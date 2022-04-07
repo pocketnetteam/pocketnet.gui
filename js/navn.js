@@ -22,6 +22,7 @@ Nav = function(app)
 		links : true,
 	}
 
+	var hostname = window.location.hostname
 
 	var electronopen = false
 	var blockclick = false
@@ -170,6 +171,8 @@ Nav = function(app)
 			else{	
 
 				if (khref == indexpage){
+
+					//// 
 					backManager.clearAll()
 				}
 				else{
@@ -348,10 +351,7 @@ Nav = function(app)
 		},
 		add : function(href, p){
 
-
 			if(!p) p = {}
-
-			
 
 			if (p.inWnd){
 
@@ -359,6 +359,7 @@ Nav = function(app)
 					pa['m' + p.id] = true
 
 				historyManager.addParameters(pa)
+
 				self.wnds[p.id] = p
 
 				return
@@ -419,6 +420,10 @@ Nav = function(app)
 
 				if(!_.isEmpty(self.wnds)){
 					_.each(self.wnds, function(w){
+
+
+						if (w.independent) return
+
 						if (w.module.parametersHandler){
 							w.module.parametersHandler()
 						}
@@ -444,6 +449,8 @@ Nav = function(app)
 					
 				}
 
+				
+
 	    	}
 		}
 		
@@ -462,7 +469,7 @@ Nav = function(app)
 		},	
 
 		removeChat : function(href){
-			if(!isMobile()) return
+			if(!app.mobileview) return
  
 			var p = parameters(href, true)
 
@@ -479,13 +486,13 @@ Nav = function(app)
 			_.each(self.wnds, function(pa, id){
 				if(!p['m' + id]){
 
+					if (pa.independent) return
+
 					var c = deep(pa, 'module.closeContainer');
 
 					if (c){
 
 						deleted.push(id)
-
-
 						c('auto')
 					}
 
@@ -495,6 +502,8 @@ Nav = function(app)
 			_.each(deleted, function(id){
 				delete self.wnds[id]
 			})
+
+			
 		},
 		
 		open : function(p){
@@ -531,14 +540,12 @@ Nav = function(app)
 							core.removeWindows(p.completeHref)
 							core.removeChat(p.completeHref)
 
-							p = {}
+							//p = {}
 
 						})
 
 						_.each(self.clbks.history, function(c){
-								
 							c(p.href);
-							
 						})
 
 						return;
@@ -576,7 +583,7 @@ Nav = function(app)
 									stop.action(function(){
 										core.open(p)
 
-										p = {}
+										//p = {}
 									})
 								}
 
@@ -606,6 +613,9 @@ Nav = function(app)
 						var c = p.clbk;
 
 						p.clbk = function(a, b, d){
+
+							console.log('p.completeHref', p)
+
 							core.removeWindows(p.completeHref)
 							core.removeChat(p.completeHref)
 
@@ -621,9 +631,7 @@ Nav = function(app)
 					p.module.active = true;
 
 					_.each(self.clbks.history, function(c){
-						
 						c(p.href);
-						
 					})
 				}
 
@@ -649,7 +657,7 @@ Nav = function(app)
 				p.clbk(null, p);
 			}
 
-			p = {}
+			//p = {}
 
 		},
 		
@@ -1324,6 +1332,11 @@ Nav = function(app)
 	}
 
 	self.api = {
+		changedclbks : function(){
+			_.each(self.clbks.history, function(c){
+				c(history.state.href);
+			})
+		},
 		history : historyManager,
 		links : core.links,
 		go : core.go,
@@ -1438,7 +1451,7 @@ Nav = function(app)
 			return decodeSeoLinks(pathnameSearch).replace("#!", "");
 		},
 		hostname : function(){
-			return window.location.hostname + '/'
+			return hostname + '/'
 		}
 	}
 
@@ -1478,38 +1491,56 @@ Nav = function(app)
 
 				//////
 
-				if (!electron && !window.cordova && !electronopen && !app.platform.sdk.usersettings.meta.openlinksinelectron.value && !isMobile() && !isTablet()){
 
+				if (!electron && !window.cordova && !electronopen && !app.platform.sdk.usersettings.meta.openlinksinelectron.value && !isMobile() && !isTablet()){
 
 					var currentHref = self.get.href();
 					var pathname = self.get.pathname();
 
-					var mpobj = app.map[pathname] || {};
+					var mpobj = app.map[pathname] || _.find(app.map, function(mp){
+						return mp.href == pathname
+					}) || {};
 
-					if (mpobj.electronDontOpen) return
+					var electronDontOpen = false
 
-					var electronHrefs = JSON.parse(localStorage['electron_hrefs'] || "[]");
+					if (mpobj.electronDontOpen) {
+
+						if(typeof mpobj.electronDontOpen == 'function'){
+							electronDontOpen = mpobj.electronDontOpen()
+						}
+						else{
+							electronDontOpen = mpobj.electronDontOpen
+						}
+					}
+
+					if (!electronDontOpen) {
+						var electronHrefs = JSON.parse(localStorage['electron_hrefs'] || "[]");
 				
-					if (electronHrefs.indexOf(currentHref) == -1 ){
+						if (electronHrefs.indexOf(currentHref) == -1 ){
 
-						electronHrefs.push(currentHref)
+							electronHrefs.push(currentHref)
 
-						try{
+							try{
 
-							window.location = app.meta.protocol + '://electron/' + currentHref;
-							localStorage['electron_hrefs'] = JSON.stringify(electronHrefs.slice(electronHrefs.length - 100))
-							
-						}
-						catch(e){
+								window.location = app.meta.protocol + '://electron/' + currentHref;
+								localStorage['electron_hrefs'] = JSON.stringify(electronHrefs.slice(electronHrefs.length - 100))
+								
+							}
+							catch(e){
 
-							localStorage['electron_hrefs'] = '[]'
-						}
+								localStorage['electron_hrefs'] = '[]'
+							}
+						
+						} 
+					}
+
 					
-					} 
 
 				}
 
+
 				electronopen = true
+				
 
 			});
 

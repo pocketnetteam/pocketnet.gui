@@ -229,7 +229,6 @@ var help = (function () {
               .html(
                 '<div class="preloaderwr"><div class="preloader5"><img src="./img/three-dots.svg"/></div></div>',
               );
-
             self.app.platform.papi.post(
               postId,
               _el.find('.lenta'),
@@ -396,13 +395,13 @@ var help = (function () {
       getdata: function (clbk) {
         state.load();
 
-        var version = null;
+        var version = window.packageversion;
 
-        if (typeof _Electron != 'undefined') {
+        /*if (typeof _Electron != 'undefined') {
           var electron = require('electron');
 
           version = electron.remote.app.getVersion();
-        }
+        }*/
 
         var data = {
           version: version,

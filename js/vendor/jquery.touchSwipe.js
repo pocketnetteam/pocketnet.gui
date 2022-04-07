@@ -640,7 +640,8 @@
       }
       //Else this is the desktop, so stop the browser from dragging content
       else if (options.preventDefaultEvents !== false) {
-        jqEvent.preventDefault(); //call this on jq event so we are cross browser
+        if(jqEvent.cancelable !== false)
+          jqEvent.preventDefault(); //call this on jq event so we are cross browser
       }
 
       //clear vars..
@@ -1299,32 +1300,48 @@
       }
 
       if (options.allowPageScroll === NONE) {
-        jqEvent.preventDefault();
+        if(jqEvent.cancelable !== false){
+          jqEvent.stopPropagation();
+          jqEvent.preventDefault();
+        }
       } else {
         var auto = options.allowPageScroll === AUTO;
 
         switch (direction) {
           case LEFT:
             if ((options.swipeLeft && auto) || (!auto && options.allowPageScroll != HORIZONTAL)) {
-              jqEvent.preventDefault();
+              if(jqEvent.cancelable !== false){
+                jqEvent.stopPropagation();
+                jqEvent.preventDefault();
+              }
             }
             break;
 
           case RIGHT:
             if ((options.swipeRight && auto) || (!auto && options.allowPageScroll != HORIZONTAL)) {
-              jqEvent.preventDefault();
+              if(jqEvent.cancelable !== false){
+                jqEvent.stopPropagation();
+                jqEvent.preventDefault();
+              }
             }
             break;
 
           case UP:
             if ((options.swipeUp && auto) || (!auto && options.allowPageScroll != VERTICAL)) {
-              jqEvent.preventDefault();
+              if(jqEvent.cancelable !== false){
+                jqEvent.stopPropagation();
+                jqEvent.preventDefault();
+              }
             }
             break;
 
           case DOWN:
             if ((options.swipeDown && auto) || (!auto && options.allowPageScroll != VERTICAL)) {
-              jqEvent.preventDefault();
+              if(jqEvent.cancelable !== false){
+                jqEvent.stopPropagation();
+                jqEvent.preventDefault();
+              }
+             
             }
             break;
 

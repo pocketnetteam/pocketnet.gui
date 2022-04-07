@@ -4,8 +4,6 @@
 
 	var value = Number(share.score)
 
-	console.log('share', share);
-
 	if (Number(share.scnt) && _.isNumber(Number(share.scnt))) {
 		value = value / Number(share.scnt)
 	}
@@ -18,7 +16,7 @@
 		</div>
 	</div>
 
-	<div id="fordetailsusers" class="fordetailsusers customscroll">
+	<div id="fordetailsusers" class="fordetailsusers ">
 
 		<div class="rating">
 			<span class="v"><%-value.toFixed(1)%></span> 

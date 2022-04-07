@@ -3,35 +3,55 @@
 #socialshare2{
 	padding : 2 * @rhythm 0;
 
+	.includeRefWrapper{
+		padding-top : @rhythm;
+		padding-left: 2 * @rhythm;
+	}
+
 	.flexWrapper{
 		overflow: hidden;
+		display: flex;
+		flex-wrap: wrap;
 
-		button{
-			text-align: left;
-			padding-left: 0;
-			padding-right: 0;
-			width: 100%;
-			text-decoration: none;
+		.button{
+			border-radius: 6px;
+			background: rgb(var(--background-secondary-theme));
+			text-align: center;
+			padding : 2 * @rhythm;
+			.transition(0.3s);
+			cursor: pointer;
+
+			&:hover{
+				opacity: 0.5;
+			}
 
 			i{
-				width: 30px;
-				text-align: center;
+				display: block;
+				margin-bottom: @rhythm;
+				font-size: 1.5em;
+			}
+
+			span{
+				white-space: nowrap;
+				display: block;
+				font-size: 0.8em;
 			}
 		}
 
+		
 		>div{
-			margin-top: @rhythm;
-			
+			flex-grow: 1;
+			padding : @rhythm;
+			width: 100%;
 
-			&.includeRefWrapper{
-				padding-left: 0 @rhythm;
-				padding-top : 2 * @rhythm;
-				span{
-					margin-right: 2 * @rhythm;
-					font-size: 0.8em;
-				}
+			&:nth-last-child(1),
+			&:nth-last-child(2){
+				width: 50%;
 			}
+
 		}
+
+		
 
 		.forrepost{			
 			.icon{
@@ -40,9 +60,8 @@
 				line-height: 40px;
 				text-align: center;
 				font-size: 0.9em;
-				color : @color-bright;
+				color : rgb(var(--color-txt-ac));
 				cursor: pointer;
-				/*.transition(0.3s);*/
 				border-radius : 40%;
 			}
 
@@ -56,9 +75,6 @@
 		width: 100%!important;
 	}
 
-	.contentShareWrapper{
-		padding: 3 * @rhythm 0;
-	}
 	.footer{
 		text-align: center;
 		padding : @rhythm 4 * @rhythm;
@@ -78,13 +94,21 @@
 		}
 	}
 
-	.embeddingWrapperCnt{
-		background: fade(@color-gray-mlight, 5);
-		padding-bottom: 2 * @rhythm;
+	.sharebuttons{
+		max-width: 520px;
+	}
 
-		.preview{
-			display: none;
+	.embeddingWrapperCnt{
+		padding-bottom: 2 * @rhythm;
+		padding-top: 2 * @rhythm;
+
+		.buttons{
+			text-align: center;
 		}
+
+		/*.preview{
+			display: none;
+		}*/
 	}
 
 	.caption{
@@ -94,145 +118,16 @@
 
 	.subcaption{
 		padding : 2 * @rhythm 0;
+		text-align: center;
 
 		span{
 			font-size: 0.8em;
 			font-weight: 700;
 		}
 	}
+
 	.embeddingSettings{
 		padding : @rhythm 0;
-	}
-
-	.parameter{
-		width: auto;
-
-		.picker{
-			select{
-				height: auto;
-			}
-		}
-
-		>div{
-			vertical-align: middle;
-		}
-
-		.pName{
-			padding-right : @rhythm;
-			width: 120px;
-
-			.downloads {
-				padding-bottom: 2*@rhythm;
-			}
-
-			.pNameW{
-				font-size: 0.8em;
-				line-height: 1.4em;
-
-			}
-
-			.unit{
-				font-weight: 700;
-				color : @color-bright;
-			}
-
-			.require{
-				color : @color-bad;
-			}
-		}
-
-		
-		.pInput{
-			position: relative;
-			vertical-align: top;
-
-			.echo{
-				padding: @rhythm;
-				color : @color-contrast;
-				font-weight: 700;
-			}
-
-			.vm_valuesmulti{
-				padding-top: @rhythm / 2;
-			}
-
-
-		}
-
-		.panel{
-			vertical-align: top;
-			padding-top: 2 * @rhythm;
-			width: 20px;
-
-			.clear{
-				text-align: right;
-				cursor: pointer;
-				color : @color-gray-slight;
-				.transition(0.3s);
-				&:hover{
-					color : @color-main;
-				}
-			}
-			
-		}
-
-		
-
-		select,
-		textarea,
-		input{
-			width: 100%;
-			padding: @rhythm;
-			border-radius: 2px;
-
-			&.error{
-				border : 1px solid @color-bad;
-			}
-		}
-
-		.error{
-			select,
-			textarea,
-			input{
-				border : 1px solid @color-bad;
-			}
-			
-		}
-
-		select{
-			height: 38px;
-			padding-right: 25px;
-			width: auto;
-		}
-
-		
-
-		.vc_valuecustom{
-			width: 100%;
-			font-size: 0.8em;
-		}
-
-		.vc_valuecustom,
-		.vc_valuecustom_multibig{
-			.vc_textInput{
-				background: #fff;
-			}
-		}
-
-		.vmt_valuesmultitree,
-		.vm_value{
-			padding : 0;
-			.checkbox{
-				&+label {
-			        &:before {
-			        	font-size : 1.6em;
-			        	line-height: 19px;
-			        }
-			    }
-			}
-		}
-
-		
 	}
 
 	.preview{
@@ -251,7 +146,8 @@
 	.previewWrapper{
 		padding : @rhythm;
 		border-radius: 10px;
-		border : 1px solid @color-gray-slight;
+		border : 1px solid rgb(var(--neutral-grad-0));
+		margin-top : @rhythm;
 	}
 
 	.embedding{
@@ -259,7 +155,7 @@
 		display: none;
 		.code{
 			
-			background: fade(@color-gray-slight,10);
+			background: rgb(var(--background-secondary-theme));
 			width: 100%;
 			border : 0;
 			outline: o;
@@ -285,55 +181,15 @@
 		}
 	}
 
-	.captionearn{
-		font-weight: 700;
-		color : @color-pink;
-	}
-
-	.requestwhocaption{
-		font-size: 0.8em;
-		margin-top: @rhythm;
-	}
-
-	.calltoActionUserTextWrapper{
-		display : none;
-		background: fade(#000, 10);
-		border-radius: 0;
-		margin-top : 2 * @rhythm;
-
-		textarea{
-			width: 100%;
-			background: transparent;
-			border : 0;
-			padding : 3 * @rhythm 0;
-		}
-	}
 
 	.hidemore{
 		display: none;
 	}
 
-	&.textshowed{
-		.calltoActionUserTextWrapper{
-			display: block;
-		}
-
-		.hidemore{
-			display: inline-block;
-		}
-		.showmore{
-			display: none;
-		}
+	.socialshareaction{
+		cursor: pointer;
+	}
 	
-	}
-
-
-	.sharecaption{
-		font-weight: 700;
-		margin-bottom: @rhythm;
-		margin-top : 6 * @rhythm;
-	}
-
 	.socialsharebtn{
 		width: 38px;
 		height: 38px;
@@ -399,61 +255,67 @@
 		}
 	}
 
-	.additionalwrapper{
-		margin-top : 6 * @rhythm;
+	.backwrapper,
+	.embeddingWrapperCnt,
+	.sharewrapper{
+		display: none;
+	}
 
-		.additionaltable{
-			width : auto;
-			cursor: pointer;
+	.backwrapper{
+		padding : 2 * @rhythm;
+		position: sticky;
+		top : 0;
+		background: rgb(var(--background-total-theme));
 
-			>div{
-				padding: 0 2 * @rhythm;
+		.transition(0.3s);
+		cursor: pointer;
 
-				&.checkcell{
-					padding-left : 0;
-				}
-
-				&.checkcell,
-				&.labelcell{
-					padding-left : 0;
-
-					
-				}
-
-				&.morecell{
-					color : @color-main;
-
-					&:hover{
-						color : @color-gray-light;
-					}
-				}
-			}
+		&:hover{
+			opacity: 0.5;
 		}
 
-		&.checked{
-			i{
-				&:before{
-					content: '\f058'
-				}
-			}
+		span{
+			font-size: 0.9em;
+		}
+
+		i{
+			font-size: 0.9em;
+			width: 22px;
+			
 		}
 	}
-}
 
-
-.wnd.sharingwindow2{
-	
-	/*z-index: 5000;*/
-	&.textshowedwnd{
-		.wndinner{
-			max-height: 600px;
+	&[show='share']{
+		.sharewrapper{
+			display: block;
 		}	
 	}
 
+	&[show='embeding']{
+		.embeddingWrapperCnt{
+			display: block;
+		}	
+	}
+
+	&[show]{
+		.backwrapper{
+			display: block;
+		}
+		.directWrapper{
+			display: none;
+		}
+	}
+	
+}
+
+.wnd.sharingwindow2{
+	
+
+
 	.wndinner{
-		max-height: 642px;
+		
 		width : auto;
-		max-width: 450px;
+		max-width: 370px;
 		.wndheader{
 			display: none;
 		}
@@ -461,6 +323,7 @@
 		.wndcontent{
 			top : 0;
 			bottom: 0;
+			max-height: 642px;
 			padding : 0;
 		}
 
@@ -471,50 +334,4 @@
 		}
 	}
 
-	.roundclosebutton{
-		color : #FFF;
-	}
-}
-
-/*t*/ @media only screen and (max-width: 768px){
-#socialshare2{
-
-	.flexWrapper{
-		display: block;	
-		overflow: hidden;
-
-		button{
-			font-size: 0.8em;
-			padding-left: 0;
-			padding-right: 0;
-		}
-
-		>div{
-
-			&.includeRefWrapper{
-				padding : 2 * @rhythm 0;
-			}
-		}
-
-
-	}
-
-	.button.medium{
-		width: 100%;
-	}
-
-	.calltoActionUserTextWrapper{
-
-		textarea{
-			padding : 2 * @rhythm;
-			height : 140px;
-		}
-	}
-
-
-}
-.wnd.sharingwindow2{
-
-
-}	
 }

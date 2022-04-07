@@ -7,10 +7,10 @@
 		<div class="mwork wh">
 			<div class="groupOptions">
 
-				<% _.each(group.options, function(parameter){ 
-					
+				<% _.each(group.options, function(parameter){
+
 					if(parameter.id == 'enablePeertube' && !parameter.value) return
-					
+
 					%>
 
 					<div class="parameterMaketWrapper <%-parameter.pid%>" parameter="<%-parameter.id%>">
@@ -18,12 +18,12 @@
 
 							<div class="pName">
 								<div class="pNameW">
-									<%= parameter.name %><% 
+									<%= parameter.name %><%
 										var unit = deep(parameter, 'format.Unit');
 										if(unit) { %>, <span class="unit"><%-unit%></span>
 
 									<%	} %><% if(parameter.type == 'valuesmulti'){%>: <%} %>
-									
+
 									<% if(parameter.require){ %>
 
 										<span class="require">*</span>
@@ -31,7 +31,7 @@
 									<% } %>
 								</div>
 							</div>
-							
+
 							<% if(parameter.type == 'boolean'){ %>
 
 								<div class="pInput pCheckbox">
@@ -84,12 +84,12 @@
 					</div>
 
 					<div class="pInput">
-						<% _.each(themes, function(th, index){ 
-							
-							
-							
+						<% _.each(themes, function(th, index){
+
+
+
 							%>
-							<div elementsid="themewrapper" class="themewrapper <% if(index == current){ %> active <% } %>" theme="<%-index%>">
+							<div elementsid="themewrapper" class="themewrapper <% if(index == currentTheme){ %> active <% } %>" theme="<%-index%>">
 								<div class="themeicon">
 									<div class="thbadge">
 											<i class="fas fa-check-circle"></i>
@@ -106,3 +106,39 @@
 	</div>
 
 </div>
+
+<% if(typeof _Electron !== 'undefined') { %>
+	<div class="settingsGroup">
+
+	<div class="mwork gk">
+		<div class="groupCaption"><%=e('uiScaleSetting')%></div>
+	</div>
+	<div class="mwork wh">
+		<div class="groupOptions">
+
+
+			<div class="parameterMaketWrapper uiscale" parameter="uiscale">
+				<div class="parameter table uiscale">
+
+					<div class="pName">
+						<div class="pNameW">
+							<%=e('uiScaleSettingTitle')%>
+						</div>
+					</div>
+
+					<div class="pInput">
+						<% _.each(uiScales, function(th, index){ %>
+						<div elementsid="uiscalewrapper" class="uiscalewrapper <% if(index == currentUiScale){ %> active <% } %>" scale="<%-index%>">
+							<span><%-th.scale%>%</span>
+						</div>
+						<% }) %>
+					</div>
+
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+</div>
+<% } %>

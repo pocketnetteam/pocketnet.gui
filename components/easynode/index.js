@@ -8,7 +8,7 @@ var easynode = (function(){
 
 		var primary = (p.history && !p.inWnd) || p.primary;
 
-		var el, amount = 1000, info = null, ed, oss, faqLangs;
+		var el, amount = 1000, info = null, ed, oss, faqLangs, ext = null;
 
 		
 		var blocktime = [{
@@ -50,9 +50,14 @@ var easynode = (function(){
 			},
 			point : function(t){
 
-				var r = amount / calc.netstakeweight()
-				var n = 1
+				// var r = amount / calc.netstakeweight()
+				// var n = 1
 				// return amount * Math.pow( (1 + 1440 * 4.75 / calc.netstakeweight() ),  t)
+				
+
+				if (amount <  50){
+
+				}
 
 				return amount / calc.netstakeweight() * 4.75 * 1440 * t
 
@@ -169,6 +174,7 @@ var easynode = (function(){
 						renders.updateValues()
 
 						el.am = el.c.find('.amredits');
+						el.err = el.c.find('.errWrapper')
 	
 						//el.am.focus();
 
@@ -181,29 +187,15 @@ var easynode = (function(){
 
 							amount = Number(v.replace(/,/g,''));
 
-							if(amount < 50){
-								amount = 50;
+							if(amount < 50 && amount !== 0){
 
-							} 
+								amount = 0;
+								el.err.text(self.app.localization.e('minPkoin', 50))
 
-							if(amount > 500000) amount = 500000
+							} else {
 
-							renders.updateValues()
-
-							
-						})
-
-						el.am.on('blur', function(){
-							var v = $(this).text() || '';
-
-							amount = Number(v.replace(/,/g,''));
-
-							if(amount < 50){
-
-								el.am.text(50);
-								amount = 50;
-
-							} 
+								el.err.empty();
+							}
 
 							if(amount > 500000) amount = 500000
 
@@ -211,6 +203,25 @@ var easynode = (function(){
 
 							
 						})
+
+						// el.am.on('blur', function(){
+						// 	var v = $(this).text() || '';
+
+						// 	amount = Number(v.replace(/,/g,''));
+
+						// 	if(amount < 50){
+
+						// 		el.am.text(50);
+						// 		amount = 50;
+
+						// 	} 
+
+						// 	if(amount > 500000) amount = 500000
+
+						// 	renders.updateValues()
+
+							
+						// })
 
 						if (clbk)
 							clbk()
@@ -295,6 +306,17 @@ var easynode = (function(){
 		}
 
 		var make = function(){
+			
+
+			self.app.platform.papi.post(
+				"18399921cc5455b3283322a488f553d0169d00e3501246fc60d2e0c67c98bfc6",
+				el.lenta,
+				function (e, p) {
+					ext = p
+				},
+			);
+
+
 			renders.calc();
 			renders.faq();
 		}
@@ -329,8 +351,14 @@ var easynode = (function(){
 
 			destroy : function(){
 
+				if (ext) {
+					ext.clearessense()
+				}
+
 				ed = {};
 				el = {};
+
+				
 			},
 			
 			init : function(p){
@@ -341,6 +369,7 @@ var easynode = (function(){
 				el.c = p.el.find('#' + self.map.id);
 				el.calcWrapper = el.c.find('.calcWrapper');
 				el.faqWrapper = el.c.find('.faqWrapper');
+				el.lenta = el.c.find('.lenta');
 
 				initEvents();
 				make()

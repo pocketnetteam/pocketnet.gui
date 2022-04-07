@@ -461,61 +461,24 @@ Comment = function(txid){
 
 				if (image.indexOf('data:image') > -1){
 
-					var r = image.split(',');
+					app.imageUploader.upload({
+						base64: image,
+					}).then( url => {
+	
+						self.images.v[index] = url
+	
+						p.success();
+	
+					}).catch(err => {
+	
+						p.success();
+	
+					})
 
-				if (r[1]){
-
-						app.ajax.run({
-							type : "POST",
-							imgur : true,
-							data : {
-								Action : "image",
-								image : r[1]
-							},
-
-							success : function(data){
-
-								self.images.v[index] = deep(data, 'data.link');
-								
-								p.success();
-
-							},
-
-							fail : function(d){
-
-								app.ajax.run({
-									type : "POST",
-									up1 : true,
-									data : {
-										file : r[1]
-									},
-		
-									success : function(data){
-		
-										self.images.v[index] = 'https://'+app.options.url+':8092/i/' + deep(data, 'data.ident');
-
-										p.success();
-		
-									},
-		
-									fail : function(d){
-		
-										//self.images.v[index] = ''
-		
-										//index++;
-		
-										p.success();
-									}
-								})
-							}
-						})
-
-
-					}
+					
 				}
 				else
 				{
-					//index++;
 					p.success();
 				}
 
@@ -1233,65 +1196,24 @@ Share = function(lang){
 
 				if (image.indexOf('data:image') > -1){
 
-					var r = image.split(',');
+					app.imageUploader.upload({
+						base64: image
+					}).then( url => {
 
-				if (r[1]){
+						console.log("URL", url)
 
-						app.ajax.run({
-							type : "POST",
-							imgur : true,
-							data : {
-								Action : "image",
-								image : r[1]
-							},
+						self.images.v[index] = url;
+						p.success();
 
-							success : function(data){
+					}).catch(err => {
+						console.log("ER", err)
 
-								self.images.v[index] = deep(data, 'data.link');
-								
-								p.success();
-
-							},
-
-							fail : function(d){
-
-
-								app.ajax.run({
-									type : "POST",
-									up1 : true,
-									data : {
-										file : r[1]
-									},
-		
-									success : function(data){
-		
-										self.images.v[index] = 'https://'+app.options.url+':8092/i/' + deep(data, 'data.ident');
-
-										p.success();
-		
-									},
-		
-									fail : function(d){
-		
-										//self.images.v[index] = ''
-		
-										//index++;
-		
-										p.success();
-									}
-								})
-								
-
-								
-							}
-						})
-
-
-					}
+						p.success();
+					})
+					
 				}
 				else
 				{
-					//index++;
 					p.success();
 				}
 
@@ -1363,8 +1285,6 @@ Share = function(lang){
 
 		if (articleversion2){
 			textvalue = JSON.stringify(textvalue) //  Base64Helper.encode(JSON.stringify(textvalue))
-
-			console.log('textvalue', textvalue)
 		}
 		
 		return encodeURIComponent(self.url.v) 
@@ -1484,6 +1404,8 @@ Share = function(lang){
 
 			share.time = new Date();
 
+			console.log('self.export()', self.export())
+
 			share._import(self.export())
 
 			share.txid = txid || self.aliasid
@@ -1509,6 +1431,25 @@ Share = function(lang){
 		}
 
 		return self.type
+	}
+
+	self.size = function(){
+
+
+		////// base64
+
+		var obj = JSON.stringify(self.export()).replace(/base64,[^ ",]*/g, 'fileinb64').replace(/base64%2C[^ ",]*/g,'fileinb64');
+
+		return obj.length
+
+	}
+
+	self.sizelimit = function(){
+		if(self.itisarticle() && !window.testpocketnet){
+			return 120000
+		}
+
+		return 60000
 	}
 
 	if(lang) self.language.set(lang)
@@ -1709,51 +1650,25 @@ UserInfo = function(){
 
 			if (r[1]){
 
-				app.ajax.run({
-					type : "POST",
-					imgur : true,
-					data : {
-						Action : "image",
-						image : r[1]
-					},
+				app.imageUploader.upload({
+					base64: image,
+					type: 'avatar'
+				}).then( url => {
 
-					success : function(data){
+					self.image.v = url;
 
-						self.image.v = deep(data, 'data.link');
-						
-						if (clbk)
-							clbk();
+					if (clbk)
+						clbk();
 
-					},
-					fail : function(d){
+				}).catch(err => {
 
+					if (clbk)
+						clbk(err);
 
-						app.ajax.run({
-							type : "POST",
-							up1 : true,
-							data : {
-								file : r[1]
-							},
-
-							success : function(data){
-								self.image.v = 'https://pocketnet.app:8092/i/' + deep(data, 'data.ident');
-								//self.image.v = 'https://'+app.options.url+':8092/i/' + deep(data, 'data.ident');
-
-								if (clbk)
-									clbk();
-
-							},
-
-							fail : function(d){
-												
-								if (clbk)
-									clbk(d);
-							}
-						})
-
-		
-					}
 				})
+
+
+
 
 
 			}
@@ -2106,7 +2021,7 @@ pShare = function(){
 				textvalue = JSON.parse(textvalue)
 			}
 			catch(e){
-				textvalue = ''
+				textvalue = textvalue
 			}
 		}
 
@@ -2147,6 +2062,9 @@ pShare = function(){
 
 		if (v.txid)
 			self.txid = v.txid;
+
+		if (v.id)
+			self.id = v.id;
 
 		if (v.txidEdit)
 			self.txidEdit = v.txidEdit;	
@@ -2201,7 +2119,7 @@ pShare = function(){
 		var s = {
 			image : '',
 			images : self.images || [],
-			title : "Post by " + name,
+			title : app.localization.e('postby') + " " + name,
 			html : {
 				body : self.renders.xssmessagec(),
 				preview : trimHtml(self.renders.xssmessagec(), 160).replace(/ &hellip;/g, '...').replace(/&hellip;/g, '...')

@@ -29,6 +29,7 @@ var taginput = (function(){
 							events.addTag(value)
 						},*/
 						fastsearch : function(value, clbk, e){
+
 				
 							if(e){
 								var char = String.fromCharCode(e.keyCode || e.which);
@@ -37,13 +38,14 @@ var taginput = (function(){
 	
 									events.addTag(value.replace(/#/g,'').replace(/ /g,''))
 	
-									el.tagSearch.find('input').val('').focus()
+									//el.tagSearch.find('input').val('').focus()
 	
 									clbk(null)
 	
 									return
 								}
 							}
+
 	
 							self.app.platform.sdk.tags.search(value, function(data){
 
@@ -195,16 +197,17 @@ var taginput = (function(){
 					var c = self.app.platform.sdk.categories.getbyid(category, actions.language())
 
 					events.addTags(c.tags)
+					
 				}
 				else{
 					events.addTag(tag)
 				}
 
-				if (isMobile())
+				/*if (isMobile())
 					setTimeout(function(){
 						if (el.tagSearch)
 							el.tagSearch.find('input').focus()
-					}, 500)
+					}, 500)*/
 				
 			},
 			remove : function(){

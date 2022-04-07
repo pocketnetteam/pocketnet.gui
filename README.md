@@ -4,8 +4,15 @@
 ![last_commit](https://img.shields.io/github/last-commit/pocketnetteam/pocketnet.gui)
 ![release_date](https://img.shields.io/github/release-date/pocketnetteam/pocketnet.gui)
 ![version](https://img.shields.io/github/v/release/pocketnetteam/pocketnet.gui)
-![GitHub release (latest by date)](https://img.shields.io/github/downloads/pocketnetteam/pocketnet.gui/latest/total)
-[![CI to Docker Hub](https://github.com/pocketnetteam/pocketnet.gui/actions/workflows/docker_registry.yml/badge.svg?branch=master&event=push)](https://github.com/pocketnetteam/pocketnet.gui/actions/workflows/docker_registry.yml)
+
+![GitHub release Win](https://img.shields.io/github/downloads/pocketnetteam/pocketnet.gui/latest/BastyonSetup.exe)
+![GitHub release Linux MacOS](https://img.shields.io/github/downloads/pocketnetteam/pocketnet.gui/latest/BastyonSetup.dmg)
+![GitHub release Linux Deb](https://img.shields.io/github/downloads/pocketnetteam/pocketnet.gui/latest/BastyonSetup.deb)
+![GitHub release Linux AppImage](https://img.shields.io/github/downloads/pocketnetteam/pocketnet.gui/latest/Bastyon.AppImage)
+![GitHub release Android APK](https://img.shields.io/github/downloads/pocketnetteam/pocketnet.gui/latest/Bastyon.apk)
+
+[![Deploy Proxy](https://github.com/pocketnetteam/pocketnet.gui/actions/workflows/docker_registry.yml/badge.svg)](https://github.com/pocketnetteam/pocketnet.gui/actions/workflows/docker_registry.yml)
+[![Auto Tests](https://github.com/pocketnetteam/pocketnet.gui/actions/workflows/autotests.yml/badge.svg)](https://github.com/pocketnetteam/pocketnet.gui/actions/workflows/autotests.yml)
 
 # What is Bastyon?
 
@@ -70,3 +77,6 @@ If you need assistance, if you want to report a bug or if you are a content crea
 
 You can also contact us directly on Bastyon: 
 - https://pocketnet.app/pocketnet_team
+
+# Issuer
+Daniel Satchkov, Open Source Developer <dsatchkov@gmail.com>

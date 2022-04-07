@@ -1,19 +1,46 @@
 @import "../../css/__cssvar";
 
 #easynode{
-  .mwork{
+  .lenta {
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom: 20px;
+
+    #post{
+      	background: rgb(var(--background-total-theme));
   
-  }
+      .commentsWrapperHb, .iconWrapper{
+        display: none;
+      }
+  
+      .cntswrk{
+        &.formeta{
+          display: none;
+        }
+      }
+  
+      .cntscontent{
+        .paddingWrapper{
+          display: none;
+        }
+      }
+  
+      .statswrapperExtended{
+        display: none;
+      }
+    }
+  } 
 
   .actionWrapper{
     padding: 7 * @rhythm 20px;
     text-align: center;
-    border-top: 1px solid rgb(197, 194, 194);  
-    border-bottom: 1px solid rgb(197, 194, 194);  
+    border-top: 1px solid rgb(var(--neutral-grad-1));  
+    border-bottom: 1px solid rgb(var(--neutral-grad-1));  
 
     .button{
       text-decoration: underline;
-      color: #0f72bb;
+      color: rgb(var(--color-bg-ac));  
       font-weight: 700;
       font-size: 3.6rem;
       cursor: pointer;
@@ -28,7 +55,7 @@
     max-width: 800px;
     width: 100%;
     margin: 0 auto;
-    padding: 0px 20px 40px 20px;
+    padding: 0px 20px 20px 20px;
   }
 
   .faq{
@@ -40,7 +67,7 @@
   .calcWrapper{
     margin-top: 0;
     padding-top:@rhythm * 8;
-    border-top: 1px solid rgb(197, 194, 194);  
+    border-top: 1px solid rgb(var(--neutral-grad-1));  
     
     .calc{
       max-width: 800px;
@@ -58,11 +85,17 @@
       }
 
       .amredits{
-          background: @color-yellow;
+          background: rgb(var(--color-yellow));
           padding: 0.5 * @rhythm @rhythm;
           border : 1px solid @color-pink;
           border-radius: 10px;
           outline: none;
+      }
+
+      .errWrapper{
+        margin-left: @rhythm;
+        font-size: .6em;
+        color: rgb(var(--color-bad));
       }
 
       .ihave{
@@ -71,7 +104,7 @@
     }
 
     .totalNumbers{
-        background: fade(@color-gray-mlight, 10);
+        background: rgba(var(--neutral-grad-4), 0.1);
         padding : 3 * @rhythm 0;
         overflow: hidden;
         .totalRow{
@@ -114,7 +147,7 @@
             span{
                 font-size: 0.8em;
                 font-weight: 700;
-                color : @color-contrast;
+                color : rgb(var(--color-bg-ac-2));
             }
         }
     }
@@ -125,7 +158,7 @@
     }
 
     .rcptwrp{
-      background: #fff;
+      background: rgb(var(--background-total-theme));
       position : relative;
       border-radius: 3px;
     }   
@@ -135,7 +168,7 @@
       padding : 1.5 * @rhythm 2 * @rhythm;
       padding-top : 0;
       font-weight: 700;
-      color : @color-brick;
+      color : rgb(var(--color-bg-orange));
       cursor: pointer;
 
       span{
@@ -156,9 +189,6 @@
 
 
   .header {
-    //margin-top: 10 * @rhythm;
-    //padding-bottom: 4 * @rhythm;
-    
     font-size: 1.2em; 
     .header__subtitle{
       span{
@@ -174,8 +204,6 @@
     text-align: center;
     text-transform: uppercase;
     margin-top: 0;
-    border-top: 2px solid #c5c2c2;
-    border-bottom: 2px solid #c5c2c2;
     padding: 10px 0;
     
     span{
@@ -228,7 +256,7 @@
 
     img{
       border-radius: 10px;
-      border: 1px solid fade(@color-gray-mlight, 20);
+      border: 1px solid rgb(var(--neutral-grad-1));
       .shadowSmaller();
     }
 
@@ -242,11 +270,8 @@
           font-size: 2.5em;
           font-weight: 700;
           padding-bottom: @rhythm;
-          color : @color-orange;
+          color : rgb(var(--color-txt-orange));
         }
-  
-        
-  
         .groupCnt{
           .question{
             font-size: 1.5em;
@@ -261,7 +286,7 @@
             .questionName{
               padding-bottom: 2 * @rhythm;
               font-weight: 700;
-              color : @color-gray;
+              color : rgb(var(--color-txt-gray));
               font-size: 1.5em;
               max-width: 85%;
             }
@@ -272,7 +297,7 @@
   
               a{
                 text-decoration: underline;
-                color : @color-main;
+                color : rgb(var(--color-txt-ac));
               }
               .image{
                 width:100% !important;
@@ -295,7 +320,7 @@
               cursor: pointer;
               &:hover{
   
-                color : @color-main;
+                color : rgb(var(--color-txt-ac));
               }
               span{
                 padding-right: 2px;
@@ -303,8 +328,8 @@
             }
   
             .icon{
-              background: @color-main;
-              color : #fff;
+              background: rgb(var(--color-bg-ac));
+              color : rgb(var(--text-on-bg-ac-color));
               cursor: pointer;
               .transition(0.3s);
               width: 44px;
@@ -315,12 +340,8 @@
               font-size: 0.6em;
   
               &:hover{
-                background : @color-contrast;
+                background : rgb(var(--color-txt-ac));
               }						
-  
-              i{
-                
-              }
             }
           }
         }
@@ -378,21 +399,23 @@
 }
 
 @media (max-width: 400px){
-  .header{
-    h2{
-      font-size: 1.5em !important;
+  #easynode{
+    .header{
+      h2{
+        font-size: 1.5em !important;
+      }
     }
-  }
-  
-  .numbers{
-    font-size: 1.2em !important;
-  }
-  .button{
-    font-size: 1.2rem !important;
-  }
-  .calcCaption{
-    span{
-      font-size: 1.3em !important;
+    
+    .numbers{
+      font-size: 1.2em !important;
+    }
+    .button{
+      font-size: 1.2rem !important;
+    }
+    .calcCaption{
+      span{
+        font-size: 1.3em !important;
+      }
     }
   }
 }
@@ -427,3 +450,4 @@
     }
 	}
 }
+

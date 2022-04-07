@@ -1,9 +1,9 @@
 {
     "name": "pocketnet",
-    "version": "0.4.125",
-    "cordovaversion": "1.1.181",
-    "cordovaversioncode": "10181",
-    "description": "Pocketnet desktop application",
+    "version": "0.7.20",
+    "cordovaversion": "1.7.20",
+    "cordovaversioncode": "170200",
+    "description": "Bastyon desktop application",
     "author": "Pocketnet Community <support@pocketnet.app>",
     "company": "Pocketnet Community",
     "license": "Apache-2.0",
@@ -11,27 +11,27 @@
     "repository": "github:pocketnetapp/pocketnet.gui",
     "scripts": {
         "start": "electron . --development",
-        "start:dev": "electron . --development --test",
+        "start:test": "electron . --development --test",
         "pack": "electron-builder -w --dir --x64",
         "dist": "electron-builder -w --x64 --ia32",
         "distl": "electron-builder -l --x64",
         "distm": "electron-builder -m --x64",
         "publish": "build --win --x64 --ia32 -p always",
-        "minimize": "node minimize.js -prodaction=true -vendor=30044 -path=/",
-        "minimize:test": "node minimize.js -prodaction=true -vendor=30044 -test=true -path=/",
+        "minimize": "node minimize.js -prodaction=true -vendor=30045 -path=/",
+        "minimize:test": "node minimize.js -prodaction=true -vendor=30045 -test=true -path=/",
         "dev": "node minimize.js -prodaction=false -path=/pocketnet/",
         "dev:test": "node minimize.js -prodaction=false -test=true -path=/pocketnet/",
-        "minimize:cordova": "node minimize.js -prodaction=true -vendor=30044 -path=/pocketnet/ -project=Bastyon -composetemplates=true",
-        "minimize:bastyon": "node minimize.js -prodaction=true -vendor=30044 -path=/ -project=Bastyon",
-        "minimize:bastyon:test": "node minimize.js -prodaction=true -vendor=30044 -test=true -path=/ -project=Bastyon",
+        "minimize:cordova": "node minimize.js -prodaction=true -vendor=30045 -path=/pocketnet/ -project=Bastyon -composetemplates=true",
+        "minimize:bastyon": "node minimize.js -prodaction=true -vendor=30045 -path=/ -project=Bastyon",
+        "minimize:bastyon:test": "node minimize.js -prodaction=true -vendor=30045 -test=true -path=/ -project=Bastyon",
         "dev:bastyon": "node minimize.js -prodaction=false -path=/pocketnet/ -project=Bastyon",
         "dev:bastyon:test": "node minimize.js -prodaction=false -test=true -path=/pocketnet/ -project=Bastyon",
-        "node:embedding": "node minimize.js -prodaction=true -vendor=30044 -path=/web/"
+        "node:embedding": "node minimize.js -prodaction=true -vendor=30045 -path=/web/"
     },
     "devDependencies": {
-        "electron": "^11.4.5",
+        "electron": "",
         "electron-builder": "",
-        "electron-notarize": "^1.0.0",
+        "electron-notarize": "",
         "electron-reload": "",
         "electron-reloader": "",
         "humanize": "0.0.9"
@@ -41,22 +41,27 @@
         "async-each": "^1.0.3",
         "auto-launch": "^5.0.5",
         "body-parser": "^1.19.0",
+        "check-disk-space": "^3.3.0",
         "clone-deep": "^4.0.1",
         "compression": "^1.7.4",
         "deep-extend": "^0.6.0",
         "download-github-release": "^0.3.2",
-        "electron-context-menu": "^2.4.0",
-        "electron-is": "^3.0.0",
-        "electron-localshortcut": "^3.2.1",
-        "electron-log": "^4.4.1",
-        "electron-updater": "^4.3.5",
+        "electron-context-menu": "",
+        "electron-is": "",
+        "electron-localshortcut": "",
+        "electron-log": "",
+        "electron-updater": "^4.0.0",
         "email-validator": "^2.0.4",
         "emojione": "^4.5.0",
         "express": "^4.17.1",
         "express-useragent": "^1.0.15",
         "express-ws": "^4.0.0",
+        "ffbinaries": "^1.1.4",
+        "ffmpeg": "^0.0.4",
+        "ffmpeg-static": "^4.4.0",
         "filestorage": "^1.7.1",
         "firebase-admin": "^9.3.0",
+        "fluent-ffmpeg": "^2.1.2",
         "github-download": "^0.5.0",
         "hash-files": "^1.1.1",
         "iconv-lite": "",
@@ -104,7 +109,7 @@
         "standard": "^11.0.1",
         "svg-captcha": "^1.4.0",
         "swagger-ui-express": "^4.1.4",
-        "tar.gz2": "^1.0.0",
+        "targz": "^1.0.1",
         "tcp-port-used": "^1.0.1",
         "twilio": "^3.48.1",
         "uglify-js": "",
@@ -114,7 +119,9 @@
         "yuicompressor": "^2.4.8"
     },
     "build": {
-        "productName": "Pocketnet",
+        "productName": "Bastyon",
+        "afterSign": "build/notarize.js",
+        "appId": "app.pocketnet.gui",
         "files": [
             "**/*",
             "!cordova${/*}",
@@ -148,11 +155,19 @@
                 "repo": "pocketnet.gui"
             }
         ],
+        "protocols": {
+            "name": "bastyon",
+            "schemes": [
+                "bastyon",
+                "pocketnet"
+            ]
+        },
         "mac": {
             "target": "dmg",
             "artifactName": "${productName}Setup.${ext}",
-            "icon": "assets/icons/mac/icon.icns",
-            "entitlements": "build/entitlements.mac.plist"
+            "icon": "res/electron/icons/mac/icon.icns",
+            "entitlements": "build/entitlements.mac.plist",
+            "extendInfo": "bastyon"
         },
         "linux": {
             "target": [
@@ -165,29 +180,119 @@
             ],
             "artifactName": "${productName}_${platform}_${arch}.${ext}",
             "category": "Network",
-            "executableName": "Pocketnet",
-            "description": "Pocketnet Desktop Browser"
+            "executableName": "bastyon",
+            "description": "Bastyon Desktop Browser"
         },
         "win": {
-            "target": "nsis",
-            "icon": "assets/icons/win/icon.ico"
+            "target": [
+                {
+                    "target": "nsis"
+                }
+            ],
+            "icon": "res/electron/icons/win/icon.ico"
         },
         "nsis": {
             "artifactName": "${productName}Setup.${ext}",
-            "oneClick": false,
+            "oneClick": true,
             "perMachine": false,
-            "allowToChangeInstallationDirectory": true,
+            "allowToChangeInstallationDirectory": false,
             "createDesktopShortcut": true,
             "displayLanguageSelector": true,
             "menuCategory": true,
-            "installerIcon": "assets/icons/win/icon.ico",
-            "uninstallerIcon": "assets/icons/win/icon.ico",
+            "installerIcon": "res/electron/icons/win/icon.ico",
+            "uninstallerIcon": "res/electron/icons/win/icon.ico",
             "uninstallDisplayName": "${productName}, v${version}",
-            "deleteAppDataOnUninstall": true,
+            "deleteAppDataOnUninstall": false,
             "license": "LICENSE",
             "include": "build/installer.nsh"
-        },
+        }
+    },
+    "buildTest": {
+        "productName": "BastyonTest",
         "afterSign": "build/notarize.js",
-        "appId": "app.pocketnet.gui"
+        "appId": "app.pocketnettest.gui",
+        "files": [
+            "**/*",
+            "!cordova${/*}",
+            "!external${/*}",
+            "!proxy16/data${/*}",
+            "!proxy16/pocketcoin${/*}",
+            "!proxy16/pocketcoind${/*}",
+            "!proxy16/downloads${/*}"
+        ],
+        "extraFiles": [
+            {
+                "from": "proxy16/cert",
+                "to": "cert",
+                "filter": [
+                    "**/cert.pem",
+                    "**/key.pem"
+                ]
+            },
+            {
+                "from": "proxy16/static",
+                "to": "static",
+                "filter": [
+                    "**/"
+                ]
+            }
+        ],
+        "publish": [
+            {
+                "provider": "github",
+                "owner": "pocketnetapp",
+                "repo": "pocketnet.gui"
+            }
+        ],
+        "protocols": {
+            "name": "bastyon",
+            "schemes": [
+                "bastyon",
+                "pocketnet"
+            ]
+        },
+        "mac": {
+            "target": "dmg",
+            "artifactName": "${productName}Setup.${ext}",
+            "icon": "res/electron/icons/mac/icon.icns",
+            "entitlements": "build/entitlements.mac.plist",
+            "extendInfo": "bastyon"
+        },
+        "linux": {
+            "target": [
+                {
+                    "target": "AppImage"
+                },
+                {
+                    "target": "deb"
+                }
+            ],
+            "artifactName": "${productName}_${platform}_${arch}.${ext}",
+            "category": "Network",
+            "description": "${productName} Desktop Browser"
+        },
+        "win": {
+            "target": [
+                {
+                    "target": "nsis"
+                }
+            ],
+            "icon": "res/electron/icons/win/test_icon.ico"
+        },
+        "nsis": {
+            "artifactName": "${productName}Setup.${ext}",
+            "oneClick": true,
+            "perMachine": false,
+            "allowToChangeInstallationDirectory": false,
+            "createDesktopShortcut": true,
+            "displayLanguageSelector": true,
+            "menuCategory": true,
+            "installerIcon": "res/electron/icons/win/test_icon.ico",
+            "uninstallerIcon": "res/electron/icons/win/test_icon.ico",
+            "uninstallDisplayName": "${productName}, v${version}",
+            "deleteAppDataOnUninstall": false,
+            "license": "LICENSE",
+            "include": "build/installerTest.nsh"
+        }
     }
 }

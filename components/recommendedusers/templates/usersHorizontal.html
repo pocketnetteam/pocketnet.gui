@@ -1,0 +1,89 @@
+	
+	<div class="usersHorizontal">
+	<% 
+
+	var me = null;
+
+	if(user.address.value)
+		me = deep(app, 'platform.sdk.users.storage.' + user.address.value.toString('hex'))
+
+	_.each(addresses, function(u){ 
+
+		var _class='';
+		var address = u.address;
+
+		var _class=''
+		
+		
+
+		if (me && me.relation(address, 'subscribes')){ _class="following" };
+
+		if (me && me.relation(address, 'blocking')){ _class="blocking" };
+
+
+	%>
+		<div class="wrk">
+
+			<div class="user" address="<%-address%>">
+				<div class="addressWrapper" address="<%-address%>">
+					<div class="iconWrapper">
+						
+						<a href="<%-app.platform.api.authorlink(address)%>">
+							<div class="icon">
+
+								<% 
+
+									var src = u.avatar;
+									var name = u.name
+									var letter = name ? name[0] : ''; 
+
+									console.log('letter', letter, name)
+
+									if (src){
+								%>
+
+									<img class="usericonQ" src="<%-src || '*'%>">
+
+									<% } else if(!src && letter) {%>
+										<div class="usericon">
+											<span class="letter">
+												<%-letter.toUpperCase()%>
+											</span>
+										</div>
+
+									<% } else if (!src) { %>
+				
+										<svg width="30" height="30" data-jdenticon-value="<%-address%>"></svg>
+				
+									<% } %>
+							</div>
+						</a>
+					</div>
+
+					<div class="userbody">
+						<div class="name">
+							<%- u.name %>							
+						</div>		
+						<% var s = u.subscribers_count || 0 %>
+	
+						<div class="subscribers">
+							<span class="label"><%=e('followers2') %></span> 
+							<span class="value"> <%- s %></span>
+						</div>
+	
+						<div class="subscribeWrapper <%-_class%>">
+							<button class="subscribeButton">
+								<%=e('follow') %>
+							</button>
+							<button class="unsubscribeButton">
+								<%=e('unfollow') %>
+							</button>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+		
+	<% }) %>
+</div>

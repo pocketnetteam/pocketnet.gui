@@ -1,0 +1,220 @@
+#pkoin .content .vc_valuecustom .vc_textInput {
+  border: 0;
+  background: transparent;
+}
+#pkoin .content .top,
+#pkoin .content .fieldsWrapper,
+#pkoin .content .sendButtonWrapper {
+  padding: 1em;
+}
+#pkoin .content .top {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 1em;
+  border-bottom: 1px solid rgba(var(--neutral-grad-1), 0.5);
+}
+#pkoin .content .top .title {
+  display: flex;
+  align-items: center;
+  font-weight: 700;
+}
+#pkoin .content .top .buyButtonWrapper {
+  display: flex;
+  align-items: center;
+}
+#pkoin .content .top .buyButtonWrapper .buyButton {
+  border: 1px solid rgb(var(--neutral-grad-1));
+  box-sizing: border-box;
+  border-radius: 100px;
+  padding: 8px 16px;
+  cursor: pointer;
+  display: flex;
+}
+#pkoin .content .top .buyButtonWrapper .buyButton .text {
+  margin-right: 1em;
+  font-weight: 600;
+  color: rgb(var(--text-color));
+}
+#pkoin .content .top .buyButtonWrapper .buyButton img {
+  width: 20px;
+  height: 20px;
+}
+#pkoin .content .profile {
+  display: flex;
+  align-items: top;
+  padding: 1em 1em 0.5em 1em;
+}
+#pkoin .content .profile .description {
+  padding-left: 0.5em;
+  padding-top: 0.25em;
+}
+#pkoin .content .profile .description .name {
+  font-weight: 700;
+}
+#pkoin .content .profile .description .about {
+  overflow-wrap: break-word;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+#pkoin .content .fieldsWrapper {
+  padding-bottom: 0;
+}
+#pkoin .content .fieldsWrapper .fields .inputWrapper {
+  margin-bottom: 2em;
+  /* Firefox */
+}
+#pkoin .content .fieldsWrapper .fields .inputWrapper.inputSumWrapper {
+  margin-bottom: 1em;
+}
+#pkoin .content .fieldsWrapper .fields .inputWrapper input::-webkit-outer-spin-button,
+#pkoin .content .fieldsWrapper .fields .inputWrapper input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+#pkoin .content .fieldsWrapper .fields .inputWrapper input[type=number] {
+  -moz-appearance: textfield;
+}
+#pkoin .content .fieldsWrapper .fields .inputWrapper .inputSum,
+#pkoin .content .fieldsWrapper .fields .inputWrapper .textareaComment {
+  padding: 12px 16px;
+  border-radius: 12px;
+  border: 1px solid rgb(var(--neutral-grad-0));
+  width: 100%;
+}
+#pkoin .content .fieldsWrapper .fields .inputWrapper .vc_valuecustom {
+  width: 100%;
+}
+#pkoin .content .fieldsWrapper .fields .inputWrapper .vc_valuecustom .vc_textInput {
+  border: 0;
+}
+#pkoin .content .fieldsWrapper .fields .inputWrapper .vc_valuecustom.opened .vc_inputWrapper,
+#pkoin .content .fieldsWrapper .fields .inputWrapper .vc_valuecustom.opened .vc_iconWrapper {
+  border: 1px solid rgb(var(--color-bg-ac));
+}
+#pkoin .content .fieldsWrapper .fields .inputWrapper .vc_valuecustom.opened .vc_iconWrapper {
+  border-left: none;
+}
+#pkoin .content .fieldsWrapper .fields .inputWrapper .vc_valuecustom.opened .vc_inputWrapper {
+  border-right: none;
+}
+#pkoin .content .fieldsWrapper .fields .inputWrapper .vc_inputWrapper {
+  border-radius: 12px 0px 0px 12px;
+  border: 1px solid rgb(var(--neutral-grad-1));
+  border-right: none;
+}
+#pkoin .content .fieldsWrapper .fields .inputWrapper .vc_inputWrapper input {
+  padding: 12px 16px;
+}
+#pkoin .content .fieldsWrapper .fields .inputWrapper .vc_iconWrapper {
+  border-radius: 0px 12px 12px 0px;
+  border: 1px solid rgb(var(--neutral-grad-1));
+  border-left: none;
+}
+#pkoin .content .fieldsWrapper .fields .inputWrapper .vc_selectInput {
+  top: 100%;
+  box-shadow: 0 5px 7px -5px rgba(var(--color-shadow-base), 0.4);
+  border-radius: 12px;
+  border: none;
+}
+#pkoin .content .fieldsWrapper .fields .inputWrapper .vc_selectInput .vc_value {
+  padding: 12px;
+  color: rgb(var(--color-txt-gray-dark));
+}
+#pkoin .content .fieldsWrapper .fields .inputWrapper .vc_selectInput .vc_value:hover {
+  background: rgb(var(--neutral-grad-1));
+  color: default;
+}
+#pkoin .content .fieldsWrapper .fields .inputWrapper > textarea {
+  min-height: 100px;
+}
+#pkoin .content .fieldsWrapper .fields .sum .inputWrapper {
+  position: relative;
+}
+#pkoin .content .fieldsWrapper .fields .sum .inputWrapper .pkoinLabel {
+  color: rgb(var(--color-txt-ac));
+  position: absolute;
+  right: 12px;
+  top: 12px;
+}
+#pkoin .content .fieldsWrapper .fields .sum .inputWrapper .notion {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9em;
+  margin-top: 0.5em;
+}
+#pkoin .content .fieldsWrapper .fields .sum .inputWrapper .notion .balance {
+  display: flex;
+  padding-left: 0.5em;
+}
+#pkoin .content .fieldsWrapper .fields .sum .inputWrapper .notion .balance .text {
+  color: rgb(var(--neutral-grad-3));
+}
+#pkoin .content .fieldsWrapper .fields .sum .inputWrapper .notion .balance .amount {
+  padding-left: 0.5em;
+  font-weight: 600;
+}
+#pkoin .content .fieldsWrapper .fields .sum .inputWrapper .notion .balance .label {
+  padding-left: 0.5em;
+}
+#pkoin .content .fieldsWrapper .fields .sum .inputWrapper .notion .errorWrapper {
+  padding-left: 0.5em;
+  color: rgb(var(--color-bad));
+}
+#pkoin .content .fieldsWrapper .fields .comment .text {
+  line-height: 24px;
+  color: rgb(var(--color-txt-gray-dark));
+}
+#pkoin .content .sendButtonWrapper {
+  padding: 1.5em 1em;
+  border-top: 1px solid rgba(var(--neutral-grad-1), 0.5);
+}
+#pkoin .content .sendButtonWrapper .sendButton {
+  padding: 12px 16px;
+  text-align: center;
+  background: rgb(var(--color-bg-ac));
+  color: rgb(var(--text-on-bg-ac-color));
+  border-radius: 12px;
+  cursor: pointer;
+}
+#pkoin .content .sendButtonWrapper .sendButton.disabled {
+  cursor: default;
+  background: rgb(var(--color-bg-ac-1));
+}
+.wnd.pkoinwindow .wndinner.pkoin {
+  max-width: 370px;
+  max-height: 520px;
+  box-shadow: none;
+}
+.wnd.pkoinwindow .wndinner .wndheader {
+  display: none;
+}
+.wnd.pkoinwindow .wndinner .wndcontent {
+  top: 0;
+  bottom: 0;
+  padding: 0;
+  overflow: auto;
+}
+.wnd.pkoinwindow .wndinner > div.buttons {
+  display: none;
+}
+.wnd.pkoinwindow #pkoin .sendButtonWrapper {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+html.mobileview .wnd.pkoinwindow #pkoin .sendButtonWrapper {
+  position: static;
+}
+@media only screen and (max-width: 768px) {
+  .wnd.pkoinwindow #pkoin .sendButtonWrapper {
+    position: static;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+}

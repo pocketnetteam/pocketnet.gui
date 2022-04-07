@@ -1,12 +1,28 @@
 <div class="authorlentawrappermain">
-    <div class="authorsearchwrapper">
-        <div class="authorsearch"></div>
-    </div>
-    <div class="authorlentawrapper">
-    </div>
-    <div class="authorsearchicon">
-        <div elementsid="authorsearchicon_icon" class="icon">
-            <i class="fas fa-search"></i>
+
+
+    <% if(!app.curation()) {%>
+
+        <div class="newsharewrapper"></div>
+
+        <div class="authorsearchwrapper">
+            <div class="authorsearch"></div>
         </div>
-    </div>
+        <div class="authorlentawrapper">
+        </div>
+        <div class="authorsearchicon">
+            <div elementsid="authorsearchicon_icon" class="icon">
+                <i class="fas fa-search"></i>
+            </div>
+        </div>
+
+    <% } else { %> 
+
+        <div class="curationWrapper">
+            <span>You can see the posts of this user only on <a elementsid="https://bastyon.com" href="https://bastyon.com">bastyon.com</a></span>
+        </div>
+
+    <% } %>
+
+    
 </div>

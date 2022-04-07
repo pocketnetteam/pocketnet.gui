@@ -16,7 +16,6 @@ var all = {
 		class : 'opennewwindow'
 	},
 
-	
 	pin : {
 		icon : '<i class="fas fa-thumbtack"></i>',
 		text : e('pin'),
@@ -36,7 +35,7 @@ var all = {
 	},
 
 	downloadVideo : {
-		icon : '<i class="far fa-bookmark"></i>',
+		icon : '<i class="fas fa-cloud-download-alt"></i>',
 		text : e('downloadVideo'),
 		class : 'downloadVideo'
 	},
@@ -77,7 +76,7 @@ var all = {
 		class : 'unsubscribe'
 	},
 
-	
+
 
 	donation : {
 		icon : '<i class="fas fa-donate"></i>',
@@ -112,7 +111,10 @@ if(share){
 
 	m.push('share')
 
-	if (share.itisvideo() && window.cordova) {
+	const isElectron = (typeof _Electron !== 'undefined');
+	const isSaveSupported = (window.cordova);
+
+	if (share.itisvideo() && isSaveSupported) {
 
 		m.push('shareBareVideoLink');
 
@@ -123,11 +125,10 @@ if(share){
 			m.unshift('downloadVideo');
 		}
 
-		
 	}
 
 	m.push('opennewwindow');
-	
+
 	if(share.address && user.address.value){
 
 		var my = (user.address.value && share.address == user.address.value.toString('hex'))
@@ -151,7 +152,7 @@ if(share){
 			m.push('remove')
 		}
 
-		
+
 		if (my && (!share.time || share.time > (new Date()).addHours(-24) )){
 			m.push('edit')
 		}
@@ -166,7 +167,7 @@ if(share){
 				m.push('startchat')
 			}
 
-			m.push('donation')
+			/*m.push('donation')*/
 			/*m.push('htls')*/
 
 			if(isMobile()){
@@ -180,12 +181,12 @@ if(share){
 			}
 
 			m.push('block')
-			
+
 		}
 	}
 
-	
-	
+
+
 }
 
 
@@ -198,12 +199,12 @@ if(share){
 	<% _.each(m, function(m){ var mo = all[m] %>
 
 	<div elementsid="lenta_menuitem_<%-mo.class||''%>" class="menuitem <%-mo.class||''%> table">
-		
+
 		<div class="icon"><span><%=mo.icon%></span></div>
 		<div class="label"><span><%-mo.text%></span></div>
 
 	</div>
-		
+
 	<% }) %>
 
 </div>

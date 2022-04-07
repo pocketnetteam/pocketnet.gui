@@ -11,9 +11,10 @@ var main = (function(){
 		var el = {};
 
 
-		var roller = null, lenta = null, share = null, panel,leftpanel, uptimer = null;
+		var roller = null, lenta = null, share = null, panel,leftpanel, uptimer = null, leftparallax = null;
 
-		var videomain = false
+		var videomain = false,
+			readmain = false
 
 		var upbutton = null, upbackbutton = null, plissing = null, searchvalue = '', searchtags = null, result, fixedBlock, openedpost = null;
 
@@ -27,28 +28,95 @@ var main = (function(){
 
 		var lastStickyRefresh = 0
 
-		/*var mobilemodes = [{
-			mode : 'leftshow',
-			icon : 'fas fa-hashtag'
-		},{
-			mode : 'mainshow',
-			icon : 'fas fa-home'
-		},{
-			mode : 'rightshow',
-			icon : 'fas fa-arrow-right'
-		}]
+		var modes = [
+			{
+				link : 'index',
+				label : () => self.app.localization.e('e13136'),
+				value : 'index'
+			},
 
-		var mobilemode = 'mainshow'*/
-
-		var helpers = {
+			{
+				link : 'index?r=sub',
+				label : () => self.app.localization.e('e13137'),
+				value : 'sub'
+			},
 			
-		}
+			{
+				link : "index?video=1",
+				label : () => self.app.localization.e('video'),
+				value : 'video'
+			},
+			{
+				link : "index?read=1",
+				label : () => self.app.localization.e('longreads'),
+				value : 'read'
+			},
+
+			{
+				link : "index?r=saved",
+				label : () => self.app.localization.e('downloaded'),
+				if : function(){
+					return window.cordova
+				},
+				value : 'saved'
+			},
+
+			{
+				link : "index?r=recommended",
+				label : () => self.app.localization.e('e13138'),
+				value : 'recommended'
+			},
+		]
 		
 		var actions = {
+
+			currentModeKey : function(){
+
+				var pss = parameters()
+
+				var r = pss.r || 'index'
+				var video = pss.video || false
+				var read = pss.read || false
+
+				if(video) r = 'video'
+				if(read) r = 'read'
+
+				return r
+			},
+
+			selector : function(){
+
+				var _modes = _.filter(modes, (m) => !m.if || m.if())
+
+				var links = {
+
+					index : "index",
+		
+					sub : "index?r=sub",
+		
+					recommended : "index?r=recommended",
+
+					video : "index?video=1",
+
+					read : "index?read=1"
+				}
+
+				if (window.cordova) {
+					links.saved = "index?r=saved"
+				}
+
+				var r = actions.currentModeKey()
+
+				var value = _.find(_modes, (m) => m.value == r)
+
+				return {
+					value : value.value,
+					modes : _modes
+				};
+
+			},
 			
 			refreshSticky : function(alv){
-
-				
 
 				var ns = self.app.lastScrollTop
 
@@ -61,16 +129,7 @@ var main = (function(){
 					if(alv){
 						el.panel.hcSticky('refresh');
 						el.leftpanel.hcSticky('refresh');
-
-						console.log("REFRESH STICKY")
-
-						/*setTimeout(function(){
-							if(el.panel) el.panel.hcSticky('refresh');
-							if(el.leftpanel) el.leftpanel.hcSticky('refresh');
-						}, 300)*/
 					}
-
-					
 				}
 					
 			},
@@ -120,6 +179,8 @@ var main = (function(){
 					}
 				}
 
+				self.nav.api.changedclbks()
+
 				renders.lentawithsearch()
 
 				makeShare()
@@ -129,8 +190,7 @@ var main = (function(){
 			backtolenta : function(){
 				actions.backtolentaClear()
 
-
-				self.app.actions.scroll(lastscroll)
+				self.app.actions.scroll(lastscroll || 0)
 				//_scrollTop(lastscroll, null, 5)
 				
 
@@ -139,6 +199,8 @@ var main = (function(){
 			backtolentaClear : function(){
 
 				self.nav.api.history.removeParameters(['v'])
+
+				if(!el.c) return
 
 				el.c.removeClass('opensvishowed')
 
@@ -151,6 +213,8 @@ var main = (function(){
 					actions.refreshSticky()
 
 				}, 350)
+
+				self.nav.api.changedclbks()
 
 				if(lenta && lenta.update) lenta.update()
 			}	
@@ -165,7 +229,6 @@ var main = (function(){
 				actions.currentMode()
 			},
 			panelPosition : function(){
-
 				actions.panelPosition()
 			},
 
@@ -223,6 +286,100 @@ var main = (function(){
 		}
 
 		var renders = {
+			menuapply : function(){
+				var {value, modes} = actions.selector()
+
+				var fmode = 'filters'
+
+				if(searchvalue || searchtags) fmode = 'search'
+				if(currentMode != 'common') fmode = 'settings'
+				if(currentMode == 'sub') fmode = 'none'
+
+				el.menu.attr('fmode', fmode)
+				el.menu.find('.mode').removeClass('active')
+				el.menu.find('.mode[mode="'+value+'"]').addClass('active')
+
+				_scrollTo(el.menu.find('.active'), el.menu.find('.modes'), 0, 0, 'Left') 
+
+			},
+			menu : function(){
+
+				var {value, modes} = actions.selector()
+
+				self.app.user.isState(function(state){
+
+					//videomain && !readmain && !searchvalue && !searchtags
+
+					
+
+					self.shell({
+
+						name :  'menu',
+						el :   el.menu,
+						data : {
+							state : state,
+							mobile : isMobile(),
+							tagsExcluded : self.app.platform.sdk.categories.gettagsexcluded().length,
+							tagsSelected : self.app.platform.sdk.categories.gettags().length,
+							tags : self.app.platform.sdk.categories.gettags(),
+							value, modes
+						},
+
+					}, function(_p){
+
+						el.menu.find('.showcategories').on(clickAction(), function(){
+
+							var mainmoduleAction = deep(self.app, 'modules.main.module.showCategories')
+			
+							if (mainmoduleAction) mainmoduleAction(true)
+						})
+
+						el.menu.find('.mode').on('click', function(){
+							var link = $(this).attr('link')
+
+							self.nav.api.load({
+								open : true,
+								href : link,
+								history : true,
+								handler : true
+							})
+						})
+
+						el.menu.find('.selectwrapper').on('click', function(){
+
+							var items = []
+
+							_.each(modes, function(a){
+								items.push({
+									text : a.label(),
+									action : function (clbk) {
+				
+										self.nav.api.load({
+											open : true,
+											href : a.link,
+											history : true,
+											handler : true,
+											replace : true
+										})
+
+										return true
+				
+									}
+								})
+							})
+				
+							menuDialog({
+								items: items
+							})
+						})
+
+						renders.menuapply()
+						
+					})
+					
+				})
+				
+			},
 
 			addpanel : function(){
 
@@ -244,7 +401,7 @@ var main = (function(){
 			
 			share : function(){
 
-				if(!isMobile() && !videomain && !searchvalue && !searchtags){
+				if (!isMobile() && !videomain && !readmain && !searchvalue && !searchtags){
 
 					el.c.removeClass('wshar')
 
@@ -273,6 +430,7 @@ var main = (function(){
 						}
 
 					})
+					
 				}else{
 					el.c.addClass('wshar')
 				}
@@ -283,8 +441,12 @@ var main = (function(){
 				if (show){
 
 					el.topvideos.removeClass('hidden')
+
+					if (external) {
+						external.clearessense()
+					}
 					
-					self.app.platform.papi.horizontalLenta(el.topvideos, function (e,p) {
+					self.app.platform.papi.horizontalLenta(el.topvideos.find('.wrpcn'), function (e,p) {
 
 						external = p
 						actions.refreshSticky()
@@ -297,6 +459,7 @@ var main = (function(){
 						shuffle : true,
 						period : '4320',
 						page : 0,
+						count : 10,
 						openPostInWindowMobile : true,
 						afterload : function(ed, s, e){
 
@@ -307,7 +470,8 @@ var main = (function(){
 						ended : function(s){
 
 							if(!s.length) return true
-							return false
+
+								return false
 
 						},
 						hasshares : function(shares){
@@ -318,17 +482,7 @@ var main = (function(){
 							
 						},
 	
-						opensvi : isMobile() ? null : function(id, share){
-
-							self.nav.api.load({
-								open : true,
-								href : 'index?video=1&v=' + id,
-								history : true,
-								handler : true
-							})
-							
-						},
-
+						opensvi : null,
 						compact : true
 	
 					})
@@ -341,7 +495,7 @@ var main = (function(){
 						external = null
 					}
 
-					el.topvideos.html('')
+					el.topvideos.find('.wrpcn').html('')
 					//showmoreby.removeClass('hasshares')
 
 					el.topvideos.addClass('hidden')
@@ -384,36 +538,33 @@ var main = (function(){
 
 			panel : function(){
 
-				if(videomain && !isMobile()) return
+				if (videomain && !isMobile() || panel) return
 
-				self.nav.api.load({
+					self.nav.api.load({
 
-					open : true,
-					id : 'panel',
-					el : el.panel,
-					animation : false,
+						open : true,
+						id : 'panel',
+						el : el.panel,
+						animation : false,
 
-					essenseData : {
-					
-						renderclbk : function(){
-							console.log("renderclbk")
-							actions.refreshSticky(true)
-	
-						}
-					},
-					clbk : function(e, p){
-
-						console.log("panelss")
-
-						panel = p;
+						essenseData : {
 						
-					}
+							renderclbk : function(){
+								actions.refreshSticky(true)
+		
+							}
+						},
+						clbk : function(e, p){
 
-				})
+							panel = p;
+							
+						}
+
+					})
 			},
+
 			lentawithsearch : function(clbk, p){
 
-				
 				if(searchvalue){
 
 					var value = searchvalue.replace('tag:', "#");
@@ -466,6 +617,7 @@ var main = (function(){
 					renders.lenta(clbk, p)
 				}
 			},
+
 			lenta : function(clbk, p){
 
 				if(!p) p = {};
@@ -474,7 +626,7 @@ var main = (function(){
 				var fp = false
 
 				if (lenta) {
-					lenta.destroy()
+					lenta.clearessense()
 				}
 
 				renders.addpanel();
@@ -506,96 +658,115 @@ var main = (function(){
 						}
 					}
 				}
+
+				self.app.user.isState(function(state){
 				
-				self.nav.api.load({
-					open : true,
-					id : 'lenta',
-					el : el.lenta,
-					animation : false,
+					self.nav.api.load({
+						open : true,
+						id : 'lenta',
+						el : el.lenta,
+						animation : false,
 
-					mid : 'main',
+						mid : 'main',
 
-					essenseData : {
-						hr : 'index?',
-						goback : p.goback,
-						searchValue : searchvalue || null,
-						search : searchvalue ? true : false,
-						tags : searchtags,
-						video : videomain && !isMobile(),
-						videomobile : videomain && isMobile(),
-						//window : isMobile() ? el.c.find('.lentacell') : el.w,
-						page : 0,
-						afterload : function(ed, s, e){
+						essenseData : {
+							hr : 'index?',
+							goback : p.goback,
+							searchValue : searchvalue || null,
+							search : searchvalue ? true : false,
+							tags : searchtags,
+							read : readmain,
+							video :  videomain && !isMobile(),
+							videomobile : videomain && isMobile(),
+							observe : actions.currentModeKey(),
+							page : 0,
 
-							if(!isMobile()) return
+							recommendedUsers : isMobile(),
+							recommendedUsersCount : isMobile() ? 15 : 3,
+							//includesub : true,
+							optimize : self.app.mobileview,
+							extra :/* state && isMobile() ? [
+								{
+									key : 'recommendedusers',
+									position : rand(1,2),
+									essenseData : () => {
+										return {
+											recommendedUsersCount : 15
+										}
+									}
+								}
+							] :*/ [],
 
-							if(e || !s.length) return
+							afterload : function(ed, s, e){
 
-							ed.page++
-						},
-						opensvi : function(id){
+								if(!isMobile()) return
 
+								if(e || !s.length) return
 
-							lastscroll = self.app.lastScrollTop
-
-							el.c.addClass('opensvishowed')
-
-							if (upbutton) upbutton.destroy()
+								ed.page++
+							},
 							
-							if (upbackbutton) upbackbutton.destroy()
+							opensvi : function(id){
 
-							setTimeout(function(){
-								upbackbutton = self.app.platform.api.upbutton(el.upbackbutton, {
-									top : function(){
-										/*if(isMobile() || isTablet() || window.cordova){
-											return '135px'
-										}*/
-										return '65px'
-									},
-									rightEl : el.c.find('.lentacellsvi'),
-									scrollTop : 0,
-									click : function(a){
-										actions.backtolenta()
-									},
+								lastscroll = self.app.lastScrollTop
 
-									icon : '<i class="fas fa-chevron-left"></i>',
-									class : 'bright',
-									text : 'Back'
-								})	
-							}, 50)
+								el.c.addClass('opensvishowed')
+
+								if (upbutton) upbutton.destroy()
 								
-							setTimeout(function(){
-								upbackbutton.apply()
-							},300)
+								if (upbackbutton) upbackbutton.destroy()
 
-							renders.post(id)
+								setTimeout(function(){
+									upbackbutton = self.app.platform.api.upbutton(el.upbackbutton, {
+										top : function(){
+											return '65px'
+										},
+										rightEl : el.c.find('.lentacellsvi'),
+										scrollTop : 0,
+										click : function(a){
+											actions.backtolenta()
+										},
 
-							self.nav.api.history.addParameters({
-								v : id
-							})
+										icon : '<i class="fas fa-chevron-left"></i>',
+										class : 'bright',
+										text : 'Back'
+									})	
+								}, 50)
+									
+								setTimeout(function(){
+									upbackbutton.apply()
+								},300)
 
-							events.up()
+								renders.post(id)
+
+								self.nav.api.history.addParameters({
+									v : id
+								})
+
+								self.nav.api.changedclbks()
+
+								events.up()
+							},
+
+							renderClbk : function(){
+								actions.refreshSticky()
+							},
+							loader : loader
 						},
+						clbk : function(e, p){
 
-						renderClbk : function(){
+							renders.upbutton()
 
-							
 							actions.refreshSticky()
-						},
-						loader : loader
-					},
-					clbk : function(e, p){
 
-						renders.upbutton()
+							lenta = p
 
-						actions.refreshSticky()
+							if (clbk)
+								clbk()
 
-						lenta = p
+						}
 
-						if (clbk)
-							clbk()
-
-					}
+					})
 
 				})
 
@@ -660,32 +831,6 @@ var main = (function(){
 
 				
 			},
-
-			/*mobilemode : function(mode){
-
-				if (mode){
-
-					if (mobilemode == 'mainshow'){
-						lastscroll = self.app.lastScrollTop
-						self.app.actions.scroll(0)
-					}
-
-					mobilemode = mode
-				}
-
-				el.c.attr('mobilemode', mobilemode)
-
-
-				setTimeout(function(){
-					self.app.el.html.removeClass('scrollmodedown')
-				}, 300)
-				
-
-				if (mobilemode == 'mainshow' && lastscroll){
-					_scrollTop(lastscroll, null, 0)
-				}
-			},*/
-
 			
 		}
 
@@ -699,12 +844,10 @@ var main = (function(){
 		}
 
 		var initstick = function(){
-			if(!isMobile() && !isTablet() && !hsready){
+			if(!self.app.mobileview && !hsready){
 
-				var t1 = 64
-				var t2 = 76
-
-				console.log("INITSTICKER!!!")
+				var t1 = 75
+				var t2 = 75
 
 				if (el.leftpanel)
 					el.leftpanel.hcSticky({
@@ -726,27 +869,56 @@ var main = (function(){
 
 		var initEvents = function(){
 
+			
+			self.app.platform.sdk.categories.clbks.excluded.topmenumobile =
+			self.app.platform.sdk.categories.clbks.tags.topmenumobile =
+			self.app.platform.sdk.categories.clbks.selected.topmenumobile = renders.menu
+
 			self.app.events.scroll.main = actions.addbuttonscroll
-
-			/*self.app.events.resize.mainpage = function(){
-				setTimeout(function(){
-					actions.refreshSticky(true)
-				}, 500)
-			}*/
-
 
 			el.c.find('.backtolenta').on('click', actions.backtolenta)
 
 			el.addbutton.on('click', actions.addbutton)
 
-			if(!isMobile() && !isTablet()){
+			if(!self.app.mobileview){
 
 				if(!videomain) initstick()
-
 			}
 			else{
 
 
+				if(leftparallax) leftparallax.destroy()
+				
+
+				leftparallax = new SwipeParallaxNew({
+
+					el : el.c.find('.leftpanelcell'),
+
+					allowPageScroll : 'vertical',
+	
+					directions : {
+						right : {
+							cancellable : true,				
+							basevalue : function(){
+								return - 0.9 * (self.app.width || $(window).width())
+							},
+
+							positionclbk : function(px){
+							},
+
+							restrict : true,
+							trueshold : 30,
+							clbk : function(){
+
+								showCategories(false)
+
+							}
+	
+						}
+					}
+					
+	
+				}).init()
 				
 			}
 			
@@ -755,9 +927,7 @@ var main = (function(){
 
 		var makePanel = function(){
 
-			if(!isMobile()){
-				renders.panel();
-			}
+			if(!isMobile()){ renders.panel(); }
 				
 			renders.leftpanel();
 
@@ -798,13 +968,20 @@ var main = (function(){
 				localStorage['lentakey'] = 'video'
 			}
 
+			if (parameters().read){
+				localStorage['lentakey'] = 'read'
+			}
+
 			renders.lentawithsearch(clbk, p)
 
 			makeShare()
 
 			makePanel()
 
-			if (currentMode == 'common' && !videomain && !searchvalue && !searchtags)
+			renders.menu()
+
+
+			if (currentMode == 'common' && !videomain && !readmain && !searchvalue && !searchtags)
 				renders.topvideos(true)
 			else{
 				renders.topvideos(false)
@@ -815,17 +992,16 @@ var main = (function(){
 		}
 
 		var showCategories = function(t){
-			if (el.c && isMobile()){
-
+			if (el.c){
 				self.app.mobile.vibration.small()
 
 				if (t){
 					el.c.addClass('leftshowed')
-					self.app.actions.offScroll()
+					//setTimeout(self.app.actions.offScroll, 300)
 				}
 				else{
 					el.c.removeClass('leftshowed')
-					self.app.actions.onScroll()
+					//setTimeout(self.app.actions.onScroll, 300)
 				}
 				
 			}
@@ -845,12 +1021,14 @@ var main = (function(){
 				var nsearchtags = words.length ? words : null
 				var nsearchvalue = parameters().ss || ''
 				var ncurrentMode = parameters().r || 'common';
-				var nlentakey = parameters().video ? 'video' : (parameters().r || 'index')
+
+				var nlentakey = parameters().video ? 'video' : parameters().read ? 'read' : (parameters().r || 'index')
+
 				var nvideomain = nlentakey == 'video'
+				var nreadmain = nlentakey == 'read'
 				var page = parameters().page
 
 				var changes = false
-
 
 				localStorage['lentakey'] = nlentakey
 
@@ -860,6 +1038,10 @@ var main = (function(){
 
 				if (videomain != nvideomain){
 					videomain = nvideomain; changes = true
+				}
+
+				if (readmain != nreadmain){
+					readmain = nreadmain; changes = true
 				}
 
 				if (searchvalue != nsearchvalue){
@@ -874,30 +1056,41 @@ var main = (function(){
 
 				if (videomain){
 
-					el.c.addClass('videomain')
+					if (el.c)
+						el.c.addClass('videomain')
 
 					if(!parameters().v){
 						actions.backtolenta()
 					}
 				}
 				else{
-					el.c.removeClass('videomain')
+					if (el.c)
+						el.c.removeClass('videomain')
+
 					actions.backtolentaClear()
 				}
 
-				if (changes){
-					renders.topvideos(currentMode == 'common' && !videomain && !searchvalue && !searchtags)
 
-					
+				if (changes){
+
+					if (external) {
+						external.clearessense()
+						external = null
+					}
+
+					renders.topvideos(currentMode == 'common' && !videomain && !readmain && !searchvalue && !searchtags)
 
 					if (lenta) {
-						lenta.destroy()
+						lenta.clearessense()
 						lenta = null
 					}
 	
 					renders.lentawithsearch()
+
 					makePanel()
 					makeShare()
+
+					renders.menuapply()
 
 					actions.refreshSticky()
 
@@ -909,15 +1102,6 @@ var main = (function(){
 				if (lenta) {
 					lenta.hideshowedvideo()
 				}
-				
-				
-				
-
-				//renders.leftpanel() ?
-
-				
-
-				
 
 			},
 
@@ -930,8 +1114,6 @@ var main = (function(){
 					el.c.find('.bgCaption').removeClass('hidden')
 
 					makeShare()
-
-					
 
 					actions.refreshSticky()
 				}
@@ -978,7 +1160,7 @@ var main = (function(){
 					return
 				}
 
-				if((_s.v || _s.s) && (isMobile() || window.cordova)){
+				if((_s.v || _s.s) && (isMobile())){
 
 					self.nav.api.load({
 						open : true,
@@ -1014,19 +1196,21 @@ var main = (function(){
 
 			destroy : function(){
 
-				
-
 				showCategories(false)
 
 				delete self.app.events.scroll.main
 				delete self.app.events.resize.mainpage
-					
 
 				renders.post(null)
 
 				hsready = false
 
 				//searchvalue = '', searchtags = null
+
+				if (leftparallax) {
+					leftparallax.destroy()
+					leftparallax = null
+				}
 
 				if (plissing)
 					plissing.destroy()
@@ -1082,6 +1266,10 @@ var main = (function(){
 				fixeddirection = null
 				addbuttonShowed = false
 
+				delete self.app.platform.sdk.categories.clbks.tags.topmenumobile
+				delete self.app.platform.sdk.categories.clbks.selected.topmenumobile
+				delete self.app.platform.sdk.categories.clbks.excluded.topmenumobile
+
 				if(el.c) el.c.empty()
 
 				el = {}
@@ -1122,6 +1310,7 @@ var main = (function(){
 				el.addbutton = el.c.find('.addbutton')
 				el.slwork = el.c.find('.maincntwrapper >div.work')
 				el.topvideos = el.c.find('.topvideosWrapper')
+				el.menu = el.c.find('.menuwrapper')
 
 				//self.app.el.footer.addClass('workstation')
 
@@ -1143,6 +1332,10 @@ var main = (function(){
 				}
 
 				videomain = parameters().video ? true : false
+				
+				readmain = parameters().read ? true : false
+
+				if(readmain) videomain = false
 
 				if(videomain && !isMobile()){
 					el.c.addClass('videomain')

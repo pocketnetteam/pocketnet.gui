@@ -270,6 +270,7 @@ var imagegallery = (function(){
 			},
 
 			clickOut: function(e) {
+
 				const clickedElem = e.target;
 
 				const isClickInside = (clickedElem.id === 'galleryImage');
@@ -425,6 +426,7 @@ var imagegallery = (function(){
 						});
 						// Event for the swipe up and down
 						hammers.f.on('swipeup swipedown', function(e) {
+							console.log('closeContainer1')
 							// If we can pan vertically, cancel the swipe
 							if (zoomData.imageContainerParent.height() < zoomData.current.height) return;
 							// Close the gallery
@@ -504,10 +506,11 @@ var imagegallery = (function(){
 								// If we can pan vertically, cancel the swipe
 								if ((zoomData.imageContainerParent.height() * 1.2) < zoomData.current.height) return;
 								// Close the gallery
+								console.log('closeContainer2')
 								self.closeContainer();
 							});
 
-					});
+					}, self.app);
 
 				})
 
@@ -539,16 +542,13 @@ var imagegallery = (function(){
 				num : num.toString()
 			})
 
-
+			image.csrc = self.app.peertubeHandler.helpers.url(image.src)
+			
 			actions.prepareImage(image, function(image){
-
 				renders.image({
 					image : image
 				})
-
 			})
-
-			
 
 		}
 

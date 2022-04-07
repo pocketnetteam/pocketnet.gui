@@ -1,15 +1,16 @@
 @rhythm : 0.5em;
-@regular : 'proxima_nova_rgregular';
-@bold : 'proxima_nova_thextrabold';
-@ebold : 'proxima_nova_blblack';
-@light : 'proxima_nova_ltlight';
+@font:'Segoe UI Variable', 'Segoe UI', SegoeUI, "Helvetica Neue", Helvetica, Arial, sans-serif;
 
-@color-border-light: #8E90A6;
-@color-background-light: #F2F2F5;
+@color-main-light : #F0F2F5;
+@color-dark-mlight : #555770;
 @color-black-toggle : rgb(0, 9, 27);
+@color-blue-mlight : #0992DF;
+
 @color-gray : rgb(60, 65, 70);
 @color-gray2 : rgb(30, 35, 40);
+
 @color-gray3 : rgb(0, 9, 27);
+
 @color-black : rgb(10, 12, 23);
 @color-black2 : rgb(14, 28, 43);
 @color-black3 : rgb(17, 32, 53);
@@ -32,6 +33,8 @@
 @color-gray-border : #d0c9ca;
 @color-raspberry : #ff0090;
 @color-brick : #ff4800;
+
+
 @color-bad : #F41A4D;
 @color-nrml : #000;
 @color-good : #076C34;
@@ -50,19 +53,19 @@
 
 
 .shadow(){
-    box-shadow: 0 10px 20px -4px rgba(0,0,0,.4);
+    box-shadow: 0 10px 20px -4px rgba(var(--color-shadow-base), .4);
 }
 
 .shadowSmall(){
-    box-shadow: 0 5px 10px -5px rgba(0,0,0,.4);
+    box-shadow: 0 5px 10px -5px rgba(var(--color-shadow-base),.4);
 }
 
 .shadowSmaller(){
-    box-shadow: 0 5px 7px -5px rgba(0,0,0,.4);
+    box-shadow: 0 5px 7px -5px rgba(var(--color-shadow-base),.4);
 }
 
 .shadowText(){
-    text-shadow: 0px 0px 2px rgba(0, 11, 58, 0.714), 0 0 3px rgba(0, 8, 43, 0.519);
+    text-shadow: 0px 0px 2px rgba(var(--color-shadow-base), 0.714), 0 0 3px rgba(var(--color-shadow-base), 0.519);
 }
 
 .transition(@param)
@@ -79,8 +82,4 @@
     -o-transition: @opt @param ;
     -webkit-transition: @opt @param ;
     transition: @opt @param ;
-}
-
-
-:root {
 }

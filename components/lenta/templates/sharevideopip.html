@@ -1,0 +1,40 @@
+<%
+
+if(typeof ed == 'undefined') ed = {}
+
+var arranges = {
+	
+	u : function(){	%> 
+
+		<% if(share.url) {
+
+			var h = ''
+			
+			%>
+
+			<div class="url">
+			</div>
+
+		<% } %>
+	<% }
+} %>
+
+<div class="work unselectablemobile">
+
+    <div class="shareTable video" address="<%-share.address%>" stxid="<%-share.txid %>">
+
+            <div class="cntswrk forurl">
+
+                <% var a = ["u"] %>
+
+                <% _.each(a, function(key, i){ %> 
+
+                    <% if(arranges[key]) arranges[key]() %>
+                            
+                <% }) %>
+
+            </div>
+        
+    </div>
+    
+</div>

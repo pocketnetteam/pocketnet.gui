@@ -487,13 +487,12 @@ f.roughSizeOfObject = function(object){
 
 f.retry = function(_function, clbk, time, totaltime){
 
-    /*
     if (_function()){
 
         if (clbk) clbk();
 
         return
-    }*/
+    }
 
 
     if(!time) time = 20;

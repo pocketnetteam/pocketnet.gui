@@ -14,7 +14,7 @@
             text-align: center;
             padding : 4 * @rhythm;
             border-radius: 10px;
-            background: fade(@color-gray-slight, 20);
+            background: rgba(var(--background-secondary-theme));
             height: 600px;
             grid-column: span 1;
             grid-row: span 2;
@@ -84,6 +84,7 @@
             margin-bottom: @rhythm;
             max-width: 450px;
         }
+        
 
         .downloadcaption{
             max-width: 640px;
@@ -93,7 +94,12 @@
 
         .buttonWrapper{
             margin-top : 2 * @rhythm;
-            margin-bottom : 2 * @rhythm;
+            
+
+            >div{
+                margin-bottom : 2 * @rhythm;
+            }
+            
         }
 
         .data{
@@ -106,7 +112,7 @@
         .icon{
             position: absolute;
             opacity: 0.5;
-            color : @color-black2;
+            color : rgb(var(--color-txt-gray-dark));
             bottom : @rhythm;
             left : 0;
             right: 0;
@@ -119,13 +125,13 @@
             padding-right : 4 * @rhythm; 
             font-size: 1.2em;
             font-weight: 100;
-            background: @color-black;
-            color : #fff;
-            border-color: @color-black;
+            background: rgb(var(--background-main-contrast));
+            color : rgb(var(--background-main));
+            border-color: rgb(var(--background-main-contrast));
 
             &:hover{
-                background: @color-black3;
-                border-color: @color-black3;
+                background: rgb(var(--color-bg-orange));
+                border-color: rgb(var(--color-bg-orange));
             }
         }
 
@@ -144,13 +150,13 @@
     }
 
     .mainWrapper{
-        background: @color-black2;
+        background: rgb(var(--color-shadow-base));
     }
 
     .mainos{
         .os{
             height: 450px;
-            color : #fff;
+            color : rgb(var(--text-on-bg-shadow-color));
 
             .osimage{
                 left : auto;
@@ -169,7 +175,7 @@
             }
 
             .icon{
-                color : #fff;
+                color : rgb(var(--text-on-bg-shadow-color));
             }
 
             .subcaption{
@@ -178,24 +184,20 @@
 
             .downloadOsStyle{
               
-                background: @color-orange;
-                color : #fff;
-                border-color: @color-orange;
+                background: rgb(var(--color-bg-orange));
+                color : rgb(var(--text-on-bg-ac-color));
+                border-color: rgb(var(--color-bg-orange));
     
                 &:hover{
-                    background: @color-orange;
-                    border-color: @color-orange;
+                    background: rgb(var(--color-bg-orange));
+                    border-color: rgb(var(--color-bg-orange));
                 }
             }
         }
     }
 }
 
-html.stblack{
-    #applications{
-      
-    }    
-}
+
 
 /*t*/ @media only screen and (max-width: 768px){
     #applications{
@@ -237,7 +239,6 @@ html.stblack{
         .mainos{
             .os{
                 height: 750px;
-                color : #fff;
     
                 .osimage{
                     left : 0;
@@ -256,25 +257,11 @@ html.stblack{
                     top : 10%;
                 }
     
-                .icon{
-                    color : #fff;
-                }
-    
                 .subcaption{
                     display: none;
                 }
     
-                .downloadOsStyle{
-                  
-                    background: @color-orange;
-                    color : #fff;
-                    border-color: @color-orange;
-        
-                    &:hover{
-                        background: @color-orange;
-                        border-color: @color-orange;
-                    }
-                }
+               
             }
         }
         

@@ -1,0 +1,83 @@
+<div id="<%-module.map.id%>">
+
+	<div class="content">
+		<div class="top">
+			<div class="title">
+				<span>
+					<%-e('thankTheAuthor')%>
+				</span>
+			</div>
+			<div class="buyButtonWrapper">
+				<div class="buyButton" id="buyButton">
+					<span class="text">
+						<%-e('buy')%>
+					</span>
+					<img src="img/logo20.svg">
+
+				</div>
+			</div>
+		</div>
+		<% 
+			var address = userinfo.address;
+			var src = userinfo.image;
+			var name = userinfo.name;
+			var about = filterXSS(clearScripts((findAndReplaceLink(userinfo.about, true))));
+
+			var _d = userinfo.regdate
+			var  d = null;
+
+			if (_d) {
+				d = new Date();
+				d.setTime(_d * 1000);	
+			}
+
+			var letter = name ? name[0] : '';  
+			var dev = userinfo.dev;
+			var authorlink = app.platform.api.authorlink(address);
+		%>
+
+		<div class="profile">
+			<div class="icon">
+				<a elementsid="<%-authorlink%>" href="<%-authorlink%>">	
+
+					<div class="usericon" image="<%-src || '*'%>">
+				
+						<% if(!src && letter) { %>
+				
+							<span 
+								class="letter"
+							>
+								<%-letter.toUpperCase()%>
+							</span>
+				
+						<% } else if (!src) { %>
+				
+							<svg width="30" height="30" data-jdenticon-value="<%-address%>"></svg>
+						<% } %>
+				
+					</div>
+
+				</a>
+			
+			</div>
+			<div class="description">
+				<div class="name"><%- name %></div>
+				<% if(about) {%><div class="about"><%- about %></div>
+				<% } else { %> 
+					<% if(d) {%>
+						<div class="label"><%=e('joined')%> <b><%-_d.yyyymmdd('.')%></b></div>
+					<% } %>
+				<% } %>
+			</div>
+		</div>
+		<div id="fieldsWrapper" class="fieldsWrapper">
+		</div>
+		<div class="sendButtonWrapper">
+			<div class="sendButton disabled">
+				<%-e('send')%>
+			</div>
+		</div>
+	</div>
+
+
+</div>

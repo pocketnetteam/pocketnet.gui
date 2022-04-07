@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="no-js" lang="">
+<html class="no-js electronapp customscroll" lang="">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -15,13 +15,13 @@
         <meta name="keywords" content="" />
 
         <meta http-equiv="Content-Security-Policy" content="
-        upgrade-insecure-requests;
-        default-src https: 'self' file:; 
-        connect-src https: wss: file: data: blob:;
-        img-src 'self' data: https: file:;
-        script-src 'self' file: blob: https://__VAR__.domain https://unpkg.com/@ffmpeg/ffmpeg@0.10.0/dist/ffmpeg.min.js https://player.vimeo.com https://www.youtube.com https://s.ytimg.com https://cdn.rawgit.com https://embed.tawk.to https://cdn.jsdelivr.net 'unsafe-eval' 'unsafe-inline';
-        style-src 'self' file: https://use.fontawesome.com https://fonts.googleapis.com https://cdn.jsdelivr.net 'unsafe-inline';
-        font-src 'self' file: data: https://fonts.gstatic.com https://static-v.tawk.to https://use.fontawesome.com;
+        default-src https: 'self' file: __VAR__.domain:*; 
+        connect-src https: wss: http: ws: file: data: blob:;
+        img-src 'self' data: http: https: file:;
+        script-src 'self' blob: https://__VAR__.domain https://player.vimeo.com https://www.youtube.com https://s.ytimg.com https://cdn.jsdelivr.net/joypixels/ 'unsafe-eval' 'unsafe-inline';
+        frame-src 'self' https://__VAR__.domain https://player.vimeo.com https://www.youtube.com;
+        style-src 'self' data: __VAR__.domain:* https://cdn.jsdelivr.net/joypixels/ https://use.fontawesome.com 'unsafe-inline' ;
+        font-src 'self' data: __VAR__.domain:* https://use.fontawesome.com;
         media-src blob: *">
 
         <link rel="manifest" href="manifest.json">
@@ -35,27 +35,20 @@
         <link rel="stylesheet" href="css/tooltipster.core.min.css?v=487681635664">
         <link rel="stylesheet" href="css/tooltipster.bundle.min.css?v=748159927557">
         <link rel="stylesheet" href="css/main.css?v=503197461855">
-        <link rel="stylesheet" href="css/stblack.css?v=276199619365">
-        <link rel="stylesheet" href="css/plyr_el.css?v=1">        
-        <link rel="stylesheet" href="css/jquery-ui.min.css?v=136">
-
-        <link rel="stylesheet" href="css/medium/medium-editor.css">
-        <link rel="stylesheet" href="css/medium/medium-editor-insert-plugin.css?v=136">
-        <link rel="stylesheet" href="js/vendor/DateTimePicker.min.css?v=514508004319">
-        <link rel="stylesheet" href="css/medium/beagle.css?v=136">
-
-        <link rel="stylesheet" href="css/datetime.css?v=136">        
+        <link rel="stylesheet" href="css/common.css?v=503197461855">
+        <link rel="stylesheet" href="css/plyr.css?v=1">        
 
         <link rel="stylesheet" href="css/openapi.css?v=815525481864">
         <link rel="stylesheet" href="css/fontawesome/css/all.css">
         <link rel="stylesheet" href="peertube/video-embed.css">
+
         <script src="js/vendor/device.min.js?v=136"></script>
         <script src="js/vendor/modernizr-2.8.3.min.js?v=136"></script>
         <script src="https://__VAR__.domain/js/widgets.js?v=136"></script>
         
        
     </head>
-    <body id="application" class="menu-hide customscroll">
+    <body id="application" class="menu-hide ">
 
         <div id="windowsContainer">
         </div>
@@ -108,6 +101,9 @@
                 </div>
                
             </div>
+        </div>
+
+        <div class="electronnav" id="electronnavContainer">
         </div>
 
         <!--<div class="updatingFrontend">
@@ -212,7 +208,7 @@
         <script src="js/vendor/paste.js"></script> 
         <script src="js/vendor/jquery.md5.js?v=136"></script>
         <script src="js/vendor/joypixels.min.js"></script>
-        <script  join src="js/vendor/hammer.min.js?v=89"></script>
+        <script join src="js/vendor/hammer.min.js?v=89"></script>
         <script src="js/vendor/plyr.js?v=1"></script>
         <script src="js/vendor/reconnectingwebsocket.js?v=136"></script>
         <script src="js/vendor/mark.js"></script>
@@ -232,7 +228,6 @@
         <script join src="js/_map.js?v=147657511756"></script>
         <script join src="js/localization.js?v=439731354592"></script>
         <script join src="js/satolist.js?v=439731354592"></script>
-        <script join src="js/messenger2/clientrtc.js?v=413927449417"></script>
         <script join src="peertube/video-embed.bundle.js"></script>
         <script join src="js/peertube.js"></script>
         <script join src="js/app.js?v=322676503798"></script>

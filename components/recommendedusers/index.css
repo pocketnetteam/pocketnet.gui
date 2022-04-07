@@ -1,0 +1,352 @@
+#recommendedusers {
+  background: rgb(var(--background-total-theme));
+  border-radius: 12px;
+  margin-bottom: 0.5em;
+}
+#recommendedusers .tcaptionwrapper {
+  display: flex;
+  align-items: center;
+}
+#recommendedusers .tcaptionwrapper .vc_valuecustom {
+  width: 75px;
+  font-size: 0.8em;
+  font-weight: 500;
+}
+#recommendedusers .tcaptionwrapper .vc_valuecustom .vc_textInput .vc_iconWrapper,
+#recommendedusers .tcaptionwrapper .vc_valuecustom .vc_textInput .vc_inputWrapper {
+  border: 0;
+}
+#recommendedusers .tcaptionwrapper .hide {
+  cursor: pointer;
+}
+#recommendedusers .tcaption {
+  display: flex;
+  justify-content: space-between;
+  flex-grow: 2;
+  font-weight: 100;
+  padding: 12px 16px;
+}
+#recommendedusers .tcaption .authors {
+  font-weight: 700;
+}
+#recommendedusers .caption {
+  font-weight: 100;
+  font-size: 2em;
+  margin-bottom: 1em;
+}
+#recommendedusers .loaderWrapper {
+  display: none;
+  padding: 1em;
+  text-align: center;
+}
+#recommendedusers.loading .loaderWrapper {
+  display: block;
+}
+#recommendedusers .subscribe,
+#recommendedusers .unsubscribe {
+  position: relative;
+}
+#recommendedusers .subscribe .fa-plus,
+#recommendedusers .unsubscribe .fa-plus {
+  position: absolute;
+  top: 3px;
+  left: 14px;
+  font-size: 0.5em;
+}
+#recommendedusers .usersHorizontal {
+  display: flex;
+  justify-content: space-around;
+  padding-bottom: 1em;
+  padding-left: 1em;
+  padding-right: 1em;
+}
+#recommendedusers .usersHorizontal .wrk {
+  max-width: 218px;
+  width: 100%;
+}
+#recommendedusers .usersHorizontal .wrk:nth-child(2n) {
+  margin-left: 1em;
+  margin-right: 1em;
+}
+#recommendedusers .usersHorizontal .user {
+  padding: 1em;
+  border: 1px solid rgba(var(--color-medium-theme), 0.3);
+  border-radius: 12px;
+}
+#recommendedusers .usersHorizontal .user .addressWrapper .iconWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100px;
+  cursor: pointer;
+}
+#recommendedusers .usersHorizontal .user .addressWrapper .iconWrapper .icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+}
+#recommendedusers .usersHorizontal .user .addressWrapper .iconWrapper .icon img {
+  border-radius: 12px;
+}
+#recommendedusers .usersHorizontal .user .addressWrapper .iconWrapper .icon img,
+#recommendedusers .usersHorizontal .user .addressWrapper .iconWrapper .icon .letter {
+  width: 100%;
+}
+#recommendedusers .usersHorizontal .user .addressWrapper .iconWrapper .icon .usericon {
+  width: 100px;
+  height: 100px;
+}
+#recommendedusers .usersHorizontal .user .addressWrapper .iconWrapper .icon .usericon .letter {
+  position: relative;
+  top: 0.5em;
+  font-size: 3.5em;
+  text-align: center;
+}
+#recommendedusers .usersHorizontal .user .addressWrapper .userbody {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 12px;
+}
+#recommendedusers .usersHorizontal .user .addressWrapper .userbody .name {
+  font-weight: 600;
+  font-size: 0.9em;
+  max-width: 120px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+#recommendedusers .usersHorizontal .user .addressWrapper .userbody .subscribers {
+  font-size: 0.9em;
+}
+#recommendedusers .usersHorizontal .user .addressWrapper .userbody .subscribers .label {
+  color: rgb(var(--color-medium-theme));
+}
+#recommendedusers .usersHorizontal .user .addressWrapper .userbody .subscribers .value {
+  color: rgb(var(--color-txt-ac));
+}
+#recommendedusers .usersHorizontal .user .addressWrapper .userbody .subscribeWrapper {
+  margin-top: 16px;
+}
+#recommendedusers .usersHorizontal .user .addressWrapper .userbody .subscribeWrapper .unsubscribeButton {
+  display: none;
+  font-size: 14px;
+  width: 155px;
+  background: rgb(var(--color-good));
+  border: 1px solid rgb(var(--color-good));
+}
+#recommendedusers .usersHorizontal .user .addressWrapper .userbody .subscribeWrapper .unsubscribeButton:hover {
+  background: rgb(var(--background-total-theme));
+  color: rgb(var(--color-good));
+}
+#recommendedusers .usersHorizontal .user .addressWrapper .userbody .subscribeWrapper .subscribeButton {
+  font-size: 14px;
+  width: 155px;
+}
+#recommendedusers .usersHorizontal .user .addressWrapper .userbody .subscribeWrapper.following .subscribeButton {
+  display: none;
+}
+#recommendedusers .usersHorizontal .user .addressWrapper .userbody .subscribeWrapper.following .unsubscribeButton {
+  display: block;
+}
+#recommendedusers .usersHorizontal .user .addressWrapper .light {
+  font-size: 0.7em;
+  color: #3c4146;
+}
+#recommendedusers .usersHorizontal .user .blockingWrapper {
+  display: none;
+}
+#recommendedusers .usersHorizontal .user.userblocking .subscribebuttonstop {
+  display: none;
+}
+#recommendedusers .usersHorizontal .user.userblocking .blockingWrapper {
+  display: inline;
+}
+#recommendedusers .usersHorizontal .user .subscribebuttonstop .unsubscribe {
+  display: none;
+}
+#recommendedusers .usersHorizontal .user .subscribebuttonstop.following .unsubscribe {
+  display: inline;
+}
+#recommendedusers .usersHorizontal .user .subscribebuttonstop.following .notificationturn {
+  display: inline;
+}
+#recommendedusers .usersHorizontal .user .subscribebuttonstop.following .subscribe {
+  display: none;
+}
+#recommendedusers .usersVertical {
+  padding-bottom: 0.5em;
+}
+#recommendedusers .usersVertical .user {
+  padding: 0.5em 0;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  padding-left: 1em;
+  padding-right: 1.5em;
+}
+#recommendedusers .usersVertical .user .addressTable {
+  cursor: pointer;
+}
+#recommendedusers .usersVertical .user .addressTable > div {
+  vertical-align: middle;
+}
+#recommendedusers .usersVertical .user .addressTable > div.iconWrapper {
+  width: 50px;
+  text-align: center;
+}
+#recommendedusers .usersVertical .user .addressTable > div.iconWrapper .usericon {
+  height: 40px;
+  width: 40px;
+}
+#recommendedusers .usersVertical .user .addressTable > div.iconWrapper .usericon .letter {
+  position: relative;
+  bottom: 3px;
+}
+#recommendedusers .usersVertical .user .addressTable > div.label {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+#recommendedusers .usersVertical .user .addressTable > div.label .cur {
+  color: rgb(var(--color-bg-ac-bright));
+}
+#recommendedusers .usersVertical .user .addressTable > div.label .top {
+  display: flex;
+}
+#recommendedusers .usersVertical .user .addressTable > div.label .top .name {
+  font-weight: 600;
+  font-size: 0.9em;
+  max-width: 120px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+#recommendedusers .usersVertical .user .addressTable > div.label .top .reputation {
+  position: relative;
+  bottom: 2px;
+  left: 3px;
+  font-size: 0.6em;
+  color: rgb(var(--color-txt-ac));
+}
+#recommendedusers .usersVertical .user .addressTable > div.label .light {
+  font-size: 0.7em;
+  color: rgb(var(--color-medium-theme));
+}
+#recommendedusers .usersVertical .user .addressTable > div.extra {
+  width: 20px;
+  text-align: right;
+  color: rgb(var(--neutral-grad-2));
+}
+#recommendedusers .usersVertical .user .blockingWrapper {
+  display: none;
+}
+#recommendedusers .usersVertical .user.userblocking .subscribebuttonstop {
+  display: none;
+}
+#recommendedusers .usersVertical .user.userblocking .blockingWrapper {
+  display: inline;
+}
+#recommendedusers .usersVertical .user .subscribebuttonstop .unsubscribe {
+  display: none;
+}
+#recommendedusers .usersVertical .user .subscribebuttonstop.following .unsubscribe {
+  display: inline;
+}
+#recommendedusers .usersVertical .user .subscribebuttonstop.following .notificationturn {
+  display: inline;
+}
+#recommendedusers .usersVertical .user .subscribebuttonstop.following .subscribe {
+  display: none;
+}
+#recommendedusers .usersVertical .user .modal {
+  display: none;
+  cursor: default;
+  width: 308px;
+  position: absolute;
+  z-index: 9999;
+  right: 180px;
+  margin-top: 15px;
+  background: rgb(var(--background-total-theme));
+  border-radius: 12px;
+  box-shadow: 32px 32px 32px 32px rgb(var(--background-total-theme));
+  padding: 1em 0.5em;
+}
+#recommendedusers .usersVertical .user .modal .topInfo .addressTable {
+  padding: 0.5em 1em;
+}
+#recommendedusers .usersVertical .user .modal .topInfo .addressTable .iconWrapper {
+  padding-right: 1em;
+}
+#recommendedusers .usersVertical .user .modal .topInfo .addressTable .iconWrapper .usericon {
+  height: 45px;
+  width: 45px;
+}
+#recommendedusers .usersVertical .user .modal .topInfo .addressTable .label {
+  padding-left: 7px;
+}
+#recommendedusers .usersVertical .user .modal .topInfo .addressTable .label .name {
+  max-width: 300px!important;
+}
+#recommendedusers .usersVertical .user .modal .topInfo .addressTable .label .reputation {
+  font-size: 0.8em;
+  color: #8E90A6;
+}
+#recommendedusers .usersVertical .user .modal .topInfo .addressTable .label .reputation .value {
+  color: rgb(var(--color-bg-ac-bright));
+  font-weight: 700;
+}
+#recommendedusers .usersVertical .user .modal .follow {
+  display: flex;
+  padding: 0.5em 1em;
+}
+#recommendedusers .usersVertical .user .modal .follow .followers {
+  padding-right: 1.5em;
+}
+#recommendedusers .usersVertical .user .modal .follow .value {
+  font-weight: 700;
+}
+#recommendedusers .usersVertical .user .modal .subscribeWrapper {
+  padding: 0.5em;
+}
+#recommendedusers .usersVertical .user .modal .subscribeWrapper button {
+  width: 100%;
+  border-radius: 8px;
+  padding: 8px 16px;
+}
+#recommendedusers .usersVertical .user .modal .subscribeWrapper .unsubscribe {
+  display: none;
+  background: rgb(var(--color-good));
+  border: 1px solid rgb(var(--color-good));
+}
+#recommendedusers .usersVertical .user .modal .subscribeWrapper .unsubscribe:hover {
+  color: rgb(var(--color-good));
+  border: 1px solid rgb(var(--color-good));
+  background: #fff;
+}
+#recommendedusers .usersVertical .user .modal .subscribeWrapper.following .unsubscribe {
+  display: block;
+}
+#recommendedusers .usersVertical .user .modal .subscribeWrapper.following .subscribe {
+  display: none;
+}
+#recommendedusers .usersVertical .user .modal .aboutWrapper {
+  padding: 0.5em 1em;
+}
+#recommendedusers .usersVertical .user:hover .modal {
+  display: block;
+}
+@media only screen and (max-width: 1180px) {
+  #recommendedusers .usersHorizontal {
+    overflow-x: auto;
+    justify-content: flex-start;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  #recommendedusers .usersHorizontal::-webkit-scrollbar {
+    display: none;
+  }
+  #recommendedusers .usersHorizontal .wrk:nth-child(-n+2) {
+    display: block;
+  }
+}

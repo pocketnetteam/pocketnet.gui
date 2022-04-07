@@ -1,0 +1,49 @@
+
+
+<div class="fields">
+    <div class="options">
+        <div class="inputWrapper">
+            <%= options.input() %>
+        </div>
+    </div>
+
+
+    <div class="sum">
+				
+        <div class="inputWrapper inputSumWrapper">
+            <input type="number" id="inputSum" class="inputSum" placeholder="<%= e('wsamount') %>" value="<%= valSum %>">
+            <div class="notion">
+                <div class="balance">
+                    <div class="text">
+                        <%= e('yourbalance') %>:
+                    </div>
+                    <div class="amount">
+                        <%-balance%>
+                    </div>
+                    <div class="label">
+                        PKOIN
+                    </div>
+                </div>
+                <div id="errorWrapper" class="errorWrapper"></span>
+            </div>
+            <div class="pkoinLabel">
+                PKOIN
+            </div>
+        </div>
+    </div>
+
+    <% if (optionsValue === 'pkoinComment'){ %>
+
+        <div class="comment">
+            <div class="text">
+                <%= e('comment') %>
+            </div>
+            <div class="inputWrapper">
+                <textarea type="text" id="textareaComment" class="textareaComment" placeholder="<%= e('e13038') %>"><%= valComment %></textarea>
+            </div>
+        </div>
+
+    <% } %>
+
+
+</div>

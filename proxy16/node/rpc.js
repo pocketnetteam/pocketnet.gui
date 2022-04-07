@@ -89,7 +89,11 @@ const publics = {
     getrecomendedaccountsbysubscriptions : true,
     getrecomendedaccountsbyscoresonsimilaraccounts : true,
     getrecomendedaccountsbyscoresfromaddress : true,
-
+    getrecomendedcontentsbyscoresfromaddress : true,
+    getrecomendedaccountsbytags : true,
+    getboostfeed : true,
+    getprofilefeed : true,
+    getsubscribesfeed : true,
 
     // BlockExplorer
     getblocktransactions: true,
@@ -114,9 +118,12 @@ const publics = {
     getcontentstatistic : true,
     getuserstatistic : true,
     searchbyhash: true,
-    getstatisticcontent: true,
     getstatisticbyhours: true,
     getstatisticbydays: true,
+    getstatisticcontentbyhours: true,
+    getstatisticcontentbydays: true,
+    getrecomendedcontentsbyscoresonsimilarcontents : true,
+    getrecomendedcontentsbyscoresfromaddress : true,
 }
 
 const keepAliveAgent = new http.Agent({ keepAlive: true });
@@ -205,6 +212,8 @@ function rpc(request, callback, obj) {
     var called = false;
     var errorMessage = 'Bitcoin JSON-RPC: ';
 
+    
+   
     var req = self.protocol.request(options, function(res) {
 
         var buf = '';
@@ -408,8 +417,8 @@ RpcClient.callspec = {
     setGenerate: 'bool int',
     getreputations: '',
     getrandomcontents : 'str',
-
-
+    getrecomendedcontentsbyscoresfromaddress : 'str obj int int int',
+    getrecomendedaccountsbytags : 'obj int',
     getcontents: 'str',
     getlastcomments: 'str str str',
     gettags: 'str',
@@ -434,8 +443,14 @@ RpcClient.callspec = {
     getaccountsetting : 'str',
     getpostscores: 'str',
     getpagescores: 'obj str',
-    gethierarchicalstrip : 'int str int str obj str',
-    gethistoricalstrip : 'int str int str obj str',
+
+
+
+    getboostfeed : 'int str int str obj obj obj obj obj str str',
+    getprofilefeed : 'int str int str obj str str str obj str str',
+    getsubscribesfeed : 'int str int str obj obj obj obj obj str str',
+    gethierarchicalstrip : 'int str int str obj obj obj obj obj str str',
+    gethistoricalstrip : 'int str int str obj obj obj obj obj str str',
     getusercontents : 'str int str int obj str',
     getcontentsstatistic : 'obj str int int',
     // BlockExplorer
@@ -448,14 +463,19 @@ RpcClient.callspec = {
     checkstringtype: 'str',
     getstatistic: 'int int',
     getuserstatistic : 'obj int int',
+
     getrecomendedaccountsbysubscriptions : 'str',
     getrecomendedaccountsbyscoresonsimilaraccounts : 'str',
     getrecomendedaccountsbyscoresfromaddress : 'str',
+    getrecomendedcontentsbyscoresonsimilarcontents : 'str obj int int',
+    getrecomendedcontentsbyscoresfromaddress : 'str obj int int int',
+    
     getcompactblock: "str int",
     searchbyhash: "str",
-    getstatisticcontent: '',
     getstatisticbyhours: 'int int',
     getstatisticbydays: 'int int',
+    getstatisticcontentbyhours : 'int int',
+    getstatisticcontentbydays : 'int int',
     
     // Control
     stop: '',

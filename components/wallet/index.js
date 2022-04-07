@@ -123,16 +123,7 @@ var wallet = (function(){
 
 						}
 						else{
-
 							return '<div class="walletdfvalue"><span>' + d + '</span></div>'
-
-							if(!d){
-								return '<div class="walletempvalue"><span>' + self.app.localization.e('wsreciever') + '</span></div>'
-							}
-							else{
-								return '<div class="walletdfvalue"><span>' + d + '</span></div>'
-							}
-							
 						}
 					}
 				}),
@@ -555,8 +546,6 @@ var wallet = (function(){
 
 			sendParameters : function(){
 
-				console.log("sendParameterssendParameterssendParameterssendParameterssendParameters")
-
 				var v = send.parameters.source.value;
 
 				send.parameters.reciever.possibleValues = []
@@ -758,7 +747,6 @@ var wallet = (function(){
 
 			showBuyInStep : function(action, step, name, clbk){
 
-				console.log('showBuyInStep')
 
 				renders.step(function(el){
 					renders.buy(function(_el){
@@ -782,7 +770,6 @@ var wallet = (function(){
 
 					mode = step
 
-					console.log("ACTION", action)
 
 					actions[action](_el)
 	
@@ -823,11 +810,9 @@ var wallet = (function(){
 
 			calculateFeeHtls : function(el){
 
-				console.log('calculateFeeHtls')
 
 				self.app.platform.sdk.node.fee.estimate(function(fees){
 
-					console.log(el, fees)
 
 					renders.htlsFees(el.find('.actionbody'), fees)
 				})
@@ -837,7 +822,6 @@ var wallet = (function(){
 			validHtls : function(){
 				var amount = htls.parameters.amount.value;
 
-				console.log('htls.parameters.amount.value', htls.parameters.amount.value)
 
 				if (amount > 0){
 					return true;
@@ -1795,7 +1779,6 @@ var wallet = (function(){
 
 			htlsFees : function(el, fees, clbk){
 
-				console.log('el, fees', el, fees)
 
 				if(!actions.validHtls()){
 					return;
@@ -1803,11 +1786,9 @@ var wallet = (function(){
 
 				var f = (fees.feerate || 0.000001)
 
-				console.log('htlsFees', f)
 
 				actions.prepareTransactionHlts(f, 0, function(addresses, outputs, inputs, totalFees, feesMode, meta){
 
-					console.log('prepareTransactionHlts', totalFees)
 
 					self.shell({
 
@@ -1845,7 +1826,6 @@ var wallet = (function(){
 
 							actions.prepareTransactionHlts(f, totalFees, function(addresses, outputs, inputs, totalFees, feesMode, meta, tx){
 
-								console.log("TX", tx)
 
 								_.each(inputs, function(t){
 									t.cantspend = true
@@ -1853,7 +1833,6 @@ var wallet = (function(){
 
 							   self.app.platform.sdk.node.transactions.send(tx, function(d, err){
 
-								   console.log("err", err)
 
 								   if(err){
 									   self.app.platform.sdk.node.transactions.releaseCS(inputs)
@@ -1864,7 +1843,10 @@ var wallet = (function(){
 								   else
 								   {
 									   var ids = _.map(inputs, function(i){
-										   return i.txid
+											return {
+												txid : i.txId || i.txid,
+												vout : i.vout
+											}
 									   })
 
 									   self.app.platform.sdk.node.transactions.clearUnspents(ids)
@@ -1896,7 +1878,6 @@ var wallet = (function(){
 			},
 			htls : function(clbk, _el){
 
-				console.log("el.htls", el.htls)
 
 				actions.htlsParameters();
 
@@ -1930,7 +1911,6 @@ var wallet = (function(){
 
 							ParametersLive([htls.parameters.amount], _p.el)
 
-							console.log("MODE", mode)
 
 							if (mode == 1){
 								actions.showHtlsInStep('calculateFeeHtls', 1, 'htls')
@@ -2004,6 +1984,12 @@ var wallet = (function(){
 								
 							}
 
+							setTimeout(function(){
+								_scrollToTop(el.find('.sendtransaction'), w, 200)
+							},200)
+
+							
+
 							_p.el.find('.sendtransaction').on('click', function(){
 
 								if($(this).hasClass('loading')) return
@@ -2027,9 +2013,10 @@ var wallet = (function(){
 							 				t.cantspend = true
 							 			})
 
+										 console.log('transactions.send', tx)
+
 										self.app.platform.sdk.node.transactions.send(tx, function(d, err){
 
-											console.log("err", err)
 
 											if(err){
 
@@ -2040,9 +2027,14 @@ var wallet = (function(){
 
 											else
 											{
+												console.log('inputs', inputs)
 												var ids = _.map(inputs, function(i){
-													return i.txid
+													return {
+														txid : i.txId || i.txid,
+														vout : i.vout
+													}
 												})
+
 
 												self.app.platform.sdk.node.transactions.clearUnspents(ids)
 
@@ -2051,7 +2043,9 @@ var wallet = (function(){
 												renders.mainWithClear()
 
 												self.app.platform.sdk.wallet.saveTempInfoWallet(d, inputs, _outputs)
+
 												sendpreloader(false)
+
 												sitemessage(self.app.localization.e('wssuccessfully'))
 
 
@@ -2076,10 +2070,8 @@ var wallet = (function(){
 				},
 				send : function(clbk, _el, nsp){
 
-					console.log('_el, nsp', _el, nsp)
 
 					if(!nsp){
-						console.log('actions.sendParameters();')
 						actions.sendParameters();
 					}
 						
@@ -2213,7 +2205,7 @@ var wallet = (function(){
 						})
 
 						_p.el.find('.calculateFee').on('click', function(){
-
+							
 							if (actions.validSend()){
 								actions.showSendInStep('calculateFee', 1, self.app.localization.e('wscalculatefees'))
 
@@ -2226,7 +2218,8 @@ var wallet = (function(){
 
 							
 						})
-						
+
+					
 
 						changerActive()
 
@@ -2358,9 +2351,8 @@ var wallet = (function(){
 				var t = [];
 				var bw = [];
 
-				var n = '#F1F1F1'
 
-				if($('html').hasClass('stblack')) n = '#112035'
+				var n = 'rgb(' + self.app.platform.sdk.theme.getstyle('--background-secondary-theme') || '241,241,241' + ')'
 
 				_.each(item.move, function(m){
 					_.each(m.items, function(i){
@@ -2487,7 +2479,7 @@ var wallet = (function(){
 					lineCap: 'round',
 					lineWidth: 1,
 					font: "100 14px 'Segoe UI',SegoeUI,'Helvetica Neue',Helvetica,Arial,sans-serif",
-					fillStyle : "#00A3F7",
+					fillStyle : "#00000000",
 					text : {						
 						value : ""
 					},
@@ -2505,7 +2497,7 @@ var wallet = (function(){
 
 				
 
-				if(!essenseData.api){
+				/*if(!essenseData.api){
 					var parallax = new SwipeParallaxNew({
 
 						el : el.c.find('.ntf'),
@@ -2564,7 +2556,7 @@ var wallet = (function(){
 						
 		
 					}).init()
-				}
+				}*/
 
 				
 			}
@@ -2778,7 +2770,7 @@ var wallet = (function(){
 
 								actions.sendParameters();
 
-								send.parameters.amount.value = Number((_p.amount || '0').replace(/,/g,''))
+								send.parameters.amount.value = Number((String(_p.amount) || '0').replace(/,/g,''))
 								send.parameters.reciever.value = _p.address || ""
 								send.parameters.message.value = _p.message || ""
 
@@ -2823,7 +2815,8 @@ var wallet = (function(){
 
 			wnd : {
 				//header : 'rwallet',
-				class : 'withoutButtons walletwindow normalizedmobile'
+				class : 'withoutButtons walletwindow normalizedmobile maxheight',
+				parallaxselector : '.wndback,.wndheader'
 			}
 		}
 	};

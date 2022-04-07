@@ -64,7 +64,7 @@ var lastcomments = (function(){
 
 						if(ed.renderclbk) ed.renderclbk()
 
-					});*/
+					}, self.app);*/
 
 
 					if(ed.renderclbk) ed.renderclbk()
@@ -191,8 +191,6 @@ var lastcomments = (function(){
 
 			destroy : function(){
 				el = {};
-
-				console.log("DESTROYED")
 
 				delete self.app.platform.ws.messages['newblocks'].clbks['lastcomments'];
 				delete self.app.platform.ws.messages['new block'].clbks['lastcomments'];

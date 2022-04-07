@@ -32,14 +32,14 @@ var value = Number(share.score)
 var metadisplay = function(){ %>
 
 <div class="meta">
-	<div class="metatable table">
+	<div class="metatable">
 		<div class="metadata">
 
 			<% if(!emptywithrepost) {%>
 
 				<div class="author">
 
-					<div class="authorTable table">
+					<div class="authorTable">
                         <div class="iconWrapper">
                             <a elementsid="<%-app.platform.api.authorlink(share.address)%>" href="<%-app.platform.api.authorlink(share.address)%>">
         
@@ -52,7 +52,7 @@ var metadisplay = function(){ %>
 								%>
         
                                 <div class="icon">
-                                    <div elementsid="<%-src || 'usericon'%>"  ban=".gif" class="usericon usericonsbsa another" image="<%-src || ''%>">
+                                    <div elementsid="<%-src || 'usericon'%>"  ban=".gif" class="usericon usericonsbsa another" image="<%-src || '*'%>">
                                      
 										<% if (!src && letter) {%>
 											<span 
@@ -75,9 +75,20 @@ var metadisplay = function(){ %>
 
 						<div class="authorCell">
 							<% if(!ed.horizontal) {%>
-							<span class="adr"><%-name || share.address %></span><% if(reputation > 1 || reputation < -1) {%><sup class="spsp"><%-compressedNumber(reputation, 1)%></sup><% } %>
+								<span class="adr"><%-(name || share.address) %></span><% if(reputation > 1 || reputation < -1) {%><sup class="spsp"><%-compressedNumber(reputation, 1)%></sup><% } %>
+
+								
 							<% } %>
-						</div>			
+						</div>		
+						<% if(!ed.horizontal) {%>
+							<div class="datetime">
+								<% if(share.time) {%>
+									<span  class="realtime" time="<%-share.time%>"><%- app.reltime(share.time) %></span>
+								<% } else { %> 
+									<span><%=e('e13019')%></span>
+								<% } %>
+							</div>
+						<% } %>
 						
 					</div>
 				</div>
@@ -97,13 +108,13 @@ var metadisplay = function(){ %>
 
 		<% if(c) {
 
-			c = filterXSS(clearScripts((findAndReplaceLink(c, true))))
+			c = filterXSS(clearScripts(c))
 		%>
 			<div class="paddingWrapper">
 				<div class="sharecaption canmark opensviurl" title="<%-nl2br(trimrn(c))%>">
 					<div>
 						<% if(ed.horizontal) {%><span class="adr"><%-name || share.address %>:</span><% } %>
-						<%=app.actions.emoji(nl2br(trimrn(c)))%>
+						<span><%=app.actions.emoji(nl2br(trimrn(c)))%></span>
 					</div>
 				</div>
 			</div>

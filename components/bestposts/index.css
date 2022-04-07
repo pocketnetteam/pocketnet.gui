@@ -1,0 +1,375 @@
+#bestposts .rcptwrp {
+  background: rgb(var(--background-total-theme));
+  border-radius: 12px;
+  position: relative;
+}
+#bestposts .tcaptionwrapper {
+  display: flex;
+  align-items: center;
+}
+#bestposts .tcaptionwrapper .vc_valuecustom {
+  width: 75px;
+  font-size: 0.8em;
+  font-weight: 500;
+}
+#bestposts .tcaptionwrapper .vc_valuecustom .vc_textInput .vc_iconWrapper,
+#bestposts .tcaptionwrapper .vc_valuecustom .vc_textInput .vc_inputWrapper {
+  border: 0;
+}
+#bestposts .tcaption {
+  display: flex;
+  justify-content: space-between;
+  flex-grow: 2;
+  font-weight: 100;
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(var(--color-medium-theme), 0.3);
+}
+#bestposts .tcaption .authors {
+  font-weight: 700;
+}
+#bestposts .tcaption .rating {
+  color: #555770;
+}
+#bestposts .caption {
+  font-weight: 100;
+  font-size: 2em;
+  margin-bottom: 1em;
+}
+#bestposts .loaderWrapper {
+  display: none;
+  padding: 1em;
+  text-align: center;
+}
+#bestposts.loading .loaderWrapper {
+  display: block;
+}
+#bestposts .subscribe,
+#bestposts .unsubscribe {
+  position: relative;
+}
+#bestposts .subscribe .fa-plus,
+#bestposts .unsubscribe .fa-plus {
+  position: absolute;
+  top: 3px;
+  left: 14px;
+  font-size: 0.5em;
+}
+#bestposts .subscribe {
+  color: #b2abac;
+}
+#bestposts .unsubscribe {
+  color: rgb(var(--color-good));
+}
+#bestposts .posts {
+  padding-bottom: 0.5em;
+}
+#bestposts .posts .authorgroup {
+  border-top: 1px solid rgba(var(--color-medium-theme), 0.1);
+}
+#bestposts .posts .authorgroup:first-child {
+  border-top: 0;
+}
+#bestposts .posts .authorgroup .post {
+  padding: 1em;
+}
+#bestposts .posts .authorgroup .post .addressTable {
+  width: auto;
+}
+#bestposts .posts .authorgroup .post .videoContentWrapper {
+  padding-top: 0.5em;
+}
+#bestposts .posts .authorgroup .post .imagesWrapper {
+  height: 180px;
+  margin-top: 0.5em;
+  cursor: pointer;
+}
+#bestposts .posts .authorgroup .post .imagesWrapper img {
+  border-radius: 8px;
+  max-width: 140px;
+}
+#bestposts .posts .authorgroup .post .imagesWrapper .image {
+  border-radius: 12px;
+  height: 100%;
+}
+#bestposts .posts .authorgroup .post .postContentWrapper {
+  cursor: pointer;
+}
+#bestposts .posts .authorgroup .post .postcontent {
+  margin-top: 0.5em;
+  word-break: break-word;
+}
+#bestposts .posts .authorgroup .post .postcontent .message {
+  overflow-wrap: break-word;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+#bestposts .posts .authorgroup .post .infoWrapper {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8em;
+  color: #C7C8D9;
+  margin-top: 1em;
+}
+#bestposts .posts .authorgroup .post .infoWrapper .actionsWrapper {
+  display: flex;
+  justify-content: flex-end;
+}
+#bestposts .posts .authorgroup .post .infoWrapper .actionsWrapper > div {
+  padding-left: 0.75em;
+}
+#bestposts .posts .authorgroup .post .addressTable {
+  cursor: pointer;
+}
+#bestposts .posts .authorgroup .post .addressTable > div {
+  vertical-align: middle;
+}
+#bestposts .posts .authorgroup .post .addressTable > div.iconWrapper {
+  width: 24px;
+  text-align: center;
+}
+#bestposts .posts .authorgroup .post .addressTable > div.iconWrapper .usericon {
+  height: 24px;
+  width: 100%;
+}
+#bestposts .posts .authorgroup .post .addressTable > div.iconWrapper .usericon .letter {
+  position: relative;
+  font-size: 1em;
+  top: -10px;
+}
+#bestposts .posts .authorgroup .post .addressTable > div.label {
+  padding-left: 0.5em;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+#bestposts .posts .authorgroup .post .addressTable > div.label .cur {
+  color: #00a4ff;
+}
+#bestposts .posts .authorgroup .post .addressTable > div.label .top {
+  display: flex;
+}
+#bestposts .posts .authorgroup .post .addressTable > div.label .top .name {
+  font-weight: 700;
+  font-size: 0.9em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 130px;
+}
+#bestposts .posts .authorgroup .post .addressTable > div.label .top .reputation {
+  font-size: 0.9em;
+  margin-left: 0.5em;
+  font-weight: 700;
+  color: rgb(var(--color-txt-ac));
+}
+#bestposts .posts .authorgroup .post .addressTable > div.label .light {
+  font-size: 0.7em;
+  color: #3c4146;
+}
+#bestposts .posts .authorgroup .post .addressTable > div.extra {
+  width: 20px;
+  text-align: right;
+}
+#bestposts .posts .authorgroup .post .blockingWrapper {
+  display: none;
+}
+#bestposts .posts .authorgroup .post.userblocking .subscribebuttonstop {
+  display: none;
+}
+#bestposts .posts .authorgroup .post.userblocking .blockingWrapper {
+  display: inline;
+}
+#bestposts .posts .authorgroup .post .subscribebuttonstop .unsubscribe {
+  display: none;
+}
+#bestposts .posts .authorgroup .post .subscribebuttonstop.following .unsubscribe {
+  display: inline;
+}
+#bestposts .posts .authorgroup .post .subscribebuttonstop.following .notificationturn {
+  display: inline;
+}
+#bestposts .posts .authorgroup .post .subscribebuttonstop.following .subscribe {
+  display: none;
+}
+#bestposts .mainvideo .zero,
+#bestposts .mainvideo .seemore,
+#bestposts .mainvideo .loadprev,
+#bestposts .mainvideo .loadmore,
+#bestposts .mainvideo .ended {
+  background: transparent;
+}
+#bestposts .mainvideo .loader {
+  background: transparent;
+}
+#bestposts .mainvideo .share {
+  background: transparent;
+  padding: 0;
+  margin-bottom: 0;
+  overflow: hidden;
+  border-radius: 6px;
+}
+#bestposts .mainvideo .share .sharecaption {
+  margin-bottom: 0;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+#bestposts .mainvideo .share .tags {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  display: block;
+}
+#bestposts .mainvideo .share .tags .tag {
+  float: none;
+  display: inline;
+  margin-right: 0;
+}
+#bestposts .mainvideo .share.hidden {
+  display: block!important;
+}
+#bestposts .mainvideo .share .sharecaption {
+  white-space: inherit;
+  padding-right: 1em;
+}
+#bestposts .mainvideo .share .sharecaption div {
+  font-size: 1em;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+#bestposts .mainvideo .share .sharecaption span {
+  font-size: 1em;
+}
+#bestposts .mainvideo .share .meta {
+  padding-top: 0.5em;
+  margin-bottom: 0;
+}
+#bestposts .mainvideo .share .commentsWrapperHb {
+  display: none;
+}
+#bestposts .mainvideo .share .hideOnFullVideo {
+  display: none;
+}
+#bestposts .mainvideo .share .videoviews {
+  display: none;
+}
+#bestposts .mainvideo .share .showMore {
+  display: none;
+}
+#bestposts .mainvideo .share .iconWrapper {
+  padding: 0;
+  z-index: 12;
+  width: 32px!important;
+}
+#bestposts .mainvideo .share .iconWrapper .icon {
+  width: auto;
+  height: 32px!important;
+}
+#bestposts .mainvideo .share .iconWrapper .icon .usericon {
+  width: 32px!important;
+  height: 32px!important;
+  line-height: 32px!important;
+  font-size: 1.5em;
+}
+#bestposts .mainvideo .share .forurl {
+  height: 200px;
+  position: relative;
+  max-width: 350px;
+  margin: 0 auto;
+}
+#bestposts .mainvideo .share .forurl.verticalVideo {
+  height: 530px;
+}
+#bestposts .mainvideo .share .url {
+  margin-bottom: 0;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+#bestposts .mainvideo .share .url .videoWrapper {
+  height: 100%;
+}
+#bestposts .mainvideo .share .url .videoWrapper .js-player {
+  height: 100%;
+}
+#bestposts .mainvideo .share .urlcnt {
+  display: none;
+}
+#bestposts .mainvideo .share .panel {
+  display: none;
+}
+#bestposts .mainvideo .share .tags > div span {
+  opacity: 0.7;
+  text-decoration: none;
+}
+#bestposts .mainvideo .share .shareTable {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+#bestposts .mainvideo .share .shareTable .authorTable {
+  align-items: center;
+  display: flex;
+}
+#bestposts .mainvideo .share .shareTable .authorTable > div.authorCell {
+  padding-left: 0.5em;
+  padding-right: 0;
+}
+#bestposts .mainvideo .share .shareTable .authorTable > div a {
+  font-size: 0.9em;
+}
+#bestposts .mainvideo .share .shareTable .authorTable > div.datetime {
+  padding-left: 0.5em;
+  opacity: 0.5;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+#bestposts .mainvideo .share .shareTable .authorTable > div.datetime span {
+  color: rgb(var(--text-color));
+}
+#bestposts .mainvideo .share .shareTable .authorTable > div span {
+  font-size: 0.9em;
+  font-weight: 400;
+}
+#bestposts .mainvideo .share .shareTable .metatable > div.metapanel {
+  width: 40px;
+  color: rgb(var(--text-color));
+}
+#bestposts .mainvideo .share .shareTable .metatable > div.metapanel .metapanelitem {
+  opacity: 1;
+}
+#bestposts .mainvideo .share .cntswrk {
+  margin-left: 0;
+  padding-left: 0;
+  padding-right: 0;
+}
+#bestposts .mainvideo .share .paddingWrapper {
+  margin-left: 32px;
+  padding-left: 0.5em;
+}
+#bestposts .mainvideo .shares .spsp {
+  font-weight: 400;
+}
+#bestposts .mainvideo .shares .authorgroup {
+  float: left;
+  width: 33.3333%;
+}
+#bestposts .mainvideo .shares .authorgroup .share {
+  padding: 15px;
+}
+#bestposts .mainvideo .shares .authorgroup .anothercntswrk {
+  height: 100px;
+  overflow: hidden;
+}
+#bestposts .mainvideo .shares .authorgroup:nth-child(3n + 1) {
+  clear: left;
+}
+#bestposts .mainvideo .shares .showmorebyauthor {
+  display: none;
+}
+html.stblack #bestposts .rcptwrp {
+  background: #0a0c17;
+}

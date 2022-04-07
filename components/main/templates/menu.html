@@ -1,0 +1,47 @@
+<div class="panelitems">
+    <div class="panelItemsWrapper">
+
+        <div class="selectwrapper">
+            <i class="fas fa-chevron-down"></i>
+        </div>
+
+        <div class="panelitem nfl modes">
+            <% _.each(modes, (mode) => { %>
+                <div class="mode <% if(mode.value == value) {%> active <% } %>" mode="<%- mode.value %>" link="<%-mode.link%>"><%- mode.label() %></div>
+            <% }) %>
+        </div>
+       
+        <div elementsid="showcategories" fmode="filters" 
+        class="panelitem showcategories btn <% if(tagsSelected || tagsExcluded) {%>  active <% } else { %> trans <% } %> ">
+           
+            <% if(!tagsSelected) {%><% } else { %>
+                <span>
+                    <% 
+                    
+                    var bycategories = app.platform.sdk.categories.fromTags(tags)
+                    
+                    %> 
+
+                    <% _.each(bycategories.categories, function(category){ %>
+                        @<%-category.name%>
+                    <% }) %>
+
+                    <% _.each(bycategories.tags, function(tag){   %>
+                        #<%-tag%>
+                    <% }) %>
+                </span> 
+            <% } %>
+            
+            <% if(tagsExcluded && !tagsSelected) {%>
+                <i class="fas fa-sliders-h"></i>
+            <% } else { %> 
+                <i class="fas fa-sliders-h"></i>
+            <% } %>
+        </div>
+
+        <div elementsid="showcategories" class="panelitem btnlight showcategories" fmode="settings">
+            <i class="fas fa-cog"></i>
+        </div>
+
+    </div>
+</div>

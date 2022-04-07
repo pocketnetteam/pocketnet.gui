@@ -2,56 +2,30 @@
 
 #nodecontrol{
 
+    .testnetwork{
+        padding : 4 * @rhythm;
+        text-align: center;
+
+        span{
+            font-size: 0.9em;
+        }
+    }
+
     .maincaption{
         display: none;
     }
 
-    /*.collapsepart{
-        .collapsingpart{
-            display: none;
-        }
-
-        .subcaption{
-            cursor: pointer;
-            i{
-                width: 40px;
-                text-align: center;
-                .transition(0.3s)
-            }
-
-            &:hover{
-                i{
-                    transform: rotate(180deg);
-                }
-                
-            }
-        }
-
-        &.expanded{
-            .subcaption{
-                i{
-                    transform: rotate(180deg);
-                }
-            }
-            
-            .collapsingpart{
-                display: block;
-            }
-        }
-    }*/
-
     .nodelanding{
         margin-bottom: 3 * @rhythm;
         border-radius: 10px;
-        background: @color-black2;
-        color : #fff;
+        background: rgb(var(--color-shadow-base));
+        color : rgb(var(--text-on-bg-shadow-color));
         text-align: center;
         padding : 5 * @rhythm;
 
         .buttonWrapper{
             padding : 2 * @rhythm 0;
         }
-
         
     }
 
@@ -83,8 +57,8 @@
         text-align: center;
         padding : 4 * @rhythm 0;
         cursor: pointer;
-        color : @color-gray-mlight;
-        background: fade(@color-gray-mlight, 10);
+        color : rgb(var(--neutral-grad-3));
+        background: rgb(var(--neutral-grad-1), 0.2);
 
         .text{
             padding : @rhythm 0;
@@ -104,7 +78,7 @@
         span{
             font-weight: 100;
             font-size: 1.7em;
-            color : @color-gray;
+            color : rgb(var(--neutral-grad-3));
         }
     }
 
@@ -113,7 +87,7 @@
 
         span{
             font-weight: 700;
-            color : @color-gray;
+            color : rgb(var(--neutral-grad-3));
         }
     }
 
@@ -121,15 +95,15 @@
         .canstacking{
 
             .good{
-                color : @color-good;
+                color : rgb(var(--color-good));
             }
 
             .bad{
-                color : @color-bad;
+                color : rgb(var(--color-bad));
             }
 
             .gray{
-                color : @color-gray-mlight;
+                color : rgb(var(--neutral-grad-3));
             }
         }
 
@@ -137,21 +111,18 @@
             cursor: pointer;
 
             &:hover{
-                color : @color-bright;
+                color: rgb(var(--color-txt-ac));
             }
         }
         
-        .balance {
 
-        }
     }
 
     .systemreq{
         padding : @rhythm;
         padding-top : 0;
         border-radius: 5px;
-        border : 1px solid @color-gray-slight;
-
+        border : 1px solid rgb(var(--neutral-grad-1));
         .scaption{
             padding : @rhythm 0;
             span{
@@ -183,14 +154,14 @@
 
         .icon{
             padding-left: @rhythm;
-            color : @color-gray-slight;
+            color : rgb(var(--neutral-grad-2));
 
             i{
                 font-size: 0.8em;
             }
 
             i.good{
-                color : @color-good;
+                color : rgb(var(--color-good));
             }
         }
 
@@ -199,49 +170,58 @@
             padding-left: 2 * @rhythm;
             cursor: pointer;
             .transition(0.3s);
-            color : @color-gray-mlight;
+            color :  rgb(var(--neutral-grad-3));
             span{
                 font-size: 0.8em;
             }
 
             &:hover{
-                color : @color-main;
+                color : rgb(var(--color-txt-ac));
             }
         }
      
         
     }
 
-    .settingTable{
-        .label{
-            span{
-                font-size: 0.9em;
+    .setting {
+        .settingTable{
+            .label{
+                span{
+                    font-size: 0.9em;
+                }
             }
-        }
-        .value{
-            
-            color : @color-gray;
+            .value{
+                
+                color : rgb(var(--neutral-grad-3));
 
-            &[fss],
-            &[sys]{
-                text-decoration: underline;
-                color : @color-gray;
+                &[fss],
+                &[sys]{
+                    text-decoration: underline;
+                    color : rgb(var(--neutral-grad-3));
+                    cursor: pointer;
+                }
+                
+
+                span{
+                    font-size: 0.9em;
+                }
+            }
+
+            .clearfirebase{
                 cursor: pointer;
             }
-            
+        }
 
-            span{
-                font-size: 0.9em;
+        &.systempath {
+            .value {
+                color : rgb(var(--neutral-grad-2));
             }
         }
-
-        .clearfirebase{
-            cursor: pointer;
-        }
     }
+
     .manage{
         border-radius: 10px;
-        background: fade(@color-gray-mlight, 12);
+        background: rgb(var(--neutral-grad-1), 0.2);
     }
 
     .managepanel{
@@ -250,86 +230,76 @@
 
     .nodecontentstate{
         i{
-            font-size: 0.9em;
-        }
-
-        .good{
-            color : @color-good;
-        }
-
-        .bad{
-            color : @color-bad;
-        }
-
-        .gray{
-            color : @color-gray-mlight;
-        }
-
-        .nodestateheightprogress{
-            width: 30em;
-            height: 0.1em;
-            background: #bdbdbd;
-            
-            .nodestateheightprogressinner {
-                background: #00A3F7;
-                display: block;
-                height: 100%;
-
-                &.fork {
-                    background: #f70000;
-                }
-            }
-        }
-        i{
             width : 20px;
             font-size: 0.9em;
         }
 
         .good{
-            color : @color-good;
+            color : rgb(var(--color-good));
         }
 
         .bad{
-            color : @color-bad;
+            color : rgb(var(--color-bad));
         }
 
         .gray{
-            color : @color-gray-mlight;
+            color : rgb(var(--neutral-grad-3));
+        }
+
+        .nodestateheightprogress{
+            width: 30em;
+            height: 0.1em;
+            background: rgb(var(--neutral-grad-3));
+            
+            .nodestateheightprogressinner {
+                background: rgb(var(--color-bg-ac));
+                display: block;
+                height: 100%;
+
+                &.fork {
+                    background: rgb(var(--color-bg-orange));
+                }
+            }
         }
 
         .syncLeft {
             float: right;
             font-size: 0.8em;
-            color: #7d7d7d;
+            color: rgb(var(--neutral-grad-3));
         }
     }
     
     .notfound{
         text-align: center;
         padding : 4 * @rhythm 0;
-        cursor: pointer;
-        color : @color-gray-mlight;
+        color : rgb(var(--neutral-grad-3));
+        
+        &.install {
+            cursor: pointer;
 
-        &:not(.loading){
             .transition(0.3s);
 
             &:hover{
-                color : @color-bright;
+                color : rgb(var(--neutral-grad-3));
             }
         }
-        
-        
+
+        &.loading {
+            .stopInstall {
+                display: inline-block;
+                cursor: pointer;
+                color : rgb(var(--color-txt-ac));
+            }
+
+            .preloader5 {
+                margin: 1em;
+            }
+        }
 
         .text{
             padding : @rhythm 0;
             font-size: 0.9em;
-        }
-
-        i{
-            font-size: 0.9em;
-            color : @color-bright;
-        }
-        
+        }        
     }
 
     .nodecontentmanage{
@@ -349,7 +319,7 @@
             top : 0;
             bottom : 0;
             padding : 2 * @rhythm;
-            background: fade(@color-white, 80);
+            background: rgb(var(--background-total-theme));
             display: none;
         }
 
@@ -357,7 +327,7 @@
             text-align: center;
             padding : 4 * @rhythm 0;
             cursor: pointer;
-            color : @color-gray-mlight;
+            color : rgb(var(--neutral-grad-3));
             
 
             .text{
@@ -367,7 +337,7 @@
 
             i{
                 font-size: 0.9em;
-                color : @color-bright;
+                color : rgb(var(--color-txt-ac));
             }
         }
 
@@ -376,7 +346,10 @@
         }
 
         .installProgressBox {
-            margin: 2em 1em 0em 1em;
+            display: inline-block;
+            width: 90%;
+            margin: 0em 0.5em;
+            vertical-align: bottom;
                 
             .title {
                 font-size: 13px;
@@ -386,25 +359,34 @@
             .installProgress {
                 width: 100%;
                 height: 3px;
-                background-color: #dcdcdc;
+                background-color: rgb(var(--neutral-grad-1));
                 border-radius: 2px;
-                margin: 0.3em 0em 1.5em 0em;
+                margin: 0.3em 0.5em 0em 0em;
 
                 .installProgressInner {
                     height: 3px;
-                    background-color: #00A3F7;
+                    background-color: rgb(var(--color-bg-ac));
                     border-radius: 2px;
                 }
             }
         }
         
         .toDefaultPath{
-            opacity: 0.5;
-            .transition(0.3s);
             cursor: pointer;
+            text-decoration: underline;
 
             &:hover{
-                color : @color-bad;
+                color : rgb(var(--color-bad));
+            }
+
+            i {
+                font-size: 0.8em;
+            }
+        }
+
+        .update {
+            .noupdatenode {
+                color : rgb(var(--neutral-grad-2));
             }
         }
     }
@@ -421,44 +403,4 @@
         height: 120px;
         max-height: 230px;
     }
-}
-
-html.stblack{
-    #nodecontrol{
-        
-        .settingTable .value[fss], 
-        .settingTable .value[sys]{
-            color : @color-gray-mlight;
-        }
-    
-        .subcaption{
-            span{
-                color : @color-bright;
-            }
-        }
-    
-        .ssubcaption{
-            background: @color-block;
-            span{
-                color : @color-gray-mlight;
-            }
-        }
-    
-        .managepanel{
-            background: fade(@color-black2, 80);
-        }
-    
-       
-    }   
-    
-  
-}
-
-/*t*/ @media only screen and (max-width: 768px){
-    #nodecontrol{
-        
-
- 
-    }
-
 }

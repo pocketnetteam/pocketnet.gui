@@ -1496,7 +1496,6 @@ var system16 = (function(){
 					var nodes = _.filter(_.sortBy(info.nodeManager.nodes, function(node){
 						return -node.users
 					}), function(n, i){
-						return true
 						return i < 5
 					})
 
@@ -2427,11 +2426,14 @@ var system16 = (function(){
 			
 			error : function(error, el, clbk){
 
+				var use = api.get.current()
+
 				self.shell({
 
 					inner : html,
 					name : 'error',
 					data : {
+						using : use,
 						error : errors[error] || errors['undefinedError']
 					},
 
@@ -2444,11 +2446,14 @@ var system16 = (function(){
 						make(proxy)
 					})
 
+					p.el.find('.selectusing').on('click', actions.proxy.selectUsing)
+
 					if (clbk)
 						clbk()
 				})
 			},
 			proxycontent : function(clbk){
+				
 				if(!info){
 					renders.error('unableProxyConnect', el.proxycontent)
 				}
@@ -2670,6 +2675,34 @@ var system16 = (function(){
 				function(p){
 					renders.webserverstatus(p.el)
 					renders.webserveradmin(p.el)
+
+					
+
+					p.el.find('.closeallwss').on('click', function(){
+						dialog({
+							class : 'zindex',
+							html : "Do you really want to close all sockets?",
+							btn1text : self.app.localization.e('dyes'),
+							btn2text : self.app.localization.e('dno'),
+							success : function(){	
+
+								proxy.fetchauth('closeallwss', {
+									
+									data : {}
+	
+								}).catch(e => {
+									
+									return Promise.resolve()
+		
+								}).then(r => {
+				
+									topPreloader(100);
+		
+								})
+
+							}
+						})
+					})
 
 					p.el.find('.heapdump').on('click', function(){
 						dialog({
@@ -3900,6 +3933,10 @@ var system16 = (function(){
 					}
 				
 				}
+			},
+			wnd : {			
+				header : "rsystem",
+				class : 'normalizedmobile',
 			}
 		}
 	};

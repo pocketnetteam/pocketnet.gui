@@ -1,0 +1,515 @@
+@import "../../css/__cssvar";
+
+#recommendedusers{
+	background: rgb(var(--background-total-theme));
+	border-radius: 12px;
+	margin-bottom: @rhythm;
+    
+
+    .tcaptionwrapper{
+        display: flex;
+        align-items: center;    
+
+        .vc_valuecustom{
+            width: 75px;
+            font-size: 0.8em;
+            font-weight: 500;
+            .vc_textInput .vc_iconWrapper,
+            .vc_textInput .vc_inputWrapper{
+                border : 0;
+            }
+        }
+
+
+		.hide{
+			cursor: pointer;
+		}
+    }
+    .tcaption{
+        display: flex;
+        justify-content: space-between;
+        flex-grow: 2;
+        font-weight: 100;
+        padding: 12px 16px;
+
+        .authors{
+            font-weight : 700;
+        }
+
+      
+    }
+
+	.caption{
+		font-weight: 100;
+		font-size: 2em;
+		margin-bottom: 2 * @rhythm;
+	}
+
+	.loaderWrapper{
+		display : none;
+		padding : 2 * @rhythm;
+		text-align: center;
+	}
+
+	&.loading{
+		.loaderWrapper{
+			display: block;
+		}
+	}
+
+	.subscribe, .unsubscribe{
+		position: relative;
+
+
+		.fa-plus{
+			position: absolute;
+			top: 3px;
+			left: 14px;
+			font-size: @rhythm;
+		}
+
+	}
+
+	.usersHorizontal{
+		display: flex;
+		justify-content: space-around;
+		padding-bottom: @rhythm * 2;
+		padding-left: @rhythm * 2;
+		padding-right: @rhythm * 2;
+
+
+		.wrk{
+			max-width: 218px;
+			width: 100%;
+
+			&:nth-child(2n) {
+				margin-left: @rhythm * 2;
+				margin-right: @rhythm * 2;
+			}
+			
+		}
+
+		.user{
+			padding : @rhythm * 2;
+			border: 1px solid rgba(var(--color-medium-theme), 0.3);			
+			border-radius: 12px;
+			
+
+			.addressWrapper{
+
+				.iconWrapper{
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					height: 100px;
+					cursor: pointer;
+
+
+					.icon{
+						display: flex;
+						justify-content: center;
+						align-items: center;
+						width: 100px;
+						
+	
+						img{
+							border-radius: 12px;
+						}
+
+						img, .letter{
+							width: 100%;
+						}
+
+						.usericon{
+							width: 100px;
+							height: 100px;
+
+							.letter{
+								position: relative;
+								top: @rhythm;
+								font-size: @rhythm * 7;
+								text-align: center;
+							}
+						}
+						
+					}
+
+				}
+			
+
+				.userbody{
+					display: flex;
+					flex-direction: column;
+					align-items: center;
+					margin-top: 12px;
+
+					.name{
+						font-weight: 600;
+						font-size: .9em;
+						max-width: 120px;
+						text-overflow: ellipsis;
+						white-space: nowrap;
+						overflow: hidden;
+					}
+	
+					.subscribers{
+						font-size: .9em;
+
+						.label{
+							color: rgb(var(--color-medium-theme));
+						}
+						
+						.value{
+							color: rgb(var(--color-txt-ac));
+
+						}
+					}
+	
+	
+					.subscribeWrapper{
+						margin-top: 16px; 
+
+						.unsubscribeButton{
+							display: none;
+							font-size: 14px;
+							width: 155px;
+							background: rgb(var(--color-good));
+							border: 1px solid rgb(var(--color-good));
+
+							&:hover{
+								background: rgb(var(--background-total-theme));
+								color: rgb(var(--color-good));
+							}
+						}
+
+						.subscribeButton{
+							font-size: 14px;
+							width: 155px;
+						}
+
+						&.following{
+							.subscribeButton{
+								display: none;
+							}
+
+							.unsubscribeButton{
+								display: block;
+							}
+						}
+
+					}
+				}
+
+
+			
+
+				.light{
+					font-size : 0.7em;
+					color : @color-gray;
+				}
+				
+
+
+	
+			}
+
+			.blockingWrapper{
+				display : none;
+			}
+
+			&.userblocking{
+	
+				.subscribebuttonstop{
+					display: none;
+				}
+	
+				.blockingWrapper{
+					display: inline;
+				}
+
+				
+			}
+	
+			.subscribebuttonstop{
+				.unsubscribe{
+					display : none;
+				}
+
+	
+				&.following{
+					.unsubscribe{
+						display : inline;
+					}
+
+					.notificationturn{
+						display: inline;
+					}
+					
+					.subscribe{
+						display : none;
+					}
+				}
+			}
+		}
+		
+	}
+
+	.usersVertical{
+		padding-bottom: @rhythm;
+
+		.user{
+			padding : @rhythm 0;
+			margin-top: @rhythm;
+			margin-bottom: @rhythm;
+			padding-left: @rhythm * 2;
+			padding-right: @rhythm * 3;
+
+			.addressTable{
+				cursor: pointer;
+
+
+
+				>div{
+
+					vertical-align: middle;
+	
+					&.iconWrapper{
+						width: 50px;
+						text-align: center;
+
+						.usericon{
+							height: 40px;
+							width: 40px;
+
+							.letter{
+								position: relative;
+								bottom: 3px;
+							}
+						}
+					}
+	
+					&.label{
+						text-overflow: ellipsis;
+						overflow: hidden;
+						white-space: nowrap;
+	
+						.cur{
+							color : rgb(var(--color-bg-ac-bright));
+
+						}
+
+						.top{
+							display: flex;
+							.name{
+								font-weight: 600;
+								font-size: .9em;
+								max-width: 120px;
+								text-overflow: ellipsis;
+								white-space: nowrap;
+								overflow: hidden;
+							}
+
+							.reputation{
+								position: relative;
+								bottom: 2px;
+								left: 3px;
+								font-size: .6em;
+								color: rgb(var(--color-txt-ac));
+
+
+							}
+
+						}
+
+						.light{
+							font-size : 0.7em;
+							color : rgb(var(--color-medium-theme));
+						}
+					}
+	
+					&.extra{
+						width: 20px;
+						text-align: right;
+						color: rgb(var(--neutral-grad-2));
+					}
+				}
+	
+			}
+
+			.blockingWrapper{
+				display : none;
+			}
+
+			&.userblocking{
+	
+				.subscribebuttonstop{
+					display: none;
+				}
+	
+				.blockingWrapper{
+					display: inline;
+				}
+
+				
+			}
+	
+			.subscribebuttonstop{
+				.unsubscribe{
+					display : none;
+				}
+
+	
+				&.following{
+					.unsubscribe{
+						display : inline;
+					}
+
+					.notificationturn{
+						display: inline;
+					}
+					
+					.subscribe{
+						display : none;
+					}
+				}
+			}
+
+			.modal{
+				display: none;
+				cursor: default;
+				width: 308px;
+				position: absolute;
+				z-index: 9999;
+				right: 180px;
+				margin-top: 15px;
+				background: rgb(var(--background-total-theme));
+				border-radius: 12px;
+				box-shadow: 32px 32px 32px 32px rgb(var(--background-total-theme));
+				padding: @rhythm * 2 @rhythm;
+
+				.topInfo{
+
+					.addressTable{
+						padding: @rhythm @rhythm * 2;
+
+						.iconWrapper{
+							padding-right: @rhythm * 2;
+
+							.usericon{
+								height: 45px;
+								width: 45px;
+							}
+						}
+
+						.label{
+							padding-left: 7px;
+
+							.name{
+								max-width: 300px!important;
+							}
+		
+							.reputation{
+								font-size: .8em;
+								color : #8E90A6;
+
+		
+								.value{
+									color: rgb(var(--color-bg-ac-bright));
+									font-weight: 700;
+								}
+							}
+						}
+
+
+					}
+				}
+
+
+
+				.follow{
+					display: flex;
+					padding : @rhythm @rhythm * 2;
+
+					.followers{
+						padding-right: @rhythm * 3;
+					}
+
+					.value{
+						font-weight: 700;
+					}
+				}
+
+				.subscribeWrapper{
+					padding : @rhythm;
+
+					button{
+						width: 100%;
+						border-radius: 8px;
+						padding: 8px 16px;
+
+					}
+
+					.unsubscribe{
+						display : none;
+						background : rgb(var(--color-good));
+						border : 1px solid rgb(var(--color-good));
+
+						&:hover{
+							color: rgb(var(--color-good));
+							border : 1px solid rgb(var(--color-good));
+							background: #fff;
+						}
+					}
+	
+		
+					&.following{
+						.unsubscribe{
+							display : block;
+						}
+						
+						.subscribe{
+							display : none;
+						}
+					}
+				}
+
+				.aboutWrapper{
+					padding : @rhythm @rhythm * 2;
+				}
+
+
+			}
+
+			&:hover{
+				.modal{
+					display: block;
+				}
+			}
+		}
+		
+	}
+}
+
+@media only screen and (max-width: 1180px) {
+
+	#recommendedusers{
+		.usersHorizontal{
+			overflow-x: auto;
+			justify-content: flex-start;
+
+			-ms-overflow-style: none;  
+			scrollbar-width: none;
+
+			&::-webkit-scrollbar {
+				display: none;
+			}
+
+			.wrk{
+				&:nth-child(-n+2){
+					display: block;
+				}
+			}
+
+		}
+	}
+}

@@ -32,14 +32,17 @@
 
 												</div>
 											</div>
-											
-											<div class="fileUploaderWrapper">
-												<div 
+
+											<div class="actionButtonsWrapper">
+												<div
 													elementsid="uploadqrcode"
 													class="uploadFile"
 												>
 													<div class="icon"><i class="fas fa-qrcode"></i></div>
 													<div class="label"></div>
+												</div>
+												<div elementsid="showpassword" class="showPassword hidden" tabindex="1000">
+													<div class="icon"><i class="fas fa-eye"></i></div>
 												</div>
 											</div>
 										</div>
@@ -47,19 +50,19 @@
 										
 									</div>
 
-									<div class="item e buttons">
+									<div class="item e buttons mpad">
 										<button type="submit" elementsid="buttonsignin" class="enter"><%=e('signin')%></button>
 									</div>
 
 								</form>
 
 								<% if(fast) {%>
-									<div class="item e buttons ">
+									<div class="item e buttons mpad">
 										<button elementsid="showforwh" class="showformh ghost"><i class="fas fa-chevron-circle-left"></i> <%=e('e13025')%></button>
 									</div>	
 								<% } %>
 
-								<div class="item">
+								<div class="item mpad">
 									
 									<div class="inputTable table stay">
 
@@ -114,7 +117,7 @@
 				<% } %>
 
 
-				<div class="createAccount buttons">
+				<div class="createAccount buttons mpad">
 					
 
 					<% if(!fast) {%> 

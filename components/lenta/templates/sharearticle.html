@@ -73,6 +73,38 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
     
 <%} %>
 
+<% var displaypkoin = function(){ %> 
+
+    <div class="sharepanel unselectablemobile">
+
+        <% if((typeof preview == 'undefined' || !preview) && all) {%>			
+            <div class="item sharesocial unselectable">
+                <div class="itemwr table">
+                    <div class="iconwr">
+                        
+                        <div class="icon">
+                            <i class="fas fa-share-alt"></i>
+                        </div>
+                    </div>
+                    
+                   
+                </div>
+                
+            </div>
+
+        <% } %>
+
+            <div class="item pkoin right unselectedtable">
+                <img src="img/pocketnet_logo_white.svg" alt="">
+                <span class="<% if(!all) { %> workstation <% } %>">
+                    PKOIN
+                </span>
+            </div>
+        
+    </div>
+    
+<% } %>
+ 
 <% var displaysys = function(){ %> 
 
     <% if((typeof repost == 'undefined' || !repost || fromempty)) {%>
@@ -91,17 +123,15 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
 
 <% var threedots = function(){ %> 
 
-    <% if((typeof repost == 'undefined' || !repost) && (typeof preview == 'undefined' || !preview)) { %>
+    <% if((typeof repost == 'undefined' || !repost) && (typeof preview == 'undefined' || !preview) && !share.temp) { %>
 				
         <% if(!checkvisibility && (typeof openapi == 'undefined' || !openapi)) {%>
             <div class="metapanelitem metmenu">
-                <i class="fas fa-ellipsis-v"></i>
+                <i class="fas fa-ellipsis-h"></i>
             </div>
         <% } else { %> 
             
         <% } %>
-
-        
 
     <% } %>
     
@@ -114,7 +144,7 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
 
             <% var reputation = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.reputation') || 0 %>
 
-                <b><span class="adr"><%-name || share.address %></span></b><%if(typeof preview == 'undefined' || !preview){%><% if(reputation && !app.curation()) {%><sup class="spsp"><%-compressedNumber(reputation, 1)%></sup><% } %><% } %>
+                <b><span class="adr gotouserprofile" address="<%-share.address%>" name="<%-name %>"><%-(name || share.address) %></span></b><%if(typeof preview == 'undefined' || !preview){%><% if(reputation && !app.curation()) {%><sup class="spsp"><%-compressedNumber(reputation, 1)%></sup><% } %><% } %>
 
 
             <% if((!state || !my) && (typeof repost == 'undefined' || !repost)) { %> 
@@ -144,13 +174,13 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
 	
 <% } %>
 
-<% var makecaptionclear = function(){ %> 
+<% var makecaptionclear = function(){%> 
 
 	<% if(cc) { %>
         <div class="captionmult">
-            <div class="sharecaption canmark showMoreArticle">
-                
-                    <%=app.actions.emoji(nl2br(trimrn(findAndReplaceLink(filterXSS(clearScripts(cc)), true))))%>
+            <div class="sharecaption canmark cancopy showMoreArticle customscroll">
+                    
+                    <%=app.actions.emoji(nl2br(trimrn(filterXSS(clearScripts(cc)))))%>
                 
             </div>
         </div>
@@ -170,17 +200,36 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
         value = 0
     }
     
-    %>
+    
 
-    <div class="item starstoppanel">
-		<div class="iconwrapper">
-            <span><%-compressedNumber(share.comment || 0)%></span> <i class="fas fa-comments"></i>
+    if(!share.temp){
+        %>
+
+        <div class="item panel starstoppanel">
+            <div class="panelLeft">
+                
+                <div class="iconwrapper postscoresshow">
+                    <span><%-Number(value).toFixed(1)%></span> <i class="fas fa-star"></i> 
+                </div>	
+
+                <div class="iconwrapper">
+                    <span><%-compressedNumber(share.comments || 0)%></span> <i class="fas fa-comments"></i>
+                </div>
+        
+	
+            </div>
+
+            <% if(!my && !all) {%>
+                <div class="panelRight">
+                    <% displaypkoin() %>
+                </div>
+
+            <% } %>
+
         </div>
-
-        <div class="iconwrapper postscoresshow">
-            <span><%-Number(value).toFixed(1)%></span> <i class="fas fa-star"></i> 
-        </div>		
-    </div>
+    <% } %>
+ 
+    
 
  
 
@@ -206,8 +255,6 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
 
     <div class="socialsharewrapper">
 
-       
-
         <div class="iconwrapper ">
             <% threedots() %>
         </div>
@@ -230,29 +277,34 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
     var letter = name ? name[0] : ''; 
     
 %>
-    <div class="icon">
-        <div class="usericon usericonsbsa another" image="<%-src || '*'%>" ban=".gif">
+    <div class="iconWrapper">
+        <a elementsid="shareiconprofilelink" href="<%-app.platform.api.authorlink(share.address)%>">
+            <div class="icon">
+                <div class="usericon usericonsbsa another" image="<%-src || '*'%>" ban=".gif">
 
-            <% if(!src && letter) { %>
+                    <% if(!src && letter) { %>
 
-                <span class="letter">
-                    <%-letter.toUpperCase()%>
-                </span>
+                        <span class="letter">
+                            <%-letter.toUpperCase()%>
+                        </span>
 
-            <% } else if (!src) { %>
+                    <% } else if (!src) { %>
 
-                <svg width="30" height="30" data-jdenticon-value="<%-share.address%>"></svg>
+                        <svg width="30" height="30" data-jdenticon-value="<%-share.address%>"></svg>
 
-            <% } %>
+                    <% } %>
 
-            <% if(app.platform.ui.markUser) {%>
+                    <% if(app.platform.ui.markUser) {%>
 
-                <%= app.platform.ui.markUser(share.address)%>
+                        <%= app.platform.ui.markUser(share.address)%>
 
-            <% } %>
-            
-        </div>
+                    <% } %>
+                    
+                </div>
+            </div>
+        </a>
     </div>
+
 
 <% } %>
 
@@ -320,11 +372,12 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
     try{
         var message = edjs.apply(share.message, decodeURIComponent)
         txt = edjs.parse(message)
-    } catch(e){}
+    } catch(e){
+    }
 	
 	%> 
 
-	<div class="article">
+	<div class="article cancopy">
         <% if(txt) {%>
 
 		    <%=txt%>
@@ -340,13 +393,14 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
 
 <% } %>
 
-<div class="sharecnt <% if(share.deleted) { %> deleted <% } %>">
+<div class="sharecnt ">
 
-    <div class="sharearticle">
+    <div class="sharearticle  <% if(share.deleted) { %> deleted <% } %>">
 
         <div class="shareTable <%-subscribed%>" address="<%-share.address%>" stxid="<%-share.txid%>">
 
-            <div class="shareBgCaption <% if(all) {%> showtext <% } %>">
+            <div class="shareBgCaption <% if(all) {%> showtext <% } %> <% if(cover) {%> withcover <% } else { %> withoutcover <% } %>">
+                
 
                 <div class="articleCover showMoreArticle" image="<%- cover %>">
 
@@ -359,44 +413,104 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
                     </div>
 
                     <div class="captioncnt ">
-                        <div class="textscnts widthcontainer">
-                           
-                            <% maketags() %>
+                        <div class="toppanel">
 
-                            <% makecaptionclear() %>
+                            <div class="authorWrapper">
 
-                            <div class="divider"></div>
+                                <% makeavatar() %>
 
-                            <% displaysys() %>
+                                <% if(!all) { %>
 
-                            <% if(!all) {%>
-                                <div class="buttonOpenWrapper">
-                                    <button class="black showMoreArticle">Read</button>
-                                </div>
-                            <% } %>
+                                    <div class="actionsWrapper">
+                                        <% metadisplay() %>
+        
+                                        <% displaysys() %>
+                                    </div>
 
-                            <% metadisplay() %>
+                                <% } %>
+
+
+                            </div>
+
+                            <% makesharepanel() %>
                             
-    
-                            <% /* maketemp()*/%>
-    
                         </div>
 
-                        <% makeavatar() %>
+                        <div class="textscnts widthcontainer articleclick">
+
+                            <% if(all) { %>
+
+                                <% maketags() %>
+
+                                <% makecaptionclear() %>
+
+                                <div class="divider"></div>
+
+                                <% displaysys() %>
+
+                                <% metadisplay() %>
+
+                            <% } else { %> 
+
+                                <% makecaptionclear() %>
+
+                                <% if(!share.temp){%>
+
+                                    <div class="buttonOpenWrapper">
+                                        <div class="black showMoreArticle"><%= e('readarticle') %></div>
+                                    </div>
+
+                                <%} else{ %>
+
+                                    <div class="waitconfirmations">
+                                        <div class="iconwr">
+                                            <div class="preloader5"><img src="./img/three-dots.svg"/></div>
+                                        </div>
+                                        <div>
+                                            <div class="label">
+                                                <span><%=e('postWaitConf')%></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                <%} %>
+                                
+
+                                <% maketags() %>  
+        
+                                <% /* maketemp()*/%>
+
+    
+                            <% }  %> 
+
+                        </div>
 
                         <% makestarstoppanel() %>
-                        
-                        <% makesharepanel() %>
-                       
+
+                        <% if(!all) {%>
+                            <div class="removeDescription postcontent">
+                                <%=e('postRemoved')%>
+                            </div>
+                        <% } %>
                     </div>
 
+                    <div class="whitematte articleclick">
+
+                    </div>
                    
                 </div>
 
             </div>
+            
             <% if(all) {%>
 
                 <div class="articlecontent widthcontainer">
+
+                    <div class="removeDescription postcontent">
+                        <%=e('postRemoved')%>
+                    </div>
+
+                    
                     <% if(!checkvisibility && !lockedaccount) {%>
 
                         <div class="cntswrk acticletext">
@@ -409,6 +523,7 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
                             <div class="divider"></div>
                             <% displaysys() %>
                             <div class="divider"></div>
+                            <% displaypkoin() %>
                         </div>
 
                         <div class="cntswrk forcomments">
@@ -431,9 +546,7 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
                         
                     <% } %>
 
-                    <div class="cntswrk removeDescription postcontent">
-                        <%=e('postRemoved')%>
-                    </div>
+                    
 
                 </div>
 

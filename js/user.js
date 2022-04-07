@@ -21,7 +21,14 @@ User = function(app, p) {
 	self.imgur = {
 		clientId : '61175058f8e21f4',
 		secret : 'ea4020d8024dfb78d372d1cd21c2f3215c72ead4'
-	};	
+	};
+
+	self.peertube = {
+		username : 'test_bastyon',
+		password : 'test_bastyon',
+		client_id : '35jtaik603lagm90ger8k0j9bcft7aah',
+		client_secret : '3iQcgUIcJlV19acA7R86MfPmAAPUY8cW'
+	}
 
 	var keys = {
 		private : {
@@ -103,10 +110,12 @@ User = function(app, p) {
 
 	self.prepare = function(clbk){
 
+
 		self.tokenExpired();
 
 		app.platform.clear(true);
 		app.platform.prepareUser(function(){
+
 
 			if (clbk)
 				clbk(state)	
@@ -133,10 +142,12 @@ User = function(app, p) {
 
 			self.isState(function(state){
 
+
 				if(state){
 
 					localStorage['waslogged'] = true
 					localStorage['popupsignup'] = 'showed'
+
 
 					self.prepare(clbk)
 				}
@@ -174,12 +185,8 @@ User = function(app, p) {
 		}
 		else
 		{
-
-			
 			self.setKeys(mnemonic, function(){
-
 				setKeysClbk()
-				
 			})
 		}
 
@@ -191,6 +198,10 @@ User = function(app, p) {
 
 		if (app.platform.firebase){
 			app.platform.firebase.destroy();
+		}
+
+		if (app.platform.sdk.categories.clbks.tags.topusersRemove){
+			app.platform.sdk.categories.clbks.tags.topusersRemove();
 		}
 
 		state = 0;

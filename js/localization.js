@@ -119,6 +119,9 @@ Localization = function(app){
 
 			self.key = key;
 
+			if(typeof moment != 'undefined')
+				moment.locale(self.key)
+
 			self.locSave();
 
 			self.import(function(){
@@ -167,6 +170,10 @@ Localization = function(app){
 
 		self.locSave();
 
+		if(typeof moment != 'undefined')
+			moment.locale(self.key)
+
+
 		lazyActions([
 			self.import,
 			function(c){
@@ -201,7 +208,14 @@ Localization = function(app){
 				return
 			}
 
-			var src = 'localization/' + (__k) + '.js?v=20'
+			var vs = '23'
+
+			if(typeof numfromreleasestring != 'undefined'){
+				vs = numfromreleasestring(window.packageversion)
+			}
+
+
+			var src = 'localization/' + (__k) + '.js?v=' + vs
 
 			self.loading[__k] = true
 

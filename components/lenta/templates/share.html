@@ -58,7 +58,7 @@ var metadisplay = function(){ %>
 
 							<a elementsid="shareaddresslink" href="<%-app.platform.api.authorlink(share.address)%>">
 							<% var reputation = deep(app.platform.sdk.usersl.storage, share.address+'.reputation') || 0 %>
-								<b><span class="adr"><%-name || share.address %></span></b><% if(reputation && !app.curation()) {%><sup class="spsp"><%-compressedNumber(reputation, 1)%></sup><% } %>
+								<b><span class="adr"><%-(name || share.address) %></span></b><% if(reputation && !app.curation()) {%><sup class="spsp"><%-compressedNumber(reputation, 1)%></sup><% } %>
 							</a>
 
 							
@@ -66,21 +66,7 @@ var metadisplay = function(){ %>
 							<% if((!state || !my) && (typeof repost == 'undefined' || !repost)) { %> 
 
 								<span elementsid="sbtnxs-follow" class="sbtnxs">
-									&middot; <span class="subscribeLabel asubscribe"><%=e('sub')%></span><span class="subscribedLabel aunsubscribe"><i class="far fa-check-circle"></i>  <%=e('subi')%></span>
-						
-									
-									<% if(state && !my && user.address.value) {
-										
-										var r = me.relation(share.address, 'subscribes') 
-										
-										%>
-										
-
-										<span elementsid="lenta_notificationturn" class="notificationturn <% if(r && (r.private == 'true' || r.private == '1' || r.private === true)) {%> turnon <% } %>">&middot; <i class="far fa-bell-slash"></i></span>
-									<% } %>
-				
-
-									
+									&middot; <span class="subscribeLabel asubscribe"><%=e('sub')%></span><span class="subscribedLabel aunsubscribe"><%=e('subi')%></span>
 								</span>
 
 							<% } %>
@@ -90,7 +76,7 @@ var metadisplay = function(){ %>
 						
 						<div class="sys unselectablemobile">
 							<%if(share.pin){%><span class="pinnedLabel"><i class="fas fa-thumbtack"></i> <%=e('pinned').toLowerCase()%>,</span><%} else { if(share.repost) { %><span><i class="fas fa-share"></i> <%=e('reposted')%>, </span><% } }%><% if(share.downloadedDate) {%> <span class="fas fa-cloud-download-alt"></span> <span class="realtime editedLabel" time="<%-share.downloadedDate%>"><%- app.reltime(share.downloadedDate) %></span><% } else { %> 
-							<% if(share.time) {%><span  class="realtime" time="<%-share.time%>"><%- app.reltime(share.time) %></span><% } else { %><span><%=e('e13019')%></span><% } %><% if(share.edit == 'true') {%><span class="editedLabel">, <%=e('e13130').toLowerCase()%></span><% } %><% } %><% if(share.visibility()) {%><span class="visibilityLabel">, <%=e('sharevisibility_' + share.visibility()).toLowerCase()%></span><% } %>
+							<% if(share.time) {%><span  class="realtime " time="<%-share.time%>"><%- app.reltime(share.time) %></span><% } else { %><span><%=e('e13019')%></span><% } %><% if(share.edit == 'true') {%><span class="editedLabel">, <%=e('e13130').toLowerCase()%></span><% } %><% } %><% if(share.visibility()) {%><span class="visibilityLabel">, <%=e('sharevisibility_' + share.visibility()).toLowerCase()%></span><% } %>
 						</div>
 					
 						
@@ -164,12 +150,12 @@ var makecaptionclear = function(){
 
 		<% if(cc) {
 
-			cc = findAndReplaceLink(filterXSS(clearScripts(findAndReplaceLink(cc))), true)
+			cc = findAndReplaceLink(filterXSS(clearScripts(cc)), true)
 
 
 		%>
 			<div class="paddingWrapper hideOnFullVideo">
-				<div class="sharecaption canmark">
+				<div class="sharecaption canmark cancopy">
 					<%=app.actions.emoji(nl2br(trimrn(cc)))%>
 				</div>
 			</div>
@@ -235,8 +221,8 @@ var arranges = {
 			nm = findAndReplaceLink(share.renders.xssmessage(nm), true)
 
 		%>
-			<div class="paddingWrapper hideOnFullVideo">
-				<div class="message canmark">
+			<div class="paddingWrapper ">
+				<div class="message canmark cancopy">
 					<%=app.actions.emoji((clearScripts(((nm)))))%>
 				</div>
 			</div>
@@ -244,7 +230,7 @@ var arranges = {
 			<% if(bigmessage) {%>
 
 				<div class="showMore">
-					<button>
+					<button class="ghost">
 						<%=e('showmore')%>
 					</button>
 				</div>
@@ -261,14 +247,7 @@ var arranges = {
 
 				var icClass = '';
 				var additionall = 0;
-				var imageFromVideo = ''
-
-
-				if(share.url && parseVideo(share.url).type){
-					additionall++;
-					imageFromVideo = videoImage(share.url)
-				}
-
+		
 				if (share.images.length + additionall == 1) icClass = 'one';
 				if (share.images.length + additionall == 2) icClass = 'two';
 				if (share.images.length + additionall == 2) icClass = 'three';
@@ -297,19 +276,10 @@ var arranges = {
 
 
 	
-					<div class="images shareImages hideOnFullVideo unselectable">
+					<div class="images shareImages hideOnFullVideo unselectable noswipepnt">
 						<div class="imagesContainer <%-icClass%>">
 
-							<% if(imageFromVideo) {%>
-
-								<div class="imagesWrapper forvideo">
-									<div elementsid="lenta_videoOpen" class="image videoOpen" image="<%-imageFromVideo || '*'%>">
-										<div class="playicon"><i class="fas fa-play"></i></div>
-									</div>
-								</div>
-
-							<% } %>
-							
+						
 							<% _.each(share.images, function(image){ %>
 
 								<div class="imagesWrapper">
@@ -350,7 +320,7 @@ var arranges = {
 
 } %>
 
-<div class="sharecnt <% if(share.deleted) { %> deleted <% } %>">
+<div class="sharecnt <% if(typeof sharesFromSub != 'undefined' && sharesFromSub[share.txid]) {%>  fromsub <% } %> <% if(share.deleted) { %> deleted <% } %>">
 
 	<div class="work unselectablemobile">
 
@@ -531,14 +501,16 @@ var arranges = {
 						
 
 						<% if(!share.temp &&   (typeof repost == 'undefined' || !repost || fromempty)) {%>
-							<div class="panel unselectablemobile">
+							<div class="panel sharepanel unselectablemobile">
 								<div class="item forstars">
 									
 								</div>
 
-								<% if(window.cordova && share.itisvideo() ) {
-									
-									
+								<% const isElectron = (typeof _Electron !== 'undefined' && !!window.electron); %>
+								<% const isSaveSupported = (window.cordova && !isios()); %>
+
+								<% if(isSaveSupported && share.itisvideo()) {
+
 									var status = app.platform.sdk.localshares.status(share.txid)
 									
 									%>
@@ -551,7 +523,7 @@ var arranges = {
 
 											<div class="iconwr">											
 												<div class="icon">
-													<i class="fas fa-cloud-download-alt cansave"></i>
+													<i class="fas fa-download cansave"></i>
 													<i class="fas fa-spinner fa-spin saving"></i>
 													<i class="fas fa-trash saved"></i>
 												</div>
@@ -565,70 +537,52 @@ var arranges = {
 
 								<% } else { %> 
 									
-									
-									
-								
-									<% if(app.platform.repost && !my && !app.curation()) {%>
-										<% if(!checkvisibility && !share.visibility()) {%>
-											<div elementsid="lenta_forreport" class="item <% if(!my){ %> forrepost <% } else { %> nact <% } %>">
-
-												<div class="itemwr table">
-													<div class="iconwr">											
-														<div class="icon">
-															<i class="fas fa-share"></i>
-														</div>
-													</div>
-												
-												</div>
-
-											</div>
-										<% } %>
-									<% } %>
-
 								<% } %>
 
 								<% if((typeof preview == 'undefined' || !preview) ) {%>			
 
-								<div class="item sharesocial right unselectable">
+									<div class="item sharesocial unselectable">
 
-									<div class="itemwr table">
-										<div class="labelwr workstation"><span class="label"><%=e('share').toUpperCase()%></span></div>
-										<div class="iconwr">
-											
-											<div class="icon">
-												<i class="fas fa-share-alt"></i>
+										<div class="itemwr table">
+											<div class="iconwr">
+												<div class="icon">
+													<i class="fas fa-share-alt"></i>
+												</div>
 											</div>
 										</div>
+										
 									</div>
-									
-								</div>
 
+								<% } %>
+
+								<% if(!my) {%>
+									<div class="item pkoin right unselectedtable">
+										<img src="img/pocketnet_logo_white.svg" alt="">
+										<span class='workstation'>
+											PKOIN
+										</span>
+									</div>
 								<% } %>
 								
 							</div>
 
-							<div class="wholikes">
-								
-							</div>
+							
 						<% } %>
 
 						<% if(share.temp) {%>
 
-							<div class="panel unselectablemobile">
+							<div class="panel sharepanel unselectablemobile">
 								<div class="item right">
 
 									<div class="itemwr table tempPreloader">
-										
-										<div class="iconwr">
-											<div class="preloader5"><img src="./img/three-dots.svg"/></div>
-										</div>
 										
 										<div elementsid="lenta_forstars_count" class="count">
 											<div class="label">
 
 												<span><%=e('postWaitConf')%></span>
 											</div>
-										</div>	
+										</div>
+											
 									</div>
 								</div>
 								<div class="clearfix"></div>

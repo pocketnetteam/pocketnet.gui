@@ -149,8 +149,6 @@ var Proxy = function (settings, manage, test, logger) {
 			return true
 		},
 
-	
-
 		parsesignature : function(nonce){
 			var ch = nonce.split(',')
 			var obj = {}
@@ -460,6 +458,16 @@ var Proxy = function (settings, manage, test, logger) {
 
 		sendlogs: function(d){
 			wss.sendlogs(d)
+		},
+
+		closeall : function(){
+			var e = wss.closeall()
+
+			if (e){
+				return Promise.reject(e)
+			}
+
+			return Promise.resolve('success')
 		}
 	}
 
@@ -598,48 +606,175 @@ var Proxy = function (settings, manage, test, logger) {
 	self.peertube = {
 		init: function () {
 			var ins = {
-        		1: [
-					{host : 'pocketnetpeertube1.nohost.me'}, 
-					{host : 'pocketnetpeertube2.nohost.me' }
+				1: [
+				  { host: 'pocketnetpeertube1.nohost.me'/*, ip: '188.0.15.28'*/},
+				{ host: 'pocketnetpeertube2.nohost.me', /*ip: '94.73.223.24'*/ },
 				],
-        		5: [
-					{host : 'pocketnetpeertube5.nohost.me', cantuploading : true}, 
-					{host : 'pocketnetpeertube7.nohost.me', cantuploading : true}, 
+				5: [
+				  {
+					host: 'pocketnetpeertube5.nohost.me',
+					cantuploading: true,
+					ip: '95.217.209.217',
+				  },
+				  {
+					host: 'pocketnetpeertube7.nohost.me',
+					cantuploading: true,
+					ip: '188.187.45.218',
+				  },
 				],
-        		6: [
-					{host : 'pocketnetpeertube4.nohost.me', cantuploading : true}, 
-					{host : 'pocketnetpeertube6.nohost.me', cantuploading : true}, 
+				6: [
+				  {
+					host: 'pocketnetpeertube4.nohost.me',
+					cantuploading: true,
+					ip: '135.181.108.193',
+				  },
+				  {
+					host: 'pocketnetpeertube6.nohost.me',
+					cantuploading: true,
+					ip: '159.69.127.9',
+				  },
 				],
-				8 : [
-					{host : 'pocketnetpeertube8.nohost.me', cantuploading : true}, 
-					{host : 'pocketnetpeertube9.nohost.me', cantuploading : true}, 
+				8: [
+				  {
+					host: 'pocketnetpeertube8.nohost.me',
+					cantuploading: true,
+					ip: '192.236.161.131',
+				  },
+				  {
+					host: 'pocketnetpeertube9.nohost.me',
+					cantuploading: true,
+					ip: '178.154.200.50',
+				  },
+				],
+		
+				10: [
+				  {
+					host: 'pocketnetpeertube10.nohost.me',
+					cantuploading: true,
+					ip: '23.254.226.253',
+				  },
+				  {
+					host: 'pocketnetpeertube11.nohost.me',
+					cantuploading: true,
+					ip: '84.252.138.108',
+				  },
+				],
+		
+				12: [
+				  {
+					host: 'bastyonmma.pocketnet.app',
+					cantuploading: true,
+					ip: '88.99.34.74',
+				  },
+				  {
+					host: 'bastyonmma.nohost.me',
+					cantuploading: true,
+					ip: '49.12.231.72',
+				  },
+				],
+		
+				13: [
+				  { host: '01rus.nohost.me', ip: '178.217.159.227' },
+				  { host: '02rus.pocketnet.app', ip: '31.184.215.67' },
+				],
+		
+				14: [
+				  { host: 'pocketnetpeertube12.nohost.me', ip: '104.168.248.113' },
+				  { host: 'pocketnetpeertube13.nohost.me', ip: '62.84.115.93' },
+				],
+
+				15: [
+					{
+						host: 'peertube14.pocketnet.app',
+						ip: '178.154.251.235',
+					},
+					{
+						host: 'peertube15.pocketnet.app',
+						ip: '192.236.199.174',
+					},
+				],
+
+				16: [
+					{
+						host : 'poketnetpeertube.space',
+						cantuploading: true,
+						ip: '178.217.155.168',
+					},
+					{
+						host : 'poketnetpeertube.ru',
+						cantuploading: true,
+						ip: '178.217.159.224',
+					}
+				],
+
+				
+				17: [
+					{
+						host : 'bastynode.ru',
+						cantuploading: true,
+						ip: '81.23.152.91',
+					},
+					{
+						host : 'storemi.ru',
+						cantuploading: true,
+						ip: '93.100.117.108',
+					},
+				],
+
+				18: [
+					{
+						host : 'bastynode1.ru',
+						cantuploading: true,
+						ip: '81.23.151.94',
+					},
+					{
+						host : 'gf110.ru',
+						cantuploading: true,
+						ip: '46.175.123.16',
+					},
+				],
+
+				19: [
+					{
+						host : 'bastyonpeertube.ru',
+						cantuploading: true,
+						ip: '178.217.155.169',
+					},
+					{
+						host : 'bastyonpeertube.site',
+						cantuploading: true,
+						ip: '178.217.155.170',
+					},
+					
+				],
+
+				20: [
+					{
+						host : 'peertube17.pocketnet.app',
+						ip: '51.250.104.218',
+					}
 				],
 				
-				10: [
-					
-					{host : 'pocketnetpeertube10.nohost.me', cantuploading : true}, 
-					{host : 'pocketnetpeertube11.nohost.me', cantuploading : true}, 
-					
+				21: [
+					{
+						host : 'peertube18.pocketnet.app',
+						ip: '51.250.41.252',
+					}
 				],
-
-				12: [
-					{host : 'bastyonmma.pocketnet.app', cantuploading : true}, 
-					{host : 'bastyonmma.nohost.me', cantuploading : true}, 
-				],
-	
-				13: [
-					'01rus.nohost.me',
-					'02rus.pocketnet.app'
-				],
-
-				14: [
-					'pocketnetpeertube12.nohost.me',
-					'pocketnetpeertube13.nohost.me'
+				
+				22: [
+					{
+						host : 'peertube19.pocketnet.app',
+						ip: '51.250.73.97',
+					}
 				],
       		};
 
 			if (test){
-				ins = {0 : ['test.peertube.pocketnet.app']}
+				ins = {0 : [
+					{ host: 'test.peertube.pocketnet.app', ip: '65.108.83.132' },
+					{ host: 'test.peertube2.pocketnet.app', ip: '95.216.212.153' },
+				]}
 			}
 
 			return peertube.init({
@@ -701,7 +836,8 @@ var Proxy = function (settings, manage, test, logger) {
 
 			return {
 				status: status,
-
+				test : self.test,
+				
 				nodeManager: self.nodeManager.info(compact),
 				nodeControl: self.nodeControl.info(compact),
 				firebase: self.firebase.info(compact),
@@ -969,6 +1105,8 @@ var Proxy = function (settings, manage, test, logger) {
 						});
 					}
 
+					
+
 					if(!self.rpcscenarios[method]){
 						return self.api.node.rpc.action({ method, parameters, options, U })
 					}
@@ -987,12 +1125,14 @@ var Proxy = function (settings, manage, test, logger) {
 							code: 400,
 						});
 					}
+
 					if (!options) options = {};
 					if (!parameters) parameters = [];
 
 					var node = null;
 					var noderating = 0
 					var timep = performance.now()
+
 					var time = {
 						preparing : 0,
 						cache : 0,
@@ -1009,6 +1149,8 @@ var Proxy = function (settings, manage, test, logger) {
 
 					self.logger.w('rpc', 'debug', 'RPC REQUEST')
 
+				
+
 					return new Promise((resolve, reject) => {
 
 						if((options.locally && options.meta)){
@@ -1024,7 +1166,6 @@ var Proxy = function (settings, manage, test, logger) {
 						self.logger.w('rpc', 'debug', 'AFTER WAITING NODEMANAGER')
 
 						time.preparing = performance.now() - timep
-
 
 						/// ????
 						if (options.locally && options.meta) {
@@ -1141,10 +1282,13 @@ var Proxy = function (settings, manage, test, logger) {
 						return new Promise((resolve, reject) => {
 
 							time.start = performance.now() - timep
+							time.node = {
+								b : timep
+							}
 
 							self.logger.w('rpc', 'debug', 'ADD TO QUEUE')
 							
-							nodeManager.queue(node, method, parameters, direct, {resolve, reject})
+							nodeManager.queue(node, method, parameters, direct, {resolve, reject}, time.node)
 								
 						})
 
@@ -1157,6 +1301,8 @@ var Proxy = function (settings, manage, test, logger) {
 							//console.log("SUCCESS", method)
 
 							time.ready = performance.now() - timep
+
+							if(time.node) delete time.node.b
 
 							return Promise.resolve({
 								data: data,
@@ -1450,7 +1596,6 @@ var Proxy = function (settings, manage, test, logger) {
 
 						remote.nmake(url, function (err, data) {
 
-							console.log('err', err)
 							if (!err) {
 
 								resolve({
@@ -1613,6 +1758,19 @@ var Proxy = function (settings, manage, test, logger) {
 						server.middle.clear()
 
 					return Promise.resolve('success');
+					
+				},
+			},
+
+			wsscloseall : {
+				path: '/closeallwss',
+				authorization: 'signature',
+				action: function (message) {
+
+					if (!message.A)
+						return Promise.reject({ error: 'Unauthorized', code: 401 });
+						
+					return self.wss.closeall()
 					
 				},
 			},
@@ -1917,9 +2075,10 @@ var Proxy = function (settings, manage, test, logger) {
 			},
 			freeregistration: {
 				path: '/free/registration',
-				authorization: 'signature',
+				authorization: self.test ? false : 'signature',
 				action: function ({ captcha, key, address, ip }) {
-					if (settings.server.captcha) {
+
+					if (settings.server.captcha && !self.test) {
 						if (!captcha || !captchas[captcha] || !captchas[captcha].done) {
 							return Promise.reject('captcha');
 						}
@@ -2024,10 +2183,5 @@ var Proxy = function (settings, manage, test, logger) {
 }
 
 module.exports = Proxy
-
-/*
-const swaggerDocument = require('./docs/api/v1.json');
-
-app.use('/api/v1/help', swaggerUi.serve, swaggerUi.setup(swaggerDocument));*/
 
 

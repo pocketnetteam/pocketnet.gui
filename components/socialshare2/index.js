@@ -36,12 +36,42 @@ var socialshare2 = (function(){
 						repost : shareid
 					})
 
-					self.closeContainer()
+					setTimeout(function(){
+						self.closeContainer()
+					}, 200)
+					
 					
 				}, shareid)
 
 			},
 
+			nativeshare : function(){
+
+				if (plugin){
+					plugin.shareWithOptions({
+
+						message: ed.sharing.text.body || '', 
+						subject: ed.sharing.text.title || '',
+						images : ed.sharing.images || [],
+						url: ed.url
+
+					}, function(){
+
+						setTimeout(function(){
+							self.closeContainer()
+						}, 200)
+
+					}, function(){
+
+					});
+				}
+				else{
+					actions.applyview('share')
+					renders.sharebuttons()
+				}
+
+				
+			},
 			
 			stateAction : function(link, clbk, txid){
 
@@ -99,6 +129,18 @@ var socialshare2 = (function(){
 				})
 			},
 
+			applyview : function(view){
+
+				if(!view){
+					el.c.removeAttr('show', view)
+					el.c.find('.embeddingWrapperCnt').html('')
+				}
+				else{
+					el.c.attr('show', view)
+				}
+				
+			}
+
 		}
 
 		var embeddingSettings = {
@@ -155,6 +197,14 @@ var socialshare2 = (function(){
 
 				
 			},
+
+			nativeshare : function(e){
+
+				e.target.blur();
+				self.app.mobile.vibration.small()
+
+				actions.nativeshare()
+			}
 
 			
 		}
@@ -248,8 +298,6 @@ var socialshare2 = (function(){
 
 			embedding : function(){
 
-				console.log("ED", ed)
-
 				if (!ed.embedding) return
 
 				var emeta = embedding[ed.embedding.type]
@@ -293,7 +341,6 @@ var socialshare2 = (function(){
 
 						_.each(settings, function(s){
 							s._onChange = function(){
-								console.log("CHANGE")
 								renders.embedding()
 							}
 						})
@@ -311,7 +358,6 @@ var socialshare2 = (function(){
 
 						_p.el.find('.showcode').on('click', function(){
 							showcode = !showcode
-							console.log('showcode', showcode)
 							showhidecode()
 						})
 
@@ -320,10 +366,7 @@ var socialshare2 = (function(){
 							sitemessage(self.app.localization.e('successcopied'))
 						})
 					})
-
 				})
-
-				
 				
 			},
 
@@ -349,7 +392,6 @@ var socialshare2 = (function(){
 						p.ref = self.app.platform.sdk.address.pnet().address = self.app.ref
 					}
 				}
-				
 
 				if(settings.onlyvideo){
 
@@ -366,7 +408,7 @@ var socialshare2 = (function(){
 						var width = 640
 						var height = (width / aspectRatio).toFixed(0)
 
-						return '<iframe width="'+width+'" height="'+height+'" src="https://'+self.app.options.url+'/embedVideo.php?embed=true&s='+actionid+'&host='+hid.host+'&id='+hid.id+'" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
+						return '<iframe width="'+width+'" style="aspect-ratio:'+aspectRatio+'" src="https://'+self.app.options.url+'/embedVideo.php?embed=true&s='+actionid+'&host='+hid.host+'&id='+hid.id+'" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
 					}	
 					
 					return ''
@@ -375,7 +417,7 @@ var socialshare2 = (function(){
 
 				p = hexEncode(JSON.stringify(p))
 
-				if(action && actionid){
+				if (action && actionid){
 					return '<div id="pocketnet_'+seed+'"></div><script src="https://'+self.app.options.url+'/js/widgets.js"></script><script type="text/javascript">(new window.PNWIDGETS()).make('+seed+', "'+action+'", "'+actionid+'", "'+p+'")</script>'
 				}	
 				else{
@@ -606,10 +648,10 @@ var socialshare2 = (function(){
 					
 					_el.on('click', function(){
 
-						var t = actions.shareText() +  '\r\n\r\n' + trimHtml(ed.sharing.text.body, 500).replace(/ &hellip;/g, '...').replace(/&hellip;/g, '...') + '\r\n\r\n' + htmlhelpers.link(ed.url, 'Сontinue on ' + self.app.meta.fullname);
+						var t = actions.shareText() +  '\r\n\r\n' + trimHtml(ed.sharing.text.body, 500).replace(/ &hellip;/g, '...').replace(/&hellip;/g, '...') + '\r\n\r\n' + htmlhelpers.link(ed.url, self.app.localization.e('continueon') + ' ' + self.app.meta.fullname);
 
 						if (deep(app, 'platform.sdk.user.storage.me.name')){
-							t += '\r\n\r\nBest,\r\n' + deep(app, 'platform.sdk.user.storage.me.name')
+							t += '\r\n\r\n'+self.app.localization.e('bestwishes')+'\r\n' + deep(app, 'platform.sdk.user.storage.me.name')
 						}
 
 						var m = '';
@@ -625,7 +667,7 @@ var socialshare2 = (function(){
 				}
 				else{
 
-					var text = ed.sharing.title + ": " + ed.sharing.text.preview + '\r\n\r\n' + 'Сontinue on ' + self.app.meta.fullname
+					var text = ed.sharing.title + ": " + ed.sharing.text.preview + '\r\n\r\n' + self.app.localization.e('continueon') + ' ' + self.app.meta.fullname
 
 					var type = _el.data('type');
 					var b = findsocial(type)
@@ -657,7 +699,7 @@ var socialshare2 = (function(){
 
 						if (_el.hasClass('s_gmail')){
 
-							text = actions.shareText() +  '\r\n\r\n' +  ed.sharing.text.body + '\r\n\r\n' + htmlhelpers.link(ed.url, 'Сontinue on ' + self.app.meta.fullname);
+							text = actions.shareText() +  '\r\n\r\n' +  ed.sharing.text.body + '\r\n\r\n' + htmlhelpers.link(ed.url, self.app.localization.e('continueon') + ' ' + self.app.meta.fullname);
 
 							
 							if (deep(app, 'platform.sdk.user.storage.me.name')){
@@ -687,23 +729,41 @@ var socialshare2 = (function(){
 
 		var initEvents = function(){
 
-			el.c.find('.url button').on('click', function(){
+			el.c.find('.url .button').on('click', function(){
 				copycleartext(ed.url)
 				sitemessage(self.app.localization.e('urlsuccesscopied'))
+
+				setTimeout(function(){
+					self.closeContainer()
+				}, 200)
 			})
 
-			el.c.find('.chat button').on('click', function(){
+			el.c.find('.chat .button').on('click', function(){
 
 				var url = self.app.nav.api.history.removeParametersFromHref(ed.url, ['ref'])
 			
 				self.app.platform.matrixchat.share.url(url).catch(r => {
-					console.log("R", r)
 				})
+
+				setTimeout(function(){
+					self.closeContainer()
+				}, 200)
 			
-				if(self.closeContainer) self.closeContainer()
 			})
 
 			el.c.find('.forrepost').on('click', events.repost)
+
+
+			el.c.find('.nativeshare .button').on('click', events.nativeshare)
+
+			el.c.find('.backwrapper').on('click', function(){
+				actions.applyview('')
+			})
+
+			el.c.find('.embeddingshow').on('click', function(){
+				actions.applyview('embeding')
+				renders.embedding()
+			})
 
 		}
 
@@ -753,7 +813,7 @@ var socialshare2 = (function(){
 
 				changeRef()
 
-				renders.sharebuttons()
+				
 
 				//renders.embedding()
 			}
@@ -820,7 +880,8 @@ var socialshare2 = (function(){
 					eparameters : eparameters,
 					notincludedRef : ed.notincludedRef, 
 					postId: postId,
-					share : share
+					share : share,
+					ed
 				};
 
 				clbk(data);
@@ -845,7 +906,7 @@ var socialshare2 = (function(){
 
 				renders.sharebuttons()
 
-				renders.embedding()
+				
 
 				ParametersLive(_.toArray(eparameters), el.c)
 			
@@ -858,7 +919,7 @@ var socialshare2 = (function(){
 				trueshold : 1,
 				swipeCloseDir : 'down',
 				header : self.app.localization.e('e13174'),
-				class : 'sharingwindow2 normalizedmobile'
+				class : 'sharingwindow2 centercontentWindow normalizedmobile noheader withoutButtons'
 			}
 		}
 	};

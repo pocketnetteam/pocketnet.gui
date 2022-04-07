@@ -22,11 +22,22 @@ var settingsPath = 'data/settings'
 var settings = {};
 
 var pocketnet = new Pocketnet()
-var test = _.indexOf(process.argv, '--test') > -1
+var test = _.indexOf(process.argv, '--test') > -1 || global.TESTPOCKETNET
 
 var logger = new Logger(['general', 'rpc', 'system', 'remote', 'firebase', 'nodecontrol']).init()
 
 var testnodes = [
+
+	
+
+	{
+		host : '78.37.233.202',
+		port : 39091,
+		ws : 6067,
+		name : 'test.v.pocketnet.app',
+		stable : true
+	},
+
 	{
 		host : '157.90.235.121',
 		port : 39091,
@@ -41,17 +52,6 @@ var testnodes = [
 		name : 'test.2.pocketnet.app',
 		stable : true
 	},
-
-
-	{
-		host : '192.168.0.15',
-		port : 39091,
-		ws : 6067,
-		name : 'test.local',
-		stable : true
-	},
-
-
 	{
 		host : '116.203.219.28',
 		port : 39091,
@@ -60,20 +60,19 @@ var testnodes = [
 		stable : true
 	},
 	{
-		host : '188.187.45.218',
-		port : 39091,
-		ws : 6067,
-		name : 'v0.20.0 (dev)',
-		stable : false
-	},
-	{
 		host : '137.135.25.73',
 		port : 39091,
 		ws : 6067,
 		name : 'tawmaz',
 		stable : false
-	}
-    
+	},
+	{
+		host : '109.173.41.29',
+		port : 39091,
+		ws : 6067,
+		name : 'lostystyg',
+		stable : false
+	}    
 ]
 
 
@@ -83,14 +82,6 @@ var activenodes = [
 		port : 38081,
 		ws : 8087,
 		name : '64.235.45.119',
-		stable : true
-	},
-
-	{
-		host : '216.108.231.40',
-		port : 38081,
-		ws : 8087,
-		name : '216.108.231.40',
 		stable : true
 	},
 	{
@@ -907,6 +898,13 @@ var kit = {
 				}).then(r => {
 
 
+					return Promise.resolve(r)
+				})
+			},
+			breakInstall : function(message){
+				return kit.proxy().then(proxy => {
+					return proxy.nodeControl.kit.breakInstall()
+				}).then(r => {
 					return Promise.resolve(r)
 				})
 			},

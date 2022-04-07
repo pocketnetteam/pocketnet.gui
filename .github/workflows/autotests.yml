@@ -1,0 +1,15 @@
+name: Tests
+
+on:
+  push:
+    tags: v*.*.*
+
+jobs:
+  build:
+    runs-on: autotest
+    steps:
+      - name: Start
+        run: |
+          cd C:\actions-runner\autotest\
+          .\AutomaticTesting.exe -all
+

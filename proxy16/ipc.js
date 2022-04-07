@@ -100,9 +100,6 @@ var IPC = function(ipc, wc){
 		promise.then(data => {
 			send(message.id, null, data)
 		}).catch(e => {
-
-			
-
 			send(message.id, e)
 		})
 
@@ -210,7 +207,11 @@ var IPC = function(ipc, wc){
 						}
 
 						return Promise.resolve()
-					})
+					}).catch(e => {
+                        return Promise.reject({
+							cancel : true
+						})
+                    })
 				},
 			}
 		}
@@ -218,7 +219,6 @@ var IPC = function(ipc, wc){
 	}
 
 	var middle = function(message){
-
 
 		if(f.deep(middles, message.action)){
 			return f.deep(middles, message.action)(message)
@@ -235,11 +235,8 @@ var IPC = function(ipc, wc){
 			if(!kaction) return Promise.reject('unknownAction')
 
 			return middle(message).then(r => { 
-				
 				return kaction(message.data)
-
 			}).then(data => {
-
 				send(message.id, null, data)
 			})
 		},
@@ -285,10 +282,6 @@ var IPC = function(ipc, wc){
         return kit.manage.node.stop()
     }
 
-	//var isDevelopment = process.argv.find(function(el) { return el == '--development'; })
-
-	//isDevelopment ? f.path('pocketcoin') : Path.join(electron.app.getPath('userData'), 'pocketcoin')
-	
     kit.init({}, { wssdummy, userDataPath : electron.app.getPath('userData')})
 
 	return self

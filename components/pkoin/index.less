@@ -1,0 +1,312 @@
+@import "../../css/__cssvar";
+
+#pkoin{
+	.content{
+
+		.vc_valuecustom .vc_textInput{
+			border: 0;
+			background: transparent;
+		}
+
+		.top, .fieldsWrapper, .sendButtonWrapper{
+			padding : @rhythm * 2;
+		}
+
+		.top{
+			display: flex;
+			justify-content: space-between;
+			padding-bottom: @rhythm * 2;
+			border-bottom : 1px solid rgba(var(--neutral-grad-1), 0.5);
+
+			.title{
+				display: flex;
+				align-items: center;
+				font-weight: 700;
+			}
+
+			.buyButtonWrapper{
+				display: flex;
+				align-items: center;
+
+				.buyButton{
+					border: 1px solid rgb(var(--neutral-grad-1));
+					box-sizing: border-box;
+					border-radius: 100px;
+					padding: 8px 16px;
+					cursor: pointer;
+
+
+					display: flex;
+					.text{
+						margin-right: @rhythm * 2;
+						font-weight: 600;
+						color : rgb(var(--text-color));
+					}	
+
+					img{
+						width: 20px;
+						height: 20px;
+					}
+				}
+			}
+
+
+		}
+
+
+		.profile{
+			display: flex;
+			align-items: top;
+			padding: @rhythm * 2 @rhythm * 2 @rhythm @rhythm * 2;
+
+			.description{
+				padding-left: @rhythm;
+				padding-top : 0.5 * @rhythm;
+				.name{
+					font-weight: 700;
+				}
+
+				.about{
+					overflow-wrap: break-word;
+					overflow: hidden;
+					text-overflow: ellipsis;
+					display: -webkit-box;
+					-webkit-line-clamp: 1;
+					line-clamp: 1;
+					-webkit-box-orient: vertical;
+				}
+			}
+		}
+
+		.fieldsWrapper{
+			padding-bottom: 0;
+
+			.fields{
+
+				.inputWrapper{
+					margin-bottom: @rhythm * 4;
+
+					&.inputSumWrapper{
+						margin-bottom: @rhythm * 2;
+					}
+
+					input::-webkit-outer-spin-button,
+					input::-webkit-inner-spin-button {
+						-webkit-appearance: none;
+						margin: 0;
+					}
+
+					/* Firefox */
+					input[type=number] {
+						-moz-appearance: textfield;
+					}
+
+					.inputSum, .textareaComment{
+						padding: 12px 16px;
+						border-radius: 12px;
+						border: 1px solid rgb(var(--neutral-grad-0));
+						width: 100%;
+					}
+
+					.vc_valuecustom{
+						width: 100%;
+
+						.vc_textInput{
+							border: 0;
+						}
+
+						&.opened{
+	
+							.vc_inputWrapper, .vc_iconWrapper{
+								border: 1px solid rgb(var(--color-bg-ac));
+							}
+
+							.vc_iconWrapper{
+								border-left: none;
+							}
+							.vc_inputWrapper{
+								border-right: none;
+							}
+
+						}
+					}
+
+					.vc_inputWrapper{
+						border-radius: 12px 0px 0px 12px;
+						border: 1px solid rgb(var(--neutral-grad-1));
+						border-right: none;
+
+						input{
+							padding: 12px 16px;
+						}
+					}
+
+					.vc_iconWrapper{
+						border-radius: 0px 12px 12px 0px;
+						border: 1px solid rgb(var(--neutral-grad-1));
+						border-left: none;
+					}
+
+					.vc_selectInput{
+						top: 100%;
+						.shadowSmaller();
+						border-radius: 12px;
+						border: none;
+
+
+						.vc_value{
+							padding: 12px;
+							color: rgb(var(--color-txt-gray-dark));
+
+							&:hover{
+								background: rgb(var(--neutral-grad-1));
+								color: default;
+							}
+
+						}
+					}
+					
+
+					>textarea{
+						min-height: 100px;
+					}
+				}
+
+				.sum{
+
+					.inputWrapper{
+						position: relative;
+
+						.pkoinLabel{
+							color: rgb(var(--color-txt-ac));
+							position: absolute;
+							right: 12px;
+							top: 12px;
+						}
+
+						.notion{
+							display: flex;
+							justify-content: space-between;
+							font-size: 0.9em;
+							margin-top: @rhythm;
+
+							.balance{
+								display: flex;
+								padding-left: @rhythm;
+				
+								.text{
+									color: rgb(var(--neutral-grad-3));
+								}
+				
+								.amount{
+									padding-left: @rhythm;
+									font-weight: 600;
+								}
+				
+								.label{
+									padding-left: @rhythm;
+								}
+							}
+
+							.errorWrapper{
+								padding-left: @rhythm;
+								color: rgb(var(--color-bad));
+							}
+						}
+
+					}
+				}
+				.comment{
+
+					.text{
+						line-height: 24px;
+						color: rgb(var(--color-txt-gray-dark));
+					}
+				}
+			}
+		}
+
+		.sendButtonWrapper{
+			padding: @rhythm * 3 @rhythm * 2;
+			border-top: 1px solid rgba(var(--neutral-grad-1), 0.5);
+
+			.sendButton{
+				padding: 12px 16px;
+				text-align: center;
+				background: rgb(var(--color-bg-ac));
+				color : rgb(var(--text-on-bg-ac-color));
+				border-radius: 12px;
+				cursor: pointer;
+
+				&.disabled{
+					cursor: default;
+					background: rgb(var(--color-bg-ac-1));
+				}
+			}
+		}
+
+	}
+
+}
+
+.wnd.pkoinwindow{
+	.wndinner{
+		
+		&.pkoin{
+            max-width: 370px;
+			max-height: 520px;
+			box-shadow: none;
+
+        }
+		.wndheader{
+			display: none;
+		}
+
+		.wndcontent{
+			top : 0;
+			bottom: 0;
+			padding : 0;
+			overflow: auto;
+		}
+
+		>div{
+			&.buttons{
+				display: none;
+			}
+		}
+	}
+
+	#pkoin{
+		.sendButtonWrapper{
+			position: absolute;
+			bottom : 0;
+			left : 0;
+			right: 0;
+		}
+	}
+}
+
+html.mobileview{
+	.wnd.pkoinwindow{
+		#pkoin{
+			.sendButtonWrapper{
+				position: static;
+			}
+		}
+	}
+}
+
+
+@media only screen and (max-width: 768px) {
+	.wnd.pkoinwindow{
+	
+		#pkoin{
+			.sendButtonWrapper{
+				position: static;
+				bottom : 0;
+				left : 0;
+				right: 0;
+			}
+		}
+	}
+}

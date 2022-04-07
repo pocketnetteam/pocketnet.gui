@@ -1,4 +1,4 @@
-<div class="nodescontent collapsepart ">
+<div class="nodescontent collapsepart <% if(!isTablet()) {%> expanded <% } %>">
     <div class="work">
         <div class="subcaption">
             <span><%-app.meta.fullname%> nodes</span> <i class="fas fa-angle-down"></i>
@@ -9,12 +9,14 @@
     <div class="collapsingpart">
 
         <% if(admin) {%>
-            <div class="panel">
-                <div class="item">
-                    <button elementsid="clearnodesstats" class="medium button clearnodesstats">
-                        Clear Nodes History Statistic
-                    </button>
-                </div>    
+            <div class="work">
+                <div class="panel">
+                    <div class="item">
+                        <button elementsid="clearnodesstats" class="medium button clearnodesstats">
+                            Clear Nodes History Statistic
+                        </button>
+                    </div>    
+                </div>
             </div>
         <% } %>
 

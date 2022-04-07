@@ -1,69 +1,81 @@
 <div id="<%-module.map.id%>" class=" <% if(typeof style != 'undefined') {%> <%- style %> <% } %>">
 
-	<div class="captionWrapper">
-		<div class="wrk">
-
-				<div class="caption">
-					<%- e('share') %>
-				</div>
-
-		</div>
-	</div>
 	<div class="contentShareWrapper">
+		<div class="backwrapper">
+			<i class="fas fa-chevron-left"></i> <span><%= e('back') %></span>
+		</div>
+
 		<div class="directWrapper">
 			<div class="wrk">
 				<div class="flexWrapper">	
 
-					<div class="url">
-						<button elementsid="urlbutton" class="button ghost ">
-							<%- e('copyLink') %> <i class="fas fa-link"></i>
-						</button>
-					</div>
+					
 
 					<% if(state) {%>
 
 						<% if(!share || !share.visibility() || share.visibility() == 'reg'){ %>
 
 							<div class="chat">
-								<button elementsid="chatbutton" class="button ghost ">
-									<%- e('sendMessenger') %> <i class="fas fa-envelope"></i>
-								</button>
+								<div elementsid="chatbutton" class="button black ">
+									<i class="fas fa-envelope"></i>
+									<span><%- e('sendMessenger') %></span> 
+								</div>
 							</div>
 
 						<% } %>
 
 					<% } %>
 
-
 					<% if(postId) {
-						
 						if(share && share.address != app.user.address.value && (!share.visibility() || share.visibility() == 'reg')){ %>
 
 							<div elementsid="itemforrepost" class="item forrepost">
-
-								<button class="button ghost ">
-									<%- e('repost') %> <i class="fas fa-reply"></i>
-								</button>
-
+								<div class="button black ">
+									<i class="fas fa-reply"></i>
+									<span><%- e('repost') %></span> 
+								</div>
 							</div>
-
 						<% } %>
 
 					<% } %>
 
-					<% if(typeof eparameters != 'undefined' && state && !notincludedRef) {%>
-						<div class="includeRefWrapper">
-							<%= eparameters.reflink.input({init : true}) %>  <span><%= eparameters.reflink.name %></span>
+					
+						<div class="nativeshare">
+							<div elementsid="nativeshare" class="button black">
+								<i class="fas fa-share-alt"></i>
+								<span><%- e('shareVia') %></span>
+							</div>
 						</div>
-					<% } %>
 
+						<% if(ed.embedding) {%>
 
+							<div class="embeddingshow">
+								<div elementsid="embeddingshow" class="button black">
+									<i class="fas fa-code"></i>
+									<span><%- e('embedding') %></span>
+								</div>
+							</div>
 
+						<% } %>
+						
+						
+					<div class="url">
+						<div elementsid="urlbutton" class="button black">
+							<i class="fas fa-link"></i>
+							<span><%- e('copyLink') %></span> 
+						</div>
+					</div>
+
+					
 				</div>
-			</div>
 
+				<% if(typeof eparameters != 'undefined' && state && !notincludedRef) {%>
+					<div class="includeRefWrapper">
+						<%= eparameters.reflink.input({init : true}) %>  <span><%= eparameters.reflink.name %></span>
+					</div>
+				<% } %>
+			</div>
 		</div>
-		
 		
 		<div class="sharewrapper">
 			<div class="wrk">

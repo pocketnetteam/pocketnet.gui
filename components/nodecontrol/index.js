@@ -100,16 +100,17 @@ var nodecontrol = (function(){
                     sitemessage(`${self.app.localization.e('easyNode_e10042')}`, null, 5000) // self.app.localization.e('successcopied')
 
 				}).catch(e => {
-                    if (e.code && e.message)
-                        sitemessage(`(${self.app.localization.e('dcode')} ${e.code}): ${e.message}`, null, 5000)
-                    else
-                        sitemessage(`Unknown error`)
+                    if (!e.cancel) {
+                        if (e.code && e.message)
+                            sitemessage(`(${self.app.localization.e('dcode')} ${e.code}): ${e.message}`, null, 5000)
+                        else
+                            sitemessage(`Unknown error`)
+                    }
 				})
 			},
 		}
 
 		var actions = {
-
 			refreshsystem : function(){
 				return proxy.system.api.get.settings().then(s => {
 					system = s
@@ -117,7 +118,6 @@ var nodecontrol = (function(){
 					renders.all()
 				})
 			},
-
 			refresh : function(){
 				return proxy.get.info().then(r => {
 
@@ -128,11 +128,9 @@ var nodecontrol = (function(){
 					return Promise.resolve()
 				})
 			},
-
 			allsettings: function(){
 				renders.all()
 			},
-
 			tick : function(state){
 
 				//var laststate = info
@@ -144,9 +142,6 @@ var nodecontrol = (function(){
 				//}
 				
 			},
-
-			
-
 			ticksettings : function(settings, s, changed){
 
 				if (changed){
@@ -178,7 +173,6 @@ var nodecontrol = (function(){
 					}
 				})
 			},
-
 			updateNode : function(){
 
 				proxy.fetchauth('manage', {
@@ -189,7 +183,7 @@ var nodecontrol = (function(){
 				}).then(r => {
 
 					actions.refresh().then(r => {
-						renders.allsettings()
+						renders.all()
 					})
 
 					topPreloader(100);
@@ -198,16 +192,15 @@ var nodecontrol = (function(){
 
 					sitemessage(self.app.localization.e('e13293'))
 
-
 					actions.refresh().then(r => {
-						renders.allsettings()
+						renders.all()
 					})
 
 					topPreloader(100);
 
 				})
 			},
-			installNode : function(){
+			installNode : function() {
 
 				proxy.fetchauth('manage', {
 					action : 'node.install',
@@ -217,7 +210,7 @@ var nodecontrol = (function(){
                     proxy.system.request('set.node.enabled', {enabled : true}).then(r => {
 
                         actions.refresh().then(r => {
-                            renders.allsettings()
+                            renders.all()
                             topPreloader(100);
                         })
                         
@@ -228,7 +221,7 @@ var nodecontrol = (function(){
 					sitemessage(self.app.localization.e('e13293'))
 
 					actions.refresh().then(r => {
-						renders.allsettings()
+						renders.all()
 					})
 
 					topPreloader(100);
@@ -247,7 +240,7 @@ var nodecontrol = (function(){
 
 
 					actions.refresh().then(r => {
-						renders.allsettings()
+						renders.all()
 					})
 
 					topPreloader(100);
@@ -257,14 +250,13 @@ var nodecontrol = (function(){
 					sitemessage(self.app.localization.e('e13293'))
 
 					actions.refresh().then(r => {
-						renders.allsettings()
+						renders.all()
 					})
 
 					topPreloader(100);
 
 				})
 			},
-
 		}
 
 		var events = {
@@ -280,19 +272,22 @@ var nodecontrol = (function(){
 
 				if (el.c){
 
-					renders.nodelanding(el.c)
-					renders.electronfornode()
+					
+						renders.nodelanding(el.c)
+						renders.electronfornode()
 
-					renders.nodecontentmanage(el.c, function(){
-						renders.nodecontentstate(el.c)
-						renders.nodecontentmanagestacking(el.c)
-						renders.nodecontentmanagewallet(el.c)
-					})
+						renders.nodecontentmanage(el.c, function(){
+							renders.nodecontentstate(el.c)
+							renders.nodecontentmanagestacking(el.c)
+							renders.nodecontentmanagewallet(el.c)
+						})
+
+
+					
 					
 				}
 			},
-		
-			nodecontentmanagestacking : function(elc, clbk) {
+		    nodecontentmanagestacking : function(elc, clbk) {
 				if (actions.admin() && info.nodeControl.state.staking){
 
 					self.shell({
@@ -518,7 +513,7 @@ var nodecontrol = (function(){
 							proxy : proxy,
 							admin : actions.admin(),
 							system : system,
-							dis : dis,
+							dis : false,
 							showdirect : true
 						},
 
@@ -526,8 +521,6 @@ var nodecontrol = (function(){
 
 					},
 					function(p){
-
-						
 
 						actions.settings(p.el)
 
@@ -592,6 +585,13 @@ var nodecontrol = (function(){
 								}
 							})
 
+						})
+
+                        p.el.find('.stopInstall').on('click', () => {
+                            proxy.fetchauth('manage', {
+                                action : 'node.breakInstall',
+                                data : {}
+                            })
 						})
 
 						p.el.find('.toDefaultPath').on('click', function(){
@@ -690,7 +690,6 @@ var nodecontrol = (function(){
 
 				}
 			},
-
 			electronfornode : function(clbk){
 				if(!actions.admin() && !(typeof _Electron != 'undefined' && _Electron)) {
 

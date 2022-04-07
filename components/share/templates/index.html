@@ -1,35 +1,19 @@
 
-
-
-<% 
-var postline = function(){ %>
-	<div class="postlineWrapper">
-
-	</div>
-<% } 
-
-
-%>
-
 <div elementsid="share-<%-module.map.id%>" id="<%-module.map.id%>" class="unfocus <% if(essenseData.minimized && typeof checkEntity !='undefined' && !checkEntity) {%> minimized <% } %>">
 	<div class="mobilecaption">
 		<% if(!share.aliasid) {%>
 
-			<span><%=e('newShare')%></span>
-
-			<!--<% if(postcnt === 0) {%>
-				<span><%=e('firstShare')%></span>
+			<% if(essenseData.repost) {%>
+				<span><%=e('newRepost')%></span>
 			<% } else { %> 
-			
 				<span><%=e('newShare')%></span>
-				
-			<% }%>-->
+			<% } %>
 			
 		<% } else { %> 
 			<span><%=e('editpost')%></span>
 		<% } %>
 	</div>
-	<div class="absolutetxwrapper">
+	<div class="absolutetxwrapper wndcustomscroll">
 
 			<div class="iconWrapper">
 
@@ -63,69 +47,64 @@ var postline = function(){ %>
 
 			</div>
 
-					<% if((deep(essenseData, 'pack.addresses.length') || 0) > 1) {%>
-						<div class="cntwrk">
-							<div class="changeAddressWrapper">
+			<% if((deep(essenseData, 'pack.addresses.length') || 0) > 1) {%>
+				<div class="cntwrk">
+					<div class="changeAddressWrapper">
 
-								<select class="changeAddress">
-									<% _.each(deep(essenseData, 'pack.addresses'), function(address){ 
+						<select class="changeAddress">
+							<% _.each(deep(essenseData, 'pack.addresses'), function(address){ 
 
-										var selected = '';
+								var selected = '';
 
 
 
-										if(address == (essenseData.daddress || user.address.value.toString('hex'))) selected = 'selected'
+								if(address == (essenseData.daddress || user.address.value.toString('hex'))) selected = 'selected'
 
-										var label = deep(app, 'platform.sdk.users.storage.'+address+'.name') || address
+								var label = deep(app, 'platform.sdk.users.storage.'+address+'.name') || address
 
-									%> 
+							%> 
 
-										<option value="<%-address%>" <%-selected%>><%-label%></option>
+								<option value="<%-address%>" <%-selected%>><%-label%></option>
 
-									<% }) %>
-								</select>
+							<% }) %>
+						</select>
 
-							</div>
-						</div>
-
-					<% } %>
-					
-
-					
-
-					<div class="cntwrk bodywrapper">
-						
 					</div>
-					
-					<div class="repostWrapper attachements"></div>	
+				</div>
 
-					<!-- ------------------------->
+			<% } %>
+			
 
-					<div class="cntwrk linewrapper">
-						<div class="sortablepaddingspacer">
+			<div class="cntwrk bodywrapper">
+				
+			</div>
+			
+			<div class="repostWrapper attachements"></div>	
 
-							<div class="tgsWrapperMain">
-							</div>
+			<!-- ------------------------->
 
-							<div class="settingsWrapper">
-							</div>
+			<div class="cntwrk linewrapper">
+				<div class="sortablepaddingspacer">
 
-							<% 
-							
-							
-							if(!essenseData.absolute) {%>
-								<% postline() %>
-
-								<div class="paddingmobilewrapper">
-									<div class="error" elementsid="errorLinewrapper"></div>
-								</div>
-
-							<% } %>
-							
-
-						
-						</div>
+					<div class="settingsWrapper">
 					</div>
+
+					<div class="tgsWrapperMain">
+					</div>
+
+					<div class="paddingmobilewrapper">
+						<div class="error" elementsid="errorLinewrapper"></div>
+					</div>
+
+					<div class="postlineWrapper">
+
+					</div>
+
+
+				</div>
+			</div>
+
+			
 
 			
 	</div>
@@ -138,10 +117,5 @@ var postline = function(){ %>
 		</div>
 	</div>
 
-	<% if(essenseData.absolute) {%>
-		<% postline() %>
 
-			<div class="error" elementsid="errorSLoader"></div>
-
-	<% } %>
 </div>

@@ -10,9 +10,12 @@ var categories = (function(){
 
 		var actions = {
 			showhideclear : function(){
+
+				var hasexc = self.app.platform.sdk.categories.gettagsexcluded().length
+
 				var hasc = self.app.platform.sdk.categories.gettags().length
 
-				if (hasc){
+				if (hasc || hasexc){
 					el.clearcategories.addClass('showed')
 				}
 				else{
@@ -38,6 +41,7 @@ var categories = (function(){
 				}
 
 				self.fastTemplate('addcategory', function(rendered){
+
 					var d = dialog({
 						html : rendered,
 						class : "addcategorydialog",
@@ -45,6 +49,7 @@ var categories = (function(){
 						btn1text : self.app.localization.e('dcancel'),
 						btn2text : self.app.localization.e('save'),
 						wrap : true,
+						
 						clbk : function(el, d){
 							renders.tagsinput(el, category)
 
@@ -113,6 +118,7 @@ var categories = (function(){
 					hasc : hasc
 				})
 			},
+
 
 			addtag : function(tag, category){
 
@@ -216,13 +222,104 @@ var categories = (function(){
 
 					el.c.removeClass('hidden')
 
-					cats = _.sortBy(cats, function(c){
-						if(c.added) return - 1
-						return c.selected ? 0 : 1
+					cats = cats.sort(function(a, b){
+
+						if (a.added){
+
+							return -1;
+						}
+
+						if (a.selected){
+
+							if (b.added){
+
+								return 1;
+
+							} else {
+
+								return -1;
+
+							}
+						}
+
+						if (a.excluded){
+
+							if (!b.selected && !b.added){
+
+								return -1;
+
+							} else {
+
+								return 1;
+							}
+						}
+
+						return 1;
+
+						if (a.excluded){
+
+							if (a.added && !b.selected && b.excluded){
+								return -1;
+							} else {
+								return 1;
+							}
+						}
+
+						if (!a.excluded){
+
+							if (a.added && !b.selected){
+								return -1;
+							}
+
+							if (b.added || b.selected){
+								return 1;
+							}
+
+							if (b.excluded && !b.added){
+
+								return -1;
+
+							} else {
+
+								return 1;
+							}
+
+						}
+
+						return 0;
+
 					})
 
-					
 
+					var catsUsedCount = cats.filter(function(c){
+						return c.added || c.selected || c.excluded;
+					}).length;
+
+					if (catsUsedCount <= 7){
+
+						var indexOfExcluded = cats.findIndex(function(cat){
+							return cat.excluded;
+						})
+
+						if (indexOfExcluded > -1){
+
+							var indexForSplice = cats.length - 8 + catsUsedCount;
+
+							var splicedItems = cats.splice(indexForSplice, cats.length);
+
+							cats.splice(indexOfExcluded, 0, ...splicedItems)
+
+						}
+
+						catsUsedCount = 7;
+
+
+					} else {
+
+						catsUsedCount--;
+					}
+
+					
 					self.shell({
 
 						name :  'categories',
@@ -230,6 +327,7 @@ var categories = (function(){
 	
 						data : {
 							cats : cats,
+							slicer: catsUsedCount
 						},				
 	
 					}, function(p){
@@ -243,7 +341,14 @@ var categories = (function(){
 						})
 
 						p.el.find('.catcheckgl').on('click', function(){
-							var id = $(this).closest('.tg').attr('category')
+							var id = $(this).closest('.tg').attr('category');
+
+							var r = self.app.platform.sdk.categories.select(id)
+
+						})
+
+						p.el.find('.cat .times').on('click', function(){
+							var id = $(this).closest('.tg').attr('category');
 
 							var r = self.app.platform.sdk.categories.select(id)
 
@@ -255,6 +360,14 @@ var categories = (function(){
 							var category = self.app.platform.sdk.categories.getbyid(id)
 
 							actions.addcategory(category)
+
+						})
+
+						p.el.find('.minus').on('click', function(){
+							var id = $(this).closest('.tg').attr('category');
+
+							var r = self.app.platform.sdk.categories.exclude(id)
+
 
 						})
 
@@ -279,10 +392,20 @@ var categories = (function(){
 		}
 
 		var initEvents = function(){
-			
+			self.app.platform.sdk.categories.clbks.excluded.mainmodule = function(id, value, l){
+
+				if(!id) return
+
+				var e = el.c.find('.tg[category="'+id+'"]')
+
+				if(value) e.addClass('excluded')
+				else e.removeClass('excluded')
+
+				actions.showhideclear()
+			}	
+
 			self.app.platform.sdk.categories.clbks.tags.mainmodule =
 			self.app.platform.sdk.categories.clbks.selected.mainmodule = function(id, value, l){
-
 
 				if(!id) return
 
@@ -301,7 +424,7 @@ var categories = (function(){
 			el.c.find('.clearcategories').on('click', function(){
 				dialog({
 					class : 'zindex',
-					html : 'Do you really want to clear category filters?',
+					html :  self.app.localization.e('clearcategories'),
 					btn1text : self.app.localization.e('dyes'),
 					btn2text : self.app.localization.e('dno'),
 					success : function(){	
@@ -315,6 +438,7 @@ var categories = (function(){
 
 		var removeEvents = function(){
 			delete self.app.platform.sdk.categories.clbks.selected.mainmodule
+			delete self.app.platform.sdk.categories.clbks.excluded.mainmodule
 		}
 
 		var load = function(clbk){

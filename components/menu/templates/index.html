@@ -1,370 +1,223 @@
 
 
-<div id="<%-module.map.id%>" class="unselectablemobile">
+<div id="<%-module.map.id%>" class="unselecmobile">
 	
-		<div class="menuWrapper">
-			<div class="rightchatspacer">
-				<div class="sections">
-					<div class="section right">
+	<div class="menuWrapper">
+		<div class="rightchatspacer">
+			<div class="sections">
 
-							<div class="items navWrapper unselectable">
+				<div class="section leftpart">
 
-								<div class="item navWrapperItem" events="navinit">
+					<% if(haschat && state && (app.mobileview)) {%>
 
-									<div class="menutoppanel ">
-										<div class="panelitemCenter">
-											<div class="centerTable table">
-
-												<div class="pcenterCell">
-													<div class="pcenterLabel fresh" r="empty">
-														<a elementsid="href_index" href="index" handler="true"><%=e('e13136')%> <span class="lentaunseen" key="common"></span></a>
-													</div>
-												</div>
-
-
-												<% if(state) { %> 
-												<div class="pcenterCell">
-													<div class="pcenterLabel " r="sub">
-														<a elementsid="href_index?r=sub" href="index?r=sub"  handler="true"><%=e('e13137')%> <span class="lentaunseen " key="sub"></span></a>
-													</div>
-												</div>
-												<% } %>
-												
-												<% if(app.platform.videoenabled) {%>
-													<div class="pcenterCell">
-														<div class="pcenterLabel " r="video">
-															<a elementsid="href_index?video=1" href="index?video=1"  handler="true"><%=e('video')%> <span class="lentaunseen" key="video"></span></a>
-														</div>
-													</div>
-												<% } %>
-
-												<!--<% if(typeof _Electron != 'undefined' && window.electron) {%>
-													<div class="pcenterCell">
-														<div class="pcenterLabel toppost " r="saved">
-															<a elementsid="href_index?r=saved" href="index?r=saved"  handler="true"><%=e('downloaded')%></a>
-														</div>
-													</div>
-												<% } %>-->
-												
-												<div class="pcenterCell">
-													<div class="pcenterLabel toppost " r="recommended">
-														<a elementsid="href_index?r=recommended" href="index?r=recommended"  handler="true"><%=e('e13138')%></a>
-													</div>
-												</div>
-												
-												
-											</div>
-										</div>
+						<div class="items chat">
+							<div elementsid="eventschats" class="item  chatwr" events="chats">
+								<div class="icon">
+									<div class="icn">
+										<i class="far fa-comment"></i>
 									</div>
-
+									<div class="amount">
+									</div>
 								</div>
-
 							</div>
-							
+						</div>
 
-							<% if(state) { %>
+					<% } else { %> 
 
+						<% if( !(state && (app.mobileview)) ) {%>
+
+							<div class="items sitenames">
+
+								<div class="item  sitename" >
+									<div elementsid="eventssitename" class="icon" events="sitename">
+										<img class="header_logo all" src="img/logotypes/<%-app.meta.fullname.toLowerCase()%>_logo_<%-theme%>.svg">
+									</div>
+									<div elementsid="eventslang" class="label">
+										<div elementsid="menu_localization" class="lang localization">
+											
+											<% if(isMobile()) {%>
+												<%-(lkey.key || '').toUpperCase()%> 
+											<% } else { %>
+												<%-(lkey.name || '').toLowerCase()%> 
+											<% } %>
+											
+											<i class="fas fa-caret-down"></i>
+										</div>
+									</div>						
+
+								</div>
 								
+							</div>
 
-									<div elementsid="keyexportWrapper" class="items keyexportWrapper <% if(typeof key== 'undefined' || !key) {%> hidden <% } %>">
-										<div class="item table right onlyicon keyexport" events="keyexport">
+						<% } %>
 
-											<div class="icon">
-												<div class="icn">
-													<i class="fas fa-key"></i>
-												</div>
+					<% } %>
 
-												<div class="amount">
-												</div>
-
-											</div>
-
-										</div>
-									</div>
-
-
-								<div elementsid="notificationsWrapper" class="items notificationsWrapper">
-									<div class="item table right onlyicon notifications" events="notifications">
-
-										<div class="icon">
-											<div class="icn">
-												<i class="far fa-bell"></i>
-											</div>
-
-											<div class="amount">
-											</div>
-
-										</div>
-
-									</div>
-								</div>
-
-
-								<div elementsid="walletsWrapperOpen" class="items walletsWrapper">
-									<div class="item table right wallets onlyicon" events="wallets">
-
-										<div class="amount">
-											<div class="numberWrp">
-												<span class="number">0</span> PKOIN
-											</div>
-										</div>
-
-									</div>
-								</div>
-
-							<% } %>
-
-
-							<div class="items">
-								<div class="item table right state onlyicon" events="state">
-									
-									<div class="icon"> <% if(state) {%> <a elementsid="userpage?id=system16" href="userpage?id=system16">	<% } else { %> <a elementsid="hrefsystem16" href="system16"> <% } %>
-										<div class="icn">
-											<i class="fas fa-wifi"></i>
-										</div></a>
-									</div>
-									
-								</div>
-							</div>		
-								
-							
-
-							<% if(state) { %>
-
-								<div class="items workstation">
-									<div elementsid="eventschangeaccount" class="item table right changeaccount" events="changeaccount">
-										<div class="icon">
-											<i class="fas fa-sort-down"></i>
-										</div>
-									</div>
-								</div>
-
-								<div class="items">
-									<div elementsid="menu_user" class="item table right user unselectable">
-
-										<% 
-										
-										var src = deep(app, 'platform.sdk.user.storage.me.image')  
-
-										var name = app.platform.api.clearname(deep(app, 'platform.sdk.user.storage.me.name') || (user.address.value && user.address.value.toString('hex')) )
-										var letter = name ? name[0] : ''
-
-
-										%>
-										
-										<div class="icon">
-											<a elementsid="<%-app.platform.api.authorlink(user.address.value.toString('hex'))%>" href="<%-app.platform.api.authorlink(user.address.value.toString('hex'))%>">	
-												<div class="usericon" visibleimage="true" image="<%-src || '*'%>" ban=".gif">
-
-													<% if(!src && letter) {%>
-
-														<span class="letter">
-															<%-letter.toUpperCase()%>
-														</span>
-
-													<% } else if (!src) { %>
-			
-														<i class="far fa-user"></i>
-
-													<% } %>
-
-													<% if(app.platform.ui.markUser) {%>
-
-														<%= app.platform.ui.markUser(user.address.value && user.address.value.toString('hex'))%>
-					
-													<% } %>
-												
-												</div>
-											</a>
-
-							
-
-											<!--<div class="localizationicon">
-												<img src="img/localization/small/<%-lkey.key || ''%>.png">
-											</div>-->
-										</div>
-
-									</div>
-									
-								</div>
-
-								
-
-							<% } %>
-
-								
-							<% if(!state) { %>
-
-								
-								<div class="items">
-									<div elementsid="eventssignin" class="item table right signin" events="signin">
-										<div class="label">
-											<b><%=e('signinmenu')%></b>
-										</div>
-									</div>
-
-								</div>
-
-								<div class="items workstation">
-
-									<div elementsid="eventssignup" class="item table right signup" events="signup">
-
-										<div class="label">
-											<b><%=e('signupmenu')%></b>
-										</div>
-
-									</div>
-								</div>
-
-							<% } %>
-						
-					</div>
+				</div>
 
 				
+				<div class="section centerpart">
+					<% if(!app.curation()) {%>
+						<div class="items searchWrapper">
 
-					<div class="section leftpart">
+							<div class="item  right" events="searchinit">
+								<div class="postssearchwrapper">
+									<div class="postssearch">
+									</div>
+								</div>
+							</div>
+						</div>
 
-						<% if(haschat && state && (isMobile() || isTablet() || window.cordova) /*&& window.testpocketnet*/) {%>
+					<% } %>
+				</div>
 
-							<div class="items chat">
+				<div class="section right">
 
-								<div elementsid="eventschats" class="item table chatwr" events="chats">
+						<% if(state) { %>
+
+							<div elementsid="keyexportWrapper" class="items keyexportWrapper <% if(typeof key== 'undefined' || !key) {%> hidden <% } %>">
+								<div class="item  right onlyicon keyexport" events="keyexport">
+
 									<div class="icon">
 										<div class="icn">
-
-											<i class="far fa-comment"></i>
-
-											
+											<i class="fas fa-key"></i>
 										</div>
+
 										<div class="amount">
 										</div>
+
 									</div>
-									
+
 								</div>
 							</div>
 
+							<div elementsid="notificationsWrapper" class="items notificationsWrapper">
+								<div class="item  right onlyicon notifications" events="notifications">
 
-						<% } else { %> 
-
-							<% if(state && (isMobile() || isTablet() || window.cordova)) {%>
-
-							<% } else { %>
-
-								<div class="items sitenames">
-
-									<% if(typeof theme != 'undefined') {%>
-
-									<div class="item table sitename" >
-										<div elementsid="eventssitename" class="icon" events="sitename">
-											<img class="header_logo all" src="img/logotypes/<%-app.meta.fullname.toLowerCase()%>_logo_<%-theme%>.svg">
+									<div class="icon">
+										<div class="icn">
+											<i class="far fa-bell"></i>
 										</div>
-										<div elementsid="eventslang" class="label">
-											<!--<div class="sitenamelabel"><% if(app.test){%>TESTNET<%} else {%><%-app.meta.fullname%><% }%></div>-->
-											<div elementsid="menu_localization" class="lang localization">
-												
-												<% if(isMobile()) {%>
-													<%-(lkey.key || '').toUpperCase()%> 
-												<% } else { %>
-													<%-(lkey.name || '').toLowerCase()%> 
+
+										<div class="amount">
+										</div>
+
+									</div>
+
+								</div>
+							</div>
+
+							<div elementsid="walletsWrapperOpen" class="items walletsWrapper">
+								<div class="item  right wallets onlyicon" events="wallets">
+
+									<div class="amount">
+										<div class="numberWrp">
+											<span class="number">0</span> PKOIN
+										</div>
+									</div>
+
+								</div>
+							</div>
+
+						<% } %>
+
+						<div class="items">
+							<div class="item  right state onlyicon" events="state">
+								
+								<div class="icon"> <% if(state) {%> <a elementsid="userpage?id=system16" href="userpage?id=system16">	<% } else { %> <a elementsid="hrefsystem16" href="system16"> <% } %>
+									<div class="icn">
+										<i class="fas fa-wifi"></i>
+									</div></a>
+								</div>
+								
+							</div>
+						</div>		
+
+						<% if(state) { %>
+
+							<div class="items workstation">
+								<div elementsid="eventschangeaccount" class="item  right changeaccount" events="changeaccount">
+									<div class="icon">
+										<i class="fas fa-sort-down"></i>
+									</div>
+								</div>
+							</div>
+
+							<div class="items">
+								<div elementsid="menu_user" class="item  right user unselec">
+
+									<% 
+									
+									var src = deep(app, 'platform.sdk.user.storage.me.image')  
+
+									var name = app.platform.api.clearname(deep(app, 'platform.sdk.user.storage.me.name') || (user.address.value && user.address.value.toString('hex')) )
+									var letter = name ? name[0] : ''
+
+
+									%>
+									
+									<div class="icon">
+										<a elementsid="<%-app.platform.api.authorlink(user.address.value.toString('hex'))%>" href="<%-app.platform.api.authorlink(user.address.value.toString('hex'))%>">	
+											<div class="usericon" visibleimage="true" image="<%-src || '*'%>" ban=".gif">
+
+												<% if(!src && letter) {%>
+
+													<span class="letter">
+														<%-letter.toUpperCase()%>
+													</span>
+
+												<% } else if (!src) { %>
+		
+													<i class="far fa-user"></i>
+
 												<% } %>
-												
-												<i class="fas fa-caret-down"></i>
-											</div>
-										</div>						
 
-									</div>
+												<% if(app.platform.ui.markUser) {%>
 
-									<% } else { %> 
-									
-										<div class="item table sitename" >
-											<div elementsid="eventssitename" class="icon" events="sitename">
-												<img class="header_logo" src="img/logo20.svg">
-											</div>
-											<div elementsid="eventslang" class="label">
-												<div class="sitenamelabel"><% if(app.test){%>TESTNET<%} else {%><%-app.meta.fullname%><% }%></div>
-												<div class="lang localization">
-													
-													<% if(isMobile()) {%>
-														<%-(lkey.key || '').toLowerCase()%> 
-													<% } else { %>
-														<%-(lkey.name || '').toLowerCase()%> 
-													<% } %>
-													
-													<i class="fas fa-caret-down"></i>
-												</div>
-											</div>						
+													<%= app.platform.ui.markUser(user.address.value && user.address.value.toString('hex'))%>
 				
-										</div>
-										
-									<% } %>
-								</div>
-
-							<% } %>
-
-						<% } %>
-
-						<% if(typeof _Electron == 'undefined' && !window.cordova){ %> 
-
-							<!--<div class="items mdl workstation">
-
-								<div class="item table">
-									
-									<div class="label">
-										<div><a elementsid="hrefabout" href="about"><%=e('aboutmenu')%></a></div>
-									</div>
-
-								</div>
-							</div>-->
-
-						<% } %>
-
-						<!--<% if(!state){ %>  
-
-							<div class="items gethotpostsWrapper">
-								<a elementsid="index?r=recommended" href="index?r=recommended">
-									<div class="item table right onlyicon gethotposts">
-										
+												<% } %>
 											
-											<div class="icon">
-												<div class="icn">
-													<i class="fas fa-fire"></i>
-												</div>
 											</div>
-
-											<div class="label">
-												Top posts
-											</div>
-										
-
+										</a>
 									</div>
-								</a>
+
+								</div>
+								
 							</div>
 
-						<% } %>-->
+							
 
-					</div>
+						<% } %>
 
-					<div class="section centerpart">
-						<% if(!app.curation()) {%>
-							<div class="items searchWrapper">
-
-								<div class="item table right" events="searchinit">
-									<div class="postssearchwrapper">
-										<div class="postssearch">
-										</div>
+							
+						<% if(!state) { %>
+							
+							<div class="items">
+								<div elementsid="eventssignin" class="item  right signin" events="signin">
+									<div class="label">
+										<b><%=e('signinmenu')%></b>
 									</div>
-
 								</div>
 
 							</div>
 
+							<div class="items workstation">
+
+								<div elementsid="eventssignup" class="item right signup" events="signup">
+
+									<div class="label">
+										<b><%=e('signupmenu')%></b>
+									</div>
+
+								</div>
+							</div>
+
 						<% } %>
-					</div>
 					
 				</div>
 			</div>
-
 		</div>
-
+	</div>
 </div>
 

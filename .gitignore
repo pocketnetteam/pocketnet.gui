@@ -3,9 +3,12 @@
 **/node_modules
 .vscode
 .vs
+.idea
 dist
 messenger/server/cert/key.pem
 messenger/server/cert/cert.pem
+exported.less
+exported.css
 build/installer2.nsh
 *.zip
 messenger2/server/cert/key.pem
@@ -23,6 +26,7 @@ publish.py
 manifest.json
 **/settings
 data/
+heapdump/
 downloads/
 pocketcoin/
 pocketcoind*/
@@ -32,7 +36,6 @@ pocketcoind*/
 /index_el.html
 /openapi.html
 /embedVideo.php
-/main.js
 /config.xml
 .htaccess
 service-worker.js
@@ -46,7 +49,12 @@ cordova/build.json
 cordova/google-services.json
 cordova/GoogleService-Info.plist
 indexcordova.html
-.DS_Store
+**/.DS_Store
+**/.pgbomit
 external/chat
 external/peertube
 web/
+main.js
+docs/
+posts/
+./main.js

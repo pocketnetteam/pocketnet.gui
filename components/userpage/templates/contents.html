@@ -120,6 +120,9 @@
                 </div>
             </div>
             
+        <% } else { %> 
+
+
         <% } %>
 
 
@@ -151,7 +154,59 @@
 
         <% } %>
 
+      
+
     </div>
+
+    <% } %>
+
+
+    <% if(isTablet()) {%>
+
+
+        <div class="additional addmenu applicationupdatemodule <% if(app.mobile.update.updating) {%> updating <% } %>">
+
+            <div class="reportCaption">
+                <div class="label">
+                    <% if(app.mobile.update.hasupdate && !app.mobile.update.playstore) {%>
+
+                        <button class="orange small hasupdate">
+                            <%=e('updateapplication')%>
+                        </button>
+
+                        
+                    <% } else { %> 
+
+                        <span class="applicaitonversion">
+                            <%=e('applicationversion')%> &middot; <%- window.packageversion %>
+                        </span>
+                        
+                    <% } %>
+                    
+                </div>
+
+                <% if(app.mobile.update.needmanage && !app.mobile.update.playstore) {%>
+                    <div class="label">
+                        <span>
+                            <%=e('installedusinggps')%>
+                        </span>
+                    </div>
+                <% } %>
+            </div>
+
+
+            <div class="updatingprogress">
+
+                <div class="text">Updating</div>
+
+                <div class="preloaderWrapper">
+                    <div class="preloader5"><img src="./img/three-dots.svg"/></div>
+                </div>
+
+            </div>
+
+        </div>
+
 
     <% } %>
 
@@ -167,9 +222,6 @@
             </div>
 
         </div>
-
-
-
 
     <% } %>
 

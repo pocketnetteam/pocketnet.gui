@@ -2,7 +2,7 @@
 
 #transactionview{
     .workd{
-        background: fade(@color-gray, 5);
+        background: rgb(var(--background-secondary-theme));
         border-radius: 10px;
         padding : 2 * @rhythm;
     }
@@ -61,12 +61,12 @@
     }
 
     .amount{
-        color : @color-good;
+        color : rgb(var(--color-good));
     }
 
     .input{
         .amount{
-            color : @color-orange;
+            color : rgb(var(--color-txt-orange));
         }
     }
 
@@ -100,7 +100,7 @@
             width: 100%;
             border-radius: 3px;
             padding : 2 * @rhythm;
-            border: 1px solid fade(@color-gray, 10) ;
+            border: 1px solid rgb(var(--neutral-grad-0));
         }
     }
 

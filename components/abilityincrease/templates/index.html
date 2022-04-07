@@ -1,0 +1,25 @@
+<div id="<%-module.map.id%>">
+
+	<div class="errorHeading"><i class="<%-meta.icon%>"></i> <%- e(meta.header) %></div>
+	<div class="errorBody"><%- e(meta.body) %></div>
+
+	<% if(meta.additional) {%>
+		<div class="errorAdditional"><%- e(meta.additional) %></div>
+	<% } %>
+
+	<div class="actions">
+		<% if(meta.support) {%>
+			<div class="buttonwrapper">
+				<button class="writesupport ghost" template="<%-meta.support.template%>"><%=e(meta.support.text || 'writesupport')%></button>
+			</div>
+		<% } %>
+
+		<% if(increase.balance) {%>
+			<div class="buttonwrapper">
+				<button class="buypkoins ghost"><%=e('buylogo')%></button>
+			</div>
+		<% } %>
+
+	</div>
+	
+</div>
