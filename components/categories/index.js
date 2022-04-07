@@ -371,16 +371,22 @@ var categories = (function(){
 			})
 
 			el.c.find('.clearcategories').on('click', function(){
-				dialog({
-					class : 'zindex',
-					html :  self.app.localization.e('clearcategories'),
-					btn1text : self.app.localization.e('dyes'),
-					btn2text : self.app.localization.e('dno'),
-					success : function(){	
-						self.app.platform.sdk.categories.clear()
-						make()
-					}
-				})
+
+				if ($(this).hasClass('showed')){
+
+					dialog({
+						class : 'zindex',
+						html :  self.app.localization.e('clearcategories'),
+						btn1text : self.app.localization.e('dyes'),
+						btn2text : self.app.localization.e('dno'),
+						success : function(){	
+							self.app.platform.sdk.categories.clear()
+							make()
+						}
+					})
+
+				}
+
 			})
 
 		}
