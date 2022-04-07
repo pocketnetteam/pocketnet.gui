@@ -414,7 +414,6 @@ var Nodemanager = function(p){
                                 if (nd.version != exp.version || !nd.vcode){
                                     db.update({ key: exp.key }, { $set: { data: {version : exp.version, vcode : exp.vcode} } }, {}, function (err) {
 
-                                        console.log("UPDATE", err)
 
                                         if(err){
                                             reject(err)
@@ -427,7 +426,6 @@ var Nodemanager = function(p){
                                 }
                                 else{
 
-                                    console.log("NIP")
 
                                     resolve()
 
@@ -505,8 +503,6 @@ var Nodemanager = function(p){
         if(!node.eventsCount) return
 
         var workingNodes = getWorkingNodes()
-
-        console.log('usersfornode', minnodescount, usersfornode, self.proxy.users(), workingNodes.length)
 
         if (workingNodes.length < minnodescount || !usersfornode || self.proxy.users() / usersfornode >= workingNodes.length){
 
@@ -861,8 +857,6 @@ var Nodemanager = function(p){
 
                 self.cleardatabase().catch(e => {}).then(() => {
 
-                    console.log('cleardatabaseclbk')
-
                     var bchain = 'main'
 
                     if (self.proxy.test) bchain = 'test'
@@ -1184,8 +1178,6 @@ var Nodemanager = function(p){
                 }
             })
 
-            console.log("peerAllNodesTime askedsuccess", askedsuccess)
-
             if (askedsuccess < 5){
                 _.each(_.shuffle(nodes), function(node, i){
 
@@ -1206,8 +1198,6 @@ var Nodemanager = function(p){
 
             if(!last || f.date.addseconds(last, peernodesCheckTime / 1000) < new Date()){
                 
-                console.log('peernodesTime', node.key)
-
                 self.askingpeer[node.key] = true
 
                 return self.api.peernodes(node).then(r => {
