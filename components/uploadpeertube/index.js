@@ -190,7 +190,7 @@ var uploadpeertube = (function () {
             el.preloaderElement.removeClass('hidden');
           }
 
-          setBarProgress(progress.toFixed(2));
+          setBarProgress(progress);
         }
 
         function initCancelListener(cancel) {
@@ -234,12 +234,10 @@ var uploadpeertube = (function () {
 					try {
 						el.cancelButton.addClass('hidden');
 
-						options.progress(0);
-
 						let binProcessing = false;
 						const progressBinaries = (progress) => {
 							if (!binProcessing && progress !== 100) {
-								options.progress(0);
+                loadProgress(0);
 
 								el.uploadProgress.find('.bold-font')
 									.text(self.app.localization.e('uploadVideoProgress_binaries'))
@@ -254,7 +252,7 @@ var uploadpeertube = (function () {
 								binProcessing = true;
 							}
 
-							options.progress(progress);
+              loadProgress(progress);
 						};
 
 						await videoProcessor.downloadBinaries(progressBinaries);
@@ -262,7 +260,7 @@ var uploadpeertube = (function () {
 						let videoTranscoding = false;
 						const progressTranscode = (progress) => {
 							if (!videoTranscoding) {
-								options.progress(0);
+                loadProgress(0);
 
 								el.uploadProgress
 									.find('.upload-progress-bar')
@@ -277,7 +275,7 @@ var uploadpeertube = (function () {
 								videoTranscoding = true;
 							}
 
-							options.progress(progress);
+              loadProgress(progress);
 						};
 
 						const transcoded = await videoProcessor.transcode(filePath, progressTranscode, options.cancel);
@@ -706,7 +704,22 @@ var uploadpeertube = (function () {
         }
 
         const uploader = new VideoUploader(data.video);
-        uploader.loadProgress = loadProgress;
+
+        el.uploadProgress
+          .find('.upload-progress-bar')
+          .removeClass('binaries processing')
+          .addClass('uploading');
+
+        el.uploadProgress.find('.bold-font')
+          .text(self.app.localization.e('uploadVideoProgress_uploading'))
+
+        el.uploadProgress.removeClass('hidden');
+
+        loadProgress(0);
+
+        uploader.loadProgress = (percent) => {
+          loadProgress(percent, true);
+        };
 
         uploader.chunkScalingCalculator = ({ time, videoSize, chunkSize }, data) => {
           if (!data.started) {
