@@ -1074,7 +1074,7 @@ PeerTubePocketnet = function (app) {
 
       authIfNeed: function (need, host, renew) {
         const userAddress = app.user.address.value;
-        const rawUserToken = localStorage[`token_${userAddress}`];
+        const rawUserToken = localStorage[`token_${userAddress}_${host}`];
 
         if (!need) return Promise.resolve();
 
@@ -1175,7 +1175,7 @@ PeerTubePocketnet = function (app) {
             };
 
             const userAddress = app.user.address.value;
-            localStorage[`token_${userAddress}`] = JSON.stringify(storageData);
+            localStorage[`token_${userAddress}_${options.host}`] = JSON.stringify(storageData);
 
 						return data;
 					})
