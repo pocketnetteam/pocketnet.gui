@@ -180,14 +180,16 @@ var uploadpeertube = (function () {
             .text(percent + '%');
         }
 
-        function loadProgress(percentComplete) {
+        function loadProgress(percentComplete, showFinalPreloader = false) {
           let progress = Math.floor(percentComplete).toString(10);
 
-          const progress100 = (progress > 100);
+          const progress100 = (progress >= 100);
           const isPreloaderHidden = el.preloaderElement.hasClass('hidden');
 
-          if (progress100 && isPreloaderHidden) {
-            el.preloaderElement.removeClass('hidden');
+          if (progress100 && showFinalPreloader && isPreloaderHidden) {
+            setTimeout(() => {
+              el.preloaderElement.removeClass('hidden');
+            }, 1000);
           }
 
           setBarProgress(progress);
@@ -774,10 +776,14 @@ var uploadpeertube = (function () {
 
         uploader.uploadChunked()
           .then((response) => {
-            hideLoadingBar();
+            loadProgress(100, true);
 
-            actions.added(response.videoLink, wnd.find('.upload-video-name').val());
-            wndObj.close();
+            setTimeout(() => {
+              hideLoadingBar();
+
+              actions.added(response.videoLink, wnd.find('.upload-video-name').val());
+              wndObj.close();
+            }, 2000);
           })
           .catch((e = {}) => {
             self.app.Logger.error({
