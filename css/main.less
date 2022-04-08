@@ -343,6 +343,7 @@ html {
 [image]{
     opacity: 0;
     .transition(0.3s, opacity);
+
 }
 
 [image][visibleimage]{
@@ -7710,15 +7711,13 @@ html.mobileview{
                 
             }
 
-            
-    
-
             .hideButton{
                 display: none!important;
             }
 
             ._close{
                 backdrop-filter: none!important;
+                opacity: 0;
             }
 
            
@@ -7772,7 +7771,11 @@ html.mobileview{
                     margin : 0 auto;
                     padding-left: 0;
                     padding-right: 0;
-                    .shadowSmaller();
+
+                    >div{
+                        opacity: 0;
+                        .transition(0.3s, opacity);
+                    }
     
                     &::-webkit-scrollbar{
                         width: 0;
@@ -7813,6 +7816,7 @@ html.mobileview{
                     .transition(0.3s, transform);
                 }  
                 
+                ._close,
                 .closeline,
                 .wndback{
                     opacity: 1;

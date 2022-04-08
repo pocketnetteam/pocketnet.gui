@@ -955,7 +955,7 @@ Nav = function(app)
 
 				p.globalpreloaderTimer = setTimeout(function(){
 					globalpreloader(true)
-				}, 100)
+				}, 400)
 				
 			}
 

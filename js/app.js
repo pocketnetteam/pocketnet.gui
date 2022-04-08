@@ -1510,6 +1510,7 @@ Application = function(p)
 
 		var dbscrolling = _.debounce(function(){
 
+
 			if(!self.el.window) return
 			if (self.fullscreenmode) return
 			if (scrollmodechanging) return

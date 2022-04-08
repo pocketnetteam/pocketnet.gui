@@ -2488,7 +2488,7 @@ Platform = function (app, listofnodes) {
 
         },
 
-        articledecoration : function(wr, share, extend){
+        articledecoration : function(wr, share, extend, clbk){
             var caption = wr.find('.shareBgCaption')
             var capiontextclass = 'caption_small'
 
@@ -2523,15 +2523,20 @@ Platform = function (app, listofnodes) {
 
                 })
 
-                wr.addClass('ready')
+               
 
                 if(small){
                     caption.addClass('smallimage')
                 }
 
-                if(aspectRatio > 1 && !small){
+                if (aspectRatio > 1 && !small){
                     caption.addClass('verticalcover')
                 }
+
+                setTimeout(function(){
+                    wr.addClass('ready')
+                }, 150)
+               
 
             }, self.app)
         },

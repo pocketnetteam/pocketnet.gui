@@ -2102,7 +2102,7 @@ var lenta = (function(){
 
 					if (
 						!loading &&  (!ended && recommended != 'recommended') && 
-						(el.w.scrollLeft() + el.w.width() > el.c.find('.shares').width() - 2000) 
+						(el.w.scrollLeft() + el.w.width() > el.c.find('.shares').width() - 1000) 
 	
 						) {
 

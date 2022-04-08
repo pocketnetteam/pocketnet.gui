@@ -681,7 +681,18 @@
 				}
 
 				if(isTablet() && (wnd.hasClass('normalizedmobile'))){
-					if(clbk) clbk()
+
+					setTimeout(function(){
+
+						if(clbk) clbk()
+
+						setTimeout(function(){
+							if (wnd)
+								wnd.find('.wndcontent>div').css('opacity', 1)
+						}, 100)
+
+					}, 30)
+					
 				}
 
 			}, 220)

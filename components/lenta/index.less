@@ -867,7 +867,6 @@
 	
 				.blackmatte{
 					background: linear-gradient(0deg, rgba(var(--background-secondary-theme-2),0.96) 10%, rgba(255, 255, 255, 0) 75%), linear-gradient(180deg, rgb(var(--background-secondary-theme-2)) 0%, rgba(255, 255, 255, 0) 18%);
-					backdrop-filter: brightness(85%);
 				}
 
 				&.withoutcover{
@@ -1252,6 +1251,7 @@
 
 		
 		.shares .sharearticle .shareBgCaption {
+			contain: strict;
 			.starstoppanel, .captioncnt .toppanel .socialsharewrapper{
 				padding-right: @rhythm;
 			}	

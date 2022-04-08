@@ -639,7 +639,6 @@
 }
 #lenta .share .sharearticle .shareBgCaption .blackmatte {
   background: linear-gradient(0deg, rgba(var(--background-secondary-theme-2), 0.96) 10%, rgba(255, 255, 255, 0) 75%), linear-gradient(180deg, rgb(var(--background-secondary-theme-2)) 0%, rgba(255, 255, 255, 0) 18%);
-  backdrop-filter: brightness(85%);
 }
 #lenta .share .sharearticle .shareBgCaption.withoutcover {
   height: 340px;
@@ -916,6 +915,9 @@
   }
   #lenta .openoriginallabel {
     display: none;
+  }
+  #lenta .shares .sharearticle .shareBgCaption {
+    contain: strict;
   }
   #lenta .shares .sharearticle .shareBgCaption .starstoppanel,
   #lenta .shares .sharearticle .shareBgCaption .captioncnt .toppanel .socialsharewrapper {

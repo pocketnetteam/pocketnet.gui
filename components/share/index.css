@@ -852,7 +852,7 @@
   display: none;
 }
 html.mobileview .wnd.wndsharepost .wndcontent {
-  overflow-y: inherit;
+  overflow-y: overlay;
 }
 html.mobileview .wnd.wndsharepost .wndcontent #share .mobilecaption {
   position: static;

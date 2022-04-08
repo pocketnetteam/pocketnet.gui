@@ -1833,6 +1833,8 @@ var post = (function () {
 
 			getdata: function (clbk, p) {
 
+				
+
 				_repost = null
 
 				eid = p.settings.eid || ''
@@ -1959,7 +1961,6 @@ var post = (function () {
 
 			init: function (p) {
 
-
 				p.clbk(null, p);
 
 				if(!share) return
@@ -1973,7 +1974,7 @@ var post = (function () {
 				el.wnd = el.c.closest('.wndcontent');
 
 				
-				if(share.itisarticle()){
+				if (share.itisarticle()){
 					el.c.closest('.wnd').addClass('articlewindow')
 					el.c.addClass('sharec')
 				}
