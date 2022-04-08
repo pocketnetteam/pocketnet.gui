@@ -1274,6 +1274,8 @@ html.mobileview{
 				right :  @rhythm;
 				top : 2 * @rhythm;
 			}
+
+			
 		}	
 
 		.settingsWrapper{
@@ -1313,7 +1315,7 @@ html.mobileview{
 			
 		}
 
-		#post{
+		.poctelc{
 			.share{
 				background: rgb(var(--background-total-theme));
 			}
@@ -1326,11 +1328,11 @@ html.mobileview{
 			}
 		
 			.cntswrk{
-				padding-left : 0;
+				padding-left : @rhythm;
 				padding-right : 0;
 		
 				&.formeta{
-					margin-left: 7 * @rhythm;
+					margin-left: 8 * @rhythm;
 					padding-left : @rhythm;
 				}
 			}
@@ -1430,31 +1432,6 @@ html.mobileview{
 				}
 			}
 
-			#post{
-		
-				.iconWrapper{
-					width: 7 * @rhythm;
-					padding-top: @rhythm;
-					padding-left: @rhythm;
-					padding-right: 0;
-					display: block;
-				}
-			
-				.cntswrk{
-					margin-left: @rhythm;
-					padding-left : 0;
-					padding-right : 0;
-			
-					&.formeta{
-						margin-left: 7 * @rhythm;
-						padding-left : @rhythm;
-					}
-				}
-		
-				.postWrapper{
-					background: transparent;
-				}
-			}
 		}
 
 		.emojionearea, .emojionearea.form-control{
@@ -1877,6 +1854,42 @@ html.mobileview{
 			.times{
 				opacity: 0.7;
 			}
+
+			.panel{
+				overflow: hidden;
+				height: auto;
+	
+				>div{
+					width : 32px;
+					height: 32px;
+					border-radius: 50%;
+					line-height: 32px;
+					background: rgb(var(--color-bg-ac));
+					color : rgb(var(--text-on-bg-ac-color));
+					border-radius: 6px;
+					float: left;
+					text-align: center;
+					font-size: 1em;
+					margin-right : 1 * @rhythm;
+					cursor: pointer;
+					.transition(0.3s);
+	
+					&:hover{
+						background : rgb(var(--color-bg-ac-1));
+					}
+	
+					&.nowidth{
+						width: auto;
+						i{
+							width: auto;
+						}
+	
+						span{
+							margin-left: @rhythm;
+						}
+					}
+				}
+			}
 		}
 		
 
@@ -1885,41 +1898,7 @@ html.mobileview{
 			min-height: 0;
 		}
 
-		.panel{
-			overflow: hidden;
-			height: auto;
-
-			>div{
-				width : 32px;
-				height: 32px;
-				border-radius: 50%;
-				line-height: 32px;
-				background: rgb(var(--color-bg-ac));
-				color : rgb(var(--text-on-bg-ac-color));
-				border-radius: 6px;
-				float: left;
-				text-align: center;
-				font-size: 1em;
-				margin-right : 1 * @rhythm;
-				cursor: pointer;
-				.transition(0.3s);
-
-				&:hover{
-					background : rgb(var(--color-bg-ac-1));
-				}
-
-				&.nowidth{
-					width: auto;
-					i{
-						width: auto;
-					}
-
-					span{
-						margin-left: @rhythm;
-					}
-				}
-			}
-		}
+		
 
 		.paddingmobilewrapper{
 			background: rgb(var(--background-total-theme));
