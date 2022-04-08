@@ -10,9 +10,12 @@ var categories = (function(){
 
 		var actions = {
 			showhideclear : function(){
+
+				var hasexc = self.app.platform.sdk.categories.gettagsexcluded().length
+
 				var hasc = self.app.platform.sdk.categories.gettags().length
 
-				if (hasc){
+				if (hasc || hasexc){
 					el.clearcategories.addClass('showed')
 				}
 				else{
@@ -419,16 +422,22 @@ var categories = (function(){
 			})
 
 			el.c.find('.clearcategories').on('click', function(){
-				dialog({
-					class : 'zindex',
-					html :  self.app.localization.e('clearcategories'),
-					btn1text : self.app.localization.e('dyes'),
-					btn2text : self.app.localization.e('dno'),
-					success : function(){	
-						self.app.platform.sdk.categories.clear()
-						make()
-					}
-				})
+
+				if ($(this).hasClass('showed')){
+
+					dialog({
+						class : 'zindex',
+						html :  self.app.localization.e('clearcategories'),
+						btn1text : self.app.localization.e('dyes'),
+						btn2text : self.app.localization.e('dno'),
+						success : function(){	
+							self.app.platform.sdk.categories.clear()
+							make()
+						}
+					})
+
+				}
+
 			})
 
 		}

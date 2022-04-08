@@ -51,11 +51,11 @@ if(!_Node)
 			wss : 8099
 		},
 
-		{
+		/*{
 			host : '6.pocketnet.app',
 			port : 8899,
 			wss : 8099
-		}
+		}*/
 
 	]
 

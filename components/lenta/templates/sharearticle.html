@@ -178,7 +178,7 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
 
 	<% if(cc) { %>
         <div class="captionmult">
-            <div class="sharecaption canmark cancopy showMoreArticle customscroll">
+            <div class="sharecaption canmark cancopy articleclick customscroll">
                     
                     <%=app.actions.emoji(nl2br(trimrn(filterXSS(clearScripts(cc)))))%>
                 
@@ -402,7 +402,7 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
             <div class="shareBgCaption <% if(all) {%> showtext <% } %> <% if(cover) {%> withcover <% } else { %> withoutcover <% } %>">
                 
 
-                <div class="articleCover showMoreArticle" image="<%- cover %>">
+                <div class="articleCover articleclick" image="<%- cover %>">
 
                 </div>
 
@@ -436,7 +436,7 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
                             
                         </div>
 
-                        <div class="textscnts widthcontainer articleclick">
+                        <div class="textscnts widthcontainer ">
 
                             <% if(all) { %>
 
@@ -457,7 +457,7 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
                                 <% if(!share.temp){%>
 
                                     <div class="buttonOpenWrapper">
-                                        <div class="black showMoreArticle"><%= e('readarticle') %></div>
+                                        <div class="black articleclick readarticlebutton"><%= e('readarticle') %></div>
                                     </div>
 
                                 <%} else{ %>

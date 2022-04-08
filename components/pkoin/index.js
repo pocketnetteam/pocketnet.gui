@@ -12,11 +12,9 @@ var pkoin = (function(){
 		var renders = {
 
 			fields: function(){
-
 				
 				self.app.platform.sdk.node.transactions.get.balance(function(balance){
 
-				
 					var options = new Parameter({
 
 						type : "VALUES",
@@ -371,7 +369,7 @@ var pkoin = (function(){
 				swipeClose : true,
 				trueshold : 1,
 				swipeCloseDir : 'down',
-				class : 'pkoinwindow normalizedmobile',
+				class : 'pkoinwindow normalizedmobile maxheight',
 				type : 'pkoin'
 			}
 		}
