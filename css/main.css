@@ -164,7 +164,6 @@
   margin-top: -8px;
   width: 30px;
   height: 15px;
-  contain: strict;
 }
 .jsPlayerLoading .jsPlayerLoadingD {
   position: absolute;
@@ -2978,9 +2977,7 @@ input[type=radio].radio:checked + label {
 }
 .preloader5 img {
   height: 7.5px;
-  contain: strict;
   width: 30px;
-  will-change: transform;
 }
 .preloader5 span {
   vertical-align: middle;
