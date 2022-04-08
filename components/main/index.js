@@ -845,6 +845,7 @@ var main = (function(){
 		}
 
 		var initstick = function(){
+			return
 			if(!self.app.mobileview && !hsready){
 
 				var t1 = 75
