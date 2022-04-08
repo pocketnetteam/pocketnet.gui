@@ -494,10 +494,19 @@
         .tcaptiontable{
 
             .buttons{
+                display: block;
+                overflow: hidden;
                 >div{
                     &.addcategory{
+                        text-overflow: ellipsis;
+                        overflow: hidden;
+                        white-space: nowrap;
+                        padding-top : 6px;
+                        i{
+                            display: inline;
+                        }
                         .text{
-                            display: inline-block;
+                            display: inline;
                         }
                     }
 

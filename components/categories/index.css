@@ -331,8 +331,21 @@
   box-shadow: 0 5px 10px -5px rgba(var(--color-shadow-base), 0.4);
 }
 @media only screen and (max-width: 768px) {
+  #categories .tcaptiontable .buttons {
+    display: block;
+    overflow: hidden;
+  }
+  #categories .tcaptiontable .buttons > div.addcategory {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    padding-top: 6px;
+  }
+  #categories .tcaptiontable .buttons > div.addcategory i {
+    display: inline;
+  }
   #categories .tcaptiontable .buttons > div.addcategory .text {
-    display: inline-block;
+    display: inline;
   }
   #categories .tcaptiontable .buttons > div.simple {
     display: none;

@@ -201,7 +201,7 @@ var comments = (function(){
 		var actions = {
 			showprofile : function(address){
 
-				if(isMobile()){
+				if (self.app.mobileview){
 					self.nav.api.load({
 						open : true,
 						id : 'channel',
@@ -214,13 +214,13 @@ var comments = (function(){
 						}
 					})
 				}
-				else{
+				/*else{
 					self.nav.api.load({
 						open : true,
 						href : 'author?address=' + address,
 						history : true
 					})
-				}
+				}*/
 
 				
 			},
