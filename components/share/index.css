@@ -9,6 +9,10 @@
 		height: auto;
 	}*/
 }
+#share .js-player {
+  border-radius: 6px;
+  overflow: hidden;
+}
 #share .mobilecaption {
   display: none;
 }
