@@ -6952,6 +6952,9 @@
 
 					document.ontouchmove = (e) => {
 
+						e.stopPropagation();
+						e.preventDefault();
+
 						return false
 					}
 				}
