@@ -101,6 +101,7 @@
 
 	.postWrapper{
 		margin : 0 auto;
+		padding-bottom: 2 * @rhythm;
 		max-width: 800px;
 		flex-grow: 1;
 		
@@ -238,6 +239,7 @@
 
 		/*padding-bottom : 4 * @rhythm;*/
 		display: flex;
+		flex-wrap: wrap;
 		padding-top: 2 * @rhythm;
 
 		.cntswrk.tags {
@@ -245,7 +247,7 @@
 		}
 
 		.videoDescription {
-			padding-bottom: 4 * @rhythm;
+			padding-bottom: 1 * @rhythm;
 		}
 
 		.authorMetatable {
@@ -306,7 +308,7 @@
 				padding-left: 2 * @rhythm;
 				padding-right: 2 * @rhythm;
 				
-				border-bottom: 1px solid rgba(var(--color-medium-theme), 0.5);
+				// border-bottom: 1px solid rgba(var(--color-medium-theme), 0.5);
 			}
 			.work{
 				padding : 0;
@@ -415,8 +417,11 @@
 
 #recomandationsFromContent {
 	width: 430px;
+	max-width: 800px;
+    margin: 0 auto;
 	padding-left: 2 * @rhythm;
 	padding-right: 2 * @rhythm;
+	flex-grow: 1;
 
 	.recoVideoDiv {
 
