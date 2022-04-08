@@ -463,8 +463,6 @@ var WSS = function(admins, manage){
             disconnectClient(ws)
         });
 
-        console.log("NEW CONNECTION")
-
         all[ws.id] = ws
         
     }
