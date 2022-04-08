@@ -2089,6 +2089,7 @@ ____loclib.ratings123 = "Only users with high reputation at least 10 publication
 
 ____loclib.ratingss3 = "Only users with high reputation can give 1, 2, 3 star ratings. This is done to protect authors, because Bastyon does NOT require any personal information for registration."
 
+____loclib.clearfilters = "Clear filters"
 ____loclib.clearcategories = "Do you really want to clear category filters?"
 ____loclib.cleartags = "Do you really want to clear tags filters?"
 ____loclib.fromsh = "From"
