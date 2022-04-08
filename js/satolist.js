@@ -21965,24 +21965,28 @@ Platform = function (app, listofnodes) {
 
                     h += '<div class="additionalcontent">'
 
+                    var a = ' + '
+
                         if (!meta.type){
                             if (images.length) {
-                                h +=  flb(self.app.localization.e('timages')) + ' ('+images.length+') '
+                                a +=  flb(self.app.localization.e('timages')) + ' ('+images.length+') '
                             }
 
                             if (links.length) {
-                                h +=  flb(self.app.localization.e('tlinks')) + ' ('+links.length+') '
+                                a +=  flb(self.app.localization.e('tlinks')) + ' ('+links.length+') '
                             }
 
                             if (share.tags.length) {
-                                h +=  flb(self.app.localization.e('e13280')) + ' ('+share.tags.length+') '
+                                a +=  flb(self.app.localization.e('e13280')) + ' ('+share.tags.length+') '
                             }
                         }
 
                         else
                         {
-                            h += '<b>' + flb(self.app.localization.e('video')) + '</b> <i class="fas fa-play"></i> '
+                            a += '<b>' + flb(self.app.localization.e('video')) + '</b> <i class="fas fa-play"></i> '
                         }
+
+                    h+=a
 
                     h += '</div>'
                 }
@@ -24426,27 +24430,24 @@ Platform = function (app, listofnodes) {
 
                                     if (typeof _Electron != 'undefined' && !platform.focus && message.html) {
 
-                                        electron.ipcRenderer.send('electron-notification', {
-                                            html : message.html,
-                                            settings : data.electronSettings
-                                        });
-
-                                        return
-
                                         var _el = $(message.html)
 
                                         var title = _el.find('.caption').text()
                                         var body = _el.find('.tips').text()
+                                        var image = _el.find('[image]').attr('image')
 
-                                        drawRoundedImage(_el.find('.image').text(),100, 200, 200).then(image=>{
+                                        _el = null
+                                      
+
+                                        drawRoundedImage(image, 100, 200, 200).then(image=>{
+
                                             electron.ipcRenderer.send('electron-notification-small', {
                                                 title, body, image
                                             });
+
                                         })
 
-
-
-                                        _el = null
+                                        
 
                                     }
 
