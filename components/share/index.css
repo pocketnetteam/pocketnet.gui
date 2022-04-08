@@ -54,6 +54,10 @@
 #share .settingsWrapper .visibilityWrapper .vc_valuecustom .vc_textInput .vc_inputWrapper {
   border: 0;
 }
+#share .postlineWrapper {
+  padding-left: 5em;
+  padding-right: 30px;
+}
 #share.minimized {
   padding: 0;
   min-height: 0!important;
@@ -103,26 +107,24 @@
   display: none!important;
 }
 #share.minimized .postlineWrapper {
-  margin-top: 0;
-}
-#share.minimized .linewrapper {
-  margin-left: 0;
+  margin: 0;
   position: absolute;
   right: 1em;
   top: 0;
   bottom: 0;
   opacity: 0.5;
-  padding-top: 1em;
+  padding: 0;
+  padding-top: 0.5em;
   left: 50%;
+}
+#share.minimized .postlineWrapper .panel > div {
+  float: right;
+}
+#share.minimized .postlineWrapper .panel > div span {
+  display: none;
 }
 #share.minimized .sortablepaddingspacer {
   padding-right: 0;
-}
-#share.minimized .panel > div {
-  float: right;
-}
-#share.minimized .panel > div span {
-  display: none;
 }
 #share .iconWrapper {
   width: 4em;
@@ -650,25 +652,13 @@
   color: #00a4ff;
   cursor: pointer;
 }
-#share .error {
-  text-align: right;
-  color: rgb(var(--color-bad));
-  font-weight: 400;
-  font-size: 0.8em;
-  margin-top: 0.5em;
-  min-height: 20px;
-  display: none;
-}
-#share.showError .error {
-  display: block;
-}
-#share .panel {
+#share .postpanel .panel {
   height: 35px;
 }
-#share .panel .hide {
+#share .postpanel .panel .hide {
   display: none;
 }
-#share .panel > div {
+#share .postpanel .panel > div {
   width: 32px;
   height: 32px;
   border-radius: 50%;
@@ -684,14 +674,26 @@
   -webkit-transition: 0.3s;
   transition: 0.3s;
 }
-#share .panel > div.nowidth {
+#share .postpanel .panel > div.nowidth {
   width: auto;
 }
-#share .panel > div.nowidth i {
+#share .postpanel .panel > div.nowidth i {
   width: 32px;
 }
-#share .panel > div:hover {
+#share .postpanel .panel > div:hover {
   color: rgb(var(--color-txt-ac));
+}
+#share .error {
+  text-align: right;
+  color: rgb(var(--color-bad));
+  font-weight: 400;
+  font-size: 0.8em;
+  margin-top: 0.5em;
+  min-height: 20px;
+  display: none;
+}
+#share.showError .error {
+  display: block;
 }
 #share .waitpost {
   display: none;
@@ -822,15 +824,8 @@
 }
 .wnd.wndsharepost .wndcontent #share .postlineWrapper {
   position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  margin-top: 0;
-  padding: 1em;
-  margin-left: 0;
-}
-.wnd.wndsharepost .wndcontent #share .postpanel > div.postWrapper {
-  width: 280px;
+  bottom: 0.5em;
+  background: rgb(var(--background-secondary-theme));
 }
 .wnd.wndsharepost .wndcontent #share #taginput .tgs .search .searchFastResultWrapper {
   top: auto;
@@ -854,19 +849,15 @@
 html.mobileview .wnd.wndsharepost .wndcontent {
   overflow-y: overlay;
 }
+html.mobileview .wnd.wndsharepost .wndcontent #share {
+  padding-top: 0;
+}
 html.mobileview .wnd.wndsharepost .wndcontent #share .mobilecaption {
   position: static;
   padding-left: 1em;
 }
 html.mobileview .wnd.wndsharepost .wndcontent #share .absolutetxwrapper {
-  position: static;
-}
-html.mobileview .wnd.wndsharepost .wndcontent #share .postlineWrapper {
-  position: sticky;
-  bottom: 0;
-  padding-left: 0;
-  padding-right: 0;
-  background: rgb(var(--background-secondary-theme));
+  bottom: 50px;
 }
 /*t*/
 @media only screen and (max-width: 768px) {
@@ -930,10 +921,6 @@ html.mobileview .wnd.wndsharepost .wndcontent #share .postlineWrapper {
     left: 0;
     right: 0;
     text-align: center;
-  }
-  .wnd.wndsharepost .wndcontent #share .postlineWrapper {
-    position: static;
-    padding: 0;
   }
   .wnd.wndsharepost .wndcontent #share .postpanel > div.postWrapper {
     width: 100%;
@@ -1343,9 +1330,10 @@ html.mobileview .wnd.wndsharepost .wndcontent #share .postlineWrapper {
     color: rgb(var(--neutral-grad-1));
   }
   #share .postlineWrapper {
-    margin-top: 0;
+    margin: 0;
     padding-left: 0;
     padding-right: 0;
+    position: static!important;
   }
   #share .cpt input {
     padding: 1.5em 1em;
@@ -1371,6 +1359,8 @@ html.mobileview .wnd.wndsharepost .wndcontent #share .postlineWrapper {
   #share .postpanel > div.postWrapper .dopost {
     float: none;
     width: 100%;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
   }
   #share .postpanel > div.postWrapper .cancelpost {
     float: none;
@@ -1386,6 +1376,9 @@ html.mobileview .wnd.wndsharepost .wndcontent #share .postlineWrapper {
   }
   #share .postpanel > div.panelWrapper {
     width: 100%;
+  }
+  #share .postpanel > div.panelWrapper .panel {
+    height: auto;
   }
   #share .postpanel > div.panelWrapper .panel .fileUploader,
   #share .postpanel > div.panelWrapper .panel .elContent {
@@ -1406,6 +1399,7 @@ html.mobileview .wnd.wndsharepost .wndcontent #share .postlineWrapper {
     background: rgb(var(--background-total-theme));
     height: auto;
     padding-left: 0.5em;
+    border-radius: 0;
     padding-right: 0.5em;
     padding: 1em;
   }

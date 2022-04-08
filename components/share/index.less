@@ -79,6 +79,11 @@
 		}
 	}
 
+	.postlineWrapper{
+		padding-left: 10 * @rhythm;
+		padding-right: 30px;
+	}
+
 	&.minimized{
 		padding : 0;
 		min-height: 0!important;
@@ -144,30 +149,29 @@
 		}
 
 		.postlineWrapper{
-			margin-top: 0;
-		}
-
-		.linewrapper{
-			margin-left: 0;
+			margin: 0;
 			position: absolute;
 			right: 2 * @rhythm;
 			top : 0;
 			bottom : 0;
 			opacity: 0.5;
-			padding-top: 2 * @rhythm;
+			padding : 0;
+			padding-top: @rhythm;
 			left: 50%;
+
+			.panel>div{
+				float: right;
+				span{
+					display: none;
+				}
+			}
 		}
 
 		.sortablepaddingspacer{
 			padding-right: 0;
 		}
 
-		.panel>div{
-			float: right;
-			span{
-				display: none;
-			}
-		}
+		
 	}
 
 	.iconWrapper{
@@ -852,6 +856,40 @@
 				}
 			}
 		}
+
+		.panel{
+			height: 35px;
+	
+			.hide{
+				display: none;
+			}
+	
+			>div{
+				width : 32px;
+				height: 32px;
+				border-radius: 50%;
+				line-height: 32px;
+				color : rgb(var(--color-txt-gray-dark));
+			
+				float: left;
+				text-align: center;
+				font-size: 0.8em;
+				margin-right : 1 * @rhythm;
+				cursor: pointer;
+				.transition(0.3s);
+	
+				&.nowidth{
+					width: auto;
+					i{
+						width: 32px;
+					}
+				}
+	
+				&:hover{
+					color : rgb(var(--color-txt-ac));
+				}
+			}
+		}
 	}
 	
 
@@ -871,41 +909,6 @@
 		}
 	}
 
-	.panel{
-		height: 35px;
-
-		.hide{
-			display: none;
-		}
-
-		>div{
-			width : 32px;
-			height: 32px;
-			border-radius: 50%;
-			line-height: 32px;
-			color : rgb(var(--color-txt-gray-dark));
-		
-			float: left;
-			text-align: center;
-			font-size: 0.8em;
-			margin-right : 1 * @rhythm;
-			cursor: pointer;
-			.transition(0.3s);
-
-			&.nowidth{
-				width: auto;
-				i{
-					width: 32px;
-				}
-			}
-
-			&:hover{
-				color : rgb(var(--color-txt-ac));
-			}
-		}
-	}
-
-	
 
 	.waitpost{
 		display: none;
@@ -1070,19 +1073,12 @@
 			}
 
             .postlineWrapper{
-                position : absolute;
-                left : 0;
-                right  :0;
-                bottom : 0;
-                margin-top : 0;
-				padding : 2 * @rhythm;
-				margin-left: 0;
-
+                position: absolute;
+				bottom : @rhythm;
+				background: rgb(var(--background-secondary-theme));
 			}
 
-			.postpanel>div.postWrapper{
-				width: 280px;
-			}
+		
 
 			#taginput .tgs .search .searchFastResultWrapper{
 				top : auto;
@@ -1117,21 +1113,16 @@ html.mobileview{
 			overflow-y: overlay;
 	
 			#share{
+				padding-top : 0;
 				.mobilecaption{
 					position: static;
 					padding-left: 2 * @rhythm;
 				}
 				.absolutetxwrapper{
-					position: static;
+					bottom : 50px;
 				}
-
-				.postlineWrapper{
-					position: sticky;
-					bottom : 0;
-					padding-left: 0;
-					padding-right: 0;
-					background: rgb(var(--background-secondary-theme));
-				}
+				
+				
 			}
 		}
 	}
@@ -1216,10 +1207,7 @@ html.mobileview{
 					text-align: center;
 				}
 
-				.postlineWrapper{
-					position: static;
-					padding : 0;
-				}
+				
 
 				.postpanel>div.postWrapper{
 					width: 100%;
@@ -1779,9 +1767,10 @@ html.mobileview{
 		}
 		
 		.postlineWrapper{
-			margin-top : 0;
+			margin : 0;
 			padding-left: 0;
 			padding-right: 0;
+			position: static!important;
 		}
 
 		.cpt{
@@ -1793,6 +1782,8 @@ html.mobileview{
 		.postpanel{
 			display: block;
 			margin-top : 0;
+			
+
 
 			>div{
 				display: block;
@@ -1811,6 +1802,8 @@ html.mobileview{
 					.dopost {
 						float: none;
 						width : 100%;
+						padding-left: @rhythm;
+						padding-right: @rhythm;
 					}
 
 					.cancelpost{
@@ -1834,7 +1827,10 @@ html.mobileview{
 				&.panelWrapper{
 					width: 100%;
 
+					
+
 					.panel{
+						height: auto;
 						.fileUploader ,
 						.elContent{
 							position: relative;
@@ -1856,6 +1852,7 @@ html.mobileview{
 							background: rgb(var(--background-total-theme));
 							height: auto;
 							padding-left: @rhythm;
+							border-radius: 0;
 							padding-right : @rhythm;
 							padding : 2 * @rhythm;
 
