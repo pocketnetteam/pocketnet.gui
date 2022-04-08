@@ -2179,8 +2179,7 @@ var share = (function(){
 
 							}, {
 								repost : true,
-								eid : "share",
-								postclass : true
+								eid : "share"
 							})
 
 							_p.el.find('.repostCaption').on('click', function(){
