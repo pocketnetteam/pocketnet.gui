@@ -173,7 +173,7 @@ var Proxy = function (settings, manage, test, logger) {
 				if(f.now().getTime() > f.date.addseconds(new Date(Number(sn.date)), sn.exp).getTime()){
 					return false
 				}
-				
+
 				var s = f.hexDecode(sn.s)
 
 				if (s != self.session) return false
@@ -265,7 +265,7 @@ var Proxy = function (settings, manage, test, logger) {
 
 					logger.w('system', 'warn', 'SSL Settings Error', e)
 
-				
+
 					return server.init({
 						ssl: ini.ssl('default'),
 						port: f.deep(settings, 'server.ports.https')
@@ -389,7 +389,7 @@ var Proxy = function (settings, manage, test, logger) {
 		}
 	}
 
-	
+
 
 	self.systemnotify = {
 
@@ -605,10 +605,8 @@ var Proxy = function (settings, manage, test, logger) {
 
 	self.peertube = {
 		init: function () {
+
 			var ins = {
-				0: [
-					{host: 'localhost', ip: '127.0.0.1'},
-				],
 				1: [
 				  { host: 'pocketnetpeertube1.nohost.me', ip: '188.0.15.28' },
 				  { host: 'pocketnetpeertube2.nohost.me', ip: '94.73.223.24' },
@@ -649,7 +647,7 @@ var Proxy = function (settings, manage, test, logger) {
 					ip: '178.154.200.50',
 				  },
 				],
-		
+
 				10: [
 				  {
 					host: 'pocketnetpeertube10.nohost.me',
@@ -662,7 +660,7 @@ var Proxy = function (settings, manage, test, logger) {
 					ip: '84.252.138.108',
 				  },
 				],
-		
+
 				12: [
 				  {
 					host: 'bastyonmma.pocketnet.app',
@@ -675,12 +673,12 @@ var Proxy = function (settings, manage, test, logger) {
 					ip: '49.12.231.72',
 				  },
 				],
-		
+
 				13: [
 				  { host: '01rus.nohost.me', ip: '178.217.159.227' },
 				  { host: '02rus.pocketnet.app', ip: '31.184.215.67' },
 				],
-		
+
 				14: [
 				  { host: 'pocketnetpeertube12.nohost.me', ip: '104.168.248.113' },
 				  { host: 'pocketnetpeertube13.nohost.me', ip: '62.84.115.93' },
@@ -710,7 +708,7 @@ var Proxy = function (settings, manage, test, logger) {
 					}
 				],
 
-				
+
 				17: [
 					{
 						host : 'bastynode.ru',
@@ -748,7 +746,7 @@ var Proxy = function (settings, manage, test, logger) {
 						cantuploading: true,
 						ip: '178.217.155.170',
 					},
-					
+
 				],
 
 				20: [
@@ -757,14 +755,14 @@ var Proxy = function (settings, manage, test, logger) {
 						ip: '51.250.104.218',
 					}
 				],
-				
+
 				21: [
 					{
 						host : 'peertube18.pocketnet.app',
 						ip: '51.250.41.252',
 					}
 				],
-				
+
 				22: [
 					{
 						host : 'peertube19.pocketnet.app',
@@ -773,12 +771,12 @@ var Proxy = function (settings, manage, test, logger) {
 				],
       		};
 
-			// if (test){
-			// 	ins = {0 : [
-			// 		{ host: 'test.peertube.pocketnet.app', ip: '65.108.83.132' },
-			// 		{ host: 'test.peertube2.pocketnet.app', ip: '95.216.212.153' },
-			// 	]}
-			// }
+			if (test){
+				ins = {0 : [
+					{ host: 'test.peertube.pocketnet.app', ip: '65.108.83.132' },
+					{ host: 'test.peertube2.pocketnet.app', ip: '95.216.212.153' },
+				]}
+			}
 
 			return peertube.init({
 				roys : ins
@@ -814,12 +812,12 @@ var Proxy = function (settings, manage, test, logger) {
 				addr: 'PP582V47P8vCvXjdV3inwYNgxScZCuTWsq',
 			}
 
-			/*if (s.listening && w.listening && settings.server.domain){ 
+			/*if (s.listening && w.listening && settings.server.domain){
 				service.mainport = Number(s.listening)
 				service.wssport = Number(w.listening)
 				service.service = true
 				service.addr = settings.server.domain
-	  
+
 			}*/
 
 			return service
@@ -830,7 +828,7 @@ var Proxy = function (settings, manage, test, logger) {
 		info: function (compact) {
 
 			var mem = process.memoryUsage()
-			
+
 			var loads = os.loadavg();
 
 			_.each(mem, function (v, i) {
@@ -840,7 +838,7 @@ var Proxy = function (settings, manage, test, logger) {
 			return {
 				status: status,
 				test : self.test,
-				
+
 				nodeManager: self.nodeManager.info(compact),
 				nodeControl: self.nodeControl.info(compact),
 				firebase: self.firebase.info(compact),
@@ -1044,7 +1042,7 @@ var Proxy = function (settings, manage, test, logger) {
 				})
 
 				users = _.map(posts, function(p){
-					return f.deep(p, 'lastComment.address') 
+					return f.deep(p, 'lastComment.address')
 				})
 
 				users = _.filter(users, u => {return u && !_.find(posts, function(p){
@@ -1108,14 +1106,14 @@ var Proxy = function (settings, manage, test, logger) {
 						});
 					}
 
-					
+
 
 					if(!self.rpcscenarios[method]){
 						return self.api.node.rpc.action({ method, parameters, options, U })
 					}
 
 					return self.rpcscenarios[method]({ method, parameters, options, U })
-					
+
 				},
 			},
 			rpc: {
@@ -1141,7 +1139,7 @@ var Proxy = function (settings, manage, test, logger) {
 						cache : 0,
 						start : 0,
 						ready : 0,
-						
+
 					}
 
 					var _waitstatus = 'un'
@@ -1152,7 +1150,7 @@ var Proxy = function (settings, manage, test, logger) {
 
 					self.logger.w('rpc', 'debug', 'RPC REQUEST')
 
-				
+
 
 					return new Promise((resolve, reject) => {
 
@@ -1163,7 +1161,7 @@ var Proxy = function (settings, manage, test, logger) {
 						}
 
 						return nodeManager.waitreadywithrating().then(resolve).catch(reject)
-						
+
 					}).then(() => {
 
 						self.logger.w('rpc', 'debug', 'AFTER WAITING NODEMANAGER')
@@ -1178,7 +1176,7 @@ var Proxy = function (settings, manage, test, logger) {
 						if (options.node) {
 							node = nodeManager.nodesmap[options.node];
 
-							if (node) 
+							if (node)
 								direct = false
 						}
 
@@ -1186,12 +1184,12 @@ var Proxy = function (settings, manage, test, logger) {
 
 							node = nodeManager.selectProbability();
 
-							if(!node && nodeManager) 
+							if(!node && nodeManager)
 								node = nodeManager.nodesmap[nodeManager.bestnode]
 
 							direct = false
 						}
-						
+
 						if (!node) {
 							return Promise.reject({
 								error: 'node',
@@ -1209,9 +1207,9 @@ var Proxy = function (settings, manage, test, logger) {
 						return new Promise((resolve, reject) => {
 
 							self.logger.w('rpc', 'debug', 'BEFORE CACHE')
-							
+
 							if(!noderating) {
-								
+
 								resolve('nocaching')
 
 								return
@@ -1222,7 +1220,7 @@ var Proxy = function (settings, manage, test, logger) {
 								if (waitstatus == 'smart'){
 									smartresult = smartdata
 								}
-								
+
 
 								resolve(waitstatus);
 
@@ -1240,7 +1238,7 @@ var Proxy = function (settings, manage, test, logger) {
 						_waitstatus = waitstatus
 
 						if (waitstatus == 'smart' && smartresult){
-			
+
 							return Promise.resolve({
 								data: smartresult,
 								code: 207,
@@ -1290,9 +1288,9 @@ var Proxy = function (settings, manage, test, logger) {
 							}
 
 							self.logger.w('rpc', 'debug', 'ADD TO QUEUE')
-							
+
 							nodeManager.queue(node, method, parameters, direct, {resolve, reject}, time.node)
-								
+
 						})
 
 						.then((data) => {
@@ -1358,7 +1356,7 @@ var Proxy = function (settings, manage, test, logger) {
 
 				},
 			},
-		
+
 			revoke: {
 				path: '/nodes/revoke',
 				authorization: 'signature',
@@ -1403,7 +1401,7 @@ var Proxy = function (settings, manage, test, logger) {
 								node: nnode.exportsafe(),
 							});
 
-						else 
+						else
 							return Promise.reject('none');
 					}
 
@@ -1592,7 +1590,7 @@ var Proxy = function (settings, manage, test, logger) {
 
 			urlPreviewFormatted: {
 				path: '/urlPreviewFormatted',
-				
+
 				action: function ({ url }) {
 
 					return new Promise((resolve, reject) => {
@@ -1665,7 +1663,7 @@ var Proxy = function (settings, manage, test, logger) {
 
 					if (!message.A)
 						return Promise.reject({ error: 'Unauthorized', code: 401 });
-						
+
 					var dumpdata = _.clone(dump)
 
 					if (dump.stared){
@@ -1715,13 +1713,13 @@ var Proxy = function (settings, manage, test, logger) {
 							dump._started = dump.stared
 							dump.end = Date.now()
 							dump.name = filename
-	
+
 							delete dump.stared
-	
+
 							if (err){
-	
+
 								dump.error = err.toString ? err.toString() : err
-	
+
 								logger.w('system', 'error', 'Dump Error', dump.error)
 							}
 							else{
@@ -1730,12 +1728,12 @@ var Proxy = function (settings, manage, test, logger) {
 
 								dump.success = true
 							}
-							
+
 						});
 
 						return Promise.resolve('started');
 					}
-					catch(err){	
+					catch(err){
 
 						logger.w('system', 'error', 'Dump Error', err)
 
@@ -1744,9 +1742,9 @@ var Proxy = function (settings, manage, test, logger) {
 							error :  err.toString ? err.toString() : err
 						});
 					}
-					
 
-					
+
+
 				},
 			},
 
@@ -1757,11 +1755,11 @@ var Proxy = function (settings, manage, test, logger) {
 
 					if (!message.A)
 						return Promise.reject({ error: 'Unauthorized', code: 401 });
-						
+
 						server.middle.clear()
 
 					return Promise.resolve('success');
-					
+
 				},
 			},
 
@@ -1772,9 +1770,9 @@ var Proxy = function (settings, manage, test, logger) {
 
 					if (!message.A)
 						return Promise.reject({ error: 'Unauthorized', code: 401 });
-						
+
 					return self.wss.closeall()
-					
+
 				},
 			},
 
@@ -1785,11 +1783,11 @@ var Proxy = function (settings, manage, test, logger) {
 
 					if (!message.A)
 						return Promise.reject({ error: 'Unauthorized', code: 401 });
-						
+
 						server.cache.clear()
 
 					return Promise.resolve('success');
-					
+
 				},
 			},
 
@@ -1800,11 +1798,11 @@ var Proxy = function (settings, manage, test, logger) {
 
 					if (!message.A)
 						return Promise.reject({ error: 'Unauthorized', code: 401 });
-						
+
 						remote.clear()
 
 					return Promise.resolve('success');
-					
+
 				},
 			},
 
@@ -1826,7 +1824,7 @@ var Proxy = function (settings, manage, test, logger) {
 					/*if (nodeManager.bestnodes.length){
 						node = nodeManager.bestnodes[f.rand(0, nodeManager.bestnodes.length - 1)]
 					}*/
-	
+
 					return Promise.resolve({
 						data: {
 							time: f.now(),
@@ -1919,7 +1917,7 @@ var Proxy = function (settings, manage, test, logger) {
 			info: {
 				path: '/firebase/info',
 				action: function (data) {
-					
+
 					return self.firebase.kit.info({}).then((r) => {
 						return Promise.resolve({ data: r });
 					});
@@ -1931,7 +1929,7 @@ var Proxy = function (settings, manage, test, logger) {
 				path: '/firebase/mytokens',
 				action: function (data) {
 
-					
+
 					return self.firebase.kit.mytokens({address : data.U}).then((r) => {
 						return Promise.resolve({ data: r });
 					});
@@ -1953,7 +1951,7 @@ var Proxy = function (settings, manage, test, logger) {
 		},
 
 		peertube: {
-			
+
 		},
 
 		captcha: {
@@ -2127,7 +2125,7 @@ var Proxy = function (settings, manage, test, logger) {
 				},
 			},
 
-			
+
 
 			freeregistrationfake: {
 				path: '/free/registrationfake',
@@ -2179,8 +2177,8 @@ var Proxy = function (settings, manage, test, logger) {
 
 	self.wallet.events()
 
-	
-		
+
+
 	return self
 
 }
