@@ -475,6 +475,7 @@ var uploadpeertube = (function () {
 								wndObj.close();
 							})
 							.catch((e = {}) => {
+
 								self.app.Logger.error({
 									err: e.text || 'videoImportError',
 									payload: JSON.stringify(e),
@@ -529,11 +530,13 @@ var uploadpeertube = (function () {
 				self.app.peertubeHandler.api.user
 					.me()
 					.then((res) => {
+
 						data.hasAccess = true;
 
 						clbk(data);
 					})
 					.catch((e = {}) => {
+
 						self.app.Logger.error({
 							err: e.text || 'getInfoError',
 							payload: JSON.stringify(e),

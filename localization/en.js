@@ -1298,8 +1298,9 @@ ____loclib.videotranscodingwait = "Please wait, this video is being processed. T
 ____loclib.views = "Views";
 
 
-____loclib.saveshare = "Add videos to saved";
-____loclib.successdownloaded = "Video saved";
+____loclib.saveshare = "Download video";
+____loclib.gotosaved = "Go to downloaded";
+____loclib.successdownloaded = "Video downloaded";
 
 
 ____loclib.logoutaccount = "Sign out of your account";
@@ -2089,6 +2090,7 @@ ____loclib.ratings123 = "Only users with high reputation at least 10 publication
 
 ____loclib.ratingss3 = "Only users with high reputation can give 1, 2, 3 star ratings. This is done to protect authors, because Bastyon does NOT require any personal information for registration."
 
+____loclib.clearfilters = "Clear filters"
 ____loclib.clearcategories = "Do you really want to clear category filters?"
 ____loclib.cleartags = "Do you really want to clear tags filters?"
 ____loclib.fromsh = "From"
@@ -2150,3 +2152,5 @@ ____loclib.optimizationtip_show = "Show"
 ____loclib.thankTheAuthor = 'Thank the author';
 
 ____loclib.encourageAuthor = "Encourage author";
+
+____loclib.gotoProfile2 = "Go to Profile";

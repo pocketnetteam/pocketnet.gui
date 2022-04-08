@@ -122,7 +122,7 @@ var Applications = function(settings) {
 
         .then(asset => {
             if(asset && gitasset) {
-                return Promise.resolve(asset.name != gitasset.name)
+                return Promise.resolve(asset.name !== gitasset.name)
             } else {
                 return Promise.resolve(true)
             }

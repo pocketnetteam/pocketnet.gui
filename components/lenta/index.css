@@ -50,9 +50,14 @@
   padding: 3em 0;
   display: none;
   border-radius: 12px;
+  height: 111px;
+  contain: strict;
 }
 #lenta.loading .loader {
   display: block;
+}
+#lenta.sharesEnded .loader {
+  display: none;
 }
 #lenta .panel {
   overflow: hidden;
@@ -92,6 +97,9 @@
 }
 #lenta .share .sharecnt.deleted .removeDescription {
   display: block;
+}
+#lenta .share.fromsub {
+  border: 1px solid #000;
 }
 #lenta .share {
   margin-bottom: 0.5em;
@@ -212,14 +220,19 @@
 #lenta.sharesZero .loadmore {
   display: none;
 }
+#lenta.sharesZero .loader {
+  display: none;
+}
 #lenta .networkErrorMessage {
+  border-radius: 12px;
+  background: rgb(var(--background-total-theme));
   display: none;
   padding: 3em;
   text-align: center;
 }
 #lenta .networkErrorMessage i {
   font-size: 2em;
-  color: rgba(var(--color-txt-ac), 0.15);
+  opacity: 0.5;
 }
 #lenta.networkError .networkErrorMessage {
   display: block;
@@ -538,334 +551,6 @@
 }
 #lenta.horizontal.compact.mainvideo .share .forurl.verticalVideo {
   height: 140px;
-}
-#lenta .share .sharearticle {
-  border-radius: 12px;
-  overflow: hidden;
-  opacity: 0;
-  -moz-transition: opacity 0.1s;
-  -o-transition: opacity 0.1s;
-  -webkit-transition: opacity 0.1s;
-  transition: opacity 0.1s;
-}
-#lenta .share .sharearticle.ready {
-  opacity: 1;
-}
-#lenta .share .sharearticle .shareTable {
-  padding-top: 0;
-  padding-bottom: 0;
-}
-#lenta .share .sharearticle .shareBgCaption .author,
-#lenta .share .sharearticle .articleend .author {
-  margin-top: 1em;
-}
-#lenta .share .sharearticle .shareBgCaption .author i,
-#lenta .share .sharearticle .articleend .author i {
-  display: none;
-}
-#lenta .share .sharearticle .shareBgCaption .author .notificationturn,
-#lenta .share .sharearticle .articleend .author .notificationturn {
-  display: none!important;
-}
-#lenta .share .sharearticle .shareBgCaption .forstars .itemwr,
-#lenta .share .sharearticle .articleend .forstars .itemwr {
-  display: flex;
-  flex-direction: column-reverse;
-  align-items: center;
-}
-#lenta .share .sharearticle .shareBgCaption .forstars .itemwr i,
-#lenta .share .sharearticle .articleend .forstars .itemwr i {
-  text-align: center;
-}
-#lenta .share .sharearticle .shareBgCaption .forstars .starWrapper,
-#lenta .share .sharearticle .articleend .forstars .starWrapper {
-  text-align: center;
-}
-#lenta .share .sharearticle .shareBgCaption .forstars .count span,
-#lenta .share .sharearticle .articleend .forstars .count span {
-  font-size: 2em;
-}
-#lenta .share .sharearticle .shareBgCaption .forstars .count span,
-#lenta .share .sharearticle .articleend .forstars .count span {
-  font-weight: 700;
-  font-family: Nunito Sans;
-}
-#lenta .share .sharearticle .shareBgCaption .sys,
-#lenta .share .sharearticle .articleend .sys {
-  text-align: center;
-}
-#lenta .share .sharearticle .shareBgCaption .buttonOpenWrapper,
-#lenta .share .sharearticle .articleend .buttonOpenWrapper {
-  padding-bottom: 1em;
-}
-#lenta .share .sharearticle .shareBgCaption .buttonOpenWrapper .showMoreArticle,
-#lenta .share .sharearticle .articleend .buttonOpenWrapper .showMoreArticle {
-  color: #00A4FF;
-  cursor: pointer;
-}
-#lenta .share .sharearticle .shareBgCaption .buttonOpenWrapper .showMoreArticle:hover,
-#lenta .share .sharearticle .articleend .buttonOpenWrapper .showMoreArticle:hover {
-  opacity: 0.6;
-}
-#lenta .share .sharearticle .shareBgCaption .divider,
-#lenta .share .sharearticle .articleend .divider {
-  margin: 0.5em auto;
-  height: 1px;
-  width: 110px;
-  background: rgb(var(--background-total-theme));
-}
-#lenta .share .sharearticle .shareBgCaption .tags,
-#lenta .share .sharearticle .articleend .tags {
-  max-width: none;
-}
-#lenta .share .sharearticle .shareBgCaption .tags div span,
-#lenta .share .sharearticle .articleend .tags div span {
-  color: rgba(var(--text-on-bg-ac-color), 0, 0.7);
-}
-#lenta .share .sharearticle .shareBgCaption {
-  height: 425px;
-  position: relative;
-}
-#lenta .share .sharearticle .shareBgCaption .blackmatte {
-  background: linear-gradient(0deg, rgba(var(--background-secondary-theme-2), 0.96) 10%, rgba(255, 255, 255, 0) 75%), linear-gradient(180deg, rgb(var(--background-secondary-theme-2)) 0%, rgba(255, 255, 255, 0) 18%);
-  backdrop-filter: brightness(85%);
-}
-#lenta .share .sharearticle .shareBgCaption.withoutcover {
-  height: 340px;
-}
-#lenta .share .sharearticle .shareBgCaption.withoutcover .blackmatte {
-  background: rgb(var(--background-secondary-theme-2));
-}
-#lenta .share .sharearticle .shareBgCaption .captioncnt {
-  display: flex;
-  flex-direction: column;
-  z-index: 1;
-  color: rgb(var(--text-on-bg-ac-color));
-  overflow: hidden;
-}
-#lenta .share .sharearticle .shareBgCaption .captioncnt .toppanel {
-  display: flex;
-  justify-content: space-between;
-}
-#lenta .share .sharearticle .shareBgCaption .captioncnt .toppanel .authorWrapper {
-  display: flex;
-}
-#lenta .share .sharearticle .shareBgCaption .captioncnt .toppanel .authorWrapper .iconWrapper {
-  margin-top: 6px;
-}
-#lenta .share .sharearticle .shareBgCaption .captioncnt .toppanel .authorWrapper .actionsWrapper {
-  margin-left: 12px;
-}
-#lenta .share .sharearticle .shareBgCaption .captioncnt .toppanel .authorWrapper .actionsWrapper .sys {
-  text-align: start;
-}
-#lenta .share .sharearticle .shareBgCaption .captioncnt .toppanel .socialsharewrapper {
-  padding-right: 1em;
-}
-#lenta .share .sharearticle .shareBgCaption .captioncnt .widthcontainer {
-  margin-top: auto;
-  padding: 0 16px;
-}
-#lenta .share .sharearticle .shareBgCaption .captioncnt .sharecaption {
-  font-size: 1.5em;
-  font-weight: 700;
-  max-width: 85%;
-  color: rgb(var(--text-on-bg-ac-color));
-  max-height: 220px;
-  overflow-x: hidden;
-  overflow-y: auto;
-  text-overflow: ellipsis;
-  overscroll-behavior: auto;
-  text-shadow: 0px 0px 2px rgba(var(--color-shadow-base), 0.714), 0 0 3px rgba(var(--color-shadow-base), 0.519);
-}
-#lenta .share .sharearticle .shareBgCaption .tags {
-  margin-bottom: 0;
-}
-#lenta .share .sharearticle .shareBgCaption .tags div span {
-  text-shadow: 0px 0px 2px rgba(var(--color-shadow-base), 0.714), 0 0 3px rgba(var(--color-shadow-base), 0.519);
-}
-#lenta .share .sharearticle .shareBgCaption .sys span {
-  color: rgb(var(--text-on-bg-shadow-color));
-  text-shadow: 0px 0px 2px rgba(var(--color-shadow-base), 0.714), 0 0 3px rgba(var(--color-shadow-base), 0.519);
-}
-#lenta .share .sharearticle .shareBgCaption .icon .usericon {
-  margin: 0 auto;
-  position: relative;
-}
-#lenta .share .sharearticle .shareBgCaption.showtext .icon {
-  position: absolute;
-  bottom: -22px;
-  left: 0;
-  right: 0;
-}
-#lenta .share .sharearticle .shareBgCaption .starstoppanel,
-#lenta .share .sharearticle .shareBgCaption .socialsharewrapper {
-  bottom: 0.75em;
-  right: 1.25em;
-}
-#lenta .share .sharearticle .shareBgCaption .starstoppanel .starstoppanel .iconwrapper,
-#lenta .share .sharearticle .shareBgCaption .socialsharewrapper .starstoppanel .iconwrapper,
-#lenta .share .sharearticle .shareBgCaption .starstoppanel .socialsharewrapper .iconwrapper,
-#lenta .share .sharearticle .shareBgCaption .socialsharewrapper .socialsharewrapper .iconwrapper {
-  color: rgb(var(--text-color));
-}
-#lenta .share .sharearticle .shareBgCaption .starstoppanel .iconwrapper,
-#lenta .share .sharearticle .shareBgCaption .socialsharewrapper .iconwrapper {
-  width: 3.5em;
-  height: 3.5em;
-  line-height: 3.5em;
-  border-radius: 3.5em;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  font-family: Nunito Sans;
-}
-#lenta .share .sharearticle .shareBgCaption .starstoppanel .iconwrapper:hover,
-#lenta .share .sharearticle .shareBgCaption .socialsharewrapper .iconwrapper:hover {
-  opacity: 0.6;
-}
-#lenta .share .sharearticle .shareBgCaption .starstoppanel .iconwrapper i,
-#lenta .share .sharearticle .shareBgCaption .socialsharewrapper .iconwrapper i {
-  width: 30px;
-  text-align: center;
-  font-size: 0.7em;
-}
-#lenta .share .sharearticle .shareBgCaption .starstoppanel .sharesocial,
-#lenta .share .sharearticle .shareBgCaption .socialsharewrapper .sharesocial {
-  display: none;
-}
-#lenta .share .sharearticle .shareBgCaption .socialsharewrapper .iconwrapper {
-  justify-content: flex-end;
-}
-#lenta .share .sharearticle .shareBgCaption .starstoppanel {
-  bottom: 0.75em;
-  left: 1.5em;
-  right: auto;
-  display: flex;
-  justify-content: space-between;
-  padding: 0 1em;
-}
-#lenta .share .sharearticle .shareBgCaption .starstoppanel .panelLeft {
-  display: flex;
-}
-#lenta .share .sharearticle .shareBgCaption .starstoppanel .panelRight {
-  display: flex;
-  align-items: center;
-}
-#lenta .share .sharearticle .shareBgCaption .articleCover {
-  border-radius: 12px;
-  overflow: hidden;
-}
-#lenta .share .sharearticle .shareBgCaption .blackmatte {
-  border-radius: 12px;
-  overflow: hidden;
-}
-#lenta .share .sharearticle .shareBgCaption .articleCover,
-#lenta .share .sharearticle .shareBgCaption .captioncnt,
-#lenta .share .sharearticle .shareBgCaption .blackmatte {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-}
-#lenta .share .sharearticle .shareBgCaption.smallimage .articleCover {
-  background-color: rgb(var(--color-shadow-base));
-  background-size: 100px auto!important;
-}
-#lenta .share .sharearticle .shareBgCaption.caption_small .captionmult {
-  font-size: 1.5em;
-}
-#lenta .share .sharearticle .shareBgCaption.caption_long .captionmult {
-  font-size: 0.8em;
-}
-#lenta .share .sharearticle .articlecontent {
-  padding-top: 4em;
-  padding-bottom: 4em;
-}
-#lenta .share .sharearticle .articlecontent .cntswrk {
-  margin-left: 0;
-  padding-left: 0;
-  padding-right: 0;
-}
-#lenta .share .sharearticle .articlecontent .articleend {
-  margin-top: 3em;
-}
-#lenta .share .sharearticle .articlecontent .commentsWrapper,
-#lenta .share .sharearticle .articlecontent .commentRegisterDiv .commentRegister {
-  border-radius: 12px;
-}
-#lenta .share .sharearticle .articlecontent .forcomments {
-  margin-top: 6em;
-}
-#lenta .share .sharearticle .removeDescription {
-  display: none;
-  padding: 1.5em;
-  color: rgb(var(--neutral-grad-2));
-}
-#lenta .share .sharearticle.deleted .starstoppanel,
-#lenta .share .sharearticle.deleted .socialsharewrapper,
-#lenta .share .sharearticle.deleted .textscnts {
-  display: none!important;
-}
-#lenta .share .sharearticle.deleted .removeDescription {
-  display: block;
-}
-#lenta .share .sharearticle.deleted .articleCover {
-  filter: blur(2px);
-}
-@media only screen and (min-width: 768px) {
-  #lenta .share .sharearticle .shareBgCaption.verticalcover {
-    height: 520px;
-  }
-  #lenta .share .sharearticle .shareBgCaption.verticalcover .articleCover {
-    left: 0;
-    top: 0;
-    bottom: 0;
-    right: 56%;
-    border-radius: 2px;
-    overflow: hidden;
-    filter: brightness(85%);
-  }
-  #lenta .share .sharearticle .shareBgCaption.verticalcover .captioncnt {
-    left: 44%;
-    top: 0.5em;
-    bottom: 0.5em;
-  }
-  #lenta .share .sharearticle .shareBgCaption.verticalcover .captioncnt .sharecaption {
-    text-shadow: none;
-    color: rgb(var(--text-color));
-  }
-  #lenta .share .sharearticle .shareBgCaption.verticalcover .blackmatte {
-    display: none;
-  }
-  #lenta .share .sharearticle .shareBgCaption.verticalcover .icon {
-    position: static;
-  }
-  #lenta .share .sharearticle .shareBgCaption.verticalcover .captioncnt {
-    justify-content: center;
-    color: rgb(var(--text-color));
-  }
-  #lenta .share .sharearticle .shareBgCaption.verticalcover .divider {
-    background: rgb(var(--text-color));
-  }
-  #lenta .share .sharearticle .shareBgCaption.verticalcover .buttonOpenWrapper {
-    margin-bottom: 0.5em;
-  }
-  #lenta .share .sharearticle .shareBgCaption.verticalcover .buttonOpenWrapper button {
-    background: rgb(var(--color-shadow-base));
-  }
-  #lenta .share .sharearticle .shareBgCaption.verticalcover .buttonOpenWrapper button:hover {
-    background: rgba(var(--color-shadow-base), 0.9);
-  }
-  #lenta .share .sharearticle .shareBgCaption.verticalcover .tags div span {
-    text-shadow: none;
-    color: rgb(var(--text-color));
-  }
-  #lenta .share .sharearticle .shareBgCaption.verticalcover .sys span {
-    text-shadow: none;
-    color: rgb(var(--text-color));
-  }
 }
 @media only screen and (max-width: 768px) {
   #lenta .share .images {

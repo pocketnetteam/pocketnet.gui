@@ -917,9 +917,7 @@ __map =  {
 	channel : {
 		uri : "channel",
 		href : "channel",
-		add : {
-			el : 'content'
-		},
+		add : insertingfunc,
 		anonimus : true,
 		exportcss : true,
 	},

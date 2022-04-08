@@ -343,6 +343,7 @@ html {
 [image]{
     opacity: 0;
     .transition(0.3s, opacity);
+
 }
 
 [image][visibleimage]{
@@ -420,7 +421,7 @@ h3{
 }
 
 mark {
-    background: rgba(var(--color-bg-ac-2), 0.9) fade(@color-contrast, 90);
+    background: rgba(var(--color-bg-ac), 0.9);
     color : rgb(var(--text-on-bg-ac-color));
 }
 
@@ -3194,6 +3195,15 @@ input[type=radio].radio:checked + label {
     bottom: 20px;
     padding : 2 * @rhythm;
     border-radius: 6px;
+    .transition(0.3s);
+
+    .action{
+        margin-top: @rhythm;
+    }
+
+    &.removing{
+        opacity: 0;
+    }
 }
 
 .bodyshadow{
@@ -3423,6 +3433,8 @@ input[type=radio].radio:checked + label {
 }
 .preloader5{
     img{
+        height: 7.5px;
+        contain: strict;
         width: 30px;
         will-change: transform;
     }
@@ -5057,6 +5069,7 @@ html.mobileview{
         contain: strict;
         left : 0;
         top : 0;
+        /*touch-action: none;*/
         right: 0;
         bottom : 0;
         background: rgb(var(--background-hidden-layer));
@@ -5067,7 +5080,6 @@ html.mobileview{
         -webkit-transform: translateX(-100%);
         transform: translateX(-100%);
         overflow: hidden;
-        border-radius: 5px;
         backface-visibility: hidden;
         will-change: transform;
         
@@ -7703,7 +7715,13 @@ html.mobileview{
             .hideButton{
                 display: none!important;
             }
-    
+
+            ._close{
+                backdrop-filter: none!important;
+                opacity: 0;
+            }
+
+           
             .closeline{
                 top : 120px;
                 height: 2px;
@@ -7754,7 +7772,11 @@ html.mobileview{
                     margin : 0 auto;
                     padding-left: 0;
                     padding-right: 0;
-                    .shadowSmaller();
+
+                    >div{
+                        opacity: 0;
+                        .transition(0.3s, opacity);
+                    }
     
                     &::-webkit-scrollbar{
                         width: 0;
@@ -7795,6 +7817,7 @@ html.mobileview{
                     .transition(0.3s, transform);
                 }  
                 
+                ._close,
                 .closeline,
                 .wndback{
                     opacity: 1;
@@ -7823,10 +7846,9 @@ html.mobileview{
 
             &.noheader{
                 .wndinner{
-                    .wndcontent{
-                        border-top-left-radius: 10px;
-                        border-top-right-radius: 10px;
-                    }
+                    border-top-left-radius: 10px;
+                    border-top-right-radius: 10px;
+                    overflow: hidden;
                    
                 }
             }

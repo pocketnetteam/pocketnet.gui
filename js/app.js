@@ -279,7 +279,7 @@ Application = function(p)
 	}
 
 	self.canuseip = function(){
-		if(self.test && (!self.secure() || (typeof _Electron != 'undefined' && _Electron))){
+		if((!self.secure() || (typeof _Electron != 'undefined' && _Electron))){
 			return true
 		}
 	}
@@ -1510,6 +1510,7 @@ Application = function(p)
 
 		var dbscrolling = _.debounce(function(){
 
+
 			if(!self.el.window) return
 			if (self.fullscreenmode) return
 			if (scrollmodechanging) return
@@ -2323,7 +2324,7 @@ Application = function(p)
 			needmanage : false,
 			hasupdate : false,
 
-			playstore : false,  ///// TODO
+			playstore : true,  ///// TODO
 
 			downloadAndInstall : function(){
 

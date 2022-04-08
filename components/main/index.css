@@ -134,6 +134,10 @@
   display: block;
   min-height: 160px;
 }
+#main .topvideosWrapper .wrpcn {
+  position: relative;
+  height: 100%;
+}
 #main .topvideosWrapper .horizontalLentaWrapper {
   padding: 1em;
   padding-bottom: 0.5em;
@@ -562,7 +566,7 @@ html.mobileview #main .bgCaption {
     bottom: 0;
     border-radius: 0;
     /**
-			
+				touch-action: none;
 			border-radius: 10px;
 			top : 4 * @rhythm;
 			bottom : 4 * @rhythm;*/
@@ -627,6 +631,8 @@ html.mobileview #main .bgCaption {
     top: 0;
     right: 0;
     bottom: 0;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
   }
   #main .topvideosWrapper .horizontalLentacaption {
     display: none;

@@ -343,7 +343,7 @@ h3 {
   background: rgba(255, 174, 0, 0.07);
 }
 mark {
-  background: rgba(var(--color-bg-ac-2), 0.9) rgba(255, 110, 132, 0.9);
+  background: rgba(var(--color-bg-ac), 0.9);
   color: rgb(var(--text-on-bg-ac-color));
 }
 /*
@@ -2772,6 +2772,16 @@ input[type=radio].radio:checked + label {
   bottom: 20px;
   padding: 1em;
   border-radius: 6px;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+.sitemessage .action {
+  margin-top: 0.5em;
+}
+.sitemessage.removing {
+  opacity: 0;
 }
 .bodyshadow {
   position: fixed;
@@ -2967,6 +2977,8 @@ input[type=radio].radio:checked + label {
   width: 30px;
 }
 .preloader5 img {
+  height: 7.5px;
+  contain: strict;
   width: 30px;
   will-change: transform;
 }
@@ -4225,6 +4237,7 @@ html.mobileview .matrixchatwrapper {
   contain: strict;
   left: 0;
   top: 0;
+  /*touch-action: none;*/
   right: 0;
   bottom: 0;
   background: rgb(var(--background-hidden-layer));
@@ -4238,7 +4251,6 @@ html.mobileview .matrixchatwrapper {
   -webkit-transform: translateX(-100%);
   transform: translateX(-100%);
   overflow: hidden;
-  border-radius: 5px;
   backface-visibility: hidden;
   will-change: transform;
 }
@@ -6273,6 +6285,10 @@ html.mobileview .wnd.normalizedmobile .wndback {
 html.mobileview .wnd.normalizedmobile .hideButton {
   display: none!important;
 }
+html.mobileview .wnd.normalizedmobile ._close {
+  backdrop-filter: none!important;
+  opacity: 0;
+}
 html.mobileview .wnd.normalizedmobile .closeline {
   top: 120px;
   height: 2px;
@@ -6324,7 +6340,13 @@ html.mobileview .wnd.normalizedmobile .wndinner .wndcontent {
   margin: 0 auto;
   padding-left: 0;
   padding-right: 0;
-  box-shadow: 0 5px 7px -5px rgba(var(--color-shadow-base), 0.4);
+}
+html.mobileview .wnd.normalizedmobile .wndinner .wndcontent > div {
+  opacity: 0;
+  -moz-transition: opacity 0.3s;
+  -o-transition: opacity 0.3s;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
 }
 html.mobileview .wnd.normalizedmobile .wndinner .wndcontent::-webkit-scrollbar {
   width: 0;
@@ -6365,6 +6387,7 @@ html.mobileview .wnd.normalizedmobile.sette .wndinner {
   -webkit-transition: transform 0.3s;
   transition: transform 0.3s;
 }
+html.mobileview .wnd.normalizedmobile.sette ._close,
 html.mobileview .wnd.normalizedmobile.sette .closeline,
 html.mobileview .wnd.normalizedmobile.sette .wndback {
   opacity: 1;
@@ -6379,9 +6402,10 @@ html.mobileview .wnd.normalizedmobile.showbetter .closeline {
 html.mobileview .wnd.normalizedmobile.showbetter .roundclosebutton {
   backdrop-filter: none;
 }
-html.mobileview .wnd.normalizedmobile.noheader .wndinner .wndcontent {
+html.mobileview .wnd.normalizedmobile.noheader .wndinner {
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
+  overflow: hidden;
 }
 html.mobileview .wnd.normalizedmobile:only-child .wndback {
   -moz-transition: 0.2s;

@@ -342,10 +342,10 @@
 }
 #post .sharearticle {
   opacity: 0;
-  -moz-transition: opacity 0.1s;
-  -o-transition: opacity 0.1s;
-  -webkit-transition: opacity 0.1s;
-  transition: opacity 0.1s;
+  -moz-transition: opacity 0.3s;
+  -o-transition: opacity 0.3s;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
 }
 #post .sharearticle .shareTable {
   padding-top: 0;
@@ -580,6 +580,15 @@
 #post .sharearticle .shareBgCaption.verticalcover .socialsharewrapper .iconwrapper {
   color: rgb(var(--text-color));
 }
+#post .sharearticle .shareBgCaption.verticalcover.showtext .iconWrapper {
+  position: static;
+  width: auto;
+  padding-left: 0;
+  float: none;
+}
+#post .sharearticle .shareBgCaption.verticalcover.showtext .toppanel {
+  order: 1;
+}
 #post .sharearticle .articlecontent {
   padding-top: 4em;
   padding-bottom: 4em;
@@ -627,6 +636,12 @@
 #post .sharearticle.deleted .articleCover {
   filter: blur(10px);
 }
+#post .sharearticle p a {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 90%;
+  overflow: hidden;
+}
 #content > div#post.sharec .postWrapper {
   max-width: none;
 }
@@ -673,11 +688,22 @@ html.mobileview .wnd.normalizedmobile.articlewindow .wndinner .wndcontent {
     border-radius: 0;
     overflow: visible;
   }
+  #post .sharearticle .shareBgCaption.caption_small .captionmult {
+    font-size: 1.1em;
+  }
+  #post .sharearticle .shareBgCaption.caption_long .captionmult {
+    font-size: 0.8em;
+  }
+  #post .sharearticle .shareBgCaption .captioncnt .sharecaption {
+    max-height: none;
+  }
   #post .sharearticle .shareBgCaption:not(.verticalcover) {
     height: auto;
   }
   #post .sharearticle .shareBgCaption:not(.verticalcover) .captioncnt {
     padding-bottom: 2em;
+    padding-left: 1em;
+    padding-right: 1em;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
@@ -699,7 +725,8 @@ html.mobileview .wnd.normalizedmobile.articlewindow .wndinner .wndcontent {
   }
   #post .sharearticle .shareBgCaption:not(.verticalcover) .captioncnt .sharecaption {
     font-size: 3em;
-    font-family: Georgia, serif;
+    padding: 0.5em 0;
+    padding-top: 1em;
   }
   #post .sharearticle .shareBgCaption:not(.verticalcover) .articleCover {
     height: 300px;
@@ -726,13 +753,13 @@ html.mobileview .wnd.normalizedmobile.articlewindow .wndinner .wndcontent {
     padding-bottom: 4em;
   }
   #post .sharearticle .shareBgCaption.verticalcover .captioncnt .sharecaption {
-    font-size: 2em;
+    font-size: 3em;
+    padding: 0.5em 0;
+    padding-top: 1em;
   }
   #post .sharearticle .shareBgCaption.verticalcover .blackmatte {
     display: block;
-  }
-  #post .sharearticle .shareBgCaption.verticalcover .icon {
-    position: absolute;
+    backdrop-filter: brightness(85%);
   }
   #post .sharearticle .shareBgCaption.verticalcover .captioncnt {
     justify-content: flex-end;
@@ -799,15 +826,10 @@ html.mobileview.fullscreen #post #comments {
 .wnd.postwindow.articlewindow .wndcontent {
   padding: 0;
   border-radius: 0;
+  background: rgb(var(--background-total-theme));
 }
 .wnd.postwindow.articlewindow #post .postWrapper {
   max-width: none;
-}
-.wnd.postwindow.articlewindow ._close {
-  backdrop-filter: blur(7px) grayscale(30%);
-  -webkit-backdrop-filter: blur(7px) grayscale(30%);
-  color: rgb(var(--text-on-bg-ac-color));
-  box-shadow: 0 5px 10px -5px rgba(var(--color-shadow-base), 0.4);
 }
 .wnd.postwindow .widthcontainer {
   width: 80%;

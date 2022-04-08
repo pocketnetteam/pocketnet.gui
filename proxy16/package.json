@@ -6,6 +6,7 @@
     "scripts": {
         "start": "node cli.js --cli",
         "serve": "set NODE_ENV=production && node --nouse-idle-notification --expose-gc --always-compact --max-old-space-size=8192 cli.js --cli",
+        "serve:proxy": "set NODE_ENV=production && node --nouse-idle-notification --expose-gc --always-compact --max-old-space-size=8192 cli.js --cli --reverseproxy",
         "servecl": "node cli.js --cli",
         "serveinspect": "node --inspect --nouse-idle-notification --expose-gc --always-compact --max-old-space-size=8192 cli.js --cli --test",
         "serve:test": "node --nouse-idle-notification --expose-gc --always-compact --max-old-space-size=8192 cli.js --cli --test",

@@ -199,7 +199,31 @@ var comments = (function(){
 		}
 
 		var actions = {
+			showprofile : function(address){
 
+				if (self.app.mobileview){
+					self.nav.api.load({
+						open : true,
+						id : 'channel',
+						inWnd : true,
+						history : true,
+	
+						essenseData : {
+							id : address,
+							openprofilebutton : true
+						}
+					})
+				}
+				/*else{
+					self.nav.api.load({
+						open : true,
+						href : 'author?address=' + address,
+						history : true
+					})
+				}*/
+
+				
+			},
 			lightarea : function(id, c){
 
 				var comment = currents[id]
@@ -1155,6 +1179,12 @@ var comments = (function(){
 		}
 
 		var events = {
+
+			showprofile : function(){
+				var address = $(this).attr('profile')
+
+				actions.showprofile(address)
+			},
 
 			upvoteComment : function(){
 
@@ -2602,7 +2632,9 @@ var comments = (function(){
 				ed = p.settings.essenseData || {}
 
 				preview = ed.preview || false;
-				listpreview = preview;
+				listpreview = ed.listpreview || false;
+
+				console.log("listpreview", listpreview, preview)
 				showedall = false;
 
 				txid = ed.txid || null
@@ -2618,7 +2650,7 @@ var comments = (function(){
 						showedall
 					};
 
-						data.ed = ed;
+					data.ed = ed;
 
 					self.app.platform.sdk.ustate.me(function(_mestate){
 
@@ -2708,6 +2740,7 @@ var comments = (function(){
 				el.list.on('click', '.tocomment', events.tocomment)
 				el.list.on('click', '.imageCommentOpen', events.openGallery)
 				el.list.on('click', '.hiddenCommentLabel', events.showHiddenComment)
+				el.list.on('click', '[profile]', events.showprofile)
 
 				if(!_in.length) {
 					_in = null
@@ -2726,7 +2759,7 @@ var comments = (function(){
 
 				
 
-				if(preview){
+				if (listpreview){
 					makePreview()
 				}
 				else{
