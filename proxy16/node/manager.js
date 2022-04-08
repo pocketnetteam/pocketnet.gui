@@ -37,7 +37,7 @@ var Nodemanager = function(p){
 
     var self = this;
     var inited = false;
-    var cachedchain = null
+    var cachedchain = null;
 
     self.askedpeers = {};
     self.askedpeerssuccess = {};
@@ -61,6 +61,7 @@ var Nodemanager = function(p){
     var queueInterval = null
 
     var minnodescount = global.MIN_NODES_COUNT || 1
+    var usetrustnodesonly = global.USE_TRUST_NODES_ONLY || false
 
     var db = new Datastore(f.path(p.dbpath));
    
@@ -163,6 +164,8 @@ var Nodemanager = function(p){
     }
 
     self.find = function(){
+
+        
 
         var notinitednodes = _.filter(self.nodes, function(node){
             return !node.inited
@@ -881,6 +884,10 @@ var Nodemanager = function(p){
                             if(i < 5) return true
                         })
 
+                        if (usetrustnodesonly){
+                            docs = []
+                        }
+
                         var nodes = _.map(c.concat(p.stable, docs || []) , function(options){
 
                             var node = new Node(options, self)
@@ -1169,6 +1176,8 @@ var Nodemanager = function(p){
         },
 
         peerAllNodesTime : function(nodes){
+
+            if(usetrustnodesonly) return
 
             var askedsuccess = 0;
 
