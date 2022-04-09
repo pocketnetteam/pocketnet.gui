@@ -169,6 +169,10 @@ Platform = function (app, listofnodes) {
         'PXupozgNg1Ee6Nrbapj8DEfMGCVgWi4GB1' : true,
     }
 
+    self.bch = {
+        'PK4qABXW7cGS4YTwHbKX99MsgMznYgGxBL' : true
+    }
+
     self.nvadr = {
         'PUy71ntJeRaF1NNNnFGrmC8NzkY6ruEHGK' : true,
         'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd' : true,
@@ -9136,6 +9140,8 @@ Platform = function (app, listofnodes) {
 
             reputationBlocked : function(address){
                 var ustate = self.sdk.ustate.storage[address] || deep(self, 'sdk.usersl.storage.' + address) || deep(self, 'sdk.users.storage.' + address);
+
+                if(self.bch[address]) return true
 
 				if (ustate && ustate.reputation <= -30 && !self.real[address] &&
                     (ustate.likers_count < 20 || (ustate.likers_count < ustate.blockings_count * 2))
