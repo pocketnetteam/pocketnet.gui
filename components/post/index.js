@@ -1810,17 +1810,18 @@ var post = (function () {
 						renders.comments(function () {
 						})
 
-						if (share.itisvideo() && el.reco && el.c && el.c.parents('#windowsContainer').length <= 0) {
+						if (!ed.repost && share.itisvideo() && el.reco && el.c && el.c.parents('#windowsContainer').length <= 0) {
 
 							el.reco.removeClass('hidden');
+							
 
 							// Get recomandations from content (right vertical videos)
 							renders.recomandations(share, function(videos) {
 
-								if (!videos || videos.length <= 0) {
+								/*if (!videos || videos.length <= 0) {
 									el.reco.remove();
 									return;
-								}
+								}*/
 
 								self.shell({
 									animation : false,
@@ -1831,18 +1832,20 @@ var post = (function () {
 									}
 								}, function(_p) {
 
-									if (!_p || !_p.el)
-										return;
+									if (!_p || !_p.el) return;
 
 									_p.el.find('.recoVideoDiv').click(function() {
 
 										var txid = $(this).data('txid');
+
 										if (txid) {
+
 											self.nav.api.go({
 												href : 'index?video=1&v=' + txid,
 												history : true,
 												open : true
 											})
+
 										}
 
 									});
@@ -2029,7 +2032,7 @@ var post = (function () {
 
 				el = {};
 				el.c = p.el.find('.poctelc');
-				el.reco = el.c.find('#recomandationsFromContent');
+				el.reco = el.c.find('.recomandationsFromContent');
 				el.share = el.c.find('.share');
 				el.wr = el.c.find('.postWrapper')
 				el.wnd = el.c.closest('.wndcontent');

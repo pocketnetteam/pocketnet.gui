@@ -240,7 +240,6 @@
 		/*padding-bottom : 4 * @rhythm;*/
 		display: flex;
 		flex-wrap: wrap;
-		padding-top: 2 * @rhythm;
 
 		.cntswrk.tags {
 			opacity: 0.6;
@@ -260,7 +259,7 @@
 		
 		.postWrapper{
 			background: transparent;
-			// max-width: none;
+			max-width: none;
 		}
 
 		
@@ -410,86 +409,132 @@
 
 		.share{
 			margin : 0 auto;
-			max-width: 960px;
-		}
-	}
-}
-
-#recomandationsFromContent {
-	width: 430px;
-	max-width: 800px;
-    margin: 0 auto;
-	padding-left: 2 * @rhythm;
-	padding-right: 2 * @rhythm;
-	flex-grow: 1;
-
-	.recoVideoDiv {
-
-		display: flex;
-		// align-items: center;
-		margin-bottom: 2 * @rhythm;
-
-		&:hover {
-			cursor: pointer;
+			/*max-width: 960px;*/
 		}
 
-		.videoThumbnail {
-
-			height: 110px;
-			width: 180px;
-			min-width: 180px;
-			border-radius: 12px;
-			background-position: center;
-			background-repeat: no-repeat;
-			background-size: cover;
-
+		.postWrapper{
+			display: flex;
 		}
-		.videoInfos {
+	
+		.postsharemain{
+			flex-grow: 1;
+		}
+	
+		.recomandationsFromContent {
+			max-width: 400px;
+			min-width: 400px;
+			margin-left: auto;
+			flex-grow: 1;
+			
 
-			text-overflow: ellipsis;
-			overflow: hidden;
-			padding-left: @rhythm;
-
-			.title {
-
-				-webkit-line-clamp: 2;
-				line-clamp: 2;
-				display: -webkit-box;
-				-webkit-box-orient: vertical;
-				overflow: hidden;
-				font-weight: bold;
-				font-size: 16px;
-
+			.recomandationsbgwrapper{
+				background: #fff;
+				border-radius: 9px;
+				padding: @rhythm;
+				margin-left: 0.5 * @rhythm;
 			}
 
-			.user {
-
-				margin-top: @rhythm;
-
-			}
-
-			.infos {
-
-				display: flex;
-				align-items: center;
-
-				.viewDateSep {
-
-					font-size: 4px;
-					margin-left: 4 * @rhythm;
-					margin-right: 4 * @rhythm;
-
+			.recoCaption{
+				padding : @rhythm 0;
+				margin-bottom: @rhythm;
+				span{
+					font-weight: 700;
+					font-size: 0.9em;
 				}
-
 			}
+	
+			.recoVideoDiv {
+	
+				display: flex;
+				margin-bottom: @rhythm;
 
-			.user, .infos {
-				color: rgb(var(--color-txt-gray-dark));
+				&:nth-last-child(1){
+					margin-bottom: 0;
+				}
+	
+				&:hover {
+					cursor: pointer;
+				}
+	
+				.videoThumbnail {
+	
+					height: 90px;
+					width: 160px;
+					min-width: 160px;
+					border-radius: 6px;
+					background-position: center;
+					background-repeat: no-repeat;
+					background-size: cover;
+					filter : brightness(85%);
+	
+				}
+				.videoInfos {
+	
+					text-overflow: ellipsis;
+					overflow: hidden;
+					padding-left: @rhythm;
+					padding-top: @rhythm;
+	
+					.title {
+	
+						-webkit-line-clamp: 2;
+						line-clamp: 2;
+						display: -webkit-box;
+						-webkit-box-orient: vertical;
+						overflow: hidden;
+						line-height: 1em;
+
+						span{
+							font-weight: 700;
+							font-size: 0.9em;
+						}
+						
+					}
+	
+					.user {
+						margin-top: @rhythm;
+
+						sup,
+						span{
+							font-size: 0.8em;
+						}
+
+						.spsp{
+							font-weight: 500;
+						}
+					}
+	
+					.infos {
+						
+						display: flex;
+						align-items: center;
+
+						span{
+							font-size: 0.8em;
+						}
+	
+						.viewDateSep {
+							opacity: 0.5;
+							font-size: 0.3em;
+							margin-left: 4 * @rhythm;
+							margin-right: 4 * @rhythm;
+	
+						}
+	
+					}
+	
+					.user, .infos {
+						color: rgb(var(--color-txt-gray-dark));
+					}
+	
+				}
 			}
-
 		}
 	}
+
+	
 }
+
 
 #post{
 	.sharearticle{
@@ -873,6 +918,8 @@
 			}
 		}
 	}
+
+	
 }
 
 #content>div#post.sharec{
@@ -896,11 +943,7 @@ html.mobileview{
 		}
 	}
 
-	#recomandationsFromContent {
-		padding-top: 4 * @rhythm;
-		margin-left: auto;
-		margin-right: auto;
-	}
+
 
 	#post{
 		.sharearticle{
@@ -919,6 +962,23 @@ html.mobileview{
 		}
 	}
 }
+
+@media only screen and (max-width: 1024px) {
+	#post{
+		&.videomainpost{
+			.postWrapper{
+				display: block;
+			}
+			.recomandationsFromContent{
+				min-width: 0;
+				max-width: 960px;
+				margin : 2 * @rhythm auto;
+				width: 100%;
+			}
+		}
+	}
+}
+
 
 @media only screen and (max-width: 768px) {
 	#content>div#post.sharec{

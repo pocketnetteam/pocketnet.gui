@@ -1,39 +1,50 @@
-<% if(videos && videos.length > 0) { 
-    _.each(videos, function(video) { %>
+<div class="recomandationsbgwrapper">
 
-        <% if(video && video.data && video.data.thumbnail) { %>
+    <div class="recoCaption">
+        <span>
+            Other videos
+        </span>
+    </div>
+    <div>
 
-            <div class="recoVideoDiv" data-txid="<%- video.txid %>">
+        <% if(videos && videos.length > 0) { 
+            _.each(videos, function(video) { %>
 
-                <div class="videoThumbnail" style="background-image: url(<%- video.data.thumbnail %>)"></div>
+                <% if(video && video.data && video.data.thumbnail) { %>
 
-                <div class="videoInfos">
+                    <div class="recoVideoDiv" data-txid="<%- video.txid %>">
 
-                    <div class="title"><%= video.c %></div>
+                        <div class="videoThumbnail" image="<%- video.data.thumbnail %>"></div>
 
-                    <div>
-                        <div class="user">
-                            
-                            <%= video.userprofile.name %>
-                            
-                            <span class="likes"><%= video.userprofile.likers_count %></span>
-                        
+                        <div class="videoInfos">
+
+                            <div class="title"><span><%= video.c %></span></div>
+
+                            <div>
+                                <div class="user">
+                                    
+                                    <span><%= video.userprofile.name %></span>
+                                    
+                                    <% if(video.userprofile.reputation && !app.curation()) {%><sup class="spsp"><%-compressedNumber(video.userprofile.reputation, 1)%></sup><% } %>
+                                
+                                </div>
+
+                                <div class="infos">
+
+                                    <span class="views"><%= video.data.views %> просмотров</span>
+                                    <i class="fas fa-circle viewDateSep"></i>
+                                    <span class="date"><%- app.reltime(new Date(video.time)) %></span>
+
+                                </div>
+                            </div>
+
                         </div>
 
-                        <div class="infos">
-
-                            <span class="views"><i class="fas fa-eye"></i> <%= video.data.views %></span>
-                            <i class="fas fa-circle viewDateSep"></i>
-                            <span class="date"><%- app.reltime(new Date(video.time)) %></span>
-
-                        </div>
                     </div>
 
-                </div>
+                <% } %>
 
-            </div>
-
-        <% } %>
-
-    <% })
-} %>
+            <% })
+        } %>
+    </div>
+</div>

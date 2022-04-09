@@ -173,7 +173,6 @@
   /*padding-bottom : 4 * @rhythm;*/
   display: flex;
   flex-wrap: wrap;
-  padding-top: 1em;
 }
 #post.videomainpost .cntswrk.tags {
   opacity: 0.6;
@@ -189,6 +188,7 @@
 }
 #post.videomainpost .postWrapper {
   background: transparent;
+  max-width: none;
 }
 #post.videomainpost .videoWrapper {
   border-bottom-left-radius: 0;
@@ -288,60 +288,97 @@
 }
 #post.videomainpost .share {
   margin: 0 auto;
-  max-width: 960px;
+  /*max-width: 960px;*/
 }
-#recomandationsFromContent {
-  width: 430px;
-  max-width: 800px;
-  margin: 0 auto;
-  padding-left: 1em;
-  padding-right: 1em;
+#post.videomainpost .postWrapper {
+  display: flex;
+}
+#post.videomainpost .postsharemain {
   flex-grow: 1;
 }
-#recomandationsFromContent .recoVideoDiv {
-  display: flex;
-  margin-bottom: 1em;
+#post.videomainpost .recomandationsFromContent {
+  max-width: 400px;
+  min-width: 400px;
+  margin-left: auto;
+  flex-grow: 1;
 }
-#recomandationsFromContent .recoVideoDiv:hover {
+#post.videomainpost .recomandationsFromContent .recomandationsbgwrapper {
+  background: #fff;
+  border-radius: 9px;
+  padding: 0.5em;
+  margin-left: 0.25em;
+}
+#post.videomainpost .recomandationsFromContent .recoCaption {
+  padding: 0.5em 0;
+  margin-bottom: 0.5em;
+}
+#post.videomainpost .recomandationsFromContent .recoCaption span {
+  font-weight: 700;
+  font-size: 0.9em;
+}
+#post.videomainpost .recomandationsFromContent .recoVideoDiv {
+  display: flex;
+  margin-bottom: 0.5em;
+}
+#post.videomainpost .recomandationsFromContent .recoVideoDiv:nth-last-child(1) {
+  margin-bottom: 0;
+}
+#post.videomainpost .recomandationsFromContent .recoVideoDiv:hover {
   cursor: pointer;
 }
-#recomandationsFromContent .recoVideoDiv .videoThumbnail {
-  height: 110px;
-  width: 180px;
-  min-width: 180px;
-  border-radius: 12px;
+#post.videomainpost .recomandationsFromContent .recoVideoDiv .videoThumbnail {
+  height: 90px;
+  width: 160px;
+  min-width: 160px;
+  border-radius: 6px;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  filter: brightness(85%);
 }
-#recomandationsFromContent .recoVideoDiv .videoInfos {
+#post.videomainpost .recomandationsFromContent .recoVideoDiv .videoInfos {
   text-overflow: ellipsis;
   overflow: hidden;
   padding-left: 0.5em;
+  padding-top: 0.5em;
 }
-#recomandationsFromContent .recoVideoDiv .videoInfos .title {
+#post.videomainpost .recomandationsFromContent .recoVideoDiv .videoInfos .title {
   -webkit-line-clamp: 2;
   line-clamp: 2;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  font-weight: bold;
-  font-size: 16px;
+  line-height: 1em;
 }
-#recomandationsFromContent .recoVideoDiv .videoInfos .user {
+#post.videomainpost .recomandationsFromContent .recoVideoDiv .videoInfos .title span {
+  font-weight: 700;
+  font-size: 0.9em;
+}
+#post.videomainpost .recomandationsFromContent .recoVideoDiv .videoInfos .user {
   margin-top: 0.5em;
 }
-#recomandationsFromContent .recoVideoDiv .videoInfos .infos {
+#post.videomainpost .recomandationsFromContent .recoVideoDiv .videoInfos .user sup,
+#post.videomainpost .recomandationsFromContent .recoVideoDiv .videoInfos .user span {
+  font-size: 0.8em;
+}
+#post.videomainpost .recomandationsFromContent .recoVideoDiv .videoInfos .user .spsp {
+  font-weight: 500;
+}
+#post.videomainpost .recomandationsFromContent .recoVideoDiv .videoInfos .infos {
   display: flex;
   align-items: center;
 }
-#recomandationsFromContent .recoVideoDiv .videoInfos .infos .viewDateSep {
-  font-size: 4px;
+#post.videomainpost .recomandationsFromContent .recoVideoDiv .videoInfos .infos span {
+  font-size: 0.8em;
+}
+#post.videomainpost .recomandationsFromContent .recoVideoDiv .videoInfos .infos .viewDateSep {
+  opacity: 0.5;
+  font-size: 0.3em;
   margin-left: 2em;
   margin-right: 2em;
 }
-#recomandationsFromContent .recoVideoDiv .videoInfos .user,
-#recomandationsFromContent .recoVideoDiv .videoInfos .infos {
+#post.videomainpost .recomandationsFromContent .recoVideoDiv .videoInfos .user,
+#post.videomainpost .recomandationsFromContent .recoVideoDiv .videoInfos .infos {
   color: rgb(var(--color-txt-gray-dark));
 }
 #post .sharearticle {
@@ -660,17 +697,23 @@ html.mobileview #post .videoWrapper {
 html.mobileview #post.videomainpost {
   padding-top: 0;
 }
-html.mobileview #recomandationsFromContent {
-  padding-top: 2em;
-  margin-left: auto;
-  margin-right: auto;
-}
 html.mobileview #post .sharearticle .articlecontent {
   padding-left: 0.5em;
   padding-right: 0.5em;
 }
 html.mobileview .wnd.normalizedmobile.articlewindow .wndinner .wndcontent {
   max-width: none;
+}
+@media only screen and (max-width: 1024px) {
+  #post.videomainpost .postWrapper {
+    display: block;
+  }
+  #post.videomainpost .recomandationsFromContent {
+    min-width: 0;
+    max-width: 960px;
+    margin: 1em auto;
+    width: 100%;
+  }
 }
 @media only screen and (max-width: 768px) {
   #content > div#post.sharec .widthcontainer {
