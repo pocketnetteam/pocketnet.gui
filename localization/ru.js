@@ -1948,3 +1948,11 @@ ____loclib.gotoProfile2 = "Перейти в профиль";
 
 ____loclib.countviews = "Просмотров";
 ____loclib.countview = "Просмотр";
+
+____loclib.popup_applications_header = "Важно! Скачайте приложение Bastyon для компьютера";
+
+____loclib.popup_applications_feature_1 = "Приложение нельзя заблокировать";
+____loclib.popup_applications_feature_2 = "Приложение не зависит от сайта bastyon.com";
+____loclib.popup_applications_feature_3 = "Приложение - это как встроенный VPN для Bastyon";
+
+____loclib.popup_applications_button = "Скачать здесь";

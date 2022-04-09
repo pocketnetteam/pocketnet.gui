@@ -18,7 +18,33 @@ var popup = (function(){
 		}
 
 		var popups = {
+			application: {
 
+				if : function(){
+					return !self.app.mobileview && (typeof _Electron == 'undefined' || !_Electron)
+				},
+
+				caption : "",
+				template : "application",
+
+				clbk : function(_el){
+				
+					_el.find('.gotoapplications').on('click', function(){
+
+						self.closeContainer()
+
+						localStorage['popup_' + key] = true
+
+						self.nav.api.load({
+							open : true,
+							id : 'applications',
+							history : true
+						})
+
+					})
+				}
+
+			},
 			test : {
 				caption : "loc_caption",
 				template : "test",
