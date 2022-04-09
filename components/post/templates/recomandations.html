@@ -31,7 +31,7 @@
 
                                 <div class="infos">
 
-                                    <span class="views"><%= video.data.views %> просмотров</span>
+                                    <span class="views"><%= video.data.views %> <%- pluralform(video.data.views,[e('countview'), e('countviews')]) %></span>
                                     <i class="fas fa-circle viewDateSep"></i>
                                     <span class="date"><%- app.reltime(new Date(video.time)) %></span>
 

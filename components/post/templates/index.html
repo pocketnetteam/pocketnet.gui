@@ -25,9 +25,9 @@ if(typeof share != 'undefined' && share){
 			<div elementsid="openshare" class="share share_common postsharemain">
 			</div>
 
-			<div class="recomandationsFromContent">
-				
-			</div>
+			<% if(ed.showrecommendations) {%>
+				<div class="recomandationsFromContent"></div>
+			<% } %>
 
 		</div>
 

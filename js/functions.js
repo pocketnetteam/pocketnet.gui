@@ -9914,7 +9914,7 @@
 /* TEXT */
 	pluralform = function(n, w){
 
-		if(n <= 1) return w[0]
+		if(n == 1) return w[0]
 
 		return w[1];
 	}

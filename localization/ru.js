@@ -1946,3 +1946,6 @@ ____loclib.encourageAuthor = "Поддержите автора поста";
 
 
 ____loclib.gotoProfile2 = "Перейти в профиль";
+
+____loclib.countviews = "Просмотров";
+____loclib.countview = "Просмотр";

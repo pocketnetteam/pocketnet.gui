@@ -2154,3 +2154,6 @@ ____loclib.thankTheAuthor = 'Thank the author';
 ____loclib.encourageAuthor = "Encourage author";
 
 ____loclib.gotoProfile2 = "Go to Profile";
+
+____loclib.countviews = "Views";
+____loclib.countview = "View";

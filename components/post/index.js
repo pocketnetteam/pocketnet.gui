@@ -1810,10 +1810,7 @@ var post = (function () {
 						renders.comments(function () {
 						})
 
-						if (!ed.repost && share.itisvideo() && el.reco && el.c && el.c.parents('#windowsContainer').length <= 0) {
-
-							el.reco.removeClass('hidden');
-							
+						if (share.itisvideo() && ed.showrecommendations) {
 
 							// Get recomandations from content (right vertical videos)
 							renders.recomandations(share, function(videos) {

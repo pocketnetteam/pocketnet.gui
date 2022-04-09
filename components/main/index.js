@@ -808,6 +808,7 @@ var main = (function(){
 						openedpost = p
 					}, {
 						video : true,
+						showrecommendations : true,
 						autoplay : true,
 						nocommentcaption : true,
 						r : 'recommended',

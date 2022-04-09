@@ -2255,6 +2255,7 @@ Platform = function (app, listofnodes) {
                             opensvi : p.opensvi,
                             minimize : p.minimize,
                             postclass : p.postclass,
+                            showrecommendations : p.showrecommendations,
                             openapi : true
                         }
                     })
