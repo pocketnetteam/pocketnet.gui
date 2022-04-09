@@ -1817,6 +1817,11 @@ var post = (function () {
 							// Get recomandations from content (right vertical videos)
 							renders.recomandations(share, function(videos) {
 
+								if (!videos || videos.length <= 0) {
+									el.reco.remove();
+									return;
+								}
+
 								self.shell({
 									animation : false,
 									name :  'recomandations',
