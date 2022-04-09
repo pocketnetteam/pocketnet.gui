@@ -610,8 +610,8 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 			var ins = {
 				1: [
-				  { host: 'pocketnetpeertube1.nohost.me'/*, ip: '188.0.15.28'*/},
-				{ host: 'pocketnetpeertube2.nohost.me', /*ip: '94.73.223.24'*/ },
+				  { host: 'pocketnetpeertube1.nohost.me', ip: '109.226.245.120'},
+				{ host: 'pocketnetpeertube2.nohost.me', ip: '94.73.223.24' },
 				],
 				5: [
 				  {

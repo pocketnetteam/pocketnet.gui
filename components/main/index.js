@@ -846,6 +846,7 @@ var main = (function(){
 		}
 
 		var initstick = function(){
+			return
 			if(!self.app.mobileview && !hsready){
 
 				var t1 = 75
@@ -1020,6 +1021,8 @@ var main = (function(){
 					return r
 				}));
 
+				
+
 				var nsearchtags = words.length ? words : null
 				var nsearchvalue = parameters().ss || ''
 				var ncurrentMode = parameters().r || 'common';
@@ -1066,6 +1069,7 @@ var main = (function(){
 					}
 				}
 				else{
+					
 					if (el.c)
 						el.c.removeClass('videomain')
 
@@ -1074,6 +1078,7 @@ var main = (function(){
 
 
 				if (changes){
+
 
 					if (external) {
 						external.clearessense()

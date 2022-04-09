@@ -1173,6 +1173,8 @@ PeerTubePocketnet = function (app) {
 
 			hostip = app.useip() ? server.ip : server.host
 
+			
+
 			data.current = protocol + "://" + hostip + path
 			data.ip = server.ip
 			data.host = server.host

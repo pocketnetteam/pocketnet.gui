@@ -1052,17 +1052,26 @@ var share = (function(){
 			},
 
 			errortext : function(text){
-				if(!el.error) return
 
-				if(!text){
-					el.error.html('')
-					el.c.removeClass('showError')
+				if(self.app.mobileview){
+					if (text)
+						sitemessage(text)
 				}
-
 				else{
-					el.error.html('<div>'+text+'</div>')
-					el.c.addClass('showError')
+					if(!el.error) return
+
+					if(!text){
+						el.error.html('')
+						el.c.removeClass('showError')
+					}
+	
+					else{
+						el.error.html('<div>'+text+'</div>')
+						el.c.addClass('showError')
+					}
 				}
+
+				
 			},
 
 			error : function(onlyremove){

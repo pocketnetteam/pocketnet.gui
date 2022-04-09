@@ -217,12 +217,18 @@ var menu = (function(){
 								
 							}
 
-							self.nav.api.go({
-								href : k,
-								history : true,
-								open : true,
-								handler : true
-							})
+							self.app.actions.scrollToTop()
+
+							setTimeout(function(){
+								self.nav.api.go({
+									href : k,
+									history : true,
+									open : true,
+									handler : parameters().video && parameters().v
+								})
+							}, 50)
+
+							
 						//}
 
 					})

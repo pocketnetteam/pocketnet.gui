@@ -52,7 +52,9 @@
 				
 				<div class="js-player js-player-ini" data-plyr-provider="<%-meta.type%>" data-plyr-embed-id="<%-meta.url%>" data-plyr-video-id="<%-meta.id%>" data-plyr-host-name="<%-meta.host_name || ''%>">
 					
-					<% if(typeof preview != 'undefined' && preview) {  %>
+					<% if(typeof preview != 'undefined' && preview) {  
+						
+						%>
 
 						<div class="jsPlayerPreview">
 							<% if(info.data) {%>

@@ -875,8 +875,6 @@
 
 				setTimeout(function(){
 
-					console.log('nooverflow', nooverflow)
-
 					if(!nooverflow)
 						app.actions.onScroll();
 
@@ -6414,8 +6412,6 @@
 				break;
 		}
 
-		console.log('storageLocation', storageLocation)
-
 		window.resolveLocalFileSystemURL(storageLocation, function (fileSystem) {
 
 			fileSystem.getDirectory('Download', {
@@ -6501,7 +6497,6 @@
 				class : "one"
 			})*/
 
-			console.log(evt)
 
 			if(clbk) clbk(null, evt)
 
@@ -6516,8 +6511,6 @@
 
 
 	_scrollTop = function(scrollTop, el, time, direction){
-
-		console.log('direction', direction, scrollTop)
 
 		if(!direction) direction = 'Top'
 
@@ -6906,8 +6899,6 @@
 				if (phase == 'cancel' || phase == 'end'){
 
 					if (mainDirection){
-
-						console.log('direction', direction)
 
 						if(phase == 'end' && mainDirection.clbk && direction == mainDirection.i){
 
