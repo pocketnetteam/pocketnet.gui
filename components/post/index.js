@@ -1810,7 +1810,7 @@ var post = (function () {
 						renders.comments(function () {
 						})
 
-						if (share.itisvideo() && ed.showrecommendations) {
+						if (share.itisvideo() ) {
 
 							// Get recomandations from content (right vertical videos)
 							renders.recomandations(share, function(videos) {

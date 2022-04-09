@@ -9,6 +9,7 @@
 }
 #post {
   background: rgb(var(--background-main));
+  padding-top: 0.5em;
 }
 #post .jsPlayerLoading,
 #post .video-js {
@@ -170,6 +171,7 @@
   max-width: 620px;
 }
 #post.videomainpost {
+  padding-top: 0;
   /*padding-bottom : 4 * @rhythm;*/
   display: flex;
   flex-wrap: wrap;
@@ -290,43 +292,33 @@
   margin: 0 auto;
   /*max-width: 960px;*/
 }
-#post.videomainpost .postWrapper {
-  display: flex;
+#post .recomandationsFromContent {
+  margin-top: 0.5em;
 }
-#post.videomainpost .postsharemain {
-  flex-grow: 1;
-}
-#post.videomainpost .recomandationsFromContent {
-  max-width: 400px;
-  min-width: 400px;
-  margin-left: auto;
-  flex-grow: 1;
-}
-#post.videomainpost .recomandationsFromContent .recomandationsbgwrapper {
+#post .recomandationsFromContent .recomandationsbgwrapper {
   background: #fff;
   border-radius: 9px;
   padding: 0.5em;
-  margin-left: 0.25em;
 }
-#post.videomainpost .recomandationsFromContent .recoCaption {
+#post .recomandationsFromContent .recoCaption {
   padding: 0.5em 0;
   margin-bottom: 0.5em;
 }
-#post.videomainpost .recomandationsFromContent .recoCaption span {
+#post .recomandationsFromContent .recoCaption span {
   font-weight: 700;
   font-size: 0.9em;
 }
-#post.videomainpost .recomandationsFromContent .recoVideoDiv {
+#post .recomandationsFromContent .recoVideoDiv {
   display: flex;
   margin-bottom: 0.5em;
 }
-#post.videomainpost .recomandationsFromContent .recoVideoDiv:nth-last-child(1) {
+#post .recomandationsFromContent .recoVideoDiv:nth-last-child(1) {
   margin-bottom: 0;
 }
-#post.videomainpost .recomandationsFromContent .recoVideoDiv:hover {
+#post .recomandationsFromContent .recoVideoDiv:hover {
   cursor: pointer;
 }
-#post.videomainpost .recomandationsFromContent .recoVideoDiv .videoThumbnail {
+#post .recomandationsFromContent .recoVideoDiv .videoThumbnail {
   height: 90px;
   width: 160px;
   min-width: 160px;
@@ -336,13 +328,13 @@
   background-size: cover;
   filter: brightness(85%);
 }
-#post.videomainpost .recomandationsFromContent .recoVideoDiv .videoInfos {
+#post .recomandationsFromContent .recoVideoDiv .videoInfos {
   text-overflow: ellipsis;
   overflow: hidden;
   padding-left: 0.5em;
   padding-top: 0.5em;
 }
-#post.videomainpost .recomandationsFromContent .recoVideoDiv .videoInfos .title {
+#post .recomandationsFromContent .recoVideoDiv .videoInfos .title {
   -webkit-line-clamp: 2;
   line-clamp: 2;
   display: -webkit-box;
@@ -350,36 +342,79 @@
   overflow: hidden;
   line-height: 1em;
 }
-#post.videomainpost .recomandationsFromContent .recoVideoDiv .videoInfos .title span {
+#post .recomandationsFromContent .recoVideoDiv .videoInfos .title span {
   font-weight: 700;
   font-size: 0.9em;
 }
-#post.videomainpost .recomandationsFromContent .recoVideoDiv .videoInfos .user {
+#post .recomandationsFromContent .recoVideoDiv .videoInfos .user {
   margin-top: 0.5em;
 }
-#post.videomainpost .recomandationsFromContent .recoVideoDiv .videoInfos .user sup,
-#post.videomainpost .recomandationsFromContent .recoVideoDiv .videoInfos .user span {
+#post .recomandationsFromContent .recoVideoDiv .videoInfos .user sup,
+#post .recomandationsFromContent .recoVideoDiv .videoInfos .user span {
   font-size: 0.8em;
 }
-#post.videomainpost .recomandationsFromContent .recoVideoDiv .videoInfos .user .spsp {
+#post .recomandationsFromContent .recoVideoDiv .videoInfos .user .spsp {
   font-weight: 500;
 }
-#post.videomainpost .recomandationsFromContent .recoVideoDiv .videoInfos .infos {
+#post .recomandationsFromContent .recoVideoDiv .videoInfos .infos {
   display: flex;
   align-items: center;
 }
-#post.videomainpost .recomandationsFromContent .recoVideoDiv .videoInfos .infos span {
+#post .recomandationsFromContent .recoVideoDiv .videoInfos .infos span {
   font-size: 0.8em;
 }
-#post.videomainpost .recomandationsFromContent .recoVideoDiv .videoInfos .infos .viewDateSep {
+#post .recomandationsFromContent .recoVideoDiv .videoInfos .infos .viewDateSep {
   opacity: 0.5;
   font-size: 0.3em;
   margin-left: 2em;
   margin-right: 2em;
 }
-#post.videomainpost .recomandationsFromContent .recoVideoDiv .videoInfos .user,
-#post.videomainpost .recomandationsFromContent .recoVideoDiv .videoInfos .infos {
+#post .recomandationsFromContent .recoVideoDiv .videoInfos .user,
+#post .recomandationsFromContent .recoVideoDiv .videoInfos .infos {
   color: rgb(var(--color-txt-gray-dark));
+}
+#post.videomainpost .postWrapper {
+  display: flex;
+}
+#post.videomainpost .postsharemain {
+  flex-grow: 1;
+}
+#post.videomainpost .recomandationsFromContent {
+  margin-top: 0;
+  max-width: 400px;
+  min-width: 400px;
+  margin-left: auto;
+}
+#post.videomainpost .recomandationsFromContent .recomandationsbgwrapper {
+  margin-left: 0.25em;
+}
+@media only screen and (max-width: 1024px) {
+  #post.videomainpost .postWrapper {
+    display: block;
+  }
+  #post.videomainpost .recomandationsFromContent {
+    margin-top: 0.5em;
+    min-width: 0;
+    max-width: 960px;
+    margin: 1em auto;
+    width: 100%;
+  }
+  #post.videomainpost .recomandationsFromContent .recomandationsbgwrapper {
+    margin-left: 0;
+  }
+}
+.wnd #post.videomainpost .postWrapper {
+  display: block;
+}
+.wnd #post.videomainpost .recomandationsFromContent {
+  margin-top: 0.5em;
+  min-width: 0;
+  max-width: 960px;
+  margin: 1em auto;
+  width: 100%;
+}
+.wnd #post.videomainpost .recomandationsFromContent .recomandationsbgwrapper {
+  margin-left: 0;
 }
 #post .sharearticle {
   opacity: 0;
@@ -703,17 +738,6 @@ html.mobileview #post .sharearticle .articlecontent {
 }
 html.mobileview .wnd.normalizedmobile.articlewindow .wndinner .wndcontent {
   max-width: none;
-}
-@media only screen and (max-width: 1024px) {
-  #post.videomainpost .postWrapper {
-    display: block;
-  }
-  #post.videomainpost .recomandationsFromContent {
-    min-width: 0;
-    max-width: 960px;
-    margin: 1em auto;
-    width: 100%;
-  }
 }
 @media only screen and (max-width: 768px) {
   #content > div#post.sharec .widthcontainer {
