@@ -1837,11 +1837,31 @@ var post = (function () {
 
 										if (txid) {
 
-											self.nav.api.go({
-												href : 'index?video=1&v=' + txid,
-												history : true,
-												open : true
-											})
+											if (ed.opensvi){
+												ed.opensvi(txid)
+											}
+											else
+
+											if (ed.next){
+
+												self.app.platform.sdk.node.shares.getbyid([txid], function () {
+
+													var share = self.app.platform.sdk.node.shares.storage.trx[txid]
+
+													ed.next(txid, share)
+								
+												})
+				
+											}
+											else{
+												self.nav.api.go({
+													href : 'index?video=1&v=' + txid,
+													history : true,
+													open : true
+												})
+											}
+
+											
 
 										}
 
@@ -2034,9 +2054,7 @@ var post = (function () {
 				el.wr = el.c.find('.postWrapper')
 				el.wnd = el.c.closest('.wndcontent');
 
-				if (self.app.mobileview)
-					el.reco.remove();
-
+			
 				
 				if (share.itisarticle()){
 					el.c.closest('.wnd').addClass('articlewindow')

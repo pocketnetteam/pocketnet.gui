@@ -917,11 +917,11 @@ var lenta = (function(){
 
 			},
 
-			openPost : function(id, clbk, video){
+			openPost : function(id, clbk, video, _share){
 
-				var share = self.app.platform.sdk.node.shares.storage.trx[id];
+				var share = self.app.platform.sdk.node.shares.storage.trx[id] || _share;
 
-				if(!shareInitedMap[id]) return
+				console.log('openPost', id, video)
 
 				if(essenseData.openPostInWindowMobile || (share && share.itisarticle())){
 
@@ -934,7 +934,27 @@ var lenta = (function(){
 								renders.stars(share)
 							},
 	
-							next : actions.next,
+							next : function(id, _share){
+
+								if(openedPost){
+					
+									if (openedPost.container)
+										openedPost.container.close()
+										
+									else 
+										openedPost.destroy()
+				
+									openedPost = null
+								}
+
+								
+								setTimeout(function(){
+									actions.openPost(id, null, video, _share)
+								}, 300)
+								
+								
+
+							},
 
 							close : function(){
 								openedPost = null
@@ -971,12 +991,12 @@ var lenta = (function(){
 				}
 				else
 				{
-
-					if(shareInitingMap[id]) return
+					if(!shareInitedMap[id]) return
+					if (shareInitingMap[id]) return
 
 					var share = self.app.platform.sdk.node.shares.storage.trx[id];
 
-					actions.destroyShare(share)
+						actions.destroyShare(share)
 
 					renders.share(share, function(){
 						if(clbk) clbk()

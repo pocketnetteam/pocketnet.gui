@@ -815,7 +815,6 @@ var main = (function(){
 						
 						opensvi : function(id){
 
-
 							if (openedpost){
 						
 								openedpost.destroy()
@@ -827,6 +826,7 @@ var main = (function(){
 							renders.post(id)
 
 							self.app.actions.scroll(0)
+							
 						}
 					})
 				}

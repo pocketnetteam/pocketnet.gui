@@ -18,7 +18,11 @@ if(typeof share != 'undefined' && share){
 <div id="<%- ed.repost && !ed.postclass ? makeid() : module.map.id%>" class="poctelc <% if(ed.video) {%> videomainpost <%- (aspectRatio <= 0.9) && (aspectRatio > 0) ? 'verticalVideo' : ''%>  <%- (aspectRatio > 0.9) && (aspectRatio < 1.25) ? 'squareVideo' : ''%> <% } %> <%-widthcontainer%>">
 	
 	
-	<% if(typeof notfound == 'undefined' || !notfound) {%>
+	<% if(typeof notfound == 'undefined' || !notfound) {
+		
+		console.log("ED", ed)
+		
+		%>
 	
 		<div class="postWrapper">
 
