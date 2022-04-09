@@ -2479,7 +2479,6 @@ Platform = function (app, listofnodes) {
 				app.nav.api.load({
 					open : true,
 					id : 'popup',
-
 					key : key,
 					inWnd : true,
 
@@ -26066,6 +26065,7 @@ Platform = function (app, listofnodes) {
 
     self.prepareUserData = function(clbk){
 
+       
 
         lazyActions([
 
@@ -26165,9 +26165,7 @@ Platform = function (app, listofnodes) {
 
         checkfeatures()
            
-      
-
-        
+        //self.ui.popup('application');
 
         app.user.isState(function(state){
 

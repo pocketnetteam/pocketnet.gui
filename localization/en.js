@@ -2153,3 +2153,12 @@ ____loclib.thankTheAuthor = 'Thank the author';
 ____loclib.encourageAuthor = "Encourage author";
 
 ____loclib.gotoProfile2 = "Go to Profile";
+
+
+____loclib.popup_applications_header = "Important! Please download Bastyon Application";
+
+____loclib.popup_applications_feature_1 = "Desktop application is the most censorship resistant way to use Bastyon";
+____loclib.popup_applications_feature_2 = "Desktop application doesn't depend on bastyon.com";
+____loclib.popup_applications_feature_3 = "Desktop is like a built-in VPN";
+
+____loclib.popup_applications_button = " Download here";
