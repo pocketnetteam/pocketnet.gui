@@ -1956,3 +1956,6 @@ ____loclib.popup_applications_feature_2 = "Приложение не завис�
 ____loclib.popup_applications_feature_3 = "Приложение - это как встроенный VPN для Bastyon";
 
 ____loclib.popup_applications_button = "Скачать здесь";
+
+
+____loclib.norecommendedvideos = "Рекомендованных видео не найдено";

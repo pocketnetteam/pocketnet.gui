@@ -2165,3 +2165,4 @@ ____loclib.popup_applications_feature_2 = "Desktop application doesn't depend on
 ____loclib.popup_applications_feature_3 = "Desktop is like a built-in VPN";
 
 ____loclib.popup_applications_button = " Download here";
+____loclib.norecommendedvideos = "No recommended videos found";

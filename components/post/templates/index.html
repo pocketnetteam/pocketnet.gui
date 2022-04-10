@@ -28,8 +28,19 @@ if(typeof share != 'undefined' && share){
 
 			<div elementsid="openshare" class="share share_common postsharemain">
 			</div>
-			<% if(!ed.repost) {%>
-				<div class="recomandationsFromContent"></div>
+			<% 
+			
+			console.log('ed', ed)
+			
+			
+			if(!ed.repost) {%>
+				<div class="recomandationsFromContent">
+					<div class="loader">
+						<div class="work">
+							<div class="preloader5"><img src="./img/three-dots.svg"/></div>
+						</div>
+					</div>
+				</div>
 			<% } %>
 
 		</div>

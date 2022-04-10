@@ -373,6 +373,14 @@
 #post .recomandationsFromContent .recoVideoDiv .videoInfos .infos {
   color: rgb(var(--color-txt-gray-dark));
 }
+#post .recomandationsFromContent .empty {
+  padding: 1em 0;
+  text-align: left;
+}
+#post .recomandationsFromContent .empty span {
+  font-size: 0.9em;
+  opacity: 0.7;
+}
 #post.videomainpost .postWrapper {
   display: flex;
 }
