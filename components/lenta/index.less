@@ -373,14 +373,20 @@
 			background: transparent;
 			padding : 0;
 			margin-bottom: 0;
-			overflow : hidden;
 			border-radius: 6px;
 
 			.sharecaption{
+				margin-top:0;
+				padding-top : 2 * @rhythm;
+				padding-bottom : @rhythm;
 				margin-bottom: 0;
 				white-space: nowrap;
 				text-overflow: ellipsis;
 
+			}
+
+			.work{
+				overflow: inherit;
 			}
 
 			.tags{
@@ -401,17 +407,27 @@
 			.sharecaption{
 				white-space: inherit;
 				padding-right: 2 * @rhythm;
+				
 				div{
 					font-size: 1em;
 					font-weight: 500;
-					text-transform: capitalize;
+					
 					
 				}
 
-				span{
-					font-size: 1em;
+				span{	
+					font-weight: 700;
+					font-size: 0.9em;
+					display: -webkit-box;
+					-webkit-line-clamp: 2;
+					line-clamp : 2;
+					-webkit-box-orient: vertical;
+					overflow: hidden;
+					text-overflow: ellipsis;
 				}
 			}
+
+		
 
 			.meta{
 				padding-top : @rhythm;
@@ -437,16 +453,16 @@
 			.iconWrapper{
 				padding : 0;
 				z-index: 12;
-				width: 32px!important;
+				width: 22px!important;
 
 				.icon{
 					width: auto;
-					height: 32px!important;
+					height: 22px!important;
 					.usericon{
-						width: 32px!important;
-						height: 32px!important;
-						line-height: 32px!important;
-						font-size: 1.5em;
+						width: 22px!important;
+						height: 22px!important;
+						line-height: 22px!important;
+						font-size: 1.2em;
 					}
 				}
 			}
@@ -503,6 +519,7 @@
 				.authorTable{
 					align-items: center;
 					display: flex;
+					white-space: nowrap;
 					
 					>div{
 						
@@ -510,6 +527,7 @@
 						&.authorCell{
 							padding-left: @rhythm;
 							padding-right: 0;
+							opacity: 0.7;
 						}
 
 						a{
@@ -518,10 +536,10 @@
 
 						&.datetime{
 							padding-left: @rhythm;
-							opacity: 0.5;
+							opacity: 0.7;
 							white-space: nowrap;
 							text-overflow: ellipsis;
-
+							font-weight: 400;
 							span{
 								color : rgb(var(--text-color));
 							}
@@ -558,11 +576,6 @@
 				padding-left: 0;
 				padding-right: 0;
 			}
-
-			.paddingWrapper{
-				margin-left: 32px;
-				padding-left: @rhythm;
-			}
 		}
 
 
@@ -581,7 +594,6 @@
 
 				.anothercntswrk{
 					height: 100px;
-					overflow: hidden;
 				}
 				
 				&:nth-child(3n + 1){
@@ -660,8 +672,16 @@
 			.share{
 				width : 230px;
 
+				.jsPlayerPreview{
+					border-radius: 12px;
+				}
+
 				.tags{
 					display: none;
+				}
+
+				.iconWrapper{
+					float: none;
 				}
 
 				.shareTable{
@@ -687,18 +707,21 @@
 						height: 40px;
 						display: flex;
 						flex-wrap: nowrap;
-						overflow: hidden;
 						flex-direction: row;
 						align-items: center;
 						width: 100%;
-					
+						.cntswrk{
+							order: 2;
+						}
+
 						.formeta{
-							width: 32px;
-							min-width: 32px;
+							width: 22px;
+							min-width: 22px;
+							order: 1;
+							margin-right: @rhythm;
 						}
 
 						.meta{
-							padding-top: 0.25 * @rhythm;
 							margin-bottom : 0;
 						}
 
@@ -722,6 +745,11 @@
 							padding-top : 0.5 * @rhythm;
 							padding-right: @rhythm;
 							font-size: 0.85em!important;
+
+							span{
+								display: inline;
+								font-size: 1em;
+							}
 
 							.adr{
 								font-weight: 700;

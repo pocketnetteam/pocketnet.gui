@@ -496,10 +496,11 @@ var main = (function(){
 						external = null
 					}
 
-					el.topvideos.find('.wrpcn').html('')
-					//showmoreby.removeClass('hasshares')
-
-					el.topvideos.addClass('hidden')
+					if(el.topvideos){
+						el.topvideos.find('.wrpcn').html('')
+						el.topvideos.addClass('hidden')
+					}
+					
 				}
 
 				
@@ -891,7 +892,6 @@ var main = (function(){
 
 				if(leftparallax) leftparallax.destroy()
 				
-
 				leftparallax = new SwipeParallaxNew({
 
 					el : el.c.find('.leftpanelcell'),

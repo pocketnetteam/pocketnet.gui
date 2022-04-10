@@ -6778,6 +6778,8 @@
 		var self = this;
 		var needclear = false
 
+		self.destroyed = false
+
 		var throttle = 50
 		var transitionstr = 'transform 50ms linear'
 
@@ -6891,6 +6893,8 @@
 
 			var statusf = function(e, phase, direction, distance){
 
+				if(self.destroyed) return
+
 				if (mainDirection && mainDirection.i != direction){
 					phase = 'cancel'
 					direction = mainDirection.i
@@ -6983,9 +6987,13 @@
 
 		self.destroy = function(){
 
+			
+
 			p.el.swipe('destroy')
 			p = {}
 			needclear = false
+
+			self.destroyed = true
 
 		}
 
