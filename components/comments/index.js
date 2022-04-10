@@ -2022,6 +2022,10 @@ var comments = (function(){
 								
 							})
 
+							if(clbk) clbk()
+
+							clbk = null
+
 							return
 						} else {
 							_p.el.find('.txt').on('click', function(){
@@ -2483,6 +2487,8 @@ var comments = (function(){
 
 		var makePreview = function(clbk){	
 
+			console.log('makePreview')
+
 			var p = {};
 
 			renders.post(function(area){
@@ -2514,6 +2520,8 @@ var comments = (function(){
 
 			var p = {};			
 
+			console.log('make')
+
 			load.level(null, function(comments){
 
 				p.comments = self.app.platform.sdk.comments.storage[txid]['0']
@@ -2530,8 +2538,12 @@ var comments = (function(){
 
 					el.c.find('.loaderWrapper').addClass('hidden')
 
+					console.log("AS2")
+
 					renders.post(function(area){
 						areas["0"] = area
+
+						console.log("ED", ed)
 
 						if (ed.reply){
 							actions.fastreply(ed.reply)

@@ -962,12 +962,8 @@ Application = function(p)
 						
 				})
 
-				try{
-					self.mobile.reload.initparallax()
-				}catch(e){
-					console.error(e)
-				}
-
+					
+				
 			})
 
 		})
@@ -1467,6 +1463,17 @@ Application = function(p)
 			_.each(self.events.scroll, function(s){
 				s(scrollTop, blockScroll)
 			})
+
+			console.log('scrollTop', scrollTop)
+
+			if(!scrollTop){
+				self.mobile.reload.initparallax()
+			}
+			else{
+				self.mobile.reload.destroyparallax()
+			}
+
+		
 
 			if(self.mobileview && !cr){
 
@@ -2179,7 +2186,10 @@ Application = function(p)
 			reloading : false,
 			destroyparallax : function(){
 
+				if(self.mobile.reload.reloading) return
+
 				if (self.mobile.reload.parallax) {
+					self.mobile.reload.parallax.clear()
 					self.mobile.reload.parallax.destroy()
 					self.mobile.reload.parallax = null
 				}
@@ -2189,7 +2199,8 @@ Application = function(p)
 
 				if(isTablet() || isMobile()){
 
-					self.mobile.reload.destroyparallax()
+					if(self.mobile.reload.parallax) return
+					if(self.mobile.reload.reloading) return
 
 					self.mobile.reload.parallax = new SwipeParallaxNew({
 

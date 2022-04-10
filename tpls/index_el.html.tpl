@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="no-js electronapp customscroll" lang="">
+<html class="no-js electronapp customscroll applicationhtml" lang="">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
