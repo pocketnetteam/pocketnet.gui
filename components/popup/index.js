@@ -17,6 +17,52 @@ var popup = (function(){
 			if (data.message == "finish") localStorage['popup_' + key] = true
 		}
 
+		var downloadapplication = function(){
+
+			var oss = self.app.platform.applications['ui']
+
+			var __os = os()
+			var _os = oss[__os]
+
+			if (_os){
+
+				if (_os){
+
+					if(_os.github){
+
+						globalpreloader(true)
+
+						$.get(_os.github.url, {}, function(d){
+
+							var assets = deep(d, 'assets') || [];
+
+							var l = _.find(assets, function(a){
+								return a.name == _os.github.name
+							})
+
+							if (l){
+
+								var link = document.createElement('a');
+							        link.setAttribute('href', l.browser_download_url);
+							        link.setAttribute('download','download');
+							        link.click();
+							}
+
+							globalpreloader(false)
+
+
+						})
+
+						return true
+
+					}
+
+				}
+			}
+
+			return false
+		}
+
 		var popups = {
 			application: {
 
@@ -32,14 +78,21 @@ var popup = (function(){
 					_el.find('.gotoapplications').on('click', function(){
 
 						self.closeContainer()
+						
+
+						if(!downloadapplication()){
+
+							self.nav.api.load({
+								open : true,
+								href : 'applications',
+								history : true
+							})
+
+						}
 
 						localStorage['popup_' + key] = true
 
-						self.nav.api.load({
-							open : true,
-							id : 'applications',
-							history : true
-						})
+						
 
 					})
 				}
