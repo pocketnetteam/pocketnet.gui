@@ -12,94 +12,53 @@ var channel = (function(){
 
 		var eid = p.eid;
 
-		var actions = {
-
-		}
-
-		var events = {
-			
-		}
-
-		var name = function(){
-
-			var name = app.platform.api.name(author.address)
-
-			if(name) return name + "?"
-
-			return 'author?address=' + author.address
-		}
-
 		var reports = {
-
-			followers : {
-				name : self.app.localization.e('followers').toUpperCase(),
-				icon : '<i class="fas fa-users"></i>',
-				id : 'followers',
-				render : 'followers',
-				history : true,
-				href : function(){
-					return name() + 'report=followers'
-				},
-				count : function(){
-					return deep(author, 'data.subscribers.length') || 0 
-				}
-			},
-
 			reputation : {
-				name : "REPUTATION",
+				name :  self.app.localization.e('reputation'),
 				icon : '<i class="far fa-star"></i>',
 				id : 'reputation',
 				render : 'reputation',
 				history : true,
-				href : function(){
-					return name()
-				},
+			
 				count : function(){
 					return deep(author, 'state.reputation') || 0 
 				}
 			},
 
+			publications : {
+				name :  self.app.localization.e('posts'),
+				icon : '<i class="fas fa-plus-circle"></i>',
+				id : 'posts',
+				render : 'posts',
+				history : true,
+				
+				count : function(){
+					return deep(author, 'data.postcnt') || 0 
+				}
+			},
+
+			followers : {
+				name : self.app.localization.e('followers2'),
+				icon : '<i class="fas fa-users"></i>',
+				id : 'followers',
+				render : 'followers',
+				history : true,
+				
+				count : function(){
+					return deep(author, 'data.subscribers.length') || 0 
+				}
+			},
+
+		
 			following : {
-				name : self.app.localization.e('following').toUpperCase(),
+				name : self.app.localization.e('following2'),
 				id : 'following',
 				icon : '<i class="fas fa-user-plus"></i>',
 				render : 'following',
 				history : true,
-				href : function(){
-					return name()+ "report=following"
-				},
+				
 				count : function(){
 					return deep(author, 'data.subscribes.length') || 0 
-				}
-			},
-
-			share : {
-				name : self.app.localization.e('share').toUpperCase(),
-				icon : '<i elementsid="channel_share-alt" class="fas fa-share-alt"></i>',
-				id : 'share',
-				if : function(){
-					return true
-				},
-				events : {
-					click : function(){
-
-						self.nav.api.load({
-							open : true,
-							href : 'socialshare2',
-							history : true,
-							inWnd : true,
-
-							essenseData : {
-								caption : "Share this author",
-								sharing : author.data.social(self.app),
-								embedding : {
-									type : 'channel',
-									id : author.address
-								}
-							}
-						})
-						
-					}
 				}
 			}
 		}
@@ -167,7 +126,6 @@ var channel = (function(){
 						author.state = self.sdk.ustate.storage[ed.id]
 						author.address = ed.id
 
-						console.log("ED", ed)
 
 						var data = {
 							author : author,
@@ -201,6 +159,10 @@ var channel = (function(){
 				initEvents();
 
 				p.clbk(null, p);
+			},
+
+			wnd : {			
+				class : 'normalizedmobile',
 			}
 		}
 	};

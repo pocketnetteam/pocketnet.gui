@@ -41,7 +41,6 @@ __map =  {
 		"js/lib/pocketnet/buffer.js", //
 		
 		//
-		"js/vendor/bodyScrollLock.min.js",
 		
         "js/vendor/pbkdf2.js", //
         "js/vendor/sha1.js", //
@@ -123,7 +122,6 @@ __map =  {
 	
 	__templates : [
 		{ c : 'navigation', n : 'menu' },
-		{ c : 'topusers', n : 'usermodal' },
 		{ c : 'menu', n : 'index' },
 		{ c : 'share', n : 'body' },
 		//{ c : 'toppanel', n : 'index' },
@@ -488,14 +486,7 @@ __map =  {
 			add : insertingfunc,
 			anonimus : true,
 		},
-		
-		topusers : {
-			uri : "topusers",
-			href : "topusers",
-		
-			add : insertingfunc,
-			anonimus : true,
-		},
+
 
 		// usermodal : {
 		// 	uri : "usermodal",
@@ -926,9 +917,7 @@ __map =  {
 	channel : {
 		uri : "channel",
 		href : "channel",
-		add : {
-			el : 'content'
-		},
+		add : insertingfunc,
 		anonimus : true,
 		exportcss : true,
 	},

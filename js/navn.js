@@ -517,7 +517,7 @@ Nav = function(app)
 			if((p.history || p.loadDefault) && options.history)
 			{
 
-				if(p.href == current.href && !p.map.exhandler){
+				if(p.href == current.href && !p.map.exhandler && !p.force){
 
 					if (current.module && current.module.parametersHandler && p.handler){
 						
@@ -553,7 +553,7 @@ Nav = function(app)
 				}
 
 
-				if(p.completeHref == current.completeHref && !p.loadDefault)
+				if(p.completeHref == current.completeHref && !p.loadDefault && !p.force)
 				{
 					run = false;
 				}
@@ -955,7 +955,7 @@ Nav = function(app)
 
 				p.globalpreloaderTimer = setTimeout(function(){
 					globalpreloader(true)
-				}, 100)
+				}, 400)
 				
 			}
 
@@ -1167,6 +1167,7 @@ Nav = function(app)
 
 						var handler = $(this).attr('handler') || null
 						var replace = $(this).attr('replace') || false
+						var force = $(this).attr('replace') || false
 
 						if (additionalActions){
 							additionalActions(e);
@@ -1180,7 +1181,8 @@ Nav = function(app)
 							history : true,
 							open : true,
 							handler : handler,
-							replaceState : replace
+							replaceState : replace,
+							force : force
 						})
 
 						blockclick = true

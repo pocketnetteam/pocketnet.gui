@@ -447,6 +447,7 @@ ____loclib.youarefollowing = "You are Following"
 ____loclib.follow = "Follow"
 ____loclib.blocked = "Blocked"
 ____loclib.e13021 = "Show more"
+
 ____loclib.blockuser = "Block User"
 ____loclib.unblockuser = "Unblock User"
 ____loclib.e13022 = "Do you really want to unfollow user?"
@@ -1120,8 +1121,9 @@ ____loclib.videoTranscodingError = "There was an error with processing your vide
 ____loclib.videoUploadingFinish = "Finishing uploading..."
 ____loclib.uploadNewVideo = "Upload New Pocketvideo"
 ____loclib.selectVideoFile = "Select video file"
-____loclib.uploadVideoProgress_processing = "Processed:"
-____loclib.uploadVideoProgress_uploading = "Uploaded:"
+____loclib.uploadVideoProgress_binaries = "Preparing binaries:"
+____loclib.uploadVideoProgress_processing = "Processing video:"
+____loclib.uploadVideoProgress_uploading = "Uploading video:"
 
 
 
@@ -1187,7 +1189,7 @@ ____loclib.transactionnotfound = "Transaction not found";
 
 ____loclib.donateself = "You can't donate yourself";
 ____loclib.donated = "commented your post and donated"
-____loclib.incoins = "Enough coins"
+____loclib.incoins = "Not enough coins"
 ____loclib.yourbalance = "Your balance"
 ____loclib.sumoftransaction = "Sum of transaction"
 
@@ -1295,8 +1297,9 @@ ____loclib.videotranscodingwait = "Please wait, this video is being processed. T
 ____loclib.views = "Views";
 
 
-____loclib.saveshare = "Add videos to saved";
-____loclib.successdownloaded = "Video saved";
+____loclib.saveshare = "Download video";
+____loclib.gotosaved = "Go to downloaded";
+____loclib.successdownloaded = "Video downloaded";
 
 
 ____loclib.logoutaccount = "Sign out of your account";
@@ -1311,6 +1314,14 @@ ____loclib.linkToPostLenta = "Already posted"
 ____loclib.ReferralUsers = "Referral Users. Total/From&nbsp;01.11.2021"
 ____loclib.lockedaccount = "Your account is locked due to reputation below -30"
 ____loclib.lockedaccounta = "Author Account is locked due to reputation below -30"
+
+____loclib.lockedaccountacomment = "Comment author Account is locked due to reputation below -30"
+____loclib.hiddenCommentLabel = "Comment hidden due to low rating"
+
+____loclib.blockedbymeHiddenCommentLabel = "Comment hidden because you have blocked a user"
+____loclib.hiddenCommentsLabel = "Comment hidden due to low ratings of the commenter"
+
+____loclib.showhiddenComment = "Show"
 
 ____loclib.visibletoeveryone = 'Visible for everyone'
 ____loclib.visibleonlytosubscribers = 'Visible only for subscribers'
@@ -1829,7 +1840,7 @@ ____loclib.ContentCreatorsMainBoard1 = '"There are many ways to earn money with 
 
 ____loclib.ContentCreatorsImgAndText = 'Post your videos';
 ____loclib.ContentCreatorsImgAndText1 = 'Post your videos on Bastyon';
-____loclib.ContentCreatorsImgAndText2 = '15,000 vides, 1250 reactions from different users and 1000 invited users to your channel';
+____loclib.ContentCreatorsImgAndText2 = '15,000 vides, 1500 reactions from different users and 1500 invited users to your channel';
 ____loclib.ContentCreatorsImgAndText3 = 'Earns you $1,000 paid in Bitcoin or PKOIN';
 ____loclib.ContentCreatorsImgAndText4 = 'Next step: contact us to get your Bastyon account verified and to access the bonus program.';
 ____loclib.ContentCreatorsImgAndText5 = 'Contact Us Now ';
@@ -2078,6 +2089,7 @@ ____loclib.ratings123 = "Only users with high reputation at least 10 publication
 
 ____loclib.ratingss3 = "Only users with high reputation can give 1, 2, 3 star ratings. This is done to protect authors, because Bastyon does NOT require any personal information for registration."
 
+____loclib.clearfilters = "Clear filters"
 ____loclib.clearcategories = "Do you really want to clear category filters?"
 ____loclib.cleartags = "Do you really want to clear tags filters?"
 ____loclib.fromsh = "From"
@@ -2130,3 +2142,23 @@ ____loclib.videobloggerRequest_submitted = "Thank you for contacting us, we will
 
 ____loclib.canuseipsetting = "Allow connection via ip over http directly. Not safe"
 
+____loclib.optimizationtip = function(v){
+    return v + ' hidden viewed posts'
+}
+
+____loclib.optimizationtip_show = "Show"
+
+____loclib.thankTheAuthor = 'Thank the author';
+
+____loclib.encourageAuthor = "Encourage author";
+
+____loclib.gotoProfile2 = "Go to Profile";
+
+
+____loclib.popup_applications_header = "Important! Please download Bastyon Application";
+
+____loclib.popup_applications_feature_1 = "Desktop application is the most censorship resistant way to use Bastyon";
+____loclib.popup_applications_feature_2 = "Desktop application doesn't depend on bastyon.com";
+____loclib.popup_applications_feature_3 = "Desktop is like a built-in VPN";
+
+____loclib.popup_applications_button = " Download here";

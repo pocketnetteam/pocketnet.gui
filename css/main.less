@@ -17,6 +17,7 @@
     --background-hidden-layer: 255, 255, 255;
     --background-total-theme: 255, 255, 255;
     --background-secondary-theme: 250, 250, 250;
+    --background-secondary-theme-2: 18, 22, 33;
     --background-main: 240, 242, 245;
     --background-main-contrast: 10, 12, 23; //@color-black
     --color-medium-theme: 199, 200, 217;
@@ -89,6 +90,7 @@
     --background-hidden-layer:  10, 12, 23; //@color-black
     --background-total-theme:  18, 22, 33;
     --background-secondary-theme: 24, 36, 52;
+    --background-secondary-theme-2: 24, 36, 52;
     --background-main: 12, 14, 18; // @color-black2;    
     --background-main-contrast: 240, 242, 245; //@color-main-light;
 
@@ -133,6 +135,7 @@
     --background-hidden-layer:  12, 12, 12; //@color-black
     --background-total-theme:  20, 20, 20;
     --background-secondary-theme: 36, 36, 36;
+    --background-secondary-theme-2: 36, 36, 36;
     --background-main: 28, 28, 28; // @color-black2;    
     --background-main-contrast: 242, 242, 242; //@color-main-light;
 
@@ -228,7 +231,6 @@
         margin-top: -8px;
         width: 30px;
         height: 15px;
-        contain: strict;
     }
 
     .jsPlayerLoadingD{
@@ -340,6 +342,7 @@ html {
 [image]{
     opacity: 0;
     .transition(0.3s, opacity);
+
 }
 
 [image][visibleimage]{
@@ -417,7 +420,7 @@ h3{
 }
 
 mark {
-    background: rgba(var(--color-bg-ac-2), 0.9) fade(@color-contrast, 90);
+    background: rgba(var(--color-bg-ac), 0.9);
     color : rgb(var(--text-on-bg-ac-color));
 }
 
@@ -3190,6 +3193,15 @@ input[type=radio].radio:checked + label {
     bottom: 20px;
     padding : 2 * @rhythm;
     border-radius: 6px;
+    .transition(0.3s);
+
+    .action{
+        margin-top: @rhythm;
+    }
+
+    &.removing{
+        opacity: 0;
+    }
 }
 
 .bodyshadow{
@@ -3419,8 +3431,8 @@ input[type=radio].radio:checked + label {
 }
 .preloader5{
     img{
+        height: 7.5px;
         width: 30px;
-        will-change: transform;
     }
 }
 .preloader5 span {
@@ -3973,7 +3985,7 @@ input[type=radio].radio:checked + label {
 
 .menudialog{
     .mobiledialogcontent{
-        max-height: 60vh;
+        max-height: calc(var(--vh, 1vh) * 60);
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
         overscroll-behavior: contain;
@@ -4931,10 +4943,8 @@ input[type=radio].radio:checked + label {
     .showmorebywrapper{
         overflow: hidden;
         overflow-x: scroll;
-        
         scroll-behavior: smooth;
         scrollbar-width: none;
-        scroll-snap-type: y mandatory;
         border-radius: 6px;
 
         >div{
@@ -4963,7 +4973,15 @@ input[type=radio].radio:checked + label {
         .showmorebywrapper{
             display: none;
         }
+
     }
+}
+
+.optimizationTip{
+    background: rgb(var(--background-total-theme));
+    background-image: url(./img/icons8-square.svg);
+    background-repeat: repeat-x;
+    background-position: center;
 }
 
 .sharepostmenu{
@@ -5047,6 +5065,7 @@ html.mobileview{
         contain: strict;
         left : 0;
         top : 0;
+        /*touch-action: none;*/
         right: 0;
         bottom : 0;
         background: rgb(var(--background-hidden-layer));
@@ -5057,13 +5076,13 @@ html.mobileview{
         -webkit-transform: translateX(-100%);
         transform: translateX(-100%);
         overflow: hidden;
-        border-radius: 5px;
         backface-visibility: hidden;
         will-change: transform;
-
+        
         &.active{
             -webkit-transform: translateX(0);
             transform: translateX(0);
+            
         }
     }
 
@@ -5111,7 +5130,7 @@ html.mobileview{
         }
 
         .mobiledialogcontent{
-            max-height: 60vh;
+            max-height: calc(var(--vh, 1vh) * 60);
         }
 
         .secondwrapper{
@@ -6670,8 +6689,8 @@ html.mobileview.fullscreen{
     position: fixed;
     top: 0;
     left: 0;
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
     background-color: #011621;
     z-index: 5000;
     display: flex;
@@ -6699,14 +6718,13 @@ html.mobileview.fullscreen{
     }
 
     img {
-        max-height: 6vh;
-        max-width: 100vw;
+        max-height: 50px;
+        max-width: 50px;
 
         &.zoom-in {
             -webkit-animation: zoom-in 0.5s ease-out both;
             animation: zoom-in 0.5s ease-out both;
         }
-
 
         &.zoom-out {
             -webkit-animation: zoom-out 0.5s ease-in both;
@@ -7693,7 +7711,13 @@ html.mobileview{
             .hideButton{
                 display: none!important;
             }
-    
+
+            ._close{
+                backdrop-filter: none!important;
+                opacity: 0;
+            }
+
+           
             .closeline{
                 top : 120px;
                 height: 2px;
@@ -7726,7 +7750,7 @@ html.mobileview{
                 }
     
                 .wndcontent{
-                    position: static;
+                    position: relative;
                     border-bottom-right-radius: 0;
                     border-bottom-left-radius: 0;
                     bottom : 0;
@@ -7734,17 +7758,21 @@ html.mobileview{
                     background: rgb(var(--background-total-theme));
                     max-width: 768px;
 
-                    max-height: 92vh; 
                     max-height: calc(var(--vh, 1vh) * 92);
-
-                    min-height: 30vh; 
                     min-height: calc(var(--vh, 1vh) * 30);
 
-
+                    top : 0;
+                    bottom : 0;
+                    right: 0;
+                    left: 0;
                     margin : 0 auto;
                     padding-left: 0;
                     padding-right: 0;
-                    .shadowSmaller();
+
+                    >div{
+                        opacity: 0;
+                        .transition(0.3s, opacity);
+                    }
     
                     &::-webkit-scrollbar{
                         width: 0;
@@ -7785,6 +7813,7 @@ html.mobileview{
                     .transition(0.3s, transform);
                 }  
                 
+                ._close,
                 .closeline,
                 .wndback{
                     opacity: 1;
@@ -7813,10 +7842,9 @@ html.mobileview{
 
             &.noheader{
                 .wndinner{
-                    .wndcontent{
-                        border-top-left-radius: 10px;
-                        border-top-right-radius: 10px;
-                    }
+                    border-top-left-radius: 10px;
+                    border-top-right-radius: 10px;
+                    overflow: hidden;
                    
                 }
             }
@@ -7841,7 +7869,6 @@ html.mobileview{
             .wndinner{
               
                 .wndcontent{
-                    height: 92vh; 
                     height: calc(var(--vh, 1vh) * 92);
                 }
             }

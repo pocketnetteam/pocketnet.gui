@@ -91,7 +91,9 @@ const publics = {
     getrecomendedaccountsbyscoresfromaddress : true,
     getrecomendedcontentsbyscoresfromaddress : true,
     getrecomendedaccountsbytags : true,
-
+    getboostfeed : true,
+    getprofilefeed : true,
+    getsubscribesfeed : true,
 
     // BlockExplorer
     getblocktransactions: true,
@@ -210,6 +212,7 @@ function rpc(request, callback, obj) {
     var called = false;
     var errorMessage = 'Bitcoin JSON-RPC: ';
 
+    
    
     var req = self.protocol.request(options, function(res) {
 
@@ -441,8 +444,13 @@ RpcClient.callspec = {
     getpostscores: 'str',
     getpagescores: 'obj str',
 
-    gethierarchicalstrip : 'int str int str obj str str str obj',
-    gethistoricalstrip : 'int str int str obj str str str str obj',
+
+
+    getboostfeed : 'int str int str obj obj obj obj obj str str',
+    getprofilefeed : 'int str int str obj str str str obj str str',
+    getsubscribesfeed : 'int str int str obj obj obj obj obj str str',
+    gethierarchicalstrip : 'int str int str obj obj obj obj obj str str',
+    gethistoricalstrip : 'int str int str obj obj obj obj obj str str',
     getusercontents : 'str int str int obj str',
     getcontentsstatistic : 'obj str int int',
     // BlockExplorer

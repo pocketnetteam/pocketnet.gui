@@ -11,6 +11,7 @@
   --background-hidden-layer: 255, 255, 255;
   --background-total-theme: 255, 255, 255;
   --background-secondary-theme: 250, 250, 250;
+  --background-secondary-theme-2: 18, 22, 33;
   --background-main: 240, 242, 245;
   --background-main-contrast: 10, 12, 23;
   --color-medium-theme: 199, 200, 217;
@@ -72,6 +73,7 @@
   --background-hidden-layer: 10, 12, 23;
   --background-total-theme: 18, 22, 33;
   --background-secondary-theme: 24, 36, 52;
+  --background-secondary-theme-2: 24, 36, 52;
   --background-main: 12, 14, 18;
   --background-main-contrast: 240, 242, 245;
   --color-medium-theme: 99, 100, 117;
@@ -107,6 +109,7 @@
   --background-hidden-layer: 12, 12, 12;
   --background-total-theme: 20, 20, 20;
   --background-secondary-theme: 36, 36, 36;
+  --background-secondary-theme-2: 36, 36, 36;
   --background-main: 28, 28, 28;
   --background-main-contrast: 242, 242, 242;
   --color-medium-theme: 104, 104, 104;
@@ -161,7 +164,6 @@
   margin-top: -8px;
   width: 30px;
   height: 15px;
-  contain: strict;
 }
 .jsPlayerLoading .jsPlayerLoadingD {
   position: absolute;
@@ -340,7 +342,7 @@ h3 {
   background: rgba(255, 174, 0, 0.07);
 }
 mark {
-  background: rgba(var(--color-bg-ac-2), 0.9) rgba(255, 110, 132, 0.9);
+  background: rgba(var(--color-bg-ac), 0.9);
   color: rgb(var(--text-on-bg-ac-color));
 }
 /*
@@ -2769,6 +2771,16 @@ input[type=radio].radio:checked + label {
   bottom: 20px;
   padding: 1em;
   border-radius: 6px;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+.sitemessage .action {
+  margin-top: 0.5em;
+}
+.sitemessage.removing {
+  opacity: 0;
 }
 .bodyshadow {
   position: fixed;
@@ -2964,8 +2976,8 @@ input[type=radio].radio:checked + label {
   width: 30px;
 }
 .preloader5 img {
+  height: 7.5px;
   width: 30px;
-  will-change: transform;
 }
 .preloader5 span {
   vertical-align: middle;
@@ -3386,7 +3398,7 @@ input[type=radio].radio:checked + label {
   width: 100%;
 }
 .menudialog .mobiledialogcontent {
-  max-height: 60vh;
+  max-height: calc(var(--vh, 1vh) * 60);
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior: contain;
@@ -4141,7 +4153,6 @@ input[type=radio].radio:checked + label {
   overflow-x: scroll;
   scroll-behavior: smooth;
   scrollbar-width: none;
-  scroll-snap-type: y mandatory;
   border-radius: 6px;
 }
 .horizontalLentaWrapper .showmorebywrapper::-webkit-scrollbar {
@@ -4162,6 +4173,12 @@ input[type=radio].radio:checked + label {
 }
 .horizontalLentaWrapper .showmorebywrapper .showmorebywrapper {
   display: none;
+}
+.optimizationTip {
+  background: rgb(var(--background-total-theme));
+  background-image: url(img/icons8-square.svg);
+  background-repeat: repeat-x;
+  background-position: center;
 }
 .sharepostmenu .menuitem {
   cursor: pointer;
@@ -4217,6 +4234,7 @@ html.mobileview .matrixchatwrapper {
   contain: strict;
   left: 0;
   top: 0;
+  /*touch-action: none;*/
   right: 0;
   bottom: 0;
   background: rgb(var(--background-hidden-layer));
@@ -4230,7 +4248,6 @@ html.mobileview .matrixchatwrapper {
   -webkit-transform: translateX(-100%);
   transform: translateX(-100%);
   overflow: hidden;
-  border-radius: 5px;
   backface-visibility: hidden;
   will-change: transform;
 }
@@ -4274,7 +4291,7 @@ html.mobileview .tooltipMobileDialog ._close {
   display: none;
 }
 html.mobileview .tooltipMobileDialog .mobiledialogcontent {
-  max-height: 60vh;
+  max-height: calc(var(--vh, 1vh) * 60);
 }
 html.mobileview .tooltipMobileDialog .secondwrapper {
   vertical-align: bottom;
@@ -5497,8 +5514,8 @@ html.mobileview.fullscreen #navigationWrapper {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   background-color: #011621;
   z-index: 5000;
   display: flex;
@@ -5522,8 +5539,8 @@ html.mobileview.fullscreen #navigationWrapper {
   background-color: #0098eb;
 }
 #splashScreen img {
-  max-height: 6vh;
-  max-width: 100vw;
+  max-height: 50px;
+  max-width: 50px;
 }
 #splashScreen img.zoom-in {
   -webkit-animation: zoom-in 0.5s ease-out both;
@@ -6265,6 +6282,10 @@ html.mobileview .wnd.normalizedmobile .wndback {
 html.mobileview .wnd.normalizedmobile .hideButton {
   display: none!important;
 }
+html.mobileview .wnd.normalizedmobile ._close {
+  backdrop-filter: none!important;
+  opacity: 0;
+}
 html.mobileview .wnd.normalizedmobile .closeline {
   top: 120px;
   height: 2px;
@@ -6301,21 +6322,28 @@ html.mobileview .wnd.normalizedmobile .wndinner .wndheader {
   position: sticky;
 }
 html.mobileview .wnd.normalizedmobile .wndinner .wndcontent {
-  position: static;
+  position: relative;
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
-  bottom: 0;
   backface-visibility: hidden;
   background: rgb(var(--background-total-theme));
   max-width: 768px;
-  max-height: 92vh;
   max-height: calc(var(--vh, 1vh) * 92);
-  min-height: 30vh;
   min-height: calc(var(--vh, 1vh) * 30);
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
   margin: 0 auto;
   padding-left: 0;
   padding-right: 0;
-  box-shadow: 0 5px 7px -5px rgba(var(--color-shadow-base), 0.4);
+}
+html.mobileview .wnd.normalizedmobile .wndinner .wndcontent > div {
+  opacity: 0;
+  -moz-transition: opacity 0.3s;
+  -o-transition: opacity 0.3s;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
 }
 html.mobileview .wnd.normalizedmobile .wndinner .wndcontent::-webkit-scrollbar {
   width: 0;
@@ -6356,6 +6384,7 @@ html.mobileview .wnd.normalizedmobile.sette .wndinner {
   -webkit-transition: transform 0.3s;
   transition: transform 0.3s;
 }
+html.mobileview .wnd.normalizedmobile.sette ._close,
 html.mobileview .wnd.normalizedmobile.sette .closeline,
 html.mobileview .wnd.normalizedmobile.sette .wndback {
   opacity: 1;
@@ -6370,9 +6399,10 @@ html.mobileview .wnd.normalizedmobile.showbetter .closeline {
 html.mobileview .wnd.normalizedmobile.showbetter .roundclosebutton {
   backdrop-filter: none;
 }
-html.mobileview .wnd.normalizedmobile.noheader .wndinner .wndcontent {
+html.mobileview .wnd.normalizedmobile.noheader .wndinner {
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
+  overflow: hidden;
 }
 html.mobileview .wnd.normalizedmobile:only-child .wndback {
   -moz-transition: 0.2s;
@@ -6384,7 +6414,6 @@ html.mobileview .wnd.normalizedmobile:only-child.asette .wndback {
   opacity: 0;
 }
 html.mobileview .wnd.maxheight .wndinner .wndcontent {
-  height: 92vh;
   height: calc(var(--vh, 1vh) * 92);
 }
 html.pipmode .pipped {

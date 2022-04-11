@@ -184,6 +184,7 @@
 }
 #menu .sections .items.searchWrapper .item {
   width: 100%;
+  min-width: 340px;
 }
 #menu .sections .items.searchWrapper .postssearchwrapper {
   padding: 15px 0;
@@ -206,6 +207,8 @@
   width: auto;
   height: 100%;
   white-space: nowrap;
+  display: flex;
+  align-items: center;
 }
 #menu .sections .items .item .icon {
   padding: 0;
@@ -354,6 +357,8 @@
 }
 #menu .sections .items .item.sitename .icon {
   padding-left: 0;
+  padding-top: 1em;
+  padding-bottom: 1em;
 }
 #menu .sections .items .item.sitename .menutoppanel {
   display: none;
@@ -671,6 +676,9 @@
   }
   #menu .sections .items.searchWrapper {
     padding-right: 1.5em;
+  }
+  #menu .sections .items.searchWrapper .item {
+    min-width: 0;
   }
   #menu .sections .items .item.signout,
   #menu .sections .items .item.signin {

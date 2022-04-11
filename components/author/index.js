@@ -1025,7 +1025,7 @@ var author = (function(){
 					author : author.address,
 					byauthor : true,
 					hr : hr,
-					
+					optimize : self.app.mobileview,
 					renderclbk : function(){
 						if (contentsready)
 							el.c.find('.contentswrapper').hcSticky('refresh');
@@ -1361,6 +1361,8 @@ var author = (function(){
 					}
 
 					author.data = self.sdk.users.storage[author.address]
+
+					console.log('author.data', author.data)
 
 					var data = {
 						author : author

@@ -1,8 +1,8 @@
 {
     "name": "pocketnet",
-    "version": "0.7.8",
-    "cordovaversion": "1.7.8",
-    "cordovaversioncode": "170080",
+    "version": "0.7.27",
+    "cordovaversion": "1.7.27",
+    "cordovaversioncode": "170270",
     "description": "Bastyon desktop application",
     "author": "Pocketnet Community <support@pocketnet.app>",
     "company": "Pocketnet Community",
@@ -37,7 +37,6 @@
         "humanize": "0.0.9"
     },
     "dependencies": {
-        "@ffmpeg-installer/ffmpeg": "^1.1.0",
         "aes-js": "^3.1.2",
         "async-each": "^1.0.3",
         "auto-launch": "^5.0.5",
@@ -57,9 +56,9 @@
         "express": "^4.17.1",
         "express-useragent": "^1.0.15",
         "express-ws": "^4.0.0",
+        "ffbinaries": "^1.1.4",
         "ffmpeg": "^0.0.4",
         "ffmpeg-static": "^4.4.0",
-        "ffprobe-static": "^3.0.0",
         "filestorage": "^1.7.1",
         "firebase-admin": "^9.3.0",
         "fluent-ffmpeg": "^2.1.2",
@@ -89,6 +88,7 @@
         "node-cmd": "^3.0.0",
         "node-fetch": "",
         "node-iplocate": "^1.0.2",
+        "node-notifier": "^10.0.1",
         "node-rsa": "^1.1.1",
         "nodejs-base64": "^1.0.3",
         "nodemailer": "^6.4.11",
@@ -181,8 +181,8 @@
             ],
             "artifactName": "${productName}_${platform}_${arch}.${ext}",
             "category": "Network",
-            "executableName": "${productName}",
-            "description": "${productName} Desktop Browser"
+            "executableName": "bastyon",
+            "description": "Bastyon Desktop Browser"
         },
         "win": {
             "target": [
@@ -270,7 +270,6 @@
             ],
             "artifactName": "${productName}_${platform}_${arch}.${ext}",
             "category": "Network",
-            "executableName": "${productName}",
             "description": "${productName} Desktop Browser"
         },
         "win": {

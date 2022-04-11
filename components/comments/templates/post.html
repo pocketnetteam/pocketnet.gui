@@ -6,7 +6,7 @@ if(isMobile()) dplace = e('e13039')
 %>
 
 <div class="postbody" answer="<%- answer %>" edit="<%- edit %>">
-	<div class="posttable table">
+	<div class="posttable ">
 
 		<% if(state) {%>
 
@@ -70,10 +70,13 @@ if(isMobile()) dplace = e('e13039')
 					<textarea elementsid="leaveCommentPreview" class="leaveCommentPreview" placeholder="<%- placeholder || dplace %>"></textarea>
 
 					<div class="leaveComment" placeholder="<%- placeholder || dplace %>"></div>
+					<% if(app.platform.sdk.user.canuseimagesincomments()) {%>
 
-					<div elementsid="comments_embedimages" class="embedimages">
-						<i class="fas fa-image"></i>
-					</div>
+						<div elementsid="comments_embedimages" class="embedimages">
+							<i class="fas fa-image"></i>
+						</div>
+
+					<% } %>
 
 					<% if(!isMobile() && !isTablet()) { %> 
 						<div elementsid="comments_embedEmojiPrivew" class="embedEmojiPrivew">

@@ -380,6 +380,42 @@ var post = (function () {
 
 			},
 
+			initVideoLight: function(clbk){
+				//js-player-dummy
+
+				var button = el.c.find('.initvideoplayer');
+
+				if (button.length){
+
+					if (button.closest && button.closest('.shareTable').attr('stxid') != (share.txid || '')) return
+
+					button.one('click', function(){
+
+						console.log("CLICK2")
+
+						$(this).closest('.jsPlayerLoading').addClass('loading') 
+						$(this).closest('.js-player-dummy').addClass('js-player-ini')
+
+						console.log("???")
+
+						actions.initVideo(function(v){
+
+							if (player)
+								player.play()
+
+							if (clbk)
+								clbk(v)
+
+						})
+					})
+				}
+				else {
+					actions.initVideo(clbk)
+				}
+
+				button = null
+			},	
+
 			initVideo: function (clbk) {
 
 				if(!el.c) return
@@ -387,14 +423,9 @@ var post = (function () {
 				if (self.app.platform.sdk.usersettings.meta.embedvideo && !
 					self.app.platform.sdk.usersettings.meta.embedvideo.value) return
 
-				var pels = el.c.find('.js-player, [data-plyr-provider][data-plyr-embed-id]');
+				var pels = el.c.find('.js-player-ini');
 
-				var shareId = share.txid;
-
-				if (!el[shareId]) el[shareId] = el.c.find('.metapanel.' + shareId + ' .downloadMetapanel');
-
-				//var downloadPanel = el[shareId];
-
+					console.log('pels', pels)
 
 				var wa =  !share.repost && !ed.repost && (((share.itisvideo() && isMobile() && !ed.openapi) || (ed.autoplay && pels.length <= 1))) ? true : false
 
@@ -411,6 +442,9 @@ var post = (function () {
 
 					var options = {
 						//autoplay : pels.length <= 1,
+
+						light : ed.repost || false,
+
 						resetOnEnd: true,
 						muted: false,
 						wautoplay: wa,
@@ -513,7 +547,7 @@ var post = (function () {
 	
 								}
 	
-								if (player.enableHotKeys) player.enableHotKeys()
+								if (player.enableHotKeys && !ed.repost) player.enableHotKeys()
 							}
 
 							if (clbk)
@@ -1040,7 +1074,8 @@ var post = (function () {
 
 									showall: !ed.fromempty,
 									init: ed.fromempty || false,
-									preview: ed.fromempty || false,
+									preview: true,
+									listpreview : false,
 
 									fromtop: !ed.fromempty,
 									fromempty: ed.fromempty,
@@ -1240,7 +1275,6 @@ var post = (function () {
 				}
 			},
 			share: function (clbk) {
-
 				self.shell(
 					{
 						turi: 'lenta',
@@ -1281,7 +1315,7 @@ var post = (function () {
 						el.wr.addClass('active');
 
 						
-						if (share.itisvideo() && !ed.repost && !_OpenApi) renders.showmoreby()
+						//if (share.itisvideo() && !ed.repost && !_OpenApi) renders.showmoreby()
 
 						renders.stars(function () {
 							renders.mystars(function () { });
@@ -1296,10 +1330,12 @@ var post = (function () {
 
 									actions.position();
 
-									setTimeout(function(){
+									if(ed.repost){
+										actions.initVideoLight();
+									}
+									else{
 										actions.initVideo();
-									}, 250)
-									
+									}
 
 									renders.images(function () {
 
@@ -1403,7 +1439,7 @@ var post = (function () {
 					author: share.address,
 					video: true,
 					shuffle : true,
-					loaderkey : 'getusercontents',
+					loaderkey : 'getprofilefeed',
 					filter : function(_share){
 						if(share.txid != _share.txid) return true
 					},
@@ -1543,7 +1579,7 @@ var post = (function () {
 							url: url,
 							og: og,
 							share: share,
-							fullplayer : true
+							fullplayer : !ed.repost
 						},
 
 						additionalActions: function () {
@@ -1577,6 +1613,7 @@ var post = (function () {
 			},
 			urlContent: function (clbk) {
 				var url = share.url;
+
 
 				if (url) {
 					var meta = self.app.platform.parseUrl(url);
@@ -1796,6 +1833,8 @@ var post = (function () {
 
 			getdata: function (clbk, p) {
 
+				
+
 				_repost = null
 
 				eid = p.settings.eid || ''
@@ -1935,7 +1974,7 @@ var post = (function () {
 				el.wnd = el.c.closest('.wndcontent');
 
 				
-				if(share.itisarticle()){
+				if (share.itisarticle()){
 					el.c.closest('.wnd').addClass('articlewindow')
 					el.c.addClass('sharec')
 				}
@@ -1950,7 +1989,7 @@ var post = (function () {
 
 			wnd: {
 				showbetter : true,
-				class: 'withoutButtons postwindow ' + (p.pip ? '' : 'normalizedmobile maxheight'),
+				class: 'withoutButtons postwindow nobfilter ' + (p.pip ? '' : 'normalizedmobile maxheight'),
 				pip : p.pip || false,
 				expand : function(){
 

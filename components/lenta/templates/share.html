@@ -58,7 +58,7 @@ var metadisplay = function(){ %>
 
 							<a elementsid="shareaddresslink" href="<%-app.platform.api.authorlink(share.address)%>">
 							<% var reputation = deep(app.platform.sdk.usersl.storage, share.address+'.reputation') || 0 %>
-								<b><span class="adr"><%-name || share.address %></span></b><% if(reputation && !app.curation()) {%><sup class="spsp"><%-compressedNumber(reputation, 1)%></sup><% } %>
+								<b><span class="adr"><%-(name || share.address) %></span></b><% if(reputation && !app.curation()) {%><sup class="spsp"><%-compressedNumber(reputation, 1)%></sup><% } %>
 							</a>
 
 							
@@ -73,9 +73,8 @@ var metadisplay = function(){ %>
 
 							
 						</div>	
-						
 						<div class="sys unselectablemobile">
-							<%if(share.pin){%><span class="pinnedLabel"><i class="fas fa-thumbtack"></i> <%=e('pinned').toLowerCase()%>,</span><%} else { if(share.repost) { %><span><i class="fas fa-share"></i> <%=e('reposted')%>, </span><% } }%><% if(share.downloadedDate) {%> <span class="fas fa-cloud-download-alt"></span> <span class="realtime editedLabel" time="<%-share.downloadedDate%>"><%- app.reltime(share.downloadedDate) %></span><% } else { %> 
+							<%if(share.pin){%><span class="pinnedLabel"><i class="fas fa-thumbtack"></i> <%=e('pinned').toLowerCase()%>,</span><%} else { if(share.repost) { %><span><i class="fas fa-share"></i> <%=e('reposted')%>, </span><% } }%><% if(share.downloadedDate) {%> <span class="fas fa-download"></span> <span class="realtime editedLabel" time="<%-share.downloadedDate%>"><%- app.reltime(share.downloadedDate) %></span><% } else { %> 
 							<% if(share.time) {%><span  class="realtime " time="<%-share.time%>"><%- app.reltime(share.time) %></span><% } else { %><span><%=e('e13019')%></span><% } %><% if(share.edit == 'true') {%><span class="editedLabel">, <%=e('e13130').toLowerCase()%></span><% } %><% } %><% if(share.visibility()) {%><span class="visibilityLabel">, <%=e('sharevisibility_' + share.visibility()).toLowerCase()%></span><% } %>
 						</div>
 					
@@ -320,7 +319,7 @@ var arranges = {
 
 } %>
 
-<div class="sharecnt <% if(share.deleted) { %> deleted <% } %>">
+<div class="sharecnt <% if(typeof sharesFromSub != 'undefined' && sharesFromSub[share.txid]) {%>  fromsub <% } %> <% if(share.deleted) { %> deleted <% } %>">
 
 	<div class="work unselectablemobile">
 
@@ -507,7 +506,7 @@ var arranges = {
 								</div>
 
 								<% const isElectron = (typeof _Electron !== 'undefined' && !!window.electron); %>
-								<% const isSaveSupported = (window.cordova || isElectron); %>
+								<% const isSaveSupported = (window.cordova && !isios()); %>
 
 								<% if(isSaveSupported && share.itisvideo()) {
 
@@ -576,16 +575,13 @@ var arranges = {
 
 									<div class="itemwr table tempPreloader">
 										
-										<div class="iconwr">
-											<div class="preloader5"><img src="./img/three-dots.svg"/></div>
-										</div>
-										
 										<div elementsid="lenta_forstars_count" class="count">
 											<div class="label">
 
 												<span><%=e('postWaitConf')%></span>
 											</div>
-										</div>	
+										</div>
+											
 									</div>
 								</div>
 								<div class="clearfix"></div>

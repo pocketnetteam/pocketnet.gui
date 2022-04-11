@@ -1,3 +1,5 @@
+
+
 <div class="fields">
     <div class="options">
         <div class="inputWrapper">
@@ -9,8 +11,21 @@
     <div class="sum">
 				
         <div class="inputWrapper inputSumWrapper">
-            <input type="number" id="inputSum" class="inputSum" placeholder="<%= e('wsamountof') %>" value="<%= valSum %>">
-            <div id="errorWrapper" class="errorWrapper"></div>
+            <input type="number" id="inputSum" class="inputSum" placeholder="<%= e('wsamount') %>" value="<%= valSum %>">
+            <div class="notion">
+                <div class="balance">
+                    <div class="text">
+                        <%= e('yourbalance') %>:
+                    </div>
+                    <div class="amount">
+                        <%-balance%>
+                    </div>
+                    <div class="label">
+                        PKOIN
+                    </div>
+                </div>
+                <div id="errorWrapper" class="errorWrapper"></span>
+            </div>
             <div class="pkoinLabel">
                 PKOIN
             </div>

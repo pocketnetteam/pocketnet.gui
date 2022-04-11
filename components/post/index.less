@@ -52,8 +52,6 @@
 			border-radius: 12px;
 		}
 	}
-	
-
 
 	.showmorelenta{
 		display: none;
@@ -388,7 +386,7 @@
 #post{
 	.sharearticle{
 		opacity: 0;
-		.transition(0.1s, opacity);
+		.transition(0.3s, opacity);
 
 		.shareTable{
 			padding-top : 0;
@@ -539,11 +537,13 @@
 			}
 
 			&.showtext{
-				.icon{
+				.iconWrapper{
 					position: absolute;
+					width: auto;
 					bottom : -22px;
 					left : 0;
 					right: 0;
+					padding-left: 0;
 				}
 			}
 			
@@ -558,7 +558,7 @@
 					height: 3.5em;
 					line-height: 3.5em;
 					border-radius: 3.5em;
-					color : rgb(var(--text-on-bg-ac-color));
+					color : rgb(var(--neutral-grad-3));
 					cursor: pointer;
 					display: flex;
 					align-items: center;
@@ -587,6 +587,11 @@
 				left: 3 * @rhythm;
 				right: auto;
 				display: flex;
+
+				.panelLeft{
+					display: flex;
+				}
+
 			}
 
 			
@@ -671,6 +676,20 @@
 						color : rgb(var(--text-color));
 					}
 				}
+
+				&.showtext{
+					.iconWrapper{
+						position: static;
+						width: auto;
+						padding-left: 0;
+						float: none;
+					}
+
+					.toppanel{
+						order : 1;
+					}
+				}
+				
 			}
 
 		}
@@ -735,6 +754,15 @@
 				filter : blur(10px);
 			}
 		}
+
+		p{
+			a{
+				white-space: nowrap;
+				text-overflow: ellipsis;
+				max-width: 90%;
+				overflow: hidden;
+			}
+		}
 	}
 }
 
@@ -762,6 +790,8 @@ html.mobileview{
 				padding-left: @rhythm;
 				padding-right: @rhythm;
 			}
+
+			
 		}
 	}
 
@@ -800,12 +830,30 @@ html.mobileview{
 		.sharearticle{
 			
 			.shareBgCaption{
+
+				&.caption_small{
+					.captionmult{ font-size: 1.1em; }
+				}
+	
+				&.caption_long{
+					.captionmult{ font-size: 0.8em; }
+				}
+
+				.captioncnt {
+					.sharecaption{
+						max-height: none;
+					}
+				}
+
+				
 				
 				&:not(.verticalcover){
 					height: auto;
 
 					.captioncnt{
 						padding-bottom: 4 * @rhythm;
+						padding-left: 2 * @rhythm;
+						padding-right: 2 * @rhythm;
 						display: flex;
 						flex-direction: column;
 						justify-content: flex-end;
@@ -832,20 +880,10 @@ html.mobileview{
 		
 						.sharecaption{
 							font-size: 3em;
-							font-family: Georgia, serif;
+							padding : @rhythm 0;
+							padding-top: 2 * @rhythm;
 						}
 						
-					}
-		
-					.icon{
-						position: absolute;
-						bottom : -22px;
-						left : 0;
-						right: 0;
-		
-						.usericon{
-							margin : 0 auto;
-						}
 					}
 
 					.articleCover{
@@ -878,16 +916,18 @@ html.mobileview{
 						padding-bottom: 8 * @rhythm;
 
 						.sharecaption{
-							font-size: 2em;
+							font-size: 3em;
+							padding : @rhythm 0;
+							padding-top: 2 * @rhythm;
 						}
 					}
 	
 					.blackmatte{
 						display: block;
+						backdrop-filter: brightness(85%);
 					}
 	
 					.icon{
-						position: absolute;
 					}
 	
 					.captioncnt{
@@ -919,6 +959,14 @@ html.mobileview{
 					}
 				}
 	
+			}
+
+			.starstoppanel, .socialsharewrapper{
+				bottom: -0.25em!important;
+
+				.panelLeft{
+					flex-direction: column;
+				}
 			}
 
 			.articlecontent{
@@ -981,6 +1029,7 @@ html.mobileview.fullscreen{
 		.wndcontent{
 			padding : 0;
 			border-radius: 0;
+			background: rgb(var(--background-total-theme));
 		}
 
 		#post{
@@ -990,10 +1039,6 @@ html.mobileview.fullscreen{
 		}
 
 		._close{
-			backdrop-filter: blur(7px) grayscale(30%);
-        	-webkit-backdrop-filter: blur(7px) grayscale(30%); 
-			color : rgb(var(--text-on-bg-ac-color));
-			.shadowSmall();
 		}
 	}
 
@@ -1006,8 +1051,6 @@ html.mobileview.fullscreen{
 	#post{
 		margin : 0 auto;
 		background: transparent;
-
-		
 
 		.postWrapper{
 			overflow: hidden;
@@ -1174,6 +1217,10 @@ html.mobileview{
 
 
 .wnd.postwindow.pipmini{
+	.wndcontent{
+		padding-right: 0;
+		overflow-y: hidden;
+	}
 	#post{
 		
 		padding: 0!important;
@@ -1191,12 +1238,27 @@ html.mobileview{
 			border-radius: 6px;
 			
 			.video-js{
-				max-height: 25vh;
 				min-height: 150px;
 				max-height: calc(var(--vh, 1vh) * 25);
+
+				.vjs-control-bar{
+					
+
+					.vjs-mute-control{
+						position: absolute;
+						height: 3em;
+						line-height: 3.5em;
+						font-size: 1em;
+						right: 0.25em;
+						bottom: 0;
+						width: 3em;
+						font-size: 0.9em;
+					}
+				}
 			}
 	
 		}
+
 
 		.work{
 			position: static;
@@ -1236,8 +1298,11 @@ html.pipmode{
 					height: 100%;
 					max-width: none;
 					right: 0;
+
+					.vjs-control-bar{
+						padding-left: 0;
+					}
 				}
-		
 			}
 		}
 	}
