@@ -1463,7 +1463,6 @@ Application = function(p)
 				s(scrollTop, blockScroll)
 			})
 
-			console.log('scrollTop', scrollTop)
 
 			if(!scrollTop){
 				self.mobile.reload.initparallax()
