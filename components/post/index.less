@@ -386,7 +386,7 @@
 #post{
 	.sharearticle{
 		opacity: 0;
-		.transition(0.1s, opacity);
+		.transition(0.3s, opacity);
 
 		.shareTable{
 			padding-top : 0;
@@ -761,7 +761,6 @@
 				text-overflow: ellipsis;
 				max-width: 90%;
 				overflow: hidden;
-				display: inline-block;
 			}
 		}
 	}
@@ -791,6 +790,8 @@ html.mobileview{
 				padding-left: @rhythm;
 				padding-right: @rhythm;
 			}
+
+			
 		}
 	}
 
@@ -923,6 +924,7 @@ html.mobileview{
 	
 					.blackmatte{
 						display: block;
+						backdrop-filter: brightness(85%);
 					}
 	
 					.icon{
@@ -1037,10 +1039,6 @@ html.mobileview.fullscreen{
 		}
 
 		._close{
-			backdrop-filter: blur(7px) grayscale(30%);
-        	-webkit-backdrop-filter: blur(7px) grayscale(30%); 
-			color : rgb(var(--text-on-bg-ac-color));
-			.shadowSmall();
 		}
 	}
 
@@ -1053,8 +1051,6 @@ html.mobileview.fullscreen{
 	#post{
 		margin : 0 auto;
 		background: transparent;
-
-		
 
 		.postWrapper{
 			overflow: hidden;

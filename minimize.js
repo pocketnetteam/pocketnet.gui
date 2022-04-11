@@ -1004,5 +1004,5 @@ var copycordovaios = function(options, clbk){
 	
 }
 
-
-String.prototype.replaceAll=function(a,b){return a?this.split(a).join(b):this};
+if(!String.prototype.replaceAll)
+	String.prototype.replaceAll=function(a,b){return a?this.split(a).join(b):this};

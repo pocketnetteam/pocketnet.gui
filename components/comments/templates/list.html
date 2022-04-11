@@ -124,6 +124,8 @@ var commentf = function(comment){
 							var letter = name ? name[0] : '';  
 						%>
 
+						<% if(!app.mobileview) {%><a elementsid="<%-app.platform.api.authorlink(comment.address)%>" href="<%-app.platform.api.authorlink(comment.address)%>"><% } %>
+
 						<div class="icon" profile="<%-comment.address%>">
 							<% if(comment.donation === 'true' && comment.amount) {%>
 								<div class="donatedbefore"></div>
@@ -147,7 +149,7 @@ var commentf = function(comment){
 							</div>
 							
 						</div>
-				
+						<% if(!app.mobileview) {%></a><% } %>
 
 				</div>
 
@@ -156,7 +158,9 @@ var commentf = function(comment){
 					<div class="metatable">
 						<div class="author">
 
-							<span class="adr" profile="<%-comment.address%>"><%-deep(app, 'platform.sdk.usersl.storage.'+comment.address+'.name') || comment.address %></span> &middot;
+							<% if(!app.mobileview) {%><a elementsid="<%-app.platform.api.authorlink(comment.address)%>" href="<%-app.platform.api.authorlink(comment.address)%>"><% } %>
+
+							<span class="adr" profile="<%-comment.address%>"><%-deep(app, 'platform.sdk.usersl.storage.'+comment.address+'.name') || comment.address %></span><% if(!app.mobileview) {%></a><% } %> &middot;
 							
 							<span class="date realtime" time="<%-comment.time%>"><%- app.reltime(comment.time) %></span>
 

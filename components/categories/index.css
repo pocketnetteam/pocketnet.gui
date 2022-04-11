@@ -33,7 +33,6 @@
   padding: 0 1em;
 }
 #categories .tcaptiontable .buttons > div {
-  display: inline-block;
   font-size: 1.2em;
 }
 #categories .tcaptiontable .buttons > div.ticon {
@@ -61,11 +60,21 @@
 #categories .tcaptiontable .buttons > div.addcategory:hover {
   color: rgb(var(--color-txt-ac));
 }
-#categories .tcaptiontable .buttons > div.clearcategories {
+#categories .tcaptiontable .buttons > div.addcategory .text {
+  display: none;
+  font-size: 1em;
+  margin-left: 2px;
+}
+#categories .clearcategories {
   display: none;
 }
-#categories .tcaptiontable .buttons > div.clearcategories.showed {
+#categories .clearcategories.showed {
   display: table-cell;
+}
+#categories .clearcategories.button {
+  display: none;
+  width: 100%;
+  margin-bottom: 1em;
 }
 #categories .tcaptionwrapper {
   padding-top: 1em;
@@ -322,6 +331,32 @@
   box-shadow: 0 5px 10px -5px rgba(var(--color-shadow-base), 0.4);
 }
 @media only screen and (max-width: 768px) {
+  #categories .tcaptiontable .buttons {
+    display: block;
+    overflow: hidden;
+  }
+  #categories .tcaptiontable .buttons > div.addcategory {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    padding-top: 6px;
+  }
+  #categories .tcaptiontable .buttons > div.addcategory i {
+    display: inline;
+  }
+  #categories .tcaptiontable .buttons > div.addcategory .text {
+    display: inline;
+  }
+  #categories .tcaptiontable .buttons > div.simple {
+    display: none;
+  }
+  #categories .clearcategories.button {
+    opacity: 0.4;
+    display: block;
+  }
+  #categories .clearcategories.button.showed {
+    opacity: 1;
+  }
   #categories .cat .cattable > div.catvalue .catname {
     font-size: 1em;
   }

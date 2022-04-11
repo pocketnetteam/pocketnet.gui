@@ -201,7 +201,7 @@ var comments = (function(){
 		var actions = {
 			showprofile : function(address){
 
-				if(isMobile()){
+				if (self.app.mobileview){
 					self.nav.api.load({
 						open : true,
 						id : 'channel',
@@ -214,13 +214,13 @@ var comments = (function(){
 						}
 					})
 				}
-				else{
+				/*else{
 					self.nav.api.load({
 						open : true,
 						href : 'author?address=' + address,
 						history : true
 					})
-				}
+				}*/
 
 				
 			},
@@ -2632,7 +2632,9 @@ var comments = (function(){
 				ed = p.settings.essenseData || {}
 
 				preview = ed.preview || false;
-				listpreview = preview;
+				listpreview = ed.listpreview || false;
+
+				console.log("listpreview", listpreview, preview)
 				showedall = false;
 
 				txid = ed.txid || null
@@ -2648,7 +2650,7 @@ var comments = (function(){
 						showedall
 					};
 
-						data.ed = ed;
+					data.ed = ed;
 
 					self.app.platform.sdk.ustate.me(function(_mestate){
 
@@ -2757,7 +2759,7 @@ var comments = (function(){
 
 				
 
-				if(preview){
+				if (listpreview){
 					makePreview()
 				}
 				else{

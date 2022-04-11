@@ -1,4 +1,5 @@
 const https       = require('https');
+const http       = require('http');
 const WebSocket   = require('ws');
 var f = require('../functions');
 var _ = require('underscore')
@@ -6,11 +7,15 @@ var _ = require('underscore')
 var WSS = function(admins, manage){
     var self = this;
         self.listening = false;
+        self.httplistening = false
 
-    var wss = null, server = null;
+    var wss = null, server = null, ws = null, httpserver = null;
 
     var users = {}
+
     var allwss = {}
+    var allws = {}
+
     var gcinfointerval = null
 
     var subscribers = {
@@ -227,6 +232,7 @@ var WSS = function(admins, manage){
     var disconnectClient = function(ws) {
 
         delete allwss[ws.id]
+        delete allws[ws.id]
 
         var wsusers = _.filter(users, function(user){
             return user.clients[ws.id] || user.devices.ws[ws.id]
@@ -263,7 +269,12 @@ var WSS = function(admins, manage){
 
 
     self.sendtoall = function(message){
+
         _.each(allwss, function(ws){
+            sendMessage(message, ws).catch(e => {})
+        })
+
+        _.each(allws, function(ws){
             sendMessage(message, ws).catch(e => {})
         })
 
@@ -428,9 +439,8 @@ var WSS = function(admins, manage){
 
     }
 
-    self.newconnection = function(ws){
+    self.newconnection = function(ws, all){
         ws.id = f.makeid();
-        
 
         var disc = false
 
@@ -453,16 +463,21 @@ var WSS = function(admins, manage){
             disconnectClient(ws)
         });
 
-        allwss[ws.id] = ws
+        console.log("NEW CONNECTION")
+
+        all[ws.id] = ws
         
     }
 
     self.wssdummy = function(wssdummy){
-        self.newconnection(wssdummy)
+        self.newconnection(wssdummy, allwss)
     }
 
+    
+
     self.init = function(settings){
-        
+
+        var port = settings.port || 8099
         
         return new Promise((resolve, reject) => {
 
@@ -474,59 +489,115 @@ var WSS = function(admins, manage){
                     return
                 }
 
-                server = new https.createServer(settings.ssl);
-
-                wss = new WebSocket.Server({
-                    server: server
-                });
-
-                wss.on('connection', (ws, req) => {
-
-                    if(!self.listening) return
-                    
-                    ws.ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress
-                    
-                    self.newconnection(ws)
-
-                })
-
-                wss.on('listening',function(){
-
-                    self.listening = settings.port || 8099
-
-                    resolve()
-                });
-
-                wss.on('error',function(e){
-
-                    reject(e) 
-                });
-
-                server.listen(settings.port || 8099);
-
                 if(!gcinfointerval) {
                     gcinfointerval = setInterval(self.gc, 30000)
                 }
 
+                createWss(port, settings).then(() => {
+
+                    return createWs(port - 1, settings)
+
+                }).then(resolve).catch(e => {
+                    console.log('e', e)
+                    reject(e)
+                })
+
             }
 
             catch(e) {
-
                 reject(e)
             }
 
         })
     }
 
-    self.gc = function(){
+    var createWss = function(port, settings){
+
+        return new Promise((resolve, reject) => {
+
+            server = new https.createServer(settings.ssl);
+
+            wss = new WebSocket.Server({
+                server: server
+            });
+
+            wss.on('connection', (ws, req) => {
+
+                if(!self.listening) return
+                
+                ws.ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress
+                
+                self.newconnection(ws, allwss)
+
+            })
+
+            wss.on('listening',function(){
+
+                self.listening = port
+
+                resolve()
+            });
+
+            wss.on('error',function(e){
+                reject(e) 
+            });
+
+            server.listen(port);
+
+        })
+        
+    }
+
+    var createWs = function(port, settings){
+
+        return new Promise((resolve, reject) => {
+
+            httpserver = new http.createServer();
+
+            ws = new WebSocket.Server({
+                server: httpserver
+            });
+
+            ws.on('connection', (ws, req) => {
+
+                if(!self.listening) return
+                
+                ws.ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress
+                
+                self.newconnection(ws, allws)
+
+            })
+
+            ws.on('listening',function(){
+
+                self.httplistening = port
+
+
+                resolve()
+            });
+
+            ws.on('error',function(e){
+                reject(e) 
+            });
+
+            httpserver.listen(port);
+
+        })
+    }
+
+    var _gc = function(_wss){
         try{
 
-            if (wss && wss.clients)
-                wss.clients.forEach((socket) => {
+            if (_wss && _wss.clients)
+                _wss.clients.forEach((socket) => {
 
                     if ([socket.CLOSED].includes(socket.readyState)) {
 
-                        if(allwss[socket.id]){
+                        if (allwss[socket.id]){
+                            disconnectClient(socket)
+                        }
+
+                        if(allws[socket.id]){
                             disconnectClient(socket)
                         }
 
@@ -536,29 +607,55 @@ var WSS = function(admins, manage){
 
         }
         catch(e){
-
         }
     }
 
-    self.closeall = function(){
-
-        var error = null
+    var _closeall = function(_wss){
 
         try {
-            if (wss && wss.clients){
-                wss.clients.forEach((socket) => {
+            if (_wss && _wss.clients){
+                _wss.clients.forEach((socket) => {
 
-                    console.log("TERMINATE")
+                    if (socket)
+                        socket.close();
 
-                    socket.terminate();
                 });
             }
-
-            
         }
         catch (e) {
-            error = e
         }
+
+    }
+
+    var _terminate = function(_wss){
+        try {
+
+            if (_wss && _wss.clients){
+                _wss.clients.forEach((socket) => {
+                    if ([socket.OPEN, socket.CLOSING].includes(socket.readyState)) {
+                        socket.terminate();
+                    }
+                });
+            }
+                
+        }
+        catch (e) {
+        }
+    }
+
+    self.gc = function(){
+
+        _gc(wss)
+        _gc(ws)
+        
+    }
+
+    
+
+    self.closeall = function(){
+
+        _closeall(wss)
+        _closeall(ws)
 
     }
 
@@ -571,31 +668,28 @@ var WSS = function(admins, manage){
             gcinfointerval = null
         }
 
-        if (wss && wss.clients)
-            wss.clients.forEach((socket) => {
-                try {
-                    if (socket)
-                        socket.close();
-                }
-                catch(e){
-                    
-                }
-            });
+        self.closeall()
 
         return new Promise((resolve, reject) => {
             setTimeout(() => {
 
                 try {
-                    if (wss && wss.clients)
-                        wss.clients.forEach((socket) => {
-                            if ([socket.OPEN, socket.CLOSING].includes(socket.readyState)) {
-                                socket.terminate();
-                            }
-                        });
+
+                    _terminate(wss)
+                    _terminate(ws)
+
 
                     if (server)
                         server.close(function(){
-                            resolve()
+                            if (httpserver)
+                                httpserver.close(function(){
+                                    resolve()
+                                })
+
+                            else{
+                                resolve()
+                            }
+
                         })
 
                     else{
@@ -701,20 +795,33 @@ var WSS = function(admins, manage){
         var open = 0
 
         if(wss && wss.clients){
+
             wss.clients.forEach(socket => {
                 clients++
 
                 if ([socket.OPEN].includes(socket.readyState)) {
                     open++
                 }
-
-                
             })
+
+        }
+
+        if(ws && ws.clients){
+
+            ws.clients.forEach(socket => {
+                clients++
+
+                if ([socket.OPEN].includes(socket.readyState)) {
+                    open++
+                }
+            })
+
         }
 
 
         var data = {
             listening : self.listening,
+            httplistening : self.httplistening,
             clients : clients,
             open : open
         }

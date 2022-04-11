@@ -1074,7 +1074,8 @@ var post = (function () {
 
 									showall: !ed.fromempty,
 									init: ed.fromempty || false,
-									preview: ed.fromempty || false,
+									preview: true,
+									listpreview : false,
 
 									fromtop: !ed.fromempty,
 									fromempty: ed.fromempty,
@@ -1832,6 +1833,8 @@ var post = (function () {
 
 			getdata: function (clbk, p) {
 
+				
+
 				_repost = null
 
 				eid = p.settings.eid || ''
@@ -1958,7 +1961,6 @@ var post = (function () {
 
 			init: function (p) {
 
-
 				p.clbk(null, p);
 
 				if(!share) return
@@ -1972,7 +1974,7 @@ var post = (function () {
 				el.wnd = el.c.closest('.wndcontent');
 
 				
-				if(share.itisarticle()){
+				if (share.itisarticle()){
 					el.c.closest('.wnd').addClass('articlewindow')
 					el.c.addClass('sharec')
 				}
@@ -1987,7 +1989,7 @@ var post = (function () {
 
 			wnd: {
 				showbetter : true,
-				class: 'withoutButtons postwindow ' + (p.pip ? '' : 'normalizedmobile maxheight'),
+				class: 'withoutButtons postwindow nobfilter ' + (p.pip ? '' : 'normalizedmobile maxheight'),
 				pip : p.pip || false,
 				expand : function(){
 

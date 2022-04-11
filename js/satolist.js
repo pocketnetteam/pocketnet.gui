@@ -162,7 +162,11 @@ Platform = function (app, listofnodes) {
         'PVyHHKFuZrH2mh8Y5ZokvZnDfG1iTURpM7' : true,
         'PTPVArrxr4wZuget8phZ1eSNFsGmdSXXck' : true,
         'PQUj7dS2QpamP9vapARCYaJaSqjXpcZk8p' : true,
-        'PP7Sz6pjbgv4XdnnCRnRm4avfxD2TEoMoC' : true
+        'PP7Sz6pjbgv4XdnnCRnRm4avfxD2TEoMoC' : true,
+        'PN9is9RTq2MW6yHw7ggz77vyeKX1a4XJQt' : true,
+        'PLAj8RmQg2ehTVEx8pSWnd2QeFvjHnYtRZ' : true,
+        'PGD5jUBQ7qNnHDuW85RRBxY1msywEdCm7r' : true,
+        'PXupozgNg1Ee6Nrbapj8DEfMGCVgWi4GB1' : true,
     }
 
     self.nvadr = {
@@ -2485,7 +2489,7 @@ Platform = function (app, listofnodes) {
 
         },
 
-        articledecoration : function(wr, share, extend){
+        articledecoration : function(wr, share, extend, clbk){
             var caption = wr.find('.shareBgCaption')
             var capiontextclass = 'caption_small'
 
@@ -2514,21 +2518,26 @@ Platform = function (app, listofnodes) {
                     var _img = img.img;
                     aspectRatio = _img.naturalHeight / _img.naturalWidth
 
-                    if(_img.naturalHeight < 400 || _img.naturalWidth < 400){
+                    if(_img.naturalHeight < 200 || _img.naturalWidth < 300){
                         small = true
                     }
 
                 })
 
-                wr.addClass('ready')
+               
 
                 if(small){
                     caption.addClass('smallimage')
                 }
 
-                if(aspectRatio > 1 && !small){
+                if (aspectRatio > 1 && !small){
                     caption.addClass('verticalcover')
                 }
+
+                setTimeout(function(){
+                    wr.addClass('ready')
+                }, 150)
+               
 
             }, self.app)
         },
@@ -2973,7 +2982,22 @@ Platform = function (app, listofnodes) {
 
                 self.sdk.localshares.saveShare(share, p).then(r => {
 
-                    sitemessage(self.app.localization.e('successdownloaded'))
+                    sitemessage(self.app.localization.e('successdownloaded'), null, 5000, {
+                        action : {
+                            text : self.app.localization.e('gotosaved'),
+                            do : function(){
+                
+                                app.nav.api.load({
+                                    open: true,
+                                    href: 'index?r=saved',
+                                    history: true,
+                                    handler : true
+                                })
+                                
+                            }
+                        }
+                    })
+
 
                     topPreloader2(100)
 
@@ -3015,7 +3039,6 @@ Platform = function (app, listofnodes) {
 
                             var info = share.url ? (app.platform.sdk.videos.storage[share.url] || {}).data || null : null
 
-                            console.log(info, share, app.platform.sdk.videos.storage)
 
                             if (info){
 
@@ -6617,7 +6640,6 @@ Platform = function (app, listofnodes) {
             read : {
                 share : {
                     electron : async function(shareId) {
-                        console.log('SHARE DIR', shareId);
 
                         const shareData = await electron.ipcRenderer
                             .invoke('getShareData', shareId);
@@ -6785,7 +6807,6 @@ Platform = function (app, listofnodes) {
                     },
 
                     electron : async function(videoId, shareId) {
-                        console.log('from', videoId);
 
                         const videosDataList = {};
 
@@ -6807,7 +6828,6 @@ Platform = function (app, listofnodes) {
                 electron : async function(shareId) {
                     const shareDataList = { id: shareId };
 
-                    console.log('SHARE FOLDER', shareId);
 
                     shareDataList.share = await self.sdk.localshares.read.share.electron(shareId);
 
@@ -6816,7 +6836,6 @@ Platform = function (app, listofnodes) {
 
                     shareDataList.videos = await self.sdk.localshares.read.video.electron(videoId, shareId);
 
-                    console.log('SHARE DATA VIDEOS', shareDataList.videos);
 
                     return shareDataList;
                 },
@@ -6864,8 +6883,6 @@ Platform = function (app, listofnodes) {
                         .invoke('getShareList');
 
                     const shareDataList = {};
-
-                    console.log('SHARE LIST', shareList);
 
                     for(const shareIndex in shareList) {
                         const shareId = shareList[shareIndex];
@@ -10066,9 +10083,6 @@ Platform = function (app, listofnodes) {
                 }
 
 
-                console.log('getmissedinfo', self.currentBlock, block)
-
-
                 if(!self.sdk.address.pnet()) return Promise.reject('address')
                 if(!self.currentBlock) return Promise.reject('currentblock')
                 if(!block) return Promise.reject('block')
@@ -11258,8 +11272,6 @@ Platform = function (app, listofnodes) {
                             }
                             else {
                                 var tx = self.app.platform.sdk.node.transactions.create.wallet(inputs, _outputs, keyPair)
-
-                                console.log('txbaseFeesMeta', tx)
 
                                 self.app.platform.sdk.node.transactions.send(tx, function (d, err) {
 
@@ -13298,6 +13310,7 @@ Platform = function (app, listofnodes) {
                 return tags
             },
 
+            
             gettags : function(_k, onlycategories){
                 var tags = []
 
@@ -13462,12 +13475,17 @@ Platform = function (app, listofnodes) {
 
                 if(!onlytags)
                     s.selected[k] = {}
+                    s.excluded[k] = {}
 
                 s.tags[k] = {}
 
                 self.sdk.categories.save()
 
                 _.each(self.sdk.categories.clbks.selected, function(f){
+                    f(null, false, k)
+                })
+
+                _.each(self.sdk.categories.clbks.excluded, function(f){
                     f(null, false, k)
                 })
             },
@@ -13551,6 +13569,7 @@ Platform = function (app, listofnodes) {
                 _.each(self.sdk.categories.clbks.excluded, function(f){
                     f(id, s.excluded[k][id], k)
                 })
+
 
                 return false
             },
@@ -15982,7 +16001,6 @@ Platform = function (app, listofnodes) {
 
                     if (!p) p = {};
 
-                    console.log("P", p)
 
                     self.app.user.isState(function (state) {
 
@@ -16355,14 +16373,14 @@ Platform = function (app, listofnodes) {
                             /////temp
                             ////
 
-                            var parameters = [Number(p.height), p.txid, p.count, p.lang, p.tagsfilter, p.type ? p.type : '', '', '', p.tagsexcluded];
+                            var parameters = [Number(p.height), p.txid, p.count, p.lang, p.tagsfilter, p.type ? [p.type] : [], [], [], p.tagsexcluded];
 
                             if(p.author) {
-                                parameters.push("");
+                                parameters.push('');
                                 parameters.push(p.author)
                             }
                             if(mtd == 'getsubscribesfeed') {
-                                parameters.push("");
+                                parameters.push('');
                                 parameters.push(p.address)
                             }
 
@@ -16654,8 +16672,6 @@ Platform = function (app, listofnodes) {
                 toUTs: function (tx, address) {
 
                     var outs = [];
-
-                    console.log("tx", tx)
 
                     _.each(tx.vout, function (vout) {
                         var a = _.find(vout.scriptPubKey.addresses, function (a) {
@@ -16954,13 +16970,11 @@ Platform = function (app, listofnodes) {
                 },
                 checkTemp: function (alias, clbk) {
 
-                    console.log('checktemp, ', alias)
 
                     if (alias && alias.txid) {
 
                         self.sdk.node.transactions.get.tx(alias.txid, function (d, _error) {
 
-                            console.log(d)
 
                             if (clbk) {
 
@@ -18332,9 +18346,6 @@ Platform = function (app, listofnodes) {
                                                     temp[obj.type][d] = alias;
 
                                                     alias.inputs = inputs
-
-
-                                                    console.log('outputs', outputs)
 
                                                     alias.outputs = _.map(outputs, function(output){
                                                         return {
@@ -22847,7 +22858,6 @@ Platform = function (app, listofnodes) {
 
                         var outs = platform.sdk.node.transactions.toUTs(tx, address);
 
-                        console.log('outs', outs, address, tx)
 
                         _.each(outs, function (o) {
 
@@ -23926,8 +23936,6 @@ Platform = function (app, listofnodes) {
         var initconnection = function (clbk) {
 
             platform.app.api.get.currentwss().then(wss => {
-
-                console.log('wss', wss)
 
                 socket = wss.dummy || (new ReconnectingWebSocket(wss.url));
 
@@ -26149,7 +26157,10 @@ Platform = function (app, listofnodes) {
         self.matrixchat.destroy()
 
         checkfeatures()
+           
+      
 
+        
 
         app.user.isState(function(state){
 
@@ -26197,9 +26208,6 @@ Platform = function (app, listofnodes) {
                     self.loadingWithErrors = !_.isEmpty(self.app.errors.state)
 
                     self.app.peertubeHandler.init()
-
-                    console.log("HERE")
-
 
                     if (clbk)
                         clbk()
@@ -26477,9 +26485,9 @@ Platform = function (app, listofnodes) {
 
                 self.matrixchat.clbks.NOTIFICATION.global = self.matrixchat.notify.event
 
-                self.matrixchat.el[0].addEventListener('pointermove', function(e){
+                /*self.matrixchat.el[0].addEventListener('pointermove', function(e){
                     e.preventDefault()
-                });
+                });*/
 
             }
         },
@@ -26879,7 +26887,6 @@ Platform = function (app, listofnodes) {
 
         var f = function (e, resume) {
 
-            console.log("FOCUS")
 
             var focustime = platform.currentTime()
             var time = focustime - (unfocustime || focustime)
@@ -27357,3 +27364,4 @@ if (typeof module != "undefined") {
 }
 
 topPreloader(65);
+

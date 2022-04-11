@@ -422,7 +422,6 @@ PeerTubePocketnet = function (app) {
 
 					var url = self.helpers.url(options.host + '/' + meta.path)  
 
-					console.log(' self.helpers.url',url, options.host + '/' + meta.path)
 
 					return axios[(requestoptions.method || 'post').toLowerCase()](
 						url,
@@ -959,10 +958,10 @@ PeerTubePocketnet = function (app) {
 
 	self.init = function () {
 
-		if (app.test)
-
+		if(app.canuseip())
 			app.peertubeHandler.api.proxy.getservers().then((_servers) => {
 				servers = _servers
+
 			});
 
 		return self.api.proxy.bestChange({ type: 'upload' });
@@ -1152,6 +1151,7 @@ PeerTubePocketnet = function (app) {
 
 			if(path) path = '/' + path
 
+
 			if(!server) {
 
 				if(hostip.indexOf('.') == -1){
@@ -1165,6 +1165,7 @@ PeerTubePocketnet = function (app) {
 
 				return data
 			} 
+
 
 			if (app.useip()) secure = false
 

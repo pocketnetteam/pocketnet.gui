@@ -45,7 +45,6 @@
             padding: 0 @rhythm * 2;
 
             >div{
-                display: inline-block;
                 font-size: 1.2em;
 
                 &.ticon{
@@ -80,19 +79,33 @@
                     &:hover{
                         color: rgb(var(--color-txt-ac));
                     }
-                }
-    
-                &.clearcategories{
-                    display: none;
-    
-                    &.showed{
-                        display: table-cell;
+
+                    .text{
+                        display: none;
+                        font-size: 1em;
+                        margin-left: 2px;
                     }
                 }
+    
             }
+ 
+        } 
+    }
 
-            
+    .clearcategories{
+        display: none;
+        
+        &.showed {
+            display: table-cell;
         }
+
+        &.button{
+            display: none;
+            width: 100%;
+            margin-bottom: @rhythm * 2;
+        }
+
+
     }
     
     .tcaptionwrapper{
@@ -477,6 +490,47 @@
 @media only screen and (max-width: 768px){
 
     #categories{
+
+        .tcaptiontable{
+
+            .buttons{
+                display: block;
+                overflow: hidden;
+                >div{
+                    &.addcategory{
+                        text-overflow: ellipsis;
+                        overflow: hidden;
+                        white-space: nowrap;
+                        padding-top : 6px;
+                        i{
+                            display: inline;
+                        }
+                        .text{
+                            display: inline;
+                        }
+                    }
+
+                    &.simple{
+                        
+                        display: none
+                        
+                    }
+                }
+            }
+     
+        }
+
+        .clearcategories{
+            &.button{
+                opacity: 0.4;
+                display: block;
+
+                &.showed{
+                    opacity: 1
+                }
+            }
+        }
+
 
         .cat{
             .cattable{

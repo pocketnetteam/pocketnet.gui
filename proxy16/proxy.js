@@ -36,11 +36,13 @@ if (process.platform === 'win32') expectedExitCodes = [3221225477];
 
 console.log('expectedExitCodes' , expectedExitCodes)*/
 
-var Proxy = function (settings, manage, test, logger) {
+var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 	var self = this;
 
 		self.test = test
+		self.reverseproxy = reverseproxy
+
 	var server = new Server(settings.server, settings.admins, manage);
 	var wss = new WSS(settings.admins, manage);
 	var pocketnet = new Pocketnet();
@@ -608,8 +610,8 @@ var Proxy = function (settings, manage, test, logger) {
 
 			var ins = {
 				1: [
-				  { host: 'pocketnetpeertube1.nohost.me', ip: '188.0.15.28' },
-				  { host: 'pocketnetpeertube2.nohost.me', ip: '94.73.223.24' },
+				  { host: 'pocketnetpeertube1.nohost.me'/*, ip: '188.0.15.28'*/},
+				{ host: 'pocketnetpeertube2.nohost.me', /*ip: '94.73.223.24'*/ },
 				],
 				5: [
 				  {
