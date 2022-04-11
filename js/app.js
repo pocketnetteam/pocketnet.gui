@@ -80,6 +80,8 @@ Application = function(p)
 		self.test = true
 	}
 
+	self.boost = self.test
+
 	self.options = {
 		
 		url : url,

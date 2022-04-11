@@ -7,7 +7,7 @@ var pkoin = (function(){
 	var Essense = function(p){
 
 		var primary = deep(p, 'history');
-		var el, optionsValue = 'pkoinComment', shareId, receiver, valSum, valComment, disabled, userinfo;
+		var el, optionsValue = 'pkoinComment', shareId, receiver, valSum, valComment, disabled, userinfo, boost = [];
 
 		var renders = {
 
@@ -15,16 +15,23 @@ var pkoin = (function(){
 				
 				self.app.platform.sdk.node.transactions.get.balance(function(balance){
 
+					var values = ['pkoinComment', 'sendToAuthor']
+					var labels = [self.app.localization.e('pkoinComment'), self.app.localization.e('sendToAuthor')]
+
+					if(self.app.boost){
+						values.push('liftUpThePost')
+						labels.push(self.app.localization.e('liftUpThePost'))
+					}
+
 					var options = new Parameter({
 
 						type : "VALUES",
 						name : "Localization",
 						id : 'localization',
 						defaultValue : optionsValue,
-						possibleValues : ['pkoinComment', 'sendToAuthor'/*, 'liftUpThePost'*/],
-						possibleValuesLabels : [self.app.localization.e('pkoinComment'), self.app.localization.e('sendToAuthor')/*, self.app.localization.e('liftUpThePost')*/],
+						possibleValues : values,
+						possibleValuesLabels : labels,
 
-			
 						_onChange : function(value){
 
 							optionsValue = value;
@@ -55,45 +62,115 @@ var pkoin = (function(){
 
 					}, function(_p){
 
-							ParametersLive([options], _p.el);
+						ParametersLive([options], _p.el);
 
-							el.inputSum = _p.el.find('#inputSum');
-		
-							var errorWrapper = _p.el.find('#errorWrapper');
+						el.inputSum = _p.el.find('#inputSum');
+	
+						var errorWrapper = _p.el.find('#errorWrapper');
+						
+						el.inputSum.on('keyup', function(e){
+							valSum = Number(e.target.value);
 							
-							el.inputSum.on('keyup', function(e){
-								valSum = Number(e.target.value);
-								
-								if (valSum >= Number(balance)){
+							if (valSum >= Number(balance)){
 
-									errorWrapper.text(self.app.localization.e('incoins'));
-									disabled = true;
-									el.send.addClass('disabled');
+								errorWrapper.text(self.app.localization.e('incoins'));
+								disabled = true;
+								el.send.addClass('disabled');
 
-								} else if (valSum < 0.05){
+							} else if (valSum < 0.05){
 
-									errorWrapper.text(self.app.localization.e('minPkoin', 0.05));
-									disabled = true;
-									el.send.addClass('disabled');
+								errorWrapper.text(self.app.localization.e('minPkoin', 0.05));
+								disabled = true;
+								el.send.addClass('disabled');
 
 
-								} else {
+							} else {
 
-									errorWrapper.text('');
-									disabled = false;
-									el.send.removeClass('disabled');
+								errorWrapper.text('');
+								disabled = false;
+								el.send.removeClass('disabled');
 
-								}
+							}
 		
 							el.textareaComment = _p.el.find('#textareaComment');
 
+							if(optionsValue === 'liftUpThePost') {
+								renders.boostinfo(boost)
+							}
 
 						})
 
-						
+						if(optionsValue === 'liftUpThePost') {
+							self.app.platform.sdk.node.shares.getboost({
+
+								count : 10,
+			
+							}, function(_boost ,err){
+
+								boost = _boost
+
+								renders.boostinfo(boost)
+
+							}, 'cache')
+						}
 					})
 
 				});
+
+			},
+
+			boostinfo : function(boost){
+				
+				if(!valSum){
+
+					el.c.find('.boostinfo').html('')
+
+				}
+				else{
+
+					self.app.platform.sdk.node.shares.getbyid([shareId], function () {
+						
+						var vs = 100000000 * valSum
+
+						var share = self.app.platform.sdk.node.shares.storage.trx[shareId]
+
+						var prevboost = _.find(boost, function(r){
+							if(r.txid == shareId){
+								return true
+							}
+						})
+
+						if (prevboost){
+							vs += prevboost.boost
+						}
+
+						var total = _.reduce(boost, function(sum, r){ 
+
+							if(r.txid == shareId){
+								return sum
+							}
+
+							return sum + Number(r.boost || 0) 
+						}, 0)
+
+						var probability = Math.min(!total ? 1 : 3 * (vs / total), 1)
+
+						self.shell({
+
+							name :  'boostinfo',
+							el :   el.c.find('.boostinfo'),
+							data : {
+								probability,
+								share,
+								language : share.language
+							},
+
+						}, function(_p){
+							
+						})
+					})
+					
+				}
 
 			}
 		}
@@ -161,6 +238,8 @@ var pkoin = (function(){
 
 						globalpreloader(false)
 
+						successCheck()
+
 						clbk()
 
 					}
@@ -190,8 +269,7 @@ var pkoin = (function(){
 
 				
 				var contentBoost = new ContentBoost(shareId);
-
-				contentBoost.amount.set(valSum);
+					contentBoost.amount.set(valSum);
 
 				actions.liftUp(contentBoost, clbk);
 
@@ -278,9 +356,7 @@ var pkoin = (function(){
 								
 								if (optionsValue === 'liftUpThePost'){
 	
-	
 									events.liftUp(final);
-			
 		
 								}
 		
@@ -335,8 +411,6 @@ var pkoin = (function(){
 
 				}
 
-
-
 				shareId = essenseData.id;
 
 				clbk(data);
@@ -347,6 +421,7 @@ var pkoin = (function(){
 
 				valSum = null;
 				valComment = null;
+				boost = []
 				el = {};
 			},
 			

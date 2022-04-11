@@ -167,6 +167,9 @@ Platform = function (app, listofnodes) {
         'PLAj8RmQg2ehTVEx8pSWnd2QeFvjHnYtRZ' : true,
         'PGD5jUBQ7qNnHDuW85RRBxY1msywEdCm7r' : true,
         'PXupozgNg1Ee6Nrbapj8DEfMGCVgWi4GB1' : true,
+        'PD4pWxVke4Yz2y5UnNWnSsVHd45Vy6izCr' : true,
+        'PW3tfEkGLKv4LFREpJYYpWxenKHSizB8rQ' : true,
+        'PSm8oVmMYCKnn35i4BABE6kw59WvTckagc' : true
     }
 
     self.bch = {
@@ -15143,6 +15146,13 @@ Platform = function (app, listofnodes) {
             },
 
             shares: {
+
+                
+
+                storagelights: {
+
+                },
+
                 storage: {
 
                 },
@@ -15950,6 +15960,7 @@ Platform = function (app, listofnodes) {
                             }
                         }).then(d => {
 
+
                             d.contents || (d.contents = [])
 
                             var clear = d.contents
@@ -16278,6 +16289,94 @@ Platform = function (app, listofnodes) {
 
                 },
 
+                getboost : function(p, clbk, cache){
+
+                    self.app.platform.sdk.node.shares.lightsid(p, clbk, cache, {
+                        method : 'getboostfeed'
+                    })
+
+                },
+
+                lightsid : function(p, clbk, cache, methodparams){
+
+                    if(!methodparams) methodparams = {}
+
+                    var mtd = methodparams.method
+
+                    /*
+
+                    p.height
+                    p.start_txid
+                    p.count 10
+                    p.lang lang
+                    p.tagsfilter tagsfilter
+                    p.type
+
+                    */
+
+                    self.app.user.isState(function (state) {
+
+                        if (!p) p = {};
+
+                        p.count || (p.count = 10)
+
+                        if(!p.lang){
+                            p.lang = self.app.localization.key || ''
+                        }
+
+                        p.height || (p.height = 0)
+                        p.tagsfilter || (p.tagsfilter = [])
+                        p.tagsexcluded || (p.tagsexcluded = [])
+
+                        if (state) {
+                            p.address = self.sdk.address.pnet().address;
+                        }
+
+                        var key = mtd + p.count + (p.address || "") + "_" + (p.lang || "") + "_" + /*(p.height || "")  +*/ "_" + (p.tagsfilter.join(',')) + "_" + (p.begin || "") + (p.type ? p.type : '')
+
+                        if(p.author) key = key + p.author
+
+                        var storage = self.sdk.node.shares.storagelights;
+                        var s = self.sdk.node.shares;
+
+                        if (cache == 'cache' && storage[key]) {
+
+                            if (clbk)
+                                clbk(storage[key], null, p)
+
+                        }
+                        else {
+                            if (!storage[key] || cache == 'clear') storage[key] = [];
+
+                            p.tagsfilter = _.map(p.tagsfilter, function(t){
+                                return encodeURIComponent(t)
+                            })
+
+                            p.tagsexcluded = _.map(p.tagsexcluded, function(t){
+                                return encodeURIComponent(t)
+                            })
+
+                            var parameters = [Number(p.height), p.txid || '', p.count, p.lang, p.tagsfilter, p.type ? [p.type] : [], [], [], p.tagsexcluded];
+
+                            s.getex(parameters, function (data, error) {
+
+                                var shares = data.boosts || []
+                                var blocknumber = data.height
+                                    p.blocknumber = blocknumber
+
+
+                                storage[key] = shares
+
+                                if (clbk)
+                                    clbk(shares, error, p)
+
+                            }, mtd)
+
+
+                        }
+                    })
+                },
+
                 hierarchical: function (p, clbk, cache, methodparams) {
 
                     if(!methodparams) methodparams = {}
@@ -16392,7 +16491,7 @@ Platform = function (app, listofnodes) {
 
                             s.getex(parameters, function (data, error) {
 
-                                var shares = data.contents || []
+                                var shares = data.contents || data.boosts || []
                                 var blocknumber = data.height
 
                                 _.each(shares, function(s){
@@ -16464,7 +16563,33 @@ Platform = function (app, listofnodes) {
 
                         }
                     })
-                }
+                },
+
+                getboostfeed : function(p, clbk, count, cache){
+
+                    self.app.platform.sdk.node.shares.getboost(p, function(boostinfo, error){
+
+                        //// filter viewed
+
+                        var boostedmap = _.uniq(randomizerarray(boostinfo, count || 3, 'boost') || [], function(v){
+                            return v.txid
+                        })
+
+                        var txids = _.map(boostedmap, function(v){
+                            return v.txid
+                        })
+
+                        self.app.platform.sdk.node.shares.getbyid(txids, function (shares) {
+
+                            if (clbk)
+                                clbk(shares, null, p)
+    
+                        })
+                        
+
+                    }, cache)
+
+                },
             },
 
             transactions: {

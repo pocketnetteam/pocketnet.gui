@@ -6914,7 +6914,7 @@
 					}
 
 					self.clear()
-					document.ontouchmove = () => true
+					//document.ontouchmove = () => true
 
 					return
 
@@ -6945,13 +6945,13 @@
 				if (phase == 'start'){
 					mainDirection = null
 
-					document.ontouchmove = (e) => {
+					/*document.ontouchmove = (e) => {
 
 						e.stopPropagation();
 						e.preventDefault();
 
 						return false
-					}
+					}*/
 				}
 
 				if (phase == 'move'){
@@ -11544,4 +11544,56 @@ drawRoundedImage = async (url, radius,sWidth, sHeight)=>{
 			resolve("");
 		}
 	})
+}
+
+
+function getRandomFloat(min, max, decimals) {
+	const str = (Math.random() * (max - min) + min).toFixed(decimals);
+
+	console.log('str', str)
+  
+	return parseFloat(str);
+}
+
+randomizer = function(ar, key){
+
+	if(!key) key = 'probability'
+
+    if(!ar) return null
+    if(!ar.length) return null
+
+    ar = _.sortBy(ar, (r) => {return - Number(r[key] || 0) })
+
+    var total = _.reduce(ar, function(sum, r){ 
+        return sum + Number(r[key] || 0) 
+    }, 0)
+
+    if (total <= 0) return ar[f.rand(0, ar.length - 1)]
+
+    var seed = getRandomFloat(0, total, 8)
+
+    var counter = 0
+
+    return _.find(ar, function(a){
+
+        if(counter + a[key] > seed && counter <= seed){
+            return true
+        }
+
+        counter = counter + a[key]
+		
+    })
+
+}
+
+randomizerarray = function(ar, count, key){
+	var r = []
+
+	for (var i = 0; i < count; i++){
+		var v = randomizer(ar, key)
+
+		if (v) r.push(v)
+	}
+
+	return r
 }

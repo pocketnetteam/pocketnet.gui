@@ -20,6 +20,9 @@ var lenta = (function(){
 
 		var subloaded = false
 
+		var boosted = [],
+			boostplaces = {}
+
 		var extra = {}, extraloading = {};
 
 		var progress, parallax;
@@ -477,6 +480,9 @@ var lenta = (function(){
 						p.destroy()
 				})
 
+				boosted = []
+				boostplaces = {}
+				
 				extraloading = {}
 				extra = {}
 				_reposts = {};
@@ -584,7 +590,80 @@ var lenta = (function(){
 
 				})
 			},
+			includeboost : function(clbk){
+				var bsts = _.filter(boosted, function(b){
+					return !shareInitedMap[b.txid] && !shareInitingMap[b.txid]
+				})
 
+
+				_.each(bsts, function(bst){
+					if (bst){
+
+						var position = null;
+	
+						_.find(boostplaces, function(v, i){
+							if(!v){
+								position = i
+	
+								return true
+							}
+						})
+	
+						if(position){
+	
+	
+							var share = sharesInview[position]
+	
+	
+							if (share && el.share[share.txid]){
+
+								
+		
+									boostplaces[position] = true
+		
+									renders.shares([bst], function(){
+										renders.sharesInview([bst], function(){
+											
+										}, {boosted : true})
+									}, {
+										boosted : true,
+										//el : _el,
+										inner : function(lel, html){
+
+											console.log('inner')
+
+											if(isotopeinited){
+
+												var content = $(html)
+													lel.append( content ).isotope( 'appended', content )
+							
+											}
+											else{
+												var _el = $("<div/>", {'class' : 'boosted'})
+
+													_el.insertAfter(el.share[share.txid].closest('.authorgroup'))
+
+													_el.html(html)
+											}
+
+										},
+										ignoresw : true,
+									})
+
+								_el = null
+	
+							}
+	
+							
+						}
+	
+					}
+				})
+
+				
+
+				
+			},
 			removeAdditionalByScroll : function(){
 
 				if(ascrollel){
@@ -700,7 +779,6 @@ var lenta = (function(){
 
 					button.one('click', function(){
 
-						console.log("CLICK1")
 
 						$(this).closest('.jsPlayerLoading').addClass('loading') 
 						$(this).closest('.js-player-dummy').addClass('js-player-ini')
@@ -2737,7 +2815,8 @@ var lenta = (function(){
 						all : all || false,
 						tplvideo : video ,
 						openapi : essenseData.openapi,
-						sharesFromSub 
+						sharesFromSub,
+						boosted : p.boosted
 					}					
 
 				}, function(p){
@@ -2927,7 +3006,7 @@ var lenta = (function(){
 
 			
 
-			sharesInview : function(shares, clbk){
+			sharesInview : function(shares, clbk, boosted){
 
 				shares = _.filter(shares, function(s){
 					return !$('#' + s.txid).hasClass('hidden')
@@ -2950,8 +3029,6 @@ var lenta = (function(){
 					})
 				}
 
-					
-
 				lazyEach({
 					array : rs,
 					sync : true,
@@ -2967,10 +3044,11 @@ var lenta = (function(){
 						{
 
 							shareInitedMap[share.txid] = true
-							renders.share(share, p.success)
+							renders.share(share, p.success, null, {
+								boosted
+							})
 						}
 
-						
 					},
 
 					//sync : isMobile(),
@@ -2979,6 +3057,8 @@ var lenta = (function(){
 						success : function(){
 
 							renders.mystars(shares)
+
+							if (essenseData.includeboost){ actions.includeboost() }
 
 							if(clbk) clbk()
 						}
@@ -3052,6 +3132,7 @@ var lenta = (function(){
 						index : p.index || 0,
 						video : video || essenseData.videomobile,
 						showRecommendedUsers : showRecommendedUsers,
+						boosted : p.boosted
 					},
 					animation : false,
 					delayRender : isotopeinited,
@@ -3490,6 +3571,35 @@ var lenta = (function(){
 		}
 
 		var load = {
+
+			boosted : function(clbk){
+
+				var tagsfilter = self.app.platform.sdk.categories.gettags()
+				var tagsexcluded = self.app.platform.sdk.categories.gettagsexcluded()
+
+				var type = null
+
+				if (video || essenseData.videomobile){ type = 'video'}
+				if (essenseData.read){ type = 'article'}
+				if (essenseData.tags) tagsfilter = essenseData.tags
+
+				
+				
+				self.app.platform.sdk.node.shares.getboostfeed({
+
+					height : fixedblock,
+					tagsfilter : tagsfilter,
+					type : type,
+					count : 10,
+					tagsexcluded : tagsexcluded
+
+				}, function(shares, error, pr){
+
+					if(clbk) clbk(shares)
+
+				}, _.toArray(boostplaces).length, 'cache')
+			},
+
 			recomended : function(clbk, firstshares){
 				
 				//el.loader.fadeIn()
@@ -3576,7 +3686,6 @@ var lenta = (function(){
 
 							if(!obs) return true
 
-							console.log('share.id > obs.first || share.id < obs.last', share.id , obs.first , obs.last, share.id > obs.first, share.id < obs.last)
 
 							return share.id > obs.first || share.id < obs.last
 						}
@@ -4408,6 +4517,8 @@ var lenta = (function(){
 
 			load.shares(function(shares, error){
 
+				if(!el.c) return
+
 				if (error){
 					making = false;
 					
@@ -4499,7 +4610,6 @@ var lenta = (function(){
 								renders.txidall(essenseData.txids)
 							}
 
-							console.log('countshares', countshares)
 
 							if(shares.length < 5 && essenseData.includesub && !loading && (!ended && recommended != 'recommended')){
 								actions.loadmore()
@@ -4509,6 +4619,21 @@ var lenta = (function(){
 						
 						})
 					})
+
+					if (essenseData.includeboost){
+
+						boostplaces = {
+							2 : false,
+							13 : false,
+							27 : false
+						}
+
+						load.boosted(function(shares){
+							boosted = shares
+							actions.includeboost()
+						})
+					}
+						
 				}
 
 
@@ -4793,8 +4918,6 @@ var lenta = (function(){
 			
 			init : function(p){
 
-				
-
 				w = self.app.el.window
 				state.load();
 
@@ -4804,6 +4927,8 @@ var lenta = (function(){
 				el.loader = el.c.find('.loader');
 				el.lentacnt = el.c.find('.lentacell .cnt');
 				el.w = essenseData.window || w;
+
+				
 				
 
 				el.share = {};
