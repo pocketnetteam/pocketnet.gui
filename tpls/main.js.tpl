@@ -12,7 +12,7 @@ const {protocol} = require('electron');
 const ProxyInterface = require('./proxy16/ipc.js')
 const IpcBridge =require('./js/electron/ipcbridge.js')
 
-const { binariesDownloader, transcodingProcessor } = require('./js/electron/transcoding.js');
+const { TranscoderBridge } = require('./js/electron/transcoding2.js');
 const { bastyonFsFetchBridge } = require('./js/peertube/bastyon-fs-fetch.js');
 
 const electronLocalshortcut = require('electron-localshortcut');
@@ -933,8 +933,7 @@ function createWindow() {
     /**
      * Video transcoding handler
      */
-    binariesDownloader(ipcMain, Storage);
-    transcodingProcessor(ipcMain);
+    new TranscoderBridge(ipcMain, Storage);
 
     proxyInterface = new ProxyInterface(ipcMain, win.webContents)
     proxyInterface.init()

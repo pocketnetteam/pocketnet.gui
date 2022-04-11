@@ -40,6 +40,7 @@
         "aes-js": "^3.1.2",
         "async-each": "^1.0.3",
         "auto-launch": "^5.0.5",
+        "base58-js": "^1.0.0",
         "body-parser": "^1.19.0",
         "check-disk-space": "^3.3.0",
         "clone-deep": "^4.0.1",

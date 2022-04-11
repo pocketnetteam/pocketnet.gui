@@ -156,10 +156,7 @@ var uploadpeertube = (function () {
 				el.header.removeClass('activeOnRolled');
 				el.uploadButton.prop('disabled', true);
 
-				//var transcoded = await self.app.peertubeHandler.transcode(videoInputFile[0])
-
 				var data = {
-					//transcoded : transcoded,
 					video: videoInputFile[0],
 				};
 
@@ -228,74 +225,93 @@ var uploadpeertube = (function () {
 
 				el.importUrl.addClass('hidden');
 
+        let transcoded = null;
+
 				if (typeof _Electron !== 'undefined') {
-					const filePath = evt.target.files[0].path;
+					const file = evt.target.files[0];
 
-					const videoProcessor = transcodingFactory(electron.ipcRenderer);
+					const transcoder = new TranscoderClient(electron.ipcRenderer);
 
-					try {
-						el.cancelButton.addClass('hidden');
+					el.cancelButton.addClass('hidden');
 
-						let binProcessing = false;
-						const progressBinaries = (progress) => {
-							if (!binProcessing && progress !== 100) {
-                loadProgress(0);
+					let binProcessing = false;
+					let videoTranscoding = false;
 
-								el.uploadProgress.find('.bold-font')
-									.text(self.app.localization.e('uploadVideoProgress_binaries'))
-									.removeClass('uploading')
-									.addClass('binaries');
+					const progressBinaries = (progress) => {
+						if (!binProcessing && progress !== 100) {
+							loadProgress(0);
 
-								el.uploadProgress.find('.bold-font')
-									.text(self.app.localization.e('uploadVideoProgress_binaries'))
+							el.uploadProgress.find('.bold-font')
+								.text(self.app.localization.e('uploadVideoProgress_binaries'))
+								.removeClass('uploading')
+								.addClass('binaries');
 
-								el.uploadProgress.removeClass('hidden');
+							el.uploadProgress.find('.bold-font')
+								.text(self.app.localization.e('uploadVideoProgress_binaries'))
 
-								binProcessing = true;
-							}
+							el.uploadProgress.removeClass('hidden');
 
-              loadProgress(progress);
-						};
-
-						await videoProcessor.downloadBinaries(progressBinaries);
-
-						let videoTranscoding = false;
-						const progressTranscode = (progress) => {
-							if (!videoTranscoding) {
-                loadProgress(0);
-
-								el.uploadProgress
-									.find('.upload-progress-bar')
-									.removeClass('uploading binaries')
-									.addClass('processing');
-
-								el.uploadProgress.find('.bold-font')
-									.text(self.app.localization.e('uploadVideoProgress_processing'))
-
-								el.uploadProgress.removeClass('hidden');
-
-								videoTranscoding = true;
-							}
-
-              loadProgress(progress);
-						};
-
-						const transcoded = await videoProcessor.transcode(filePath, progressTranscode, initCancelListener);
-
-						/** Writing transcoded alternatives to target object */
-						/** At this moment for backend reasons, sending only 720p */
-
-						if (!transcoded) {
-							return;
+							binProcessing = true;
 						}
 
-						data.video = new File([transcoded.p720.buffer], data.video.name, { type: 'video/mp4' });
+						loadProgress(progress);
+					};
+					const progressTranscode = (task, progress) => {
+						if (!videoTranscoding) {
+							loadProgress(0);
+
+							el.uploadProgress
+								.find('.upload-progress-bar')
+								.removeClass('uploading binaries')
+								.addClass('processing');
+
+							el.uploadProgress.find('.bold-font')
+								.text(self.app.localization.e('uploadVideoProgress_processing'))
+
+							el.uploadProgress.removeClass('hidden');
+
+							videoTranscoding = true;
+						}
+
+						loadProgress(progress);
+					};
+
+					transcoder.cancelTranscodingIfTrue((probe) => {
+						const MaxVideoBitrate = 2600;
+						const MaxAudioBitrate = 256;
+						const MaxVideoFramerate = 25;
+
+						const isVideoBitrateBigger = (probe.videoBitrate > MaxVideoBitrate);
+						const isAudioBitrateBigger = (probe.audioBitrate > MaxAudioBitrate);
+						const isFrameRateBigger = (probe.frameRate > MaxVideoFramerate);
+
+						const isVerticalVideo = (probe.width < probe.height);
+
+						if (isVerticalVideo) {
+							return 'VERTICAL_VIDEO_NOT_SUPPORTED';
+						}
+
+						const isTranscodeNeeded = (
+							isVideoBitrateBigger
+							|| isAudioBitrateBigger
+							|| isFrameRateBigger
+						);
+
+						if (!isTranscodeNeeded) {
+							return 'NO_TRANSCODE_NEEDED';
+						}
+					});
+
+					try {
+						transcoder.handleBinariesDownloadProgress(progressBinaries);
+
+						transcoded = await transcoder.runTask(file, progressTranscode);
 					} catch (err) {
-						const isCanceledByUser = (err.message === 'TRANSCODE_ABORT');
-						const isAbortedByApp = (err.message === 'NO_TRANSCODED');
-						const binariesNotAvailable = (err.message === 'FFBIN_DOWNLOAD_ERROR');
-						const isVerticalVideo = (err.message === 'VERTICAL_VIDEO_NOT_SUPPORTED');
-						const notMetRequirements = (err.message === 'REQUIREMENTS_NOT_MET');
+						const isCanceledByUser = (err === 'TRANSCODE_ABORT');
+						const isAbortedByApp = (err === 'NO_TRANSCODE_NEEDED');
+						const binariesNotAvailable = (err === 'FFBIN_DOWNLOAD_ERROR');
+						const isVerticalVideo = (err === 'VERTICAL_VIDEO_NOT_SUPPORTED');
+						const notMetRequirements = (err === 'REQUIREMENTS_NOT_MET');
 
 						if (isCanceledByUser) {
 							/**
@@ -335,7 +351,18 @@ var uploadpeertube = (function () {
 					}
 				}
 
-        const uploader = new VideoUploader(data.video);
+        let uploader;
+
+				if (transcoded) {
+					uploader = new VideoUploader(data.video);
+
+					uploader.chunkRequestor = async (start, end) => {
+						const chunkData = await transcoded.getChunk(start, end);
+						return new Blob([chunkData.data]);
+					};
+				} else {
+					uploader = new VideoUploader(data.video);
+				}
 
         el.uploadProgress
           .find('.upload-progress-bar')

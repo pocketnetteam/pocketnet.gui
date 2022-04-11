@@ -45,7 +45,8 @@ class VideoUploader {
 
     let chunker = this.getNextChunk(chunkPos);
 
-    let chunkData = chunker.next().value;
+    let chunkerNextPromise = await chunker.next();
+    let chunkData = chunkerNextPromise.value;
 
     while(chunkData && !this.canceled) {
       const startUpload = Date.now();
@@ -112,7 +113,8 @@ class VideoUploader {
         this.loadProgress(done);
       }
 
-      chunkData = chunker.next().value;
+      let chunkerNextPromise = await chunker.next();
+      chunkData = chunkerNextPromise.value;
     }
   }
 
@@ -134,7 +136,7 @@ class VideoUploader {
     return this.static.uploadVideo(this);
   }
 
-  * getNextChunk(startFrom) {
+  async * getNextChunk(startFrom) {
     const videoFile = this.videoFile;
     const videoSize = this.videoFile.size;
 
@@ -154,7 +156,11 @@ class VideoUploader {
         endByte = videoSize;
       }
 
-      yield videoFile.slice(position, endByte);
+      if (!this.chunkRequestor) {
+        yield videoFile.slice(position, endByte);
+      } else {
+        yield await this.chunkRequestor(position, endByte);
+      }
 
       position += chunkSize;
     } while (position < videoSize);
@@ -366,6 +372,19 @@ class VideoUploader {
     const percent = self.videoFile.size / 100;
     return chunkPos / percent;
   }
+
+  /**
+   * This function is a stub that needs to
+   * be overridden to work with the uncommon
+   * chunking process. Don't use it when
+   * file passed in constructor.
+   *
+   * @param position
+   * @param endByte
+   *
+   * @return {Promise<TypedArray>}
+   */
+  chunkRequestor;
 }
 
 module.exports = VideoUploader;
