@@ -1109,8 +1109,7 @@ Application = function(p)
 				}
 
 				self.mobile.pip.init()
-
-				
+				self.mobile.keyboard.init()
 
 				if (window.Keyboard && window.Keyboard.disableScroll){
 					window.Keyboard.disableScroll(false)
@@ -1440,7 +1439,7 @@ Application = function(p)
 		self.width = self.el.window.width()
 
 		document.documentElement.style.setProperty('--vh', `${self.height * 0.01}px`);
-
+		document.documentElement.style.setProperty('--keyboardheight', `0px`);
 	
 
 		istouchstyle()
@@ -1854,6 +1853,25 @@ Application = function(p)
 	}
 
 	self.mobile = {
+
+		keyboard : {
+			init : function(){
+
+				if(window.cordova && !isios()){
+
+					window.addEventListener('keyboardWillShow', (event) => {
+						console.log('event', event)
+						document.documentElement.style.setProperty('--keyboardheight', `${event.keyboardHeight}px`);
+					});
+
+					window.addEventListener('keyboardWillHide', () => {
+						document.documentElement.style.setProperty('--keyboardheight', `0px`);
+					});
+				}
+
+				
+			}
+		},
 
 		pip : {
 

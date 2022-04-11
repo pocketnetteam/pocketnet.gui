@@ -1951,7 +1951,9 @@ var comments = (function(){
 							el.c.removeClass('preview')
 
 							var __clbk = function(a, b){
-								clbk(a, b)
+
+								if (clbk)
+									clbk(a, b)
 
 
 								if (_clbk){
