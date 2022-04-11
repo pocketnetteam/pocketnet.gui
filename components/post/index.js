@@ -1645,12 +1645,14 @@ var post = (function () {
 			},
 
 			recomandations : function(share, clbk) {
+				// Number of recomandations we want
+				nbRecomandations = 12;
 				self.app.platform.sdk.node.shares.getrecomendedcontents({
 					type: 'content',
-					contentid: share.txid,
+					contentAddress: share.address,
 					contenttypes: ['video'],
 					depth: 10000,
-					count: 12
+					count: nbRecomandations
 				}, function (recomandations) {
 
 					if (clbk)
