@@ -2173,3 +2173,6 @@ ____loclib.probabilitytext = function(lang){
 };
 
 ____loclib.probabilitytexterror = "Unable to calculate promotion probability";
+
+____loclib.image = "Image";
+____loclib.file = "File";

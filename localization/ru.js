@@ -1962,3 +1962,6 @@ ____loclib.probabilitytext = function(lang){
 };
 
 ____loclib.probabilitytexterror = "Не удаётся вычислить вероятность продвижения";
+
+____loclib.image = "Изображение";
+____loclib.file = "Файл";

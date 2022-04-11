@@ -169,7 +169,8 @@ Platform = function (app, listofnodes) {
         'PXupozgNg1Ee6Nrbapj8DEfMGCVgWi4GB1' : true,
         'PD4pWxVke4Yz2y5UnNWnSsVHd45Vy6izCr' : true,
         'PW3tfEkGLKv4LFREpJYYpWxenKHSizB8rQ' : true,
-        'PSm8oVmMYCKnn35i4BABE6kw59WvTckagc' : true
+        'PSm8oVmMYCKnn35i4BABE6kw59WvTckagc' : true,
+        'PEWcDgFAD6t7SmCmsnixbmhTFkZr6hYVUb' : true
     }
 
     self.bch = {
@@ -26652,8 +26653,26 @@ Platform = function (app, listofnodes) {
 
                 }, "", true, self.app.localization.e(ctype), '', dateNow())
 
+                var text = deep(matrixevent, 'event.event.decrypted.body') || deep(matrixevent, 'event.event.content.message') || ''
+                var dtype = deep(matrixevent, 'event.event.content.msgtype')
+                var type = deep(matrixevent, 'event.event.type')
+
+                if (type != 'm.room.message'){
+                    text  = ''
+
+                    return
+                }
+                else{
+
+                    if(dtype == 'm.image') text = self.app.localization.e('image')
+                    if(dtype == 'm.file') text = self.app.localization.e('file')
+
+                }
+
+
+
                 var h = '<div class="fastMessage">\
-                <div class="fmCnt">' + html + '</div>\
+                <div class="fmCnt">' + html + '<div class="tips">'+text+'</div></div>\
                 <div class="close">\
                     <i class="fa fa-times" aria-hidden="true"></i>\
                 </div>\
@@ -26663,19 +26682,30 @@ Platform = function (app, listofnodes) {
             },
             event : function(matrixevent){
 
+                
+
 
                 if(typeof _Electron != 'undefined' && !self.focus){
 
-                    var html = self.matrixchat.notify.tpl(matrixevent)
+                    var _el = $(self.matrixchat.notify.tpl(matrixevent))
 
-                    if (html)
+                    console.log(_el.html())
 
-                        electron.ipcRenderer.send('electron-notification', {
-                            html : html,
-                            settings : {
-                                size : 'small'
-                            }
+                    var title = _el.find('.caption').text()
+                    var body = _el.find('.tips').text()
+                    var image = _el.find('[image]').attr('image')
+                    _el = null
+
+                    drawRoundedImage(image, 100, 200, 200).then(image=>{
+
+                        electron.ipcRenderer.send('electron-notification-small', {
+                            title, body, image
                         });
+
+                    })
+
+                    
+
 
                 }
             }
