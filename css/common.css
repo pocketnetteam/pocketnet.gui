@@ -1401,7 +1401,11 @@ html.ios .share_common.fullScreenVideo .video-js {
   cursor: pointer;
 }
 .common_share_article_wrapper .share .sharearticle .readarticlebutton {
-  text-decoration: underline;
+  display: block!important;
+}
+.common_share_article_wrapper .share .sharearticle .readarticlebutton span {
+  display: inline;
+  opacity: 0.5;
 }
 .common_share_article_wrapper .share .sharearticle .shareBgCaption .author,
 .common_share_article_wrapper .share .sharearticle .articleend .author {

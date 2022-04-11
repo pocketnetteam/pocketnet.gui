@@ -454,10 +454,16 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
 
                                 <% makecaptionclear() %>
 
-                                <% if(!share.temp){%>
+                                <% if(!share.temp){
+                                    
+                                    var edjs = new edjsHTML(null, app)
+                                    var message = edjs.apply(share.message, decodeURIComponent)
+				                    var words = edjs.words(message)
+                                    
+                                    %>
 
                                     <div class="buttonOpenWrapper">
-                                        <div class="black articleclick readarticlebutton"><%= e('readarticle') %></div>
+                                        <div class="black articleclick readarticlebutton"><%= e('readarticle') %> <span>(<%-e('art_wordscount')%> <%-words%>)</span></div>
                                     </div>
 
                                 <%} else{ %>
