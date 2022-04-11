@@ -281,6 +281,8 @@ var uploadpeertube = (function () {
 						const MaxAudioBitrate = 256;
 						const MaxVideoFramerate = 25;
 
+						const isWidthBigger = (probe.width > 1280);
+						const isHeightBigger = (probe.height > 720);
 						const isVideoBitrateBigger = (probe.videoBitrate > MaxVideoBitrate);
 						const isAudioBitrateBigger = (probe.audioBitrate > MaxAudioBitrate);
 						const isFrameRateBigger = (probe.frameRate > MaxVideoFramerate);
@@ -292,7 +294,9 @@ var uploadpeertube = (function () {
 						}
 
 						const isTranscodeNeeded = (
-							isVideoBitrateBigger
+							isWidthBigger
+							|| isHeightBigger
+							|| isVideoBitrateBigger
 							|| isAudioBitrateBigger
 							|| isFrameRateBigger
 						);
@@ -354,7 +358,16 @@ var uploadpeertube = (function () {
         let uploader;
 
 				if (transcoded) {
-					uploader = new VideoUploader(data.video);
+					const { lastModified, name, type } = data.video;
+
+					const transcodedFile = {
+						size: transcoded.resultSize,
+						lastModified,
+						name,
+						type,
+					};
+
+					uploader = new VideoUploader(transcodedFile);
 
 					uploader.chunkRequestor = async (start, end) => {
 						const chunkData = await transcoded.getChunk(start, end);

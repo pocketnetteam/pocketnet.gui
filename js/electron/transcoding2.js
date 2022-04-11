@@ -4,11 +4,15 @@ const path = require('path');
 const ffbin = require('ffbinaries');
 const ffmpeg = require('fluent-ffmpeg');
 
-const { binary_to_base58: binaryB64 } = require('base58-js');
+const getUniqueFileId = require('../file-hash');
 const checkDiskSpace = require('check-disk-space').default;
 
 const coresCount = os.cpus().length;
 const ramCount = Math.round(os.totalmem() / Math.pow(1024, 3));
+
+/** Uncomment line to enable debug logs */
+let debugLog = () => {};
+debugLog = console.log;
 
 class TranscoderClient {
   _static = TranscoderClient;
@@ -27,7 +31,7 @@ class TranscoderClient {
 
     constructor(transcoderClient, file) {
       this.tClient = transcoderClient;
-      this.id = this.getUniqueFileId(file);
+      this.id = getUniqueFileId(file);
       this.file = file;
     }
 
@@ -194,26 +198,6 @@ class TranscoderClient {
     sendGetProbe = async (filePath) => {
       this.tClient.ipcRender.send(`Transcoder:GetProbe`, filePath);
     };
-
-    async getUniqueFileId(videoFile) {
-      let { lastModified, name, size, type } = videoFile;
-
-      let data = { lastModified, name, size, type };
-
-      let uniqueData = JSON.stringify(data);
-
-      let fileDataHash = await this.sha256(uniqueData);
-
-      return fileDataHash;
-    }
-
-    async sha256(str) {
-      const encoder = new TextEncoder();
-      const data = encoder.encode(str);
-      const hash = await crypto.subtle.digest('SHA-256', data);
-      const bytes = new Uint8Array(hash);
-      return binaryB64(bytes);
-    }
   };
 
   async runTask(file, progressListener) {
@@ -329,7 +313,7 @@ class TranscoderBridge {
         this.bridge.checkRequirements(this.inputSize)
           .then(() => {
             if (this.checkIfFinished()) {
-              console.log(`Transcoding task ${this.id}: Already finished task`);
+              debugLog(`Transcoding task ${this.id}: Already finished task`);
               return;
             }
 
@@ -351,12 +335,12 @@ class TranscoderBridge {
 
       if (!this.bridge.binaries.downloaded) {
         this.bridge.binaries.listenProgress((progress) => {
-          console.log('Downloading binaries', progress);
+          debugLog('Downloading binaries', progress);
         });
         this.bridge.binaries.download()
           .then(transcode)
           .catch((err) => {
-            console.log('FFBinaries error occurred');
+            debugLog('FFBinaries error occurred');
           });
 
         return;
@@ -367,10 +351,20 @@ class TranscoderBridge {
 
     processChunks() {
       this.handleChunkRequest((e, chunkReq) => {
-        console.log(`Transcoding task ${this.id}: Chunk requested [${chunkReq.from}:${chunkReq.to}]`);
+        debugLog(`Transcoding task ${this.id}: Chunk requested [${chunkReq.from}:${chunkReq.to}]`);
 
         this.getChunkFromFile(chunkReq.from, chunkReq.to)
-          .then((chunk) => this.sendChunkReceived(chunkReq.from, chunkReq.to, chunk));
+          .then((chunk) => {
+            this.sendChunkReceived(chunkReq.from, chunkReq.to, chunk);
+
+            console.log('Checks', chunkReq.to, this.outputStats.size);
+
+            if (chunkReq.to >= this.outputStats.size) {
+              fs.unlink(this.output, () => {
+                debugLog(`Transcoding task ${this.id}: Works finished, file purged`);
+              });
+            }
+          });
       });
     }
 
@@ -400,15 +394,13 @@ class TranscoderBridge {
       });
     }
 
-    prepareFinished(path) {
+    prepareFinished() {
       this.sendStarted();
       this.sendProgress(100);
 
-      const fileStats = fs.statSync(path)
-
       this.processChunks();
 
-      this.sendFinished(fileStats.size);
+      this.sendFinished();
     }
 
     checkIfFinished() {
@@ -416,14 +408,18 @@ class TranscoderBridge {
 
       if (fs.existsSync(finishedPath)) {
         this.output = finishedPath;
-        this.prepareFinished(finishedPath);
+        this.outputStats = fs.statSync(finishedPath);
+
+        this.prepareFinished();
         return true;
       }
+
+      return false;
     }
 
     handleTranscodingStart() {
       this.handleStop(() => {
-        console.log(`Transcoding task ${this.id}: Stopped`);
+        debugLog(`Transcoding task ${this.id}: Stopped`);
 
         this.sendStopped();
         this.command.kill('SIGTERM');
@@ -436,7 +432,7 @@ class TranscoderBridge {
       // DEATH SIMULATION
       // if (progress > 40) this.command.kill();
 
-      console.log(`Transcoding task ${this.id}: Processed ${progress}%`);
+      debugLog(`Transcoding task ${this.id}: Processed ${progress}%`);
 
       this.sendProgress(progress);
     }
@@ -447,14 +443,14 @@ class TranscoderBridge {
 
       if (isSignal15) {
         if (!isStoppedState) {
-          console.log(`Transcoding task ${this.id}: Suddenly stopped`);
+          debugLog(`Transcoding task ${this.id}: Suddenly stopped`);
         } else {
-          console.log(`Transcoding task ${this.id}: Stopped by user`);
+          debugLog(`Transcoding task ${this.id}: Stopped by user`);
           this.sendError('TRANSCODE_ABORT');
           return;
         }
       } else {
-        console.log(`Transcoding task ${this.id}: Error occurred (${err.message || 'no description'})`);
+        debugLog(`Transcoding task ${this.id}: Error occurred (${err.message || 'no description'})`);
       }
 
       console.error(err);
@@ -470,7 +466,7 @@ class TranscoderBridge {
       this.handleTranscodingProgress(100);
 
       if (!fs.existsSync(this.output)) {
-        console.log(`Transcoding task ${this.id}: Final file not found`);
+        debugLog(`Transcoding task ${this.id}: Final file not found`);
 
         this.sendError('FINAL_FILE_MISSING');
       }
@@ -478,12 +474,12 @@ class TranscoderBridge {
       const finishedPath = this._static.getFinishedPath(this.bridge.saveFolder, this.id);
       fs.renameSync(this.output, finishedPath);
       this.output = finishedPath;
+      this.outputStats = fs.statSync(finishedPath);
 
-      const outputStats = fs.statSync(this.output);
+      debugLog(`Transcoding task ${this.id}: Finished`);
 
-      console.log(`Transcoding task ${this.id}: Finished`);
-
-      this.sendFinished(outputStats.size);
+      this.processChunks();
+      this.sendFinished();
     }
 
     spawnFfmpeg() {
@@ -525,9 +521,9 @@ class TranscoderBridge {
       this.sender.send(`Transcoder:Task[${this.id}]:Progress`, progress);
     };
 
-    sendFinished = (fileSize) => {
+    sendFinished = () => {
       this.state = 'FINISHED';
-      this.sender.send(`Transcoder:Task[${this.id}]:Finished`, fileSize);
+      this.sender.send(`Transcoder:Task[${this.id}]:Finished`, this.outputStats.size);
     };
 
     sendStopped = () => {
@@ -693,7 +689,7 @@ class TranscoderBridge {
   }
 
   loadInterruptedResults() {
-    console.log('Looking for interrupted transcodings');
+    debugLog('Looking for interrupted transcodings');
 
     try {
       const regex = /transcoding-.+\.temp\.mp4/g;
