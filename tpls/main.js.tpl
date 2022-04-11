@@ -183,7 +183,9 @@ function destroyApp() {
 }
 
 function createTray() {
-
+    if(app.dock.getMenu()){
+        return;
+    }
     var defaultImage = nativeImage.createFromPath(defaultTrayIcon);
     var badgeImage = nativeImage.createFromPath(badgeTrayIcon);
 
@@ -195,7 +197,14 @@ function createTray() {
     var contextMenu = Menu.buildFromTemplate([{
         label: 'Open',
         click: function() {
-            showHideWindow(true)
+            if(is.macOS()){
+                if(win.isDestroyed())
+                    initApp()
+                else
+                    showHideWindow(true)
+            }else {
+                showHideWindow(true)
+            }
         }
     }, {
         label: 'Quit',
@@ -234,7 +243,7 @@ function createTray() {
     if (is.macOS()) {
         app.dock.setMenu(contextMenu)
         app.on('activate', () => {
-            showHideWindow(true)
+            initApp()
         })
     }
 
@@ -283,18 +292,19 @@ function createBadgeOS() {
     if (is.linux() || is.macOS()) {
 
         // Linux or macOS
+        ipcMain.removeAllListeners('update-badge');
         ipcMain.on('update-badge', (event, badgeNumber) => {
-            if (badgeNumber) {
-                app.setBadgeCount(badgeNumber);
-                if (is.macOS())
-                    app.dock.setBadge(badgeNumber.toString())
-            } else {
-                app.setBadgeCount(0);
-                if (is.macOS())
-                    app.dock.setBadge('')
-            }
+                if (badgeNumber) {
+                    app.setBadgeCount(badgeNumber);
+                    if (is.macOS())
+                        app.dock.setBadge(badgeNumber.toString())
+                } else {
+                    app.setBadgeCount(0);
+                    if (is.macOS())
+                        app.dock.setBadge('')
+                }
 
-            event.returnValue = 'success';
+                event.returnValue = 'success';
         });
     }
 
@@ -619,24 +629,16 @@ function createWindow() {
     });
 
     win.on('close', function(e) {
-        if (!willquit) {
-
-            e.preventDefault();
-
-            if (is.macOS()){
-                if (win.isFullScreen()){
-                    win.setFullScreen(false)
-                    return
-                }
+        if(!is.macOS()) {
+            if (!willquit) {
+                e.preventDefault();
+                win.hide();
+                destroyBadge()
+            } else {
+                destroyBadge()
+                destroyTray()
+                win = null
             }
-
-
-            win.hide();
-            destroyBadge()
-        } else {
-            destroyBadge()
-            destroyTray()
-            win = null
         }
     });
 
@@ -728,6 +730,7 @@ function createWindow() {
     const getPostFolder = (postId) => path.join(Storage, PostsDir, postId);
     const getVideoFolder = (postId, videoId) => path.join(getPostFolder(postId), VideosDir, videoId);
 
+    ipcMain.removeHandler('saveShareData');
     ipcMain.handle('saveShareData', async (event, shareData) => {
         const shareDir = getPostFolder(shareData.id);
         const jsonDir = path.join(shareDir, 'share.json');
@@ -743,6 +746,7 @@ function createWindow() {
         return shareDir;
     });
 
+    ipcMain.removeHandler('saveShareVideo');
     ipcMain.handle('saveShareVideo', async (event, folder, videoData, videoResolution) => {
         function downloadFile(url, options = {}) {
             return new Promise((resolve, reject) => {
@@ -867,12 +871,14 @@ function createWindow() {
         return result;
     });
 
+    ipcMain.removeHandler('deleteShareWithVideo');
     ipcMain.handle('deleteShareWithVideo', async (event, shareId) => {
         const shareDir = getPostFolder(shareId);
 
         fs.rmSync(shareDir, { recursive: true, force: true });
     });
 
+    ipcMain.removeHandler('getShareList');
     ipcMain.handle('getShareList', async (event) => {
         const isShaHash = /[a-f0-9]{64}/;
 
@@ -888,6 +894,7 @@ function createWindow() {
         return postsList;
     });
 
+    ipcMain.removeHandler('getShareData');
     ipcMain.handle('getShareData', async (event, shareId) => {
         const shareDir = getPostFolder(shareId);
         const jsonPath = path.join(shareDir, 'share.json');
@@ -897,6 +904,7 @@ function createWindow() {
         return JSON.parse(jsonData);
     });
 
+    ipcMain.removeHandler('getVideoData');
     ipcMain.handle('getVideoData', async (event, shareId, videoId) => {
         const videoDir = getVideoFolder(shareId, videoId);
 
