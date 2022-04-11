@@ -6982,15 +6982,11 @@
 				swipeStatus : _.throttle(statusf, throttle),
 			})
 
-			p.el.css('touch-action', 'manipulation')
-
 			return self
 		}
 
 		self.destroy = function(){
 
-			
-			p.el.css('touch-action', '')
 			p.el.swipe('destroy')
 			p = {}
 			needclear = false
