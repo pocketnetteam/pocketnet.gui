@@ -644,7 +644,7 @@ var arranges = {
 
 		<% if(!emptywithrepost) {%>
 
-			<% if((typeof repost == 'undefined' || !repost || fromempty) && loggedIn) {%>
+			<% if(typeof repost == 'undefined' || !repost || fromempty) {%>
 
 				<div class="showmorelenta"></div>
 	
@@ -655,19 +655,6 @@ var arranges = {
 	
 				</div>
 	
-			<% } else if((typeof repost == 'undefined' || !repost || fromempty) && !loggedIn) { %>
-
-				<div class="commentRegisterDiv">
-
-					<div class="commentRegister">
-
-						<%=e('signToComment')%>
-						<button elementsid="hrefregistration" class="button toregistration"><%=e('signupmenu')%></button>
-
-					</div>
-
-				</div>
-		
 			<% } %>
 	
 		<% } %>

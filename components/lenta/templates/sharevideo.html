@@ -538,26 +538,13 @@ var metadisplay = function(){ %>
 
 <% if(!emptywithrepost) {%>
 
-	<% if((typeof repost == 'undefined' || !repost || fromempty) && loggedIn) {%>
+	<% if(typeof repost == 'undefined' || !repost || fromempty) {%>
 
 		<div class="showmorelenta piphidden"></div>
 
 		<div class="commentsWrapperHb piphidden">
 			
 			<div class="commentsWrapper">
-			</div>
-
-		</div>
-
-	<% } else if((typeof repost == 'undefined' || !repost || fromempty) && !loggedIn) { %>
-
-		<div class="commentRegisterDiv piphidden">
-
-			<div class="commentRegister piphidden">
-
-				<%=e('signToComment')%>
-				<button elementsid="hrefregistration" class="button toregistration"><%=e('signupmenu')%></button>
-
 			</div>
 
 		</div>
