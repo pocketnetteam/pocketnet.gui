@@ -15954,9 +15954,9 @@ Platform = function (app, listofnodes) {
 
                 getex: function (parameters, clbk, method, rpc) {
 
-                    if(!rpc) rpc = {
-                        ex : true
-                    }
+                    if(!rpc) rpc = {}
+
+                    rpc.ex = true
 
                     method || (method = 'getrawtransactionwithmessage')
 
@@ -16307,7 +16307,10 @@ Platform = function (app, listofnodes) {
                         
                     self.app.platform.sdk.node.shares.hierarchical(p, function(contentIds, error) {
 
-                        clbk(contentIds)
+                        console.log('contentIds', contentIds)
+
+                        if (clbk)
+                            clbk(contentIds)
 
                         return
 
@@ -16566,7 +16569,7 @@ Platform = function (app, listofnodes) {
                                 parameters = [p.contentid, p.contenttypes, p.depth, p.count];
 
                             if (methodparams.method == 'getrecommendedcontentbyaddress')
-                                parameters = [p.contentAddress, p.address, p.type ? [p.type] : [], p.lang || "", p.count];
+                                parameters = [p.contentAddress, '', p.type ? [p.type] : [], p.lang || "", p.count];
 
                             s.getex(parameters, function (data, error) {
 

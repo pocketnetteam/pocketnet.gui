@@ -922,7 +922,8 @@ Nav = function(app)
 
 				core.dynamicmap(p, function(err, res){
 
-					if(err){
+					if (err){
+						
 						p.clbk("map for module isn't exist")
 						p.href = 'page404'
 						p.map = module.find(p.href);
@@ -1473,7 +1474,13 @@ Nav = function(app)
 			{
 				window.onpopstate = function(event)
 				{
-					historyManager.openCurrent();
+					try{
+						historyManager.openCurrent();
+					}
+					catch(e){
+						sitemessage(app.localization.e('errorreload'))
+					}
+					
 				};
 			}
 

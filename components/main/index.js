@@ -438,6 +438,8 @@ var main = (function(){
 			},
 
 			topvideos: function (show) {
+
+				if(!el.topvideos) return
 				
 				if (show){
 

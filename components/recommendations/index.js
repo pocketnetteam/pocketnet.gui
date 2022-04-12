@@ -106,7 +106,7 @@ var recommendations = (function(){
 
 			self.app.platform.sdk.node.shares[ed.loader || 'getrecomendedcontents'](ed.parameters || {}, function (recomandations) {
 
-				console.log('recomandations', recomandations)
+				console.log('contentIds2', recomandations)
 
 				if (clbk)
 					clbk(recomandations);

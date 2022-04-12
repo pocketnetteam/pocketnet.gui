@@ -604,9 +604,12 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 		},
 	}
 
+	var trustpeertube = []
 
 	self.peertube = {
 		init: function () {
+
+			trustpeertube = []
 
 			var ins = {
 				1: [
@@ -641,6 +644,8 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				  {
 					host: 'pocketnetpeertube8.nohost.me',
 					cantuploading: true,
+					old : true,
+
 					ip: '192.236.161.131',
 				  },
 				  {
@@ -701,11 +706,15 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					{
 						host : 'poketnetpeertube.space',
 						cantuploading: true,
+
+						old : true,
 						ip: '178.217.155.168',
 					},
 					{
 						host : 'poketnetpeertube.ru',
 						cantuploading: true,
+
+						old : true,
 						ip: '178.217.159.224',
 					}
 				],
@@ -715,11 +724,15 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					{
 						host : 'bastynode.ru',
 						cantuploading: true,
+
+						old : true,
 						ip: '81.23.152.91',
 					},
 					{
 						host : 'storemi.ru',
 						cantuploading: true,
+
+						old : true,
 						ip: '93.100.117.108',
 					},
 				],
@@ -728,11 +741,15 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					{
 						host : 'bastynode1.ru',
 						cantuploading: true,
+
+						old : true,
 						ip: '81.23.151.94',
 					},
 					{
 						host : 'gf110.ru',
 						cantuploading: true,
+
+						old : true,
 						ip: '46.175.123.16',
 					},
 				],
@@ -779,6 +796,14 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					{ host: 'test.peertube2.pocketnet.app', ip: '95.216.212.153' },
 				]}
 			}
+
+			_.each(ins, function(r){
+				_.each(r, function(p){
+					if(!p.old){
+						trustpeertube.push(p.host)
+					}
+				})	
+			})
 
 			return peertube.init({
 				roys : ins
@@ -1028,8 +1053,9 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 			var result = null
 
-			return rpc({ method, parameters, options, U }).then(r => {
+			
 
+			return rpc({ method, parameters, options, U }).then(r => {
 
 				var posts = r.data.contents || []
 
@@ -1043,42 +1069,63 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					return decodeURIComponent(p.u)
 				})
 
-				users = _.map(posts, function(p){
-					return f.deep(p, 'lastComment.address')
+				videos = _.filter(videos, function(url){
+					return _.find(trustpeertube, function(host){
+						return url.indexOf(host) > -1
+					})
 				})
 
-				users = _.filter(users, u => {return u && !_.find(posts, function(p){
-					return p.address == u
-				})})
+				if(method == 'gethierarchicalstrip'){
+					users = _.map(posts, function(p){
+						return f.deep(p, 'lastComment.address')
+					})
+	
+					users = _.filter(users, u => {return u && !_.find(posts, function(p){
+						return p.address == u
+					})})
+				}
 
 				return Promise.resolve()
 
 			}).then(() => {
 
-				var userPr = rpc({
-					method : 'getuserprofile',
-					parameters : [users, '1'],
-					options, U
-				}).then(users => {
+				var userPr = null
+				var videosPr = null
 
+				if(!users.length){
+					userPr = () => Promise.resolve()
+				}
+				else{
+					userPr = rpc({
+						method : 'getuserprofile',
+						parameters : [users, '1'],
+						options, U
+					}).then(users => {
+	
+						result.data.users = users.data
+	
+						return Promise.resolve()
+					})
+				}
 
-					result.data.users = users.data
+				if(!videos.length){
+					videosPr = () => Promise.resolve()
+				}
+				else{
+					videosPr = videosapi({
+						urls : videos,
+						fast : true
+					}).then(videos => {
 
-					return Promise.resolve()
-				})
+						result.data.videos = videos.data
 
-				var videosPr = videosapi({
-					urls : videos,
-					fast : true
-				}).then(videos => {
+						return Promise.resolve()
+					}).catch(e => {
+						return Promise.resolve()
+					})
+				}
 
-
-					result.data.videos = videos.data
-
-					return Promise.resolve()
-				}).catch(e => {
-					return Promise.resolve()
-				})
+					
 
 				users = null
 				videos = null
@@ -1109,8 +1156,6 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 							code: 400,
 						});
 					}
-
-
 
 					if(!self.rpcscenarios[method]){
 						return self.api.node.rpc.action({ method, parameters, options, U })
@@ -1207,11 +1252,6 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 						}
 
 						noderating = node.statistic.rating()
-
-						if(method == 'getrecommendedcontentbyaddress'){
-							console.log('options', options, node)
-							console.log('noderating', noderating)
-						}
 
 						return new Promise((resolve, reject) => {
 

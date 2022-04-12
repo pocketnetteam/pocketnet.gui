@@ -1643,7 +1643,7 @@ var post = (function () {
 						parameters : {
 					
 							contentAddress: share.address,
-							type: ['video'],
+							type: 'video',
 							depth: 10000,
 							count: 12
 						},

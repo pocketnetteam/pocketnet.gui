@@ -3,7 +3,10 @@
     <% if(contents && contents.length > 0) { 
         _.each(contents, function(content) { 
             
-            var video = content
+
+            var video = app.platform.sdk.videos.storage[content.url || "undefined"] || {}
+            var userinfo =  deep(app.platform.sdk.usersl.storage, content.address);
+
             
             %>
 
@@ -15,14 +18,14 @@
 
                     <div class="videoInfos">
 
-                        <div class="title"><span><%= video.c %></span></div>
+                        <div class="title"><span><%= content.renders.caption() %></span></div>
 
                         <div>
                             <div class="user">
                                 
-                                <span><%= video.userprofile.name %></span>
+                                <span><%= userinfo.name %></span>
                                 
-                                <% if(video.userprofile.reputation && !app.curation()) {%><sup class="spsp"><%-compressedNumber(video.userprofile.reputation, 1)%></sup><% } %>
+                                <% if(userinfo.reputation && !app.curation()) {%><sup class="spsp"><%-compressedNumber(userinfo.reputation, 1)%></sup><% } %>
                             
                             </div>
 
@@ -30,7 +33,7 @@
 
                                 <span class="views"><%= video.data.views %> <%- pluralform(video.data.views,[e('countview'), e('countviews')]) %></span>
                                 <i class="fas fa-circle viewDateSep"></i>
-                                <span class="date"><%- app.reltime(new Date(video.time)) %></span>
+                                <span class="date"><%- app.reltime(content.time) %></span>
 
                             </div>
                         </div>

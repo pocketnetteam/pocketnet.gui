@@ -172,6 +172,8 @@ var Peertube = function (settings) {
 							return Promise.reject({ error: true, cached: true });
 						}
 
+						cached.fromcache = true
+
 						return Promise.resolve(cached);
 					}
 
