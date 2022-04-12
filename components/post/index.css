@@ -200,7 +200,8 @@
   border-radius: 0;
 }
 #post.videomainpost .share {
-  margin: inherit !important;
+  margin: 0 auto;
+  max-width: 960px;
   background: transparent;
 }
 #post.videomainpost .share .shareTable {
@@ -308,6 +309,10 @@
 }
 #post.videomainpost.recommendationsenabled .postWrapper {
   display: flex;
+}
+#post.videomainpost.recommendationsenabled .share {
+  margin: 0 auto;
+  max-width: 960px;
 }
 #post.videomainpost.recommendationsenabled .postsharemain {
   flex-grow: 1;
