@@ -971,7 +971,7 @@ Application = function(p)
 		})
 
 		self.mobile.inputs.init()
-
+		self.mobile.reload.initparallax()
 	}
 
 	self.reload = function(p){
@@ -1112,6 +1112,7 @@ Application = function(p)
 
 				self.mobile.pip.init()
 				self.mobile.keyboard.init()
+				
 
 				if (window.Keyboard && window.Keyboard.disableScroll){
 					window.Keyboard.disableScroll(false)
@@ -2216,7 +2217,11 @@ Application = function(p)
 			},
 			initparallax : function(){
 
+				console.log('initparallax', isTablet() || isMobile(), self.mobile.reload.parallax , self.mobile.reload.reloading)
+
 				if(isTablet() || isMobile()){
+
+					
 
 					if(self.mobile.reload.parallax) return
 					if(self.mobile.reload.reloading) return

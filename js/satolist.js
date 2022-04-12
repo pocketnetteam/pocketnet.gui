@@ -17195,6 +17195,22 @@ Platform = function (app, listofnodes) {
 
                 },
 
+                removeTempInputsFromUnspents : function(unspents){
+                    var inputs = self.sdk.node.transactions.tempInputs()
+
+                    var ids = {}
+                    
+                    _.each(inputs, function (i) {
+
+                        ids[(i.txId || i.txid) + "_" +  i.vout] = true
+                       
+                    })
+                    
+                    return _.filter(unspents, function(u){
+                        return !ids[u.txid + "_" + u.vout]
+                    })
+                },
+
                 tempOutputs: function () {
 
                     if(!self.sdk.address.pnet()) return []
@@ -17243,17 +17259,7 @@ Platform = function (app, listofnodes) {
                 tempBalance: function () {
 
                     return this.tempBalanceOutputs()
-
-                    var inputs = this.tempInputs()
-                    var outputs = this.tempOutputs()
-
-
-
-                    return _.reduce(inputs, function (m, i) {
-
-                        return m + i.amount / smulti
-
-                    }, 0)
+                  
                 },
 
                 haveTemp: function () {
@@ -17588,9 +17594,13 @@ Platform = function (app, listofnodes) {
 
                                     if (!s.unspent)
                                         s.unspent = {};
+                                        
+
+                                    d = self.sdk.node.transactions.removeTempInputsFromUnspents(d)
 
 
                                     _.each(d, function (u) {
+                                        
                                         self.sdk.node.transactions.clearTemp(u.txid, u.vout);
                                     })
 
@@ -18095,6 +18105,7 @@ Platform = function (app, listofnodes) {
 
                                 var lastUnspent = _.clone(unspent).reverse();
 
+
                                 for (var u of lastUnspent){
 
                                     if (totalDonate + feerate >= totalInputs){
@@ -18108,6 +18119,7 @@ Platform = function (app, listofnodes) {
                                             scriptPubKey: u.scriptPubKey,
                                         })
 
+
                                     } else {
 
                                         break;
@@ -18117,7 +18129,7 @@ Platform = function (app, listofnodes) {
 
                                 if (totalDonate >= totalInputs){
 
-                                    sitemessage(self.app.localization.e('e13117'))
+                                    //sitemessage(self.app.localization.e('e13117'))
 
                                     if (clbk){
                                         clbk(null, self.app.localization.e('e13117'));
@@ -18158,7 +18170,7 @@ Platform = function (app, listofnodes) {
 
                                 if (obj.amount.v > totalInputs){
 
-                                    sitemessage(self.app.localization.e('e13117'))
+                                    //sitemessage(self.app.localization.e('e13117'))
 
                                     if (clbk){
                                         clbk(null, self.app.localization.e('e13117'));
@@ -18530,6 +18542,8 @@ Platform = function (app, listofnodes) {
                                                             deleted : output.deleted
                                                         }
                                                     })
+
+                                                    console.log('temp', temp)
 
                                                     self.sdk.node.transactions.saveTemp()
 

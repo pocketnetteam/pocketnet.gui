@@ -120,7 +120,7 @@ var pkoin = (function(){
 
 								renders.boostinfo(boost)
 
-							}, 'cache')
+							}, boost ? 'cache' : null)
 						}
 					})
 
@@ -416,7 +416,7 @@ var pkoin = (function(){
 				var data = {
 					userinfo: userinfo
 				}
-
+				boost = null
 				shareId = essenseData.id;
 
 				self.app.platform.sdk.node.shares.getbyid([shareId], function () {
