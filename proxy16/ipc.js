@@ -64,20 +64,20 @@ var IPC = function(ipc, wc){
 	}
 
 	var send = function(id, error, p, key){
+		if(!wc.isDestroyed()) {
+			wc.send(key || 'proxy-message', {
 
-		wc.send(key || 'proxy-message', {
+				error: error,
+				id: id || '0',
+				data: p || {}
 
-			error : error,
-			id : id || '0',
-			data : p || {}
-
-		})
-
+			})
+		}
 		return Promise.resolve()
 	}
 
 	var handleMessage = function(e, message) {
-		
+
 		if(!message.action && !message.path && !message.wss) return
 		if(!message.id) message.id = f.makeid()
 
@@ -89,14 +89,14 @@ var IPC = function(ipc, wc){
 		if (message.path)
 			promise = kit.gateway(message)
 
-		
+
 
 		if (message.wss){
 			promise = wssdummy.recieve(message.data)
 		}
-		
+
 		if(!promise) return
-		
+
 		promise.then(data => {
 			send(message.id, null, data)
 		}).catch(e => {
@@ -104,7 +104,7 @@ var IPC = function(ipc, wc){
 		})
 
 	}
-    
+
     var tick = function() {
 		kit.manage.get.state(true).then(state => {
 
@@ -113,7 +113,7 @@ var IPC = function(ipc, wc){
 			})
 
 		})
-        
+
 	}
 
 	var helpers = {
@@ -154,14 +154,14 @@ var IPC = function(ipc, wc){
 						properties: ['openDirectory'],
                         defaultPath: message.data.defaultPath || ''
 					}).then(res => {
-	
+
 						message.data = {
 							ndataPath : res[0]
 						}
 
-		
+
 						return Promise.resolve()
-	
+
 					})
 				},
 				binPath : function(message){
@@ -174,21 +174,21 @@ var IPC = function(ipc, wc){
 						]*/
 					}).then(res => {
 
-	
+
 						message.data = {
 							binPath : res[0]
 						}
-	
+
 						return Promise.resolve()
-	
-					}) 
+
+					})
 				},
                 dumpWallet : function(message) {
 					return helpers.saveFileDialog({
 						properties: ['dontAddToRecent'],
                         defaultPath: message.data.defaultPath || ''
 					}).then(res => {
-	
+
                         message.data = {
 							path : res
 						}
@@ -201,7 +201,7 @@ var IPC = function(ipc, wc){
 						properties: ['openFile'],
                         defaultPath: message.data.defaultPath || ''
 					}).then(res => {
-	
+
                         message.data = {
 							path : res[0]
 						}
@@ -215,7 +215,7 @@ var IPC = function(ipc, wc){
 				},
 			}
 		}
-		
+
 	}
 
 	var middle = function(message){
@@ -226,7 +226,7 @@ var IPC = function(ipc, wc){
 
 		return Promise.resolve()
 	}
-    
+
 	var actions = {
 
 		manage : function(message){
@@ -234,7 +234,7 @@ var IPC = function(ipc, wc){
 
 			if(!kaction) return Promise.reject('unknownAction')
 
-			return middle(message).then(r => { 
+			return middle(message).then(r => {
 				return kaction(message.data)
 			}).then(data => {
 				send(message.id, null, data)
@@ -262,7 +262,7 @@ var IPC = function(ipc, wc){
 	self.destroy = function(){
 
 		ipc.off('proxy-message', handleMessage)
-		
+
 		wssdummy.destroy()
 
 		if (tickInterval){
@@ -277,7 +277,7 @@ var IPC = function(ipc, wc){
     self.candestroy = function() {
         return kit.candestroy()
     }
-    
+
     self.nodeStop = function() {
         return kit.manage.node.stop()
     }
