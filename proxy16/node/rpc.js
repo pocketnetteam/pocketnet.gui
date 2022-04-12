@@ -123,7 +123,7 @@ const publics = {
     getstatisticbydays: true,
     getstatisticcontentbyhours: true,
     getstatisticcontentbydays: true,
-    getrecomendedcontentsbyscoresonsimilarcontents : true,
+    getrecommendedcontentbyaddress: true,
     getrecomendedcontentsbyscoresfromaddress : true,
 }
 
@@ -469,7 +469,7 @@ RpcClient.callspec = {
     getrecomendedaccountsbysubscriptions : 'str',
     getrecomendedaccountsbyscoresonsimilaraccounts : 'str',
     getrecomendedaccountsbyscoresfromaddress : 'str',
-    getrecomendedcontentsbyscoresonsimilarcontents : 'str obj int int',
+    getrecommendedcontentbyaddress: 'str str obj str int',
     getrecomendedcontentsbyscoresfromaddress : 'str obj int int int',
     
     getcompactblock: "str int",
