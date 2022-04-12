@@ -266,7 +266,7 @@ var Cache = function(p){
                 block : 0,
             },
 
-            getrecomendedcontentsbyscoresonsimilarcontents : {
+            getrecommendedcontentbyaddress : {
                 time : 3600
             },
 

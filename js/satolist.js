@@ -16249,81 +16249,54 @@ Platform = function (app, listofnodes) {
 
                 getrecomendedcontents : function(p, clbk, cache){
 
-                    var fetchVideosInfo = function(contentIds) {
+                    var fetchVideosInfo = function(data) {
 
-                        var videosIds = contentIds.map((c) => c.contentid);
-
-                        if (videosIds.length <= 0 && clbk) {
+                        if (data && data.length <= 0) {
                             if (clbk)
                                 clbk([]);
                             return;
                         }
 
-                        self.sdk.node.shares.getex([videosIds], function (data, error) {
+                        var videos = data.map((v) => {
+                            v.c = decodeURIComponent(v.c);
+                            v.url = v.u = decodeURIComponent(v.u);
+                            v.time = parseInt(v.time + '000');
+                            return v;
+                        });
 
-                            if (error) {
-                                if (clbk)
-                                    clbk([]);
-                                return;
-                            }
+                        self.sdk.node.shares.loadvideoinfoifneed(videos, true, function() {
 
-                            var videos = data.map((v) => {
-                                v.c = decodeURIComponent(v.c);
-                                v.url = v.u = decodeURIComponent(v.u);
-                                v.time = parseInt(v.time + '000');
+                            data = data.map((v) => {
+                                if (self.sdk.videos.storage[v.u] && self.sdk.videos.storage[v.u].data)
+                                    v.data = self.sdk.videos.storage[v.u].data;
                                 return v;
                             });
 
-                            self.sdk.node.shares.loadvideoinfoifneed(videos, true, function() {
+                            // Random shuffle
+                            for (var i = data.length - 1; i > 0; i--) {
+                                var j = Math.floor(Math.random() * (i + 1));
+                                var temp = data[i];
+                                data[i] = data[j];
+                                data[j] = temp;
+                            }
 
-                                data = data.map((v) => {
-                                    if (self.sdk.videos.storage[v.u] && self.sdk.videos.storage[v.u].data)
-                                        v.data = self.sdk.videos.storage[v.u].data;
-                                    return v;
-                                });
+                            if (clbk)
+                                clbk(data);
 
-                                if (clbk)
-                                    clbk(data);
-
-                            });
-
-                        }, 'getcontent');
-
-                    }
-
-                    // Get the recomended videos by content
-                    if (p.type == 'content') {
-                            
-                        
-                        self.app.platform.sdk.node.shares.hierarchical(p, function(contentIds, error) {
-                            if (error)
-                                fetchVideosInfo([]);
-                            else
-                                fetchVideosInfo(contentIds);
-
-                        }, cache, {
-                            method : 'getrecomendedcontentsbyscoresonsimilarcontents'
                         });
 
-                    } else {
-
-                        // Get the recomended videos by address
-                        self.app.api.rpc('getrecomendedcontentsbyscoresfromaddress', [p.address, p.contenttypes, 0, p.depth, p.count]).then(function(contentIds, error){
-
-                            if (error)
-                                fetchVideosInfo([]);
-                            else
-                                fetchVideosInfo(contentIds);
-
-                        })
-                        .catch(function(e){
-
-                            console.log(e);
-                            fetchVideosInfo([]);
-
-                        })
-                        
                     }
+
+                        
+                    self.app.platform.sdk.node.shares.hierarchical(p, function(contentIds, error) {
+                        if (error)
+                            fetchVideosInfo([]);
+                        else
+                            fetchVideosInfo(contentIds.slice(0, p.count + 5));
+
+                    }, cache, {
+                        method : 'getrecommendedcontentbyaddress'
+                    });
 
                 },
 
@@ -16471,9 +16444,10 @@ Platform = function (app, listofnodes) {
                                 parameters.push('');
                                 parameters.push(p.address)
                             }
-                            if (methodparams.method == 'getrecomendedcontentsbyscoresfromaddress' ||
-                                methodparams.method == 'getrecomendedcontentsbyscoresonsimilarcontents')
+                            if (methodparams.method == 'getrecomendedcontentsbyscoresfromaddress')
                                 parameters = [p.contentid, p.contenttypes, p.depth, p.count];
+                            if (methodparams.method == 'getrecommendedcontentbyaddress')
+                                parameters = [p.contentAddress, p.address, p.contenttypes, p.lang || "", p.count];
 
                             s.getex(parameters, function (data, error) {
 
