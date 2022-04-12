@@ -1,0 +1,21 @@
+<div class="boostinfodata">
+
+    <% if(app.localization.available[language]) {%>
+        <div class="label">
+            <span><%= e('probability') %></span>
+        </div>
+        
+        <div class="probability">
+            <span><%- (probability * 100).toFixed(1) %> %</span>
+        </div>
+        
+        <div class="text">
+            <span><%= e('probabilitytext', app.localization.available[language].name) %></span>
+        </div>
+
+    <% } else { %> 
+        <div class="text">
+            <span><%= e('probabilitytexterror') %></span>
+        </div>
+    <% } %>
+</div>

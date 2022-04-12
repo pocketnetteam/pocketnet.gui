@@ -1,9 +1,19 @@
 #lenta {
+  /*i.boostedlabel{
+		width: 30px;
+		text-align: right;
+	}*/
   /*.authorCell a,
 	.sbtnxs,
 	.spsp{
 		display: inline-block;
 	}*/
+}
+#lenta .boosted {
+  min-height: 100px;
+}
+#lenta .boostedlabel {
+  color: rgb(var(--color-good));
 }
 #lenta .optimizationTip {
   height: 150px;

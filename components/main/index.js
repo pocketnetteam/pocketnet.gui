@@ -686,6 +686,7 @@ var main = (function(){
 							recommendedUsers : isMobile(),
 							recommendedUsersCount : isMobile() ? 15 : 3,
 							//includesub : true,
+							includeboost : self.app.boost,
 							optimize : self.app.mobileview,
 							extra :/* state && isMobile() ? [
 								{

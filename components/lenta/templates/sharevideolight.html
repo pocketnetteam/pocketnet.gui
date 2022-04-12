@@ -76,11 +76,7 @@ var metadisplay = function(){ %>
 							</div>		
 
 							<div class="datetime">
-								<% if(share.time) {%>
-									<span  class="realtime" time="<%-share.time%>"><%- app.reltime(share.time) %></span>
-								<% } else { %> 
-									<span><%=e('e13019')%></span>
-								<% } %>
+								<% if(share.time) {%> <span  class="realtime" time="<%-share.time%>"><%- app.reltime(share.time) %></span><% } else { %> <span><%=e('e13019')%></span><% } %><% if(typeof boosted != 'undefined' && boosted) {%> <i class="fas fa-rocket boostedlabel"></i> <span class="boostedlabel"> Boosted</span> <% } %>
 							</div>
 						<% } %>
 						

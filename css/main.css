@@ -1991,12 +1991,12 @@ input[type=radio].radio:checked + label {
 }
 .m-message-container .notificationWrapper .m-message {
   padding: 0.5em 0.5em;
-  border: 1px solid rgb(var(--neutral-grad-4));
   border-radius: 5px;
   box-shadow: none;
   background: rgb(var(--background-total-theme));
   font-size: 1em;
   color: rgb(var(--text-color));
+  box-shadow: 0 5px 7px -5px rgba(var(--color-shadow-base), 0.4);
 }
 .m-message-container .notificationWrapper .m-message--title {
   font-weight: bold;

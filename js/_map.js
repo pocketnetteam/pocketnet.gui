@@ -17,7 +17,6 @@ var insertingfunc = function(settings, p){
 	return {
 		el : 'content'
 	}
-
 }
 
 __map =  { 

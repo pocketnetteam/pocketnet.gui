@@ -930,8 +930,8 @@ html.mobileview .wnd.wndsharepost .wndcontent #share .absolutetxwrapper {
     width: 100%;
   }
   .wnd.wndsharepost .wndcontent #share .sLoader {
-    left: 1em;
-    top: 1em;
+    left: 0em;
+    top: 0em;
   }
   .wnd.wndsharepost .wndcontent #share .cntwrk {
     margin-left: 0;

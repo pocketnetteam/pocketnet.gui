@@ -1223,8 +1223,6 @@ var comments = (function(){
 
 				var comment = self.app.platform.sdk.comments.find(txid, id, pid)
 
-				console.log('comment', comment)
-
 				if (!comment && listpreview && ed.lastComment){
 					comment = self.app.platform.sdk.comments.ini([ed.lastComment])[0]
 				}
@@ -1951,7 +1949,9 @@ var comments = (function(){
 							el.c.removeClass('preview')
 
 							var __clbk = function(a, b){
-								clbk(a, b)
+
+								if (clbk)
+									clbk(a, b)
 
 
 								if (_clbk){
@@ -2178,7 +2178,6 @@ var comments = (function(){
 								return c.id == p.add
 							})
 
-							console.log('addcomment', addcomment, comments, p.add)
 
 							if (addcomment){
 								if(ed.fromtop)
@@ -2487,7 +2486,6 @@ var comments = (function(){
 
 		var makePreview = function(clbk){	
 
-			console.log('makePreview')
 
 			var p = {};
 
@@ -2520,7 +2518,6 @@ var comments = (function(){
 
 			var p = {};			
 
-			console.log('make')
 
 			load.level(null, function(comments){
 
@@ -2538,12 +2535,10 @@ var comments = (function(){
 
 					el.c.find('.loaderWrapper').addClass('hidden')
 
-					console.log("AS2")
 
 					renders.post(function(area){
 						areas["0"] = area
 
-						console.log("ED", ed)
 
 						if (ed.reply){
 							actions.fastreply(ed.reply)
@@ -2646,7 +2641,6 @@ var comments = (function(){
 				preview = ed.preview || false;
 				listpreview = ed.listpreview || false;
 
-				console.log("listpreview", listpreview, preview)
 				showedall = false;
 
 				txid = ed.txid || null

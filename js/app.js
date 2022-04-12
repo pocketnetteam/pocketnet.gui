@@ -80,6 +80,8 @@ Application = function(p)
 		self.test = true
 	}
 
+	self.boost = self.test
+
 	self.options = {
 		
 		url : url,
@@ -969,7 +971,7 @@ Application = function(p)
 		})
 
 		self.mobile.inputs.init()
-
+		self.mobile.reload.initparallax()
 	}
 
 	self.reload = function(p){
@@ -1109,7 +1111,7 @@ Application = function(p)
 				}
 
 				self.mobile.pip.init()
-
+				self.mobile.keyboard.init()
 				
 
 				if (window.Keyboard && window.Keyboard.disableScroll){
@@ -1440,7 +1442,7 @@ Application = function(p)
 		self.width = self.el.window.width()
 
 		document.documentElement.style.setProperty('--vh', `${self.height * 0.01}px`);
-
+		document.documentElement.style.setProperty('--keyboardheight', `0px`);
 	
 
 		istouchstyle()
@@ -1464,7 +1466,6 @@ Application = function(p)
 				s(scrollTop, blockScroll)
 			})
 
-			console.log('scrollTop', scrollTop)
 
 			if(!scrollTop){
 				self.mobile.reload.initparallax()
@@ -1855,6 +1856,25 @@ Application = function(p)
 
 	self.mobile = {
 
+		keyboard : {
+			init : function(){
+
+				if(window.cordova && !isios()){
+
+					window.addEventListener('keyboardWillShow', (event) => {
+						console.log('event', event)
+						document.documentElement.style.setProperty('--keyboardheight', `${event.keyboardHeight}px`);
+					});
+
+					window.addEventListener('keyboardWillHide', () => {
+						document.documentElement.style.setProperty('--keyboardheight', `0px`);
+					});
+				}
+
+				
+			}
+		},
+
 		pip : {
 
 			element : null,
@@ -2197,7 +2217,11 @@ Application = function(p)
 			},
 			initparallax : function(){
 
+				console.log('initparallax', isTablet() || isMobile(), self.mobile.reload.parallax , self.mobile.reload.reloading)
+
 				if(isTablet() || isMobile()){
+
+					
 
 					if(self.mobile.reload.parallax) return
 					if(self.mobile.reload.reloading) return

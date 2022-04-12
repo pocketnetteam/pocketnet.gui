@@ -167,6 +167,11 @@ Platform = function (app, listofnodes) {
         'PLAj8RmQg2ehTVEx8pSWnd2QeFvjHnYtRZ' : true,
         'PGD5jUBQ7qNnHDuW85RRBxY1msywEdCm7r' : true,
         'PXupozgNg1Ee6Nrbapj8DEfMGCVgWi4GB1' : true,
+        'PD4pWxVke4Yz2y5UnNWnSsVHd45Vy6izCr' : true,
+        'PW3tfEkGLKv4LFREpJYYpWxenKHSizB8rQ' : true,
+        'PSm8oVmMYCKnn35i4BABE6kw59WvTckagc' : true,
+        'PEWcDgFAD6t7SmCmsnixbmhTFkZr6hYVUb' : true,
+        'PQi77s3JtrUkavxN9t6Hy5sT3CNnHokNrK' : true
     }
 
     self.bch = {
@@ -15146,6 +15151,13 @@ Platform = function (app, listofnodes) {
             },
 
             shares: {
+
+                
+
+                storagelights: {
+
+                },
+
                 storage: {
 
                 },
@@ -15953,6 +15965,7 @@ Platform = function (app, listofnodes) {
                             }
                         }).then(d => {
 
+
                             d.contents || (d.contents = [])
 
                             var clear = d.contents
@@ -16334,6 +16347,94 @@ Platform = function (app, listofnodes) {
 
                 },
 
+                getboost : function(p, clbk, cache){
+
+                    self.app.platform.sdk.node.shares.lightsid(p, clbk, cache, {
+                        method : 'getboostfeed'
+                    })
+
+                },
+
+                lightsid : function(p, clbk, cache, methodparams){
+
+                    if(!methodparams) methodparams = {}
+
+                    var mtd = methodparams.method
+
+                    /*
+
+                    p.height
+                    p.start_txid
+                    p.count 10
+                    p.lang lang
+                    p.tagsfilter tagsfilter
+                    p.type
+
+                    */
+
+                    self.app.user.isState(function (state) {
+
+                        if (!p) p = {};
+
+                        p.count || (p.count = 10)
+
+                        if(!p.lang){
+                            p.lang = self.app.localization.key || ''
+                        }
+
+                        p.height || (p.height = 0)
+                        p.tagsfilter || (p.tagsfilter = [])
+                        p.tagsexcluded || (p.tagsexcluded = [])
+
+                        if (state) {
+                            p.address = self.sdk.address.pnet().address;
+                        }
+
+                        var key = mtd + p.count + (p.address || "") + "_" + (p.lang || "") + "_" + /*(p.height || "")  +*/ "_" + (p.tagsfilter.join(',')) + "_" + (p.begin || "") + (p.type ? p.type : '')
+
+                        if(p.author) key = key + p.author
+
+                        var storage = self.sdk.node.shares.storagelights;
+                        var s = self.sdk.node.shares;
+
+                        if (cache == 'cache' && storage[key]) {
+
+                            if (clbk)
+                                clbk(storage[key], null, p)
+
+                        }
+                        else {
+                            if (!storage[key] || cache == 'clear') storage[key] = [];
+
+                            p.tagsfilter = _.map(p.tagsfilter, function(t){
+                                return encodeURIComponent(t)
+                            })
+
+                            p.tagsexcluded = _.map(p.tagsexcluded, function(t){
+                                return encodeURIComponent(t)
+                            })
+
+                            var parameters = [Number(p.height), p.txid || '', p.count, p.lang, p.tagsfilter, p.type ? [p.type] : [], [], [], p.tagsexcluded];
+
+                            s.getex(parameters, function (data, error) {
+
+                                var shares = data.boosts || []
+                                var blocknumber = data.height
+                                    p.blocknumber = blocknumber
+
+
+                                storage[key] = shares
+
+                                if (clbk)
+                                    clbk(shares, error, p)
+
+                            }, mtd)
+
+
+                        }
+                    })
+                },
+
                 hierarchical: function (p, clbk, cache, methodparams) {
 
                     if(!methodparams) methodparams = {}
@@ -16452,8 +16553,9 @@ Platform = function (app, listofnodes) {
                             s.getex(parameters, function (data, error) {
 
                                 var shares = data.contents || []
-                                if (p.contenttypes)
-                                    shares = data;
+
+                                if (p.contenttypes) shares = data;
+
                                 var blocknumber = data.height
 
                                 _.each(shares, function(s){
@@ -16466,6 +16568,50 @@ Platform = function (app, listofnodes) {
 
 
                                 if (shares) {
+
+                                    if (state) {
+
+                                        var me = self.app.user.address.value;
+
+                                        if (
+
+                                            (p.author && p.author == me) 
+                                            
+                                        ) {
+                                            
+                                            _.each(self.sdk.relayTransactions.withtemp('share'), function (ps) {
+
+                                                var s = new pShare();
+                                                s._import(ps, true);
+                                                s.temp = true;
+
+                                                if (ps.relay) s.relay = true
+
+                                                s.address = ps.address
+
+                                                if (ps.txidEdit) {
+                                                    replaceEqual(shares, {
+                                                        txid: ps.txidEdit
+                                                    }, s)
+
+                                                    /// new
+                                                    s.txidEdit = s.txid
+                                                    s.txid = ps.txidEdit
+                                                }
+
+                                                else {
+                                                    shares.unshift(s)
+                                                }
+
+                                            })
+                                        }
+
+                                        _.each(self.sdk.relayTransactions.withtemp('blocking'), function (block) {
+                                            _.each(shares, function (s) {
+                                                if (s.address == block.address) s.blocking = true;
+                                            })
+                                        })
+                                    }
 
 
                                     self.sdk.node.shares.loadvideoinfoifneed(shares, p.video, function(){
@@ -16525,7 +16671,33 @@ Platform = function (app, listofnodes) {
 
                         }
                     })
-                }
+                },
+
+                getboostfeed : function(p, clbk, count, cache){
+
+                    self.app.platform.sdk.node.shares.getboost(p, function(boostinfo, error){
+
+                        //// filter viewed
+
+                        var boostedmap = _.uniq(randomizerarray(boostinfo, count || 3, 'boost') || [], function(v){
+                            return v.txid
+                        })
+
+                        var txids = _.map(boostedmap, function(v){
+                            return v.txid
+                        })
+
+                        self.app.platform.sdk.node.shares.getbyid(txids, function (shares) {
+
+                            if (clbk)
+                                clbk(shares, null, p)
+    
+                        })
+                        
+
+                    }, cache)
+
+                },
             },
 
             transactions: {
@@ -17085,6 +17257,22 @@ Platform = function (app, listofnodes) {
 
                 },
 
+                removeTempInputsFromUnspents : function(unspents){
+                    var inputs = self.sdk.node.transactions.tempInputs()
+
+                    var ids = {}
+                    
+                    _.each(inputs, function (i) {
+
+                        ids[(i.txId || i.txid) + "_" +  i.vout] = true
+                       
+                    })
+                    
+                    return _.filter(unspents, function(u){
+                        return !ids[u.txid + "_" + u.vout]
+                    })
+                },
+
                 tempOutputs: function () {
 
                     if(!self.sdk.address.pnet()) return []
@@ -17133,17 +17321,7 @@ Platform = function (app, listofnodes) {
                 tempBalance: function () {
 
                     return this.tempBalanceOutputs()
-
-                    var inputs = this.tempInputs()
-                    var outputs = this.tempOutputs()
-
-
-
-                    return _.reduce(inputs, function (m, i) {
-
-                        return m + i.amount / smulti
-
-                    }, 0)
+                  
                 },
 
                 haveTemp: function () {
@@ -17478,9 +17656,13 @@ Platform = function (app, listofnodes) {
 
                                     if (!s.unspent)
                                         s.unspent = {};
+                                        
+
+                                    d = self.sdk.node.transactions.removeTempInputsFromUnspents(d)
 
 
                                     _.each(d, function (u) {
+                                        
                                         self.sdk.node.transactions.clearTemp(u.txid, u.vout);
                                     })
 
@@ -17985,6 +18167,7 @@ Platform = function (app, listofnodes) {
 
                                 var lastUnspent = _.clone(unspent).reverse();
 
+
                                 for (var u of lastUnspent){
 
                                     if (totalDonate + feerate >= totalInputs){
@@ -17998,6 +18181,7 @@ Platform = function (app, listofnodes) {
                                             scriptPubKey: u.scriptPubKey,
                                         })
 
+
                                     } else {
 
                                         break;
@@ -18007,7 +18191,7 @@ Platform = function (app, listofnodes) {
 
                                 if (totalDonate >= totalInputs){
 
-                                    sitemessage(self.app.localization.e('e13117'))
+                                    //sitemessage(self.app.localization.e('e13117'))
 
                                     if (clbk){
                                         clbk(null, self.app.localization.e('e13117'));
@@ -18048,7 +18232,7 @@ Platform = function (app, listofnodes) {
 
                                 if (obj.amount.v > totalInputs){
 
-                                    sitemessage(self.app.localization.e('e13117'))
+                                    //sitemessage(self.app.localization.e('e13117'))
 
                                     if (clbk){
                                         clbk(null, self.app.localization.e('e13117'));
@@ -18420,6 +18604,8 @@ Platform = function (app, listofnodes) {
                                                             deleted : output.deleted
                                                         }
                                                     })
+
+                                                    console.log('temp', temp)
 
                                                     self.sdk.node.transactions.saveTemp()
 
@@ -26588,8 +26774,26 @@ Platform = function (app, listofnodes) {
 
                 }, "", true, self.app.localization.e(ctype), '', dateNow())
 
+                var text = deep(matrixevent, 'event.event.decrypted.body') || deep(matrixevent, 'event.event.content.message') || ''
+                var dtype = deep(matrixevent, 'event.event.content.msgtype')
+                var type = deep(matrixevent, 'event.event.type')
+
+                if (type != 'm.room.message'){
+                    text  = ''
+
+                    return
+                }
+                else{
+
+                    if(dtype == 'm.image') text = self.app.localization.e('image')
+                    if(dtype == 'm.file') text = self.app.localization.e('file')
+
+                }
+
+
+
                 var h = '<div class="fastMessage">\
-                <div class="fmCnt">' + html + '</div>\
+                <div class="fmCnt">' + html + '<div class="tips">'+text+'</div></div>\
                 <div class="close">\
                     <i class="fa fa-times" aria-hidden="true"></i>\
                 </div>\
@@ -26599,19 +26803,30 @@ Platform = function (app, listofnodes) {
             },
             event : function(matrixevent){
 
+                
+
 
                 if(typeof _Electron != 'undefined' && !self.focus){
 
-                    var html = self.matrixchat.notify.tpl(matrixevent)
+                    var _el = $(self.matrixchat.notify.tpl(matrixevent))
 
-                    if (html)
+                    console.log(_el.html())
 
-                        electron.ipcRenderer.send('electron-notification', {
-                            html : html,
-                            settings : {
-                                size : 'small'
-                            }
+                    var title = _el.find('.caption').text()
+                    var body = _el.find('.tips').text()
+                    var image = _el.find('[image]').attr('image')
+                    _el = null
+
+                    drawRoundedImage(image, 100, 200, 200).then(image=>{
+
+                        electron.ipcRenderer.send('electron-notification-small', {
+                            title, body, image
                         });
+
+                    })
+
+                    
+
 
                 }
             }

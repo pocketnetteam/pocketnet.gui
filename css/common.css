@@ -304,15 +304,12 @@
 }
 .share_common .tempPreloader {
   padding: 1em 0;
-  margin-bottom: 1em;
+  padding-bottom: 0;
+  padding-right: 1em;
 }
 .share_common .tempPreloader .label {
-  padding-top: 0.5em;
   color: rgb(var(--color-bg-ac));
   font-size: 0.8em;
-}
-.share_common .tempPreloader .iconwr {
-  padding-bottom: 1em;
 }
 .share_common .tempPreloader .count {
   padding-right: 0;
@@ -1406,7 +1403,11 @@ html.ios .share_common.fullScreenVideo .video-js {
   cursor: pointer;
 }
 .common_share_article_wrapper .share .sharearticle .readarticlebutton {
-  text-decoration: underline;
+  display: block!important;
+}
+.common_share_article_wrapper .share .sharearticle .readarticlebutton span {
+  display: inline;
+  opacity: 0.5;
 }
 .common_share_article_wrapper .share .sharearticle .shareBgCaption .author,
 .common_share_article_wrapper .share .sharearticle .articleend .author {

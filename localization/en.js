@@ -2166,3 +2166,17 @@ ____loclib.popup_applications_feature_3 = "Desktop is like a built-in VPN";
 
 ____loclib.popup_applications_button = " Download here";
 ____loclib.norecommendedvideos = "No recommended videos found";
+
+____loclib.boosted = "Boosted";
+
+
+____loclib.probability = "Probability";
+
+____loclib.probabilitytext = function(lang){
+	return "Probability that a post will appear among the first <b>30</b> posts in the feed by language <b>"+lang+"</b> for approximately <b>300</b> minutes"
+};
+
+____loclib.probabilitytexterror = "Unable to calculate promotion probability";
+
+____loclib.image = "Image";
+____loclib.file = "File";
