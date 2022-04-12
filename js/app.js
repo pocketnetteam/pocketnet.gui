@@ -2354,7 +2354,7 @@ Application = function(p)
 			needmanage : false,
 			hasupdate : false,
 
-			playstore : false,  ///// TODO
+			playstore : true,  ///// TODO
 
 			downloadAndInstall : function(){
 

@@ -7,7 +7,7 @@ var pkoin = (function(){
 	var Essense = function(p){
 
 		var primary = deep(p, 'history');
-		var el, optionsValue = 'pkoinComment', shareId, receiver, valSum, valComment, disabled, userinfo, boost = [];
+		var el, optionsValue = 'pkoinComment', shareId, receiver, valSum, valComment, disabled, userinfo, boost = [], share = null;
 
 		var renders = {
 
@@ -15,8 +15,17 @@ var pkoin = (function(){
 				
 				self.app.platform.sdk.node.transactions.get.balance(function(balance){
 
+					var my = (share.address == self.app.user.address.value)
+
 					var values = ['pkoinComment', 'sendToAuthor']
 					var labels = [self.app.localization.e('pkoinComment'), self.app.localization.e('sendToAuthor')]
+
+					if (my){
+						values = []
+						labels = []
+
+						optionsValue = 'liftUpThePost'
+					}
 
 					if(self.app.boost){
 						values.push('liftUpThePost')
@@ -127,47 +136,42 @@ var pkoin = (function(){
 
 				}
 				else{
-
-					self.app.platform.sdk.node.shares.getbyid([shareId], function () {
 						
-						var vs = 100000000 * valSum
+					var vs = 100000000 * valSum
 
-						var share = self.app.platform.sdk.node.shares.storage.trx[shareId]
+					var prevboost = _.find(boost, function(r){
+						if(r.txid == shareId){
+							return true
+						}
+					})
 
-						var prevboost = _.find(boost, function(r){
-							if(r.txid == shareId){
-								return true
-							}
-						})
+					if (prevboost){
+						vs += prevboost.boost
+					}
 
-						if (prevboost){
-							vs += prevboost.boost
+					var total = _.reduce(boost, function(sum, r){ 
+
+						if(r.txid == shareId){
+							return sum
 						}
 
-						var total = _.reduce(boost, function(sum, r){ 
+						return sum + Number(r.boost || 0) 
+					}, 0)
 
-							if(r.txid == shareId){
-								return sum
-							}
+					var probability = Math.min(!total ? 1 : 3 * (vs / total), 1)
 
-							return sum + Number(r.boost || 0) 
-						}, 0)
+					self.shell({
 
-						var probability = Math.min(!total ? 1 : 3 * (vs / total), 1)
+						name :  'boostinfo',
+						el :   el.c.find('.boostinfo'),
+						data : {
+							probability,
+							share,
+							language : share.language
+						},
 
-						self.shell({
-
-							name :  'boostinfo',
-							el :   el.c.find('.boostinfo'),
-							data : {
-								probability,
-								share,
-								language : share.language
-							},
-
-						}, function(_p){
-							
-						})
+					}, function(_p){
+						
 					})
 					
 				}
@@ -404,16 +408,24 @@ var pkoin = (function(){
 
 				var essenseData = p.settings.essenseData;
 				var userinfo = essenseData.userinfo;
-				receiver = userinfo.address;
+
+
+					receiver = userinfo.address;
+					optionsValue = 'pkoinComment';
 
 				var data = {
 					userinfo: userinfo
-
 				}
 
 				shareId = essenseData.id;
 
-				clbk(data);
+				self.app.platform.sdk.node.shares.getbyid([shareId], function () {
+
+					share = self.app.platform.sdk.node.shares.storage.trx[shareId]
+
+					clbk(data);
+
+				})
 
 			},
 
