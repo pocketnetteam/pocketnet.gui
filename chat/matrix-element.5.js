@@ -386,8 +386,7 @@ var vue_carousel_min = __webpack_require__("0a63");
         pagination: {
           el: '.swiper-pagination'
         }
-      } // pUsers: []
-
+      }
     };
   },
   computed: {
@@ -395,20 +394,6 @@ var vue_carousel_min = __webpack_require__("0a63");
       if (!this.chat) return [];
       return this.core.mtrx.chatUsersInfo(this.chat.roomId, 'anotherChatUsers');
     }
-    /*roomMembers: function () {
-        var self = this
-      var my = f.getmatrixid(this.core.mtrx.client.credentials.userId)
-      var names = _.map(self.chat.members, function (member) {
-        return member.name
-      })
-        this.core.user.usersInfo(names).then(r => {
-        this.pUsers = r
-      }).catch(e => {
-        console.log(e, "eeerror name")
-      })
-      return this.chat.members
-    }*/
-
   }
 });
 // CONCATENATED MODULE: ./src/components/chat/preview?vue&type=script&lang=js&
