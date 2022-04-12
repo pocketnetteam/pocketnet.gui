@@ -16507,6 +16507,52 @@ Platform = function (app, listofnodes) {
 
                                 if (shares) {
 
+                                    if (state) {
+
+                                        var me = self.app.user.address.value;
+
+                                        if (
+
+                                            (p.author && p.author == me) ||
+
+                                            (!p.type && mtd == 'gethierarchicalstrip')
+                                            
+                                        ) {
+                                            
+                                            _.each(self.sdk.relayTransactions.withtemp('share'), function (ps) {
+
+                                                var s = new pShare();
+                                                s._import(ps, true);
+                                                s.temp = true;
+
+                                                if (ps.relay) s.relay = true
+
+                                                s.address = ps.address
+
+                                                if (ps.txidEdit) {
+                                                    replaceEqual(shares, {
+                                                        txid: ps.txidEdit
+                                                    }, s)
+
+                                                    /// new
+                                                    s.txidEdit = s.txid
+                                                    s.txid = ps.txidEdit
+                                                }
+
+                                                else {
+                                                    shares.unshift(s)
+                                                }
+
+                                            })
+                                        }
+
+                                        _.each(self.sdk.relayTransactions.withtemp('blocking'), function (block) {
+                                            _.each(shares, function (s) {
+                                                if (s.address == block.address) s.blocking = true;
+                                            })
+                                        })
+                                    }
+
 
                                     self.sdk.node.shares.loadvideoinfoifneed(shares, p.video, function(){
 
