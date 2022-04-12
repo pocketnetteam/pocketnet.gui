@@ -122,6 +122,9 @@ var comments = (function(){
 
 				if (id == '0')
 				{
+
+					console.log('areas[id]', areas[id])
+
 					if (areas[id])
 
 						areas[id].setText('');
@@ -1543,7 +1546,7 @@ var comments = (function(){
 						}
 
 						actions.lightarea(p.id || '0', c)
-						
+						areas[p.id || '0'] = this
 
 						// Hide the emoji button for mobiles and tablets
 						if (isMobile() || isTablet())
@@ -2537,8 +2540,7 @@ var comments = (function(){
 
 
 					renders.post(function(area){
-						areas["0"] = area
-
+						
 
 						if (ed.reply){
 							actions.fastreply(ed.reply)

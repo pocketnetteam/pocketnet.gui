@@ -13,7 +13,7 @@ var post = (function () {
 
 		var primary = (p.history && !p.inWnd) || p.primary;
 
-		var el = {}, share, ed = {}, inicomments, eid = '', _repost = null, level = 0, external = null;
+		var el = {}, share, ed = {}, recommendationsenabled = false, inicomments, eid = '', _repost = null, level = 0, external = null, recommendations = null;
 
 		var player = null
 
@@ -21,15 +21,6 @@ var post = (function () {
 
 		var actions = {
 
-			/*pipmini : function(enable){
-				if (p.inWnd && self.container){
-					enable ? self.container.addClass('pipmini') : self.container.removeClass('pipmini')
-				}
-				else{
-
-				}
-			},*/
-			
 			pkoin : function(id){
 
 				if (share){
@@ -53,15 +44,7 @@ var post = (function () {
 			
 								essenseData : {
 									userinfo: userinfo,
-									balance : balance,
-									id : id,
-									embedding : {
-										type : 'pkoin',
-										id : share.address,
-										close : function(){
-											renders.articles();
-										},
-									},	
+									id : share.txid
 								}
 							})
 	
@@ -1644,21 +1627,63 @@ var post = (function () {
 				}
 			},
 
-			recomandations : function(share, clbk) {
-				// Number of recomandations we want
-				nbRecomandations = 12;
-				self.app.platform.sdk.node.shares.getrecomendedcontents({
-					type: 'content',
-					contentAddress: share.address,
-					contenttypes: ['video'],
-					depth: 10000,
-					count: nbRecomandations
-				}, function (recomandations) {
+			recommendations : function(clbk){
 
-					if (clbk)
-						clbk(recomandations);
+				console.log('recommendations')
 
-				});
+				self.nav.api.load({
+					open: true,
+					href: 'recommendations',
+					el: el.reco,
+
+					essenseData: {
+
+						caption : 'othervideos',
+						loader : 'getrecomendedcontents',
+						parameters : {
+					
+							contentAddress: share.address,
+							type: ['video'],
+							depth: 10000,
+							count: 12
+						},
+
+						open : function(txid){
+							if (ed.opensvi){
+								ed.opensvi(txid)
+							}
+							else
+
+							if (ed.next){
+
+								self.app.platform.sdk.node.shares.getbyid([txid], function () {
+
+									var share = self.app.platform.sdk.node.shares.storage.trx[txid]
+
+									ed.next(txid, share)
+				
+								})
+
+							}
+
+							else{
+								self.nav.api.go({
+									href : 'index?video=1&v=' + txid,
+									history : true,
+									open : true
+								})
+							}
+						}
+						
+					},
+
+					clbk : function(e, p){
+						recommendations = p
+
+						if(clbk) clbk()
+					}
+				})
+
 			},
 			
 		};
@@ -1809,69 +1834,13 @@ var post = (function () {
 				}
 				else{
 					renders.share(function () {
+
 						renders.comments(function () {
 						})
 
-						if (share.itisvideo() ) {
+						if (share.itisvideo() && !ed.repost && recommendationsenabled) {
 
-							// Get recomandations from content (right vertical videos)
-							renders.recomandations(share, function(videos) {
-
-								/*if (!videos || videos.length <= 0) {
-									el.reco.remove();
-									return;
-								}*/
-
-								self.shell({
-									animation : false,
-									name :  'recomandations',
-									el : el.reco,
-									data : {
-										videos: videos
-									}
-								}, function(_p) {
-
-									if (!_p || !_p.el) return;
-
-									_p.el.find('.recoVideoDiv').click(function() {
-
-										var txid = $(this).data('txid');
-
-										if (txid) {
-
-											if (ed.opensvi){
-												ed.opensvi(txid)
-											}
-											else
-
-											if (ed.next){
-
-												self.app.platform.sdk.node.shares.getbyid([txid], function () {
-
-													var share = self.app.platform.sdk.node.shares.storage.trx[txid]
-
-													ed.next(txid, share)
-								
-												})
-				
-											}
-											else{
-												self.nav.api.go({
-													href : 'index?video=1&v=' + txid,
-													history : true,
-													open : true
-												})
-											}
-
-											
-
-										}
-
-									});
-
-								});
-
-							});
+							renders.recommendations();
 
 						}
 						else {
@@ -1915,7 +1884,8 @@ var post = (function () {
 
 			getdata: function (clbk, p) {
 
-				
+
+				recommendationsenabled = self.app.platform.istest()
 
 				_repost = null
 
@@ -1953,7 +1923,8 @@ var post = (function () {
 
 							var data = {
 								ed: deep(p, 'settings.essenseData') || {},
-								share: share
+								share: share,
+								recommendationsenabled
 							};
 
 							self.app.platform.sdk.videos.info([share.url]).then(r => {
@@ -1989,10 +1960,13 @@ var post = (function () {
 			
 				
 				if (external){
-
 					external.destroy()
 					external = null
+				}
 
+				if (recommendations){
+					recommendations.destroy()
+					recommendations = null
 				}
 
 				self.app.actions.playingvideo(null)
@@ -2051,12 +2025,13 @@ var post = (function () {
 
 				el = {};
 				el.c = p.el.find('.poctelc');
-				el.reco = el.c.find('.recomandationsFromContent');
+				el.reco = el.c.find('.recomandationsbgwrapper');
 				el.share = el.c.find('.share');
 				el.wr = el.c.find('.postWrapper')
 				el.wnd = el.c.closest('.wndcontent');
 
-			
+
+				
 				
 				if (share.itisarticle()){
 					el.c.closest('.wnd').addClass('articlewindow')

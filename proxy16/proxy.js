@@ -1095,6 +1095,8 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 		}
 	}
 
+	self.rpcscenarios.getrecommendedcontentbyaddress = self.rpcscenarios.gethierarchicalstrip
+
 	self.api = {
 		node: {
 			rpcex : {
@@ -1174,8 +1176,8 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 						if (options.locally && options.meta) {
 							node = nodeManager.temp(options.meta);
 						}
-
-						if (options.node) {
+						
+						if (!node && options.node) {
 							node = nodeManager.nodesmap[options.node];
 
 							if (node)
@@ -1205,6 +1207,11 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 						}
 
 						noderating = node.statistic.rating()
+
+						if(method == 'getrecommendedcontentbyaddress'){
+							console.log('options', options, node)
+							console.log('noderating', noderating)
+						}
 
 						return new Promise((resolve, reject) => {
 

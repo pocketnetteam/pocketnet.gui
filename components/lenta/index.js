@@ -591,10 +591,10 @@ var lenta = (function(){
 				})
 			},
 			includeboost : function(clbk){
-				var bsts = _.filter(boosted, function(b){
-					return !shareInitedMap[b.txid] && !shareInitingMap[b.txid]
-				})
 
+				var bsts = _.filter(boosted, function(b){
+					return !shareInitedMap[b.txid] && !shareInitingMap[b.txid] && !el.share[b.txid]
+				})
 
 				_.each(bsts, function(bst){
 					if (bst){
@@ -611,14 +611,10 @@ var lenta = (function(){
 	
 						if(position){
 	
-	
 							var share = sharesInview[position]
-	
 	
 							if (share && el.share[share.txid]){
 
-								
-		
 									boostplaces[position] = true
 		
 									renders.shares([bst], function(){
@@ -630,8 +626,6 @@ var lenta = (function(){
 										//el : _el,
 										inner : function(lel, html){
 
-											console.log('inner')
-
 											if(isotopeinited){
 
 												var content = $(html)
@@ -640,9 +634,7 @@ var lenta = (function(){
 											}
 											else{
 												var _el = $("<div/>", {'class' : 'boosted'})
-
 													_el.insertAfter(el.share[share.txid].closest('.authorgroup'))
-
 													_el.html(html)
 											}
 
@@ -1219,14 +1211,7 @@ var lenta = (function(){
 	
 						essenseData : {
 							userinfo: userinfo,
-							id : id,
-							embedding : {
-								type : 'pkoin',
-								id : share.address,
-								close : function(){
-									renders.articles();
-								},
-							},	
+							id : id
 						}
 					})
 	

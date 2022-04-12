@@ -478,6 +478,14 @@ __map =  {
 			anonimus : true,
 		},	
 
+		recommendations : {
+			uri : "recommendations",
+			href : "recommendations",
+		
+			add : insertingfunc,
+			anonimus : true,
+		},
+
 		recommendedusers : {
 			uri : "recommendedusers",
 			href : "recommendedusers",

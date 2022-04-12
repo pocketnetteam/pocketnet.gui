@@ -1970,3 +1970,5 @@ ____loclib.probabilitytexterror = "Не удаётся вычислить вер
 
 ____loclib.image = "Изображение";
 ____loclib.file = "Файл";
+
+____loclib.othervideos = "Другие видео";

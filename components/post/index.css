@@ -293,6 +293,12 @@
   /*max-width: 960px;*/
 }
 #post .recomandationsFromContent {
+  display: none;
+}
+#post.recommendationsenabled .recomandationsFromContent {
+  display: block;
+}
+#post .recomandationsFromContent {
   margin-top: 0.5em;
 }
 #post .recomandationsFromContent .recomandationsbgwrapper {
@@ -300,100 +306,19 @@
   border-radius: 9px;
   padding: 0.5em;
 }
-#post .recomandationsFromContent .recoCaption {
-  padding: 0.5em 0;
-  margin-bottom: 0.5em;
-}
-#post .recomandationsFromContent .recoCaption span {
-  font-weight: 700;
-  font-size: 0.9em;
-}
-#post .recomandationsFromContent .recoVideoDiv {
-  display: flex;
-  margin-bottom: 0.5em;
-}
-#post .recomandationsFromContent .recoVideoDiv:nth-last-child(1) {
-  margin-bottom: 0;
-}
-#post .recomandationsFromContent .recoVideoDiv:hover {
-  cursor: pointer;
-}
-#post .recomandationsFromContent .recoVideoDiv .videoThumbnail {
-  height: 90px;
-  width: 160px;
-  min-width: 160px;
-  border-radius: 6px;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  filter: brightness(85%);
-}
-#post .recomandationsFromContent .recoVideoDiv .videoInfos {
-  text-overflow: ellipsis;
-  overflow: hidden;
-  padding-left: 0.5em;
-  padding-top: 0.5em;
-}
-#post .recomandationsFromContent .recoVideoDiv .videoInfos .title {
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  line-height: 1em;
-}
-#post .recomandationsFromContent .recoVideoDiv .videoInfos .title span {
-  font-weight: 700;
-  font-size: 0.9em;
-}
-#post .recomandationsFromContent .recoVideoDiv .videoInfos .user {
-  margin-top: 0.5em;
-}
-#post .recomandationsFromContent .recoVideoDiv .videoInfos .user sup,
-#post .recomandationsFromContent .recoVideoDiv .videoInfos .user span {
-  font-size: 0.8em;
-}
-#post .recomandationsFromContent .recoVideoDiv .videoInfos .user .spsp {
-  font-weight: 500;
-}
-#post .recomandationsFromContent .recoVideoDiv .videoInfos .infos {
-  display: flex;
-  align-items: center;
-}
-#post .recomandationsFromContent .recoVideoDiv .videoInfos .infos span {
-  font-size: 0.8em;
-}
-#post .recomandationsFromContent .recoVideoDiv .videoInfos .infos .viewDateSep {
-  opacity: 0.5;
-  font-size: 0.3em;
-  margin-left: 2em;
-  margin-right: 2em;
-}
-#post .recomandationsFromContent .recoVideoDiv .videoInfos .user,
-#post .recomandationsFromContent .recoVideoDiv .videoInfos .infos {
-  color: rgb(var(--color-txt-gray-dark));
-}
-#post .recomandationsFromContent .empty {
-  padding: 1em 0;
-  text-align: left;
-}
-#post .recomandationsFromContent .empty span {
-  font-size: 0.9em;
-  opacity: 0.7;
-}
-#post.videomainpost .postWrapper {
+#post.videomainpost.recommendationsenabled .postWrapper {
   display: flex;
 }
-#post.videomainpost .postsharemain {
+#post.videomainpost.recommendationsenabled .postsharemain {
   flex-grow: 1;
 }
-#post.videomainpost .recomandationsFromContent {
+#post.videomainpost.recommendationsenabled .recomandationsFromContent {
   margin-top: 0;
   max-width: 400px;
   min-width: 400px;
   margin-left: auto;
 }
-#post.videomainpost .recomandationsFromContent .recomandationsbgwrapper {
+#post.videomainpost.recommendationsenabled .recomandationsFromContent .recomandationsbgwrapper {
   margin-left: 0.25em;
 }
 @media only screen and (max-width: 1024px) {

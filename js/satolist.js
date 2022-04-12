@@ -171,7 +171,8 @@ Platform = function (app, listofnodes) {
         'PW3tfEkGLKv4LFREpJYYpWxenKHSizB8rQ' : true,
         'PSm8oVmMYCKnn35i4BABE6kw59WvTckagc' : true,
         'PEWcDgFAD6t7SmCmsnixbmhTFkZr6hYVUb' : true,
-        'PQi77s3JtrUkavxN9t6Hy5sT3CNnHokNrK' : true
+        'PQi77s3JtrUkavxN9t6Hy5sT3CNnHokNrK' : true,
+        'PTBHcYYBL5NU1okBYXYUTcFY6PE9p2o7gz' : true
     }
 
     self.bch = {
@@ -15951,7 +15952,11 @@ Platform = function (app, listofnodes) {
                     })
                 },
 
-                getex: function (parameters, clbk, method) {
+                getex: function (parameters, clbk, method, rpc) {
+
+                    if(!rpc) rpc = {
+                        ex : true
+                    }
 
                     method || (method = 'getrawtransactionwithmessage')
 
@@ -15960,9 +15965,7 @@ Platform = function (app, listofnodes) {
                     self.app.user.isState(function (state) {
 
                         self.app.api.rpc(method, parameters, {
-                            rpc : {
-                                ex : true
-                            }
+                            rpc : rpc
                         }).then(d => {
 
 
@@ -16300,15 +16303,29 @@ Platform = function (app, listofnodes) {
 
                     }
 
+                    p.video = true
                         
                     self.app.platform.sdk.node.shares.hierarchical(p, function(contentIds, error) {
+
+                        clbk(contentIds)
+
+                        return
+
                         if (error)
                             fetchVideosInfo([]);
                         else
                             fetchVideosInfo(contentIds.slice(0, p.count + 5));
 
                     }, cache, {
-                        method : 'getrecommendedcontentbyaddress'
+                        method : 'getrecommendedcontentbyaddress',
+                        rpc : {
+                            locally : true,
+                            meta : {
+                                host : '78.37.233.202',
+                                port : 31031,
+                                ws : 3037
+                            }
+                        }
                     });
 
                 },
@@ -16459,7 +16476,7 @@ Platform = function (app, listofnodes) {
                         p.count || (p.count = 10)
 
                         if(!p.lang){
-                            mtd == 'gethierarchicalstrip' ? p.lang = self.app.localization.key : p.lang = ''
+                            (mtd == 'gethierarchicalstrip' || mtd == 'gethistoricalstrip') ? p.lang = self.app.localization.key : p.lang = ''
                         }
 
                         p.height || (p.height = 0)
@@ -16547,14 +16564,17 @@ Platform = function (app, listofnodes) {
                             }
                             if (methodparams.method == 'getrecomendedcontentsbyscoresfromaddress')
                                 parameters = [p.contentid, p.contenttypes, p.depth, p.count];
+
                             if (methodparams.method == 'getrecommendedcontentbyaddress')
-                                parameters = [p.contentAddress, p.address, p.contenttypes, p.lang || "", p.count];
+                                parameters = [p.contentAddress, p.address, p.type ? [p.type] : [], p.lang || "", p.count];
 
                             s.getex(parameters, function (data, error) {
 
                                 var shares = data.contents || []
 
-                                if (p.contenttypes) shares = data;
+                                console.log("P", p, data)
+
+                                //if (p.contenttypes) shares = data;
 
                                 var blocknumber = data.height
 
@@ -16666,7 +16686,7 @@ Platform = function (app, listofnodes) {
                                         clbk(shares, error, p)
                                 }
 
-                            }, mtd)
+                            }, mtd, methodparams.rpc)
 
 
                         }
