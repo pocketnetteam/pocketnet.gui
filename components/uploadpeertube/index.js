@@ -218,7 +218,7 @@ var uploadpeertube = (function () {
 
 				el.importUrl.addClass('hidden');
 
-				if (typeof _Electron !== 'undefined') {
+				if (typeof _Electron !== 'undefined' && 1 == 0) {
 					const filePath = evt.target.files[0].path;
 
 					const videoProcessor = transcodingFactory(electron.ipcRenderer);
