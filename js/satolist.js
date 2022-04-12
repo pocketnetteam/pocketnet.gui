@@ -16513,9 +16513,7 @@ Platform = function (app, listofnodes) {
 
                                         if (
 
-                                            (p.author && p.author == me) ||
-
-                                            (!p.type && mtd == 'gethierarchicalstrip')
+                                            (p.author && p.author == me) 
                                             
                                         ) {
                                             
