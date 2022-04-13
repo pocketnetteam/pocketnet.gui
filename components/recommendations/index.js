@@ -134,11 +134,9 @@ var recommendations = (function(){
 				p.skipvideo = true
 				
 				self.app.platform.sdk.node.shares[ed.loader || 'getrecomendedcontents'](p, function (recommendations) {
-					console.log('recommendations', recommendations.length)
 					if (ed.filter){
 						recommendations = _.filter(recommendations, ed.filter)
 					}
-					console.log('recommendations2', recommendations.length)
 
 					if (clbk)
 						clbk(recommendations);
