@@ -1348,8 +1348,6 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 								server.cache.set(method, cparameters, data, node.height());
 							}
 
-							//console.log("SUCCESS", method)
-
 							time.ready = performance.now() - timep
 
 							if(time.node) delete time.node.b
@@ -1363,8 +1361,6 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 						});
 					})
 					.catch((e) => {
-
-						//console.log("E", e, method)
 
 						if (_waitstatus == 'execute'){
 							server.cache.remove(method, cparameters);
@@ -1486,7 +1482,6 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 							});
 						})
 						.catch((e) => {
-							//console.log("e", e)
 							return Promise.reject(e);
 						});
 				},

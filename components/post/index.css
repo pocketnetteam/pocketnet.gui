@@ -327,31 +327,31 @@
   margin-left: 0.25em;
 }
 @media only screen and (max-width: 1024px) {
-  #post.videomainpost .postWrapper {
+  #post.videomainpost.recommendationsenabled .postWrapper {
     display: block;
   }
-  #post.videomainpost .recomandationsFromContent {
+  #post.videomainpost.recommendationsenabled .recomandationsFromContent {
     margin-top: 0.5em;
     min-width: 0;
     max-width: 960px;
     margin: 1em auto;
     width: 100%;
   }
-  #post.videomainpost .recomandationsFromContent .recomandationsbgwrapper {
+  #post.videomainpost.recommendationsenabled .recomandationsFromContent .recomandationsbgwrapper {
     margin-left: 0;
   }
 }
-.wnd #post.videomainpost .postWrapper {
+.wnd #post.videomainpost.recommendationsenabled .postWrapper {
   display: block;
 }
-.wnd #post.videomainpost .recomandationsFromContent {
+.wnd #post.videomainpost.recommendationsenabled .recomandationsFromContent {
   margin-top: 0.5em;
   min-width: 0;
   max-width: 960px;
   margin: 1em auto;
   width: 100%;
 }
-.wnd #post.videomainpost .recomandationsFromContent .recomandationsbgwrapper {
+.wnd #post.videomainpost.recommendationsenabled .recomandationsFromContent .recomandationsbgwrapper {
   margin-left: 0;
 }
 #post .sharearticle {

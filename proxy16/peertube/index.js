@@ -159,9 +159,6 @@ var Peertube = function (settings) {
 					return Promise.resolve(cached);
 				}
 				else{
-
-					console.log("")
-
 					return Promise.resolve({});
 				}
 			}
