@@ -133,10 +133,15 @@ var recommendations = (function(){
 
 				p.skipvideo = true
 				
-				self.app.platform.sdk.node.shares[ed.loader || 'getrecomendedcontents'](p, function (recomandations) {
+				self.app.platform.sdk.node.shares[ed.loader || 'getrecomendedcontents'](p, function (recommendations) {
+					console.log('recommendations', recommendations.length)
+					if (ed.filter){
+						recommendations = _.filter(recommendations, ed.filter)
+					}
+					console.log('recommendations2', recommendations.length)
 
 					if (clbk)
-						clbk(recomandations);
+						clbk(recommendations);
 
 				});
 			},
@@ -154,11 +159,11 @@ var recommendations = (function(){
 
 
 		var make = function(){
-			load.contents(function(recomandations){
-				renders.list(recomandations, function(_p){
+			load.contents(function(recommendations){
+				renders.list(recommendations, function(_p){
 
-					load.info(recomandations, function(){
-						renders.lazyinfo(recomandations, _p)
+					load.info(recommendations, function(){
+						renders.lazyinfo(recommendations, _p)
 					})
 				})
 			})

@@ -1645,11 +1645,12 @@ var post = (function () {
 							contentAddress: share.address,
 							type: 'video',
 							depth: 10000,
-							count: 12
+							count: 12,
+							lang : share.language
 						},
 
 						filter : function(_share){
-							return _share.txid != share.txid
+							return _share.txid != share.txid && _share.address != self.app.user.address.value
 						},
 
 						open : function(txid){
