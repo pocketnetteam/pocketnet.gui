@@ -1648,6 +1648,10 @@ var post = (function () {
 							count: 12
 						},
 
+						filter : function(_share){
+							return _share.txid != share.txid
+						},
+
 						open : function(txid){
 							if (ed.opensvi){
 								ed.opensvi(txid)

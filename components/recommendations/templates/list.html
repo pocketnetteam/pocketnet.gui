@@ -4,45 +4,48 @@
         _.each(contents, function(content) { 
             
 
-            var video = app.platform.sdk.videos.storage[content.url || "undefined"] || {}
+            var video = (app.platform.sdk.videos.storage[content.url || "undefined"] || {}).data || {}
             var userinfo =  deep(app.platform.sdk.usersl.storage, content.address);
 
             
             %>
 
-            <% if(video && video.data && video.data.thumbnail) { %>
 
-                <div class="recoVideoDiv" data-txid="<%- video.txid %>">
+            <div class="recoVideoDiv" data-txid="<%- content.txid %>">
 
-                    <div class="videoThumbnail" image="<%- video.data.thumbnail %>"></div>
+                <div class="videoThumbnail <% if(!video.thumbnail) {%>dummy<% } %>" image="<%- video.thumbnail || '' %>"></div>
 
-                    <div class="videoInfos">
+                <div class="videoInfos">
 
-                        <div class="title"><span><%= content.renders.caption() %></span></div>
+                    <div class="title"><span><%= content.renders.caption() %></span></div>
 
-                        <div>
-                            <div class="user">
-                                
-                                <span><%= userinfo.name %></span>
-                                
-                                <% if(userinfo.reputation && !app.curation()) {%><sup class="spsp"><%-compressedNumber(userinfo.reputation, 1)%></sup><% } %>
+                    <div>
+                        <div class="user">
                             
-                            </div>
-
-                            <div class="infos">
-
-                                <span class="views"><%= video.data.views %> <%- pluralform(video.data.views,[e('countview'), e('countviews')]) %></span>
-                                <i class="fas fa-circle viewDateSep"></i>
-                                <span class="date"><%- app.reltime(content.time) %></span>
-
-                            </div>
+                            <span><%= userinfo.name %></span>
+                            
+                            <% if(userinfo.reputation && !app.curation()) {%><sup class="spsp"><%-compressedNumber(userinfo.reputation, 1)%></sup><% } %>
+                        
                         </div>
 
+                        <div class="infos">
+
+                            <% if(typeof video.views != 'undefined') {%>
+                                <span class="views"><%= video.views %> <%- pluralform(video.views,[e('countview'), e('countviews')]) %></span>
+                            <% } else { %>
+                                <span class="views dummy"></span>
+                            <% } %>
+
+                            <i class="fas fa-circle viewDateSep"></i>
+                            <span class="date"><%- app.reltime(content.time) %></span>
+
+                        </div>
                     </div>
 
                 </div>
 
-            <% } %>
+            </div>
+
 
         <% })
     } else { %> 

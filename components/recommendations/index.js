@@ -19,7 +19,7 @@ var recommendations = (function(){
 		}
 
 		var renders = {
-			list : function(contents){
+			list : function(contents, clbk){
 				self.shell({
 
 					animation : false,
@@ -76,7 +76,44 @@ var recommendations = (function(){
 
 					});
 
+					if(clbk) clbk(_p)
+
 				});
+			},
+
+			lazyinfo : function(contents, p){
+
+				console.log('lazyinfo', contents)
+
+				_.each(contents, function(content) { 
+
+					var video = (app.platform.sdk.videos.storage[content.url || "undefined"] || {}).data || {}
+
+					var el = p.el.find('.recoVideoDiv[data-txid="'+content.txid+'"]')
+
+					console.log('el.length', el.length)
+
+					if (el.length){
+
+						if(!el.find('.dummy').length) return
+
+						if (video.thumbnail){
+							el.find('.videoThumbnail').attr('image', video.thumbnail).removeClass('dummy')
+						}
+	
+						if (typeof video.views != 'undefined'){
+
+							var text = video.views + ' ' + pluralform(video.views,[self.app.localization.e('countview'), self.app.localization.e('countviews')])
+
+							el.find('.views').removeClass('dummy').html(text)
+						}
+
+					}
+
+				})
+
+				bgImages(p.el)
+
 			}
 		}
 
@@ -89,34 +126,41 @@ var recommendations = (function(){
 			}
 		}
 
-		var load = function(clbk){
-			//var nbRecomandations = 12;
-			///getrecomendedcontents
-			/*
+		var load = {
+			contents : function(clbk){
 
-				type: 'content',
+				var p = _.clone(ed.parameters || {})
 
-				contentAddress: share.address,
+				p.skipvideo = true
+				
+				self.app.platform.sdk.node.shares[ed.loader || 'getrecomendedcontents'](p, function (recomandations) {
 
-				contenttypes: ['video'],
-				depth: ed.depth || 10000,
-				count: ed.count || 12
+					if (clbk)
+						clbk(recomandations);
 
-			*/
+				});
+			},
 
-			self.app.platform.sdk.node.shares[ed.loader || 'getrecomendedcontents'](ed.parameters || {}, function (recomandations) {
+			info : function(contents, clbk){
 
-				console.log('contentIds2', recomandations)
 
-				if (clbk)
-					clbk(recomandations);
+				self.sdk.node.shares.loadvideoinfoifneed(contents, true, function() {
 
-			});
+
+					if(clbk) clbk()
+				})
+			}
 		}
 
+
 		var make = function(){
-			load(function(recomandations){
-				renders.list(recomandations)
+			load.contents(function(recomandations){
+				renders.list(recomandations, function(_p){
+
+					load.info(recomandations, function(){
+						renders.lazyinfo(recomandations, _p)
+					})
+				})
 			})
 		}
 

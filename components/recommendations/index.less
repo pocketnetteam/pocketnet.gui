@@ -34,7 +34,11 @@
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
-            filter : brightness(85%);
+            background: rgb(var(--neutral-grad-0));
+
+            &[data-image]{
+                filter : brightness(85%);
+            }
 
         }
         .videoInfos {
@@ -88,6 +92,14 @@
                     margin-left: 4 * @rhythm;
                     margin-right: 4 * @rhythm;
 
+                }
+
+                .views.dummy{
+                    display: inline-block;
+                    height: 20px;
+                    width: 100px;
+                    background: rgb(var(--neutral-grad-0));
+                    border-radius: 3px;
                 }
 
             }

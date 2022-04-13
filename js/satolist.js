@@ -172,7 +172,11 @@ Platform = function (app, listofnodes) {
         'PSm8oVmMYCKnn35i4BABE6kw59WvTckagc' : true,
         'PEWcDgFAD6t7SmCmsnixbmhTFkZr6hYVUb' : true,
         'PQi77s3JtrUkavxN9t6Hy5sT3CNnHokNrK' : true,
-        'PTBHcYYBL5NU1okBYXYUTcFY6PE9p2o7gz' : true
+        'PTBHcYYBL5NU1okBYXYUTcFY6PE9p2o7gz' : true,
+        'PFrbFN4W2kwHj9jbHwLjt3vAkTM7ThgGBk' : true,
+        'PGCqT8bhkWHLEyQG1xgVhrzojCN1VjDLaP' : true,
+        'PWeAQ1Mb3Xb7anjikyNogR3UqiZgnNbRiZ' : true,
+        'PCkkR6TPP273vv5AQgJTWhBHawjzakkU1A' : true,
     }
 
     self.bch = {
@@ -16265,64 +16269,21 @@ Platform = function (app, listofnodes) {
 
                 getrecomendedcontents : function(p, clbk, cache){
 
-                    var fetchVideosInfo = function(data) {
-
-                        if (data && data.length <= 0) {
-                            if (clbk)
-                                clbk([]);
-                            return;
-                        }
-
-                        var videos = data.map((v) => {
-                            v.c = decodeURIComponent(v.c);
-                            v.url = v.u = decodeURIComponent(v.u);
-                            v.time = parseInt(v.time + '000');
-                            return v;
-                        });
-
-                        self.sdk.node.shares.loadvideoinfoifneed(videos, true, function() {
-
-                            data = data.map((v) => {
-                                if (self.sdk.videos.storage[v.u] && self.sdk.videos.storage[v.u].data)
-                                    v.data = self.sdk.videos.storage[v.u].data;
-                                return v;
-                            });
-
-                            // Random shuffle
-                            for (var i = data.length - 1; i > 0; i--) {
-                                var j = Math.floor(Math.random() * (i + 1));
-                                var temp = data[i];
-                                data[i] = data[j];
-                                data[j] = temp;
-                            }
-
-                            if (clbk)
-                                clbk(data);
-
-                        });
-
-                    }
-
-                    p.video = true
-                        
+                    console.log("getrecomendedcontents", p)
+                   
                     self.app.platform.sdk.node.shares.hierarchical(p, function(contentIds, error) {
-
-                        console.log('contentIds', contentIds)
 
                         if (clbk)
                             clbk(contentIds)
 
                         return
 
-                        if (error)
-                            fetchVideosInfo([]);
-                        else
-                            fetchVideosInfo(contentIds.slice(0, p.count + 5));
-
                     }, cache, {
                         method : 'getrecommendedcontentbyaddress',
                         rpc : {
+                            cache : true,
                             locally : true,
+                            fastvideo : true,
                             meta : {
                                 host : '78.37.233.202',
                                 port : 31031,
@@ -16334,12 +16295,20 @@ Platform = function (app, listofnodes) {
                 },
 
                 loadvideoinfoifneed : function(shares, need, clbk){
-                    self.sdk.videos.infoshares(shares).then(r => {
+
+                    if(need){
+                        self.sdk.videos.infoshares(shares).then(r => {
+                            if(clbk) clbk()
+                        }).catch(e => {
+                            console.error(e)
+                            if(clbk) clbk()
+                        })
+                    }
+                    else{
                         if(clbk) clbk()
-                    }).catch(e => {
-                        console.error(e)
-                        if(clbk) clbk()
-                    })
+                    }
+
+                   
                 },
 
                 getprofilefeed : function(p, clbk, cache){
@@ -16636,8 +16605,7 @@ Platform = function (app, listofnodes) {
                                         })
                                     }
 
-
-                                    self.sdk.node.shares.loadvideoinfoifneed(shares, p.video, function(){
+                                    self.sdk.node.shares.loadvideoinfoifneed(shares, p.skipvideo ? false : true, function(){
 
                                         if (state) {
                                             _.each(self.sdk.relayTransactions.withtemp('blocking'), function (block) {
@@ -26122,7 +26090,7 @@ Platform = function (app, listofnodes) {
         self.updating = false;
     }, 600000)
 
-    self.appstate = function() {
+    self.appstate = function(reload) {
 
         if (reload || (self.loadingWithErrors && _.isEmpty(self.app.errors.state))) {
 

@@ -1114,7 +1114,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				else{
 					videosPr = videosapi({
 						urls : videos,
-						fast : true
+						fast : options.fastvideo
 					}).then(videos => {
 
 						result.data.videos = videos.data
@@ -1257,7 +1257,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 							self.logger.w('rpc', 'debug', 'BEFORE CACHE')
 
-							if(!noderating) {
+							if(!noderating && !options.cache) {
 
 								resolve('nocaching')
 
@@ -1344,7 +1344,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 						.then((data) => {
 
-							if (noderating){
+							if (noderating || options.cache){
 								server.cache.set(method, cparameters, data, node.height());
 							}
 

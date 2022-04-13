@@ -24,6 +24,9 @@
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  background: rgb(var(--neutral-grad-0));
+}
+#recommendations .recoVideoDiv .videoThumbnail[data-image] {
   filter: brightness(85%);
 }
 #recommendations .recoVideoDiv .videoInfos {
@@ -66,6 +69,13 @@
   font-size: 0.3em;
   margin-left: 2em;
   margin-right: 2em;
+}
+#recommendations .recoVideoDiv .videoInfos .infos .views.dummy {
+  display: inline-block;
+  height: 20px;
+  width: 100px;
+  background: rgb(var(--neutral-grad-0));
+  border-radius: 3px;
 }
 #recommendations .recoVideoDiv .videoInfos .user,
 #recommendations .recoVideoDiv .videoInfos .infos {
