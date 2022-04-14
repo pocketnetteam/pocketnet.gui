@@ -182,7 +182,7 @@ class VideoUploader {
     const response = await self.ptVideoApi
       .initResumableUpload(data, options)
       .catch(() => {
-        console.log('Resumable video init failed');
+        console.error('Resumable video init failed');
       });
 
     if (!response) {
