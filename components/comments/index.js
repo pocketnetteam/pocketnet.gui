@@ -123,7 +123,6 @@ var comments = (function(){
 				if (id == '0')
 				{
 
-					console.log('areas[id]', areas[id])
 
 					if (areas[id])
 

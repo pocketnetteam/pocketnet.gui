@@ -424,7 +424,6 @@ var pkoin = (function(){
 
 					share = self.app.platform.sdk.node.shares.storage.trx[shareId]
 
-					console.log('shareId', shareId, share)
 
 					clbk(data);
 

@@ -33,7 +33,6 @@ _.each(metrics, function(metrica){
 		<div class="metricaContent">
 			<% if(metrica.vis == 'scale') {
 
-				console.log('mestate', mestate)
 
 				var l = Number(mestate[metrica.key + "_unspent"] || '0')
 				var s = Number(mestate[metrica.key + "_spent"] || '0')

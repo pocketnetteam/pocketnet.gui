@@ -34,7 +34,6 @@ var transactionview = (function(){
 
 				if(!tx) return ''
 
-				console.log("tx.vout[0].scriptPubKey", tx)
 			
 				var asm = tx.vout[0].scriptPubKey.asm.split(' ');
 

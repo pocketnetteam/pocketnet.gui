@@ -1019,7 +1019,6 @@ var lenta = (function(){
 
 				var share = self.app.platform.sdk.node.shares.storage.trx[id] || _share;
 
-				console.log('openPost', id, video)
 
 				if(essenseData.openPostInWindowMobile || (share && share.itisarticle())){
 
@@ -1417,7 +1416,6 @@ var lenta = (function(){
 
 				if (recommendations[id]){
 
-					console.log('clearessense')
 
 					recommendations[id].clearessense()
 					_el.find('.extrashare').html('')

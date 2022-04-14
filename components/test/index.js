@@ -334,7 +334,6 @@ var test = (function(){
 
 										function(tx, error){
 
-											console.log('error', error, tx)
 
 											if(!tx){
 
@@ -908,7 +907,6 @@ var test = (function(){
 		var renders = {
 			termsconditions : function(clbk){
 
-				console.log("SADASD", ed.wizard)
 
 				
 
@@ -1213,7 +1211,6 @@ var test = (function(){
 							
 							data.ref = ref;
 
-							console.log('ref', ref)
 
 							clbk(data);
 

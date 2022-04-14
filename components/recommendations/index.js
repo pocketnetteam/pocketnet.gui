@@ -83,7 +83,6 @@ var recommendations = (function(){
 
 			lazyinfo : function(contents, p){
 
-				console.log('lazyinfo', contents)
 
 				_.each(contents, function(content) { 
 
@@ -91,7 +90,6 @@ var recommendations = (function(){
 
 					var el = p.el.find('.recoVideoDiv[data-txid="'+content.txid+'"]')
 
-					console.log('el.length', el.length)
 
 					if (el.length){
 

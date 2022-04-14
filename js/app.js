@@ -1223,13 +1223,6 @@ Application = function(p)
 			p.clbk = function(c,b){
 				self.pipwindow = b
 
-
-				/*console.log('elf.pipwin', self.pipwindow)
-
-				setTimeout(function(){
-					console.log('self.pipwindow.playerstatus()',self.pipwindow.playerstatus())
-				},2000)*/
-
 				if(clbk) clbk(c,b)
 			}
 
@@ -1367,8 +1360,6 @@ Application = function(p)
 			if(self.scrollRemoved < 0) self.scrollRemoved = 0
 
 			self.scrollRemoved++
-
-			console.log('self.scrollRemoved1', self.scrollRemoved)
 
 			if (self.scrollRemoved > 1){
 				return false
@@ -1862,7 +1853,6 @@ Application = function(p)
 				if(window.cordova && !isios()){
 
 					window.addEventListener('keyboardWillShow', (event) => {
-						console.log('event', event)
 						document.documentElement.style.setProperty('--keyboardheight', `${event.keyboardHeight}px`);
 					});
 
@@ -1883,8 +1873,6 @@ Application = function(p)
 			checkIfHere : function(){
 				if (window.PictureInPicture && window.PictureInPicture.leavePip){
 					window.PictureInPicture.isPip(function(res){
-
-						console.log("IN PIP", res)
 
 						if(res == 'true'){
 							window.PictureInPicture.leavePip()
@@ -2217,7 +2205,6 @@ Application = function(p)
 			},
 			initparallax : function(){
 
-				console.log('initparallax', isTablet() || isMobile(), self.mobile.reload.parallax , self.mobile.reload.reloading)
 
 				if(isTablet() || isMobile()){
 
@@ -2483,7 +2470,6 @@ Application = function(p)
 						self.inputfocused = false
 					}
 					
-					console.log("E", e)
 				});
 			}
 		}

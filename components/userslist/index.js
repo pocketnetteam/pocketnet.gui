@@ -111,7 +111,6 @@ var userslist = (function(){
 		var events = {
 			loadmorescroll : function(){
 
-				console.log('loadmorescroll')
 
 				if (
 
@@ -270,7 +269,6 @@ var userslist = (function(){
 
 		var make = function(){
 			makepage(function(){
-				console.log("scnt", scnt)
 
 				if(scnt.hasClass('applicationhtml')){
 					self.app.events.scroll['userlist'] = events.loadmorescroll

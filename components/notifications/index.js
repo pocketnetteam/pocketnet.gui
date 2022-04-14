@@ -275,7 +275,6 @@ var notifications = (function(){
 			})
 
 			self.iclbks.lenta = function(){
-				console.log("HERE&")
 				renders.loadingAndEmpty()
 			}
 

@@ -2526,8 +2526,6 @@ Platform = function (app, listofnodes) {
                 })
             }
 
-            console.log('articledecoration', share)
-
             var cover = share.images[0]
 
             if(!cover){
@@ -16426,8 +16424,6 @@ Platform = function (app, listofnodes) {
 
                 getrecomendedcontents : function(p, clbk, cache){
 
-                    console.log("getrecomendedcontents", p)
-                   
                     self.app.platform.sdk.node.shares.hierarchical(p, function(contentIds, error) {
 
                         if (clbk)
@@ -16700,8 +16696,6 @@ Platform = function (app, listofnodes) {
                             s.getex(parameters, function (data, error) {
 
                                 var shares = data.contents || []
-
-                                console.log("P", p, data)
 
                                 //if (p.contenttypes) shares = data;
 
@@ -18752,8 +18746,6 @@ Platform = function (app, listofnodes) {
                                                             deleted : output.deleted
                                                         }
                                                     })
-
-                                                    console.log('temp', temp)
 
                                                     self.sdk.node.transactions.saveTemp()
 
@@ -26956,8 +26948,6 @@ Platform = function (app, listofnodes) {
                 if(typeof _Electron != 'undefined' && !self.focus){
 
                     var _el = $(self.matrixchat.notify.tpl(matrixevent))
-
-                    console.log(_el.html())
 
                     var title = _el.find('.caption').text()
                     var body = _el.find('.tips').text()

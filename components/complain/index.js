@@ -261,7 +261,6 @@ var complain = (function(){
 
 					if(ess == 'user' && textreason){
 
-						console.log(textreason, sobj.address, mestate.address)
 
 						self.app.complainletters.user({
 							reason : textreason,

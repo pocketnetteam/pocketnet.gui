@@ -374,12 +374,10 @@ var post = (function () {
 
 					button.one('click', function(){
 
-						console.log("CLICK2")
 
 						$(this).closest('.jsPlayerLoading').addClass('loading') 
 						$(this).closest('.js-player-dummy').addClass('js-player-ini')
 
-						console.log("???")
 
 						actions.initVideo(function(v){
 
@@ -408,7 +406,6 @@ var post = (function () {
 
 				var pels = el.c.find('.js-player-ini');
 
-					console.log('pels', pels)
 
 				var wa =  !share.repost && !ed.repost && (((share.itisvideo() && isMobile() && !ed.openapi) || (ed.autoplay && pels.length <= 1))) ? true : false
 

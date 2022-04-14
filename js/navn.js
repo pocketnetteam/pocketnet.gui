@@ -614,8 +614,6 @@ Nav = function(app)
 
 						p.clbk = function(a, b, d){
 
-							console.log('p.completeHref', p)
-
 							core.removeWindows(p.completeHref)
 							core.removeChat(p.completeHref)
 

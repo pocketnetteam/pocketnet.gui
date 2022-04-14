@@ -80,7 +80,6 @@ var abilityincrease = (function(){
 				
 				var template = $(this).attr('template')
 
-				console.log("templatetemplatetemplate")
 
 				self.nav.api.load({
 					open: true,
@@ -105,7 +104,6 @@ var abilityincrease = (function(){
 
 				template = deep(p, 'settings.essenseData.template') || 'video'
 
-				console.log('template', template)
 
 				self.app.platform.sdk.ustate.canincrease(
 
