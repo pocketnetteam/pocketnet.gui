@@ -318,7 +318,7 @@ var uploadpeertube = (function () {
 						transcoder.setTranscodeStartedListener((task) => {
 							initCancelListener(() => {
 								task.close(true);
-								sitemessage('Uploading canceled');
+								sitemessage(self.app.localization.e('uploadCanceled'));
 							});
 						});
 
@@ -326,7 +326,7 @@ var uploadpeertube = (function () {
 					} catch (err) {
 						switch (err) {
 							case 'TRANSCODE_SUBOPTIMAL_RESULT':
-								sitemessage('Suboptimal transcoding result. Continuing with original video');
+								sitemessage(self.app.localization.e('videoTranscodingNotOptimal'));
 								console.error('Suboptimal transcoding results expected. Preferring original video');
 								break;
 							case 'TRANSCODE_FFMPEG_ERROR':
@@ -351,7 +351,7 @@ var uploadpeertube = (function () {
 								console.error('Tried to load task while transcoder is busy', err);
 								break;
 							default:
-								sitemessage(`Unhandled error ${err.message || err} occurred. Please, contact with developers`);
+								sitemessage(self.app.localization.e('pleaseTryAgain'));
 								console.error('Strange error, please, contact with developers', err);
 								break;
 						}
@@ -586,9 +586,7 @@ var uploadpeertube = (function () {
 
 								ed.uploadInProgress = false;
 
-								if (e.cancel) {
-									sitemessage('Uploading canceled');
-								} else {
+								if (!e.cancel) {
 									var message =
 										e.text ||
 										findResponseError(e) ||

@@ -934,13 +934,17 @@ ____loclib.editWallpaper = "Изменить Заставку";
 ____loclib.removeVideo = "Удалить Видео";
 
 
+____loclib.videoTranscodingNotOptimal = "Неверный результат обработки. Загрузка исходного видео"
 ____loclib.videoTranscodingError = "Произошла ошибка при обработке вашего видео"
 ____loclib.videoUploadingFinish = "Завершение загрузки..."
 ____loclib.uploadNewVideo = "Добавить новое видео"
 ____loclib.selectVideoFile = "Выберите файл"
-____loclib.uploadVideoProgress_binaries = "Подготовка библиотек:";
+____loclib.uploadVideoProgress_binaries = "Подготовка библиотек:"
 ____loclib.uploadVideoProgress_processing = "Обработка видео:"
 ____loclib.uploadVideoProgress_uploading = "Загрузка видео:"
+____loclib.uploadCanceled = "Загрузка отменена"
+
+____loclib.pleaseTryAgain = "Что-то пошло не так. Повторите попытку"
 
 
 

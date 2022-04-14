@@ -1118,6 +1118,7 @@ ____loclib.pterror_getToken = "Peertube: Unable to get Token"
 ____loclib.pterror_videonotselected = "Peertube: Video not Selected"
 
 
+____loclib.videoTranscodingNotOptimal = "Not optimal transcoding result. Continuing with original video"
 ____loclib.videoTranscodingError = "There was an error with processing your video"
 ____loclib.videoUploadingFinish = "Finishing uploading..."
 ____loclib.uploadNewVideo = "Upload New Pocketvideo"
@@ -1125,6 +1126,9 @@ ____loclib.selectVideoFile = "Select video file"
 ____loclib.uploadVideoProgress_binaries = "Preparing binaries:"
 ____loclib.uploadVideoProgress_processing = "Processing video:"
 ____loclib.uploadVideoProgress_uploading = "Uploading video:"
+____loclib.uploadCanceled = "Upload canceled"
+
+____loclib.pleaseTryAgain = "Something was wrong there. Please try again"
 
 
 

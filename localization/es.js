@@ -807,6 +807,7 @@ ____loclib.noDownloadedVideos = "No hay vídeos descargados";
 ____loclib.buy = 'Comprar';
 
 // Uploadpeertube component
+____loclib.videoTranscodingNotOptimal = "El resultado del procesador no es óptimo. Continuando con el video original"
 ____loclib.videoTranscodingError = "Se ha producido un error al procesar su vídeo"
 ____loclib.videoUploadingFinish = "Terminando de subir el archivo..."
 ____loclib.uploadNewVideo = "Subir un nuevo Pocketvídeo"
@@ -814,5 +815,8 @@ ____loclib.selectVideoFile = "Seleccione el archivo de vídeo"
 ____loclib.uploadVideoProgress_binaries = "Preparando las bibliotecas:"
 ____loclib.uploadVideoProgress_processing = "Procesando el video:"
 ____loclib.uploadVideoProgress_uploading = "Cargando el video:"
+____loclib.uploadCanceled = "Carga cancelada"
+
+____loclib.pleaseTryAgain = "Algo está incorrecto. Por favor, inténtelo de nuevo"
 
 ____loclib.buy = 'Comprar';
