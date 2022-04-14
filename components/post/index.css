@@ -9,7 +9,6 @@
 }
 #post {
   background: rgb(var(--background-main));
-  padding-top: 0.5em;
 }
 #post .jsPlayerLoading,
 #post .video-js {
@@ -868,7 +867,6 @@ html.mobileview.fullscreen #post #comments {
 }
 .wnd.postwindow #post .postWrapper {
   overflow: hidden;
-  border-radius: 3px;
 }
 .wnd.postwindow #post .nextpost {
   display: block;
