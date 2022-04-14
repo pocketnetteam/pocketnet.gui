@@ -163,7 +163,6 @@ function rpc(request, callback, obj) {
     var timeout = 45000
     var self = obj;
 
-    if(m == 'gettopfeed') console.log(request)
 
     try{
         request = JSON.stringify(request);
