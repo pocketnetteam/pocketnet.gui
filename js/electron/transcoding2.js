@@ -318,6 +318,16 @@ class BridgeTask {
     this.ipcMain.removeAllListeners('Transcoder:Transcode');
   }
 
+  stopTask() {
+    this.state = 'STOPPED';
+
+    this.command.kill('SIGTERM');
+
+    this.sender.send('Transcoder:Transcode:Stopped');
+
+    fs.unlink(this.output, () => {});
+  }
+
   getVideoProbe(filePath) {
     return new Promise((resolve, reject) => {
       ffmpeg.ffprobe(filePath, (err, meta) => {
@@ -370,6 +380,18 @@ class BridgeTask {
     return false;
   }
 
+  checkSuboptimalResult() {
+    const resultSize = fs.statSync(this.output).size;
+
+    if (resultSize > this.inputSize) {
+      debugLog(`Transcoding task ${this.id}: Final file is bigger than original`);
+
+      this.sender.send('Transcoder:Transcode:Error', 'TRANSCODE_SUBOPTIMAL_RESULT');
+      this.stopTask();
+      this.closeTask();
+    }
+  }
+
   transcodeVideo(filePath) {
     const spawnFfmpeg = () => {
       const threadsCount = coresCount / 2;
@@ -378,23 +400,20 @@ class BridgeTask {
         .withVideoCodec('libx264')
         .withAudioCodec('libmp3lame')
         .videoFilters(`scale=-2:min'(720,ih)'`)
+        .outputOption('-qmin 25')
+        .outputOption('-qmax 35')
         .outputOption('-preset veryfast')
         .outputOption(`-threads ${threadsCount}`)
         .withVideoBitrate('2600k')
         .withAudioBitrate('256k')
         .outputFps(25)
         .format('mp4')
+        //.on('start', (cmdline) => console.log(cmdline))
     };
 
     const handleTranscodingStart = () => {
       this.ipcMain.once('Transcoder:Transcode:Stop', () => {
-        this.state = 'STOPPED';
-
-        this.command.kill('SIGTERM');
-
-        this.sender.send('Transcoder:Transcode:Stopped');
-
-        fs.unlink(this.output, () => {});
+        this.stopTask();
       });
 
       this.sender.send('Transcoder:Transcode:Start');
@@ -403,6 +422,10 @@ class BridgeTask {
     const handleTranscodingProgress = ({ percent }) => {
       if (this.state === 'STOPPED') {
         return;
+      }
+
+      if (percent !== 100 && (percent % 5) < 1) {
+        this.checkSuboptimalResult();
       }
 
       // DEATH SIMULATION
@@ -424,7 +447,6 @@ class BridgeTask {
           debugLog(`Transcoding task ${this.id}: Suddenly stopped. Task closed`);
         } else {
           debugLog(`Transcoding task ${this.id}: Stopped by user. Task closed, file purged`);
-          this.sender.send('Transcoder:Transcode:Error', 'TRANSCODE_ABORT');
 
           return;
         }
@@ -450,6 +472,8 @@ class BridgeTask {
 
         this.sender.send('Transcoder:Transcode:Error', 'TRANSCODE_OUTPUT_MISSING');
       }
+
+      this.checkSuboptimalResult();
 
       fs.renameSync(this.output, this.finishedOutput);
       this.resultSize = fs.statSync(this.finishedOutput).size;

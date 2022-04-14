@@ -53,35 +53,37 @@ class VideoUploader {
     while(chunkData && !this.canceled) {
       const startUpload = Date.now();
 
-      let loadResult = await this.static.loadChunk(this, chunkData, chunkPos)
-        .catch((err) => {
-          if (err.reason === 'not_found') {
+      let loadResult;
+
+      try {
+        loadResult = await this.static.loadChunk(this, chunkData, chunkPos)
+      } catch(err) {
+        if (err.reason === 'not_found') {
+          this.static.deleteResumableStorage(videoUniqueId);
+
+          console.error('Load chunk error', err);
+
+          if (this.canceled) {
             this.static.deleteResumableStorage(videoUniqueId);
 
-            if (this.canceled) {
-              this.static.deleteResumableStorage(videoUniqueId);
-
-              throw {
-                text: 'Video upload canceled',
-                cancel: true,
-              };
-            }
-
             throw {
-              err,
-              reason: 'unhandled_error',
-              text: 'Please try uploading again',
+              text: 'Video upload canceled',
+              cancel: true,
             };
           }
 
-          this.static.setResumableStorage(videoUniqueId, {
-            uploadId: this.uploadId,
-            resumeFrom: chunkPos,
-            lastOperation: Date.now(),
-          });
+          console.error('Chunked upload failed to continue');
+          throw { text: 'Chunked upload failed to continue'};
+        }
 
-          throw err;
+        this.static.setResumableStorage(videoUniqueId, {
+          uploadId: this.uploadId,
+          resumeFrom: chunkPos,
+          lastOperation: Date.now(),
         });
+
+        throw err;
+      }
 
       this.static.setResumableStorage(videoUniqueId, {
         uploadId: this.uploadId,
@@ -207,7 +209,7 @@ class VideoUploader {
       .proceedResumableUpload(data, options)
       .catch(() => {
         throw {
-          reason: 'unhandled_error',
+          reason: 'resumable_chunk_request_failed',
           text: 'Looks like there are problems with your connection',
         };
       });
