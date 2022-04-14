@@ -975,11 +975,11 @@ var lenta = (function(){
 							playbackState,
 							duration
 						}){
-							if(playbackState == 'playing' && ((position > 15 && duration > 240) || startTime)){
+							if(playbackState == 'playing' && ((position > 15 && duration > 120) || startTime)){
 								
 								self.app.platform.sdk.videos.historyset(share.txid, {
 									time : position,
-									percent : ((position/duration)* 100).toFixed(0)
+									percent : ((position/duration)* 100).toFixed(0),
 								})
 
 							}
@@ -1394,7 +1394,9 @@ var lenta = (function(){
 							}
 
 							return 1
-						}
+						},
+
+						el : _el.find('.sharecnt'),
 					}, function(e, p){
 
 						recommendations[id] = p

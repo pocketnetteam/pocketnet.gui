@@ -25,6 +25,8 @@
   background-repeat: no-repeat;
   background-size: cover;
   background: rgb(var(--neutral-grad-0));
+  position: relative;
+  overflow: hidden;
 }
 #recommendations .recoVideoDiv .videoThumbnail[data-image] {
   filter: brightness(85%);

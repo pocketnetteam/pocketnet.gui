@@ -6,14 +6,20 @@
 
             var video = (app.platform.sdk.videos.storage[content.url || "undefined"] || {}).data || {}
             var userinfo =  deep(app.platform.sdk.usersl.storage, content.address);
-
+            var h = app.platform.sdk.videos.historyget(content.txid)
             
             %>
 
 
             <div class="recoVideoDiv" data-txid="<%- content.txid %>">
 
-                <div class="videoThumbnail <% if(!video.thumbnail) {%>dummy<% } %>" image="<%- video.thumbnail || '' %>"></div>
+                <div class="videoThumbnail <% if(!video.thumbnail) {%>dummy<% } %>" image="<%- video.thumbnail || '' %>">
+                    <% if(h.percent && h.percent > 3) {%>
+                        <div class="videoprogressbar">
+                            <div class="videoprogress" style="width:<%-h.percent%>%"></div>
+                        </div>
+                    <% } %>
+                </div>
 
                 <div class="videoInfos">
 

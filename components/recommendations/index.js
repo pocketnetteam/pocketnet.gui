@@ -8,14 +8,24 @@ var recommendations = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el, ed;
+		var el, ed, places = {}, additionalMake = false, sel;
 
-		var actions = {
+	
 
-		}
+		var rendered = {}
 
 		var events = {
-			
+			scrollapp : function(){
+				if(self.app.lastScrollTop + self.app.height > document.body.scrollHeight - 500) {
+					makeadditional()
+				}
+			},
+
+			scrollell : function(){
+				if(sel.scrollTop() + sel.height() > sel[0].scrollHeight - 500){
+					makeadditional()
+				}
+			}
 		}
 
 		var renders = {
@@ -25,6 +35,7 @@ var recommendations = (function(){
 					animation : false,
 					name :  'list',
 					el : el.c.find('.listWrapper'),
+					inner : append,
 					data : {
 						contents
 					}
@@ -49,29 +60,6 @@ var recommendations = (function(){
 									open : true
 								})
 							}
-
-							//ed.open
-
-							/*if (ed.opensvi){
-								ed.opensvi(txid)
-							}
-							else
-
-							if (ed.next){
-
-								self.app.platform.sdk.node.shares.getbyid([txid], function () {
-
-									var share = self.app.platform.sdk.node.shares.storage.trx[txid]
-
-									ed.next(txid, share)
-				
-								})
-
-							}*/
-							
-
-							
-
 						}
 
 					});
@@ -124,17 +112,96 @@ var recommendations = (function(){
 			}
 		}
 
-		var load = {
-			contents : function(clbk){
+		var sorting = function(recommendations){
+			return _.sortBy(recommendations, function(r){
+				r.point = recommendationPoint(r)
+				return -recommendationPoint(r)
+			})	
+		}
 
-				var p = _.clone(ed.parameters || {})
+		var filter = function(recommendation){
+
+			var me = deep(self.app, 'platform.sdk.users.storage.' + (self.user.address.value || ''))
+
+
+			if (me.relation(recommendation.address, 'blocking') ){
+				return false
+			}
+
+			if(rendered[recommendation.txid]) return false
+
+			return true
+
+		}
+
+		var recommendationPoint = function(recommendation){
+			var p = Number(recommendation.score || 0)
+
+			p += 10 * (recommendation.comments || 0)
+
+			p += 50 * (recommendation.reposted || 0)
+
+			var activities = self.app.platform.sdk.activity.has('users', recommendation.address)
+
+			if (activities.point){
+				p = p + activities.point * 10
+			}
+
+			if(recommendation.itisvideo){
+				var h = self.app.platform.sdk.videos.historyget(recommendation.txid)
+
+				if (h.percent > 94){
+					p = p / 100
+				}
+				else
+				if (h.percent > 5){
+					p = p * 10
+				}
+				
+			}
+
+			if (places[recommendation.txid]){
+				p = 5 * p / (places[recommendation.txid])
+			}
+
+			if (ed.points){
+				p = ed.points(recommendation, p)
+			}
+
+			if (recommendation.myVal){
+				p = p / 10
+			}
+
+			return p
+
+		}
+
+
+		var load = {
+			contents : function(loader, clbk){
+
+				var p = _.clone(loader.parameters || {})
 
 				p.skipvideo = true
 				
-				self.app.platform.sdk.node.shares[ed.loader || 'getrecomendedcontents'](p, function (recommendations) {
+				self.app.platform.sdk.node.shares[loader.loader || 'getrecomendedcontents'](p, function (recommendations) {
+			
+					places = {}
+
+					_.each(recommendations, function(r, i){
+						places[r.txid] = i + 1
+					})
+
 					if (ed.filter){
 						recommendations = _.filter(recommendations, ed.filter)
 					}
+
+					recommendations = sorting(_.filter(recommendations, filter))
+				
+					_.each(recommendations, function(recommendation){
+						rendered[recommendation.txid] = true
+					})
+					
 
 					if (clbk)
 						clbk(recommendations);
@@ -153,21 +220,59 @@ var recommendations = (function(){
 			}
 		}
 
+		var makeadditional = function(){
+			console.log('makeadditional')
 
-		var make = function(){
-			load.contents(function(recommendations){
+			if(ed.additional){
+
+				if(additionalMake) return
+
+				additionalMake = true
+
+				removeEvents()
+
+				make(ed.additional)
+			}
+
+		}
+
+		var make = function(loader, clbk){
+			load.contents(loader, function(recommendations){
 				renders.list(recommendations, function(_p){
 
 					load.info(recommendations, function(){
 						renders.lazyinfo(recommendations, _p)
 					})
+
+					if(clbk) clbk()
+
 				})
+			})
+		}
+
+		var makeall = function(){
+			make(ed.loader, function(){
+				initEvents()
 			})
 		}
 
 		var initEvents = function(){
 			
+			if (sel){
+				sel.on('scroll', events.scrollell);
+			}
+			else{
+				self.app.events.scroll['recommendations'] = events.scrollapp
+			}
+		}
 
+		var removeEvents = function(){
+			if (sel){
+				sel.off('scroll', events.scrollell);
+			}
+			else{
+				delete self.app.events.scroll['recommendations'] 
+			}
 		}
 
 		return {
@@ -176,6 +281,13 @@ var recommendations = (function(){
 			getdata : function(clbk, p){
 
 				ed = p.settings.essenseData || {}
+
+				if(ed.container) sel = ed.container
+
+				console.log('sel', sel)
+
+				rendered = {}
+				additionalMake = false
 
 				var data = {
 					ed : ed
@@ -186,8 +298,13 @@ var recommendations = (function(){
 			},
 
 			destroy : function(){
+
+				removeEvents()
+
 				el = {};
 				ed = {}
+				places = {}
+				sel = null
 
 			},
 			
@@ -198,9 +315,8 @@ var recommendations = (function(){
 				el = {};
 				el.c = p.el.find('#' + self.map.id);
 
-				initEvents();
 
-				make()
+				makeall()
 
 				p.clbk(null, p);
 			}

@@ -2715,19 +2715,51 @@ Platform = function (app, listofnodes) {
 
                 essenseData: {
 
+                    container : ed.el,
+
                     caption : 'othervideos',
                     loader : 'getrecomendedcontents',
-                    parameters : {
+                   
+
+                    loader : {
+                        loader : 'getrecomendedcontents',
+                        parameters : {
                 
-                        contentAddress: share.address,
-                        type: 'video',
-                        depth: 10000,
-                        count: 12,
-                        lang : share.language
+                            contentAddress: share.address,
+                            type: 'video',
+                            depth: 10000,
+                            count: 12,
+                            lang : share.language
+                        },
+                    },
+
+                    additional : {
+                        loader : 'gettopfeed',
+                        parameters : {
+                
+                            type: 'video',
+                            depth: 10000,
+                            count: 20,
+                            lang : share.language,
+                            tagsfilter : share.tags
+                        },
+                        
                     },
 
                     filter : function(_share){
                         return _share.txid != share.txid && _share.address != self.app.user.address.value
+                    },
+
+                    points : function(_share, p){
+                        if (_share.address == share.address){
+                            p = p * 3
+                        }
+
+                        var i = _.intersection(_share.tags, share.tags)
+
+                        p = p + p * i.length
+
+                        return p
                     },
 
                     open : function(txid){
@@ -16422,16 +16454,27 @@ Platform = function (app, listofnodes) {
                     })
                 },
 
+                gettopfeed : function(p, clbk, cache){
+
+                    self.app.platform.sdk.node.shares.hierarchical(p, clbk, cache, {
+                        method : 'gettopfeed',
+                        rpc : {
+                            cache : true,
+                            locally : true,
+                            fastvideo : true,
+                            meta : {
+                                host : '78.37.233.202',
+                                port : 31031,
+                                ws : 3037
+                            }
+                        }
+                    });
+
+                },
+
                 getrecomendedcontents : function(p, clbk, cache){
 
-                    self.app.platform.sdk.node.shares.hierarchical(p, function(contentIds, error) {
-
-                        if (clbk)
-                            clbk(contentIds)
-
-                        return
-
-                    }, cache, {
+                    self.app.platform.sdk.node.shares.hierarchical(p, clbk, cache, {
                         method : 'getrecommendedcontentbyaddress',
                         rpc : {
                             cache : true,
@@ -16608,6 +16651,7 @@ Platform = function (app, listofnodes) {
                         p.tagsfilter || (p.tagsfilter = [])
                         p.tagsexcluded || (p.tagsexcluded = [])
                         p.begin || (p.begin = '')
+                        p.depth || (p.depth = 10)
 
                         if (state) {
                             p.address = self.sdk.address.pnet().address;
@@ -16692,6 +16736,13 @@ Platform = function (app, listofnodes) {
 
                             if (methodparams.method == 'getrecommendedcontentbyaddress')
                                 parameters = [p.contentAddress, '', p.type ? [p.type] : [], p.lang || "", p.count];
+
+                            if(mtd == 'gettopfeed') {
+                                //parameters.push('');
+                               // parameters.push('')
+                                //parameters.push(p.depth)
+                                
+                            }
 
                             s.getex(parameters, function (data, error) {
 
@@ -21495,6 +21546,7 @@ Platform = function (app, listofnodes) {
                     date : null,
                     percent : 0
                 }
+
 
                 try{
                     var jsn = JSON.parse(localStorage[self.sdk.videos.historykey + txid] || "{}")

@@ -123,6 +123,7 @@ const publics = {
     getstatisticbydays: true,
     getstatisticcontentbyhours: true,
     getstatisticcontentbydays: true,
+    gettopfeed : true,
     getrecommendedcontentbyaddress: true,
     getrecomendedcontentsbyscoresfromaddress : true,
 }
@@ -161,6 +162,8 @@ function rpc(request, callback, obj) {
     var pst = posts[request.method]
     var timeout = 45000
     var self = obj;
+
+    if(m == 'gettopfeed') console.log(request)
 
     try{
         request = JSON.stringify(request);
@@ -447,7 +450,7 @@ RpcClient.callspec = {
     getpagescores: 'obj str',
 
 
-
+    gettopfeed : 'int str int str obj obj obj obj obj str str int',
     getboostfeed : 'int str int str obj obj obj obj obj str str',
     getprofilefeed : 'int str int str obj str str str obj str str',
     getsubscribesfeed : 'int str int str obj obj obj obj obj str str',

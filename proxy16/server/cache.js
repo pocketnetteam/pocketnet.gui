@@ -266,6 +266,10 @@ var Cache = function(p){
                 block : 0,
             },
 
+            gettopfeed : {
+                time : 3600
+            },
+
             getrecommendedcontentbyaddress : {
                 time : 3600
             },
