@@ -38,7 +38,10 @@ var main = (function(){
 			{
 				link : 'index?r=sub',
 				label : () => self.app.localization.e('e13137'),
-				value : 'sub'
+				value : 'sub',
+				if : function(){
+					return self.app.user.getstate()
+				}
 			},
 			
 			{
