@@ -535,6 +535,8 @@ var uploadpeertube = (function () {
 					})
 					.catch((e = {}) => {
 
+						self.app.peertubeHandler.clear()
+
 						self.app.Logger.error({
 							err: e.text || 'getInfoError',
 							payload: JSON.stringify(e),
@@ -547,6 +549,9 @@ var uploadpeertube = (function () {
 						self.app.platform.sdk.ustate.canincrease(
 							{ template: 'video' },
 							function (r) {
+
+
+
 								data.increase = r;
 
 								clbk(data);
