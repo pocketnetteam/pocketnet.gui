@@ -148,7 +148,6 @@ var lastcomments = (function(){
 			/*self.app.platform.clbks._focus.lastcomments = function(time){
 
 				if(time > 120 && typeof _Electron != 'undefined'){
-					console.log("CLBKS2")
 					make()
 
 					

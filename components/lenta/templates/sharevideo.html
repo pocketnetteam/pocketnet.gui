@@ -22,6 +22,7 @@ if(share.address){
 
 var view = 'post';
 var name = app.platform.api.name(share.address)
+var loggedIn = (user && user.address && user.address.value != null)
 
 var cview = view
 
@@ -341,7 +342,7 @@ var metadisplay = function(){ %>
 					
 				<% } %>
 
-			<div class="anothercntswrk piphidden">
+			<div class="anothercntswrk piphidden videoDescription">
 
 				<div class="cntswrk formeta">
 

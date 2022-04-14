@@ -471,6 +471,7 @@ ____loclib.removeDescription = "Remove description"
 ____loclib.preview = "Preview"
 ____loclib.autoplayVideo = "Autoplay Video"
 ____loclib.onlyVideo = "Only video"
+____loclib.signToComment = "To view or post comments, you need to login or register"
 
 ____loclib.e13023 = "Do you really want to unblock user?"
 ____loclib.e13024 = "Your Private Login Key"
@@ -1297,8 +1298,9 @@ ____loclib.videotranscodingwait = "Please wait, this video is being processed. T
 ____loclib.views = "Views";
 
 
-____loclib.saveshare = "Add videos to saved";
-____loclib.successdownloaded = "Video saved";
+____loclib.saveshare = "Download video";
+____loclib.gotosaved = "Go to downloaded";
+____loclib.successdownloaded = "Video downloaded";
 
 
 ____loclib.logoutaccount = "Sign out of your account";
@@ -2088,6 +2090,7 @@ ____loclib.ratings123 = "Only users with high reputation at least 10 publication
 
 ____loclib.ratingss3 = "Only users with high reputation can give 1, 2, 3 star ratings. This is done to protect authors, because Bastyon does NOT require any personal information for registration."
 
+____loclib.clearfilters = "Clear filters"
 ____loclib.clearcategories = "Do you really want to clear category filters?"
 ____loclib.cleartags = "Do you really want to clear tags filters?"
 ____loclib.fromsh = "From"
@@ -2138,7 +2141,7 @@ ____loclib.videobloggerRequest_er_email = "Leave an email for feedback"
 
 ____loclib.videobloggerRequest_submitted = "Thank you for contacting us, we will review your application"
 
-____loclib.canuseipsetting = "Allow connection via ip over http directly. Not safe"
+____loclib.canuseipsetting = "Allow connection via ip over http directly. Insecure connection"
 
 ____loclib.optimizationtip = function(v){
     return v + ' hidden viewed posts'
@@ -2151,3 +2154,31 @@ ____loclib.thankTheAuthor = 'Thank the author';
 ____loclib.encourageAuthor = "Encourage author";
 
 ____loclib.gotoProfile2 = "Go to Profile";
+
+____loclib.countviews = "Views";
+____loclib.countview = "View";
+
+____loclib.popup_applications_header = "Important! Please download Bastyon Application";
+
+____loclib.popup_applications_feature_1 = "Desktop application is the most censorship resistant way to use Bastyon";
+____loclib.popup_applications_feature_2 = "Desktop application doesn't depend on bastyon.com";
+____loclib.popup_applications_feature_3 = "Desktop is like a built-in VPN";
+
+____loclib.popup_applications_button = " Download here";
+____loclib.norecommendedvideos = "No recommended videos found";
+
+____loclib.boosted = "Boosted";
+
+
+____loclib.probability = "Probability";
+
+____loclib.probabilitytext = function(lang){
+	return "Probability that a post will appear among the first <b>30</b> posts in the feed by language <b>"+lang+"</b> for approximately <b>300</b> minutes"
+};
+
+____loclib.probabilitytexterror = "Unable to calculate promotion probability";
+
+____loclib.image = "Image";
+____loclib.file = "File";
+
+____loclib.othervideos = "Other videos";

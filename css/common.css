@@ -7,6 +7,9 @@
 .share_common .gotouserprofile {
   cursor: pointer;
 }
+.share_common .extrashare {
+  display: none;
+}
 .share_common .pkoin {
   display: flex;
   align-items: center;
@@ -24,6 +27,10 @@
 }
 .share_common .commentsWrapper {
   background: rgb(var(--background-secondary-theme));
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
+.share_common .commentRegisterDiv .commentRegister {
   border-bottom-left-radius: 12px;
   border-bottom-right-radius: 12px;
 }
@@ -138,7 +145,7 @@
   font-weight: 700;
 }
 .share_common .repostShare {
-  border-radius: 6px;
+  border-radius: 12px;
   border: 1px solid rgba(var(--neutral-grad-1), 0.5);
   border-bottom: 1px solid rgba(var(--background-total-theme), 0.75);
   border-right: 1px solid rgba(var(--background-total-theme), 0.75);
@@ -148,7 +155,7 @@
   margin-bottom: 0.5em;
 }
 .share_common .repostShare .share {
-  margin-bottom: 0;
+  margin-bottom: 0!important;
 }
 .share_common .repostShare .share .videoTips {
   display: none!important;
@@ -300,15 +307,12 @@
 }
 .share_common .tempPreloader {
   padding: 1em 0;
-  margin-bottom: 1em;
+  padding-bottom: 0;
+  padding-right: 1em;
 }
 .share_common .tempPreloader .label {
-  padding-top: 0.5em;
   color: rgb(var(--color-bg-ac));
   font-size: 0.8em;
-}
-.share_common .tempPreloader .iconwr {
-  padding-bottom: 1em;
 }
 .share_common .tempPreloader .count {
   padding-right: 0;
@@ -410,16 +414,20 @@
   width: 100%;
   height: 100%;
   cursor: pointer;
+  border-radius: 18px;
+  overflow: hidden;
 }
-.share_common .jsPlayerPreview .wpl:hover {
-  opacity: 0.9;
+@media (pointer: fine) {
+  .share_common .jsPlayerPreview .wpl:hover {
+    opacity: 0.9;
+  }
 }
 .share_common .jsPlayerPreview .statswrapper,
 .share_common .jsPlayerPreview .durationWrapper {
   position: absolute;
   bottom: 6px;
   right: 6px;
-  border-radius: 6px;
+  border-radius: 12px;
   background: rgba(var(--color-shadow-base), 0.8);
   color: rgb(var(--text-on-bg-shadow-color));
   padding: 0.25em 0.5em;
@@ -902,6 +910,16 @@
   border-radius: 0!important;
   margin-bottom: 0!important;
 }
+.share_common.fullScreenVideo .extrashare {
+  display: block;
+}
+.share_common.fullScreenVideo .extrashare > div {
+  background: rgb(var(--background-total-theme));
+  margin: 0 auto;
+  max-width: 960px;
+  margin-top: 1em;
+  padding: 1em;
+}
 .share_common.fullScreenVideo .video-js {
   max-height: calc(var(--vh, 1vh) * 80);
 }
@@ -918,6 +936,7 @@
   scrollbar-width: none;
   overscroll-behavior: none;
   transform: translate3d(0, 0, 0);
+  padding-bottom: 20%;
 }
 .share_common.fullScreenVideo .sharecnt .videoWrapper {
   border-radius: 0;
@@ -945,16 +964,14 @@
 .share_common.fullScreenVideo .showMore {
   display: none;
 }
-.share_common.fullScreenVideo .commentsWrapper {
+.share_common.fullScreenVideo .commentsWrapper,
+.share_common.fullScreenVideo .commentRegisterDiv .commentRegister {
   margin: 0 auto;
   max-width: 960px;
   border-radius: 0;
 }
 .share_common.fullScreenVideo .url.hiddenurl .videoWrapper {
   display: block;
-}
-.share_common.fullScreenVideo .commentsWrapperHb {
-  padding-bottom: 20%;
 }
 .share_common.fullScreenVideo .cntswrk {
   margin-left: 0;
@@ -1163,6 +1180,9 @@ html.ios .share_common.fullScreenVideo .video-js {
   .share_common.fullScreenVideo {
     contain: strict;
     background: rgb(var(--color-shadow-base));
+  }
+  .share_common.fullScreenVideo .extrashare > div {
+    margin-top: 0.5em;
   }
   .share_common.fullScreenVideo .sharecaption {
     padding-left: 0.5em;
@@ -1379,5 +1399,383 @@ html.ios .share_common.fullScreenVideo .video-js {
   }
   .share_common .exitFull {
     right: 1em;
+  }
+}
+.common_share_article_wrapper .share .sharearticle {
+  border-radius: 12px;
+  overflow: hidden;
+  opacity: 0;
+  -moz-transition: opacity 0.1s;
+  -o-transition: opacity 0.1s;
+  -webkit-transition: opacity 0.1s;
+  transition: opacity 0.1s;
+}
+.common_share_article_wrapper .share .sharearticle.ready {
+  opacity: 1;
+}
+.common_share_article_wrapper .share .sharearticle .shareTable {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+.common_share_article_wrapper .share .sharearticle .articleclick {
+  cursor: pointer;
+}
+.common_share_article_wrapper .share .sharearticle .readarticlebutton {
+  display: block!important;
+}
+.common_share_article_wrapper .share .sharearticle .readarticlebutton span {
+  display: inline;
+  opacity: 0.5;
+}
+.common_share_article_wrapper .share .sharearticle .shareBgCaption .author,
+.common_share_article_wrapper .share .sharearticle .articleend .author {
+  margin-top: 1em;
+}
+.common_share_article_wrapper .share .sharearticle .shareBgCaption .author i,
+.common_share_article_wrapper .share .sharearticle .articleend .author i {
+  display: none;
+}
+.common_share_article_wrapper .share .sharearticle .shareBgCaption .author .notificationturn,
+.common_share_article_wrapper .share .sharearticle .articleend .author .notificationturn {
+  display: none!important;
+}
+.common_share_article_wrapper .share .sharearticle .shareBgCaption .forstars .itemwr,
+.common_share_article_wrapper .share .sharearticle .articleend .forstars .itemwr {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+}
+.common_share_article_wrapper .share .sharearticle .shareBgCaption .forstars .itemwr i,
+.common_share_article_wrapper .share .sharearticle .articleend .forstars .itemwr i {
+  text-align: center;
+}
+.common_share_article_wrapper .share .sharearticle .shareBgCaption .forstars .starWrapper,
+.common_share_article_wrapper .share .sharearticle .articleend .forstars .starWrapper {
+  text-align: center;
+}
+.common_share_article_wrapper .share .sharearticle .shareBgCaption .forstars .count span,
+.common_share_article_wrapper .share .sharearticle .articleend .forstars .count span {
+  font-size: 2em;
+}
+.common_share_article_wrapper .share .sharearticle .shareBgCaption .forstars .count span,
+.common_share_article_wrapper .share .sharearticle .articleend .forstars .count span {
+  font-weight: 700;
+  font-family: Nunito Sans;
+}
+.common_share_article_wrapper .share .sharearticle .shareBgCaption .sys,
+.common_share_article_wrapper .share .sharearticle .articleend .sys {
+  text-align: center;
+}
+.common_share_article_wrapper .share .sharearticle .shareBgCaption .buttonOpenWrapper,
+.common_share_article_wrapper .share .sharearticle .articleend .buttonOpenWrapper {
+  padding-bottom: 1em;
+}
+.common_share_article_wrapper .share .sharearticle .shareBgCaption .buttonOpenWrapper .showMoreArticle,
+.common_share_article_wrapper .share .sharearticle .articleend .buttonOpenWrapper .showMoreArticle {
+  color: #00A4FF;
+  cursor: pointer;
+}
+.common_share_article_wrapper .share .sharearticle .shareBgCaption .buttonOpenWrapper .showMoreArticle:hover,
+.common_share_article_wrapper .share .sharearticle .articleend .buttonOpenWrapper .showMoreArticle:hover {
+  opacity: 0.6;
+}
+.common_share_article_wrapper .share .sharearticle .shareBgCaption .divider,
+.common_share_article_wrapper .share .sharearticle .articleend .divider {
+  margin: 0.5em auto;
+  height: 1px;
+  width: 110px;
+  background: rgb(var(--background-total-theme));
+}
+.common_share_article_wrapper .share .sharearticle .shareBgCaption .tags,
+.common_share_article_wrapper .share .sharearticle .articleend .tags {
+  max-width: none;
+}
+.common_share_article_wrapper .share .sharearticle .shareBgCaption .tags div span,
+.common_share_article_wrapper .share .sharearticle .articleend .tags div span {
+  color: rgba(var(--text-on-bg-ac-color), 0, 0.7);
+}
+.common_share_article_wrapper .share .sharearticle .author {
+  white-space: nowrap;
+}
+.common_share_article_wrapper .share .sharearticle .shareBgCaption {
+  height: 425px;
+  position: relative;
+}
+.common_share_article_wrapper .share .sharearticle .shareBgCaption .blackmatte {
+  background: linear-gradient(0deg, rgba(var(--background-secondary-theme-2), 0.96) 10%, rgba(255, 255, 255, 0) 75%), linear-gradient(180deg, rgb(var(--background-secondary-theme-2)) 0%, rgba(255, 255, 255, 0) 18%);
+}
+.common_share_article_wrapper .share .sharearticle .shareBgCaption.withoutcover {
+  height: 340px;
+}
+.common_share_article_wrapper .share .sharearticle .shareBgCaption.withoutcover .blackmatte {
+  background: rgb(var(--background-secondary-theme-2));
+}
+.common_share_article_wrapper .share .sharearticle .shareBgCaption .captioncnt {
+  display: flex;
+  flex-direction: column;
+  z-index: 1;
+  color: rgb(var(--text-on-bg-ac-color));
+  overflow: hidden;
+}
+.common_share_article_wrapper .share .sharearticle .shareBgCaption .captioncnt .toppanel {
+  display: flex;
+  justify-content: space-between;
+}
+.common_share_article_wrapper .share .sharearticle .shareBgCaption .captioncnt .toppanel .authorWrapper {
+  display: flex;
+}
+.common_share_article_wrapper .share .sharearticle .shareBgCaption .captioncnt .toppanel .authorWrapper .iconWrapper {
+  margin-top: 6px;
+}
+.common_share_article_wrapper .share .sharearticle .shareBgCaption .captioncnt .toppanel .authorWrapper .actionsWrapper {
+  margin-left: 12px;
+}
+.common_share_article_wrapper .share .sharearticle .shareBgCaption .captioncnt .toppanel .authorWrapper .actionsWrapper .sys {
+  text-align: start;
+}
+.common_share_article_wrapper .share .sharearticle .shareBgCaption .captioncnt .toppanel .socialsharewrapper {
+  padding-right: 1em;
+}
+.common_share_article_wrapper .share .sharearticle .shareBgCaption .captioncnt .widthcontainer {
+  margin-top: auto;
+  padding: 0 16px;
+}
+.common_share_article_wrapper .share .sharearticle .shareBgCaption .captioncnt .articleclick {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  cursor: pointer;
+}
+.common_share_article_wrapper .share .sharearticle .shareBgCaption .captioncnt .articleclick .captionmult {
+  margin-top: auto;
+}
+.common_share_article_wrapper .share .sharearticle .shareBgCaption .captioncnt .sharecaption {
+  font-size: 1.5em;
+  font-weight: 700;
+  max-width: 85%;
+  color: rgb(var(--text-on-bg-ac-color));
+  max-height: 220px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  text-overflow: ellipsis;
+  overscroll-behavior: auto;
+  text-shadow: 0px 0px 2px rgba(var(--color-shadow-base), 0.714), 0 0 3px rgba(var(--color-shadow-base), 0.519);
+}
+.common_share_article_wrapper .share .sharearticle .shareBgCaption .tags {
+  margin-bottom: 0;
+}
+.common_share_article_wrapper .share .sharearticle .shareBgCaption .tags div span {
+  text-shadow: 0px 0px 2px rgba(var(--color-shadow-base), 0.714), 0 0 3px rgba(var(--color-shadow-base), 0.519);
+}
+.common_share_article_wrapper .share .sharearticle .shareBgCaption .sys span {
+  color: rgb(var(--text-on-bg-shadow-color));
+  text-shadow: 0px 0px 2px rgba(var(--color-shadow-base), 0.714), 0 0 3px rgba(var(--color-shadow-base), 0.519);
+}
+.common_share_article_wrapper .share .sharearticle .shareBgCaption .icon .usericon {
+  margin: 0 auto;
+  position: relative;
+}
+.common_share_article_wrapper .share .sharearticle .shareBgCaption.showtext .icon {
+  position: absolute;
+  bottom: -22px;
+  left: 0;
+  right: 0;
+}
+.common_share_article_wrapper .share .sharearticle .shareBgCaption .starstoppanel,
+.common_share_article_wrapper .share .sharearticle .shareBgCaption .socialsharewrapper {
+  bottom: 0.75em;
+  right: 1.25em;
+}
+.common_share_article_wrapper .share .sharearticle .shareBgCaption .starstoppanel .starstoppanel .iconwrapper,
+.common_share_article_wrapper .share .sharearticle .shareBgCaption .socialsharewrapper .starstoppanel .iconwrapper,
+.common_share_article_wrapper .share .sharearticle .shareBgCaption .starstoppanel .socialsharewrapper .iconwrapper,
+.common_share_article_wrapper .share .sharearticle .shareBgCaption .socialsharewrapper .socialsharewrapper .iconwrapper {
+  color: rgb(var(--text-color));
+}
+.common_share_article_wrapper .share .sharearticle .shareBgCaption .starstoppanel .iconwrapper,
+.common_share_article_wrapper .share .sharearticle .shareBgCaption .socialsharewrapper .iconwrapper {
+  width: 3.5em;
+  height: 3.5em;
+  line-height: 3.5em;
+  border-radius: 3.5em;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  font-family: Nunito Sans;
+}
+.common_share_article_wrapper .share .sharearticle .shareBgCaption .starstoppanel .iconwrapper:hover,
+.common_share_article_wrapper .share .sharearticle .shareBgCaption .socialsharewrapper .iconwrapper:hover {
+  opacity: 0.6;
+}
+.common_share_article_wrapper .share .sharearticle .shareBgCaption .starstoppanel .iconwrapper i,
+.common_share_article_wrapper .share .sharearticle .shareBgCaption .socialsharewrapper .iconwrapper i {
+  width: 30px;
+  text-align: center;
+  font-size: 0.7em;
+}
+.common_share_article_wrapper .share .sharearticle .shareBgCaption .starstoppanel .sharesocial,
+.common_share_article_wrapper .share .sharearticle .shareBgCaption .socialsharewrapper .sharesocial {
+  display: none;
+}
+.common_share_article_wrapper .share .sharearticle .shareBgCaption .socialsharewrapper .iconwrapper {
+  justify-content: flex-end;
+}
+.common_share_article_wrapper .share .sharearticle .shareBgCaption .starstoppanel {
+  bottom: 0.75em;
+  left: 1.5em;
+  right: auto;
+  display: flex;
+  justify-content: space-between;
+  padding-left: 1em;
+  padding-right: 1.5em;
+  padding-bottom: 0.5em;
+  contain: none;
+  height: auto;
+}
+.common_share_article_wrapper .share .sharearticle .shareBgCaption .starstoppanel .panelLeft {
+  display: flex;
+  padding-bottom: 0.5em;
+}
+.common_share_article_wrapper .share .sharearticle .shareBgCaption .starstoppanel .panelRight {
+  display: flex;
+  align-items: center;
+}
+.common_share_article_wrapper .share .sharearticle .shareBgCaption .starstoppanel .panelRight .panel {
+  contain: none;
+}
+.common_share_article_wrapper .share .sharearticle .shareBgCaption .articleCover {
+  border-radius: 12px;
+  overflow: hidden;
+  filter: brightness(85%);
+}
+.common_share_article_wrapper .share .sharearticle .shareBgCaption .blackmatte {
+  border-radius: 12px;
+  overflow: hidden;
+}
+.common_share_article_wrapper .share .sharearticle .shareBgCaption .articleCover,
+.common_share_article_wrapper .share .sharearticle .shareBgCaption .captioncnt,
+.common_share_article_wrapper .share .sharearticle .shareBgCaption .blackmatte {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+.common_share_article_wrapper .share .sharearticle .shareBgCaption .whitematte {
+  position: absolute;
+  bottom: 30%;
+  top: 20%;
+  left: 0;
+  right: 0;
+  cursor: pointer;
+  z-index: 1;
+}
+.common_share_article_wrapper .share .sharearticle .shareBgCaption.smallimage .articleCover {
+  background-color: rgb(var(--color-shadow-base));
+  background-size: 100px auto!important;
+}
+.common_share_article_wrapper .share .sharearticle .shareBgCaption.caption_small .captionmult {
+  font-size: 1.5em;
+}
+.common_share_article_wrapper .share .sharearticle .shareBgCaption.caption_long .captionmult {
+  font-size: 0.8em;
+}
+.common_share_article_wrapper .share .sharearticle .articlecontent {
+  padding-top: 4em;
+  padding-bottom: 4em;
+}
+.common_share_article_wrapper .share .sharearticle .articlecontent .cntswrk {
+  margin-left: 0;
+  padding-left: 0;
+  padding-right: 0;
+}
+.common_share_article_wrapper .share .sharearticle .articlecontent .articleend {
+  margin-top: 3em;
+}
+.common_share_article_wrapper .share .sharearticle .articlecontent .commentsWrapper {
+  border-radius: 12px;
+}
+.common_share_article_wrapper .share .sharearticle .articlecontent .forcomments {
+  margin-top: 6em;
+}
+.common_share_article_wrapper .share .sharearticle .removeDescription {
+  display: none;
+  padding: 1.5em;
+  color: rgb(var(--neutral-grad-2));
+}
+.common_share_article_wrapper .share .sharearticle.deleted .starstoppanel,
+.common_share_article_wrapper .share .sharearticle.deleted .socialsharewrapper,
+.common_share_article_wrapper .share .sharearticle.deleted .textscnts {
+  display: none!important;
+}
+.common_share_article_wrapper .share .sharearticle.deleted .removeDescription {
+  display: block;
+}
+.common_share_article_wrapper .share .sharearticle.deleted .articleCover {
+  filter: blur(2px);
+}
+@media only screen and (min-width: 768px) {
+  .common_share_article_wrapper .share .sharearticle .shareBgCaption.verticalcover {
+    height: 520px;
+  }
+  .common_share_article_wrapper .share .sharearticle .shareBgCaption.verticalcover .articleCover {
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 56%;
+    border-radius: 2px;
+    overflow: hidden;
+    filter: brightness(85%);
+  }
+  .common_share_article_wrapper .share .sharearticle .shareBgCaption.verticalcover .captioncnt {
+    left: 44%;
+    top: 0.5em;
+    bottom: 0.5em;
+  }
+  .common_share_article_wrapper .share .sharearticle .shareBgCaption.verticalcover .captioncnt .sharecaption {
+    text-shadow: none;
+    color: rgb(var(--text-color));
+  }
+  .common_share_article_wrapper .share .sharearticle .shareBgCaption.verticalcover .blackmatte {
+    display: none;
+  }
+  .common_share_article_wrapper .share .sharearticle .shareBgCaption.verticalcover .whitematte {
+    display: none;
+  }
+  .common_share_article_wrapper .share .sharearticle .shareBgCaption.verticalcover .icon {
+    position: static;
+  }
+  .common_share_article_wrapper .share .sharearticle .shareBgCaption.verticalcover .captioncnt {
+    justify-content: center;
+    color: rgb(var(--text-color));
+  }
+  .common_share_article_wrapper .share .sharearticle .shareBgCaption.verticalcover .divider {
+    background: rgb(var(--text-color));
+  }
+  .common_share_article_wrapper .share .sharearticle .shareBgCaption.verticalcover .buttonOpenWrapper {
+    margin-bottom: 0.5em;
+  }
+  .common_share_article_wrapper .share .sharearticle .shareBgCaption.verticalcover .buttonOpenWrapper button {
+    background: rgb(var(--color-shadow-base));
+  }
+  .common_share_article_wrapper .share .sharearticle .shareBgCaption.verticalcover .buttonOpenWrapper button:hover {
+    background: rgba(var(--color-shadow-base), 0.9);
+  }
+  .common_share_article_wrapper .share .sharearticle .shareBgCaption.verticalcover .tags div span {
+    text-shadow: none;
+    color: rgb(var(--text-color));
+  }
+  .common_share_article_wrapper .share .sharearticle .shareBgCaption.verticalcover .sys span {
+    text-shadow: none;
+    color: rgb(var(--text-color));
+  }
+}
+@media only screen and (max-width: 768px) {
+  .common_share_article_wrapper .shares .sharearticle .shareBgCaption {
+    contain: strict;
+  }
+  .common_share_article_wrapper .shares .sharearticle .shareBgCaption .starstoppanel,
+  .common_share_article_wrapper .shares .sharearticle .shareBgCaption .captioncnt .toppanel .socialsharewrapper {
+    padding-right: 0.5em;
   }
 }

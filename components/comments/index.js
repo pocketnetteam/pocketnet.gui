@@ -122,6 +122,8 @@ var comments = (function(){
 
 				if (id == '0')
 				{
+
+
 					if (areas[id])
 
 						areas[id].setText('');
@@ -201,7 +203,7 @@ var comments = (function(){
 		var actions = {
 			showprofile : function(address){
 
-				if(isMobile()){
+				if (self.app.mobileview){
 					self.nav.api.load({
 						open : true,
 						id : 'channel',
@@ -214,13 +216,13 @@ var comments = (function(){
 						}
 					})
 				}
-				else{
+				/*else{
 					self.nav.api.load({
 						open : true,
 						href : 'author?address=' + address,
 						history : true
 					})
-				}
+				}*/
 
 				
 			},
@@ -1223,8 +1225,6 @@ var comments = (function(){
 
 				var comment = self.app.platform.sdk.comments.find(txid, id, pid)
 
-				console.log('comment', comment)
-
 				if (!comment && listpreview && ed.lastComment){
 					comment = self.app.platform.sdk.comments.ini([ed.lastComment])[0]
 				}
@@ -1545,7 +1545,7 @@ var comments = (function(){
 						}
 
 						actions.lightarea(p.id || '0', c)
-						
+						areas[p.id || '0'] = this
 
 						// Hide the emoji button for mobiles and tablets
 						if (isMobile() || isTablet())
@@ -1951,7 +1951,9 @@ var comments = (function(){
 							el.c.removeClass('preview')
 
 							var __clbk = function(a, b){
-								clbk(a, b)
+
+								if (clbk)
+									clbk(a, b)
 
 
 								if (_clbk){
@@ -2021,6 +2023,10 @@ var comments = (function(){
 								
 								
 							})
+
+							if(clbk) clbk()
+
+							clbk = null
 
 							return
 						} else {
@@ -2174,7 +2180,6 @@ var comments = (function(){
 								return c.id == p.add
 							})
 
-							console.log('addcomment', addcomment, comments, p.add)
 
 							if (addcomment){
 								if(ed.fromtop)
@@ -2483,6 +2488,7 @@ var comments = (function(){
 
 		var makePreview = function(clbk){	
 
+
 			var p = {};
 
 			renders.post(function(area){
@@ -2514,6 +2520,7 @@ var comments = (function(){
 
 			var p = {};			
 
+
 			load.level(null, function(comments){
 
 				p.comments = self.app.platform.sdk.comments.storage[txid]['0']
@@ -2530,8 +2537,9 @@ var comments = (function(){
 
 					el.c.find('.loaderWrapper').addClass('hidden')
 
+
 					renders.post(function(area){
-						areas["0"] = area
+						
 
 						if (ed.reply){
 							actions.fastreply(ed.reply)
@@ -2632,7 +2640,8 @@ var comments = (function(){
 				ed = p.settings.essenseData || {}
 
 				preview = ed.preview || false;
-				listpreview = preview;
+				listpreview = ed.listpreview || false;
+
 				showedall = false;
 
 				txid = ed.txid || null
@@ -2648,7 +2657,7 @@ var comments = (function(){
 						showedall
 					};
 
-						data.ed = ed;
+					data.ed = ed;
 
 					self.app.platform.sdk.ustate.me(function(_mestate){
 
@@ -2757,7 +2766,7 @@ var comments = (function(){
 
 				
 
-				if(preview){
+				if (listpreview){
 					makePreview()
 				}
 				else{

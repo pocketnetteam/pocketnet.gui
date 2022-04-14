@@ -13,7 +13,7 @@ var post = (function () {
 
 		var primary = (p.history && !p.inWnd) || p.primary;
 
-		var el = {}, share, ed = {}, inicomments, eid = '', _repost = null, level = 0, external = null;
+		var el = {}, share, ed = {}, recommendationsenabled = false, inicomments, eid = '', _repost = null, level = 0, external = null, recommendations = null;
 
 		var player = null
 
@@ -21,15 +21,6 @@ var post = (function () {
 
 		var actions = {
 
-			/*pipmini : function(enable){
-				if (p.inWnd && self.container){
-					enable ? self.container.addClass('pipmini') : self.container.removeClass('pipmini')
-				}
-				else{
-
-				}
-			},*/
-			
 			pkoin : function(id){
 
 				if (share){
@@ -53,15 +44,7 @@ var post = (function () {
 			
 								essenseData : {
 									userinfo: userinfo,
-									balance : balance,
-									id : id,
-									embedding : {
-										type : 'pkoin',
-										id : share.address,
-										close : function(){
-											renders.articles();
-										},
-									},	
+									id : share.txid
 								}
 							})
 	
@@ -391,12 +374,10 @@ var post = (function () {
 
 					button.one('click', function(){
 
-						console.log("CLICK2")
 
 						$(this).closest('.jsPlayerLoading').addClass('loading') 
 						$(this).closest('.js-player-dummy').addClass('js-player-ini')
 
-						console.log("???")
 
 						actions.initVideo(function(v){
 
@@ -425,7 +406,6 @@ var post = (function () {
 
 				var pels = el.c.find('.js-player-ini');
 
-					console.log('pels', pels)
 
 				var wa =  !share.repost && !ed.repost && (((share.itisvideo() && isMobile() && !ed.openapi) || (ed.autoplay && pels.length <= 1))) ? true : false
 
@@ -496,7 +476,7 @@ var post = (function () {
 							playbackState,
 							duration
 						}){
-							if(playbackState == 'playing' && ((position > 15 && duration > 240) || startTime)){
+							if(playbackState == 'playing' && ((position > 15 && duration > 120) || startTime)){
 
 								self.app.platform.sdk.videos.historyset(share.txid, {
 									time : position,
@@ -1074,7 +1054,8 @@ var post = (function () {
 
 									showall: !ed.fromempty,
 									init: ed.fromempty || false,
-									preview: ed.fromempty || false,
+									preview: true,
+									listpreview : false,
 
 									fromtop: !ed.fromempty,
 									fromempty: ed.fromempty,
@@ -1643,6 +1624,23 @@ var post = (function () {
 				}
 			},
 
+			recommendations : function(clbk){
+
+				self.app.platform.ui.recommendations(el.reco, share, {
+					opensvi : ed.opensvi,
+					next : ed.next,
+
+					beforeopen : function(){
+						self.closeContainer()
+					}
+					
+				}, function(e, p){
+					recommendations = p
+
+					if(clbk) clbk()
+				})
+
+			},
 			
 		};
 
@@ -1792,8 +1790,18 @@ var post = (function () {
 				}
 				else{
 					renders.share(function () {
+
 						renders.comments(function () {
 						})
+
+						if (share.itisvideo() && !ed.repost && recommendationsenabled) {
+
+							renders.recommendations();
+
+						}
+						else {
+							el.reco.remove();
+						}
 					})
 				}
 
@@ -1832,6 +1840,9 @@ var post = (function () {
 
 			getdata: function (clbk, p) {
 
+
+				recommendationsenabled = self.app.platform.istest()
+
 				_repost = null
 
 				eid = p.settings.eid || ''
@@ -1868,7 +1879,8 @@ var post = (function () {
 
 							var data = {
 								ed: deep(p, 'settings.essenseData') || {},
-								share: share
+								share: share,
+								recommendationsenabled
 							};
 
 							self.app.platform.sdk.videos.info([share.url]).then(r => {
@@ -1904,10 +1916,13 @@ var post = (function () {
 			
 				
 				if (external){
-
 					external.destroy()
 					external = null
+				}
 
+				if (recommendations){
+					recommendations.destroy()
+					recommendations = null
 				}
 
 				self.app.actions.playingvideo(null)
@@ -1958,7 +1973,6 @@ var post = (function () {
 
 			init: function (p) {
 
-
 				p.clbk(null, p);
 
 				if(!share) return
@@ -1967,12 +1981,15 @@ var post = (function () {
 
 				el = {};
 				el.c = p.el.find('.poctelc');
+				el.reco = el.c.find('.recomandationsbgwrapper');
 				el.share = el.c.find('.share');
 				el.wr = el.c.find('.postWrapper')
 				el.wnd = el.c.closest('.wndcontent');
 
+
 				
-				if(share.itisarticle()){
+				
+				if (share.itisarticle()){
 					el.c.closest('.wnd').addClass('articlewindow')
 					el.c.addClass('sharec')
 				}
@@ -1987,7 +2004,7 @@ var post = (function () {
 
 			wnd: {
 				showbetter : true,
-				class: 'withoutButtons postwindow ' + (p.pip ? '' : 'normalizedmobile maxheight'),
+				class: 'withoutButtons postwindow nobfilter ' + (p.pip ? '' : 'normalizedmobile maxheight'),
 				pip : p.pip || false,
 				expand : function(){
 

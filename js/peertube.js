@@ -515,7 +515,7 @@ PeerTubePocketnet = function (app) {
         console.error(e)
 
         return Promise.reject(e)
-      });;
+      });
   };
 
 	var setactive = function (host) {
@@ -1201,7 +1201,6 @@ PeerTubePocketnet = function (app) {
 			app.peertubeHandler.api.proxy.getservers().then((_servers) => {
 				servers = _servers
 
-				console.log('servers', servers)
 			});
 
 		return self.api.proxy.bestChange({ type: 'upload' });
@@ -1391,7 +1390,6 @@ PeerTubePocketnet = function (app) {
 
 			if(path) path = '/' + path
 
-			console.log("server", server, hostip)
 
 			if(!server) {
 
@@ -1407,13 +1405,14 @@ PeerTubePocketnet = function (app) {
 				return data
 			}
 
-			console.log('app.useip()', app.useip())
 
 			if (app.useip()) secure = false
 
 			if (secure) protocol = protocol + 's'
 
 			hostip = app.useip() ? server.ip : server.host
+
+
 
 			data.current = protocol + "://" + hostip + path
 			data.ip = server.ip

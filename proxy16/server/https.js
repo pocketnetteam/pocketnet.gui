@@ -17,7 +17,7 @@ var Server = function(settings, admins, manage){
     var app = null;
     var server = null;
     var httpserver = null;
-    var middle = new Middle()
+    var middle = new Middle(self)
     var iplimiter = new Iplimiter(settings.iplimiter)
 
     var startedDate = null

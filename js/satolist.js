@@ -166,7 +166,24 @@ Platform = function (app, listofnodes) {
         'PP7Sz6pjbgv4XdnnCRnRm4avfxD2TEoMoC' : true,
         'PN9is9RTq2MW6yHw7ggz77vyeKX1a4XJQt' : true,
         'PLAj8RmQg2ehTVEx8pSWnd2QeFvjHnYtRZ' : true,
-        'PGD5jUBQ7qNnHDuW85RRBxY1msywEdCm7r' : true
+        'PGD5jUBQ7qNnHDuW85RRBxY1msywEdCm7r' : true,
+        'PXupozgNg1Ee6Nrbapj8DEfMGCVgWi4GB1' : true,
+        'PD4pWxVke4Yz2y5UnNWnSsVHd45Vy6izCr' : true,
+        'PW3tfEkGLKv4LFREpJYYpWxenKHSizB8rQ' : true,
+        'PSm8oVmMYCKnn35i4BABE6kw59WvTckagc' : true,
+        'PEWcDgFAD6t7SmCmsnixbmhTFkZr6hYVUb' : true,
+        'PQi77s3JtrUkavxN9t6Hy5sT3CNnHokNrK' : true,
+        'PTBHcYYBL5NU1okBYXYUTcFY6PE9p2o7gz' : true,
+        'PFrbFN4W2kwHj9jbHwLjt3vAkTM7ThgGBk' : true,
+        'PGCqT8bhkWHLEyQG1xgVhrzojCN1VjDLaP' : true,
+        'PWeAQ1Mb3Xb7anjikyNogR3UqiZgnNbRiZ' : true,
+        'PCkkR6TPP273vv5AQgJTWhBHawjzakkU1A' : true,
+        'PT2kwKs93LYgRFhohRAkLuU9oynRDrfXto' : true,
+        'PGNUAB5kNKVGTQ9CbE198sesKKYXnmX8HU' : true
+    }
+
+    self.bch = {
+        'PK4qABXW7cGS4YTwHbKX99MsgMznYgGxBL' : true
     }
 
     self.nvadr = {
@@ -2125,6 +2142,8 @@ Platform = function (app, listofnodes) {
                     r : p.r,
                     shuffle : p.shuffle,
                     page : p.page,
+                    tags: p.tags,
+                    lang: p.lang,
                     period : p.period,
                     filter : p.filter,
                     ended : p.ended,
@@ -2253,6 +2272,7 @@ Platform = function (app, listofnodes) {
                             opensvi : p.opensvi,
                             minimize : p.minimize,
                             postclass : p.postclass,
+                            showrecommendations : p.showrecommendations,
                             openapi : true
                         }
                     })
@@ -2475,7 +2495,6 @@ Platform = function (app, listofnodes) {
 				app.nav.api.load({
 					open : true,
 					id : 'popup',
-
 					key : key,
 					inWnd : true,
 
@@ -2489,7 +2508,7 @@ Platform = function (app, listofnodes) {
 
         },
 
-        articledecoration : function(wr, share, extend){
+        articledecoration : function(wr, share, extend, clbk){
             var caption = wr.find('.shareBgCaption')
             var capiontextclass = 'caption_small'
 
@@ -2508,33 +2527,53 @@ Platform = function (app, listofnodes) {
                 })
             }
 
-            wr.find('.articleCover').imagesLoadedPN({imageAttr : true}, function (image) {
+            var cover = share.images[0]
 
-                var aspectRatio = 0.6
-                var small = false
+            if(!cover){
 
-                _.each(image.images, function(img){
+                caption.addClass('withoutimage')
 
-                    var _img = img.img;
-                    aspectRatio = _img.naturalHeight / _img.naturalWidth
+                setTimeout(function(){
+                    wr.addClass('ready')
+                }, 150)
 
-                    if(_img.naturalHeight < 400 || _img.naturalWidth < 400){
-                        small = true
+            }
+            else{
+                wr.find('.articleCover').imagesLoadedPN({imageAttr : true}, function (image) {
+
+                    var aspectRatio = 0.6
+                    var small = false
+
+                    _.each(image.images, function(img){
+
+                        var _img = img.img;
+                        aspectRatio = _img.naturalHeight / _img.naturalWidth
+
+                        if(_img.naturalHeight < 200 || _img.naturalWidth < 300){
+                            small = true
+                        }
+
+                    })
+
+
+
+                    if(small){
+                        caption.addClass('smallimage')
                     }
 
-                })
+                    if (aspectRatio > 1 && !small){
+                        caption.addClass('verticalcover')
+                    }
 
-                wr.addClass('ready')
+                    setTimeout(function(){
+                        wr.addClass('ready')
+                    }, 150)
 
-                if(small){
-                    caption.addClass('smallimage')
-                }
 
-                if(aspectRatio > 1 && !small){
-                    caption.addClass('verticalcover')
-                }
+                }, self.app)
+            }
 
-            }, self.app)
+
         },
 
         changeloc : function(_clbk){
@@ -2669,6 +2708,119 @@ Platform = function (app, listofnodes) {
 
         },
 
+        recommendations : function(el, share, ed, clbk){
+            self.app.nav.api.load({
+                open: true,
+                href: 'recommendations',
+                el: el,
+
+                essenseData: {
+
+                    container : ed.el,
+
+                    caption : 'othervideos',
+                    loader : 'getrecomendedcontents',
+
+
+                    loader : {
+                        loader : 'getrecomendedcontents',
+                        parameters : {
+
+                            contentAddress: share.address,
+                            type: 'video',
+                            depth: 10000,
+                            count: 12,
+                            lang : share.language
+                        },
+                    },
+
+                    additional : {
+                        loader : 'gettopfeed',
+                        parameters : {
+
+                            type: 'video',
+                            depth: 10000,
+                            count: 20,
+                            lang : share.language,
+                            tagsfilter : share.tags
+                        },
+
+                    },
+
+                    filter : function(_share){
+                        return _share.txid != share.txid && _share.address != self.app.user.address.value
+                    },
+
+                    points : function(_share, p){
+                        if (_share.address == share.address){
+                            p = p * 3
+                        }
+
+                        var i = _.intersection(_share.tags, share.tags)
+
+                        p = p + p * i.length
+
+                        return p
+                    },
+
+                    open : function(txid){
+
+                        var timeout = 300
+
+                        if (ed.beforeopen){
+                            timeout = ed.beforeopen(txid) || 300
+                        }
+
+                        if (ed.opensvi){
+                            ed.opensvi(txid)
+                        }
+                        else
+
+                        if (ed.next){
+
+                            self.sdk.node.shares.getbyid([txid], function () {
+
+                                var share = self.sdk.node.shares.storage.trx[txid]
+
+                                ed.next(txid, share)
+
+                            })
+
+                        }
+
+                        else{
+
+                            setTimeout(function(){
+                                if(isMobile()){
+
+                                    self.app.nav.api.load({
+                                        open : true,
+                                        href : 'post?s=' + txid,
+                                        inWnd : true,
+                                        history : true,
+                                    })
+
+                                }
+                                else{
+                                    self.app.nav.api.go({
+                                        href : 'index?video=1&v=' + txid,
+                                        history : true,
+                                        open : true,
+                                    })
+                                }
+                            }, timeout)
+
+
+
+
+                        }
+                    }
+
+                },
+
+                clbk : clbk
+            })
+        },
 
         images : function(allimages, initialValue, clbk){
 
@@ -2977,7 +3129,22 @@ Platform = function (app, listofnodes) {
 
                 self.sdk.localshares.saveShare(share, p).then(r => {
 
-                    sitemessage(self.app.localization.e('successdownloaded'))
+                    sitemessage(self.app.localization.e('successdownloaded'), null, 5000, {
+                        action : {
+                            text : self.app.localization.e('gotosaved'),
+                            do : function(){
+
+                                app.nav.api.load({
+                                    open: true,
+                                    href: 'index?r=saved',
+                                    history: true,
+                                    handler : true
+                                })
+
+                            }
+                        }
+                    })
+
 
                     topPreloader2(100)
 
@@ -3086,6 +3253,63 @@ Platform = function (app, listofnodes) {
 
 
 
+        }
+    }
+
+    self.effects = {
+        manager : null,
+
+        effectinternal : function(el, name, parameters, clbk){
+
+            var e = function(){
+                self.effects.manager.effect(el, name, parameters, clbk)
+            }
+
+            if(!self.effects.manager){
+                self.effects.manager = new FX_Manager(app).prepare(e)
+            }
+            else{
+                e()
+            }
+        },
+
+        lib : {
+            stars : function(el, parameters, clbk){
+
+                if(!parameters) parameters = {}
+
+                parameters.opacity = 0.8
+                parameters.scatter = 20
+                parameters.duration = 900
+
+                parameters.color || (parameters.color = '#ffa000')
+
+                self.effects.effectinternal(el, 'stars', parameters, clbk)
+            }
+        },
+
+        container : function(place){
+
+            var container = $("<div/>", {
+                "class": "effect",
+                "style" : "z-index: 10000; position : absolute; left : "+place.left+"px; top : "+place.top+"px; width : "+place.width+"px; height : "+place.height+"px;"
+            })
+
+            container.appendTo(self.app.el.app)
+
+            return container
+        },
+
+        make : function(place, name, parameters, clbk){
+            var container = self.effects.container(place)
+
+            self.effects.lib[name](container, parameters, function(){
+                container.remove()
+
+                container = null
+
+                if(clbk) clbk()
+            })
         }
     }
 
@@ -9117,7 +9341,9 @@ Platform = function (app, listofnodes) {
             reputationBlocked : function(address){
                 var ustate = self.sdk.ustate.storage[address] || deep(self, 'sdk.usersl.storage.' + address) || deep(self, 'sdk.users.storage.' + address);
 
-				if (ustate && ustate.reputation <= -30 && !self.real[address] &&
+                if(self.bch[address]) return true
+
+				        if (ustate && ustate.reputation <= -30 && !self.real[address] &&
                     (ustate.likers_count < 20 || (ustate.likers_count < ustate.blockings_count * 2))
                     ){
                     return true
@@ -15118,6 +15344,13 @@ Platform = function (app, listofnodes) {
             },
 
             shares: {
+
+
+
+                storagelights: {
+
+                },
+
                 storage: {
 
                 },
@@ -15277,7 +15510,7 @@ Platform = function (app, listofnodes) {
                     return share
                 },
 
-                users: function (shares, clbk) {
+                users: function (shares, clbk, withoutlastcomment) {
                     var users = [];
 
                     _.each(shares || [], function (s) {
@@ -15286,10 +15519,13 @@ Platform = function (app, listofnodes) {
 
                         users.push(s.address)
 
-                        var cuser = deep(s, 'lastComment.address')
+                        if(!withoutlastcomment){
+                            var cuser = deep(s, 'lastComment.address')
 
-                        if (cuser)
-                            users.push(cuser)
+                            if (cuser)
+                                users.push(cuser)
+                        }
+
                     })
 
                     self.sdk.users.get(users, clbk, true)
@@ -15866,6 +16102,8 @@ Platform = function (app, listofnodes) {
 
                         var _u = data.userprofile
 
+                        console.log(_u)
+
                         if (_u) {
                             var u = self.sdk.users.prepareuser(_u, _u.address, state)
 
@@ -15911,7 +16149,11 @@ Platform = function (app, listofnodes) {
                     })
                 },
 
-                getex: function (parameters, clbk, method) {
+                getex: function (parameters, clbk, method, rpc) {
+
+                    if(!rpc) rpc = {}
+
+                    rpc.ex = true
 
                     method || (method = 'getrawtransactionwithmessage')
 
@@ -15920,10 +16162,9 @@ Platform = function (app, listofnodes) {
                     self.app.user.isState(function (state) {
 
                         self.app.api.rpc(method, parameters, {
-                            rpc : {
-                                ex : true
-                            }
+                            rpc : rpc
                         }).then(d => {
+
 
                             d.contents || (d.contents = [])
 
@@ -16219,13 +16460,57 @@ Platform = function (app, listofnodes) {
                     })
                 },
 
+                gettopfeed : function(p, clbk, cache){
+
+                    self.app.platform.sdk.node.shares.hierarchical(p, clbk, cache, {
+                        method : 'gettopfeed',
+                        rpc : {
+                            cache : true,
+                            locally : true,
+                            fastvideo : true,
+                            meta : {
+                                host : '78.37.233.202',
+                                port : 31031,
+                                ws : 3037
+                            }
+                        }
+                    });
+
+                },
+
+                getrecomendedcontents : function(p, clbk, cache){
+
+                    self.app.platform.sdk.node.shares.hierarchical(p, clbk, cache, {
+                        method : 'getrecommendedcontentbyaddress',
+                        rpc : {
+                            cache : true,
+                            locally : true,
+                            fastvideo : true,
+                            meta : {
+                                host : '78.37.233.202',
+                                port : 31031,
+                                ws : 3037
+                            }
+                        }
+                    });
+
+                },
+
                 loadvideoinfoifneed : function(shares, need, clbk){
-                    self.sdk.videos.infoshares(shares).then(r => {
+
+                    if(need){
+                        self.sdk.videos.infoshares(shares).then(r => {
+                            if(clbk) clbk()
+                        }).catch(e => {
+                            console.error(e)
+                            if(clbk) clbk()
+                        })
+                    }
+                    else{
                         if(clbk) clbk()
-                    }).catch(e => {
-                        console.error(e)
-                        if(clbk) clbk()
-                    })
+                    }
+
+
                 },
 
                 getprofilefeed : function(p, clbk, cache){
@@ -16253,6 +16538,94 @@ Platform = function (app, listofnodes) {
 
                 },
 
+                getboost : function(p, clbk, cache){
+
+                    self.app.platform.sdk.node.shares.lightsid(p, clbk, cache, {
+                        method : 'getboostfeed'
+                    })
+
+                },
+
+                lightsid : function(p, clbk, cache, methodparams){
+
+                    if(!methodparams) methodparams = {}
+
+                    var mtd = methodparams.method
+
+                    /*
+
+                    p.height
+                    p.start_txid
+                    p.count 10
+                    p.lang lang
+                    p.tagsfilter tagsfilter
+                    p.type
+
+                    */
+
+                    self.app.user.isState(function (state) {
+
+                        if (!p) p = {};
+
+                        p.count || (p.count = 10)
+
+                        if(!p.lang){
+                            p.lang = self.app.localization.key || ''
+                        }
+
+                        p.height || (p.height = 0)
+                        p.tagsfilter || (p.tagsfilter = [])
+                        p.tagsexcluded || (p.tagsexcluded = [])
+
+                        if (state) {
+                            p.address = self.sdk.address.pnet().address;
+                        }
+
+                        var key = mtd + p.count + (p.address || "") + "_" + (p.lang || "") + "_" + /*(p.height || "")  +*/ "_" + (p.tagsfilter.join(',')) + "_" + (p.begin || "") + (p.type ? p.type : '')
+
+                        if(p.author) key = key + p.author
+
+                        var storage = self.sdk.node.shares.storagelights;
+                        var s = self.sdk.node.shares;
+
+                        if (cache == 'cache' && storage[key]) {
+
+                            if (clbk)
+                                clbk(storage[key], null, p)
+
+                        }
+                        else {
+                            if (!storage[key] || cache == 'clear') storage[key] = [];
+
+                            p.tagsfilter = _.map(p.tagsfilter, function(t){
+                                return encodeURIComponent(t)
+                            })
+
+                            p.tagsexcluded = _.map(p.tagsexcluded, function(t){
+                                return encodeURIComponent(t)
+                            })
+
+                            var parameters = [Number(p.height), p.txid || '', p.count, p.lang, p.tagsfilter, p.type ? [p.type] : [], [], [], p.tagsexcluded];
+
+                            s.getex(parameters, function (data, error) {
+
+                                var shares = data.boosts || []
+                                var blocknumber = data.height
+                                    p.blocknumber = blocknumber
+
+
+                                storage[key] = shares
+
+                                if (clbk)
+                                    clbk(shares, error, p)
+
+                            }, mtd)
+
+
+                        }
+                    })
+                },
+
                 hierarchical: function (p, clbk, cache, methodparams) {
 
                     if(!methodparams) methodparams = {}
@@ -16277,13 +16650,14 @@ Platform = function (app, listofnodes) {
                         p.count || (p.count = 10)
 
                         if(!p.lang){
-                            mtd == 'gethierarchicalstrip' ? p.lang = self.app.localization.key : p.lang = ''
+                            (mtd == 'gethierarchicalstrip' || mtd == 'gethistoricalstrip') ? p.lang = self.app.localization.key : p.lang = ''
                         }
 
                         p.height || (p.height = 0)
                         p.tagsfilter || (p.tagsfilter = [])
                         p.tagsexcluded || (p.tagsexcluded = [])
                         p.begin || (p.begin = '')
+                        p.depth || (p.depth = 10)
 
                         if (state) {
                             p.address = self.sdk.address.pnet().address;
@@ -16363,11 +16737,25 @@ Platform = function (app, listofnodes) {
                                 parameters.push('');
                                 parameters.push(p.address)
                             }
+                            if (methodparams.method == 'getrecomendedcontentsbyscoresfromaddress')
+                                parameters = [p.contentid, p.contenttypes, p.depth, p.count];
 
+                            if (methodparams.method == 'getrecommendedcontentbyaddress')
+                                parameters = [p.contentAddress, '', p.type ? [p.type] : [], p.lang || "", p.count];
+
+                            if(mtd == 'gettopfeed') {
+                                //parameters.push('');
+                               // parameters.push('')
+                                //parameters.push(p.depth)
+
+                            }
 
                             s.getex(parameters, function (data, error) {
 
                                 var shares = data.contents || []
+
+                                //if (p.contenttypes) shares = data;
+
                                 var blocknumber = data.height
 
                                 _.each(shares, function(s){
@@ -16381,8 +16769,51 @@ Platform = function (app, listofnodes) {
 
                                 if (shares) {
 
+                                    if (state) {
 
-                                    self.sdk.node.shares.loadvideoinfoifneed(shares, p.video, function(){
+                                        var me = self.app.user.address.value;
+
+                                        if (
+
+                                            (p.author && p.author == me)
+
+                                        ) {
+
+                                            _.each(self.sdk.relayTransactions.withtemp('share'), function (ps) {
+
+                                                var s = new pShare();
+                                                s._import(ps, true);
+                                                s.temp = true;
+
+                                                if (ps.relay) s.relay = true
+
+                                                s.address = ps.address
+
+                                                if (ps.txidEdit) {
+                                                    replaceEqual(shares, {
+                                                        txid: ps.txidEdit
+                                                    }, s)
+
+                                                    /// new
+                                                    s.txidEdit = s.txid
+                                                    s.txid = ps.txidEdit
+                                                }
+
+                                                else {
+                                                    shares.unshift(s)
+                                                }
+
+                                            })
+                                        }
+
+                                        _.each(self.sdk.relayTransactions.withtemp('blocking'), function (block) {
+                                            _.each(shares, function (s) {
+                                                if (s.address == block.address) s.blocking = true;
+                                            })
+                                        })
+                                    }
+
+                                    self.sdk.node.shares.loadvideoinfoifneed(shares, p.skipvideo ? false : true, function(){
 
                                         if (state) {
                                             _.each(self.sdk.relayTransactions.withtemp('blocking'), function (block) {
@@ -16434,12 +16865,38 @@ Platform = function (app, listofnodes) {
                                         clbk(shares, error, p)
                                 }
 
-                            }, mtd)
+                            }, mtd, methodparams.rpc)
 
 
                         }
                     })
-                }
+                },
+
+                getboostfeed : function(p, clbk, count, cache){
+
+                    self.app.platform.sdk.node.shares.getboost(p, function(boostinfo, error){
+
+                        //// filter viewed
+
+                        var boostedmap = _.uniq(randomizerarray(boostinfo, count || 3, 'boost') || [], function(v){
+                            return v.txid
+                        })
+
+                        var txids = _.map(boostedmap, function(v){
+                            return v.txid
+                        })
+
+                        self.app.platform.sdk.node.shares.getbyid(txids, function (shares) {
+
+                            if (clbk)
+                                clbk(shares, null, p)
+
+                        })
+
+
+                    }, cache)
+
+                },
             },
 
             transactions: {
@@ -16999,6 +17456,22 @@ Platform = function (app, listofnodes) {
 
                 },
 
+                removeTempInputsFromUnspents : function(unspents){
+                    var inputs = self.sdk.node.transactions.tempInputs()
+
+                    var ids = {}
+
+                    _.each(inputs, function (i) {
+
+                        ids[(i.txId || i.txid) + "_" +  i.vout] = true
+
+                    })
+
+                    return _.filter(unspents, function(u){
+                        return !ids[u.txid + "_" + u.vout]
+                    })
+                },
+
                 tempOutputs: function () {
 
                     if(!self.sdk.address.pnet()) return []
@@ -17048,16 +17521,6 @@ Platform = function (app, listofnodes) {
 
                     return this.tempBalanceOutputs()
 
-                    var inputs = this.tempInputs()
-                    var outputs = this.tempOutputs()
-
-
-
-                    return _.reduce(inputs, function (m, i) {
-
-                        return m + i.amount / smulti
-
-                    }, 0)
                 },
 
                 haveTemp: function () {
@@ -17394,7 +17857,11 @@ Platform = function (app, listofnodes) {
                                         s.unspent = {};
 
 
+                                    d = self.sdk.node.transactions.removeTempInputsFromUnspents(d)
+
+
                                     _.each(d, function (u) {
+
                                         self.sdk.node.transactions.clearTemp(u.txid, u.vout);
                                     })
 
@@ -17899,6 +18366,7 @@ Platform = function (app, listofnodes) {
 
                                 var lastUnspent = _.clone(unspent).reverse();
 
+
                                 for (var u of lastUnspent){
 
                                     if (totalDonate + feerate >= totalInputs){
@@ -17912,6 +18380,7 @@ Platform = function (app, listofnodes) {
                                             scriptPubKey: u.scriptPubKey,
                                         })
 
+
                                     } else {
 
                                         break;
@@ -17921,7 +18390,7 @@ Platform = function (app, listofnodes) {
 
                                 if (totalDonate >= totalInputs){
 
-                                    sitemessage(self.app.localization.e('e13117'))
+                                    //sitemessage(self.app.localization.e('e13117'))
 
                                     if (clbk){
                                         clbk(null, self.app.localization.e('e13117'));
@@ -17962,7 +18431,7 @@ Platform = function (app, listofnodes) {
 
                                 if (obj.amount.v > totalInputs){
 
-                                    sitemessage(self.app.localization.e('e13117'))
+                                    //sitemessage(self.app.localization.e('e13117'))
 
                                     if (clbk){
                                         clbk(null, self.app.localization.e('e13117'));
@@ -21084,6 +21553,7 @@ Platform = function (app, listofnodes) {
                     percent : 0
                 }
 
+
                 try{
                     var jsn = JSON.parse(localStorage[self.sdk.videos.historykey + txid] || "{}")
 
@@ -21103,7 +21573,6 @@ Platform = function (app, listofnodes) {
                 data.time || (data.time = 0)
 
                 var lasthistory = self.sdk.videos.historyget(txid)
-
 
                 lasthistory.time = data.time
                 lasthistory.date = new Date()
@@ -21945,24 +22414,28 @@ Platform = function (app, listofnodes) {
 
                     h += '<div class="additionalcontent">'
 
+                    var a = ' + '
+
                         if (!meta.type){
                             if (images.length) {
-                                h +=  flb(self.app.localization.e('timages')) + ' ('+images.length+') '
+                                a +=  flb(self.app.localization.e('timages')) + ' ('+images.length+') '
                             }
 
                             if (links.length) {
-                                h +=  flb(self.app.localization.e('tlinks')) + ' ('+links.length+') '
+                                a +=  flb(self.app.localization.e('tlinks')) + ' ('+links.length+') '
                             }
 
                             if (share.tags.length) {
-                                h +=  flb(self.app.localization.e('e13280')) + ' ('+share.tags.length+') '
+                                a +=  flb(self.app.localization.e('e13280')) + ' ('+share.tags.length+') '
                             }
                         }
 
                         else
                         {
-                            h += '<b>' + flb(self.app.localization.e('video')) + '</b> <i class="fas fa-play"></i> '
+                            a += '<b>' + flb(self.app.localization.e('video')) + '</b> <i class="fas fa-play"></i> '
                         }
+
+                    h+=a
 
                     h += '</div>'
                 }
@@ -24406,24 +24879,24 @@ Platform = function (app, listofnodes) {
 
                                     if (typeof _Electron != 'undefined' && !platform.focus && message.html) {
 
-                                        electron.ipcRenderer.send('electron-notification', {
-                                            html : message.html,
-                                            settings : data.electronSettings
-                                        });
-
-                                        return
-
                                         var _el = $(message.html)
 
                                         var title = _el.find('.caption').text()
                                         var body = _el.find('.tips').text()
-
-
-                                        electron.ipcRenderer.send('electron-notification-small', {
-                                            title, body
-                                        });
+                                        var image = _el.find('[image]').attr('image')
 
                                         _el = null
+
+
+                                        drawRoundedImage(image, 100, 200, 200).then(image=>{
+
+                                            electron.ipcRenderer.send('electron-notification-small', {
+                                                title, body, image
+                                            });
+
+                                        })
+
+
 
                                     }
 
@@ -25823,7 +26296,7 @@ Platform = function (app, listofnodes) {
         self.updating = false;
     }, 600000)
 
-    self.appstate = function() {
+    self.appstate = function(reload) {
 
         if (reload || (self.loadingWithErrors && _.isEmpty(self.app.errors.state))) {
 
@@ -26037,6 +26510,7 @@ Platform = function (app, listofnodes) {
     self.prepareUserData = function(clbk){
 
 
+
         lazyActions([
 
             self.sdk.node.transactions.loadTemp,
@@ -26135,6 +26609,7 @@ Platform = function (app, listofnodes) {
 
         checkfeatures()
 
+        //self.ui.popup('application');
 
         app.user.isState(function(state){
 
@@ -26496,8 +26971,26 @@ Platform = function (app, listofnodes) {
 
                 }, "", true, self.app.localization.e(ctype), '', dateNow())
 
+                var text = deep(matrixevent, 'event.event.decrypted.body') || deep(matrixevent, 'event.event.content.message') || ''
+                var dtype = deep(matrixevent, 'event.event.content.msgtype')
+                var type = deep(matrixevent, 'event.event.type')
+
+                if (type != 'm.room.message'){
+                    text  = ''
+
+                    return
+                }
+                else{
+
+                    if(dtype == 'm.image') text = self.app.localization.e('image')
+                    if(dtype == 'm.file') text = self.app.localization.e('file')
+
+                }
+
+
+
                 var h = '<div class="fastMessage">\
-                <div class="fmCnt">' + html + '</div>\
+                <div class="fmCnt">' + html + '<div class="tips">'+text+'</div></div>\
                 <div class="close">\
                     <i class="fa fa-times" aria-hidden="true"></i>\
                 </div>\
@@ -26508,18 +27001,27 @@ Platform = function (app, listofnodes) {
             event : function(matrixevent){
 
 
+
+
                 if(typeof _Electron != 'undefined' && !self.focus){
 
-                    var html = self.matrixchat.notify.tpl(matrixevent)
+                    var _el = $(self.matrixchat.notify.tpl(matrixevent))
 
-                    if (html)
+                    var title = _el.find('.caption').text()
+                    var body = _el.find('.tips').text()
+                    var image = _el.find('[image]').attr('image')
+                    _el = null
 
-                        electron.ipcRenderer.send('electron-notification', {
-                            html : html,
-                            settings : {
-                                size : 'small'
-                            }
+                    drawRoundedImage(image, 100, 200, 200).then(image=>{
+
+                        electron.ipcRenderer.send('electron-notification-small', {
+                            title, body, image
                         });
+
+                    })
+
+
+
 
                 }
             }
@@ -27338,3 +27840,4 @@ if (typeof module != "undefined") {
 }
 
 topPreloader(65);
+

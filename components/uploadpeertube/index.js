@@ -134,7 +134,6 @@ var uploadpeertube = (function () {
 
 				nameError.text('');
 
-				console.log('videoInputFile[0].size', videoInputFile[0].size);
 
 				if (videoInputFile[0].size > 4 * 1024 * 1024 * 1024) {
 					el.videoError.text(self.app.localization.e('videoSizeError'));
@@ -477,7 +476,6 @@ var uploadpeertube = (function () {
 						}
 					});
 
-				console.log(data, options);
 			});
 
 			el.importUrl.click(() => {
@@ -624,12 +622,13 @@ var uploadpeertube = (function () {
 				self.app.peertubeHandler.api.user
 					.me()
 					.then((res) => {
-
 						data.hasAccess = true;
 
 						clbk(data);
 					})
 					.catch((e = {}) => {
+
+						self.app.peertubeHandler.clear()
 
 						self.app.Logger.error({
 							err: e.text || 'getInfoError',
@@ -643,6 +642,7 @@ var uploadpeertube = (function () {
 						self.app.platform.sdk.ustate.canincrease(
 							{ template: 'video' },
 							function (r) {
+
 								data.increase = r;
 
 								clbk(data);

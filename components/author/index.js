@@ -1310,6 +1310,7 @@ var author = (function(){
 			renders.authorcaption(function(){
 				make(true);
 
+
 				self.sdk.activity.adduser('visited', author.address)
 
 				if(self.user.isItMe(author.address)){
@@ -1362,7 +1363,6 @@ var author = (function(){
 
 					author.data = self.sdk.users.storage[author.address]
 
-					console.log('author.data', author.data)
 
 					var data = {
 						author : author

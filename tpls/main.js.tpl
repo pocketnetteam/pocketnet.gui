@@ -3,7 +3,7 @@ if (global.WRITE_LOGS) {
     global.LOG_LEVEL = global.WRITE_LOGS.split("=").pop()
 }
 
-__VAR__.globaltest
+const notifier = require('node-notifier');
 
 var open = require("open");
 
@@ -31,11 +31,13 @@ const log = require('electron-log');
 const is = require('electron-is');
 const fs = require('fs');
 const asyncFs = require('fs/promises');
+const os = require("os");
 const AutoLaunch = require('auto-launch');
 const contextMenu = require('electron-context-menu');
 const path = require('path');
 const http = require('http');
 const https = require('https');
+const request = require('request');
 
 contextMenu({
     showSearchWithGoogle : false,
@@ -657,18 +659,43 @@ function createWindow() {
 
     })
 
-    ipcMain.on('electron-notification-small', function(e, p) {
-
-        var n = new Notification({ title : p.title, body: p.body, silent :true, icon: defaultIcon })
-
-        n.onclick = function(){
-
-            if (win) {
-                win.show();
-            }
+    ipcMain.on('electron-notification-small', async (e, p) => {
+        let pathImage = defaultIcon;
+        if(p.image){
+            pathImage= await saveBlobToFile(p.image)
         }
 
-        n.show()
+        if (!is.windows()) {
+
+            const n = new Notification({ title: p.title, body: p.body, silent: true, icon: pathImage })
+
+            n.onclick = function () {
+
+                if (win) {
+                    win.show();
+                }
+            }
+
+            n.show()
+        }
+        else {
+
+            notifier.notify(
+                {
+                    appID : 'app.pocketnet.gui',
+                    title: p.title,
+                    message: p.body,
+                    icon: pathImage, // Absolute path (doesn't work on balloons)
+                    wait: true // Wait with callback, until user action is taken against notification, does not apply to Windows Toasters as they always wait or notify-send as it does not support the wait option
+                },
+                function (err, response, metadata) {
+                    if (win) {
+                        win.show();
+                    }
+                }
+            );
+
+        }
 
     })
 
@@ -1065,10 +1092,21 @@ if(!r) {
             }
         })
     }
-
-
-
-
-
-
 }
+
+const saveBlobToFile = async (blob)=>{
+    return new Promise((resolve, reject) => {
+        if(!fs.existsSync(path.join(os.tmpdir(), "bastyon"))){
+            fs.mkdirSync(path.join(os.tmpdir(), "bastyon"))
+        }
+        var base64Data = blob.replace(/^data:image\/png;base64,/, "");
+        const pathImage = path.join(os.tmpdir(), "bastyon", `${Math.floor(Math.random() * 1000000000)}.png`);
+        fs.writeFile(pathImage, base64Data, 'base64', function(err) {
+            if(err){
+                reject(err);
+            }else{
+                resolve(pathImage)
+            }
+        });
+    });
+};

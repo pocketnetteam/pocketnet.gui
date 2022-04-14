@@ -40,7 +40,6 @@ var electronnav = (function(){
 			primary : primary,
 
 			getdata : function(clbk){
-console.log("DSADSA")
 				var data = {};
 
 				clbk(data);

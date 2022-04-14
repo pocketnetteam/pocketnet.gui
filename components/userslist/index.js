@@ -111,6 +111,7 @@ var userslist = (function(){
 		var events = {
 			loadmorescroll : function(){
 
+
 				if (
 
 					(el.c.height() - scnt.scrollTop() < 1000) 
@@ -268,7 +269,14 @@ var userslist = (function(){
 
 		var make = function(){
 			makepage(function(){
-				scnt.on('scroll', events.loadmorescroll)
+
+				if(scnt.hasClass('applicationhtml')){
+					self.app.events.scroll['userlist'] = events.loadmorescroll
+				}
+				else{
+					scnt.on('scroll', events.loadmorescroll)
+				}
+				
 			})
 		}
 
@@ -321,6 +329,7 @@ var userslist = (function(){
 			destroy : function(){
 
 				scnt.off('scroll', events.loadmorescroll)
+				delete self.app.events.scroll['userlist']
 				//scnt.removeEventListener('scroll', events.loadmorescroll)
 
 				delete self.app.platform.clbks.api.actions.subscribe.userlist

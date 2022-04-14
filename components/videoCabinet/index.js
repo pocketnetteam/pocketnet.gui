@@ -137,7 +137,6 @@ var videoCabinet = (function () {
 					.catch(() => {
 						peertubeServers[server].isFull = true;
 
-						console.log(`Error loading ${server}`);
 						return [];
 					});
 			},
@@ -162,7 +161,6 @@ var videoCabinet = (function () {
 					.rpc('searchlinks', [videoArray, 'video', 0, videoArray.length])
 
 					.then((res = []) => {
-						console.log('RESULT ', res);
 
 						res.forEach((post) => {
 							const postUrl = decodeURIComponent(post.u);
@@ -170,7 +168,6 @@ var videoCabinet = (function () {
 							blockChainInfo[postUrl] = { ...post };
 						});
 
-						console.log('blockChainInfo', blockChainInfo);
 					})
 					.catch((err) => { }),
 
@@ -205,7 +202,6 @@ var videoCabinet = (function () {
 					return self.app.api
 						.rpc('getcontentsstatistic', [[address], 'video'], {})
 						.then((r) => {
-							console.log('RE', r);
 
 							var d =
 								_.find(r || [], function (obj) {
@@ -660,7 +656,6 @@ var videoCabinet = (function () {
 							),
 						);
 
-						console.log('blockchainStrings', blockchainStrings);
 
 						//get information about videos being published to blockchain
 						actions.getBlockchainPostByVideos(blockchainStrings).then(() => {

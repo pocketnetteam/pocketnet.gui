@@ -59,6 +59,7 @@ const posts = {
 }
 
 const publics = {
+    getcontent: true,
     getcontents: true,
     getlastcomments: true,
     gettags: true,
@@ -122,7 +123,8 @@ const publics = {
     getstatisticbydays: true,
     getstatisticcontentbyhours: true,
     getstatisticcontentbydays: true,
-    getrecomendedcontentsbyscoresonsimilarcontents : true,
+    gettopfeed : true,
+    getrecommendedcontentbyaddress: true,
     getrecomendedcontentsbyscoresfromaddress : true,
 }
 
@@ -160,6 +162,7 @@ function rpc(request, callback, obj) {
     var pst = posts[request.method]
     var timeout = 45000
     var self = obj;
+
 
     try{
         request = JSON.stringify(request);
@@ -419,6 +422,7 @@ RpcClient.callspec = {
     getrandomcontents : 'str',
     getrecomendedcontentsbyscoresfromaddress : 'str obj int int int',
     getrecomendedaccountsbytags : 'obj int',
+    getcontent: 'obj',
     getcontents: 'str',
     getlastcomments: 'str str str',
     gettags: 'str',
@@ -445,7 +449,7 @@ RpcClient.callspec = {
     getpagescores: 'obj str',
 
 
-
+    gettopfeed : 'int str int str obj obj obj obj obj str str int',
     getboostfeed : 'int str int str obj obj obj obj obj str str',
     getprofilefeed : 'int str int str obj str str str obj str str',
     getsubscribesfeed : 'int str int str obj obj obj obj obj str str',
@@ -467,7 +471,7 @@ RpcClient.callspec = {
     getrecomendedaccountsbysubscriptions : 'str',
     getrecomendedaccountsbyscoresonsimilaraccounts : 'str',
     getrecomendedaccountsbyscoresfromaddress : 'str',
-    getrecomendedcontentsbyscoresonsimilarcontents : 'str obj int int',
+    getrecommendedcontentbyaddress: 'str str obj str int',
     getrecomendedcontentsbyscoresfromaddress : 'str obj int int int',
     
     getcompactblock: "str int",

@@ -34,7 +34,6 @@ var recommendedusers = (function(){
 				array[randomIndex], array[currentIndex]];
 			}
 
-			console.log('p.essense.', array, p.essenseData.recommendedUsersCount)
 		  
 			return array.slice(0, p.essenseData.recommendedUsersCount || 3);
 		}
@@ -266,7 +265,6 @@ var recommendedusers = (function(){
 	
 							} else {
 	
-								console.log('getrecomendedaccountsbyscoresfromaddress executed')
 
 								self.app.platform.sdk.categories.clbks.tags.topusersRemove = function(data){
 
@@ -304,7 +302,6 @@ var recommendedusers = (function(){
 			self.app.platform.sdk.categories.clbks.tags.recommendedusers =
 			self.app.platform.sdk.categories.clbks.selected.recommendedusers = function(data){
 
-				console.log("recommendedusers")
 
 				if (el.users)
 					el.users.empty();
@@ -338,7 +335,6 @@ var recommendedusers = (function(){
 
 			destroy : function(){
 
-				console.log("DESTROY")
 
 				window.removeEventListener('scroll', events.loadmorescroll)
 

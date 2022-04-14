@@ -769,15 +769,10 @@
 #comments .post .postbody .closeAnswer:hover {
   color: rgba(var(--color-txt-ac));
 }
-#comments .edit .posttable,
-#comments .answer .posttable,
-#comments .post .posttable {
-  display: flex;
-  justify-content: space-between;
-}
 #comments .edit .posttable > div,
 #comments .answer .posttable > div,
 #comments .post .posttable > div {
+  vertical-align: top;
   padding: 1em 0.5em;
   /*&.postCellWrapper{
 					.postaction{
@@ -806,7 +801,6 @@
 #comments .post .posttable > div.lcpp {
   padding-right: 0;
   min-width: 0;
-  flex-grow: 1;
 }
 #comments .edit .posttable > div.reputationFailCell,
 #comments .answer .posttable > div.reputationFailCell,

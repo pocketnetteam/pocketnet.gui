@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="no-js electronapp customscroll" lang="">
+<html class="no-js electronapp customscroll applicationhtml" lang="">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -25,7 +25,7 @@
         media-src blob: *">
 
         <link rel="manifest" href="manifest.json">
-        <link rel="apple-touch-icon" href="https://__VAR__.domain/img/res/blue_pad_250.png" sizes="250x250">
+        <link rel="apple-touch-icon" href="img/res/blue_pad_250.png" sizes="250x250">
         <meta name="theme-color" content="#011621" />
 
         <link rel="stylesheet" href="css/normalize.css?v=136">

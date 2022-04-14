@@ -165,7 +165,6 @@ var postscores = (function(){
 					return self.indexOf(value) === index;
 				})
 
-				console.log('scores', scores, addresses)
 
 				var map = {};
 

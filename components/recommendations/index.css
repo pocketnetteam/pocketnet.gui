@@ -1,0 +1,93 @@
+#recommendations .recaption {
+  padding: 0.5em 0;
+  margin-bottom: 0.5em;
+}
+#recommendations .recaption span {
+  font-weight: 700;
+  font-size: 0.9em;
+}
+#recommendations .recoVideoDiv {
+  display: flex;
+  margin-bottom: 0.5em;
+}
+#recommendations .recoVideoDiv:nth-last-child(1) {
+  margin-bottom: 0;
+}
+#recommendations .recoVideoDiv:hover {
+  cursor: pointer;
+}
+#recommendations .recoVideoDiv .videoThumbnail {
+  height: 90px;
+  width: 160px;
+  min-width: 160px;
+  border-radius: 6px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background: rgb(var(--neutral-grad-0));
+  position: relative;
+  overflow: hidden;
+}
+#recommendations .recoVideoDiv .videoThumbnail[data-image] {
+  filter: brightness(85%);
+}
+#recommendations .recoVideoDiv .videoInfos {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  padding-left: 0.5em;
+  padding-top: 0.5em;
+}
+#recommendations .recoVideoDiv .videoInfos .title {
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-height: 1em;
+}
+#recommendations .recoVideoDiv .videoInfos .title span {
+  font-weight: 700;
+  font-size: 0.9em;
+}
+#recommendations .recoVideoDiv .videoInfos .user {
+  margin-top: 0.5em;
+}
+#recommendations .recoVideoDiv .videoInfos .user sup,
+#recommendations .recoVideoDiv .videoInfos .user span {
+  font-size: 0.8em;
+}
+#recommendations .recoVideoDiv .videoInfos .user .spsp {
+  font-weight: 500;
+}
+#recommendations .recoVideoDiv .videoInfos .infos {
+  display: flex;
+  align-items: center;
+}
+#recommendations .recoVideoDiv .videoInfos .infos span {
+  font-size: 0.8em;
+}
+#recommendations .recoVideoDiv .videoInfos .infos .viewDateSep {
+  opacity: 0.5;
+  font-size: 0.3em;
+  margin-left: 2em;
+  margin-right: 2em;
+}
+#recommendations .recoVideoDiv .videoInfos .infos .views.dummy {
+  display: inline-block;
+  height: 20px;
+  width: 100px;
+  background: rgb(var(--neutral-grad-0));
+  border-radius: 3px;
+}
+#recommendations .recoVideoDiv .videoInfos .user,
+#recommendations .recoVideoDiv .videoInfos .infos {
+  color: rgb(var(--color-txt-gray-dark));
+}
+#recommendations .empty {
+  padding: 1em 0;
+  text-align: left;
+}
+#recommendations .empty span {
+  font-size: 0.9em;
+  opacity: 0.7;
+}

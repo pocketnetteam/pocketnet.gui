@@ -9,6 +9,7 @@
 }
 #post {
   background: rgb(var(--background-main));
+  padding-top: 0.5em;
 }
 #post .jsPlayerLoading,
 #post .video-js {
@@ -42,6 +43,12 @@
   display: none;
   background: rgb(var(--background-total-theme));
 }
+#post .showmorelenta .anothercntswrk {
+  border-bottom: none !important;
+}
+#post .showmorelenta .share.share_common.shareinlenta {
+  margin-right: 1em !important;
+}
 #post .showmorelenta.hasshares {
   display: block;
 }
@@ -68,7 +75,9 @@
 }
 #post .postWrapper {
   margin: 0 auto;
-  max-width: 930px;
+  padding-bottom: 1em;
+  max-width: 800px;
+  flex-grow: 1;
   opacity: 0;
   /*border-radius: 6px;*/
   -moz-transition: opacity 0.3s;
@@ -162,7 +171,19 @@
   max-width: 620px;
 }
 #post.videomainpost {
+  padding-top: 0;
   /*padding-bottom : 4 * @rhythm;*/
+  display: flex;
+  flex-wrap: wrap;
+}
+#post.videomainpost .cntswrk.tags {
+  opacity: 0.6;
+}
+#post.videomainpost .videoDescription {
+  padding-bottom: 0.5em;
+}
+#post.videomainpost .authorMetatable {
+  align-items: center;
 }
 #post.videomainpost .hiddenpost {
   background: rgb(var(--background-total-theme));
@@ -179,6 +200,8 @@
   border-radius: 0;
 }
 #post.videomainpost .share {
+  margin: 0 auto;
+  max-width: 960px;
   background: transparent;
 }
 #post.videomainpost .share .shareTable {
@@ -268,14 +291,78 @@
 }
 #post.videomainpost .share {
   margin: 0 auto;
+  /*max-width: 960px;*/
+}
+#post .recomandationsFromContent {
+  display: none;
+}
+#post.recommendationsenabled .recomandationsFromContent {
+  display: block;
+}
+#post .recomandationsFromContent {
+  margin-top: 0.5em;
+}
+#post .recomandationsFromContent .recomandationsbgwrapper {
+  background: #fff;
+  border-radius: 9px;
+  padding: 0.5em;
+}
+#post.videomainpost.recommendationsenabled .postWrapper {
+  display: flex;
+}
+#post.videomainpost.recommendationsenabled .share {
+  margin: 0 auto;
   max-width: 960px;
+}
+#post.videomainpost.recommendationsenabled .postsharemain {
+  flex-grow: 1;
+}
+#post.videomainpost.recommendationsenabled .recomandationsFromContent {
+  margin-top: 0;
+  max-width: 400px;
+  min-width: 400px;
+  margin-left: auto;
+}
+#post.videomainpost.recommendationsenabled .recomandationsFromContent .recomandationsbgwrapper {
+  margin-left: 0.25em;
+}
+@media only screen and (max-width: 1024px) {
+  #post.videomainpost.recommendationsenabled .postWrapper {
+    display: block;
+  }
+  #post.videomainpost.recommendationsenabled .recomandationsFromContent {
+    margin-top: 0.5em;
+    min-width: 0;
+    max-width: 960px;
+    margin: 1em auto;
+    width: 100%;
+  }
+  #post.videomainpost.recommendationsenabled .recomandationsFromContent .recomandationsbgwrapper {
+    margin-left: 0;
+  }
+}
+.wnd #post.videomainpost.recommendationsenabled .postWrapper {
+  display: block;
+}
+.wnd #post.videomainpost.recommendationsenabled .recomandationsFromContent {
+  margin-top: 0.5em;
+  min-width: 0;
+  max-width: 960px;
+  margin: 1em auto;
+  width: 100%;
+}
+.wnd #post.videomainpost.recommendationsenabled .recomandationsFromContent .recomandationsbgwrapper {
+  margin-left: 0;
 }
 #post .sharearticle {
   opacity: 0;
-  -moz-transition: opacity 0.1s;
-  -o-transition: opacity 0.1s;
-  -webkit-transition: opacity 0.1s;
-  transition: opacity 0.1s;
+  -moz-transition: opacity 0.3s;
+  -o-transition: opacity 0.3s;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
+}
+#post .sharearticle .article_body {
+  overflow: hidden;
 }
 #post .sharearticle .shareTable {
   padding-top: 0;
@@ -519,6 +606,21 @@
 #post .sharearticle .shareBgCaption.verticalcover.showtext .toppanel {
   order: 1;
 }
+#post .sharearticle .shareBgCaption.withoutcover {
+  border-bottom: 1px dashed rgb(var(--color-shadow-base));
+}
+#post .sharearticle .shareBgCaption.withoutcover .tags div span {
+  color: rgb(var(--text-color));
+}
+#post .sharearticle .shareBgCaption.withoutcover .captioncnt {
+  color: rgb(var(--text-color));
+}
+#post .sharearticle .shareBgCaption.withoutcover .sys span {
+  color: rgb(var(--text-color));
+}
+#post .sharearticle .shareBgCaption.withoutcover .blackmatte {
+  display: none;
+}
 #post .sharearticle .articlecontent {
   padding-top: 4em;
   padding-bottom: 4em;
@@ -534,7 +636,8 @@
 #post .sharearticle .articlecontent .articleend {
   margin-top: 3em;
 }
-#post .sharearticle .articlecontent .commentsWrapper {
+#post .sharearticle .articlecontent .commentsWrapper,
+#post .sharearticle .articlecontent .commentRegisterDiv .commentRegister {
   border-radius: 12px;
 }
 #post .sharearticle .articlecontent .forcomments {
@@ -566,7 +669,7 @@
   filter: blur(10px);
 }
 #post .sharearticle p a {
-  white-space: nowrap;
+  word-break: break-all;
   text-overflow: ellipsis;
   max-width: 90%;
   overflow: hidden;
@@ -581,6 +684,9 @@
 }
 html.mobileview #post .videoWrapper {
   max-width: none;
+}
+html.mobileview #post.videomainpost {
+  padding-top: 0;
 }
 html.mobileview #post .sharearticle .articlecontent {
   padding-left: 0.5em;
@@ -629,7 +735,6 @@ html.mobileview .wnd.normalizedmobile.articlewindow .wndinner .wndcontent {
     flex-direction: column;
     justify-content: flex-end;
     z-index: 1;
-    color: #fff;
     text-align: center;
     position: relative;
     border-bottom: 1px dashed rgba(var(--neutral-grad-4), 0.5);
@@ -752,12 +857,6 @@ html.mobileview.fullscreen #post #comments {
 .wnd.postwindow.articlewindow #post .postWrapper {
   max-width: none;
 }
-.wnd.postwindow.articlewindow ._close {
-  backdrop-filter: blur(7px) grayscale(30%);
-  -webkit-backdrop-filter: blur(7px) grayscale(30%);
-  color: rgb(var(--text-on-bg-ac-color));
-  box-shadow: 0 5px 10px -5px rgba(var(--color-shadow-base), 0.4);
-}
 .wnd.postwindow .widthcontainer {
   width: 80%;
   max-width: 800px;
@@ -790,7 +889,7 @@ html.mobileview .wnd.articlewindow .widthcontainer {
     padding: 0.5em;
   }
   #post .showmorelenta .horizontalLentaWrapper {
-    padding: 0.5em 0;
+    padding: 0.5em;
   }
   #post .showmorelenta .horizontalLentacaption {
     padding: 0.5em;
@@ -832,10 +931,11 @@ html.mobileview .wnd.articlewindow .widthcontainer {
   .wnd.postwindow .wndcontent {
     padding-bottom: 0;
   }
-  .wnd.postwindow #post .share .sharearticle .commentsWrapper {
+  .wnd.postwindow #post .share .sharearticle .commentsWrapper,
+  .wnd.postwindow #post .share .sharearticle .commentRegisterDiv .commentRegister {
     padding-bottom: 0;
   }
-  .wnd.postwindow #post .share .commentsWrapper {
+  .wnd.postwindow #post .share .recomandationsFromContent {
     padding-bottom: 5em;
   }
   html.mobileview .wnd.postwindow .widthcontainer {
