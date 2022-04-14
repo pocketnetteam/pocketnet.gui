@@ -2974,7 +2974,7 @@ var lenta = (function(){
 
 			mystars : function(shares, clbk){
 
-				if(ed.horizontal || video || essenseData.openapi || essenseData.second) {
+				if(essenseData.horizontal || video || essenseData.openapi || essenseData.second) {
 					
 					if(clbk) clbk()
 
