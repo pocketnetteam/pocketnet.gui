@@ -1204,8 +1204,10 @@ pie {
   cursor: default!important;
   color: rgb(var(--neutral-grad-2));
 }
-.stars[value="4"] [value="5"]:hover .tstars {
-  display: block;
+@media (pointer: fine) {
+  .stars[value="4"] [value="5"]:hover .tstars {
+    display: block;
+  }
 }
 .stars[value="4"] [value="4"],
 .stars[value="4"] [value="3"],
@@ -1224,9 +1226,11 @@ pie {
   cursor: default!important;
   color: rgb(var(--neutral-grad-2));
 }
-.stars[value="3"] [value="5"]:hover .tstars,
-.stars[value="3"] [value="4"]:hover .tstars {
-  display: block;
+@media (pointer: fine) {
+  .stars[value="3"] [value="5"]:hover .tstars,
+  .stars[value="3"] [value="4"]:hover .tstars {
+    display: block;
+  }
 }
 .stars[value="3"] [value="3"],
 .stars[value="3"] [value="2"],
@@ -1246,10 +1250,12 @@ pie {
   cursor: default!important;
   color: rgb(var(--neutral-grad-2));
 }
-.stars[value="2"] [value="5"]:hover .tstars,
-.stars[value="2"] [value="4"]:hover .tstars,
-.stars[value="2"] [value="3"]:hover .tstars {
-  display: block;
+@media (pointer: fine) {
+  .stars[value="2"] [value="5"]:hover .tstars,
+  .stars[value="2"] [value="4"]:hover .tstars,
+  .stars[value="2"] [value="3"]:hover .tstars {
+    display: block;
+  }
 }
 .stars[value="2"] [value="2"],
 .stars[value="2"] [value="1"] {
@@ -1270,11 +1276,13 @@ pie {
   cursor: default!important;
   color: rgb(var(--neutral-grad-2));
 }
-.stars[value="1"] [value="5"]:hover .tstars,
-.stars[value="1"] [value="4"]:hover .tstars,
-.stars[value="1"] [value="3"]:hover .tstars,
-.stars[value="1"] [value="2"]:hover .tstars {
-  display: block;
+@media (pointer: fine) {
+  .stars[value="1"] [value="5"]:hover .tstars,
+  .stars[value="1"] [value="4"]:hover .tstars,
+  .stars[value="1"] [value="3"]:hover .tstars,
+  .stars[value="1"] [value="2"]:hover .tstars {
+    display: block;
+  }
 }
 .stars[value="1"] [value="1"] {
   font-weight: 900;
@@ -1309,8 +1317,10 @@ pie {
 .stars .tstars .tstarsov .starsWrapper {
   width: 20em;
 }
-.stars:hover .tstars {
-  display: none;
+@media (pointer: fine) {
+  .stars:hover .tstars {
+    display: none;
+  }
 }
 .stars.liked .starsWrapperM i {
   font-weight: 900;
@@ -1318,8 +1328,10 @@ pie {
 .stars.liked .tstars i {
   font-weight: 400;
 }
-.stars.liked:hover .tstars {
-  display: block;
+@media (pointer: fine) {
+  .stars.liked:hover .tstars {
+    display: block;
+  }
 }
 .stars.disabled {
   cursor: default!important;
@@ -1328,8 +1340,10 @@ pie {
   cursor: default!important;
   color: rgb(var(--neutral-grad-2));
 }
-.stars.disabled:hover .tstars {
-  display: block;
+@media (pointer: fine) {
+  .stars.disabled:hover .tstars {
+    display: block;
+  }
 }
 .subscribebuttons {
   width: auto;
@@ -1348,9 +1362,11 @@ pie {
   background: rgb(var(--color-bg-ac));
   border-color: rgb(var(--color-bg-ac));
 }
-.subscribebuttons > div button:hover {
-  background: transparent;
-  color: rgb(var(--color-bg-ac));
+@media (pointer: fine) {
+  .subscribebuttons > div button:hover {
+    background: transparent;
+    color: rgb(var(--color-bg-ac));
+  }
 }
 .subscribebuttons > div button.subscribe {
   border-radius: 3px;
@@ -1413,8 +1429,10 @@ pie {
 .search .searchIconLabel .fa-circle-notch {
   display: none;
 }
-.search .searchIconLabel:hover .fa-search {
-  color: rgb(var(--color-txt-ac));
+@media (pointer: fine) {
+  .search .searchIconLabel:hover .fa-search {
+    color: rgb(var(--color-txt-ac));
+  }
 }
 .search .searchPanel {
   width: 40px;
@@ -1444,8 +1462,10 @@ pie {
   display: none;
   color: rgb(var(--neutral-grad-2));
 }
-.search .searchPanel .searchPanelWrapper > div:hover {
-  color: rgb(var(--color-txt-ac));
+@media (pointer: fine) {
+  .search .searchPanel .searchPanelWrapper > div:hover {
+    color: rgb(var(--color-txt-ac));
+  }
 }
 .search .searchInputWrapper input {
   width: 100%;
@@ -1500,8 +1520,10 @@ pie {
   -webkit-transition: width 0.3s;
   transition: width 0.3s;
 }
-.hoverColorChange:hover {
-  animation: colorChange 5s infinite ease-in-out;
+@media (pointer: fine) {
+  .hoverColorChange:hover {
+    animation: colorChange 5s infinite ease-in-out;
+  }
 }
 @keyframes spin {
   0% {
@@ -1667,20 +1689,28 @@ pie {
   -webkit-transition: 0.3s;
   transition: 0.3s;
 }
-.checkbox + label:hover:before {
-  border-color: rgb(var(--color-bg-ac));
+@media (pointer: fine) {
+  .checkbox + label:hover:before {
+    border-color: rgb(var(--color-bg-ac));
+  }
 }
-.checkbox:checked + label:hover:before {
-  color: rgb(var(--neutral-grad-2));
+@media (pointer: fine) {
+  .checkbox:checked + label:hover:before {
+    color: rgb(var(--neutral-grad-2));
+  }
 }
 .checkbox[disabled] + label {
   cursor: default;
 }
-.checkbox[disabled] + label:hover:before {
-  border-color: rgb(var(--neutral-grad-2));
+@media (pointer: fine) {
+  .checkbox[disabled] + label:hover:before {
+    border-color: rgb(var(--neutral-grad-2));
+  }
 }
-.checkbox[disabled]:checked + label:hover:before {
-  color: rgb(var(--color-bg-ac));
+@media (pointer: fine) {
+  .checkbox[disabled]:checked + label:hover:before {
+    color: rgb(var(--color-bg-ac));
+  }
 }
 #loader {
   position: fixed;
@@ -2184,17 +2214,21 @@ input[type=radio].radio:checked + label {
   cursor: pointer;
   text-shadow: 0px 0px 2px rgba(var(--color-shadow-base), 0.714), 0 0 3px rgba(var(--color-shadow-base), 0.519);
 }
-.roundclosebutton:hover {
-  background: rgba(var(--background-total-theme), 0.2);
-  box-shadow: 0 5px 7px -5px rgba(var(--color-shadow-base), 0.4);
+@media (pointer: fine) {
+  .roundclosebutton:hover {
+    background: rgba(var(--background-total-theme), 0.2);
+    box-shadow: 0 5px 7px -5px rgba(var(--color-shadow-base), 0.4);
+  }
 }
 .roundclosebutton.onwhite {
   color: rgb(var(--text-color));
 }
-.roundclosebutton.onwhite:hover {
-  background: rgba(var(--background-main-contrast), 0.1);
-  color: rgb(var(--text-on-bg-ac-color));
-  box-shadow: 0 5px 7px -5px rgba(var(--color-shadow-base), 0.4);
+@media (pointer: fine) {
+  .roundclosebutton.onwhite:hover {
+    background: rgba(var(--background-main-contrast), 0.1);
+    color: rgb(var(--text-on-bg-ac-color));
+    box-shadow: 0 5px 7px -5px rgba(var(--color-shadow-base), 0.4);
+  }
 }
 .successCheck {
   position: fixed;

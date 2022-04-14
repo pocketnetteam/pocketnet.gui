@@ -1595,9 +1595,11 @@ pie {
         }
     }
 
-    &:hover{
-        .tstars{
-            display: none;
+    @media (pointer:fine) {
+        &:hover{
+            .tstars{
+                display: none;
+            }
         }
     }
 
@@ -1616,10 +1618,14 @@ pie {
             }
         }
 
-        &:hover{
-            .tstars{
-                display: block;
+        @media (pointer:fine) {
+
+            &:hover{
+                .tstars{
+                    display: block;
+                }
             }
+
         }
     }
 
@@ -1631,10 +1637,14 @@ pie {
             .disabled()
         }
 
-        &:hover{
-            .tstars{
-                display: block;
+        @media (pointer:fine) {
+
+            &:hover{
+                .tstars{
+                    display: block;
+                }
             }
+
         }
     }
     
@@ -1662,9 +1672,11 @@ pie {
             background: rgb(var(--color-bg-ac));
             border-color: rgb(var(--color-bg-ac));
 
-            &:hover{
-                background: transparent;
-                color: rgb(var(--color-bg-ac));
+            @media (pointer:fine) {
+                &:hover{
+                    background: transparent;
+                    color: rgb(var(--color-bg-ac));
+                }
             }
 
             &.subscribe{
@@ -1749,11 +1761,13 @@ pie {
             display: none;
         }
 
-        &:hover{
-            .fa-search{
-                color : rgb(var(--color-txt-ac));
+        @media (pointer:fine) {
+            &:hover{
+                .fa-search{
+                    color : rgb(var(--color-txt-ac));
+                }
+                
             }
-            
         }
     }
 
@@ -1783,8 +1797,10 @@ pie {
                     color : rgb(var(--neutral-grad-2));
                 }
 
-                &:hover{
-                    color: rgb(var(--color-txt-ac));
+                @media (pointer:fine) {
+                    &:hover{
+                        color: rgb(var(--color-txt-ac));
+                    }
                 }
             }
         }
@@ -1865,8 +1881,10 @@ pie {
 }
 
 .hoverColorChange{
-    &:hover{
-        animation: colorChange 5s infinite ease-in-out;
+    @media (pointer:fine) {
+        &:hover{
+            animation: colorChange 5s infinite ease-in-out;
+        }
     }
 }
 
@@ -2065,9 +2083,11 @@ pie {
 
         }
 
-        &:hover{
-            &:before {
-                border-color: rgb(var(--color-bg-ac));
+        @media (pointer:fine) {
+            &:hover{
+                &:before {
+                    border-color: rgb(var(--color-bg-ac));
+                }
             }
         }
     }
@@ -2077,9 +2097,11 @@ pie {
             &:before {             
               
             }
-            &:hover{
-                &:before {
-                    color: rgb(var(--neutral-grad-2));
+            @media (pointer:fine) {
+                &:hover{
+                    &:before {
+                        color: rgb(var(--neutral-grad-2));
+                    }
                 }
             }
         }
@@ -2088,17 +2110,22 @@ pie {
     &[disabled]{
         &+label {
             cursor: default;
-            &:hover{
-                &:before {
-                    border-color: rgb(var(--neutral-grad-2));
+
+            @media (pointer:fine) {
+                &:hover{
+                    &:before {
+                        border-color: rgb(var(--neutral-grad-2));
+                    }
                 }
             }
         }
         &:checked {
             &+label{
-                &:hover{
-                    &:before {
-                        color: rgb(var(--color-bg-ac));
+                @media (pointer:fine) {
+                    &:hover{
+                        &:before {
+                            color: rgb(var(--color-bg-ac));
+                        }
                     }
                 }
             }
@@ -2439,18 +2466,22 @@ input[type=radio].radio:checked + label {
     cursor: pointer;
     .shadowText();
 
-    &:hover{
-        background : rgba(var(--background-total-theme), 0.2);
-        .shadowSmaller();
+    @media (pointer:fine) {
+        &:hover{
+            background : rgba(var(--background-total-theme), 0.2);
+            .shadowSmaller();
+        }
     }
 
     &.onwhite{
         color : rgb(var(--text-color));
 
-        &:hover{
-            background : rgba(var(--background-main-contrast), 0.1);
-            color : rgb(var(--text-on-bg-ac-color));
-            .shadowSmaller();
+        @media (pointer:fine) {
+            &:hover{
+                background : rgba(var(--background-main-contrast), 0.1);
+                color : rgb(var(--text-on-bg-ac-color));
+                .shadowSmaller();
+            }
         }
     }
 }
