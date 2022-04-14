@@ -415,8 +415,10 @@
   height: 100%;
   cursor: pointer;
 }
-.share_common .jsPlayerPreview .wpl:hover {
-  opacity: 0.9;
+@media (pointer: fine) {
+  .share_common .jsPlayerPreview .wpl:hover {
+    opacity: 0.9;
+  }
 }
 .share_common .jsPlayerPreview .statswrapper,
 .share_common .jsPlayerPreview .durationWrapper {

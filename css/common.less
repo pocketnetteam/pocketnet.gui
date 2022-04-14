@@ -546,10 +546,15 @@
             height: 100%;
             cursor: pointer;
 
-            &:hover{
-                opacity: 0.9;
+            @media (pointer:fine) {
+
+                &:hover{
+                    opacity: 0.9;
+                }
             }
         }
+
+
 
         .statswrapper,
         .durationWrapper{
