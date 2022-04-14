@@ -6,14 +6,21 @@
   font-weight: 700;
   font-size: 0.9em;
 }
+#recommendations .emptyrec,
 #recommendations .recloader {
   display: none;
+}
+#recommendations.emptyr .emptyrec {
+  display: block;
 }
 #recommendations.loading .recloader {
   display: block;
 }
 #recommendations .listWrapper > div {
   margin-bottom: 0.5em;
+}
+#recommendations .listWrapper > div:nth-last-child(1) {
+  margin-bottom: 0;
 }
 #recommendations .recoVideoDiv {
   display: flex;

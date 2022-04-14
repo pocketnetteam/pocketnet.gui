@@ -10,7 +10,7 @@ var recommendations = (function(){
 
 		var el, ed, places = {}, sel;
 
-		var needmake = [], making = false
+		var needmake = [], making = false, empty = false
 
 		var rendered = {}
 
@@ -242,7 +242,7 @@ var recommendations = (function(){
 
 		var makeneed = function(){
 
-			if (making) return
+			if (making && !empty) return
 
 			if (needmake.length){
 
@@ -253,7 +253,22 @@ var recommendations = (function(){
 					el.c.removeClass('loading')
 					needmake.shift()
 					making = false
+
+					if(_.toArray(rendered).length < 6){
+						makeneed()
+					}
 				})
+			}
+			else{
+
+				removeEvents()
+
+				if(_.isEmpty(rendered)){
+
+					empty = true
+
+					el.c.addClass('emptyr')
+				}
 			}
 
 			
@@ -284,6 +299,8 @@ var recommendations = (function(){
 			getdata : function(clbk, p){
 
 				needmake = []
+
+				empty = false
 
 				ed = p.settings.essenseData || {}
 
