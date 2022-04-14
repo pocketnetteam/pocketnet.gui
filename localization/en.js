@@ -2141,7 +2141,7 @@ ____loclib.videobloggerRequest_er_email = "Leave an email for feedback"
 
 ____loclib.videobloggerRequest_submitted = "Thank you for contacting us, we will review your application"
 
-____loclib.canuseipsetting = "Allow connection via ip over http directly. Not safe"
+____loclib.canuseipsetting = "Allow connection via ip over http directly. Insecure connection"
 
 ____loclib.optimizationtip = function(v){
     return v + ' hidden viewed posts'

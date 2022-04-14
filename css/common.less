@@ -12,6 +12,10 @@
         cursor: pointer;
     }
 
+    .extrashare{
+        display: none;
+    }
+
     .pkoin{
         display: flex;
         align-items: center;
@@ -552,7 +556,7 @@
             position: absolute;
             bottom : 6px;
             right : 6px;
-            border-radius: 6px;
+            border-radius: 12px;
             background: rgba(var(--color-shadow-base), 0.8);
             color : rgb(var(--text-on-bg-shadow-color));
             padding : 0.5 * @rhythm @rhythm;
@@ -1214,6 +1218,18 @@
         border-radius: 0!important;
         margin-bottom: 0!important;
     
+        .extrashare{
+            display: block;
+
+            >div{
+                background: rgb(var(--background-total-theme));
+                margin : 0 auto;
+                max-width: 960px;
+                margin-top : 2 * @rhythm;
+                padding: 2 * @rhythm;
+            }
+            
+        }
 
         .video-js{
             max-height: calc(var(--vh, 1vh) * 80);
@@ -1233,6 +1249,7 @@
             scrollbar-width: none;
             overscroll-behavior: none;
             transform: translate3d(0, 0, 0);
+            padding-bottom : 20%;
 
             .videoWrapper{
                 border-radius: 0;
@@ -1285,9 +1302,7 @@
             }
         }
 
-        .commentsWrapperHb{
-            padding-bottom : 20%;
-        }
+       
 
         .cntswrk{
             margin-left: 0;
@@ -1528,6 +1543,13 @@ html.ios{
         &.fullScreenVideo{
             contain: strict;
             background: rgb(var(--color-shadow-base));
+
+            .extrashare{
+                >div{
+                    margin-top : @rhythm;
+                }
+                
+            }
 
             .sharecaption{
                 padding-left: @rhythm;

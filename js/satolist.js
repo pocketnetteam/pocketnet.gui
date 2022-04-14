@@ -177,6 +177,8 @@ Platform = function (app, listofnodes) {
         'PGCqT8bhkWHLEyQG1xgVhrzojCN1VjDLaP' : true,
         'PWeAQ1Mb3Xb7anjikyNogR3UqiZgnNbRiZ' : true,
         'PCkkR6TPP273vv5AQgJTWhBHawjzakkU1A' : true,
+        'PT2kwKs93LYgRFhohRAkLuU9oynRDrfXto' : true,
+        'PGNUAB5kNKVGTQ9CbE198sesKKYXnmX8HU' : true
     }
 
     self.bch = {
@@ -2524,38 +2526,55 @@ Platform = function (app, listofnodes) {
                 })
             }
 
-            wr.find('.articleCover').imagesLoadedPN({imageAttr : true}, function (image) {
+            console.log('articledecoration', share)
 
-                var aspectRatio = 0.6
-                var small = false
+            var cover = share.images[0]
 
-                _.each(image.images, function(img){
+            if(!cover){
 
-                    var _img = img.img;
-                    aspectRatio = _img.naturalHeight / _img.naturalWidth
-
-                    if(_img.naturalHeight < 200 || _img.naturalWidth < 300){
-                        small = true
-                    }
-
-                })
-
-               
-
-                if(small){
-                    caption.addClass('smallimage')
-                }
-
-                if (aspectRatio > 1 && !small){
-                    caption.addClass('verticalcover')
-                }
+                caption.addClass('withoutimage')
 
                 setTimeout(function(){
                     wr.addClass('ready')
                 }, 150)
-               
 
-            }, self.app)
+            }
+            else{
+                wr.find('.articleCover').imagesLoadedPN({imageAttr : true}, function (image) {
+
+                    var aspectRatio = 0.6
+                    var small = false
+    
+                    _.each(image.images, function(img){
+    
+                        var _img = img.img;
+                        aspectRatio = _img.naturalHeight / _img.naturalWidth
+    
+                        if(_img.naturalHeight < 200 || _img.naturalWidth < 300){
+                            small = true
+                        }
+    
+                    })
+    
+                   
+    
+                    if(small){
+                        caption.addClass('smallimage')
+                    }
+    
+                    if (aspectRatio > 1 && !small){
+                        caption.addClass('verticalcover')
+                    }
+    
+                    setTimeout(function(){
+                        wr.addClass('ready')
+                    }, 150)
+                   
+    
+                }, self.app)
+            }
+
+            
         },
 
         changeloc : function(_clbk){
@@ -2690,6 +2709,87 @@ Platform = function (app, listofnodes) {
 
         },
 
+        recommendations : function(el, share, ed, clbk){
+            self.app.nav.api.load({
+                open: true,
+                href: 'recommendations',
+                el: el,
+
+                essenseData: {
+
+                    caption : 'othervideos',
+                    loader : 'getrecomendedcontents',
+                    parameters : {
+                
+                        contentAddress: share.address,
+                        type: 'video',
+                        depth: 10000,
+                        count: 12,
+                        lang : share.language
+                    },
+
+                    filter : function(_share){
+                        return _share.txid != share.txid && _share.address != self.app.user.address.value
+                    },
+
+                    open : function(txid){
+
+                        var timeout = 300
+
+                        if (ed.beforeopen){
+                            timeout = ed.beforeopen(txid) || 300
+                        }
+
+                        if (ed.opensvi){
+                            ed.opensvi(txid)
+                        }
+                        else
+
+                        if (ed.next){
+
+                            self.sdk.node.shares.getbyid([txid], function () {
+
+                                var share = self.sdk.node.shares.storage.trx[txid]
+
+                                ed.next(txid, share)
+            
+                            })
+
+                        }
+
+                        else{
+
+                            setTimeout(function(){
+                                if(isMobile()){
+
+                                    self.app.nav.api.load({
+                                        open : true,
+                                        href : 'post?s=' + txid,
+                                        inWnd : true,
+                                        history : true,
+                                    })
+                                    
+                                }
+                                else{
+                                    self.app.nav.api.go({
+                                        href : 'index?video=1&v=' + txid,
+                                        history : true,
+                                        open : true,
+                                    })
+                                }
+                            }, timeout)
+
+                            
+
+                            
+                        }
+                    }
+                    
+                },
+
+                clbk : clbk
+            })
+        },
 
         images : function(allimages, initialValue, clbk){
 
@@ -3122,6 +3222,63 @@ Platform = function (app, listofnodes) {
 
 
 
+        }
+    }
+
+    self.effects = {
+        manager : null,
+
+        effectinternal : function(el, name, parameters, clbk){
+
+            var e = function(){
+                self.effects.manager.effect(el, name, parameters, clbk)
+            }
+
+            if(!self.effects.manager){
+                self.effects.manager = new FX_Manager(app).prepare(e)
+            }
+            else{
+                e()
+            }
+        },
+
+        lib : {
+            stars : function(el, parameters, clbk){
+
+                if(!parameters) parameters = {}
+
+                parameters.opacity = 0.8
+                parameters.scatter = 20
+                parameters.duration = 900
+                
+                parameters.color || (parameters.color = '#ffa000')
+
+                self.effects.effectinternal(el, 'stars', parameters, clbk)
+            }
+        },
+
+        container : function(place){
+
+            var container = $("<div/>", {
+                "class": "effect",
+                "style" : "z-index: 10000; position : absolute; left : "+place.left+"px; top : "+place.top+"px; width : "+place.width+"px; height : "+place.height+"px;"
+            })
+
+            container.appendTo(self.app.el.app)
+
+            return container
+        },
+
+        make : function(place, name, parameters, clbk){
+            var container = self.effects.container(place)
+
+            self.effects.lib[name](container, parameters, function(){
+                container.remove()
+
+                container = null
+
+                if(clbk) clbk()
+            })
         }
     }
 
@@ -21366,7 +21523,6 @@ Platform = function (app, listofnodes) {
                 data.time || (data.time = 0)
 
                 var lasthistory = self.sdk.videos.historyget(txid)
-
 
                 lasthistory.time = data.time
                 lasthistory.date = new Date()

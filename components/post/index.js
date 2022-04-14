@@ -1629,64 +1629,18 @@ var post = (function () {
 
 			recommendations : function(clbk){
 
-				console.log('recommendations')
+				self.app.platform.ui.recommendations(el.reco, share, {
+					opensvi : ed.opensvi,
+					next : ed.next,
 
-				self.nav.api.load({
-					open: true,
-					href: 'recommendations',
-					el: el.reco,
-
-					essenseData: {
-
-						caption : 'othervideos',
-						loader : 'getrecomendedcontents',
-						parameters : {
-					
-							contentAddress: share.address,
-							type: 'video',
-							depth: 10000,
-							count: 12,
-							lang : share.language
-						},
-
-						filter : function(_share){
-							return _share.txid != share.txid && _share.address != self.app.user.address.value
-						},
-
-						open : function(txid){
-							if (ed.opensvi){
-								ed.opensvi(txid)
-							}
-							else
-
-							if (ed.next){
-
-								self.app.platform.sdk.node.shares.getbyid([txid], function () {
-
-									var share = self.app.platform.sdk.node.shares.storage.trx[txid]
-
-									ed.next(txid, share)
-				
-								})
-
-							}
-
-							else{
-								self.nav.api.go({
-									href : 'index?video=1&v=' + txid,
-									history : true,
-									open : true
-								})
-							}
-						}
-						
-					},
-
-					clbk : function(e, p){
-						recommendations = p
-
-						if(clbk) clbk()
+					beforeopen : function(){
+						self.closeContainer()
 					}
+					
+				}, function(e, p){
+					recommendations = p
+
+					if(clbk) clbk()
 				})
 
 			},

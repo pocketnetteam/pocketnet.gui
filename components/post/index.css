@@ -361,6 +361,9 @@
   -webkit-transition: opacity 0.3s;
   transition: opacity 0.3s;
 }
+#post .sharearticle .article_body {
+  overflow: hidden;
+}
 #post .sharearticle .shareTable {
   padding-top: 0;
   padding-bottom: 0;
@@ -603,6 +606,21 @@
 #post .sharearticle .shareBgCaption.verticalcover.showtext .toppanel {
   order: 1;
 }
+#post .sharearticle .shareBgCaption.withoutcover {
+  border-bottom: 1px dashed rgb(var(--color-shadow-base));
+}
+#post .sharearticle .shareBgCaption.withoutcover .tags div span {
+  color: rgb(var(--text-color));
+}
+#post .sharearticle .shareBgCaption.withoutcover .captioncnt {
+  color: rgb(var(--text-color));
+}
+#post .sharearticle .shareBgCaption.withoutcover .sys span {
+  color: rgb(var(--text-color));
+}
+#post .sharearticle .shareBgCaption.withoutcover .blackmatte {
+  display: none;
+}
 #post .sharearticle .articlecontent {
   padding-top: 4em;
   padding-bottom: 4em;
@@ -717,7 +735,6 @@ html.mobileview .wnd.normalizedmobile.articlewindow .wndinner .wndcontent {
     flex-direction: column;
     justify-content: flex-end;
     z-index: 1;
-    color: #fff;
     text-align: center;
     position: relative;
     border-bottom: 1px dashed rgba(var(--neutral-grad-4), 0.5);
@@ -918,8 +935,7 @@ html.mobileview .wnd.articlewindow .widthcontainer {
   .wnd.postwindow #post .share .sharearticle .commentRegisterDiv .commentRegister {
     padding-bottom: 0;
   }
-  .wnd.postwindow #post .share .commentsWrapper,
-  .wnd.postwindow #post .share .commentRegisterDiv .commentRegister {
+  .wnd.postwindow #post .share .recomandationsFromContent {
     padding-bottom: 5em;
   }
   html.mobileview .wnd.postwindow .widthcontainer {

@@ -1934,7 +1934,7 @@ ____loclib.videobloggerRequest_er_email = "Оставьте электронну
 ____loclib.videobloggerRequest_submitted = "Спасибо за обращение, мы рассмотрим вашу заявку"
 
 
-____loclib.canuseipsetting = "Позволять соединение через ip по http напрямую. Небезопасно"
+____loclib.canuseipsetting = "Позволять соединение через ip по http напрямую. Незашифрованное соединение"
 ____loclib.optimizationtip = function(v){
     return v + ' скрытых просмотренных публикаций'
 }

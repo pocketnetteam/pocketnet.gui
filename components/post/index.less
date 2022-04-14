@@ -511,6 +511,10 @@
 		opacity: 0;
 		.transition(0.3s, opacity);
 
+		.article_body{
+			overflow: hidden;
+		}
+
 		.shareTable{
 			padding-top : 0;
 			padding-bottom : 0;
@@ -815,6 +819,24 @@
 				
 			}
 
+			&.withoutcover{
+				border-bottom: 1px dashed rgb(var(--color-shadow-base));
+				.tags div span{
+					color : rgb(var(--text-color));
+				}
+				.captioncnt{
+					color : rgb(var(--text-color));
+				}
+
+				.sys span{
+					color : rgb(var(--text-color));
+				}
+
+				.blackmatte{
+					display: none;
+				}
+			}
+
 		}
 
 		.articlecontent{
@@ -990,7 +1012,6 @@ html.mobileview{
 						flex-direction: column;
 						justify-content: flex-end;
 						z-index: 1;
-						color : #fff;
 						text-align: center;
 						position: relative;
 						border-bottom : 1px dashed rgba(var(--neutral-grad-4), 0.5);
@@ -1300,8 +1321,7 @@ html.mobileview{
 			}
 		}
 
-		#post .share .commentsWrapper,
-		#post .share .commentRegisterDiv .commentRegister{
+		#post .share .recomandationsFromContent{
 			padding-bottom: 10 * @rhythm;
 		}
 	}

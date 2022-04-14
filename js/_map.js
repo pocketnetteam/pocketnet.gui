@@ -95,6 +95,7 @@ __map =  {
 		"js/satolist.js",
 		"js/peertube.js",
 		"js/widgets.js",
+		"js/effects.js",
 		"js/logger.js"
 	],
 

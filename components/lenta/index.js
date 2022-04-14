@@ -18,12 +18,13 @@ var lenta = (function(){
 		var w, essenseData, recomended = [], recommended, mestate, initedcommentes = {}, canloadprev = false,
 		video = false, isotopeinited = false, videosVolume = 0, fullscreenvideoShowing = null, loadedcachedHeight, showRecommendedUsers = true, recommendedusers = null;
 
+		var animation = false
 		var subloaded = false
 
 		var boosted = [],
 			boostplaces = {}
 
-		var extra = {}, extraloading = {};
+		var extra = {}, extraloading = {}, recommendations = {}, recommendationsMaking = {};
 
 		var progress, parallax;
 
@@ -73,17 +74,43 @@ var lenta = (function(){
 
 		var essenserenderclbk = function(){
 
-			
-
 			if (isMobile()){
 				dbrc()
 			}
 			else{
 				rc()
 			}
+			
+		}
 
-			
-			
+		var effects = {
+			starstocomments : function(txid, value){
+
+				if(animation) return
+
+				animation = true
+				var stars = el.share[txid].find('.starswr')
+
+				var comment = el.share[txid].find('#comments')
+
+				var parameters = {}
+
+				if (value < 2) parameters.color = '#FF0022'
+				if (value == 2) parameters.color = '#ff2400'
+				if (value == 3) parameters.color = '#CCCCCC'
+
+				var top = stars.offset().top + 15
+				var left = stars.offset().left
+				var height = 300
+				var width = 200
+				var swidth = stars.width() * (value - 1) / 5
+
+				left += swidth
+
+				self.app.platform.effects.make({top : top - height,left,width, height}, 'stars', parameters, function(){
+					animation = false
+				})
+			}
 		}
 
 
@@ -949,6 +976,7 @@ var lenta = (function(){
 							duration
 						}){
 							if(playbackState == 'playing' && ((position > 15 && duration > 240) || startTime)){
+								
 								self.app.platform.sdk.videos.historyset(share.txid, {
 									time : position,
 									percent : ((position/duration)* 100).toFixed(0)
@@ -1341,6 +1369,62 @@ var lenta = (function(){
 				}).init()
 			},
 
+			addRecommendationsFullScreenVideo : function(id, clbk){
+
+				if(recommendationsMaking[id] || recommendations[id]) return
+
+				var _el = el.share[id]
+				var share = self.app.platform.sdk.node.shares.storage.trx[id];
+
+				if(!_el || !share || !self.app.platform.istest()){
+					if(clbk) clbk()
+
+					return
+				}
+
+				recommendationsMaking[id] = true
+
+				setTimeout(function(){
+					self.app.platform.ui.recommendations(_el.find('.extrashare'), share, {
+						beforeopen : function(){
+
+							actions.removeRecommendationsFullScreenVideo(id)
+
+							if (fullscreenvideoShowed){
+								actions.exitFullScreenVideo(fullscreenvideoShowed)
+							}
+
+							return 1
+						}
+					}, function(e, p){
+
+						recommendations[id] = p
+						recommendationsMaking[id] = false
+	
+						if(clbk) clbk()
+					})
+				}, 1000)
+				
+			},
+
+			removeRecommendationsFullScreenVideo : function(id){
+
+				var _el = el.share[id]
+
+				if(!_el || !self.app.platform.istest()){
+					return
+				}
+
+				if (recommendations[id]){
+
+					console.log('clearessense')
+
+					recommendations[id].clearessense()
+					_el.find('.extrashare').html('')
+					delete recommendations[id]
+				}
+			},
+
 			fullScreenVideo : function(id, clbk, auto){
 
 				if (fullscreenvideoShowing) { return }
@@ -1407,7 +1491,7 @@ var lenta = (function(){
 							if (player.p.enableHotKeys) player.p.enableHotKeys()
 				
 							
-							
+							actions.addRecommendationsFullScreenVideo(id)
 						}
 
 						actions.setVolume(players[id], videosVolume || 0.5)
@@ -1430,6 +1514,8 @@ var lenta = (function(){
 							})
 							
 						}
+
+
 
 
 						if (clbk)
@@ -1481,6 +1567,8 @@ var lenta = (function(){
 				el.w.scrollTop(lastscroll || 0)
 
 				fullscreenvideoShowed = null;
+
+				actions.removeRecommendationsFullScreenVideo(id)
 
 				if (!essenseData.comments){
 
@@ -2236,6 +2324,8 @@ var lenta = (function(){
 
 			like : function(){
 
+				
+
 				var p = $(this).closest('.stars');
 
 				if (p.attr('value')){
@@ -2244,6 +2334,8 @@ var lenta = (function(){
 
 				var id = $(this).closest('.share').attr('id');
 				var value = $(this).attr('value')
+
+				//effects.starstocomments($(this).closest('.share').attr('id'), value)
 
 				if(!id) id = $(this).closest('.truerepost').attr('stxid')
 
@@ -4813,6 +4905,14 @@ var lenta = (function(){
 				_.each(shareInitedMap, function(s, id){
 					delete self.app.platform.sdk.node.shares.storage.trx[id]
 				})
+
+				_.each(recommendations, function(p, id){
+					if (p)
+						p.clearessense()
+				})
+
+				recommendations = {}
+				recommendationsMaking = {}
 
 				_.each(_reposts, function(p){
 					if (p)

@@ -190,6 +190,7 @@ var recommendations = (function(){
 			destroy : function(){
 				el = {};
 				ed = {}
+
 			},
 			
 			init : function(p){
