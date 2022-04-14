@@ -807,6 +807,7 @@ ____loclib.noDownloadedVideos = "No hay vídeos descargados";
 ____loclib.buy = 'Comprar';
 
 // Uploadpeertube component
+____loclib.settingsTranscoding = "Al subir el video lo transcodifico en mi dispositivo"
 ____loclib.videoTranscodingNotOptimal = "El resultado del procesador no es óptimo. Continuando con el video original"
 ____loclib.videoTranscodingError = "Se ha producido un error al procesar su vídeo"
 ____loclib.videoUploadingFinish = "Terminando de subir el archivo..."

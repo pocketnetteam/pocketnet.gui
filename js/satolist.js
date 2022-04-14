@@ -8337,6 +8337,13 @@ Platform = function (app, listofnodes) {
                     value: true
                 },
 
+                videoTranscoding: {
+                    name: self.app.localization.e('settingsTranscoding'),
+                    id: 'transcoding',
+                    type: "BOOLEAN",
+                    value: true
+                },
+
                 autostart: {
                     name: self.app.localization.e('e13278'),
                     id: 'autostart',
@@ -8569,6 +8576,7 @@ Platform = function (app, listofnodes) {
 
                 if (electron) {
                     c.system.options.autostart = options.autostart
+                    c.video.options.videoTranscoding = options.videoTranscoding;
                 }
                 else{
                     if(!window.cordova){

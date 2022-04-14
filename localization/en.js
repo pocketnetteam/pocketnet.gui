@@ -1118,6 +1118,7 @@ ____loclib.pterror_getToken = "Peertube: Unable to get Token"
 ____loclib.pterror_videonotselected = "Peertube: Video not Selected"
 
 
+____loclib.settingsTranscoding = "On video upload transcode it on my device"
 ____loclib.videoTranscodingNotOptimal = "Not optimal transcoding result. Continuing with original video"
 ____loclib.videoTranscodingError = "There was an error with processing your video"
 ____loclib.videoUploadingFinish = "Finishing uploading..."

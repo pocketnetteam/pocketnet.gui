@@ -934,6 +934,7 @@ ____loclib.editWallpaper = "Изменить Заставку";
 ____loclib.removeVideo = "Удалить Видео";
 
 
+____loclib.settingsTranscoding = "При загрузке видео выполнять транскодинг на моём устройстве"
 ____loclib.videoTranscodingNotOptimal = "Неверный результат обработки. Загрузка исходного видео"
 ____loclib.videoTranscodingError = "Произошла ошибка при обработке вашего видео"
 ____loclib.videoUploadingFinish = "Завершение загрузки..."

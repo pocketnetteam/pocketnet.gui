@@ -73,7 +73,7 @@ class VideoUploader {
           }
 
           console.error('Chunked upload failed to continue');
-          throw { text: 'Chunked upload failed to continue'};
+          throw 'LOAD_CHUNK_ERROR';
         }
 
         this.static.setResumableStorage(videoUniqueId, {

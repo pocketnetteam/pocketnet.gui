@@ -231,9 +231,13 @@ var uploadpeertube = (function () {
 
 				el.importUrl.addClass('hidden');
 
+        const transcodeOption = self.app.platform.sdk.usersettings.meta.videoTranscoding;
+
+        let transcodingAllowed = (transcodeOption && transcodeOption.value);
+
         let transcoded = null;
 
-				if (typeof _Electron !== 'undefined') {
+				if (transcodingAllowed && typeof _Electron !== 'undefined') {
 					const file = evt.target.files[0];
 
 					const transcoder = new TranscoderClient(electron.ipcRenderer);
