@@ -528,7 +528,6 @@ var uploadpeertube = (function () {
 				self.app.peertubeHandler.api.user
 					.me()
 					.then((res) => {
-
 						data.hasAccess = true;
 
 						clbk(data);
@@ -549,8 +548,6 @@ var uploadpeertube = (function () {
 						self.app.platform.sdk.ustate.canincrease(
 							{ template: 'video' },
 							function (r) {
-
-
 
 								data.increase = r;
 

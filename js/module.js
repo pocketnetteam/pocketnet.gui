@@ -466,7 +466,10 @@ nModule = function(){
 		var globalpreloaderTimer = p.globalpreloaderTimer || null
 
 
-		if (p.restartModule) frommodule = false
+		if (p.restartModule) {
+			frommodule = false
+			settings.fast = true
+		}
 
 		if (typeof add == 'function')
 
