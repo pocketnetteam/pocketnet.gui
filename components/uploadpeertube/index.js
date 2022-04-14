@@ -201,6 +201,7 @@ var uploadpeertube = (function () {
 
 					ed.cancelCloseFunction = cancelCloseFunction;
 
+					el.closeButton.on('click', cancel);
           el.cancelButton.one('click', () => {
             el.uploadProgress.addClass('hidden');
 
@@ -237,7 +238,7 @@ var uploadpeertube = (function () {
 					let binProcessing = false;
 					let videoTranscoding = false;
 
-					const progressBinaries = (progress) => {
+					const progressBinaries = (task, progress) => {
 						if (!binProcessing && progress !== 100) {
 							loadProgress(0);
 
@@ -276,7 +277,7 @@ var uploadpeertube = (function () {
 						loadProgress(progress);
 					};
 
-					transcoder.cancelTranscodingIfTrue((probe) => {
+					transcoder.setPreCheckFunction((probe) => {
 						const MaxVideoBitrate = 2600;
 						const MaxAudioBitrate = 256;
 						const MaxVideoFramerate = 25;
@@ -307,50 +308,47 @@ var uploadpeertube = (function () {
 					});
 
 					try {
-						transcoder.handleBinariesDownloadProgress(progressBinaries);
+						transcoder.setBinariesProgressListener(progressBinaries);
+						transcoder.setTranscodeProgressListener(progressTranscode);
+						transcoder.setTranscodeStartedListener((task) => {
+							initCancelListener(() => {
+								sitemessage(`Upload canceled`);
+								task.close(true);
+							});
+						});
 
-						transcoded = await transcoder.runTask(file, progressTranscode);
+						transcoded = await transcoder.runTask(file);
 					} catch (err) {
-						const isCanceledByUser = (err === 'TRANSCODE_ABORT');
-						const isAbortedByApp = (err === 'NO_TRANSCODE_NEEDED');
-						const binariesNotAvailable = (err === 'FFBIN_DOWNLOAD_ERROR');
-						const isVerticalVideo = (err === 'VERTICAL_VIDEO_NOT_SUPPORTED');
-						const notMetRequirements = (err === 'REQUIREMENTS_NOT_MET');
+						switch (err) {
+							case 'TRANSCODE_FFMPEG_ERROR':
+								console.error('FF Binaries produced error while processing video');
+								break;
+							case 'TRANSCODE_OUTPUT_MISSING':
+								console.error('Transcoder was not able to find processed video');
+								break;
+							case 'BINARIES_REQUIREMENTS':
+							case 'TRANSCODE_UNNECESSARY':
+								/**
+								 * Not fatal errors. Video would
+								 * be processed on server side
+								 * after upload finished.
+								 */
 
-						if (isCanceledByUser) {
-							/**
-							 * Handling user cancelled transcoding.
-							 * Just stopping video upload...
-							 */
-							console.log('Transcoding was canceled by user');
-							return;
-						} else if (isAbortedByApp) {
-							/**
-							 * Handling not required transcoding cases.
-							 * This doesn't cancel video upload...
-							 */
-							console.log('Transcoding is not required');
-						} if (binariesNotAvailable) {
-							/**
-							 * Handling FF Binaries error.
-							 */
-							console.log('FF Binaries download error');
-						} if (isVerticalVideo) {
-							/**
-							 * Handling vertical video error.
-							 */
-							console.log('Transcoding vertical videos is not supported');
-						} if (notMetRequirements) {
-							console.log('Minimal requirements for computer are not met to transcode');
-						} else {
-							/**
-							 * Anyway transcoding error is not fatal. If
-							 * video can't be processed by client then
-							 * it would be handled on server. No reason
-							 * to report user about any issue related...
-							 */
+								break;
 
-							console.error(err);
+							case 'TRANSCODE_NONSTOP':
+								console.error('Transcoding was not stopped. Timeout', err);
+								break;
+							case 'PROBE_BINARIES_DISAPPEARED':
+								console.error('FF Binaries disappeared', err);
+								break;
+							case 'TRANSCODER_BUSY':
+								console.error('Tried to load task while transcoder is busy', err);
+								break;
+							default:
+								sitemessage(`Unhandled error ${err.message || err} occurred. Please, contact with developers`);
+								console.error('Strange error, please, contact with developers', err);
+								break;
 						}
 					}
 				}
@@ -458,7 +456,6 @@ var uploadpeertube = (function () {
           .catch((e = {}) => {
             self.app.Logger.error({
               err: e.text || 'videoUploadError',
-              payload: JSON.stringify(e),
               code: 401,
             });
 
@@ -469,10 +466,8 @@ var uploadpeertube = (function () {
 						if (e.cancel) {
 							sitemessage('Uploading canceled');
 						} else {
-							var message =
-								e.text ||
-								findResponseError(e) ||
-								`Uploading error: ${JSON.stringify(e)}`;
+							let message = e.text || findResponseError(e) || 'Video upload error';
+							console.error('Video upload error');
 
 							sitemessage(message);
 						}
@@ -683,6 +678,7 @@ var uploadpeertube = (function () {
 
 				el.uploadButton = el.c.find('.uploadButton');
 				el.cancelButton = el.c.find('.cancelButton');
+				el.closeButton = p.el.find('.closeButton');
 
 				el.header = el.c.find('.upload-header');
 

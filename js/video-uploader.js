@@ -68,6 +68,7 @@ class VideoUploader {
             }
 
             throw {
+              err,
               reason: 'unhandled_error',
               text: 'Please try uploading again',
             };
@@ -176,13 +177,17 @@ class VideoUploader {
     data.name = self.videoName;
     options.type = 'uploadVideo';
 
-    const { uploadId } = await self.ptVideoApi
+    const response = await self.ptVideoApi
       .initResumableUpload(data, options)
       .catch(() => {
         console.log('Resumable video init failed');
       });
 
-    return Promise.resolve(uploadId);
+    if (!response) {
+      throw 'RESUMABLE_UPLOAD_INIT';
+    }
+
+    return Promise.resolve(response.uploadId);
   }
 
   static async loadChunk(self, chunk, chunkPos) {

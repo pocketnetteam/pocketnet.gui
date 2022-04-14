@@ -12,7 +12,7 @@ const {protocol} = require('electron');
 const ProxyInterface = require('./proxy16/ipc.js')
 const IpcBridge =require('./js/electron/ipcbridge.js')
 
-const { TranscoderBridge } = require('./js/electron/transcoding2.js');
+const { Bridge: TranscoderBridge } = require('./js/electron/transcoding2.js');
 const { bastyonFsFetchBridge } = require('./js/peertube/bastyon-fs-fetch.js');
 
 const electronLocalshortcut = require('electron-localshortcut');
