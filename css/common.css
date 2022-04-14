@@ -414,6 +414,8 @@
   width: 100%;
   height: 100%;
   cursor: pointer;
+  border-radius: 18px;
+  overflow: hidden;
 }
 @media (pointer: fine) {
   .share_common .jsPlayerPreview .wpl:hover {
