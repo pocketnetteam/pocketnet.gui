@@ -6,6 +6,15 @@
   font-weight: 700;
   font-size: 0.9em;
 }
+#recommendations .recloader {
+  display: none;
+}
+#recommendations.loading .recloader {
+  display: block;
+}
+#recommendations .listWrapper > div {
+  margin-bottom: 0.5em;
+}
 #recommendations .recoVideoDiv {
   display: flex;
   margin-bottom: 0.5em;

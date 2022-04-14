@@ -1629,10 +1629,12 @@ var post = (function () {
 				self.app.platform.ui.recommendations(el.reco, share, {
 					opensvi : ed.opensvi,
 					next : ed.next,
-
+					startload : !p.inWnd && el.c.closest('.videomainpost').length && !isMobile(),
 					beforeopen : function(){
 						self.closeContainer()
-					}
+					},
+
+					el : p.inWnd ? el.c.closest('.wndcontent') : null
 					
 				}, function(e, p){
 					recommendations = p

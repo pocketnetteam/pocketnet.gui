@@ -449,7 +449,7 @@ RpcClient.callspec = {
     getpagescores: 'obj str',
 
 
-    gettopfeed : 'int str int str obj obj obj obj obj str str int',
+    gettopfeed : 'int str int str obj obj obj obj obj str int',
     getboostfeed : 'int str int str obj obj obj obj obj str str',
     getprofilefeed : 'int str int str obj str str str obj str str',
     getsubscribesfeed : 'int str int str obj obj obj obj obj str str',

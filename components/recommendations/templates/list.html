@@ -55,10 +55,11 @@
 
         <% })
     } else { %> 
-    
-        <div class="empty">
-            <span><%- e('norecommendedvideos') %></span>
-        </div>
+        <% if(empty) {%>
+            <div class="empty">
+                <span><%- e('norecommendedvideos') %></span>
+            </div>
+        <% } %>
         
     <% } %>
 </div>

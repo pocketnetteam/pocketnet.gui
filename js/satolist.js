@@ -178,7 +178,8 @@ Platform = function (app, listofnodes) {
         'PWeAQ1Mb3Xb7anjikyNogR3UqiZgnNbRiZ' : true,
         'PCkkR6TPP273vv5AQgJTWhBHawjzakkU1A' : true,
         'PT2kwKs93LYgRFhohRAkLuU9oynRDrfXto' : true,
-        'PGNUAB5kNKVGTQ9CbE198sesKKYXnmX8HU' : true
+        'PGNUAB5kNKVGTQ9CbE198sesKKYXnmX8HU' : true,
+        'PBGqJGSrdsBrEsLmiAaeH22bxGg8irX3gC' : true
     }
 
     self.bch = {
@@ -2719,9 +2720,9 @@ Platform = function (app, listofnodes) {
 
                     caption : 'othervideos',
                     loader : 'getrecomendedcontents',
-                   
+                    startload : ed.startload,
 
-                    loader : {
+                    loaders : [{
                         loader : 'getrecomendedcontents',
                         parameters : {
                 
@@ -2731,9 +2732,7 @@ Platform = function (app, listofnodes) {
                             count: 12,
                             lang : share.language
                         },
-                    },
-
-                    additional : {
+                    },{
                         loader : 'gettopfeed',
                         parameters : {
                 
@@ -2744,7 +2743,7 @@ Platform = function (app, listofnodes) {
                             tagsfilter : share.tags
                         },
                         
-                    },
+                    }],
 
                     filter : function(_share){
                         return _share.txid != share.txid && _share.address != self.app.user.address.value
@@ -16101,8 +16100,6 @@ Platform = function (app, listofnodes) {
 
                         var _u = data.userprofile
 
-                        console.log(_u)
-
                         if (_u) {
                             var u = self.sdk.users.prepareuser(_u, _u.address, state)
 
@@ -16743,9 +16740,8 @@ Platform = function (app, listofnodes) {
                                 parameters = [p.contentAddress, '', p.type ? [p.type] : [], p.lang || "", p.count];
 
                             if(mtd == 'gettopfeed') {
-                                //parameters.push('');
-                               // parameters.push('')
-                                //parameters.push(p.depth)
+                                parameters.push('');
+                                parameters.push(p.depth)
                                 
                             }
 
