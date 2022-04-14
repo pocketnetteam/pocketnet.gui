@@ -15509,7 +15509,7 @@ Platform = function (app, listofnodes) {
                     return share
                 },
 
-                users: function (shares, clbk) {
+                users: function (shares, clbk, withoutlastcomment) {
                     var users = [];
 
                     _.each(shares || [], function (s) {
@@ -15517,11 +15517,14 @@ Platform = function (app, listofnodes) {
                         if(!s) return
 
                         users.push(s.address)
+                        
+                        if(!withoutlastcomment){
+                            var cuser = deep(s, 'lastComment.address')
 
-                        var cuser = deep(s, 'lastComment.address')
-
-                        if (cuser)
-                            users.push(cuser)
+                            if (cuser)
+                                users.push(cuser)
+                        }
+                       
                     })
 
                     self.sdk.users.get(users, clbk, true)
@@ -16097,6 +16100,8 @@ Platform = function (app, listofnodes) {
                     _.each(d, function (data) {
 
                         var _u = data.userprofile
+
+                        console.log(_u)
 
                         if (_u) {
                             var u = self.sdk.users.prepareuser(_u, _u.address, state)

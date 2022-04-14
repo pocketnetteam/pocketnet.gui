@@ -2974,7 +2974,7 @@ var lenta = (function(){
 
 			mystars : function(shares, clbk){
 
-				if(video || essenseData.openapi || essenseData.second) {
+				if(ed.horizontal || video || essenseData.openapi || essenseData.second) {
 					
 					if(clbk) clbk()
 
@@ -3153,7 +3153,8 @@ var lenta = (function(){
 					all : {
 						success : function(){
 
-							renders.mystars(shares)
+				
+								renders.mystars(shares)
 
 							if (essenseData.includeboost){ actions.includeboost() }
 
@@ -3805,6 +3806,9 @@ var lenta = (function(){
 				var author = essenseData.author;
 
 				self.app.platform.sdk.node.shares.loadvideoinfoifneed(allshares, video, function(){
+
+					console.log('allshares', allshares)
+
 					self.app.platform.sdk.node.shares.users(allshares, function(l, error2){
 
 						countshares = countshares + allshares.length
@@ -4017,7 +4021,7 @@ var lenta = (function(){
 							clbk(shares, error || error2);
 						}
 
-					})	
+					}, essenseData.horizontal)	
 
 				})
 			},

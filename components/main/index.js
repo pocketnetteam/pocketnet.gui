@@ -667,6 +667,7 @@ var main = (function(){
 				}
 
 				self.app.user.isState(function(state){
+
 				
 					self.nav.api.load({
 						open : true,
