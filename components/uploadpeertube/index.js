@@ -115,6 +115,12 @@ var uploadpeertube = (function () {
 
 
 			el.videoInput.change(async function (evt) {
+				if (!evt.target.files[0]) {
+					el.videoError.text('No file was selected');
+					el.videoError.addClass('error-message');
+					return;
+				}
+
 				var fileName = evt.target.files[0].name;
 
 				el.videoError.text(
@@ -312,14 +318,18 @@ var uploadpeertube = (function () {
 						transcoder.setTranscodeProgressListener(progressTranscode);
 						transcoder.setTranscodeStartedListener((task) => {
 							initCancelListener(() => {
-								sitemessage(`Upload canceled`);
 								task.close(true);
+								sitemessage('Uploading canceled');
 							});
 						});
 
 						transcoded = await transcoder.runTask(file);
 					} catch (err) {
 						switch (err) {
+							case 'TRANSCODE_SUBOPTIMAL_RESULT':
+								sitemessage('Suboptimal transcoding result. Continuing with original video');
+								console.error('Suboptimal transcoding results expected. Preferring original video');
+								break;
 							case 'TRANSCODE_FFMPEG_ERROR':
 								console.error('FF Binaries produced error while processing video');
 								break;
@@ -327,13 +337,9 @@ var uploadpeertube = (function () {
 								console.error('Transcoder was not able to find processed video');
 								break;
 							case 'BINARIES_REQUIREMENTS':
+								console.error('This device does not meet some requirements for transcoder');
+								break;
 							case 'TRANSCODE_UNNECESSARY':
-								/**
-								 * Not fatal errors. Video would
-								 * be processed on server side
-								 * after upload finished.
-								 */
-
 								break;
 
 							case 'TRANSCODE_NONSTOP':
@@ -463,9 +469,7 @@ var uploadpeertube = (function () {
 
             hideLoadingBar();
 
-						if (e.cancel) {
-							sitemessage('Uploading canceled');
-						} else {
+						if (!e.cancel) {
 							let message = e.text || findResponseError(e) || 'Video upload error';
 							console.error('Video upload error');
 
