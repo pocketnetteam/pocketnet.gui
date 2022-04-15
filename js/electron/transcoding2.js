@@ -400,6 +400,7 @@ class BridgeTask {
 
       const targetVideoBitrate = Math.min(2600, this.inputProbe.videoBitrate);
       const targetAudioBitrate = Math.min(256, this.inputProbe.audioBitrate);
+      const targetFps = Math.min(25, this.inputProbe.frameRate);
 
       return ffmpeg(filePath)
         .withVideoCodec('libx264')
@@ -411,7 +412,7 @@ class BridgeTask {
         .outputOption(`-threads ${threadsCount}`)
         .withVideoBitrate(`${targetVideoBitrate}k`)
         .withAudioBitrate(`${targetAudioBitrate}k`)
-        .outputFps(25)
+        .outputFps(targetFps)
         .format('mp4')
         //.on('start', (cmdline) => console.log(cmdline))
     };
@@ -476,6 +477,7 @@ class BridgeTask {
         debugLog(`Transcoding task ${this.id}: Final file not found`);
 
         this.sender.send('Transcoder:Transcode:Error', 'TRANSCODE_OUTPUT_MISSING');
+        return;
       }
 
       this.checkSuboptimalResult();
