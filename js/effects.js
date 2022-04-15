@@ -172,8 +172,8 @@ FX_Star = function(p){
 
     self.angle = p.angle || 0
 
-    var color = Color(self.color)
-    self.color = color.lighten(Math.random()).hex()
+    //var color = Color(self.color)
+    //self.color = color.lighten( Math.min(Math.random() + 0.5, 1)).hex()
 
     self.render = function(ctx, percentOfLife){
         var x = self.x;
@@ -304,7 +304,7 @@ FX_Effects = function(el){
 
                         size : parameters.size,
                         color : parameters.color,
-                        opacity : parameters.opacity * Math.random() + 0.3
+                        opacity : parameters.opacity * (Math.random() + 0.5)
                     })
         
                     h.init()

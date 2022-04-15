@@ -835,6 +835,10 @@ var main = (function(){
 
 							renders.post(id)
 
+							self.nav.api.history.addParameters({
+								v : id
+							})
+
 							self.app.actions.scroll(0)
 							
 						}

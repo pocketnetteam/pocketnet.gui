@@ -2709,6 +2709,13 @@ Platform = function (app, listofnodes) {
         },
 
         recommendations : function(el, share, ed, clbk){
+
+
+            var idf = (share.txid.replace(/[^0-9]/, '') || '2') / 2
+
+            var oddtxid = idf[idf.length - 1] % 2 == 0
+
+
             self.app.nav.api.load({
                 open: true,
                 href: 'recommendations',
@@ -2729,7 +2736,7 @@ Platform = function (app, listofnodes) {
                             contentAddress: share.address,
                             type: 'video',
                             depth: 10000,
-                            count: 12,
+                            count: 20,
                             lang : share.language
                         },
                     },{
@@ -2738,15 +2745,19 @@ Platform = function (app, listofnodes) {
                 
                             type: 'video',
                             depth: 10000,
-                            count: 20,
+                            count: 30,
                             lang : share.language,
                             tagsfilter : share.tags
                         },
                         
                     }],
 
-                    filter : function(_share){
-                        return _share.txid != share.txid && _share.address != self.app.user.address.value
+                    filter : function(_share, i){
+
+                        if (oddtxid && i % 2 === 0 || !oddtxid && i % 2){
+                            return _share.txid != share.txid && _share.address != self.app.user.address.value
+                        }
+                        
                     },
 
                     points : function(_share, p){
@@ -3260,9 +3271,13 @@ Platform = function (app, listofnodes) {
 
         effectinternal : function(el, name, parameters, clbk){
 
-            if (typeof _Electron != 'undefined' || !self.istest()) {
+            if (typeof _Electron != 'undefined' || (!self.istest() && !self.app.test)) {
                 return
             }
+
+            console.log('self.sdk.usersettings.meta.useanimations', self.sdk.usersettings.meta.useanimations)
+
+            if(!self.sdk.usersettings.meta.useanimations.value) return
 
             var e = function(){
                 self.effects.manager.effect(el, name, parameters, clbk)
@@ -8494,6 +8509,13 @@ Platform = function (app, listofnodes) {
                     value: false
                 },
 
+                useanimations: {
+                    name: self.app.localization.e('useanimations'),
+                    id: 'useanimations',
+                    type: "BOOLEAN",
+                    value: true
+                },
+
             },
 
             //self.canuseip
@@ -8606,6 +8628,7 @@ Platform = function (app, listofnodes) {
 
                 }
 
+                c.system.options.useanimations = options.useanimations
 
                 if (electron) {
                     c.system.options.autostart = options.autostart
@@ -8676,6 +8699,8 @@ Platform = function (app, listofnodes) {
                         }
                     }
                 })
+
+                console.log("SETTINGS", c)
 
                 return {
                     c: c,
@@ -9600,6 +9625,8 @@ Platform = function (app, listofnodes) {
 
             clbks: {},
 
+            loading : {},
+
 
             validationcurrent: function (address, parameter, clbk) {
                 var s = self.sdk.ustate.storage;
@@ -9752,6 +9779,24 @@ Platform = function (app, listofnodes) {
                     if (state) {
                         var address = self.sdk.address.pnet().address;
 
+                        if(self.sdk.ustate.loading[address]){
+
+                            retry(function(){
+
+                                console.log("WAIT", update)
+
+                                return !self.sdk.ustate.loading[address]
+                            }, function(){
+                                if (clbk)
+                                    clbk(s[address])
+                            })
+
+                            return
+
+                        }
+
+                        
+
                         self.sdk.ustate.get(address, function () {
 
                             if (clbk)
@@ -9778,11 +9823,15 @@ Platform = function (app, listofnodes) {
                 if (!update)
 
                     addresses = _.filter(addresses, function (a) {
-                        if (!s[a]) return true
+                        if (!s[a]) {
+
+                            self.sdk.ustate.loading[a] = true
+
+                            return true
+                        }
                     })
 
                 addresses = _.uniq(addresses)
-
 
                 if (addresses.length) {
 
@@ -9792,6 +9841,10 @@ Platform = function (app, listofnodes) {
 
                         _.each(d || [], function (info) {
                             s[info.address] = info
+                        })
+
+                        _.each(addresses, function(a){
+                            self.sdk.ustate.loading[a] = false
                         })
 
 
@@ -9812,6 +9865,7 @@ Platform = function (app, listofnodes) {
                     })
 
                 }
+                
                 else {
                     if (clbk)
                         clbk()
@@ -26204,6 +26258,8 @@ Platform = function (app, listofnodes) {
         self.sdk.sharesObserver.storage = {
             viewed : {}
         }
+
+        self.sdk.ustate.loading = {}
 
         self.sdk.likes.who = {};
 

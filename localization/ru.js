@@ -1977,3 +1977,5 @@ ____loclib.starssendcomments = "Оставьте комментарий авто
 ____loclib.starssendcommentp = "Оставьте комментарий автору";
 
 ____loclib.savevideo = "Загрузить видео";
+
+____loclib.useanimations = "Включить анимации";

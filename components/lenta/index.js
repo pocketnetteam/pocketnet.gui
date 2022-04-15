@@ -2323,7 +2323,7 @@ console.log("ASASAS")
 
 							var reason = null
 
-							if(!rand(0,9)) reason = 'p'
+							//if(!rand(0,9)) reason = 'p'
 
 							if(s.scnt == '0') reason = 's'
 

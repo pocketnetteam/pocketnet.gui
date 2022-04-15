@@ -2187,3 +2187,5 @@ ____loclib.starssendcomments = "Leave a comment for the author";
 ____loclib.starssendcommentp = "Leave a comment for the author";
 
 ____loclib.savevideo = "Download video";
+
+____loclib.useanimations = "Enable animations";
