@@ -2679,7 +2679,7 @@ var comments = (function(){
 
 					el.c.find('.post').addClass('attention')
 
-					if (text)
+					if (text && !isMobile())
 						el.c.find('.leaveCommentPreview').attr('placeholder', text)
 
 					setTimeout(function(){

@@ -121,7 +121,7 @@ var postscores = (function(){
 								var v = Number(share.score) / Number(share.scnt) 
 
 
-								p.find('.tstarsov').css('width', ((v / 5) * 100) + '%')
+								p.find('.tstars').css('width', ((v / 5) * 100) + '%')
 								p.closest('.itemwr').find('.count span.v').html(v.toFixed(1))
 
 								renders.stars()

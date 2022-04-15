@@ -2363,7 +2363,7 @@ console.log("ASASAS")
 
 								var v = Number(s.score) / Number(s.scnt) 
 
-								p.find('.tstarsov').css('width', ((v / 5) * 100) + '%')
+								p.find('.tstars').css('width', ((v / 5) * 100) + '%')
 								p.closest('.itemwr').find('.count span.v').html(v.toFixed(1))
 
 								renders.stars(s)

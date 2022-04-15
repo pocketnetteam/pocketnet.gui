@@ -1438,7 +1438,7 @@ pie {
     }
 
     .disabled(){
-        color : rgb(var(--neutral-grad-2));
+        color : rgb(var(--neutral-grad-1));
     }
 
    
@@ -1571,12 +1571,17 @@ pie {
         line-height: 1.8em;
     }
 
+    i{
+        width: 100%;
+    }
+
     .tstars{
+        display: block;
         position: absolute;
         left: 0;
-        right: 0;
         bottom: 0;
         top: 0;
+        cursor: pointer;
         .transition(0.3s);
 
         .tstarsov{
@@ -1595,12 +1600,15 @@ pie {
             }
         }
     }
-
-    &:hover{
-        .tstars{
-            display: none;
+    @media (pointer:fine) {
+       
+        &:hover{
+            .tstars{
+                display: none;
+            }
         }
     }
+    
 
     &.liked{
         .starsWrapperM{
@@ -1617,16 +1625,17 @@ pie {
             }
         }
 
-
-        &:hover{
-            .tstars{
-                display: block;
+        @media (pointer:fine) {
+            &:hover{
+                .tstars{
+                    display: block;
+                }
             }
         }
 
     }
 
-    &.disabled{
+    /*&.disabled{
         cursor: default!important;
 
         [value]{
@@ -1634,14 +1643,15 @@ pie {
             .disabled()
         }
 
-
-        &:hover{
-            .tstars{
-                display: block;
+        @media (pointer:fine) {
+            &:hover{
+                .tstars{
+                    display: block;
+                }
             }
         }
 
-    }
+    }*/
     
 }
 

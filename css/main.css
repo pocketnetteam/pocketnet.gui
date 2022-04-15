@@ -1128,6 +1128,23 @@ pie {
   position: relative;
   font-size: 1.1em;
   color: rgb(var(--neutral-grad-3));
+  /*&.disabled{
+        cursor: default!important;
+
+        [value]{
+            cursor: default!important;
+            .disabled()
+        }
+
+        @media (pointer:fine) {
+            &:hover{
+                .tstars{
+                    display: block;
+                }
+            }
+        }
+
+    }*/
 }
 .stars .starsWrapper {
   overflow: hidden;
@@ -1201,15 +1218,7 @@ pie {
   color: rgb(var(--color-star-yellow));
 }
 .stars[value="4"] [value="5"] {
-  color: rgb(var(--neutral-grad-2));
-  cursor: default!important;
-}
-.stars[value="4"] [value="5"] [value] {
-  cursor: default!important;
-  color: rgb(var(--neutral-grad-2));
-}
-.stars[value="4"] [value="5"]:hover .tstars {
-  display: block;
+  color: rgb(var(--neutral-grad-1));
 }
 .stars[value="4"] [value="4"],
 .stars[value="4"] [value="3"],
@@ -1220,17 +1229,7 @@ pie {
 }
 .stars[value="3"] [value="5"],
 .stars[value="3"] [value="4"] {
-  color: rgb(var(--neutral-grad-2));
-  cursor: default!important;
-}
-.stars[value="3"] [value="5"] [value],
-.stars[value="3"] [value="4"] [value] {
-  cursor: default!important;
-  color: rgb(var(--neutral-grad-2));
-}
-.stars[value="3"] [value="5"]:hover .tstars,
-.stars[value="3"] [value="4"]:hover .tstars {
-  display: block;
+  color: rgb(var(--neutral-grad-1));
 }
 .stars[value="3"] [value="3"],
 .stars[value="3"] [value="2"],
@@ -1241,19 +1240,7 @@ pie {
 .stars[value="2"] [value="5"],
 .stars[value="2"] [value="4"],
 .stars[value="2"] [value="3"] {
-  color: rgb(var(--neutral-grad-2));
-  cursor: default!important;
-}
-.stars[value="2"] [value="5"] [value],
-.stars[value="2"] [value="4"] [value],
-.stars[value="2"] [value="3"] [value] {
-  cursor: default!important;
-  color: rgb(var(--neutral-grad-2));
-}
-.stars[value="2"] [value="5"]:hover .tstars,
-.stars[value="2"] [value="4"]:hover .tstars,
-.stars[value="2"] [value="3"]:hover .tstars {
-  display: block;
+  color: rgb(var(--neutral-grad-1));
 }
 .stars[value="2"] [value="2"],
 .stars[value="2"] [value="1"] {
@@ -1264,21 +1251,7 @@ pie {
 .stars[value="1"] [value="4"],
 .stars[value="1"] [value="3"],
 .stars[value="1"] [value="2"] {
-  color: rgb(var(--neutral-grad-2));
-  cursor: default!important;
-}
-.stars[value="1"] [value="5"] [value],
-.stars[value="1"] [value="4"] [value],
-.stars[value="1"] [value="3"] [value],
-.stars[value="1"] [value="2"] [value] {
-  cursor: default!important;
-  color: rgb(var(--neutral-grad-2));
-}
-.stars[value="1"] [value="5"]:hover .tstars,
-.stars[value="1"] [value="4"]:hover .tstars,
-.stars[value="1"] [value="3"]:hover .tstars,
-.stars[value="1"] [value="2"]:hover .tstars {
-  display: block;
+  color: rgb(var(--neutral-grad-1));
 }
 .stars[value="1"] [value="1"] {
   font-weight: 900;
@@ -1288,12 +1261,16 @@ pie {
 .stars img {
   line-height: 1.8em;
 }
+.stars i {
+  width: 100%;
+}
 .stars .tstars {
+  display: block;
   position: absolute;
   left: 0;
-  right: 0;
   bottom: 0;
   top: 0;
+  cursor: pointer;
   -moz-transition: 0.3s;
   -o-transition: 0.3s;
   -webkit-transition: 0.3s;
@@ -1313,8 +1290,10 @@ pie {
 .stars .tstars .tstarsov .starsWrapper {
   width: 20em;
 }
-.stars:hover .tstars {
-  display: none;
+@media (pointer: fine) {
+  .stars:hover .tstars {
+    display: none;
+  }
 }
 .stars.liked .starsWrapperM i {
   font-weight: 900;
@@ -1322,18 +1301,10 @@ pie {
 .stars.liked .tstars i {
   font-weight: 400;
 }
-.stars.liked:hover .tstars {
-  display: block;
-}
-.stars.disabled {
-  cursor: default!important;
-}
-.stars.disabled [value] {
-  cursor: default!important;
-  color: rgb(var(--neutral-grad-2));
-}
-.stars.disabled:hover .tstars {
-  display: block;
+@media (pointer: fine) {
+  .stars.liked:hover .tstars {
+    display: block;
+  }
 }
 .subscribebuttons {
   width: auto;

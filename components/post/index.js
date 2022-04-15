@@ -544,6 +544,7 @@ var post = (function () {
 
 			like: function (value, clbk) {
 
+
 				var checkvisibility = app.platform.sdk.node.shares.checkvisibility(share);
 				var reputation = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.reputation') || 0
 
@@ -591,19 +592,17 @@ var post = (function () {
 					return
 				}
 
-				if (value > 4 ){
+				if (value > 4){
 
 					var reason = null
 
-					if(!rand(0,9)) reason = 'p'
+					if(!rand(0, 9)) reason = 'p'
 
-					if(share.scnt == '0') reason = 's'
+					if (share.scnt == '0') reason = 's'
 
 					if (reason) {
 						setTimeout(function(){
-								
 							if(!el.c) return
-	
 								self.app.platform.effects.templates.commentstars(el.c, value, function(){
 									if (inicomments){
 										inicomments.attention(self.app.localization.e('starssendcomment' + reason))
@@ -611,8 +610,6 @@ var post = (function () {
 								})
 						}, 300)
 					}
-
-					
 					
 				}
 
@@ -957,7 +954,7 @@ var post = (function () {
 							var v = Number(share.score) / Number(share.scnt)
 
 
-							p.find('.tstarsov').css('width', ((v / 5) * 100) + '%')
+							p.find('.tstars').css('width', ((v / 5) * 100) + '%')
 							p.closest('.itemwr').find('.count span.v').html(v.toFixed(1))
 
 							renders.stars()

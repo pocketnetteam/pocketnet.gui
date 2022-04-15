@@ -2273,9 +2273,9 @@ Application = function(p)
 
 									setTimeout(function(){
 
-										if (self.app.platform.loadingWithErrors){
+										if (self.platform.loadingWithErrors){
 
-											self.app.platform.appstate(function(){
+											self.platform.appstate(function(){
 
 												setTimeout(function(){
 													globalpreloader(false)
