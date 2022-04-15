@@ -243,7 +243,9 @@ function createTray() {
     if (is.macOS()) {
         app.dock.setMenu(contextMenu)
         app.on('activate', () => {
-            initApp()
+            if(win.isDestroyed()) {
+                initApp()
+            }
         })
     }
 
