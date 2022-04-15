@@ -251,6 +251,8 @@ class BridgeTask {
           this.sender.send('Transcoder:Probe:Error', err);
         });
 
+      this.inputProbe = videoProbe;
+
       this.sender.send('Transcoder:Probe:Result', videoProbe);
     });
   }
@@ -396,6 +398,9 @@ class BridgeTask {
     const spawnFfmpeg = () => {
       const threadsCount = coresCount / 2;
 
+      const targetVideoBitrate = Math.min(2600, this.inputProbe.videoBitrate);
+      const targetAudioBitrate = Math.min(256, this.inputProbe.audioBitrate);
+
       return ffmpeg(filePath)
         .withVideoCodec('libx264')
         .withAudioCodec('libmp3lame')
@@ -404,8 +409,8 @@ class BridgeTask {
         .outputOption('-qmax 35')
         .outputOption('-preset veryfast')
         .outputOption(`-threads ${threadsCount}`)
-        .withVideoBitrate('2600k')
-        .withAudioBitrate('256k')
+        .withVideoBitrate(`${targetVideoBitrate}k`)
+        .withAudioBitrate(`${targetAudioBitrate}k`)
         .outputFps(25)
         .format('mp4')
         //.on('start', (cmdline) => console.log(cmdline))
