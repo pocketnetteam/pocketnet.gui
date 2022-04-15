@@ -326,8 +326,6 @@ class BridgeTask {
     this.command.kill('SIGTERM');
 
     this.sender.send('Transcoder:Transcode:Stopped');
-
-    fs.unlink(this.output, () => {});
   }
 
   getVideoProbe(filePath) {
@@ -357,7 +355,7 @@ class BridgeTask {
         const resultStats = {
           width,
           height,
-          frameRate: Number.parseFloat(avg_frame_rate),
+          frameRate: Number.parseFloat(eval(avg_frame_rate)), // Using eval to run math from ffprobe
           videoBitrate: Math.floor(videoBitrate / 1000),
         };
 
@@ -383,9 +381,7 @@ class BridgeTask {
   }
 
   checkSuboptimalResult() {
-    const resultSize = fs.statSync(this.output).size;
-
-    if (resultSize > this.inputSize) {
+    if (this.resultSize > this.inputSize) {
       debugLog(`Transcoding task ${this.id}: Final file is bigger than original`);
 
       this.sender.send('Transcoder:Transcode:Error', 'TRANSCODE_SUBOPTIMAL_RESULT');
@@ -480,10 +476,10 @@ class BridgeTask {
         return;
       }
 
-      this.checkSuboptimalResult();
-
       fs.renameSync(this.output, this.finishedOutput);
       this.resultSize = fs.statSync(this.finishedOutput).size;
+
+      this.checkSuboptimalResult();
 
       debugLog(`Transcoding task ${this.id}: Finished`);
 
