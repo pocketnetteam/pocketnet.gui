@@ -2,7 +2,7 @@ var IpcBridge = function(ipc, wc){
 	var self = this;
 
 	var send = function(id, error, p){
-		if(!ws.isDestroyed()) {
+		if(!wc.isDestroyed()) {
 			wc.send('ipc-bridge', {
 
 				error: error,
