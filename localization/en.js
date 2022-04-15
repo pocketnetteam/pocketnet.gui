@@ -2185,3 +2185,5 @@ ____loclib.othervideos = "Other videos";
 
 ____loclib.starssendcomments = "Leave a comment for the author";
 ____loclib.starssendcommentp = "Leave a comment for the author";
+
+____loclib.savevideo = "Download video";

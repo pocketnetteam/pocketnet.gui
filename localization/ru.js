@@ -1975,3 +1975,5 @@ ____loclib.othervideos = "Другие видео";
 
 ____loclib.starssendcomments = "Оставьте комментарий автору";
 ____loclib.starssendcommentp = "Оставьте комментарий автору";
+
+____loclib.savevideo = "Загрузить видео";
