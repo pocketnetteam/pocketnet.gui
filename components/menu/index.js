@@ -703,13 +703,29 @@ var menu = (function(){
 					self.app.errors.clbks.menu = function(){
 						action()
 					}
+				},
 
-					if(!self.app.mobileview)
-						el.tooltipster({
-							theme: 'tooltipster-light',
-							maxWidth : 300,
-							zIndex : 200,
-						});
+
+				click : function(){
+
+					var state = self.app.user.getstate()
+
+					var href = 'system16'
+
+					if(state && !self.app.mobileview){
+						href = 'userpage?id=system16'
+					}
+
+					self.app.platform.appstateclbk(function(){
+
+						self.nav.api.go({
+							open : true,
+							href : href,
+							history : true
+						})
+						
+					})
+
 				}
 			},
 
@@ -776,7 +792,6 @@ var menu = (function(){
 						    	el.removeClass(c)
 						    });
 						}
-					
 						
 					}
 
@@ -804,18 +819,6 @@ var menu = (function(){
 							self.app.platform.sdk.wallet.drawSpendLine(el.find('.numberWrp'))
 						})
 
-					}
-
-					var setNewBalance = function(){
-						self.app.platform.sdk.node.transactions.get.allBalance(function(amount){
-
-
-							var t = self.app.platform.sdk.node.transactions.tempBalance()
-
-
-							setValue(amount - current + t)	
-							
-						})
 					}
 
 					var act = function(){

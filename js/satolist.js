@@ -3256,15 +3256,21 @@ Platform = function (app, listofnodes) {
 
     self.effects = {
         manager : null,
+        animation : false,
 
         effectinternal : function(el, name, parameters, clbk){
+
+            if (typeof _Electron != 'undefined') {
+                return
+            }
 
             var e = function(){
                 self.effects.manager.effect(el, name, parameters, clbk)
             }
 
             if(!self.effects.manager){
-                self.effects.manager = new FX_Manager(app).prepare(e)
+                self.effects.manager = new FX_Manager(app)
+                self.effects.manager.prepare(e)
             }
             else{
                 e()
@@ -3308,6 +3314,39 @@ Platform = function (app, listofnodes) {
 
                 if(clbk) clbk()
             })
+        },
+
+        templates : {
+            commentstars : function(el, value, clbk){
+
+                if(!el) return
+
+                if(self.effects.animation) return
+
+                self.effects.animation = true
+
+                var stars = el.find('.starswr')
+
+                var parameters = {}
+
+                if (value < 2) parameters.color = '#FF0022'
+                if (value == 2) parameters.color = '#ff2400'
+                if (value == 3) parameters.color = '#CCCCCC'
+
+                var top = stars.offset().top + 15
+                var left = stars.offset().left
+                var height = 300
+                var width = 200
+                var swidth = stars.width() * (value - 1) / 5
+
+                left += swidth
+
+                self.effects.make({top : top - height,left,width, height}, 'stars', parameters, function(){
+                    self.effects.animation = false
+
+                    if(clbk) clbk()
+                })
+            }
         }
     }
 
@@ -3436,27 +3475,30 @@ Platform = function (app, listofnodes) {
             var events = {
                 resize: function () {
 
+                    setTimeout(function(){
+                        var mode = getmode();
 
-                    var mode = getmode();
-
-                    if (mode != currentmode) {
-                        actions.clear();
-                    }
-
-                    currentmode = mode
-
-                    if (mode == 'full') {
-                        if (p.rightEl) {
-                            up.css('width', p.rightEl.offset().left + "px")
+                        if (mode != currentmode) {
+                            actions.clear();
                         }
-
-                        if (p.top) {
-                            up.css('top', p.top())
+    
+                        currentmode = mode
+    
+                        if (mode == 'full') {
+                            if (p.rightEl) {
+                                up.css('width', p.rightEl.offset().left + "px")
+                            }
+    
+                            if (p.top) {
+                                up.css('top', p.top())
+                            }
                         }
-                    }
-                    else {
+                        else {
+    
+                        }
+                    }, 200)
 
-                    }
+                    
                 },
                 scroll: function () {
 
@@ -26291,19 +26333,47 @@ Platform = function (app, listofnodes) {
         self.updating = false;
     }, 600000)
 
-    self.appstate = function(reload) {
+    var reloading = false
 
-        if (reload || (self.loadingWithErrors && _.isEmpty(self.app.errors.state))) {
-
-            self.loadingWithErrors = false;
-            self.restart(function () {
-                self.prepareUserData(function(){
-                    self.app.reload(function () {
-                    })
-                })
-
+    self.appstateclbk = function(c){
+        if(self.loadingWithErrors){
+            self.appstate(function(){
+                setTimeout(function(){
+                    if(c) c()
+                }, 200)
             })
         }
+        else{
+            if(c) c()
+        }
+    }
+
+    self.appstate = function(clbk) {
+
+        if (reloading) {
+            return
+        }
+        
+        reloading = true
+
+        self.loadingWithErrors = false;
+
+        
+        self.restart(function () {
+            self.prepareUserData(function(){
+
+                self.app.reload({
+                    clbk : function () {
+                        reloading = false
+    
+                        self.loadingWithErrors = !_.isEmpty(self.app.errors.state)
+    
+                        if(clbk) clbk()
+                    }
+                })
+            })
+
+        })
     }
 
 
@@ -26363,9 +26433,9 @@ Platform = function (app, listofnodes) {
             self.initSounds();
         }, 35000)
 
-        if (self.app.errors.clbks) {
+        /*if (self.app.errors.clbks) {
             self.app.errors.clbks.platform = self.appstate
-        }
+        }*/
 
         ///
 

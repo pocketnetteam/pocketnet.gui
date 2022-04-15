@@ -18,7 +18,6 @@ var lenta = (function(){
 		var w, essenseData, recomended = [], recommended, mestate, initedcommentes = {}, canloadprev = false,
 		video = false, isotopeinited = false, videosVolume = 0, fullscreenvideoShowing = null, loadedcachedHeight, showRecommendedUsers = true, recommendedusers = null;
 
-		var animation = false
 		var subloaded = false
 
 		var boosted = [],
@@ -83,35 +82,7 @@ var lenta = (function(){
 			
 		}
 
-		var effects = {
-			starstocomments : function(txid, value){
-
-				if(animation) return
-
-				animation = true
-				var stars = el.share[txid].find('.starswr')
-
-				var comment = el.share[txid].find('#comments')
-
-				var parameters = {}
-
-				if (value < 2) parameters.color = '#FF0022'
-				if (value == 2) parameters.color = '#ff2400'
-				if (value == 3) parameters.color = '#CCCCCC'
-
-				var top = stars.offset().top + 15
-				var left = stars.offset().left
-				var height = 300
-				var width = 200
-				var swidth = stars.width() * (value - 1) / 5
-
-				left += swidth
-
-				self.app.platform.effects.make({top : top - height,left,width, height}, 'stars', parameters, function(){
-					animation = false
-				})
-			}
-		}
+		
 
 
 		var actions = {
@@ -1636,7 +1607,12 @@ var lenta = (function(){
 
 				var reputation = deep(app, 'platform.sdk.usersl.storage.'+obj.address+'.reputation') || 0
 
-				if (checkvisibility && reputation >= 50) return
+				if (checkvisibility && reputation >= 50) {
+					if (clbk)
+						clbk(false)
+
+					return
+				}
 
 				if(value <= 3){
 					if(self.app.platform.sdk.user.scamcriteria()){
@@ -2224,8 +2200,6 @@ var lenta = (function(){
 
 					events.videosInview()
 
-				}, function(){
-
 				})
 
 			},
@@ -2323,9 +2297,7 @@ var lenta = (function(){
 			
 
 			like : function(){
-
-				
-
+console.log("ASASAS")
 				var p = $(this).closest('.stars');
 
 				if (p.attr('value')){
@@ -2334,8 +2306,6 @@ var lenta = (function(){
 
 				var id = $(this).closest('.share').attr('id');
 				var value = $(this).attr('value')
-
-				//effects.starstocomments($(this).closest('.share').attr('id'), value)
 
 				if(!id) id = $(this).closest('.truerepost').attr('stxid')
 
@@ -2349,8 +2319,34 @@ var lenta = (function(){
 
 						if (self.app.platform.sdk.address.pnet() && s.address == self.app.platform.sdk.address.pnet().address) return
 
+						if (value > 4){
 
-					
+							var reason = null
+
+							if(!rand(0,9)) reason = 'p'
+
+							if(s.scnt == '0') reason = 's'
+
+							if(reason) {
+								setTimeout(function(){
+
+									if(!el.share[id]) return
+	
+									self.app.platform.effects.templates.commentstars(el.share[id], value, function(){
+										if (initedcommentes[id]){
+											initedcommentes[id].attention(self.app.localization.e('starssendcomment' + reason))
+										}
+									})
+	
+								}, 300)
+							}
+
+							
+							
+
+						}
+
+							
 
 						p.attr('value', value)
 						p.addClass('liked')
@@ -3103,7 +3099,9 @@ var lenta = (function(){
 
 			
 
-			sharesInview : function(shares, clbk, boosted){
+			sharesInview : function(shares, clbk, p){
+
+				if(!p) p = {}
 
 				shares = _.filter(shares, function(s){
 					return !$('#' + s.txid).hasClass('hidden')
@@ -3142,7 +3140,7 @@ var lenta = (function(){
 
 							shareInitedMap[share.txid] = true
 							renders.share(share, p.success, null, {
-								boosted
+								boosted : p.boosted
 							})
 						}
 
@@ -4307,15 +4305,24 @@ var lenta = (function(){
 
 			el.c.find('.networkErrorMessage button').on('click', function(){
 
-				globalpreloader(true)
-
 				delete self.iclbks.lenta
-				make()
 
-				setTimeout(function(){
-					globalpreloader(false)
+				if (self.app.platform.loadingWithErrors){
+					self.app.platform.appstate(function(){
 
-				}, 600)
+					})
+				}
+				else{
+					globalpreloader(true)
+				
+					make()
+	
+					setTimeout(function(){
+						globalpreloader(false)
+	
+					}, 600)
+				}
+
 			})
 
 			//////////////////////

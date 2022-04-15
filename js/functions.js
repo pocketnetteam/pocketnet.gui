@@ -1784,7 +1784,7 @@
 		}
 
 		var messageel = $("<div/>", {
-			"class": "sitemessage remove_now removing",
+			"class": "sitemessage remove_now removing " + (p.class || ""),
 			html: m
 
 		})

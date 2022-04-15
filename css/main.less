@@ -1182,6 +1182,7 @@ pie {
     top : 65px;
     display: none;
     cursor: pointer;
+    .transition(0.3s);
 
     .mini{
         display: none;
@@ -1595,11 +1596,9 @@ pie {
         }
     }
 
-    @media (pointer:fine) {
-        &:hover{
-            .tstars{
-                display: none;
-            }
+    &:hover{
+        .tstars{
+            display: none;
         }
     }
 
@@ -1618,15 +1617,13 @@ pie {
             }
         }
 
-        @media (pointer:fine) {
 
-            &:hover{
-                .tstars{
-                    display: block;
-                }
+        &:hover{
+            .tstars{
+                display: block;
             }
-
         }
+
     }
 
     &.disabled{
@@ -1637,15 +1634,13 @@ pie {
             .disabled()
         }
 
-        @media (pointer:fine) {
 
-            &:hover{
-                .tstars{
-                    display: block;
-                }
+        &:hover{
+            .tstars{
+                display: block;
             }
-
         }
+
     }
     
 }
@@ -3251,6 +3246,38 @@ input[type=radio].radio:checked + label {
 
     &.removing{
         opacity: 0;
+    }
+
+    &.lightcenter{
+        text-align: center;
+        background: rgba(var(--background-total-theme), 0.98);
+        color: rgb(var(--text-color));
+        left : 50%;
+        top : 50%;
+        bottom: auto;
+        right: auto;
+        -webkit-transform: translate3d(-50%, -50%, 0);
+        transform: translate3d(-50%, -50%, 0);
+        .shadowSmaller();
+
+        .black{
+            background: rgb(var(--color-bg-orange));
+            color : #fff;
+            border : 1px solid rgb(var(--color-bg-orange)); 
+
+            @media (pointer:fine) {
+
+                &:hover{
+                    border : 1px solid rgb(var(--color-bg-orange)); 
+
+                    background: rgb(var(--color-bg-orange));
+                    color : #fff;
+                    opacity: 0.7;
+                }
+
+            }
+        }
+
     }
 }
 

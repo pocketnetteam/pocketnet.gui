@@ -1972,3 +1972,6 @@ ____loclib.image = "Изображение";
 ____loclib.file = "Файл";
 
 ____loclib.othervideos = "Другие видео";
+
+____loclib.starssendcomments = "Первые ✩✩✩✩✩! Оставьте комментарий автору";
+____loclib.starssendcommentp = "Оставьте комментарий автору";

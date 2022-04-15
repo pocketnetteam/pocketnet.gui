@@ -760,6 +760,9 @@ html.mobileview .wnd.normalizedmobile.articlewindow .wndinner .wndcontent {
   #post .sharearticle .shareBgCaption:not(.verticalcover) .blackmatte {
     display: none;
   }
+  #post .sharearticle .shareBgCaption.withoutcover .articleCover {
+    height: 1.5em;
+  }
   #post .sharearticle .shareBgCaption.verticalcover {
     height: 720px;
     border-bottom: 0;

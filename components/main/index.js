@@ -786,12 +786,14 @@ var main = (function(){
 
 				if(isMobile()) return
 
-				upbutton = self.app.platform.api.upbutton(el.up, {
-					top : function(){
-						return '65px'
-					},
-					rightEl : el.c.find('.leftpanelcell')
-				})	
+				if(el.c)
+
+					upbutton = self.app.platform.api.upbutton(el.up, {
+						top : function(){
+							return '65px'
+						},
+						rightEl : el.c.find('.leftpanelcell')
+					})	
 			},
 
 			post : function(id){

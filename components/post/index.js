@@ -591,6 +591,33 @@ var post = (function () {
 					return
 				}
 
+				if (value > 4 ){
+
+					var reason = null
+
+					if(!rand(0,9)) reason = 'p'
+
+					if(share.scnt == '0') reason = 's'
+
+					if (reason) {
+						setTimeout(function(){
+								
+							if(!el.c) return
+	
+								self.app.platform.effects.templates.commentstars(el.c, value, function(){
+									if (inicomments){
+										inicomments.attention(self.app.localization.e('starssendcomment' + reason))
+									}
+								})
+						}, 300)
+					}
+
+					
+					
+				}
+
+					
+
 				self.sdk.node.transactions.create.commonFromUnspent(
 
 					upvoteShare,
@@ -1447,35 +1474,16 @@ var post = (function () {
 					compact : true
 				})
 			},
-			wholike: function (clbk) {
-				var wholikes = share.who || [];
-
-				self.shell(
-					{
-						turi: 'lenta',
-						name: 'wholike',
-						el: el.share.find('.wholikes'),
-						data: {
-							scores: Number(share.scnt),
-							wholikes: wholikes,
-						},
-						bgImages: {},
-					},
-					function (p) {
-						p.el.find('.forstars .count').on('click', events.postscores);
-
-						if (clbk) clbk();
-					},
-				);
-			},
+			
 			mystars: function (clbk) {
 				if (typeof share.myVal == 'undefined' && !ed.preview) {
 					var ids = [share.txid];
 
 					self.app.platform.sdk.likes.get(ids, function () {
-						renders.stars();
+						renders.stars(clbk);
 
-						renders.wholike(clbk);
+						console.log("AS")
+
 					});
 				} else {
 					if (clbk) clbk();

@@ -350,15 +350,19 @@ var Proxy16 = function(meta, app, api){
     }
 
     var freshping = function(){
-        if(!self.ping || self.ping.addSeconds(60) < new Date()){return false}
+
+        console.log('freshping', self.ping < new Date(), self.ping)
+
+        if(!self.ping || self.ping < new Date()){return false}
         return true
     }
 
     self.api = {
         ping : () => {
             return self.fetch('ping', {}, {timeout : 4000}).then(r => {
+                console.log("HERE")
 
-                self.ping = new Date()
+                self.ping = (new Date()).addSeconds(60)
                 self.session = r.session
 
                 if(!self.current && r.node && !api.get.fixednode()){
@@ -369,6 +373,11 @@ var Proxy16 = function(meta, app, api){
 
                 return Promise.resolve(r)
             }).catch(e => {
+
+                console.log("GGG")
+
+                self.ping = (new Date()).addSeconds(10)
+                
                 return Promise.reject(e)
             })
         },
@@ -1279,6 +1288,9 @@ var Api = function(app){
 
         return internal.proxy.manage.init().then(r => { 
             //softping
+
+            console.log('mixedping')
+
             internal.proxy.api.mixedping(proxies).catch(e => {
             })
 

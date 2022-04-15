@@ -416,12 +416,17 @@ FX_Effects = function(el){
 FX_Manager = function(app){
     var self = this
 
-    var lib = ['js/vendor/pixi.min.js', 'js/vendor/bezier.js', 'js/vendor/color.min.js']
+    var lib = [
+        {src : 'js/vendor/pixi.min.js', f : 'js'}, 
+        {src : 'js/vendor/bezier.js', f : 'js'}, 
+        {src : 'js/vendor/color.min.js', f : 'js'}
+    ]
     var relations = {}
 
     var importlibs = function(clbk){
 
-        importScripts(_.map(lib, (src) => {return {src, f : 'js'}}), relations, function(){
+
+        importScripts(lib, relations, function(){
 
             if (clbk)
                 clbk();
