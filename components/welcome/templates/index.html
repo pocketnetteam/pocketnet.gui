@@ -14,12 +14,12 @@
 				</div>
 
 				<div class="caption">
-					Bastyon of Free Speech
+					<%=e('welcomecaption1')%>
 				</div>
 
 				<div class="features">
-					<div class="feature">Read Content <b>Banned</b> by Big Tech</div>
-					<div class="feature">Chat <b>privately</b> with friends - no SIM card</div>
+					<div class="feature"><%=e('welcomecaption2')%></div>
+					<div class="feature"><%=e('welcomecaption3')%></div>
 				</div>
 
 				<div class="invitation">
@@ -46,19 +46,19 @@
 
 	<div class="navbottom">
 		<div>
-			<a elementsid="https://<%-app.options.url%>/blockexplorer/" href="https://<%-app.options.url%>/blockexplorer/">Block Explorer</a>
+			<a elementsid="https://<%-app.options.url%>/blockexplorer/" href="https://<%-app.options.url%>/blockexplorer/"><%- e('e14101')%></a>
 			<span>&middot;</span>
-			<a elementsid="help?page=faq" href="help?page=faq">F.A.Q.</a>
+			<a elementsid="help?page=faq" href="help?page=faq"><%- e('e14102')%></a>
 			<span>&middot;</span>
-			<a elementsid="hrefuserpage" href="userpage">MENU</a>
+			<a elementsid="hrefuserpage" href="userpage"><%- e('e141081')%></a>
 
 			<% if(!app.curation()) {%>
 				<span>&middot;</span>
-				<a elementsid="help?page=roadmap" href="help?page=roadmap">Roadmap</a>
+				<a elementsid="help?page=roadmap" href="help?page=roadmap"><%- e('e14103')%></a>
 				<span>&middot;</span>
-				<a elementsid="help?page=guides" href="help?page=guides">Node&nbsp;Setup</a>s
+				<a elementsid="help?page=guides" href="help?page=guides"><%- e('e14104')%></a>
 				<span>&middot;</span>
-				<a elementsid="help?page=applications" href="help?page=applications">Applications</a>
+				<a elementsid="help?page=applications" href="help?page=applications"><%- e('e14106')%></a>
 			<% } %>
 		</div>
 	

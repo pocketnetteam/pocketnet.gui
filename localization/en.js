@@ -1045,6 +1045,7 @@ ____loclib.e14105 = "Videos"
 ____loclib.e14106 = "Applications"
 ____loclib.e14107 = "Check for updates"
 ____loclib.e14108 = "Share answer"
+____loclib.e141081 = "Menu"
 ____loclib.e14109 = "Where do I download the Android App?"
 ____loclib.e14110 = "Google Play Market"
 
@@ -2189,3 +2190,7 @@ ____loclib.starssendcommentp = "Leave a comment for the author";
 ____loclib.savevideo = "Download video";
 
 ____loclib.useanimations = "Enable animations";
+
+____loclib.welcomecaption1 = "Bastyon of Free Speech";
+____loclib.welcomecaption2 = "Read Content Banned by Big Tech";
+____loclib.welcomecaption3 = "Chat privately with friends - no SIM card";
