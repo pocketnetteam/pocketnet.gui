@@ -680,7 +680,7 @@
 					app.actions.offScroll(wnd);
 				}
 
-				if(isTablet() && (wnd.hasClass('normalizedmobile'))){
+				if(self.app.mobileview && (wnd.hasClass('normalizedmobile'))){
 
 					setTimeout(function(){
 
