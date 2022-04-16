@@ -3275,8 +3275,6 @@ Platform = function (app, listofnodes) {
                 return
             }
 
-            console.log('self.sdk.usersettings.meta.useanimations', self.sdk.usersettings.meta.useanimations)
-
             if(!self.sdk.usersettings.meta.useanimations.value) return
 
             var e = function(){
