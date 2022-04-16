@@ -4297,9 +4297,6 @@ html.mobileview .matrixchatwrapper.active {
   -webkit-transform: translateX(0);
   transform: translateX(0);
 }
-html.mobileview.ios .matrixchatwrapper {
-  contain: none;
-}
 html.mobileview[chatposition='above'] .matrixchatwrapper {
   z-index: 1006;
 }

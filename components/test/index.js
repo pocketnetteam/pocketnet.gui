@@ -202,13 +202,13 @@ var test = (function(){
 						var pn = el.c.find('[parameter="name"] input')
 
 						pn.focus()
-						_scrollTo(pn)
+						_scrollTo(pn, el.c.closest('.customscroll'))
 					}
 					else{
 						if(!tempInfo.image){	
 							var pn = el.c.find('.fileUploader')
 
-							_scrollTo(pn)
+							_scrollTo(pn, el.c.closest('.customscroll'))
 						}	
 
 					}
@@ -261,7 +261,7 @@ var test = (function(){
 
 						pn.focus()
 
-						_scrollTo(pn)
+						_scrollTo(pn, el.c.closest('.customscroll'))
 						saving = false
 					return false;
 				}
@@ -419,7 +419,7 @@ var test = (function(){
 
 								pn.focus()
 
-								_scrollTo(pn)
+								_scrollTo(pn, el.c.closest('.customscroll'))
 							
 							sitemessage(txt)
 						}
@@ -992,7 +992,7 @@ var test = (function(){
 								if (plissing)
 									plissing.destroy()
 
-									_scrollTo(el.c.find('.nickname input').focus());
+									_scrollTo(el.c.find('.nickname input').focus(), el.c.closest('.customscroll'));
 								
 
 								if (clbk)
