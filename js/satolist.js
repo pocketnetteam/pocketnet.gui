@@ -9385,29 +9385,31 @@ Platform = function (app, listofnodes) {
                 }
             },
 
-            reputationBlockedMe : function(address){
+            reputationBlockedMe : function(address, count){
 
                 if(!address) address = (self.app.platform.sdk.address.pnet() || {}).address
 
-                return self.app.platform.sdk.user.itisme(address) && self.app.platform.sdk.user.reputationBlocked(address)
+                return self.app.platform.sdk.user.itisme(address) && self.app.platform.sdk.user.reputationBlocked(address, count)
 
             },
 
-            reputationBlockedNotMe : function(address){
+            reputationBlockedNotMe : function(address, count){
 
                 if(!address) address = (self.app.platform.sdk.address.pnet() || {}).address
 
-                return !self.app.platform.sdk.user.itisme(address) && self.app.platform.sdk.user.reputationBlocked(address)
+                return !self.app.platform.sdk.user.itisme(address) && self.app.platform.sdk.user.reputationBlocked(address, count)
 
             },
 
-            reputationBlocked : function(address){
+            reputationBlocked : function(address, count){
                 var ustate = self.sdk.ustate.storage[address] || deep(self, 'sdk.usersl.storage.' + address) || deep(self, 'sdk.users.storage.' + address);
 
                 if(self.bch[address]) return true
 
-				if (ustate && ustate.reputation <= -30 && !self.real[address] &&
-                    (ustate.likers_count < 20 || (ustate.likers_count < ustate.blockings_count * 2))
+                if(typeof count == 'undefined') count = -12
+
+				if (ustate && ustate.reputation <= count && !self.real[address]/* &&
+                    (ustate.likers_count < 20 || (ustate.likers_count < ustate.blockings_count * 2))*/
                     ){
                     return true
                 }
