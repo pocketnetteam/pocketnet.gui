@@ -1,15 +1,21 @@
 //var os = require('os');
 const fs = require('fs');
 const https = require('https');
-const axios = require('axios');
+let axios = require('axios')
 const { reject } = require('underscore');
 var f = require('../functions');
 var path = require('path');
 var Datastore = require('nedb');
 
-var request = require('request');
+var request = require('request')
 var progress = require('request-progress');
 var targz = require('targz');
+
+
+require('../freeproxy')().listHttp().then(proxies=>{
+    request = require('request').defaults({ proxy: proxies[0].url})
+    axios = require('axios').create({ proxy: {host :proxies[0].ip, port: +proxies[0].port}});
+})
 
 var Applications = function(settings) {
 
