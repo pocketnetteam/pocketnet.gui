@@ -3690,6 +3690,7 @@ console.log("ASASAS")
 
 				}, function(shares, error, pr){
 
+				
 					if(clbk) clbk(shares)
 
 				}, _.toArray(boostplaces).length, 'cache')

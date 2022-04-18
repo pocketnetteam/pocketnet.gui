@@ -93,13 +93,14 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
             </div>
 
         <% } %>
-
+        <% if(!lockedaccount) {%>
             <div class="item pkoin right unselectedtable">
                 <img src="img/pocketnet_logo_white.svg" alt="">
                 <span class="<% if(!all) { %> workstation <% } %>">
                     PKOIN
                 </span>
             </div>
+        <% } %>
         
     </div>
     
