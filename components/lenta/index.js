@@ -4732,7 +4732,7 @@ console.log("ASASAS")
 					if (essenseData.includeboost){
 
 						boostplaces = {
-							2 : false,
+							4 : false,
 							13 : false,
 							27 : false
 						}
