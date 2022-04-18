@@ -275,7 +275,6 @@ var notifications = (function(){
 			})
 
 			self.iclbks.lenta = function(){
-				console.log("HERE&")
 				renders.loadingAndEmpty()
 			}
 
@@ -495,8 +494,8 @@ var notifications = (function(){
 			},
 
 			wnd : {
-				header : "notifications",
-				class : 'wndnotifications normalizedmobile',
+				//header : "notifications",
+				class : 'wndnotifications normalizedmobile maxheight',
 				parallaxselector : '.wndback,.wndheader'
 			}
 

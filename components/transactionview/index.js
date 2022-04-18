@@ -34,7 +34,6 @@ var transactionview = (function(){
 
 				if(!tx) return ''
 
-				console.log("tx.vout[0].scriptPubKey", tx)
 			
 				var asm = tx.vout[0].scriptPubKey.asm.split(' ');
 
@@ -196,8 +195,6 @@ var transactionview = (function(){
 		}
 
 		var make = function(){
-
-			console.log("make", txid)
 
 			self.app.platform.sdk.node.transactions.get.tx(txid, function(_tx){
 

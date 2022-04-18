@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="no-js electronapp" lang="">
+<html class="no-js electronapp customscroll applicationhtml" lang="">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -15,17 +15,17 @@
         <meta name="keywords" content="" />
 
         <meta http-equiv="Content-Security-Policy" content="
-        upgrade-insecure-requests;
-        default-src https: 'self' file:; 
-        connect-src https: wss: file: data: blob:;
-        img-src 'self' data: https: file:;
-        script-src 'self' file: blob: https://__VAR__.domain https://unpkg.com/@ffmpeg/ffmpeg@0.10.0/dist/ffmpeg.min.js https://player.vimeo.com https://www.youtube.com https://s.ytimg.com https://cdn.rawgit.com https://embed.tawk.to https://cdn.jsdelivr.net 'unsafe-eval' 'unsafe-inline';
-        style-src 'self' file: https://use.fontawesome.com https://fonts.googleapis.com https://cdn.jsdelivr.net 'unsafe-inline';
-        font-src 'self' file: data: https://fonts.gstatic.com https://static-v.tawk.to https://use.fontawesome.com;
+        default-src https: 'self' file: __VAR__.domain:*; 
+        connect-src https: wss: http: ws: file: data: blob:;
+        img-src 'self' data: http: https: file:;
+        script-src 'self' blob: https://__VAR__.domain https://player.vimeo.com https://www.youtube.com https://s.ytimg.com https://cdn.jsdelivr.net/joypixels/ 'unsafe-eval' 'unsafe-inline';
+        frame-src 'self' https://__VAR__.domain https://player.vimeo.com https://www.youtube.com;
+        style-src 'self' data: __VAR__.domain:* https://cdn.jsdelivr.net/joypixels/ https://use.fontawesome.com 'unsafe-inline' ;
+        font-src 'self' data: __VAR__.domain:* https://use.fontawesome.com;
         media-src blob: *">
 
         <link rel="manifest" href="manifest.json">
-        <link rel="apple-touch-icon" href="https://__VAR__.domain/img/res/blue_pad_250.png" sizes="250x250">
+        <link rel="apple-touch-icon" href="img/res/blue_pad_250.png" sizes="250x250">
         <meta name="theme-color" content="#011621" />
 
         <link rel="stylesheet" href="css/normalize.css?v=136">
@@ -48,7 +48,7 @@
         
        
     </head>
-    <body id="application" class="menu-hide customscroll">
+    <body id="application" class="menu-hide ">
 
         <div id="windowsContainer">
         </div>

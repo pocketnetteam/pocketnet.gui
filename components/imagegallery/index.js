@@ -426,7 +426,6 @@ var imagegallery = (function(){
 						});
 						// Event for the swipe up and down
 						hammers.f.on('swipeup swipedown', function(e) {
-							console.log('closeContainer1')
 							// If we can pan vertically, cancel the swipe
 							if (zoomData.imageContainerParent.height() < zoomData.current.height) return;
 							// Close the gallery
@@ -506,7 +505,6 @@ var imagegallery = (function(){
 								// If we can pan vertically, cancel the swipe
 								if ((zoomData.imageContainerParent.height() * 1.2) < zoomData.current.height) return;
 								// Close the gallery
-								console.log('closeContainer2')
 								self.closeContainer();
 							});
 
@@ -535,25 +533,19 @@ var imagegallery = (function(){
 
 			var image = essenseData.images[num] || essenseData.images[0];
 
-			console.log(image, essenseData.images, num)
 
 			
 			self.app.nav.api.history.addParameters({
 				num : num.toString()
 			})
 
+			image.csrc = self.app.peertubeHandler.helpers.url(image.src)
 			
-			self.app.peertubeHandler.helpers.convertUrlWithIp(image.src).then((newUrl) => {
-
-			 	image.src = newUrl;
-				
-				actions.prepareImage(image, function(image){
-					renders.image({
-						image : image
-					})
+			actions.prepareImage(image, function(image){
+				renders.image({
+					image : image
 				})
-
-			});
+			})
 
 		}
 

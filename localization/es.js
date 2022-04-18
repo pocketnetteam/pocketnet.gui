@@ -382,6 +382,7 @@ ____loclib.unfollow = "Dejar de seguir"
 ____loclib.unblock = "Desbloquear"
 ____loclib.share = "Compartir"
 ____loclib.info = "Información"
+____loclib.signToComment = "Para ver o publicar comentarios, debe iniciar sesión o registrarse"
 ____loclib.e13023 = "¿Está seguro de que desea desbloquear a este usuario?"
 ____loclib.e13024 = "Su clave privada parar entrar"
 ____loclib.e13025 = "Crear nueva cuenta"
@@ -802,5 +803,16 @@ ____loclib.deleteVideoDialog = "Estás seguro de que quieres borrar este vídeo?
 ____loclib.deleteAllVideoDialog = "Estás seguro de que quieres borrar todos los vídeos?";
 ____loclib.videosDeleted = "Vídeos eliminados!";
 ____loclib.noDownloadedVideos = "No hay vídeos descargados";
+
+____loclib.buy = 'Comprar';
+
+// Uploadpeertube component
+____loclib.videoTranscodingError = "Se ha producido un error al procesar su vídeo"
+____loclib.videoUploadingFinish = "Terminando de subir el archivo..."
+____loclib.uploadNewVideo = "Subir un nuevo Pocketvídeo"
+____loclib.selectVideoFile = "Seleccione el archivo de vídeo"
+____loclib.uploadVideoProgress_binaries = "Preparando las bibliotecas:"
+____loclib.uploadVideoProgress_processing = "Procesando el video:"
+____loclib.uploadVideoProgress_uploading = "Cargando el video:"
 
 ____loclib.buy = 'Comprar';

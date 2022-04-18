@@ -396,7 +396,6 @@ var staking = (function(){
 			},
 			pricechart : function(){
 
-				console.log('el.c', el.c)
 				var _el = el.c.find('.chart')
 
 				_el.empty();

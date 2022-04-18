@@ -1,0 +1,206 @@
+<%
+
+var c = share.caption;
+var m = share.message;
+var bigmessage = false
+
+if(typeof ed == 'undefined') ed = {}
+
+var reputation = 0
+
+if(share.address){
+
+	var my = (user.address.value && share.address == user.address.value.toString('hex'))
+	var subscribed = '';
+
+	reputation = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.reputation') || 0
+
+	if(!my && user.address.value){
+
+		var me = deep(app, 'platform.sdk.users.storage.' + user.address.value.toString('hex'))
+		if (me && me.relation(share.address, 'subscribes')){
+			subscribed = 'subscribed'
+		}
+	}
+
+var name = app.platform.api.name(share.address)
+var emptywithrepost = false
+var value = Number(share.score)
+
+var src =  deep(app, 'platform.sdk.usersl.storage.' + share.address + '.image');
+var name = deep(app, 'platform.sdk.usersl.storage.' + share.address + '.name');
+var letter = name ? name[0] : ''; 
+
+var r = deep(app, 'platform.sdk.usersl.storage.'+share.address + '.reputation');
+
+
+%>
+
+<% var arranges = {
+	
+	cm : function(){ %> 
+
+		<% if(c) {
+
+			c = filterXSS(clearScripts(c))
+		%>
+			<div class="captionWrapper">
+				<div class="sharecaption canmark opensviurl" title="<%-nl2br(trimrn(c))%>">
+					<div>
+						<% if(ed.horizontal) {%><span class="adr"><%-name || share.address %>:</span><% } %>
+						<span><%=app.actions.emoji(nl2br(trimrn(c)))%></span>
+					</div>
+				</div>
+			</div>
+
+		<% } %>
+		
+	<% },
+
+	
+	i : function(){ %> 
+		
+	<% },
+
+	u : function(){	%> 
+		<% if(share.url) {
+
+			var h = '' %>
+
+			<div class="url"></div>
+
+		<% } %>
+	<% },
+
+
+} %>
+
+	<div class="wrk">
+
+		<div class="post" address="<%-share.address%>">
+			<div class="addressTable table" address="<%-share.address%>">
+				<div class="iconWrapper">
+				
+					<a href="<%-app.platform.api.authorlink(share.address)%>">
+						<div class="icon">
+
+							<div class="usericon" image="<%-src || '*'%>">
+
+								<% if(!src && letter) {%>
+
+									<span class="letter">
+										<%-letter.toUpperCase()%>
+									</span>
+
+								<% } else if (!src) { %>
+
+									<svg width="30" height="30" data-jdenticon-value="<%-address%>"></svg>
+
+								<% } %>
+							</div>
+						</div>
+					</a>
+				</div>
+
+				
+				<div class="label">
+					<a href="<%-app.platform.api.authorlink(share.address)%>">
+
+						<div class="top">
+							<div class="name">
+								<%- name %>							
+							</div>		
+
+							<% if (r) {%>
+								<div class="reputation">
+									<%- Number(r).toFixed(0)  %>
+								</div>
+							<% } %>
+
+						</div>
+
+
+					</a>			
+
+				</div>
+			</div>
+
+			<div class="postContentWrapper">
+				<div class="unselectablemobile videoContentWrapper">
+					<% 
+						var info = app.platform.sdk.videos.storage[share.url || "undefined"] || {}
+						var aspectRatio = deep(info, 'data.aspectRatio') || 0
+					%>
+	
+					<div class="shareTable lighted <%-subscribed%> <% if(emptywithrepost) { %> emptywithrepost <% } else { %> truerepost <% } %>" address="<%-share.address%>" stxid="<%-share.txid%>">
+	
+						<div class="cntswrk forurl <%- (aspectRatio > 0.9) && (aspectRatio < 1.25) ? 'squareVideo' : ''%> <%- (aspectRatio < 0.9) && (aspectRatio > 0) ? 'verticalVideo' : ''%>">
+	
+							<% var a = ["u"] %>
+	
+							<% _.each(a, function(key, i){ %> 
+	
+								<% if(arranges[key]) arranges[key]() %>
+										
+							<% }) %>
+	
+						</div>
+					</div>
+					
+				</div>
+	
+				
+				<div class="anothercntswrk postcontent">
+	
+					<div class="cntswrk">
+	
+						<% var a = ["i", "cm", "p"] %>
+	
+						<% _.each(a, function(key, i){ %> 
+	
+							<% if(arranges[key]) arranges[key]() %>
+									
+						<% }) %>
+	
+					</div>
+					
+	
+				</div>
+	
+				<div class="infoWrapper">
+					<div class="dateWrapper">
+						<div class="date">
+							<%-app.reltime(Number(share.time))%>
+						</div>
+					</div>
+	
+					<div class="actionsWrapper">
+						<div class="scoreSum">
+							<i class="far fa-star"></i>
+							<span>
+								<%- (share.score / share.scnt).toFixed(1) %>							
+							</span>
+						</div>
+						<div class="scoreCnt">
+							<i class="far fa-user"></i>
+							<span>
+								<%- share.scnt %>							
+							</span>
+						</div>
+						<div class="comments">
+							<i class="far fa-comment">
+							</i>
+							<span>
+								<%- share.comments %>							
+							</span>
+						</div>
+					</div>
+	
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+
+<% } %>

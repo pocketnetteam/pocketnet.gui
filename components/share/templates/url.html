@@ -4,26 +4,45 @@
 	if(typeof share == 'undefined') share = {};
 
 	if((meta.type == 'youtube') || meta.type == 'vimeo' || meta.type == 'bitchute' || meta.type == 'peertube'){ 
-		if(!app.platform.sdk.usersettings.meta.embedvideo || 
-			app.platform.sdk.usersettings.meta.embedvideo.value) {
+		
 
 			var info = app.platform.sdk.videos.storage[url] || app.platform.sdk.videos.storage[meta.id] || {}
 			var aspectRatio = (info.data || {}).aspectRatio || 0;
+			
+			var image = videoImage(url)
 	%>
 		<div class="videoWrapper fullscreenActive <%- (aspectRatio < 1.25) && (aspectRatio >= 0.9) ? 'squareVideo' : ''%> <%- (aspectRatio < 0.9) && (aspectRatio != 0) ? 'verticalVideo' : ''%>" pid="<%- makeid() %>">
+			
+			<% if(meta.type != 'peertube' && (!fullplayer || !app.platform.sdk.usersettings.meta.embedvideo.value || (meta.type == 'youtube' && window.cordova))) {%>
 
-			<% if(meta.type == 'youtube' && window.cordova) {%>
+				<div class="js-player-dummy " data-plyr-provider="<%-meta.type%>" data-plyr-embed-id="<%-meta.url%>" data-plyr-video-id="<%-meta.id%>" data-plyr-host-name="<%-meta.host_name || ''%>">
 
-				<div class="js-player-dummy">
-					<div class="jsPlayerLoading">
-						<div class="jsPlayerLoadingD table watchonyoutube">
+					<div class="jsPlayerLoading ytbvimb" <% if(image) {%> image="<%-image%>" <% } else { %> style="background:#000" <% } %>>
+						<div class="jsPlayerLoadingD watchonyoutube">
 							<div>
-								<a elementsid="jsplayerhref" href="<%- url %>" cordovalink="_system" target="_blank">
-									<button class="black">
-										<i class="fab fa-youtube"></i> Watch on Youtube
-									</button>
-									
-								</a>
+
+								<% if(!app.platform.sdk.usersettings.meta.embedvideo.value || (meta.type == 'youtube' && window.cordova)) {%>
+
+									<a elementsid="jsplayerhref" href="<%- url %>" cordovalink="_system" target="_blank">
+										<button class="black">
+											<% if(meta.type == 'youtube') {%><i class="fab fa-youtube"></i><% } %> Watch on <%- flb(meta.type) %>
+										</button>
+									</a>
+
+								<% } else { %>
+									<div class="initvideoplayer">
+										<i class="fas fa-play"></i>
+									</div>
+
+									<div class="playerlabel">
+										<%- flb(meta.type) %>
+									</div>
+
+									<div class="jsPlayerLoading">
+										<div class="jsPlayerLoading-matte"></div>
+										<div class="preloader5"><img src="./img/three-dots.svg"/></div>
+									</div>
+								<% } %>
 							</div>
 						</div>
 					</div>
@@ -31,9 +50,11 @@
 		
 			<% } else { %> 
 				
-				<div class="js-player" data-plyr-provider="<%-meta.type%>" data-plyr-embed-id="<%-meta.url%>" data-plyr-video-id="<%-meta.id%>" data-plyr-host-name="<%-meta.host_name || ''%>">
+				<div class="js-player js-player-ini" data-plyr-provider="<%-meta.type%>" data-plyr-embed-id="<%-meta.url%>" data-plyr-video-id="<%-meta.id%>" data-plyr-host-name="<%-meta.host_name || ''%>">
 					
-					<% if(typeof preview != 'undefined' && preview) {  %>
+					<% if(typeof preview != 'undefined' && preview) {  
+						
+						%>
 
 						<div class="jsPlayerPreview">
 							<% if(info.data) {%>
@@ -50,35 +71,36 @@
 										<i class="fas fa-rss"></i> <span>Live</span>
 									</div>
 								<% } %>
-
-								<div class="statswrapper">
-									<% if(info.data.views) {%>
-										<div class="viewsWrapper">
-											<i class="far fa-eye"></i> <span><%-compressedNumber(info.data.views)%></span>
-										</div>
-									<% } %>
-
-		
-									<% if(share) {
+									<div class="statswrapper">
+										<!--<%-compressedNumber(info.data.views)%> Просмотров -->
 										
-										var value = Number(share.score)
+										<% if(info.data.views) {%>
+											<div class="viewsWrapper">
+												<i class="far fa-eye"></i> <span><%-compressedNumber(info.data.views)%></span>
+											</div>
+										<% } %>
 
-										if (Number(share.scnt) && _.isNumber(Number(share.scnt))) {
-											value = value / Number(share.scnt)
-										}
-										else {
-											value = 0
-										}
-										
-										%>
-										<div class="starsRatingWrapper">
-											<i class="far fa-star"></i> <span><%-Number(value).toFixed(1)%></span>
-										</div>
-										<div class="commentsCountWrapper">
-											<i class="far fa-comment"></i> <span><%-compressedNumber(share.comments || 0)%></span>
-										</div>
-									<% } %>
-								</div>
+			
+										<% if(share) {
+											
+											var value = Number(share.score)
+
+											if (Number(share.scnt) && _.isNumber(Number(share.scnt))) {
+												value = value / Number(share.scnt)
+											}
+											else {
+												value = 0
+											}
+											
+											%>
+											<div class="starsRatingWrapper">
+												<i class="far fa-star"></i> <span><%-Number(value).toFixed(1)%></span>
+											</div>
+											<div class="commentsCountWrapper">
+												<i class="far fa-comment"></i> <span><%-compressedNumber(share.comments || 0)%></span>
+											</div>
+										<% } %>
+									</div>
 
 							<% } %>
 						</div>
@@ -152,7 +174,6 @@
 			
 		</div>
 
-		<% } %>
 
 	<% } else { %> 
 
@@ -200,7 +221,10 @@
 		
 	<% } %> 
 
-	<% if((typeof remove != 'undefined' || (!og || _.isEmpty(og))) && !share.itisvideo()) {%>
+	<% if( (typeof remove != 'undefined' || (!og || _.isEmpty(og)) ) && !share.itisvideo()  ) {
+		
+		if(!meta.type || typeof remove != 'undefined'){
+		%>
 
 	<div class="urlcnt">
 		<div class="urlcnttable table">
@@ -226,6 +250,6 @@
 		</div>
 	</div>
 
-	<% } %>
+	<% } } %>
 
 <% } %>

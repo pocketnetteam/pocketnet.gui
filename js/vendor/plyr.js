@@ -6087,6 +6087,8 @@ typeof navigator === "object" && (function (global, factory) {
           player.elements.poster.style.backgroundSize = 'cover';
         }
       }).catch(function () {});
+
+
       var config = player.config.youtube; // Setup instance
       // https://developers.google.com/youtube/iframe_api_reference
 
@@ -6346,7 +6348,8 @@ typeof navigator === "object" && (function (global, factory) {
           }
         }
       });
-    }
+    },
+    
   };
 
   // ==========================================================================
@@ -8066,6 +8069,8 @@ typeof navigator === "object" && (function (global, factory) {
 
       this.supported = support.check(this.type, this.provider, this.config.playsinline); // If no support for even API, bail
 
+      //this.supported.ui = false
+
       if (!this.supported.api) {
         this.debug.error('Setup failed: no support');
         return;
@@ -9152,6 +9157,7 @@ typeof navigator === "object" && (function (global, factory) {
 
 var PlyrEx = async function(target, options, clbk, readyCallback) {
     var self = this;
+    
     var clear = function(){
       video_options = {}
       target = null
@@ -9213,7 +9219,7 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
           start : options.startTime || 0,
           localTransport,
           hlsError : options.hlsError,
-
+          light : options.light,
           pathfunction : options.app.peertubeHandler.helpers.url
 
         },{
@@ -9299,6 +9305,10 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
                         if(video_options.volumeChange) video_options.volumeChange(plyrPlayer.muted ? 0 : plyrPlayer.volume)
                       })
 
+                      plyrPlayer.prepare = function(){
+                        return Promise.resolve()
+                      }
+
                     if (clbk) clbk(plyrPlayer);
 
                 } else {
@@ -9323,7 +9333,9 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
           plyrPlayer.on('play', video_options.play)
           plyrPlayer.on('pause', video_options.pause)
 
-
+          plyrPlayer.prepare = function(){
+            return Promise.resolve()
+          }
 
       if (clbk) clbk(plyrPlayer);
 

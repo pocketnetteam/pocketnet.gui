@@ -29,10 +29,10 @@ var PeertubeRequest = function (app = {}) {
 	var direct = function (url, data, p) {
 		var controller = new AbortController();
 
-		var time = 10000;
+		var time = 40000;
 
 		if (window.cordova || isInStandaloneMode()) {
-			time = 25000;
+			time = 65000;
 		}
 
 		return timeout(
@@ -420,8 +420,12 @@ PeerTubePocketnet = function (app) {
 						});
 					}
 
+					var url = self.helpers.url(options.host + '/' + meta.path)  
+
+
 					return axios[(requestoptions.method || 'post').toLowerCase()](
-						'https://' + options.host + '/' + meta.path,
+						url,
+						//'https://' + options.host + '/' + meta.path,
 						data,
 						axiosoptions,
 					)
@@ -434,13 +438,21 @@ PeerTubePocketnet = function (app) {
 							return Promise.reject(e);
 						});
 				}
+				
+
+				var url = self.helpers.url(options.host) 
 
 				return proxyRequest.fetch(
-					'https://' + options.host,
+					url,
+					//'https://' + options.host,
 					meta.path,
 					data,
 					requestoptions,
 				);
+			}).catch(e => {
+				console.error(e)
+
+				return Promise.reject(e)
 			});
 	};
 
@@ -481,37 +493,24 @@ PeerTubePocketnet = function (app) {
 
 			best: function (type) {
 
-				var special = false
-
-				/*if( app.user.address.value == 'P9EkPPJPPRYxmK541WJkmH8yBM4GuWDn2m' || app.user.address.value == 'PDgbAvsrS4VGKkW5rivcJaiCp7fnBoZRgM' || app.user.address.value == 'PU6LDxDqNBDipG4usCqhebgJWeA4fQR5R4' || 
-				 app.user.address.value == 'PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM'
-				 
-				 ){
-					 special = true
-				 }*/
-
-				return this.roys({ type: type, special: special })
+				return this.roys({ type: type })
 					.then((data = {}) => {
-						//console.log("FDATA", data)
 
 						const roysAmount = Object.keys(data).length;
 						var royId;
 
+
 						if (app.user.address.value) {
-							royId = self.helpers.base58.decode(app.user.address.value) % roysAmount;
+
+							var sq = Number(Math.pow(Number(
+								self.helpers.base58.decode(app.user.address.value) / Math.pow(10, 26)
+							), 1 / 3).toFixed(0)).toString().substr(9) 
+
+							royId = self.helpers.base58.decode(sq) % roysAmount;
 						}
-
-
-
-						if (special) {
-							var spc = _.find(data, function (i) {
-								if (i == '01rus.nohost.me') return true
-							})
-
-							if (spc) return spc
+						else{
+							royId = rand(0, roysAmount - 1);
 						}
-
-						if (!royId) royId = rand(0, roysAmount - 1);
 
 						return data[royId];
 					})
@@ -521,7 +520,7 @@ PeerTubePocketnet = function (app) {
 					.then((data) => {
 						if (!data.host) return Promise.reject(error('host'));
 
-						activehost = data.host;
+						setactive(data.host)
 						return Promise.resolve(data.host);
 					})
 
@@ -954,14 +953,15 @@ PeerTubePocketnet = function (app) {
 
 	self.clear = function () {
 		sessions = {};
+		setactive('')
 	};
 
 	self.init = function () {
 
-		if (app.test)
-
+		if(app.canuseip())
 			app.peertubeHandler.api.proxy.getservers().then((_servers) => {
 				servers = _servers
+
 			});
 
 		return self.api.proxy.bestChange({ type: 'upload' });
@@ -1130,6 +1130,7 @@ PeerTubePocketnet = function (app) {
 
 				if (oldprotocol == 'https') oldprotocol = 'http';
 				if (oldprotocol == 'wss') oldprotocol = 'ws';
+				if (oldprotocol == '.') oldprotocol = '';
 
 			}
 			/*else{
@@ -1150,7 +1151,12 @@ PeerTubePocketnet = function (app) {
 
 			if(path) path = '/' + path
 
+
 			if(!server) {
+
+				if(hostip.indexOf('.') == -1){
+					return {current : url}
+				}
 
 				if (secure) protocol = protocol + 's'
 
@@ -1160,11 +1166,14 @@ PeerTubePocketnet = function (app) {
 				return data
 			} 
 
+
 			if (app.useip()) secure = false
 
 			if (secure) protocol = protocol + 's'
 
 			hostip = app.useip() ? server.ip : server.host
+
+			
 
 			data.current = protocol + "://" + hostip + path
 			data.ip = server.ip

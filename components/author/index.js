@@ -1025,7 +1025,7 @@ var author = (function(){
 					author : author.address,
 					byauthor : true,
 					hr : hr,
-					
+					optimize : self.app.mobileview,
 					renderclbk : function(){
 						if (contentsready)
 							el.c.find('.contentswrapper').hcSticky('refresh');
@@ -1310,6 +1310,7 @@ var author = (function(){
 			renders.authorcaption(function(){
 				make(true);
 
+
 				self.sdk.activity.adduser('visited', author.address)
 
 				if(self.user.isItMe(author.address)){
@@ -1361,6 +1362,7 @@ var author = (function(){
 					}
 
 					author.data = self.sdk.users.storage[author.address]
+
 
 					var data = {
 						author : author

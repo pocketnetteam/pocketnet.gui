@@ -20,7 +20,6 @@ var pkview = (function(){
 
 					var image = b64toBlob(base64.split(',')[1], 'image/png');	
 
-					console.log("image", image)
 
 					p_saveAsWithCordova(image, name + '.png', function(){
 						if (clbk)
@@ -148,7 +147,6 @@ var pkview = (function(){
 					var hiddenform = p.el.find('#loginform')
 
 						hiddenform.on('submit', function(event) {
-							console.log("SUBMIT")
 			
 							event.preventDefault();
 							event.stopPropagation();
@@ -156,7 +154,6 @@ var pkview = (function(){
 							return false
 						})	
 
-						console.log("A", hiddenform)
 
 					if(ed.showsavelabel) setTimeout(function(){
 

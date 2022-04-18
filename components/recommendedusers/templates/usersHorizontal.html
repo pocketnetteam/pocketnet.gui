@@ -1,5 +1,5 @@
 	
-	<div class="users">
+	<div class="usersHorizontal">
 	<% 
 
 	var me = null;
@@ -37,7 +37,6 @@
 									var name = u.name
 									var letter = name ? name[0] : ''; 
 
-									console.log('letter', letter, name)
 
 									if (src){
 								%>
@@ -64,10 +63,11 @@
 						<div class="name">
 							<%- u.name %>							
 						</div>		
-						<% var r = u.reputation || 0 %>
+						<% var s = u.subscribers_count || 0 %>
 	
-						<div class="reputation">
-							<%=e('reputation') %> <span class="value"> <%- Number(r).toFixed(0) %></span>
+						<div class="subscribers">
+							<span class="label"><%=e('followers2') %></span> 
+							<span class="value"> <%- s %></span>
 						</div>
 	
 						<div class="subscribeWrapper <%-_class%>">

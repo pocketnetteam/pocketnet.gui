@@ -36,11 +36,13 @@ if (process.platform === 'win32') expectedExitCodes = [3221225477];
 
 console.log('expectedExitCodes' , expectedExitCodes)*/
 
-var Proxy = function (settings, manage, test, logger) {
+var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 	var self = this;
 
 		self.test = test
+		self.reverseproxy = reverseproxy
+
 	var server = new Server(settings.server, settings.admins, manage);
 	var wss = new WSS(settings.admins, manage);
 	var pocketnet = new Pocketnet();
@@ -149,8 +151,6 @@ var Proxy = function (settings, manage, test, logger) {
 			return true
 		},
 
-	
-
 		parsesignature : function(nonce){
 			var ch = nonce.split(',')
 			var obj = {}
@@ -175,7 +175,7 @@ var Proxy = function (settings, manage, test, logger) {
 				if(f.now().getTime() > f.date.addseconds(new Date(Number(sn.date)), sn.exp).getTime()){
 					return false
 				}
-				
+
 				var s = f.hexDecode(sn.s)
 
 				if (s != self.session) return false
@@ -267,7 +267,7 @@ var Proxy = function (settings, manage, test, logger) {
 
 					logger.w('system', 'warn', 'SSL Settings Error', e)
 
-				
+
 					return server.init({
 						ssl: ini.ssl('default'),
 						port: f.deep(settings, 'server.ports.https')
@@ -391,7 +391,7 @@ var Proxy = function (settings, manage, test, logger) {
 		}
 	}
 
-	
+
 
 	self.systemnotify = {
 
@@ -604,13 +604,17 @@ var Proxy = function (settings, manage, test, logger) {
 		},
 	}
 
+	var trustpeertube = []
 
 	self.peertube = {
 		init: function () {
+
+			trustpeertube = []
+
 			var ins = {
 				1: [
-				  { host: 'pocketnetpeertube1.nohost.me', ip: '188.0.15.28' },
-				  { host: 'pocketnetpeertube2.nohost.me', ip: '94.73.223.24' },
+				  { host: 'pocketnetpeertube1.nohost.me', ip: '109.226.245.120'},
+				{ host: 'pocketnetpeertube2.nohost.me', ip: '94.73.223.24' },
 				],
 				5: [
 				  {
@@ -640,6 +644,8 @@ var Proxy = function (settings, manage, test, logger) {
 				  {
 					host: 'pocketnetpeertube8.nohost.me',
 					cantuploading: true,
+					old : true,
+
 					ip: '192.236.161.131',
 				  },
 				  {
@@ -648,7 +654,7 @@ var Proxy = function (settings, manage, test, logger) {
 					ip: '178.154.200.50',
 				  },
 				],
-		
+
 				10: [
 				  {
 					host: 'pocketnetpeertube10.nohost.me',
@@ -661,7 +667,7 @@ var Proxy = function (settings, manage, test, logger) {
 					ip: '84.252.138.108',
 				  },
 				],
-		
+
 				12: [
 				  {
 					host: 'bastyonmma.pocketnet.app',
@@ -674,30 +680,113 @@ var Proxy = function (settings, manage, test, logger) {
 					ip: '49.12.231.72',
 				  },
 				],
-		
+
 				13: [
 				  { host: '01rus.nohost.me', ip: '178.217.159.227' },
 				  { host: '02rus.pocketnet.app', ip: '31.184.215.67' },
 				],
-		
+
 				14: [
 				  { host: 'pocketnetpeertube12.nohost.me', ip: '104.168.248.113' },
 				  { host: 'pocketnetpeertube13.nohost.me', ip: '62.84.115.93' },
 				],
 
 				15: [
-					'peertube14.pocketnet.app',
-					'peertube15.pocketnet.app',
+					{
+						host: 'peertube14.pocketnet.app',
+						ip: '178.154.251.235',
+					},
+					{
+						host: 'peertube15.pocketnet.app',
+						ip: '192.236.199.174',
+					},
 				],
 
 				16: [
-					'poketnetpeertube.space',
-					'poketnetpeertube.ru',
+					{
+						host : 'poketnetpeertube.space',
+						cantuploading: true,
+
+						old : true,
+						ip: '178.217.155.168',
+					},
+					{
+						host : 'poketnetpeertube.ru',
+						cantuploading: true,
+
+						old : true,
+						ip: '178.217.159.224',
+					}
 				],
 
+
 				17: [
-					'bastynode.ru',
-					'storemi.ru',
+					{
+						host : 'bastynode.ru',
+						cantuploading: true,
+
+						old : true,
+						ip: '81.23.152.91',
+					},
+					{
+						host : 'storemi.ru',
+						cantuploading: true,
+
+						old : true,
+						ip: '93.100.117.108',
+					},
+				],
+
+				18: [
+					{
+						host : 'bastynode1.ru',
+						cantuploading: true,
+
+						old : true,
+						ip: '81.23.151.94',
+					},
+					{
+						host : 'gf110.ru',
+						cantuploading: true,
+
+						old : true,
+						ip: '46.175.123.16',
+					},
+				],
+
+				19: [
+					{
+						host : 'bastyonpeertube.ru',
+						cantuploading: true,
+						ip: '178.217.155.169',
+					},
+					{
+						host : 'bastyonpeertube.site',
+						cantuploading: true,
+						ip: '178.217.155.170',
+					},
+
+				],
+
+				20: [
+					{
+						host : 'peertube17.pocketnet.app',
+						ip: '51.250.104.218',
+					}
+				],
+
+				21: [
+					{
+						host : 'peertube18.pocketnet.app',
+						ip: '51.250.41.252',
+					}
+				],
+
+				22: [
+					{
+						host : 'peertube19.pocketnet.app',
+						ip: '51.250.73.97',
+					}
 				],
       		};
 
@@ -707,6 +796,14 @@ var Proxy = function (settings, manage, test, logger) {
 					{ host: 'test.peertube2.pocketnet.app', ip: '95.216.212.153' },
 				]}
 			}
+
+			_.each(ins, function(r){
+				_.each(r, function(p){
+					if(!p.old){
+						trustpeertube.push(p.host)
+					}
+				})	
+			})
 
 			return peertube.init({
 				roys : ins
@@ -742,12 +839,12 @@ var Proxy = function (settings, manage, test, logger) {
 				addr: 'PP582V47P8vCvXjdV3inwYNgxScZCuTWsq',
 			}
 
-			/*if (s.listening && w.listening && settings.server.domain){ 
+			/*if (s.listening && w.listening && settings.server.domain){
 				service.mainport = Number(s.listening)
 				service.wssport = Number(w.listening)
 				service.service = true
 				service.addr = settings.server.domain
-	  
+
 			}*/
 
 			return service
@@ -758,7 +855,7 @@ var Proxy = function (settings, manage, test, logger) {
 		info: function (compact) {
 
 			var mem = process.memoryUsage()
-			
+
 			var loads = os.loadavg();
 
 			_.each(mem, function (v, i) {
@@ -768,7 +865,7 @@ var Proxy = function (settings, manage, test, logger) {
 			return {
 				status: status,
 				test : self.test,
-				
+
 				nodeManager: self.nodeManager.info(compact),
 				nodeControl: self.nodeControl.info(compact),
 				firebase: self.firebase.info(compact),
@@ -956,8 +1053,9 @@ var Proxy = function (settings, manage, test, logger) {
 
 			var result = null
 
-			return rpc({ method, parameters, options, U }).then(r => {
+			
 
+			return rpc({ method, parameters, options, U }).then(r => {
 
 				var posts = r.data.contents || []
 
@@ -971,42 +1069,63 @@ var Proxy = function (settings, manage, test, logger) {
 					return decodeURIComponent(p.u)
 				})
 
-				users = _.map(posts, function(p){
-					return f.deep(p, 'lastComment.address') 
+				videos = _.filter(videos, function(url){
+					return _.find(trustpeertube, function(host){
+						return url.indexOf(host) > -1
+					})
 				})
 
-				users = _.filter(users, u => {return u && !_.find(posts, function(p){
-					return p.address == u
-				})})
+				if(method == 'gethierarchicalstrip'){
+					users = _.map(posts, function(p){
+						return f.deep(p, 'lastComment.address')
+					})
+	
+					users = _.filter(users, u => {return u && !_.find(posts, function(p){
+						return p.address == u
+					})})
+				}
 
 				return Promise.resolve()
 
 			}).then(() => {
 
-				var userPr = rpc({
-					method : 'getuserprofile',
-					parameters : [users, '1'],
-					options, U
-				}).then(users => {
+				var userPr = null
+				var videosPr = null
 
+				if(!users.length){
+					userPr = () => Promise.resolve()
+				}
+				else{
+					userPr = rpc({
+						method : 'getuserprofile',
+						parameters : [users, '1'],
+						options, U
+					}).then(users => {
+	
+						result.data.users = users.data
+	
+						return Promise.resolve()
+					})
+				}
 
-					result.data.users = users.data
+				if(!videos.length){
+					videosPr = () => Promise.resolve()
+				}
+				else{
+					videosPr = videosapi({
+						urls : videos,
+						fast : options.fastvideo
+					}).then(videos => {
 
-					return Promise.resolve()
-				})
+						result.data.videos = videos.data
 
-				var videosPr = videosapi({
-					urls : videos,
-					fast : true
-				}).then(videos => {
+						return Promise.resolve()
+					}).catch(e => {
+						return Promise.resolve()
+					})
+				}
 
-
-					result.data.videos = videos.data
-
-					return Promise.resolve()
-				}).catch(e => {
-					return Promise.resolve()
-				})
+					
 
 				users = null
 				videos = null
@@ -1022,6 +1141,8 @@ var Proxy = function (settings, manage, test, logger) {
 			})
 		}
 	}
+
+	self.rpcscenarios.getrecommendedcontentbyaddress = self.rpcscenarios.gethierarchicalstrip
 
 	self.api = {
 		node: {
@@ -1041,7 +1162,7 @@ var Proxy = function (settings, manage, test, logger) {
 					}
 
 					return self.rpcscenarios[method]({ method, parameters, options, U })
-					
+
 				},
 			},
 			rpc: {
@@ -1054,18 +1175,20 @@ var Proxy = function (settings, manage, test, logger) {
 							code: 400,
 						});
 					}
+
 					if (!options) options = {};
 					if (!parameters) parameters = [];
 
 					var node = null;
 					var noderating = 0
 					var timep = performance.now()
+
 					var time = {
 						preparing : 0,
 						cache : 0,
 						start : 0,
 						ready : 0,
-						
+
 					}
 
 					var _waitstatus = 'un'
@@ -1076,6 +1199,8 @@ var Proxy = function (settings, manage, test, logger) {
 
 					self.logger.w('rpc', 'debug', 'RPC REQUEST')
 
+
+
 					return new Promise((resolve, reject) => {
 
 						if((options.locally && options.meta)){
@@ -1085,23 +1210,22 @@ var Proxy = function (settings, manage, test, logger) {
 						}
 
 						return nodeManager.waitreadywithrating().then(resolve).catch(reject)
-						
+
 					}).then(() => {
 
 						self.logger.w('rpc', 'debug', 'AFTER WAITING NODEMANAGER')
 
 						time.preparing = performance.now() - timep
 
-
 						/// ????
 						if (options.locally && options.meta) {
 							node = nodeManager.temp(options.meta);
 						}
-
-						if (options.node) {
+						
+						if (!node && options.node) {
 							node = nodeManager.nodesmap[options.node];
 
-							if (node) 
+							if (node)
 								direct = false
 						}
 
@@ -1109,12 +1233,12 @@ var Proxy = function (settings, manage, test, logger) {
 
 							node = nodeManager.selectProbability();
 
-							if(!node && nodeManager) 
+							if(!node && nodeManager)
 								node = nodeManager.nodesmap[nodeManager.bestnode]
 
 							direct = false
 						}
-						
+
 						if (!node) {
 							return Promise.reject({
 								error: 'node',
@@ -1132,9 +1256,9 @@ var Proxy = function (settings, manage, test, logger) {
 						return new Promise((resolve, reject) => {
 
 							self.logger.w('rpc', 'debug', 'BEFORE CACHE')
-							
-							if(!noderating) {
-								
+
+							if(!noderating && !options.cache) {
+
 								resolve('nocaching')
 
 								return
@@ -1145,7 +1269,7 @@ var Proxy = function (settings, manage, test, logger) {
 								if (waitstatus == 'smart'){
 									smartresult = smartdata
 								}
-								
+
 
 								resolve(waitstatus);
 
@@ -1163,7 +1287,7 @@ var Proxy = function (settings, manage, test, logger) {
 						_waitstatus = waitstatus
 
 						if (waitstatus == 'smart' && smartresult){
-			
+
 							return Promise.resolve({
 								data: smartresult,
 								code: 207,
@@ -1208,22 +1332,25 @@ var Proxy = function (settings, manage, test, logger) {
 						return new Promise((resolve, reject) => {
 
 							time.start = performance.now() - timep
+							time.node = {
+								b : timep
+							}
 
 							self.logger.w('rpc', 'debug', 'ADD TO QUEUE')
-							
-							nodeManager.queue(node, method, parameters, direct, {resolve, reject})
-								
+
+							nodeManager.queue(node, method, parameters, direct, {resolve, reject}, time.node)
+
 						})
 
 						.then((data) => {
 
-							if (noderating){
+							if (noderating || options.cache){
 								server.cache.set(method, cparameters, data, node.height());
 							}
 
-							//console.log("SUCCESS", method)
-
 							time.ready = performance.now() - timep
+
+							if(time.node) delete time.node.b
 
 							return Promise.resolve({
 								data: data,
@@ -1234,8 +1361,6 @@ var Proxy = function (settings, manage, test, logger) {
 						});
 					})
 					.catch((e) => {
-
-						//console.log("E", e, method)
 
 						if (_waitstatus == 'execute'){
 							server.cache.remove(method, cparameters);
@@ -1276,7 +1401,7 @@ var Proxy = function (settings, manage, test, logger) {
 
 				},
 			},
-		
+
 			revoke: {
 				path: '/nodes/revoke',
 				authorization: 'signature',
@@ -1321,7 +1446,7 @@ var Proxy = function (settings, manage, test, logger) {
 								node: nnode.exportsafe(),
 							});
 
-						else 
+						else
 							return Promise.reject('none');
 					}
 
@@ -1357,7 +1482,6 @@ var Proxy = function (settings, manage, test, logger) {
 							});
 						})
 						.catch((e) => {
-							//console.log("e", e)
 							return Promise.reject(e);
 						});
 				},
@@ -1510,7 +1634,7 @@ var Proxy = function (settings, manage, test, logger) {
 
 			urlPreviewFormatted: {
 				path: '/urlPreviewFormatted',
-				
+
 				action: function ({ url }) {
 
 					return new Promise((resolve, reject) => {
@@ -1583,7 +1707,7 @@ var Proxy = function (settings, manage, test, logger) {
 
 					if (!message.A)
 						return Promise.reject({ error: 'Unauthorized', code: 401 });
-						
+
 					var dumpdata = _.clone(dump)
 
 					if (dump.stared){
@@ -1633,13 +1757,13 @@ var Proxy = function (settings, manage, test, logger) {
 							dump._started = dump.stared
 							dump.end = Date.now()
 							dump.name = filename
-	
+
 							delete dump.stared
-	
+
 							if (err){
-	
+
 								dump.error = err.toString ? err.toString() : err
-	
+
 								logger.w('system', 'error', 'Dump Error', dump.error)
 							}
 							else{
@@ -1648,12 +1772,12 @@ var Proxy = function (settings, manage, test, logger) {
 
 								dump.success = true
 							}
-							
+
 						});
 
 						return Promise.resolve('started');
 					}
-					catch(err){	
+					catch(err){
 
 						logger.w('system', 'error', 'Dump Error', err)
 
@@ -1662,9 +1786,9 @@ var Proxy = function (settings, manage, test, logger) {
 							error :  err.toString ? err.toString() : err
 						});
 					}
-					
 
-					
+
+
 				},
 			},
 
@@ -1675,11 +1799,11 @@ var Proxy = function (settings, manage, test, logger) {
 
 					if (!message.A)
 						return Promise.reject({ error: 'Unauthorized', code: 401 });
-						
+
 						server.middle.clear()
 
 					return Promise.resolve('success');
-					
+
 				},
 			},
 
@@ -1690,9 +1814,9 @@ var Proxy = function (settings, manage, test, logger) {
 
 					if (!message.A)
 						return Promise.reject({ error: 'Unauthorized', code: 401 });
-						
+
 					return self.wss.closeall()
-					
+
 				},
 			},
 
@@ -1703,11 +1827,11 @@ var Proxy = function (settings, manage, test, logger) {
 
 					if (!message.A)
 						return Promise.reject({ error: 'Unauthorized', code: 401 });
-						
+
 						server.cache.clear()
 
 					return Promise.resolve('success');
-					
+
 				},
 			},
 
@@ -1718,11 +1842,11 @@ var Proxy = function (settings, manage, test, logger) {
 
 					if (!message.A)
 						return Promise.reject({ error: 'Unauthorized', code: 401 });
-						
+
 						remote.clear()
 
 					return Promise.resolve('success');
-					
+
 				},
 			},
 
@@ -1744,7 +1868,7 @@ var Proxy = function (settings, manage, test, logger) {
 					/*if (nodeManager.bestnodes.length){
 						node = nodeManager.bestnodes[f.rand(0, nodeManager.bestnodes.length - 1)]
 					}*/
-	
+
 					return Promise.resolve({
 						data: {
 							time: f.now(),
@@ -1837,7 +1961,7 @@ var Proxy = function (settings, manage, test, logger) {
 			info: {
 				path: '/firebase/info',
 				action: function (data) {
-					
+
 					return self.firebase.kit.info({}).then((r) => {
 						return Promise.resolve({ data: r });
 					});
@@ -1849,7 +1973,7 @@ var Proxy = function (settings, manage, test, logger) {
 				path: '/firebase/mytokens',
 				action: function (data) {
 
-					
+
 					return self.firebase.kit.mytokens({address : data.U}).then((r) => {
 						return Promise.resolve({ data: r });
 					});
@@ -1871,7 +1995,7 @@ var Proxy = function (settings, manage, test, logger) {
 		},
 
 		peertube: {
-			
+
 		},
 
 		captcha: {
@@ -2045,7 +2169,7 @@ var Proxy = function (settings, manage, test, logger) {
 				},
 			},
 
-			
+
 
 			freeregistrationfake: {
 				path: '/free/registrationfake',
@@ -2097,17 +2221,12 @@ var Proxy = function (settings, manage, test, logger) {
 
 	self.wallet.events()
 
-	
-		
+
+
 	return self
 
 }
 
 module.exports = Proxy
-
-/*
-const swaggerDocument = require('./docs/api/v1.json');
-
-app.use('/api/v1/help', swaggerUi.serve, swaggerUi.setup(swaggerDocument));*/
 
 

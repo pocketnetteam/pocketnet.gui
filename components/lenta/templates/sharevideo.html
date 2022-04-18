@@ -22,6 +22,7 @@ if(share.address){
 
 var view = 'post';
 var name = app.platform.api.name(share.address)
+var loggedIn = (user && user.address && user.address.value != null)
 
 var cview = view
 
@@ -107,7 +108,7 @@ var metadisplay = function(){ %>
 							<div>
 								<a elementsid="<%-app.platform.api.authorlink(share.address)%>" href="<%-app.platform.api.authorlink(share.address)%>">
 								<% var reputation = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.reputation') || 0; %>
-									<span class="adr"><%-name || share.address %></span><% if(reputation > 1 || reputation < -1) {%><sup class="spsp"><%-compressedNumber(reputation, 1)%></sup><% } %>
+									<span class="adr"><%-(name || share.address) %></span><% if(reputation > 1 || reputation < -1) {%><sup class="spsp"><%-compressedNumber(reputation, 1)%></sup><% } %>
 								</a>
 
 								<% if((!state || !my) && (typeof repost == 'undefined' || !repost)) { %> 
@@ -341,7 +342,7 @@ var metadisplay = function(){ %>
 					
 				<% } %>
 
-			<div class="anothercntswrk piphidden">
+			<div class="anothercntswrk piphidden videoDescription">
 
 				<div class="cntswrk formeta">
 
@@ -415,7 +416,7 @@ var metadisplay = function(){ %>
 									</div>
 
 									<% const isElectron = (typeof _Electron !== 'undefined' && !!window.electron); %>
-									<% const isSaveSupported = (window.cordova || isElectron); %>
+									<% const isSaveSupported = (window.cordova && !isios()); %>
 
 									<% if(isSaveSupported && share.itisvideo() ) {
 
@@ -431,7 +432,7 @@ var metadisplay = function(){ %>
 	
 												<div class="iconwr">											
 													<div class="icon">
-														<i class="fas fa-cloud-download-alt cansave"></i>
+														<i class="fas fa-download cansave"></i>
 														<i class="fas fa-spinner fa-spin saving"></i>
 														<i class="fas fa-trash saved"></i>
 													</div>

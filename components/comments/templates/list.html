@@ -1,16 +1,21 @@
 <%
-var commentpanel = function(comment, _class){  %>
+var commentpanel = function(comment, _class){  
+	
+	var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(comment.address)
+	
+	
+	%>
 	<div class="commentpanel">
 
 		<div class="items">
 
-			<% if(!comment.deleted) { 
+			<% if(!comment.deleted && !lockedaccount) { 
 				
 				
 				%> 
 				<div class="item upvoteCommentWrapper">
 
-					<div elementsid="comments_upvoteComment" class="upvoteComment scoreUp <% if(comment.myScore && comment.myScore > 0) {%> ratedScore <% } %>"  score="scoreUp">
+					<div elementsid="comments_upvoteComment" class="upvoteComment scoreUp  <% if(comment.myScore && comment.myScore > 0) {%> ratedScore <% } %>"  score="scoreUp">
 						<div class="upvoteCommentTable">
 							<div class="upvoteCommentCell">
 								<i class="fas fa-thumbs-up"></i>
@@ -70,7 +75,7 @@ var commentpanel = function(comment, _class){  %>
 			<% } %> 
 
 
-			<% if((!state || mestate.reputation >= -50) && !comment.deleted && !ed.cantsend) { %> 
+			<% if((!state || mestate.reputation >= -50) && !comment.deleted && !lockedaccount && !ed.cantsend) { %> 
 				<div elementsid="comments_reply" class="item reply">
 					<div class="cact">
 						<div class="label">
@@ -92,25 +97,36 @@ var commentpanel = function(comment, _class){  %>
 var commentf = function(comment){  
 	var me = app.platform.sdk.user.me()
 
-	/*if(me && me.relation(comment.address, 'blocking')) return*/
+	var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(comment.address)
+
+	var hiddenComment = !comment.my(app) && app.platform.sdk.user.hiddenComment(comment) && !(comment.deleted || lockedaccount)
+
+	var hiddenComments = app.platform.sdk.comments.blocked[comment.address]
+
+	var blockedbyme = showedall && me && me.relation(comment.address, 'blocking')
 
 	var m = '' %> 
 
-	<div class="comment <% if(comment.my(app)) {%> mycomment <% } %>  <% if(comment.deleted) {%> deleted <% } %> <% if(comment.myScore > 0 || comment.myScore < 0) {%> rated <% } %> <% if(comment.temp) {%> temptransaction <% } %> <% if(Number(comment.timeUpd) === Number(comment.time)) {%> commentnotedited <% } %> <%-newcomments%> <%- _class %>" id="<%-comment.id%>" aid="<%-comment.answerid%>" pid='<%-comment.parentid%>'>
+	<div class="comment <% if(hiddenComment || hiddenComments || blockedbyme) {%> hiddenComment <% } %> <% if(comment.my(app)) {%> mycomment <% } %>  <% if(comment.deleted || lockedaccount) {%> deleted <% } %> <% if(comment.myScore > 0 || comment.myScore < 0) {%> rated <% } %> <% if(comment.temp) {%> temptransaction <% } %> <% if(Number(comment.timeUpd) === Number(comment.time)) {%> commentnotedited <% } %> <%-newcomments%> <%- _class %>" id="<%-comment.id%>" aid="<%-comment.answerid%>" pid='<%-comment.parentid%>'>
+
+
+		
 
 		<div class="commentPaddingWrapper">
 
-			<div class="commentWrapper table">
+			<div class="commentWrapper">
 
 				<div class="iconWrapper">
-					<% if(!app.curation()) {%><a elementsid="<%-app.platform.api.authorlink(comment.address)%>" href="<%-app.platform.api.authorlink(comment.address)%>"><% } %>
+					
 						<% 
 							var src = deep(app, 'platform.sdk.usersl.storage.'+comment.address+'.image');
 							var name = deep(app, 'platform.sdk.usersl.storage.'+comment.address+'.name');
 							var letter = name ? name[0] : '';  
 						%>
 
-						<div class="icon">
+						<% if(!app.mobileview) {%><a elementsid="<%-app.platform.api.authorlink(comment.address)%>" href="<%-app.platform.api.authorlink(comment.address)%>"><% } %>
+
+						<div class="icon" profile="<%-comment.address%>">
 							<% if(comment.donation === 'true' && comment.amount) {%>
 								<div class="donatedbefore"></div>
 							<% } %>
@@ -118,7 +134,7 @@ var commentf = function(comment){
 
 								<% if(!src && letter) { %>
 
-									<span class="letter">
+									<span class="letter cancopy">
 										<%-letter.toUpperCase()%>
 									</span>
 				
@@ -133,8 +149,7 @@ var commentf = function(comment){
 							</div>
 							
 						</div>
-					<% if(!app.curation()) {%></a><% } %>
-				
+						<% if(!app.mobileview) {%></a><% } %>
 
 				</div>
 
@@ -143,9 +158,9 @@ var commentf = function(comment){
 					<div class="metatable">
 						<div class="author">
 
-							<% if(!app.curation()) {%><a elementsid="<%-app.platform.api.authorlink(comment.address)%>" href="<%-app.platform.api.authorlink(comment.address)%>"><% } %>
-							
-							<span class="adr"><%-deep(app, 'platform.sdk.usersl.storage.'+comment.address+'.name') || comment.address %></span> <% if(!app.curation()) {%></a><% } %> &middot;
+							<% if(!app.mobileview) {%><a elementsid="<%-app.platform.api.authorlink(comment.address)%>" href="<%-app.platform.api.authorlink(comment.address)%>"><% } %>
+
+							<span class="adr" profile="<%-comment.address%>"><%-deep(app, 'platform.sdk.usersl.storage.'+comment.address+'.name') || comment.address %></span><% if(!app.mobileview) {%></a><% } %> &middot;
 							
 							<span class="date realtime" time="<%-comment.time%>"><%- app.reltime(comment.time) %></span>
 
@@ -182,6 +197,25 @@ var commentf = function(comment){
 
 						<div class="commentcontenttable">
 
+							
+								<% if(hiddenComment || hiddenComments || blockedbyme) { %> 
+									
+									<div class="commentmessage hiddenCommentLabel">
+
+										<div>
+											<% if(hiddenComment) {%><%=e('hiddenCommentLabel')%><% } %>
+											<% if(!hiddenComment && hiddenComments) {%><%=e('hiddenCommentsLabel')%><% } %>
+											<% if(!hiddenComment && !hiddenComments && blockedbyme) {%><%=e('blockedbymeHiddenCommentLabel')%><% } %>
+										</div>
+
+										<div>
+											<button class="ghost"><%=e('showhiddenComment')%></button>
+										</div>
+										
+									</div>
+									
+								<% } %>
+
 								<% if(comment.deleted) {%>
 
 									<div class="commentmessage">
@@ -190,7 +224,15 @@ var commentf = function(comment){
 
 								<% } %>
 
-								<% if(comment.message && !comment.deleted) {
+								<% if(lockedaccount) {%>
+
+									<div class="commentmessage">
+										<div><%=e('lockedaccountacomment')%></div>
+									</div>
+						
+								<% } %>
+
+								<% if(comment.message && !comment.deleted && !lockedaccount) {
 
 									var l = findAndReplaceLink(filterXSS(comment.message, {
 										whiteList: [],
@@ -221,7 +263,7 @@ var commentf = function(comment){
 
 								<% 								
 								
-								if(comment.images.length && !comment.deleted) {
+								if(comment.images.length && !comment.deleted && !lockedaccount) {
 									var additionall = 0;
 									var icClass = '';
 					
@@ -251,6 +293,9 @@ var commentf = function(comment){
 								
 
 						</div>
+
+
+
 						<% commentpanel(comment, _class) %>
 					</div>
 					

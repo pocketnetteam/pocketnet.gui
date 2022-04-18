@@ -17,7 +17,6 @@ var insertingfunc = function(settings, p){
 	return {
 		el : 'content'
 	}
-
 }
 
 __map =  { 
@@ -41,7 +40,7 @@ __map =  {
 		"js/lib/pocketnet/buffer.js", //
 		
 		//
-
+		
         "js/vendor/pbkdf2.js", //
         "js/vendor/sha1.js", //
         "js/vendor/paste.js", //
@@ -96,6 +95,7 @@ __map =  {
 		"js/satolist.js",
 		"js/peertube.js",
 		"js/widgets.js",
+		"js/effects.js",
 		"js/logger.js"
 	],
 
@@ -122,7 +122,6 @@ __map =  {
 	
 	__templates : [
 		{ c : 'navigation', n : 'menu' },
-		{ c : 'topusers', n : 'usermodal' },
 		{ c : 'menu', n : 'index' },
 		{ c : 'share', n : 'body' },
 		//{ c : 'toppanel', n : 'index' },
@@ -480,6 +479,14 @@ __map =  {
 			anonimus : true,
 		},	
 
+		recommendations : {
+			uri : "recommendations",
+			href : "recommendations",
+		
+			add : insertingfunc,
+			anonimus : true,
+		},
+
 		recommendedusers : {
 			uri : "recommendedusers",
 			href : "recommendedusers",
@@ -487,14 +494,7 @@ __map =  {
 			add : insertingfunc,
 			anonimus : true,
 		},
-		
-		topusers : {
-			uri : "topusers",
-			href : "topusers",
-		
-			add : insertingfunc,
-			anonimus : true,
-		},
+
 
 		// usermodal : {
 		// 	uri : "usermodal",
@@ -925,9 +925,7 @@ __map =  {
 	channel : {
 		uri : "channel",
 		href : "channel",
-		add : {
-			el : 'content'
-		},
+		add : insertingfunc,
 		anonimus : true,
 		exportcss : true,
 	},
@@ -953,7 +951,7 @@ __map =  {
 
 		relations : [
 			{src : 'js/vendor/chart.min.js',			   f : 'js', require : function(){
-				Chart = require('./js/vendor/Chart.js')
+				Chart = require('./js/vendor/chart.min.js')
 			}},	
 		]
 

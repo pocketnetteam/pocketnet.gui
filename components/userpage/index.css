@@ -1,6 +1,10 @@
 #userpage .backtabletmenu {
   display: none;
   padding: 1em;
+  position: sticky;
+  top: 0;
+  background: rgb(var(--background-total-theme));
+  z-index: 2;
 }
 #userpage .backtabletmenu span {
   font-size: 0.9em;

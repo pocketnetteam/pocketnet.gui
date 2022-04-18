@@ -5,6 +5,7 @@ var _ = require('lodash');
 var f = require('../functions');
 const { performance } = require('perf_hooks');
 const queuemethods = {
+    getcontent: true,
     getcontents: true,
     getlastcomments: true,
     gettags: true,
@@ -24,7 +25,9 @@ const queuemethods = {
     getpagescores: true,
     gethierarchicalstrip : true,
     getusercontents : true,
-    getcontentsstatistic : true
+    getcontentsstatistic : true,
+    getboostfeed : true,
+    getprofilefeed : true
 }
 
 const exepmethods = {
@@ -37,9 +40,11 @@ var Nodemanager = function(p){
 
     var self = this;
     var inited = false;
-    var cachedchain = null
+    var cachedchain = null;
 
     self.askedpeers = {};
+    self.askedpeerssuccess = {};
+    self.askingpeer = {};
     self.peers = {}
     self.bestnode = ''
     self.bestnodes = []
@@ -52,13 +57,14 @@ var Nodemanager = function(p){
     var statscalculationTime = 5000
     var findInterval = null
     var safetimeout = 1000
-    var peernodesCheckTime = 1000000
-    var usersfornode = 30
+    var peernodesCheckTime = 10000000
+    var usersfornode = 50
     var commonnotinitedInterval = null
     var queue = []
     var queueInterval = null
 
     var minnodescount = global.MIN_NODES_COUNT || 1
+    var usetrustnodesonly = global.USE_TRUST_NODES_ONLY || false
 
     var db = new Datastore(f.path(p.dbpath));
    
@@ -162,20 +168,20 @@ var Nodemanager = function(p){
 
     self.find = function(){
 
+        
+
         var notinitednodes = _.filter(self.nodes, function(node){
             return !node.inited
         })
 
-        _.each(_.shuffle(notinitednodes), function(node){
-            self.initIfNeed(node)
-        })
-        _.each(_.shuffle(self.nodes), function(node, i){
+        _.each(_.shuffle(notinitednodes), function(node, i){
 
-            if(i < 5){
-                self.api.peernodesTime(node).then(r => {}).catch(e => {})
-            }
-            
+            if (i < 10) // not more 10 for time
+                self.initIfNeed(node)
+
         })
+
+        self.api.peerAllNodesTime(self.nodes)
 
         forgetIfNotUsing()
 
@@ -209,13 +215,25 @@ var Nodemanager = function(p){
         return similar
     }
 
-    self.rpcs = function(node, method, parameters, clbks){
+    self.rpcs = function(node, method, parameters, clbks, time){
 
-        return node.rpcs(method, _.clone(parameters)).then(clbks.resolve).catch(clbks.reject)
+        if (time){
+            time.rpcsstart = performance.now() - time.b
+        }
+
+        return node.rpcs(method, _.clone(parameters), time).then(r => {
+
+            if (time){
+                time.rpcsend = performance.now() - time.b
+            }
+
+            clbks.resolve(r)
+
+        }).catch(clbks.reject)
 
     }
 
-    var runrpcswideclbks = function(e, r, clbks, responses, need, result, error, fromadd){
+    var runrpcswideclbks = function(e, r, clbks, responses, need, result, error, fromadd, time){
         if (responses >= need){
             return responses
         }
@@ -228,6 +246,17 @@ var Nodemanager = function(p){
 
         if (typeof r != 'undefined'){
             responses = need
+        }
+
+        if (time){
+            if(!time.runrpcswideclbks) time.runrpcswideclbks = []
+
+            time.runrpcswideclbks.push({
+                t : performance.now() - time.b,
+                e : e ? 1 : 0,
+                r : r ? 1 : 0,
+                a : fromadd ? 1 : 0
+            })
         }
 
         if (responses >= need){
@@ -249,7 +278,7 @@ var Nodemanager = function(p){
 
     }
 
-    self.rpcswide = function(node, method, parameters, clbks){
+    self.rpcswide = function(node, method, parameters, clbks, time){
 
         var similarnodes = self.similarnodes(node, 1)
 
@@ -260,21 +289,22 @@ var Nodemanager = function(p){
         var error = undefined
 
 
-        node.rpcs(method, _.clone(parameters)).then(r => {
+        if (time){
+            time.rpcswidestart = performance.now() - time.b
+        }
 
-           
+        node.rpcs(method, _.clone(parameters)).then(r => {
 
             result = r
 
-            responses = runrpcswideclbks(undefined, r, clbks, responses, need, result, error)
+            responses = runrpcswideclbks(undefined, r, clbks, responses, need, result, error, false, time)
            
 
         }).catch(e => {
 
             error = e
 
-
-            responses = runrpcswideclbks(e, undefined, clbks, responses, need, result, error)
+            responses = runrpcswideclbks(e, undefined, clbks, responses, need, result, error, false, time)
 
         })
 
@@ -295,14 +325,14 @@ var Nodemanager = function(p){
 
                         if(typeof result == 'undefined') result = r
 
-                        responses = runrpcswideclbks(undefined, result, clbks, responses, need, result, error, true)
+                        responses = runrpcswideclbks(undefined, result, clbks, responses, need, result, error, true, time)
 
                     }).catch(e => {
 
 
                         if(typeof error == 'undefined') error = e
 
-                        responses = runrpcswideclbks(e, undefined, clbks, responses, need, result, error, true)
+                        responses = runrpcswideclbks(e, undefined, clbks, responses, need, result, error, true, time)
 
                     })
 
@@ -313,7 +343,7 @@ var Nodemanager = function(p){
 
     }
 
-    self.exepmethod = function(node, method, parameters, clbks){
+    self.exepmethod = function(node, method, parameters, clbks, time){
 
         node.checkParameters().then((r) => {
 
@@ -327,25 +357,25 @@ var Nodemanager = function(p){
 
     }
 
-    self.queue = function(node, method, parameters, direct, clbks){
+    self.queue = function(node, method, parameters, direct, clbks, time){
         if(!clbks) clbks = {}
 
         if (exepmethods[method]){
 
-            self.exepmethod(node, method, parameters, clbks)
+            self.exepmethod(node, method, parameters, clbks, time)
 
             return
         }
 
-        //self.rpcs(node, method, parameters, clbks)
-
         if (direct || !queuemethods[method]){
-            self.rpcs(node, method, parameters, clbks)
+
+            self.rpcs(node, method, parameters, clbks, time)
         }
 
         else{
+
             addqueue({
-                node, method, parameters, clbks
+                node, method, parameters, clbks, time
             })
         }
     }
@@ -359,50 +389,81 @@ var Nodemanager = function(p){
 
     var worker = function(){
 
-
-        var now = performance.now()
-
         for (var i = 0; i < queue.length; i++){
 
             var rpcs = queue[i]
 
-
-            self.rpcswide(rpcs.node, rpcs.method, rpcs.parameters, rpcs.clbks)
+            self.rpcswide(rpcs.node, rpcs.method, rpcs.parameters, rpcs.clbks, rpcs.time)
         }
-
-        var dif = performance.now() - now
-
 
         queue = []
     }
 
-    var getnodeinfo = function(){
-        
-    }
+    
 
     var saveNodes = function(nodes){
 
-        _.map(nodes, function(node){
+        var pr = _.map(nodes, function(node){
 
             var exp = node.export()
-
+            
             if (exp.bchain)
-                db.find({key : node.key}).exec(function (err, docs) {
 
-                    if(!err){
-                        if (docs.length){
-                            
+                return new Promise((resolve, reject) => {
+                    db.find({key : node.key}).exec(function (err, docs) {
+
+                        if(!err){
+                            if (docs.length){
+
+                                var nd = docs[0]
+
+                                if (nd.version != exp.version || !nd.vcode){
+                                    db.update({ key: exp.key }, { $set: { data: {version : exp.version, vcode : exp.vcode} } }, {}, function (err) {
+
+
+                                        if(err){
+                                            reject(err)
+                                        }
+                                        else{
+                                            resolve()
+                                        }
+                                    });
+                                    
+                                }
+                                else{
+
+
+                                    resolve()
+
+                                    
+                                }
+                            }
+                            else{
+                                db.insert(exp, function(err, docs) {
+                                    if(err){
+                                        reject(err)
+                                    }
+                                    else{
+                                        resolve()
+                                    }
+                                })
+                            }
                         }
+
                         else{
-                            db.insert(exp, function(err, docs) {})
+                            reject(err)
                         }
-                    }
-
+    
+                    })
                 })
+
+            else
+                return Promise.reject('bchain')
            
         })
 
-       
+        return Promise.all(pr)
+
     }
 
     self.addfromtemp = function(nodekey){
@@ -449,9 +510,7 @@ var Nodemanager = function(p){
 
         var workingNodes = getWorkingNodes()
 
-
         if (workingNodes.length < minnodescount || !usersfornode || self.proxy.users() / usersfornode >= workingNodes.length){
-
 
             node.init()
         }
@@ -524,70 +583,6 @@ var Nodemanager = function(p){
         
     }
 
-    /*self.currentChainCommon = function(){
-
-        if(!self.nodes.length) return null
-
-        if(cachedchain){
-            if(f.date.addseconds(cachedchain.time, 60) > new Date()){
-                return cachedchain.result
-            }
-        }
-
-        var commonHeight = 0,
-            commonBlockHash = '',
-            maxHeight = 0;
-
-        var lastblocks = _.filter(_.map(self.nodes, function(node){
-            return node.lastblock()
-        }), lb => {return lb})
-        
-        if(!lastblocks.length) return null
-
-        maxHeight = _.maxBy(lastblocks, function(r){ return r.height }).height
-
-        var hlastblocks = f.group(lastblocks, function(lb){ return lb.height })
-
-        var kmc = 0
-
-        _.each (hlastblocks, function(b, i){
-            if (b.length > kmc || (b.length >= kmc && commonHeight < i) ) {
-                kmc = b.length
-                commonHeight = i
-            }
-        })
-
-        var halastblocks = f.group(lastblocks, function(lb){ return lb.blockhash })
-
-        var hmc = 0
-
-        _.each (halastblocks, function(b, i){
-            if (b.length > hmc || (b.length >= hmc && commonHeight < i) ) {
-                hmc = b.length
-                commonBlockHash = i
-            }
-        })
-
-        var c = _.reduce(self.nodes, function(s, n){
-            return s + (n.chain() || []).length
-        }, 0) / self.nodes.length
-
-        var result = {
-            commonHeight : commonHeight,
-            maxHeight : maxHeight,
-            commonBlockHash : commonBlockHash,
-            chainlength : c
-        }
-
-        cachedchain = {
-            result : result,
-            time : new Date()
-        }
-
-        return result
-
-    }*/
-
     self.currentChainCommon2 = function(){
 
         if(!self.nodes.length) return null
@@ -623,8 +618,6 @@ var Nodemanager = function(p){
                 if(!chainmap[chainlink.height][chainlink.blockhash]) 
                     chainmap[chainlink.height][chainlink.blockhash] = 0; 
                     chainmap[chainlink.height][chainlink.blockhash] ++;
-
-                //if(!hashmap[chainlink.blockhash]) hashmap[chainlink.blockhash] = {}
 
                 if(i){
                     hashmap[chainlink.blockhash] = chain[i - 1].blockhash
@@ -837,6 +830,27 @@ var Nodemanager = function(p){
         return stats
     }
 
+    self.cleardatabase = function(){
+
+        // vcode will be used later
+
+        return new Promise((resolve, reject) => {
+
+            db.remove({ version: {$in : ['0.20.16', '0.20.17', '0.20.18', '0.20.16', '0.20.15', '0.20.14']}  }, { multi: true }, function (err, numRemoved) {
+
+                console.log("db cleared", numRemoved)
+                
+                if(err) return reject(err)
+                
+                resolve()
+
+            });
+
+        })
+
+       
+    }
+
 
     self.init = function(){
 
@@ -847,84 +861,84 @@ var Nodemanager = function(p){
 
                 db.ensureIndex({ fieldName: 'key', unique: true });
 
-                var bchain = 'main'
+                self.cleardatabase().catch(e => {}).then(() => {
 
-                if (self.proxy.test) bchain = 'test'
+                    var bchain = 'main'
 
-                db.find({bchain}).exec(function (err, docs) {
+                    if (self.proxy.test) bchain = 'test'
 
+                    db.find({bchain}).exec(function (err, docs) {
 
+                        self.nodes = []
 
-                    self.nodes = []
+                        var haslocal = self.nodeControl.kit.hasbin()
 
-                    var haslocal = self.nodeControl.kit.hasbin()
+                        var c = []
 
-                    var c = []
+                        if (haslocal) c = [{
+                            host : '127.0.0.1',
+                            port : 38081,
+                            ws : 8087,
+                            name : 'Local Proxy Pocketnet Node',
+                            local : true
+                        }]
 
+                        docs = _.filter(_.shuffle(docs), function(d, i){
+                            if(i < 5) return true
+                        })
 
-                    if (haslocal) c = [{
-                        host : '127.0.0.1',
-                        port : 38081,
-                        ws : 8087,
-                        name : 'Local Proxy Pocketnet Node',
-                        local : true
-                    }]
+                        if (usetrustnodesonly){
+                            docs = []
+                        }
 
-                    docs = _.filter(_.shuffle(docs), function(d, i){
-                        if(i < 5) return true
-                    })
+                        var nodes = _.map(c.concat(p.stable, docs || []) , function(options){
 
+                            var node = new Node(options, self)
 
-                    //// remove
-                    //docs = []
+                            self.add(node)
 
-                   // console.log('docs', docs, p.stable)
+                            return node
+                            
+                        })
 
-                    var nodes = _.map(c.concat(p.stable, docs || []) , function(options){
+                        self.api.connected(nodes, function(nodes){
+                            saveNodes(nodes)
+                        })
 
-                        var node = new Node(options, self)
-
-                        self.add(node)
-
-                        return node
+                        setTimeout(function(){
+                            self.find()
+                        }, 2000)
                         
-                    })
+                        if(!findInterval)
+                            findInterval = setInterval(self.find, 30000)
 
-                    self.api.connected(nodes, function(nodes){
-                        saveNodes(nodes)
-                    })
+                        if(!commonnotinitedInterval)
+                            commonnotinitedInterval = setInterval(self.getNotinitedInfo, 1000 * 60 * 60 * 2) 
 
-                    setTimeout(function(){
-                        self.find()
-                    }, 2000)
-                    
-                    if(!findInterval)
-                        findInterval = setInterval(self.find, 10000)
+                        if(!queueInterval)
+                            queueInterval =  setInterval(worker, 10) 
 
-                    if(!commonnotinitedInterval)
-                        commonnotinitedInterval = setInterval(self.getNotinitedInfo, 1000 * 60 * 60 * 2) 
+                        if(!statscalculationInterval)
+                            statscalculationInterval = setInterval(function(){
+                                self.bestapply()
+                                self.bestnodesapply()
+                            }, statscalculationTime) 
 
-                    if(!queueInterval)
-                        queueInterval =  setInterval(worker, 10) 
-
-                    if(!statscalculationInterval)
-                        statscalculationInterval = setInterval(function(){
+                        setTimeout(function(){
                             self.bestapply()
                             self.bestnodesapply()
-                        }, statscalculationTime) 
+                        }, 2000)
 
-                    setTimeout(function(){
-                        self.bestapply()
-                        self.bestnodesapply()
-                    }, 2000)
+                        inited = true
 
-                    inited = true
+                        
 
-                    
+                        resolve()
 
-                    resolve()
-
+                    })
                 })
+
+                
             })
         })  
         
@@ -1083,10 +1097,6 @@ var Nodemanager = function(p){
 
     self.waitreadywithrating = function(){
 
-        if (inited && self.initednodeswithrating().length){
-            return Promise.resolve(true)
-        }
-
         return f.pretry(()=>{
             return inited && self.initednodeswithrating().length
         }, 30, 10000)
@@ -1094,13 +1104,10 @@ var Nodemanager = function(p){
 
     self.waitready = function(){
 
-        if(inited && self.initednodes().length) {
-            return Promise.resolve(true)
-        }
-
         return f.pretry(()=>{
             return inited && self.initednodes().length
         }, 30, 10000)
+
     }
 
     self.request = function(method, parameters){
@@ -1170,17 +1177,52 @@ var Nodemanager = function(p){
                 n.statistic.clearAlltime()
             })
         },
+
+        peerAllNodesTime : function(nodes){
+
+            if(usetrustnodesonly) return
+
+            var askedsuccess = 0;
+
+            _.each(self.askedpeerssuccess, function(time){
+                if (f.date.addseconds(time, peernodesCheckTime / 1000) > new Date()){
+                    askedsuccess++
+                }
+            })
+
+            if (askedsuccess < 5){
+                _.each(_.shuffle(nodes), function(node, i){
+
+                    if(i < 5){
+                        self.api.peernodesTime(node).then(r => {}).catch(e => {})
+                    }
+                    
+                })
+            }
+            
+        },
         
         peernodesTime : function(node){
+
+            if (self.askingpeer[node.key]) return Promise.reject('wait')
 
             var last = self.askedpeers[node.key]
 
             if(!last || f.date.addseconds(last, peernodesCheckTime / 1000) < new Date()){
-
-                self.askedpeers[node.key] = new Date()
+                
+                self.askingpeer[node.key] = true
 
                 return self.api.peernodes(node).then(r => {
+
+                    self.askedpeerssuccess[node.key] = new Date()
+
                     return Promise.resolve(r)
+
+                }).finally(() => {
+
+                    self.askedpeers[node.key] = new Date()
+                    delete self.askingpeer[node.key]
+
                 })
             }   
 

@@ -221,7 +221,7 @@ var addaccount = (function(){
 			},
 
 			wnd : {
-				class : 'addaccountwnd normalizedmobile'
+				class : 'addaccountwnd normalizedmobile maxheight'
 			}
 		}
 	};

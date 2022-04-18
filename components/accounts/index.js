@@ -29,16 +29,13 @@ var accounts = (function(){
 
 						//bitcoin.ECPair.fromPrivateKey(Buffer.from(private, 'hex'))
 
-						console.log("I")
 
 						self.app.user.signout(function(){
 							self.app.user.stay = stay;
 
-							console.log("I2", private)
 
 							self.user.signin(private, function(state){
 
-								console.log("I3")
 
 								var h = ed.href || 'userpage?id=accounts&s=' + makeid()
 								var history = false;
@@ -61,7 +58,6 @@ var accounts = (function(){
 
 								self.closeContainer()
 
-								console.log("H", h, history)
 
 								self.app.reload({
 									href : h,
@@ -83,7 +79,6 @@ var accounts = (function(){
 
 					else{
 
-						console.log("INDEX", index)
 					}
 				})
 

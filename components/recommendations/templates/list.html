@@ -1,0 +1,60 @@
+<div>
+
+    <% if(contents && contents.length > 0) { 
+        _.each(contents, function(content) { 
+            
+
+            var video = (app.platform.sdk.videos.storage[content.url || "undefined"] || {}).data || {}
+            var userinfo =  deep(app.platform.sdk.usersl.storage, content.address);
+            var h = app.platform.sdk.videos.historyget(content.txid)
+            
+            %>
+
+
+            <div class="recoVideoDiv" data-txid="<%- content.txid %>">
+
+                <div class="videoThumbnail <% if(!video.thumbnail) {%>dummy<% } %>" image="<%- video.thumbnail || '' %>">
+                    <% if(h.percent && h.percent > 3) {%>
+                        <div class="videoprogressbar">
+                            <div class="videoprogress" style="width:<%-h.percent%>%"></div>
+                        </div>
+                    <% } %>
+                </div>
+
+                <div class="videoInfos">
+
+                    <div class="title"><span><%= content.renders.caption() %></span></div>
+
+                    <div>
+                        <div class="user">
+                            
+                            <span><%= userinfo.name %></span>
+                            
+                            <% if(userinfo.reputation && !app.curation()) {%><sup class="spsp"><%-compressedNumber(userinfo.reputation, 1)%></sup><% } %>
+                        
+                        </div>
+
+                        <div class="infos">
+
+                            <% if(typeof video.views != 'undefined') {%>
+                                <span class="views"><%= video.views %> <%- pluralform(video.views,[e('countview'), e('countviews')]) %></span>
+                            <% } else { %>
+                                <span class="views dummy"></span>
+                            <% } %>
+
+                            <i class="fas fa-circle viewDateSep"></i>
+                            <span class="date"><%- app.reltime(content.time) %></span>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        <% })
+    } else { %> 
+      
+    <% } %>
+</div>

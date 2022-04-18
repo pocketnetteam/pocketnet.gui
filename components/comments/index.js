@@ -122,6 +122,8 @@ var comments = (function(){
 
 				if (id == '0')
 				{
+
+
 					if (areas[id])
 
 						areas[id].setText('');
@@ -199,7 +201,31 @@ var comments = (function(){
 		}
 
 		var actions = {
+			showprofile : function(address){
 
+				if (self.app.mobileview){
+					self.nav.api.load({
+						open : true,
+						id : 'channel',
+						inWnd : true,
+						history : true,
+	
+						essenseData : {
+							id : address,
+							openprofilebutton : true
+						}
+					})
+				}
+				/*else{
+					self.nav.api.load({
+						open : true,
+						href : 'author?address=' + address,
+						history : true
+					})
+				}*/
+
+				
+			},
 			lightarea : function(id, c){
 
 				var comment = currents[id]
@@ -1025,17 +1051,9 @@ var comments = (function(){
 
 				if (el && el.length > 0 && el[0].scrollIntoView && isMobile()) {
 
+					if(el.closest('.fullScreenVideo').length > 0) return
+
 					_scrollTo(el, _in, 0)
-
-					//el[0].scrollIntoView(true);
-					
-					// Scroll until the comment section is at 120 px from the top
-
-					/*var container =  $('html');
-					
-					var offset = 120 - el[0].getBoundingClientRect().top;
-					if (offset > 0)
-						container.animate({scrollTop: '-=' + offset + 'px'}, 0);*/
 				}
 			}
 		}
@@ -1135,6 +1153,11 @@ var comments = (function(){
 	
 				comments = _.sortBy(comments, function(c){
 
+					if (self.app.platform.sdk.comments.blocked[c.address]) {
+						return 0
+					}
+
+
 					var ms = (c.time || new Date()) / 1000
 
 					var timec = ((ms - oldest) / (newest - oldest)) 
@@ -1143,11 +1166,6 @@ var comments = (function(){
 
 					return - (commentPoint(c) + (timec * 3000) ) / count
 				}) 
-
-				/*var authors = {}
-
-				_.each*/
-
 
 				return comments
 			}
@@ -1163,6 +1181,12 @@ var comments = (function(){
 		}
 
 		var events = {
+
+			showprofile : function(){
+				var address = $(this).attr('profile')
+
+				actions.showprofile(address)
+			},
 
 			upvoteComment : function(){
 
@@ -1180,6 +1204,16 @@ var comments = (function(){
 				
 				actions.upvoteComment(value, id, pid)
 			},
+
+			showHiddenComment: function(){
+
+				var _el = $(this)
+
+				var parent = _el.closest('.comment');
+
+				parent.removeClass('hiddenComment')
+			},
+
 			openGallery : function(){
 
 				var _el = $(this)
@@ -1190,8 +1224,6 @@ var comments = (function(){
 				var pid = parent.attr('pid')
 
 				var comment = self.app.platform.sdk.comments.find(txid, id, pid)
-
-				console.log('comment', comment)
 
 				if (!comment && listpreview && ed.lastComment){
 					comment = self.app.platform.sdk.comments.ini([ed.lastComment])[0]
@@ -1477,7 +1509,7 @@ var comments = (function(){
 
 						var a = this
 
-						if(ed.init || p.init){
+						if ((ed.init || p.init) && !p.unfocus){
 
 							_p.el.find('.emojionearea-editor').focus()
 
@@ -1513,6 +1545,7 @@ var comments = (function(){
 						}
 
 						actions.lightarea(p.id || '0', c)
+						areas[p.id || '0'] = this
 
 						// Hide the emoji button for mobiles and tablets
 						if (isMobile() || isTablet())
@@ -1908,7 +1941,7 @@ var comments = (function(){
 
 					}, function(_p){				
 
-						var ini = function(_clbk){
+						var ini = function(_clbk, unfocus){
 
 							if(!preview) return
 
@@ -1918,7 +1951,9 @@ var comments = (function(){
 							el.c.removeClass('preview')
 
 							var __clbk = function(a, b){
-								clbk(a, b)
+
+								if (clbk)
+									clbk(a, b)
 
 
 								if (_clbk){
@@ -1926,6 +1961,8 @@ var comments = (function(){
 								}
 								
 							}
+
+							if(unfocus) p.unfocus = true
 
 							postEvents(p, _p, __clbk)
 						}
@@ -1941,7 +1978,7 @@ var comments = (function(){
 								actions.embedimages(id, p)
 
 								if(!p.answer && !p.editid){
-									ini()
+									ini(null, true)
 								}	
 							}
 							else if (_preview){
@@ -1986,6 +2023,10 @@ var comments = (function(){
 								
 								
 							})
+
+							if(clbk) clbk()
+
+							clbk = null
 
 							return
 						} else {
@@ -2043,7 +2084,7 @@ var comments = (function(){
 
 				_el.imagesLoadedPN({ imageAttr: true }, function(image) {
 
-					_.each(image.images, function(img, n){
+					/*_.each(image.images, function(img, n){
 
 						var _img = img.img;
 
@@ -2079,7 +2120,7 @@ var comments = (function(){
 							el.addClass(ac)
 						}
 						
-					})
+					})*/
 
 					if(ed.renderClbk) ed.renderClbk()
 
@@ -2087,38 +2128,7 @@ var comments = (function(){
 						clbk()
 
 
-
-
 					return
-
-					var gutter = 10;
-
-					images.isotope({
-
-						layoutMode: 'packery',
-						itemSelector: '.imagesWrapper',
-						packery: {
-							gutter: gutter
-						},
-						initLayout: false
-					});
-
-					images.on('arrangeComplete', function(){
-	
-						images.addClass('active')
-
-						_el.addClass('active')
-
-						if(ed.renderClbk) ed.renderClbk()
-
-						if (clbk)
-							clbk()
-
-					});
-
-					images.isotope()
-					
-					isotopes[s.id] = images
 
 				}, self.app);
 				
@@ -2170,7 +2180,6 @@ var comments = (function(){
 								return c.id == p.add
 							})
 
-							console.log('addcomment', addcomment, comments, p.add)
 
 							if (addcomment){
 								if(ed.fromtop)
@@ -2199,10 +2208,11 @@ var comments = (function(){
 						//inner : p.inner || _in, /// html
 						
 						data : {
+
+							showedall,
 							comments : comments || [],
 							_class : p.class || '',
 							newcomments : p.newcomments || '',
-
 							needtoshow : commentslength - comments.length,
 
 							replaceName : function(name, p){
@@ -2478,6 +2488,7 @@ var comments = (function(){
 
 		var makePreview = function(clbk){	
 
+
 			var p = {};
 
 			renders.post(function(area){
@@ -2509,6 +2520,7 @@ var comments = (function(){
 
 			var p = {};			
 
+
 			load.level(null, function(comments){
 
 				p.comments = self.app.platform.sdk.comments.storage[txid]['0']
@@ -2525,8 +2537,9 @@ var comments = (function(){
 
 					el.c.find('.loaderWrapper').addClass('hidden')
 
+
 					renders.post(function(area){
-						areas["0"] = area
+						
 
 						if (ed.reply){
 							actions.fastreply(ed.reply)
@@ -2627,7 +2640,8 @@ var comments = (function(){
 				ed = p.settings.essenseData || {}
 
 				preview = ed.preview || false;
-				listpreview = preview;
+				listpreview = ed.listpreview || false;
+
 				showedall = false;
 
 				txid = ed.txid || null
@@ -2643,7 +2657,7 @@ var comments = (function(){
 						showedall
 					};
 
-						data.ed = ed;
+					data.ed = ed;
 
 					self.app.platform.sdk.ustate.me(function(_mestate){
 
@@ -2654,6 +2668,34 @@ var comments = (function(){
 					})
 				}
 
+			},
+
+			attention : function(text){
+
+				if(isMobile() || !text){
+					el.c.find('.post').addClass('attention')
+				}
+				else{
+					el.c.find('.leaveCommentPreview').css('opacity', '0')
+
+					setTimeout(function(){
+
+						if(!el.c) return
+
+						el.c.find('.post').addClass('attention')
+
+						if (text)
+							el.c.find('.leaveCommentPreview').attr('placeholder', text)
+
+						setTimeout(function(){
+
+							if(!el.c) return
+
+							el.c.find('.leaveCommentPreview').css('opacity', '')
+						}, 100)
+					}, 100)
+					
+				}
 			},
 
 			authclbk : function(){
@@ -2732,6 +2774,8 @@ var comments = (function(){
 				el.list.on('click', '.panel', events.metmenu);
 				el.list.on('click', '.tocomment', events.tocomment)
 				el.list.on('click', '.imageCommentOpen', events.openGallery)
+				el.list.on('click', '.hiddenCommentLabel', events.showHiddenComment)
+				el.list.on('click', '[profile]', events.showprofile)
 
 				if(!_in.length) {
 					_in = null
@@ -2750,7 +2794,7 @@ var comments = (function(){
 
 				
 
-				if(preview){
+				if (listpreview){
 					makePreview()
 				}
 				else{

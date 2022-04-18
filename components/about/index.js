@@ -395,7 +395,6 @@ var about = (function(){
 
 				var r = function(){
 
-					console.log('current', app.localization.current());
 
 					var lkey = app.localization.current();
 
@@ -506,7 +505,6 @@ var about = (function(){
 	
 							el.c.find('[elementsid="eventssitename"]').on('click', function(){
 	
-								console.log('click')
 				
 								self.app.user.isState(function(state){
 				

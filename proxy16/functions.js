@@ -41,6 +41,31 @@ f.gcwrapper = function(){
     
 }
 
+f.addzeros = function(v){
+    v = v.toString()
+
+    var zs = 5 - v.length
+
+    for(var i = 0; i < zs; i++){
+        v = '0' + v
+    }
+
+    return v
+}
+
+f.numfromreleasestring = function(v){
+
+    var vss = v.split('.')
+
+    vss[2] = f.addzeros(vss[2])
+
+    v = vss.join('.').replace(/[^0-9]/g, '')
+
+    var vs = Number(v.substr(0, 1) + '.' + v.substr(1))
+
+    return vs
+}
+
 f.esc = function(str) {
     return str.replace(/[\0\x08\x09\x1a\n\r"'\\\%]/g, function (char) {
         switch (char) {
@@ -487,13 +512,12 @@ f.roughSizeOfObject = function(object){
 
 f.retry = function(_function, clbk, time, totaltime){
 
-    /*
     if (_function()){
 
         if (clbk) clbk();
 
         return
-    }*/
+    }
 
 
     if(!time) time = 20;

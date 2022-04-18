@@ -2,13 +2,11 @@ name: Tests
 
 on:
   push:
-    branches: [ master ]
-    tags: v*
+    tags: v*.*.*
 
 jobs:
   build:
     runs-on: autotest
-
     steps:
       - name: Start
         run: |

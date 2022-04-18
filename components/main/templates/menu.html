@@ -1,42 +1,47 @@
 <div class="panelitems">
     <div class="panelItemsWrapper">
-        <div class="panelitem nfl">
-            <%= selector.input() %>
+
+        <div class="selectwrapper">
+            <i class="fas fa-chevron-down"></i>
         </div>
-        <% if(fmode == 'filters') {%>
-            <div elementsid="showcategories" class="panelitem btn showcategories <% if(tagsSelected || tagsExcluded) {%> active <% } %>">
+
+        <div class="panelitem nfl modes">
+            <% _.each(modes, (mode) => { %>
+                <div class="mode <% if(mode.value == value) {%> active <% } %>" mode="<%- mode.value %>" link="<%-mode.link%>"><%- mode.label() %></div>
+            <% }) %>
+        </div>
+       
+        <div elementsid="showcategories" fmode="filters" 
+        class="panelitem showcategories btn <% if(tagsSelected || tagsExcluded) {%>  active <% } else { %> trans <% } %> ">
+           
+            <% if(!tagsSelected) {%><% } else { %>
                 <span>
-                    <% if(!tagsSelected) {%><%= e('filters') %><% } else { 
-                        
-                        var bycategories = app.platform.sdk.categories.fromTags(tags)
-                        
-                        %> 
+                    <% 
+                    
+                    var bycategories = app.platform.sdk.categories.fromTags(tags)
+                    
+                    %> 
 
-                        <% _.each(bycategories.categories, function(category){ %>
-                            @<%-category.name%>
-                        <% }) %>
+                    <% _.each(bycategories.categories, function(category){ %>
+                        @<%-category.name%>
+                    <% }) %>
 
-                        <% _.each(bycategories.tags, function(tag){   %>
-                            #<%-tag%>
-                        <% }) %>
-                        
-                    <% } %>
+                    <% _.each(bycategories.tags, function(tag){   %>
+                        #<%-tag%>
+                    <% }) %>
                 </span> 
-                <% if(tagsExcluded && !tagsSelected) {%>
-                    <i class="fas fa-times"></i>
-                <% } else { %> 
-                    <i class="fas fa-filter"></i>
-                <% } %>
-            </div>
-        <% } %>
+            <% } %>
+            
+            <% if(tagsExcluded && !tagsSelected) {%>
+                <i class="fas fa-sliders-h"></i>
+            <% } else { %> 
+                <i class="fas fa-sliders-h"></i>
+            <% } %>
+        </div>
 
-        <% if(fmode == 'settings') {%>
-
-            <div elementsid="showcategories" class="panelitem btnlight showcategories">
-                <i class="fas fa-cog"></i>
-            </div>
-
-        <% } %>
+        <div elementsid="showcategories" class="panelitem btnlight showcategories" fmode="settings">
+            <i class="fas fa-cog"></i>
+        </div>
 
     </div>
 </div>

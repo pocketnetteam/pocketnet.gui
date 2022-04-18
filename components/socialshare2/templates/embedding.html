@@ -1,12 +1,5 @@
 <div class="embeddingWrapper">
-    <div class="wrk">
-        <div class="subcaption">
-            <span><%- e('embedding') %></span>
-        </div>
-    </div>
-
-    
-    
+ 
     <div class="wrk">
         <div class="buttons">
             <button elementsid="mediumcopycode" class="button bright medium copycode">
@@ -18,8 +11,15 @@
             </button>
         </div>
     </div>
+    
     <div class="embedding">
         <div class="code" disabled="disabled"><%- embeddingcode %></div>
+    </div>
+
+    <div class="previewWrapper">
+        <div class="preview">
+            <%= embeddingcode %>
+        </div>
     </div>
 
     <% if(!embeddingSettings.onlyvideo) {%>
@@ -31,8 +31,6 @@
                 </span>
             </div>
         </div>
-
-        
 
         <div class="wrk">
             <div class="embeddingSettings">
@@ -70,23 +68,3 @@
     <% } %>
     
 </div>
-
-<!--
-
-<div class="preview">
-    <div class="wrk">
-        <div class="subcaption">
-            <span><%- e('preview') %></span>
-        </div>
-    </div>
-
-    <div class="previewWrapper">
-        <%= embeddingcode %>
-    </div>
-    <% if(!embeddingSettings.onlyvideo) {%>
-        <div class="spacer">
-            
-        </div>
-
-    <% } %>
-</div>-->

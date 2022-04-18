@@ -40,11 +40,13 @@ var panel = (function(){
 				self.nav.api.load({
 
 					open : true,
-					id : 'topusers',
+					id : 'recommendedusers',
 					el : el.topusers,
 					animation : false,
 
 					essenseData : {
+						usersFormat : 'usersVertical',
+						recommendedUsersCount : 5
 					},
 					
 					clbk : function(e, p){
@@ -65,7 +67,8 @@ var panel = (function(){
 					animation : false,
 
 					essenseData : {
-						type : 'recommended'
+						type : 'recommended',
+						header : self.app.localization.e('recommendedPosts')
 					},
 					
 					clbk : function(e, p){
@@ -126,10 +129,12 @@ var panel = (function(){
 			)
 				renders.stacking()
 
-		
+	
+			// renders.topusers();
+				
+			// renders.bestposts();
+
 			
-			//renders.topusers();
-			//renders.bestposts();
 
 
 		}

@@ -123,16 +123,7 @@ var wallet = (function(){
 
 						}
 						else{
-
 							return '<div class="walletdfvalue"><span>' + d + '</span></div>'
-
-							if(!d){
-								return '<div class="walletempvalue"><span>' + self.app.localization.e('wsreciever') + '</span></div>'
-							}
-							else{
-								return '<div class="walletdfvalue"><span>' + d + '</span></div>'
-							}
-							
 						}
 					}
 				}),
@@ -2022,7 +2013,6 @@ var wallet = (function(){
 							 				t.cantspend = true
 							 			})
 
-										 console.log('transactions.send', tx)
 
 										self.app.platform.sdk.node.transactions.send(tx, function(d, err){
 
@@ -2036,7 +2026,6 @@ var wallet = (function(){
 
 											else
 											{
-												console.log('inputs', inputs)
 												var ids = _.map(inputs, function(i){
 													return {
 														txid : i.txId || i.txid,
@@ -2824,7 +2813,7 @@ var wallet = (function(){
 
 			wnd : {
 				//header : 'rwallet',
-				class : 'withoutButtons walletwindow normalizedmobile',
+				class : 'withoutButtons walletwindow normalizedmobile maxheight',
 				parallaxselector : '.wndback,.wndheader'
 			}
 		}

@@ -211,7 +211,7 @@ fs.exists(mapJsPath, function (exists) {
 								}
 								
 	
-								modules.data = modules.data + "\n /*_____*/ \n" + data;
+								modules.data = modules.data + "\n\n\n /*"+modulepath+"*/ " + "\n /*_____*/ \n" + data;
 	
 								fs.exists(csspath, function (exists) {
 									if(exists){
@@ -490,7 +490,7 @@ fs.exists(mapJsPath, function (exists) {
 									}
 									
 
-									join.data = join.data + "\n /*_____*/ \n" + data;
+									join.data = join.data + "\n\n\n /*"+path+"*/ " + "\n /*_____*/ \n" + data;
 
 									p.success();
 								});
@@ -690,7 +690,7 @@ fs.exists(mapJsPath, function (exists) {
 										console.log("SKIP MINIFY", path)
 									}
 
-									vendor.data = vendor.data + "\n /*_____*/ \n" + data;
+									vendor.data = vendor.data + "\n\n\n /*"+path+"*/ " + "\n /*_____*/ \n" + data;
 									p.success();
 								});
 
@@ -747,6 +747,7 @@ fs.exists(mapJsPath, function (exists) {
 							}
 							var JSENV = "";
 							var JS = "";
+							var JSPOST = "";
 							var CSS = "";
 							var VE = "";
 							var CACHED_FILES = "";
@@ -776,8 +777,8 @@ fs.exists(mapJsPath, function (exists) {
 
 								//JS += '<script type="text/javascript">'+joinfirst.data+'</script>';
 								JS += '<script join src="js/joinfirst.min.js?v='+rand(1, 999999999999)+'"></script>';
-								JS += '<script async join src="js/join.min.js?v='+rand(1, 999999999999)+'"></script>';
-								JS += '<script async join src="js/joinlast.min.js?v='+rand(1, 999999999999)+'"></script>';
+								JSPOST += '<script async join src="js/join.min.js?v='+rand(1, 999999999999)+'"></script>';
+								JSPOST += '<script async join src="js/joinlast.min.js?v='+rand(1, 999999999999)+'"></script>';
 								VE = '<script async join src="js/vendor.min.js?v='+args.vendor+'"></script>';
 								CSS = '<link rel="stylesheet" href="css/master.css?v='+rand(1, 999999999999)+'">';
 	
@@ -794,12 +795,12 @@ fs.exists(mapJsPath, function (exists) {
 								})
 								
 								_.each(m.__sources, function(source){
-									JS += '<script  join src="'+source+'?v='+rand(1, 999999999999)+'"></script>\n';
+									JSPOST += '<script  join src="'+source+'?v='+rand(1, 999999999999)+'"></script>\n';
 									CACHED_FILES += `'${source}',\n`;
 								})
 
 								_.each(m.__sourceslast, function(source){
-									JS += '<script  join src="'+source+'?v='+rand(1, 999999999999)+'"></script>\n';
+									JSPOST += '<script  join src="'+source+'?v='+rand(1, 999999999999)+'"></script>\n';
 									CACHED_FILES += `'${source}',\n`;
 								})
 	
@@ -817,6 +818,7 @@ fs.exists(mapJsPath, function (exists) {
 							index = index.replace("__VE__" , VE);
 							index = index.replace("__JS__" , JS);
 							index = index.replace("__CSS__" , CSS);
+							index = index.replace("__JSPOST__" , JSPOST);
 							index = index.replace("__CACHED-FILES__", CACHED_FILES);
 							index = index.replace("__PACKAGE-VERSION__", package.version);
 							index = index.replace("__PACKAGE-CORDOVAVERSIONCODE__", package.cordovaversioncode);
@@ -1004,5 +1006,5 @@ var copycordovaios = function(options, clbk){
 	
 }
 
-
-String.prototype.replaceAll=function(a,b){return a?this.split(a).join(b):this};
+if(!String.prototype.replaceAll)
+	String.prototype.replaceAll=function(a,b){return a?this.split(a).join(b):this};

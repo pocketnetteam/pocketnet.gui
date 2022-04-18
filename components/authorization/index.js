@@ -204,7 +204,6 @@ var authorization = (function(){
 			
 			el.hiddenform.on('submit', function(event) {
 
-				console.log("SUBMIT")
 
 				event.preventDefault();
 				event.stopPropagation();
@@ -241,7 +240,6 @@ var authorization = (function(){
 
 							qrscanner.q.callback = function(data){
 
-								console.log('data', data)
 
 								if(data == 'error decoding QR Code'){
 									sitemessage(self.app.localization.e('filedamaged'))
@@ -500,7 +498,7 @@ var authorization = (function(){
 			},
 
 			wnd : {
-				class : 'withoutButtons authwindow normalizedmobile'
+				class : 'withoutButtons authwindow normalizedmobile maxheight'
 			}
 		}
 	};
