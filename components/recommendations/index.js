@@ -30,6 +30,9 @@ var recommendations = (function(){
 
 		var renders = {
 			list : function(contents, clbk){
+
+				if(!el.c) return
+
 				self.shell({
 
 					animation : false,
@@ -216,10 +219,7 @@ var recommendations = (function(){
 
 			info : function(contents, clbk){
 
-
 				self.sdk.node.shares.loadvideoinfoifneed(contents, true, function() {
-
-
 					if(clbk) clbk()
 				})
 			}
@@ -301,6 +301,7 @@ var recommendations = (function(){
 				needmake = []
 
 				empty = false
+				making = false
 
 				ed = p.settings.essenseData || {}
 

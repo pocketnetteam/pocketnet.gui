@@ -399,6 +399,8 @@ var post = (function () {
 
 			initVideo: function (clbk) {
 
+				console.log("initVideo")
+
 				if(!el.c) return
 
 				if (self.app.platform.sdk.usersettings.meta.embedvideo && !
@@ -419,6 +421,7 @@ var post = (function () {
 						if (pr.percent < 95)
 							startTime = pr.time
 					}
+
 
 					var options = {
 						//autoplay : pels.length <= 1,
@@ -1302,6 +1305,8 @@ var post = (function () {
 					},
 					function (_p) {
 
+						console.log("SHARE CLBK 1")
+
 						if(!el.share) return
 
 						el.stars = el.share.find('.forstars');
@@ -1322,9 +1327,15 @@ var post = (function () {
 						//if (share.itisvideo() && !ed.repost && !_OpenApi) renders.showmoreby()
 
 						renders.stars(function () {
+
+							console.log("SHARE CLBK 2")
+
 							renders.mystars(function () { });
 
 							renders.url(function () {
+
+								console.log("SHARE CLBK 3")
+
 
 								if(!el.share.find('.showMore').length) renders.repost();
 
@@ -1590,8 +1601,10 @@ var post = (function () {
 							}
 						});
 
-						if (clbk) clbk();
+						
 					}, self.app);
+
+					if (clbk) clbk();
 				})
 
 

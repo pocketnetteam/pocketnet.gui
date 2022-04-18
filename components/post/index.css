@@ -198,6 +198,10 @@
 #post.videomainpost .videoWrapper .js-player {
   border-radius: 0;
 }
+#post.videomainpost .videoWrapper .vjs-control-bar {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
 #post.videomainpost .share {
   margin: 0 auto;
   max-width: 960px;

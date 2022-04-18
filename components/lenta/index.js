@@ -614,6 +614,8 @@ var lenta = (function(){
 							if (share && el.share[share.txid]){
 
 									boostplaces[position] = true
+
+									console.log("RENDER BOOST", bst)
 		
 									renders.shares([bst], function(){
 										renders.sharesInview([bst], function(){
@@ -3103,6 +3105,7 @@ console.log("ASASAS")
 
 				if(!p) p = {}
 
+				
 				shares = _.filter(shares, function(s){
 					return !$('#' + s.txid).hasClass('hidden')
 				})
@@ -3128,18 +3131,17 @@ console.log("ASASAS")
 					array : rs,
 					sync : true,
 
-					action : function(p){
-						var share = p.item;
+					action : function(_p){
+						var share = _p.item;
 
 
 						if(shareInitedMap[share.txid]){
-							p.success()
+							_p.success()
 						}
 						else
 						{
-
 							shareInitedMap[share.txid] = true
-							renders.share(share, p.success, null, {
+							renders.share(share, _p.success, null, {
 								boosted : p.boosted
 							})
 						}
@@ -3517,9 +3519,6 @@ console.log("ASASAS")
 
 				var og = self.app.platform.sdk.remote.storage[url];	
 				var meta = self.app.platform.parseUrl(url);		
-
-		
-				
 
 				var rndr = function(){
 
@@ -4739,6 +4738,9 @@ console.log("ASASAS")
 
 						load.boosted(function(shares){
 							boosted = shares
+
+							console.log('boosted', boosted)
+
 							actions.includeboost()
 						})
 					}
