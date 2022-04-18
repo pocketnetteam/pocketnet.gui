@@ -2299,7 +2299,6 @@ var lenta = (function(){
 			
 
 			like : function(){
-console.log("ASASAS")
 				var p = $(this).closest('.stars');
 
 				if (p.attr('value')){
