@@ -2716,8 +2716,6 @@ Platform = function (app, listofnodes) {
 
             var oddtxid = (Number(idf[idf.length - 2] + '' + idf[idf.length - 1]) / 2).toFixed(0)
 
-            console.log('oddtxid', oddtxid, idf)
-
             self.app.nav.api.load({
                 open: true,
                 href: 'recommendations',
