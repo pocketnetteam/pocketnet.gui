@@ -204,8 +204,7 @@
 
                 &.times{
                     display: none;
-                    font-size: 0.8;
-                    color: rgb(var(--color-bad));
+                    color: rgb(var(--color-txt-gray));
                     justify-content: flex-end;
                     cursor: pointer;
                     align-items: center;
@@ -240,74 +239,6 @@
 
       
 
-    }
-
-    @media (pointer:fine) {
-
-        .cat{
-            .cattable{
-                >div{
-    
-                    &.catvalue{
-                        &:hover{
-                            color : rgb(var(--color-txt-ac));
-                        }
-                    }
-    
-                    &.catedit,
-                    &.catcheck{
-    
-                        
-                        &:hover{
-                            color : rgb(var(--color-txt-ac));
-                        }
-                    }
-    
-                    &.catedit{
-                        &:hover{
-                            opacity: 1;
-                        }
-                    }
-                }
-            }
-    
-            &:hover{
-                .cattable{
-                    >div{
-                        &.catedit,
-                        &.catcheck{
-                            opacity: 1;
-                        }
-    
-                        &.catedit,
-                        &.minus{
-                            opacity: 0.5;
-    
-                            &:hover{
-                                opacity: 1;
-                            }
-                        }
-    
-                     
-                    }
-                }
-            }
-    
-        }
-        
-        .selected{
-
-            .cat{
-
-                &:hover{
-                    .times{
-                        display: flex;
-                    }
-                }
-            }
-
-        }
-        
     }
 
     .tg{
@@ -358,9 +289,89 @@
                     display: none;
                 }
 
+                .times{
+                    display: flex;
+                }
+
             }
         }
 
+    }
+
+    @media (pointer:fine) {
+
+        .tg{
+            .cat{
+                .cattable{
+                    >div{
+        
+                        &.catvalue{
+                            &:hover{
+                                color : rgb(var(--color-txt-ac));
+                            }
+                        }
+        
+                        &.catedit,
+                        &.catcheck{
+        
+                            
+                            &:hover{
+                                color : rgb(var(--color-txt-ac));
+                            }
+                        }
+        
+                        &.catedit{
+                            &:hover{
+                                opacity: 1;
+                            }
+                        }
+    
+                        &.times{
+                            display: none;
+                        }
+                    }
+                }
+        
+                &:hover{
+                    .cattable{
+                        >div{
+                            &.catedit,
+                            &.catcheck{
+                                opacity: 1;
+                            }
+        
+                            &.catedit,
+                            &.minus{
+                                opacity: 0.5;
+        
+                                &:hover{
+                                    opacity: 1;
+                                }
+                            }
+        
+                         
+                        }
+                    }
+                }
+        
+            }
+            
+            &.selected{
+    
+                .cat{
+    
+                    &:hover{
+                        .times{
+                            display: flex;
+                            color: rgb(var(--color-bad));
+                        }
+                    }
+                }
+    
+            }
+
+        }
+        
     }
 
     .ta{
@@ -549,6 +560,7 @@
                 .catedit, .minus{
                     opacity: 1!important;
                 }
+                
             }
         }
 

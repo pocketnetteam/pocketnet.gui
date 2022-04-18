@@ -152,8 +152,7 @@
 }
 #categories .cat .cattable > div.times {
   display: none;
-  font-size: 0.8;
-  color: rgb(var(--color-bad));
+  color: rgb(var(--color-txt-gray));
   justify-content: flex-end;
   cursor: pointer;
   align-items: center;
@@ -178,33 +177,6 @@
 }
 #categories .cat .cattable > div.checked {
   display: none;
-}
-@media (pointer: fine) {
-  #categories .cat .cattable > div.catvalue:hover {
-    color: rgb(var(--color-txt-ac));
-  }
-  #categories .cat .cattable > div.catedit:hover,
-  #categories .cat .cattable > div.catcheck:hover {
-    color: rgb(var(--color-txt-ac));
-  }
-  #categories .cat .cattable > div.catedit:hover {
-    opacity: 1;
-  }
-  #categories .cat:hover .cattable > div.catedit,
-  #categories .cat:hover .cattable > div.catcheck {
-    opacity: 1;
-  }
-  #categories .cat:hover .cattable > div.catedit,
-  #categories .cat:hover .cattable > div.minus {
-    opacity: 0.5;
-  }
-  #categories .cat:hover .cattable > div.catedit:hover,
-  #categories .cat:hover .cattable > div.minus:hover {
-    opacity: 1;
-  }
-  #categories .selected .cat:hover .times {
-    display: flex;
-  }
 }
 #categories .tg {
   border-radius: 12px;
@@ -234,6 +206,40 @@
 }
 #categories .tg.selected .cat .minus {
   display: none;
+}
+#categories .tg.selected .cat .times {
+  display: flex;
+}
+@media (pointer: fine) {
+  #categories .tg .cat .cattable > div.catvalue:hover {
+    color: rgb(var(--color-txt-ac));
+  }
+  #categories .tg .cat .cattable > div.catedit:hover,
+  #categories .tg .cat .cattable > div.catcheck:hover {
+    color: rgb(var(--color-txt-ac));
+  }
+  #categories .tg .cat .cattable > div.catedit:hover {
+    opacity: 1;
+  }
+  #categories .tg .cat .cattable > div.times {
+    display: none;
+  }
+  #categories .tg .cat:hover .cattable > div.catedit,
+  #categories .tg .cat:hover .cattable > div.catcheck {
+    opacity: 1;
+  }
+  #categories .tg .cat:hover .cattable > div.catedit,
+  #categories .tg .cat:hover .cattable > div.minus {
+    opacity: 0.5;
+  }
+  #categories .tg .cat:hover .cattable > div.catedit:hover,
+  #categories .tg .cat:hover .cattable > div.minus:hover {
+    opacity: 1;
+  }
+  #categories .tg.selected .cat:hover .times {
+    display: flex;
+    color: rgb(var(--color-bad));
+  }
 }
 #categories .ta .tg {
   display: block;
