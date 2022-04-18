@@ -22,7 +22,6 @@ if(share.address){
 
 var view = 'post';
 var name = app.platform.api.name(share.address)
-var loggedIn = (user && user.address && user.address.value != null)
 
 var cview = view
 
@@ -34,7 +33,7 @@ var value = Number(share.score)
 
 var makecaptionclear = function(){
 
-	%> 
+	%>
 
 		<% if(cc) {
 
@@ -48,7 +47,7 @@ var makecaptionclear = function(){
 				</div>
 			</div>
 
-	<% } 
+	<% }
 
 }
 
@@ -66,56 +65,56 @@ var metadisplay = function(){ %>
 
 
                         <div class="iconWrapper">
-                            
+
                             <a elementsid="<%-app.platform.api.authorlink(share.address)%>" href="<%-app.platform.api.authorlink(share.address)%>">
-        
-        
-                                <% 
+
+
+                                <%
 									var src = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.image');
 									var letter = name ? name[0] : '';
 
 								%>
-        
+
                                 <div class="icon">
                                     <div class="usericon usericonsbsa another "  ban=".gif" elementsid="<%-src || 'userimg'%>" image="<%-src || '*'%>">
-                                     
-			
+
+
 										<% if (!src && letter) {%>
 
-											<span 
+											<span
 												class="letter"
 											>
 												<%-letter.toUpperCase()%>
 											</span>
-						
+
 										<% } %>
 
 										<% if(app.platform.ui.markUser) {%>
 
 											<%= app.platform.ui.markUser(share.address)%>
-		
+
 										<% } %>
 
                                     </div>
                                 </div>
-        
+
                             </a>
-        
+
                         </div>
-            
+
 
 						<div class="authorCell">
 							<div>
 								<a elementsid="<%-app.platform.api.authorlink(share.address)%>" href="<%-app.platform.api.authorlink(share.address)%>">
 								<% var reputation = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.reputation') || 0; %>
-									<span class="adr"><%-(name || share.address) %></span><% if(reputation > 1 || reputation < -1) {%><sup class="spsp"><%-compressedNumber(reputation, 1)%></sup><% } %>
+									<span class="adr"><%-name || share.address %></span><% if(reputation > 1 || reputation < -1) {%><sup class="spsp"><%-compressedNumber(reputation, 1)%></sup><% } %>
 								</a>
 
-								<% if((!state || !my) && (typeof repost == 'undefined' || !repost)) { %> 
+								<% if((!state || !my) && (typeof repost == 'undefined' || !repost)) { %>
 
 									<span class="sbtnxs">
 										&middot; <span class="subscribeLabel asubscribe"><%=e('sub')%></span><span class="subscribedLabel aunsubscribe"><%=e('subi')%></span>
-							
+
 									</span>
 
 								<% } %>
@@ -124,32 +123,32 @@ var metadisplay = function(){ %>
 							<div class="datetime">
 								<% if(share.time) {%>
 									<span  class="realtime" time="<%-share.time%>"><%- app.reltime(share.time) %></span>
-								<% } else { %> 
+								<% } else { %>
 									<span><%=e('e13019')%></span>
 								<% } %>
 							</div>
-							
-						</div>			
-                        
-                        
-						
+
+						</div>
+
+
+
 					</div>
 				</div>
 
-			<% } else { %> 
-			
+			<% } else { %>
+
 				<div class="repostCaption">
-					<i class="fas fa-share"></i> 
+					<i class="fas fa-share"></i>
 					<a elementsid="<%-app.platform.api.authorlink(share.address)%>" href="<%-app.platform.api.authorlink(share.address)%>">
 						<span class="adr"><%-name || share.address %></span>
 					</a>
 				</div>
-				
+
 			<% } %>
-		
+
 		</div>
 
-		<% if(!checkvisibility && state && (typeof repost == 'undefined' || !repost)) { %>			
+		<% if(!checkvisibility && state && (typeof repost == 'undefined' || !repost)) { %>
 
 			<div class="metapanel">
 				<div class="metapanelitem metmenu">
@@ -159,28 +158,28 @@ var metadisplay = function(){ %>
 
 		<% } %>
 
-		<% if(!checkvisibility && typeof repost != 'undefined' && repost && !fromempty) { %> 
+		<% if(!checkvisibility && typeof repost != 'undefined' && repost && !fromempty) { %>
 
 			<div class="metapanel">
 				<div class="metapanelitem">
 					<a elementsid="<%-app.platform.api.authorlink(share.address)%>?s=<%-share.txid%>&mpost=true" href="<%-app.platform.api.authorlink(share.address)%>?s=<%-share.txid%>&mpost=true">
-						<i class="fas fa-share"></i> 
+						<i class="fas fa-share"></i>
 					</a>
 				</div>
 			</div>
-			
+
 		<% } %>
-		
-	</div>					
+
+	</div>
 </div>
-	
+
 <% }
 
 %>
 
 <% var arranges = {
-	
-	cm : function(){ %> 
+
+	cm : function(){ %>
 
 		<% if(c) {
 
@@ -201,7 +200,7 @@ var metadisplay = function(){ %>
             if(typeof tplvideo != 'undefined' && tplvideo) return
 
 			m = (m)
-			
+
 			var nm = m;
 
 			if(typeof all == 'undefined' || !all){
@@ -241,7 +240,7 @@ var metadisplay = function(){ %>
 								<div class="line"></div>
 							</div> -->
 						</div>
-						
+
 
 					</div>
 				</div>
@@ -249,19 +248,19 @@ var metadisplay = function(){ %>
 			<% } %>
 
 		<% } %>
-		
+
 	<% },
 
-	
-	i : function(){ %> 
-		
+
+	i : function(){ %>
+
 	<% },
 
-	u : function(){	%> 
+	u : function(){	%>
 		<% if(share.url) {
 
 			var h = ''
-			
+
 			%>
 
 			<div class="url">
@@ -276,7 +275,7 @@ var metadisplay = function(){ %>
 
 	<div class="work unselectablemobile">
 
-		<% 
+		<%
 
 			var info = app.platform.sdk.videos.storage[share.url || "undefined"] || {}
 			var aspectRatio = deep(info, 'data.aspectRatio') || 0
@@ -290,65 +289,65 @@ var metadisplay = function(){ %>
 
 					<% var a = ["u"] %>
 
-					<% _.each(a, function(key, i){ %> 
+					<% _.each(a, function(key, i){ %>
 
 						<% if(arranges[key]) arranges[key]() %>
-								
+
 					<% }) %>
 
 				</div>
-				<% } else { %> 
+				<% } else { %>
 					<div class="cntswrk cntscontent piphidden">
-	
+
 						<div class="hiddenpost">
-	
-	
-	
+
+
+
 							<div class="captionpreview">
 								<% makecaptionclear() %>
 							</div>
-	
+
 							<% if(checkvisibility == 'sub'){ %>
-	
+
 								<div class="hiddenlabeltext">
 									<%=e('sharevisibilitylabel_sub_' + cview)%>
 								</div>
-	
-								
-	
+
+
+
 							<% } %>
-	
+
 							<% if(checkvisibility == 'reg'){ %>
-	
+
 								<div class="hiddenlabeltext">
 									<%=e('sharevisibilitylabel_reg_' + cview)%>
 								</div>
-	
-	
+
+
 							<% } %>
-	
-	
+
+
 							<% if(!state) {%>
 
 								<div class="hiddenlabelaction">
 									<button elementsid="hrefregistration" class="orange small button toregistration"><%=e('signupmenu')%></button>
 								</div>
-	
+
 							<% } %>
 						</div>
-						
-		
+
+
 					</div>
-					
+
 				<% } %>
 
-			<div class="anothercntswrk piphidden videoDescription">
+			<div class="anothercntswrk piphidden">
 
 				<div class="cntswrk formeta">
 
-					<div class="metawrapper"> 
-						<% metadisplay() %> 
-					</div> 
+					<div class="metawrapper">
+						<% metadisplay() %>
+					</div>
 
 				</div>
 
@@ -356,10 +355,10 @@ var metadisplay = function(){ %>
 
 					<% var a = ["i", "cm", "p"] %>
 
-					<% _.each(a, function(key, i){ %> 
+					<% _.each(a, function(key, i){ %>
 
 						<% if(arranges[key]) arranges[key]() %>
-								
+
 					<% }) %>
 
 				</div>
@@ -368,25 +367,25 @@ var metadisplay = function(){ %>
 
 					<div class="cntswrk">
 						<div class="paddingWrapper">
-							
+
 							<% if(share.tags && share.tags.length > 0) {
 
 								var bycategories = app.platform.sdk.categories.fromTags(share.tags, share.lanuage)
 
-								
+
 								%>
 
 								<div class="tags canmark ">
 
-									
+
 									<% _.each(bycategories.categories, function(category){ %>
 
 										<div class="category">
 											<a elementsid="index?sst=<%-category.tags.join(' ')%>" href="index?sst=<%-category.tags.join(' ')%>">
-												<span><b>@<%-category.name%></b></span> 
+												<span><b>@<%-category.name%></b></span>
 											</a>
 											<!--<% _.each(category.tags, function(tag){ %><span>#<%-tag%></span><% }) %><span>;</span>-->
-									
+
 										</div>
 
 									<% }) %>
@@ -406,52 +405,52 @@ var metadisplay = function(){ %>
 
 							<% } %>
 
-						
+
 
 							<% if(!share.temp &&  (typeof repost == 'undefined' || !repost || fromempty)) {%>
 								<div class="panel sharepanel">
 									<div class="item forstars">
 
-										
+
 									</div>
 
 									<% const isElectron = (typeof _Electron !== 'undefined' && !!window.electron); %>
-									<% const isSaveSupported = (window.cordova && !isios()); %>
+									<% const isSaveSupported = (window.cordova || isElectron && !isios()); %>
 
 									<% if(isSaveSupported && share.itisvideo() ) {
 
 										var status = app.platform.sdk.localshares.status(share.txid)
-										
+
 										%>
-	
+
 										<% if(!checkvisibility) {%>
-	
+
 										<div elementsid="lenta_shareSave" class="item shareSave" status="<%-status%>">
-	
+
 											<div class="itemwr table">
-	
-												<div class="iconwr">											
+
+												<div class="iconwr">
 													<div class="icon">
 														<i class="fas fa-download cansave"></i>
 														<i class="fas fa-spinner fa-spin saving"></i>
 														<i class="fas fa-trash saved"></i>
 													</div>
 												</div>
-											
+
 											</div>
-	
+
 										</div>
-	
+
 										<% } %>
-	
-									<% } else { %> 
-										
+
+									<% } else { %>
+
 									<% } %>
-	
-									<% if((typeof preview == 'undefined' || !preview) ) {%>			
-	
+
+									<% if((typeof preview == 'undefined' || !preview) ) {%>
+
 										<div class="item sharesocial unselectable">
-	
+
 											<div class="itemwr table">
 												<div class="iconwr">
 													<div class="icon">
@@ -459,11 +458,11 @@ var metadisplay = function(){ %>
 													</div>
 												</div>
 											</div>
-											
+
 										</div>
-	
+
 									<% } %>
-	
+
 									<% if(!my) {%>
 										<div class="item pkoin right unselectedtable">
 											<img src="img/pocketnet_logo_white.svg" alt="">
@@ -472,10 +471,10 @@ var metadisplay = function(){ %>
 											</span>
 										</div>
 									<% } %>
-									
+
 								</div>
 
-							
+
 							<% } %>
 
 							<% if(share.temp) {%>
@@ -484,29 +483,29 @@ var metadisplay = function(){ %>
 									<div class="item right">
 
 										<div class="itemwr table tempPreloader">
-											
+
 											<div class="iconwr">
 												<div class="preloader5"><img src="./img/three-dots.svg"/></div>
 											</div>
-											
+
 											<div class="count">
 												<div class="label">
 
 													<span><%=e('postWaitConf')%></span>
 												</div>
-											</div>	
+											</div>
 										</div>
 									</div>
 								</div>
 
 							<% } %>
-							
+
 
 						</div>
 
 
 
-						
+
 					</div>
 
 				<% } %>
@@ -543,7 +542,7 @@ var metadisplay = function(){ %>
 		<div class="showmorelenta piphidden"></div>
 
 		<div class="commentsWrapperHb piphidden">
-			
+
 			<div class="commentsWrapper">
 			</div>
 

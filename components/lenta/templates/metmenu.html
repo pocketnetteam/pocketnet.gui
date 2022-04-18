@@ -112,7 +112,7 @@ if(share){
 	m.push('share')
 
 	const isElectron = (typeof _Electron !== 'undefined');
-	const isSaveSupported = (window.cordova);
+	const isSaveSupported = (window.cordova || isElectron);
 
 	if (share.itisvideo() && isSaveSupported) {
 

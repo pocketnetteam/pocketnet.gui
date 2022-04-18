@@ -38,7 +38,6 @@ var name = app.platform.api.name(share.address)
 
 var emptywithrepost = false
 
-var loggedIn = (user && user.address && user.address.value != null)
 
 var value = Number(share.score)
 
@@ -59,12 +58,12 @@ var metadisplay = function(){ %>
 
 							<a elementsid="shareaddresslink" href="<%-app.platform.api.authorlink(share.address)%>">
 							<% var reputation = deep(app.platform.sdk.usersl.storage, share.address+'.reputation') || 0 %>
-								<b><span class="adr"><%-(name || share.address) %></span></b><% if(reputation && !app.curation()) {%><sup class="spsp"><%-compressedNumber(reputation, 1)%></sup><% } %>
+								<b><span class="adr"><%-name || share.address %></span></b><% if(reputation && !app.curation()) {%><sup class="spsp"><%-compressedNumber(reputation, 1)%></sup><% } %>
 							</a>
 
-							
 
-							<% if((!state || !my) && (typeof repost == 'undefined' || !repost)) { %> 
+
+							<% if((!state || !my) && (typeof repost == 'undefined' || !repost)) { %>
 
 								<span elementsid="sbtnxs-follow" class="sbtnxs">
 									&middot; <span class="subscribeLabel asubscribe"><%=e('sub')%></span><span class="subscribedLabel aunsubscribe"><%=e('subi')%></span>
@@ -72,17 +71,18 @@ var metadisplay = function(){ %>
 
 							<% } %>
 
-							
-						</div>	
-						<div class="sys unselectablemobile">
-							<%if(share.pin){%><span class="pinnedLabel"><i class="fas fa-thumbtack"></i> <%=e('pinned').toLowerCase()%>,</span><%} else { %><% if(share.repost) { %><span><i class="fas fa-share"></i> <%=e('reposted')%>, </span><% } }%><% if(share.downloadedDate) {%> <span class="fas fa-download"></span> <span class="realtime editedLabel" time="<%-share.downloadedDate%>"><%- app.reltime(share.downloadedDate) %></span><% } else { %> 
-							<% if(share.time) {%><span  class="realtime " time="<%-share.time%>"><%- app.reltime(share.time) %></span><% } else { %><span><%=e('e13019')%></span><% } %><% if(typeof boosted != 'undefined' && boosted) {%> <i class="fas fa-rocket boostedlabel"></i> <span class="boostedlabel"> Boosted</span> <% } %><% if(share.edit == 'true') {%><span class="editedLabel">, <%=e('e13130').toLowerCase()%></span><% } %><% } %><% if(share.visibility()) {%><span class="visibilityLabel">, <%=e('sharevisibility_' + share.visibility()).toLowerCase()%></span><% } %>
+
 						</div>
-					
-						
+
+						<div class="sys unselectablemobile">
+							<%if(share.pin){%><span class="pinnedLabel"><i class="fas fa-thumbtack"></i> <%=e('pinned').toLowerCase()%>,</span><%} else { if(share.repost) { %><span><i class="fas fa-share"></i> <%=e('reposted')%>, </span><% } }%><% if(share.downloadedDate) {%> <span class="fas fa-cloud-download-alt"></span> <span class="realtime editedLabel" time="<%-share.downloadedDate%>"><%- app.reltime(share.downloadedDate) %></span><% } else { %>
+							<% if(share.time) {%><span  class="realtime " time="<%-share.time%>"><%- app.reltime(share.time) %></span><% } else { %><span><%=e('e13019')%></span><% } %><% if(share.edit == 'true') {%><span class="editedLabel">, <%=e('e13130').toLowerCase()%></span><% } %><% } %><% if(share.visibility()) {%><span class="visibilityLabel">, <%=e('sharevisibility_' + share.visibility()).toLowerCase()%></span><% } %>
+						</div>
+
+
 					</div>
 				</div>
-			
+
 			</div>
 
 			<% if((typeof preview == 'undefined' || !preview)) {%>
@@ -94,41 +94,41 @@ var metadisplay = function(){ %>
 							<div class="metapanelitem metmenu">
 								<i class="fas fa-ellipsis-h"></i>
 							</div>
-						<% } else { %> 
+						<% } else { %>
 							<div class="metapanelitem">
-								
+
 							</div>
 						<% } %>
 
 					</div>
-					
+
 
 				<% } %>
 
-				<% if(typeof repost != 'undefined' && !fromempty) { %> 
+				<% if(typeof repost != 'undefined' && !fromempty) { %>
 
 					<div class="metapanel">
 						<div class="metapanelitem openoriginal">
 							<i class="fas fa-link"></i> <span class="openoriginallabel"><%= e('opennew') %></span>
 						</div>
 					</div>
-					
+
 				<% } %>
 
 			<% } %>
-			
-		</div>					
+
+		</div>
 	</div>
-	
+
 <% }
 
 %>
 
-<% 
+<%
 
 var makecaption = function(){
 
-	%> 
+	%>
 
 		<% if(c) {
 
@@ -140,13 +140,13 @@ var makecaption = function(){
 				</div>
 			</div>
 
-	<% } 
+	<% }
 
 }
 
 var makecaptionclear = function(){
 
-	%> 
+	%>
 
 		<% if(cc) {
 
@@ -160,15 +160,15 @@ var makecaptionclear = function(){
 				</div>
 			</div>
 
-	<% } 
+	<% }
 
 }
 
-var makearticle = function(){ 
+var makearticle = function(){
 
 	var edjs = new edjsHTML(null, app)
-	
-	%> 
+
+	%>
 
 	<div class="article">
 		<%=edjs.parse(share.message)%>
@@ -178,11 +178,11 @@ var makearticle = function(){
 }
 
 var arranges = {
-	
-	cm : function(){ 
 
-		
-		
+	cm : function(){
+
+
+
 		makecaption()
 
 		if (share.itisarticle()){
@@ -190,7 +190,7 @@ var arranges = {
 		}
 
 		var m = share.renders.message();
-		
+
 		if(m) {
 
 			var nm = m;
@@ -215,7 +215,7 @@ var arranges = {
 					}
 				}
 
-				
+
 			}
 
 			nm = findAndReplaceLink(share.renders.xssmessage(nm), true)
@@ -238,25 +238,25 @@ var arranges = {
 			<% } %>
 
 		<% } %>
-		
+
 	<% },
 
-	
-	i : function(){ %> 
+
+	i : function(){ %>
 		<% if(share.images.length) {
 
 				var icClass = '';
 				var additionall = 0;
-		
+
 				if (share.images.length + additionall == 1) icClass = 'one';
 				if (share.images.length + additionall == 2) icClass = 'two';
 				if (share.images.length + additionall == 2) icClass = 'three';
 				if (share.images.length + additionall == 4) icClass = 'four';
 				if (share.images.length + additionall > 4) icClass = 'more';
-				
-				if(share.settings.v != 'a' || share.images.length + additionall > 2){ 
 
-					if(share.settings.v == 'a'){ 
+				if(share.settings.v != 'a' || share.images.length + additionall > 2){
+
+					if(share.settings.v == 'a'){
 
 						icClass = 'articleImages'
 
@@ -275,11 +275,11 @@ var arranges = {
 					} %>
 
 
-	
+
 					<div class="images shareImages hideOnFullVideo unselectable noswipepnt">
 						<div class="imagesContainer <%-icClass%>">
 
-						
+
 							<% _.each(share.images, function(image){ %>
 
 								<div class="imagesWrapper">
@@ -289,8 +289,8 @@ var arranges = {
 
 							<% }) %>
 
-						
-							
+
+
 						</div>
 					</div>
 
@@ -299,16 +299,16 @@ var arranges = {
 		<% } %>
 	<% },
 
-	u : function(){	%> 
+	u : function(){	%>
 		<% if(share.url) {
 
 
 			var h = ''
-			
+
 			if(parseVideo(share.url).type && share.images.length){
 				h = 'hiddenurl'
 			}
-			
+
 			%>
 
 			<div class="url <%-h%>">
@@ -320,21 +320,21 @@ var arranges = {
 
 } %>
 
-<div class="sharecnt <% if(typeof sharesFromSub != 'undefined' && sharesFromSub[share.txid]) {%>  fromsub <% } %> <% if(share.deleted) { %> deleted <% } %>">
+<div class="sharecnt <% if(share.deleted) { %> deleted <% } %>">
 
 	<div class="work unselectablemobile">
 
 		<div class="shareTable <%-subscribed%> <%-view%> truerepost" address="<%-share.address%>" stxid="<%-share.txid%>">
 
-			
+
 
 				<div class="iconWrapper">
 					<a elementsid="shareiconprofilelink" href="<%-app.platform.api.authorlink(share.address)%>">
 
-						<% 
+						<%
 							var src = deep(app.platform.sdk.usersl.storage, share.address + '.image');
-							var letter = name ? name[0] : ''; 
-							
+							var letter = name ? name[0] : '';
+
 						%>
 
 						<div class="icon">
@@ -345,11 +345,11 @@ var arranges = {
 									<span class="letter">
 										<%-letter.toUpperCase()%>
 									</span>
-				
+
 								<% } else if (!src) { %>
-				
+
 									<svg width="30" height="30" data-jdenticon-value="<%-share.address%>"></svg>
-				
+
 								<% } %>
 
 								<% if(app.platform.ui.markUser) {%>
@@ -357,7 +357,7 @@ var arranges = {
 									<%= app.platform.ui.markUser(share.address)%>
 
 								<% } %>
-								
+
 							</div>
 						</div>
 
@@ -371,12 +371,12 @@ var arranges = {
 
 			<div class="cntswrk  formeta">
 
-				<div class="metawrapper"> 
-					<% metadisplay() %> 
-				</div> 
+				<div class="metawrapper">
+					<% metadisplay() %>
+				</div>
 
 			</div>
-			
+
 			<% if(!checkvisibility && !lockedaccount) {%>
 
 				<div class="cntswrk cntscontent postcontent">
@@ -385,15 +385,15 @@ var arranges = {
 					<% var a = share.settings.a || share.default.a %>
 
 
-					<% _.each(a, function(key, i){ %> 
+					<% _.each(a, function(key, i){ %>
 
 						<% if(arranges[key]) arranges[key]() %>
-								
+
 					<% }) %>
 
 				</div>
 
-			<% } else { %> 
+			<% } else { %>
 				<div class="cntswrk cntscontent postcontent">
 
 					<div class="hiddenpost">
@@ -426,24 +426,24 @@ var arranges = {
 								</div>
 
 							<% } %>
-						
-						<% } else { %> 
-							
+
+						<% } else { %>
+
 							<div class="hiddenlabeltext">
 								<%=e('lockedaccounta')%>
 							</div>
-							
+
 						<% } %>
 
 
 					</div>
-					
-	
+
+
 				</div>
-				
+
 			<% } %>
 
-			
+
 			<div class="cntswrk removeDescription postcontent">
 				<%=e('postRemoved')%>
 			</div>
@@ -454,12 +454,12 @@ var arranges = {
 
 				<div class="cntswrk cntscontent">
 					<div class="paddingWrapper">
-						
+
 						<% if(share.tags && share.tags.length > 0) {
 
 							var bycategories = app.platform.sdk.categories.fromTags(share.tags, share.lanuage)
 
-							
+
 							%>
 
 							<div class="tags canmark hideOnFullVideo unselectablemobile">
@@ -467,16 +467,16 @@ var arranges = {
 
 									<div class="category">
 										<a elementsid="tagslink" href="index?sst=<%-category.tags.join(' ')%>">
-											<span>@<%-category.name%></span><% if(category.new) {%>&nbsp;<span class="newlabel">New!</span><% } %> 
+											<span>@<%-category.name%></span><% if(category.new) {%>&nbsp;<span class="newlabel">New!</span><% } %>
 										</a>
 									</div>
 
 								<% }) %>
 
-								<% _.each(bycategories.tags, function(tag){ 
-									
+								<% _.each(bycategories.tags, function(tag){
+
 									var additional = app.platform.sdk.tags.findadditional(tag)
-									
+
 									%>
 
 									<div class="tag">
@@ -498,21 +498,21 @@ var arranges = {
 								<span><%=e('pkoin_commerce_info')%></span>
 							</div>
 						<% } %>
-						
+
 
 						<% if(!share.temp &&   (typeof repost == 'undefined' || !repost || fromempty)) {%>
 							<div class="panel sharepanel unselectablemobile">
 								<div class="item forstars">
-									
+
 								</div>
 
 								<% const isElectron = (typeof _Electron !== 'undefined' && !!window.electron); %>
-								<% const isSaveSupported = (window.cordova && !isios()); %>
+								<% const isSaveSupported = (window.cordova || isElectron && !isios()); %>
 
 								<% if(isSaveSupported && share.itisvideo()) {
 
 									var status = app.platform.sdk.localshares.status(share.txid)
-									
+
 									%>
 
 									<% if(!checkvisibility) {%>
@@ -521,25 +521,25 @@ var arranges = {
 
 										<div class="itemwr table">
 
-											<div class="iconwr">											
+											<div class="iconwr">
 												<div class="icon">
 													<i class="fas fa-download cansave"></i>
 													<i class="fas fa-spinner fa-spin saving"></i>
 													<i class="fas fa-trash saved"></i>
 												</div>
 											</div>
-										
+
 										</div>
 
 									</div>
 
 									<% } %>
 
-								<% } else { %> 
-									
+								<% } else { %>
+
 								<% } %>
 
-								<% if((typeof preview == 'undefined' || !preview) ) {%>			
+								<% if((typeof preview == 'undefined' || !preview) ) {%>
 
 									<div class="item sharesocial unselectable">
 
@@ -550,22 +550,23 @@ var arranges = {
 												</div>
 											</div>
 										</div>
-										
+
 									</div>
 
 								<% } %>
-								<% if(!lockedaccount) {%>
-								<div class="item pkoin right unselectedtable">
-									<img src="img/pocketnet_logo_white.svg" alt="">
-									<span class='workstation'>
-										PKOIN
-									</span>
-								</div>
+
+								<% if(!my) {%>
+									<div class="item pkoin right unselectedtable">
+										<img src="img/pocketnet_logo_white.svg" alt="">
+										<span class='workstation'>
+											PKOIN
+										</span>
+									</div>
 								<% } %>
-								
+
 							</div>
 
-							
+
 						<% } %>
 
 						<% if(share.temp) {%>
@@ -574,14 +575,17 @@ var arranges = {
 								<div class="item right">
 
 									<div class="itemwr table tempPreloader">
-										
+
+										<div class="iconwr">
+											<div class="preloader5"><img src="./img/three-dots.svg"/></div>
+										</div>
+
 										<div elementsid="lenta_forstars_count" class="count">
 											<div class="label">
 
 												<span><%=e('postWaitConf')%></span>
 											</div>
 										</div>
-											
 									</div>
 								</div>
 								<div class="clearfix"></div>
@@ -590,11 +594,11 @@ var arranges = {
 						<% } %>
 
 
-						
+
 
 					</div>
 
-					
+
 				</div>
 
 				<% if(typeof verticalVideo != 'undefined' && verticalVideo) {%>
@@ -605,22 +609,22 @@ var arranges = {
 							<div class="cntswrk forcomments">
 								<div class="paddingWrapper">
 									<div class="commentsWrapperHb">
-									
+
 										<div class="commentsWrapper">
 										</div>
-					
+
 									</div>
 								</div>
 							</div>
 						<% } %>
-				
+
 					<% } %>
 
 				<% } %>
 
-				
 
-					
+
+
 
 			<% } %>
 
@@ -634,7 +638,7 @@ var arranges = {
 				</button>
 			</div>
 		</div>
-		
+
 	</div>
 
 	<div class="exitFull roundclosebutton unselectablemobile">
@@ -648,22 +652,20 @@ var arranges = {
 			<% if(typeof repost == 'undefined' || !repost || fromempty) {%>
 
 				<div class="showmorelenta"></div>
-	
+
 				<div class="commentsWrapperHb">
-					
+
 					<div class="commentsWrapper">
 					</div>
-	
+
 				</div>
-	
+
 			<% } %>
-	
+
 		<% } %>
 
 	<% } %>
 
-	<div class="extrashare"></div>
-
-</div>	
+</div>
 
 <% } %>

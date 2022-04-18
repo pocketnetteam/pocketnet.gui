@@ -1,4 +1,4 @@
-<% 
+<%
 
 var r = parameters(app.nav.current.completeHref, true).r;
 var video = parameters(app.nav.current.completeHref, true).video;
@@ -14,15 +14,15 @@ var read = parameters(app.nav.current.completeHref, true).read;
                 <span class="pcenterLabel fresh <% if(!r && !video && !read && pathname=='index') {%> active <% } %> ">
                     <a href="index" handler="true"><i class="far fa-calendar"></i><span class="text"><%=e('e13136')%> </span><span class="lentaunseen" key="common"></span></a>
                 </span>
-                
+
             </div>
 
-            <% if(state) { %> 
+            <% if(state) { %>
             <div class="tab">
                 <span class="pcenterLabel <% if(r == 'sub' && pathname=='index') {%> active <% } %>">
                     <a href="index?r=sub"  handler="true"><i class="far fa-heart"></i><span class="text"><%=e('e13137')%> </span> <span class="lentaunseen " key="sub"></span></a>
                 </span>
-                
+
             </div>
             <% } %>
 
@@ -40,7 +40,7 @@ var read = parameters(app.nav.current.completeHref, true).read;
             </div>
 
             <% const isElectron = (typeof _Electron !== 'undefined' && !!window.electron); %>
-            <% const isSaveSupported = (window.cordova && !isios()); %>
+            <% const isSaveSupported = (window.cordova || isElectron && !isios()); %>
 
             <% if(isSaveSupported) {%>
                 <div class="tab">
@@ -49,7 +49,7 @@ var read = parameters(app.nav.current.completeHref, true).read;
                     </span>
                 </div>
             <% } %>
-            
+
             <div class="tab">
                 <span class="pcenterLabel toppost <% if(!video && r == 'recommended' && pathname=='index') {%> active <% } %>">
                     <a href="index?r=recommended"  handler="true"><i class="far fa-star"></i><span class="text"><%=e('e13138')%></span></a>
@@ -58,7 +58,7 @@ var read = parameters(app.nav.current.completeHref, true).read;
 
 
 
-            
+
         </div>
     </div>
 </div>

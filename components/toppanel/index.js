@@ -30,7 +30,7 @@ var toppanel = (function(){
 
 				const isCordova = (window.cordova);
 				const isElectron = (typeof _Electron !== 'undefined' && !!window.electron);
-				const isSaveSupported = (isCordova && !isios());
+				const isSaveSupported = (isCordova || isElectron && !isios());
 
 				if (isSaveSupported) {
 					links.saved = "index?r=saved"

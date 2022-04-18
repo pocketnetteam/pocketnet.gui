@@ -115,7 +115,7 @@ var lenta = (function(){
 
 				if (isSafari) return
 
-				var notoptimized = el.c.find('.portion:not(.optimized):not(:first-child):not(:nth-last-child(1)):not(:nth-last-child(2)):not(:nth-last-child(3))')
+				var notoptimized = el.c.find('.portion:not(.optimized):not(:first-child):not(:nth-last-child(1)):not(:nth-last-child(2))')
 
 				var optimizationTip = el.c.find('.optimizationTip')
 				var els = notoptimized.find('.share')
