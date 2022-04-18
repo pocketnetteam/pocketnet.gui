@@ -42,7 +42,7 @@ var recommendedusers = (function(){
 			
 			getRecommendedAccountsByTags : function(clbk){
 
-				self.app.platform.sdk.users.getRecommendedAccountsByTags(function(c, error){
+				self.app.platform.sdk.users.getRecommendedAccountsByTags('gettopaccounts', function(c, error){
 
 					onlytags = true;
 

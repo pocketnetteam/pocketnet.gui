@@ -10917,8 +10917,24 @@ Platform = function (app, listofnodes) {
 
             },
 
-            getRecommendedAccountsByTags : function(clbk){
+            getRecommendedAccountsByTags : function(method, clbk){
                 var selectedTags = self.app.platform.sdk.categories.gettags();
+
+                var p = {};
+                p.height = 0;
+                p.count = 10;
+                p.lang = self.app.localization.key;
+                p.tagsfilter = self.app.platform.sdk.categories.gettags()
+                p.tagsexcluded = self.app.platform.sdk.categories.gettagsexcluded()
+                p.depth || (p.depth = 10);
+
+                var parameters = []
+
+                if (method === 'gettopaccounts'){
+                    
+                    parameters = [Number(p.height), p.count, p.lang, p.tagsfilter, p.type ? [p.type] : [], [], p.tagsexcluded, p.depth];
+
+                }
 
                 if (selectedTags.length){
 
@@ -13476,8 +13492,6 @@ Platform = function (app, listofnodes) {
 
                 var excluded = self.sdk.categories.settings.excluded[k] || {};
 
-
-
                 var all = self.sdk.categories.get(k)
 
                 _.each(all, function(c){
@@ -13485,30 +13499,7 @@ Platform = function (app, listofnodes) {
                 })
 
 
-                if(onlycategories === 'onlytags') tags = excludedtags
-
-                return tags
-            },
-
-            gettagsexcluded : function(_k, onlycategories){
-                var tags = []
-
-                var k = _k || self.app.localization.key
-
-                if(!self.sdk.categories.data.all[k]) k = 'en'
-
-                var excluded = self.sdk.categories.settings.excluded[k] || {};
-
-
-
-                var all = self.sdk.categories.get(k)
-
-                _.each(all, function(c){
-                    if(excluded[c.id]) tags = tags.concat(c.tags)
-                })
-
-
-                if(onlycategories === 'onlytags') tags = excludedtags
+                if(onlycategories === 'onlytags') tags = excluded
 
                 return tags
             },
