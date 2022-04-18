@@ -360,7 +360,9 @@ var Proxy16 = function(meta, app, api){
         ping : () => {
             return self.fetch('ping', {}, {timeout : 4000}).then(r => {
 
-                self.ping = (new Date()).addSeconds(60)
+                var rdate = new Date()
+
+                self.ping = rdate.addSeconds(60)
                 self.successping = true
                 self.session = r.session
 
@@ -373,7 +375,9 @@ var Proxy16 = function(meta, app, api){
                 return Promise.resolve(r)
             }).catch(e => {
 
-                self.ping = (new Date()).addSeconds(10)
+                var rdate = new Date()
+
+                self.ping = rdate.addSeconds(10)
                 
                 return Promise.reject(e)
             })
@@ -755,17 +759,7 @@ var Api = function(app){
 
                         this.addlist(initialProxies)
 
-                        /*setTimeout(() => {
-                            this.addlist([{
-                                host : 'pocketnet.app',
-                                port : 8899,
-                                wss : 8099
-                            }])
 
-                            current = 'pocketnet.app:8899:8099'
-                            console.log("ADDED")
-                        },5000)*/
-                    
                         try{ this.addlist(JSON.parse(localStorage['listofproxies'] || "[]")) }
                         catch(e){}
 
@@ -1052,6 +1046,7 @@ var Api = function(app){
 
         use : () => {
 
+
             return useproxy ? _.filter(proxies, proxy => { 
                 return proxy.successping
             }).length || !proxies.length : false
@@ -1071,6 +1066,7 @@ var Api = function(app){
         ready : function(key, total){
 
             if(!key) key = 'use'
+
 
             return pretry(self.ready[key], 20, total)
         }
@@ -1286,7 +1282,6 @@ var Api = function(app){
         return internal.proxy.manage.init().then(r => { 
             //softping
 
-            console.log('mixedping')
 
             internal.proxy.api.mixedping(proxies).catch(e => {
             })

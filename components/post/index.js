@@ -399,7 +399,6 @@ var post = (function () {
 
 			initVideo: function (clbk) {
 
-				console.log("initVideo")
 
 				if(!el.c) return
 
@@ -599,7 +598,9 @@ var post = (function () {
 
 					var reason = null
 
-					if(!rand(0, 9)) reason = 'p'
+					if (self.app.platform.sdk.user.newuser()){
+						reason = 'n'
+					}
 
 					if (share.scnt == '0') reason = 's'
 
@@ -1605,6 +1606,7 @@ var post = (function () {
 					}, self.app);
 
 					if (clbk) clbk();
+					
 				})
 
 
@@ -1647,6 +1649,7 @@ var post = (function () {
 				self.app.platform.ui.recommendations(el.reco, share, {
 					opensvi : ed.opensvi,
 					next : ed.next,
+					basecount : 20,
 					startload : !p.inWnd && el.c.closest('.videomainpost').length && !isMobile(),
 					beforeopen : function(){
 						self.closeContainer()

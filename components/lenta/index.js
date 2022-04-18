@@ -2299,7 +2299,6 @@ var lenta = (function(){
 			
 
 			like : function(){
-console.log("ASASAS")
 				var p = $(this).closest('.stars');
 
 				if (p.attr('value')){
@@ -2326,6 +2325,11 @@ console.log("ASASAS")
 							var reason = null
 
 							//if(!rand(0,9)) reason = 'p'
+
+							if (self.app.platform.sdk.user.newuser()){
+								reason = 'n'
+							}
+							
 
 							if(s.scnt == '0') reason = 's'
 
@@ -4732,7 +4736,7 @@ console.log("ASASAS")
 					if (essenseData.includeboost){
 
 						boostplaces = {
-							2 : false,
+							4 : false,
 							13 : false,
 							27 : false
 						}
@@ -5048,8 +5052,7 @@ console.log("ASASAS")
 				el.lentacnt = el.c.find('.lentacell .cnt');
 				el.w = essenseData.window || w;
 
-				
-				
+
 
 				el.share = {};
 

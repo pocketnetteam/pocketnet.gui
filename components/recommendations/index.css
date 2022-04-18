@@ -54,6 +54,7 @@
   padding-top: 0.5em;
 }
 #recommendations .recoVideoDiv .videoInfos .title {
+  max-width: 420px;
   -webkit-line-clamp: 2;
   line-clamp: 2;
   display: -webkit-box;

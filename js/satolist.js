@@ -2710,11 +2710,11 @@ Platform = function (app, listofnodes) {
 
         recommendations : function(el, share, ed, clbk){
 
+            var basecount = ed.basecount || 20
 
-            var idf = (share.txid.replace(/[^0-9]/, '') || '2') / 2
+            var idf = share.txid.replace(/[^0-9]/, '') || '49'
 
-            var oddtxid = idf[idf.length - 1] % 2 == 0
-
+            var oddtxid = (Number(idf[idf.length - 2] + '' + idf[idf.length - 1]) / 2).toFixed(0)
 
             self.app.nav.api.load({
                 open: true,
@@ -2736,7 +2736,7 @@ Platform = function (app, listofnodes) {
                             contentAddress: share.address,
                             type: 'video',
                             depth: 10000,
-                            count: 20,
+                            count: basecount,
                             lang : share.language
                         },
                     },{
@@ -2745,18 +2745,31 @@ Platform = function (app, listofnodes) {
                 
                             type: 'video',
                             depth: 10000,
-                            count: 30,
+                            count: basecount * 1.5,
                             lang : share.language,
                             tagsfilter : share.tags
                         },
                         
                     }],
 
-                    filter : function(_share, i){
+                    sorting : function(recommendations){
 
-                        if (oddtxid && i % 2 === 0 || !oddtxid && i % 2){
+                        if(recommendations.length <= 1) return recommendations
+
+                        return _.sortBy(recommendations, function(r, i){
+                            return (i + oddtxid) % (recommendations.length - 1)
+                        })
+                    },
+
+                    filter : function(recommendations){
+
+                        recommendations = _.filter(recommendations, (_share) => {
                             return _share.txid != share.txid && _share.address != self.app.user.address.value
-                        }
+                        })
+
+                        recommendations = _.first(recommendations, basecount)
+
+                        return recommendations
                         
                     },
 
@@ -9385,6 +9398,31 @@ Platform = function (app, listofnodes) {
                 }
             },
 
+            newuser : function(address){
+                if(!address) address = (self.app.platform.sdk.address.pnet() || {}).address
+
+                if(!address) return false
+
+                var ustate = self.sdk.ustate.storage[address] || deep(self, 'sdk.usersl.storage.' + address) || deep(self, 'sdk.users.storage.' + address);
+
+                if(!ustate) return false
+
+                var redgate = ustate.user_reg_date || ustate.regdate
+
+                if(!redgate) return true
+
+                var d = new Date();
+			        d.setTime(redgate * 1000);	
+
+                if(d.addHours(24) > new Date()){
+                    return true
+                }
+
+                return false
+
+
+            },
+
             reputationBlockedMe : function(address, count){
 
                 if(!address) address = (self.app.platform.sdk.address.pnet() || {}).address
@@ -9782,9 +9820,6 @@ Platform = function (app, listofnodes) {
                         if(self.sdk.ustate.loading[address]){
 
                             retry(function(){
-
-                                console.log("WAIT", update)
-
                                 return !self.sdk.ustate.loading[address]
                             }, function(){
                                 if (clbk)
@@ -9794,8 +9829,6 @@ Platform = function (app, listofnodes) {
                             return
 
                         }
-
-                        
 
                         self.sdk.ustate.get(address, function () {
 
@@ -26504,7 +26537,9 @@ Platform = function (app, listofnodes) {
 
         initOnlineListener() // /remove for test
 
+
         self.app.api.wait.ready('use', 10000).then(r => {
+
 
             return new Promise((resolve, reject) => {
                 setTimeout(function(){
@@ -26784,18 +26819,22 @@ Platform = function (app, listofnodes) {
 
                     self.loadingWithErrors = !_.isEmpty(self.app.errors.state)
 
-                    self.app.peertubeHandler.init()
+
+                    
 
                     if (clbk)
                         clbk()
 
                     setTimeout(function(){
                         self.matrixchat.init()
+                        
                     }, 300)
 
                     setTimeout(self.acceptterms, 5000)
 
                     setTimeout(function(){
+
+                        self.app.peertubeHandler.init()
 
                         lazyActions([
                             self.cryptography.prepare,
