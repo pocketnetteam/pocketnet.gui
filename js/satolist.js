@@ -10918,12 +10918,11 @@ Platform = function (app, listofnodes) {
             },
 
             getRecommendedAccountsByTags : function(clbk){
-
                 var selectedTags = self.app.platform.sdk.categories.gettags();
 
                 if (selectedTags.length){
 
-                    self.app.api.rpc('getrecomendedaccountsbytags', [selectedTags, 15])
+                    self.app.api.rpc('gettopaccounts', [selectedTags, 15])
                     .then(function(d){
 
                         if (clbk){
@@ -16733,8 +16732,7 @@ Platform = function (app, listofnodes) {
                                 parameters.push('');
                                 parameters.push(p.address)
                             }
-                            if (methodparams.method == 'getrecomendedcontentsbyscoresfromaddress')
-                                parameters = [p.contentid, p.contenttypes, p.depth, p.count];
+
 
                             if (methodparams.method == 'getrecommendedcontentbyaddress')
                                 parameters = [p.contentAddress, '', p.type ? [p.type] : [], p.lang || "", p.count];
