@@ -26799,18 +26799,22 @@ Platform = function (app, listofnodes) {
 
                     self.loadingWithErrors = !_.isEmpty(self.app.errors.state)
 
-                    self.app.peertubeHandler.init()
+
+                    
 
                     if (clbk)
                         clbk()
 
                     setTimeout(function(){
                         self.matrixchat.init()
+                        
                     }, 300)
 
                     setTimeout(self.acceptterms, 5000)
 
                     setTimeout(function(){
+
+                        self.app.peertubeHandler.init()
 
                         lazyActions([
                             self.cryptography.prepare,
