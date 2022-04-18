@@ -2327,6 +2327,11 @@ console.log("ASASAS")
 
 							//if(!rand(0,9)) reason = 'p'
 
+							if (self.app.platform.sdk.user.newuser()){
+								reason = 'n'
+							}
+							
+
 							if(s.scnt == '0') reason = 's'
 
 							if(reason) {
@@ -5048,8 +5053,7 @@ console.log("ASASAS")
 				el.lentacnt = el.c.find('.lentacell .cnt');
 				el.w = essenseData.window || w;
 
-				
-				
+
 
 				el.share = {};
 

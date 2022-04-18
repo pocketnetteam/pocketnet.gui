@@ -598,7 +598,9 @@ var post = (function () {
 
 					var reason = null
 
-					if(!rand(0, 9)) reason = 'p'
+					if (self.app.platform.sdk.user.newuser()){
+						reason = 'n'
+					}
 
 					if (share.scnt == '0') reason = 's'
 

@@ -9398,6 +9398,31 @@ Platform = function (app, listofnodes) {
                 }
             },
 
+            newuser : function(address){
+                if(!address) address = (self.app.platform.sdk.address.pnet() || {}).address
+
+                if(!address) return false
+
+                var ustate = self.sdk.ustate.storage[address] || deep(self, 'sdk.usersl.storage.' + address) || deep(self, 'sdk.users.storage.' + address);
+
+                if(!ustate) return false
+
+                var redgate = ustate.user_reg_date || ustate.regdate
+
+                if(!redgate) return true
+
+                var d = new Date();
+			        d.setTime(redgate * 1000);	
+
+                if(d.addHours(24) > new Date()){
+                    return true
+                }
+
+                return false
+
+
+            },
+
             reputationBlockedMe : function(address, count){
 
                 if(!address) address = (self.app.platform.sdk.address.pnet() || {}).address
@@ -9795,9 +9820,6 @@ Platform = function (app, listofnodes) {
                         if(self.sdk.ustate.loading[address]){
 
                             retry(function(){
-
-                                console.log("WAIT", update)
-
                                 return !self.sdk.ustate.loading[address]
                             }, function(){
                                 if (clbk)
@@ -9807,8 +9829,6 @@ Platform = function (app, listofnodes) {
                             return
 
                         }
-
-                        
 
                         self.sdk.ustate.get(address, function () {
 
