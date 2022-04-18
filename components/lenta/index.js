@@ -18,7 +18,6 @@ var lenta = (function(){
 		var w, essenseData, recomended = [], recommended, mestate, initedcommentes = {}, canloadprev = false,
 		video = false, isotopeinited = false, videosVolume = 0, fullscreenvideoShowing = null, loadedcachedHeight, showRecommendedUsers = true, recommendedusers = null;
 
-		var animation = false
 		var subloaded = false
 
 		var boosted = [],
@@ -83,35 +82,7 @@ var lenta = (function(){
 			
 		}
 
-		var effects = {
-			starstocomments : function(txid, value){
-
-				if(animation) return
-
-				animation = true
-				var stars = el.share[txid].find('.starswr')
-
-				var comment = el.share[txid].find('#comments')
-
-				var parameters = {}
-
-				if (value < 2) parameters.color = '#FF0022'
-				if (value == 2) parameters.color = '#ff2400'
-				if (value == 3) parameters.color = '#CCCCCC'
-
-				var top = stars.offset().top + 15
-				var left = stars.offset().left
-				var height = 300
-				var width = 200
-				var swidth = stars.width() * (value - 1) / 5
-
-				left += swidth
-
-				self.app.platform.effects.make({top : top - height,left,width, height}, 'stars', parameters, function(){
-					animation = false
-				})
-			}
-		}
+		
 
 
 		var actions = {
@@ -643,6 +614,8 @@ var lenta = (function(){
 							if (share && el.share[share.txid]){
 
 									boostplaces[position] = true
+
+									console.log("RENDER BOOST", bst)
 		
 									renders.shares([bst], function(){
 										renders.sharesInview([bst], function(){
@@ -1636,7 +1609,12 @@ var lenta = (function(){
 
 				var reputation = deep(app, 'platform.sdk.usersl.storage.'+obj.address+'.reputation') || 0
 
-				if (checkvisibility && reputation >= 50) return
+				if (checkvisibility && reputation >= 50) {
+					if (clbk)
+						clbk(false)
+
+					return
+				}
 
 				if(value <= 3){
 					if(self.app.platform.sdk.user.scamcriteria()){
@@ -2224,8 +2202,6 @@ var lenta = (function(){
 
 					events.videosInview()
 
-				}, function(){
-
 				})
 
 			},
@@ -2323,9 +2299,6 @@ var lenta = (function(){
 			
 
 			like : function(){
-
-				
-
 				var p = $(this).closest('.stars');
 
 				if (p.attr('value')){
@@ -2334,8 +2307,6 @@ var lenta = (function(){
 
 				var id = $(this).closest('.share').attr('id');
 				var value = $(this).attr('value')
-
-				//effects.starstocomments($(this).closest('.share').attr('id'), value)
 
 				if(!id) id = $(this).closest('.truerepost').attr('stxid')
 
@@ -2349,8 +2320,39 @@ var lenta = (function(){
 
 						if (self.app.platform.sdk.address.pnet() && s.address == self.app.platform.sdk.address.pnet().address) return
 
+						if (value > 4){
 
-					
+							var reason = null
+
+							//if(!rand(0,9)) reason = 'p'
+
+							if (self.app.platform.sdk.user.newuser()){
+								reason = 'n'
+							}
+							
+
+							if(s.scnt == '0') reason = 's'
+
+							if(reason) {
+								setTimeout(function(){
+
+									if(!el.share[id]) return
+	
+									self.app.platform.effects.templates.commentstars(el.share[id], value, function(){
+										if (initedcommentes[id]){
+											initedcommentes[id].attention(self.app.localization.e('starssendcomment' + reason))
+										}
+									})
+	
+								}, 300)
+							}
+
+							
+							
+
+						}
+
+							
 
 						p.attr('value', value)
 						p.addClass('liked')
@@ -2367,7 +2369,7 @@ var lenta = (function(){
 
 								var v = Number(s.score) / Number(s.scnt) 
 
-								p.find('.tstarsov').css('width', ((v / 5) * 100) + '%')
+								p.find('.tstars').css('width', ((v / 5) * 100) + '%')
 								p.closest('.itemwr').find('.count span.v').html(v.toFixed(1))
 
 								renders.stars(s)
@@ -3103,8 +3105,11 @@ var lenta = (function(){
 
 			
 
-			sharesInview : function(shares, clbk, boosted){
+			sharesInview : function(shares, clbk, p){
 
+				if(!p) p = {}
+
+				
 				shares = _.filter(shares, function(s){
 					return !$('#' + s.txid).hasClass('hidden')
 				})
@@ -3130,19 +3135,18 @@ var lenta = (function(){
 					array : rs,
 					sync : true,
 
-					action : function(p){
-						var share = p.item;
+					action : function(_p){
+						var share = _p.item;
 
 
 						if(shareInitedMap[share.txid]){
-							p.success()
+							_p.success()
 						}
 						else
 						{
-
 							shareInitedMap[share.txid] = true
-							renders.share(share, p.success, null, {
-								boosted
+							renders.share(share, _p.success, null, {
+								boosted : p.boosted
 							})
 						}
 
@@ -3520,9 +3524,6 @@ var lenta = (function(){
 				var og = self.app.platform.sdk.remote.storage[url];	
 				var meta = self.app.platform.parseUrl(url);		
 
-		
-				
-
 				var rndr = function(){
 
 					self.app.platform.sdk.videos.paddingplaceholder(isMobile() || essenseData.horizontal ? null : url, function (next) {
@@ -3693,6 +3694,7 @@ var lenta = (function(){
 
 				}, function(shares, error, pr){
 
+				
 					if(clbk) clbk(shares)
 
 				}, _.toArray(boostplaces).length, 'cache')
@@ -4307,15 +4309,24 @@ var lenta = (function(){
 
 			el.c.find('.networkErrorMessage button').on('click', function(){
 
-				globalpreloader(true)
-
 				delete self.iclbks.lenta
-				make()
 
-				setTimeout(function(){
-					globalpreloader(false)
+				if (self.app.platform.loadingWithErrors){
+					self.app.platform.appstate(function(){
 
-				}, 600)
+					})
+				}
+				else{
+					globalpreloader(true)
+				
+					make()
+	
+					setTimeout(function(){
+						globalpreloader(false)
+	
+					}, 600)
+				}
+
 			})
 
 			//////////////////////
@@ -4725,13 +4736,16 @@ var lenta = (function(){
 					if (essenseData.includeboost){
 
 						boostplaces = {
-							2 : false,
+							4 : false,
 							13 : false,
 							27 : false
 						}
 
 						load.boosted(function(shares){
 							boosted = shares
+
+							console.log('boosted', boosted)
+
 							actions.includeboost()
 						})
 					}
@@ -5038,8 +5052,7 @@ var lenta = (function(){
 				el.lentacnt = el.c.find('.lentacell .cnt');
 				el.w = essenseData.window || w;
 
-				
-				
+
 
 				el.share = {};
 

@@ -20,6 +20,8 @@ var pkoin = (function(){
 					var values = ['pkoinComment', 'sendToAuthor']
 					var labels = [self.app.localization.e('pkoinComment'), self.app.localization.e('sendToAuthor')]
 
+					var blocked = self.app.platform.sdk.user.reputationBlocked(share.address)
+
 					if (my){
 						values = []
 						labels = []
@@ -27,7 +29,7 @@ var pkoin = (function(){
 						optionsValue = 'liftUpThePost'
 					}
 
-					if(self.app.boost){
+					if(self.app.boost && !blocked){
 						values.push('liftUpThePost')
 						labels.push(self.app.localization.e('liftUpThePost'))
 					}

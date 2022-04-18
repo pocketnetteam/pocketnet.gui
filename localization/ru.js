@@ -1897,6 +1897,7 @@ ____loclib.e14105 = "Видео"
 ____loclib.e14106 = "Приложения"
 ____loclib.e14107 = "Проверка обновления"
 ____loclib.e14108 = "Поделиться ответом"
+____loclib.e141081 = "Меню"
 
 ____loclib.longreads = "Статьи"
 ____loclib.readarticle = "Читать статью"
@@ -1977,3 +1978,18 @@ ____loclib.image = "Изображение";
 ____loclib.file = "Файл";
 
 ____loclib.othervideos = "Другие видео";
+
+____loclib.starssendcomments = "Оставьте комментарий автору";
+____loclib.starssendcommentn = "Оставьте комментарий автору";
+____loclib.starssendcommentp = "Оставьте комментарий автору";
+
+____loclib.savevideo = "Загрузить видео";
+
+____loclib.useanimations = "Включить анимации";
+
+
+
+
+____loclib.welcomecaption1 = "Бастион свободы слова";
+____loclib.welcomecaption2 = "Децентрализованная социальная сеть на блокчейне.";
+____loclib.welcomecaption3 = "Общайтесь с друзьями в зашифрованном чате без привязки к телефону";

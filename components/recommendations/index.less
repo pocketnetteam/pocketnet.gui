@@ -12,6 +12,33 @@
         }
     }
 
+    .emptyrec,
+    .recloader{
+        display: none;
+    }
+
+    &.emptyr{
+        .emptyrec{
+            display: block;
+        }
+    }
+
+    &.loading{
+        .recloader{
+            display: block;
+        }
+    }
+
+    .listWrapper{
+        >div{
+            margin-bottom: @rhythm;
+
+            &:nth-last-child(1){
+                margin-bottom: 0;
+            }
+        }
+    }
+
     .recoVideoDiv {
 
         display: flex;
@@ -52,7 +79,7 @@
             padding-top: @rhythm;
 
             .title {
-
+                max-width: 420px;
                 -webkit-line-clamp: 2;
                 line-clamp: 2;
                 display: -webkit-box;
@@ -123,3 +150,4 @@
         }
     }
 }
+

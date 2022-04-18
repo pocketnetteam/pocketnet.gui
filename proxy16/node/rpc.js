@@ -123,9 +123,13 @@ const publics = {
     getstatisticbydays: true,
     getstatisticcontentbyhours: true,
     getstatisticcontentbydays: true,
+
     gettopfeed : true,
     getrecommendedcontentbyaddress: true,
     getrecomendedcontentsbyscoresfromaddress : true,
+    gettopaccounts: true,
+    getrecommendedaccountbyaddress: true,
+    getcontentactions: true,    
 }
 
 const keepAliveAgent = new http.Agent({ keepAlive: true });
@@ -448,8 +452,9 @@ RpcClient.callspec = {
     getpostscores: 'str',
     getpagescores: 'obj str',
 
+    gettopfeed : 'int str int str obj obj obj obj obj str int',
+    gettopaccounts : 'int int str obj obj obj obj int',
 
-    gettopfeed : 'int str int str obj obj obj obj obj str str int',
     getboostfeed : 'int str int str obj obj obj obj obj str str',
     getprofilefeed : 'int str int str obj str str str obj str str',
     getsubscribesfeed : 'int str int str obj obj obj obj obj str str',
@@ -473,6 +478,10 @@ RpcClient.callspec = {
     getrecomendedaccountsbyscoresfromaddress : 'str',
     getrecommendedcontentbyaddress: 'str str obj str int',
     getrecomendedcontentsbyscoresfromaddress : 'str obj int int int',
+    getrecommendedaccountbyaddress: 'str str obj str int',
+
+    getcontentactions : 'str',  
+
     
     getcompactblock: "str int",
     searchbyhash: "str",

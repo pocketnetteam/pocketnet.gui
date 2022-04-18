@@ -61,6 +61,7 @@
   height: 30px;
 }
 #welcome .layout .contentpart .features .feature {
+  margin-bottom: 0.25em;
   font-size: 1.5em;
 }
 #welcome .layout .contentpart .caption {

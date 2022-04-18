@@ -9,7 +9,6 @@
 }
 #post {
   background: rgb(var(--background-main));
-  padding-top: 0.5em;
 }
 #post .jsPlayerLoading,
 #post .video-js {
@@ -199,6 +198,10 @@
 #post.videomainpost .videoWrapper .js-player {
   border-radius: 0;
 }
+#post.videomainpost .videoWrapper .vjs-control-bar {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
 #post.videomainpost .share {
   margin: 0 auto;
   max-width: 960px;
@@ -303,7 +306,7 @@
   margin-top: 0.5em;
 }
 #post .recomandationsFromContent .recomandationsbgwrapper {
-  background: #fff;
+  background: rgb(var(--background-total-theme));
   border-radius: 9px;
   padding: 0.5em;
 }
@@ -761,6 +764,9 @@ html.mobileview .wnd.normalizedmobile.articlewindow .wndinner .wndcontent {
   #post .sharearticle .shareBgCaption:not(.verticalcover) .blackmatte {
     display: none;
   }
+  #post .sharearticle .shareBgCaption.withoutcover .articleCover {
+    height: 1.5em;
+  }
   #post .sharearticle .shareBgCaption.verticalcover {
     height: 720px;
     border-bottom: 0;
@@ -868,7 +874,6 @@ html.mobileview.fullscreen #post #comments {
 }
 .wnd.postwindow #post .postWrapper {
   overflow: hidden;
-  border-radius: 3px;
 }
 .wnd.postwindow #post .nextpost {
   display: block;

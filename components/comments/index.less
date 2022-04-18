@@ -1282,6 +1282,29 @@
 				}
 			}
 		}
+
+		.embedimages,
+		.embedEmojiPrivew{
+			.transition(0.3s);
+		}
+		
+
+		&.attention{
+
+			.leaveCommentPreview{
+				.transition(0.3s);
+			}
+			
+			.leaveCommentPreview{
+				opacity: 1;
+				border : 1px solid rgb(var(--color-bg-ac-bright));
+			}	
+
+			.embedimages,
+			.embedEmojiPrivew{
+				color : rgb(var(--color-bg-ac-bright));
+			}
+		}
 	}
 
 	.edit,

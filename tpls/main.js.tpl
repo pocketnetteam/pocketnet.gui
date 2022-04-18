@@ -689,9 +689,12 @@ function createWindow() {
                     wait: true // Wait with callback, until user action is taken against notification, does not apply to Windows Toasters as they always wait or notify-send as it does not support the wait option
                 },
                 function (err, response, metadata) {
-                    if (win) {
-                        win.show();
-                    }
+
+                    if (response != 'timeout')
+
+                        if (win) {
+                            win.show();
+                        }
                 }
             );
 

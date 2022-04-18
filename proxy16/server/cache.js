@@ -270,11 +270,23 @@ var Cache = function(p){
                 time : 3600
             },
 
+            gettopaccounts : {
+                time : 3600
+            },
+
+            getcontentactions : {
+                time : 3600
+            },
+
             getrecommendedcontentbyaddress : {
                 time : 3600
             },
 
             getrecomendedaccountsbysubscriptions : {
+                time : 3600
+            },
+
+            getrecommendedaccountbyaddress : {
                 time : 3600
             },
 

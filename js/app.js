@@ -2272,24 +2272,42 @@ Application = function(p)
 									globalpreloader(true)
 
 									setTimeout(function(){
-		
-										self.user.isState(function(state){
-											if(state){
-												self.platform.sdk.node.transactions.get.allBalanceUpdate(function(){
-													self.platform.sdk.notifications.getNotifications()
-												})
-											}
-											
-										})
 
-										if (self.nav.current.module)
-											self.nav.current.module.restart()
+										if (self.platform.loadingWithErrors){
 
-										setTimeout(function(){
-											globalpreloader(false)
-											
-											self.mobile.reload.reloading = false
-										}, 200)
+											self.platform.appstate(function(){
+
+												setTimeout(function(){
+													globalpreloader(false)
+													
+													self.mobile.reload.reloading = false
+													
+												}, 200)
+
+											})
+
+										}
+										else{
+
+											self.user.isState(function(state){
+												if(state){
+													self.platform.sdk.node.transactions.get.allBalanceUpdate(function(){
+														self.platform.sdk.notifications.getNotifications()
+													})
+												}
+												
+											})
+
+											if (self.nav.current.module)
+												self.nav.current.module.restart()
+
+											setTimeout(function(){
+												globalpreloader(false)
+												
+												self.mobile.reload.reloading = false
+											}, 200)
+
+										}
 
 										
 									}, 100)

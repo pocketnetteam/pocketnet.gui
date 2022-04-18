@@ -786,12 +786,14 @@ var main = (function(){
 
 				if(isMobile()) return
 
-				upbutton = self.app.platform.api.upbutton(el.up, {
-					top : function(){
-						return '65px'
-					},
-					rightEl : el.c.find('.leftpanelcell')
-				})	
+				if(el.c)
+
+					upbutton = self.app.platform.api.upbutton(el.up, {
+						top : function(){
+							return '65px'
+						},
+						rightEl : el.c.find('.leftpanelcell')
+					})	
 			},
 
 			post : function(id){
@@ -832,6 +834,10 @@ var main = (function(){
 							el.c.find('.renderposthere').html('')
 
 							renders.post(id)
+
+							self.nav.api.history.addParameters({
+								v : id
+							})
 
 							self.app.actions.scroll(0)
 							
@@ -1149,8 +1155,7 @@ var main = (function(){
 
 				beginmaterial = _s.s || _s.i || _s.v || null;
 
-				
-				if((!beginmaterial && !_s.ss && !_s.sst && !p.state && (window.cordova || self.app.platform.matrixchat.connectWith))){
+				if((!beginmaterial && !_s.ss && !_s.sst && !p.state && (self.app.mobileview || window.cordova || self.app.platform.matrixchat.connectWith))){
 					
 					self.nav.api.load({
 						open : true,

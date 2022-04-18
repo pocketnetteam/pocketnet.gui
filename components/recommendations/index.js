@@ -8,28 +8,31 @@ var recommendations = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el, ed, places = {}, additionalMake = false, sel;
+		var el, ed, places = {}, sel;
 
-	
+		var needmake = [], making = false, empty = false
 
 		var rendered = {}
 
 		var events = {
 			scrollapp : function(){
-				if(self.app.lastScrollTop + self.app.height > document.body.scrollHeight - 500) {
-					makeadditional()
+				if(self.app.lastScrollTop + self.app.height > document.body.scrollHeight - 700) {
+					makeneed()
 				}
 			},
 
 			scrollell : function(){
-				if(sel.scrollTop() + sel.height() > sel[0].scrollHeight - 500){
-					makeadditional()
+				if(sel.scrollTop() + sel.height() > sel[0].scrollHeight - 700){
+					makeneed()
 				}
 			}
 		}
 
 		var renders = {
 			list : function(contents, clbk){
+
+				if(!el.c) return
+
 				self.shell({
 
 					animation : false,
@@ -37,7 +40,8 @@ var recommendations = (function(){
 					el : el.c.find('.listWrapper'),
 					inner : append,
 					data : {
-						contents
+						contents,
+						empty : _.isEmpty(rendered)
 					}
 
 				}, function(_p) {
@@ -92,6 +96,10 @@ var recommendations = (function(){
 							var text = video.views + ' ' + pluralform(video.views,[self.app.localization.e('countview'), self.app.localization.e('countviews')])
 
 							el.find('.views').removeClass('dummy').html(text)
+						}
+
+						if(_.isEmpty(video)){
+							el.remove()
 						}
 
 					}
@@ -185,18 +193,22 @@ var recommendations = (function(){
 				p.skipvideo = true
 				
 				self.app.platform.sdk.node.shares[loader.loader || 'getrecomendedcontents'](p, function (recommendations) {
-			
-					places = {}
 
 					_.each(recommendations, function(r, i){
 						places[r.txid] = i + 1
 					})
 
+					if (ed.sorting){
+						recommendations = ed.sorting(recommendations)
+					}
+
 					if (ed.filter){
-						recommendations = _.filter(recommendations, ed.filter)
+						recommendations =  ed.filter(recommendations) //_.filter(recommendations, ed.filter)
 					}
 
 					recommendations = sorting(_.filter(recommendations, filter))
+
+					
 				
 					_.each(recommendations, function(recommendation){
 						rendered[recommendation.txid] = true
@@ -211,32 +223,14 @@ var recommendations = (function(){
 
 			info : function(contents, clbk){
 
-
 				self.sdk.node.shares.loadvideoinfoifneed(contents, true, function() {
-
-
 					if(clbk) clbk()
 				})
 			}
 		}
 
-		var makeadditional = function(){
-			console.log('makeadditional')
-
-			if(ed.additional){
-
-				if(additionalMake) return
-
-				additionalMake = true
-
-				removeEvents()
-
-				make(ed.additional)
-			}
-
-		}
-
 		var make = function(loader, clbk){
+			
 			load.contents(loader, function(recommendations){
 				renders.list(recommendations, function(_p){
 
@@ -250,10 +244,38 @@ var recommendations = (function(){
 			})
 		}
 
-		var makeall = function(){
-			make(ed.loader, function(){
-				initEvents()
-			})
+		var makeneed = function(){
+
+			if (making && !empty) return
+
+			if (needmake.length){
+
+				making = true
+				el.c.addClass('loading')
+
+				make(needmake[0], function(){
+					el.c.removeClass('loading')
+					needmake.shift()
+					making = false
+
+					if(_.toArray(rendered).length < 6){
+						makeneed()
+					}
+				})
+			}
+			else{
+
+				removeEvents()
+
+				if(_.isEmpty(rendered)){
+
+					empty = true
+
+					el.c.addClass('emptyr')
+				}
+			}
+
+			
 		}
 
 		var initEvents = function(){
@@ -280,14 +302,20 @@ var recommendations = (function(){
 
 			getdata : function(clbk, p){
 
+				needmake = []
+
+				empty = false
+				making = false
+
+				places = {}
+
 				ed = p.settings.essenseData || {}
 
 				if(ed.container) sel = ed.container
 
-				console.log('sel', sel)
+				needmake = ed.loaders || []
 
 				rendered = {}
-				additionalMake = false
 
 				var data = {
 					ed : ed
@@ -315,8 +343,12 @@ var recommendations = (function(){
 				el = {};
 				el.c = p.el.find('#' + self.map.id);
 
+				initEvents()
 
-				makeall()
+				console.log("ED", ed, needmake)
+
+				if (ed.startload)
+					makeneed()
 
 				p.clbk(null, p);
 			}

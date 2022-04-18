@@ -350,7 +350,9 @@ var Proxy16 = function(meta, app, api){
     }
 
     var freshping = function(){
-        if(!self.ping || self.ping.addSeconds(60) < new Date()){return false}
+
+        if(!self.ping || self.ping < new Date()){return false}
+
         return true
     }
 
@@ -358,7 +360,10 @@ var Proxy16 = function(meta, app, api){
         ping : () => {
             return self.fetch('ping', {}, {timeout : 4000}).then(r => {
 
-                self.ping = new Date()
+                var rdate = new Date()
+
+                self.ping = rdate.addSeconds(60)
+                self.successping = true
                 self.session = r.session
 
                 if(!self.current && r.node && !api.get.fixednode()){
@@ -369,6 +374,11 @@ var Proxy16 = function(meta, app, api){
 
                 return Promise.resolve(r)
             }).catch(e => {
+
+                var rdate = new Date()
+
+                self.ping = rdate.addSeconds(10)
+                
                 return Promise.reject(e)
             })
         },
@@ -749,17 +759,7 @@ var Api = function(app){
 
                         this.addlist(initialProxies)
 
-                        /*setTimeout(() => {
-                            this.addlist([{
-                                host : 'pocketnet.app',
-                                port : 8899,
-                                wss : 8099
-                            }])
 
-                            current = 'pocketnet.app:8899:8099'
-                            console.log("ADDED")
-                        },5000)*/
-                    
                         try{ this.addlist(JSON.parse(localStorage['listofproxies'] || "[]")) }
                         catch(e){}
 
@@ -1041,13 +1041,14 @@ var Api = function(app){
 
     self.ready = {
         proxies : () => {
-            return _.filter(proxies, proxy => { return proxy.ping })
+            return _.filter(proxies, proxy => { return proxy.successping })
         },
 
         use : () => {
 
+
             return useproxy ? _.filter(proxies, proxy => { 
-                return proxy.ping
+                return proxy.successping
             }).length || !proxies.length : false
 
         },
@@ -1055,7 +1056,7 @@ var Api = function(app){
         useexternal : () => {
 
             return useproxy ? _.filter(proxies, proxy => { 
-                return proxy.ping && !proxy.direct
+                return proxy.successping && !proxy.direct
             }).length || !proxies.length : false
             
         },
@@ -1065,6 +1066,7 @@ var Api = function(app){
         ready : function(key, total){
 
             if(!key) key = 'use'
+
 
             return pretry(self.ready[key], 20, total)
         }
@@ -1279,6 +1281,8 @@ var Api = function(app){
 
         return internal.proxy.manage.init().then(r => { 
             //softping
+
+
             internal.proxy.api.mixedping(proxies).catch(e => {
             })
 
