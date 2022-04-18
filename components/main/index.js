@@ -4,6 +4,8 @@ var main = (function(){
 
 	var essenses = {};
 
+	const isElectron = (typeof _Electron !== 'undefined' && !!window.electron);
+
 	var Essense = function(p){
 
 		var primary = deep(p, 'history');
@@ -58,9 +60,7 @@ var main = (function(){
 			{
 				link : "index?r=saved",
 				label : () => self.app.localization.e('downloaded'),
-				if : function(){
-					return window.cordova
-				},
+				if : () => window.cordova || isElectron,
 				value : 'saved'
 			},
 
@@ -104,7 +104,9 @@ var main = (function(){
 					read : "index?read=1"
 				}
 
-				if (window.cordova) {
+				const isElectron = (typeof _Electron !== 'undefined' && !!window.electron);
+
+				if (window.cordova || isElectron) {
 					links.saved = "index?r=saved"
 				}
 
