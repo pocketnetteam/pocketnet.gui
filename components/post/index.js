@@ -399,7 +399,6 @@ var post = (function () {
 
 			initVideo: function (clbk) {
 
-				console.log("initVideo")
 
 				if(!el.c) return
 
@@ -1603,7 +1602,7 @@ var post = (function () {
 
 						
 					}, self.app);
-					
+
 					if (clbk) clbk();
 					
 				})
