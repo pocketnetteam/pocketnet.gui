@@ -2710,11 +2710,13 @@ Platform = function (app, listofnodes) {
 
         recommendations : function(el, share, ed, clbk){
 
+            var basecount = ed.basecount || 20
 
-            var idf = (share.txid.replace(/[^0-9]/, '') || '2') / 2
+            var idf = share.txid.replace(/[^0-9]/, '') || '49'
 
-            var oddtxid = idf[idf.length - 1] % 2 == 0
+            var oddtxid = (Number(idf[idf.length - 2] + '' + idf[idf.length - 1]) / 2).toFixed(0)
 
+            console.log('oddtxid', oddtxid, idf)
 
             self.app.nav.api.load({
                 open: true,
@@ -2736,7 +2738,7 @@ Platform = function (app, listofnodes) {
                             contentAddress: share.address,
                             type: 'video',
                             depth: 10000,
-                            count: 20,
+                            count: basecount,
                             lang : share.language
                         },
                     },{
@@ -2745,18 +2747,31 @@ Platform = function (app, listofnodes) {
                 
                             type: 'video',
                             depth: 10000,
-                            count: 30,
+                            count: basecount * 1.5,
                             lang : share.language,
                             tagsfilter : share.tags
                         },
                         
                     }],
 
-                    filter : function(_share, i){
+                    sorting : function(recommendations){
 
-                        if (oddtxid && i % 2 === 0 || !oddtxid && i % 2){
+                        if(recommendations.length <= 1) return recommendations
+
+                        return _.sortBy(recommendations, function(r, i){
+                            return (i + oddtxid) % (recommendations.length - 1)
+                        })
+                    },
+
+                    filter : function(recommendations){
+
+                        recommendations = _.filter(recommendations, (_share) => {
                             return _share.txid != share.txid && _share.address != self.app.user.address.value
-                        }
+                        })
+
+                        recommendations = _.first(recommendations, basecount)
+
+                        return recommendations
                         
                     },
 
@@ -26504,7 +26519,11 @@ Platform = function (app, listofnodes) {
 
         initOnlineListener() // /remove for test
 
+        console.log("WAIT USE")
+
         self.app.api.wait.ready('use', 10000).then(r => {
+
+            console.log("WAIT USE CLBK")
 
             return new Promise((resolve, reject) => {
                 setTimeout(function(){
