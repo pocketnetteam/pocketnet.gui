@@ -3,8 +3,6 @@ if (global.WRITE_LOGS) {
     global.LOG_LEVEL = global.WRITE_LOGS.split("=").pop()
 }
 
-
-
 var open = require("open");
 
 const {protocol} = require('electron');
@@ -22,6 +20,21 @@ var willquit = false;
 
 const { app, BrowserWindow, Menu, MenuItem, Tray, ipcMain, Notification, nativeImage, dialog, globalShortcut, OSBrowser } = require('electron')
 app.allowRendererProcessReuse = false
+const ProxyList = require('free-proxy');
+const proxyList = new ProxyList();
+proxyList.get()
+    .then(function (proxies) {
+        proxies = proxies.sort((a,b)=>{
+            return (+a.speed_download > +b.speed_download) ? -1 : (+a.speed_download < +b.speed_download) ? 1 : 0
+        })
+        for(const proxy of proxies){
+            app.commandLine.appendSwitch('proxy-server', proxy.url)
+
+        }
+    })
+    .catch(function (error) {
+        console.error(error)
+    });
 
 const Badge = require('./js/vendor/electron-windows-badge.js');
 
