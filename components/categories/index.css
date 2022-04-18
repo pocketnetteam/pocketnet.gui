@@ -130,7 +130,8 @@
 #categories .cat .cattable > div.catvalue {
   /*.transition(0.3s);*/
   cursor: pointer;
-  width: 80%;
+  width: 85%;
+  overflow: hidden;
 }
 #categories .cat .cattable > div.catedit,
 #categories .cat .cattable > div.catcheck {
@@ -201,6 +202,9 @@
   #categories .cat:hover .cattable > div.minus:hover {
     opacity: 1;
   }
+  #categories .selected .cat:hover .times {
+    display: flex;
+  }
 }
 #categories .tg {
   border-radius: 12px;
@@ -230,9 +234,6 @@
 }
 #categories .tg.selected .cat .minus {
   display: none;
-}
-#categories .tg.selected .cat:hover .times {
-  display: flex;
 }
 #categories .ta .tg {
   display: block;
@@ -330,7 +331,7 @@
   border: 0;
   box-shadow: 0 5px 10px -5px rgba(var(--color-shadow-base), 0.4);
 }
-@media only screen and (max-width: 768px) {
+@media (pointer: coarse) {
   #categories .tcaptiontable .buttons {
     display: block;
     overflow: hidden;
@@ -344,9 +345,6 @@
   #categories .tcaptiontable .buttons > div.addcategory i {
     display: inline;
   }
-  #categories .tcaptiontable .buttons > div.addcategory .text {
-    display: inline;
-  }
   #categories .tcaptiontable .buttons > div.simple {
     display: none;
   }
@@ -356,9 +354,6 @@
   }
   #categories .clearcategories.button.showed {
     opacity: 1;
-  }
-  #categories .cat .cattable > div.catvalue .catname {
-    font-size: 1em;
   }
   #categories .cat .cattable .catedit,
   #categories .cat .cattable .minus {
@@ -376,5 +371,13 @@
   #categories .tg {
     margin-top: 0.5em;
     margin-bottom: 0.5em;
+  }
+}
+@media only screen and (max-width: 768px) {
+  #categories .tcaptiontable .buttons > div.addcategory .text {
+    display: inline;
+  }
+  #categories .cat .cattable > div.catvalue .catname {
+    font-size: 1em;
   }
 }

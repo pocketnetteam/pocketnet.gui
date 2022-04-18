@@ -21,6 +21,8 @@
                 }
             }
         }
+
+
     }
 
     .newlabel{
@@ -176,7 +178,8 @@
                 &.catvalue{
                     /*.transition(0.3s);*/
                     cursor: pointer;
-                    width: 80%;
+                    width: 85%;
+                    overflow: hidden;
                     
                 }
 
@@ -240,6 +243,7 @@
     }
 
     @media (pointer:fine) {
+
         .cat{
             .cattable{
                 >div{
@@ -290,6 +294,20 @@
             }
     
         }
+        
+        .selected{
+
+            .cat{
+
+                &:hover{
+                    .times{
+                        display: flex;
+                    }
+                }
+            }
+
+        }
+        
     }
 
     .tg{
@@ -340,11 +358,6 @@
                     display: none;
                 }
 
-                &:hover{
-                    .times{
-                        display: flex;
-                    }
-                }
             }
         }
 
@@ -487,7 +500,7 @@
     
 }
 
-@media only screen and (max-width: 768px){
+@media (pointer:coarse){
 
     #categories{
 
@@ -505,9 +518,7 @@
                         i{
                             display: inline;
                         }
-                        .text{
-                            display: inline;
-                        }
+
                     }
 
                     &.simple{
@@ -535,14 +546,6 @@
         .cat{
             .cattable{
 
-                >div{
-                    &.catvalue{
-                        .catname{
-                            font-size: 1em;
-                        }
-                    }
-                }
-
                 .catedit, .minus{
                     opacity: 1!important;
                 }
@@ -569,3 +572,38 @@
     }
 
 }
+
+@media only screen and (max-width: 768px){
+
+    #categories{
+
+        .tcaptiontable{
+
+            .buttons{
+                >div{
+                    &.addcategory{
+                        .text{
+                            display: inline
+                        }
+                    }
+
+                }
+            }
+        }
+
+        .cat{
+            .cattable{
+
+                >div{
+                    &.catvalue{
+                        .catname{
+                            font-size: 1em;
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+}
+
