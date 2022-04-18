@@ -26517,11 +26517,9 @@ Platform = function (app, listofnodes) {
 
         initOnlineListener() // /remove for test
 
-        console.log("WAIT USE")
 
         self.app.api.wait.ready('use', 10000).then(r => {
 
-            console.log("WAIT USE CLBK")
 
             return new Promise((resolve, reject) => {
                 setTimeout(function(){
