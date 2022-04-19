@@ -10198,34 +10198,7 @@
 		return value;
 	}
 
-	hexEncode= function(text)
-	{
-	    var ch = 0;
-	    var result = "";
-	    for (var i = 0; i < text.length; i++)
-	    {
-	        ch = text.charCodeAt(i);
-	        if (ch > 0xFF) ch -= 0x350;
-	        ch = ch.toString(16);
-	        while (ch.length < 2) ch = "0" + ch;
-	        result += ch;
-	    }
-	    return result;
-	}
-	hexDecode= function(hex)
-	{
-	    var ch = 0;
-	    var result = "";
-	    hex = trim(hex);
-	    for (var i = 2; i <= hex.length; i += 2)
-	    {
-	        ch = parseInt(hex.substring(i - 2, i), 16);
-	        if (ch >= 128) ch += 0x350;
-	        ch = String.fromCharCode("0x" + ch.toString(16));
-	        result += ch;
-	    }
-	    return result;
-	}
+	
 
 	checkUrlForImage = function(url){
 

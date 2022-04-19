@@ -725,26 +725,31 @@ var main = (function(){
 								
 								if (upbackbutton) upbackbutton.destroy()
 
-								setTimeout(function(){
-									upbackbutton = self.app.platform.api.upbutton(el.upbackbutton, {
-										top : function(){
-											return '65px'
-										},
-										rightEl : el.c.find('.lentacellsvi'),
-										scrollTop : 0,
-										click : function(a){
-											actions.backtolenta()
-										},
-
-										icon : '<i class="fas fa-chevron-left"></i>',
-										class : 'bright',
-										text : 'Back'
-									})	
-								}, 50)
+								if(typeof _Electron == 'undefined' || !_Electron){
+									setTimeout(function(){
 									
-								setTimeout(function(){
-									upbackbutton.apply()
-								},300)
+										upbackbutton = self.app.platform.api.upbutton(el.upbackbutton, {
+											top : function(){
+												return '65px'
+											},
+											rightEl : el.c.find('.lentacellsvi'),
+											scrollTop : 0,
+											click : function(a){
+												actions.backtolenta()
+											},
+	
+											icon : '<i class="fas fa-chevron-left"></i>',
+											class : 'bright',
+											text : 'Back'
+										})	
+									}, 50)
+										
+									setTimeout(function(){
+										upbackbutton.apply()
+									},300)
+								}
+
+								
 
 								renders.post(id)
 

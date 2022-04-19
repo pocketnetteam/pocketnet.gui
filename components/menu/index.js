@@ -414,6 +414,33 @@ var menu = (function(){
 
 				}
 			},
+
+			controlApp : {
+				init : function(_el){
+					_el.find('.control-app-back').on('click',()=>{
+						if (history.length) {
+							history.back()
+						}
+					})
+
+					_el.find('.control-app-next').on('click',()=>{
+						if (history.length) {
+							history.forward() 
+						}
+					})
+
+					_el.find('.control-app-refresh').on('click',()=>{
+
+						var electron = require('electron');
+
+						if (electron)
+							electron.ipcRenderer.send('electron-refresh');
+					})
+					
+				},
+				fast : true,
+			},
+			
 			searchinit : {
 				init : function(_el){
 

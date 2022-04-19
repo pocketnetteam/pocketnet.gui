@@ -2235,6 +2235,8 @@ var comments = (function(){
 
 					}, function(_p){
 
+						if(!_p.el) return
+
 						if(!preview)
 							p.el.removeClass('listloading')
 
