@@ -26,60 +26,7 @@
 
 
 /* DATE */
-	var dateFormat = function () {
-		var e = /d{1,4}|m{1,4}|yy(?:yy)?|([HhMsTt])\1?|[LloSZ]|"[^"]*"|'[^']*'/g, t = /\b(?:[PMCEA][SDP]T|(?:Pacific|Mountain|Central|Eastern|Atlantic) (?:Standard|Daylight|Prevailing) Time|(?:GMT|UTC)(?:[-+]\d{4})?)\b/g, n = /[^-+\dA-Z]/g, r = function (e, t) {
-			e = String(e);
-			t = t || 2;
-			while (e.length < t)
-				e = "0" + e;
-			return e
-		};
-		return function (i, s, o) {
-			var u = dateFormat;
-			if (arguments.length == 1 && Object.prototype.toString.call(i) == "[object String]" && !/\d/.test(i)) {
-				s = i;
-				i = undefined
-			}
-			i = i ? new Date(i) : new Date;
-			if (isNaN(i))
-				throw SyntaxError("invalid date");
-			s = String(u.masks[s] || s || u.masks["default"]);
-			if (s.slice(0, 4) == "UTC:") {
-				s = s.slice(4);
-				o = true
-			}
-			var a = o ? "getUTC" : "get", f = i[a + "Date"](), l = i[a + "Day"](), c = i[a + "Month"](), h = i[a + "FullYear"](), p = i[a + "Hours"](), d = i[a + "Minutes"](), v = i[a + "Seconds"](), m = i[a + "Milliseconds"](), g = o ? 0 : i.getTimezoneOffset(), y = {d: f, dd: r(f), ddd: u.i18n.dayNames[l], dddd: u.i18n.dayNames[l + 7], m: c + 1, mm: r(c + 1), mmm: u.i18n.monthNames[c], mmmm: u.i18n.monthNames[c + 12], yy: String(h).slice(2), yyyy: h, h: p % 12 || 12, hh: r(p % 12 || 12), H: p, HH: r(p), M: d, MM: r(d), s: v, ss: r(v), l: r(m, 3), L: r(m > 99 ? Math.round(m / 10) : m), t: p < 12 ? "a" : "p", tt: p < 12 ? "am" : "pm", T: p < 12 ? "A" : "P", TT: p < 12 ? "AM" : "PM", Z: o ? "UTC" : (String(i).match(t) || [""]).pop().replace(n, ""), o: (g > 0 ? "-" : "+") + r(Math.floor(Math.abs(g) / 60) * 100 + Math.abs(g) % 60, 4), S: ["th", "st", "nd", "rd"][f % 10 > 3 ? 0 : (f % 100 - f % 10 != 10) * f % 10]};
-			return s.replace(e, function (e) {
-				return e in y ? y[e] : e.slice(1, e.length - 1)
-			})
-		}
-	}();
-	dateFormat.masks = {"default": "ddd mmm dd yyyy HH:MM:ss", shortDate: "m/d/yy", mediumDate: "mmm d, yyyy", longDate: "mmmm d, yyyy", fullDate: "dddd, mmmm d, yyyy", shortTime: "h:MM TT", mediumTime: "h:MM:ss TT", longTime: "h:MM:ss TT Z", isoDate: "yyyy-mm-dd", isoTime: "HH:MM:ss", isoDateTime: "yyyy-mm-dd'T'HH:MM:ss", isoUtcDateTime: "UTC:yyyy-mm-dd'T'HH:MM:ss'Z'"};
-	dateFormat.i18n = {dayNames: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"], monthNames: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]}
-
-	Date.prototype.addDays = function( d ) {
-	   this.setDate( this.getDate() + d ) ;
-	   return this;
-	};
-	Date.prototype.format=function(e,t){return dateFormat(this,e,t)}
-	Date.prototype.addMonths=function(b){a=new Date(this.valueOf());a.setMonth(a.getMonth()+b);return a};
-	Date.prototype.addDays=function(b){a=new Date(this.valueOf());a.setDate(a.getDate()+b);return a};
-	Date.prototype.addHours=function(b){a=new Date(this.valueOf());a.setHours(this.getHours()+b);return a};
-	Date.prototype.addMinutes=function(b){a=new Date(this.valueOf());a.setMinutes(this.getMinutes()+b);return a};
-	Date.prototype.addSeconds=function(b){a=new Date(this.valueOf());a.setSeconds(this.getSeconds()+b);return a};
-	Date.prototype.lastDayOfMonth=function(){return new Date(this.getFullYear(),this.getMonth()+1,0).getDate()};
-
-  	Date.prototype.yyyymmdd = function(d) {
-	    var mm = this.getMonth() + 1; // getMonth() is zero-based
-	    var dd = this.getDate();
-
-	    return [this.getFullYear(),
-	          (mm > 9 ? '' : '0') + mm,
-	          (dd > 9 ? '' : '0') + dd
-	    ].join(d || '');
- 	};
-
-
+	
 
  	secInTime = function(sec){
 
@@ -98,10 +45,6 @@
 
 		return result.join(":")
  	}
-
-	/*isios = function () {
-		return typeof window != 'undefined' && window.cordova && window.device && deep(window, 'device.platform') == 'iOS'
-	}*/
 
 
 	currentYear = function(){
@@ -680,7 +623,7 @@
 					app.actions.offScroll(wnd);
 				}
 
-				if(isTablet() && (wnd.hasClass('normalizedmobile'))){
+				if(app.mobileview && (wnd.hasClass('normalizedmobile'))){
 
 					setTimeout(function(){
 
@@ -697,7 +640,7 @@
 
 			}, 220)
 
-			if(isTablet() && (wnd.hasClass('normalizedmobile'))){
+			if(app.mobileview && (wnd.hasClass('normalizedmobile'))){
 
 			}
 			else{
@@ -874,8 +817,6 @@
 				wnd.removeClass('sette')
 
 				setTimeout(function(){
-
-					console.log('nooverflow', nooverflow)
 
 					if(!nooverflow)
 						app.actions.onScroll();
@@ -1786,7 +1727,7 @@
 		}
 
 		var messageel = $("<div/>", {
-			"class": "sitemessage remove_now removing",
+			"class": "sitemessage remove_now removing " + (p.class || ""),
 			html: m
 
 		})
@@ -6414,8 +6355,6 @@
 				break;
 		}
 
-		console.log('storageLocation', storageLocation)
-
 		window.resolveLocalFileSystemURL(storageLocation, function (fileSystem) {
 
 			fileSystem.getDirectory('Download', {
@@ -6501,7 +6440,6 @@
 				class : "one"
 			})*/
 
-			console.log(evt)
 
 			if(clbk) clbk(null, evt)
 
@@ -6516,8 +6454,6 @@
 
 
 	_scrollTop = function(scrollTop, el, time, direction){
-
-		console.log('direction', direction, scrollTop)
 
 		if(!direction) direction = 'Top'
 
@@ -6785,6 +6721,8 @@
 		var self = this;
 		var needclear = false
 
+		self.destroyed = false
+
 		var throttle = 50
 		var transitionstr = 'transform 50ms linear'
 
@@ -6898,6 +6836,8 @@
 
 			var statusf = function(e, phase, direction, distance){
 
+				if(self.destroyed) return
+
 				if (mainDirection && mainDirection.i != direction){
 					phase = 'cancel'
 					direction = mainDirection.i
@@ -6906,8 +6846,6 @@
 				if (phase == 'cancel' || phase == 'end'){
 
 					if (mainDirection){
-
-						console.log('direction', direction)
 
 						if(phase == 'end' && mainDirection.clbk && direction == mainDirection.i){
 
@@ -6919,7 +6857,7 @@
 					}
 
 					self.clear()
-					document.ontouchmove = () => true
+					//document.ontouchmove = () => true
 
 					return
 
@@ -6950,10 +6888,13 @@
 				if (phase == 'start'){
 					mainDirection = null
 
-					document.ontouchmove = (e) => {
+					/*document.ontouchmove = (e) => {
+
+						e.stopPropagation();
+						e.preventDefault();
 
 						return false
-					}
+					}*/
 				}
 
 				if (phase == 'move'){
@@ -6992,6 +6933,8 @@
 			p.el.swipe('destroy')
 			p = {}
 			needclear = false
+
+			self.destroyed = true
 
 		}
 
@@ -9911,7 +9854,7 @@
 /* TEXT */
 	pluralform = function(n, w){
 
-		if(n <= 1) return w[0]
+		if(n == 1) return w[0]
 
 		return w[1];
 	}
@@ -11544,4 +11487,55 @@ drawRoundedImage = async (url, radius,sWidth, sHeight)=>{
 			resolve("");
 		}
 	})
+}
+
+
+function getRandomFloat(min, max, decimals) {
+	const str = (Math.random() * (max - min) + min).toFixed(decimals);
+
+  
+	return parseFloat(str);
+}
+
+randomizer = function(ar, key){
+
+	if(!key) key = 'probability'
+
+    if(!ar) return null
+    if(!ar.length) return null
+
+    ar = _.sortBy(ar, (r) => {return - Number(r[key] || 0) })
+
+    var total = _.reduce(ar, function(sum, r){ 
+        return sum + Number(r[key] || 0) 
+    }, 0)
+
+    if (total <= 0) return ar[f.rand(0, ar.length - 1)]
+
+    var seed = getRandomFloat(0, total, 8)
+
+    var counter = 0
+
+    return _.find(ar, function(a){
+
+        if(counter + a[key] > seed && counter <= seed){
+            return true
+        }
+
+        counter = counter + a[key]
+		
+    })
+
+}
+
+randomizerarray = function(ar, count, key){
+	var r = []
+
+	for (var i = 0; i < count; i++){
+		var v = randomizer(ar, key)
+
+		if (v) r.push(v)
+	}
+
+	return r
 }

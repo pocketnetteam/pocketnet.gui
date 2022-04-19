@@ -1,7 +1,6 @@
 
 
 <div id="<%-module.map.id%>" class="unselecmobile">
-	
 	<div class="menuWrapper">
 		<div class="rightchatspacer">
 			<div class="sections">
@@ -40,7 +39,7 @@
 											<% } else { %>
 												<%-(lkey.name || '').toLowerCase()%> 
 											<% } %>
-											
+
 											<i class="fas fa-caret-down"></i>
 										</div>
 									</div>						
@@ -140,10 +139,10 @@
 						<div class="items">
 							<div class="item  right state onlyicon" events="state">
 								
-								<div class="icon"> <% if(state) {%> <a elementsid="userpage?id=system16" href="userpage?id=system16">	<% } else { %> <a elementsid="hrefsystem16" href="system16"> <% } %>
+								<div class="icon">
 									<div class="icn">
 										<i class="fas fa-wifi"></i>
-									</div></a>
+									</div>
 								</div>
 								
 							</div>
@@ -173,8 +172,11 @@
 									%>
 									
 									<div class="icon">
+
+
+										
 										<a elementsid="<%-app.platform.api.authorlink(user.address.value.toString('hex'))%>" href="<%-app.platform.api.authorlink(user.address.value.toString('hex'))%>">	
-											<div class="usericon" visibleimage="true" image="<%-src || '*'%>" ban=".gif">
+											<div class="usericon" <% if(src) {%> style="background-image: url(<%-src%>); background-size: cover; background-position: center center; background-repeat: no-repeat;" <% } %>>
 
 												<% if(!src && letter) {%>
 

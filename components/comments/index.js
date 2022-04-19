@@ -122,6 +122,8 @@ var comments = (function(){
 
 				if (id == '0')
 				{
+
+
 					if (areas[id])
 
 						areas[id].setText('');
@@ -1223,8 +1225,6 @@ var comments = (function(){
 
 				var comment = self.app.platform.sdk.comments.find(txid, id, pid)
 
-				console.log('comment', comment)
-
 				if (!comment && listpreview && ed.lastComment){
 					comment = self.app.platform.sdk.comments.ini([ed.lastComment])[0]
 				}
@@ -1545,7 +1545,7 @@ var comments = (function(){
 						}
 
 						actions.lightarea(p.id || '0', c)
-						
+						areas[p.id || '0'] = this
 
 						// Hide the emoji button for mobiles and tablets
 						if (isMobile() || isTablet())
@@ -1951,7 +1951,9 @@ var comments = (function(){
 							el.c.removeClass('preview')
 
 							var __clbk = function(a, b){
-								clbk(a, b)
+
+								if (clbk)
+									clbk(a, b)
 
 
 								if (_clbk){
@@ -2021,6 +2023,10 @@ var comments = (function(){
 								
 								
 							})
+
+							if(clbk) clbk()
+
+							clbk = null
 
 							return
 						} else {
@@ -2174,7 +2180,6 @@ var comments = (function(){
 								return c.id == p.add
 							})
 
-							console.log('addcomment', addcomment, comments, p.add)
 
 							if (addcomment){
 								if(ed.fromtop)
@@ -2229,6 +2234,8 @@ var comments = (function(){
 						}
 
 					}, function(_p){
+
+						if(!_p.el) return
 
 						if(!preview)
 							p.el.removeClass('listloading')
@@ -2483,6 +2490,7 @@ var comments = (function(){
 
 		var makePreview = function(clbk){	
 
+
 			var p = {};
 
 			renders.post(function(area){
@@ -2514,6 +2522,7 @@ var comments = (function(){
 
 			var p = {};			
 
+
 			load.level(null, function(comments){
 
 				p.comments = self.app.platform.sdk.comments.storage[txid]['0']
@@ -2530,8 +2539,9 @@ var comments = (function(){
 
 					el.c.find('.loaderWrapper').addClass('hidden')
 
+
 					renders.post(function(area){
-						areas["0"] = area
+						
 
 						if (ed.reply){
 							actions.fastreply(ed.reply)
@@ -2634,7 +2644,6 @@ var comments = (function(){
 				preview = ed.preview || false;
 				listpreview = ed.listpreview || false;
 
-				console.log("listpreview", listpreview, preview)
 				showedall = false;
 
 				txid = ed.txid || null
@@ -2661,6 +2670,34 @@ var comments = (function(){
 					})
 				}
 
+			},
+
+			attention : function(text){
+
+				if(isMobile() || !text){
+					el.c.find('.post').addClass('attention')
+				}
+				else{
+					el.c.find('.leaveCommentPreview').css('opacity', '0')
+
+					setTimeout(function(){
+
+						if(!el.c) return
+
+						el.c.find('.post').addClass('attention')
+
+						if (text)
+							el.c.find('.leaveCommentPreview').attr('placeholder', text)
+
+						setTimeout(function(){
+
+							if(!el.c) return
+
+							el.c.find('.leaveCommentPreview').css('opacity', '')
+						}, 100)
+					}, 100)
+					
+				}
 			},
 
 			authclbk : function(){

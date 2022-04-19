@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="no-js customscroll" lang="">
+<html class="no-js customscroll applicationhtml" lang="">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -34,7 +34,7 @@
         media-src blob: *">
 
         <link rel="manifest" href="manifest.json">
-        <link rel="apple-touch-icon" href="__VAR__.domain/img/res/blue_pad_250.png" sizes="250x250">
+        <link rel="apple-touch-icon" href="img/res/blue_pad_250.png" sizes="250x250">
         <meta name="theme-color" content="#011621" />
 
         <link rel="dns-prefetch" href="__VAR__.domain:8899" />
@@ -140,6 +140,8 @@
         __JS__
 
         __CSS__
+
+        __JSPOST__
 
         <link rel="stylesheet" href="css/fontawesome/css/all.min.css">
 

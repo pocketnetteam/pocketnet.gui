@@ -31,9 +31,7 @@ var value = Number(share.score)
 
 var metadisplay = function(){ %>
 
-<div class="meta">
-	<div class="metatable">
-		<div class="metadata">
+
 
 			<% if(!emptywithrepost) {%>
 
@@ -72,21 +70,13 @@ var metadisplay = function(){ %>
                                 </div>
                             </a>
                         </div>
-
-						<div class="authorCell">
-							<% if(!ed.horizontal) {%>
-								<span class="adr"><%-(name || share.address) %></span><% if(reputation > 1 || reputation < -1) {%><sup class="spsp"><%-compressedNumber(reputation, 1)%></sup><% } %>
-
-								
-							<% } %>
-						</div>		
 						<% if(!ed.horizontal) {%>
+							<div class="authorCell">
+								<span class="adr"><%-(name || share.address) %></span><% if(reputation > 1 || reputation < -1) {%><sup class="spsp"><%-compressedNumber(reputation, 1)%></sup><% } %>
+							</div>		
+
 							<div class="datetime">
-								<% if(share.time) {%>
-									<span  class="realtime" time="<%-share.time%>"><%- app.reltime(share.time) %></span>
-								<% } else { %> 
-									<span><%=e('e13019')%></span>
-								<% } %>
+								<% if(share.time) {%> <span  class="realtime" time="<%-share.time%>"><%- app.reltime(share.time) %></span><% } else { %> <span><%=e('e13019')%></span><% } %><% if(typeof boosted != 'undefined' && boosted) {%> <i class="fas fa-rocket boostedlabel"></i> <span class="boostedlabel"> Boosted</span> <% } %>
 							</div>
 						<% } %>
 						
@@ -94,9 +84,7 @@ var metadisplay = function(){ %>
 				</div>
 
 			<% } %> 
-		</div>
-	</div>					
-</div>
+		
 	
 <% }
 
@@ -110,14 +98,10 @@ var metadisplay = function(){ %>
 
 			c = filterXSS(clearScripts(c))
 		%>
-			<div class="paddingWrapper">
 				<div class="sharecaption canmark opensviurl" title="<%-nl2br(trimrn(c))%>">
-					<div>
-						<% if(ed.horizontal) {%><span class="adr"><%-name || share.address %>:</span><% } %>
-						<span><%=app.actions.emoji(nl2br(trimrn(c)))%></span>
-					</div>
+					<% if(ed.horizontal) {%><span class="adr"><%-name || share.address %>:</span><% } %>
+					<span><%=app.actions.emoji(nl2br(trimrn(c)))%></span>
 				</div>
-			</div>
 
 		<% } %>
 		
@@ -164,14 +148,6 @@ var metadisplay = function(){ %>
 
 			<div class="anothercntswrk">
 
-				<div class="cntswrk formeta">
-
-					<div class="metawrapper"> 
-						<% metadisplay() %> 
-					</div> 
-
-				</div>
-
 				<div class="cntswrk">
 
 					<% var a = ["i", "cm", "p"] %>
@@ -183,8 +159,10 @@ var metadisplay = function(){ %>
 					<% }) %>
 
 				</div>
-				
 
+				<div class="cntswrk formeta">
+						<% metadisplay() %> 
+				</div>
 			</div>
 		</div>
 		

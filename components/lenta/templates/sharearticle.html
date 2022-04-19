@@ -93,13 +93,14 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
             </div>
 
         <% } %>
-
+        <% if(!lockedaccount) {%>
             <div class="item pkoin right unselectedtable">
                 <img src="img/pocketnet_logo_white.svg" alt="">
                 <span class="<% if(!all) { %> workstation <% } %>">
                     PKOIN
                 </span>
             </div>
+        <% } %>
         
     </div>
     
@@ -111,7 +112,7 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
         <div class="sys unselectablemobile">
             <%if(share.pin){%>
             <span class="pinnedLabel"><i class="fas fa-thumbtack"></i> <%=e('pinned').toLowerCase()%>,</span><%}%><% if(share.downloadedDate) {%> <span class="fas fa-cloud-download-alt"></span> <span class="realtime editedLabel" time="<%-share.downloadedDate%>"><%- app.reltime(share.downloadedDate) %></span><% } else { %> 
-            <% if(share.time) {%><span  class="realtime" time="<%-share.time%>"><%- app.reltime(share.time) %></span><% } else { %><span><%=e('e13019')%></span><% } %><% if(share.edit == 'true') {%><span class="editedLabel">, <%=e('e13130').toLowerCase()%></span><% } %><% } %><% if(share.visibility()) {%><span class="visibilityLabel">, <%=e('sharevisibility_' + share.visibility()).toLowerCase()%></span><% } %>
+            <% if(share.time) {%><span  class="realtime" time="<%-share.time%>"><%- app.reltime(share.time) %></span><% } else { %><span><%=e('e13019')%></span><% } %><% if(typeof boosted != 'undefined' && boosted) {%> <i class="fas fa-rocket boostedlabel"></i> <span class="boostedlabel"> Boosted</span> <% } %><% if(share.edit == 'true') {%><span class="editedLabel">, <%=e('e13130').toLowerCase()%></span><% } %><% } %><% if(share.visibility()) {%><span class="visibilityLabel">, <%=e('sharevisibility_' + share.visibility()).toLowerCase()%></span><% } %>
         </div>
     <% } else { %> 
         <div class="sys unselectablemobile">
@@ -219,7 +220,7 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
 	
             </div>
 
-            <% if(!my && !all) {%>
+            <% if(!all) {%>
                 <div class="panelRight">
                     <% displaypkoin() %>
                 </div>
@@ -454,10 +455,16 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
 
                                 <% makecaptionclear() %>
 
-                                <% if(!share.temp){%>
+                                <% if(!share.temp){
+                                    
+                                    var edjs = new edjsHTML(null, app)
+                                    var message = edjs.apply(share.message, decodeURIComponent)
+				                    var words = edjs.words(message)
+                                    
+                                    %>
 
                                     <div class="buttonOpenWrapper">
-                                        <div class="black articleclick readarticlebutton"><%= e('readarticle') %></div>
+                                        <div class="black articleclick readarticlebutton"><%= e('readarticle') %> <span>(<%-e('art_wordscount')%> <%-words%>)</span></div>
                                     </div>
 
                                 <%} else{ %>

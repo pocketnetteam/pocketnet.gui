@@ -831,6 +831,72 @@ ComplainShare = function(){
 	return self;
 }
 
+ContentBoost = function(txid){
+	var self = this;
+	
+	self.txid = txid;
+
+	self.amount = {
+		set : function(_v){
+			this.v = _v
+		},
+		v : ''
+	};
+
+	self.ustate = 'contentBoost'
+
+	self.validation = function(){
+
+		if (!self.amount.v){
+			return 'amount';
+		}
+
+		return false;
+	}
+
+
+	self.serialize = function(){
+
+		return encodeURIComponent(self.txid)
+	}
+
+	self.export = function(alias){
+
+		if(!alias){
+			return {
+				content : self.txid
+			}
+		}
+		else{
+			return {
+				content : self.txid
+			}
+		}
+
+	}
+
+	self.import = function(p){
+
+		if (p.amount && p.txid)
+			self.amount.v = p.amount
+			self.txid = p.txid;
+
+
+	}
+
+
+	self.type = 'contentBoost'
+
+
+	self.typeop = function(){
+
+        return self.type;
+
+	}
+
+	return self;
+}
+
 Share = function(lang){
 
 	var self = this;
@@ -2559,7 +2625,8 @@ kits = {
 		blocking : Blocking,
 		unsubscribe : Unsubscribe,
 		subscribe : Subscribe,
-		subscribePrivate : SubscribePrivate
+		subscribePrivate : SubscribePrivate,
+		contentBoost : ContentBoost
 	},
 
 	ini : {

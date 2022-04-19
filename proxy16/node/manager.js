@@ -5,6 +5,7 @@ var _ = require('lodash');
 var f = require('../functions');
 const { performance } = require('perf_hooks');
 const queuemethods = {
+    getcontent: true,
     getcontents: true,
     getlastcomments: true,
     gettags: true,
@@ -24,7 +25,9 @@ const queuemethods = {
     getpagescores: true,
     gethierarchicalstrip : true,
     getusercontents : true,
-    getcontentsstatistic : true
+    getcontentsstatistic : true,
+    getboostfeed : true,
+    getprofilefeed : true
 }
 
 const exepmethods = {
@@ -37,7 +40,7 @@ var Nodemanager = function(p){
 
     var self = this;
     var inited = false;
-    var cachedchain = null
+    var cachedchain = null;
 
     self.askedpeers = {};
     self.askedpeerssuccess = {};
@@ -55,12 +58,13 @@ var Nodemanager = function(p){
     var findInterval = null
     var safetimeout = 1000
     var peernodesCheckTime = 10000000
-    var usersfornode = 100
+    var usersfornode = 50
     var commonnotinitedInterval = null
     var queue = []
     var queueInterval = null
 
     var minnodescount = global.MIN_NODES_COUNT || 1
+    var usetrustnodesonly = global.USE_TRUST_NODES_ONLY || false
 
     var db = new Datastore(f.path(p.dbpath));
    
@@ -163,6 +167,8 @@ var Nodemanager = function(p){
     }
 
     self.find = function(){
+
+        
 
         var notinitednodes = _.filter(self.nodes, function(node){
             return !node.inited
@@ -881,6 +887,10 @@ var Nodemanager = function(p){
                             if(i < 5) return true
                         })
 
+                        if (usetrustnodesonly){
+                            docs = []
+                        }
+
                         var nodes = _.map(c.concat(p.stable, docs || []) , function(options){
 
                             var node = new Node(options, self)
@@ -1169,6 +1179,8 @@ var Nodemanager = function(p){
         },
 
         peerAllNodesTime : function(nodes){
+
+            if(usetrustnodesonly) return
 
             var askedsuccess = 0;
 

@@ -3,6 +3,8 @@ if (global.WRITE_LOGS) {
     global.LOG_LEVEL = global.WRITE_LOGS.split("=").pop()
 }
 
+const notifier = require('node-notifier');
+
 var open = require("open");
 
 const {protocol} = require('electron');
@@ -681,14 +683,41 @@ function createWindow() {
         if(p.image){
             pathImage= await saveBlobToFile(p.image)
         }
-        const n = new Notification({ title : p.title, body: p.body, silent :true, icon: pathImage})
-        n.onclick = function(){
 
-            if (win) {
-                win.show();
+        if (!is.windows()) {
+
+            const n = new Notification({ title: p.title, body: p.body, silent: true, icon: pathImage })
+
+            n.onclick = function () {
+
+                if (win) {
+                    win.show();
+                }
             }
+
+            n.show()
         }
-        n.show()
+        else {
+
+            notifier.notify(
+                {
+                    appID : 'app.pocketnet.gui',
+                    title: p.title,
+                    message: p.body,
+                    icon: pathImage, // Absolute path (doesn't work on balloons)
+                    wait: true // Wait with callback, until user action is taken against notification, does not apply to Windows Toasters as they always wait or notify-send as it does not support the wait option
+                },
+                function (err, response, metadata) {
+
+                    if (response != 'timeout')
+
+                        if (win) {
+                            win.show();
+                        }
+                }
+            );
+
+        }
 
     })
 

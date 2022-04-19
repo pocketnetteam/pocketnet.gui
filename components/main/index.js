@@ -38,7 +38,10 @@ var main = (function(){
 			{
 				link : 'index?r=sub',
 				label : () => self.app.localization.e('e13137'),
-				value : 'sub'
+				value : 'sub',
+				if : function(){
+					return self.app.user.getstate()
+				}
 			},
 			
 			{
@@ -438,6 +441,8 @@ var main = (function(){
 			},
 
 			topvideos: function (show) {
+
+				if(!el.topvideos) return
 				
 				if (show){
 
@@ -496,10 +501,11 @@ var main = (function(){
 						external = null
 					}
 
-					el.topvideos.find('.wrpcn').html('')
-					//showmoreby.removeClass('hasshares')
-
-					el.topvideos.addClass('hidden')
+					if(el.topvideos){
+						el.topvideos.find('.wrpcn').html('')
+						el.topvideos.addClass('hidden')
+					}
+					
 				}
 
 				
@@ -661,6 +667,7 @@ var main = (function(){
 				}
 
 				self.app.user.isState(function(state){
+
 				
 					self.nav.api.load({
 						open : true,
@@ -685,6 +692,7 @@ var main = (function(){
 							recommendedUsers : isMobile(),
 							recommendedUsersCount : isMobile() ? 15 : 3,
 							//includesub : true,
+							includeboost : self.app.boost,
 							optimize : self.app.mobileview,
 							extra :/* state && isMobile() ? [
 								{
@@ -778,12 +786,14 @@ var main = (function(){
 
 				if(isMobile()) return
 
-				upbutton = self.app.platform.api.upbutton(el.up, {
-					top : function(){
-						return '65px'
-					},
-					rightEl : el.c.find('.leftpanelcell')
-				})	
+				if(el.c)
+
+					upbutton = self.app.platform.api.upbutton(el.up, {
+						top : function(){
+							return '65px'
+						},
+						rightEl : el.c.find('.leftpanelcell')
+					})	
 			},
 
 			post : function(id){
@@ -808,12 +818,12 @@ var main = (function(){
 						openedpost = p
 					}, {
 						video : true,
+						showrecommendations : true,
 						autoplay : true,
 						nocommentcaption : true,
 						r : 'recommended',
 						
 						opensvi : function(id){
-
 
 							if (openedpost){
 						
@@ -825,7 +835,12 @@ var main = (function(){
 
 							renders.post(id)
 
+							self.nav.api.history.addParameters({
+								v : id
+							})
+
 							self.app.actions.scroll(0)
+							
 						}
 					})
 				}
@@ -845,6 +860,7 @@ var main = (function(){
 		}
 
 		var initstick = function(){
+			return
 			if(!self.app.mobileview && !hsready){
 
 				var t1 = 75
@@ -890,7 +906,6 @@ var main = (function(){
 
 				if(leftparallax) leftparallax.destroy()
 				
-
 				leftparallax = new SwipeParallaxNew({
 
 					el : el.c.find('.leftpanelcell'),
@@ -1019,6 +1034,8 @@ var main = (function(){
 					return r
 				}));
 
+				
+
 				var nsearchtags = words.length ? words : null
 				var nsearchvalue = parameters().ss || ''
 				var ncurrentMode = parameters().r || 'common';
@@ -1065,6 +1082,7 @@ var main = (function(){
 					}
 				}
 				else{
+					
 					if (el.c)
 						el.c.removeClass('videomain')
 
@@ -1073,6 +1091,7 @@ var main = (function(){
 
 
 				if (changes){
+
 
 					if (external) {
 						external.clearessense()
@@ -1136,8 +1155,7 @@ var main = (function(){
 
 				beginmaterial = _s.s || _s.i || _s.v || null;
 
-				
-				if((!beginmaterial && !_s.ss && !_s.sst && !p.state && (window.cordova || self.app.platform.matrixchat.connectWith))){
+				if((!beginmaterial && !_s.ss && !_s.sst && !p.state && (self.app.mobileview || window.cordova || self.app.platform.matrixchat.connectWith))){
 					
 					self.nav.api.load({
 						open : true,

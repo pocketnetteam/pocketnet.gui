@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="no-js cordova customscroll" lang="">
+<html class="no-js cordova customscroll applicationhtml" lang="">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -124,6 +124,8 @@
         __JS__
 
         __CSS__
+
+        __JSPOST__
 
         <link rel="stylesheet" href="css/fontawesome/css/all.min.css">
 

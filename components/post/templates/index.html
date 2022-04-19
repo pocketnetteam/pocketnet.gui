@@ -15,13 +15,29 @@ if(typeof share != 'undefined' && share){
 
 %>
 
-<div id="<%- ed.repost && !ed.postclass ? makeid() : module.map.id%>" class="poctelc <% if(ed.video) {%> videomainpost <%- (aspectRatio <= 0.9) && (aspectRatio > 0) ? 'verticalVideo' : ''%>  <%- (aspectRatio > 0.9) && (aspectRatio < 1.25) ? 'squareVideo' : ''%> <% } %> <%-widthcontainer%>">
-	<% if(typeof notfound == 'undefined' || !notfound) {%>
+<div id="<%- ed.repost && !ed.postclass ? makeid() : module.map.id%>" class="poctelc <% if(typeof recommendationsenabled != 'undefined' && recommendationsenabled) {%> recommendationsenabled <% } %> <% if(ed.video) {%> videomainpost <%- (aspectRatio <= 0.9) && (aspectRatio > 0) ? 'verticalVideo' : ''%>  <%- (aspectRatio > 0.9) && (aspectRatio < 1.25) ? 'squareVideo' : ''%> <% } %> <%-widthcontainer%>">
+	
+	
+	<% if(typeof notfound == 'undefined' || !notfound) {
+		
+		
+		%>
 	
 		<div class="postWrapper">
 
-			<div elementsid="openshare" class="share share_common">
+			<div elementsid="openshare" class="share share_common postsharemain">
 			</div>
+			<% 
+			
+			
+			
+			if(!ed.repost) {%>
+				<div class="recomandationsFromContent">
+					<div class="recomandationsbgwrapper">
+						
+					</div>
+				</div>
+			<% } %>
 
 		</div>
 
@@ -30,5 +46,8 @@ if(typeof share != 'undefined' && share){
 			<%=e('postNotFound')%>
 		</div>
 	<% } %> 
+
+	
+
 </div>
 

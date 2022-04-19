@@ -217,12 +217,18 @@ var menu = (function(){
 								
 							}
 
-							self.nav.api.go({
-								href : k,
-								history : true,
-								open : true,
-								handler : true
-							})
+							self.app.actions.scrollToTop()
+
+							setTimeout(function(){
+								self.nav.api.go({
+									href : k,
+									history : true,
+									open : true,
+									handler : parameters().video && parameters().v
+								})
+							}, 50)
+
+							
 						//}
 
 					})
@@ -327,6 +333,8 @@ var menu = (function(){
 						}
 						
 					},2000)
+
+					actions.ahnotify(el, unseen().length, 'notifications')
 
 					
 				},
@@ -717,13 +725,29 @@ var menu = (function(){
 					self.app.errors.clbks.menu = function(){
 						action()
 					}
+				},
 
-					if(!self.app.mobileview)
-						el.tooltipster({
-							theme: 'tooltipster-light',
-							maxWidth : 300,
-							zIndex : 200,
-						});
+
+				click : function(){
+
+					var state = self.app.user.getstate()
+
+					var href = 'system16'
+
+					if(state && !self.app.mobileview){
+						href = 'userpage?id=system16'
+					}
+
+					self.app.platform.appstateclbk(function(){
+
+						self.nav.api.go({
+							open : true,
+							href : href,
+							history : true
+						})
+						
+					})
+
 				}
 			},
 
@@ -790,7 +814,6 @@ var menu = (function(){
 						    	el.removeClass(c)
 						    });
 						}
-					
 						
 					}
 
@@ -818,18 +841,6 @@ var menu = (function(){
 							self.app.platform.sdk.wallet.drawSpendLine(el.find('.numberWrp'))
 						})
 
-					}
-
-					var setNewBalance = function(){
-						self.app.platform.sdk.node.transactions.get.allBalance(function(amount){
-
-
-							var t = self.app.platform.sdk.node.transactions.tempBalance()
-
-
-							setValue(amount - current + t)	
-							
-						})
 					}
 
 					var act = function(){
@@ -962,51 +973,7 @@ var menu = (function(){
 
 			})
 
-
-
 			ParametersLive([loc], el.c);
-
-
-
-
-			////
-
-			/*if(typeof _Electron != 'undefined'){
-				var electron = require('electron');
-				var remote = electron.remote; 
-
-				var full = function(){
-					var window = remote.getCurrentWindow();
-
-					if (window.isFullScreen()){
-						el.c.addClass('fullscreen')
-					}
-					else{
-						el.c.removeClass('fullscreen')
-					}
-				}
-				 
-				el.c.find('.closeApp').on('click', function(){
-					var window = remote.getCurrentWindow();
-					window.close(); 
-				})
-
-				el.c.find('.miniizeApp').on('click', function(){
-					var window = remote.getCurrentWindow();
-					window.minimize(); 
-				})
-
-				el.c.find('.toggleMinMax').on('click', function(){
-					var window = remote.getCurrentWindow();
-					window.setFullScreen(!window.isFullScreen());
-
-					full()
-				})
-
-				full()
-			}*/
-
-			
 		}
 
 		var renders = {
@@ -1077,9 +1044,6 @@ var menu = (function(){
 					data.lkey = app.localization.current()
 					data.theme = self.app.platform.sdk.theme.current == "white" ? 'white' : 'black'
 
-
-					var userinfo = deep(app, 'platform.sdk.user.storage.me')
-
 					data.haschat = self.app.platform.matrixchat.core
 
 				if(p.state){
@@ -1141,7 +1105,7 @@ var menu = (function(){
 						e.destroy()
 				})
 
-				if (el.c) el.c.empty()
+				//if (el.c) el.c.empty()
 
 				el = {};
 			},

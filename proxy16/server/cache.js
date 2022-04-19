@@ -204,6 +204,11 @@ var Cache = function(p){
                 time : 460,
                 block : 0
             },
+
+            // node +
+            getcontent: {
+                time : 82000,
+            },
             
             // node +
             getcontents: {
@@ -261,11 +266,27 @@ var Cache = function(p){
                 block : 0,
             },
 
-            getrecomendedcontentsbyscoresonsimilarcontents : {
+            gettopfeed : {
+                time : 3600
+            },
+
+            gettopaccounts : {
+                time : 3600
+            },
+
+            getcontentactions : {
+                time : 3600
+            },
+
+            getrecommendedcontentbyaddress : {
                 time : 3600
             },
 
             getrecomendedaccountsbysubscriptions : {
+                time : 3600
+            },
+
+            getrecommendedaccountbyaddress : {
                 time : 3600
             },
 

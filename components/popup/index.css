@@ -44,30 +44,92 @@
 #popup .marketing-app-button {
   font-weight: normal;
 }
-.popupwnd .wndcontent {
+#popup .applicationcnt {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+#popup .applicationcnt .apltable {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+#popup .applicationcnt .apltable > div {
+  text-align: center;
+}
+#popup .applicationcnt .apltable > div.forimage {
+  width: 302px;
+  height: 100%;
+}
+#popup .applicationcnt .apltable > div.forimage .image {
+  width: 100%;
+  height: 100%;
+}
+#popup .applicationcnt .text {
+  margin-bottom: 2em;
+  padding: 0 4em;
+}
+#popup .applicationcnt .text span {
+  font-size: 2em;
+  font-weight: 100;
+}
+#popup .applicationcnt .features {
+  max-width: 80%;
+  margin: 0 auto;
+  margin-bottom: 1.5em;
+}
+#popup .applicationcnt .features .feature {
+  margin-bottom: 0.5em;
+}
+#popup .applicationcnt button {
+  min-width: 270px;
+}
+.wnd.popupwnd .wndcontent {
   top: 0;
   padding: 0;
 }
-.popupwnd .wndinner {
+.wnd.popupwnd .wndinner {
   width: 450px;
   height: 100%;
   max-height: 350px;
 }
-.popupwnd .caption {
+.wnd.popupwnd .caption {
   position: absolute;
   left: 0;
   right: 0;
   top: 0;
   height: 100px;
 }
-.popupwnd .pcontent {
+.wnd.popupwnd .pcontent {
   position: absolute;
-  overflow-x: auto;
   left: 0;
   right: 0;
   bottom: 0;
   top: 100px;
   padding: 0 2em;
+}
+.wnd.popupwnd.application .wndinner {
+  width: 100%;
+  height: 100%;
+  max-height: 450px;
+  max-width: 650px;
+}
+.wnd.popupwnd.application .wndcontent {
+  border-radius: 6px;
+}
+.wnd.popupwnd.application #popup .caption {
+  display: none;
+}
+.wnd.popupwnd.application #popup .pcontent {
+  top: 0;
+}
+.wnd.popupwnd.application .wndinner > div.buttons {
+  display: none;
+}
+.wnd.popupwnd.application .wndinner > div.wndcontent {
+  bottom: 0;
 }
 @media only screen and (max-width: 640px) {
   .popupwnd .wndinner {

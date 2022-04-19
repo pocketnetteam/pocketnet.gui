@@ -556,14 +556,12 @@ var registration = (function(){
 
 					var ch = function(){
 
-						console.log('allBalanceCheck')
 
 						self.app.platform.sdk.node.transactions.get.allBalance(function(amount){
 							
 							topPreloader(100);
 
 
-							console.log('allBalance', amount)
 	
 							b()
 							
@@ -611,7 +609,6 @@ var registration = (function(){
 
 				self.sdk.users.requestFreeMoney(function(res, err){
 
-					//console.log('res, err', res, err)
 
 					var address = self.sdk.address.pnet().address;
 
@@ -630,7 +627,6 @@ var registration = (function(){
 
 						}
 
-						console.log('err', err)
 
 						if (err == 'error' || err == 'iplimit'){
 
@@ -1246,7 +1242,6 @@ var registration = (function(){
 					k.mk = self.app.user.private.value.toString('hex');
 
 
-					console.log(k.mainAddress)
 				}
 
 				actions.next();
@@ -1300,7 +1295,6 @@ var registration = (function(){
 						localStorage['regproxy'] = regproxy.id
 					}
 
-					console.log('regproxy', regproxy)
 
 					clbk(data);
 				})

@@ -286,7 +286,6 @@ var system16 = (function(){
 
 					stats = lastelements(stats, 1000)
 
-					console.log('stats', stats.length)
 
 					if (el.c){
 						renders.nodescontenttable(el.c)
@@ -1966,7 +1965,6 @@ var system16 = (function(){
 
 							}).catch(e => {
 
-								console.log("E", e)
 
 								wnd.find('.addproxy').removeClass('loading')
 
@@ -3826,13 +3824,11 @@ var system16 = (function(){
 
 					stats = data.stats
 
-					console.log('stats', data.stats)
 
 					stats = lastelements(stats, 1000)
 
 					actions.convertTime(stats)
 
-					console.log('stats', stats.length)
 
 					setTimeout(function(){
 						makers.stats()

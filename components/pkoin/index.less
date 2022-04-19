@@ -53,15 +53,24 @@
 
 		}
 
+		.abswrappcontent{
+			position: absolute;
+			left : 0;
+			right: 0;
+			top : 70px;
+			bottom : 91px;
+			padding-bottom: 3 * @rhythm;
+		}
 
 		.profile{
 			display: flex;
 			align-items: top;
-			padding: @rhythm * 2 @rhythm * 2 @rhythm @rhythm * 2;
-
+			padding: 2 * @rhythm;
+			background: rgb(var(--background-secondary-theme));
 			.description{
 				padding-left: @rhythm;
 				padding-top : 0.5 * @rhythm;
+				
 				.name{
 					font-weight: 700;
 				}
@@ -71,9 +80,10 @@
 					overflow: hidden;
 					text-overflow: ellipsis;
 					display: -webkit-box;
-					-webkit-line-clamp: 1;
-					line-clamp: 1;
+					-webkit-line-clamp: 2;
+					line-clamp: 2;
 					-webkit-box-orient: vertical;
+					font-size: 0.8em;
 				}
 			}
 		}
@@ -187,12 +197,12 @@
 						.notion{
 							display: flex;
 							justify-content: space-between;
-							font-size: 0.9em;
+							font-size: 0.8em;
 							margin-top: @rhythm;
 
 							.balance{
 								display: flex;
-								padding-left: @rhythm;
+								padding-left: 3 * @rhythm;
 				
 								.text{
 									color: rgb(var(--neutral-grad-3));
@@ -210,6 +220,7 @@
 
 							.errorWrapper{
 								padding-left: @rhythm;
+								padding-right: 3 * @rhythm;
 								color: rgb(var(--color-bad));
 							}
 						}
@@ -221,6 +232,9 @@
 					.text{
 						line-height: 24px;
 						color: rgb(var(--color-txt-gray-dark));
+						font-size: 0.8em;
+						font-weight: 700;
+						text-align: center;
 					}
 				}
 			}
@@ -229,6 +243,7 @@
 		.sendButtonWrapper{
 			padding: @rhythm * 3 @rhythm * 2;
 			border-top: 1px solid rgba(var(--neutral-grad-1), 0.5);
+			background: rgb(var(--background-total-theme));
 
 			.sendButton{
 				padding: 12px 16px;
@@ -247,6 +262,36 @@
 
 	}
 
+	.boostinfodata{
+		text-align: center;
+		margin-top : @rhythm;
+		border-radius: 12px;
+		background: rgb(var(--background-secondary-theme));
+		border : 1px solid rgb(var(--neutral-grad-0));
+
+		.label{
+			padding: @rhythm;
+			span{
+				font-size: 0.8em;
+				font-weight: 700;
+			}
+		}
+
+		.probability{
+			span{
+				font-size: 1.5em;
+				font-weight: 100;
+			}
+		}
+
+		.text{
+			padding: @rhythm;
+			span{
+				font-size: 0.7em;
+			}
+		}
+	}
+
 }
 
 .wnd.pkoinwindow{
@@ -254,7 +299,7 @@
 		
 		&.pkoin{
             max-width: 370px;
-			max-height: 520px;
+			max-height: 620px;
 			box-shadow: none;
 
         }
@@ -292,6 +337,18 @@ html.mobileview{
 			.sendButtonWrapper{
 				position: static;
 			}
+
+			.abswrappcontent{
+				position: static;
+			}
+
+			.boostinfodata{
+				.text{
+					span{
+						font-size: 0.8em;
+					}
+				}
+			}
 		}
 	}
 }
@@ -301,11 +358,24 @@ html.mobileview{
 	.wnd.pkoinwindow{
 	
 		#pkoin{
+
+			.abswrappcontent{
+				position: static;
+			}
+
 			.sendButtonWrapper{
 				position: static;
 				bottom : 0;
 				left : 0;
 				right: 0;
+			}
+
+			.boostinfodata{
+				.text{
+					span{
+						font-size: 0.8em;
+					}
+				}
 			}
 		}
 	}

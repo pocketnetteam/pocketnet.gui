@@ -471,6 +471,7 @@ ____loclib.removeDescription = "Remove description"
 ____loclib.preview = "Preview"
 ____loclib.autoplayVideo = "Autoplay Video"
 ____loclib.onlyVideo = "Only video"
+____loclib.signToComment = "To view or post comments, you need to login or register"
 
 ____loclib.e13023 = "Do you really want to unblock user?"
 ____loclib.e13024 = "Your Private Login Key"
@@ -1044,6 +1045,7 @@ ____loclib.e14105 = "Videos"
 ____loclib.e14106 = "Applications"
 ____loclib.e14107 = "Check for updates"
 ____loclib.e14108 = "Share answer"
+____loclib.e141081 = "Menu"
 ____loclib.e14109 = "Where do I download the Android App?"
 ____loclib.e14110 = "Google Play Market"
 
@@ -2140,7 +2142,7 @@ ____loclib.videobloggerRequest_er_email = "Leave an email for feedback"
 
 ____loclib.videobloggerRequest_submitted = "Thank you for contacting us, we will review your application"
 
-____loclib.canuseipsetting = "Allow connection via ip over http directly. Not safe"
+____loclib.canuseipsetting = "Allow connection via ip over http directly. Insecure connection"
 
 ____loclib.optimizationtip = function(v){
     return v + ' hidden viewed posts'
@@ -2153,3 +2155,43 @@ ____loclib.thankTheAuthor = 'Thank the author';
 ____loclib.encourageAuthor = "Encourage author";
 
 ____loclib.gotoProfile2 = "Go to Profile";
+
+____loclib.countviews = "Views";
+____loclib.countview = "View";
+
+____loclib.popup_applications_header = "Important! Please download Bastyon Application";
+
+____loclib.popup_applications_feature_1 = "Desktop application is the most censorship resistant way to use Bastyon";
+____loclib.popup_applications_feature_2 = "Desktop application doesn't depend on bastyon.com";
+____loclib.popup_applications_feature_3 = "Desktop is like a built-in VPN";
+
+____loclib.popup_applications_button = " Download here";
+____loclib.norecommendedvideos = "No recommended videos found";
+
+____loclib.boosted = "Boosted";
+
+
+____loclib.probability = "Probability";
+
+____loclib.probabilitytext = function(lang){
+	return "Probability that a post will appear among the first <b>30</b> posts in the feed by language <b>"+lang+"</b> for approximately <b>300</b> minutes"
+};
+
+____loclib.probabilitytexterror = "Unable to calculate promotion probability";
+
+____loclib.image = "Image";
+____loclib.file = "File";
+
+____loclib.othervideos = "Other videos";
+
+____loclib.starssendcomments = "Leave a comment for the author";
+____loclib.starssendcommentn = "Leave a comment for the author";
+____loclib.starssendcommentp = "Leave a comment for the author";
+
+____loclib.savevideo = "Download video";
+
+____loclib.useanimations = "Enable animations";
+
+____loclib.welcomecaption1 = "Bastyon of Free Speech";
+____loclib.welcomecaption2 = "Read Content Banned by Big Tech";
+____loclib.welcomecaption3 = "Chat privately with friends - no SIM card";

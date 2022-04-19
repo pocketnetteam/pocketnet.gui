@@ -360,14 +360,28 @@ var WSS = function(admins, manage){
             var device = message.device;
             var block = message.block || 0;
 
-            if(!address || !device) return
+            if(!address || !device) {
+                sendMessage({
+                    msg : 'address, device'
+                }, ws).catch(e => {
+                    
+                })
+
+                return
+            }
 
             var user = null
       
             var authorized = self.pocketnet.kit.authorization.signature(signature, address)
 
             if(!authorized) {
-                return false
+                sendMessage({
+                    msg : 'notauthorized'
+                }, ws).catch(e => {
+                    
+                })
+
+                return
             }
 
             if(!users[address]) 
@@ -407,6 +421,7 @@ var WSS = function(admins, manage){
                     addr : user.addr,
                     node : message.node
                 }, ws).catch(e => {
+
                 })
 
                 setTimeout(function(){
@@ -462,8 +477,6 @@ var WSS = function(admins, manage){
 
             disconnectClient(ws)
         });
-
-        console.log("NEW CONNECTION")
 
         all[ws.id] = ws
         

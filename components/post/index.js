@@ -13,7 +13,7 @@ var post = (function () {
 
 		var primary = (p.history && !p.inWnd) || p.primary;
 
-		var el = {}, share, ed = {}, inicomments, eid = '', _repost = null, level = 0, external = null;
+		var el = {}, share, ed = {}, recommendationsenabled = false, inicomments, eid = '', _repost = null, level = 0, external = null, recommendations = null;
 
 		var player = null
 
@@ -21,15 +21,6 @@ var post = (function () {
 
 		var actions = {
 
-			/*pipmini : function(enable){
-				if (p.inWnd && self.container){
-					enable ? self.container.addClass('pipmini') : self.container.removeClass('pipmini')
-				}
-				else{
-
-				}
-			},*/
-			
 			pkoin : function(id){
 
 				if (share){
@@ -53,15 +44,7 @@ var post = (function () {
 			
 								essenseData : {
 									userinfo: userinfo,
-									balance : balance,
-									id : id,
-									embedding : {
-										type : 'pkoin',
-										id : share.address,
-										close : function(){
-											renders.articles();
-										},
-									},	
+									id : share.txid
 								}
 							})
 	
@@ -391,12 +374,10 @@ var post = (function () {
 
 					button.one('click', function(){
 
-						console.log("CLICK2")
 
 						$(this).closest('.jsPlayerLoading').addClass('loading') 
 						$(this).closest('.js-player-dummy').addClass('js-player-ini')
 
-						console.log("???")
 
 						actions.initVideo(function(v){
 
@@ -418,6 +399,7 @@ var post = (function () {
 
 			initVideo: function (clbk) {
 
+
 				if(!el.c) return
 
 				if (self.app.platform.sdk.usersettings.meta.embedvideo && !
@@ -425,7 +407,6 @@ var post = (function () {
 
 				var pels = el.c.find('.js-player-ini');
 
-					console.log('pels', pels)
 
 				var wa =  !share.repost && !ed.repost && (((share.itisvideo() && isMobile() && !ed.openapi) || (ed.autoplay && pels.length <= 1))) ? true : false
 
@@ -439,6 +420,7 @@ var post = (function () {
 						if (pr.percent < 95)
 							startTime = pr.time
 					}
+
 
 					var options = {
 						//autoplay : pels.length <= 1,
@@ -496,7 +478,7 @@ var post = (function () {
 							playbackState,
 							duration
 						}){
-							if(playbackState == 'playing' && ((position > 15 && duration > 240) || startTime)){
+							if(playbackState == 'playing' && ((position > 15 && duration > 120) || startTime)){
 
 								self.app.platform.sdk.videos.historyset(share.txid, {
 									time : position,
@@ -564,6 +546,7 @@ var post = (function () {
 
 			like: function (value, clbk) {
 
+
 				var checkvisibility = app.platform.sdk.node.shares.checkvisibility(share);
 				var reputation = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.reputation') || 0
 
@@ -610,6 +593,31 @@ var post = (function () {
 
 					return
 				}
+
+				if (value > 4){
+
+					var reason = null
+
+					if (self.app.platform.sdk.user.newuser()){
+						reason = 'n'
+					}
+
+					if (share.scnt == '0') reason = 's'
+
+					if (reason) {
+						setTimeout(function(){
+							if(!el.c) return
+								self.app.platform.effects.templates.commentstars(el.c, value, function(){
+									if (inicomments){
+										inicomments.attention(self.app.localization.e('starssendcomment' + reason))
+									}
+								})
+						}, 300)
+					}
+					
+				}
+
+					
 
 				self.sdk.node.transactions.create.commonFromUnspent(
 
@@ -950,7 +958,7 @@ var post = (function () {
 							var v = Number(share.score) / Number(share.scnt)
 
 
-							p.find('.tstarsov').css('width', ((v / 5) * 100) + '%')
+							p.find('.tstars').css('width', ((v / 5) * 100) + '%')
 							p.closest('.itemwr').find('.count span.v').html(v.toFixed(1))
 
 							renders.stars()
@@ -1298,6 +1306,8 @@ var post = (function () {
 					},
 					function (_p) {
 
+						console.log("SHARE CLBK 1")
+
 						if(!el.share) return
 
 						el.stars = el.share.find('.forstars');
@@ -1318,9 +1328,15 @@ var post = (function () {
 						//if (share.itisvideo() && !ed.repost && !_OpenApi) renders.showmoreby()
 
 						renders.stars(function () {
+
+							console.log("SHARE CLBK 2")
+
 							renders.mystars(function () { });
 
 							renders.url(function () {
+
+								console.log("SHARE CLBK 3")
+
 
 								if(!el.share.find('.showMore').length) renders.repost();
 
@@ -1467,35 +1483,16 @@ var post = (function () {
 					compact : true
 				})
 			},
-			wholike: function (clbk) {
-				var wholikes = share.who || [];
-
-				self.shell(
-					{
-						turi: 'lenta',
-						name: 'wholike',
-						el: el.share.find('.wholikes'),
-						data: {
-							scores: Number(share.scnt),
-							wholikes: wholikes,
-						},
-						bgImages: {},
-					},
-					function (p) {
-						p.el.find('.forstars .count').on('click', events.postscores);
-
-						if (clbk) clbk();
-					},
-				);
-			},
+			
 			mystars: function (clbk) {
 				if (typeof share.myVal == 'undefined' && !ed.preview) {
 					var ids = [share.txid];
 
 					self.app.platform.sdk.likes.get(ids, function () {
-						renders.stars();
+						renders.stars(clbk);
 
-						renders.wholike(clbk);
+						console.log("AS")
+
 					});
 				} else {
 					if (clbk) clbk();
@@ -1605,8 +1602,11 @@ var post = (function () {
 							}
 						});
 
-						if (clbk) clbk();
+						
 					}, self.app);
+
+					if (clbk) clbk();
+					
 				})
 
 
@@ -1644,6 +1644,26 @@ var post = (function () {
 				}
 			},
 
+			recommendations : function(clbk){
+
+				self.app.platform.ui.recommendations(el.reco, share, {
+					opensvi : ed.opensvi,
+					next : ed.next,
+					basecount : 20,
+					startload : !p.inWnd && el.c.closest('.videomainpost').length && !isMobile(),
+					beforeopen : function(){
+						self.closeContainer()
+					},
+
+					el : p.inWnd ? el.c.closest('.wndcontent') : null
+					
+				}, function(e, p){
+					recommendations = p
+
+					if(clbk) clbk()
+				})
+
+			},
 			
 		};
 
@@ -1793,8 +1813,18 @@ var post = (function () {
 				}
 				else{
 					renders.share(function () {
+
 						renders.comments(function () {
 						})
+
+						if (share.itisvideo() && !ed.repost && recommendationsenabled) {
+
+							renders.recommendations();
+
+						}
+						else {
+							el.reco.remove();
+						}
 					})
 				}
 
@@ -1833,7 +1863,8 @@ var post = (function () {
 
 			getdata: function (clbk, p) {
 
-				
+
+				recommendationsenabled = self.app.platform.istest()
 
 				_repost = null
 
@@ -1871,7 +1902,8 @@ var post = (function () {
 
 							var data = {
 								ed: deep(p, 'settings.essenseData') || {},
-								share: share
+								share: share,
+								recommendationsenabled
 							};
 
 							self.app.platform.sdk.videos.info([share.url]).then(r => {
@@ -1907,10 +1939,13 @@ var post = (function () {
 			
 				
 				if (external){
-
 					external.destroy()
 					external = null
+				}
 
+				if (recommendations){
+					recommendations.destroy()
+					recommendations = null
 				}
 
 				self.app.actions.playingvideo(null)
@@ -1969,10 +2004,13 @@ var post = (function () {
 
 				el = {};
 				el.c = p.el.find('.poctelc');
+				el.reco = el.c.find('.recomandationsbgwrapper');
 				el.share = el.c.find('.share');
 				el.wr = el.c.find('.postWrapper')
 				el.wnd = el.c.closest('.wndcontent');
 
+
+				
 				
 				if (share.itisarticle()){
 					el.c.closest('.wnd').addClass('articlewindow')

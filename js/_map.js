@@ -17,7 +17,6 @@ var insertingfunc = function(settings, p){
 	return {
 		el : 'content'
 	}
-
 }
 
 __map =  { 
@@ -96,6 +95,7 @@ __map =  {
 		"js/satolist.js",
 		"js/peertube.js",
 		"js/widgets.js",
+		"js/effects.js",
 		"js/logger.js"
 	],
 
@@ -478,6 +478,14 @@ __map =  {
 			add : insertingfunc,
 			anonimus : true,
 		},	
+
+		recommendations : {
+			uri : "recommendations",
+			href : "recommendations",
+		
+			add : insertingfunc,
+			anonimus : true,
+		},
 
 		recommendedusers : {
 			uri : "recommendedusers",

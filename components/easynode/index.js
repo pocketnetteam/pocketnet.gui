@@ -287,7 +287,6 @@ var easynode = (function(){
 
 				}, function(p){
 
-					console.log('pp!!!', p)
 
 				})
 			}

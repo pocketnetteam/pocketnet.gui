@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="no-js customscroll" lang="">
+<html class="no-js customscroll applicationhtml" lang="">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -27,7 +27,7 @@
         media-src blob: *">
 
         <link rel="manifest" href="manifest.json">
-        <link rel="apple-touch-icon" href="https://__VAR__.domain/img/res/blue_pad_250.png" sizes="250x250">
+        <link rel="apple-touch-icon" href="img/res/blue_pad_250.png" sizes="250x250">
         <meta name="theme-color" content="#011621" />
 
         <style type="text/css">
@@ -72,7 +72,6 @@
 
         <div id="splashScreen" class="cssanimation">
             <img src="img/splashscreen/pocketnet-logo-19.svg" id="splashScreenImg" class="zoom-in">
-            <h1 class="fade-in">__VAR__.project</h1>
         </div>
 
         <div class="chats">
@@ -102,14 +101,13 @@
 
         __JSENV__
         
-        <script async join src="js/vendor/underscore-min.js"></script>
-
         __VE__
         
         __JS__
 
-
         __CSS__
+
+        __JSPOST__
 
         <link rel="stylesheet" href="css/fontawesome/css/all.css">
 

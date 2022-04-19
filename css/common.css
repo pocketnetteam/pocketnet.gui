@@ -7,6 +7,9 @@
 .share_common .gotouserprofile {
   cursor: pointer;
 }
+.share_common .extrashare {
+  display: none;
+}
 .share_common .pkoin {
   display: flex;
   align-items: center;
@@ -24,6 +27,10 @@
 }
 .share_common .commentsWrapper {
   background: rgb(var(--background-secondary-theme));
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
+.share_common .commentRegisterDiv .commentRegister {
   border-bottom-left-radius: 12px;
   border-bottom-right-radius: 12px;
 }
@@ -231,9 +238,6 @@
 .share_common .subscribeWrapper .unsubscribeevent {
   display: none;
 }
-.share_common .shareSave {
-  margin-right: auto;
-}
 .share_common .shareSave i {
   display: none;
 }
@@ -300,15 +304,12 @@
 }
 .share_common .tempPreloader {
   padding: 1em 0;
-  margin-bottom: 1em;
+  padding-bottom: 0;
+  padding-right: 1em;
 }
 .share_common .tempPreloader .label {
-  padding-top: 0.5em;
   color: rgb(var(--color-bg-ac));
   font-size: 0.8em;
-}
-.share_common .tempPreloader .iconwr {
-  padding-bottom: 1em;
 }
 .share_common .tempPreloader .count {
   padding-right: 0;
@@ -410,16 +411,20 @@
   width: 100%;
   height: 100%;
   cursor: pointer;
+  border-radius: 18px;
+  overflow: hidden;
 }
-.share_common .jsPlayerPreview .wpl:hover {
-  opacity: 0.9;
+@media (pointer: fine) {
+  .share_common .jsPlayerPreview .wpl:hover {
+    opacity: 0.9;
+  }
 }
 .share_common .jsPlayerPreview .statswrapper,
 .share_common .jsPlayerPreview .durationWrapper {
   position: absolute;
   bottom: 6px;
   right: 6px;
-  border-radius: 6px;
+  border-radius: 12px;
   background: rgba(var(--color-shadow-base), 0.8);
   color: rgb(var(--text-on-bg-shadow-color));
   padding: 0.25em 0.5em;
@@ -800,6 +805,9 @@
   font-weight: 700;
   font-size: 0.8em;
 }
+.share_common .sharepanel .itemwr .starswr {
+  min-width: 150px;
+}
 .share_common .sharepanel > div:nth-last-child(1) {
   margin-right: 0;
 }
@@ -902,6 +910,16 @@
   border-radius: 0!important;
   margin-bottom: 0!important;
 }
+.share_common.fullScreenVideo .extrashare {
+  display: block;
+}
+.share_common.fullScreenVideo .extrashare > div {
+  background: rgb(var(--background-total-theme));
+  margin: 0 auto;
+  max-width: 960px;
+  margin-top: 1em;
+  padding: 1em;
+}
 .share_common.fullScreenVideo .video-js {
   max-height: calc(var(--vh, 1vh) * 80);
 }
@@ -918,6 +936,7 @@
   scrollbar-width: none;
   overscroll-behavior: none;
   transform: translate3d(0, 0, 0);
+  padding-bottom: 20%;
 }
 .share_common.fullScreenVideo .sharecnt .videoWrapper {
   border-radius: 0;
@@ -945,16 +964,14 @@
 .share_common.fullScreenVideo .showMore {
   display: none;
 }
-.share_common.fullScreenVideo .commentsWrapper {
+.share_common.fullScreenVideo .commentsWrapper,
+.share_common.fullScreenVideo .commentRegisterDiv .commentRegister {
   margin: 0 auto;
   max-width: 960px;
   border-radius: 0;
 }
 .share_common.fullScreenVideo .url.hiddenurl .videoWrapper {
   display: block;
-}
-.share_common.fullScreenVideo .commentsWrapperHb {
-  padding-bottom: 20%;
 }
 .share_common.fullScreenVideo .cntswrk {
   margin-left: 0;
@@ -1163,6 +1180,9 @@ html.ios .share_common.fullScreenVideo .video-js {
   .share_common.fullScreenVideo {
     contain: strict;
     background: rgb(var(--color-shadow-base));
+  }
+  .share_common.fullScreenVideo .extrashare > div {
+    margin-top: 0.5em;
   }
   .share_common.fullScreenVideo .sharecaption {
     padding-left: 0.5em;
@@ -1401,7 +1421,11 @@ html.ios .share_common.fullScreenVideo .video-js {
   cursor: pointer;
 }
 .common_share_article_wrapper .share .sharearticle .readarticlebutton {
-  text-decoration: underline;
+  display: block!important;
+}
+.common_share_article_wrapper .share .sharearticle .readarticlebutton span {
+  display: inline;
+  opacity: 0.5;
 }
 .common_share_article_wrapper .share .sharearticle .shareBgCaption .author,
 .common_share_article_wrapper .share .sharearticle .articleend .author {

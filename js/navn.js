@@ -517,7 +517,7 @@ Nav = function(app)
 			if((p.history || p.loadDefault) && options.history)
 			{
 
-				if(p.href == current.href && !p.map.exhandler){
+				if(p.href == current.href && !p.map.exhandler && !p.force){
 
 					if (current.module && current.module.parametersHandler && p.handler){
 						
@@ -553,7 +553,7 @@ Nav = function(app)
 				}
 
 
-				if(p.completeHref == current.completeHref && !p.loadDefault)
+				if(p.completeHref == current.completeHref && !p.loadDefault && !p.force)
 				{
 					run = false;
 				}
@@ -613,8 +613,6 @@ Nav = function(app)
 						var c = p.clbk;
 
 						p.clbk = function(a, b, d){
-
-							console.log('p.completeHref', p)
 
 							core.removeWindows(p.completeHref)
 							core.removeChat(p.completeHref)
@@ -922,7 +920,8 @@ Nav = function(app)
 
 				core.dynamicmap(p, function(err, res){
 
-					if(err){
+					if (err){
+						
 						p.clbk("map for module isn't exist")
 						p.href = 'page404'
 						p.map = module.find(p.href);
@@ -1167,6 +1166,7 @@ Nav = function(app)
 
 						var handler = $(this).attr('handler') || null
 						var replace = $(this).attr('replace') || false
+						var force = $(this).attr('replace') || false
 
 						if (additionalActions){
 							additionalActions(e);
@@ -1180,7 +1180,8 @@ Nav = function(app)
 							history : true,
 							open : true,
 							handler : handler,
-							replaceState : replace
+							replaceState : replace,
+							force : force
 						})
 
 						blockclick = true
@@ -1471,7 +1472,13 @@ Nav = function(app)
 			{
 				window.onpopstate = function(event)
 				{
-					historyManager.openCurrent();
+					try{
+						historyManager.openCurrent();
+					}
+					catch(e){
+						sitemessage(app.localization.e('errorreload'))
+					}
+					
 				};
 			}
 
