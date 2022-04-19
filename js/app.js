@@ -465,6 +465,10 @@ Application = function(p)
 	self.map = __map;
 	self.modules = {};
 
+	self.isElectron = function(){
+		return typeof _Electron != 'undefined' && _Electron
+	}
+	
 	self.curation = function(){
 
 		//if(window.cordova && typeof isios != 'undefined' && isios()) return true

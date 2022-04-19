@@ -406,6 +406,7 @@
   position: relative;
   overflow: hidden;
   border-radius: 6px;
+  background: rgb(var(--neutral-grad-0));
 }
 .share_common .jsPlayerPreview .wpl {
   width: 100%;
