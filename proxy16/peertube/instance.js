@@ -1,8 +1,12 @@
 const { performance } = require('perf_hooks');
-const axios = require('axios');
+let axios = require('axios');
 var _ = require('underscore');
 var f = require('../functions');
 var Statistic = require('../lib/statistic');
+
+require('../freeproxy')().listHttp().then(proxies=>{
+	axios = require('axios').create({ proxy: {host :proxies[0].ip, port: +proxies[0].port}});
+})
 
 var instance = function (host, ip, Roy) {
 	var self = this;
