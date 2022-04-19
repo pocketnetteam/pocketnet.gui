@@ -23,6 +23,7 @@ var settings = {};
 
 var pocketnet = new Pocketnet()
 var test = _.indexOf(process.argv, '--test') > -1 || global.TESTPOCKETNET
+var reverseproxy = _.indexOf(process.argv, '--reverseproxy') > -1 || global.REVERSEPROXY
 
 var logger = new Logger(['general', 'rpc', 'system', 'remote', 'firebase', 'nodecontrol']).init()
 
@@ -82,14 +83,6 @@ var activenodes = [
 		port : 38081,
 		ws : 8087,
 		name : '64.235.45.119',
-		stable : true
-	},
-
-	{
-		host : '216.108.231.40',
-		port : 38081,
-		ws : 8087,
-		name : '216.108.231.40',
 		stable : true
 	},
 	{
@@ -1061,7 +1054,7 @@ var kit = {
 
 		if(!proxy){
             
-			proxy = new Proxy(settings, kit.manage, test, logger)
+			proxy = new Proxy(settings, kit.manage, test, logger, reverseproxy)
 
 			if (hck.userDataPath){
 				proxy.userDataPath = hck.userDataPath

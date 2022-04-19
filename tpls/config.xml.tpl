@@ -153,6 +153,10 @@
             <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
         </config-file>
 
+        <edit-config file="AndroidManifest.xml" target="/manifest/application/activity[@android:name='MainActivity']" mode="merge">
+            <activity android:windowSoftInputMode="adjustPan" />
+        </edit-config>
+
         <preference name="AndroidPersistentFileLocation" value="Compatibility" />
 
     </platform>

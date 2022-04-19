@@ -1,18 +1,47 @@
 <div id="<%-module.map.id%>">
 
-	<% 
-		var address = self.app.user.address.value;
-		var src = deep(app, 'platform.sdk.usersl.storage.'+address+'.image');
-		deep(app, 'platform.sdk.user.storage.me.image'); 
-		var name = deep(app, 'platform.sdk.usersl.storage.'+address+'.name');
-		var letter = name ? name[0] : '';  
-		var dev = deep(app, 'platform.sdk.usersl.storage.'+address+'.dev');
-%>
 	<div class="content">
 		<div class="top">
+			<div class="title">
+				<span>
+					<%-e('thankTheAuthor')%>
+				</span>
+			</div>
+			<div class="buyButtonWrapper">
+				<div class="buyButton" id="buyButton">
+					<span class="text">
+						<%-e('buy')%>
+					</span>
+					<img src="img/logo20.svg">
+
+				</div>
+			</div>
+		</div>
+
+		<div class="abswrappcontent customscroll">
+
+			<% 
+				var address = userinfo.address;
+				var src = userinfo.image;
+				var name = userinfo.name;
+				var about = filterXSS(clearScripts((findAndReplaceLink(userinfo.about, true))));
+
+				var _d = userinfo.regdate
+				var  d = null;
+
+				if (_d) {
+					d = new Date();
+					d.setTime(_d * 1000);	
+				}
+
+				var letter = name ? name[0] : '';  
+				var dev = userinfo.dev;
+				var authorlink = app.platform.api.authorlink(address);
+			%>
+
 			<div class="profile">
 				<div class="icon">
-					<a elementsid="<%-app.platform.api.authorlink(address)%>" href="<%-app.platform.api.authorlink(address)%>">	
+					<a elementsid="<%-authorlink%>" href="<%-authorlink%>">	
 
 						<div class="usericon" image="<%-src || '*'%>">
 					
@@ -34,27 +63,22 @@
 					</a>
 				
 				</div>
-				<div class="balance">
-					<div class="amount">
-						<%-balance%>
-					</div>
-					<div class="label">
-						PKOIN
-					</div>
+				<div class="description">
+					<div class="name"><%- name %></div>
+					<% if(about) {%><div class="about"><%- about %></div>
+					<% } else { %> 
+						<% if(d) {%>
+							<div class="label"><%=e('joined')%> <b><%-_d.yyyymmdd('.')%></b></div>
+						<% } %>
+					<% } %>
 				</div>
 			</div>
-			<div class="buyButtonWrapper">
-				<div class="buyButton" id="buyButton">
-					<span class="text">
-						<%-e('buy')%>
-					</span>
-					<img src="img/logo20.svg">
+			<div id="fieldsWrapper" class="fieldsWrapper">
+			</div>
 
-				</div>
-			</div>
 		</div>
-		<div id="fieldsWrapper" class="fieldsWrapper">
-		</div>
+
+
 		<div class="sendButtonWrapper">
 			<div class="sendButton disabled">
 				<%-e('send')%>

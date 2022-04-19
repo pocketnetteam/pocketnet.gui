@@ -203,7 +203,7 @@ var articlev = (function(){
 			validate : function(art){
 
 				if(!art.tags.length) return 'validatetags'
-				if(!art.cover) return 'validatecover'
+				// if(!art.cover) return 'validatecover'
 				if(!art.caption.value) return 'validatecaption'
 				if(!art.content || !art.content.blocks || !art.content.blocks.length ) return 'validatecontent'
 				

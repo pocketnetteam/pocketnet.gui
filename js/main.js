@@ -42,11 +42,17 @@ if(!_Node)
 			host : '4.pocketnet.app',
 			port : 8899,
 			wss : 8099
-		}/*,
+		},
 
 		
 		{
 			host : '5.pocketnet.app',
+			port : 8899,
+			wss : 8099
+		},
+
+		/*{
+			host : '6.pocketnet.app',
 			port : 8899,
 			wss : 8099
 		}*/

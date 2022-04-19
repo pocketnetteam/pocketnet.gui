@@ -1,8 +1,8 @@
 {
     "name": "pocketnet",
-    "version": "0.7.7",
-    "cordovaversion": "1.7.7",
-    "cordovaversioncode": "170070",
+    "version": "0.7.41",
+    "cordovaversion": "1.7.41",
+    "cordovaversioncode": "170410",
     "description": "Bastyon desktop application",
     "author": "Pocketnet Community <support@pocketnet.app>",
     "company": "Pocketnet Community",
@@ -41,12 +41,13 @@
         "async-each": "^1.0.3",
         "auto-launch": "^5.0.5",
         "body-parser": "^1.19.0",
+        "check-disk-space": "^3.3.0",
         "clone-deep": "^4.0.1",
         "compression": "^1.7.4",
         "deep-extend": "^0.6.0",
         "download-github-release": "^0.3.2",
-        "electron-is": "",
         "electron-context-menu": "",
+        "electron-is": "",
         "electron-localshortcut": "",
         "electron-log": "",
         "electron-updater": "^4.0.0",
@@ -55,8 +56,12 @@
         "express": "^4.17.1",
         "express-useragent": "^1.0.15",
         "express-ws": "^4.0.0",
+        "ffbinaries": "^1.1.4",
+        "ffmpeg": "^0.0.4",
+        "ffmpeg-static": "^4.4.0",
         "filestorage": "^1.7.1",
         "firebase-admin": "^9.3.0",
+        "fluent-ffmpeg": "^2.1.2",
         "github-download": "^0.5.0",
         "hash-files": "^1.1.1",
         "iconv-lite": "",
@@ -83,6 +88,7 @@
         "node-cmd": "^3.0.0",
         "node-fetch": "",
         "node-iplocate": "^1.0.2",
+        "node-notifier": "^10.0.1",
         "node-rsa": "^1.1.1",
         "nodejs-base64": "^1.0.3",
         "nodemailer": "^6.4.11",
@@ -175,8 +181,8 @@
             ],
             "artifactName": "${productName}_${platform}_${arch}.${ext}",
             "category": "Network",
-            "executableName": "${productName}",
-            "description": "${productName} Desktop Browser"
+            "executableName": "bastyon",
+            "description": "Bastyon Desktop Browser"
         },
         "win": {
             "target": [
@@ -264,7 +270,6 @@
             ],
             "artifactName": "${productName}_${platform}_${arch}.${ext}",
             "category": "Network",
-            "executableName": "${productName}",
             "description": "${productName} Desktop Browser"
         },
         "win": {

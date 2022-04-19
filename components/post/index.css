@@ -42,6 +42,12 @@
   display: none;
   background: rgb(var(--background-total-theme));
 }
+#post .showmorelenta .anothercntswrk {
+  border-bottom: none !important;
+}
+#post .showmorelenta .share.share_common.shareinlenta {
+  margin-right: 1em !important;
+}
 #post .showmorelenta.hasshares {
   display: block;
 }
@@ -68,7 +74,9 @@
 }
 #post .postWrapper {
   margin: 0 auto;
-  max-width: 930px;
+  padding-bottom: 1em;
+  max-width: 800px;
+  flex-grow: 1;
   opacity: 0;
   /*border-radius: 6px;*/
   -moz-transition: opacity 0.3s;
@@ -162,7 +170,19 @@
   max-width: 620px;
 }
 #post.videomainpost {
+  padding-top: 0;
   /*padding-bottom : 4 * @rhythm;*/
+  display: flex;
+  flex-wrap: wrap;
+}
+#post.videomainpost .cntswrk.tags {
+  opacity: 0.6;
+}
+#post.videomainpost .videoDescription {
+  padding-bottom: 0.5em;
+}
+#post.videomainpost .authorMetatable {
+  align-items: center;
 }
 #post.videomainpost .hiddenpost {
   background: rgb(var(--background-total-theme));
@@ -178,7 +198,13 @@
 #post.videomainpost .videoWrapper .js-player {
   border-radius: 0;
 }
+#post.videomainpost .videoWrapper .vjs-control-bar {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
 #post.videomainpost .share {
+  margin: 0 auto;
+  max-width: 960px;
   background: transparent;
 }
 #post.videomainpost .share .shareTable {
@@ -268,14 +294,78 @@
 }
 #post.videomainpost .share {
   margin: 0 auto;
+  /*max-width: 960px;*/
+}
+#post .recomandationsFromContent {
+  display: none;
+}
+#post.recommendationsenabled .recomandationsFromContent {
+  display: block;
+}
+#post .recomandationsFromContent {
+  margin-top: 0.5em;
+}
+#post .recomandationsFromContent .recomandationsbgwrapper {
+  background: rgb(var(--background-total-theme));
+  border-radius: 9px;
+  padding: 0.5em;
+}
+#post.videomainpost.recommendationsenabled .postWrapper {
+  display: flex;
+}
+#post.videomainpost.recommendationsenabled .share {
+  margin: 0 auto;
   max-width: 960px;
+}
+#post.videomainpost.recommendationsenabled .postsharemain {
+  flex-grow: 1;
+}
+#post.videomainpost.recommendationsenabled .recomandationsFromContent {
+  margin-top: 0;
+  max-width: 400px;
+  min-width: 400px;
+  margin-left: auto;
+}
+#post.videomainpost.recommendationsenabled .recomandationsFromContent .recomandationsbgwrapper {
+  margin-left: 0.25em;
+}
+@media only screen and (max-width: 1024px) {
+  #post.videomainpost.recommendationsenabled .postWrapper {
+    display: block;
+  }
+  #post.videomainpost.recommendationsenabled .recomandationsFromContent {
+    margin-top: 0.5em;
+    min-width: 0;
+    max-width: 960px;
+    margin: 1em auto;
+    width: 100%;
+  }
+  #post.videomainpost.recommendationsenabled .recomandationsFromContent .recomandationsbgwrapper {
+    margin-left: 0;
+  }
+}
+.wnd #post.videomainpost.recommendationsenabled .postWrapper {
+  display: block;
+}
+.wnd #post.videomainpost.recommendationsenabled .recomandationsFromContent {
+  margin-top: 0.5em;
+  min-width: 0;
+  max-width: 960px;
+  margin: 1em auto;
+  width: 100%;
+}
+.wnd #post.videomainpost.recommendationsenabled .recomandationsFromContent .recomandationsbgwrapper {
+  margin-left: 0;
 }
 #post .sharearticle {
   opacity: 0;
-  -moz-transition: opacity 0.1s;
-  -o-transition: opacity 0.1s;
-  -webkit-transition: opacity 0.1s;
-  transition: opacity 0.1s;
+  -moz-transition: opacity 0.3s;
+  -o-transition: opacity 0.3s;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
+}
+#post .sharearticle .article_body {
+  overflow: hidden;
 }
 #post .sharearticle .shareTable {
   padding-top: 0;
@@ -402,11 +492,13 @@
   margin: 0 auto;
   position: relative;
 }
-#post .sharearticle .shareBgCaption.showtext .icon {
+#post .sharearticle .shareBgCaption.showtext .iconWrapper {
   position: absolute;
+  width: auto;
   bottom: -22px;
   left: 0;
   right: 0;
+  padding-left: 0;
 }
 #post .sharearticle .shareBgCaption .starstoppanel,
 #post .sharearticle .shareBgCaption .socialsharewrapper {
@@ -420,7 +512,7 @@
   height: 3.5em;
   line-height: 3.5em;
   border-radius: 3.5em;
-  color: rgb(var(--text-on-bg-ac-color));
+  color: rgb(var(--neutral-grad-3));
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -443,6 +535,9 @@
   bottom: 0.75em;
   left: 1.5em;
   right: auto;
+  display: flex;
+}
+#post .sharearticle .shareBgCaption .starstoppanel .panelLeft {
   display: flex;
 }
 #post .sharearticle .shareBgCaption .articleCover,
@@ -505,6 +600,30 @@
 #post .sharearticle .shareBgCaption.verticalcover .socialsharewrapper .iconwrapper {
   color: rgb(var(--text-color));
 }
+#post .sharearticle .shareBgCaption.verticalcover.showtext .iconWrapper {
+  position: static;
+  width: auto;
+  padding-left: 0;
+  float: none;
+}
+#post .sharearticle .shareBgCaption.verticalcover.showtext .toppanel {
+  order: 1;
+}
+#post .sharearticle .shareBgCaption.withoutcover {
+  border-bottom: 1px dashed rgb(var(--color-shadow-base));
+}
+#post .sharearticle .shareBgCaption.withoutcover .tags div span {
+  color: rgb(var(--text-color));
+}
+#post .sharearticle .shareBgCaption.withoutcover .captioncnt {
+  color: rgb(var(--text-color));
+}
+#post .sharearticle .shareBgCaption.withoutcover .sys span {
+  color: rgb(var(--text-color));
+}
+#post .sharearticle .shareBgCaption.withoutcover .blackmatte {
+  display: none;
+}
 #post .sharearticle .articlecontent {
   padding-top: 4em;
   padding-bottom: 4em;
@@ -520,7 +639,8 @@
 #post .sharearticle .articlecontent .articleend {
   margin-top: 3em;
 }
-#post .sharearticle .articlecontent .commentsWrapper {
+#post .sharearticle .articlecontent .commentsWrapper,
+#post .sharearticle .articlecontent .commentRegisterDiv .commentRegister {
   border-radius: 12px;
 }
 #post .sharearticle .articlecontent .forcomments {
@@ -551,6 +671,12 @@
 #post .sharearticle.deleted .articleCover {
   filter: blur(10px);
 }
+#post .sharearticle p a {
+  word-break: break-all;
+  text-overflow: ellipsis;
+  max-width: 90%;
+  overflow: hidden;
+}
 #content > div#post.sharec .postWrapper {
   max-width: none;
 }
@@ -561,6 +687,9 @@
 }
 html.mobileview #post .videoWrapper {
   max-width: none;
+}
+html.mobileview #post.videomainpost {
+  padding-top: 0;
 }
 html.mobileview #post .sharearticle .articlecontent {
   padding-left: 0.5em;
@@ -589,16 +718,26 @@ html.mobileview .wnd.normalizedmobile.articlewindow .wndinner .wndcontent {
     border-radius: 0;
     overflow: visible;
   }
+  #post .sharearticle .shareBgCaption.caption_small .captionmult {
+    font-size: 1.1em;
+  }
+  #post .sharearticle .shareBgCaption.caption_long .captionmult {
+    font-size: 0.8em;
+  }
+  #post .sharearticle .shareBgCaption .captioncnt .sharecaption {
+    max-height: none;
+  }
   #post .sharearticle .shareBgCaption:not(.verticalcover) {
     height: auto;
   }
   #post .sharearticle .shareBgCaption:not(.verticalcover) .captioncnt {
     padding-bottom: 2em;
+    padding-left: 1em;
+    padding-right: 1em;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     z-index: 1;
-    color: #fff;
     text-align: center;
     position: relative;
     border-bottom: 1px dashed rgba(var(--neutral-grad-4), 0.5);
@@ -615,16 +754,8 @@ html.mobileview .wnd.normalizedmobile.articlewindow .wndinner .wndcontent {
   }
   #post .sharearticle .shareBgCaption:not(.verticalcover) .captioncnt .sharecaption {
     font-size: 3em;
-    font-family: Georgia, serif;
-  }
-  #post .sharearticle .shareBgCaption:not(.verticalcover) .icon {
-    position: absolute;
-    bottom: -22px;
-    left: 0;
-    right: 0;
-  }
-  #post .sharearticle .shareBgCaption:not(.verticalcover) .icon .usericon {
-    margin: 0 auto;
+    padding: 0.5em 0;
+    padding-top: 1em;
   }
   #post .sharearticle .shareBgCaption:not(.verticalcover) .articleCover {
     height: 300px;
@@ -632,6 +763,9 @@ html.mobileview .wnd.normalizedmobile.articlewindow .wndinner .wndcontent {
   }
   #post .sharearticle .shareBgCaption:not(.verticalcover) .blackmatte {
     display: none;
+  }
+  #post .sharearticle .shareBgCaption.withoutcover .articleCover {
+    height: 1.5em;
   }
   #post .sharearticle .shareBgCaption.verticalcover {
     height: 720px;
@@ -651,13 +785,13 @@ html.mobileview .wnd.normalizedmobile.articlewindow .wndinner .wndcontent {
     padding-bottom: 4em;
   }
   #post .sharearticle .shareBgCaption.verticalcover .captioncnt .sharecaption {
-    font-size: 2em;
+    font-size: 3em;
+    padding: 0.5em 0;
+    padding-top: 1em;
   }
   #post .sharearticle .shareBgCaption.verticalcover .blackmatte {
     display: block;
-  }
-  #post .sharearticle .shareBgCaption.verticalcover .icon {
-    position: absolute;
+    backdrop-filter: brightness(85%);
   }
   #post .sharearticle .shareBgCaption.verticalcover .captioncnt {
     justify-content: flex-end;
@@ -675,6 +809,14 @@ html.mobileview .wnd.normalizedmobile.articlewindow .wndinner .wndcontent {
   #post .sharearticle .shareBgCaption.verticalcover .starstoppanel .iconwrapper,
   #post .sharearticle .shareBgCaption.verticalcover .socialsharewrapper .iconwrapper {
     color: rgb(var(--text-on-bg-ac-color));
+  }
+  #post .sharearticle .starstoppanel,
+  #post .sharearticle .socialsharewrapper {
+    bottom: -0.25em !important;
+  }
+  #post .sharearticle .starstoppanel .panelLeft,
+  #post .sharearticle .socialsharewrapper .panelLeft {
+    flex-direction: column;
   }
   #post .sharearticle .articlecontent {
     padding-left: 0.5em;
@@ -716,15 +858,10 @@ html.mobileview.fullscreen #post #comments {
 .wnd.postwindow.articlewindow .wndcontent {
   padding: 0;
   border-radius: 0;
+  background: rgb(var(--background-total-theme));
 }
 .wnd.postwindow.articlewindow #post .postWrapper {
   max-width: none;
-}
-.wnd.postwindow.articlewindow ._close {
-  backdrop-filter: blur(7px) grayscale(30%);
-  -webkit-backdrop-filter: blur(7px) grayscale(30%);
-  color: rgb(var(--text-on-bg-ac-color));
-  box-shadow: 0 5px 10px -5px rgba(var(--color-shadow-base), 0.4);
 }
 .wnd.postwindow .widthcontainer {
   width: 80%;
@@ -737,7 +874,6 @@ html.mobileview.fullscreen #post #comments {
 }
 .wnd.postwindow #post .postWrapper {
   overflow: hidden;
-  border-radius: 3px;
 }
 .wnd.postwindow #post .nextpost {
   display: block;
@@ -758,7 +894,7 @@ html.mobileview .wnd.articlewindow .widthcontainer {
     padding: 0.5em;
   }
   #post .showmorelenta .horizontalLentaWrapper {
-    padding: 0.5em 0;
+    padding: 0.5em;
   }
   #post .showmorelenta .horizontalLentacaption {
     padding: 0.5em;
@@ -800,10 +936,11 @@ html.mobileview .wnd.articlewindow .widthcontainer {
   .wnd.postwindow .wndcontent {
     padding-bottom: 0;
   }
-  .wnd.postwindow #post .share .sharearticle .commentsWrapper {
+  .wnd.postwindow #post .share .sharearticle .commentsWrapper,
+  .wnd.postwindow #post .share .sharearticle .commentRegisterDiv .commentRegister {
     padding-bottom: 0;
   }
-  .wnd.postwindow #post .share .commentsWrapper {
+  .wnd.postwindow #post .share .recomandationsFromContent {
     padding-bottom: 5em;
   }
   html.mobileview .wnd.postwindow .widthcontainer {
@@ -827,6 +964,10 @@ html.mobileview .wnd.articlewindow .widthcontainer {
     padding-top: 0;
   }
 }
+.wnd.postwindow.pipmini .wndcontent {
+  padding-right: 0;
+  overflow-y: hidden;
+}
 .wnd.postwindow.pipmini #post {
   padding: 0!important;
 }
@@ -841,9 +982,18 @@ html.mobileview .wnd.articlewindow .widthcontainer {
   border-radius: 6px;
 }
 .wnd.postwindow.pipmini #post .videoWrapper .video-js {
-  max-height: 25vh;
   min-height: 150px;
   max-height: calc(var(--vh, 1vh) * 25);
+}
+.wnd.postwindow.pipmini #post .videoWrapper .video-js .vjs-control-bar .vjs-mute-control {
+  position: absolute;
+  height: 3em;
+  line-height: 3.5em;
+  font-size: 1em;
+  right: 0.25em;
+  bottom: 0;
+  width: 3em;
+  font-size: 0.9em;
 }
 .wnd.postwindow.pipmini #post .work {
   position: static;
@@ -874,4 +1024,7 @@ html.pipmode .wnd.postwindow.pipmini #post .videoWrapper .video-js {
   height: 100%;
   max-width: none;
   right: 0;
+}
+html.pipmode .wnd.postwindow.pipmini #post .videoWrapper .video-js .vjs-control-bar {
+  padding-left: 0;
 }

@@ -7,7 +7,6 @@ on:
 jobs:
   build:
     runs-on: autotest
-
     steps:
       - name: Start
         run: |

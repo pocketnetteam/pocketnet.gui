@@ -3,7 +3,7 @@ if (global.WRITE_LOGS) {
     global.LOG_LEVEL = global.WRITE_LOGS.split("=").pop()
 }
 
-__VAR__.globaltest
+const notifier = require('node-notifier');
 
 var open = require("open");
 
@@ -12,6 +12,7 @@ const {protocol} = require('electron');
 const ProxyInterface = require('./proxy16/ipc.js')
 const IpcBridge =require('./js/electron/ipcbridge.js')
 
+const { binariesDownloader, transcodingProcessor } = require('./js/electron/transcoding.js');
 const { bastyonFsFetchBridge } = require('./js/peertube/bastyon-fs-fetch.js');
 
 const electronLocalshortcut = require('electron-localshortcut');
@@ -28,9 +29,15 @@ const Badge = require('./js/vendor/electron-windows-badge.js');
 const { autoUpdater } = require("electron-updater");
 const log = require('electron-log');
 const is = require('electron-is');
+const fs = require('fs');
+const asyncFs = require('fs/promises');
+const os = require("os");
 const AutoLaunch = require('auto-launch');
-
 const contextMenu = require('electron-context-menu');
+const path = require('path');
+const http = require('http');
+const https = require('https');
+const request = require('request');
 
 contextMenu({
     showSearchWithGoogle : false,
@@ -77,13 +84,6 @@ autoUpdater.on('update-downloaded', (ev) => {
 //---------------------------------------------------
 
 var appName = global.TESTPOCKETNET ? 'BastyonTest' : 'Bastyon';
-
-let url = require('url')
-let path = require('path')
-const fs = require('fs');
-const asyncFs = require('fs/promises');
-const http = require('http');
-const https = require('https');
 
 var defaultIcon = require('path').join(__dirname, 'res/electron/icons/win/icon.ico')
 var defaultTrayIcon = require('path').join(__dirname, 'res/electron/icons/win/icon.ico')
@@ -659,6 +659,49 @@ function createWindow() {
 
     })
 
+    ipcMain.on('electron-notification-small', async (e, p) => {
+        let pathImage = defaultIcon;
+        if(p.image){
+            pathImage= await saveBlobToFile(p.image)
+        }
+
+        if (!is.windows()) {
+
+            const n = new Notification({ title: p.title, body: p.body, silent: true, icon: pathImage })
+
+            n.onclick = function () {
+
+                if (win) {
+                    win.show();
+                }
+            }
+
+            n.show()
+        }
+        else {
+
+            notifier.notify(
+                {
+                    appID : 'app.pocketnet.gui',
+                    title: p.title,
+                    message: p.body,
+                    icon: pathImage, // Absolute path (doesn't work on balloons)
+                    wait: true // Wait with callback, until user action is taken against notification, does not apply to Windows Toasters as they always wait or notify-send as it does not support the wait option
+                },
+                function (err, response, metadata) {
+
+                    if (response != 'timeout')
+
+                        if (win) {
+                            win.show();
+                        }
+                }
+            );
+
+        }
+
+    })
+
     ipcMain.on('electron-notification-close', function(e) {
 
         closeNotification()
@@ -700,6 +743,7 @@ function createWindow() {
 
         autoLaunchManage(p.enable)
     })
+
 
     /**
      * Video and posts download handlers
@@ -916,6 +960,12 @@ function createWindow() {
      */
     bastyonFsFetchBridge(ipcMain, Storage);
 
+    /**
+     * Video transcoding handler
+     */
+    binariesDownloader(ipcMain, Storage);
+    transcodingProcessor(ipcMain);
+
     proxyInterface = new ProxyInterface(ipcMain, win.webContents)
     proxyInterface.init()
 
@@ -1046,10 +1096,21 @@ if(!r) {
             }
         })
     }
-
-
-
-
-
-
 }
+
+const saveBlobToFile = async (blob)=>{
+    return new Promise((resolve, reject) => {
+        if(!fs.existsSync(path.join(os.tmpdir(), "bastyon"))){
+            fs.mkdirSync(path.join(os.tmpdir(), "bastyon"))
+        }
+        var base64Data = blob.replace(/^data:image\/png;base64,/, "");
+        const pathImage = path.join(os.tmpdir(), "bastyon", `${Math.floor(Math.random() * 1000000000)}.png`);
+        fs.writeFile(pathImage, base64Data, 'base64', function(err) {
+            if(err){
+                reject(err);
+            }else{
+                resolve(pathImage)
+            }
+        });
+    });
+};

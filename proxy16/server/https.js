@@ -1,7 +1,6 @@
 var https = require('https');
 var http = require('http');
 var express = require('express');
-var swaggerUi = require('swagger-ui-express');
 var Middle = require('./middle.js');
 var Cache = require('./cache.js');
 var Iplimiter = require('./iplimiter.js');
@@ -18,7 +17,7 @@ var Server = function(settings, admins, manage){
     var app = null;
     var server = null;
     var httpserver = null;
-    var middle = new Middle()
+    var middle = new Middle(self)
     var iplimiter = new Iplimiter(settings.iplimiter)
 
     var startedDate = null
@@ -84,6 +83,8 @@ var Server = function(settings, admins, manage){
 
             middle.prepare(request, result, function(){
 
+                
+
                 if (settings.iplimiter && request.clientIP){
 
                     return iplimiter.check(request.clientIP).then(r => {
@@ -123,8 +124,6 @@ var Server = function(settings, admins, manage){
     self.http = function(settings){
 9
         var port = (settings.port || 8899) - 1
-
-        return Promise.resolve()
 
         return new Promise((resolve, reject) => {
 
@@ -177,6 +176,8 @@ var Server = function(settings, admins, manage){
 
                     self.listening = settings.port || 8899
 
+                    
+
                     resolve()
                 });
 
@@ -190,8 +191,11 @@ var Server = function(settings, admins, manage){
 
                 server.listen(settings.port || 8899);
 
+                console.log('listen', settings.port || 8899)
+
             }
             catch(e) {
+                console.log("E", e)
                 reject(e)
             }
 

@@ -3,6 +3,9 @@
 	<div class="wrp">
 		<div class="rcptwrp">
 			<div class="tcaptionwrapper">
+				<button elementsid="clearcategories" class="mlab ticon clearcategories button">
+					<%=e('clearfilters')%>
+				</button>
 				<div class="tcaptiontable">
 					<div class="tcaption">
 						<span><%=e('Categories').toUpperCase()%></span> 
@@ -10,8 +13,9 @@
 					<div class="buttons">
 						<div elementsid="addcategory" class="ticon addcategory">
 							<i class="far fa-plus-square"></i>
+							<span class="text"><%=e('addcategory') %></span>
 						</div>
-						<div elementsid="clearcategories" class="mlab ticon clearcategories">
+						<div elementsid="clearcategories" class="mlab ticon clearcategories simple">		
 							<i class="fas fa-ban"></i>
 						</div>
 					</div>

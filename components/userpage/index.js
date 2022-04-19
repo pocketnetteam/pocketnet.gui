@@ -1083,7 +1083,7 @@ var userpage = (function(){
 				}
 			}
 
-			if(primary){
+			if(primary && !self.app.mobileview){
 
 				el.contents.hcSticky({
 					stickTo: '#userpagestick',

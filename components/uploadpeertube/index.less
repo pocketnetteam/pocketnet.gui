@@ -37,7 +37,7 @@
         opacity: 0.8;
         padding : 2 * @rhythm 0;
     }
-    
+
     .upload-header {
         display: flex;
         justify-content: flex-start;
@@ -165,9 +165,18 @@
     }
 
     .upload-progress-bar {
-        height: 1px;
+        height: 3px;
         width: 100%;
-        background-color: rgb(var(--color-bg-orange));
+
+        transition: width 0.3s linear;
+
+        &.processing {
+            background-color: rgb(var(--color-bg-orange));
+        }
+
+        &.uploading, &.binaries {
+            background-color: @color-raspberry;
+        }
     }
 
     .disabledInput {
@@ -215,9 +224,9 @@
 
         .pbg{
             padding: 2 * @rhythm 4 * @rhythm;
-            
+
         }
-        
+
         .caption{
             padding: 2 * @rhythm 0;
             padding-top : 0;
@@ -225,14 +234,14 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             text-transform: uppercase;
-            
+
 
             span{
                 font-weight: 700;
                 font-size: 2em;
                 line-height: 1em;
             }
-            
+
         }
 
         .offerpart{
@@ -337,7 +346,7 @@
         >div {
             vertical-align: middle;
         }
-        
+
     }
 
 
@@ -616,14 +625,14 @@ html.mobileview{
             .mainWrapper{
                 position: relative;
             }
-    
+
             .upload-header-wrapper{
                 position: relative;
                 padding : 2 * @rhythm;
             }
         }
 
-       
+
     }
 }
 

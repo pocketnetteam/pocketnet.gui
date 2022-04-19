@@ -1,0 +1,153 @@
+@import "../../css/__cssvar";
+
+#recommendations{
+    
+
+    .recaption{
+        padding : @rhythm 0;
+        margin-bottom: @rhythm;
+        span{
+            font-weight: 700;
+            font-size: 0.9em;
+        }
+    }
+
+    .emptyrec,
+    .recloader{
+        display: none;
+    }
+
+    &.emptyr{
+        .emptyrec{
+            display: block;
+        }
+    }
+
+    &.loading{
+        .recloader{
+            display: block;
+        }
+    }
+
+    .listWrapper{
+        >div{
+            margin-bottom: @rhythm;
+
+            &:nth-last-child(1){
+                margin-bottom: 0;
+            }
+        }
+    }
+
+    .recoVideoDiv {
+
+        display: flex;
+        margin-bottom: @rhythm;
+
+        &:nth-last-child(1){
+            margin-bottom: 0;
+        }
+
+        &:hover {
+            cursor: pointer;
+        }
+
+        .videoThumbnail {
+
+            height: 90px;
+            width: 160px;
+            min-width: 160px;
+            border-radius: 6px;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background: rgb(var(--neutral-grad-0));
+            position: relative;
+
+            overflow: hidden;
+
+            &[data-image]{
+                filter : brightness(85%);
+            }
+
+        }
+        .videoInfos {
+
+            text-overflow: ellipsis;
+            overflow: hidden;
+            padding-left: @rhythm;
+            padding-top: @rhythm;
+
+            .title {
+                max-width: 420px;
+                -webkit-line-clamp: 2;
+                line-clamp: 2;
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+                line-height: 1em;
+
+                span{
+                    font-weight: 700;
+                    font-size: 0.9em;
+                }
+                
+            }
+
+            .user {
+                margin-top: @rhythm;
+
+                sup,
+                span{
+                    font-size: 0.8em;
+                }
+
+                .spsp{
+                    font-weight: 500;
+                }
+            }
+
+            .infos {
+                
+                display: flex;
+                align-items: center;
+
+                span{
+                    font-size: 0.8em;
+                }
+
+                .viewDateSep {
+                    opacity: 0.5;
+                    font-size: 0.3em;
+                    margin-left: 4 * @rhythm;
+                    margin-right: 4 * @rhythm;
+
+                }
+
+                .views.dummy{
+                    display: inline-block;
+                    height: 20px;
+                    width: 100px;
+                    background: rgb(var(--neutral-grad-0));
+                    border-radius: 3px;
+                }
+
+            }
+
+            .user, .infos {
+                color: rgb(var(--color-txt-gray-dark));
+            }
+
+        }
+    }
+
+    .empty{
+        padding : 2 * @rhythm 0;
+        text-align: left;
+        span{
+            font-size: 0.9em;
+            opacity: 0.7;
+        }
+    }
+}
+

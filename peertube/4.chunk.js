@@ -610,6 +610,7 @@ class WebTorrentPlugin extends Plugin {
                 if (err.message.indexOf('The play() request') !== -1) {
                     return;
                 }
+                console.log("PAUSE");
                 this.player.pause();
                 this.player.posterImage.show();
                 this.player.removeClass('vjs-has-autoplay');
@@ -770,8 +771,10 @@ class WebTorrentPlugin extends Plugin {
                 return done(err);
             if (options.seek)
                 this.seek(options.seek);
-            if (options.forcePlay === false && paused === true)
+            if (options.forcePlay === false && paused === true) {
+                console.log("PLAUSE");
                 this.player.pause();
+            }
             if (done)
                 return done();
         });

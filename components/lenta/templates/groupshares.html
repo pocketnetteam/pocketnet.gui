@@ -1,3 +1,7 @@
+<% if(typeof boosted == 'undefined' || !boosted) {%>
+<div class="portion">
+<% } %>
+
 <% 
 var i = index || 0;
 
@@ -58,6 +62,16 @@ _.each(groupshares, function(gs, address){
 
 	</div>
 
+	<!-- <% if(showRecommendedUsers && recommendeduserscnt) { 
+		recommendeduserscnt = false;	
+	%>
+
+		<div class="recommendeduserscnt"></div>
+
+	<% } %> -->
+
 <% }) %>
 
-	
+<% if(typeof boosted == 'undefined' || !boosted) {%>
+	</div>
+<% } %>

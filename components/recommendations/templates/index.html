@@ -1,0 +1,24 @@
+<div id="<%-module.map.id%>">
+
+	<% if(ed.caption) {%>
+		<div class="recaption">
+			<span>
+				<%- e(ed.caption) %>
+			</span>
+		</div>
+	<% } %>
+
+	<div class="listWrapper">
+		
+	</div>
+
+	<div class="recloader">
+		<div class="work">
+			<div class="preloader5"><img src="./img/three-dots.svg"/></div>
+		</div>
+	</div>
+
+	<div class="emptyrec">
+		<span><%- e('norecommendedvideos') %></span>
+	</div>
+</div>

@@ -473,13 +473,13 @@ var share = (function(){
 
 				_.find(tags, function(tag){
 					if(!currentShare.tags.set(tag)){
-						el.error.html(self.app.localization.e('e13162'))
+						actions.errortext(self.app.localization.e('e13162'))
 
 						return true
 					}
 					else
 					{
-						el.error.html('')
+						actions.errortext('')
 						if(!essenseData.share){
 							state.save()
 						}
@@ -492,11 +492,11 @@ var share = (function(){
 				//tag = tag.replace(/#/g, '')
 
 				if(!currentShare.tags.set(tag)){
-					el.error.html(self.app.localization.e('e13162'))
+					actions.errortext(self.app.localization.e('e13162'))
 				}
 				else
 				{
-					el.error.html('')
+					actions.errortext('')
 					if(!essenseData.share){
 						state.save()
 					}
@@ -823,8 +823,8 @@ var share = (function(){
 
 				if(essenseData.hash == currentShare.shash()){
 
-					el.postWrapper.addClass('showError');
-					el.error.html(self.app.localization.e('e13163'))
+
+					actions.errortext(self.app.localization.e('e13163'))
 					return
 				}
 
@@ -911,9 +911,8 @@ var share = (function(){
 		
 											var t = self.app.platform.errorHandler(error, true);
 		
-											if (t)
+											if (t) actions.errortext(t)
 		
-												el.error.html(t)
 										}
 									}
 									else
@@ -1052,6 +1051,29 @@ var share = (function(){
 
 			},
 
+			errortext : function(text){
+
+				if(self.app.mobileview){
+					if (text)
+						sitemessage(text)
+				}
+				else{
+					if(!el.error) return
+
+					if(!text){
+						el.error.html('')
+						el.c.removeClass('showError')
+					}
+	
+					else{
+						el.error.html('<div>'+text+'</div>')
+						el.c.addClass('showError')
+					}
+				}
+
+				
+			},
+
 			error : function(onlyremove){
 				var error = currentShare.validation();
 
@@ -1060,10 +1082,7 @@ var share = (function(){
 
 				if (error && !onlyremove){
 
-					if (el.postWrapper)
-						el.postWrapper.addClass('showError')
-
-					el.error.html(errors[error])
+					actions.errortext(errors[error])
 
 					if(error == 'message'){
 						el.c.find('.emojionearea-editor').focus()
@@ -1081,11 +1100,8 @@ var share = (function(){
 				}
 				else
 				{
-					if (el.postWrapper)
-						el.postWrapper.removeClass('showError')
 
-					if(el.error)
-						el.error.html('')
+					actions.errortext('')
 
 					return false
 				}
@@ -2172,8 +2188,7 @@ var share = (function(){
 
 							}, {
 								repost : true,
-								eid : "share",
-								postclass : true
+								eid : "share"
 							})
 
 							_p.el.find('.repostCaption').on('click', function(){

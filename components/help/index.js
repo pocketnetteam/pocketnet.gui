@@ -305,7 +305,6 @@ var help = (function () {
         this.page(page, function (_el) {
           c.pkoin.loading = true;
 
-          console.log('this.page', _el);
           var explorerBase = 'https://explorer.pocketnet.app/rest/';
 
           var endpoints = [

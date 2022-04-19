@@ -127,7 +127,7 @@ var applications = (function(){
 				return os.id != __os
 			})
 
-			if(filtered.length != fl){
+			if (filtered.length != fl){
 				renders.mainoss(oss[__os])
 			}
 			

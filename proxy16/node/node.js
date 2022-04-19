@@ -283,6 +283,7 @@ var Node = function(options, manager){
 
     self.rpcs = function(method, parsed){
 
+
         if(!self.rpc[method]) return Promise.reject('method')
 
         if(!parsed) parsed = []
@@ -1034,6 +1035,7 @@ var Node = function(options, manager){
             wssusers : _.toArray(wss.users).length,
             bchain : self.bchain,
             version : self.version,
+            vcode : self.version ? f.numfromreleasestring(self.version) : 1,
             service : wssconnected ? true : false
             
         }

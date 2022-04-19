@@ -447,6 +447,7 @@ ____loclib.youarefollowing = "You are Following"
 ____loclib.follow = "Follow"
 ____loclib.blocked = "Blocked"
 ____loclib.e13021 = "Show more"
+
 ____loclib.blockuser = "Block User"
 ____loclib.unblockuser = "Unblock User"
 ____loclib.e13022 = "Do you really want to unfollow user?"
@@ -470,6 +471,7 @@ ____loclib.removeDescription = "Remove description"
 ____loclib.preview = "Preview"
 ____loclib.autoplayVideo = "Autoplay Video"
 ____loclib.onlyVideo = "Only video"
+____loclib.signToComment = "To view or post comments, you need to login or register"
 
 ____loclib.e13023 = "Do you really want to unblock user?"
 ____loclib.e13024 = "Your Private Login Key"
@@ -1043,6 +1045,7 @@ ____loclib.e14105 = "Videos"
 ____loclib.e14106 = "Applications"
 ____loclib.e14107 = "Check for updates"
 ____loclib.e14108 = "Share answer"
+____loclib.e141081 = "Menu"
 ____loclib.e14109 = "Where do I download the Android App?"
 ____loclib.e14110 = "Google Play Market"
 
@@ -1116,10 +1119,13 @@ ____loclib.pterror_getToken = "Peertube: Unable to get Token"
 ____loclib.pterror_videonotselected = "Peertube: Video not Selected"
 
 
+____loclib.videoTranscodingError = "There was an error with processing your video"
 ____loclib.videoUploadingFinish = "Finishing uploading..."
 ____loclib.uploadNewVideo = "Upload New Pocketvideo"
 ____loclib.selectVideoFile = "Select video file"
-____loclib.uploadVideoProgress = "Progress:"
+____loclib.uploadVideoProgress_binaries = "Preparing binaries:"
+____loclib.uploadVideoProgress_processing = "Processing video:"
+____loclib.uploadVideoProgress_uploading = "Uploading video:"
 
 
 
@@ -1185,7 +1191,7 @@ ____loclib.transactionnotfound = "Transaction not found";
 
 ____loclib.donateself = "You can't donate yourself";
 ____loclib.donated = "commented your post and donated"
-____loclib.incoins = "Enough coins"
+____loclib.incoins = "Not enough coins"
 ____loclib.yourbalance = "Your balance"
 ____loclib.sumoftransaction = "Sum of transaction"
 
@@ -1293,8 +1299,9 @@ ____loclib.videotranscodingwait = "Please wait, this video is being processed. T
 ____loclib.views = "Views";
 
 
-____loclib.saveshare = "Add videos to saved";
-____loclib.successdownloaded = "Video saved";
+____loclib.saveshare = "Download video";
+____loclib.gotosaved = "Go to downloaded";
+____loclib.successdownloaded = "Video downloaded";
 
 
 ____loclib.logoutaccount = "Sign out of your account";
@@ -1309,6 +1316,14 @@ ____loclib.linkToPostLenta = "Already posted"
 ____loclib.ReferralUsers = "Referral Users. Total/From&nbsp;01.11.2021"
 ____loclib.lockedaccount = "Your account is locked due to reputation below -30"
 ____loclib.lockedaccounta = "Author Account is locked due to reputation below -30"
+
+____loclib.lockedaccountacomment = "Comment author Account is locked due to reputation below -30"
+____loclib.hiddenCommentLabel = "Comment hidden due to low rating"
+
+____loclib.blockedbymeHiddenCommentLabel = "Comment hidden because you have blocked a user"
+____loclib.hiddenCommentsLabel = "Comment hidden due to low ratings of the commenter"
+
+____loclib.showhiddenComment = "Show"
 
 ____loclib.visibletoeveryone = 'Visible for everyone'
 ____loclib.visibleonlytosubscribers = 'Visible only for subscribers'
@@ -1827,7 +1842,7 @@ ____loclib.ContentCreatorsMainBoard1 = '"There are many ways to earn money with 
 
 ____loclib.ContentCreatorsImgAndText = 'Post your videos';
 ____loclib.ContentCreatorsImgAndText1 = 'Post your videos on Bastyon';
-____loclib.ContentCreatorsImgAndText2 = '15,000 vides, 1250 reactions from different users and 1000 invited users to your channel';
+____loclib.ContentCreatorsImgAndText2 = '15,000 vides, 1500 reactions from different users and 1500 invited users to your channel';
 ____loclib.ContentCreatorsImgAndText3 = 'Earns you $1,000 paid in Bitcoin or PKOIN';
 ____loclib.ContentCreatorsImgAndText4 = 'Next step: contact us to get your Bastyon account verified and to access the bonus program.';
 ____loclib.ContentCreatorsImgAndText5 = 'Contact Us Now ';
@@ -2011,10 +2026,10 @@ ____loclib.easyNode_e2002_1 = " earns "
 ____loclib.easyNode_e2002_2 = "Pocketcoin. Your computer can be one of those nodes, assuming you have at least 50 GB of free SSD space and a decent internet connection.  Node has to lock some Pocketcoin in it to"
 ____loclib.easyNode_e2002_2_1 = " earn "
 ____loclib.easyNode_e2002_2_2 = "more Pocketcoin. That is called staking in cryptocurency."
-____loclib.minPkoin = function (p){	
+____loclib.minPkoin = function (p){
 	return  String(p) + " PKOIN Minimum"
 }
-____loclib.maxPkoin = function (p){	
+____loclib.maxPkoin = function (p){
 	return  String(p) + " PKOIN Maximum"
 }
 
@@ -2076,6 +2091,7 @@ ____loclib.ratings123 = "Only users with high reputation at least 10 publication
 
 ____loclib.ratingss3 = "Only users with high reputation can give 1, 2, 3 star ratings. This is done to protect authors, because Bastyon does NOT require any personal information for registration."
 
+____loclib.clearfilters = "Clear filters"
 ____loclib.clearcategories = "Do you really want to clear category filters?"
 ____loclib.cleartags = "Do you really want to clear tags filters?"
 ____loclib.fromsh = "From"
@@ -2109,7 +2125,7 @@ ____loclib.submitapplicationVideo = "Request PKOIN for video"
 ____loclib.submitapplicationVideoSmall = "Send & request PKOIN"
 
 ____loclib.videobloggerRequest = "If you are a blogger with an established audience, you can get a gift of PKOIN to load video. Click the button below if you are a blogger:"
-    
+
 
 ____loclib.videobloggerRequest_pl1 = "Link to existing channel 1"
 ____loclib.videobloggerRequest_pl2 = "Link to existing channel 2"
@@ -2126,5 +2142,56 @@ ____loclib.videobloggerRequest_er_email = "Leave an email for feedback"
 
 ____loclib.videobloggerRequest_submitted = "Thank you for contacting us, we will review your application"
 
-____loclib.canuseipsetting = "Allow connection via ip over http directly. Not safe"
+____loclib.canuseipsetting = "Allow connection via ip over http directly. Insecure connection"
 
+____loclib.optimizationtip = function(v){
+    return v + ' hidden viewed posts'
+}
+
+____loclib.optimizationtip_show = "Show"
+
+____loclib.thankTheAuthor = 'Thank the author';
+
+____loclib.encourageAuthor = "Encourage author";
+
+____loclib.gotoProfile2 = "Go to Profile";
+
+____loclib.countviews = "Views";
+____loclib.countview = "View";
+
+____loclib.popup_applications_header = "Important! Please download Bastyon Application";
+
+____loclib.popup_applications_feature_1 = "Desktop application is the most censorship resistant way to use Bastyon";
+____loclib.popup_applications_feature_2 = "Desktop application doesn't depend on bastyon.com";
+____loclib.popup_applications_feature_3 = "Desktop is like a built-in VPN";
+
+____loclib.popup_applications_button = " Download here";
+____loclib.norecommendedvideos = "No recommended videos found";
+
+____loclib.boosted = "Boosted";
+
+
+____loclib.probability = "Probability";
+
+____loclib.probabilitytext = function(lang){
+	return "Probability that a post will appear among the first <b>30</b> posts in the feed by language <b>"+lang+"</b> for approximately <b>300</b> minutes"
+};
+
+____loclib.probabilitytexterror = "Unable to calculate promotion probability";
+
+____loclib.image = "Image";
+____loclib.file = "File";
+
+____loclib.othervideos = "Other videos";
+
+____loclib.starssendcomments = "Leave a comment for the author";
+____loclib.starssendcommentn = "Leave a comment for the author";
+____loclib.starssendcommentp = "Leave a comment for the author";
+
+____loclib.savevideo = "Download video";
+
+____loclib.useanimations = "Enable animations";
+
+____loclib.welcomecaption1 = "Bastyon of Free Speech";
+____loclib.welcomecaption2 = "Read Content Banned by Big Tech";
+____loclib.welcomecaption3 = "Chat privately with friends - no SIM card";

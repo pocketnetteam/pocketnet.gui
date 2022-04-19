@@ -152,6 +152,17 @@ var Peertube = function (settings) {
 			var cacheparameters = _.clone(parsed);
 			var _waitstatus = '';
 
+			if (fast){
+				var cached = cache.get(cachekey, cacheparameters, cachehash);
+
+				if (cached && !cached.error) {
+					return Promise.resolve(cached);
+				}
+				else{
+					return Promise.resolve({});
+				}
+			}
+
 			return new Promise((resolve, reject) => {
 				cache.wait(
 					cachekey,
@@ -162,81 +173,82 @@ var Peertube = function (settings) {
 					cachehash,
 				);
 			})
-				.then((waitstatus) => {
-					_waitstatus = waitstatus;
+			.then((waitstatus) => {
+				_waitstatus = waitstatus;
 
-					var cached = cache.get(cachekey, cacheparameters, cachehash);
+				var cached = cache.get(cachekey, cacheparameters, cachehash);
 
-					if (cached) {
-						if (cached.error) {
-							return Promise.reject({ error: true, cached: true });
-						}
+				if (cached) {
 
-						return Promise.resolve(cached);
-					}
-
-					if (waitstatus == 'attemps') {
+					if (cached.error) {
 						return Promise.reject({ error: true, cached: true });
 					}
 
-					return self.inner.video(parsed).then((r) => {
-						var ontime = null;
+					return Promise.resolve(cached);
+				}
 
-						var fr = null;
+				if (waitstatus == 'attemps') {
+					return Promise.reject({ error: true, cached: true });
+				}
 
-						if (r && r.data) {
-							fr = r.data;
+				return self.inner.video(parsed).then((r) => {
+					var ontime = null;
 
-							if (
-								(fr && fr.isLive) ||
-								(fr.state && (fr.state.id == 2 || fr.state.id == 3))
-							)
-								ontime = 20;
+					var fr = null;
 
-							if (fr && fr.isLive && (!fr.aspectRatio || fr.aspectRatio == '0'))
-								fr.aspectRatio = 1.78;
-						}
+					if (r && r.data) {
+						fr = r.data;
 
-						cache.set(cachekey, cacheparameters, r, null, ontime, cachehash);
+						if (
+							(fr && fr.isLive) ||
+							(fr.state && (fr.state.id == 2 || fr.state.id == 3))
+						)
+							ontime = 20;
 
-						return Promise.resolve(r);
-					});
-				})
-				.catch((e) => {
-					if (!e) e = {};
-
-					var cachedone = false;
-					var ontime = 20;
-
-					if (e && e.status == '404') {
-						ontime = 120;
+						if (fr && fr.isLive && (!fr.aspectRatio || fr.aspectRatio == '0'))
+							fr.aspectRatio = 1.78;
 					}
 
-					if (!e.cached) {
-						cache.set(
-							cachekey,
-							cacheparameters,
-							{
-								error: true,
-							},
-							null,
-							ontime,
-							cachehash,
-						);
-					}
+					cache.set(cachekey, cacheparameters, r, null, ontime, cachehash);
 
-					/*if(!e.cached && _waitstatus == 'execute'){
-					if(!cachedone){
-					  cache.remove(
+					return Promise.resolve(r);
+				});
+			})
+			.catch((e) => {
+				if (!e) e = {};
+
+				var cachedone = false;
+				var ontime = 20;
+
+				if (e && e.status == '404') {
+					ontime = 120;
+				}
+
+				if (!e.cached) {
+					cache.set(
 						cachekey,
 						cacheparameters,
+						{
+							error: true,
+						},
+						null,
+						ontime,
 						cachehash,
-					  );
-					}
-				  }*/
+					);
+				}
 
-					return Promise.reject(e);
-				});
+				/*if(!e.cached && _waitstatus == 'execute'){
+				if(!cachedone){
+					cache.remove(
+					cachekey,
+					cacheparameters,
+					cachehash,
+					);
+				}
+				}*/
+
+				return Promise.reject(e);
+			});
 		},
 
 		videos: function ({ urls, fast }, cache) {
@@ -244,10 +256,12 @@ var Peertube = function (settings) {
 
 			return Promise.all(
 				_.map(urls, function (url) {
+
 					return self.api
 						.video({ url, fast }, cache)
 						.then((r) => {
-							result[url] = r.data;
+							if (r.data)
+								result[url] = r.data;
 
 							return Promise.resolve();
 						})
@@ -256,6 +270,7 @@ var Peertube = function (settings) {
 
 							return Promise.resolve();
 						});
+						
 				}),
 			)
 				.then(() => {

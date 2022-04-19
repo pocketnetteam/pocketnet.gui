@@ -13,35 +13,17 @@
   padding-bottom: 1em;
   border-bottom: 1px solid rgba(var(--neutral-grad-1), 0.5);
 }
-#pkoin .content .top .profile {
+#pkoin .content .top .title {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  width: 90px;
-}
-#pkoin .content .top .profile .balance {
-  padding-left: 0.5em;
-  display: flex;
-  flex-direction: column;
-}
-#pkoin .content .top .profile .balance .amount,
-#pkoin .content .top .profile .balance .label {
-  line-height: 14px;
-}
-#pkoin .content .top .profile .balance .amount {
-  font-size: 14px;
-  font-weight: 600;
-}
-#pkoin .content .top .profile .balance .label {
-  font-size: 12px;
-  color: rgb(var(--neutral-grad-3));
+  font-weight: 700;
 }
 #pkoin .content .top .buyButtonWrapper {
   display: flex;
   align-items: center;
 }
 #pkoin .content .top .buyButtonWrapper .buyButton {
-  border: 1px solid rgb(var(--neutral-grad-0));
+  border: 1px solid rgb(var(--neutral-grad-1));
   box-sizing: border-box;
   border-radius: 100px;
   padding: 8px 16px;
@@ -57,8 +39,38 @@
   width: 20px;
   height: 20px;
 }
+#pkoin .content .abswrappcontent {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 70px;
+  bottom: 91px;
+  padding-bottom: 1.5em;
+}
+#pkoin .content .profile {
+  display: flex;
+  align-items: top;
+  padding: 1em;
+  background: rgb(var(--background-secondary-theme));
+}
+#pkoin .content .profile .description {
+  padding-left: 0.5em;
+  padding-top: 0.25em;
+}
+#pkoin .content .profile .description .name {
+  font-weight: 700;
+}
+#pkoin .content .profile .description .about {
+  overflow-wrap: break-word;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  font-size: 0.8em;
+}
 #pkoin .content .fieldsWrapper {
-  margin-top: 1em;
   padding-bottom: 0;
 }
 #pkoin .content .fieldsWrapper .fields .inputWrapper {
@@ -101,7 +113,7 @@
 }
 #pkoin .content .fieldsWrapper .fields .inputWrapper .vc_inputWrapper {
   border-radius: 12px 0px 0px 12px;
-  border: 1px solid rgb(var(--neutral-grad-0));
+  border: 1px solid rgb(var(--neutral-grad-1));
   border-right: none;
 }
 #pkoin .content .fieldsWrapper .fields .inputWrapper .vc_inputWrapper input {
@@ -109,7 +121,7 @@
 }
 #pkoin .content .fieldsWrapper .fields .inputWrapper .vc_iconWrapper {
   border-radius: 0px 12px 12px 0px;
-  border: 1px solid rgb(var(--neutral-grad-0));
+  border: 1px solid rgb(var(--neutral-grad-1));
   border-left: none;
 }
 #pkoin .content .fieldsWrapper .fields .inputWrapper .vc_selectInput {
@@ -138,19 +150,42 @@
   right: 12px;
   top: 12px;
 }
-#pkoin .content .fieldsWrapper .fields .sum .inputWrapper .errorWrapper {
+#pkoin .content .fieldsWrapper .fields .sum .inputWrapper .notion {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8em;
   margin-top: 0.5em;
-  font-size: 0.9em;
+}
+#pkoin .content .fieldsWrapper .fields .sum .inputWrapper .notion .balance {
+  display: flex;
+  padding-left: 1.5em;
+}
+#pkoin .content .fieldsWrapper .fields .sum .inputWrapper .notion .balance .text {
+  color: rgb(var(--neutral-grad-3));
+}
+#pkoin .content .fieldsWrapper .fields .sum .inputWrapper .notion .balance .amount {
+  padding-left: 0.5em;
+  font-weight: 600;
+}
+#pkoin .content .fieldsWrapper .fields .sum .inputWrapper .notion .balance .label {
+  padding-left: 0.5em;
+}
+#pkoin .content .fieldsWrapper .fields .sum .inputWrapper .notion .errorWrapper {
+  padding-left: 0.5em;
+  padding-right: 1.5em;
   color: rgb(var(--color-bad));
-  height: 19px;
 }
 #pkoin .content .fieldsWrapper .fields .comment .text {
   line-height: 24px;
   color: rgb(var(--color-txt-gray-dark));
+  font-size: 0.8em;
+  font-weight: 700;
+  text-align: center;
 }
 #pkoin .content .sendButtonWrapper {
   padding: 1.5em 1em;
   border-top: 1px solid rgba(var(--neutral-grad-1), 0.5);
+  background: rgb(var(--background-total-theme));
 }
 #pkoin .content .sendButtonWrapper .sendButton {
   padding: 12px 16px;
@@ -164,9 +199,33 @@
   cursor: default;
   background: rgb(var(--color-bg-ac-1));
 }
+#pkoin .boostinfodata {
+  text-align: center;
+  margin-top: 0.5em;
+  border-radius: 12px;
+  background: rgb(var(--background-secondary-theme));
+  border: 1px solid rgb(var(--neutral-grad-0));
+}
+#pkoin .boostinfodata .label {
+  padding: 0.5em;
+}
+#pkoin .boostinfodata .label span {
+  font-size: 0.8em;
+  font-weight: 700;
+}
+#pkoin .boostinfodata .probability span {
+  font-size: 1.5em;
+  font-weight: 100;
+}
+#pkoin .boostinfodata .text {
+  padding: 0.5em;
+}
+#pkoin .boostinfodata .text span {
+  font-size: 0.7em;
+}
 .wnd.pkoinwindow .wndinner.pkoin {
   max-width: 370px;
-  max-height: 500px;
+  max-height: 620px;
   box-shadow: none;
 }
 .wnd.pkoinwindow .wndinner .wndheader {
@@ -176,6 +235,7 @@
   top: 0;
   bottom: 0;
   padding: 0;
+  overflow: auto;
 }
 .wnd.pkoinwindow .wndinner > div.buttons {
   display: none;
@@ -189,11 +249,23 @@
 html.mobileview .wnd.pkoinwindow #pkoin .sendButtonWrapper {
   position: static;
 }
+html.mobileview .wnd.pkoinwindow #pkoin .abswrappcontent {
+  position: static;
+}
+html.mobileview .wnd.pkoinwindow #pkoin .boostinfodata .text span {
+  font-size: 0.8em;
+}
 @media only screen and (max-width: 768px) {
+  .wnd.pkoinwindow #pkoin .abswrappcontent {
+    position: static;
+  }
   .wnd.pkoinwindow #pkoin .sendButtonWrapper {
     position: static;
     bottom: 0;
     left: 0;
     right: 0;
+  }
+  .wnd.pkoinwindow #pkoin .boostinfodata .text span {
+    font-size: 0.8em;
   }
 }

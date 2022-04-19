@@ -77,6 +77,8 @@ var lastcomments = (function(){
 		var load = function(clbk){
 			self.app.platform.sdk.comments.last(function(c, error){
 
+				c = _.uniq(c, (c) => c.address)
+
 				var bytx = group(c, function(c){
 					return c.txid
 				})
@@ -84,6 +86,8 @@ var lastcomments = (function(){
 				var txids = _.map(bytx, function(g, id){
 					return id;
 				})
+
+
 
 				self.app.platform.sdk.node.shares.getbyid(txids, function(l, error2){
 
@@ -148,7 +152,6 @@ var lastcomments = (function(){
 			/*self.app.platform.clbks._focus.lastcomments = function(time){
 
 				if(time > 120 && typeof _Electron != 'undefined'){
-					console.log("CLBKS2")
 					make()
 
 					
