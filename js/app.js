@@ -6,7 +6,7 @@ if(typeof require != 'undefined' && typeof __map == 'undefined')
 
 if (typeof _OpenApi == 'undefined') _OpenApi = false;
 
-if(typeof _Electron != 'undefined' && _Electron){
+if (typeof _Electron != 'undefined' && _Electron){
 
 	imagesLoaded = require('./js/vendor/imagesloaded.pkgd.min.js');
 
@@ -75,6 +75,10 @@ Application = function(p)
 	}
 
 	var url = window.pocketnetdomain
+
+	if ((typeof _Electron != 'undefined' && _Electron) || window.cordova){} else {
+		url = window.location.hostname + window.pocketnetpublicpath.substring(0, window.pocketnetpublicpath.length - 1)
+	}
 
 	if (window.testpocketnet){
 		self.test = true
