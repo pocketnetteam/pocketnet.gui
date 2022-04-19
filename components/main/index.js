@@ -59,7 +59,7 @@ var main = (function(){
 				link : "index?r=saved",
 				label : () => self.app.localization.e('downloaded'),
 				if : function(){
-					return window.cordova
+					return self.app.savesupported()
 				},
 				value : 'saved'
 			},

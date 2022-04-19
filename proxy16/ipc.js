@@ -86,6 +86,8 @@ var IPC = function(ipc, wc){
 		if (message.action)
 			promise = f.deep(actions, message.action) ? f.deep(actions, message.action)() : actions.manage(message)
 
+		console.log('message.path', message.path, message)
+
 		if (message.path)
 			promise = kit.gateway(message)
 

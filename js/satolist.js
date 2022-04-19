@@ -3517,7 +3517,7 @@ Platform = function (app, listofnodes) {
                             if (p.top) {
                                 up.css('top', p.top())
                             }
-                            
+
                         }
                         else {
 
@@ -6610,6 +6610,7 @@ Platform = function (app, listofnodes) {
 
                 return self.sdk.localshares.getall[self.sdk.localshares.key]().then(r => {
 
+                    console.log("R", r)
 
                     _.each(r, function(share){
                         self.sdk.localshares.addtostorage(share)
@@ -6617,9 +6618,21 @@ Platform = function (app, listofnodes) {
                         _.each(share.videos, function(v){
                             if(v.infos &&  v.infos.videoDetails) window.peertubeglobalcache[v.infos.videoDetails.uuid] = v.infos.videoDetails
                         })
+
                     })
 
+                    var fm = _.filter(r, function(u){
+                        return u.share && u.share.user
+                    })
+                    
+
+                    self.sdk.node.shares.takeusers(_.map(fm, function(u){
+                        return {userprofile : u.share.user} 
+                    }), false)
+
+
                 }).catch(error => {
+                    console.error(error)
                 })
             },
 
@@ -9793,6 +9806,7 @@ Platform = function (app, listofnodes) {
 
                 self.sdk.ustate._me(function (info) {
 
+
                     if (self.sdk.address.pnet()) {
                         var a = self.sdk.address.pnet().address;
 
@@ -9835,7 +9849,7 @@ Platform = function (app, listofnodes) {
                             }, function(){
                                 if (clbk)
                                     clbk(s[address])
-                            })
+                            }, 5000)
 
                             return
 
@@ -9897,6 +9911,11 @@ Platform = function (app, listofnodes) {
 
 
                     }).catch(e => {
+
+
+                        _.each(addresses, function(a){
+                            self.sdk.ustate.loading[a] = false
+                        })
 
                         if(e && e.code == -5){
                             _.each(addresses || [], function (address) {
@@ -15853,6 +15872,7 @@ Platform = function (app, listofnodes) {
                         return;
                     }
                     var loadedShares = [];
+
                     _.each(p.txids, function (txid) {
 
                         var curShare = self.sdk.localshares.getShare(txid);
@@ -16241,11 +16261,14 @@ Platform = function (app, listofnodes) {
                         var _u = data.userprofile
 
                         if (_u) {
-                            var u = self.sdk.users.prepareuser(_u, _u.address, state)
+
+                            console.log("_u", _u)
+
+                            var u = self.sdk.users.prepareuser(_u, _u.address || _u.adr, state)
 
                             //self.sdk.users.storage[data.address] = u;
 
-                            self.sdk.usersl.storage[_u.address] = u;
+                            self.sdk.usersl.storage[_u.address|| _u.adr] = u;
 
                         }
 

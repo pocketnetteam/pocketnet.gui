@@ -290,6 +290,11 @@ Application = function(p)
 		}
 	}
 
+	self.savesupported = function(){
+		var isElectron = (typeof _Electron !== 'undefined' && !!window.electron);
+		return isElectron || (window.cordova && !isios());
+	}
+
 	self.useip = function(){
 		return self.canuseip() && self.platform.sdk.usersettings.meta.canuseip.value
 	}

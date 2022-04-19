@@ -890,7 +890,10 @@ function createWindow() {
 
         const jsonData = fs.readFileSync(jsonPath, { encoding:'utf8', flag:'r' });
 
-        videoData.infos = JSON.parse(jsonData);
+        videoData.infos = {
+            thumbnail : '',
+            videoDetails : JSON.parse(jsonData)
+        }
 
         const playlistName = videosList.find(fN => (
             fN.endsWith('.m3u8')

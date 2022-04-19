@@ -4033,6 +4033,8 @@ var lenta = (function(){
 
 			shares : function(clbk, cache){
 
+				console.log("shares")
+
 				if (loading || (ended && (!essenseData.contents || essenseData.txids.length == _.toArray(shareInitedMap).length) )) return
 
 
@@ -4104,6 +4106,8 @@ var lenta = (function(){
 									}
 								}						
 							}
+
+							console.log("sharesloader", loader)
 
 							var count = 10
 
@@ -4587,6 +4591,8 @@ var lenta = (function(){
 
 		var make = function(clbk, _p){
 
+			console.log("MAKE LENTA")
+
 			making = true;
 
 			actions.cleardelay()
@@ -4789,6 +4795,8 @@ var lenta = (function(){
 
 			getdata : function(clbk, p){
 
+				console.log("GETDATA")
+
 				ovf = false
 
 				newmaterials = 0;
@@ -4831,11 +4839,13 @@ var lenta = (function(){
 				canloadprev = !!!essenseData.txids || false
 				
 				video = essenseData.video || false
+
+				console.log("STATEME1")
 				
 				self.app.platform.sdk.ustate.me(function(_mestate){
 
 					mestate = _mestate || {}
-
+					console.log("STATEME2")
 
 					var data = {
 						beginmaterial : beginmaterial,
