@@ -83,63 +83,63 @@ var activenodes = [
 		port : 38081,
 		ws : 8087,
 		name : '135.181.196.243',
-		stable : false
+		stable : true
 	},
 	{
 		host : '65.21.56.203',
 		port : 38081,
 		ws : 8087,
 		name : '65.21.56.203',
-		stable : false
+		stable : true
 	},
 	{
 		host : '178.217.159.227',
 		port : 38081,
 		ws : 8087,
 		name : '178.217.159.227',
-		stable : false
+		stable : true
 	},
 	{
 		host : '178.217.159.221',
 		port : 38081,
 		ws : 8087,
 		name : '178.217.159.221',
-		stable : false
+		stable : true
 	},
 	{
 		host : '46.175.122.243',
 		port : 38081,
 		ws : 8087,
 		name : '46.175.122.243',
-		stable : false
+		stable : true
 	},
 	{
 		host : '46.175.123.77',
 		port : 38081,
 		ws : 8087,
 		name : '46.175.123.77',
-		stable : false
+		stable : true
 	},
 	{
 		host : '178.217.155.169',
 		port : 38081,
 		ws : 8087,
 		name : '178.217.155.169',
-		stable : false
+		stable : true
 	},
 	{
 		host : '178.217.155.170',
 		port : 38081,
 		ws : 8087,
 		name : '178.217.155.170',
-		stable : false
+		stable : true
 	},
 	{
 		host : '93.100.117.108',
 		port : 38081,
 		ws : 8087,
 		name : '93.100.117.108',
-		stable : false
+		stable : true
 	},
 ]
 
