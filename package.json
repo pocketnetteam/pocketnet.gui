@@ -58,7 +58,7 @@
         "express": "^4.17.1",
         "express-useragent": "^1.0.15",
         "express-ws": "^4.0.0",
-        "ffbinaries": "^1.1.4",
+        "ffbinaries": "file:ffbinary-node.tgz",
         "filestorage": "^1.7.1",
         "firebase-admin": "^9.3.0",
         "fluent-ffmpeg": "^2.1.2",
