@@ -8,7 +8,7 @@ exports.default = async function notarizing(context) {
   }
 
   if(!process.env.APPLEID || !process.env.APPLEIDPASS){
-    console.error("Build without signature")
+    console.log("Build without signature!!!")
     return
   }
 

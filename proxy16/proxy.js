@@ -1042,6 +1042,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 		return result
 	}
 
+
 	self.rpcscenarios = {
 		'gethierarchicalstrip' : function({ method, parameters, options, U }){
 			var rpc = self.api.node.rpc.action

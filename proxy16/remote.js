@@ -12,9 +12,9 @@ const autoenc = require('node-autodetect-utf8-cp1251-cp866');
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 var nremotelink = 'https://1.pocketnet.app/opengraph/parse'
 
-require('./freeproxy').listHttp().then(proxies=>{
+/*require('./freeproxy').listHttp().then(proxies=>{
 	request = require('request').defaults({ proxy: proxies[0].url})
-})
+})*/
 
 var Remote = function(app){
 
@@ -106,7 +106,7 @@ var Remote = function(app){
 			  .catch(err => error(err));
 		},
 		url : function(uri, clbk){
-	    
+
 			request({
 				url : uri,
 				timeout: 30000
@@ -697,7 +697,6 @@ var Remote = function(app){
 		ogcache = [];
 		ogloading = {};
 	}
-
 
 	self.info = function(){
 		return {

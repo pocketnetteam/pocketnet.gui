@@ -3558,7 +3558,6 @@ var lenta = (function(){
 						})
 	
 						essenserenderclbk()
-						
 						images.imagesLoadedPN({ imageAttr: true }, function(image) {
 	
 							_.each(image.images, function(i, index){

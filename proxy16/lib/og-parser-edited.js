@@ -5,9 +5,9 @@ var htmlparser = require("htmlparser2"),
   currMeta = {},
   currTag = null;
 
-require('../freeproxy')().listHttp().then(proxies=>{
+/*require('../freeproxy')().listHttp().then(proxies=>{
   request = require('request').defaults({ proxy: proxies[0].url})
-})
+})*/
 
 function _og() {};
 _og.prototype._set_og = function(inoutMeta, name, value) {

@@ -385,10 +385,9 @@ Nav = function(app)
 					history.replaceState({
 
 						href : href,
-	
 						lfox : true
 	
-					}, null, href);
+					}, 'Bastyon', href);
 					
 				}
 				else{
@@ -396,13 +395,15 @@ Nav = function(app)
 					history.pushState({
 
 						href : href,
-	
 						lfox : true
 	
-					}, null, href);
+					}, 'Bastyon', href);
 
 				}
-				
+
+				if (electron)
+					electron.ipcRenderer.send('electron-url-changed', href);
+
 			}
 
 		},
@@ -437,7 +438,8 @@ Nav = function(app)
 		        		href : history.state.href,
 		        		open : true,
 						loadDefault : true,
-						replaceState : true
+						replaceState : true,
+						handler : true
 		        	}); 
 
 				}
@@ -1478,6 +1480,9 @@ Nav = function(app)
 					catch(e){
 						sitemessage(app.localization.e('errorreload'))
 					}
+
+					if (electron && history.state)
+						electron.ipcRenderer.send('electron-url-changed', history.state.href);
 					
 				};
 			}
@@ -1487,6 +1492,14 @@ Nav = function(app)
 				p.open = true;
 				p.history = true;
 				p.loadDefault = true;
+
+
+				var path = parameters().path
+
+				if (path){
+					p.href = hexDecode(path)
+
+				}
 
 				if(_OpenApi){
 					if(p.clbk) p.clbk()

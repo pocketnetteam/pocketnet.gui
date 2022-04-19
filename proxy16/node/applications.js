@@ -12,10 +12,10 @@ var progress = require('request-progress');
 var targz = require('targz');
 
 
-require('../freeproxy')().listHttp().then(proxies=>{
+/*require('../freeproxy')().listHttp().then(proxies=>{
     request = require('request').defaults({ proxy: proxies[0].url})
     axios = require('axios').create({ proxy: {host :proxies[0].ip, port: +proxies[0].port}});
-})
+})*/
 
 var Applications = function(settings) {
 

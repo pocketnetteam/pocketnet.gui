@@ -4,9 +4,9 @@ var _ = require('underscore');
 var f = require('../functions');
 var Statistic = require('../lib/statistic');
 
-require('../freeproxy')().listHttp().then(proxies=>{
+/*require('../freeproxy')().listHttp().then(proxies=>{
 	axios = require('axios').create({ proxy: {host :proxies[0].ip, port: +proxies[0].port}});
-})
+})*/
 
 var instance = function (host, ip, Roy) {
 	var self = this;
@@ -139,6 +139,20 @@ var instance = function (host, ip, Roy) {
 		return inited;
 	};
 
+	var requestwithip = function(url, type, p){
+
+		return axios[type](`http://${host}${url}`, p).catch(e => {
+
+			var status = ((e || {}).response || {}).status
+
+			if (status) return Promise.reject(e)
+
+			return axios[type](`http://${ip}${url}`, p).catch(e => {
+				return Promise.reject(e)
+			})
+		})
+	}
+
 	self.request = function (method, data, p = {}) {
 		var responseTime = performance.now();
 		var url = methods[method];
@@ -149,7 +163,7 @@ var instance = function (host, ip, Roy) {
 
 		var timeout = p.timeout || Roy.parent.timeout() || 10000
 
-		return axios[p.type || 'get'](`http://${host}${url}`, { timeout }).then((result) => {
+		return requestwithip(url, p.type || 'get', { timeout }).then((result) => {
 
 			var meta = {
 				code : 200,
@@ -166,8 +180,6 @@ var instance = function (host, ip, Roy) {
 			});
 
 		}).catch((error) => {
-
-			//console.log('error', `http://${host}${url}`, url, ((error || {}).response || {}).status || 500)
 
 			var meta = {
 				code : ((error || {}).response || {}).status || 500,

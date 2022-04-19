@@ -2,9 +2,9 @@ let axios = require('axios');
 const { zip } = require('underscore');
 var f = require('./functions');
 
-require('./freeproxy')().listHttp().then(proxies=>{
+/*require('./freeproxy')().listHttp().then(proxies=>{
     axios = require('axios').create({ proxy: {host :proxies[0].ip, port: +proxies[0].port}});
-})
+})*/
 
 
 var Exchanges = function(){
