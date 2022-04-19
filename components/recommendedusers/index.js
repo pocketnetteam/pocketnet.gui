@@ -44,9 +44,6 @@ var recommendedusers = (function(){
 
 				self.app.platform.sdk.users.getRecommendedAccounts(function(c, error){
 
-					onlytags = true;
-
-
 					self.app.platform.sdk.categories.clbks.excluded.topusers =
 					self.app.platform.sdk.categories.clbks.tags.topusers =
 					self.app.platform.sdk.categories.clbks.selected.topusers = function(data){
@@ -61,7 +58,6 @@ var recommendedusers = (function(){
 					self.app.platform.sdk.categories.clbks.tags.topusersRemove = function(data){
 
 						addresses = [];
-						onlytags = false;
 						
 					}
 
@@ -70,10 +66,10 @@ var recommendedusers = (function(){
 
 						el.c.show();
 
-						addresses = c;
+						addresses = shuffle(c.filter(filterSubscribes));
 
 						if (clbk){
-							clbk(shuffle(addresses.filter(filterSubscribes)))
+							clbk(addresses);
 						}
 
 					}
@@ -250,42 +246,9 @@ var recommendedusers = (function(){
 
 				} else {
 					
-					if (true){
-
-						actions.getRecommendedAccounts(clbk);
+					actions.getRecommendedAccounts(clbk);
 							
-					} else {
-
-						self.app.platform.sdk.users.getBestUsers(function(c, error){
-
-							if (!(c && c.length)){
-	
-								actions.getRecommendedAccounts(clbk);
-	
-							} else {
-	
-								self.app.platform.sdk.categories.clbks.tags.topusersRemove = function(data){
-
-									addresses = [];
-									onlytags = false;
-									
-								}
-	
-								el.c.show();
-	
-								addresses = shuffle(c.filter(filterSubscribes));
-
-		
-								if (clbk){
-									clbk(addresses)
-								}
-	
-							}
-	
-						})
-						
-					}
-
+					
 				}
 
 			}
