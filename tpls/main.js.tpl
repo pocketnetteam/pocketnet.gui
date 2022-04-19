@@ -23,6 +23,7 @@ var willquit = false;
 const { app, BrowserWindow, Menu, MenuItem, Tray, ipcMain, Notification, nativeImage, dialog, globalShortcut, OSBrowser } = require('electron')
 app.allowRendererProcessReuse = false
 
+/*
 const ProxyList = require('free-proxy');
 const proxyList = new ProxyList();
 proxyList.get()
@@ -37,7 +38,7 @@ proxyList.get()
     })
     .catch(function (error) {
         console.error(error)
-    });
+    });*/
 
 const Badge = require('./js/vendor/electron-windows-badge.js');
 
