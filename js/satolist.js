@@ -3513,13 +3513,11 @@ Platform = function (app, listofnodes) {
                         currentmode = mode
 
                         if (mode == 'full') {
-                            if (p.rightEl) {
-                                up.css('width', p.rightEl.offset().left + "px")
-                            }
-
+                           
                             if (p.top) {
                                 up.css('top', p.top())
                             }
+                            
                         }
                         else {
 
@@ -3561,14 +3559,15 @@ Platform = function (app, listofnodes) {
                /**window.addEventListener('scroll', events.scroll)
                 window.addEventListener('resize', events.resize)*/
 
-                up.swipe({
-                    tap: events.click
-                })
+                up.on('click', events.click)
+
+              
             }
 
             var removeEvents = function () {
                 delete app.events.scroll[id]
                 delete app.events.resize[id]
+                up.off('click', events.click)
                 /*window.removeEventListener('scroll', events.scroll)
                 window.removeEventListener('resize', events.resize)*/
             }
@@ -3593,6 +3592,8 @@ Platform = function (app, listofnodes) {
                 removeEvents()
 
                 el.html('')
+
+                up = null
             }
 
             self.init()

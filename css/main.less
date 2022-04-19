@@ -1183,6 +1183,8 @@ pie {
     display: none;
     cursor: pointer;
     .transition(0.3s);
+    width: calc(50% - 640px);
+    min-width: 4%;
 
     .mini{
         display: none;
@@ -1282,7 +1284,54 @@ pie {
         }
     }
 }
+@media only screen and (max-width: 1640px) {
 
+    .upbutton{
+        
+        .full{
+            padding-right : 0;
+            .fulltable{
+                >div{
+
+                    &.icon{
+                        width: 100%;
+                    }
+                    &.label{
+                        display: none;
+                    }
+                }
+            }
+        }
+    }
+  
+}
+
+@media only screen and (max-width: 1366px) {
+
+    .upbutton{
+
+        .full{
+            padding-right : 0;
+            .fulltable{
+                >div{
+                    &.icon{
+                        width: 40px;
+                    }
+                  
+                }
+            }
+        }
+    }
+
+}
+
+html.mobileview{
+
+
+    .upbutton{
+        display: none;
+    }
+}
 
 
 .table{
@@ -7247,28 +7296,7 @@ html{
    These examples override the primary ('mobile first') styles.
    Modify as content requires.
    ========================================================================== */
-@media only screen and (max-width: 1640px) {
 
-    .upbutton{
-        
-
-        .full{
-            padding-right : 0;
-            .fulltable{
-                >div{
-
-                    &.icon{
-                        width: 100%;
-                    }
-                    &.label{
-                        display: none;
-                    }
-                }
-            }
-        }
-    }
-  
-}
 
 
 
@@ -7319,21 +7347,6 @@ html{
     #content{
         .work.adj{
             padding-right: 0;
-        }
-    }
-
-    .upbutton{
-
-        .full{
-            padding-right : 0;
-            .fulltable{
-                >div{
-                    &.icon{
-                        width: 40px;
-                    }
-                  
-                }
-            }
         }
     }
 
@@ -7767,16 +7780,6 @@ html.mobileview{
 
     }
 
-    .upbutton{
-    
-        .mini{
-            display: none;
-        }
-
-        .full{
-            display: none;
-        }
-    }
 
     .wnd{
         &.normalizedmobile{
