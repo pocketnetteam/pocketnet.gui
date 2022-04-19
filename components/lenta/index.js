@@ -2802,7 +2802,7 @@ var lenta = (function(){
 
 				var share = deep(self.app.platform, 'sdk.node.shares.storage.trx.' + txid)
 
-				var checkvisibility = app.platform.sdk.node.shares.checkvisibility(share);
+				var checkvisibility = share ? app.platform.sdk.node.shares.checkvisibility(share) : false;
 
 				self.fastTemplate('commentspreview', function(rendered){
 					
