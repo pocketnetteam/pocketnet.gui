@@ -5041,7 +5041,7 @@
 						input += caret;
 
 					input += 		'<div class="vc_inputWrapper">';
-					input += 			'<input elementsid="vs_input" '+disabled+' type="text" value="'+displayValue+'" placeholder="'+self.placeholder+'">';
+					input += 			'<input elementsid="vs_input" '+disabled+'  type="text" value="'+displayValue+'" placeholder="'+self.placeholder+'">';
 					input += 		'</div>';
 
 					if(!self.format.right)
@@ -5211,7 +5211,7 @@
 				var input = '<div class="vmt_valuesmultitree" pid="'+self.id+'">';
 
 				if(self.autoSearch){
-					input += '<div class="autoSearchWrapper"><input elementsid="autoSearch_input" type="text" class="autoSearch" placeholder="Search Code"></div>'
+					input += '<div class="autoSearchWrapper"><input elementsid="autoSearch_input"  type="text" class="autoSearch" placeholder="Search Code"></div>'
 				}
 
 				if(inputp.init){
@@ -5384,7 +5384,7 @@
 
 					input += '<div class="inputCashWrapper">';
 
-					input += '<input elementsid="input_cash" ' + m + ' class="' + self.type + ' input" value="' + self.render(true) + '">';
+					input += '<input elementsid="input_cash" ' + m + ' class="' + self.type + ' input"  value="' + self.render(true) + '">';
 
 					input += '</div>';
 
@@ -5410,13 +5410,13 @@
 
 						input += '<div class="inputCashrangeWrapper">';
 
-						input += '<input elementsid="input_cashrange" index="0" ' + m + ' class="' + self.type + ' input" placeholder="From" value="' + self.render(true, 0) + '">';
+						input += '<input  elementsid="input_cashrange" index="0" ' + m + ' class="' + self.type + ' input" placeholder="From" value="' + self.render(true, 0) + '">';
 
 						input += '</div>';
 
 						input += '<div class="inputCashrangeWrapper">';
 
-						input += '<input elementsid="input_cashrange_2" index="1" ' + m + ' class="' + self.type + ' input" placeholder="To" value="' + self.render(true, 1) + '">';
+						input += '<input  elementsid="input_cashrange_2" index="1" ' + m + ' class="' + self.type + ' input" placeholder="To" value="' + self.render(true, 1) + '">';
 
 						input += '</div>';
 
@@ -5454,13 +5454,13 @@
 
 					input += '<div class="inputNumberrangeWrapperFrom">';
 
-					input += '<input elementsid="input_numberrangefrom" index="0" ' + m + ' class="' + self.type + ' input" placeholder="From" value="' + self.render(true, 0) + '">';
+					input += '<input  elementsid="input_numberrangefrom" index="0" ' + m + ' class="' + self.type + ' input" placeholder="From" value="' + self.render(true, 0) + '">';
 
 					input += '</div>';
 
 					input += '<div class="inputNumberrangeWrapperTo">';
 
-					input += '<input elementsid="input_numberrangeto" index="1" ' + m + ' class="' + self.type + ' input" placeholder="To" value="' + self.render(true, 1) + '">';
+					input += '<input  elementsid="input_numberrangeto" index="1" ' + m + ' class="' + self.type + ' input" placeholder="To" value="' + self.render(true, 1) + '">';
 
 					input += '</div>';
 
@@ -5470,7 +5470,7 @@
 			}
 
 			if(self.type == 'color'){
-				var input = '<input elementsid="input_cashrange" notmasked="notmasked" pid="'+self.id+'" class="simpleColor input" value="' + self.value + '">';
+				var input = '<input  elementsid="input_cashrange" notmasked="notmasked" pid="'+self.id+'" class="simpleColor input" value="' + self.value + '">';
 
 				return input
 
@@ -5482,13 +5482,13 @@
 
 					input += '<div class="inputNumberrangeWrapperFrom">';
 
-					input += '<input elementsid="input_numberrangefrom_"' + self.id + ' notmasked="notmasked" pid="'+self.id+'" class="datePicker input from" placeholder="From">'
+					input += '<input  elementsid="input_numberrangefrom_"' + self.id + ' notmasked="notmasked" pid="'+self.id+'" class="datePicker input from" placeholder="From">'
 
 					input += '</div>';
 
 					input += '<div class="inputNumberrangeWrapperTo">';
 
-					input += '<input elementsid="input_numberrangeto_"' + self.id + ' notmasked="notmasked" pid="'+self.id+'" class="datePicker input to" placeholder="To">'
+					input += '<input  elementsid="input_numberrangeto_"' + self.id + ' notmasked="notmasked" pid="'+self.id+'" class="datePicker input to" placeholder="To">'
 
 					input += '</div>';
 
@@ -5499,7 +5499,7 @@
 			}
 
 			if(self.type == 'daterange'){
-				var input = '<input elementsid="input_numberrange_"' + self.id + ' notmasked="notmasked" pid="'+self.id+'" class="datePicker input">';
+				var input = '<input  elementsid="input_numberrange_"' + self.id + ' notmasked="notmasked" pid="'+self.id+'" class="datePicker input">';
 
 				return input
 
@@ -5508,7 +5508,7 @@
 			if(self.type == 'phone'){
 
 
-				var input = '<input elementsid="input_numberrange_"' + self.id + ' notmasked="notmasked" pid="'+self.id+'" class="' + self.type + ' input" value="' + self.render(true) + '" type="text">';;
+				var input = '<input  elementsid="input_numberrange_"' + self.id + ' notmasked="notmasked" pid="'+self.id+'" class="' + self.type + ' input" value="' + self.render(true) + '" type="text">';;
 
 				return input
 
@@ -5519,7 +5519,7 @@
 				var input = '<div class="vc_autosearchInput">\
 				<div class="placeholder"><div class="placeholderghost">&nbsp;</div></div>\
 				<div class="autosearchInputCnt">\
-				<input elementsid="input_autosearch_"' + self.id + ' notmasked="notmasked" ' + m + ' pid="'+self.id+'" class="' + self.type + ' input" placeholder="'+(self.placeholder || "")+'" value="' + self.render(true) + '" type="text">\
+				<input  elementsid="input_autosearch_"' + self.id + ' notmasked="notmasked" ' + m + ' pid="'+self.id+'" class="' + self.type + ' input" placeholder="'+(self.placeholder || "")+'" value="' + self.render(true) + '" type="text">\
 				</div></div>';
 
 
@@ -5527,7 +5527,7 @@
 			}
 
 			if(self.type == 'password'){
-				var input = '<input elementsid="input_numberrangepassword_"' + self.id + ' '+__disabled+' pid="'+self.id+'" class="' + self.type + ' input" placeholder="'+(self.placeholder || "")+'" value="' + self.render(true) + '" type="password">';
+				var input = '<input  elementsid="input_numberrangepassword_"' + self.id + ' '+__disabled+' pid="'+self.id+'" class="' + self.type + ' input" placeholder="'+(self.placeholder || "")+'" value="' + self.render(true) + '" type="password">';
 
 				return input;
 
@@ -5539,7 +5539,7 @@
 
             if(self.type == 'file_select'){
                 return `
-                    <input elementsid="input_file_select_${self.id}" ${__disabled} ${m} pid="${self.id}" class="${self.type} input" placeholder="${(self.placeholder || "")}" value="${self.render(true)}" type="text">
+                    <input  elementsid="input_file_select_${self.id}" ${__disabled} ${m} pid="${self.id}" class="${self.type} input" placeholder="${(self.placeholder || "")}" value="${self.render(true)}" type="text">
                     <button elementsid="button_file_select_${self.id}" ${__disabled} ${m} pid="${self.id}_Selector" class="simpleColor inpButton btn_select">...</button>
                 `;
             }
@@ -5549,10 +5549,10 @@
 			}
 
 			if(self.type == 'number'){
-				return `<input elementsid="button_${self.id}_2" ${__disabled} step="${deep(self, 'format.Step') || ''}" min="${deep(self, 'format.Min') || ''}" max="${deep(self, 'format.Max') || ''}" pid="${self.id}" class="${self.type} input" placeholder="${(self.placeholder || "")}" value="${self.render(true)}" type="number">`
+				return `<input  elementsid="button_${self.id}_2" ${__disabled} step="${deep(self, 'format.Step') || ''}" min="${deep(self, 'format.Min') || ''}" max="${deep(self, 'format.Max') || ''}" pid="${self.id}" class="${self.type} input" placeholder="${(self.placeholder || "")}" value="${self.render(true)}" type="number">`
 			}
 
-			var input = `<input elementsid="button_${self.id}_2" ${__disabled} ${m ? m : ''} pid="${self.id}" class="${self.type} input" placeholder="${(self.placeholder || "")}" value="${self.render(true)}" type="text">`
+			var input = `<input  elementsid="button_${self.id}_2" ${__disabled} ${m ? m : ''} pid="${self.id}" class="${self.type} input" placeholder="${(self.placeholder || "")}" value="${self.render(true)}" type="text">`
 
 			return input;
 		}
@@ -8449,7 +8449,7 @@
 				'</div>',
 
 				'<div class="searchInputWrapper">' +
-					'<input elementsid="sminputsearch_' + (p.id || p.placeholder) + '" class="sminput" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" id="text" maxlength="400" type="text" placeholder="' + (p.placeholder || "Search") + '">' +
+					'<input  elementsid="sminputsearch_' + (p.id || p.placeholder) + '" class="sminput" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" id="text" maxlength="400" type="text" placeholder="' + (p.placeholder || "Search") + '">' +
 				'</div>',
 
 				'<div class="searchPanel">' +
@@ -8471,7 +8471,7 @@
 
 			if(p.collectresults){
 				elements[1] = '<div class="searchInputWrapper">' +
-					'<div class="sminput" contenteditable="true"  autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" id="text" maxlength="400" type="text" placeholder="' + (p.placeholder || "Search") + '"></div>' +
+					'<div class="sminput"  contenteditable="true"  autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" id="text" maxlength="400" type="text" placeholder="' + (p.placeholder || "Search") + '"></div>' +
 				'</div>'
 			}
 
@@ -8506,7 +8506,7 @@
 					searchEl.removeClass('fastSearchShow');
 			},
 			closeclickResults : function(e){
-				if (searchEl.has(e.target).length === 0 && searchEl.hasClass('fastSearchShow')) {
+				if (!searchEl || (searchEl.has(e.target).length === 0 && searchEl.hasClass('fastSearchShow'))) {
 					helpers.closeResults();
 				}
 			},

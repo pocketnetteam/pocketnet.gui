@@ -630,6 +630,8 @@ var uploadpeertube = (function () {
 					})
 					.catch((e = {}) => {
 
+						console.log("ERRR", e)
+
 						self.app.peertubeHandler.clear()
 
 						self.app.Logger.error({

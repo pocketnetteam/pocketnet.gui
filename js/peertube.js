@@ -465,7 +465,6 @@ PeerTubePocketnet = function (app) {
 					var method = requestoptions.method.toLowerCase() || 'post';
           var url = self.helpers.url(options.host + '/' + meta.path);
 
-          console.log(' self.helpers.url',url, options.host + '/' + meta.path);
 
           return axios({ method, url, data, ...axiosoptions })
             .then((r) => {
@@ -512,7 +511,6 @@ PeerTubePocketnet = function (app) {
           requestoptions,
         );
       }).catch(e => {
-        console.error(e)
 
         return Promise.reject(e)
       });

@@ -180,7 +180,8 @@ Platform = function (app, listofnodes) {
         'PCkkR6TPP273vv5AQgJTWhBHawjzakkU1A' : true,
         'PT2kwKs93LYgRFhohRAkLuU9oynRDrfXto' : true,
         'PGNUAB5kNKVGTQ9CbE198sesKKYXnmX8HU' : true,
-        'PBGqJGSrdsBrEsLmiAaeH22bxGg8irX3gC' : true
+        'PBGqJGSrdsBrEsLmiAaeH22bxGg8irX3gC' : true,
+        'PQ2hAPwkey8aACP548DtgLscQTk9PkAKnP' : true
     }
 
     self.bch = {
@@ -9959,9 +9960,9 @@ Platform = function (app, listofnodes) {
 
                 self.sdk.ustate.me(function(info){
 
-                    if(p.balance && info.balance < p.balance) result.balance = true
+                    if(p.balance && (info.balance || 0) < p.balance) result.balance = true
                     else
-                    if(p.reputation && info.reputation < p.reputation) result.reputation = true
+                    if(p.reputation && (info.reputation || 0) < p.reputation) result.reputation = true
                     else
                     if(p.trial && !info.trial) result.trial = true
 
@@ -26786,10 +26787,6 @@ Platform = function (app, listofnodes) {
         app.user.isState(function(state){
 
             if (state) {
-
-
-                /*self.ui.popup('test', false, {});*/
-
 
                 lazyActions([
 
