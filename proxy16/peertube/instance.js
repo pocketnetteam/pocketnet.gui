@@ -1,13 +1,8 @@
 const { performance } = require('perf_hooks');
-let axios = require('axios');
 var _ = require('underscore');
 var f = require('../functions');
 var Statistic = require('../lib/statistic');
-
-require('../freeproxy')().listHttp().then(proxies=>{
-	axios = require('axios').create({ proxy: {host :proxies[0].ip, port: +proxies[0].port}});
-})
-
+var Transport = require('../transports')();
 var instance = function (host, ip, Roy) {
 	var self = this;
 
@@ -148,8 +143,7 @@ var instance = function (host, ip, Roy) {
 		if (typeof url == 'function') url = url(data);
 
 		var timeout = p.timeout || Roy.parent.timeout() || 10000
-
-		return axios[p.type || 'get'](`http://${host}${url}`, { timeout }).then((result) => {
+		return Transport.axios[p.type || 'get'](`http://${host}${url}`, { timeout }).then((result) => {
 
 			var meta = {
 				code : 200,

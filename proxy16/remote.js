@@ -2,7 +2,6 @@ process.setMaxListeners(0);
 require('events').EventEmitter.defaultMaxListeners = 0
 
 var f = require('./functions');
-var request = require('request');
 var jsdom  	= require('jsdom');
 var _ = require('underscore')
 var jquery = {}
@@ -11,10 +10,6 @@ var iconv = require('iconv-lite');
 const autoenc = require('node-autodetect-utf8-cp1251-cp866');
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 var nremotelink = 'https://1.pocketnet.app/opengraph/parse'
-
-require('./freeproxy').listHttp().then(proxies=>{
-	request = require('request').defaults({ proxy: proxies[0].url})
-})
 
 var Remote = function(app){
 
@@ -107,7 +102,7 @@ var Remote = function(app){
 		},
 		url : function(uri, clbk){
 	    
-			request({
+			self.transports.request({
 				url : uri,
 				timeout: 30000
 

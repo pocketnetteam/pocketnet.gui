@@ -1,15 +1,8 @@
-let axios = require('axios');
 const { zip } = require('underscore');
 var f = require('./functions');
 
-require('./freeproxy')().listHttp().then(proxies=>{
-    axios = require('axios').create({ proxy: {host :proxies[0].ip, port: +proxies[0].port}});
-})
-
-
 var Exchanges = function(){
     var self = this
-
     var hasdata = false
 
     var history = {
@@ -58,7 +51,7 @@ var Exchanges = function(){
     self.api = {
         price : {
             bilaxy : function(){
-                return axios.get(apis.bilaxy).then(function(response) {
+                return self.transports.axios.get(apis.bilaxy).then(function(response) {
 
                     return f.getPkoinPrice(response.data, 'close')
 
@@ -71,7 +64,7 @@ var Exchanges = function(){
             },
 
             mercatox : function(){
-                return axios.get(apis.mercatoxPrices).then(function(response) {
+                return self.transports.axios.get(apis.mercatoxPrices).then(function(response) {
 
                     return f.getPkoinPrice(response.data, 'last_price')
                 
@@ -83,7 +76,7 @@ var Exchanges = function(){
             },
 
             digifinex : function(){
-                return axios.get(apis.digifinex).then(function(response) {
+                return self.transports.axios.get(apis.digifinex).then(function(response) {
 
                     var converted = {}
                     

@@ -25,6 +25,7 @@ var Exchanges = require('./exchanges.js');
 var Peertube = require('./peertube/index.js');
 var Bots = require('./bots.js');
 var SystemNotify = require('./systemnotify.js');
+var Transports = require("./transports")
 
 process.setMaxListeners(0);
 require('events').EventEmitter.defaultMaxListeners = 0
@@ -56,7 +57,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 	var peertube = new Peertube()
 	var bots = new Bots(settings.bots)
 	var systemnotify = new SystemNotify(settings.systemnotify)
-
+	var transports = new Transports();
 	var dump = {}
 
 	self.userDataPath = null
@@ -64,7 +65,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 	logger.setapp(self)
 
-	f.mix({
+	f.mix({transports,
 		wss, server, pocketnet, nodeControl,
 		remote, firebase, nodeManager, wallet,
 		proxies, exchanges, peertube, bots,

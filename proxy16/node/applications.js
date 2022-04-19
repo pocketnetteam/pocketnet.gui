@@ -1,21 +1,14 @@
 //var os = require('os');
 const fs = require('fs');
 const https = require('https');
-let axios = require('axios')
 const { reject } = require('underscore');
 var f = require('../functions');
 var path = require('path');
 var Datastore = require('nedb');
 
-var request = require('request')
 var progress = require('request-progress');
 var targz = require('targz');
 
-
-require('../freeproxy')().listHttp().then(proxies=>{
-    request = require('request').defaults({ proxy: proxies[0].url})
-    axios = require('axios').create({ proxy: {host :proxies[0].ip, port: +proxies[0].port}});
-})
 
 var Applications = function(settings) {
 
@@ -84,7 +77,7 @@ var Applications = function(settings) {
 
         if(!meta) return Promise.reject('platform')
 
-        return axios.get(meta[key].url).then(function(response) {
+        return self.transports.axios.get(meta[key].url).then(function(response) {
 
             var d = response.data
             var assets = d.assets || [];
@@ -253,7 +246,7 @@ var Applications = function(settings) {
         let endFile = path.resolve(dest, meta[key].name)
 
         return new Promise(function(resolve, reject) {
-            let req = request(meta[key].url)
+            let req = self.transports.request(meta[key].url)
             
             progress(req, {
                 throttle: 500,                    // Throttle the progress event to 2000ms, defaults to 1000ms
