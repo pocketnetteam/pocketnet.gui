@@ -79,33 +79,68 @@ var testnodes = [
 
 var activenodes = [
 	{
-		host : '64.235.45.119',
-		port : 38081,
-		ws : 8087,
-		name : '64.235.45.119',
-		stable : true
-	},
-	{
 		host : '135.181.196.243',
 		port : 38081,
 		ws : 8087,
 		name : '135.181.196.243',
-		stable : true
+		stable : false
 	},
 	{
 		host : '65.21.56.203',
 		port : 38081,
 		ws : 8087,
 		name : '65.21.56.203',
-		stable : true
+		stable : false
 	},
 	{
-		host : '65.21.57.14',
+		host : '178.217.159.227',
 		port : 38081,
 		ws : 8087,
-		name : '65.21.57.14',
-		stable : true
-	}	
+		name : '178.217.159.227',
+		stable : false
+	},
+	{
+		host : '178.217.159.221',
+		port : 38081,
+		ws : 8087,
+		name : '178.217.159.221',
+		stable : false
+	},
+	{
+		host : '46.175.122.243',
+		port : 38081,
+		ws : 8087,
+		name : '46.175.122.243',
+		stable : false
+	},
+	{
+		host : '46.175.123.77',
+		port : 38081,
+		ws : 8087,
+		name : '46.175.123.77',
+		stable : false
+	},
+	{
+		host : '178.217.155.169',
+		port : 38081,
+		ws : 8087,
+		name : '178.217.155.169',
+		stable : false
+	},
+	{
+		host : '178.217.155.170',
+		port : 38081,
+		ws : 8087,
+		name : '178.217.155.170',
+		stable : false
+	},
+	{
+		host : '93.100.117.108',
+		port : 38081,
+		ws : 8087,
+		name : '93.100.117.108',
+		stable : false
+	},
 ]
 
 var nodes = activenodes
