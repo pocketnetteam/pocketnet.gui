@@ -95,7 +95,8 @@ __map =  {
 		"js/peertube.js",
 		"js/widgets.js",
 		"js/effects.js",
-		"js/logger.js"
+		"js/logger.js",
+		'js/video-uploader.js'
 	],
 
 	__css : [

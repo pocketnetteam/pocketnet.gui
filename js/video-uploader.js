@@ -1,4 +1,4 @@
-const getUniqueFileId = require('./file-hash');
+//const getUniqueFileId = require('./file-hash');
 
 class VideoUploader {
   minChunkSize = 256;
@@ -292,9 +292,9 @@ class VideoUploader {
 
     let fileExtension = name.match(/\.(.*)/g);
 
-    let fileDataHash = await getUniqueFileId(videoFile);
+    //let fileDataHash = await getUniqueFileId(videoFile);
 
-    return `video_${fileDataHash}${fileExtension}`;
+    return name; `video_${fileDataHash}${fileExtension}`;
   }
 
   static getResumableStorage(videoUniqueId) {
@@ -332,4 +332,5 @@ class VideoUploader {
   chunkRequestor;
 }
 
-module.exports = VideoUploader;
+if(typeof module != 'undefined')
+  module.exports = VideoUploader;
