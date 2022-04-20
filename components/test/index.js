@@ -13,6 +13,7 @@ var test = (function(){
 		var el = {}, ed, ref, plissing; 
 
 		var firstTime = false;
+		var loading = false
 		//var termsaccepted = false;
 
 		var checkusernameTimer = null
@@ -42,6 +43,27 @@ var test = (function(){
 		}
 
 		var actions = {		
+
+			loading : function(en){
+
+				loading = en ? true : false
+
+				if(el.c){
+
+					if(loading){
+						globalpreloader(true)
+						//el.c.find('.userPanel').addClass('loading')
+						//el.upanel.addClass('loading')
+					}
+					else{
+						globalpreloader(false)
+						//el.c.find('.userPanel').removeClass('loading')
+						//el.upanel.removeClass('loading')
+					}
+					
+				}
+				
+			},
 
 			saveemail : function(email, clbk){
 			
@@ -152,8 +174,10 @@ var test = (function(){
 
 				var allclbk = function(){
 
-					el.upanel.removeClass('loading')
-					el.c.find('.userPanel').removeClass('loading')
+					actions.loading(false)
+
+					//el.upanel.removeClass('loading')
+					//el.c.find('.userPanel').removeClass('loading')
 
 					topPreloader(100)
 
@@ -184,7 +208,7 @@ var test = (function(){
 
 				
 
-				if (el.c.find('.userPanel').hasClass('loading')){
+				if (loading){
 					saving = false
 					return
 				}
@@ -202,24 +226,20 @@ var test = (function(){
 						var pn = el.c.find('[parameter="name"] input')
 
 						pn.focus()
-						_scrollTo(pn)
+						_scrollTo(pn, el.c.closest('.customscroll'))
 					}
 					else{
 						if(!tempInfo.image){	
 							var pn = el.c.find('.fileUploader')
 
-							_scrollTo(pn)
+							_scrollTo(pn, el.c.closest('.customscroll'))
 						}	
 
 					}
-
 						
 					saving = false
 					return
 				}
-
-
-			
 
 				var userInfo = new UserInfo();
 
@@ -261,7 +281,7 @@ var test = (function(){
 
 						pn.focus()
 
-						_scrollTo(pn)
+						_scrollTo(pn, el.c.closest('.customscroll'))
 						saving = false
 					return false;
 				}
@@ -272,9 +292,9 @@ var test = (function(){
 
 					topPreloader(30)
 
-					el.c.find('.userPanel').addClass('loading')
+				
 
-					el.upanel.addClass('loading')
+					actions.loading(true)
 
 					self.app.platform.sdk.users.nameExist(userInfo.name.v, function(exist){
 
@@ -298,9 +318,9 @@ var test = (function(){
 
 									if (err){
 										topPreloader(100)
-										el.upanel.removeClass('loading')
 
-										el.c.find('.userPanel').removeClass('loading')
+
+										actions.loading(false)
 
 										sitemessage("An error occurred while loading images")
 										saving = false
@@ -311,9 +331,7 @@ var test = (function(){
 
 										topPreloader(100)
 
-										el.upanel.removeClass('loading')
-
-										el.c.find('.userPanel').removeClass('loading')
+										actions.loading(false)
 
 										ed.makeuser(userInfo)
 										saving = false
@@ -341,9 +359,7 @@ var test = (function(){
 
 												self.app.platform.errorHandler(error, true)	
 												
-												el.upanel.removeClass('loading')
-
-												el.c.find('.userPanel').removeClass('loading')
+												actions.loading(false)
 
 												topPreloader(100)
 
@@ -404,9 +420,8 @@ var test = (function(){
 						else
 						{
 							saving = false
-							el.upanel.removeClass('loading')
-
-							el.c.find('.userPanel').removeClass('loading')
+							
+							actions.loading(false)
 
 							topPreloader(100)
 
@@ -419,7 +434,7 @@ var test = (function(){
 
 								pn.focus()
 
-								_scrollTo(pn)
+								_scrollTo(pn, el.c.closest('.customscroll'))
 							
 							sitemessage(txt)
 						}
@@ -992,7 +1007,7 @@ var test = (function(){
 								if (plissing)
 									plissing.destroy()
 
-									_scrollTo(el.c.find('.nickname input').focus());
+									_scrollTo(el.c.find('.nickname input').focus(), el.c.closest('.customscroll'));
 								
 
 								if (clbk)
@@ -1231,6 +1246,10 @@ var test = (function(){
 
 				if (el.c) el.c.empty()
 
+				if (loading){
+					actions.loading(false)
+				}
+
 
 				el = {};
 				ed = {};
@@ -1247,6 +1266,8 @@ var test = (function(){
 			init : function(p){
 
 				state.load();
+
+				loading = false
 
 				el = {};
 				el.c = p.el.find('#' + self.map.id);

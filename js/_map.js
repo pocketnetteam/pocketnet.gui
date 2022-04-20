@@ -52,7 +52,6 @@ __map =  {
         "js/vendor/reconnectingwebsocket.js", //
         "js/vendor/xss.min.js", //
 		"js/vendor/jquery.mark.js", //?
-		"js/vendor/hc-sticky.js", //
 
 		"js/vendor/moment.min.js", //?
 		"js/vendor/moment.locale.js", //?

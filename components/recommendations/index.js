@@ -30,6 +30,9 @@ var recommendations = (function(){
 
 		var renders = {
 			list : function(contents, clbk){
+
+				if(!el.c) return
+
 				self.shell({
 
 					animation : false,
@@ -190,18 +193,22 @@ var recommendations = (function(){
 				p.skipvideo = true
 				
 				self.app.platform.sdk.node.shares[loader.loader || 'getrecomendedcontents'](p, function (recommendations) {
-			
-					places = {}
 
 					_.each(recommendations, function(r, i){
 						places[r.txid] = i + 1
 					})
 
+					if (ed.sorting){
+						recommendations = ed.sorting(recommendations)
+					}
+
 					if (ed.filter){
-						recommendations = _.filter(recommendations, ed.filter)
+						recommendations =  ed.filter(recommendations) //_.filter(recommendations, ed.filter)
 					}
 
 					recommendations = sorting(_.filter(recommendations, filter))
+
+					
 				
 					_.each(recommendations, function(recommendation){
 						rendered[recommendation.txid] = true
@@ -216,10 +223,7 @@ var recommendations = (function(){
 
 			info : function(contents, clbk){
 
-
 				self.sdk.node.shares.loadvideoinfoifneed(contents, true, function() {
-
-
 					if(clbk) clbk()
 				})
 			}
@@ -301,6 +305,9 @@ var recommendations = (function(){
 				needmake = []
 
 				empty = false
+				making = false
+
+				places = {}
 
 				ed = p.settings.essenseData || {}
 

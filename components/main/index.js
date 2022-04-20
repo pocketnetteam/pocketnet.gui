@@ -59,7 +59,7 @@ var main = (function(){
 				link : "index?r=saved",
 				label : () => self.app.localization.e('downloaded'),
 				if : function(){
-					return window.cordova
+					return self.app.savesupported()
 				},
 				value : 'saved'
 			},
@@ -129,10 +129,7 @@ var main = (function(){
 
 					lastStickyRefresh = ns
 
-					if(alv){
-						el.panel.hcSticky('refresh');
-						el.leftpanel.hcSticky('refresh');
-					}
+				
 				}
 					
 			},
@@ -725,26 +722,31 @@ var main = (function(){
 								
 								if (upbackbutton) upbackbutton.destroy()
 
-								setTimeout(function(){
-									upbackbutton = self.app.platform.api.upbutton(el.upbackbutton, {
-										top : function(){
-											return '65px'
-										},
-										rightEl : el.c.find('.lentacellsvi'),
-										scrollTop : 0,
-										click : function(a){
-											actions.backtolenta()
-										},
-
-										icon : '<i class="fas fa-chevron-left"></i>',
-										class : 'bright',
-										text : 'Back'
-									})	
-								}, 50)
+								if(typeof _Electron == 'undefined' || !_Electron){
+									setTimeout(function(){
 									
-								setTimeout(function(){
-									upbackbutton.apply()
-								},300)
+										upbackbutton = self.app.platform.api.upbutton(el.upbackbutton, {
+											top : function(){
+												return '65px'
+											},
+											rightEl : el.c.find('.lentacellsvi'),
+											scrollTop : 0,
+											click : function(a){
+												actions.backtolenta()
+											},
+	
+											icon : '<i class="fas fa-chevron-left"></i>',
+											class : 'bright',
+											text : 'Back'
+										})	
+									}, 50)
+										
+									setTimeout(function(){
+										upbackbutton.apply()
+									},300)
+								}
+
+								
 
 								renders.post(id)
 
@@ -786,12 +788,14 @@ var main = (function(){
 
 				if(isMobile()) return
 
-				upbutton = self.app.platform.api.upbutton(el.up, {
-					top : function(){
-						return '65px'
-					},
-					rightEl : el.c.find('.leftpanelcell')
-				})	
+				if(el.c)
+
+					upbutton = self.app.platform.api.upbutton(el.up, {
+						top : function(){
+							return '65px'
+						},
+						rightEl : el.c.find('.leftpanelcell')
+					})	
 			},
 
 			post : function(id){
@@ -802,7 +806,7 @@ var main = (function(){
 
 					if (openedpost){
 						
-						openedpost.destroy()
+						openedpost.clearessense()
 						openedpost = null
 					}
 
@@ -811,6 +815,8 @@ var main = (function(){
 				}
 
 				else{
+
+					//console.log("OPEN PAPI", id)
 					
 					self.app.platform.papi.post(id, el.c.find('.renderposthere'), function(e, p){
 						openedpost = p
@@ -824,14 +830,21 @@ var main = (function(){
 						opensvi : function(id){
 
 							if (openedpost){
+
+								//console.log('clearessense')
 						
-								openedpost.destroy()
+								//openedpost.destroy()
+								openedpost.clearessense()
 								openedpost = null
 							}
 		
 							el.c.find('.renderposthere').html('')
 
 							renders.post(id)
+
+							self.nav.api.history.addParameters({
+								v : id
+							})
 
 							self.app.actions.scroll(0)
 							
@@ -855,27 +868,7 @@ var main = (function(){
 
 		var initstick = function(){
 			return
-			if(!self.app.mobileview && !hsready){
-
-				var t1 = 75
-				var t2 = 75
-
-				if (el.leftpanel)
-					el.leftpanel.hcSticky({
-						stickTo: '#main',
-						top : t1,
-						bottom : 122
-					});
-
-				if (el.panel)
-					el.panel.hcSticky({
-						stickTo: '#main',
-						top : t2,
-						bottom : 122
-					});
-
-				hsready = true
-			}
+		
 		}
 
 		var initEvents = function(){
@@ -1149,8 +1142,7 @@ var main = (function(){
 
 				beginmaterial = _s.s || _s.i || _s.v || null;
 
-				
-				if((!beginmaterial && !_s.ss && !_s.sst && !p.state && (window.cordova || self.app.platform.matrixchat.connectWith))){
+				if((!beginmaterial && !_s.ss && !_s.sst && !p.state && (self.app.mobileview || window.cordova || self.app.platform.matrixchat.connectWith))){
 					
 					self.nav.api.load({
 						open : true,

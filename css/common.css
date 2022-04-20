@@ -238,9 +238,6 @@
 .share_common .subscribeWrapper .unsubscribeevent {
   display: none;
 }
-.share_common .shareSave {
-  margin-right: auto;
-}
 .share_common .shareSave i {
   display: none;
 }
@@ -409,6 +406,7 @@
   position: relative;
   overflow: hidden;
   border-radius: 6px;
+  background: rgb(var(--neutral-grad-0));
 }
 .share_common .jsPlayerPreview .wpl {
   width: 100%;
@@ -807,6 +805,9 @@
 .share_common .sharepanel .itemwr > div.labelwr span {
   font-weight: 700;
   font-size: 0.8em;
+}
+.share_common .sharepanel .itemwr .starswr {
+  min-width: 150px;
 }
 .share_common .sharepanel > div:nth-last-child(1) {
   margin-right: 0;

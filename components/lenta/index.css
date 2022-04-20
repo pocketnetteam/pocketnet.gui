@@ -720,6 +720,8 @@ html.mobileview.ios #lenta .share .video-js {
 html.mobileview #lenta .fullScreenVideo {
   will-change: transform;
   -webkit-backface-visibility: hidden;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
 }
 html.mobileview.fullscreen #lenta .fullScreenVideo #comments {
   display: none;

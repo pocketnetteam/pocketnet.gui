@@ -415,10 +415,9 @@ var metadisplay = function(){ %>
 										
 									</div>
 
-									<% const isElectron = (typeof _Electron !== 'undefined' && !!window.electron); %>
-									<% const isSaveSupported = (window.cordova && !isios()); %>
+									
 
-									<% if(isSaveSupported && share.itisvideo() ) {
+									<% if(app.savesupported() && share.itisvideo() ) {
 
 										var status = app.platform.sdk.localshares.status(share.txid)
 										
