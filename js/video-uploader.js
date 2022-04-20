@@ -36,6 +36,7 @@ class VideoUploader {
     this.static = VideoUploader;
 
     this.videoFile = videoFile;
+    this.uploadHost = app.peertubeHandler.active();
   }
 
   async uploadChunked(startFrom = 0) {
@@ -43,13 +44,17 @@ class VideoUploader {
 
     this.videoName = await this.static.getUniqueId(this.videoFile);
 
-    const videoUniqueId = `chunkupload_${this.videoName}`;
+    const userAddress = app.user.address.value;
+
+    const videoUniqueId = `chunkupload_${userAddress}_${this.videoName}`;
 
     const cachedResumable = this.static.getResumableStorage(videoUniqueId);
 
     let resumeFrom;
 
     if (cachedResumable) {
+      this.uploadHost = cachedResumable.uploadHost;
+
       const timeout12hours = cachedResumable.lastOperation + 12 * 60 * 60 * 1000;
 
       this.uploadId = cachedResumable.uploadId;
@@ -82,8 +87,6 @@ class VideoUploader {
         loadResult = await this.static.loadChunk(this, chunkData, chunkPos);
       } catch(err) {
         if (err.reason === 'not_found') {
-          this.static.deleteResumableStorage(videoUniqueId);
-
           console.error('Load chunk error', err);
 
           if (this.canceled) {
@@ -100,6 +103,7 @@ class VideoUploader {
         }
 
         this.static.setResumableStorage(videoUniqueId, {
+          uploadHost: app.peertubeHandler.active(),
           uploadId: this.uploadId,
           resumeFrom: chunkPos,
           lastOperation: Date.now(),
@@ -109,6 +113,7 @@ class VideoUploader {
       }
 
       this.static.setResumableStorage(videoUniqueId, {
+        uploadHost: app.peertubeHandler.active(),
         uploadId: this.uploadId,
         resumeFrom: chunkPos + chunkData.size,
         lastOperation: Date.now(),
@@ -201,6 +206,7 @@ class VideoUploader {
     data.video = self.videoFile;
     data.name = self.videoName;
     options.type = 'uploadVideo';
+    options.host = self.uploadHost;
 
     const response = await self.ptVideoApi
       .initResumableUpload(data, options)
@@ -223,6 +229,8 @@ class VideoUploader {
     data.chunkPosition = chunkPos;
     data.videoSize = self.videoFile.size;
     data.uploadId = self.uploadId;
+
+    options.host = self.uploadHost;
 
     if (self.canceled) {
       return;
@@ -263,7 +271,9 @@ class VideoUploader {
   }
 
   static async cancelResumable(self) {
-    const videoUniqueId = `chunkupload_${self.videoName}`;
+    const userAddress = app.user.address.value;
+
+    const videoUniqueId = `chunkupload_${userAddress}_${self.videoName}`;
 
     self.static.deleteResumableStorage(videoUniqueId);
 
@@ -325,7 +335,7 @@ class VideoUploader {
       }
     } catch(e) {
       // TODO: Handle errors
-      console.error('Something went wrong here. Normall');
+      console.error('Something went wrong here. Rare situation');
     }
 
     return `video_${fileDataHash}${fileExtension}`;
