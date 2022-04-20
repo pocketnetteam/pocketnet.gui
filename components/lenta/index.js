@@ -3237,13 +3237,13 @@ var lenta = (function(){
 
 				}, function(_p){
 
-					// if (tpl ==='groupshares' && !essenseData.video && essenseData.recommendedUsers && !recommendedusers){
+					if (tpl ==='groupshares' && !essenseData.video && essenseData.recommendedUsers && !recommendedusers){
 
-					// 	el.recommendedusers = _p.el.find('.recommendeduserscnt');
+						el.recommendedusers = _p.el.find('.recommendeduserscnt');
 			
-					// 	renders.recommendedusers();
+						renders.recommendedusers();
 						
-					// }
+					}
 			
 					if (_p.inner == append){
 						sharesInview = sharesInview.concat(shares)	
@@ -4915,6 +4915,8 @@ var lenta = (function(){
 
 				recommendations = {}
 				recommendationsMaking = {}
+
+				showRecommendedUsers = true;
 
 				_.each(_reposts, function(p){
 					if (p)

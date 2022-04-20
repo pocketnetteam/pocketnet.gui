@@ -203,7 +203,8 @@ Platform = function (app, listofnodes) {
         'PP6bNhVaXy7YK19UbLHXbQPKa7oV4yx1rr',
         'TSisNge5kisi7cwGRwmUBuZQWZFD8cRoG8',
         'TQEGz5cQQtRad8wo2c1KapvFek9rnuprkD',
-        'PKU652wwKYC52WGBJ8EHkA1Mtud8iHWChC'
+        'PKU652wwKYC52WGBJ8EHkA1Mtud8iHWChC',
+        'PD4us1zniwrJv64xhPyhT2mgNrTvPur9YN'
     ];
 
     if (window.IpcBridge)
@@ -10957,7 +10958,7 @@ Platform = function (app, listofnodes) {
                 }
 
                 var address = self.sdk.activity.getbestaddress();
-                
+
                 var method = 'getrecommendedaccountbyaddress';
 
                 var p = {};

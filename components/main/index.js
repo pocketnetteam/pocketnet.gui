@@ -689,8 +689,8 @@ var main = (function(){
 							observe : actions.currentModeKey(),
 							page : 0,
 
-							recommendedUsers : isMobile(),
-							recommendedUsersCount : isMobile() ? 15 : 3,
+							recommendedUsers : self.app.mobileview,
+							recommendedUsersCount : self.app.mobileview ? 15 : 3,
 							//includesub : true,
 							includeboost : self.app.boost,
 							optimize : self.app.mobileview,
