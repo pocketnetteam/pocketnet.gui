@@ -6634,7 +6634,7 @@ Platform = function (app, listofnodes) {
 
 
                 }).catch(error => {
-                    console.error(error)
+                    //console.error(error)
                 })
             },
 
@@ -24650,16 +24650,11 @@ Platform = function (app, listofnodes) {
 
         var destroyMessage = function (message, time, noarrange, destroyUser) {
 
-            if (message.timeout)
-                clearTimeout(message.timeout);
+            if (message.timeout) clearTimeout(message.timeout);
 
             if (platform.focus) {
 
-
-
                 message.timeout = setTimeout(function () {
-
-
 
                     message.el.fadeOut(300)
 
@@ -24686,8 +24681,7 @@ Platform = function (app, listofnodes) {
             else {
                 setTimeout(function () {
                     destroyMessage(message, time, noarrange)
-                }, 100)
-
+                }, 1000)
             }
 
         }
@@ -24713,7 +24707,6 @@ Platform = function (app, listofnodes) {
         }
 
         var arrangeMessages = function(){
-
 
 			var offset = 0;
 
@@ -24758,7 +24751,6 @@ Platform = function (app, listofnodes) {
                 }
 
                 offset = offset + boffset
-
 
 				_.each(self.fastMessages, function(m, i){
 

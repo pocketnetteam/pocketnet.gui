@@ -1125,7 +1125,6 @@ Application = function(p)
 
 				self.mobile.pip.init()
 				self.mobile.keyboard.init()
-				
 
 				if (window.Keyboard && window.Keyboard.disableScroll){
 					window.Keyboard.disableScroll(false)

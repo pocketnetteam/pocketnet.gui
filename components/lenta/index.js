@@ -15,7 +15,7 @@ var lenta = (function(){
 		var el = {};
 		var mid = p.mid;
 		var making = false, ovf = false;
-		var w, essenseData, recomended = [], recommended, mestate, initedcommentes = {}, canloadprev = false,
+		var w, essenseData, recomended = [], initialized, recommended, mestate, initedcommentes = {}, canloadprev = false,
 		video = false, isotopeinited = false, videosVolume = 0, fullscreenvideoShowing = null, loadedcachedHeight, showRecommendedUsers = true, recommendedusers = null;
 
 		var subloaded = false
@@ -283,6 +283,10 @@ var lenta = (function(){
 
 			newmaterials : function(data){
 				if(making || essenseData.author || essenseData.txids) return
+
+				if(initialized && initialized.addSeconds(45) > (new Date())) {
+					return
+				}
 
 				if(!data) data = {}
 
@@ -4585,7 +4589,7 @@ var lenta = (function(){
 		}
 
 		var make = function(clbk, _p){
-
+			initialized = new Date()
 
 			making = true;
 
@@ -4887,6 +4891,7 @@ var lenta = (function(){
 			},
 
 			destroy : function(){
+				initialized = null
 
 				delete self.app.events.delayedscroll['videos' + mid]
 				delete self.app.events.delayedscroll['videosinit' + mid]
@@ -5051,7 +5056,7 @@ var lenta = (function(){
 				el.lentacnt = el.c.find('.lentacell .cnt');
 				el.w = essenseData.window || w;
 
-
+				
 
 				el.share = {};
 

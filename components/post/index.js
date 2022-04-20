@@ -340,6 +340,8 @@ var post = (function () {
 
 			position: function () {
 
+				if(!el.wr) return
+
 				if (self.app.mobileview) return
 
 				if (primary) return

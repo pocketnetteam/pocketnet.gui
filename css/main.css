@@ -5012,12 +5012,9 @@ html.mobileview.fullscreen #navigationWrapper {
 .fastMessage .sharepreview,
 .notification .sharepreview {
   cursor: pointer;
-}
-.fastMessage .commentprev:hover,
-.notification .commentprev:hover,
-.fastMessage .sharepreview:hover,
-.notification .sharepreview:hover {
-  color: rgb(var(--color-txt-ac));
+  /*&:hover{
+            color : rgb(var(--color-txt-ac));
+        }*/
 }
 .fastMessage {
   border-radius: 12px;
@@ -5088,6 +5085,7 @@ html.mobileview.fullscreen #navigationWrapper {
 }
 #hideallnotifications .hidenf {
   position: fixed;
+  border-radius: 12px;
   left: 5px;
   bottom: 5px;
   height: 45px;
