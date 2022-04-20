@@ -11,7 +11,7 @@ var recommendedusers = (function(){
 		var el;
 		var addresses = [];
 
-		var me = deep(app, 'platform.sdk.users.storage.' + self.app.user.address.value.toString('hex'))
+		var me = deep(app, 'platform.sdk.users.storage.' + self.app.user.address.value.toString('hex'));
 
 		var filterSubscribes = function(u){
 
@@ -20,20 +20,9 @@ var recommendedusers = (function(){
 
 
 						
-		var shuffle = function(array) {
-			let currentIndex = array.length,  randomIndex;
+		var prepareUsers = function(array) {
 		  
-			while (currentIndex != 0) {
-		  
-			  randomIndex = Math.floor(Math.random() * currentIndex);
-			  currentIndex--;
-		  
-			  [array[currentIndex], array[randomIndex]] = [
-				array[randomIndex], array[currentIndex]];
-			}
-
-		  
-			return array.slice(0, p.essenseData.recommendedUsersCount || 3);
+			return _.shuffle(array).slice(0, p.essenseData.recommendedUsersCount || 3);
 		}
 
 		var actions = {
@@ -69,7 +58,7 @@ var recommendedusers = (function(){
 
 						el.c.show();
 
-						addresses = shuffle(c.filter(filterSubscribes));
+						addresses = prepareUsers(c.filter(filterSubscribes));
 
 						if (clbk){
 							clbk(addresses);

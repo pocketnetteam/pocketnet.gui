@@ -10956,13 +10956,11 @@ Platform = function (app, listofnodes) {
                     }
                 }
 
+                var address = self.sdk.activity.getbestaddress();
+                
                 var method = 'getrecommendedaccountbyaddress';
 
                 var p = {};
-
-                var address = self.sdk.activity.getbestaddress();
-
-                console.log('address', address);
                 
                 p.addressexclude = '';
                 p.type = [];
