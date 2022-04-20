@@ -26540,7 +26540,7 @@ Platform = function (app, listofnodes) {
         self.sdk.registrations.load();
         self.sdk.relayTransactions.load();
         self.applications = self.__applications()
-        self.sdk.theme.load()
+        
         self.sdk.lentaMethod.load()
 
         self.sdk.uiScale.load();
@@ -26666,6 +26666,8 @@ Platform = function (app, listofnodes) {
             }
 
             self.prepareUser(function() {
+
+                self.sdk.theme.load()
 
                 clbk();
             });

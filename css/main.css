@@ -6452,6 +6452,9 @@ html.mobileview .wnd.normalizedmobile:only-child.asette .wndback {
 html.mobileview .wnd.maxheight .wndinner .wndcontent {
   height: calc(var(--vh, 1vh) * 92);
 }
+.keyboardsafe {
+  padding-bottom: calc(var(--keyboardheight, 0) - 1px);
+}
 html.pipmode .pipped {
   position: fixed!important;
   left: 0!important;
