@@ -1283,6 +1283,8 @@ var post = (function () {
 				}
 			},
 			share: function (clbk) {
+				//console.log("SHARE CLBK 0", share.txid)
+
 				self.shell(
 					{
 						turi: 'lenta',
@@ -1306,7 +1308,7 @@ var post = (function () {
 					},
 					function (_p) {
 
-						console.log("SHARE CLBK 1")
+						//console.log("SHARE CLBK 1", share.txid)
 
 						if(!el.share) return
 
@@ -1329,13 +1331,17 @@ var post = (function () {
 
 						renders.stars(function () {
 
-							console.log("SHARE CLBK 2")
+							if(!el.share) return
+
+							//console.log("SHARE CLBK 2", share.txid)
 
 							renders.mystars(function () { });
 
 							renders.url(function () {
 
-								console.log("SHARE CLBK 3")
+								if(!el.share) return
+
+								//console.log("SHARE CLBK 3", share.txid)
 
 
 								if(!el.share.find('.showMore').length) renders.repost();
@@ -1343,6 +1349,8 @@ var post = (function () {
 								actions.position();
 
 								renders.urlContent(function () {
+
+									if(!el.share) return
 
 									actions.position();
 
@@ -1354,6 +1362,8 @@ var post = (function () {
 									}
 
 									renders.images(function () {
+
+										if(!el.share) return
 
 
 										if (!ed.repost) {
@@ -1429,9 +1439,6 @@ var post = (function () {
 						if (share.itisarticle()){
 							renders.articlespart(_p.el.find('.sharearticle'))
 						}
-
-
-						
 						
 					},
 				);
@@ -1490,9 +1497,6 @@ var post = (function () {
 
 					self.app.platform.sdk.likes.get(ids, function () {
 						renders.stars(clbk);
-
-						console.log("AS")
-
 					});
 				} else {
 					if (clbk) clbk();
@@ -1509,11 +1513,14 @@ var post = (function () {
 						},
 					},
 					function (p) {
-						fastars(p.el.find('.stars'));
 
-						el.share.find('.stars i').on('click', events.like);
+						if(p.el){
+							fastars(p.el.find('.stars'));
 
-						p.el.find('.count').on('click', events.postscores);
+							el.share.find('.stars i').on('click', events.like);
+	
+							p.el.find('.count').on('click', events.postscores);
+						}
 
 						if (clbk) clbk();
 					},
@@ -1804,6 +1811,8 @@ var post = (function () {
 
 		var make = function () {
 
+			//console.log("MAKE POST", share.txid)
+
 			if (share) {
 
 				if(self.app.platform.sdk.user.reputationBlockedNotMe(share.address)){
@@ -1863,7 +1872,7 @@ var post = (function () {
 
 			getdata: function (clbk, p) {
 
-
+				
 				recommendationsenabled = self.app.platform.istest()
 
 				_repost = null
@@ -1878,9 +1887,13 @@ var post = (function () {
 
 				level = (ed.level || -1) + 1
 
+				//console.log("NEW POST0", id)
+
 				getshareprominitialp(id, deep(p, 'settings.essenseData.shareobj'), function(_share){
 
 					share = _share
+
+					//console.log("NEW POST", share.txid)
 
 					if (!share) {
 
@@ -1936,7 +1949,7 @@ var post = (function () {
 
 			destroy: function (key) {
 
-			
+				//console.log("DESTROY", share.txid)
 				
 				if (external){
 					external.destroy()

@@ -129,10 +129,7 @@ var main = (function(){
 
 					lastStickyRefresh = ns
 
-					if(alv){
-						el.panel.hcSticky('refresh');
-						el.leftpanel.hcSticky('refresh');
-					}
+				
 				}
 					
 			},
@@ -809,7 +806,7 @@ var main = (function(){
 
 					if (openedpost){
 						
-						openedpost.destroy()
+						openedpost.clearessense()
 						openedpost = null
 					}
 
@@ -818,6 +815,8 @@ var main = (function(){
 				}
 
 				else{
+
+					//console.log("OPEN PAPI", id)
 					
 					self.app.platform.papi.post(id, el.c.find('.renderposthere'), function(e, p){
 						openedpost = p
@@ -831,8 +830,11 @@ var main = (function(){
 						opensvi : function(id){
 
 							if (openedpost){
+
+								//console.log('clearessense')
 						
-								openedpost.destroy()
+								//openedpost.destroy()
+								openedpost.clearessense()
 								openedpost = null
 							}
 		
@@ -866,27 +868,7 @@ var main = (function(){
 
 		var initstick = function(){
 			return
-			if(!self.app.mobileview && !hsready){
-
-				var t1 = 75
-				var t2 = 75
-
-				if (el.leftpanel)
-					el.leftpanel.hcSticky({
-						stickTo: '#main',
-						top : t1,
-						bottom : 122
-					});
-
-				if (el.panel)
-					el.panel.hcSticky({
-						stickTo: '#main',
-						top : t2,
-						bottom : 122
-					});
-
-				hsready = true
-			}
+		
 		}
 
 		var initEvents = function(){

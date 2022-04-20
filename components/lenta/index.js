@@ -615,8 +615,6 @@ var lenta = (function(){
 
 									boostplaces[position] = true
 
-									console.log("RENDER BOOST", bst)
-		
 									renders.shares([bst], function(){
 										renders.sharesInview([bst], function(){
 											
@@ -3808,7 +3806,6 @@ var lenta = (function(){
 
 				self.app.platform.sdk.node.shares.loadvideoinfoifneed(allshares, video, function(){
 
-					console.log('allshares', allshares)
 
 					self.app.platform.sdk.node.shares.users(allshares, function(l, error2){
 
@@ -4033,7 +4030,6 @@ var lenta = (function(){
 
 			shares : function(clbk, cache){
 
-				console.log("shares")
 
 				if (loading || (ended && (!essenseData.contents || essenseData.txids.length == _.toArray(shareInitedMap).length) )) return
 
@@ -4107,7 +4103,6 @@ var lenta = (function(){
 								}						
 							}
 
-							console.log("sharesloader", loader)
 
 							var count = 10
 
@@ -4591,7 +4586,6 @@ var lenta = (function(){
 
 		var make = function(clbk, _p){
 
-			console.log("MAKE LENTA")
 
 			making = true;
 
@@ -4749,7 +4743,6 @@ var lenta = (function(){
 						load.boosted(function(shares){
 							boosted = shares
 
-							console.log('boosted', boosted)
 
 							actions.includeboost()
 						})
@@ -4795,7 +4788,6 @@ var lenta = (function(){
 
 			getdata : function(clbk, p){
 
-				console.log("GETDATA")
 
 				ovf = false
 
@@ -4840,12 +4832,10 @@ var lenta = (function(){
 				
 				video = essenseData.video || false
 
-				console.log("STATEME1")
 				
 				self.app.platform.sdk.ustate.me(function(_mestate){
 
 					mestate = _mestate || {}
-					console.log("STATEME2")
 
 					var data = {
 						beginmaterial : beginmaterial,

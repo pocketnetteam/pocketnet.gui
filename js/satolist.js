@@ -181,7 +181,9 @@ Platform = function (app, listofnodes) {
         'PT2kwKs93LYgRFhohRAkLuU9oynRDrfXto' : true,
         'PGNUAB5kNKVGTQ9CbE198sesKKYXnmX8HU' : true,
         'PBGqJGSrdsBrEsLmiAaeH22bxGg8irX3gC' : true,
-        'PQ2hAPwkey8aACP548DtgLscQTk9PkAKnP' : true
+        'PQ2hAPwkey8aACP548DtgLscQTk9PkAKnP' : true,
+        'PFGMWt1cQFm6QEbcqH6YJxfabj4L5rHfLM' : true,
+        'PUq5SNWQCdU1dwuQUNRCKaxgzw52rD6Uez' : true
     }
 
     self.bch = {
@@ -2716,7 +2718,7 @@ Platform = function (app, listofnodes) {
 
             var idf = share.txid.replace(/[^0-9]/, '') || '49'
 
-            var oddtxid = (Number(idf[idf.length - 2] + '' + idf[idf.length - 1]) / 2).toFixed(0)
+            var oddtxid = (Number(idf[idf.length - 2] + '' + idf[idf.length - 1])).toFixed(0)
 
             self.app.nav.api.load({
                 open: true,
@@ -3567,7 +3569,9 @@ Platform = function (app, listofnodes) {
             var removeEvents = function () {
                 delete app.events.scroll[id]
                 delete app.events.resize[id]
-                up.off('click', events.click)
+
+                if (up)
+                    up.off('click', events.click)
                 /*window.removeEventListener('scroll', events.scroll)
                 window.removeEventListener('resize', events.resize)*/
             }
@@ -6610,8 +6614,6 @@ Platform = function (app, listofnodes) {
 
                 return self.sdk.localshares.getall[self.sdk.localshares.key]().then(r => {
 
-                    console.log("R", r)
-
                     _.each(r, function(share){
                         self.sdk.localshares.addtostorage(share)
 
@@ -8734,8 +8736,6 @@ Platform = function (app, listofnodes) {
                         }
                     }
                 })
-
-                console.log("SETTINGS", c)
 
                 return {
                     c: c,
@@ -16261,8 +16261,6 @@ Platform = function (app, listofnodes) {
                         var _u = data.userprofile
 
                         if (_u) {
-
-                            console.log("_u", _u)
 
                             var u = self.sdk.users.prepareuser(_u, _u.address || _u.adr, state)
 
