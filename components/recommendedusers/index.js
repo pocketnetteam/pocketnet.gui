@@ -9,8 +9,7 @@ var recommendedusers = (function(){
 		var primary = deep(p, 'history');
 
 		var el;
-		var addresses = [],
-			onlytags = false;
+		var addresses = [];
 
 		var me = deep(app, 'platform.sdk.users.storage.' + self.app.user.address.value.toString('hex'))
 
@@ -42,18 +41,22 @@ var recommendedusers = (function(){
 			getRecommendedAccounts : function(clbk){
 
 
-				self.app.platform.sdk.users.getRecommendedAccounts(function(c, error){
+				self.app.platform.sdk.users.getRecommendedAccounts(function(c, error, tagsexecute){
+					
+					if (tagsexecute){
 
-					self.app.platform.sdk.categories.clbks.excluded.topusers =
-					self.app.platform.sdk.categories.clbks.tags.topusers =
-					self.app.platform.sdk.categories.clbks.selected.topusers = function(data){
-
-						el.c.hide();
-						el.users.empty();
-						addresses = [];
-						state.load(renders.page);
-						
+						self.app.platform.sdk.categories.clbks.excluded.topusers =
+						self.app.platform.sdk.categories.clbks.tags.topusers =
+						self.app.platform.sdk.categories.clbks.selected.topusers = function(data){
+	
+							el.c.hide();
+							el.users.empty();
+							addresses = [];
+							state.load(renders.page);
+							
+						}
 					}
+
 
 					self.app.platform.sdk.categories.clbks.tags.topusersRemove = function(data){
 
@@ -62,7 +65,7 @@ var recommendedusers = (function(){
 					}
 
 
-					if (!error && c.length){
+					if (!error && c && c.length){
 
 						el.c.show();
 
@@ -178,6 +181,7 @@ var recommendedusers = (function(){
 
 				el.loader.fadeOut();
 
+				el.users.empty();
 				
 				self.shell({
 
@@ -235,22 +239,8 @@ var recommendedusers = (function(){
 			},
 			load : function(clbk){
 
-
-				if (addresses.length){
-
-					el.c.show();
-
-					if (clbk){
-						clbk(shuffle(addresses));
-					}
-
-				} else {
-					
-					actions.getRecommendedAccounts(clbk);
+				actions.getRecommendedAccounts(clbk);
 							
-					
-				}
-
 			}
 		}
 

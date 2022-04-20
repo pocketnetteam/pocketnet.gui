@@ -3807,8 +3807,6 @@ var lenta = (function(){
 
 				self.app.platform.sdk.node.shares.loadvideoinfoifneed(allshares, video, function(){
 
-					console.log('allshares', allshares)
-
 					self.app.platform.sdk.node.shares.users(allshares, function(l, error2){
 
 						countshares = countshares + allshares.length

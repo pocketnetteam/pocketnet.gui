@@ -10919,6 +10919,30 @@ Platform = function (app, listofnodes) {
 
             },
 
+            getTopAccounts : function(p, rpc, clbk){
+
+                var method = 'gettopaccounts';
+     
+                p.height = 0;
+                p.tagsfilter = self.app.platform.sdk.categories.gettags()
+                p.tagsexcluded = self.app.platform.sdk.categories.gettagsexcluded()
+                p.depth || (p.depth = 10000);
+                    
+                var parameters = [p.height, p.count, p.lang, p.tagsfilter, p.type, '', p.tagsexcluded, p.depth];
+
+                var s = self.sdk.node.shares;
+
+                s.getex(parameters, function(data, error){
+
+                    console.log('gettopaccounts result', data, error);
+
+                    clbk(data, error, true);
+                    
+
+                }, method, rpc)
+
+            },
+
             getRecommendedAccounts : function(clbk){
 
                 var rpc = {
@@ -10943,36 +10967,31 @@ Platform = function (app, listofnodes) {
                 p.addressexclude = '';
                 p.type = [];
                 p.lang = self.app.localization.key;
-                p.count = 10;
+                p.count = 15;
 
-                var parameters = []
+                if (!address){
 
+                    self.app.platform.sdk.users.getTopAccounts(p, rpc, clbk);
+                    return;
 
-                if (address){
+                } 
 
-                    parameters = [address, p.addressexclude, p.type, p.lang, p.count];
-
-                } else {
-
-                    method = 'gettopaccounts';
-     
-                    p.height = 0;
-                    p.tagsfilter = self.app.platform.sdk.categories.gettags()
-                    p.tagsexcluded = self.app.platform.sdk.categories.gettagsexcluded()
-                    p.depth || (p.depth = 100);
-                        
-                    parameters = [p.height, p.count, p.lang, p.tagsfilter, p.type, '', p.tagsexcluded, p.depth];
-
-                }
+                var parameters = [address, p.addressexclude, p.type, p.lang, p.count];
 
                 var s = self.sdk.node.shares;
 
                 s.getex(parameters, function(data, error){
 
-                    console.log('gettopaccounts result', data, error);
+                    console.log('getrecommendedaccounts result', data, error);
 
-                    if (clbk){
+                    if (!(data && data.length) || error){
+
+                        self.app.platform.sdk.users.getTopAccounts(p, rpc, clbk);
+
+                    } else {
+
                         clbk(data, error);
+
                     }
 
                 }, method, rpc)
