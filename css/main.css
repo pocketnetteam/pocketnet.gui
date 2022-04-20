@@ -253,6 +253,7 @@
   background-image: linear-gradient(180deg, rgba(var(--background-main-contrast), 0.25) 0%, rgba(var(--background-hidden-layer), 0) 90%);
 }
 body {
+  overflow-x: hidden;
   overscroll-behavior: none;
   /* scroll-snap-type: y proximity;*/
 }

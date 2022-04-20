@@ -4194,7 +4194,8 @@ Platform = function (app, listofnodes) {
 
                             self.app.mobile.vibration.small()
 
-                            var href = 'https://bastyon.com/' /// domain
+                            var href = 'https://'+self.app.options.url+'/' /// domain
+
 
                             var path = ''
 

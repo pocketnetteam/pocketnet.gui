@@ -936,6 +936,7 @@
   bottom: 0;
   scrollbar-width: none;
   overscroll-behavior: none;
+  -webkit-overflow-scrolling: touch;
   transform: translate3d(0, 0, 0);
   padding-bottom: 20%;
 }
