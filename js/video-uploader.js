@@ -1,4 +1,27 @@
-//const getUniqueFileId = require('./file-hash');
+var getUniqueFileId = null
+
+if(typeof require != 'undefined') getUniqueFileId = require('./file-hash');
+
+function fileHash( file, hasher,  ){
+  //Instantiate a reader		  
+  var reader = new FileReader();
+
+  return new Promise((resolve, reject) => {
+    //What to do when we gets data?
+    reader.onload = function( e ){
+      var hash = hasher(e.target.result);
+      resolve( hash );
+    }
+
+    reader.onerror= function( e ){
+      reject( e );
+    }
+      
+    reader.readAsBinaryString( file );
+  })
+
+}
+
 
 class VideoUploader {
   minChunkSize = 256;
@@ -292,9 +315,21 @@ class VideoUploader {
 
     let fileExtension = name.match(/\.(.*)/g);
 
-    //let fileDataHash = await getUniqueFileId(videoFile);
+    let fileDataHash = name;
 
-    return name; `video_${fileDataHash}${fileExtension}`;
+    try{
+      if(getUniqueFileId){
+        fileDataHash = await getUniqueFileId(videoFile);
+      }
+  
+      else
+      if(typeof $ != 'undefined' && $.md5){
+        fileDataHash = await fileHash(videoFile, $.md5);
+      }
+    }
+    catch(e){}
+
+    return `video_${fileDataHash}${fileExtension}`;
   }
 
   static getResumableStorage(videoUniqueId) {
