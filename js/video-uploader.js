@@ -13,6 +13,8 @@ class VideoUploader {
     this.static = VideoUploader;
 
     this.videoFile = videoFile;
+
+    this.activeHost = app.peertubeHandler.active();
   }
 
   async uploadChunked(startFrom = 0) {
@@ -22,15 +24,13 @@ class VideoUploader {
 
     const userAddress = app.user.address.value;
 
-    const videoUniqueId = `${userAddress}_${this.videoName}`;
+    const videoUniqueId = `${this.activeHost}_${userAddress}_${this.videoName}`;
 
     const cachedResumable = this.getResumableStorage(videoUniqueId);
 
     let resumeFrom;
 
     if (cachedResumable) {
-      this.uploadHost = cachedResumable.uploadHost;
-
       const timeout12hours = cachedResumable.lastOperation + 12 * 60 * 60 * 1000;
 
       this.uploadId = cachedResumable.uploadId;
@@ -41,7 +41,6 @@ class VideoUploader {
         resumeFrom = cachedResumable.resumeFrom;
       }
     } else {
-      this.uploadHost = app.peertubeHandler.active();
       this.uploadId = await this.static.initResumable(this);
     }
 
@@ -138,7 +137,7 @@ class VideoUploader {
       return this.static.cancelResumable(this);
     }
 
-    return this.static.uploadVideo(this);
+    return this.static.cancelUpload(this);
   }
 
   async destroy(){
@@ -185,7 +184,6 @@ class VideoUploader {
     data.video = self.videoFile;
     data.name = self.videoName;
     options.type = 'uploadVideo';
-    options.host = self.uploadHost;
 
     const response = await self.ptVideoApi
       .initResumableUpload(data, options)
@@ -208,8 +206,6 @@ class VideoUploader {
     data.chunkPosition = chunkPos;
     data.videoSize = self.videoFile.size;
     data.uploadId = self.uploadId;
-
-    options.host = self.uploadHost;
 
     if (self.canceled) {
       return;
@@ -252,7 +248,7 @@ class VideoUploader {
   static async cancelResumable(self) {
     const userAddress = app.user.address.value;
 
-    const videoUniqueId = `${userAddress}_${self.videoName}`;
+    const videoUniqueId = `${self.activeHost}_${userAddress}_${self.videoName}`;
 
     self.deleteResumableStorage(videoUniqueId);
 
