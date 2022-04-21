@@ -88,6 +88,28 @@ var videoCabinet = (function () {
 		};
 
 		var actions = {
+
+			videoadded : function(resultLink){
+				actions.getSingleVideo(resultLink).then((data) => {
+					const { host } =
+						self.app.peertubeHandler.parselink(resultLink);
+
+					const formattedData = {
+						...data,
+						server: host,
+					};
+
+					peertubeServers[host].videos.unshift(formattedData);
+
+					renders.videos(
+						[formattedData],
+						renders.newVideoContainer(true),
+					);
+				});
+
+				actions.getQuota().then(() => renders.quota());
+			},
+
 			async getHosts() {
 				// const serverStructureHosts = await self.app.peertubeHandler.api.proxy
 				//   .roys({ type: 'view' })
@@ -821,28 +843,7 @@ var videoCabinet = (function () {
 						storage: p.storage,
 						value: p.value,
 						currentLink: '',
-						actions: {
-							added: function (resultLink) {
-								actions.getSingleVideo(resultLink).then((data) => {
-									const { host } =
-										self.app.peertubeHandler.parselink(resultLink);
-
-									const formattedData = {
-										...data,
-										server: host,
-									};
-
-									peertubeServers[host].videos.unshift(formattedData);
-
-									renders.videos(
-										[formattedData],
-										renders.newVideoContainer(true),
-									);
-								});
-
-								actions.getQuota().then(() => renders.quota());
-							},
-						},
+						
 
 						closeClbk: function () {
 							external = null;
@@ -851,6 +852,8 @@ var videoCabinet = (function () {
 
 					clbk: function (p, element) {
 						external = element;
+
+						external.addclbk('videocabinet', actions.videoadded)
 
 						videoUploadData = element.essenseData;
 					},
@@ -1367,6 +1370,18 @@ var videoCabinet = (function () {
 					errorcomp.destroy()
 					errorcomp = null
 				}
+
+				if (external){
+
+					if(!external.uploading || !external.uploading())
+						external.module.closeContainer()
+					else{
+						external.removeclbk('videocabinet')
+					}
+
+					external = null
+				}
+
 			},
 
 			init: function (p) {
@@ -1417,6 +1432,13 @@ var videoCabinet = (function () {
 				const videoParameters = {
 					sort: ed.sort,
 				};
+
+				var externallatest = deep(self, 'app.modules.uploadpeertube.module.essense.secondary')
+
+				if (externallatest && !externallatest.destroyed){
+					external = externallatest
+					external.addclbk('videocabinet', actions.videoadded)
+				}
 
 				self.app.platform.sdk.user
 					.mystatisticnov()

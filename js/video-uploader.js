@@ -178,6 +178,13 @@ class VideoUploader {
     return this.static.uploadVideo(this);
   }
 
+  async destroy(){
+    await this.cancel()
+
+    this.videoFile = null;
+    this.uploadHost = null;
+  }
+
   async * getNextChunk(startFrom) {
     const videoFile = this.videoFile;
     const videoSize = this.videoFile.size;
@@ -351,19 +358,19 @@ class VideoUploader {
   }
 
   static getResumableStorage(videoUniqueId) {
-    if (!localStorage[videoUniqueId]) {
+    if (!localStorage['resumable_' + this.uploadHost + '_' +  videoUniqueId]) {
       return;
     }
 
-    return JSON.parse(localStorage[videoUniqueId]);
+    return JSON.parse(localStorage['resumable_' + this.uploadHost + '_' +  videoUniqueId]);
   }
 
   static deleteResumableStorage(videoUniqueId) {
-    delete localStorage[videoUniqueId];
+    delete localStorage['resumable_' + this.uploadHost + '_' + videoUniqueId];
   }
 
   static setResumableStorage(videoUniqueId, data) {
-    localStorage[videoUniqueId] = JSON.stringify(data);
+    localStorage['resumable_' + this.uploadHost + '_' +  videoUniqueId] = JSON.stringify(data);
   }
 
   static getPercentLoaded(self, chunkPos) {

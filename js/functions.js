@@ -510,14 +510,25 @@
 			/*wnd.css('top', app.lastScrollTop)*/
 		}
 
+		var templates = {
+			statebuttons : function(){
+				return '<div class="changeStateButtons"><div class="hideButton changeButton roundclosebutton"><i class="fas fa-minus"></i></div><div class="closeButton changeButton roundclosebutton"><i class="fas fa-times"></i></div><div class="changeButton expandButton"><i class="fas fa-expand-arrows-alt"></i></div></div>'
+			},
+
+			pipbuttons : function(){
+				return '<div class="_expand roundclosebutton"><i class="fas fa-expand"></i></div><div class="_changeplace roundclosebutton"><i class="fas fa-angle-down"></i></div>'
+			},
+
+			roundclose : function(){
+				return '<div class="_close roundclosebutton"><i class="fa fa-times" aria-hidden="true"></i></div><div class="closeline"></div>'
+			}
+		}
+
 		var render = function(clbk){
 
 			if(!p.type) p. type = ''
 
-			var h = p.allowHide ? '<div class="wndback" id='+id+'></div><div class="wndinner">' : '<div class="wndback" id='+id+'></div>'+ (p.pip ? '<div class="_expand roundclosebutton"><i class="fas fa-expand"></i></div><div class="_changeplace roundclosebutton"><i class="fas fa-angle-down"></i></div>' : '') +'<div class="_close roundclosebutton '+closedbtnclass+'"><i class="fa fa-times" aria-hidden="true"></i></div><div class="closeline"></div><div class="wndinner ' + p.type + '">\
-			';
-
-			var closedbtnclass = ''
+			var h = '<div class="wndback" id='+id+'></div>'+ (p.pip ? templates.pipbuttons() : '') + (p.allowHide ? templates.statebuttons() : templates.roundclose()) +'<div class="wndinner ' + p.type + '">';
 
 				if(p.leftbg)
 					h+='<div class="leftbg"><div>'+p.leftbg+'</div></div>';
@@ -526,14 +537,9 @@
 				{
 					h+='<div class="wndheader">'+ (app.localization.e(p.header) || p.header)+'</div>';
 				}
-				else
-				{
-					closedbtnclass = 'onwhite'
-				}
+				
 
-				h+=	 p.allowHide ? '<div class="wndcontent content customscroll">' + content + '<div class="changeStateButtons"><div class="hideButton changeButton"><i class="fas fa-minus"></i></div><div class="closeButton changeButton"><i class="fas fa-times"></i></div><div class="changeButton expandButton hidden"><i class="fas fa-expand-arrows-alt"></i></div></div></div>' : '<div class="wndcontent customscroll content">'+content+'</div>';
-
-
+				h+=	 '<div class="wndcontent customscroll content">'+content+'</div>';
 
 				if (!p.noButtons) {
 					h +=	 '<div class="buttons windowmainbuttons">';
@@ -565,7 +571,15 @@
 				wnd.attr('position', localStorage['pipposition'] || 'default')
 			}
 
-			el.append(wnd);
+			var hiddenState = el.find('.hiddenState')
+
+			if (hiddenState.length){
+				hiddenState.before(wnd)
+			}	
+			else{	
+				el.append(wnd);
+			}
+			
 
 			wnd.find("._close").on('click', function(){
 				actions["close"](true);
@@ -676,7 +690,14 @@
 
 			if(!p.noCloseBack)
 				wnd.find('.wndback').one('click', function(){
-					actions.close(true)
+
+					if(p.allowHide && self.minimizeOnBgClick){
+						actions.hide()
+					}
+					else{
+						actions.close(true)
+					}
+					
 				});
 
 			if (p.allowHide) {
@@ -816,6 +837,7 @@
 				wnd.addClass('asette')
 				wnd.removeClass('sette')
 
+
 				setTimeout(function(){
 
 					if(!nooverflow)
@@ -841,9 +863,9 @@
 				wnd.addClass('hiddenState');
 
 				wnd.find('.wndcontent > div').addClass('rolledUp');
-				wnd.find('.expandButton').removeClass('hidden');
+				/*wnd.find('.expandButton').removeClass('hidden');
 				wnd.find('.closeButton').addClass('hidden');
-				wnd.find('.hideButton').addClass('hidden');
+				wnd.find('.hideButton').addClass('hidden');*/
 
 				if(!nooverflow) {
 					app.actions.onScroll();
@@ -857,9 +879,9 @@
 				wnd.find('.buttons').removeClass('hidden');
 				wnd.removeClass('hiddenState');
 				wnd.find('.wndcontent > div').removeClass('rolledUp');
-				wnd.find('.expandButton').addClass('hidden');
+				/*wnd.find('.expandButton').addClass('hidden');
 				wnd.find('.closeButton').removeClass('hidden');
-				wnd.find('.hideButton').removeClass('hidden');
+				wnd.find('.hideButton').removeClass('hidden');*/
 
 				if(!nooverflow) {
 					app.actions.offScroll(wnd);

@@ -2773,24 +2773,7 @@ input[type=radio].radio:checked + label {
 
     }
 
-    .changeStateButtons {
-        display: flex;
-        position: absolute;
-        right: 2 * @rhythm;
-        top: 2 * @rhythm;
-
-        .changeButton {
-            cursor: pointer;
-            
-            &:hover {
-                color: rgb(var(--color-txt-ac));
-            }
-        }
-
-        .hideButton {
-            margin-right: 2 * @rhythm;
-        }
-    }
+    
 
     .leftbg{
         position: absolute;
@@ -2860,6 +2843,23 @@ input[type=radio].radio:checked + label {
         background: rgb(var(--background-total-theme));
     }
 
+    .changeStateButtons {
+        display: flex;
+        position: absolute;
+        right: 1.5 * @rhythm;
+        top:  @rhythm;
+        
+        .hideButton {
+            margin-right: @rhythm;
+        }
+
+        .expandButton{
+            padding : 2 * @rhythm;
+            cursor: pointer;
+            display: none;
+            color : rgb(var(--color-bg-ac));
+        }
+    }
     
     ._changeplace,
     ._expand,
@@ -3249,7 +3249,7 @@ input[type=radio].radio:checked + label {
     position: fixed;
     width: 250px;
     height: 50px !important;
-
+    z-index: 1006;
     top: auto !important;
     right: auto;
     bottom: 10px;
@@ -3265,6 +3265,20 @@ input[type=radio].radio:checked + label {
         .wndcontent {
             padding: 0;
             height: 100%;
+        }
+    }
+
+    .changeStateButtons{
+        right : 0.5 * @rhythm;
+        top : 0;
+        z-index: 2;
+        .closeButton,
+        .hideButton{
+            display: none;
+        }
+
+        .expandButton{
+            display: block;
         }
     }
 }
@@ -5400,8 +5414,19 @@ html.mobileview{
             }
         }
     }
-}
 
+    
+}
+html.mobileview{
+    .wnd{
+        &.hiddenState{
+            width: 100%;
+            left : 0;
+            top : auto;
+            bottom : 80px;
+        }
+    }
+}
 
 html.mobileview.fullscreen{
 
@@ -7784,7 +7809,7 @@ html.mobileview{
 
 
     .wnd{
-        &.normalizedmobile{
+        &.normalizedmobile:not(.hiddenState){
             contain: strict;
 
             .wndinner{
@@ -7800,9 +7825,9 @@ html.mobileview{
                 
             }
 
-            .hideButton{
+            /*.hideButton{
                 display: none!important;
-            }
+            }*/
 
             ._close{
                 backdrop-filter: none!important;

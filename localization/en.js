@@ -1207,8 +1207,13 @@ ____loclib.videoQualityCaption = "Video quality limitations"
 ____loclib.videoFormats = "List of supported video formats: .mp4, .mkv, .mov, .avi, .wmv, .flv, .f4v, .3g2, .3gp, .mts, .m2ts, .mxf, .nut"
 ____loclib.videoSizeError = "Selected video file exceeds the limit of 4 Gb per video. Please compress it or select another one."
 ____loclib.videoSizeAtt = "Maximum allowed file size: 4 Gb."
+____loclib.videoFormatError = "Incorrect video format";
+____loclib.videoSelectError = "No video selected";
 
-
+____loclib.removevideoShareQuestion = "The uploaded video remains available in the video cabinet. Do you want to delete the video completely?";
+____loclib.removevideoShareQuestionDelete = "Delete video"
+____loclib.removevideoShareQuestionLeave = "No"
+____loclib.importingVideo = "Video is loading"
 
 ____loclib.streamLinks = "Streaming software links"
 ____loclib.linkRTMP = "RTMP Url"
@@ -2200,3 +2205,6 @@ ____loclib.useanimations = "Enable animations";
 ____loclib.welcomecaption1 = "Bastyon of Free Speech";
 ____loclib.welcomecaption2 = "Read Content Banned by Big Tech";
 ____loclib.welcomecaption3 = "Chat privately with friends - no SIM card";
+
+
+
