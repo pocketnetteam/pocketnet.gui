@@ -1,6 +1,6 @@
 let getUniqueFileId;
 
-if (require) {
+if (typeof require != 'undefined') {
   getUniqueFileId = require('./file-hash');
 }
 
@@ -11,8 +11,17 @@ function fileHash(file, hasher) {
   return new Promise((resolve, reject) => {
     // What to do when we gets data?
     reader.onload = function(e) {
-      const hash = hasher(e.target.result);
-      resolve(hash);
+
+      if(e.target && e.target.result){
+
+        const hash = hasher(e.target.result.substring(1000));
+        resolve(hash);
+      }
+      else{
+        reject('empty')
+      }
+
+      
     };
 
     reader.onerror = function(e) {

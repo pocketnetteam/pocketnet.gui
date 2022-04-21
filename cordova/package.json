@@ -139,8 +139,7 @@
       "cordova-plugin-pip": {}
     },
     "platforms": [
-      "ios",
-      "android"
+      "ios"
     ]
   }
 }

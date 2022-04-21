@@ -173,33 +173,33 @@ var uploadpeertube = (function () {
 					type: 'uploadVideo',
 				};
 
-        function setBarProgress(percent) {
-          el.uploadProgress
-            .find('.upload-progress-bar')
-            .css('width', percent + '%');
-          el.uploadProgress
-            .find('.upload-progress-percentage')
-            .text(percent + '%');
-        }
+				function setBarProgress(percent) {
+					el.uploadProgress
+						.find('.upload-progress-bar')
+						.css('width', percent + '%');
+					el.uploadProgress
+						.find('.upload-progress-percentage')
+						.text(percent + '%');
+				}
 
-        function loadProgress(percentComplete, showFinalPreloader = false) {
-          let progress = Math.floor(percentComplete).toString(10);
+				function loadProgress(percentComplete, showFinalPreloader = false) {
+					let progress = Math.floor(percentComplete).toString(10);
 
-          const progress100 = (progress >= 100);
-          const isPreloaderHidden = el.preloaderElement.hasClass('hidden');
+					const progress100 = (progress >= 100);
+					const isPreloaderHidden = el.preloaderElement.hasClass('hidden');
 
-          if (progress100 && showFinalPreloader && isPreloaderHidden) {
-            setTimeout(() => {
-              el.preloaderElement.removeClass('hidden');
-            }, 1000);
-          }
+					if (progress100 && showFinalPreloader && isPreloaderHidden) {
+						setTimeout(() => {
+							el.preloaderElement.removeClass('hidden');
+						}, 1000);
+					}
 
-          setBarProgress(progress);
-        }
+					setBarProgress(progress);
+				}
 
-        function initCancelListener(cancel) {
-          const cancelCloseFunction = () => {
-            if (typeof cancel === 'function') cancel();
+				function initCancelListener(cancel) {
+					const cancelCloseFunction = () => {
+						if (typeof cancel === 'function') cancel();
 
 						self.closeContainer()
 					};
@@ -207,35 +207,35 @@ var uploadpeertube = (function () {
 					ed.cancelCloseFunction = cancelCloseFunction;
 
 					el.closeButton.on('click', cancel);
-          el.cancelButton.one('click', () => {
-            el.uploadProgress.addClass('hidden');
+					el.cancelButton.one('click', () => {
+						el.uploadProgress.addClass('hidden');
 
-            setBarProgress('0');
+						setBarProgress('0');
 
-            el.cancelButton.addClass('hidden');
-            el.importUrl.removeClass('hidden');
+						el.cancelButton.addClass('hidden');
+						el.importUrl.removeClass('hidden');
 
-            ed.uploadInProgress = false;
-            cancel();
+						ed.uploadInProgress = false;
+						cancel();
 
-            el.videoInput.val('');
-            el.wallpaperError.text('');
+						el.videoInput.val('');
+						el.wallpaperError.text('');
 
-            el.uploadButton.prop('disabled', false);
-            el.header.addClass('activeOnRolled');
-            el.uploadProgress.addClass('hidden');
-          });
+						el.uploadButton.prop('disabled', false);
+						el.header.addClass('activeOnRolled');
+						el.uploadProgress.addClass('hidden');
+					});
 
-          el.cancelButton.removeClass('hidden');
-        }
+					el.cancelButton.removeClass('hidden');
+				}
 
 				el.importUrl.addClass('hidden');
 
-        const transcodeOption = self.app.platform.sdk.usersettings.meta.videoTranscoding;
+				const transcodeOption = self.app.platform.sdk.usersettings.meta.videoTranscoding;
 
-        let transcodingAllowed = (transcodeOption && transcodeOption.value);
+				let transcodingAllowed = (transcodeOption && transcodeOption.value);
 
-        let transcoded = null;
+				let transcoded = null;
 
 				if (transcodingAllowed && typeof _Electron !== 'undefined') {
 					const file = evt.target.files[0];
@@ -362,7 +362,7 @@ var uploadpeertube = (function () {
 					}
 				}
 
-        let uploader;
+				let uploader;
 
 				if (transcoded) {
 					const { lastModified, name, type } = data.video;
@@ -384,89 +384,93 @@ var uploadpeertube = (function () {
 					uploader = new VideoUploader(data.video);
 				}
 
-        el.uploadProgress
-          .find('.upload-progress-bar')
-          .removeClass('binaries processing')
-          .addClass('uploading');
+				el.uploadProgress
+					.find('.upload-progress-bar')
+					.removeClass('binaries processing')
+					.addClass('uploading');
 
-        el.uploadProgress.find('.bold-font')
-          .text(self.app.localization.e('uploadVideoProgress_uploading'))
+				el.uploadProgress.find('.bold-font')
+					.text(self.app.localization.e('uploadVideoProgress_uploading'))
 
-        el.uploadProgress.removeClass('hidden');
+				el.uploadProgress.removeClass('hidden');
 
-        loadProgress(0);
+				loadProgress(0);
 
-        uploader.loadProgress = (percent) => {
-          loadProgress(percent, true);
-        };
+				uploader.loadProgress = (percent) => {
+					loadProgress(percent, true);
+				};
 
-        uploader.chunkScalingCalculator = ({ time, videoSize, chunkSize }, data) => {
-          if (!data.started) {
-            data.countChunks = 0;
-          }
+				uploader.chunkScalingCalculator = ({ time, videoSize, chunkSize }, data) => {
+					if (!data.started) {
+						data.countChunks = 0;
+					}
 
-          data.started = true;
+					data.started = true;
 
-          if (data.showInfo) {
-            console.log('Video will be uploaded in chunks', Math.round(videoSize / chunkSize));
-            console.log('Expected time in seconds', (time / 1000) * Math.round(videoSize / chunkSize));
-            console.log('Started at', Date.now() / 1000);
+					if (data.showInfo) {
+						console.log('Video will be uploaded in chunks', Math.round(videoSize / chunkSize));
+						console.log('Expected time in seconds', (time / 1000) * Math.round(videoSize / chunkSize));
+						console.log('Started at', Date.now() / 1000);
 
-            window.ct_expected = Math.floor((time / 1000) * Math.round(videoSize / chunkSize));
+						window.ct_expected = Math.floor((time / 1000) * Math.round(videoSize / chunkSize));
 
-            data.showInfo = false;
-          }
+						data.showInfo = false;
+					}
 
-          if(data.countChunks >= 5 && data.showInfo === undefined) {
-            data.showInfo = true;
-          }
+					if (data.countChunks >= 5 && data.showInfo === undefined) {
+						data.showInfo = true;
+					}
 
-          data.countChunks++;
+					data.countChunks++;
 
-          /**
-           * TODO: Chunk size optimization is
-           *       a complex task. Tests might
-           *       resolve some speed issues in
-           *       future. Must be tested...
-           */
+					/**
+					 * TODO: Chunk size optimization is
+					 *       a complex task. Tests might
+					 *       resolve some speed issues in
+					 *       future. Must be tested...
+					 */
 
-          if (window.cordova || isDeviceMobile()) {
-            /** Mobile slow 3G chunking */
-            return 256 * 1024;
-          }
+					if (window.cordova || isDeviceMobile()) {
+						/** Mobile slow 3G chunking */
+						return 256 * 1024;
+					}
 
-          /** Regular internet (60 mbit/s) */
-          return 256 * 4096;
-        };
+					/** Regular internet (60 mbit/s) */
+					return 256 * 4096;
+				};
 
-        initCancelListener(() => uploader.cancel());
+				initCancelListener(() => uploader.cancel());
 
-        function hideLoadingBar() {
-          el.uploadButton.prop('disabled', false);
-          el.header.addClass('activeOnRolled');
-          el.uploadProgress.addClass('hidden');
+				function hideLoadingBar() {
+					el.uploadButton.prop('disabled', false);
+					el.header.addClass('activeOnRolled');
+					el.uploadProgress.addClass('hidden');
 
-          el.preloaderElement.addClass('hidden');
+					el.preloaderElement.addClass('hidden');
 
-          ed.uploadInProgress = false;
-        }
+					ed.uploadInProgress = false;
+				}
 
-        uploader.uploadChunked()
-          .then((response) => {
-            loadProgress(100, true);
+				uploader.uploadChunked()
+					.then((response) => {
+						loadProgress(100, true);
 
-            setTimeout(() => {
-              hideLoadingBar();
+						setTimeout(() => {
+							hideLoadingBar();
 
-              actions.added(response.videoLink, wnd.find('.upload-video-name').val());
-              wndObj.close();
-            }, 2000);
-          })
-          .catch((e = {}) => {
-            self.app.Logger.error({
-              err: e.text || 'videoUploadError',
-              code: 401,
-            });
+							actions.added(response.videoLink, wnd.find('.upload-video-name').val());
+							wndObj.close();
+						}, 2000);
+					})
+					.catch((e = {}) => {
+						self.app.Logger.error({
+							err: e.text || 'videoUploadError',
+							code: 401,
+						});
+
+						//console.error('Uploading error', e);
+
+						hideLoadingBar();
 
 						if (!e.cancel) {
 							let message = e.text || findResponseError(e) || 'Video upload error';
