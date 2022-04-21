@@ -1128,6 +1128,7 @@ ____loclib.selectVideoFile = "Select video file"
 ____loclib.uploadVideoProgress_binaries = "Preparing binaries:"
 ____loclib.uploadVideoProgress_processing = "Processing video:"
 ____loclib.uploadVideoProgress_uploading = "Uploading video:"
+____loclib.uploadVideoProgress_start = "Video download initialization:"
 ____loclib.uploadCanceled = "Upload canceled"
 
 ____loclib.pleaseTryAgain = "Something was wrong there. Please try again"

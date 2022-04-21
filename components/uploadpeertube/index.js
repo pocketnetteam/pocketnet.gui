@@ -269,7 +269,7 @@ var uploadpeertube = (function () {
 
 				showerror()
 				processing(true)
-				loadProgress(0);
+				loadProgress(0, 'uploadVideoProgress_start');
 
 				if (transcodingAllowed && typeof _Electron !== 'undefined') {
 					const file = evt.target.files[0];

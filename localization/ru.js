@@ -943,6 +943,10 @@ ____loclib.selectVideoFile = "Выберите файл"
 ____loclib.uploadVideoProgress_binaries = "Подготовка библиотек:"
 ____loclib.uploadVideoProgress_processing = "Обработка видео:"
 ____loclib.uploadVideoProgress_uploading = "Загрузка видео:"
+____loclib.uploadVideoProgress_start = "Инициализация загрузки видео:"
+
+
+
 ____loclib.uploadCanceled = "Загрузка отменена"
 
 ____loclib.pleaseTryAgain = "Что-то пошло не так. Повторите попытку"
@@ -1015,6 +1019,7 @@ ____loclib.removevideoShareQuestionDelete = "Удалить видео"
 ____loclib.removevideoShareQuestionLeave = "Нет"
 
 ____loclib.importingVideo = "Видео загружается"
+
 
 
 
