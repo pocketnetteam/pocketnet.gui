@@ -96,7 +96,8 @@ __map =  {
 		"js/widgets.js",
 		"js/effects.js",
 		"js/logger.js",
-		'js/video-uploader.js'
+		'js/video-uploader.js',
+		'js/file-hash.js',
 	],
 
 	__css : [
