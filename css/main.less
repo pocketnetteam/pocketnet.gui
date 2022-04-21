@@ -3254,6 +3254,7 @@ input[type=radio].radio:checked + label {
     right: auto;
     bottom: 10px;
     left: 10px;
+    white-space: nowrap;
 
     .wndback {
         display: none;
@@ -5420,12 +5421,15 @@ html.mobileview{
 html.mobileview{
     .wnd{
         &.hiddenState{
-            width: 100%;
-            left : 0;
+            width: auto;
+            left : @rhythm;
+            right: @rhythm;
             top : auto;
             bottom : 80px;
             will-change: transform;
             .transition(0.3s, transform);
+            white-space: nowrap;
+            border-radius: 12px;
 
             &.asette{
                 transform:  translateY(100px);

@@ -1206,11 +1206,16 @@ Application = function(p)
 	var optimizeTimeout = null
 
 	self.actions = {
-		
+		closepip : function(){
+			if (self.pipwindow) {
+				self.pipwindow.container.close()
+				self.pipwindow = null
+			}
+		},
 		pipwindow : function(p){
 			
 			if (self.pipwindow) {
-				self.pipwindow.destroy()
+				self.pipwindow.container.close()
 				self.pipwindow = null
 			}
 
@@ -1225,7 +1230,7 @@ Application = function(p)
 			p.inWnd = true
 			p.history = false
 			p.open = true
-
+			p.independent = true
 			p.eid = p.mid = makeid()
 
 			if (p.essenseData){
@@ -1234,6 +1239,8 @@ Application = function(p)
 
 			p.clbk = function(c,b){
 				self.pipwindow = b
+
+				console.log('self.pipwindow', self.pipwindow)
 
 				if(clbk) clbk(c,b)
 			}

@@ -2453,6 +2453,7 @@ Platform = function (app, listofnodes) {
             var p = {
                 href : 'post?s=' + txid,
                 clbk : clbk,
+               
                 essenseData : {
                     share : txid,
                     video : true,

@@ -830,7 +830,7 @@ var videoCabinet = (function () {
 					return;
 				}
 
-				if (external) external.container.close();
+				if (external) external.closehack();
 
 				self.nav.api.load({
 					open: true,
@@ -1376,11 +1376,11 @@ var videoCabinet = (function () {
 
 				if (external){
 
-					//if(!external.uploading || !external.uploading())
-					//	external.module.closeContainer()
-					//else{
+					if(!external.uploading || !external.uploading())
+						external.closehack()
+					else{
 						external.removeclbk('videocabinet')
-					//}
+					}
 
 					external = null
 				}

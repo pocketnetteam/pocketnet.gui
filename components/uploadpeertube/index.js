@@ -664,8 +664,11 @@ var uploadpeertube = (function () {
 
 				uploading = false
 				cancel = null
-
 				
+			},
+
+			closehack : function(){
+				self.closeContainer()
 			},
 
 			init: function (p) {
