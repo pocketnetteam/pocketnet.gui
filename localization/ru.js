@@ -943,6 +943,10 @@ ____loclib.selectVideoFile = "Выберите файл"
 ____loclib.uploadVideoProgress_binaries = "Подготовка библиотек:"
 ____loclib.uploadVideoProgress_processing = "Обработка видео:"
 ____loclib.uploadVideoProgress_uploading = "Загрузка видео:"
+____loclib.uploadVideoProgress_start = "Инициализация загрузки видео:"
+
+
+
 ____loclib.uploadCanceled = "Загрузка отменена"
 
 ____loclib.pleaseTryAgain = "Что-то пошло не так. Повторите попытку"
@@ -1007,6 +1011,17 @@ ____loclib.videoQualityCaption = "Ограничения по качеству �
 ____loclib.videoFormats = "Cписок поддерживаемых видеоформатов: .mp4, .mkv, .mov, .avi, .wmv, .flv, .f4v, .3g2, .3gp, .mts, .m2ts, .mxf, .nut"
 ____loclib.videoSizeError = "Видео имеет слишком большой размер. Максимальный размер загружаемого файла - 4Gb"
 ____loclib.videoSizeAtt = "Возможна загрузка файлов размером до 4Gb."
+____loclib.videoFormatError = "Неподдерживаемый формат видео";
+____loclib.videoSelectError = "Видео не выбрано";
+
+____loclib.removevideoShareQuestion = "Загруженное видео остаётся доступным в видео кабинете. Хотите ли вы удалить видео полностью?";
+____loclib.removevideoShareQuestionDelete = "Удалить видео"
+____loclib.removevideoShareQuestionLeave = "Нет"
+
+____loclib.importingVideo = "Видео загружается"
+
+
+
 
 ____loclib.streamLinks = 'Информация о трансляции'
 ____loclib.linkRTMP = 'Ссылка на RTMP-сервер'

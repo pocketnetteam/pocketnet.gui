@@ -22,7 +22,7 @@ class VideoUploader {
 
     const userAddress = app.user.address.value;
 
-    const videoUniqueId = `chunkupload_${userAddress}_${this.videoName}`;
+    const videoUniqueId = `${userAddress}_${this.videoName}`;
 
     const cachedResumable = this.getResumableStorage(videoUniqueId);
 
@@ -141,6 +141,13 @@ class VideoUploader {
     return this.static.uploadVideo(this);
   }
 
+  async destroy(){
+    await this.cancel()
+
+    this.videoFile = null;
+    this.uploadHost = null;
+  }
+
   async * getNextChunk(startFrom) {
     const videoFile = this.videoFile;
     const videoSize = this.videoFile.size;
@@ -245,7 +252,7 @@ class VideoUploader {
   static async cancelResumable(self) {
     const userAddress = app.user.address.value;
 
-    const videoUniqueId = `chunkupload_${userAddress}_${self.videoName}`;
+    const videoUniqueId = `${userAddress}_${self.videoName}`;
 
     self.deleteResumableStorage(videoUniqueId);
 
@@ -307,18 +314,26 @@ class VideoUploader {
   }
 
   getResumableStorage(videoUniqueId) {
-    if (localStorage[videoUniqueId]) {
-      return JSON.parse(localStorage[videoUniqueId]);
+    const storeName = `resumable_${videoUniqueId}`;
+
+    if (!localStorage[storeName]) {
+      return;
     }
+
+    return JSON.parse(localStorage[storeName]);
   }
 
   deleteResumableStorage(videoUniqueId) {
-    delete localStorage[videoUniqueId];
+    const storeName = `resumable_${videoUniqueId}`;
+
+    delete localStorage[storeName];
   }
 
   setResumableStorage(videoUniqueId, data) {
+    const storeName = `resumable_${videoUniqueId}`;
+
     if (!this.canceled) {
-      localStorage[videoUniqueId] = JSON.stringify(data);
+      localStorage[storeName] = JSON.stringify(data);
     }
   }
 

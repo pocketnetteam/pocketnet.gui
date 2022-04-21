@@ -197,7 +197,7 @@ nModule = function(){
 						self .container = new insert.obj(options);
 							p.container = self.container;
 
-						self.container.essenseDestroy = options.destroy
+						self.container.essenseDestroy = p.clearessense
 
 						if (insert.after) 
 						{
@@ -626,6 +626,7 @@ nModule = function(){
 		}
 
 		essenses[id].destroyed = false;
+	
 
 		p.clearessense = essense.clearessense = function(){
 			self.removeEssense(essenses, id)

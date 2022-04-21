@@ -2409,21 +2409,6 @@ input[type=radio].radio:checked + label {
 .wnd .wndinner > div.buttons .button.ghost:hover {
   color: rgb(var(--color-txt-ac));
 }
-.wnd .changeStateButtons {
-  display: flex;
-  position: absolute;
-  right: 1em;
-  top: 1em;
-}
-.wnd .changeStateButtons .changeButton {
-  cursor: pointer;
-}
-.wnd .changeStateButtons .changeButton:hover {
-  color: rgb(var(--color-txt-ac));
-}
-.wnd .changeStateButtons .hideButton {
-  margin-right: 1em;
-}
 .wnd .leftbg {
   position: absolute;
   left: -60px;
@@ -2481,6 +2466,21 @@ input[type=radio].radio:checked + label {
   overflow: hidden;
   white-space: nowrap;
   background: rgb(var(--background-total-theme));
+}
+.wnd .changeStateButtons {
+  display: flex;
+  position: absolute;
+  right: 0.75em;
+  top: 0.5em;
+}
+.wnd .changeStateButtons .hideButton {
+  margin-right: 0.5em;
+}
+.wnd .changeStateButtons .expandButton {
+  padding: 1em;
+  cursor: pointer;
+  display: none;
+  color: rgb(var(--color-bg-ac));
 }
 .wnd ._changeplace,
 .wnd ._expand,
@@ -2763,8 +2763,9 @@ input[type=radio].radio:checked + label {
 }
 .wnd.hiddenState {
   position: fixed;
-  width: 250px;
+  width: 350px;
   height: 50px !important;
+  z-index: 1006;
   top: auto !important;
   right: auto;
   bottom: 10px;
@@ -2779,6 +2780,18 @@ input[type=radio].radio:checked + label {
 .wnd.hiddenState .wndinner .wndcontent {
   padding: 0;
   height: 100%;
+}
+.wnd.hiddenState .changeStateButtons {
+  right: 0.25em;
+  top: 0;
+  z-index: 2;
+}
+.wnd.hiddenState .changeStateButtons .closeButton,
+.wnd.hiddenState .changeStateButtons .hideButton {
+  display: none;
+}
+.wnd.hiddenState .changeStateButtons .expandButton {
+  display: block;
 }
 .updImgWrapper {
   position: absolute;
@@ -4455,6 +4468,20 @@ html.mobileview .wnd.pipmini ._close {
   html.mobileview.scrollmodedown .wnd.pipmini[position='bottom'] {
     transform: translateY(90px);
   }
+}
+html.mobileview .wnd.hiddenState {
+  width: 100%;
+  left: 0;
+  top: auto;
+  bottom: 80px;
+  will-change: transform;
+  -moz-transition: transform 0.3s;
+  -o-transition: transform 0.3s;
+  -webkit-transition: transform 0.3s;
+  transition: transform 0.3s;
+}
+html.mobileview .wnd.hiddenState.asette {
+  transform: translateY(100px);
 }
 html.mobileview.fullscreen {
   -webkit-touch-callout: none;
@@ -6300,29 +6327,29 @@ html.mobileview .fastMessage .notification .subscribeWrapper > div.forsubscribe 
 html.mobileview .fastMessage .foramount {
   width: auto!important;
 }
-html.mobileview .wnd.normalizedmobile {
+html.mobileview .wnd.normalizedmobile:not(.hiddenState) {
   contain: strict;
+  /*.hideButton{
+                display: none!important;
+            }*/
 }
-html.mobileview .wnd.normalizedmobile .wndinner {
+html.mobileview .wnd.normalizedmobile:not(.hiddenState) .wndinner {
   width: 100%;
   background: transparent!important;
   will-change: transform;
 }
-html.mobileview .wnd.normalizedmobile .wndback {
+html.mobileview .wnd.normalizedmobile:not(.hiddenState) .wndback {
   backface-visibility: hidden;
   -moz-transition: 0s;
   -o-transition: 0s;
   -webkit-transition: 0s;
   transition: 0s;
 }
-html.mobileview .wnd.normalizedmobile .hideButton {
-  display: none!important;
-}
-html.mobileview .wnd.normalizedmobile ._close {
+html.mobileview .wnd.normalizedmobile:not(.hiddenState) ._close {
   backdrop-filter: none!important;
   opacity: 0;
 }
-html.mobileview .wnd.normalizedmobile .closeline {
+html.mobileview .wnd.normalizedmobile:not(.hiddenState) .closeline {
   top: 120px;
   height: 2px;
   background: rgba(var(--background-total-theme), 0.8);
@@ -6337,7 +6364,7 @@ html.mobileview .wnd.normalizedmobile .closeline {
   -webkit-transition: top 0.3s;
   transition: top 0.3s;
 }
-html.mobileview .wnd.normalizedmobile .wndinner {
+html.mobileview .wnd.normalizedmobile:not(.hiddenState) .wndinner {
   max-height: none!important;
   top: auto!important;
   bottom: 0;
@@ -6352,12 +6379,12 @@ html.mobileview .wnd.normalizedmobile .wndinner {
   -webkit-transition: top 0.3s;
   transition: top 0.3s;
 }
-html.mobileview .wnd.normalizedmobile .wndinner .wndheader {
+html.mobileview .wnd.normalizedmobile:not(.hiddenState) .wndinner .wndheader {
   max-width: 768px;
   margin: 0 auto;
   position: sticky;
 }
-html.mobileview .wnd.normalizedmobile .wndinner .wndcontent {
+html.mobileview .wnd.normalizedmobile:not(.hiddenState) .wndinner .wndcontent {
   position: relative;
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
@@ -6374,45 +6401,45 @@ html.mobileview .wnd.normalizedmobile .wndinner .wndcontent {
   padding-left: 0;
   padding-right: 0;
 }
-html.mobileview .wnd.normalizedmobile .wndinner .wndcontent > div {
+html.mobileview .wnd.normalizedmobile:not(.hiddenState) .wndinner .wndcontent > div {
   opacity: 0;
   -moz-transition: opacity 0.3s;
   -o-transition: opacity 0.3s;
   -webkit-transition: opacity 0.3s;
   transition: opacity 0.3s;
 }
-html.mobileview .wnd.normalizedmobile .wndinner .wndcontent::-webkit-scrollbar {
+html.mobileview .wnd.normalizedmobile:not(.hiddenState) .wndinner .wndcontent::-webkit-scrollbar {
   width: 0;
 }
-html.mobileview .wnd.normalizedmobile .wndinner .wndcontent::-webkit-scrollbar {
+html.mobileview .wnd.normalizedmobile:not(.hiddenState) .wndinner .wndcontent::-webkit-scrollbar {
   display: none!important;
 }
-html.mobileview .wnd.normalizedmobile .wndinner > div.buttons {
+html.mobileview .wnd.normalizedmobile:not(.hiddenState) .wndinner > div.buttons {
   display: none;
 }
-html.mobileview .wnd.normalizedmobile .wndinner > div.buttons > div {
+html.mobileview .wnd.normalizedmobile:not(.hiddenState) .wndinner > div.buttons > div {
   max-width: 768px;
   margin: 0 auto;
 }
-html.mobileview .wnd.normalizedmobile.asette .wndback {
+html.mobileview .wnd.normalizedmobile:not(.hiddenState).asette .wndback {
   -moz-transition: 0.2s;
   -o-transition: 0.2s;
   -webkit-transition: 0.2s;
   transition: 0.2s;
 }
-html.mobileview .wnd.normalizedmobile.asette .closeline {
+html.mobileview .wnd.normalizedmobile:not(.hiddenState).asette .closeline {
   -moz-transition: 0.2s;
   -o-transition: 0.2s;
   -webkit-transition: 0.2s;
   transition: 0.2s;
 }
-html.mobileview .wnd.normalizedmobile.asette .wndinner {
+html.mobileview .wnd.normalizedmobile:not(.hiddenState).asette .wndinner {
   -moz-transition: 0.2s;
   -o-transition: 0.2s;
   -webkit-transition: 0.2s;
   transition: 0.2s;
 }
-html.mobileview .wnd.normalizedmobile.sette .wndinner {
+html.mobileview .wnd.normalizedmobile:not(.hiddenState).sette .wndinner {
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
   -moz-transition: transform 0.3s;
@@ -6420,33 +6447,33 @@ html.mobileview .wnd.normalizedmobile.sette .wndinner {
   -webkit-transition: transform 0.3s;
   transition: transform 0.3s;
 }
-html.mobileview .wnd.normalizedmobile.sette ._close,
-html.mobileview .wnd.normalizedmobile.sette .closeline,
-html.mobileview .wnd.normalizedmobile.sette .wndback {
+html.mobileview .wnd.normalizedmobile:not(.hiddenState).sette ._close,
+html.mobileview .wnd.normalizedmobile:not(.hiddenState).sette .closeline,
+html.mobileview .wnd.normalizedmobile:not(.hiddenState).sette .wndback {
   opacity: 1;
 }
-html.mobileview .wnd.normalizedmobile.showbetter.sette .wndinner {
+html.mobileview .wnd.normalizedmobile:not(.hiddenState).showbetter.sette .wndinner {
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
 }
-html.mobileview .wnd.normalizedmobile.showbetter .closeline {
+html.mobileview .wnd.normalizedmobile:not(.hiddenState).showbetter .closeline {
   opacity: 0;
 }
-html.mobileview .wnd.normalizedmobile.showbetter .roundclosebutton {
+html.mobileview .wnd.normalizedmobile:not(.hiddenState).showbetter .roundclosebutton {
   backdrop-filter: none;
 }
-html.mobileview .wnd.normalizedmobile.noheader .wndinner {
+html.mobileview .wnd.normalizedmobile:not(.hiddenState).noheader .wndinner {
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   overflow: hidden;
 }
-html.mobileview .wnd.normalizedmobile:only-child .wndback {
+html.mobileview .wnd.normalizedmobile:not(.hiddenState):only-child .wndback {
   -moz-transition: 0.2s;
   -o-transition: 0.2s;
   -webkit-transition: 0.2s;
   transition: 0.2s;
 }
-html.mobileview .wnd.normalizedmobile:only-child.asette .wndback {
+html.mobileview .wnd.normalizedmobile:not(.hiddenState):only-child.asette .wndback {
   opacity: 0;
 }
 html.mobileview .wnd.maxheight .wndinner .wndcontent {

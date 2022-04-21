@@ -197,45 +197,45 @@ PeerTubePocketnet = function (app) {
 			authorization: true,
 		},
 
-    initResumableUploadVideo: {
-      path: 'api/v1/videos/upload-resumable',
-      formdata: true,
-      renew: true,
-      method: 'POST',
-      authorization: true,
-      fullreport: true,
-      axios: true,
-    },
+		initResumableUploadVideo: {
+			path: 'api/v1/videos/upload-resumable',
+			formdata: true,
+			renew: true,
+			method: 'POST',
+			authorization: true,
+			fullreport: true,
+			axios: true,
+		},
 
-    proceedResumableUploadVideo: {
-      path: 'api/v1/videos/upload-resumable',
-      headers: {
-        "Content-Type": "application/octet-stream",
-      },
-      binary: true,
-      renew: true,
-      method: 'PUT',
-      authorization: true,
-      fullreport: true,
-      axios: true,
-    },
+		proceedResumableUploadVideo: {
+			path: 'api/v1/videos/upload-resumable',
+			headers: {
+				"Content-Type": "application/octet-stream",
+			},
+			binary: true,
+			renew: true,
+			method: 'PUT',
+			authorization: true,
+			fullreport: true,
+			axios: true,
+		},
 
-    cancelResumableUploadVideo: {
-      path: 'api/v1/videos/upload-resumable',
-      renew: true,
-      method: 'DELETE',
-      authorization: true,
-      fullreport: true,
-      axios: true,
-    },
+		cancelResumableUploadVideo: {
+			path: 'api/v1/videos/upload-resumable',
+			renew: true,
+			method: 'DELETE',
+			authorization: true,
+			fullreport: true,
+			axios: true,
+		},
 
-    importVideo: {
-      path: 'api/v1/videos/imports',
-      formdata: true,
-      renew: true,
-      method: 'POST',
-      authorization: true,
-    },
+		importVideo: {
+			path: 'api/v1/videos/imports',
+			formdata: true,
+			renew: true,
+			method: 'POST',
+			authorization: true,
+		},
 
 		startLive: {
 			path: 'api/v1/videos/live',
@@ -332,16 +332,16 @@ PeerTubePocketnet = function (app) {
 			.then((signature) => {
 				data = _.extend(data, signature);
 
-        return self.api.user.authIfNeed(
-          meta.authorization,
-          options.host,
-          meta.renew,
-        );
-      })
-      .then((r) => {
-        if (meta.authorization) {
-          requestoptions.headers.Authorization = `Bearer ${r.access_token}`;
-        }
+				return self.api.user.authIfNeed(
+					meta.authorization,
+					options.host,
+					meta.renew,
+				);
+			})
+			.then((r) => {
+				if (meta.authorization) {
+					requestoptions.headers.Authorization = `Bearer ${r.access_token}`;
+				}
 
 				if (meta.headers) {
 					requestoptions.headers = _.extend(
@@ -350,16 +350,16 @@ PeerTubePocketnet = function (app) {
 					);
 				}
 
-        if ('headers' in options) {
-          requestoptions.headers = {
-            ...requestoptions.headers,
-            ...options.headers,
-          };
-        }
+				if ('headers' in options) {
+					requestoptions.headers = {
+						...requestoptions.headers,
+						...options.headers,
+					};
+				}
 
-        if (meta.method) {
-          requestoptions.method = meta.method;
-        }
+				if (meta.method) {
+					requestoptions.method = meta.method;
+				}
 
 				if (meta.formdata) {
 					var formData = new FormData();
@@ -388,12 +388,12 @@ PeerTubePocketnet = function (app) {
 						headers: requestoptions.headers,
 					};
 
-          if ('queryParams' in options) {
-            axiosoptions.params = options.queryParams;
-          }
+					if ('queryParams' in options) {
+						axiosoptions.params = options.queryParams;
+					}
 
-          if (requestoptions.method === 'GET')
-            data = { ...data, ...axiosoptions };
+					if (requestoptions.method === 'GET')
+						data = { ...data, ...axiosoptions };
 
 					if (meta.formdata) {
 						axiosoptions.onUploadProgress = (evt) => {
@@ -410,58 +410,58 @@ PeerTubePocketnet = function (app) {
 					}
 
 					var method = requestoptions.method.toLowerCase() || 'post';
-          var url = self.helpers.url(options.host + '/' + meta.path);
+					var url = self.helpers.url(options.host + '/' + meta.path);
 
 
-          return axios({ method, url, data, ...axiosoptions })
-            .then((r) => {
-              if (meta.fullreport) {
-                return r;
-              }
+					return axios({ method, url, data, ...axiosoptions })
+						.then((r) => {
+							if (meta.fullreport) {
+								return r;
+							}
 
-              return r.data || {};
-            })
-            .catch((e) => {
-              if (meta.fullreport) {
-                return e.response;
-              }
+							return r.data || {};
+						})
+						.catch((e) => {
+							if (meta.fullreport) {
+								return e.response;
+							}
 
-              //axios.isCancel(e)
+							//axios.isCancel(e)
 
 							return Promise.reject(e);
 						});
 				}
 
 
-        let params = '';
+				let params = '';
 
-        if ('queryParams' in options) {
-          let paramElements = [];
+				if ('queryParams' in options) {
+					let paramElements = [];
 
-          const paramNames = Object.keys(options.queryParams);
+					const paramNames = Object.keys(options.queryParams);
 
-          paramNames.forEach((paramName) => {
-            paramElements.push(`${paramName}=${options.queryParams[paramName]}`);
-          });
+					paramNames.forEach((paramName) => {
+						paramElements.push(`${paramName}=${options.queryParams[paramName]}`);
+					});
 
-          paramElements = paramElements.join('&');
+					paramElements = paramElements.join('&');
 
-          params = `?${paramElements}`;
-        }
+					params = `?${paramElements}`;
+				}
 
-        var url = self.helpers.url(options.host);
+				var url = self.helpers.url(options.host);
 
-        return proxyRequest.fetch(
-          url,
-          meta.path + params,
-          data,
-          requestoptions,
-        );
-      }).catch(e => {
+				return proxyRequest.fetch(
+					url,
+					meta.path + params,
+					data,
+					requestoptions,
+				);
+			}).catch(e => {
 
-        return Promise.reject(e)
-      });
-  };
+				return Promise.reject(e)
+			});
+	};
 
 	var setactive = function (host) {
 		activehost = host;
@@ -515,7 +515,7 @@ PeerTubePocketnet = function (app) {
 
 							royId = self.helpers.base58.decode(sq) % roysAmount;
 						}
-						else{
+						else {
 							royId = rand(0, roysAmount - 1);
 						}
 
@@ -558,14 +558,14 @@ PeerTubePocketnet = function (app) {
 
 			getHostIp: (hostname) => app.api.fetch('peertube/getHostIp?host=' + hostname),
 
-			getservers : () => app.api.fetch('peertube/getHosts').then(roys => {
+			getservers: () => app.api.fetch('peertube/getHosts').then(roys => {
 
 				var servers = []
 
-				_.each(roys, function(_servers){
-					_.each(_servers, function(server){
+				_.each(roys, function (_servers) {
+					_.each(_servers, function (server) {
 
-						if(!server.ip) return
+						if (!server.ip) return
 
 						server.timestamp = new Date();
 
@@ -666,19 +666,19 @@ PeerTubePocketnet = function (app) {
 							.then((r) => {
 								if (!r.video) return Promise.reject(error('uploaderror'));
 
-                return Promise.resolve({
-                  videoLink: self.composeLink(options.host, r.video.uuid),
-                });
-              })
-              .catch((e) => {
-                e.cancel = axios.isCancel(e);
+								return Promise.resolve({
+									videoLink: self.composeLink(options.host, r.video.uuid),
+								});
+							})
+							.catch((e) => {
+								e.cancel = axios.isCancel(e);
 
-                return Promise.reject(e);
-              });
-          });
-      },
+								return Promise.reject(e);
+							});
+					});
+			},
 
-      initResumableUpload: function(parameters, options) {
+      initResumableUpload: function (parameters, options) {
         return self.api.videos
           .checkQuota(parameters.video.size, {
           	host: options.host,
@@ -687,167 +687,171 @@ PeerTubePocketnet = function (app) {
           .then((rme) => {
             const videoName = parameters.name || `PocketVideo:${new Date().toISOString()}`;
 
-            const data = {
-              privacy: 1,
-              'scheduleUpdate[updateAt]': new Date().toISOString(),
-              channelId: rme.channelId,
-              name: videoName,
-              filename: videoName,
-            };
+						const data = {
+							privacy: 1,
+							'scheduleUpdate[updateAt]': new Date().toISOString(),
+							channelId: rme.channelId,
+							name: videoName,
+							filename: videoName,
+						};
 
-            const optionsPrepared = {
-              headers: {
-                "X-Upload-Content-Length": parameters.video.size,
-                "X-Upload-Content-Type": 'video/mp4', // FIXME: Is dynamic variable...
-              },
-              ...options,
-            };
+						const optionsPrepared = {
+							headers: {
+								"X-Upload-Content-Length": parameters.video.size,
+								"X-Upload-Content-Type": 'video/mp4', // FIXME: Is dynamic variable...
+							},
+							...options,
+						};
 
-            if (parameters.image) {
-              data.thumbnailfile = data.previewfile = dataURLtoFile(
-                parameters.image.data,
-                parameters.image.name,
-              );
-            }
-            return request('initResumableUploadVideo', data, optionsPrepared)
-              .then((r) => {
-                // console.log('INIT c UPLOAD VIDEO', r);
+						if (parameters.image) {
+							data.thumbnailfile = data.previewfile = dataURLtoFile(
+								parameters.image.data,
+								parameters.image.name,
+							);
+						}
+						return request('initResumableUploadVideo', data, optionsPrepared)
+							.then((r) => {
+								// console.log('INIT RESUMABLE UPLOAD VIDEO', r);
 
-                const handleResume = () => Promise.resolve({
-                  responseType: 'resume_upload',
-                });
-                const handleCreated = () => {
-                  const url = new URL(`http://${r.headers.location}`);
+								const handleResume = () => Promise.resolve({
+									responseType: 'resume_upload',
+								});
+								const handleCreated = () => {
+									const url = new URL(`http://${r.headers.location}`);
 
-                  return Promise.resolve({
-                    responseType: 'created_upload',
-                    uploadId: url.searchParams.get('upload_id'),
-                  });
-                };
+									return Promise.resolve({
+										responseType: 'created_upload',
+										uploadId: url.searchParams.get('upload_id'),
+									});
+								};
 
-                switch (r.status) {
-                  case 200: return handleResume();
-                  case 201: return handleCreated();
+								switch (r.status) {
+									case 200: return handleResume();
+									case 201: return handleCreated();
 
-                  case 413: throw Error('max_file_size_reached or quota_reached'); // FIXME: Do separation
-                  case 415: throw Error('Video type unsupported');
-                }
-              })
-              .catch((e) => {
-                e.cancel = axios.isCancel(e);
+									case 413: throw Error('max_file_size_reached or quota_reached'); // FIXME: Do separation
+									case 415: throw Error('Video type unsupported');
+								}
+							})
+							.catch((e) => {
+								e.cancel = axios.isCancel(e);
 
 								return Promise.reject(e);
 							});
 					});
 			},
 
-      proceedResumableUpload: async function(params, options) {
-        const chunkPositionEnd = params.chunkPosition + params.chunkData.size - 1;
+			proceedResumableUpload: async function (params, options) {
+				const chunkPositionEnd = params.chunkPosition + params.chunkData.size - 1;
 
-        const multiple256 = (params.chunkData.size % 256 == 0);
-        const lastChunk = (params.videoSize - 1 === chunkPositionEnd);
+				const multiple256 = (params.chunkData.size % 256 == 0);
+				const lastChunk = (params.videoSize - 1 === chunkPositionEnd);
 
-        if (!multiple256 && !lastChunk) {
-          throw Error('Video chunk is not a multiple of 256 bytes');
-        }
+				if (!multiple256 && !lastChunk) {
+					throw Error('Video chunk is not a multiple of 256 bytes');
+				}
 
-        const data = new Uint8Array(await params.chunkData.arrayBuffer());
+				const data = new Uint8Array(await params.chunkData.arrayBuffer());
 
-        const rangeStr = `bytes ${params.chunkPosition}-${chunkPositionEnd}/${params.videoSize}`;
+				const rangeStr = `bytes ${params.chunkPosition}-${chunkPositionEnd}/${params.videoSize}`;
 
-        const optionsPrepared = {
-          queryParams: {
-            upload_id: params.uploadId,
-          },
-          headers: {
-            "Content-Range": rangeStr,
-          },
-          ...options,
-        };
+				const optionsPrepared = {
+					queryParams: {
+						upload_id: params.uploadId,
+					},
+					headers: {
+						"Content-Range": rangeStr,
+					},
+					...options,
+				};
 
-        if (params.image) {
-          data.thumbnailfile = data.previewfile = dataURLtoFile(
-            params.image.data,
-            params.image.name,
-          );
-        }
+				if (params.image) {
+					data.thumbnailfile = data.previewfile = dataURLtoFile(
+						params.image.data,
+						params.image.name,
+					);
+				}
 
-        return request('proceedResumableUploadVideo', data, optionsPrepared)
-          .then((r) => {
-            // console.log('RESUME RESUMABLE UPLOAD VIDEO', r);
+				return request('proceedResumableUploadVideo', data, optionsPrepared)
+					.then((r) => {
+						// console.log('RESUME RESUMABLE UPLOAD VIDEO', r);
 
-            const handleResume = () => Promise.resolve({
-              responseType: 'resume_upload',
-            });
-            const handleLastChunk = () => Promise.resolve({
-              responseType: 'upload_end',
-              videoLink: self.composeLink(optionsPrepared.host, r.data.video.uuid),
-            });
-            const handleNotFound = () => Promise.resolve({
-              responseType: 'not_found',
-            });
+						const handleResume = () => Promise.resolve({
+							responseType: 'resume_upload',
+						});
+						const handleLastChunk = () => Promise.resolve({
+							responseType: 'upload_end',
+							videoLink: self.composeLink(optionsPrepared.host, r.data.video.uuid),
+						});
+						const handleNotFound = () => Promise.resolve({
+							responseType: 'not_found',
+						});
 
-            switch (r.status) {
-              case 200: return handleLastChunk();
-              case 308: return handleResume();
-              case 404: return handleNotFound();
+						switch (r.status) {
+							case 200: return handleLastChunk();
+							case 308: return handleResume();
+							case 404: return handleNotFound();
 
-              case 403: case 409: case 422:
-              case 429: case 503:
-                throw Error('RESUME ERROR OCCURRED');
-            }
-          })
-          .catch((e) => {
-            e.cancel = axios.isCancel(e);
+							case 403: case 409: case 422:
+							case 429: case 503:
+								throw Error('RESUME ERROR OCCURRED');
+						}
+					})
+					.catch((e) => {
+						e.cancel = axios.isCancel(e);
 
-            return Promise.reject(e);
-          });
-      },
+						return Promise.reject(e);
+					});
+			},
 
-      cancelResumableUpload: async function(params, options) {
-        const optionsPrepared = {
-          queryParams: {
-            upload_id: params.uploadId,
-          },
-        };
+			cancelResumableUpload: async function (params, options) {
+				const optionsPrepared = {
+					queryParams: {
+						upload_id: params.uploadId,
+					},
+				};
 
-        return request('cancelResumableUploadVideo', '', optionsPrepared)
-          .then((r) => {
-            // console.log('CANCEL RESUMABLE UPLOAD VIDEO', r);
+				return request('cancelResumableUploadVideo', '', optionsPrepared)
+					.then((r) => {
+						// console.log('CANCEL RESUMABLE UPLOAD VIDEO', r);
 
-            const handleSuccess = () => Promise.resolve({ responseType: 'success' });
-            const handleNotFound = () => Promise.resolve({ responseType: 'not_found' });
+						const handleSuccess = () => Promise.resolve({ responseType: 'success' });
+						const handleNotFound = () => Promise.resolve({ responseType: 'not_found' });
 
-            switch (r.status) {
-              case 204: return handleSuccess();
-              case 404: return handleNotFound();
-            }
-          })
-          .catch((e) => {
-            e.cancel = axios.isCancel(e);
+						switch (r.status) {
+							case 204: return handleSuccess();
+							case 404: return handleNotFound();
+						}
+					})
+					.catch((e) => {
+						e.cancel = axios.isCancel(e);
 
-            return Promise.reject(e);
-          });
-      },
+						return Promise.reject(e);
+					});
+			},
 
-      import: (parameters = {}, options = {}) =>
-        self.api.videos
-          .checkQuota(0, { type: options.type })
-          .then((rme) => ({
-            ...parameters.data,
-            channelId: rme.channelId,
-            privacy: 1,
-          }))
-          .then((data) =>
-            request('importVideo', data, options)
-              .then((r) => {
-                if (!r.video) return Promise.reject(error('uploaderror'));
+			import: (parameters = {}, options = {}) =>
+				self.api.videos
+					.checkQuota(0, { type: options.type })
+					.then((rme) => ({
+						...parameters.data,
+						channelId: rme.channelId,
+						privacy: 1,
+					}))
+					.then((data) =>
+						request('importVideo', data, options)
+							.then((r) => {
+
+								console.log("R",r)
+
+								if (!r.video) return Promise.reject(error('uploaderror'));
 
 								return Promise.resolve(
-									self.composeLink(options.host, r.video.uuid),
+									self.composeLink(options.host, r.video.uuid)
 								);
 							})
 							.catch((e) => {
+								console.error(e)
 								e.cancel = axios.isCancel(e);
 
 								return Promise.reject(e);
@@ -1020,26 +1024,26 @@ PeerTubePocketnet = function (app) {
 				});
 			},
 
-      authIfNeed: function (need, host, renew) {
-        const userAddress = app.user.address.value;
-        const rawUserToken = localStorage[`token_${userAddress}_${host}`];
+			authIfNeed: function (need, host, renew) {
+				const userAddress = app.user.address.value;
+				const rawUserToken = localStorage[`token_${userAddress}_${host}`];
 
-        if (!need) return Promise.resolve();
+				if (!need) return Promise.resolve();
 
-        if (rawUserToken) {
-          const userToken = JSON.parse(rawUserToken);
+				if (rawUserToken) {
+					const userToken = JSON.parse(rawUserToken);
 
-          const currentTime = Math.floor(Date.now() / 1000);
+					const currentTime = Math.floor(Date.now() / 1000);
 
-          if (currentTime > userToken.expires_in) {
-            return this.auth(host, renew);
-          }
+					if (currentTime > userToken.expires_in) {
+						return this.auth(host, renew);
+					}
 
-          return userToken;
-        }
+					return userToken;
+				}
 
-        return this.auth(host, renew);
-      },
+				return this.auth(host, renew);
+			},
 
 			auth: function (host, renew) {
 				var data = {};
@@ -1103,27 +1107,27 @@ PeerTubePocketnet = function (app) {
 				if (data.refresh_token) data.grant_type = 'refresh_token';
 				else data.grant_type = 'password';
 
-        return request('getToken', data, options)
-          .then((res) => {
-            if (!res.access_token || !res.refresh_token) {
-              return Promise.reject(error('getToken'));
-            }
+				return request('getToken', data, options)
+					.then((res) => {
+						if (!res.access_token || !res.refresh_token) {
+							return Promise.reject(error('getToken'));
+						}
 
-            data.access_token = res.access_token;
-            data.refresh_token = res.refresh_token;
-            data.expires_in = res.expires_in;
+						data.access_token = res.access_token;
+						data.refresh_token = res.refresh_token;
+						data.expires_in = res.expires_in;
 
-            const currentTime = Math.floor(Date.now() / 1000);
+						const currentTime = Math.floor(Date.now() / 1000);
 
-            const storageData = {
-              access_token: res.access_token,
-              refresh_token: res.refresh_token,
-              expires_in: currentTime + res.expires_in - 60,
-              refresh_token_expires_in: currentTime + res.refresh_token_expires_in - 60,
-            };
+						const storageData = {
+							access_token: res.access_token,
+							refresh_token: res.refresh_token,
+							expires_in: currentTime + res.expires_in - 60,
+							refresh_token_expires_in: currentTime + res.refresh_token_expires_in - 60,
+						};
 
-            const userAddress = app.user.address.value;
-            localStorage[`token_${userAddress}_${options.host}`] = JSON.stringify(storageData);
+						const userAddress = app.user.address.value;
+						localStorage[`token_${userAddress}_${options.host}`] = JSON.stringify(storageData);
 
 						return data;
 					})
@@ -1145,7 +1149,7 @@ PeerTubePocketnet = function (app) {
 
 	self.init = function () {
 
-		if(app.canuseip())
+		if (app.canuseip())
 			app.peertubeHandler.api.proxy.getservers().then((_servers) => {
 				servers = _servers
 
@@ -1278,10 +1282,10 @@ PeerTubePocketnet = function (app) {
 			},
 		},
 
-		checkIp : function(server){
+		checkIp: function (server) {
 			var now = new Date();
 
-			if (now.getTime() > server.timestamp.getTime() + INTERVAL_CHECK_SERVER_IP){
+			if (now.getTime() > server.timestamp.getTime() + INTERVAL_CHECK_SERVER_IP) {
 
 				return app.peertubeHandler.api.proxy.getHostIp(server.host).then(ip => {
 					server.ip = ip
@@ -1295,13 +1299,13 @@ PeerTubePocketnet = function (app) {
 		},
 
 		getserver: function (hostip) {
-			return _.find(servers, function(s){
+			return _.find(servers, function (s) {
 				return s.host == hostip || s.ip == hostip
 			})
 		},
 
 
-		urlextended : function(url){
+		urlextended: function (url) {
 
 			var parts = url.split('://')
 			var oldprotocol = 'http'
@@ -1325,10 +1329,10 @@ PeerTubePocketnet = function (app) {
 			}*/
 
 			var parts = parts.join('')
-				parts = parts.split('/')
+			parts = parts.split('/')
 
 			var hostip = parts[0];
-				parts.shift()
+			parts.shift()
 
 			var path = parts.join('/')
 			var server = self.helpers.getserver(hostip)
@@ -1336,13 +1340,13 @@ PeerTubePocketnet = function (app) {
 
 			protocol = oldprotocol
 
-			if(path) path = '/' + path
+			if (path) path = '/' + path
 
 
-			if(!server) {
+			if (!server) {
 
-				if(hostip.indexOf('.') == -1){
-					return {current : url}
+				if (hostip.indexOf('.') == -1) {
+					return { current: url }
 				}
 
 				if (secure) protocol = protocol + 's'
@@ -1369,7 +1373,7 @@ PeerTubePocketnet = function (app) {
 			return data
 		},
 
-		url : function(hostip){
+		url: function (hostip) {
 			return self.helpers.urlextended(hostip).current
 		},
 

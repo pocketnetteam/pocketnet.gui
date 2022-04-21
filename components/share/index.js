@@ -14,9 +14,7 @@ var share = (function(){
 
 		var el, currentShare = null, essenseData, taginput, eblock, sortable;
 
-		var focusfixed = false, external = null, pliss;
-
-		var videoUploadData = {};
+		var focusfixed = false, external = null, pliss, destroying = false;
 
 		var loadedimages = {}
 		var loadingimages = {}
@@ -26,6 +24,33 @@ var share = (function(){
 		var m = self.app.localization.e('e13160');
 
 		var actions = {
+			_videoadded : function(link, name){
+				var type = 'url';
+
+				var result = currentShare[type].set(link)
+
+				currentShare.settings.a = ["i", "u", "cm", "p"]
+				currentShare.caption.set(name)
+				currentShare.images.set()
+				currentShare.repost.set()
+
+				if(!essenseData.share){
+					state.save()
+				}
+
+				return result
+			},
+			videoadded : function(link, name){
+				var result = actions._videoadded(link, name)
+
+				if(!result && errors[type]){
+					sitemessage(errors[type])
+				}	
+				
+				el.c.removeClass('minimized')
+
+				make();	
+			},
 
 			getrepost : function(clbk){
 				var repost = currentShare.repost.v;
@@ -250,6 +275,9 @@ var share = (function(){
 			},
 
 			filled : function(key, f){
+
+				if(!el.c) return
+
 				var _el = el.c.find('.draggablepart[part="'+key+'"]');
 
 				if (f){
@@ -405,68 +433,8 @@ var share = (function(){
 				}
 				
 
-				return
 				
-				if(type == 'url' || type == 'images'){
-					focusfixed = true;
-
-					self.nav.api.load({
-						open : true,
-						id : 'embeding',
-						inWnd : true,
-
-						essenseData : {
-							type : type,
-							storage : storage,
-							value : value,
-							on : {
-							
-								added : function(value){
-
-									var result = true;
-
-									if(type == 'url' && value && actions.checkUrlForImage(value)){
-
-										type = 'images';
-										value = value
-									}
-
-									if(!_.isArray(value)) value = [value]
-
-									_.each(value, function(v, i){
-
-										result = currentShare[type].set(v)
-
-										if(!essenseData.share){
-											state.save()
-										}
-									})
-
-									if(!result && errors[type]){
-
-										sitemessage(errors[type])
-
-									}		
-									
-									if(type == 'url'){
-										renders.all()
-									}
-									else{
-										if (renders[type])
-											renders[type]();
-									}
-
-									
-								}
-							}
-						},
-
-						clbk : function(s, p){
-							external = p
-
-						}
-					})
-				}
+				
 				
 			},
 			addTags : function(tags){
@@ -636,13 +604,28 @@ var share = (function(){
 				el.message.change();*/
 			},
 
-			removevideo : function(l){
+			removevideo : function(l, dlg){
 
-					currentShare.settings.a = currentShare.default.a
+				currentShare.settings.a = currentShare.default.a
+				currentShare.caption.set('');
 
-					// self.app.peertubeHandler.api.videos.remove(l).then(r => {
-					// 	self.app.platform.sdk.videos.clearstorage(l)
-					// })
+
+				setTimeout(function(){
+					dialog({
+						html : self.app.localization.e('removevideoShareQuestion'),
+						btn1text : self.app.localization.e('removevideoShareQuestionDelete'),
+						btn2text : self.app.localization.e('removevideoShareQuestionLeave'),
+						class : "zindex",
+						success : function(){
+							self.app.peertubeHandler.api.videos.remove(l).then(r => {
+								self.app.platform.sdk.videos.clearstorage(l)
+							})
+						},
+
+						fail : function(){
+						}
+					})
+				}, 400)
 
 			},
 
@@ -661,7 +644,7 @@ var share = (function(){
 				
 
 				if (self.app.peertubeHandler.checklink(l)) {
-					actions.removevideo(l)
+					actions.removevideo(l, true)
 					make()
 				}
 
@@ -1335,7 +1318,7 @@ var share = (function(){
 			post : function(){
 				var error = actions.error();
 
-				if (videoUploadData.uploadInProgress) {
+				if (external && external.uploading()) {
 					dialog({
 						html : "Video is still uploading. Do you want to cancel it?",
 						btn1text : "Wait",
@@ -1348,7 +1331,9 @@ var share = (function(){
 						},
 
 						fail : () => {
-							if (videoUploadData.cancelCloseFunction) videoUploadData.cancelCloseFunction();
+
+							external.cancel()
+							external.clearessense()
 							
 							return;
 						},
@@ -1632,7 +1617,12 @@ var share = (function(){
 						p.el.find('.cancelediting').on('click', function(){
 							self.closeContainer();
 
-							if (videoUploadData.cancelCloseFunction) videoUploadData.cancelCloseFunction();
+							if(external && external.cancel){
+								external.cancel()
+								external.clearessense()
+							}
+
+					
 			
 							if (essenseData.close){
 								essenseData.close()
@@ -1830,15 +1820,13 @@ var share = (function(){
 
 				var elName = typeDictionary[p.type];
 				
-				if (external && external.id == elName){
-					external.container.show()
+				if (external && external.id == elName && external.show){
+					external.show()
 
 					return;
 				}
 
-				if (external) external.container.close();
-
-				var serverLink = currentShare.url ? self.app.peertubeHandler.parselink(currentShare.url.v).host : null;
+				if (external) external.clearessense();
 
 				self.nav.api.load({
 					open : true,
@@ -1853,33 +1841,10 @@ var share = (function(){
 						currentLink : currentShare.url ? currentShare.url.v : '',
 						inLentaWindow : true,
 						scrollElementName: '.wnd.videoCabinet .wndcontent',
-						actions : {
-							added : function(link, name){
-								var type = 'url';
-
-								var result = currentShare[type].set(link)
-
-								currentShare.settings.a = ["i", "u", "cm", "p"]
-								currentShare.caption.set(name)
-								currentShare.images.set()
-								currentShare.repost.set()
-
-								if(!essenseData.share){
-									state.save()
-								}
-
-								if(!result && errors[type]){
-
-									sitemessage(errors[type])
-
-								}			
-													
-
-								make();	
-							}
-						},
+					
 
 						closeClbk : function() {
+
 							if(!self.app.peertubeHandler.checklink(currentShare.url.v)){
 								if (el.peertube && el.peertubeLiveStream) {
 								}
@@ -1887,10 +1852,7 @@ var share = (function(){
 
 							external = null
 
-
-							if(elName != 'streampeertube')
-
-								make();
+							if(elName != 'streampeertube' && !destroying) make();
 						}
 					},
 
@@ -1898,25 +1860,14 @@ var share = (function(){
 
 						external = element;
 
-						videoUploadData = element.essenseData;
+						console.log('element', element)
+
+						external.addclbk('share', actions.videoadded)
 
 					}
 				});
 
 
-				// self.app.peertubeHandler.api.user.auth(serverLink || self.app.peertubeHandler.active(), true)
-				//   .then(r => {
-					  
-					
-
-				// }).catch(e => {
-
-				// 	console.log("E", e)
-
-				// 	globalpreloader(false);
-
-				// 	return sitemessage(e.text || "Undefined Error");
-				// })
 			},
 
 			url : function(clbk){
@@ -2527,8 +2478,19 @@ var share = (function(){
 				if(essenseData.dontsave) return
 
 				var last = self.app.settings.get(self.map.id, 'currentShare_v1')
-				if (last)
+
+				if (last){
+
 					currentShare.import(last)
+
+					var lastvideo = self.app.settings.get('common', 'lastuploadedvideo');
+
+					if (lastvideo && !lastvideo.wasclbk){
+						actions._videoadded(lastvideo.link, lastvideo.name)
+						self.app.settings.delete('common', 'lastuploadedvideo');
+					}
+				}
+					
 
 				return last
 			}
@@ -2599,7 +2561,7 @@ var share = (function(){
 			},
 
 			getdata : function(clbk, p){
-
+				destroying = false
 				intro = false;
 				external = null
 				currentShare = deep(p, 'settings.essenseData.share') || new Share(self.app.localization.key);
@@ -2633,6 +2595,7 @@ var share = (function(){
 
 			destroy : function(){
 
+				destroying = true
 
 				if (el.c)
 					el.c.find('.emojionearea-editor').off('pasteImage')
@@ -2646,15 +2609,24 @@ var share = (function(){
 				
 
 				if (external){
-					external.module.closeContainer()
+
+					/*if(!external.uploading || !external.uploading())
+						external.module.closeContainer()
+					else{*/
+						external.removeclbk('share')
+					//}
+
+					external = null
 				}
+
+				
 
 				if (taginput){
 					taginput.destroy()
 					taginput = null
 				}
 
-				external = null
+				
 
 				$('html').off('click', events.unfocus);
 
@@ -2713,6 +2685,15 @@ var share = (function(){
 					essenseData.tags.map(tag => currentShare.tags.set(tag));
 				}
 
+				var externallatest = deep(self, 'app.modules.uploadpeertube.module.essenses.uploadpeertube')
+
+				console.log('externallatest', externallatest)
+
+				if (externallatest && !externallatest.destroyed){
+					external = externallatest
+					external.addclbk('share', actions.videoadded)
+				}
+
 				make();
 
 				//p.noscroll = self.app.actions.scrollBMenu()
@@ -2724,12 +2705,13 @@ var share = (function(){
 				el.c.on('click', function(){
 					el.c.removeClass('minimized')
 				})
+				
 
 			},
 
 			wnd : {
 				close : function(){
-					if (videoUploadData.cancelCloseFunction) videoUploadData.cancelCloseFunction();
+	
 					
 					if (essenseData.close){
 						essenseData.close()
