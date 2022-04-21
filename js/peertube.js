@@ -159,7 +159,7 @@ PeerTubePocketnet = function (app) {
 		},
 
 		pocketnetAuth: {
-			path: 'plugins/pocketnet-auth/router/code-cb',
+			path: 'api/v1/users/blockChainAuth',
 			signature: true,
 			method: 'POST',
 			axios: true,
