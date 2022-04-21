@@ -246,7 +246,7 @@ var Applications = function(settings) {
         let endFile = path.resolve(dest, meta[key].name)
 
         return new Promise(function(resolve, reject) {
-            let req = self.transports.request(meta[key].url)
+            let req = self.transports.request({url:meta[key].url})
             
             progress(req, {
                 throttle: 500,                    // Throttle the progress event to 2000ms, defaults to 1000ms
