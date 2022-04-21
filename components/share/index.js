@@ -45,7 +45,9 @@ var share = (function(){
 
 				if(!result && errors[type]){
 					sitemessage(errors[type])
-				}			
+				}	
+				
+				el.c.removeClass('minimized')
 
 				make();	
 			},

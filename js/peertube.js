@@ -892,6 +892,8 @@ PeerTubePocketnet = function (app) {
 						request('importVideo', data, options)
 							.then((r) => {
 
+								console.log("R",r)
+
 								if (!r.video) return Promise.reject(error('uploaderror'));
 
 								return Promise.resolve(
@@ -899,6 +901,7 @@ PeerTubePocketnet = function (app) {
 								);
 							})
 							.catch((e) => {
+								console.error(e)
 								e.cancel = axios.isCancel(e);
 
 								return Promise.reject(e);
