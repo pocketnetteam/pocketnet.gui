@@ -1826,7 +1826,7 @@ var share = (function(){
 					return;
 				}
 
-				if (external) external.clearessense();
+				if (external) external.closehack();
 
 				self.nav.api.load({
 					open : true,
@@ -2610,11 +2610,15 @@ var share = (function(){
 
 				if (external){
 
-					/*if(!external.uploading || !external.uploading())
-						external.module.closeContainer()
-					else{*/
+					console.log("external close")
+
+					if(!external.uploading || !external.uploading()){
+						external.closehack()
+					}
+						
+					else{
 						external.removeclbk('share')
-					//}
+					}
 
 					external = null
 				}
