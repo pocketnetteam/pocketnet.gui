@@ -93,16 +93,15 @@ class VideoUploader {
         loadResult = await this.static.loadChunk(this, chunkData, chunkPos);
       } catch(err) {
         if (err.reason === 'not_found') {
-          console.error('Load chunk error', err);
-
-          this.deleteResumableStorage(videoUniqueId);
-
           if (this.canceled) {
             throw {
               text: 'Video upload canceled',
               cancel: true,
             };
           }
+
+          console.error('Load chunk error', err);
+          this.deleteResumableStorage(videoUniqueId);
 
           return await this.uploadChunked();
         } else {
