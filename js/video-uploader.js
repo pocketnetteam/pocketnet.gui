@@ -1,36 +1,4 @@
-let getUniqueFileId;
-
-if (typeof require != 'undefined') {
-  getUniqueFileId = require('./file-hash');
-}
-
-function fileHash(file, hasher) {
-  // Instantiate a reader
-  const reader = new FileReader();
-
-  return new Promise((resolve, reject) => {
-    // What to do when we gets data?
-    reader.onload = function(e) {
-
-      if(e.target && e.target.result){
-
-        const hash = hasher(e.target.result.substring(1000));
-        resolve(hash);
-      }
-      else{
-        reject('empty')
-      }
-
-      
-    };
-
-    reader.onerror = function(e) {
-      reject(e);
-    };
-
-    reader.readAsBinaryString(file);
-  });
-}
+// getUniqueFileId = require('./file-hash');
 
 class VideoUploader {
   minChunkSize = 256;
@@ -329,18 +297,11 @@ class VideoUploader {
 
     let fileExtension = name.match(/\.(.*)/g);
 
-    let fileDataHash = name;
-
-    try {
-      if (getUniqueFileId) {
-        fileDataHash = await getUniqueFileId(videoFile);
-      } else if (typeof $ != 'undefined' && $.md5) {
-        fileDataHash = await fileHash(videoFile, $.md5);
-      }
-    } catch(e) {
-      // TODO: Handle errors
-      console.error('Something went wrong here. Rare situation');
-    }
+    let fileDataHash = await getUniqueFileId(videoFile)
+      .catch(() => {
+        // TODO: Handle errors
+        console.error('File unique ID generator error. Do you use prehistoric browser?');
+      });
 
     return `video_${fileDataHash}${fileExtension}`;
   }
