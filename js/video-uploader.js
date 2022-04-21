@@ -141,10 +141,9 @@ class VideoUploader {
   }
 
   async destroy(){
-    await this.cancel()
-
+    this.canceled = true;
     this.videoFile = null;
-    this.uploadHost = null;
+    this.activeHost = null;
   }
 
   async * getNextChunk(startFrom) {
