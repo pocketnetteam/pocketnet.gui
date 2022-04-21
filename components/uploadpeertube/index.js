@@ -468,6 +468,8 @@ var uploadpeertube = (function () {
 				})
 				.catch((e = {}) => {
 
+					console.error(e)
+
 					processing(false)
 
 					self.app.Logger.error({
