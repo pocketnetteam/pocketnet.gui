@@ -1818,23 +1818,13 @@ var share = (function(){
 
 				var elName = typeDictionary[p.type];
 				
-				if (external && external.id == elName){
-					external.container.show()
+				if (external && external.id == elName && external.show){
+					external.show()
 
 					return;
 				}
 
-				if(!external){
-					var externallatest = deep(self, 'app.modules.' + elName + '.module.essense.secondary')
-
-					if (externallatest && !externallatest.destroyed){
-						external = externallatest
-
-						external.container.show()
-					}
-				}
-
-				if (external) external.container.close();
+				if (external) external.clearessense();
 
 				self.nav.api.load({
 					open : true,
@@ -1867,6 +1857,8 @@ var share = (function(){
 					clbk : function(p, element){
 
 						external = element;
+
+						console.log('element', element)
 
 						external.addclbk('share', actions.videoadded)
 
@@ -2616,11 +2608,11 @@ var share = (function(){
 
 				if (external){
 
-					if(!external.uploading || !external.uploading())
+					/*if(!external.uploading || !external.uploading())
 						external.module.closeContainer()
-					else{
+					else{*/
 						external.removeclbk('share')
-					}
+					//}
 
 					external = null
 				}
@@ -2691,7 +2683,9 @@ var share = (function(){
 					essenseData.tags.map(tag => currentShare.tags.set(tag));
 				}
 
-				var externallatest = deep(self, 'app.modules.uploadpeertube.module.essense.secondary')
+				var externallatest = deep(self, 'app.modules.uploadpeertube.module.essenses.uploadpeertube')
+
+				console.log('externallatest', externallatest)
 
 				if (externallatest && !externallatest.destroyed){
 					external = externallatest

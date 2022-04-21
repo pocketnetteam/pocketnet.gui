@@ -5424,8 +5424,17 @@ html.mobileview{
             left : 0;
             top : auto;
             bottom : 80px;
+            will-change: transform;
+            .transition(0.3s, transform);
+
+            &.asette{
+                transform:  translateY(100px);
+            }
+
         }
     }
+
+   
 }
 
 html.mobileview.fullscreen{

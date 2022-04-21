@@ -1356,6 +1356,9 @@ var videoCabinet = (function () {
 			},
 
 			destroy: function () {
+
+				console.log("DESTROY")
+
 				el.windowElement.off('scroll', events.onPageScroll);
 
 				_.each(transcodingIntervals, function (i) {
@@ -1373,11 +1376,11 @@ var videoCabinet = (function () {
 
 				if (external){
 
-					if(!external.uploading || !external.uploading())
-						external.module.closeContainer()
-					else{
+					//if(!external.uploading || !external.uploading())
+					//	external.module.closeContainer()
+					//else{
 						external.removeclbk('videocabinet')
-					}
+					//}
 
 					external = null
 				}
@@ -1433,11 +1436,14 @@ var videoCabinet = (function () {
 					sort: ed.sort,
 				};
 
-				var externallatest = deep(self, 'app.modules.uploadpeertube.module.essense.secondary')
+				var externallatest = deep(self, 'app.modules.uploadpeertube.module.essenses.uploadpeertube')
+
 
 				if (externallatest && !externallatest.destroyed){
 					external = externallatest
 					external.addclbk('videocabinet', actions.videoadded)
+
+					console.log("ADD CLBK TO V")
 				}
 
 				self.app.platform.sdk.user

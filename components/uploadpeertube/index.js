@@ -163,15 +163,16 @@ var uploadpeertube = (function () {
 		var added = {}
 
 		var add = function(v, name){
-			_.each(added, function(a){
-				a(v, name)
-			})
-			
+
 			self.app.settings.set('common', 'lastuploadedvideo', {
 				link : v,
 				name : name || '',
 				wasclbk : !_.isEmpty(added)
 			});
+
+			_.each(added, function(a){
+				a(v, name)
+			})
 			
 		}
 
@@ -573,6 +574,8 @@ var uploadpeertube = (function () {
 		return {
 			primary: primary,
 
+			id : 'uploadpeertube',
+
 			addclbk : function(index, fun){
 				added[index] = fun
 			},
@@ -587,6 +590,12 @@ var uploadpeertube = (function () {
 
 			cancel : function(){
 				clear()
+			},
+
+			show : function(){
+				var v = deep(self, 'container.show')
+
+				if(v) v()
 			},
 
 			getdata: function (clbk, p) {
@@ -655,6 +664,8 @@ var uploadpeertube = (function () {
 
 				uploading = false
 				cancel = null
+
+				
 			},
 
 			init: function (p) {
@@ -707,6 +718,8 @@ var uploadpeertube = (function () {
 						clbk();
 					}
 				},
+
+				
 				offScroll: true,
 				noInnerScroll: true,
 				class: 'uploadpeertube normalizedmobile showbetter',
