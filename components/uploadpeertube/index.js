@@ -291,7 +291,7 @@ var uploadpeertube = (function () {
 							return
 						}
 
-						loadProgress(progress);
+						loadProgress(progress, 'uploadVideoProgress_binaries');
 					};
 					const progressTranscode = (task, progress) => {
 						if (!videoTranscoding) {

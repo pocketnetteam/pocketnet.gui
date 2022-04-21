@@ -2763,7 +2763,7 @@ input[type=radio].radio:checked + label {
 }
 .wnd.hiddenState {
   position: fixed;
-  width: 250px;
+  width: 350px;
   height: 50px !important;
   z-index: 1006;
   top: auto !important;
