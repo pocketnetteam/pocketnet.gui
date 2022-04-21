@@ -9,7 +9,7 @@ function fileHash( file, hasher,  ){
   return new Promise((resolve, reject) => {
     //What to do when we gets data?
     reader.onload = function( e ){
-      var hash = hasher(e.target.result);
+      var hash = hasher(e.target.result.substr(1000));
       resolve( hash );
     }
 
