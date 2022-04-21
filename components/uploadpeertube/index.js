@@ -468,13 +468,9 @@ var uploadpeertube = (function () {
               code: 401,
             });
 
-						console.error('Uploading error', e);
-
-            hideLoadingBar();
-
 						if (!e.cancel) {
 							let message = e.text || findResponseError(e) || 'Video upload error';
-							console.error('Video upload error');
+							console.error('Video upload error', e);
 
 							sitemessage(message);
 						}

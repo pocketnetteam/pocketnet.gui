@@ -764,7 +764,7 @@ PeerTubePocketnet = function (app) {
             }
             return request('initResumableUploadVideo', data, optionsPrepared)
               .then((r) => {
-                console.log('INIT RESUMABLE UPLOAD VIDEO', r);
+                // console.log('INIT c UPLOAD VIDEO', r);
 
                 const handleResume = () => Promise.resolve({
                   responseType: 'resume_upload',
@@ -827,7 +827,7 @@ PeerTubePocketnet = function (app) {
 
         return request('proceedResumableUploadVideo', data, optionsPrepared)
           .then((r) => {
-            console.log('RESUME RESUMABLE UPLOAD VIDEO', r);
+            // console.log('RESUME RESUMABLE UPLOAD VIDEO', r);
 
             const handleResume = () => Promise.resolve({
               responseType: 'resume_upload',
@@ -866,7 +866,7 @@ PeerTubePocketnet = function (app) {
 
         return request('cancelResumableUploadVideo', '', optionsPrepared)
           .then((r) => {
-            console.log('CANCEL RESUMABLE UPLOAD VIDEO', r);
+            // console.log('CANCEL RESUMABLE UPLOAD VIDEO', r);
 
             const handleSuccess = () => Promise.resolve({ responseType: 'success' });
             const handleNotFound = () => Promise.resolve({ responseType: 'not_found' });
