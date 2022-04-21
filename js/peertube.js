@@ -733,7 +733,10 @@ PeerTubePocketnet = function (app) {
 
       initResumableUpload: function(parameters, options) {
         return self.api.videos
-          .checkQuota(parameters.video.size, { type: options.type })
+          .checkQuota(parameters.video.size, {
+          	host: options.host,
+          	type: options.type,
+          })
           .then((rme) => {
             const videoName = parameters.name || `PocketVideo:${new Date().toISOString()}`;
 
