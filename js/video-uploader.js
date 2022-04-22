@@ -1,5 +1,9 @@
 // getUniqueFileId = require('./file-hash');
 
+if(typeof require != 'undefined'){
+  getUniqueFileId = require('./file-hash');
+}
+
 class VideoUploader {
   minChunkSize = 256;
 
