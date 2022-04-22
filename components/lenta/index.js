@@ -1619,7 +1619,7 @@ var lenta = (function(){
 					return
 				}
 
-				if(value <= 3){
+				if(value <= 3 && !self.app.test){
 					if(self.app.platform.sdk.user.scamcriteria()){
 						if(clbk)
 							clbk(false)

@@ -6,6 +6,10 @@ var share = (function(){
 
 	var Essense = function(p){
 
+		var key = p.mid || 'sec'
+
+		console.log("key", key)
+
 		var wordsRegExp = /[,.!?;:() \n\r]/g
 
 		var displayTimes = false
@@ -18,6 +22,7 @@ var share = (function(){
 
 		var loadedimages = {}
 		var loadingimages = {}
+		var player = null
 
 		var intro = false;
 
@@ -1890,8 +1895,8 @@ var share = (function(){
 
 						external = element;
 
-						external.addclbk('share', actions.videoadded)
-						external.addclbk('share', actions.closeexternal, 'closed')
+						external.addclbk('share' + key, actions.videoadded)
+						external.addclbk('share' + key, actions.closeexternal, 'closed')
 						
 
 						make()
@@ -1904,6 +1909,10 @@ var share = (function(){
 
 			url : function(clbk){
 
+				console.log("INITPLAYER0", player)
+
+				destroyPlayer()
+				
 				var url = currentShare.url.v;
 
 				var meta = self.app.platform.parseUrl(url);
@@ -1924,12 +1933,21 @@ var share = (function(){
 
 				}, function(p){
 
+					
+
 					if(currentShare.url.v && !og){
 
 						if (meta.type == 'youtube' || meta.type == 'vimeo' || meta.type == 'bitchute' || meta.type == 'peertube') {
+
+
+							console.log("INITPLAYER", player)
+							destroyPlayer()
+
 							
 
-                            Plyr.setup('#' + self.map.id + ' .js-player', function(player) {
+                            Plyr.setup('#' + self.map.id + ' .js-player', function(_player) {
+
+								player = _player
 
 								try{
 									player.muted = false
@@ -2252,44 +2270,7 @@ var share = (function(){
 					events.removePoll();
 				})
 
-				
-				// self.shell({
-				// 	name :  'poll',
-				// 	inner : html,
-				// 	el : el.urlWrapper,
-				// 	data : {
-				// 		poll : poll,
-				// 		og : null,
-				// 		remove : true,
-
-				// 		share : currentShare
-				// 	},
-
-				// }, function(p){
-
-
-
-				// 	if(poll && !og){
-
-				// 		if (meta.type == 'youtube' || meta.type == 'vimeo' || meta.type == 'bitchute' || meta.type == 'peertube') {
-
-                //             Plyr.setup('.js-player', function(player) {
-
-				// 				player.muted = false
-				// 			});
-
-				// 		} else {
-				// 			self.app.platform.sdk.remote.get(meta.url, function(og){
-
-				// 				if(og){
-				// 					renders.url()
-				// 				}
-
-				// 			})
-				// 		}
-				// 	}
-
-				// })
+			
 			},
 
 			makesortable : function(){
@@ -2518,7 +2499,10 @@ var share = (function(){
 					var lastvideo = self.app.settings.get('common', 'lastuploadedvideo');
 
 					if (lastvideo && !lastvideo.wasclbk){
-						actions._videoadded(lastvideo.link, lastvideo.name)
+
+						if(!currentShare.itisvideo())
+							actions._videoadded(lastvideo.link, lastvideo.name)
+							
 						self.app.settings.delete('common', 'lastuploadedvideo');
 					}
 				}
@@ -2565,7 +2549,20 @@ var share = (function(){
 		}
 
 
+		var destroyPlayer = function(){
+			if (player) {
 
+				console.log("DESTROY")
+
+				if (player.playing){
+					player.stop()
+				}
+
+				if (player.destroy) player.destroy()
+
+				player = null
+			}
+		}
 
 		return {
 			primary : primary,
@@ -2627,6 +2624,8 @@ var share = (function(){
 
 			destroy : function(){
 
+				destroyPlayer()
+
 				destroying = true
 
 				if (el.c)
@@ -2642,17 +2641,15 @@ var share = (function(){
 
 				if (external){
 
-					console.log("external close")
-
 					if (external.removeclbk)
-						external.removeclbk('share', 'closed')
+						external.removeclbk('share' + key, 'closed')
 
 					if(!external.uploading || !external.uploading()){
 						external.closehack()
 					}
 						
 					else{
-						external.removeclbk('share')
+						external.removeclbk('share' + key)
 						
 					}
 
@@ -2733,8 +2730,8 @@ var share = (function(){
 				if (externallatest && !externallatest.destroyed){
 					external = externallatest
 
-					external.addclbk('share', actions.videoadded)
-					external.addclbk('share', actions.closeexternal, 'closed')
+					external.addclbk('share' + key, actions.videoadded)
+					external.addclbk('share' + key, actions.closeexternal, 'closed')
 				}
 
 				make();

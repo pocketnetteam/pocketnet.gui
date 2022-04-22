@@ -15,7 +15,7 @@ var postscores = (function(){
 
 				if (share.address == self.user.address.value) return
 
-				if (value <= 3){
+				if (value <= 3 && !self.app.test){
 					if(self.app.platform.sdk.user.scamcriteria()){
 
 						if (clbk)
@@ -43,6 +43,27 @@ var postscores = (function(){
 
 						return
 					}
+				}
+
+				if (value > 4){
+
+					var reason = null
+
+					if (self.app.platform.sdk.user.newuser()){
+						reason = 'n'
+					}
+
+					if (share.scnt == '0') reason = 's'
+
+					if (reason) {
+						setTimeout(function(){
+							if(!el.c) return
+								self.app.platform.effects.templates.commentstars(el.c, value, function(){
+									
+								})
+						}, 300)
+					}
+					
 				}
 
 				var upvoteShare = share.upvote(value);

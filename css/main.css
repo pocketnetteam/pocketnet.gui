@@ -6483,7 +6483,7 @@ html.mobileview .wnd.normalizedmobile:not(.hiddenState):only-child.asette .wndba
 html.mobileview .wnd.maxheight .wndinner .wndcontent {
   height: calc(var(--vh, 1vh) * 92);
 }
-.keyboardsafe {
+html.mobileview .keyboardsafe {
   padding-bottom: calc(var(--keyboardheight, 0) - 1px) !important;
 }
 html.pipmode .pipped {

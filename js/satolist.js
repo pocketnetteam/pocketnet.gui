@@ -2930,6 +2930,7 @@ Platform = function (app, listofnodes) {
                     id : 'share',
                     inWnd : true,
                     eid : 'postin',
+                    mid : 'postin',
 
                     clbk : function(e, p){
                         globalpreloader(false)
