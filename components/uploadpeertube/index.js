@@ -637,16 +637,11 @@ var uploadpeertube = (function () {
 						clbk(data);
 					})
 					.catch((e = {}) => {
-
 						console.log("ERRR", e)
 
-						self.app.peertubeHandler.clear()
+						const errorBody = e.response || {};
 
-						self.app.Logger.error({
-							err: e.text || 'getInfoError',
-							payload: JSON.stringify(e),
-							code: 501,
-						});
+						self.app.peertubeHandler.clear()
 
 						data.e = e;
 						error = true;
@@ -655,7 +650,13 @@ var uploadpeertube = (function () {
 							{ template: 'video' },
 							function (r) {
 
-								console.log("R", r)
+								if (r.trial || !(r.balance && r.reputation)) {
+									self.app.Logger.error({
+										err: deep(errorBody, 'data.errors.name') || 'FRONTEND_DEFAULT_ERROR',
+										payload: JSON.stringify(deep(errorBody, 'data.errors') || {}),
+										code: errorBody.status || 501,
+									});
+								}
 
 								data.increase = r;
 

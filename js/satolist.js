@@ -9977,13 +9977,13 @@ Platform = function (app, listofnodes) {
 
                 if (p.template == 'video'){
                     p.balance = 500000000
-                    p.reputation = 50
+                    p.reputation = 100
+                    p.trial = true
                 }
 
                 var result = {}
 
                 self.sdk.ustate.me(function(info){
-
                     if(p.balance && (info.balance || 0) < p.balance) result.balance = true
                     else
                     if(p.reputation && (info.reputation || 0) < p.reputation) result.reputation = true
