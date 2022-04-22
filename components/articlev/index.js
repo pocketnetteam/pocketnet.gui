@@ -295,6 +295,8 @@ var articlev = (function(){
 
 			edittags : function(show){
 
+				if(!el.tagsinputwrapper) return
+
 				var inp = el.tagsinputwrapper.find('input')
 
 				if(show){

@@ -837,6 +837,8 @@
 				wnd.addClass('asette')
 				wnd.removeClass('sette')
 
+		
+
 				setTimeout(function(){
 
 					if(!nooverflow)

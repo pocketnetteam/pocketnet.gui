@@ -360,8 +360,10 @@ Nav = function(app)
 
 				historyManager.addParameters(pa)
 
-				self.wnds[p.id] = p
 
+				console.log("ADD TO WNDS")
+
+				self.wnds[p.id] = p
 			
 
 				return

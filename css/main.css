@@ -4469,6 +4469,9 @@ html.mobileview .wnd.pipmini ._close {
   html.mobileview.scrollmodedown .wnd.pipmini[position='bottom'] {
     transform: translateY(90px);
   }
+  html.mobileview #windowsContainer:has(.wnd.hiddenState) .wnd.pipmini[position='bottom'] {
+    bottom: 140px;
+  }
 }
 html.mobileview .wnd.hiddenState {
   width: auto;
