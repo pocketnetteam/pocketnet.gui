@@ -1019,7 +1019,7 @@ ____loclib.removevideoShareQuestionDelete = "Удалить видео"
 ____loclib.removevideoShareQuestionLeave = "Нет"
 
 ____loclib.importingVideo = "Видео загружается"
-
+____loclib.importingVideoSuccess = "Видео загружено. Вы можете продолжить создание пуликации"
 
 
 

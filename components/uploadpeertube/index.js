@@ -175,6 +175,11 @@ var uploadpeertube = (function () {
 				a(v, name)
 			})
 
+			if(_.isEmpty(self.added))
+				if(el.c && el.c.closest('.wnd').hasClass('hiddenState')){
+					sitemessage(self.app.localization.e('importingVideoSuccess'))
+				}
+
 		}
 
 		var initEvents = function () {
@@ -461,9 +466,11 @@ var uploadpeertube = (function () {
 
 						uploading = false
 
+						add(response.videoLink);
+
 						wndObj.close();
 
-						add(response.videoLink);
+						
 
 					}, 300);
 				})

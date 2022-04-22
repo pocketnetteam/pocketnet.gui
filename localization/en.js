@@ -1215,6 +1215,7 @@ ____loclib.removevideoShareQuestion = "The uploaded video remains available in t
 ____loclib.removevideoShareQuestionDelete = "Delete video"
 ____loclib.removevideoShareQuestionLeave = "No"
 ____loclib.importingVideo = "Video is loading"
+____loclib.importingVideoSuccess = "Video loaded. You can continue posting"
 
 ____loclib.streamLinks = "Streaming software links"
 ____loclib.linkRTMP = "RTMP Url"
