@@ -4489,7 +4489,8 @@ var lenta = (function(){
 	
 								s.time = new Date()
 	
-								shareInitedMap[s.txid] = false
+								
+								actions.destroyShare(s)
 	
 								renders.sharesInview([s], function(){
 									

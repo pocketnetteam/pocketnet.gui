@@ -569,7 +569,7 @@ var component = Object(componentNormalizer["a" /* default */])(
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                filter = new core.mtrx.sdk.Filter(client.getUserId());
+                filter = new this.core.mtrx.sdk.Filter(client.getUserId());
                 filter.setDefinition({
                   "room": {
                     "timeline": {
@@ -579,7 +579,7 @@ var component = Object(componentNormalizer["a" /* default */])(
                   }
                 });
                 _context.next = 4;
-                return client.getOrCreateFilter("FILTER_FILES_" + client.credentials.userId, filter);
+                return this.core.mtrx.client.getOrCreateFilter("FILTER_FILES_" + this.core.mtrx.client.credentials.userId, filter);
 
               case 4:
                 filter.filterId = _context.sent;

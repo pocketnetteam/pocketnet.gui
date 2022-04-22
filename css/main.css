@@ -6484,7 +6484,7 @@ html.mobileview .wnd.maxheight .wndinner .wndcontent {
   height: calc(var(--vh, 1vh) * 92);
 }
 .keyboardsafe {
-  padding-bottom: calc(var(--keyboardheight, 0) - 1px);
+  padding-bottom: calc(var(--keyboardheight, 0) - 1px) !important;
 }
 html.pipmode .pipped {
   position: fixed!important;
