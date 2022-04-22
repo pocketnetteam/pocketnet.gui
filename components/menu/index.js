@@ -1086,7 +1086,6 @@ var menu = (function(){
 					menusearch = null
 
 
-				delete self.app.events.resize.menu
 
 				delete self.app.platform.sdk.newmaterials.clbks.update.menu
 
