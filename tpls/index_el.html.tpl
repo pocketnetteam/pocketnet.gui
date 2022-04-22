@@ -215,6 +215,8 @@
         <script src="js/vendor/hc-sticky.js"></script>
         <script join src="js/vendor/axios.js"></script>
 
+
+
         __JSENV__
 
         <script>window.design = true;</script>
@@ -229,6 +231,8 @@
         <script join src="js/localization.js?v=439731354592"></script>
         <script join src="js/satolist.js?v=439731354592"></script>
         <script join src="peertube/video-embed.bundle.js"></script>
+        <script join src="js/video-uploader.js?v=796137724348"></script>
+        <script join src="js/file-hash.js?v=31192517726"></script>
         <script join src="js/peertube.js"></script>
         <script join src="js/app.js?v=322676503798"></script>
         <script join src="js/logger.js"></script>
