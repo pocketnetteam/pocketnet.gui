@@ -6,7 +6,6 @@ if (typeof _Electron != 'undefined') {
 
     bastyonFsFetchFactory = require('./js/peertube/bastyon-fs-fetch').bastyonFsFetchFactory;
     TranscoderClient = require('./js/electron/transcoding2').Client;
-    VideoUploader = require('./js/video-uploader');
 
     fs = require('fs');
     url = require('url');
