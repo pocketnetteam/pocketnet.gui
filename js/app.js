@@ -21,7 +21,7 @@ if (typeof _Electron != 'undefined' && _Electron){
 	
 	ImageUploader = require('./js/image-uploader.js');
 
-
+	VideoUploader = require('./js/video-uploader.js');
 
 	jQueryBridget = require('jquery-bridget');
 	jQueryBridget( 'isotope', Isotope, $ );
