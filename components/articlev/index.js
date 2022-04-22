@@ -620,7 +620,7 @@ var articlev = (function(){
 					open : true,
 					id : 'taginput',
 					el : el.tagsinputwrapper,
-					eid : 'sharetags' + p.mid,
+					eid : 'sharetags' + (p.mid || 'articles'),
 					animation : false,
 					essenseData : {
 						tags : function(){

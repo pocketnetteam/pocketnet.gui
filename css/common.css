@@ -1429,6 +1429,9 @@ html.ios .share_common.fullScreenVideo .video-js {
   display: inline;
   opacity: 0.5;
 }
+.common_share_article_wrapper .share .sharearticle .waitconfirmations {
+  padding: 0.5em 0;
+}
 .common_share_article_wrapper .share .sharearticle .shareBgCaption .author,
 .common_share_article_wrapper .share .sharearticle .articleend .author {
   margin-top: 1em;

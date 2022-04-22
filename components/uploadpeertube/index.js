@@ -648,6 +648,8 @@ var uploadpeertube = (function () {
 							{ template: 'video' },
 							function (r) {
 
+								console.log("R", r)
+
 								data.increase = r;
 
 								clbk(data);

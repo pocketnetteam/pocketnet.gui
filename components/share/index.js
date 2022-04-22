@@ -1753,7 +1753,7 @@ var share = (function(){
 						open : true,
 						id : 'taginput',
 						el : el.tgsWrapperMain,
-						eid : 'sharetags' + p.mid,
+						eid : 'sharetags' + (p.mid || 'mainshare'),
 						animation : false,
 						essenseData : {
 							tags : function(){
