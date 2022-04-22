@@ -1360,7 +1360,8 @@ var videoCabinet = (function () {
 
 				console.log("DESTROY")
 
-				el.windowElement.off('scroll', events.onPageScroll);
+				if (el.windowElement)
+					el.windowElement.off('scroll', events.onPageScroll);
 
 				_.each(transcodingIntervals, function (i) {
 					clearInterval(i);
@@ -1515,7 +1516,7 @@ var videoCabinet = (function () {
 				},
 				offScroll: true,
 				noInnerScroll: true,
-				class: 'videoCabinet normalizedmobile',
+				class: 'videoCabinet normalizedmobile nobfilter maxheight showbetter',
 				allowHide: false,
 				noCloseButton: true,
 				noButtons: true,

@@ -1828,7 +1828,7 @@ var post = (function () {
 						renders.comments(function () {
 						})
 
-						if (share.itisvideo() && !ed.repost && recommendationsenabled) {
+						if (share.itisvideo() && !ed.repost && !p.pip && recommendationsenabled) {
 
 							renders.recommendations();
 
