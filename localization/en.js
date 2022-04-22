@@ -2209,3 +2209,7 @@ ____loclib.welcomecaption3 = "Chat privately with friends - no SIM card";
 
 
 
+____loclib.shareexternal = "Another window is open";
+____loclib.shareexternaluploadpeertube = "Video upload window open";
+
+____loclib.removeimageswhenvideo = "The images attached to the post will be deleted if you continue to upload the video. Go to uploading video?";

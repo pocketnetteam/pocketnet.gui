@@ -837,6 +837,7 @@
 				wnd.addClass('asette')
 				wnd.removeClass('sette')
 
+		
 
 				setTimeout(function(){
 
@@ -962,6 +963,7 @@
 		self.el = wnd;
 		self.hide = actions.hide;
 		self.show = actions.show;
+
 
 		return self;
 	}

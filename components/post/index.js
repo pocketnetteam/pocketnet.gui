@@ -1872,6 +1872,8 @@ var post = (function () {
 			id : p.mid,
 			pip : p.pip,
 
+			independent : p.pip,
+
 			getdata: function (clbk, p) {
 
 				
@@ -1951,7 +1953,7 @@ var post = (function () {
 
 			destroy: function (key) {
 
-				//console.log("DESTROY", share.txid)
+				console.log("DESTROY", share.txid)
 				
 				if (external){
 					external.destroy()
@@ -2005,6 +2007,8 @@ var post = (function () {
 				el = {};
 				ed = {}
 
+				
+
 			},
 
 			clearparameters: ['s', 'commentid', 'parentid'],
@@ -2024,12 +2028,15 @@ var post = (function () {
 				el.wr = el.c.find('.postWrapper')
 				el.wnd = el.c.closest('.wndcontent');
 
-
 				
 				
 				if (share.itisarticle()){
 					el.c.closest('.wnd').addClass('articlewindow')
 					el.c.addClass('sharec')
+				}
+
+				if(share.itisvideo() && !p.pip){
+					self.app.actions.closepip()
 				}
 
 				make()

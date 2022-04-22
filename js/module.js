@@ -171,13 +171,17 @@ nModule = function(){
 								
 								if (p.destroy) {
 									r = p.destroy(key)
+
+									if(!r)
+										p.clearessense()
 								}
 							}
 
-							console.log("CLEAR P", p)
 
-							if (p.inWnd){
+							if (!r && p.inWnd){
 								delete self.app.nav.wnds[p.id]
+
+								p.clearessense()
 							}
 
 							//p = null
@@ -197,7 +201,9 @@ nModule = function(){
 						self .container = new insert.obj(options);
 							p.container = self.container;
 
-						self.container.essenseDestroy = p.clearessense
+						self.container.essenseDestroy = options.destroy
+						
+					
 
 						if (insert.after) 
 						{

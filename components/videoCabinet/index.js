@@ -830,7 +830,7 @@ var videoCabinet = (function () {
 					return;
 				}
 
-				if (external) external.container.close();
+				if (external) external.closehack();
 
 				self.nav.api.load({
 					open: true,
@@ -854,6 +854,7 @@ var videoCabinet = (function () {
 						external = element;
 
 						external.addclbk('videocabinet', actions.videoadded)
+						external.addclbk('videocabinet', () => { external = null }, 'closed')
 
 						videoUploadData = element.essenseData;
 					},
@@ -1376,11 +1377,12 @@ var videoCabinet = (function () {
 
 				if (external){
 
-					//if(!external.uploading || !external.uploading())
-					//	external.module.closeContainer()
-					//else{
+					if(!external.uploading || !external.uploading())
+						external.closehack()
+					else{
 						external.removeclbk('videocabinet')
-					//}
+						external.removeclbk('videocabinet', 'closed')
+					}
 
 					external = null
 				}
@@ -1442,8 +1444,7 @@ var videoCabinet = (function () {
 				if (externallatest && !externallatest.destroyed){
 					external = externallatest
 					external.addclbk('videocabinet', actions.videoadded)
-
-					console.log("ADD CLBK TO V")
+					external.addclbk('videocabinet', () => { external = null }, 'closed')
 				}
 
 				self.app.platform.sdk.user

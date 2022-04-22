@@ -360,7 +360,11 @@ Nav = function(app)
 
 				historyManager.addParameters(pa)
 
+
+				console.log("ADD TO WNDS")
+
 				self.wnds[p.id] = p
+			
 
 				return
 			}
@@ -487,6 +491,8 @@ Nav = function(app)
 
 			_.each(self.wnds, function(pa, id){
 				if(!p['m' + id]){
+
+					console.log('pa', pa)
 
 					if (pa.independent) return
 
@@ -1417,7 +1423,8 @@ Nav = function(app)
 				history : p.history,
 				inWnd : p.inWnd,
 				inTooltip : p.inTooltip,
-				animation : p.animation
+				animation : p.animation,
+				independent : p.independent
         	}
 
         	this.load(loadParameters)

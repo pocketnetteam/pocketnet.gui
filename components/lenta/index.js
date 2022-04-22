@@ -1432,6 +1432,7 @@ var lenta = (function(){
 					
 					if(!players[id]) return;
 
+					self.app.actions.closepip()
 
 					fullscreenvideoShowed = id;
 
