@@ -67,4 +67,9 @@ async function sha256(str) {
   return binaryB58(bytes);
 }
 
-// module.exports = getUniqueFileId;
+/**
+ * Export function if require()
+ */
+if (typeof module === 'object' && module.exports) {
+  module.exports = getUniqueFileId;
+}
