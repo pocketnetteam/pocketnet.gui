@@ -160,17 +160,18 @@ var uploadpeertube = (function () {
 			showerror()
 		}
 
-		var added = {}
+		self.added = {}
+		self.closed = {}
 
 		var add = function(v, name){
 
 			self.app.settings.set('common', 'lastuploadedvideo', {
 				link : v,
 				name : name || '',
-				wasclbk : !_.isEmpty(added)
+				wasclbk : !_.isEmpty(self.added)
 			});
 
-			_.each(added, function(a){
+			_.each(self.added, function(a){
 				a(v, name)
 			})
 
@@ -578,12 +579,19 @@ var uploadpeertube = (function () {
 
 			id : 'uploadpeertube',
 
-			addclbk : function(index, fun){
-				added[index] = fun
+			addclbk : function(index, fun, event){
+				if(!event) event = 'added'
+
+				if (self[event])
+					self[event][index] = fun
 			},
 
-			removeclbk : function(index, fun){
-				delete added[index]
+			removeclbk : function(index, event){
+
+				if(!event) event = 'added'
+
+				if (self[event])
+					delete self[event][index]
 			},
 
 			uploading : function(){
@@ -711,9 +719,9 @@ var uploadpeertube = (function () {
 			wnd: {
 				header: '',
 				close: function () {
-					if (ed.closeClbk) {
-						ed.closeClbk();
-					}
+					_.each(self.closed, function(c){
+						c()
+					})
 				},
 				postRender: function (_wnd, _wndObj, clbk) {
 					wndObj = _wndObj;

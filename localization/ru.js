@@ -2003,8 +2003,14 @@ ____loclib.savevideo = "Загрузить видео";
 ____loclib.useanimations = "Включить анимации";
 
 
-
-
 ____loclib.welcomecaption1 = "Бастион свободы слова";
 ____loclib.welcomecaption2 = "Децентрализованная социальная сеть на блокчейне.";
 ____loclib.welcomecaption3 = "Общайтесь с друзьями в зашифрованном чате без привязки к телефону";
+
+
+____loclib.shareexternal = "Открыто другое окно";
+____loclib.shareexternaluploadpeertube = "Открыто окно загрузки видео";
+
+____loclib.removeimageswhenvideo = "Прикреплённые к публикации изображения удалятся, если вы продолжите загружать видео. Перейти к загрузке видео?";
+
+

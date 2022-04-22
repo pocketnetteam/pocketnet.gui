@@ -197,7 +197,13 @@ nModule = function(){
 						self .container = new insert.obj(options);
 							p.container = self.container;
 
-						self.container.essenseDestroy = options.destroy
+						self.container.essenseDestroy = function(a, b){
+
+							console.log("DESTROY", p)
+							p.clearessense()
+
+							return options.destroy(a, b)
+						}
 
 						if (insert.after) 
 						{

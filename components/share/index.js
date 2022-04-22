@@ -30,7 +30,10 @@ var share = (function(){
 				var result = currentShare[type].set(link)
 
 				currentShare.settings.a = ["i", "u", "cm", "p"]
-				currentShare.caption.set(name)
+
+				if(name && !currentShare.caption.v)
+					currentShare.caption.set(name)
+					
 				currentShare.images.set()
 				currentShare.repost.set()
 
@@ -50,6 +53,12 @@ var share = (function(){
 				el.c.removeClass('minimized')
 
 				make();	
+			},
+
+			closeexternal : function(){
+				external = null
+
+				if(!destroying) make();
 			},
 
 			getrepost : function(clbk){
@@ -373,10 +382,40 @@ var share = (function(){
 					eblock = false
 				}, 1000)
 
+				if (type === 'openexternal') {
+					if (external && external.show)
+
+						external.show()
+
+					return
+				} 
+
 				var storage = currentShare.export(true)
 
-				if (type === 'addVideo'/* || type === 'addStream'*/) {
-					renders.streamPage({ value, storage, type });
+				if (type === 'addVideo') {
+
+					if(currentShare.images.v.length){
+						dialog({
+							html : self.app.localization.e('removeimageswhenvideo'),
+							btn1text : self.app.localization.e('dyes'),
+							btn2text : self.app.localization.e('dno'),
+							class : "zindex",
+							success : function(){
+	
+								currentShare.images.set()
+								renders.streamPage({ value, storage, type });
+
+							},
+	
+							fail : function(){
+							}
+						})
+					}
+					else{
+						renders.streamPage({ value, storage, type });
+					}
+
+					return
 				} 
 
 				if(type == 'article'){
@@ -392,7 +431,9 @@ var share = (function(){
 						},
 
 						clbk : function(p){
-							external = p
+							//external = p
+
+							make()
 						}
 					})
 					
@@ -504,12 +545,10 @@ var share = (function(){
 
 			editImage : function(r){
 				var m = _.map(currentShare.images.v, function(src, i){
-
 					return {
 						original : src,
 						index : i
 					}
-					
 				})
 
 				var f = _.filter(m, function(f){
@@ -524,6 +563,7 @@ var share = (function(){
 					open : true,
 					id : 'imageGalleryEdit',
 					inWnd : true,
+					history : true,
 
 					essenseData : {
 						edit : true,
@@ -1155,7 +1195,7 @@ var share = (function(){
 
 						btn1text : self.app.localization.e('daccept'),
 
-						class : "one sharedate",
+						class : "one sharedate zindex",
 
 						clbk : function(d){
 
@@ -1218,7 +1258,7 @@ var share = (function(){
 						html : self.app.localization.e('sharenow'),
 						btn1text : self.app.localization.e('dyes'),
 						btn2text : self.app.localization.e('dno'),
-
+						
 						success : function(){
 
 							if (essenseData.type)
@@ -1324,7 +1364,7 @@ var share = (function(){
 						btn1text : "Wait",
 						btn2text : "Cancel uploading",
 	
-						class : 'videoCaution',
+						class : 'videoCaution zindex',
 	
 						success : () => {
 							return;
@@ -1333,7 +1373,7 @@ var share = (function(){
 						fail : () => {
 
 							external.cancel()
-							external.clearessense()
+							external.closehack()
 							
 							return;
 						},
@@ -1360,7 +1400,7 @@ var share = (function(){
 
 					dialog({
 						header: "Create new poll",
-						class : "one joinbeta",
+						class : "one joinbeta zindex",
 						poll: true,
 						btn1text : 'Create',
 						success: function(){
@@ -1542,7 +1582,8 @@ var share = (function(){
 							share : currentShare,
 							essenseData : essenseData,
 							lkey : self.app.localization.key,
-							u : _mestate
+							u : _mestate,
+							external
 						},
 
 					}, function(p){
@@ -1619,7 +1660,7 @@ var share = (function(){
 
 							if(external && external.cancel){
 								external.cancel()
-								external.clearessense()
+								external.closehack()
 							}
 
 					
@@ -1772,6 +1813,8 @@ var share = (function(){
 
 			all : function(){
 
+				console.log('renders all')
+
 				renders.body(function(){
 
 					el.eMessage[0].emojioneArea.setText(currentShare.message.v);
@@ -1840,29 +1883,18 @@ var share = (function(){
 						value : p.value,
 						currentLink : currentShare.url ? currentShare.url.v : '',
 						inLentaWindow : true,
-						scrollElementName: '.wnd.videoCabinet .wndcontent',
-					
-
-						closeClbk : function() {
-
-							if(!self.app.peertubeHandler.checklink(currentShare.url.v)){
-								if (el.peertube && el.peertubeLiveStream) {
-								}
-							}
-
-							external = null
-
-							if(elName != 'streampeertube' && !destroying) make();
-						}
+						scrollElementName: '.wnd.videoCabinet .wndcontent'
 					},
 
 					clbk : function(p, element){
 
 						external = element;
 
-						console.log('element', element)
-
 						external.addclbk('share', actions.videoadded)
+						external.addclbk('share', actions.closeexternal, 'closed')
+						
+
+						make()
 
 					}
 				});
@@ -2612,13 +2644,19 @@ var share = (function(){
 
 					console.log("external close")
 
+					if (external.removeclbk)
+						external.removeclbk('share', 'closed')
+
 					if(!external.uploading || !external.uploading()){
 						external.closehack()
 					}
 						
 					else{
 						external.removeclbk('share')
+						
 					}
+
+					
 
 					external = null
 				}
@@ -2691,11 +2729,12 @@ var share = (function(){
 
 				var externallatest = deep(self, 'app.modules.uploadpeertube.module.essenses.uploadpeertube')
 
-				console.log('externallatest', externallatest)
 
 				if (externallatest && !externallatest.destroyed){
 					external = externallatest
+
 					external.addclbk('share', actions.videoadded)
+					external.addclbk('share', actions.closeexternal, 'closed')
 				}
 
 				make();
@@ -2721,7 +2760,7 @@ var share = (function(){
 						essenseData.close()
 					}
 				},
-				class : "smallWnd withoutButtons wndsharepost normalizedmobile maxheight showbetter"
+				class : "smallWnd withoutButtons wndsharepost normalizedmobile maxheight showbetter nobfilter"
 			},
 
 			id : p._id,

@@ -854,6 +854,7 @@ var videoCabinet = (function () {
 						external = element;
 
 						external.addclbk('videocabinet', actions.videoadded)
+						external.addclbk('videocabinet', () => { external = null }, 'closed')
 
 						videoUploadData = element.essenseData;
 					},
@@ -1380,6 +1381,7 @@ var videoCabinet = (function () {
 						external.closehack()
 					else{
 						external.removeclbk('videocabinet')
+						external.removeclbk('videocabinet', 'closed')
 					}
 
 					external = null
@@ -1442,8 +1444,7 @@ var videoCabinet = (function () {
 				if (externallatest && !externallatest.destroyed){
 					external = externallatest
 					external.addclbk('videocabinet', actions.videoadded)
-
-					console.log("ADD CLBK TO V")
+					external.addclbk('videocabinet', () => { external = null }, 'closed')
 				}
 
 				self.app.platform.sdk.user
