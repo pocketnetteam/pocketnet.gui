@@ -764,6 +764,7 @@ var lenta = (function(){
 			initVideoLight: function(share, clbk, shadow){
 				//js-player-dummy
 
+				if(!el.share[share.txid]) return
 
 				var button = el.share[share.txid].find('.initvideoplayer')
 

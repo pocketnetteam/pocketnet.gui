@@ -1135,7 +1135,6 @@ Nav = function(app)
 					if(link.attr('donottrust'))
 					{
 						
-
 						link.off('click').on('click', function(){
 							var href = $(this).attr('href');	
 
@@ -1170,11 +1169,42 @@ Nav = function(app)
 
 						if(blockclick) return false
 
+						blockclick = true
+
+						setTimeout(function(){
+							blockclick = false
+						}, 800)
+
 						var href = core.thisSiteLink( $(this).attr('href') );
 
 						var handler = $(this).attr('handler') || null
 						var replace = $(this).attr('replace') || false
 						var force = $(this).attr('replace') || false
+						var mobilepreview = $(this).attr('mobilepreview') || null
+
+						if (mobilepreview && app.mobileview){
+
+							try{
+
+								mobilepreview = JSON.parse(mobilepreview)
+
+								self.api.load({
+									open : true,
+									id : mobilepreview.id,
+									inWnd : true,
+									history : true,
+				
+									essenseData : mobilepreview.essenseData || {}
+								})
+
+								return false
+							}
+							catch(e){
+								console.log("E", e)
+							}
+
+							
+						}
 
 						if (additionalActions){
 							additionalActions(e);
@@ -1192,11 +1222,7 @@ Nav = function(app)
 							force : force
 						})
 
-						blockclick = true
-
-						setTimeout(function(){
-							blockclick = false
-						}, 800)
+						
 
 						return false
 					}

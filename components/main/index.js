@@ -691,7 +691,7 @@ var main = (function(){
 							//includesub : true,
 							includeboost : self.app.boost,
 							optimize : self.app.mobileview,
-							extra :/* state && isMobile() ? [
+							extra : (self.app.test || self.app.platform.istest()) && state && isMobile() ? [
 								{
 									key : 'recommendedusers',
 									position : rand(1,2),
@@ -701,7 +701,7 @@ var main = (function(){
 										}
 									}
 								}
-							] :*/ [],
+							] : [],
 
 							afterload : function(ed, s, e){
 

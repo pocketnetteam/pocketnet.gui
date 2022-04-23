@@ -129,8 +129,10 @@ var panel = (function(){
 			)
 				renders.stacking()
 
-	
-			renders.topusers();
+			self.app.user.isState(function(state){
+				if ((self.app.test || self.app.platform.istest()) && state && !isMobile())
+					renders.topusers();
+			})
 				
 			// renders.bestposts();
 
