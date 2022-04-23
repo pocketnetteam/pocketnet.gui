@@ -4964,10 +4964,7 @@ var lenta = (function(){
 					parallax = null
 				}
 			
-				if (recommendedusers){
-					recommendedusers.destroy();
-					recommendedusers = null;
-				}
+				
 
 				app.actions.playingvideo(null);
 
