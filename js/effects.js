@@ -172,8 +172,8 @@ FX_Star = function(p){
 
     self.angle = p.angle || 0
 
-    var color = Color(self.color)
-    self.color = color.lighten(Math.random()).hex()
+    //var color = Color(self.color)
+    //self.color = color.lighten( Math.min(Math.random() + 0.5, 1)).hex()
 
     self.render = function(ctx, percentOfLife){
         var x = self.x;
@@ -304,7 +304,7 @@ FX_Effects = function(el){
 
                         size : parameters.size,
                         color : parameters.color,
-                        opacity : parameters.opacity * Math.random() + 0.3
+                        opacity : parameters.opacity * (Math.random() + 0.5)
                     })
         
                     h.init()
@@ -416,12 +416,17 @@ FX_Effects = function(el){
 FX_Manager = function(app){
     var self = this
 
-    var lib = ['js/vendor/pixi.min.js', 'js/vendor/bezier.js', 'js/vendor/color.min.js']
+    var lib = [
+        {src : 'js/vendor/pixi.min.js', f : 'js'}, 
+        {src : 'js/vendor/bezier.js', f : 'js'}, 
+        {src : 'js/vendor/color.min.js', f : 'js'}
+    ]
     var relations = {}
 
     var importlibs = function(clbk){
 
-        importScripts(_.map(lib, (src) => {return {src, f : 'js'}}), relations, function(){
+
+        importScripts(lib, relations, function(){
 
             if (clbk)
                 clbk();

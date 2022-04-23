@@ -1,7 +1,6 @@
 
 
 <div id="<%-module.map.id%>" class="unselecmobile">
-	
 	<div class="menuWrapper">
 		<div class="rightchatspacer">
 			<div class="sections">
@@ -40,7 +39,7 @@
 											<% } else { %>
 												<%-(lkey.name || '').toLowerCase()%> 
 											<% } %>
-											
+
 											<i class="fas fa-caret-down"></i>
 										</div>
 									</div>						
@@ -58,6 +57,16 @@
 				
 				<div class="section centerpart">
 					<% if(!app.curation()) {%>
+						<% if(app.isElectron()) {%>
+							<div class="items control-app" events="controlApp">
+								<div class="control-app-back" >
+									<i class="fa fa-arrow-left"></i>
+								</div>
+								<div class="control-app-next" >
+									<i class="fa fa-arrow-right"></i>
+								</div>
+							</div>
+						<% } %>
 						<div class="items searchWrapper">
 
 							<div class="item  right" events="searchinit">
@@ -67,7 +76,13 @@
 								</div>
 							</div>
 						</div>
-
+						<% if(app.isElectron()) {%>
+						<div class="items control-app" events="controlApp">
+							<div class="control-app-refresh" >
+								<i class="fas fa-redo-alt"></i>
+							</div>
+						</div>
+						<% } %>
 					<% } %>
 				</div>
 
@@ -124,10 +139,10 @@
 						<div class="items">
 							<div class="item  right state onlyicon" events="state">
 								
-								<div class="icon"> <% if(state) {%> <a elementsid="userpage?id=system16" href="userpage?id=system16">	<% } else { %> <a elementsid="hrefsystem16" href="system16"> <% } %>
+								<div class="icon">
 									<div class="icn">
 										<i class="fas fa-wifi"></i>
-									</div></a>
+									</div>
 								</div>
 								
 							</div>

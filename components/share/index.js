@@ -1084,6 +1084,7 @@ var share = (function(){
 
 					actions.errortext(errors[error])
 
+
 					if(error == 'message'){
 						el.c.find('.emojionearea-editor').focus()
 					}

@@ -271,6 +271,11 @@
 			.js-player{
 				border-radius: 0;
 			}
+
+			.vjs-control-bar{
+				border-bottom-left-radius: 0;
+				border-bottom-right-radius: 0;
+			}
 		}
 
 		.share{
@@ -429,7 +434,7 @@
 		margin-top : @rhythm;
 
 		.recomandationsbgwrapper{
-			background: #fff;
+			background: rgb(var(--background-total-theme));
 			border-radius: 9px;
 			padding: @rhythm;
 		}
@@ -1049,6 +1054,11 @@ html.mobileview{
 					}
 
 					
+				}
+				&.withoutcover{
+					.articleCover{
+						height: 3 * @rhythm;
+					}
 				}
 				
 				&.verticalcover{

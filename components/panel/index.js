@@ -130,7 +130,7 @@ var panel = (function(){
 				renders.stacking()
 
 	
-			// renders.topusers();
+			renders.topusers();
 				
 			// renders.bestposts();
 

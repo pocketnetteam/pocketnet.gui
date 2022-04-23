@@ -2235,6 +2235,8 @@ var comments = (function(){
 
 					}, function(_p){
 
+						if(!_p.el) return
+
 						if(!preview)
 							p.el.removeClass('listloading')
 
@@ -2668,6 +2670,34 @@ var comments = (function(){
 					})
 				}
 
+			},
+
+			attention : function(text){
+
+				if(isMobile() || !text){
+					el.c.find('.post').addClass('attention')
+				}
+				else{
+					el.c.find('.leaveCommentPreview').css('opacity', '0')
+
+					setTimeout(function(){
+
+						if(!el.c) return
+
+						el.c.find('.post').addClass('attention')
+
+						if (text)
+							el.c.find('.leaveCommentPreview').attr('placeholder', text)
+
+						setTimeout(function(){
+
+							if(!el.c) return
+
+							el.c.find('.leaveCommentPreview').css('opacity', '')
+						}, 100)
+					}, 100)
+					
+				}
 			},
 
 			authclbk : function(){

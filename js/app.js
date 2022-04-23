@@ -6,7 +6,7 @@ if(typeof require != 'undefined' && typeof __map == 'undefined')
 
 if (typeof _OpenApi == 'undefined') _OpenApi = false;
 
-if(typeof _Electron != 'undefined' && _Electron){
+if (typeof _Electron != 'undefined' && _Electron){
 
 	imagesLoaded = require('./js/vendor/imagesloaded.pkgd.min.js');
 
@@ -75,6 +75,10 @@ Application = function(p)
 	}
 
 	var url = window.pocketnetdomain
+
+	if ((typeof _Electron != 'undefined' && _Electron) || window.cordova){} else {
+		url = window.location.hostname + window.pocketnetpublicpath.substring(0, window.pocketnetpublicpath.length - 1)
+	}
 
 	if (window.testpocketnet){
 		self.test = true
@@ -286,6 +290,11 @@ Application = function(p)
 		}
 	}
 
+	self.savesupported = function(){
+		var isElectron = (typeof _Electron !== 'undefined' && !!window.electron);
+		return isElectron || (window.cordova && !isios());
+	}
+
 	self.useip = function(){
 		return self.canuseip() && self.platform.sdk.usersettings.meta.canuseip.value
 	}
@@ -465,6 +474,10 @@ Application = function(p)
 	self.map = __map;
 	self.modules = {};
 
+	self.isElectron = function(){
+		return typeof _Electron != 'undefined' && _Electron
+	}
+	
 	self.curation = function(){
 
 		//if(window.cordova && typeof isios != 'undefined' && isios()) return true
@@ -2272,24 +2285,42 @@ Application = function(p)
 									globalpreloader(true)
 
 									setTimeout(function(){
-		
-										self.user.isState(function(state){
-											if(state){
-												self.platform.sdk.node.transactions.get.allBalanceUpdate(function(){
-													self.platform.sdk.notifications.getNotifications()
-												})
-											}
-											
-										})
 
-										if (self.nav.current.module)
-											self.nav.current.module.restart()
+										if (self.platform.loadingWithErrors){
 
-										setTimeout(function(){
-											globalpreloader(false)
-											
-											self.mobile.reload.reloading = false
-										}, 200)
+											self.platform.appstate(function(){
+
+												setTimeout(function(){
+													globalpreloader(false)
+													
+													self.mobile.reload.reloading = false
+													
+												}, 200)
+
+											})
+
+										}
+										else{
+
+											self.user.isState(function(state){
+												if(state){
+													self.platform.sdk.node.transactions.get.allBalanceUpdate(function(){
+														self.platform.sdk.notifications.getNotifications()
+													})
+												}
+												
+											})
+
+											if (self.nav.current.module)
+												self.nav.current.module.restart()
+
+											setTimeout(function(){
+												globalpreloader(false)
+												
+												self.mobile.reload.reloading = false
+											}, 200)
+
+										}
 
 										
 									}, 100)
@@ -2346,7 +2377,7 @@ Application = function(p)
 			needmanage : false,
 			hasupdate : false,
 
-			playstore : false,  ///// TODO
+			playstore : true,  ///// TODO
 
 			downloadAndInstall : function(){
 

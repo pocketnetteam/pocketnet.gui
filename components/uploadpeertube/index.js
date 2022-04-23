@@ -115,6 +115,12 @@ var uploadpeertube = (function () {
 
 
 			el.videoInput.change(async function (evt) {
+				if (!evt.target.files[0]) {
+					el.videoError.text('No file was selected');
+					el.videoError.addClass('error-message');
+					return;
+				}
+
 				var fileName = evt.target.files[0].name;
 
 				el.videoError.text(
@@ -155,10 +161,7 @@ var uploadpeertube = (function () {
 				el.header.removeClass('activeOnRolled');
 				el.uploadButton.prop('disabled', true);
 
-				//var transcoded = await self.app.peertubeHandler.transcode(videoInputFile[0])
-
 				var data = {
-					//transcoded : transcoded,
 					video: videoInputFile[0],
 				};
 
@@ -170,213 +173,308 @@ var uploadpeertube = (function () {
 					type: 'uploadVideo',
 				};
 
-				options.progress = function (percentComplete) {
-					let formattedProgress;
+        function setBarProgress(percent) {
+          el.uploadProgress
+            .find('.upload-progress-bar')
+            .css('width', percent + '%');
+          el.uploadProgress
+            .find('.upload-progress-percentage')
+            .text(percent + '%');
+        }
 
-					if (percentComplete === 100) {
-						formattedProgress = percentComplete;
-					} else {
-						formattedProgress = (percentComplete * 0.9).toFixed(2);
-					}
+        function loadProgress(percentComplete, showFinalPreloader = false) {
+          let progress = Math.floor(percentComplete).toString(10);
 
-					if (
-						formattedProgress === '100.00' &&
-						el.preloaderElement.hasClass('hidden')
-					) {
-						el.preloaderElement.removeClass('hidden');
-					}
+          const progress100 = (progress >= 100);
+          const isPreloaderHidden = el.preloaderElement.hasClass('hidden');
 
-					el.uploadProgress
-						.find('.upload-progress-bar')
-						.css('width', formattedProgress + '%');
-					el.uploadProgress
-						.find('.upload-progress-percentage')
-						.text(formattedProgress + '%');
-				};
+          if (progress100 && showFinalPreloader && isPreloaderHidden) {
+            setTimeout(() => {
+              el.preloaderElement.removeClass('hidden');
+            }, 1000);
+          }
 
-				options.cancel = function (cancel) {
-					const cancelCloseFunction = () => {
-						if (typeof cancel === 'function') cancel();
+          setBarProgress(progress);
+        }
+
+        function initCancelListener(cancel) {
+          const cancelCloseFunction = () => {
+            if (typeof cancel === 'function') cancel();
 
 						self.closeContainer()
 					};
 
 					ed.cancelCloseFunction = cancelCloseFunction;
 
-					el.cancelButton.on('click', () => {
-						el.uploadProgress.addClass('hidden');
-						el.cancelButton.addClass('hidden');
-						el.importUrl.removeClass('hidden');
+					el.closeButton.on('click', cancel);
+          el.cancelButton.one('click', () => {
+            el.uploadProgress.addClass('hidden');
 
-						ed.uploadInProgress = false;
-						cancel();
-					});
+            setBarProgress('0');
 
-					el.cancelButton.removeClass('hidden');
-				};
+            el.cancelButton.addClass('hidden');
+            el.importUrl.removeClass('hidden');
+
+            ed.uploadInProgress = false;
+            cancel();
+
+            el.videoInput.val('');
+            el.wallpaperError.text('');
+
+            el.uploadButton.prop('disabled', false);
+            el.header.addClass('activeOnRolled');
+            el.uploadProgress.addClass('hidden');
+          });
+
+          el.cancelButton.removeClass('hidden');
+        }
 
 				el.importUrl.addClass('hidden');
 
-				if (typeof _Electron !== 'undefined' && 1 == 0) {
-					const filePath = evt.target.files[0].path;
+        const transcodeOption = self.app.platform.sdk.usersettings.meta.videoTranscoding;
 
-					const videoProcessor = transcodingFactory(electron.ipcRenderer);
+        let transcodingAllowed = (transcodeOption && transcodeOption.value);
 
-					try {
-						el.cancelButton.addClass('hidden');
+        let transcoded = null;
 
-						options.progress(0);
+				if (transcodingAllowed && typeof _Electron !== 'undefined') {
+					const file = evt.target.files[0];
 
-						let binProcessing = false;
-						const progressBinaries = (progress) => {
-							if (!binProcessing && progress !== 100) {
-								options.progress(0);
+					const transcoder = new TranscoderClient(electron.ipcRenderer);
 
-								el.uploadProgress.find('.bold-font')
-									.text(self.app.localization.e('uploadVideoProgress_binaries'))
-									.removeClass('uploading')
-									.addClass('binaries');
+					el.cancelButton.addClass('hidden');
 
-								el.uploadProgress.find('.bold-font')
-									.text(self.app.localization.e('uploadVideoProgress_binaries'))
+					let binProcessing = false;
+					let videoTranscoding = false;
 
-								el.uploadProgress.removeClass('hidden');
+					const progressBinaries = (task, progress) => {
+						if (!binProcessing && progress !== 100) {
+							loadProgress(0);
 
-								binProcessing = true;
-							}
+							el.uploadProgress.find('.bold-font')
+								.text(self.app.localization.e('uploadVideoProgress_binaries'))
+								.removeClass('uploading')
+								.addClass('binaries');
 
-							options.progress(progress);
-						};
+							el.uploadProgress.find('.bold-font')
+								.text(self.app.localization.e('uploadVideoProgress_binaries'))
 
-						await videoProcessor.downloadBinaries(progressBinaries);
+							el.uploadProgress.removeClass('hidden');
 
-						let videoTranscoding = false;
-						const progressTranscode = (progress) => {
-							if (!videoTranscoding) {
-								options.progress(0);
-
-								el.uploadProgress
-									.find('.upload-progress-bar')
-									.removeClass('uploading binaries')
-									.addClass('processing');
-
-								el.uploadProgress.find('.bold-font')
-									.text(self.app.localization.e('uploadVideoProgress_processing'))
-
-								el.uploadProgress.removeClass('hidden');
-
-								videoTranscoding = true;
-							}
-
-							options.progress(progress);
-						};
-
-						const transcoded = await videoProcessor.transcode(filePath, progressTranscode, options.cancel);
-
-						/** Writing transcoded alternatives to target object */
-						/** At this moment for backend reasons, sending only 720p */
-
-						if (!transcoded) {
-							return;
+							binProcessing = true;
 						}
 
-						data.video = new File([transcoded.p720.buffer], data.video.name, { type: 'video/mp4' });
+						loadProgress(progress);
+					};
+					const progressTranscode = (task, progress) => {
+						if (!videoTranscoding) {
+							loadProgress(0);
+
+							el.uploadProgress
+								.find('.upload-progress-bar')
+								.removeClass('uploading binaries')
+								.addClass('processing');
+
+							el.uploadProgress.find('.bold-font')
+								.text(self.app.localization.e('uploadVideoProgress_processing'))
+
+							el.uploadProgress.removeClass('hidden');
+
+							videoTranscoding = true;
+						}
+
+						loadProgress(progress);
+					};
+
+					transcoder.setPreCheckFunction((probe) => {
+						const MaxVideoBitrate = 2600;
+						const MaxAudioBitrate = 256;
+						const MaxVideoFramerate = 25;
+
+						const isWidthBigger = (probe.width > 1280);
+						const isHeightBigger = (probe.height > 720);
+						const isVideoBitrateBigger = (probe.videoBitrate > MaxVideoBitrate);
+						const isAudioBitrateBigger = (probe.audioBitrate > MaxAudioBitrate);
+						const isFrameRateBigger = (probe.frameRate > MaxVideoFramerate);
+
+						const isVerticalVideo = (probe.width < probe.height);
+
+						if (isVerticalVideo) {
+							return 'VERTICAL_VIDEO_NOT_SUPPORTED';
+						}
+
+						const isTranscodeNeeded = (
+							isWidthBigger
+							|| isHeightBigger
+							|| isVideoBitrateBigger
+							|| isAudioBitrateBigger
+							|| isFrameRateBigger
+						);
+
+						if (!isTranscodeNeeded) {
+							return 'NO_TRANSCODE_NEEDED';
+						}
+					});
+
+					try {
+						transcoder.setBinariesProgressListener(progressBinaries);
+						transcoder.setTranscodeProgressListener(progressTranscode);
+						transcoder.setTranscodeStartedListener((task) => {
+							initCancelListener(() => {
+								task.close(true);
+								sitemessage(self.app.localization.e('uploadCanceled'));
+							});
+						});
+
+						transcoded = await transcoder.runTask(file);
 					} catch (err) {
-						const isCanceledByUser = (err.message === 'TRANSCODE_ABORT');
-						const isAbortedByApp = (err.message === 'NO_TRANSCODED');
-						const binariesNotAvailable = (err.message === 'FFBIN_DOWNLOAD_ERROR');
-						const isVerticalVideo = (err.message === 'VERTICAL_VIDEO_NOT_SUPPORTED');
+						switch (err) {
+							case 'TRANSCODE_SUBOPTIMAL_RESULT':
+								sitemessage(self.app.localization.e('videoTranscodingNotOptimal'));
+								console.error('Suboptimal transcoding results expected. Preferring original video');
+								break;
+							case 'TRANSCODE_FFMPEG_ERROR':
+								console.error('FF Binaries produced error while processing video');
+								break;
+							case 'TRANSCODE_OUTPUT_MISSING':
+								console.error('Transcoder was not able to find processed video');
+								break;
+							case 'BINARIES_REQUIREMENTS':
+								console.error('This device does not meet some requirements for transcoder');
+								break;
+							case 'TRANSCODE_UNNECESSARY':
+								break;
 
-						if (isCanceledByUser) {
-							/**
-							 * Handling user cancelled transcoding.
-							 * Just stopping video upload...
-							 */
-							console.log('Transcoding was canceled by user');
-							return;
-						} else if (isAbortedByApp) {
-							/**
-							 * Handling not required transcoding cases.
-							 * This doesn't cancel video upload...
-							 */
-							console.log('Transcoding is not required');
-						} if (binariesNotAvailable) {
-							/**
-							 * Handling FF Binaries error.
-							 */
-							console.log('FF Binaries download error');
-						} if (isVerticalVideo) {
-							/**
-							 * Handling vertical video error.
-							 */
-							console.log('Transcoding vertical videos is not supported ');
-						} else {
-							/**
-							 * Anyway transcoding error is not fatal. If
-							 * video can't be processed by client then
-							 * it would be handled on server. No reason
-							 * to report user about any issue related...
-							 */
-
-							console.error(err);
+							case 'TRANSCODE_NONSTOP':
+								console.error('Transcoding was not stopped. Timeout', err);
+								break;
+							case 'PROBE_BINARIES_DISAPPEARED':
+								console.error('FF Binaries disappeared', err);
+								break;
+							case 'TRANSCODER_BUSY':
+								console.error('Tried to load task while transcoder is busy', err);
+								break;
+							default:
+								sitemessage(self.app.localization.e('pleaseTryAgain'));
+								console.error('Strange error, please, contact with developers', err);
+								break;
 						}
 					}
 				}
 
-				el.uploadProgress.removeClass('hidden');
+        let uploader;
 
-				el.uploadProgress.find('.bold-font')
-					.text(self.app.localization.e('uploadVideoProgress_uploading'));
-				el.uploadProgress
-					.find('.upload-progress-bar')
-					.removeClass('processing binaries')
-					.addClass('uploading');
+				if (transcoded) {
+					const { lastModified, name, type } = data.video;
 
-				options.progress(0);
+					const transcodedFile = {
+						size: transcoded.resultSize,
+						lastModified,
+						name,
+						type,
+					};
 
-				self.app.peertubeHandler.api.videos
-					.upload(data, options)
-					.then((response) => {
-						el.uploadButton.prop('disabled', false);
-						el.header.addClass('activeOnRolled');
-						el.uploadProgress.addClass('hidden');
+					uploader = new VideoUploader(transcodedFile);
 
-						el.preloaderElement.addClass('hidden');
+					uploader.chunkRequestor = async (start, end) => {
+						const chunkData = await transcoded.getChunk(start, end);
+						return new Blob([chunkData.data]);
+					};
+				} else {
+					uploader = new VideoUploader(data.video);
+				}
 
-						ed.uploadInProgress = false;
+        el.uploadProgress
+          .find('.upload-progress-bar')
+          .removeClass('binaries processing')
+          .addClass('uploading');
 
-						if (response.error) {
-							return;
-						}
+        el.uploadProgress.find('.bold-font')
+          .text(self.app.localization.e('uploadVideoProgress_uploading'))
 
-						videoId = response.split('/').pop();
+        el.uploadProgress.removeClass('hidden');
 
-						actions.added(response, wnd.find('.upload-video-name').val());
-						wndObj.close();
-					})
-					.catch((e = {}) => {
-						self.app.Logger.error({
-							err: e.text || 'videoUploadError',
-							payload: JSON.stringify(e),
-							code: 401,
-						});
+        loadProgress(0);
+
+        uploader.loadProgress = (percent) => {
+          loadProgress(percent, true);
+        };
+
+        uploader.chunkScalingCalculator = ({ time, videoSize, chunkSize }, data) => {
+          if (!data.started) {
+            data.countChunks = 0;
+          }
+
+          data.started = true;
+
+          if (data.showInfo) {
+            console.log('Video will be uploaded in chunks', Math.round(videoSize / chunkSize));
+            console.log('Expected time in seconds', (time / 1000) * Math.round(videoSize / chunkSize));
+            console.log('Started at', Date.now() / 1000);
+
+            window.ct_expected = Math.floor((time / 1000) * Math.round(videoSize / chunkSize));
+
+            data.showInfo = false;
+          }
+
+          if(data.countChunks >= 5 && data.showInfo === undefined) {
+            data.showInfo = true;
+          }
+
+          data.countChunks++;
+
+          /**
+           * TODO: Chunk size optimization is
+           *       a complex task. Tests might
+           *       resolve some speed issues in
+           *       future. Must be tested...
+           */
+
+          if (window.cordova || isDeviceMobile()) {
+            /** Mobile slow 3G chunking */
+            return 256 * 1024;
+          }
+
+          /** Regular internet (60 mbit/s) */
+          return 256 * 4096;
+        };
+
+        initCancelListener(() => uploader.cancel());
+
+        function hideLoadingBar() {
+          el.uploadButton.prop('disabled', false);
+          el.header.addClass('activeOnRolled');
+          el.uploadProgress.addClass('hidden');
+
+          el.preloaderElement.addClass('hidden');
+
+          ed.uploadInProgress = false;
+        }
+
+        uploader.uploadChunked()
+          .then((response) => {
+            loadProgress(100, true);
+
+            setTimeout(() => {
+              hideLoadingBar();
+
+              actions.added(response.videoLink, wnd.find('.upload-video-name').val());
+              wndObj.close();
+            }, 2000);
+          })
+          .catch((e = {}) => {
+            self.app.Logger.error({
+              err: e.text || 'videoUploadError',
+              code: 401,
+            });
 
 						console.error('Uploading error', e);
 
-						el.videoInput.val('');
-						el.wallpaperError.text('');
+            hideLoadingBar();
 
-						el.uploadButton.prop('disabled', false);
-						el.header.addClass('activeOnRolled');
-						el.uploadProgress.addClass('hidden');
-
-						if (e.cancel) {
-							sitemessage('Uploading canceled');
-						} else {
-							var message =
-								e.text ||
-								findResponseError(e) ||
-								`Uploading error: ${JSON.stringify(e)}`;
+						if (!e.cancel) {
+							let message = e.text || findResponseError(e) || 'Video upload error';
+							console.error('Video upload error');
 
 							sitemessage(message);
 						}
@@ -492,9 +590,7 @@ var uploadpeertube = (function () {
 
 								ed.uploadInProgress = false;
 
-								if (e.cancel) {
-									sitemessage('Uploading canceled');
-								} else {
+								if (!e.cancel) {
 									var message =
 										e.text ||
 										findResponseError(e) ||
@@ -533,6 +629,8 @@ var uploadpeertube = (function () {
 						clbk(data);
 					})
 					.catch((e = {}) => {
+
+						console.log("ERRR", e)
 
 						self.app.peertubeHandler.clear()
 
@@ -588,6 +686,7 @@ var uploadpeertube = (function () {
 
 				el.uploadButton = el.c.find('.uploadButton');
 				el.cancelButton = el.c.find('.cancelButton');
+				el.closeButton = p.el.find('.closeButton');
 
 				el.header = el.c.find('.upload-header');
 

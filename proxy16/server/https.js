@@ -122,7 +122,6 @@ var Server = function(settings, admins, manage){
     }
 
     self.http = function(settings){
-9
         var port = (settings.port || 8899) - 1
 
         return new Promise((resolve, reject) => {

@@ -7,6 +7,11 @@ exports.default = async function notarizing(context) {
     return;
   }
 
+  if(!process.env.APPLEID || !process.env.APPLEIDPASS){
+    console.log("Build without signature!!!")
+    return
+  }
+
   const appName = context.packager.appInfo.productFilename;
 
   return await notarize({

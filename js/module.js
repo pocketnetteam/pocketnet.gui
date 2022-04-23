@@ -100,7 +100,8 @@ nModule = function(){
 		
 		var completeClbk = function(p){
 
-			if(p.el && !p.ignorelinksandimages)
+
+			if (p.el && !p.ignorelinksandimages)
 			{
 				self.nav.api.links(null, p.el, p.additionalActions || null);
 				bgImages(p.el, p.bgImages)

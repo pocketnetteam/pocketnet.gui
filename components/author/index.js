@@ -821,8 +821,7 @@ var author = (function(){
 						self.app.platform.papi.post(id, p.el.find('.postcnt'), function(e, _p){					
 							external = _p
 							
-							if (contentsready)
-								el.c.find('.contentswrapper').hcSticky('refresh');
+						
 
 							p.el.find('.postauarrows').addClass('active')
 
@@ -856,8 +855,6 @@ var author = (function(){
 	
 							share = p
 	
-							if (contentsready)
-								el.c.find('.contentswrapper').hcSticky('refresh');
 	
 						},
 						essenseData : {
@@ -917,8 +914,6 @@ var author = (function(){
 								
 									report.module = p;
 		
-									if (contentsready)
-										el.c.find('.contentswrapper').hcSticky('refresh');
 								}
 			
 							})
@@ -1027,8 +1022,7 @@ var author = (function(){
 					hr : hr,
 					optimize : self.app.mobileview,
 					renderclbk : function(){
-						if (contentsready)
-							el.c.find('.contentswrapper').hcSticky('refresh');
+	
 
 					}
 				}
