@@ -16,7 +16,7 @@ var lenta = (function(){
 		var mid = p.mid;
 		var making = false, ovf = false;
 		var w, essenseData, recomended = [], initialized, recommended, mestate, initedcommentes = {}, canloadprev = false,
-		video = false, isotopeinited = false, videosVolume = 0, fullscreenvideoShowing = null, loadedcachedHeight, showRecommendedUsers = true, recommendedusers = null;
+		video = false, isotopeinited = false, videosVolume = 0, fullscreenvideoShowing = null, loadedcachedHeight;
 
 		var subloaded = false
 
@@ -389,8 +389,6 @@ var lenta = (function(){
 
 			rebuilddelay : function(){
 
-				showRecommendedUsers = true;
-				recommendedusers = null;
 
 				if (el.c)
 					el.c.addClass('rebuilding')
@@ -2651,9 +2649,8 @@ var lenta = (function(){
 				el = null
 			},
 
-			recommendedusers : function(){
+			/*recommendedusers : function(){
 				
-				showRecommendedUsers = false;
 
 				self.nav.api.load({
 
@@ -2675,7 +2672,7 @@ var lenta = (function(){
 				})
 
 
-			},
+			},*/
 
 			loadprev : function(){
 
@@ -2719,6 +2716,8 @@ var lenta = (function(){
 					}
 
 					if (p.selector) _el = el.c.find(selector);
+
+					console.log("RENDER EXTRA", _el)
 
 					if (_el && _el.length){
 
@@ -3237,7 +3236,6 @@ var lenta = (function(){
 						shares : shares || [],
 						index : p.index || 0,
 						video : video || essenseData.videomobile,
-						showRecommendedUsers : showRecommendedUsers,
 						boosted : p.boosted
 					},
 					animation : false,
@@ -3245,13 +3243,7 @@ var lenta = (function(){
 
 				}, function(_p){
 
-					if (tpl ==='groupshares' && !essenseData.video && essenseData.recommendedUsers && !recommendedusers){
-
-						el.recommendedusers = _p.el.find('.recommendeduserscnt');
-			
-						renders.recommendedusers();
-						
-					}
+					
 			
 					if (_p.inner == append){
 						sharesInview = sharesInview.concat(shares)	
@@ -4938,7 +4930,6 @@ var lenta = (function(){
 				recommendations = {}
 				recommendationsMaking = {}
 
-				showRecommendedUsers = true;
 
 				_.each(_reposts, function(p){
 					if (p)

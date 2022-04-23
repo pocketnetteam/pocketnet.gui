@@ -56,8 +56,9 @@ var accounts = (function(){
 
 								globalpreloader(false)
 
-								self.closeContainer()
+								make()
 
+								self.closeContainer()
 
 								self.app.reload({
 									href : h,
@@ -329,12 +330,7 @@ var accounts = (function(){
 						}
 					})
 
-					
-
-					
 				})
-
-				
 			}
 
 			else
