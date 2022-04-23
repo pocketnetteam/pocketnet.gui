@@ -3244,13 +3244,13 @@ var lenta = (function(){
 
 				}, function(_p){
 
-					// if (tpl ==='groupshares' && !essenseData.video && essenseData.recommendedUsers && !recommendedusers){
+					if (tpl ==='groupshares' && !essenseData.video && essenseData.recommendedUsers && !recommendedusers){
 
-					// 	el.recommendedusers = _p.el.find('.recommendeduserscnt');
+						el.recommendedusers = _p.el.find('.recommendeduserscnt');
 			
-					// 	renders.recommendedusers();
+						renders.recommendedusers();
 						
-					// }
+					}
 			
 					if (_p.inner == append){
 						sharesInview = sharesInview.concat(shares)	
@@ -3810,7 +3810,6 @@ var lenta = (function(){
 				var author = essenseData.author;
 
 				self.app.platform.sdk.node.shares.loadvideoinfoifneed(allshares, video, function(){
-
 
 					self.app.platform.sdk.node.shares.users(allshares, function(l, error2){
 
@@ -4937,6 +4936,8 @@ var lenta = (function(){
 
 				recommendations = {}
 				recommendationsMaking = {}
+
+				showRecommendedUsers = true;
 
 				_.each(_reposts, function(p){
 					if (p)

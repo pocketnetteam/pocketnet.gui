@@ -206,7 +206,10 @@ Platform = function (app, listofnodes) {
         'PUy71ntJeRaF1NNNnFGrmC8NzkY6ruEHGK',
         'PU7D6X5bNUdEiuUGWGLp8C6TjSsB2hzHxL',
         'PP6bNhVaXy7YK19UbLHXbQPKa7oV4yx1rr',
-        'TSisNge5kisi7cwGRwmUBuZQWZFD8cRoG8'
+        'TSisNge5kisi7cwGRwmUBuZQWZFD8cRoG8',
+        'TQEGz5cQQtRad8wo2c1KapvFek9rnuprkD',
+        'PKU652wwKYC52WGBJ8EHkA1Mtud8iHWChC',
+        'PD4us1zniwrJv64xhPyhT2mgNrTvPur9YN'
     ];
 
     if (window.IpcBridge)
@@ -11080,28 +11083,80 @@ Platform = function (app, listofnodes) {
 
             },
 
-            getRecommendedAccountsByTags : function(clbk){
+            getTopAccounts : function(p, rpc, clbk){
 
-                var selectedTags = self.app.platform.sdk.categories.gettags();
+                var method = 'gettopaccounts';
+     
+                p.height = 0;
+                p.tagsfilter = self.app.platform.sdk.categories.gettags()
+                p.tagsexcluded = self.app.platform.sdk.categories.gettagsexcluded()
+                p.depth || (p.depth = 10000);
+                    
+                var parameters = [p.height, p.count, p.lang, p.tagsfilter, p.type, '', p.tagsexcluded, p.depth];
 
-                if (selectedTags.length){
+                var s = self.sdk.node.shares;
 
-                    self.app.api.rpc('getrecomendedaccountsbytags', [selectedTags, 15])
-                    .then(function(d){
+                s.getex(parameters, function(data, error){
 
-                        if (clbk){
-                            clbk(d)
-                        }
+                    console.log('gettopaccounts result', data, error);
 
-                    })
+                    clbk(data, error, true);
+                    
 
+                }, method, rpc)
 
-                }
-                else{
-                    if (clbk){
-                        clbk([])
+            },
+
+            getRecommendedAccounts : function(clbk){
+
+                var rpc = {
+                    cache : true,
+                    locally : true,
+                    fastvideo : true,
+                    meta : {
+                        host : '78.37.233.202',
+                        port : 31031,
+                        ws : 3037
                     }
                 }
+
+                var address = self.sdk.activity.getbestaddress();
+
+                var method = 'getrecommendedaccountbyaddress';
+
+                var p = {};
+                
+                p.addressexclude = '';
+                p.type = [];
+                p.lang = self.app.localization.key;
+                p.count = 15;
+
+                if (!address){
+
+                    self.app.platform.sdk.users.getTopAccounts(p, rpc, clbk);
+                    return;
+
+                } 
+
+                var parameters = [address, p.addressexclude, p.type, p.lang, p.count];
+
+                var s = self.sdk.node.shares;
+
+                s.getex(parameters, function(data, error){
+
+                    console.log('getrecommendedaccounts result', data, error);
+
+                    if (!(data && data.length) || error){
+
+                        self.app.platform.sdk.users.getTopAccounts(p, rpc, clbk);
+
+                    } else {
+
+                        clbk(data, error);
+
+                    }
+
+                }, method, rpc)
 
 
             },
@@ -12384,6 +12439,36 @@ Platform = function (app, listofnodes) {
         },
         activity : {
             latest : {},
+
+            getbestaddress : function(){
+
+                if (this.latest && this.latest.like){
+
+                    var availablesLikes = this.latest.like.filter(function(like){
+
+                        return like.countOfFives && like.data.subscribers_count + like.data.subscribes_count;
+                    })
+    
+                    var bestAddress = '';
+                    var bestCount = 1;
+    
+                    availablesLikes.forEach(function(like){
+    
+                        if (like.countOfFives > bestCount){
+                            bestAddress = like.data.address;
+                            bestCount = like.countOfFives;
+                        }
+                    })
+    
+                    return bestAddress;
+                }
+
+                return ''
+
+
+
+            },
+
             clear : function(){
                 self.sdk.activity.latest = {}
                 self.sdk.activity.save()
@@ -12465,22 +12550,26 @@ Platform = function (app, listofnodes) {
                 }
             },
 
-            adduser : function(key, address){
+            adduser : function(key, address, value){
 
                 if(!address) return
 
                 self.sdk.users.get([address], function () {
 
-                    var user = self.sdk.usersl.storage[address] || self.sdk.users.storage[address]
+                    var user = self.sdk.users.storage[address] || self.sdk.usersl.storage[address] 
 
                     if (user){
+
 
                         var info = {
                             id : address,
                             index : user.name.toLowerCase(),
                             name : user.name,
                             image : user.image,
-                            address : address
+                            address : address,
+                            subscribers_count: user.subscribers.length,
+                            subscribes_count : user.subscribes.length,
+                            value: value
                         }
 
                         var error = self.sdk.activity.add(key, 'user', info)
@@ -12512,7 +12601,9 @@ Platform = function (app, listofnodes) {
                     obj.data = {
                         name : info.name,
                         address : info.address,
-                        image : info.image
+                        image : info.image,
+                        subscribes_count: info.subscribes_count,
+                        subscribers_count: info.subscribers_count,
                     }
                 }
 
@@ -12530,6 +12621,27 @@ Platform = function (app, listofnodes) {
                 obj.date = self.currentTime()
 
                 l[key] || (l[key] = [])
+
+                var objectsIdx = l[key].findIndex(function(objects){
+                    return objects.id === info.id && objects.index === info.index;
+                })
+
+
+                if (objectsIdx > -1){
+
+                    if (info.value === '5'){
+                        var already = l[key][objectsIdx].countOfFives;
+                        obj.countOfFives = already ? already + 1 : 1;
+                    }
+
+                    l[key].splice(objectsIdx, 1);
+                } else {
+
+                    if (info.value === '5'){
+
+                        obj.countOfFives = 1;
+                    }
+                }
 
                 l[key] = _.filter(l[key], function(objects){
                     return objects.id != info.id && objects.index != info.index
@@ -13640,8 +13752,6 @@ Platform = function (app, listofnodes) {
 
                 var excluded = self.sdk.categories.settings.excluded[k] || {};
 
-
-
                 var all = self.sdk.categories.get(k)
 
                 _.each(all, function(c){
@@ -13649,30 +13759,7 @@ Platform = function (app, listofnodes) {
                 })
 
 
-                if(onlycategories === 'onlytags') tags = excludedtags
-
-                return tags
-            },
-
-            gettagsexcluded : function(_k, onlycategories){
-                var tags = []
-
-                var k = _k || self.app.localization.key
-
-                if(!self.sdk.categories.data.all[k]) k = 'en'
-
-                var excluded = self.sdk.categories.settings.excluded[k] || {};
-
-
-
-                var all = self.sdk.categories.get(k)
-
-                _.each(all, function(c){
-                    if(excluded[c.id]) tags = tags.concat(c.tags)
-                })
-
-
-                if(onlycategories === 'onlytags') tags = excludedtags
+                if(onlycategories === 'onlytags') tags = excluded
 
                 return tags
             },
@@ -16898,8 +16985,7 @@ Platform = function (app, listofnodes) {
                                 parameters.push('');
                                 parameters.push(p.address)
                             }
-                            if (methodparams.method == 'getrecomendedcontentsbyscoresfromaddress')
-                                parameters = [p.contentid, p.contenttypes, p.depth, p.count];
+
 
                             if (methodparams.method == 'getrecommendedcontentbyaddress')
                                 parameters = [p.contentAddress, '', p.type ? [p.type] : [], p.lang || "", p.count];
@@ -19202,7 +19288,7 @@ Platform = function (app, listofnodes) {
                     upvoteShare: function (inputs, upvoteShare, clbk, p) {
                         this.common(inputs, upvoteShare, TXFEE, clbk, p)
 
-                        self.sdk.activity.adduser('like', upvoteShare.address.v)
+                        self.sdk.activity.adduser('like', upvoteShare.address.v, upvoteShare.value.v)
                     },
 
                     complainShare: function (inputs, complainShare, clbk, p) {
@@ -19226,7 +19312,7 @@ Platform = function (app, listofnodes) {
                     cScore: function (inputs, cScore, clbk, p) {
                         this.common(inputs, cScore, TXFEE, clbk, p)
 
-                        self.sdk.activity.adduser('like', cScore.address.v)
+                        self.sdk.activity.adduser('like', cScore.address.v, cScore.value.v)
                     },
 
                     unsubscribe: function (inputs, unsubscribe, clbk, p) {
