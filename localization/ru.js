@@ -1778,7 +1778,7 @@ ____loclib.easyNode_e10033 = "Блокчейн"
 ____loclib.easyNode_e10034 = "Описание"
 ____loclib.easyNode_e10035 = "Высота"
 ____loclib.easyNode_e10036 = "Осталось меньше часа"
-____loclib.easyNode_e10037 = function(v) { return `Осталось менее ${v}ч` }
+____loclib.easyNode_e10037 = function(v) { return "Осталось менее "+v+"ч" }
 ____loclib.easyNode_e10038 = "Хэш блока"
 ____loclib.easyNode_e10039 = "Выключить Ноду"
 ____loclib.easyNode_e10040 = "Включить Ноду"
@@ -1823,11 +1823,11 @@ ____loclib.easyNode_e2002_2_1 = " Заработок ";
 ____loclib.easyNode_e2002_2_2 = " Покеткойна будет пропорционален количеству Покеткойнов, которое вы положите в свою Ноду. В криптовалютах такой алгоритм называется стейкинг.";
 
 ____loclib.minPkoin = function (p){
-	return `Минимум ${String(p)} PKOIN`
+	return "Минимум "+String(p)+" PKOIN"
 }
 
 ____loclib.maxPkoin = function (p){
-	return `Максимум ${String(p)} PKOIN`
+	return "Максимум "+String(p)+" PKOIN"
 }
 
 ____loclib.topPosts = "Популярные посты";

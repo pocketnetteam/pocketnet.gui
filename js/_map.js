@@ -35,9 +35,9 @@ __map =  {
 		"js/vendor/linkify-html.min.js",
 		
 		//new
-		"js/lib/pocketnet/btc17.js", //
-		"js/lib/pocketnet/htls.js", //
-		"js/lib/pocketnet/buffer.js", //
+		{path : "js/lib/pocketnet/btc17.js", babelify : true}, //
+		{path : "js/lib/pocketnet/htls.js", babelify : true}, //
+		{path : "js/lib/pocketnet/buffer.js", babelify : true}, //
 		
 		//
 		
@@ -48,7 +48,7 @@ __map =  {
 		"js/vendor/jquery.animate-number.js", //
 		"js/vendor/jquery.touchSwipe.js", //
         "js/vendor/joypixels.min.js", //
-        "js/vendor/plyr.js", // later
+        {path : "js/vendor/plyr.js", babelify : true}, // later
         "js/vendor/reconnectingwebsocket.js", //
         "js/vendor/xss.min.js", //
 		"js/vendor/jquery.mark.js", //?
@@ -59,7 +59,7 @@ __map =  {
 		"js/vendor/axios.js", //
 		"js/vendor/isotope.pkgd.js", //
 		"js/vendor/circular-progress.js", //
-		"js/vendor/workbox-v6.1.5/workbox-sw.js",
+		{path : "js/vendor/workbox-v6.1.5/workbox-sw.js", babelify : true},
 		"js/vendor/ion.sound/ion.sound.js",
 		"js/vendor/hammer.min.js",
 		"js/vendor/owl/owl.carousel.min.js"
@@ -67,37 +67,40 @@ __map =  {
 	],
 
 	__sourcesfirst : [
+
 		"js/vendor/underscore-min.js",  
-		"js/functionsfirst.js",  
+		{path : "js/functionsfirst.js", babelify : true},
 		"js/localization.js",
 		//"js/notifications.js",
-		"js/lib/client/system16.js",
-		"js/lib/client/api.js",
-		"js/image-uploader.js",
+		{path : "js/lib/client/system16.js", babelify : true},
+		{path : "js/lib/client/api.js", babelify : true},
+		{path : "js/image-uploader.js", babelify : true},
 		"js/_map.js",
-		"js/app.js",
+		{path : "js/app.js", babelify : true},
 		"js/main.js"
 	],
 
 	__sourceslast : [
-		"peertube/video-embed.bundle.js",
+		{path : "peertube/video-embed.bundle.js", babelify : true}
 	],
 
+
 	__sources : [
-	
-		"js/functions.js",     	
-		"js/user.js",
-		"js/module.js",
-		"js/navn.js",
-		"js/validation.js",
-		"js/kit.js",
-		"js/satolist.js",
-		"js/peertube.js",
-		"js/widgets.js",
-		"js/effects.js",
-		"js/logger.js",
-		'js/video-uploader.js',
-		'js/file-hash.js',
+		
+		{path : "js/functions.js", babelify : true},
+		{path : "js/user.js", babelify : true},
+		{path : "js/module.js", babelify : true},
+		{path : "js/navn.js", babelify : true},
+		{path : "js/validation.js", babelify : true},
+		{path : "js/kit.js", babelify : true},
+		{path : "js/satolist.js", babelify : true},
+		{path : "js/peertube.js", babelify : true},
+		{path : "js/widgets.js", babelify : true},
+		{path : "js/effects.js", babelify : true},
+		{path : "js/logger.js", babelify : true},
+		{path : "js/video-uploader.js", babelify : true},
+		{path : "js/file-hash.js", babelify : true}
+		
 	],
 
 	__css : [

@@ -12325,8 +12325,8 @@ Platform = function (app, listofnodes) {
                 }
             },
 
-            wallet: function (n, private) {
-                const { publicKey: pubkey } = self.sdk.address.dumpKeys(n, private);
+            wallet: function (n, _private) {
+                const { publicKey: pubkey } = self.sdk.address.dumpKeys(n, _private);
 
                 const a = bitcoin.payments['p2wpkh']({ pubkey });
 
@@ -12335,9 +12335,9 @@ Platform = function (app, listofnodes) {
                 return p2sh;
             },
 
-            dumpKeys: function (n, private = self.app.user.private.value) {
+            dumpKeys: function (n, _private = self.app.user.private.value) {
                 const addressPath = app.platform.sdk.address.path(n);
-                const d = bitcoin.bip32.fromSeed(private).derivePath(addressPath).toWIF();
+                const d = bitcoin.bip32.fromSeed(_private).derivePath(addressPath).toWIF();
 
                 const keyPair = bitcoin.ECPair.fromWIF(d);
 
@@ -19657,9 +19657,9 @@ Platform = function (app, listofnodes) {
                 lazyEach({
                     array: pack.private,
                     action: function (p, index) {
-                        var private = p.item;
+                        var _private = p.item;
 
-                        self.cryptography.api.aeswc.encryption(private, pack._key, {}, function (encrypted) {
+                        self.cryptography.api.aeswc.encryption(_private, pack._key, {}, function (encrypted) {
                             exported.keys[index] = encrypted;
 
                             p.success()
@@ -21999,7 +21999,7 @@ Platform = function (app, listofnodes) {
                     return self.sdk.videos.types.youtube(links)
                 },
 
-                peertube : async function(links){
+                peertube : function(links){
 
                     return self.app.api.fetch('peertube/videos', {
                         urls: links.map(link => link.link),
@@ -25928,8 +25928,8 @@ Platform = function (app, listofnodes) {
 
                     if (!pair.private)
 
-                        self.api.aeswc.pwd.decryption(pair.privateEncrypted, {}, function (private) {
-                            pair.private = private
+                        self.api.aeswc.pwd.decryption(pair.privateEncrypted, {}, function (_private) {
+                            pair.private = _private
 
                             if (clbk)
                                 clbk(pair)

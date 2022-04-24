@@ -879,7 +879,7 @@ Application = function(p)
 		})
 	}
 
-	self.initTestFromPrivate = function(private, clbk,){
+	self.initTestFromPrivate = function(_private, clbk,){
 		if (typeof localStorage == 'undefined') localStorage = {};
 
 		prepareMap();
@@ -888,7 +888,7 @@ Application = function(p)
 
 		self.platform.nodeid = 0;
 
-		self.user.setKeysPairFromPrivate(private);
+		self.user.setKeysPairFromPrivate(_private);
 
 		self.user.isState(function(state){
 

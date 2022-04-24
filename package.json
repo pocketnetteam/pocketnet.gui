@@ -30,6 +30,10 @@
         "node:embedding": "node minimize.js -prodaction=true -vendor=30045 -path=/web/"
     },
     "devDependencies": {
+        "@babel/cli": "^7.17.6",
+        "@babel/core": "^7.17.9",
+        "@babel/preset-env": "^7.16.11",
+        "babel-plugin-remove-use-strict": "^1.0.1",
         "electron": "",
         "electron-builder": "^23.0.4",
         "electron-notarize": "",
@@ -69,6 +73,7 @@
         "image-js": "^0.21.9",
         "image-type": "^4.1.0",
         "imagesloaded": "^4.1.4",
+        "install": "^0.13.0",
         "isotope-layout": "^3.0.6",
         "isotope-packery": "^2.0.1",
         "jdenticon": "^2.1.0",
@@ -93,6 +98,7 @@
         "node-rsa": "^1.1.1",
         "nodejs-base64": "^1.0.3",
         "nodemailer": "^6.4.11",
+        "npm": "^8.7.0",
         "object-hash": "^2.0.3",
         "og-parser": "^1.0.5",
         "open": "^6.3.0",

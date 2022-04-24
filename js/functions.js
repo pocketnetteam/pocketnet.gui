@@ -11442,7 +11442,7 @@ errortostring = function(error){
 }
 
 
-drawRoundedImage = async (url, radius,sWidth, sHeight)=>{
+drawRoundedImage = (url, radius,sWidth, sHeight)=>{
 	return new Promise(resolve => {
 		if(!url){
 			resolve("");

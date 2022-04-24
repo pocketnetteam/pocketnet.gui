@@ -20,7 +20,7 @@ var accounts = (function(){
 					var index = _.indexOf(expandedPack.addresses, address);
 
 					if (index > -1){
-						var private = expandedPack.private[index];
+						var _private = expandedPack.private[index];
 						
 
 						var stay = self.app.user.stay;
@@ -34,7 +34,7 @@ var accounts = (function(){
 							self.app.user.stay = stay;
 
 
-							self.user.signin(private, function(state){
+							self.user.signin(_private, function(state){
 
 
 								var h = ed.href || 'userpage?id=accounts&s=' + makeid()
@@ -91,10 +91,10 @@ var accounts = (function(){
 					var index = _.indexOf(expandedPack.addresses, address);
 
 					if (index > -1){
-						var private = expandedPack.private[index];
+						var _private = expandedPack.private[index];
 
 
-						renders.dumpkey(address, private)
+						renders.dumpkey(address, _private)
 					}
 				})
 
@@ -224,14 +224,14 @@ var accounts = (function(){
 				
 			},
 			
-			dumpkey : function(address, private){
+			dumpkey : function(address, _private){
 
 
 				var privateWif = '';
 
 
 				try{
-					var keyPair = self.app.user.keysPairFromPrivate(private)
+					var keyPair = self.app.user.keysPairFromPrivate(_private)
 
 						privateWif = keyPair.toWIF().toString('hex')
 				}
@@ -263,7 +263,7 @@ var accounts = (function(){
 						}
 					})
 				}, {
-					private : private,
+					_private : _private,
 					address : address,
 					privateWif : privateWif
 				})

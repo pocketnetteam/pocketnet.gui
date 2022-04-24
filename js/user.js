@@ -397,22 +397,22 @@ User = function(app, p) {
     	
 	}
 
-	self.keysPairFromPrivate = function(private, clbk){
+	self.keysPairFromPrivate = function(_private, clbk){
 
-		if(!private) private = ''
+		if(!_private) _private = ''
 
 		var keyPair = null;
-		if (bitcoin.bip39.validateMnemonic(private.toLowerCase())) {
-			keyPair = self.keysFromMnemo(private)
+		if (bitcoin.bip39.validateMnemonic(_private.toLowerCase())) {
+			keyPair = self.keysFromMnemo(_private)
 		}
 		else{
 			try{
-				keyPair = bitcoin.ECPair.fromPrivateKey(Buffer.from(private, 'hex'))
+				keyPair = bitcoin.ECPair.fromPrivateKey(Buffer.from(_private, 'hex'))
 			}
 			catch (e){
 
 				try{
-					keyPair = bitcoin.ECPair.fromWIF(private)
+					keyPair = bitcoin.ECPair.fromWIF(_private)
 				}
 				catch (e){
 				}
@@ -427,12 +427,12 @@ User = function(app, p) {
 	
 	}
 
-	self.setKeysPairFromPrivate = function(private, clbk){
+	self.setKeysPairFromPrivate = function(_private, clbk){
 		var keyPair = null;
 
 		try{
 
-			keyPair = bitcoin.ECPair.fromPrivateKey(Buffer.from(private, 'hex'))
+			keyPair = bitcoin.ECPair.fromPrivateKey(Buffer.from(_private, 'hex'))
 
 			
 		}
@@ -441,7 +441,7 @@ User = function(app, p) {
 
 
 			try{
-				keyPair = bitcoin.ECPair.fromWIF(private)
+				keyPair = bitcoin.ECPair.fromWIF(_private)
 			}
 			catch (e){
 			}
