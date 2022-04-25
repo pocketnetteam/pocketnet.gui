@@ -27,7 +27,10 @@ var PeertubeRequest = function (app = {}) {
 	};
 
 	var direct = function (url, data, p) {
-		var controller = new AbortController();
+		var controller = {};
+		
+		
+		if(typeof AbortController != 'undefined') controller = new AbortController();
 
 		var time = 40000;
 
