@@ -221,6 +221,7 @@
     scrollbar-width: 7px;
     scrollbar-color: rgba(var(--background-main-contrast), 0.15) rgba(var(--background-main-contrast), 0.05);
     overscroll-behavior: contain;
+    scroll-behavior: smooth;
   }
   .customscroll::-webkit-scrollbar {
     width: 7px;
@@ -240,6 +241,7 @@
   scrollbar-width: 7px;
   scrollbar-color: rgba(var(--background-main-contrast), 0.15) rgba(var(--background-main-contrast), 0.05);
   overscroll-behavior: contain;
+  scroll-behavior: smooth;
 }
 .wnd .wndcustomscroll::-webkit-scrollbar {
   width: 7px;
