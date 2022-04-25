@@ -3,8 +3,6 @@ if (global.WRITE_LOGS) {
     global.LOG_LEVEL = global.WRITE_LOGS.split("=").pop()
 }
 
-const notifier = require('node-notifier');
-
 var open = require("open");
 
 const {protocol} = require('electron');
@@ -22,6 +20,7 @@ var willquit = false;
 
 const { app, BrowserWindow, Menu, MenuItem, Tray, ipcMain, Notification, nativeImage, dialog, globalShortcut, OSBrowser } = require('electron')
 app.allowRendererProcessReuse = false
+
 const ProxyList = require('free-proxy');
 const proxyList = new ProxyList();
 proxyList.get()
@@ -29,14 +28,15 @@ proxyList.get()
         proxies = proxies.sort((a,b)=>{
             return (+a.speed_download > +b.speed_download) ? -1 : (+a.speed_download < +b.speed_download) ? 1 : 0
         })
-        for(const proxy of proxies){
-            app.commandLine.appendSwitch('proxy-server', proxy.url)
-
+        if(proxies?.length) {
+            app.commandLine.appendSwitch('proxy-server', proxies[0])
         }
     })
     .catch(function (error) {
         console.error(error)
     });
+
+
 
 const Badge = require('./js/vendor/electron-windows-badge.js');
 
@@ -683,41 +683,14 @@ function createWindow() {
         if(p.image){
             pathImage= await saveBlobToFile(p.image)
         }
+        const n = new Notification({ title : p.title, body: p.body, silent :true, icon: pathImage})
+        n.onclick = function(){
 
-        if (!is.windows()) {
-
-            const n = new Notification({ title: p.title, body: p.body, silent: true, icon: pathImage })
-
-            n.onclick = function () {
-
-                if (win) {
-                    win.show();
-                }
+            if (win) {
+                win.show();
             }
-
-            n.show()
         }
-        else {
-
-            notifier.notify(
-                {
-                    appID : 'app.pocketnet.gui',
-                    title: p.title,
-                    message: p.body,
-                    icon: pathImage, // Absolute path (doesn't work on balloons)
-                    wait: true // Wait with callback, until user action is taken against notification, does not apply to Windows Toasters as they always wait or notify-send as it does not support the wait option
-                },
-                function (err, response, metadata) {
-
-                    if (response != 'timeout')
-
-                        if (win) {
-                            win.show();
-                        }
-                }
-            );
-
-        }
+        n.show()
 
     })
 
