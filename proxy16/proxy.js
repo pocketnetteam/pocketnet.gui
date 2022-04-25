@@ -57,7 +57,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 	var peertube = new Peertube()
 	var bots = new Bots(settings.bots)
 	var systemnotify = new SystemNotify(settings.systemnotify)
-	var transports = new Transports();
+	var transports = new Transports(global.USE_PROXY_NODE);
 	var dump = {}
 
 	self.userDataPath = null
@@ -73,7 +73,6 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 		logger,
 		proxy: self
 	})
-
 
 	var stats = [];
 	var statcount = 100;

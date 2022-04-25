@@ -4,7 +4,7 @@ const _request = require("request");
 const _axios = require("axios");
 const proxy = new ProxyList();
 
-module.exports = function (){
+module.exports = function (enable){
     const self = {};
 
     self.proxyServers = []
@@ -46,6 +46,9 @@ module.exports = function (){
     }
     
     const axiosRequest =  async (method, ...args)=> {
+        if(!enable){
+            return await _axios[method]?.(...args)
+        }
         const url = new URL(args?.[0])
         const queues = await requestQueue(url.host);
         let error = {};
@@ -81,8 +84,7 @@ module.exports = function (){
                 self.disabledHost.push(host)
         }
     }
-    
-    self.axios = {
+    self.axios ={
         get : async (...args)=>{
             return await axiosRequest('get', ...args)
         },
@@ -100,7 +102,7 @@ module.exports = function (){
         }
     }
     
-    self.request = async (options, callBack)=>{
+    self.request = enable ? async (options, callBack)=>{
         const url = new URL(options?.url)
         const queues = await requestQueue(url?.host);
         let error = "";
@@ -127,7 +129,7 @@ module.exports = function (){
         }
         pushHost('disable', url?.host)
         callBack(error)
-    }
+    } : _request
     
     return self;
 }
