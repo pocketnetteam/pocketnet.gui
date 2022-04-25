@@ -921,7 +921,7 @@
   margin-top: 1em;
   padding: 1em;
 }
-.video-js.share_common.fullScreenVideo:not(.vjs-fullscreen) {
+.share_common.fullScreenVideo .video-js:not(.vjs-fullscreen) {
   max-height: calc(var(--vh, 1vh) * 80);
 }
 .share_common.fullScreenVideo .shareTable {
@@ -1182,6 +1182,9 @@ html.ios .share_common.fullScreenVideo .video-js {
   .share_common.fullScreenVideo {
     contain: strict;
     background: rgb(var(--color-shadow-base));
+  }
+  .share_common.fullScreenVideo .sharecnt .commentsWrapperHb {
+    padding-bottom: calc(var(--keyboardheight, 0) - 1px) !important;
   }
   .share_common.fullScreenVideo .extrashare > div {
     margin-top: 0.5em;
