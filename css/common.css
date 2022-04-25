@@ -921,7 +921,7 @@
   margin-top: 1em;
   padding: 1em;
 }
-.share_common.fullScreenVideo .video-js {
+.video-js.share_common.fullScreenVideo:not(.vjs-fullscreen) {
   max-height: calc(var(--vh, 1vh) * 80);
 }
 .share_common.fullScreenVideo .shareTable {
