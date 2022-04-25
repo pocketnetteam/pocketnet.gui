@@ -911,4 +911,4 @@ if (!('remove' in Element.prototype)) {
 }());
 
 // Your code can use `globalThis` now.
-console.log(globalThis);
+console.log('globalThis', globalThis);
