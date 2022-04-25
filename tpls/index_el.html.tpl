@@ -180,7 +180,7 @@
             topPreloader(15)
             
         </script>
-        <script src="js/polyfills.js"></script>
+
         <script src="js/vendor/underscore-min.js?v=136"></script> 
         <script src="js/vendor/tooltipster.core.js"></script>
         <script src="js/vendor/tooltipster.bundle.js"></script>
