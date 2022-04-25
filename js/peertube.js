@@ -71,7 +71,9 @@ var PeertubeRequest = function (app = {}) {
 
 		return fetch(url, ps)
 			.then((r) => {
-				signal.dontabortable = true;
+
+				if (signal)
+					signal.dontabortable = true;
 
 				resp = r;
 
