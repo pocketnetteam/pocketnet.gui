@@ -80,6 +80,7 @@
         "jsonwebtoken": "^8.5.1",
         "lambda-rate-limiter": "",
         "lodash": "^4.17.15",
+        "make-fetch-happen": "^10.1.2",
         "masonry-layout": "^4.2.2",
         "md5": "^2.3.0",
         "medium-editor": "^5.23.3",

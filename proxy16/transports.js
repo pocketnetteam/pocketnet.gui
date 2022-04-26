@@ -2,6 +2,7 @@
 const ProxyList =  require("free-proxy");
 const _request = require("request");
 const _axios = require("axios");
+const _fetch = require("make-fetch-happen");
 const proxy = new ProxyList();
 
 module.exports = function (enable){
@@ -72,7 +73,7 @@ module.exports = function (enable){
         pushHost('disable', url.host)
         throw error
     }
-    
+
     const pushHost = (type, host)=>{
         self.proxyHosts = self.proxyHosts.filter(el=>el !== host)
         self.disabledHost = self.disabledHost.filter(el=>el !== host)
@@ -101,7 +102,47 @@ module.exports = function (enable){
             return await axiosRequest('patch', ...args)
         }
     }
-    
+
+    const fetchRequest = async (url, opts) => {
+        if (!enable){
+            return _fetch(url, opts);
+        }
+
+        const parsedUrl = new URL(url);
+        const queues = await requestQueue(parsedUrl.host);
+
+        let error = {};
+
+        for (const queue of queues) {
+            if (opts.signal.aborted) {
+                break;
+            }
+
+            const optsWithProxy = {
+                ...opts,
+            };
+
+            if (queue.proxy) {
+                optsWithProxy.proxy = {
+                    host: queue.proxy.ip,
+                    port: queue.proxy.port
+                };
+            }
+
+            if (queue.proxy) {
+                pushHost('proxy', parsedUrl.host);
+            }
+
+            try {
+                return await _fetch(url, optsWithProxy);
+            } catch (e) {
+                error = e;
+            }
+        }
+    };
+
+    self.fetch = fetchRequest;
+
     self.request = enable ? async (options, callBack)=>{
         const url = new URL(options?.url)
         const queues = await requestQueue(url?.host);
