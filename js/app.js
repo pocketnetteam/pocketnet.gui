@@ -1869,7 +1869,10 @@ Application = function(p)
 		keyboard : {
 			init : function(){
 
-				if(window.cordova && !isios()){
+				if(window.cordova){
+
+					if (isios())
+						Keyboard.setResizeMode('ionic');
 
 					window.addEventListener('keyboardWillShow', (event) => {
 						document.documentElement.style.setProperty('--keyboardheight', `${event.keyboardHeight}px`);
