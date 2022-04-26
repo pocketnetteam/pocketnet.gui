@@ -6,7 +6,7 @@ if(typeof require != 'undefined' && typeof __map == 'undefined')
 
 if (typeof _OpenApi == 'undefined') _OpenApi = false;
 
-if(typeof _Electron != 'undefined' && _Electron){
+if (typeof _Electron != 'undefined' && _Electron){
 
 	imagesLoaded = require('./js/vendor/imagesloaded.pkgd.min.js');
 
@@ -21,7 +21,7 @@ if(typeof _Electron != 'undefined' && _Electron){
 	
 	ImageUploader = require('./js/image-uploader.js');
 
-
+	VideoUploader = require('./js/video-uploader.js');
 
 	jQueryBridget = require('jquery-bridget');
 	jQueryBridget( 'isotope', Isotope, $ );
@@ -75,6 +75,10 @@ Application = function(p)
 	}
 
 	var url = window.pocketnetdomain
+
+	if ((typeof _Electron != 'undefined' && _Electron) || window.cordova){} else {
+		url = window.location.hostname + window.pocketnetpublicpath.substring(0, window.pocketnetpublicpath.length - 1)
+	}
 
 	if (window.testpocketnet){
 		self.test = true
@@ -284,6 +288,11 @@ Application = function(p)
 		if((!self.secure() || (typeof _Electron != 'undefined' && _Electron))){
 			return true
 		}
+	}
+
+	self.savesupported = function(){
+		var isElectron = (typeof _Electron !== 'undefined' && !!window.electron);
+		return isElectron || (window.cordova && !isios());
 	}
 
 	self.useip = function(){
@@ -870,7 +879,7 @@ Application = function(p)
 		})
 	}
 
-	self.initTestFromPrivate = function(private, clbk,){
+	self.initTestFromPrivate = function(_private, clbk,){
 		if (typeof localStorage == 'undefined') localStorage = {};
 
 		prepareMap();
@@ -879,7 +888,7 @@ Application = function(p)
 
 		self.platform.nodeid = 0;
 
-		self.user.setKeysPairFromPrivate(private);
+		self.user.setKeysPairFromPrivate(_private);
 
 		self.user.isState(function(state){
 
@@ -1116,7 +1125,6 @@ Application = function(p)
 
 				self.mobile.pip.init()
 				self.mobile.keyboard.init()
-				
 
 				if (window.Keyboard && window.Keyboard.disableScroll){
 					window.Keyboard.disableScroll(false)
@@ -1198,11 +1206,16 @@ Application = function(p)
 	var optimizeTimeout = null
 
 	self.actions = {
-		
+		closepip : function(){
+			if (self.pipwindow) {
+				self.pipwindow.container.close()
+				self.pipwindow = null
+			}
+		},
 		pipwindow : function(p){
 			
 			if (self.pipwindow) {
-				self.pipwindow.destroy()
+				self.pipwindow.container.close()
 				self.pipwindow = null
 			}
 
@@ -1217,7 +1230,7 @@ Application = function(p)
 			p.inWnd = true
 			p.history = false
 			p.open = true
-
+			p.independent = true
 			p.eid = p.mid = makeid()
 
 			if (p.essenseData){
@@ -1226,6 +1239,8 @@ Application = function(p)
 
 			p.clbk = function(c,b){
 				self.pipwindow = b
+
+				console.log('self.pipwindow', self.pipwindow)
 
 				if(clbk) clbk(c,b)
 			}
@@ -1854,7 +1869,7 @@ Application = function(p)
 		keyboard : {
 			init : function(){
 
-				if(window.cordova && !isios()){
+				if(window.cordova){
 
 					window.addEventListener('keyboardWillShow', (event) => {
 						document.documentElement.style.setProperty('--keyboardheight', `${event.keyboardHeight}px`);

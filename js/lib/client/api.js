@@ -855,7 +855,7 @@ var Api = function(app){
                     return Promise.all(promises)
                 },
 
-                softping : async function (proxies){
+                softping : function (proxies){
 
                     var result = false
 

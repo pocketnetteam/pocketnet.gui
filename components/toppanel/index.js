@@ -28,11 +28,7 @@ var toppanel = (function(){
 					links.video = "index?video=1"
 				}
 
-				const isCordova = (window.cordova);
-				const isElectron = (typeof _Electron !== 'undefined' && !!window.electron);
-				const isSaveSupported = (isCordova && !isios());
-
-				if (isSaveSupported) {
+				if (self.app.savesupported()) {
 					links.saved = "index?r=saved"
 				}
 

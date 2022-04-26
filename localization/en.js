@@ -1119,6 +1119,8 @@ ____loclib.pterror_getToken = "Peertube: Unable to get Token"
 ____loclib.pterror_videonotselected = "Peertube: Video not Selected"
 
 
+____loclib.settingsTranscoding = "On video upload transcode it on my device"
+____loclib.videoTranscodingNotOptimal = "Not optimal transcoding result. Continuing with original video"
 ____loclib.videoTranscodingError = "There was an error with processing your video"
 ____loclib.videoUploadingFinish = "Finishing uploading..."
 ____loclib.uploadNewVideo = "Upload New Pocketvideo"
@@ -1126,6 +1128,10 @@ ____loclib.selectVideoFile = "Select video file"
 ____loclib.uploadVideoProgress_binaries = "Preparing binaries:"
 ____loclib.uploadVideoProgress_processing = "Processing video:"
 ____loclib.uploadVideoProgress_uploading = "Uploading video:"
+____loclib.uploadVideoProgress_start = "Video download initialization:"
+____loclib.uploadCanceled = "Upload canceled"
+
+____loclib.pleaseTryAgain = "Something was wrong there. Please try again"
 
 
 
@@ -1202,8 +1208,14 @@ ____loclib.videoQualityCaption = "Video quality limitations"
 ____loclib.videoFormats = "List of supported video formats: .mp4, .mkv, .mov, .avi, .wmv, .flv, .f4v, .3g2, .3gp, .mts, .m2ts, .mxf, .nut"
 ____loclib.videoSizeError = "Selected video file exceeds the limit of 4 Gb per video. Please compress it or select another one."
 ____loclib.videoSizeAtt = "Maximum allowed file size: 4 Gb."
+____loclib.videoFormatError = "Incorrect video format";
+____loclib.videoSelectError = "No video selected";
 
-
+____loclib.removevideoShareQuestion = "The uploaded video remains available in the video cabinet. Do you want to delete the video completely?";
+____loclib.removevideoShareQuestionDelete = "Delete video"
+____loclib.removevideoShareQuestionLeave = "No"
+____loclib.importingVideo = "Video is loading"
+____loclib.importingVideoSuccess = "Video loaded. You can continue posting"
 
 ____loclib.streamLinks = "Streaming software links"
 ____loclib.linkRTMP = "RTMP Url"
@@ -1479,7 +1491,7 @@ ____loclib.aboutYoutubeThirdBoard1 = 'Account ownership';
 ____loclib.aboutYoutubeThirdBoard2 = 'Property of YouTube.';
 ____loclib.aboutYoutubeThirdBoard3 = 'Your Private Key Belongs to You';
 ____loclib.aboutYoutubeThirdBoard4 = 'Censorship';
-____loclib.aboutYoutubeThirdBoard5 = `Yes, selective and arbitrary censorship`;
+____loclib.aboutYoutubeThirdBoard5 = 'Yes, selective and arbitrary censorship';
 ____loclib.aboutYoutubeThirdBoard6 = 'Community moderates content with only a few topics such as pornography and illicit content moderated';
 ____loclib.aboutYoutubeThirdBoard7 = 'Open Sourced Code';
 ____loclib.aboutYoutubeThirdBoard8 = 'NO.';
@@ -1509,7 +1521,7 @@ ____loclib.aboutYoutubeThirdBoard26 = 'No';
 
 ____loclib.aboutYoutubeThirdBoard18 = 'Reporting videos';
 ____loclib.aboutYoutubeThirdBoard19 = 'YES, YouTube algorithms analyze videos and remove or block them automatically if they believe that they are against the policy. In addition YouTube can remove posts and ban users at its sole discretion.';
-____loclib.aboutYoutubeThirdBoard20 = `YES, however only users with a high reputation can report post and a post is made "invisible" on the feed page (but remains available on the user's profile page) only if several tens of high reputation users report it (reports can be made only for racism, hate speech and pornography).`;
+____loclib.aboutYoutubeThirdBoard20 = "YES, however only users with a high reputation can report post and a post is made \"invisible\" on the feed page (but remains available on the user's profile page) only if several tens of high reputation users report it (reports can be made only for racism, hate speech and pornography).";
 ____loclib.aboutYoutubeThirdBoard21 = 'Hashtags to classify videos';
 ____loclib.aboutYoutubeThirdBoard22 = 'Videoa can be shared on multiple platforms';
 ____loclib.aboutYoutubeThirdBoard23 = 'Dictatorship bans';
@@ -1985,7 +1997,7 @@ ____loclib.easyNode_e10033 = "Chain"
 ____loclib.easyNode_e10034 = "Description"
 ____loclib.easyNode_e10035 = "Height"
 ____loclib.easyNode_e10036 = "Less than an hour left"
-____loclib.easyNode_e10037 = function(v) { return `${v} hour(s) remaining` }
+____loclib.easyNode_e10037 = function(v) { return v + " hour(s) remaining" }
 ____loclib.easyNode_e10038 = "Block Hash"
 ____loclib.easyNode_e10039 = "Disable Node"
 ____loclib.easyNode_e10040 = "Enable Node"
@@ -2195,3 +2207,10 @@ ____loclib.useanimations = "Enable animations";
 ____loclib.welcomecaption1 = "Bastyon of Free Speech";
 ____loclib.welcomecaption2 = "Read Content Banned by Big Tech";
 ____loclib.welcomecaption3 = "Chat privately with friends - no SIM card";
+
+
+
+____loclib.shareexternal = "Another window is open";
+____loclib.shareexternaluploadpeertube = "Video upload window open";
+
+____loclib.removeimageswhenvideo = "The images attached to the post will be deleted if you continue to upload the video. Go to uploading video?";

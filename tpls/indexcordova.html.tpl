@@ -117,6 +117,8 @@
             
         </script>
 
+        <script src="js/polyfills.js"></script>
+
         __JSENV__
 
         __VE__

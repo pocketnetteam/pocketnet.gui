@@ -171,24 +171,24 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: rgb(var(--color-txt-ac));
+  color: rgb(var(--neutral-grad-1));
   box-sizing: border-box;
-  padding: 0 20px;
+  padding: 0 0.5em;
   font-size: 0.9em;
 }
 #menu .sections .items.control-app > div {
-  margin: 0 10px;
+  margin: 0 0.5em;
   cursor: pointer;
 }
 #menu .sections .items.control-app > div:hover {
   color: rgb(var(--color-txt-gray));
 }
 #menu .sections .items.notificationsWrapper {
-  margin-right: 1em;
+  margin-right: 0.5em;
 }
 #menu .sections .items.gethotpostsWrapper {
   color: rgb(var(--color-txt-orange));
-  margin-left: 2em;
+  margin-left: 1em;
 }
 #menu .sections .items.gethotpostsWrapper i {
   font-size: 1.1em;
@@ -830,4 +830,3 @@
     width: 24px!important;
   }
 }
-/*# sourceMappingURL=index.css.map */

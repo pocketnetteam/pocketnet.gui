@@ -11,11 +11,13 @@ var staking = (function(){
 		var el, info = null, amount = 1000, graph = null, history, stakingClose = null;
 
 			// exchange = 'mercatox'
-			exchange = 'digifinex'
+			exchange = 'common'
 
 		var market_keys = {
 			'mercatox' : 'last_price',
-			'digifinex' : 'last'
+			'digifinex' : 'last',
+			'bitforex' : 'last',
+			'common' : 'last'
 		}
 
 		var charts = {}
@@ -96,16 +98,23 @@ var staking = (function(){
 						var index = markets.indexOf(exchange)
 
 
-						if(index >= 0) {
+						if (index >= 0) {
 							markets.splice(index, 1)
 						}
 
 						var max_result = markets.map(item => {
 
+							if(!history[item]){
+								return '0'
+							}
+
 							var price_log = history[item][history[item].length - 1]
+
+							if(!price_log.prices[currency]) return '0'
 
 							return Number(price_log.prices[currency].data[market_keys[item]] || '0')
 						})
+
 						max_result.push(0)
 
 						return Math.max.apply(null, max_result)
@@ -141,7 +150,6 @@ var staking = (function(){
 
 					p = _.map(p, function(pn){
 
-
 						if(pn.prices['USD']) {
 							return {
 								x : fromutc(new Date(pn.date)),
@@ -165,6 +173,7 @@ var staking = (function(){
 				self.app.api.fetch('exchanges/history').then(result => {
 
 					history = result.prices
+
 
 					if(clbk) clbk()
 				})
@@ -329,10 +338,7 @@ var staking = (function(){
 					}
 	
 					if (price){
-	
-	
 						text = currencies[currency].view(price)
-	
 					}
 	
 					if (prevprice && price){

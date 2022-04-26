@@ -3,45 +3,23 @@ var f = require('./functions');
 
 var Exchanges = function(){
     var self = this
+
     var hasdata = false
 
     var history = {
         prices : {}
     }
 
-    // {
-    //     'mercatox': [
-    //         {
-    //             prices: { BTC: {}, USDT: {}, USD: {}},
-    //             date: ''
-    //         },
-    //         {
-    //             prices: { BTC: {}, USDT: {}, USD: {}},
-    //             date: ''
-    //         }
-    //     ],
-    //
-    //     'bilaxy': [
-    //         {
-    //             prices: { USDT: {}, USD: {} },
-    //             date: ''
-    //         },
-    //         {
-    //             prices: { USDT: {}, USD: {} },
-    //             date: ''
-    //         },
-    //     ]
-    // }
-
     var keys = {
-        'mercatox' : 'last_price',
-        'bilaxy' : 'close',
-        'bitforex' : 'last'
+        //'mercatox' : 'last_price',
+        //'bilaxy' : 'close',
+        'bitforex' : 'last',
+        'digifinex' : 'last'
     }
 
     var apis = {
-        'mercatoxPrices' : 'https://mercatox.com/api/public/v1/ticker',
-        'bilaxy' : 'https://newapi.bilaxy.com/v1/ticker/24hr',
+        //'mercatox' : 'https://mercatox.com/api/public/v1/ticker',
+        //'bilaxy' : 'https://newapi.bilaxy.com/v1/ticker/24hr',
         'bitforex' : 'https://www.bitforex.com/server/market.act?cmd=searchTickers&type=all',
         'digifinex' : 'https://openapi.digifinex.vip/v3/ticker'
     }
@@ -51,6 +29,7 @@ var Exchanges = function(){
     self.api = {
         price : {
             bilaxy : function(){
+
                 return self.transports.axios.get(apis.bilaxy).then(function(response) {
 
                     return f.getPkoinPrice(response.data, 'close')
@@ -63,23 +42,23 @@ var Exchanges = function(){
                 })
             },
 
-            mercatox : function(){
+            /*mercatox : function(){
                 return self.transports.axios.get(apis.mercatoxPrices).then(function(response) {
 
                     return f.getPkoinPrice(response.data, 'last_price')
-                
+
                 }).catch(e => {
 
 
                     return Promise.reject('notfound')
                 })
-            },
+            },*/
 
             digifinex : function(){
                 return self.transports.axios.get(apis.digifinex).then(function(response) {
 
                     var converted = {}
-                    
+
                     _.each(f.deep(response, 'data.ticker') || [], function(c){
                         if (c.symbol && c.symbol.toUpperCase)
                             converted[c.symbol.toUpperCase()] = c
@@ -89,31 +68,38 @@ var Exchanges = function(){
 
                 }).catch(e => {
 
-                    //console.log('bilaxy error', e)
+                    //console.log('digifinex error', e)
 
                     return Promise.reject('notfound')
                 })
             },
 
-            /*bitforex : function(){
-                 return axios.post(apis.bitforex).then(function(response) {
+            bitforex : function(){
+                 return self.transports.axios.post(apis.bitforex).then(function(response) {
 
-                     
-                     const formatted_data = f.formatExchageKeys(response.data)
 
-                     console.log("formatted_data", formatted_data)
-                    
-                     return f.getPkoinPrice(formatted_data, 'last')
-                
+                    var formatted_data = f.formatExchageKeys(response.data)
+
+                    var pkoinusdt = formatted_data.DATA['coin-usdt-pkoin']
+
+                    if(!pkoinusdt){
+                        return reject('notfound')
+                    }
+
+                    formatted_data = {
+                        'PKOIN_USDT' : pkoinusdt
+                    }
+
+                    return f.getPkoinPrice(formatted_data, 'last')
+
                  }).catch(e => {
 
-                    console.log("EE", e)
 
                      return Promise.reject('notfound')
                  })
-            },*/
+            },
         }
-       
+
     }
 
     self.getAveragePrice = function(market, prices, key) {
@@ -145,7 +131,7 @@ var Exchanges = function(){
 
             first_price_value = first_price_value ? first_price_value : current_price_value
             second_price_value = second_price_value ? second_price_value : current_price_value
-            
+
             prices.prices[item].data[key] = ((current_price_value + first_price_value + second_price_value) / 3)
 
         })
@@ -165,42 +151,87 @@ var Exchanges = function(){
             prices[item] =  history.prices[item][currencies_length - 1].data
         })
 
-        
+
     },
 
     self.history = {
         prices : function(){
             var promises = _.map(self.api.price, function(r, i){
                 return r().then(slice => {
-                    if(!slice) return Promise.resolve()
 
+                    if(!slice) return Promise.resolve()
 
                     if(!history.prices[i]) history.prices[i] = []
 
-                    // let new_slice = self.getAveragePrice(i, slice, keys[i])
-
-                    // if(!new_slice) {
-                    //     history.prices[i].push(slice)
-                    // } else {
-                    //     history.prices[i].push(new_slice)
-                    // }
-
                     history.prices[i].push(slice)
-                    
+                    history.prices[i] = f.lastelements(history.prices[i], 100)
 
-                    history.prices[i] = f.lastelements(history.prices[i], 500)
 
-                    hasdata = true
 
                     return Promise.resolve()
 
                 }).catch(e => {
+
                     return Promise.resolve()
                 })
 
             })
 
-            return Promise.all(promises).catch(e => {})
+            return Promise.all(promises).then(r => {
+
+                var common = {
+                    date : f.now(),
+                    prices : {
+                    }
+                }
+
+                var m = {}
+
+                _.each(history.prices, function(v, i){
+                    if (i == 'common') return
+
+                    if (v.length) {
+                        var pr = v[v.length - 1]
+
+                        _.each(pr.prices, function(p, i){
+
+                            if(p && p.data && p.data.last && p.currency){
+                                m[i] || (m[i] = 0)
+
+                                m[i] ++
+
+                                common.prices[i] || (common.prices[i] = {
+                                    currency : p.currency,
+                                    data : {}
+                                })
+
+                                common.prices[i].data.last || (common.prices[i].data.last = 0)
+
+                                common.prices[i].data.last += Number(p.data.last)
+                            }
+
+                        })
+                    }
+                })
+
+                _.each(common.prices, function(p, i){
+                    if(m[i]){
+                        p.data.last = p.data.last / m[i]
+                    }
+                })
+
+                if(!history.prices.common) history.prices.common = []
+
+                history.prices.common.push(common)
+
+                hasdata = true
+
+                return Promise.resolve()
+
+
+            }).catch(e => {
+                return Promise.resolve()
+            })
         }
     }
 
@@ -218,7 +249,7 @@ var Exchanges = function(){
         if(!followInterval){
             followInterval = setInterval(function(){
                 self.history.prices()
-            }, 60000)
+            }, 360000)
         }
 
         return Promise.resolve()
@@ -231,7 +262,7 @@ var Exchanges = function(){
                 var action = f.deep(self.api, path)
 
                 if(!action){
-                    return action() 
+                    return action()
                 }
                 else{
                     return Promise.reject('epmty')
@@ -242,11 +273,12 @@ var Exchanges = function(){
 
                 return f.pretry(function(){
                     return hasdata
-                }, 50, 10000).then(r => {
+                }, 50, 35000).then(r => {
+
                     return Promise.resolve(history)
                 })
 
-                
+
             }
         }
     }

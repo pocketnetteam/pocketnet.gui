@@ -131,6 +131,7 @@
             
         </script>
 
+        <script src="js/polyfills.js"></script>
         
 
         __JSENV__
@@ -144,8 +145,8 @@
         __JSPOST__
 
         <link rel="stylesheet" href="css/fontawesome/css/all.min.css">
-
         <script async src="js/pwa-service-worker.js?v=v__PACKAGE-VERSION__"></script>
+        
 
 
     </body>
