@@ -1396,7 +1396,7 @@ Application = function(p)
 
 			//self.el.html.addClass('nooverflow')
 
-			if (window.Keyboard && window.Keyboard.disableScroll){
+			if (window.Keyboard && window.Keyboard.disableScroll && !isios()){
 				window.Keyboard.disableScroll(true)
 			}
 
@@ -1433,7 +1433,7 @@ Application = function(p)
 				//self.el.html.removeClass('nooverflow')
 				///
 
-				if (window.Keyboard && window.Keyboard.disableScroll){
+				if (window.Keyboard && window.Keyboard.disableScroll && !isios()){
 					window.Keyboard.disableScroll(false)
 				}
 
@@ -1869,7 +1869,7 @@ Application = function(p)
 		keyboard : {
 			init : function(){
 
-				if(window.cordova){
+				if(window.cordova && !isios()){
 
 					window.addEventListener('keyboardWillShow', (event) => {
 						document.documentElement.style.setProperty('--keyboardheight', `${event.keyboardHeight}px`);
@@ -2275,7 +2275,6 @@ Application = function(p)
 									if(self.lastScrollTop <= 0 && !self.mobile.reload.reloading){
 										return true;
 									}
-
 
 								},
 
