@@ -198,8 +198,8 @@ function destroyApp() {
 }
 
 function createTray() {
-    if(app.dock.getMenu()){
-        return;
+    if(app?.dock?.getMenu()){
+         return;
     }
     var defaultImage = nativeImage.createFromPath(defaultTrayIcon);
     var badgeImage = nativeImage.createFromPath(badgeTrayIcon);
@@ -683,15 +683,17 @@ function createWindow() {
         if(p.image){
             pathImage= await saveBlobToFile(p.image)
         }
-        const n = new Notification({ title : p.title, body: p.body, silent :true, icon: pathImage})
-        n.onclick = function(){
 
-            if (win) {
-                win.show();
-            }
-        }
+        const n = new Notification({ title : p.title, body: p.body, silent :true, icon: pathImage})
+
         n.show()
 
+        n.once('click', (event, arg)=>{
+          if (win) {
+            win.show();
+            win.webContents.send('nav-message', { msg: 'userpage?id=notifications&report=notifications', type: 'action'})
+          }
+        })
     })
 
     ipcMain.on('electron-notification-close', function(e) {

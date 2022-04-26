@@ -5,7 +5,7 @@ const { reject } = require('underscore');
 var f = require('../functions');
 var path = require('path');
 var Datastore = require('nedb');
-
+var transports = require('../transports')(global.USE_PROXY_NODE)
 var progress = require('request-progress');
 var targz = require('targz');
 
@@ -17,6 +17,8 @@ var Applications = function(settings) {
     var self = this;
 
     var db = new Datastore(f.path(settings.dbpath));
+
+    self.transports = transports;
 
     var applications = {
         win32: {
@@ -62,6 +64,11 @@ var Applications = function(settings) {
                 permanent: true,
                 name: "latest.tgz",
                 url: 'https://snapshot.pocketnet.app/latest.tgz'
+            },
+            checkpoint_main: {
+                name: "main.sqlite3",
+                url: 'https://api.github.com/repos/pocketnetapp/pocketnet.core/releases/latest',
+                page: 'https://github.com/pocketnetteam/pocketnet.core/releases/latest'
             },
         }
     }
@@ -182,6 +189,7 @@ var Applications = function(settings) {
                     fs.copyFile(r.path, dest, (e) => {
 
                         if(!e) {
+                            fs.chmodSync(dest, 0o755)
                             return resolve(r)
                         }
                         reject({
@@ -280,7 +288,7 @@ var Applications = function(settings) {
             .on('end', function () {
                 return resolve()
             })
-            .pipe(fs.createWriteStream(endFile))
+            .pipe(fs.createWriteStream(endFile, { mode: 0o755 }))
         }).then(r => {
             return Promise.resolve(endFile);
         })
