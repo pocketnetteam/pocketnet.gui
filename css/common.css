@@ -930,6 +930,7 @@
 .share_common.fullScreenVideo .sharecnt {
   position: absolute;
   overflow-y: scroll;
+  scroll-behavior: smooth;
   left: 0;
   right: 0;
   top: 0;

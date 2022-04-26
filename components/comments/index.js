@@ -1047,11 +1047,12 @@ var comments = (function(){
 			},
 			scrollToComment : function(el) {
 
-				if(ed.openapi) return
+				if (ed.openapi) return
+
 
 				if (el && el.length > 0 && el[0].scrollIntoView && isMobile()) {
 
-					if(el.closest('.fullScreenVideo').length > 0) return
+					//if(el.closest('.fullScreenVideo').length > 0) return
 
 					_scrollTo(el, _in, 0)
 				}
@@ -1502,7 +1503,11 @@ var comments = (function(){
 
 					focus : function() {
 						// Scroll comment section to top of the screen
-						actions.scrollToComment(_p.el);
+
+						setTimeout(function(){
+							actions.scrollToComment(_p.el);
+						}, 100)
+						
 					},
 
 					onLoad : function(c, d){
@@ -2770,6 +2775,9 @@ var comments = (function(){
 
 				_in = el.c.closest('.wndcontent');
 
+				if(!_in.length) {
+					_in = el.c.closest('.fullScreenVideo .sharecnt');
+				}
 
 				el.list.on('click', '.reply', events.reply);
 				el.list.on('click', '.replies', events.replies);

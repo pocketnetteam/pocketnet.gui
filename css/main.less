@@ -311,6 +311,7 @@
 body{
     overflow-x: hidden;
     overscroll-behavior: none;
+    scroll-behavior: smooth;
     /* scroll-snap-type: y proximity;*/
 }
 
@@ -322,6 +323,7 @@ html {
     overflow-x: hidden;
     overflow-y: overlay;
     overscroll-behavior: none;
+    scroll-behavior: smooth;
     
     /*&.mobileview{
         scroll-behavior: smooth;
@@ -7899,6 +7901,7 @@ html.mobileview{
                     backface-visibility: hidden;
                     background: rgb(var(--background-total-theme));
                     max-width: 768px;
+                    scroll-behavior: smooth;
 
                     max-height: calc(var(--vh, 1vh) * 92);
                     min-height: calc(var(--vh, 1vh) * 30);
