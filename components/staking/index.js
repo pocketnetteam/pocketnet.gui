@@ -11,7 +11,7 @@ var staking = (function(){
 		var el, info = null, amount = 1000, graph = null, history, stakingClose = null;
 
 			// exchange = 'mercatox'
-			exchange = 'digifinex' //'common'
+			exchange = 'common'
 
 		var market_keys = {
 			'mercatox' : 'last_price',

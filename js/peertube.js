@@ -693,7 +693,7 @@ PeerTubePocketnet = function (app) {
 							privacy: 1,
 							'scheduleUpdate[updateAt]': new Date().toISOString(),
 							channelId: rme.channelId,
-							name: videoName,
+							name: parameters.title || videoName,
 							filename: videoName,
 						};
 
