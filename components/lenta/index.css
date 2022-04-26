@@ -722,7 +722,7 @@ html.mobileview #lenta .fullScreenVideo {
   -webkit-backface-visibility: hidden;
 }
 html.mobileview #lenta .fullScreenVideo .sharecnt {
-  -webkit-overflow-scrolling: touch;
+  -webkit-overflow-scrolling: none;
   overscroll-behavior: none;
 }
 html.mobileview.fullscreen #lenta .fullScreenVideo #comments {

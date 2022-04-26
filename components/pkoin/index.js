@@ -29,7 +29,7 @@ var pkoin = (function(){
 						optionsValue = 'liftUpThePost'
 					}
 
-					if(self.app.boost && !blocked){
+					if (self.app.boost && !blocked){
 						values.push('liftUpThePost')
 						labels.push(self.app.localization.e('liftUpThePost'))
 					}
