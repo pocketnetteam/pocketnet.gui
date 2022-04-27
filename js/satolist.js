@@ -11088,8 +11088,17 @@ Platform = function (app, listofnodes) {
                 var method = 'gettopaccounts';
      
                 p.height = 0;
-                p.tagsfilter = self.app.platform.sdk.categories.gettags()
-                p.tagsexcluded = self.app.platform.sdk.categories.gettagsexcluded()
+                p.tagsfilter = self.app.platform.sdk.categories.gettags();
+                p.tagsexcluded = self.app.platform.sdk.categories.gettagsexcluded();
+
+                _.map(p.tagsfilter, function(t){
+                    return encodeURIComponent(t)
+                })
+
+                _.map(p.tagsexcluded, function(t){
+                    return encodeURIComponent(t)
+                })
+
                 p.depth || (p.depth = 10000);
                     
                 var parameters = [p.height, p.count, p.lang, p.tagsfilter, p.type, '', p.tagsexcluded, p.depth];
@@ -12560,15 +12569,14 @@ Platform = function (app, listofnodes) {
 
                     if (user){
 
-
                         var info = {
                             id : address,
                             index : user.name.toLowerCase(),
                             name : user.name,
                             image : user.image,
                             address : address,
-                            subscribers_count: user.subscribers.length,
-                            subscribes_count : user.subscribes.length,
+                            subscribers_count: user.subscribers_count,
+                            subscribes_count : user.subscribes_count,
                             value: value
                         }
 
