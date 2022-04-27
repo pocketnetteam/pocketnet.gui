@@ -14760,6 +14760,43 @@ Platform = function (app, listofnodes) {
             }
         },
 
+        upvote : {
+            checkvalue : function(value, clbk){
+                if(value > 2){
+                    if(clbk) clbk()
+
+                    return
+                }
+
+                var h = '<div>'+self.app.localization.e('lowstar1')+'</div>'
+
+                h+='<div><ul>'
+                h+='<li>'+self.app.localization.e('lowstar_reason_1')+'</li>'
+                h+='<li>'+self.app.localization.e('lowstar_reason_2')+'</li>'
+                h+='<li>'+self.app.localization.e('lowstar_reason_3')+'</li>'
+                h+='<li>'+self.app.localization.e('lowstar_reason_4')+'</li>'
+                h+='</ul></div>'
+                h+='<div>'+self.app.localization.e('lowstar2')+'</div>'
+                
+                dialog({
+                    html: h,
+                    btn1text: self.app.localization.e('lowstaragree'),
+                    btn2text: self.app.localization.e('close'),
+
+                    class: 'zindex',
+
+                    success: function () {
+
+                        if(clbk) clbk()
+
+                    },
+
+                    fail: function () {
+                    }
+                })
+            },
+        },
+
         comments: {
             storage: {},
 

@@ -66,44 +66,47 @@ var postscores = (function(){
 					
 				}
 
-				var upvoteShare = share.upvote(value);
+				self.app.platform.sdk.upvote.checkvalue(value, function(){
 
-				if(!upvoteShare){
-					self.app.platform.errorHandler('4', true)	
+					var upvoteShare = share.upvote(value);
 
-					if (clbk)
-						clbk(false)
+					if(!upvoteShare){
+						self.app.platform.errorHandler('4', true)	
 
-					return
-				}
+						if (clbk)
+							clbk(false)
 
-				self.sdk.node.transactions.create.commonFromUnspent(
-
-					upvoteShare,
-
-					function(tx, error){
-
-						topPreloader(100)
-
-						if(!tx){							
-
-							share.myVal = null;		
-
-							self.app.platform.errorHandler(error, true)	
-
-							if (clbk)
-								clbk(false)
-							
-						}
-						else
-						{
-
-							if (clbk)
-								clbk(true)
-						}
-
+						return
 					}
-				)
+
+					self.sdk.node.transactions.create.commonFromUnspent(
+
+						upvoteShare,
+
+						function(tx, error){
+
+							topPreloader(100)
+
+							if(!tx){							
+
+								share.myVal = null;		
+
+								self.app.platform.errorHandler(error, true)	
+
+								if (clbk)
+									clbk(false)
+								
+							}
+							else
+							{
+
+								if (clbk)
+									clbk(true)
+							}
+
+						}
+					)
+				})
 			},
 		}
 

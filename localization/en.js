@@ -2214,3 +2214,12 @@ ____loclib.shareexternal = "Another window is open";
 ____loclib.shareexternaluploadpeertube = "Video upload window open";
 
 ____loclib.removeimageswhenvideo = "The images attached to the post will be deleted if you continue to upload the video. Go to uploading video?";
+
+
+____loclib.lowstar1 = "Bastyon team is implementing a temporary moratorium on 1 and 2 star ratings, except prohibited content. Prohibited content is:"
+____loclib.lowstar_reason_1 = "Porno"
+____loclib.lowstar_reason_2 = "Child exploitation"
+____loclib.lowstar_reason_3 = "Direct threat of violence"
+____loclib.lowstar_reason_4 = "Illegal narcotics"
+____loclib.lowstar2 = "Please do not use 1 and 2 star ratings for other reasons. After the new moderation is released in mid. May you will be able to use low ratings for other reasons"
+____loclib.lowstaragree = "I confirm that this post contains one of four types of prohibited content"

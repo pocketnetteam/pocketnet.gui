@@ -615,7 +615,8 @@ Nav = function(app)
 
 						current.href = p.href;
 						current.completeHref = p.completeHref;
-						current.module = p.module;		
+						current.module = p.module;	
+						current.essenseData = p.essenseData;	
 						current.map = p.map
 
 						var c = p.clbk;

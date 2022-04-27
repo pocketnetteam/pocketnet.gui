@@ -2358,7 +2358,9 @@ Application = function(p)
 											})
 
 											if (self.nav.current.module)
-												self.nav.current.module.restart()
+												self.nav.current.module.restart({
+													essenseData : self.nav.current.essenseData || {}
+												})
 
 											setTimeout(function(){
 												globalpreloader(false)

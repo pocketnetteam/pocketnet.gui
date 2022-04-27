@@ -1647,48 +1647,50 @@ var lenta = (function(){
 					}
 				}
 
-				
+				self.app.platform.sdk.upvote.checkvalue(value, function(){
 
-				var upvoteShare = obj.upvote(value);
+					var upvoteShare = obj.upvote(value);
 
-				if(!upvoteShare){
-					self.app.platform.errorHandler('4', true)	
+					if(!upvoteShare){
+						self.app.platform.errorHandler('4', true)	
 
-					if(clbk)
-						clbk(false)
+						if(clbk)
+							clbk(false)
 
-					return
-				}
-
-				self.sdk.node.transactions.create.commonFromUnspent(
-
-					upvoteShare,
-
-					function(tx, error){
-
-						topPreloader(100)
-
-						if(!tx){				
-
-							upvoteShare.myVal = null;	
-							obj.myVal = 0;	
-
-							self.app.platform.errorHandler(error, true)	
-
-
-							if(clbk)
-								clbk(false)
-							
-						}
-						else
-						{
-
-							if (clbk)
-								clbk(true)
-						}
-
+						return
 					}
-				)
+
+					self.sdk.node.transactions.create.commonFromUnspent(
+
+						upvoteShare,
+
+						function(tx, error){
+
+							topPreloader(100)
+
+							if(!tx){				
+
+								upvoteShare.myVal = null;	
+								obj.myVal = 0;	
+
+								self.app.platform.errorHandler(error, true)	
+
+
+								if(clbk)
+									clbk(false)
+								
+							}
+							else
+							{
+
+								if (clbk)
+									clbk(true)
+							}
+
+						}
+					)
+
+				})
 			},
 
 			block : function(address, clbk){
