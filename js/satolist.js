@@ -11110,7 +11110,7 @@ Platform = function (app, listofnodes) {
 
                     console.log('gettopaccounts result', data, error);
 
-                    clbk(data, error, true);
+                    clbk(data, error);
                     
 
                 }, method, rpc)
@@ -11162,6 +11162,7 @@ Platform = function (app, listofnodes) {
 
                     } else {
 
+                        self.sdk.activity.allowRequestAfterFive = false;
                         clbk(data, error);
 
                     }
@@ -12449,6 +12450,7 @@ Platform = function (app, listofnodes) {
         },
         activity : {
             latest : {},
+            allowRequestAfterFive : true,
 
             getbestaddress : function(){
 
@@ -12666,7 +12668,14 @@ Platform = function (app, listofnodes) {
 
                 l[key] = firstEls(l[key], 300)
 
-                self.sdk.activity.save()
+                self.sdk.activity.save();
+
+                if (this.allowRequestAfterFive && info.value === '5'){
+
+                    self.app.platform.sdk.categories.clbks.selected.topusers && self.app.platform.sdk.categories.clbks.selected.topusers();
+                    this.allowRequestAfterFive = false;
+                }
+
             },
             save: function () {
                 localStorage['latestactivity'] = JSON.stringify({
