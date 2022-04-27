@@ -209,7 +209,8 @@ Platform = function (app, listofnodes) {
         'TSisNge5kisi7cwGRwmUBuZQWZFD8cRoG8',
         'TQEGz5cQQtRad8wo2c1KapvFek9rnuprkD',
         'PKU652wwKYC52WGBJ8EHkA1Mtud8iHWChC',
-        'PD4us1zniwrJv64xhPyhT2mgNrTvPur9YN'
+        'PD4us1zniwrJv64xhPyhT2mgNrTvPur9YN',
+        'PHiNjAhHbxVb6D8oaVVBe8DGigKuN4QFP6'
     ];
 
     if (window.IpcBridge)
@@ -11091,11 +11092,11 @@ Platform = function (app, listofnodes) {
                 p.tagsfilter = self.app.platform.sdk.categories.gettags();
                 p.tagsexcluded = self.app.platform.sdk.categories.gettagsexcluded();
 
-                _.map(p.tagsfilter, function(t){
+                p.tagsfilter = _.map(p.tagsfilter, function(t){
                     return encodeURIComponent(t)
                 })
 
-                _.map(p.tagsexcluded, function(t){
+                p.tagsexcluded = _.map(p.tagsexcluded, function(t){
                     return encodeURIComponent(t)
                 })
 
@@ -12457,6 +12458,7 @@ Platform = function (app, listofnodes) {
 
                         return like.countOfFives && like.data.subscribers_count + like.data.subscribes_count;
                     })
+
     
                     var bestAddress = '';
                     var bestCount = 1;
@@ -12464,8 +12466,13 @@ Platform = function (app, listofnodes) {
                     availablesLikes.forEach(function(like){
     
                         if (like.countOfFives > bestCount){
+
                             bestAddress = like.data.address;
                             bestCount = like.countOfFives;
+                            
+                        } else if (!bestAddress && (like.countOfFives === bestCount)){
+
+                            bestAddress = like.data.address;
                         }
                     })
     
