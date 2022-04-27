@@ -14777,6 +14777,8 @@ Platform = function (app, listofnodes) {
                 h+='<li>'+self.app.localization.e('lowstar_reason_4')+'</li>'
                 h+='</ul></div>'
                 h+='<div>'+self.app.localization.e('lowstar2')+'</div>'
+                if(self.app.localization.key == 'ru')
+                h+='<div class="b">'+self.app.localization.e('lowstar3')+'</div>'
                 
                 dialog({
                     html: h,
