@@ -104,12 +104,15 @@ module.exports = function (enable){
     }
 
     const fetchRequest = async (url, opts) => {
-        if (!enable){
+        if (!enable) {
             return _fetch(url, opts);
         }
 
         const parsedUrl = new URL(url);
-        const queues = await requestQueue(parsedUrl.host);
+        const queues = await requestQueue(parsedUrl.host)
+          .catch(() => {
+              throw Error('Request queue failed');
+          });
 
         let error = {};
 
@@ -118,14 +121,17 @@ module.exports = function (enable){
                 break;
             }
 
-            const optsWithProxy = {
-                ...opts,
-            };
+            const optsWithProxy = { ...opts };
+
+            if (!queue.proxy) continue;
 
             if (queue.proxy) {
                 optsWithProxy.proxy = {
-                    host: queue.proxy.ip,
-                    port: queue.proxy.port
+                    protocol: `${queue.proxy.protocol}:`,
+                    hostname: queue.proxy.ip,
+                    port: queue.proxy.port,
+                    username: queue.proxy.username,
+                    password: queue.proxy.password,
                 };
             }
 
@@ -136,6 +142,7 @@ module.exports = function (enable){
             try {
                 return await _fetch(url, optsWithProxy);
             } catch (e) {
+                console.log(e);
                 error = e;
             }
         }

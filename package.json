@@ -93,7 +93,6 @@
         "nedb": "^1.8.0",
         "node-autodetect-utf8-cp1251-cp866": "",
         "node-cmd": "^3.0.0",
-        "node-fetch": "",
         "node-iplocate": "^1.0.2",
         "node-notifier": "^10.0.1",
         "node-rsa": "^1.1.1",

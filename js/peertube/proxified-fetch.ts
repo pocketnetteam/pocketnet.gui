@@ -3,7 +3,7 @@ import type * as Stream from "stream";
 
 import * as proxyTransport from "../../proxy16/transports.js";
 
-const proxified = proxyTransport();
+const proxified = proxyTransport(true);
 
 const getRequestId = () => {
     const rand = Math.random()
@@ -23,7 +23,7 @@ export async function proxifiedFetchFactory(electronIpcRenderer: Electron.IpcRen
     };
 
     async function profixiedFetch(input: RequestInfo, init: RequestInit = defaultInit): Promise<Response> {
-        const preparedInit = { ...init };
+        const preparedInit: RequestInit = {};
 
         preparedInit.headers = {};
 
@@ -57,6 +57,7 @@ export async function proxifiedFetchFactory(electronIpcRenderer: Electron.IpcRen
             async start(controller) {
                 if (fetchCancel) {
                     fetchCancel.onabort = () => {
+                        electronIpcRenderer.removeAllListeners(`ProxifiedFetch : InitialData[${id}]`);
                         electronIpcRenderer.removeAllListeners(`ProxifiedFetch : PartialResponse[${id}]`);
 
                         electronIpcRenderer.send('ProxifiedFetch : Abort', id);
@@ -66,13 +67,22 @@ export async function proxifiedFetchFactory(electronIpcRenderer: Electron.IpcRen
                 }
 
                 electronIpcRenderer.once(`ProxifiedFetch : Closed[${id}]`, (event) => {
+                    electronIpcRenderer.removeAllListeners(`ProxifiedFetch : InitialData[${id}]`);
                     electronIpcRenderer.removeAllListeners(`ProxifiedFetch : PartialResponse[${id}]`);
 
                     controller.close();
                 });
 
-                electronIpcRenderer.on(`ProxifiedFetch : PartialResponse[${id}]`, (event, data: Buffer) => {
-                    // FIXME: ONLY 1 PARTIAL RECEIVED
+                electronIpcRenderer.on(`ProxifiedFetch : PartialResponse[${id}]`, (event, data: Uint8Array) => {
+                    /**
+                     * FIXME:
+                     *  Strange issue found. Somewhere Uint8Array.buffer was replaced
+                     *  what produces invalid data in ArrayBuffer analog of object.
+                     *  Must not be trusted, so using destructuring to get the
+                     *  correct one buffer.
+                     */
+                    // @ts-ignore
+                    data = new Uint8Array([...data]);
 
                     const chunkUint8 = new Uint8Array(data.buffer);
                     controller.enqueue(chunkUint8);
@@ -82,13 +92,30 @@ export async function proxifiedFetchFactory(electronIpcRenderer: Electron.IpcRen
             }
         });
 
-        const response = new Response(readStream);
+        return new Promise((resolve, reject) => {
+            electronIpcRenderer.on(`ProxifiedFetch : InitialData[${id}]`, (event, initialData) => {
+                const response = new Response(readStream, initialData);
 
-        electronIpcRenderer.send('ProxifiedFetch : Request', id, url, preparedInit);
+                Object.defineProperty(response, 'url', { value: url });
 
-        Object.defineProperty(response, 'url', { value: url });
+                const responseData = { url: response.url };
 
-        return response;
+                response.headers.forEach((value, name) => {
+                    responseData[name] = value;
+                });
+
+                console.table(responseData);
+                console.log(response);
+
+                resolve(response);
+            });
+
+            try {
+                electronIpcRenderer.send('ProxifiedFetch : Request', id, url, preparedInit);
+            } catch (e) {
+                throw Error('ProxifiedFetch : Request -  sent invalid data');
+            }
+        });
     }
 
     return (input: RequestInfo, init?: RequestInit) => profixiedFetch(input, init);
@@ -107,14 +134,27 @@ export async function initProxifiedFetchBridge(electronIpcMain: Electron.IpcMain
         const signal = controller.signal;
 
         const request = fetch(url, { signal, ...requestInit })
-            .then(({ body }: { body: Stream }) => {
-                body.on('data', (chunk) => {
+            .then((data: Response & { body: Stream }) => {
+                const { status } = data;
+
+                const headers = {};
+
+                data.headers.forEach((value, name) => {
+                    headers[name] = value;
+                });
+
+                sender.send(`ProxifiedFetch : InitialData[${id}]`, { status, headers });
+
+                data.body.on('data', (chunk) => {
                     sender.send(`ProxifiedFetch : PartialResponse[${id}]`, chunk);
                 });
 
-                body.on('end', () => {
+                data.body.on('end', () => {
                     sender.send(`ProxifiedFetch : Closed[${id}]`);
                 });
+            })
+            .catch((err) => {
+                console.log('Proxified Fetch failed with next error:', err);
             });
 
         requests[id] = { request, cancel: () => controller.abort() };
