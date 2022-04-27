@@ -6504,7 +6504,7 @@ html.mobileview .wnd.normalizedmobile:not(.hiddenState):only-child.asette .wndba
 html.mobileview .wnd.maxheight .wndinner .wndcontent {
   height: calc(var(--vh, 1vh) * 92);
 }
-html.cordova .wnd.normalizedmobile.maxheight:not(.hiddenState) .wndinner .wndcontent {
+html.mobileview .wnd.normalizedmobile.maxheight:not(.hiddenState) .wndinner .wndcontent {
   padding-bottom: 300px;
 }
 html.mobileview .keyboardsafe {

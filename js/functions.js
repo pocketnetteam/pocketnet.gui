@@ -6517,7 +6517,7 @@
 		if (direction == 'Top') {
 			offset = (to.height() - $(window).height()) / 2;
 
-			if(window.cordova){
+			if(window.cordova && !isios()){
 				offset = offset + $(window).height() / 4
 			}
 		}

@@ -1503,7 +1503,9 @@ var comments = (function(){
 
 					focus : function() {
 						// Scroll comment section to top of the screen
-						actions.scrollToComment(_p.el);
+
+						if(!isios())
+							actions.scrollToComment(_p.el);
 					},
 
 					blur : function(){
