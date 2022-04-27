@@ -443,6 +443,7 @@
 #comments .list .commentWrapper > div .commentmessage {
   padding-top: 0.5em;
   word-wrap: break-word;
+  word-break: break-word;
 }
 #comments .list .commentWrapper > div .commentmessage a {
   color: rgb(var(--color-txt-ac));

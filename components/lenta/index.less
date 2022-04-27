@@ -1079,8 +1079,11 @@ html.mobileview{
 		.fullScreenVideo{
 			will-change: transform;
 			-webkit-backface-visibility: hidden;
-			-webkit-overflow-scrolling: auto;
-    		overscroll-behavior: contain;
+			.sharecnt{
+				-webkit-overflow-scrolling: none;
+				overscroll-behavior: none;
+			}
+			
 		}
 	}
 }

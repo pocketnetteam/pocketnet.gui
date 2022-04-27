@@ -1506,7 +1506,7 @@ var comments = (function(){
 
 						setTimeout(function(){
 							actions.scrollToComment(_p.el);
-						}, 100)
+						}, 300)
 						
 					},
 

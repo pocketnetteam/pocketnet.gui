@@ -553,13 +553,16 @@ var arranges = {
 									</div>
 
 								<% } %>
+
 								<% if(!lockedaccount) {%>
-								<div class="item pkoin right unselectedtable">
-									<img src="img/pocketnet_logo_white.svg" alt="">
-									<span class='workstation'>
-										PKOIN
-									</span>
-								</div>
+									<% if(!my || app.boost) {%>
+									<div class="item pkoin right unselectedtable">
+										<img src="img/pocketnet_logo_white.svg" alt="">
+										<span class='workstation'>
+											PKOIN
+										</span>
+									</div>
+									<% } %>
 								<% } %>
 								
 							</div>
