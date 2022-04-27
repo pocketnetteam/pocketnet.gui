@@ -1503,11 +1503,10 @@ var comments = (function(){
 
 					focus : function() {
 						// Scroll comment section to top of the screen
+						actions.scrollToComment(_p.el);
+					},
 
-						setTimeout(function(){
-							actions.scrollToComment(_p.el);
-						}, 300)
-						
+					blur : function(){
 					},
 
 					onLoad : function(c, d){

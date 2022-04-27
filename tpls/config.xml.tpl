@@ -123,7 +123,6 @@
         <preference name="InterceptRemoteRequests" value="all" />
         <preference name="allowFileAccessFromFileURLs" value="true" />
         <preference name="allowUniversalAccessFromFileURLs" value="true" />
-
         <config-file target="*-Info.plist" parent="CFBundleURLTypes">
         <array>
             <dict>

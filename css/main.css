@@ -6280,6 +6280,17 @@ html.mobileview #content .work {
     padding-top: 0;
   }
 }
+html.mobileview.keyboadrshown .focusedinput {
+  position: fixed!important;
+  bottom: calc(var(--keyboardheight, 0) - 1px) !important;
+  top: auto!important;
+  left: 0!important;
+  right: 0!important;
+  max-height: 25vh!important;
+}
+html.mobileview .dialog {
+  padding-bottom: calc(var(--keyboardheight, 0) - 1px);
+}
 html.mobileview .sitemessage {
   position: fixed;
   width: auto;
@@ -6410,6 +6421,10 @@ html.mobileview .wnd.normalizedmobile:not(.hiddenState) .wndinner .wndcontent {
   margin: 0 auto;
   padding-left: 0;
   padding-right: 0;
+  -moz-transition: padding-bottom 0.3s;
+  -o-transition: padding-bottom 0.3s;
+  -webkit-transition: padding-bottom 0.3s;
+  transition: padding-bottom 0.3s;
 }
 html.mobileview .wnd.normalizedmobile:not(.hiddenState) .wndinner .wndcontent > div {
   opacity: 0;
@@ -6489,8 +6504,22 @@ html.mobileview .wnd.normalizedmobile:not(.hiddenState):only-child.asette .wndba
 html.mobileview .wnd.maxheight .wndinner .wndcontent {
   height: calc(var(--vh, 1vh) * 92);
 }
+html.cordova .wnd.normalizedmobile.maxheight:not(.hiddenState) .wndinner .wndcontent {
+  padding-bottom: 300px;
+}
 html.mobileview .keyboardsafe {
+  -moz-transition: padding-bottom 0.3s;
+  -o-transition: padding-bottom 0.3s;
+  -webkit-transition: padding-bottom 0.3s;
+  transition: padding-bottom 0.3s;
   padding-bottom: calc(var(--keyboardheight, 0) - 1px) !important;
+}
+html.mobileview .keyboardsafetranslate {
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+  transform: translateY(calc(-1 * var(--keyboardheight, 0) + 1px));
 }
 html.pipmode .pipped {
   position: fixed!important;

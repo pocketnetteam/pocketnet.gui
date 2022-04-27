@@ -23,6 +23,7 @@
   top: 0;
   height: 65px;
   z-index: 20;
+  contain: strict;
   background: rgb(var(--background-total-theme));
   /*
 		.sections{
@@ -90,6 +91,9 @@
 }
 #menu.searchactive .sections .items .item.navWrapperItem {
   display: none;
+}
+#menu.searchactive .menuWrapper {
+  contain: none;
 }
 #menu.menupanelactive:not(.searchactive) .sections .items .item.navWrapperItem {
   display: block;

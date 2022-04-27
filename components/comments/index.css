@@ -1223,6 +1223,9 @@ html.tablet #comments .list .metatable > div.panelWrapper .panel,
 html.mobile #comments .list .metatable > div.panelWrapper .panel {
   opacity: 1;
 }
+html.mobileview #comments .emojionearea-editor {
+  max-height: 100px;
+}
 /*t*/
 @media only screen and (max-width: 768px) {
   #comments .repliesloaderWrapper,

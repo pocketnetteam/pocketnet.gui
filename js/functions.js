@@ -6514,7 +6514,14 @@
 
 		var offset = 0
 
-		if (direction == 'Top') offset = (to.height() - $(window).height()) / 2;
+		if (direction == 'Top') {
+			offset = (to.height() - $(window).height()) / 2;
+
+			if(window.cordova){
+				offset = offset + $(window).height() / 4
+			}
+		}
+
 		if (direction == 'Left') offset = (to.width() - $(el).width()) / 2;
 
 		if (ofssetObj)

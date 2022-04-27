@@ -65,7 +65,7 @@
         <div id="navigationWrapper">
         </div> 
 
-        <div class="contentWrapper"> 
+        <div class="contentWrapper "> 
             <div id="content">                
             </div>
         </div>

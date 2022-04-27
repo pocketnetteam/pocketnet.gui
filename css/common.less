@@ -1486,14 +1486,27 @@ html.mobileview{
             contain: strict;
             height: 40px;
         }
+
+        &.fullScreenVideo{
+    
+            .video-js:not(.vjs-fullscreen){
+                max-height: calc(var(--vh, 1vh) * 100);
+            }
+
+            .sharecnt{
+                padding-bottom: 400px;
+            }
+        }
     }
+
+    
 }
 
-html.ios{
+html.mobileview.ios{
     .share_common{
         &.fullScreenVideo{
             .video-js{
-                max-height: 80vh;
+                max-height: 100vh;
             }
         }
     }
@@ -1556,11 +1569,6 @@ html.ios{
         &.fullScreenVideo{
             contain: strict;
             background: rgb(var(--color-shadow-base));
-            .sharecnt{
-                .commentsWrapperHb{
-                    padding-bottom: calc(var(--keyboardheight, 0) - 1px)!important;
-                }
-            }
             
 
             .extrashare{
@@ -1569,6 +1577,8 @@ html.ios{
                 }
                 
             }
+
+            
 
             .sharecaption{
                 padding-left: @rhythm;

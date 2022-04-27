@@ -33,6 +33,7 @@
 		top: 0;
 		height: 65px;
 		z-index: 20;
+		contain: strict;
 		background: rgb(var(--background-total-theme));
 		
 		// electronnav
@@ -140,6 +141,9 @@
 			}
 		}
 
+		.menuWrapper{
+			contain: none;
+		}
 	}
 
 	&.menupanelactive{

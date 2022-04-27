@@ -1056,6 +1056,11 @@ html.mobileview{
 					display: none;
 				}
 			}
+
+			.jsPlayerLoading,
+			.video-js{
+				max-height: calc(var(--vh, 1vh) * 100);
+			}
 		}
 	}
 	
@@ -1069,9 +1074,15 @@ html.mobileview.ios{
 			.video-js{
 				max-height: 80vh;
 			}
+
+			&.fullScreenVideo{
+				.jsPlayerLoading,
+				.video-js{
+					max-height: 100vh;
+				}
+			}
 		}
 	}
-	
 }
 
 html.mobileview{

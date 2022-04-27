@@ -1195,7 +1195,7 @@ Application = function(p)
 
 	self.height = 0
 	self.width = 0
-	self.inputfocused = false
+
 	self.fullscreenmode = false
 	self.pseudofullscreenmode = false
 	self.playingvideo = null
@@ -1556,7 +1556,7 @@ Application = function(p)
 
 			if(!self.el.window) return
 			if (self.fullscreenmode) return
-			if (self.inputfocused) return
+			if (self.mobile.inputs.focused) return
 
 
 			var scrollTop = self.actions.getScroll(),
@@ -1866,20 +1866,58 @@ Application = function(p)
 
 	self.mobile = {
 
+		inputs : {
+		
+			init : function(){
+				$(document).on('focus blur', 'select, textarea, input, [contenteditable="true"]', function(e){
+					if(e.type == 'focusin'){
+						self.mobile.inputs.focused = $(e.target)
+					}
+
+					if(e.type == 'focusout'){
+						self.mobile.inputs.focused = null
+					}
+					
+				});
+			}
+
+		},
+	
 		keyboard : {
+			height : 0,
+			lastheight : 0,
 			init : function(){
 
 				if(window.cordova){
 
-					if (isios())
-						Keyboard.setResizeMode('ionic');
-
 					window.addEventListener('keyboardWillShow', (event) => {
+
+						self.mobile.keyboard.height = self.mobile.keyboard.lastheight = event.keyboardHeight
+
 						document.documentElement.style.setProperty('--keyboardheight', `${event.keyboardHeight}px`);
+
+						console.log('self.mobile.inputs.focused', self.mobile.inputs.focused)
+
+						/*if(self.mobile.inputs.focused && self.mobile.inputs.focused.length){
+
+							var scroll = null
+
+							var cs = self.mobile.inputs.focused.closest('.wndcontent.customscroll')
+
+							if (cs.length) scroll = cs
+
+							console.log('scroll', scroll)
+
+
+							if (scroll && self.mobile.inputs.focused.length)
+								_scrollTo(self.mobile.inputs.focused, scroll, 0)
+						}*/
 					});
 
 					window.addEventListener('keyboardWillHide', () => {
 						document.documentElement.style.setProperty('--keyboardheight', `0px`);
+
+						self.mobile.keyboard.height = 0
 					});
 				}
 
@@ -2496,22 +2534,7 @@ Application = function(p)
 
 		},
 
-		inputs : {
 		
-			init : function(){
-				$(document).on('focus blur', 'select, textarea, input, [contenteditable="true"]', function(e){
-
-					if(e.type == 'focusin'){
-						self.inputfocused = true
-					}
-
-					if(e.type == 'focusout'){
-						self.inputfocused = false
-					}
-					
-				});
-			}
-		}
 	}
 
 	self.thislink = function(_url){
