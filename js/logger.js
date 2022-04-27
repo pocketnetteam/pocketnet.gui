@@ -17,10 +17,57 @@ class FrontendLogger {
   }
 
   get loggerActive() {
-    return this.app.platform.sdk.usersettings.meta.sendUserStatistics.value && !this.app.test;
+    return (
+      this.app.platform.sdk.usersettings.meta.sendUserStatistics.value &&
+      !this.app.test
+    );
   }
 
-  _createErrorBody({
+  static logCodes = {
+    SELECT_FEED_CATEGORY: {
+      id: 'SELECT_FEED_CATEGORY',
+      description: 'User clicked on the feed category button',
+    },
+
+    SELECT_FEED_SECTION: {
+      id: 'CLICK_FEED_SECTION',
+      description: 'User clicked on the feed category button',
+    },
+
+    SELECT_FEED_TAG: {
+      id: 'SELECT_FEED_TAG',
+      description: 'User clicked on the feed tag button',
+    },
+
+    POST_CREATING_STARTED: {
+      id: 'POST_CREATING_STARTED',
+      description: 'User clicked clicked on post creating window',
+    },
+
+    POST_CREATED: {
+      id: 'POST_CREATED',
+      description: 'User created post',
+    },
+
+    CHAT_OPENED: {
+      id: 'CHAT_OPENED',
+      description: 'Chat window is opened',
+    },
+
+    RECOMMENDATION_SELECTED: {
+      id: 'RECOMMENDATION_SELECTED',
+      description: 'One of the recomendations is selected',
+    },
+
+    BEST_VIDEO_CLICKED: {
+      id: 'BEST_VIDEO_CLICKED',
+      description: 'One of the best videos selected',
+    },
+
+    
+  };
+
+  _createLogBody({
     level = 'error',
     date = moment().format('YYYY-MM-DD hh:mm:ss'),
     moduleVersion = '',
@@ -47,11 +94,27 @@ class FrontendLogger {
   }
 
   error(error = {}) {
-    const { instance, _createErrorBody, guid, userAgent, loggerActive } = this;
+    const { instance, _createLogBody, guid, userAgent, loggerActive } = this;
     //protection from incorrect error formats or logger is turned off
     if (typeof error !== 'object' || !loggerActive) return;
 
-    const formattedError = _createErrorBody({ ...error, guid, userAgent });
+    const formattedError = _createLogBody({ ...error, guid, userAgent });
+
+    instance.post('front/add', formattedError);
+  }
+
+  info(info = {}) {
+    const { instance, _createLogBody, guid, userAgent, loggerActive } = this;
+
+    if (typeof info !== 'object' || !loggerActive) return;
+
+    const fullInfo = {
+      code: 211,
+      level: 'info',
+      ...info,
+    };
+
+    const formattedError = _createLogBody({ ...fullInfo, guid, userAgent });
 
     instance.post('front/add', formattedError);
   }
