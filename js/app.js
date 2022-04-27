@@ -1888,7 +1888,7 @@ Application = function(p)
 			lastheight : 0,
 			init : function(){
 
-				if(window.cordova){
+				if(window.cordova && !isios()){
 
 					window.addEventListener('keyboardWillShow', (event) => {
 
@@ -1896,7 +1896,6 @@ Application = function(p)
 
 						document.documentElement.style.setProperty('--keyboardheight', `${event.keyboardHeight}px`);
 
-						console.log('self.mobile.inputs.focused', self.mobile.inputs.focused)
 
 						/*if(self.mobile.inputs.focused && self.mobile.inputs.focused.length){
 
