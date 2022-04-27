@@ -11106,14 +11106,16 @@ Platform = function (app, listofnodes) {
 
                 var s = self.sdk.node.shares;
 
-                s.getex(parameters, function(data, error){
+                // s.getex(parameters, function(data, error){
 
-                    console.log('gettopaccounts result', data, error);
+                //     console.log('gettopaccounts result', data, error);
 
-                    clbk(data, error);
+                //     clbk(data, error);
                     
 
-                }, method, rpc)
+                // }, method, rpc)
+
+                clbk();
 
             },
 
