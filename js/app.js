@@ -1126,7 +1126,7 @@ Application = function(p)
 				self.mobile.pip.init()
 				self.mobile.keyboard.init()
 
-				if (window.Keyboard && window.Keyboard.disableScroll){
+				if (window.Keyboard && window.Keyboard.disableScroll && !isios()){
 					window.Keyboard.disableScroll(false)
 				}
 
@@ -1896,21 +1896,6 @@ Application = function(p)
 
 						document.documentElement.style.setProperty('--keyboardheight', `${event.keyboardHeight}px`);
 
-
-						/*if(self.mobile.inputs.focused && self.mobile.inputs.focused.length){
-
-							var scroll = null
-
-							var cs = self.mobile.inputs.focused.closest('.wndcontent.customscroll')
-
-							if (cs.length) scroll = cs
-
-							console.log('scroll', scroll)
-
-
-							if (scroll && self.mobile.inputs.focused.length)
-								_scrollTo(self.mobile.inputs.focused, scroll, 0)
-						}*/
 					});
 
 					window.addEventListener('keyboardWillHide', () => {
@@ -2034,11 +2019,7 @@ Application = function(p)
 
 					var image = b64toBlob(base64.split(',')[1], 'image/' + ms);	
 
-					console.log(image, base64, name + '.' + format)
-
 					p_saveAsWithCordova(image, name + '.' + format, function(d, e){
-
-						console.log(d,e)
 
 						if (clbk)
 							clbk(d, e)

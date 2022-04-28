@@ -6367,9 +6367,7 @@
 
 	p_saveAsWithCordova = function(file, name, clbk, todownloads){
 
-
 		var storageLocation = "";
-
 
 		switch (device.platform) {
 			case "Android":
@@ -6455,6 +6453,9 @@
 		
 		if(todownloads){
 			window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem){
+
+				console.log(fileSystem)
+
 				onsuccess(fileSystem.root)
 			}, onerror)
 		}

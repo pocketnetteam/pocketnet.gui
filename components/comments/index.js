@@ -1504,6 +1504,8 @@ var comments = (function(){
 					focus : function() {
 						// Scroll comment section to top of the screen
 
+						console.log('isios()', isios())
+
 						if(!isios())
 							actions.scrollToComment(_p.el);
 					},
