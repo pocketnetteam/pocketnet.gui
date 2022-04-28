@@ -6365,28 +6365,25 @@
 		return blob;
 	}
 
-	p_saveAsWithCordova = function(file, name, clbk){
+	p_saveAsWithCordova = function(file, name, clbk, todownloads){
 
 
 		var storageLocation = "";
 
+
 		switch (device.platform) {
 			case "Android":
-				storageLocation = 'file:///storage/emulated/0/';
+				storageLocation = cordova.file.externalDataDirectory; //LocalFileSystem.PERSISTENT
 				break;
 			case "iOS":
 				storageLocation = cordova.file.cacheDirectory;
 				break;
 		}
 
-		window.resolveLocalFileSystemURL(storageLocation, function (fileSystem) {
 
-			fileSystem.getDirectory('Download', {
-				//create: true,
-				exclusive: false
-			},
-			function (directory) {
+		var onsuccess = function (fileSystem) {
 
+			fileSystem.getDirectory('Download', { exclusive: false }, function (directory) {
 
 				directory.getFile(name, { create: true, exclusive: false }, function (entry) {
 					// After you save the file, you can access it with this URL
@@ -6449,25 +6446,21 @@
 
 				});
 
-			}, function (error) {
-
-				if(clbk) clbk(null, error)
-
 			})
+		}
 
-
-
-		}, function (evt) {
-
-			/*dialog({
-				html : "Error: Could not create file, " + evt.target.error.code,
-				class : "one"
-			})*/
-
-
+		var onerror = function (evt) {
 			if(clbk) clbk(null, evt)
-
-		});
+		}
+		
+		if(todownloads){
+			window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem){
+				onsuccess(fileSystem.root)
+			}, onerror)
+		}
+		else{
+			window.resolveLocalFileSystemURL(storageLocation, onsuccess, onerror)
+		}
 
 	}
 

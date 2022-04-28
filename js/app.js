@@ -2034,7 +2034,7 @@ Application = function(p)
 
 					var image = b64toBlob(base64.split(',')[1], 'image/' + ms);	
 
-					console.log(image, name + '.' + format)
+					console.log(image, base64, name + '.' + format)
 
 					p_saveAsWithCordova(image, name + '.' + format, function(d, e){
 
@@ -2042,7 +2042,7 @@ Application = function(p)
 
 						if (clbk)
 							clbk(d, e)
-					})
+					}, true)
 
 				}
 
@@ -2068,7 +2068,11 @@ Application = function(p)
 
 							globalpreloader(true, true)
 
+							console.log(src)
+
 							srcToData(src, function(base64){
+
+								console.log({base64, name})
 
 								imagetojpegifneed({base64, name}).then(({base64, name})=> {
 
