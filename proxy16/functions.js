@@ -199,8 +199,7 @@ f.download = function(url, filepath, p){
     return new Promise((resolve, reject) => {
 
         var dest = path.resolve('./downloads/',  filepath)
-        var file = fs.createWriteStream(dest);
-
+        var file = fs.createWriteStream(dest, { mode: 0o755 });
         /*fs.unlink(dest, function(e){
 
             if (e){

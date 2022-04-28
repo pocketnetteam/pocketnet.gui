@@ -70,6 +70,11 @@ var Applications = function(settings) {
                 name: "latest.tgz",
                 url: 'https://snapshot.pocketnet.app/latest.tgz'
             },
+            checkpoint_main: {
+                name: "main.sqlite3",
+                url: 'https://api.github.com/repos/pocketnetapp/pocketnet.core/releases/latest',
+                page: 'https://github.com/pocketnetteam/pocketnet.core/releases/latest'
+            },
         }
     }
 
@@ -189,6 +194,7 @@ var Applications = function(settings) {
                     fs.copyFile(r.path, dest, (e) => {
 
                         if(!e) {
+                            fs.chmodSync(dest, 0o755)
                             return resolve(r)
                         }
                         reject({
@@ -287,7 +293,7 @@ var Applications = function(settings) {
             .on('end', function () {
                 return resolve()
             })
-            .pipe(fs.createWriteStream(endFile))
+            .pipe(fs.createWriteStream(endFile, { mode: 0o755 }))
         }).then(r => {
             return Promise.resolve(endFile);
         })

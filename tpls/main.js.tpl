@@ -202,9 +202,11 @@ function destroyApp() {
 }
 
 function createTray() {
-    if(app.dock && app.dock.getMenu()){
+
+    if (app && app.dock && app.dock.getMenu && app.dock.getMenu()){
         return;
     }
+
     var defaultImage = nativeImage.createFromPath(defaultTrayIcon);
     var badgeImage = nativeImage.createFromPath(badgeTrayIcon);
 
@@ -636,6 +638,7 @@ function createWindow() {
 
                 if (win) {
                     win.show();
+                    win.webContents.send('nav-message', { msg: 'userpage?id=notifications&report=notifications', type: 'action'})
                 }
             }
 
@@ -657,6 +660,7 @@ function createWindow() {
 
                         if (win) {
                             win.show();
+                            win.webContents.send('nav-message', { msg: 'userpage?id=notifications&report=notifications', type: 'action'})
                         }
                 }
             );
