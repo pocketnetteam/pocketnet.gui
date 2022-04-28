@@ -2,21 +2,25 @@
 const ProxyList =  require("free-proxy");
 const _request = require("request");
 const _axios = require("axios");
-const proxy = new ProxyList();
+const proxyList = require('get-free-https-proxy');
 
 module.exports = function (enable){
+    const apiKey = "NDYzNg.YmmzPw.239Is-uAjA5q63f70JxxK1AwdOQ";
     const self = {};
 
     self.proxyServers = []
     self.proxyHosts = []
     self.disabledHost = []
     self.lastUpdate = Date.now();
-    
-    const listProxy = async ()=>{
-        const data = await proxy.get();
-        return data?.sort((a,b)=>
-            +a.speed_download > +b.speed_download ? -1 : +a.speed_download < +b.speed_download ? 1 : 0
-        )?.slice(0, 3) ?? [];
+
+    self.listProxy = async ()=>{
+
+        const res = await _axios.get(`https://www.proxyscan.io/api/proxy?limit=20&type=http,https`)
+        const data = res.data.sort((a,b)=>
+            +a.Ping > +b.Ping ? 1 : +a.Ping < +b.Ping ? -1 : 0
+        ).map(el=>({host: el.Ip, port:el.Port}))
+        console.log(data)
+        return data?.slice(0, 3) ?? [];
     }
 
     const requestQueue = async (host)=>{
@@ -24,14 +28,14 @@ module.exports = function (enable){
             self.proxyServers = [];
             self.disabledHost = [];
             self.lastUpdate = Date.now();
-            self.proxyServers = await listProxy();
+            self.proxyServers = await self.listProxy();
         }
         if(self.disabledHost.some(el=>el===host)){
             return [{proxy: null}]
         }
 
         if(!self.proxyServers?.length){
-            self.proxyServers = await listProxy();
+            self.proxyServers = await self.listProxy();
         }
 
         if(self.proxyHosts.some(el=>el===host)){
@@ -59,7 +63,7 @@ module.exports = function (enable){
             const axi = queue.proxy ?
                 require('axios').create({
                     proxy: {
-                        host: queue.proxy?.ip,
+                        host: queue.proxy?.host,
                         port: +queue.proxy?.port
                     }
                 }) : _axios;
@@ -84,6 +88,7 @@ module.exports = function (enable){
                 self.disabledHost.push(host)
         }
     }
+    
     self.axios ={
         get : async (...args)=>{
             return await axiosRequest('get', ...args)
@@ -110,7 +115,7 @@ module.exports = function (enable){
             if(queue.proxy){
                 pushHost('proxy', url?.host)
             }
-            const req = queue.proxy ? require('request').defaults({ proxy: queue.proxy?.url}) : _request;
+            const req = queue.proxy ? require('request').defaults({ proxy: `https://${queue?.proxy?.host}:${queue?.proxy?.port}`}) : _request;
             try {
                 const data = await new Promise((resolve, reject) => {
                     req(options, (...args)=>{

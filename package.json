@@ -64,6 +64,7 @@
         "firebase-admin": "^9.3.0",
         "fluent-ffmpeg": "^2.1.2",
         "free-proxy": "^0.2.0",
+        "get-free-https-proxy": "^2.0.2",
         "github-download": "^0.5.0",
         "hash-files": "^1.1.1",
         "iconv-lite": "",
