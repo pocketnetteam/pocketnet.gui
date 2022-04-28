@@ -106,6 +106,9 @@ var postscores = (function(){
 
 						}
 					)
+				}, function(){
+					if (clbk)
+						clbk(false)
 				})
 			},
 		}

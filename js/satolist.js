@@ -14761,7 +14761,7 @@ Platform = function (app, listofnodes) {
         },
 
         upvote : {
-            checkvalue : function(value, clbk){
+            checkvalue : function(value, clbk, fclbk){
                 if(value > 2){
                     if(clbk) clbk()
 
@@ -14794,6 +14794,7 @@ Platform = function (app, listofnodes) {
                     },
 
                     fail: function () {
+                        if(fclbk) fclbk()
                     }
                 })
             },

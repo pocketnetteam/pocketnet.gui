@@ -1690,6 +1690,9 @@ var lenta = (function(){
 						}
 					)
 
+				}, function(){
+					if (clbk)
+						clbk(false)
 				})
 			},
 
