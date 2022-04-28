@@ -2034,7 +2034,12 @@ Application = function(p)
 
 					var image = b64toBlob(base64.split(',')[1], 'image/' + ms);	
 
+					console.log(image, name + '.' + format)
+
 					p_saveAsWithCordova(image, name + '.' + format, function(d, e){
+
+						console.log(d,e)
+
 						if (clbk)
 							clbk(d, e)
 					})
@@ -2068,6 +2073,8 @@ Application = function(p)
 								imagetojpegifneed({base64, name}).then(({base64, name})=> {
 
 									self.mobile.saveImages.save(base64, name, function(d, err){
+
+										console.log("D", d, err)
 
 										globalpreloader(false)
 	
@@ -2103,11 +2110,11 @@ Application = function(p)
 					_el.swipe({
 						longTap : function(){
 
-
+							console.log("T", this)
 							self.mobile.vibration.small()
 
 							var name = this.attr('save')
-							var src = this.attr('src') || this.attr('i')
+							var src = this.attr('original') || this.attr('src') || this.attr('i')
 
 
 							setTimeout(function(){
