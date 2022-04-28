@@ -118,6 +118,7 @@
         <config-file parent="NSCameraUsageDescription" target="*-Info.plist">
             <string>This Application can allow your camera to make avatar or post photo, if you want.</string>
         </config-file>
+        <preference name="KeyboardResize" value="false" />
         <preference name="NativeXHRLogging" value="full" />
         <preference name="AllowUntrustedCerts"  value="true" />
         <preference name="InterceptRemoteRequests" value="all" />
