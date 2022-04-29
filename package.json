@@ -109,6 +109,7 @@
         "save": "^2.4.0",
         "sha1": "^1.1.1",
         "sha2": "^1.0.2",
+        "socks-proxy-agent": "^6.2.0",
         "sortablejs": "^1.8.3",
         "standard": "^11.0.1",
         "svg-captcha": "^1.4.0",
