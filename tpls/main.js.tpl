@@ -21,22 +21,7 @@ var willquit = false;
 const { app, BrowserWindow, Menu, MenuItem, Tray, ipcMain, Notification, nativeImage, dialog, globalShortcut, OSBrowser } = require('electron')
 app.allowRendererProcessReuse = false
 
-const ProxyList = require('free-proxy');
-const proxyList = new ProxyList();
-proxyList.get()
-    .then(function (proxies) {
-        proxies = proxies.sort((a,b)=>{
-            return (+a.speed_download > +b.speed_download) ? -1 : (+a.speed_download < +b.speed_download) ? 1 : 0
-        })
-        if(proxies?.length) {
-            app.commandLine.appendSwitch('proxy-server', proxies[0])
-        }
-    })
-    .catch(function (error) {
-        console.error(error)
-    });
-
-
+app.commandLine.appendSwitch('proxy-server', "socks5://127.0.0.1:9050")
 
 const Badge = require('./js/vendor/electron-windows-badge.js');
 
@@ -52,7 +37,6 @@ const contextMenu = require('electron-context-menu');
 const path = require('path');
 const http = require('http');
 const https = require('https');
-const request = require('request');
 
 contextMenu({
     showSearchWithGoogle : false,
