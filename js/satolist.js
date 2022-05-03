@@ -209,7 +209,8 @@ Platform = function (app, listofnodes) {
         'TSisNge5kisi7cwGRwmUBuZQWZFD8cRoG8',
         'TQEGz5cQQtRad8wo2c1KapvFek9rnuprkD',
         'PKU652wwKYC52WGBJ8EHkA1Mtud8iHWChC',
-        'PD4us1zniwrJv64xhPyhT2mgNrTvPur9YN'
+        'PD4us1zniwrJv64xhPyhT2mgNrTvPur9YN',
+        'PHiNjAhHbxVb6D8oaVVBe8DGigKuN4QFP6'
     ];
 
     if (window.IpcBridge)
@@ -11088,22 +11089,33 @@ Platform = function (app, listofnodes) {
                 var method = 'gettopaccounts';
      
                 p.height = 0;
-                p.tagsfilter = self.app.platform.sdk.categories.gettags()
-                p.tagsexcluded = self.app.platform.sdk.categories.gettagsexcluded()
+                p.tagsfilter = self.app.platform.sdk.categories.gettags();
+                p.tagsexcluded = self.app.platform.sdk.categories.gettagsexcluded();
+
+                p.tagsfilter = _.map(p.tagsfilter, function(t){
+                    return encodeURIComponent(t)
+                })
+
+                p.tagsexcluded = _.map(p.tagsexcluded, function(t){
+                    return encodeURIComponent(t)
+                })
+
                 p.depth || (p.depth = 10000);
                     
                 var parameters = [p.height, p.count, p.lang, p.tagsfilter, p.type, '', p.tagsexcluded, p.depth];
 
                 var s = self.sdk.node.shares;
 
-                s.getex(parameters, function(data, error){
+                // s.getex(parameters, function(data, error){
 
-                    console.log('gettopaccounts result', data, error);
+                //     console.log('gettopaccounts result', data, error);
 
-                    clbk(data, error, true);
+                //     clbk(data, error);
                     
 
-                }, method, rpc)
+                // }, method, rpc)
+
+                clbk();
 
             },
 
@@ -11152,6 +11164,7 @@ Platform = function (app, listofnodes) {
 
                     } else {
 
+                        self.sdk.activity.allowRequestAfterFive = false;
                         clbk(data, error);
 
                     }
@@ -12439,6 +12452,7 @@ Platform = function (app, listofnodes) {
         },
         activity : {
             latest : {},
+            allowRequestAfterFive : true,
 
             getbestaddress : function(){
 
@@ -12448,6 +12462,7 @@ Platform = function (app, listofnodes) {
 
                         return like.countOfFives && like.data.subscribers_count + like.data.subscribes_count;
                     })
+
     
                     var bestAddress = '';
                     var bestCount = 1;
@@ -12455,8 +12470,13 @@ Platform = function (app, listofnodes) {
                     availablesLikes.forEach(function(like){
     
                         if (like.countOfFives > bestCount){
+
                             bestAddress = like.data.address;
                             bestCount = like.countOfFives;
+                            
+                        } else if (!bestAddress && (like.countOfFives === bestCount)){
+
+                            bestAddress = like.data.address;
                         }
                     })
     
@@ -12560,15 +12580,14 @@ Platform = function (app, listofnodes) {
 
                     if (user){
 
-
                         var info = {
                             id : address,
                             index : user.name.toLowerCase(),
                             name : user.name,
                             image : user.image,
                             address : address,
-                            subscribers_count: user.subscribers.length,
-                            subscribes_count : user.subscribes.length,
+                            subscribers_count: user.subscribers_count,
+                            subscribes_count : user.subscribes_count,
                             value: value
                         }
 
@@ -12651,7 +12670,14 @@ Platform = function (app, listofnodes) {
 
                 l[key] = firstEls(l[key], 300)
 
-                self.sdk.activity.save()
+                self.sdk.activity.save();
+
+                if (this.allowRequestAfterFive && info.value === '5'){
+
+                    self.app.platform.sdk.categories.clbks.selected.topusers && self.app.platform.sdk.categories.clbks.selected.topusers();
+                    this.allowRequestAfterFive = false;
+                }
+
             },
             save: function () {
                 localStorage['latestactivity'] = JSON.stringify({
