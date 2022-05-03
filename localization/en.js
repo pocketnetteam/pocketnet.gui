@@ -2223,3 +2223,5 @@ ____loclib.lowstar_reason_3 = "Direct threat of violence"
 ____loclib.lowstar_reason_4 = "Illegal narcotics"
 ____loclib.lowstar2 = "Please do not use 1 and 2 star ratings for other reasons. After the new moderation is released in mid. May you will be able to use low ratings for other reasons"
 ____loclib.lowstaragree = "I confirm that this post contains one of four types of prohibited content"
+
+____loclib.usetor = "Connection via Tor network"

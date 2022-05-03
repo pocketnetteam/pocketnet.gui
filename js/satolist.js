@@ -8567,6 +8567,12 @@ Platform = function (app, listofnodes) {
                     value: true
                 },
 
+                useTor: {
+                    name: self.app.localization.e('usetor'),
+                    id: 'usetor',
+                    type: "BOOLEAN",
+                    value: true
+                },
             },
 
             //self.canuseip
@@ -8683,6 +8689,7 @@ Platform = function (app, listofnodes) {
 
                 if (electron) {
                     c.system.options.autostart = options.autostart
+                    c.system.options.useTor = options.useTor;
                     c.video.options.videoTranscoding = options.videoTranscoding;
                 }
                 else{

@@ -821,3 +821,5 @@ ____loclib.uploadCanceled = "Carga cancelada"
 ____loclib.pleaseTryAgain = "Algo está incorrecto. Por favor, inténtelo de nuevo"
 
 ____loclib.buy = 'Comprar';
+
+____loclib.usetor = "Conexión a través de la red Tor"
