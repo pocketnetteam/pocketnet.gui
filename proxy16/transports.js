@@ -3,12 +3,9 @@
 const _request = require("request");
 const _axios = require("axios");
 const _fetch = require("make-fetch-happen");
-const proxy = new ProxyList();
 const path = require("path");
-const fs = require("fs");
 const { SocksProxyAgent } = require('socks-proxy-agent')
 const child_process = require("child_process");
-const {Notification} = require("electron");
 const httpsAgent = new SocksProxyAgent('socks://127.0.0.1:9050')
 
 const getPathTor = ()=>{
