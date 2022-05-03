@@ -112,7 +112,7 @@
 #recommendedusers .usersHorizontal .user .addressWrapper .userbody .name {
   font-weight: 600;
   font-size: 0.9em;
-  max-width: 120px;
+  max-width: 100px;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
@@ -217,7 +217,7 @@
 #recommendedusers .usersVertical .user .addressTable > div.label .top .name {
   font-weight: 600;
   font-size: 0.9em;
-  max-width: 120px;
+  max-width: 100px;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
