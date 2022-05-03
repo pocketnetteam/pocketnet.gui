@@ -215,7 +215,9 @@ Platform = function (app, listofnodes) {
         'TQEGz5cQQtRad8wo2c1KapvFek9rnuprkD',
         'PKU652wwKYC52WGBJ8EHkA1Mtud8iHWChC',
         'PD4us1zniwrJv64xhPyhT2mgNrTvPur9YN',
-        'PHiNjAhHbxVb6D8oaVVBe8DGigKuN4QFP6'
+        'PHiNjAhHbxVb6D8oaVVBe8DGigKuN4QFP6',
+        'PANkQ994YKvCMiH8pHR8vtKvGqH9DQt8Bc',
+        'PGvRUM7jXqHdUn7Let2QyTi1t2LHq7RgX7'
     ];
 
     if (window.IpcBridge)
