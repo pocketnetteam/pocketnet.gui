@@ -1349,7 +1349,7 @@ var lenta = (function(){
 				var _el = el.share[id]
 				var share = self.app.platform.sdk.node.shares.storage.trx[id];
 
-				if(!_el || !share || !self.app.platform.istest()){
+				if(!_el || !share /*|| !self.app.platform.istest()*/){
 					if(clbk) clbk()
 
 					return

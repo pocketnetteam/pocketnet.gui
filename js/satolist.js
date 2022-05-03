@@ -3303,7 +3303,7 @@ Platform = function (app, listofnodes) {
 
         effectinternal : function(el, name, parameters, clbk){
 
-            if (typeof _Electron != 'undefined' || (!self.istest() && !self.app.test)) {
+            if (typeof _Electron != 'undefined' /*|| (!self.istest() && !self.app.test)*/) {
                 return
             }
 
