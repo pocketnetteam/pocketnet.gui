@@ -10,7 +10,7 @@ const {protocol} = require('electron');
 const ProxyInterface = require('./proxy16/ipc.js')
 const IpcBridge =require('./js/electron/ipcbridge.js')
 
-const { binariesDownloader, transcodingProcessor } = require('./js/electron/transcoding.js');
+const { Bridge: TranscoderBridge } = require('./js/electron/transcoding2.js');
 const { bastyonFsFetchBridge } = require('./js/peertube/bastyon-fs-fetch.js');
 
 const electronLocalshortcut = require('electron-localshortcut');
@@ -173,6 +173,8 @@ function quit(){
     app.quit()
 }
 
+
+
 function destroyApp() {
     proxyInterface.destroy().then(r => {
         quit()
@@ -182,9 +184,11 @@ function destroyApp() {
 }
 
 function createTray() {
-    if(app.dock.getMenu()){
+
+    if (app && app.dock && app.dock.getMenu && app.dock.getMenu()){
         return;
     }
+
     var defaultImage = nativeImage.createFromPath(defaultTrayIcon);
     var badgeImage = nativeImage.createFromPath(badgeTrayIcon);
 
@@ -356,90 +360,6 @@ function initApp() {
 
 }
 
-function closeNotification() {
-    if (nwin) {
-        nwin.destroy()
-
-        nwin = null;
-    }
-}
-
-function notification(nhtml, p) {
-
-    if (is.macOS()) {
-        return
-    }
-
-    const screen = require('electron').screen;
-    const mainScreen = screen.getPrimaryDisplay();
-
-    if (nwin) {
-        nwin.destroy()
-
-        nwin = null;
-    }
-
-    var w =  Math.min(mainScreen.size.width / 3, 510)
-    var h = 135;
-
-    if(!p) p = {}
-    if (p.size == 'medium') h = 110
-    if (p.size == 'small') h = 90
-
-    nwin = new BrowserWindow({
-        width: w,
-        height: h,
-        frame: false,
-        title: 'New notification',
-        x: mainScreen.size.width - w - 5,
-        y: 5,
-        skipTaskbar: true,
-        useContentSize: true,
-        resizable: false,
-        movable: false,
-        backgroundColor: '#020E1B',
-        alwaysOnTop: true,
-        show: false,
-        focusable: false,
-        parent : win,
-        webPreferences: {
-            contextIsolation: false,
-            nodeIntegration: true,
-            enableRemoteModule: true
-        }
-    })
-
-    nwin.loadFile('notifications.html', {
-        search: encodeURIComponent(nhtml)
-    })
-
-
-
-    setTimeout(function() {
-        if (nwin){
-            nwin.show()
-
-            nwin.on('hide', function(){
-                win.webContents.send('win-hide')
-            })
-
-            nwin.on('minimize', function(){
-                win.webContents.send('win-minimize')
-            })
-
-            nwin.on('restore', function(){
-                win.webContents.send('win-restore')
-            })
-        }
-
-
-
-       // nwin.webContents.toggleDevTools()
-    }, 300)
-
-    setTimeout(closeNotification, 15000)
-}
-
 function createWindow() {
     const screen = require('electron').screen;
     const mainScreen = screen.getPrimaryDisplay();
@@ -475,21 +395,52 @@ function createWindow() {
     win.webContents.session.setSpellCheckerLanguages(['en-US', 'ru'])
 
     electronLocalshortcut.register(win, 'f5', function() {
-		win.reload()
-        win.loadFile('index_el.html')
+		refresh()
 	})
 
+
 	electronLocalshortcut.register(win, 'CommandOrControl+R', function() {
-		win.reload()
-        win.loadFile('index_el.html')
+		refresh()
 	})
+
+    electronLocalshortcut.register(win, 'f5', function() {
+		refresh()
+	})
+
+
+	electronLocalshortcut.register(win, 'CommandOrControl+R', function() {
+		refresh()
+	})
+
+    var refresh = function(){
+        win.reload()
+
+        win.loadFile('index_el.html', {
+            search : 'path=' + hexEncode(currenturl)
+        }).then(r => {
+            win.webContents.clearHistory()
+        })
+
+    }
+
+    ipcMain.on('electron-refresh', function(e, p) {
+        refresh()
+    })
+
+
+    ipcMain.on('electron-url-changed', function(e, url) {
+
+        currenturl = url
+
+        win.setTitle('Bastyon')
+
+    })
 
     win.webContents.on('context-menu', (event, params) => {
         const menu = new Menu()
 
         // Add each spelling suggestion
         for (const suggestion of params.dictionarySuggestions) {
-
 
           menu.append(new MenuItem({
             label: suggestion,
@@ -655,13 +606,6 @@ function createWindow() {
 
 
 
-
-    ipcMain.on('electron-notification', function(e, p) {
-
-        notification(p.html, p.settings || {})
-
-    })
-
     ipcMain.on('electron-notification-small', async (e, p) => {
         let pathImage = defaultIcon;
         if(p.image){
@@ -670,27 +614,36 @@ function createWindow() {
         const n = new Notification({ title : p.title, body: p.body, silent :true, icon: pathImage})
         n.onclick = function(){
 
-            if (win) {
-                win.show();
+                if (win) {
+                    win.show();
+                    win.webContents.send('nav-message', { msg: 'userpage?id=notifications&report=notifications', type: 'action'})
+                }
             }
+
+            n.show()
         }
-        n.show()
+        else {
 
-    })
+            notifier.notify(
+                {
+                    appID : 'app.pocketnet.gui',
+                    title: p.title,
+                    message: p.body,
+                    icon: pathImage, // Absolute path (doesn't work on balloons)
+                    wait: true // Wait with callback, until user action is taken against notification, does not apply to Windows Toasters as they always wait or notify-send as it does not support the wait option
+                },
+                function (err, response, metadata) {
 
-    ipcMain.on('electron-notification-close', function(e) {
+                    if (response != 'timeout')
 
-        closeNotification()
+                        if (win) {
+                            win.show();
+                            win.webContents.send('nav-message', { msg: 'userpage?id=notifications&report=notifications', type: 'action'})
+                        }
+                }
+            );
 
-    })
-
-    ipcMain.on('electron-notification-click', function(e) {
-
-        if (win) {
-            win.show();
         }
-
-        closeNotification()
 
     })
 
@@ -919,7 +872,10 @@ function createWindow() {
 
         const jsonData = fs.readFileSync(jsonPath, { encoding:'utf8', flag:'r' });
 
-        videoData.infos = JSON.parse(jsonData);
+        videoData.infos = {
+            thumbnail : '',
+            videoDetails : JSON.parse(jsonData)
+        }
 
         const playlistName = videosList.find(fN => (
             fN.endsWith('.m3u8')
@@ -945,8 +901,7 @@ function createWindow() {
     /**
      * Video transcoding handler
      */
-    binariesDownloader(ipcMain, Storage);
-    transcodingProcessor(ipcMain);
+    new TranscoderBridge(ipcMain, Storage);
 
     proxyInterface = new ProxyInterface(ipcMain, win.webContents)
     proxyInterface.init()
@@ -1096,3 +1051,17 @@ const saveBlobToFile = async (blob)=>{
         });
     });
 };
+
+var hexEncode= function(text){
+    var ch = 0;
+    var result = "";
+    for (var i = 0; i < text.length; i++)
+    {
+        ch = text.charCodeAt(i);
+        if (ch > 0xFF) ch -= 0x350;
+        ch = ch.toString(16);
+        while (ch.length < 2) ch = "0" + ch;
+        result += ch;
+    }
+    return result;
+}

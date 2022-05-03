@@ -13,8 +13,7 @@
 		var address = u.address;
 
 		var _class=''
-		
-		
+	
 
 		if (me && me.relation(address, 'subscribes')){ _class="following" };
 
@@ -28,12 +27,12 @@
 				<div class="addressWrapper" address="<%-address%>">
 					<div class="iconWrapper">
 						
-						<a href="<%-app.platform.api.authorlink(address)%>">
+						<a href="<%-app.platform.api.authorlink(address)%>" mobilepreview='{"id":"channel", "essenseData":{"id":"<%-address%>", "openprofilebutton":true}}'>
 							<div class="icon">
 
 								<% 
 
-									var src = u.avatar;
+									var src = u.i;
 									var name = u.name
 									var letter = name ? name[0] : ''; 
 
@@ -61,7 +60,9 @@
 
 					<div class="userbody">
 						<div class="name">
-							<%- u.name %>							
+							<a href="<%-app.platform.api.authorlink(address)%>" mobilepreview='{"id":"channel", "essenseData":{"id":"<%-address%>", "openprofilebutton":true}}'>
+								<%- u.name %>		
+							</a>					
 						</div>		
 						<% var s = u.subscribers_count || 0 %>
 	

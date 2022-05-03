@@ -88,6 +88,28 @@ var videoCabinet = (function () {
 		};
 
 		var actions = {
+
+			videoadded : function(resultLink){
+				actions.getSingleVideo(resultLink).then((data) => {
+					const { host } =
+						self.app.peertubeHandler.parselink(resultLink);
+
+					const formattedData = {
+						...data,
+						server: host,
+					};
+
+					peertubeServers[host].videos.unshift(formattedData);
+
+					renders.videos(
+						[formattedData],
+						renders.newVideoContainer(true),
+					);
+				});
+
+				actions.getQuota().then(() => renders.quota());
+			},
+
 			async getHosts() {
 				// const serverStructureHosts = await self.app.peertubeHandler.api.proxy
 				//   .roys({ type: 'view' })
@@ -808,7 +830,7 @@ var videoCabinet = (function () {
 					return;
 				}
 
-				if (external) external.container.close();
+				if (external) external.closehack();
 
 				self.nav.api.load({
 					open: true,
@@ -821,28 +843,7 @@ var videoCabinet = (function () {
 						storage: p.storage,
 						value: p.value,
 						currentLink: '',
-						actions: {
-							added: function (resultLink) {
-								actions.getSingleVideo(resultLink).then((data) => {
-									const { host } =
-										self.app.peertubeHandler.parselink(resultLink);
-
-									const formattedData = {
-										...data,
-										server: host,
-									};
-
-									peertubeServers[host].videos.unshift(formattedData);
-
-									renders.videos(
-										[formattedData],
-										renders.newVideoContainer(true),
-									);
-								});
-
-								actions.getQuota().then(() => renders.quota());
-							},
-						},
+						
 
 						closeClbk: function () {
 							external = null;
@@ -851,6 +852,9 @@ var videoCabinet = (function () {
 
 					clbk: function (p, element) {
 						external = element;
+
+						external.addclbk('videocabinet', actions.videoadded)
+						external.addclbk('videocabinet', () => { external = null }, 'closed')
 
 						videoUploadData = element.essenseData;
 					},
@@ -1353,7 +1357,11 @@ var videoCabinet = (function () {
 			},
 
 			destroy: function () {
-				el.windowElement.off('scroll', events.onPageScroll);
+
+				console.log("DESTROY")
+
+				if (el.windowElement)
+					el.windowElement.off('scroll', events.onPageScroll);
 
 				_.each(transcodingIntervals, function (i) {
 					clearInterval(i);
@@ -1367,6 +1375,19 @@ var videoCabinet = (function () {
 					errorcomp.destroy()
 					errorcomp = null
 				}
+
+				if (external){
+
+					if(!external.uploading || !external.uploading())
+						external.closehack()
+					else{
+						external.removeclbk('videocabinet')
+						external.removeclbk('videocabinet', 'closed')
+					}
+
+					external = null
+				}
+
 			},
 
 			init: function (p) {
@@ -1417,6 +1438,15 @@ var videoCabinet = (function () {
 				const videoParameters = {
 					sort: ed.sort,
 				};
+
+				var externallatest = deep(self, 'app.modules.uploadpeertube.module.essenses.uploadpeertube')
+
+
+				if (externallatest && !externallatest.destroyed){
+					external = externallatest
+					external.addclbk('videocabinet', actions.videoadded)
+					external.addclbk('videocabinet', () => { external = null }, 'closed')
+				}
 
 				self.app.platform.sdk.user
 					.mystatisticnov()
@@ -1486,7 +1516,7 @@ var videoCabinet = (function () {
 				},
 				offScroll: true,
 				noInnerScroll: true,
-				class: 'videoCabinet normalizedmobile',
+				class: 'videoCabinet normalizedmobile nobfilter maxheight showbetter',
 				allowHide: false,
 				noCloseButton: true,
 				noButtons: true,

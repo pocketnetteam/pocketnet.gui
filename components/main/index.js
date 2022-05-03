@@ -59,7 +59,7 @@ var main = (function(){
 				link : "index?r=saved",
 				label : () => self.app.localization.e('downloaded'),
 				if : function(){
-					return window.cordova
+					return self.app.savesupported()
 				},
 				value : 'saved'
 			},
@@ -129,10 +129,7 @@ var main = (function(){
 
 					lastStickyRefresh = ns
 
-					if(alv){
-						el.panel.hcSticky('refresh');
-						el.leftpanel.hcSticky('refresh');
-					}
+				
 				}
 					
 			},
@@ -668,6 +665,7 @@ var main = (function(){
 
 				self.app.user.isState(function(state){
 
+					console.log('(self.app.test || self.app.platform.istest())', (self.app.test || self.app.platform.istest()))
 				
 					self.nav.api.load({
 						open : true,
@@ -689,22 +687,23 @@ var main = (function(){
 							observe : actions.currentModeKey(),
 							page : 0,
 
-							recommendedUsers : isMobile(),
-							recommendedUsersCount : isMobile() ? 15 : 3,
+							//recommendedUsers : self.app.mobileview,
+							//recommendedUsersCount : self.app.mobileview ? 15 : 3,
 							//includesub : true,
 							includeboost : self.app.boost,
 							optimize : self.app.mobileview,
-							extra :/* state && isMobile() ? [
+							extra : (self.app.test || self.app.platform.istest()) && state && isMobile() ? [
 								{
 									key : 'recommendedusers',
 									position : rand(1,2),
 									essenseData : () => {
 										return {
-											recommendedUsersCount : 15
+											recommendedUsersCount : 15,
+											usersFormat : 'usersHorizontal'
 										}
 									}
 								}
-							] :*/ [],
+							] : [],
 
 							afterload : function(ed, s, e){
 
@@ -725,26 +724,31 @@ var main = (function(){
 								
 								if (upbackbutton) upbackbutton.destroy()
 
-								setTimeout(function(){
-									upbackbutton = self.app.platform.api.upbutton(el.upbackbutton, {
-										top : function(){
-											return '65px'
-										},
-										rightEl : el.c.find('.lentacellsvi'),
-										scrollTop : 0,
-										click : function(a){
-											actions.backtolenta()
-										},
-
-										icon : '<i class="fas fa-chevron-left"></i>',
-										class : 'bright',
-										text : 'Back'
-									})	
-								}, 50)
+								if(typeof _Electron == 'undefined' || !_Electron){
+									setTimeout(function(){
 									
-								setTimeout(function(){
-									upbackbutton.apply()
-								},300)
+										upbackbutton = self.app.platform.api.upbutton(el.upbackbutton, {
+											top : function(){
+												return '65px'
+											},
+											rightEl : el.c.find('.lentacellsvi'),
+											scrollTop : 0,
+											click : function(a){
+												actions.backtolenta()
+											},
+	
+											icon : '<i class="fas fa-chevron-left"></i>',
+											class : 'bright',
+											text : 'Back'
+										})	
+									}, 50)
+										
+									setTimeout(function(){
+										upbackbutton.apply()
+									},300)
+								}
+
+								
 
 								renders.post(id)
 
@@ -804,7 +808,7 @@ var main = (function(){
 
 					if (openedpost){
 						
-						openedpost.destroy()
+						openedpost.clearessense()
 						openedpost = null
 					}
 
@@ -813,6 +817,8 @@ var main = (function(){
 				}
 
 				else{
+
+					//console.log("OPEN PAPI", id)
 					
 					self.app.platform.papi.post(id, el.c.find('.renderposthere'), function(e, p){
 						openedpost = p
@@ -826,8 +832,11 @@ var main = (function(){
 						opensvi : function(id){
 
 							if (openedpost){
+
+								//console.log('clearessense')
 						
-								openedpost.destroy()
+								//openedpost.destroy()
+								openedpost.clearessense()
 								openedpost = null
 							}
 		
@@ -861,27 +870,7 @@ var main = (function(){
 
 		var initstick = function(){
 			return
-			if(!self.app.mobileview && !hsready){
-
-				var t1 = 75
-				var t2 = 75
-
-				if (el.leftpanel)
-					el.leftpanel.hcSticky({
-						stickTo: '#main',
-						top : t1,
-						bottom : 122
-					});
-
-				if (el.panel)
-					el.panel.hcSticky({
-						stickTo: '#main',
-						top : t2,
-						bottom : 122
-					});
-
-				hsready = true
-			}
+		
 		}
 
 		var initEvents = function(){

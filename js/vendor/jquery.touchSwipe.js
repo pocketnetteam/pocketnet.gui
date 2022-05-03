@@ -640,8 +640,11 @@
       }
       //Else this is the desktop, so stop the browser from dragging content
       else if (options.preventDefaultEvents !== false) {
-        if(jqEvent.cancelable !== false)
+        if(jqEvent.cancelable !== false){
+          jqEvent.stopPropagation();
           jqEvent.preventDefault(); //call this on jq event so we are cross browser
+        }
+          
       }
 
       //clear vars..
@@ -867,7 +870,9 @@
       } else if (options.triggerOnTouchEnd || (options.triggerOnTouchEnd === false && phase === PHASE_MOVE)) {
         //call this on jq event so we are cross browser
         if (options.preventDefaultEvents !== false && jqEvent.cancelable !== false) {
+          jqEvent.stopPropagation();
           jqEvent.preventDefault();
+          
         }
         phase = PHASE_END;
         triggerHandler(event, phase);

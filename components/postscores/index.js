@@ -15,7 +15,7 @@ var postscores = (function(){
 
 				if (share.address == self.user.address.value) return
 
-				if (value <= 3){
+				if (value <= 3 && !self.app.test){
 					if(self.app.platform.sdk.user.scamcriteria()){
 
 						if (clbk)
@@ -45,44 +45,71 @@ var postscores = (function(){
 					}
 				}
 
-				var upvoteShare = share.upvote(value);
+				if (value > 4){
 
-				if(!upvoteShare){
-					self.app.platform.errorHandler('4', true)	
+					var reason = null
 
-					if (clbk)
-						clbk(false)
+					if (self.app.platform.sdk.user.newuser()){
+						reason = 'n'
+					}
 
-					return
+					if (share.scnt == '0') reason = 's'
+
+					if (reason) {
+						setTimeout(function(){
+							if(!el.c) return
+								self.app.platform.effects.templates.commentstars(el.c, value, function(){
+									
+								})
+						}, 300)
+					}
+					
 				}
 
-				self.sdk.node.transactions.create.commonFromUnspent(
+				self.app.platform.sdk.upvote.checkvalue(value, function(){
 
-					upvoteShare,
+					var upvoteShare = share.upvote(value);
 
-					function(tx, error){
+					if(!upvoteShare){
+						self.app.platform.errorHandler('4', true)	
 
-						topPreloader(100)
+						if (clbk)
+							clbk(false)
 
-						if(!tx){							
-
-							share.myVal = null;		
-
-							self.app.platform.errorHandler(error, true)	
-
-							if (clbk)
-								clbk(false)
-							
-						}
-						else
-						{
-
-							if (clbk)
-								clbk(true)
-						}
-
+						return
 					}
-				)
+
+					self.sdk.node.transactions.create.commonFromUnspent(
+
+						upvoteShare,
+
+						function(tx, error){
+
+							topPreloader(100)
+
+							if(!tx){							
+
+								share.myVal = null;		
+
+								self.app.platform.errorHandler(error, true)	
+
+								if (clbk)
+									clbk(false)
+								
+							}
+							else
+							{
+
+								if (clbk)
+									clbk(true)
+							}
+
+						}
+					)
+				}, function(){
+					if (clbk)
+						clbk(false)
+				})
 			},
 		}
 

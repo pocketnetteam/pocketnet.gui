@@ -15,7 +15,7 @@ var Remote = function(app){
 
 	var self = this;
 	var cache = [];
-	
+
 	var loading = {};
 	var errors = {};
 	var ogcache = [];
@@ -42,7 +42,7 @@ var Remote = function(app){
 	var gethead = function(body){
 
 		if(!body) return ''
-		
+
 		var match = body.toLowerCase().match(/<head>[\s\S]*?<\/head>/gi)
 
 
@@ -73,9 +73,9 @@ var Remote = function(app){
 					var applyencoding = {
 						//'cp1251' : true
 					}
-					
+
 					var encoding = autoenc.detectEncoding(r).encoding;
-	
+
 					if (encoding && applyencoding[encoding]){
 
 						//r = iconv.decode(r, encoding).toString();
@@ -101,7 +101,7 @@ var Remote = function(app){
 			  .catch(err => error(err));
 		},
 		url : function(uri, clbk){
-	    
+
 			self.transports.request({
 				url : uri,
 				timeout: 30000
@@ -110,7 +110,7 @@ var Remote = function(app){
 
 				var ishtml = response && response.headers && response.headers['content-type'] && response.headers['content-type'].indexOf('html') > -1;
 
-			  
+
 				if(!error)
 				{
 					var size = 1 *  1024 * 1024
@@ -137,7 +137,7 @@ var Remote = function(app){
 			if(errors[link]){
 
 				if (clbk)
-					clbk(null)	
+					clbk(null)
 
 				return
 			}
@@ -147,7 +147,7 @@ var Remote = function(app){
 			if (html){
 
 				if (clbk)
-					clbk(html.html)		
+					clbk(html.html)
 			}
 			else
 			{
@@ -164,12 +164,12 @@ var Remote = function(app){
 
 						if (html){
 							if (clbk)
-								clbk(html, true)	
+								clbk(html, true)
 						}
 						else
 						{
 							if (clbk)
-								clbk(null)	
+								clbk(null)
 						}
 
 					}, 100, 10000)
@@ -187,17 +187,17 @@ var Remote = function(app){
 							if(html.length > 500)
 							{
 								if (clbk)
-									clbk(html)						
+									clbk(html)
 							}
 							else{
 								if (clbk)
 									clbk(null)
-							}				
+							}
 
 						}
 						else
 						{
-							
+
 							if (clbk)
 								clbk(null)
 						}
@@ -205,10 +205,10 @@ var Remote = function(app){
 				}
 
 
-				
+
 			}
 
-			
+
 		},
 
 		cache : function(url){
@@ -221,7 +221,7 @@ var Remote = function(app){
 			if(errors[uri]){
 
 				if (clbk)
-					clbk({})	
+					clbk({})
 
 				return
 			}
@@ -230,7 +230,7 @@ var Remote = function(app){
 
 			if (dt){
 				if (clbk)
-					clbk(dt.og)	
+					clbk(dt.og)
 
 				return
 			}
@@ -246,9 +246,9 @@ var Remote = function(app){
 					var dt = load.fromogcache(uri) || {}
 
 					if (clbk)
-						clbk(dt.og || {})	
+						clbk(dt.og || {})
 
-				
+
 				}, 100, 10000)
 			}
 			else{
@@ -262,17 +262,17 @@ var Remote = function(app){
 								ogcache = _.last(ogcache, 3000)
 							}
 
-							
-		
+
+
 							delete ogloading[uri]
-		
+
 							ogcache.push({
 								url : uri,
 								og : og
 							})
-		
+
 							if (clbk)
-								clbk(og)	
+								clbk(og)
 						})
 					}
 					else{
@@ -280,21 +280,21 @@ var Remote = function(app){
 						if (ogcache.length > 3500){
 							ogcache = _.last(ogcache, 3000)
 						}
-		
+
 						delete ogloading[uri]
-	
+
 						ogcache.push({
 							url : uri,
 							og : og
 						})
 
-						
+
 						if (clbk)
 							clbk(og)
 					}
 				})
 
-				
+
 			}
 		},
 
@@ -317,7 +317,7 @@ var Remote = function(app){
 						ogParser(gethead(r), function(error, data) {
 
 
-		
+
 							if (error){
 								errors[uri] = error
 
@@ -329,12 +329,12 @@ var Remote = function(app){
 
 								return
 							}
-			
+
 							if(!data) data = {}
-			
-			
-							var og = {}		
-			
+
+
+							var og = {}
+
 							if (data.og){
 								og.type = data.og.type
 								og.image = f.deep(data.og, 'image.url')
@@ -342,37 +342,37 @@ var Remote = function(app){
 								og.title = data.og.title
 								og.description = data.og.description
 							}
-			
-							
+
+
 							if (data.meta){
 								og.descriptionPage = data.meta.description
-			
+
 								if(!og.image){
 									og.image = f.deep(data.meta, 'thumbnail.url') || data.meta.thumbnailUrl
 								}
-			
+
 								if(!og.title){
 									og.title = data.meta.name
 								}
-								
+
 							}
-			
+
 							og.titlePage = data.title || ""
-			
-			
+
+
 							/*if(!og.video){
 								og.video = $('meta[property="og:video:url"]').attr('content')
 							}*/
-			
+
 							if (og.type || og.image || og.video || og.title || og.description || og.descriptionPage || og.titlePage){
-			
+
 								if(clbk) clbk(og)
-			
+
 								return
 							}
-			
+
 							if(clbk) clbk({})
-			
+
 						})
 					}
 
@@ -382,7 +382,7 @@ var Remote = function(app){
 						if(clbk) clbk({})
 					}
 
-					
+
 				}
 
 				else{
@@ -391,15 +391,15 @@ var Remote = function(app){
 					if(clbk) clbk({})
 				}
 
-				
+
 			})
-			
+
 		},
 
 		ogs : function(uri, clbk){
 
 			if(!uri){
-				
+
 				if (clbk){
 					clbk({})
 				}
@@ -497,10 +497,10 @@ var Remote = function(app){
 		if (clbk)
 			clbk(window, html)
 
-		
+
 	}
 
-	
+
 	self.jsdom = function(html, clbk){
 		try{
 
@@ -516,9 +516,9 @@ var Remote = function(app){
 				{
 					clbk(window, html);
 				}
-				
 
-			
+
+
 			})
 		}
 
@@ -549,7 +549,7 @@ var Remote = function(app){
 						html : html
 					})
 				}
-				
+
 				self.jsdom(html, clbk)
 			}
 
@@ -563,21 +563,21 @@ var Remote = function(app){
 			}
 
 
-			
+
 
 		})
 	}
 
 	self.og = function($){
 
-		var og = {}		
+		var og = {}
 
 		og.type = $('meta[property="og:type"]').attr('content')
 		og.image = $('meta[property="og:image"]').attr('content')
 		og.video = $('meta[property="og:video"]').attr('content')
 		og.title = $('meta[property="og:title"]').attr('content')
 		og.description = $('meta[property="og:description"]').attr('content')
-	
+
 		og.descriptionPage = $('meta[name="description"]').attr('content')
 		og.titlePage = $('title').html()
 
@@ -600,7 +600,7 @@ var Remote = function(app){
 		if (response) {
 			if (clbk)
 				clbk(response)
-				
+
 			return
 		}
 
@@ -616,12 +616,12 @@ var Remote = function(app){
 
 				if (response){
 					if (clbk)
-						clbk(response)	
+						clbk(response)
 				}
 				else
 				{
 					if (clbk)
-						clbk(null)	
+						clbk(null)
 				}
 
 			}, 100, 10000)
@@ -636,7 +636,7 @@ var Remote = function(app){
 
 				clbk(response || null)
 
-				
+
 			}, false, options)
 		}
 
@@ -646,7 +646,7 @@ var Remote = function(app){
 	self.make = function(url, clbk){
 
 		self.get(url, function(window, html){
-		
+
 			if(html && window.$){
 				if(window.$){
 					var og = self.og(window.$)
@@ -693,14 +693,13 @@ var Remote = function(app){
 		ogloading = {};
 	}
 
-
 	self.info = function(){
 		return {
-			size : JSON.stringify(cache).length +  JSON.stringify(ogcache).length + 
-				JSON.stringify(errors).length + 
-				JSON.stringify(loading).length + 
+			size : JSON.stringify(cache).length +  JSON.stringify(ogcache).length +
+				JSON.stringify(errors).length +
+				JSON.stringify(loading).length +
 				JSON.stringify(ogloading).length
-				
+
 		}
 	}
 

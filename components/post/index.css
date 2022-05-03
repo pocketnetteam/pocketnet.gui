@@ -11,7 +11,7 @@
   background: rgb(var(--background-main));
 }
 #post .jsPlayerLoading,
-#post .video-js {
+#post .video-js:not(.vjs-fullscreen) {
   max-height: 80vh;
   max-height: calc(var(--vh, 1vh) * 80);
 }

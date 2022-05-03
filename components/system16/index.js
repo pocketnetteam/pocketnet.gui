@@ -3726,11 +3726,14 @@ var system16 = (function(){
 		var makers = {
 
 			panel : function(){
-				renders.nodescontenttable(el.c)
-				renders.peertubeinstancestable(el.c)
-				renders.webadminscontent(el.c)
-				renders.webdistributionwallets(el.c)
-				renders.webserveradmin(el.c)
+				if(el.c){
+					renders.nodescontenttable(el.c)
+					renders.peertubeinstancestable(el.c)
+					renders.webadminscontent(el.c)
+					renders.webdistributionwallets(el.c)
+					renders.webserveradmin(el.c)
+				}
+				
 			},
 
 			stats : function(update){

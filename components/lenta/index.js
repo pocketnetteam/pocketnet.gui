@@ -15,8 +15,8 @@ var lenta = (function(){
 		var el = {};
 		var mid = p.mid;
 		var making = false, ovf = false;
-		var w, essenseData, recomended = [], recommended, mestate, initedcommentes = {}, canloadprev = false,
-		video = false, isotopeinited = false, videosVolume = 0, fullscreenvideoShowing = null, loadedcachedHeight, showRecommendedUsers = true, recommendedusers = null;
+		var w, essenseData, recomended = [], initialized, recommended, mestate, initedcommentes = {}, canloadprev = false,
+		video = false, isotopeinited = false, videosVolume = 0, fullscreenvideoShowing = null, loadedcachedHeight;
 
 		var subloaded = false
 
@@ -284,6 +284,10 @@ var lenta = (function(){
 			newmaterials : function(data){
 				if(making || essenseData.author || essenseData.txids) return
 
+				if(initialized && initialized.addSeconds(45) > (new Date())) {
+					return
+				}
+
 				if(!data) data = {}
 
 				if(recommended == 'sub'){
@@ -385,8 +389,6 @@ var lenta = (function(){
 
 			rebuilddelay : function(){
 
-				showRecommendedUsers = true;
-				recommendedusers = null;
 
 				if (el.c)
 					el.c.addClass('rebuilding')
@@ -615,8 +617,6 @@ var lenta = (function(){
 
 									boostplaces[position] = true
 
-									console.log("RENDER BOOST", bst)
-		
 									renders.shares([bst], function(){
 										renders.sharesInview([bst], function(){
 											
@@ -762,6 +762,7 @@ var lenta = (function(){
 			initVideoLight: function(share, clbk, shadow){
 				//js-player-dummy
 
+				if(!el.share[share.txid]) return
 
 				var button = el.share[share.txid].find('.initvideoplayer')
 
@@ -1430,6 +1431,7 @@ var lenta = (function(){
 					
 					if(!players[id]) return;
 
+					self.app.actions.closepip()
 
 					fullscreenvideoShowed = id;
 
@@ -1616,7 +1618,7 @@ var lenta = (function(){
 					return
 				}
 
-				if(value <= 3){
+				if(value <= 3 && !self.app.test){
 					if(self.app.platform.sdk.user.scamcriteria()){
 						if(clbk)
 							clbk(false)
@@ -1645,48 +1647,53 @@ var lenta = (function(){
 					}
 				}
 
-				
+				self.app.platform.sdk.upvote.checkvalue(value, function(){
 
-				var upvoteShare = obj.upvote(value);
+					var upvoteShare = obj.upvote(value);
 
-				if(!upvoteShare){
-					self.app.platform.errorHandler('4', true)	
+					if(!upvoteShare){
+						self.app.platform.errorHandler('4', true)	
 
-					if(clbk)
-						clbk(false)
+						if(clbk)
+							clbk(false)
 
-					return
-				}
-
-				self.sdk.node.transactions.create.commonFromUnspent(
-
-					upvoteShare,
-
-					function(tx, error){
-
-						topPreloader(100)
-
-						if(!tx){				
-
-							upvoteShare.myVal = null;	
-							obj.myVal = 0;	
-
-							self.app.platform.errorHandler(error, true)	
-
-
-							if(clbk)
-								clbk(false)
-							
-						}
-						else
-						{
-
-							if (clbk)
-								clbk(true)
-						}
-
+						return
 					}
-				)
+
+					self.sdk.node.transactions.create.commonFromUnspent(
+
+						upvoteShare,
+
+						function(tx, error){
+
+							topPreloader(100)
+
+							if(!tx){				
+
+								upvoteShare.myVal = null;	
+								obj.myVal = 0;	
+
+								self.app.platform.errorHandler(error, true)	
+
+
+								if(clbk)
+									clbk(false)
+								
+							}
+							else
+							{
+
+								if (clbk)
+									clbk(true)
+							}
+
+						}
+					)
+
+				}, function(){
+					if (clbk)
+						clbk(false)
+				})
 			},
 
 			block : function(address, clbk){
@@ -2647,9 +2654,8 @@ var lenta = (function(){
 				el = null
 			},
 
-			recommendedusers : function(){
+			/*recommendedusers : function(){
 				
-				showRecommendedUsers = false;
 
 				self.nav.api.load({
 
@@ -2671,7 +2677,7 @@ var lenta = (function(){
 				})
 
 
-			},
+			},*/
 
 			loadprev : function(){
 
@@ -2715,6 +2721,8 @@ var lenta = (function(){
 					}
 
 					if (p.selector) _el = el.c.find(selector);
+
+					console.log("RENDER EXTRA", _el)
 
 					if (_el && _el.length){
 
@@ -3233,7 +3241,6 @@ var lenta = (function(){
 						shares : shares || [],
 						index : p.index || 0,
 						video : video || essenseData.videomobile,
-						showRecommendedUsers : showRecommendedUsers,
 						boosted : p.boosted
 					},
 					animation : false,
@@ -3241,13 +3248,7 @@ var lenta = (function(){
 
 				}, function(_p){
 
-					// if (tpl ==='groupshares' && !essenseData.video && essenseData.recommendedUsers && !recommendedusers){
-
-					// 	el.recommendedusers = _p.el.find('.recommendeduserscnt');
-			
-					// 	renders.recommendedusers();
-						
-					// }
+					
 			
 					if (_p.inner == append){
 						sharesInview = sharesInview.concat(shares)	
@@ -3558,7 +3559,6 @@ var lenta = (function(){
 						})
 	
 						essenserenderclbk()
-						
 						images.imagesLoadedPN({ imageAttr: true }, function(image) {
 	
 							_.each(image.images, function(i, index){
@@ -3809,8 +3809,6 @@ var lenta = (function(){
 
 				self.app.platform.sdk.node.shares.loadvideoinfoifneed(allshares, video, function(){
 
-					console.log('allshares', allshares)
-
 					self.app.platform.sdk.node.shares.users(allshares, function(l, error2){
 
 						countshares = countshares + allshares.length
@@ -4034,6 +4032,7 @@ var lenta = (function(){
 
 			shares : function(clbk, cache){
 
+
 				if (loading || (ended && (!essenseData.contents || essenseData.txids.length == _.toArray(shareInitedMap).length) )) return
 
 
@@ -4105,6 +4104,7 @@ var lenta = (function(){
 									}
 								}						
 							}
+
 
 							var count = 10
 
@@ -4486,7 +4486,8 @@ var lenta = (function(){
 	
 								s.time = new Date()
 	
-								shareInitedMap[s.txid] = false
+								
+								actions.destroyShare(s)
 	
 								renders.sharesInview([s], function(){
 									
@@ -4587,6 +4588,7 @@ var lenta = (function(){
 		}
 
 		var make = function(clbk, _p){
+			initialized = new Date()
 
 			making = true;
 
@@ -4744,7 +4746,6 @@ var lenta = (function(){
 						load.boosted(function(shares){
 							boosted = shares
 
-							console.log('boosted', boosted)
 
 							actions.includeboost()
 						})
@@ -4790,6 +4791,7 @@ var lenta = (function(){
 
 			getdata : function(clbk, p){
 
+
 				ovf = false
 
 				newmaterials = 0;
@@ -4832,11 +4834,11 @@ var lenta = (function(){
 				canloadprev = !!!essenseData.txids || false
 				
 				video = essenseData.video || false
+
 				
 				self.app.platform.sdk.ustate.me(function(_mestate){
 
 					mestate = _mestate || {}
-
 
 					var data = {
 						beginmaterial : beginmaterial,
@@ -4888,6 +4890,7 @@ var lenta = (function(){
 			},
 
 			destroy : function(){
+				initialized = null
 
 				delete self.app.events.delayedscroll['videos' + mid]
 				delete self.app.events.delayedscroll['videosinit' + mid]
@@ -4932,6 +4935,7 @@ var lenta = (function(){
 				recommendations = {}
 				recommendationsMaking = {}
 
+
 				_.each(_reposts, function(p){
 					if (p)
 						p.clearessense()
@@ -4965,10 +4969,7 @@ var lenta = (function(){
 					parallax = null
 				}
 			
-				if (recommendedusers){
-					recommendedusers.destroy();
-					recommendedusers = null;
-				}
+				
 
 				app.actions.playingvideo(null);
 
@@ -5052,7 +5053,7 @@ var lenta = (function(){
 				el.lentacnt = el.c.find('.lentacell .cnt');
 				el.w = essenseData.window || w;
 
-
+				
 
 				el.share = {};
 

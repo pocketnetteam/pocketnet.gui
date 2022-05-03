@@ -63,6 +63,11 @@ var Applications = function(settings) {
                 name: "latest.tgz",
                 url: 'https://snapshot.pocketnet.app/latest.tgz'
             },
+            checkpoint_main: {
+                name: "main.sqlite3",
+                url: 'https://api.github.com/repos/pocketnetapp/pocketnet.core/releases/latest',
+                page: 'https://github.com/pocketnetteam/pocketnet.core/releases/latest'
+            },
         }
     }
 
@@ -90,7 +95,7 @@ var Applications = function(settings) {
 
             return Promise.reject('notfound')
         })
-           
+
     }
 
     self.current = function(){
@@ -133,8 +138,8 @@ var Applications = function(settings) {
 
 
             db.remove({}, { multi: true }, function (err, numRemoved) {
-                
-                if (err){   
+
+                if (err){
                     reject({
                         code : 500,
                         error : "dbsave"
@@ -171,7 +176,7 @@ var Applications = function(settings) {
             })
         })
 
-        
+
     }
 
     self.install = function(key, dest, save){
@@ -182,19 +187,20 @@ var Applications = function(settings) {
                     fs.copyFile(r.path, dest, (e) => {
 
                         if(!e) {
+                            fs.chmodSync(dest, 0o755)
                             return resolve(r)
                         }
                         reject({
                             code : 500,
                             error : 'cantcopy'
                         })
-                   
+
                     });
                 }
                 catch(e){
                     return Promise.reject()
                 }
-                
+
             }).catch(e => {
                 reject({
                     code : 500,
@@ -230,7 +236,7 @@ var Applications = function(settings) {
                 }
 
             })
-            
+
         }).then(p => {
 
             r.path = p
@@ -247,7 +253,7 @@ var Applications = function(settings) {
 
         return new Promise(function(resolve, reject) {
             let req = self.transports.request({url:meta[key].url})
-            
+
             progress(req, {
                 throttle: 500,                    // Throttle the progress event to 2000ms, defaults to 1000ms
                 // delay: 1000,                       // Only start to emit after 1000ms delay, defaults to 0ms
@@ -280,7 +286,7 @@ var Applications = function(settings) {
             .on('end', function () {
                 return resolve()
             })
-            .pipe(fs.createWriteStream(endFile))
+            .pipe(fs.createWriteStream(endFile, { mode: 0o755 }))
         }).then(r => {
             return Promise.resolve(endFile);
         })

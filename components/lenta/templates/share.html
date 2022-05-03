@@ -506,10 +506,9 @@ var arranges = {
 									
 								</div>
 
-								<% const isElectron = (typeof _Electron !== 'undefined' && !!window.electron); %>
-								<% const isSaveSupported = (window.cordova && !isios()); %>
+							
 
-								<% if(isSaveSupported && share.itisvideo()) {
+								<% if(app.savesupported() && share.itisvideo()) {
 
 									var status = app.platform.sdk.localshares.status(share.txid)
 									
@@ -554,13 +553,16 @@ var arranges = {
 									</div>
 
 								<% } %>
+
 								<% if(!lockedaccount) {%>
-								<div class="item pkoin right unselectedtable">
-									<img src="img/pocketnet_logo_white.svg" alt="">
-									<span class='workstation'>
-										PKOIN
-									</span>
-								</div>
+									<% if(!my || app.boost) {%>
+									<div class="item pkoin right unselectedtable">
+										<img src="img/pocketnet_logo_white.svg" alt="">
+										<span class='workstation'>
+											PKOIN
+										</span>
+									</div>
+									<% } %>
 								<% } %>
 								
 							</div>

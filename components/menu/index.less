@@ -33,6 +33,7 @@
 		top: 0;
 		height: 65px;
 		z-index: 20;
+		contain: strict;
 		background: rgb(var(--background-total-theme));
 		
 		// electronnav
@@ -140,6 +141,9 @@
 			}
 		}
 
+		.menuWrapper{
+			contain: none;
+		}
 	}
 
 	&.menupanelactive{
@@ -260,12 +264,12 @@
 				display: flex;
 				align-items: center;
 				justify-content: center;
-				color : rgb(var(--color-txt-ac));
+				color : rgb(var(--neutral-grad-1));
 				box-sizing: border-box;
-				padding: 0 20px;
+				padding: 0 @rhythm;
 				font-size: 0.9em;
 				& > div{
-					margin: 0 10px;
+					margin: 0 @rhythm;
 					cursor: pointer;
 					&:hover{
 						color : rgb(var(--color-txt-gray));
@@ -274,12 +278,12 @@
 			}
 			
 			&.notificationsWrapper{
-				margin-right : 2 * @rhythm;
+				margin-right : @rhythm;
 			}
 
 			&.gethotpostsWrapper{
 				color : rgb(var(--color-txt-orange));	
-				margin-left : 4 * @rhythm;
+				margin-left : 2 * @rhythm;
 
 				i{
 					font-size: 1.1em;

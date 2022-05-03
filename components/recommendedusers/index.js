@@ -9,11 +9,9 @@ var recommendedusers = (function(){
 		var primary = deep(p, 'history');
 
 		var el;
-		var addresses = [],
-			extra = null,
-			onlytags = false;
+		var addresses = [];
 
-		var me = deep(app, 'platform.sdk.users.storage.' + self.app.user.address.value.toString('hex'))
+		var me = deep(app, 'platform.sdk.users.storage.' + self.app.user.address.value.toString('hex'));
 
 		var filterSubscribes = function(u){
 
@@ -22,58 +20,49 @@ var recommendedusers = (function(){
 
 
 						
-		var shuffle = function(array) {
-			let currentIndex = array.length,  randomIndex;
+		var prepareUsers = function(array) {
 		  
-			while (currentIndex != 0) {
-		  
-			  randomIndex = Math.floor(Math.random() * currentIndex);
-			  currentIndex--;
-		  
-			  [array[currentIndex], array[randomIndex]] = [
-				array[randomIndex], array[currentIndex]];
-			}
-
-		  
-			return array.slice(0, p.essenseData.recommendedUsersCount || 3);
+			return _.shuffle(array).slice(0, p.essenseData.recommendedUsersCount || 3);
 		}
 
 		var actions = {
 			
-			getRecommendedAccountsByTags : function(clbk){
+			getRecommendedAccounts : function(clbk){
 
-				self.app.platform.sdk.users.getRecommendedAccountsByTags(function(c, error){
 
-					onlytags = true;
+				self.app.platform.sdk.users.getRecommendedAccounts(function(c, error){
 
-					
+
 					self.app.platform.sdk.categories.clbks.excluded.topusers =
 					self.app.platform.sdk.categories.clbks.tags.topusers =
 					self.app.platform.sdk.categories.clbks.selected.topusers = function(data){
 
-						el.c.hide();
-						el.users.empty();
-						addresses = [];
-						state.load(renders.page);
+						if (self.sdk.activity.allowRequestAfterFive){
+
+							el.c.hide();
+							el.users.empty();
+							addresses = [];
+							state.load(renders.page);
+
+						}
 						
 					}
-
+	
 					self.app.platform.sdk.categories.clbks.tags.topusersRemove = function(data){
 
 						addresses = [];
-						onlytags = false;
 						
 					}
 
 
-					if (!error && c.length){
+					if (!error && c && c.length){
 
 						el.c.show();
 
-						addresses = c;
+						addresses = prepareUsers(c.filter(filterSubscribes));
 
 						if (clbk){
-							clbk(shuffle(addresses).filter(filterSubscribes))
+							clbk(addresses);
 						}
 
 					}
@@ -182,6 +171,7 @@ var recommendedusers = (function(){
 
 				el.loader.fadeOut();
 
+				el.users.empty();
 				
 				self.shell({
 
@@ -189,7 +179,6 @@ var recommendedusers = (function(){
 					el :   el.users,
 					data : {
 						addresses : addresses,
-						extra : extra
 					},
 
 					inner : append
@@ -240,56 +229,8 @@ var recommendedusers = (function(){
 			},
 			load : function(clbk){
 
-
-				if (addresses.length){
-
-					el.c.show();
-
-					if (clbk){
-						clbk(shuffle(addresses));
-					}
-
-				} else {
-					
-					if (onlytags){
-
-						actions.getRecommendedAccountsByTags(clbk);
+				actions.getRecommendedAccounts(clbk);
 							
-					} else {
-
-						self.app.platform.sdk.users.getBestUsers(function(c, error){
-
-							if (!(c && c.length)){
-	
-								actions.getRecommendedAccountsByTags(clbk);
-	
-							} else {
-	
-
-								self.app.platform.sdk.categories.clbks.tags.topusersRemove = function(data){
-
-									addresses = [];
-									onlytags = false;
-									
-								}
-	
-								el.c.show();
-	
-								addresses = shuffle(c.filter(filterSubscribes));
-
-		
-								if (clbk){
-									clbk(addresses)
-								}
-	
-							}
-	
-						})
-						
-					}
-
-				}
-
 			}
 		}
 

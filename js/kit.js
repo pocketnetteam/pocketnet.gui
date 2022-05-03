@@ -1862,7 +1862,6 @@ pUserInfo = function(){
 
 	self._import = function(v){
 
-
 		self.name = clearStringXss(decodeURIComponent(v.n || v.name || ''));
 		self.image = clearStringXss(v.i || v.image);
 		self.about = clearStringXss(decodeURIComponent(v.a || v.about || ''));
@@ -1876,6 +1875,10 @@ pUserInfo = function(){
 
 		if (v.subscribes) self.subscribes = v.subscribes;
 		if (v.subscribers) self.subscribers = v.subscribers;
+
+		if (v.subscribes_count) self.subscribes_count = v.subscribes_count;
+		if (v.subscribers_count) self.subscribers_count = v.subscribers_count;
+
 		if (v.recomendedSubscribes) self.recomendedSubscribes = v.recomendedSubscribes;
 
 		if (v.blocking) self.blocking = v.blocking;
@@ -1964,17 +1967,49 @@ pUserInfo = function(){
 	}
 
 	self.addRelation = function(obj, key){
+
 		if(!key) key = 'subscribes'
 
 		self[key] || (self[key] = [])
 
 		self[key].push(obj)	
+
+		if (key === 'subscribers'){
+
+			self['subscribers_count'] || (self['subscribers_count'] = 0);
+			self['subscribers_count']++;
+
+		}
+
+		if (key === 'subscribes'){
+
+			self['subscribes_count'] || (self['subscribes_count'] = 0);
+			self['subscribes_count']++;
+			
+		}
+
 	}
 
 	self.removeRelation = function(obj, key){
+
 		if(!key) key = 'subscribes'
 
 		removeEqual(self[key], obj)
+
+		if (key === 'subscribers'){
+
+			self['subscribers_count'] || (self['subscribers_count'] = 1);
+			self['subscribers_count']--;
+
+		}
+
+		if (key === 'subscribes'){
+
+			self['subscribes_count'] || (self['subscribes_count'] = 1);
+			self['subscribes_count']--;
+			
+		}
+
 	}
 	
 

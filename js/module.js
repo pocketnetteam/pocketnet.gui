@@ -100,7 +100,8 @@ nModule = function(){
 		
 		var completeClbk = function(p){
 
-			if(p.el && !p.ignorelinksandimages)
+
+			if (p.el && !p.ignorelinksandimages)
 			{
 				self.nav.api.links(null, p.el, p.additionalActions || null);
 				bgImages(p.el, p.bgImages)
@@ -170,13 +171,17 @@ nModule = function(){
 								
 								if (p.destroy) {
 									r = p.destroy(key)
+
+									if(!r)
+										p.clearessense()
 								}
 							}
 
-							console.log("CLEAR P", p)
 
-							if (p.inWnd){
+							if (!r && p.inWnd){
 								delete self.app.nav.wnds[p.id]
+
+								p.clearessense()
 							}
 
 							//p = null
@@ -197,6 +202,8 @@ nModule = function(){
 							p.container = self.container;
 
 						self.container.essenseDestroy = options.destroy
+						
+					
 
 						if (insert.after) 
 						{
@@ -621,14 +628,17 @@ nModule = function(){
 		}
 		else
 		{
-			delete essense;
+			//essense = null
 		}
 
 		essenses[id].destroyed = false;
+	
 
 		p.clearessense = essense.clearessense = function(){
 			self.removeEssense(essenses, id)
 		}
+
+		essense = null
 
 		return essenses[id];
 	}

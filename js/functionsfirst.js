@@ -527,6 +527,35 @@ importScripts = function(src, storage, callback, appendTo, i, app){
     }
 }
 
+hexEncode= function(text)
+{
+    var ch = 0;
+    var result = "";
+    for (var i = 0; i < text.length; i++)
+    {
+        ch = text.charCodeAt(i);
+        if (ch > 0xFF) ch -= 0x350;
+        ch = ch.toString(16);
+        while (ch.length < 2) ch = "0" + ch;
+        result += ch;
+    }
+    return result;
+}
+hexDecode= function(hex)
+{
+    var ch = 0;
+    var result = "";
+    hex = trim(hex);
+    for (var i = 2; i <= hex.length; i += 2)
+    {
+        ch = parseInt(hex.substring(i - 2, i), 16);
+        if (ch >= 128) ch += 0x350;
+        ch = String.fromCharCode("0x" + ch.toString(16));
+        result += ch;
+    }
+    return result;
+}
+
 importScript = function(src, callback, appendTo, app, module, _require) {
     if(_Node || (typeof _Electron != 'undefined' && _Electron == true)) {
         src = src.split("?")[0];
@@ -591,7 +620,8 @@ importScript = function(src, callback, appendTo, app, module, _require) {
         script.onload = callback;
     }
 
-    src += "?v=119"
+    if (src.indexOf('v=') == -1)
+        src += "?v=119"
 
     script.src = src;
     

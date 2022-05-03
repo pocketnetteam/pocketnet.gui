@@ -6,7 +6,7 @@ if(typeof require != 'undefined' && typeof __map == 'undefined')
 
 if (typeof _OpenApi == 'undefined') _OpenApi = false;
 
-if(typeof _Electron != 'undefined' && _Electron){
+if (typeof _Electron != 'undefined' && _Electron){
 
 	imagesLoaded = require('./js/vendor/imagesloaded.pkgd.min.js');
 
@@ -21,7 +21,7 @@ if(typeof _Electron != 'undefined' && _Electron){
 	
 	ImageUploader = require('./js/image-uploader.js');
 
-
+	VideoUploader = require('./js/video-uploader.js');
 
 	jQueryBridget = require('jquery-bridget');
 	jQueryBridget( 'isotope', Isotope, $ );
@@ -75,6 +75,10 @@ Application = function(p)
 	}
 
 	var url = window.pocketnetdomain
+
+	if ((typeof _Electron != 'undefined' && _Electron) || window.cordova){} else {
+		url = window.location.hostname + window.pocketnetpublicpath.substring(0, window.pocketnetpublicpath.length - 1)
+	}
 
 	if (window.testpocketnet){
 		self.test = true
@@ -284,6 +288,11 @@ Application = function(p)
 		if((!self.secure() || (typeof _Electron != 'undefined' && _Electron))){
 			return true
 		}
+	}
+
+	self.savesupported = function(){
+		var isElectron = (typeof _Electron !== 'undefined' && !!window.electron);
+		return isElectron || (window.cordova && !isios());
 	}
 
 	self.useip = function(){
@@ -870,7 +879,7 @@ Application = function(p)
 		})
 	}
 
-	self.initTestFromPrivate = function(private, clbk,){
+	self.initTestFromPrivate = function(_private, clbk,){
 		if (typeof localStorage == 'undefined') localStorage = {};
 
 		prepareMap();
@@ -879,7 +888,7 @@ Application = function(p)
 
 		self.platform.nodeid = 0;
 
-		self.user.setKeysPairFromPrivate(private);
+		self.user.setKeysPairFromPrivate(_private);
 
 		self.user.isState(function(state){
 
@@ -1116,7 +1125,6 @@ Application = function(p)
 
 				self.mobile.pip.init()
 				self.mobile.keyboard.init()
-				
 
 				if (window.Keyboard && window.Keyboard.disableScroll){
 					window.Keyboard.disableScroll(false)
@@ -1187,7 +1195,7 @@ Application = function(p)
 
 	self.height = 0
 	self.width = 0
-	self.inputfocused = false
+
 	self.fullscreenmode = false
 	self.pseudofullscreenmode = false
 	self.playingvideo = null
@@ -1198,11 +1206,16 @@ Application = function(p)
 	var optimizeTimeout = null
 
 	self.actions = {
-		
+		closepip : function(){
+			if (self.pipwindow) {
+				self.pipwindow.container.close()
+				self.pipwindow = null
+			}
+		},
 		pipwindow : function(p){
 			
 			if (self.pipwindow) {
-				self.pipwindow.destroy()
+				self.pipwindow.container.close()
 				self.pipwindow = null
 			}
 
@@ -1217,7 +1230,7 @@ Application = function(p)
 			p.inWnd = true
 			p.history = false
 			p.open = true
-
+			p.independent = true
 			p.eid = p.mid = makeid()
 
 			if (p.essenseData){
@@ -1226,6 +1239,8 @@ Application = function(p)
 
 			p.clbk = function(c,b){
 				self.pipwindow = b
+
+				console.log('self.pipwindow', self.pipwindow)
 
 				if(clbk) clbk(c,b)
 			}
@@ -1381,7 +1396,7 @@ Application = function(p)
 
 			//self.el.html.addClass('nooverflow')
 
-			if (window.Keyboard && window.Keyboard.disableScroll){
+			if (window.Keyboard && window.Keyboard.disableScroll && !isios()){
 				window.Keyboard.disableScroll(true)
 			}
 
@@ -1418,7 +1433,7 @@ Application = function(p)
 				//self.el.html.removeClass('nooverflow')
 				///
 
-				if (window.Keyboard && window.Keyboard.disableScroll){
+				if (window.Keyboard && window.Keyboard.disableScroll && !isios()){
 					window.Keyboard.disableScroll(false)
 				}
 
@@ -1541,7 +1556,7 @@ Application = function(p)
 
 			if(!self.el.window) return
 			if (self.fullscreenmode) return
-			if (self.inputfocused) return
+			if (self.mobile.inputs.focused) return
 
 
 			var scrollTop = self.actions.getScroll(),
@@ -1851,17 +1866,42 @@ Application = function(p)
 
 	self.mobile = {
 
+		inputs : {
+		
+			init : function(){
+				$(document).on('focus blur', 'select, textarea, input, [contenteditable="true"]', function(e){
+					if(e.type == 'focusin'){
+						self.mobile.inputs.focused = $(e.target)
+					}
+
+					if(e.type == 'focusout'){
+						self.mobile.inputs.focused = null
+					}
+					
+				});
+			}
+
+		},
+	
 		keyboard : {
+			height : 0,
+			lastheight : 0,
 			init : function(){
 
 				if(window.cordova && !isios()){
 
 					window.addEventListener('keyboardWillShow', (event) => {
+
+						self.mobile.keyboard.height = self.mobile.keyboard.lastheight = event.keyboardHeight
+
 						document.documentElement.style.setProperty('--keyboardheight', `${event.keyboardHeight}px`);
+
 					});
 
 					window.addEventListener('keyboardWillHide', () => {
 						document.documentElement.style.setProperty('--keyboardheight', `0px`);
+
+						self.mobile.keyboard.height = 0
 					});
 				}
 
@@ -1980,9 +2020,10 @@ Application = function(p)
 					var image = b64toBlob(base64.split(',')[1], 'image/' + ms);	
 
 					p_saveAsWithCordova(image, name + '.' + format, function(d, e){
+
 						if (clbk)
 							clbk(d, e)
-					})
+					}, true)
 
 				}
 
@@ -2008,11 +2049,17 @@ Application = function(p)
 
 							globalpreloader(true, true)
 
+							console.log(src)
+
 							srcToData(src, function(base64){
+
+								console.log({base64, name})
 
 								imagetojpegifneed({base64, name}).then(({base64, name})=> {
 
 									self.mobile.saveImages.save(base64, name, function(d, err){
+
+										console.log("D", d, err)
 
 										globalpreloader(false)
 	
@@ -2048,11 +2095,11 @@ Application = function(p)
 					_el.swipe({
 						longTap : function(){
 
-
+							console.log("T", this)
 							self.mobile.vibration.small()
 
 							var name = this.attr('save')
-							var src = this.attr('src') || this.attr('i')
+							var src = this.attr('original') || this.attr('src') || this.attr('i')
 
 
 							setTimeout(function(){
@@ -2261,7 +2308,6 @@ Application = function(p)
 										return true;
 									}
 
-
 								},
 
 								restrict : true,
@@ -2303,7 +2349,9 @@ Application = function(p)
 											})
 
 											if (self.nav.current.module)
-												self.nav.current.module.restart()
+												self.nav.current.module.restart({
+													essenseData : self.nav.current.essenseData || {}
+												})
 
 											setTimeout(function(){
 												globalpreloader(false)
@@ -2479,22 +2527,7 @@ Application = function(p)
 
 		},
 
-		inputs : {
 		
-			init : function(){
-				$(document).on('focus blur', 'select, textarea, input, [contenteditable="true"]', function(e){
-
-					if(e.type == 'focusin'){
-						self.inputfocused = true
-					}
-
-					if(e.type == 'focusout'){
-						self.inputfocused = false
-					}
-					
-				});
-			}
-		}
 	}
 
 	self.thislink = function(_url){
