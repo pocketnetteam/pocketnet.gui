@@ -611,8 +611,9 @@ function createWindow() {
         if(p.image){
             pathImage= await saveBlobToFile(p.image)
         }
-        const n = new Notification({ title : p.title, body: p.body, silent :true, icon: pathImage})
-        n.onclick = function(){
+        if (!is.windows()) {
+            const n = new Notification({ title : p.title, body: p.body, silent :true, icon: pathImage})
+            n.onclick = function(){
 
                 if (win) {
                     win.show();
