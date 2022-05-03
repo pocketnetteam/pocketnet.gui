@@ -154,7 +154,9 @@ export function initProxifiedFetchBridge(electronIpcMain: Electron.IpcMain) {
                 });
             })
             .catch((err) => {
-                console.log('Proxified Fetch failed with next error:', err);
+                if (err.code !== 'FETCH_ABORTED') {
+                    console.log('Proxified Fetch failed with next error:', err);
+                }
             });
 
         requests[id] = { request, cancel: () => controller.abort() };

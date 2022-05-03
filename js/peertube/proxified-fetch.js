@@ -181,7 +181,9 @@ function initProxifiedFetchBridge(electronIpcMain) {
                 sender.send("ProxifiedFetch : Closed[".concat(id, "]"));
             });
         })["catch"](function (err) {
-            console.log('Proxified Fetch failed with next error:', err);
+            if (err.code !== 'FETCH_ABORTED') {
+                console.log('Proxified Fetch failed with next error:', err);
+            }
         });
         requests[id] = { request: request, cancel: function () { return controller.abort(); } };
     });
