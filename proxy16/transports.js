@@ -46,7 +46,10 @@ module.exports = function (enable){
         self.tor.instance.stderr.on("data", (chunk) => log(String(chunk)));
         self.tor.instance.stdout.on("data", (chunk) => log(String(chunk)));
     }
-    
+
+    // TODO: Remove from here
+    self.runTor();
+
 
     const axiosRequest =  async (method, ...args)=> {
         return enable ? await _axios[method]?.(...args) : await _axios[method]?.({...{httpsAgent: httpsAgent}, ...args})
