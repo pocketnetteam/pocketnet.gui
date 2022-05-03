@@ -9,7 +9,7 @@ const fs = require("fs");
 const { SocksProxyAgent } = require('socks-proxy-agent')
 const child_process = require("child_process");
 const {Notification} = require("electron");
-const httpsAgent = new SocksProxyAgent('socks5://127.0.0.1:9050')
+const httpsAgent = new SocksProxyAgent('socks://127.0.0.1:9050')
 
 const getPathTor = ()=>{
     const  isDevelopment = process.argv.some(function(el) { return el === '--development'; })
@@ -54,7 +54,10 @@ module.exports = function (enable){
 
 
     const axiosRequest =  async (method, ...args)=> {
-        return enable ? await _axios[method]?.(...args) : await _axios[method]?.({...{httpsAgent: httpsAgent}, ...args})
+        if(enable) {
+            args.push({httpsAgent: httpsAgent})
+        }
+        return await _axios[method]?.(...args)
     }
 
     self.axios ={
