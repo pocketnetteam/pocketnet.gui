@@ -1884,7 +1884,7 @@ var post = (function () {
 			getdata: function (clbk, p) {
 
 				
-				recommendationsenabled = self.app.platform.istest()
+				recommendationsenabled = true ///self.app.platform.istest()
 
 				_repost = null
 
