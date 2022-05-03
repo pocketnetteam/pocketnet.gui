@@ -6,8 +6,8 @@ const _fetch = require("make-fetch-happen");
 const path = require("path");
 const { SocksProxyAgent } = require('socks-proxy-agent')
 const child_process = require("child_process");
-const httpsAgent = new SocksProxyAgent('socks://127.0.0.1:9050')
-
+const httpsAgent = new SocksProxyAgent('socks5://127.0.0.1:9050')
+const { Blob } = require('buffer');
 const getPathTor = ()=>{
     const  isDevelopment = process.argv.some(function(el) { return el === '--development'; })
     let pathTor = "";
@@ -45,10 +45,6 @@ module.exports = function (enable){
         self.tor.instance.stderr.on("data", (chunk) => log(String(chunk)));
         self.tor.instance.stdout.on("data", (chunk) => log(String(chunk)));
     }
-
-    // TODO: Remove from here
-    self.runTor();
-
 
     const axiosRequest =  async (method, ...args)=> {
         if(enable) {
@@ -89,5 +85,10 @@ module.exports = function (enable){
 
     self.request = !enable ? _request : _request.defaults({agent: httpsAgent})
 
+    self.proxyUrl = async (url)=>{
+        const res = await _axios.get(url, {httpsAgent: enable ? httpsAgent : null, responseType: "arraybuffer"})
+        return {data: Buffer.from(res.data, 'binary').toString('base64'), type: res?.headers?.['content-type']}
+    }
+    
     return self;
 }
