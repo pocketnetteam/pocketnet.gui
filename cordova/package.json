@@ -35,7 +35,7 @@
   "devDependencies": {
     "@globules-io/cordova-plugin-ios-xhr": "^1.2.1",
     "cc.fovea.cordova.openwith": "file:cc.fovea.cordova.openwith",
-    "cordova-android": "^9.1.0",
+    "cordova-android": "^10.1.2",
     "cordova-ios": "^6.2.0",
     "cordova-plugin-add-swift-support": "^2.0.2",
     "cordova-plugin-android-packagemanager": "file:cordova-plugin-android-packagemanager",
@@ -48,7 +48,7 @@
     "cordova-plugin-device": "^1.1.7",
     "cordova-plugin-file": "^6.0.2",
     "cordova-plugin-file-opener2": "^3.0.5",
-    "cordova-plugin-file-transfer": "^1.7.1",
+    "cordova-plugin-file-transfer": "github:apache/cordova-plugin-file-transfer",
     "cordova-plugin-firebasex": "^13.0.1",
     "cordova-plugin-insomnia": "github:EddyVerbruggen/Insomnia-PhoneGap-Plugin",
     "cordova-plugin-ionic-keyboard": "file:cordova-plugin-ionic-keyboard",
@@ -56,7 +56,6 @@
     "cordova-plugin-pip": "file:cordova-plugin-pip",
     "cordova-plugin-statusbar": "github:apache/cordova-plugin-statusbar",
     "cordova-plugin-taptic-engine": "^2.2.0",
-    "cordova-plugin-whitelist": "^1.3.5",
     "cordova-plugin-x-socialsharing": "^6.0.3",
     "cordova-universal-links-plugin": "file:cordova-universal-links-plugin"
   },
@@ -132,11 +131,10 @@
       "cordova-plugin-network-information": {},
       "cordova-plugin-vibration": {},
       "cordova-plugin-androidx-adapter": {},
-      "cordova-plugin-whitelist": {},
       "cordova-plugin-android-packagemanager": {},
       "cordova-plugin-apkupdater": {},
-      "cordova-plugin-file-transfer": {},
-      "cordova-plugin-pip": {}
+      "cordova-plugin-pip": {},
+      "cordova-plugin-file-transfer": {}
     },
     "platforms": [
       "ios",
