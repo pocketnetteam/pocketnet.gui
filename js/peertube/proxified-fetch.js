@@ -68,141 +68,129 @@ var getRequestId = function () {
     return randHex + dateHex;
 };
 function proxifiedFetchFactory(electronIpcRenderer) {
-    return __awaiter(this, void 0, void 0, function () {
-        function profixiedFetch(input, init) {
-            if (init === void 0) { init = defaultInit; }
-            return __awaiter(this, void 0, void 0, function () {
-                var preparedInit, id, url, fetchCancel, readStream;
-                return __generator(this, function (_a) {
-                    preparedInit = {};
-                    preparedInit.headers = {};
-                    if (input instanceof Request) {
-                        throw Error('Bastyon Proxified Fetch does not support Request objects');
-                    }
-                    if (init.method && init.method !== 'GET') {
-                        throw Error('Bastyon Proxified Fetch supports only GET method');
-                    }
-                    if (init.headers && !(init.headers instanceof Headers)) {
-                        throw Error('Bastyon Proxified Fetch supports only headers as Headers object');
-                    }
-                    id = getRequestId();
-                    url = input;
-                    if (init.signal) {
-                        fetchCancel = init.signal;
-                    }
-                    if (init.headers instanceof Headers) {
-                        init.headers.forEach(function (value, name) {
-                            preparedInit.headers[name] = value;
-                        });
-                    }
-                    readStream = new ReadableStream({
-                        start: function (controller) {
-                            return __awaiter(this, void 0, void 0, function () {
-                                return __generator(this, function (_a) {
-                                    if (fetchCancel) {
-                                        fetchCancel.onabort = function () {
-                                            electronIpcRenderer.removeAllListeners("ProxifiedFetch : InitialData[".concat(id, "]"));
-                                            electronIpcRenderer.removeAllListeners("ProxifiedFetch : PartialResponse[".concat(id, "]"));
-                                            electronIpcRenderer.send('ProxifiedFetch : Abort', id);
-                                            controller.close();
-                                        };
-                                    }
-                                    electronIpcRenderer.once("ProxifiedFetch : Closed[".concat(id, "]"), function (event) {
+    var defaultInit = {
+        method: 'GET'
+    };
+    function profixiedFetch(input, init) {
+        if (init === void 0) { init = defaultInit; }
+        return __awaiter(this, void 0, void 0, function () {
+            var preparedInit, id, url, fetchCancel, readStream;
+            return __generator(this, function (_a) {
+                preparedInit = {};
+                preparedInit.headers = {};
+                if (input instanceof Request) {
+                    throw Error('Bastyon Proxified Fetch does not support Request objects');
+                }
+                if (init.method && init.method !== 'GET') {
+                    throw Error('Bastyon Proxified Fetch supports only GET method');
+                }
+                if (init.headers && !(init.headers instanceof Headers)) {
+                    throw Error('Bastyon Proxified Fetch supports only headers as Headers object');
+                }
+                id = getRequestId();
+                url = input;
+                if (init.signal) {
+                    fetchCancel = init.signal;
+                }
+                if (init.headers instanceof Headers) {
+                    init.headers.forEach(function (value, name) {
+                        preparedInit.headers[name] = value;
+                    });
+                }
+                readStream = new ReadableStream({
+                    start: function (controller) {
+                        return __awaiter(this, void 0, void 0, function () {
+                            return __generator(this, function (_a) {
+                                if (fetchCancel) {
+                                    fetchCancel.onabort = function () {
                                         electronIpcRenderer.removeAllListeners("ProxifiedFetch : InitialData[".concat(id, "]"));
                                         electronIpcRenderer.removeAllListeners("ProxifiedFetch : PartialResponse[".concat(id, "]"));
+                                        electronIpcRenderer.send('ProxifiedFetch : Abort', id);
                                         controller.close();
-                                    });
-                                    electronIpcRenderer.on("ProxifiedFetch : PartialResponse[".concat(id, "]"), function (event, data) {
-                                        /**
-                                         * FIXME:
-                                         *  Strange issue found. Somewhere Uint8Array.buffer was replaced
-                                         *  what produces invalid data in ArrayBuffer analog of object.
-                                         *  Must not be trusted, so using destructuring to get the
-                                         *  correct one buffer.
-                                         */
-                                        // @ts-ignore
-                                        data = new Uint8Array(__spreadArray([], data, true));
-                                        var chunkUint8 = new Uint8Array(data.buffer);
-                                        controller.enqueue(chunkUint8);
-                                        electronIpcRenderer.send("ProxifiedFetch : ReceivedResponse[".concat(id, "]"));
-                                    });
-                                    return [2 /*return*/];
+                                    };
+                                }
+                                electronIpcRenderer.once("ProxifiedFetch : Closed[".concat(id, "]"), function (event) {
+                                    electronIpcRenderer.removeAllListeners("ProxifiedFetch : InitialData[".concat(id, "]"));
+                                    electronIpcRenderer.removeAllListeners("ProxifiedFetch : PartialResponse[".concat(id, "]"));
+                                    controller.close();
                                 });
-                            });
-                        }
-                    });
-                    return [2 /*return*/, new Promise(function (resolve, reject) {
-                            electronIpcRenderer.on("ProxifiedFetch : InitialData[".concat(id, "]"), function (event, initialData) {
-                                var response = new Response(readStream, initialData);
-                                Object.defineProperty(response, 'url', { value: url });
-                                var responseData = { url: response.url };
-                                response.headers.forEach(function (value, name) {
-                                    responseData[name] = value;
+                                electronIpcRenderer.on("ProxifiedFetch : PartialResponse[".concat(id, "]"), function (event, data) {
+                                    /**
+                                     * FIXME:
+                                     *  Strange issue found. Somewhere Uint8Array.buffer was replaced
+                                     *  what produces invalid data in ArrayBuffer analog of object.
+                                     *  Must not be trusted, so using destructuring to get the
+                                     *  correct one buffer.
+                                     */
+                                    // @ts-ignore
+                                    data = new Uint8Array(__spreadArray([], data, true));
+                                    var chunkUint8 = new Uint8Array(data.buffer);
+                                    controller.enqueue(chunkUint8);
+                                    electronIpcRenderer.send("ProxifiedFetch : ReceivedResponse[".concat(id, "]"));
                                 });
-                                console.table(responseData);
-                                console.log(response);
-                                resolve(response);
+                                return [2 /*return*/];
                             });
-                            try {
-                                electronIpcRenderer.send('ProxifiedFetch : Request', id, url, preparedInit);
-                            }
-                            catch (e) {
-                                throw Error('ProxifiedFetch : Request -  sent invalid data');
-                            }
-                        })];
+                        });
+                    }
                 });
+                return [2 /*return*/, new Promise(function (resolve, reject) {
+                        electronIpcRenderer.on("ProxifiedFetch : InitialData[".concat(id, "]"), function (event, initialData) {
+                            var response = new Response(readStream, initialData);
+                            Object.defineProperty(response, 'url', { value: url });
+                            var responseData = { url: response.url };
+                            response.headers.forEach(function (value, name) {
+                                responseData[name] = value;
+                            });
+                            console.table(responseData);
+                            console.log(response);
+                            resolve(response);
+                        });
+                        try {
+                            electronIpcRenderer.send('ProxifiedFetch : Request', id, url, preparedInit);
+                        }
+                        catch (e) {
+                            throw Error('ProxifiedFetch : Request -  sent invalid data');
+                        }
+                    })];
             });
-        }
-        var defaultInit;
-        return __generator(this, function (_a) {
-            defaultInit = {
-                method: 'GET'
-            };
-            return [2 /*return*/, function (input, init) { return profixiedFetch(input, init); }];
         });
-    });
+    }
+    return function (input, init) { return profixiedFetch(input, init); };
 }
 exports.proxifiedFetchFactory = proxifiedFetchFactory;
 function initProxifiedFetchBridge(electronIpcMain) {
-    return __awaiter(this, void 0, void 0, function () {
-        var requests;
-        return __generator(this, function (_a) {
-            requests = {};
-            electronIpcMain.on('ProxifiedFetch : Request', function (event, id, url, requestInit) {
-                var sender = event.sender;
-                var fetch = proxified.fetch;
-                requests[id] = {};
-                var controller = new AbortController();
-                var signal = controller.signal;
-                var request = fetch(url, __assign({ signal: signal }, requestInit))
-                    .then(function (data) {
-                    var status = data.status;
-                    var headers = {};
-                    data.headers.forEach(function (value, name) {
-                        headers[name] = value;
-                    });
-                    sender.send("ProxifiedFetch : InitialData[".concat(id, "]"), { status: status, headers: headers });
-                    data.body.on('data', function (chunk) {
-                        sender.send("ProxifiedFetch : PartialResponse[".concat(id, "]"), chunk);
-                    });
-                    data.body.on('end', function () {
-                        sender.send("ProxifiedFetch : Closed[".concat(id, "]"));
-                    });
-                })["catch"](function (err) {
-                    console.log('Proxified Fetch failed with next error:', err);
-                });
-                requests[id] = { request: request, cancel: function () { return controller.abort(); } };
+    var requests = {};
+    electronIpcMain.on('ProxifiedFetch : Request', function (event, id, url, requestInit) {
+        var sender = event.sender;
+        var fetch = proxified.fetch;
+        requests[id] = {};
+        var controller = new AbortController();
+        var signal = controller.signal;
+        var request = fetch(url, __assign({ signal: signal }, requestInit))
+            .then(function (data) {
+            var status = data.status;
+            var headers = {};
+            data.headers.forEach(function (value, name) {
+                headers[name] = value;
             });
-            electronIpcMain.on('ProxifiedFetch : Abort', function (e, id) {
-                var request = requests[id];
-                if (!request || !request.cancel) {
-                    return;
-                }
-                request.cancel();
+            sender.send("ProxifiedFetch : InitialData[".concat(id, "]"), { status: status, headers: headers });
+            data.body.on('data', function (chunk) {
+                sender.send("ProxifiedFetch : PartialResponse[".concat(id, "]"), chunk);
             });
-            return [2 /*return*/];
+            data.body.on('end', function () {
+                sender.send("ProxifiedFetch : Closed[".concat(id, "]"));
+            });
+        })["catch"](function (err) {
+            console.log('Proxified Fetch failed with next error:', err);
         });
+        requests[id] = { request: request, cancel: function () { return controller.abort(); } };
+    });
+    electronIpcMain.on('ProxifiedFetch : Abort', function (e, id) {
+        var request = requests[id];
+        if (!request || !request.cancel) {
+            return;
+        }
+        request.cancel();
     });
 }
 exports.initProxifiedFetchBridge = initProxifiedFetchBridge;
-//# sourceMappingURL=proxified-fetch.js.map

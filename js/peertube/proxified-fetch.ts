@@ -17,7 +17,7 @@ const getRequestId = () => {
     return randHex + dateHex;
 }
 
-export async function proxifiedFetchFactory(electronIpcRenderer: Electron.IpcRenderer) {
+export function proxifiedFetchFactory(electronIpcRenderer: Electron.IpcRenderer) {
     const defaultInit = {
         method: 'GET',
     };
@@ -121,7 +121,7 @@ export async function proxifiedFetchFactory(electronIpcRenderer: Electron.IpcRen
     return (input: RequestInfo, init?: RequestInit) => profixiedFetch(input, init);
 }
 
-export async function initProxifiedFetchBridge(electronIpcMain: Electron.IpcMain) {
+export function initProxifiedFetchBridge(electronIpcMain: Electron.IpcMain) {
     const requests = {};
 
     electronIpcMain.on('ProxifiedFetch : Request', (event, id: string, url: string, requestInit: RequestInit) => {
