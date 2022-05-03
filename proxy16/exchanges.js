@@ -3,6 +3,7 @@ var f = require('./functions');
 
 var Exchanges = function(){
     var self = this
+
     var hasdata = false
 
     var history = {
@@ -28,6 +29,7 @@ var Exchanges = function(){
     self.api = {
         price : {
             bilaxy : function(){
+
                 return self.transports.axios.get(apis.bilaxy).then(function(response) {
 
                     return f.getPkoinPrice(response.data, 'close')
@@ -40,6 +42,8 @@ var Exchanges = function(){
                 })
             },
 
+            /*mercatox : function(){
+                return self.transports.axios.get(apis.mercatoxPrices).then(function(response) {
             /*mercatox : function(){
                 return self.transports.axios.get(apis.mercatox).then(function(response) {
 

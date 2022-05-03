@@ -11,6 +11,7 @@ const ProxyInterface = require('./proxy16/ipc.js')
 const IpcBridge =require('./js/electron/ipcbridge.js')
 
 const { Bridge: TranscoderBridge } = require('./js/electron/transcoding2.js');
+const { initProxifiedFetchBridge } = require('./js/peertube/proxified-fetch.js');
 const { bastyonFsFetchBridge } = require('./js/peertube/bastyon-fs-fetch.js');
 
 const electronLocalshortcut = require('electron-localshortcut');
@@ -172,8 +173,6 @@ function quit(){
     willquit = true
     app.quit()
 }
-
-
 
 function destroyApp() {
     proxyInterface.destroy().then(r => {
@@ -403,7 +402,7 @@ function createWindow() {
 		refresh()
 	})
 
-    electronLocalshortcut.register(win, 'f5', function() {
+  electronLocalshortcut.register(win, 'f5', function() {
 		refresh()
 	})
 
@@ -898,6 +897,11 @@ function createWindow() {
      * Local files requestor bridge
      */
     bastyonFsFetchBridge(ipcMain, Storage);
+
+    /**
+     * Fetch request proxifier bridge
+     */
+    initProxifiedFetchBridge(ipcMain);
 
     /**
      * Video transcoding handler
