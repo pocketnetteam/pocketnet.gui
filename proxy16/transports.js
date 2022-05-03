@@ -76,48 +76,13 @@ module.exports = function (enable){
     }
 
     const fetchRequest = async (url, opts) => {
-        if (!enable) {
-            return _fetch(url, opts);
+        const optsPrepared = { ...opts };
+
+        if (enable) {
+            optsPrepared.agent = httpsAgent;
         }
 
-        const parsedUrl = new URL(url);
-        const queues = await requestQueue(parsedUrl.host)
-          .catch(() => {
-              throw Error('Request queue failed');
-          });
-
-        let error = {};
-
-        for (const queue of queues) {
-            if (opts.signal.aborted) {
-                break;
-            }
-
-            const optsWithProxy = { ...opts };
-
-            if (!queue.proxy) continue;
-
-            if (queue.proxy) {
-                optsWithProxy.proxy = {
-                    protocol: `${queue.proxy.protocol}:`,
-                    hostname: queue.proxy.ip,
-                    port: queue.proxy.port,
-                    username: queue.proxy.username,
-                    password: queue.proxy.password,
-                };
-            }
-
-            if (queue.proxy) {
-                pushHost('proxy', parsedUrl.host);
-            }
-
-            try {
-                return await _fetch(url, optsWithProxy);
-            } catch (e) {
-                console.log(e);
-                error = e;
-            }
-        }
+        return await _fetch(url, optsPrepared);
     };
 
     self.fetch = fetchRequest;
