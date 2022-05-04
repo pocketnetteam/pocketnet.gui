@@ -17,6 +17,9 @@ class VideoUploader {
     this.static = VideoUploader;
 
     this.videoFile = videoFile;
+    this.title = videoFile.name;
+
+    console.log('videoFile', videoFile, this)
 
     this.activeHost = app.peertubeHandler.active();
   }
@@ -186,6 +189,7 @@ class VideoUploader {
 
     data.video = self.videoFile;
     data.name = self.videoName;
+    data.title = self.title || '';
     options.type = 'uploadVideo';
 
     const response = await self.ptVideoApi

@@ -1056,6 +1056,11 @@ html.mobileview{
 					display: none;
 				}
 			}
+
+			.jsPlayerLoading,
+			.video-js{
+				max-height: calc(var(--vh, 1vh) * 100);
+			}
 		}
 	}
 	
@@ -1069,9 +1074,15 @@ html.mobileview.ios{
 			.video-js{
 				max-height: 80vh;
 			}
+
+			&.fullScreenVideo{
+				.jsPlayerLoading,
+				.video-js{
+					max-height: 100vh;
+				}
+			}
 		}
 	}
-	
 }
 
 html.mobileview{
@@ -1079,8 +1090,11 @@ html.mobileview{
 		.fullScreenVideo{
 			will-change: transform;
 			-webkit-backface-visibility: hidden;
-			-webkit-overflow-scrolling: touch;
-    		overscroll-behavior: contain;
+			.sharecnt{
+				-webkit-overflow-scrolling: none;
+				overscroll-behavior: none;
+			}
+			
 		}
 	}
 }

@@ -187,6 +187,7 @@
     scrollbar-width: 7px;
     scrollbar-color: rgba(var(--background-main-contrast), .15) rgba(var(--background-main-contrast), .05);
     overscroll-behavior: contain;
+    scroll-behavior: smooth;
 
     &::-webkit-scrollbar {
         width: 7px;
@@ -310,6 +311,7 @@
 body{
     overflow-x: hidden;
     overscroll-behavior: none;
+    scroll-behavior: smooth;
     /* scroll-snap-type: y proximity;*/
 }
 
@@ -321,6 +323,7 @@ html {
     overflow-x: hidden;
     overflow-y: overlay;
     overscroll-behavior: none;
+    scroll-behavior: smooth;
     
     /*&.mobileview{
         scroll-behavior: smooth;
@@ -3313,6 +3316,7 @@ input[type=radio].radio:checked + label {
     bottom: 20px;
     padding : 2 * @rhythm;
     border-radius: 6px;
+    touch-action: none;
     .transition(0.3s);
 
     .action{
@@ -7760,6 +7764,21 @@ html.mobileview{
 
 html.mobileview{
 
+    &.keyboadrshown{
+        .focusedinput{
+            position: fixed!important;
+            bottom : calc(var(--keyboardheight, 0) - 1px)!important;
+            top : auto!important;
+            left : 0!important;
+            right: 0!important;
+            max-height: 25vh!important;
+        }
+    }
+
+    .dialog{
+        padding-bottom : calc(var(--keyboardheight, 0) - 1px);
+    }
+
     .sitemessage{    
         position: fixed;
         width: auto;
@@ -7894,14 +7913,12 @@ html.mobileview{
                     position: relative;
                     border-bottom-right-radius: 0;
                     border-bottom-left-radius: 0;
-                    bottom : 0;
                     backface-visibility: hidden;
                     background: rgb(var(--background-total-theme));
                     max-width: 768px;
-
+                    scroll-behavior: smooth;
                     max-height: calc(var(--vh, 1vh) * 92);
                     min-height: calc(var(--vh, 1vh) * 30);
-
                     top : 0;
                     bottom : 0;
                     right: 0;
@@ -7909,6 +7926,8 @@ html.mobileview{
                     margin : 0 auto;
                     padding-left: 0;
                     padding-right: 0;
+                    .transition(0.3s, padding-bottom);
+                    
 
                     >div{
                         opacity: 0;
@@ -8008,7 +8027,6 @@ html.mobileview{
 
         &.maxheight{
             .wndinner{
-              
                 .wndcontent{
                     height: calc(var(--vh, 1vh) * 92);
                 }
@@ -8018,11 +8036,45 @@ html.mobileview{
 
     
 }
-html.mobileview{
-    .keyboardsafe{
-        padding-bottom: calc(var(--keyboardheight, 0) - 1px)!important;
+
+html.mobileview.ios{
+    .wnd{
+      
+        &.maxheight{
+            .wndinner{
+                .wndcontent{
+                    height: 92vh;
+                }
+            }
+        }
     }
 }
+
+html.mobileview{
+    .wnd{
+        &.normalizedmobile.maxheight:not(.hiddenState){
+            .wndinner{
+                .wndcontent{
+                    padding-bottom: 300px;
+                }   
+            }
+        }
+    }
+}
+
+html.mobileview{
+    .keyboardsafe{
+        .transition(0.3s, padding-bottom);
+        padding-bottom: calc(var(--keyboardheight, 0) - 1px)!important;
+    }
+
+    .keyboardsafetranslate{
+        .transition(0.3s);
+        transform: translateY(calc(-1 * var(--keyboardheight, 0) + 1px));
+    }
+}
+
+
 
 html.pipmode{
     .pipped{

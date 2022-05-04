@@ -620,7 +620,8 @@ importScript = function(src, callback, appendTo, app, module, _require) {
         script.onload = callback;
     }
 
-    src += "?v=119"
+    if (src.indexOf('v=') == -1)
+        src += "?v=119"
 
     script.src = src;
     

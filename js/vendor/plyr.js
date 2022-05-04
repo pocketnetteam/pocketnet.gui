@@ -3651,7 +3651,7 @@ typeof navigator === "object" && (function (global, factory) {
     // Sprite (for icons)
     loadSprite: true,
     iconPrefix: 'plyr',
-    iconUrl: 'https://cdn.plyr.io/3.5.4/plyr.svg',
+    iconUrl: './css/plyr.svg',
     // Blank video (used to prevent errors on source change)
     blankVideo: 'https://cdn.plyr.io/static/blank.mp4',
     // Quality default
@@ -9197,6 +9197,10 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
 
       let localTransport;
 
+      if (isElectron) {
+        localTransport = await proxifiedFetchFactory(electron.ipcRenderer);
+      }
+
       if (localVideo && isElectron) {
         localTransport = await bastyonFsFetchFactory(electron.ipcRenderer, localVideo.video.internalURL);
         localVideo = undefined;
@@ -9235,7 +9239,7 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
           pause : options.pause
 
   
-        }).then(embed => {
+        }).then(function(embed){
 
           if(!embed || !embed.api){
             if (clbk) clbk(null);

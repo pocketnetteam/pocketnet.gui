@@ -1,21 +1,14 @@
 //var os = require('os');
 const fs = require('fs');
 const https = require('https');
-let axios = require('axios')
 const { reject } = require('underscore');
 var f = require('../functions');
 var path = require('path');
 var Datastore = require('nedb');
 
-var request = require('request')
 var progress = require('request-progress');
 var targz = require('targz');
 
-
-/*require('../freeproxy')().listHttp().then(proxies=>{
-    request = require('request').defaults({ proxy: proxies[0].url})
-    axios = require('axios').create({ proxy: {host :proxies[0].ip, port: +proxies[0].port}});
-})*/
 
 var Applications = function(settings) {
 
@@ -70,6 +63,11 @@ var Applications = function(settings) {
                 name: "latest.tgz",
                 url: 'https://snapshot.pocketnet.app/latest.tgz'
             },
+            checkpoint_main: {
+                name: "main.sqlite3",
+                url: 'https://api.github.com/repos/pocketnetapp/pocketnet.core/releases/latest',
+                page: 'https://github.com/pocketnetteam/pocketnet.core/releases/latest'
+            },
         }
     }
 
@@ -84,7 +82,7 @@ var Applications = function(settings) {
 
         if(!meta) return Promise.reject('platform')
 
-        return axios.get(meta[key].url).then(function(response) {
+        return self.transports.axios.get(meta[key].url).then(function(response) {
 
             var d = response.data
             var assets = d.assets || [];
@@ -97,7 +95,7 @@ var Applications = function(settings) {
 
             return Promise.reject('notfound')
         })
-           
+
     }
 
     self.current = function(){
@@ -140,8 +138,8 @@ var Applications = function(settings) {
 
 
             db.remove({}, { multi: true }, function (err, numRemoved) {
-                
-                if (err){   
+
+                if (err){
                     reject({
                         code : 500,
                         error : "dbsave"
@@ -178,7 +176,7 @@ var Applications = function(settings) {
             })
         })
 
-        
+
     }
 
     self.install = function(key, dest, save){
@@ -189,19 +187,20 @@ var Applications = function(settings) {
                     fs.copyFile(r.path, dest, (e) => {
 
                         if(!e) {
+                            fs.chmodSync(dest, 0o755)
                             return resolve(r)
                         }
                         reject({
                             code : 500,
                             error : 'cantcopy'
                         })
-                   
+
                     });
                 }
                 catch(e){
                     return Promise.reject()
                 }
-                
+
             }).catch(e => {
                 reject({
                     code : 500,
@@ -237,7 +236,7 @@ var Applications = function(settings) {
                 }
 
             })
-            
+
         }).then(p => {
 
             r.path = p
@@ -253,8 +252,8 @@ var Applications = function(settings) {
         let endFile = path.resolve(dest, meta[key].name)
 
         return new Promise(function(resolve, reject) {
-            let req = request(meta[key].url)
-            
+            let req = self.transports.request({url:meta[key].url})
+
             progress(req, {
                 throttle: 500,                    // Throttle the progress event to 2000ms, defaults to 1000ms
                 // delay: 1000,                       // Only start to emit after 1000ms delay, defaults to 0ms
@@ -287,7 +286,7 @@ var Applications = function(settings) {
             .on('end', function () {
                 return resolve()
             })
-            .pipe(fs.createWriteStream(endFile))
+            .pipe(fs.createWriteStream(endFile, { mode: 0o755 }))
         }).then(r => {
             return Promise.resolve(endFile);
         })

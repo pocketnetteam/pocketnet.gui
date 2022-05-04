@@ -1491,7 +1491,7 @@ ____loclib.aboutYoutubeThirdBoard1 = 'Account ownership';
 ____loclib.aboutYoutubeThirdBoard2 = 'Property of YouTube.';
 ____loclib.aboutYoutubeThirdBoard3 = 'Your Private Key Belongs to You';
 ____loclib.aboutYoutubeThirdBoard4 = 'Censorship';
-____loclib.aboutYoutubeThirdBoard5 = `Yes, selective and arbitrary censorship`;
+____loclib.aboutYoutubeThirdBoard5 = 'Yes, selective and arbitrary censorship';
 ____loclib.aboutYoutubeThirdBoard6 = 'Community moderates content with only a few topics such as pornography and illicit content moderated';
 ____loclib.aboutYoutubeThirdBoard7 = 'Open Sourced Code';
 ____loclib.aboutYoutubeThirdBoard8 = 'NO.';
@@ -1521,7 +1521,7 @@ ____loclib.aboutYoutubeThirdBoard26 = 'No';
 
 ____loclib.aboutYoutubeThirdBoard18 = 'Reporting videos';
 ____loclib.aboutYoutubeThirdBoard19 = 'YES, YouTube algorithms analyze videos and remove or block them automatically if they believe that they are against the policy. In addition YouTube can remove posts and ban users at its sole discretion.';
-____loclib.aboutYoutubeThirdBoard20 = `YES, however only users with a high reputation can report post and a post is made "invisible" on the feed page (but remains available on the user's profile page) only if several tens of high reputation users report it (reports can be made only for racism, hate speech and pornography).`;
+____loclib.aboutYoutubeThirdBoard20 = "YES, however only users with a high reputation can report post and a post is made \"invisible\" on the feed page (but remains available on the user's profile page) only if several tens of high reputation users report it (reports can be made only for racism, hate speech and pornography).";
 ____loclib.aboutYoutubeThirdBoard21 = 'Hashtags to classify videos';
 ____loclib.aboutYoutubeThirdBoard22 = 'Videoa can be shared on multiple platforms';
 ____loclib.aboutYoutubeThirdBoard23 = 'Dictatorship bans';
@@ -1997,7 +1997,7 @@ ____loclib.easyNode_e10033 = "Chain"
 ____loclib.easyNode_e10034 = "Description"
 ____loclib.easyNode_e10035 = "Height"
 ____loclib.easyNode_e10036 = "Less than an hour left"
-____loclib.easyNode_e10037 = function(v) { return `${v} hour(s) remaining` }
+____loclib.easyNode_e10037 = function(v) { return v + " hour(s) remaining" }
 ____loclib.easyNode_e10038 = "Block Hash"
 ____loclib.easyNode_e10039 = "Disable Node"
 ____loclib.easyNode_e10040 = "Enable Node"
@@ -2214,3 +2214,14 @@ ____loclib.shareexternal = "Another window is open";
 ____loclib.shareexternaluploadpeertube = "Video upload window open";
 
 ____loclib.removeimageswhenvideo = "The images attached to the post will be deleted if you continue to upload the video. Go to uploading video?";
+
+
+____loclib.lowstar1 = "Bastyon team is implementing a temporary moratorium on 1 and 2 star ratings, except prohibited content. Prohibited content is:"
+____loclib.lowstar_reason_1 = "Porno"
+____loclib.lowstar_reason_2 = "Child exploitation"
+____loclib.lowstar_reason_3 = "Direct threat of violence"
+____loclib.lowstar_reason_4 = "Illegal narcotics"
+____loclib.lowstar2 = "Please do not use 1 and 2 star ratings for other reasons. After the new moderation is released in mid. May you will be able to use low ratings for other reasons"
+____loclib.lowstaragree = "I confirm that this post contains one of four types of prohibited content"
+
+____loclib.usetor = "Connection via Tor network"

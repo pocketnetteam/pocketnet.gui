@@ -585,6 +585,8 @@ var post = (function () {
 					}
 				}
 
+				
+
 				var upvoteShare = share.upvote(value);
 
 				if(!upvoteShare) {
@@ -619,35 +621,40 @@ var post = (function () {
 					
 				}
 
-					
+				self.app.platform.sdk.upvote.checkvalue(value, function(){
 
-				self.sdk.node.transactions.create.commonFromUnspent(
+					self.sdk.node.transactions.create.commonFromUnspent(
 
-					upvoteShare,
+						upvoteShare,
 
-					function (tx, error) {
+						function (tx, error) {
 
 
-						topPreloader(100)
+							topPreloader(100)
 
-						if (!tx) {
+							if (!tx) {
 
-							share.myVal = null;
+								share.myVal = null;
 
-							self.app.platform.errorHandler(error, true)
+								self.app.platform.errorHandler(error, true)
 
-							if (clbk)
-								clbk(false)
+								if (clbk)
+									clbk(false)
+
+							}
+							else {
+
+								if (clbk)
+									clbk(true)
+							}
 
 						}
-						else {
+					)
 
-							if (clbk)
-								clbk(true)
-						}
-
-					}
-				)
+				}, function(){
+					if (clbk)
+						clbk(false)
+				})
 			},
 
 			complain: function (clbk) {
@@ -1877,7 +1884,7 @@ var post = (function () {
 			getdata: function (clbk, p) {
 
 				
-				recommendationsenabled = self.app.platform.istest()
+				recommendationsenabled = true ///self.app.platform.istest()
 
 				_repost = null
 

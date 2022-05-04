@@ -889,6 +889,14 @@ html.mobileview .wnd.wndsharepost .wndcontent #share .absolutetxwrapper {
   .wnd.wndsharepost .wndcontent #share .absolutetxwrapper {
     overflow-y: visible;
   }
+  .wnd.wndsharepost .wndcontent #share #taginput .tgs .search .searchFastResultWrapper {
+    top: 100%;
+    bottom: auto;
+  }
+  .wnd.wndsharepost .wndcontent #share .settingsWrapper .vc_selectInput {
+    top: 100%;
+    bottom: auto;
+  }
   .wnd.wndsharepost .wndcontent #share .mobilecaption {
     display: block;
     padding: 1em;
@@ -903,6 +911,7 @@ html.mobileview .wnd.wndsharepost .wndcontent #share .absolutetxwrapper {
   .wnd.wndsharepost .wndcontent #share .absolutetxwrapper {
     position: static;
     padding-bottom: 0;
+    overflow: visible;
   }
   .wnd.wndsharepost .wndcontent #share .absolutetxwrapper .txtwrapper {
     height: 100%;

@@ -713,15 +713,25 @@ html.mobileview #lenta .share .video-js {
 html.mobileview #lenta .fullScreenVideo .video-js .vjs-volume-control {
   display: none;
 }
+html.mobileview #lenta .fullScreenVideo .jsPlayerLoading,
+html.mobileview #lenta .fullScreenVideo .video-js {
+  max-height: calc(var(--vh, 1vh) * 100);
+}
 html.mobileview.ios #lenta .share .jsPlayerLoading,
 html.mobileview.ios #lenta .share .video-js {
   max-height: 80vh;
 }
+html.mobileview.ios #lenta .share.fullScreenVideo .jsPlayerLoading,
+html.mobileview.ios #lenta .share.fullScreenVideo .video-js {
+  max-height: 100vh;
+}
 html.mobileview #lenta .fullScreenVideo {
   will-change: transform;
   -webkit-backface-visibility: hidden;
-  -webkit-overflow-scrolling: touch;
-  overscroll-behavior: contain;
+}
+html.mobileview #lenta .fullScreenVideo .sharecnt {
+  -webkit-overflow-scrolling: none;
+  overscroll-behavior: none;
 }
 html.mobileview.fullscreen #lenta .fullScreenVideo #comments {
   display: none;

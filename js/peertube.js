@@ -27,7 +27,10 @@ var PeertubeRequest = function (app = {}) {
 	};
 
 	var direct = function (url, data, p) {
-		var controller = new AbortController();
+		var controller = {};
+
+
+		if (typeof AbortController != 'undefined') controller = new AbortController();
 
 		var time = 40000;
 
@@ -68,7 +71,9 @@ var PeertubeRequest = function (app = {}) {
 
 		return fetch(url, ps)
 			.then((r) => {
-				signal.dontabortable = true;
+
+				if (signal)
+					signal.dontabortable = true;
 
 				resp = r;
 
@@ -678,17 +683,17 @@ PeerTubePocketnet = function (app) {
 					});
 			},
 
-      initResumableUpload: function (parameters, options) {
-        return self.api.videos
-          .checkQuota(parameters.video.size, { type: options.type })
-          .then((rme) => {
-            const videoName = parameters.name || `PocketVideo:${new Date().toISOString()}`;
+			initResumableUpload: function (parameters, options) {
+				return self.api.videos
+					.checkQuota(parameters.video.size, { type: options.type })
+					.then((rme) => {
+						const videoName = parameters.name || `PocketVideo:${new Date().toISOString()}`;
 
 						const data = {
 							privacy: 1,
 							'scheduleUpdate[updateAt]': new Date().toISOString(),
 							channelId: rme.channelId,
-							name: videoName,
+							name: parameters.title || videoName,
 							filename: videoName,
 						};
 
@@ -839,7 +844,7 @@ PeerTubePocketnet = function (app) {
 						request('importVideo', data, options)
 							.then((r) => {
 
-								console.log("R",r)
+								console.log("R", r)
 
 								if (!r.video) return Promise.reject(error('uploaderror'));
 

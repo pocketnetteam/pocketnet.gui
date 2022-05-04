@@ -16,7 +16,7 @@ var lenta = (function(){
 		var mid = p.mid;
 		var making = false, ovf = false;
 		var w, essenseData, recomended = [], initialized, recommended, mestate, initedcommentes = {}, canloadprev = false,
-		video = false, isotopeinited = false, videosVolume = 0, fullscreenvideoShowing = null, loadedcachedHeight, showRecommendedUsers = true, recommendedusers = null;
+		video = false, isotopeinited = false, videosVolume = 0, fullscreenvideoShowing = null, loadedcachedHeight;
 
 		var subloaded = false
 
@@ -389,8 +389,6 @@ var lenta = (function(){
 
 			rebuilddelay : function(){
 
-				showRecommendedUsers = true;
-				recommendedusers = null;
 
 				if (el.c)
 					el.c.addClass('rebuilding')
@@ -764,6 +762,7 @@ var lenta = (function(){
 			initVideoLight: function(share, clbk, shadow){
 				//js-player-dummy
 
+				if(!el.share[share.txid]) return
 
 				var button = el.share[share.txid].find('.initvideoplayer')
 
@@ -1350,7 +1349,7 @@ var lenta = (function(){
 				var _el = el.share[id]
 				var share = self.app.platform.sdk.node.shares.storage.trx[id];
 
-				if(!_el || !share || !self.app.platform.istest()){
+				if(!_el || !share /*|| !self.app.platform.istest()*/){
 					if(clbk) clbk()
 
 					return
@@ -1648,48 +1647,53 @@ var lenta = (function(){
 					}
 				}
 
-				
+				self.app.platform.sdk.upvote.checkvalue(value, function(){
 
-				var upvoteShare = obj.upvote(value);
+					var upvoteShare = obj.upvote(value);
 
-				if(!upvoteShare){
-					self.app.platform.errorHandler('4', true)	
+					if(!upvoteShare){
+						self.app.platform.errorHandler('4', true)	
 
-					if(clbk)
-						clbk(false)
+						if(clbk)
+							clbk(false)
 
-					return
-				}
-
-				self.sdk.node.transactions.create.commonFromUnspent(
-
-					upvoteShare,
-
-					function(tx, error){
-
-						topPreloader(100)
-
-						if(!tx){				
-
-							upvoteShare.myVal = null;	
-							obj.myVal = 0;	
-
-							self.app.platform.errorHandler(error, true)	
-
-
-							if(clbk)
-								clbk(false)
-							
-						}
-						else
-						{
-
-							if (clbk)
-								clbk(true)
-						}
-
+						return
 					}
-				)
+
+					self.sdk.node.transactions.create.commonFromUnspent(
+
+						upvoteShare,
+
+						function(tx, error){
+
+							topPreloader(100)
+
+							if(!tx){				
+
+								upvoteShare.myVal = null;	
+								obj.myVal = 0;	
+
+								self.app.platform.errorHandler(error, true)	
+
+
+								if(clbk)
+									clbk(false)
+								
+							}
+							else
+							{
+
+								if (clbk)
+									clbk(true)
+							}
+
+						}
+					)
+
+				}, function(){
+					if (clbk)
+						clbk(false)
+				})
 			},
 
 			block : function(address, clbk){
@@ -2650,9 +2654,8 @@ var lenta = (function(){
 				el = null
 			},
 
-			recommendedusers : function(){
+			/*recommendedusers : function(){
 				
-				showRecommendedUsers = false;
 
 				self.nav.api.load({
 
@@ -2674,7 +2677,7 @@ var lenta = (function(){
 				})
 
 
-			},
+			},*/
 
 			loadprev : function(){
 
@@ -2718,6 +2721,8 @@ var lenta = (function(){
 					}
 
 					if (p.selector) _el = el.c.find(selector);
+
+					console.log("RENDER EXTRA", _el)
 
 					if (_el && _el.length){
 
@@ -3236,7 +3241,6 @@ var lenta = (function(){
 						shares : shares || [],
 						index : p.index || 0,
 						video : video || essenseData.videomobile,
-						showRecommendedUsers : showRecommendedUsers,
 						boosted : p.boosted
 					},
 					animation : false,
@@ -3244,13 +3248,7 @@ var lenta = (function(){
 
 				}, function(_p){
 
-					// if (tpl ==='groupshares' && !essenseData.video && essenseData.recommendedUsers && !recommendedusers){
-
-					// 	el.recommendedusers = _p.el.find('.recommendeduserscnt');
-			
-					// 	renders.recommendedusers();
-						
-					// }
+					
 			
 					if (_p.inner == append){
 						sharesInview = sharesInview.concat(shares)	
@@ -3810,7 +3808,6 @@ var lenta = (function(){
 				var author = essenseData.author;
 
 				self.app.platform.sdk.node.shares.loadvideoinfoifneed(allshares, video, function(){
-
 
 					self.app.platform.sdk.node.shares.users(allshares, function(l, error2){
 
@@ -4938,6 +4935,7 @@ var lenta = (function(){
 				recommendations = {}
 				recommendationsMaking = {}
 
+
 				_.each(_reposts, function(p){
 					if (p)
 						p.clearessense()
@@ -4971,10 +4969,7 @@ var lenta = (function(){
 					parallax = null
 				}
 			
-				if (recommendedusers){
-					recommendedusers.destroy();
-					recommendedusers = null;
-				}
+				
 
 				app.actions.playingvideo(null);
 

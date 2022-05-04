@@ -42,7 +42,7 @@
 }
 .share_common .sbtnxs,
 .share_common .adr {
-  max-width: 200px;
+  max-width: 30vw;
   overflow: hidden;
   text-overflow: ellipsis;
   vertical-align: middle;
@@ -921,7 +921,7 @@
   margin-top: 1em;
   padding: 1em;
 }
-.share_common.fullScreenVideo .video-js {
+.share_common.fullScreenVideo .video-js:not(.vjs-fullscreen) {
   max-height: calc(var(--vh, 1vh) * 80);
 }
 .share_common.fullScreenVideo .shareTable {
@@ -930,6 +930,7 @@
 .share_common.fullScreenVideo .sharecnt {
   position: absolute;
   overflow-y: scroll;
+  scroll-behavior: smooth;
   left: 0;
   right: 0;
   top: 0;
@@ -1101,8 +1102,14 @@ html.mobileview .share_common .panel {
   contain: strict;
   height: 40px;
 }
-html.ios .share_common.fullScreenVideo .video-js {
-  max-height: 80vh;
+html.mobileview .share_common.fullScreenVideo .video-js:not(.vjs-fullscreen) {
+  max-height: calc(var(--vh, 1vh) * 100);
+}
+html.mobileview .share_common.fullScreenVideo .sharecnt {
+  padding-bottom: 400px;
+}
+html.mobileview.ios .share_common.fullScreenVideo .video-js {
+  max-height: 100vh;
 }
 /*t*/
 @media only screen and (max-width: 768px) {

@@ -11,7 +11,7 @@ var staking = (function(){
 		var el, info = null, amount = 1000, graph = null, history, stakingClose = null;
 
 			// exchange = 'mercatox'
-			exchange = 'digifinex' //'common'
+			exchange = 'common'
 
 		var market_keys = {
 			'mercatox' : 'last_price',
@@ -110,6 +110,8 @@ var staking = (function(){
 
 							var price_log = history[item][history[item].length - 1]
 
+							if(!price_log.prices[currency]) return '0'
+
 							return Number(price_log.prices[currency].data[market_keys[item]] || '0')
 						})
 
@@ -147,7 +149,6 @@ var staking = (function(){
 					})
 
 					p = _.map(p, function(pn){
-
 
 						if(pn.prices['USD']) {
 							return {

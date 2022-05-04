@@ -15,7 +15,7 @@ if(typeof share != 'undefined' && share){
 
 %>
 
-<div id="<%- ed.repost && !ed.postclass ? makeid() : module.map.id%>" class="poctelc <% if(typeof recommendationsenabled != 'undefined' && recommendationsenabled) {%> recommendationsenabled <% } %> <% if(ed.video) {%> videomainpost <%- (aspectRatio <= 0.9) && (aspectRatio > 0) ? 'verticalVideo' : ''%>  <%- (aspectRatio > 0.9) && (aspectRatio < 1.25) ? 'squareVideo' : ''%> <% } %> <%-widthcontainer%>">
+<div id="<%- ed.repost && !ed.postclass ? makeid() : module.map.id%>" class="poctelc <% if(!ed.repost) { %><% } %>  <% if(typeof recommendationsenabled != 'undefined' && recommendationsenabled) {%> recommendationsenabled <% } %> <% if(ed.video) {%> videomainpost <%- (aspectRatio <= 0.9) && (aspectRatio > 0) ? 'verticalVideo' : ''%>  <%- (aspectRatio > 0.9) && (aspectRatio < 1.25) ? 'squareVideo' : ''%> <% } %> <%-widthcontainer%>">
 	
 	
 	<% if(typeof notfound == 'undefined' || !notfound) {

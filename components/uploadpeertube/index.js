@@ -1,5 +1,3 @@
-
-
 if (typeof _Electron !== 'undefined') {
 	ipcRenderer = require('electron').ipcRenderer;
 
@@ -255,9 +253,11 @@ var uploadpeertube = (function () {
 
 				var data = {
 					video: videoInputFile[0],
+					title : fileName
 				};
 
 				data.name =  fileName;
+				data.title = data.name
 
 				await Promise.all(Object.values(data.video));
 
@@ -394,6 +394,7 @@ var uploadpeertube = (function () {
 						size: transcoded.resultSize,
 						lastModified,
 						name,
+						title : name,
 						type,
 					};
 
@@ -404,6 +405,7 @@ var uploadpeertube = (function () {
 						return new Blob([chunkData.data]);
 					};
 				} else {
+					
 					uploader = new VideoUploader(data.video);
 				}
 
@@ -466,7 +468,7 @@ var uploadpeertube = (function () {
 
 						uploading = false
 
-						add(response.videoLink);
+						add(response.videoLink, data.title);
 
 						wndObj.close();
 

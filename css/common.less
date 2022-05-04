@@ -54,7 +54,7 @@
 
     .sbtnxs,
     .adr{
-		max-width: 200px;
+		max-width: 30vw;
 		overflow: hidden;
 		text-overflow: ellipsis;
 		vertical-align: middle;
@@ -1228,7 +1228,7 @@
         padding-top: 0;
         border-radius: 0!important;
         margin-bottom: 0!important;
-    
+        
         .extrashare{
             display: block;
 
@@ -1242,7 +1242,7 @@
             
         }
 
-        .video-js{
+        .video-js:not(.vjs-fullscreen){
             max-height: calc(var(--vh, 1vh) * 80);
         }
 
@@ -1253,6 +1253,7 @@
         .sharecnt{
             position: absolute;
             overflow-y: scroll;
+            scroll-behavior: smooth;
             left: 0;
             right: 0;
             top : 0;
@@ -1485,14 +1486,27 @@ html.mobileview{
             contain: strict;
             height: 40px;
         }
+
+        &.fullScreenVideo{
+    
+            .video-js:not(.vjs-fullscreen){
+                max-height: calc(var(--vh, 1vh) * 100);
+            }
+
+            .sharecnt{
+                padding-bottom: 400px;
+            }
+        }
     }
+
+    
 }
 
-html.ios{
+html.mobileview.ios{
     .share_common{
         &.fullScreenVideo{
             .video-js{
-                max-height: 80vh;
+                max-height: 100vh;
             }
         }
     }
@@ -1555,6 +1569,7 @@ html.ios{
         &.fullScreenVideo{
             contain: strict;
             background: rgb(var(--color-shadow-base));
+            
 
             .extrashare{
                 >div{
@@ -1562,6 +1577,8 @@ html.ios{
                 }
                 
             }
+
+            
 
             .sharecaption{
                 padding-left: @rhythm;

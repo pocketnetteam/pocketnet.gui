@@ -1778,7 +1778,7 @@ ____loclib.easyNode_e10033 = "Блокчейн"
 ____loclib.easyNode_e10034 = "Описание"
 ____loclib.easyNode_e10035 = "Высота"
 ____loclib.easyNode_e10036 = "Осталось меньше часа"
-____loclib.easyNode_e10037 = function(v) { return `Осталось менее ${v}ч` }
+____loclib.easyNode_e10037 = function(v) { return "Осталось менее "+v+"ч" }
 ____loclib.easyNode_e10038 = "Хэш блока"
 ____loclib.easyNode_e10039 = "Выключить Ноду"
 ____loclib.easyNode_e10040 = "Включить Ноду"
@@ -1823,11 +1823,11 @@ ____loclib.easyNode_e2002_2_1 = " Заработок ";
 ____loclib.easyNode_e2002_2_2 = " Покеткойна будет пропорционален количеству Покеткойнов, которое вы положите в свою Ноду. В криптовалютах такой алгоритм называется стейкинг.";
 
 ____loclib.minPkoin = function (p){
-	return `Минимум ${String(p)} PKOIN`
+	return "Минимум "+String(p)+" PKOIN"
 }
 
 ____loclib.maxPkoin = function (p){
-	return `Максимум ${String(p)} PKOIN`
+	return "Максимум "+String(p)+" PKOIN"
 }
 
 ____loclib.topPosts = "Популярные посты";
@@ -2014,3 +2014,14 @@ ____loclib.shareexternaluploadpeertube = "Открыто окно загрузк
 ____loclib.removeimageswhenvideo = "Прикреплённые к публикации изображения удалятся, если вы продолжите загружать видео. Перейти к загрузке видео?";
 
 
+____loclib.lowstar1 = "Команда Bastyon вводит временный мораторий на 1 и 2 рейтинги, исключая публикации, нарушающие правила сообщества:"
+____loclib.lowstar_reason_1 = "Порно"
+____loclib.lowstar_reason_2 = "Детская эксплуатация"
+____loclib.lowstar_reason_3 = "Прямая угроза насилия"
+____loclib.lowstar_reason_4 = "Нелегальные наркотики"
+____loclib.lowstar2 = "Пожалуйста, не используйте рейтинги с одной или двумя звёздами по другим причинам."
+____loclib.lowstar3 = "Если вы ставите 1 или 2 звезды по причинам, не указанным выше, то после выхода алгоритма модерации, члены жюри лишат Ваш аккаунт репутации навсегда."
+
+____loclib.lowstaragree = "Я подтверждаю, что публикация нарушает правила сообщества."
+
+____loclib.usetor = "Соединение через Tor сеть"

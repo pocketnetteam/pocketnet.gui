@@ -3,8 +3,6 @@ if (global.WRITE_LOGS) {
     global.LOG_LEVEL = global.WRITE_LOGS.split("=").pop()
 }
 
-const notifier = require('node-notifier');
-
 var open = require("open");
 
 const {protocol} = require('electron');
@@ -13,6 +11,7 @@ const ProxyInterface = require('./proxy16/ipc.js')
 const IpcBridge =require('./js/electron/ipcbridge.js')
 
 const { Bridge: TranscoderBridge } = require('./js/electron/transcoding2.js');
+const { initProxifiedFetchBridge } = require('./js/peertube/proxified-fetch.js');
 const { bastyonFsFetchBridge } = require('./js/peertube/bastyon-fs-fetch.js');
 
 const electronLocalshortcut = require('electron-localshortcut');
@@ -20,25 +19,15 @@ const electronLocalshortcut = require('electron-localshortcut');
 var win, nwin, badge, tray, proxyInterface, ipcbridge;
 var willquit = false;
 
+const transports = require('./proxy16/transports')
+transports().runTor((message)=>{
+   // z console.log(message)
+});
+
 const { app, BrowserWindow, Menu, MenuItem, Tray, ipcMain, Notification, nativeImage, dialog, globalShortcut, OSBrowser } = require('electron')
 app.allowRendererProcessReuse = false
 
-/*
-const ProxyList = require('free-proxy');
-const proxyList = new ProxyList();
-proxyList.get()
-    .then(function (proxies) {
-        proxies = proxies.sort((a,b)=>{
-            return (+a.speed_download > +b.speed_download) ? -1 : (+a.speed_download < +b.speed_download) ? 1 : 0
-        })
-        for(const proxy of proxies){
-            app.commandLine.appendSwitch('proxy-server', proxy.url)
-
-        }
-    })
-    .catch(function (error) {
-        console.error(error)
-    });*/
+// app.commandLine.appendSwitch('proxy-server', "socks5://127.0.0.1:9050")
 
 const Badge = require('./js/vendor/electron-windows-badge.js');
 
@@ -54,7 +43,6 @@ const contextMenu = require('electron-context-menu');
 const path = require('path');
 const http = require('http');
 const https = require('https');
-const request = require('request');
 
 contextMenu({
     showSearchWithGoogle : false,
@@ -191,8 +179,6 @@ function quit(){
     app.quit()
 }
 
-
-
 function destroyApp() {
     proxyInterface.destroy().then(r => {
         quit()
@@ -202,9 +188,11 @@ function destroyApp() {
 }
 
 function createTray() {
-    if(app.dock && app.dock.getMenu()){
+
+    if (app && app.dock && app.dock.getMenu && app.dock.getMenu()){
         return;
     }
+
     var defaultImage = nativeImage.createFromPath(defaultTrayIcon);
     var badgeImage = nativeImage.createFromPath(badgeTrayIcon);
 
@@ -413,16 +401,16 @@ function createWindow() {
     electronLocalshortcut.register(win, 'f5', function() {
 		refresh()
 	})
-    
+
 
 	electronLocalshortcut.register(win, 'CommandOrControl+R', function() {
 		refresh()
 	})
 
-    electronLocalshortcut.register(win, 'f5', function() {
+  electronLocalshortcut.register(win, 'f5', function() {
 		refresh()
 	})
-    
+
 
 	electronLocalshortcut.register(win, 'CommandOrControl+R', function() {
 		refresh()
@@ -627,15 +615,13 @@ function createWindow() {
         if(p.image){
             pathImage= await saveBlobToFile(p.image)
         }
-
         if (!is.windows()) {
-
-            const n = new Notification({ title: p.title, body: p.body, silent: true, icon: pathImage })
-
-            n.onclick = function () {
+            const n = new Notification({ title : p.title, body: p.body, silent :true, icon: pathImage})
+            n.onclick = function(){
 
                 if (win) {
                     win.show();
+                    win.webContents.send('nav-message', { msg: 'userpage?id=notifications&report=notifications', type: 'action'})
                 }
             }
 
@@ -657,6 +643,7 @@ function createWindow() {
 
                         if (win) {
                             win.show();
+                            win.webContents.send('nav-message', { msg: 'userpage?id=notifications&report=notifications', type: 'action'})
                         }
                 }
             );
@@ -850,6 +837,12 @@ function createWindow() {
         fs.rmSync(shareDir, { recursive: true, force: true });
     });
 
+    ipcMain.removeHandler('proxyUrl');
+    ipcMain.handle('proxyUrl', async (event, data) => {
+        return await transports(true).proxyUrl(data)
+    });
+    
+
     ipcMain.removeHandler('getShareList');
     ipcMain.handle('getShareList', async (event) => {
         const isShaHash = /[a-f0-9]{64}/;
@@ -915,6 +908,11 @@ function createWindow() {
      * Local files requestor bridge
      */
     bastyonFsFetchBridge(ipcMain, Storage);
+
+    /**
+     * Fetch request proxifier bridge
+     */
+    initProxifiedFetchBridge(ipcMain);
 
     /**
      * Video transcoding handler

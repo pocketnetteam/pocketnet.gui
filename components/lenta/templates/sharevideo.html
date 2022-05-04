@@ -32,6 +32,8 @@ var checkvisibility = app.platform.sdk.node.shares.checkvisibility(share)
 var emptywithrepost = share.isEmpty() && share.repost
 var value = Number(share.score)
 
+var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
+
 var makecaptionclear = function(){
 
 	%> 
@@ -463,13 +465,17 @@ var metadisplay = function(){ %>
 	
 									<% } %>
 	
-									<% if(!my) {%>
+									<% if(!lockedaccount) {%>
+										<% if(!my || app.boost) {%>
+										
 										<div class="item pkoin right unselectedtable">
 											<img src="img/pocketnet_logo_white.svg" alt="">
 											<span class='workstation'>
 												PKOIN
 											</span>
 										</div>
+
+										<% } %>
 									<% } %>
 									
 								</div>

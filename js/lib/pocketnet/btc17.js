@@ -6997,6 +6997,8 @@
   // file LICENSE or http://www.opensource.org/licenses/mit-license.php.
   
   const Buffer = require('safe-buffer').Buffer
+
+  
   
   module.exports = function base (ALPHABET) {
     if (ALPHABET.length >= 255) throw new TypeError('Alphabet too long')
@@ -8947,7 +8949,7 @@
       }
   };
 
-  if((typeof process !== 'undefined' && process.argv && process.argv.includes('--test')) || (typeof window !== 'undefined' && window.testpocketnet)){
+  if((typeof process !== 'undefined' && process.argv && process.argv.includes && process.argv.includes('--test')) || (typeof window !== 'undefined' && window.testpocketnet)){
     BITCOIN = {
         wif: 0x1e,
         bip32: {
@@ -38523,7 +38525,7 @@
   exports.bitcoin =
     (typeof process !== 'undefined' &&
       process.argv &&
-      process.argv.includes('--test')) ||
+      process.argv.includes && process.argv.includes('--test')) ||
     (typeof window !== 'undefined' && window.testpocketnet)
       ? {
           messagePrefix: '\x18Bitcoin Signed Message:\n',

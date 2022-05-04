@@ -55,7 +55,7 @@
         <div id="navigationWrapper">
         </div> 
 
-        <div class="contentWrapper"> 
+        <div class="contentWrapper "> 
             <div id="content">                
             </div>
         </div>
@@ -116,6 +116,8 @@
             _Node = false;
             
         </script>
+
+        <script src="js/polyfills.js"></script>
 
         __JSENV__
 

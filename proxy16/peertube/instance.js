@@ -1,13 +1,8 @@
 const { performance } = require('perf_hooks');
-let axios = require('axios');
 var _ = require('underscore');
 var f = require('../functions');
 var Statistic = require('../lib/statistic');
-
-/*require('../freeproxy')().listHttp().then(proxies=>{
-	axios = require('axios').create({ proxy: {host :proxies[0].ip, port: +proxies[0].port}});
-})*/
-
+var Transport = require('../transports')();
 var instance = function (host, ip, Roy) {
 	var self = this;
 
@@ -21,7 +16,7 @@ var instance = function (host, ip, Roy) {
 	const FREE_SPACE_PERC = 0.95;
 
 	var lastStat = null;
-	
+
 	var k = 1000;
 
 	var info = []
@@ -45,7 +40,7 @@ var instance = function (host, ip, Roy) {
 		}
 	}
 
-	
+
 	var clearinfointerval = function(){
 		if (infointerval){
 			clearInterval(infointerval)
@@ -121,7 +116,7 @@ var instance = function (host, ip, Roy) {
 		if (info.length) {
 			v = info[info.length - 1]
 			////
-			
+
 			var { free, size } = v.space;
             var occupiedPerc = (size - free) / size;
 
@@ -139,20 +134,6 @@ var instance = function (host, ip, Roy) {
 		return inited;
 	};
 
-	var requestwithip = function(url, type, p){
-
-		return axios[type](`http://${host}${url}`, p).catch(e => {
-
-			var status = ((e || {}).response || {}).status
-
-			if (status) return Promise.reject(e)
-
-			return axios[type](`http://${ip}${url}`, p).catch(e => {
-				return Promise.reject(e)
-			})
-		})
-	}
-
 	self.request = function (method, data, p = {}) {
 		var responseTime = performance.now();
 		var url = methods[method];
@@ -162,15 +143,14 @@ var instance = function (host, ip, Roy) {
 		if (typeof url == 'function') url = url(data);
 
 		var timeout = p.timeout || Roy.parent.timeout() || 10000
-
-		return requestwithip(url, p.type || 'get', { timeout }).then((result) => {
+		return Transport.axios[p.type || 'get'](`http://${host}${url}`, { timeout }).then((result) => {
 
 			var meta = {
 				code : 200,
 				difference : performance.now() - responseTime,
 				method : method
 			}
-		
+
 			statistic.add(meta);
 
 			return Promise.resolve({
@@ -188,7 +168,7 @@ var instance = function (host, ip, Roy) {
 			}
 
 			if (meta.code == 500) statistic.penalty.set(0.9, 30000, 500)
-		
+
 			statistic.add(meta);
 
 			return Promise.reject((error || {}).response || {});
@@ -208,9 +188,9 @@ var instance = function (host, ip, Roy) {
 			penalty : statistic.penalty.get(),
 			info : self.info(),
 			availability : statistic.get.availability()
-		} 
+		}
 
-		
+
 	};
 
 	self.canuse = function () {
