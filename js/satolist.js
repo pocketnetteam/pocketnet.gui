@@ -17207,11 +17207,15 @@ Platform = function (app, listofnodes) {
 
                         self.app.platform.sdk.node.shares.getbyid(txids, function (shares) {
 
+                            console.log('include, shares', shares.length)
+
                             shares = _.filter(shares, function(s){
                                 if(!self.sdk.user.reputationBlocked(s.address)){
                                     return true
                                 }
                             })
+
+                            console.log('include, shares2', shares.length)
 
 
                             if (clbk)

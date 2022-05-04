@@ -11539,9 +11539,17 @@ randomizerarray = function(ar, count, key){
 	var r = []
 
 	for (var i = 0; i < count; i++){
+
 		var v = randomizer(ar, key)
 
-		if (v) r.push(v)
+		if (v) {
+
+			ar = _.filter(ar, function(_v, v){
+				return !isEqual(_v, v, false)
+			})
+
+			r.push(v)
+		}
 	}
 
 	return r

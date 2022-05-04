@@ -596,6 +596,8 @@ var lenta = (function(){
 					return !shareInitedMap[b.txid] && !shareInitingMap[b.txid] && !el.share[b.txid]
 				})
 
+				console.log('include bsts', boosted.length, bsts.length)
+
 				_.each(bsts, function(bst){
 					if (bst){
 
@@ -616,6 +618,8 @@ var lenta = (function(){
 							if (share && el.share[share.txid]){
 
 									boostplaces[position] = true
+
+									console.log('include boostplaces[position]', position)
 
 									renders.shares([bst], function(){
 										renders.sharesInview([bst], function(){
