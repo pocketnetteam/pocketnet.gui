@@ -122,6 +122,10 @@ function proxifiedFetchFactory(electronIpcRenderer) {
                                     electronIpcRenderer.removeAllListeners("ProxifiedFetch : InitialData[".concat(id, "]"));
                                     electronIpcRenderer.removeAllListeners("ProxifiedFetch : PartialResponse[".concat(id, "]"));
                                     controller.close();
+                                    delete fetchCancel.onabort;
+                                });
+                                electronIpcRenderer.once("ProxifiedFetch : Error[".concat(id, "]"), function (event) {
+                                    controller.error('PROXIFIED_FETCH_ERROR');
                                 });
                                 electronIpcRenderer.on("ProxifiedFetch : PartialResponse[".concat(id, "]"), function (event, data) {
                                     /**
@@ -192,6 +196,7 @@ function initProxifiedFetchBridge(electronIpcMain) {
         })["catch"](function (err) {
             if (err.code !== 'FETCH_ABORTED') {
                 console.log('Proxified Fetch failed with next error:', err);
+                sender.send("ProxifiedFetch : Error[".concat(id, "]"));
             }
         });
         requests[id] = { request: request, cancel: function () { return controller.abort(); } };

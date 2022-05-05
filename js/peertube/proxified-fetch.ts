@@ -83,6 +83,12 @@ export function proxifiedFetchFactory(electronIpcRenderer: Electron.IpcRenderer)
                     electronIpcRenderer.removeAllListeners(`ProxifiedFetch : PartialResponse[${id}]`);
 
                     controller.close();
+
+                    delete fetchCancel.onabort;
+                });
+
+                electronIpcRenderer.once(`ProxifiedFetch : Error[${id}]`, (event) => {
+                    controller.error('PROXIFIED_FETCH_ERROR');
                 });
 
                 electronIpcRenderer.on(`ProxifiedFetch : PartialResponse[${id}]`, (event, data: Uint8Array) => {
@@ -168,6 +174,7 @@ export function initProxifiedFetchBridge(electronIpcMain: Electron.IpcMain) {
             .catch((err) => {
                 if (err.code !== 'FETCH_ABORTED') {
                     console.log('Proxified Fetch failed with next error:', err);
+                    sender.send(`ProxifiedFetch : Error[${id}]`);
                 }
             });
 
