@@ -1968,7 +1968,7 @@ var lenta = (function(){
 
 				var cvv = videosVolume
 
-				if(!player.p) return
+				if(!player || !player.p) return
 
 				if (player.p.setVolume){
 					if (v){
