@@ -322,11 +322,24 @@
 #comments .list .comment.newcomments {
   color: rgb(var(--color-txt-ac-1));
 }
+#comments .list .comment.hiddenBlockedUserComment > .commentPaddingWrapper > .commentWrapper > .commentBody > .cbodyWrapper .commentimages,
+#comments .list .comment.hiddenBlockedUserComment > .commentPaddingWrapper > .commentWrapper > .commentBody > .cbodyWrapper .commentmessage {
+  filter: blur(5px);
+  user-select: none;
+  pointer-events: none;
+}
+#comments .list .comment.hiddenBlockedUserComment .showBlockedUserComment {
+  display: block;
+}
+#comments .list .comment .showBlockedUserComment {
+  display: none;
+}
 #comments .list .comment.hiddenComment .commentimages,
 #comments .list .comment.hiddenComment .commentmessage {
   display: none;
 }
-#comments .list .comment.hiddenComment .hiddenCommentLabel {
+#comments .list .comment.hiddenComment .hiddenCommentLabel,
+#comments .list .comment.hiddenBlockedUserComment .hiddenCommentLabel{
   display: block;
   color: rgb(var(--neutral-grad-2));
 }

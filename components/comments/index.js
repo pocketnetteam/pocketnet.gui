@@ -1215,6 +1215,15 @@ var comments = (function(){
 				parent.removeClass('hiddenComment')
 			},
 
+			showBlockedUserComment: function(){
+
+				var _el = $(this)
+
+				var parent = _el.closest('.comment');
+
+				parent.removeClass('hiddenBlockedUserComment')
+			},
+
 			openGallery : function(){
 
 				var _el = $(this)
@@ -2788,6 +2797,7 @@ var comments = (function(){
 				el.list.on('click', '.tocomment', events.tocomment)
 				el.list.on('click', '.imageCommentOpen', events.openGallery)
 				el.list.on('click', '.hiddenCommentLabel', events.showHiddenComment)
+				el.list.on('click', '.showBlockedUserComment', events.showBlockedUserComment)
 				el.list.on('click', '[profile]', events.showprofile)
 
 				if(!_in.length) {

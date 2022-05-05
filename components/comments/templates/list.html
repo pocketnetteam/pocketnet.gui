@@ -103,11 +103,11 @@ var commentf = function(comment){
 
 	var hiddenComments = app.platform.sdk.comments.blocked[comment.address]
 
-	var blockedbyme = showedall && me && me.relation(comment.address, 'blocking')
+	var blockedbyme = me && me.relation(comment.address, 'blocking')
 
 	var m = '' %> 
 
-	<div class="comment <% if(hiddenComment || hiddenComments || blockedbyme) {%> hiddenComment <% } %> <% if(comment.my(app)) {%> mycomment <% } %>  <% if(comment.deleted || lockedaccount) {%> deleted <% } %> <% if(comment.myScore > 0 || comment.myScore < 0) {%> rated <% } %> <% if(comment.temp) {%> temptransaction <% } %> <% if(Number(comment.timeUpd) === Number(comment.time)) {%> commentnotedited <% } %> <%-newcomments%> <%- _class %>" id="<%-comment.id%>" aid="<%-comment.answerid%>" pid='<%-comment.parentid%>'>
+	<div class="comment <% if(hiddenComment || hiddenComments) {%> hiddenComment <% } %> <% if(blockedbyme) {%> hiddenBlockedUserComment <% } %> <% if(comment.my(app)) {%> mycomment <% } %>  <% if(comment.deleted || lockedaccount) {%> deleted <% } %> <% if(comment.myScore > 0 || comment.myScore < 0) {%> rated <% } %> <% if(comment.temp) {%> temptransaction <% } %> <% if(Number(comment.timeUpd) === Number(comment.time)) {%> commentnotedited <% } %> <%-newcomments%> <%- _class %>" id="<%-comment.id%>" aid="<%-comment.answerid%>" pid='<%-comment.parentid%>'>
 
 
 		
@@ -198,14 +198,13 @@ var commentf = function(comment){
 						<div class="commentcontenttable">
 
 							
-								<% if(hiddenComment || hiddenComments || blockedbyme) { %> 
+								<% if(hiddenComment || hiddenComments) { %> 
 									
 									<div class="commentmessage hiddenCommentLabel">
 
 										<div>
 											<% if(hiddenComment) {%><%=e('hiddenCommentLabel')%><% } %>
 											<% if(!hiddenComment && hiddenComments) {%><%=e('hiddenCommentsLabel')%><% } %>
-											<% if(!hiddenComment && !hiddenComments && blockedbyme) {%><%=e('blockedbymeHiddenCommentLabel')%><% } %>
 										</div>
 
 										<div>
@@ -258,6 +257,16 @@ var commentf = function(comment){
 									<div class="commentmessage">
 										<%=nl2br(trimrn(m))%>
 									</div>
+
+									<% if(!hiddenComment && !hiddenComments && blockedbyme) { %>
+										<div class="hiddenCommentLabel">
+											<%=e('blockedbymeHiddenCommentLabel')%>
+										</div>
+
+										<div>
+											<button class="ghost showBlockedUserComment"><%=e('showhiddenComment')%></button>
+										</div>
+									<% } %>
 
 								<% } %>
 
