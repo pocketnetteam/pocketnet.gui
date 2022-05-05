@@ -824,20 +824,9 @@ var share = (function(){
 			checktranscoding : function(clbk){
 				if(currentShare.itisvideo() && !currentShare.aliasid){
 
-					self.app.api.fetch('peertube/videos', {
-                        urls: [currentShare.url.v],
-                    }).then(r => {
-						var result = r[currentShare.url.v]
-
-						if(!result || !result.state){
-							clbk(true)
-						}
-						else{
-							clbk(result.state.id != 2 && result.state.id != 3)
-
-						}
-						
-					})
+					currentShare.canSendFromRelay(self.app, (result) => {
+						clbk(result)
+					});
 
 				}
 				else{

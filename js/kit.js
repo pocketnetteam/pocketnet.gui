@@ -1382,6 +1382,27 @@ Share = function(lang){
 		if(meta.type == 'peertube') return true
 	}
 
+	self.canSendFromRelay = function(app, clbk) {
+		if (self.itisvideo() && !self.aliasid) {
+			app.api.fetch('peertube/videos', {
+				urls: [self.url.v],
+			}).then(r => {
+				debugger;
+				var result = r[self.url.v]
+
+				if(!result || !result.state){
+					clbk(true)
+				}
+				else{
+					clbk(result.state.id != 2 && result.state.id != 3)
+
+				}
+			})
+		}
+
+		return true;
+	}
+
 	self.itisarticle = function(){
 		return self.settings.v == 'a' && self.settings.version && self.settings.version >= 2
 	}
