@@ -1382,12 +1382,11 @@ Share = function(lang){
 		if(meta.type == 'peertube') return true
 	}
 
-	self.canSendFromRelay = function(app, clbk) {
+	self.canSend = function(app, clbk) {
 		if (self.itisvideo() && !self.aliasid) {
 			app.api.fetch('peertube/videos', {
 				urls: [self.url.v],
 			}).then(r => {
-				debugger;
 				var result = r[self.url.v]
 
 				if(!result || !result.state){

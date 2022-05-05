@@ -824,7 +824,7 @@ var share = (function(){
 			checktranscoding : function(clbk){
 				if(currentShare.itisvideo() && !currentShare.aliasid){
 
-					currentShare.canSendFromRelay(self.app, (result) => {
+					currentShare.canSend(self.app, (result) => {
 						clbk(result)
 					});
 
