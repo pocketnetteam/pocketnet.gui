@@ -40,130 +40,121 @@ exports.bastyonFsFetchBridge = exports.bastyonFsFetchFactory = void 0;
 var fs = require("fs");
 var crypto = require("crypto");
 function bastyonFsFetchFactory(electronIpcRenderer, shareId) {
-    return __awaiter(this, void 0, void 0, function () {
-        function fsFetch(input, init) {
-            if (init === void 0) { init = defaultInit; }
-            return __awaiter(this, void 0, void 0, function () {
-                var url, range, readKill, rangeStr, fileStats, fetchId, readStream, response;
-                return __generator(this, function (_a) {
-                    switch (_a.label) {
-                        case 0:
-                            if (input instanceof Request) {
-                                throw Error("Bastyon FS Fetch doesn't support Request objects");
-                            }
-                            if (init.method && init.method !== 'GET') {
-                                throw Error("Bastyon FS Fetch supports only GET method");
-                            }
-                            if (init.headers && !(init.headers instanceof Headers)) {
-                                throw Error("Bastyon FS Fetch supports only headers as Headers object");
-                            }
-                            url = input;
-                            if (init.headers instanceof Headers && init.headers.has('Range')) {
-                                rangeStr = init.headers.get('Range');
-                                range = rangeStr
-                                    .match(/\d+/g)
-                                    .map(Number.parseFloat);
-                            }
-                            if (init.signal) {
-                                readKill = init.signal;
-                            }
-                            return [4 /*yield*/, electronIpcRenderer.invoke('BastyonFsFetch : FileStats', shareId, url, range)];
-                        case 1:
-                            fileStats = _a.sent();
-                            return [4 /*yield*/, electronIpcRenderer.invoke('BastyonFsFetch : GetFile', shareId, url, range)];
-                        case 2:
-                            fetchId = _a.sent();
-                            readStream = new ReadableStream({
-                                start: function (controller) {
-                                    return __awaiter(this, void 0, void 0, function () {
-                                        return __generator(this, function (_a) {
-                                            if (readKill) {
-                                                readKill.onabort = function () {
-                                                    electronIpcRenderer.send("BastyonFsFetch : ".concat(fetchId, " : Abort"));
-                                                    controller.close();
-                                                };
-                                            }
-                                            electronIpcRenderer.on("BastyonFsFetch : ".concat(fetchId, " : Progress"), function (event, data) {
-                                                var chunkUint8 = new Uint8Array(data.buffer);
-                                                controller.enqueue(chunkUint8);
-                                            });
-                                            electronIpcRenderer.once("BastyonFsFetch : ".concat(fetchId, " : Close"), function (event) {
+    var defaultInit = {
+        method: 'GET'
+    };
+    function fsFetch(input, init) {
+        if (init === void 0) { init = defaultInit; }
+        return __awaiter(this, void 0, void 0, function () {
+            var url, range, readKill, rangeStr, fileStats, fetchId, readStream, response;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        if (input instanceof Request) {
+                            throw Error("Bastyon FS Fetch doesn't support Request objects");
+                        }
+                        if (init.method && init.method !== 'GET') {
+                            throw Error("Bastyon FS Fetch supports only GET method");
+                        }
+                        if (init.headers && !(init.headers instanceof Headers)) {
+                            throw Error("Bastyon FS Fetch supports only headers as Headers object");
+                        }
+                        url = input;
+                        if (init.headers instanceof Headers && init.headers.has('Range')) {
+                            rangeStr = init.headers.get('Range');
+                            range = rangeStr
+                                .match(/\d+/g)
+                                .map(Number.parseFloat);
+                        }
+                        if (init.signal) {
+                            readKill = init.signal;
+                        }
+                        return [4 /*yield*/, electronIpcRenderer.invoke('BastyonFsFetch : FileStats', shareId, url, range)];
+                    case 1:
+                        fileStats = _a.sent();
+                        return [4 /*yield*/, electronIpcRenderer.invoke('BastyonFsFetch : GetFile', shareId, url, range)];
+                    case 2:
+                        fetchId = _a.sent();
+                        readStream = new ReadableStream({
+                            start: function (controller) {
+                                return __awaiter(this, void 0, void 0, function () {
+                                    return __generator(this, function (_a) {
+                                        if (readKill) {
+                                            readKill.onabort = function () {
+                                                electronIpcRenderer.send("BastyonFsFetch : ".concat(fetchId, " : Abort"));
                                                 controller.close();
-                                            });
-                                            electronIpcRenderer.once("BastyonFsFetch : ".concat(fetchId, " : Error"), function (event, err) {
-                                                controller.error(err);
-                                            });
-                                            return [2 /*return*/];
+                                            };
+                                        }
+                                        electronIpcRenderer.on("BastyonFsFetch : ".concat(fetchId, " : Progress"), function (event, data) {
+                                            var chunkUint8 = new Uint8Array(data.buffer);
+                                            controller.enqueue(chunkUint8);
                                         });
+                                        electronIpcRenderer.once("BastyonFsFetch : ".concat(fetchId, " : Close"), function (event) {
+                                            controller.close();
+                                        });
+                                        electronIpcRenderer.once("BastyonFsFetch : ".concat(fetchId, " : Error"), function (event, err) {
+                                            controller.error(err);
+                                        });
+                                        return [2 /*return*/];
                                     });
-                                }
-                            });
-                            response = new Response(readStream);
-                            Object.defineProperty(response, "url", { value: url });
-                            response.headers.append('Content-Length', "".concat(fileStats.size));
-                            return [2 /*return*/, response];
-                    }
-                });
+                                });
+                            }
+                        });
+                        response = new Response(readStream);
+                        Object.defineProperty(response, "url", { value: url });
+                        response.headers.append('Content-Length', "".concat(fileStats.size));
+                        return [2 /*return*/, response];
+                }
             });
-        }
-        var defaultInit;
-        return __generator(this, function (_a) {
-            defaultInit = {
-                method: 'GET'
-            };
-            return [2 /*return*/, function (input, init) { return fsFetch(input, init); }];
         });
-    });
+    }
+    return function (input, init) { return fsFetch(input, init); };
 }
 exports.bastyonFsFetchFactory = bastyonFsFetchFactory;
 function bastyonFsFetchBridge(electronIpcMain, appPath) {
-    return __awaiter(this, void 0, void 0, function () {
-        function urlToFsPath(url, shareId, range) {
-            var isPlaylist = url.endsWith('.m3u8');
-            var isFragment = url.endsWith('.mp4');
-            var urlSplits = url.split('/');
-            var videoId = urlSplits[urlSplits.length - 2];
-            var filePath;
-            if (isPlaylist) {
-                filePath = "".concat(shareId, "/videos/").concat(videoId, "/playlist.m3u8");
-            }
-            if (isFragment && range) {
-                filePath = "".concat(shareId, "/videos/").concat(videoId, "/fragment_").concat(range[0], "-").concat(range[1], ".mp4");
-            }
-            return "".concat(appPath, "/posts/").concat(filePath);
+    function urlToFsPath(url, shareId, range) {
+        var isPlaylist = url.endsWith('.m3u8');
+        var isFragment = url.endsWith('.mp4');
+        var urlSplits = url.split('/');
+        var videoId = urlSplits[urlSplits.length - 2];
+        var filePath;
+        if (isPlaylist) {
+            filePath = "".concat(shareId, "/videos/").concat(videoId, "/playlist.m3u8");
         }
-        return __generator(this, function (_a) {
-            electronIpcMain.handle('BastyonFsFetch : FileStats', function (event, shareId, url, range) {
-                var filePath = urlToFsPath(url, shareId, range);
-                var fileStats = fs.statSync(filePath);
-                return fileStats;
-            });
-            electronIpcMain.handle('BastyonFsFetch : GetFile', function (event, shareId, url, range) {
-                var fetchId = crypto.randomBytes(5).toString('hex');
-                var filePath = urlToFsPath(url, shareId, range);
-                var readStream = fs.createReadStream(filePath);
-                var fileStats = fs.statSync(filePath);
-                var fileSize = fileStats.size;
-                readStream.on('data', function (fragment) {
-                    event.sender.send("BastyonFsFetch : ".concat(fetchId, " : Progress"), fragment);
-                });
-                readStream.once('close', function () {
-                    if (readStream.bytesRead !== fileSize) {
-                        event.sender.send("BastyonFsFetch : ".concat(fetchId, " : Error"), Error('Unhandled file read error'));
-                        return;
-                    }
-                    event.sender.send("BastyonFsFetch : ".concat(fetchId, " : Close"));
-                });
-                readStream.once('error', function (err) {
-                    event.sender.send("BastyonFsFetch : ".concat(fetchId, " : Error"), err);
-                });
-                electronIpcMain.once("BastyonFsFetch : ".concat(fetchId, " : Abort"), function (event) {
-                    readStream.close();
-                });
-                return fetchId;
-            });
-            return [2 /*return*/];
+        if (isFragment && range) {
+            filePath = "".concat(shareId, "/videos/").concat(videoId, "/fragment_").concat(range[0], "-").concat(range[1], ".mp4");
+        }
+        return "".concat(appPath, "/posts/").concat(filePath);
+    }
+    electronIpcMain.handle('BastyonFsFetch : FileStats', function (event, shareId, url, range) {
+        var filePath = urlToFsPath(url, shareId, range);
+        var fileStats = fs.statSync(filePath);
+        return fileStats;
+    });
+    electronIpcMain.handle('BastyonFsFetch : GetFile', function (event, shareId, url, range) {
+        var fetchId = crypto.randomBytes(5).toString('hex');
+        var filePath = urlToFsPath(url, shareId, range);
+        var readStream = fs.createReadStream(filePath);
+        var fileStats = fs.statSync(filePath);
+        var fileSize = fileStats.size;
+        readStream.on('data', function (fragment) {
+            event.sender.send("BastyonFsFetch : ".concat(fetchId, " : Progress"), fragment);
         });
+        readStream.once('close', function () {
+            if (readStream.bytesRead !== fileSize) {
+                event.sender.send("BastyonFsFetch : ".concat(fetchId, " : Error"), Error('Unhandled file read error'));
+                return;
+            }
+            event.sender.send("BastyonFsFetch : ".concat(fetchId, " : Close"));
+        });
+        readStream.once('error', function (err) {
+            event.sender.send("BastyonFsFetch : ".concat(fetchId, " : Error"), err);
+        });
+        electronIpcMain.once("BastyonFsFetch : ".concat(fetchId, " : Abort"), function (event) {
+            readStream.close();
+        });
+        return fetchId;
     });
 }
 exports.bastyonFsFetchBridge = bastyonFsFetchBridge;
+//# sourceMappingURL=bastyon-fs-fetch.js.map
