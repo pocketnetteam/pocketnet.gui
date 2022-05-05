@@ -1384,22 +1384,10 @@ Share = function(lang){
 
 	self.canSend = function(app, clbk) {
 		if (self.itisvideo() && !self.aliasid) {
-			app.api.fetch('peertube/videos', {
-				urls: [self.url.v],
-			}).then(r => {
-				var result = r[self.url.v]
-
-				if(!result || !result.state){
-					clbk(true)
-				}
-				else{
-					clbk(result.state.id != 2 && result.state.id != 3)
-
-				}
-			})
+			return app.peertubeHandler.checkTranscoding(self.url.v).then(result => clbk(result));
 		}
 
-		return true;
+		return clbk(true);
 	}
 
 	self.itisarticle = function(){
@@ -1447,7 +1435,6 @@ Share = function(lang){
 			l : self.language.v,
 			txidEdit : self.aliasid || "",
 			txidRepost : self.repost.v || ""
-
 		}
 	}
 

@@ -862,20 +862,15 @@ var share = (function(){
 							topPreloader(100)
 
 							dialog({
-								html : self.app.localization.e('videotranscodingwait'),
+								html : self.app.localization.e('videotranscodingdelayedpost'),
 								btn1text : self.app.localization.e('daccept'),
-								btn2text : self.app.localization.e('dno'),
 								class : "zindex one",
 								success : function(){
-									
 								},
 		
 								fail : function(){
 								}
 							})
-
-							return
-
 						}
 
 						currentShare.uploadImages(self.app, function(){

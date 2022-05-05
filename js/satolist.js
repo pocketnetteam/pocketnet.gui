@@ -7392,7 +7392,6 @@ Platform = function (app, listofnodes) {
 
                 var needaction = false
                 self.app.user.isState(function (state) {
-
                     if (state) {
                         var rs = self.sdk.relayTransactions.get();
 
@@ -7450,83 +7449,94 @@ Platform = function (app, listofnodes) {
                                                             return
                                                         }
 
-                                                        var c = kits.c[object.type]
+                                                        var successFullSendFunc = () => {
+                                                            var c = kits.c[object.type]
 
-                                                        var trobj = new c();
-
-                                                        trobj.import(object);
-
-                                                        trobj.fromrelay = true;
-
-                                                        object.sending = true;
-
-                                                        self.sdk.node.transactions.create.commonFromUnspent(
-
-                                                            trobj,
-
-                                                            function (_alias, error) {
-
-                                                                var eh = self.errors[error] || {}
-
-                                                                delete object.sending;
-
-                                                                if (error) {
-                                                                    if (key == 'userInfo') {
-
-                                                                        var _nsh = bitcoin.crypto.hash256(JSON.stringify(object))
-
-                                                                        needaction = true
-
-                                                                        if (error == '18' && _nsh != nshowed) {
-
-                                                                            nshowed = _nsh
-
-                                                                            app.nav.api.load({
-                                                                                open: true,
-                                                                                href: 'test',
-                                                                                inWnd: true,
-
-                                                                                essenseData: {
-                                                                                    caption: self.app.localization.e('e13265'),
-                                                                                    failedrelay : trobj
-                                                                                }
+                                                            var trobj = new c();
+    
+                                                            trobj.import(object);
+    
+                                                            trobj.fromrelay = true;
+    
+                                                            object.sending = true;
+    
+                                                            self.sdk.node.transactions.create.commonFromUnspent(
+    
+                                                                trobj,
+    
+                                                                function (_alias, error) {
+    
+                                                                    var eh = self.errors[error] || {}
+    
+                                                                    delete object.sending;
+    
+                                                                    if (error) {
+                                                                        if (key == 'userInfo') {
+    
+                                                                            var _nsh = bitcoin.crypto.hash256(JSON.stringify(object))
+    
+                                                                            needaction = true
+    
+                                                                            if (error == '18' && _nsh != nshowed) {
+    
+                                                                                nshowed = _nsh
+    
+                                                                                app.nav.api.load({
+                                                                                    open: true,
+                                                                                    href: 'test',
+                                                                                    inWnd: true,
+    
+                                                                                    essenseData: {
+                                                                                        caption: self.app.localization.e('e13265'),
+                                                                                        failedrelay : trobj
+                                                                                    }
+                                                                                })
+                                                                            }
+    
+                                                                            if (clbk)
+                                                                                clbk(needaction)
+    
+                                                                            return
+                                                                        }
+                                                                    }
+    
+                                                                    if (!error || (eh && !eh.relay)) {
+    
+                                                                        if (key == 'userInfo') {
+    
+                                                                            delete rs[key]
+    
+                                                                        }
+                                                                        else {
+                                                                            rs[key] = _.filter(rs[key], function (t) {
+                                                                                return t.txid != object.txid
                                                                             })
                                                                         }
-
-                                                                        if (clbk)
-                                                                            clbk(needaction)
-
-                                                                        return
-                                                                    }
-                                                                }
-
-                                                                if (!error || (eh && !eh.relay)) {
-
-                                                                    if (key == 'userInfo') {
-
-                                                                        delete rs[key]
-
+    
+                                                                        self.sdk.relayTransactions.save()
+    
                                                                     }
                                                                     else {
-                                                                        rs[key] = _.filter(rs[key], function (t) {
-                                                                            return t.txid != object.txid
-                                                                        })
+    
                                                                     }
-
-                                                                    self.sdk.relayTransactions.save()
-
+    
+                                                                    p.success()
+    
                                                                 }
-                                                                else {
+                                                            );
+                                                        }
 
-                                                                }
+                                                        // Transcoding checking for functions
+                                                        if (object.checkSend) {
+                                                            self.app.peertubeHandler.checkTranscoding(object.url).then((result) => {
+                                                                if (result) return successFullSendFunc();
 
-                                                                p.success()
-
-                                                            }
-                                                        )
-
-
-
+                                                                // Skip if transcoding is not finished
+                                                                return p.success()
+                                                            })
+                                                        } else {
+                                                            successFullSendFunc();
+                                                        }
                                                     },
 
                                                     all: {
@@ -7592,6 +7602,13 @@ Platform = function (app, listofnodes) {
 
                 s.storage[address] || (s.storage[address] = {})
                 s.storage[address][alias.type] || (s.storage[address][alias.type] = []);
+
+                var postsStack = s.storage[address][alias.type];
+
+                // Check, if post with such url is already relayed (for video purposes)
+                if (alias.url && postsStack.find(tempAlias => tempAlias.url === alias.url)) {
+                    return;
+                }
 
                 s.storage[address][alias.type].push(alias)
 
@@ -18914,7 +18931,6 @@ Platform = function (app, listofnodes) {
                         }
 
                         else {
-                            debugger;
 
                             var generateShare = () => {
                                 var keyPair = p.keys || self.app.user.keys()
@@ -19194,6 +19210,8 @@ Platform = function (app, listofnodes) {
                             };
 
                             var generateShareRelayed = () => {
+                                var optype = obj.typeop ? obj.typeop(self) : obj.type
+
                                 var alias = obj.export(true);
                                 alias.txid = makeid();
                                 alias.address = p.relay;
@@ -19204,8 +19222,9 @@ Platform = function (app, listofnodes) {
 
                                 alias.relay = true;
 
-                                self.sdk.relayTransactions.add(p.relay, alias)
+                                alias.checkSend = true;
 
+                                self.sdk.relayTransactions.add(addr.address, alias)
                                 if (clbk)
                                     clbk(alias)
 
@@ -19214,13 +19233,15 @@ Platform = function (app, listofnodes) {
 
                             // If transaction is made from Share, check if it consist video that is in transcoding. 
                             if (obj.canSend) {
-                                obj.canSend(self.app, (result) => {
+                                return obj.canSend(self.app, (result) => {
+
                                     if (result) return generateShare();
 
                                     return generateShareRelayed();
                                 })
                             }
-
+                            
+                            return generateShare();
                         }
 
                     },
