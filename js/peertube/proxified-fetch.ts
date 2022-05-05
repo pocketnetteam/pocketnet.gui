@@ -35,8 +35,8 @@ export function proxifiedFetchFactory(electronIpcRenderer: Electron.IpcRenderer)
             throw Error('Bastyon Proxified Fetch does not support Request objects');
         }
 
-        if (init.method && init.method !== 'GET') {
-            throw Error('Bastyon Proxified Fetch supports only GET method');
+        if (init.method) {
+            preparedInit.method = init.method;
         }
 
         if (init.headers && !(init.headers instanceof Headers)) {
