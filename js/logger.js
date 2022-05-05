@@ -1,5 +1,6 @@
 const LOGGER_ENDPOINT_ADDRESS = 'https://metrix.pocketnet.app/';
 const DEFAULT_CONTENT_TYPE = 'text/plain';
+const SENDING_INTERVAL = 30000;
 
 class FrontendLogger {
   constructor(userAgent = '', app = {}) {
@@ -14,6 +15,12 @@ class FrontendLogger {
     });
     this.instance.defaults.headers.common['Content-Type'] =
       DEFAULT_CONTENT_TYPE;
+
+    const bindedLogSender = this.sendLogsBatch.bind(this);
+
+    this.sendLogsInterval = setInterval(() => {
+      bindedLogSender();
+    }, SENDING_INTERVAL);
   }
 
   get loggerActive() {
@@ -63,9 +70,19 @@ class FrontendLogger {
       id: 'BEST_VIDEO_CLICKED',
       description: 'One of the best videos selected',
     },
-
-    
   };
+
+  static _logsCache = [];
+
+  sendLogsBatch() {
+    const { _logsCache, instance } = this;
+
+    const logsBatch = _logsCache.splice(0, 10);
+
+    if (logsBatch.length) {
+      instance.post('front/add', logsBatch.join(','));
+    }
+  }
 
   _createLogBody({
     level = 'error',
@@ -94,17 +111,17 @@ class FrontendLogger {
   }
 
   error(error = {}) {
-    const { instance, _createLogBody, guid, userAgent, loggerActive } = this;
+    const { _logsCache, _createLogBody, guid, userAgent, loggerActive } = this;
     //protection from incorrect error formats or logger is turned off
     if (typeof error !== 'object' || !loggerActive) return;
 
     const formattedError = _createLogBody({ ...error, guid, userAgent });
 
-    instance.post('front/add', formattedError);
+    _logsCache.push(formattedError);
   }
 
   info(info = {}) {
-    const { instance, _createLogBody, guid, userAgent, loggerActive } = this;
+    const { _logsCache, _createLogBody, guid, userAgent, loggerActive } = this;
 
     if (typeof info !== 'object' || !loggerActive) return;
 
@@ -114,8 +131,8 @@ class FrontendLogger {
       ...info,
     };
 
-    const formattedError = _createLogBody({ ...fullInfo, guid, userAgent });
+    const formattedInfo = _createLogBody({ ...fullInfo, guid, userAgent });
 
-    instance.post('front/add', formattedError);
+    _logsCache.push(formattedInfo);
   }
 }
