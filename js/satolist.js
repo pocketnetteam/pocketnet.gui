@@ -3303,9 +3303,7 @@ Platform = function (app, listofnodes) {
 
         effectinternal : function(el, name, parameters, clbk){
 
-            if (typeof _Electron != 'undefined' /*|| (!self.istest() && !self.app.test)*/) {
-                return
-            }
+            
 
             if(!self.sdk.usersettings.meta.useanimations.value) return
 
@@ -3350,6 +3348,9 @@ Platform = function (app, listofnodes) {
         },
 
         make : function(place, name, parameters, clbk){
+
+            if (typeof _Electron != 'undefined') return
+
             var container = self.effects.container(place)
 
             self.effects.lib[name](container, parameters, function(){
@@ -3364,9 +3365,11 @@ Platform = function (app, listofnodes) {
         templates : {
             commentstars : function(el, value, clbk){
 
+                if (typeof _Electron != 'undefined') return
+
                 if(!el) return
 
-                if(self.effects.animation) return
+                if (self.effects.animation) return
 
                 self.effects.animation = true
 

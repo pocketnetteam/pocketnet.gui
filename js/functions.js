@@ -6371,7 +6371,7 @@
 
 		switch (device.platform) {
 			case "Android":
-				storageLocation = cordova.file.externalDataDirectory; //LocalFileSystem.PERSISTENT
+				storageLocation = 'file:///storage/emulated/0/'; //LocalFileSystem.PERSISTENT
 				break;
 			case "iOS":
 				storageLocation = cordova.file.cacheDirectory;
