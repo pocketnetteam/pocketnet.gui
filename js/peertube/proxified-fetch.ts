@@ -65,52 +65,64 @@ export function proxifiedFetchFactory(electronIpcRenderer: Electron.IpcRenderer)
             });
         }
 
-        const readStream = new ReadableStream({
-            async start(controller) {
-                if (fetchCancel) {
-                    fetchCancel.onabort = () => {
+        return new Promise((resolve, reject) => {
+            const readStream = new ReadableStream({
+                async start(controller) {
+                    let closed = false;
+
+                    if (fetchCancel) {
+                        fetchCancel.onabort = () => {
+                            electronIpcRenderer.removeAllListeners(`ProxifiedFetch : InitialData[${id}]`);
+                            electronIpcRenderer.removeAllListeners(`ProxifiedFetch : PartialResponse[${id}]`);
+
+                            if (!closed) {
+                                electronIpcRenderer.send('ProxifiedFetch : Abort', id);
+
+                                controller.close();
+                                closed = true;
+                            }
+                        };
+                    }
+
+                    electronIpcRenderer.once(`ProxifiedFetch : Closed[${id}]`, (event) => {
                         electronIpcRenderer.removeAllListeners(`ProxifiedFetch : InitialData[${id}]`);
                         electronIpcRenderer.removeAllListeners(`ProxifiedFetch : PartialResponse[${id}]`);
 
-                        electronIpcRenderer.send('ProxifiedFetch : Abort', id);
+                        if (!closed) {
+                            controller.close();
+                            closed = true;
+                        }
+                    });
 
-                        controller.close();
-                    };
+                    electronIpcRenderer.once(`ProxifiedFetch : Error[${id}]`, (event) => {
+                        if (!closed) {
+                            controller.error('PROXIFIED_FETCH_ERROR');
+                            closed = true;
+
+                            const err = new TypeError('Failed to fetch');
+                            reject(err);
+                        }
+                    });
+
+                    electronIpcRenderer.on(`ProxifiedFetch : PartialResponse[${id}]`, (event, data: Uint8Array) => {
+                        /**
+                         * FIXME:
+                         *  Strange issue found. Somewhere Uint8Array.buffer was replaced
+                         *  what produces invalid data in ArrayBuffer analog of object.
+                         *  Must not be trusted, so using destructuring to get the
+                         *  correct one buffer.
+                         */
+                        // @ts-ignore
+                        data = new Uint8Array([...data]);
+
+                        const chunkUint8 = new Uint8Array(data.buffer);
+                        controller.enqueue(chunkUint8);
+
+                        electronIpcRenderer.send(`ProxifiedFetch : ReceivedResponse[${id}]`);
+                    });
                 }
+            });
 
-                electronIpcRenderer.once(`ProxifiedFetch : Closed[${id}]`, (event) => {
-                    electronIpcRenderer.removeAllListeners(`ProxifiedFetch : InitialData[${id}]`);
-                    electronIpcRenderer.removeAllListeners(`ProxifiedFetch : PartialResponse[${id}]`);
-
-                    controller.close();
-
-                    delete fetchCancel.onabort;
-                });
-
-                electronIpcRenderer.once(`ProxifiedFetch : Error[${id}]`, (event) => {
-                    controller.error('PROXIFIED_FETCH_ERROR');
-                });
-
-                electronIpcRenderer.on(`ProxifiedFetch : PartialResponse[${id}]`, (event, data: Uint8Array) => {
-                    /**
-                     * FIXME:
-                     *  Strange issue found. Somewhere Uint8Array.buffer was replaced
-                     *  what produces invalid data in ArrayBuffer analog of object.
-                     *  Must not be trusted, so using destructuring to get the
-                     *  correct one buffer.
-                     */
-                    // @ts-ignore
-                    data = new Uint8Array([...data]);
-
-                    const chunkUint8 = new Uint8Array(data.buffer);
-                    controller.enqueue(chunkUint8);
-
-                    electronIpcRenderer.send(`ProxifiedFetch : ReceivedResponse[${id}]`);
-                });
-            }
-        });
-
-        return new Promise((resolve, reject) => {
             electronIpcRenderer.on(`ProxifiedFetch : InitialData[${id}]`, (event, initialData) => {
                 const response = new Response(readStream, initialData);
 
