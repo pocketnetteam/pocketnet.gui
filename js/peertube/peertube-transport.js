@@ -37,7 +37,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 exports.__esModule = true;
 exports.peertubeTransport = void 0;
-var bastyon_fs_fetch_1 = require("./bastyon-fs-fetch");
+var fs_fetch_1 = require("./fs-fetch");
 var proxified_fetch_1 = require("./proxified-fetch");
 function peertubeTransport(ipcRenderer, shareId) {
     return __awaiter(this, void 0, void 0, function () {
@@ -58,7 +58,7 @@ function peertubeTransport(ipcRenderer, shareId) {
         var proxyFetch, fsFetch;
         return __generator(this, function (_a) {
             proxyFetch = (0, proxified_fetch_1.proxifiedFetchFactory)(ipcRenderer);
-            fsFetch = (0, bastyon_fs_fetch_1.bastyonFsFetchFactory)(ipcRenderer, shareId);
+            fsFetch = (0, fs_fetch_1.fsFetchFactory)(ipcRenderer, shareId);
             return [2 /*return*/, function (input, init) { return fetchRouter(input, init); }];
         });
     });

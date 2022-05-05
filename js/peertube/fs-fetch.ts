@@ -2,7 +2,7 @@ import type * as Electron from "electron";
 import * as fs from "fs";
 import * as crypto from "crypto";
 
-export function bastyonFsFetchFactory(electronIpcRenderer: Electron.IpcRenderer, shareId: string) {
+export function fsFetchFactory(electronIpcRenderer: Electron.IpcRenderer, shareId: string) {
     const defaultInit = {
         method: 'GET',
     };
@@ -74,7 +74,7 @@ export function bastyonFsFetchFactory(electronIpcRenderer: Electron.IpcRenderer,
     return (input: RequestInfo, init?: RequestInit) => fsFetch(input, init);
 }
 
-export function bastyonFsFetchBridge(electronIpcMain: Electron.IpcMain, appPath: string) {
+export function initFsFetchBridge(electronIpcMain: Electron.IpcMain, appPath: string) {
     function urlToFsPath(url: string, shareId: string, range?: number[]) {
         const isPlaylist = url.endsWith('.m3u8');
         const isFragment = url.endsWith('.mp4')

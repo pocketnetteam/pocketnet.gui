@@ -36,10 +36,10 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.bastyonFsFetchBridge = exports.bastyonFsFetchFactory = void 0;
+exports.initFsFetchBridge = exports.fsFetchFactory = void 0;
 var fs = require("fs");
 var crypto = require("crypto");
-function bastyonFsFetchFactory(electronIpcRenderer, shareId) {
+function fsFetchFactory(electronIpcRenderer, shareId) {
     var defaultInit = {
         method: 'GET'
     };
@@ -110,8 +110,8 @@ function bastyonFsFetchFactory(electronIpcRenderer, shareId) {
     }
     return function (input, init) { return fsFetch(input, init); };
 }
-exports.bastyonFsFetchFactory = bastyonFsFetchFactory;
-function bastyonFsFetchBridge(electronIpcMain, appPath) {
+exports.fsFetchFactory = fsFetchFactory;
+function initFsFetchBridge(electronIpcMain, appPath) {
     function urlToFsPath(url, shareId, range) {
         var isPlaylist = url.endsWith('.m3u8');
         var isFragment = url.endsWith('.mp4');
@@ -156,5 +156,4 @@ function bastyonFsFetchBridge(electronIpcMain, appPath) {
         return fetchId;
     });
 }
-exports.bastyonFsFetchBridge = bastyonFsFetchBridge;
-//# sourceMappingURL=bastyon-fs-fetch.js.map
+exports.initFsFetchBridge = initFsFetchBridge;

@@ -12,7 +12,7 @@ const IpcBridge =require('./js/electron/ipcbridge.js')
 
 const { Bridge: TranscoderBridge } = require('./js/electron/transcoding2.js');
 const { initProxifiedFetchBridge } = require('./js/peertube/proxified-fetch.js');
-const { bastyonFsFetchBridge } = require('./js/peertube/bastyon-fs-fetch.js');
+const { initFsFetchBridge } = require('./js/peertube/fs-fetch.js');
 
 const electronLocalshortcut = require('electron-localshortcut');
 
@@ -907,7 +907,7 @@ function createWindow() {
     /**
      * Local files requestor bridge
      */
-    bastyonFsFetchBridge(ipcMain, Storage);
+    initFsFetchBridge(ipcMain, Storage);
 
     /**
      * Fetch request proxifier bridge

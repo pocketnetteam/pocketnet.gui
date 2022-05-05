@@ -1,11 +1,11 @@
 import type { IpcRenderer } from 'electron';
 
-import { bastyonFsFetchFactory } from './bastyon-fs-fetch';
+import { fsFetchFactory } from './fs-fetch';
 import { proxifiedFetchFactory } from './proxified-fetch';
 
 export async function peertubeTransport(ipcRenderer: IpcRenderer, shareId: string) {
     const proxyFetch = proxifiedFetchFactory(ipcRenderer);
-    const fsFetch = bastyonFsFetchFactory(ipcRenderer, shareId);
+    const fsFetch = fsFetchFactory(ipcRenderer, shareId);
 
     function fetchRouter(input: RequestInfo, init: RequestInit): Promise<Response> {
         let url: string;
