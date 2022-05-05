@@ -3,7 +3,7 @@ import type { IpcRenderer } from 'electron';
 import { fsFetchFactory } from './fs-fetch';
 import { proxifiedFetchFactory } from './proxified-fetch';
 
-export async function peertubeTransport(ipcRenderer: IpcRenderer, shareId: string) {
+export function peertubeTransport(ipcRenderer: IpcRenderer, shareId: string) {
     const proxyFetch = proxifiedFetchFactory(ipcRenderer);
     const fsFetch = fsFetchFactory(ipcRenderer, shareId);
 
