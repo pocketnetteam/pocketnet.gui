@@ -88,7 +88,13 @@ function proxifiedFetchFactory(electronIpcRenderer) {
                     preparedInit.method = init.method;
                 }
                 if (init.headers && !(init.headers instanceof Headers)) {
-                    throw Error('Bastyon Proxified Fetch supports only headers as Headers object');
+                    preparedInit.headers = init.headers;
+                }
+                if (init.body) {
+                    if (typeof init.body !== 'string') {
+                        throw Error('Bastyon Proxified Fetch does support only String Body');
+                    }
+                    preparedInit.body = init.body;
                 }
                 id = getRequestId();
                 url = input;
