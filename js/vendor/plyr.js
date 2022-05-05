@@ -9202,7 +9202,7 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
       }
 
       if (localVideo && isElectron) {
-        localTransport = bastyonFsFetchFactory(electron.ipcRenderer, localVideo.video.internalURL);
+        localTransport = peertubeTransport(electron.ipcRenderer, localVideo.video.internalURL);
         localVideo = undefined;
       }
 
