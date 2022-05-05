@@ -141,7 +141,9 @@ var instance = function (host, ip, Roy) {
 
 	var requestwithip = function(url, type, p){
 
-		return axios[type](`http://${host}${url}`, p).catch(e => {
+		return axios[type](`http://${host}${url}`, p)
+		
+		/*.catch(e => {
 
 			var status = ((e || {}).response || {}).status
 
@@ -150,7 +152,7 @@ var instance = function (host, ip, Roy) {
 			return axios[type](`http://${ip}${url}`, p).catch(e => {
 				return Promise.reject(e)
 			})
-		})
+		})*/
 	}
 
 	self.request = function (method, data, p = {}) {

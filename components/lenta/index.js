@@ -619,7 +619,7 @@ var lenta = (function(){
 
 									boostplaces[position] = true
 
-									console.log('include boostplaces[position]', position)
+									console.log('include boostplaces[position]', position, el.share[share.txid])
 
 									renders.shares([bst], function(){
 										renders.sharesInview([bst], function(){
@@ -3202,8 +3202,15 @@ var lenta = (function(){
 				if(!p) p = {};
 
 
+				var likeappend = false
+
+
 				if(!p.inner) {
+
+					likeappend = true
 					p.inner = function(el, html){
+
+						
 
 						if(isotopeinited){
 							var content = $(html)
@@ -3254,7 +3261,8 @@ var lenta = (function(){
 
 					
 			
-					if (_p.inner == append){
+					if (_p.inner == append || likeappend){
+						console.log("ARRANGE")
 						sharesInview = sharesInview.concat(shares)	
 					}
 					else
@@ -3685,7 +3693,6 @@ var lenta = (function(){
 				if (video || essenseData.videomobile){ type = 'video'}
 				if (essenseData.read){ type = 'article'}
 				if (essenseData.tags) tagsfilter = essenseData.tags
-
 				
 				
 				self.app.platform.sdk.node.shares.getboostfeed({

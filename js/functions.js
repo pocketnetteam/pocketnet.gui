@@ -11544,9 +11544,13 @@ randomizerarray = function(ar, count, key){
 
 		if (v) {
 
-			ar = _.filter(ar, function(_v, v){
+			console.log('include ar', ar.length)
+
+			ar = _.filter(ar, function(_v){
 				return !isEqual(_v, v, false)
 			})
+
+			console.log('include ar2', ar.length)
 
 			r.push(v)
 		}
