@@ -79,6 +79,9 @@ function proxifiedFetchFactory(electronIpcRenderer) {
                 preparedInit = {};
                 preparedInit.headers = {};
                 if (input instanceof Request) {
+                    input.headers.forEach(function (value, name) {
+                        preparedInit.headers[name] = value;
+                    });
                     throw Error('Bastyon Proxified Fetch does not support Request objects');
                 }
                 if (init.method && init.method !== 'GET') {

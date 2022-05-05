@@ -28,6 +28,10 @@ export function proxifiedFetchFactory(electronIpcRenderer: Electron.IpcRenderer)
         preparedInit.headers = {};
 
         if (input instanceof Request) {
+            input.headers.forEach((value, name) => {
+                preparedInit.headers[name] = value;
+            });
+
             throw Error('Bastyon Proxified Fetch does not support Request objects');
         }
 
