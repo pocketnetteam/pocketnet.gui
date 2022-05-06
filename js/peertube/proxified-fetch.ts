@@ -3,7 +3,7 @@ import type * as Stream from "stream";
 
 import * as proxyTransport from "../../proxy16/transports.js";
 
-const proxified = proxyTransport(true);
+const proxified = proxyTransport();
 
 const getRequestId = () => {
     const rand = Math.random()

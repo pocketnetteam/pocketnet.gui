@@ -58,7 +58,7 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
 exports.__esModule = true;
 exports.initProxifiedFetchBridge = exports.proxifiedFetchFactory = void 0;
 var proxyTransport = require("../../proxy16/transports.js");
-var proxified = proxyTransport(true);
+var proxified = proxyTransport();
 var getRequestId = function () {
     var rand = Math.random();
     var min = 0x100000;
