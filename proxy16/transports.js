@@ -122,7 +122,8 @@ module.exports = function (){
                 return await self.fetch(url, opts)
                   .catch((err) => {
                       if (err.code !== 'FETCH_ABORTED') {
-                          console.log(err);
+                          // For debugging, don't remove
+                          // console.log(err);
                       }
                   });
             }
