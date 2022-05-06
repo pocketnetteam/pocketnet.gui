@@ -119,7 +119,12 @@ module.exports = function (){
         }catch (e) {
             if(enable && !isUseProxy(url)){
                 addToPoxy(url)
-                return await self.fetch(url, opts);
+                return await self.fetch(url, opts)
+                  .catch((err) => {
+                      if (err.code !== 'FETCH_ABORTED') {
+                          console.log(err);
+                      }
+                  });
             }
             removeToPoxy(url)
             throw e;
