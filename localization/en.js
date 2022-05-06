@@ -2224,4 +2224,6 @@ ____loclib.lowstar_reason_4 = "Illegal narcotics"
 ____loclib.lowstar2 = "Please do not use 1 and 2 star ratings for other reasons. After the new moderation is released in mid. May you will be able to use low ratings for other reasons"
 ____loclib.lowstaragree = "I confirm that this post contains one of four types of prohibited content"
 
-____loclib.videotranscodingdelayedpost = "This video is being processed and will be posted as soon as the transcoding process ends. PLEASE, DO NOT CLOSE THE TAB UNTILL THAT.";
+____loclib.videotranscodingdelayedpost = "This video is being processed and will be posted as soon as the transcoding process ends. Please, do not close the tab untill then."
+
+____loclib.postInRelay = "This post is processed before publishing to blockchain"

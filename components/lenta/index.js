@@ -2904,7 +2904,6 @@ var lenta = (function(){
 			},
 			
 			share : function(share, clbk, all, p){
-
 				if(!p) p = {}
 
 				if(!share) return
@@ -2913,7 +2912,13 @@ var lenta = (function(){
 
 				if(!p.repost)
 					shareInitingMap[share.txid] = true;
+				debugger;
 
+				var shareRelayedFlag = (
+					deep(self.app.platform.sdk.relayTransactions.get(), 'share') || {}
+				).find((transaction) => transaction.txid === share.txid);
+
+				
 				self.shell({
 					name : video ? 'sharevideolight' : share.itisarticle() ? 'sharearticle' : 'share',
 
@@ -2927,7 +2932,8 @@ var lenta = (function(){
 						tplvideo : video ,
 						openapi : essenseData.openapi,
 						sharesFromSub,
-						boosted : p.boosted
+						boosted : p.boosted,
+						shareRelayedFlag,
 					}					
 
 				}, function(p){
@@ -3118,7 +3124,6 @@ var lenta = (function(){
 			
 
 			sharesInview : function(shares, clbk, p){
-
 				if(!p) p = {}
 
 				
@@ -3243,7 +3248,6 @@ var lenta = (function(){
 						})
 					})
 					
-
 				self.shell({
 					name :  tpl,
 					inner : p.inner,
@@ -3259,8 +3263,6 @@ var lenta = (function(){
 
 				}, function(_p){
 
-					
-			
 					if (_p.inner == append || likeappend){
 						console.log("ARRANGE")
 						sharesInview = sharesInview.concat(shares)	
@@ -4426,8 +4428,7 @@ var lenta = (function(){
 					}
 
 					self.app.platform.sdk.node.shares.clbks.added.lenta = function(share){
-	
-	
+						
 						if (share.txidEdit){		
 													
 							delete initedcommentes[share.txidEdit]

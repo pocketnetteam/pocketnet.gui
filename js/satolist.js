@@ -7605,11 +7605,6 @@ Platform = function (app, listofnodes) {
 
                 var postsStack = s.storage[address][alias.type];
 
-                // Check, if post with such url is already relayed (for video purposes)
-                if (alias.url && postsStack.find(tempAlias => tempAlias.url === alias.url)) {
-                    return;
-                }
-
                 s.storage[address][alias.type].push(alias)
 
                 s.save()
@@ -19214,7 +19209,7 @@ Platform = function (app, listofnodes) {
 
                                 var alias = obj.export(true);
                                 alias.txid = makeid();
-                                alias.address = p.relay;
+                                alias.address = addr.address;
                                 alias.type = obj.type
                                 alias.time = self.currentTime()
                                 alias.timeUpd = alias.time
