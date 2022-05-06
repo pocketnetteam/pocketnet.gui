@@ -1,3 +1,5 @@
+let proxyFetch = proxifiedFetchFactory(electron.ipcRenderer);
+
 var PeertubeRequest = function (app = {}) {
 	var self = this;
 
@@ -69,7 +71,7 @@ var PeertubeRequest = function (app = {}) {
 		if (data && !_.isEmpty(data) && ps.method !== 'GET')
 			ps.body = serialize(data);
 
-		return fetch(url, ps)
+		return proxyFetch(url, ps)
 			.then((r) => {
 
 				if (signal)
@@ -461,7 +463,9 @@ PeerTubePocketnet = function (app) {
 					meta.path + params,
 					data,
 					requestoptions,
-				);
+				).catch((err, data) => {
+					return Promise.reject(err);
+				});
 			}).catch(e => {
 
 				return Promise.reject(e)
