@@ -3,9 +3,21 @@ import type { IpcRenderer } from 'electron';
 import { fsFetchFactory } from './fs-fetch';
 import { proxifiedFetchFactory } from './proxified-fetch';
 
-export function peertubeTransport(ipcRenderer: IpcRenderer, shareId: string) {
+/** Partial type for LocalVideo */
+type LocalVideo = {
+    video: {
+        internalURL: string,
+    },
+}
+
+export function peertubeTransport(ipcRenderer: IpcRenderer, localVideo: LocalVideo) {
+    let fsFetch;
+
     const proxyFetch = proxifiedFetchFactory(ipcRenderer);
-    const fsFetch = fsFetchFactory(ipcRenderer, shareId);
+
+    if (localVideo) {
+        fsFetch = fsFetchFactory(ipcRenderer, localVideo.video.internalURL);
+    }
 
     function fetchRouter(input: RequestInfo, init: RequestInit): Promise<Response> {
         let url: string;
@@ -16,13 +28,24 @@ export function peertubeTransport(ipcRenderer: IpcRenderer, shareId: string) {
             url = input.url;
         }
 
-        const isViewsRequest = url.endsWith('views');
+        if (localVideo) {
+            const isViewsRequest = url.endsWith('views');
 
-        if (isViewsRequest) {
+            if (isViewsRequest) {
+                return proxyFetch(input, init);
+            }
+
+            return fsFetch(input, init);
+        }
+
+        // @ts-ignore
+        const isTorEnabled = app.platform.sdk.usersettings.meta.useTor.value;
+
+        if (isTorEnabled) {
             return proxyFetch(input, init);
         }
 
-        return fsFetch(input, init);
+        return fetch(input, init);
     }
 
     return (input: RequestInfo, init?: RequestInit) => fetchRouter(input, init);
