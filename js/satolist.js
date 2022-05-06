@@ -4172,7 +4172,7 @@ Platform = function (app, listofnodes) {
             if (!share) {
                 var temp = _.find(self.sdk.node.transactions.temp.share, function (s) {
                     return s.txid == id
-                })
+                }) || (self.app.platform.sdk.relayTransactions.get().share || []).find(transaction => transaction.txid === id);
 
                 if (temp){
                     share = new pShare();
