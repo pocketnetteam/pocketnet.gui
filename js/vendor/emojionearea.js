@@ -744,6 +744,9 @@ document = window.document || {};
         return str;
     }
     function calcButtonPosition() {
+
+        if(!this.editor) return
+
         var self = this,
             offset = self.editor[0].offsetWidth - self.editor[0].clientWidth,
             current = parseInt(self.button.css('marginRight'));

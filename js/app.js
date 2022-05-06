@@ -84,7 +84,7 @@ Application = function(p)
 		self.test = true
 	}
 
-	self.boost = self.test
+	self.boost = true
 
 	self.options = {
 		
