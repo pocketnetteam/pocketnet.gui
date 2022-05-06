@@ -26,6 +26,12 @@ var all = {
 		class : 'block'
 	},
 
+	unblock : {
+		icon : '<i class="fas fa-user-check"></i>',
+		text : e('unblockuser'),
+		class : 'unblock'
+	},
+
 	waiting : {
 		icon : '<i class="fas fa-spinner fa-spin"></i>',
 		text : e('actionWaitConf'),
@@ -50,8 +56,13 @@ var all = {
 
 	}
 	else{
-		m.push('block')
 		m.push('share')
+		var me = app.platform.sdk.user.me()
+		if (me && me.relation(caddress, 'blocking')) {
+			m.push('unblock')
+		} else {
+			m.push('block')
+		}
 	}
 
 	
