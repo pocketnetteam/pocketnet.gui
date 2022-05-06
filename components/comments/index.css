@@ -322,11 +322,18 @@
 #comments .list .comment.newcomments {
   color: rgb(var(--color-txt-ac-1));
 }
-#comments .list .comment.hiddenBlockedUserComment > .commentPaddingWrapper > .commentWrapper > .commentBody > .cbodyWrapper .commentimages,
-#comments .list .comment.hiddenBlockedUserComment > .commentPaddingWrapper > .commentWrapper > .commentBody > .cbodyWrapper .commentmessage {
-  filter: blur(5px);
-  user-select: none;
-  pointer-events: none;
+#comments .list .comment.hiddenBlockedUserComment > .commentPaddingWrapper > .commentWrapper > .iconWrapper,
+#comments .list .comment.hiddenBlockedUserComment > .commentPaddingWrapper > .commentWrapper > .commentBody > .metatable,
+#comments .list .comment.hiddenBlockedUserComment > .commentPaddingWrapper > .commentWrapper > .commentBody >.answers,
+#comments .list .comment.hiddenBlockedUserComment > .commentPaddingWrapper > .commentWrapper > .commentBody > .cbodyWrapper .commentmessage,
+#comments .list .comment.hiddenBlockedUserComment > .commentPaddingWrapper > .commentWrapper > .commentBody > .cbodyWrapper .commentpanel {
+  display: none;
+}
+#comments .list .comment.hiddenBlockedUserComment > .commentPaddingWrapper > .commentWrapper > .commentBody {
+  margin-left: 45px;
+}
+#comments .list .comment.hiddenBlockedUserComment > .commentPaddingWrapper > .commentWrapper > .commentBody > .cbodyWrapper {
+  padding-top: 1em;
 }
 #comments .list .comment.hiddenBlockedUserComment .showBlockedUserComment {
   display: block;
