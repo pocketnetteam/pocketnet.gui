@@ -8573,7 +8573,10 @@ Platform = function (app, listofnodes) {
                     name: self.app.localization.e('usetor'),
                     id: 'usetor',
                     type: "BOOLEAN",
-                    value: true
+                    value: true,
+                    _onChange: (value) => {
+                        // Entry point h8JR7s
+                    },
                 },
             },
 
