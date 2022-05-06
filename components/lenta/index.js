@@ -2912,7 +2912,6 @@ var lenta = (function(){
 
 				if(!p.repost)
 					shareInitingMap[share.txid] = true;
-				debugger;
 
 				var shareRelayedFlag = (
 					deep(self.app.platform.sdk.relayTransactions.get(), 'share') || {}
@@ -4478,7 +4477,6 @@ var lenta = (function(){
 					}
 	
 					self.app.platform.ws.messages.transaction.clbks.temp = function(data){
-	
 						if(essenseData.author && (essenseData.author != self.user.address.value.toString('hex')) || essenseData.txids) return
 	
 						if(data.temp){
@@ -4510,6 +4508,28 @@ var lenta = (function(){
 	
 						}
 						
+					}
+
+					self.app.platform.sdk.relayTransactions.clbks.relayToTemp = function(data) {
+						if(essenseData.author && (essenseData.author != self.user.address.value.toString('hex')) || essenseData.txids) return
+	
+						if(data.txid){
+							var s = _.find(sharesInview, function(sh){
+								if(sh.txid == data.txid) return true
+							})
+	
+							if (s){
+								
+								actions.destroyShare(s)
+	
+								renders.sharesInview([s], function(){
+									
+								})
+	
+								
+							}
+	
+						}
 					}
 	
 					self.app.platform.ws.messages.event.clbks.lenta = function(data){

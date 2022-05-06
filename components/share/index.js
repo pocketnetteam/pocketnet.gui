@@ -855,23 +855,23 @@ var share = (function(){
 
 					actions.checktranscoding(function(result){
 
-						if(!result){
+						// if(!result){
 
-							el.c.removeClass('loading')
+						// 	el.c.removeClass('loading')
 
-							topPreloader(100)
+						// 	topPreloader(100)
 
-							dialog({
-								html : self.app.localization.e('videotranscodingdelayedpost'),
-								btn1text : self.app.localization.e('daccept'),
-								class : "zindex one",
-								success : function(){
-								},
+						// 	dialog({
+						// 		html : self.app.localization.e('videotranscodingdelayedpost'),
+						// 		btn1text : self.app.localization.e('daccept'),
+						// 		class : "zindex one",
+						// 		success : function(){
+						// 		},
 		
-								fail : function(){
-								}
-							})
-						}
+						// 		fail : function(){
+						// 		}
+						// 	})
+						// }
 
 						currentShare.uploadImages(self.app, function(){
 
@@ -907,7 +907,7 @@ var share = (function(){
 								currentShare,
 		
 								function(_alias, error){
-		
+
 									topPreloader(100)
 		
 									el.c.removeClass('loading')
@@ -932,7 +932,7 @@ var share = (function(){
 										//sitemessage("Success")
 		
 										try{
-		
+
 											var alias = new pShare();
 												alias._import(_alias, true)
 												alias.temp = true;

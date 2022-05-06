@@ -7388,6 +7388,8 @@ Platform = function (app, listofnodes) {
 
             arranges: ['userInfo'],
 
+            clbks: {},
+
             send: function (clbk) {
 
                 var needaction = false
@@ -7512,7 +7514,13 @@ Platform = function (app, listofnodes) {
                                                                                 return t.txid != object.txid
                                                                             })
                                                                         }
-    
+
+                                                                        Object.values(self.sdk.relayTransactions.clbks).map(clbk => {
+                                                                            if (typeof clbk === 'function') clbk({
+                                                                                txid: object.txid,
+                                                                            });
+                                                                        });
+
                                                                         self.sdk.relayTransactions.save()
     
                                                                     }

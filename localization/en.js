@@ -2226,4 +2226,4 @@ ____loclib.lowstaragree = "I confirm that this post contains one of four types o
 
 ____loclib.videotranscodingdelayedpost = "This video is being processed and will be posted as soon as the transcoding process ends. Please, do not close the tab untill then."
 
-____loclib.postInRelay = "This post is processed before publishing to blockchain"
+____loclib.postInRelay = "This post is being processed before publishing to blockchain"
