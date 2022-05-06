@@ -9198,12 +9198,7 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
       let localTransport;
 
       if (isElectron) {
-        localTransport = proxifiedFetchFactory(electron.ipcRenderer);
-      }
-
-      if (localVideo && isElectron) {
-        localTransport = peertubeTransport(electron.ipcRenderer, localVideo.video.internalURL);
-        localVideo = undefined;
+        localTransport = peertubeTransport(electron.ipcRenderer, localVideo);
       }
 
       retry(function(){
