@@ -21,7 +21,7 @@ var willquit = false;
 
 const transports = require('./proxy16/transports')
 transports().runTor((message)=>{
-   // z console.log(message)
+   console.log(message?.data)
 });
 
 const { app, BrowserWindow, Menu, MenuItem, Tray, ipcMain, Notification, nativeImage, dialog, globalShortcut, OSBrowser } = require('electron')
