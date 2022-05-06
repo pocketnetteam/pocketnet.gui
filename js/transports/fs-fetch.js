@@ -157,3 +157,4 @@ function initFsFetchBridge(electronIpcMain, appPath) {
     });
 }
 exports.initFsFetchBridge = initFsFetchBridge;
+//# sourceMappingURL=fs-fetch.js.map

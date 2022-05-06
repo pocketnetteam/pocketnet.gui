@@ -23,6 +23,8 @@ export function proxifiedFetchFactory(electronIpcRenderer: Electron.IpcRenderer)
     };
 
     async function profixiedFetch(input: RequestInfo, init: RequestInit = defaultInit): Promise<Response> {
+        console.log('PROXIFIED FETCH TO', input, init);
+
         const preparedInit: RequestInit = {};
 
         preparedInit.headers = {};
@@ -185,7 +187,7 @@ export function initProxifiedFetchBridge(electronIpcMain: Electron.IpcMain) {
             })
             .catch((err) => {
                 if (err.code !== 'FETCH_ABORTED') {
-                    console.log('Proxified Fetch failed with next error:', err);
+                    // console.log('Proxified Fetch failed with next error:', err);
                     sender.send(`ProxifiedFetch : Error[${id}]`);
                 }
             });

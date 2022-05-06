@@ -76,6 +76,7 @@ function proxifiedFetchFactory(electronIpcRenderer) {
         return __awaiter(this, void 0, void 0, function () {
             var preparedInit, id, url, fetchCancel;
             return __generator(this, function (_a) {
+                console.log('PROXIFIED FETCH TO', input, init);
                 preparedInit = {};
                 preparedInit.headers = {};
                 if (input instanceof Request) {
@@ -207,7 +208,7 @@ function initProxifiedFetchBridge(electronIpcMain) {
             });
         })["catch"](function (err) {
             if (err.code !== 'FETCH_ABORTED') {
-                console.log('Proxified Fetch failed with next error:', err);
+                // console.log('Proxified Fetch failed with next error:', err);
                 sender.send("ProxifiedFetch : Error[".concat(id, "]"));
             }
         });
@@ -222,3 +223,4 @@ function initProxifiedFetchBridge(electronIpcMain) {
     });
 }
 exports.initProxifiedFetchBridge = initProxifiedFetchBridge;
+//# sourceMappingURL=proxified-fetch.js.map
