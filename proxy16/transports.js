@@ -66,50 +66,58 @@ module.exports = function (){
         return self.proxyHosts.some(el=>el===url?.host);
     }
 
-    const addToPoxy = (path)=>{
+    const proxifyHost = (path)=>{
         const url = new URL(path)
         self.proxyHosts.push(url?.host)
     }
 
-    const removeToPoxy = (path)=>{
+    const unproxifyHost = (path)=>{
         const url = new URL(path)
         self.proxyHosts = self.proxyHosts.filter(el=>el!==url.host)
     }
-    
-    const axiosRequest =  async (method, ...args)=> {
-        if(isUseProxy(args[0]) && enable) {
-            args.push({httpsAgent: httpsAgent})
+
+    const axiosRequest = (arg1, arg2)=> {
+        let preparedOpts = {};
+
+        if (!arg1) {
+            return Promise.reject('AXIOS_INVALID_ARG_TYPE');
         }
-        try {
-            return await _axios[method]?.(...args)
-        }catch (e) {
-            if(enable && !isUseProxy(args[0])){
-                addToPoxy(args[0])
-                return await axiosRequest(method, ...args);
+
+        if (typeof arg1 === 'string') {
+            preparedOpts.url = arg1;
+
+            if (typeof arg2 === 'object') {
+                preparedOpts = { ...preparedOpts, ...arg2 };
             }
-            removeToPoxy(args[0])
+        } else if (typeof arg1 === 'object') {
+            preparedOpts = arg1;
+        }
+
+        const isProxyUsed = isUseProxy(preparedOpts.url);
+
+        if(isProxyUsed && enable) {
+            preparedOpts.httpsAgent = httpsAgent;
+        }
+
+        try {
+            return _axios(preparedOpts);
+        } catch (e) {
+            if(!isProxyUsed && enable){
+                proxifyHost(preparedOpts.url)
+                return axiosRequest(preparedOpts);
+            }
+            unproxifyHost(preparedOpts.url)
             throw e;
         }
     }
-    
-    self.axios ={
-        get : async (...args)=>{
-            return await axiosRequest('get', ...args)
-        },
-        post: async (...args)=>{
-            return await axiosRequest('post', ...args)
-        },
-        put: async (...args)=>{
-            return await axiosRequest('put', ...args)
-        },
-        delete: async (...args)=>{
-            return await axiosRequest('delete', ...args)
-        },
-        patch: async (...args)=>{
-            return await axiosRequest('patch', ...args)
-        }
-    }
-    
+
+    self.axios = (...args) => axiosRequest(...args);
+    self.axios.get = (...args) => axiosRequest(...args);
+    self.axios.post = (...args) => axiosRequest(...args);
+    self.axios.put = (...args) => axiosRequest(...args);
+    self.axios.delete = (...args) => axiosRequest(...args);
+    self.axios.patch = (...args) => axiosRequest(...args);
+
     self.fetch = async (url, opts) => {
         if(isUseProxy(url) && enable) {
             opts.agent = httpsAgent;
@@ -118,7 +126,7 @@ module.exports = function (){
             return await _fetch(url, opts);
         }catch (e) {
             if(enable && !isUseProxy(url)){
-                addToPoxy(url)
+                proxifyHost(url)
                 return await self.fetch(url, opts)
                   .catch((err) => {
                       if (err.code !== 'FETCH_ABORTED') {
@@ -127,7 +135,7 @@ module.exports = function (){
                       }
                   });
             }
-            removeToPoxy(url)
+            unproxifyHost(url)
             throw e;
         }
     }
@@ -150,10 +158,10 @@ module.exports = function (){
             callBack(...data)
         }catch (e) {
             if(enable && !isUseProxy(options.url)){
-                addToPoxy(options.url)
+                proxifyHost(options.url)
                 return await self.request(options, callBack);
             }
-            removeToPoxy(options.url)
+            unproxifyHost(options.url)
             callBack(e);
         }
     }
