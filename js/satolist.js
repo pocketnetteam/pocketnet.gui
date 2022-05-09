@@ -4,9 +4,10 @@ if (typeof _OpenApi == 'undefined') _OpenApi = false;
 if (typeof _Electron != 'undefined') {
     electron = require('electron');
 
-    proxifiedFetchFactory = require('./js/peertube/proxified-fetch').proxifiedFetchFactory;
-    fsFetchFactory = require('./js/peertube/fs-fetch').fsFetchFactory;
-    peertubeTransport = require('./js/peertube/peertube-transport').peertubeTransport;
+    proxifiedAxiosFactory = require('./js/transports/proxified-axios').proxifiedAxiosFactory;
+    proxifiedFetchFactory = require('./js/transports/proxified-fetch').proxifiedFetchFactory;
+    fsFetchFactory = require('./js/transports/fs-fetch').fsFetchFactory;
+    peertubeTransport = require('./js/transports/peertube-transport').peertubeTransport;
     TranscoderClient = require('./js/electron/transcoding2').Client;
 
     fs = require('fs');

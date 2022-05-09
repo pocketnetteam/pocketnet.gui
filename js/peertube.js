@@ -1,3 +1,4 @@
+let proxyAxios = proxifiedAxiosFactory(electron.ipcRenderer);
 let proxyFetch = proxifiedFetchFactory(electron.ipcRenderer);
 
 var PeertubeRequest = function (app = {}) {
@@ -420,7 +421,7 @@ PeerTubePocketnet = function (app) {
 					var url = self.helpers.url(options.host + '/' + meta.path);
 
 
-					return axios({ method, url, data, ...axiosoptions })
+					return proxyAxios({ method, url, data, ...axiosoptions })
 						.then((r) => {
 							if (meta.fullreport) {
 								return r;
