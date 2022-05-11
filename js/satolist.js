@@ -4,8 +4,10 @@ if (typeof _OpenApi == 'undefined') _OpenApi = false;
 if (typeof _Electron != 'undefined') {
     electron = require('electron');
 
-    proxifiedFetchFactory = require('./js/peertube/proxified-fetch').proxifiedFetchFactory;
-    bastyonFsFetchFactory = require('./js/peertube/bastyon-fs-fetch').bastyonFsFetchFactory;
+    proxifiedAxiosFactory = require('./js/transports/proxified-axios').proxifiedAxiosFactory;
+    proxifiedFetchFactory = require('./js/transports/proxified-fetch').proxifiedFetchFactory;
+    fsFetchFactory = require('./js/transports/fs-fetch').fsFetchFactory;
+    peertubeTransport = require('./js/transports/peertube-transport').peertubeTransport;
     TranscoderClient = require('./js/electron/transcoding2').Client;
 
     fs = require('fs');
@@ -190,7 +192,9 @@ Platform = function (app, listofnodes) {
         'PKB7GXh1qcY7Q7gs3hafgpzndHLKTx4isM' : true,
         'PQ8PDzWy7hDV8gfgSgoP2BCU2CXngMPCvt' : true,
         'PHMjVgWj6HMiLeAhiR8eDLzVrXp8nyF2ji' : true,
-        'PR54hSnPDbhPePLNQZCP4CU77TRFoMxYqg' : true
+        'PR54hSnPDbhPePLNQZCP4CU77TRFoMxYqg' : true,
+        'PARV591XENALBB5ApkR7WcQPhEZtLHfi2A' : true,
+        'PVgktx9ZmPnSXW83HmSF6MX76SV4u5a2hJ' : true
     }
 
     self.bch = {
@@ -2465,7 +2469,7 @@ Platform = function (app, listofnodes) {
             var p = {
                 href : 'post?s=' + txid,
                 clbk : clbk,
-               
+
                 essenseData : {
                     share : txid,
                     video : true,
@@ -3303,9 +3307,7 @@ Platform = function (app, listofnodes) {
 
         effectinternal : function(el, name, parameters, clbk){
 
-            if (typeof _Electron != 'undefined' /*|| (!self.istest() && !self.app.test)*/) {
-                return
-            }
+            
 
             if(!self.sdk.usersettings.meta.useanimations.value) return
 
@@ -3350,6 +3352,9 @@ Platform = function (app, listofnodes) {
         },
 
         make : function(place, name, parameters, clbk){
+
+            if (typeof _Electron != 'undefined') return
+
             var container = self.effects.container(place)
 
             self.effects.lib[name](container, parameters, function(){
@@ -3364,9 +3369,11 @@ Platform = function (app, listofnodes) {
         templates : {
             commentstars : function(el, value, clbk){
 
+                if (typeof _Electron != 'undefined') return
+
                 if(!el) return
 
-                if(self.effects.animation) return
+                if (self.effects.animation) return
 
                 self.effects.animation = true
 
@@ -3530,7 +3537,7 @@ Platform = function (app, listofnodes) {
                         currentmode = mode
 
                         if (mode == 'full') {
-                           
+
                             if (p.top) {
                                 up.css('top', p.top())
                             }
@@ -3578,7 +3585,7 @@ Platform = function (app, listofnodes) {
 
                 up.on('click', events.click)
 
-              
+
             }
 
             var removeEvents = function () {
@@ -6642,10 +6649,10 @@ Platform = function (app, listofnodes) {
                     var fm = _.filter(r, function(u){
                         return u.share && u.share.user
                     })
-                    
+
 
                     self.sdk.node.shares.takeusers(_.map(fm, function(u){
-                        return {userprofile : u.share.user} 
+                        return {userprofile : u.share.user}
                     }), false)
 
 
@@ -8572,7 +8579,10 @@ Platform = function (app, listofnodes) {
                     name: self.app.localization.e('usetor'),
                     id: 'usetor',
                     type: "BOOLEAN",
-                    value: true
+                    value: true,
+                    _onChange: (value) => {
+                        // Entry point h8JR7s
+                    },
                 },
             },
 
@@ -11102,7 +11112,7 @@ Platform = function (app, listofnodes) {
             getTopAccounts : function(p, rpc, clbk){
 
                 var method = 'gettopaccounts';
-     
+
                 p.height = 0;
                 p.tagsfilter = self.app.platform.sdk.categories.gettags();
                 p.tagsexcluded = self.app.platform.sdk.categories.gettagsexcluded();
@@ -11116,7 +11126,7 @@ Platform = function (app, listofnodes) {
                 })
 
                 p.depth || (p.depth = 10000);
-                    
+
                 var parameters = [p.height, p.count, p.lang, p.tagsfilter, p.type, '', p.tagsexcluded, p.depth];
 
                 var s = self.sdk.node.shares;
@@ -11126,7 +11136,7 @@ Platform = function (app, listofnodes) {
                 //     console.log('gettopaccounts result', data, error);
 
                 //     clbk(data, error);
-                    
+
 
                 // }, method, rpc)
 
@@ -11152,7 +11162,7 @@ Platform = function (app, listofnodes) {
                 var method = 'getrecommendedaccountbyaddress';
 
                 var p = {};
-                
+
                 p.addressexclude = '';
                 p.type = [];
                 p.lang = self.app.localization.key;
@@ -11163,7 +11173,7 @@ Platform = function (app, listofnodes) {
                     self.app.platform.sdk.users.getTopAccounts(p, rpc, clbk);
                     return;
 
-                } 
+                }
 
                 var parameters = [address, p.addressexclude, p.type, p.lang, p.count];
 
@@ -12478,23 +12488,23 @@ Platform = function (app, listofnodes) {
                         return like.countOfFives && like.data.subscribers_count + like.data.subscribes_count;
                     })
 
-    
+
                     var bestAddress = '';
                     var bestCount = 1;
-    
+
                     availablesLikes.forEach(function(like){
-    
+
                         if (like.countOfFives > bestCount){
 
                             bestAddress = like.data.address;
                             bestCount = like.countOfFives;
-                            
+
                         } else if (!bestAddress && (like.countOfFives === bestCount)){
 
                             bestAddress = like.data.address;
                         }
                     })
-    
+
                     return bestAddress;
                 }
 
@@ -12591,7 +12601,7 @@ Platform = function (app, listofnodes) {
 
                 self.sdk.users.get([address], function () {
 
-                    var user = self.sdk.users.storage[address] || self.sdk.usersl.storage[address] 
+                    var user = self.sdk.users.storage[address] || self.sdk.usersl.storage[address]
 
                     if (user){
 
@@ -14820,7 +14830,7 @@ Platform = function (app, listofnodes) {
                 h+='<div>'+self.app.localization.e('lowstar2')+'</div>'
                 if(self.app.localization.key == 'ru')
                 h+='<div class="b">'+self.app.localization.e('lowstar3')+'</div>'
-                
+
                 dialog({
                     html: h,
                     btn1text: self.app.localization.e('lowstaragree'),
@@ -17215,11 +17225,15 @@ Platform = function (app, listofnodes) {
 
                         self.app.platform.sdk.node.shares.getbyid(txids, function (shares) {
 
+                            console.log('include, shares', shares.length)
+
                             shares = _.filter(shares, function(s){
                                 if(!self.sdk.user.reputationBlocked(s.address)){
                                     return true
                                 }
                             })
+
+                            console.log('include, shares2', shares.length)
 
 
                             if (clbk)
@@ -26710,7 +26724,7 @@ Platform = function (app, listofnodes) {
         self.sdk.registrations.load();
         self.sdk.relayTransactions.load();
         self.applications = self.__applications()
-        
+
         self.sdk.lentaMethod.load()
 
         self.sdk.uiScale.load();

@@ -6371,7 +6371,7 @@
 
 		switch (device.platform) {
 			case "Android":
-				storageLocation = cordova.file.externalDataDirectory; //LocalFileSystem.PERSISTENT
+				storageLocation = 'file:///storage/emulated/0/'; //LocalFileSystem.PERSISTENT
 				break;
 			case "iOS":
 				storageLocation = cordova.file.cacheDirectory;
@@ -11539,9 +11539,21 @@ randomizerarray = function(ar, count, key){
 	var r = []
 
 	for (var i = 0; i < count; i++){
+
 		var v = randomizer(ar, key)
 
-		if (v) r.push(v)
+		if (v) {
+
+			console.log('include ar', ar.length)
+
+			ar = _.filter(ar, function(_v){
+				return !isEqual(_v, v, false)
+			})
+
+			console.log('include ar2', ar.length)
+
+			r.push(v)
+		}
 	}
 
 	return r
