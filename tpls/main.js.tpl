@@ -20,10 +20,10 @@ const electronLocalshortcut = require('electron-localshortcut');
 var win, nwin, badge, tray, proxyInterface, ipcbridge;
 var willquit = false;
 
-const transports = require('./proxy16/transports')
-transports().runTor((message)=>{
-   console.log(message?.data)
-});
+const transports = require('./proxy16/transports')()
+// transports().runTor((message)=>{
+//    console.log(message?.data)
+// });
 
 const { app, BrowserWindow, Menu, MenuItem, Tray, ipcMain, Notification, nativeImage, dialog, globalShortcut, OSBrowser } = require('electron')
 app.allowRendererProcessReuse = false
@@ -840,9 +840,19 @@ function createWindow() {
 
     ipcMain.removeHandler('proxyUrl');
     ipcMain.handle('proxyUrl', async (event, data) => {
-        return await transports(true).proxyUrl(data)
+        return await transports.proxyUrl(data)
     });
-    
+
+    ipcMain.removeHandler('torEnable');
+    ipcMain.handle('torEnable', async (event, data) => {
+        if(data?.enable) {
+             await transports.runTor((message)=>{
+                 console.log(message)
+             })
+        }else{
+            await transports.stopTor();
+        }
+    });
 
     ipcMain.removeHandler('getShareList');
     ipcMain.handle('getShareList', async (event) => {
