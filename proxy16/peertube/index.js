@@ -401,6 +401,12 @@ var Peertube = function (settings) {
 		return r.length
 	}
 
+	self.wait = function(timeout){
+		return f.pretry(() => {
+			return self.canuse()
+		}, timeout)
+	}
+
 	self.init = function ({ urls, roys }) {
 		if (roys) {
 			_.each(roys, function (urls, i) {
