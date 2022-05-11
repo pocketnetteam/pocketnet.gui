@@ -10,7 +10,7 @@ var progress = require('request-progress');
 var targz = require('targz');
 
 
-var Applications = function(settings, applications) {
+var Applications = function(settings, applications = {}) {
 
     if(!settings) settings = {}
 
