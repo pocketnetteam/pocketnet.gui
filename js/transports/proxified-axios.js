@@ -60,23 +60,48 @@ var getRequestId = function () {
     return randHex + dateHex;
 };
 function proxifiedAxiosFactory(electronIpcRenderer) {
-    function parseArgs(arg1, arg2) {
-        var preparedConfig = {};
-        if (typeof arg2 === 'object') {
-            preparedConfig = arg2;
-            preparedConfig.url = arg1;
-        }
-        else if (typeof arg1 === 'object') {
-            preparedConfig = arg1;
-        }
-        return preparedConfig;
-    }
     function profixiedAxios(urlOrConfig, config) {
         return __awaiter(this, void 0, void 0, function () {
-            var preparedConfig, id;
+            function parseArgs(arg1, arg2) {
+                var preparedConfig = {};
+                if (typeof arg2 === 'object') {
+                    preparedConfig = arg2;
+                    preparedConfig.url = arg1;
+                }
+                else if (typeof arg1 === 'object') {
+                    preparedConfig = arg1;
+                }
+                if (preparedConfig.data instanceof FormData) {
+                    var formData = preparedConfig.data;
+                    preparedConfig.data = { type: 'FormData', value: {} };
+                    formData.forEach(function (value, name) {
+                        preparedConfig.data.value[name] = value;
+                    });
+                }
+                if (preparedConfig.cancelToken) {
+                    cancelToken = preparedConfig.cancelToken.promise;
+                    delete preparedConfig.cancelToken;
+                }
+                if (preparedConfig.onUploadProgress) {
+                    onUploadProgress = preparedConfig.onUploadProgress;
+                    delete preparedConfig.onUploadProgress;
+                }
+                return preparedConfig;
+            }
+            var id, cancelToken, onUploadProgress, preparedConfig;
             return __generator(this, function (_a) {
-                preparedConfig = parseArgs(urlOrConfig, config);
                 id = getRequestId();
+                preparedConfig = parseArgs(urlOrConfig, config);
+                if (cancelToken) {
+                    cancelToken.then(function () {
+                        electronIpcRenderer.send('ProxifiedAxios : Abort', id);
+                    });
+                }
+                if (onUploadProgress) {
+                    electronIpcRenderer.on("ProxifiedAxios : Progress[".concat(id, "]"), function (event, progressEvent) {
+                        onUploadProgress(progressEvent);
+                    });
+                }
                 try {
                     electronIpcRenderer.send('ProxifiedAxios : Request', id, preparedConfig);
                 }
@@ -98,17 +123,28 @@ function proxifiedAxiosFactory(electronIpcRenderer) {
 exports.proxifiedAxiosFactory = proxifiedAxiosFactory;
 function initProxifiedAxiosBridge(electronIpcMain) {
     var requests = {};
+    function parseInputs(axiosConfig) {
+        // let defaultConfig: AxiosRequestConfig = { headers: {} };
+        var preparedConfig = __assign({}, axiosConfig);
+        if (axiosConfig.data.type === 'FormData') {
+            // preparedConfig.headers['Content-Type'] = 'multipart/form-data';
+            var formData_1 = [];
+            Object.keys(preparedConfig.data.value).forEach(function (valueName) {
+                var value = preparedConfig.data.value[valueName];
+                formData_1.push("".concat(valueName, "=").concat(value));
+            });
+            preparedConfig.data = formData_1.join('&');
+        }
+        return preparedConfig;
+    }
     electronIpcMain.on('ProxifiedAxios : Request', function (event, id, axiosConfig) {
         var sender = event.sender;
         var axios = proxified.axios;
         requests[id] = {};
-        var preparedConfig = axiosConfig;
-        // TODO: Handle this
-        /*preparedConfig.onDownloadProgress = (e) => {
-            const dataChunk = e.currentTarget.response;
-
-            sender.send(`ProxifiedFetch : PartialResponse[${id}]`, dataChunk);
-        };*/
+        var preparedConfig = parseInputs(axiosConfig);
+        preparedConfig.onDownloadProgress = function (progressEvent) {
+            sender.send("ProxifiedAxios : Progress[".concat(id, "]"), progressEvent);
+        };
         var cancelSource = axios_1["default"].CancelToken.source();
         preparedConfig.cancelToken = cancelSource.token;
         var request = axios(preparedConfig)
@@ -118,12 +154,10 @@ function initProxifiedAxiosBridge(electronIpcMain) {
             delete preparedResponse.config;
             sender.send("ProxifiedAxios : Response[".concat(id, "]"), preparedResponse);
         })["catch"](function (err) {
-            // TODO: Handle cancel
-            console.log(err);
-            if (err.code !== 'FETCH_ABORTED') {
-                // console.log('Proxified Fetch failed with next error:', err);
-                sender.send("ProxifiedFetch : Error[".concat(id, "]"));
-            }
+            var preparedResponse = __assign({}, err.response);
+            delete preparedResponse.request;
+            delete preparedResponse.config;
+            sender.send("ProxifiedAxios : Response[".concat(id, "]"), preparedResponse);
         });
         requests[id] = { request: request, cancel: function () { return cancelSource.cancel(); } };
     });
