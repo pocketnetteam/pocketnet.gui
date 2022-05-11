@@ -58,7 +58,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 	var peertube = new Peertube()
 	var bots = new Bots(settings.bots)
 	var systemnotify = new SystemNotify(settings.systemnotify)
-	
+
 	var transports = new Transports(global.USE_PROXY_NODE);
 	var torapplications = new Applications(settings.tor, {})
 
@@ -534,10 +534,21 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 	self.torapplications = {
 		init: function () {
-			return torapplications.init()
+
+			if(!global.USE_PROXY_NODE) return Promise.resolve()
+
+			return torapplications.init().then(r => {
+
+				/// check and download
+				
+				return Promise.resolve()
+			})
 		},
 
 		destroy: function () {
+
+			if(!global.USE_PROXY_NODE) return Promise.resolve()
+
 			return torapplications.destroy()
 		},
 	}
