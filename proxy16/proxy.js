@@ -535,7 +535,10 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 	self.torapplications = {
 		init: function () {
 
-			if(!global.USE_PROXY_NODE) return Promise.resolve()
+			if(!global.USE_PROXY_NODE) {
+				console.log('!global.USE_PROXY_NODE')
+				return Promise.resolve()
+			}
 
 			return torapplications.init().then(r => {
 
