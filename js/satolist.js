@@ -8581,7 +8581,9 @@ Platform = function (app, listofnodes) {
                     type: "BOOLEAN",
                     value: true,
                     _onChange: (value) => {
-                        // Entry point h8JR7s
+                        electron.ipcRenderer.invoke('torEnable', {
+                            enable : value
+                        });
                     },
                 },
             },
