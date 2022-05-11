@@ -24,7 +24,7 @@
         frame-src 'self' player.vimeo.com www.youtube.com;
         style-src 'self' data: __VAR__.domain:* cdn.jsdelivr.net/joypixels/ 'unsafe-inline' use.fontawesome.com;
         font-src 'self' data: __VAR__.domain:* use.fontawesome.com;
-        media-src blob: *">
+        media-src data: blob: *">
 
         <link rel="manifest" href="manifest.json">
         <link rel="apple-touch-icon" href="img/res/blue_pad_250.png" sizes="250x250">

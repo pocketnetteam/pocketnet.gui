@@ -7,33 +7,39 @@ const path = require("path");
 const { SocksProxyAgent } = require('socks-proxy-agent')
 const child_process = require("child_process");
 const httpsAgent = new SocksProxyAgent('socks5://127.0.0.1:9050')
+const fs = require('fs/promises');
 
 const getPathTor = ()=>{
     const  isDevelopment = process.argv.some(function(el) { return el === '--development'; })
-    let pathTor = "";
+    let torPath = {
+        path: "",
+        binary: "",
+    };
     switch (process.platform){
         case 'win32':
-            pathTor = "tor/win/tor.exe"
+            torPath.path = "tor/win/"
+            torPath.binary = "tor.exe"
             break;
         case 'linux':
-            pathTor = "tor/linux/tor"
+            torPath.path = "tor/linux/"
+            torPath.binary = "tor"
             break;
         case 'darwin':
+            torPath.binary = "tor"
             if(process.arch === "arm64") {
-                pathTor = "tor/m1/tor"
+                torPath.path = "tor/m1/"
             }else {
-                pathTor = "tor/osx/tor"
+                torPath.path = "tor/osx/"
             }
-            pathTor = (isDevelopment ? "" : "../") + pathTor;
+            torPath.path = (isDevelopment ? "" : "../") + torPath.path;
             break;
     }
-    return path.join(isDevelopment ? __dirname : "", pathTor)
+    torPath.path = path.join(isDevelopment ? __dirname : "", torPath.path)
+    return torPath;
 }
 
-global.USE_PROXY_NODE = true
-
 module.exports = function (){
-    const enable = global.USE_PROXY_NODE;
+    let enable = false
     const self = {};
     self.tor = {};
     self.proxyHosts = []
@@ -41,19 +47,49 @@ module.exports = function (){
     self.tor.path = getPathTor();
     
     self.runTor = async (eventCallBack)=>{
+        enable = true;
         const log = async (data)=>{
             eventCallBack?.(data)
         }
-        self.tor.instance = child_process.spawn(self.tor.path, [], { stdio: ['ignore'], detached : false, shell : false})
+        try {
+            const pid = await fs.readFile(path.join(self.tor.path.path, "tor.pid"), {encoding: "utf-8"})
+            process.kill(+pid.toString(), 9)
+            await fs.unlink(path.join(self.tor.path.path, "tor.pid"))
+        }catch (e) {}
+        self.tor.instance = child_process.spawn(path.join(self.tor.path.path, self.tor.path.binary), [], { stdio: ['ignore'], detached : false, shell : false})
         self.tor.instance.on("error", (err)=>log({error: err}));
-        self.tor.instance.on("exit", (code) => log({exit: code}));
+        self.tor.instance.on("exit", async (code) => {
+            try {
+                await fs.unlink(path.join(self.tor.path.path, "tor.pid"))
+            }catch (e) {}
+            log({exit: code})
+        });
         self.tor.instance.stderr.on("data", (chunk) => log({error: String(chunk)}));
         self.tor.instance.stdout.on("data", (chunk) => log({data: String(chunk)}));
+        if (self?.tor?.instance?.pid){
+            try {
+                await fs.writeFile(path.join(self.tor.path.path, "tor.pid"), self?.tor?.instance?.pid.toString(), { encoding: "utf-8"});
+            }catch (e) {
+                console.error(e)
+                throw "Error write pid file for tor"
+            }
+        }
     }
 
     self.stopTor = async ()=>{
-        if(self.tor?.instance?.pid){
-            self.tor?.instance.kill(9)
+        enable = false;
+        let pid = ""
+        try {
+            pid = await fs.readFile(path.join(self.tor.path.path, "tor.pid"), {encoding: "utf-8"})
+        }catch (e) {
+            if(self.tor?.instance){
+                pid = self.tor.instance.pid;
+            }else{
+                throw "Error read pid file for tor"
+            }
+        }
+        if(pid) {
+            process.kill(+pid.toString(), 9)
         }
     }
     
