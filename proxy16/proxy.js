@@ -614,7 +614,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 			var ins = {
 				1: [
 				  { host: 'pocketnetpeertube1.nohost.me', ip: '109.226.245.120'},
-				{ host: 'pocketnetpeertube2.nohost.me', ip: '94.73.223.24' },
+				  // { host: 'pocketnetpeertube2.nohost.me', ip: '94.73.223.24' },
 				],
 				5: [
 				  {
@@ -622,11 +622,11 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					cantuploading: true,
 					ip: '95.217.209.217',
 				  },
-				  {
+				  /*{
 					host: 'pocketnetpeertube7.nohost.me',
 					cantuploading: true,
 					ip: '188.187.45.218',
-				  },
+				  },*/
 				],
 				6: [
 				  {
@@ -721,13 +721,13 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 
 				17: [
-					{
+					/*{
 						host : 'bastynode.ru',
 						cantuploading: true,
 
 						old : true,
 						ip: '81.23.152.91',
-					},
+					},*/
 					{
 						host : 'storemi.ru',
 						cantuploading: true,
@@ -738,13 +738,13 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				],
 
 				18: [
-					{
+					/*{
 						host : 'bastynode1.ru',
 						cantuploading: true,
 
 						old : true,
 						ip: '81.23.151.94',
-					},
+					},*/
 					{
 						host : 'gf110.ru',
 						cantuploading: true,
