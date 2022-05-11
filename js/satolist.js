@@ -16810,13 +16810,7 @@ Platform = function (app, listofnodes) {
                         method : 'getrecommendedcontentbyaddress',
                         rpc : {
                             cache : true,
-                            locally : true,
-                            fastvideo : true,
-                            meta : {
-                                host : '78.37.233.202',
-                                port : 31031,
-                                ws : 3037
-                            }
+                            fastvideo : true
                         }
                     });
 
