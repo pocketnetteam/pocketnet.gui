@@ -137,6 +137,14 @@ var Roy = function (parent) {
 		return null;
 	};
 
+	self.canuse = function(){
+		var _instances = _.filter(instances, function (instance) {
+			return instance.canuse();
+		});
+
+		return _instances.length
+	}
+
 	self.instances = () => instances.map((instance) => instance.host);
 
 	self.requestToBest = function (method, data, p) {
