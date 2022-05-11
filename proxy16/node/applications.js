@@ -18,58 +18,7 @@ var Applications = function(settings) {
 
     var db = new Datastore(f.path(settings.dbpath));
 
-    var applications = {
-        win32: {
-            bin: {
-                name: "_win_x64_daemon.bin",
-                url: 'https://api.github.com/repos/pocketnetapp/pocketnet.core/releases/latest',
-                page: 'https://github.com/pocketnetteam/pocketnet.core/releases/latest'
-            },
-            checkpoint_main: {
-                name: "main.sqlite3",
-                url: 'https://api.github.com/repos/pocketnetapp/pocketnet.core/releases/latest',
-                page: 'https://github.com/pocketnetteam/pocketnet.core/releases/latest'
-            },
-            checkpoint_test: {
-                name: "test.sqlite3",
-                url: 'https://api.github.com/repos/pocketnetapp/pocketnet.core/releases/latest',
-                page: 'https://github.com/pocketnetteam/pocketnet.core/releases/latest'
-            },
-            snapshot_latest: {
-                permanent: true,
-                name: "latest.tgz",
-                url: 'https://snapshot.pocketnet.app/latest.tgz'
-            },
-            bin_permanent: {
-                permanent: true,
-                name: "pocketcoind.exe",
-                url: 'https://snapshot.pocketnet.app/pocketcoind.exe'
-            },
-            checkpoint_main_permanent: {
-                permanent: true,
-                name: "main.sqlite3",
-                url: 'https://snapshot.pocketnet.app/main.sqlite3'
-            }
-        },
 
-        linux: {
-            bin: {
-                name: "_linux_x64_daemon.bin",
-                url: 'https://api.github.com/repos/pocketnetapp/pocketnet.core/releases/latest',
-                page: 'https://github.com/pocketnetteam/pocketnet.core/releases/latest'
-            },
-            snapshot_latest: {
-                permanent: true,
-                name: "latest.tgz",
-                url: 'https://snapshot.pocketnet.app/latest.tgz'
-            },
-            checkpoint_main: {
-                name: "main.sqlite3",
-                url: 'https://api.github.com/repos/pocketnetapp/pocketnet.core/releases/latest',
-                page: 'https://github.com/pocketnetteam/pocketnet.core/releases/latest'
-            },
-        }
-    }
 
     var platform = process.platform
     var meta = applications[platform]

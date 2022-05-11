@@ -157,6 +157,10 @@ var defaultSettings = {
 		dbpath : 'data/nodes'
 	},
 
+	tor : {
+		dbpath : 'data/tor'
+	},
+
 	server : {
 		enabled : false,
 

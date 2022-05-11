@@ -26,6 +26,7 @@ var Peertube = require('./peertube/index.js');
 var Bots = require('./bots.js');
 var SystemNotify = require('./systemnotify.js');
 var Transports = require("./transports")
+var Applications = require('./node/applications');
 
 process.setMaxListeners(0);
 require('events').EventEmitter.defaultMaxListeners = 0
@@ -57,7 +58,10 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 	var peertube = new Peertube()
 	var bots = new Bots(settings.bots)
 	var systemnotify = new SystemNotify(settings.systemnotify)
+	
 	var transports = new Transports(global.USE_PROXY_NODE);
+	var torapplications = new Applications(settings.tor, {})
+
 	var dump = {}
 
 	self.userDataPath = null
@@ -527,6 +531,16 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 
 	}
+
+	self.torapplications = {
+		init: function () {
+			return torapplications.init()
+		},
+
+		destroy: function () {
+			return torapplications.destroy()
+		},
+	}
 	///
 	self.nodeManager = {
 		init: function () {
@@ -929,7 +943,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 			status = 1
 
-			return this.initlist(['server', 'wss', 'nodeManager', 'wallet', 'firebase', 'nodeControl', 'exchanges', 'peertube', 'bots']).then(r => {
+			return this.initlist(['server', 'wss', 'nodeManager', 'wallet', 'firebase', 'nodeControl', 'torapplications', 'exchanges', 'peertube', 'bots']).then(r => {
 
 				status = 2
 
@@ -975,7 +989,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				}
 			}
 
-			var promises = _.map(['server', 'wss', 'nodeManager', 'wallet', 'firebase', 'nodeControl', 'exchanges', 'peertube', 'bots'], (i) => {
+			var promises = _.map(['server', 'wss', 'nodeManager', 'wallet', 'firebase', 'nodeControl', 'torapplications', 'exchanges', 'peertube', 'bots'], (i) => {
 				return self[i].destroy().catch(catchError(i)).then(() => {
 					return Promise.resolve()
 				})
