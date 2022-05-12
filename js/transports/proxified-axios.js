@@ -69,6 +69,9 @@ function proxifiedAxiosFactory(electronIpcRenderer) {
                 else if (typeof arg1 === 'object') {
                     preparedConfig = arg1;
                 }
+                else if (typeof arg1 === 'string') {
+                    preparedConfig.url = arg1;
+                }
                 if (preparedConfig.data instanceof FormData) {
                     var formData = preparedConfig.data;
                     preparedConfig.data = { type: 'FormData', value: {} };
@@ -201,7 +204,7 @@ var ProxifiedAxiosBridge = /** @class */ (function () {
     };
     ProxifiedAxiosBridge.prototype.prepareConfig = function (axiosConfig) {
         var preparedConfig = __assign({}, axiosConfig);
-        if (axiosConfig.data.type === 'FormData') {
+        if ('data' in axiosConfig && axiosConfig.data.type === 'FormData') {
             var formData_1 = [];
             Object.keys(preparedConfig.data.value).forEach(function (valueName) {
                 var value = preparedConfig.data.value[valueName];

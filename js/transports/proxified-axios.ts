@@ -3,10 +3,6 @@ import type { AxiosStatic, AxiosRequestConfig, AxiosResponse, Cancel } from 'axi
 
 import _axios from 'axios';
 
-import * as proxyTransport from "../../proxy16/transports.js";
-
-const proxified = proxyTransport();
-
 const getRequestId = () => {
     const rand = Math.random();
 
@@ -34,6 +30,8 @@ export function proxifiedAxiosFactory(electronIpcRenderer: Electron.IpcRenderer)
                 preparedConfig.url = arg1 as string;
             } else if (typeof arg1 === 'object') {
                 preparedConfig = arg1;
+            } else if (typeof arg1 === 'string') {
+                preparedConfig.url = arg1 as string;
             }
 
             if (preparedConfig.data instanceof FormData) {
@@ -197,7 +195,7 @@ export class ProxifiedAxiosBridge {
     private prepareConfig(axiosConfig: AxiosRequestConfig): AxiosRequestConfig {
         let preparedConfig: AxiosRequestConfig = { ...axiosConfig };
 
-        if (axiosConfig.data.type === 'FormData') {
+        if ('data' in axiosConfig && axiosConfig.data.type === 'FormData') {
             const formData = [];
 
             Object.keys(preparedConfig.data.value).forEach((valueName) => {
