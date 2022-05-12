@@ -47,7 +47,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.initProxifiedAxiosBridge = exports.proxifiedAxiosFactory = void 0;
+exports.ProxifiedAxiosBridge = exports.initProxifiedAxiosBridge = exports.proxifiedAxiosFactory = void 0;
 var axios_1 = require("axios");
 var proxyTransport = require("../../proxy16/transports.js");
 var proxified = proxyTransport();
@@ -121,6 +121,7 @@ function proxifiedAxiosFactory(electronIpcRenderer) {
     return function (urlOrConfig, config) { return profixiedAxios(urlOrConfig, config); };
 }
 exports.proxifiedAxiosFactory = proxifiedAxiosFactory;
+/** @deprecated */
 function initProxifiedAxiosBridge(electronIpcMain) {
     var requests = {};
     function parseInputs(axiosConfig) {
@@ -170,4 +171,98 @@ function initProxifiedAxiosBridge(electronIpcMain) {
     });
 }
 exports.initProxifiedAxiosBridge = initProxifiedAxiosBridge;
-//# sourceMappingURL=proxified-axios.js.map
+var ProxifiedAxiosBridge = /** @class */ (function () {
+    function ProxifiedAxiosBridge(electronIpcMain) {
+        this.selfStatic = ProxifiedAxiosBridge;
+        this.requests = {};
+        this.ipc = electronIpcMain;
+    }
+    ProxifiedAxiosBridge.prototype.init = function () {
+        var _this = this;
+        this.listen('Request', function (id, axiosConfig, _a) {
+            var sender = _a.sender;
+            var axios = proxified.axios;
+            _this.requests[id] = {};
+            var preparedConfig = _this.prepareConfig(axiosConfig);
+            preparedConfig.onDownloadProgress = function (progressEvent) {
+                _this.answer(sender, 'Progress', id, progressEvent);
+            };
+            var cancelSource = axios_1["default"].CancelToken.source();
+            preparedConfig.cancelToken = cancelSource.token;
+            var request = axios(preparedConfig)
+                .then(function (data) {
+                var preparedResponse = __assign({}, data);
+                delete preparedResponse.request;
+                delete preparedResponse.config;
+                _this.answer(sender, 'Response', id, preparedResponse);
+            })["catch"](function (err) {
+                var preparedResponse = __assign({}, err.response);
+                delete preparedResponse.request;
+                delete preparedResponse.config;
+                _this.answer(sender, 'Response', id, preparedResponse);
+            });
+            _this.requests[id] = { request: request, cancel: function () { return cancelSource.cancel(); } };
+        });
+        this.listen('Abort', function (id) {
+            var request = _this.requests[id];
+            if (!request || !request.cancel) {
+                return;
+            }
+            request.cancel();
+        });
+    };
+    ProxifiedAxiosBridge.prototype.destroy = function () {
+        this.stopListen('Request');
+        this.stopListen('Abort');
+        delete this.requests;
+        delete this.ipc;
+        delete this.selfStatic;
+    };
+    ProxifiedAxiosBridge.prototype.answer = function (sender, event, id, data) {
+        var eventName = "".concat(this.selfStatic.eventGroup, " : ").concat(event, "[").concat(id, "]");
+        sender.send(eventName, data);
+    };
+    ProxifiedAxiosBridge.prototype.listen = function (event, callback) {
+        var eventName = "".concat(this.selfStatic.eventGroup, " : ").concat(event);
+        this.ipc.on(eventName, function () {
+            var args = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                args[_i] = arguments[_i];
+            }
+            var arrangedArgs = args.slice(1);
+            arrangedArgs.push(args[0]);
+            callback.apply(void 0, arrangedArgs);
+        });
+    };
+    ProxifiedAxiosBridge.prototype.listenOnce = function (event, callback) {
+        var eventName = "".concat(this.selfStatic.eventGroup, " : ").concat(event);
+        this.ipc.once(eventName, function () {
+            var args = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                args[_i] = arguments[_i];
+            }
+            var arrangedArgs = args.slice(1);
+            arrangedArgs.push(args[0]);
+            callback.apply(void 0, arrangedArgs);
+        });
+    };
+    ProxifiedAxiosBridge.prototype.stopListen = function (event) {
+        var eventName = "".concat(this.selfStatic.eventGroup, " : ").concat(event);
+        this.ipc.removeAllListeners(eventName);
+    };
+    ProxifiedAxiosBridge.prototype.prepareConfig = function (axiosConfig) {
+        var preparedConfig = __assign({}, axiosConfig);
+        if (axiosConfig.data.type === 'FormData') {
+            var formData_2 = [];
+            Object.keys(preparedConfig.data.value).forEach(function (valueName) {
+                var value = preparedConfig.data.value[valueName];
+                formData_2.push("".concat(valueName, "=").concat(value));
+            });
+            preparedConfig.data = formData_2.join('&');
+        }
+        return preparedConfig;
+    };
+    ProxifiedAxiosBridge.eventGroup = 'ProxifiedAxios';
+    return ProxifiedAxiosBridge;
+}());
+exports.ProxifiedAxiosBridge = ProxifiedAxiosBridge;

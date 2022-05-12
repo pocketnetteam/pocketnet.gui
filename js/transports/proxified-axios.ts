@@ -3,10 +3,6 @@ import type { AxiosStatic, AxiosRequestConfig, AxiosResponse, Cancel } from 'axi
 
 import _axios from 'axios';
 
-import * as proxyTransport from "../../proxy16/transports.js";
-
-const proxified = proxyTransport();
-
 const getRequestId = () => {
     const rand = Math.random();
 
@@ -92,16 +88,112 @@ export function proxifiedAxiosFactory(electronIpcRenderer: Electron.IpcRenderer)
     return (urlOrConfig: string | AxiosRequestConfig, config?: AxiosRequestConfig) => profixiedAxios(urlOrConfig, config);
 }
 
-export function initProxifiedAxiosBridge(electronIpcMain: Electron.IpcMain) {
-    const requests = {};
+export class ProxifiedAxiosBridge {
+    private selfStatic = ProxifiedAxiosBridge;
 
-    function parseInputs(axiosConfig: AxiosRequestConfig): AxiosRequestConfig {
-        // let defaultConfig: AxiosRequestConfig = { headers: {} };
+    static eventGroup = 'ProxifiedAxios';
+
+    private ipc: Electron.IpcMain;
+    private proxifiedAxios: AxiosStatic;
+    private requests = {};
+
+    constructor(electronIpcMain: Electron.IpcMain, proxifiedAxios: AxiosStatic) {
+        this.ipc = electronIpcMain;
+        this.proxifiedAxios = proxifiedAxios;
+    }
+
+    init() {
+        this.listen('Request', (id: string, axiosConfig: AxiosRequestConfig, { sender }: Electron.IpcMainEvent) => {
+            const axios = this.proxifiedAxios;
+
+            this.requests[id] = {};
+
+            const preparedConfig = this.prepareConfig(axiosConfig);
+
+            preparedConfig.onDownloadProgress = (progressEvent) => {
+                this.answer(sender, 'Progress', id, progressEvent);
+            };
+
+            const cancelSource = _axios.CancelToken.source();
+
+            preparedConfig.cancelToken = cancelSource.token;
+
+            const request = axios(preparedConfig)
+                .then((data: AxiosResponse) => {
+                    const preparedResponse = { ...data };
+                    delete preparedResponse.request;
+                    delete preparedResponse.config;
+
+                    this.answer(sender, 'Response', id, preparedResponse);
+                })
+                .catch((err) => {
+                    const preparedResponse = { ...err.response };
+                    delete preparedResponse.request;
+                    delete preparedResponse.config;
+
+                    this.answer(sender, 'Response', id, preparedResponse);
+                });
+
+            this.requests[id] = { request, cancel: () => cancelSource.cancel() };
+        });
+        this.listen('Abort', (id: string) => {
+            const request = this.requests[id];
+
+            if (!request || !request.cancel) {
+                return;
+            }
+
+            request.cancel();
+        })
+    }
+
+    destroy() {
+        this.stopListen('Request');
+        this.stopListen('Abort');
+
+        delete this.requests;
+        delete this.ipc;
+        delete this.selfStatic;
+    }
+
+    private answer(sender: Electron.WebContents, event: string, id: string, data: any) {
+        const eventName = `${this.selfStatic.eventGroup} : ${event}[${id}]`;
+
+        sender.send(eventName, data);
+    }
+
+    private listen(event: string, callback: (...args) => void) {
+        const eventName = `${this.selfStatic.eventGroup} : ${event}`;
+
+        this.ipc.on(eventName, (...args) => {
+            const arrangedArgs = args.slice(1);
+            arrangedArgs.push(args[0]);
+
+            callback(...arrangedArgs);
+        });
+    }
+
+    private listenOnce(event: string, callback: (...args) => void) {
+        const eventName = `${this.selfStatic.eventGroup} : ${event}`;
+
+        this.ipc.once(eventName, (...args) => {
+            const arrangedArgs = args.slice(1);
+            arrangedArgs.push(args[0]);
+
+            callback(...arrangedArgs);
+        });
+    }
+
+    private stopListen(event: string) {
+        const eventName = `${this.selfStatic.eventGroup} : ${event}`;
+
+        this.ipc.removeAllListeners(eventName);
+    }
+
+    private prepareConfig(axiosConfig: AxiosRequestConfig): AxiosRequestConfig {
         let preparedConfig: AxiosRequestConfig = { ...axiosConfig };
 
         if (axiosConfig.data.type === 'FormData') {
-            // preparedConfig.headers['Content-Type'] = 'multipart/form-data';
-
             const formData = [];
 
             Object.keys(preparedConfig.data.value).forEach((valueName) => {
@@ -114,49 +206,4 @@ export function initProxifiedAxiosBridge(electronIpcMain: Electron.IpcMain) {
 
         return preparedConfig;
     }
-
-    electronIpcMain.on('ProxifiedAxios : Request', (event, id: string, axiosConfig: AxiosRequestConfig) => {
-        const sender = event.sender;
-        const axios = proxified.axios as unknown as AxiosStatic;
-
-        requests[id] = {};
-
-        const preparedConfig = parseInputs(axiosConfig);
-
-        preparedConfig.onDownloadProgress = (progressEvent) => {
-            sender.send(`ProxifiedAxios : Progress[${id}]`, progressEvent);
-        };
-
-        const cancelSource = _axios.CancelToken.source();
-
-        preparedConfig.cancelToken = cancelSource.token;
-
-        const request = axios(preparedConfig)
-            .then((data: AxiosResponse) => {
-                const preparedResponse = { ...data };
-                delete preparedResponse.request;
-                delete preparedResponse.config;
-
-                sender.send(`ProxifiedAxios : Response[${id}]`, preparedResponse);
-            })
-            .catch((err) => {
-                const preparedResponse = { ...err.response };
-                delete preparedResponse.request;
-                delete preparedResponse.config;
-
-                sender.send(`ProxifiedAxios : Response[${id}]`, preparedResponse);
-            });
-
-        requests[id] = { request, cancel: () => cancelSource.cancel() };
-    });
-
-    electronIpcMain.on('ProxifiedAxios : Abort', (e, id) => {
-        const request = requests[id];
-
-        if (!request || !request.cancel) {
-            return;
-        }
-
-        request.cancel();
-    });
 }
