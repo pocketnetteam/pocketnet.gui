@@ -4,8 +4,7 @@ var f = require('./functions');
 const electron = require('electron')
 const { dialog } = require('electron');
 
-const { ProxifiedAxiosBridge } = require('./js/transports/proxified-axios.js');
-const { ProxifiedFetchBridge } = require('./js/transports/proxified-fetch.js');
+const transports = require('./transports')();
 
 var WssDummy = function(wc){
 	var self = this
@@ -57,13 +56,13 @@ var WssDummy = function(wc){
 	return self
 }
 
-var IPC = function(ipc, wc){
+var IPC = function(ipc, wc, proxyBridges){
 	var self = this;
 
 	var wssdummy = new WssDummy(wc)
 
-	var axiosBridge = new ProxifiedAxiosBridge(ipc)
-	var fetchBridge = new ProxifiedFetchBridge(ipc)
+	var axiosBridge = new proxyBridges.Axios(ipc, transports.axios)
+	var fetchBridge = new proxyBridges.Fetch(ipc, transports.fetch)
 
 	var tickInterval = function(){
 
