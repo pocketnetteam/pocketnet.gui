@@ -4,6 +4,9 @@ var f = require('./functions');
 const electron = require('electron')
 const { dialog } = require('electron');
 
+const { ProxifiedAxiosBridge } = require('./js/transports/proxified-axios.js');
+const { ProxifiedFetchBridge } = require('./js/transports/proxified-fetch.js');
+
 var WssDummy = function(wc){
 	var self = this
 
@@ -58,6 +61,9 @@ var IPC = function(ipc, wc){
 	var self = this;
 
 	var wssdummy = new WssDummy(wc)
+
+	var axiosBridge = new ProxifiedAxiosBridge(ipc)
+	var fetchBridge = new ProxifiedFetchBridge(ipc)
 
 	var tickInterval = function(){
 
@@ -255,6 +261,8 @@ var IPC = function(ipc, wc){
 		ipc.on('proxy-message', handleMessage)
 
 		wssdummy.init()
+		axiosBridge.init()
+		fetchBridge.init()
 
         tickInterval = setInterval(tick, 2500)
 	}
@@ -264,6 +272,8 @@ var IPC = function(ipc, wc){
 		ipc.off('proxy-message', handleMessage)
 
 		wssdummy.destroy()
+		axiosBridge.destroy()
+		fetchBridge.destroy()
 
 		if (tickInterval){
 			clearInterval(tickInterval)
