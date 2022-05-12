@@ -47,10 +47,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.ProxifiedAxiosBridge = exports.initProxifiedAxiosBridge = exports.proxifiedAxiosFactory = void 0;
+exports.ProxifiedAxiosBridge = exports.proxifiedAxiosFactory = void 0;
 var axios_1 = require("axios");
-var proxyTransport = require("../../proxy16/transports.js");
-var proxified = proxyTransport();
 var getRequestId = function () {
     var rand = Math.random();
     var min = 0x100000;
@@ -121,67 +119,18 @@ function proxifiedAxiosFactory(electronIpcRenderer) {
     return function (urlOrConfig, config) { return profixiedAxios(urlOrConfig, config); };
 }
 exports.proxifiedAxiosFactory = proxifiedAxiosFactory;
-/** @deprecated */
-function initProxifiedAxiosBridge(electronIpcMain) {
-    var requests = {};
-    function parseInputs(axiosConfig) {
-        // let defaultConfig: AxiosRequestConfig = { headers: {} };
-        var preparedConfig = __assign({}, axiosConfig);
-        if (axiosConfig.data.type === 'FormData') {
-            // preparedConfig.headers['Content-Type'] = 'multipart/form-data';
-            var formData_1 = [];
-            Object.keys(preparedConfig.data.value).forEach(function (valueName) {
-                var value = preparedConfig.data.value[valueName];
-                formData_1.push("".concat(valueName, "=").concat(value));
-            });
-            preparedConfig.data = formData_1.join('&');
-        }
-        return preparedConfig;
-    }
-    electronIpcMain.on('ProxifiedAxios : Request', function (event, id, axiosConfig) {
-        var sender = event.sender;
-        var axios = proxified.axios;
-        requests[id] = {};
-        var preparedConfig = parseInputs(axiosConfig);
-        preparedConfig.onDownloadProgress = function (progressEvent) {
-            sender.send("ProxifiedAxios : Progress[".concat(id, "]"), progressEvent);
-        };
-        var cancelSource = axios_1["default"].CancelToken.source();
-        preparedConfig.cancelToken = cancelSource.token;
-        var request = axios(preparedConfig)
-            .then(function (data) {
-            var preparedResponse = __assign({}, data);
-            delete preparedResponse.request;
-            delete preparedResponse.config;
-            sender.send("ProxifiedAxios : Response[".concat(id, "]"), preparedResponse);
-        })["catch"](function (err) {
-            var preparedResponse = __assign({}, err.response);
-            delete preparedResponse.request;
-            delete preparedResponse.config;
-            sender.send("ProxifiedAxios : Response[".concat(id, "]"), preparedResponse);
-        });
-        requests[id] = { request: request, cancel: function () { return cancelSource.cancel(); } };
-    });
-    electronIpcMain.on('ProxifiedAxios : Abort', function (e, id) {
-        var request = requests[id];
-        if (!request || !request.cancel) {
-            return;
-        }
-        request.cancel();
-    });
-}
-exports.initProxifiedAxiosBridge = initProxifiedAxiosBridge;
 var ProxifiedAxiosBridge = /** @class */ (function () {
-    function ProxifiedAxiosBridge(electronIpcMain) {
+    function ProxifiedAxiosBridge(electronIpcMain, proxifiedAxios) {
         this.selfStatic = ProxifiedAxiosBridge;
         this.requests = {};
         this.ipc = electronIpcMain;
+        this.proxifiedAxios = proxifiedAxios;
     }
     ProxifiedAxiosBridge.prototype.init = function () {
         var _this = this;
         this.listen('Request', function (id, axiosConfig, _a) {
             var sender = _a.sender;
-            var axios = proxified.axios;
+            var axios = _this.proxifiedAxios;
             _this.requests[id] = {};
             var preparedConfig = _this.prepareConfig(axiosConfig);
             preparedConfig.onDownloadProgress = function (progressEvent) {
@@ -253,12 +202,12 @@ var ProxifiedAxiosBridge = /** @class */ (function () {
     ProxifiedAxiosBridge.prototype.prepareConfig = function (axiosConfig) {
         var preparedConfig = __assign({}, axiosConfig);
         if (axiosConfig.data.type === 'FormData') {
-            var formData_2 = [];
+            var formData_1 = [];
             Object.keys(preparedConfig.data.value).forEach(function (valueName) {
                 var value = preparedConfig.data.value[valueName];
-                formData_2.push("".concat(valueName, "=").concat(value));
+                formData_1.push("".concat(valueName, "=").concat(value));
             });
-            preparedConfig.data = formData_2.join('&');
+            preparedConfig.data = formData_1.join('&');
         }
         return preparedConfig;
     };

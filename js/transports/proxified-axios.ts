@@ -3,6 +3,10 @@ import type { AxiosStatic, AxiosRequestConfig, AxiosResponse, Cancel } from 'axi
 
 import _axios from 'axios';
 
+import * as proxyTransport from "../../proxy16/transports.js";
+
+const proxified = proxyTransport();
+
 const getRequestId = () => {
     const rand = Math.random();
 

@@ -56,9 +56,7 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
     return to.concat(ar || Array.prototype.slice.call(from));
 };
 exports.__esModule = true;
-exports.ProxifiedFetchBridge = exports.initProxifiedFetchBridge = exports.proxifiedFetchFactory = void 0;
-var proxyTransport = require("../../proxy16/transports.js");
-var proxified = proxyTransport();
+exports.ProxifiedFetchBridge = exports.proxifiedFetchFactory = void 0;
 var getRequestId = function () {
     var rand = Math.random();
     var min = 0x100000;
@@ -184,57 +182,18 @@ function proxifiedFetchFactory(electronIpcRenderer) {
     return function (input, init) { return profixiedFetch(input, init); };
 }
 exports.proxifiedFetchFactory = proxifiedFetchFactory;
-/** @deprecated */
-function initProxifiedFetchBridge(electronIpcMain) {
-    var requests = {};
-    electronIpcMain.on('ProxifiedFetch : Request', function (event, id, url, requestInit) {
-        var sender = event.sender;
-        var fetch = proxified.fetch;
-        requests[id] = {};
-        var controller = new AbortController();
-        var signal = controller.signal;
-        var request = fetch(url, __assign({ signal: signal }, requestInit))
-            .then(function (data) {
-            var status = data.status;
-            var headers = {};
-            data.headers.forEach(function (value, name) {
-                headers[name] = value;
-            });
-            sender.send("ProxifiedFetch : InitialData[".concat(id, "]"), { status: status, headers: headers });
-            data.body.on('data', function (chunk) {
-                sender.send("ProxifiedFetch : PartialResponse[".concat(id, "]"), chunk);
-            });
-            data.body.on('end', function () {
-                sender.send("ProxifiedFetch : Closed[".concat(id, "]"));
-            });
-        })["catch"](function (err) {
-            if (err.code !== 'FETCH_ABORTED') {
-                // console.log('Proxified Fetch failed with next error:', err);
-                sender.send("ProxifiedFetch : Error[".concat(id, "]"));
-            }
-        });
-        requests[id] = { request: request, cancel: function () { return controller.abort(); } };
-    });
-    electronIpcMain.on('ProxifiedFetch : Abort', function (e, id) {
-        var request = requests[id];
-        if (!request || !request.cancel) {
-            return;
-        }
-        request.cancel();
-    });
-}
-exports.initProxifiedFetchBridge = initProxifiedFetchBridge;
 var ProxifiedFetchBridge = /** @class */ (function () {
-    function ProxifiedFetchBridge(electronIpcMain) {
+    function ProxifiedFetchBridge(electronIpcMain, proxifiedFetch) {
         this.selfStatic = ProxifiedFetchBridge;
         this.requests = {};
         this.ipc = electronIpcMain;
+        this.proxifiedFetch = proxifiedFetch;
     }
     ProxifiedFetchBridge.prototype.init = function () {
         var _this = this;
         this.listen('Request', function (id, url, requestInit, _a) {
             var sender = _a.sender;
-            var fetch = proxified.fetch;
+            var fetch = _this.proxifiedFetch;
             _this.requests[id] = {};
             var controller = new AbortController();
             var signal = controller.signal;
