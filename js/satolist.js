@@ -14448,7 +14448,6 @@ Platform = function (app, listofnodes) {
             },
 
             get: function (value, type, start, count, fixedBlock, clbk, address, cached) {
-
                 if (!address) address = 'pocketnet'
 
                 var s = self.sdk.search;
@@ -14481,8 +14480,22 @@ Platform = function (app, listofnodes) {
 
                 if (value.length) {
 
+                    if(type== 'users') {
+                        self.app.api.rpc('searchusers', np).then(d => {
+                            d = {
+                                data: [...d]
+                            }
+                            s.add(value, fixedBlock, type, d, start, count, address)
+                            if (clbk)
+                                clbk(d, fixedBlock)
+                        }).catch(e => {
+                            if (clbk) {
+                                clbk({})
+                            }
+                        })
+                        return;
+                    }
                     self.app.api.rpc('search', np).then(d => {
-
                         if (type != 'fs') {
 
                             if (type == 'all') {
@@ -14490,6 +14503,7 @@ Platform = function (app, listofnodes) {
                                     s.add(value, fixedBlock, k, d, start, count, address)
                                 })
                             }
+
                             else {
                                 d = d[type] || {
                                     data: []
@@ -27157,6 +27171,7 @@ Platform = function (app, listofnodes) {
                                     address="${a}"
                                     privatekey="${privatekey}"
                                     pocketnet="`+( self.app.mobileview ? '' : 'true')+`"
+                                    recording=""
                                     mobile="`+( self.app.mobileview ? 'true' : '')+`" 
                                     ctheme="`+self.sdk.theme.current+`"
                                     localization="`+self.app.localization.key+`"

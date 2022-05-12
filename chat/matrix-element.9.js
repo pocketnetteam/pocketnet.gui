@@ -95,14 +95,14 @@ __webpack_require__.r(__webpack_exports__);
 // ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"7b7193d2-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/views/contacts.vue?vue&type=template&id=34b9b16f&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"3d54125c-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/views/contacts.vue?vue&type=template&id=34b9b16f&scoped=true&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"page contacts"},[_c('topheader',{staticClass:"topheader",attrs:{"title":_vm.title}}),_c('maincontent',{scopedSlots:_vm._u([{key:"content",fn:function(){return [_c('contacts',{attrs:{"mode":_vm.mode}})]},proxy:true}])})],1)}
 var staticRenderFns = []
 
 
 // CONCATENATED MODULE: ./src/views/contacts.vue?vue&type=template&id=34b9b16f&scoped=true&
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"7b7193d2-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/contacts/topheader/index.vue?vue&type=template&id=a06dc160&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"3d54125c-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/contacts/topheader/index.vue?vue&type=template&id=a06dc160&scoped=true&
 var topheadervue_type_template_id_a06dc160_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{attrs:{"id":"chatsTopheader"}},[_c('topheader',{attrs:{"sideSlotsWidth":100},scopedSlots:_vm._u([{key:"left",fn:function(){return [((!_vm.minimized || _vm.active) && _vm.pocketnet)?_c('div',{staticClass:"iconbutton",on:{"click":_vm.minimizeall}},[_c('i',{staticClass:"fas fa-times"})]):_vm._e()]},proxy:true},{key:"info",fn:function(){return [_c('span',[_vm._v(_vm._s(_vm.title))])]},proxy:true},{key:"right",fn:function(){return undefined},proxy:true}])})],1)}
 var topheadervue_type_template_id_a06dc160_scoped_true_staticRenderFns = []
 

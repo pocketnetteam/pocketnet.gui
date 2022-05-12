@@ -17,14 +17,14 @@
 
         <meta http-equiv="Content-Security-Policy" content="
         upgrade-insecure-requests;
-        default-src 'self' __VAR__.domain:*; 
+        default-src blob: 'self' __VAR__.domain:*;
         connect-src 'self' http: ws: https: wss:;
         img-src 'self' data: http: https: __VAR__.domain:*;
         script-src 'self' blob: __VAR__.domain player.vimeo.com www.youtube.com s.ytimg.com cdn.jsdelivr.net/joypixels/ 'unsafe-eval' 'unsafe-inline';
         frame-src 'self' player.vimeo.com www.youtube.com;
         style-src 'self' data: __VAR__.domain:* cdn.jsdelivr.net/joypixels/ 'unsafe-inline' use.fontawesome.com;
         font-src 'self' data: __VAR__.domain:* use.fontawesome.com;
-        media-src blob: *">
+        media-src data: blob: *">
 
         <link rel="manifest" href="manifest.json">
         <link rel="apple-touch-icon" href="img/res/blue_pad_250.png" sizes="250x250">
