@@ -393,9 +393,42 @@ var authorization = (function(){
 			}
 		}
 
+		addInputControle = function(){
+			$('.loginValue').on('keyup',function (e) {
+				// right arrow
+				if (e.code === 'ArrowRight') { 
+				  $(this).closest('td').next().find('input').trigger( "focus" )
+				  // left arrow
+				} else if (e.code === 'ArrowLeft') { 
+				  $(this).closest('td').prev().find('input').trigger( "focus" )
+				  // down arrow
+				} else if (e.code === 'ArrowDown') { 
+				  $(this).closest('tr').next().find('td:eq(' + $(this).closest('td').index() + ')').find('input').trigger( "focus" )
+				  // up arrow
+				} else if (e.code === 'ArrowUp') { 
+				  $(this).closest('tr').prev().find('td:eq(' + $(this).closest('td').index() + ')').find('input').trigger( "focus" )
+				}
+			  });	
+	   		}
+
+		addAutocomlete = function(){
+			console.log(111,$( ".loginValue" )[0].autocomplete);
+			$( ".loginValue" )[0].autocomplete({
+				source: bitcoin.bip39.wordlists[bitcoin.bip39.getDefaultWordlist()]
+			  });
+			// let autocomlete = document.querySelector('#wordList')
+			// let wordList = bitcoin.bip39.wordlists[bitcoin.bip39.getDefaultWordlist()]
+			// console.log(wordList);
+			// for (let item of wordList){
+			// 	console.log(item);
+			// 	autocomlete.innerHTML += `<option value="${item}">`
+			// }
+			
+		}
+
 		var make = function(){
 			var p = parameters();
-
+	
 			ParametersLive([stay], el.c)
 
 			if (p.restore){
@@ -459,11 +492,12 @@ var authorization = (function(){
 				}
 			},
 			
+		
+
 			init : function(p){
 
 				el = {};
 				el.c = p.el.find('#' + self.map.id)
-
 				el.login = el.c.find(".loginValue");
 				el.pwd = el.c.find(".pwdValue");
 				el.enter = el.c.find('.enter');
@@ -476,8 +510,9 @@ var authorization = (function(){
 				initialParameters = p;
 
 				initEvents(p);
-
 				make();
+				addInputControle()
+				addAutocomlete()
 		
 				p.clbk(null, p);
 

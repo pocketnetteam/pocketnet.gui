@@ -84,7 +84,7 @@
   font-weight: 100;
   background: rgb(var(--background-total-theme));
   color: rgb(var(--color-txt-ac));
-  border: 1px solid transparent;
+  border: 1px solid red;
   -moz-transition: 0.4s;
   -o-transition: 0.4s;
   -webkit-transition: 0.4s;
