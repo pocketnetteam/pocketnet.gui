@@ -84,7 +84,7 @@ Application = function(p)
 		self.test = true
 	}
 
-	self.boost = self.test
+	self.boost = true
 
 	self.options = {
 		
@@ -1126,7 +1126,7 @@ Application = function(p)
 				self.mobile.pip.init()
 				self.mobile.keyboard.init()
 
-				if (window.Keyboard && window.Keyboard.disableScroll && !isios()){
+				if (window.Keyboard && window.Keyboard.disableScroll){
 					window.Keyboard.disableScroll(false)
 				}
 
@@ -1725,6 +1725,8 @@ Application = function(p)
 				// var blob = new Blob([file], { type: "image/png" });
 				var name = $.md5(url);
 
+				console.log('storageLocation', storageLocation, name)
+
 				window.resolveLocalFileSystemURL(storageLocation, function (fileSystem) {
 					fileSystem.getDirectory(self.storage.getStorageDirectory(), {
 						create: true,
@@ -1761,8 +1763,12 @@ Application = function(p)
 			}
 
 			return new Promise((resolve, reject) => {
+
 				var storageLocation = self.storage.getStorageLocation();
 				var name = $.md5(url);
+
+				console.log('storageLocation', storageLocation, name)
+
 				window.resolveLocalFileSystemURL(storageLocation, function (fileSystem) {
 					fileSystem.getDirectory(self.storage.getStorageDirectory(), {
 						create: true,
@@ -1837,6 +1843,9 @@ Application = function(p)
 						resolve();
 				}
 				var storageLocation = self.storage.getStorageLocation();
+
+				
+
 				window.resolveLocalFileSystemURL(storageLocation, function (fileSystem) {
 					fileSystem.getDirectory(self.storage.getStorageDirectory(), {
 						create: true,

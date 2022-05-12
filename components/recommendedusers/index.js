@@ -30,23 +30,24 @@ var recommendedusers = (function(){
 			getRecommendedAccounts : function(clbk){
 
 
-				self.app.platform.sdk.users.getRecommendedAccounts(function(c, error, tagsexecute){
-					
-					if (tagsexecute){
+				self.app.platform.sdk.users.getRecommendedAccounts(function(c, error){
 
-						self.app.platform.sdk.categories.clbks.excluded.topusers =
-						self.app.platform.sdk.categories.clbks.tags.topusers =
-						self.app.platform.sdk.categories.clbks.selected.topusers = function(data){
-	
+
+					self.app.platform.sdk.categories.clbks.excluded.topusers =
+					self.app.platform.sdk.categories.clbks.tags.topusers =
+					self.app.platform.sdk.categories.clbks.selected.topusers = function(data){
+
+						if (self.sdk.activity.allowRequestAfterFive){
+
 							el.c.hide();
 							el.users.empty();
 							addresses = [];
 							state.load(renders.page);
-							
+
 						}
+						
 					}
-
-
+	
 					self.app.platform.sdk.categories.clbks.tags.topusersRemove = function(data){
 
 						addresses = [];

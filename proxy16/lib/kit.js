@@ -1777,12 +1777,15 @@ var pUserInfo = function(){
 		self[key] || (self[key] = [])
 
 		self[key].push(obj)	
+
+
 	}
 
 	self.removeRelation = function(obj, key){
 		if(!key) key = 'subscribes'
 
 		removeEqual(self[key], obj)
+
 	}
 	
 

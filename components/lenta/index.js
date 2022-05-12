@@ -596,6 +596,8 @@ var lenta = (function(){
 					return !shareInitedMap[b.txid] && !shareInitingMap[b.txid] && !el.share[b.txid]
 				})
 
+				console.log('include bsts', boosted.length, bsts.length)
+
 				_.each(bsts, function(bst){
 					if (bst){
 
@@ -616,6 +618,8 @@ var lenta = (function(){
 							if (share && el.share[share.txid]){
 
 									boostplaces[position] = true
+
+									console.log('include boostplaces[position]', position, el.share[share.txid])
 
 									renders.shares([bst], function(){
 										renders.sharesInview([bst], function(){
@@ -1349,7 +1353,7 @@ var lenta = (function(){
 				var _el = el.share[id]
 				var share = self.app.platform.sdk.node.shares.storage.trx[id];
 
-				if(!_el || !share || !self.app.platform.istest()){
+				if(!_el || !share /*|| !self.app.platform.istest()*/){
 					if(clbk) clbk()
 
 					return
@@ -1523,12 +1527,13 @@ var lenta = (function(){
 				}
 
 				if(player){
+
 					if (player.p.disableHotKeys) player.p.disableHotKeys()
+
+					actions.setVolume(player, videosVolume)
 				}
 
 				//player.p.muted = true;
-
-				actions.setVolume(players[id], videosVolume)
 
 				self.app.mobile.statusbar.background()
 				self.app.pseudofullscreenmode = false
@@ -1964,7 +1969,7 @@ var lenta = (function(){
 
 				var cvv = videosVolume
 
-				if(!player.p) return
+				if(!player || !player.p) return
 
 				if (player.p.setVolume){
 					if (v){
@@ -3198,8 +3203,15 @@ var lenta = (function(){
 				if(!p) p = {};
 
 
+				var likeappend = false
+
+
 				if(!p.inner) {
+
+					likeappend = true
 					p.inner = function(el, html){
+
+						
 
 						if(isotopeinited){
 							var content = $(html)
@@ -3250,7 +3262,8 @@ var lenta = (function(){
 
 					
 			
-					if (_p.inner == append){
+					if (_p.inner == append || likeappend){
+						console.log("ARRANGE")
 						sharesInview = sharesInview.concat(shares)	
 					}
 					else
@@ -3681,7 +3694,6 @@ var lenta = (function(){
 				if (video || essenseData.videomobile){ type = 'video'}
 				if (essenseData.read){ type = 'article'}
 				if (essenseData.tags) tagsfilter = essenseData.tags
-
 				
 				
 				self.app.platform.sdk.node.shares.getboostfeed({

@@ -184,7 +184,14 @@ Platform = function (app, listofnodes) {
         'PFGMWt1cQFm6QEbcqH6YJxfabj4L5rHfLM' : true,
         'PUq5SNWQCdU1dwuQUNRCKaxgzw52rD6Uez' : true,
         'PTft97ycE3N6ZKgvixdpbYj8qPxzCe2CxG' : true,
-        'P9W6f4HJoimwsjJwmnAWKG6HQKcUHz1vaP' : true
+        'P9W6f4HJoimwsjJwmnAWKG6HQKcUHz1vaP' : true,
+        'PAVjp9nsNtgzUNF1VkUd74YzLaQHpv4g7v' : true,
+        'PKB7GXh1qcY7Q7gs3hafgpzndHLKTx4isM' : true,
+        'PQ8PDzWy7hDV8gfgSgoP2BCU2CXngMPCvt' : true,
+        'PHMjVgWj6HMiLeAhiR8eDLzVrXp8nyF2ji' : true,
+        'PR54hSnPDbhPePLNQZCP4CU77TRFoMxYqg' : true,
+        'PARV591XENALBB5ApkR7WcQPhEZtLHfi2A' : true,
+        'PVgktx9ZmPnSXW83HmSF6MX76SV4u5a2hJ' : true
     }
 
     self.bch = {
@@ -209,7 +216,10 @@ Platform = function (app, listofnodes) {
         'TSisNge5kisi7cwGRwmUBuZQWZFD8cRoG8',
         'TQEGz5cQQtRad8wo2c1KapvFek9rnuprkD',
         'PKU652wwKYC52WGBJ8EHkA1Mtud8iHWChC',
-        'PD4us1zniwrJv64xhPyhT2mgNrTvPur9YN'
+        'PD4us1zniwrJv64xhPyhT2mgNrTvPur9YN',
+        'PHiNjAhHbxVb6D8oaVVBe8DGigKuN4QFP6',
+        'PANkQ994YKvCMiH8pHR8vtKvGqH9DQt8Bc',
+        'PGvRUM7jXqHdUn7Let2QyTi1t2LHq7RgX7'
     ];
 
     if (window.IpcBridge)
@@ -3294,9 +3304,7 @@ Platform = function (app, listofnodes) {
 
         effectinternal : function(el, name, parameters, clbk){
 
-            if (typeof _Electron != 'undefined' || (!self.istest() && !self.app.test)) {
-                return
-            }
+            
 
             if(!self.sdk.usersettings.meta.useanimations.value) return
 
@@ -3341,6 +3349,9 @@ Platform = function (app, listofnodes) {
         },
 
         make : function(place, name, parameters, clbk){
+
+            if (typeof _Electron != 'undefined') return
+
             var container = self.effects.container(place)
 
             self.effects.lib[name](container, parameters, function(){
@@ -3355,9 +3366,11 @@ Platform = function (app, listofnodes) {
         templates : {
             commentstars : function(el, value, clbk){
 
+                if (typeof _Electron != 'undefined') return
+
                 if(!el) return
 
-                if(self.effects.animation) return
+                if (self.effects.animation) return
 
                 self.effects.animation = true
 
@@ -11088,22 +11101,33 @@ Platform = function (app, listofnodes) {
                 var method = 'gettopaccounts';
      
                 p.height = 0;
-                p.tagsfilter = self.app.platform.sdk.categories.gettags()
-                p.tagsexcluded = self.app.platform.sdk.categories.gettagsexcluded()
+                p.tagsfilter = self.app.platform.sdk.categories.gettags();
+                p.tagsexcluded = self.app.platform.sdk.categories.gettagsexcluded();
+
+                p.tagsfilter = _.map(p.tagsfilter, function(t){
+                    return encodeURIComponent(t)
+                })
+
+                p.tagsexcluded = _.map(p.tagsexcluded, function(t){
+                    return encodeURIComponent(t)
+                })
+
                 p.depth || (p.depth = 10000);
                     
                 var parameters = [p.height, p.count, p.lang, p.tagsfilter, p.type, '', p.tagsexcluded, p.depth];
 
                 var s = self.sdk.node.shares;
 
-                s.getex(parameters, function(data, error){
+                // s.getex(parameters, function(data, error){
 
-                    console.log('gettopaccounts result', data, error);
+                //     console.log('gettopaccounts result', data, error);
 
-                    clbk(data, error, true);
+                //     clbk(data, error);
                     
 
-                }, method, rpc)
+                // }, method, rpc)
+
+                clbk();
 
             },
 
@@ -11152,6 +11176,7 @@ Platform = function (app, listofnodes) {
 
                     } else {
 
+                        self.sdk.activity.allowRequestAfterFive = false;
                         clbk(data, error);
 
                     }
@@ -12439,6 +12464,7 @@ Platform = function (app, listofnodes) {
         },
         activity : {
             latest : {},
+            allowRequestAfterFive : true,
 
             getbestaddress : function(){
 
@@ -12448,6 +12474,7 @@ Platform = function (app, listofnodes) {
 
                         return like.countOfFives && like.data.subscribers_count + like.data.subscribes_count;
                     })
+
     
                     var bestAddress = '';
                     var bestCount = 1;
@@ -12455,8 +12482,13 @@ Platform = function (app, listofnodes) {
                     availablesLikes.forEach(function(like){
     
                         if (like.countOfFives > bestCount){
+
                             bestAddress = like.data.address;
                             bestCount = like.countOfFives;
+                            
+                        } else if (!bestAddress && (like.countOfFives === bestCount)){
+
+                            bestAddress = like.data.address;
                         }
                     })
     
@@ -12560,15 +12592,14 @@ Platform = function (app, listofnodes) {
 
                     if (user){
 
-
                         var info = {
                             id : address,
                             index : user.name.toLowerCase(),
                             name : user.name,
                             image : user.image,
                             address : address,
-                            subscribers_count: user.subscribers.length,
-                            subscribes_count : user.subscribes.length,
+                            subscribers_count: user.subscribers_count,
+                            subscribes_count : user.subscribes_count,
                             value: value
                         }
 
@@ -12651,7 +12682,14 @@ Platform = function (app, listofnodes) {
 
                 l[key] = firstEls(l[key], 300)
 
-                self.sdk.activity.save()
+                self.sdk.activity.save();
+
+                if (this.allowRequestAfterFive && info.value === '5'){
+
+                    self.app.platform.sdk.categories.clbks.selected.topusers && self.app.platform.sdk.categories.clbks.selected.topusers();
+                    this.allowRequestAfterFive = false;
+                }
+
             },
             save: function () {
                 localStorage['latestactivity'] = JSON.stringify({
@@ -16786,13 +16824,7 @@ Platform = function (app, listofnodes) {
                         method : 'getrecommendedcontentbyaddress',
                         rpc : {
                             cache : true,
-                            locally : true,
-                            fastvideo : true,
-                            meta : {
-                                host : '78.37.233.202',
-                                port : 31031,
-                                ws : 3037
-                            }
+                            fastvideo : true
                         }
                     });
 
@@ -17188,11 +17220,15 @@ Platform = function (app, listofnodes) {
 
                         self.app.platform.sdk.node.shares.getbyid(txids, function (shares) {
 
+                            console.log('include, shares', shares.length)
+
                             shares = _.filter(shares, function(s){
                                 if(!self.sdk.user.reputationBlocked(s.address)){
                                     return true
                                 }
                             })
+
+                            console.log('include, shares2', shares.length)
 
 
                             if (clbk)
@@ -27171,7 +27207,7 @@ Platform = function (app, listofnodes) {
                                     address="${a}"
                                     privatekey="${privatekey}"
                                     pocketnet="`+( self.app.mobileview ? '' : 'true')+`"
-                                    recording=""
+                                    recording="`+(self.app.test || self.app.platform.isTest()) ? 'true': ''+`"
                                     mobile="`+( self.app.mobileview ? 'true' : '')+`" 
                                     ctheme="`+self.sdk.theme.current+`"
                                     localization="`+self.app.localization.key+`"
