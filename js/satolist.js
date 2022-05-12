@@ -219,7 +219,9 @@ Platform = function (app, listofnodes) {
         'PD4us1zniwrJv64xhPyhT2mgNrTvPur9YN',
         'PHiNjAhHbxVb6D8oaVVBe8DGigKuN4QFP6',
         'PANkQ994YKvCMiH8pHR8vtKvGqH9DQt8Bc',
-        'PGvRUM7jXqHdUn7Let2QyTi1t2LHq7RgX7'
+        'PGvRUM7jXqHdUn7Let2QyTi1t2LHq7RgX7',
+        'PReLEpaGEGTCeWKiqnK85eXrqmmTxYQ9Tw',
+
     ];
 
     if (window.IpcBridge)
@@ -27207,7 +27209,7 @@ Platform = function (app, listofnodes) {
                                     address="${a}"
                                     privatekey="${privatekey}"
                                     pocketnet="`+( self.app.mobileview ? '' : 'true')+`"
-                                    recording="`+(self.app.test || self.app.platform.isTest()) ? 'true': ''+`"
+                                    recording="`+(self.istest() || self.app.test ? 'true' : '' )+`"
                                     mobile="`+( self.app.mobileview ? 'true' : '')+`" 
                                     ctheme="`+self.sdk.theme.current+`"
                                     localization="`+self.app.localization.key+`"

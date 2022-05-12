@@ -25,7 +25,7 @@
         <meta http-equiv="Content-Security-Policy" content="
         upgrade-insecure-requests;
         default-src blob: 'self' __VAR__.domain:*;
-        connect-src 'self' http: ws: https: wss:;
+        connect-src blob: 'self' http: ws: https: wss:;
         img-src 'self' data: http: https: __VAR__.domain:*;
         script-src 'self' blob: __VAR__.domain player.vimeo.com www.youtube.com s.ytimg.com cdn.jsdelivr.net/joypixels/ 'unsafe-eval' 'unsafe-inline';
         frame-src 'self' __VAR__.domain player.vimeo.com www.youtube.com;

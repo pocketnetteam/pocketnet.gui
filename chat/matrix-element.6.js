@@ -1522,10 +1522,8 @@ var es2019_module = __webpack_require__("0319");
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                console.log('init recorder');
-
                 if (!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia)) {
-                  _context.next = 6;
+                  _context.next = 5;
                   break;
                 }
 
@@ -1544,12 +1542,12 @@ var es2019_module = __webpack_require__("0319");
                   throw new Error(err);
                 }));
 
-              case 6:
+              case 5:
                 console.log('getUserMedia not supported on your browser!');
                 _this8.microphoneDisabled = true;
                 return _context.abrupt("return", false);
 
-              case 9:
+              case 8:
               case "end":
                 return _context.stop();
             }
@@ -1703,9 +1701,8 @@ var es2019_module = __webpack_require__("0319");
                   id: id,
                   isPlaying: false
                 };
-                console.log('message created');
 
-              case 7:
+              case 6:
               case "end":
                 return _context4.stop();
             }
@@ -1722,7 +1719,6 @@ var es2019_module = __webpack_require__("0319");
       this.mediaRecorder.stream.getTracks().forEach(function (track) {
         track.enabled = false;
       });
-      console.log('recording stoped');
       this.mediaRecorder.stop();
       this.isRecording = false;
       clearInterval(this.interval);

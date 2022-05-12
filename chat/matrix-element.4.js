@@ -1598,9 +1598,7 @@ var avatarsList_component = Object(componentNormalizer["a" /* default */])(
           _this6.core.mtrx.client.invite(_this6.m_chat.roomId, functions["a" /* default */].getMatrixIdFull(user.userId, _this6.core.domain)).then(function (r) {});
         });
       } else {
-        this.core.mtrx.client.ban(this.m_chat.roomId, functions["a" /* default */].getMatrixIdFull(user.userId, this.core.domain), 'admin ban').then(function (r) {
-          console.log();
-        });
+        this.core.mtrx.client.ban(this.m_chat.roomId, functions["a" /* default */].getMatrixIdFull(user.userId, this.core.domain), 'admin ban').then(function (r) {});
       }
     },
     kickUser: function kickUser(user) {
