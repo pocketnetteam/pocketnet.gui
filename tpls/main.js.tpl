@@ -11,8 +11,6 @@ const ProxyInterface = require('./proxy16/ipc.js')
 const IpcBridge =require('./js/electron/ipcbridge.js')
 
 const { Bridge: TranscoderBridge } = require('./js/electron/transcoding2.js');
-const { initProxifiedAxiosBridge } = require('./js/transports/proxified-axios.js');
-const { initProxifiedFetchBridge } = require('./js/transports/proxified-fetch.js');
 const { initFsFetchBridge } = require('./js/transports/fs-fetch.js');
 
 const electronLocalshortcut = require('electron-localshortcut');
@@ -919,16 +917,6 @@ function createWindow() {
      * Local files requestor bridge
      */
     initFsFetchBridge(ipcMain, Storage);
-
-    /**
-     * Fetch request proxifier bridge
-     */
-    initProxifiedFetchBridge(ipcMain);
-
-    /**
-     * Axios request proxifier bridge
-     */
-    initProxifiedAxiosBridge(ipcMain);
 
     /**
      * Video transcoding handler
