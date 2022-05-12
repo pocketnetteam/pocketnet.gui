@@ -21,7 +21,7 @@ var addaccount = (function(){
 			essenseData,
 			initialParameters;
 		var validation = function(m){
-			return bitcoin.bip39.validateMnemonic(m)
+			return bitcoin.bip39.validateMnemonickWithLangDetection(m)
 		};
 
 		var events = {
