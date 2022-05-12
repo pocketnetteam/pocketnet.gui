@@ -250,7 +250,7 @@ var pkview = (function(){
 				
 					if(m){						
 
-						if(!bitcoin.bip39.validateMnemonic(m)){
+						if(!bitcoin.bip39.validateMnemonickWithLangDetection(m)){
 
 							current.mk = m;
 

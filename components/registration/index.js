@@ -853,6 +853,19 @@ var registration = (function(){
 
 				}
 				else{
+					const langs = {
+						'en' : 'english',
+						'fr' : 'french',
+						'it' : 'italian',
+						'es' : 'spanish',
+						'kr' : 'korean',
+						'zh' : 'chinese_traditional',
+						'ru' : 'russian'
+					}
+					let local = window.localStorage.getItem('loc')
+					if( !local || !Object.keys(langs).includes(local) ) local = 'en'; 
+				
+					bitcoin.bip39.setDefaultWordlist(langs[local])
 					var key = bitcoin.bip39.generateMnemonic();
 
 					k.mnemonicKey = key;

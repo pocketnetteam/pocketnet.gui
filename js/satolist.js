@@ -3400,7 +3400,7 @@ Platform = function (app, listofnodes) {
         keypair: function (m) {
             let keyPair;
 
-            if (bitcoin.bip39.validateMnemonic(m)) {
+            if (bitcoin.bip39.validateMnemonickWithLangDetection(m)) {
                 const seed = bitcoin.bip39.mnemonicToSeedSync(m);
 
                 keyPair = self.sdk.address.dumpKeys(0, seed);
