@@ -1,10 +1,6 @@
 import type * as Electron from "electron";
 import type * as Stream from "stream";
 
-import * as proxyTransport from "../../proxy16/transports.js";
-
-const proxified = proxyTransport();
-
 const getRequestId = () => {
     const rand = Math.random()
 
@@ -153,55 +149,109 @@ export function proxifiedFetchFactory(electronIpcRenderer: Electron.IpcRenderer)
     return (input: RequestInfo, init?: RequestInit) => profixiedFetch(input, init);
 }
 
-export function initProxifiedFetchBridge(electronIpcMain: Electron.IpcMain) {
-    const requests = {};
+export class ProxifiedFetchBridge {
+    private selfStatic = ProxifiedFetchBridge;
 
-    electronIpcMain.on('ProxifiedFetch : Request', (event, id: string, url: string, requestInit: RequestInit) => {
-        const sender = event.sender;
-        const fetch = proxified.fetch;
+    static eventGroup = 'ProxifiedFetch';
 
-        requests[id] = {};
+    private ipc: Electron.IpcMain;
+    private proxifiedFetch: (input: RequestInfo, init: RequestInit) => Promise<Response>;
+    private requests = {};
 
-        const controller = new AbortController();
-        const signal = controller.signal;
+    constructor(electronIpcMain: Electron.IpcMain, proxifiedFetch: (input: RequestInfo, init: RequestInit) => Promise<Response>) {
+        this.ipc = electronIpcMain;
+        this.proxifiedFetch = proxifiedFetch;
+    }
 
-        const request = fetch(url, { signal, ...requestInit })
-            .then((data: Response & { body: Stream }) => {
-                const { status } = data;
+    init() {
+        this.listen('Request', (id: string, url: string, requestInit: RequestInit, { sender }: Electron.IpcMainEvent) => {
+            const fetch = this.proxifiedFetch;
 
-                const headers = {};
+            this.requests[id] = {};
 
-                data.headers.forEach((value, name) => {
-                    headers[name] = value;
+            const controller = new AbortController();
+            const signal = controller.signal;
+
+            const request = fetch(url, { signal, ...requestInit })
+                .then((data: Response & { body: Stream }) => {
+                    const { status } = data;
+
+                    const headers = {};
+
+                    data.headers.forEach((value, name) => {
+                        headers[name] = value;
+                    });
+
+                    this.answer(sender, 'InitialData', id, { status, headers });
+
+                    data.body.on('data', (chunk) => {
+                        this.answer(sender, 'PartialResponse', id, chunk);
+                    });
+
+                    data.body.on('end', () => {
+                        this.answer(sender, 'Closed', id);
+                    });
+                })
+                .catch((err) => {
+                    if (err.code !== 'FETCH_ABORTED') {
+                        // console.log('Proxified Fetch failed with next error:', err);
+                        this.answer(sender, 'Error', id);
+                    }
                 });
 
-                sender.send(`ProxifiedFetch : InitialData[${id}]`, { status, headers });
+            this.requests[id] = { request, cancel: () => controller.abort() };
+        });
+        this.listen('Abort', (id: string) => {
+            const request = this.requests[id];
 
-                data.body.on('data', (chunk) => {
-                    sender.send(`ProxifiedFetch : PartialResponse[${id}]`, chunk);
-                });
+            if (!request || !request.cancel) {
+                return;
+            }
 
-                data.body.on('end', () => {
-                    sender.send(`ProxifiedFetch : Closed[${id}]`);
-                });
-            })
-            .catch((err) => {
-                if (err.code !== 'FETCH_ABORTED') {
-                    // console.log('Proxified Fetch failed with next error:', err);
-                    sender.send(`ProxifiedFetch : Error[${id}]`);
-                }
-            });
+            request.cancel();
+        })
+    }
 
-        requests[id] = { request, cancel: () => controller.abort() };
-    });
+    destroy() {
+        this.stopListen('Request');
+        this.stopListen('Abort');
 
-    electronIpcMain.on('ProxifiedFetch : Abort', (e, id) => {
-        const request = requests[id];
+        delete this.requests;
+        delete this.ipc;
+        delete this.selfStatic;
+    }
 
-        if (!request || !request.cancel) {
-            return;
-        }
+    private answer(sender: Electron.WebContents, event: string, id: string, data?: any) {
+        const eventName = `${this.selfStatic.eventGroup} : ${event}[${id}]`;
 
-        request.cancel();
-    });
+        sender.send(eventName, data);
+    }
+
+    private listen(event: string, callback: (...args) => void) {
+        const eventName = `${this.selfStatic.eventGroup} : ${event}`;
+
+        this.ipc.on(eventName, (...args) => {
+            const arrangedArgs = args.slice(1);
+            arrangedArgs.push(args[0]);
+
+            callback(...arrangedArgs);
+        });
+    }
+
+    private listenOnce(event: string, callback: (...args) => void) {
+        const eventName = `${this.selfStatic.eventGroup} : ${event}`;
+
+        this.ipc.once(eventName, (...args) => {
+            const arrangedArgs = args.slice(1);
+            arrangedArgs.push(args[0]);
+
+            callback(...arrangedArgs);
+        });
+    }
+
+    private stopListen(event: string) {
+        const eventName = `${this.selfStatic.eventGroup} : ${event}`;
+
+        this.ipc.removeAllListeners(eventName);
+    }
 }

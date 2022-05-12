@@ -56,7 +56,7 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
     return to.concat(ar || Array.prototype.slice.call(from));
 };
 exports.__esModule = true;
-exports.initProxifiedFetchBridge = exports.proxifiedFetchFactory = void 0;
+exports.ProxifiedFetchBridge = exports.initProxifiedFetchBridge = exports.proxifiedFetchFactory = void 0;
 var proxyTransport = require("../../proxy16/transports.js");
 var proxified = proxyTransport();
 var getRequestId = function () {
@@ -184,6 +184,7 @@ function proxifiedFetchFactory(electronIpcRenderer) {
     return function (input, init) { return profixiedFetch(input, init); };
 }
 exports.proxifiedFetchFactory = proxifiedFetchFactory;
+/** @deprecated */
 function initProxifiedFetchBridge(electronIpcMain) {
     var requests = {};
     electronIpcMain.on('ProxifiedFetch : Request', function (event, id, url, requestInit) {
@@ -223,4 +224,90 @@ function initProxifiedFetchBridge(electronIpcMain) {
     });
 }
 exports.initProxifiedFetchBridge = initProxifiedFetchBridge;
-//# sourceMappingURL=proxified-fetch.js.map
+var ProxifiedFetchBridge = /** @class */ (function () {
+    function ProxifiedFetchBridge(electronIpcMain) {
+        this.selfStatic = ProxifiedFetchBridge;
+        this.requests = {};
+        this.ipc = electronIpcMain;
+    }
+    ProxifiedFetchBridge.prototype.init = function () {
+        var _this = this;
+        this.listen('Request', function (id, url, requestInit, _a) {
+            var sender = _a.sender;
+            var fetch = proxified.fetch;
+            _this.requests[id] = {};
+            var controller = new AbortController();
+            var signal = controller.signal;
+            var request = fetch(url, __assign({ signal: signal }, requestInit))
+                .then(function (data) {
+                var status = data.status;
+                var headers = {};
+                data.headers.forEach(function (value, name) {
+                    headers[name] = value;
+                });
+                _this.answer(sender, 'InitialData', id, { status: status, headers: headers });
+                data.body.on('data', function (chunk) {
+                    _this.answer(sender, 'PartialResponse', id, chunk);
+                });
+                data.body.on('end', function () {
+                    _this.answer(sender, 'Closed', id);
+                });
+            })["catch"](function (err) {
+                if (err.code !== 'FETCH_ABORTED') {
+                    // console.log('Proxified Fetch failed with next error:', err);
+                    _this.answer(sender, 'Error', id);
+                }
+            });
+            _this.requests[id] = { request: request, cancel: function () { return controller.abort(); } };
+        });
+        this.listen('Abort', function (id) {
+            var request = _this.requests[id];
+            if (!request || !request.cancel) {
+                return;
+            }
+            request.cancel();
+        });
+    };
+    ProxifiedFetchBridge.prototype.destroy = function () {
+        this.stopListen('Request');
+        this.stopListen('Abort');
+        delete this.requests;
+        delete this.ipc;
+        delete this.selfStatic;
+    };
+    ProxifiedFetchBridge.prototype.answer = function (sender, event, id, data) {
+        var eventName = "".concat(this.selfStatic.eventGroup, " : ").concat(event, "[").concat(id, "]");
+        sender.send(eventName, data);
+    };
+    ProxifiedFetchBridge.prototype.listen = function (event, callback) {
+        var eventName = "".concat(this.selfStatic.eventGroup, " : ").concat(event);
+        this.ipc.on(eventName, function () {
+            var args = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                args[_i] = arguments[_i];
+            }
+            var arrangedArgs = args.slice(1);
+            arrangedArgs.push(args[0]);
+            callback.apply(void 0, arrangedArgs);
+        });
+    };
+    ProxifiedFetchBridge.prototype.listenOnce = function (event, callback) {
+        var eventName = "".concat(this.selfStatic.eventGroup, " : ").concat(event);
+        this.ipc.once(eventName, function () {
+            var args = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                args[_i] = arguments[_i];
+            }
+            var arrangedArgs = args.slice(1);
+            arrangedArgs.push(args[0]);
+            callback.apply(void 0, arrangedArgs);
+        });
+    };
+    ProxifiedFetchBridge.prototype.stopListen = function (event) {
+        var eventName = "".concat(this.selfStatic.eventGroup, " : ").concat(event);
+        this.ipc.removeAllListeners(eventName);
+    };
+    ProxifiedFetchBridge.eventGroup = 'ProxifiedFetch';
+    return ProxifiedFetchBridge;
+}());
+exports.ProxifiedFetchBridge = ProxifiedFetchBridge;
