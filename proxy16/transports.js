@@ -8,7 +8,7 @@ const _fetch = require("node-fetch")
 const path = require("path");
 const { SocksProxyAgent } = require('socks-proxy-agent')
 const child_process = require("child_process");
-const httpsAgent = new SocksProxyAgent('socks5://127.0.0.1:9050')
+const httpsAgent = new SocksProxyAgent('socks5h://127.0.0.1:9050')
 const fs = require('fs/promises');
 
 const getPathTor = ()=>{
