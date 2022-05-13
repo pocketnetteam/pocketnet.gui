@@ -28,12 +28,8 @@ const getPathTor = ()=>{
             break;
         case 'darwin':
             torPath.binary = "tor"
-            if(process.arch === "arm64") {
-                torPath.path = "tor/m1/"
-            }else {
-                torPath.path = "tor/osx/"
-            }
-            torPath.path = (isDevelopment ? "" : `${rootPath}/Contents/`) + torPath.path;
+            torPath.path = "tor/osx/"
+            torPath.path = (isDevelopment ? "" : "../") + torPath.path;
             break;
     }
     torPath.path = path.join(isDevelopment ? __dirname : "", torPath.path)
@@ -47,16 +43,26 @@ module.exports = function (){
     self.proxyHosts = []
     self.lastUpdate = Date.now();
     self.tor.path = getPathTor();
-    
+
     const generateTorConfig = async (pathRoot)=>{
         try {
             await fs.stat(path.join(pathRoot, "torrc"))
+            await fs.unlink(path.join(pathRoot, "torrc"))
         }catch (e){
+            console.log("GENERATE CONFIG TOR")
+        }finally {
+            await fs.writeFile(path.join(pathRoot, "torrc"), `CookieAuthentication 1\n`, {flag: "a+"})
+            await fs.writeFile(path.join(pathRoot, "torrc"), `DormantCanceledByStartup 1\n`, {flag: "a+"})
+            await fs.writeFile(path.join(pathRoot, "torrc"), `DataDirectory ${path.join(pathRoot, "data")}\n`, {flag: "a+"})
+            await fs.writeFile(path.join(pathRoot, "torrc"), `Log notice stdout\n`, {flag: "a+"})
+            await fs.writeFile(path.join(pathRoot, "torrc"), `AvoidDiskWrites 1\n`, {flag: "a+"})
             await fs.writeFile(path.join(pathRoot, "torrc"), `GeoIPFile ${path.join(pathRoot, "geoip")}\n`, {flag: "a+"})
-            await fs.writeFile(path.join(pathRoot, "torrc"), `GeoIPv6File ${path.join(pathRoot, "geoip6")}`, {flag: "a+"})
+            await fs.writeFile(path.join(pathRoot, "torrc"), `GeoIPv6File ${path.join(pathRoot, "geoip6")}\n`, {flag: "a+"})
+            await fs.writeFile(path.join(pathRoot, "torrc"), `ClientTransportPlugin meek_lite,obfs2,obfs3,obfs4,scramblesuit exec ${path.join(pathRoot, "transports", "obfs4proxy")}\n`, {flag: "a+"})
+            await fs.writeFile(path.join(pathRoot, "torrc"), `ClientTransportPlugin snowflake exec ${path.join(pathRoot, "transports", "snowflake-client")} -url https://snowflake-broker.torproject.net.global.prod.fastly.net/ -front cdn.sstatic.net -ice stun:stun.l.google.com:19302,stun:stun.voip.blackberry.com:3478,stun:stun.altar.com.pl:3478,stun:stun.antisip.com:3478,stun:stun.bluesip.net:3478,stun:stun.dus.net:3478,stun:stun.epygi.com:3478,stun:stun.sonetel.com:3478,stun:stun.sonetel.net:3478,stun:stun.stunprotocol.org:3478,stun:stun.uls.co.za:3478,stun:stun.voipgate.com:3478,stun:stun.voys.nl:3478`, {flag: "a+"})
         }
     }
-    
+
     self.runTor = async (eventCallBack)=>{
         await generateTorConfig( self.tor.path.path)
         enable = true;
@@ -88,9 +94,17 @@ module.exports = function (){
                 throw "Error write pid file for tor"
             }
         }
+        setTimeout(async ()=>{
+            try {
+                let res = await _axios.get('https://bastynode1.ru/', {httpsAgent: httpsAgent})
+                console.log("DATA ", res)
+            }catch (e) {
+                console.log("ERR ", e)
+            }
+        }, 7000)
     }
 
-    
+
     self.stopTor = async ()=>{
         enable = false;
         let pid = ""
@@ -107,7 +121,7 @@ module.exports = function (){
             process.kill(+pid.toString(), 9)
         }
     }
-    
+
     const isUseProxy = (path)=>{
         const url = new URL(path)
         if((self.lastUpdate + 60*60*1000) < Date.now()){
@@ -221,7 +235,7 @@ module.exports = function (){
         const res = await self.axios.get(url, {responseType: "arraybuffer"})
         return {data: Buffer.from(res?.data || [], 'binary').toString('base64'), type: res?.headers?.['content-type']}
     }
-    
-    
+
+
     return self;
 }
