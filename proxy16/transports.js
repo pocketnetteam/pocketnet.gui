@@ -1,5 +1,7 @@
 'use strict';
 
+const rootPath = require('electron-root-path').rootPath;
+const { dialog } = require('electron');
 const _request = require("request");
 const _axios = require("axios");
 const _fetch = require("node-fetch")
@@ -31,7 +33,7 @@ const getPathTor = ()=>{
             }else {
                 torPath.path = "tor/osx/"
             }
-            torPath.path = (isDevelopment ? "" : "../") + torPath.path;
+            torPath.path = (isDevelopment ? "" : `${rootPath}/Contents/`) + torPath.path;
             break;
     }
     torPath.path = path.join(isDevelopment ? __dirname : "", torPath.path)
