@@ -46,7 +46,7 @@
     "cordova-plugin-buildinfo": "^4.0.0",
     "cordova-plugin-contacts-x": "file:cordova-plugin-contacts-x",
     "cordova-plugin-device": "^1.1.7",
-    "cordova-plugin-file": "^6.0.2",
+    "cordova-plugin-file": "^7.0.0",
     "cordova-plugin-file-opener2": "^3.0.5",
     "cordova-plugin-file-transfer": "github:apache/cordova-plugin-file-transfer",
     "cordova-plugin-firebasex": "^13.0.1",
@@ -77,7 +77,6 @@
       "cordova-plugin-buildinfo": {},
       "cordova-plugin-inappbrowser": {},
       "@globules-io/cordova-plugin-ios-xhr": {},
-      "cordova-plugin-file": {},
       "cordova-plugin-file-opener2": {
         "ANDROID_SUPPORT_V4_VERSION": "27.+"
       },
@@ -134,7 +133,10 @@
       "cordova-plugin-android-packagemanager": {},
       "cordova-plugin-apkupdater": {},
       "cordova-plugin-pip": {},
-      "cordova-plugin-file-transfer": {}
+      "cordova-plugin-file-transfer": {},
+      "cordova-plugin-file": {
+        "ANDROIDX_WEBKIT_VERSION": "1.4.0"
+      }
     },
     "platforms": [
       "ios",
