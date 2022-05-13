@@ -84,6 +84,10 @@ export function proxifiedAxiosFactory(electronIpcRenderer: Electron.IpcRenderer)
 
                 resolve(response);
             });
+
+            electronIpcRenderer.on(`ProxifiedAxios : Error[${id}]`, (event, errorMessage) => {
+                reject(errorMessage);
+            })
         });
     }
 
@@ -129,6 +133,11 @@ export class ProxifiedAxiosBridge {
                     this.answer(sender, 'Response', id, preparedResponse);
                 })
                 .catch((err) => {
+                    if (!err.response) {
+                        this.answer(sender, 'Error', id, err.message);
+                        return;
+                    }
+
                     const preparedResponse = { ...err.response };
                     delete preparedResponse.request;
                     delete preparedResponse.config;
@@ -158,7 +167,7 @@ export class ProxifiedAxiosBridge {
         delete this.selfStatic;
     }
 
-    private answer(sender: Electron.WebContents, event: string, id: string, data: any) {
+    private answer(sender: Electron.WebContents, event: string, id: string, data?: any) {
         const eventName = `${this.selfStatic.eventGroup} : ${event}[${id}]`;
 
         sender.send(eventName, data);

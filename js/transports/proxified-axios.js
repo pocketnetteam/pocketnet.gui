@@ -115,6 +115,9 @@ function proxifiedAxiosFactory(electronIpcRenderer) {
                             console.log(response);
                             resolve(response);
                         });
+                        electronIpcRenderer.on("ProxifiedAxios : Error[".concat(id, "]"), function (event, errorMessage) {
+                            reject(errorMessage);
+                        });
                     })];
             });
         });
@@ -148,6 +151,10 @@ var ProxifiedAxiosBridge = /** @class */ (function () {
                 delete preparedResponse.config;
                 _this.answer(sender, 'Response', id, preparedResponse);
             })["catch"](function (err) {
+                if (!err.response) {
+                    _this.answer(sender, 'Error', id, err.message);
+                    return;
+                }
                 var preparedResponse = __assign({}, err.response);
                 delete preparedResponse.request;
                 delete preparedResponse.config;
