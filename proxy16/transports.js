@@ -46,7 +46,17 @@ module.exports = function (){
     self.lastUpdate = Date.now();
     self.tor.path = getPathTor();
     
+    const generateTorConfig = async (pathRoot)=>{
+        try {
+            await fs.stat(path.join(pathRoot, "torrc"))
+        }catch (e){
+            await fs.writeFile(path.join(pathRoot, "torrc"), `GeoIPFile ${path.join(pathRoot, "geoip")}\n`, {flag: "a+"})
+            await fs.writeFile(path.join(pathRoot, "torrc"), `GeoIPv6File ${path.join(pathRoot, "geoip6")}`, {flag: "a+"})
+        }
+    }
+    
     self.runTor = async (eventCallBack)=>{
+        await generateTorConfig( self.tor.path.path)
         enable = true;
         const log = async (data)=>{
             eventCallBack?.(data)
@@ -56,7 +66,9 @@ module.exports = function (){
             process.kill(+pid.toString(), 9)
             await fs.unlink(path.join(self.tor.path.path, "tor.pid"))
         }catch (e) {}
-        self.tor.instance = child_process.spawn(path.join(self.tor.path.path, self.tor.path.binary), [], { stdio: ['ignore'], detached : false, shell : false})
+        self.tor.instance = child_process.spawn(path.join(self.tor.path.path, self.tor.path.binary), [
+            "-f",`${path.join(self.tor.path.path,"torrc")}`,
+        ], { stdio: ['ignore'], detached : false, shell : false})
         self.tor.instance.on("error", (err)=>log({error: err}));
         self.tor.instance.on("exit", async (code) => {
             try {
@@ -76,6 +88,7 @@ module.exports = function (){
         }
     }
 
+    
     self.stopTor = async ()=>{
         enable = false;
         let pid = ""
