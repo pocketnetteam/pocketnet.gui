@@ -32,8 +32,9 @@ var authorization = (function(){
 			self.app.user.stay = 0;
 
 		}
-
-
+		
+		var activeMnemonicInput
+		var autocompleteWord
 
 		var stay = new Parameter({
 
@@ -79,11 +80,23 @@ var authorization = (function(){
 
 		
 			login : function(){
-
 				
-				var p = {};
+            //    if(!el.c.find('.mnemonicItem').value.trim()){
 
-				var mnemonicKey = trim(el.login.val());
+			//    }
+				var mnemonicKeyArray = []
+				var mnemonicInputs = el.c.find('.mnemonicItem')
+				mnemonicInputs.each(function(index){
+					if(mnemonicInputs[index].value.trim()){
+						mnemonicKeyArray[index] = mnemonicInputs[index].value.trim()
+					}else{
+						mnemonicInputs[index].classList.add('errorClass')
+					}
+				})
+				var p = {};
+				// TODO for privatekey
+				var mnemonicKey = mnemonicKeyArray.join(' ') //trim(el.login.val());
+				console.log('test',mnemonicKey);
 
 				localStorage['stay'] = boolToNumber(stay.value).toString()
 
@@ -393,18 +406,20 @@ var authorization = (function(){
 			}
 		}
 
+		// setActiveMnemonicInput = function(){
+		// 	el.c.find('.mnemonicItem').on('focus', function(){
+		// 		activeMnemonicInput = $(this)
+		// 	})
+		// }
+
 		addInputControle = function(){
-			$('.loginValue').on('keyup',function (e) {
-				// right arrow
+			el.c.find('.mnemonicItem').on('keyup',function (e) {
 				if (e.code === 'ArrowRight') { 
 				  $(this).closest('td').next().find('input').trigger( "focus" )
-				  // left arrow
 				} else if (e.code === 'ArrowLeft') { 
 				  $(this).closest('td').prev().find('input').trigger( "focus" )
-				  // down arrow
 				} else if (e.code === 'ArrowDown') { 
 				  $(this).closest('tr').next().find('td:eq(' + $(this).closest('td').index() + ')').find('input').trigger( "focus" )
-				  // up arrow
 				} else if (e.code === 'ArrowUp') { 
 				  $(this).closest('tr').prev().find('td:eq(' + $(this).closest('td').index() + ')').find('input').trigger( "focus" )
 				}
@@ -412,19 +427,100 @@ var authorization = (function(){
 	   		}
 
 		addAutocomlete = function(){
-			console.log(111,$( ".loginValue" )[0].autocomplete);
-			$( ".loginValue" )[0].autocomplete({
-				source: bitcoin.bip39.wordlists[bitcoin.bip39.getDefaultWordlist()]
-			  });
-			// let autocomlete = document.querySelector('#wordList')
-			// let wordList = bitcoin.bip39.wordlists[bitcoin.bip39.getDefaultWordlist()]
-			// console.log(wordList);
-			// for (let item of wordList){
-			// 	console.log(item);
-			// 	autocomlete.innerHTML += `<option value="${item}">`
-			// }
-			
+			el.c.find('.mnemonicItem').on('input',function (e) {
+				$(this).removeClass('errorClass')
+				const { top, left } = e.target.getBoundingClientRect();
+				const foundWord = e.target.value.length > 1 ? 
+				[
+					...bitcoin.bip39.wordlists.english,
+					...bitcoin.bip39.wordlists.russian,
+					...bitcoin.bip39.wordlists.french,
+					...bitcoin.bip39.wordlists.italian,
+					...bitcoin.bip39.wordlists.spanish,
+					...bitcoin.bip39.wordlists.korean,
+					...bitcoin.bip39.chinese_traditional
+				].find((item) => item.includes(e.target.value) 
+				&& !item.includes(e.target.value, e.target.value.length)
+				&& item.slice(0, e.target.value.length) === e.target.value) 
+				: '' 
+				autocompleteWord = foundWord || ''
+
+				var autocompleteWordStart = autocompleteWord && autocompleteWord.slice(autocompleteWord.indexOf(e.target.value),e.target.value.length)
+				var autocompleteWordEnd = autocompleteWord && autocompleteWord.slice(autocompleteWordStart.length)
+	
+				el.autocomplete.css({
+					'position': 'absolute',
+					'top' : `${top + parseInt($(this).css("padding-top")) + 0.7}px`,
+					'left' : `${left + parseInt($(this).css("padding-left"))}px`,
+					'font-size': $(this).css("font-size"),
+					'font-weight': $(this).css("font-weight"),
+					'display': 'flex',
+				})
+				el.autocompleteEnd.css({
+					'color' : `red`,
+				})
+				el.autocompleteStart.css({
+					'color' : `transparent`,
+				})
+				
+				el.autocompleteStart.html(autocompleteWordStart)
+				el.autocompleteEnd.html(autocompleteWordEnd)
+			  });	
 		}
+
+		validateMnemonicInput = function(){
+			el.c.find('.mnemonicItem').on('keypress paste', function(e){
+				if(e.key === 'Enter'){
+					autocompleteWord && activeMnemonicInput.val(autocompleteWord)
+					el.autocomplete.css({'display': 'none'})
+					var currentInputId = +activeMnemonicInput.attr("id").replace('mnemonicItem','')
+				    var nextId = currentInputId + 1
+					if(nextId < 12 ){
+						el.c.find(`#mnemonicItem${nextId}`).trigger( "focus" )
+						return false
+					}else{
+						return true
+					} 
+				} else{
+					return /^[a-zA-Z]+$/.test(e.key)
+				}
+			})
+		}
+
+		pasteMnemonicPhares = function(){
+			el.c.find('.mnemonicItem').on('paste', function(e){
+				var mnemonicArray = e.originalEvent.clipboardData.getData('text/plain').split(' ')
+				var mnemonicInputs = el.c.find('.mnemonicItem')
+				mnemonicArray.forEach((item, index)=>{
+					if(item){
+						mnemonicInputs[index].value = item
+					}
+				})
+				return false
+			})
+		}
+
+		removeAutocomplete = function(){
+			el.c.find('.mnemonicItem').on('focus', function(){
+				autocompleteWord = ''
+				activeMnemonicInput = $(this)
+				el.autocomplete.css({'display': 'none'})
+			})
+		}
+
+		checkAutocompleteValue = function(){
+			el.autocompleteEnd.on('click', function(e){
+				e.stopPropagation();
+				activeMnemonicInput.val(autocompleteWord);
+				el.autocomplete.css({'display': 'none'})
+				var currentInputId = +activeMnemonicInput.attr("id").replace('mnemonicItem','')
+				var nextId = currentInputId + 1
+				if(nextId < 12 ){
+					el.c.find(`#mnemonicItem${nextId}`).trigger( "focus" )
+				}
+			})
+		}
+		
 
 		var make = function(){
 			var p = parameters();
@@ -503,6 +599,9 @@ var authorization = (function(){
 				el.enter = el.c.find('.enter');
 				el.toRegistration = el.c.find('.toRegistration');
 				el.forgotPassword = el.c.find('.forgotPassword');
+				el.autocompleteStart = el.c.find('#autocompleteStart')
+				el.autocompleteEnd = el.c.find('#autocompleteEnd')
+				el.autocomplete = el.c.find('#autocomplete')
 
 				el.hiddenform = el.c.find('#loginform')
 
@@ -512,7 +611,11 @@ var authorization = (function(){
 				initEvents(p);
 				make();
 				addInputControle()
+				removeAutocomplete()
 				addAutocomlete()
+				validateMnemonicInput()
+				checkAutocompleteValue()
+				pasteMnemonicPhares()
 		
 				p.clbk(null, p);
 
