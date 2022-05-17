@@ -808,7 +808,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 				25: [
 					{
-						host : 'peertube18mirror.pocketnet.app',
+						host : 'peertube19mirror.pocketnet.app',
 						ip: '64.235.50.17',
 					}
 				],
