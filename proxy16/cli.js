@@ -7,7 +7,7 @@ var readline = require('readline');
 global.MIN_NODES_COUNT = 10
 global.WRITE_LOGS = true
 global.USE_TRUST_NODES_ONLY = false
-global.USE_PROXY_NODE = true
+global.USE_PROXY_NODE = false
 
 var destroy = function(repeat){
 

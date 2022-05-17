@@ -393,6 +393,20 @@ var Peertube = function (settings) {
 		return info;
 	};
 
+	self.canuse = function(){
+		var r = _.filter(roys, function (roy) {
+			return roy.canuse()
+		});
+
+		return r.length
+	}
+
+	self.wait = function(timeout){
+		return f.pretry(() => {
+			return self.canuse()
+		}, timeout)
+	}
+
 	self.init = function ({ urls, roys }) {
 		if (roys) {
 			_.each(roys, function (urls, i) {
