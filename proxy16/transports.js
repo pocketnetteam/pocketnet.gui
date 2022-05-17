@@ -169,7 +169,7 @@ module.exports = function (){
     self.axios.delete = (...args) => axiosRequest(...args);
     self.axios.patch = (...args) => axiosRequest(...args);
 
-    self.fetch = async (url, opts) => {
+    self.fetch = async (url, opts = {}) => {
         if(isUseProxy(url) && enable) {
             opts.agent = httpsAgent;
         }
