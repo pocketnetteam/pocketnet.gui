@@ -199,7 +199,8 @@ Platform = function (app, listofnodes) {
         'PXb9rpCDax5NpU6m4tt2gdXyTp4urbTdS8' : true,
         'PRDXZpyF7rm9cJw3y6DX2nFvK1AYgjpXdF' : true,
         'P9D3ntMdwy4HGjBhg1uQDuQD99MXYZTqg3' : true,
-        'PWGhooqyrq1qL7NPgg2an8M69sHfJrDM8Y' : true
+        'PWGhooqyrq1qL7NPgg2an8M69sHfJrDM8Y' : true,
+        'PUuNT7icKad8fm7ATPRn1s8gd19HXYKDqS' : true
     }
 
     self.bch = {
@@ -2474,7 +2475,7 @@ Platform = function (app, listofnodes) {
             var p = {
                 href : 'post?s=' + txid,
                 clbk : clbk,
-               
+
                 essenseData : {
                     share : txid,
                     video : true,
@@ -3312,7 +3313,7 @@ Platform = function (app, listofnodes) {
 
         effectinternal : function(el, name, parameters, clbk){
 
-            
+
 
             if(!self.sdk.usersettings.meta.useanimations.value) return
 
@@ -3542,7 +3543,7 @@ Platform = function (app, listofnodes) {
                         currentmode = mode
 
                         if (mode == 'full') {
-                           
+
                             if (p.top) {
                                 up.css('top', p.top())
                             }
@@ -3590,7 +3591,7 @@ Platform = function (app, listofnodes) {
 
                 up.on('click', events.click)
 
-              
+
             }
 
             var removeEvents = function () {
@@ -6654,10 +6655,10 @@ Platform = function (app, listofnodes) {
                     var fm = _.filter(r, function(u){
                         return u.share && u.share.user
                     })
-                    
+
 
                     self.sdk.node.shares.takeusers(_.map(fm, function(u){
-                        return {userprofile : u.share.user} 
+                        return {userprofile : u.share.user}
                     }), false)
 
 
@@ -11107,7 +11108,7 @@ Platform = function (app, listofnodes) {
             getTopAccounts : function(p, rpc, clbk){
 
                 var method = 'gettopaccounts';
-     
+
                 p.height = 0;
                 p.tagsfilter = self.app.platform.sdk.categories.gettags();
                 p.tagsexcluded = self.app.platform.sdk.categories.gettagsexcluded();
@@ -11121,7 +11122,7 @@ Platform = function (app, listofnodes) {
                 })
 
                 p.depth || (p.depth = 10000);
-                    
+
                 var parameters = [p.height, p.count, p.lang, p.tagsfilter, p.type, '', p.tagsexcluded, p.depth];
 
                 var s = self.sdk.node.shares;
@@ -11131,7 +11132,7 @@ Platform = function (app, listofnodes) {
                 //     console.log('gettopaccounts result', data, error);
 
                 //     clbk(data, error);
-                    
+
 
                 // }, method, rpc)
 
@@ -11157,7 +11158,7 @@ Platform = function (app, listofnodes) {
                 var method = 'getrecommendedaccountbyaddress';
 
                 var p = {};
-                
+
                 p.addressexclude = '';
                 p.type = [];
                 p.lang = self.app.localization.key;
@@ -11168,7 +11169,7 @@ Platform = function (app, listofnodes) {
                     self.app.platform.sdk.users.getTopAccounts(p, rpc, clbk);
                     return;
 
-                } 
+                }
 
                 var parameters = [address, p.addressexclude, p.type, p.lang, p.count];
 
@@ -12483,23 +12484,23 @@ Platform = function (app, listofnodes) {
                         return like.countOfFives && like.data.subscribers_count + like.data.subscribes_count;
                     })
 
-    
+
                     var bestAddress = '';
                     var bestCount = 1;
-    
+
                     availablesLikes.forEach(function(like){
-    
+
                         if (like.countOfFives > bestCount){
 
                             bestAddress = like.data.address;
                             bestCount = like.countOfFives;
-                            
+
                         } else if (!bestAddress && (like.countOfFives === bestCount)){
 
                             bestAddress = like.data.address;
                         }
                     })
-    
+
                     return bestAddress;
                 }
 
@@ -12596,7 +12597,7 @@ Platform = function (app, listofnodes) {
 
                 self.sdk.users.get([address], function () {
 
-                    var user = self.sdk.users.storage[address] || self.sdk.usersl.storage[address] 
+                    var user = self.sdk.users.storage[address] || self.sdk.usersl.storage[address]
 
                     if (user){
 
@@ -14825,7 +14826,7 @@ Platform = function (app, listofnodes) {
                 h+='<div>'+self.app.localization.e('lowstar2')+'</div>'
                 if(self.app.localization.key == 'ru')
                 h+='<div class="b">'+self.app.localization.e('lowstar3')+'</div>'
-                
+
                 dialog({
                     html: h,
                     btn1text: self.app.localization.e('lowstaragree'),
@@ -26713,7 +26714,7 @@ Platform = function (app, listofnodes) {
         self.sdk.registrations.load();
         self.sdk.relayTransactions.load();
         self.applications = self.__applications()
-        
+
         self.sdk.lentaMethod.load()
 
         self.sdk.uiScale.load();
