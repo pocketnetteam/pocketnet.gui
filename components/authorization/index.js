@@ -96,7 +96,6 @@ var authorization = (function(){
 				var p = {};
 				// TODO for privatekey
 				var mnemonicKey = trim(el.login.val()) || mnemonicKeyArray.join(' ');
-				console.log('test',mnemonicKey);
 
 				localStorage['stay'] = boolToNumber(stay.value).toString()
 
@@ -406,30 +405,55 @@ var authorization = (function(){
 			}
 		}
 
-		// setActiveMnemonicInput = function(){
-		// 	el.c.find('.mnemonicItem').on('focus', function(){
-		// 		activeMnemonicInput = $(this)
-		// 	})
-		// }
-
 		addInputControle = function(){
 			el.c.find('.mnemonicItem').on('keyup',function (e) {
 				if (e.code === 'ArrowRight') { 
+					if(e.target.value && e.target.selectionStart !== e.target.value.length){
+						return
+					}
+					if(autocompleteWord){
+						activeMnemonicInput.val(autocompleteWord)
+						el.autocomplete.css({'display': 'none'})
+						var currentInputId = +activeMnemonicInput.attr("id").replace('mnemonicItem','')
+						var nextId = currentInputId + 1
+						if(nextId < 12 ){
+							el.c.find(`#mnemonicItem${nextId}`).trigger( "focus" )
+						}
+					    return
+					}
 				  $(this).closest('td').next().find('input').trigger( "focus" )
 				} else if (e.code === 'ArrowLeft') { 
+					if(e.target.value && e.target.selectionStart > 0){
+						return
+					}
 				  $(this).closest('td').prev().find('input').trigger( "focus" )
 				} else if (e.code === 'ArrowDown') { 
 				  $(this).closest('tr').next().find('td:eq(' + $(this).closest('td').index() + ')').find('input').trigger( "focus" )
 				} else if (e.code === 'ArrowUp') { 
 				  $(this).closest('tr').prev().find('td:eq(' + $(this).closest('td').index() + ')').find('input').trigger( "focus" )
 				}
-			  });	
-	   		}
+			});	
+	   	}
+
+		backspaceEventHandler = function(){
+			el.c.find('.mnemonicItem').on('keydown',function (e) {
+				if (e.code === 'Backspace'){
+					if(e.target.selectionStart < 1){
+						var currentInputId = +activeMnemonicInput.attr("id").replace('mnemonicItem','')
+						var nextId = currentInputId - 1
+						if(nextId > 0 ){
+							el.c.find(`#mnemonicItem${nextId}`).trigger( "focus" )
+						}
+					}
+				}
+			})
+		}
 
 		addAutocomlete = function(){
-			el.c.find('.mnemonicItem').on('input paste',function (e) {
-				console.log('grec');
+			el.c.find('.mnemonicItem').on('input paste focus',function (e) {
 				$(this).removeClass('errorClass')
+				autocompleteWord = ''
+				activeMnemonicInput = $(this)
 				const { top, left } = e.target.getBoundingClientRect();
 				const foundWord = e.target.value.length > 1 ? 
 				[
@@ -445,20 +469,24 @@ var authorization = (function(){
 				&& item.slice(0, e.target.value.length) === e.target.value) 
 				: '' 
 				autocompleteWord = foundWord || ''
-
+				if(autocompleteWord === e.target.value){
+					el.autocomplete.css({'display': 'none'})
+					return
+				}
 					var autocompleteWordStart = autocompleteWord && autocompleteWord.slice(autocompleteWord.indexOf(e.target.value),e.target.value.length)
 					var autocompleteWordEnd = autocompleteWord && autocompleteWord.slice(autocompleteWordStart.length)
 		
 					el.autocomplete.css({
 						'position': 'absolute',
-						'top' : `${top + parseInt($(this).css("padding-top")) + 0.7}px`,
+						'top' : `${top + parseInt($(this).css("padding-top")) + 1.5}px`,
 						'left' : `${left + parseInt($(this).css("padding-left"))}px`,
 						'font-size': $(this).css("font-size"),
 						'font-weight': $(this).css("font-weight"),
 						'display': 'flex',
 					})
 					el.autocompleteEnd.css({
-						'color' : `red`,
+						'color' : `#555770`,
+						'opacity': '0.6'
 					})
 					el.autocompleteStart.css({
 						'color' : `transparent`,
@@ -471,7 +499,7 @@ var authorization = (function(){
 						$(this).val('')
 						el.c.find('#mnemonicInput').css({'display': 'none'})
 						el.c.find('.loginValue').css({'display': 'initial'})
-						
+						el.c.find('.loginValue').trigger( "focus" )
 					}
 			  });	
 		}
@@ -495,24 +523,17 @@ var authorization = (function(){
 			})
 		}
 
-		pasteMnemonicPhares = function(){
+		pasteMnemonicPhrase = function(){
 			el.c.find('.mnemonicItem').on('paste', function(e){
 				var mnemonicArray = e.originalEvent.clipboardData.getData('text/plain').split(' ')
 				var mnemonicInputs = el.c.find('.mnemonicItem')
 				mnemonicArray.forEach((item, index)=>{
 					if(item){
+						mnemonicInputs[index].classList.remove('errorClass')
 						mnemonicInputs[index].value = item
 					}
 				})
 				return false
-			})
-		}
-
-		removeAutocomplete = function(){
-			el.c.find('.mnemonicItem').on('focus', function(){
-				autocompleteWord = ''
-				activeMnemonicInput = $(this)
-				el.autocomplete.css({'display': 'none'})
 			})
 		}
 
@@ -526,6 +547,16 @@ var authorization = (function(){
 				if(nextId < 12 ){
 					el.c.find(`#mnemonicItem${nextId}`).trigger( "focus" )
 				}
+			})
+		}
+
+		privateKeyInputHandler = function(){
+			el.c.find('.loginValue').on('input', function(e){
+				if(!e.target.value){
+					el.c.find('.loginValue').css({'display': 'none'})
+					el.c.find('#mnemonicInput').css({'display': 'initial'})
+					el.c.find('.mnemonicItem')[0].focus()
+				} 
 			})
 		}
 		
@@ -619,11 +650,12 @@ var authorization = (function(){
 				initEvents(p);
 				make();
 				addInputControle()
-				removeAutocomplete()
+				backspaceEventHandler()
 				addAutocomlete()
 				validateMnemonicInput()
 				checkAutocompleteValue()
-				pasteMnemonicPhares()
+				pasteMnemonicPhrase()
+				privateKeyInputHandler()
 		
 				p.clbk(null, p);
 

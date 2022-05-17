@@ -121,15 +121,21 @@
 					font-weight: 100;
 					background: rgb(var(--background-total-theme));
 					color : rgb(var(--color-txt-ac));
-					border : 1px solid green;
+					border : 1px solid @color-gray;
 					.transition(0.4s);
-					
 
 					&:focus{
 						border : 1px solid rgb(var(--neutral-grad-1));
 						background: rgb(var(--background-total-theme));
 						color : rgb(var(--text-color));
 					}
+				}
+
+				.mnemonicItem{
+					margin-bottom: 0.3em;
+					width: 95%;
+					font-size: 1.4em;
+					padding: @rhythm;
 				}
 
 				.validationFail{
