@@ -1,7 +1,5 @@
 'use strict';
 
-const rootPath = require('electron-root-path').rootPath;
-const { dialog } = require('electron');
 const _request = require("request");
 const _axios = require("axios");
 const _fetch = require("node-fetch")
