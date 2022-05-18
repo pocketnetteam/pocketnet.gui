@@ -154,10 +154,9 @@ f.saveFile = function(filepath, buffer){
 
 }
 
-f.downloadgitrelease = function(name, p){
+f.downloadgitrelease = function(name, p, repo = { user: "pocketnetteam", name: "pocketnet.core"}){
     var dest = p.dest || f.path('downloads')
     var fullname = path.resolve(dest, name)
-
     try{
         var stats = fs.statSync(fullname)
 
@@ -166,7 +165,7 @@ f.downloadgitrelease = function(name, p){
         }
     } 
     catch(e){ 
-        console.log(e)
+        // console.log(e)
     }
 
    
@@ -187,7 +186,7 @@ f.downloadgitrelease = function(name, p){
     }
 
 
-    return downloadRelease('pocketnetteam', 'pocketnet.core', dest, filterRelease, filterAsset, false).then(function() {
+    return downloadRelease(repo.user, repo.name, dest, filterRelease, filterAsset, false).then(function() {
 
 
         return Promise.resolve(fullname)
