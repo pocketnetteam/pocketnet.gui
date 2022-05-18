@@ -158,7 +158,8 @@ var defaultSettings = {
 	},
 
 	tor : {
-		dbpath : 'data/tor'
+		dbpath : 'data/tor',
+		enabled: true,
 	},
 
 	server : {
@@ -1062,6 +1063,23 @@ var kit = {
 				})
 			}
 		},
+		
+		tor : {
+			start : function(){
+				return kit.proxy().then(async proxy => {
+					settings.tor.enabled = true
+					await proxy.torapplications.start();
+					await state.saverp()
+				})
+			},
+			stop : function(){
+				return kit.proxy().then(async proxy => {
+					settings.tor.enabled = true
+					await proxy.torapplications.stop();
+					await state.saverp()
+				})
+			},
+		},
 
         quit : function() {
             return kit.destroy().then(r => {
@@ -1127,8 +1145,9 @@ var kit = {
 		if(!hck) hck = {}
 
 		settings = state.expand(environmentDefaultSettings, settings)
-        db = new Datastore(f.path(settingsPath));
-        
+
+		db = new Datastore(f.path(settingsPath));
+
 		return new Promise((resolve, reject) => {
 
 			var start = function(){

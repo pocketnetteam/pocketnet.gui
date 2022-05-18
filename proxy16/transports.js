@@ -5,122 +5,14 @@ const { dialog } = require('electron');
 const _request = require("request");
 const _axios = require("axios");
 const _fetch = require("node-fetch")
-const path = require("path");
 const { SocksProxyAgent } = require('socks-proxy-agent')
-const child_process = require("child_process");
 const httpsAgent = new SocksProxyAgent('socks5h://127.0.0.1:9050')
-const fs = require('fs/promises');
 
-const getPathTor = ()=>{
-    const  isDevelopment = process.argv.some(function(el) { return el === '--development'; })
-    let torPath = {
-        path: "",
-        binary: "",
-    };
-    switch (process.platform){
-        case 'win32':
-            torPath.path = "tor/win/"
-            torPath.binary = "tor.exe"
-            break;
-        case 'linux':
-            torPath.path = "tor/linux/"
-            torPath.binary = "tor"
-            break;
-        case 'darwin':
-            torPath.binary = "tor"
-            torPath.path = "tor/osx/"
-            torPath.path = (isDevelopment ? "" : "../") + torPath.path;
-            break;
-    }
-    torPath.path = path.join(isDevelopment ? __dirname : "", torPath.path)
-    return torPath;
-}
-
-module.exports = function (){
-    let enable = false
+module.exports = function (enable = false){
     const self = {};
     self.tor = {};
     self.proxyHosts = []
     self.lastUpdate = Date.now();
-    self.tor.path = getPathTor();
-
-    const generateTorConfig = async (pathRoot)=>{
-        try {
-            await fs.stat(path.join(pathRoot, "torrc"))
-            await fs.unlink(path.join(pathRoot, "torrc"))
-        }catch (e){
-            console.log("GENERATE CONFIG TOR")
-        }finally {
-            await fs.writeFile(path.join(pathRoot, "torrc"), `CookieAuthentication 1\n`, {flag: "a+"})
-            await fs.writeFile(path.join(pathRoot, "torrc"), `DormantCanceledByStartup 1\n`, {flag: "a+"})
-            await fs.writeFile(path.join(pathRoot, "torrc"), `DataDirectory ${path.join(pathRoot, "data")}\n`, {flag: "a+"})
-            await fs.writeFile(path.join(pathRoot, "torrc"), `Log notice stdout\n`, {flag: "a+"})
-            await fs.writeFile(path.join(pathRoot, "torrc"), `AvoidDiskWrites 1\n`, {flag: "a+"})
-            await fs.writeFile(path.join(pathRoot, "torrc"), `GeoIPFile ${path.join(pathRoot, "geoip")}\n`, {flag: "a+"})
-            await fs.writeFile(path.join(pathRoot, "torrc"), `GeoIPv6File ${path.join(pathRoot, "geoip6")}\n`, {flag: "a+"})
-            await fs.writeFile(path.join(pathRoot, "torrc"), `ClientTransportPlugin meek_lite,obfs2,obfs3,obfs4,scramblesuit exec ${path.join(pathRoot, "transports", "obfs4proxy")}\n`, {flag: "a+"})
-            await fs.writeFile(path.join(pathRoot, "torrc"), `ClientTransportPlugin snowflake exec ${path.join(pathRoot, "transports", "snowflake-client")} -url https://snowflake-broker.torproject.net.global.prod.fastly.net/ -front cdn.sstatic.net -ice stun:stun.l.google.com:19302,stun:stun.voip.blackberry.com:3478,stun:stun.altar.com.pl:3478,stun:stun.antisip.com:3478,stun:stun.bluesip.net:3478,stun:stun.dus.net:3478,stun:stun.epygi.com:3478,stun:stun.sonetel.com:3478,stun:stun.sonetel.net:3478,stun:stun.stunprotocol.org:3478,stun:stun.uls.co.za:3478,stun:stun.voipgate.com:3478,stun:stun.voys.nl:3478`, {flag: "a+"})
-        }
-    }
-
-    self.runTor = async (eventCallBack)=>{
-        await generateTorConfig( self.tor.path.path)
-        enable = true;
-        const log = async (data)=>{
-            eventCallBack?.(data)
-        }
-        try {
-            const pid = await fs.readFile(path.join(self.tor.path.path, "tor.pid"), {encoding: "utf-8"})
-            process.kill(+pid.toString(), 9)
-            await fs.unlink(path.join(self.tor.path.path, "tor.pid"))
-        }catch (e) {}
-        self.tor.instance = child_process.spawn(path.join(self.tor.path.path, self.tor.path.binary), [
-            "-f",`${path.join(self.tor.path.path,"torrc")}`,
-        ], { stdio: ['ignore'], detached : false, shell : false})
-        self.tor.instance.on("error", (err)=>log({error: err}));
-        self.tor.instance.on("exit", async (code) => {
-            try {
-                await fs.unlink(path.join(self.tor.path.path, "tor.pid"))
-            }catch (e) {}
-            log({exit: code})
-        });
-        self.tor.instance.stderr.on("data", (chunk) => log({error: String(chunk)}));
-        self.tor.instance.stdout.on("data", (chunk) => log({data: String(chunk)}));
-        if (self?.tor?.instance?.pid){
-            try {
-                await fs.writeFile(path.join(self.tor.path.path, "tor.pid"), self?.tor?.instance?.pid.toString(), { encoding: "utf-8"});
-            }catch (e) {
-                console.error(e)
-                throw "Error write pid file for tor"
-            }
-        }
-        setTimeout(async ()=>{
-            try {
-                let res = await _axios.get('https://bastynode1.ru/', {httpsAgent: httpsAgent})
-                console.log("DATA ", res)
-            }catch (e) {
-                console.log("ERR ", e)
-            }
-        }, 7000)
-    }
-
-
-    self.stopTor = async ()=>{
-        enable = false;
-        let pid = ""
-        try {
-            pid = await fs.readFile(path.join(self.tor.path.path, "tor.pid"), {encoding: "utf-8"})
-        }catch (e) {
-            if(self.tor?.instance){
-                pid = self.tor.instance.pid;
-            }else{
-                throw "Error read pid file for tor"
-            }
-        }
-        if(pid) {
-            process.kill(+pid.toString(), 9)
-        }
-    }
 
     const isUseProxy = (path)=>{
         const url = new URL(path)
@@ -205,22 +97,16 @@ module.exports = function (){
         }
     }
 
-    self.request = async (options, callBack)=>{
+    self.request = (options, callBack)=>{
         let req = _request;
         if(isUseProxy(options.url) && enable) {
             req = _request.defaults({agent: httpsAgent});
         }
         try {
-            const data = await new Promise((resolve, reject) => {
-                req(options, (...args)=>{
-                    if(args[0]){
-                        reject(args[0])
-                    }else {
-                        resolve(args)
-                    }
+            const data = req(options, (...args)=>{
+                    callBack?.(...args)
                 })
-            })
-            callBack(...data)
+            return data;
         }catch (e) {
             if(enable && !isUseProxy(options.url)){
                 proxifyHost(options.url)
