@@ -27051,12 +27051,12 @@ Platform = function (app, listofnodes) {
 
                         self.sdk.notifications.init().catch(e => {})
 
-                        if (self.sdk.address.pnet()){
-                            if(self.nvadr[self.sdk.address.pnet().address]) $('html').addClass('testaddress')
-                            else{
-                                if($('html').hasClass('testaddress'))
+                        if(self.istest()){
+                            $('html').addClass('testaddress')
+                        }
+                        else{
+                            if($('html').hasClass('testaddress'))
                                 $('html').removeClass('testaddress')
-                            }
                         }
 
                     }, 2000)
