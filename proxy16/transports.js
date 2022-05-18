@@ -110,7 +110,7 @@ module.exports = function (enable = false){
         }catch (e) {
             if(enable && !isUseProxy(options.url)){
                 proxifyHost(options.url)
-                return await self.request(options, callBack);
+                return self.request(options, callBack);
             }
             unproxifyHost(options.url)
             callBack(e);
