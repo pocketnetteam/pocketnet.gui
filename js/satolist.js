@@ -229,7 +229,8 @@ Platform = function (app, listofnodes) {
         'PD4us1zniwrJv64xhPyhT2mgNrTvPur9YN',
         'PHiNjAhHbxVb6D8oaVVBe8DGigKuN4QFP6',
         'PANkQ994YKvCMiH8pHR8vtKvGqH9DQt8Bc',
-        'PGvRUM7jXqHdUn7Let2QyTi1t2LHq7RgX7'
+        'PGvRUM7jXqHdUn7Let2QyTi1t2LHq7RgX7',
+        'P9EkPPJPPRYxmK541WJkmH8yBM4GuWDn2m'
     ];
 
     if (window.IpcBridge)
