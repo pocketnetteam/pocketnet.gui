@@ -824,20 +824,9 @@ var share = (function(){
 			checktranscoding : function(clbk){
 				if(currentShare.itisvideo() && !currentShare.aliasid){
 
-					self.app.api.fetch('peertube/videos', {
-                        urls: [currentShare.url.v],
-                    }).then(r => {
-						var result = r[currentShare.url.v]
-
-						if(!result || !result.state){
-							clbk(true)
-						}
-						else{
-							clbk(result.state.id != 2 && result.state.id != 3)
-
-						}
-						
-					})
+					currentShare.canSend(self.app, (result) => {
+						clbk(result)
+					});
 
 				}
 				else{
@@ -866,28 +855,23 @@ var share = (function(){
 
 					actions.checktranscoding(function(result){
 
-						if(!result){
+						// if(!result){
 
-							el.c.removeClass('loading')
+						// 	el.c.removeClass('loading')
 
-							topPreloader(100)
+						// 	topPreloader(100)
 
-							dialog({
-								html : self.app.localization.e('videotranscodingwait'),
-								btn1text : self.app.localization.e('daccept'),
-								btn2text : self.app.localization.e('dno'),
-								class : "zindex one",
-								success : function(){
-									
-								},
+						// 	dialog({
+						// 		html : self.app.localization.e('videotranscodingdelayedpost'),
+						// 		btn1text : self.app.localization.e('daccept'),
+						// 		class : "zindex one",
+						// 		success : function(){
+						// 		},
 		
-								fail : function(){
-								}
-							})
-
-							return
-
-						}
+						// 		fail : function(){
+						// 		}
+						// 	})
+						// }
 
 						currentShare.uploadImages(self.app, function(){
 
@@ -923,7 +907,7 @@ var share = (function(){
 								currentShare,
 		
 								function(_alias, error){
-		
+
 									topPreloader(100)
 		
 									el.c.removeClass('loading')
@@ -948,7 +932,7 @@ var share = (function(){
 										//sitemessage("Success")
 		
 										try{
-		
+
 											var alias = new pShare();
 												alias._import(_alias, true)
 												alias.temp = true;
