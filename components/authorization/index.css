@@ -42,7 +42,7 @@
   position: relative;
 }
 #authorization .inputTable > div.actionButtonsWrapper {
-  width: 190px;
+  width: 80px;
   text-align: center;
 }
 #authorization .inputTable > div.actionButtonsWrapper .icon {
@@ -201,6 +201,10 @@
 			}
 		}*/
   }
+  #authorization #mnemonicInput {
+    width: 90%;
+    margin-left: 1em;
+  }
   #authorization .work {
     padding-top: 1em;
     padding-bottom: 1em;
@@ -238,8 +242,6 @@
     display: block;
   }
   #authorization .keytable > div.actionButtonsWrapper {
-    /*width: 50%;*/
-    width: 80px;
     text-align: center;
     display: block;
     position: absolute;
