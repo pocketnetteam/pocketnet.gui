@@ -8580,10 +8580,13 @@ Platform = function (app, listofnodes) {
                     type: "BOOLEAN",
                     value: true,
                     _onChange: (value) => {
-                        self.app.api.fetch('manage', {
-                            action : value ? 'tor.start' : 'tor.stop',
-                            data : {}
-                        });
+                        const proxy = self.app.api.get.current();
+                        if(proxy.host === "localhost") {
+                            self.app.api.fetch('manage', {
+                                action: value ? 'tor.start' : 'tor.stop',
+                                data: {}
+                            });
+                        }
                     },
                 },
             },

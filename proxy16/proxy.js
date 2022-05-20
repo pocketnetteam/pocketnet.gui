@@ -569,6 +569,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				const dbPath = f.path(settings.tor.dbpath);
 				const checkRunning = await self.torapplications.check_running(dbPath)
 				if(checkRunning){
+					console.log("DDD2")
 					await self.torapplications.stop();
 				}
 				
@@ -673,7 +674,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 			}
 
 			const log = (data)=>{
-				//console.log(data)
+				// console.log(data)
 			}
 
 			self.torapplications.instance = child_process.spawn(self.torapplications.bin_path(dbPath), [
@@ -684,6 +685,10 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				try {
 					await self.torapplications.stop()
 				}catch (e) {}
+				if(code){
+					console.error(`TOR code: ${code}`)
+					console.error(`TOR closed`)
+				}
 				log({exit: code})
 			});
 			self.torapplications.instance.stderr.on("data", (chunk) => log({error: String(chunk)}));
@@ -716,6 +721,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					process.kill(+pid.toString(), 9)
 					await fsPromises.unlink(path.join(dbPath, "tor.pid"))
 				}catch (e) {
+					console.error(e)
 					return false;
 				}
 			}
