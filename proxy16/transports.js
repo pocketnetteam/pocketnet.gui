@@ -115,11 +115,5 @@ module.exports = function (enable = false){
         }
     }
 
-    self.proxyUrl = async (url)=>{
-        const res = await self.axios.get(url, {responseType: "arraybuffer"})
-        return {data: Buffer.from(res?.data || [], 'binary').toString('base64'), type: res?.headers?.['content-type']}
-    }
-
-
     return self;
 }

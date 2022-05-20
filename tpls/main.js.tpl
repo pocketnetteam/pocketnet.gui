@@ -837,9 +837,6 @@ function createWindow() {
     });
 
     ipcMain.removeHandler('proxyUrl');
-    ipcMain.handle('proxyUrl', async (event, data) => {
-        return await transports.proxyUrl(data)
-    });
 
     ipcMain.removeHandler('getShareList');
     ipcMain.handle('getShareList', async (event) => {
