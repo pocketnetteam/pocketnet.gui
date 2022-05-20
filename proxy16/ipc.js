@@ -4,6 +4,8 @@ var f = require('./functions');
 const electron = require('electron')
 const { dialog } = require('electron');
 
+global.USE_PROXY_NODE = true
+
 var WssDummy = function(wc){
 	var self = this
 

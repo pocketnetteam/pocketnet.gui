@@ -1,4 +1,3 @@
-const {Blob} = require("buffer");
 if(typeof _Electron != 'undefined'){
     electron = require('electron');
 }

@@ -560,14 +560,13 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 	self.torapplications = {
 		init: function () {
 
-			// if(!global.USE_PROXY_NODE) {
-			// 	console.log('!global.USE_PROXY_NODE')
-			// 	return Promise.resolve()
-			// }
+			if(!global.USE_PROXY_NODE) {
+				console.log('!global.USE_PROXY_NODE')
+				return Promise.resolve()
+			}
 			
 			return torapplications.init().then(async r => {
-			
-				const dbPath = settings.tor.dbpath;
+				const dbPath = f.path(settings.tor.dbpath);
 				const checkRunning = await self.torapplications.check_running(dbPath)
 				if(checkRunning){
 					await self.torapplications.stop();
@@ -577,13 +576,14 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				if(!checkPath){
 					await self.torapplications.install()
 				}
+
 				if(settings.tor.enabled)
 					return self.torapplications.start();
 			})
 		},
 		
 		check_path: async ()=>{
-			const dbPath = settings.tor.dbpath;
+			const dbPath = f.path(settings.tor.dbpath);
 			try {
 				await fsPromises.lstat(self.torapplications.bin_path(dbPath));
 				return true;
@@ -600,7 +600,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 		},
 		
 		install: async ()=>{
-			const dbPath = settings.tor.dbpath;
+			const dbPath = f.path(settings.tor.dbpath);
 			try {
 				const existPath = await fsPromises.lstat(dbPath)
 				if(!existPath.isDirectory()){
@@ -664,13 +664,14 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 		},
 		
 		start: async ()=>{
-			const dbPath = settings.tor.dbpath;
+			if(!global.USE_PROXY_NODE) return true;
+			const dbPath = f.path(settings.tor.dbpath);
 			await self.torapplications.check_path(dbPath)
 			const checkRunning = await self.torapplications.check_running(dbPath)
 			if(checkRunning){
 				return true;
 			}
-			// if(!global.USE_PROXY_NODE) return true;
+
 			const log = (data)=>{
 				//console.log(data)
 			}
@@ -699,8 +700,8 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 		},
 		
 		stop: async ()=>{
-			// if(!global.USE_PROXY_NODE) return true;
-			const dbPath = settings.tor.dbpath;
+			if(!global.USE_PROXY_NODE) return true;
+			const dbPath = f.path(settings.tor.dbpath);
 			await self.torapplications.check_path(dbPath)
 			const checkRunning = await self.torapplications.check_running(dbPath)
 			if(!checkRunning){
@@ -732,8 +733,8 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 		},
 		
 		destroy: async ()=>{
-			// if(!global.USE_PROXY_NODE) return true;
-			await self.torapplications.stop();
+			if(!global.USE_PROXY_NODE)
+				await self.torapplications.stop();
 			return torapplications.destroy()
 		},
 	}
