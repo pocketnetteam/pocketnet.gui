@@ -4,7 +4,7 @@ var f = require('./functions');
 const electron = require('electron')
 const { dialog } = require('electron');
 
-const transports = require('./transports')();
+const transports = require('./transports')(true);
 
 global.USE_PROXY_NODE = true
 
