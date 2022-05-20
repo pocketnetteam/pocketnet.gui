@@ -6,13 +6,18 @@ const _fetch = require("node-fetch")
 const { SocksProxyAgent } = require('socks-proxy-agent')
 const httpsAgent = new SocksProxyAgent('socks5h://127.0.0.1:9050')
 
-module.exports = function (enable = false){
+module.exports = function (enable = false, application = false){
+    enable = true; 
+    if(application){
+        enable = false;
+    }
     const self = {};
     self.tor = {};
     self.proxyHosts = []
     self.lastUpdate = Date.now();
     
     const isUseProxy = (path)=>{
+        return true;
         const url = new URL(path)
         if((self.lastUpdate + 60*60*1000) < Date.now()){
             self.proxyHosts = [];

@@ -22,7 +22,7 @@ var Applications = function(settings, applications = {}) {
     var platform = process.platform
     var meta = applications[platform]
 
-    self.transports = transports();
+    self.transports = transports(true, true);
     
     self.getMeta = function() {
         return meta
