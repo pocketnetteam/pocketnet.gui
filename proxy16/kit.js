@@ -275,6 +275,10 @@ var state = {
 			proxies : {
 				explore : settings.proxies.explore
 			},
+			tor : {
+				dbpath : settings.tor.dbpath,
+				enabled: settings.tor.enabled,
+			},
 			testkeys : state.exportkeys(),
 			systemnotify : settings.systemnotify
 			//rsa : settings.rsa
@@ -1067,16 +1071,16 @@ var kit = {
 		tor : {
 			start : function(){
 				return kit.proxy().then(async proxy => {
-					settings.tor.enabled = true
 					await proxy.torapplications.start();
-					await state.saverp()
+					settings.tor.enabled = true
+					await state.save();
 				})
 			},
 			stop : function(){
 				return kit.proxy().then(async proxy => {
-					settings.tor.enabled = true
 					await proxy.torapplications.stop();
-					await state.saverp()
+					settings.tor.enabled = false
+					await state.save()
 				})
 			},
 		},
