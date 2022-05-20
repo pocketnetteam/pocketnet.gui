@@ -71,7 +71,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				url: 'https://api.github.com/repos/cenitelas/tor/releases/latest'
 			},
 		},
-		win:{
+		win32:{
 			bin: {
 				name: "win-latest.tgz",
 				page: 'https://github.com/cenitelas/tor/releases/latest',
