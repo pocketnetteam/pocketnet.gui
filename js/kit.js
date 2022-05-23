@@ -1382,6 +1382,14 @@ Share = function(lang){
 		if(meta.type == 'peertube') return true
 	}
 
+	self.canSend = function(app, clbk) {
+		if (self.itisvideo() && !self.aliasid) {
+			return app.peertubeHandler.checkTranscoding(self.url.v).then(result => clbk(result));
+		}
+
+		return clbk(true);
+	}
+
 	self.itisarticle = function(){
 		return self.settings.v == 'a' && self.settings.version && self.settings.version >= 2
 	}
@@ -1427,7 +1435,6 @@ Share = function(lang){
 			l : self.language.v,
 			txidEdit : self.aliasid || "",
 			txidRepost : self.repost.v || ""
-
 		}
 	}
 

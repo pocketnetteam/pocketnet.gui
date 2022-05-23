@@ -139,6 +139,21 @@ PeerTubePocketnet = function (app) {
 		return PEERTUBE_ID + host + '/' + videoid;
 	};
 
+	self.checkTranscoding = function(url) {
+		return app.api.fetch('peertube/videos', {
+			urls: [url],
+		}).then(r => {
+			var result = r[url]
+
+			if(!result || !result.state){
+				return true;
+			}
+			else{
+				return result.state.id != 2 && result.state.id != 3;
+			}
+		})
+	}
+
 	var error = function (code) {
 		return {
 			code: code,
