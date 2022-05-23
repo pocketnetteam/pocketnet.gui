@@ -1098,6 +1098,56 @@ Application = function(p)
 		{
 			document.addEventListener('deviceready', function(){
 
+				// Manage (save/load) localstorage for Cordova update
+				if (localStorage && window.cordova.file) {
+
+					var cordovaStorage = (window.cordova.file.externalDataDirectory) ? window.cordova.file.externalDataDirectory : window.cordova.file.dataDirectory;
+
+					// --------------------------------------------------------------------------------
+					// Save the local storage into a file
+					// --------------------------------------------------------------------------------
+					var localStorageStr = JSON.stringify(localStorage);
+					window.resolveLocalFileSystemURL(cordovaStorage, function(dirEntry) {
+						dirEntry.getFile('localstorage.json', { create: true }, function (file) {
+							// Write into file
+							file.createWriter(function (fileWriter) {
+								fileWriter.write(localStorageStr);
+							});
+						});
+					}, function(err) {
+						console.log(err);
+					});
+
+					// --------------------------------------------------------------------------------
+					// Load the local storage from a file
+					// --------------------------------------------------------------------------------
+					/*
+					window.resolveLocalFileSystemURL(cordovaStorage, function(dirEntry) {
+						dirEntry.getFile('localstorage.json', { create: true }, function (fileEntry) {
+							// Read from file
+							fileEntry.file(function(file) {
+								var reader = new FileReader();
+								reader.onloadend = function() {
+									var newLocalstorage;
+									try {
+										newLocalstorage = JSON.parse(this.result);
+									} catch(err) {
+										console.log(err);
+									}
+									if (newLocalstorage)
+										console.log("Got localstorage: ", newLocalstorage);
+								};
+								reader.readAsText(file);
+							});
+						});
+					}, function(err) {
+						console.log(err);
+					});
+					*/
+					
+				}
+
+
 				self.el.html.addClass('cordova')
 
 				if(self.curation()){
