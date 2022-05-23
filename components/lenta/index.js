@@ -2914,9 +2914,11 @@ var lenta = (function(){
 				if(!p.repost)
 					shareInitingMap[share.txid] = true;
 
-				var shareRelayedFlag = (
-					deep(self.app.platform.sdk.relayTransactions.get(), 'share') || {}
-				).find((transaction) => transaction.txid === share.txid);
+				var relayTransactions = deep(self.app.platform.sdk.relayTransactions.get(), 'share') || {};
+
+				var shareRelayedFlag = _.find(relayTransactions, (transaction) => (
+					transaction.txid === share.txid
+				));
 
 				
 				self.shell({
