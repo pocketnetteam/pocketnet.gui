@@ -1,6 +1,15 @@
 @import "../../css/__cssvar";
 
 #authorization{	
+	.inputWrapperKey{
+		display: flex;
+    	align-items: center;
+	}
+	.icon {
+		& i{
+			color : rgb(var(--color-txt-ac));
+		}
+	}
 
 	#registration{
 		.caption{
@@ -63,6 +72,7 @@
 
 			&.actionButtonsWrapper{
 				width: 80px;
+				display: none;
 
 				text-align: center;
 
@@ -133,9 +143,11 @@
 
 				.mnemonicItem{
 					margin-bottom: 0.3em;
-					width: 95%;
+					width: 16%;
 					font-size: 1.4em;
 					padding: @rhythm;
+					border-color: transparent;
+					background-color: rgb(var(--neutral-grad-0));
 				}
 
 				.validationFail{
@@ -242,6 +254,9 @@
 	}
 
 	#authorization{
+		#mnemonicInput{
+			display: flex;
+		}
 		.topCaption{
 			padding-top : 2 * @rhythm;
 			padding-bottom : 2 * @rhythm;
@@ -270,9 +285,23 @@
 
 /*t*/ @media only screen and (max-width: 768px){
 	#authorization{	
+		.inputWrapperKey{
+			flex-direction: column;
+		}
 		#mnemonicInput{
 			width: 90%;
-    		margin-left: 1em;
+			.mnemonicItem{
+				margin-bottom: 0.3em;
+				width: 49%;
+				font-size: 1em;
+				padding: 5px !important;
+				border-color: transparent;
+				border-radius: 6px;
+				background-color: rgb(var(--neutral-grad-0));
+				&:focus{
+					border-color: rgb(var(--neutral-grad-1));
+				}
+			}
 		}
 		padding-bottom : 6 * @rhythm;
 		.work{
@@ -327,7 +356,7 @@
 				display: block;
 				&.actionButtonsWrapper{
 					text-align: center;
-					display: block;
+					display: none;
 					position: absolute;
 					right: 0;
 					bottom : 0;
@@ -345,6 +374,9 @@
 				input{
 					border-radius: 3px;
 					padding-right: 80px !important;
+					&[type="file"]{
+						padding: 0 !important;
+					}
 				}
 			}
 		}

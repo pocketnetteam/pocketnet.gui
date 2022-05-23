@@ -407,30 +407,27 @@ var authorization = (function(){
 
 		addInputControle = function(){
 			el.c.find('.mnemonicItem').on('keyup',function (e) {
+				var currentInputId = +activeMnemonicInput.attr("id").replace('mnemonicItem','')
 				if (e.code === 'ArrowRight') { 
+					var nextId = currentInputId + 1
 					if(e.target.value && e.target.selectionStart !== e.target.value.length){
 						return
 					}
 					if(autocompleteWord){
 						activeMnemonicInput.val(autocompleteWord)
 						el.autocomplete.css({'display': 'none'})
-						var currentInputId = +activeMnemonicInput.attr("id").replace('mnemonicItem','')
-						var nextId = currentInputId + 1
-						if(nextId < 12 ){
-							el.c.find(`#mnemonicItem${nextId}`).trigger( "focus" )
-						}
-					    return
 					}
-				  $(this).closest('td').next().find('input').trigger( "focus" )
+					if(nextId <= 12 ){
+						el.c.find(`#mnemonicItem${nextId}`).trigger( "focus" )
+					}
 				} else if (e.code === 'ArrowLeft') { 
+					var nextId = currentInputId - 1
 					if(e.target.value && e.target.selectionStart > 0){
 						return
 					}
-				  $(this).closest('td').prev().find('input').trigger( "focus" )
-				} else if (e.code === 'ArrowDown') { 
-				  $(this).closest('tr').next().find('td:eq(' + $(this).closest('td').index() + ')').find('input').trigger( "focus" )
-				} else if (e.code === 'ArrowUp') { 
-				  $(this).closest('tr').prev().find('td:eq(' + $(this).closest('td').index() + ')').find('input').trigger( "focus" )
+					if(nextId > 0 ){
+						el.c.find(`#mnemonicItem${nextId}`).trigger( "focus" )
+					}
 				}
 			});	
 	   	}
@@ -477,8 +474,8 @@ var authorization = (function(){
 					var autocompleteWordEnd = autocompleteWord && autocompleteWord.slice(autocompleteWordStart.length)
 		
 					el.autocomplete.css({
-						'position': 'absolute',
-						'top' : `${top + parseInt($(this).css("padding-top")) + 1.5}px`,
+						'position': 'fixed',
+						'top' : `${top + parseInt($(this).css("padding-top")) + 1}px`,
 						'left' : `${left + parseInt($(this).css("padding-left"))}px`,
 						'font-size': $(this).css("font-size"),
 						'font-weight': $(this).css("font-weight"),
@@ -498,6 +495,7 @@ var authorization = (function(){
 						el.c.find('.loginValue').val($(this).val())
 						$(this).val('')
 						el.c.find('#mnemonicInput').css({'display': 'none'})
+						el.c.find('.actionButtonsWrapper').css({'display': 'table-cell'})
 						el.c.find('.loginValue').css({'display': 'initial'})
 						el.c.find('.loginValue').trigger( "focus" )
 					}
@@ -554,6 +552,7 @@ var authorization = (function(){
 			el.c.find('.loginValue').on('input', function(e){
 				if(!e.target.value){
 					el.c.find('.loginValue').css({'display': 'none'})
+					el.c.find('.actionButtonsWrapper').css({'display': 'none'})
 					el.c.find('#mnemonicInput').css({'display': 'initial'})
 					el.c.find('.mnemonicItem')[0].focus()
 				} 

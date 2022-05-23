@@ -1,3 +1,10 @@
+#authorization .inputWrapperKey {
+  display: flex;
+  align-items: center;
+}
+#authorization .icon i {
+  color: rgb(var(--color-txt-ac));
+}
 #authorization #registration .caption {
   display: none;
 }
@@ -43,6 +50,7 @@
 }
 #authorization .inputTable > div.actionButtonsWrapper {
   width: 80px;
+  display: none;
   text-align: center;
 }
 #authorization .inputTable > div.actionButtonsWrapper .icon {
@@ -97,9 +105,11 @@
 }
 #authorization .sitelogin .form .item .mnemonicItem {
   margin-bottom: 0.3em;
-  width: 95%;
+  width: 16%;
   font-size: 1.4em;
   padding: 0.5em;
+  border-color: transparent;
+  background-color: rgb(var(--neutral-grad-0));
 }
 #authorization .sitelogin .form .item .validationFail {
   color: rgb(var(--color-bad));
@@ -171,6 +181,9 @@
 .wnd.authwindow .wndinner .wndcontent {
   padding: 0;
 }
+.wnd.authwindow #authorization #mnemonicInput {
+  display: flex;
+}
 .wnd.authwindow #authorization .topCaption {
   padding-top: 1em;
   padding-bottom: 1em;
@@ -201,9 +214,23 @@
 			}
 		}*/
   }
+  #authorization .inputWrapperKey {
+    flex-direction: column;
+  }
   #authorization #mnemonicInput {
     width: 90%;
-    margin-left: 1em;
+  }
+  #authorization #mnemonicInput .mnemonicItem {
+    margin-bottom: 0.3em;
+    width: 49%;
+    font-size: 1em;
+    padding: 5px !important;
+    border-color: transparent;
+    border-radius: 6px;
+    background-color: rgb(var(--neutral-grad-0));
+  }
+  #authorization #mnemonicInput .mnemonicItem:focus {
+    border-color: rgb(var(--neutral-grad-1));
   }
   #authorization .work {
     padding-top: 1em;
@@ -243,7 +270,7 @@
   }
   #authorization .keytable > div.actionButtonsWrapper {
     text-align: center;
-    display: block;
+    display: none;
     position: absolute;
     right: 0;
     bottom: 0;
@@ -259,6 +286,9 @@
   #authorization .keytable > div input {
     border-radius: 3px;
     padding-right: 80px !important;
+  }
+  #authorization .keytable > div input[type="file"] {
+    padding: 0 !important;
   }
   .wnd.authwindow #authorization .topCaption {
     padding-left: 1em;
