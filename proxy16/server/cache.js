@@ -111,6 +111,10 @@ var Cache = function(p){
             search: {
                 time : 6000
             },
+
+            searchusers: {
+                time : 6000
+            },
             
             // node +
             gettags : {
