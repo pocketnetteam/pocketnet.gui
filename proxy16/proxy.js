@@ -599,6 +599,10 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 			const linux = path.join(dbPath,'tor')
 			return (process.platform == 'win32' ? win : (process.platform == 'darwin' ? mac : (process.platform == 'linux' ? linux : '')))
 		},
+
+		extension: ()=>{
+			return process.platform == 'win32' ? '.exe' : ''
+		},
 		
 		install: async ()=>{
 			const dbPath = f.path(settings.tor.dbpath);
@@ -660,8 +664,8 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 			await fsPromises.writeFile(path.join(dbPath, "torrc"), `AvoidDiskWrites 1\n`, {flag: "a+"})
 			await fsPromises.writeFile(path.join(dbPath, "torrc"), `GeoIPFile ${path.join(dbPath, "geoip")}\n`, {flag: "a+"})
 			await fsPromises.writeFile(path.join(dbPath, "torrc"), `GeoIPv6File ${path.join(dbPath, "geoip6")}\n`, {flag: "a+"})
-			// await fsPromises.writeFile(path.join(dbPath, "torrc"), `ClientTransportPlugin meek_lite,obfs2,obfs3,obfs4,scramblesuit exec ${path.join(dbPath, "transports", "obfs4proxy")}\n`, {flag: "a+"})
-			// await fsPromises.writeFile(path.join(dbPath, "torrc"), `ClientTransportPlugin snowflake exec ${path.join(dbPath, "transports", "snowflake-client")} -url https://snowflake-broker.torproject.net.global.prod.fastly.net/ -front cdn.sstatic.net -ice stun:stun.l.google.com:19302,stun:stun.voip.blackberry.com:3478,stun:stun.altar.com.pl:3478,stun:stun.antisip.com:3478,stun:stun.bluesip.net:3478,stun:stun.dus.net:3478,stun:stun.epygi.com:3478,stun:stun.sonetel.com:3478,stun:stun.sonetel.net:3478,stun:stun.stunprotocol.org:3478,stun:stun.uls.co.za:3478,stun:stun.voipgate.com:3478,stun:stun.voys.nl:3478`, {flag: "a+"})
+			await fsPromises.writeFile(path.join(dbPath, "torrc"), `ClientTransportPlugin meek_lite,obfs2,obfs3,obfs4,scramblesuit exec ${path.join(dbPath, "PluggableTransports", "obfs4proxy" + self.torapplications.extension())}\n`, {flag: "a+"})
+			await fsPromises.writeFile(path.join(dbPath, "torrc"), `ClientTransportPlugin snowflake exec ${path.join(dbPath, "PluggableTransports", "snowflake-client" + self.torapplications.extension())} -url https://snowflake-broker.torproject.net.global.prod.fastly.net/ -front cdn.sstatic.net -ice stun:stun.l.google.com:19302,stun:stun.voip.blackberry.com:3478,stun:stun.altar.com.pl:3478,stun:stun.antisip.com:3478,stun:stun.bluesip.net:3478,stun:stun.dus.net:3478,stun:stun.epygi.com:3478,stun:stun.sonetel.com:3478,stun:stun.sonetel.net:3478,stun:stun.stunprotocol.org:3478,stun:stun.uls.co.za:3478,stun:stun.voipgate.com:3478,stun:stun.voys.nl:3478`, {flag: "a+"})
 		},
 		
 		start: async ()=>{
@@ -674,7 +678,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 			}
 
 			const log = (data)=>{
-				// console.log(data)
+				console.log(data)
 			}
 
 			self.torapplications.instance = child_process.spawn(self.torapplications.bin_path(dbPath), [
