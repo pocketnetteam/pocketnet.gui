@@ -34,7 +34,7 @@
         "@babel/core": "^7.17.9",
         "@babel/preset-env": "^7.16.11",
         "babel-plugin-remove-use-strict": "^1.0.1",
-        "electron": "17.0.0",
+        "electron": "",
         "electron-builder": "^23.0.4",
         "electron-notarize": "",
         "electron-reload": "",
