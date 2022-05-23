@@ -190,7 +190,8 @@ Platform = function (app, listofnodes) {
         'PQ8PDzWy7hDV8gfgSgoP2BCU2CXngMPCvt' : true,
         'PHMjVgWj6HMiLeAhiR8eDLzVrXp8nyF2ji' : true,
         'PR54hSnPDbhPePLNQZCP4CU77TRFoMxYqg' : true,
-        'PARV591XENALBB5ApkR7WcQPhEZtLHfi2A' : true
+        'PARV591XENALBB5ApkR7WcQPhEZtLHfi2A' : true,
+        'PVgktx9ZmPnSXW83HmSF6MX76SV4u5a2hJ' : true
     }
 
     self.bch = {
@@ -3303,9 +3304,7 @@ Platform = function (app, listofnodes) {
 
         effectinternal : function(el, name, parameters, clbk){
 
-            if (typeof _Electron != 'undefined' /*|| (!self.istest() && !self.app.test)*/) {
-                return
-            }
+            
 
             if(!self.sdk.usersettings.meta.useanimations.value) return
 
@@ -3350,6 +3349,9 @@ Platform = function (app, listofnodes) {
         },
 
         make : function(place, name, parameters, clbk){
+
+            if (typeof _Electron != 'undefined') return
+
             var container = self.effects.container(place)
 
             self.effects.lib[name](container, parameters, function(){
@@ -3364,9 +3366,11 @@ Platform = function (app, listofnodes) {
         templates : {
             commentstars : function(el, value, clbk){
 
+                if (typeof _Electron != 'undefined') return
+
                 if(!el) return
 
-                if(self.effects.animation) return
+                if (self.effects.animation) return
 
                 self.effects.animation = true
 

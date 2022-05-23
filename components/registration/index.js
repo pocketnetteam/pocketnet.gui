@@ -321,6 +321,9 @@ var registration = (function(){
 
 					var c = false
 
+					console.log('self.app.platform.sdk.registrations', self.app.platform.sdk.registrations)
+
+
 					var clbk = function(){
 
 						if(c) return
@@ -340,8 +343,8 @@ var registration = (function(){
 						}
 						else
 						{
-							self.app.platform.sdk.registrations.redirect
 
+						
 							self.nav.api.go({
 								href : self.app.platform.sdk.registrations.redirect || 'index',
 								history : true,

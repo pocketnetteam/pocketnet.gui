@@ -1527,12 +1527,13 @@ var lenta = (function(){
 				}
 
 				if(player){
+
 					if (player.p.disableHotKeys) player.p.disableHotKeys()
+
+					actions.setVolume(player, videosVolume)
 				}
 
 				//player.p.muted = true;
-
-				actions.setVolume(players[id], videosVolume)
 
 				self.app.mobile.statusbar.background()
 				self.app.pseudofullscreenmode = false
@@ -1968,7 +1969,7 @@ var lenta = (function(){
 
 				var cvv = videosVolume
 
-				if(!player.p) return
+				if(!player || !player.p) return
 
 				if (player.p.setVolume){
 					if (v){

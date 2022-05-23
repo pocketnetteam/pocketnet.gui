@@ -1692,7 +1692,7 @@ var share = (function(){
 
 					var u = _mestate
 
-					if(!currentShare.hasexchangetag() && !currentShare.repost.v && (u.reputation > 50 || !u.trial)) {
+					if(!currentShare.hasexchangetag() && !currentShare.repost.v && u && (u.reputation > 50 || !u.trial)) {
 
 						currentShare.settings.f || (currentShare.settings.f = '0')
 
@@ -1741,7 +1741,8 @@ var share = (function(){
 
 					else{
 
-						el.settings.html('')
+						if (el.settings)
+							el.settings.html('')
 
 						if(clbk) clbk()
 					}
