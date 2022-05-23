@@ -15,11 +15,13 @@ This repository is open-source and every interested in our project developer can
 - Dependabot - this is dependabot branches. If you are a contributor normally just ignore them.
 
 ## Contribution process
-1. Find what you want to add or change in the project.
-2. Make fork from our repository.
-3. Create separate branch for your task to keep the things easy. Master (or Latest) must not be changed on your fork and must be periodically synchronized with upstream.
-4. Make sure that your IDE or editor doesn't format the code stylings. Why? Because currently we have no linter set. Any "empty" changes would complicate the merge process for our git managers.
-5. Start changing the code, but don't forget to separate big code changes into logically easy to understand commits with correct descriptions and titles.
-6. When everything is ready, make sure to check that code works. We will be even more grateful to you if you check the changes on Cordova and Web builds, but it is fine if you don't. Just check Electron in this case.
-7. Provide description of what you changed. We appreciate more if your code is test-covered with Mocha.
-8. That's it! You contributed in our project. Now wait while our devs check everything.
+1. Make fork from our repository.
+2. Find what you want to add or change in the project.
+3. Start new issue that is describing the problem or enhancement. Don't forget to write that you are ready to solve it.
+4. Wait while developers will answer you about the issue ang provide more information.
+5. Create separate branch for your task to keep the things easy. Master (or Latest) must not be changed on your fork and must be periodically synchronized with upstream.
+6. Make sure that your IDE or editor doesn't format the code stylings. Why? Because currently we have no linter set. Any "empty" changes would complicate the merge process for our git managers.
+7. Start changing the code, but don't forget to separate big code changes into logically easy to understand commits with correct descriptions and titles.
+8. When everything is ready, make sure to check that code works. We will be even more grateful to you if you check the changes on Cordova and Web builds, but it is fine if you don't. Just check Electron in this case.
+9. Provide description of what you changed. We appreciate more if your code is test-covered with Mocha.
+10. That's it! You contributed in our project. Now wait while our devs check everything.
