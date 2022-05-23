@@ -201,6 +201,7 @@ Platform = function (app, listofnodes) {
         'P9D3ntMdwy4HGjBhg1uQDuQD99MXYZTqg3' : true,
         'PWGhooqyrq1qL7NPgg2an8M69sHfJrDM8Y' : true,
         'PUuNT7icKad8fm7ATPRn1s8gd19HXYKDqS' : true,
+        'PWkQMUTG6pKVA9bAbjLmLewB5eVgEnVk6f' : true
         'PKwa3jVZXHpaVgG89WvnM8vBfpp745GGNN' : true
     }
 
@@ -7409,6 +7410,7 @@ Platform = function (app, listofnodes) {
 
                 var needaction = false
                 self.app.user.isState(function (state) {
+
                     if (state) {
                         var rs = self.sdk.relayTransactions.get();
 
@@ -7466,63 +7468,62 @@ Platform = function (app, listofnodes) {
                                                             return
                                                         }
 
-                                                        var successFullSendFunc = () => {
-                                                            var c = kits.c[object.type]
+                                                        var c = kits.c[object.type]
 
                                                             var trobj = new c();
-    
+
                                                             trobj.import(object);
-    
+
                                                             trobj.fromrelay = true;
-    
+
                                                             object.sending = true;
-    
+
                                                             self.sdk.node.transactions.create.commonFromUnspent(
-    
+
                                                                 trobj,
-    
+
                                                                 function (_alias, error) {
-    
+
                                                                     var eh = self.errors[error] || {}
-    
+
                                                                     delete object.sending;
-    
+
                                                                     if (error) {
                                                                         if (key == 'userInfo') {
-    
+
                                                                             var _nsh = bitcoin.crypto.hash256(JSON.stringify(object))
-    
+
                                                                             needaction = true
-    
+
                                                                             if (error == '18' && _nsh != nshowed) {
-    
+
                                                                                 nshowed = _nsh
-    
+
                                                                                 app.nav.api.load({
                                                                                     open: true,
                                                                                     href: 'test',
                                                                                     inWnd: true,
-    
+
                                                                                     essenseData: {
                                                                                         caption: self.app.localization.e('e13265'),
                                                                                         failedrelay : trobj
                                                                                     }
                                                                                 })
                                                                             }
-    
+
                                                                             if (clbk)
                                                                                 clbk(needaction)
-    
+
                                                                             return
                                                                         }
                                                                     }
-    
+
                                                                     if (!error || (eh && !eh.relay)) {
-    
+
                                                                         if (key == 'userInfo') {
-    
+
                                                                             delete rs[key]
-    
+
                                                                         }
                                                                         else {
                                                                             rs[key] = _.filter(rs[key], function (t) {
@@ -7537,14 +7538,14 @@ Platform = function (app, listofnodes) {
                                                                         });
 
                                                                         self.sdk.relayTransactions.save()
-    
+
                                                                     }
                                                                     else {
-    
+
                                                                     }
-    
+
                                                                     p.success()
-    
+
                                                                 }
                                                             );
                                                         }
@@ -18948,70 +18949,70 @@ Platform = function (app, listofnodes) {
                                 var keyPair = p.keys || self.app.user.keys()
 
                                 //var p2pkh = bitcoin.payments.p2pkh({ pubkey: keyPair.publicKey});
-    
-    
+
+
                                 var address = p.address || self.sdk.address.pnet()
-    
+
                                 var txb = new bitcoin.TransactionBuilder();
-    
+
                                 txb.addNTime(self.timeDifference || 0)
-    
+
                                 var amount = 0;
-    
+
                                 _.each(inputs, function (i, index) {
-    
+
                                     txb.addInput(i.txId, i.vout, null, Buffer.from(i.scriptPubKey, 'hex'))
-    
+
                                     amount = amount + Number(i.amount);
                                 })
-    
+
                                 amount = amount * smulti;
-    
-    
+
+
                                 var data = Buffer.from(bitcoin.crypto.hash256(obj.serialize()), 'utf8');
                                 var optype = obj.typeop ? obj.typeop(self) : obj.type
                                 var optstype = optype
-    
+
                                 if (obj.optstype && obj.optstype(self)) optstype = obj.optstype(self)
-    
+
                                 var opreturnData = [Buffer.from(optype, 'utf8'), data];
-    
+
                                 var outputs = [];
-    
+
                                 if (obj.opreturn) {
                                     opreturnData.push(Buffer.from(obj.opreturn()))
                                 }
-    
+
                                 var embed = bitcoin.payments.embed({ data: opreturnData });
                                 var i = 0;
-    
+
                                 if (obj.type !== 'contentBoost'){
-    
-    
+
+
                                     outputs.push({
                                         amount : 0,
                                         deleted : true,
                                         address : address.address
                                     })
-    
-    
+
+
                                 }
-    
+
                                 txb.addOutput(embed.output, 0);
-    
+
                                 if(self.sdk.user.reputationBlockedMe()){
-    
+
                                     if (clbk) {
                                         clbk(null, 313, {})
                                     }
-    
+
                                     return
                                 }
-    
+
                                 self.sdk.node.transactions.get.unspent(function (unspents) {
-    
+
                                     if (p.relay) {
-    
+
                                         var alias = obj.export(true);
                                         alias.txid = makeid();
                                         alias.address = p.relay;
@@ -19019,126 +19020,126 @@ Platform = function (app, listofnodes) {
                                         alias.time = self.currentTime()
                                         alias.timeUpd = alias.time
                                         alias.optype = optype
-    
+
                                         alias.relay = true;
-    
+
                                         self.sdk.relayTransactions.add(p.relay, alias)
-    
+
                                         if (clbk)
                                             clbk(alias)
-    
+
                                         return
                                     }
-    
-    
+
+
                                     if (
                                         !(obj.donate && obj.donate.v.length) &&
-    
-    
+
+
                                         unspents.length < 50 && amount > 0.2 * smulti && obj.type !== 'contentBoost') {
-    
+
                                         var ds = Number((amount / 2).toFixed(0))
-    
+
                                         amount = amount - ds
-    
-    
+
+
                                         txb.addOutput(address.address, ds);
-    
+
                                         outputs.push({
                                             address: address.address,
                                             amount: ds
                                         })
-    
+
                                     }
-    
-    
+
+
                                     ///// add donations
-    
-    
+
+
                                     totalDonate = 0;
-    
+
                                     if (obj.donate && obj.donate.v.length){
-    
+
                                         obj.donate.v.forEach(function(d){
                                             var donate = Number(d.amount) * smulti;
-    
+
                                             totalDonate += donate
-    
+
                                             txb.addOutput(d.address, donate);
                                             outputs.push({
                                                 address: d.address,
                                                 amount: donate
                                             });
-    
+
                                         })
                                     }
-    
+
                                     var totalReturn = Number((amount - totalDonate - (fees || 0)).toFixed(0));
-    
-    
+
+
                                     if (obj.type === 'contentBoost'){
-    
+
                                         var amountMulti = obj.amount.v * smulti;;
                                         totalReturn -= amountMulti;
-    
+
                                     }
-    
+
                                     if (obj.donate && obj.donate.v.length && (totalReturn < 0 || totalDonate <= fees)){
-    
+
                                         if (clbk){
                                             clbk(null, 'tosmallamount')
                                         }
-    
+
                                         return;
-    
+
                                     } else {
-    
+
                                         txb.addOutput(address.address, totalReturn);
                                         outputs.push({
                                             address: address.address,
                                             amount: totalReturn
                                         })
-    
+
                                         _.each(inputs, function (input, index) {
                                             txb.sign(index, keyPair);
                                         })
-    
+
                                         var tx = txb.build()
-    
+
                                         if (obj.donate && obj.donate.v.length && !obj.fees.v){
-    
+
                                             var totalFees = Math.min(tx.virtualSize() * fees / smulti, 0.0999);
-    
+
                                             obj.fees.set(totalFees);
-    
+
                                             self.sdk.node.transactions.create.common(inputs, obj, totalFees * smulti, clbk, p);
-    
+
                                         } else {
-    
+
                                             var hex = tx.toHex();
-    
+
                                             if (p.pseudo) {
                                                 var alias = obj.export(true);
                                                 alias.txid = makeid();
-    
+
                                                 if (clbk)
                                                     clbk(alias, null)
                                             }
                                             else {
-    
+
                                                 var bids = _.map(inputs, function (i) {
                                                     return {
                                                         txid : i.txId,
                                                         vout : i.vout
                                                     }
                                                 })
-    
+
                                                 self.app.platform.sdk.node.transactions.blockUnspents(bids)
-    
-    
+
+
                                                 self.app.api.rpc('sendrawtransactionwithmessage', [hex, obj.export(), optstype]).then(d => {
-    
-    
+
+
                                                     var alias = obj.export(true);
                                                         alias.txid = d;
                                                         alias.address = address.address;
@@ -19146,18 +19147,18 @@ Platform = function (app, listofnodes) {
                                                         alias.time = self.currentTime()
                                                         alias.timeUpd = alias.time
                                                         alias.optype = optype
-    
+
                                                         var count = deep(tempOptions, obj.type + ".count") || 'many'
-    
-    
+
+
                                                         if (!temp[obj.type] || count == 'one') {
                                                             temp[obj.type] = {};
                                                         }
-    
+
                                                         temp[obj.type][d] = alias;
-    
+
                                                         alias.inputs = inputs
-    
+
                                                         alias.outputs = _.map(outputs, function(output){
                                                             return {
                                                                 address : output.address,
@@ -19165,50 +19166,50 @@ Platform = function (app, listofnodes) {
                                                                 deleted : output.deleted
                                                             }
                                                         })
-    
+
                                                         self.sdk.node.transactions.saveTemp()
-    
+
                                                         var ids = _.map(inputs, function (i) {
-    
+
                                                             return {
                                                                 txid: i.txId || i.txid,
                                                                 vout: i.vout
                                                             }
-    
+
                                                         })
-    
+
                                                         self.app.platform.sdk.node.transactions.clearUnspents(ids)
-    
+
                                                         if (obj.ustate) {
-    
+
                                                             var ustate = obj.ustate;
-    
+
                                                             if (typeof obj.ustate == 'function') ustate = obj.ustate();
-    
+
                                                             if (ustate) {
                                                                 var us = self.sdk.ustate.storage;
-    
+
                                                                 if (us[address.address] && !_.isEmpty(us[address.address])) {
                                                                     us[address.address][obj.ustate + "_spent"]++
                                                                     us[address.address][obj.ustate + "_unspent"]--
                                                                 }
-    
+
                                                                 _.each(self.sdk.ustate.clbks, function (c) {
                                                                     c()
                                                                 })
                                                             }
-    
+
                                                         }
-    
-    
+
+
                                                         if (clbk)
                                                             clbk(alias)
-    
+
                                                 }).catch(e => {
                                                     self.app.platform.sdk.node.transactions.unblockUnspents(bids)
-    
+
                                                     console.error(e)
-    
+
                                                     if (clbk) {
                                                         clbk(null, e.code, data)
                                                     }
@@ -19216,9 +19217,9 @@ Platform = function (app, listofnodes) {
                                             }
                                         }
                                     }
-    
+
                                 }, address.address)
-    
+
                             };
 
                             var generateShareRelayed = () => {
@@ -19243,7 +19244,7 @@ Platform = function (app, listofnodes) {
                                 return;
                             };
 
-                            // If transaction is made from Share, check if it consist video that is in transcoding. 
+                            // If transaction is made from Share, check if it consist video that is in transcoding.
                             if (obj.canSend) {
                                 return obj.canSend(self.app, (result) => {
 
@@ -19252,7 +19253,7 @@ Platform = function (app, listofnodes) {
                                     return generateShareRelayed();
                                 })
                             }
-                            
+
                             return generateShare();
                         }
 
