@@ -1215,6 +1215,15 @@ var comments = (function(){
 				parent.removeClass('hiddenComment')
 			},
 
+			showBlockedUserComment: function(){
+
+				var _el = $(this)
+
+				var parent = _el.closest('.comment');
+
+				parent.removeClass('hiddenBlockedUserComment')
+			},
+
 			openGallery : function(){
 
 				var _el = $(this)
@@ -1341,13 +1350,32 @@ var comments = (function(){
                                 }
 								else
 								{
-									parent.remove()
+									parent.addClass('hiddenBlockedUserComment');
+									var hiddenCommentLabel = $('<div></div>').html(self.app.localization.e('blockedbymeHiddenCommentLabel')).addClass('hiddenCommentLabel')
+									var ghostButton = $('<div></div>').append($('<button></button>').html(self.app.localization.e('showhiddenComment')).addClass('ghost showBlockedUserComment'))
+									var commentContentTable = localParent.find('.cbodyWrapper > .commentcontenttable')
+									commentContentTable.append(hiddenCommentLabel)
+									commentContentTable.append(ghostButton)
 								}
 
-								close()
                             })
+								close()
 
 							
+						})
+						
+						__el.find('.unblock').on('click', function(){
+							self.app.mobile.vibration.small()
+							self.app.platform.api.actions.unblocking(d.caddress, function(tx, error){
+								if(!tx){
+									self.app.platform.errorHandler(error, true)
+								} else {
+									localParent.find('.cbodyWrapper > .commentcontenttable div:not(.commentmessage)').remove()
+									parent.removeClass('hiddenBlockedUserComment')
+								}
+							})
+
+							close()
 						})
 
 						__el.find('.remove').on('click', function(){
@@ -2788,6 +2816,7 @@ var comments = (function(){
 				el.list.on('click', '.tocomment', events.tocomment)
 				el.list.on('click', '.imageCommentOpen', events.openGallery)
 				el.list.on('click', '.hiddenCommentLabel', events.showHiddenComment)
+				el.list.on('click', '.showBlockedUserComment', events.showBlockedUserComment)
 				el.list.on('click', '[profile]', events.showprofile)
 
 				if(!_in.length) {
