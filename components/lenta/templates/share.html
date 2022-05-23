@@ -1,5 +1,4 @@
 <%
-
 var c = share.renders.caption();
 var cc = share.renders.captionclear();
 
@@ -568,9 +567,26 @@ var arranges = {
 							</div>
 
 							
-						<% } %>
+						<% };
 
-						<% if(share.temp) {%>
+						if (shareRelayedFlag) { %>
+							<div class="panel sharepanel unselectablemobile">
+								<div class="item right">
+
+									<div class="itemwr table tempPreloader">
+										
+										<div elementsid="lenta_forstars_count" class="count">
+											<div class="label">
+
+												<span><%=e('postInRelay')%></span>
+											</div>
+										</div>
+											
+									</div>
+								</div>
+								<div class="clearfix"></div>
+							</div>
+						<% } else if(share.temp) {%>
 
 							<div class="panel sharepanel unselectablemobile">
 								<div class="item right">
