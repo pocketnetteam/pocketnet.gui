@@ -81,9 +81,6 @@ var authorization = (function(){
 		
 			login : function(){
 				
-            //    if(!el.c.find('.mnemonicItem').value.trim()){
-
-			//    }
 				var mnemonicKeyArray = []
 				var mnemonicInputs = el.c.find('.mnemonicItem')
 				mnemonicInputs.each(function(index){
@@ -94,7 +91,7 @@ var authorization = (function(){
 					}
 				})
 				var p = {};
-				// TODO for privatekey
+
 				var mnemonicKey = trim(el.login.val()) || mnemonicKeyArray.join(' ');
 
 				localStorage['stay'] = boolToNumber(stay.value).toString()
@@ -474,12 +471,13 @@ var authorization = (function(){
 					var autocompleteWordEnd = autocompleteWord && autocompleteWord.slice(autocompleteWordStart.length)
 		
 					el.autocomplete.css({
-						'position': 'fixed',
-						'top' : `${top + parseInt($(this).css("padding-top")) + 1}px`,
+						'position': 'absolute',
+						'top' : `${top + parseInt($(this).css("padding-top")) + 1.45}px`,
 						'left' : `${left + parseInt($(this).css("padding-left"))}px`,
 						'font-size': $(this).css("font-size"),
 						'font-weight': $(this).css("font-weight"),
 						'display': 'flex',
+						"z-index": "99999"
 					})
 					el.autocompleteEnd.css({
 						'color' : `#555770`,
@@ -495,6 +493,7 @@ var authorization = (function(){
 						el.c.find('.loginValue').val($(this).val())
 						$(this).val('')
 						el.c.find('#mnemonicInput').css({'display': 'none'})
+						el.c.find('.uploadFile').css({'display': 'none'})
 						el.c.find('.actionButtonsWrapper').css({'display': 'table-cell'})
 						el.c.find('.loginValue').css({'display': 'initial'})
 						el.c.find('.loginValue').trigger( "focus" )
@@ -504,15 +503,22 @@ var authorization = (function(){
 
 		validateMnemonicInput = function(){
 			el.c.find('.mnemonicItem').on('keypress paste', function(e){
+				let isAllInputsFull = el.c.find('.mnemonicItem').filter(function () {
+					return $(this).val().trim().length === 0
+				}).length === 0;
 				if(e.key === 'Enter'){
 					autocompleteWord && activeMnemonicInput.val(autocompleteWord)
 					el.autocomplete.css({'display': 'none'})
 					var currentInputId = +activeMnemonicInput.attr("id").replace('mnemonicItem','')
 				    var nextId = currentInputId + 1
-					if(nextId < 12 ){
+					if(isAllInputsFull){
+						return true
+					}
+					else if(nextId <= 12 ){
 						el.c.find(`#mnemonicItem${nextId}`).trigger( "focus" )
 						return false
-					}else{
+					}
+					else{
 						return true
 					} 
 				} else{
@@ -524,14 +530,19 @@ var authorization = (function(){
 		pasteMnemonicPhrase = function(){
 			el.c.find('.mnemonicItem').on('paste', function(e){
 				var mnemonicArray = e.originalEvent.clipboardData.getData('text/plain').split(' ')
-				var mnemonicInputs = el.c.find('.mnemonicItem')
-				mnemonicArray.forEach((item, index)=>{
-					if(item){
-						mnemonicInputs[index].classList.remove('errorClass')
-						mnemonicInputs[index].value = item
-					}
-				})
-				return false
+				if(mnemonicArray.length > 1){
+					var mnemonicInputs = el.c.find('.mnemonicItem')
+					mnemonicArray.forEach((item, index)=>{
+						if(item){
+							mnemonicInputs[index].classList.remove('errorClass')
+							mnemonicInputs[index].value = item
+							mnemonicInputs[index].focus()
+						}
+					})
+					return false
+				}else{
+					return true
+				}	
 			})
 		}
 
@@ -554,6 +565,7 @@ var authorization = (function(){
 					el.c.find('.loginValue').css({'display': 'none'})
 					el.c.find('.actionButtonsWrapper').css({'display': 'none'})
 					el.c.find('#mnemonicInput').css({'display': 'initial'})
+					el.c.find('.uploadFile').css({'display': 'initial'})
 					el.c.find('.mnemonicItem')[0].focus()
 				} 
 			})
@@ -629,7 +641,7 @@ var authorization = (function(){
 		
 
 			init : function(p){
-
+				$("body").prepend( "<span id='autocomplete'><span id='autocompleteStart'></span><span id='autocompleteEnd'></span></span>" );
 				el = {};
 				el.c = p.el.find('#' + self.map.id)
 				el.login = el.c.find(".loginValue");
@@ -637,9 +649,9 @@ var authorization = (function(){
 				el.enter = el.c.find('.enter');
 				el.toRegistration = el.c.find('.toRegistration');
 				el.forgotPassword = el.c.find('.forgotPassword');
-				el.autocompleteStart = el.c.find('#autocompleteStart')
-				el.autocompleteEnd = el.c.find('#autocompleteEnd')
-				el.autocomplete = el.c.find('#autocomplete')
+				el.autocompleteStart = $('#autocompleteStart')
+				el.autocompleteEnd = $('#autocompleteEnd')
+				el.autocomplete = $('#autocomplete')
 
 				el.hiddenform = el.c.find('#loginform')
 

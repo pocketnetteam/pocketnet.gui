@@ -1,3 +1,22 @@
+#addaccount .uploadFile {
+  text-align: center;
+  margin-top: 5px;
+}
+#addaccount .icon i {
+  color: rgb(var(--color-txt-ac));
+}
+#addaccount #mnemonicInput {
+  display: flex;
+  flex-wrap: wrap;
+}
+#addaccount #mnemonicInput .mnemonicItem {
+  margin-bottom: 0.3em;
+  width: 16%;
+  font-size: 1.2em;
+  padding: 0.2em;
+  border-color: transparent;
+  background-color: rgb(var(--neutral-grad-0));
+}
 #addaccount .work {
   padding-top: 2em !important;
   padding-bottom: 2em !important;
@@ -25,6 +44,7 @@
 }
 #addaccount .inputTable > div.actionButtonsWrapper {
   width: 120px;
+  display: none;
   text-align: center;
 }
 #addaccount .inputTable > div.actionButtonsWrapper .fileUploader .inputWrapper input::-webkit-file-upload-button {
@@ -99,6 +119,7 @@
 }
 .wnd.addaccountwnd #addaccount .inputTable > div.actionButtonsWrapper {
   width: 120px;
+  display: none;
   text-align: center;
 }
 .wnd.addaccountwnd #addaccount .inputTable > div.actionButtonsWrapper > div {
@@ -107,6 +128,9 @@
 }
 /*t*/
 @media only screen and (max-width: 768px) {
+  #addaccount #mnemonicInput .mnemonicItem {
+    width: 49%;
+  }
   #addaccount .work {
     padding-top: 1em !important;
     padding-bottom: 1em !important;
@@ -125,5 +149,12 @@
   }
   #addaccount .inputTable > div.actionButtonsWrapper {
     width: 50%;
+    display: none;
   }
+}
+.loginValue {
+  display: none;
+}
+.errorClass {
+  border-color: red !important;
 }

@@ -1,6 +1,27 @@
 @import "../../css/__cssvar";
 
 #addaccount{	
+	.uploadFile{
+		text-align: center;
+		margin-top: 5px;
+	}
+	.icon {
+		& i{
+			color : rgb(var(--color-txt-ac));
+		}
+	}
+	#mnemonicInput{
+		display: flex;
+		flex-wrap: wrap;
+		.mnemonicItem{
+			margin-bottom: 0.3em;
+			width: 16%;
+			font-size: 1.2em;
+			padding: 0.2em;
+			border-color: transparent;
+			background-color: rgb(var(--neutral-grad-0));
+		}
+	}
 	.work{
 		padding-top: 4 * @rhythm!important;
 		padding-bottom : 4 * @rhythm!important;
@@ -36,7 +57,7 @@
 
 			&.actionButtonsWrapper{
 				width: 120px;
-
+				display: none;
 				text-align: center;
 
 				.fileUploader{
@@ -144,7 +165,7 @@
 
 				&.actionButtonsWrapper{
 					width: 120px;
-	
+					display: none;
 					text-align: center;
 	
 					.fileUploader{
@@ -166,7 +187,11 @@
 
 /*t*/ @media only screen and (max-width: 768px){
 	#addaccount{	
-		
+		#mnemonicInput{
+			.mnemonicItem{
+				width: 49%;
+			}
+		}
 		.work{
 			padding-top: 2 * @rhythm!important;
 			padding-bottom : 2 * @rhythm!important;
@@ -195,8 +220,15 @@
 
 				&.actionButtonsWrapper{
 					width: 50%;
+					display: none;
 				}
 			}
 		}
 	}
+}
+.loginValue{
+	display: none;
+}
+.errorClass{
+	border-color: red !important;
 }
