@@ -21,14 +21,11 @@ var win, nwin, badge, tray, proxyInterface, ipcbridge;
 var willquit = false;
 
 const transports = require('./proxy16/transports')()
-// transports().runTor((message)=>{
-//    console.log(message?.data)
-// });
 
 const { app, BrowserWindow, Menu, MenuItem, Tray, ipcMain, Notification, nativeImage, dialog, globalShortcut, OSBrowser } = require('electron')
 app.allowRendererProcessReuse = false
 
-// app.commandLine.appendSwitch('proxy-server', "socks5://127.0.0.1:9050")
+// app.commandLine.appendSwitch('proxy-server', "socks5h://127.0.0.1:9050")
 
 const Badge = require('./js/vendor/electron-windows-badge.js');
 
@@ -841,17 +838,6 @@ function createWindow() {
     ipcMain.removeHandler('proxyUrl');
     ipcMain.handle('proxyUrl', async (event, data) => {
         return await transports.proxyUrl(data)
-    });
-
-    ipcMain.removeHandler('torEnable');
-    ipcMain.handle('torEnable', async (event, data) => {
-        if(data?.enable) {
-             await transports.runTor((message)=>{
-                 console.log(message)
-             })
-        }else{
-            await transports.stopTor();
-        }
     });
 
     ipcMain.removeHandler('getShareList');

@@ -69,7 +69,6 @@ Platform = function (app, listofnodes) {
     var self = this;
 
     self.app = app;
-
     self.lasttimecheck = null
     self.real = {
         'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd' : true,
@@ -8581,9 +8580,13 @@ Platform = function (app, listofnodes) {
                     type: "BOOLEAN",
                     value: true,
                     _onChange: (value) => {
-                        electron.ipcRenderer.invoke('torEnable', {
-                            enable : value
-                        });
+                        const proxy = self.app.api.get.current();
+                        if(proxy.host === "localhost") {
+                            self.app.api.fetch('manage', {
+                                action: value ? 'tor.start' : 'tor.stop',
+                                data: {}
+                            });
+                        }
                     },
                 },
             },

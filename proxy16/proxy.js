@@ -1,6 +1,7 @@
 
 var _ = require('lodash')
 var fs = require('fs');
+const fsPromises = require('fs/promises');
 var path = require('path');
 
 const { performance } = require('perf_hooks');
@@ -27,6 +28,9 @@ var Bots = require('./bots.js');
 var SystemNotify = require('./systemnotify.js');
 var Transports = require("./transports")
 var Applications = require('./node/applications');
+const Path = require("path");
+const child_process = require("child_process");
+const {unlink} = require("nedb/browser-version/browser-specific/lib/storage");
 
 process.setMaxListeners(0);
 require('events').EventEmitter.defaultMaxListeners = 0
@@ -39,7 +43,6 @@ if (process.platform === 'win32') expectedExitCodes = [3221225477];
 console.log('expectedExitCodes' , expectedExitCodes)*/
 
 var Proxy = function (settings, manage, test, logger, reverseproxy) {
-
 	var self = this;
 
 		self.test = test
@@ -60,7 +63,29 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 	var systemnotify = new SystemNotify(settings.systemnotify)
 
 	var transports = new Transports(global.USE_PROXY_NODE);
-	var torapplications = new Applications(settings.tor, {})
+	var torapplications = new Applications(settings.tor, {
+		darwin:{
+			bin: {
+				name: "osx-latest.tgz",
+				page: 'https://github.com/cenitelas/tor/releases/latest',
+				url: 'https://api.github.com/repos/cenitelas/tor/releases/latest'
+			},
+		},
+		win32:{
+			bin: {
+				name: "win-latest.tgz",
+				page: 'https://github.com/cenitelas/tor/releases/latest',
+				url: 'https://api.github.com/repos/cenitelas/tor/releases/latest'
+			},
+		},
+		linux:{
+			bin: {
+				name: "linux-latest.tgz",
+				page: 'https://github.com/cenitelas/tor/releases/latest',
+				url: 'https://api.github.com/repos/cenitelas/tor/releases/latest'
+			},
+		}
+	})
 
 	var dump = {}
 
@@ -539,19 +564,187 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				console.log('!global.USE_PROXY_NODE')
 				return Promise.resolve()
 			}
-
-			return torapplications.init().then(r => {
-
-				/// check and download
+			
+			return torapplications.init().then(async r => {
+				const dbPath = f.path(settings.tor.dbpath);
+				const checkRunning = await self.torapplications.check_running(dbPath)
+				if(checkRunning){
+					console.log("DDD2")
+					await self.torapplications.stop();
+				}
 				
-				return Promise.resolve()
+				const checkPath = await self.torapplications.check_path();
+				if(!checkPath){
+					await self.torapplications.install()
+				}
+
+				if(settings.tor.enabled)
+					return self.torapplications.start();
 			})
 		},
+		
+		check_path: async ()=>{
+			const dbPath = f.path(settings.tor.dbpath);
+			try {
+				await fsPromises.lstat(self.torapplications.bin_path(dbPath));
+				return true;
+			}catch (e) {
+				return false;
+			}
+		},
+		
+		bin_path: (dbPath)=>{
+			const win = path.join(dbPath,'tor.exe')
+			const mac = path.join(dbPath,'tor')
+			const linux = path.join(dbPath,'tor')
+			return (process.platform == 'win32' ? win : (process.platform == 'darwin' ? mac : (process.platform == 'linux' ? linux : '')))
+		},
 
-		destroy: function () {
+		extension: ()=>{
+			return process.platform == 'win32' ? '.exe' : ''
+		},
+		
+		install: async ()=>{
+			const dbPath = f.path(settings.tor.dbpath);
+			try {
+				const existPath = await fsPromises.lstat(dbPath)
+				if(!existPath.isDirectory()){
+					fs.unlinkSync(dbPath)
+					throw ""
+				}
+			}catch (e){
+				try {
+					await fsPromises.mkdir(dbPath, {recursive: true, mode: 0o755})
+				}catch (e) {
+					throw 'tordatapath'
+				}
+			}
+			try{
+				const download = await torapplications.download('bin', {user: "cenitelas", name: "tor"});
+				await torapplications.decompress(download.path, dbPath)
+				try {
+					await fsPromises.lstat(download.path)
+					await fsPromises.unlink(download.path)
+				}catch (e) {}
+				await fsPromises.chmod(dbPath, 0o755)
+				await fsPromises.chmod(self.torapplications.bin_path(dbPath), 0o755)
+				await self.torapplications.generate_config(dbPath);
+				if(process.platform === 'linux'){
+					const libPath='/usr/lib'
+					const localLibPath='/usr/local/lib'
+					for(const lib of ["libcrypto.so.1.1","libevent-2.1.so.7","libssl.so.1"]) {
+						try {
+							await fsPromises.lstat(path.join(dbPath, el))
+							await fsPromises.copyFile(path.join(dbPath, el), libPath, 0o755)
+							await fsPromises.copyFile(path.join(dbPath, el), localLibPath, 0o755)
+						}catch (e){
+							console.error(`Error copy library tor: ${e}`)
+						}
+					}
+				}
+				return torapplications.save(download.asset)
+			}catch (e) {
+				throw {
+					code : 500,
+					error : 'cantcopy'
+				}
+			}
+		},
+		
+		generate_config: async (dbPath)=>{
+			await self.torapplications.check_path(dbPath)
+			try {
+				await fsPromises.stat(path.join(dbPath, "torrc"))
+				await fsPromises.unlink(path.join(dbPath, "torrc"))
+			}catch (e) {}
+			await fsPromises.writeFile(path.join(dbPath, "torrc"), `CookieAuthentication 1\n`, {flag: "a+"})
+			await fsPromises.writeFile(path.join(dbPath, "torrc"), `DormantCanceledByStartup 1\n`, {flag: "a+"})
+			await fsPromises.writeFile(path.join(dbPath, "torrc"), `DataDirectory ${path.join(dbPath, "data")}\n`, {flag: "a+"})
+			await fsPromises.writeFile(path.join(dbPath, "torrc"), `Log notice stdout\n`, {flag: "a+"})
+			await fsPromises.writeFile(path.join(dbPath, "torrc"), `AvoidDiskWrites 1\n`, {flag: "a+"})
+			await fsPromises.writeFile(path.join(dbPath, "torrc"), `GeoIPFile ${path.join(dbPath, "geoip")}\n`, {flag: "a+"})
+			await fsPromises.writeFile(path.join(dbPath, "torrc"), `GeoIPv6File ${path.join(dbPath, "geoip6")}\n`, {flag: "a+"})
+			await fsPromises.writeFile(path.join(dbPath, "torrc"), `ClientTransportPlugin meek_lite,obfs2,obfs3,obfs4,scramblesuit exec ${path.join(dbPath, "PluggableTransports", "obfs4proxy" + self.torapplications.extension())}\n`, {flag: "a+"})
+			await fsPromises.writeFile(path.join(dbPath, "torrc"), `ClientTransportPlugin snowflake exec ${path.join(dbPath, "PluggableTransports", "snowflake-client" + self.torapplications.extension())} -url https://snowflake-broker.torproject.net.global.prod.fastly.net/ -front cdn.sstatic.net -ice stun:stun.l.google.com:19302,stun:stun.voip.blackberry.com:3478,stun:stun.altar.com.pl:3478,stun:stun.antisip.com:3478,stun:stun.bluesip.net:3478,stun:stun.dus.net:3478,stun:stun.epygi.com:3478,stun:stun.sonetel.com:3478,stun:stun.sonetel.net:3478,stun:stun.stunprotocol.org:3478,stun:stun.uls.co.za:3478,stun:stun.voipgate.com:3478,stun:stun.voys.nl:3478`, {flag: "a+"})
+		},
+		
+		start: async ()=>{
+			if(!global.USE_PROXY_NODE) return true;
+			const dbPath = f.path(settings.tor.dbpath);
+			await self.torapplications.check_path(dbPath)
+			const checkRunning = await self.torapplications.check_running(dbPath)
+			if(checkRunning){
+				return true;
+			}
 
-			if(!global.USE_PROXY_NODE) return Promise.resolve()
+			const log = (data)=>{
+				console.log(data)
+			}
 
+			self.torapplications.instance = child_process.spawn(self.torapplications.bin_path(dbPath), [
+				"-f",`${path.join(dbPath,"torrc")}`,
+			], { stdio: ['ignore'], detached : false, shell : false})
+			self.torapplications.instance.on("error", (err)=>log({error: err}));
+			self.torapplications.instance.on("exit", async (code) => {
+				try {
+					await self.torapplications.stop()
+				}catch (e) {}
+				if(code){
+					console.error(`TOR code: ${code}`)
+					console.error(`TOR closed`)
+				}
+				log({exit: code})
+			});
+			self.torapplications.instance.stderr.on("data", (chunk) => log({error: String(chunk)}));
+			self.torapplications.instance.stdout.on("data", (chunk) => log({data: String(chunk)}));
+			if (self?.torapplications?.instance?.pid){
+				try {
+					await fsPromises.writeFile(path.join(dbPath, "tor.pid"), self.torapplications.instance.pid.toString(), { encoding: "utf-8"});
+				}catch (e) {
+					console.error(e)
+				}
+			}
+			console.log("TOR PID ", self?.torapplications?.instance?.pid)
+			return true;
+		},
+		
+		stop: async ()=>{
+			if(!global.USE_PROXY_NODE) return true;
+			const dbPath = f.path(settings.tor.dbpath);
+			await self.torapplications.check_path(dbPath)
+			const checkRunning = await self.torapplications.check_running(dbPath)
+			if(!checkRunning){
+				return true;
+			}
+			let pid = self?.torapplications?.instance?.pid || self.torapplications.pid;
+			try {
+				pid = await fsPromises.readFile(path.join(dbPath, "tor.pid"), {encoding: "utf-8"})
+			}catch (e) {}
+			if(pid) {
+				try {
+					process.kill(+pid.toString(), 9)
+					await fsPromises.unlink(path.join(dbPath, "tor.pid"))
+				}catch (e) {
+					console.error(e)
+					return false;
+				}
+			}
+			console.log("TOR STOP")
+			return true;
+		},
+
+		check_running: async (dbPath)=>{
+			try{
+				const pid = await fsPromises.readFile(path.join(dbPath, "tor.pid"), {encoding: "utf-8"})
+				return process.kill(+pid, 0);
+			} catch (error) {
+				return false;
+			}
+		},
+		
+		destroy: async ()=>{
+			if(!global.USE_PROXY_NODE)
+				await self.torapplications.stop();
 			return torapplications.destroy()
 		},
 	}

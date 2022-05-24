@@ -5,24 +5,25 @@ const { reject } = require('underscore');
 var f = require('../functions');
 var path = require('path');
 var Datastore = require('nedb');
-
+var transports = require("../transports")
 var progress = require('request-progress');
 var targz = require('targz');
 
 
 var Applications = function(settings, applications = {}) {
-
     if(!settings) settings = {}
 
     var self = this;
 
     var db = new Datastore(f.path(settings.dbpath));
 
-
-
+    
+    
     var platform = process.platform
     var meta = applications[platform]
 
+    self.transports = transports(true, true);
+    
     self.getMeta = function() {
         return meta
     }
@@ -166,12 +167,11 @@ var Applications = function(settings, applications = {}) {
         })
     }
 
-    self.download = function(key){
+    self.download = function(key, repo = { user: "pocketnetteam", name: "pocketnet.core"}){
 
         var r = {}
 
         return self.getinfo(key).then(asset => {
-
             r.asset = asset
 
 
@@ -184,7 +184,7 @@ var Applications = function(settings, applications = {}) {
                     return true
                 }
 
-            })
+            }, repo)
 
         }).then(p => {
 
@@ -230,6 +230,7 @@ var Applications = function(settings, applications = {}) {
                 }
             })
             .on('error', function (err) {
+                console.log(err)
                 return reject(err)
             })
             .on('end', function () {
