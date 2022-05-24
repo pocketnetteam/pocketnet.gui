@@ -1,6 +1,11 @@
 @import "../../css/__cssvar";
 
 #authorization{	
+	#mnemonicInput{
+		display: flex;
+		flex-wrap: wrap;
+		margin-right: 10px;
+	}
 	.inputWrapperKey{
 		display: flex;
     	align-items: center;
@@ -254,9 +259,6 @@
 	}
 
 	#authorization{
-		#mnemonicInput{
-			display: flex;
-		}
 		.topCaption{
 			padding-top : 2 * @rhythm;
 			padding-bottom : 2 * @rhythm;
@@ -290,6 +292,7 @@
 		}
 		#mnemonicInput{
 			width: 90%;
+			margin-right: 0px;
 			.mnemonicItem{
 				margin-bottom: 0.3em;
 				width: 49%;
