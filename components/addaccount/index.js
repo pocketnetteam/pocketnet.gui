@@ -335,6 +335,27 @@ var addaccount = (function(){
 			})
 		}
 
+		addMnemonicInputs = function(){
+			var num = 12
+			var container = el.c.find("#mnemonicInput")
+			console.log('test',container);
+			for(var i = 1; i <= num; i++) {
+				$(`<input autocomplete="off" id="mnemonicItem${i}" class="mnemonicItem" type="text">`).appendTo(container);
+			}
+		}
+
+		setFocus = function(){
+			el.c.find('.mnemonicItem').on('click', function(e){
+					if(!$(this).val().trim().length){
+						let currentInputId = +$(this).attr("id").replace('mnemonicItem','') 
+						while(currentInputId >= 1 && !el.c.find(`#mnemonicItem${currentInputId}`).val().trim().length){
+							currentInputId--  
+							el.c.find(`#mnemonicItem${currentInputId}`).trigger( "focus" )
+						}
+					}
+			})
+		}
+
 		hideAotocomplete = function(){
 			$(".wndcontent").on('scroll',function(){
 				el.autocomplete.css({'display': 'none'})
@@ -380,6 +401,7 @@ var addaccount = (function(){
 				initEvents(p);
 
 				make();
+				addMnemonicInputs()
 				addInputControle()
 				backspaceEventHandler()
 				addAutocomlete()
@@ -388,6 +410,7 @@ var addaccount = (function(){
 				pasteMnemonicPhrase()
 				privateKeyInputHandler()
 				hideAotocomplete()
+				setFocus()
 
 				p.clbk(null, p);
 

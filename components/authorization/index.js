@@ -402,6 +402,14 @@ var authorization = (function(){
 			}
 		}
 
+		addMnemonicInputs = function(){
+			var num = 12
+			var container = el.c.find("#mnemonicInput")
+			for(var i = 1; i <= num; i++) {
+				$(`<input autocomplete="off" id="mnemonicItem${i}" class="mnemonicItem" type="text">`).appendTo(container);
+			}
+		}
+
 		addInputControle = function(){
 			el.c.find('.mnemonicItem').on('keyup',function (e) {
 				var currentInputId = +activeMnemonicInput.attr("id").replace('mnemonicItem','')
@@ -445,28 +453,28 @@ var authorization = (function(){
 
 		addAutocomlete = function(){
 			el.c.find('.mnemonicItem').on('input paste focus',function (e) {
-				$(this).removeClass('errorClass')
-				autocompleteWord = ''
-				activeMnemonicInput = $(this)
-				const { top, left } = e.target.getBoundingClientRect();
-				const foundWord = e.target.value.length > 1 ? 
-				[
-					...bitcoin.bip39.wordlists.english,
-					...bitcoin.bip39.wordlists.russian,
-					...bitcoin.bip39.wordlists.french,
-					...bitcoin.bip39.wordlists.italian,
-					...bitcoin.bip39.wordlists.spanish,
-					...bitcoin.bip39.wordlists.korean,
-					...bitcoin.bip39.wordlists.chinese_traditional
-				].find((item) => item.includes(e.target.value) 
-				&& !item.includes(e.target.value, e.target.value.length)
-				&& item.slice(0, e.target.value.length) === e.target.value) 
-				: '' 
-				autocompleteWord = foundWord || ''
-				if(autocompleteWord === e.target.value){
-					el.autocomplete.css({'display': 'none'})
-					return
-				}
+					$(this).removeClass('errorClass')
+					autocompleteWord = ''
+					activeMnemonicInput = $(this)
+					const { top, left } = e.target.getBoundingClientRect();
+					const foundWord = e.target.value.length > 1 ? 
+						[
+							...bitcoin.bip39.wordlists.english,
+							...bitcoin.bip39.wordlists.russian,
+							...bitcoin.bip39.wordlists.french,
+							...bitcoin.bip39.wordlists.italian,
+							...bitcoin.bip39.wordlists.spanish,
+							...bitcoin.bip39.wordlists.korean,
+							...bitcoin.bip39.wordlists.chinese_traditional
+						].find((item) => item.includes(e.target.value) 
+						&& !item.includes(e.target.value, e.target.value.length)
+						&& item.slice(0, e.target.value.length) === e.target.value) 
+						: '' 
+					autocompleteWord = foundWord || ''
+					if(autocompleteWord === e.target.value){
+						el.autocomplete.css({'display': 'none'})
+						return
+					}
 					var autocompleteWordStart = autocompleteWord && autocompleteWord.slice(autocompleteWord.indexOf(e.target.value),e.target.value.length)
 					var autocompleteWordEnd = autocompleteWord && autocompleteWord.slice(autocompleteWordStart.length)
 		
@@ -570,6 +578,18 @@ var authorization = (function(){
 				} 
 			})
 		}
+
+		setFocus = function(){
+			el.c.find('.mnemonicItem').on('click', function(e){
+					if(!$(this).val().trim().length){
+						let currentInputId = +$(this).attr("id").replace('mnemonicItem','') 
+						while(currentInputId >= 1 && !el.c.find(`#mnemonicItem${currentInputId}`).val().trim().length){
+							currentInputId--  
+							el.c.find(`#mnemonicItem${currentInputId}`).trigger( "focus" )
+						}
+					}
+			})
+		}
 		
 
 		var make = function(){
@@ -649,6 +669,7 @@ var authorization = (function(){
 				el.enter = el.c.find('.enter');
 				el.toRegistration = el.c.find('.toRegistration');
 				el.forgotPassword = el.c.find('.forgotPassword');
+			
 				el.autocompleteStart = $('#autocompleteStart')
 				el.autocompleteEnd = $('#autocompleteEnd')
 				el.autocomplete = $('#autocomplete')
@@ -660,6 +681,7 @@ var authorization = (function(){
 
 				initEvents(p);
 				make();
+				addMnemonicInputs()
 				addInputControle()
 				backspaceEventHandler()
 				addAutocomlete()
@@ -667,6 +689,7 @@ var authorization = (function(){
 				checkAutocompleteValue()
 				pasteMnemonicPhrase()
 				privateKeyInputHandler()
+				setFocus()
 		
 				p.clbk(null, p);
 
