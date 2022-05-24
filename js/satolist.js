@@ -9491,7 +9491,6 @@ Platform = function (app, listofnodes) {
             reputationBlockedNotMe : function(address, count){
 
                 if(!address) address = (self.app.platform.sdk.address.pnet() || {}).address
-
                 return !self.app.platform.sdk.user.itisme(address) && self.app.platform.sdk.user.reputationBlocked(address, count)
 
             },
@@ -9499,8 +9498,8 @@ Platform = function (app, listofnodes) {
             reputationBlocked : function(address, count){
                 var ustate = self.sdk.ustate.storage[address] || deep(self, 'sdk.usersl.storage.' + address) || deep(self, 'sdk.users.storage.' + address);
 
-                var totalComplains = typeof ustate.flags === 'Object' ? Object.keys(ustate.flags).reduce((a,b) => a + b, 0) : 0
-                var isOverComplained = typeof ustate.flags === 'Object' ? Object.keys(ustate.flags).some(el => el / ustate.postcnt > 5) : false
+                var totalComplains = typeof ustate.flags === 'object' ? Object.values(ustate.flags).reduce((a,b) => a + +b, 0) : 0
+                var isOverComplained = typeof ustate.flags === 'object' ? Object.values(ustate.flags).some(el => el / ustate.postcnt > 5) : false
                 console.log(ustate.name,totalComplains, isOverComplained)
                 if(self.bch[address]) return true
 
@@ -9510,6 +9509,10 @@ Platform = function (app, listofnodes) {
                 ){
                     return true
                 }
+                if(isOverComplained) {
+                    return true
+                }
+
                 if(moment().diff(ustate.regdate, 'days') <= 7 && totalComplains  > 20 ) {
                     return true
                 }
