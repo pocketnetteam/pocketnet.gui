@@ -569,7 +569,6 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				const dbPath = f.path(settings.tor.dbpath);
 				const checkRunning = await self.torapplications.check_running(dbPath)
 				if(checkRunning){
-					console.log("DDD2")
 					await self.torapplications.stop();
 				}
 				
@@ -664,8 +663,9 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 			await fsPromises.writeFile(path.join(dbPath, "torrc"), `AvoidDiskWrites 1\n`, {flag: "a+"})
 			await fsPromises.writeFile(path.join(dbPath, "torrc"), `GeoIPFile ${path.join(dbPath, "geoip")}\n`, {flag: "a+"})
 			await fsPromises.writeFile(path.join(dbPath, "torrc"), `GeoIPv6File ${path.join(dbPath, "geoip6")}\n`, {flag: "a+"})
-			await fsPromises.writeFile(path.join(dbPath, "torrc"), `ClientTransportPlugin meek_lite,obfs2,obfs3,obfs4,scramblesuit exec ${path.join(dbPath, "PluggableTransports", "obfs4proxy" + self.torapplications.extension())}\n`, {flag: "a+"})
-			await fsPromises.writeFile(path.join(dbPath, "torrc"), `ClientTransportPlugin snowflake exec ${path.join(dbPath, "PluggableTransports", "snowflake-client" + self.torapplications.extension())} -url https://snowflake-broker.torproject.net.global.prod.fastly.net/ -front cdn.sstatic.net -ice stun:stun.l.google.com:19302,stun:stun.voip.blackberry.com:3478,stun:stun.altar.com.pl:3478,stun:stun.antisip.com:3478,stun:stun.bluesip.net:3478,stun:stun.dus.net:3478,stun:stun.epygi.com:3478,stun:stun.sonetel.com:3478,stun:stun.sonetel.net:3478,stun:stun.stunprotocol.org:3478,stun:stun.uls.co.za:3478,stun:stun.voipgate.com:3478,stun:stun.voys.nl:3478`, {flag: "a+"})
+			await fsPromises.writeFile(path.join(dbPath, "torrc"), `UseBridges 1\n`, {flag: "a+"})
+			await fsPromises.writeFile(path.join(dbPath, "torrc"), `ClientTransportPlugin snowflake exec ${path.join(dbPath, "PluggableTransports", "snowflake-client" + self.torapplications.extension())}\n`, {flag: "a+"})
+			await fsPromises.writeFile(path.join(dbPath, "torrc"), `Bridge snowflake 192.0.2.3:1 url=https://snowflake-broker.torproject.net.global.prod.fastly.net/ front=cdn.sstatic.net ice=stun:stun.voip.blackberry.com:3478,stun:stun.altar.com.pl:3478,stun:stun.antisip.com:3478,stun:stun.bluesip.net:3478,stun:stun.dus.net:3478,stun:stun.epygi.com:3478,stun:stun.sonetel.com:3478,stun:stun.sonetel.net:3478,stun:stun.stunprotocol.org:3478,stun:stun.uls.co.za:3478,stun:stun.voipgate.com:3478,stun:stun.voys.nl:3478`, {flag: "a+"})
 		},
 		
 		start: async ()=>{
