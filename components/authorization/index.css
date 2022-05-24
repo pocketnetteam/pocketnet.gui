@@ -1,3 +1,7 @@
+#authorization .mnemonicInputWrapper {
+  display: flex;
+  align-items: baseline;
+}
 #authorization .inputWrapperKey {
   display: flex;
   align-items: center;
@@ -213,6 +217,14 @@
 				background: #F7F7F9;
 			}
 		}*/
+  }
+  #authorization .uploadFile {
+    width: 16px;
+    margin-top: 10px;
+  }
+  #authorization .mnemonicInputWrapper {
+    flex-direction: column;
+    align-items: center;
   }
   #authorization .inputWrapperKey {
     flex-direction: column;

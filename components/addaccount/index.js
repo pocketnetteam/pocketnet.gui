@@ -24,13 +24,24 @@ var addaccount = (function(){
 			return bitcoin.bip39.validateMnemonickWithLangDetection(m)
 		};
 
+		var activeMnemonicInput
+		var autocompleteWord
+
 		var events = {
 
 		
 			add : function(){
+				var mnemonicKeyArray = []
+				var mnemonicInputs = el.c.find('.mnemonicItem')
+				mnemonicInputs.each(function(index){
+					if(mnemonicInputs[index].value.trim()){
+						mnemonicKeyArray[index] = mnemonicInputs[index].value.trim()
+					}else{
+						mnemonicInputs[index].classList.add('errorClass')
+					}
+				})
 				var p = {};
-
-				var mnemonicKey = trim(el.login.val());
+				var mnemonicKey = trim(el.login.val()) || mnemonicKeyArray.join(' ');
 
 				if (essenseData.success)
 					essenseData.success(mnemonicKey);
@@ -164,6 +175,171 @@ var addaccount = (function(){
 			})
 	       
 		}
+		addInputControle = function(){
+			el.c.find('.mnemonicItem').on('keyup',function (e) {
+				var currentInputId = +activeMnemonicInput.attr("id").replace('mnemonicItem','')
+				if (e.code === 'ArrowRight') { 
+					var nextId = currentInputId + 1
+					if(e.target.value && e.target.selectionStart !== e.target.value.length){
+						return
+					}
+					if(autocompleteWord){
+						activeMnemonicInput.val(autocompleteWord)
+						el.autocomplete.css({'display': 'none'})
+					}
+					if(nextId <= 12 ){
+						el.c.find(`#mnemonicItem${nextId}`).trigger( "focus" )
+					}
+				} else if (e.code === 'ArrowLeft') { 
+					var nextId = currentInputId - 1
+					if(e.target.value && e.target.selectionStart > 0){
+						return
+					}
+					if(nextId > 0 ){
+						el.c.find(`#mnemonicItem${nextId}`).trigger( "focus" )
+					}
+				}
+			});	
+	   	}
+
+		backspaceEventHandler = function(){
+			el.c.find('.mnemonicItem').on('keydown',function (e) {
+				if (e.code === 'Backspace'){
+					if(e.target.selectionStart < 1){
+						var currentInputId = +activeMnemonicInput.attr("id").replace('mnemonicItem','')
+						var nextId = currentInputId - 1
+						if(nextId > 0 ){
+							el.c.find(`#mnemonicItem${nextId}`).trigger( "focus" )
+						}
+					}
+				}
+			})
+		}
+
+		addAutocomlete = function(){
+			el.c.find('.mnemonicItem').on('input paste focus',function (e) {
+				$(this).removeClass('errorClass')
+				autocompleteWord = ''
+				activeMnemonicInput = $(this)
+				const { top, left } = e.target.getBoundingClientRect();
+				const foundWord = e.target.value.length > 1 ? 
+				[
+					...bitcoin.bip39.wordlists.english,
+					...bitcoin.bip39.wordlists.russian,
+					...bitcoin.bip39.wordlists.french,
+					...bitcoin.bip39.wordlists.italian,
+					...bitcoin.bip39.wordlists.spanish,
+					...bitcoin.bip39.wordlists.korean,
+					...bitcoin.bip39.wordlists.chinese_traditional
+				].find((item) => item.includes(e.target.value) 
+				&& !item.includes(e.target.value, e.target.value.length)
+				&& item.slice(0, e.target.value.length) === e.target.value) 
+				: '' 
+				autocompleteWord = foundWord || ''
+				if(autocompleteWord === e.target.value){
+					el.autocomplete.css({'display': 'none'})
+					return
+				}
+					var autocompleteWordStart = autocompleteWord && autocompleteWord.slice(autocompleteWord.indexOf(e.target.value),e.target.value.length)
+					var autocompleteWordEnd = autocompleteWord && autocompleteWord.slice(autocompleteWordStart.length)
+		
+					el.autocomplete.css({
+						'position': 'absolute',
+						'top' : `${top + parseInt($(this).css("padding-top")) + 1.5}px`,
+						'left' : `${left + parseInt($(this).css("padding-left"))}px`,
+						'font-size': $(this).css("font-size"),
+						'font-weight': $(this).css("font-weight"),
+						'display': 'flex',
+						"z-index": "99999"
+					})
+					el.autocompleteEnd.css({
+						'color' : `#555770`,
+						'opacity': '0.6'
+					})
+					el.autocompleteStart.css({
+						'color' : `transparent`,
+					})
+					
+					el.autocompleteStart.html(autocompleteWordStart)
+					el.autocompleteEnd.html(autocompleteWordEnd)
+					if(e.target.value.length > 2 && !autocompleteWord && $(this).attr("id") === 'mnemonicItem1'){
+						el.c.find('.loginValue').val($(this).val())
+						$(this).val('')
+						el.c.find('#mnemonicInput').css({'display': 'none'})
+						el.c.find('.actionButtonsWrapper').css({'display': 'table-cell'})
+						el.c.find('.loginValue').css({'display': 'initial'})
+						el.c.find('.loginValue').trigger( "focus" )
+					}
+			  });	
+		}
+
+		validateMnemonicInput = function(){
+			el.c.find('.mnemonicItem').on('keypress paste', function(e){
+				if(e.key === 'Enter'){
+					autocompleteWord && activeMnemonicInput.val(autocompleteWord)
+					el.autocomplete.css({'display': 'none'})
+					var currentInputId = +activeMnemonicInput.attr("id").replace('mnemonicItem','')
+				    var nextId = currentInputId + 1
+					if(nextId < 12 ){
+						el.c.find(`#mnemonicItem${nextId}`).trigger( "focus" )
+						return false
+					}else{
+						return true
+					} 
+				} else{
+					return /^\p{L}+$/u.test(e.key)
+				}
+			})
+		}
+
+		pasteMnemonicPhrase = function(){
+			el.c.find('.mnemonicItem').on('paste', function(e){
+				var mnemonicArray = e.originalEvent.clipboardData.getData('text/plain').split(' ')
+				if(mnemonicArray.length > 1){
+					var mnemonicInputs = el.c.find('.mnemonicItem')
+					mnemonicArray.forEach((item, index)=>{
+						if(item){
+							mnemonicInputs[index].classList.remove('errorClass')
+							mnemonicInputs[index].value = item
+							mnemonicInputs[index].focus()
+						}
+					})
+					return false
+				}else{
+					return true
+				}	
+			})
+		}
+
+		checkAutocompleteValue = function(){
+			el.autocompleteEnd.on('click', function(e){
+				e.stopPropagation();
+				activeMnemonicInput.val(autocompleteWord);
+				el.autocomplete.css({'display': 'none'})
+				var currentInputId = +activeMnemonicInput.attr("id").replace('mnemonicItem','')
+				var nextId = currentInputId + 1
+				if(nextId < 12 ){
+					el.c.find(`#mnemonicItem${nextId}`).trigger( "focus" )
+				}
+			})
+		}
+
+		privateKeyInputHandler = function(){
+			el.c.find('.loginValue').on('input', function(e){
+				if(!e.target.value){
+					el.c.find('.loginValue').css({'display': 'none'})
+					el.c.find('.actionButtonsWrapper').css({'display': 'none'})
+					el.c.find('#mnemonicInput').css({'display': 'flex'})
+					el.c.find('.mnemonicItem')[0].focus()
+				} 
+			})
+		}
+
+		hideAotocomplete = function(){
+			$(".wndcontent").on('scroll',function(){
+				el.autocomplete.css({'display': 'none'})
+			})
+		}
 
 		var make = function(){
 		}
@@ -188,12 +364,15 @@ var addaccount = (function(){
 			},
 			
 			init : function(p){
-
+				$("body").prepend( "<span id='autocomplete'><span id='autocompleteStart'></span><span id='autocompleteEnd'></span></span>" );
 				el = {};
 				el.c = p.el.find('#' + self.map.id)
 
 				el.login = el.c.find(".loginValue");
 				el.enter = el.c.find('.enter');
+				el.autocompleteStart = $('#autocompleteStart')
+				el.autocompleteEnd = $('#autocompleteEnd')
+				el.autocomplete = $('#autocomplete')
 
 				essenseData = p.essenseData || {};
 				initialParameters = p;
@@ -201,6 +380,14 @@ var addaccount = (function(){
 				initEvents(p);
 
 				make();
+				addInputControle()
+				backspaceEventHandler()
+				addAutocomlete()
+				validateMnemonicInput()
+				checkAutocompleteValue()
+				pasteMnemonicPhrase()
+				privateKeyInputHandler()
+				hideAotocomplete()
 
 				p.clbk(null, p);
 
