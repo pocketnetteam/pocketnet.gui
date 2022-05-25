@@ -9500,7 +9500,6 @@ Platform = function (app, listofnodes) {
 
                 var totalComplains = typeof ustate.flags === 'object' ? Object.values(ustate.flags).reduce((a,b) => a + +b, 0) : 0
                 var isOverComplained = typeof ustate.flags === 'object' ? Object.values(ustate.flags).some(el => el / ustate.postcnt > 5) : false
-                console.log(ustate.name,totalComplains, isOverComplained)
                 if(self.bch[address]) return true
 
                 if(typeof count == 'undefined') count = -12
