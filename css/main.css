@@ -604,12 +604,9 @@ html.mobile .unselectablemobile {
   -ms-user-select: text!important;
   user-select: text!important;
 }
-/*
-html.testaddress{
-    .vjs-peertube{
-        display : block;
-    }
-}*/
+html.testaddress .vjs-peertube {
+  display: block;
+}
 div {
   -webkit-tap-highlight-color: transparent;
 }

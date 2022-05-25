@@ -191,7 +191,20 @@ Platform = function (app, listofnodes) {
         'PHMjVgWj6HMiLeAhiR8eDLzVrXp8nyF2ji' : true,
         'PR54hSnPDbhPePLNQZCP4CU77TRFoMxYqg' : true,
         'PARV591XENALBB5ApkR7WcQPhEZtLHfi2A' : true,
-        'PVgktx9ZmPnSXW83HmSF6MX76SV4u5a2hJ' : true
+        'PVgktx9ZmPnSXW83HmSF6MX76SV4u5a2hJ' : true,
+        'PSbwbtsVfALgykAUsCYofkPFTu9Chd6RUo' : true,
+        'PP3QYWu7ZRRm7NTAkXD7u3NbCKNGJhbEeL' : true,
+        'PP8AJb4X4uHxJw89UEGcNEom5RZy2RRxBY' : true,
+        'PRhLYR1TJegWzuzFa7FwT1iCCpNSeJrpjn' : true,
+        'PXb9rpCDax5NpU6m4tt2gdXyTp4urbTdS8' : true,
+        'PRDXZpyF7rm9cJw3y6DX2nFvK1AYgjpXdF' : true,
+        'P9D3ntMdwy4HGjBhg1uQDuQD99MXYZTqg3' : true,
+        'PWGhooqyrq1qL7NPgg2an8M69sHfJrDM8Y' : true,
+        'PUuNT7icKad8fm7ATPRn1s8gd19HXYKDqS' : true,
+        'PWkQMUTG6pKVA9bAbjLmLewB5eVgEnVk6f' : true,
+        'PUAQeTYUB9H5qjeSSXzeeAd6NKXAz8fzpP' : true,
+        'PQ4X2NQJD1ZA5Hy58ZU9eHcjpRco7ZMgTz' : true,
+        'PTMFZXMXYFjiN1UuSV4ZckepyEFVWMm6Zy' : true
     }
 
     self.bch = {
@@ -27058,12 +27071,12 @@ Platform = function (app, listofnodes) {
 
                         self.sdk.notifications.init().catch(e => {})
 
-                        if (self.sdk.address.pnet()){
-                            if(self.nvadr[self.sdk.address.pnet().address]) $('html').addClass('testaddress')
-                            else{
-                                if($('html').hasClass('testaddress'))
+                        if(self.istest()){
+                            $('html').addClass('testaddress')
+                        }
+                        else{
+                            if($('html').hasClass('testaddress'))
                                 $('html').removeClass('testaddress')
-                            }
                         }
 
                     }, 2000)
