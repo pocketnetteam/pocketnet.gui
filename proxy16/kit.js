@@ -1083,6 +1083,11 @@ var kit = {
 					await state.save()
 				})
 			},
+			info : function(){
+				return kit.proxy().then(async proxy => {
+					return await proxy.torapplications.info();
+				})
+			},
 		},
 
         quit : function() {

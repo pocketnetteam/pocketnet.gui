@@ -557,6 +557,10 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 			
 			await torapplications.start();
 		},
+
+		info: async ()=>{
+			return torapplications.info();
+		},
 		
 		stop: async ()=>{
 			if(!global.USE_PROXY_NODE) {
@@ -919,6 +923,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				remote: remote.info(compact),
 				admins: settings.admins,
 				peertube : self.peertube.info(compact),
+				tor: self.torapplications.info(),
 				captcha: {
 					ip: _.toArray(captchaip).length,
 					all: _.toArray(captchas).length
