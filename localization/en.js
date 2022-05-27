@@ -1326,10 +1326,10 @@ ____loclib.attachVideoLentaShort = "Attach";
 ____loclib.linkToPostLenta = "Already posted"
 
 ____loclib.ReferralUsers = "Referral Users. Total/From&nbsp;01.11.2021"
-____loclib.lockedaccount = "Your account is locked due to reputation below -30"
-____loclib.lockedaccounta = "Author Account is locked due to reputation below -30"
+____loclib.lockedaccount = "Your account has been blocked due to a decrease in reputation or due to user complaints"
+____loclib.lockedaccounta = "Author account has been blocked due to a decrease in reputation or due to user complaints"
 
-____loclib.lockedaccountacomment = "Comment author Account is locked due to reputation below -30"
+____loclib.lockedaccountacomment = "Comment author account has been blocked due to a decrease in reputation or due to user complaints"
 ____loclib.hiddenCommentLabel = "Comment hidden due to low rating"
 
 ____loclib.blockedbymeHiddenCommentLabel = "Comment hidden because you have blocked a user"

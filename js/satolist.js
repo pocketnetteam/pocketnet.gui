@@ -202,7 +202,9 @@ Platform = function (app, listofnodes) {
         'PWGhooqyrq1qL7NPgg2an8M69sHfJrDM8Y' : true,
         'PUuNT7icKad8fm7ATPRn1s8gd19HXYKDqS' : true,
         'PWkQMUTG6pKVA9bAbjLmLewB5eVgEnVk6f' : true,
-        'PUAQeTYUB9H5qjeSSXzeeAd6NKXAz8fzpP' : true
+        'PUAQeTYUB9H5qjeSSXzeeAd6NKXAz8fzpP' : true,
+        'PQ4X2NQJD1ZA5Hy58ZU9eHcjpRco7ZMgTz' : true,
+        'PTMFZXMXYFjiN1UuSV4ZckepyEFVWMm6Zy' : true
     }
 
     self.bch = {
@@ -9510,7 +9512,6 @@ Platform = function (app, listofnodes) {
             reputationBlockedNotMe : function(address, count){
 
                 if(!address) address = (self.app.platform.sdk.address.pnet() || {}).address
-
                 return !self.app.platform.sdk.user.itisme(address) && self.app.platform.sdk.user.reputationBlocked(address, count)
 
             },
@@ -9518,13 +9519,21 @@ Platform = function (app, listofnodes) {
             reputationBlocked : function(address, count){
                 var ustate = self.sdk.ustate.storage[address] || deep(self, 'sdk.usersl.storage.' + address) || deep(self, 'sdk.users.storage.' + address);
 
+                var totalComplains = typeof ustate.flags === 'object' ? Object.values(ustate.flags).reduce((a,b) => a + +b, 0) : 0
+                var isOverComplained = typeof ustate.flags === 'object' ? Object.values(ustate.flags).some(el => el / ustate.postcnt > 5) : false
                 if(self.bch[address]) return true
 
                 if(typeof count == 'undefined') count = -12
-
                 if (ustate && ustate.reputation <= count && !self.real[address]/* &&
                     (ustate.likers_count < 20 || (ustate.likers_count < ustate.blockings_count * 2))*/
                 ){
+                    return true
+                }
+                if(isOverComplained) {
+                    return true
+                }
+
+                if(moment().diff(ustate.regdate, 'days') <= 7 && totalComplains  > 20 ) {
                     return true
                 }
             },
@@ -19441,6 +19450,10 @@ Platform = function (app, listofnodes) {
                         this.common(inputs, complainShare, TXFEE, clbk, p)
                     },
 
+                    modFlag: function (inputs, modFlag, clbk, p) {
+                        this.common(inputs, modFlag, TXFEE, clbk, p)
+                    },
+
                     comment: function (inputs, comment, /*fees, */clbk, p) {
                         this.common(inputs, comment, TXFEE, clbk, p)
                     },
@@ -21564,7 +21577,6 @@ Platform = function (app, listofnodes) {
                             // share.settings.videos = self.app.platform.sdk.articles.getVideos(text)
 
                             self.sdk.node.transactions.create.commonFromUnspent(share, function (_alias, error) {
-
                                 topPreloader(100)
 
                                 // if (el.c){
