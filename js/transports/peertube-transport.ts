@@ -19,7 +19,7 @@ export function peertubeTransport(ipcRenderer: IpcRenderer, localVideo: LocalVid
         fsFetch = fsFetchFactory(ipcRenderer, localVideo.video.internalURL);
     }
 
-    function fetchRouter(input: RequestInfo, init: RequestInit): Promise<Response> {
+    async function fetchRouter(input: RequestInfo, init: RequestInit): Promise<Response> {
         let url: string;
 
         if (typeof input === 'string') {
@@ -38,10 +38,12 @@ export function peertubeTransport(ipcRenderer: IpcRenderer, localVideo: LocalVid
             return fsFetch(input, init);
         }
 
+        //ToDo посмотри тут пожалуйста
         // @ts-ignore
-        const isTorEnabled = app.platform.sdk.usersettings.meta.useTor.value;
-
-        if (isTorEnabled) {
+        const proxy = await app.api.get.current();
+        const info = await proxy.get.info();
+        
+        if (info?.tor?.enabled) {
             return proxyFetch(input, init);
         }
 

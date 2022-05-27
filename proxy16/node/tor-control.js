@@ -130,7 +130,7 @@ class TorControl {
         }
 
         const log = (data)=>{
-            if(data?.data.indexOf("100%") >= 0){
+            if(data?.data?.indexOf("100%") >= 0){
                 console.log("TOR started")
                 this.state.status = "started"
             }
@@ -162,6 +162,7 @@ class TorControl {
             }
         }
         console.log("TOR running with pid: ", this.instance?.pid)
+        this.settings.enable = true;
         return true;
     }
 
@@ -180,19 +181,24 @@ class TorControl {
         if(pid) {
             try {
                 process.kill(+pid.toString(), 9)
-                await fs.unlink(path.join(this.settings.path, "tor.pid"))
             }catch (e) {
-                console.error(e)
-                return false;
+                try {
+                    this.instance?.kill(9)
+                }catch (e) {}
+            }finally {
+                try{
+                    await fs.unlink(path.join(this.settings.path, "tor.pid"))
+                }catch (e) {}
             }
         }
         console.log("TOR stop")
+        this.settings.enable = false;
         return true;
     }
 
-    info = ()=>{
+    info = (compact)=>{
         return {
-            enabled : this.state.enabled,
+            enabled : this.settings.enable,
             instance : !!this.instance,
             state : this.state,
             binPath : path.join(this.settings.path, this.helpers.bin_name("tor")),
@@ -211,7 +217,7 @@ class TorControl {
 
     destroy = async ()=>{
         await this.stop();
-        return this.application.destroy()
+        return this.application?.destroy()
     }
 }
 
