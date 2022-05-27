@@ -15,7 +15,8 @@
   flex-wrap: wrap;
   gap: 4px;
   margin-bottom: 20px;
-  justify-content: space-between;
+  justify-content: start;
+  align-content: start;
 }
 #pkview .approveMnemonic .shuffledMnemonicWrapper .shuffledMnemonicItem,
 #pkview .approveMnemonic .randomWordsWrapper .shuffledMnemonicItem {
@@ -46,22 +47,8 @@
   display: flex;
   justify-content: space-between;
 }
-#pkview .approveMnemonic .submitButton,
-#pkview .approveMnemonic .backButton {
-  width: fit-content;
-  display: flex;
-  align-items: center;
-}
-#pkview .approveMnemonic .submitButton i,
-#pkview .approveMnemonic .backButton i {
-  margin-left: 3px;
-  margin-right: 3px;
-  height: 11px;
-}
 #pkview .approveMnemonic .submitButton:disabled,
-#pkview .approveMnemonic .backButton:disabled,
-#pkview .approveMnemonic .submitButton [disabled],
-#pkview .approveMnemonic .backButton [disabled] {
+#pkview .approveMnemonic .submitButton [disabled] {
   opacity: 0.5;
   cursor: default;
   pointer-events: none;
@@ -217,6 +204,10 @@
 }
 /*t*/
 @media only screen and (max-width: 768px) {
+  .wnd.pkviewwnd #pkview .approveMnemonic {
+    padding-bottom: 10px;
+    padding-top: 5px;
+  }
   .wnd.pkviewwnd #pkview .keywrapper {
     padding-left: 0.5em;
     padding-right: 0.5em;
