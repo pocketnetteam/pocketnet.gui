@@ -22,17 +22,17 @@
             .shuffledMnemonicItem{
                 width: 32%;
                 height: 40px;
-                background: #E1E7F5;
+                background: @color-blue-mlight;
                 border-radius: 6px;
-                color: blue;
+                color: @color-white;
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 font-size: 1em;
                 &:hover {
                     cursor: pointer;
-                    background: #6A4BFF;
-                    color: white;
+                    background: @color-block;
+                    color: @color-white;
                 }
             }
         }
@@ -40,7 +40,7 @@
             height: 194px;
             padding: 10px;
             margin-bottom: 2em;
-            border: 1px dashed #8b9bc7;
+            border: 1px dashed @color-gray;
             border-radius: 8px;
         }
         .approveMnemonicButtons{
@@ -56,8 +56,8 @@
             }
         }
         .hide {
-            background: #E1E7F5;
-            color: #E1E7F5;
+            background: @color-dark-mlight !important;
+            color: @color-dark-mlight !important;
             pointer-events: none;
             text-indent: -9999px;
         }
