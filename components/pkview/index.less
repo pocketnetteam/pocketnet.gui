@@ -17,7 +17,8 @@
             flex-wrap: wrap;
             gap: 4px;
             margin-bottom: 20px;
-            justify-content: space-between;
+            justify-content: start;
+            align-content: start;
             .shuffledMnemonicItem{
                 width: 32%;
                 height: 40px;
@@ -46,16 +47,7 @@
             display: flex;
             justify-content: space-between;
         }
-        .submitButton,
-        .backButton{
-            width: fit-content;
-            display: flex;
-            align-items: center;
-            & i{
-                margin-left: 3px;
-                margin-right: 3px;
-                height: 11px;
-            }
+        .submitButton{
             &:disabled,
             & [disabled]{
                 opacity:.5;
@@ -266,6 +258,10 @@
     .wnd.pkviewwnd{
        
         #pkview{
+            .approveMnemonic{
+                padding-bottom: 10px;
+                padding-top: 5px;
+            }
             
             .keywrapper{
                 padding-left: @rhythm;

@@ -221,7 +221,7 @@ var pkview = (function(){
 		}
 		renderShuffledMnemonic = function(){
 			el.c.find(".approveMnemonic")
-			.html(`<span class="approveMnemonicNote">${self.app.localization.e('mnemonicnote')}</span><div class="randomWordsWrapper"></div><div class="shuffledMnemonicWrapper"></div><div class="approveMnemonicButtons"><button class="backButton"><i class="fas fa-angle-left"></i><span>${self.app.localization.e('back')}</span></button><button class="submitButton" disabled><span>${self.app.localization.e('confirm')}</span><i class="fas fa-angle-right"></i></button></div>`)
+			.html(`<span class="approveMnemonicNote">${self.app.localization.e('mnemonicnote')}</span><div class="randomWordsWrapper"></div><div class="shuffledMnemonicWrapper"></div><div class="approveMnemonicButtons"><button class="button ghost backButton"><span>${self.app.localization.e('back')}</span></button><button class="button orange submitButton" disabled>${self.app.localization.e('confirm')}</button></div>`)
 			var shuffledMnemonic = shuffleArray(current.mnemonicContent)
 			var container = el.c.find(".shuffledMnemonicWrapper")
 			for(var i = 0; i < shuffledMnemonic.length; i++) {
