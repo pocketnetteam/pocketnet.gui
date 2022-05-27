@@ -10,6 +10,8 @@ var pkview = (function(){
 
 		var el, current = {}, ed = {}
 
+		var checkedMnemonic = []
+
 		var actions = {
 			saveqr : function(base64, clbk){
 
@@ -192,6 +194,84 @@ var pkview = (function(){
 			}
 		}
 
+		shuffleArray = function(array){
+			const words = [...array];
+			const shuffled = [];
+		  
+			var n = words.length;
+		  
+			while (n) {
+			  n -= 1;
+			  const i = Math.floor(Math.random() * n);
+			  const [word] = words.splice(i, 1);
+		  
+			  shuffled.push(word);
+			}
+		  
+			return shuffled;
+		}
+
+		back = function(){
+			el.c.find(".backButton").on('click', function(e){
+				checkedMnemonic = []
+				el.c.find(".stepContent").css({"display": "block"})
+				el.c.find('.dontshowagain').css({"display": "block"})
+				el.c.find(".approveMnemonic").html('')
+			})
+		}
+		renderShuffledMnemonic = function(){
+			el.c.find(".approveMnemonic")
+			.html(`<span class="approveMnemonicNote">${self.app.localization.e('mnemonicnote')}</span><div class="randomWordsWrapper"></div><div class="shuffledMnemonicWrapper"></div><div class="approveMnemonicButtons"><button class="backButton"><i class="fas fa-angle-left"></i><span>${self.app.localization.e('back')}</span></button><button class="submitButton" disabled><span>${self.app.localization.e('confirm')}</span><i class="fas fa-angle-right"></i></button></div>`)
+			var shuffledMnemonic = shuffleArray(current.mnemonicContent)
+			var container = el.c.find(".shuffledMnemonicWrapper")
+			for(var i = 0; i < shuffledMnemonic.length; i++) {
+				$(`<div class="shuffledMnemonicItem">${shuffledMnemonic[i]}</div>`).appendTo(container);
+			}
+		}
+
+		removeFromSelected = function(){
+			el.c.find(".randomWordsWrapper > .shuffledMnemonicItem").on('click', function(e){
+				e.stopPropagation();
+				e.stopImmediatePropagation();
+				var value = $(this).text()
+				checkedMnemonic = checkedMnemonic.filter(
+					(el) => value !== el,
+				  );
+				  var shuffledMnemonicItem = el.c.find(".shuffledMnemonicWrapper > .shuffledMnemonicItem").filter(function() {
+					return $(this).text() === value;
+				})
+				shuffledMnemonicItem.removeClass('hide')
+				$(this).remove()
+				checkedMnemonic.length !== 12 && el.c.find(".submitButton").prop("disabled", true)
+			})
+		}
+
+		mnemonicItemClickHandler = function(){
+			el.c.find(".shuffledMnemonicItem").on('click', function(){
+				var container = el.c.find(".randomWordsWrapper")
+				if(checkedMnemonic.length < 12){
+					checkedMnemonic.push($(this).text())
+					$(`<div class="shuffledMnemonicItem">${$(this).text()}</div>`).appendTo(container)
+					$(this).addClass('hide')
+					checkedMnemonic.length === 12 && el.c.find(".submitButton").prop("disabled", false)
+				}
+				removeFromSelected()
+			})
+		}
+
+		validateMnemonic = function(){
+			el.c.find(".submitButton").on('click', function(){
+				if(checkedMnemonic.length === 12){
+					if(checkedMnemonic.join(' ') === current.mnemonicKey){
+						self.closeContainer()
+				 		self.app.platform.sdk.registrations.donotshowprivate()
+					}else{
+						sitemessage(self.app.localization.e('mnemonicerror'))
+					}
+				}
+			})
+		}
+
 		var state = {
 			save : function(){
 
@@ -218,9 +298,17 @@ var pkview = (function(){
 			
 			el.c.find('.dontshowagain').on('click', function(){
 
-				self.closeContainer()
+				// self.closeContainer()
 
-				self.app.platform.sdk.registrations.donotshowprivate()
+				// self.app.platform.sdk.registrations.donotshowprivate()
+
+				el.c.find(".stepContent").css({"display": "none"})
+				el.c.find(".approveMnemonic").css({"display": "flex"})
+				renderShuffledMnemonic()
+				back()
+				mnemonicItemClickHandler()
+				validateMnemonic()
+				$(this).css({"display": "none"})
 
 				/**if(isMobile()){
 
