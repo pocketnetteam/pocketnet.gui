@@ -2651,6 +2651,11 @@ var lenta = (function(){
 			showBanner : function(){
 				var shareId = $(this).closest('.share').attr('id');
 				renders.showBanner(shareId);
+			},
+
+			closeBanner: function(){
+				var shareId = $(this).closest('.share').attr('id');
+				renders.closeBanner(shareId);
 			}
 
 			
@@ -3696,9 +3701,18 @@ var lenta = (function(){
 			},
 
 			showBanner : function(id) {
-				console.log('slkdhfñasdflkjddd');
-				el.c.find('#' + id).find('.bannerComment').css("display","block");
+				let currentBanner = el.c.find('#' + id).find('.bannerComment')[0];
+				let bannerBody = el.c.find('#' + id).find('.bannerBody')[0];
+
+				bannerBody.classList.remove('hidden');
+				bannerBody.classList.add('showAnimation');
 			},
+
+			closeBanner : function (id) {
+				let currentBanner = el.c.find('#' + id).find('.bannerComment')[0];
+				currentBanner.classList.remove('showAnimation')
+				currentBanner.classList.add('hidden');
+			}
 
 			
 		}
@@ -4338,6 +4352,7 @@ var lenta = (function(){
 			el.c.find('.loadprev button').on('click', events.loadprev)
 			el.c.on('click', '.gotouserprofile', events.gotouserprofile)
 			el.c.on('click', '.forstars', events.showBanner)
+			el.c.on('click', '.closeBannerBtn', events.closeBanner)
 
 			el.c.on('click','.openauthorwindow', events.openauthorwindow)
 
