@@ -1322,8 +1322,8 @@ var post = (function () {
 						if(!el.share) return
 
 						el.stars = el.share.find('.forstars');
-						
-						_p.el.find('.panel .pkoin').on('click', events.pkoin)
+
+						_p.el.find('.pkoin').on('click', events.pkoin)
 						_p.el.find('.gotouserprofile').on('click', events.gotouserprofile)
 
 						if (ed.repost)
