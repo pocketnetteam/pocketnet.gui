@@ -4,6 +4,7 @@ const Applications = require("./applications");
 const f = require('../functions');
 const fs = require("fs/promises");
 const {settings} = require("express/lib/application");
+const {EventEmitter} = require("events");
 
 class Helpers {
     bin_name = (name)=> {
@@ -32,6 +33,7 @@ class TorControl {
         this.state.status = 'stopped'
         this.application = new Applications(settings,applicationRepository)
         this.helpers = new Helpers();
+        this.events = new EventEmitter();
     }
 
     init = async ()=>{
@@ -133,6 +135,8 @@ class TorControl {
             if(data?.data?.indexOf("100%") >= 0){
                 console.log("TOR started")
                 this.state.status = "started"
+
+                this.events.emit('TorStarted', true);
             }
             // console.log(data)
         }
@@ -205,7 +209,28 @@ class TorControl {
             dataPath : this.settings.path,
         }
     }
-    
+
+    whileNotStarted = () => {
+        return new Promise((resolve, reject) => {
+            const isTorEnabled = (this.settings.enable);
+            const isAlreadyStarted = (this.state.status === 'started');
+
+            if (!isTorEnabled || isAlreadyStarted) {
+                resolve();
+                return;
+            }
+
+            const timer = setTimeout(() => {
+                reject();
+            }, 20000);
+
+            this.events.once('TorStarted', () => {
+                clearTimeout(timer);
+                resolve();
+            });
+        });
+    }
+
     checkRunning = async ()=> {
         try {
             const pid = await fs.readFile(path.join(this.settings.path, "tor.pid"), {encoding: "utf-8"})

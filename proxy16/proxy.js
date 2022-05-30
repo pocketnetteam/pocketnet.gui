@@ -561,7 +561,11 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 		info: (compact)=>{
 			return torapplications.info(compact);
 		},
-		
+
+		whileNotStarted: () => {
+			return torapplications.whileNotStarted();
+		},
+
 		stop: async ()=>{
 			if(!global.USE_PROXY_NODE) {
 				console.log('!global.USE_PROXY_NODE')

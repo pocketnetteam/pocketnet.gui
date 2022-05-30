@@ -1,5 +1,6 @@
 import type * as Electron from "electron";
 import type * as Stream from "stream";
+import {AxiosStatic} from "axios";
 
 const getRequestId = () => {
     const rand = Math.random()
@@ -156,21 +157,25 @@ export class ProxifiedFetchBridge {
 
     private ipc: Electron.IpcMain;
     private proxifiedFetch: (input: RequestInfo, init: RequestInit) => Promise<Response>;
+    private torInitFinished: () => unknown;
     private requests = {};
 
-    constructor(electronIpcMain: Electron.IpcMain, proxifiedFetch: (input: RequestInfo, init: RequestInit) => Promise<Response>) {
+    constructor(electronIpcMain: Electron.IpcMain, proxifiedFetch: (input: RequestInfo, init: RequestInit) => Promise<Response>, torInitFinished: () => void) {
         this.ipc = electronIpcMain;
         this.proxifiedFetch = proxifiedFetch;
+        this.torInitFinished = torInitFinished;
     }
 
     init() {
-        this.listen('Request', (id: string, url: string, requestInit: RequestInit, { sender }: Electron.IpcMainEvent) => {
+        this.listen('Request', async (id: string, url: string, requestInit: RequestInit, { sender }: Electron.IpcMainEvent) => {
             const fetch = this.proxifiedFetch;
 
             this.requests[id] = {};
 
             const controller = new AbortController();
             const signal = controller.signal;
+
+            await this.torInitFinished();
 
             const request = fetch(url, { signal, ...requestInit })
                 .then((data: Response & { body: Stream }) => {
