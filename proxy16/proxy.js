@@ -44,6 +44,7 @@ if (process.platform === 'win32') expectedExitCodes = [3221225477];
 console.log('expectedExitCodes' , expectedExitCodes)*/
 
 var Proxy = function (settings, manage, test, logger, reverseproxy) {
+
 	var self = this;
 
 		self.test = test
@@ -62,11 +63,11 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 	var peertube = new Peertube()
 	var bots = new Bots(settings.bots)
 	var systemnotify = new SystemNotify(settings.systemnotify)
-	
+
 	var torapplications = new TorControl(settings.tor)
-	
+
 	var transports = new Transports(self);
-	
+
 	var dump = {}
 
 	self.userDataPath = null
@@ -74,7 +75,8 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 	logger.setapp(self)
 
-	f.mix({transports,
+	f.mix({
+		transports,
 		wss, server, pocketnet, nodeControl,
 		remote, firebase, nodeManager, wallet,
 		proxies, exchanges, peertube, bots,
@@ -82,6 +84,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 		logger,
 		proxy: self
 	})
+
 
 	var stats = [];
 	var statcount = 100;
@@ -543,18 +546,18 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				console.log('!global.USE_PROXY_NODE')
 				return Promise.resolve()
 			}
-			
+
 			return torapplications.application.init().then(async r => {
 				return await torapplications.init();
 			})
 		},
-		
+
 		start: async ()=>{
 			if(!global.USE_PROXY_NODE) {
 				console.log('!global.USE_PROXY_NODE')
 				return Promise.resolve()
 			}
-			
+
 			await torapplications.start();
 		},
 
@@ -574,7 +577,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 			await torapplications.stop();
 		},
-		
+
 		destroy: async ()=>{
 			await torapplications.destroy();
 		},
@@ -665,8 +668,8 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 			var ins = {
 				1: [
-				  { host: 'pocketnetpeertube1.nohost.me', ip: '109.226.245.120'},
-				{ host: 'pocketnetpeertube2.nohost.me', cantuploading: true, ip: '94.73.223.24' },
+				  	{ host: 'pocketnetpeertube1.nohost.me', cantuploading: true, ip: '109.226.245.120'},
+					{ host: 'pocketnetpeertube2.nohost.me', cantuploading: true, ip: '94.73.223.24'},
 				],
 				5: [
 				  {
@@ -824,6 +827,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					{
 						host : 'peertube17.pocketnet.app',
 						ip: '51.250.104.218',
+						cantuploading: true
 					}
 				],
 
@@ -831,6 +835,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					{
 						host : 'peertube18.pocketnet.app',
 						ip: '51.250.41.252',
+						cantuploading: true
 					}
 				],
 
@@ -838,6 +843,28 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					{
 						host : 'peertube19.pocketnet.app',
 						ip: '51.250.73.97',
+						cantuploading: true
+					}
+				],
+
+				23: [
+					{
+						host : 'peertube17mirror.pocketnet.app',
+						ip: '64.235.40.47',
+					}
+				],
+
+				24: [
+					{
+						host : 'peertube18mirror.pocketnet.app',
+						ip: '64.235.42.75 ',
+					}
+				],
+
+				25: [
+					{
+						host : 'peertube19mirror.pocketnet.app',
+						ip: '64.235.50.17',
 					}
 				],
       		};
@@ -854,7 +881,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					if(!p.old){
 						trustpeertube.push(p.host)
 					}
-				})	
+				})
 			})
 
 			return peertube.init({
@@ -1107,7 +1134,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 			var result = null
 
-			
+
 
 			return rpc({ method, parameters, options, U }).then(r => {
 
@@ -1133,7 +1160,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					users = _.map(posts, function(p){
 						return f.deep(p, 'lastComment.address')
 					})
-	
+
 					users = _.filter(users, u => {return u && !_.find(posts, function(p){
 						return p.address == u
 					})})
@@ -1155,9 +1182,9 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 						parameters : [users, '1'],
 						options, U
 					}).then(users => {
-	
+
 						result.data.users = users.data
-	
+
 						return Promise.resolve()
 					})
 				}
@@ -1179,7 +1206,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					})
 				}
 
-					
+
 
 				users = null
 				videos = null
@@ -1275,7 +1302,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 						if (options.locally && options.meta) {
 							node = nodeManager.temp(options.meta);
 						}
-						
+
 						if (!node && options.node) {
 							node = nodeManager.nodesmap[options.node];
 
@@ -1927,7 +1954,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 						data: {
 							time: f.now(),
 							session : self.session,
-							v : '0807',
+							v : '0808',
 							node : node || ''
 						},
 					});

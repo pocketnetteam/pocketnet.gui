@@ -793,7 +793,7 @@ ComplainShare = function(){
 		v : ''
 	};
 
-	
+
 
 	self.validation = function(){
 		if(!self.share.v){
@@ -823,11 +823,83 @@ ComplainShare = function(){
 
 		if (p.reason)
 			self.reason.v = p.reason
-			
+
 	}
 
 	self.type = 'complainShare'
 
+	return self;
+}
+
+ModFlag = function(){
+	var self = this;
+
+	self.s2 = {
+		set : function(_v){
+			this.v = _v
+		},
+		v : ''
+	};
+
+	self.s3 = {
+		set: function(_v){
+			this.v = _v
+		},
+		v : ''
+	};
+
+	self.i1 = {
+		set : function(_v){
+			this.v = _v
+		},
+		v : ''
+	};
+
+	
+
+	self.validation = function(){
+		if(!self.s2.v){
+			return 'share'
+		}
+
+		if(!self.s3.v){
+			return 'address'
+		}
+
+		if(!self.i1.v){
+			return 'reason'
+		}
+	}
+
+	self.serialize = function(){
+		// return self.share.v + '_' + self.reason.v
+		return self.s2.v + self.s3.v + self.i1.v
+	}
+
+	self.export = function(){
+		return {
+			// share : self.share.v,
+			// reason : self.reason.v
+			s2 : self.s2.v,
+			s3 : self.s3.v,
+			i1 : self.i1.v
+		}
+	}
+
+	self.import = function(p){
+
+		if (p.s2)
+			self.s2.v = p.s2;
+
+		if (p.s3)
+			self.s3.v = p.s3;
+
+		if (p.i1)
+			self.i1.v = p.i1;
+			
+	}
+
+	self.type = 'modFlag'
 	return self;
 }
 
@@ -1382,6 +1454,14 @@ Share = function(lang){
 		if(meta.type == 'peertube') return true
 	}
 
+	self.canSend = function(app, clbk) {
+		if (self.itisvideo() && !self.aliasid) {
+			return app.peertubeHandler.checkTranscoding(self.url.v).then(result => clbk(result));
+		}
+
+		return clbk(true);
+	}
+
 	self.itisarticle = function(){
 		return self.settings.v == 'a' && self.settings.version && self.settings.version >= 2
 	}
@@ -1427,7 +1507,6 @@ Share = function(lang){
 			l : self.language.v,
 			txidEdit : self.aliasid || "",
 			txidRepost : self.repost.v || ""
-
 		}
 	}
 
@@ -1861,7 +1940,6 @@ pUserInfo = function(){
 
 
 	self._import = function(v){
-
 		self.name = clearStringXss(decodeURIComponent(v.n || v.name || ''));
 		self.image = clearStringXss(v.i || v.image);
 		self.about = clearStringXss(decodeURIComponent(v.a || v.about || ''));
@@ -1882,6 +1960,7 @@ pUserInfo = function(){
 		if (v.recomendedSubscribes) self.recomendedSubscribes = v.recomendedSubscribes;
 
 		if (v.blocking) self.blocking = v.blocking;
+		if (v.flags) self.flags = v.flags;
 
 		self.keys = (v.k || v.keys || '')
 
@@ -2394,6 +2473,15 @@ pShare = function(){
 
 		return complainShare;
 	}
+	self.modFlag = function(reason){
+		var modFlag = new ModFlag();
+
+		modFlag.s2.set(self.txid);
+		modFlag.s3.set(self.address);
+		modFlag.i1.set(reason);
+
+		return modFlag;
+	}
 
 	self.alias = function(){
 		var share = new Share();
@@ -2653,6 +2741,7 @@ kits = {
 		userInfo : UserInfo,
 		share : Share,
 		complainShare : ComplainShare,
+		modFlag : ModFlag,
 		upvoteShare : UpvoteShare,
 		cScore : СScore,
 		comment : Comment,

@@ -1000,3 +1000,11 @@ ____loclib.videosDeleted = "视频被删除!";
 ____loclib.noDownloadedVideos = "没有下载的视频";
 
 ____loclib.buy = '买';
+
+____loclib.lowstar1 = "Bastyon 團隊正在實施臨時暫停 1 星和 2 星評級，禁止內容除外。禁止內容是："
+____loclib.lowstar_reason_1 = "色情"
+____loclib.lowstar_reason_2 = "兒童剝削"
+____loclib.lowstar_reason_3 = "直接的暴力威脅"
+____loclib.lowstar_reason_4 = "非法藥物"
+____loclib.lowstar2 = "請不要出於其他原因使用 1 星和 2 星評級。在新的審核在中旬發布後。希望您能夠出於其他原因使用低評級"
+____loclib.lowstaragree = "我確認這篇文章包含四種禁止內容之一"

@@ -823,3 +823,11 @@ ____loclib.pleaseTryAgain = "Algo está incorrecto. Por favor, inténtelo de nue
 ____loclib.buy = 'Comprar';
 
 ____loclib.usetor = "Conexión a través de la red Tor"
+
+____loclib.lowstar1 = "El equipo de Bastyon está implementando una moratoria temporal en las calificaciones de 1 y 2 estrellas, excepto el contenido prohibido. El contenido prohibido es:"
+____loclib.lowstar_reason_1 = "Porno"
+____loclib.lowstar_reason_2 = "Explotación de menores"
+____loclib.lowstar_reason_3 = "Amenaza directa de violencia"
+____loclib.lowstar_reason_4 = "Drogas ilegales"
+____loclib.lowstar2 = "Por favor, no use calificaciones de 1 y 2 estrellas por otras razones. Después de que se publique la nueva moderación a mediados. Puede que pueda usar calificaciones bajas por otras razones"
+____loclib.lowstaragree = "Confirmo que esta publicación contiene uno de los cuatro tipos de contenido prohibido"
