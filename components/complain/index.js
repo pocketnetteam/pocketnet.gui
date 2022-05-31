@@ -14,19 +14,19 @@ var complain = (function(){
 
       post : [
         {
-          name : self.app.localization.e(____loclib.lowstar_reason_1),
+          name : self.app.localization.e('lowstar_reason_1'),
           gid : 1
         },
         {
-          name : self.app.localization.e(____loclib.lowstar_reason_2),
+          name : self.app.localization.e('lowstar_reason_2'),
           gid : 2
         },
         {
-          name : self.app.localization.e(____loclib.lowstar_reason_3),
+          name : self.app.localization.e('lowstar_reason_3'),
           gid : 3
         },
         {
-          name : self.app.localization.e(____loclib.lowstar_reason_4),
+          name : self.app.localization.e('lowstar_reason_4'),
           gid : 4
         }
 
