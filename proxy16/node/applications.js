@@ -5,25 +5,21 @@ const { reject } = require('underscore');
 var f = require('../functions');
 var path = require('path');
 var Datastore = require('nedb');
-var transports = require("../transports")
 var progress = require('request-progress');
 var targz = require('targz');
 
 
-var Applications = function(settings, applications = {}) {
+var Applications = function(settings, applications = {}, proxy) {
     if(!settings) settings = {}
 
     var self = this;
 
     var db = new Datastore(f.path(settings.dbpath));
-
     
     
     var platform = process.platform
     var meta = applications[platform]
 
-    self.transports = transports(true, true);
-    
     self.getMeta = function() {
         return meta
     }
@@ -31,8 +27,8 @@ var Applications = function(settings, applications = {}) {
     self.getinfo = function(key){
 
         if(!meta) return Promise.reject('platform')
-
-        return self.transports.axios.get(meta[key].url).then(function(response) {
+        console.log(meta[key].url)
+        return proxy.transports.axios.get(meta[key].url).then(function(response) {
 
             var d = response.data
             var assets = d.assets || [];
@@ -167,8 +163,8 @@ var Applications = function(settings, applications = {}) {
         })
     }
 
-    self.download = function(key, repo = { user: "pocketnetteam", name: "pocketnet.core"}){
-
+    self.download = async function(key, repo = { user: "pocketnetteam", name: "pocketnet.core"}){
+        const current = await self.current()
         var r = {}
 
         return self.getinfo(key).then(asset => {
@@ -201,7 +197,7 @@ var Applications = function(settings, applications = {}) {
         let endFile = path.resolve(dest, meta[key].name)
 
         return new Promise(function(resolve, reject) {
-            let req = self.transports.request({url:meta[key].url})
+            let req = proxy.transports.request({url:meta[key].url})
 
             progress(req, {
                 throttle: 500,                    // Throttle the progress event to 2000ms, defaults to 1000ms
@@ -291,7 +287,7 @@ var Applications = function(settings, applications = {}) {
     self.hasapplication = function(){
         return meta ? true : false
     }
-
+    
     return self
 }
 

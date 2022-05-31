@@ -1085,7 +1085,25 @@ var kit = {
 			},
 			info : function(){
 				return kit.proxy().then(async proxy => {
-					return await proxy.torapplications.info();
+					return proxy.torapplications.info();
+				})
+			},
+		},
+
+		transports : {
+			axios : function(data = {method: "", args: []}){
+				return kit.proxy().then(async proxy => {
+					return proxy.transports.axios[data.method](...data.args);
+				})
+			},
+			fetch : function(...args){
+				return kit.proxy().then(async proxy => {
+					return proxy.transports.fetch(...args);
+				})
+			},
+			request : function(option, callback){
+				return kit.proxy().then(async proxy => {
+					return proxy.transports.request(option, callback);
 				})
 			},
 			whileNotStarted : function() {

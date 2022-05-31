@@ -7,7 +7,7 @@ var f = require('../functions');
 const { clearTimeout } = require('timers');
 const { auth } = require('firebase-admin');
 
-var Control = function(settings) {
+var Control = function(settings, proxy) {
     if (!settings) settings = {};
 
     var isDevelopment = process.argv.find(function(el) { return el == '--development'; })
@@ -64,7 +64,7 @@ var Control = function(settings) {
                 page: 'https://github.com/pocketnetteam/pocketnet.core/releases/latest'
             },
         }
-    })
+    }, proxy)
     
     var nodeStateTimer = null
     var nodeStateInterval = 15000

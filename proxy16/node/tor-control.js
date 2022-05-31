@@ -4,7 +4,6 @@ const Applications = require("./applications");
 const f = require('../functions');
 const fs = require("fs/promises");
 const {settings} = require("express/lib/application");
-const {EventEmitter} = require("events");
 
 class Helpers {
     bin_name = (name)=> {
@@ -13,7 +12,7 @@ class Helpers {
         const linux = name
         return (process.platform == 'win32' ? win : (process.platform == 'darwin' ? mac : (process.platform == 'linux' ? linux : '')))
     }
-    
+
     checkPath = async (pathname)=>{
         try {
             const stat = await fs.lstat(pathname)
@@ -25,33 +24,42 @@ class Helpers {
 }
 
 class TorControl {
-    constructor(settings) {
+    constructor(settings, proxy) {
         this.settings = {};
         this.settings.path = f.path(settings?.dbpath || "data/tor");
         this.settings.enable = settings?.enabled || false;
         this.state = {};
+        this._statusListenerCallBack = null;
         this.state.status = 'stopped'
-        this.application = new Applications(settings,applicationRepository)
+        this.application = new Applications(settings,applicationRepository, proxy)
         this.helpers = new Helpers();
-        this.events = new EventEmitter();
+    }
+
+    statusListener = (callBack)=>{
+        this._statusListenerCallBack = callBack;
     }
 
     init = async ()=>{
-        await this.folders();
-        const checkRunning = await this.checkRunning(this.settings.path)
-        if(checkRunning){
-            await this.stop();
-        }
+        try {
+            await this.folders();
+            const checkRunning = await this.checkRunning(this.settings.path)
+            if (checkRunning) {
+                await this.stop();
+            }
 
-        const checkBin = await this.helpers.checkPath(path.join(this.settings.path, this.helpers.bin_name("tor")));
-        if(!checkBin.exists){
-            await this.install()
+            const checkBin = await this.helpers.checkPath(path.join(this.settings.path, this.helpers.bin_name("tor")));
+            if (!checkBin.exists) {
+                await this.install()
+            }
+
+            if (this.settings.enable)
+                return this.start();
+        }catch (e) {
+            this.state.status = "stopped"
+            this._statusListenerCallBack?.(this.state.status)
         }
-        
-        if(this.settings.enable)
-            return this.start();
     }
-    
+
     folders = async ()=>{
         const check = await this.helpers.checkPath(this.settings.path)
         if(!check.exists){
@@ -90,6 +98,8 @@ class TorControl {
 
     install = async ()=>{
         try{
+            this.state.status = "install"
+            this._statusListenerCallBack?.(this.state.status)
             const download = await this.application.download('bin', {user: "cenitelas", name: "tor"});
             await this.application.decompress(download.path, this.settings.path)
             await fs.unlink(download.path)
@@ -119,13 +129,13 @@ class TorControl {
             }
         }
     }
-    
+
     start = async ()=>{
         const existsBin = await this.helpers.checkPath(path.join(this.settings.path,this.helpers.bin_name("tor")))
         if(!existsBin.exists){
             await this.install();
         }
-        
+
         const checkRunning = await this.checkRunning()
         if(checkRunning){
             return true;
@@ -135,19 +145,20 @@ class TorControl {
             if(data?.data?.indexOf("100%") >= 0){
                 console.log("TOR started")
                 this.state.status = "started"
-
-                this.events.emit('TorStarted', true);
+                this._statusListenerCallBack?.(this.state.status)
             }
             // console.log(data)
         }
 
         this.state.status = "running"
+        this._statusListenerCallBack?.(this.state.status)
         this.instance = child_process.spawn(path.join(this.settings.path, this.helpers.bin_name("tor")), [
             "-f",`${path.join(this.settings.path,"torrc")}`,
         ], { stdio: ['ignore'], detached : false, shell : false})
         this.instance.on("error", (err)=>log({error: err}));
         this.instance.on("exit", async (code) => {
             this.state.status = "stopped"
+            this._statusListenerCallBack?.(this.state.status)
             try {
                 await this.stop()
             }catch (e) {}
@@ -175,7 +186,7 @@ class TorControl {
         if(!existsBin.exists){
             return true;
         }
-        
+
         let pid = this.instance?.pid
         try {
             if(!pid || this.state.status === "stopped") {
@@ -208,27 +219,6 @@ class TorControl {
             binPath : path.join(this.settings.path, this.helpers.bin_name("tor")),
             dataPath : this.settings.path,
         }
-    }
-
-    whileNotStarted = () => {
-        return new Promise((resolve, reject) => {
-            const isTorEnabled = (this.settings.enable);
-            const isAlreadyStarted = (this.state.status === 'started');
-
-            if (!isTorEnabled || isAlreadyStarted) {
-                resolve();
-                return;
-            }
-
-            const timer = setTimeout(() => {
-                reject();
-            }, 20000);
-
-            this.events.once('TorStarted', () => {
-                clearTimeout(timer);
-                resolve();
-            });
-        });
     }
 
     checkRunning = async ()=> {

@@ -44,7 +44,6 @@ if (process.platform === 'win32') expectedExitCodes = [3221225477];
 console.log('expectedExitCodes' , expectedExitCodes)*/
 
 var Proxy = function (settings, manage, test, logger, reverseproxy) {
-
 	var self = this;
 
 		self.test = test
@@ -53,20 +52,20 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 	var server = new Server(settings.server, settings.admins, manage);
 	var wss = new WSS(settings.admins, manage);
 	var pocketnet = new Pocketnet();
-	var nodeControl = new NodeControl(settings.node);
+	var nodeControl = new NodeControl(settings.node, self);
 	var nodeManager = new NodeManager(settings.nodes);
 	var firebase = new Firebase(settings.firebase);
 	var wallet = new Wallet(settings.wallet);
 	var remote = new Remote();
 	var proxies = new Proxies(settings.proxies)
 	var exchanges = new Exchanges()
-	var peertube = new Peertube()
+	var peertube = new Peertube(self)
 	var bots = new Bots(settings.bots)
 	var systemnotify = new SystemNotify(settings.systemnotify)
 
-	var torapplications = new TorControl(settings.tor)
+	var torapplications = new TorControl(settings.tor, self)
 
-	var transports = new Transports(self);
+	var transports = new Transports(global.USE_PROXY_NODE);
 
 	var dump = {}
 
@@ -76,7 +75,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 	logger.setapp(self)
 
 	f.mix({
-		transports,
+		transports, torapplications,
 		wss, server, pocketnet, nodeControl,
 		remote, firebase, nodeManager, wallet,
 		proxies, exchanges, peertube, bots,
@@ -84,7 +83,6 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 		logger,
 		proxy: self
 	})
-
 
 	var stats = [];
 	var statcount = 100;
@@ -565,10 +563,6 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 			return torapplications.info(compact);
 		},
 
-		whileNotStarted: () => {
-			return torapplications.whileNotStarted();
-		},
-
 		stop: async ()=>{
 			if(!global.USE_PROXY_NODE) {
 				console.log('!global.USE_PROXY_NODE')
@@ -578,10 +572,47 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 			await torapplications.stop();
 		},
 
+		statusListener: async (callBack)=>{
+			if(!global.USE_PROXY_NODE) {
+				callBack?.('sopped')
+			}else {
+				torapplications.statusListener(callBack)
+			}
+		},
+
 		destroy: async ()=>{
 			await torapplications.destroy();
 		},
 	}
+
+	self.transports = {
+		fetch: async (url, opts)=>{
+			return transports.fetch(url, opts)
+		},
+
+		axios: {
+			get : async (...args)=>{
+				return await transports.axios.get(...args)
+			},
+			post: async (...args)=>{
+				return await transports.axios.post(...args)
+			},
+			put: async (...args)=>{
+				return await transports.axios.put( ...args)
+			},
+			delete: async (...args)=>{
+				return await transports.axios.delete( ...args)
+			},
+			patch: async (...args)=>{
+				return await transports.axios.patch( ...args)
+			}
+		},
+
+		request: (option, callback)=>{
+			return transports.request(option, callback)
+		}
+	}
+
 	///
 	self.nodeManager = {
 		init: function () {
