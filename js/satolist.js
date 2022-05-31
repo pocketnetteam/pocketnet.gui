@@ -19458,6 +19458,10 @@ Platform = function (app, listofnodes) {
                         this.common(inputs, complainShare, TXFEE, clbk, p)
                     },
 
+                    modFlag: function (inputs, modFlag, clbk, p) {
+                        this.common(inputs, modFlag, TXFEE, clbk, p)
+                    },
+
                     comment: function (inputs, comment, /*fees, */clbk, p) {
                         this.common(inputs, comment, TXFEE, clbk, p)
                     },
@@ -24810,7 +24814,6 @@ Platform = function (app, listofnodes) {
 
 
                 socket.onmessage = function (message) {
-
                     message = message.data ? message.data : message;
 
                     var jm = message;
@@ -25192,7 +25195,7 @@ Platform = function (app, listofnodes) {
         }
 
         self.messageHandler = function (data, clbk) {
-
+            console.log('handle message')
 
             data || (data = {})
 
@@ -27775,7 +27778,6 @@ Platform = function (app, listofnodes) {
     }
 
     self.initSounds = function () {
-
         if (typeof ion != 'undefined'){
             ion.prepare()
             ion.sound({
