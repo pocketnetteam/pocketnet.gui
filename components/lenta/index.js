@@ -1078,7 +1078,6 @@ var lenta = (function(){
 					}, true)
 
 				}
-				
 
 			},
 
