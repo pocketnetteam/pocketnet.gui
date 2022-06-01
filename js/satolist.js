@@ -9530,6 +9530,24 @@ Platform = function (app, listofnodes) {
                 ){
                     return true
                 }
+                if(this.isNotAllowedName(ustate)) {
+                    return true
+                }
+            },
+
+            isNotAllowedName : function (user) {
+                let {name, address} = user
+
+                name = name?.toLowerCase().replace(/[^a-z]/g,'') || ''
+
+                if(name.indexOf('pocketnet') !== -1 || name.indexOf('bastyon') !== -1) {
+                    if(address == 'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd' || address == 'PJ3nv2jGyW2onqZVDKJf9TmfuLGpmkSK2X'){
+                        return false
+                    }
+                    console.log(name)
+                    return true
+                }
+
             },
 
             hiddenComment : function(comment){
@@ -14536,7 +14554,6 @@ Platform = function (app, listofnodes) {
                 value = trim(value.replace(/[^а-яА-Яa-zA-Z0-9\# _]+/g, ''))
 
                 if(cached && type && type != 'fs') {
-
                     var g =  self.sdk.search.getcached(value, fixedBlock, type, start, count, address)
 
                     if (g){
@@ -14553,12 +14570,19 @@ Platform = function (app, listofnodes) {
 
                 if (value.length) {
 
-                    if(type== 'users') {
+                    if(type === 'users') {
                         self.app.api.rpc('searchusers', np).then(d => {
+                            d = d.filter(user => {
+                                if (self.app.platform.sdk.user.isNotAllowedName(user)) return false
+                                return true
+                            })
+
                             d = {
                                 data: [...d]
                             }
+
                             s.add(value, fixedBlock, type, d, start, count, address)
+
                             if (clbk)
                                 clbk(d, fixedBlock)
                         }).catch(e => {
@@ -14849,41 +14873,7 @@ Platform = function (app, listofnodes) {
 
         upvote : {
             checkvalue : function(value, clbk, fclbk){
-                if(value > 2){
-                    if(clbk) clbk()
-
-                    return
-                }
-
-                var h = '<div>'+self.app.localization.e('lowstar1')+'</div>'
-
-                h+='<div><ul>'
-                h+='<li>'+self.app.localization.e('lowstar_reason_1')+'</li>'
-                h+='<li>'+self.app.localization.e('lowstar_reason_2')+'</li>'
-                h+='<li>'+self.app.localization.e('lowstar_reason_3')+'</li>'
-                h+='<li>'+self.app.localization.e('lowstar_reason_4')+'</li>'
-                h+='</ul></div>'
-                h+='<div>'+self.app.localization.e('lowstar2')+'</div>'
-                if(self.app.localization.key == 'ru')
-                h+='<div class="b">'+self.app.localization.e('lowstar3')+'</div>'
-
-                dialog({
-                    html: h,
-                    btn1text: self.app.localization.e('lowstaragree'),
-                    btn2text: self.app.localization.e('close'),
-
-                    class: 'zindex',
-
-                    success: function () {
-
-                        if(clbk) clbk()
-
-                    },
-
-                    fail: function () {
-                        if(fclbk) fclbk()
-                    }
-                })
+                if(clbk) clbk()
             },
         },
 
