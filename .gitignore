@@ -39,6 +39,7 @@ pocketcoind*/
 /config.xml
 .htaccess
 service-worker.js
+package-lock.json
 css/master.css
 cordova/platforms
 cordova/plugins

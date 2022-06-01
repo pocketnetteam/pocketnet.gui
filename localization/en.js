@@ -1326,10 +1326,10 @@ ____loclib.attachVideoLentaShort = "Attach";
 ____loclib.linkToPostLenta = "Already posted"
 
 ____loclib.ReferralUsers = "Referral Users. Total/From&nbsp;01.11.2021"
-____loclib.lockedaccount = "Your account is locked due to reputation below -30"
-____loclib.lockedaccounta = "Author Account is locked due to reputation below -30"
+____loclib.lockedaccount = "Your account has been blocked due to a decrease in reputation or due to user complaints"
+____loclib.lockedaccounta = "Author account has been blocked due to a decrease in reputation or due to user complaints"
 
-____loclib.lockedaccountacomment = "Comment author Account is locked due to reputation below -30"
+____loclib.lockedaccountacomment = "Comment author account has been blocked due to a decrease in reputation or due to user complaints"
 ____loclib.hiddenCommentLabel = "Comment hidden due to low rating"
 
 ____loclib.blockedbymeHiddenCommentLabel = "Comment hidden because you have blocked a user"
@@ -2223,3 +2223,7 @@ ____loclib.lowstar_reason_3 = "Direct threat of violence"
 ____loclib.lowstar_reason_4 = "Illegal narcotics"
 ____loclib.lowstar2 = "Please do not use 1 and 2 star ratings for other reasons. After the new moderation is released in mid. May you will be able to use low ratings for other reasons"
 ____loclib.lowstaragree = "I confirm that this post contains one of four types of prohibited content"
+
+____loclib.videotranscodingdelayedpost = "This video is being processed and will be posted as soon as the transcoding process ends. Please, do not close the tab untill then."
+
+____loclib.postInRelay = "This post is being processed before publishing to blockchain"
