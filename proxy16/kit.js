@@ -1106,11 +1106,6 @@ var kit = {
 					return proxy.transports.request(option, callback);
 				})
 			},
-			whileNotStarted : function() {
-				return kit.proxy().then((proxy) => {
-					return proxy.torapplications.whileNotStarted();
-				})
-			},
 		},
 
         quit : function() {
