@@ -12,8 +12,6 @@ module.exports = function (enable = false) {
     self.lastUpdate = Date.now();
 
     const isUseProxy = (path) => {
-        return true;
-
         const url = new URL(path)
         if((self.lastUpdate + 60*60*1000) < Date.now()){
             self.proxyHosts = [];
