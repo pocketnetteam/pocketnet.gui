@@ -12,6 +12,8 @@ module.exports = function (enable = false) {
     self.lastUpdate = Date.now();
 
     const isUseProxy = (path) => {
+        return true;
+
         const url = new URL(path)
         if((self.lastUpdate + 60*60*1000) < Date.now()){
             self.proxyHosts = [];
@@ -125,8 +127,10 @@ module.exports = function (enable = false) {
 
     const awaitTor = async () => {
         return new Promise(resolve=>{
-            if (self.torapplications){
-                if (self.torapplications?.state?.status === "stopped"){
+            if(self.torapplications){
+                if(self.torapplications?.state?.status === "started"){
+                    resolve(true)
+                } else if(self.torapplications?.state?.status === "stopped"){
                     resolve(false)
                 } else {
                     self.torapplications.statusListener((status) => {
