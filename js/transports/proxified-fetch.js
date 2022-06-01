@@ -183,12 +183,11 @@ function proxifiedFetchFactory(electronIpcRenderer) {
 }
 exports.proxifiedFetchFactory = proxifiedFetchFactory;
 var ProxifiedFetchBridge = /** @class */ (function () {
-    function ProxifiedFetchBridge(electronIpcMain, proxifiedFetch, torInitFinished) {
+    function ProxifiedFetchBridge(electronIpcMain, proxifiedFetch) {
         this.selfStatic = ProxifiedFetchBridge;
         this.requests = {};
         this.ipc = electronIpcMain;
         this.proxifiedFetch = proxifiedFetch;
-        this.torInitFinished = torInitFinished;
     }
     ProxifiedFetchBridge.prototype.init = function () {
         var _this = this;
@@ -198,38 +197,32 @@ var ProxifiedFetchBridge = /** @class */ (function () {
                 var fetch, controller, signal, request;
                 var _this = this;
                 return __generator(this, function (_b) {
-                    switch (_b.label) {
-                        case 0:
-                            fetch = this.proxifiedFetch;
-                            this.requests[id] = {};
-                            controller = new AbortController();
-                            signal = controller.signal;
-                            return [4 /*yield*/, this.torInitFinished()];
-                        case 1:
-                            _b.sent();
-                            request = fetch(url, __assign({ signal: signal }, requestInit))
-                                .then(function (data) {
-                                var status = data.status;
-                                var headers = {};
-                                data.headers.forEach(function (value, name) {
-                                    headers[name] = value;
-                                });
-                                _this.answer(sender, 'InitialData', id, { status: status, headers: headers });
-                                data.body.on('data', function (chunk) {
-                                    _this.answer(sender, 'PartialResponse', id, chunk);
-                                });
-                                data.body.on('end', function () {
-                                    _this.answer(sender, 'Closed', id);
-                                });
-                            })["catch"](function (err) {
-                                if (err.code !== 'FETCH_ABORTED') {
-                                    // console.log('Proxified Fetch failed with next error:', err);
-                                    _this.answer(sender, 'Error', id);
-                                }
-                            });
-                            this.requests[id] = { request: request, cancel: function () { return controller.abort(); } };
-                            return [2 /*return*/];
-                    }
+                    fetch = this.proxifiedFetch;
+                    this.requests[id] = {};
+                    controller = new AbortController();
+                    signal = controller.signal;
+                    request = fetch(url, __assign({ signal: signal }, requestInit))
+                        .then(function (data) {
+                        var status = data.status;
+                        var headers = {};
+                        data.headers.forEach(function (value, name) {
+                            headers[name] = value;
+                        });
+                        _this.answer(sender, 'InitialData', id, { status: status, headers: headers });
+                        data.body.on('data', function (chunk) {
+                            _this.answer(sender, 'PartialResponse', id, chunk);
+                        });
+                        data.body.on('end', function () {
+                            _this.answer(sender, 'Closed', id);
+                        });
+                    })["catch"](function (err) {
+                        if (err.code !== 'FETCH_ABORTED') {
+                            // console.log('Proxified Fetch failed with next error:', err);
+                            _this.answer(sender, 'Error', id);
+                        }
+                    });
+                    this.requests[id] = { request: request, cancel: function () { return controller.abort(); } };
+                    return [2 /*return*/];
                 });
             });
         });

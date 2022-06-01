@@ -63,8 +63,8 @@ var IPC = function(ipc, wc, proxyBridges){
 
 	var wssdummy = new WssDummy(wc)
 
-	var axiosBridge = new proxyBridges.Axios(ipc, transports.axios, () => kit.manage.tor.whileNotStarted())
-	var fetchBridge = new proxyBridges.Fetch(ipc, transports.fetch, () => kit.manage.tor.whileNotStarted())
+	var axiosBridge = new proxyBridges.Axios(ipc, kit.manage.transports.axios)
+	var fetchBridge = new proxyBridges.Fetch(ipc, kit.manage.transports.fetch)
 
 	var tickInterval = function(){
 

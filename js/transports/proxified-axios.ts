@@ -101,13 +101,11 @@ export class ProxifiedAxiosBridge {
 
     private ipc: Electron.IpcMain;
     private proxifiedAxios: AxiosStatic;
-    private torInitFinished: () => unknown;
     private requests = {};
 
-    constructor(electronIpcMain: Electron.IpcMain, proxifiedAxios: AxiosStatic, torInitFinished: () => void) {
+    constructor(electronIpcMain: Electron.IpcMain, proxifiedAxios: AxiosStatic) {
         this.ipc = electronIpcMain;
         this.proxifiedAxios = proxifiedAxios;
-        this.torInitFinished = torInitFinished;
     }
 
     init() {
@@ -125,8 +123,6 @@ export class ProxifiedAxiosBridge {
             const cancelSource = _axios.CancelToken.source();
 
             preparedConfig.cancelToken = cancelSource.token;
-
-            await this.torInitFinished();
 
             const request = axios(preparedConfig)
                 .then((data: AxiosResponse) => {

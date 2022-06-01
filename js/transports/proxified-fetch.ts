@@ -157,13 +157,11 @@ export class ProxifiedFetchBridge {
 
     private ipc: Electron.IpcMain;
     private proxifiedFetch: (input: RequestInfo, init: RequestInit) => Promise<Response>;
-    private torInitFinished: () => unknown;
     private requests = {};
 
-    constructor(electronIpcMain: Electron.IpcMain, proxifiedFetch: (input: RequestInfo, init: RequestInit) => Promise<Response>, torInitFinished: () => void) {
+    constructor(electronIpcMain: Electron.IpcMain, proxifiedFetch: (input: RequestInfo, init: RequestInit) => Promise<Response>) {
         this.ipc = electronIpcMain;
         this.proxifiedFetch = proxifiedFetch;
-        this.torInitFinished = torInitFinished;
     }
 
     init() {
@@ -174,8 +172,6 @@ export class ProxifiedFetchBridge {
 
             const controller = new AbortController();
             const signal = controller.signal;
-
-            await this.torInitFinished();
 
             const request = fetch(url, { signal, ...requestInit })
                 .then((data: Response & { body: Stream }) => {

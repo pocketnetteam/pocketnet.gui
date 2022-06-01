@@ -126,12 +126,11 @@ function proxifiedAxiosFactory(electronIpcRenderer) {
 }
 exports.proxifiedAxiosFactory = proxifiedAxiosFactory;
 var ProxifiedAxiosBridge = /** @class */ (function () {
-    function ProxifiedAxiosBridge(electronIpcMain, proxifiedAxios, torInitFinished) {
+    function ProxifiedAxiosBridge(electronIpcMain, proxifiedAxios) {
         this.selfStatic = ProxifiedAxiosBridge;
         this.requests = {};
         this.ipc = electronIpcMain;
         this.proxifiedAxios = proxifiedAxios;
-        this.torInitFinished = torInitFinished;
     }
     ProxifiedAxiosBridge.prototype.init = function () {
         var _this = this;
@@ -141,38 +140,32 @@ var ProxifiedAxiosBridge = /** @class */ (function () {
                 var axios, preparedConfig, cancelSource, request;
                 var _this = this;
                 return __generator(this, function (_b) {
-                    switch (_b.label) {
-                        case 0:
-                            axios = this.proxifiedAxios;
-                            this.requests[id] = {};
-                            preparedConfig = this.prepareConfig(axiosConfig);
-                            preparedConfig.onDownloadProgress = function (progressEvent) {
-                                _this.answer(sender, 'Progress', id, progressEvent);
-                            };
-                            cancelSource = axios_1["default"].CancelToken.source();
-                            preparedConfig.cancelToken = cancelSource.token;
-                            return [4 /*yield*/, this.torInitFinished()];
-                        case 1:
-                            _b.sent();
-                            request = axios(preparedConfig)
-                                .then(function (data) {
-                                var preparedResponse = __assign({}, data);
-                                delete preparedResponse.request;
-                                delete preparedResponse.config;
-                                _this.answer(sender, 'Response', id, preparedResponse);
-                            })["catch"](function (err) {
-                                if (!err.response) {
-                                    _this.answer(sender, 'Error', id, err.message);
-                                    return;
-                                }
-                                var preparedResponse = __assign({}, err.response);
-                                delete preparedResponse.request;
-                                delete preparedResponse.config;
-                                _this.answer(sender, 'Response', id, preparedResponse);
-                            });
-                            this.requests[id] = { request: request, cancel: function () { return cancelSource.cancel(); } };
-                            return [2 /*return*/];
-                    }
+                    axios = this.proxifiedAxios;
+                    this.requests[id] = {};
+                    preparedConfig = this.prepareConfig(axiosConfig);
+                    preparedConfig.onDownloadProgress = function (progressEvent) {
+                        _this.answer(sender, 'Progress', id, progressEvent);
+                    };
+                    cancelSource = axios_1["default"].CancelToken.source();
+                    preparedConfig.cancelToken = cancelSource.token;
+                    request = axios(preparedConfig)
+                        .then(function (data) {
+                        var preparedResponse = __assign({}, data);
+                        delete preparedResponse.request;
+                        delete preparedResponse.config;
+                        _this.answer(sender, 'Response', id, preparedResponse);
+                    })["catch"](function (err) {
+                        if (!err.response) {
+                            _this.answer(sender, 'Error', id, err.message);
+                            return;
+                        }
+                        var preparedResponse = __assign({}, err.response);
+                        delete preparedResponse.request;
+                        delete preparedResponse.config;
+                        _this.answer(sender, 'Response', id, preparedResponse);
+                    });
+                    this.requests[id] = { request: request, cancel: function () { return cancelSource.cancel(); } };
+                    return [2 /*return*/];
                 });
             });
         });
