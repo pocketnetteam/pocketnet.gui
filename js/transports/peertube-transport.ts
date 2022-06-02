@@ -38,7 +38,6 @@ export function peertubeTransport(ipcRenderer: IpcRenderer, localVideo: LocalVid
             return fsFetch(input, init);
         }
 
-        //ToDo посмотри тут пожалуйста
         // @ts-ignore
         const proxy = await app.api.get.current();
         const info = await proxy.get.info();

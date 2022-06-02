@@ -1,6 +1,3 @@
-let proxyAxios = proxifiedAxiosFactory(electron.ipcRenderer);
-let proxyFetch = proxifiedFetchFactory(electron.ipcRenderer);
-
 var PeertubeRequest = function (app = {}) {
 	var self = this;
 
