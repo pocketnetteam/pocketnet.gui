@@ -1,0 +1,43 @@
+# Basic set up for three package managers
+
+version: 2
+updates:
+
+  # Maintain dependencies for GitHub Actions
+  - package-ecosystem: "github-actions"
+    versioning-strategy: auto
+    target-branch: "master"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "10:00"
+    reviewers:
+      - "andyoknen"
+      - "shpingalet007"
+
+  # Frontend: Maintain dependencies for npm
+  - package-ecosystem: "npm"
+    versioning-strategy: increase-if-necessary
+    target-branch: "latest"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "tuesday"
+      time: "10:00"
+    reviewers:
+      - "maxgithubprofile"
+      - "shpingalet007"
+
+  # Proxy16: Maintain dependencies for npm
+  - package-ecosystem: "npm"
+    versioning-strategy: increase-if-necessary
+    target-branch: "latest"
+    directory: "/proxy16"
+    schedule:
+      interval: "weekly"
+      day: "wednesday"
+      time: "10:00"
+    reviewers:
+      - "maxgithubprofile"
+      - "shpingalet007"
