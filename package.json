@@ -98,7 +98,7 @@
         "node-rsa": "^1.1.1",
         "nodejs-base64": "^1.0.3",
         "nodemailer": "^6.4.11",
-        "npm": "^8.7.0",
+        "npm": "^8.11.0",
         "object-hash": "^2.0.3",
         "og-parser": "^1.0.5",
         "open": "^6.3.0",
