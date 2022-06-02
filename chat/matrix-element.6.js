@@ -183,7 +183,7 @@ module.exports = exports;
 // ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"476efc6e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/chat/input/index.vue?vue&type=template&id=22eb6a42&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"3d54125c-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/chat/input/index.vue?vue&type=template&id=22eb6a42&scoped=true&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{attrs:{"id":"chatInput"}},[(_vm.ready)?_c('div',{staticClass:"work"},[(_vm.chat)?_c('div',{staticClass:"inputWrapper"},[(_vm.tipusers.length)?_c('div',{staticClass:"tipusers"},_vm._l((_vm.tipusers),function(user,i){return _c('div',{key:user.id,staticClass:"previewWrapperExt",class:{selected : _vm.tipuserindex == i},on:{"click":function($event){return _vm.insertuser(user)}}},[_c('preview',{attrs:{"contact":user,"mode":""}})],1)}),0):_vm._e(),_c('div',{staticClass:"center"},[(_vm.voiceEnable && (_vm.isRecording || _vm.recordViewData.length))?_c('record-progress',{attrs:{"recordTime":_vm.recordTime,"isRecording":_vm.isRecording,"rmsData":_vm.recordViewData,"opacity":_vm.cancelOpacity},on:{"onClear":_vm.clear}}):_c('InputField',{ref:"newinput",attrs:{"storagekey":'chatinput' + _vm.chat.roomId,"tipusers":_vm.tipusers},on:{"transaction":_vm.sendtransaction,"chatMessage":_vm.sendinput,"setMetaUrl":_vm.emitUrl,"emptyInput":_vm.emitInputData,"FilledInput":_vm.HideUploadPic,"base64":_vm.pasteImage,"focused":_vm.focused,"tipsearchrequest":_vm.tipBySearch,"browsetip":_vm.browsetip,"selectcurrenttip":_vm.selectcurrenttip}}),(_vm.upload && _vm.chat)?_c('div',{staticClass:"left",class:{extended: _vm.voiceEnable}},[(!_vm.isRecording && !_vm.recordViewData.length)?_c('div',{staticClass:"iconbutton"},[_c('dropdownMenu',{ref:"dropdownMenu",attrs:{"menuItems":_vm.menuItems,"rowObject":{},"icon":"fas fa-plus"},scopedSlots:_vm._u([{key:"default",fn:function(slotProps){return [(!slotProps.item.upload)?_c('div',{staticClass:"menu-item",on:{"click":function($event){return _vm.menuItemClick(slotProps.item)}}},[_c('div',{staticClass:"iconWrapper"},[(slotProps.item.icon)?_c('i',{class:slotProps.item.icon}):_vm._e()]),_c('div',{staticClass:"title"},[_vm._v(" "+_vm._s(slotProps.item.title)+" ")])]):_c('upload',{attrs:{"multiple":slotProps.item.upload.multiple,"extensions":slotProps.item.upload.extensions,"images":slotProps.item.upload.images},on:{"start":function (files) { return _vm.uploadStart(slotProps.item, files); },"uploaded":function (data) { return _vm.uploadUploaded(slotProps.item, data); },"uploadedAll":function (result) { return _vm.uploadUploadedAll(slotProps.item, result); },"error":function (error) { return _vm.uploadError(slotProps.item, error); }},scopedSlots:_vm._u([{key:"content",fn:function(){return [_c('div',{staticClass:"menu-item"},[_c('div',{staticClass:"iconWrapper"},[(slotProps.item.icon)?_c('i',{class:slotProps.item.icon}):_vm._e()]),_c('div',{staticClass:"title"},[_vm._v(" "+_vm._s(slotProps.item.title)+" ")])])]},proxy:true},{key:"dropzone",fn:function(){return undefined},proxy:true}],null,true)})]}}],null,false,2831926823)})],1):_vm._e(),(_vm.voiceEnable)?[((_vm.isRecording || !_vm.recordRmsData.length) && !_vm.microphoneDisabled)?_c('div',{staticClass:"iconbutton"},[_c('recordVoice',{attrs:{"isRecording":_vm.isRecording},on:{"onRecordingStart":_vm.initRecording,"onRecordingStop":_vm.stopRecording,"onClear":_vm.clear,"canceling":_vm.setOpacity}})],1):_vm._e(),(_vm.microphoneDisabled)?_c('div',{staticClass:"disabled"},[_c('i',{staticClass:"icon fas fa-microphone-slash",on:{"click":_vm.initRecording}})]):_vm._e()]:_vm._e(),(!_vm.isRecording && _vm.recordViewData.length)?_c('div',{staticClass:"iconbutton",on:{"click":_vm.sendVoiceMessage}},[_vm._m(0)]):_vm._e()],2):_vm._e()],1)]):_vm._e()]):_c('div',{staticClass:"notready"},[_c('linepreloader')],1)])}
 var staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('i',{staticClass:"icon fas fa-paper-plane"})])}]
 
@@ -209,7 +209,7 @@ var es_typed_array_at = __webpack_require__("907a");
 // EXTERNAL MODULE: ./src/application/functions.js
 var functions = __webpack_require__("3139");
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"476efc6e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/chat/input/InputField/InputField.vue?vue&type=template&id=036f9580&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"3d54125c-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/chat/input/InputField/InputField.vue?vue&type=template&id=036f9580&scoped=true&
 var InputFieldvue_type_template_id_036f9580_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"input_component"},[_c('div',{staticClass:"input-wrapper"},[_c('div',{staticClass:"textarea"},[_c('textarea',{ref:"textarea",staticClass:"chat-input",attrs:{"id":"textInput","type":"text","row":"1","spellcheck":"true","autocorrect":"on","placeholder":_vm.$t('caption.sendmessage')},domProps:{"value":_vm.text},on:{"focus":_vm.focused,"blur":_vm.blured,"keydown":_vm.keydown,"input":_vm.textchange,"keyup":_vm.keyup,"click":_vm.keyup,"paste":_vm.paste_image}}),(!_vm.mobile)?_c('transition',{attrs:{"name":"fade","mode":"out-in"}},[_c('picker',{directives:[{name:"show",rawName:"v-show",value:(_vm.display_emoji),expression:"display_emoji"},{name:"click-outside",rawName:"v-click-outside",value:(_vm.close_emoji_picker),expression:"close_emoji_picker"}],style:({ width: '325px', position: 'absolute', bottom: '32px', right: '-60px', fontSize: '0.8em', fontFamily: 'Segoe UI' }),attrs:{"data":_vm.emojiIndex,"exclude":_vm.exclude,"showPreview":false,"showSearch":false,"native":true,"set":"emojione"},on:{"select":_vm.insert_emoji}})],1):_vm._e()],1)]),(!_vm.mobile)?_c('div',{staticClass:"iconbutton emojipicker",on:{"click":function($event){return _vm.toggle_emoji_picker()}}},[_c('div',{staticClass:"leftdummy"},[_c('div',{staticClass:"idummy"},[(_vm.display_emoji)?_c('i',{staticClass:"fas fa-times"}):_c('i',{staticClass:"far fa-smile"})])])]):_vm._e(),(_vm.send)?_c('div',{staticClass:"iconbutton",on:{"click":function($event){return _vm.send_text($event)}}},[_vm._m(0)]):_vm._e()])}
 var InputFieldvue_type_template_id_036f9580_scoped_true_staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"rightdummy"},[_c('div',{staticClass:"idummy"},[_c('i',{staticClass:"far fa-paper-plane"})])])}]
 
@@ -232,7 +232,7 @@ var dist_emoji_mart = __webpack_require__("41fb");
 var v_click_outside_umd = __webpack_require__("c28b");
 var v_click_outside_umd_default = /*#__PURE__*/__webpack_require__.n(v_click_outside_umd);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"476efc6e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/chat/input/picturePreview/picturePreview.vue?vue&type=template&id=4b882d9f&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"3d54125c-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/chat/input/picturePreview/picturePreview.vue?vue&type=template&id=4b882d9f&scoped=true&
 var picturePreviewvue_type_template_id_4b882d9f_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return (_vm.is_opened)?_c('div',{staticClass:"wrapper"},[_c('img',{staticClass:"preview-picture",attrs:{"src":_vm.base64,"alt":"picture preview"}}),_c('i',{staticClass:"fas fa-times fa-sm",on:{"click":_vm.hide}})]):_vm._e()}
 var picturePreviewvue_type_template_id_4b882d9f_scoped_true_staticRenderFns = []
 
@@ -730,7 +730,7 @@ var list = __webpack_require__("f978");
 // EXTERNAL MODULE: ./src/components/contacts/preview/index.vue + 4 modules
 var preview = __webpack_require__("92a6");
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"476efc6e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/assets/recordProgress/index.vue?vue&type=template&id=5cbd823e&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"3d54125c-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/assets/recordProgress/index.vue?vue&type=template&id=5cbd823e&scoped=true&
 var recordProgressvue_type_template_id_5cbd823e_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"recordProgress"},[(_vm.isRecording)?_c('div',{staticClass:"indicator",class:{'recording': _vm.isRecording}}):_c('div',{staticClass:"del",on:{"click":_vm.clear}},[_c('i',{staticClass:"fas fa-trash"})]),_c('div',{staticClass:"timer"},[_vm._v(_vm._s(_vm.timer))]),_c('div',{ref:"graph",staticClass:"graph"},[_c('canvas',{ref:"canvas",attrs:{"id":"canvas","width":_vm.width,"height":"60"}})]),_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.isRecording && _vm.opacity),expression:"isRecording && opacity"}],ref:"cancel",staticClass:"cancel"},[_c('i'),_vm._v(" "),_c('span',[_vm._v("Slide left to cancel")])])])}
 var recordProgressvue_type_template_id_5cbd823e_scoped_true_staticRenderFns = []
 
@@ -1566,15 +1566,14 @@ var es2019_module = __webpack_require__("0319");
                 _context3.prev = 0;
 
                 if (_this9.mediaRecorder) {
-                  _context3.next = 12;
+                  _context3.next = 11;
                   break;
                 }
 
-                console.log('init recorder');
-                _context3.next = 5;
+                _context3.next = 4;
                 return _this9.initMediaRecorder();
 
-              case 5:
+              case 4:
                 _this9.mediaRecorder = _context3.sent;
                 _this9.audioContext = new (window.AudioContext || window.webkitAudioContext)();
                 _this9.audioAnalyser = _this9.audioContext.createAnalyser();
@@ -1605,37 +1604,37 @@ var es2019_module = __webpack_require__("0319");
 
                 _this9.src.connect(_this9.audioAnalyser);
 
-              case 12:
+              case 11:
                 if (!(_this9.microphoneDisabled && _this9.mediaRecorder)) {
-                  _context3.next = 15;
+                  _context3.next = 14;
                   break;
                 }
 
                 _this9.microphoneDisabled = false;
                 return _context3.abrupt("return");
 
-              case 15:
+              case 14:
                 _this9.isRecording = true;
-                _context3.next = 22;
+                _context3.next = 21;
                 break;
 
-              case 18:
-                _context3.prev = 18;
+              case 17:
+                _context3.prev = 17;
                 _context3.t0 = _context3["catch"](0);
                 _this9.microphoneDisabled = true;
                 return _context3.abrupt("return", _this9.$dialog.confirm('Access to the microphone is restricted, please check your browser settings.', {
                   okText: 'Yes'
                 }));
 
-              case 22:
+              case 21:
                 _this9.startRecording();
 
-              case 23:
+              case 22:
               case "end":
                 return _context3.stop();
             }
           }
-        }, _callee3, null, [[0, 18]]);
+        }, _callee3, null, [[0, 17]]);
       }))();
     },
     startRecording: function startRecording() {
@@ -1672,7 +1671,6 @@ var es2019_module = __webpack_require__("0319");
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
-                console.log('createVoiceMessage', event);
                 audioUrl = URL.createObjectURL(event.data);
                 audio = new Audio(audioUrl);
                 track = _this11.audioContext.createMediaElementSource(audio);
@@ -1703,9 +1701,8 @@ var es2019_module = __webpack_require__("0319");
                   id: id,
                   isPlaying: false
                 };
-                console.log('create message', _this11.record);
 
-              case 8:
+              case 6:
               case "end":
                 return _context4.stop();
             }
@@ -1725,7 +1722,6 @@ var es2019_module = __webpack_require__("0319");
       this.mediaRecorder.stop();
       this.isRecording = false;
       clearInterval(this.interval);
-      console.log('stop recording', this.record);
     },
     sendVoiceMessage: function sendVoiceMessage() {
       var _this12 = this;
@@ -1764,9 +1760,7 @@ var es2019_module = __webpack_require__("0319");
                   return Promise.resolve();
                 });
 
-                console.log('message sended');
-
-              case 8:
+              case 7:
               case "end":
                 return _context5.stop();
             }
