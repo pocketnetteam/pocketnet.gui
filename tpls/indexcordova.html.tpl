@@ -15,7 +15,7 @@
         <meta name="keywords" content="Blockchain, Decentralized, Delete Facebook, Alternative Social Media, Social Network, Social Platform, No Censorship, Online Social Network, Facebook Alternative, Reddit Alternative, Twitter Alternative, Social Sharing Platform, Decentralized Social Network, Blockchain Social Network " />
 
         <meta http-equiv="Content-Security-Policy" content="
-        default-src https: 'self' data: app: file: cdvfile: android-webview-video-poster: https://ssl.gstatic.com  __VAR__.domain:*; 
+        default-src https: blob: 'self' data: app: file: cdvfile: android-webview-video-poster: https://ssl.gstatic.com  __VAR__.domain:*;
         connect-src http: https: 'self' wss: file: cdvfile: data:;
         img-src 'self' data: http: https: cdvfile: file: android-webview-video-poster:;
         script-src 'self' file: blob: https://__VAR__.domain https://player.vimeo.com https://www.youtube.com https://s.ytimg.com https://cdn.jsdelivr.net/joypixels/ 'unsafe-eval' 'unsafe-inline';

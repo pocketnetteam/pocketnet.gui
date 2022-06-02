@@ -202,7 +202,9 @@ Platform = function (app, listofnodes) {
         'PWGhooqyrq1qL7NPgg2an8M69sHfJrDM8Y' : true,
         'PUuNT7icKad8fm7ATPRn1s8gd19HXYKDqS' : true,
         'PWkQMUTG6pKVA9bAbjLmLewB5eVgEnVk6f' : true,
-        'PKwa3jVZXHpaVgG89WvnM8vBfpp745GGNN' : true
+        'PUAQeTYUB9H5qjeSSXzeeAd6NKXAz8fzpP' : true,
+        'PQ4X2NQJD1ZA5Hy58ZU9eHcjpRco7ZMgTz' : true,
+        'PTMFZXMXYFjiN1UuSV4ZckepyEFVWMm6Zy' : true
     }
 
     self.bch = {
@@ -231,7 +233,8 @@ Platform = function (app, listofnodes) {
         'PHiNjAhHbxVb6D8oaVVBe8DGigKuN4QFP6',
         'PANkQ994YKvCMiH8pHR8vtKvGqH9DQt8Bc',
         'PGvRUM7jXqHdUn7Let2QyTi1t2LHq7RgX7',
-        'P9EkPPJPPRYxmK541WJkmH8yBM4GuWDn2m'
+        'P9EkPPJPPRYxmK541WJkmH8yBM4GuWDn2m',
+        'PReLEpaGEGTCeWKiqnK85eXrqmmTxYQ9Tw'
     ];
 
     if (window.IpcBridge)
@@ -7410,7 +7413,6 @@ Platform = function (app, listofnodes) {
 
                 var needaction = false
                 self.app.user.isState(function (state) {
-
                     if (state) {
                         var rs = self.sdk.relayTransactions.get();
 
@@ -7468,7 +7470,8 @@ Platform = function (app, listofnodes) {
                                                             return
                                                         }
 
-                                                        var c = kits.c[object.type]
+                                                        var successFullSendFunc = () => {
+                                                            var c = kits.c[object.type]
 
                                                             var trobj = new c();
 
@@ -9527,6 +9530,24 @@ Platform = function (app, listofnodes) {
                 ){
                     return true
                 }
+                if(this.isNotAllowedName(ustate)) {
+                    return true
+                }
+            },
+
+            isNotAllowedName : function (user) {
+                let {name, address} = user
+
+                name = name?.toLowerCase().replace(/[^a-z]/g,'') || ''
+
+                if(name.indexOf('pocketnet') !== -1 || name.indexOf('bastyon') !== -1) {
+                    if(address == 'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd' || address == 'PJ3nv2jGyW2onqZVDKJf9TmfuLGpmkSK2X'){
+                        return false
+                    }
+                    console.log(name)
+                    return true
+                }
+
             },
 
             hiddenComment : function(comment){
@@ -14518,7 +14539,6 @@ Platform = function (app, listofnodes) {
             },
 
             get: function (value, type, start, count, fixedBlock, clbk, address, cached) {
-
                 if (!address) address = 'pocketnet'
 
                 var s = self.sdk.search;
@@ -14534,7 +14554,6 @@ Platform = function (app, listofnodes) {
                 value = trim(value.replace(/[^а-яА-Яa-zA-Z0-9\# _]+/g, ''))
 
                 if(cached && type && type != 'fs') {
-
                     var g =  self.sdk.search.getcached(value, fixedBlock, type, start, count, address)
 
                     if (g){
@@ -14551,8 +14570,29 @@ Platform = function (app, listofnodes) {
 
                 if (value.length) {
 
-                    self.app.api.rpc('search', np).then(d => {
+                    if(type === 'users') {
+                        self.app.api.rpc('searchusers', np).then(d => {
+                            d = d.filter(user => {
+                                if (self.app.platform.sdk.user.isNotAllowedName(user)) return false
+                                return true
+                            })
 
+                            d = {
+                                data: [...d]
+                            }
+
+                            s.add(value, fixedBlock, type, d, start, count, address)
+
+                            if (clbk)
+                                clbk(d, fixedBlock)
+                        }).catch(e => {
+                            if (clbk) {
+                                clbk({})
+                            }
+                        })
+                        return;
+                    }
+                    self.app.api.rpc('search', np).then(d => {
                         if (type != 'fs') {
 
                             if (type == 'all') {
@@ -14560,6 +14600,7 @@ Platform = function (app, listofnodes) {
                                     s.add(value, fixedBlock, k, d, start, count, address)
                                 })
                             }
+
                             else {
                                 d = d[type] || {
                                     data: []
@@ -14832,41 +14873,7 @@ Platform = function (app, listofnodes) {
 
         upvote : {
             checkvalue : function(value, clbk, fclbk){
-                if(value > 2){
-                    if(clbk) clbk()
-
-                    return
-                }
-
-                var h = '<div>'+self.app.localization.e('lowstar1')+'</div>'
-
-                h+='<div><ul>'
-                h+='<li>'+self.app.localization.e('lowstar_reason_1')+'</li>'
-                h+='<li>'+self.app.localization.e('lowstar_reason_2')+'</li>'
-                h+='<li>'+self.app.localization.e('lowstar_reason_3')+'</li>'
-                h+='<li>'+self.app.localization.e('lowstar_reason_4')+'</li>'
-                h+='</ul></div>'
-                h+='<div>'+self.app.localization.e('lowstar2')+'</div>'
-                if(self.app.localization.key == 'ru')
-                h+='<div class="b">'+self.app.localization.e('lowstar3')+'</div>'
-
-                dialog({
-                    html: h,
-                    btn1text: self.app.localization.e('lowstaragree'),
-                    btn2text: self.app.localization.e('close'),
-
-                    class: 'zindex',
-
-                    success: function () {
-
-                        if(clbk) clbk()
-
-                    },
-
-                    fail: function () {
-                        if(fclbk) fclbk()
-                    }
-                })
+                if(clbk) clbk()
             },
         },
 
@@ -19439,6 +19446,10 @@ Platform = function (app, listofnodes) {
 
                     complainShare: function (inputs, complainShare, clbk, p) {
                         this.common(inputs, complainShare, TXFEE, clbk, p)
+                    },
+
+                    modFlag: function (inputs, modFlag, clbk, p) {
+                        this.common(inputs, modFlag, TXFEE, clbk, p)
                     },
 
                     comment: function (inputs, comment, /*fees, */clbk, p) {
@@ -24793,7 +24804,6 @@ Platform = function (app, listofnodes) {
 
 
                 socket.onmessage = function (message) {
-
                     message = message.data ? message.data : message;
 
                     var jm = message;
@@ -25175,7 +25185,7 @@ Platform = function (app, listofnodes) {
         }
 
         self.messageHandler = function (data, clbk) {
-
+            console.log('handle message')
 
             data || (data = {})
 
@@ -27263,6 +27273,7 @@ Platform = function (app, listofnodes) {
                                     address="${a}"
                                     privatekey="${privatekey}"
                                     pocketnet="`+( self.app.mobileview ? '' : 'true')+`"
+                                    recording="`+(self.istest() || self.app.test ? 'true' : '' )+`"
                                     mobile="`+( self.app.mobileview ? 'true' : '')+`" 
                                     ctheme="`+self.sdk.theme.current+`"
                                     localization="`+self.app.localization.key+`"
@@ -27757,7 +27768,6 @@ Platform = function (app, listofnodes) {
     }
 
     self.initSounds = function () {
-
         if (typeof ion != 'undefined'){
             ion.prepare()
             ion.sound({
