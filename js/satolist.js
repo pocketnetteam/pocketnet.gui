@@ -9539,7 +9539,7 @@ Platform = function (app, listofnodes) {
                 }
             },
 
-            isNotAllowedName : function (user) {
+            isNotAllowedName : function (user = {}) {
                 let {name, address} = user
 
                 name = name?.toLowerCase().replace(/[^a-z]/g,'') || ''
@@ -9548,7 +9548,7 @@ Platform = function (app, listofnodes) {
                     if(address == 'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd' || address == 'PJ3nv2jGyW2onqZVDKJf9TmfuLGpmkSK2X'){
                         return false
                     }
-                    console.log(name)
+               
                     return true
                 }
 
