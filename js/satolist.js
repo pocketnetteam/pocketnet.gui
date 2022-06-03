@@ -238,7 +238,13 @@ Platform = function (app, listofnodes) {
         'PANkQ994YKvCMiH8pHR8vtKvGqH9DQt8Bc',
         'PGvRUM7jXqHdUn7Let2QyTi1t2LHq7RgX7',
         'P9EkPPJPPRYxmK541WJkmH8yBM4GuWDn2m',
-        'PReLEpaGEGTCeWKiqnK85eXrqmmTxYQ9Tw'
+        'PReLEpaGEGTCeWKiqnK85eXrqmmTxYQ9Tw',
+        'TAqR1ncH95eq9XKSDRR18DtpXqktxh74UU'
+    ];
+    self.whiteList = [
+      'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd',
+      'PJ3nv2jGyW2onqZVDKJf9TmfuLGpmkSK2X',
+      'TAqR1ncH95eq9XKSDRR18DtpXqktxh74UU'
     ];
 
     if (window.IpcBridge)
@@ -9545,10 +9551,9 @@ Platform = function (app, listofnodes) {
                 name = name?.toLowerCase().replace(/[^a-z]/g,'') || ''
 
                 if(name.indexOf('pocketnet') !== -1 || name.indexOf('bastyon') !== -1) {
-                    if(address == 'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd' || address == 'PJ3nv2jGyW2onqZVDKJf9TmfuLGpmkSK2X'){
+                    if(self.whiteList.includes(address)){
                         return false
                     }
-               
                     return true
                 }
 
