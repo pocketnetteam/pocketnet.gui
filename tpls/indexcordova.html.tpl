@@ -17,7 +17,7 @@
         <meta http-equiv="Content-Security-Policy" content="
         default-src https: blob: 'self' data: app: file: cdvfile: android-webview-video-poster: https://ssl.gstatic.com  __VAR__.domain:*;
         connect-src http: https: 'self' wss: file: cdvfile: data:;
-        img-src 'self' data: http: https: cdvfile: file: android-webview-video-poster:;
+        img-src 'self' blob: data: http: https: cdvfile: file: android-webview-video-poster:;
         script-src 'self' file: blob: https://__VAR__.domain https://player.vimeo.com https://www.youtube.com https://s.ytimg.com https://cdn.jsdelivr.net/joypixels/ 'unsafe-eval' 'unsafe-inline';
         frame-src 'self' https://__VAR__.domain https://player.vimeo.com https://www.youtube.com;
         style-src 'self' data: __VAR__.domain:* https://cdn.jsdelivr.net/joypixels/ https://use.fontawesome.com 'unsafe-inline';
