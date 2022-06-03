@@ -30,7 +30,7 @@ var addaccount = (function(){
 		var events = {
 
 		
-			add : function(){
+			add : function(key){
 				var mnemonicKeyArray = []
 				var mnemonicInputs = el.c.find('.mnemonicItem')
 				mnemonicInputs.each(function(index){
@@ -41,8 +41,7 @@ var addaccount = (function(){
 					}
 				})
 				var p = {};
-				var mnemonicKey = trim(el.login.val()) || mnemonicKeyArray.join(' ');
-
+				var mnemonicKey = (typeof key !== 'object' && key?.trim()) || trim(el.login.val()) || mnemonicKeyArray.join(' ');
 				if (essenseData.success)
 					essenseData.success(mnemonicKey);
 
@@ -50,6 +49,19 @@ var addaccount = (function(){
 				
 
 			},
+			addQrHandler : function(){
+				el.c.find('.qrcode').on('click', function(){
+					self.nav.api.load({
+						open : true,
+						href : 'scanorimportqr',
+						inWnd : true,
+						history : true,
+						essenseData : {
+							login: events.add
+						}
+					})
+				})
+			}
 
 		}
 
@@ -266,6 +278,7 @@ var addaccount = (function(){
 						el.c.find('.loginValue').val($(this).val())
 						$(this).val('')
 						el.c.find('#mnemonicInput').css({'display': 'none'})
+						el.c.find('.qrcode').css({'display': 'none'})
 						el.c.find('.actionButtonsWrapper').css({'display': 'table-cell'})
 						el.c.find('.loginValue').css({'display': 'initial'})
 						el.c.find('.loginValue').trigger( "focus" )
@@ -330,6 +343,7 @@ var addaccount = (function(){
 					el.c.find('.loginValue').css({'display': 'none'})
 					el.c.find('.actionButtonsWrapper').css({'display': 'none'})
 					el.c.find('#mnemonicInput').css({'display': 'flex'})
+					el.c.find('.qrcode').css({'display': 'block'})
 					el.c.find('.mnemonicItem')[0].focus()
 				} 
 			})
@@ -338,7 +352,6 @@ var addaccount = (function(){
 		addMnemonicInputs = function(){
 			var num = 12
 			var container = el.c.find("#mnemonicInput")
-			console.log('test',container);
 			for(var i = 1; i <= num; i++) {
 				$(`<input autocomplete="off" id="mnemonicItem${i}" class="mnemonicItem" type="text">`).appendTo(container);
 			}
@@ -411,6 +424,7 @@ var addaccount = (function(){
 				privateKeyInputHandler()
 				hideAotocomplete()
 				setFocus()
+				events.addQrHandler()
 
 				p.clbk(null, p);
 

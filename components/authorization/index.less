@@ -1,6 +1,5 @@
 @import "../../css/__cssvar";
-
-#authorization{	
+#authorization{
 	#mnemonicInput{
 		display: flex;
 		flex-wrap: wrap;
@@ -9,6 +8,9 @@
 	.inputWrapperKey{
 		display: flex;
     	align-items: center;
+		.qrcode{
+			cursor: pointer;
+		}
 	}
 	.icon {
 		& i{
@@ -429,7 +431,7 @@
 
 }
 .errorClass{
-	border-color: red !important;
+	border-color: @color-bad !important;
 }
 .loginValue{
 	display: none;

@@ -2226,3 +2226,5 @@ ____loclib.lowstaragree = "I confirm that this post contains one of four types o
 ____loclib.mnemonicnote = "To confirm that you wrote down the 12 words, please select them in the correct order."
 ____loclib.mnemonicerror = "You entered the 12 words incorrectly. Please go back and write down the 12 word passphrase to use Bastyon."
 ____loclib.confirm = "Confirm"
+____loclib.cameralocked = "Camera locked"
+____loclib.cameraunlocknote = "To scan, unlock the camera from your browser settings and try again."
