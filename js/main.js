@@ -69,7 +69,7 @@ if(!_Node)
 			wss : 8099
 	    }]
 
-		matrix = 'vamily.ru'
+		matrix = 'test.matrix.pocketnet.app'
 	}
 
 

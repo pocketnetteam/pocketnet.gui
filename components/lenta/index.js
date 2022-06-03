@@ -1078,7 +1078,6 @@ var lenta = (function(){
 					}, true)
 
 				}
-				
 
 			},
 
@@ -1417,7 +1416,7 @@ var lenta = (function(){
 				if(!share){
 					var temp = _.find(self.sdk.node.transactions.temp.share, function(s){
 						return s.txid == id
-					})
+					}) || (self.app.platform.sdk.relayTransactions.get().share || []).find(transaction => transaction.txid === id);
 
 					share = new pShare();
 					share._import(temp);
@@ -2905,7 +2904,6 @@ var lenta = (function(){
 			},
 			
 			share : function(share, clbk, all, p){
-
 				if(!p) p = {}
 
 				if(!share) return
@@ -2915,6 +2913,13 @@ var lenta = (function(){
 				if(!p.repost)
 					shareInitingMap[share.txid] = true;
 
+				var relayTransactions = deep(self.app.platform.sdk.relayTransactions.get(), 'share') || {};
+
+				var shareRelayedFlag = _.find(relayTransactions, (transaction) => (
+					transaction.txid === share.txid
+				));
+
+				
 				self.shell({
 					name : video ? 'sharevideolight' : share.itisarticle() ? 'sharearticle' : 'share',
 
@@ -2928,7 +2933,8 @@ var lenta = (function(){
 						tplvideo : video ,
 						openapi : essenseData.openapi,
 						sharesFromSub,
-						boosted : p.boosted
+						boosted : p.boosted,
+						shareRelayedFlag,
 					}					
 
 				}, function(p){
@@ -3119,7 +3125,6 @@ var lenta = (function(){
 			
 
 			sharesInview : function(shares, clbk, p){
-
 				if(!p) p = {}
 
 				
@@ -3244,7 +3249,6 @@ var lenta = (function(){
 						})
 					})
 					
-
 				self.shell({
 					name :  tpl,
 					inner : p.inner,
@@ -3260,8 +3264,6 @@ var lenta = (function(){
 
 				}, function(_p){
 
-					
-			
 					if (_p.inner == append || likeappend){
 						console.log("ARRANGE")
 						sharesInview = sharesInview.concat(shares)	
@@ -4427,8 +4429,7 @@ var lenta = (function(){
 					}
 
 					self.app.platform.sdk.node.shares.clbks.added.lenta = function(share){
-	
-	
+						
 						if (share.txidEdit){		
 													
 							delete initedcommentes[share.txidEdit]
@@ -4478,7 +4479,6 @@ var lenta = (function(){
 					}
 	
 					self.app.platform.ws.messages.transaction.clbks.temp = function(data){
-	
 						if(essenseData.author && (essenseData.author != self.user.address.value.toString('hex')) || essenseData.txids) return
 	
 						if(data.temp){
@@ -4510,6 +4510,28 @@ var lenta = (function(){
 	
 						}
 						
+					}
+
+					self.app.platform.sdk.relayTransactions.clbks.relayToTemp = function(data) {
+						if(essenseData.author && (essenseData.author != self.user.address.value.toString('hex')) || essenseData.txids) return
+	
+						if(data.txid){
+							var s = _.find(sharesInview, function(sh){
+								if(sh.txid == data.txid) return true
+							})
+	
+							if (s){
+								
+								actions.destroyShare(s)
+	
+								renders.sharesInview([s], function(){
+									
+								})
+	
+								
+							}
+	
+						}
 					}
 	
 					self.app.platform.ws.messages.event.clbks.lenta = function(data){

@@ -247,7 +247,12 @@ var registration = (function(){
 
 					input.on('focus', function(){
 
-						if (self.app.mobileview) setTimeout(function(){_scrollTo(input, el.c.closest('.customscroll')), 200})
+						if (self.app.mobileview) setTimeout(function(){
+							
+							if(el.c)
+								_scrollTo(input, el.c.closest('.customscroll')
+							
+						), 200})
 
 					})
 

@@ -832,3 +832,12 @@ ____loclib.videosDeleted = "Videos gelöscht!";
 ____loclib.noDownloadedVideos = "Keine heruntergeladenen Videos";
 
 ____loclib.buy = 'Kaufen';
+
+
+____loclib.lowstar1 = "Das Bastion-Team führt ein vorübergehendes Moratorium für 1- und 2-Sterne-Bewertungen ein, mit Ausnahme von verbotenen Inhalten. Verbotene Inhalte sind:"
+____loclib.lowstar_reason_1 = "Porno"
+____loclib.lowstar_reason_2 = "Ausbeutung von Kindern"
+____loclib.lowstar_reason_3 = "Direkte Androhung von Gewalt"
+____loclib.lowstar_reason_4 = "Illegale Drogen"
+____loclib.lowstar2 = "Bitte verwenden Sie keine 1- und 2-Sterne-Bewertungen aus anderen Gründen. Nachdem die neue Moderation Mitte Mai veröffentlicht wurde, können Sie niedrige Bewertungen aus anderen Gründen verwenden."
+____loclib.lowstaragree = "Ich bestätige, dass dieser Beitrag eine von vier Arten von verbotenen Inhalten enthält"
