@@ -7,6 +7,9 @@
   display: flex;
   align-items: center;
 }
+#authorization .inputWrapperKey .qrcode {
+  cursor: pointer;
+}
 #authorization .icon i {
   color: rgb(var(--color-txt-ac));
 }
@@ -318,5 +321,5 @@
   }
 }
 .errorClass {
-  border-color: red !important;
+  border-color: #F41A4D !important;
 }
