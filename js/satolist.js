@@ -745,7 +745,36 @@ Platform = function (app, listofnodes) {
         },
 
         ///// NODE
+        "66": {
+            message: function () {
+                return self.app.localization.e('e13257')
+            }
+        },
 
+        "65": {
+            message: function () {
+                return self.app.localization.e('e13258')
+            }
+        },
+
+        "64": {
+            message: function () {
+                return self.app.localization.e('e13259')
+            }
+        },
+
+
+        "62": {
+            message: function () {
+                return self.app.localization.e('e13260')
+            }
+        },
+
+        "61": {
+            message: function () {
+                return self.app.localization.e('e13248')
+            }
+        },
 
         "60": {
             message: function () {
