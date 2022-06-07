@@ -1193,3 +1193,12 @@ ____loclib.bastyonhelperSubtitle1 = "Pocketnet è ora";
 ____loclib.bastyonhelperSubtitle2 = "Per favore, segui il link qui sotto";
 
 ____loclib.buy = 'Acquistare';
+
+
+____loclib.lowstar1 = "Il team di Bastyon sta implementando una moratoria temporanea sulle valutazioni a 1 e 2 stelle, ad eccezione dei contenuti vietati. I contenuti vietati sono:"
+____loclib.lowstar_reason_1 = "Porno"
+____loclib.lowstar_reason_2 = "Sfruttamento minorile"
+____loclib.lowstar_reason_3 = "Minaccia diretta di violenza"
+____loclib.lowstar_reason_4 = "Droghe illegali"
+____loclib.lowstar2 = "Non utilizzare valutazioni a 1 e 2 stelle per altri motivi. Dopo il rilascio della nuova moderazione a metà. Potresti essere in grado di utilizzare valutazioni basse per altri motivi"
+____loclib.lowstaragree = "Confermo che questo post contiene uno dei quattro tipi di contenuto proibito"

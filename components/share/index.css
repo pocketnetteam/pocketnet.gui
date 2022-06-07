@@ -1117,6 +1117,7 @@ html.mobileview .wnd.wndsharepost .wndcontent #share .absolutetxwrapper {
   #share .sLoader {
     left: 0;
     background: rgba(var(-background-secondary-theme), 0.9);
+    position: fixed;
   }
   #share .sLoader .prwrapper {
     position: absolute;

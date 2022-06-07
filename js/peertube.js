@@ -139,6 +139,21 @@ PeerTubePocketnet = function (app) {
 		return PEERTUBE_ID + host + '/' + videoid;
 	};
 
+	self.checkTranscoding = function(url) {
+		return app.api.fetch('peertube/videos', {
+			urls: [url],
+		}).then(r => {
+			var result = r[url]
+
+			if(!result || !result.state){
+				return true;
+			}
+			else{
+				return result.state.id != 2 && result.state.id != 3;
+			}
+		})
+	}
+
 	var error = function (code) {
 		return {
 			code: code,
@@ -164,7 +179,12 @@ PeerTubePocketnet = function (app) {
 		},
 
 		pocketnetAuth: {
-			path: app.test ? 'api/v1/users/blockChainAuth' : 'plugins/pocketnet-auth/router/code-cb',
+			path: () => {
+				return app.test ||
+					app.platform.testaddresses.includes(app.platform.sdk.address.pnet().address)
+					? 'api/v1/users/blockChainAuth'
+					: 'plugins/pocketnet-auth/router/code-cb';
+			},
 			signature: true,
 			method: 'POST',
 			axios: true,
