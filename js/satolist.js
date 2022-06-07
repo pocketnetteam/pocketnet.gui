@@ -204,7 +204,13 @@ Platform = function (app, listofnodes) {
         'PWkQMUTG6pKVA9bAbjLmLewB5eVgEnVk6f' : true,
         'PUAQeTYUB9H5qjeSSXzeeAd6NKXAz8fzpP' : true,
         'PQ4X2NQJD1ZA5Hy58ZU9eHcjpRco7ZMgTz' : true,
-        'PTMFZXMXYFjiN1UuSV4ZckepyEFVWMm6Zy' : true
+        'PTMFZXMXYFjiN1UuSV4ZckepyEFVWMm6Zy' : true,
+        'PKwa3jVZXHpaVgG89WvnM8vBfpp745GGNN' : true,
+        'PHsHq6i4RKm9gCqFGhAr3yvF34yDocc5S7' : true,
+        'PNsx3cC4wDyfowrhvBgjf7VfeXHeFdRgX1' : true,
+        'PHEDVg12YtcHjHYNsmxzV8iexWyw81cQge' : true,
+        'PRKdjSJkqk15YFncjq1FUUXpHo1XWPbB9x' : true,
+        'PBw3aSQe6HCzX75xDy5X2SXx9y9JaUP9ke' : true
     }
 
     self.bch = {
@@ -234,7 +240,13 @@ Platform = function (app, listofnodes) {
         'PANkQ994YKvCMiH8pHR8vtKvGqH9DQt8Bc',
         'PGvRUM7jXqHdUn7Let2QyTi1t2LHq7RgX7',
         'P9EkPPJPPRYxmK541WJkmH8yBM4GuWDn2m',
-        'PReLEpaGEGTCeWKiqnK85eXrqmmTxYQ9Tw'
+        'PReLEpaGEGTCeWKiqnK85eXrqmmTxYQ9Tw',
+        'TAqR1ncH95eq9XKSDRR18DtpXqktxh74UU'
+    ];
+    self.whiteList = [
+      'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd',
+      'PJ3nv2jGyW2onqZVDKJf9TmfuLGpmkSK2X',
+      'TAqR1ncH95eq9XKSDRR18DtpXqktxh74UU'
     ];
 
     if (window.IpcBridge)
@@ -745,7 +757,36 @@ Platform = function (app, listofnodes) {
         },
 
         ///// NODE
+        "66": {
+            message: function () {
+                return self.app.localization.e('e13257')
+            }
+        },
 
+        "65": {
+            message: function () {
+                return self.app.localization.e('e13258')
+            }
+        },
+
+        "64": {
+            message: function () {
+                return self.app.localization.e('e13259')
+            }
+        },
+
+
+        "62": {
+            message: function () {
+                return self.app.localization.e('e13260')
+            }
+        },
+
+        "61": {
+            message: function () {
+                return self.app.localization.e('e13248')
+            }
+        },
 
         "60": {
             message: function () {
@@ -9535,16 +9576,15 @@ Platform = function (app, listofnodes) {
                 }
             },
 
-            isNotAllowedName : function (user) {
+            isNotAllowedName : function (user = {}) {
                 let {name, address} = user
 
                 name = name?.toLowerCase().replace(/[^a-z]/g,'') || ''
 
                 if(name.indexOf('pocketnet') !== -1 || name.indexOf('bastyon') !== -1) {
-                    if(address == 'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd' || address == 'PJ3nv2jGyW2onqZVDKJf9TmfuLGpmkSK2X'){
+                    if(self.whiteList.includes(address)){
                         return false
                     }
-                    console.log(name)
                     return true
                 }
 

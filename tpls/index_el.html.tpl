@@ -17,7 +17,7 @@
         <meta http-equiv="Content-Security-Policy" content="
         default-src https: 'self' file: __VAR__.domain:*; 
         connect-src https: wss: http: ws: file: data: blob:;
-        img-src 'self' data: http: https: file:;
+        img-src 'self' blob: data: http: https: file:;
         script-src 'self' blob: https://__VAR__.domain https://player.vimeo.com https://www.youtube.com https://s.ytimg.com https://cdn.jsdelivr.net/joypixels/ 'unsafe-eval' 'unsafe-inline';
         frame-src 'self' https://__VAR__.domain https://player.vimeo.com https://www.youtube.com;
         style-src 'self' data: __VAR__.domain:* https://cdn.jsdelivr.net/joypixels/ https://use.fontawesome.com 'unsafe-inline' ;

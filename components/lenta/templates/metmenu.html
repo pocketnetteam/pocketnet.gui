@@ -156,10 +156,9 @@ if(share){
 
 		if(!my && me){
 
-			if((typeof mestate!= 'undefined' && !mestate.trial) || window.cordova){
+			if((typeof mestate!= 'undefined' && mestate.badges && Object.values(mestate.badges).includes('shark'))){
 				m.push('complain')
 			}
-
 			if(app.platform.matrixchat.core){
 				m.push('startchat')
 			}
