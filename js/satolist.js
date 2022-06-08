@@ -27684,6 +27684,11 @@ Platform = function (app, listofnodes) {
 
             core.apptochat = function(link){
 
+                self.app.Logger.info({
+					actionId: 'CHAT_OPENED',
+					actionSubType: 'FROM_MOBILE_INTERFACE',
+				});
+
                 if (document.activeElement) document.activeElement.blur()
 
                 if (self.matrixchat.core){
