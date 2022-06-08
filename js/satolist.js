@@ -210,7 +210,8 @@ Platform = function (app, listofnodes) {
         'PNsx3cC4wDyfowrhvBgjf7VfeXHeFdRgX1' : true,
         'PHEDVg12YtcHjHYNsmxzV8iexWyw81cQge' : true,
         'PRKdjSJkqk15YFncjq1FUUXpHo1XWPbB9x' : true,
-        'PBw3aSQe6HCzX75xDy5X2SXx9y9JaUP9ke' : true
+        'PBw3aSQe6HCzX75xDy5X2SXx9y9JaUP9ke' : true,
+        'PCxXVA4quzXVjUM356t3FE2nvWmDVY47J7' : true
     }
 
     self.bch = {
@@ -9562,6 +9563,13 @@ Platform = function (app, listofnodes) {
             reputationBlocked : function(address, count){
                 var ustate = self.sdk.ustate.storage[address] || deep(self, 'sdk.usersl.storage.' + address) || deep(self, 'sdk.users.storage.' + address);
 
+                if(!ustate) return false
+
+
+                var totalComplains = typeof ustate.flags === 'object' ? Object.values(ustate.flags).reduce((a,b) => a + +b, 0) : 0
+                var isOverComplained = typeof ustate.flags === 'object' ? Object.values(ustate.flags).some(el => el / ustate.postcnt > 5) : false
+
+
                 if(self.bch[address]) return true
 
                 if(typeof count == 'undefined') count = -12
@@ -9571,6 +9579,18 @@ Platform = function (app, listofnodes) {
                 ){
                     return true
                 }
+                if(isOverComplained) {
+                    return true
+                }
+
+                if(moment().diff(ustate.regdate, 'days') <= 7 && totalComplains  > 20 ) {
+                    return true
+                }
+
+                if(totalComplains > 20 && ustate.likers_count * 2 < totalComplains) {
+                    return true
+                }
+
                 if(this.isNotAllowedName(ustate)) {
                     return true
                 }
