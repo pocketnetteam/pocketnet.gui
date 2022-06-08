@@ -14096,7 +14096,6 @@ Platform = function (app, listofnodes) {
             },
 
             select : function(id, _k){
-
                 if(!id) return 'emptyid'
 
                 var allcats = self.sdk.categories.get(_k)
@@ -14114,6 +14113,11 @@ Platform = function (app, listofnodes) {
 
                 s.selected[k] || (s.selected[k] = {})
 
+                self.app.Logger.info({
+                    actionId: 'SELECT_FEED_CATEGORY',
+                    actionValue: cat.name,
+                    actionSubType: s.selected[k][id] ? 'DESELECT' : 'SELECT'
+                });
 
                 if (s.selected[k][id])
                     delete s.selected[k][id]

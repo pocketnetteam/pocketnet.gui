@@ -8,6 +8,8 @@ class FrontendLogger {
     this.app = app;
 
     this.guid = makeid();
+    this._logsCache = [];
+    this._errorsCache = [];
 
     //configuration of the axios instance
     this.instance = axios.create({
@@ -30,7 +32,7 @@ class FrontendLogger {
     );
   }
 
-  static logCodes = {
+  logCodes = {
     SELECT_FEED_CATEGORY: {
       id: 'SELECT_FEED_CATEGORY',
       description: 'User clicked on the feed category button',
@@ -72,19 +74,32 @@ class FrontendLogger {
     },
   };
 
-  static _logsCache = [];
-
   sendLogsBatch() {
-    const { _logsCache, instance } = this;
+    const {
+      _logsCache,
+      _errorsCache,
+      instance,
+      _createErrorBody,
+      _createLogBody,
+    } = this;
 
-    const logsBatch = _logsCache.splice(0, 10);
+    // const logsBatch = _logsCache
+    //   .splice(0, 10)
+    //   .map((log) => _createLogBody(log));
+    // const errorsBatch = _errorsCache
+    //   .splice(0, 10)
+    //   .map((err) => _createErrorBody(err));
 
-    if (logsBatch.length) {
-      instance.post('front/add', logsBatch.join(','));
-    }
+    // if (logsBatch.length) {
+    //   instance.post('front/action', logsBatch.join(','));
+    // }
+
+    // if (errorsBatch.length) {
+    //   instance.post('front/add', errorsBatch.join(','));
+    // }
   }
 
-  _createLogBody({
+  _createErrorBody({
     level = 'error',
     date = moment().format('YYYY-MM-DD hh:mm:ss'),
     moduleVersion = '',
@@ -110,29 +125,89 @@ class FrontendLogger {
     return `(${parametersOrder.join(',')})`;
   }
 
+  _createLogBody({
+    type = 'DEFAULT_LOG',
+    subType = 'DEFAULT_SUBTYPE',
+    value = 'NO_VALUE',
+    date = moment().format('YYYY-MM-DD hh:mm:ss'),
+    moduleVersion = '0.0.1',
+    userAgent = '',
+    guid = '',
+  }) {
+    const parametersOrder = [
+      type,
+      subType,
+      value,
+      date,
+      moduleVersion,
+      userAgent,
+      guid,
+    ].map((element) =>
+      typeof element !== 'number' ? `'${element}'` : element,
+    );
+
+    return `(${parametersOrder.join(',')})`;
+  }
+
   error(error = {}) {
-    const { _logsCache, _createLogBody, guid, userAgent, loggerActive } = this;
+    const { _errorsCache, guid, userAgent, loggerActive } = this;
     //protection from incorrect error formats or logger is turned off
     if (typeof error !== 'object' || !loggerActive) return;
 
-    const formattedError = _createLogBody({ ...error, guid, userAgent });
+    const formattedError = { ...error, guid, userAgent };
 
-    _logsCache.push(formattedError);
+    _errorsCache.push(formattedError);
   }
 
-  info(info = {}) {
-    const { _logsCache, _createLogBody, guid, userAgent, loggerActive } = this;
+  _addLogWithAggregation = {
+    default: (info, arr) => arr.push(info),
 
-    if (typeof info !== 'object' || !loggerActive) return;
+    SELECT_FEED_CATEGORY(info, array) {
+      const existingLog = array.find(
+        (element) =>
+          element.type === info.type && element.subType === info.subType,
+      );
 
-    const fullInfo = {
-      code: 211,
-      level: 'info',
-      ...info,
+      if (!existingLog) return array.push(info);
+
+      const valueArray = existingLog.value.split(',');
+
+      if (!valueArray.includes(info.value)) valueArray.push(info.value);
+
+      existingLog.value = valueArray.join(',');
+
+      return;
+    },
+  };
+
+  info({ actionId = '', actionSubType = '', actionValue = '' }) {
+    const {
+      _logsCache,
+      guid,
+      userAgent,
+      loggerActive,
+      logCodes,
+      _addLogWithAggregation,
+    } = this;
+
+    // if (typeof info !== 'object' || !loggerActive) return;
+
+    const infoType = logCodes[actionId] ? logCodes[actionId].id : '';
+
+    const info = {
+      type: infoType,
+      subType: actionSubType,
+      value: actionValue,
+      guid,
+      userAgent,
     };
 
-    const formattedInfo = _createLogBody({ ...fullInfo, guid, userAgent });
+    if (_addLogWithAggregation[infoType]) {
+      _addLogWithAggregation[infoType](info, _logsCache);
+    } else {
+      _addLogWithAggregation.default(info, _logsCache);
+    }
 
-    _logsCache.push(formattedInfo);
+    console.log('Batch state', _logsCache);
   }
 }
