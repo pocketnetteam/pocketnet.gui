@@ -757,7 +757,36 @@ Platform = function (app, listofnodes) {
         },
 
         ///// NODE
+        "66": {
+            message: function () {
+                return self.app.localization.e('e13257')
+            }
+        },
 
+        "65": {
+            message: function () {
+                return self.app.localization.e('e13258')
+            }
+        },
+
+        "64": {
+            message: function () {
+                return self.app.localization.e('e13259')
+            }
+        },
+
+
+        "62": {
+            message: function () {
+                return self.app.localization.e('e13260')
+            }
+        },
+
+        "61": {
+            message: function () {
+                return self.app.localization.e('e13248')
+            }
+        },
 
         "60": {
             message: function () {
@@ -9533,6 +9562,11 @@ Platform = function (app, listofnodes) {
             reputationBlocked : function(address, count){
                 var ustate = self.sdk.ustate.storage[address] || deep(self, 'sdk.usersl.storage.' + address) || deep(self, 'sdk.users.storage.' + address);
 
+
+                var totalComplains = typeof ustate.flags === 'object' ? Object.values(ustate.flags).reduce((a,b) => a + +b, 0) : 0
+                var isOverComplained = typeof ustate.flags === 'object' ? Object.values(ustate.flags).some(el => el / ustate.postcnt > 5) : false
+
+
                 if(self.bch[address]) return true
 
                 if(typeof count == 'undefined') count = -12
@@ -9542,6 +9576,18 @@ Platform = function (app, listofnodes) {
                 ){
                     return true
                 }
+                if(isOverComplained) {
+                    return true
+                }
+
+                if(moment().diff(ustate.regdate, 'days') <= 7 && totalComplains  > 20 ) {
+                    return true
+                }
+
+                if(totalComplains > 20 && ustate.likers_count * 2 < totalComplains) {
+                    return true
+                }
+
                 if(this.isNotAllowedName(ustate)) {
                     return true
                 }
