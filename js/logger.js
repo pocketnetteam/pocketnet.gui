@@ -39,8 +39,8 @@ class FrontendLogger {
     },
 
     SELECT_FEED_SECTION: {
-      id: 'CLICK_FEED_SECTION',
-      description: 'User clicked on the feed category button',
+      id: 'SELECT_FEED_SECTION',
+      description: 'User clicked on the feed section button',
     },
 
     SELECT_FEED_TAG: {
@@ -175,6 +175,16 @@ class FrontendLogger {
       if (!valueArray.includes(info.value)) valueArray.push(info.value);
 
       existingLog.value = valueArray.join(',');
+
+      return;
+    },
+
+    SELECT_FEED_SECTION(info, array) {
+      const existingLog = array.find(
+        (element) => element.type === info.type && element.value === info.value,
+      );
+
+      if (!existingLog) return array.push(info);
 
       return;
     },

@@ -1023,13 +1023,16 @@ var main = (function(){
 					return r
 				}));
 
-				
-
 				var nsearchtags = words.length ? words : null
 				var nsearchvalue = parameters().ss || ''
 				var ncurrentMode = parameters().r || 'common';
 
 				var nlentakey = parameters().video ? 'video' : parameters().read ? 'read' : (parameters().r || 'index')
+
+				self.app.Logger.info({
+					actionId: 'SELECT_FEED_SECTION',
+                    actionValue: nlentakey,
+				});
 
 				var nvideomain = nlentakey == 'video'
 				var nreadmain = nlentakey == 'read'
