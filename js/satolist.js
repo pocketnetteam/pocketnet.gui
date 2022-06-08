@@ -14040,6 +14040,11 @@ Platform = function (app, listofnodes) {
 
                 s.tags[k] || (s.tags[k] = {})
 
+                self.app.Logger.info({
+                    actionId: 'SELECT_FEED_TAG',
+                    actionValue: tag,
+                    actionSubType: s.tags[k][tag] ? 'DESELECT' : 'SELECT'
+                });
 
                 if (s.tags[k][tag])
                     delete s.tags[k][tag]

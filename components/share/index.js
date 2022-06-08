@@ -2523,6 +2523,7 @@ var share = (function(){
 			self.app.platform.ws.messages.transaction.clbks.share = actions.waitActions
 
 			el.c.on('click', function(){
+				debugger;
 				if (el.c) el.c.addClass('focus').removeClass('unfocus')
 			})
 

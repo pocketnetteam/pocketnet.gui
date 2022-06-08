@@ -188,6 +188,23 @@ class FrontendLogger {
 
       return;
     },
+
+    SELECT_FEED_TAG(info, array) {
+      const existingLog = array.find(
+        (element) =>
+          element.type === info.type && element.subType === info.subType,
+      );
+
+      if (!existingLog) return array.push(info);
+
+      const valueArray = existingLog.value.split(',');
+
+      if (!valueArray.includes(info.value)) valueArray.push(info.value);
+
+      existingLog.value = valueArray.join(',');
+
+      return;
+    },
   };
 
   info({ actionId = '', actionSubType = '', actionValue = '' }) {
