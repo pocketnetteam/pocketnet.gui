@@ -838,6 +838,10 @@ var share = (function(){
 
 			post : function(clbk, p){
 				
+				self.app.Logger.info({
+					actionId: 'POST_CREATED',
+				});
+
 				el.postWrapper.removeClass('showError');
 
 				if(essenseData.hash == currentShare.shash()){
@@ -1347,6 +1351,7 @@ var share = (function(){
 			},
 
 			post : function(){
+
 				var error = actions.error();
 
 				if (external && external.uploading()) {
