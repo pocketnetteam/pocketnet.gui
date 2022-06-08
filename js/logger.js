@@ -205,6 +205,16 @@ class FrontendLogger {
 
       return;
     },
+
+    RECOMMENDATION_SELECTED(info, array) {
+      const existingLog = array.find(
+        (element) => element.type === info.type && element.value === info.value,
+      );
+
+      if (!existingLog) return array.push(info);
+
+      return;
+    },
   };
 
   info({ actionId = '', actionSubType = '', actionValue = '' }) {
