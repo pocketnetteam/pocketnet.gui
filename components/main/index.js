@@ -135,6 +135,10 @@ var main = (function(){
 			},
 
 			addbutton : function(){
+				self.app.Logger.info({
+					actionId: 'POST_CREATING_STARTED',
+					actionSubType: 'FROM_SCROLL_BUTTON',
+				});
 
 				self.app.platform.ui.share()
 			},
