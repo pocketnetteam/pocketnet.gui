@@ -27331,7 +27331,6 @@ Platform = function (app, listofnodes) {
 
                             var privatekey = self.app.user.private.value.toString('hex');
 
-
                             var matrix = `<div class="wrapper matrixchatwrapper">
                                 <matrix-element
                                     address="${a}"
@@ -27342,6 +27341,7 @@ Platform = function (app, listofnodes) {
                                     ctheme="`+self.sdk.theme.current+`"
                                     localization="`+self.app.localization.key+`"
                                     fcmtoken="`+(self.fcmtoken || "")+`"
+                                    isSoundAvailable="`+(self.sdk.usersettings.meta.sound.value)+`"
                                 >
                                 </matrix-element>
                             </div>`
