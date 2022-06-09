@@ -83,20 +83,20 @@ class FrontendLogger {
       _createLogBody,
     } = this;
 
-    // const logsBatch = _logsCache
-    //   .splice(0, 10)
-    //   .map((log) => _createLogBody(log));
-    // const errorsBatch = _errorsCache
-    //   .splice(0, 10)
-    //   .map((err) => _createErrorBody(err));
+    const logsBatch = _logsCache
+      .splice(0, 10)
+      .map((log) => _createLogBody(log));
+    const errorsBatch = _errorsCache
+      .splice(0, 10)
+      .map((err) => _createErrorBody(err));
 
-    // if (logsBatch.length) {
-    //   instance.post('front/action', logsBatch.join(','));
-    // }
+    if (logsBatch.length) {
+      instance.post('front/action', logsBatch.join(','))
+    }
 
-    // if (errorsBatch.length) {
-    //   instance.post('front/add', errorsBatch.join(','));
-    // }
+    if (errorsBatch.length) {
+      instance.post('front/add', errorsBatch.join(','));
+    }
   }
 
   _createErrorBody({
@@ -205,16 +205,6 @@ class FrontendLogger {
 
       return;
     },
-
-    RECOMMENDATION_SELECTED(info, array) {
-      const existingLog = array.find(
-        (element) => element.type === info.type && element.value === info.value,
-      );
-
-      if (!existingLog) return array.push(info);
-
-      return;
-    },
   };
 
   info({ actionId = '', actionSubType = '', actionValue = '' }) {
@@ -227,7 +217,7 @@ class FrontendLogger {
       _addLogWithAggregation,
     } = this;
 
-    // if (typeof info !== 'object' || !loggerActive) return;
+    if (typeof info !== 'object' || !loggerActive) return;
 
     const infoType = logCodes[actionId] ? logCodes[actionId].id : '';
 
