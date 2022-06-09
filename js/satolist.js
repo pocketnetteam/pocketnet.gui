@@ -211,7 +211,8 @@ Platform = function (app, listofnodes) {
         'PHEDVg12YtcHjHYNsmxzV8iexWyw81cQge' : true,
         'PRKdjSJkqk15YFncjq1FUUXpHo1XWPbB9x' : true,
         'PBw3aSQe6HCzX75xDy5X2SXx9y9JaUP9ke' : true,
-        'PCxXVA4quzXVjUM356t3FE2nvWmDVY47J7' : true
+        'PCxXVA4quzXVjUM356t3FE2nvWmDVY47J7' : true,
+        'PVATJhZqKdYXLp1nmPdrssRhygJApmAALR' : true
     }
 
     self.bch = {
@@ -17305,19 +17306,26 @@ Platform = function (app, listofnodes) {
 
                         self.app.platform.sdk.node.shares.getbyid(txids, function (shares) {
 
-                            console.log('include, shares', shares.length)
+                            
+                            self.app.platform.sdk.node.shares.users(shares, function(){
 
-                            shares = _.filter(shares, function(s){
-                                if(!self.sdk.user.reputationBlocked(s.address)){
-                                    return true
-                                }
+                                shares = _.filter(shares, function(s){
+                                    if(!self.sdk.user.reputationBlocked(s.address)){
+                                        return true
+                                    }
+                                    else{
+                                        console.log(".")
+                                    }
+                                })
+    
+                                console.log('include, shares2', shares.length)
+    
+    
+                                if (clbk)
+                                    clbk(shares, null, p)
                             })
 
-                            console.log('include, shares2', shares.length)
-
-
-                            if (clbk)
-                                clbk(shares, null, p)
+                            
 
                         })
 
