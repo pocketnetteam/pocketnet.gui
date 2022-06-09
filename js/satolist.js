@@ -9564,6 +9564,8 @@ Platform = function (app, listofnodes) {
             reputationBlocked : function(address, count){
                 var ustate = self.sdk.ustate.storage[address] || deep(self, 'sdk.usersl.storage.' + address) || deep(self, 'sdk.users.storage.' + address);
 
+                console.log('ustate', ustate, address)
+
                 if(!ustate) return false
 
 
@@ -15954,7 +15956,7 @@ Platform = function (app, listofnodes) {
 
                     })
 
-                    self.sdk.users.get(users, clbk, true)
+                    self.sdk.users.get(users, clbk)
                 },
                 add: function (share) {
 
@@ -17310,11 +17312,11 @@ Platform = function (app, listofnodes) {
                             self.app.platform.sdk.node.shares.users(shares, function(){
 
                                 shares = _.filter(shares, function(s){
+
                                     if(!self.sdk.user.reputationBlocked(s.address)){
                                         return true
                                     }
                                     else{
-                                        console.log(".")
                                     }
                                 })
     
