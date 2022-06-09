@@ -2187,7 +2187,6 @@ Platform = function (app, listofnodes) {
                 mid : id,
                 animation : false,
                 essenseData : {
-
                     author : p.author,
                     video : p.video,
                     comments : p.comments,
@@ -2224,7 +2223,6 @@ Platform = function (app, listofnodes) {
                     ended : p.ended,
                     afterload : p.afterload,
                     count : p.count
-
                 },
 
                 clbk : clbk
