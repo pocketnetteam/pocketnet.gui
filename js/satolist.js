@@ -9561,10 +9561,9 @@ Platform = function (app, listofnodes) {
             },
 
             reputationBlocked : function(address, count){
-                var ustate = self.sdk.ustate.storage[address] || deep(self, 'sdk.usersl.storage.' + address) || deep(self, 'sdk.users.storage.' + address);
+                var ustate = deep(self, 'sdk.usersl.storage.' + address) || self.sdk.ustate.storage[address] || deep(self, 'sdk.users.storage.' + address);
 
                 if(!ustate) return false
-
 
                 var totalComplains = typeof ustate.flags === 'object' ? Object.values(ustate.flags).reduce((a,b) => a + +b, 0) : 0
                 var isOverComplained = typeof ustate.flags === 'object' ? Object.values(ustate.flags).some(el => el / ustate.postcnt > 5) : false
@@ -9579,6 +9578,7 @@ Platform = function (app, listofnodes) {
                 ){
                     return true
                 }
+
                 if(isOverComplained) {
                     return true
                 }
@@ -9598,6 +9598,10 @@ Platform = function (app, listofnodes) {
 
             isNotAllowedName : function (user = {}) {
                 let {name, address} = user
+
+                if(self.api.name(address) !== name) {
+                    return true
+                }
 
                 name = name?.toLowerCase().replace(/[^a-z]/g,'') || ''
 
