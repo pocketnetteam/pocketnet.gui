@@ -210,7 +210,8 @@ Platform = function (app, listofnodes) {
         'PNsx3cC4wDyfowrhvBgjf7VfeXHeFdRgX1' : true,
         'PHEDVg12YtcHjHYNsmxzV8iexWyw81cQge' : true,
         'PRKdjSJkqk15YFncjq1FUUXpHo1XWPbB9x' : true,
-        'PBw3aSQe6HCzX75xDy5X2SXx9y9JaUP9ke' : true
+        'PBw3aSQe6HCzX75xDy5X2SXx9y9JaUP9ke' : true,
+        'PCxXVA4quzXVjUM356t3FE2nvWmDVY47J7' : true
     }
 
     self.bch = {
@@ -9561,6 +9562,8 @@ Platform = function (app, listofnodes) {
 
             reputationBlocked : function(address, count){
                 var ustate = self.sdk.ustate.storage[address] || deep(self, 'sdk.usersl.storage.' + address) || deep(self, 'sdk.users.storage.' + address);
+
+                if(!ustate) return false
 
 
                 var totalComplains = typeof ustate.flags === 'object' ? Object.values(ustate.flags).reduce((a,b) => a + +b, 0) : 0
@@ -27324,7 +27327,6 @@ Platform = function (app, listofnodes) {
 
                             var privatekey = self.app.user.private.value.toString('hex');
 
-
                             var matrix = `<div class="wrapper matrixchatwrapper">
                                 <matrix-element
                                     address="${a}"
@@ -27335,6 +27337,7 @@ Platform = function (app, listofnodes) {
                                     ctheme="`+self.sdk.theme.current+`"
                                     localization="`+self.app.localization.key+`"
                                     fcmtoken="`+(self.fcmtoken || "")+`"
+                                    isSoundAvailable="`+(self.sdk.usersettings.meta.sound.value)+`"
                                 >
                                 </matrix-element>
                             </div>`
