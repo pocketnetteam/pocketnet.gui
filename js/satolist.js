@@ -15960,7 +15960,7 @@ Platform = function (app, listofnodes) {
 
                     })
 
-                    self.sdk.users.get(users, clbk)
+                    self.sdk.users.get(users, clbk, true)
                 },
                 add: function (share) {
 
