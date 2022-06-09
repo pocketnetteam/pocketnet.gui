@@ -20,6 +20,8 @@ var share = (function(){
 
 		var focusfixed = false, external = null, pliss, destroying = false;
 
+		var clickOnCreateHappened = false;
+
 		var loadedimages = {}
 		var loadingimages = {}
 		var player = null
@@ -836,6 +838,10 @@ var share = (function(){
 
 			post : function(clbk, p){
 				
+				self.app.Logger.info({
+					actionId: 'POST_CREATED',
+				});
+
 				el.postWrapper.removeClass('showError');
 
 				if(essenseData.hash == currentShare.shash()){
@@ -1345,6 +1351,7 @@ var share = (function(){
 			},
 
 			post : function(){
+
 				var error = actions.error();
 
 				if (external && external.uploading()) {
@@ -2523,6 +2530,16 @@ var share = (function(){
 			self.app.platform.ws.messages.transaction.clbks.share = actions.waitActions
 
 			el.c.on('click', function(){
+				
+				if (!clickOnCreateHappened) {
+					self.app.Logger.info({
+						actionId: 'POST_CREATING_STARTED',
+						actionSubType: 'FROM_MAIN_FORM',
+					});
+
+					clickOnCreateHappened = true;
+				};
+
 				if (el.c) el.c.addClass('focus').removeClass('unfocus')
 			})
 

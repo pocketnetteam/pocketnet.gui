@@ -2188,7 +2188,6 @@ Platform = function (app, listofnodes) {
                 mid : id,
                 animation : false,
                 essenseData : {
-
                     author : p.author,
                     video : p.video,
                     comments : p.comments,
@@ -2225,7 +2224,6 @@ Platform = function (app, listofnodes) {
                     ended : p.ended,
                     afterload : p.afterload,
                     count : p.count
-
                 },
 
                 clbk : clbk
@@ -14045,6 +14043,11 @@ Platform = function (app, listofnodes) {
 
                 s.tags[k] || (s.tags[k] = {})
 
+                self.app.Logger.info({
+                    actionId: 'SELECT_FEED_TAG',
+                    actionValue: tag,
+                    actionSubType: s.tags[k][tag] ? 'DESELECT' : 'SELECT'
+                });
 
                 if (s.tags[k][tag])
                     delete s.tags[k][tag]
@@ -14101,7 +14104,6 @@ Platform = function (app, listofnodes) {
             },
 
             select : function(id, _k){
-
                 if(!id) return 'emptyid'
 
                 var allcats = self.sdk.categories.get(_k)
@@ -14119,6 +14121,11 @@ Platform = function (app, listofnodes) {
 
                 s.selected[k] || (s.selected[k] = {})
 
+                self.app.Logger.info({
+                    actionId: 'SELECT_FEED_CATEGORY',
+                    actionValue: cat.name,
+                    actionSubType: s.selected[k][id] ? 'DESELECT' : 'SELECT'
+                });
 
                 if (s.selected[k][id])
                     delete s.selected[k][id]
@@ -27686,6 +27693,11 @@ Platform = function (app, listofnodes) {
             }
 
             core.apptochat = function(link){
+
+                self.app.Logger.info({
+					actionId: 'CHAT_OPENED',
+					actionSubType: 'FROM_MOBILE_INTERFACE',
+				});
 
                 if (document.activeElement) document.activeElement.blur()
 

@@ -180,10 +180,7 @@ PeerTubePocketnet = function (app) {
 
 		pocketnetAuth: {
 			path: () => {
-				return app.test ||
-					app.platform.testaddresses.includes(app.platform.sdk.address.pnet().address)
-					? 'api/v1/users/blockChainAuth'
-					: 'plugins/pocketnet-auth/router/code-cb';
+				return 'api/v1/users/blockChainAuth';
 			},
 			signature: true,
 			method: 'POST',
