@@ -1,5 +1,60 @@
 @import "../../css/__cssvar";
+.qrmenu{
+	.qrmenuitem{
+		cursor: pointer;
+		height: 80px;
+			.fileUploader{
+				.elContent{
+					display: flex;
+					.icon{
+						width: 30px;
+						padding: 2em 0px 2em 1.5em;
+					}
+					.label{
+						padding: 2em 0em 2em 1em;
+					}
+				}
+			}
+		>div{
+			padding : 2*  @rhythm;
+			border-bottom: 1px solid rgb(var(--neutral-grad-1));
+			.transition(0.3s);
 
+			span{
+				font-size: 0.9em;
+			}
+
+			&.icon{
+				width: 30px;
+				text-align: center;
+			}
+		}
+
+		&:nth-last-child(1){
+			>div{
+				border-bottom: 0;
+			}
+		}
+
+		&:hover{
+			>div{
+				color : rgb(var(--color-text-ac));
+				border-color: rgb(var(--color-text-ac));
+			}
+		}
+
+		&.block,
+		&.complain{
+			&:hover{
+				>div{
+					color : rgb(var(--color-text-ac-2));
+					border-color: rgb(var(--color-text-ac-2));
+				}
+			}
+		}
+
+	}
+}
 #addaccount{	
 	.qrcode{
 		text-align: center;

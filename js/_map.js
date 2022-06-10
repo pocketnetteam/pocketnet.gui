@@ -166,13 +166,9 @@ __map =  {
 		href : "pkview",
 		add : insertingfunc,
 
-		/*relations : [
-			{src : 'js/vendor/qrscanner.js',			   f : 'js'},
-			{src : 'js/vendor/qrcode.min.js',			   f : 'js', require : function(){
-				QRCode = require('./js/vendor/qrcode.min.js')
-			}},	
-
-		],*/
+		relations : [
+			{src : 'js/vendor/qrcode.js',			   f : 'js'},
+		],
 	},      
 
 	
@@ -856,7 +852,9 @@ __map =  {
 		relations : [
 			{src : 'js/validation.js',			   f : 'js'},
 			{src : 'js/vendor/qr/qrscanner.js',			   f : 'js'},	
+			{src : 'js/vendor/html5-qrcode.min.js',			   f : 'js', }
 		],
+		
 		anonimus : true,
 		electronDontOpen : true
 	},
@@ -868,7 +866,7 @@ __map =  {
 		relations : [
 			{src : 'js/validation.js',			   f : 'js'},				
 			{src : 'js/vendor/qr/qrscanner.js',			   f : 'js'},	
-			
+			{src : 'js/vendor/html5-qrcode.min.js',			   f : 'js', }
 		]
 	},
 

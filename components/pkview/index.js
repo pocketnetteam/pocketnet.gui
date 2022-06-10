@@ -11,9 +11,10 @@ var pkview = (function(){
 		var el, current = {}, ed = {}
 
 		var checkedMnemonic = []
+		var base64
 
 		var actions = {
-			saveqr : function(base64, clbk){
+			saveqr : function(clbk){
 
 				var name = 'pkey_'+self.app.platform.currentTime()
 
@@ -44,19 +45,7 @@ var pkview = (function(){
 		}
 
 		var renders = {
-			qrcode : function(el, m){
-				
-
-				var qrcode = new QRCode(el[0], {
-					text: m,
-					width: 256,
-					height: 256
-				});
-
-				return qrcode
-
-			},
-
+			
 			mnemonic : function(percent){
 
 				var s = '';
@@ -135,17 +124,6 @@ var pkview = (function(){
 						hiddenform.find('button').click();
 					});
 
-					/*var container = p.el.find('.qrcode');
-					var qr = renders.qrcode(container, current.mk)
-
-					var base64 = qr._oDrawing._elCanvas.toDataURL("image/png")*/
-
-
-					/*container.attr('save', name + '.png')
-					container.attr('src', base64)
-
-					self.app.mobile.saveImages.init(container)*/
-
 					var hiddenform = p.el.find('#loginform')
 
 						hiddenform.on('submit', function(event) {
@@ -171,15 +149,21 @@ var pkview = (function(){
 						sitemessage(self.app.localization.e('successfullycopied'))
 					})
 
-					/*p.el.find('.save').on('click', function(){
-
-						actions.saveqr(base64, function(){
-							successCheck()
-						})
-
-					
-
-					})*/ 
+					p.el.find('.save').on('click', function(){
+						el.c.find(".qrCode")
+						.html(`<canvas id="canvas"></canvas><div class="approveMnemonicButtons"><button class="button ghost backButton"><span>${self.app.localization.e('back')}</span></button><button class="button orange qrSubmitButton">${self.app.localization.e('download')}</button></div>`)
+						QRCode.toCanvas(document.getElementById('canvas'), current.mnemonicKey, { width: 256 }, function (error) {
+							if (error) console.error(error)
+						  })
+						QRCode.toDataURL(current.mnemonicKey, { errorCorrectionLevel: 'H' }, function (err, url) {
+							base64 = url
+						  })
+						back()
+						downLoadQr()
+						el.c.find(".stepContent").css({"display": "none"})
+						el.c.find('.dontshowagain').css({"display": "none"})
+						el.c.find(".qrCode").css({"display": "flex"})
+					}) 
 
 					
 
@@ -217,6 +201,7 @@ var pkview = (function(){
 				el.c.find(".stepContent").css({"display": "block"})
 				el.c.find('.dontshowagain').css({"display": "block"})
 				el.c.find(".approveMnemonic").html('')
+				el.c.find(".qrCode").html('')
 			})
 		}
 		renderShuffledMnemonic = function(){
@@ -269,6 +254,13 @@ var pkview = (function(){
 						sitemessage(self.app.localization.e('mnemonicerror'))
 					}
 				}
+			})
+		}
+		downLoadQr = function(){
+			el.c.find(".qrSubmitButton").on('click', function(){
+				actions.saveqr(function(){
+						successCheck()
+					})
 			})
 		}
 

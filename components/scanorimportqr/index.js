@@ -29,34 +29,22 @@ var scanorimportqr = (function(){
 
 				action : function(file, clbk){
 
-			
 					if(file.ext == 'png' || file.ext == 'jpeg' || file.ext == 'jpg'){
-						
-
-						grayscaleImage(file.base64, function(image){
-							qrscanner.q.debug = true
-
-							qrscanner.q.callback = function(data){
-
-
-								if(data == 'error decoding QR Code'){
-									sitemessage(self.app.localization.e('filedamaged'))
-								}
-								else
-								{
-                                    essenseData.login(trim(data))
-									// el.login.val(trim(data))
-
-									// el.hiddenform.submit()
-								}
-							}
-
-							qrscanner.q.decode(image)
-						})
-
-						
-					
-						
+							if(qrCodeScanner && qrCodeScanner.getState() === 2){
+								qrCodeScanner.stop().then((ignore) => {
+									qrCodeScanner.scanFile(file.file, false)
+									.then(decodedText => {
+										essenseData.login(trim(decodedText))
+										self.closeContainer()
+									})
+									.catch(err => {
+										self.closeContainer()
+										sitemessage(self.app.localization.e('filedamaged'))
+									});
+							  }).catch((err) => {
+								console.log(err);
+							  });
+							}	
 					}
 					else
 					{
@@ -70,6 +58,8 @@ var scanorimportqr = (function(){
 						if (ds[1]) {
 
                             trim(trim(ds[1]))
+							essenseData.login(trim(ds[1]))
+							self.closeContainer()
 							// el.login.val(trim(ds[1]))
 
 							// events.login();
@@ -111,7 +101,6 @@ var scanorimportqr = (function(){
 				var cameraId
 				window.Html5Qrcode.getCameras().then(devices => {
 					if (devices && devices.length) {
-						console.log();
 						cameraId = devices[0].id;
 					    qrCodeScanner = new window.Html5Qrcode("reader")
 						qrCodeScanner.start(
@@ -128,7 +117,6 @@ var scanorimportqr = (function(){
 					}
 					el.c.find(".loader").fadeOut()
 				  }).catch(err => {
-					console.log('qaq',err);
 					el.c.find(".loader").fadeOut()
 					el.c.find(".error").fadeIn()
 					
