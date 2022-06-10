@@ -1,11 +1,15 @@
 @import "../../css/__cssvar";
 
 #pkview{
-    .approveMnemonic{
+    .approveMnemonic,
+    .qrCode{
         position: relative;
         display: none;
         flex-direction: column;
         justify-content: center;
+        & canvas{
+            align-self: center;
+        }
         .approveMnemonicNote{
             font-weight: 700;
             text-align: center;

@@ -46,23 +46,127 @@ var addaccount = (function(){
 					essenseData.success(mnemonicKey);
 
 				self.closeContainer()
-				
-
 			},
+
+			openQrScanner : function(){
+				self.nav.api.load({
+							open : true,
+							href : 'scanorimportqr',
+							inWnd : true,
+							history : true,
+							essenseData : {
+								login: events.add
+							}
+						})
+			},
+
+			renderFileLoader : function(_el, closetooltip){
+				initUpload({
+					el : _el,
+	
+					notexif : true,
+		
+					ext : ['txt', 'png', 'jpeg', 'jpg'],
+	
+					dropZone : el.c,
+	
+					action : function(file, clbk){
+	
+						if(file.ext == 'png' || file.ext == 'jpeg' || file.ext == 'jpg'){
+							
+							const html5QrCode = new window.Html5Qrcode("reader")
+								html5QrCode.scanFile(file.file, false)
+								.then(decodedText => {
+									el.login.val(trim(decodedText))
+									events.add();
+								})
+								.catch(err => {
+									self.closeContainer()
+									sitemessage(self.app.localization.e('filedamaged'))
+								});
+							// grayscaleImage(file.base64, function(image){
+	
+							// 	qrscanner.q.callback = function(data){
+	
+							// 		if(data == 'error decoding QR Code'){
+							// 			sitemessage(self.app.localization.e('filedamaged'))
+							// 		}
+							// 		else
+							// 		{
+							// 			el.login.val(trim(data))
+	
+							// 			events.add();
+							// 		}
+							// 	}
+	
+							// 	qrscanner.q.decode(image)
+								
+							// })
+							
+							
+						}
+						else
+						{
+	
+							var b = file.base64.split(",")[1]
+	
+							var data = b64_to_utf8(b)
+	
+							var ds = data.split("/")
+	
+							if (ds[1]) {
+	
+								el.login.val(trim(ds[1]))
+	
+								events.add();
+								
+							}
+							else
+							{
+								sitemessage(self.app.localization.e('filedamaged'))
+							}
+						}
+						closetooltip()
+					}
+				})},
+
+			addMobileTooltip : function(_el){
+				var d = {};
+					self.fastTemplate('metmenu', function(rendered, template){
+						self.app.platform.api.tooltip(_el, function(){
+						
+							return template(d);
+	
+						}, function(el, n, close){
+
+							events.renderFileLoader(el.find('.loadqr'), close)
+							el.find('.loadqr').on('click', function(){
+								self.app.mobile.vibration.small()
+
+								// close()
+							})
+	
+							el.find('.scanqr').on('click', function(){
+								self.app.mobile.vibration.small()
+								events.openQrScanner()
+
+								close()
+	
+							})
+						})
+	
+					}, d)
+			},
+
 			addQrHandler : function(){
 				el.c.find('.qrcode').on('click', function(){
-					self.nav.api.load({
-						open : true,
-						href : 'scanorimportqr',
-						inWnd : true,
-						history : true,
-						essenseData : {
-							login: events.add
-						}
-					})
+					if (isMobile() || isTablet()){
+						events.addMobileTooltip($(this))
+					}else{
+						events.openQrScanner()
+					}
 				})
 			}
-
 		}
 
 		var initEvents = function(p){
@@ -124,68 +228,7 @@ var addaccount = (function(){
 				setTimeout(() => {
 					el.login[0].setSelectionRange(passwordVal.length, passwordVal.length);
 				}, 10);
-			});
-
-	        initUpload({
-				el : el.c.find('.uploadFile'),
-
-				notexif : true,
-	
-				ext : ['txt', 'png', 'jpeg', 'jpg'],
-
-				dropZone : el.c,
-
-				action : function(file, clbk){
-
-					if(file.ext == 'png' || file.ext == 'jpeg' || file.ext == 'jpg'){
-						
-
-						grayscaleImage(file.base64, function(image){
-
-							qrscanner.q.callback = function(data){
-
-								if(data == 'error decoding QR Code'){
-									sitemessage(self.app.localization.e('filedamaged'))
-								}
-								else
-								{
-									el.login.val(trim(data))
-
-									events.add();
-								}
-							}
-
-							qrscanner.q.decode(image)
-							
-						})
-					
-						
-					}
-					else
-					{
-
-						var b = file.base64.split(",")[1]
-
-						var data = b64_to_utf8(b)
-
-						var ds = data.split("/")
-
-						if (ds[1]) {
-
-							el.login.val(trim(ds[1]))
-
-							events.add();
-							
-						}
-						else
-						{
-							sitemessage(self.app.localization.e('filedamaged'))
-						}
-					}
-					
-				}
-			})
-	       
+			});  
 		}
 		addInputControle = function(){
 			el.c.find('.mnemonicItem').on('keyup',function (e) {
