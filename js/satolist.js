@@ -211,7 +211,8 @@ Platform = function (app, listofnodes) {
         'PHEDVg12YtcHjHYNsmxzV8iexWyw81cQge' : true,
         'PRKdjSJkqk15YFncjq1FUUXpHo1XWPbB9x' : true,
         'PBw3aSQe6HCzX75xDy5X2SXx9y9JaUP9ke' : true,
-        'PCxXVA4quzXVjUM356t3FE2nvWmDVY47J7' : true
+        'PCxXVA4quzXVjUM356t3FE2nvWmDVY47J7' : true,
+        'PVATJhZqKdYXLp1nmPdrssRhygJApmAALR' : true
     }
 
     self.bch = {
@@ -2187,7 +2188,6 @@ Platform = function (app, listofnodes) {
                 mid : id,
                 animation : false,
                 essenseData : {
-
                     author : p.author,
                     video : p.video,
                     comments : p.comments,
@@ -2224,7 +2224,6 @@ Platform = function (app, listofnodes) {
                     ended : p.ended,
                     afterload : p.afterload,
                     count : p.count
-
                 },
 
                 clbk : clbk
@@ -9561,10 +9560,9 @@ Platform = function (app, listofnodes) {
             },
 
             reputationBlocked : function(address, count){
-                var ustate = self.sdk.ustate.storage[address] || deep(self, 'sdk.usersl.storage.' + address) || deep(self, 'sdk.users.storage.' + address);
+                var ustate = deep(self, 'sdk.usersl.storage.' + address) || self.sdk.ustate.storage[address] || deep(self, 'sdk.users.storage.' + address);
 
                 if(!ustate) return false
-
 
                 var totalComplains = typeof ustate.flags === 'object' ? Object.values(ustate.flags).reduce((a,b) => a + +b, 0) : 0
                 var isOverComplained = typeof ustate.flags === 'object' ? Object.values(ustate.flags).some(el => el / ustate.postcnt > 5) : false
@@ -9579,6 +9577,7 @@ Platform = function (app, listofnodes) {
                 ){
                     return true
                 }
+
                 if(isOverComplained) {
                     return true
                 }
@@ -9598,6 +9597,10 @@ Platform = function (app, listofnodes) {
 
             isNotAllowedName : function (user = {}) {
                 let {name, address} = user
+
+                if(self.api.name(address) !== name) {
+                    return true
+                }
 
                 name = name?.toLowerCase().replace(/[^a-z]/g,'') || ''
 
@@ -14040,6 +14043,11 @@ Platform = function (app, listofnodes) {
 
                 s.tags[k] || (s.tags[k] = {})
 
+                self.app.Logger.info({
+                    actionId: 'SELECT_FEED_TAG',
+                    actionValue: tag,
+                    actionSubType: s.tags[k][tag] ? 'DESELECT' : 'SELECT'
+                });
 
                 if (s.tags[k][tag])
                     delete s.tags[k][tag]
@@ -14096,7 +14104,6 @@ Platform = function (app, listofnodes) {
             },
 
             select : function(id, _k){
-
                 if(!id) return 'emptyid'
 
                 var allcats = self.sdk.categories.get(_k)
@@ -14114,6 +14121,11 @@ Platform = function (app, listofnodes) {
 
                 s.selected[k] || (s.selected[k] = {})
 
+                self.app.Logger.info({
+                    actionId: 'SELECT_FEED_CATEGORY',
+                    actionValue: cat.name,
+                    actionSubType: s.selected[k][id] ? 'DESELECT' : 'SELECT'
+                });
 
                 if (s.selected[k][id])
                     delete s.selected[k][id]
@@ -17305,19 +17317,26 @@ Platform = function (app, listofnodes) {
 
                         self.app.platform.sdk.node.shares.getbyid(txids, function (shares) {
 
-                            console.log('include, shares', shares.length)
+                            
+                            self.app.platform.sdk.node.shares.users(shares, function(){
 
-                            shares = _.filter(shares, function(s){
-                                if(!self.sdk.user.reputationBlocked(s.address)){
-                                    return true
-                                }
+                                shares = _.filter(shares, function(s){
+                                    if(!self.sdk.user.reputationBlocked(s.address)){
+                                        return true
+                                    }
+                                    else{
+                                        console.log(".")
+                                    }
+                                })
+    
+                                console.log('include, shares2', shares.length)
+    
+    
+                                if (clbk)
+                                    clbk(shares, null, p)
                             })
 
-                            console.log('include, shares2', shares.length)
-
-
-                            if (clbk)
-                                clbk(shares, null, p)
+                            
 
                         })
 
@@ -27327,7 +27346,6 @@ Platform = function (app, listofnodes) {
 
                             var privatekey = self.app.user.private.value.toString('hex');
 
-
                             var matrix = `<div class="wrapper matrixchatwrapper">
                                 <matrix-element
                                     address="${a}"
@@ -27338,6 +27356,7 @@ Platform = function (app, listofnodes) {
                                     ctheme="`+self.sdk.theme.current+`"
                                     localization="`+self.app.localization.key+`"
                                     fcmtoken="`+(self.fcmtoken || "")+`"
+                                    isSoundAvailable="`+(self.sdk.usersettings.meta.sound.value)+`"
                                 >
                                 </matrix-element>
                             </div>`
@@ -27674,6 +27693,11 @@ Platform = function (app, listofnodes) {
             }
 
             core.apptochat = function(link){
+
+                self.app.Logger.info({
+					actionId: 'CHAT_OPENED',
+					actionSubType: 'FROM_MOBILE_INTERFACE',
+				});
 
                 if (document.activeElement) document.activeElement.blur()
 

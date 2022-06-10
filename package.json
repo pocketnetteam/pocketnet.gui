@@ -1,8 +1,8 @@
 {
     "name": "pocketnet",
-    "version": "0.7.72",
-    "cordovaversion": "1.7.72",
-    "cordovaversioncode": "170720",
+    "version": "0.7.73",
+    "cordovaversion": "1.7.73",
+    "cordovaversioncode": "170730",
     "description": "Bastyon desktop application",
     "author": "Pocketnet Community <support@pocketnet.app>",
     "company": "Pocketnet Community",
