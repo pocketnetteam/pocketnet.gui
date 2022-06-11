@@ -244,7 +244,7 @@ ____loclib.lprivate = "Privado";
 ____loclib.lpublic = "Público";
 
 ____loclib.commentBannerTitle = "Deja un comentario para el autor";
-____loclib.commentBannerDescription = "Comentar te desbloquea nuevas funciones en Bastyon y te ayuda a encontrar amigos";
+____loclib.commentBannerDescription = "Comentar te desbloquea nuevas funciones en Bastyon y te ayuda a encontrar amigos 😀";
 
 //share
 ____loclib.newShare = "Nueva publicación";

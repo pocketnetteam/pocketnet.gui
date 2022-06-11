@@ -273,7 +273,7 @@ ____loclib.lprivate = "Private";
 ____loclib.lpublic = "Public";
 
 ____loclib.commentBannerTitle = "Comment on this post";
-____loclib.commentBannerDescription = "Commenting unlocks features on Bastyon and helps you find friends😀";
+____loclib.commentBannerDescription = "Commenting unlocks features on Bastyon and helps you find friends 😀";
 
 //share
 ____loclib.newShare = "New Post";
