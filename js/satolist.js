@@ -9569,7 +9569,10 @@ Platform = function (app, listofnodes) {
                 if(!ustate) return false
 
                 var totalComplains = typeof ustate.flags === 'object' ? Object.values(ustate.flags).reduce((a,b) => a + +b, 0) : 0
+
                 var isOverComplained = typeof ustate.flags === 'object' ? Object.values(ustate.flags).some(el => el / ustate.postcnt > 5) : false
+
+                var totalComplainsFirstFlags = typeof ustate.firstFlags === 'object' ? Object.values(ustate.firstFlags).reduce((a,b) => a + +b, 0) : 0
 
 
                 if(self.bch[address]) return true
@@ -9587,6 +9590,10 @@ Platform = function (app, listofnodes) {
                 }
 
                 if(moment().diff(ustate.regdate, 'days') <= 7 && totalComplains  > 20 ) {
+                    return true
+                }
+
+                if(totalComplainsFirstFlags > 10){
                     return true
                 }
 
