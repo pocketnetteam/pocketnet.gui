@@ -9564,8 +9564,6 @@ Platform = function (app, listofnodes) {
             reputationBlocked : function(address, count){
                 var ustate = deep(self, 'sdk.usersl.storage.' + address) || self.sdk.ustate.storage[address] || deep(self, 'sdk.users.storage.' + address);
 
-                console.log('ustate', ustate, address)
-
                 if(!ustate) return false
 
                 var totalComplains = typeof ustate.flags === 'object' ? Object.values(ustate.flags).reduce((a,b) => a + +b, 0) : 0
@@ -9574,7 +9572,7 @@ Platform = function (app, listofnodes) {
 
                 var totalComplainsFirstFlags = typeof ustate.firstFlags === 'object' ? Object.values(ustate.firstFlags).reduce((a,b) => a + +b, 0) : 0
 
-
+                console.log('totalComplainsFirstFlags', totalComplainsFirstFlags, ustate.firstFlags)
                 if(self.bch[address]) return true
 
                 if(typeof count == 'undefined') count = -12
