@@ -272,6 +272,9 @@ ____loclib.lprivatepublic = "Do you want to make a Private or Public subscriptio
 ____loclib.lprivate = "Private";
 ____loclib.lpublic = "Public";
 
+____loclib.commentBannerTitle = "Comment on this post";
+____loclib.commentBannerDescription = "Commenting unlocks features on Bastyon and helps you find friends😀";
+
 //share
 ____loclib.newShare = "New Post";
 ____loclib.firstShare = "Share Your First Post in "+appname+"";
