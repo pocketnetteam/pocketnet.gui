@@ -178,12 +178,15 @@
   padding-right: 2.25em;
   padding-bottom: 1.3em;
   padding-top: 1em;
+  background-color: rgb(var(--background-total-theme));
 }
 #lenta .bannerComment .bannerBody {
   display: none;
+  background-color: rgb(var(--background-total-theme));
 }
 #lenta .bannerComment .bannerBody .text {
   display: inline-block;
+  color: rgb(var(--text-color));
 }
 #lenta .bannerComment .bannerBody .text .bannerDescription {
   padding-top: 5px;
@@ -194,6 +197,15 @@
 }
 #lenta .bannerComment .bannerBody .closeBannerBtn {
   margin-top: -1%;
+}
+#lenta .bannerComment .bannerBody .closeBannerBtn .container {
+  display: flex;
+  padding: 1px;
+  color: rgb(var(--neutral-grad-3));
+  transition: color 0.12s linear;
+}
+#lenta .bannerComment .bannerBody .closeBannerBtn .container:hover {
+  color: rgb(var(--color-txt-orange));
 }
 #lenta .bannerComment .hidden {
   visibility: hidden;
@@ -209,9 +221,8 @@
   animation: fadeIn 0.7s;
   animation-delay: 0s;
   animation-fill-mode: forwards;
-  border: solid #e7e7e7 1px;
+  border: solid rgb(var(--color-border)) 1px;
   border-radius: 7px;
-  background-color: #ffffff;
   padding: 2%;
   display: inline-flex;
 }
