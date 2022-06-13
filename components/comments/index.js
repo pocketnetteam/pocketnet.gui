@@ -237,7 +237,26 @@ var comments = (function(){
 				else
 					c.removeClass('hastext')
 			},
+			complain : function(){
+				debugger
+				self.nav.api.load({
+					open : true,
+					id : 'complain',
+					inWnd : true,
+					essenseData : {
+						item : 'user',
+						obj : {},
 
+						success : function(){
+
+						}
+					},
+
+					clbk : function(){
+
+					}
+				})
+			},
 			myscores : function(){
 				_.each(rendered, function(c, id){
 					var comment = deep(self.app.platform.sdk, 'comments.storage.all.' + id)
@@ -1334,6 +1353,14 @@ var comments = (function(){
 						return template(d);
 
 					}, function(__el, f, close){
+
+						__el.find('.complain').on('click', function(){
+							self.app.mobile.vibration.small()
+							actions.complain()
+
+							close()
+
+						})
 
 						__el.find('.edit').on('click', function(){
 

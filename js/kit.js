@@ -858,9 +858,6 @@ ModFlag = function(){
 	
 
 	self.validation = function(){
-		if(!self.s2.v){
-			return 'share'
-		}
 
 		if(!self.s3.v){
 			return 'address'
@@ -2090,8 +2087,15 @@ pUserInfo = function(){
 		}
 
 	}
-	
 
+	self.modFlag = function(reason){
+		var modFlag = new ModFlag();
+		modFlag.s2.set(self.txid);
+		modFlag.s3.set(self.address);
+		modFlag.i1.set(reason);
+
+		return modFlag;
+	}
 	self.type = 'userInfo'
 
 	return self;
@@ -2719,6 +2723,15 @@ pComment = function(){
 	}
 
 	self.type = 'comment'
+	self.modFlag = function(reason){
+		var modFlag = new ModFlag();
+
+		modFlag.s2.set(self.txid);
+		modFlag.s3.set(self.address);
+		modFlag.i1.set(reason);
+
+		return modFlag;
+	}
 
 	return self;
 }
