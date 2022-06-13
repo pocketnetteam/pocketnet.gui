@@ -89,6 +89,7 @@ var scanorimportqr = (function(){
                     }
                     isValidMnemonicPhrase = bitcoin.bip39.validateMnemonickWithLangDetection(decodedText.toLowerCase())
                     if(isValidPrivateKey || isValidMnemonicPhrase){
+						
                         essenseData.login(decodedText)
 						self.closeContainer()
                     }else{
