@@ -321,366 +321,374 @@ var arranges = {
 
 <div class="sharecnt <% if(typeof sharesFromSub != 'undefined' && sharesFromSub[share.txid]) {%>  fromsub <% } %> <% if(share.deleted) { %> deleted <% } %>">
 
-	<div class="work unselectablemobile">
+	<div class="sharecntinner">
 
-		<div class="shareTable <%-subscribed%> <%-view%> truerepost" address="<%-share.address%>" stxid="<%-share.txid%>">
+		<div>
 
-			
+			<div class="work unselectablemobile">
 
-				<div class="iconWrapper">
-					<a elementsid="shareiconprofilelink" href="<%-app.platform.api.authorlink(share.address)%>">
+				<div class="shareTable <%-subscribed%> <%-view%> truerepost" address="<%-share.address%>" stxid="<%-share.txid%>">
 
-						<% 
-							var src = deep(app.platform.sdk.usersl.storage, share.address + '.image');
-							var letter = name ? name[0] : ''; 
-							
-						%>
+					
 
-						<div class="icon">
-							<div class="usericon usericonsbsa another" image="<%-src || '*'%>" ban=".gif">
+						<div class="iconWrapper">
+							<a elementsid="shareiconprofilelink" href="<%-app.platform.api.authorlink(share.address)%>">
 
-								<% if(!src && letter) { %>
+								<% 
+									var src = deep(app.platform.sdk.usersl.storage, share.address + '.image');
+									var letter = name ? name[0] : ''; 
+									
+								%>
 
-									<span class="letter">
-										<%-letter.toUpperCase()%>
-									</span>
-				
-								<% } else if (!src) { %>
-				
-									<svg width="30" height="30" data-jdenticon-value="<%-share.address%>"></svg>
-				
-								<% } %>
+								<div class="icon">
+									<div class="usericon usericonsbsa another" image="<%-src || '*'%>" ban=".gif">
 
-								<% if(app.platform.ui.markUser) {%>
+										<% if(!src && letter) { %>
 
-									<%= app.platform.ui.markUser(share.address)%>
+											<span class="letter">
+												<%-letter.toUpperCase()%>
+											</span>
+						
+										<% } else if (!src) { %>
+						
+											<svg width="30" height="30" data-jdenticon-value="<%-share.address%>"></svg>
+						
+										<% } %>
 
-								<% } %>
-								
-							</div>
+										<% if(app.platform.ui.markUser) {%>
+
+											<%= app.platform.ui.markUser(share.address)%>
+
+										<% } %>
+										
+									</div>
+								</div>
+
+							</a>
+
 						</div>
 
-					</a>
+					<% if(!emptywithrepost) { %>
 
-				</div>
+					<% } %>
 
-			<% if(!emptywithrepost) { %>
+					<div class="cntswrk  formeta">
 
-			<% } %>
-
-			<div class="cntswrk  formeta">
-
-				<div class="metawrapper"> 
-					<% metadisplay() %> 
-				</div> 
-
-			</div>
-			
-			<% if(!checkvisibility && !lockedaccount) {%>
-
-				<div class="cntswrk cntscontent postcontent">
-
-
-					<% var a = share.settings.a || share.default.a %>
-
-
-					<% _.each(a, function(key, i){ %> 
-
-						<% if(arranges[key]) arranges[key]() %>
-								
-					<% }) %>
-
-				</div>
-
-			<% } else { %> 
-				<div class="cntswrk cntscontent postcontent">
-
-					<div class="hiddenpost">
-
-						<% if(!lockedaccount) {%>
-							<div class="captionpreview">
-								<% makecaptionclear() %>
-							</div>
-
-							<% if(checkvisibility == 'sub'){ %>
-
-								<div class="hiddenlabeltext">
-									<%=e('sharevisibilitylabel_sub_' + cview)%>
-								</div>
-
-							<% } %>
-
-							<% if(checkvisibility == 'reg'){ %>
-
-								<div class="hiddenlabeltext">
-									<%=e('sharevisibilitylabel_reg_' + cview)%>
-								</div>
-
-							<% } %>
-
-							<% if(!state) {%>
-
-								<div class="hiddenlabelaction">
-									<button elementsid="hrefregistration" class="orange small button toregistration"><%=e('signupmenu')%></button>
-								</div>
-
-							<% } %>
-						
-						<% } else { %> 
-							
-							<div class="hiddenlabeltext">
-								<%=e('lockedaccounta')%>
-							</div>
-							
-						<% } %>
-
+						<div class="metawrapper"> 
+							<% metadisplay() %> 
+						</div> 
 
 					</div>
 					
-	
-				</div>
-				
-			<% } %>
+					<% if(!checkvisibility && !lockedaccount) {%>
 
-			
-			<div class="cntswrk removeDescription postcontent">
-				<%=e('postRemoved')%>
-			</div>
-
-			<div class="repostWrapper cntscontent postcontent"></div>
-
-			<% if(!emptywithrepost) {%>
-
-				<div class="cntswrk cntscontent">
-					<div class="paddingWrapper">
-						
-						<% if(share.tags && share.tags.length > 0) {
-
-							var bycategories = app.platform.sdk.categories.fromTags(share.tags, share.lanuage)
-
-							
-							%>
-
-							<div class="tags canmark hideOnFullVideo unselectablemobile">
-								<% _.each(bycategories.categories, function(category){ %>
-
-									<div class="category">
-										<a elementsid="tagslink" href="index?sst=<%-category.tags.join(' ')%>">
-											<span>@<%-category.name%></span><% if(category.new) {%>&nbsp;<span class="newlabel">New!</span><% } %> 
-										</a>
-									</div>
-
-								<% }) %>
-
-								<% _.each(bycategories.tags, function(tag){ 
-									
-									var additional = app.platform.sdk.tags.findadditional(tag)
-									
-									%>
-
-									<div class="tag">
-										<a elementsid="tagslink2" href="index?sst=<%-tag%>">
-											<span>#<%-tag%></span><% if(additional && additional.new) {%>&nbsp;<span class="newlabel">New!</span><% } %>
-										</a>
-									</div>
-
-								<% }) %>
-							</div>
+						<div class="cntswrk cntscontent postcontent">
 
 
+							<% var a = share.settings.a || share.default.a %>
 
 
-						<% } %>
+							<% _.each(a, function(key, i){ %> 
 
-						<% if(share.hasexchangetag()) {%>
-							<div class="pkoin_commerce_info">
-								<span><%=e('pkoin_commerce_info')%></span>
-							</div>
-						<% } %>
-						
-
-						<% if(!share.temp &&   (typeof repost == 'undefined' || !repost || fromempty)) {%>
-							<div class="panel sharepanel unselectablemobile">
-								<div class="item forstars">
-									
-								</div>
-
-							
-
-								<% if(app.savesupported() && share.itisvideo()) {
-
-									var status = app.platform.sdk.localshares.status(share.txid)
-									
-									%>
-
-									<% if(!checkvisibility) {%>
-
-									<div elementsid="lenta_shareSave" class="item shareSave" status="<%-status%>">
-
-										<div class="itemwr table">
-
-											<div class="iconwr">											
-												<div class="icon">
-													<i class="fas fa-download cansave"></i>
-													<i class="fas fa-spinner fa-spin saving"></i>
-													<i class="fas fa-trash saved"></i>
-												</div>
-											</div>
+								<% if(arranges[key]) arranges[key]() %>
 										
-										</div>
+							<% }) %>
 
-									</div>
+						</div>
 
-									<% } %>
+					<% } else { %> 
+						<div class="cntswrk cntscontent postcontent">
 
-								<% } else { %> 
-									
-								<% } %>
-
-								<% if((typeof preview == 'undefined' || !preview) ) {%>			
-
-									<div class="item sharesocial unselectable">
-
-										<div class="itemwr table">
-											<div class="iconwr">
-												<div class="icon">
-													<i class="fas fa-share-alt"></i>
-												</div>
-											</div>
-										</div>
-										
-									</div>
-
-								<% } %>
+							<div class="hiddenpost">
 
 								<% if(!lockedaccount) {%>
-									<% if(!my || app.boost) {%>
-									<div class="item pkoin right unselectedtable">
-										<img src="img/pocketnet_logo_white.svg" alt="">
-										<span class='workstation'>
-											PKOIN
-										</span>
+									<div class="captionpreview">
+										<% makecaptionclear() %>
 									</div>
+
+									<% if(checkvisibility == 'sub'){ %>
+
+										<div class="hiddenlabeltext">
+											<%=e('sharevisibilitylabel_sub_' + cview)%>
+										</div>
+
 									<% } %>
-								<% } %>
+
+									<% if(checkvisibility == 'reg'){ %>
+
+										<div class="hiddenlabeltext">
+											<%=e('sharevisibilitylabel_reg_' + cview)%>
+										</div>
+
+									<% } %>
+
+									<% if(!state) {%>
+
+										<div class="hiddenlabelaction">
+											<button elementsid="hrefregistration" class="orange small button toregistration"><%=e('signupmenu')%></button>
+										</div>
+
+									<% } %>
 								
-							</div>
+								<% } else { %> 
+									
+									<div class="hiddenlabeltext">
+										<%=e('lockedaccounta')%>
+									</div>
+									
+								<% } %>
 
+
+							</div>
 							
-						<% };
-
-						if (typeof shareRelayedFlag !== 'undefined' && shareRelayedFlag) { %>
-							<div class="panel sharepanel unselectablemobile">
-								<div class="item right">
-
-									<div class="itemwr table tempPreloader">
-										
-										<div elementsid="lenta_forstars_count" class="count">
-											<div class="label">
-
-												<span><%=e('postInRelay')%></span>
-											</div>
-										</div>
-											
-									</div>
-								</div>
-								<div class="clearfix"></div>
-							</div>
-						<% } else if(share.temp) {%>
-
-							<div class="panel sharepanel unselectablemobile">
-								<div class="item right">
-
-									<div class="itemwr table tempPreloader">
-										
-										<div elementsid="lenta_forstars_count" class="count">
-											<div class="label">
-
-												<span><%=e('postWaitConf')%></span>
-											</div>
-										</div>
-											
-									</div>
-								</div>
-								<div class="clearfix"></div>
-							</div>
-
-						<% } %>
-
-
+			
+						</div>
 						
-
-					</div>
+					<% } %>
 
 					
-				</div>
+					<div class="cntswrk removeDescription postcontent">
+						<%=e('postRemoved')%>
+					</div>
 
-				<% if(typeof verticalVideo != 'undefined' && verticalVideo) {%>
+					<div class="repostWrapper cntscontent postcontent"></div>
 
 					<% if(!emptywithrepost) {%>
 
-						<% if(typeof repost == 'undefined' || !repost || fromempty) {%>
-							<div class="cntswrk forcomments">
-								<div class="paddingWrapper">
-									<div class="commentsWrapperHb">
+						<div class="cntswrk cntscontent">
+							<div class="paddingWrapper">
+								
+								<% if(share.tags && share.tags.length > 0) {
+
+									var bycategories = app.platform.sdk.categories.fromTags(share.tags, share.lanuage)
+
 									
-										<div class="commentsWrapper">
-										</div>
-					
+									%>
+
+									<div class="tags canmark hideOnFullVideo unselectablemobile">
+										<% _.each(bycategories.categories, function(category){ %>
+
+											<div class="category">
+												<a elementsid="tagslink" href="index?sst=<%-category.tags.join(' ')%>">
+													<span>@<%-category.name%></span><% if(category.new) {%>&nbsp;<span class="newlabel">New!</span><% } %> 
+												</a>
+											</div>
+
+										<% }) %>
+
+										<% _.each(bycategories.tags, function(tag){ 
+											
+											var additional = app.platform.sdk.tags.findadditional(tag)
+											
+											%>
+
+											<div class="tag">
+												<a elementsid="tagslink2" href="index?sst=<%-tag%>">
+													<span>#<%-tag%></span><% if(additional && additional.new) {%>&nbsp;<span class="newlabel">New!</span><% } %>
+												</a>
+											</div>
+
+										<% }) %>
 									</div>
-								</div>
+
+
+
+
+								<% } %>
+
+								<% if(share.hasexchangetag()) {%>
+									<div class="pkoin_commerce_info">
+										<span><%=e('pkoin_commerce_info')%></span>
+									</div>
+								<% } %>
+								
+
+								<% if(!share.temp &&   (typeof repost == 'undefined' || !repost || fromempty)) {%>
+									<div class="panel sharepanel unselectablemobile">
+										<div class="item forstars">
+											
+										</div>
+
+									
+
+										<% if(app.savesupported() && share.itisvideo()) {
+
+											var status = app.platform.sdk.localshares.status(share.txid)
+											
+											%>
+
+											<% if(!checkvisibility) {%>
+
+											<div elementsid="lenta_shareSave" class="item shareSave" status="<%-status%>">
+
+												<div class="itemwr table">
+
+													<div class="iconwr">											
+														<div class="icon">
+															<i class="fas fa-download cansave"></i>
+															<i class="fas fa-spinner fa-spin saving"></i>
+															<i class="fas fa-trash saved"></i>
+														</div>
+													</div>
+												
+												</div>
+
+											</div>
+
+											<% } %>
+
+										<% } else { %> 
+											
+										<% } %>
+
+										<% if((typeof preview == 'undefined' || !preview) ) {%>			
+
+											<div class="item sharesocial unselectable">
+
+												<div class="itemwr table">
+													<div class="iconwr">
+														<div class="icon">
+															<i class="fas fa-share-alt"></i>
+														</div>
+													</div>
+												</div>
+												
+											</div>
+
+										<% } %>
+
+										<% if(!lockedaccount) {%>
+											<% if(!my || app.boost) {%>
+											<div class="item pkoin right unselectedtable">
+												<img src="img/pocketnet_logo_white.svg" alt="">
+												<span class='workstation'>
+													PKOIN
+												</span>
+											</div>
+											<% } %>
+										<% } %>
+										
+									</div>
+
+									
+								<% };
+
+								if (typeof shareRelayedFlag !== 'undefined' && shareRelayedFlag) { %>
+									<div class="panel sharepanel unselectablemobile">
+										<div class="item right">
+
+											<div class="itemwr table tempPreloader">
+												
+												<div elementsid="lenta_forstars_count" class="count">
+													<div class="label">
+
+														<span><%=e('postInRelay')%></span>
+													</div>
+												</div>
+													
+											</div>
+										</div>
+										<div class="clearfix"></div>
+									</div>
+								<% } else if(share.temp) {%>
+
+									<div class="panel sharepanel unselectablemobile">
+										<div class="item right">
+
+											<div class="itemwr table tempPreloader">
+												
+												<div elementsid="lenta_forstars_count" class="count">
+													<div class="label">
+
+														<span><%=e('postWaitConf')%></span>
+													</div>
+												</div>
+													
+											</div>
+										</div>
+										<div class="clearfix"></div>
+									</div>
+
+								<% } %>
+
+
+								
+
 							</div>
+
+							
+						</div>
+
+						<% if(typeof verticalVideo != 'undefined' && verticalVideo) {%>
+
+							<% if(!emptywithrepost) {%>
+
+								<% if(typeof repost == 'undefined' || !repost || fromempty) {%>
+									<div class="cntswrk forcomments">
+										<div class="paddingWrapper">
+											<div class="commentsWrapperHb">
+											
+												<div class="commentsWrapper">
+												</div>
+							
+											</div>
+										</div>
+									</div>
+								<% } %>
+						
+							<% } %>
+
 						<% } %>
-				
+
+						
+
+							
+
 					<% } %>
 
+				</div>
+
+				<div class="blockAuthor">
+					<div class="blockCell">
+						<div class="label"><%=e('e13131')%></div>
+						<button class="button small unblockbutton">
+							Unblock
+						</button>
+					</div>
+				</div>
+				
+			</div>
+
+			<div class="exitFull roundclosebutton unselectablemobile">
+				<i class="fa fa-times" aria-hidden="true"></i>
+			</div>
+
+			<% if(typeof verticalVideo == 'undefined' || !verticalVideo) {%>
+
+				<% if(!emptywithrepost) {%>
+
+					<% if(typeof repost == 'undefined' || !repost || fromempty) {%>
+
+						<div class="showmorelenta"></div>
+			
+						<div class="commentsWrapperHb">
+							
+							<div class="commentsWrapper">
+							</div>
+			
+						</div>
+			
+					<% } %>
+			
 				<% } %>
 
-				
-
-					
-
 			<% } %>
 
 		</div>
 
-		<div class="blockAuthor">
-			<div class="blockCell">
-				<div class="label"><%=e('e13131')%></div>
-				<button class="button small unblockbutton">
-					Unblock
-				</button>
-			</div>
-		</div>
-		
+		<div class="extrashare"></div>
+
 	</div>
-
-	<div class="exitFull roundclosebutton unselectablemobile">
-		<i class="fa fa-times" aria-hidden="true"></i>
-	</div>
-
-	<% if(typeof verticalVideo == 'undefined' || !verticalVideo) {%>
-
-		<% if(!emptywithrepost) {%>
-
-			<% if(typeof repost == 'undefined' || !repost || fromempty) {%>
-
-				<div class="showmorelenta"></div>
-	
-				<div class="commentsWrapperHb">
-					
-					<div class="commentsWrapper">
-					</div>
-	
-				</div>
-	
-			<% } %>
-	
-		<% } %>
-
-	<% } %>
-
-	<div class="extrashare"></div>
 
 </div>	
 
