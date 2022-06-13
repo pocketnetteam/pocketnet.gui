@@ -219,6 +219,7 @@
         __JSENV__
 
         <script>window.design = true;</script>
+        <script join src="js/vendor/html5-qrcode.min.js"></script>
         <script join src="js/functionsfirst.js?v=138441565214"></script>
         <script join src="js/functions.js?v=138441565214"></script>
         <script join src="js/kit.js"></script>
