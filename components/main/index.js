@@ -135,6 +135,10 @@ var main = (function(){
 			},
 
 			addbutton : function(){
+				self.app.Logger.info({
+					actionId: 'POST_CREATING_STARTED',
+					actionSubType: 'FROM_SCROLL_BUTTON',
+				});
 
 				self.app.platform.ui.share()
 			},
@@ -1023,13 +1027,16 @@ var main = (function(){
 					return r
 				}));
 
-				
-
 				var nsearchtags = words.length ? words : null
 				var nsearchvalue = parameters().ss || ''
 				var ncurrentMode = parameters().r || 'common';
 
 				var nlentakey = parameters().video ? 'video' : parameters().read ? 'read' : (parameters().r || 'index')
+
+				self.app.Logger.info({
+					actionId: 'SELECT_FEED_SECTION',
+                    actionValue: nlentakey,
+				});
 
 				var nvideomain = nlentakey == 'video'
 				var nreadmain = nlentakey == 'read'

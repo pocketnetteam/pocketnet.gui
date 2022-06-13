@@ -994,7 +994,6 @@ var lenta = (function(){
 			},
 
 			openPost : function(id, clbk, video, _share){
-
 				var share = self.app.platform.sdk.node.shares.storage.trx[id] || _share;
 
 
@@ -2569,7 +2568,15 @@ var lenta = (function(){
 			opensvi : function(){
 
 				var shareId = $(this).closest('.share').attr('id');
-					actions.opensvi(shareId)
+
+				if (essenseData.horizontal) {
+					self.app.Logger.info({
+						actionId: 'BEST_VIDEO_CLICKED',
+						value: shareId
+					});
+				}
+
+				actions.opensvi(shareId)
 			},
 
 			fullScreenVideoMobile : function(){
