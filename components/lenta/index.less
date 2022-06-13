@@ -239,6 +239,73 @@
 		
 	}
 
+	.bannerComment {
+		padding-left: 2.5em;
+    	padding-right: 2.25em;
+    	padding-bottom: 1.3em;
+    	padding-top: 1em;
+
+		.bannerBody {
+			display: none;
+			.text {
+				display: inline-block;
+				.bannerDescription {
+					padding-top: 5px;
+				}
+			}
+
+			img {
+				padding-right: 1.4em;
+				display: inline-block;
+			}
+
+			.closeBannerBtn {
+				margin-top: -1%;
+			}
+
+		}
+
+		.hidden {
+			visibility: hidden;
+			opacity: 0;
+			display: none;
+
+			position: relative;
+		}
+
+		 .showAnimation {
+			visibility: visible;
+			opacity: 1;
+			display: block;
+
+			position: relative;
+
+			animation: fadeIn 0.7s;
+			animation-delay: 0s;
+			animation-fill-mode: forwards;
+
+			border: solid #e7e7e7 1px;
+			border-radius: 7px;
+			background-color: #ffffff;
+			padding: 2%;
+			display: inline-flex;
+		  }
+
+		  @keyframes fadeIn {
+			from {
+			  opacity: 0;
+			visibility: 0;
+    		transform: translate(0%, -20%);
+			}
+			to {
+			  opacity: 1;
+			visibility: 1;
+    		transform: translate(0%, 0%);
+			}
+		  }
+		
+	}
+
 	.subc{
 		margin-top : 2 * @rhythm;
 		button{
