@@ -426,6 +426,7 @@
 	&.recommendationsenabled{
 		.recomandationsFromContent{
 			display: block;
+			flex-shrink: 0;
 		}
 		
 	}
@@ -457,7 +458,7 @@
 		.recomandationsFromContent {
 			margin-top : 0;
 			max-width: 400px;
-			min-width: 400px;
+			min-width: 390px;
 			margin-left: auto;
 
 			.recomandationsbgwrapper{
@@ -475,7 +476,7 @@
 			}
 			.recomandationsFromContent{
 				margin-top : @rhythm;
-				min-width: 0;
+				min-width: 390px;
 				max-width: 960px;
 				margin : 2 * @rhythm auto;
 				width: 100%;
@@ -496,7 +497,7 @@
 			}
 			.recomandationsFromContent{
 				margin-top : @rhythm;
-				min-width: 0;
+				min-width: 390px;
 				max-width: 960px;
 				margin : 2 * @rhythm auto;
 				width: 100%;
@@ -509,7 +510,7 @@
 	}
 }
 
-@media only screen and (min-width: 1730px) {
+@media only screen and (min-width: 1300px) {
 	#post{
 		&.videomainpost.recommendationsenabled{
 			max-width: 1350px;
@@ -943,7 +944,7 @@
 		max-width: none;
 	}
 	.widthcontainer{
-		width: 80%;
+		width: 90%;
 		max-width: 800px;
 		margin : 0 auto;
 	}
@@ -1235,7 +1236,7 @@ html.mobileview.fullscreen{
 	}
 
 	.widthcontainer{
-		width: 80%;
+		width: 90%;
 		max-width: 800px;
 		margin : 0 auto;
 	}

@@ -1255,7 +1255,7 @@ var lenta = (function(){
 				}
 				else
 				{
-					work.css('margin-top', 0 + 'px')
+					work.css('margin-top', 20 + 'px')
 				}
 
 				_el = null
