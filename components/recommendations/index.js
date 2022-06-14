@@ -199,6 +199,9 @@ var recommendations = (function(){
 				
 				self.app.platform.sdk.node.shares[loader.loader || 'getrecomendedcontents'](p, function (recommendations) {
 
+					if (!recommendations || recommendations.length <=0)
+						el.c.closest('.recomandationsFromContent').remove();
+
 					_.each(recommendations, function(r, i){
 						places[r.txid] = i + 1
 					})
