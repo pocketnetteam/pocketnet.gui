@@ -106,19 +106,6 @@ class TorControl {
             await fs.chmod(this.settings.path, 0o755)
             await fs.chmod(path.join(this.settings.path, this.helpers.bin_name("tor")), 0o755)
             await this.makeConfig()
-            if(process.platform === 'linux'){
-                const libPath='/usr/lib'
-                const localLibPath='/usr/local/lib'
-                for(const lib of ["libcrypto.so.1.1","libevent-2.1.so.7","libssl.so.1"]) {
-                    try {
-                        await fs.lstat(path.join(this.settings.path, lib))
-                        await fs.copyFile(path.join(this.settings.path, lib), libPath, 0o755)
-                        await fs.copyFile(path.join(this.settings.path, lib), localLibPath, 0o755)
-                    }catch (e){
-                        console.error(`Error copy library tor: ${e}`)
-                    }
-                }
-            }
             //return this.application.save(download.asset)
             return true;
         }catch (e) {
@@ -154,7 +141,7 @@ class TorControl {
         this._statusListenerCallBack?.(this.state.status)
         this.instance = child_process.spawn(path.join(this.settings.path, this.helpers.bin_name("tor")), [
             "-f",`${path.join(this.settings.path,"torrc")}`,
-        ], { stdio: ['ignore'], detached : false, shell : false})
+        ], { stdio: ['ignore'], detached : false, shell : false, env: {'LD_LIBRARY_PATH': this.settings.path}})
         this.instance.on("error", (err)=>log({error: err}));
         this.instance.on("exit", async (code) => {
             this.state.status = "stopped"
