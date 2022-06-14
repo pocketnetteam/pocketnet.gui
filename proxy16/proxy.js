@@ -585,28 +585,19 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 		},
 	}
 
+	const axiosTransport = (...args) => transports.axios(...args);
+	axiosTransport.get = (...args) => transports.axios.get(...args);
+	axiosTransport.post = (...args) => transports.axios.post(...args);
+	axiosTransport.put = (...args) => transports.axios.put(...args);
+	axiosTransport.delete = (...args) => transports.axios.delete(...args);
+	axiosTransport.patch = (...args) => transports.axios.patch(...args);
+
 	self.transports = {
 		fetch: async (url, opts)=>{
 			return transports.fetch(url, opts)
 		},
 
-		axios: {
-			get : async (...args)=>{
-				return await transports.axios.get(...args)
-			},
-			post: async (...args)=>{
-				return await transports.axios.post(...args)
-			},
-			put: async (...args)=>{
-				return await transports.axios.put( ...args)
-			},
-			delete: async (...args)=>{
-				return await transports.axios.delete( ...args)
-			},
-			patch: async (...args)=>{
-				return await transports.axios.patch( ...args)
-			}
-		},
+		axios: axiosTransport,
 
 		request: (option, callback)=>{
 			return transports.request(option, callback)

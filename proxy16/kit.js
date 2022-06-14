@@ -1091,9 +1091,9 @@ var kit = {
 		},
 
 		transports : {
-			axios : function(data = {method: "", args: []}){
+			axios : function(...args){
 				return kit.proxy().then(async proxy => {
-					return proxy.transports.axios[data.method](...data.args);
+					return proxy.transports.axios(...args);
 				})
 			},
 			fetch : function(...args){
