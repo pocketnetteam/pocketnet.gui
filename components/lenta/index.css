@@ -174,67 +174,55 @@
   text-decoration: underline;
 }
 #lenta .bannerComment {
-  padding-left: 2.5em;
-  padding-right: 2.25em;
-  padding-bottom: 1.3em;
-  padding-top: 1em;
+  display: block;
   background-color: rgb(var(--background-total-theme));
 }
 #lenta .bannerComment .bannerBody {
   display: none;
-  background-color: rgb(var(--background-total-theme));
+  padding: 1.2em;
+  background-color: rgb(var(--background-secondary-theme));
+  border: solid rgb(var(--neutral-grad-3)) 1px;
+  border-radius: 7px;
+}
+#lenta .bannerComment .bannerBody > * {
+  padding: 0 0.5em;
+}
+#lenta .bannerComment .bannerBody :first-child {
+  padding-left: 0;
+}
+#lenta .bannerComment .bannerBody :last-child {
+  padding-right: 0;
 }
 #lenta .bannerComment .bannerBody .text {
-  display: inline-block;
   color: rgb(var(--text-color));
 }
 #lenta .bannerComment .bannerBody .text .bannerDescription {
-  padding-top: 5px;
-}
-#lenta .bannerComment .bannerBody img {
-  padding-right: 1.4em;
-  display: inline-block;
-}
-#lenta .bannerComment .bannerBody .closeBannerBtn {
-  margin-top: -1%;
+  padding-top: 0.5em;
 }
 #lenta .bannerComment .bannerBody .closeBannerBtn .container {
   display: flex;
-  padding: 1px;
-  color: rgb(var(--neutral-grad-3));
-  transition: color 0.12s linear;
+  color: rgb(var(--neutral-grad-4));
+  cursor: pointer;
+  transition: color 0.1s linear;
 }
 #lenta .bannerComment .bannerBody .closeBannerBtn .container:hover {
-  color: rgb(var(--color-txt-orange));
+  color: rgb(var(--neutral-grad-2));
 }
-#lenta .bannerComment .hidden {
-  visibility: hidden;
-  opacity: 0;
-  display: none;
-  position: relative;
+#lenta .bannerComment.show {
+  padding: 1em 2.5em 2em 2.5em;
 }
-#lenta .bannerComment .showAnimation {
-  visibility: visible;
+#lenta .bannerComment.show .bannerBody {
+  display: flex;
   opacity: 1;
-  display: block;
-  position: relative;
   animation: fadeIn 0.7s;
-  animation-delay: 0s;
-  animation-fill-mode: forwards;
-  border: solid rgb(var(--color-border)) 1px;
-  border-radius: 7px;
-  padding: 2%;
-  display: inline-flex;
 }
 @keyframes fadeIn {
   from {
     opacity: 0;
-    visibility: 0;
     transform: translate(0%, -20%);
   }
   to {
     opacity: 1;
-    visibility: 1;
     transform: translate(0%, 0%);
   }
 }
