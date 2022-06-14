@@ -21,7 +21,7 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-
+		
 		margin-bottom: @rhythm;
 		border-radius: 6px;
 
@@ -64,7 +64,7 @@
 	.mlwr{
 		position: relative;
 	}
-
+	
 	.loader{
 		background: rgb(var(--background-total-theme));
 		padding : 6 * @rhythm 0;
@@ -78,7 +78,7 @@
 		.loader{
 			display: block;
 		}
-
+		
 	}
 
 	&.sharesEnded{
@@ -91,7 +91,7 @@
 		overflow: hidden;
 	}
 
-
+	
 	.video-js{
         .vjs-volume-control{
             display: none;
@@ -104,7 +104,7 @@
 			}
 		}
 	}
-
+	
 	/*.authorCell a,
 	.sbtnxs,
 	.spsp{
@@ -125,7 +125,7 @@
 			canvas{
 				margin : 0 auto;
 			}
-		}
+		}		
 	}
 
 	.share {
@@ -136,17 +136,17 @@
 				padding-bottom: @rhythm * 3;
 				color: rgb(var(--neutral-grad-1));
 			}
-
+				
 			&.deleted{
 				.cntscontent, .repostWrapper, .commentsWrapperHb, .metapanel, .sys{
 					display: none!important;
 				}
-
+	
 				.removeDescription{
 					display: block;
 				}
 			}
-
+	
 		}
 
 		&.fromsub{
@@ -159,7 +159,7 @@
 		padding-bottom : 0;
 		border-radius: 12px;
 
-
+		
 
 		.shareSpacer{
 			height: 400px;
@@ -200,7 +200,7 @@
 	}
 
 	.shares{
-		overflow: hidden;
+		overflow: hidden; 
 		display: flex;
 		flex-direction: column;
 
@@ -216,7 +216,7 @@
 			padding-left: 0;
 		}
 
-
+		
 
 		.ss{
 			padding : 2 * @rhythm;
@@ -236,70 +236,84 @@
 			font-weight: 700;
 			text-decoration: underline;
 		}
-
+		
 	}
 
 	.bannerComment {
-		display: block;
+		padding-left: 2.5em;
+    	padding-right: 2.25em;
+    	padding-bottom: 1.3em;
+    	padding-top: 1em;
 		background-color: rgb(var(--background-total-theme));
 
 		.bannerBody {
 			display: none;
-			padding: 1.2em;
-			background-color: rgb(var(--background-secondary-theme));
-			border: solid rgb(var(--neutral-grad-3)) 1px;
-			border-radius: 7px;
-
-			> *          { padding: 0 0.5em }
-			:first-child { padding-left: 0  }
-			:last-child  { padding-right: 0 }
-
+			background-color: rgb(var(--background-total-theme));
 			.text {
+				display: inline-block;
 				color: rgb(var(--text-color));
-
 				.bannerDescription {
-					padding-top: 0.5em;
+					padding-top: 5px;
 				}
+			}
+
+			img {
+				padding-right: 1.4em;
+				display: inline-block;
 			}
 
 			.closeBannerBtn {
+				margin-top: -1%;
 				.container {
     				display: flex;
-					color:  rgb(var(--neutral-grad-4));
-					cursor: pointer;
-
-					transition: color 0.1s linear;
+					padding: 1px;
+					color:  rgb(var(--neutral-grad-3));;
+					transition: color 0.12s linear;
 				}
-
-				.container:hover {
-					color: rgb(var(--neutral-grad-2));
+				.container:hover {			
+					color: rgb(var(--color-txt-orange));
 				}
 			}
+
 		}
 
-		&.show {
-			padding: 1em 2.5em 2em 2.5em;
+		.hidden {
+			visibility: hidden;
+			opacity: 0;
+			display: none;
 
-			.bannerBody {
-				display: flex;
-				opacity: 1;
-
-				animation: fadeIn 0.7s;
-			}
+			position: relative;
 		}
 
-		@keyframes fadeIn {
-			from {
-				opacity: 0;
-    			transform: translate(0%, -20%);
-			}
+		 .showAnimation {
+			visibility: visible;
+			opacity: 1;
+			display: block;
 
-			to {
-				opacity: 1;
-    			transform: translate(0%, 0%);
-			}
+			position: relative;
+
+			animation: fadeIn 0.7s;
+			animation-delay: 0s;
+			animation-fill-mode: forwards;
+			border: solid rgb(var(--color-border)) 1px;
+			border-radius: 7px;
+			padding: 2%;
+			display: inline-flex;
 		  }
 
+		  @keyframes fadeIn {
+			from {
+			  opacity: 0;
+			visibility: 0;
+    		transform: translate(0%, -20%);
+			}
+			to {
+			  opacity: 1;
+			visibility: 1;
+    		transform: translate(0%, 0%);
+			}
+		  }
+		
 	}
 
 	.subc{
@@ -423,11 +437,11 @@
 			display: none;
 		}
 
-
+		
 	}
 
 
-
+	
 }
 
 .commentRegisterDiv {
@@ -451,7 +465,7 @@
 		.loadprev,
 		.loadmore,
 		.ended{
-
+			
 			background: transparent;
 		}
 
@@ -497,15 +511,15 @@
 			.sharecaption{
 				white-space: inherit;
 				padding-right: 2 * @rhythm;
-
+				
 				div{
 					font-size: 1em;
 					font-weight: 500;
-
-
+					
+					
 				}
 
-				span{
+				span{	
 					font-weight: 700;
 					font-size: 0.9em;
 					display: -webkit-box;
@@ -517,7 +531,7 @@
 				}
 			}
 
-
+		
 
 			.meta{
 				padding-top : @rhythm;
@@ -565,7 +579,7 @@
 
 				&.verticalVideo{
 					height: 530px;
-
+					
 				}
 			}
 
@@ -585,7 +599,7 @@
 					}
 				}
 
-
+				
 			}
 
 			.urlcnt{
@@ -612,10 +626,10 @@
 					align-items: center;
 					display: flex;
 					white-space: nowrap;
-
+					
 					>div{
-
-
+						
+	
 						&.authorCell{
 							padding-left: @rhythm;
 							padding-right: 0;
@@ -636,7 +650,7 @@
 								color : rgb(var(--text-color));
 							}
 						}
-
+						
 						span{
 							font-size: 0.9em;
 							font-weight: 400;
@@ -648,7 +662,7 @@
 
 				.metatable{
 					>div{
-
+						
 						&.metapanel{
 							width: 40px;
 							color : rgb(var(--text-color));
@@ -658,7 +672,7 @@
 							}
 						}
 
-
+						
 					}
 				}
 			}
@@ -687,24 +701,24 @@
 				.anothercntswrk{
 					height: 100px;
 				}
-
+				
 				&:nth-child(3n + 1){
 					clear: left;
 				}
-
+				
 			}
 
 			.showmorebyauthor{
 				display: none;
 			}
 
-
+			
 		}
 	}
 }
 
 #lenta{
-
+	
 	&.horizontal{
 		display: flex;
 		flex-grow: 1;
@@ -725,7 +739,7 @@
 			margin-right: @rhythm;
 			margin-bottom : @rhythm;
 			//content-visibility:visible;
-
+			
 			&:nth-last-child(1){
 				margin-right: 0;
 			}
@@ -742,12 +756,12 @@
 		.ended{
 			display: none!important;
 		}
-
+		
 
 		&.mainvideo{
 			.share .forurl.verticalVideo{
 				height: 200px;
-
+				
 			}
 
 			.share .formeta{
@@ -861,7 +875,7 @@
 
 					.forurl{
 						height: 140px;
-
+	
 						&.verticalVideo{
 							height: 140px;
 						}
@@ -869,7 +883,7 @@
 				}
 			}
 
-
+			
 		}
 	}
 }
@@ -891,15 +905,15 @@
 			display: none;
 		}
 
-
-
+		
+		
 
 		.share{
 
 		}
-
+		
 	}
-
+	
 }
 
 /*t*/ @media only screen and (max-width: 768px){
@@ -934,7 +948,7 @@
 					width: 260px;
 				}
 			}
-
+			
 		}
 	}
 
@@ -944,7 +958,7 @@
 				&.fxdp{
 					transform:  translateY(-220px);
 				}
-
+				
 			}
 		}
 	}
@@ -972,11 +986,11 @@
 		}
 
 		.shares{
-			overflow: hidden;
+			overflow: hidden; 
 			.work{
 				padding : 0;
 			}
-
+			
 			.loadmore{
 				padding : 2 * @rhythm 0;
 				padding-bottom : 2 * @rhythm;
@@ -989,8 +1003,8 @@
 			.statswrapperExtended{
 				padding : @rhythm;
 			}
-
-
+			
+			
 
 			.ss{
 				padding : 2 * @rhythm;
@@ -999,7 +1013,7 @@
 					font-size: 2em;
 				}
 			}
-
+			
 		}
 
 		.share{
@@ -1009,7 +1023,7 @@
 			}
 		}
 
-
+		
 
 		&.mainvideo{
 
@@ -1025,15 +1039,15 @@
 					margin-left: 2 * @rhythm;
 				}
 			}
-
+				
 			.shares{
 
 				.authorgroup{
 					width: 50%;
 				}
 
-
-
+				
+				
 				.authorgroup{
 					width: 100%;
 					padding : 0;
@@ -1042,17 +1056,17 @@
 						padding : 0;
 					}
 
-
+					
 
 					.anothercntswrk{
 						max-height: none;
 						height: auto;
 					}
 
-
+					
 				}
 
-
+				
 			}
 
 		}
@@ -1076,7 +1090,7 @@
 						}
 					}
 
-
+					
 				}
 
 				.share{
@@ -1086,7 +1100,7 @@
 				}
 			}
 		}
-
+		
 	}
 
 	.dialog{
@@ -1126,7 +1140,7 @@ html.mobileview{
 			}
 		}
 	}
-
+	
 }
 
 
@@ -1157,7 +1171,7 @@ html.mobileview{
 				-webkit-overflow-scrolling: none;
 				overscroll-behavior: none;
 			}
-
+			
 		}
 	}
 }
@@ -1168,7 +1182,7 @@ html.mobileview.fullscreen{
 			#comments{
 				display: none;
 			}
-
+			
 		}
 	}
 }

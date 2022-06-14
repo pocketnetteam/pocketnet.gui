@@ -3693,13 +3693,17 @@ var lenta = (function(){
 			},
 
 			showBanner : function(id) {
-				const currentBanner = el.c.find('.bannerComment')[0];
-				currentBanner.classList.add('show');
+				let currentBanner = el.c.find('#' + id).find('.bannerComment')[0];
+				let bannerBody = el.c.find('#' + id).find('.bannerBody')[0];
+
+				bannerBody.classList.remove('hidden');
+				bannerBody.classList.add('showAnimation');
 			},
 
 			closeBanner : function (id) {
-				const currentBanner = el.c.find('.bannerComment')[0];
-				currentBanner.classList.remove('show');
+				let currentBanner = el.c.find('#' + id).find('.bannerComment')[0];
+				currentBanner.classList.remove('showAnimation')
+				currentBanner.classList.add('hidden');
 			}
 
 
