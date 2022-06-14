@@ -82,13 +82,21 @@ var scanorimportqr = (function(){
                 function onScanSuccess(decodedText, decodedResult) {
                     var isValidPrivateKey,isValidMnemonicPhrase
                     try{
-                        bitcoin.ECPair.fromPrivateKey(Buffer.from(decodedText, 'hex'))
+                        const buff = Buffer.from(decodedText, 'hex');
+
+                        // FIXME:
+                        //  This is a hack. Some Buffer behavior is broken.
+                        //  Find out what is the reason...
+                        buff._isBuffer = true;
+
+                        bitcoin.ECPair.fromPrivateKey(buff)
                         isValidPrivateKey = true
                     }catch(e){
                         isValidPrivateKey = false
                     }
                     isValidMnemonicPhrase = bitcoin.bip39.validateMnemonickWithLangDetection(decodedText.toLowerCase())
                     if(isValidPrivateKey || isValidMnemonicPhrase){
+						
                         essenseData.login(decodedText)
 						self.closeContainer()
                     }else{

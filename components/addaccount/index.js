@@ -74,7 +74,7 @@ var addaccount = (function(){
 	
 						if(file.ext == 'png' || file.ext == 'jpeg' || file.ext == 'jpg'){
 							
-							const html5QrCode = new window.Html5Qrcode("reader")
+							const html5QrCode = new window.Html5Qrcode("fleReader")
 								html5QrCode.scanFile(file.file, false)
 								.then(decodedText => {
 									el.login.val(trim(decodedText))
