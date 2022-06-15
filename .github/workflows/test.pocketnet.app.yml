@@ -8,7 +8,7 @@ on:
 jobs:
   build:
   
-    if: github.event.base_ref == 'refs/heads/latest'
+    if: github.event.base_ref == 'refs/heads/release'
     
     runs-on: gui 
 

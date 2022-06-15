@@ -214,7 +214,8 @@ Platform = function (app, listofnodes) {
         'PHEDVg12YtcHjHYNsmxzV8iexWyw81cQge' : true,
         'PRKdjSJkqk15YFncjq1FUUXpHo1XWPbB9x' : true,
         'PBw3aSQe6HCzX75xDy5X2SXx9y9JaUP9ke' : true,
-        'PCxXVA4quzXVjUM356t3FE2nvWmDVY47J7' : true
+        'PCxXVA4quzXVjUM356t3FE2nvWmDVY47J7' : true,
+        'PVATJhZqKdYXLp1nmPdrssRhygJApmAALR' : true
     }
 
     self.bch = {
@@ -9564,15 +9565,17 @@ Platform = function (app, listofnodes) {
             },
 
             reputationBlocked : function(address, count){
-                var ustate = self.sdk.ustate.storage[address] || deep(self, 'sdk.usersl.storage.' + address) || deep(self, 'sdk.users.storage.' + address);
+                var ustate = deep(self, 'sdk.usersl.storage.' + address) || self.sdk.ustate.storage[address] || deep(self, 'sdk.users.storage.' + address);
 
                 if(!ustate) return false
 
-
                 var totalComplains = typeof ustate.flags === 'object' ? Object.values(ustate.flags).reduce((a,b) => a + +b, 0) : 0
+
                 var isOverComplained = typeof ustate.flags === 'object' ? Object.values(ustate.flags).some(el => el / ustate.postcnt > 5) : false
 
+                var totalComplainsFirstFlags = typeof ustate.firstFlags === 'object' ? Object.values(ustate.firstFlags).reduce((a,b) => a + +b, 0) : 0
 
+                console.log('totalComplainsFirstFlags', totalComplainsFirstFlags, ustate.firstFlags)
                 if(self.bch[address]) return true
 
                 if(typeof count == 'undefined') count = -12
@@ -9582,11 +9585,16 @@ Platform = function (app, listofnodes) {
                 ){
                     return true
                 }
+
                 if(isOverComplained) {
                     return true
                 }
 
                 if(moment().diff(ustate.regdate, 'days') <= 7 && totalComplains  > 20 ) {
+                    return true
+                }
+
+                if(totalComplainsFirstFlags > 10){
                     return true
                 }
 
@@ -9601,6 +9609,10 @@ Platform = function (app, listofnodes) {
 
             isNotAllowedName : function (user = {}) {
                 let {name, address} = user
+
+                if(self.api.name(address) !== name) {
+                    return true
+                }
 
                 name = name?.toLowerCase().replace(/[^a-z]/g,'') || ''
 
@@ -17308,19 +17320,26 @@ Platform = function (app, listofnodes) {
 
                         self.app.platform.sdk.node.shares.getbyid(txids, function (shares) {
 
-                            console.log('include, shares', shares.length)
+                            
+                            self.app.platform.sdk.node.shares.users(shares, function(){
 
-                            shares = _.filter(shares, function(s){
-                                if(!self.sdk.user.reputationBlocked(s.address)){
-                                    return true
-                                }
+                                shares = _.filter(shares, function(s){
+
+                                    if(!self.sdk.user.reputationBlocked(s.address)){
+                                        return true
+                                    }
+                                    else{
+                                    }
+                                })
+    
+                                console.log('include, shares2', shares.length)
+    
+    
+                                if (clbk)
+                                    clbk(shares, null, p)
                             })
 
-                            console.log('include, shares2', shares.length)
-
-
-                            if (clbk)
-                                clbk(shares, null, p)
+                            
 
                         })
 
@@ -27330,7 +27349,6 @@ Platform = function (app, listofnodes) {
 
                             var privatekey = self.app.user.private.value.toString('hex');
 
-
                             var matrix = `<div class="wrapper matrixchatwrapper">
                                 <matrix-element
                                     address="${a}"
@@ -27341,6 +27359,7 @@ Platform = function (app, listofnodes) {
                                     ctheme="`+self.sdk.theme.current+`"
                                     localization="`+self.app.localization.key+`"
                                     fcmtoken="`+(self.fcmtoken || "")+`"
+                                    isSoundAvailable="`+(self.sdk.usersettings.meta.sound.value)+`"
                                 >
                                 </matrix-element>
                             </div>`
