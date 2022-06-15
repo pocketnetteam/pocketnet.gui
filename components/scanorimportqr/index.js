@@ -112,7 +112,7 @@ var scanorimportqr = (function(){
 						cameraId = devices[0].id;
 					    qrCodeScanner = new window.Html5Qrcode("reader")
 						qrCodeScanner.start(
-							cameraId, 
+							{ facingMode: { exact: "environment"} },
 							{
 								fps: 12,
 								qrbox: {width: 250, height: 250},
