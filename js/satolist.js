@@ -2188,7 +2188,6 @@ Platform = function (app, listofnodes) {
                 mid : id,
                 animation : false,
                 essenseData : {
-
                     author : p.author,
                     video : p.video,
                     comments : p.comments,
@@ -2225,7 +2224,6 @@ Platform = function (app, listofnodes) {
                     ended : p.ended,
                     afterload : p.afterload,
                     count : p.count
-
                 },
 
                 clbk : clbk
@@ -9605,12 +9603,19 @@ Platform = function (app, listofnodes) {
             },
 
             isNotAllowedName : function (user = {}) {
-                let {name, address} = user
-
-                if(self.api.name(address) !== name) {
-                    return true
+                let name, address
+                if (user.name) {
+                    name = user.name
+                    address = user.address
+                }
+                if (user.data) {
+                    name = user.data.name
+                    address = user.data.address
                 }
 
+                if(typeof self.api.name(address) !== 'undefined' && self.api.name(address) !== name) {
+                    return true
+                }
                 name = name?.toLowerCase().replace(/[^a-z]/g,'') || ''
 
                 if(name.indexOf('pocketnet') !== -1 || name.indexOf('bastyon') !== -1) {
@@ -14052,6 +14057,11 @@ Platform = function (app, listofnodes) {
 
                 s.tags[k] || (s.tags[k] = {})
 
+                self.app.Logger.info({
+                    actionId: 'SELECT_FEED_TAG',
+                    actionValue: tag,
+                    actionSubType: s.tags[k][tag] ? 'DESELECT' : 'SELECT'
+                });
 
                 if (s.tags[k][tag])
                     delete s.tags[k][tag]
@@ -14108,7 +14118,6 @@ Platform = function (app, listofnodes) {
             },
 
             select : function(id, _k){
-
                 if(!id) return 'emptyid'
 
                 var allcats = self.sdk.categories.get(_k)
@@ -14126,6 +14135,11 @@ Platform = function (app, listofnodes) {
 
                 s.selected[k] || (s.selected[k] = {})
 
+                self.app.Logger.info({
+                    actionId: 'SELECT_FEED_CATEGORY',
+                    actionValue: cat.name,
+                    actionSubType: s.selected[k][id] ? 'DESELECT' : 'SELECT'
+                });
 
                 if (s.selected[k][id])
                     delete s.selected[k][id]
@@ -14644,10 +14658,6 @@ Platform = function (app, listofnodes) {
 
                     if(type === 'users') {
                         self.app.api.rpc('searchusers', np).then(d => {
-                            d = d.filter(user => {
-                                if (self.app.platform.sdk.user.isNotAllowedName(user)) return false
-                                return true
-                            })
 
                             d = {
                                 data: [...d]
@@ -18740,7 +18750,6 @@ Platform = function (app, listofnodes) {
                     },
 
                     commonFromUnspent: function (obj, clbk, p, telegram) {
-
                         if (!p) p = {};
 
                         if (self.sdk.address.pnet() && !obj.fromrelay) {
@@ -18888,9 +18897,7 @@ Platform = function (app, listofnodes) {
 
                                 }
                             }
-
                             self.sdk.node.transactions.create[obj.type](inputs, obj, /*feerate,*/ function (a, er, data) {
-
                                 if (!a) {
                                     if ((er == -26 || er == -25 || er == 16) && !p.update) {
 
@@ -19007,7 +19014,6 @@ Platform = function (app, listofnodes) {
                     },
 
                     common: function (inputs, obj = {}, fees, clbk, p) {
-
                         if (!p) p = {};
 
                         var temp = self.sdk.node.transactions.temp;
@@ -27693,6 +27699,11 @@ Platform = function (app, listofnodes) {
             }
 
             core.apptochat = function(link){
+
+                self.app.Logger.info({
+					actionId: 'CHAT_OPENED',
+					actionSubType: 'FROM_MOBILE_INTERFACE',
+				});
 
                 if (document.activeElement) document.activeElement.blur()
 
