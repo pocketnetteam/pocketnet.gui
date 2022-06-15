@@ -459,7 +459,7 @@ var authorization = (function(){
 							sitemessage(self.app.localization.e('filedamaged'))
 						}
 					}
-					closetooltip()
+					closetooltip && closetooltip()
 				}
 			})},
 
@@ -495,9 +495,10 @@ var authorization = (function(){
 				el.c.find('.qrcode').on('click', function(){
 					if (isMobile() || isTablet()){
 						events.addMobileTooltip($(this))
-					}else{
-						events.openQrScanner()
 					}
+					// else{
+					// 	events.renderFileLoader($(this))
+					// }
 				})
 			}
 		
@@ -702,6 +703,11 @@ var authorization = (function(){
 				for(var i = 1; i <= num; i++) {
 					$(`<input autocomplete="off" id="mnemonicItem${i}" class="mnemonicItem" type="text">`).appendTo(container);
 				}
+			},
+			addFileLoader : function(){
+				if (!(isMobile() || isTablet())){
+					events.renderFileLoader(el.c.find('.qrcode'))
+				}
 			}
 		}
 
@@ -718,6 +724,7 @@ var authorization = (function(){
 				renders.fastfill()
 			}
 			renders.addMnemonicInputs()
+			renders.addFileLoader()
 		}
 
 		return {

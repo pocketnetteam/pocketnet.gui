@@ -126,7 +126,7 @@ var addaccount = (function(){
 								sitemessage(self.app.localization.e('filedamaged'))
 							}
 						}
-						closetooltip()
+						closetooltip && closetooltip()
 					}
 				})},
 
@@ -162,8 +162,6 @@ var addaccount = (function(){
 				el.c.find('.qrcode').on('click', function(){
 					if (isMobile() || isTablet()){
 						events.addMobileTooltip($(this))
-					}else{
-						events.openQrScanner()
 					}
 				})
 			}
@@ -418,7 +416,16 @@ var addaccount = (function(){
 			})
 		}
 
+		var renders = {
+			addFileLoader : function(){
+				if (!(isMobile() || isTablet())){
+					events.renderFileLoader(el.c.find('.qrcode'))
+				}
+			}
+		}
+
 		var make = function(){
+			renders.addFileLoader()
 		}
 
 		return {
