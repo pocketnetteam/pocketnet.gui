@@ -1,7 +1,10 @@
 var electron = null
 
+let apiFetch = (...args) => fetch(...args);
+
 if (typeof _Electron != 'undefined') {
     electron = require('electron');
+    apiFetch = (...args) => proxyFetch(...args);
 }
 
 var rand = function(min, max){
@@ -145,7 +148,7 @@ var ProxyRequest = function(app = {}, proxy){
             if (app.user && (app.user.getstate && app.user.getstate() == 1)){ data.state = 1 }
         }
 
-        return fetch(url, {
+        return apiFetch(url, {
 
             method: p.method || 'POST',
             mode: 'cors', 
