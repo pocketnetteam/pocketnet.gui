@@ -2654,7 +2654,7 @@ var lenta = (function(){
 
 				let currentDate = Math.floor(new Date().getTime()/1000);
 
-				let oneDayInSeconds = 16;
+				let oneDayInSeconds = 86400000;
 
 				if (localStorage['showBanner'] == 'false') {
 					return;
