@@ -647,7 +647,7 @@
     width: 50%;
   }
 }
-@media only screen and (min-width: 1400px) {
+@media only screen and (min-width: 1300px) {
   #lenta .share.fullScreenVideo .sharecntinner {
     display: flex;
     justify-content: center;
@@ -665,7 +665,7 @@
     margin-top: 0;
   }
   #lenta .share.fullScreenVideo .videoWrapper {
-    min-width: 960px !important;
+    min-width: 900px !important;
   }
 }
 /*t*/
