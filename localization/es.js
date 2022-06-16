@@ -826,6 +826,8 @@ ____loclib.pleaseTryAgain = "Algo está incorrecto. Por favor, inténtelo de nue
 
 ____loclib.buy = 'Comprar';
 
+____loclib.usetor = "Conexión a través de la red Tor"
+
 ____loclib.lowstar1 = "El equipo de Bastyon está implementando una moratoria temporal en las calificaciones de 1 y 2 estrellas, excepto el contenido prohibido. El contenido prohibido es:"
 ____loclib.lowstar_reason_1 = "Porno"
 ____loclib.lowstar_reason_2 = "Explotación de menores"

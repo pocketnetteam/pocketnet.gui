@@ -1,8 +1,8 @@
 {
     "name": "pocketnet",
-    "version": "0.7.80",
-    "cordovaversion": "1.7.80",
-    "cordovaversioncode": "170800",
+    "version": "0.7.85",
+    "cordovaversion": "1.7.85",
+    "cordovaversioncode": "170850",
     "description": "Bastyon desktop application",
     "author": "Pocketnet Community <support@pocketnet.app>",
     "company": "Pocketnet Community",
@@ -92,7 +92,7 @@
         "nedb": "^1.8.0",
         "node-autodetect-utf8-cp1251-cp866": "",
         "node-cmd": "^3.0.0",
-        "node-fetch": "",
+        "node-fetch": "^2.6.7",
         "node-iplocate": "^1.0.2",
         "node-notifier": "^10.0.1",
         "node-rsa": "^1.1.1",
@@ -113,6 +113,7 @@
         "save": "^2.4.0",
         "sha1": "^1.1.1",
         "sha2": "^1.0.2",
+        "socks-proxy-agent": "^6.2.0",
         "sortablejs": "^1.8.3",
         "standard": "^11.0.1",
         "svg-captcha": "^1.4.0",
@@ -146,6 +147,13 @@
                 "filter": [
                     "**/cert.pem",
                     "**/key.pem"
+                ]
+            },
+            {
+                "from": "proxy16/tor",
+                "to": "tor",
+                "filter": [
+                    "**/*"
                 ]
             },
             {

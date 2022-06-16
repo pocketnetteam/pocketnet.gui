@@ -4,7 +4,10 @@ if (typeof _OpenApi == 'undefined') _OpenApi = false;
 if (typeof _Electron != 'undefined') {
     electron = require('electron');
 
-    bastyonFsFetchFactory = require('./js/peertube/bastyon-fs-fetch').bastyonFsFetchFactory;
+    proxyAxios = require('./js/transports/proxified-axios').proxifiedAxiosFactory(electron.ipcRenderer);
+    proxyFetch = require('./js/transports/proxified-fetch').proxifiedFetchFactory(electron.ipcRenderer);
+    fsFetchFactory = require('./js/transports/fs-fetch').fsFetchFactory;
+    peertubeTransport = require('./js/transports/peertube-transport').peertubeTransport;
     TranscoderClient = require('./js/electron/transcoding2').Client;
 
     fs = require('fs');

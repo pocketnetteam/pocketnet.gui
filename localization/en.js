@@ -2236,3 +2236,5 @@ ____loclib.postInRelay = "This post is being processed before publishing to bloc
 ____loclib.scanqr = "Scan QR Code"
 
 ____loclib.postInRelay = "This post is being processed before publishing to blockchain"
+
+____loclib.usetor = "Connection via Tor network"
