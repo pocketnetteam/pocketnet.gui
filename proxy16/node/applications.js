@@ -1,83 +1,22 @@
 //var os = require('os');
 const fs = require('fs');
 const https = require('https');
-let axios = require('axios')
 const { reject } = require('underscore');
 var f = require('../functions');
 var path = require('path');
 var Datastore = require('nedb');
-
-var request = require('request')
 var progress = require('request-progress');
 var targz = require('targz');
 
 
-/*require('../freeproxy')().listHttp().then(proxies=>{
-    request = require('request').defaults({ proxy: proxies[0].url})
-    axios = require('axios').create({ proxy: {host :proxies[0].ip, port: +proxies[0].port}});
-})*/
-
-var Applications = function(settings) {
-
+var Applications = function(settings, applications = {}, proxy) {
     if(!settings) settings = {}
 
     var self = this;
 
     var db = new Datastore(f.path(settings.dbpath));
-
-    var applications = {
-        win32: {
-            bin: {
-                name: "_win_x64_daemon.bin",
-                url: 'https://api.github.com/repos/pocketnetapp/pocketnet.core/releases/latest',
-                page: 'https://github.com/pocketnetteam/pocketnet.core/releases/latest'
-            },
-            checkpoint_main: {
-                name: "main.sqlite3",
-                url: 'https://api.github.com/repos/pocketnetapp/pocketnet.core/releases/latest',
-                page: 'https://github.com/pocketnetteam/pocketnet.core/releases/latest'
-            },
-            checkpoint_test: {
-                name: "test.sqlite3",
-                url: 'https://api.github.com/repos/pocketnetapp/pocketnet.core/releases/latest',
-                page: 'https://github.com/pocketnetteam/pocketnet.core/releases/latest'
-            },
-            snapshot_latest: {
-                permanent: true,
-                name: "latest.tgz",
-                url: 'https://snapshot.pocketnet.app/latest.tgz'
-            },
-            bin_permanent: {
-                permanent: true,
-                name: "pocketcoind.exe",
-                url: 'https://snapshot.pocketnet.app/pocketcoind.exe'
-            },
-            checkpoint_main_permanent: {
-                permanent: true,
-                name: "main.sqlite3",
-                url: 'https://snapshot.pocketnet.app/main.sqlite3'
-            }
-        },
-
-        linux: {
-            bin: {
-                name: "_linux_x64_daemon.bin",
-                url: 'https://api.github.com/repos/pocketnetapp/pocketnet.core/releases/latest',
-                page: 'https://github.com/pocketnetteam/pocketnet.core/releases/latest'
-            },
-            snapshot_latest: {
-                permanent: true,
-                name: "latest.tgz",
-                url: 'https://snapshot.pocketnet.app/latest.tgz'
-            },
-            checkpoint_main: {
-                name: "main.sqlite3",
-                url: 'https://api.github.com/repos/pocketnetapp/pocketnet.core/releases/latest',
-                page: 'https://github.com/pocketnetteam/pocketnet.core/releases/latest'
-            },
-        }
-    }
-
+    
+    
     var platform = process.platform
     var meta = applications[platform]
 
@@ -88,8 +27,8 @@ var Applications = function(settings) {
     self.getinfo = function(key){
 
         if(!meta) return Promise.reject('platform')
-
-        return axios.get(meta[key].url).then(function(response) {
+        console.log(meta[key].url)
+        return proxy.transports.axios.get(meta[key].url).then(function(response) {
 
             var d = response.data
             var assets = d.assets || [];
@@ -102,7 +41,7 @@ var Applications = function(settings) {
 
             return Promise.reject('notfound')
         })
-           
+
     }
 
     self.current = function(){
@@ -145,8 +84,8 @@ var Applications = function(settings) {
 
 
             db.remove({}, { multi: true }, function (err, numRemoved) {
-                
-                if (err){   
+
+                if (err){
                     reject({
                         code : 500,
                         error : "dbsave"
@@ -183,7 +122,7 @@ var Applications = function(settings) {
             })
         })
 
-        
+
     }
 
     self.install = function(key, dest, save){
@@ -201,13 +140,13 @@ var Applications = function(settings) {
                             code : 500,
                             error : 'cantcopy'
                         })
-                   
+
                     });
                 }
                 catch(e){
                     return Promise.reject()
                 }
-                
+
             }).catch(e => {
                 reject({
                     code : 500,
@@ -224,12 +163,11 @@ var Applications = function(settings) {
         })
     }
 
-    self.download = function(key){
-
+    self.download = async function(key, repo = { user: "pocketnetteam", name: "pocketnet.core"}){
+        const current = await self.current()
         var r = {}
 
         return self.getinfo(key).then(asset => {
-
             r.asset = asset
 
 
@@ -242,8 +180,8 @@ var Applications = function(settings) {
                     return true
                 }
 
-            })
-            
+            }, repo)
+
         }).then(p => {
 
             r.path = p
@@ -259,8 +197,8 @@ var Applications = function(settings) {
         let endFile = path.resolve(dest, meta[key].name)
 
         return new Promise(function(resolve, reject) {
-            let req = request(meta[key].url)
-            
+            let req = proxy.transports.request({url:meta[key].url})
+
             progress(req, {
                 throttle: 500,                    // Throttle the progress event to 2000ms, defaults to 1000ms
                 // delay: 1000,                       // Only start to emit after 1000ms delay, defaults to 0ms
@@ -288,6 +226,7 @@ var Applications = function(settings) {
                 }
             })
             .on('error', function (err) {
+                console.log(err)
                 return reject(err)
             })
             .on('end', function () {
@@ -348,7 +287,7 @@ var Applications = function(settings) {
     self.hasapplication = function(){
         return meta ? true : false
     }
-
+    
     return self
 }
 
