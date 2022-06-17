@@ -12,17 +12,21 @@ if ('serviceWorker' in navigator) {
         console.log('Service worker registration failed:', error);
     });
 
-    navigator.serviceWorker.addEventListener('message', async (event) => {
-        if(typeof _Electron != 'undefined') {
-            const channel = new BroadcastChannel(event.data);
-            const res = await pwaFetch(event.data);
-            const blob = await res.blob();
-            const url = URL.createObjectURL(blob)
-            channel.postMessage(url)
-        } else {
-            channel.postMessage(event.data)
-        }
-    });
+    if (typeof _Electron != 'undefined') {
+
+        navigator.serviceWorker.addEventListener('message', async (event) => {
+            if (typeof _Electron != 'undefined') {
+                const channel = new BroadcastChannel(event.data);
+                const res = await pwaFetch(event.data);
+                const blob = await res.blob();
+                const url = URL.createObjectURL(blob)
+                channel.postMessage(url)
+            } else {
+                channel.postMessage(event.data)
+            }
+        });
+
+    }
     
  
 } else {
