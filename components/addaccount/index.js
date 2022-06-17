@@ -378,6 +378,12 @@ var addaccount = (function(){
 			})
 		}
 
+		mnemonicInputBlurHandler = function(){
+			el.c.find('.mnemonicItem').on('blur', function(e){
+				el.autocomplete.css({'display': 'none'})
+			})
+		}
+
 		privateKeyInputHandler = function(){
 			el.c.find('.loginValue').on('input', function(e){
 				if(!e.target.value){
@@ -470,6 +476,7 @@ var addaccount = (function(){
 				addAutocomlete()
 				validateMnemonicInput()
 				checkAutocompleteValue()
+				mnemonicInputBlurHandler()
 				pasteMnemonicPhrase()
 				privateKeyInputHandler()
 				hideAotocomplete()
@@ -511,7 +518,7 @@ var addaccount = (function(){
 	self.stop = function(){
 
 		_.each(essenses, function(essense){
-
+			$("#autocomplete").remove()
 			essense.destroy();
 
 		})
