@@ -106,31 +106,62 @@ var scanorimportqr = (function(){
                   
                 function onScanFailure(error) {
                 }
-				var cameraId
-				window.Html5Qrcode.getCameras().then(devices => {
-					if (devices && devices.length) {
-						cameraId = devices[0].id;
-					    qrCodeScanner = new window.Html5Qrcode("reader")
-						qrCodeScanner.start(
-							{ facingMode: { exact: "environment"} },
-							{
-								fps: 12,
-								qrbox: {width: 250, height: 250},
-								formatsToSupport: [window.Html5QrcodeSupportedFormats.QR_CODE ],
-								supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA],
-								rememberLastUsedCamera: true
-							},
-							onScanSuccess
-						)	
-					}
-					el.c.find(".loader").fadeOut()
-				  }).catch(err => {
-					el.c.find(".loader").fadeOut()
-					el.c.find(".error").fadeIn()
-					
-				  });               
-            }
+				if(window.cordova){
+					QRScanner.prepare(onDone);
 
+					function onDone(err, status){
+						if (err) {
+							console.log(err);
+						}
+						if (status.authorized) {
+							QRScanner.show(function(){
+								QRScanner.scan(function(err, text){
+									console.log('displayContents');
+									if(err){
+										console.log(err);
+									} else {
+										console.log('test',text);
+										onScanSuccess(text)
+									}
+								});
+							})
+							
+						} else if (status.denied) {
+							QRScanner.openSettings()
+						} else {
+							// we didn't get permission, but we didn't get permanently denied. (On
+							// Android, a denial isn't permanent unless the user checks the "Don't
+							// ask again" box.) We can ask again at the next relevant opportunity.
+						}
+					}
+				}else{
+					var cameraId
+					window.Html5Qrcode.getCameras().then(devices => {
+						if (devices && devices.length) {
+							cameraId = devices[0].id;
+							qrCodeScanner = new window.Html5Qrcode("reader")
+							qrCodeScanner.start(
+								// cameraId,
+								{ facingMode: "environment" },
+								{
+									fps: 12,
+									qrbox: {width: 250, height: 250},
+									formatsToSupport: [window.Html5QrcodeSupportedFormats.QR_CODE ],
+									supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA],
+									rememberLastUsedCamera: true
+								},
+								onScanSuccess,
+								onScanFailure
+							)	
+						}
+						el.c.find(".loader").fadeOut()
+					}).catch(err => {
+						el.c.find(".loader").fadeOut()
+						el.c.find(".error").fadeIn()
+						
+					});               
+				}
+            }
 		}
         var make = function(){
             renders.addScanner()
@@ -156,12 +187,18 @@ var scanorimportqr = (function(){
 			},
 
 			destroy : function(){
-				if(qrCodeScanner && qrCodeScanner.getState() === 2){
-					qrCodeScanner.stop().then((ignore) => {
-					qrCodeScanner.clear()
-				  }).catch((err) => {
-					console.log(err);
-				  });
+				if(window.cordova){
+					QRScanner.cancelScan(function(status){
+						console.log(status);
+					  });
+				}else{
+					if(qrCodeScanner && qrCodeScanner.getState() === 2){
+						qrCodeScanner.stop().then((ignore) => {
+						qrCodeScanner.clear()
+					  }).catch((err) => {
+						console.log(err);
+					  });
+					}
 				}
 				el = {};
 			},

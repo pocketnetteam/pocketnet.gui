@@ -346,6 +346,12 @@ var authorization = (function(){
 				})
 			},
 
+			mnemonicInputBlurHandler : function(){
+				el.c.find('.mnemonicItem').on('blur', function(e){
+					el.autocomplete.css({'display': 'none'})
+				})
+			},
+
 			checkAutocompleteValue : function(){
 				el.autocompleteEnd.on('click', function(e){
 					e.stopPropagation();
@@ -807,6 +813,7 @@ var authorization = (function(){
 				events.addAutocomlete()
 				events.validateMnemonicInput()
 				events.checkAutocompleteValue()
+				events.mnemonicInputBlurHandler()
 				events.pasteMnemonicPhrase()
 				events.privateKeyInputHandler()
 				events.setFocus()
@@ -846,7 +853,7 @@ var authorization = (function(){
 	self.stop = function(){
 
 		_.each(essenses, function(essense){
-
+			$("#autocomplete").remove()
 			essense.destroy();
 
 		})
