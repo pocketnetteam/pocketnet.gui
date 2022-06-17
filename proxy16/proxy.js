@@ -574,7 +574,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 		statusListener: async (callBack)=>{
 			if(!global.USE_PROXY_NODE) {
-				callBack?.('sopped')
+				callBack?.('stopped')
 			}else {
 				torapplications.statusListener(callBack)
 			}
