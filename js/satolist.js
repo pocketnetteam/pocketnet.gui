@@ -4,7 +4,10 @@ if (typeof _OpenApi == 'undefined') _OpenApi = false;
 if (typeof _Electron != 'undefined') {
     electron = require('electron');
 
-    bastyonFsFetchFactory = require('./js/peertube/bastyon-fs-fetch').bastyonFsFetchFactory;
+    proxyAxios = require('./js/transports/proxified-axios').proxifiedAxiosFactory(electron.ipcRenderer);
+    proxyFetch = require('./js/transports/proxified-fetch').proxifiedFetchFactory(electron.ipcRenderer);
+    fsFetchFactory = require('./js/transports/fs-fetch').fsFetchFactory;
+    peertubeTransport = require('./js/transports/peertube-transport').peertubeTransport;
     TranscoderClient = require('./js/electron/transcoding2').Client;
 
     fs = require('fs');
@@ -9567,7 +9570,9 @@ Platform = function (app, listofnodes) {
                 var totalComplains = typeof ustate.flags === 'object' ? Object.values(ustate.flags).reduce((a,b) => a + +b, 0) : 0
                 var isOverComplained = typeof ustate.flags === 'object' ? Object.values(ustate.flags).some(el => el / (ustate.postcnt || 1) > 5) : false
 
+                var totalComplainsFirstFlags = typeof ustate.firstFlags === 'object' ? Object.values(ustate.firstFlags).reduce((a,b) => a + +b, 0) : 0
 
+                console.log('totalComplainsFirstFlags', totalComplainsFirstFlags, ustate.firstFlags)
                 if(self.bch[address]) return true
 
                 if(typeof count == 'undefined') count = -12
@@ -9586,6 +9591,10 @@ Platform = function (app, listofnodes) {
                     return true
                 }
 
+                if(totalComplainsFirstFlags > 10){
+                    return true
+                }
+
                 if(totalComplains > 20 && ustate.likers_count * 2 < totalComplains) {
                     return true
                 }
@@ -9596,12 +9605,19 @@ Platform = function (app, listofnodes) {
             },
 
             isNotAllowedName : function (user = {}) {
-                let {name, address} = user
-
-                if(self.api.name(address) !== name) {
-                    return true
+                let name, address
+                if (user.name) {
+                    name = user.name
+                    address = user.address
+                }
+                if (user.data) {
+                    name = user.data.name
+                    address = user.data.address
                 }
 
+                if(typeof self.api.name(address) !== 'undefined' && self.api.name(address) !== name) {
+                    return true
+                }
                 name = name?.toLowerCase().replace(/[^a-z]/g,'') || ''
 
                 if(name.indexOf('pocketnet') !== -1 || name.indexOf('bastyon') !== -1) {
@@ -14644,10 +14660,6 @@ Platform = function (app, listofnodes) {
 
                     if(type === 'users') {
                         self.app.api.rpc('searchusers', np).then(d => {
-                            d = d.filter(user => {
-                                if (self.app.platform.sdk.user.isNotAllowedName(user)) return false
-                                return true
-                            })
 
                             d = {
                                 data: [...d]
@@ -17321,11 +17333,11 @@ Platform = function (app, listofnodes) {
                             self.app.platform.sdk.node.shares.users(shares, function(){
 
                                 shares = _.filter(shares, function(s){
+
                                     if(!self.sdk.user.reputationBlocked(s.address)){
                                         return true
                                     }
                                     else{
-                                        console.log(".")
                                     }
                                 })
     
@@ -18740,7 +18752,6 @@ Platform = function (app, listofnodes) {
                     },
 
                     commonFromUnspent: function (obj, clbk, p, telegram) {
-
                         if (!p) p = {};
 
                         if (self.sdk.address.pnet() && !obj.fromrelay) {
@@ -18888,9 +18899,7 @@ Platform = function (app, listofnodes) {
 
                                 }
                             }
-
                             self.sdk.node.transactions.create[obj.type](inputs, obj, /*feerate,*/ function (a, er, data) {
-
                                 if (!a) {
                                     if ((er == -26 || er == -25 || er == 16) && !p.update) {
 
@@ -26982,10 +26991,9 @@ Platform = function (app, listofnodes) {
             if (typeof PeerTubePocketnet != 'undefined'){
                 self.app.peertubeHandler = new PeerTubePocketnet(self.app);
             }
-            // FIXME: - Fix logger init errors
+
             if (typeof FrontendLogger !== 'undefined') {
                 self.app.Logger = new FrontendLogger(navigator.userAgent, self.app);
-                console.log('Init Logger', self.app.Logger)
             } else {
                 self.app.Logger = {}
             }

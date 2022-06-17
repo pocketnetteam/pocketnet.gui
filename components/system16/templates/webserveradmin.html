@@ -91,7 +91,7 @@
                     <% } %>
                 </div>
             </div>
-
+            
             <div class="setting togglebutton">
                 <div class="settingTable table">
                     <div class="label">
@@ -155,6 +155,24 @@
                 </div>
             </div>
 
+            <div class="setting togglebutton">
+                <div class="settingTable table">
+                    <div class="label">
+                        <span>Enable Tor</span>
+                    </div>
+
+                    <div elementsid="torenabled" class="value" sys="torenabled" value="<%-(typeof changes.enabledtor != 'undefined' ? changes.enabledtor : system.tor.enabled)%>">
+                        <span><%- (typeof changes.enabledtor!= 'undefined' ? changes.enabledtor : system.tor.enabled) ? 'Yes' : 'No' %></span>
+                    </div>
+
+                    <% if(typeof changes.enabledtor != 'undefined') {%>
+                    <div class="icon">
+                        <i elementsid="fa-times-circle" class="far fa-times-circle" remove="torenabled"></i>
+                    </div>
+                    <% } %>
+                </div>
+            </div>
+            
             <% if(proxy.direct) {%>
 
 

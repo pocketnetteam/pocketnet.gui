@@ -225,6 +225,8 @@ class FrontendLogger {
       _addLogWithAggregation,
     } = this;
 
+    if (!loggerActive) return;
+
     const infoType = logCodes[actionId] ? logCodes[actionId].id : '';
     const info = {
       type: infoType,
@@ -233,8 +235,6 @@ class FrontendLogger {
       guid,
       userAgent,
     };
-
-    if (typeof info !== 'object' || !loggerActive) return;
 
 
     if (_addLogWithAggregation[infoType]) {
