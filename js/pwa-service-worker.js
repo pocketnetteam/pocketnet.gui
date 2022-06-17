@@ -20,15 +20,16 @@ if ('serviceWorker' in navigator) {
 
         if (typeof _Electron != 'undefined') {
             
-            const res = await pwaFetch(event.data);
+            const res = await pwaFetch(event.data, { mode: 'no-cors'});
             const blob = await res.blob();
             const url = URL.createObjectURL(blob)
             channel.postMessage(url)
-            
+
 
         } else {
             channel.postMessage(event.data)
         }
+
     });
 
     
