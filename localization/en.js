@@ -2231,3 +2231,6 @@ ____loclib.cameraunlocknote = "To scan, unlock the camera from your browser sett
 ____loclib.videotranscodingdelayedpost = "This video is being processed and will be posted as soon as the transcoding process ends. Please, do not close the tab untill then."
 ____loclib.postInRelay = "This post is being processed before publishing to blockchain"
 ____loclib.scanqr = "Scan QR Code"
+____loclib.usetor = "Connection via Tor network"
+____loclib.videotranscodingdelayedpost = "This video is being processed and will be posted as soon as the transcoding process ends. Please, do not close the tab untill then."
+____loclib.postInRelay = "This post is being processed before publishing to blockchain"

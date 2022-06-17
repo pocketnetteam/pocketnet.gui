@@ -1961,6 +1961,7 @@ pUserInfo = function(){
 
 		if (v.blocking) self.blocking = v.blocking;
 		if (v.flags) self.flags = v.flags;
+		if (v.firstFlags) self.firstFlags = v.firstFlags;
 
 		self.keys = (v.k || v.keys || '')
 

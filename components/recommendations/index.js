@@ -49,10 +49,15 @@ var recommendations = (function(){
 					if (!_p || !_p.el) return;
 
 					_p.el.find('.recoVideoDiv').click(function() {
-
+		
 						var txid = $(this).data('txid');
 
 						if (txid) {
+
+							self.app.Logger.info({
+								actionId: 'RECOMMENDATION_SELECTED',
+								actionValue: txid
+							});
 
 							if (ed.open){
 								ed.open(txid)

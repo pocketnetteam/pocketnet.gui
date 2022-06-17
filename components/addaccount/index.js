@@ -450,6 +450,7 @@ var addaccount = (function(){
 			},
 
 			destroy : function(){
+				$("#autocomplete").remove()
 				el = {};
 			},
 			
@@ -516,9 +517,7 @@ var addaccount = (function(){
 	};
 
 	self.stop = function(){
-
 		_.each(essenses, function(essense){
-			$("#autocomplete").remove()
 			essense.destroy();
 
 		})
@@ -534,7 +533,6 @@ if(typeof module != "undefined")
 	module.exports = addaccount;
 }
 else{
-
 	app.modules.addaccount = {};
 	app.modules.addaccount.module = addaccount;
 

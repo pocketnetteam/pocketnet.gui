@@ -1,13 +1,8 @@
 var htmlparser = require("htmlparser2"),
   string = require('string'),
-  request = require('request'),
   meta = {},
   currMeta = {},
   currTag = null;
-
-/*require('../freeproxy')().listHttp().then(proxies=>{
-  request = require('request').defaults({ proxy: proxies[0].url})
-})*/
 
 function _og() {};
 _og.prototype._set_og = function(inoutMeta, name, value) {
@@ -354,7 +349,7 @@ var _get_og_data = function(url, callback) {
   }
 
   try{
-    request(options, function(error, response, body) {
+    self.transports.request(options, function(error, response, body) {
       try{
 
      
