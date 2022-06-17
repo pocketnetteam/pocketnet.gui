@@ -138,7 +138,6 @@ var complain = (function(){
                     topPreloader(100)
 
                     if(!tx){
-                      debugger
                       self.app.platform.errorHandler(error, true)
 
                       if (clbk)

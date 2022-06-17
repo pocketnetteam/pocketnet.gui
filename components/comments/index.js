@@ -237,15 +237,14 @@ var comments = (function(){
 				else
 					c.removeClass('hastext')
 			},
-			complain : function(){
-				debugger
+			complain : function(comment){
 				self.nav.api.load({
 					open : true,
 					id : 'complain',
 					inWnd : true,
 					essenseData : {
-						item : 'user',
-						obj : {},
+						item : 'post',
+						obj : comment,
 
 						success : function(){
 
@@ -1356,7 +1355,7 @@ var comments = (function(){
 
 						__el.find('.complain').on('click', function(){
 							self.app.mobile.vibration.small()
-							actions.complain()
+							actions.complain(comment)
 
 							close()
 

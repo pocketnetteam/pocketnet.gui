@@ -9565,7 +9565,7 @@ Platform = function (app, listofnodes) {
                 if(!ustate) return false
 
                 var totalComplains = typeof ustate.flags === 'object' ? Object.values(ustate.flags).reduce((a,b) => a + +b, 0) : 0
-                var isOverComplained = typeof ustate.flags === 'object' ? Object.values(ustate.flags).some(el => el / ustate.postcnt > 5) : false
+                var isOverComplained = typeof ustate.flags === 'object' ? Object.values(ustate.flags).some(el => el / (ustate.postcnt || 1) > 5) : false
 
 
                 if(self.bch[address]) return true
@@ -26982,9 +26982,10 @@ Platform = function (app, listofnodes) {
             if (typeof PeerTubePocketnet != 'undefined'){
                 self.app.peertubeHandler = new PeerTubePocketnet(self.app);
             }
-
+            // FIXME: - Fix logger init errors
             if (typeof FrontendLogger !== 'undefined') {
                 self.app.Logger = new FrontendLogger(navigator.userAgent, self.app);
+                console.log('Init Logger', self.app.Logger)
             } else {
                 self.app.Logger = {}
             }

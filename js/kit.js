@@ -1958,6 +1958,7 @@ pUserInfo = function(){
 
 		if (v.blocking) self.blocking = v.blocking;
 		if (v.flags) self.flags = v.flags;
+		if (v.hash) self.hash = v.hash;
 
 		self.keys = (v.k || v.keys || '')
 
@@ -2089,8 +2090,10 @@ pUserInfo = function(){
 	}
 
 	self.modFlag = function(reason){
+
 		var modFlag = new ModFlag();
-		modFlag.s2.set(self.txid);
+
+		modFlag.s2.set(self.hash);
 		modFlag.s3.set(self.address);
 		modFlag.i1.set(reason);
 
@@ -2588,6 +2591,9 @@ pComment = function(){
 
 		if (v.deleted) self.deleted = true
 
+		if (v.flags) self.flags = v.flags;
+		if (v.hash) self.hash = v.hash;
+
 		if (v.id || v.txid)
 			self.id = v.id || v.txid;
 	}
@@ -2724,9 +2730,10 @@ pComment = function(){
 
 	self.type = 'comment'
 	self.modFlag = function(reason){
+
 		var modFlag = new ModFlag();
 
-		modFlag.s2.set(self.txid);
+		modFlag.s2.set(self.id);
 		modFlag.s3.set(self.address);
 		modFlag.i1.set(reason);
 
