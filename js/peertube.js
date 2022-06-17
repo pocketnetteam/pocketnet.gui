@@ -69,7 +69,7 @@ var PeertubeRequest = function (app = {}) {
 		if (data && !_.isEmpty(data) && ps.method !== 'GET')
 			ps.body = serialize(data);
 
-		return fetch(url, ps)
+		return proxyFetch(url, ps)
 			.then((r) => {
 
 				if (signal)
@@ -180,10 +180,7 @@ PeerTubePocketnet = function (app) {
 
 		pocketnetAuth: {
 			path: () => {
-				return app.test ||
-					app.platform.testaddresses.includes(app.platform.sdk.address.pnet().address)
-					? 'api/v1/users/blockChainAuth'
-					: 'plugins/pocketnet-auth/router/code-cb';
+				return 'api/v1/users/blockChainAuth';
 			},
 			signature: true,
 			method: 'POST',
@@ -438,7 +435,7 @@ PeerTubePocketnet = function (app) {
 					var url = self.helpers.url(options.host + '/' + meta.path);
 
 
-					return axios({ method, url, data, ...axiosoptions })
+					return proxyAxios({ method, url, data, ...axiosoptions })
 						.then((r) => {
 							if (meta.fullreport) {
 								return r;
@@ -481,7 +478,9 @@ PeerTubePocketnet = function (app) {
 					meta.path + params,
 					data,
 					requestoptions,
-				);
+				).catch((err, data) => {
+					return Promise.reject(err);
+				});
 			}).catch(e => {
 
 				return Promise.reject(e)

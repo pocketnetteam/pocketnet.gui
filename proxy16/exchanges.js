@@ -1,11 +1,5 @@
-let axios = require('axios');
-const { zip, reject } = require('underscore');
+const { zip } = require('underscore');
 var f = require('./functions');
-
-/*require('./freeproxy')().listHttp().then(proxies=>{
-    axios = require('axios').create({ proxy: {host :proxies[0].ip, port: +proxies[0].port}});
-})*/
-
 
 var Exchanges = function(){
     var self = this
@@ -15,7 +9,7 @@ var Exchanges = function(){
     var history = {
         prices : {}
     }
-    
+
     var keys = {
         //'mercatox' : 'last_price',
         //'bilaxy' : 'close',
@@ -35,8 +29,8 @@ var Exchanges = function(){
     self.api = {
         price : {
             bilaxy : function(){
-                
-                return axios.get(apis.bilaxy).then(function(response) {
+
+                return self.transports.axios.get(apis.bilaxy).then(function(response) {
 
                     return f.getPkoinPrice(response.data, 'close')
 
@@ -49,10 +43,12 @@ var Exchanges = function(){
             },
 
             /*mercatox : function(){
-                return axios.get(apis.mercatox).then(function(response) {
+                return self.transports.axios.get(apis.mercatoxPrices).then(function(response) {
+            /*mercatox : function(){
+                return self.transports.axios.get(apis.mercatox).then(function(response) {
 
                     return f.getPkoinPrice(response.data, 'last_price')
-                
+
                 }).catch(e => {
 
 
@@ -61,10 +57,10 @@ var Exchanges = function(){
             },*/
 
             digifinex : function(){
-                return axios.get(apis.digifinex).then(function(response) {
+                return self.transports.axios.get(apis.digifinex).then(function(response) {
 
                     var converted = {}
-                    
+
                     _.each(f.deep(response, 'data.ticker') || [], function(c){
                         if (c.symbol && c.symbol.toUpperCase)
                             converted[c.symbol.toUpperCase()] = c
@@ -81,9 +77,9 @@ var Exchanges = function(){
             },
 
             bitforex : function(){
-                 return axios.post(apis.bitforex).then(function(response) {
+                 return self.transports.axios.post(apis.bitforex).then(function(response) {
 
-                     
+
                     var formatted_data = f.formatExchageKeys(response.data)
 
                     var pkoinusdt = formatted_data.DATA['coin-usdt-pkoin']
@@ -95,9 +91,9 @@ var Exchanges = function(){
                     formatted_data = {
                         'PKOIN_USDT' : pkoinusdt
                     }
-                    
+
                     return f.getPkoinPrice(formatted_data, 'last')
-                
+
                  }).catch(e => {
 
 
@@ -105,7 +101,7 @@ var Exchanges = function(){
                  })
             },
         }
-       
+
     }
 
     self.getAveragePrice = function(market, prices, key) {
@@ -137,7 +133,7 @@ var Exchanges = function(){
 
             first_price_value = first_price_value ? first_price_value : current_price_value
             second_price_value = second_price_value ? second_price_value : current_price_value
-            
+
             prices.prices[item].data[key] = ((current_price_value + first_price_value + second_price_value) / 3)
 
         })
@@ -157,7 +153,7 @@ var Exchanges = function(){
             prices[item] =  history.prices[item][currencies_length - 1].data
         })
 
-        
+
     },
 
     self.history = {
@@ -172,7 +168,7 @@ var Exchanges = function(){
                     history.prices[i].push(slice)
                     history.prices[i] = f.lastelements(history.prices[i], 100)
 
-                    
+
 
                     return Promise.resolve()
 
@@ -192,7 +188,7 @@ var Exchanges = function(){
                 }
 
                 var m = {}
-                
+
                 _.each(history.prices, function(v, i){
                     if (i == 'common') return
 
@@ -205,14 +201,14 @@ var Exchanges = function(){
                                 m[i] || (m[i] = 0)
 
                                 m[i] ++
-    
+
                                 common.prices[i] || (common.prices[i] = {
                                     currency : p.currency,
                                     data : {}
                                 })
-    
+
                                 common.prices[i].data.last || (common.prices[i].data.last = 0)
-    
+
                                 common.prices[i].data.last += Number(p.data.last)
                             }
 
@@ -268,7 +264,7 @@ var Exchanges = function(){
                 var action = f.deep(self.api, path)
 
                 if(!action){
-                    return action() 
+                    return action()
                 }
                 else{
                     return Promise.reject('epmty')
@@ -284,7 +280,7 @@ var Exchanges = function(){
                     return Promise.resolve(history)
                 })
 
-                
+
             }
         }
     }

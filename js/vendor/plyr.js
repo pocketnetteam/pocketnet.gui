@@ -9197,8 +9197,8 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
 
       let localTransport;
 
-      if (localVideo && isElectron) {
-        localTransport = await bastyonFsFetchFactory(electron.ipcRenderer, localVideo.video.internalURL);
+      if (isElectron) {
+        localTransport = peertubeTransport(electron.ipcRenderer, localVideo);
         localVideo = undefined;
       }
 

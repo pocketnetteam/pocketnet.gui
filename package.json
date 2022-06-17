@@ -1,8 +1,8 @@
 {
     "name": "pocketnet",
-    "version": "0.7.75",
-    "cordovaversion": "1.7.75",
-    "cordovaversioncode": "170750",
+    "version": "0.7.85",
+    "cordovaversion": "1.7.85",
+    "cordovaversioncode": "170850",
     "description": "Bastyon desktop application",
     "author": "Pocketnet Community <support@pocketnet.app>",
     "company": "Pocketnet Community",
@@ -67,6 +67,7 @@
         "firebase-admin": "^9.3.0",
         "fluent-ffmpeg": "^2.1.2",
         "free-proxy": "^0.2.0",
+        "get-free-https-proxy": "^2.0.2",
         "github-download": "^0.5.0",
         "hash-files": "^1.1.1",
         "iconv-lite": "",
@@ -84,6 +85,7 @@
         "jsonwebtoken": "^8.5.1",
         "lambda-rate-limiter": "",
         "lodash": "^4.17.15",
+        "make-fetch-happen": "^10.1.2",
         "masonry-layout": "^4.2.2",
         "md5": "^2.3.0",
         "medium-editor": "^5.23.3",
@@ -92,7 +94,7 @@
         "nedb": "^1.8.0",
         "node-autodetect-utf8-cp1251-cp866": "",
         "node-cmd": "^3.0.0",
-        "node-fetch": "",
+        "node-fetch": "^2.6.7",
         "node-iplocate": "^1.0.2",
         "node-notifier": "^10.0.1",
         "node-rsa": "^1.1.1",
@@ -113,6 +115,7 @@
         "save": "^2.4.0",
         "sha1": "^1.1.1",
         "sha2": "^1.0.2",
+        "socks-proxy-agent": "^6.2.0",
         "sortablejs": "^1.8.3",
         "standard": "^11.0.1",
         "svg-captcha": "^1.4.0",
@@ -146,6 +149,13 @@
                 "filter": [
                     "**/cert.pem",
                     "**/key.pem"
+                ]
+            },
+            {
+                "from": "proxy16/tor",
+                "to": "tor",
+                "filter": [
+                    "**/*"
                 ]
             },
             {
