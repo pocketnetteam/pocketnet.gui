@@ -69,7 +69,7 @@ var PeertubeRequest = function (app = {}) {
 		if (data && !_.isEmpty(data) && ps.method !== 'GET')
 			ps.body = serialize(data);
 
-		return proxyFetch(url, ps)
+		return (typeof proxyFetch == 'undefined' ? fetch : proxyFetch)(url, ps)
 			.then((r) => {
 
 				if (signal)
@@ -435,7 +435,7 @@ PeerTubePocketnet = function (app) {
 					var url = self.helpers.url(options.host + '/' + meta.path);
 
 
-					return proxyAxios({ method, url, data, ...axiosoptions })
+					return (typeof proxyAxios != 'undefined' ? proxyAxios : axios)({ method, url, data, ...axiosoptions })
 						.then((r) => {
 							if (meta.fullreport) {
 								return r;

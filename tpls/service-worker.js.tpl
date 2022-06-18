@@ -26,7 +26,12 @@ const proxyPlugin = {
           resolve(event?.data)
         }
       })
-      return new Request(result, {headers: request.headers});;
+
+      if (request.url === result) {
+        return request;
+      }
+
+      return new Request(result, {headers: request.headers});
     }catch (e){
       return request
     }
@@ -37,7 +42,7 @@ const proxyPlugin = {
 routing.registerRoute(
   // Check to see if the request's destination is style for stylesheets, script for JavaScript, or worker for web worker
   ({ request }) => {
-    
+
     return request.destination === 'style' ||
       request.destination === 'script' ||
       request.destination === 'worker'},
