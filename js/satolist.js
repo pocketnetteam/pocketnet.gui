@@ -3488,7 +3488,7 @@ Platform = function (app, listofnodes) {
         },
 
         clearname: function (n) {
-            return (n || "").replace(/[^a-zA-Z0-9_ ]/g, "")
+            return (n || "").replace(/[^a-zA-Z0-9_.]/g, "")
         },
 
         name: function (address) {
@@ -3497,7 +3497,6 @@ Platform = function (app, listofnodes) {
             if (n) {
                 n = this.clearname(n)
             }
-
             return n;
         },
 
@@ -9617,7 +9616,6 @@ Platform = function (app, listofnodes) {
                     name = user.data.name
                     address = user.data.address
                 }
-
                 if(typeof self.api.name(address) !== 'undefined' && self.api.name(address) !== name) {
                     return true
                 }
