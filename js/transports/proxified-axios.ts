@@ -91,7 +91,34 @@ export function proxifiedAxiosFactory(electronIpcRenderer: Electron.IpcRenderer)
         });
     }
 
-    return (urlOrConfig: string | AxiosRequestConfig, config?: AxiosRequestConfig) => profixiedAxios(urlOrConfig, config);
+    return (urlOrConfig: string | AxiosRequestConfig, config?: AxiosRequestConfig) => {
+        const hasFileFormData = () => {
+            function checkForFile(config) {
+                let flagged = false;
+
+                for (let item of config.data.values()) {
+                    if (item.constructor?.name === 'File') {
+                        flagged = true;
+                    }
+                }
+
+                return flagged;
+            }
+
+            if (typeof config === 'object' && config.data?.constructor.name === 'FormData') {
+                return checkForFile(config);
+            } else if (typeof urlOrConfig === 'object' && urlOrConfig.data?.constructor.name === 'FormData') {
+                return checkForFile(urlOrConfig);
+            }
+        }
+
+        if (hasFileFormData()) {
+            // @ts-ignore
+            return axios(urlOrConfig, config);
+        } else {
+            return profixiedAxios(urlOrConfig, config);
+        }
+    }
 }
 
 export class ProxifiedAxiosBridge {
