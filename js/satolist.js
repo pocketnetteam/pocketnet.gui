@@ -3488,7 +3488,7 @@ Platform = function (app, listofnodes) {
         },
 
         clearname: function (n) {
-            return (n || "").replace(/[^a-zA-Z0-9_.]/g, "")
+            return (n || "").replace(/[^a-zA-Z0-9_. ]/g, "")
         },
 
         name: function (address) {
