@@ -2650,15 +2650,41 @@ var lenta = (function(){
 
 			showBanner : function(){
 				var shareId = $(this).closest('.share').attr('id');
-				renders.showBanner(shareId);
+
+				let currentDate = Math.floor(new Date().getTime()/1000);
+
+				let oneDayInSeconds = 86400000;
+
+				if (localStorage['showBanner'] == 'false') {
+					return;
+				}
+
+				if (!localStorage.getItem('dateForBanner')) {
+					localStorage['dateForBanner'] = currentDate;
+					renders.showBanner(shareId)
+				}
+
+				if (+localStorage.getItem('dateForBanner') + oneDayInSeconds <= currentDate) {
+					localStorage['dateForBanner'] = currentDate;
+					renders.showBanner(shareId)
+					console.log('proshli');
+					return;
+				} else {
+					console.log('ne proshli');
+				}
+
 			},
 
 			closeBanner: function(){
 				var shareId = $(this).closest('.share').attr('id');
 				renders.closeBanner(shareId);
+			},
+
+			dontShowBanner: function() {
+				localStorage.showBanner = 'false';
+				var shareId = $(this).closest('.share').attr('id');
+				renders.closeBanner(shareId);
 			}
-
-
 		}
 
 		var renders = {
@@ -3701,17 +3727,13 @@ var lenta = (function(){
 			},
 
 			showBanner : function(id) {
-				let currentBanner = el.c.find('#' + id).find('.bannerComment')[0];
-				let bannerBody = el.c.find('#' + id).find('.bannerBody')[0];
-
-				bannerBody.classList.remove('hidden');
-				bannerBody.classList.add('showAnimation');
+				const currentBanner = el.c.find('#' + id).find('.bannerComment')[0];
+				currentBanner.classList.add('show');
 			},
 
 			closeBanner : function (id) {
-				let currentBanner = el.c.find('#' + id).find('.bannerComment')[0];
-				currentBanner.classList.remove('showAnimation')
-				currentBanner.classList.add('hidden');
+				const currentBanner = el.c.find('#' + id).find('.bannerComment')[0];
+				currentBanner.classList.remove('show');
 			}
 
 
@@ -4353,6 +4375,7 @@ var lenta = (function(){
 			el.c.on('click', '.gotouserprofile', events.gotouserprofile)
 			el.c.on('click', '.forstars .starWrapper', events.showBanner)
 			el.c.on('click', '.closeBannerBtn', events.closeBanner)
+			el.c.on('click', '.noShowAgain', events.dontShowBanner)
 
 			el.c.on('click','.openauthorwindow', events.openauthorwindow)
 

@@ -216,6 +216,13 @@
 #lenta .bannerComment .bannerBody .closeBannerBtn {
   margin-top: -1%;
 }
+#lenta .bannerComment .bannerBody .text .noShowAgain {
+  text-decoration: underline;
+  padding-top: 0.7%;
+}
+#lenta .bannerComment .bannerBody .text .noShowAgain:hover {
+  color: rgb(var(--color-cc-blue));
+}
 #lenta .bannerComment .bannerBody .closeBannerBtn .container {
   display: flex;
   padding: 1px;
