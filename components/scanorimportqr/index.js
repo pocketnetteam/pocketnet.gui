@@ -11,7 +11,11 @@ var scanorimportqr = (function(){
 		var el,essenseData;
 
 		var actions = {
-
+			closeCordovaScanner : function(){
+				QRScanner.destroy(function(status){
+					console.log(status);
+				  });
+			}
 		}
 
 		var events = {
@@ -98,6 +102,11 @@ var scanorimportqr = (function(){
                     if(isValidPrivateKey || isValidMnemonicPhrase){
 						
                         essenseData.login(decodedText)
+						if(window.cordova){
+							$("body").removeClass('camera')
+							$(".cameraUi").remove()
+							actions.closeCordovaScanner()
+						}
 						self.closeContainer()
                     }else{
                         sitemessage(self.app.localization.e('e13028'))
@@ -107,31 +116,46 @@ var scanorimportqr = (function(){
                 function onScanFailure(error) {
                 }
 				if(window.cordova){
+					$("body").addClass('camera')
+					$("body").prepend("<div class='cameraUi'><div id='closeScannerButton' class='_close roundclosebutton'><i class='fa fa-times' aria-hidden='true'></i></div></div>")
+					$("#closeScannerButton").on('click', function(){
+						$("body").removeClass('camera')
+						$(".cameraUi").remove()
+						actions.closeCordovaScanner()
+						self.closeContainer()
+					})
 					QRScanner.prepare(onDone);
 
 					function onDone(err, status){
 						if (err) {
-							console.log(err);
+							switch (err.code) {
+								case 1:
+									sitemessage(self.app.localization.e('cameraError1'))
+								  break;
+								case 5:
+									sitemessage(self.app.localization.e('cameraError5'))
+								  break;
+								default:
+									sitemessage(error._message)
+							  }
+							$("body").removeClass('camera')
+							$(".cameraUi").remove()
+							actions.closeCordovaScanner()
+							self.closeContainer()
+							return
 						}
 						if (status.authorized) {
 							QRScanner.show(function(){
 								QRScanner.scan(function(err, text){
-									console.log('displayContents');
-									if(err){
-										console.log(err);
-									} else {
-										console.log('test',text);
+									if(!err){
 										onScanSuccess(text)
 									}
 								});
 							})
 							
 						} else if (status.denied) {
+							console.log("denied");
 							QRScanner.openSettings()
-						} else {
-							// we didn't get permission, but we didn't get permanently denied. (On
-							// Android, a denial isn't permanent unless the user checks the "Don't
-							// ask again" box.) We can ask again at the next relevant opportunity.
 						}
 					}
 				}else{
@@ -144,10 +168,8 @@ var scanorimportqr = (function(){
 								// cameraId,
 								{ facingMode: "environment" },
 								{
-									fps: 12,
+									fps: 10,
 									qrbox: {width: 250, height: 250},
-									formatsToSupport: [window.Html5QrcodeSupportedFormats.QR_CODE ],
-									supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA],
 									rememberLastUsedCamera: true
 								},
 								onScanSuccess,
@@ -188,9 +210,7 @@ var scanorimportqr = (function(){
 
 			destroy : function(){
 				if(window.cordova){
-					QRScanner.cancelScan(function(status){
-						console.log(status);
-					  });
+					actions.closeCordovaScanner()
 				}else{
 					if(qrCodeScanner && qrCodeScanner.getState() === 2){
 						qrCodeScanner.stop().then((ignore) => {
