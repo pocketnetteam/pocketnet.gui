@@ -3814,9 +3814,12 @@ var lenta = (function(){
 						return true
 					})
 
-					if (shares.length < pr.count || countshares >= 0){
+					/*
+					if (shares.length < pr.count || countshares >= 20){
 						subloaded = (self.sdk.sharesObserver.seenAll(shares, essenseData.observe)) ? true : false;
 					}
+					*/
+					subloaded = (self.sdk.sharesObserver.loadSubNeeded === true) ? true : false;
 
 					_.each(shares, function(share){
 						sharesFromSub[share.txid] = share
