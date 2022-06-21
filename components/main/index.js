@@ -693,7 +693,7 @@ var main = (function(){
 
 							//recommendedUsers : self.app.mobileview,
 							//recommendedUsersCount : self.app.mobileview ? 15 : 3,
-							//includesub : true,
+							includesub : true,
 							includeboost : self.app.boost,
 							//optimize : self.app.mobileview,
 							extra : (self.app.test || self.app.platform.istest()) && state && isMobile() ? [

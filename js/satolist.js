@@ -8079,6 +8079,19 @@ Platform = function (app, listofnodes) {
                 viewed : {}
             },
 
+            seenAll : function(shares, observe = 'index') {
+                if (!shares || shares.length <= 0)
+                    return true;
+                var obs = self.sdk.sharesObserver.storage.viewed[observe + '_sub'];
+                if(!obs || !obs.first || !obs.last)
+                    return false;
+                for (var i = 0; i < shares.length; i++) {
+                    if (share.id > obs.first || share.id < obs.last)
+                        return false;
+                }
+                return true;
+            },
+
             view : function(key, first, last){
 
                 if(key == 'saved') return
@@ -24164,7 +24177,8 @@ Platform = function (app, listofnodes) {
                         })
                     })
 
-                    platform.sdk.newmaterials.update(data)
+                    if (data.sharesSubscr > 0)
+                        platform.sdk.newmaterials.update(data)
 
                     platform.sdk.user.subscribeRef()
 

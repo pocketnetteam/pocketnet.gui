@@ -3814,8 +3814,8 @@ var lenta = (function(){
 						return true
 					})
 
-					if (shares.length < pr.count || countshares >= 20){
-						subloaded = true
+					if (shares.length < pr.count || countshares >= 0){
+						subloaded = (self.sdk.sharesObserver.seenAll(shares, essenseData.observe)) ? true : false;
 					}
 
 					_.each(shares, function(share){
