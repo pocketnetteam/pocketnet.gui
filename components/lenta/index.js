@@ -3814,7 +3814,7 @@ var lenta = (function(){
 						return true
 					})
 
-					subloaded = (self.sdk.sharesObserver.loadSubNeeded === true) ? true : false;
+					subloaded = (self.sdk.sharesObserver.loadSubNeeded === true) ? false : true;
 
 					_.each(shares, function(share){
 						sharesFromSub[share.txid] = share
