@@ -2650,40 +2650,38 @@ var lenta = (function(){
 			},
 
 			showBanner : function(){
-				var shareId = $(this).closest('.share').attr('id');
+				const shareId = $(this).closest('.share').attr('id');
 
-				let currentDate = Math.floor(new Date().getTime()/1000);
+				const unixTimeNow = Math.floor(Date.now() / 1000);
+				const oneDayInSeconds = 86400000;
 
-				let oneDayInSeconds = 86400000;
+				const alreadyShowed = ('nextCommentBanner' in localStorage);
+				const isBannerDisabled = (localStorage.nextCommentBanner == -1);
+				const timeToShowBanner = (localStorage.nextCommentBanner <= unixTimeNow);
 
-				if (localStorage['showBanner'] == 'false') {
-					return;
-				}
-
-				if (!localStorage.getItem('dateForBanner')) {
-					localStorage['dateForBanner'] = currentDate;
+				if (!alreadyShowed) {
+					localStorage.nextCommentBanner = unixTimeNow + oneDayInSeconds;
 					renders.showBanner(shareId)
 				}
 
-				if (+localStorage.getItem('dateForBanner') + oneDayInSeconds <= currentDate) {
-					localStorage['dateForBanner'] = currentDate;
-					renders.showBanner(shareId)
-					console.log('proshli');
+				if (isBannerDisabled) {
 					return;
-				} else {
-					console.log('ne proshli');
 				}
 
+				if (timeToShowBanner) {
+					localStorage.nextCommentBanner = unixTimeNow + oneDayInSeconds;
+					renders.showBanner(shareId);
+				}
 			},
 
 			closeBanner: function(){
-				var shareId = $(this).closest('.share').attr('id');
+				const shareId = $(this).closest('.share').attr('id');
 				renders.closeBanner(shareId);
 			},
 
 			dontShowBanner: function() {
-				localStorage.showBanner = 'false';
-				var shareId = $(this).closest('.share').attr('id');
+				localStorage.nextCommentBanner = -1;
+				const shareId = $(this).closest('.share').attr('id');
 				renders.closeBanner(shareId);
 			}
 		}
