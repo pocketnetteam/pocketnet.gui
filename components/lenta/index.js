@@ -3727,12 +3727,21 @@ var lenta = (function(){
 
 			showBanner : function(id) {
 				const currentBanner = el.c.find('#' + id).find('.bannerComment')[0];
-				currentBanner.classList.add('show');
+
+				self.fastTemplate('invitecomment', (rendered) => {
+					currentBanner.innerHTML = rendered;
+					currentBanner.classList.add('show');
+				});
 			},
 
 			closeBanner : function (id) {
 				const currentBanner = el.c.find('#' + id).find('.bannerComment')[0];
+
 				currentBanner.classList.remove('show');
+
+				setTimeout(() => {
+					currentBanner.innerHTML = '';
+				}, 1000);
 			}
 
 
