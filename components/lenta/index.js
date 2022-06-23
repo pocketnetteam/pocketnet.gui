@@ -4670,7 +4670,6 @@ var lenta = (function(){
 				}
 			}
 
-
 			load.shares(function(shares, error){
 
 				if(!el.c) return
