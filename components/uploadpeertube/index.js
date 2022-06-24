@@ -161,16 +161,16 @@ var uploadpeertube = (function () {
 		self.added = {}
 		self.closed = {}
 
-		var add = function(v, name){
+		var add = function(v){
 
 			self.app.settings.set('common', 'lastuploadedvideo', {
 				link : v,
-				name : name || '',
+				name : '',
 				wasclbk : !_.isEmpty(self.added)
 			});
 
 			_.each(self.added, function(a){
-				a(v, name)
+				a(v)
 			})
 
 			if(_.isEmpty(self.added))
@@ -468,7 +468,7 @@ var uploadpeertube = (function () {
 
 						uploading = false
 
-						add(response.videoLink, data.title);
+						add(response.videoLink);
 
 						wndObj.close();
 
