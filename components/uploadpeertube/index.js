@@ -161,16 +161,16 @@ var uploadpeertube = (function () {
 		self.added = {}
 		self.closed = {}
 
-		var add = function(v, name){
+		var add = function(v){
 
 			self.app.settings.set('common', 'lastuploadedvideo', {
 				link : v,
-				name : name || '',
+				name : '',
 				wasclbk : !_.isEmpty(self.added)
 			});
 
 			_.each(self.added, function(a){
-				a(v, name)
+				a(v)
 			})
 
 			if(_.isEmpty(self.added))
@@ -468,7 +468,7 @@ var uploadpeertube = (function () {
 
 						uploading = false
 
-						add(response.videoLink, data.title);
+						add(response.videoLink);
 
 						wndObj.close();
 
@@ -477,7 +477,6 @@ var uploadpeertube = (function () {
 					}, 300);
 				})
 				.catch((e = {}) => {
-
 					console.error(e)
 
 					processing(false)
@@ -485,6 +484,7 @@ var uploadpeertube = (function () {
 					self.app.Logger.error({
 						err: e.text || 'videoUploadError',
 						code: 401,
+						payload: e.toString ? e.toString() : JSON.stringify(e),
 					});
 
 					if (!e.cancel) {
@@ -561,7 +561,7 @@ var uploadpeertube = (function () {
 
 							self.app.Logger.error({
 								err: e.text || 'videoImportError',
-								payload: JSON.stringify(e),
+								payload: e.toString ? e.toString() : JSON.stringify(e),
 								code: 402,
 							});
 
