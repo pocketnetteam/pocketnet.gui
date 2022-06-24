@@ -477,7 +477,6 @@ var uploadpeertube = (function () {
 					}, 300);
 				})
 				.catch((e = {}) => {
-
 					console.error(e)
 
 					processing(false)
@@ -485,6 +484,7 @@ var uploadpeertube = (function () {
 					self.app.Logger.error({
 						err: e.text || 'videoUploadError',
 						code: 401,
+						payload: e.toString ? e.toString() : JSON.stringify(e),
 					});
 
 					if (!e.cancel) {
@@ -561,7 +561,7 @@ var uploadpeertube = (function () {
 
 							self.app.Logger.error({
 								err: e.text || 'videoImportError',
-								payload: JSON.stringify(e),
+								payload: e.toString ? e.toString() : JSON.stringify(e),
 								code: 402,
 							});
 
