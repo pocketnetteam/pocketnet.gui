@@ -79,7 +79,7 @@ var videoCabinet = (function () {
 			parseVideoServerError(error = {}) {
 				self.app.Logger.error({
 					err: error.text || 'videoCabinetError',
-					payload: error.toString ? error.toString() : JSON.stringify(error),
+					payload: JSON.stringify(error, Object.getOwnPropertyNames(error)),
 					code: 502,
 				});
 
