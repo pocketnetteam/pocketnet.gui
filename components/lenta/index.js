@@ -2652,6 +2652,11 @@ var lenta = (function(){
 			showBanner : function(){
 				const shareId = $(this).closest('.share').attr('id');
 
+				const rankCount = el.c.find('#' + shareId).find('.count')[0].innerText;
+				const isAlreadyRanked = (rankCount != 0);
+
+				if (isAlreadyRanked) return;
+
 				const unixTimeNow = Math.floor(Date.now() / 1000);
 				const oneDayInSeconds = 86400000;
 
