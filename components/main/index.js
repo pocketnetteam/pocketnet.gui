@@ -1179,7 +1179,7 @@ var main = (function(){
 
 					self.nav.api.load({
 						open : true,
-						href : 'post?s=' + (_s.v || _s.s),
+						href : 'post?s=' + (_s.v || _s.s) + (_s.commentid ? '&commentid=' + _s.commentid : ''),
 						history : true,
 						replaceState : true
 					})

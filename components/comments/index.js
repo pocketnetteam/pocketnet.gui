@@ -633,9 +633,9 @@ var comments = (function(){
 
 						else
 						{
-							actions.tocomment(reply.answerid)
+							actions.tocomment(reply.parentid || reply.answerid)
 
-							var cel = el.c.find("#" + reply.answerid)
+							var cel = el.c.find("#" + (reply.parentid || reply.answerid))
 
 							cel.addClass('newcommentsn')
 
