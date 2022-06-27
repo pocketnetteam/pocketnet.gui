@@ -243,8 +243,10 @@ ____loclib.lprivatepublic = "¿Le gustaría hacer una suscripción pública o pr
 ____loclib.lprivate = "Privado";
 ____loclib.lpublic = "Público";
 
+//inviteComment
 ____loclib.commentBannerTitle = "Deja un comentario para el autor";
 ____loclib.commentBannerDescription = "Comentar te desbloquea nuevas funciones en Bastyon y te ayuda a encontrar amigos 😀";
+____loclib.dontShowAgain = 'No mostrar más';
 
 //share
 ____loclib.newShare = "Nueva publicación";

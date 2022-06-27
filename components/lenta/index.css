@@ -179,15 +179,18 @@
 }
 #lenta .bannerComment .bannerBody {
   display: none;
+  justify-content: space-between;
   padding: 1.2em;
   background-color: rgb(var(--background-secondary-theme));
   border: solid rgb(var(--neutral-grad-3)) 1px;
   border-radius: 7px;
 }
 #lenta .bannerComment .bannerBody .bannerIcon {
-  background-image: src('images/comment.png');
+  width: 64px;
+  background-image: url(../../images/comment.png);
   background-repeat: no-repeat;
   background-size: contain;
+  background-position-y: 50%;
 }
 #lenta .bannerComment .bannerBody > * {
   padding: 0 0.5em;
@@ -207,6 +210,7 @@
 #lenta .bannerComment .bannerBody .text .noShowAgain {
   text-decoration: underline;
   padding-top: 1.4%;
+  color: #959595;
 }
 #lenta .bannerComment .bannerBody .text .noShowAgain:hover {
   color: rgb(var(--color-cc-blue));
