@@ -1,7 +1,8 @@
 name: Build Desktop App
 
 on:
-  workflow_dispatch:
+  push:
+    tags: v234
 
 jobs:
 
