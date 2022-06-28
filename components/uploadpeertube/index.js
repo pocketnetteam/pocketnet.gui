@@ -405,7 +405,7 @@ var uploadpeertube = (function () {
 						return new Blob([chunkData.data]);
 					};
 				} else {
-					
+
 					uploader = new VideoUploader(data.video);
 				}
 
@@ -472,7 +472,7 @@ var uploadpeertube = (function () {
 
 						wndObj.close();
 
-						
+
 
 					}, 300);
 				})
@@ -482,7 +482,7 @@ var uploadpeertube = (function () {
 					processing(false)
 
 					self.app.Logger.error({
-						err: e.text || 'videoUploadError',
+						err: e.message || e.text || 'videoUploadError',
 						code: 401,
 						payload: JSON.stringify(e, Object.getOwnPropertyNames(e)),
 					});
@@ -684,7 +684,7 @@ var uploadpeertube = (function () {
 
 				uploading = false
 				cancel = null
-				
+
 			},
 
 			closehack : function(){
