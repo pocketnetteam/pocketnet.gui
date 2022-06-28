@@ -190,13 +190,14 @@
         "linux": {
             "target": [
                 {
-                    "target": "AppImage"
+                    "target": "AppImage",
+                    "artifactName": "${productName}.${ext}"
                 },
                 {
                     "target": "deb"
                 }
             ],
-            "artifactName": "${productName}_${platform}_${arch}.${ext}",
+            "artifactName": "${productName}Setup.${ext}",
             "category": "Network",
             "executableName": "bastyon",
             "description": "Bastyon Desktop Browser"
