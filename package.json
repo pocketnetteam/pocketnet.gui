@@ -190,8 +190,7 @@
         "linux": {
             "target": [
                 {
-                    "target": "AppImage",
-                    "artifactName": "${productName}.${ext}"
+                    "target": "AppImage"
                 },
                 {
                     "target": "deb"
