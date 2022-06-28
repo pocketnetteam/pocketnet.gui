@@ -297,8 +297,6 @@ User = function(app, p) {
 						clbk(state);
 					}
 
-						
-
 				})		
 
 				return

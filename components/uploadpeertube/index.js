@@ -205,7 +205,7 @@ var uploadpeertube = (function () {
 				contentAsHTML: true,
 			});
 
-			el.cancelButton.one('click', () => {
+			el.cancelButton.on('click', () => {
 				//clear()
 
 				if(cancel) cancel()
@@ -455,8 +455,11 @@ var uploadpeertube = (function () {
 					return 256 * 4096;
 				};
 
-				initCancelListener(() => uploader.cancel());
-
+				initCancelListener(() => {
+					console.log('initCancelListener')
+					uploader.cancel(); processing(false)
+				});
+				
 				uploader.uploadChunked().then((response) => {
 
 					if(!uploading) return
@@ -477,15 +480,17 @@ var uploadpeertube = (function () {
 					}, 300);
 				})
 				.catch((e = {}) => {
-					console.error(e)
+
 
 					processing(false)
 
-					self.app.Logger.error({
-						err: e.message || e.text || 'videoUploadError',
-						code: 401,
-						payload: JSON.stringify(e, Object.getOwnPropertyNames(e)),
-					});
+					if(!e.cancel){
+						self.app.Logger.error({
+							err: e.message || e.text || 'videoUploadError',
+							code: 401,
+							payload: JSON.stringify(e, Object.getOwnPropertyNames(e)),
+						});
+					}
 
 					if (!e.cancel) {
 						let message = e.text || findResponseError(e) || 'Video upload error';
