@@ -13,9 +13,10 @@
         "start": "electron . --development",
         "start:test": "electron . --development --test",
         "pack": "electron-builder -w --dir --x64",
-        "dist": "electron-builder -w --x64 --ia32",
-        "distl": "electron-builder -l --x64",
-        "distm": "electron-builder -m --x64",
+        "build": "npm i && npm run dev:bastyon",
+        "dist": "electron-builder -w --x64 --ia32 -p never",
+        "distl": "electron-builder -l --x64 -p never",
+        "distm": "electron-builder -m --x64 -p never",
         "dist:arm64": "electron-builder -m --arm64",
         "publish": "build --win --x64 --ia32 -p always",
         "minimize": "node minimize.js -prodaction=true -vendor=30045 -path=/",
@@ -166,13 +167,6 @@
                 ]
             }
         ],
-        "publish": [
-            {
-                "provider": "github",
-                "owner": "pocketnetapp",
-                "repo": "pocketnet.gui"
-            }
-        ],
         "protocols": {
             "name": "bastyon",
             "schemes": [
@@ -190,8 +184,7 @@
         "linux": {
             "target": [
                 {
-                    "target": "AppImage",
-                    "artifactName": "${productName}.${ext}"
+                    "target": "AppImage"
                 },
                 {
                     "target": "deb"
@@ -254,13 +247,6 @@
                 "filter": [
                     "**/"
                 ]
-            }
-        ],
-        "publish": [
-            {
-                "provider": "github",
-                "owner": "pocketnetapp",
-                "repo": "pocketnet.gui"
             }
         ],
         "protocols": {
