@@ -659,7 +659,7 @@ var uploadpeertube = (function () {
 
 								if (r.trial || !(r.balance && r.reputation)) {
 									self.app.Logger.error({
-										err: 'PEERTIBE_AUTH_ERROR',
+										err: 'PEERTIBE_AUTH_ERROR_VIDEOELEMENT',
 										payload: e,
 										code: 501,
 									});
