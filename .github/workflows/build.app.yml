@@ -38,14 +38,9 @@ jobs:
         with:
           node-version: '14'
 
-      - name: Installing rependencies
-        run: npm i
-        
-      - name: Preparing source code
-        run: npm run dev:bastyon
-        
-      - name: Preparing environment
-        run: cp ../../../.app.env ./.env
+      - name: Build/release Electron app
+        uses: samuelmeuli/action-electron-builder@v1
+        with:
         
       - name: Building installer
         run: npm run distm
@@ -55,8 +50,8 @@ jobs:
         with:
           name: MacOS
           path: |
-            .\dist\BastyonSetup.dmg
-            .\dist\latest-mac.yml
+            ./dist/BastyonSetup.dmg
+            ./dist/latest-mac.yml
 
   build_linux:
     runs-on: build.app.linux
@@ -80,6 +75,6 @@ jobs:
         with:
           name: Linux
           path: |
-            .\dist\BastyonSetup.deb
-            .\dist\Bastyon.AppImage
-            .\dist\latest-linux.yml
+            ./dist/BastyonSetup.deb
+            ./dist/Bastyon.AppImage
+            ./dist/latest-linux.yml
