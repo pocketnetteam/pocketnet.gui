@@ -42,10 +42,20 @@ var scanorimportqr = (function(){
 										self.closeContainer()
 									})
 									.catch(err => {
+										self.app.Logger.error({
+											err: err.text || 'scanQrFileError',
+											code: 1001,
+											payload: JSON.stringify(err),
+										});
 										self.closeContainer()
 										sitemessage(self.app.localization.e('filedamaged'))
 									});
 							  }).catch((err) => {
+								  self.app.Logger.error({
+										err: err.text || 'stopScanQrFileError',
+										code: 1001,
+										payload: JSON.stringify(err),
+									});
 								console.log(err);
 							  });
 							}	
@@ -96,6 +106,11 @@ var scanorimportqr = (function(){
                         bitcoin.ECPair.fromPrivateKey(buff)
                         isValidPrivateKey = true
                     }catch(e){
+						self.app.Logger.error({
+							err: e.text || 'fromPrivateKeyError',
+							code: 1001,
+							payload: JSON.stringify(e),
+						});
                         isValidPrivateKey = false
                     }
                     isValidMnemonicPhrase = bitcoin.bip39.validateMnemonickWithLangDetection(decodedText.toLowerCase())
@@ -128,6 +143,11 @@ var scanorimportqr = (function(){
 
 					function onDone(err, status){
 						if (err) {
+							self.app.Logger.error({
+								err: err.text || 'cordovaScannerRunError',
+								code: 1001,
+								payload: JSON.stringify(err),
+							});
 							switch (err.code) {
 								case 1:
 									sitemessage(self.app.localization.e('cameraError1'))
