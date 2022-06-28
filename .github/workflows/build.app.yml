@@ -5,7 +5,7 @@ on:
 
 jobs:
 
-  build.win:
+  build_win:
     runs-on: build.app.win
     steps:
       - uses: actions/checkout@v2
@@ -30,7 +30,7 @@ jobs:
             .\dist\BastyonSetup.exe
             .\dist\latest.yml
 
-  build.macos:
+  build_macos:
     runs-on: build.app.macos
     steps:
       - uses: actions/checkout@v2
@@ -55,7 +55,7 @@ jobs:
             .\dist\BastyonSetup.dmg
             .\dist\latest-mac.yml
 
-  build.linux:
+  build_linux:
     runs-on: build.app.linux
     steps:
       - uses: actions/checkout@v2
