@@ -1,6 +1,8 @@
 name: Build Desktop App
 
-on: push
+on:
+  push:
+    tags: v*.*.*-beta
 
 jobs:
   release:
