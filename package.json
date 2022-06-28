@@ -142,7 +142,6 @@
             "!proxy16/pocketcoind${/*}",
             "!proxy16/downloads${/*}"
         ],
-        "publish": "never",
         "extraFiles": [
             {
                 "from": "proxy16/cert",
