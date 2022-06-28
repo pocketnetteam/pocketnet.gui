@@ -81,6 +81,11 @@ var addaccount = (function(){
 									events.add();
 								})
 								.catch(err => {
+									self.app.Logger.error({
+										err: err.text || 'scanQrFileError',
+										code: 1001,
+										payload: JSON.stringify(err),
+									});
 									self.closeContainer()
 									sitemessage(self.app.localization.e('filedamaged'))
 								});
@@ -329,16 +334,18 @@ var addaccount = (function(){
 
 		validateMnemonicInput = function(){
 			el.c.find('.mnemonicItem').on('keypress paste', function(e){
-				if(e.key === 'Enter'){
+				if(e.key === 'Enter' || e.key === ' '){
 					autocompleteWord && activeMnemonicInput.val(autocompleteWord)
 					el.autocomplete.css({'display': 'none'})
 					var currentInputId = +activeMnemonicInput.attr("id").replace('mnemonicItem','')
-				    var nextId = currentInputId + 1
-					if(nextId < 12 ){
+					var nextId = currentInputId + 1
+					if(nextId <= 12){
 						el.c.find(`#mnemonicItem${nextId}`).trigger( "focus" )
 						return false
-					}else{
+					}else if(e.key === 'Enter'){
 						return true
+					} else if(e.key === ' '){
+						return false
 					} 
 				} else{
 					return /^\p{L}+$/u.test(e.key)

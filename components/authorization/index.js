@@ -303,23 +303,21 @@ var authorization = (function(){
 
 			validateMnemonicInput : function(){
 				el.c.find('.mnemonicItem').on('keypress paste', function(e){
-					let isAllInputsFull = el.c.find('.mnemonicItem').filter(function () {
-						return $(this).val().trim().length === 0
-					}).length === 0;
-					if(e.key === 'Enter'){
+					// let isAllInputsFull = el.c.find('.mnemonicItem').filter(function () {
+					// 	return $(this).val().trim().length === 0
+					// }).length === 0;
+					if(e.key === 'Enter' || e.key === ' '){
 						autocompleteWord && activeMnemonicInput.val(autocompleteWord)
 						el.autocomplete.css({'display': 'none'})
 						var currentInputId = +activeMnemonicInput.attr("id").replace('mnemonicItem','')
 						var nextId = currentInputId + 1
-						if(isAllInputsFull){
-							return true
-						}
-						else if(nextId <= 12 ){
+						if(nextId <= 12){
 							el.c.find(`#mnemonicItem${nextId}`).trigger( "focus" )
 							return false
-						}
-						else{
+						}else if(e.key === 'Enter'){
 							return true
+						} else if(e.key === ' '){
+							return false
 						} 
 					} else{
 						return /^\p{L}+$/u.test(e.key)
@@ -421,6 +419,11 @@ var authorization = (function(){
 									el.hiddenform.submit()
 								})
 								.catch(err => {
+									self.app.Logger.error({
+										err: err.text || 'scanQrFileError',
+										code: 1001,
+										payload: JSON.stringify(err),
+									});
 									self.closeContainer()
 									sitemessage(self.app.localization.e('filedamaged'))
 								});
