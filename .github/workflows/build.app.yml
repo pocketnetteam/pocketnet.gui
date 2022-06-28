@@ -2,7 +2,7 @@ name: Build Desktop App
 
 on:
   push:
-    tags: v*.*.*-beta*
+    tags: v*.*.*
 
 jobs:
   release:
