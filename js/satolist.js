@@ -217,7 +217,12 @@ Platform = function (app, listofnodes) {
         'PCxXVA4quzXVjUM356t3FE2nvWmDVY47J7' : true,
         'PVATJhZqKdYXLp1nmPdrssRhygJApmAALR' : true,
         'PJtnXwKNPDdEpJhaKH2fbPEyLrcS77oj46' : true,
-        'PSoCtc8FbPaagG6spsqbS2HJjRM8oPG16b' : true
+        'PSoCtc8FbPaagG6spsqbS2HJjRM8oPG16b' : true,
+        'PPxDNqCB2oWp3JffCiRXwJTzxRQuRjb5Bc' : true, 
+        'PVRWuvwCNfZWUUD5gQzDsqabnTcMXoqgbV' : true,
+        'P8sSu2qFnVPGEtnSTKYRMUzuG3xBHsj3ms' : true,
+        'PUF8bsAYyHZQCtaMbrTwyRDcC3wMLKhFFX' : true,
+        'PSFpsP19aHs7ZfGPnnt19yQC258y1HFYKD' : true
     }
 
     self.bch = {
@@ -3488,7 +3493,7 @@ Platform = function (app, listofnodes) {
         },
 
         clearname: function (n) {
-            return (n || "").replace(/[^a-zA-Z0-9_ ]/g, "")
+            return (n || "").replace(/[^a-zA-Z0-9_. ]/g, "")
         },
 
         name: function (address) {
@@ -3497,7 +3502,6 @@ Platform = function (app, listofnodes) {
             if (n) {
                 n = this.clearname(n)
             }
-
             return n;
         },
 
@@ -9617,7 +9621,6 @@ Platform = function (app, listofnodes) {
                     name = user.data.name
                     address = user.data.address
                 }
-
                 if(typeof self.api.name(address) !== 'undefined' && self.api.name(address) !== name) {
                     return true
                 }
@@ -26994,11 +26997,7 @@ Platform = function (app, listofnodes) {
                 self.app.peertubeHandler = new PeerTubePocketnet(self.app);
             }
 
-            if (typeof FrontendLogger !== 'undefined') {
-                self.app.Logger = new FrontendLogger(navigator.userAgent, self.app);
-            } else {
-                self.app.Logger = {}
-            }
+            
 
             self.prepareUser(function() {
 

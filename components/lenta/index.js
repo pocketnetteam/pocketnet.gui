@@ -993,11 +993,12 @@ var lenta = (function(){
 
 			},
 
-			openPost : function(id, clbk, video, _share){
+			openPost : function(id, clbk, video, _share, openWnd){
 				var share = self.app.platform.sdk.node.shares.storage.trx[id] || _share;
 
+				console.log("openWnd?", openWnd)
 
-				if(essenseData.openPostInWindowMobile || (share && share.itisarticle())){
+				if(openWnd || essenseData.openPostInWindowMobile || (share && share.itisarticle())){
 
 					self.app.user.isState(function(state){
 
@@ -1065,13 +1066,14 @@ var lenta = (function(){
 				}
 				else
 				{
-					if(!shareInitedMap[id]) return
+					if (!shareInitedMap[id]) return
 					if (shareInitingMap[id]) return
 
 					var share = self.app.platform.sdk.node.shares.storage.trx[id];
 
 						actions.destroyShare(share)
 
+						
 					renders.share(share, function(){
 						if(clbk) clbk()
 					}, true)
@@ -4670,7 +4672,6 @@ var lenta = (function(){
 				}
 			}
 
-
 			load.shares(function(shares, error){
 
 				if(!el.c) return
@@ -4716,7 +4717,8 @@ var lenta = (function(){
 									setTimeout(function(){
 										actions.openPost(p.s, function(){
 											actions.scrollToPost(p.s)
-										})
+										}, null, null, p.commentid)
+										
 									}, 500)
 
 								}

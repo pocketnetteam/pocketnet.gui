@@ -109,6 +109,7 @@ const publics = {
     checkstringtype: true,
     getstatistic: true,
     getinfo : true,
+    getcoininfo : true,
     getpeerinfo : true,
     txunspent: true,
     estimatefee: true,
@@ -467,6 +468,7 @@ RpcClient.callspec = {
     // BlockExplorer
     getblocktransactions: 'str int int',
     getaddressinfo: 'str',
+    getcoininfo: 'int',
     getaddresstransactions: 'str int int int',
     gettransactions: 'obj',
     getblocks: 'int int int',

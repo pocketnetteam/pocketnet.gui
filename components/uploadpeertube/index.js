@@ -161,16 +161,16 @@ var uploadpeertube = (function () {
 		self.added = {}
 		self.closed = {}
 
-		var add = function(v, name){
+		var add = function(v){
 
 			self.app.settings.set('common', 'lastuploadedvideo', {
 				link : v,
-				name : name || '',
+				name : '',
 				wasclbk : !_.isEmpty(self.added)
 			});
 
 			_.each(self.added, function(a){
-				a(v, name)
+				a(v)
 			})
 
 			if(_.isEmpty(self.added))
@@ -468,7 +468,7 @@ var uploadpeertube = (function () {
 
 						uploading = false
 
-						add(response.videoLink, data.title);
+						add(response.videoLink);
 
 						wndObj.close();
 
@@ -477,7 +477,6 @@ var uploadpeertube = (function () {
 					}, 300);
 				})
 				.catch((e = {}) => {
-
 					console.error(e)
 
 					processing(false)
@@ -485,6 +484,7 @@ var uploadpeertube = (function () {
 					self.app.Logger.error({
 						err: e.text || 'videoUploadError',
 						code: 401,
+						payload: JSON.stringify(e, Object.getOwnPropertyNames(e)),
 					});
 
 					if (!e.cancel) {
@@ -561,7 +561,7 @@ var uploadpeertube = (function () {
 
 							self.app.Logger.error({
 								err: e.text || 'videoImportError',
-								payload: JSON.stringify(e),
+								payload: JSON.stringify(e, Object.getOwnPropertyNames(e)),
 								code: 402,
 							});
 
@@ -641,8 +641,6 @@ var uploadpeertube = (function () {
 					.catch((e = {}) => {
 						console.log("ERRR", e)
 
-						const errorBody = e.response || {};
-
 						self.app.peertubeHandler.clear()
 
 						data.e = e;
@@ -652,17 +650,17 @@ var uploadpeertube = (function () {
 							{ template: 'video' },
 							function (r) {
 
-								if (r.trial || !(r.balance && r.reputation)) {
-									self.app.Logger.error({
-										err: deep(errorBody, 'data.errors.name') || 'FRONTEND_DEFAULT_ERROR',
-										payload: JSON.stringify(deep(errorBody, 'data.errors') || {}),
-										code: errorBody.status || 501,
-									});
-								}
-
 								data.increase = r;
 
 								clbk(data);
+
+								if (r.trial || !(r.balance && r.reputation)) {
+									self.app.Logger.error({
+										err: 'PEERTIBE_AUTH_ERROR',
+										payload: JSON.stringify(e),
+										code: 501,
+									});
+								}
 							},
 						);
 					})
