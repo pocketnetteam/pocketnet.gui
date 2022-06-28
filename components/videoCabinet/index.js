@@ -1514,6 +1514,7 @@ var videoCabinet = (function () {
 						);
 					});
 
+				const cabinetLoadingStartTime = performance.now();
 				//getting and rendering videos
 				actions
 					.getHosts()
@@ -1535,7 +1536,22 @@ var videoCabinet = (function () {
 						return Promise.allSettled(serverPromises);
 					})
 					.then(() => actions.getFullPageInfo(videoPortionElement))
-					.catch(() => actions.getFullPageInfo(videoPortionElement));
+					.catch(() => actions.getFullPageInfo(videoPortionElement))
+					.finally(() => {
+						debugger;
+						const loadingTime = performance.now() - cabinetLoadingStartTime;
+
+						if (loadingTime > 10000) {
+							self.app.Logger.error({
+								err: 'LONG_CABINET_LOADING',
+								payload: {
+									loadingTime,
+								},
+								code: 485,
+								level: 'warning',
+							});
+						}
+					});
 
 				//getting and rendering video quota information
 				actions
