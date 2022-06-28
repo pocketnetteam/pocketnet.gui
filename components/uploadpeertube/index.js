@@ -484,13 +484,11 @@ var uploadpeertube = (function () {
 
 					processing(false)
 
-					if(!e.cancel){
-						self.app.Logger.error({
-							err: e.message || e.text || 'videoUploadError',
-							code: 401,
-							payload: JSON.stringify(e, Object.getOwnPropertyNames(e)),
-						});
-					}
+					self.app.Logger.error({
+						err: e.text || 'videoUploadError',
+						code: 401,
+						payload: e,
+					});
 
 					if (!e.cancel) {
 						let message = e.text || findResponseError(e) || 'Video upload error';
@@ -566,7 +564,7 @@ var uploadpeertube = (function () {
 
 							self.app.Logger.error({
 								err: e.text || 'videoImportError',
-								payload: JSON.stringify(e, Object.getOwnPropertyNames(e)),
+								payload: e,
 								code: 402,
 							});
 
@@ -662,7 +660,7 @@ var uploadpeertube = (function () {
 								if (r.trial || !(r.balance && r.reputation)) {
 									self.app.Logger.error({
 										err: 'PEERTIBE_AUTH_ERROR',
-										payload: JSON.stringify(e),
+										payload: e,
 										code: 501,
 									});
 								}

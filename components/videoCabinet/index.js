@@ -79,7 +79,7 @@ var videoCabinet = (function () {
 			parseVideoServerError(error = {}) {
 				self.app.Logger.error({
 					err: error.text || 'videoCabinetError',
-					payload: JSON.stringify(error, Object.getOwnPropertyNames(error)),
+					payload: error,
 					code: 502,
 				});
 
@@ -1356,7 +1356,7 @@ var videoCabinet = (function () {
 								if (r.trial || !(r.balance && r.reputation)) {
 									self.app.Logger.error({
 										err: 'PEERTIBE_AUTH_ERROR',
-										payload: JSON.stringify(err),
+										payload: err,
 										code: 501,
 									});
 								}

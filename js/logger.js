@@ -114,7 +114,7 @@ class FrontendLogger {
     try {
       formattedError = JSON.stringify(err, Object.getOwnPropertyNames(err));
     } catch (error) {
-      formattedError = `Unable to stringify received error. Report: ${error}`;
+      formattedError = `{ "error": "Unable to stringify received error. Report: ${error}", "type": "ERROR_PROCESSING_FAILED"}`;
     }
 
     const parametersOrder = [
