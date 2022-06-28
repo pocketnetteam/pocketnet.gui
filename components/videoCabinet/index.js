@@ -1538,7 +1538,6 @@ var videoCabinet = (function () {
 					.then(() => actions.getFullPageInfo(videoPortionElement))
 					.catch(() => actions.getFullPageInfo(videoPortionElement))
 					.finally(() => {
-						debugger;
 						const loadingTime = performance.now() - cabinetLoadingStartTime;
 
 						if (loadingTime > 10000) {
