@@ -64,8 +64,11 @@ class VideoUploader {
       let loadResult;
 
       try {
-        loadResult = await this.static.loadChunk(this, chunkData, chunkPos);
+        loadResult = await this.static.loadChunkRes(this, chunkData, chunkPos);
       } catch(err) {
+
+       
+
         if (err.reason === 'not_found') {
           if (this.canceled) {
             throw {
@@ -79,6 +82,10 @@ class VideoUploader {
 
           return await this.uploadChunked();
         } else {
+
+
+
+
           this.setResumableStorage(videoUniqueId, {
             uploadHost: app.peertubeHandler.active(),
             uploadId: this.uploadId,
@@ -204,6 +211,26 @@ class VideoUploader {
 
     return Promise.resolve(response.uploadId);
   }
+
+  static async loadChunkRes(self, chunk, chunkPos) {
+
+    console.log("THIS", self)
+
+    var r = null
+    try{
+      r = await self.static.loadChunk(self, chunk, chunkPos);
+    }
+    catch(e) {
+      console.log(e, e.reason)
+      if(e && e.reason == "resumable_chunk_request_failed"){
+        console.log("RECU")
+        await waitPromise(20000)
+        return self.static.loadChunkRes(self, chunk, chunkPos);
+      }
+    }
+
+    return r
+  } 
 
   static async loadChunk(self, chunk, chunkPos) {
     const data = {};

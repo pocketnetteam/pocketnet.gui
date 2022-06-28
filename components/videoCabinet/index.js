@@ -1345,12 +1345,21 @@ var videoCabinet = (function () {
 						self.app.platform.sdk.ustate.canincrease(
 							{ template: 'video' },
 							function (r) {
+
 								clbk({
 									hasAccess: false,
 									inLentaWindow: ed.inLentaWindow,
 									scrollElementName: ed.scrollElementName || '',
 									increase: r,
 								});
+
+								if (r.trial || !(r.balance && r.reputation)) {
+									self.app.Logger.error({
+										err: 'PEERTIBE_AUTH_ERROR',
+										payload: JSON.stringify(err),
+										code: 501,
+									});
+								}
 							},
 						);
 					});

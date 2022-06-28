@@ -26997,11 +26997,7 @@ Platform = function (app, listofnodes) {
                 self.app.peertubeHandler = new PeerTubePocketnet(self.app);
             }
 
-            if (typeof FrontendLogger !== 'undefined') {
-                self.app.Logger = new FrontendLogger(navigator.userAgent, self.app);
-            } else {
-                self.app.Logger = {}
-            }
+            
 
             self.prepareUser(function() {
 

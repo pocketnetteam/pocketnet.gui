@@ -11420,7 +11420,13 @@ if(typeof window != 'undefined'){
 }
 
 
-
+waitPromise = function(time){
+	return new Promise((resolve) => {
+		setTimeout(() => {
+			resolve()
+		}, time)
+	})
+}
 
 
 errortostring = function(error){

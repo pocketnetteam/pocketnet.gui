@@ -718,13 +718,13 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				  },
 				],
 				8: [
-				  /*{
+				  {
 					host: 'pocketnetpeertube8.nohost.me',
 					cantuploading: true,
 					old : true,
 
 					ip: '192.236.161.131',
-				  },*/
+				  },
 				  {
 					host: 'pocketnetpeertube9.nohost.me',
 					cantuploading: true,
