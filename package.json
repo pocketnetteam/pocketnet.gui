@@ -166,13 +166,6 @@
                 ]
             }
         ],
-        "publish": [
-            {
-                "provider": "github",
-                "owner": "pocketnetapp",
-                "repo": "pocketnet.gui"
-            }
-        ],
         "protocols": {
             "name": "bastyon",
             "schemes": [
@@ -253,13 +246,6 @@
                 "filter": [
                     "**/"
                 ]
-            }
-        ],
-        "publish": [
-            {
-                "provider": "github",
-                "owner": "pocketnetapp",
-                "repo": "pocketnet.gui"
             }
         ],
         "protocols": {
