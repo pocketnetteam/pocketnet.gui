@@ -19,8 +19,8 @@ jobs:
       - name: Preparing source code
         run: npm run dev:bastyon
         
-        - name: Building installer
-          run: npm run dist
+      - name: Building installer
+        run: npm run dist
 
       - name: Upload artifact
         uses: actions/upload-artifact@v2
@@ -44,8 +44,8 @@ jobs:
       - name: Preparing source code
         run: npm run dev:bastyon
         
-        - name: Building installer
-          run: npm run distm
+      - name: Building installer
+        run: npm run distm
 
       - name: Upload artifact
         uses: actions/upload-artifact@v2
@@ -69,8 +69,8 @@ jobs:
       - name: Preparing source code
         run: npm run dev:bastyon
         
-        - name: Building installer
-          run: npm run distl
+      - name: Building installer
+        run: npm run distl
 
       - name: Upload artifact
         uses: actions/upload-artifact@v2
