@@ -750,8 +750,28 @@ PeerTubePocketnet = function (app) {
 									case 200: return handleResume();
 									case 201: return handleCreated();
 
-									case 413: throw Error('max_file_size_reached or quota_reached'); // FIXME: Do separation
-									case 415: throw Error('Video type unsupported');
+									case 413:
+										const err413 = Error('Error 413: Video was rejected by Peertube server');
+
+										err413.video = {
+											size: parameters.video.size,
+											type: parameters.video.type,
+										};
+
+										return Promise.reject(err413);
+
+									case 415:
+										const err415 = Error('Error 415: Unsupported video type');
+
+										err415.video = {
+											type: parameters.video.type,
+										};
+
+										return Promise.reject(err415);
+
+									default: return Promise.reject(
+										Error(`Error ${r.status}: Undocumented Peertube error`)
+									);
 								}
 							})
 							.catch((e) => {
