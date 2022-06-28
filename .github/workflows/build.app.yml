@@ -44,6 +44,9 @@ jobs:
       - name: Preparing source code
         run: npm run dev:bastyon
         
+      - name: Preparing environment
+        run: cp ../../../.app.env ./.env
+        
       - name: Building installer
         run: npm run distm
 
