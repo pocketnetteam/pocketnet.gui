@@ -644,6 +644,8 @@ var uploadpeertube = (function () {
 					.catch((e = {}) => {
 						console.log("ERRR", e)
 
+						if(e.response) e = e.response
+
 						self.app.peertubeHandler.clear()
 
 						data.e = e;
