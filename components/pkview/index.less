@@ -1,8 +1,72 @@
 @import "../../css/__cssvar";
 
 #pkview{
+    .approveMnemonic,
+    .qrCode{
+        position: relative;
+        display: none;
+        flex-direction: column;
+        justify-content: center;
+        & canvas{
+            align-self: center;
+        }
+        .approveMnemonicNote{
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        .shuffledMnemonicWrapper,
+        .randomWordsWrapper{
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            margin-bottom: 20px;
+            justify-content: start;
+            align-content: start;
+            .shuffledMnemonicItem{
+                width: 32%;
+                height: 40px;
+                background: @color-blue-mlight;
+                border-radius: 6px;
+                color: @color-white;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 1em;
+                &:hover {
+                    cursor: pointer;
+                    background: @color-block;
+                    color: @color-white;
+                }
+            }
+        }
+        .randomWordsWrapper{
+            height: 194px;
+            padding: 10px;
+            margin-bottom: 2em;
+            border: 1px dashed @color-gray;
+            border-radius: 8px;
+        }
+        .approveMnemonicButtons{
+            display: flex;
+            justify-content: space-between;
+        }
+        .submitButton{
+            &:disabled,
+            & [disabled]{
+                opacity:.5;
+                cursor:default;
+                pointer-events: none;
+            }
+        }
+        .hide {
+            background: @color-dark-mlight !important;
+            color: @color-dark-mlight !important;
+            pointer-events: none;
+            text-indent: -9999px;
+        }
+    }
     
-
     .buttonWrapper{
         padding : 2 * @rhythm;
         text-align: center;
@@ -198,7 +262,11 @@
     .wnd.pkviewwnd{
        
         #pkview{
-
+            .approveMnemonic{
+                padding-bottom: 10px;
+                padding-top: 5px;
+            }
+            
             .keywrapper{
                 padding-left: @rhythm;
                 padding-right: @rhythm;

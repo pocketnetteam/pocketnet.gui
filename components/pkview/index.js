@@ -10,8 +10,11 @@ var pkview = (function(){
 
 		var el, current = {}, ed = {}
 
+		var checkedMnemonic = []
+		var base64
+
 		var actions = {
-			saveqr : function(base64, clbk){
+			saveqr : function(clbk){
 
 				var name = 'pkey_'+self.app.platform.currentTime()
 
@@ -42,19 +45,7 @@ var pkview = (function(){
 		}
 
 		var renders = {
-			qrcode : function(el, m){
-				
-
-				var qrcode = new QRCode(el[0], {
-					text: m,
-					width: 256,
-					height: 256
-				});
-
-				return qrcode
-
-			},
-
+			
 			mnemonic : function(percent){
 
 				var s = '';
@@ -133,17 +124,6 @@ var pkview = (function(){
 						hiddenform.find('button').click();
 					});
 
-					/*var container = p.el.find('.qrcode');
-					var qr = renders.qrcode(container, current.mk)
-
-					var base64 = qr._oDrawing._elCanvas.toDataURL("image/png")*/
-
-
-					/*container.attr('save', name + '.png')
-					container.attr('src', base64)
-
-					self.app.mobile.saveImages.init(container)*/
-
 					var hiddenform = p.el.find('#loginform')
 
 						hiddenform.on('submit', function(event) {
@@ -169,15 +149,21 @@ var pkview = (function(){
 						sitemessage(self.app.localization.e('successfullycopied'))
 					})
 
-					/*p.el.find('.save').on('click', function(){
-
-						actions.saveqr(base64, function(){
-							successCheck()
-						})
-
-					
-
-					})*/ 
+					p.el.find('.save').on('click', function(){
+						el.c.find(".qrCode")
+						.html(`<canvas id="canvas"></canvas><div class="approveMnemonicButtons"><button class="button ghost backButton"><span>${self.app.localization.e('back')}</span></button><button class="button orange qrSubmitButton">${self.app.localization.e('download')}</button></div>`)
+						QRCode.toCanvas(document.getElementById('canvas'), current.mnemonicKey, { width: 256 }, function (error) {
+							if (error) console.error(error)
+						  })
+						QRCode.toDataURL(current.mnemonicKey, { errorCorrectionLevel: 'H' }, function (err, url) {
+							base64 = url
+						  })
+						back()
+						downLoadQr()
+						el.c.find(".stepContent").css({"display": "none"})
+						el.c.find('.dontshowagain').css({"display": "none"})
+						el.c.find(".qrCode").css({"display": "flex"})
+					}) 
 
 					
 
@@ -190,6 +176,92 @@ var pkview = (function(){
 				if (el && el.c)
 					el.c.find('.dontshowagain').addClass('active')
 			}
+		}
+
+		shuffleArray = function(array){
+			const words = [...array];
+			const shuffled = [];
+		  
+			var n = words.length;
+		  
+			while (n) {
+			  n -= 1;
+			  const i = Math.floor(Math.random() * n);
+			  const [word] = words.splice(i, 1);
+		  
+			  shuffled.push(word);
+			}
+		  
+			return shuffled;
+		}
+
+		back = function(){
+			el.c.find(".backButton").on('click', function(e){
+				checkedMnemonic = []
+				el.c.find(".stepContent").css({"display": "block"})
+				el.c.find('.dontshowagain').css({"display": "block"})
+				el.c.find(".approveMnemonic").html('')
+				el.c.find(".qrCode").html('')
+			})
+		}
+		renderShuffledMnemonic = function(){
+			el.c.find(".approveMnemonic")
+			.html(`<span class="approveMnemonicNote">${self.app.localization.e('mnemonicnote')}</span><div class="randomWordsWrapper"></div><div class="shuffledMnemonicWrapper"></div><div class="approveMnemonicButtons"><button class="button ghost backButton"><span>${self.app.localization.e('back')}</span></button><button class="button orange submitButton" disabled>${self.app.localization.e('confirm')}</button></div>`)
+			var shuffledMnemonic = shuffleArray(current.mnemonicContent)
+			var container = el.c.find(".shuffledMnemonicWrapper")
+			for(var i = 0; i < shuffledMnemonic.length; i++) {
+				$(`<div class="shuffledMnemonicItem">${shuffledMnemonic[i]}</div>`).appendTo(container);
+			}
+		}
+
+		removeFromSelected = function(){
+			el.c.find(".randomWordsWrapper > .shuffledMnemonicItem").on('click', function(e){
+				e.stopPropagation();
+				e.stopImmediatePropagation();
+				var value = $(this).text()
+				checkedMnemonic = checkedMnemonic.filter(
+					(el) => value !== el,
+				  );
+				  var shuffledMnemonicItem = el.c.find(".shuffledMnemonicWrapper > .shuffledMnemonicItem").filter(function() {
+					return $(this).text() === value;
+				})
+				shuffledMnemonicItem.removeClass('hide')
+				$(this).remove()
+				checkedMnemonic.length !== 12 && el.c.find(".submitButton").prop("disabled", true)
+			})
+		}
+
+		mnemonicItemClickHandler = function(){
+			el.c.find(".shuffledMnemonicItem").on('click', function(){
+				var container = el.c.find(".randomWordsWrapper")
+				if(checkedMnemonic.length < 12){
+					checkedMnemonic.push($(this).text())
+					$(`<div class="shuffledMnemonicItem">${$(this).text()}</div>`).appendTo(container)
+					$(this).addClass('hide')
+					checkedMnemonic.length === 12 && el.c.find(".submitButton").prop("disabled", false)
+				}
+				removeFromSelected()
+			})
+		}
+
+		validateMnemonic = function(){
+			el.c.find(".submitButton").on('click', function(){
+				if(checkedMnemonic.length === 12){
+					if(checkedMnemonic.join(' ') === current.mnemonicKey){
+						self.closeContainer()
+				 		self.app.platform.sdk.registrations.donotshowprivate()
+					}else{
+						sitemessage(self.app.localization.e('mnemonicerror'))
+					}
+				}
+			})
+		}
+		downLoadQr = function(){
+			el.c.find(".qrSubmitButton").on('click', function(){
+				actions.saveqr(function(){
+						successCheck()
+					})
+			})
 		}
 
 		var state = {
@@ -217,10 +289,22 @@ var pkview = (function(){
 			})
 			
 			el.c.find('.dontshowagain').on('click', function(){
+				if(current.mnemonicContent.length === 12){
+					el.c.find(".stepContent").css({"display": "none"})
+					el.c.find(".approveMnemonic").css({"display": "flex"})
+					renderShuffledMnemonic()
+					back()
+					mnemonicItemClickHandler()
+					validateMnemonic()
+					$(this).css({"display": "none"})
+				}else{
+					self.closeContainer()
+					self.app.platform.sdk.registrations.donotshowprivate()
+				}
 
-				self.closeContainer()
+				
 
-				self.app.platform.sdk.registrations.donotshowprivate()
+				
 
 				/**if(isMobile()){
 
@@ -250,7 +334,7 @@ var pkview = (function(){
 				
 					if(m){						
 
-						if(!bitcoin.bip39.validateMnemonic(m)){
+						if(!bitcoin.bip39.validateMnemonickWithLangDetection(m)){
 
 							current.mk = m;
 

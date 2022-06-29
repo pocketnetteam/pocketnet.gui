@@ -1,3 +1,59 @@
+.qrmenu .qrmenuitem {
+  cursor: pointer;
+  height: 80px;
+}
+.qrmenu .qrmenuitem .fileUploader .elContent {
+  display: flex;
+}
+.qrmenu .qrmenuitem .fileUploader .elContent .icon {
+  width: 30px;
+  padding: 2em 0px 2em 1.5em;
+}
+.qrmenu .qrmenuitem .fileUploader .elContent .label {
+  padding: 2em 0em 2em 1em;
+}
+.qrmenu .qrmenuitem > div {
+  padding: 1em;
+  border-bottom: 1px solid rgb(var(--neutral-grad-1));
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+.qrmenu .qrmenuitem > div span {
+  font-size: 0.9em;
+}
+.qrmenu .qrmenuitem > div.icon {
+  width: 30px;
+  text-align: center;
+}
+.qrmenu .qrmenuitem:nth-last-child(1) > div {
+  border-bottom: 0;
+}
+.qrmenu .qrmenuitem:hover > div {
+  color: rgb(var(--color-text-ac));
+  border-color: rgb(var(--color-text-ac));
+}
+.qrmenu .qrmenuitem.block:hover > div,
+.qrmenu .qrmenuitem.complain:hover > div {
+  color: rgb(var(--color-text-ac-2));
+  border-color: rgb(var(--color-text-ac-2));
+}
+#authorization #mnemonicInput {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: 10px;
+}
+#authorization .inputWrapperKey {
+  display: flex;
+  align-items: center;
+}
+#authorization .inputWrapperKey .qrcode {
+  cursor: pointer;
+}
+#authorization .icon i {
+  color: rgb(var(--color-txt-ac));
+}
 #authorization #registration .caption {
   display: none;
 }
@@ -42,7 +98,8 @@
   position: relative;
 }
 #authorization .inputTable > div.actionButtonsWrapper {
-  width: 190px;
+  width: 80px;
+  display: none;
   text-align: center;
 }
 #authorization .inputTable > div.actionButtonsWrapper .icon {
@@ -84,7 +141,7 @@
   font-weight: 100;
   background: rgb(var(--background-total-theme));
   color: rgb(var(--color-txt-ac));
-  border: 1px solid transparent;
+  border: 1px solid #3c4146;
   -moz-transition: 0.4s;
   -o-transition: 0.4s;
   -webkit-transition: 0.4s;
@@ -94,6 +151,14 @@
   border: 1px solid rgb(var(--neutral-grad-1));
   background: rgb(var(--background-total-theme));
   color: rgb(var(--text-color));
+}
+#authorization .sitelogin .form .item .mnemonicItem {
+  margin-bottom: 0.3em;
+  width: 16%;
+  font-size: 1.4em;
+  padding: 0.5em;
+  border-color: transparent;
+  background-color: rgb(var(--neutral-grad-0));
 }
 #authorization .sitelogin .form .item .validationFail {
   color: rgb(var(--color-bad));
@@ -195,6 +260,25 @@
 			}
 		}*/
   }
+  #authorization .inputWrapperKey {
+    flex-direction: column;
+  }
+  #authorization #mnemonicInput {
+    width: 90%;
+    margin-right: 0px;
+  }
+  #authorization #mnemonicInput .mnemonicItem {
+    margin-bottom: 0.3em;
+    width: 49%;
+    font-size: 1em;
+    padding: 5px !important;
+    border-color: transparent;
+    border-radius: 6px;
+    background-color: rgb(var(--neutral-grad-0));
+  }
+  #authorization #mnemonicInput .mnemonicItem:focus {
+    border-color: rgb(var(--neutral-grad-1));
+  }
   #authorization .work {
     padding-top: 1em;
     padding-bottom: 1em;
@@ -232,10 +316,8 @@
     display: block;
   }
   #authorization .keytable > div.actionButtonsWrapper {
-    /*width: 50%;*/
-    width: 80px;
     text-align: center;
-    display: block;
+    display: none;
     position: absolute;
     right: 0;
     bottom: 0;
@@ -251,6 +333,9 @@
   #authorization .keytable > div input {
     border-radius: 3px;
     padding-right: 80px !important;
+  }
+  #authorization .keytable > div input[type="file"] {
+    padding: 0 !important;
   }
   .wnd.authwindow #authorization .topCaption {
     padding-left: 1em;
@@ -275,4 +360,10 @@
   .wnd.authwindow #authorization button.toRegistration {
     min-width: 190px;
   }
+}
+.errorClass {
+  border-color: #F41A4D !important;
+}
+.loginValue {
+  display: none;
 }
