@@ -4,6 +4,7 @@
 ![last_commit](https://img.shields.io/github/last-commit/pocketnetteam/pocketnet.gui)
 ![release_date](https://img.shields.io/github/release-date/pocketnetteam/pocketnet.gui)
 ![version](https://img.shields.io/github/v/release/pocketnetteam/pocketnet.gui)
+[![Auto Tests](https://github.com/pocketnetteam/pocketnet.gui/actions/workflows/autotests.yml/badge.svg)](https://github.com/pocketnetteam/pocketnet.gui/actions/workflows/autotests.yml)
 
 ![GitHub release Win](https://img.shields.io/github/downloads/pocketnetteam/pocketnet.gui/latest/BastyonSetup.exe)
 ![GitHub release Linux MacOS](https://img.shields.io/github/downloads/pocketnetteam/pocketnet.gui/latest/BastyonSetup.dmg)
@@ -11,8 +12,8 @@
 ![GitHub release Linux AppImage](https://img.shields.io/github/downloads/pocketnetteam/pocketnet.gui/latest/Bastyon.AppImage)
 ![GitHub release Android APK](https://img.shields.io/github/downloads/pocketnetteam/pocketnet.gui/latest/Bastyon.apk)
 
-[![Deploy Proxy](https://github.com/pocketnetteam/pocketnet.gui/actions/workflows/docker_registry.yml/badge.svg)](https://github.com/pocketnetteam/pocketnet.gui/actions/workflows/docker_registry.yml)
-[![Auto Tests](https://github.com/pocketnetteam/pocketnet.gui/actions/workflows/autotests.yml/badge.svg)](https://github.com/pocketnetteam/pocketnet.gui/actions/workflows/autotests.yml)
+[![Deploy Proxy](https://github.com/pocketnetteam/pocketnet.gui/actions/workflows/deploy.proxy.yml/badge.svg)](https://github.com/pocketnetteam/pocketnet.gui/actions/workflows/deploy.proxy.yml)
+[![Deploy Web](https://github.com/pocketnetteam/pocketnet.gui/actions/workflows/deploy.web.yml/badge.svg)](https://github.com/pocketnetteam/pocketnet.gui/actions/workflows/deploy.web.yml)
 
 # What is Bastyon?
 

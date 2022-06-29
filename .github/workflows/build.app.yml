@@ -1,80 +1,31 @@
 name: Build Desktop App
 
 on:
-  workflow_dispatch:
+  push:
+    tags: v*.*.*
 
 jobs:
+  release:
+    runs-on: ${{ matrix.os }}
 
-  build_win:
-    runs-on: build.app.win
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest, windows-latest]
+
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-        with:
-          node-version: '14'
+      - name: Check out Git repository
+        uses: actions/checkout@v1
 
-      - name: Installing rependencies
-        run: npm i
-        
-      - name: Preparing source code
-        run: npm run dev:bastyon
-        
-      - name: Building installer
-        run: npm run dist
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v2
+      - name: Install Node.js, NPM and Yarn
+        uses: actions/setup-node@v1
         with:
-          name: Windows
-          path: |
-            .\dist\BastyonSetup.exe
-            .\dist\latest.yml
-
-  build_macos:
-    runs-on: build.app.macos
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-        with:
-          node-version: '14'
+          node-version: 14
 
       - name: Build/release Electron app
         uses: samuelmeuli/action-electron-builder@v1
         with:
-        
-      - name: Building installer
-        run: npm run distm
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: MacOS
-          path: |
-            ./dist/BastyonSetup.dmg
-            ./dist/latest-mac.yml
-
-  build_linux:
-    runs-on: build.app.linux
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-        with:
-          node-version: '14'
-
-      - name: Installing rependencies
-        run: npm i
-        
-      - name: Preparing source code
-        run: npm run dev:bastyon
-        
-      - name: Building installer
-        run: npm run distl
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: Linux
-          path: |
-            ./dist/BastyonSetup.deb
-            ./dist/Bastyon.AppImage
-            ./dist/latest-linux.yml
+          github_token: ${{ secrets.release_token }}
+          release: ${{ startsWith(github.ref, 'refs/tags/v') }}
+          
+          mac_certs: ${{ secrets.mac_certs }}
+          mac_certs_password: ${{ secrets.mac_certs_password }}

@@ -195,6 +195,9 @@
             "executableName": "bastyon",
             "description": "Bastyon Desktop Browser"
         },
+        "appImage": {
+            "artifactName": "${productName}.${ext}"
+        },
         "win": {
             "target": [
                 {
