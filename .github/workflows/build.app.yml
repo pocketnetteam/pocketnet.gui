@@ -2,7 +2,7 @@ name: Build Desktop App
 
 on:
   push:
-    #tags: v*.*.*
+    tags: v*.*.*
 
 jobs:
   release:
@@ -10,7 +10,7 @@ jobs:
 
     strategy:
       matrix:
-        os: [macos-latest] # , ubuntu-latest, windows-latest
+        os: [macos-latest, ubuntu-latest, windows-latest]
 
     steps:
       - name: Check out Git repository
@@ -35,8 +35,5 @@ jobs:
           mac_certs: ${{ secrets.mac_certs }}
           mac_certs_password: ${{ secrets.mac_certs_password }}
         env:
-          # TEAM_SHORT_NAME: ${{ secrets.apple_team_short_name }}
-          # APPLE_ID: ${{ secrets.apple_id }}
-          # APPLE_ID_PASSWORD: ${{ secrets.apple_id_password }}
           API_KEY_ID: ${{ secrets.APPLE_API_KEY_ID }}
           API_KEY_ISSUER_ID: ${{ secrets.APPLE_API_KEY_ISSUER_ID }}
