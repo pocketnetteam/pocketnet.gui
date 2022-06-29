@@ -35,5 +35,6 @@ jobs:
           mac_certs: ${{ secrets.mac_certs }}
           mac_certs_password: ${{ secrets.mac_certs_password }}
         env:
+          TEAM_SHORT_NAME: ${{ secrets.apple_team_short_name }}
           API_KEY_ID: ${{ secrets.apple_api_key_id }}
           API_KEY_ISSUER_ID: ${{ secrets.apple_api_key_issuer_id }}
