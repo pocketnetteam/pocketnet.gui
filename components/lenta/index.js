@@ -2648,6 +2648,11 @@ var lenta = (function(){
 
 			},
 
+			showBanner : function(){
+				var shareId = $(this).closest('.share').attr('id');
+				renders.showBanner(shareId);
+			}
+
 			
 		}	
 
@@ -3690,6 +3695,11 @@ var lenta = (function(){
 				})
 			},
 
+			showBanner : function(id) {
+				console.log('slkdhfñasdflkjddd');
+				el.c.find('#' + id).find('.bannerComment').css("display","block");
+			},
+
 			
 		}
 
@@ -4327,6 +4337,7 @@ var lenta = (function(){
 			el.c.find('.loadmore button').on('click', events.loadmore)
 			el.c.find('.loadprev button').on('click', events.loadprev)
 			el.c.on('click', '.gotouserprofile', events.gotouserprofile)
+			el.c.on('click', '.forstars', events.showBanner)
 
 			el.c.on('click','.openauthorwindow', events.openauthorwindow)
 
