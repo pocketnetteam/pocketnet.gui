@@ -75,14 +75,7 @@
 #lenta .video-js .vjs-volume-control {
   display: none;
 }
-#lenta .fullScreenVideo .videoWrapper .js-player {
-  background: rgb(var(--color-shadow-base));
-}
-#lenta .fullScreenVideo .videoWrapper .js-player .video-js {
-  border-top-left-radius: 12px;
-  border-top-right-radius: 12px;
-}
-#lenta .fullScreenVideo .videoWrapper .js-player .video-js .vjs-volume-control {
+#lenta .fullScreenVideo .video-js .vjs-volume-control {
   display: inherit;
 }
 #lenta .circularprogress {
@@ -149,17 +142,6 @@
 #lenta .share.fullScreenVideo .verticalVideo {
   max-width: none;
 }
-#lenta .share.fullScreenVideo .commentsWrapper {
-  border-bottom-left-radius: 12px;
-  border-bottom-right-radius: 12px;
-}
-#lenta .share.fullScreenVideo .sharecntinner > div {
-  padding-left: 0;
-  padding-right: 0;
-}
-#lenta .share.fullScreenVideo #recommendations {
-  border-radius: 9px;
-}
 #lenta .shares {
   overflow: hidden;
   display: flex;
@@ -192,73 +174,19 @@
   text-decoration: underline;
 }
 #lenta .bannerComment {
-  display: block;
-  background-color: rgb(var(--background-total-theme));
+  padding-left: 2.5em;
+  padding-right: 2.25em;
+  padding-bottom: 1.3em;
+  padding-top: 1em;
 }
 #lenta .bannerComment .bannerBody {
-  display: none;
-  justify-content: space-between;
-  padding: 1.2em;
-  background-color: rgb(var(--background-secondary-theme));
-  border: solid rgb(var(--neutral-grad-3)) 1px;
+  border: solid #c1c1c1 1px;
   border-radius: 7px;
+  background-color: #f0f2f5;
+  padding: 2%;
 }
-#lenta .bannerComment .bannerBody .bannerIcon {
-  width: 64px;
-  background-image: url(../../images/comment.png);
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position-y: 50%;
-}
-#lenta .bannerComment .bannerBody > * {
-  padding: 0 0.5em;
-}
-#lenta .bannerComment .bannerBody :first-child {
-  padding-left: 0;
-}
-#lenta .bannerComment .bannerBody :last-child {
-  padding-right: 0;
-}
-#lenta .bannerComment .bannerBody .text {
-  color: rgb(var(--text-color));
-}
-#lenta .bannerComment .bannerBody .text .bannerDescription {
-  padding-top: 0.5em;
-}
-#lenta .bannerComment .bannerBody .text .noShowAgain {
-  text-decoration: underline;
-  padding-top: 1.4%;
-  color: #959595;
-}
-#lenta .bannerComment .bannerBody .text .noShowAgain:hover {
-  color: rgb(var(--color-cc-blue));
-}
-#lenta .bannerComment .bannerBody .closeBannerBtn .container {
-  display: flex;
-  color: rgb(var(--neutral-grad-4));
-  cursor: pointer;
-  transition: color 0.1s linear;
-}
-#lenta .bannerComment .bannerBody .closeBannerBtn .container:hover {
-  color: rgb(var(--neutral-grad-2));
-}
-#lenta .bannerComment.show {
-  padding: 1em 2.5em 2em 2.5em;
-}
-#lenta .bannerComment.show .bannerBody {
-  display: flex;
-  opacity: 1;
-  animation: fadeIn 0.7s;
-}
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translate(0%, -20%);
-  }
-  to {
-    opacity: 1;
-    transform: translate(0%, 0%);
-  }
+#lenta .bannerComment .bannerDescription {
+  padding-top: 5px;
 }
 #lenta .subc {
   margin-top: 1em;
@@ -714,27 +642,6 @@
 @media only screen and (max-width: 1180px) {
   #lenta.mainvideo .shares .authorgroup {
     width: 50%;
-  }
-}
-@media only screen and (min-width: 1300px) {
-  #lenta .share.fullScreenVideo .sharecntinner {
-    display: flex;
-    justify-content: center;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  #lenta .share.fullScreenVideo .sharecntinner > div {
-    padding-left: 10px;
-    padding-right: 10px;
-  }
-  #lenta .share.fullScreenVideo .sharecntinner .extrashare {
-    width: 400px;
-  }
-  #lenta .share.fullScreenVideo #recommendations {
-    margin-top: 0;
-  }
-  #lenta .share.fullScreenVideo .videoWrapper {
-    min-width: 900px !important;
   }
 }
 /*t*/
