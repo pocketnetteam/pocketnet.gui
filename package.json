@@ -179,8 +179,9 @@
             "target": "dmg",
             "artifactName": "${productName}Setup.${ext}",
             "icon": "res/electron/icons/mac/icon.icns",
-            "entitlements": "build/entitlements.mac.plist",
-            "extendInfo": "bastyon"
+            "extendInfo": "bastyon",
+            "hardenedRuntime": true,
+            "entitlements": "./node_modules/electron-builder-notarize/entitlements.mac.inherit.plist"
         },
         "linux": {
             "target": [
