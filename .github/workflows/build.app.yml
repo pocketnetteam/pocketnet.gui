@@ -21,11 +21,18 @@ jobs:
         with:
           node-version: 14
 
+      - name: Prepare for app notarization
+        if: startsWith(matrix.os, 'macos')
+        run: |
+          mkdir -p ~/private_keys/
+          echo '${{ secrets.apple_api_key }}' > ~/private_keys/AuthKey_${{ secrets.apple_api_key_id }}.p8
+
       - name: Build/release Electron app
         uses: samuelmeuli/action-electron-builder@v1
         with:
           github_token: ${{ secrets.release_token }}
           release: ${{ startsWith(github.ref, 'refs/tags/v') }}
-          
           mac_certs: ${{ secrets.mac_certs }}
           mac_certs_password: ${{ secrets.mac_certs_password }}
+          API_KEY_ID: ${{ secrets.apple_api_key_id }}
+          API_KEY_ISSUER_ID: ${{ secrets.apple_api_key_issuer_id }}
