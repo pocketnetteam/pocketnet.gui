@@ -187,6 +187,30 @@
   font-weight: 700;
   text-decoration: underline;
 }
+#lenta .bannerComment {
+  display: none;
+  padding-left: 2.5em;
+  padding-right: 2.25em;
+  padding-bottom: 1.3em;
+  padding-top: 1em;
+}
+#lenta .bannerComment .bannerBody {
+  border: solid #e7e7e7 1px;
+  border-radius: 7px;
+  background-color: #ffffff;
+  padding: 2%;
+  display: inline-flex;
+}
+#lenta .bannerComment .bannerBody .text,
+#lenta .bannerComment .bannerBody img {
+  display: inline-block;
+}
+#lenta .bannerComment .bannerBody img {
+  padding-right: 1.4em;
+}
+#lenta .bannerComment .bannerDescription {
+  padding-top: 5px;
+}
 #lenta .subc {
   margin-top: 1em;
 }
