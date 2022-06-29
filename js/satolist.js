@@ -9576,8 +9576,7 @@ Platform = function (app, listofnodes) {
                 if(!ustate) return false
 
                 var totalComplains = typeof ustate.flags === 'object' ? Object.values(ustate.flags).reduce((a,b) => a + +b, 0) : 0
-
-                var isOverComplained = typeof ustate.flags === 'object' ? Object.values(ustate.flags).some(el => el / ustate.postcnt > 5) : false
+                var isOverComplained = typeof ustate.flags === 'object' ? Object.values(ustate.flags).some(el => el / (ustate.postcnt || 1) > 5) : false
 
                 var totalComplainsFirstFlags = typeof ustate.firstFlags === 'object' ? Object.values(ustate.firstFlags).reduce((a,b) => a + +b, 0) : 0
 
@@ -19024,6 +19023,7 @@ Platform = function (app, listofnodes) {
                     },
 
                     common: function (inputs, obj = {}, fees, clbk, p) {
+
                         if (!p) p = {};
 
                         var temp = self.sdk.node.transactions.temp;
