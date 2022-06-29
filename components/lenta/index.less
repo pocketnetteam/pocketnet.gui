@@ -98,9 +98,16 @@
         }
     }
 	.fullScreenVideo{
-		.video-js{
-			.vjs-volume-control{
-				display: inherit;
+		.videoWrapper{
+			.js-player{
+				background: rgb(var(--color-shadow-base));
+				.video-js{
+					.vjs-volume-control{
+						display: inherit;
+					}
+					border-top-left-radius: 12px;
+					border-top-right-radius: 12px;
+				}
 			}
 		}
 	}
@@ -194,6 +201,22 @@
 			.squareVideo,
 			.verticalVideo {
 				max-width: none;
+			}
+
+			.commentsWrapper {
+				border-bottom-left-radius: 12px;
+				border-bottom-right-radius: 12px;
+			}
+
+			.sharecntinner {
+				>div {
+					padding-left: 0;
+					padding-right: 0;
+				}
+			}
+
+			#recommendations {
+				border-radius: 9px;
 			}
 		}
 
@@ -897,6 +920,28 @@
 				}
 			}
 		}
+	}
+}
+
+@media only screen and (min-width: 1300px) {
+	#lenta .share.fullScreenVideo .sharecntinner {
+		display: flex;
+		justify-content: center;
+		margin-left: auto;
+		margin-right: auto;
+		>div {
+			padding-left: 10px;
+			padding-right: 10px;
+		}
+	}
+	#lenta .share.fullScreenVideo .sharecntinner .extrashare {
+		width: 400px;
+	}
+	#lenta .share.fullScreenVideo #recommendations {
+		margin-top: 0;
+	}
+	#lenta .share.fullScreenVideo .videoWrapper {
+		min-width: 900px !important;
 	}
 }
 
