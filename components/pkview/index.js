@@ -289,18 +289,22 @@ var pkview = (function(){
 			})
 			
 			el.c.find('.dontshowagain').on('click', function(){
+				if(current.mnemonicContent.length === 12){
+					el.c.find(".stepContent").css({"display": "none"})
+					el.c.find(".approveMnemonic").css({"display": "flex"})
+					renderShuffledMnemonic()
+					back()
+					mnemonicItemClickHandler()
+					validateMnemonic()
+					$(this).css({"display": "none"})
+				}else{
+					self.closeContainer()
+					self.app.platform.sdk.registrations.donotshowprivate()
+				}
 
-				// self.closeContainer()
+				
 
-				// self.app.platform.sdk.registrations.donotshowprivate()
-
-				el.c.find(".stepContent").css({"display": "none"})
-				el.c.find(".approveMnemonic").css({"display": "flex"})
-				renderShuffledMnemonic()
-				back()
-				mnemonicItemClickHandler()
-				validateMnemonic()
-				$(this).css({"display": "none"})
+				
 
 				/**if(isMobile()){
 
