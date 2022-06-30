@@ -529,19 +529,29 @@ var lenta = (function(){
 
 				if(essenseData.observe){
 
-					var last = _.last(sharesInview)
-					var first = _.first(sharesInview)
+					var last = _.min(sharesInview, (s) => {
+						return s.id
+					})
+
+					var first = _.max(sharesInview, (s) => {
+						return s.id
+					})
+
+					//var first = _.first(sharesInview)
 
 					if (first && last){
 
 						var k = ''
 
-						if(sharesFromSub[last.txid] && sharesFromSub[first.txid]){
+						if(sharesFromSub[last.txid] || sharesFromSub[first.txid]){
 							k = '_sub'
 						}
 
-						console.log('essenseData.observe + k, first.id, last.id', essenseData.observe + k, first.id, last.id)
+						console.log("sharesFromSub", _.map(sharesInview, (f) => {
+							return f.txid
+						}), sharesFromSub, last.txid, first.txid)
 
+						console.log('essenseData.observe + k, first.id, last.id', essenseData.observe + k, first.id, last.id)
 
 						self.app.platform.sdk.sharesObserver.view(essenseData.observe + k, first.id, last.id)
 					}
@@ -2738,7 +2748,15 @@ var lenta = (function(){
 
 					if (_el && _el.length){
 
-						if (p.template){
+						if (p.render){
+
+							renders[p.render](_el, p, function(){
+								extraloading[p.key]
+
+								if(clbk) clbk()
+							})
+
+							
 
 						}
 						else{
@@ -3073,12 +3091,12 @@ var lenta = (function(){
 				}
 			},
 
-			tosubscribeshares : function(el, share){
+			tosubscribeshares : function(el, p = {}, clbk){
 				self.shell({
 					name :  'tosubscribeshares',
 					el : el,
 					data : {
-						share : share
+						share : p.share
 					},
 					animation : false,				
 
@@ -3319,8 +3337,13 @@ var lenta = (function(){
 					renders.extras()
 
 					if(subloaded && subloadedindex > 0){
-
-					}
+						renders.extra({
+							key : 'tosubscribeshares',
+							render : 'tosubscribeshares',
+							position : subloadedindex,
+							share : shares[shares.length - 1]
+						})
+					}	
 
 					essenserenderclbk()
 
@@ -3829,6 +3852,8 @@ var lenta = (function(){
 				if(!bshares) bshares = []
 
 				if(includingsub) {
+
+					console.log('sharesSUB1', shares)
 								
 					shares = _.filter(shares, function(share){
 
@@ -3838,13 +3863,17 @@ var lenta = (function(){
 
 							if(!obs) return true
 
-							return share.id > obs.first || share.id < obs.last
+							console.log(share.id , obs.first , obs.last)
+
+							return (!obs.first || share.id > obs.first) || (!obs.last || share.id < obs.last)
 						}
 
 						return true
 					})
 
-					if (shares.length < pr.count || countshares >= 20){
+					console.log('sharesSUB', shares)
+
+					if (shares.length < pr.count || countshares >= 10){
 						subloaded = true
 						subloadedindex = countshares + shares.length - 1
 					}
@@ -4186,10 +4215,12 @@ var lenta = (function(){
 							else if (recommended == 'recommended') count = 30
 							else if (video) count = 20
 
-							if(state && essenseData.includesub && loader == 'hierarchical' && !tagsfilter.length && !tagsexcluded.length && !subloaded){
+							if(state && essenseData.includesub && loader == 'hierarchical' && !subloaded){
 
-								loader = 'common'
-								author = '1'
+								console.log("INCLUDE SUBS")
+
+								loader = 'getsubscribesfeed'
+								//author = '1'
 
 								includingsub = true
 
@@ -4695,7 +4726,7 @@ var lenta = (function(){
 			console.log('essenseData.observe && essenseData.includesub', essenseData.observe , essenseData.includesub)
 
 			if(essenseData.observe && essenseData.includesub){
-				subloaded = !self.app.platform.sdk.sharesObserver.hasnew(essenseData.observe + '_sub')
+				subloaded = !self.app.platform.sdk.sharesObserver.hasnewkeys([essenseData.observe + '_sub', 'sub'])
 
 				console.log('subloaded', subloaded)
 			}
@@ -4936,7 +4967,11 @@ var lenta = (function(){
 									name : 'stars'
 								}, function(){
 
-									clbk(data);
+									self.loadTemplate({
+										name : 'tosubscribeshares'
+									}, function(){
+										clbk(data);
+									})
 
 								})
 

@@ -669,6 +669,8 @@ var main = (function(){
 
 				self.app.user.isState(function(state){
 
+					console.log('searchtags', searchtags)
+
 					var mode = actions.currentModeKey()
 
 					self.nav.api.load({
@@ -695,7 +697,7 @@ var main = (function(){
 							//recommendedUsersCount : self.app.mobileview ? 15 : 3,
 
 
-							includesub : (mode == 'index' /*|| mode == 'video' || mode == 'read'*/) ? true : false,
+							includesub : !searchvalue && !searchtags && (mode == 'index' /*|| mode == 'video' || mode == 'read'*/) ? true : false,
 							includeboost : self.app.boost,
 
 							//optimize : self.app.mobileview,

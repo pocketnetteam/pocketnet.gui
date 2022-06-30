@@ -8088,11 +8088,17 @@ Platform = function (app, listofnodes) {
             newmaterials : function(counts){
                 _.each(counts, (c, i) => {
                     if (self.sdk.sharesObserver.storage.viewed[i]){
-                        self.sdk.sharesObserver.storage.viewed[i].new = c
+                        self.sdk.sharesObserver.storage.viewed[i].new = (self.sdk.sharesObserver.storage.viewed[i].new || 0) + c
                     }
                 })
 
                 self.sdk.sharesObserver.save()
+            },
+
+            hasnewkeys : function(keys){
+                return _.reduce(keys, (m, key) => {
+                    return m && self.sdk.sharesObserver.hasnew(key)
+                }, true)
             },
 
             hasnew : function(key){
@@ -8101,20 +8107,29 @@ Platform = function (app, listofnodes) {
 
                 if(!self.sdk.sharesObserver.storage.viewed[key]) return true
 
+                var block = self.currentBlock || (self.app.api.getCurrentBlock ? self.app.api.getCurrentBlock() : 0)
 
-                if (self.currentBlock){
+                console.log('block', block, self.sdk.sharesObserver.storage.viewed[key])
+                if (block){
 
-                    if (self.currentBlock > self.sdk.sharesObserver.storage.viewed[key].block + 30){
+                    if (block >= (self.sdk.sharesObserver.storage.viewed[key].block || 0) + 30){
+
+                        console.log("BLOCK 30", block, self.sdk.sharesObserver.storage.viewed[key].block || 0)
+
                         return true
                     }
 
-                    if (self.currentBlock > self.sdk.sharesObserver.storage.viewed[key].block){
+                    if (block > (self.sdk.sharesObserver.storage.viewed[key].block || 0)){
+                        console.log("HASNEW", self.sdk.sharesObserver.storage.viewed[key].new)
+
                         return self.sdk.sharesObserver.storage.viewed[key].new > 0
                     }
                 }   
             },
 
             view : function(key, first, last){
+
+                console.log("HERE", key, first, last)
 
                 if(key == 'saved') return
 
@@ -8131,9 +8146,11 @@ Platform = function (app, listofnodes) {
                 if (!self.sdk.sharesObserver.storage.viewed[key].last || self.sdk.sharesObserver.storage.viewed[key].last > last)
                     self.sdk.sharesObserver.storage.viewed[key].last = last
 
+                console.log('self.sdk.sharesObserver.storage.viewed', self.sdk.sharesObserver.storage.viewed)
+
 
                 self.sdk.sharesObserver.storage.viewed[key].time = new Date()
-                self.sdk.sharesObserver.storage.viewed[key].block = self.currentBlock
+                self.sdk.sharesObserver.storage.viewed[key].block = self.currentBlock || (self.app.api.getCurrentBlock ? self.app.api.getCurrentBlock() : 0)
                 
 
                 self.sdk.sharesObserver.save()
