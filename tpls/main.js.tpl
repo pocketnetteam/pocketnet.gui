@@ -1033,6 +1033,10 @@ if(!r) {
         if (win === null) {
             createWindow()
         }
+
+        else{
+            win.restore();
+        }
     })
 
     if (is.macOS()){
