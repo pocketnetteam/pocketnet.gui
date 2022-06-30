@@ -547,10 +547,6 @@ var lenta = (function(){
 							k = '_sub'
 						}
 
-						console.log("sharesFromSub", _.map(sharesInview, (f) => {
-							return f.txid
-						}), sharesFromSub, last.txid, first.txid)
-
 						console.log('essenseData.observe + k, first.id, last.id', essenseData.observe + k, first.id, last.id)
 
 						self.app.platform.sdk.sharesObserver.view(essenseData.observe + k, first.id, last.id)
