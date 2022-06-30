@@ -350,7 +350,6 @@ var recommendations = (function(){
 
 				initEvents()
 
-				console.log("ED", ed, needmake)
 
 				if (ed.startload)
 					makeneed()

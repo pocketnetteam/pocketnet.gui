@@ -63,8 +63,6 @@ function proxifiedAxiosFactory(electronIpcRenderer) {
         }
         return new Promise((resolve, reject) => {
             electronIpcRenderer.on(`ProxifiedAxios : Response[${id}]`, (event, response) => {
-                console.table(response);
-                console.log(response);
                 resolve(response);
             });
             electronIpcRenderer.on(`ProxifiedAxios : Error[${id}]`, (event, errorMessage) => {

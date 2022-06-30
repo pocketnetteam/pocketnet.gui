@@ -360,9 +360,6 @@ Nav = function(app)
 
 				historyManager.addParameters(pa)
 
-
-				console.log("ADD TO WNDS")
-
 				self.wnds[p.id] = p
 			
 
@@ -491,8 +488,6 @@ Nav = function(app)
 
 			_.each(self.wnds, function(pa, id){
 				if(!p['m' + id]){
-
-					console.log('pa', pa)
 
 					if (pa.independent) return
 

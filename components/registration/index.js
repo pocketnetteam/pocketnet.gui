@@ -326,9 +326,6 @@ var registration = (function(){
 
 					var c = false
 
-					console.log('self.app.platform.sdk.registrations', self.app.platform.sdk.registrations)
-
-
 					var clbk = function(){
 
 						if(c) return

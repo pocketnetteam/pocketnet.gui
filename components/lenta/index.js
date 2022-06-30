@@ -596,7 +596,6 @@ var lenta = (function(){
 					return !shareInitedMap[b.txid] && !shareInitingMap[b.txid] && !el.share[b.txid]
 				})
 
-				console.log('include bsts', boosted.length, bsts.length)
 
 				_.each(bsts, function(bst){
 					if (bst){
@@ -619,7 +618,6 @@ var lenta = (function(){
 
 									boostplaces[position] = true
 
-									console.log('include boostplaces[position]', position, el.share[share.txid])
 
 									renders.shares([bst], function(){
 										renders.sharesInview([bst], function(){
@@ -996,7 +994,6 @@ var lenta = (function(){
 			openPost : function(id, clbk, video, _share, openWnd){
 				var share = self.app.platform.sdk.node.shares.storage.trx[id] || _share;
 
-				console.log("openWnd?", openWnd)
 
 				if(openWnd || essenseData.openPostInWindowMobile || (share && share.itisarticle())){
 
@@ -2735,8 +2732,6 @@ var lenta = (function(){
 
 					if (p.selector) _el = el.c.find(selector);
 
-					console.log("RENDER EXTRA", _el)
-
 					if (_el && _el.length){
 
 						self.nav.api.load({
@@ -3274,7 +3269,6 @@ var lenta = (function(){
 				}, function(_p){
 
 					if (_p.inner == append || likeappend){
-						console.log("ARRANGE")
 						sharesInview = sharesInview.concat(shares)	
 					}
 					else

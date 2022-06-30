@@ -154,11 +154,9 @@ async function binariesDownloader(electronIpcMain, userDataFolder) {
     }
 
     downloadFfBinaries(ffbinFolder, (progress) => {
-      console.log(`FF Binaries download`, progress);
 
       e.sender.send('transcode-binaries-progress', progress);
     }).then(() => {
-      console.log(`FF Binaries are downloaded`);
 
       ffmpeg.setFfmpegPath(ffmpegPath);
       ffmpeg.setFfprobePath(ffprobePath);
@@ -167,7 +165,6 @@ async function binariesDownloader(electronIpcMain, userDataFolder) {
       e.sender.send('transcode-binaries-ready');
     }).catch((err) => {
       console.error(err);
-      console.log('FF Binaries not downloaded. Proceeding as is...');
 
       e.sender.send('transcode-binaries-error', err);
     });
@@ -321,7 +318,6 @@ async function transcodingProcessor(electronIpcMain) {
             .format('mp4');
 
           function cancelTranscoding() {
-            console.log('Video transcoding cancel');
             transcodeProcess.kill();
             reject('TRANSCODE_ABORT');
           }
@@ -333,7 +329,6 @@ async function transcodingProcessor(electronIpcMain) {
               e.sender.send('transcode-video-start');
             })
             .on('progress', (progress) => {
-              console.log('Processing: ' + progress.percent + '% done');
               e.sender.send('transcode-video-progress', calcProgress(`p${resolution[1]}`, progress.percent));
             })
             .on('error', (err) => {
@@ -365,7 +360,6 @@ async function transcodingProcessor(electronIpcMain) {
               resolve(data);
 
               fs.unlink(fileLocation, () => {
-                console.log('Purged temporary file');
               });
             })
             .saveToFile(fileLocation);
@@ -466,31 +460,26 @@ async function transcodingProcessor(electronIpcMain) {
           case 'TRANSCODE_ABORT':
             const reportAbort = Error(err);
 
-            console.log('Transcode aborted by user');
             e.sender.send('transcode-video-error', reportAbort);
             break;
           case 'TRANSCODE_ERROR':
             const errTranscode = Error(err);
 
-            console.log('Transcode error occurred');
             e.sender.send('transcode-video-error', errTranscode);
             break;
           case 'ERROR_FILE_ACCESS':
             const errAccess = Error(err);
 
-            console.log('Transcoding error: file access error');
             e.sender.send('transcode-video-error', errAccess);
             return;
           case 'FFBIN_NOT_DOWNLOADED':
             const errFfbin = Error(err);
 
-            console.log('Transcoding error: binaries still not downloaded');
             e.sender.send('transcode-video-error', errFfbin);
             return;
           case 'VERTICAL_VIDEO_NOT_SUPPORTED':
             const verticalNotSupported = Error(err);
 
-            console.log('Transcoding error: vertical video not supported');
             e.sender.send('transcode-video-error', verticalNotSupported);
             return;
           default:

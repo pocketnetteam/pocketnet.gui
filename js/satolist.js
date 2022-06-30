@@ -9581,7 +9581,6 @@ Platform = function (app, listofnodes) {
 
                 var totalComplainsFirstFlags = typeof ustate.firstFlags === 'object' ? Object.values(ustate.firstFlags).reduce((a,b) => a + +b, 0) : 0
 
-                console.log('totalComplainsFirstFlags', totalComplainsFirstFlags, ustate.firstFlags)
                 if(self.bch[address]) return true
 
                 if(typeof count == 'undefined') count = -12
@@ -11258,14 +11257,6 @@ Platform = function (app, listofnodes) {
 
                 var s = self.sdk.node.shares;
 
-                // s.getex(parameters, function(data, error){
-
-                //     console.log('gettopaccounts result', data, error);
-
-                //     clbk(data, error);
-
-
-                // }, method, rpc)
 
                 clbk();
 
@@ -11307,8 +11298,6 @@ Platform = function (app, listofnodes) {
                 var s = self.sdk.node.shares;
 
                 s.getex(parameters, function(data, error){
-
-                    console.log('getrecommendedaccounts result', data, error);
 
                     if (!(data && data.length) || error){
 
@@ -17348,8 +17337,6 @@ Platform = function (app, listofnodes) {
                                     else{
                                     }
                                 })
-    
-                                console.log('include, shares2', shares.length)
     
     
                                 if (clbk)
@@ -25280,7 +25267,6 @@ Platform = function (app, listofnodes) {
         }
 
         self.messageHandler = function (data, clbk) {
-            console.log('handle message')
 
             data || (data = {})
 
