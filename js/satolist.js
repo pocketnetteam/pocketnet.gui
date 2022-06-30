@@ -8085,20 +8085,56 @@ Platform = function (app, listofnodes) {
                 viewed : {}
             },
 
+            newmaterials : function(counts){
+                _.each(counts, (c, i) => {
+                    if (self.sdk.sharesObserver.storage.viewed[i]){
+                        self.sdk.sharesObserver.storage.viewed[i].new = c
+                    }
+                })
+
+                self.sdk.sharesObserver.save()
+            },
+
+            hasnew : function(key){
+
+                console.log("KEY", key)
+
+                if(!self.sdk.sharesObserver.storage.viewed[key]) return true
+
+
+                if (self.currentBlock){
+
+                    if (self.currentBlock > self.sdk.sharesObserver.storage.viewed[key].block + 30){
+                        return true
+                    }
+
+                    if (self.currentBlock > self.sdk.sharesObserver.storage.viewed[key].block){
+                        return self.sdk.sharesObserver.storage.viewed[key].new > 0
+                    }
+                }   
+            },
+
             view : function(key, first, last){
 
                 if(key == 'saved') return
 
                 if(!self.sdk.sharesObserver.storage.viewed[key]) self.sdk.sharesObserver.storage.viewed[key] = {}
 
-                if (self.sdk.sharesObserver.storage.viewed[key].first < first)
-                    self.sdk.sharesObserver.storage.viewed[key].first = first
+                if (!self.sdk.sharesObserver.storage.viewed[key].first || self.sdk.sharesObserver.storage.viewed[key].first < first){
 
-                if (self.sdk.sharesObserver.storage.viewed[key].last > last)
+                    self.sdk.sharesObserver.storage.viewed[key].first = first
+                    self.sdk.sharesObserver.storage.viewed[key].new = 0
+
+                }
+                    
+
+                if (!self.sdk.sharesObserver.storage.viewed[key].last || self.sdk.sharesObserver.storage.viewed[key].last > last)
                     self.sdk.sharesObserver.storage.viewed[key].last = last
 
 
                 self.sdk.sharesObserver.storage.viewed[key].time = new Date()
+                self.sdk.sharesObserver.storage.viewed[key].block = self.currentBlock
+                
 
                 self.sdk.sharesObserver.save()
 
@@ -11420,8 +11456,12 @@ Platform = function (app, listofnodes) {
                     sub : data['sharesSubscr'] || 0,
                     video : deep(data, 'contentsLang.video.' + self.app.localization.key)|| 0,
                     article : deep(data, 'contentsLang.article.' + self.app.localization.key)|| 0,
-                    common : deep(data, 'sharesLang.' + self.app.localization.key) || ( (deep(data, 'contentsLang.share.' + self.app.localization.key) || 0) + (deep(data, 'contentsLang.video.' + self.app.localization.key)|| 0))
+                    common : deep(data, 'sharesLang.' + self.app.localization.key) || ( (deep(data, 'contentsLang.share.' + self.app.localization.key) || 0) + (deep(data, 'contentsLang.video.' + self.app.localization.key)|| 0)),
+
+                    index_sub : data['sharesSubscr'] || 0
                 }
+
+                counts.index = counts.common
 
                 _.each(counts, function(c, i){
                     // c = rand(1,3)
@@ -11432,7 +11472,7 @@ Platform = function (app, listofnodes) {
                     u(self.sdk.newmaterials.storage)
                 })
 
-
+                self.sdk.sharesObserver.newmaterials(counts)
             },
 
             clear : function(){

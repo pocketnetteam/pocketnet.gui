@@ -669,6 +669,8 @@ var main = (function(){
 
 				self.app.user.isState(function(state){
 
+					var mode = actions.currentModeKey()
+
 					self.nav.api.load({
 						open : true,
 						id : 'lenta',
@@ -686,13 +688,14 @@ var main = (function(){
 							read : readmain,
 							video :  videomain && !isMobile(),
 							videomobile : videomain && isMobile(),
-							observe : actions.currentModeKey(),
+							observe : searchvalue || searchtags ? null : mode,
 							page : 0,
 
 							//recommendedUsers : self.app.mobileview,
 							//recommendedUsersCount : self.app.mobileview ? 15 : 3,
 
-							includesub : true,
+
+							includesub : (mode == 'index' /*|| mode == 'video' || mode == 'read'*/) ? true : false,
 							includeboost : self.app.boost,
 
 							//optimize : self.app.mobileview,

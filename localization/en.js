@@ -2229,3 +2229,7 @@ ____loclib.usetor = "Connection via Tor network"
 ____loclib.videotranscodingdelayedpost = "This video is being processed and will be posted as soon as the transcoding process ends. Please, do not close the tab untill then."
 
 ____loclib.postInRelay = "This post is being processed before publishing to blockchain"
+
+
+____loclib.continuesubscribefeedCaption = "Would you like to continue seeing posts from the people you follow?"
+____loclib.continuesubscribefeedButton = "Continue in the subscription feed"

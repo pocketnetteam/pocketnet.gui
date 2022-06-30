@@ -19,6 +19,7 @@ var lenta = (function(){
 		video = false, isotopeinited = false, videosVolume = 0, fullscreenvideoShowing = null, loadedcachedHeight;
 
 		var subloaded = false
+		var subloadedindex = 0
 
 		var boosted = [],
 			boostplaces = {}
@@ -453,6 +454,7 @@ var lenta = (function(){
 				cachedHeight = 0;
 				optimizedCount = 0;
 				subloaded = false;
+				subloadedindex = 0;
 
 				_.each(shareInitedMap, function(s, id){
 					delete self.app.platform.sdk.node.shares.storage.trx[id]
@@ -537,6 +539,8 @@ var lenta = (function(){
 						if(sharesFromSub[last.txid] && sharesFromSub[first.txid]){
 							k = '_sub'
 						}
+
+						console.log('essenseData.observe + k, first.id, last.id', essenseData.observe + k, first.id, last.id)
 
 
 						self.app.platform.sdk.sharesObserver.view(essenseData.observe + k, first.id, last.id)
@@ -2711,7 +2715,7 @@ var lenta = (function(){
 
 			extra : function(p, clbk){
 
-				if (extraloading[p.key]) return
+				if(extraloading[p.key]) return
 
 				if(!extra[p.key]){
 
@@ -2734,27 +2738,34 @@ var lenta = (function(){
 
 					if (_el && _el.length){
 
-						self.nav.api.load({
+						if (p.template){
 
-							open : true,
-							id : p.key,
-							el : _el,
-							animation : false,
+						}
+						else{
+							self.nav.api.load({
+
+								open : true,
+								id : p.key,
+								el : _el,
+								animation : false,
+			
+								essenseData : p.essenseData(),
+								
+								clbk : function(e, _p){
 		
-							essenseData : p.essenseData(),
-							
-							clbk : function(e, _p){
+									extra[p.key] = _p;
 	
-								extra[p.key] = _p;
-
-								delete extraloading[p.key]
-
-								essenserenderclbk()
+									delete extraloading[p.key]
 	
-								if(clbk) clbk()
-							}
+									essenserenderclbk()
 		
-						})
+									if(clbk) clbk()
+								}
+			
+							})
+						}
+
+						
 
 					}
 					
@@ -3062,6 +3073,24 @@ var lenta = (function(){
 				}
 			},
 
+			tosubscribeshares : function(el, share){
+				self.shell({
+					name :  'tosubscribeshares',
+					el : el,
+					data : {
+						share : share
+					},
+					animation : false,				
+
+				}, function(p){
+
+
+					if (clbk)
+						clbk()
+
+				})
+			},
+
 			stars : function(share, clbk){
 
 				if (video) { return }
@@ -3288,6 +3317,10 @@ var lenta = (function(){
 					})
 
 					renders.extras()
+
+					if(subloaded && subloadedindex > 0){
+
+					}
 
 					essenserenderclbk()
 
@@ -3805,7 +3838,6 @@ var lenta = (function(){
 
 							if(!obs) return true
 
-
 							return share.id > obs.first || share.id < obs.last
 						}
 
@@ -3814,6 +3846,7 @@ var lenta = (function(){
 
 					if (shares.length < pr.count || countshares >= 20){
 						subloaded = true
+						subloadedindex = countshares + shares.length - 1
 					}
 
 					_.each(shares, function(share){
@@ -3879,18 +3912,11 @@ var lenta = (function(){
 									
 							}
 
-
-							
-
 							shares = _.filter(shares, function(share){
 								return !_.find(bshares, function(bshare){
 									return bshare.txid == share.txid
 								})
 							})
-
-							
-
-							
 
 							if(!essenseData.author){
 								shares = _.filter(shares, function(share){
@@ -4043,10 +4069,6 @@ var lenta = (function(){
 					}, essenseData.horizontal)	
 
 				})
-			},
-
-			subloaded : function(){
-
 			},
 
 			shares : function(clbk, cache){
@@ -4666,6 +4688,16 @@ var lenta = (function(){
 				if(essenseData.author && beginmaterial){
 					el.c.addClass('showprev')
 				}
+
+				
+			}
+
+			console.log('essenseData.observe && essenseData.includesub', essenseData.observe , essenseData.includesub)
+
+			if(essenseData.observe && essenseData.includesub){
+				subloaded = !self.app.platform.sdk.sharesObserver.hasnew(essenseData.observe + '_sub')
+
+				console.log('subloaded', subloaded)
 			}
 
 			load.shares(function(shares, error){
