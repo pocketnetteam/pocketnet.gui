@@ -584,16 +584,22 @@ function createWindow() {
     });
 
     win.on('close', function(e) {
-        if(!is.macOS()) {
-            if (!willquit) {
-                e.preventDefault();
-                win.hide();
-                destroyBadge()
-            } else {
-                destroyBadge()
-                destroyTray()
-                win = null
+        if (!willquit) {
+            e.preventDefault();
+
+            if (is.macOS()){
+                if (win.isFullScreen()){
+                    win.setFullScreen(false)
+                    return
+                }
             }
+            
+            win.hide();
+            destroyBadge()
+        } else {
+            destroyBadge()
+            destroyTray()
+            win = null
         }
     });
 
