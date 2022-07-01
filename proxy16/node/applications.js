@@ -197,7 +197,16 @@ var Applications = function(settings, applications = {}, proxy) {
         let endFile = path.resolve(dest, meta[key].name)
 
         return new Promise(async (resolve, reject) => {
-            let req = await proxy.transports.request({url:meta[key].url})
+            let req;
+
+            try {
+                req = await proxy.transports.request({url: meta[key].url});
+            } catch(err) {
+                console.log(err);
+                reject(err);
+
+                return;
+            }
 
             progress(req, {
                 throttle: 500,                    // Throttle the progress event to 2000ms, defaults to 1000ms
