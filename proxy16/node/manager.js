@@ -1026,7 +1026,9 @@ var Nodemanager = function(p){
         var node = self.selectProbability()
 
         if (node) {
+
             self.bestnode = node.key
+            self.bestnodeheight = node.height()
         }
     }
 

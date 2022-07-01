@@ -3770,6 +3770,8 @@ var lenta = (function(){
 
 				self.app.platform.sdk.node.shares.getboostfeed({
 
+					lang: essenseData.lang,
+
 					height : fixedblock,
 					tagsfilter : tagsfilter,
 					type : type,
