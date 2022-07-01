@@ -304,7 +304,7 @@ var addaccount = (function(){
 					el.autocomplete.css({
 						'position': 'absolute',
 						'top' : `${top + parseInt($(this).css("padding-top")) + 1.5}px`,
-						'left' : `${left + parseInt($(this).css("padding-left"))}px`,
+						'left' : `${left + parseInt($(this).css("padding-left")) + 2}px`,
 						'font-size': $(this).css("font-size"),
 						'font-weight': $(this).css("font-weight"),
 						'display': 'flex',
