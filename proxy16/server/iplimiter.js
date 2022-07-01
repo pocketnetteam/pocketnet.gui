@@ -45,7 +45,12 @@ var Iplimiter = function(p){
             '::ffff:188.0.15.28' : true,
             '::ffff:51.250.104.218' : true,
             '::ffff:51.250.41.252' : true,
-            '::ffff:51.250.73.97' : true
+            '::ffff:51.250.73.97' : true,
+
+            '::ffff:64.235.40.47' : true,
+            '::ffff:64.235.42.75' : true,
+            '::ffff:64.235.50.17' : true,
+
         }
 
     }

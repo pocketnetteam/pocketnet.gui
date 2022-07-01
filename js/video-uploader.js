@@ -214,18 +214,24 @@ class VideoUploader {
 
   static async loadChunkRes(self, chunk, chunkPos) {
 
-    console.log("THIS", self)
-
     var r = null
     try{
       r = await self.static.loadChunk(self, chunk, chunkPos);
     }
     catch(e) {
-      console.log(e, e.reason)
-      if(e && e.reason == "resumable_chunk_request_failed"){
-        console.log("RECU")
-        await waitPromise(20000)
-        return self.static.loadChunkRes(self, chunk, chunkPos);
+
+      console.log('self.canceled', self)
+
+      if(!self.canceled) {
+
+      
+        console.log(e, e.reason)
+        if(e && e.reason == "resumable_chunk_request_failed"){
+          console.log("RECU")
+          await waitPromise(2000)
+          return self.static.loadChunkRes(self, chunk, chunkPos);
+        }
+
       }
     }
 

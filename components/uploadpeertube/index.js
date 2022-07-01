@@ -205,7 +205,7 @@ var uploadpeertube = (function () {
 				contentAsHTML: true,
 			});
 
-			el.cancelButton.one('click', () => {
+			el.cancelButton.on('click', () => {
 				//clear()
 
 				if(cancel) cancel()
@@ -405,7 +405,7 @@ var uploadpeertube = (function () {
 						return new Blob([chunkData.data]);
 					};
 				} else {
-					
+
 					uploader = new VideoUploader(data.video);
 				}
 
@@ -455,8 +455,11 @@ var uploadpeertube = (function () {
 					return 256 * 4096;
 				};
 
-				initCancelListener(() => uploader.cancel());
-
+				initCancelListener(() => {
+					console.log('initCancelListener')
+					uploader.cancel(); processing(false)
+				});
+				
 				uploader.uploadChunked().then((response) => {
 
 					if(!uploading) return
@@ -472,19 +475,19 @@ var uploadpeertube = (function () {
 
 						wndObj.close();
 
-						
+
 
 					}, 300);
 				})
 				.catch((e = {}) => {
-					console.error(e)
+
 
 					processing(false)
 
 					self.app.Logger.error({
 						err: e.text || 'videoUploadError',
 						code: 401,
-						payload: JSON.stringify(e, Object.getOwnPropertyNames(e)),
+						payload: e,
 					});
 
 					if (!e.cancel) {
@@ -561,7 +564,7 @@ var uploadpeertube = (function () {
 
 							self.app.Logger.error({
 								err: e.text || 'videoImportError',
-								payload: JSON.stringify(e, Object.getOwnPropertyNames(e)),
+								payload: e,
 								code: 402,
 							});
 
@@ -641,6 +644,8 @@ var uploadpeertube = (function () {
 					.catch((e = {}) => {
 						console.log("ERRR", e)
 
+						if(e.response) e = e.response
+
 						self.app.peertubeHandler.clear()
 
 						data.e = e;
@@ -656,8 +661,8 @@ var uploadpeertube = (function () {
 
 								if (r.trial || !(r.balance && r.reputation)) {
 									self.app.Logger.error({
-										err: 'PEERTIBE_AUTH_ERROR',
-										payload: JSON.stringify(e),
+										err: 'PEERTIBE_AUTH_ERROR_VIDEOELEMENT',
+										payload: e,
 										code: 501,
 									});
 								}
@@ -684,7 +689,7 @@ var uploadpeertube = (function () {
 
 				uploading = false
 				cancel = null
-				
+
 			},
 
 			closehack : function(){
