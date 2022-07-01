@@ -84,7 +84,7 @@ var addaccount = (function(){
 									self.app.Logger.error({
 										err: err.text || 'scanQrFileError',
 										code: 1001,
-										payload: JSON.stringify(err),
+										payload: err,
 									});
 									self.closeContainer()
 									sitemessage(self.app.localization.e('filedamaged'))
