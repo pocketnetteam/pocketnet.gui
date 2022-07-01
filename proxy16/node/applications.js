@@ -235,6 +235,10 @@ var Applications = function(settings, applications = {}, proxy) {
                 }
             })
             .on('error', function (err) {
+                if (err.message === 'aborted') {
+                    return resolve()
+                }
+
                 console.log(err)
                 return reject(err)
             })
