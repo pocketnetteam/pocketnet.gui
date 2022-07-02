@@ -417,6 +417,7 @@ var lenta = (function(){
 				}
 
 				isotopeinited = false
+				
 
 				clearnewmaterials()	
 
@@ -3872,6 +3873,9 @@ var lenta = (function(){
 					if (shares.length < pr.count || countshares >= 10){
 						subloaded = true
 						subloadedindex = countshares + shares.length - 1
+
+
+						console.log("subloadedindex", subloadedindex)
 					}
 
 					_.each(shares, function(share){

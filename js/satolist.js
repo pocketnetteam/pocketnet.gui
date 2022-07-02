@@ -70,6 +70,7 @@ Platform = function (app, listofnodes) {
 
     self.app = app;
 
+    self.lastblocktime = null
     self.lasttimecheck = null
     self.real = {
         'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd' : true,
@@ -24142,6 +24143,7 @@ Platform = function (app, listofnodes) {
 
                         platform.currentBlock = data.block;
                         platform.lasttimecheck = new Date()
+                        platform.lastblocktime = new Date()
 
                         lost = data.block;
 
@@ -24196,6 +24198,7 @@ Platform = function (app, listofnodes) {
                     platform.currentBlock = data.height;
 
                     platform.lasttimecheck = new Date()
+                    platform.lastblocktime = new Date()
 
                     localStorage['lastblock'] = platform.currentBlock
 
@@ -25164,7 +25167,11 @@ Platform = function (app, listofnodes) {
 
         self.getMissed = function () {
 
-            if (lost < 1 || self.loadingMissed) return Promise.resolve()
+            console.log('platform.lastblocktime', platform.lastblocktime, lost)
+
+            if ((!platform.lastblocktime || (new Date() < platform.lastblocktime.addMinutes(3))) || (lost < 1)) return Promise.resolve()
+
+            if(self.loadingMissed) return Promise.resolve()
 
             self.loadingMissed = true;
 
@@ -26769,9 +26776,9 @@ Platform = function (app, listofnodes) {
             self.clientrtctemp.destroy()
         }
 
-        if (self.focusListener) {
+        /*if (self.focusListener) {
             self.focusListener.destroy()
-        }
+        }*/
 
         if (onlinetnterval)
             clearInterval(onlinetnterval)
@@ -27025,6 +27032,7 @@ Platform = function (app, listofnodes) {
             self.state.load();
 
             self.focusListener = self.FocusListener(self);
+            console.log('self.focusListener.init();')
             self.focusListener.init();
             self.titleManager = new self.TitleManager();
             self.sdk.captcha.load()
@@ -27961,6 +27969,8 @@ Platform = function (app, listofnodes) {
                     }, 500)
                 })
             }
+
+            platform.ws.getMissed()
 
             self.clbks.focus(time);
 
