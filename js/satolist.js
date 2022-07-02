@@ -7606,13 +7606,20 @@ Platform = function (app, listofnodes) {
                                                         }
 
                                                         // Transcoding checking for functions
-                                                        if (object.checkSend) {
-                                                            self.app.peertubeHandler.checkTranscoding(object.url).then((result) => {
+                                                        if (object.checkSend && object.canSend) {
+
+                                                            obj.canSend(self.app, (result) => {
+                                                                if (result) return successFullSendFunc();
+                                                                // Skip if transcoding is not finished
+                                                                return p.success()
+                                                            })
+
+                                                            /*self.app.peertubeHandler.checkTranscoding(object.url).then((result) => {
                                                                 if (result) return successFullSendFunc();
 
                                                                 // Skip if transcoding is not finished
                                                                 return p.success()
-                                                            })
+                                                            })*/
                                                         } else {
                                                             successFullSendFunc();
                                                         }
@@ -15960,6 +15967,7 @@ Platform = function (app, listofnodes) {
                         share.temp = true;
 
                         if (s.relay) share.relay = true;
+                        if (s.checkSend) share.checkSend = true
 
                         share.address = self.app.platform.sdk.address.pnet().address
                     }
@@ -19249,6 +19257,7 @@ Platform = function (app, listofnodes) {
                                                         alias.time = self.currentTime()
                                                         alias.timeUpd = alias.time
                                                         alias.optype = optype
+                                                        alias.temp = true
 
                                                         var count = deep(tempOptions, obj.type + ".count") || 'many'
 
@@ -19336,7 +19345,6 @@ Platform = function (app, listofnodes) {
                                 alias.optype = optype
 
                                 alias.relay = true;
-
                                 alias.checkSend = true;
 
                                 self.sdk.relayTransactions.add(addr.address, alias)

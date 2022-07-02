@@ -941,7 +941,12 @@ var share = (function(){
 
 											var alias = new pShare();
 												alias._import(_alias, true)
-												alias.temp = true;
+
+
+
+												alias.temp = _alias.temp;
+												alias.relay = _alias.relay;
+												alias.checkSend = _alias.checkSend
 												alias.address = _alias.address
 		
 											if(currentShare.aliasid) alias.edit = "true"	

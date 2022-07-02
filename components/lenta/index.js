@@ -1412,9 +1412,11 @@ var lenta = (function(){
 				fullscreenvideoShowing = id
 
 				var _el = el.share[id]
-				var share = self.app.platform.sdk.node.shares.storage.trx[id];
+				var share = self.app.platform.sdk.node.shares.getWithTemp(id) 
+				
+				//self.app.platform.sdk.node.shares.storage.trx[id];
 
-				if(!share){
+				/*if(!share){
 					var temp = _.find(self.sdk.node.transactions.temp.share, function(s){
 						return s.txid == id
 					}) || (self.app.platform.sdk.relayTransactions.get().share || []).find(transaction => transaction.txid === id);
@@ -1423,7 +1425,8 @@ var lenta = (function(){
 					share._import(temp);
 					share.temp = true;
 					share.address = self.app.platform.sdk.address.pnet().address
-				}
+				}*/
+
 
 				actions.initVideo(share, function(res){
 
@@ -2425,7 +2428,9 @@ var lenta = (function(){
 				var id = $(this).closest('.shareinlenta').attr('id');
 				var src = $(this).attr('i')
 
-				var share = self.app.platform.sdk.node.shares.storage.trx[id];
+				var share = self.app.platform.sdk.node.shares.getWithTemp(id) 
+				
+				/*self.app.platform.sdk.node.shares.storage.trx[id];
 
 				if(!share){
 					var temp = _.find(self.sdk.node.transactions.temp.share, function(s){
@@ -2437,7 +2442,7 @@ var lenta = (function(){
 					share._import(temp);
 					share.temp = true;
 					share.address = self.app.platform.sdk.address.pnet().address
-				}
+				}*/
 
 				self.app.mobile.vibration.small()
 				actions.openGalleryRec(share, src)
@@ -4502,6 +4507,7 @@ var lenta = (function(){
 	
 	
 								s.temp = false
+								
 	
 								s.scnt = "0"
 								s.score = "0"
@@ -4532,6 +4538,9 @@ var lenta = (function(){
 							})
 	
 							if (s){
+
+								s.relay = false
+								s.checkSend = false
 								
 								actions.destroyShare(s)
 	

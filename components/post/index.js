@@ -1908,7 +1908,9 @@ var post = (function () {
 
 					if (!share) {
 
-						var temp = _.find(self.sdk.node.transactions.temp.share, function (s) {
+						share = self.app.platform.sdk.node.shares.getWithTemp(id) 
+
+						/*var temp = _.find(self.sdk.node.transactions.temp.share, function (s) {
 							return s.txid == id
 						})
 
@@ -1917,7 +1919,7 @@ var post = (function () {
 							share._import(temp, true);
 							share.temp = true;
 							share.address = self.app.platform.sdk.address.pnet().address
-						}
+						}*/
 
 					}
 
