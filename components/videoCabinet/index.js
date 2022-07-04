@@ -33,6 +33,7 @@ var videoCabinet = (function () {
 		var blockChainInfo = [];
 		var external = null;
 		var perServerCounter = 10;
+		var blockChainVidsStart = 0;
 
 		const descriptionCache = {};
 
@@ -521,6 +522,10 @@ var videoCabinet = (function () {
 					)
 					.replace(`Watch more exciting videos at https://pocketnet.app/!`, '')
 					.replace(`Watch more exciting videos at https://bastyon.com/!`, ''),
+
+			getBlockChainVideos() {
+
+			},
 		};
 
 		var events = {

@@ -17028,7 +17028,7 @@ Platform = function (app, listofnodes) {
                 },
 
                 getprofilefeed : function(p, clbk, cache){
-
+                    debugger;
                     self.app.platform.sdk.node.shares.hierarchical(p, clbk, cache, {
                         method : 'getprofilefeed'
                     })
