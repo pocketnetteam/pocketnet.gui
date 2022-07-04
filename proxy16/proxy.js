@@ -574,7 +574,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 		statusListener: async (callBack)=>{
 			if(!global.USE_PROXY_NODE) {
-				callBack?.('sopped')
+				callBack?.('stopped')
 			}else {
 				torapplications.statusListener(callBack)
 			}
@@ -1967,6 +1967,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				path: '/ping',
 				action: function () {
 					var node = nodeManager.bestnode
+					var height = nodeManager.bestnodeheight
 
 					/*if (nodeManager.bestnodes.length){
 						node = nodeManager.bestnodes[f.rand(0, nodeManager.bestnodes.length - 1)]
@@ -1977,7 +1978,8 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 							time: f.now(),
 							session : self.session,
 							v : '0808',
-							node : node || ''
+							node : node || '',
+							height : height || 0
 						},
 					});
 				},

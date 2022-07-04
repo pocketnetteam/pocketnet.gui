@@ -57,6 +57,7 @@ var Roy = function (parent) {
 
 		if (options.cantuploading) instance.cantuploading = true;
 		if (options.special) instance.special = true;
+		if (options.old) instance.old = true;
 
 		instance.init();
 
@@ -143,6 +144,18 @@ var Roy = function (parent) {
 		});
 
 		return _instances.length
+	}
+
+	self.availableInstances = () => {
+		var i = []
+
+		_.each(instances, (ins) => {
+			if(!ins.old){
+				i.push(ins.host)
+			}
+		})
+
+		return i
 	}
 
 	self.instances = () => instances.map((instance) => instance.host);

@@ -91,7 +91,7 @@ class FrontendLogger {
       .map((err) => _createErrorBody(err));
 
     if (logsBatch.length) {
-      instance.post('front/action', logsBatch.join(','))
+      instance.post('front/action', logsBatch.join(','));
     }
 
     if (errorsBatch.length) {
@@ -109,13 +109,21 @@ class FrontendLogger {
     guid = '',
     userAgent = '',
   }) {
+    let formattedError;
+
+    try {
+      formattedError = JSON.stringify(err, Object.getOwnPropertyNames(err));
+    } catch (error) {
+      formattedError = `{ "error": "Unable to stringify received error. Report: ${error}", "type": "ERROR_PROCESSING_FAILED"}`;
+    }
+
     const parametersOrder = [
       level,
       date,
       moduleVersion,
       code,
       payload,
-      err,
+      formattedError,
       userAgent,
       guid,
     ].map((element) =>

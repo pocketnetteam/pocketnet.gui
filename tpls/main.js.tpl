@@ -42,6 +42,7 @@ const contextMenu = require('electron-context-menu');
 const path = require('path');
 const http = require('http');
 const https = require('https');
+const notifier = require('node-notifier');
 
 contextMenu({
     showSearchWithGoogle : false,
@@ -584,16 +585,22 @@ function createWindow() {
     });
 
     win.on('close', function(e) {
-        if(!is.macOS()) {
-            if (!willquit) {
-                e.preventDefault();
-                win.hide();
-                destroyBadge()
-            } else {
-                destroyBadge()
-                destroyTray()
-                win = null
+        if (!willquit) {
+            e.preventDefault();
+
+            if (is.macOS()){
+                if (win.isFullScreen()){
+                    win.setFullScreen(false)
+                    return
+                }
             }
+            
+            win.hide();
+            destroyBadge()
+        } else {
+            destroyBadge()
+            destroyTray()
+            win = null
         }
     });
 
@@ -1026,6 +1033,10 @@ if(!r) {
         // после того, как на иконку в доке нажали, и других открытых окон нету.
         if (win === null) {
             createWindow()
+        }
+
+        else{
+            win.restore();
         }
     })
 

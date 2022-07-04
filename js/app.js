@@ -1187,6 +1187,8 @@ Application = function(p)
   self.renewModules = function(map){}
   self.logger = function(Function, Message){}
 
+  self.Logger = new FrontendLogger(navigator.userAgent, self);
+
   self.scrollRemoved = 0;
   self.scrollTop = 0
   self.lastScrollTop = 0
@@ -2423,7 +2425,7 @@ Application = function(p)
       needmanage : false,
       hasupdate : false,
 
-      playstore : false,  ///// TODO
+      playstore : true,  ///// TODO
 
       downloadAndInstall : function(){
 

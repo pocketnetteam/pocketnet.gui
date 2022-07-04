@@ -606,6 +606,7 @@ var Node = function(options, manager){
         calcAvailability : function(s){
 
             if(!s.count) return 0.01
+            if(!wssconnected) return 0.01
 
             var time = s.time;
             var rate = (s.rate || 0) + 1
