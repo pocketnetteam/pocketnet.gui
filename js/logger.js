@@ -87,6 +87,11 @@ class FrontendLogger {
       id: 'USER_STARTED_REGISTRATION',
       description: 'Userhas started a registration process',
     },
+
+    USER_REGISTRATION_PROCESS: {
+      id: 'USER_REGISTRATION_PROCESS',
+      description: 'USER_REGISTRATION_PROCESS',
+    },
   };
 
   sendLogsBatch() {
