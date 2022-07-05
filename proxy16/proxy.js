@@ -1164,6 +1164,10 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 					result = r
 
+				posts = _.filter(posts, p => {
+					return p
+				})
+
 				var withvideos = _.filter(posts, p => {
 					return p.type == 'video' && p.u
 				})

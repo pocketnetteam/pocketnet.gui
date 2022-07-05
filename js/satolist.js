@@ -11322,12 +11322,7 @@ Platform = function (app, listofnodes) {
                 var rpc = {
                     cache : true,
                     locally : true,
-                    fastvideo : true,
-                    meta : {
-                        host : '78.37.233.202',
-                        port : 31031,
-                        ws : 3037
-                    }
+                    fastvideo : true
                 }
 
                 var address = self.sdk.activity.getbestaddress();
@@ -16973,12 +16968,7 @@ Platform = function (app, listofnodes) {
                         rpc : {
                             cache : true,
                             locally : true,
-                            fastvideo : true,
-                            meta : {
-                                host : '78.37.233.202',
-                                port : 31031,
-                                ws : 3037
-                            }
+                            fastvideo : true
                         }
                     });
 
