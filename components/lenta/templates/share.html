@@ -88,7 +88,7 @@ var metadisplay = function(){ %>
 
 				<% if((typeof repost == 'undefined' || !repost)) { %>
 
-					<% if(!share.temp && !shareRelayedFlag) {%>
+					<% if(!share.temp && !share.relay) {%>
 
 						<div elementsid="lenta_metapanel" class="metapanel <%-share.txid%>">
 							<% if(!checkvisibility && (typeof openapi == 'undefined' || !openapi)) {%>

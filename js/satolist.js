@@ -16013,8 +16013,10 @@ Platform = function (app, listofnodes) {
                         share._import(temp, true);
                         share.temp = true;
 
-                        if (s.relay) share.relay = true;
-                        if (s.checkSend) share.checkSend = true
+                        if (temp.relay) share.relay = true;
+                        if (temp.checkSend) share.checkSend = true
+
+                        console.log('share', share)
 
                         share.address = self.app.platform.sdk.address.pnet().address
                     }
@@ -16909,12 +16911,15 @@ Platform = function (app, listofnodes) {
                                         if (!p.author || p.author == p.address) {
                                             _.each(self.sdk.relayTransactions.withtemp('share'), function (ps) {
 
+                                                console.log('ps', ps)
+
 
                                                 var s = new pShare();
-                                                s._import(ps, true);
-                                                s.temp = true;
+                                                    s._import(ps, true);
+                                                    s.temp = true;
 
                                                 if (ps.relay) s.relay = true
+                                                if (ps.checkSend) s.checkSend = true
 
                                                 s.address = ps.address
 
@@ -17290,6 +17295,7 @@ Platform = function (app, listofnodes) {
                                                 s.temp = true;
 
                                                 if (ps.relay) s.relay = true
+                                                if (ps.checkSend) s.checkSend = true
 
                                                 s.address = ps.address
 
@@ -19395,6 +19401,7 @@ Platform = function (app, listofnodes) {
                                 alias.checkSend = true;
 
                                 self.sdk.relayTransactions.add(addr.address, alias)
+
                                 if (clbk)
                                     clbk(alias)
 
@@ -24175,6 +24182,35 @@ Platform = function (app, listofnodes) {
                     platform.sdk.user.subscribeRef()
 
                     clbk(dif)
+
+                    ////////////////
+
+                    if(app.platform.sdk.address.pnet()){
+                        var addr = app.platform.sdk.address.pnet().address
+
+                        var regs = app.platform.sdk.registrations.storage[addr];
+
+                        if (regs == 5) {
+
+                            app.platform.sdk.registrations.add(addr, 6)
+
+                            platform.matrixchat.update()
+                        }
+                    }
+
+                    if(!slowMadeRelayTransactions)
+
+                        slowMadeRelayTransactions = slowMade(function(){
+                            
+                            platform.sdk.relayTransactions.send()
+                            slowMadeRelayTransactions = null
+
+                        }, slowMadeRelayTransactions, 10000)
+
+                    setTimeout(function(){
+                        platform.matrixchat.init()
+                    }, 100)
+                    ////////
                 },
 
                 refs: {
@@ -24248,11 +24284,14 @@ Platform = function (app, listofnodes) {
 
                     ////////
 
+                    if(!slowMadeRelayTransactions)
 
-                    slowMadeRelayTransactions = slowMade(function(){
+                        slowMadeRelayTransactions = slowMade(function(){
 
-                        platform.sdk.relayTransactions.send()
-                    }, slowMadeRelayTransactions, 10000)
+                            platform.sdk.relayTransactions.send()
+                            slowMadeRelayTransactions = null
+
+                        }, slowMadeRelayTransactions, 10000)
 
                     clbk()
 

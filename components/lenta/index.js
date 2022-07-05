@@ -1486,7 +1486,7 @@ var lenta = (function(){
 
 						actions.setVolume(players[id], videosVolume || 0.5)
 
-						if(!essenseData.comments){
+						if(!essenseData.comments && !share.temp && !share.relay){
 
 							retry(function(){
 								return initedcommentes[id] || !el.c
@@ -1561,22 +1561,26 @@ var lenta = (function(){
 
 				actions.removeRecommendationsFullScreenVideo(id)
 
-				if (!essenseData.comments){
+				var share = self.app.platform.sdk.node.shares.getWithTemp(id) 
 
-					if (initedcommentes[id]){
-						initedcommentes[id].destroy()
-						initedcommentes[id] = null
+				if (share){
+					if (!essenseData.comments && !share.temp && !share.relay){
+
+						if (initedcommentes[id]){
+							initedcommentes[id].destroy()
+							initedcommentes[id] = null
+						}
+	
+						renders.comments(id, false, false, true)
+	
 					}
-
-					renders.comments(id, false, false, true)
-
+	
+					if(video){
+						actions.destroyVideo(share)
+					}
 				}
 
-				if(video){
-					var share = self.app.platform.sdk.node.shares.storage.trx[id];
-
-					actions.destroyVideo(share)
-				}
+				
 
 			},
 
@@ -2969,7 +2973,7 @@ var lenta = (function(){
 						openapi : essenseData.openapi,
 						sharesFromSub,
 						boosted : p.boosted,
-						//shareRelayedFlag,
+						shareRelayedFlag : false,
 					}					
 
 				}, function(p){
@@ -2981,7 +2985,7 @@ var lenta = (function(){
 
 					renders.stars(share)
 
-					if(!share.temp){
+					if(!share.temp && !share.relay){
 						renders.comments(share.txid, false, false, true)
 					}
 			
@@ -4493,6 +4497,8 @@ var lenta = (function(){
 
 					self.app.platform.sdk.node.shares.clbks.added.lenta = function(share){
 						
+						console.log('share', share)
+
 						if (share.txidEdit){		
 													
 							delete initedcommentes[share.txidEdit]
@@ -4588,6 +4594,7 @@ var lenta = (function(){
 
 								s.relay = false
 								s.checkSend = false
+								s.temp = true
 								
 								actions.destroyShare(s)
 	
