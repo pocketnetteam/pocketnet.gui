@@ -495,7 +495,21 @@ nModule = function(){
 			self.user.isState(function(state){	
 				
 				
-				settings.getdata(function(data){
+				settings.getdata(function(data, err){
+
+					if(err){
+
+						topPreloader(100);
+
+						if(globalpreloaderTimer){
+
+							globalpreloader(false)
+
+							clearTimeout(globalpreloaderTimer)
+						}
+
+						return
+					}
 
 					topPreloader(45);
 

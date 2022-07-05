@@ -27208,7 +27208,7 @@ Platform = function (app, listofnodes) {
 
         checkfeatures()
 
-        //self.ui.popup('application');
+        self.ui.popup('application');
 
         app.user.isState(function(state){
 
