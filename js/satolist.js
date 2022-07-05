@@ -2851,8 +2851,10 @@ Platform = function (app, listofnodes) {
 
                     filter : function(recommendations){
 
+
                         recommendations = _.filter(recommendations, (_share) => {
-                            return _share.txid != share.txid && _share.address != self.app.user.address.value
+
+                            return _share.txid != share.txid && (!self.app.user.address.value || _share.address != self.app.user.address.value)
                         })
 
                         recommendations = _.first(recommendations, basecount)
@@ -8111,24 +8113,20 @@ Platform = function (app, listofnodes) {
 
             hasnew : function(key){
 
-                console.log("KEY", key)
 
                 if(!self.sdk.sharesObserver.storage.viewed[key]) return true
 
                 var block = self.currentBlock || (self.app.api.getCurrentBlock ? self.app.api.getCurrentBlock() : 0)
 
-                console.log('block', block, self.sdk.sharesObserver.storage.viewed[key])
                 if (block){
 
                     if (block >= (self.sdk.sharesObserver.storage.viewed[key].block || 0) + 30){
 
-                        console.log("BLOCK 30", block, self.sdk.sharesObserver.storage.viewed[key].block || 0)
 
                         return true
                     }
 
                     if (block > (self.sdk.sharesObserver.storage.viewed[key].block || 0)){
-                        console.log("HASNEW", self.sdk.sharesObserver.storage.viewed[key].new)
 
                         return self.sdk.sharesObserver.storage.viewed[key].new > 0
                     }
@@ -8137,7 +8135,6 @@ Platform = function (app, listofnodes) {
 
             view : function(key, first, last){
 
-                console.log("HERE", key, first, last)
 
                 if(key == 'saved') return
 
@@ -8153,9 +8150,6 @@ Platform = function (app, listofnodes) {
 
                 if (!self.sdk.sharesObserver.storage.viewed[key].last || self.sdk.sharesObserver.storage.viewed[key].last > last)
                     self.sdk.sharesObserver.storage.viewed[key].last = last
-
-                console.log('self.sdk.sharesObserver.storage.viewed', self.sdk.sharesObserver.storage.viewed)
-
 
                 self.sdk.sharesObserver.storage.viewed[key].time = new Date()
                 self.sdk.sharesObserver.storage.viewed[key].block = self.currentBlock || (self.app.api.getCurrentBlock ? self.app.api.getCurrentBlock() : 0)
@@ -16016,8 +16010,6 @@ Platform = function (app, listofnodes) {
                         if (temp.relay) share.relay = true;
                         if (temp.checkSend) share.checkSend = true
 
-                        console.log('share', share)
-
                         share.address = self.app.platform.sdk.address.pnet().address
                     }
 
@@ -16910,9 +16902,6 @@ Platform = function (app, listofnodes) {
 
                                         if (!p.author || p.author == p.address) {
                                             _.each(self.sdk.relayTransactions.withtemp('share'), function (ps) {
-
-                                                console.log('ps', ps)
-
 
                                                 var s = new pShare();
                                                     s._import(ps, true);
@@ -17937,9 +17926,6 @@ Platform = function (app, listofnodes) {
                     if (alias && alias.txid) {
 
                         self.sdk.node.transactions.get.tx(alias.txid, function (d, _error) {
-
-                            console.log('_error', _error)
-
 
                             if (clbk) {
 
@@ -25216,8 +25202,6 @@ Platform = function (app, listofnodes) {
 
         self.getMissed = function () {
 
-            console.log('platform.lastblocktime', platform.lastblocktime, lost)
-
             if ((!platform.lastblocktime || (new Date() < platform.lastblocktime.addMinutes(3))) || (lost < 1)) return Promise.resolve()
 
             if(self.loadingMissed) return Promise.resolve()
@@ -27081,7 +27065,6 @@ Platform = function (app, listofnodes) {
             self.state.load();
 
             self.focusListener = self.FocusListener(self);
-            console.log('self.focusListener.init();')
             self.focusListener.init();
             self.titleManager = new self.TitleManager();
             self.sdk.captcha.load()

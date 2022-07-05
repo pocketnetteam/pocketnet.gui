@@ -669,7 +669,6 @@ var main = (function(){
 
 				self.app.user.isState(function(state){
 
-					console.log('searchtags', searchtags)
 
 					var mode = actions.currentModeKey()
 

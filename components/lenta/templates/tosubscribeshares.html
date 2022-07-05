@@ -5,9 +5,16 @@
         </div>
 
         <div class="tosubscribeshares_buttonWrapper">
-            <a href="index?r=sub&s=<%-share.txid%>" handler="true">
-                <button class="button small"><%=e('continuesubscribefeedButton')%></button>
-            </a>
+            <% if(share) {%>
+                <a href="index?r=sub&s=<%-share.txid%>" handler="true">
+                    <button class="button"><%=e('continuesubscribefeedButton')%></button>
+                </a>
+            <% } else { %>
+                <a href="index?r=sub" handler="true">
+                    <button class="button"><%=e('continuesubscribefeedButton')%></button>
+                </a>
+            <% } %>
+            
         </div>
     </div>
 </div>

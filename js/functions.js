@@ -1,4 +1,3 @@
-//window.onanimationiteration = console.log;
 
 /* PDF */
 

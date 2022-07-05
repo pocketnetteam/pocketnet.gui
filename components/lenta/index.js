@@ -548,8 +548,6 @@ var lenta = (function(){
 							k = '_sub'
 						}
 
-						console.log('essenseData.observe + k, first.id, last.id', essenseData.observe + k, first.id, last.id)
-
 						self.app.platform.sdk.sharesObserver.view(essenseData.observe + k, first.id, last.id)
 					}
 
@@ -3343,6 +3341,9 @@ var lenta = (function(){
 					renders.extras()
 
 					if(subloaded && subloadedindex > 0){
+
+						console.log('shares', shares)
+
 						renders.extra({
 							key : 'tosubscribeshares',
 							render : 'tosubscribeshares',
@@ -3858,8 +3859,6 @@ var lenta = (function(){
 				if(!bshares) bshares = []
 
 				if(includingsub) {
-
-					console.log('sharesSUB1', shares)
 								
 					shares = _.filter(shares, function(share){
 
@@ -3869,22 +3868,16 @@ var lenta = (function(){
 
 							if(!obs) return true
 
-							console.log(share.id , obs.first , obs.last)
-
 							return (!obs.first || share.id > obs.first) || (!obs.last || share.id < obs.last)
 						}
 
 						return true
 					})
 
-					console.log('sharesSUB', shares)
 
 					if (shares.length < pr.count || countshares >= 10){
 						subloaded = true
-						subloadedindex = countshares + shares.length - 1
-
-
-						console.log("subloadedindex", subloadedindex)
+						subloadedindex = countshares + shares.length 
 					}
 
 					_.each(shares, function(share){
@@ -4226,8 +4219,6 @@ var lenta = (function(){
 
 							if(state && essenseData.includesub && loader == 'hierarchical' && !subloaded){
 
-								console.log("INCLUDE SUBS")
-
 								loader = 'getsubscribesfeed'
 								//author = '1'
 
@@ -4497,8 +4488,6 @@ var lenta = (function(){
 
 					self.app.platform.sdk.node.shares.clbks.added.lenta = function(share){
 						
-						console.log('share', share)
-
 						if (share.txidEdit){		
 													
 							delete initedcommentes[share.txidEdit]
@@ -4739,12 +4728,10 @@ var lenta = (function(){
 				
 			}
 
-			console.log('essenseData.observe && essenseData.includesub', essenseData.observe , essenseData.includesub)
 
 			if(essenseData.observe && essenseData.includesub){
 				subloaded = !self.app.platform.sdk.sharesObserver.hasnewkeys([essenseData.observe + '_sub', 'sub'])
 
-				console.log('subloaded', subloaded)
 			}
 
 			load.shares(function(shares, error){
