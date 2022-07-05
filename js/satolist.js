@@ -7511,6 +7511,17 @@ Platform = function (app, listofnodes) {
             storage: {},
             clbks: {},
 
+            mappings: {
+                loggingMapping: {
+                    1: 'USER_ADDRESS_GENERATED',
+                    2: 'USER_FILLED_ACCOUNT_INFO',
+                    3: 'COINS_REQUEST_SENT',
+                    4: 'COINS_REQUEST_COMPLETED',
+                    5: 'ACCOUNT_CREATING_TRANSACTION_SUCCESS',
+                    6: 'ACCOUNT_SUCCESSFULLY_CREATED',
+                },
+            },
+
             redirect : null,
 
             getredirectFromCurrentPage : function(){
@@ -7542,6 +7553,12 @@ Platform = function (app, listofnodes) {
             },
 
             add: function (address, value) {
+                
+                self.app.Logger.info({
+                    actionId: 'USER_REGISTRATION_PROCESS',
+                    actionSubType: self.sdk.registrations.mappings.loggingMapping[value] || value,
+                    actionValue: bitcoin.crypto.sha256(Buffer.from(address, 'utf8')).toString('hex'),
+                });
 
                 /*if(self.sdk.registrations.storage[address] && self.sdk.registrations.storage[address] > value) return*/
 
