@@ -188,7 +188,8 @@
   text-decoration: underline;
 }
 #lenta .bannerComment {
-  display: block;
+  display: flex;
+  justify-content: center;
   background-color: rgb(var(--background-total-theme));
 }
 #lenta .bannerComment .bannerBody {
@@ -223,8 +224,9 @@
 }
 #lenta .bannerComment .bannerBody .text .noShowAgain {
   text-decoration: underline;
-  padding-top: 1.4%;
-  color: #959595;
+  padding-top: 3%;
+  color: rgb(var(--color-not-catchy-grey));
+  font-size: 0.8em;
 }
 #lenta .bannerComment .bannerBody .text .noShowAgain:hover {
   color: rgb(var(--color-cc-blue));
