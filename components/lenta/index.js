@@ -2927,11 +2927,11 @@ var lenta = (function(){
 				if(!p.repost)
 					shareInitingMap[share.txid] = true;
 
-				var relayTransactions = deep(self.app.platform.sdk.relayTransactions.get(), 'share') || {};
+				//var relayTransactions = deep(self.app.platform.sdk.relayTransactions.get(), 'share') || {};
 
-				var shareRelayedFlag = _.find(relayTransactions, (transaction) => (
+				/*var shareRelayedFlag = _.find(relayTransactions, (transaction) => (
 					transaction.txid === share.txid
-				));
+				));*/
 
 				
 				self.shell({
@@ -2948,7 +2948,7 @@ var lenta = (function(){
 						openapi : essenseData.openapi,
 						sharesFromSub,
 						boosted : p.boosted,
-						shareRelayedFlag,
+						//shareRelayedFlag,
 					}					
 
 				}, function(p){

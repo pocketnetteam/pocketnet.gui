@@ -17887,6 +17887,8 @@ Platform = function (app, listofnodes) {
 
                         self.sdk.node.transactions.get.tx(alias.txid, function (d, _error) {
 
+                            console.log('_error', _error)
+
 
                             if (clbk) {
 
