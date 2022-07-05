@@ -117,8 +117,6 @@ var pkoin = (function(){
 
 						if(optionsValue === 'liftUpThePost') {
 
-							console.log('share', share)
-
 							self.app.platform.sdk.node.shares.getboost({
 								lang: share.language,
 								count : 10,
@@ -153,8 +151,6 @@ var pkoin = (function(){
 				else{
 						
 					var vs = 100000000 * valSum
-
-					console.log('boost', boost)
 
 					var prevboost = _.find(boost, function(r){
 						if(r.txid == shareId){

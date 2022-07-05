@@ -1335,13 +1335,10 @@ Share = function(lang){
 						base64: image
 					}).then( url => {
 
-						console.log("URL", url)
-
 						self.images.v[index] = url;
 						p.success();
 
 					}).catch(err => {
-						console.log("ER", err)
 
 						p.success();
 					})
@@ -1545,8 +1542,6 @@ Share = function(lang){
 		var share = new pShare();
 
 			share.time = new Date();
-
-			console.log('self.export()', self.export())
 
 			share._import(self.export())
 
@@ -2563,7 +2558,6 @@ pComment = function(){
 			}
 
 			catch(e){
-				console.log("ERROR", e, v.msgparsed)
 			}
 
 			

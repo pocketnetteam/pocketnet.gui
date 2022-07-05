@@ -251,6 +251,7 @@ var Proxy16 = function(meta, app, api){
 
     self.id = self.host + ":" + self.port + ":" + self.wss
     self.enabled = true
+    self.currentBlock = 0
 
     nodes = []
 
@@ -368,6 +369,10 @@ var Proxy16 = function(meta, app, api){
                 self.ping = rdate.addSeconds(60)
                 self.successping = true
                 self.session = r.session
+
+                if (r.height && self.currentBlock < r.height){
+                    self.currentBlock = r.height
+                }       
 
                 if(!self.current && r.node && !api.get.fixednode()){
                     self.current = {
@@ -656,7 +661,17 @@ var Api = function(app){
         return proxy ? Promise.resolve(proxy) : Promise.reject('proxy')
     }
 
-    
+    self.getCurrentBlock = function(){
+        var b = 0
+
+        _.each(proxies, (p) => {
+            if(p.currentBlock || 0 > b){
+                b = p.currentBlock || 0
+            }
+        })
+
+        return b
+    }
 
     self.addproxy = function(meta){
         var lsproxies = JSON.parse(localStorage['listofproxies'] || "[]")

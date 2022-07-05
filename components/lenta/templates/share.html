@@ -88,18 +88,23 @@ var metadisplay = function(){ %>
 
 				<% if((typeof repost == 'undefined' || !repost)) { %>
 
-					<div elementsid="lenta_metapanel" class="metapanel <%-share.txid%>">
-						<% if(!checkvisibility && (typeof openapi == 'undefined' || !openapi)) {%>
-							<div class="metapanelitem metmenu">
-								<i class="fas fa-ellipsis-h"></i>
-							</div>
-						<% } else { %>
-							<div class="metapanelitem">
+					<% if(!share.temp && !share.relay) {%>
 
-							</div>
-						<% } %>
+						<div elementsid="lenta_metapanel" class="metapanel <%-share.txid%>">
+							<% if(!checkvisibility && (typeof openapi == 'undefined' || !openapi)) {%>
+								<div class="metapanelitem metmenu">
+									<i class="fas fa-ellipsis-h"></i>
+								</div>
+							<% } else { %> 
+								<div class="metapanelitem">
+									
+								</div>
+							<% } %>
 
-					</div>
+						</div>
+						
+					<% } %>
+					
 
 
 				<% } %>
@@ -513,7 +518,11 @@ var arranges = {
 
 										<% if(app.savesupported() && share.itisvideo()) {
 
-											var status = app.platform.sdk.localshares.status(share.txid)
+						<% if(!share.temp && (typeof repost == 'undefined' || !repost || fromempty)) {%>
+							<div class="panel sharepanel unselectablemobile">
+								<div class="item forstars">
+									
+								</div>
 
 											%>
 
@@ -612,6 +621,9 @@ var arranges = {
 								<% } %>
 
 
+						if (share.relay && share.checkSend) { %>
+							<div class="panel sharepanel unselectablemobile">
+								<div class="item right">
 
 
 							</div>

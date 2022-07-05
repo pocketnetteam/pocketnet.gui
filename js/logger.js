@@ -117,21 +117,13 @@ class FrontendLogger {
     guid = '',
     userAgent = '',
   }) {
-    let formattedError;
-
-    try {
-      formattedError = JSON.stringify(err, Object.getOwnPropertyNames(err));
-    } catch (error) {
-      formattedError = `{ "error": "Unable to stringify received error. Report: ${error}", "type": "ERROR_PROCESSING_FAILED"}`;
-    }
-
     const parametersOrder = [
       level,
       date,
       moduleVersion,
       code,
       payload,
-      formattedError,
+      err,
       userAgent,
       guid,
     ].map((element) =>
@@ -168,9 +160,20 @@ class FrontendLogger {
   error(error = {}) {
     const { _errorsCache, guid, userAgent, loggerActive } = this;
     //protection from incorrect error formats or logger is turned off
-    if (typeof error !== 'object' || !loggerActive) return;
+    // if (typeof error !== 'object' || !loggerActive) return;
+    let errorBody;
 
-    const formattedError = { ...error, guid, userAgent };
+    try {
+      errorBody = JSON.stringify(
+        error.payload,
+        Object.getOwnPropertyNames(error.payload),
+      );
+    } catch (errorFormat) {
+      errorBody = `{ "error": "Unable to stringify received error. Report: ${errorFormat}", "type": "ERROR_PROCESSING_FAILED"}`;
+    }
+
+    const formattedError = { ...error, guid, userAgent, payload: errorBody };
+    debugger;
 
     _errorsCache.push(formattedError);
   }
@@ -251,6 +254,5 @@ class FrontendLogger {
       _addLogWithAggregation.default(info, _logsCache);
     }
 
-    console.log('Batch state', _logsCache);
   }
 }

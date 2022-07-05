@@ -118,6 +118,23 @@
 #lenta .share.fromsub {
   border: 1px solid #000;
 }
+#lenta .tosubscribeshares {
+  margin-bottom: 0.5em;
+  border-radius: 12px;
+  background: rgb(var(--background-total-theme));
+  padding: 2em;
+  text-align: center;
+}
+#lenta .tosubscribeshares .tosubscribesharesWrapper {
+  max-width: 460px;
+  margin: 0 auto;
+}
+#lenta .tosubscribeshares .tosubscribeshares_caption span {
+  font-size: 0.8em;
+}
+#lenta .tosubscribeshares .tosubscribeshares_buttonWrapper {
+  margin-top: 2em;
+}
 #lenta .share {
   margin-bottom: 0.5em;
   padding-bottom: 0;

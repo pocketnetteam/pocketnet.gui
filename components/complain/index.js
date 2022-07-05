@@ -132,7 +132,6 @@ var complain = (function(){
                 topPreloader(30);
                 self.sdk.node.transactions.create.commonFromUnspent(
 
-                  modFlag,
 
                   function(tx, error){
                     topPreloader(100)
@@ -306,7 +305,6 @@ var complain = (function(){
           var data = {
             ess : ess
           };
-          console.log('getData', data)
           clbk(data);
         }
 

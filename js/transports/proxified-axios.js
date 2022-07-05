@@ -63,8 +63,6 @@ function proxifiedAxiosFactory(electronIpcRenderer) {
         }
         return new Promise((resolve, reject) => {
             electronIpcRenderer.on(`ProxifiedAxios : Response[${id}]`, (event, response) => {
-                console.table(response);
-                console.log(response);
                 resolve(response);
             });
             electronIpcRenderer.on(`ProxifiedAxios : Error[${id}]`, (event, errorMessage) => {
@@ -153,11 +151,11 @@ class ProxifiedAxiosBridge {
     }
     answer(sender, event, id, data) {
         const eventName = `${this.selfStatic.eventGroup} : ${event}[${id}]`;
-        sender.send(eventName, data);
+        sender?.send(eventName, data);
     }
     listen(event, callback) {
         const eventName = `${this.selfStatic.eventGroup} : ${event}`;
-        this.ipc.on(eventName, (...args) => {
+        this.ipc?.on(eventName, (...args) => {
             const arrangedArgs = args.slice(1);
             arrangedArgs.push(args[0]);
             callback(...arrangedArgs);
@@ -165,7 +163,7 @@ class ProxifiedAxiosBridge {
     }
     listenOnce(event, callback) {
         const eventName = `${this.selfStatic.eventGroup} : ${event}`;
-        this.ipc.once(eventName, (...args) => {
+        this.ipc?.once(eventName, (...args) => {
             const arrangedArgs = args.slice(1);
             arrangedArgs.push(args[0]);
             callback(...arrangedArgs);
@@ -173,7 +171,7 @@ class ProxifiedAxiosBridge {
     }
     stopListen(event) {
         const eventName = `${this.selfStatic.eventGroup} : ${event}`;
-        this.ipc.removeAllListeners(eventName);
+        this.ipc?.removeAllListeners(eventName);
     }
     prepareConfig(axiosConfig) {
         let preparedConfig = { ...axiosConfig };

@@ -42,6 +42,7 @@ const contextMenu = require('electron-context-menu');
 const path = require('path');
 const http = require('http');
 const https = require('https');
+const notifier = require('node-notifier');
 
 contextMenu({
     showSearchWithGoogle : false,

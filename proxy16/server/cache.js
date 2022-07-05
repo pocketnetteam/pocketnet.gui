@@ -109,11 +109,11 @@ var Cache = function(p){
 
             // node +
             search: {
-                time : 6000
+                time : 2000
             },
 
             searchusers: {
-                time : 6000
+                time : 2000
             },
             
             // node +

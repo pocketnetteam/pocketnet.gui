@@ -157,13 +157,6 @@ var test = (function(){
 					localStorage[self.app.platform.sdk.address.pnet().address + 'subscribeRef'] = ref.address										
 				}
 
-				/*if(ref && resref && firstTime){
-					var refaddress = deep(ref, 'address');		
-
-					self.sdk.users.requestFreeRef(refaddress, function(res, err){
-						console.log(res, err)
-					})
-				}*/
 			},
 
 			save : function(clbk){
