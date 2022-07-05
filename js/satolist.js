@@ -24992,7 +24992,9 @@ Platform = function (app, listofnodes) {
 
             platform.app.api.get.currentwss().then(wss => {
 
-                socket = wss.dummy || (new ReconnectingWebSocket(wss.url));
+                socket = wss.dummy || (new ReconnectingWebSocket(wss.url, null, {
+                    reconnectDecay : 1
+                }));
 
 
                 socket.onmessage = function (message) {
