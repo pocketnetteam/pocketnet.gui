@@ -14331,9 +14331,11 @@ Platform = function (app, listofnodes) {
 
                 s.selected[k] || (s.selected[k] = {})
 
+                var categoryNameForLogs = self.sdk.categories.getByIdForLogs(cat.id);
+
                 self.app.Logger.info({
                     actionId: 'SELECT_FEED_CATEGORY',
-                    actionValue: cat.name,
+                    actionValue: categoryNameForLogs.name,
                     actionSubType: s.selected[k][id] ? 'DESELECT' : 'SELECT'
                 });
 
@@ -14433,6 +14435,12 @@ Platform = function (app, listofnodes) {
 				})
 
                 return (categories).concat(added)
+            },
+
+            getByIdForLogs : function(id) {
+                var categories = self.sdk.categories.data.all['en'];
+
+                return categories.find(category => category.id === id) || {};
             },
 
             getbyid : function(id, _k){
@@ -27376,7 +27384,7 @@ Platform = function (app, listofnodes) {
         
 
         app.user.isState(function(state){
-
+            
             if (state) {
 
                 lazyActions([
@@ -27416,8 +27424,10 @@ Platform = function (app, listofnodes) {
 
                     self.loadingWithErrors = !_.isEmpty(self.app.errors.state)
 
-
-
+                    self.app.Logger.info({
+                        actionId: 'SESSION_STARTED',
+                        actionSubType: 'AUTHORIZED_SESSION',
+                    });
 
                     if (clbk)
                         clbk()
@@ -27465,6 +27475,10 @@ Platform = function (app, listofnodes) {
                 })
             }
             else {
+                self.app.Logger.info({
+                    actionId: 'SESSION_STARTED',
+                    actionSubType: 'UNAUTHORIZED_SESSION',
+                });
 
                 self.preparingUser = false;
 
