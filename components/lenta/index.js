@@ -2652,12 +2652,15 @@ var lenta = (function(){
 			},
 
 			showBanner : function(){
-				const shareId = $(this).closest('.share').attr('id');
+				const share = $(this).closest('.share');
+				const shareId = share.attr('id');
 
 				const rankCount = el.c.find('#' + shareId).find('.count')[0].innerText;
 				const isAlreadyRanked = (rankCount != 0);
+				const isRegisteredUser = app.platform.sdk.user.me();
 
 				if (isAlreadyRanked) return;
+				if (!isRegisteredUser) return;
 
 				const unixTimeNow = Math.floor(Date.now() / 1000);
 				const oneDayInSeconds = 86400000;
@@ -2665,6 +2668,17 @@ var lenta = (function(){
 				const alreadyShowed = ('nextCommentBanner' in localStorage);
 				const isBannerDisabled = (localStorage.nextCommentBanner == -1);
 				const timeToShowBanner = (localStorage.nextCommentBanner <= unixTimeNow);
+
+				const regdate = app.platform.sdk.user.me().regdate;
+				const regUnixTime = (regdate.getTime());
+				const registeredTime = Date.now() - regUnixTime;
+
+				const isOneDayOld = registeredTime <= 86400000;
+
+				if (isOneDayOld) {
+					renders.showBanner(shareId);
+					return;
+				}
 
 				if (!alreadyShowed) {
 					localStorage.nextCommentBanner = unixTimeNow + oneDayInSeconds;
@@ -2679,6 +2693,7 @@ var lenta = (function(){
 					localStorage.nextCommentBanner = unixTimeNow + oneDayInSeconds;
 					renders.showBanner(shareId);
 				}
+
 			},
 
 			closeBanner: function(){
@@ -4390,7 +4405,7 @@ var lenta = (function(){
 			el.c.find('.loadmore button').on('click', events.loadmore)
 			el.c.find('.loadprev button').on('click', events.loadprev)
 			el.c.on('click', '.gotouserprofile', events.gotouserprofile)
-			el.c.on('click', '.forstars .starWrapper', events.showBanner)
+			el.c.on('click', '.forstars .starWrapper:last-child', events.showBanner)
 			el.c.on('click', '.closeBannerBtn', events.closeBanner)
 			el.c.on('click', '.noShowAgain', events.dontShowBanner)
 
