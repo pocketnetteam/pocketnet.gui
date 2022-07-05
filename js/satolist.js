@@ -70,6 +70,7 @@ Platform = function (app, listofnodes) {
 
     self.app = app;
 
+    self.lastblocktime = null
     self.lasttimecheck = null
     self.real = {
         'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd' : true,
@@ -8092,20 +8093,73 @@ Platform = function (app, listofnodes) {
                 viewed : {}
             },
 
+            newmaterials : function(counts){
+                _.each(counts, (c, i) => {
+                    if (self.sdk.sharesObserver.storage.viewed[i]){
+                        self.sdk.sharesObserver.storage.viewed[i].new = (self.sdk.sharesObserver.storage.viewed[i].new || 0) + c
+                    }
+                })
+
+                self.sdk.sharesObserver.save()
+            },
+
+            hasnewkeys : function(keys){
+                return _.reduce(keys, (m, key) => {
+                    return m && self.sdk.sharesObserver.hasnew(key)
+                }, true)
+            },
+
+            hasnew : function(key){
+
+                console.log("KEY", key)
+
+                if(!self.sdk.sharesObserver.storage.viewed[key]) return true
+
+                var block = self.currentBlock || (self.app.api.getCurrentBlock ? self.app.api.getCurrentBlock() : 0)
+
+                console.log('block', block, self.sdk.sharesObserver.storage.viewed[key])
+                if (block){
+
+                    if (block >= (self.sdk.sharesObserver.storage.viewed[key].block || 0) + 30){
+
+                        console.log("BLOCK 30", block, self.sdk.sharesObserver.storage.viewed[key].block || 0)
+
+                        return true
+                    }
+
+                    if (block > (self.sdk.sharesObserver.storage.viewed[key].block || 0)){
+                        console.log("HASNEW", self.sdk.sharesObserver.storage.viewed[key].new)
+
+                        return self.sdk.sharesObserver.storage.viewed[key].new > 0
+                    }
+                }   
+            },
+
             view : function(key, first, last){
+
+                console.log("HERE", key, first, last)
 
                 if(key == 'saved') return
 
                 if(!self.sdk.sharesObserver.storage.viewed[key]) self.sdk.sharesObserver.storage.viewed[key] = {}
 
-                if (self.sdk.sharesObserver.storage.viewed[key].first < first)
-                    self.sdk.sharesObserver.storage.viewed[key].first = first
+                if (!self.sdk.sharesObserver.storage.viewed[key].first || self.sdk.sharesObserver.storage.viewed[key].first < first){
 
-                if (self.sdk.sharesObserver.storage.viewed[key].last > last)
+                    self.sdk.sharesObserver.storage.viewed[key].first = first
+                    self.sdk.sharesObserver.storage.viewed[key].new = 0
+
+                }
+                    
+
+                if (!self.sdk.sharesObserver.storage.viewed[key].last || self.sdk.sharesObserver.storage.viewed[key].last > last)
                     self.sdk.sharesObserver.storage.viewed[key].last = last
+
+                console.log('self.sdk.sharesObserver.storage.viewed', self.sdk.sharesObserver.storage.viewed)
 
 
                 self.sdk.sharesObserver.storage.viewed[key].time = new Date()
+                self.sdk.sharesObserver.storage.viewed[key].block = self.currentBlock || (self.app.api.getCurrentBlock ? self.app.api.getCurrentBlock() : 0)
+                
 
                 self.sdk.sharesObserver.save()
 
@@ -9588,7 +9642,6 @@ Platform = function (app, listofnodes) {
 
                 var totalComplainsFirstFlags = typeof ustate.firstFlags === 'object' ? Object.values(ustate.firstFlags).reduce((a,b) => a + +b, 0) : 0
 
-                console.log('totalComplainsFirstFlags', totalComplainsFirstFlags, ustate.firstFlags)
                 if(self.bch[address]) return true
 
                 if(typeof count == 'undefined') count = -12
@@ -11265,14 +11318,6 @@ Platform = function (app, listofnodes) {
 
                 var s = self.sdk.node.shares;
 
-                // s.getex(parameters, function(data, error){
-
-                //     console.log('gettopaccounts result', data, error);
-
-                //     clbk(data, error);
-
-
-                // }, method, rpc)
 
                 clbk();
 
@@ -11314,8 +11359,6 @@ Platform = function (app, listofnodes) {
                 var s = self.sdk.node.shares;
 
                 s.getex(parameters, function(data, error){
-
-                    console.log('getrecommendedaccounts result', data, error);
 
                     if (!(data && data.length) || error){
 
@@ -11438,8 +11481,12 @@ Platform = function (app, listofnodes) {
                     sub : data['sharesSubscr'] || 0,
                     video : deep(data, 'contentsLang.video.' + self.app.localization.key)|| 0,
                     article : deep(data, 'contentsLang.article.' + self.app.localization.key)|| 0,
-                    common : deep(data, 'sharesLang.' + self.app.localization.key) || ( (deep(data, 'contentsLang.share.' + self.app.localization.key) || 0) + (deep(data, 'contentsLang.video.' + self.app.localization.key)|| 0))
+                    common : deep(data, 'sharesLang.' + self.app.localization.key) || ( (deep(data, 'contentsLang.share.' + self.app.localization.key) || 0) + (deep(data, 'contentsLang.video.' + self.app.localization.key)|| 0)),
+
+                    index_sub : data['sharesSubscr'] || 0
                 }
+
+                counts.index = counts.common
 
                 _.each(counts, function(c, i){
                     // c = rand(1,3)
@@ -11450,7 +11497,7 @@ Platform = function (app, listofnodes) {
                     u(self.sdk.newmaterials.storage)
                 })
 
-
+                self.sdk.sharesObserver.newmaterials(counts)
             },
 
             clear : function(){
@@ -17356,8 +17403,6 @@ Platform = function (app, listofnodes) {
                                     else{
                                     }
                                 })
-    
-                                console.log('include, shares2', shares.length)
     
     
                                 if (clbk)
@@ -24108,6 +24153,7 @@ Platform = function (app, listofnodes) {
 
                         platform.currentBlock = data.block;
                         platform.lasttimecheck = new Date()
+                        platform.lastblocktime = new Date()
 
                         lost = data.block;
 
@@ -24162,6 +24208,7 @@ Platform = function (app, listofnodes) {
                     platform.currentBlock = data.height;
 
                     platform.lasttimecheck = new Date()
+                    platform.lastblocktime = new Date()
 
                     localStorage['lastblock'] = platform.currentBlock
 
@@ -25130,7 +25177,11 @@ Platform = function (app, listofnodes) {
 
         self.getMissed = function () {
 
-            if (lost < 1 || self.loadingMissed) return Promise.resolve()
+            console.log('platform.lastblocktime', platform.lastblocktime, lost)
+
+            if ((!platform.lastblocktime || (new Date() < platform.lastblocktime.addMinutes(3))) || (lost < 1)) return Promise.resolve()
+
+            if(self.loadingMissed) return Promise.resolve()
 
             self.loadingMissed = true;
 
@@ -25290,7 +25341,6 @@ Platform = function (app, listofnodes) {
         }
 
         self.messageHandler = function (data, clbk) {
-            console.log('handle message')
 
             data || (data = {})
 
@@ -26736,9 +26786,9 @@ Platform = function (app, listofnodes) {
             self.clientrtctemp.destroy()
         }
 
-        if (self.focusListener) {
+        /*if (self.focusListener) {
             self.focusListener.destroy()
-        }
+        }*/
 
         if (onlinetnterval)
             clearInterval(onlinetnterval)
@@ -26992,6 +27042,7 @@ Platform = function (app, listofnodes) {
             self.state.load();
 
             self.focusListener = self.FocusListener(self);
+            console.log('self.focusListener.init();')
             self.focusListener.init();
             self.titleManager = new self.TitleManager();
             self.sdk.captcha.load()
@@ -27928,6 +27979,8 @@ Platform = function (app, listofnodes) {
                     }, 500)
                 })
             }
+
+            platform.ws.getMissed()
 
             self.clbks.focus(time);
 

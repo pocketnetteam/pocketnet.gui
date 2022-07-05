@@ -1405,8 +1405,6 @@ var videoCabinet = (function () {
 
 			destroy: function () {
 
-				console.log("DESTROY")
-
 				if (el.windowElement)
 					el.windowElement.off('scroll', events.onPageScroll);
 

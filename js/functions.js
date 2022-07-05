@@ -1302,21 +1302,6 @@
 
 					});
 
-					/*txt.on('change', function(){
-						console.log('this.scrollTop', this.scrollTop)
-
-						if (this.scrollTop > 0){
-						  	this.style.height = (this.scrollHeight + 10) + "px";
-						}
-
-					});
-
-					txt.focus()
-					txt.change()*/
-
-
-
-
 				}
 
 				if(value.upload){
@@ -6454,8 +6439,6 @@
 		if(todownloads){
 			window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem){
 
-				console.log(fileSystem)
-
 				onsuccess(fileSystem.root)
 			}, onerror)
 		}
@@ -6806,8 +6789,6 @@
 			}
 
 			if(!ms){
-
-				console.log('transitionstr', transitionstr)
 
 				__el.style["-moz-transition"] = transitionstr
 				__el.style["-o-transition"] = transitionstr
@@ -11551,13 +11532,10 @@ randomizerarray = function(ar, count, key){
 
 		if (v) {
 
-			console.log('include ar', ar.length)
 
 			ar = _.filter(ar, function(_v){
 				return !isEqual(_v, v, false)
 			})
-
-			console.log('include ar2', ar.length)
 
 			r.push(v)
 		}

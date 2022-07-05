@@ -669,8 +669,10 @@ var main = (function(){
 
 				self.app.user.isState(function(state){
 
-					console.log('(self.app.test || self.app.platform.istest())', (self.app.test || self.app.platform.istest()))
-				
+					console.log('searchtags', searchtags)
+
+					var mode = actions.currentModeKey()
+
 					self.nav.api.load({
 						open : true,
 						id : 'lenta',
@@ -688,13 +690,16 @@ var main = (function(){
 							read : readmain,
 							video :  videomain && !isMobile(),
 							videomobile : videomain && isMobile(),
-							observe : actions.currentModeKey(),
+							observe : searchvalue || searchtags ? null : mode,
 							page : 0,
 
 							//recommendedUsers : self.app.mobileview,
 							//recommendedUsersCount : self.app.mobileview ? 15 : 3,
-							//includesub : true,
+
+
+							includesub : !searchvalue && !searchtags && (mode == 'index' /*|| mode == 'video' || mode == 'read'*/) ? true : false,
 							includeboost : self.app.boost,
+
 							//optimize : self.app.mobileview,
 							extra : (self.app.test || self.app.platform.istest()) && state && isMobile() ? [
 								{
@@ -822,7 +827,6 @@ var main = (function(){
 
 				else{
 
-					//console.log("OPEN PAPI", id)
 					
 					self.app.platform.papi.post(id, el.c.find('.renderposthere'), function(e, p){
 						openedpost = p
@@ -836,10 +840,6 @@ var main = (function(){
 						opensvi : function(id){
 
 							if (openedpost){
-
-								//console.log('clearessense')
-						
-								//openedpost.destroy()
 								openedpost.clearessense()
 								openedpost = null
 							}

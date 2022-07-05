@@ -19,7 +19,6 @@ class VideoUploader {
     this.videoFile = videoFile;
     this.title = videoFile.name;
 
-    console.log('videoFile', videoFile, this)
 
     this.activeHost = app.peertubeHandler.active();
   }
@@ -220,14 +219,10 @@ class VideoUploader {
     }
     catch(e) {
 
-      console.log('self.canceled', self)
 
       if(!self.canceled) {
 
-      
-        console.log(e, e.reason)
         if(e && e.reason == "resumable_chunk_request_failed"){
-          console.log("RECU")
           await waitPromise(2000)
           return self.static.loadChunkRes(self, chunk, chunkPos);
         }

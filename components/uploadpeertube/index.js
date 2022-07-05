@@ -424,12 +424,6 @@ var uploadpeertube = (function () {
 					data.started = true;
 
 					if (data.showInfo) {
-						/*console.log('Video will be uploaded in chunks', Math.round(videoSize / chunkSize));
-						console.log('Expected time in seconds', (time / 1000) * Math.round(videoSize / chunkSize));
-						console.log('Started at', Date.now() / 1000);*/
-
-						//window.ct_expected = Math.floor((time / 1000) * Math.round(videoSize / chunkSize));
-
 						data.showInfo = false;
 					}
 
@@ -456,7 +450,6 @@ var uploadpeertube = (function () {
 				};
 
 				initCancelListener(() => {
-					console.log('initCancelListener')
 					uploader.cancel(); processing(false)
 				});
 				
@@ -530,9 +523,6 @@ var uploadpeertube = (function () {
 						};
 
 						options.progress = function (percentComplete) {
-
-							console.log('percentComplete', percentComplete)
-
 							loadProgress(percentComplete, 'importingVideo');
 
 						};
@@ -642,7 +632,6 @@ var uploadpeertube = (function () {
 						clbk(data);
 					})
 					.catch((e = {}) => {
-						console.log("ERRR", e)
 
 						if(e.response) e = e.response
 
