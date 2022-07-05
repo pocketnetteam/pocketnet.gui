@@ -3818,9 +3818,7 @@ var lenta = (function(){
 						return true
 					})
 
-					if (shares.length < pr.count || countshares >= 20){
-						subloaded = true
-					}
+					subloaded = (self.sdk.sharesObserver.loadSubNeeded === true) ? false : true;
 
 					_.each(shares, function(share){
 						sharesFromSub[share.txid] = share

@@ -8085,6 +8085,8 @@ Platform = function (app, listofnodes) {
                 viewed : {}
             },
 
+            lastBlockNumberSeen: null,
+
             view : function(key, first, last){
 
                 if(key == 'saved') return
@@ -24168,6 +24170,19 @@ Platform = function (app, listofnodes) {
 
                         })
                     })
+
+                    // If block number has increased (or was not set yet) AND we have new sub shares
+                    if ((!self.sdk.sharesObserver.lastBlockNumberSeen || self.sdk.sharesObserver.lastBlockNumberSeen < data.height) &&
+                        data.sharesSubscr > 0) {
+
+                        // Mark the observer so we will request the sub shares on next load
+                        self.sdk.sharesObserver.loadSubNeeded = true;
+
+                    }
+
+                    // Save the last seen block number
+                    if (data.height)
+                        self.sdk.sharesObserver.lastBlockNumberSeen = data.height;
 
                     platform.sdk.newmaterials.update(data)
 
