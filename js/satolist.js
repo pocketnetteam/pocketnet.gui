@@ -70,6 +70,7 @@ Platform = function (app, listofnodes) {
 
     self.app = app;
 
+    self.lastblocktime = null
     self.lasttimecheck = null
     self.real = {
         'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd' : true,
@@ -2850,8 +2851,10 @@ Platform = function (app, listofnodes) {
 
                     filter : function(recommendations){
 
+
                         recommendations = _.filter(recommendations, (_share) => {
-                            return _share.txid != share.txid && _share.address != self.app.user.address.value
+
+                            return _share.txid != share.txid && (!self.app.user.address.value || _share.address != self.app.user.address.value)
                         })
 
                         recommendations = _.first(recommendations, basecount)
@@ -7606,13 +7609,20 @@ Platform = function (app, listofnodes) {
                                                         }
 
                                                         // Transcoding checking for functions
-                                                        if (object.checkSend) {
-                                                            self.app.peertubeHandler.checkTranscoding(object.url).then((result) => {
+                                                        if (object.checkSend && object.canSend) {
+
+                                                            obj.canSend(self.app, (result) => {
+                                                                if (result) return successFullSendFunc();
+                                                                // Skip if transcoding is not finished
+                                                                return p.success()
+                                                            })
+
+                                                            /*self.app.peertubeHandler.checkTranscoding(object.url).then((result) => {
                                                                 if (result) return successFullSendFunc();
 
                                                                 // Skip if transcoding is not finished
                                                                 return p.success()
-                                                            })
+                                                            })*/
                                                         } else {
                                                             successFullSendFunc();
                                                         }
@@ -8085,20 +8095,65 @@ Platform = function (app, listofnodes) {
                 viewed : {}
             },
 
+            newmaterials : function(counts){
+                _.each(counts, (c, i) => {
+                    if (self.sdk.sharesObserver.storage.viewed[i]){
+                        self.sdk.sharesObserver.storage.viewed[i].new = (self.sdk.sharesObserver.storage.viewed[i].new || 0) + c
+                    }
+                })
+
+                self.sdk.sharesObserver.save()
+            },
+
+            hasnewkeys : function(keys){
+                return _.reduce(keys, (m, key) => {
+                    return m && self.sdk.sharesObserver.hasnew(key)
+                }, true)
+            },
+
+            hasnew : function(key){
+
+
+                if(!self.sdk.sharesObserver.storage.viewed[key]) return true
+
+                var block = self.currentBlock || (self.app.api.getCurrentBlock ? self.app.api.getCurrentBlock() : 0)
+
+                if (block){
+
+                    if (block >= (self.sdk.sharesObserver.storage.viewed[key].block || 0) + 30){
+
+
+                        return true
+                    }
+
+                    if (block > (self.sdk.sharesObserver.storage.viewed[key].block || 0)){
+
+                        return self.sdk.sharesObserver.storage.viewed[key].new > 0
+                    }
+                }   
+            },
+
             view : function(key, first, last){
+
 
                 if(key == 'saved') return
 
                 if(!self.sdk.sharesObserver.storage.viewed[key]) self.sdk.sharesObserver.storage.viewed[key] = {}
 
-                if (self.sdk.sharesObserver.storage.viewed[key].first < first)
-                    self.sdk.sharesObserver.storage.viewed[key].first = first
+                if (!self.sdk.sharesObserver.storage.viewed[key].first || self.sdk.sharesObserver.storage.viewed[key].first < first){
 
-                if (self.sdk.sharesObserver.storage.viewed[key].last > last)
+                    self.sdk.sharesObserver.storage.viewed[key].first = first
+                    self.sdk.sharesObserver.storage.viewed[key].new = 0
+
+                }
+                    
+
+                if (!self.sdk.sharesObserver.storage.viewed[key].last || self.sdk.sharesObserver.storage.viewed[key].last > last)
                     self.sdk.sharesObserver.storage.viewed[key].last = last
 
-
                 self.sdk.sharesObserver.storage.viewed[key].time = new Date()
+                self.sdk.sharesObserver.storage.viewed[key].block = self.currentBlock || (self.app.api.getCurrentBlock ? self.app.api.getCurrentBlock() : 0)
+                
 
                 self.sdk.sharesObserver.save()
 
@@ -9581,7 +9636,6 @@ Platform = function (app, listofnodes) {
 
                 var totalComplainsFirstFlags = typeof ustate.firstFlags === 'object' ? Object.values(ustate.firstFlags).reduce((a,b) => a + +b, 0) : 0
 
-                console.log('totalComplainsFirstFlags', totalComplainsFirstFlags, ustate.firstFlags)
                 if(self.bch[address]) return true
 
                 if(typeof count == 'undefined') count = -12
@@ -11258,14 +11312,6 @@ Platform = function (app, listofnodes) {
 
                 var s = self.sdk.node.shares;
 
-                // s.getex(parameters, function(data, error){
-
-                //     console.log('gettopaccounts result', data, error);
-
-                //     clbk(data, error);
-
-
-                // }, method, rpc)
 
                 clbk();
 
@@ -11276,12 +11322,7 @@ Platform = function (app, listofnodes) {
                 var rpc = {
                     cache : true,
                     locally : true,
-                    fastvideo : true,
-                    meta : {
-                        host : '78.37.233.202',
-                        port : 31031,
-                        ws : 3037
-                    }
+                    fastvideo : true
                 }
 
                 var address = self.sdk.activity.getbestaddress();
@@ -11307,8 +11348,6 @@ Platform = function (app, listofnodes) {
                 var s = self.sdk.node.shares;
 
                 s.getex(parameters, function(data, error){
-
-                    console.log('getrecommendedaccounts result', data, error);
 
                     if (!(data && data.length) || error){
 
@@ -11431,8 +11470,12 @@ Platform = function (app, listofnodes) {
                     sub : data['sharesSubscr'] || 0,
                     video : deep(data, 'contentsLang.video.' + self.app.localization.key)|| 0,
                     article : deep(data, 'contentsLang.article.' + self.app.localization.key)|| 0,
-                    common : deep(data, 'sharesLang.' + self.app.localization.key) || ( (deep(data, 'contentsLang.share.' + self.app.localization.key) || 0) + (deep(data, 'contentsLang.video.' + self.app.localization.key)|| 0))
+                    common : deep(data, 'sharesLang.' + self.app.localization.key) || ( (deep(data, 'contentsLang.share.' + self.app.localization.key) || 0) + (deep(data, 'contentsLang.video.' + self.app.localization.key)|| 0)),
+
+                    index_sub : data['sharesSubscr'] || 0
                 }
+
+                counts.index = counts.common
 
                 _.each(counts, function(c, i){
                     // c = rand(1,3)
@@ -11443,7 +11486,7 @@ Platform = function (app, listofnodes) {
                     u(self.sdk.newmaterials.storage)
                 })
 
-
+                self.sdk.sharesObserver.newmaterials(counts)
             },
 
             clear : function(){
@@ -15959,7 +16002,8 @@ Platform = function (app, listofnodes) {
                         share._import(temp, true);
                         share.temp = true;
 
-                        if (s.relay) share.relay = true;
+                        if (temp.relay) share.relay = true;
+                        if (temp.checkSend) share.checkSend = true
 
                         share.address = self.app.platform.sdk.address.pnet().address
                     }
@@ -16854,12 +16898,12 @@ Platform = function (app, listofnodes) {
                                         if (!p.author || p.author == p.address) {
                                             _.each(self.sdk.relayTransactions.withtemp('share'), function (ps) {
 
-
                                                 var s = new pShare();
-                                                s._import(ps, true);
-                                                s.temp = true;
+                                                    s._import(ps, true);
+                                                    s.temp = true;
 
                                                 if (ps.relay) s.relay = true
+                                                if (ps.checkSend) s.checkSend = true
 
                                                 s.address = ps.address
 
@@ -16924,12 +16968,7 @@ Platform = function (app, listofnodes) {
                         rpc : {
                             cache : true,
                             locally : true,
-                            fastvideo : true,
-                            meta : {
-                                host : '78.37.233.202',
-                                port : 31031,
-                                ws : 3037
-                            }
+                            fastvideo : true
                         }
                     });
 
@@ -17235,6 +17274,7 @@ Platform = function (app, listofnodes) {
                                                 s.temp = true;
 
                                                 if (ps.relay) s.relay = true
+                                                if (ps.checkSend) s.checkSend = true
 
                                                 s.address = ps.address
 
@@ -17348,8 +17388,6 @@ Platform = function (app, listofnodes) {
                                     else{
                                     }
                                 })
-    
-                                console.log('include, shares2', shares.length)
     
     
                                 if (clbk)
@@ -17878,7 +17916,6 @@ Platform = function (app, listofnodes) {
                     if (alias && alias.txid) {
 
                         self.sdk.node.transactions.get.tx(alias.txid, function (d, _error) {
-
 
                             if (clbk) {
 
@@ -19249,6 +19286,7 @@ Platform = function (app, listofnodes) {
                                                         alias.time = self.currentTime()
                                                         alias.timeUpd = alias.time
                                                         alias.optype = optype
+                                                        alias.temp = true
 
                                                         var count = deep(tempOptions, obj.type + ".count") || 'many'
 
@@ -19336,10 +19374,10 @@ Platform = function (app, listofnodes) {
                                 alias.optype = optype
 
                                 alias.relay = true;
-
                                 alias.checkSend = true;
 
                                 self.sdk.relayTransactions.add(addr.address, alias)
+
                                 if (clbk)
                                     clbk(alias)
 
@@ -24098,6 +24136,7 @@ Platform = function (app, listofnodes) {
 
                         platform.currentBlock = data.block;
                         platform.lasttimecheck = new Date()
+                        platform.lastblocktime = new Date()
 
                         lost = data.block;
 
@@ -24119,6 +24158,35 @@ Platform = function (app, listofnodes) {
                     platform.sdk.user.subscribeRef()
 
                     clbk(dif)
+
+                    ////////////////
+
+                    if(app.platform.sdk.address.pnet()){
+                        var addr = app.platform.sdk.address.pnet().address
+
+                        var regs = app.platform.sdk.registrations.storage[addr];
+
+                        if (regs == 5) {
+
+                            app.platform.sdk.registrations.add(addr, 6)
+
+                            platform.matrixchat.update()
+                        }
+                    }
+
+                    if(!slowMadeRelayTransactions)
+
+                        slowMadeRelayTransactions = slowMade(function(){
+                            
+                            platform.sdk.relayTransactions.send()
+                            slowMadeRelayTransactions = null
+
+                        }, slowMadeRelayTransactions, 10000)
+
+                    setTimeout(function(){
+                        platform.matrixchat.init()
+                    }, 100)
+                    ////////
                 },
 
                 refs: {
@@ -24152,6 +24220,7 @@ Platform = function (app, listofnodes) {
                     platform.currentBlock = data.height;
 
                     platform.lasttimecheck = new Date()
+                    platform.lastblocktime = new Date()
 
                     localStorage['lastblock'] = platform.currentBlock
 
@@ -24191,11 +24260,14 @@ Platform = function (app, listofnodes) {
 
                     ////////
 
+                    if(!slowMadeRelayTransactions)
 
-                    slowMadeRelayTransactions = slowMade(function(){
+                        slowMadeRelayTransactions = slowMade(function(){
 
-                        platform.sdk.relayTransactions.send()
-                    }, slowMadeRelayTransactions, 10000)
+                            platform.sdk.relayTransactions.send()
+                            slowMadeRelayTransactions = null
+
+                        }, slowMadeRelayTransactions, 10000)
 
                     clbk()
 
@@ -25120,7 +25192,9 @@ Platform = function (app, listofnodes) {
 
         self.getMissed = function () {
 
-            if (lost < 1 || self.loadingMissed) return Promise.resolve()
+            if ((!platform.lastblocktime || (new Date() < platform.lastblocktime.addMinutes(3))) || (lost < 1)) return Promise.resolve()
+
+            if(self.loadingMissed) return Promise.resolve()
 
             self.loadingMissed = true;
 
@@ -25280,7 +25354,6 @@ Platform = function (app, listofnodes) {
         }
 
         self.messageHandler = function (data, clbk) {
-            console.log('handle message')
 
             data || (data = {})
 
@@ -26726,9 +26799,9 @@ Platform = function (app, listofnodes) {
             self.clientrtctemp.destroy()
         }
 
-        if (self.focusListener) {
+        /*if (self.focusListener) {
             self.focusListener.destroy()
-        }
+        }*/
 
         if (onlinetnterval)
             clearInterval(onlinetnterval)
@@ -27135,7 +27208,7 @@ Platform = function (app, listofnodes) {
 
         checkfeatures()
 
-        //self.ui.popup('application');
+        self.ui.popup('application');
 
         app.user.isState(function(state){
 
@@ -27918,6 +27991,8 @@ Platform = function (app, listofnodes) {
                     }, 500)
                 })
             }
+
+            platform.ws.getMissed()
 
             self.clbks.focus(time);
 

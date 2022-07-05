@@ -151,6 +151,9 @@ __map =  {
 		{ c : 'lenta', n : 'stars' },
 		{ c : 'lenta', n : 'groupshares' },
 		{ c : 'lenta', n : 'commentspreview' },
+		{ c : 'lenta', n : 'tosubscribeshares' },
+
+		
 		{ c : 'comments', n : 'index' },
 		{ c : 'comments', n : 'post' },
 		{ c : 'comments', n : 'list' },

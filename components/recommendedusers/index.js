@@ -237,20 +237,6 @@ var recommendedusers = (function(){
 		var initEvents = function(){
 
 
-			/*console.log("ASD")
-
-			self.app.platform.sdk.categories.clbks.excluded.recommendedusers =
-			self.app.platform.sdk.categories.clbks.tags.recommendedusers =
-			self.app.platform.sdk.categories.clbks.selected.recommendedusers = function(data){
-
-
-				if (el.users)
-					el.users.empty();
-
-				addresses = [];
-				state.load(renders.page);
-				
-			}*/
 
 			
 		}

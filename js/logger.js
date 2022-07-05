@@ -246,6 +246,5 @@ class FrontendLogger {
       _addLogWithAggregation.default(info, _logsCache);
     }
 
-    console.log('Batch state', _logsCache);
   }
 }

@@ -1,6 +1,5 @@
 const electron = require('electron');
 
-console.log('electron', electron);
 
 let mainWindow;
 
