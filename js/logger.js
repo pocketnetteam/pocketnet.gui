@@ -75,7 +75,12 @@ class FrontendLogger {
 
     SESSION_STARTED: {
       id: 'SESSION_STARTED',
-      description: 'User session has started'
+      description: 'User session has started',
+    },
+
+    VIDEO_LOADED_WITH_RECOMMENDATIONS: {
+      id: 'VIDEO_LOADED_WITH_RECOMMENDATIONS',
+      description: 'User opened video with recommendations',
     },
   };
 
