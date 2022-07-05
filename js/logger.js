@@ -82,6 +82,11 @@ class FrontendLogger {
       id: 'VIDEO_LOADED_WITH_RECOMMENDATIONS',
       description: 'User opened video with recommendations',
     },
+
+    USER_STARTED_REGISTRATION: {
+      id: 'USER_STARTED_REGISTRATION',
+      description: 'Userhas started a registration process',
+    },
   };
 
   sendLogsBatch() {
