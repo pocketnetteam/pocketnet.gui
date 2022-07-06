@@ -33,7 +33,8 @@ var videoCabinet = (function () {
     var blockChainInfo = [];
     var external = null;
     var perServerCounter = 10;
-    var blockChainVidsStart = 0;
+
+    var allVideosLoaded = false;
 
     const descriptionCache = {};
 
@@ -310,8 +311,8 @@ var videoCabinet = (function () {
           });
       },
 
-      getFullPageInfo(videoPortionElement, videos = null) {
-        renders.videos(videos, videoPortionElement);
+      getFullPageInfo(videoPortionElement, videos = null, fromBlockChainFlag) {
+        renders.videos(videos, videoPortionElement, fromBlockChainFlag);
 
         //getting and rendering bonus program status for views and ratings (same template)
         actions
@@ -520,41 +521,43 @@ var videoCabinet = (function () {
           .replace(`Watch more exciting videos at https://pocketnet.app/!`, '')
           .replace(`Watch more exciting videos at https://bastyon.com/!`, ''),
 
-      getBlockChainVideos() {
+      getBlockChainVideos(resetCache) {
         const payload = {
           author: self.app.user.address.value,
           begin: '',
           count: perServerCounter,
           height: 0,
-          page: blockChainVidsStart,
           type: 'video',
         };
 
-        self.app.platform.sdk.node.shares.getprofilefeed(
-          payload,
-          (data = []) => {
-            const outputVideos = data
-              .filter((video = {}) => !video.deleted)
-              .map((video = {}) => {
-                const meta = self.app.platform.parseUrl(video.url) || {};
+        return new Promise((res) => {
+          self.app.platform.sdk.node.shares.getprofilefeed(
+            payload,
+            (data = []) => {
+              const outputVideos = data
+                .filter((video = {}) => !video.deleted)
+                .map((video = {}) => {
+                  const meta = self.app.platform.parseUrl(video.url) || {};
 
-                return {
-                  uuid: meta.id,
-                  name: video.caption,
-                  description: video.message,
-                  server: meta.host_name,
-                  txid: video.txid,
-                  url: video.url,
-                  state: {
-                    id: 1,
-                  },
-                };
-              });
-            blockChainVidsStart += 1;
+                  return {
+                    uuid: meta.id,
+                    name: video.caption,
+                    description: video.message,
+                    server: meta.host_name,
+                    txid: video.txid,
+                    url: video.url,
+                    createdAt: video.time,
+                    state: {
+                      id: 1,
+                    },
+                  };
+                });
 
-            return outputVideos;
-          },
-        );
+              return res(outputVideos);
+            },
+            resetCache,
+          );
+        });
       },
     };
 
@@ -562,43 +565,30 @@ var videoCabinet = (function () {
       onPageScroll() {
         const scrollProgress =
           el.windowElement.scrollTop() / el.scrollElement.height();
-
-        if (scrollProgress >= LAZYLOAD_PERCENTAGE && !newVideosAreUploading) {
-          const activeServers = Object.keys(peertubeServers).filter(
-            (server) => !(peertubeServers[server] || {}).isFull,
-          );
-
-          if (!activeServers.length) return;
-
-          events.getAdditionalVideos(activeServers);
+        console.log(scrollProgress, LAZYLOAD_PERCENTAGE);
+        if (scrollProgress >= LAZYLOAD_PERCENTAGE && !newVideosAreUploading && !allVideosLoaded) {
+          
+          debugger;
+          events.getAdditionalVideos();
           newVideosAreUploading = true;
         }
       },
 
-      getAdditionalVideos(activeServers = []) {
-        if (!activeServers.length) return;
-
+      getAdditionalVideos() {
         const videoPortionElement = renders.newVideoContainer();
 
         const videoParameters = { sort: ed.sort };
 
         if (ed.search) videoParameters.search = ed.search;
 
-        return Promise.allSettled(
-          activeServers.map((server) =>
-            actions.getVideos(server, videoParameters),
-          ),
-        )
+        return actions
+          .getBlockChainVideos()
           .then((data = []) => {
-            const newVideos = data
-              .filter((item) => item.status === POSITIVE_STATUS)
-              .map((item) => item.value.data)
-              .flat()
-              .filter((video) => video);
+            if (!data.length) allVideosLoaded = true;
 
             newVideosAreUploading = false;
 
-            renders.videos(newVideos, videoPortionElement);
+            renders.videos(data, videoPortionElement, true);
           })
           .catch(() => videoPortionElement.addClass('hidden'));
       },
@@ -649,7 +639,7 @@ var videoCabinet = (function () {
 
     var renders = {
       //table with video elements
-      videos(videosForRender, videoPortionElement) {
+      videos(videosForRender, videoPortionElement, inBlockChainFlag) {
         //additional sorting due to different servers
         const videos = (
           videosForRender ||
@@ -741,54 +731,57 @@ var videoCabinet = (function () {
               return renders.metmenu(
                 $(this),
                 { videoLink, backupHost },
-                blockChainInfo[videoLink] ? true : false,
+                inBlockChainFlag,
               );
             });
 
-			p.el.find('.singleVideoSection').each(function () {
-                const singleVideoSection = $(this);
+            p.el.find('.singleVideoSection').each(function () {
+              const singleVideoSection = $(this);
 
-                const currentElement = singleVideoSection.find(
-                  '.postingStatusWrapper[videoTranscoding="false"]',
+              const currentElement = singleVideoSection.find(
+                '.postingStatusWrapper[videoTranscoding="false"]',
+              );
+
+              const isTranscoding = currentElement.attr('isTranscoding');
+
+              const link = currentElement.attr('video');
+
+              const txid = currentElement.attr('txid');
+
+              if (inBlockChainFlag) {
+                if (ed.inLentaWindow)
+                  singleVideoSection.addClass('alreadyPostedVideo');
+
+                //check if component is rendered natively or from externat component (as ex lenta)
+                const alreadyPostedCaption = ed.inLentaWindow
+                  ? 'linkToPostLenta'
+                  : 'linkToPost';
+
+                return renders.postLink(
+                  currentElement,
+                  link,
+                  alreadyPostedCaption,
+                  {
+                    txid,
+                  },
                 );
+              }
 
-                const isTranscoding = currentElement.attr('isTranscoding');
+              if (!isTranscoding) {
+                currentElement.find(`.${buttonCaption}`).removeClass('hidden');
+                currentElement.find('.preloaderwr').addClass('hidden');
+              }
+            });
 
-                const link = currentElement.attr('video');
+            p.el.find('.videoStatsWrapper').each(function () {
+              const currentElement = $(this);
 
-                if (blockChainInfo[link]) {
-                  if (ed.inLentaWindow)
-                    singleVideoSection.addClass('alreadyPostedVideo');
+              const link = currentElement.attr('video');
+              const host = currentElement.attr('host');
+              const uuid = currentElement.attr('uuid');
 
-                  //check if component is rendered natively or from externat component (as ex lenta)
-                  const alreadyPostedCaption = ed.inLentaWindow
-                    ? 'linkToPostLenta'
-                    : 'linkToPost';
-
-                  return renders.postLink(
-                    currentElement,
-                    link,
-                    alreadyPostedCaption,
-                  );
-                }
-				
-                if (!isTranscoding) {
-                  currentElement
-                    .find(`.${buttonCaption}`)
-                    .removeClass('hidden');
-                  currentElement.find('.preloaderwr').addClass('hidden');
-                }
-              });
-
-              p.el.find('.videoStatsWrapper').each(function () {
-                const currentElement = $(this);
-
-                const link = currentElement.attr('video');
-                const host = currentElement.attr('host');
-                const uuid = currentElement.attr('uuid');
-
-                return renders.videoStats(currentElement, link, host, uuid);
-              });
+              return renders.videoStats(currentElement, link, host, uuid);
+            });
 
             p.el.find('[videoTranscoding="true"]').each(function () {
               const videoLink = $(this).attr('video');
@@ -936,7 +929,6 @@ var videoCabinet = (function () {
       },
       //get link to existing video post
       postLink(element, link, buttonCaption, linkInfo) {
-
         if (isMobile()) {
           element.html(
             `<a class="videoPostLink" href="index?video=1&v=${
@@ -1550,11 +1542,11 @@ var videoCabinet = (function () {
 
         //getting and rendering videos
         actions
-          .getBlockChainVideos()
+          .getBlockChainVideos('clear')
           .then((videos) =>
-            actions.getFullPageInfo(videoPortionElement, videos),
+            actions.getFullPageInfo(videoPortionElement, videos, true),
           )
-          .catch(() => actions.getFullPageInfo(videoPortionElement))
+          .catch(() => actions.getFullPageInfo(videoPortionElement, [], true))
           .finally(() => {
             const loadingTime = performance.now() - cabinetLoadingStartTime;
 
