@@ -446,7 +446,6 @@ var test = (function(){
 		
 			},
 			upload	: function(file, clbk){
-
 				topPreloader(20);
 
 				var images = [{

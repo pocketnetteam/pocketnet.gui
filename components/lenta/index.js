@@ -1700,8 +1700,22 @@ var lenta = (function(){
 			},
 
 			block : function(address, clbk){
-				
-			},	
+				self.app.nav.api.load({
+					open : true,
+					href : 'blocking',
+					inWnd : true,
+					history : true,
+
+					essenseData : {
+						address
+					},
+
+					clbk : function(){
+						if (clbk)
+							clbk()
+					}
+				})
+			},
 			
 			openGalleryRec : function(share, initialValue, clbk){
 
@@ -2123,7 +2137,7 @@ var lenta = (function(){
 				})
 			},
 
-		
+
 
 
 			videosInview : function(e, block){
@@ -2306,7 +2320,7 @@ var lenta = (function(){
 				actions.postscores(id)
 			},
 
-			
+
 
 			like : function(){
 				var p = $(this).closest('.stars');
