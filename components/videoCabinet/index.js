@@ -479,7 +479,6 @@ var videoCabinet = (function () {
           self.app.platform.sdk.node.shares.getprofilefeed(
             payload,
             (data = []) => {
-
               const outputVideos = data
                 .filter((video = {}) => !video.deleted)
                 .map((video = {}) => {
@@ -720,13 +719,40 @@ var videoCabinet = (function () {
               videosForRender,
               true,
               function () {
+                p.el.find('.singleVideoSection').each(function () {
+                  const sectionElement = $(this);
+                  const avatarWrapper = sectionElement.find('.videoAvatar');
+                  const avatarDescription =
+                    sectionElement.find('.videoDuration');
+                  const avatarPreloader = sectionElement.find(
+                    '.backgroundPreloader',
+                  );
+                  const videoUrl = avatarWrapper.attr('video');
+
+                  const videoInfo =
+                    self.app.platform.sdk.videos.storage[videoUrl];
+
+                  if (!videoInfo) return;
+
+                  avatarPreloader.addClass('hidden');
+                  avatarWrapper.css(
+                    'background-image',
+                    `url(${deep(videoInfo, 'data.image')})`,
+                  );
+                  avatarDescription.html(
+                    secInTime(deep(videoInfo, 'data.duration') || 0),
+                  );
+                });
+
                 p.el.find('.videoStatsWrapper').each(function () {
                   const currentElement = $(this);
 
                   const link = currentElement.attr('video');
 
-                  const linkInfo = videosForRender.find(video => video.url === link) || {};
-                  const videoInfo = self.app.platform.sdk.videos.storage[linkInfo.url] || {};
+                  const linkInfo =
+                    videosForRender.find((video) => video.url === link) || {};
+                  const videoInfo =
+                    self.app.platform.sdk.videos.storage[linkInfo.url] || {};
                   const views = deep(videoInfo, 'data.views');
 
                   return renders.videoStats(currentElement, linkInfo, views);
@@ -917,7 +943,6 @@ var videoCabinet = (function () {
       },
       //render single video stats column in video table
       videoStats(element, linkInfo, views) {
-
         self.shell(
           {
             name: 'videoStats',
