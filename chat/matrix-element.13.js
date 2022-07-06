@@ -7,7 +7,7 @@
 // ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"476efc6e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/views/teamroom.vue?vue&type=template&id=7c03da32&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"24656860-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/views/teamroom.vue?vue&type=template&id=7c03da32&scoped=true&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"page chats"},[_c('topheader',{staticClass:"topheader",scopedSlots:_vm._u([{key:"left",fn:function(){return [_c('backButton',{attrs:{"action":"chats"}})]},proxy:true},{key:"info",fn:function(){return [_c('span',{staticClass:"nameline"},[_vm._v("Bastyon")])]},proxy:true}])}),_c('maincontent',{scopedSlots:_vm._u([{key:"content",fn:function(){return _vm._l((_vm.pocketteammessages),function(message){return _c('div',{key:message.id,staticClass:"messageRow"},[_c('div',{staticClass:"logo"}),_c('div',{staticClass:"maxcontent"},[_c('div',{staticClass:"messageText"},[_c('div',{staticClass:"sendername"},[_c('span',[_vm._v("Bastyon")])]),_c('div',{staticClass:"msgtext"},[_c('div',{domProps:{"innerHTML":_vm._s(message.text)}})])])])])})},proxy:true}])})],1)}
 var staticRenderFns = []
 
@@ -126,22 +126,18 @@ var vuex_esm = __webpack_require__("2f62");
     topheader: topheader["a" /* default */]
   },
   props: {},
-  data: function data() {
+  data: function () {
     return {};
   },
   computed: Object(vuex_esm["c" /* mapState */])({
-    pocketnet: function pocketnet(state) {
-      return state.pocketnet;
-    },
-    minimized: function minimized(state) {
-      return state.minimized;
-    },
-    pocketteammessages: function pocketteammessages(state) {
-      return state.pocketteammessages;
-    }
+    pocketnet: state => state.pocketnet,
+    minimized: state => state.minimized,
+    pocketteammessages: state => state.pocketteammessages
   }),
   methods: {},
-  mounted: function mounted() {}
+
+  mounted() {}
+
 });
 // CONCATENATED MODULE: ./src/views/teamroom.vue?vue&type=script&lang=js&
  /* harmony default export */ var views_teamroomvue_type_script_lang_js_ = (teamroomvue_type_script_lang_js_); 

@@ -3344,11 +3344,13 @@ var lenta = (function(){
 
 						console.log('shares', shares)
 
+						var sushares = _.toArray(sharesFromSub)
+
 						renders.extra({
 							key : 'tosubscribeshares',
 							render : 'tosubscribeshares',
 							position : subloadedindex,
-							share : shares[shares.length - 1]
+							share : sushares.length ? sushares[sushares.length - 1] : null
 						})
 					}	
 
