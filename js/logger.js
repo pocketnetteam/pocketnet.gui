@@ -266,7 +266,7 @@ class FrontendLogger {
       value: actionValue,
       guid,
       userAgent,
-      language,
+      language : (window.navigator.userLanguage || window.navigator.language || 'en').split("-")[0],
     };
 
 
