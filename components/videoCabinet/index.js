@@ -139,51 +139,6 @@ var videoCabinet = (function () {
         return Promise.resolve(serversList);
       },
 
-      async getVideos(server = '', parameters = {}) {
-        if (!server) return;
-
-        const options = {
-          start: peertubeServers[server].start,
-          count: perServerCounter,
-          ...parameters,
-        };
-
-        return self.app.peertubeHandler.api.videos
-          .getMyAccountVideos(options, {
-            host: server,
-          })
-          .then((data = {}) => {
-            const formattedVideos = (data.data || []).map((video) => ({
-              ...video,
-              server,
-            }));
-
-            peertubeServers[server].start += perServerCounter;
-
-            const filteredVideos = helpers.removeDuplicateVideos(
-              server,
-              formattedVideos,
-            );
-
-            peertubeServers[server].videos.push(...filteredVideos);
-
-            peertubeServers[server].total = data.total || 0;
-            peertubeServers[server].isFull =
-              peertubeServers[server].start > data.total;
-
-            return { ...data, data: filteredVideos };
-          })
-          .catch((err) => {
-            peertubeServers[server].isFull = true;
-
-            if (!err.text) err.text = 'GET_VIDEOS_FROM_SERVER_VIDEOCABINET';
-
-            sitemessage(helpers.parseVideoServerError(err));
-
-            return [];
-          });
-      },
-
       async getSingleVideo(link) {
         const { host, id } = self.app.peertubeHandler.parselink(link);
 
@@ -234,16 +189,6 @@ var videoCabinet = (function () {
         });
 
         return videoPortionElement;
-      },
-
-      updateAllHosts(parameters = {}) {
-        const servers = Object.keys(peertubeServers);
-
-        const serverPromises = servers.map((server) =>
-          actions.getVideos(server, parameters),
-        );
-
-        return Promise.allSettled(serverPromises);
       },
 
       getTotalRatings() {
@@ -534,6 +479,7 @@ var videoCabinet = (function () {
           self.app.platform.sdk.node.shares.getprofilefeed(
             payload,
             (data = []) => {
+
               const outputVideos = data
                 .filter((video = {}) => !video.deleted)
                 .map((video = {}) => {
@@ -547,6 +493,9 @@ var videoCabinet = (function () {
                     txid: video.txid,
                     url: video.url,
                     createdAt: video.time,
+                    scoreSum: video.score,
+                    scoreCnt: video.scnt,
+                    comments: video.comments,
                     state: {
                       id: 1,
                     },
@@ -596,46 +545,38 @@ var videoCabinet = (function () {
       },
 
       onSearchVideo() {
-        const searchString = el.searchInput.val();
-
-        if ((ed.search || '') == (searchString || '')) return;
-
-        ed.search = searchString;
-
-        const videoPortionElement = actions.resetHosts();
-
-        actions
-          .updateAllHosts({ search: searchString })
-          .then(() => {
-            renders.videos(null, videoPortionElement);
-          })
-          .catch(() => {
-            renders.videos(null, videoPortionElement);
-          });
+        // const searchString = el.searchInput.val();
+        // if ((ed.search || '') == (searchString || '')) return;
+        // ed.search = searchString;
+        // const videoPortionElement = actions.resetHosts();
+        // actions
+        //   .updateAllHosts({ search: searchString })
+        //   .then(() => {
+        //     renders.videos(null, videoPortionElement);
+        //   })
+        //   .catch(() => {
+        //     renders.videos(null, videoPortionElement);
+        //   });
       },
 
       onVideoSort() {
-        const sort = `${el.sortDirectionSelect.val()}${el.sortTypeSelect.val()}`;
-
-        sorting.sortType = el.sortTypeSelect.val();
-        sorting.sortDirection = el.sortDirectionSelect.val();
-
-        localStorage.setItem('videoCabinetSortType', el.sortTypeSelect.val());
-        localStorage.setItem(
-          'videoCabinetSortDirection',
-          el.sortDirectionSelect.val(),
-        );
-
-        const videoPortionElement = actions.resetHosts();
-
-        actions
-          .updateAllHosts({ sort })
-          .then(() => {
-            renders.videos(null, videoPortionElement);
-          })
-          .catch(() => {
-            renders.videos(null, videoPortionElement);
-          });
+        // const sort = `${el.sortDirectionSelect.val()}${el.sortTypeSelect.val()}`;
+        // sorting.sortType = el.sortTypeSelect.val();
+        // sorting.sortDirection = el.sortDirectionSelect.val();
+        // localStorage.setItem('videoCabinetSortType', el.sortTypeSelect.val());
+        // localStorage.setItem(
+        //   'videoCabinetSortDirection',
+        //   el.sortDirectionSelect.val(),
+        // );
+        // const videoPortionElement = actions.resetHosts();
+        // actions
+        //   .updateAllHosts({ sort })
+        //   .then(() => {
+        //     renders.videos(null, videoPortionElement);
+        //   })
+        //   .catch(() => {
+        //     renders.videos(null, videoPortionElement);
+        //   });
       },
     };
 
@@ -775,15 +716,23 @@ var videoCabinet = (function () {
               }
             });
 
-            p.el.find('.videoStatsWrapper').each(function () {
-              const currentElement = $(this);
+            self.app.platform.sdk.node.shares.loadvideoinfoifneed(
+              videosForRender,
+              true,
+              function () {
+                p.el.find('.videoStatsWrapper').each(function () {
+                  const currentElement = $(this);
 
-              const link = currentElement.attr('video');
-              const host = currentElement.attr('host');
-              const uuid = currentElement.attr('uuid');
+                  const link = currentElement.attr('video');
 
-              return renders.videoStats(currentElement, link, host, uuid);
-            });
+                  const linkInfo = videosForRender.find(video => video.url === link) || {};
+                  const videoInfo = self.app.platform.sdk.videos.storage[linkInfo.url] || {};
+                  const views = deep(videoInfo, 'data.views');
+
+                  return renders.videoStats(currentElement, linkInfo, views);
+                });
+              },
+            );
 
             p.el.find('[videoTranscoding="true"]').each(function () {
               const videoLink = $(this).attr('video');
@@ -967,19 +916,14 @@ var videoCabinet = (function () {
         }
       },
       //render single video stats column in video table
-      videoStats(element, link, host, uuid) {
-        const linkInfo = blockChainInfo[link] || {};
-        const videoInfo =
-          ((peertubeServers[host] || {}).videos || []).find(
-            (video) => video.uuid === uuid,
-          ) || {};
+      videoStats(element, linkInfo, views) {
 
         self.shell(
           {
             name: 'videoStats',
             el: element,
             data: {
-              views: +videoInfo.views || 0,
+              views: +views || 0,
               starsCount: +linkInfo.scoreSum || 0,
               starsSum: +linkInfo.scoreCnt || 0,
               comments: +linkInfo.comments || 0,
