@@ -53,7 +53,7 @@ var recommendations = (function(){
 					if (!_p || !_p.el) return;
 
 					_p.el.find('.recoVideoDiv').click(function() {
-		
+
 						var txid = $(this).data('txid');
 
 						if (txid) {
@@ -85,7 +85,7 @@ var recommendations = (function(){
 			lazyinfo : function(contents, p){
 
 
-				_.each(contents, function(content) { 
+				_.each(contents, function(content) {
 
 					var video = (app.platform.sdk.videos.storage[content.url || "undefined"] || {}).data || {}
 
@@ -99,7 +99,7 @@ var recommendations = (function(){
 						if (video.thumbnail){
 							el.find('.videoThumbnail').attr('image', video.thumbnail).removeClass('dummy')
 						}
-	
+
 						if (typeof video.views != 'undefined'){
 
 							var text = video.views + ' ' + pluralform(video.views,[self.app.localization.e('countview'), self.app.localization.e('countviews')])
@@ -125,7 +125,7 @@ var recommendations = (function(){
 
 			},
 			load : function(){
-				
+
 			}
 		}
 
@@ -133,7 +133,7 @@ var recommendations = (function(){
 			return _.sortBy(recommendations, function(r){
 				r.point = recommendationPoint(r)
 				return -recommendationPoint(r)
-			})	
+			})
 		}
 
 		var filter = function(recommendation){
@@ -174,7 +174,7 @@ var recommendations = (function(){
 				if (h.percent > 5){
 					p = p * 10
 				}
-				
+
 			}
 
 			if (places[recommendation.txid]){
@@ -200,9 +200,11 @@ var recommendations = (function(){
 				var p = _.clone(loader.parameters || {})
 
 				p.skipvideo = true
-				
+
 				self.app.platform.sdk.node.shares[loader.loader || 'getrecomendedcontents'](p, function (recommendations) {
 
+					if ((!recommendations || recommendations.length <=0) && el && el.c)
+						el.c.closest('.recomandationsFromContent').remove();
 
 					_.each(recommendations, function(r, i){
 						places[r.txid] = i + 1
@@ -218,11 +220,11 @@ var recommendations = (function(){
 
 					recommendations = sorting(_.filter(recommendations, filter))
 
-				
+
 					_.each(recommendations, function(recommendation){
 						rendered[recommendation.txid] = true
 					})
-			
+
 
 					if (clbk)
 						clbk(recommendations);
@@ -241,7 +243,7 @@ var recommendations = (function(){
 		var make = function(loader, clbk){
 
 			console.log("HERE")
-			
+
 			load.contents(loader, function(recommendations){
 				console.log("HERE4")
 				renders.list(recommendations, function(_p){
@@ -291,11 +293,11 @@ var recommendations = (function(){
 				}
 			}
 
-			
+
 		}
 
 		var initEvents = function(){
-			
+
 			if (sel){
 				sel.on('scroll', events.scrollell);
 			}
@@ -309,7 +311,7 @@ var recommendations = (function(){
 				sel.off('scroll', events.scrollell);
 			}
 			else{
-				delete self.app.events.scroll['recommendations'] 
+				delete self.app.events.scroll['recommendations']
 			}
 		}
 
@@ -352,7 +354,7 @@ var recommendations = (function(){
 				sel = null
 
 			},
-			
+
 			init : function(p){
 
 				state.load();

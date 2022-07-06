@@ -73,6 +73,11 @@ class FrontendLogger {
       description: 'One of the best videos selected',
     },
 
+    USER_COMPLAIN : {
+      id: 'USER_COMPLAIN',
+      description: 'user send complain'
+    },
+
     SESSION_STARTED: {
       id: 'SESSION_STARTED',
       description: 'User session has started',
@@ -92,11 +97,6 @@ class FrontendLogger {
       id: 'USER_REGISTRATION_PROCESS',
       description: 'USER_REGISTRATION_PROCESS',
     },
-
-    USER_COMPLAIN : {
-      id: 'USER_COMPLAIN',
-      description: 'user send complain'
-    }
   };
 
   sendLogsBatch() {
@@ -259,6 +259,7 @@ class FrontendLogger {
     if (!loggerActive) return;
 
     const infoType = logCodes[actionId] ? logCodes[actionId].id : '';
+    const language = (app.localization || {}).key || 'no';
 
     const info = {
       type: infoType,
@@ -276,6 +277,5 @@ class FrontendLogger {
       _addLogWithAggregation.default(info, _logsCache);
     }
 
-    console.log('Batch state', _logsCache);
   }
 }
