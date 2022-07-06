@@ -169,6 +169,29 @@ var uploadpeertube = (function () {
 				wasclbk : !_.isEmpty(self.added)
 			});
 
+			try {
+				var currentUnloadedVideos = JSON.parse(
+				localStorage.getItem('unpostedVideos') || '{}',
+				);
+
+				if (
+					currentUnloadedVideos[self.app.user.address.value] &&
+					typeof currentUnloadedVideos[self.app.user.address.value] === 'object'
+				) {
+					currentUnloadedVideos[self.app.user.address.value].push(v);
+				} else {
+					currentUnloadedVideos[self.app.user.address.value] = [v];
+				}
+
+				localStorage.setItem(
+					'unpostedVideos',
+					JSON.stringify(currentUnloadedVideos),
+				);
+			} catch (error) {
+				localStorage.setItem('unpostedVideos', JSON.stringify([v]));
+			}
+			
+
 			_.each(self.added, function(a){
 				a(v)
 			})

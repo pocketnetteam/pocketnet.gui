@@ -507,13 +507,62 @@ var videoCabinet = (function () {
           );
         });
       },
+
+      getUnpostedVideos() {
+        const unpostedVideosByAddress =
+          localStorage.getItem('unpostedVideos') || '{}';
+
+        let unpostedVideosParsed;
+
+        try {
+          unpostedVideosParsed = JSON.parse(unpostedVideosByAddress);
+        } catch (error) {
+          self.app.Logger.error({
+            err: 'DAMAGED_LOCAL_STORAGE',
+            code: 801,
+            payload: error,
+          });
+
+          return [];
+        }
+
+        const accountVideos = (
+          unpostedVideosParsed[self.app.user.address.value] || []
+        ).map((video) => ({
+          url: video,
+        }));
+
+        return new Promise((res) => {
+          self.app.platform.sdk.node.shares.loadvideoinfoifneed(
+            accountVideos,
+            true,
+            function () {
+              return res(
+                accountVideos
+                  .map(
+                    (video) => self.app.platform.sdk.videos.storage[video.url],
+                  )
+                  .map((videoInfo = {}) => ({
+                    uuid: deep(videoInfo, 'meta.id'),
+                    name: deep(videoInfo, 'data.original.name'),
+                    description: deep(videoInfo, 'data.original.description'),
+                    server: deep(videoInfo, 'meta.host_name'),
+                    url: deep(videoInfo, 'meta.url'),
+                    createdAt: deep(videoInfo, 'data.original.createdAt'),
+                    state: deep(videoInfo, 'data.original.state') || {},
+                  })),
+              );
+            },
+          );
+        });
+      },
     };
 
     var events = {
       onPageScroll() {
         const scrollProgress =
           el.windowElement.scrollTop() / el.scrollElement.height();
-        console.log(scrollProgress, LAZYLOAD_PERCENTAGE);
+
         if (
           scrollProgress >= LAZYLOAD_PERCENTAGE &&
           !newVideosAreUploading &&
@@ -1306,6 +1355,23 @@ var videoCabinet = (function () {
           clbk: function (e, p) {},
         });
       },
+
+      unPostedVideos(videos = [], element) {
+        if (!videos.length) return;
+
+        self.shell(
+          {
+            name: 'unpostedVideos',
+            el: element,
+            data: {},
+          },
+          (p) => {
+            const containerWrapper = p.el.find('.unpostedVideosBody');
+
+            renders.videos(videos, containerWrapper, false);
+          },
+        );
+      },
     };
 
     var state = {
@@ -1397,7 +1463,6 @@ var videoCabinet = (function () {
       },
 
       destroy: function () {
-        console.log('DESTROY');
 
         if (el.windowElement)
           el.windowElement.off('scroll', events.onPageScroll);
@@ -1446,6 +1511,7 @@ var videoCabinet = (function () {
         if (!ed.hasAccess) return p.clbk(null, p);
 
         el.videoContainer = el.c.find('.userVideos');
+        el.unPostedVideosContainer = el.c.find('.unPostedVideos');
         el.quotaContainer = el.c.find('.quotaContainer');
         el.videoButtons = el.c.find('.videoActiveButton');
 
@@ -1538,6 +1604,13 @@ var videoCabinet = (function () {
           .getQuota()
           .then(() => renders.quota())
           .catch(() => renders.quota());
+
+        //get unposted videos
+        actions
+          .getUnpostedVideos()
+          .then((videos) =>
+            renders.unPostedVideos(videos, el.unPostedVideosContainer),
+          );
 
         p.clbk(null, p);
       },
