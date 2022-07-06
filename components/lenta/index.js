@@ -2590,7 +2590,7 @@ var lenta = (function(){
 				if (essenseData.horizontal) {
 					self.app.Logger.info({
 						actionId: 'BEST_VIDEO_CLICKED',
-						value: shareId
+						actionValue: shareId,
 					});
 				}
 

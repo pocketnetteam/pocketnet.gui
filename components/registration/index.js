@@ -1359,7 +1359,11 @@ var registration = (function(){
 
 				initEvents();
 
-				make()
+				make();
+
+				self.app.Logger.info({
+					actionId: 'USER_STARTED_REGISTRATION',
+				});
 
 				p.clbk(null, p);
 
