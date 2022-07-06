@@ -306,7 +306,6 @@ var complain = (function(){
           var data = {
             ess : ess
           };
-          console.log('getData', data)
           clbk(data);
         }
 

@@ -1,4 +1,4 @@
-
+﻿
 var appname = window.pocketnetproject || "Pocketnet"
 
 if(typeof loclib == "undefined" || !loclib)
@@ -1932,9 +1932,9 @@ ____loclib.drafts = 'Drafts'
 ____loclib.repostyourown = 'You cannot repost your own post'
 
 
-____loclib.reachedlimits = 'You reached your daily limit of actions. To increase your limit you need to have at least 50 PKOIN in your account or have a valid reputation.'
+____loclib.reachedlimits = 'You reached your daily limit of actions. To increase your limit you need to have a valid reputation.'
 
-____loclib.closestreachedlimits = 'You are close to hitting your daily action limit. To increase your limit you need to have at least 50 PKOIN in your account or have a valid reputation.'
+____loclib.closestreachedlimits = 'You are close to hitting your daily action limit. To increase your limit you need to have a valid reputation.'
 
 
 ____loclib.sendUserStatistics = 'Send anonimous report of errors to Bastyon Team'
@@ -2228,6 +2228,7 @@ ____loclib.lowstar_reason_3 = "Direct threat of violence"
 ____loclib.lowstar_reason_4 = "Illegal narcotics"
 ____loclib.lowstar2 = "Please do not use 1 and 2 star ratings for other reasons. After the new moderation is released in mid. May you will be able to use low ratings for other reasons"
 ____loclib.lowstaragree = "I confirm that this post contains one of four types of prohibited content"
+
 ____loclib.mnemonicnote = "To confirm that you wrote down the 12 words, please select them in the correct order."
 ____loclib.mnemonicerror = "You entered the 12 words incorrectly. Please go back and write down the 12 word passphrase to use Bastyon."
 ____loclib.confirm = "Confirm"
@@ -2236,8 +2237,15 @@ ____loclib.cameraunlocknote = "To scan, unlock the camera from your browser sett
 ____loclib.videotranscodingdelayedpost = "This video is being processed and will be posted as soon as the transcoding process ends. Please, do not close the tab untill then."
 ____loclib.postInRelay = "This post is being processed before publishing to blockchain"
 ____loclib.scanqr = "Scan QR Code"
+
 ____loclib.usetor = "Connection via Tor network"
+
 ____loclib.videotranscodingdelayedpost = "This video is being processed and will be posted as soon as the transcoding process ends. Please, do not close the tab untill then."
+
 ____loclib.postInRelay = "This post is being processed before publishing to blockchain"
 ____loclib.cameraError1 = "The user denied camera access."
 ____loclib.cameraError5 = "The camera is unavailable because it doesn't exist or is otherwise unable to be configured."
+
+
+____loclib.continuesubscribefeedCaption = "Would you like to continue seeing posts from the people you follow?"
+____loclib.continuesubscribefeedButton = "Continue in the subscription feed"
