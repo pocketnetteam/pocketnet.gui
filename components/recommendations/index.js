@@ -141,7 +141,7 @@ var recommendations = (function(){
 			var me = deep(self.app, 'platform.sdk.users.storage.' + (self.user.address.value || ''))
 
 
-			if (me.relation(recommendation.address, 'blocking') ){
+			if (me && me.relation(recommendation.address, 'blocking') ){
 				return false
 			}
 
@@ -203,6 +203,7 @@ var recommendations = (function(){
 				
 				self.app.platform.sdk.node.shares[loader.loader || 'getrecomendedcontents'](p, function (recommendations) {
 
+
 					_.each(recommendations, function(r, i){
 						places[r.txid] = i + 1
 					})
@@ -217,12 +218,11 @@ var recommendations = (function(){
 
 					recommendations = sorting(_.filter(recommendations, filter))
 
-					
 				
 					_.each(recommendations, function(recommendation){
 						rendered[recommendation.txid] = true
 					})
-					
+			
 
 					if (clbk)
 						clbk(recommendations);
@@ -239,13 +239,18 @@ var recommendations = (function(){
 		}
 
 		var make = function(loader, clbk){
+
+			console.log("HERE")
 			
 			load.contents(loader, function(recommendations){
+				console.log("HERE4")
 				renders.list(recommendations, function(_p){
-
+					console.log("HERE54")
 					load.info(recommendations, function(){
 						renders.lazyinfo(recommendations, _p)
 					})
+
+					console.log("HERE2")
 
 					if(clbk) clbk()
 
@@ -261,6 +266,8 @@ var recommendations = (function(){
 
 				making = true
 				el.c.addClass('loading')
+
+				console.log('needmake', needmake)
 
 				make(needmake[0], function(){
 					el.c.removeClass('loading')
@@ -355,7 +362,8 @@ var recommendations = (function(){
 
 				initEvents()
 
-				console.log("ED", ed, needmake)
+				console.log('ed.startload', ed.startload)
+
 
 				if (ed.startload)
 					makeneed()
