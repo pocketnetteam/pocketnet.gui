@@ -3984,6 +3984,7 @@ Platform = function (app, listofnodes) {
 
             blocking: function (address, clbk) {
                 var blocking = new Blocking();
+
                 blocking.address.set(address);
 
                 topPreloader(10)
@@ -4595,11 +4596,23 @@ Platform = function (app, listofnodes) {
 
                         el.find('.block').on('click', function () {
                             self.app.mobile.vibration.small()
-                            self.api.actions.blocking(address, function (tx, error) {
-                                if (!tx) {
-                                    self.errorHandler(error, true)
+
+                             self.api.actions.blocking(address, function (tx, error) {
+                                 if (!tx) {
+                                     self.errorHandler(error, true)
+                                 }
+                             })
+                            dialog({
+                                html: "Do you want to also block connected accounts? ONLY do this for suspected bots.",
+                                btn1text: "Yes",
+                                btn2text: "No",
+                                class: 'zindex',
+                                success: () => {
+                                    actions.block(address, function (error) {
+                                        console.log(error)
+                                    })
                                 }
-                            })
+                            });
 
                             close()
 
@@ -10859,8 +10872,8 @@ Platform = function (app, listofnodes) {
             nameaddressstorage : {},
 
             extend: function (u, state) {
-
                 var ext = function (temp) {
+
                     _.each(temp.blocking, function (block) {
                         u.addRelation(block.vsaddress, 'blocking')
                     })
@@ -10916,7 +10929,6 @@ Platform = function (app, listofnodes) {
             },
 
             prepareuser: function (data, a, state) {
-
                 var temp = self.sdk.node.transactions.temp;
                 var relay = self.sdk.relayTransactions.storage;
 
@@ -10955,7 +10967,6 @@ Platform = function (app, listofnodes) {
                 if(self.real[a]) u.real = true
 
                 self.sdk.users.extend(u, state)
-
                 return u
             },
 

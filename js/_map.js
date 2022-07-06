@@ -157,6 +157,7 @@ __map =  {
 		{ c : 'comments', n : 'index' },
 		{ c : 'comments', n : 'post' },
 		{ c : 'comments', n : 'list' },
+		{ c : 'blocking', n : 'index' },
 		{ c : 'lastcomments', n : 'lastcommentslist'},
 		{ c : 'author', n : 'preshell'},
 		{ c : 'author', n : 'authorcaption'},
@@ -889,6 +890,12 @@ __map =  {
 	postscores : {
 		uri : "postscores",
 		href : "postscores",
+		add : insertingfunc
+	},
+
+	blocking : {
+		uri : "blocking",
+		href : "blocking",
 		add : insertingfunc
 	},
 

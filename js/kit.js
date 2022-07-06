@@ -151,37 +151,61 @@ Blocking = function(){
 		},
 		v : ''
 	};
+	self.addresses = {
+		set : function(_v){
+			this.v = _v
+		},
+		v : ''
+	};
 
 	self.validation = function(){
-		if(!self.address.v){
+		if(!self.address.v && !self.addresses){
 			return 'address';
 		}
 	}
 
 	self.serialize = function(){
-		return self.address.v
+		let a = self.addresses.v
+		return self.address.v || self.addresses.v.join(',')
 	}
 
 	self.export = function(alias){
 
 		if(alias){
+			if (self.addresses.v) {
+				return {
+					vsaddress : self.addresses.v
+				}
+			}
 			return {
 				vsaddress : self.address.v
 			}
 		}
+		if (self.address.v) {
+			return {
+				address : self.address.v
+			}
+		}
 
-		return {
-			address : self.address.v
+		if (self.addresses.v) {
+			return {
+				addresses : self.addresses.v
+			}
 		}
 	}
 
 	self.import = function(p){
-
 		if (p.address)
 			self.address.v = p.address
 
 		if (p.vsaddress)
 			self.address.v =  p.vsaddress
+
+		if (p.addresses)
+			self.addresses.v = p.addresses
+
+		if (p.vsaddresses)
+			self.addresses.v =  p.vsaddresses
 			
 	}
 
@@ -1966,7 +1990,6 @@ pUserInfo = function(){
 
 		if (v.txid)
 			self.txid = v.txid;
-
 			
 		try{
 			self.addresses = JSON.parse(v.b || v.addresses || "[]")
@@ -1989,7 +2012,7 @@ pUserInfo = function(){
 	}
 
 	self.export = function(){
-
+		debugger
 		var v = {};
 
 		v.n = encodeURIComponent(self.name)
@@ -2034,8 +2057,8 @@ pUserInfo = function(){
 	}
 
 	self.relation = function(address, key){
-		if(!key) key = 'subscribes'
 
+		if(!key) key = 'subscribes'
 		return _.find(self[key], function(o){
 			return (o.adddress || o.address || o) == address 
 		})
@@ -2047,7 +2070,11 @@ pUserInfo = function(){
 
 		self[key] || (self[key] = [])
 
-		self[key].push(obj)	
+		if (typeof obj === 'object') {
+			self[key].push(...obj)
+		} else {
+			self[key].push(obj)
+		}
 
 		if (key === 'subscribers'){
 

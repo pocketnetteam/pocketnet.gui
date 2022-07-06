@@ -319,7 +319,6 @@ var userslist = (function(){
 				data.caption = deep(p.settings, 'essenseData.caption');
 
 				extra = deep(p.settings, 'essenseData.extra');
-
 				//scnt = deep(p.settings, 'essenseData.cnt') || $(window);
 
 				clbk(data);
