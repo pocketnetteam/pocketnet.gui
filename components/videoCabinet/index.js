@@ -566,9 +566,11 @@ var videoCabinet = (function () {
         const scrollProgress =
           el.windowElement.scrollTop() / el.scrollElement.height();
         console.log(scrollProgress, LAZYLOAD_PERCENTAGE);
-        if (scrollProgress >= LAZYLOAD_PERCENTAGE && !newVideosAreUploading && !allVideosLoaded) {
-          
-          debugger;
+        if (
+          scrollProgress >= LAZYLOAD_PERCENTAGE &&
+          !newVideosAreUploading &&
+          !allVideosLoaded
+        ) {
           events.getAdditionalVideos();
           newVideosAreUploading = true;
         }
