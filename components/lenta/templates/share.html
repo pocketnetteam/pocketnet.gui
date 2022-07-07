@@ -61,7 +61,9 @@ var metadisplay = function(){ %>
 								<b><span class="adr"><%-(name || share.address) %></span></b><% if(reputation && !app.curation()) {%><sup class="spsp"><%-compressedNumber(reputation, 1)%></sup><% } %>
 							</a>
 
-							
+							<!--<% if(share.__fromSUB) {%>
+								<i class="fa-solid fa-user-pen"></i> <%-share.txid%>
+							<% } %>-->
 
 							<% if((!state || !my) && (typeof repost == 'undefined' || !repost)) { %> 
 

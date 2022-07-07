@@ -530,11 +530,20 @@ var lenta = (function(){
 
 				if(essenseData.observe){
 
-					var last = _.min(sharesInview, (s) => {
+					var k = ''
+					var larray = sharesInview
+
+					var first = _.max(sharesInview, (s) => {
 						return s.id
 					})
 
-					var first = _.max(sharesInview, (s) => {
+					if(sharesFromSub[first.txid]){
+						k = '_sub'
+
+						larray = _.toArray(sharesFromSub)
+					}
+
+					var last = _.min(larray, (s) => {
 						return s.id
 					})
 
@@ -542,11 +551,11 @@ var lenta = (function(){
 
 					if (first && last){
 
-						var k = ''
+						/*
 
 						if(sharesFromSub[last.txid] || sharesFromSub[first.txid]){
 							k = '_sub'
-						}
+						}*/
 
 						self.app.platform.sdk.sharesObserver.view(essenseData.observe + k, first.id, last.id)
 					}
@@ -2795,7 +2804,7 @@ var lenta = (function(){
 					var _el = null;
 
 					if (p.position) {
-						var share = sharesInview[p.position]
+						var share = sharesInview[p.position - 1]
 
 						if (share && el.share[share.txid]){
 							_el = $("<div/>", {'class' : 'extra'})
@@ -3395,18 +3404,26 @@ var lenta = (function(){
 						el.share[s.txid] = el.c.find('#' + s.txid)
 					})
 
+
 					renders.extras()
 
 					if(subloaded && subloadedindex > 0){
 
-						console.log('shares', shares)
-
 						var sushares = _.toArray(sharesFromSub)
+						var position = subloadedindex
+
+						if (boostplaces){
+							_.each(boostplaces, (v, i) => {
+								if(i < subloadedindex && v){
+									position++
+								}
+							})
+						}
 
 						renders.extra({
 							key : 'tosubscribeshares',
 							render : 'tosubscribeshares',
-							position : subloadedindex,
+							position : position,
 							share : sushares.length ? sushares[sushares.length - 1] : null
 						})
 					}
@@ -3936,6 +3953,8 @@ var lenta = (function(){
 
 				if(!bshares) bshares = []
 
+				var allshares = [].concat(shares, bshares)
+
 				if(includingsub) {
 
 					shares = _.filter(shares, function(share){
@@ -3944,18 +3963,26 @@ var lenta = (function(){
 
 							var obs = self.sdk.sharesObserver.storage.viewed[essenseData.observe + '_sub']
 
+
 							if(!obs) return true
+
 
 							return (!obs.first || share.id > obs.first) || (!obs.last || share.id < obs.last)
 						}
 
 						return true
 					})
+					//temp
+					/*_.each(shares, (s) => {
+						s.__fromSUB = true
+					})*/
 
 
 					if (shares.length < pr.count || countshares >= 10){
 						subloaded = true
 						subloadedindex = countshares + shares.length
+
+						self.app.platform.sdk.newmaterials.see('sub')
 					}
 
 					_.each(shares, function(share){
@@ -3963,8 +3990,6 @@ var lenta = (function(){
 					})
 
 				}
-
-				var allshares = [].concat(shares, bshares)
 
 				var author = essenseData.author;
 
