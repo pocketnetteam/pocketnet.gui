@@ -1138,6 +1138,13 @@ ____loclib.uploadCanceled = "Upload canceled"
 
 ____loclib.pleaseTryAgain = "Something was wrong there. Please try again"
 
+____loclib.postedVideos = "Posted Videos"
+____loclib.unPostedVideos = "Unposted Videos"
+____loclib.videoIsPosting = "Posting"
+
+
+
+
 
 
 

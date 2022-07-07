@@ -3024,6 +3024,7 @@ Platform = function (app, listofnodes) {
                         close : function(){
                         },
                         post : function(){
+                            if (p.onPost) p.onPost();
                         },
                         absolute : true,
                         repost  : p.repost,

@@ -2045,3 +2045,7 @@ ____loclib.cameraError5 = "Камера недоступна, так как ее
 
 ____loclib.continuesubscribefeedCaption = "Хотели бы вы продолжить просматривать публикации от людей на которых вы подписаны?"
 ____loclib.continuesubscribefeedButton = "Продолжить в ленте подписок"
+
+____loclib.postedVideos = "Опубликованные Видео"
+____loclib.unPostedVideos = "Неопубликованные Видео"
+____loclib.videoIsPosting = "Загрузка"

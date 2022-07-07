@@ -549,6 +549,10 @@ var videoCabinet = (function () {
           );
         });
       },
+
+      onVideoPost(videoLink) {
+        debugger;
+      },
     };
 
     var events = {
@@ -623,11 +627,7 @@ var videoCabinet = (function () {
 
     var renders = {
       //table with video elements
-      videos(
-        videosForRender,
-        videoPortionElement,
-        inBlockChainFlag,
-      ) {
+      videos(videosForRender, videoPortionElement, inBlockChainFlag) {
         //additional sorting due to different servers
         const videos = (
           videosForRender ||
@@ -693,7 +693,15 @@ var videoCabinet = (function () {
                 .getDirectVideoInfo({ id: meta.id }, { host: meta.host })
                 .then((info) => {
                   const { name, description, tags } = info;
-                  renders.addButton({ videoLink, name, description, tags });
+                  renders.addButton({
+                    videoLink,
+                    name,
+                    description,
+                    tags,
+                    onPost: () => {
+                      actions.onVideoPost(videoLink, attachVideoToPost);
+                    },
+                  });
                 });
             });
 
@@ -775,7 +783,8 @@ var videoCabinet = (function () {
                   );
                   const videoUrl = avatarWrapper.attr('video');
                   const uuid = sectionElement.attr('uuid');
-                  const videoInfo = self.app.platform.sdk.videos.storage[videoUrl];
+                  const videoInfo =
+                    self.app.platform.sdk.videos.storage[videoUrl];
 
                   if (!videoInfo) return;
 
