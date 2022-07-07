@@ -29,6 +29,7 @@ var videoCabinet = (function () {
     let serversList = {};
 
     let unpostedVideosParsed;
+    let videosInPosting = [];
 
     var peertubeServers = {};
     var userQuota = {};
@@ -103,6 +104,10 @@ var videoCabinet = (function () {
               server: host,
               url: `peertube://${host}/${id}`,
             };
+
+            el.unPostedVideosContainer
+              .find('.unpostedCaption')
+              .addClass('hidden');
 
             renders.videos(
               [formattedData],
@@ -542,7 +547,12 @@ var videoCabinet = (function () {
                     url: deep(videoInfo, 'meta.url'),
                     createdAt: deep(videoInfo, 'data.original.createdAt'),
                     state: deep(videoInfo, 'data.original.state') || {},
-                    editable: true,
+                    editable: videosInPosting.includes(
+                      deep(videoInfo, 'meta.url'),
+                    ),
+                    isPosting: videosInPosting.includes(
+                      deep(videoInfo, 'meta.url'),
+                    ),
                   })),
               );
             },
@@ -550,8 +560,14 @@ var videoCabinet = (function () {
         });
       },
 
-      onVideoPost(videoLink) {
-        debugger;
+      onVideoPost(videoLink, linkElement) {
+        state.removeVideo(self.app.peertubeHandler.parselink(videoLink).id);
+        linkElement.html(
+          `<i class="fas fa-spinner fa-spin"></i>${self.app.localization.e(
+            'videoIsPosting',
+          )}`,
+        );
+        linkElement.attr('isposting', 'true');
       },
     };
 
@@ -685,7 +701,11 @@ var videoCabinet = (function () {
 
             //button for creating post with video (active only when cabinet is opened directly)
             attachVideoToPost.on('click', function () {
-              const videoLink = $(this).attr('videoLink');
+              const currentLink = $(this);
+              const videoLink = currentLink.attr('videoLink');
+              const isPosting = currentLink.attr('isposting');
+
+              if (isPosting === 'true') return;
 
               const meta = self.app.peertubeHandler.parselink(videoLink);
 
@@ -699,7 +719,7 @@ var videoCabinet = (function () {
                     description,
                     tags,
                     onPost: () => {
-                      actions.onVideoPost(videoLink, attachVideoToPost);
+                      actions.onVideoPost(videoLink, currentLink);
                     },
                   });
                 });
@@ -1365,8 +1385,6 @@ var videoCabinet = (function () {
       },
 
       unPostedVideos(videos = [], element) {
-        if (!videos.length) return;
-
         self.shell(
           {
             name: 'unpostedVideos',
@@ -1376,6 +1394,8 @@ var videoCabinet = (function () {
           (p) => {
             const containerWrapper = p.el.find('.unpostedVideosBody');
 
+            if (!videos.length) return;
+            
             renders.videos(videos, containerWrapper, false);
           },
         );
@@ -1404,8 +1424,40 @@ var videoCabinet = (function () {
 
           unpostedVideosParsed = {};
         }
+
+        const postingShares = self.sdk.relayTransactions
+          .withtemp('share')
+          .map((ps) => {
+            const s = new pShare();
+            s._import(ps, true);
+            s.temp = true;
+
+            if (ps.relay) s.relay = true;
+            if (ps.checkSend) s.checkSend = true;
+
+            s.address = ps.address;
+
+            return s;
+          });
+
+        const postingVideos = postingShares
+          .filter((share) => share.itisvideo())
+          .map((share) => share.url);
+
+        if (unpostedVideosParsed[self.app.user.address.value]) {
+          unpostedVideosParsed[self.app.user.address.value].push(
+            ...postingVideos,
+          );
+        } else {
+          unpostedVideosParsed[self.app.user.address.value] = [
+            ...postingVideos,
+          ];
+        }
+
+        videosInPosting = [...postingVideos];
       },
       update() {},
+
       removeVideo(id) {
         unpostedVideosParsed[self.app.user.address.value] = (
           unpostedVideosParsed[self.app.user.address.value] || []
@@ -1446,8 +1498,6 @@ var videoCabinet = (function () {
         ed = p.settings.essenseData || {};
 
         externalActions = ed.actions || {};
-
-        state.load();
 
         //check if user has access to videos
         self.app.peertubeHandler.api.user

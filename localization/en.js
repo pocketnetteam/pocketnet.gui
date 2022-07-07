@@ -1138,13 +1138,6 @@ ____loclib.uploadCanceled = "Upload canceled"
 
 ____loclib.pleaseTryAgain = "Something was wrong there. Please try again"
 
-____loclib.postedVideos = "Posted Videos"
-____loclib.unPostedVideos = "Unposted Videos"
-____loclib.videoIsPosting = "Posting"
-
-
-
-
 
 
 
@@ -2252,3 +2245,8 @@ ____loclib.cameraError5 = "The camera is unavailable because it doesn't exist or
 
 ____loclib.continuesubscribefeedCaption = "Would you like to continue seeing posts from the people you follow?"
 ____loclib.continuesubscribefeedButton = "Continue in the subscription feed"
+
+____loclib.postedVideos = "Posted Videos"
+____loclib.unPostedVideos = "Unposted Videos"
+____loclib.videoIsPosting = "Posting"
+____loclib.noUnposted = "No Unposted Videos"

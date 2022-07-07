@@ -59,8 +59,12 @@
           title="<%- e(buttonCaption) %>"
           videoLink="<%- video.url %>"
           videoName="<%- video.name %>"
+          isPosting="<%- video.isPosting %>"
         >
-          <i class="fas fa-signature"></i> <%- e(`${buttonCaption}Short`) %>
+          <% if (video.isPosting) { %>
+          <i class="fas fa-spinner fa-spin"></i><%- e('videoIsPosting') %> <% }
+          else { %> <i class="fas fa-signature"></i> <%-
+          e(`${buttonCaption}Short`) %> <%}%>
         </button>
       </div>
       <div class="videoItemPart removeButtonWrapper">

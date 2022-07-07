@@ -196,6 +196,20 @@
   font-size: 2em;
   font-weight: 100;
 }
+#videoCabinet .postedVideosHeader {
+  max-width: 700px;
+  padding-top: 1em;
+  padding-bottom: 1em;
+  font-size: 2em;
+  font-weight: 100;
+}
+#videoCabinet .unpostedVideosHeader {
+  max-width: 700px;
+  padding-top: 1em;
+  padding-bottom: 1em;
+  font-size: 2em;
+  font-weight: 100;
+}
 #videoCabinet .ghostButton {
   background-color: transparent;
   color: rgba(var(--color-txt-gray-dark), 0.4);
