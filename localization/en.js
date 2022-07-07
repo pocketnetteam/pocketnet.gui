@@ -1927,9 +1927,9 @@ ____loclib.drafts = 'Drafts'
 ____loclib.repostyourown = 'You cannot repost your own post'
 
 
-____loclib.reachedlimits = 'You reached your daily limit of actions. To increase your limit you need to have at least 50 PKOIN in your account or have a valid reputation.'
+____loclib.reachedlimits = 'You reached your daily limit of actions. To increase your limit you need to have a valid reputation.'
 
-____loclib.closestreachedlimits = 'You are close to hitting your daily action limit. To increase your limit you need to have at least 50 PKOIN in your account or have a valid reputation.'
+____loclib.closestreachedlimits = 'You are close to hitting your daily action limit. To increase your limit you need to have a valid reputation.'
 
 
 ____loclib.sendUserStatistics = 'Send anonimous report of errors to Bastyon Team'
@@ -2229,3 +2229,7 @@ ____loclib.usetor = "Connection via Tor network"
 ____loclib.videotranscodingdelayedpost = "This video is being processed and will be posted as soon as the transcoding process ends. Please, do not close the tab untill then."
 
 ____loclib.postInRelay = "This post is being processed before publishing to blockchain"
+
+
+____loclib.continuesubscribefeedCaption = "Would you like to continue seeing posts from the people you follow?"
+____loclib.continuesubscribefeedButton = "Continue in the subscription feed"

@@ -1187,6 +1187,8 @@ Application = function(p)
   self.renewModules = function(map){}
   self.logger = function(Function, Message){}
 
+  self.Logger = new FrontendLogger(navigator.userAgent, self);
+
   self.scrollRemoved = 0;
   self.scrollTop = 0
   self.lastScrollTop = 0
@@ -1237,8 +1239,6 @@ Application = function(p)
 
       p.clbk = function(c,b){
         self.pipwindow = b
-
-        console.log('self.pipwindow', self.pipwindow)
 
         if(clbk) clbk(c,b)
       }
@@ -1723,8 +1723,6 @@ Application = function(p)
         // var blob = new Blob([file], { type: "image/png" });
         var name = $.md5(url);
 
-        console.log('storageLocation', storageLocation, name)
-
         window.resolveLocalFileSystemURL(storageLocation, function (fileSystem) {
           fileSystem.getDirectory(self.storage.getStorageDirectory(), {
               create: true,
@@ -1764,8 +1762,6 @@ Application = function(p)
 
         var storageLocation = self.storage.getStorageLocation();
         var name = $.md5(url);
-
-        console.log('storageLocation', storageLocation, name)
 
         window.resolveLocalFileSystemURL(storageLocation, function (fileSystem) {
           fileSystem.getDirectory(self.storage.getStorageDirectory(), {
@@ -2056,17 +2052,12 @@ Application = function(p)
 
               globalpreloader(true, true)
 
-              console.log(src)
 
               srcToData(src, function(base64){
-
-                console.log({base64, name})
 
                 imagetojpegifneed({base64, name}).then(({base64, name})=> {
 
                   self.mobile.saveImages.save(base64, name, function(d, err){
-
-                    console.log("D", d, err)
 
                     globalpreloader(false)
 
@@ -2101,8 +2092,6 @@ Application = function(p)
         if(self.mobileview){
           _el.swipe({
             longTap : function(){
-
-              console.log("T", this)
               self.mobile.vibration.small()
 
               var name = this.attr('save')
@@ -2423,7 +2412,7 @@ Application = function(p)
       needmanage : false,
       hasupdate : false,
 
-      playstore : false,  ///// TODO
+      playstore : true,  ///// TODO
 
       downloadAndInstall : function(){
 

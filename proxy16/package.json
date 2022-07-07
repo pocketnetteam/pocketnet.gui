@@ -40,6 +40,7 @@
         "random": "^2.2.0",
         "request": "^2.88.2",
         "request-progress": "^3.0.0",
+        "socks-proxy-agent": "^7.0.0",
         "string": "^3.3.3",
         "svg-captcha": "^1.4.0",
         "targz": "^1.0.1",

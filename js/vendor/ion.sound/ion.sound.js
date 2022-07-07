@@ -380,8 +380,6 @@
                 return;
             }
 
-            console.log(this)
-
             if (this.no_file || !this.decoded) {
                 return;
             }

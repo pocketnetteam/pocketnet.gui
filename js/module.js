@@ -277,7 +277,6 @@ nModule = function(){
 				p.rendered = template(p.data);
 			}
 			catch(e){
-				console.log(p)
 				console.error(e)
 				p.rendered = ''
 			}
@@ -382,7 +381,6 @@ nModule = function(){
 					}
 
 					catch(e){
-						console.log('p.name', p.name, url)
 						console.error(e)
 					}
 
@@ -497,7 +495,21 @@ nModule = function(){
 			self.user.isState(function(state){	
 				
 				
-				settings.getdata(function(data){
+				settings.getdata(function(data, err){
+
+					if(err){
+
+						topPreloader(100);
+
+						if(globalpreloaderTimer){
+
+							globalpreloader(false)
+
+							clearTimeout(globalpreloaderTimer)
+						}
+
+						return
+					}
 
 					topPreloader(45);
 

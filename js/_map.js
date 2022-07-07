@@ -56,7 +56,7 @@ __map =  {
 		"js/vendor/moment.min.js", //?
 		"js/vendor/moment.locale.js", //?
 		"js/vendor/jquery.inputmask.bundle.js",
-		"js/vendor/axios.js", //
+		 //
 		"js/vendor/isotope.pkgd.js", //
 		"js/vendor/circular-progress.js", //
 		{path : "js/vendor/workbox-v6.1.5/workbox-sw.js", babelify : true},
@@ -67,7 +67,7 @@ __map =  {
 	],
 
 	__sourcesfirst : [
-
+		"js/vendor/axios.js",
 		"js/vendor/underscore-min.js",  
 		{path : "js/functionsfirst.js", babelify : true},
 		"js/localization.js",
@@ -76,6 +76,7 @@ __map =  {
 		{path : "js/lib/client/api.js", babelify : true},
 		{path : "js/image-uploader.js", babelify : true},
 		"js/_map.js",
+		{path : "js/logger.js", babelify : true},
 		{path : "js/app.js", babelify : true},
 		"js/main.js"
 	],
@@ -97,7 +98,6 @@ __map =  {
 		{path : "js/peertube.js", babelify : true},
 		{path : "js/widgets.js", babelify : true},
 		{path : "js/effects.js", babelify : true},
-		{path : "js/logger.js", babelify : true},
 		{path : "js/video-uploader.js", babelify : true},
 		{path : "js/file-hash.js", babelify : true}
 		
@@ -151,6 +151,9 @@ __map =  {
 		{ c : 'lenta', n : 'stars' },
 		{ c : 'lenta', n : 'groupshares' },
 		{ c : 'lenta', n : 'commentspreview' },
+		{ c : 'lenta', n : 'tosubscribeshares' },
+
+		
 		{ c : 'comments', n : 'index' },
 		{ c : 'comments', n : 'post' },
 		{ c : 'comments', n : 'list' },

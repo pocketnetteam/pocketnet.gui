@@ -1164,6 +1164,10 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 					result = r
 
+				posts = _.filter(posts, p => {
+					return p
+				})
+
 				var withvideos = _.filter(posts, p => {
 					return p.type == 'video' && p.u
 				})
@@ -1967,6 +1971,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				path: '/ping',
 				action: function () {
 					var node = nodeManager.bestnode
+					var height = nodeManager.bestnodeheight
 
 					/*if (nodeManager.bestnodes.length){
 						node = nodeManager.bestnodes[f.rand(0, nodeManager.bestnodes.length - 1)]
@@ -1977,7 +1982,8 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 							time: f.now(),
 							session : self.session,
 							v : '0808',
-							node : node || ''
+							node : node || '',
+							height : height || 0
 						},
 					});
 				},

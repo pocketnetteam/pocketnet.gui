@@ -315,7 +315,7 @@ var Peertube = function (settings) {
 			const output = {};
 
 			Object.keys(roys).map((roy) => {
-				output[roy] = roys[roy].instances();
+				output[roy] = roys[roy].availableInstances();
 			});
 
 			return Promise.resolve(output);
