@@ -28,6 +28,8 @@ var videoCabinet = (function () {
     let newVideosAreUploading = false;
     let serversList = {};
 
+    let unpostedVideosParsed;
+
     var peertubeServers = {};
     var userQuota = {};
     var blockChainInfo = [];
@@ -101,9 +103,15 @@ var videoCabinet = (function () {
               server: host,
             };
 
-            peertubeServers[host].videos.unshift(formattedData);
-
-            renders.videos([formattedData], renders.newVideoContainer(true));
+            renders.videos(
+              [formattedData],
+              renders.newVideoContainer(
+                true,
+                el.unPostedVideosContainer.find('.unpostedVideosBody'),
+              ),
+              false,
+              true,
+            );
           })
           .catch((err = {}) => {
             if (!err.text) err.text = 'SINGLE_VIDEO_ADDING_VIDEOCABINET';
@@ -495,6 +503,7 @@ var videoCabinet = (function () {
                     scoreSum: video.score,
                     scoreCnt: video.scnt,
                     comments: video.comments,
+                    editable: video.edit,
                     state: {
                       id: 1,
                     },
@@ -509,22 +518,6 @@ var videoCabinet = (function () {
       },
 
       getUnpostedVideos() {
-        const unpostedVideosByAddress =
-          localStorage.getItem('unpostedVideos') || '{}';
-
-        let unpostedVideosParsed;
-
-        try {
-          unpostedVideosParsed = JSON.parse(unpostedVideosByAddress);
-        } catch (error) {
-          self.app.Logger.error({
-            err: 'DAMAGED_LOCAL_STORAGE',
-            code: 801,
-            payload: error,
-          });
-
-          return [];
-        }
 
         const accountVideos = (
           unpostedVideosParsed[self.app.user.address.value] || []
@@ -550,6 +543,7 @@ var videoCabinet = (function () {
                     url: deep(videoInfo, 'meta.url'),
                     createdAt: deep(videoInfo, 'data.original.createdAt'),
                     state: deep(videoInfo, 'data.original.state') || {},
+                    editable: true,
                   })),
               );
             },
@@ -630,7 +624,12 @@ var videoCabinet = (function () {
 
     var renders = {
       //table with video elements
-      videos(videosForRender, videoPortionElement, inBlockChainFlag) {
+      videos(
+        videosForRender,
+        videoPortionElement,
+        inBlockChainFlag,
+        newVideoFlag,
+      ) {
         //additional sorting due to different servers
         const videos = (
           videosForRender ||
@@ -777,9 +776,10 @@ var videoCabinet = (function () {
                     '.backgroundPreloader',
                   );
                   const videoUrl = avatarWrapper.attr('video');
-
-                  const videoInfo =
-                    self.app.platform.sdk.videos.storage[videoUrl];
+                  const uuid = sectionElement.attr('uuid');
+                  const videoInfo = newVideoFlag
+                    ? videosForRender.find((video) => video.uuid === uuid)
+                    : self.app.platform.sdk.videos.storage[videoUrl];
 
                   if (!videoInfo) return;
 
@@ -1039,14 +1039,14 @@ var videoCabinet = (function () {
         }
       },
       //add new container for a protion of videos (lazyload)
-      newVideoContainer(atStart = false) {
+      newVideoContainer(atStart = false, container = el.videoContainer) {
         const videoPortionElement = $(
           '<div class="videoPage"><div class="preloaderwr"><div class="preloader5"><img src="./img/three-dots.svg"/></div></div></div>',
         );
 
         atStart
-          ? el.videoContainer.prepend(videoPortionElement)
-          : el.videoContainer.append(videoPortionElement);
+          ? container.prepend(videoPortionElement)
+          : container.append(videoPortionElement);
 
         return videoPortionElement;
       },
@@ -1068,7 +1068,7 @@ var videoCabinet = (function () {
         const data = {
           isVideoPosted,
         };
-
+        debugger;
         const meta = self.app.peertubeHandler.parselink(videoLink);
 
         self.fastTemplate(
@@ -1091,7 +1091,7 @@ var videoCabinet = (function () {
                       self.app.peertubeHandler.api.videos
                         .remove(videoLink)
                         .then(() => {
-                          el.videoContainer
+                          el.c
                             .find(`.singleVideoSection[uuid="${meta.id}"]`)
                             .addClass('hidden');
                         })
@@ -1100,7 +1100,7 @@ var videoCabinet = (function () {
                             return self.app.peertubeHandler.api.videos
                               .remove(`peertube://${backupHost}/${meta.id}`)
                               .then(() => {
-                                el.videoContainer
+                                el.c
                                   .find(
                                     `.singleVideoSection[uuid="${meta.id}"]`,
                                   )
@@ -1192,7 +1192,7 @@ var videoCabinet = (function () {
                             return self.app.peertubeHandler.api.videos
                               .update(videoLink, parameters, { host })
                               .then(() => {
-                                const textContainert = el.videoContainer.find(
+                                const textContainert = el.c.find(
                                   `.singleVideoSection[uuid="${meta.id}"]`,
                                 );
 
@@ -1375,8 +1375,29 @@ var videoCabinet = (function () {
     };
 
     var state = {
-      save: function () {},
-      load: function () {},
+      save() {
+        localStorage.setItem(
+          'unpostedVideos',
+          JSON.stringify(unpostedVideosParsed),
+        );
+      },
+      load() {
+        const unpostedVideosByAddress =
+          localStorage.getItem('unpostedVideos') || '{}';
+
+        try {
+          unpostedVideosParsed = JSON.parse(unpostedVideosByAddress);
+        } catch (error) {
+          self.app.Logger.error({
+            err: 'DAMAGED_LOCAL_STORAGE',
+            code: 801,
+            payload: error,
+          });
+
+          unpostedVideosParsed = {};
+        }
+      },
+      update() {},
     };
 
     var initEvents = function () {
@@ -1406,6 +1427,8 @@ var videoCabinet = (function () {
         ed = p.settings.essenseData || {};
 
         externalActions = ed.actions || {};
+
+        state.load();
 
         //check if user has access to videos
         self.app.peertubeHandler.api.user
@@ -1463,7 +1486,6 @@ var videoCabinet = (function () {
       },
 
       destroy: function () {
-
         if (el.windowElement)
           el.windowElement.off('scroll', events.onPageScroll);
 
