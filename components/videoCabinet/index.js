@@ -96,11 +96,12 @@ var videoCabinet = (function () {
         actions
           .getSingleVideo(resultLink)
           .then((data) => {
-            const { host } = self.app.peertubeHandler.parselink(resultLink);
+            const { host, id } = self.app.peertubeHandler.parselink(resultLink);
 
             const formattedData = {
               ...data,
               server: host,
+              url: `peertube://${host}/${id}`,
             };
 
             renders.videos(
@@ -110,7 +111,6 @@ var videoCabinet = (function () {
                 el.unPostedVideosContainer.find('.unpostedVideosBody'),
               ),
               false,
-              true,
             );
           })
           .catch((err = {}) => {
@@ -357,7 +357,7 @@ var videoCabinet = (function () {
       videoFinishedTranscoding(id) {
         clearInterval(transcodingIntervals[id]);
         delete transcodingIntervals[id];
-        const videoElement = el.videoContainer.find(`[uuid="${id}"]`);
+        const videoElement = el.c.find(`[uuid="${id}"]`);
 
         videoElement.find('.attachVideoToPost').removeClass('hidden');
         videoElement.find('.transcodingPreloader').addClass('hidden');
@@ -518,7 +518,6 @@ var videoCabinet = (function () {
       },
 
       getUnpostedVideos() {
-
         const accountVideos = (
           unpostedVideosParsed[self.app.user.address.value] || []
         ).map((video) => ({
@@ -628,7 +627,6 @@ var videoCabinet = (function () {
         videosForRender,
         videoPortionElement,
         inBlockChainFlag,
-        newVideoFlag,
       ) {
         //additional sorting due to different servers
         const videos = (
@@ -777,9 +775,7 @@ var videoCabinet = (function () {
                   );
                   const videoUrl = avatarWrapper.attr('video');
                   const uuid = sectionElement.attr('uuid');
-                  const videoInfo = newVideoFlag
-                    ? videosForRender.find((video) => video.uuid === uuid)
-                    : self.app.platform.sdk.videos.storage[videoUrl];
+                  const videoInfo = self.app.platform.sdk.videos.storage[videoUrl];
 
                   if (!videoInfo) return;
 
@@ -1068,7 +1064,6 @@ var videoCabinet = (function () {
         const data = {
           isVideoPosted,
         };
-        debugger;
         const meta = self.app.peertubeHandler.parselink(videoLink);
 
         self.fastTemplate(
@@ -1094,6 +1089,8 @@ var videoCabinet = (function () {
                           el.c
                             .find(`.singleVideoSection[uuid="${meta.id}"]`)
                             .addClass('hidden');
+
+                          state.removeVideo(meta.id);
                         })
                         .catch((error = {}) => {
                           if (error.code === 'removeerror') {
@@ -1105,6 +1102,8 @@ var videoCabinet = (function () {
                                     `.singleVideoSection[uuid="${meta.id}"]`,
                                   )
                                   .addClass('hidden');
+
+                                state.removeVideo(meta.id);
                               })
                               .catch((err = {}) => {
                                 sitemessage(
@@ -1144,7 +1143,7 @@ var videoCabinet = (function () {
                         backupHost,
                       })
                       .then((img) => {
-                        const previewContainer = el.videoContainer.find(
+                        const previewContainer = el.c.find(
                           `.singleVideoSection[uuid="${meta.id}"] .videoAvatar`,
                         );
 
@@ -1398,6 +1397,17 @@ var videoCabinet = (function () {
         }
       },
       update() {},
+      removeVideo(id) {
+        unpostedVideosParsed[self.app.user.address.value] = (
+          unpostedVideosParsed[self.app.user.address.value] || []
+        ).filter((item) => {
+          const itemMeta = self.app.peertubeHandler.parselink(item);
+
+          return itemMeta.id !== id;
+        });
+
+        state.save();
+      },
     };
 
     var initEvents = function () {
