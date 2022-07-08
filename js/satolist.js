@@ -8157,7 +8157,10 @@ Platform = function (app, listofnodes) {
 
                 if(!self.sdk.sharesObserver.storage.viewed[key]) self.sdk.sharesObserver.storage.viewed[key] = {}
 
-                if (!self.sdk.sharesObserver.storage.viewed[key].first || self.sdk.sharesObserver.storage.viewed[key].first < first){
+
+                console.log('self.sdk.sharesObserver.storage.viewed[key].first < first', key, self.sdk.sharesObserver.storage.viewed[key].first , first)
+
+                if (!self.sdk.sharesObserver.storage.viewed[key].first || self.sdk.sharesObserver.storage.viewed[key].first <= first){
 
                     self.sdk.sharesObserver.storage.viewed[key].first = first
                     self.sdk.sharesObserver.storage.viewed[key].new = 0

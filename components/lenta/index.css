@@ -697,6 +697,9 @@
   #lenta .openoriginallabel {
     display: none;
   }
+  #lenta .fullScreenVideo .videoWrapper .js-player .video-js .vjs-volume-control {
+    display: none;
+  }
 }
 /*t*/
 @media only screen and (max-width: 768px) {
