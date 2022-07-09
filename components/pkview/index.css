@@ -50,11 +50,12 @@
 }
 #pkview .approveMnemonic .randomWordsWrapper,
 #pkview .qrCode .randomWordsWrapper {
-  height: 194px;
+  height: 62px;
   padding: 10px;
   margin-bottom: 2em;
   border: 1px dashed #3c4146;
   border-radius: 8px;
+  justify-content: space-between;
 }
 #pkview .approveMnemonic .approveMnemonicButtons,
 #pkview .qrCode .approveMnemonicButtons {

@@ -12,6 +12,8 @@ var pkview = (function(){
 
 		var checkedMnemonic = []
 		var base64
+		var mnemonicCheckPart
+		var mnemonicCheckPartLength = 3
 
 		var actions = {
 			saveqr : function(clbk){
@@ -178,22 +180,24 @@ var pkview = (function(){
 			}
 		}
 
-		shuffleArray = function(array){
-			const words = [...array];
-			const shuffled = [];
-		  
-			var n = words.length;
-		  
-			while (n) {
-			  n -= 1;
-			  const i = Math.floor(Math.random() * n);
-			  const [word] = words.splice(i, 1);
-		  
-			  shuffled.push(word);
+		shuffleArray = function (array) {
+			let arrayCopy = [...array]
+			let currentIndex = array.length,  randomIndex;
+			while (currentIndex != 0) {
+			  randomIndex = Math.floor(Math.random() * currentIndex);
+			  currentIndex--;
+			  
+			  [arrayCopy[currentIndex], arrayCopy[randomIndex]] = [
+				arrayCopy[randomIndex], arrayCopy[currentIndex]];
+			}
+			if(array.join(' ') === arrayCopy.join(' ')){
+				return shuffleArray(array)
+			}else{
+				return arrayCopy;
 			}
 		  
-			return shuffled;
-		}
+			
+		  }
 
 		back = function(){
 			el.c.find(".backButton").on('click', function(e){
@@ -207,6 +211,7 @@ var pkview = (function(){
 		renderShuffledMnemonic = function(){
 			el.c.find(".approveMnemonic")
 			.html(`<span class="approveMnemonicNote">${self.app.localization.e('mnemonicnote')}</span><div class="randomWordsWrapper"></div><div class="shuffledMnemonicWrapper"></div><div class="approveMnemonicButtons"><button class="button ghost backButton"><span>${self.app.localization.e('back')}</span></button><button class="button orange submitButton" disabled>${self.app.localization.e('confirm')}</button></div>`)
+			mnemonicCheckPart = current.mnemonicContent.slice(0, mnemonicCheckPartLength)
 			var shuffledMnemonic = shuffleArray(current.mnemonicContent)
 			var container = el.c.find(".shuffledMnemonicWrapper")
 			for(var i = 0; i < shuffledMnemonic.length; i++) {
@@ -227,18 +232,18 @@ var pkview = (function(){
 				})
 				shuffledMnemonicItem.removeClass('hide')
 				$(this).remove()
-				checkedMnemonic.length !== 12 && el.c.find(".submitButton").prop("disabled", true)
+				checkedMnemonic.length !== mnemonicCheckPartLength && el.c.find(".submitButton").prop("disabled", true)
 			})
 		}
 
 		mnemonicItemClickHandler = function(){
 			el.c.find(".shuffledMnemonicItem").on('click', function(){
 				var container = el.c.find(".randomWordsWrapper")
-				if(checkedMnemonic.length < 12){
+				if(checkedMnemonic.length < mnemonicCheckPartLength){
 					checkedMnemonic.push($(this).text())
 					$(`<div class="shuffledMnemonicItem">${$(this).text()}</div>`).appendTo(container)
 					$(this).addClass('hide')
-					checkedMnemonic.length === 12 && el.c.find(".submitButton").prop("disabled", false)
+					checkedMnemonic.length === mnemonicCheckPartLength && el.c.find(".submitButton").prop("disabled", false)
 				}
 				removeFromSelected()
 			})
@@ -246,8 +251,8 @@ var pkview = (function(){
 
 		validateMnemonic = function(){
 			el.c.find(".submitButton").on('click', function(){
-				if(checkedMnemonic.length === 12){
-					if(checkedMnemonic.join(' ') === current.mnemonicKey){
+				if(checkedMnemonic.length === mnemonicCheckPartLength){
+					if(checkedMnemonic.join(' ') === mnemonicCheckPart.join(' ')){
 						self.closeContainer()
 				 		self.app.platform.sdk.registrations.donotshowprivate()
 					}else{
