@@ -94,7 +94,6 @@ var complain = (function(){
 
           if(ess == 'user' && textreason){
 
-            console.log(textreason, sobj.address, mestate.address)
 
             self.app.complainletters.user({
               i1 : textreason,
@@ -240,7 +239,6 @@ var complain = (function(){
           var data = {
             ess : ess
           };
-          console.log('getData', data)
           clbk(data);
         }
 

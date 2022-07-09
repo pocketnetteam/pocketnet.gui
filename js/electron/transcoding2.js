@@ -12,7 +12,6 @@ const ramCount = Math.round(os.totalmem() / Math.pow(1024, 3));
 
 /** Uncomment line to enable debug logs */
 let debugLog = () => {};
-// debugLog = console.log;
 
 class ClientTask {
   state = 'CREATED';
