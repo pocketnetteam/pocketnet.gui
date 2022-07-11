@@ -1,6 +1,6 @@
 <%
 
-var m = ['editPreview', 'editText'];
+var m = ['editPreview'];
 
 var all = {
 	remove : {
@@ -21,10 +21,22 @@ var all = {
 		text : e('editVideoDescription'),
 		class : 'editText',
 	},
+
+	removePost : {
+		icon : '<i class="fas fa-times-circle"></i>',
+		text : e('removepost'),
+		class : 'removePost',
+	},
 }
 
 if (!isVideoPosted) {
 	m.push('remove');
+} else {
+	m.push('removePost');
+}
+
+if (editableFlag === 'true') {
+	m.push('editText');
 }
 
 %>

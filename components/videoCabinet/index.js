@@ -177,6 +177,8 @@ var videoCabinet = (function () {
           .rpc('searchlinks', [videoArray, 'video', 0, videoArray.length])
 
           .then((res = []) => {
+            debugger;
+
             res.forEach((post) => {
               const postUrl = decodeURIComponent(post.u);
 
@@ -530,33 +532,44 @@ var videoCabinet = (function () {
         }));
 
         return new Promise((res) => {
-          self.app.platform.sdk.node.shares.loadvideoinfoifneed(
-            accountVideos,
-            true,
-            function () {
-              return res(
-                accountVideos
-                  .map(
-                    (video) => self.app.platform.sdk.videos.storage[video.url],
-                  )
-                  .map((videoInfo = {}) => ({
-                    uuid: deep(videoInfo, 'meta.id'),
-                    name: deep(videoInfo, 'data.original.name'),
-                    description: deep(videoInfo, 'data.original.description'),
-                    server: deep(videoInfo, 'meta.host_name'),
-                    url: deep(videoInfo, 'meta.url'),
-                    createdAt: deep(videoInfo, 'data.original.createdAt'),
-                    state: deep(videoInfo, 'data.original.state') || {},
-                    editable: videosInPosting.includes(
-                      deep(videoInfo, 'meta.url'),
-                    ),
-                    isPosting: videosInPosting.includes(
-                      deep(videoInfo, 'meta.url'),
-                    ),
-                  })),
-              );
-            },
-          );
+          actions
+            .getBlockchainPostByVideos(
+              unpostedVideosParsed[self.app.user.address.value] || [],
+            )
+            .then(() => {
+            })
+            .then(() =>
+              self.app.platform.sdk.node.shares.loadvideoinfoifneed(
+                accountVideos,
+                true,
+                function () {
+                  return res(
+                    accountVideos
+                      .map(
+                        (video) =>
+                          self.app.platform.sdk.videos.storage[video.url],
+                      )
+                      .map((videoInfo = {}) => ({
+                        uuid: deep(videoInfo, 'meta.id'),
+                        name: deep(videoInfo, 'data.original.name'),
+                        description: actions.replaceNetLinks(
+                          deep(videoInfo, 'data.original.description'),
+                        ),
+                        server: deep(videoInfo, 'meta.host_name'),
+                        url: deep(videoInfo, 'meta.url'),
+                        createdAt: deep(videoInfo, 'data.original.createdAt'),
+                        state: deep(videoInfo, 'data.original.state') || {},
+                        editable: !videosInPosting.includes(
+                          deep(videoInfo, 'meta.url'),
+                        ),
+                        isPosting: videosInPosting.includes(
+                          deep(videoInfo, 'meta.url'),
+                        ),
+                      })),
+                  );
+                },
+              ),
+            );
         });
       },
 
@@ -568,6 +581,39 @@ var videoCabinet = (function () {
           )}`,
         );
         linkElement.attr('isposting', 'true');
+      },
+
+      onSendToBlockchain(data) {
+        if (data.opmessage !== 'video') return;
+
+        const videoUrl = deep(data, 'temp.url');
+
+        const { id, host } = self.app.peertubeHandler.parselink(videoUrl);
+
+        el.c.find(`.singleVideoSection[uuid="${id}"]`).addClass('hidden');
+
+        actions
+          .getSingleVideo(videoUrl)
+          .then((data) => {
+            const formattedData = {
+              ...data,
+              server: host,
+              url: videoUrl,
+              txid: deep(data, 'temp.txid'),
+              editable: true,
+            };
+
+            renders.videos(
+              [formattedData],
+              renders.newVideoContainer(true),
+              false,
+            );
+          })
+          .catch((err = {}) => {
+            if (!err.text) err.text = 'SINGLE_VIDEO_ADDING_VIDEOCABINET';
+
+            return sitemessage(helpers.parseVideoServerError(err));
+          });
       },
     };
 
@@ -596,6 +642,7 @@ var videoCabinet = (function () {
         return actions
           .getBlockChainVideos()
           .then((data = []) => {
+            debugger;
             if (!data.length) allVideosLoaded = true;
 
             newVideosAreUploading = false;
@@ -743,10 +790,11 @@ var videoCabinet = (function () {
 
               const videoLink = menuActivatorElement.attr('videoLink');
               const backupHost = menuActivatorElement.attr('backupHost');
+              const editableFlag = menuActivatorElement.attr('editable');
 
               return renders.metmenu(
                 $(this),
-                { videoLink, backupHost },
+                { videoLink, backupHost, editableFlag },
                 inBlockChainFlag,
               );
             });
@@ -1088,10 +1136,11 @@ var videoCabinet = (function () {
       },
       //render menu with video controls
       metmenu(_el, parameters, isVideoPosted) {
-        const { videoLink, backupHost } = parameters;
+        const { videoLink, backupHost, editableFlag } = parameters;
 
         const data = {
           isVideoPosted,
+          editableFlag,
         };
         const meta = self.app.peertubeHandler.parselink(videoLink);
 
@@ -1395,7 +1444,7 @@ var videoCabinet = (function () {
             const containerWrapper = p.el.find('.unpostedVideosBody');
 
             if (!videos.length) return;
-            
+
             renders.videos(videos, containerWrapper, false);
           },
         );
@@ -1455,6 +1504,9 @@ var videoCabinet = (function () {
         }
 
         videosInPosting = [...postingVideos];
+
+        self.app.platform.ws.messages.transaction.clbks.postVideos =
+          actions.onSendToBlockchain;
       },
       update() {},
 
@@ -1555,6 +1607,8 @@ var videoCabinet = (function () {
       },
 
       destroy: function () {
+        delete self.app.platform.ws.messages.transaction.clbks.postVideos;
+
         if (el.windowElement)
           el.windowElement.off('scroll', events.onPageScroll);
 
