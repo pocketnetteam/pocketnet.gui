@@ -24,7 +24,7 @@
                 </div>
               </div>
               <div class="rating">
-                Оценок:  <strong><%- liker.ratingscnt  %></strong>
+                <%=e('ratings')%>:  <strong><%- liker.ratingscnt  %></strong>
               </div>
             </div>
 
@@ -33,7 +33,7 @@
             <% if(liker.about) {%>
             <div class="about">
               <%- decodeURIComponent(liker.about)  %>
-              <strong class="regdate"> Дата регистрации - </strong><%- moment.unix(liker.regdate).format('D MMMM YYYY')  %>
+              <strong class="regdate"> <%=e('regdate')%> - </strong><%- moment.unix(liker.regdate).format('D MMMM YYYY')  %>
             </div>
             <% } %>
           </div>
