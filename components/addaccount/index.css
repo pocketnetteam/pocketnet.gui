@@ -1,3 +1,63 @@
+.qrmenu .qrmenuitem {
+  cursor: pointer;
+  height: 80px;
+}
+.qrmenu .qrmenuitem .fileUploader .elContent {
+  display: flex;
+}
+.qrmenu .qrmenuitem .fileUploader .elContent .icon {
+  width: 30px;
+  padding: 2em 0px 2em 1.5em;
+}
+.qrmenu .qrmenuitem .fileUploader .elContent .label {
+  padding: 2em 0em 2em 1em;
+}
+.qrmenu .qrmenuitem > div {
+  padding: 1em;
+  border-bottom: 1px solid rgb(var(--neutral-grad-1));
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+.qrmenu .qrmenuitem > div span {
+  font-size: 0.9em;
+}
+.qrmenu .qrmenuitem > div.icon {
+  width: 30px;
+  text-align: center;
+}
+.qrmenu .qrmenuitem:nth-last-child(1) > div {
+  border-bottom: 0;
+}
+.qrmenu .qrmenuitem:hover > div {
+  color: rgb(var(--color-text-ac));
+  border-color: rgb(var(--color-text-ac));
+}
+.qrmenu .qrmenuitem.block:hover > div,
+.qrmenu .qrmenuitem.complain:hover > div {
+  color: rgb(var(--color-text-ac-2));
+  border-color: rgb(var(--color-text-ac-2));
+}
+#addaccount .qrcode {
+  text-align: center;
+  cursor: pointer;
+}
+#addaccount .icon i {
+  color: rgb(var(--color-txt-ac));
+}
+#addaccount #mnemonicInput {
+  display: flex;
+  flex-wrap: wrap;
+}
+#addaccount #mnemonicInput .mnemonicItem {
+  margin-bottom: 0.3em;
+  width: 16%;
+  font-size: 1.2em;
+  padding: 0.2em;
+  border-color: transparent;
+  background-color: rgb(var(--neutral-grad-0));
+}
 #addaccount .work {
   padding-top: 2em !important;
   padding-bottom: 2em !important;
@@ -25,6 +85,7 @@
 }
 #addaccount .inputTable > div.actionButtonsWrapper {
   width: 120px;
+  display: none;
   text-align: center;
 }
 #addaccount .inputTable > div.actionButtonsWrapper .fileUploader .inputWrapper input::-webkit-file-upload-button {
@@ -99,6 +160,7 @@
 }
 .wnd.addaccountwnd #addaccount .inputTable > div.actionButtonsWrapper {
   width: 120px;
+  display: none;
   text-align: center;
 }
 .wnd.addaccountwnd #addaccount .inputTable > div.actionButtonsWrapper > div {
@@ -107,6 +169,9 @@
 }
 /*t*/
 @media only screen and (max-width: 768px) {
+  #addaccount #mnemonicInput .mnemonicItem {
+    width: 49%;
+  }
   #addaccount .work {
     padding-top: 1em !important;
     padding-bottom: 1em !important;
@@ -125,5 +190,12 @@
   }
   #addaccount .inputTable > div.actionButtonsWrapper {
     width: 50%;
+    display: none;
   }
+}
+.loginValue {
+  display: none;
+}
+.errorClass {
+  border-color: #F41A4D !important;
 }

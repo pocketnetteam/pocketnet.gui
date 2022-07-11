@@ -1,0 +1,117 @@
+.camera {
+  height: 100vh;
+}
+.camera *:not(.cameraUi, .cameraUi *, .sitemessage, .sitemessage *) {
+  display: none !important;
+}
+.cameraUi {
+  background-image: url(../../css/img/scan-frame.png);
+  width: 100%;
+  height: 100%;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  position: relative;
+}
+.cameraUi .roundclosebutton {
+  position: absolute;
+  right: 0;
+}
+.wndinner.scanorimportqr {
+  max-width: 571px;
+  max-height: 427px !important;
+}
+.wndinner.scanorimportqr .windowmainbuttons {
+  display: none !important;
+}
+.wndinner.scanorimportqr .wndcontent {
+  overflow-y: hidden;
+  padding: 0;
+  height: 100%;
+  padding-bottom: 0 !important;
+  top: 0;
+}
+#scanorimportqr {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background: #000;
+}
+#scanorimportqr .loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+#scanorimportqr .error {
+  display: none;
+  color: rgba(var(--text-on-bg-ac-color));
+  position: absolute;
+  padding: 1em;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  text-align: center;
+}
+#scanorimportqr #reader {
+  width: 100%;
+  height: 100%;
+}
+#scanorimportqr #reader #qr-shaded-region {
+  height: 101.5%;
+}
+#scanorimportqr #reader #qr-shaded-region div {
+  opacity: 0.5;
+}
+#scanorimportqr .uploadFile {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  opacity: 0.8;
+}
+#scanorimportqr .uploadFile .fileUploader {
+  display: flex;
+  flex-direction: column;
+  position: initial;
+}
+#scanorimportqr .uploadFile .fileUploader .elContent {
+  color: #F0F2F5;
+  position: initial;
+  display: flex;
+  align-items: center;
+}
+#scanorimportqr .uploadFile .fileUploader .elContent .icon {
+  text-align: center;
+  margin-right: 5px;
+}
+#scanorimportqr .uploadFile .fileUploader .elContent .label {
+  width: 100%;
+  font-size: 0.9em;
+  color: #F0F2F5;
+  font-weight: 700;
+}
+#scanorimportqr .uploadFile .fileUploader .inputWrapper input::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  cursor: pointer;
+}
+/*t*/
+@media only screen and (max-width: 768px) {
+  .wndinner.scanorimportqr {
+    max-width: 570px;
+    max-height: 292px;
+  }
+  #scanorimportqr #reader video {
+    height: 101%;
+  }
+  #scanorimportqr .uploadFile {
+    top: 10px;
+    bottom: initial;
+    left: 10px;
+  }
+}
