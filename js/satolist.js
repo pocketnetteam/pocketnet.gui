@@ -2724,7 +2724,7 @@ Platform = function (app, listofnodes) {
                 app.nav.api.load({
                     open: true,
                     id: 'commentBanner',
-                    el: $('.bannerComment', contextElem),
+                    el: contextElem.find('.bannerComment'),
                     essenseData: {},
                 });
             };

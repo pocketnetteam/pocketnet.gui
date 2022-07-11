@@ -21,15 +21,15 @@ const commentBanner = (function() {
 		const renders = {
 			show() {
 				console.log('show', p.el)
-				p.el.addClass('show')
+				el.c.addClass('show')
 			},
 			closeBanner() {
-				p.el.removeClass('show');
+				el.c.removeClass('show');
 				setTimeout(() => {
-					p.el.empty();
+					el.c.empty();
 				}, 1000);
 
-				p.el.off('click');
+				el.c.off('click');
 			}
 		};
 
@@ -43,8 +43,8 @@ const commentBanner = (function() {
 		};
 
 		const initEvents = function() {
-			p.el.on('click', '.noShowAgain', actions.dontShowAgain)
-			p.el.on('click', '.closeBannerBtn', renders.closeBanner)
+			el.c.on('click', '.noShowAgain', actions.dontShowAgain)
+			el.c.on('click', '.closeBannerBtn', renders.closeBanner)
 		};
 
 		return {
@@ -64,6 +64,8 @@ const commentBanner = (function() {
 				state.load();
 
 				el = {};
+
+				el.c = p.el;
 
 				renders.show();
 
