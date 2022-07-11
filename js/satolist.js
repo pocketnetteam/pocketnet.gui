@@ -7419,6 +7419,15 @@ Platform = function (app, listofnodes) {
                 _.each(this.clbks, function (c) { c(address) })
             },
 
+            value : function(address){
+                var regs = self.sdk.registrations.storage[address];
+                var rm = self.sdk.registrations.storage[address + 'rm']
+
+                if(rm) return 0
+
+                return regs
+            },
+
             showprivate : function(address){
                 if (!address && self.sdk.address.pnet()) address = self.sdk.address.pnet().address
 
@@ -27213,7 +27222,7 @@ Platform = function (app, listofnodes) {
 
         checkfeatures()
 
-        self.ui.popup('application');
+        
 
         app.user.isState(function(state){
 
@@ -27314,7 +27323,34 @@ Platform = function (app, listofnodes) {
 
         })
 
+        setTimeout(() => {
+            app.user.isState(function(state){
 
+                if(app.nav.current.href == 'index'){
+
+                    if($(document.activeElement).is('#application')){
+                        if(!state){
+                            self.ui.popup('application');
+                        }
+                        else{
+                            
+                            var a = self.sdk.address.pnet()
+    
+                            if (a){
+                                var regs = self.sdk.registrations.value(a.address)
+    
+                                if(!regs){
+                                    self.ui.popup('application');
+                                }
+                            }
+                            
+                        }
+                    }
+                    
+                }
+                
+            })
+        }, 30000)
 
     }
 
