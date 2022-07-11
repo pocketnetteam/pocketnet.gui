@@ -181,6 +181,7 @@ function quit(){
 
 function destroyApp() {
     proxyInterface.destroy().then(r => {
+        global.proxyInterface = null
         quit()
     }).catch(e => {
         quit()
@@ -664,6 +665,7 @@ function createWindow() {
 
         if (proxyInterface)
             proxyInterface.destroy().then(r => {
+                global.proxyInterface = null
                 autoUpdater.quitAndInstall(true, true)
             })
 
@@ -922,7 +924,7 @@ function createWindow() {
     });
 
     proxyInterface.init()
-
+    global.proxyInterface = proxyInterface
 
     ipcbridge = new IpcBridge(ipcMain, win.webContents)
 

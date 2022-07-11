@@ -293,6 +293,14 @@ var IPC = function(ipc, wc, proxyBridges){
         return kit.manage.node.stop()
     }
 
+	self.preloader = {
+		gettransports : function(){
+			return kit.proxy().then(r => {
+				return r.transports
+			})
+		}
+	}
+
     kit.init({}, { wssdummy, userDataPath : electron.app.getPath('userData')})
 
 	return self
