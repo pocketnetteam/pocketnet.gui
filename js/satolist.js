@@ -225,6 +225,15 @@ Platform = function (app, listofnodes) {
         'PUF8bsAYyHZQCtaMbrTwyRDcC3wMLKhFFX' : true,
         'PSFpsP19aHs7ZfGPnnt19yQC258y1HFYKD' : true,
         'PCkX8n2e6aD6Ji37hSpHCJpqvaaJjVWt1m' : true,
+        'PT4fvQ7jMicg6McC52BmFFkL2M6AEWc7vo' : true,
+        'PGecwCERTkoFd82E3e471SvxSxnJpC4cWk' : true,
+        'PRZEXQXTmz1jW6YmH1e83nkRRiDUqkE6fw' : true,
+        'PCM3fmcUikLbSNCeqtQ7MEk4yQbn6qQRJt' : true,
+        'PKXSw8Q4Kdy244Gb1R7GYPvTwiM22JssTf' : true,
+        'P8gfyLfXyeHzyAvq4Yqw6EW39ifCyVJ9f6' : true,
+        'PSKLx4k7ehAtvipwpo2ohBeCYzpf4SiKHj' : true,
+        'PK8dRanrBFxfSo3qw1P4gm6veaQQssZXxB' : true,
+        'PCkX8n2e6aD6Ji37hSpHCJpqvaaJjVWt1m' : true,
         'PT4fvQ7jMicg6McC52BmFFkL2M6AEWc7vo' : true
     }
 
@@ -7419,6 +7428,15 @@ Platform = function (app, listofnodes) {
                 _.each(this.clbks, function (c) { c(address) })
             },
 
+            value : function(address){
+                var regs = self.sdk.registrations.storage[address];
+                var rm = self.sdk.registrations.storage[address + 'rm']
+
+                if(rm) return 0
+
+                return regs
+            },
+
             showprivate : function(address){
                 if (!address && self.sdk.address.pnet()) address = self.sdk.address.pnet().address
 
@@ -8140,7 +8158,10 @@ Platform = function (app, listofnodes) {
 
                 if(!self.sdk.sharesObserver.storage.viewed[key]) self.sdk.sharesObserver.storage.viewed[key] = {}
 
-                if (!self.sdk.sharesObserver.storage.viewed[key].first || self.sdk.sharesObserver.storage.viewed[key].first < first){
+
+                console.log('self.sdk.sharesObserver.storage.viewed[key].first < first', key, self.sdk.sharesObserver.storage.viewed[key].first , first)
+
+                if (!self.sdk.sharesObserver.storage.viewed[key].first || self.sdk.sharesObserver.storage.viewed[key].first <= first){
 
                     self.sdk.sharesObserver.storage.viewed[key].first = first
                     self.sdk.sharesObserver.storage.viewed[key].new = 0
@@ -24967,7 +24988,9 @@ Platform = function (app, listofnodes) {
 
             platform.app.api.get.currentwss().then(wss => {
 
-                socket = wss.dummy || (new ReconnectingWebSocket(wss.url));
+                socket = wss.dummy || (new ReconnectingWebSocket(wss.url, null, {
+                    reconnectDecay : 1
+                }));
 
 
                 socket.onmessage = function (message) {
@@ -27208,7 +27231,7 @@ Platform = function (app, listofnodes) {
 
         checkfeatures()
 
-        self.ui.popup('application');
+        
 
         app.user.isState(function(state){
 
@@ -27309,7 +27332,34 @@ Platform = function (app, listofnodes) {
 
         })
 
+        setTimeout(() => {
+            app.user.isState(function(state){
 
+                if(app.nav.current.href == 'index'){
+
+                    if($(document.activeElement).is('#application')){
+                        if(!state){
+                            self.ui.popup('application');
+                        }
+                        else{
+                            
+                            var a = self.sdk.address.pnet()
+    
+                            if (a){
+                                var regs = self.sdk.registrations.value(a.address)
+    
+                                if(!regs){
+                                    self.ui.popup('application');
+                                }
+                            }
+                            
+                        }
+                    }
+                    
+                }
+                
+            })
+        }, 30000)
 
     }
 

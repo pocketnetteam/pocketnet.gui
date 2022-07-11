@@ -153,7 +153,7 @@ var test = (function(){
 			ref : function(resref){
 
 
-				if (ref && firstTime){
+				if (ref && firstTime && !self.app.dsubref){
 					localStorage[self.app.platform.sdk.address.pnet().address + 'subscribeRef'] = ref.address										
 				}
 
