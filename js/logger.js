@@ -99,7 +99,7 @@ class FrontendLogger {
       .map((err) => _createErrorBody(err));
 
     if (logsBatch.length) {
-      instance.post('front/action', logsBatch.join(','))
+      instance.post('front/action', logsBatch.join(','));
     }
 
     if (errorsBatch.length) {
@@ -160,9 +160,20 @@ class FrontendLogger {
   error(error = {}) {
     const { _errorsCache, guid, userAgent, loggerActive } = this;
     //protection from incorrect error formats or logger is turned off
-    if (typeof error !== 'object' || !loggerActive) return;
+    // if (typeof error !== 'object' || !loggerActive) return;
+    let errorBody;
 
-    const formattedError = { ...error, guid, userAgent };
+    try {
+      errorBody = JSON.stringify(
+        error.payload,
+        Object.getOwnPropertyNames(error.payload),
+      );
+    } catch (errorFormat) {
+      errorBody = `{ "error": "Unable to stringify received error. Report: ${errorFormat}", "type": "ERROR_PROCESSING_FAILED"}`;
+    }
+
+    const formattedError = { ...error, guid, userAgent, payload: errorBody };
+    debugger;
 
     _errorsCache.push(formattedError);
   }
@@ -243,6 +254,5 @@ class FrontendLogger {
       _addLogWithAggregation.default(info, _logsCache);
     }
 
-    console.log('Batch state', _logsCache);
   }
 }

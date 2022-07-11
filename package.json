@@ -1,8 +1,8 @@
 {
     "name": "pocketnet",
-    "version": "0.7.85",
-    "cordovaversion": "1.7.85",
-    "cordovaversioncode": "170850",
+    "version": "0.8.3",
+    "cordovaversion": "1.8.3",
+    "cordovaversioncode": "180030",
     "description": "Bastyon desktop application",
     "author": "Pocketnet Community <support@pocketnet.app>",
     "company": "Pocketnet Community",
@@ -13,9 +13,10 @@
         "start": "electron . --development",
         "start:test": "electron . --development --test",
         "pack": "electron-builder -w --dir --x64",
-        "dist": "electron-builder -w --x64 --ia32",
-        "distl": "electron-builder -l --x64",
-        "distm": "electron-builder -m --x64",
+        "build": "npm run dev:bastyon",
+        "dist": "electron-builder -w --x64 --ia32 -p never",
+        "distl": "electron-builder -l --x64 -p never",
+        "distm": "electron-builder -m --x64 -p never",
         "dist:arm64": "electron-builder -m --arm64",
         "publish": "build --win --x64 --ia32 -p always",
         "minimize": "node minimize.js -prodaction=true -vendor=30045 -path=/",
@@ -37,6 +38,7 @@
         "electron": "",
         "electron-builder": "^23.0.4",
         "electron-notarize": "",
+        "electron-builder-notarize": "^1.5.0",
         "electron-reload": "",
         "electron-reloader": "",
         "humanize": "0.0.9"
@@ -131,7 +133,7 @@
     },
     "build": {
         "productName": "Bastyon",
-        "afterSign": "build/notarize.js",
+        "afterSign": "electron-builder-notarize",
         "appId": "app.pocketnet.gui",
         "files": [
             "**/*",
@@ -166,13 +168,6 @@
                 ]
             }
         ],
-        "publish": [
-            {
-                "provider": "github",
-                "owner": "pocketnetapp",
-                "repo": "pocketnet.gui"
-            }
-        ],
         "protocols": {
             "name": "bastyon",
             "schemes": [
@@ -184,8 +179,9 @@
             "target": "dmg",
             "artifactName": "${productName}Setup.${ext}",
             "icon": "res/electron/icons/mac/icon.icns",
-            "entitlements": "build/entitlements.mac.plist",
-            "extendInfo": "bastyon"
+            "extendInfo": "bastyon",
+            "hardenedRuntime": true,
+            "entitlements": "./node_modules/electron-builder-notarize/entitlements.mac.inherit.plist"
         },
         "linux": {
             "target": [
@@ -196,10 +192,13 @@
                     "target": "deb"
                 }
             ],
-            "artifactName": "${productName}_${platform}_${arch}.${ext}",
+            "artifactName": "${productName}Setup.${ext}",
             "category": "Network",
             "executableName": "bastyon",
             "description": "Bastyon Desktop Browser"
+        },
+        "appImage": {
+            "artifactName": "${productName}.${ext}"
         },
         "win": {
             "target": [
@@ -253,13 +252,6 @@
                 "filter": [
                     "**/"
                 ]
-            }
-        ],
-        "publish": [
-            {
-                "provider": "github",
-                "owner": "pocketnetapp",
-                "repo": "pocketnet.gui"
             }
         ],
         "protocols": {

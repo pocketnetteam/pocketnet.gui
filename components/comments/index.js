@@ -651,9 +651,9 @@ var comments = (function(){
 
 						else
 						{
-							actions.tocomment(reply.answerid)
+							actions.tocomment(reply.parentid || reply.answerid)
 
-							var cel = el.c.find("#" + reply.answerid)
+							var cel = el.c.find("#" + (reply.parentid || reply.answerid))
 
 							cel.addClass('newcommentsn')
 
@@ -1557,8 +1557,6 @@ var comments = (function(){
 
 					focus : function() {
 						// Scroll comment section to top of the screen
-
-						console.log('isios()', isios())
 
 						if(!isios())
 							actions.scrollToComment(_p.el);

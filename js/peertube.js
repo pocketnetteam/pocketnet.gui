@@ -69,7 +69,7 @@ var PeertubeRequest = function (app = {}) {
 		if (data && !_.isEmpty(data) && ps.method !== 'GET')
 			ps.body = serialize(data);
 
-		return proxyFetch(url, ps)
+		return (typeof proxyFetch == 'undefined' ? fetch : proxyFetch)(url, ps)
 			.then((r) => {
 
 				if (signal)
@@ -435,7 +435,7 @@ PeerTubePocketnet = function (app) {
 					var url = self.helpers.url(options.host + '/' + meta.path);
 
 
-					return proxyAxios({ method, url, data, ...axiosoptions })
+					return (typeof proxyAxios != 'undefined' ? proxyAxios : axios)({ method, url, data, ...axiosoptions })
 						.then((r) => {
 							if (meta.fullreport) {
 								return r;
@@ -732,7 +732,6 @@ PeerTubePocketnet = function (app) {
 						}
 						return request('initResumableUploadVideo', data, optionsPrepared)
 							.then((r) => {
-								// console.log('INIT RESUMABLE UPLOAD VIDEO', r);
 
 								const handleResume = () => Promise.resolve({
 									responseType: 'resume_upload',
@@ -750,8 +749,28 @@ PeerTubePocketnet = function (app) {
 									case 200: return handleResume();
 									case 201: return handleCreated();
 
-									case 413: throw Error('max_file_size_reached or quota_reached'); // FIXME: Do separation
-									case 415: throw Error('Video type unsupported');
+									case 413:
+										const err413 = Error('Error 413: Video was rejected by Peertube server');
+
+										err413.video = {
+											size: parameters.video.size,
+											type: parameters.video.type,
+										};
+
+										return Promise.reject(err413);
+
+									case 415:
+										const err415 = Error('Error 415: Unsupported video type');
+
+										err415.video = {
+											type: parameters.video.type,
+										};
+
+										return Promise.reject(err415);
+
+									default: return Promise.reject(
+										Error(`Error ${r.status}: Undocumented Peertube error`)
+									);
 								}
 							})
 							.catch((e) => {
@@ -795,7 +814,6 @@ PeerTubePocketnet = function (app) {
 
 				return request('proceedResumableUploadVideo', data, optionsPrepared)
 					.then((r) => {
-						// console.log('RESUME RESUMABLE UPLOAD VIDEO', r);
 
 						const handleResume = () => Promise.resolve({
 							responseType: 'resume_upload',
@@ -834,7 +852,6 @@ PeerTubePocketnet = function (app) {
 
 				return request('cancelResumableUploadVideo', '', optionsPrepared)
 					.then((r) => {
-						// console.log('CANCEL RESUMABLE UPLOAD VIDEO', r);
 
 						const handleSuccess = () => Promise.resolve({ responseType: 'success' });
 						const handleNotFound = () => Promise.resolve({ responseType: 'not_found' });
@@ -862,8 +879,6 @@ PeerTubePocketnet = function (app) {
 					.then((data) =>
 						request('importVideo', data, options)
 							.then((r) => {
-
-								console.log("R", r)
 
 								if (!r.video) return Promise.reject(error('uploaderror'));
 

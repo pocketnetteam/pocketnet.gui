@@ -20,7 +20,6 @@ export function proxifiedFetchFactory(electronIpcRenderer: Electron.IpcRenderer)
     };
 
     async function profixiedFetch(input: RequestInfo, init: RequestInit = defaultInit): Promise<Response> {
-        console.log('PROXIFIED FETCH TO', input, init);
 
         const preparedInit: RequestInit = {};
 
@@ -147,7 +146,32 @@ export function proxifiedFetchFactory(electronIpcRenderer: Electron.IpcRenderer)
         });
     }
 
-    return (input: RequestInfo, init?: RequestInit) => profixiedFetch(input, init);
+    return (input: RequestInfo, init?: RequestInit) => {
+        const hasFileFormData = () => {
+            function checkForFile(config) {
+                let flagged = false;
+
+                for (let item of config.body.values()) {
+                    if (item.constructor?.name === 'File') {
+                        flagged = true;
+                    }
+                }
+
+                return flagged;
+            }
+
+            if (init?.body?.constructor.name === 'FormData') {
+                return checkForFile(init);
+            }
+        }
+
+        if (hasFileFormData()) {
+            // @ts-ignore
+            return fetch(input, init);
+        } else {
+            return profixiedFetch(input, init);
+        }
+    }
 }
 
 export class ProxifiedFetchBridge {

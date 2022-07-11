@@ -91,7 +91,34 @@ export function proxifiedAxiosFactory(electronIpcRenderer: Electron.IpcRenderer)
         });
     }
 
-    return (urlOrConfig: string | AxiosRequestConfig, config?: AxiosRequestConfig) => profixiedAxios(urlOrConfig, config);
+    return (urlOrConfig: string | AxiosRequestConfig, config?: AxiosRequestConfig) => {
+        const hasFileFormData = () => {
+            function checkForFile(config) {
+                let flagged = false;
+
+                for (let item of config.data.values()) {
+                    if (item.constructor?.name === 'File') {
+                        flagged = true;
+                    }
+                }
+
+                return flagged;
+            }
+
+            if (typeof config === 'object' && config.data?.constructor.name === 'FormData') {
+                return checkForFile(config);
+            } else if (typeof urlOrConfig === 'object' && urlOrConfig.data?.constructor.name === 'FormData') {
+                return checkForFile(urlOrConfig);
+            }
+        }
+
+        if (hasFileFormData()) {
+            // @ts-ignore
+            return axios(urlOrConfig, config);
+        } else {
+            return profixiedAxios(urlOrConfig, config);
+        }
+    }
 }
 
 export class ProxifiedAxiosBridge {
@@ -170,13 +197,13 @@ export class ProxifiedAxiosBridge {
     private answer(sender: Electron.WebContents, event: string, id: string, data?: any) {
         const eventName = `${this.selfStatic.eventGroup} : ${event}[${id}]`;
 
-        sender.send(eventName, data);
+        sender?.send(eventName, data);
     }
 
     private listen(event: string, callback: (...args) => void) {
         const eventName = `${this.selfStatic.eventGroup} : ${event}`;
 
-        this.ipc.on(eventName, (...args) => {
+        this.ipc?.on(eventName, (...args) => {
             const arrangedArgs = args.slice(1);
             arrangedArgs.push(args[0]);
 
@@ -187,7 +214,7 @@ export class ProxifiedAxiosBridge {
     private listenOnce(event: string, callback: (...args) => void) {
         const eventName = `${this.selfStatic.eventGroup} : ${event}`;
 
-        this.ipc.once(eventName, (...args) => {
+        this.ipc?.once(eventName, (...args) => {
             const arrangedArgs = args.slice(1);
             arrangedArgs.push(args[0]);
 
@@ -198,7 +225,7 @@ export class ProxifiedAxiosBridge {
     private stopListen(event: string) {
         const eventName = `${this.selfStatic.eventGroup} : ${event}`;
 
-        this.ipc.removeAllListeners(eventName);
+        this.ipc?.removeAllListeners(eventName);
     }
 
     private prepareConfig(axiosConfig: AxiosRequestConfig): AxiosRequestConfig {
