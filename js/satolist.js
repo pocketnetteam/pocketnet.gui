@@ -2701,6 +2701,15 @@ Platform = function (app, listofnodes) {
         },
 
         showCommentBanner : function(contextElem) {
+            const createComponent = () => {
+                app.nav.api.load({
+                    open: true,
+                    id: 'commentBanner',
+                    el: contextElem.find('.bannerComment'),
+                    essenseData: {},
+                });
+            };
+
             const unixTimeNow = Math.floor(Date.now() / 1000);
             const oneDayInSeconds = 86400000;
 
@@ -2714,30 +2723,24 @@ Platform = function (app, listofnodes) {
 
             const isOneDayOld = (registeredTime >= oneDayInSeconds);
 
-            if (isBannerDisabled || !isOneDayOld) {
+            if (isBannerDisabled) {
                 return;
             }
 
-            console.log(contextElem, 'context from showCommentBanner');
-
-            const createEssense = () => {
-                app.nav.api.load({
-                    open: true,
-                    id: 'commentBanner',
-                    el: contextElem.find('.bannerComment'),
-                    essenseData: {},
-                });
-            };
+            if (!isOneDayOld) {
+                createComponent();
+                return;
+            }
 
             if (!alreadyShowed) {
                 localStorage.nextCommentBanner = 1;
-                createEssense();
+                createComponent();
                 return;
             }
 
             if (timeToShowBanner || !alreadyShowed) {
                 localStorage.nextCommentBanner = unixTimeNow + oneDayInSeconds;
-                createEssense();
+                createComponent();
             }
 
         },
