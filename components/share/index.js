@@ -1006,7 +1006,7 @@ var share = (function(){
 										intro = false
 		
 										if (essenseData.post){
-											essenseData.post()
+											essenseData.post(alias)
 										}
 										else{
 		

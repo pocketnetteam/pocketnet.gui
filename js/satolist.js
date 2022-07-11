@@ -4607,7 +4607,7 @@ Platform = function (app, listofnodes) {
                         })
 
                         el.find('.edit').on('click', function () {
-
+                            debugger;
                             self.app.mobile.vibration.small()
                             var em = null;
                             var editing = d.share.alias()

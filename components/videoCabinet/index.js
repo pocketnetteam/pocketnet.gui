@@ -104,6 +104,7 @@ var videoCabinet = (function () {
               ...data,
               server: host,
               url: `peertube://${host}/${id}`,
+              editable: true,
             };
 
             el.unPostedVideosContainer
@@ -606,7 +607,6 @@ var videoCabinet = (function () {
         const { id, host } = self.app.peertubeHandler.parselink(videoUrl);
 
         el.c.find(`.singleVideoSection[uuid="${id}"]`).addClass('hidden');
-
         actions
           .getSingleVideo(videoUrl)
           .then((dataVideo) => {
@@ -621,7 +621,7 @@ var videoCabinet = (function () {
             renders.videos(
               [formattedData],
               renders.newVideoContainer(true),
-              false,
+              true,
             );
           })
           .catch((err = {}) => {
@@ -1313,77 +1313,131 @@ var videoCabinet = (function () {
                   self.app.peertubeHandler.api.videos
                     .getDirectVideoInfo({ id: meta.id }, { host: meta.host })
                     .then((videoData) => {
-                      self.fastTemplate('editDescription', (rendered) => {
-                        dialog({
-                          html: rendered,
+                      if (isVideoPosted) {
+                        const currentShare = sharesDict[videoLink];
 
-                          wrap: true,
+                        const editing = currentShare.alias();
+                        const hash = editing.shash();
+                        let em;
 
-                          success: function (d) {
-                            const name = d.el.find('.videoNameInput').val();
-                            const description = d.el
-                              .find('.videoDescriptionInput')
-                              .val();
+                        return self.app.nav.api.load({
+                          open: true,
+                          id: 'share',
+                          animation: false,
+                          inWnd: true,
+                          _id: currentShare.txid,
 
-                            const parameters = {};
+                          essenseData: {
+                            share: editing,
+                            notClear: true,
+                            hash: hash,
+                            absolute: true,
+                            cancel: function () {
+                              const close = deep(em, 'container.close');
 
-                            if (name) parameters.name = name;
-                            if (description)
-                              parameters.description = description;
+                              if (close) close();
+                            },
 
-                            parameters.tags = tagArray;
+                            post: function (alias) {
+                              debugger;
 
-                            const { host } = videoLink;
+                              const textContainert = el.c.find(
+                                `.singleVideoSection[uuid="${meta.id}"]`,
+                              );
 
-                            return self.app.peertubeHandler.api.videos
-                              .update(videoLink, parameters, { host })
-                              .then(() => {
-                                const textContainert = el.c.find(
-                                  `.singleVideoSection[uuid="${meta.id}"]`,
-                                );
+                              textContainert
+                                .find('.videoNameText')
+                                .text(alias.caption);
+                              textContainert
+                                .find('.videoDescriptionText')
+                                .text(alias.message);
 
-                                if (name)
-                                  textContainert
-                                    .find('.videoNameText')
-                                    .text(name);
-                                if (description)
-                                  textContainert
-                                    .find('.videoDescriptionText')
-                                    .text(description);
+                              const close = deep(em, 'container.close');
 
-                                d.close();
-                                tagElement = {};
-                                tagArray = [];
-                              })
-                              .catch((err = {}) => {
-                                tagElement = {};
-                                tagArray = [];
-                                d.close();
-
-                                sitemessage(
-                                  `${self.app.localization.e(
-                                    'errorChangingDescription',
-                                  )}: ${helpers.parseVideoServerError(err)}`,
-                                );
-                              });
+                              if (close) close();
+                            },
                           },
 
-                          clbk: function (editDialogEl) {
-                            tagElement = editDialogEl.find('.videoTagsWrapper');
-                            tagArray = [...videoData.tags];
-                            renders.tags(tagElement, tagArray);
-
-                            editDialogEl
-                              .find('.videoNameInput')
-                              .val(videoData.name);
-                            editDialogEl
-                              .find('.videoDescriptionInput')
-                              .val(videoData.description);
+                          clbk: function (e, p) {
+                            em = p;
                           },
-
-                          class: 'editVideoDialog',
                         });
-                      });
+                      }
+                      return self.fastTemplate(
+                        'editDescription',
+                        (rendered) => {
+                          dialog({
+                            html: rendered,
+
+                            wrap: true,
+
+                            success: function (d) {
+                              const name = d.el.find('.videoNameInput').val();
+                              const description = d.el
+                                .find('.videoDescriptionInput')
+                                .val();
+
+                              const parameters = {};
+
+                              if (name) parameters.name = name;
+                              if (description)
+                                parameters.description = description;
+
+                              parameters.tags = tagArray;
+
+                              const { host } = videoLink;
+
+                              return self.app.peertubeHandler.api.videos
+                                .update(videoLink, parameters, { host })
+                                .then(() => {
+                                  const textContainert = el.c.find(
+                                    `.singleVideoSection[uuid="${meta.id}"]`,
+                                  );
+
+                                  if (name)
+                                    textContainert
+                                      .find('.videoNameText')
+                                      .text(name);
+                                  if (description)
+                                    textContainert
+                                      .find('.videoDescriptionText')
+                                      .text(description);
+
+                                  d.close();
+                                  tagElement = {};
+                                  tagArray = [];
+                                })
+                                .catch((err = {}) => {
+                                  tagElement = {};
+                                  tagArray = [];
+                                  d.close();
+
+                                  sitemessage(
+                                    `${self.app.localization.e(
+                                      'errorChangingDescription',
+                                    )}: ${helpers.parseVideoServerError(err)}`,
+                                  );
+                                });
+                            },
+
+                            clbk: function (editDialogEl) {
+                              tagElement =
+                                editDialogEl.find('.videoTagsWrapper');
+                              tagArray = [...videoData.tags];
+                              renders.tags(tagElement, tagArray);
+
+                              editDialogEl
+                                .find('.videoNameInput')
+                                .val(videoData.name);
+                              editDialogEl
+                                .find('.videoDescriptionInput')
+                                .val(videoData.description);
+                            },
+
+                            class: 'editVideoDialog',
+                          });
+                        },
+                      );
                     })
                     .catch((err = {}) => {
                       sitemessage(
