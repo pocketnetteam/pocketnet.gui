@@ -4049,7 +4049,8 @@ Platform = function (app, listofnodes) {
                 )
             },
 
-            subscribeWithDialog: function (address, clbk) {
+            subscribeWithDialog: function (address, renderclbk) {
+
                 menuDialog({
 
                     items: [
@@ -4059,10 +4060,16 @@ Platform = function (app, listofnodes) {
                             class: 'itemmain',
                             action: function (clbk) {
 
+
                                 self.api.actions.notificationsTurnOn(address, function(tx, error){
                                     if (error) {
                                         self.errorHandler(error, true)
                                     }
+
+                                    if (renderclbk){
+                                        renderclbk(tx);
+                                    }
+
                                 })
 
                                 clbk()
@@ -4078,6 +4085,11 @@ Platform = function (app, listofnodes) {
                                     if (error) {
                                         self.errorHandler(error, true)
                                     }
+
+                                    if (renderclbk){
+                                        renderclbk(tx);
+                                    }
+
                                 })
 
                                 clbk()

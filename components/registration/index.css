@@ -525,6 +525,197 @@
   margin-top: 2em;
   text-align: center;
 }
+#registration .mWrapper .bloggers {
+  margin: 0 auto;
+  max-width: 962px;
+  width: 100%;
+  text-align: center;
+}
+#registration .mWrapper .bloggers .icon {
+  margin-top: 3em;
+  width: 246px;
+  margin-left: auto;
+  margin-right: auto;
+}
+#registration .mWrapper .bloggers .welcome_text {
+  margin-top: 1em;
+  font-size: 2em;
+}
+#registration .mWrapper .bloggers .welcome_text .name {
+  color: rgb(var(--color-txt-ac));
+}
+#registration .mWrapper .bloggers .usersHorizontal {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding-bottom: 1em;
+  padding-left: 1em;
+  padding-right: 1em;
+}
+#registration .mWrapper .bloggers .usersHorizontal .wrk {
+  max-width: 218px;
+  width: 100%;
+  margin-bottom: 30px;
+}
+#registration .mWrapper .bloggers .usersHorizontal .wrk:nth-child(2n) {
+  margin-left: 1em;
+  margin-right: 1em;
+}
+#registration .mWrapper .bloggers .usersHorizontal .user {
+  padding: 1em;
+  border: 1px solid rgba(var(--color-medium-theme), 0.3);
+  border-radius: 12px;
+}
+#registration .mWrapper .bloggers .usersHorizontal .user .addressWrapper .iconWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100px;
+  cursor: pointer;
+}
+#registration .mWrapper .bloggers .usersHorizontal .user .addressWrapper .iconWrapper .icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+}
+#registration .mWrapper .bloggers .usersHorizontal .user .addressWrapper .iconWrapper .icon img {
+  border-radius: 12px;
+}
+#registration .mWrapper .bloggers .usersHorizontal .user .addressWrapper .iconWrapper .icon img,
+#registration .mWrapper .bloggers .usersHorizontal .user .addressWrapper .iconWrapper .icon .letter {
+  width: 100%;
+}
+#registration .mWrapper .bloggers .usersHorizontal .user .addressWrapper .iconWrapper .icon .usericon {
+  width: 100px;
+  height: 100px;
+}
+#registration .mWrapper .bloggers .usersHorizontal .user .addressWrapper .iconWrapper .icon .usericon .letter {
+  position: relative;
+  top: 0.5em;
+  font-size: 3.5em;
+  text-align: center;
+}
+#registration .mWrapper .bloggers .usersHorizontal .user .addressWrapper .userbody {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 42px;
+}
+#registration .mWrapper .bloggers .usersHorizontal .user .addressWrapper .userbody .name {
+  font-weight: 600;
+  font-size: 0.9em;
+  max-width: 100px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+#registration .mWrapper .bloggers .usersHorizontal .user .addressWrapper .userbody .subscribers {
+  font-size: 0.9em;
+}
+#registration .mWrapper .bloggers .usersHorizontal .user .addressWrapper .userbody .subscribers .label {
+  color: rgb(var(--color-medium-theme));
+}
+#registration .mWrapper .bloggers .usersHorizontal .user .addressWrapper .userbody .subscribers .value {
+  color: rgb(var(--color-txt-ac));
+}
+#registration .mWrapper .bloggers .usersHorizontal .user .addressWrapper .userbody .subscribeWrapper {
+  margin-top: 16px;
+}
+#registration .mWrapper .bloggers .usersHorizontal .user .addressWrapper .userbody .subscribeWrapper .unsubscribeButton {
+  display: none;
+  font-size: 14px;
+  width: 155px;
+  background: rgb(var(--color-good));
+  border: 1px solid rgb(var(--color-good));
+}
+#registration .mWrapper .bloggers .usersHorizontal .user .addressWrapper .userbody .subscribeWrapper .unsubscribeButton:hover {
+  background: rgb(var(--background-total-theme));
+  color: rgb(var(--color-good));
+}
+#registration .mWrapper .bloggers .usersHorizontal .user .addressWrapper .userbody .subscribeWrapper .subscribeButton {
+  font-size: 14px;
+  width: 155px;
+}
+#registration .mWrapper .bloggers .usersHorizontal .user .addressWrapper .userbody .subscribeWrapper.following .subscribeButton {
+  display: none;
+}
+#registration .mWrapper .bloggers .usersHorizontal .user .addressWrapper .userbody .subscribeWrapper.following .unsubscribeButton {
+  display: block;
+}
+#registration .mWrapper .bloggers .usersHorizontal .user .addressWrapper .light {
+  font-size: 0.7em;
+  color: #3c4146;
+}
+#registration .mWrapper .bloggers .usersHorizontal .user .blockingWrapper {
+  display: none;
+}
+#registration .mWrapper .bloggers .usersHorizontal .user.userblocking .subscribebuttonstop {
+  display: none;
+}
+#registration .mWrapper .bloggers .usersHorizontal .user.userblocking .blockingWrapper {
+  display: inline;
+}
+#registration .mWrapper .bloggers .usersHorizontal .user .subscribebuttonstop .unsubscribe {
+  display: none;
+}
+#registration .mWrapper .bloggers .usersHorizontal .user .subscribebuttonstop.following .unsubscribe {
+  display: inline;
+}
+#registration .mWrapper .bloggers .usersHorizontal .user .subscribebuttonstop.following .notificationturn {
+  display: inline;
+}
+#registration .mWrapper .bloggers .usersHorizontal .user .subscribebuttonstop.following .subscribe {
+  display: none;
+}
+#registration .mWrapper .bloggers .next {
+  width: 240px;
+  padding: 12px, 24px, 12px, 24px;
+  border-radius: 12px;
+  background: rgb(var(--color-bg-orange));
+  opacity: 0.3;
+  color: rgb(var(--text-on-bg-ac-color));
+  border: none;
+  cursor: default;
+}
+#registration .mWrapper .bloggers .next.active {
+  background: rgb(var(--color-bg-orange));
+  cursor: pointer;
+  opacity: 1;
+}
+#registration .mWrapper .bloggers .next:hover {
+  color: rgb(var(--text-on-bg-ac-color));
+}
+#registration .mWrapper .bloggers .skip {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+#registration .mWrapper .bloggers .choosebloggers_text {
+  margin-top: 0.5em;
+  font-size: 1.5em;
+  color: rgb(var(--neutral-grad-3));
+}
+#registration .mWrapper .bloggers .showmorebloggers {
+  text-align: center;
+  padding: 1em;
+  cursor: pointer;
+  font-size: 0.8em;
+  margin-bottom: 0.6em;
+  border-radius: 12px;
+  font-weight: 700;
+  text-decoration: underline;
+}
+#registration .mWrapper .bloggers .subcaption {
+  font-weight: 100;
+  padding-top: 3em;
+  font-size: 4em;
+}
+#registration .mWrapper .bloggers .subc {
+  margin-top: 2em;
+  text-align: center;
+}
 #registration .mWrapper .network {
   cursor: pointer;
   margin: 0 auto;
