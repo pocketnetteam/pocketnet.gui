@@ -10,18 +10,18 @@
         flex-direction: column;
     }
 
-    .preloaderwr{
-        padding : 2 * @rhythm;
+    .preloaderwr {
+        padding: 2 * @rhythm;
     }
 
     .videoErrorBody {
         margin-top: 2*@rhythm;
     }
 
-    .buttonwrapper{
-        margin-top : 3 * @rhythm;
+    .buttonwrapper {
+        margin-top: 3 * @rhythm;
 
-        button{
+        button {
             padding-left: 3 * @rhythm;
             padding-right: 3 * @rhythm;
         }
@@ -29,11 +29,34 @@
 
     .singleVideoSection {
         display: flex;
+        position: relative;
         justify-content: space-between;
         align-items: top;
         padding: @rhythm * 2 0;
         border-bottom: 1px solid rgb(var(--neutral-grad-1));
         font-size: 1.1em;
+
+        .loadingContainer {
+            display: none;
+
+            width: 100%;
+            height: 100%;
+
+            position: absolute;
+            font-weight: 900;
+            text-align: center;
+            font-size: 2em;
+            line-height: 3.5em;
+
+            background-color: rgba(255, 255, 255, 0.5);
+            z-index: 1;
+        }
+
+        &.loading {
+            .loadingContainer {
+                display: block;
+            }
+        }
 
         >div {
             padding: 0 2 * @rhythm;
@@ -213,10 +236,10 @@
         .backgroundPreloader {
             position: absolute;
 
-            left: 0; 
-            right: 0; 
-            margin-left: auto; 
-            margin-right: auto; 
+            left: 0;
+            right: 0;
+            margin-left: auto;
+            margin-right: auto;
 
             width: 150px;
             height: 90px;
@@ -355,7 +378,7 @@
             .blockContentWrapper {
                 padding: 0.5em;
                 background: rgb(var(--background-secondary-theme));
-                
+
                 .transition(0.3s);
 
                 &.forchart {
@@ -448,9 +471,7 @@
 
     }
 
-    .videoErrorContainer {
-        
-    }
+    .videoErrorContainer {}
 
     .videoControls {
         display: flex;
@@ -494,7 +515,7 @@
     }
 
     .metricsContainer {
-        
+
         .metricsContainerHeader {
             font-size: 0.8em;
             min-height: 36px;
@@ -670,9 +691,9 @@
     }
 }*/
 
-html.mobileview{
-    #videoCabinet{
-        .videoSearchWrapper{
+html.mobileview {
+    #videoCabinet {
+        .videoSearchWrapper {
             max-width: none;
         }
     }
@@ -831,8 +852,8 @@ html.mobileview{
         .videoContainer {
             padding: 0;
 
-            &.videoErrorContainer{
-                padding : @rhythm;
+            &.videoErrorContainer {
+                padding: @rhythm;
             }
 
             .work {
@@ -878,50 +899,51 @@ html.mobileview{
     }
 
 
-    .wnd.videoCabinet{
+    .wnd.videoCabinet {
         .wndcontent {
-            padding-top : 0;
+            padding-top: 0;
+
             #videoCabinet {
                 position: relative;
-        
+
                 .cabinetHeaderWrapper {
                     position: relative;
                     top: 0;
                 }
-        
+
                 .videoContainer {
                     position: relative;
                     top: 0px;
                     width: 100%;
                 }
 
-                .videoControlsWrapper{
+                .videoControlsWrapper {
                     position: sticky;
-                    top : 0;
+                    top: 0;
                     z-index: 2;
                     background: rgb(var(--background-total-theme));
                 }
 
-                .videoControls{
+                .videoControls {
                     padding-bottom: 0.5 * @rhythm;
                     padding-top: 0.5 * @rhythm;
 
-                    .videoSearchWrapper{
-                        margin-top : 0;
-                    }
-                    .videoSortWrapper{
-                        flex-direction: row;
-                        margin-top : 0;
+                    .videoSearchWrapper {
+                        margin-top: 0;
                     }
 
-                    .sortSelectWrapper{
-                        margin-top : @rhythm;
+                    .videoSortWrapper {
+                        flex-direction: row;
+                        margin-top: 0;
+                    }
+
+                    .sortSelectWrapper {
+                        margin-top: @rhythm;
                     }
                 }
             }
         }
     }
 
-    
-}
 
+}

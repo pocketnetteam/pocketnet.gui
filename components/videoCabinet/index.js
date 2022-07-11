@@ -36,6 +36,7 @@ var videoCabinet = (function () {
     var blockChainInfo = [];
     var external = null;
     var perServerCounter = 10;
+    var sharesDict = {};
 
     var allVideosLoaded = false;
 
@@ -177,8 +178,6 @@ var videoCabinet = (function () {
           .rpc('searchlinks', [videoArray, 'video', 0, videoArray.length])
 
           .then((res = []) => {
-            debugger;
-
             res.forEach((post) => {
               const postUrl = decodeURIComponent(post.u);
 
@@ -498,6 +497,7 @@ var videoCabinet = (function () {
                 .filter((video = {}) => !video.deleted)
                 .map((video = {}) => {
                   const meta = self.app.platform.parseUrl(video.url) || {};
+                  sharesDict[video.url] = video;
 
                   return {
                     uuid: meta.id,
@@ -510,7 +510,10 @@ var videoCabinet = (function () {
                     scoreSum: video.score,
                     scoreCnt: video.scnt,
                     comments: video.comments,
-                    editable: video.edit,
+                    editable:
+                      moment
+                        .duration(moment().diff(moment(video.time)))
+                        .asHours() < 24,
                     state: {
                       id: 1,
                     },
@@ -525,20 +528,32 @@ var videoCabinet = (function () {
       },
 
       getUnpostedVideos() {
-        const accountVideos = (
-          unpostedVideosParsed[self.app.user.address.value] || []
-        ).map((video) => ({
-          url: video,
-        }));
+        const unpostedVideos =
+          unpostedVideosParsed[self.app.user.address.value] || [];
 
         return new Promise((res) => {
           actions
             .getBlockchainPostByVideos(
-              unpostedVideosParsed[self.app.user.address.value] || [],
+              unpostedVideos.map((video = '') => encodeURIComponent(video)),
             )
             .then(() => {
+              const accountVideos = unpostedVideos
+                .filter((video) => {
+                  if (blockChainInfo[video]) {
+                    state.removeVideo(
+                      self.app.peertubeHandler.parselink(video).id,
+                    );
+                  }
+
+                  return !blockChainInfo[video];
+                })
+                .map((video) => ({
+                  url: video,
+                }));
+
+              return accountVideos;
             })
-            .then(() =>
+            .then((accountVideos) =>
               self.app.platform.sdk.node.shares.loadvideoinfoifneed(
                 accountVideos,
                 true,
@@ -553,7 +568,7 @@ var videoCabinet = (function () {
                         uuid: deep(videoInfo, 'meta.id'),
                         name: deep(videoInfo, 'data.original.name'),
                         description: actions.replaceNetLinks(
-                          deep(videoInfo, 'data.original.description'),
+                          deep(videoInfo, 'data.original.description') || '',
                         ),
                         server: deep(videoInfo, 'meta.host_name'),
                         url: deep(videoInfo, 'meta.url'),
@@ -594,9 +609,9 @@ var videoCabinet = (function () {
 
         actions
           .getSingleVideo(videoUrl)
-          .then((data) => {
+          .then((dataVideo) => {
             const formattedData = {
-              ...data,
+              ...dataVideo,
               server: host,
               url: videoUrl,
               txid: deep(data, 'temp.txid'),
@@ -642,7 +657,6 @@ var videoCabinet = (function () {
         return actions
           .getBlockChainVideos()
           .then((data = []) => {
-            debugger;
             if (!data.length) allVideosLoaded = true;
 
             newVideosAreUploading = false;
@@ -1198,6 +1212,61 @@ var videoCabinet = (function () {
                             )}`,
                           );
                         });
+                    },
+                  });
+
+                  close();
+                });
+
+                element.find('.removePost').on('click', () => {
+                  const { id } = meta;
+
+                  const deletingElem = el.c.find(
+                    `.singleVideoSection[uuid="${id}"]`,
+                  );
+
+                  dialog({
+                    class: 'zindex',
+                    html: self.app.localization.e('removePostDialog'),
+                    btn1text: self.app.localization.e('dyes'),
+                    btn2text: self.app.localization.e('dno'),
+                    success: function () {
+                      deletingElem.addClass('loading');
+                      const currentShare = sharesDict[videoLink];
+
+                      const removePost = (share, clbk) => {
+                        share.deleted = true;
+
+                        const ct = new Remove();
+                        ct.txidEdit = share.txid;
+
+                        self.app.platform.sdk.node.shares.delete(
+                          share.txid,
+                          ct,
+                          function (err, alias) {
+                            if (!err) {
+                              if (clbk) {
+                                clbk(null, alias);
+                              }
+                            } else {
+                              self.app.platform.errorHandler(err, true);
+
+                              if (clbk) clbk(err, null);
+                            }
+                          },
+                        );
+                      };
+
+                      removePost(currentShare, function (err, result) {
+                        if (err) {
+                          return self.app.Logger.error({
+                            err: 'ERROR_DELETING_VIDEO_FROMCABINET',
+                            code: 444,
+                            payload: err,
+                          });
+                        }
+                        deletingElem.addClass('hidden');
+                      });
                     },
                   });
 

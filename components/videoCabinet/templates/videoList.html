@@ -2,6 +2,7 @@
   <% videos.map((video) => { %>
   <div class="work">
     <div class="singleVideoSection" uuid="<%- video.uuid %>">
+      <div class="loadingContainer"><i class="fas fa-spinner fa-spin"></i></div>
       <div class="videoAvatar" video="<%- video.url %>">
         <div class="preloaderwr backgroundPreloader">
           <i class="fas fa-spinner fa-spin"></i>

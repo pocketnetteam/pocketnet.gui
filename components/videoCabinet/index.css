@@ -22,11 +22,27 @@
 }
 #videoCabinet .singleVideoSection {
   display: flex;
+  position: relative;
   justify-content: space-between;
   align-items: top;
   padding: 1em 0;
   border-bottom: 1px solid rgb(var(--neutral-grad-1));
   font-size: 1.1em;
+}
+#videoCabinet .singleVideoSection .loadingContainer {
+  display: none;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  font-weight: 900;
+  text-align: center;
+  font-size: 2em;
+  line-height: 3.5em;
+  background-color: rgba(255, 255, 255, 0.5);
+  z-index: 1;
+}
+#videoCabinet .singleVideoSection.loading .loadingContainer {
+  display: block;
 }
 #videoCabinet .singleVideoSection > div {
   padding: 0 1em;
