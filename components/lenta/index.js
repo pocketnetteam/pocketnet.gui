@@ -2370,6 +2370,10 @@ var lenta = (function(){
 						p.attr('value', value)
 						p.addClass('liked')
 
+						if (value == 5){
+							app.platform.ui.showCommentBanner(el.c.find('#' + id));
+						}
+
 						actions.like(s, value, function(r){
 							if(r){
 
@@ -2647,62 +2651,6 @@ var lenta = (function(){
 			loadprev : function(){
 				actions.loadprev();
 
-			},
-
-			showBanner : function(){
-				const share = $(this).closest('.share');
-				const shareId = share.attr('id');
-
-				const rankCount = el.c.find('#' + shareId).find('.count')[0].innerText;
-				const isAlreadyRanked = (rankCount != 0);
-				const isRegisteredUser = app.platform.sdk.user.me();
-
-				if (isAlreadyRanked) return;
-				if (!isRegisteredUser) return;
-
-				const unixTimeNow = Math.floor(Date.now() / 1000);
-				const oneDayInSeconds = 86400000;
-
-				const alreadyShowed = ('nextCommentBanner' in localStorage);
-				const isBannerDisabled = (localStorage.nextCommentBanner == -1);
-				const timeToShowBanner = (localStorage.nextCommentBanner <= unixTimeNow);
-
-				const regdate = app.platform.sdk.user.me().regdate;
-				const regUnixTime = (regdate.getTime());
-				const registeredTime = Date.now() - regUnixTime;
-
-				const isOneDayOld = registeredTime <= 86400000;
-
-				if (isOneDayOld) {
-					renders.showBanner(shareId);
-					return;
-				}
-
-				if (!alreadyShowed) {
-					localStorage.nextCommentBanner = unixTimeNow + oneDayInSeconds;
-					renders.showBanner(shareId)
-				}
-
-				if (isBannerDisabled) {
-					return;
-				}
-
-				if (timeToShowBanner) {
-					localStorage.nextCommentBanner = unixTimeNow + oneDayInSeconds;
-					renders.showBanner(shareId);
-				}
-
-			},
-
-			closeBanner: function(){
-				const shareId = $(this).closest('.share').attr('id');
-				renders.closeBanner(shareId);
-			},
-
-			dontShowBanner: function() {
-				localStorage.nextCommentBanner = -1;
-				const shareId = $(this).closest('.share').attr('id');
-				renders.closeBanner(shareId);
 			}
 		}
 
@@ -3744,27 +3692,6 @@ var lenta = (function(){
 					noview : true
 				})
 			},
-
-			showBanner : function(id) {
-				const currentBanner = el.c.find('#' + id).find('.bannerComment')[0];
-
-				self.fastTemplate('invitecomment', (rendered) => {
-					currentBanner.innerHTML = rendered;
-					currentBanner.classList.add('show');
-				});
-			},
-
-			closeBanner : function (id) {
-				const currentBanner = el.c.find('#' + id).find('.bannerComment')[0];
-
-				currentBanner.classList.remove('show');
-
-				setTimeout(() => {
-					currentBanner.innerHTML = '';
-				}, 1000);
-			}
-
-
 		}
 
 		var load = {
@@ -4401,9 +4328,6 @@ var lenta = (function(){
 			el.c.find('.loadmore button').on('click', events.loadmore)
 			el.c.find('.loadprev button').on('click', events.loadprev)
 			el.c.on('click', '.gotouserprofile', events.gotouserprofile)
-			el.c.on('click', '.forstars .starWrapper:last-child', events.showBanner)
-			el.c.on('click', '.closeBannerBtn', events.closeBanner)
-			el.c.on('click', '.noShowAgain', events.dontShowBanner)
 
 			el.c.on('click','.openauthorwindow', events.openauthorwindow)
 

@@ -157,7 +157,8 @@ __map =  {
 		{ c : 'lastcomments', n : 'lastcommentslist'},
 		{ c : 'author', n : 'preshell'},
 		{ c : 'author', n : 'authorcaption'},
-		{ c : 'post', n : 'preshell'}
+		{ c : 'post', n : 'preshell'},
+		{ c : 'commentBanner', n : 'index' },
 
 	],
 
@@ -987,6 +988,14 @@ __map =  {
 		]
 	},
 
+	commentBanner : {
+		uri : "commentBanner",
+		href : "commentBanner",
+		preshell : true,
+		add : insertingfunc,
+		anonimus : true,
+		exportcss : true,
+	}
 };
 
 
