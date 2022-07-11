@@ -1,4 +1,4 @@
-﻿
+
 var appname = window.pocketnetproject || "Pocketnet"
 
 if(typeof loclib == "undefined" || !loclib)
@@ -271,6 +271,11 @@ ____loclib.lunsubscribe = "Do you really want to unfollow this account?";
 ____loclib.lprivatepublic = "Do you want to make a Private or Public subscription?";
 ____loclib.lprivate = "Private";
 ____loclib.lpublic = "Public";
+
+//inviteComment
+____loclib.commentBannerTitle = "Comment on this post";
+____loclib.commentBannerDescription = "Commenting unlocks features on Bastyon and helps you find friends 😀";
+____loclib.dontShowAgain = "Don't show again";
 
 //share
 ____loclib.newShare = "New Post";

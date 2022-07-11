@@ -1,4 +1,4 @@
-﻿if(typeof loclib == "undefined" || !loclib)
+if(typeof loclib == "undefined" || !loclib)
 	loclib = {};
 
 	loclib.ru = {};
@@ -274,6 +274,11 @@ ____loclib.lunsubscribe = "Вы действительно хотите отпи
 ____loclib.lprivatepublic = "Вы хотели бы сделать публичную подписку или приватную?";
 ____loclib.lprivate = "Приватная";
 ____loclib.lpublic = "Публичная";
+
+//inviteComment
+____loclib.commentBannerTitle = "Оставьте комментарий автору";
+____loclib.commentBannerDescription = "Комментарии открывают новые функции на Бастионе и помогают найти друзей 😀";
+____loclib.dontShowAgain = 'Не показывать снова';
 
 //share
 ____loclib.newShare = "Новая публикация";

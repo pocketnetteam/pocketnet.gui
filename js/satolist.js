@@ -2710,6 +2710,48 @@ Platform = function (app, listofnodes) {
 
         },
 
+        showCommentBanner : function(contextElem) {
+            const unixTimeNow = Math.floor(Date.now() / 1000);
+            const oneDayInSeconds = 86400000;
+
+            const alreadyShowed = ('nextCommentBanner' in localStorage);
+            const isBannerDisabled = (localStorage.nextCommentBanner == -1);
+            const timeToShowBanner = (localStorage.nextCommentBanner <= unixTimeNow);
+
+            const regDate = app.platform.sdk.user.me().regdate;
+            const regUnixTime = (regDate.getTime());
+            const registeredTime = Date.now() - regUnixTime;
+
+            const isOneDayOld = (registeredTime >= oneDayInSeconds);
+
+            if (isBannerDisabled || !isOneDayOld) {
+                return;
+            }
+
+            console.log(contextElem, 'context from showCommentBanner');
+
+            const createEssense = () => {
+                app.nav.api.load({
+                    open: true,
+                    id: 'commentBanner',
+                    el: contextElem.find('.bannerComment'),
+                    essenseData: {},
+                });
+            };
+
+            if (!alreadyShowed) {
+                localStorage.nextCommentBanner = 1;
+                createEssense();
+                return;
+            }
+
+            if (timeToShowBanner || !alreadyShowed) {
+                localStorage.nextCommentBanner = unixTimeNow + oneDayInSeconds;
+                createEssense();
+            }
+
+        },
+
         carousel : function(el, clbk){
 			var images = el.find('[image]');
 
