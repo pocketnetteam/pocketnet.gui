@@ -81,7 +81,17 @@ var PeertubeRequest = function (app = {}) {
 					return Promise.resolve(r.text());
 				}
 
-				return r.text().then((data) => (data ? JSON.parse(data) : {}));
+				return r.text().then((data) => {
+					var v = {}
+
+					try{
+						data ? JSON.parse(data) : {}
+					}catch(e) {
+						return Promise.reject('Unable parse: ' + (data || "Empty data"))
+					}
+
+					return Promise.resolve(data)
+				});
 			})
 			.then((result) => {
 				if (resp.ok) {
