@@ -128,7 +128,23 @@ var applications = (function(){
 			})
 
 			if (filtered.length != fl){
+
+				
+
 				renders.mainoss(oss[__os])
+			}
+			else{
+				if (parameters().re) {
+
+					self.nav.api.load({
+						open : true,
+						href : 'index',
+						history : true,
+						replaceState : true
+					})
+
+					return
+				}
 			}
 			
 			renders.oss(filtered)
