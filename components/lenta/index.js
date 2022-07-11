@@ -22,6 +22,7 @@ var lenta = (function(){
 		var subloadedindex = 0
 
 		var boosted = [],
+			boostloadedblock = 0,
 			boostplaces = {}
 
 		var extra = {}, extraloading = {}, recommendations = {}, recommendationsMaking = {};
@@ -3782,6 +3783,9 @@ var lenta = (function(){
 				if (essenseData.read){ type = 'article'}
 				if (essenseData.tags) tagsfilter = essenseData.tags
 				
+				var cache = (!self.app.platform.currentBlock || !boostloadedblock || boostloadedblock + 3 > self.app.platform.currentBlock) ? 'cache' : 'clear'
+
+				console.log('boost cache', cache, boostloadedblock, self.app.platform.currentBlock, (!self.app.platform.currentBlock || !boostloadedblock || boostloadedblock + 3 < self.app.platform.currentBlock))
 				
 				self.app.platform.sdk.node.shares.getboostfeed({
 
@@ -3795,10 +3799,13 @@ var lenta = (function(){
 
 				}, function(shares, error, pr){
 
+
+					boostloadedblock = self.app.platform.currentBlock
+
 				
 					if(clbk) clbk(shares)
 
-				}, _.toArray(boostplaces).length, 'cache')
+				}, _.toArray(boostplaces).length, cache)
 			},
 
 			recomended : function(clbk, firstshares){
