@@ -128,10 +128,11 @@ var applications = (function(){
 			})
 
 			if (filtered.length != fl){
-
-				
-
 				renders.mainoss(oss[__os])
+
+				if (parameters().re) {
+					return
+				}
 			}
 			else{
 				if (parameters().re) {
@@ -162,7 +163,8 @@ var applications = (function(){
 				oss = self.app.platform.applications[ed.key || 'ui']
 
 				var data = {
-					ed : ed
+					ed : ed,
+					re : parameters().re
 				};
 
 				clbk(data);

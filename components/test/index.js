@@ -372,7 +372,7 @@ var test = (function(){
 												
 												actions.upanel()
 
-												//actions.ref(resref)
+												actions.ref(resref)
 
 												self.closeContainer()
 												
