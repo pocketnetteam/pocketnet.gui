@@ -29,6 +29,7 @@ var comments = (function(){
 		var rendered = {};
 		var areas = {};
 		var external = null;
+		var bannerComment = null;
 		var currentstate = {};
 		var wordsRegExp = /[,.!?;:() \n\r]/g
 		var sortby = 'interesting' 
@@ -2732,6 +2733,9 @@ var comments = (function(){
 					}, 100)
 					
 				}
+
+				bannerComment = app.platform.ui.showCommentBanner(el.c);
+
 			},
 
 			authclbk : function(){
@@ -2778,6 +2782,10 @@ var comments = (function(){
 
 				if (caption)
 					caption.destroy()
+
+				if (bannerComment) {
+					bannerComment.destroy();
+				}
 
 				if (el.c) el.c.empty()
 

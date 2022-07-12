@@ -5,7 +5,7 @@ const commentBanner = (function() {
 	const Essense = function(p) {
 		const primary = deep(p, 'history');
 
-		let anchor, el, essenseData;
+		let anchor, el, essenseData, destroyDelay;
 
 		const actions = {
 			dontShowAgain() {
@@ -20,12 +20,11 @@ const commentBanner = (function() {
 
 		const renders = {
 			show() {
-				console.log('show', p.el)
 				el.c.addClass('show')
 			},
 			closeBanner() {
 				el.c.removeClass('show');
-				setTimeout(() => {
+				destroyDelay = setTimeout(() => {
 					el.c.empty();
 				}, 1000);
 
@@ -57,7 +56,9 @@ const commentBanner = (function() {
 			},
 
 			destroy: function() {
+				el.c.empty();
 				el = {};
+				delete destroyDelay;
 			},
 			
 			init: function(p) {
@@ -71,7 +72,7 @@ const commentBanner = (function() {
 
 				initEvents();
 
-				p.clbk?.(null, p);
+				p.clbk(null, p);
 			}
 		};
 	};

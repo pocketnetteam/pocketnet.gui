@@ -2382,10 +2382,6 @@ var lenta = (function(){
 						p.attr('value', value)
 						p.addClass('liked')
 
-						if (value == 5){
-							app.platform.ui.showCommentBanner(el.c.find('#' + id));
-						}
-
 						actions.like(s, value, function(r){
 							if(r){
 								

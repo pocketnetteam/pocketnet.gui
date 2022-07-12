@@ -956,10 +956,6 @@ var post = (function () {
 					p.attr('value', value)
 					p.addClass('liked')
 
-					if (value == 5) {
-						app.platform.ui.showCommentBanner($(el.c[0]));
-					}
-
 					actions.like(value, function (r) {
 						if (r) {
 							share.scnt || (share.scnt = 0)
