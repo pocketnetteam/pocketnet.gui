@@ -102,7 +102,7 @@ module.exports = function (enable = false) {
 
     self.request = async (uri, options, callback) => {
         let req = _request;
-        if (isUseProxy(uri) && enable) {
+        if (isUseProxy(uri || options.url) && enable) {
             req = _request.defaults({agent: httpsAgent});
         }
         try {
@@ -111,12 +111,12 @@ module.exports = function (enable = false) {
         } catch (e) {
             const isTorEnabled = await awaitTor();
 
-            if (enable && isTorEnabled && !isUseProxy(uri)) {
-                proxifyHost(uri)
+            if (enable && isTorEnabled && !isUseProxy(uri || options.url)) {
+                proxifyHost(uri || options.url)
                 return self.request(uri, options, callback);
             }
 
-            unproxifyHost(uri)
+            unproxifyHost(uri || options.url)
             callback?.(e);
         }
     }
