@@ -1811,10 +1811,12 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				path: '/heapdump',
 				authorization: 'signature',
 				action: function (message) {
-
-					if (!message.A)
+					
+					if (!message.A) {
+						console.log(Error('SH007-1'));
 						return Promise.reject({ error: 'Unauthorized', code: 401 });
-
+					}
+					
 					var dumpdata = _.clone(dump)
 
 					if (dump.stared){
@@ -1903,10 +1905,11 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				path: '/clearlogs',
 				authorization: 'signature',
 				action: function (message) {
-
-					if (!message.A)
+					
+					if (!message.A) {
+						console.log(Error('SH007-2'));
 						return Promise.reject({ error: 'Unauthorized', code: 401 });
-
+					}
 						server.middle.clear()
 
 					return Promise.resolve('success');
@@ -1918,10 +1921,11 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				path: '/closeallwss',
 				authorization: 'signature',
 				action: function (message) {
-
-					if (!message.A)
+					
+					if (!message.A) {
+						console.log(Error('SH007-3'));
 						return Promise.reject({ error: 'Unauthorized', code: 401 });
-
+					}
 					return self.wss.closeall()
 
 				},
@@ -1931,10 +1935,11 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				path: '/clearcache',
 				authorization: 'signature',
 				action: function (message) {
-
-					if (!message.A)
+					
+					if (!message.A) {
+						console.log(Error('SH007-4'));
 						return Promise.reject({ error: 'Unauthorized', code: 401 });
-
+					}
 						server.cache.clear()
 
 					return Promise.resolve('success');
@@ -1947,9 +1952,10 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				authorization: 'signature',
 				action: function (message) {
 
-					if (!message.A)
+					if (!message.A) {
+						console.log(Error('SH007-5'));
 						return Promise.reject({ error: 'Unauthorized', code: 401 });
-
+					}
 						remote.clear()
 
 					return Promise.resolve('success');
@@ -2231,7 +2237,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				path: '/free/registration',
 				authorization: self.test ? false : 'signature',
 				action: function ({ captcha, key, address, ip }) {
-
+					
 					if (settings.server.captcha && !self.test) {
 						if (!captcha || !captchas[captcha] || !captchas[captcha].done) {
 							return Promise.reject('captcha');
@@ -2305,9 +2311,10 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				path: '/manage',
 				authorization: 'signature',
 				action: function (message) {
-					if (!message.A)
+					if (!message.A) {
+						console.log(Error('SH007-6'));
 						return Promise.reject({ error: 'Unauthorized', code: 401 });
-
+					}
 					var kaction = f.deep(manage, message.action);
 
 					if (!kaction) {

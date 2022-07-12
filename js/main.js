@@ -9,7 +9,7 @@ if(!_Node)
 	
 			
 		{
-			host : 'pocketnet.app',
+			host : '127.0.0.1',
 			port : 8899,
 			wss : 8099
 	    },
