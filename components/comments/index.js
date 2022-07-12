@@ -247,6 +247,23 @@ var comments = (function(){
 					}
 				})	
 			},
+			block : function(address, clbk){
+				self.app.nav.api.load({
+					open : true,
+					href : 'blocking',
+					inWnd : true,
+					history : true,
+
+					essenseData : {
+						address
+					},
+
+					clbk : function(){
+						if (clbk)
+							clbk()
+					}
+				})
+			},
 			
 
 			stateAction : function(clbk){
@@ -1344,9 +1361,11 @@ var comments = (function(){
 
 						__el.find('.block').on('click', function(){
 
+
 							self.app.platform.api.actions.blocking(d.caddress, function (tx, error) {
                                 if (!tx) {
                                     self.app.platform.errorHandler(error, true)
+																	return
                                 }
 								else
 								{
@@ -1356,6 +1375,18 @@ var comments = (function(){
 									var commentContentTable = localParent.find('.cbodyWrapper > .commentcontenttable')
 									commentContentTable.append(hiddenCommentLabel)
 									commentContentTable.append(ghostButton)
+									dialog({
+										html: "Do you want to also block connected accounts? ONLY do this for suspected bots.",
+										btn1text: "Yes",
+										btn2text: "No",
+										class: 'zindex',
+										success: () => {
+
+											actions.block(d.caddress, function (error) {
+												console.log(error)
+											})
+										}
+									});
 								}
 
                             })

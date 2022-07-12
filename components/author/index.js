@@ -14,6 +14,23 @@ var author = (function(){
 		var panel = null, uptimer = null, contentsready = false, fixedBlock = null, acsearch, share = null;
 
 		var actions = {
+			block : function(address, clbk){
+				self.app.nav.api.load({
+					open : true,
+					href : 'blocking',
+					inWnd : true,
+					history : true,
+
+					essenseData : {
+						address,
+					},
+
+					clbk : function(){
+						if (clbk)
+							clbk()
+					}
+				})
+			},
 			subscribeLabel : function(){
 
 				var user = self.app.user
@@ -515,13 +532,26 @@ var author = (function(){
 
 						el.find('.block').on('click', function(){
 							self.app.mobile.vibration.small()
-							self.app.platform.api.actions.blocking(author.address, function(tx, error){
-								if(!tx){
-									self.app.platform.errorHandler(error, true)	
-								}
-							})
+								self.app.platform.api.actions.blocking(author.address, function (tx, error) {
+									if (!tx) {
+										self.app.platform.errorHandler(error, true)
+										return
+									}
+								})
+								dialog({
+									html: "Do you want to also block connected accounts? ONLY do this for suspected bots.",
+									btn1text: "Yes",
+									btn2text: "No",
+									class: 'zindex',
+									success: () => {
 
-							close()
+										actions.block(author.address, function (error) {
+											console.log(error)
+										})
+									}
+								});
+
+								close()
 
 						})
 
@@ -763,7 +793,6 @@ var author = (function(){
 			},
 
 			blocking : function(_el, report){
-
 				var u = _.map(deep(author, 'data.blocking') || [], function(a){
 					return a
 				})
@@ -1278,11 +1307,9 @@ var author = (function(){
 					var me = self.app.platform.sdk.users.storage[self.app.platform.sdk.address.pnet().address];
 
 					if (me && me.relation(author.address, 'blocking')){
-						el.caption.addClass('blocking');
+						el.caption.addClass('blocking');А
 					}
 				}
-				
-				
 
 			})
 			
@@ -1300,7 +1327,6 @@ var author = (function(){
 		}
 
 		var init = function(){
-
 			renders.authorcaption(function(){
 				make(true);
 

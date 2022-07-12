@@ -23,6 +23,7 @@ const queuemethods = {
     getaccountsetting : true,
     getpostscores: true,
     getpagescores: true,
+    getaccountraters: true,
     gethierarchicalstrip : true,
     getusercontents : true,
     getcontentsstatistic : true,

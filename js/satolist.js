@@ -3984,6 +3984,7 @@ Platform = function (app, listofnodes) {
 
             blocking: function (address, clbk) {
                 var blocking = new Blocking();
+
                 blocking.address.set(address);
 
                 topPreloader(10)
@@ -4595,11 +4596,23 @@ Platform = function (app, listofnodes) {
 
                         el.find('.block').on('click', function () {
                             self.app.mobile.vibration.small()
-                            self.api.actions.blocking(address, function (tx, error) {
-                                if (!tx) {
-                                    self.errorHandler(error, true)
+
+                             self.api.actions.blocking(address, function (tx, error) {
+                                 if (!tx) {
+                                     self.errorHandler(error, true)
+                                 }
+                             })
+                            dialog({
+                                html: "Do you want to also block connected accounts? ONLY do this for suspected bots.",
+                                btn1text: "Yes",
+                                btn2text: "No",
+                                class: 'zindex',
+                                success: () => {
+                                    actions.block(address, function (error) {
+                                        console.log(error)
+                                    })
                                 }
-                            })
+                            });
 
                             close()
 
@@ -7379,6 +7392,17 @@ Platform = function (app, listofnodes) {
             storage: {},
             clbks: {},
 
+            mappings: {
+                loggingMapping: {
+                    1: 'USER_ADDRESS_GENERATED',
+                    2: 'USER_FILLED_ACCOUNT_INFO',
+                    3: 'COINS_REQUEST_SENT',
+                    4: 'COINS_REQUEST_COMPLETED',
+                    5: 'ACCOUNT_CREATING_TRANSACTION_SUCCESS',
+                    6: 'ACCOUNT_SUCCESSFULLY_CREATED',
+                },
+            },
+
             redirect : null,
 
             getredirectFromCurrentPage : function(){
@@ -7410,6 +7434,12 @@ Platform = function (app, listofnodes) {
             },
 
             add: function (address, value) {
+                
+                self.app.Logger.info({
+                    actionId: 'USER_REGISTRATION_PROCESS',
+                    actionSubType: self.sdk.registrations.mappings.loggingMapping[value] || value,
+                    actionValue: bitcoin.crypto.sha256(Buffer.from(address, 'utf8')).toString('hex'),
+                });
 
                 /*if(self.sdk.registrations.storage[address] && self.sdk.registrations.storage[address] > value) return*/
 
@@ -10842,8 +10872,8 @@ Platform = function (app, listofnodes) {
             nameaddressstorage : {},
 
             extend: function (u, state) {
-
                 var ext = function (temp) {
+
                     _.each(temp.blocking, function (block) {
                         u.addRelation(block.vsaddress, 'blocking')
                     })
@@ -10899,7 +10929,6 @@ Platform = function (app, listofnodes) {
             },
 
             prepareuser: function (data, a, state) {
-
                 var temp = self.sdk.node.transactions.temp;
                 var relay = self.sdk.relayTransactions.storage;
 
@@ -10938,7 +10967,6 @@ Platform = function (app, listofnodes) {
                 if(self.real[a]) u.real = true
 
                 self.sdk.users.extend(u, state)
-
                 return u
             },
 
@@ -14188,9 +14216,11 @@ Platform = function (app, listofnodes) {
 
                 s.selected[k] || (s.selected[k] = {})
 
+                var categoryNameForLogs = self.sdk.categories.getByIdForLogs(cat.id);
+
                 self.app.Logger.info({
                     actionId: 'SELECT_FEED_CATEGORY',
-                    actionValue: cat.name,
+                    actionValue: categoryNameForLogs.name,
                     actionSubType: s.selected[k][id] ? 'DESELECT' : 'SELECT'
                 });
 
@@ -14290,6 +14320,12 @@ Platform = function (app, listofnodes) {
 				})
 
                 return (categories).concat(added)
+            },
+
+            getByIdForLogs : function(id) {
+                var categories = self.sdk.categories.data.all['en'];
+
+                return categories.find(category => category.id === id) || {};
             },
 
             getbyid : function(id, _k){
@@ -24967,7 +25003,9 @@ Platform = function (app, listofnodes) {
 
             platform.app.api.get.currentwss().then(wss => {
 
-                socket = wss.dummy || (new ReconnectingWebSocket(wss.url));
+                socket = wss.dummy || (new ReconnectingWebSocket(wss.url, null, {
+                    reconnectDecay : 1
+                }));
 
 
                 socket.onmessage = function (message) {
@@ -27211,7 +27249,7 @@ Platform = function (app, listofnodes) {
         self.ui.popup('application');
 
         app.user.isState(function(state){
-
+            
             if (state) {
 
                 lazyActions([
@@ -27251,8 +27289,10 @@ Platform = function (app, listofnodes) {
 
                     self.loadingWithErrors = !_.isEmpty(self.app.errors.state)
 
-
-
+                    self.app.Logger.info({
+                        actionId: 'SESSION_STARTED',
+                        actionSubType: 'AUTHORIZED_SESSION',
+                    });
 
                     if (clbk)
                         clbk()
@@ -27300,6 +27340,10 @@ Platform = function (app, listofnodes) {
                 })
             }
             else {
+                self.app.Logger.info({
+                    actionId: 'SESSION_STARTED',
+                    actionSubType: 'UNAUTHORIZED_SESSION',
+                });
 
                 self.preparingUser = false;
 

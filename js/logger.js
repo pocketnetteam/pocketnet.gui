@@ -72,6 +72,26 @@ class FrontendLogger {
       id: 'BEST_VIDEO_CLICKED',
       description: 'One of the best videos selected',
     },
+
+    SESSION_STARTED: {
+      id: 'SESSION_STARTED',
+      description: 'User session has started',
+    },
+
+    VIDEO_LOADED_WITH_RECOMMENDATIONS: {
+      id: 'VIDEO_LOADED_WITH_RECOMMENDATIONS',
+      description: 'User opened video with recommendations',
+    },
+
+    USER_STARTED_REGISTRATION: {
+      id: 'USER_STARTED_REGISTRATION',
+      description: 'Userhas started a registration process',
+    },
+
+    USER_REGISTRATION_PROCESS: {
+      id: 'USER_REGISTRATION_PROCESS',
+      description: 'USER_REGISTRATION_PROCESS',
+    },
   };
 
   sendLogsBatch() {
@@ -91,7 +111,7 @@ class FrontendLogger {
       .map((err) => _createErrorBody(err));
 
     if (logsBatch.length) {
-      instance.post('front/action', logsBatch.join(','));
+      instance.post('front/action/v2', logsBatch.join(','));
     }
 
     if (errorsBatch.length) {
@@ -133,6 +153,7 @@ class FrontendLogger {
     moduleVersion = '0.0.1',
     userAgent = '',
     guid = '',
+    language = 'no',
   }) {
     const parametersOrder = [
       type,
@@ -142,6 +163,7 @@ class FrontendLogger {
       moduleVersion,
       userAgent,
       guid,
+      language,
     ].map((element) =>
       typeof element !== 'number' ? `'${element}'` : element,
     );
@@ -226,11 +248,13 @@ class FrontendLogger {
       loggerActive,
       logCodes,
       _addLogWithAggregation,
+      app,
     } = this;
 
     if (!loggerActive) return;
 
     const infoType = logCodes[actionId] ? logCodes[actionId].id : '';
+    const language = (app.localization || {}).key || 'no';
 
     const info = {
       type: infoType,
@@ -238,6 +262,7 @@ class FrontendLogger {
       value: actionValue,
       guid,
       userAgent,
+      language,
     };
 
     if (_addLogWithAggregation[infoType]) {
@@ -245,6 +270,5 @@ class FrontendLogger {
     } else {
       _addLogWithAggregation.default(info, _logsCache);
     }
-
   }
 }

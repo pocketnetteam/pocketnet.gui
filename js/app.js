@@ -6,13 +6,14 @@ if(typeof require != 'undefined' && typeof __map == 'undefined')
 
 if (typeof _OpenApi == 'undefined') _OpenApi = false;
 
-if (typeof _Electron != 'undefined' && _Electron){
+if (typeof _Electron != 'undefined' && _Electron) {
 
   imagesLoaded = require('./js/vendor/imagesloaded.pkgd.min.js');
 
   emojione = require('emojione')
 
-  var Isotope = require('isotope-layout'); require('isotope-packery');
+  var Isotope = require('isotope-layout');
+  require('isotope-packery');
 
   var jquerytextcomplete = require('jquery-textcomplete')
 
@@ -24,8 +25,8 @@ if (typeof _Electron != 'undefined' && _Electron){
   VideoUploader = require('./js/video-uploader.js');
 
   jQueryBridget = require('jquery-bridget');
-  jQueryBridget( 'isotope', Isotope, $ );
-  jQueryBridget( 'textcomplete', jquerytextcomplete, $ );
+  jQueryBridget('isotope', Isotope, $);
+  jQueryBridget('textcomplete', jquerytextcomplete, $);
 
   Mark = require('./js/vendor/jquery.mark.js');
 
@@ -34,53 +35,53 @@ if (typeof _Electron != 'undefined' && _Electron){
 
 }
 
-if(typeof _Node == 'undefined') _Node = false;
+if (typeof _Node == 'undefined') _Node = false;
 
 /////////////////////////////////////////////
 ///
 
 chrsz = 8;
 
-Application = function(p)
-{
+Application = function (p) {
 
-  if(!p) p = {}
+  if (!p) p = {}
 
   var self = this;
   var realtimeInterval = null;
   var baseorientation = typeof getbaseorientation != undefined ? getbaseorientation() : 'portrait'
 
   self._meta = {
-    Pocketnet : {
-      url : "pocketnet.app",
-      turl : "test.pocketnet.app",
-      fullname : "Pocketnet",
-      protocol : 'pocketnet',
-      blockexplorer : 'https://pocketnet.app/blockexplorer/'
+    Pocketnet: {
+      url: "pocketnet.app",
+      turl: "test.pocketnet.app",
+      fullname: "Pocketnet",
+      protocol: 'pocketnet',
+      blockexplorer: 'https://pocketnet.app/blockexplorer/'
     },
 
-    Bastyon : {
-      fullname : "Bastyon",
-      url : "bastyon.com",
-      turl : "test.pocketnet.app",
-      protocol : 'bastyon',
-      blockexplorer : 'https://pocketnet.app/blockexplorer/'
+    Bastyon: {
+      fullname: "Bastyon",
+      url: "bastyon.com",
+      turl: "test.pocketnet.app",
+      protocol: 'bastyon',
+      blockexplorer: 'https://pocketnet.app/blockexplorer/'
     }
   }
 
   self.meta = self._meta.Pocketnet
 
-  if (window.pocketnetproject && self._meta[window.pocketnetproject]){
+  if (window.pocketnetproject && self._meta[window.pocketnetproject]) {
     self.meta = self._meta[window.pocketnetproject]
   }
 
   var url = window.pocketnetdomain
 
-  if ((typeof _Electron != 'undefined' && _Electron) || window.cordova){} else {
+  if ((typeof _Electron != 'undefined' && _Electron) || window.cordova) {
+  } else {
     url = window.location.hostname + window.pocketnetpublicpath.substring(0, window.pocketnetpublicpath.length - 1)
   }
 
-  if (window.testpocketnet){
+  if (window.testpocketnet) {
     self.test = true
   }
 
@@ -88,64 +89,63 @@ Application = function(p)
 
   self.options = {
 
-    url : url,
+    url: url,
 
-    matrix : p.matrix,
+    matrix: p.matrix,
 
-    nav : {
-      navPrefix : window.pocketnetpublicpath || '/pocketnet',
+    nav: {
+      navPrefix: window.pocketnetpublicpath || '/pocketnet',
     },
 
-    name : 'PCRB',
-    fullName : self.meta.protocol,
-    localStoragePrefix : self.meta.protocol,
+    name: 'PCRB',
+    fullName: self.meta.protocol,
+    localStoragePrefix: self.meta.protocol,
 
 
-    server : p.server || 'https://pocketnet.app/Shop/AJAXMain.aspx', //donations will be removed
-
-    //////////////
-
-    firebase : p.firebase || 'https://'+url+':8888', /// will be removed
+    server: p.server || 'https://pocketnet.app/Shop/AJAXMain.aspx', //donations will be removed
 
     //////////////
 
-    peertubeServer : 'https://test.peertube2.pocketnet.app/api/v1/',
+    firebase: p.firebase || 'https://' + url + ':8888', /// will be removed
+
+    //////////////
+
+    peertubeServer: 'https://test.peertube2.pocketnet.app/api/v1/',
 
 
     //////////////
 
-    imageServer : p.imageServer || 'https://api.imgur.com/3/',
-    imageStorage : 'https://api.imgur.com/3/images/',
+    imageServer: p.imageServer || 'https://api.imgur.com/3/',
+    imageStorage: 'https://api.imgur.com/3/images/',
 
     //imageServerup1 : p.imageServerup1 || 'https://'+url+':8092/up', // will be part of proxy
-    imageServerup1 : p.imageServerup1 || 'https://pocketnet.app:8092/up',
-    rtc : p.rtc || 'https://'+url+':9001/',
-    rtcws : p.rtcws || 'wss://pocketnet.app:9090',
-    rtchttp : p.rtchttp || 'https://pocketnet.app:9091',
+    imageServerup1: p.imageServerup1 || 'https://pocketnet.app:8092/up',
+    rtc: p.rtc || 'https://' + url + ':9001/',
+    rtcws: p.rtcws || 'wss://pocketnet.app:9090',
+    rtchttp: p.rtchttp || 'https://pocketnet.app:9091',
 
-    listofnodes : p.listofnodes || null,
-    listofproxies : p.listofproxies || null,
+    listofnodes: p.listofnodes || null,
+    listofproxies: p.listofproxies || null,
 
-    unathorizated : function(ignoreDialog){
+    unathorizated: function (ignoreDialog) {
 
-      self.user.isState(function(state){
+      self.user.isState(function (state) {
 
-        if (state){
+        if (state) {
 
           self.user.signout();
 
           self.reload({
-            href : 'authorization'
+            href: 'authorization'
           });
 
-          if(!ignoreDialog)
+          if (!ignoreDialog)
             dialog({
-              html : self.localization.e('id189_1'),
-              class : 'accepting one',
-              btn1text : "Okay",
-              btn2text : self.localization.e('dcancel'),
+              html: self.localization.e('id189_1'),
+              class: 'accepting one',
+              btn1text: "Okay",
+              btn2text: self.localization.e('dcancel'),
             })
-
 
 
         }
@@ -157,36 +157,36 @@ Application = function(p)
 
     /////////
 
-    successHandler : function(p){
+    successHandler: function (p) {
 
       var ca = {}
       var change = false;
 
-      if (p.rpc){
+      if (p.rpc) {
         ca.proxy = true;
         ca.node = true;
         ca.offline = true;
       }
 
-      if (p.api){
+      if (p.api) {
         ca.proxy = true;
         ca.offline = true;
       }
 
-      if (p.apim){
+      if (p.apim) {
         ca.proxymain = true;
         ca.offline = true;
       }
 
-      if (p.online){
+      if (p.online) {
         ca.offline = true
       }
 
       ca.offline = true;
 
-      _.each(ca, function(t, i){
+      _.each(ca, function (t, i) {
 
-        if (self.errors.state[i]){
+        if (self.errors.state[i]) {
           delete self.errors.state[i]
 
           change = true
@@ -194,8 +194,8 @@ Application = function(p)
 
       })
 
-      if(change){
-        _.each(self.errors.clbks, function(c){
+      if (change) {
+        _.each(self.errors.clbks, function (c) {
           c(self.errors.state)
         })
       }
@@ -205,9 +205,9 @@ Application = function(p)
 
     ///////////
 
-    errorHandler : function(error, p){
+    errorHandler: function (error, p) {
 
-      if(!error) {
+      if (!error) {
 
         if (p.rpc || p.api)
 
@@ -216,26 +216,23 @@ Application = function(p)
         if (p.apim)
           error = 'proxymain'
 
-      }
-
-      else
-      {
-        if(error == 'fail') error = ''
+      } else {
+        if (error == 'fail') error = ''
         //error = 'node'
       }
 
 
-      if((error == 'proxy' || error == 'proxymain') && self.platform && !self.platform.online){
+      if ((error == 'proxy' || error == 'proxymain') && self.platform && !self.platform.online) {
         error = 'offline'
       }
 
       self.app.api.changeProxyIfNeed()
 
-      if(error && !self.errors.state[error]){
+      if (error && !self.errors.state[error]) {
 
         self.errors.state[error] = true;
 
-        _.each(self.errors.clbks, function(c){
+        _.each(self.errors.clbks, function (c) {
           c(self.errors.state)
         })
 
@@ -248,13 +245,13 @@ Application = function(p)
 
   };
 
-  var isonline = function(){
+  var isonline = function () {
 
-    if (window.cordova){
-      if(navigator.connection.type === 'none') return false
+    if (window.cordova) {
+      if (navigator.connection.type === 'none') return false
     }
 
-    if(typeof window.navigator && window.navigator.onLine === false){
+    if (typeof window.navigator && window.navigator.onLine === false) {
       return window.navigator.onLine
     }
 
@@ -262,40 +259,39 @@ Application = function(p)
   }
 
 
-  var istouchstyle = function(){
+  var istouchstyle = function () {
 
     let isIpad = /Macintosh/i.test(navigator.userAgent) && navigator.maxTouchPoints && navigator.maxTouchPoints > 1;
 
     self.mobileview = (isIpad || self.el.html.hasClass('mobile') || self.el.html.hasClass('ipad') || self.el.html.hasClass('tablet') || window.cordova || self.width < 768)
 
-    if ((typeof _Electron != 'undefined' && _Electron)){
+    if ((typeof _Electron != 'undefined' && _Electron)) {
       self.mobileview = false
     }
 
-    if(self.mobileview){
+    if (self.mobileview) {
       self.el.html.addClass('mobileview').removeClass('wsview')
-    }
-    else{
+    } else {
       self.el.html.removeClass('mobileview').addClass('wsview')
     }
   }
 
-  self.secure = function(){
+  self.secure = function () {
     return location.protocol != 'http:'
   }
 
-  self.canuseip = function(){
-    if((!self.secure() || (typeof _Electron != 'undefined' && _Electron))){
+  self.canuseip = function () {
+    if ((!self.secure() || (typeof _Electron != 'undefined' && _Electron))) {
       return true
     }
   }
 
-  self.savesupported = function(){
+  self.savesupported = function () {
     var isElectron = (typeof _Electron !== 'undefined' && !!window.electron);
     return isElectron || (window.cordova && !isios());
   }
 
-  self.useip = function(){
+  self.useip = function () {
     return self.canuseip() && self.platform.sdk.usersettings.meta.canuseip.value
   }
 
@@ -303,7 +299,7 @@ Application = function(p)
 
   ///////////////
   self.errors = {
-    clear : function(){
+    clear: function () {
       this.state = {};
 
       self.platform.loadingWithErrors = false
@@ -311,8 +307,8 @@ Application = function(p)
       self.errors.autocheck(false)
 
     },
-    state : {},
-    clbks : {
+    state: {},
+    clbks: {
 
       /*_platform : function(change){
         if(!self.errors.connection() && !self.platform.loadingWithErrors){
@@ -320,14 +316,14 @@ Application = function(p)
         }
       },*/
 
-      _modules : function(change){
+      _modules: function (change) {
 
 
-        if(!self.errors.connection() && !self.platform.loadingWithErrors){
+        if (!self.errors.connection() && !self.platform.loadingWithErrors) {
 
-          _.each(self.modules, function(m){
+          _.each(self.modules, function (m) {
 
-            _.each(m.module.iclbks, function(c){
+            _.each(m.module.iclbks, function (c) {
 
               c(change)
 
@@ -339,38 +335,34 @@ Application = function(p)
 
       },
 
-      check : function(){
-        if (self.errors.connection()){
+      check: function () {
+        if (self.errors.connection()) {
           self.errors.autocheck(true)
-        }
-
-        else
-        {
+        } else {
           self.errors.autocheck(false)
         }
       }
 
     },
 
-    _autocheck : null,
+    _autocheck: null,
 
-    autocheck : function(enable){
-      if (enable){
+    autocheck: function (enable) {
+      if (enable) {
 
-        if(!self.platform || !this.connection()) return
+        if (!self.platform || !this.connection()) return
 
-        self.errors._autocheck || (self.errors._autocheck = setInterval(function(){
+        self.errors._autocheck || (self.errors._autocheck = setInterval(function () {
 
-          if (self.platform.focus && isonline()){
+          if (self.platform.focus && isonline()) {
             self.errors.check()
           }
 
         }, 10000))
 
-      }
-      else{
+      } else {
 
-        if(self.errors._autocheck){
+        if (self.errors._autocheck) {
 
           clearInterval(self.errors._autocheck)
           self.errors._autocheck = null;
@@ -380,45 +372,47 @@ Application = function(p)
       }
     },
 
-    check : function(clbk){
+    check: function (clbk) {
       if (self.errors.state.node || self.errors.state.proxy)
-        self.platform.sdk.node.get.time(function(t, error){})
+        self.platform.sdk.node.get.time(function (t, error) {
+        })
 
-      if (self.errors.state.proxymain){
-        self.platform.sdk.proxy.info(function(t, error){}, true)
+      if (self.errors.state.proxymain) {
+        self.platform.sdk.proxy.info(function (t, error) {
+        }, true)
       }
     },
 
-    connection : function(){
+    connection: function () {
       return this.state.node || this.state.proxy || this.state.offline
     },
 
-    connectionRs : function(){
+    connectionRs: function () {
       return (this.state.node || this.state.proxy || this.state.offline) && !self.platform.loadingWithErrors
     }
   }
 
   self.apiHandlers = {
-    success : function(p){
+    success: function (p) {
 
       var ca = {}
       var change = false;
 
-      if (p.rpc){
+      if (p.rpc) {
         ca.proxy = true;
         ca.node = true;
       }
 
-      if (p.api){
+      if (p.api) {
         ca.proxy = true;
       }
 
       ca.offline = true;
 
 
-      _.each(ca, function(t, i){
+      _.each(ca, function (t, i) {
 
-        if (self.errors.state[i]){
+        if (self.errors.state[i]) {
           delete self.errors.state[i]
 
           change = true
@@ -426,8 +420,8 @@ Application = function(p)
 
       })
 
-      if (change){
-        _.each(self.errors.clbks, function(c){
+      if (change) {
+        _.each(self.errors.clbks, function (c) {
           c(self.errors.state)
         })
       }
@@ -436,27 +430,27 @@ Application = function(p)
 
     ///////////
 
-    error : function(p){
+    error: function (p) {
       var error = null
 
-      if (p.rpc){
+      if (p.rpc) {
         error = 'node'
       }
 
-      if (p.api){
+      if (p.api) {
         error = 'proxy'
       }
 
-      if((error == 'proxy') && (self.platform && !self.platform.online)){
+      if ((error == 'proxy') && (self.platform && !self.platform.online)) {
         error = 'offline'
       }
 
 
-      if(error && !self.errors.state[error]){
+      if (error && !self.errors.state[error]) {
 
         self.errors.state[error] = true;
 
-        _.each(self.errors.clbks, function(c){
+        _.each(self.errors.clbks, function (c) {
           c(self.errors.state)
         })
 
@@ -474,25 +468,25 @@ Application = function(p)
   self.map = __map;
   self.modules = {};
 
-  self.isElectron = function(){
+  self.isElectron = function () {
     return typeof _Electron != 'undefined' && _Electron
   }
 
-  self.curation = function(){
+  self.curation = function () {
 
     //if(window.cordova && typeof isios != 'undefined' && isios()) return true
     return false
   }
 
   self.letters = {
-    videoblogger : function({
+    videoblogger: function ({
                               link1 = '',
                               link2 = '',
                               link3 = '',
                               info = '',
                               email = '',
                               address = ''
-                            }, clbk){
+                            }, clbk) {
 
       var _p = {
         link1,
@@ -508,19 +502,19 @@ Application = function(p)
 
       var body = ''
 
-      body += '<p><a href="https://'+self.options.url+'/author?address='+address+'">User ('+address+') require PKOIN</a></p>'
+      body += '<p><a href="https://' + self.options.url + '/author?address=' + address + '">User (' + address + ') require PKOIN</a></p>'
 
-      if(link1)
-        body += '<p>Link: <a href="'+link1+'">'+link1+'</a></p>'
+      if (link1)
+        body += '<p>Link: <a href="' + link1 + '">' + link1 + '</a></p>'
 
-      if(link2)
-        body += '<p>Link: <a href="'+link2+'">'+link2+'</a></p>'
+      if (link2)
+        body += '<p>Link: <a href="' + link2 + '">' + link2 + '</a></p>'
 
-      if(link3)
-        body += '<p>Link: <a href="'+link2+'">'+link2+'</a></p>'
+      if (link3)
+        body += '<p>Link: <a href="' + link2 + '">' + link2 + '</a></p>'
 
-      body += '<p>Info: '+info+'</p>'
-      body += '<p>Email: '+email+'</p>'
+      body += '<p>Info: ' + info + '</p>'
+      body += '<p>Email: ' + email + '</p>'
 
       _p.body = encodeURIComponent(body)
 
@@ -529,14 +523,14 @@ Application = function(p)
         url: 'https://pocketnet.app/Shop/AJAXMain.aspx',
         data: _p,
         dataType: 'json',
-        success : function(){
+        success: function () {
 
           if (clbk)
             clbk(true);
 
         },
 
-        error : function(){
+        error: function () {
 
           if (clbk)
             clbk(true);
@@ -593,31 +587,31 @@ Application = function(p)
         }
       });
     },
-    user : function({
+    user: function ({
                       address1,
                       address2,
                       email,
                       reason
-                    }, clbk){
+                    }, clbk) {
 
-      if(!address1 || !address2 || !reason){
+      if (!address1 || !address2 || !reason) {
         clbk(false)
 
         return
       }
 
       var _p = {
-        address1 : address1,
-        address2 : address2,
-        email : email || ''
+        address1: address1,
+        address2: address2,
+        email: email || ''
       }
 
       _p.Action || (_p.Action = 'ADDTOMAILLIST');
       _p.TemplateID = '2000'
 
       var body = ''
-      body += '<p><a href="https://'+self.options.url+'/author?address='+address1+'">User('+address1+')</a> complaint another <a href="https://'+self.options.url+'/author?address='+address2+'">user('+address2+')</a></p>'
-      body += '<p>Reason: '+reason+'</p>'
+      body += '<p><a href="https://' + self.options.url + '/author?address=' + address1 + '">User(' + address1 + ')</a> complaint another <a href="https://' + self.options.url + '/author?address=' + address2 + '">user(' + address2 + ')</a></p>'
+      body += '<p>Reason: ' + reason + '</p>'
 
       _p.body = encodeURIComponent(body)
 
@@ -626,7 +620,7 @@ Application = function(p)
         url: 'https://pocketnet.app/Shop/AJAXMain.aspx',
         data: _p,
         dataType: 'json',
-        success : function(){
+        success: function () {
 
 
           if (clbk)
@@ -634,7 +628,7 @@ Application = function(p)
 
         },
 
-        error : function(){
+        error: function () {
 
           if (clbk)
             clbk(true);
@@ -642,16 +636,16 @@ Application = function(p)
       });
 
     },
-    common : function({address1, reason, email},  clbk){
-      if(!address1 || !reason){
+    common: function ({address1, reason, email}, clbk) {
+      if (!address1 || !reason) {
         clbk(false)
 
         return
       }
 
       var _p = {
-        address1 : address1,
-        email : email
+        address1: address1,
+        email: email
       }
 
       _p.Action || (_p.Action = 'ADDTOMAILLIST');
@@ -660,7 +654,7 @@ Application = function(p)
       var body = ''
       body += '<p>Common complaint</p>'
 
-      body += '<p>Reason: '+reason+'</p>'
+      body += '<p>Reason: ' + reason + '</p>'
 
       _p.body = encodeURIComponent(body)
 
@@ -669,39 +663,39 @@ Application = function(p)
         url: 'https://pocketnet.app/Shop/AJAXMain.aspx',
         data: _p,
         dataType: 'json',
-        success : function(){
+        success: function () {
 
           if (clbk)
             clbk(true);
 
         },
 
-        error : function(){
+        error: function () {
 
           if (clbk)
             clbk(true);
         }
       });
     },
-    room : function({address1, roomid, reason}, clbk){
-      if(!address1 || !roomid || !reason){
+    room: function ({address1, roomid, reason}, clbk) {
+      if (!address1 || !roomid || !reason) {
         clbk(false)
 
         return
       }
 
       var _p = {
-        address1 : address1,
-        roomid : roomid
+        address1: address1,
+        roomid: roomid
       }
 
       _p.Action || (_p.Action = 'ADDTOMAILLIST');
       _p.TemplateID = '2000'
 
       var body = ''
-      body += '<p><a elementsid="https://'+self.options.url+'/author?address='+address1+'" href="https://'+self.options.url+'/author?address='+address1+'">User('+address1+')</a> complaint room ('+roomid+')</a></p>'
+      body += '<p><a elementsid="https://' + self.options.url + '/author?address=' + address1 + '" href="https://' + self.options.url + '/author?address=' + address1 + '">User(' + address1 + ')</a> complaint room (' + roomid + ')</a></p>'
 
-      body += '<p>Reason: '+reason+'</p>'
+      body += '<p>Reason: ' + reason + '</p>'
 
       _p.body = encodeURIComponent(body)
 
@@ -710,14 +704,14 @@ Application = function(p)
         url: 'https://pocketnet.app/Shop/AJAXMain.aspx',
         data: _p,
         dataType: 'json',
-        success : function(){
+        success: function () {
 
           if (clbk)
             clbk(true);
 
         },
 
-        error : function(){
+        error: function () {
 
           if (clbk)
             clbk(true);
@@ -732,37 +726,37 @@ Application = function(p)
   self.backmap = {
 
 
-    index : {
-      href : 'index',
-      childrens : ['author', 'chat', 's', 'share', 'userpage']
+    index: {
+      href: 'index',
+      childrens: ['author', 'chat', 's', 'share', 'userpage']
     },
 
-    s : {
-      href : 's',
-      childrens : ['author', 'chat', 's', 'share','userpage']
+    s: {
+      href: 's',
+      childrens: ['author', 'chat', 's', 'share', 'userpage']
     },
 
-    author : {
-      href : 'author',
-      childrens : ['author', 's', 'chat', 'share', 'userpage']
+    author: {
+      href: 'author',
+      childrens: ['author', 's', 'chat', 'share', 'userpage']
     },
 
-    userpage : {
-      href : 'userpage',
-      childrens : ['userpage', 'share', 'author', 'post', 'authorization', 'registration', 'pkview']
+    userpage: {
+      href: 'userpage',
+      childrens: ['userpage', 'share', 'author', 'post', 'authorization', 'registration', 'pkview']
     }
 
   }
 
-  if(self.curation()){
+  if (self.curation()) {
     delete self.backmap.index
   }
 
   self.options.backmap = self.backMap
 
-  var prepareMap = function(){
+  var prepareMap = function () {
 
-    _.each(self.map, function(m, id){
+    _.each(self.map, function (m, id) {
       m.id = id;
     })
 
@@ -772,9 +766,9 @@ Application = function(p)
     self.options.address = window.location.protocol + "//" + window.location.host;
 
 
-  self.preapi = function(){
+  self.preapi = function () {
 
-    if(self.preapied) return
+    if (self.preapied) return
 
     self.api = new Api(self)
     self.api.initIf()
@@ -786,7 +780,7 @@ Application = function(p)
 
   }
 
-  var newObjects = function(p){
+  var newObjects = function (p) {
 
     self.settings = new settingsLocalstorage(self);
     self.nav = new Nav(self);
@@ -802,8 +796,8 @@ Application = function(p)
     self.options.platform = self.platform
 
     if (self.ref)
-      self.platform.sdk.users.addressByName(self.ref, function(r){
-        if(r){
+      self.platform.sdk.users.addressByName(self.ref, function (r) {
+        if (r) {
           self.setref(r)
           /*self.ref = r;
           localStorage['ref'] = self.ref*/
@@ -811,23 +805,22 @@ Application = function(p)
 
       })
 
-    self.nav.dynamic = function(p, clbk){
+    self.nav.dynamic = function (p, clbk) {
 
 
-      self.platform.sdk.users.addressByName((p.href), function(r){
+      self.platform.sdk.users.addressByName((p.href), function (r) {
 
-        if (r){
+        if (r) {
           if (clbk)
             clbk(null, {
 
-              id : 'author',
-              extra : {
-                address : r
+              id: 'author',
+              extra: {
+                address: r
               }
 
             })
-        }
-        else{
+        } else {
           if (clbk)
             clbk('notfound')
         }
@@ -838,7 +831,7 @@ Application = function(p)
 
   }
 
-  self.module = function(id){
+  self.module = function (id) {
 
     var checkedId = deep(self, 'map.' + id + ".id");
 
@@ -851,7 +844,7 @@ Application = function(p)
     return module;
   }
 
-  self.initTest = function(mnemokey, clbk,){
+  self.initTest = function (mnemokey, clbk,) {
     if (typeof localStorage == 'undefined') localStorage = {};
 
     prepareMap();
@@ -862,11 +855,11 @@ Application = function(p)
 
     self.user.setKeysPair(self.user.keysFromMnemo(mnemokey));
 
-    self.user.isState(function(state){
+    self.user.isState(function (state) {
 
-      self.localization.init(function(){
+      self.localization.init(function () {
 
-        self.platform.prepare(function(){
+        self.platform.prepare(function () {
           if (clbk)
             clbk(state)
         })
@@ -877,7 +870,7 @@ Application = function(p)
     })
   }
 
-  self.initTestFromPrivate = function(_private, clbk,){
+  self.initTestFromPrivate = function (_private, clbk,) {
     if (typeof localStorage == 'undefined') localStorage = {};
 
     prepareMap();
@@ -888,11 +881,11 @@ Application = function(p)
 
     self.user.setKeysPairFromPrivate(_private);
 
-    self.user.isState(function(state){
+    self.user.isState(function (state) {
 
-      self.localization.init(function(){
+      self.localization.init(function () {
 
-        self.platform.prepare(function(){
+        self.platform.prepare(function () {
           if (clbk)
             clbk(state)
         })
@@ -903,18 +896,18 @@ Application = function(p)
     })
   }
 
-  self.showuikeysfirstloading = function(){
+  self.showuikeysfirstloading = function () {
 
-    self.user.isState(function(state){
+    self.user.isState(function (state) {
 
-      if(state && self.platform.sdk.address.pnet()){
+      if (state && self.platform.sdk.address.pnet()) {
 
         self.user.usePeertube = self.platform.sdk.usersettings.meta.enablePeertube ? self.platform.sdk.usersettings.meta.enablePeertube.value : false;
 
 
-        if (self.platform.sdk.registrations.showprivate()){
+        if (self.platform.sdk.registrations.showprivate()) {
           self.platform.ui.showmykey({
-            showsavelabel : true
+            showsavelabel: true
           })
         }
       }
@@ -922,36 +915,35 @@ Application = function(p)
     })
   }
 
-  self.init = function(p){
+  self.init = function (p) {
 
     if (navigator.webdriver && !self.test && !parameters().webdrivertest) return
 
     if (typeof localStorage == 'undefined')
       localStorage = {};
 
-    if(!p) p = {};
+    if (!p) p = {};
 
-    p.nav || 		(p.nav = {})
-    p.nav.clbk || 	(p.nav.clbk = self.initClbk || null)
+    p.nav || (p.nav = {})
+    p.nav.clbk || (p.nav.clbk = self.initClbk || null)
 
     prepareMap();
 
     self.options.fingerPrint = hexEncode('fakefingerprint');
 
-    self.localization.init(function(){
+    self.localization.init(function () {
 
       newObjects(p);
 
       lazyActions([
         self.platform.prepare
-      ], function(){
+      ], function () {
 
         self.realtime();
 
-        if (typeof hideSplashScreen != 'undefined'){
+        if (typeof hideSplashScreen != 'undefined') {
           hideSplashScreen();
-        }
-        else{
+        } else {
           $('#splashScreen').remove()
         }
 
@@ -963,18 +955,16 @@ Application = function(p)
         if (p.clbk)
           p.clbk();
 
-        if(!_OpenApi)
+        if (!_OpenApi)
           self.showuikeysfirstloading()
 
 
-
         self.mobile.update.needmanagecheck().then(r => {
-          if (r){
+          if (r) {
             self.mobile.update.hasupdatecheck()
           }
 
         })
-
 
 
       })
@@ -985,18 +975,18 @@ Application = function(p)
     self.mobile.reload.initparallax()
   }
 
-  self.reload = function(p){
-    if(!p) p = {};
+  self.reload = function (p) {
+    if (!p) p = {};
 
     p.nav || (p.nav = {})
 
 
-    if(typeof p.nav.reload == 'undefined')
+    if (typeof p.nav.reload == 'undefined')
       p.nav.reload = true;
 
-    if(p.href) p.nav.href = p.href;
-    if(p.history) p.nav.history = p.history;
-    if(p.current) p.nav.href = self.nav.get.href()
+    if (p.href) p.nav.href = p.href;
+    if (p.history) p.nav.history = p.history;
+    if (p.current) p.nav.href = self.nav.get.href()
 
     if (typeof _Electron != 'undefined' && _Electron) {
       p.nav.href = 'index'
@@ -1004,31 +994,31 @@ Application = function(p)
 
     self.destroyModules();
 
-    self.user.isState(function(s){
+    self.user.isState(function (s) {
 
       p.nav.clbk = p.clbk;
 
-      if(typeof p.nav.href == 'function') p.nav.href = p.nav.href()
+      if (typeof p.nav.href == 'function') p.nav.href = p.nav.href()
 
       self.nav.init(p.nav);
 
     })
   }
 
-  self.reloadModules = function(clbk){
+  self.reloadModules = function (clbk) {
     self.destroyModules();
 
-    self.user.isState(function(){
+    self.user.isState(function () {
 
-      var mp = _.filter(self.map, function(mobj, i){
+      var mp = _.filter(self.map, function (mobj, i) {
 
         var m = self.modules[i]
 
-        if (m && m.module.inited && m.module.authclbk){
+        if (m && m.module.inited && m.module.authclbk) {
           m.module.authclbk()
         }
 
-        if (m && m.module.inited && m.module.restart && (mobj.reload && !mobj.now) ) {
+        if (m && m.module.inited && m.module.restart && (mobj.reload && !mobj.now)) {
           m.module.restart();
         }
 
@@ -1039,7 +1029,7 @@ Application = function(p)
         }
       })
 
-      self.nav.api.ini(function(){
+      self.nav.api.ini(function () {
         if (clbk)
           clbk()
       }, mp)
@@ -1048,43 +1038,42 @@ Application = function(p)
     })
   }
 
-  self.reloadLight = function(clbk){
+  self.reloadLight = function (clbk) {
 
-    self.reloadModules(function(){
+    self.reloadModules(function () {
       if (clbk)
         clbk();
     })
 
   }
 
-  self.chatposition = function(ab){
+  self.chatposition = function (ab) {
     var attr = ab ? 'above' : 'under'
 
     self.el.html.attr('chatposition', attr)
   }
 
-  self.deviceReadyInit = function(p){
+  self.deviceReadyInit = function (p) {
 
     self.el = {
-      content : 		$('#content'),
-      app : 			$('#application'),
-      header : 		$('#headerWrapper'),
-      menu : 			$('#menuWrapper'),
-      toppanel : 		$('#panelWrapper'),
-      navigation : 	$('#navigationWrapper'),
-      footer : 		$('#footerWrapper'),
-      chats : 		$('.chats'),
-      html : 			$('html'),
-      window : 		$(window),
-      windows : 		$('#windowsContainer'),
-      electronnav : 	$('#electronnavContainer'),
-      preloader : 	$('#globalpreloader'),
-      topsmallpreloader : 	$('#topsmallpreloader'),
+      content: $('#content'),
+      app: $('#application'),
+      header: $('#headerWrapper'),
+      menu: $('#menuWrapper'),
+      toppanel: $('#panelWrapper'),
+      navigation: $('#navigationWrapper'),
+      footer: $('#footerWrapper'),
+      chats: $('.chats'),
+      html: $('html'),
+      window: $(window),
+      windows: $('#windowsContainer'),
+      electronnav: $('#electronnavContainer'),
+      preloader: $('#globalpreloader'),
+      topsmallpreloader: $('#topsmallpreloader'),
     };
 
 
-
-    if (self.test){
+    if (self.test) {
       $('html').addClass('testpocketnet') /// bstn
     }
 
@@ -1092,28 +1081,27 @@ Application = function(p)
 
     moment.locale(self.localization.key)
 
-    if(typeof window.cordova != 'undefined')
-    {
-      document.addEventListener('deviceready', function(){
+    if (typeof window.cordova != 'undefined') {
+      document.addEventListener('deviceready', function () {
 
         self.el.html.addClass('cordova')
 
-        if(self.curation()){
+        if (self.curation()) {
           self.el.html.addClass('curation')
         }
 
-        if (window.cordova && !isMobile()){
+        if (window.cordova && !isMobile()) {
           self.el.html.addClass('tablet')
         }
 
 
-        if(isTablet() && !isMobile()) baseorientation = null
+        if (isTablet() && !isMobile()) baseorientation = null
 
         self.mobile.screen.lock()
 
         p || (p = {});
 
-        p.clbk = function(){
+        p.clbk = function () {
 
           self.appready = true
 
@@ -1124,27 +1112,24 @@ Application = function(p)
         self.mobile.pip.init()
         self.mobile.keyboard.init()
 
-        if (window.Keyboard && window.Keyboard.disableScroll){
+        if (window.Keyboard && window.Keyboard.disableScroll) {
           window.Keyboard.disableScroll(false)
         }
 
         if (cordova.plugins && cordova.plugins.backgroundMode)
-          cordova.plugins.backgroundMode.on('activate', function() {
+          cordova.plugins.backgroundMode.on('activate', function () {
             cordova.plugins.backgroundMode.disableWebViewOptimizations();
           });
 
         self.init(p)
 
       }, false);
-    }
-    else
-    {
-
+    } else {
 
 
       self.init(p);
 
-      setTimeout(function(){
+      setTimeout(function () {
         self.appready = true
 
 
@@ -1154,8 +1139,8 @@ Application = function(p)
 
   }
 
-  self.destroyModules = function(){
-    _.each(self.modules, function(module){
+  self.destroyModules = function () {
+    _.each(self.modules, function (module) {
       if (module.module.inited) {
         if (module.module.destroy)
           module.module.destroy();
@@ -1164,8 +1149,8 @@ Application = function(p)
     })
   }
 
-  self.stopModules = function(){
-    _.each(self.modules, function(module){
+  self.stopModules = function () {
+    _.each(self.modules, function (module) {
 
       if (module.module.inited) {
         module.module.stop();
@@ -1174,7 +1159,7 @@ Application = function(p)
     })
   }
 
-  self.destroy = function(){
+  self.destroy = function () {
 
     self.destroyModules();
 
@@ -1184,10 +1169,15 @@ Application = function(p)
     self.nav = null;
   }
 
-  self.renewModules = function(map){}
-  self.logger = function(Function, Message){}
+  self.renewModules = function (map) {
+  }
+  self.logger = function (Function, Message) {
+  }
 
   self.Logger = new FrontendLogger(navigator.userAgent, self);
+
+
+
 
   self.scrollRemoved = 0;
   self.scrollTop = 0
@@ -1206,20 +1196,20 @@ Application = function(p)
   var optimizeTimeout = null
 
   self.actions = {
-    closepip : function(){
+    closepip: function () {
       if (self.pipwindow) {
         self.pipwindow.container.close()
         self.pipwindow = null
       }
     },
-    pipwindow : function(p){
+    pipwindow: function (p) {
 
       if (self.pipwindow) {
         self.pipwindow.container.close()
         self.pipwindow = null
       }
 
-      if(!p) {
+      if (!p) {
         return
       }
 
@@ -1233,17 +1223,17 @@ Application = function(p)
       p.independent = true
       p.eid = p.mid = makeid()
 
-      if (p.essenseData){
+      if (p.essenseData) {
         p.essenseData.eid = p.eid
       }
 
-      p.clbk = function(c,b){
+      p.clbk = function (c, b) {
         self.pipwindow = b
 
-        if(clbk) clbk(c,b)
+        if (clbk) clbk(c, b)
       }
 
-      p.onclose = function(){
+      p.onclose = function () {
         self.pipwindow = null
       }
 
@@ -1252,13 +1242,13 @@ Application = function(p)
 
     },
 
-    emoji : function(text){
-      if(self.mobileview) return text
+    emoji: function (text) {
+      if (self.mobileview) return text
 
       return joypixels.toImage(text)
     },
 
-    restore : function(){
+    restore: function () {
 
       return
 
@@ -1273,14 +1263,14 @@ Application = function(p)
       self.el.content.css('display', '')*/
     },
 
-    optimize : function(){
+    optimize: function () {
 
 
       return
 
       if (optimizeTimeout) clearTimeout(optimizeTimeout)
 
-      optimizeTimeout = setTimeout(function(){
+      optimizeTimeout = setTimeout(function () {
         /*self.el.content.css('width', self.width)
         self.el.content.css('height', self.height)
         self.el.content.css('contain', 'strict')*/
@@ -1291,14 +1281,13 @@ Application = function(p)
 
     },
 
-    playingvideo : function(v){
+    playingvideo: function (v) {
 
-      if (self.playingvideo && self.playingvideo.playing){
+      if (self.playingvideo && self.playingvideo.playing) {
 
-        try{
+        try {
           self.playingvideo.pause()
-        }
-        catch(e){
+        } catch (e) {
 
         }
 
@@ -1306,13 +1295,13 @@ Application = function(p)
 
       self.playingvideo = v
 
-      if(self.playingvideo){
+      if (self.playingvideo) {
 
-        setTimeout(function(){
+        setTimeout(function () {
 
           var scrollTop = self.actions.getScroll()
 
-          if (self.playingvideo && self.playingvideo.playing){
+          if (self.playingvideo && self.playingvideo.playing) {
 
             if (scrollTop >= 65) self.el.html.addClass('scrollmodedown')
 
@@ -1321,7 +1310,7 @@ Application = function(p)
         }, 1000)
       }
 
-      setTimeout(function(){
+      setTimeout(function () {
 
         var duration = deep(self.playingvideo, 'embed.details.duration') || 0
 
@@ -1332,53 +1321,53 @@ Application = function(p)
 
     },
 
-    up : function(scrollTop, el, time){
+    up: function (scrollTop, el, time) {
       _scrollTop(scrollTop, el, time)
     },
 
-    wscroll : function(){
+    wscroll: function () {
       self.actions.scroll(self.scrollTop)
     },
 
-    scrollToTop: function(){
+    scrollToTop: function () {
       self.actions.scroll(0)
     },
 
-    backupscroll : function(){
+    backupscroll: function () {
       self.actions.scroll(self.lastScrollTop)
     },
 
-    scroll : function(to){
+    scroll: function (to) {
 
       blockScroll = true
 
       self.el.window.scrollTop(to)
       self.scrollTop = to
 
-      setTimeout(function(){
+      setTimeout(function () {
         blockScroll = false
       }, 100)
 
     },
 
-    getScroll : function(){
+    getScroll: function () {
 
       var s = window.pageYOffset || document.documentElement.scrollTop;
 
-      if(!self.fullscreenmode){
+      if (!self.fullscreenmode) {
         self.lastScrollTop = s
       }
 
       return s
     },
 
-    offScroll : function(target){
+    offScroll: function (target) {
 
-      if(self.scrollRemoved < 0) self.scrollRemoved = 0
+      if (self.scrollRemoved < 0) self.scrollRemoved = 0
 
       self.scrollRemoved++
 
-      if (self.scrollRemoved > 1){
+      if (self.scrollRemoved > 1) {
         return false
       }
 
@@ -1394,11 +1383,11 @@ Application = function(p)
 
       //self.el.html.addClass('nooverflow')
 
-      if (window.Keyboard && window.Keyboard.disableScroll && !isios()){
+      if (window.Keyboard && window.Keyboard.disableScroll && !isios()) {
         window.Keyboard.disableScroll(true)
       }
 
-      setTimeout(function(){
+      setTimeout(function () {
         scrollmodechanging = false
       }, 100)
 
@@ -1406,17 +1395,16 @@ Application = function(p)
 
     },
 
-    onScroll : function(target){
+    onScroll: function (target) {
 
       if (self.scrollRemoved < 1) self.scrollRemoved = 1
 
-      if (self.scrollRemoved){
+      if (self.scrollRemoved) {
         self.scrollRemoved--
       }
 
 
-
-      if(!self.scrollRemoved){
+      if (!self.scrollRemoved) {
 
         scrollmodechanging = true
 
@@ -1431,11 +1419,11 @@ Application = function(p)
         //self.el.html.removeClass('nooverflow')
         ///
 
-        if (window.Keyboard && window.Keyboard.disableScroll && !isios()){
+        if (window.Keyboard && window.Keyboard.disableScroll && !isios()) {
           window.Keyboard.disableScroll(false)
         }
 
-        setTimeout(function(){
+        setTimeout(function () {
           scrollmodechanging = false
         }, 100)
       }
@@ -1444,7 +1432,7 @@ Application = function(p)
 
   }
 
-  var initevents = function(){
+  var initevents = function () {
 
     self.height = self.el.window.height()
     self.width = self.el.window.width()
@@ -1459,9 +1447,9 @@ Application = function(p)
 
     var cr = self.curation()
 
-    var scrolling = _.throttle(function(){
+    var scrolling = _.throttle(function () {
 
-      if(!self.el.window) return
+      if (!self.el.window) return
       if (self.fullscreenmode) return
       if (scrollmodechanging) return
       if (self.blockScroll) return
@@ -1470,53 +1458,49 @@ Application = function(p)
 
       var scrollTop = self.actions.getScroll()
 
-      _.each(self.events.scroll, function(s){
+      _.each(self.events.scroll, function (s) {
         s(scrollTop, blockScroll)
       })
 
 
-      if(!scrollTop){
+      if (!scrollTop) {
         self.mobile.reload.initparallax()
-      }
-      else{
+      } else {
         self.mobile.reload.destroyparallax()
       }
 
 
-
-      if(self.mobileview && !cr){
+      if (self.mobileview && !cr) {
 
         var cs = (lastScrollTop + 40 < scrollTop || lastScrollTop - 40 < scrollTop)
 
         var scrollTopH = 900
 
-        if(self.playingvideo) scrollTopH = 65
+        if (self.playingvideo) scrollTopH = 65
 
-        if (scrollTop < scrollTopH){
+        if (scrollTop < scrollTopH) {
 
           showPanel = '1'
 
-          if (self.el.html.hasClass('scrollmodedown')){
+          if (self.el.html.hasClass('scrollmodedown')) {
             self.el.html.removeClass('scrollmodedown')
           }
 
           return
         }
 
-        if (scrollTop > scrollTopH && cs){
-          if(lastScrollTop + 40 < scrollTop){
+        if (scrollTop > scrollTopH && cs) {
+          if (lastScrollTop + 40 < scrollTop) {
             showPanel = '2'
 
-            if(!self.el.html.hasClass('scrollmodedown')){
+            if (!self.el.html.hasClass('scrollmodedown')) {
               self.el.html.addClass('scrollmodedown')
-              if(self.modules.menu.module) self.modules.menu.module.blursearch()
+              if (self.modules.menu.module) self.modules.menu.module.blursearch()
             }
 
 
-
           }
-        }
-        else{
+        } else {
           showPanel = '3'
         }
 
@@ -1524,21 +1508,21 @@ Application = function(p)
 
     }, 100)
 
-    var dbscrolling = _.debounce(function(){
+    var dbscrolling = _.debounce(function () {
 
 
-      if(!self.el.window) return
+      if (!self.el.window) return
       if (self.fullscreenmode) return
       if (scrollmodechanging) return
       if (self.blockScroll) return
 
-      _.each(self.events.delayedscroll, function(s){
+      _.each(self.events.delayedscroll, function (s) {
         s(self.lastScrollTop, blockScroll)
       })
 
-      if(!t && self.mobileview){
+      if (!t && self.mobileview) {
 
-        if (showPanel == '2' && !self.el.html.hasClass('scrollmodedown')){
+        if (showPanel == '2' && !self.el.html.hasClass('scrollmodedown')) {
           self.el.html.addClass('scrollmodedown')
         }
 
@@ -1550,9 +1534,9 @@ Application = function(p)
 
     }, 100)
 
-    var dbresize = _.debounce(function(){
+    var dbresize = _.debounce(function () {
 
-      if(!self.el.window) return
+      if (!self.el.window) return
       if (self.fullscreenmode) return
       if (self.mobile.inputs.focused) return
 
@@ -1564,11 +1548,11 @@ Application = function(p)
       self.height = height
       self.width = width
 
-      _.each(self.events.resize, function(s){
+      _.each(self.events.resize, function (s) {
         s({
-          scrollTop : scrollTop,
-          height : height,
-          width : width
+          scrollTop: scrollTop,
+          height: height,
+          width: width
         })
       })
 
@@ -1579,54 +1563,54 @@ Application = function(p)
 
     var t = false
 
-    window.addEventListener('touchstart', function(e){
+    window.addEventListener('touchstart', function (e) {
       t = true
     })
 
-    window.addEventListener('touchend', function(e){
+    window.addEventListener('touchend', function (e) {
       t = false
     })
 
-    window.addEventListener('touchcancel', function(e){
+    window.addEventListener('touchcancel', function (e) {
       t = false
     })
 
-    window.addEventListener('scroll', function(){
+    window.addEventListener('scroll', function () {
       scrolling()
       dbscrolling()
     })
 
-    window.addEventListener('resize', function(){
+    window.addEventListener('resize', function () {
       dbresize()
     })
   }
 
   self.events = {
-    scroll : {},
-    resize : {},
-    delayedscroll : {}
+    scroll: {},
+    resize: {},
+    delayedscroll: {}
   }
 
-  self.loadModules = function(p){
+  self.loadModules = function (p) {
 
     lazyEach({
-      array : p.modules,
-      action : function(p){
+      array: p.modules,
+      action: function (p) {
 
         self.nav.p.open({
-          nohistory : true,
-          load : true,
-          uri : p.item,
-          success : p.success,
-          psname : true
+          nohistory: true,
+          load: true,
+          uri: p.item,
+          success: p.success,
+          psname: true
         })
 
       },
-      each : {
-        after : p.after
+      each: {
+        after: p.after
       },
-      all : {
-        success : function(){
+      all: {
+        success: function () {
 
           p.success(p.modules);
         }
@@ -1637,13 +1621,13 @@ Application = function(p)
 
   self.name = self.options.name;
 
-  self.reltime = function(time){
+  self.reltime = function (time) {
 
     var value = time || new Date()
 
     if ((moment().diff(value, 'days')) === 0) {
 
-      if((moment().diff(value, 'hours') < 12 ))
+      if ((moment().diff(value, 'hours') < 12))
         return moment(moment.utc(value).toDate()).local().fromNow();
 
       return new Date(value).toLocaleTimeString([], {hour: '2-digit', minute: "2-digit", hour12: false})
@@ -1655,37 +1639,35 @@ Application = function(p)
     return moment(value).local().format('D MMMM YYYY')
   }
 
-  self.realtime = function(){
+  self.realtime = function () {
 
     if (realtimeInterval)
       clearInterval(realtimeInterval)
 
-    realtimeInterval = setInterval(function(){
+    realtimeInterval = setInterval(function () {
 
       var realtimeelements = $('.realtime');
 
-      if(realtimeelements.length > 30 || isMobile()) return
+      if (realtimeelements.length > 30 || isMobile()) return
 
-      realtimeelements.each(function(){
+      realtimeelements.each(function () {
         var el = $(this);
 
         var time = el.attr('time');
-        var utc =  el.attr('utc');
+        var utc = el.attr('utc');
         var _ctime = el.html();
 
         var ctime = null;
 
-        if (utc && utc == 'true'){
+        if (utc && utc == 'true') {
           ctime = self.platform.convertUTCSSrel(time)
-        }
-        else{
+        } else {
           ctime = self.reltime(new Date(time))
         }
 
-        if(_ctime != ctime){
+        if (_ctime != ctime) {
           el.html(ctime)
         }
-
 
 
         el = null
@@ -1699,7 +1681,7 @@ Application = function(p)
 
   self.storage = {
 
-    getStorageLocation: function() {
+    getStorageLocation: function () {
 
       if (!device || !device.platform || !cordova || !cordova.file)
         return undefined;
@@ -1708,13 +1690,13 @@ Application = function(p)
 
     },
 
-    getStorageDirectory: function() {
+    getStorageDirectory: function () {
       return 'internal';
     },
 
-    saveFile: function(url, blob) {
+    saveFile: function (url, blob) {
 
-      if(!window.resolveLocalFileSystemURL){
+      if (!window.resolveLocalFileSystemURL) {
         return Promise.resolve()
       }
 
@@ -1729,7 +1711,7 @@ Application = function(p)
               exclusive: false
             },
             function (directory) {
-              directory.getFile(name, { create: true, exclusive: false }, function (entry) {
+              directory.getFile(name, {create: true, exclusive: false}, function (entry) {
                 var myFileUrl = entry.toURL();
                 entry.createWriter(function (writer) {
                   writer.onwriteend = function () {
@@ -1752,9 +1734,9 @@ Application = function(p)
       });
     },
 
-    loadFile: function(url) {
+    loadFile: function (url) {
 
-      if(!window.resolveLocalFileSystemURL){
+      if (!window.resolveLocalFileSystemURL) {
         return Promise.reject()
       }
 
@@ -1769,15 +1751,15 @@ Application = function(p)
               exclusive: false
             },
             function (directory) {
-              directory.getFile(name, { create: false }, function (entry) {
+              directory.getFile(name, {create: false}, function (entry) {
 
-                entry.file(function(file) {
+                entry.file(function (file) {
 
                   var reader = new FileReader();
 
-                  reader.onloadend = function() {
+                  reader.onloadend = function () {
 
-                    var blob = new Blob([new Uint8Array(this.result)], { type: file.type || "file" });
+                    var blob = new Blob([new Uint8Array(this.result)], {type: file.type || "file"});
 
                     return resolve(blob);
                   };
@@ -1785,8 +1767,7 @@ Application = function(p)
                   reader.readAsArrayBuffer(file);
 
 
-
-                }, function(error) {
+                }, function (error) {
                   return reject(error);
                 });
 
@@ -1804,21 +1785,21 @@ Application = function(p)
     },
 
     // Delete the file if it is older than the time passed as parameter
-    deleteFileIfTooOld: function(fileEntry, time) {
+    deleteFileIfTooOld: function (fileEntry, time) {
       return new Promise((resolve, reject) => {
         if (fileEntry.isFile) {
           fileEntry.file((file) => {
             // If file is older than the date passed as parameter
             if (file.lastModifiedDate <= time.getTime()) {
               // Delete the file
-              fileEntry.remove(function() {
+              fileEntry.remove(function () {
                 return resolve();
-              }, function(error) {
+              }, function (error) {
                 return resolve();
               });
             } else
               return resolve();
-          }, function(error) {
+          }, function (error) {
             return resolve();
           });
         } else
@@ -1826,18 +1807,17 @@ Application = function(p)
       });
     },
 
-    clearStorage: function(time) {
+    clearStorage: function (time) {
       return new Promise((resolve, reject) => {
         if (!time || !time.getTime)
           return reject('Invalid date object');
         var nbEntries, nbDone = 0;
-        var incrementAndCheckNbDone = function() {
+        var incrementAndCheckNbDone = function () {
           nbDone += 1;
           if (nbDone >= nbEntries)
             resolve();
         }
         var storageLocation = self.storage.getStorageLocation();
-
 
 
         window.resolveLocalFileSystemURL(storageLocation, function (fileSystem) {
@@ -1847,7 +1827,7 @@ Application = function(p)
             },
             function (directory) {
               var directoryReader = directory.createReader();
-              directoryReader.readEntries(function(entries) {
+              directoryReader.readEntries(function (entries) {
                 nbEntries = entries.length;
                 // For each file inside the directory
                 for (var i = 0; i < nbEntries; i++) {
@@ -1855,7 +1835,7 @@ Application = function(p)
                     incrementAndCheckNbDone();
                   });
                 }
-              }, function(error) {
+              }, function (error) {
                 return reject(error);
               });
             }, function (error) {
@@ -1869,15 +1849,15 @@ Application = function(p)
 
   self.mobile = {
 
-    inputs : {
+    inputs: {
 
-      init : function(){
-        $(document).on('focus blur', 'select, textarea, input, [contenteditable="true"]', function(e){
-          if(e.type == 'focusin'){
+      init: function () {
+        $(document).on('focus blur', 'select, textarea, input, [contenteditable="true"]', function (e) {
+          if (e.type == 'focusin') {
             self.mobile.inputs.focused = $(e.target)
           }
 
-          if(e.type == 'focusout'){
+          if (e.type == 'focusout') {
             self.mobile.inputs.focused = null
           }
 
@@ -1886,12 +1866,12 @@ Application = function(p)
 
     },
 
-    keyboard : {
-      height : 0,
-      lastheight : 0,
-      init : function(){
+    keyboard: {
+      height: 0,
+      lastheight: 0,
+      init: function () {
 
-        if(window.cordova && !isios()){
+        if (window.cordova && !isios()) {
 
           window.addEventListener('keyboardWillShow', (event) => {
 
@@ -1912,24 +1892,24 @@ Application = function(p)
       }
     },
 
-    pip : {
+    pip: {
 
-      element : null,
-      enabled : false,
-      loading : false,
-      checkIfHere : function(){
-        if (window.PictureInPicture && window.PictureInPicture.leavePip){
-          window.PictureInPicture.isPip(function(res){
+      element: null,
+      enabled: false,
+      loading: false,
+      checkIfHere: function () {
+        if (window.PictureInPicture && window.PictureInPicture.leavePip) {
+          window.PictureInPicture.isPip(function (res) {
 
-            if(res == 'true'){
+            if (res == 'true') {
               window.PictureInPicture.leavePip()
             }
           })
         }
       },
-      enable : function(htmlElement) {
+      enable: function (htmlElement) {
 
-        if(self.mobile.pip.loading){
+        if (self.mobile.pip.loading) {
           return Promise.resolve()
         }
 
@@ -1937,7 +1917,7 @@ Application = function(p)
 
         if (!window.PictureInPicture || !window.PictureInPicture.enter) return Promise.resolve();
 
-        if (htmlElement){
+        if (htmlElement) {
           aspectratio = htmlElement.height() / htmlElement.width()
         }
 
@@ -1947,9 +1927,9 @@ Application = function(p)
 
         return new Promise((resolve, reject) => {
 
-          PictureInPicture.enter(width, height, function(d) {
+          PictureInPicture.enter(width, height, function (d) {
 
-            if (self.mobile.pip.element){
+            if (self.mobile.pip.element) {
               self.mobile.pip.element.removeClass('pipped')
             }
 
@@ -1962,7 +1942,7 @@ Application = function(p)
 
             // PIP mode started
             resolve(d)
-          }, function(error) {
+          }, function (error) {
 
             self.mobile.pip.loading = false
 
@@ -1973,21 +1953,20 @@ Application = function(p)
 
       },
 
-      init : function(){
+      init: function () {
 
-        if (window.PictureInPicture && window.PictureInPicture.onPipModeChanged){
-          window.PictureInPicture.onPipModeChanged(function(res){
+        if (window.PictureInPicture && window.PictureInPicture.onPipModeChanged) {
+          window.PictureInPicture.onPipModeChanged(function (res) {
 
             res = (res == 'true')
 
-            if (res){
-              if(!self.el.html.hasClass('pipmode')) self.el.html.addClass('pipmode')
-            }
-            else{
+            if (res) {
+              if (!self.el.html.hasClass('pipmode')) self.el.html.addClass('pipmode')
+            } else {
 
               if (self.el.html.hasClass('pipmode')) self.el.html.removeClass('pipmode')
 
-              if (self.mobile.pip.element){
+              if (self.mobile.pip.element) {
                 self.mobile.pip.element.removeClass('pipped')
                 self.mobile.pip.element = null
               }
@@ -2004,68 +1983,65 @@ Application = function(p)
       }
     },
 
-    saveImages : {
-      save : function(base64, nms, clbk){
+    saveImages: {
+      save: function (base64, nms, clbk) {
         var nm = nms.split('.')
 
         var name = nm[0],
           format = nm[1]
 
         var mt = {
-          png : 'image/png',
-          jpg : 'image/jpeg'
+          png: 'image/png',
+          jpg: 'image/jpeg'
         }
 
         var ms = mt[format] || 'image/' + format
 
-        if (window.cordova){
+        if (window.cordova) {
 
           var image = b64toBlob(base64.split(',')[1], 'image/' + ms);
 
-          p_saveAsWithCordova(image, name + '.' + format, function(d, e){
+          p_saveAsWithCordova(image, name + '.' + format, function (d, e) {
 
             if (clbk)
               clbk(d, e)
           }, true)
 
-        }
-
-        else{
+        } else {
           p_saveAs({
-            file : base64,
-            format : format,
-            name : name
+            file: base64,
+            format: format,
+            name: name
           })
 
           if (clbk)
             clbk({name})
         }
       },
-      dialog : function(name, src){
+      dialog: function (name, src) {
 
 
         var items = [
           {
-            text : app.localization.e('saveimage'),
-            class : 'itemmain',
-            action : function(clbk){
+            text: app.localization.e('saveimage'),
+            class: 'itemmain',
+            action: function (clbk) {
 
               globalpreloader(true, true)
 
 
-              srcToData(src, function(base64){
+              srcToData(src, function (base64) {
 
-                imagetojpegifneed({base64, name}).then(({base64, name})=> {
+                imagetojpegifneed({base64, name}).then(({base64, name}) => {
 
-                  self.mobile.saveImages.save(base64, name, function(d, err){
+                  self.mobile.saveImages.save(base64, name, function (d, err) {
 
                     globalpreloader(false)
 
-                    if (d){
+                    if (d) {
                       successCheck()
-                    }
-                    else{
-                      sitemessage( self.localization.e('e13230')  )
+                    } else {
+                      sitemessage(self.localization.e('e13230'))
                     }
 
                     clbk()
@@ -2076,29 +2052,28 @@ Application = function(p)
                 })
 
 
-
               })
             }
           }
         ]
 
         menuDialog({
-          items : items
+          items: items
         })
 
       },
-      init : function(_el){
+      init: function (_el) {
 
-        if(self.mobileview){
+        if (self.mobileview) {
           _el.swipe({
-            longTap : function(){
+            longTap: function () {
               self.mobile.vibration.small()
 
               var name = this.attr('save')
               var src = this.attr('original') || this.attr('src') || this.attr('i')
 
 
-              setTimeout(function(){
+              setTimeout(function () {
                 self.mobile.saveImages.dialog(name, src)
               }, 200)
 
@@ -2111,14 +2086,14 @@ Application = function(p)
 
       }
     },
-    vibration : {
-      small : function(android){
+    vibration: {
+      small: function (android) {
 
-        if(!window.cordova) return
+        if (!window.cordova) return
 
-        if(isios()){
+        if (isios()) {
 
-          if(typeof TapticEngine != 'undefined')
+          if (typeof TapticEngine != 'undefined')
             TapticEngine.impact({
               style: "medium"
             });
@@ -2126,18 +2101,18 @@ Application = function(p)
           return
         }
 
-        if (navigator.vibrate && android){
+        if (navigator.vibrate && android) {
           navigator.vibrate(50)
         }
       }
     },
-    statusbar : {
-      background : function(){
+    statusbar: {
+      background: function () {
 
         var colors = {
-          white : "#FFF",
-          black : "#030F1B",
-          gray : '#1e1d1a'
+          white: "#FFF",
+          black: "#030F1B",
+          gray: '#1e1d1a'
         }
 
         if (window.StatusBar) {
@@ -2149,7 +2124,7 @@ Application = function(p)
           window.NavigationBar.backgroundColorByHexString(colors[self.platform.sdk.theme.current] || "#FFF", self.platform.sdk.theme.current != 'white');
       },
 
-      gallerybackground : function(){
+      gallerybackground: function () {
 
 
         if (window.StatusBar) {
@@ -2162,23 +2137,23 @@ Application = function(p)
 
       },
 
-      hide : function(){
+      hide: function () {
         if (window.StatusBar) {
           window.StatusBar.hide()
           window.StatusBar.overlaysWebView(true);
         }
 
-        if (window.NavigationBar){
+        if (window.NavigationBar) {
           window.NavigationBar.hide()
         }
       },
-      show : function(){
+      show: function () {
         if (window.StatusBar) {
           window.StatusBar.show()
           window.StatusBar.overlaysWebView(false);
         }
 
-        if (window.NavigationBar){
+        if (window.NavigationBar) {
           window.NavigationBar.show()
         }
 
@@ -2186,25 +2161,24 @@ Application = function(p)
       },
     },
 
-    unsleep : function(t){
+    unsleep: function (t) {
 
-      if (window.plugins && window.plugins.insomnia){
+      if (window.plugins && window.plugins.insomnia) {
 
-        if(t) window.plugins.insomnia.keepAwake()
+        if (t) window.plugins.insomnia.keepAwake()
         else window.plugins.insomnia.allowSleepAgain()
       }
 
     },
 
-    backgroundMode : function(t){
+    backgroundMode: function (t) {
 
-      if (window.cordova){
-        if (window.cordova.plugins && window.cordova.plugins.backgroundMode){
+      if (window.cordova) {
+        if (window.cordova.plugins && window.cordova.plugins.backgroundMode) {
 
-          if(t) {
+          if (t) {
             cordova.plugins.backgroundMode.enable()
-          }
-          else {
+          } else {
             cordova.plugins.backgroundMode.disable()
           }
         }
@@ -2214,7 +2188,7 @@ Application = function(p)
     },
 
 
-    fullscreenmode : function(v){
+    fullscreenmode: function (v) {
       v ? self.mobile.screen.unlock() : self.mobile.screen.lock()
       v ? self.mobile.statusbar.hide() : self.mobile.statusbar.show()
 
@@ -2223,25 +2197,24 @@ Application = function(p)
       //v ? self.el.html.addClass('fullscreen') : self.el.html.removeClass('fullscreen')
 
 
-      if(!v){
-        setTimeout(function(){
+      if (!v) {
+        setTimeout(function () {
           self.fullscreenmode = v
           self.actions.scroll(self.lastScrollTop)
         }, 10)
-      }
-      else{
+      } else {
         self.fullscreenmode = v
 
 
       }
     },
 
-    reload : {
-      parallax : null,
-      reloading : false,
-      destroyparallax : function(){
+    reload: {
+      parallax: null,
+      reloading: false,
+      destroyparallax: function () {
 
-        if(self.mobile.reload.reloading) return
+        if (self.mobile.reload.reloading) return
 
         if (self.mobile.reload.parallax) {
           self.mobile.reload.parallax.clear()
@@ -2250,39 +2223,37 @@ Application = function(p)
         }
 
       },
-      initparallax : function(){
+      initparallax: function () {
 
 
-        if(isTablet() || isMobile()){
+        if (isTablet() || isMobile()) {
 
 
-
-          if(self.mobile.reload.parallax) return
-          if(self.mobile.reload.reloading) return
+          if (self.mobile.reload.parallax) return
+          if (self.mobile.reload.reloading) return
 
           self.mobile.reload.parallax = new SwipeParallaxNew({
 
-            el : self.el.content,
+            el: self.el.content,
 
-            allowPageScroll : 'vertical',
-            preventDefaultEvents : false,
+            allowPageScroll: 'vertical',
+            preventDefaultEvents: false,
 
-            directions : {
-              down : {
-                cancellable : true,
+            directions: {
+              down: {
+                cancellable: true,
 
-                positionclbk : function(px){
+                positionclbk: function (px) {
                   var percent = easeOutQuint(Math.abs(px) / 200);
 
-                  if (px >= 5){
+                  if (px >= 5) {
 
-                    if(!self.el.topsmallpreloader.hasClass('show'))
+                    if (!self.el.topsmallpreloader.hasClass('show'))
                       self.el.topsmallpreloader.addClass('show')
 
 
-                    self.el.topsmallpreloader.css('transform', 'translateY('+(100 * percent)+'%)')
-                  }
-                  else{
+                    self.el.topsmallpreloader.css('transform', 'translateY(' + (100 * percent) + '%)')
+                  } else {
 
                     self.el.topsmallpreloader.removeClass('show')
                     self.el.topsmallpreloader.css('transform', '')
@@ -2290,26 +2261,26 @@ Application = function(p)
 
                 },
 
-                constraints : function(e){
+                constraints: function (e) {
 
-                  if(self.platform.preparingUser) return false
+                  if (self.platform.preparingUser) return false
 
-                  if(_.find(e.path, function(el){
+                  if (_.find(e.path, function (el) {
 
                     return el.className && (el.className.indexOf('noswipepnt') > -1 || el.className.indexOf('fullScreenVideo') > -1)
 
                   })) return false
 
-                  if(self.lastScrollTop <= 0 && !self.mobile.reload.reloading){
+                  if (self.lastScrollTop <= 0 && !self.mobile.reload.reloading) {
                     return true;
                   }
 
                 },
 
-                restrict : true,
+                restrict: true,
                 //distance : 150,
-                trueshold : 70,
-                clbk : function(){
+                trueshold: 70,
+                clbk: function () {
 
                   self.mobile.reload.reloading = true
                   self.el.topsmallpreloader.css('transform', '')
@@ -2317,13 +2288,13 @@ Application = function(p)
 
                   globalpreloader(true)
 
-                  setTimeout(function(){
+                  setTimeout(function () {
 
-                    if (self.platform.loadingWithErrors){
+                    if (self.platform.loadingWithErrors) {
 
-                      self.platform.appstate(function(){
+                      self.platform.appstate(function () {
 
-                        setTimeout(function(){
+                        setTimeout(function () {
                           globalpreloader(false)
 
                           self.mobile.reload.reloading = false
@@ -2332,12 +2303,11 @@ Application = function(p)
 
                       })
 
-                    }
-                    else{
+                    } else {
 
-                      self.user.isState(function(state){
-                        if(state){
-                          self.platform.sdk.node.transactions.get.allBalanceUpdate(function(){
+                      self.user.isState(function (state) {
+                        if (state) {
+                          self.platform.sdk.node.transactions.get.allBalanceUpdate(function () {
                             self.platform.sdk.notifications.getNotifications()
                           })
                         }
@@ -2346,10 +2316,10 @@ Application = function(p)
 
                       if (self.nav.current.module)
                         self.nav.current.module.restart({
-                          essenseData : self.nav.current.essenseData || {}
+                          essenseData: self.nav.current.essenseData || {}
                         })
 
-                      setTimeout(function(){
+                      setTimeout(function () {
                         globalpreloader(false)
 
                         self.mobile.reload.reloading = false
@@ -2373,55 +2343,54 @@ Application = function(p)
       }
     },
 
-    screen : {
+    screen: {
 
-      lock : function(){
+      lock: function () {
         if (window.cordova && baseorientation)
           window.screen.orientation.lock(baseorientation)
       },
-      unlock : function(){
+      unlock: function () {
         if (window.cordova)
           window.screen.orientation.unlock()
       },
 
-      destroy : function(){
+      destroy: function () {
         if (window.cordova)
           window.screen.orientation.removeEventListener('change')
         self.mobile.screen.clbks = {}
       },
 
-      init : function(){
+      init: function () {
         self.mobile.screen.clbks = {}
 
 
-
         if (window.cordova)
-          window.screen.orientation.addEventListener('change', function(){
+          window.screen.orientation.addEventListener('change', function () {
 
-            _.each(self.mobile.screen.clbks, function(c){
+            _.each(self.mobile.screen.clbks, function (c) {
               c(screen.orientation.type)
             })
 
           });
       },
 
-      clbks : {}
+      clbks: {}
     },
 
-    update : {
-      needmanage : false,
-      hasupdate : false,
+    update: {
+      needmanage: false,
+      hasupdate: false,
 
-      playstore : true,  ///// TODO
+      playstore: true,  ///// TODO
 
-      downloadAndInstall : function(){
+      downloadAndInstall: function () {
 
-        if(!self.mobile.update.hasupdate){
-          return Promise.reject({text : 'hasnotupdates'})
+        if (!self.mobile.update.hasupdate) {
+          return Promise.reject({text: 'hasnotupdates'})
         }
 
-        if(!self.mobile.update.needmanage){
-          return Promise.reject({text : 'cantmanageupdate'})
+        if (!self.mobile.update.needmanage) {
+          return Promise.reject({text: 'cantmanageupdate'})
         }
 
         self.mobile.update.updating = true
@@ -2430,7 +2399,7 @@ Application = function(p)
 
           return window.ApkUpdater.install()
 
-        }).then( r => {
+        }).then(r => {
           self.mobile.update.updating = false
 
           return Promise.resolve()
@@ -2443,10 +2412,10 @@ Application = function(p)
 
       },
 
-      download : function(l){
+      download: function (l) {
 
         return window.ApkUpdater.download(l, {
-          onDownloadProgress: function(e){
+          onDownloadProgress: function (e) {
             topPreloader2(e.progress, self.localization.e('downloadingUpdate'))
           }
         }).then(r => {
@@ -2461,24 +2430,24 @@ Application = function(p)
 
 
       },
-      hasupdatecheck : function(){
+      hasupdatecheck: function () {
 
-        if(!self.platform) return Promise.resolve()
+        if (!self.platform) return Promise.resolve()
 
         var os = self.platform.__applications().ui.android
 
         return new Promise((resolve, reject) => {
 
-          $.get(os.github.url, {}, function(d){
+          $.get(os.github.url, {}, function (d) {
 
-            if(!d.prerelease && numfromreleasestring(d.name) > numfromreleasestring(window.packageversion)) {
+            if (!d.prerelease && numfromreleasestring(d.name) > numfromreleasestring(window.packageversion)) {
               var assets = deep(d, 'assets') || [];
 
-              var l = _.find(assets, function(a){
+              var l = _.find(assets, function (a) {
                 return a.name == os.github.name
               })
 
-              if(l){
+              if (l) {
                 self.mobile.update.hasupdate = l.browser_download_url
               }
             }
@@ -2488,22 +2457,21 @@ Application = function(p)
         })
 
 
-
       },
-      needmanagecheck : function(){
+      needmanagecheck: function () {
 
-        if(window.plugins && window.plugins.packagemanager && window.ApkUpdater){
+        if (window.plugins && window.plugins.packagemanager && window.ApkUpdater) {
 
           return new Promise((resolve, reject) => {
 
-            window.plugins.packagemanager.getInstallerPackageName(function(d){
+            window.plugins.packagemanager.getInstallerPackageName(function (d) {
 
               self.mobile.update.needmanage = d && d.indexOf('com.android.vending') > -1 ? false : true
               self.mobile.update.needmanageinfo = d
 
               resolve(self.mobile.update.needmanage)
 
-            }, function(e){
+            }, function (e) {
 
               self.mobile.update.needmanage = false
               self.mobile.update.needmanageinfo = e
@@ -2513,8 +2481,7 @@ Application = function(p)
 
           })
 
-        }
-        else{
+        } else {
 
           return Promise.resolve(self.mobile.update.needmanage)
         }
@@ -2526,20 +2493,19 @@ Application = function(p)
 
   }
 
-  self.thislink = function(_url){
+  self.thislink = function (_url) {
 
     var url = {}
 
-    try{
+    try {
       url = new URL(_url)
-    }
-    catch(e){
+    } catch (e) {
       url.host = ''
     }
 
     var groups = {
-      p : ['pocketnet.app', 'bastyon.com'],
-      pt : ['test.pocketnet.app', 'test.bastyon.com']
+      p: ['pocketnet.app', 'bastyon.com'],
+      pt: ['test.pocketnet.app', 'test.bastyon.com']
     }
 
     if (_url.indexOf('bastyon://') > -1) return true
@@ -2547,17 +2513,17 @@ Application = function(p)
 
     var domain = self.options.url
 
-    var m = _.find(groups, function(g){
-      return _.indexOf(g, url.host) > -1 &&  _.indexOf(g, domain) > -1
+    var m = _.find(groups, function (g) {
+      return _.indexOf(g, url.host) > -1 && _.indexOf(g, domain) > -1
     })
 
-    if(m) return true
+    if (m) return true
 
   }
 
-  self.setref = function(r, na){
+  self.setref = function (r, na) {
 
-    if(na && self.ref) return
+    if (na && self.ref) return
 
     self.ref = r;
     localStorage['ref'] = self.ref
@@ -2566,24 +2532,26 @@ Application = function(p)
 
   self.ref = null;
 
-  try{
+  try {
     self.ref = parameters().ref || localStorage['ref'];
-  }catch(e){}
+  } catch (e) {
+  }
 
 
   self.options.device = localStorage['device'] || makeid();
 
   localStorage['device'] = self.options.device
 
-  if(typeof window != 'undefined'){ self.fref = deep(window, 'location.href') }
+  if (typeof window != 'undefined') {
+    self.fref = deep(window, 'location.href')
+  }
 
   return self;
 }
 
 topPreloader(85);
 
-if(typeof module != "undefined")
-{
+if (typeof module != "undefined") {
   module.exports = Application;
 }
 
