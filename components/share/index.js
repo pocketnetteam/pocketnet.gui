@@ -8,8 +8,6 @@ var share = (function(){
 
 		var key = p.mid || 'sec'
 
-		console.log("key", key)
-
 		var wordsRegExp = /[,.!?;:() \n\r]/g
 
 		var displayTimes = false
@@ -941,7 +939,12 @@ var share = (function(){
 
 											var alias = new pShare();
 												alias._import(_alias, true)
-												alias.temp = true;
+
+
+
+												alias.temp = _alias.temp;
+												alias.relay = _alias.relay;
+												alias.checkSend = _alias.checkSend
 												alias.address = _alias.address
 		
 											if(currentShare.aliasid) alias.edit = "true"	
@@ -1810,8 +1813,6 @@ var share = (function(){
 
 			all : function(){
 
-				console.log('renders all')
-
 				renders.body(function(){
 
 					el.eMessage[0].emojioneArea.setText(currentShare.message.v);
@@ -1901,7 +1902,6 @@ var share = (function(){
 
 			url : function(clbk){
 
-				console.log("INITPLAYER0", player)
 
 				destroyPlayer()
 				
@@ -1931,11 +1931,7 @@ var share = (function(){
 
 						if (meta.type == 'youtube' || meta.type == 'vimeo' || meta.type == 'bitchute' || meta.type == 'peertube') {
 
-
-							console.log("INITPLAYER", player)
 							destroyPlayer()
-
-							
 
                             Plyr.setup('#' + self.map.id + ' .js-player', function(_player) {
 
@@ -2553,8 +2549,6 @@ var share = (function(){
 
 		var destroyPlayer = function(){
 			if (player) {
-
-				console.log("DESTROY")
 
 				if (player.playing){
 					player.stop()

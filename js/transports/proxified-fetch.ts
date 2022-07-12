@@ -20,7 +20,6 @@ export function proxifiedFetchFactory(electronIpcRenderer: Electron.IpcRenderer)
     };
 
     async function profixiedFetch(input: RequestInfo, init: RequestInit = defaultInit): Promise<Response> {
-        console.log('PROXIFIED FETCH TO', input, init);
 
         const preparedInit: RequestInit = {};
 

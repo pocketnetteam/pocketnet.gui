@@ -333,10 +333,11 @@ var postscores = (function(){
 
 				self.app.platform.sdk.node.shares.getbyid([shareid], function(){
 
-					share = self.app.platform.sdk.node.shares.storage.trx[shareid] 
+					//share = self.app.platform.sdk.node.shares.storage.trx[shareid] 
 						
+					share = self.app.platform.sdk.node.shares.getWithTemp(shareid) 
 
-					if(!share){
+					/*if(!share){
 						var temp = _.find(self.sdk.node.transactions.temp.share, function(s){
 							return s.txid == shareid
 						})
@@ -348,7 +349,7 @@ var postscores = (function(){
 							share.address = self.app.platform.sdk.address.pnet().address
 						}
 
-					}
+					}*/
 
 					if (share){
 

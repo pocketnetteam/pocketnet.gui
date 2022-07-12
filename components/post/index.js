@@ -1296,7 +1296,6 @@ var post = (function () {
 				}
 			},
 			share: function (clbk) {
-				//console.log("SHARE CLBK 0", share.txid)
 
 				self.shell(
 					{
@@ -1321,7 +1320,6 @@ var post = (function () {
 					},
 					function (_p) {
 
-						//console.log("SHARE CLBK 1", share.txid)
 
 						if(!el.share) return
 
@@ -1340,13 +1338,11 @@ var post = (function () {
 						el.wr.addClass('active');
 
 						
-						//if (share.itisvideo() && !ed.repost && !_OpenApi) renders.showmoreby()
 
 						renders.stars(function () {
 
 							if(!el.share) return
 
-							//console.log("SHARE CLBK 2", share.txid)
 
 							renders.mystars(function () { });
 
@@ -1354,7 +1350,6 @@ var post = (function () {
 
 								if(!el.share) return
 
-								//console.log("SHARE CLBK 3", share.txid)
 
 
 								if(!el.share.find('.showMore').length) renders.repost();
@@ -1824,7 +1819,6 @@ var post = (function () {
 
 		var make = function () {
 
-			//console.log("MAKE POST", share.txid)
 
 			if (share) {
 
@@ -1902,17 +1896,17 @@ var post = (function () {
 
 				level = (ed.level || -1) + 1
 
-				//console.log("NEW POST0", id)
 
 				getshareprominitialp(id, deep(p, 'settings.essenseData.shareobj'), function(_share){
 
 					share = _share
 
-					//console.log("NEW POST", share.txid)
 
 					if (!share) {
 
-						var temp = _.find(self.sdk.node.transactions.temp.share, function (s) {
+						share = self.app.platform.sdk.node.shares.getWithTemp(id) 
+
+						/*var temp = _.find(self.sdk.node.transactions.temp.share, function (s) {
 							return s.txid == id
 						})
 
@@ -1921,7 +1915,7 @@ var post = (function () {
 							share._import(temp, true);
 							share.temp = true;
 							share.address = self.app.platform.sdk.address.pnet().address
-						}
+						}*/
 
 					}
 
@@ -1964,7 +1958,6 @@ var post = (function () {
 
 			destroy: function (key) {
 
-				console.log("DESTROY", share.txid)
 				
 				if (external){
 					external.destroy()

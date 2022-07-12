@@ -116,8 +116,9 @@ var pkoin = (function(){
 						})
 
 						if(optionsValue === 'liftUpThePost') {
-							self.app.platform.sdk.node.shares.getboost({
 
+							self.app.platform.sdk.node.shares.getboost({
+								lang: share.language,
 								count : 10,
 			
 							}, function(_boost ,err){

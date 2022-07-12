@@ -14,7 +14,6 @@ function proxifiedFetchFactory(electronIpcRenderer) {
         method: 'GET',
     };
     async function profixiedFetch(input, init = defaultInit) {
-        console.log('PROXIFIED FETCH TO', input, init);
         const preparedInit = {};
         preparedInit.headers = {};
         if (input instanceof Request) {
