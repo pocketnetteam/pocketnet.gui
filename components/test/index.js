@@ -150,7 +150,7 @@ var test = (function(){
 
 				renders.options();
 			},
-			ref : function(resref){
+			ref : function(){
 
 
 				if (ref && firstTime && !self.app.dsubref){
@@ -372,7 +372,7 @@ var test = (function(){
 												
 												actions.upanel()
 
-												actions.ref(resref)
+												actions.ref()
 
 												self.closeContainer()
 												
