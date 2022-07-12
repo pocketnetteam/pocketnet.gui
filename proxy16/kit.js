@@ -393,7 +393,6 @@ var state = {
 	}
 }
 
-
 var kit = {
 
   manage: {
@@ -475,7 +474,6 @@ var kit = {
             return Promise.all(promises)
           })
 
-					
 
         },
         domain: function (domain) {
@@ -611,7 +609,7 @@ var kit = {
             return proxy.server.rews()
           })
 
-
+					
 
         },
 
