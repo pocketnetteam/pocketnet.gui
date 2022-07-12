@@ -37,6 +37,7 @@ var videoCabinet = (function () {
     var external = null;
     var perServerCounter = 10;
     var sharesDict = {};
+    var videosInTemp = {};
 
     var allVideosLoaded = false;
 
@@ -272,6 +273,7 @@ var videoCabinet = (function () {
       },
 
       getFullPageInfo(videoPortionElement, videos = null, fromBlockChainFlag) {
+
         renders.videos(videos, videoPortionElement, fromBlockChainFlag);
 
         //getting and rendering bonus program status for views and ratings (same template)
@@ -494,6 +496,7 @@ var videoCabinet = (function () {
           self.app.platform.sdk.node.shares.getprofilefeed(
             payload,
             (data = []) => {
+
               const outputVideos = data
                 .filter((video = {}) => !video.deleted)
                 .map((video = {}) => {
@@ -546,7 +549,7 @@ var videoCabinet = (function () {
                     );
                   }
 
-                  return !blockChainInfo[video];
+                  return !blockChainInfo[video] || videosInTemp[video];
                 })
                 .map((video) => ({
                   url: video,
@@ -1339,8 +1342,6 @@ var videoCabinet = (function () {
                             },
 
                             post: function (alias) {
-                              debugger;
-
                               const textContainert = el.c.find(
                                 `.singleVideoSection[uuid="${meta.id}"]`,
                               );
@@ -1597,36 +1598,40 @@ var videoCabinet = (function () {
           unpostedVideosParsed = {};
         }
 
-        const postingShares = self.sdk.relayTransactions
-          .withtemp('share')
-          .map((ps) => {
-            const s = new pShare();
-            s._import(ps, true);
-            s.temp = true;
+        // const postingShares = self.sdk.relayTransactions
+        //   .withtemp('share')
+        //   .map((ps) => {
+        //     const s = new pShare();
+        //     s._import(ps, true);
+        //     s.temp = true;
 
-            if (ps.relay) s.relay = true;
-            if (ps.checkSend) s.checkSend = true;
+        //     if (ps.relay) s.relay = true;
+        //     if (ps.checkSend) s.checkSend = true;
 
-            s.address = ps.address;
+        //     s.address = ps.address;
 
-            return s;
-          });
+        //     return s;
+        //   });
 
-        const postingVideos = postingShares
-          .filter((share) => share.itisvideo())
-          .map((share) => share.url);
+        // const postingVideos = postingShares
+        //   .filter((share) => share.itisvideo())
+        //   .map((share) => {
+        //     videosInTemp[share.url] = true;
 
-        if (unpostedVideosParsed[self.app.user.address.value]) {
-          unpostedVideosParsed[self.app.user.address.value].push(
-            ...postingVideos,
-          );
-        } else {
-          unpostedVideosParsed[self.app.user.address.value] = [
-            ...postingVideos,
-          ];
-        }
+        //     return share.url;
+        //   });
+        //   debugger;
+        // if (unpostedVideosParsed[self.app.user.address.value]) {
+        //   unpostedVideosParsed[self.app.user.address.value].push(
+        //     ...postingVideos,
+        //   );
+        // } else {
+        //   unpostedVideosParsed[self.app.user.address.value] = [
+        //     ...postingVideos,
+        //   ];
+        // }
 
-        videosInPosting = [...postingVideos];
+        // videosInPosting = [...postingVideos];
 
         self.app.platform.ws.messages.transaction.clbks.postVideos =
           actions.onSendToBlockchain;
