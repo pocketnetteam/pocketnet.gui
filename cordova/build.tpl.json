@@ -14,5 +14,27 @@
             "password" : "",
             "keystoreType": ""
         }
+    },
+    "ios": {
+        "debug": {
+            "codeSignIdentity": "iPhone Developer",
+            "developmentTeam": "Y5JW9JU787",
+            "packageType": "development",
+            "automaticProvisioning": true,
+            "buildFlag": [
+                "PRODUCT_BUNDLE_IDENTIFIER = app.pocketnet",
+                "SWIFT_VERSION=4.0"
+            ]
+        },
+        "release": {
+            "codeSignIdentity": "iPhone Developer",
+            "developmentTeam": "Y5JW9JU787",
+            "packageType": "app-store",
+            "automaticProvisioning": true,
+            "buildFlag": [
+                "PRODUCT_BUNDLE_IDENTIFIER = app.pocketnet",
+                "SWIFT_VERSION=4.0"
+            ]
+        }
     }
 }
