@@ -38,6 +38,7 @@
   padding-top: 3%;
   color: rgb(var(--color-not-catchy-grey));
   font-size: 0.8em;
+  cursor: pointer;
 }
 .bannerComment .bannerBody .text .noShowAgain:hover {
   color: rgb(var(--color-cc-blue));
