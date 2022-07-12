@@ -349,7 +349,7 @@ var _get_og_data = function(url, callback) {
   }
 
   try{
-    self.transports.request(options, function(error, response, body) {
+    self.transports.request(url, options, function(error, response, body) {
       try{
 
      

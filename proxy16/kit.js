@@ -1101,9 +1101,9 @@ var kit = {
 					return proxy.transports.fetch(...args);
 				})
 			},
-			request : function(option, callback){
+			request : function(uri, options, callback){
 				return kit.proxy().then(async proxy => {
-					return proxy.transports.request(option, callback);
+					return proxy.transports.request(uri, options, callback);
 				})
 			},
 		},
