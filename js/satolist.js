@@ -11410,11 +11410,11 @@ Platform = function (app, listofnodes) {
                 var point = 1;
 
 
-                if (me.relation(address, 'subscribes')){
+                if (me && me.relation(address, 'subscribes')){
                     point += 100
                 }
 
-                if (me.relation(address, 'subscribers')){
+                if (me && me.relation(address, 'subscribers')){
                     point += 20
                 }
 
