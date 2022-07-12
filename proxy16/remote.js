@@ -102,7 +102,7 @@ var Remote = function(app){
 		},
 		url : function(uri, clbk){
 
-			self.transports.request({
+			self.transports.request(uri, {
 				url : uri,
 				timeout: 30000
 

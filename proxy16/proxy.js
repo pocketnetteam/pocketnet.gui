@@ -599,8 +599,8 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 		axios: axiosTransport,
 
-		request: (option, callback)=>{
-			return transports.request(option, callback)
+		request: async (uri, options, callback)=>{
+			return await transports.request(uri, options, callback)
 		}
 	}
 

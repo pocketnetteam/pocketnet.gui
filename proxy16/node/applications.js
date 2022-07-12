@@ -200,7 +200,7 @@ var Applications = function(settings, applications = {}, proxy) {
             let req;
 
             try {
-                req = await proxy.transports.request({url: meta[key].url});
+                req = await proxy.transports.request(meta[key].url);
             } catch(err) {
                 console.log(err);
                 reject(err);
