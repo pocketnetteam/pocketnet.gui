@@ -29,7 +29,9 @@ var logger = new Logger(['general', 'rpc', 'system', 'remote', 'firebase', 'node
 
 var testnodes = [
 
-  {
+
+
+{
     host: '188.187.45.218',
     port: 22022,
     ws: 22030,
@@ -39,49 +41,49 @@ var testnodes = [
 
 
   //
-  // {
-  // 	host : '78.37.233.202',
-  // 	port : 39091,
-  // 	ws : 6067,
-  // 	name : 'test.v.pocketnet.app',
-  // 	stable : true
+  //{
+  //	host : '78.37.233.202',
+  //	port : 39091,
+  //	ws : 6067,
+  //	name : 'test.v.pocketnet.app',
+  //	stable : true
   // },
   //
-  // {
-  // 	host : '157.90.235.121',
-  // 	port : 39091,
-  // 	ws : 6067,
-  // 	name : 'test.1.pocketnet.app',
-  // 	stable : true
-  // },
-  // {
-  // 	host : '157.90.228.34',
-  // 	port : 39091,
-  // 	ws : 6067,
-  // 	name : 'test.2.pocketnet.app',
-  // 	stable : true
-  // },
-  // {
-  // 	host : '116.203.219.28',
-  // 	port : 39091,
-  // 	ws : 6067,
-  // 	name : 'test.pocketnet.app',
-  // 	stable : true
-  // },
-  // {
-  // 	host : '137.135.25.73',
-  // 	port : 39091,
-  // 	ws : 6067,
-  // 	name : 'tawmaz',
-  // 	stable : false
-  // },
-  // {
-  // 	host : '109.173.41.29',
-  // 	port : 39091,
-  // 	ws : 6067,
-  // 	name : 'lostystyg',
-  // 	stable : false
-  // }
+  //{
+  //	host : '157.90.235.121',
+  //	port : 39091,
+  //	ws : 6067,
+  //	name : 'test.1.pocketnet.app',
+  //	stable : true
+  //},
+  //{
+  //	host : '157.90.228.34',
+  //	port : 39091,
+  //	ws : 6067,
+  //	name : 'test.2.pocketnet.app',
+  //	stable : true
+  //},
+  //{
+  //	host : '116.203.219.28',
+  //	port : 39091,
+  //	ws : 6067,
+  //	name : 'test.pocketnet.app',
+  //	stable : true
+  //},
+  //{
+  //	host : '137.135.25.73',
+  //	port : 39091,
+  //	ws : 6067,
+  //	name : 'tawmaz',
+  //	stable : false
+  //},
+  //{
+  //	host : '109.173.41.29',
+  //	port : 39091,
+  //	ws : 6067,
+  //	name : 'lostystyg',
+  //	stable : false
+  //}
 ]
 
 
@@ -371,22 +373,24 @@ var state = {
     return state.rewrite()
   },
 
-  saverp: function () {
-    return state.rewrite().then(r => {
-      return kit.proxy()
-    })
-  },
-  prepare: function () {
+	saverp : function(){
+		return state.rewrite().then(r => {
+			return kit.proxy()
+		})
+	},
+	prepare : function(){
 
-    try {
-      if (!fs.existsSync(f.path('data'))) {
-        fs.mkdirSync(f.path('data'))
-      }
-    } catch (e) {
-    }
+		try{
+			if(!fs.existsSync(f.path('data'))){
+				fs.mkdirSync(f.path('data'))
+			}
+		}
+		catch(e){
+		}
 
 
-  }
+
+	}
 }
 
 
@@ -409,7 +413,6 @@ var kit = {
           if (typeof settings.enabled) notification.enabled = settings.enabled
           if (deep(settings, 'firebase.id')) notification.firebase = deep(settings, 'firebase.id')
           if (settings.ssl) notification.ssl = true
-
 
           return kit.proxy().then(proxy => {
 
@@ -472,6 +475,7 @@ var kit = {
             return Promise.all(promises)
           })
 
+					
 
         },
         domain: function (domain) {
@@ -608,6 +612,7 @@ var kit = {
           })
 
 
+
         },
 
         ssl: function (sslobj) {
@@ -630,31 +635,33 @@ var kit = {
 
               return f.saveFile(certpath, Buffer.from(base64decode(sslobj.cert), 'utf8'))
 
-            }).then(() => {
-              d.certpath = certpath
+						}).then(() => {
+							d.certpath = certpath
 
-              return Promise.resolve(d)
-            }).then(() => {
+							return Promise.resolve(d)
+						}).then(() => {
 
-              settings.server.ssl = d
+							settings.server.ssl = d
 
-              return state.saverp()
+							return state.saverp()
 
-            }).then(proxy => {
-              return proxy.server.rews()
-            })
-          } else {
+						}).then(proxy => {
+							return proxy.server.rews()
+						})
+					}
 
-            return Promise.reject('bad format')
+					else{
 
-          }
+						return Promise.reject('bad format')
 
-        },
+					}
 
-        firebase: {
-          clear: function () {
-            settings.firebase.id = ''
-            settings.firebase.key = ''
+				},
+
+				firebase : {
+					clear : function(){
+						settings.firebase.id = ''
+						settings.firebase.key = ''
 
             return state.saverp().then(proxy => {
               return proxy.firebase.re()
@@ -1210,12 +1217,14 @@ var kit = {
 
             state.apply(state.expand(savedSettings, settings))
 
-            state.save()
+						state.save()
 
-            start()
-          });
-        } else {
-          state.apply(state.expand({}, settings))
+						start()
+					});
+				}
+
+				else{
+					state.apply(state.expand({}, settings))
 
           state.save()
 
@@ -1262,7 +1271,6 @@ var kit = {
       return proxy.kit.candestroy()
     })
   },
-
 }
 
 
