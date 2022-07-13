@@ -2711,12 +2711,19 @@ Platform = function (app, listofnodes) {
         },
 
         showCommentBanner : function(contextElem) {
+
+            let bannerCommentComponent = null;
+
             const createComponent = () => {
                 app.nav.api.load({
                     open: true,
                     id: 'commentBanner',
                     el: contextElem.find('.bannerComment'),
                     essenseData: {},
+
+                    clbk : function(e, p){
+                        bannerCommentComponent = p;
+                    }
                 });
             };
 
@@ -2734,23 +2741,28 @@ Platform = function (app, listofnodes) {
             const isOneDayOld = (registeredTime >= oneDayInSeconds);
 
             if (isBannerDisabled) {
-                return;
+                console.log('banner showbanner', bannerCommentComponent);
+                return bannerCommentComponent;
             }
 
             if (!isOneDayOld) {
                 createComponent();
-                return;
+                console.log('banner showbanner', bannerCommentComponent);
+                return bannerCommentComponent;
             }
 
             if (!alreadyShowed) {
                 localStorage.nextCommentBanner = 1;
                 createComponent();
-                return;
+                console.log('banner showbanner', bannerCommentComponent);
+                return bannerCommentComponent;
             }
 
             if (timeToShowBanner || !alreadyShowed) {
                 localStorage.nextCommentBanner = unixTimeNow + oneDayInSeconds;
                 createComponent();
+                console.log('banner showbanner', bannerCommentComponent);
+                return bannerCommentComponent;
             }
 
         },
@@ -3491,11 +3503,7 @@ Platform = function (app, listofnodes) {
         templates : {
             commentstars : function(el, value, clbk){
 
-                if (typeof _Electron != 'undefined') return
-
-                if(!el) return
-
-                if (self.effects.animation) return
+                if(clbk) {clbk()} return;
 
                 self.effects.animation = true
 
