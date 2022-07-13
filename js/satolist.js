@@ -25889,7 +25889,7 @@ Platform = function (app, listofnodes) {
 
             // test coin 
 
-            self.messageHandler({"addr":"TSVui5YmA3JNYvSjGK23Y2S8Rckb2eV3kn","msg":"transaction","txid":"a6819e0de29c148a193932da4581b79cae02163f717962a86ccbf259f915a4be","time":1657701744,"amount":"1000000","nout":"2","node":"116.203.219.28:39091:6067"})
+            //self.messageHandler({"addr":"TSVui5YmA3JNYvSjGK23Y2S8Rckb2eV3kn","msg":"transaction","txid":"a6819e0de29c148a193932da4581b79cae02163f717962a86ccbf259f915a4be","time":1657701744,"amount":"1000000","nout":"2","node":"116.203.219.28:39091:6067"})
 
 		}, 3000)
     }
