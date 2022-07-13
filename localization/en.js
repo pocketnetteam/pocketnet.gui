@@ -2235,6 +2235,5 @@ ____loclib.continuesubscribefeedCaption = "Would you like to continue seeing pos
 ____loclib.continuesubscribefeedButton = "Continue in the subscription feed"
 
 ____loclib.androidPopupTitle = "Get uncensored information in Bastyon mobile app"
-____loclib.androidPopupContent = "Never miss a post. Open this on Bastyon app to get the full experience"
 ____loclib.androidPopupAgree = "Switch to the app"
 ____loclib.androidPopupDisagree = "Not now"

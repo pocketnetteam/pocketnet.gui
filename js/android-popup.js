@@ -4,7 +4,7 @@ options = {
   ],
   
   title: '<h1 id="androidPopupTitle">'+app.localization.e('androidPopupTitle')+'</h1>',
-  content: '<p id="androidPopupContent">'+app.localization.e('androidPopupContent')+'</p>',
+  content: '',
   buttons: {
     androidPopupDisagree: {
       text: app.localization.e('androidPopupDisagree'),
@@ -13,7 +13,7 @@ options = {
       },
       actions: {
         click: ({ button, event, instance }) => {
-          instance.setCookie('android-app', 'not now', 21);
+          localStorage.setItem('android-app', instance.options.addDays(21));
           instance.hide();
         }
       }
@@ -28,13 +28,22 @@ options = {
       },
       actions: {
         click: ({ button, event, instance }) => {
-          instance.setCookie('android-app', 'install', 365);
+          localStorage.setItem('android-app', instance.options.addDays(365));
           instance.hide();
         }
       }
     }
   },
+  addDays: (days) => {
+    let date = new Date();
+    date.setDate(date.getDate() + days);
+    return date.getTime();
+  },
   appear: (instance) => {
+    let state = (() => {
+      return new Date() > localStorage.getItem('android-app');
+    })();
+    
     /*Update text after locale change*/
     // window.localeChange = () => {
     //   instance.popup.querySelectorAll('*[id]').forEach(el => {
@@ -44,13 +53,13 @@ options = {
     
     /*Set position inline*/
     instance.css(instance.popup, {
-      position: 'absolute',
+      position: 'fixed',
       right: 0,
-      bottom: '-360px',
+      bottom: 0,
       left: 0,
       zIndex: 1001
     });
     
-    return isTablet() && !window.cordova && !isios() && !instance.getCookie('android-app');
+    return /*isTablet() && !window.cordova && !isios() &&*/ state;
   }
 }

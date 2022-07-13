@@ -1204,6 +1204,5 @@ ____loclib.lowstar2 = "Non utilizzare valutazioni a 1 e 2 stelle per altri motiv
 ____loclib.lowstaragree = "Confermo che questo post contiene uno dei quattro tipi di contenuto proibito"
 
 ____loclib.androidPopupTitle = "Ottieni informazioni non censurate nell'app mobile Bastyon"
-____loclib.androidPopupContent = "Non perdere mai un post. Apri questa app sull'app Bastyon per vivere un'esperienza completa"
 ____loclib.androidPopupAgree = "Passa all'app"
 ____loclib.androidPopupDisagree = "Non ora"

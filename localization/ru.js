@@ -2034,6 +2034,5 @@ ____loclib.continuesubscribefeedCaption = "Хотели бы вы продолж
 ____loclib.continuesubscribefeedButton = "Продолжить в ленте подписок"
 
 ____loclib.androidPopupTitle = "Получайте информацию без цензуры в мобильном приложении Бастион"
-____loclib.androidPopupContent = "Никогда не пропустите сообщение. Откройте это в приложении Бастион, чтобы получить полный опыт"
 ____loclib.androidPopupAgree = "Переключиться на приложение"
 ____loclib.androidPopupDisagree = "Не сейчас"

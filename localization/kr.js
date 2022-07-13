@@ -841,6 +841,5 @@ ____loclib.lowstar2 = "다른 이유로 별점 1 및 2를 사용하지 마십시
 ____loclib.lowstaragree = "이 게시물에는 4가지 유형의 금지된 콘텐츠 중 하나가 포함되어 있음을 확인합니다."
 
 ____loclib.androidPopupTitle = "Bastyon 모바일 앱에서 무수정 정보 가져오기"
-____loclib.androidPopupContent = "글을 놓치지 마세요. Bastyon 앱에서 이 게시물을 열어 전체 경험을 얻으세요"
 ____loclib.androidPopupAgree = "앱으로 전환"
 ____loclib.androidPopupDisagree = "지금은 아닙니다"

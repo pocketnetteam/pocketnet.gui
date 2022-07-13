@@ -168,11 +168,14 @@ class ShadowPopup {
       /**Generate static popup**/
       popup = new Promise(resolve => {
         const popup = document.createElement('div'),
+              holder = document.createElement('div'),
               header = document.createElement('div'),
               container = document.createElement('div'),
               buttons = document.createElement('div');
         
         popup.classList.add('popup');
+        
+        holder.classList.add('holder');
   
         header.classList.add('header');
         header.innerHTML = this.options.title;
@@ -182,8 +185,10 @@ class ShadowPopup {
   
         buttons.classList.add('buttons');
         buttons.append( this.#buildButtons() );
+        
+        holder.append(header, container, buttons);
   
-        popup.append(header, container, buttons);
+        popup.append(holder);
         
         resolve(popup);
       });
@@ -321,48 +326,6 @@ class ShadowPopup {
       this.popup.classList.remove('transition');
       if (this.isFunction(cb)) cb();
     }, duration);
-  }
-  
-  /**
-   * Set cookie
-   * @param name
-   * @param value
-   * @param days
-   */
-  setCookie (name, value, days) {
-    let expires = '';
-    if (days) {
-      const date = new Date();
-      date.setTime(date.getTime() + (days*24*60*60*1000));
-      expires = '; expires=' + date.toUTCString();
-    }
-    
-    document.cookie = name + '=' + (value || '')  + expires + '; path=/';
-  }
-  
-  /**
-   * Get cookie
-   * @param name
-   * @return {string|null}
-   */
-  getCookie (name) {
-    let nameEQ = name + '=', ca = document.cookie.split(';');
-    
-    for(let i=0;i < ca.length;i++) {
-      let c = ca[i];
-      while (c.charAt(0) === ' ') c = c.substring(1,c.length);
-      if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length,c.length);
-    }
-    
-    return null;
-  }
-  
-  /**
-   * Remove cookie
-   * @param name
-   */
-  removeCookie(name) {
-    document.cookie = name +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
   }
   
   /**

@@ -1010,6 +1010,5 @@ ____loclib.lowstar2 = "請不要出於其他原因使用 1 星和 2 星評級。
 ____loclib.lowstaragree = "我確認這篇文章包含四種禁止內容之一"
 
 ____loclib.androidPopupTitle = "在 Bastyon 移动应用中获取未经审查的信息"
-____loclib.androidPopupContent = "永远不会错过任何帖子。在 Bastyon 应用上打开它以获得完整体验"
 ____loclib.androidPopupAgree = "切换到应用"
 ____loclib.androidPopupDisagree = "不是现在"
