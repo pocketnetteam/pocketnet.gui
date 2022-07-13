@@ -4,7 +4,6 @@
   font: 1.75rem "Verdana, Helvetica", sans-serif;
   text-align: center;
   padding: 1.25rem;
-  transition: opacity .25s ease-in-out;
 
   -webkit-touch-callout: none; /* iOS Safari */
   -webkit-user-select: none; /* Safari */
@@ -14,17 +13,21 @@
   user-select: none; /* Non-prefixed version, currently */
 }
 
+.popup:not(.loading) {
+  transition: opacity .25s ease-in-out;
+}
+
 .popup.visible {
   opacity: 1;
+  display: block !important;
 }
 
 .popup.hidden {
   opacity: 0;
-  display: none;
 }
 
 .popup.transition {
-  display: block;
+  display: block !important;
 }
 
 .popup .holder {
@@ -62,6 +65,9 @@
   padding: .75rem;
   text-align: center;
   text-decoration: none;
+}
+
+.popup:not(.loading) .button {
   transition: background-color .25s ease-in-out, color .25s ease-in-out;
 }
 
@@ -88,8 +94,4 @@
 
 .popup .btn-secondary:hover {
   background: #fff;
-}
-
-.popup.loading * {
-  transition: none !important;
 }

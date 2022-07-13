@@ -13,7 +13,8 @@ class ShadowPopup {
   popup;
   
   options = { /*Can be {...} || { url: './....js' } to file with options = {...}*/
-    holder: null, /*Shadow can be attachable to any element*/
+    shadowParent: null, /*Shadow can be attachable to any element*/
+    shadowMode: 'open', /*Can be open || closed*/
     
     template: null, /*Can be '<div>...</div>' || { url: './....tpl' } || null*/
     variables: {
@@ -33,7 +34,7 @@ class ShadowPopup {
     
     title: '', /*Text || HTML*/
     content: '', /*Text || HTML*/
-  
+    
     buttons: {
       /*Describe buttons models*/
       /*button: {                 // button id
@@ -86,10 +87,10 @@ class ShadowPopup {
       this.options, options,
       { template: this.options.template || options?.template || null },
       { variables: Object.assign({
-        '{%heading%}': () => this.options.title,
-        '{%content%}': () => this.options.content,
-        '{%buttons%}': () => this.#buildButtons()
-      }, options?.variables || {}) },
+          '{%heading%}': () => this.options.title,
+          '{%content%}': () => this.options.content,
+          '{%buttons%}': () => this.#buildButtons()
+        }, options?.variables || {}) },
       { stylesheets: Object.assign(this.options.stylesheets, options?.stylesheets || []) },
       { fonts: Object.assign(this.options.fonts, options?.fonts || []) },
       { title: this.options.title || options?.title || '' },
@@ -97,21 +98,19 @@ class ShadowPopup {
       { buttons: Object.assign(this.options.buttons, options?.buttons || {}) }
     );
     
-    /*Build holder*/
-    if (!this.options.holder) {
-      this.options.holder = document.createElement('div');
-      this.options.holder.classList.add('shadow-popup-' + setTimeout(null, 1));
-      document.body.append(this.options.holder);
+    /*Build shadow parent if unassigned*/
+    if (!this.options.shadowParent) {
+      this.options.shadowParent = document.createElement('div');
+      this.options.shadowParent.classList.add('shadow-popup-' + setTimeout(null, 1));
     }
-  
+    
     /*Build popup*/
-    this.holder = this.options.holder.attachShadow({ mode: 'open' });
     this.#buildPopup()
       .then(popup => {
         this.popup = popup;
         this.#startUp();
       });
-  
+    
     /*Attach fonts*/
     document.head.insertAdjacentHTML(
       'beforeend',
@@ -119,16 +118,14 @@ class ShadowPopup {
         return '@import "' + font + '?t=' + (new Date().getTime() / 1000).toFixed(0) + '";';
       }).join("\n") )+'</style>'
     );
-  
+    
     /*Attach stylesheets*/
-    const stylesheets = document.createElement('style');
-    stylesheets.setAttribute('type', 'text/css');
-  
-    stylesheets.textContent = this.options.stylesheets.map(sheet => {
+    this.stylesheets = document.createElement('style');
+    this.stylesheets.setAttribute('type', 'text/css');
+    
+    this.stylesheets.textContent = this.options.stylesheets.map(sheet => {
       return /\.css$/.test(sheet) ? '@import "' +sheet+ '?t='+(new Date().getTime() / 1000).toFixed(0) + '";' : sheet;
     }).join("\n");
-  
-    this.holder.append(stylesheets);
     
     return this;
   }
@@ -139,14 +136,7 @@ class ShadowPopup {
   #startUp () {
     /*Show popup*/
     if ( this.isFunction(this.options.appear) && this.options.appear(this) ) {
-      this.holder.append(this.popup);
-  
-      /*Temporary disable animation*/
-      setTimeout(() => {
-        this.transition('loading', null, () => {
-          this.popup.classList.remove('loading');
-        });
-      }, 10);
+      this.show();
     }
   }
   
@@ -168,26 +158,26 @@ class ShadowPopup {
       /**Generate static popup**/
       popup = new Promise(resolve => {
         const popup = document.createElement('div'),
-              holder = document.createElement('div'),
-              header = document.createElement('div'),
-              container = document.createElement('div'),
-              buttons = document.createElement('div');
+          holder = document.createElement('div'),
+          header = document.createElement('div'),
+          container = document.createElement('div'),
+          buttons = document.createElement('div');
         
         popup.classList.add('popup');
         
         holder.classList.add('holder');
-  
+        
         header.classList.add('header');
         header.innerHTML = this.options.title;
-  
+        
         container.classList.add('content');
         container.innerHTML = this.options.content;
-  
+        
         buttons.classList.add('buttons');
         buttons.append( this.#buildButtons() );
         
         holder.append(header, container, buttons);
-  
+        
         popup.append(holder);
         
         resolve(popup);
@@ -204,12 +194,12 @@ class ShadowPopup {
    */
   #tplParser (template) {
     const parser = new DOMParser(),
-          content = parser.parseFromString(
-            template,
-            'text/html'
-          ).body.querySelector('*'),
-          elements = this.#textNodesUnder(content),
-          variables = this.options.variables;
+      content = parser.parseFromString(
+        template,
+        'text/html'
+      ).body.querySelector('*'),
+      elements = this.#textNodesUnder(content),
+      variables = this.options.variables;
     
     /*Replace all variables with elements*/
     Object.keys(variables).forEach(tag => {
@@ -223,7 +213,7 @@ class ShadowPopup {
           } else {
             el.parentNode.append(result);
           }
-  
+          
           el.remove();
         }
       });
@@ -249,18 +239,18 @@ class ShadowPopup {
    */
   #buildButtons () {
     const buttons = document.createDocumentFragment();
-  
+    
     Object.keys(this.options.buttons).forEach(id => {
       const options = Object.assign(
-              this.options.buttons[id] || {},
-              { attributes: Object.assign({ id: id }, this.options.buttons[id]?.attributes || {}) },
-              { actions: this.options.buttons[id]?.actions || {} }
-            ),
-            button = document.createElement(options.type || 'button');
+          this.options.buttons[id] || {},
+          { attributes: Object.assign({ id: id }, this.options.buttons[id]?.attributes || {}) },
+          { actions: this.options.buttons[id]?.actions || {} }
+        ),
+        button = document.createElement(options.type || 'button');
       
       /*Add button based class*/
       button.classList.add('button');
-  
+      
       /*Add attributes*/
       Object.keys(options.attributes).forEach(prop => {
         const value = options.attributes[prop];
@@ -319,7 +309,7 @@ class ShadowPopup {
     if (remove) this.popup.classList.remove(...remove.split(' '));
     
     this.popup.classList.add('transition');
-  
+    
     clearTimeout(this.popup.timeout);
     /*Change class after animation*/
     this.popup.timeout = setTimeout(() => {
@@ -332,8 +322,21 @@ class ShadowPopup {
    * Open popup
    */
   show () {
-    if (this.popup.parentNode !== this.holder) {
-      this.holder.append(this.popup);
+    if (!this.holder) {
+      this.holder = this.options.shadowParent.attachShadow({ mode: this.options.shadowMode });
+      this.holder.append(this.stylesheets, this.popup);
+      this.popup.classList.add('loading');
+      
+      /*Temporary disable animation*/
+      setTimeout(() => {
+        this.transition(null, null, () => {
+          this.popup.classList.remove('loading');
+        });
+      }, 10);
+    }
+    
+    if (!this.options.shadowParent.parentNode) {
+      document.body.append(this.options.shadowParent);
     }
     
     this.transition('visible', 'hidden');

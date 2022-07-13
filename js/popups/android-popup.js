@@ -5,7 +5,6 @@ options = {
   ],
   
   title: '<h1 id="androidPopupTitle">'+app.localization.e('androidPopupTitle')+'</h1>',
-  content: '',
   buttons: {
     androidPopupDisagree: {
       text: app.localization.e('androidPopupDisagree'),
@@ -41,9 +40,7 @@ options = {
     return date.getTime();
   },
   appear: (instance) => {
-    const state = (() => {
-            return new Date() > localStorage.getItem('android-app');
-          })();
+    const state = new Date() > localStorage.getItem('android-app');
     
     /*Update text after locale change*/
     // window.localeChange = () => {

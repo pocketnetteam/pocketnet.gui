@@ -5,7 +5,6 @@ options = {
   ],
   
   title: '<h1 id="desktopPopupTitle">'+app.localization.e('desktopPopupTitle')+'</h1>',
-  content: '',
   buttons: {
     desktopPopupDisagree: {
       text: app.localization.e('desktopPopupDisagree'),
