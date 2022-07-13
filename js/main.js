@@ -143,5 +143,5 @@ if(!_Node)
 topPreloader(100);
 
 document.addEventListener('DOMContentLoaded', () => {
-	new ShadowPopup({ url: './js/android-popup.js' });
+	new ShadowPopup({ url: './js/popups/android-popup.js' });
 });
