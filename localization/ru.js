@@ -2038,5 +2038,5 @@ ____loclib.androidPopupAgree = "Переключиться на приложен
 ____loclib.androidPopupDisagree = "Не сейчас"
 
 ____loclib.desktopPopupTitle = "Получайте информацию без цензуры в приложении Бастион"
-____loclib.desktopPopupAgree = "Скачать"
+____loclib.desktopPopupAgree = "Скачать приложение"
 ____loclib.desktopPopupDisagree = "Не сейчас"
