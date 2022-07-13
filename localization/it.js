@@ -1202,3 +1202,8 @@ ____loclib.lowstar_reason_3 = "Minaccia diretta di violenza"
 ____loclib.lowstar_reason_4 = "Droghe illegali"
 ____loclib.lowstar2 = "Non utilizzare valutazioni a 1 e 2 stelle per altri motivi. Dopo il rilascio della nuova moderazione a metà. Potresti essere in grado di utilizzare valutazioni basse per altri motivi"
 ____loclib.lowstaragree = "Confermo che questo post contiene uno dei quattro tipi di contenuto proibito"
+
+____loclib.androidPopupTitle = "Ottieni informazioni non censurate nell'app mobile Bastyon"
+____loclib.androidPopupContent = "Non perdere mai un post. Apri questa app sull'app Bastyon per vivere un'esperienza completa"
+____loclib.androidPopupAgree = "Passa all'app"
+____loclib.androidPopupDisagree = "Non ora"

@@ -1359,3 +1359,8 @@ ____loclib.lowstar_reason_3 = "Menace directe de violence"
 ____loclib.lowstar_reason_4 = "Drogues illégales"
 ____loclib.lowstar2 = "Veuillez ne pas utiliser les classements 1 et 2 étoiles pour d'autres raisons. Après la publication de la nouvelle modération à la mi-journée, vous pourrez utiliser les classements bas pour d'autres raisons"
 ____loclib.lowstaragree = "Je confirme que ce message contient l'un des quatre types de contenu interdit"
+
+____loclib.androidPopupTitle = "Obtenir des informations non censurées dans l'application mobile Bastyon"
+____loclib.androidPopupContent = "Ne manquez jamais un message. Ouvrez ceci sur l'application Bastyon pour profiter pleinement de l'expérience"
+____loclib.androidPopupAgree = "Basculer vers l'application"
+____loclib.androidPopupDisagree = "Pas maintenant"
