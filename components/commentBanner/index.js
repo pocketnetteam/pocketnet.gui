@@ -58,7 +58,6 @@ const commentBanner = (function() {
 			destroy: function() {
 				el.c.empty();
 				el = {};
-				delete destroyDelay;
 			},
 			
 			init: function(p) {
