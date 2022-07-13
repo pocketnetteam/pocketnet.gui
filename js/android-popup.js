@@ -3,11 +3,11 @@ options = {
     './js/vendor/shadow-popup/css/popup.css'
   ],
   
-  title: '<h1>Bastyon is better on the app</h1>',
-  content: '<p>Never miss a post. Open this on Bastyon app to get the full experience</p>',
+  title: '<h1 id="androidPopupTitle">'+app.localization.e('androidPopupTitle')+'</h1>',
+  content: '<p id="androidPopupContent">'+app.localization.e('androidPopupContent')+'</p>',
   buttons: {
-    disagree: {
-      text: 'Not now',
+    androidPopupDisagree: {
+      text: app.localization.e('androidPopupDisagree'),
       attributes: {
         class: 'btn-secondary'
       },
@@ -18,9 +18,9 @@ options = {
         }
       }
     },
-    agree: {
+    androidPopupAgree: {
       type: 'a',
-      text: 'Switch to the app',
+      text: app.localization.e('androidPopupAgree'),
       attributes: {
         class: 'btn-primary',
         href: 'https://play.google.com/store/apps/details?id=pocketnet.app',
