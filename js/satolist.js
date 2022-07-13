@@ -11454,11 +11454,11 @@ Platform = function (app, listofnodes) {
                 var point = 1;
 
 
-                if (me.relation(address, 'subscribes')){
+                if (me && me.relation(address, 'subscribes')){
                     point += 100
                 }
 
-                if (me.relation(address, 'subscribers')){
+                if (me && me.relation(address, 'subscribers')){
                     point += 20
                 }
 
@@ -17500,49 +17500,49 @@ Platform = function (app, listofnodes) {
                     if(!tx.vout || !tx.vout.length || !address) return null
 
                     var firstout = tx.vout[0]
+
+                    var n = -1
+                    var uservout = _.find(tx.vout, (v) => {
+                        n ++ 
+                        return _.find(deep(v, 'scriptPubKey.addresses') || [], (a) => {
+                            return a == address
+                        })
+                    })
+                    
+                    
+                    /**/
                     var l = tx.vout.length
 
-                    if(!firstout || l <= 1) return null
+                    if(!firstout || l <= 1 || !uservout) return null
+
+                    n = l - n
 
                     try {
                         var chunks = bitcoin.script.decompile(Buffer.from(firstout.scriptPubKey.hex, 'hex'))
 
                         if(!chunks.length) return
 
-                        chunks = chunks[0]
-
                         var cl = chunks.length
+
                         if(!cl) return null
 
-                        var n = 0;
+                        if (chunks[cl - n]) {
+                            var ch = chunks[cl - n]
 
-                        for(var i = l - 1; i > 0; i--){
+                            if (ch == bitcoin.opcodes.OP_WINNER_POST) {
+                                type = 'post'
+                            }
 
-                            n++
+                            if (ch == bitcoin.opcodes.OP_WINNER_COMMENT) {
+                                type = 'comment'
+                            }
 
-                            var v = tx.vout[i]
+                            if (ch == bitcoin.opcodes.OP_WINNER_POST_REFERRAL) {
+                                type = 'postref'
+                            }
 
-                            var _address = deep(v, 'scriptPubKey.addresses.0')
-
-                            if (_address == address && chunks[cl - n]) {
-                                var ch = chunks[cl - n]
-
-
-                                if (ch == bitcoin.opcodes.OP_WINNER_POST) {
-                                    type = 'post'
-                                }
-
-                                if (ch == bitcoin.opcodes.OP_WINNER_COMMENT) {
-                                    type = 'comment'
-                                }
-
-                                if (ch == bitcoin.opcodes.OP_WINNER_POST_REFERRAL) {
-                                    type = 'postref'
-                                }
-
-                                if (ch == bitcoin.opcodes.OP_WINNER_COMMENT_REFERRAL) {
-                                    type = 'commentref'
-                                }
+                            if (ch == bitcoin.opcodes.OP_WINNER_COMMENT_REFERRAL) {
+                                type = 'commentref'
                             }
                         }
 
@@ -23861,6 +23861,7 @@ Platform = function (app, listofnodes) {
 
                     var _dataclbk = function (tx, err) {
 
+
                         if (err || !tx) {
 
                             if (clbk) clbk()
@@ -23974,6 +23975,7 @@ Platform = function (app, listofnodes) {
 
                         data.cointype = platform.sdk.node.transactions.getCoibaseTypeN(data.txinfo, platform.sdk.address.pnet().address)
 
+
                         platform.sdk.users.getone(data.address || '', function () {
 
                             if (data.address) {
@@ -23985,8 +23987,6 @@ Platform = function (app, listofnodes) {
                             _.each(platform.sdk.node.transactions.clbks, function (c) {
                                 c(data.amountall)
                             })
-
-
 
                             if (clbk)
                                 clbk(data)
@@ -24066,7 +24066,7 @@ Platform = function (app, listofnodes) {
                     if (data.tx) {
 
 
-                        if (data.tx.coinbase) {
+                        if (data.cointype) {
 
                             if (platform.sdk.usersettings.meta.win.value) {
 
@@ -25447,7 +25447,7 @@ Platform = function (app, listofnodes) {
                     }
                 }
 
-                if (data.txid) {
+                /*if (data.txid) {
 
                     if (txidstorage[data.txid] || (data.msg === 'transaction' && data.donation)) return;
 
@@ -25455,7 +25455,7 @@ Platform = function (app, listofnodes) {
 
 
                     if (platform.sdk.notifications.find(data.txid)) return
-                }
+                }*/
 
 
                 var clbks = function (loadedData) {
@@ -25932,9 +25932,11 @@ Platform = function (app, listofnodes) {
                 txid: "65fee9b1e925833c5ff623178efecc436d3af0c9f6a4baa0b73c52907a9d1d7b"
             })*/
 
+            // test coin 
 
+            //self.messageHandler({"addr":"TSVui5YmA3JNYvSjGK23Y2S8Rckb2eV3kn","msg":"transaction","txid":"a6819e0de29c148a193932da4581b79cae02163f717962a86ccbf259f915a4be","time":1657701744,"amount":"1000000","nout":"2","node":"116.203.219.28:39091:6067"})
 
-		}, 6000)
+		}, 3000)
     }
 
     self.convertUTCSS = function (str) {
