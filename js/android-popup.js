@@ -35,6 +35,13 @@ options = {
     }
   },
   appear: (instance) => {
+    /*Update text after locale change*/
+    // window.localeChange = () => {
+    //   instance.popup.querySelectorAll('*[id]').forEach(el => {
+    //     el.textContent = app.localization.e(el.id)
+    //   });
+    // }
+    
     /*Set position inline*/
     instance.css(instance.popup, {
       position: 'absolute',
