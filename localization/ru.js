@@ -2045,3 +2045,11 @@ ____loclib.cameraError5 = "Камера недоступна, так как ее
 
 ____loclib.continuesubscribefeedCaption = "Хотели бы вы продолжить просматривать публикации от людей на которых вы подписаны?"
 ____loclib.continuesubscribefeedButton = "Продолжить в ленте подписок"
+
+____loclib.androidPopupTitle = "Получайте информацию без цензуры в мобильном приложении Бастион"
+____loclib.androidPopupAgree = "Переключиться на приложение"
+____loclib.androidPopupDisagree = "Не сейчас"
+
+____loclib.desktopPopupTitle = "Получайте информацию без цензуры в приложении Бастион"
+____loclib.desktopPopupAgree = "Скачать приложение"
+____loclib.desktopPopupDisagree = "Не сейчас"

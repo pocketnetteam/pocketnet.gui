@@ -2245,3 +2245,11 @@ ____loclib.cameraError5 = "The camera is unavailable because it doesn't exist or
 
 ____loclib.continuesubscribefeedCaption = "Would you like to continue seeing posts from the people you follow?"
 ____loclib.continuesubscribefeedButton = "Continue in the subscription feed"
+
+____loclib.androidPopupTitle = "Get uncensored information in Bastyon mobile app"
+____loclib.androidPopupAgree = "Switch to the app"
+____loclib.androidPopupDisagree = "Not now"
+
+____loclib.desktopPopupTitle = "Get uncensored information in Bastyon desktop app"
+____loclib.desktopPopupAgree = "Download the app"
+____loclib.desktopPopupDisagree = "Not now"
