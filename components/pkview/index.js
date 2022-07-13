@@ -210,7 +210,7 @@ var pkview = (function(){
 		}
 		renderShuffledMnemonic = function(){
 			el.c.find(".approveMnemonic")
-			.html(`<span class="approveMnemonicNote">${self.app.localization.e('mnemonicnote')}</span><div class="randomWordsWrapper"></div><div class="shuffledMnemonicWrapper"></div><div class="approveMnemonicButtons"><button class="button ghost backButton"><span>${self.app.localization.e('back')}</span></button><button class="button orange submitButton" disabled>${self.app.localization.e('confirm')}</button></div>`)
+			.html(`<span class="approveMnemonicNote">${self.app.localization.e('mnemonicnote')}</span><div class="randomWordsWrapper"></div><div class="shuffledMnemonicWrapper"></div><div class="approveMnemonicButtons"><button class="button ghost backButton"><span>${self.app.localization.e('back')}</span></button></div>`)
 			mnemonicCheckPart = current.mnemonicContent.slice(0, mnemonicCheckPartLength)
 			var shuffledMnemonic = shuffleArray(current.mnemonicContent)
 			var container = el.c.find(".shuffledMnemonicWrapper")
@@ -232,7 +232,6 @@ var pkview = (function(){
 				})
 				shuffledMnemonicItem.removeClass('hide')
 				$(this).remove()
-				checkedMnemonic.length !== mnemonicCheckPartLength && el.c.find(".submitButton").prop("disabled", true)
 			})
 		}
 
@@ -243,24 +242,19 @@ var pkview = (function(){
 					checkedMnemonic.push($(this).text())
 					$(`<div class="shuffledMnemonicItem">${$(this).text()}</div>`).appendTo(container)
 					$(this).addClass('hide')
-					checkedMnemonic.length === mnemonicCheckPartLength && el.c.find(".submitButton").prop("disabled", false)
+					if(checkedMnemonic.length === mnemonicCheckPartLength){
+						if(checkedMnemonic.join(' ') === mnemonicCheckPart.join(' ')){
+							self.closeContainer()
+							 self.app.platform.sdk.registrations.donotshowprivate()
+						}else{
+							sitemessage(self.app.localization.e('mnemonicerror'))
+						}
+					}
 				}
 				removeFromSelected()
 			})
 		}
 
-		validateMnemonic = function(){
-			el.c.find(".submitButton").on('click', function(){
-				if(checkedMnemonic.length === mnemonicCheckPartLength){
-					if(checkedMnemonic.join(' ') === mnemonicCheckPart.join(' ')){
-						self.closeContainer()
-				 		self.app.platform.sdk.registrations.donotshowprivate()
-					}else{
-						sitemessage(self.app.localization.e('mnemonicerror'))
-					}
-				}
-			})
-		}
 		downLoadQr = function(){
 			el.c.find(".qrSubmitButton").on('click', function(){
 				actions.saveqr(function(){
@@ -300,7 +294,6 @@ var pkview = (function(){
 					renderShuffledMnemonic()
 					back()
 					mnemonicItemClickHandler()
-					validateMnemonic()
 					$(this).css({"display": "none"})
 				}else{
 					self.closeContainer()

@@ -55,7 +55,6 @@
   margin-bottom: 2em;
   border: 1px dashed #3c4146;
   border-radius: 8px;
-  justify-content: space-between;
 }
 #pkview .approveMnemonic .approveMnemonicButtons,
 #pkview .qrCode .approveMnemonicButtons {
