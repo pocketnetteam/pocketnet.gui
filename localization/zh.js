@@ -1012,3 +1012,7 @@ ____loclib.lowstaragree = "我確認這篇文章包含四種禁止內容之一"
 ____loclib.androidPopupTitle = "在 Bastyon 移动应用中获取未经审查的信息"
 ____loclib.androidPopupAgree = "切换到应用"
 ____loclib.androidPopupDisagree = "不是现在"
+
+____loclib.desktopPopupTitle = "在 Bastyon 桌面应用程序中获取未经审查的信息"
+____loclib.desktopPopupAgree = "下载应用程序"
+____loclib.desktopPopupDisagree = "不是现在"

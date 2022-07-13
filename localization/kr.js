@@ -843,3 +843,7 @@ ____loclib.lowstaragree = "이 게시물에는 4가지 유형의 금지된 콘�
 ____loclib.androidPopupTitle = "Bastyon 모바일 앱에서 무수정 정보 가져오기"
 ____loclib.androidPopupAgree = "앱으로 전환"
 ____loclib.androidPopupDisagree = "지금은 아닙니다"
+
+____loclib.desktopPopupTitle = "Bastyon 데스크탑 앱에서 무수정 정보 가져오기"
+____loclib.desktopPopupAgree = "앱 다운로드"
+____loclib.desktopPopupDisagree = "지금은 아닙니다"

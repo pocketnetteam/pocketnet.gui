@@ -835,3 +835,7 @@ ____loclib.lowstaragree = "Confirmo que esta publicación contiene uno de los cu
 ____loclib.androidPopupTitle = "Obtenga información sin censura en la aplicación móvil Bastyon"
 ____loclib.androidPopupAgree = "Cambiar a la aplicación"
 ____loclib.androidPopupDisagree = "Ahora no"
+
+____loclib.desktopPopupTitle = "Obtenga información sin censura en la aplicación de escritorio Bastyon"
+____loclib.desktopPopupAgree = "Descargar la aplicación"
+____loclib.desktopPopupDisagree = "Ahora no"

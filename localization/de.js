@@ -845,3 +845,7 @@ ____loclib.lowstaragree = "Ich bestätige, dass dieser Beitrag eine von vier Art
 ____loclib.androidPopupTitle = "Erhalte unzensierte Informationen in der mobilen Bastion-App"
 ____loclib.androidPopupAgree = "Zur App wechseln"
 ____loclib.androidPopupDisagree = "Nicht jetzt"
+
+____loclib.desktopPopupTitle = "Unzensierte Informationen in der Bastyon-Desktop-App abrufen"
+____loclib.desktopPopupAgree = "App herunterladen"
+____loclib.desktopPopupDisagree = "Nicht jetzt"

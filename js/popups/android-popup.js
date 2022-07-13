@@ -1,6 +1,7 @@
 options = {
   stylesheets: [
-    './js/vendor/shadow-popup/css/popup.css'
+    './js/vendor/shadow-popup/css/popup.css',
+    '.popup { position: fixed; right: 0; bottom: 0; left: 0; z-index: 1001; }'
   ],
   
   title: '<h1 id="androidPopupTitle">'+app.localization.e('androidPopupTitle')+'</h1>',
@@ -40,9 +41,9 @@ options = {
     return date.getTime();
   },
   appear: (instance) => {
-    let state = (() => {
-      return new Date() > localStorage.getItem('android-app');
-    })();
+    const state = (() => {
+            return new Date() > localStorage.getItem('android-app');
+          })();
     
     /*Update text after locale change*/
     // window.localeChange = () => {
@@ -50,15 +51,6 @@ options = {
     //     el.textContent = app.localization.e(el.id)
     //   });
     // }
-    
-    /*Set position inline*/
-    instance.css(instance.popup, {
-      position: 'fixed',
-      right: 0,
-      bottom: 0,
-      left: 0,
-      zIndex: 1001
-    });
     
     return isTablet() && !window.cordova && !isios() && state;
   }

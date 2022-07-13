@@ -1206,3 +1206,7 @@ ____loclib.lowstaragree = "Confermo che questo post contiene uno dei quattro tip
 ____loclib.androidPopupTitle = "Ottieni informazioni non censurate nell'app mobile Bastyon"
 ____loclib.androidPopupAgree = "Passa all'app"
 ____loclib.androidPopupDisagree = "Non ora"
+
+____loclib.desktopPopupTitle = "Ottieni informazioni non censurate nell'app desktop Bastyon"
+____loclib.desktopPopupAgree = "Scarica l'app"
+____loclib.desktopPopupDisagree = "Non ora"

@@ -125,7 +125,7 @@ class ShadowPopup {
     stylesheets.setAttribute('type', 'text/css');
   
     stylesheets.textContent = this.options.stylesheets.map(sheet => {
-      return '@import "' + sheet + '?t=' + (new Date().getTime() / 1000).toFixed(0) + '";';
+      return /\.css$/.test(sheet) ? '@import "' +sheet+ '?t='+(new Date().getTime() / 1000).toFixed(0) + '";' : sheet;
     }).join("\n");
   
     this.holder.append(stylesheets);

@@ -1363,3 +1363,7 @@ ____loclib.lowstaragree = "Je confirme que ce message contient l'un des quatre t
 ____loclib.androidPopupTitle = "Obtenir des informations non censurées dans l'application mobile Bastyon"
 ____loclib.androidPopupAgree = "Basculer vers l'application"
 ____loclib.androidPopupDisagree = "Pas maintenant"
+
+____loclib.desktopPopupTitle = "Obtenir des informations non censurées dans l'application de bureau Bastyon"
+____loclib.desktopPopupAgree = "Télécharger l'application"
+____loclib.desktopPopupDisagree = "Pas maintenant"
