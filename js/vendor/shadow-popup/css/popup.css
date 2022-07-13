@@ -4,6 +4,7 @@
   font: 1.75rem "Verdana, Helvetica", sans-serif;
   text-align: center;
   padding: 1.25rem;
+  opacity: 0;
 
   -webkit-touch-callout: none; /* iOS Safari */
   -webkit-user-select: none; /* Safari */
@@ -17,17 +18,13 @@
   transition: opacity .25s ease-in-out;
 }
 
+.popup.transition,
+.popup.visible {
+  display: block !important;
+}
+
 .popup.visible {
   opacity: 1;
-  display: block !important;
-}
-
-.popup.hidden {
-  opacity: 0;
-}
-
-.popup.transition {
-  display: block !important;
 }
 
 .popup .holder {
