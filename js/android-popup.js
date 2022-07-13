@@ -60,6 +60,6 @@ options = {
       zIndex: 1001
     });
     
-    return /*isTablet() && !window.cordova && !isios() &&*/ state;
+    return isTablet() && !window.cordova && !isios() && state;
   }
 }
