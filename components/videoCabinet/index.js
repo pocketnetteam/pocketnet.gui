@@ -178,6 +178,8 @@ var videoCabinet = (function () {
 
 						if (!err.text) err.text = 'GET_VIDEOS_FROM_SERVER_VIDEOCABINET';
 
+						helpers.parseVideoServerError(err)
+
 					  	//sitemessage(helpers.parseVideoServerError(err));
 
 
