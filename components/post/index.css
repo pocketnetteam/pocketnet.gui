@@ -301,7 +301,6 @@
 }
 #post.recommendationsenabled .recomandationsFromContent {
   display: block;
-  flex-shrink: 0;
 }
 #post .recomandationsFromContent {
   margin-top: 0.5em;
@@ -324,7 +323,7 @@
 #post.videomainpost.recommendationsenabled .recomandationsFromContent {
   margin-top: 0;
   max-width: 400px;
-  min-width: 390px;
+  min-width: 400px;
   margin-left: auto;
 }
 #post.videomainpost.recommendationsenabled .recomandationsFromContent .recomandationsbgwrapper {
@@ -336,7 +335,7 @@
   }
   #post.videomainpost.recommendationsenabled .recomandationsFromContent {
     margin-top: 0.5em;
-    min-width: 390px;
+    min-width: 0;
     max-width: 960px;
     margin: 1em auto;
     width: 100%;
@@ -350,7 +349,7 @@
 }
 .wnd #post.videomainpost.recommendationsenabled .recomandationsFromContent {
   margin-top: 0.5em;
-  min-width: 390px;
+  min-width: 0;
   max-width: 960px;
   margin: 1em auto;
   width: 100%;
@@ -358,7 +357,7 @@
 .wnd #post.videomainpost.recommendationsenabled .recomandationsFromContent .recomandationsbgwrapper {
   margin-left: 0;
 }
-@media only screen and (min-width: 1300px) {
+@media only screen and (min-width: 1730px) {
   #post.videomainpost.recommendationsenabled {
     max-width: 1350px;
   }
@@ -700,7 +699,7 @@
   max-width: none;
 }
 #content > div#post.sharec .widthcontainer {
-  width: 90%;
+  width: 80%;
   max-width: 800px;
   margin: 0 auto;
 }
@@ -883,7 +882,7 @@ html.mobileview.fullscreen #post #comments {
   max-width: none;
 }
 .wnd.postwindow .widthcontainer {
-  width: 90%;
+  width: 80%;
   max-width: 800px;
   margin: 0 auto;
 }

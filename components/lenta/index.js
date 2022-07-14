@@ -1250,7 +1250,7 @@ var lenta = (function(){
 
 				var _el = el.share[id] 
 				
-				var work = _el.find('.sharecntinner');
+				var work = _el.find('.work');
 
 				if(!_el.hasClass('fullScreenVideo')){
 					work.css('margin-top', '0px')
@@ -1272,7 +1272,7 @@ var lenta = (function(){
 				}
 				else
 				{
-					work.css('margin-top', 20 + 'px')
+					work.css('margin-top', 0 + 'px')
 				}
 
 				_el = null
@@ -1389,8 +1389,6 @@ var lenta = (function(){
 
 							return 1
 						},
-
-						startload: true,
 
 						el : _el.find('.sharecnt'),
 					}, function(e, p){
