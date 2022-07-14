@@ -2673,10 +2673,8 @@ var lenta = (function(){
 			loadprev : function(){
 				actions.loadprev();
 
-			},
-
-			
-		}	
+			}
+		}
 
 		var renders = {
 
@@ -3768,8 +3766,6 @@ var lenta = (function(){
 					noview : true
 				})
 			},
-
-			
 		}
 
 		var load = {

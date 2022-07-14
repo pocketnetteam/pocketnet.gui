@@ -2710,6 +2710,63 @@ Platform = function (app, listofnodes) {
 
         },
 
+        showCommentBanner : function(contextElem) {
+
+            let bannerCommentComponent = null;
+
+            const createComponent = () => {
+                app.nav.api.load({
+                    open: true,
+                    id: 'commentBanner',
+                    el: contextElem.find('.bannerComment'),
+                    essenseData: {},
+
+                    clbk : function(e, p){
+                        bannerCommentComponent = p;
+                    }
+                });
+            };
+
+            const unixTimeNow = Math.floor(Date.now() / 1000);
+            const oneDayInSeconds = 86400000;
+
+            const alreadyShowed = ('nextCommentBanner' in localStorage);
+            const isBannerDisabled = (localStorage.nextCommentBanner == -1);
+            const timeToShowBanner = (localStorage.nextCommentBanner <= unixTimeNow);
+
+            const regDate = app.platform.sdk.user.me().regdate;
+            const regUnixTime = (regDate.getTime());
+            const registeredTime = Date.now() - regUnixTime;
+
+            const isOneDayOld = (registeredTime >= oneDayInSeconds);
+
+            if (isBannerDisabled) {
+                console.log('banner showbanner', bannerCommentComponent);
+                return bannerCommentComponent;
+            }
+
+            if (!isOneDayOld) {
+                createComponent();
+                console.log('banner showbanner', bannerCommentComponent);
+                return bannerCommentComponent;
+            }
+
+            if (!alreadyShowed) {
+                localStorage.nextCommentBanner = 1;
+                createComponent();
+                console.log('banner showbanner', bannerCommentComponent);
+                return bannerCommentComponent;
+            }
+
+            if (timeToShowBanner || !alreadyShowed) {
+                localStorage.nextCommentBanner = unixTimeNow + oneDayInSeconds;
+                createComponent();
+                console.log('banner showbanner', bannerCommentComponent);
+                return bannerCommentComponent;
+            }
+
+        },
+
         carousel : function(el, clbk){
 			var images = el.find('[image]');
 
@@ -3446,11 +3503,7 @@ Platform = function (app, listofnodes) {
         templates : {
             commentstars : function(el, value, clbk){
 
-                if (typeof _Electron != 'undefined') return
-
-                if(!el) return
-
-                if (self.effects.animation) return
+                if(clbk) {clbk()} return;
 
                 self.effects.animation = true
 
