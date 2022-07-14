@@ -1661,7 +1661,8 @@ var post = (function () {
 					opensvi : ed.opensvi,
 					next : ed.next,
 					basecount : 20,
-					startload : !p.inWnd && el.c.closest('.videomainpost').length && !isMobile(),
+					// !p.inWnd && el.c.closest('.videomainpost').length && !isMobile()
+					startload : el.c.closest('.videomainpost').length && !isMobile(),
 					beforeopen : function(){
 						self.closeContainer()
 					},
