@@ -1124,7 +1124,7 @@ var videoCabinet = (function () {
 										.getDirectVideoInfo({ id: meta.id }, { host: meta.host })
 										.then((videoData) => {
 											self.fastTemplate('editDescription', (rendered) => {
-												dialog({
+												var dialogWindow = new dialog({
 													html: rendered,
 
 													wrap: true,
@@ -1173,14 +1173,14 @@ var videoCabinet = (function () {
 																		.find('.videoDescriptionText')
 																		.text(description);
 
-																d.close();
+                                d.destroy();
 																tagElement = {};
 																tagArray = [];
 															})
 															.catch((err = {}) => {
 																tagElement = {};
 																tagArray = [];
-																d.close();
+																d.destroy();
 
 																sitemessage(
 																	`${self.app.localization.e(
@@ -1188,8 +1188,6 @@ var videoCabinet = (function () {
 																	)}: ${helpers.parseVideoServerError(err)}`,
 																);
 															});
-
-                              return false;
 													},
 
 													clbk: function (editDialogEl) {
