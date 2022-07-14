@@ -1124,7 +1124,7 @@ var videoCabinet = (function () {
 										.getDirectVideoInfo({ id: meta.id }, { host: meta.host })
 										.then((videoData) => {
 											self.fastTemplate('editDescription', (rendered) => {
-												var dialogWindow = dialog({
+												var dialogWindow = new dialog({
 													html: rendered,
 
 													wrap: true,
