@@ -514,6 +514,7 @@ ____loclib.e13107 = "La gestion des nœuds peut ètre effectuèe avec Applicatio
 ____loclib.e13108 = "Il n'y a pas de connexion avec l'interface proxy Electron"
 
 ____loclib.e13109 = "Veuillez entrer les mots dans l'image pour recevoir Pocketcoin et continuer l'inscription"
+____loclib.e13109h = "Cliquez sur les hexagones pour assembler l'image, puis saisissez du texte sur l'image résultante"
 ____loclib.e13110 = "Entrez les mots"
 ____loclib.next = "Suivant"
 ____loclib.refresh = "Rafraîchir"

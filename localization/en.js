@@ -590,6 +590,7 @@ ____loclib.e13107 = "Node management may be carried out with Application"
 ____loclib.e13108 = "There isn't connection with Electron proxy interface"
 
 ____loclib.e13109 = "Please enter the words in the picture to receive Pocketcoin and continue registration"
+____loclib.e13109h = "Click on the hexagons to assemble the picture, then enter text from the resulting image"
 ____loclib.e13110 = "Enter words"
 ____loclib.poll = "Create poll"
 ____loclib.next = "Next"

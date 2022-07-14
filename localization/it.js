@@ -546,6 +546,7 @@ ____loclib.e13107 = "La gestione dei nodi può essere effettuata con l'applicazi
 ____loclib.e13108 = "Non c'è connessione con l'interfaccia proxy Electron";
 
 ____loclib.e13109 = "Inserisci le parole nell'immagine per ricevere PKOIN e continuare la registrazione";
+____loclib.e13109h = "Fai clic sugli esagoni per assemblare l'immagine, quindi inserisci il testo nell'immagine risultante"
 ____loclib.e13110 = "Inserire le parole";
 ____loclib.poll = "Crea sondaggio";
 ____loclib.next = "Avanti";
