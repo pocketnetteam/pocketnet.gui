@@ -165,7 +165,6 @@ class FrontendLogger {
     }
 
     const formattedError = { ...error, guid, userAgent, payload: errorBody };
-    debugger;
 
     _errorsCache.push(formattedError);
   }
