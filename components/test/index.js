@@ -737,7 +737,7 @@ var test = (function(){
 
 					mdl.fastTemplate('addaddress', function(rendered){
 
-						dialog({
+						new dialog({
 							html : rendered,
 
 							wrap : true,

@@ -1041,7 +1041,7 @@ var videoCabinet = (function () {
 								element.find('.remove').on('click', function () {
 									const { host } = meta;
 
-									dialog({
+									new dialog({
 										html: self.app.localization.e('removeVideoDialog'),
 										btn1text: self.app.localization.e('remove'),
 										btn2text: self.app.localization.e('ucancel'),
@@ -1127,7 +1127,7 @@ var videoCabinet = (function () {
 										.getDirectVideoInfo({ id: meta.id }, { host: meta.host })
 										.then((videoData) => {
 											self.fastTemplate('editDescription', (rendered) => {
-												dialog({
+												new dialog({
 													html: rendered,
 
 													wrap: true,

@@ -1200,7 +1200,7 @@ var wallet = (function(){
 									}
 									else
 									{
-										dialog({
+										new dialog({
 											html : self.app.localization.e('e13221'),
 											success : function(){
 												remove(addressobject, iel)

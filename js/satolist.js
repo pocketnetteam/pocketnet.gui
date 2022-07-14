@@ -650,7 +650,7 @@ Platform = function (app, listofnodes) {
                             topPreloader(100);
 
                             if (!cs) {
-                                dialog({
+                                new dialog({
                                     html: self.app.localization.e('canSpendError'),
                                     btn1text: self.app.localization.e('daccept'),
 
@@ -681,7 +681,7 @@ Platform = function (app, listofnodes) {
                                             self.errors["1"].action()
                                         }
                                         else {
-                                            dialog({
+                                            new dialog({
                                                 html: self.app.localization.e('noMoneyError'),
                                                 btn1text: self.app.localization.e('daccept'),
 
@@ -707,7 +707,7 @@ Platform = function (app, listofnodes) {
                             self.app.platform.sdk.user.waitActions(function (r) {
 
                                 if (!r) {
-                                    dialog({
+                                    new dialog({
                                         html: self.app.localization.e('noMoneyError'),
                                         btn1text: self.app.localization.e('daccept'),
 
@@ -715,7 +715,7 @@ Platform = function (app, listofnodes) {
                                     })
                                 }
                                 else {
-                                    dialog({
+                                    new dialog({
                                         html: self.app.localization.e('waitConf'),
                                         btn1text: self.app.localization.e('daccept'),
 
@@ -1108,7 +1108,7 @@ Platform = function (app, listofnodes) {
                                     var exist = self.sdk.users.storage[a]
 
                                     if(!exist){
-                                        dialog({
+                                        new dialog({
                                             html: self.app.localization.e('checkScoreError'),
                                             btn1text: self.app.localization.e('dyes'),
                                             btn2text: self.app.localization.e('dno'),
@@ -1129,7 +1129,7 @@ Platform = function (app, listofnodes) {
                                     }
                                     else{
 
-                                        dialog({
+                                        new dialog({
                                             html: self.app.localization.e('waitConf'),
                                             btn1text: self.app.localization.e('daccept'),
 
@@ -1158,7 +1158,7 @@ Platform = function (app, listofnodes) {
 
                             if(!mestate || _.isEmpty(mestate)){
 
-                                dialog({
+                                new dialog({
                                     html: self.app.localization.e('accountnotfound'),
                                     btn1text: self.app.localization.e('daccept'),
 
@@ -1168,7 +1168,7 @@ Platform = function (app, listofnodes) {
                             }
                             else{
 
-                                dialog({
+                                new dialog({
                                     html: self.app.localization.e('waitConf'),
                                     btn1text: self.app.localization.e('daccept'),
 
@@ -3082,7 +3082,7 @@ Platform = function (app, listofnodes) {
 
             if (!p) p = {};
 
-            dialog({
+            new dialog({
                 html: p.text || self.app.localization.e('e13188'),
                 btn1text: p.successLabel || self.app.localization.e('e13261'),
                 btn2text: p.faillabel || self.app.localization.e('e13262'),
@@ -3336,7 +3336,7 @@ Platform = function (app, listofnodes) {
 
                                 if(info && info.original && info.original.isLive){
 
-                                    dialog({
+                                    new dialog({
                                         html: "Please wait, you will be able to download the video when the broadcast recording appears",
                                         btn1text: self.app.localization.e('daccept'),
                                         class : 'one',
@@ -3350,7 +3350,7 @@ Platform = function (app, listofnodes) {
 
                                 if(!items.length){
 
-                                    dialog({
+                                    new dialog({
                                         html: "Please wait, the video hasn't been transcoded yet",
                                         btn1text: self.app.localization.e('daccept'),
                                         class : 'one',
@@ -4390,7 +4390,7 @@ Platform = function (app, listofnodes) {
 
                             close()
 
-                            dialog({
+                            new dialog({
                                 class : 'zindex',
                                 html : self.app.localization.e('pinPostDialog'),
                                 btn1text : self.app.localization.e('dyes'),
@@ -4439,7 +4439,7 @@ Platform = function (app, listofnodes) {
 
                             close()
 
-                            dialog({
+                            new dialog({
                                 class : 'zindex',
                                 html : self.app.localization.e('unpinPostDialog'),
                                 btn1text : self.app.localization.e('dyes'),
@@ -4544,7 +4544,7 @@ Platform = function (app, listofnodes) {
                             close()
 
 
-                            dialog({
+                            new dialog({
                                 class : 'zindex',
                                 html : self.app.localization.e('removePostDialog'),
                                 btn1text : self.app.localization.e('dyes'),
@@ -9135,7 +9135,7 @@ Platform = function (app, listofnodes) {
             },
 
             error : function(text){
-                dialog({
+                new dialog({
                     html: app.meta.fullname + " chat ask you to generate encryption keys. But some error with your profile update was occuried:<br><b>" + text + "</b>",
                     btn1text: 'Edit profile',
                     class : 'one',
@@ -9542,7 +9542,7 @@ Platform = function (app, listofnodes) {
                                         h += '</div>'
                                         h += '</div>'
 
-                                        dialog({
+                                        new dialog({
                                             html: h,
                                             btn1text: self.app.localization.e('dyes'),
                                             btn2text: self.app.localization.e('dno'),
@@ -19572,7 +19572,7 @@ Platform = function (app, listofnodes) {
 
                           } else {
                             // this.telegramSend = this.telegramSend.bind(this)
-                            dialog({
+                            new dialog({
                               html: "Do you really want send message to Telegram?",
                               btn1text: "Send",
                               btn2text: "Cancel",
@@ -21845,7 +21845,7 @@ Platform = function (app, listofnodes) {
 
                         this.openedDialog = true;
 
-                        dialog({
+                        new dialog({
                             html: self.app.localization.e('e13325'),
                             btn1text: self.app.localization.e('e13326'),
                             btn2text: self.app.localization.e('ucancel'),
@@ -26659,7 +26659,7 @@ Platform = function (app, listofnodes) {
         var updateReady = function () {
 
             if (!d) {
-                d = dialog({
+                d = new dialog({
                     html: self.app.localization.e('e13347'),
                     btn1text: self.app.localization.e('dyes'),
                     btn2text: self.app.localization.e('e13348'),
@@ -26688,7 +26688,7 @@ Platform = function (app, listofnodes) {
                 if (self.app.platform.applications.ui[os()]) {
                     var _os = self.app.platform.applications.ui[os()]
                     if (_os.github && _os.github.url) {
-                        d = dialog({
+                        d = new dialog({
                             html:  self.app.localization.e('e13349'),
                             btn1text: self.app.localization.e('dyes'),
                             btn2text: self.app.localization.e('e13348'),
@@ -26950,7 +26950,7 @@ Platform = function (app, listofnodes) {
 
         return new Promise((resolve, reject) => {
 
-            var d = dialog({
+            var d = new dialog({
                 html:  self.app.localization.e('pdirectdialog'),
                 btn1text: self.app.localization.e('dyes'),
                 btn2text: self.app.localization.e('dno'),
@@ -27052,7 +27052,7 @@ Platform = function (app, listofnodes) {
                             self.nodeControlUpdateNodeLast = new Date()
                             self.nodeControlUpdateNodePopup = true
 
-                            dialog({
+                            new dialog({
                                 html: self.app.localization.e('easyNode_e10062'),
                                 btn1text: self.app.localization.e('easyNode_e10015'),
                                 btn2text: self.app.localization.e('skip'),
