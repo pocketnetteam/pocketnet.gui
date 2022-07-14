@@ -178,7 +178,11 @@ var videoCabinet = (function () {
 
 						if (!err.text) err.text = 'GET_VIDEOS_FROM_SERVER_VIDEOCABINET';
 
-					  	sitemessage(helpers.parseVideoServerError(err));
+						if (err.text.message === 'Failed to fetch') {
+							return [];
+						}
+
+						sitemessage(helpers.parseVideoServerError(err));
 
 						return [];
 					});
