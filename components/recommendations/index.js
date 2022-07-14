@@ -8,7 +8,7 @@ var recommendations = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el, ed, places = {}, sel;
+		var el, ed, places = {}, sel, globalParams;
 
 		var needmake = [], making = false, empty = false
 
@@ -30,8 +30,12 @@ var recommendations = (function(){
 
 		var renders = {
 			list : function(contents, clbk){
+				if(!el.c) return;
 
-				if(!el.c) return
+				self.app.Logger.info({
+					actionId: 'VIDEO_LOADED_WITH_RECOMMENDATIONS',
+					actionValue: globalParams.v,
+				});
 
 				self.shell({
 
@@ -313,8 +317,9 @@ var recommendations = (function(){
 			primary : primary,
 
 			getdata : function(clbk, p){
+				needmake = [];
 
-				needmake = []
+				globalParams = parameters() || {};
 
 				empty = false
 				making = false
