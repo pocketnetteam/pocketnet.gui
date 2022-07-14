@@ -1145,7 +1145,7 @@ var videoCabinet = (function () {
 
 														const { host } = videoLink;
 
-														return self.app.peertubeHandler.api.videos
+														self.app.peertubeHandler.api.videos
 															.update(videoLink, parameters, { host })
 															.then(() => {
 																const textContainert = el.videoContainer.find(
@@ -1176,6 +1176,8 @@ var videoCabinet = (function () {
 																	)}: ${helpers.parseVideoServerError(err)}`,
 																);
 															});
+
+                              return false;
 													},
 
 													clbk: function (editDialogEl) {
