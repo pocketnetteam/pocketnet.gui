@@ -1130,10 +1130,22 @@ var videoCabinet = (function () {
 													wrap: true,
 
 													success: function (d) {
-														const name = d.el.find('.videoNameInput').val();
+														const name = d.el.find('.videoNameInput').val() || '';
 														const description = d.el
 															.find('.videoDescriptionInput')
 															.val();
+
+                            if (!name || name.length < 3) {
+                              sitemessage(self.app.localization.e('videoNameIsIncorrectShort'));
+
+                              return false;
+                            }
+
+                            if (name.length > 120) {
+                              sitemessage(self.app.localization.e('videoNameIsIncorrectLong'));
+
+                              return false;
+                            }
 
 														const parameters = {};
 
