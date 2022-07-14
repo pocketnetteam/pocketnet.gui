@@ -585,6 +585,13 @@ Platform = function (app, listofnodes) {
 
     self.errorHandler = function (key, action, akey) {
 
+        var er = null
+
+        if(_.isObject(key)){
+            er = key
+            key = er.code
+        }
+
         var eobj = self.errors[key] || self.errors['network'];
 
         if (!eobj) {
@@ -594,7 +601,7 @@ Platform = function (app, listofnodes) {
             var m = eobj.message;
 
             if (m) {
-                if (typeof m == 'function') m = m(akey);
+                if (typeof m == 'function') m = m(akey, er);
 
                 if (!m) return
 
@@ -1191,10 +1198,11 @@ Platform = function (app, listofnodes) {
         },
 
         "-26": {
-            message: function () {
+            message: function (v, er) {
 
-                return self.app.localization.e('Error code: -26')
+                var loc = deep(er, 'error.message') || ''
 
+                return self.app.localization.e(loc || 'Error code: -26')
             },
 
             relay: true
