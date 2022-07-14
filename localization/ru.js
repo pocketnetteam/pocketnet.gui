@@ -2040,3 +2040,7 @@ ____loclib.continuesubscribefeedCaption = "Хотели бы вы продолж
 ____loclib.continuesubscribefeedButton = "Продолжить в ленте подписок"
 
 ____loclib['dust (code 64)'] = "Вы пытаетесь отправить слишком маленькую сумму, это невозможно сделать"
+
+
+____loclib.videoNameIsIncorrectShort = "Имя видео должно содержать минимум 3 символа"
+____loclib.videoNameIsIncorrectLong = "Имя видео не должно содержать более 120 символов"

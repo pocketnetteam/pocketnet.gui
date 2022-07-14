@@ -164,9 +164,10 @@ class FrontendLogger {
     let errorBody;
 
     try {
+      const serverResponse = deep(error, 'payload.response.data') || error.payload;
       errorBody = JSON.stringify(
-        error.payload,
-        Object.getOwnPropertyNames(error.payload),
+        serverResponse,
+        Object.getOwnPropertyNames(serverResponse),
       );
     } catch (errorFormat) {
       errorBody = `{ "error": "Unable to stringify received error. Report: ${errorFormat}", "type": "ERROR_PROCESSING_FAILED"}`;

@@ -884,7 +884,7 @@ var videoCabinet = (function () {
 						storage: p.storage,
 						value: p.value,
 						currentLink: '',
-						
+
 
 						closeClbk: function () {
 							external = null;
@@ -988,14 +988,14 @@ var videoCabinet = (function () {
 						id : 'abilityincrease',
 						el : errorel,
 
-						essenseData : {	
+						essenseData : {
 							template : 'video'
 						}
 					}, function(v, p){
 						errorcomp = p
 					})
 				}
-				
+
 			},
 			//add new container for a protion of videos (lazyload)
 			newVideoContainer(atStart = false) {
@@ -1133,10 +1133,22 @@ var videoCabinet = (function () {
 													wrap: true,
 
 													success: function (d) {
-														const name = d.el.find('.videoNameInput').val();
+														const name = d.el.find('.videoNameInput').val() || '';
 														const description = d.el
 															.find('.videoDescriptionInput')
 															.val();
+
+                            if (!name || name.length < 3) {
+                              sitemessage(self.app.localization.e('videoNameIsIncorrectShort'));
+
+                              return false;
+                            }
+
+                            if (name.length > 120) {
+                              sitemessage(self.app.localization.e('videoNameIsIncorrectLong'));
+
+                              return false;
+                            }
 
 														const parameters = {};
 
@@ -1148,7 +1160,7 @@ var videoCabinet = (function () {
 
 														const { host } = videoLink;
 
-														return self.app.peertubeHandler.api.videos
+														self.app.peertubeHandler.api.videos
 															.update(videoLink, parameters, { host })
 															.then(() => {
 																const textContainert = el.videoContainer.find(
@@ -1164,14 +1176,14 @@ var videoCabinet = (function () {
 																		.find('.videoDescriptionText')
 																		.text(description);
 
-																d.close();
+                                d.destroy();
 																tagElement = {};
 																tagArray = [];
 															})
 															.catch((err = {}) => {
 																tagElement = {};
 																tagArray = [];
-																d.close();
+																d.destroy();
 
 																sitemessage(
 																	`${self.app.localization.e(
@@ -1451,7 +1463,7 @@ var videoCabinet = (function () {
 					? el.c.find('.userVideos')
 					: el.c;
 
-				
+
 
 				renders.videoErrorContainer()
 
