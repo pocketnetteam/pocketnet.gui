@@ -25402,7 +25402,7 @@ Platform = function (app, listofnodes) {
                     }
                 }
 
-                /*if (data.txid) {
+                if (data.txid) {
 
                     if (txidstorage[data.txid] || (data.msg === 'transaction' && data.donation)) return;
 
@@ -25410,7 +25410,7 @@ Platform = function (app, listofnodes) {
 
 
                     if (platform.sdk.notifications.find(data.txid)) return
-                }*/
+                }
 
 
                 var clbks = function (loadedData) {
