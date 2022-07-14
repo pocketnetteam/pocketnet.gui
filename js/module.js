@@ -172,7 +172,7 @@ nModule = function(){
 								if (p.destroy) {
 									r = p.destroy(key)
 
-									if(!r)
+									if(!r && p.clearessense)
 										p.clearessense()
 								}
 							}
@@ -181,7 +181,8 @@ nModule = function(){
 							if (!r && p.inWnd){
 								delete self.app.nav.wnds[p.id]
 
-								p.clearessense()
+								if (p.clearessense)
+									p.clearessense()
 							}
 
 							//p = null
