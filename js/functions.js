@@ -3266,7 +3266,7 @@
 
 	ParametersLive = function(parameters, el, p){
 
-
+		if(!el) return
 		if(!p) p = {};
 
 		_.each(parameters, function(parameter){

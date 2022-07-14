@@ -1177,7 +1177,7 @@ var lenta = (function(){
 
 
 					self.fastTemplate('donation', function(rendered){
-						dialog({
+						new dialog({
 							html : rendered,
 							class : "one donation",
 
@@ -1653,7 +1653,7 @@ var lenta = (function(){
 						if(clbk)
 							clbk(false)
 
-						dialog({
+						new dialog({
 							html : self.app.localization.e('ratings123'),
 							btn1text :  self.app.localization.e('daccept'),
 							btn2text : self.app.localization.e('ucancel'),
@@ -2528,7 +2528,7 @@ var lenta = (function(){
 				var _el = $(this).closest('.share')
 
 
-				dialog({
+				new dialog({
 					html : self.app.localization.e('e13022'),
 					btn1text :  self.app.localization.e('unsub'),
 					btn2text : self.app.localization.e('ucancel'),

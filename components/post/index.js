@@ -300,7 +300,7 @@ var post = (function () {
 
 
 				self.fastTemplate('donation', function (rendered) {
-					dialog({
+					new dialog({
 						html: rendered,
 						class: "one donation",
 
@@ -561,7 +561,7 @@ var post = (function () {
 						if (clbk)
 							clbk(false)
 
-							dialog({
+							new dialog({
 								html : self.app.localization.e('ratings123'),
 								btn1text :  self.app.localization.e('daccept'),
 								btn2text : self.app.localization.e('ucancel'),
@@ -989,7 +989,7 @@ var post = (function () {
 
 			complain: function () {
 
-				dialog({
+				new dialog({
 					html: self.app.localization.e('e13148'),
 					btn1text: self.app.localization.e('dyes'),
 					btn2text: self.app.localization.e('dno'),

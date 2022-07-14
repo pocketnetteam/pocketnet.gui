@@ -1200,7 +1200,7 @@ var wallet = (function(){
 									}
 									else
 									{
-										dialog({
+										new dialog({
 											html : self.app.localization.e('e13221'),
 											success : function(){
 												remove(addressobject, iel)
@@ -1835,6 +1835,7 @@ var wallet = (function(){
 
 
 								   if(err){
+									console.log("ERR", err)
 									   self.app.platform.sdk.node.transactions.releaseCS(inputs)
 									   sendpreloader(false)
 									   self.app.platform.errorHandler(err, true)
@@ -2019,9 +2020,11 @@ var wallet = (function(){
 
 											if(err){
 
+												console.log("ERR", err)
+
 												self.app.platform.sdk.node.transactions.releaseCS(inputs)
 												sendpreloader(false)
-												sitemessage(err.text || err)
+												self.app.platform.errorHandler(err, true)
 											}
 
 											else

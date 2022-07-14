@@ -518,7 +518,7 @@ var comments = (function(){
 
 							el.c.find('.sending').removeClass('sending')
 	
-							dialog({
+							new dialog({
 								html : self.app.localization.e('ratings123'),
 								btn1text :  self.app.localization.e('daccept'),
 								btn2text : self.app.localization.e('ucancel'),
@@ -1035,7 +1035,7 @@ var comments = (function(){
 
 					if (value < 0 && self.app.platform.sdk.user.scamcriteria()){
 
-						dialog({
+						new dialog({
 							html : self.app.localization.e('ratings123'),
 							btn1text :  self.app.localization.e('daccept'),
 							btn2text : self.app.localization.e('ucancel'),
@@ -1407,7 +1407,7 @@ var comments = (function(){
 
 						__el.find('.remove').on('click', function(){
 
-							dialog({
+							new dialog({
 								html : self.app.localization.e('e13032'),
 								success : function(){
 
