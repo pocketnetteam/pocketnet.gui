@@ -22,8 +22,15 @@
             "packageType": "development",
             "automaticProvisioning": true,
             "buildFlag": [
-                "PRODUCT_BUNDLE_IDENTIFIER = app.pocketnet",
-                "SWIFT_VERSION=4.0"
+                "DEVELOPMENT_TEAM=Y5JW9JU787",
+                "SHAREEXT_DEVELOPMENT_TEAM=Y5JW9JU787",
+                "PRODUCT_BUNDLE_IDENTIFIER=app.pocketnet",
+                "IPHONEOS_DEPLOYMENT_TARGET=12.0",
+                "SWIFT_VERSION=4.0",
+                "-UseModernBuildSystem=0",
+                "EMBEDDED_CONTENT_CONTAINS_SWIFT = YES",
+                "ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES=NO",
+                "LD_RUNPATH_SEARCH_PATHS = \"@executable_path/Frameworks\""
             ]
         },
         "release": {
@@ -32,8 +39,15 @@
             "packageType": "app-store",
             "automaticProvisioning": true,
             "buildFlag": [
-                "PRODUCT_BUNDLE_IDENTIFIER = app.pocketnet",
-                "SWIFT_VERSION=4.0"
+                "DEVELOPMENT_TEAM=Y5JW9JU787",
+                "SHAREEXT_DEVELOPMENT_TEAM=Y5JW9JU787",
+                "PRODUCT_BUNDLE_IDENTIFIER=app.pocketnet",
+                "IPHONEOS_DEPLOYMENT_TARGET=12.0",
+                "SWIFT_VERSION=4.0",
+                "-UseModernBuildSystem=0",
+                "EMBEDDED_CONTENT_CONTAINS_SWIFT = YES",
+                "ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES=NO",
+                "LD_RUNPATH_SEARCH_PATHS = \"@executable_path/Frameworks\""
             ]
         }
     }
