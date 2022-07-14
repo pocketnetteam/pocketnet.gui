@@ -3493,8 +3493,10 @@ Platform = function (app, listofnodes) {
 
         templates : {
             commentstars : function(el, value, clbk){
-
-                if(clbk) {clbk()} return;
+                if (typeof _Electron != 'undefined' || !el || self.effects.animation) {
+                    if(clbk) clbk()
+                    return
+                }
 
                 self.effects.animation = true
 
