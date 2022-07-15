@@ -451,8 +451,7 @@
   text-align: center;
 }
 #registration .mWrapper .categories .icon {
-  margin-top: 3em;
-  width: 246px;
+  margin-top: 2em;
   margin-left: auto;
   margin-right: auto;
 }
@@ -554,7 +553,7 @@
   padding-right: 1em;
 }
 #registration .mWrapper .bloggers .usersHorizontal .wrk {
-  max-width: 218px;
+  max-width: 185px;
   width: 100%;
   margin-bottom: 30px;
 }
@@ -578,7 +577,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100px;
+  width: 85px;
 }
 #registration .mWrapper .bloggers .usersHorizontal .user .addressWrapper .iconWrapper .icon img {
   border-radius: 12px;
@@ -588,20 +587,20 @@
   width: 100%;
 }
 #registration .mWrapper .bloggers .usersHorizontal .user .addressWrapper .iconWrapper .icon .usericon {
-  width: 100px;
-  height: 100px;
+  width: 85px;
+  height: 85px;
 }
 #registration .mWrapper .bloggers .usersHorizontal .user .addressWrapper .iconWrapper .icon .usericon .letter {
   position: relative;
   top: 0.5em;
-  font-size: 3.5em;
+  font-size: 2.5em;
   text-align: center;
 }
 #registration .mWrapper .bloggers .usersHorizontal .user .addressWrapper .userbody {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 42px;
+  margin-top: 25px;
 }
 #registration .mWrapper .bloggers .usersHorizontal .user .addressWrapper .userbody .name {
   font-weight: 600;
@@ -626,7 +625,7 @@
 #registration .mWrapper .bloggers .usersHorizontal .user .addressWrapper .userbody .subscribeWrapper .unsubscribeButton {
   display: none;
   font-size: 14px;
-  width: 155px;
+  width: 140px;
   background: rgb(var(--color-good));
   border: 1px solid rgb(var(--color-good));
 }
@@ -636,7 +635,7 @@
 }
 #registration .mWrapper .bloggers .usersHorizontal .user .addressWrapper .userbody .subscribeWrapper .subscribeButton {
   font-size: 14px;
-  width: 155px;
+  width: 140px;
 }
 #registration .mWrapper .bloggers .usersHorizontal .user .addressWrapper .userbody .subscribeWrapper.following .subscribeButton {
   display: none;
@@ -736,8 +735,10 @@
 }
 #registration[step="welcome"] .caption,
 #registration[step="categories"] .caption,
+#registration[step="bloggers"] .caption,
 #registration[step="welcome"] .hasaccount,
-#registration[step="categories"] .hasaccount {
+#registration[step="categories"] .hasaccount,
+#registration[step="bloggers"] .hasaccount {
   display: none;
 }
 .wndcontent #registration .categories .welcome_text {

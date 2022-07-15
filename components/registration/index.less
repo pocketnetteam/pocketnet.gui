@@ -549,8 +549,7 @@
 			text-align: center;
 
 			.icon{
-				margin-top: 3em;
-				width: 246px;
+				margin-top: 4 * @rhythm;
 				margin-left: auto;
 				margin-right: auto;
 			}
@@ -673,7 +672,7 @@
 		
 		
 				.wrk{
-					max-width: 218px;
+					max-width: 185px;
 					width: 100%;
 					margin-bottom: 30px;
 		
@@ -704,7 +703,7 @@
 								display: flex;
 								justify-content: center;
 								align-items: center;
-								width: 100px;
+								width: 85px;
 								
 			
 								img{
@@ -716,13 +715,13 @@
 								}
 		
 								.usericon{
-									width: 100px;
-									height: 100px;
+									width: 85px;
+									height: 85px;
 		
 									.letter{
 										position: relative;
 										top: @rhythm;
-										font-size: @rhythm * 7;
+										font-size: @rhythm * 5;
 										text-align: center;
 									}
 								}
@@ -736,7 +735,7 @@
 							display: flex;
 							flex-direction: column;
 							align-items: center;
-							margin-top: 42px;
+							margin-top: 25px;
 		
 							.name{
 								font-weight: 600;
@@ -767,7 +766,7 @@
 								.unsubscribeButton{
 									display: none;
 									font-size: 14px;
-									width: 155px;
+									width: 140px;
 									background: rgb(var(--color-good));
 									border: 1px solid rgb(var(--color-good));
 		
@@ -779,7 +778,7 @@
 		
 								.subscribeButton{
 									font-size: 14px;
-									width: 155px;
+									width: 140px;
 								}
 		
 								&.following{
@@ -924,7 +923,7 @@
 		}
 	}
 
-	&[step="welcome"], &[step="categories"]{
+	&[step="welcome"], &[step="categories"], &[step="bloggers"]{
 		.caption, .hasaccount{
 			display: none;
 		}
