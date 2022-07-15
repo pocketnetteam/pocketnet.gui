@@ -65,7 +65,6 @@ Notifications = function(app) {
         self.canSendDesktopNotifications().then(() => {
             if (self.registration) {
                 self.registration.showNotification(title, options);
-                console.log("Notification sent");
             }
         });
     }

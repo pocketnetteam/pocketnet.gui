@@ -3,44 +3,49 @@
 <div class="postpanel table">
     <div class="panelWrapper">
         <div class="panel">
-            
-            <% if(!share.itisvideo()) {%>
 
-                <!--<div class="item url tooltip" embeding="url" title="<%=e('saddlink')%>">
-                    <i class="fas fa-external-link-alt"></i><span class="mobiledevice"><%=e('saddlink')%></span>
-                </div>-->
-                <div elementsid="saddimages" class="item images tooltip" title="<%=e('saddimages')%>">
-                    <i class="fas fa-camera"></i> <span class="mobiledevice"><%=e('saddimages')%></span>
-                </div>
-                
-                <% if(!share.aliasid && !share.repost.v && !share.hasexchangetag()) {%>
-                
-                    <div elementsid="sarticle" class="item article tooltip" embeding="article" title="<%=e('sarticle')%>">
-                        <i class="fas fa-book-open"></i> <span class="mobiledevice"><%=e('sarticle')%></span>
+            <% if(!external) {%>
+            
+                <% if(!share.itisvideo()) {%>
+
+                    <div elementsid="saddimages" class="item images tooltip" title="<%=e('saddimages')%>">
+                        <i class="fas fa-camera"></i> <span class="mobiledevice"><%=e('saddimages')%></span>
                     </div>
+                    
+                    <% if(!share.aliasid && !share.repost.v && !share.hasexchangetag()) {%>
+                    
+                        <div elementsid="sarticle" class="item article tooltip" embeding="article" title="<%=e('sarticle')%>">
+                            <i class="fas fa-book-open"></i> <span class="mobiledevice"><%=e('sarticle')%></span>
+                        </div>
+
+                    <% } %>
 
                 <% } %>
 
-            <% } %>
+                <% 
 
-            <% 
+                if(!share.hasexchangetag() && !share.repost.v){
 
-            if(!share.hasexchangetag() && !share.repost.v){
+                        
+                    if (!share.repost.v && !share.itisvideo() && !share.aliasid) { %>
+                        <div elementsid="peertubeAddVideo" class="item peertube tooltip nowidth" embeding="addVideo" title="<%=e('peertubeAddVideo')%>">
+                            <i class="fas fa-video"></i> <span><%- e('peertubeAddVideo') %></span>
+                        </div>
 
                     
-                if (!share.repost.v && !share.itisvideo() && !share.aliasid) { %>
-                    <div elementsid="peertubeAddVideo" class="item peertube tooltip nowidth" embeding="addVideo" title="<%=e('peertubeAddVideo')%>">
-                        <i class="fas fa-video"></i> <span><%- e('peertubeAddVideo') %></span>
+                    <% }
+
+                } %>
+            
+                <% if(!share.aliasid && !share.repost.v) {%>
+                    <div elementsid="stimes" class="item times tooltip <% if(share.itisvideo() || share.hasexchangetag()) {%> nowidth <%} %>" embeding="times" title="<%=e('stimes')%>">
+                        <i class="fas fa-times-circle"></i> <span class="<% if(!share.itisvideo() && !share.hasexchangetag()) {%>mobiledevice <% } %>"><%=e('stimes')%></span>
                     </div>
+                <% } %>
 
-                  
-                <% }
-
-            } %>
-           
-            <% if(!share.aliasid && !share.repost.v) {%>
-                <div elementsid="stimes" class="item times tooltip <% if(share.itisvideo() || share.hasexchangetag()) {%> nowidth <%} %>" embeding="times" title="<%=e('stimes')%>">
-                    <i class="fas fa-times-circle"></i> <span class="<% if(!share.itisvideo() && !share.hasexchangetag()) {%>mobiledevice <% } %>"><%=e('stimes')%></span>
+            <% } else { %>
+                <div class="item nowidth" embeding="openexternal">
+                    <i class="far fa-clock"></i> <span><%- external.id ? e('shareexternal' + external.id) : e('shareexternal') %></span>
                 </div>
             <% } %>
 

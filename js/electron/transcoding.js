@@ -3,6 +3,8 @@ const fs = require('fs');
 const path = require('path');
 
 const checkDiskSpace = require('check-disk-space').default;
+const coresCount = os.cpus().length;
+const ramCount = Math.round(os.totalmem() / Math.pow(1024, 3));
 
 const ffbin = require('ffbinaries');
 const ffmpeg = require('fluent-ffmpeg');
@@ -141,20 +143,20 @@ async function binariesDownloader(electronIpcMain, userDataFolder) {
 
   const spaceCalc = await checkDiskSpace(ffbinFolder);
   const isEnoughSpace = (spaceCalc.free > oneGbBytes);
-
-  if (!isEnoughSpace) {
-    const err = Error('NO_DISK_SPACE');
-    e.sender.send('transcode-binaries-error', err);
-    return;
-  }
+  const isRamEnough = (ramCount >= 4);
+  const areCoresEnough = (coresCount >= 4);
 
   electronIpcMain.on('transcode-binaries-request', async (e) => {
+    if (!isRamEnough || !areCoresEnough || !isEnoughSpace) {
+      const err = Error('REQUIREMENTS_NOT_MET');
+      e.sender.send('transcode-binaries-error', err);
+      return;
+    }
+
     downloadFfBinaries(ffbinFolder, (progress) => {
-      console.log(`FF Binaries download`, progress);
 
       e.sender.send('transcode-binaries-progress', progress);
     }).then(() => {
-      console.log(`FF Binaries are downloaded`);
 
       ffmpeg.setFfmpegPath(ffmpegPath);
       ffmpeg.setFfprobePath(ffprobePath);
@@ -163,7 +165,6 @@ async function binariesDownloader(electronIpcMain, userDataFolder) {
       e.sender.send('transcode-binaries-ready');
     }).catch((err) => {
       console.error(err);
-      console.log('FF Binaries not downloaded. Proceeding as is...');
 
       e.sender.send('transcode-binaries-error', err);
     });
@@ -303,18 +304,20 @@ async function transcodingProcessor(electronIpcMain) {
 
           const transcodeProcess = ffmpeg(filePath);
 
+          const threadsCount = Math.ceil(coresCount / 2);
+
           transcodeProcess
             .withVideoCodec('libx264')
             .withAudioCodec('libmp3lame')
             .videoFilters(`scale=-2:min'(720,ih)'`)
-            .outputOption('-threads 2')
+            .outputOption('-preset veryfast')
+            .outputOption(`-threads ${threadsCount}`)
             .withVideoBitrate('2600k')
             .withAudioBitrate('256k')
             .outputFps(25)
             .format('mp4');
 
           function cancelTranscoding() {
-            console.log('Video transcoding cancel');
             transcodeProcess.kill();
             reject('TRANSCODE_ABORT');
           }
@@ -326,24 +329,37 @@ async function transcodingProcessor(electronIpcMain) {
               e.sender.send('transcode-video-start');
             })
             .on('progress', (progress) => {
-              console.log('Processing: ' + progress.percent + '% done');
               e.sender.send('transcode-video-progress', calcProgress(`p${resolution[1]}`, progress.percent));
             })
             .on('error', (err) => {
               console.error('FFmpeg error occurred:', err);
               e.sender.send('transcode-video-progress', calcProgress(`p${resolution[1]}`, 100));
 
+              reject('TRANSCODE_ERROR');
+
               electronIpcMain.removeListener('transcode-video-stop', cancelTranscoding);
             })
             .on('end', () => {
               electronIpcMain.removeListener('transcode-video-stop', cancelTranscoding);
+
+              /**
+               * Looks like FFMPEG process can suddenly end
+               * in the middle of the task without reporting
+               * about any error. Anyway, handling the
+               * situation when final file is missing.
+               */
+              if (!fs.existsSync(fileLocation)) {
+                console.error('FFmpeg error occurred: Transcoded file is not saved');
+
+                reject('TRANSCODE_ERROR');
+                return;
+              }
 
               const data = fs.readFileSync(fileLocation);
 
               resolve(data);
 
               fs.unlink(fileLocation, () => {
-                console.log('Purged temporary file');
               });
             })
             .saveToFile(fileLocation);
@@ -404,9 +420,11 @@ async function transcodingProcessor(electronIpcMain) {
     const fileSize = fs.statSync(filePath).size;
 
     const isEnoughSpace = (spaceCalc.free > (fileSize * 1.5));
+    const isRamEnough = (ramCount >= 4);
+    const areCoresEnough = (coresCount >= 4);
 
-    if (!isEnoughSpace) {
-      const err = Error('NO_DISK_SPACE');
+    if (!isRamEnough || !areCoresEnough || !isEnoughSpace) {
+      const err = Error('REQUIREMENTS_NOT_MET');
       e.sender.send('transcode-video-error', err);
       return;
     }
@@ -440,27 +458,28 @@ async function transcodingProcessor(electronIpcMain) {
       } catch (err) {
         switch (err) {
           case 'TRANSCODE_ABORT':
+            const reportAbort = Error(err);
+
+            e.sender.send('transcode-video-error', reportAbort);
+            break;
+          case 'TRANSCODE_ERROR':
             const errTranscode = Error(err);
 
-            console.log('Transcode aborted');
             e.sender.send('transcode-video-error', errTranscode);
             break;
           case 'ERROR_FILE_ACCESS':
             const errAccess = Error(err);
 
-            console.log('Transcoding error: file access error');
             e.sender.send('transcode-video-error', errAccess);
             return;
           case 'FFBIN_NOT_DOWNLOADED':
             const errFfbin = Error(err);
 
-            console.log('Transcoding error: binaries still not downloaded');
             e.sender.send('transcode-video-error', errFfbin);
             return;
           case 'VERTICAL_VIDEO_NOT_SUPPORTED':
             const verticalNotSupported = Error(err);
 
-            console.log('Transcoding error: vertical video not supported');
             e.sender.send('transcode-video-error', verticalNotSupported);
             return;
           default:

@@ -340,6 +340,8 @@ var post = (function () {
 
 			position: function () {
 
+				if(!el.wr) return
+
 				if (self.app.mobileview) return
 
 				if (primary) return
@@ -553,7 +555,7 @@ var post = (function () {
 				if (checkvisibility && reputation >= 50) return
 
 
-				if(value <= 3){
+				if(value <= 3 && !self.app.test){
 					if(self.app.platform.sdk.user.scamcriteria()){
 
 						if (clbk)
@@ -582,6 +584,8 @@ var post = (function () {
 						return
 					}
 				}
+
+				
 
 				var upvoteShare = share.upvote(value);
 
@@ -617,35 +621,40 @@ var post = (function () {
 					
 				}
 
-					
+				self.app.platform.sdk.upvote.checkvalue(value, function(){
 
-				self.sdk.node.transactions.create.commonFromUnspent(
+					self.sdk.node.transactions.create.commonFromUnspent(
 
-					upvoteShare,
+						upvoteShare,
 
-					function (tx, error) {
+						function (tx, error) {
 
 
-						topPreloader(100)
+							topPreloader(100)
 
-						if (!tx) {
+							if (!tx) {
 
-							share.myVal = null;
+								share.myVal = null;
 
-							self.app.platform.errorHandler(error, true)
+								self.app.platform.errorHandler(error, true)
 
-							if (clbk)
-								clbk(false)
+								if (clbk)
+									clbk(false)
+
+							}
+							else {
+
+								if (clbk)
+									clbk(true)
+							}
 
 						}
-						else {
+					)
 
-							if (clbk)
-								clbk(true)
-						}
-
-					}
-				)
+				}, function(){
+					if (clbk)
+						clbk(false)
+				})
 			},
 
 			complain: function (clbk) {
@@ -1283,6 +1292,7 @@ var post = (function () {
 				}
 			},
 			share: function (clbk) {
+
 				self.shell(
 					{
 						turi: 'lenta',
@@ -1306,13 +1316,12 @@ var post = (function () {
 					},
 					function (_p) {
 
-						console.log("SHARE CLBK 1")
 
 						if(!el.share) return
 
 						el.stars = el.share.find('.forstars');
-						
-						_p.el.find('.panel .pkoin').on('click', events.pkoin)
+
+						_p.el.find('.pkoin').on('click', events.pkoin)
 						_p.el.find('.gotouserprofile').on('click', events.gotouserprofile)
 
 						if (ed.repost)
@@ -1325,17 +1334,18 @@ var post = (function () {
 						el.wr.addClass('active');
 
 						
-						//if (share.itisvideo() && !ed.repost && !_OpenApi) renders.showmoreby()
 
 						renders.stars(function () {
 
-							console.log("SHARE CLBK 2")
+							if(!el.share) return
+
 
 							renders.mystars(function () { });
 
 							renders.url(function () {
 
-								console.log("SHARE CLBK 3")
+								if(!el.share) return
+
 
 
 								if(!el.share.find('.showMore').length) renders.repost();
@@ -1343,6 +1353,8 @@ var post = (function () {
 								actions.position();
 
 								renders.urlContent(function () {
+
+									if(!el.share) return
 
 									actions.position();
 
@@ -1354,6 +1366,8 @@ var post = (function () {
 									}
 
 									renders.images(function () {
+
+										if(!el.share) return
 
 
 										if (!ed.repost) {
@@ -1429,9 +1443,6 @@ var post = (function () {
 						if (share.itisarticle()){
 							renders.articlespart(_p.el.find('.sharearticle'))
 						}
-
-
-						
 						
 					},
 				);
@@ -1490,9 +1501,6 @@ var post = (function () {
 
 					self.app.platform.sdk.likes.get(ids, function () {
 						renders.stars(clbk);
-
-						console.log("AS")
-
 					});
 				} else {
 					if (clbk) clbk();
@@ -1509,11 +1517,14 @@ var post = (function () {
 						},
 					},
 					function (p) {
-						fastars(p.el.find('.stars'));
 
-						el.share.find('.stars i').on('click', events.like);
+						if(p.el){
+							fastars(p.el.find('.stars'));
 
-						p.el.find('.count').on('click', events.postscores);
+							el.share.find('.stars i').on('click', events.like);
+	
+							p.el.find('.count').on('click', events.postscores);
+						}
 
 						if (clbk) clbk();
 					},
@@ -1804,6 +1815,7 @@ var post = (function () {
 
 		var make = function () {
 
+
 			if (share) {
 
 				if(self.app.platform.sdk.user.reputationBlockedNotMe(share.address)){
@@ -1817,7 +1829,7 @@ var post = (function () {
 						renders.comments(function () {
 						})
 
-						if (share.itisvideo() && !ed.repost && recommendationsenabled) {
+						if (share.itisvideo() && !ed.repost && !p.pip && recommendationsenabled) {
 
 							renders.recommendations();
 
@@ -1861,10 +1873,12 @@ var post = (function () {
 			id : p.mid,
 			pip : p.pip,
 
+			independent : p.pip,
+
 			getdata: function (clbk, p) {
 
-
-				recommendationsenabled = self.app.platform.istest()
+				
+				recommendationsenabled = true ///self.app.platform.istest()
 
 				_repost = null
 
@@ -1878,13 +1892,17 @@ var post = (function () {
 
 				level = (ed.level || -1) + 1
 
+
 				getshareprominitialp(id, deep(p, 'settings.essenseData.shareobj'), function(_share){
 
 					share = _share
 
+
 					if (!share) {
 
-						var temp = _.find(self.sdk.node.transactions.temp.share, function (s) {
+						share = self.app.platform.sdk.node.shares.getWithTemp(id) 
+
+						/*var temp = _.find(self.sdk.node.transactions.temp.share, function (s) {
 							return s.txid == id
 						})
 
@@ -1893,7 +1911,7 @@ var post = (function () {
 							share._import(temp, true);
 							share.temp = true;
 							share.address = self.app.platform.sdk.address.pnet().address
-						}
+						}*/
 
 					}
 
@@ -1936,7 +1954,6 @@ var post = (function () {
 
 			destroy: function (key) {
 
-			
 				
 				if (external){
 					external.destroy()
@@ -1990,6 +2007,8 @@ var post = (function () {
 				el = {};
 				ed = {}
 
+				
+
 			},
 
 			clearparameters: ['s', 'commentid', 'parentid'],
@@ -2009,12 +2028,15 @@ var post = (function () {
 				el.wr = el.c.find('.postWrapper')
 				el.wnd = el.c.closest('.wndcontent');
 
-
 				
 				
 				if (share.itisarticle()){
 					el.c.closest('.wnd').addClass('articlewindow')
 					el.c.addClass('sharec')
+				}
+
+				if(share.itisvideo() && !p.pip){
+					self.app.actions.closepip()
 				}
 
 				make()

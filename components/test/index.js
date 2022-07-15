@@ -13,6 +13,7 @@ var test = (function(){
 		var el = {}, ed, ref, plissing; 
 
 		var firstTime = false;
+		var loading = false
 		//var termsaccepted = false;
 
 		var checkusernameTimer = null
@@ -42,6 +43,27 @@ var test = (function(){
 		}
 
 		var actions = {		
+
+			loading : function(en){
+
+				loading = en ? true : false
+
+				if(el.c){
+
+					if(loading){
+						globalpreloader(true)
+						//el.c.find('.userPanel').addClass('loading')
+						//el.upanel.addClass('loading')
+					}
+					else{
+						globalpreloader(false)
+						//el.c.find('.userPanel').removeClass('loading')
+						//el.upanel.removeClass('loading')
+					}
+					
+				}
+				
+			},
 
 			saveemail : function(email, clbk){
 			
@@ -135,13 +157,6 @@ var test = (function(){
 					localStorage[self.app.platform.sdk.address.pnet().address + 'subscribeRef'] = ref.address										
 				}
 
-				/*if(ref && resref && firstTime){
-					var refaddress = deep(ref, 'address');		
-
-					self.sdk.users.requestFreeRef(refaddress, function(res, err){
-						console.log(res, err)
-					})
-				}*/
 			},
 
 			save : function(clbk){
@@ -152,8 +167,10 @@ var test = (function(){
 
 				var allclbk = function(){
 
-					el.upanel.removeClass('loading')
-					el.c.find('.userPanel').removeClass('loading')
+					actions.loading(false)
+
+					//el.upanel.removeClass('loading')
+					//el.c.find('.userPanel').removeClass('loading')
 
 					topPreloader(100)
 
@@ -184,7 +201,7 @@ var test = (function(){
 
 				
 
-				if (el.c.find('.userPanel').hasClass('loading')){
+				if (loading){
 					saving = false
 					return
 				}
@@ -212,14 +229,10 @@ var test = (function(){
 						}	
 
 					}
-
 						
 					saving = false
 					return
 				}
-
-
-			
 
 				var userInfo = new UserInfo();
 
@@ -272,9 +285,9 @@ var test = (function(){
 
 					topPreloader(30)
 
-					el.c.find('.userPanel').addClass('loading')
+				
 
-					el.upanel.addClass('loading')
+					actions.loading(true)
 
 					self.app.platform.sdk.users.nameExist(userInfo.name.v, function(exist){
 
@@ -298,9 +311,9 @@ var test = (function(){
 
 									if (err){
 										topPreloader(100)
-										el.upanel.removeClass('loading')
 
-										el.c.find('.userPanel').removeClass('loading')
+
+										actions.loading(false)
 
 										sitemessage("An error occurred while loading images")
 										saving = false
@@ -311,9 +324,7 @@ var test = (function(){
 
 										topPreloader(100)
 
-										el.upanel.removeClass('loading')
-
-										el.c.find('.userPanel').removeClass('loading')
+										actions.loading(false)
 
 										ed.makeuser(userInfo)
 										saving = false
@@ -341,9 +352,7 @@ var test = (function(){
 
 												self.app.platform.errorHandler(error, true)	
 												
-												el.upanel.removeClass('loading')
-
-												el.c.find('.userPanel').removeClass('loading')
+												actions.loading(false)
 
 												topPreloader(100)
 
@@ -404,9 +413,8 @@ var test = (function(){
 						else
 						{
 							saving = false
-							el.upanel.removeClass('loading')
-
-							el.c.find('.userPanel').removeClass('loading')
+							
+							actions.loading(false)
 
 							topPreloader(100)
 
@@ -1231,6 +1239,10 @@ var test = (function(){
 
 				if (el.c) el.c.empty()
 
+				if (loading){
+					actions.loading(false)
+				}
+
 
 				el = {};
 				ed = {};
@@ -1247,6 +1259,8 @@ var test = (function(){
 			init : function(p){
 
 				state.load();
+
+				loading = false
 
 				el = {};
 				el.c = p.el.find('#' + self.map.id);

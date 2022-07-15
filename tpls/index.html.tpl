@@ -17,14 +17,14 @@
 
         <meta http-equiv="Content-Security-Policy" content="
         upgrade-insecure-requests;
-        default-src 'self' __VAR__.domain:*; 
-        connect-src 'self' http: ws: https: wss:;
-        img-src 'self' data: http: https: __VAR__.domain:*;
+        default-src blob: 'self' __VAR__.domain:*;
+        connect-src blob: 'self' http: ws: https: wss:;
+        img-src 'self' blob: data: http: https: __VAR__.domain:*;
         script-src 'self' blob: __VAR__.domain player.vimeo.com www.youtube.com s.ytimg.com cdn.jsdelivr.net/joypixels/ 'unsafe-eval' 'unsafe-inline';
         frame-src 'self' player.vimeo.com www.youtube.com;
         style-src 'self' data: __VAR__.domain:* cdn.jsdelivr.net/joypixels/ 'unsafe-inline' use.fontawesome.com;
         font-src 'self' data: __VAR__.domain:* use.fontawesome.com;
-        media-src blob: *">
+        media-src data: blob: *">
 
         <link rel="manifest" href="manifest.json">
         <link rel="apple-touch-icon" href="img/res/blue_pad_250.png" sizes="250x250">
@@ -55,7 +55,7 @@
         <div id="navigationWrapper">
         </div> 
 
-        <div class="contentWrapper"> 
+        <div class="contentWrapper "> 
             <div id="content">                
             </div>
         </div>
@@ -99,19 +99,21 @@
             
         </script>
 
+        <script src="js/polyfills.js"></script>
+        
+
         __JSENV__
-        
+
         __VE__
-        
+
         __JS__
 
         __CSS__
 
         __JSPOST__
 
-        <link rel="stylesheet" href="css/fontawesome/css/all.css">
-
-        <script src="js/pwa-service-worker.js?v=v__PACKAGE-VERSION__"></script>
+        <link rel="stylesheet" href="css/fontawesome/css/all.min.css">
+        <script async src="js/pwa-service-worker.js?v=v__PACKAGE-VERSION__"></script>
 
     </body>
 </html>

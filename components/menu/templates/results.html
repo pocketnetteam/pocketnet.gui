@@ -4,14 +4,18 @@
 
 		<div class="results">
 
-			<% 
-			
+			<%
+
 			var c = 6
+			var filteredResults = results.filter(user => {
+			if (self.app.platform.sdk.user.isNotAllowedName(user)) return false
+			else return true
+			})
 
 			if(isMobile()) c = 4
 
-			_.each(results, function(r, i){
-				
+			_.each(filteredResults, function(r, i){
+
 				
 				if(i > c) return
 				

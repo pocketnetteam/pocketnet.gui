@@ -1,5 +1,4 @@
 <%
-
 var c = share.renders.caption();
 var cc = share.renders.captionclear();
 
@@ -89,18 +88,22 @@ var metadisplay = function(){ %>
 
 				<% if((typeof repost == 'undefined' || !repost)) { %>
 
-					<div elementsid="lenta_metapanel" class="metapanel <%-share.txid%>">
-						<% if(!checkvisibility && (typeof openapi == 'undefined' || !openapi)) {%>
-							<div class="metapanelitem metmenu">
-								<i class="fas fa-ellipsis-h"></i>
-							</div>
-						<% } else { %> 
-							<div class="metapanelitem">
-								
-							</div>
-						<% } %>
+					<% if(!share.temp && !share.relay) {%>
 
-					</div>
+						<div elementsid="lenta_metapanel" class="metapanel <%-share.txid%>">
+							<% if(!checkvisibility && (typeof openapi == 'undefined' || !openapi)) {%>
+								<div class="metapanelitem metmenu">
+									<i class="fas fa-ellipsis-h"></i>
+								</div>
+							<% } else { %> 
+								<div class="metapanelitem">
+									
+								</div>
+							<% } %>
+
+						</div>
+						
+					<% } %>
 					
 
 				<% } %>
@@ -500,16 +503,15 @@ var arranges = {
 						<% } %>
 						
 
-						<% if(!share.temp &&   (typeof repost == 'undefined' || !repost || fromempty)) {%>
+						<% if(!share.temp && (typeof repost == 'undefined' || !repost || fromempty)) {%>
 							<div class="panel sharepanel unselectablemobile">
 								<div class="item forstars">
 									
 								</div>
 
-								<% const isElectron = (typeof _Electron !== 'undefined' && !!window.electron); %>
-								<% const isSaveSupported = (window.cordova && !isios()); %>
+							
 
-								<% if(isSaveSupported && share.itisvideo()) {
+								<% if(app.savesupported() && share.itisvideo()) {
 
 									var status = app.platform.sdk.localshares.status(share.txid)
 									
@@ -554,21 +556,41 @@ var arranges = {
 									</div>
 
 								<% } %>
+
 								<% if(!lockedaccount) {%>
-								<div class="item pkoin right unselectedtable">
-									<img src="img/pocketnet_logo_white.svg" alt="">
-									<span class='workstation'>
-										PKOIN
-									</span>
-								</div>
+									<% if(!my || app.boost) {%>
+									<div class="item pkoin right unselectedtable">
+										<img src="img/pocketnet_logo_white.svg" alt="">
+										<span class='workstation'>
+											PKOIN
+										</span>
+									</div>
+									<% } %>
 								<% } %>
 								
 							</div>
 
 							
-						<% } %>
+						<% };
 
-						<% if(share.temp) {%>
+						if (share.relay && share.checkSend) { %>
+							<div class="panel sharepanel unselectablemobile">
+								<div class="item right">
+
+									<div class="itemwr table tempPreloader">
+										
+										<div elementsid="lenta_forstars_count" class="count">
+											<div class="label">
+
+												<span><%=e('postInRelay')%></span>
+											</div>
+										</div>
+											
+									</div>
+								</div>
+								<div class="clearfix"></div>
+							</div>
+						<% } else if(share.temp) {%>
 
 							<div class="panel sharepanel unselectablemobile">
 								<div class="item right">

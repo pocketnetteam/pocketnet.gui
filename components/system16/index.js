@@ -18,7 +18,8 @@ var system16 = (function(){
 		var colors = ['#F0810F', '#011A27', '#4897D8', '#E6DF44', '#063852', '#486824']
 
 		var changes = {
-			server : {}
+			server : {},
+			tor: {}
 		}
 
 		var settings = {
@@ -152,14 +153,18 @@ var system16 = (function(){
 	        		}
 	        	})
 			},
+
 			'serverenabled' : function(_el){
-				
 				changes.server.enabled = !JSON.parse(_el.attr('value'))
 				if(changes.server.enabled == system.server.enabled) delete changes.server.enabled
 
 				renders.webserveradmin(el.c)
 			},
-			
+			'torenabled' : function(_el){
+				changes.server.enabledtor = !JSON.parse(_el.attr('value'))
+				if(changes.server.enabledtor == system.tor.enabled) delete changes.server.enabledtor
+				renders.webserveradmin(el.c)
+			},
 		}
 
 		var actions = {
@@ -2863,7 +2868,6 @@ var system16 = (function(){
 						})
 
 						p.el.find('.save').on('click', function(){
-
 							if(changes.server.https || changes.server.wss){
 								changes.server.ports = {
 									https : changes.server.https,
@@ -2872,16 +2876,31 @@ var system16 = (function(){
 							}
 
 							var _make = function(){
-
-
 								globalpreloader(true)
+								if(typeof changes.server.enabledtor != 'undefined') {
+									proxy.fetchauth('manage', {
+										action: changes.server.enabledtor ? 'tor.start' : 'tor.stop',
+										data: {}
+									}).catch(e => {
+										globalpreloader(false)
+										return Promise.resolve()
 
+									}).then(r => {
+										delete changes.server.enabledtor;
+										make(proxy || api.get.current());
+
+										globalpreloader(false)
+
+										topPreloader(100);
+
+									})
+								}
+								
 								proxy.fetchauth('manage', {
-									action : 'set.server.settings',
-									data : {
-										settings : changes.server
+									action: 'set.server.settings',
+									data: {
+										settings: changes.server
 									}
-	
 								}).catch(e => {
 									globalpreloader(false)
 									return Promise.resolve()
@@ -2897,16 +2916,14 @@ var system16 = (function(){
 		
 								})
 							}
-
-							if(typeof changes.server.enabled != 'undefined' || changes.server.https || changes.server.wss || changes.server.ssl){
-
-
+							
+							if(typeof changes.server.enabledtor != 'undefined' || typeof changes.server.enabled != 'undefined' || changes.server.https || changes.server.wss || changes.server.ssl){
 								dialog({
 									class : 'zindex',
 									html : "Do you really want to change this settings?",
 									btn1text : self.app.localization.e('dyes'),
 									btn2text : self.app.localization.e('dno'),
-									success : function(){	
+									success : function(){
 										_make()
 									}
 								})
@@ -3013,8 +3030,6 @@ var system16 = (function(){
 
 							renders.webserveradmin(elc)
 						})
-
-						
 
 						if (clbk)
 							clbk()
@@ -3726,11 +3741,14 @@ var system16 = (function(){
 		var makers = {
 
 			panel : function(){
-				renders.nodescontenttable(el.c)
-				renders.peertubeinstancestable(el.c)
-				renders.webadminscontent(el.c)
-				renders.webdistributionwallets(el.c)
-				renders.webserveradmin(el.c)
+				if(el.c){
+					renders.nodescontenttable(el.c)
+					renders.peertubeinstancestable(el.c)
+					renders.webadminscontent(el.c)
+					renders.webdistributionwallets(el.c)
+					renders.webserveradmin(el.c)
+				}
+				
 			},
 
 			stats : function(update){

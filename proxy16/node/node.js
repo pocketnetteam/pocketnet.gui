@@ -298,6 +298,7 @@ var Node = function(options, manager){
 
             return self.rpc[method](parsed).catch(e => {
 
+
                 if (rpcerrorsignore[method] && e.code && _.indexOf(rpcerrorsignore[method].codes, e.code) > -1){
                     return Promise.resolve({
                         result : rpcerrorsignore[method].data()
@@ -605,6 +606,7 @@ var Node = function(options, manager){
         calcAvailability : function(s){
 
             if(!s.count) return 0.01
+            if(!wssconnected) return 0.01
 
             var time = s.time;
             var rate = (s.rate || 0) + 1

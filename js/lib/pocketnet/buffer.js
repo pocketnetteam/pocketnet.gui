@@ -19,6 +19,8 @@
   // See: https://en.wikipedia.org/wiki/Base64#URL_applications
   revLookup['-'.charCodeAt(0)] = 62
   revLookup['_'.charCodeAt(0)] = 63
+
+  
   
   function getLens (b64) {
     var len = b64.length

@@ -1,6 +1,7 @@
 
 var _ = require('lodash')
 var fs = require('fs');
+const fsPromises = require('fs/promises');
 var path = require('path');
 
 const { performance } = require('perf_hooks');
@@ -17,6 +18,7 @@ var WSS = require('./server/wss.js');
 var Firebase = require('./server/firebase.js');
 var NodeControl = require('./node/control.js');
 var NodeManager = require('./node/manager.js');
+var TorControl = require('./node/tor-control.js');
 var Pocketnet = require('./pocketnet.js');
 var Wallet = require('./wallet/wallet.js');
 var Remote = require('./remotelight.js');
@@ -25,6 +27,11 @@ var Exchanges = require('./exchanges.js');
 var Peertube = require('./peertube/index.js');
 var Bots = require('./bots.js');
 var SystemNotify = require('./systemnotify.js');
+var Transports = require("./transports")
+var Applications = require('./node/applications');
+const Path = require("path");
+const child_process = require("child_process");
+const {unlink} = require("nedb/browser-version/browser-specific/lib/storage");
 
 process.setMaxListeners(0);
 require('events').EventEmitter.defaultMaxListeners = 0
@@ -37,7 +44,6 @@ if (process.platform === 'win32') expectedExitCodes = [3221225477];
 console.log('expectedExitCodes' , expectedExitCodes)*/
 
 var Proxy = function (settings, manage, test, logger, reverseproxy) {
-
 	var self = this;
 
 		self.test = test
@@ -46,16 +52,20 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 	var server = new Server(settings.server, settings.admins, manage);
 	var wss = new WSS(settings.admins, manage);
 	var pocketnet = new Pocketnet();
-	var nodeControl = new NodeControl(settings.node);
+	var nodeControl = new NodeControl(settings.node, self);
 	var nodeManager = new NodeManager(settings.nodes);
 	var firebase = new Firebase(settings.firebase);
 	var wallet = new Wallet(settings.wallet);
 	var remote = new Remote();
 	var proxies = new Proxies(settings.proxies)
 	var exchanges = new Exchanges()
-	var peertube = new Peertube()
+	var peertube = new Peertube(self)
 	var bots = new Bots(settings.bots)
 	var systemnotify = new SystemNotify(settings.systemnotify)
+
+	var torapplications = new TorControl(settings.tor, self)
+
+	var transports = new Transports(global.USE_PROXY_NODE);
 
 	var dump = {}
 
@@ -65,6 +75,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 	logger.setapp(self)
 
 	f.mix({
+		transports, torapplications,
 		wss, server, pocketnet, nodeControl,
 		remote, firebase, nodeManager, wallet,
 		proxies, exchanges, peertube, bots,
@@ -72,7 +83,6 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 		logger,
 		proxy: self
 	})
-
 
 	var stats = [];
 	var statcount = 100;
@@ -527,6 +537,73 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 
 	}
+
+	self.torapplications = {
+		init: function () {
+			if(!global.USE_PROXY_NODE) {
+				console.log('!global.USE_PROXY_NODE')
+				return Promise.resolve()
+			}
+
+			return torapplications.application.init().then(async r => {
+				return await torapplications.init();
+			})
+		},
+
+		start: async ()=>{
+			if(!global.USE_PROXY_NODE) {
+				console.log('!global.USE_PROXY_NODE')
+				return Promise.resolve()
+			}
+
+			await torapplications.start();
+		},
+
+		info: (compact)=>{
+			return torapplications.info(compact);
+		},
+
+		stop: async ()=>{
+			if(!global.USE_PROXY_NODE) {
+				console.log('!global.USE_PROXY_NODE')
+				return Promise.resolve()
+			}
+
+			await torapplications.stop();
+		},
+
+		statusListener: async (callBack)=>{
+			if(!global.USE_PROXY_NODE) {
+				callBack?.('stopped')
+			}else {
+				torapplications.statusListener(callBack)
+			}
+		},
+
+		destroy: async ()=>{
+			await torapplications.destroy();
+		},
+	}
+
+	const axiosTransport = (...args) => transports.axios(...args);
+	axiosTransport.get = (...args) => transports.axios.get(...args);
+	axiosTransport.post = (...args) => transports.axios.post(...args);
+	axiosTransport.put = (...args) => transports.axios.put(...args);
+	axiosTransport.delete = (...args) => transports.axios.delete(...args);
+	axiosTransport.patch = (...args) => transports.axios.patch(...args);
+
+	self.transports = {
+		fetch: async (url, opts)=>{
+			return transports.fetch(url, opts)
+		},
+
+		axios: axiosTransport,
+
+		request: (option, callback)=>{
+			return transports.request(option, callback)
+		}
+	}
+
 	///
 	self.nodeManager = {
 		init: function () {
@@ -613,8 +690,8 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 			var ins = {
 				1: [
-				  { host: 'pocketnetpeertube1.nohost.me', ip: '109.226.245.120'},
-				{ host: 'pocketnetpeertube2.nohost.me', ip: '94.73.223.24' },
+				  	{ host: 'pocketnetpeertube1.nohost.me', cantuploading: true, ip: '109.226.245.120'},
+					{ host: 'pocketnetpeertube2.nohost.me', cantuploading: true, ip: '94.73.223.24'},
 				],
 				5: [
 				  {
@@ -772,6 +849,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					{
 						host : 'peertube17.pocketnet.app',
 						ip: '51.250.104.218',
+						cantuploading: true
 					}
 				],
 
@@ -779,6 +857,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					{
 						host : 'peertube18.pocketnet.app',
 						ip: '51.250.41.252',
+						cantuploading: true
 					}
 				],
 
@@ -786,6 +865,28 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					{
 						host : 'peertube19.pocketnet.app',
 						ip: '51.250.73.97',
+						cantuploading: true
+					}
+				],
+
+				23: [
+					{
+						host : 'peertube17mirror.pocketnet.app',
+						ip: '64.235.40.47',
+					}
+				],
+
+				24: [
+					{
+						host : 'peertube18mirror.pocketnet.app',
+						ip: '64.235.42.75 ',
+					}
+				],
+
+				25: [
+					{
+						host : 'peertube19mirror.pocketnet.app',
+						ip: '64.235.50.17',
 					}
 				],
       		};
@@ -802,7 +903,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					if(!p.old){
 						trustpeertube.push(p.host)
 					}
-				})	
+				})
 			})
 
 			return peertube.init({
@@ -875,6 +976,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				remote: remote.info(compact),
 				admins: settings.admins,
 				peertube : self.peertube.info(compact),
+				tor: self.torapplications.info(compact),
 				captcha: {
 					ip: _.toArray(captchaip).length,
 					all: _.toArray(captchas).length
@@ -929,7 +1031,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 			status = 1
 
-			return this.initlist(['server', 'wss', 'nodeManager', 'wallet', 'firebase', 'nodeControl', 'exchanges', 'peertube', 'bots']).then(r => {
+			return this.initlist(['server', 'wss', 'nodeManager', 'wallet', 'firebase', 'nodeControl', 'torapplications', 'exchanges', 'peertube', 'bots']).then(r => {
 
 				status = 2
 
@@ -975,7 +1077,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				}
 			}
 
-			var promises = _.map(['server', 'wss', 'nodeManager', 'wallet', 'firebase', 'nodeControl', 'exchanges', 'peertube', 'bots'], (i) => {
+			var promises = _.map(['server', 'wss', 'nodeManager', 'wallet', 'firebase', 'nodeControl', 'torapplications', 'exchanges', 'peertube', 'bots'], (i) => {
 				return self[i].destroy().catch(catchError(i)).then(() => {
 					return Promise.resolve()
 				})
@@ -1042,6 +1144,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 		return result
 	}
 
+
 	self.rpcscenarios = {
 		'gethierarchicalstrip' : function({ method, parameters, options, U }){
 			var rpc = self.api.node.rpc.action
@@ -1053,13 +1156,17 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 			var result = null
 
-			
+
 
 			return rpc({ method, parameters, options, U }).then(r => {
 
 				var posts = r.data.contents || []
 
 					result = r
+
+				posts = _.filter(posts, p => {
+					return p
+				})
 
 				var withvideos = _.filter(posts, p => {
 					return p.type == 'video' && p.u
@@ -1079,7 +1186,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					users = _.map(posts, function(p){
 						return f.deep(p, 'lastComment.address')
 					})
-	
+
 					users = _.filter(users, u => {return u && !_.find(posts, function(p){
 						return p.address == u
 					})})
@@ -1101,9 +1208,9 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 						parameters : [users, '1'],
 						options, U
 					}).then(users => {
-	
+
 						result.data.users = users.data
-	
+
 						return Promise.resolve()
 					})
 				}
@@ -1125,7 +1232,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					})
 				}
 
-					
+
 
 				users = null
 				videos = null
@@ -1221,7 +1328,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 						if (options.locally && options.meta) {
 							node = nodeManager.temp(options.meta);
 						}
-						
+
 						if (!node && options.node) {
 							node = nodeManager.nodesmap[options.node];
 
@@ -1864,6 +1971,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				path: '/ping',
 				action: function () {
 					var node = nodeManager.bestnode
+					var height = nodeManager.bestnodeheight
 
 					/*if (nodeManager.bestnodes.length){
 						node = nodeManager.bestnodes[f.rand(0, nodeManager.bestnodes.length - 1)]
@@ -1873,8 +1981,9 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 						data: {
 							time: f.now(),
 							session : self.session,
-							v : '0807',
-							node : node || ''
+							v : '0808',
+							node : node || '',
+							height : height || 0
 						},
 					});
 				},

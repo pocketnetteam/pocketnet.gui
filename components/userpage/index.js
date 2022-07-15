@@ -755,8 +755,7 @@ var userpage = (function(){
 							})
 						})
 
-						if (hcready)
-							el.contents.hcSticky('refresh');
+	
 	
 						if (clbk)
 							clbk();
@@ -953,8 +952,6 @@ var userpage = (function(){
 					if (renders[report.report]){
 						renders[report.report](_p.el.find('.reportCnt'), _clbk)
 
-						if (hcready)
-							el.contents.hcSticky('refresh');
 					}
 					else{
 						self.nav.api.load({
@@ -975,8 +972,6 @@ var userpage = (function(){
 	
 								_clbk(e, p)
 
-								if (hcready)
-									el.contents.hcSticky('refresh');
 								
 							}
 	
@@ -1085,13 +1080,7 @@ var userpage = (function(){
 
 			if(primary && !self.app.mobileview){
 
-				el.contents.hcSticky({
-					stickTo: '#userpagestick',
-					top : 77,
-					bottom : 177
-				});
-
-				hcready = true
+			
 
 			}
 

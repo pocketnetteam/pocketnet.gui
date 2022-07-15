@@ -1,8 +1,8 @@
 {
     "name": "pocketnet",
-    "version": "0.7.41",
-    "cordovaversion": "1.7.41",
-    "cordovaversioncode": "170410",
+    "version": "0.8.3",
+    "cordovaversion": "1.8.3",
+    "cordovaversioncode": "180030",
     "description": "Bastyon desktop application",
     "author": "Pocketnet Community <support@pocketnet.app>",
     "company": "Pocketnet Community",
@@ -13,9 +13,11 @@
         "start": "electron . --development",
         "start:test": "electron . --development --test",
         "pack": "electron-builder -w --dir --x64",
-        "dist": "electron-builder -w --x64 --ia32",
-        "distl": "electron-builder -l --x64",
-        "distm": "electron-builder -m --x64",
+        "build": "npm run dev:bastyon",
+        "dist": "electron-builder -w --x64 --ia32 -p never",
+        "distl": "electron-builder -l --x64 -p never",
+        "distm": "electron-builder -m --x64 -p never",
+        "dist:arm64": "electron-builder -m --arm64",
         "publish": "build --win --x64 --ia32 -p always",
         "minimize": "node minimize.js -prodaction=true -vendor=30045 -path=/",
         "minimize:test": "node minimize.js -prodaction=true -vendor=30045 -test=true -path=/",
@@ -29,9 +31,14 @@
         "node:embedding": "node minimize.js -prodaction=true -vendor=30045 -path=/web/"
     },
     "devDependencies": {
+        "@babel/cli": "^7.17.6",
+        "@babel/core": "^7.17.9",
+        "@babel/preset-env": "^7.16.11",
+        "babel-plugin-remove-use-strict": "^1.0.1",
         "electron": "",
-        "electron-builder": "",
+        "electron-builder": "^23.0.4",
         "electron-notarize": "",
+        "electron-builder-notarize": "^1.5.0",
         "electron-reload": "",
         "electron-reloader": "",
         "humanize": "0.0.9"
@@ -40,6 +47,7 @@
         "aes-js": "^3.1.2",
         "async-each": "^1.0.3",
         "auto-launch": "^5.0.5",
+        "base58-js": "^1.0.0",
         "body-parser": "^1.19.0",
         "check-disk-space": "^3.3.0",
         "clone-deep": "^4.0.1",
@@ -56,18 +64,19 @@
         "express": "^4.17.1",
         "express-useragent": "^1.0.15",
         "express-ws": "^4.0.0",
-        "ffbinaries": "^1.1.4",
-        "ffmpeg": "^0.0.4",
-        "ffmpeg-static": "^4.4.0",
+        "ffbinaries": "file:ffbinary-node.tgz",
         "filestorage": "^1.7.1",
         "firebase-admin": "^9.3.0",
         "fluent-ffmpeg": "^2.1.2",
+        "free-proxy": "^0.2.0",
+        "get-free-https-proxy": "^2.0.2",
         "github-download": "^0.5.0",
         "hash-files": "^1.1.1",
         "iconv-lite": "",
         "image-js": "^0.21.9",
         "image-type": "^4.1.0",
         "imagesloaded": "^4.1.4",
+        "install": "^0.13.0",
         "isotope-layout": "^3.0.6",
         "isotope-packery": "^2.0.1",
         "jdenticon": "^2.1.0",
@@ -78,6 +87,7 @@
         "jsonwebtoken": "^8.5.1",
         "lambda-rate-limiter": "",
         "lodash": "^4.17.15",
+        "make-fetch-happen": "^10.1.2",
         "masonry-layout": "^4.2.2",
         "md5": "^2.3.0",
         "medium-editor": "^5.23.3",
@@ -86,12 +96,13 @@
         "nedb": "^1.8.0",
         "node-autodetect-utf8-cp1251-cp866": "",
         "node-cmd": "^3.0.0",
-        "node-fetch": "",
+        "node-fetch": "^2.6.7",
         "node-iplocate": "^1.0.2",
         "node-notifier": "^10.0.1",
         "node-rsa": "^1.1.1",
         "nodejs-base64": "^1.0.3",
         "nodemailer": "^6.4.11",
+        "npm": "^8.7.0",
         "object-hash": "^2.0.3",
         "og-parser": "^1.0.5",
         "open": "^6.3.0",
@@ -106,6 +117,7 @@
         "save": "^2.4.0",
         "sha1": "^1.1.1",
         "sha2": "^1.0.2",
+        "socks-proxy-agent": "^6.2.0",
         "sortablejs": "^1.8.3",
         "standard": "^11.0.1",
         "svg-captcha": "^1.4.0",
@@ -121,7 +133,7 @@
     },
     "build": {
         "productName": "Bastyon",
-        "afterSign": "build/notarize.js",
+        "afterSign": "electron-builder-notarize",
         "appId": "app.pocketnet.gui",
         "files": [
             "**/*",
@@ -142,18 +154,18 @@
                 ]
             },
             {
+                "from": "proxy16/tor",
+                "to": "tor",
+                "filter": [
+                    "**/*"
+                ]
+            },
+            {
                 "from": "proxy16/static",
                 "to": "static",
                 "filter": [
                     "**/"
                 ]
-            }
-        ],
-        "publish": [
-            {
-                "provider": "github",
-                "owner": "pocketnetapp",
-                "repo": "pocketnet.gui"
             }
         ],
         "protocols": {
@@ -167,8 +179,9 @@
             "target": "dmg",
             "artifactName": "${productName}Setup.${ext}",
             "icon": "res/electron/icons/mac/icon.icns",
-            "entitlements": "build/entitlements.mac.plist",
-            "extendInfo": "bastyon"
+            "extendInfo": "bastyon",
+            "hardenedRuntime": true,
+            "entitlements": "./node_modules/electron-builder-notarize/entitlements.mac.inherit.plist"
         },
         "linux": {
             "target": [
@@ -179,10 +192,13 @@
                     "target": "deb"
                 }
             ],
-            "artifactName": "${productName}_${platform}_${arch}.${ext}",
+            "artifactName": "${productName}Setup.${ext}",
             "category": "Network",
             "executableName": "bastyon",
             "description": "Bastyon Desktop Browser"
+        },
+        "appImage": {
+            "artifactName": "${productName}.${ext}"
         },
         "win": {
             "target": [
@@ -236,13 +252,6 @@
                 "filter": [
                     "**/"
                 ]
-            }
-        ],
-        "publish": [
-            {
-                "provider": "github",
-                "owner": "pocketnetapp",
-                "repo": "pocketnet.gui"
             }
         ],
         "protocols": {

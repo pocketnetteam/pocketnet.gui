@@ -162,12 +162,17 @@
     .barWrapper {
         min-width: 50px;
         width: 100%;
-    }
+    }   
 
-    .upload-progress-bar {
+    .upload-progress-bar-wrapper{
         height: 3px;
         width: 100%;
-
+        background-color: rgb(var(--neutral-grad-1));
+    }
+    .upload-progress-bar {
+        
+        height: 100%;
+        width: 100%;    
         transition: width 0.3s linear;
 
         &.processing {
@@ -340,6 +345,39 @@
 
     .upload-input {
         border-color: rgb(var(--color-txt-orange));
+    }
+    .upload-progress-container{
+        display: none;
+    }
+
+    &.processing{
+        .cancelButton{
+            display: block;
+        }
+
+        .upload-progress-container{
+            display: flex;
+        }
+
+        .uploadButton{
+            display: none;
+        }
+
+        .upload-field-container{
+            display: none;
+        }
+
+        .upload-progress-container{
+            display: flex;
+        }
+
+      
+    }
+
+    &.wasprocessing{
+        .challengeoffer{
+            display: none;
+        }
     }
 
     .sectionsWrapper {
@@ -551,6 +589,7 @@
         .hideButton {
             display: none!important;
         }
+
         .wndinner {
             max-width: 650px;
             max-height: 485px;
@@ -560,11 +599,7 @@
             }
         }
     }
-
-    .changeButton{
-        color : @color-main!important;
-    }
-
+   
     .wndcontent {
         height: 100%;
     }
@@ -575,10 +610,18 @@
         width: 100%;
         height: 100%;
 
-        max-width: 250px;
+        max-width: none;
 
         .wndcontent {
             padding: 0 20px;
+        }
+    }
+
+    #uploadpeertube{
+        &.processing{
+            .upload-header-wrapper{
+                display: none!important;
+            }
         }
     }
 }
@@ -612,7 +655,7 @@ html.mobileview{
         }
     }
 
-    .wnd.uploadpeertube {
+    .wnd.uploadpeertube:not(.hiddenState) {
         &.witherror{
             .wndinner {
                 #uploadpeertube{

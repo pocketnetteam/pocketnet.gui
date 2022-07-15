@@ -322,11 +322,31 @@
 #comments .list .comment.newcomments {
   color: rgb(var(--color-txt-ac-1));
 }
+#comments .list .comment.hiddenBlockedUserComment > .commentPaddingWrapper > .commentWrapper > .iconWrapper,
+#comments .list .comment.hiddenBlockedUserComment > .commentPaddingWrapper > .commentWrapper > .commentBody > .metatable,
+#comments .list .comment.hiddenBlockedUserComment > .commentPaddingWrapper > .commentWrapper > .commentBody >.answers,
+#comments .list .comment.hiddenBlockedUserComment > .commentPaddingWrapper > .commentWrapper > .commentBody > .cbodyWrapper .commentmessage,
+#comments .list .comment.hiddenBlockedUserComment > .commentPaddingWrapper > .commentWrapper > .commentBody > .cbodyWrapper .commentpanel {
+  display: none;
+}
+#comments .list .comment.hiddenBlockedUserComment > .commentPaddingWrapper > .commentWrapper > .commentBody {
+  margin-left: 45px;
+}
+#comments .list .comment.hiddenBlockedUserComment > .commentPaddingWrapper > .commentWrapper > .commentBody > .cbodyWrapper {
+  padding-top: 1em;
+}
+#comments .list .comment.hiddenBlockedUserComment .showBlockedUserComment {
+  display: block;
+}
+#comments .list .comment .showBlockedUserComment {
+  display: none;
+}
 #comments .list .comment.hiddenComment .commentimages,
 #comments .list .comment.hiddenComment .commentmessage {
   display: none;
 }
-#comments .list .comment.hiddenComment .hiddenCommentLabel {
+#comments .list .comment.hiddenComment .hiddenCommentLabel,
+#comments .list .comment.hiddenBlockedUserComment .hiddenCommentLabel{
   display: block;
   color: rgb(var(--neutral-grad-2));
 }
@@ -443,6 +463,7 @@
 #comments .list .commentWrapper > div .commentmessage {
   padding-top: 0.5em;
   word-wrap: break-word;
+  word-break: break-word;
 }
 #comments .list .commentWrapper > div .commentmessage a {
   color: rgb(var(--color-txt-ac));
@@ -1221,6 +1242,9 @@ html.mobile #comments .embedimages {
 html.tablet #comments .list .metatable > div.panelWrapper .panel,
 html.mobile #comments .list .metatable > div.panelWrapper .panel {
   opacity: 1;
+}
+html.mobileview #comments .emojionearea-editor {
+  max-height: 100px;
 }
 /*t*/
 @media only screen and (max-width: 768px) {

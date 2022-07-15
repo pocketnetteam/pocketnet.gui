@@ -807,6 +807,8 @@ ____loclib.noDownloadedVideos = "No hay vídeos descargados";
 ____loclib.buy = 'Comprar';
 
 // Uploadpeertube component
+____loclib.settingsTranscoding = "Al subir el video lo transcodifico en mi dispositivo"
+____loclib.videoTranscodingNotOptimal = "El resultado del procesador no es óptimo. Continuando con el video original"
 ____loclib.videoTranscodingError = "Se ha producido un error al procesar su vídeo"
 ____loclib.videoUploadingFinish = "Terminando de subir el archivo..."
 ____loclib.uploadNewVideo = "Subir un nuevo Pocketvídeo"
@@ -814,5 +816,18 @@ ____loclib.selectVideoFile = "Seleccione el archivo de vídeo"
 ____loclib.uploadVideoProgress_binaries = "Preparando las bibliotecas:"
 ____loclib.uploadVideoProgress_processing = "Procesando el video:"
 ____loclib.uploadVideoProgress_uploading = "Cargando el video:"
+____loclib.uploadCanceled = "Carga cancelada"
+
+____loclib.pleaseTryAgain = "Algo está incorrecto. Por favor, inténtelo de nuevo"
 
 ____loclib.buy = 'Comprar';
+
+____loclib.usetor = "Conexión a través de la red Tor"
+
+____loclib.lowstar1 = "El equipo de Bastyon está implementando una moratoria temporal en las calificaciones de 1 y 2 estrellas, excepto el contenido prohibido. El contenido prohibido es:"
+____loclib.lowstar_reason_1 = "Porno"
+____loclib.lowstar_reason_2 = "Explotación de menores"
+____loclib.lowstar_reason_3 = "Amenaza directa de violencia"
+____loclib.lowstar_reason_4 = "Drogas ilegales"
+____loclib.lowstar2 = "Por favor, no use calificaciones de 1 y 2 estrellas por otras razones. Después de que se publique la nueva moderación a mediados. Puede que pueda usar calificaciones bajas por otras razones"
+____loclib.lowstaragree = "Confirmo que esta publicación contiene uno de los cuatro tipos de contenido prohibido"

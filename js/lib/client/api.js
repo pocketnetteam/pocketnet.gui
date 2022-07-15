@@ -1,7 +1,10 @@
 var electron = null
 
+let apiFetch = (...args) => fetch(...args);
+
 if (typeof _Electron != 'undefined') {
     electron = require('electron');
+    apiFetch = (...args) => proxyFetch(...args);
 }
 
 var rand = function(min, max){
@@ -145,7 +148,7 @@ var ProxyRequest = function(app = {}, proxy){
             if (app.user && (app.user.getstate && app.user.getstate() == 1)){ data.state = 1 }
         }
 
-        return fetch(url, {
+        return apiFetch(url, {
 
             method: p.method || 'POST',
             mode: 'cors', 
@@ -248,6 +251,7 @@ var Proxy16 = function(meta, app, api){
 
     self.id = self.host + ":" + self.port + ":" + self.wss
     self.enabled = true
+    self.currentBlock = 0
 
     nodes = []
 
@@ -365,6 +369,10 @@ var Proxy16 = function(meta, app, api){
                 self.ping = rdate.addSeconds(60)
                 self.successping = true
                 self.session = r.session
+
+                if (r.height && self.currentBlock < r.height){
+                    self.currentBlock = r.height
+                }       
 
                 if(!self.current && r.node && !api.get.fixednode()){
                     self.current = {
@@ -653,7 +661,17 @@ var Api = function(app){
         return proxy ? Promise.resolve(proxy) : Promise.reject('proxy')
     }
 
-    
+    self.getCurrentBlock = function(){
+        var b = 0
+
+        _.each(proxies, (p) => {
+            if(p.currentBlock || 0 > b){
+                b = p.currentBlock || 0
+            }
+        })
+
+        return b
+    }
 
     self.addproxy = function(meta){
         var lsproxies = JSON.parse(localStorage['listofproxies'] || "[]")
@@ -855,7 +873,7 @@ var Api = function(app){
                     return Promise.all(promises)
                 },
 
-                softping : async function (proxies){
+                softping : function (proxies){
 
                     var result = false
 

@@ -633,9 +633,9 @@ var comments = (function(){
 
 						else
 						{
-							actions.tocomment(reply.answerid)
+							actions.tocomment(reply.parentid || reply.answerid)
 
-							var cel = el.c.find("#" + reply.answerid)
+							var cel = el.c.find("#" + (reply.parentid || reply.answerid))
 
 							cel.addClass('newcommentsn')
 
@@ -1047,11 +1047,12 @@ var comments = (function(){
 			},
 			scrollToComment : function(el) {
 
-				if(ed.openapi) return
+				if (ed.openapi) return
+
 
 				if (el && el.length > 0 && el[0].scrollIntoView && isMobile()) {
 
-					if(el.closest('.fullScreenVideo').length > 0) return
+					//if(el.closest('.fullScreenVideo').length > 0) return
 
 					_scrollTo(el, _in, 0)
 				}
@@ -1214,6 +1215,15 @@ var comments = (function(){
 				parent.removeClass('hiddenComment')
 			},
 
+			showBlockedUserComment: function(){
+
+				var _el = $(this)
+
+				var parent = _el.closest('.comment');
+
+				parent.removeClass('hiddenBlockedUserComment')
+			},
+
 			openGallery : function(){
 
 				var _el = $(this)
@@ -1340,13 +1350,32 @@ var comments = (function(){
                                 }
 								else
 								{
-									parent.remove()
+									parent.addClass('hiddenBlockedUserComment');
+									var hiddenCommentLabel = $('<div></div>').html(self.app.localization.e('blockedbymeHiddenCommentLabel')).addClass('hiddenCommentLabel')
+									var ghostButton = $('<div></div>').append($('<button></button>').html(self.app.localization.e('showhiddenComment')).addClass('ghost showBlockedUserComment'))
+									var commentContentTable = localParent.find('.cbodyWrapper > .commentcontenttable')
+									commentContentTable.append(hiddenCommentLabel)
+									commentContentTable.append(ghostButton)
 								}
 
-								close()
                             })
+								close()
 
 							
+						})
+						
+						__el.find('.unblock').on('click', function(){
+							self.app.mobile.vibration.small()
+							self.app.platform.api.actions.unblocking(d.caddress, function(tx, error){
+								if(!tx){
+									self.app.platform.errorHandler(error, true)
+								} else {
+									localParent.find('.cbodyWrapper > .commentcontenttable div:not(.commentmessage)').remove()
+									parent.removeClass('hiddenBlockedUserComment')
+								}
+							})
+
+							close()
 						})
 
 						__el.find('.remove').on('click', function(){
@@ -1502,7 +1531,12 @@ var comments = (function(){
 
 					focus : function() {
 						// Scroll comment section to top of the screen
-						actions.scrollToComment(_p.el);
+
+						if(!isios())
+							actions.scrollToComment(_p.el);
+					},
+
+					blur : function(){
 					},
 
 					onLoad : function(c, d){
@@ -2235,6 +2269,8 @@ var comments = (function(){
 
 					}, function(_p){
 
+						if(!_p.el) return
+
 						if(!preview)
 							p.el.removeClass('listloading')
 
@@ -2768,6 +2804,9 @@ var comments = (function(){
 
 				_in = el.c.closest('.wndcontent');
 
+				if(!_in.length) {
+					_in = el.c.closest('.fullScreenVideo .sharecnt');
+				}
 
 				el.list.on('click', '.reply', events.reply);
 				el.list.on('click', '.replies', events.replies);
@@ -2775,6 +2814,7 @@ var comments = (function(){
 				el.list.on('click', '.tocomment', events.tocomment)
 				el.list.on('click', '.imageCommentOpen', events.openGallery)
 				el.list.on('click', '.hiddenCommentLabel', events.showHiddenComment)
+				el.list.on('click', '.showBlockedUserComment', events.showBlockedUserComment)
 				el.list.on('click', '[profile]', events.showprofile)
 
 				if(!_in.length) {

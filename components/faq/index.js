@@ -153,11 +153,6 @@ var faq = (function(){
 			
 	
 
-			el.c.find('.contens').hcSticky({
-				stickTo: '#faq',
-				top : 65
-			});
-
 		}
 
 		return {

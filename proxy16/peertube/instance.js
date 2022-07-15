@@ -1,9 +1,7 @@
 const { performance } = require('perf_hooks');
-const axios = require('axios');
 var _ = require('underscore');
 var f = require('../functions');
 var Statistic = require('../lib/statistic');
-
 var instance = function (host, ip, Roy) {
 	var self = this;
 
@@ -17,7 +15,7 @@ var instance = function (host, ip, Roy) {
 	const FREE_SPACE_PERC = 0.95;
 
 	var lastStat = null;
-	
+
 	var k = 1000;
 
 	var info = []
@@ -41,7 +39,7 @@ var instance = function (host, ip, Roy) {
 		}
 	}
 
-	
+
 	var clearinfointerval = function(){
 		if (infointerval){
 			clearInterval(infointerval)
@@ -117,7 +115,7 @@ var instance = function (host, ip, Roy) {
 		if (info.length) {
 			v = info[info.length - 1]
 			////
-			
+
 			var { free, size } = v.space;
             var occupiedPerc = (size - free) / size;
 
@@ -144,15 +142,14 @@ var instance = function (host, ip, Roy) {
 		if (typeof url == 'function') url = url(data);
 
 		var timeout = p.timeout || Roy.parent.timeout() || 10000
-
-		return axios[p.type || 'get'](`http://${host}${url}`, { timeout }).then((result) => {
+		return Roy.parent.transports.axios[p.type || 'get'](`http://${host}${url}`, { timeout }).then((result) => {
 
 			var meta = {
 				code : 200,
 				difference : performance.now() - responseTime,
 				method : method
 			}
-		
+
 			statistic.add(meta);
 
 			return Promise.resolve({
@@ -163,8 +160,6 @@ var instance = function (host, ip, Roy) {
 
 		}).catch((error) => {
 
-			//console.log('error', `http://${host}${url}`, url, ((error || {}).response || {}).status || 500)
-
 			var meta = {
 				code : ((error || {}).response || {}).status || 500,
 				difference : performance.now() - responseTime,
@@ -172,7 +167,7 @@ var instance = function (host, ip, Roy) {
 			}
 
 			if (meta.code == 500) statistic.penalty.set(0.9, 30000, 500)
-		
+
 			statistic.add(meta);
 
 			return Promise.reject((error || {}).response || {});
@@ -192,9 +187,9 @@ var instance = function (host, ip, Roy) {
 			penalty : statistic.penalty.get(),
 			info : self.info(),
 			availability : statistic.get.availability()
-		} 
+		}
 
-		
+
 	};
 
 	self.canuse = function () {

@@ -130,7 +130,8 @@
 #categories .cat .cattable > div.catvalue {
   /*.transition(0.3s);*/
   cursor: pointer;
-  width: 80%;
+  width: 85%;
+  overflow: hidden;
 }
 #categories .cat .cattable > div.catedit,
 #categories .cat .cattable > div.catcheck {
@@ -151,8 +152,7 @@
 }
 #categories .cat .cattable > div.times {
   display: none;
-  font-size: 0.8;
-  color: rgb(var(--color-bad));
+  color: rgb(var(--color-txt-gray));
   justify-content: flex-end;
   cursor: pointer;
   align-items: center;
@@ -177,30 +177,6 @@
 }
 #categories .cat .cattable > div.checked {
   display: none;
-}
-@media (pointer: fine) {
-  #categories .cat .cattable > div.catvalue:hover {
-    color: rgb(var(--color-txt-ac));
-  }
-  #categories .cat .cattable > div.catedit:hover,
-  #categories .cat .cattable > div.catcheck:hover {
-    color: rgb(var(--color-txt-ac));
-  }
-  #categories .cat .cattable > div.catedit:hover {
-    opacity: 1;
-  }
-  #categories .cat:hover .cattable > div.catedit,
-  #categories .cat:hover .cattable > div.catcheck {
-    opacity: 1;
-  }
-  #categories .cat:hover .cattable > div.catedit,
-  #categories .cat:hover .cattable > div.minus {
-    opacity: 0.5;
-  }
-  #categories .cat:hover .cattable > div.catedit:hover,
-  #categories .cat:hover .cattable > div.minus:hover {
-    opacity: 1;
-  }
 }
 #categories .tg {
   border-radius: 12px;
@@ -231,8 +207,39 @@
 #categories .tg.selected .cat .minus {
   display: none;
 }
-#categories .tg.selected .cat:hover .times {
+#categories .tg.selected .cat .times {
   display: flex;
+}
+@media (pointer: fine) {
+  #categories .tg .cat .cattable > div.catvalue:hover {
+    color: rgb(var(--color-txt-ac));
+  }
+  #categories .tg .cat .cattable > div.catedit:hover,
+  #categories .tg .cat .cattable > div.catcheck:hover {
+    color: rgb(var(--color-txt-ac));
+  }
+  #categories .tg .cat .cattable > div.catedit:hover {
+    opacity: 1;
+  }
+  #categories .tg .cat .cattable > div.times {
+    display: none;
+  }
+  #categories .tg .cat:hover .cattable > div.catedit,
+  #categories .tg .cat:hover .cattable > div.catcheck {
+    opacity: 1;
+  }
+  #categories .tg .cat:hover .cattable > div.catedit,
+  #categories .tg .cat:hover .cattable > div.minus {
+    opacity: 0.5;
+  }
+  #categories .tg .cat:hover .cattable > div.catedit:hover,
+  #categories .tg .cat:hover .cattable > div.minus:hover {
+    opacity: 1;
+  }
+  #categories .tg.selected .cat:hover .times {
+    display: flex;
+    color: rgb(var(--color-bad));
+  }
 }
 #categories .ta .tg {
   display: block;
@@ -330,7 +337,7 @@
   border: 0;
   box-shadow: 0 5px 10px -5px rgba(var(--color-shadow-base), 0.4);
 }
-@media only screen and (max-width: 768px) {
+@media (pointer: coarse) {
   #categories .tcaptiontable .buttons {
     display: block;
     overflow: hidden;
@@ -344,9 +351,6 @@
   #categories .tcaptiontable .buttons > div.addcategory i {
     display: inline;
   }
-  #categories .tcaptiontable .buttons > div.addcategory .text {
-    display: inline;
-  }
   #categories .tcaptiontable .buttons > div.simple {
     display: none;
   }
@@ -356,9 +360,6 @@
   }
   #categories .clearcategories.button.showed {
     opacity: 1;
-  }
-  #categories .cat .cattable > div.catvalue .catname {
-    font-size: 1em;
   }
   #categories .cat .cattable .catedit,
   #categories .cat .cattable .minus {
@@ -376,5 +377,13 @@
   #categories .tg {
     margin-top: 0.5em;
     margin-bottom: 0.5em;
+  }
+}
+@media only screen and (max-width: 768px) {
+  #categories .tcaptiontable .buttons > div.addcategory .text {
+    display: inline;
+  }
+  #categories .cat .cattable > div.catvalue .catname {
+    font-size: 1em;
   }
 }

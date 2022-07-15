@@ -1351,3 +1351,11 @@ ____loclib.ContentCreatorsOpen2 = 'Site internet officiel';
 ____loclib.ContentCreatorsOpen3 = 'Code Source';
 ____loclib.ContentCreatorsOpen4 = 'Contactez-nous';
 ____loclib.ContentCreatorsOpen5 = "Envoyez-nous un message si vous avez besoin d’aide ou si vous êtes un créateur de contenu, blogueur, influenceur et que vous souhaitez débloquer votre bonus et vérifier votre profil!";
+
+____loclib.lowstar1 = "L'équipe Bastyon met en place un moratoire temporaire sur les classifications 1 et 2 étoiles, à l'exception du contenu interdit. Le contenu interdit est :"
+____loclib.lowstar_reason_1 = "Porno"
+____loclib.lowstar_reason_2 = "L'exploitation des enfants"
+____loclib.lowstar_reason_3 = "Menace directe de violence"
+____loclib.lowstar_reason_4 = "Drogues illégales"
+____loclib.lowstar2 = "Veuillez ne pas utiliser les classements 1 et 2 étoiles pour d'autres raisons. Après la publication de la nouvelle modération à la mi-journée, vous pourrez utiliser les classements bas pour d'autres raisons"
+____loclib.lowstaragree = "Je confirme que ce message contient l'un des quatre types de contenu interdit"

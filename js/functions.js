@@ -1,4 +1,3 @@
-//window.onanimationiteration = console.log;
 
 /* PDF */
 
@@ -26,7 +25,7 @@
 
 
 /* DATE */
-	
+
 
  	secInTime = function(sec){
 
@@ -510,14 +509,25 @@
 			/*wnd.css('top', app.lastScrollTop)*/
 		}
 
+		var templates = {
+			statebuttons : function(){
+				return '<div class="changeStateButtons"><div class="hideButton changeButton roundclosebutton"><i class="fas fa-minus"></i></div><div class="closeButton changeButton roundclosebutton"><i class="fas fa-times"></i></div><div class="changeButton expandButton"><i class="fas fa-expand-arrows-alt"></i></div></div>'
+			},
+
+			pipbuttons : function(){
+				return '<div class="_expand roundclosebutton"><i class="fas fa-expand"></i></div><div class="_changeplace roundclosebutton"><i class="fas fa-angle-down"></i></div>'
+			},
+
+			roundclose : function(){
+				return '<div class="_close roundclosebutton"><i class="fa fa-times" aria-hidden="true"></i></div><div class="closeline"></div>'
+			}
+		}
+
 		var render = function(clbk){
 
 			if(!p.type) p. type = ''
 
-			var h = p.allowHide ? '<div class="wndback" id='+id+'></div><div class="wndinner">' : '<div class="wndback" id='+id+'></div>'+ (p.pip ? '<div class="_expand roundclosebutton"><i class="fas fa-expand"></i></div><div class="_changeplace roundclosebutton"><i class="fas fa-angle-down"></i></div>' : '') +'<div class="_close roundclosebutton '+closedbtnclass+'"><i class="fa fa-times" aria-hidden="true"></i></div><div class="closeline"></div><div class="wndinner ' + p.type + '">\
-			';
-
-			var closedbtnclass = ''
+			var h = '<div class="wndback" id='+id+'></div>'+ (p.pip ? templates.pipbuttons() : '') + (p.allowHide ? templates.statebuttons() : templates.roundclose()) +'<div class="wndinner ' + p.type + '">';
 
 				if(p.leftbg)
 					h+='<div class="leftbg"><div>'+p.leftbg+'</div></div>';
@@ -526,14 +536,9 @@
 				{
 					h+='<div class="wndheader">'+ (app.localization.e(p.header) || p.header)+'</div>';
 				}
-				else
-				{
-					closedbtnclass = 'onwhite'
-				}
+				
 
-				h+=	 p.allowHide ? '<div class="wndcontent content customscroll">' + content + '<div class="changeStateButtons"><div class="hideButton changeButton"><i class="fas fa-minus"></i></div><div class="closeButton changeButton"><i class="fas fa-times"></i></div><div class="changeButton expandButton hidden"><i class="fas fa-expand-arrows-alt"></i></div></div></div>' : '<div class="wndcontent customscroll content">'+content+'</div>';
-
-
+				h+=	 '<div class="wndcontent customscroll content">'+content+'</div>';
 
 				if (!p.noButtons) {
 					h +=	 '<div class="buttons windowmainbuttons">';
@@ -565,7 +570,15 @@
 				wnd.attr('position', localStorage['pipposition'] || 'default')
 			}
 
-			el.append(wnd);
+			var hiddenState = el.find('.hiddenState')
+
+			if (hiddenState.length){
+				hiddenState.before(wnd)
+			}	
+			else{	
+				el.append(wnd);
+			}
+			
 
 			wnd.find("._close").on('click', function(){
 				actions["close"](true);
@@ -610,7 +623,7 @@
 			wnd.addClass('asette')
 
 			if(p.showbetter) wnd.addClass('showbetter')
-			
+
 
 			setTimeout(function(){
 				wnd.addClass('sette')
@@ -635,7 +648,7 @@
 						}, 100)
 
 					}, 30)
-					
+
 				}
 
 			}, 220)
@@ -647,7 +660,7 @@
 				if(clbk) clbk()
 			}
 
-			
+
 		}
 
 		var resize = function(){
@@ -676,7 +689,14 @@
 
 			if(!p.noCloseBack)
 				wnd.find('.wndback').one('click', function(){
-					actions.close(true)
+
+					if(p.allowHide && self.minimizeOnBgClick){
+						actions.hide()
+					}
+					else{
+						actions.close(true)
+					}
+					
 				});
 
 			if (p.allowHide) {
@@ -816,6 +836,8 @@
 				wnd.addClass('asette')
 				wnd.removeClass('sette')
 
+		
+
 				setTimeout(function(){
 
 					if(!nooverflow)
@@ -841,9 +863,9 @@
 				wnd.addClass('hiddenState');
 
 				wnd.find('.wndcontent > div').addClass('rolledUp');
-				wnd.find('.expandButton').removeClass('hidden');
+				/*wnd.find('.expandButton').removeClass('hidden');
 				wnd.find('.closeButton').addClass('hidden');
-				wnd.find('.hideButton').addClass('hidden');
+				wnd.find('.hideButton').addClass('hidden');*/
 
 				if(!nooverflow) {
 					app.actions.onScroll();
@@ -857,9 +879,9 @@
 				wnd.find('.buttons').removeClass('hidden');
 				wnd.removeClass('hiddenState');
 				wnd.find('.wndcontent > div').removeClass('rolledUp');
-				wnd.find('.expandButton').addClass('hidden');
+				/*wnd.find('.expandButton').addClass('hidden');
 				wnd.find('.closeButton').removeClass('hidden');
-				wnd.find('.hideButton').removeClass('hidden');
+				wnd.find('.hideButton').removeClass('hidden');*/
 
 				if(!nooverflow) {
 					app.actions.offScroll(wnd);
@@ -907,23 +929,23 @@
 					initevents();
 
 					self.el = wnd;
-	
+
 					if (p.postRender) {
-	
+
 						p.postRender(wnd, self, () => {
-							if (p.clbk) 
+							if (p.clbk)
 								p.clbk(self, wnd);
 						});
-	
+
 					} else {
-	
-						if (p.clbk) 
+
+						if (p.clbk)
 							p.clbk(self, wnd);
-	
-					} 
+
+					}
 				});
-				
-		    	
+
+
 			}
 
 			if (app.chatposition)
@@ -940,6 +962,7 @@
 		self.el = wnd;
 		self.hide = actions.hide;
 		self.show = actions.show;
+
 
 		return self;
 	}
@@ -1277,21 +1300,6 @@
 						}
 
 					});
-
-					/*txt.on('change', function(){
-						console.log('this.scrollTop', this.scrollTop)
-
-						if (this.scrollTop > 0){
-						  	this.style.height = (this.scrollHeight + 10) + "px";
-						}
-
-					});
-
-					txt.focus()
-					txt.change()*/
-
-
-
 
 				}
 
@@ -1747,12 +1755,12 @@
 				messageel.detach();
 
 				messageel = null
-				
+
 			}, 300)
 		}
 
 		if(!p) p = {}
-		
+
 		messageel.appendTo("body")
 
 
@@ -5041,7 +5049,7 @@
 						input += caret;
 
 					input += 		'<div class="vc_inputWrapper">';
-					input += 			'<input elementsid="vs_input" '+disabled+' type="text" value="'+displayValue+'" placeholder="'+self.placeholder+'">';
+					input += 			'<input elementsid="vs_input" '+disabled+'  type="text" value="'+displayValue+'" placeholder="'+self.placeholder+'">';
 					input += 		'</div>';
 
 					if(!self.format.right)
@@ -5211,7 +5219,7 @@
 				var input = '<div class="vmt_valuesmultitree" pid="'+self.id+'">';
 
 				if(self.autoSearch){
-					input += '<div class="autoSearchWrapper"><input elementsid="autoSearch_input" type="text" class="autoSearch" placeholder="Search Code"></div>'
+					input += '<div class="autoSearchWrapper"><input elementsid="autoSearch_input"  type="text" class="autoSearch" placeholder="Search Code"></div>'
 				}
 
 				if(inputp.init){
@@ -5384,7 +5392,7 @@
 
 					input += '<div class="inputCashWrapper">';
 
-					input += '<input elementsid="input_cash" ' + m + ' class="' + self.type + ' input" value="' + self.render(true) + '">';
+					input += '<input elementsid="input_cash" ' + m + ' class="' + self.type + ' input"  value="' + self.render(true) + '">';
 
 					input += '</div>';
 
@@ -5410,13 +5418,13 @@
 
 						input += '<div class="inputCashrangeWrapper">';
 
-						input += '<input elementsid="input_cashrange" index="0" ' + m + ' class="' + self.type + ' input" placeholder="From" value="' + self.render(true, 0) + '">';
+						input += '<input  elementsid="input_cashrange" index="0" ' + m + ' class="' + self.type + ' input" placeholder="From" value="' + self.render(true, 0) + '">';
 
 						input += '</div>';
 
 						input += '<div class="inputCashrangeWrapper">';
 
-						input += '<input elementsid="input_cashrange_2" index="1" ' + m + ' class="' + self.type + ' input" placeholder="To" value="' + self.render(true, 1) + '">';
+						input += '<input  elementsid="input_cashrange_2" index="1" ' + m + ' class="' + self.type + ' input" placeholder="To" value="' + self.render(true, 1) + '">';
 
 						input += '</div>';
 
@@ -5454,13 +5462,13 @@
 
 					input += '<div class="inputNumberrangeWrapperFrom">';
 
-					input += '<input elementsid="input_numberrangefrom" index="0" ' + m + ' class="' + self.type + ' input" placeholder="From" value="' + self.render(true, 0) + '">';
+					input += '<input  elementsid="input_numberrangefrom" index="0" ' + m + ' class="' + self.type + ' input" placeholder="From" value="' + self.render(true, 0) + '">';
 
 					input += '</div>';
 
 					input += '<div class="inputNumberrangeWrapperTo">';
 
-					input += '<input elementsid="input_numberrangeto" index="1" ' + m + ' class="' + self.type + ' input" placeholder="To" value="' + self.render(true, 1) + '">';
+					input += '<input  elementsid="input_numberrangeto" index="1" ' + m + ' class="' + self.type + ' input" placeholder="To" value="' + self.render(true, 1) + '">';
 
 					input += '</div>';
 
@@ -5470,7 +5478,7 @@
 			}
 
 			if(self.type == 'color'){
-				var input = '<input elementsid="input_cashrange" notmasked="notmasked" pid="'+self.id+'" class="simpleColor input" value="' + self.value + '">';
+				var input = '<input  elementsid="input_cashrange" notmasked="notmasked" pid="'+self.id+'" class="simpleColor input" value="' + self.value + '">';
 
 				return input
 
@@ -5482,13 +5490,13 @@
 
 					input += '<div class="inputNumberrangeWrapperFrom">';
 
-					input += '<input elementsid="input_numberrangefrom_"' + self.id + ' notmasked="notmasked" pid="'+self.id+'" class="datePicker input from" placeholder="From">'
+					input += '<input  elementsid="input_numberrangefrom_"' + self.id + ' notmasked="notmasked" pid="'+self.id+'" class="datePicker input from" placeholder="From">'
 
 					input += '</div>';
 
 					input += '<div class="inputNumberrangeWrapperTo">';
 
-					input += '<input elementsid="input_numberrangeto_"' + self.id + ' notmasked="notmasked" pid="'+self.id+'" class="datePicker input to" placeholder="To">'
+					input += '<input  elementsid="input_numberrangeto_"' + self.id + ' notmasked="notmasked" pid="'+self.id+'" class="datePicker input to" placeholder="To">'
 
 					input += '</div>';
 
@@ -5499,7 +5507,7 @@
 			}
 
 			if(self.type == 'daterange'){
-				var input = '<input elementsid="input_numberrange_"' + self.id + ' notmasked="notmasked" pid="'+self.id+'" class="datePicker input">';
+				var input = '<input  elementsid="input_numberrange_"' + self.id + ' notmasked="notmasked" pid="'+self.id+'" class="datePicker input">';
 
 				return input
 
@@ -5508,7 +5516,7 @@
 			if(self.type == 'phone'){
 
 
-				var input = '<input elementsid="input_numberrange_"' + self.id + ' notmasked="notmasked" pid="'+self.id+'" class="' + self.type + ' input" value="' + self.render(true) + '" type="text">';;
+				var input = '<input  elementsid="input_numberrange_"' + self.id + ' notmasked="notmasked" pid="'+self.id+'" class="' + self.type + ' input" value="' + self.render(true) + '" type="text">';;
 
 				return input
 
@@ -5519,7 +5527,7 @@
 				var input = '<div class="vc_autosearchInput">\
 				<div class="placeholder"><div class="placeholderghost">&nbsp;</div></div>\
 				<div class="autosearchInputCnt">\
-				<input elementsid="input_autosearch_"' + self.id + ' notmasked="notmasked" ' + m + ' pid="'+self.id+'" class="' + self.type + ' input" placeholder="'+(self.placeholder || "")+'" value="' + self.render(true) + '" type="text">\
+				<input  elementsid="input_autosearch_"' + self.id + ' notmasked="notmasked" ' + m + ' pid="'+self.id+'" class="' + self.type + ' input" placeholder="'+(self.placeholder || "")+'" value="' + self.render(true) + '" type="text">\
 				</div></div>';
 
 
@@ -5527,7 +5535,7 @@
 			}
 
 			if(self.type == 'password'){
-				var input = '<input elementsid="input_numberrangepassword_"' + self.id + ' '+__disabled+' pid="'+self.id+'" class="' + self.type + ' input" placeholder="'+(self.placeholder || "")+'" value="' + self.render(true) + '" type="password">';
+				var input = '<input  elementsid="input_numberrangepassword_"' + self.id + ' '+__disabled+' pid="'+self.id+'" class="' + self.type + ' input" placeholder="'+(self.placeholder || "")+'" value="' + self.render(true) + '" type="password">';
 
 				return input;
 
@@ -5539,7 +5547,7 @@
 
             if(self.type == 'file_select'){
                 return `
-                    <input elementsid="input_file_select_${self.id}" ${__disabled} ${m} pid="${self.id}" class="${self.type} input" placeholder="${(self.placeholder || "")}" value="${self.render(true)}" type="text">
+                    <input  elementsid="input_file_select_${self.id}" ${__disabled} ${m} pid="${self.id}" class="${self.type} input" placeholder="${(self.placeholder || "")}" value="${self.render(true)}" type="text">
                     <button elementsid="button_file_select_${self.id}" ${__disabled} ${m} pid="${self.id}_Selector" class="simpleColor inpButton btn_select">...</button>
                 `;
             }
@@ -5549,10 +5557,10 @@
 			}
 
 			if(self.type == 'number'){
-				return `<input elementsid="button_${self.id}_2" ${__disabled} step="${deep(self, 'format.Step') || ''}" min="${deep(self, 'format.Min') || ''}" max="${deep(self, 'format.Max') || ''}" pid="${self.id}" class="${self.type} input" placeholder="${(self.placeholder || "")}" value="${self.render(true)}" type="number">`
+				return `<input  elementsid="button_${self.id}_2" ${__disabled} step="${deep(self, 'format.Step') || ''}" min="${deep(self, 'format.Min') || ''}" max="${deep(self, 'format.Max') || ''}" pid="${self.id}" class="${self.type} input" placeholder="${(self.placeholder || "")}" value="${self.render(true)}" type="number">`
 			}
 
-			var input = `<input elementsid="button_${self.id}_2" ${__disabled} ${m ? m : ''} pid="${self.id}" class="${self.type} input" placeholder="${(self.placeholder || "")}" value="${self.render(true)}" type="text">`
+			var input = `<input  elementsid="button_${self.id}_2" ${__disabled} ${m ? m : ''} pid="${self.id}" class="${self.type} input" placeholder="${(self.placeholder || "")}" value="${self.render(true)}" type="text">`
 
 			return input;
 		}
@@ -6341,28 +6349,23 @@
 		return blob;
 	}
 
-	p_saveAsWithCordova = function(file, name, clbk){
-
+	p_saveAsWithCordova = function(file, name, clbk, todownloads){
 
 		var storageLocation = "";
 
 		switch (device.platform) {
 			case "Android":
-				storageLocation = 'file:///storage/emulated/0/';
+				storageLocation = 'file:///storage/emulated/0/'; //LocalFileSystem.PERSISTENT
 				break;
 			case "iOS":
 				storageLocation = cordova.file.cacheDirectory;
 				break;
 		}
 
-		window.resolveLocalFileSystemURL(storageLocation, function (fileSystem) {
 
-			fileSystem.getDirectory('Download', {
-				//create: true,
-				exclusive: false
-			},
-			function (directory) {
+		var onsuccess = function (fileSystem) {
 
+			fileSystem.getDirectory('Download', { exclusive: false }, function (directory) {
 
 				directory.getFile(name, { create: true, exclusive: false }, function (entry) {
 					// After you save the file, you can access it with this URL
@@ -6425,25 +6428,22 @@
 
 				});
 
-			}, function (error) {
-
-				if(clbk) clbk(null, error)
-
 			})
+		}
 
-
-
-		}, function (evt) {
-
-			/*dialog({
-				html : "Error: Could not create file, " + evt.target.error.code,
-				class : "one"
-			})*/
-
-
+		var onerror = function (evt) {
 			if(clbk) clbk(null, evt)
+		}
+		
+		if(todownloads){
+			window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem){
 
-		});
+				onsuccess(fileSystem.root)
+			}, onerror)
+		}
+		else{
+			window.resolveLocalFileSystemURL(storageLocation, onsuccess, onerror)
+		}
 
 	}
 
@@ -6490,7 +6490,14 @@
 
 		var offset = 0
 
-		if (direction == 'Top') offset = (to.height() - $(window).height()) / 2;
+		if (direction == 'Top') {
+			offset = (to.height() - $(window).height()) / 2;
+
+			if(window.cordova && !isios()){
+				offset = offset + $(window).height() / 4
+			}
+		}
+
 		if (direction == 'Left') offset = (to.width() - $(el).width()) / 2;
 
 		if (ofssetObj)
@@ -6723,8 +6730,9 @@
 
 		self.destroyed = false
 
-		var throttle = 50
-		var transitionstr = 'transform 50ms linear'
+		var throttle = isios() ? 0 : 50
+		var transitionstr = throttle ? ''+throttle+'ms linear' : 'none'
+
 
 		let ticking = false;
 
@@ -6780,10 +6788,13 @@
 			}
 
 			if(!ms){
+
 				__el.style["-moz-transition"] = transitionstr
 				__el.style["-o-transition"] = transitionstr
 				__el.style["-webkit-transition"] = transitionstr
 				__el.style["transition"] = transitionstr
+
+				__el.style["-webkit-overflow-scrolling"] = 'touch'
 			}
 
 			ms = true
@@ -6811,6 +6822,9 @@
 				__el.css({"-webkit-transition": transitionstr});
 				__el.css({"transition": transitionstr});
 
+
+				__el.css({"-webkit-overflow-scrolling": ''});
+
 				_.each(p.directions, function(d){
 					applyDirection(d, 0)
 				})
@@ -6836,7 +6850,7 @@
 
 			var statusf = function(e, phase, direction, distance){
 
-				if(self.destroyed) return
+				if (self.destroyed) return
 
 				if (mainDirection && mainDirection.i != direction){
 					phase = 'cancel'
@@ -6857,7 +6871,7 @@
 					}
 
 					self.clear()
-					//document.ontouchmove = () => true
+					document.ontouchmove = () => true
 
 					return
 
@@ -6888,13 +6902,13 @@
 				if (phase == 'start'){
 					mainDirection = null
 
-					/*document.ontouchmove = (e) => {
+					document.ontouchmove = (e) => {
 
 						e.stopPropagation();
 						e.preventDefault();
 
 						return false
-					}*/
+					}
 				}
 
 				if (phase == 'move'){
@@ -6922,7 +6936,7 @@
 			p.el.swipe({
 				preventDefaultEvents : p.preventDefaultEvents,
 				allowPageScroll : p.allowPageScroll,
-				swipeStatus : _.throttle(statusf, throttle),
+				swipeStatus : throttle ? _.throttle(statusf, throttle) : statusf,
 			})
 
 			return self
@@ -8449,7 +8463,7 @@
 				'</div>',
 
 				'<div class="searchInputWrapper">' +
-					'<input elementsid="sminputsearch_' + (p.id || p.placeholder) + '" class="sminput" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" id="text" maxlength="400" type="text" placeholder="' + (p.placeholder || "Search") + '">' +
+					'<input  elementsid="sminputsearch_' + (p.id || p.placeholder) + '" class="sminput" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" id="text" maxlength="400" type="text" placeholder="' + (p.placeholder || "Search") + '">' +
 				'</div>',
 
 				'<div class="searchPanel">' +
@@ -8471,7 +8485,7 @@
 
 			if(p.collectresults){
 				elements[1] = '<div class="searchInputWrapper">' +
-					'<div class="sminput" contenteditable="true"  autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" id="text" maxlength="400" type="text" placeholder="' + (p.placeholder || "Search") + '"></div>' +
+					'<div class="sminput"  contenteditable="true"  autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" id="text" maxlength="400" type="text" placeholder="' + (p.placeholder || "Search") + '"></div>' +
 				'</div>'
 			}
 
@@ -8506,7 +8520,7 @@
 					searchEl.removeClass('fastSearchShow');
 			},
 			closeclickResults : function(e){
-				if (searchEl.has(e.target).length === 0 && searchEl.hasClass('fastSearchShow')) {
+				if (!searchEl || (searchEl.has(e.target).length === 0 && searchEl.hasClass('fastSearchShow'))) {
 					helpers.closeResults();
 				}
 			},
@@ -10198,34 +10212,7 @@
 		return value;
 	}
 
-	hexEncode= function(text)
-	{
-	    var ch = 0;
-	    var result = "";
-	    for (var i = 0; i < text.length; i++)
-	    {
-	        ch = text.charCodeAt(i);
-	        if (ch > 0xFF) ch -= 0x350;
-	        ch = ch.toString(16);
-	        while (ch.length < 2) ch = "0" + ch;
-	        result += ch;
-	    }
-	    return result;
-	}
-	hexDecode= function(hex)
-	{
-	    var ch = 0;
-	    var result = "";
-	    hex = trim(hex);
-	    for (var i = 2; i <= hex.length; i += 2)
-	    {
-	        ch = parseInt(hex.substring(i - 2, i), 16);
-	        if (ch >= 128) ch += 0x350;
-	        ch = String.fromCharCode("0x" + ch.toString(16));
-	        result += ch;
-	    }
-	    return result;
-	}
+	
 
 	checkUrlForImage = function(url){
 
@@ -10254,8 +10241,9 @@
 	}
 
 	clearTagString = function(t){
-		return t.substr(0, 25).toLowerCase().replace(/[\-=!"#%&'*{},.\/:;?\(\)\[\]@\\$\^*+<>~`\u00a1\u00a7\u00b6\u00b7\u00bf\u037e\u0387\u055a-\u055f\u0589\u05c0\u05c3\u05c6\u05f3\u05f4\u0609\u060a\u060c\u060d\u061b\u061e\u061f\u066a-\u066d\u06d4\u0700-\u070d\u07f7-\u07f9\u0830-\u083e\u085e\u0964\u0965\u0970\u0af0\u0df4\u0e4f\u0e5a\u0e5b\u0f04-\u0f12\u0f14\u0f85\u0fd0-\u0fd4\u0fd9\u0fda\u104a-\u104f\u10fb\u1360-\u1368\u166d\u166e\u16eb-\u16ed\u1735\u1736\u17d4-\u17d6\u17d8-\u17da\u1800-\u1805\u1807-\u180a\u1944\u1945\u1a1e\u1a1f\u1aa0-\u1aa6\u1aa8-\u1aad\u1b5a-\u1b60\u1bfc-\u1bff\u1c3b-\u1c3f\u1c7e\u1c7f\u1cc0-\u1cc7\u1cd3\u2016\u2017\u2020-\u2027\u2030-\u2038\u203b-\u203e\u2041-\u2043\u2047-\u2051\u2053\u2055-\u205e\u2cf9-\u2cfc\u2cfe\u2cff\u2d70\u2e00\u2e01\u2e06-\u2e08\u2e0b\u2e0e-\u2e16\u2e18\u2e19\u2e1b\u2e1e\u2e1f\u2e2a-\u2e2e\u2e30-\u2e39\u3001-\u3003\u303d\u30fb\ua4fe\ua4ff\ua60d-\ua60f\ua673\ua67e\ua6f2-\ua6f7\ua874-\ua877\ua8ce\ua8cf\ua8f8-\ua8fa\ua92e\ua92f\ua95f\ua9c1-\ua9cd\ua9de\ua9df\uaa5c-\uaa5f\uaade\uaadf\uaaf0\uaaf1\uabeb\ufe10-\ufe16\ufe19\ufe30\ufe45\ufe46\ufe49-\ufe4c\ufe50-\ufe52\ufe54-\ufe57\ufe5f-\ufe61\ufe68\ufe6a\ufe6b\uff01-\uff03\uff05-\uff07\uff0a\uff0c\uff0e\uff0f\uff1a\uff1b\uff1f\uff20\uff3c\uff61\uff64\uff65]+/g, "")
+		return trim(t.substr(0, 25).toLowerCase().replace(/[\-=!"#%&'*{},.\/:;?\(\)\[\]@\\$\^*+<>~`\u00a1\u00a7\u00b6\u00b7\u00bf\u037e\u0387\u055a-\u055f\u0589\u05c0\u05c3\u05c6\u05f3\u05f4\u0609\u060a\u060c\u060d\u061b\u061e\u061f\u066a-\u066d\u06d4\u0700-\u070d\u07f7-\u07f9\u0830-\u083e\u085e\u0964\u0965\u0970\u0af0\u0df4\u0e4f\u0e5a\u0e5b\u0f04-\u0f12\u0f14\u0f85\u0fd0-\u0fd4\u0fd9\u0fda\u104a-\u104f\u10fb\u1360-\u1368\u166d\u166e\u16eb-\u16ed\u1735\u1736\u17d4-\u17d6\u17d8-\u17da\u1800-\u1805\u1807-\u180a\u1944\u1945\u1a1e\u1a1f\u1aa0-\u1aa6\u1aa8-\u1aad\u1b5a-\u1b60\u1bfc-\u1bff\u1c3b-\u1c3f\u1c7e\u1c7f\u1cc0-\u1cc7\u1cd3\u2016\u2017\u2020-\u2027\u2030-\u2038\u203b-\u203e\u2041-\u2043\u2047-\u2051\u2053\u2055-\u205e\u2cf9-\u2cfc\u2cfe\u2cff\u2d70\u2e00\u2e01\u2e06-\u2e08\u2e0b\u2e0e-\u2e16\u2e18\u2e19\u2e1b\u2e1e\u2e1f\u2e2a-\u2e2e\u2e30-\u2e39\u3001-\u3003\u303d\u30fb\ua4fe\ua4ff\ua60d-\ua60f\ua673\ua67e\ua6f2-\ua6f7\ua874-\ua877\ua8ce\ua8cf\ua8f8-\ua8fa\ua92e\ua92f\ua95f\ua9c1-\ua9cd\ua9de\ua9df\uaa5c-\uaa5f\uaade\uaadf\uaaf0\uaaf1\uabeb\ufe10-\ufe16\ufe19\ufe30\ufe45\ufe46\ufe49-\ufe4c\ufe50-\ufe52\ufe54-\ufe57\ufe5f-\ufe61\ufe68\ufe6a\ufe6b\uff01-\uff03\uff05-\uff07\uff0a\uff0c\uff0e\uff0f\uff1a\uff1b\uff1f\uff20\uff3c\uff61\uff64\uff65]+/g, ""))
 	}
+	
 
 	boolToNumber = function(v){
 
@@ -11413,7 +11401,13 @@ if(typeof window != 'undefined'){
 }
 
 
-
+waitPromise = function(time){
+	return new Promise((resolve) => {
+		setTimeout(() => {
+			resolve()
+		}, time)
+	})
+}
 
 
 errortostring = function(error){
@@ -11436,7 +11430,7 @@ errortostring = function(error){
 }
 
 
-drawRoundedImage = async (url, radius,sWidth, sHeight)=>{
+drawRoundedImage = (url, radius,sWidth, sHeight)=>{
 	return new Promise(resolve => {
 		if(!url){
 			resolve("");
@@ -11493,7 +11487,7 @@ drawRoundedImage = async (url, radius,sWidth, sHeight)=>{
 function getRandomFloat(min, max, decimals) {
 	const str = (Math.random() * (max - min) + min).toFixed(decimals);
 
-  
+
 	return parseFloat(str);
 }
 
@@ -11506,8 +11500,8 @@ randomizer = function(ar, key){
 
     ar = _.sortBy(ar, (r) => {return - Number(r[key] || 0) })
 
-    var total = _.reduce(ar, function(sum, r){ 
-        return sum + Number(r[key] || 0) 
+    var total = _.reduce(ar, function(sum, r){
+        return sum + Number(r[key] || 0)
     }, 0)
 
     if (total <= 0) return ar[f.rand(0, ar.length - 1)]
@@ -11523,7 +11517,7 @@ randomizer = function(ar, key){
         }
 
         counter = counter + a[key]
-		
+
     })
 
 }
@@ -11532,10 +11526,31 @@ randomizerarray = function(ar, count, key){
 	var r = []
 
 	for (var i = 0; i < count; i++){
+
 		var v = randomizer(ar, key)
 
-		if (v) r.push(v)
+		if (v) {
+
+
+			ar = _.filter(ar, function(_v){
+				return !isEqual(_v, v, false)
+			})
+
+			r.push(v)
+		}
 	}
 
 	return r
 }
+
+/**
+ * Function code is kindly provided by
+ * http://detectmobilebrowsers.com/
+ */
+isDeviceMobile = function() {
+	let check = false;
+	(function(a){if(/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino/i.test(a)||/1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(a.substr(0,4))) check = true;})(navigator.userAgent||navigator.vendor||window.opera);
+	return check;
+};
+
+

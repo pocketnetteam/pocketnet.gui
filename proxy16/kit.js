@@ -79,13 +79,6 @@ var testnodes = [
 
 var activenodes = [
 	{
-		host : '64.235.45.119',
-		port : 38081,
-		ws : 8087,
-		name : '64.235.45.119',
-		stable : true
-	},
-	{
 		host : '135.181.196.243',
 		port : 38081,
 		ws : 8087,
@@ -100,12 +93,54 @@ var activenodes = [
 		stable : true
 	},
 	{
-		host : '65.21.57.14',
+		host : '178.217.159.227',
 		port : 38081,
 		ws : 8087,
-		name : '65.21.57.14',
+		name : '178.217.159.227',
 		stable : true
-	}	
+	},
+	{
+		host : '178.217.159.221',
+		port : 38081,
+		ws : 8087,
+		name : '178.217.159.221',
+		stable : true
+	},
+	{
+		host : '46.175.122.243',
+		port : 38081,
+		ws : 8087,
+		name : '46.175.122.243',
+		stable : true
+	},
+	{
+		host : '46.175.123.77',
+		port : 38081,
+		ws : 8087,
+		name : '46.175.123.77',
+		stable : true
+	},
+	{
+		host : '178.217.155.169',
+		port : 38081,
+		ws : 8087,
+		name : '178.217.155.169',
+		stable : true
+	},
+	{
+		host : '178.217.155.170',
+		port : 38081,
+		ws : 8087,
+		name : '178.217.155.170',
+		stable : true
+	},
+	{
+		host : '93.100.117.108',
+		port : 38081,
+		ws : 8087,
+		name : '93.100.117.108',
+		stable : true
+	},
 ]
 
 var nodes = activenodes
@@ -120,6 +155,11 @@ var defaultSettings = {
 	
 	nodes : {
 		dbpath : 'data/nodes'
+	},
+
+	tor : {
+		dbpath : 'data/tor',
+		enabled: true,
 	},
 
 	server : {
@@ -234,6 +274,10 @@ var state = {
 			admins : settings.admins,
 			proxies : {
 				explore : settings.proxies.explore
+			},
+			tor : {
+				dbpath : settings.tor.dbpath,
+				enabled: settings.tor.enabled,
 			},
 			testkeys : state.exportkeys(),
 			systemnotify : settings.systemnotify
@@ -1023,6 +1067,46 @@ var kit = {
 				})
 			}
 		},
+		
+		tor : {
+			start : function(){
+				return kit.proxy().then(async proxy => {
+					await proxy.torapplications.start();
+					settings.tor.enabled = true
+					await state.save();
+				})
+			},
+			stop : function(){
+				return kit.proxy().then(async proxy => {
+					await proxy.torapplications.stop();
+					settings.tor.enabled = false
+					await state.save()
+				})
+			},
+			info : function(){
+				return kit.proxy().then(async proxy => {
+					return proxy.torapplications.info();
+				})
+			},
+		},
+
+		transports : {
+			axios : function(...args){
+				return kit.proxy().then(async proxy => {
+					return proxy.transports.axios(...args);
+				})
+			},
+			fetch : function(...args){
+				return kit.proxy().then(async proxy => {
+					return proxy.transports.fetch(...args);
+				})
+			},
+			request : function(option, callback){
+				return kit.proxy().then(async proxy => {
+					return proxy.transports.request(option, callback);
+				})
+			},
+		},
 
         quit : function() {
             return kit.destroy().then(r => {
@@ -1088,8 +1172,9 @@ var kit = {
 		if(!hck) hck = {}
 
 		settings = state.expand(environmentDefaultSettings, settings)
-        db = new Datastore(f.path(settingsPath));
-        
+
+		db = new Datastore(f.path(settingsPath));
+
 		return new Promise((resolve, reject) => {
 
 			var start = function(){

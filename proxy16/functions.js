@@ -154,10 +154,9 @@ f.saveFile = function(filepath, buffer){
 
 }
 
-f.downloadgitrelease = function(name, p){
+f.downloadgitrelease = function(name, p, repo = { user: "pocketnetteam", name: "pocketnet.core"}){
     var dest = p.dest || f.path('downloads')
     var fullname = path.resolve(dest, name)
-
     try{
         var stats = fs.statSync(fullname)
 
@@ -166,7 +165,7 @@ f.downloadgitrelease = function(name, p){
         }
     } 
     catch(e){ 
-        console.log(e)
+        // console.log(e)
     }
 
    
@@ -187,7 +186,7 @@ f.downloadgitrelease = function(name, p){
     }
 
 
-    return downloadRelease('pocketnetteam', 'pocketnet.core', dest, filterRelease, filterAsset, false).then(function() {
+    return downloadRelease(repo.user, repo.name, dest, filterRelease, filterAsset, false).then(function() {
 
 
         return Promise.resolve(fullname)
@@ -691,10 +690,10 @@ f.getPkoinPrice = function(array, arrkey) {
         return item.includes('PKOIN_') && !item.includes('_USDT') && !item.includes('_BTC')
     })
 
-    var btc_usd_price = array['BTC_USDT'] ? array['BTC_USDT'][arrkey] : 0
+    var btc_usd_price = Number(array['BTC_USDT'] ? array['BTC_USDT'][arrkey] : 0)
 
-    var pkoin_usd_price = array['PKOIN_USDT'] ? array['PKOIN_USDT'][arrkey] : 0
-    var pkoin_btc_price = array['PKOIN_BTC'] ? array['PKOIN_BTC'][arrkey] * btc_usd_price : 0
+    var pkoin_usd_price = Number(array['PKOIN_USDT'] ? array['PKOIN_USDT'][arrkey] : 0)
+    var pkoin_btc_price = Number(array['PKOIN_BTC'] ? array['PKOIN_BTC'][arrkey] * btc_usd_price : 0)
 
     var highest_price = pkoin_usd_price > pkoin_btc_price ? pkoin_usd_price : pkoin_btc_price
 
@@ -702,11 +701,11 @@ f.getPkoinPrice = function(array, arrkey) {
     if(pkoin_pairs.length !== 0) {
         pkoin_pairs.forEach(item => {
             var currency = item.split('_')[1]
-            var pair = array[item][arrkey]  // наивысшая цена в паре валют
+            var pair = Number(array[item][arrkey])  // наивысшая цена в паре валют
             var price
 
             if (array[currency + '_USDT']) {
-                price = array[currency + '_USDT'][arrkey] * pair
+                price = Number(array[currency + '_USDT'][arrkey]) * pair
 
             } else if(array[currency + '_BTC']) {
                 price = array[currency + '_BTC'] * btc_price * pair

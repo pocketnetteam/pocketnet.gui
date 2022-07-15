@@ -2,6 +2,8 @@ fs = require('fs');
 _ = require('underscore');
 var package = require('./package.json');
 
+var bablecore = require("@babel/core")
+
 require('./js/functions.js');
 var uglifyJS = require("uglify-js");
 var uglifycss = require('uglifycss');
@@ -87,6 +89,17 @@ var vars = {
 
 
 var VARS = args.test ? vars.test : vars.prod
+
+var babelifycode = function(code){
+	var c = bablecore.transformSync(code, {
+		presets: [
+			"@babel/preset-env"
+		],
+			plugins: ["remove-use-strict"]
+	});
+	return c.code
+	
+}
 
 fs.exists(mapJsPath, function (exists) { 
 	if(exists) {
@@ -192,26 +205,30 @@ fs.exists(mapJsPath, function (exists) {
 								if (err) {
 									throw err;
 								}
+
+								var code = babelifycode(data.toString())
+
+								//if(s.babelify) code = babelifycode(code)
 	
-								var minified = uglifyJS.minify(data.toString(), {
+								var minified = uglifyJS.minify(code, {
 									compress: {
 										passes: 2
 									}
 								})
 	
 								
-								
 	
 								if(!minified.error && uglify){
-									data = minified.code
+									code = minified.code
 								}
 								else
 								{
-									console.log('UglifyJS Fail: ' + minified.error, modulepath)
+									if(uglify)
+										console.log('UglifyJS Fail: ' + minified.error, modulepath)
 								}
 								
 	
-								modules.data = modules.data + "\n\n\n /*"+modulepath+"*/ " + "\n /*_____*/ \n" + data;
+								modules.data = modules.data + "\n\n\n /*"+modulepath+"*/ " + "\n /*_____*/ \n" + code;
 	
 								fs.exists(csspath, function (exists) {
 									if(exists){
@@ -286,8 +303,7 @@ fs.exists(mapJsPath, function (exists) {
 							var arl = _.clone(m.__sourceslast || []);
 	
 							var ar = _.clone(m.__sources || []);
-	
-							ar.push(modules.path.replace('./', ''));
+								ar.push(modules.path.replace('./', ''));
 	
 							var ver = _.clone(m.__vendor || []);
 	
@@ -458,6 +474,14 @@ fs.exists(mapJsPath, function (exists) {
 					action : function(p){
 
 						var filepath = p.item;
+						var s = {}
+
+						if(_.isObject(p.item)){
+							filepath = p.item.path
+							s = p.item
+						}
+
+						
 
 						var path;
 
@@ -475,22 +499,27 @@ fs.exists(mapJsPath, function (exists) {
 										throw err;
 									}
 
-									var minified = uglifyJS.minify(data.toString(), {
+									var code = data.toString()
+
+									if(s.babelify) code = babelifycode(code)
+
+									var minified = uglifyJS.minify(code, {
 										compress: {
 											passes: 2
 										}
 									})
 
 									if(!minified.error && uglify){
-										data = minified.code
+										code = minified.code
 									}
 									else
 									{
-										console.log('UglifyJS Fail: ' + minified.error, path)
+										if (uglify)
+											console.log('UglifyJS Fail: ' + minified.error, path)
 									}
 									
 
-									join.data = join.data + "\n\n\n /*"+path+"*/ " + "\n /*_____*/ \n" + data;
+									join.data = join.data + "\n\n\n /*"+path+"*/ " + "\n /*_____*/ \n" + code;
 
 									p.success();
 								});
@@ -658,6 +687,12 @@ fs.exists(mapJsPath, function (exists) {
 					action : function(p){
 
 						var filepath = p.item;
+						var s = {}
+
+						if(_.isObject(p.item)){
+							filepath = p.item.path
+							s = p.item
+						}
 
 						var path;
 
@@ -675,11 +710,22 @@ fs.exists(mapJsPath, function (exists) {
 										throw err;
 									}
 
+									var code = data.toString()
+
+									//
+
 									if(path.indexOf('min.') == -1){
-										var minified = uglifyJS.minify(data.toString())
+
+										if(s.babelify) {
+											console.log("BABELIFY", path)
+
+											code = babelifycode(code)
+										}
+
+										var minified = uglifyJS.minify(code)
 
 										if(!minified.error){
-											data = minified.code
+											code = minified.code
 										}
 										else
 										{
@@ -690,7 +736,7 @@ fs.exists(mapJsPath, function (exists) {
 										console.log("SKIP MINIFY", path)
 									}
 
-									vendor.data = vendor.data + "\n\n\n /*"+path+"*/ " + "\n /*_____*/ \n" + data;
+									vendor.data = vendor.data + "\n\n\n /*"+path+"*/ " + "\n /*_____*/ \n" + code;
 									p.success();
 								});
 
@@ -787,21 +833,43 @@ fs.exists(mapJsPath, function (exists) {
 							else
 							{
 	
+
 								JSENV += '<script>window.design = true;</script>';
 
 								_.each(m.__sourcesfirst, function(source){
-									JS += '<script  join src="'+source+'?v='+rand(1, 999999999999)+'"></script>\n';
-									CACHED_FILES += `'${source}',\n`;
+
+									var filepath = source;
+
+									if(_.isObject(filepath)){
+										filepath = source.path
+									}
+
+									JS += '<script  join src="'+filepath+'?v='+rand(1, 999999999999)+'"></script>\n';
+									CACHED_FILES += `'${filepath}',\n`;
 								})
 								
 								_.each(m.__sources, function(source){
-									JSPOST += '<script  join src="'+source+'?v='+rand(1, 999999999999)+'"></script>\n';
-									CACHED_FILES += `'${source}',\n`;
+
+									var filepath = source;
+
+									if(_.isObject(filepath)){
+										filepath = source.path
+									}
+
+									JSPOST += '<script  join src="'+filepath+'?v='+rand(1, 999999999999)+'"></script>\n';
+									CACHED_FILES += `'${filepath}',\n`;
 								})
 
 								_.each(m.__sourceslast, function(source){
-									JSPOST += '<script  join src="'+source+'?v='+rand(1, 999999999999)+'"></script>\n';
-									CACHED_FILES += `'${source}',\n`;
+
+									var filepath = source;
+
+									if(_.isObject(filepath)){
+										filepath = source.path
+									}
+
+									JSPOST += '<script  join src="'+filepath+'?v='+rand(1, 999999999999)+'"></script>\n';
+									CACHED_FILES += `'${filepath}',\n`;
 								})
 	
 								_.each(m.__css, function(source){
@@ -810,8 +878,15 @@ fs.exists(mapJsPath, function (exists) {
 								})	
 	
 								_.each(m.__vendor, function(source){
-									VE += '<script  join src="'+source+'?v='+args.vendor+'"></script>\n';
-									CACHED_FILES += `'${source}',\n`;
+
+									var filepath = source;
+
+									if(_.isObject(filepath)){
+										filepath = source.path
+									}
+
+									VE += '<script  join src="'+filepath+'?v='+args.vendor+'"></script>\n';
+									CACHED_FILES += `'${filepath}',\n`;
 								})			            		
 							}
 							index = index.replace("__JSENV__" , JSENV);

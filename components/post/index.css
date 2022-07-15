@@ -11,7 +11,7 @@
   background: rgb(var(--background-main));
 }
 #post .jsPlayerLoading,
-#post .video-js {
+#post .video-js:not(.vjs-fullscreen) {
   max-height: 80vh;
   max-height: calc(var(--vh, 1vh) * 80);
 }
@@ -356,6 +356,24 @@
 }
 .wnd #post.videomainpost.recommendationsenabled .recomandationsFromContent .recomandationsbgwrapper {
   margin-left: 0;
+}
+@media only screen and (min-width: 1730px) {
+  #post.videomainpost.recommendationsenabled {
+    max-width: 1350px;
+  }
+  #post.videomainpost.recommendationsenabled .postWrapper {
+    display: flex !important;
+  }
+  #post.videomainpost.recommendationsenabled .recomandationsFromContent {
+    display: flex;
+    max-width: 390px !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    margin-left: 1em !important;
+  }
+  #post.videomainpost.recommendationsenabled .recomandationsFromContent .recomandationsbgwrapper {
+    width: 100%;
+  }
 }
 #post .sharearticle {
   opacity: 0;

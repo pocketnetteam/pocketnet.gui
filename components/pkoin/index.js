@@ -29,7 +29,7 @@ var pkoin = (function(){
 						optionsValue = 'liftUpThePost'
 					}
 
-					if(self.app.boost && !blocked){
+					if (self.app.boost && !blocked){
 						values.push('liftUpThePost')
 						labels.push(self.app.localization.e('liftUpThePost'))
 					}
@@ -49,6 +49,10 @@ var pkoin = (function(){
 
 							renders.fields();
 						},
+
+						onFocus : function(el){
+							_scrollTo(el, el.c.closest('.customscroll'), 0)
+						}
 			
 					})
 
@@ -103,7 +107,7 @@ var pkoin = (function(){
 
 							}
 		
-							el.textareaComment = _p.el.find('#textareaComment');
+							
 
 							if(optionsValue === 'liftUpThePost') {
 								renders.boostinfo(boost)
@@ -112,8 +116,9 @@ var pkoin = (function(){
 						})
 
 						if(optionsValue === 'liftUpThePost') {
-							self.app.platform.sdk.node.shares.getboost({
 
+							self.app.platform.sdk.node.shares.getboost({
+								lang: share.language,
 								count : 10,
 			
 							}, function(_boost ,err){
@@ -124,6 +129,12 @@ var pkoin = (function(){
 
 							}, boost ? 'cache' : null)
 						}
+
+						el.textareaComment = _p.el.find('#textareaComment');
+
+						el.textareaComment.on('focus', function(){
+							_scrollTo(el.textareaComment, el.c.closest('.customscroll'), 0)
+						})
 					})
 
 				});

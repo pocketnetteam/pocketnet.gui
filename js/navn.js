@@ -361,6 +361,7 @@ Nav = function(app)
 				historyManager.addParameters(pa)
 
 				self.wnds[p.id] = p
+			
 
 				return
 			}
@@ -385,10 +386,9 @@ Nav = function(app)
 					history.replaceState({
 
 						href : href,
-	
 						lfox : true
 	
-					}, null, href);
+					}, 'Bastyon', href);
 					
 				}
 				else{
@@ -396,13 +396,15 @@ Nav = function(app)
 					history.pushState({
 
 						href : href,
-	
 						lfox : true
 	
-					}, null, href);
+					}, 'Bastyon', href);
 
 				}
-				
+
+				if (electron)
+					electron.ipcRenderer.send('electron-url-changed', href);
+
 			}
 
 		},
@@ -437,7 +439,8 @@ Nav = function(app)
 		        		href : history.state.href,
 		        		open : true,
 						loadDefault : true,
-						replaceState : true
+						replaceState : true,
+						handler : true
 		        	}); 
 
 				}
@@ -607,7 +610,8 @@ Nav = function(app)
 
 						current.href = p.href;
 						current.completeHref = p.completeHref;
-						current.module = p.module;		
+						current.module = p.module;	
+						current.essenseData = p.essenseData;	
 						current.map = p.map
 
 						var c = p.clbk;
@@ -1127,7 +1131,6 @@ Nav = function(app)
 					if(link.attr('donottrust'))
 					{
 						
-
 						link.off('click').on('click', function(){
 							var href = $(this).attr('href');	
 
@@ -1162,11 +1165,42 @@ Nav = function(app)
 
 						if(blockclick) return false
 
+						blockclick = true
+
+						setTimeout(function(){
+							blockclick = false
+						}, 800)
+
 						var href = core.thisSiteLink( $(this).attr('href') );
 
 						var handler = $(this).attr('handler') || null
 						var replace = $(this).attr('replace') || false
 						var force = $(this).attr('replace') || false
+						var mobilepreview = $(this).attr('mobilepreview') || null
+
+						if (mobilepreview && app.mobileview){
+
+							try{
+
+								mobilepreview = JSON.parse(mobilepreview)
+
+								self.api.load({
+									open : true,
+									id : mobilepreview.id,
+									inWnd : true,
+									history : true,
+				
+									essenseData : mobilepreview.essenseData || {}
+								})
+
+								return false
+							}
+							catch(e){
+								console.log("E", e)
+							}
+
+							
+						}
 
 						if (additionalActions){
 							additionalActions(e);
@@ -1184,11 +1218,7 @@ Nav = function(app)
 							force : force
 						})
 
-						blockclick = true
-
-						setTimeout(function(){
-							blockclick = false
-						}, 800)
+						
 
 						return false
 					}
@@ -1277,11 +1307,19 @@ Nav = function(app)
 			pathnameSearch : function(){
 				var loc =  window.location; 
 
+				
+
 				return protocolActions.file.pathname() + loc.search
 			},
 
 			pathname : function(){
 				var loc =  window.location; 
+
+				if (electron){
+					var splitted = loc.pathname.split('/')
+
+					return splitted[splitted.length - 1].replace(options.navPrefix, '').replace(".html", "").replace("index_el", "index")
+				}
 
 				return loc.pathname.replace(options.navPrefix, '').replace(".html", "").replace('.cordova', "").replace('indexcordova', "index")
 			}
@@ -1415,7 +1453,8 @@ Nav = function(app)
 				history : p.history,
 				inWnd : p.inWnd,
 				inTooltip : p.inTooltip,
-				animation : p.animation
+				animation : p.animation,
+				independent : p.independent
         	}
 
         	this.load(loadParameters)
@@ -1478,6 +1517,9 @@ Nav = function(app)
 					catch(e){
 						sitemessage(app.localization.e('errorreload'))
 					}
+
+					if (electron && history.state)
+						electron.ipcRenderer.send('electron-url-changed', history.state.href);
 					
 				};
 			}
@@ -1487,6 +1529,14 @@ Nav = function(app)
 				p.open = true;
 				p.history = true;
 				p.loadDefault = true;
+
+
+				var path = parameters().path
+
+				if (path){
+					p.href = hexDecode(path)
+
+				}
 
 				if(_OpenApi){
 					if(p.clbk) p.clbk()

@@ -690,9 +690,9 @@ ____loclib.repost = "Repost"
 ____loclib.reposted = "Repost"
 ____loclib.e13160 = "Hello Pocketeers!"
 
-____loclib.e13161 = "Add Tags For Your Post"
-____loclib.e13162 = "You can enter less than 5 tags"
-____loclib.e13163 = "There aren't changes in Post"
+____loclib.e13161 = "Add tags for your post"
+____loclib.e13162 = "You can enter a maximum of 5 tags"
+____loclib.e13163 = "There are no changes in the post"
 ____loclib.e13164 = "Please add a few words to tell Pocketpeople about your link. What is it about? Why is it important? What is your opinion?"
 ____loclib.e13165 = "Your link to video is invalid. Please load valid video URL."
 ____loclib.e13166 = "You rescued"
@@ -706,9 +706,9 @@ ____loclib.e13171 = "Great news. I gained my independence from social media mono
 ____loclib.e13172 = "I want to invite you to a new decentralized blockchain social called "+appname+"! You will find a ton of interesting stuff and if you sign up, both of us will get Pocketcoin cryptocurrency bonus!"
 ____loclib.e13173 = "Send by email"
 ____loclib.e13174 = "Social sharing"
-____loclib.e13175 = "Popular Tags"
-____loclib.e13176 = "Address Type"
-____loclib.e13177 = "Upload Photo"
+____loclib.e13175 = "Popular tags"
+____loclib.e13176 = "Address type"
+____loclib.e13177 = "Upload photo"
 
 ____loclib.requiredfields = "required fields"
 ____loclib.e13178 = "Not linked to your profile"
@@ -1119,6 +1119,8 @@ ____loclib.pterror_getToken = "Peertube: Unable to get Token"
 ____loclib.pterror_videonotselected = "Peertube: Video not Selected"
 
 
+____loclib.settingsTranscoding = "On video upload transcode it on my device"
+____loclib.videoTranscodingNotOptimal = "Not optimal transcoding result. Continuing with original video"
 ____loclib.videoTranscodingError = "There was an error with processing your video"
 ____loclib.videoUploadingFinish = "Finishing uploading..."
 ____loclib.uploadNewVideo = "Upload New Pocketvideo"
@@ -1126,6 +1128,10 @@ ____loclib.selectVideoFile = "Select video file"
 ____loclib.uploadVideoProgress_binaries = "Preparing binaries:"
 ____loclib.uploadVideoProgress_processing = "Processing video:"
 ____loclib.uploadVideoProgress_uploading = "Uploading video:"
+____loclib.uploadVideoProgress_start = "Video download initialization:"
+____loclib.uploadCanceled = "Upload canceled"
+
+____loclib.pleaseTryAgain = "Something was wrong there. Please try again"
 
 
 
@@ -1202,8 +1208,14 @@ ____loclib.videoQualityCaption = "Video quality limitations"
 ____loclib.videoFormats = "List of supported video formats: .mp4, .mkv, .mov, .avi, .wmv, .flv, .f4v, .3g2, .3gp, .mts, .m2ts, .mxf, .nut"
 ____loclib.videoSizeError = "Selected video file exceeds the limit of 4 Gb per video. Please compress it or select another one."
 ____loclib.videoSizeAtt = "Maximum allowed file size: 4 Gb."
+____loclib.videoFormatError = "Incorrect video format";
+____loclib.videoSelectError = "No video selected";
 
-
+____loclib.removevideoShareQuestion = "The uploaded video remains available in the video cabinet. Do you want to delete the video completely?";
+____loclib.removevideoShareQuestionDelete = "Delete video"
+____loclib.removevideoShareQuestionLeave = "No"
+____loclib.importingVideo = "Video is loading"
+____loclib.importingVideoSuccess = "Video loaded. You can continue posting"
 
 ____loclib.streamLinks = "Streaming software links"
 ____loclib.linkRTMP = "RTMP Url"
@@ -1314,10 +1326,10 @@ ____loclib.attachVideoLentaShort = "Attach";
 ____loclib.linkToPostLenta = "Already posted"
 
 ____loclib.ReferralUsers = "Referral Users. Total/From&nbsp;01.11.2021"
-____loclib.lockedaccount = "Your account is locked due to reputation below -30"
-____loclib.lockedaccounta = "Author Account is locked due to reputation below -30"
+____loclib.lockedaccount = "Your account has been blocked due to a decrease in reputation or due to user complaints"
+____loclib.lockedaccounta = "Author account has been blocked due to a decrease in reputation or due to user complaints"
 
-____loclib.lockedaccountacomment = "Comment author Account is locked due to reputation below -30"
+____loclib.lockedaccountacomment = "Comment author account has been blocked due to a decrease in reputation or due to user complaints"
 ____loclib.hiddenCommentLabel = "Comment hidden due to low rating"
 
 ____loclib.blockedbymeHiddenCommentLabel = "Comment hidden because you have blocked a user"
@@ -1479,7 +1491,7 @@ ____loclib.aboutYoutubeThirdBoard1 = 'Account ownership';
 ____loclib.aboutYoutubeThirdBoard2 = 'Property of YouTube.';
 ____loclib.aboutYoutubeThirdBoard3 = 'Your Private Key Belongs to You';
 ____loclib.aboutYoutubeThirdBoard4 = 'Censorship';
-____loclib.aboutYoutubeThirdBoard5 = `Yes, selective and arbitrary censorship`;
+____loclib.aboutYoutubeThirdBoard5 = 'Yes, selective and arbitrary censorship';
 ____loclib.aboutYoutubeThirdBoard6 = 'Community moderates content with only a few topics such as pornography and illicit content moderated';
 ____loclib.aboutYoutubeThirdBoard7 = 'Open Sourced Code';
 ____loclib.aboutYoutubeThirdBoard8 = 'NO.';
@@ -1509,7 +1521,7 @@ ____loclib.aboutYoutubeThirdBoard26 = 'No';
 
 ____loclib.aboutYoutubeThirdBoard18 = 'Reporting videos';
 ____loclib.aboutYoutubeThirdBoard19 = 'YES, YouTube algorithms analyze videos and remove or block them automatically if they believe that they are against the policy. In addition YouTube can remove posts and ban users at its sole discretion.';
-____loclib.aboutYoutubeThirdBoard20 = `YES, however only users with a high reputation can report post and a post is made "invisible" on the feed page (but remains available on the user's profile page) only if several tens of high reputation users report it (reports can be made only for racism, hate speech and pornography).`;
+____loclib.aboutYoutubeThirdBoard20 = "YES, however only users with a high reputation can report post and a post is made \"invisible\" on the feed page (but remains available on the user's profile page) only if several tens of high reputation users report it (reports can be made only for racism, hate speech and pornography).";
 ____loclib.aboutYoutubeThirdBoard21 = 'Hashtags to classify videos';
 ____loclib.aboutYoutubeThirdBoard22 = 'Videoa can be shared on multiple platforms';
 ____loclib.aboutYoutubeThirdBoard23 = 'Dictatorship bans';
@@ -1915,9 +1927,9 @@ ____loclib.drafts = 'Drafts'
 ____loclib.repostyourown = 'You cannot repost your own post'
 
 
-____loclib.reachedlimits = 'You reached your daily limit of actions. To increase your limit you need to have at least 50 PKOIN in your account or have a valid reputation.'
+____loclib.reachedlimits = 'You reached your daily limit of actions. To increase your limit you need to have a valid reputation.'
 
-____loclib.closestreachedlimits = 'You are close to hitting your daily action limit. To increase your limit you need to have at least 50 PKOIN in your account or have a valid reputation.'
+____loclib.closestreachedlimits = 'You are close to hitting your daily action limit. To increase your limit you need to have a valid reputation.'
 
 
 ____loclib.sendUserStatistics = 'Send anonimous report of errors to Bastyon Team'
@@ -1985,7 +1997,7 @@ ____loclib.easyNode_e10033 = "Chain"
 ____loclib.easyNode_e10034 = "Description"
 ____loclib.easyNode_e10035 = "Height"
 ____loclib.easyNode_e10036 = "Less than an hour left"
-____loclib.easyNode_e10037 = function(v) { return `${v} hour(s) remaining` }
+____loclib.easyNode_e10037 = function(v) { return v + " hour(s) remaining" }
 ____loclib.easyNode_e10038 = "Block Hash"
 ____loclib.easyNode_e10039 = "Disable Node"
 ____loclib.easyNode_e10040 = "Enable Node"
@@ -2195,3 +2207,32 @@ ____loclib.useanimations = "Enable animations";
 ____loclib.welcomecaption1 = "Bastyon of Free Speech";
 ____loclib.welcomecaption2 = "Read Content Banned by Big Tech";
 ____loclib.welcomecaption3 = "Chat privately with friends - no SIM card";
+
+
+
+____loclib.shareexternal = "Another window is open";
+____loclib.shareexternaluploadpeertube = "Video upload window open";
+
+____loclib.removeimageswhenvideo = "The images attached to the post will be deleted if you continue to upload the video. Go to uploading video?";
+
+
+____loclib.lowstar1 = "Bastyon team is implementing a temporary moratorium on 1 and 2 star ratings, except prohibited content. Prohibited content is:"
+____loclib.lowstar_reason_1 = "Porno"
+____loclib.lowstar_reason_2 = "Child exploitation"
+____loclib.lowstar_reason_3 = "Direct threat of violence"
+____loclib.lowstar_reason_4 = "Illegal narcotics"
+____loclib.lowstar2 = "Please do not use 1 and 2 star ratings for other reasons. After the new moderation is released in mid. May you will be able to use low ratings for other reasons"
+____loclib.lowstaragree = "I confirm that this post contains one of four types of prohibited content"
+
+____loclib.usetor = "Connection via Tor network"
+
+____loclib.videotranscodingdelayedpost = "This video is being processed and will be posted as soon as the transcoding process ends. Please, do not close the tab untill then."
+
+____loclib.postInRelay = "This post is being processed before publishing to blockchain"
+
+
+____loclib.continuesubscribefeedCaption = "Would you like to continue seeing posts from the people you follow?"
+____loclib.continuesubscribefeedButton = "Continue in the subscription feed"
+
+____loclib.videoNameIsIncorrectShort = "Video name should be at least 3 characters long"
+____loclib.videoNameIsIncorrectLong = "Video name should be no more than 120 characters long"
