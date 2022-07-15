@@ -12,7 +12,7 @@ var taginput = (function(){
 
 		var actions = {
 			initsearch : function(){
-				search(el.tagSearch, {
+				new search(el.tagSearch, {
 					placeholder : essenseData.placeholder || self.app.localization.e('addtagsCategories'),
 
 					id : 'addtagsCategories',

@@ -1,4 +1,4 @@
-﻿
+
 var appname = window.pocketnetproject || "Pocketnet"
 
 if(typeof loclib == "undefined" || !loclib)
@@ -272,6 +272,11 @@ ____loclib.lprivatepublic = "Do you want to make a Private or Public subscriptio
 ____loclib.lprivate = "Private";
 ____loclib.lpublic = "Public";
 
+//inviteComment
+____loclib.commentBannerTitle = "Comment on this post";
+____loclib.commentBannerDescription = "Commenting unlocks features on Bastyon and helps you find friends 😀";
+____loclib.dontShowAgain = "Don't show again";
+
 //share
 ____loclib.newShare = "New Post";
 ____loclib.firstShare = "Share Your First Post in "+appname+"";
@@ -499,6 +504,7 @@ ____loclib.e13038 = "Comment Now"
 ____loclib.e13039 = "Comment Now"
 ____loclib.e13040 = "You do not have commenting priviliges"
 ____loclib.complain = "Complain"
+____loclib.complain_success =  "Your complaint has been successfully submitted"
 ____loclib.next = "Next"
 ____loclib.post = "Post"
 ____loclib.e13041 = ""+appname+" Connection"
@@ -2233,3 +2239,8 @@ ____loclib.postInRelay = "This post is being processed before publishing to bloc
 
 ____loclib.continuesubscribefeedCaption = "Would you like to continue seeing posts from the people you follow?"
 ____loclib.continuesubscribefeedButton = "Continue in the subscription feed"
+
+____loclib['dust (code 64)'] = "You are trying to send an amount too small, it cannot be done"
+
+____loclib.videoNameIsIncorrectShort = "Video name should be at least 3 characters long"
+____loclib.videoNameIsIncorrectLong = "Video name should be no more than 120 characters long"

@@ -30,6 +30,25 @@ var complain = (function(){
           gid : 4
         }
 
+      ],
+      user : [
+        {
+          name : self.app.localization.e('lowstar_reason_1'),
+          gid : 1
+        },
+        {
+          name : self.app.localization.e('lowstar_reason_2'),
+          gid : 2
+        },
+        {
+          name : self.app.localization.e('lowstar_reason_3'),
+          gid : 3
+        },
+        {
+          name : self.app.localization.e('lowstar_reason_4'),
+          gid : 4
+        }
+
       ]
 
     }
@@ -43,73 +62,121 @@ var complain = (function(){
       },
 
       complain : function(clbk){
-        self.app.platform.sdk.ustate.me(function(mestate){
+        try {
+          self.app.platform.sdk.ustate.me(function(mestate){
+            if(ess == 'post'){
 
-          if(ess == 'post'){
-            if(mestate && !mestate.trial){
-              var modFlag = sobj.modFlag(selected);
+              if((typeof mestate!= 'undefined' && mestate.badges && Object.values(mestate.badges).includes('shark'))){
+                var modFlag = sobj.modFlag(selected);
 
-              topPreloader(30);
-              self.sdk.node.transactions.create.commonFromUnspent(
+                topPreloader(30);
+                self.sdk.node.transactions.create.commonFromUnspent(
 
-                modFlag,
+                  modFlag,
 
-                function(tx, error){
-                  topPreloader(100)
+                  function(tx, error){
+                    topPreloader(100)
 
-                  if(!tx){
+                    if(!tx){
+                      self.app.platform.errorHandler(error, true)
 
-                    self.app.platform.errorHandler(error, true)
+                      if (clbk)
+                        clbk()
+                    }
+                    else
+                    {
 
-                    if (clbk)
-                      clbk()
+                      successCheck()
+                      sitemessage(self.app.localization.e('complain_success'))
+                    }
+
                   }
-                  else
-                  {
-
-                    successCheck()
-
-                    if (clbk)
-                      clbk(true)
-                  }
-
-                }
-              )
-            }
-
-            else{
-              var i1 = ((actions.find(selected) || {}).name) || selected;
-              self.app.complainletters.post({
-                i1,
-                s3 : mestate.address,
-                s2 : sobj.txid
-              }, function(r){
-                successCheck()
-
+                )
                 if (clbk)
-                  clbk(r)
-              })
+                  clbk(true)
+              }
+
+              else{
+                try{
+                  var i1 = ((actions.find(selected) || {}).name) || selected;
+                  self.app.Logger.info({
+                    actionId: 'POST_COMPLAIN',
+                    actionValue: i1,
+                    actionSubType: sobj.txid
+                  });
+                  clbk(true)
+                  sitemessage(self.app.localization.e('complain_success'))
+                } catch (error) {
+                  self.app.platform.errorHandler(error, true)
+                }
+
+                // var i1 = ((actions.find(selected) || {}).name) || selected;
+                // self.app.complainletters.post({
+                //   i1,
+                //   s3 : mestate.address,
+                //   s2 : sobj.txid
+                // }, function(r){
+                //   successCheck()
+                //
+                //   if (clbk)
+                //     clbk(r)
+                // })
+              }
             }
-          }
 
-          if(ess == 'user' && textreason){
+            if(ess == 'user'){
+              if((typeof mestate!= 'undefined' && mestate.badges && Object.values(mestate.badges).includes('shark'))){
 
+                var modFlag = sobj.data.modFlag(selected);
 
-            self.app.complainletters.user({
-              i1 : textreason,
-              s3 : mestate.address,
-              s2 : sobj.address
-            }, function(r){
+                topPreloader(30);
+                self.sdk.node.transactions.create.commonFromUnspent(
 
-              successCheck()
+                  modFlag,
 
-              if (clbk)
-                clbk(r)
-            })
+                  function(tx, error){
+                    topPreloader(100)
 
-          }
+                    if(!tx){
+                      self.app.platform.errorHandler(error, true)
 
-        })
+                      if (clbk)
+                        clbk()
+                    }
+                    else
+                    {
+                      successCheck()
+                      sitemessage(self.app.localization.e('complain_success'))
+                    }
+
+                  }
+                )
+                if (clbk)
+                  clbk(true)
+              }
+
+              else{
+                try{
+                  var i1 = ((actions.find(selected) || {}).name) || selected;
+                  self.app.Logger.info({
+                    actionId: 'USER_COMPLAIN',
+                    actionValue: i1,
+                    actionSubType: sobj.data.address
+                  });
+                  clbk(true)
+                  sitemessage(self.app.localization.e('complain_success'))
+                } catch (error) {
+                  console.log(error)
+                  self.app.platform.errorHandler(error, true)
+                }
+
+              }
+            }
+
+          })
+        } catch (e) {
+          console.log(e)
+        }
 
       },
 
