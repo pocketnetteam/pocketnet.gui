@@ -443,7 +443,7 @@ var articlev = (function(){
 		var events = {
 
 			saveedited : function(){
-				dialog({
+				new dialog({
 					html:  self.app.localization.e('usavechanges'),
 					btn1text: self.app.localization.e('dyes'),
 					btn2text: self.app.localization.e('dno'),
@@ -461,7 +461,7 @@ var articlev = (function(){
 			},
 
 			publish : function(){
-				dialog({
+				new dialog({
 					html:  self.app.localization.e('publishquestion'),
 					btn1text: self.app.localization.e('dyes'),
 					btn2text: self.app.localization.e('dno'),

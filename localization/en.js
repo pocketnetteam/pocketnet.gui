@@ -2240,5 +2240,7 @@ ____loclib.postInRelay = "This post is being processed before publishing to bloc
 ____loclib.continuesubscribefeedCaption = "Would you like to continue seeing posts from the people you follow?"
 ____loclib.continuesubscribefeedButton = "Continue in the subscription feed"
 
+____loclib['dust (code 64)'] = "You are trying to send an amount too small, it cannot be done"
+
 ____loclib.videoNameIsIncorrectShort = "Video name should be at least 3 characters long"
 ____loclib.videoNameIsIncorrectLong = "Video name should be no more than 120 characters long"

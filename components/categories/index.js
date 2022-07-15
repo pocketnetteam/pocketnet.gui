@@ -42,7 +42,7 @@ var categories = (function(){
 
 				self.fastTemplate('addcategory', function(rendered){
 
-					var d = dialog({
+					var d = new dialog({
 						html : rendered,
 						class : "addcategorydialog",
 						header : self.app.localization.e('addcategory'),
@@ -59,7 +59,7 @@ var categories = (function(){
 
 							el.find('.removecat').on('click', function(){
 
-								dialog({
+								new dialog({
 									class : 'zindex',
 									html : 'Do you really want to remove this category?',
 									btn1text : self.app.localization.e('dyes'),
@@ -425,7 +425,7 @@ var categories = (function(){
 
 				if ($(this).hasClass('showed')){
 
-					dialog({
+					new dialog({
 						class : 'zindex',
 						html :  self.app.localization.e('clearcategories'),
 						btn1text : self.app.localization.e('dyes'),

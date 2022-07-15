@@ -225,7 +225,18 @@ Platform = function (app, listofnodes) {
         'PUF8bsAYyHZQCtaMbrTwyRDcC3wMLKhFFX' : true,
         'PSFpsP19aHs7ZfGPnnt19yQC258y1HFYKD' : true,
         'PCkX8n2e6aD6Ji37hSpHCJpqvaaJjVWt1m' : true,
-        'PT4fvQ7jMicg6McC52BmFFkL2M6AEWc7vo' : true
+        'PT4fvQ7jMicg6McC52BmFFkL2M6AEWc7vo' : true,
+        'PGecwCERTkoFd82E3e471SvxSxnJpC4cWk' : true,
+        'PRZEXQXTmz1jW6YmH1e83nkRRiDUqkE6fw' : true,
+        'PCM3fmcUikLbSNCeqtQ7MEk4yQbn6qQRJt' : true,
+        'PKXSw8Q4Kdy244Gb1R7GYPvTwiM22JssTf' : true,
+        'P8gfyLfXyeHzyAvq4Yqw6EW39ifCyVJ9f6' : true,
+        'PSKLx4k7ehAtvipwpo2ohBeCYzpf4SiKHj' : true,
+        'PK8dRanrBFxfSo3qw1P4gm6veaQQssZXxB' : true,
+        'PCkX8n2e6aD6Ji37hSpHCJpqvaaJjVWt1m' : true,
+        'PT4fvQ7jMicg6McC52BmFFkL2M6AEWc7vo' : true,
+        'PGegspsgRqvMiZCP8PGufKMYBk3yekDaEE' : true,
+        'PB8wu7hQwo5xMsVG4F4HshrW39t2Y4eN37' : true
     }
 
     self.bch = {
@@ -576,6 +587,13 @@ Platform = function (app, listofnodes) {
 
     self.errorHandler = function (key, action, akey) {
 
+        var er = null
+
+        if(_.isObject(key)){
+            er = key
+            key = er.code
+        }
+
         var eobj = self.errors[key] || self.errors['network'];
 
         if (!eobj) {
@@ -585,7 +603,7 @@ Platform = function (app, listofnodes) {
             var m = eobj.message;
 
             if (m) {
-                if (typeof m == 'function') m = m(akey);
+                if (typeof m == 'function') m = m(akey, er);
 
                 if (!m) return
 
@@ -632,7 +650,7 @@ Platform = function (app, listofnodes) {
                             topPreloader(100);
 
                             if (!cs) {
-                                dialog({
+                                new dialog({
                                     html: self.app.localization.e('canSpendError'),
                                     btn1text: self.app.localization.e('daccept'),
 
@@ -663,7 +681,7 @@ Platform = function (app, listofnodes) {
                                             self.errors["1"].action()
                                         }
                                         else {
-                                            dialog({
+                                            new dialog({
                                                 html: self.app.localization.e('noMoneyError'),
                                                 btn1text: self.app.localization.e('daccept'),
 
@@ -689,7 +707,7 @@ Platform = function (app, listofnodes) {
                             self.app.platform.sdk.user.waitActions(function (r) {
 
                                 if (!r) {
-                                    dialog({
+                                    new dialog({
                                         html: self.app.localization.e('noMoneyError'),
                                         btn1text: self.app.localization.e('daccept'),
 
@@ -697,7 +715,7 @@ Platform = function (app, listofnodes) {
                                     })
                                 }
                                 else {
-                                    dialog({
+                                    new dialog({
                                         html: self.app.localization.e('waitConf'),
                                         btn1text: self.app.localization.e('daccept'),
 
@@ -1090,7 +1108,7 @@ Platform = function (app, listofnodes) {
                                     var exist = self.sdk.users.storage[a]
 
                                     if(!exist){
-                                        dialog({
+                                        new dialog({
                                             html: self.app.localization.e('checkScoreError'),
                                             btn1text: self.app.localization.e('dyes'),
                                             btn2text: self.app.localization.e('dno'),
@@ -1111,7 +1129,7 @@ Platform = function (app, listofnodes) {
                                     }
                                     else{
 
-                                        dialog({
+                                        new dialog({
                                             html: self.app.localization.e('waitConf'),
                                             btn1text: self.app.localization.e('daccept'),
 
@@ -1140,7 +1158,7 @@ Platform = function (app, listofnodes) {
 
                             if(!mestate || _.isEmpty(mestate)){
 
-                                dialog({
+                                new dialog({
                                     html: self.app.localization.e('accountnotfound'),
                                     btn1text: self.app.localization.e('daccept'),
 
@@ -1150,7 +1168,7 @@ Platform = function (app, listofnodes) {
                             }
                             else{
 
-                                dialog({
+                                new dialog({
                                     html: self.app.localization.e('waitConf'),
                                     btn1text: self.app.localization.e('daccept'),
 
@@ -1182,10 +1200,11 @@ Platform = function (app, listofnodes) {
         },
 
         "-26": {
-            message: function () {
+            message: function (v, er) {
 
-                return self.app.localization.e('Error code: -26')
+                var loc = deep(er, 'error.message') || ''
 
+                return self.app.localization.e(loc || 'Error code: -26')
             },
 
             relay: true
@@ -3120,7 +3139,7 @@ Platform = function (app, listofnodes) {
 
             if (!p) p = {};
 
-            dialog({
+            new dialog({
                 html: p.text || self.app.localization.e('e13188'),
                 btn1text: p.successLabel || self.app.localization.e('e13261'),
                 btn2text: p.faillabel || self.app.localization.e('e13262'),
@@ -3374,7 +3393,7 @@ Platform = function (app, listofnodes) {
 
                                 if(info && info.original && info.original.isLive){
 
-                                    dialog({
+                                    new dialog({
                                         html: "Please wait, you will be able to download the video when the broadcast recording appears",
                                         btn1text: self.app.localization.e('daccept'),
                                         class : 'one',
@@ -3388,7 +3407,7 @@ Platform = function (app, listofnodes) {
 
                                 if(!items.length){
 
-                                    dialog({
+                                    new dialog({
                                         html: "Please wait, the video hasn't been transcoded yet",
                                         btn1text: self.app.localization.e('daccept'),
                                         class : 'one',
@@ -4426,7 +4445,7 @@ Platform = function (app, listofnodes) {
 
                             close()
 
-                            dialog({
+                            new dialog({
                                 class : 'zindex',
                                 html : self.app.localization.e('pinPostDialog'),
                                 btn1text : self.app.localization.e('dyes'),
@@ -4475,7 +4494,7 @@ Platform = function (app, listofnodes) {
 
                             close()
 
-                            dialog({
+                            new dialog({
                                 class : 'zindex',
                                 html : self.app.localization.e('unpinPostDialog'),
                                 btn1text : self.app.localization.e('dyes'),
@@ -4580,7 +4599,7 @@ Platform = function (app, listofnodes) {
                             close()
 
 
-                            dialog({
+                            new dialog({
                                 class : 'zindex',
                                 html : self.app.localization.e('removePostDialog'),
                                 btn1text : self.app.localization.e('dyes'),
@@ -7474,6 +7493,15 @@ Platform = function (app, listofnodes) {
                 _.each(this.clbks, function (c) { c(address) })
             },
 
+            value : function(address){
+                var regs = self.sdk.registrations.storage[address];
+                var rm = self.sdk.registrations.storage[address + 'rm']
+
+                if(rm) return 0
+
+                return regs
+            },
+
             showprivate : function(address){
                 if (!address && self.sdk.address.pnet()) address = self.sdk.address.pnet().address
 
@@ -8195,7 +8223,10 @@ Platform = function (app, listofnodes) {
 
                 if(!self.sdk.sharesObserver.storage.viewed[key]) self.sdk.sharesObserver.storage.viewed[key] = {}
 
-                if (!self.sdk.sharesObserver.storage.viewed[key].first || self.sdk.sharesObserver.storage.viewed[key].first < first){
+
+                console.log('self.sdk.sharesObserver.storage.viewed[key].first < first', key, self.sdk.sharesObserver.storage.viewed[key].first , first)
+
+                if (!self.sdk.sharesObserver.storage.viewed[key].first || self.sdk.sharesObserver.storage.viewed[key].first <= first){
 
                     self.sdk.sharesObserver.storage.viewed[key].first = first
                     self.sdk.sharesObserver.storage.viewed[key].new = 0
@@ -9159,7 +9190,7 @@ Platform = function (app, listofnodes) {
             },
 
             error : function(text){
-                dialog({
+                new dialog({
                     html: app.meta.fullname + " chat ask you to generate encryption keys. But some error with your profile update was occuried:<br><b>" + text + "</b>",
                     btn1text: 'Edit profile',
                     class : 'one',
@@ -9566,7 +9597,7 @@ Platform = function (app, listofnodes) {
                                         h += '</div>'
                                         h += '</div>'
 
-                                        dialog({
+                                        new dialog({
                                             html: h,
                                             btn1text: self.app.localization.e('dyes'),
                                             btn2text: self.app.localization.e('dno'),
@@ -11443,11 +11474,11 @@ Platform = function (app, listofnodes) {
                 var point = 1;
 
 
-                if (me.relation(address, 'subscribes')){
+                if (me && me.relation(address, 'subscribes')){
                     point += 100
                 }
 
-                if (me.relation(address, 'subscribers')){
+                if (me && me.relation(address, 'subscribers')){
                     point += 20
                 }
 
@@ -17489,49 +17520,49 @@ Platform = function (app, listofnodes) {
                     if(!tx.vout || !tx.vout.length || !address) return null
 
                     var firstout = tx.vout[0]
+
+                    var n = -1
+                    var uservout = _.find(tx.vout, (v) => {
+                        n ++ 
+                        return _.find(deep(v, 'scriptPubKey.addresses') || [], (a) => {
+                            return a == address
+                        })
+                    })
+                    
+                    
+                    /**/
                     var l = tx.vout.length
 
-                    if(!firstout || l <= 1) return null
+                    if(!firstout || l <= 1 || !uservout) return null
+
+                    n = l - n
 
                     try {
                         var chunks = bitcoin.script.decompile(Buffer.from(firstout.scriptPubKey.hex, 'hex'))
 
                         if(!chunks.length) return
 
-                        chunks = chunks[0]
-
                         var cl = chunks.length
+
                         if(!cl) return null
 
-                        var n = 0;
+                        if (chunks[cl - n]) {
+                            var ch = chunks[cl - n]
 
-                        for(var i = l - 1; i > 0; i--){
+                            if (ch == bitcoin.opcodes.OP_WINNER_POST) {
+                                type = 'post'
+                            }
 
-                            n++
+                            if (ch == bitcoin.opcodes.OP_WINNER_COMMENT) {
+                                type = 'comment'
+                            }
 
-                            var v = tx.vout[i]
+                            if (ch == bitcoin.opcodes.OP_WINNER_POST_REFERRAL) {
+                                type = 'postref'
+                            }
 
-                            var _address = deep(v, 'scriptPubKey.addresses.0')
-
-                            if (_address == address && chunks[cl - n]) {
-                                var ch = chunks[cl - n]
-
-
-                                if (ch == bitcoin.opcodes.OP_WINNER_POST) {
-                                    type = 'post'
-                                }
-
-                                if (ch == bitcoin.opcodes.OP_WINNER_COMMENT) {
-                                    type = 'comment'
-                                }
-
-                                if (ch == bitcoin.opcodes.OP_WINNER_POST_REFERRAL) {
-                                    type = 'postref'
-                                }
-
-                                if (ch == bitcoin.opcodes.OP_WINNER_COMMENT_REFERRAL) {
-                                    type = 'commentref'
-                                }
+                            if (ch == bitcoin.opcodes.OP_WINNER_COMMENT_REFERRAL) {
+                                type = 'commentref'
                             }
                         }
 
@@ -19596,7 +19627,7 @@ Platform = function (app, listofnodes) {
 
                           } else {
                             // this.telegramSend = this.telegramSend.bind(this)
-                            dialog({
+                            new dialog({
                               html: "Do you really want send message to Telegram?",
                               btn1text: "Send",
                               btn2text: "Cancel",
@@ -21869,7 +21900,7 @@ Platform = function (app, listofnodes) {
 
                         this.openedDialog = true;
 
-                        dialog({
+                        new dialog({
                             html: self.app.localization.e('e13325'),
                             btn1text: self.app.localization.e('e13326'),
                             btn2text: self.app.localization.e('ucancel'),
@@ -23850,6 +23881,7 @@ Platform = function (app, listofnodes) {
 
                     var _dataclbk = function (tx, err) {
 
+
                         if (err || !tx) {
 
                             if (clbk) clbk()
@@ -23963,6 +23995,7 @@ Platform = function (app, listofnodes) {
 
                         data.cointype = platform.sdk.node.transactions.getCoibaseTypeN(data.txinfo, platform.sdk.address.pnet().address)
 
+
                         platform.sdk.users.getone(data.address || '', function () {
 
                             if (data.address) {
@@ -23974,8 +24007,6 @@ Platform = function (app, listofnodes) {
                             _.each(platform.sdk.node.transactions.clbks, function (c) {
                                 c(data.amountall)
                             })
-
-
 
                             if (clbk)
                                 clbk(data)
@@ -24055,7 +24086,7 @@ Platform = function (app, listofnodes) {
                     if (data.tx) {
 
 
-                        if (data.tx.coinbase) {
+                        if (data.cointype) {
 
                             if (platform.sdk.usersettings.meta.win.value) {
 
@@ -25022,7 +25053,9 @@ Platform = function (app, listofnodes) {
 
             platform.app.api.get.currentwss().then(wss => {
 
-                socket = wss.dummy || (new ReconnectingWebSocket(wss.url));
+                socket = wss.dummy || (new ReconnectingWebSocket(wss.url, null, {
+                    reconnectDecay : 1
+                }));
 
 
                 socket.onmessage = function (message) {
@@ -25919,9 +25952,11 @@ Platform = function (app, listofnodes) {
                 txid: "65fee9b1e925833c5ff623178efecc436d3af0c9f6a4baa0b73c52907a9d1d7b"
             })*/
 
+            // test coin 
 
+            //self.messageHandler({"addr":"TSVui5YmA3JNYvSjGK23Y2S8Rckb2eV3kn","msg":"transaction","txid":"a6819e0de29c148a193932da4581b79cae02163f717962a86ccbf259f915a4be","time":1657701744,"amount":"1000000","nout":"2","node":"116.203.219.28:39091:6067"})
 
-		}, 6000)
+		}, 3000)
     }
 
     self.convertUTCSS = function (str) {
@@ -26679,7 +26714,7 @@ Platform = function (app, listofnodes) {
         var updateReady = function () {
 
             if (!d) {
-                d = dialog({
+                d = new dialog({
                     html: self.app.localization.e('e13347'),
                     btn1text: self.app.localization.e('dyes'),
                     btn2text: self.app.localization.e('e13348'),
@@ -26708,7 +26743,7 @@ Platform = function (app, listofnodes) {
                 if (self.app.platform.applications.ui[os()]) {
                     var _os = self.app.platform.applications.ui[os()]
                     if (_os.github && _os.github.url) {
-                        d = dialog({
+                        d = new dialog({
                             html:  self.app.localization.e('e13349'),
                             btn1text: self.app.localization.e('dyes'),
                             btn2text: self.app.localization.e('e13348'),
@@ -26970,7 +27005,7 @@ Platform = function (app, listofnodes) {
 
         return new Promise((resolve, reject) => {
 
-            var d = dialog({
+            var d = new dialog({
                 html:  self.app.localization.e('pdirectdialog'),
                 btn1text: self.app.localization.e('dyes'),
                 btn2text: self.app.localization.e('dno'),
@@ -27072,7 +27107,7 @@ Platform = function (app, listofnodes) {
                             self.nodeControlUpdateNodeLast = new Date()
                             self.nodeControlUpdateNodePopup = true
 
-                            dialog({
+                            new dialog({
                                 html: self.app.localization.e('easyNode_e10062'),
                                 btn1text: self.app.localization.e('easyNode_e10015'),
                                 btn2text: self.app.localization.e('skip'),
@@ -27263,7 +27298,7 @@ Platform = function (app, listofnodes) {
 
         checkfeatures()
 
-        self.ui.popup('application');
+        
 
         app.user.isState(function(state){
 
@@ -27364,7 +27399,34 @@ Platform = function (app, listofnodes) {
 
         })
 
+        setTimeout(() => {
+            app.user.isState(function(state){
 
+                if(app.nav.current.href == 'index'){
+
+                    if($(document.activeElement).is('#application')){
+                        if(!state){
+                            self.ui.popup('application');
+                        }
+                        else{
+                            
+                            var a = self.sdk.address.pnet()
+    
+                            if (a){
+                                var regs = self.sdk.registrations.value(a.address)
+    
+                                if(!regs){
+                                    self.ui.popup('application');
+                                }
+                            }
+                            
+                        }
+                    }
+                    
+                }
+                
+            })
+        }, 30000)
 
     }
 
