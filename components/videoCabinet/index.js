@@ -1135,17 +1135,17 @@ var videoCabinet = (function () {
 															.find('.videoDescriptionInput')
 															.val();
 
-                            if (!name || name.length < 3) {
-                              sitemessage(self.app.localization.e('videoNameIsIncorrectShort'));
+														if (!name || name.length < 3) {
+															sitemessage(self.app.localization.e('videoNameIsIncorrectShort'));
 
-                              return false;
-                            }
+															return false;
+														}
 
-                            if (name.length > 120) {
-                              sitemessage(self.app.localization.e('videoNameIsIncorrectLong'));
+														if (name.length > 120) {
+															sitemessage(self.app.localization.e('videoNameIsIncorrectLong'));
 
-                              return false;
-                            }
+															return false;
+														}
 
 														const parameters = {};
 
