@@ -11101,7 +11101,7 @@ Platform = function (app, listofnodes) {
 
 
                             if (clbk)
-                                clbk()
+                                clbk(d)
 
                         }).catch(e => {
                             if (clbk)
