@@ -29,6 +29,7 @@ var comments = (function(){
 		var rendered = {};
 		var areas = {};
 		var external = null;
+		var bannerComment = null;
 		var currentstate = {};
 		var wordsRegExp = /[,.!?;:() \n\r]/g
 		var sortby = 'interesting' 
@@ -237,7 +238,25 @@ var comments = (function(){
 				else
 					c.removeClass('hastext')
 			},
+			complain : function(comment){
+				self.nav.api.load({
+					open : true,
+					id : 'complain',
+					inWnd : true,
+					essenseData : {
+						item : 'post',
+						obj : comment,
 
+						success : function(){
+
+						}
+					},
+
+					clbk : function(){
+
+					}
+				})
+			},
 			myscores : function(){
 				_.each(rendered, function(c, id){
 					var comment = deep(self.app.platform.sdk, 'comments.storage.all.' + id)
@@ -1334,6 +1353,14 @@ var comments = (function(){
 						return template(d);
 
 					}, function(__el, f, close){
+
+						__el.find('.complain').on('click', function(){
+							self.app.mobile.vibration.small()
+							actions.complain(comment)
+
+							close()
+
+						})
 
 						__el.find('.edit').on('click', function(){
 
@@ -2732,6 +2759,9 @@ var comments = (function(){
 					}, 100)
 					
 				}
+
+				bannerComment = app.platform.ui.showCommentBanner(el.c);
+
 			},
 
 			authclbk : function(){
@@ -2778,6 +2808,10 @@ var comments = (function(){
 
 				if (caption)
 					caption.destroy()
+
+				if (bannerComment) {
+					bannerComment.destroy();
+				}
 
 				if (el.c) el.c.empty()
 

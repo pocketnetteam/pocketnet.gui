@@ -2720,6 +2720,63 @@ Platform = function (app, listofnodes) {
 
         },
 
+        showCommentBanner : function(contextElem) {
+
+            let bannerCommentComponent = null;
+
+            const createComponent = () => {
+                app.nav.api.load({
+                    open: true,
+                    id: 'commentBanner',
+                    el: contextElem.find('.bannerComment'),
+                    essenseData: {},
+
+                    clbk : function(e, p){
+                        bannerCommentComponent = p;
+                    }
+                });
+            };
+
+            const unixTimeNow = Math.floor(Date.now() / 1000);
+            const oneDayInSeconds = 86400000;
+
+            const alreadyShowed = ('nextCommentBanner' in localStorage);
+            const isBannerDisabled = (localStorage.nextCommentBanner == -1);
+            const timeToShowBanner = (localStorage.nextCommentBanner <= unixTimeNow);
+
+            const regDate = app.platform.sdk.user.me().regdate;
+            const regUnixTime = (regDate.getTime());
+            const registeredTime = Date.now() - regUnixTime;
+
+            const isOneDayOld = (registeredTime >= oneDayInSeconds);
+
+            if (isBannerDisabled) {
+                console.log('banner showbanner', bannerCommentComponent);
+                return bannerCommentComponent;
+            }
+
+            if (!isOneDayOld) {
+                createComponent();
+                console.log('banner showbanner', bannerCommentComponent);
+                return bannerCommentComponent;
+            }
+
+            if (!alreadyShowed) {
+                localStorage.nextCommentBanner = 1;
+                createComponent();
+                console.log('banner showbanner', bannerCommentComponent);
+                return bannerCommentComponent;
+            }
+
+            if (timeToShowBanner || !alreadyShowed) {
+                localStorage.nextCommentBanner = unixTimeNow + oneDayInSeconds;
+                createComponent();
+                console.log('banner showbanner', bannerCommentComponent);
+                return bannerCommentComponent;
+            }
+
+        },
+
         carousel : function(el, clbk){
 			var images = el.find('[image]');
 
@@ -3455,12 +3512,10 @@ Platform = function (app, listofnodes) {
 
         templates : {
             commentstars : function(el, value, clbk){
-
-                if (typeof _Electron != 'undefined') return
-
-                if(!el) return
-
-                if (self.effects.animation) return
+                if (typeof _Electron != 'undefined' || !el || self.effects.animation) {
+                    if(clbk) clbk()
+                    return
+                }
 
                 self.effects.animation = true
 
@@ -9662,8 +9717,7 @@ Platform = function (app, listofnodes) {
                 if(!ustate) return false
 
                 var totalComplains = typeof ustate.flags === 'object' ? Object.values(ustate.flags).reduce((a,b) => a + +b, 0) : 0
-
-                var isOverComplained = typeof ustate.flags === 'object' ? Object.values(ustate.flags).some(el => el / ustate.postcnt > 5) : false
+                var isOverComplained = typeof ustate.flags === 'object' ? Object.values(ustate.flags).some(el => el / (ustate.postcnt || 1) > 5) : false
 
                 var totalComplainsFirstFlags = typeof ustate.firstFlags === 'object' ? Object.values(ustate.firstFlags).reduce((a,b) => a + +b, 0) : 0
 
@@ -19092,6 +19146,7 @@ Platform = function (app, listofnodes) {
                     },
 
                     common: function (inputs, obj = {}, fees, clbk, p) {
+
                         if (!p) p = {};
 
                         var temp = self.sdk.node.transactions.temp;
