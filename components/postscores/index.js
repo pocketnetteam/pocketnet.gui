@@ -21,7 +21,7 @@ var postscores = (function(){
 						if (clbk)
 							clbk(false)
 
-							dialog({
+							new dialog({
 								html : self.app.localization.e('ratings123'),
 								btn1text :  self.app.localization.e('daccept'),
 								btn2text : self.app.localization.e('ucancel'),

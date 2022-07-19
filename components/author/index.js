@@ -92,7 +92,7 @@ var author = (function(){
 
 				self.app.mobile.vibration.small()
 
-				dialog({
+				new dialog({
 					html : self.app.localization.e('e13022'),
 					btn1text :  self.app.localization.e('unfollow'),
 					btn2text : self.app.localization.e('ucancel') ,
@@ -443,7 +443,7 @@ var author = (function(){
 					el.caption.find('.startchat').on('click', events.startchat)
 					el.caption.find('.unblocking').on('click', function(){
 		
-						dialog({
+						new dialog({
 							html : self.app.localization.e('e13023'),
 							btn1text : self.app.localization.e('unblock'),
 							btn2text : self.app.localization.e('ucancel'),

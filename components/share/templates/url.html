@@ -118,22 +118,6 @@
 				
 				</div>	
 
-				<% 
-				
-				if((typeof preview == 'undefined' || !preview) && info.data) {%>
-
-					<% if(info.data.views) {%>
-
-					<div class="statswrapperExtended">
-
-						<div><span class="label"><%=e('views')%>:</span> <span class="number"><%-info.data.views || 0%></span></div>
-
-					</div>
-
-					<% } %>
-
-				<% } %>
-
 				<% if(typeof video == 'undefined' || !video) { %> 
 					<div class="videoTips">
 						<div class="videoTip">
@@ -173,6 +157,24 @@
 
 			
 		</div>
+
+		<% if(meta.type == 'peertube' && (fullplayer || app.platform.sdk.usersettings.meta.embedvideo.value || (meta.type != 'youtube' && !window.cordova))) {%>
+
+			<% if((typeof preview == 'undefined' || !preview) && info.data) {%>
+
+				<% if(info.data.views) {%>
+
+					<div class="statswrapperExtended">
+
+						<div><span class="label"><%=e('views')%>:</span> <span class="number"><%-info.data.views || 0%></span></div>
+
+					</div>
+
+				<% } %>
+
+			<% } %>
+
+		<% } %>
 
 
 	<% } else { %> 

@@ -150,10 +150,10 @@ var test = (function(){
 
 				renders.options();
 			},
-			ref : function(resref){
+			ref : function(){
 
 
-				if (ref && firstTime){
+				if (ref && firstTime && !self.app.dsubref){
 					localStorage[self.app.platform.sdk.address.pnet().address + 'subscribeRef'] = ref.address										
 				}
 
@@ -372,7 +372,7 @@ var test = (function(){
 												
 												actions.upanel()
 
-												//actions.ref(resref)
+												actions.ref()
 
 												self.closeContainer()
 												
@@ -737,7 +737,7 @@ var test = (function(){
 
 					mdl.fastTemplate('addaddress', function(rendered){
 
-						dialog({
+						new dialog({
 							html : rendered,
 
 							wrap : true,

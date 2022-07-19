@@ -712,7 +712,7 @@ var userpage = (function(){
 							
 								if(self.app.mobile.update.needmanageinfo){
 
-									dialog({
+									new dialog({
 										class : 'zindex one',
 										html : self.app.mobile.update.needmanageinfo || 'empty',
 										btn1text : self.app.localization.e('dyes'),
