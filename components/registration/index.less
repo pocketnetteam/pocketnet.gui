@@ -518,9 +518,10 @@
 			}
 
 			.subc{
-				margin-top : 4 * @rhythm;
+				margin-top : 12 * @rhythm;
 				text-align: center;
 			}
+
 		}	
 
 		.welcome{
@@ -645,14 +646,6 @@
 			width: 100%;
 			text-align: center;
 
-			.icon{
-				margin-top: 1.5em;
-				font-size: 1.5em;
-				width: 246px;
-				margin-left: auto;
-				margin-right: auto;
-			}
-
 			.welcome_text{
 				margin-top: 2 * @rhythm;
 				font-size: 2em;
@@ -673,6 +666,7 @@
 		
 		
 				.wrk{
+					position: relative;
 					max-width: 185px;
 					width: 100%;
 					margin-bottom: 30px;
@@ -681,6 +675,178 @@
 						margin-left: @rhythm * 2;
 						margin-right: @rhythm * 2;
 					}
+
+					:nth-last-child(-n+4){
+
+						.modal .aboutWrapper{
+							-webkit-line-clamp: 6;
+							line-clamp: 6; 
+						}
+
+					}
+
+					.subscribeWrapper{
+						margin-top: 16px; 
+
+						.unsubscribeButton{
+							display: none;
+							font-size: 14px;
+							width: 140px;
+							background: rgb(var(--color-good));
+							border: 1px solid rgb(var(--color-good));
+
+							&:hover{
+								background: rgb(var(--background-total-theme));
+								color: rgb(var(--color-good));
+							}
+						}
+
+						.subscribeButton{
+							font-size: 14px;
+							width: 140px;
+						}
+
+						&.following{
+							.subscribeButton{
+								display: none;
+							}
+
+							.unsubscribeButton{
+								display: block;
+							}
+						}
+
+					}
+
+					.modal{
+						display: none;
+						border: 1px solid rgba(var(--color-medium-theme), 0.8);
+						top: -16px;
+						left: -63px;
+						cursor: default;
+						width: 308px;
+						position: absolute;
+						z-index: 9999;
+						right: 180px;
+						margin-top: 15px;
+						background: rgb(var(--background-total-theme));
+						border-radius: 12px;
+						padding: @rhythm * 2 @rhythm;
+		
+						.topInfo{
+	
+
+							.iconWrapper{
+
+								.usericon{
+									margin-left: auto;
+									margin-right: auto;
+									height: 45px;
+									width: 45px;
+								}
+							}
+
+							.label{
+								margin-top: 20px;
+								padding-left: 7px;
+
+								.name{
+									max-width: 300px!important;
+								}
+			
+								.reputation{
+									font-size: .8em;
+									color : #8E90A6;
+
+			
+									.value{
+										color: rgb(var(--color-bg-ac-bright));
+										font-weight: 700;
+									}
+								}
+							}
+
+
+						}
+						
+		
+		
+		
+						.follow{
+							display: flex;
+							padding : @rhythm @rhythm * 6;
+		
+							.followers{
+								padding-right: @rhythm * 3;
+							}
+		
+							.value{
+								font-weight: 700;
+							}
+						}
+		
+						.subscribeWrapper{
+							padding : @rhythm;
+		
+							button{
+								width: 100%;
+								border-radius: 8px;
+								padding: 8px 16px;
+		
+							}
+		
+							.unsubscribe{
+								display : none;
+								background : rgb(var(--color-good));
+								border : 1px solid rgb(var(--color-good));
+		
+								&:hover{
+									color: rgb(var(--color-good));
+									border : 1px solid rgb(var(--color-good));
+									background: #fff;
+								}
+							}
+			
+				
+							&.following{
+								.unsubscribe{
+									display : block;
+								}
+								
+								.subscribe{
+									display : none;
+								}
+							}
+						}
+		
+						.aboutWrapper{
+							padding : 0 @rhythm * 2;
+							overflow: hidden;
+							text-overflow: ellipsis;
+							display: -webkit-box;
+							-webkit-line-clamp: 12;
+							line-clamp: 12; 
+							-webkit-box-orient: vertical;
+						}
+
+		
+		
+					}
+
+					.iconWrapper{
+					
+						&:hover{
+
+							@media (pointer: fine){
+								.modal{
+									display: block;
+								}					
+							}
+	
+						}
+					}
+		
+
 					
 				}
 		
@@ -688,6 +854,7 @@
 					padding : @rhythm * 2;
 					border: 1px solid rgba(var(--color-medium-theme), 0.3);			
 					border-radius: 12px;
+					
 					
 		
 					.addressWrapper{
@@ -701,6 +868,11 @@
 		
 		
 							.icon{
+								margin-top: 1.5em;
+								font-size: 1.5em;
+								width: 246px;
+								margin-left: auto;
+								margin-right: auto;
 								display: flex;
 								justify-content: center;
 								align-items: center;
@@ -721,8 +893,8 @@
 		
 									.letter{
 										position: relative;
-										top: @rhythm;
-										font-size: @rhythm * 5;
+										top: @rhythm * 0.5;
+										font-size: @rhythm * 3;
 										text-align: center;
 									}
 								}
@@ -747,7 +919,7 @@
 								overflow: hidden;
 							}
 			
-							.subscribers{
+							.reputation{
 								font-size: .9em;
 		
 								.label{
@@ -760,39 +932,6 @@
 								}
 							}
 			
-			
-							.subscribeWrapper{
-								margin-top: 16px; 
-		
-								.unsubscribeButton{
-									display: none;
-									font-size: 14px;
-									width: 140px;
-									background: rgb(var(--color-good));
-									border: 1px solid rgb(var(--color-good));
-		
-									&:hover{
-										background: rgb(var(--background-total-theme));
-										color: rgb(var(--color-good));
-									}
-								}
-		
-								.subscribeButton{
-									font-size: 14px;
-									width: 140px;
-								}
-		
-								&.following{
-									.subscribeButton{
-										display: none;
-									}
-		
-									.unsubscribeButton{
-										display: block;
-									}
-								}
-		
-							}
 						}
 		
 		
@@ -896,7 +1035,7 @@
 			}
 
 			.subc{
-				margin-top : 4 * @rhythm;
+				margin-top : 12 * @rhythm;
 				text-align: center;
 			}
 		}
@@ -989,7 +1128,14 @@ html[theme="gray"]{
 			.cat{
 				font-size: .8em!important;
 			}
+
+			.bloggers{
+				.subc{
+					margin-top: @rhythm * 4;
+				}
+			}
 		}
+
 		
 	}
 

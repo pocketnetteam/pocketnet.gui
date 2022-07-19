@@ -749,7 +749,7 @@ var registration = (function(){
 					if (essenseData.welcomepart)
 						essenseData.welcomepart()
 
-					var bloggers = ['PKSV2KXCdEtTtYb8rF3xMMgiiKe1oDstXR', 
+					var bloggers = _.shuffle(['PKSV2KXCdEtTtYb8rF3xMMgiiKe1oDstXR', 
 									'PXXaSczoZcuJEwxYKhaC9pV1JBvwi6UjSw', 
 									'P9eLPo3gXUqBr7wgxDSSLNfyNMyeDua7cn',
 									'PVpSK2qQXmG1SjAMJVMAMRLUkrzMjsJouL',
@@ -758,8 +758,16 @@ var registration = (function(){
 									'PAVjp9nsNtgzUNF1VkUd74YzLaQHpv4g7v',
 									'PWvS62zsRm96Bw63qo9Adif97U18mLCpfN',
 									'PGQh5JW5c1shJTpi3iC2dkvov1pUqs1SqX',
-									'PXsjQA3fYDGCr1WwmNTNmrs9N7VA18gVuB'
-								];
+									'PXsjQA3fYDGCr1WwmNTNmrs9N7VA18gVuB',
+									'PJg4gur26sCRukHcn5aoDSRZTQF5dxTMUS',
+									"PQkNpRfXbCGXJ2o1mRfsJMvMtsvq3uvZU9",
+									'PUhvX53ueD2Sxa3q7av83vNcEHuS8M7kRS',
+									'PCfvhqHEYG3zdWXvLJrjPPDVK2H8qwwXn5',
+									'PGegspsgRqvMiZCP8PGufKMYBk3yekDaEE',
+									'PB8wu7hQwo5xMsVG4F4HshrW39t2Y4eN37',
+									'PKYwaiikhUoPWmpWmYec4Xf3TPWwJQCqUt',
+									'PSBhEi8AUasemizUHyJ64t6xXonsxwp73y'
+								]);
 
 					// var test = ['TE2SDWt8G8qdAowd6oMKmXeNh77AbaheaQ', 'TRWCZHGBgGBve3Ethz9wFnwqnfainFQpLj', 'TLnfXcFNxxrpEUUzrzZvbW7b9gWFtAcc8x', 'TQPBvaNUyEWoK9AfY7mUfx3BXZWE2fRXQd', 'TSVui5YmA3JNYvSjGK23Y2S8Rckb2eV3kn', 'TBknFE7we8YxY3g14UkKn93nZsraHCquHi', 'TVyYcQ4bUQt7D1SJ7m1AcgQPYVmMGVQGG6'];
 
@@ -784,7 +792,7 @@ var registration = (function(){
 					el.on('click', '.subscribeButton', events.subscribe);
 					el.on('click', '.unsubscribeButton', events.unsubscribe);
 
-					el.on('click', '.user [address]', events.showprofile)
+					el.on('click', '.user .iconWrapper', events.showprofile)
 
 					next.on('click', function(){
 
@@ -1020,20 +1028,31 @@ var registration = (function(){
 		var actions = {
 
 			showprofile: function(address){
-				self.nav.api.load({
-					open : true,
-					id : 'channel',
-					inWnd : true,
-					history : true,
 
-					essenseData : {
-						id : address,
-						openprofilebutton : true
-					}
-				})
+				if (isMobile()){
+
+					self.nav.api.load({
+						open : true,
+						id : 'channel',
+						inWnd : true,
+						history : true,
+	
+						essenseData : {
+							id : address,
+							followbutton : true,
+						},
+	
+						clbk : function(i, p){
+
+							p.el.on('click', '.subscribeButton', function() {events.subscribe(address, p.container.close)});
+							p.el.on('click', '.unsubscribeButton', function(){ events.unsubscribe(address, p.container.close)});
+						}
+					})
+				}
+
 			},
 
-			unsubscribe : function(address){
+			unsubscribe : function(address, clbk){
 
 				dialog({
 					html : self.app.localization.e('e13022'),
@@ -1047,11 +1066,15 @@ var registration = (function(){
 						self.app.platform.api.actions.unsubscribe(address, function(tx, err){
 
 							if(tx){
-								el.c.find('.user[address="'+address+'"] .subscribeWrapper').removeClass('following')
+								el.c.find('.user[address="'+address+'"] .subscribeWrapper').removeClass('following');
 							}
 							else
 							{
 								self.app.platform.errorHandler(err, true)	
+							}
+
+							if (clbk){
+								clbk();
 							}
 		
 						})
@@ -1061,7 +1084,7 @@ var registration = (function(){
 
 				
 			},
-			subscribe : function(address){
+			subscribe : function(address, clbk){
 
 				self.app.platform.api.actions.notificationsTurnOn(address, function(tx, err){
 
@@ -1072,6 +1095,10 @@ var registration = (function(){
 					else
 					{
 						self.app.platform.errorHandler(err, true)
+					}
+
+					if (clbk){
+						clbk();
 					}
 
 				})
@@ -1274,24 +1301,27 @@ var registration = (function(){
 		var events = {
 
 			showprofile : function(){
-				var address = $(this).attr('address');
-
-				console.log('showprofile', address);
+				var address = $(this).closest('.user').attr('address');
 
 				actions.showprofile(address)
 			},
 
-			unsubscribe : function(){
+			unsubscribe : function(address, clbk){
 
-				var address = $(this).closest('.user').attr('address')
+				if (!address){
+					address = $(this).closest('.user').attr('address')
+				}
 
-				actions.unsubscribe(address)
+				actions.unsubscribe(address, clbk)
 			},
 
-			subscribe : function(){
-				var address = $(this).closest('.user').attr('address')
+			subscribe : function(address, clbk){
+				
+				if (!address){
+					address = $(this).closest('.user').attr('address');
+				}
 
-				actions.subscribe(address)
+				actions.subscribe(address, clbk)
 			},
 
 			width : function(){

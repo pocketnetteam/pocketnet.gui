@@ -427,7 +427,7 @@
   width: 180px;
 }
 #registration .mWrapper .moneyfail .subc {
-  margin-top: 2em;
+  margin-top: 6em;
   text-align: center;
 }
 #registration .mWrapper .welcome {
@@ -530,13 +530,6 @@
   width: 100%;
   text-align: center;
 }
-#registration .mWrapper .bloggers .icon {
-  margin-top: 1.5em;
-  font-size: 1.5em;
-  width: 246px;
-  margin-left: auto;
-  margin-right: auto;
-}
 #registration .mWrapper .bloggers .welcome_text {
   margin-top: 1em;
   font-size: 2em;
@@ -554,6 +547,7 @@
   padding-right: 1em;
 }
 #registration .mWrapper .bloggers .usersHorizontal .wrk {
+  position: relative;
   max-width: 185px;
   width: 100%;
   margin-bottom: 30px;
@@ -561,6 +555,118 @@
 #registration .mWrapper .bloggers .usersHorizontal .wrk:nth-child(2n) {
   margin-left: 1em;
   margin-right: 1em;
+}
+#registration .mWrapper .bloggers .usersHorizontal .wrk :nth-last-child(-n+4) .modal .aboutWrapper {
+  -webkit-line-clamp: 6;
+  line-clamp: 6;
+}
+#registration .mWrapper .bloggers .usersHorizontal .wrk .subscribeWrapper {
+  margin-top: 16px;
+}
+#registration .mWrapper .bloggers .usersHorizontal .wrk .subscribeWrapper .unsubscribeButton {
+  display: none;
+  font-size: 14px;
+  width: 140px;
+  background: rgb(var(--color-good));
+  border: 1px solid rgb(var(--color-good));
+}
+#registration .mWrapper .bloggers .usersHorizontal .wrk .subscribeWrapper .unsubscribeButton:hover {
+  background: rgb(var(--background-total-theme));
+  color: rgb(var(--color-good));
+}
+#registration .mWrapper .bloggers .usersHorizontal .wrk .subscribeWrapper .subscribeButton {
+  font-size: 14px;
+  width: 140px;
+}
+#registration .mWrapper .bloggers .usersHorizontal .wrk .subscribeWrapper.following .subscribeButton {
+  display: none;
+}
+#registration .mWrapper .bloggers .usersHorizontal .wrk .subscribeWrapper.following .unsubscribeButton {
+  display: block;
+}
+#registration .mWrapper .bloggers .usersHorizontal .wrk .modal {
+  display: none;
+  border: 1px solid rgba(var(--color-medium-theme), 0.8);
+  top: -16px;
+  left: -63px;
+  cursor: default;
+  width: 308px;
+  position: absolute;
+  z-index: 9999;
+  right: 180px;
+  margin-top: 15px;
+  background: rgb(var(--background-total-theme));
+  border-radius: 12px;
+  padding: 1em 0.5em;
+}
+#registration .mWrapper .bloggers .usersHorizontal .wrk .modal .topInfo .iconWrapper .usericon {
+  margin-left: auto;
+  margin-right: auto;
+  height: 45px;
+  width: 45px;
+}
+#registration .mWrapper .bloggers .usersHorizontal .wrk .modal .topInfo .label {
+  margin-top: 20px;
+  padding-left: 7px;
+}
+#registration .mWrapper .bloggers .usersHorizontal .wrk .modal .topInfo .label .name {
+  max-width: 300px!important;
+}
+#registration .mWrapper .bloggers .usersHorizontal .wrk .modal .topInfo .label .reputation {
+  font-size: 0.8em;
+  color: #8E90A6;
+}
+#registration .mWrapper .bloggers .usersHorizontal .wrk .modal .topInfo .label .reputation .value {
+  color: rgb(var(--color-bg-ac-bright));
+  font-weight: 700;
+}
+#registration .mWrapper .bloggers .usersHorizontal .wrk .modal .follow {
+  display: flex;
+  padding: 0.5em 3em;
+}
+#registration .mWrapper .bloggers .usersHorizontal .wrk .modal .follow .followers {
+  padding-right: 1.5em;
+}
+#registration .mWrapper .bloggers .usersHorizontal .wrk .modal .follow .value {
+  font-weight: 700;
+}
+#registration .mWrapper .bloggers .usersHorizontal .wrk .modal .subscribeWrapper {
+  padding: 0.5em;
+}
+#registration .mWrapper .bloggers .usersHorizontal .wrk .modal .subscribeWrapper button {
+  width: 100%;
+  border-radius: 8px;
+  padding: 8px 16px;
+}
+#registration .mWrapper .bloggers .usersHorizontal .wrk .modal .subscribeWrapper .unsubscribe {
+  display: none;
+  background: rgb(var(--color-good));
+  border: 1px solid rgb(var(--color-good));
+}
+#registration .mWrapper .bloggers .usersHorizontal .wrk .modal .subscribeWrapper .unsubscribe:hover {
+  color: rgb(var(--color-good));
+  border: 1px solid rgb(var(--color-good));
+  background: #fff;
+}
+#registration .mWrapper .bloggers .usersHorizontal .wrk .modal .subscribeWrapper.following .unsubscribe {
+  display: block;
+}
+#registration .mWrapper .bloggers .usersHorizontal .wrk .modal .subscribeWrapper.following .subscribe {
+  display: none;
+}
+#registration .mWrapper .bloggers .usersHorizontal .wrk .modal .aboutWrapper {
+  padding: 0 1em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 12;
+  line-clamp: 12;
+  -webkit-box-orient: vertical;
+}
+@media (pointer: fine) {
+  #registration .mWrapper .bloggers .usersHorizontal .wrk .iconWrapper:hover .modal {
+    display: block;
+  }
 }
 #registration .mWrapper .bloggers .usersHorizontal .user {
   padding: 1em;
@@ -575,6 +681,11 @@
   cursor: pointer;
 }
 #registration .mWrapper .bloggers .usersHorizontal .user .addressWrapper .iconWrapper .icon {
+  margin-top: 1.5em;
+  font-size: 1.5em;
+  width: 246px;
+  margin-left: auto;
+  margin-right: auto;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -593,8 +704,8 @@
 }
 #registration .mWrapper .bloggers .usersHorizontal .user .addressWrapper .iconWrapper .icon .usericon .letter {
   position: relative;
-  top: 0.5em;
-  font-size: 2.5em;
+  top: 0.25em;
+  font-size: 1.5em;
   text-align: center;
 }
 #registration .mWrapper .bloggers .usersHorizontal .user .addressWrapper .userbody {
@@ -611,38 +722,14 @@
   white-space: nowrap;
   overflow: hidden;
 }
-#registration .mWrapper .bloggers .usersHorizontal .user .addressWrapper .userbody .subscribers {
+#registration .mWrapper .bloggers .usersHorizontal .user .addressWrapper .userbody .reputation {
   font-size: 0.9em;
 }
-#registration .mWrapper .bloggers .usersHorizontal .user .addressWrapper .userbody .subscribers .label {
+#registration .mWrapper .bloggers .usersHorizontal .user .addressWrapper .userbody .reputation .label {
   color: rgb(var(--color-medium-theme));
 }
-#registration .mWrapper .bloggers .usersHorizontal .user .addressWrapper .userbody .subscribers .value {
+#registration .mWrapper .bloggers .usersHorizontal .user .addressWrapper .userbody .reputation .value {
   color: rgb(var(--color-txt-ac));
-}
-#registration .mWrapper .bloggers .usersHorizontal .user .addressWrapper .userbody .subscribeWrapper {
-  margin-top: 16px;
-}
-#registration .mWrapper .bloggers .usersHorizontal .user .addressWrapper .userbody .subscribeWrapper .unsubscribeButton {
-  display: none;
-  font-size: 14px;
-  width: 140px;
-  background: rgb(var(--color-good));
-  border: 1px solid rgb(var(--color-good));
-}
-#registration .mWrapper .bloggers .usersHorizontal .user .addressWrapper .userbody .subscribeWrapper .unsubscribeButton:hover {
-  background: rgb(var(--background-total-theme));
-  color: rgb(var(--color-good));
-}
-#registration .mWrapper .bloggers .usersHorizontal .user .addressWrapper .userbody .subscribeWrapper .subscribeButton {
-  font-size: 14px;
-  width: 140px;
-}
-#registration .mWrapper .bloggers .usersHorizontal .user .addressWrapper .userbody .subscribeWrapper.following .subscribeButton {
-  display: none;
-}
-#registration .mWrapper .bloggers .usersHorizontal .user .addressWrapper .userbody .subscribeWrapper.following .unsubscribeButton {
-  display: block;
 }
 #registration .mWrapper .bloggers .usersHorizontal .user .addressWrapper .light {
   font-size: 0.7em;
@@ -713,7 +800,7 @@
   font-size: 4em;
 }
 #registration .mWrapper .bloggers .subc {
-  margin-top: 2em;
+  margin-top: 6em;
   text-align: center;
 }
 #registration .mWrapper .network {
@@ -770,6 +857,9 @@ html[theme="gray"] #registration .ucaptcha .captchaImage {
   }
   #registration .mWrapper .cat {
     font-size: 0.8em !important;
+  }
+  #registration .mWrapper .bloggers .subc {
+    margin-top: 2em;
   }
   .wndcontent #registration .categories .nextStepButtons {
     position: static;
