@@ -1044,8 +1044,8 @@ var registration = (function(){
 	
 						clbk : function(i, p){
 
-							p.el.on('click', '.subscribeButton', function() {events.subscribe(address, p.container.close)});
-							p.el.on('click', '.unsubscribeButton', function(){ events.unsubscribe(address, p.container.close)});
+							p.el.on('click', '.subscribeButton', function() {actions.subscribe(address, p.container.close)});
+							p.el.on('click', '.unsubscribeButton', function(){ actions.unsubscribe(address, p.container.close)});
 						}
 					})
 				}
@@ -1306,22 +1306,18 @@ var registration = (function(){
 				actions.showprofile(address)
 			},
 
-			unsubscribe : function(address, clbk){
+			unsubscribe : function(){
 
-				if (!address){
-					address = $(this).closest('.user').attr('address')
-				}
+				var address = $(this).closest('.user').attr('address')
 
-				actions.unsubscribe(address, clbk)
+				actions.unsubscribe(address)
 			},
 
-			subscribe : function(address, clbk){
+			subscribe : function(){
 				
-				if (!address){
-					address = $(this).closest('.user').attr('address');
-				}
+				var address = $(this).closest('.user').attr('address');			
 
-				actions.subscribe(address, clbk)
+				actions.subscribe(address);
 			},
 
 			width : function(){
