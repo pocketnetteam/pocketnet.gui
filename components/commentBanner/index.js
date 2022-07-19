@@ -5,7 +5,7 @@ const commentBanner = (function() {
 	const Essense = function(p) {
 		const primary = deep(p, 'history');
 
-		let anchor, el, essenseData, destroyDelay;
+		let el, destroyDelay;
 
 		const actions = {
 			dontShowAgain() {
@@ -57,8 +57,15 @@ const commentBanner = (function() {
 			},
 
 			destroy: function() {
-				if (el.c)
+				if (el.c) {
 					el.c.empty();
+				}
+
+				if (destroyDelay) {
+					clearTimeout(destroyDelay);
+					destroyDelay = null;
+				}
+
 				el = {};
 			},
 			

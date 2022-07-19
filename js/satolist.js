@@ -219,7 +219,7 @@ Platform = function (app, listofnodes) {
         'PVATJhZqKdYXLp1nmPdrssRhygJApmAALR' : true,
         'PJtnXwKNPDdEpJhaKH2fbPEyLrcS77oj46' : true,
         'PSoCtc8FbPaagG6spsqbS2HJjRM8oPG16b' : true,
-        'PPxDNqCB2oWp3JffCiRXwJTzxRQuRjb5Bc' : true, 
+        'PPxDNqCB2oWp3JffCiRXwJTzxRQuRjb5Bc' : true,
         'PVRWuvwCNfZWUUD5gQzDsqabnTcMXoqgbV' : true,
         'P8sSu2qFnVPGEtnSTKYRMUzuG3xBHsj3ms' : true,
         'PUF8bsAYyHZQCtaMbrTwyRDcC3wMLKhFFX' : true,
@@ -2733,6 +2733,9 @@ Platform = function (app, listofnodes) {
         showCommentBanner : function(contextElem) {
 
             let bannerCommentComponent = null;
+            if (!contextElem) {
+                return bannerCommentComponent;
+            }
 
             const createComponent = () => {
                 app.nav.api.load({
@@ -2752,12 +2755,13 @@ Platform = function (app, listofnodes) {
 
             const alreadyShowed = ('nextCommentBanner' in localStorage);
             const isBannerDisabled = (localStorage.nextCommentBanner == -1);
-            const timeToShowBanner = (localStorage.nextCommentBanner <= unixTimeNow);
+            const timeToShowBanner = (unixTimeNow >= localStorage.nextCommentBanner);
 
             const regDate = app.platform.sdk.user.me().regdate;
             const regUnixTime = (regDate.getTime());
             const registeredTime = Date.now() - regUnixTime;
 
+            const repeat = (localStorage.nextCommentBanner == 1);
             const isOneDayOld = (registeredTime >= oneDayInSeconds);
 
             if (isBannerDisabled) {
@@ -2767,21 +2771,18 @@ Platform = function (app, listofnodes) {
 
             if (!isOneDayOld) {
                 createComponent();
-                console.log('banner showbanner', bannerCommentComponent);
                 return bannerCommentComponent;
             }
 
-            if (!alreadyShowed) {
-                localStorage.nextCommentBanner = 1;
+            if (repeat && timeToShowBanner) {
+                localStorage.nextCommentBanner = unixTimeNow + oneDayInSeconds;
                 createComponent();
-                console.log('banner showbanner', bannerCommentComponent);
                 return bannerCommentComponent;
             }
 
             if (timeToShowBanner || !alreadyShowed) {
-                localStorage.nextCommentBanner = unixTimeNow + oneDayInSeconds;
+                localStorage.nextCommentBanner = 1;
                 createComponent();
-                console.log('banner showbanner', bannerCommentComponent);
                 return bannerCommentComponent;
             }
 
@@ -8263,7 +8264,7 @@ Platform = function (app, listofnodes) {
 
                         return self.sdk.sharesObserver.storage.viewed[key].new > 0
                     }
-                }   
+                }
             },
 
             view : function(key, first, last){
@@ -8282,14 +8283,14 @@ Platform = function (app, listofnodes) {
                     self.sdk.sharesObserver.storage.viewed[key].new = 0
 
                 }
-                    
+
 
                 if (!self.sdk.sharesObserver.storage.viewed[key].last || self.sdk.sharesObserver.storage.viewed[key].last > last)
                     self.sdk.sharesObserver.storage.viewed[key].last = last
 
                 self.sdk.sharesObserver.storage.viewed[key].time = new Date()
                 self.sdk.sharesObserver.storage.viewed[key].block = self.currentBlock || (self.app.api.getCurrentBlock ? self.app.api.getCurrentBlock() : 0)
-                
+
 
                 self.sdk.sharesObserver.save()
 
@@ -17512,7 +17513,7 @@ Platform = function (app, listofnodes) {
 
                         self.app.platform.sdk.node.shares.getbyid(txids, function (shares) {
 
-                            
+
                             self.app.platform.sdk.node.shares.users(shares, function(){
 
                                 shares = _.filter(shares, function(s){
@@ -17523,13 +17524,13 @@ Platform = function (app, listofnodes) {
                                     else{
                                     }
                                 })
-    
-    
+
+
                                 if (clbk)
                                     clbk(shares, null, p)
                             })
 
-                            
+
 
                         })
 
@@ -17573,13 +17574,13 @@ Platform = function (app, listofnodes) {
 
                     var n = -1
                     var uservout = _.find(tx.vout, (v) => {
-                        n ++ 
+                        n ++
                         return _.find(deep(v, 'scriptPubKey.addresses') || [], (a) => {
                             return a == address
                         })
                     })
-                    
-                    
+
+
                     /**/
                     var l = tx.vout.length
 
@@ -24313,7 +24314,7 @@ Platform = function (app, listofnodes) {
                     if(!slowMadeRelayTransactions)
 
                         slowMadeRelayTransactions = slowMade(function(){
-                            
+
                             platform.sdk.relayTransactions.send()
                             slowMadeRelayTransactions = null
 
@@ -26002,7 +26003,7 @@ Platform = function (app, listofnodes) {
                 txid: "65fee9b1e925833c5ff623178efecc436d3af0c9f6a4baa0b73c52907a9d1d7b"
             })*/
 
-            // test coin 
+            // test coin
 
             //self.messageHandler({"addr":"TSVui5YmA3JNYvSjGK23Y2S8Rckb2eV3kn","msg":"transaction","txid":"a6819e0de29c148a193932da4581b79cae02163f717962a86ccbf259f915a4be","time":1657701744,"amount":"1000000","nout":"2","node":"116.203.219.28:39091:6067"})
 
@@ -27212,7 +27213,7 @@ Platform = function (app, listofnodes) {
                 self.app.peertubeHandler = new PeerTubePocketnet(self.app);
             }
 
-            
+
 
             self.prepareUser(function() {
 
@@ -27348,7 +27349,7 @@ Platform = function (app, listofnodes) {
 
         checkfeatures()
 
-        
+
 
         app.user.isState(function(state){
 
@@ -27459,22 +27460,22 @@ Platform = function (app, listofnodes) {
                             self.ui.popup('application');
                         }
                         else{
-                            
+
                             var a = self.sdk.address.pnet()
-    
+
                             if (a){
                                 var regs = self.sdk.registrations.value(a.address)
-    
+
                                 if(!regs){
                                     self.ui.popup('application');
                                 }
                             }
-                            
+
                         }
                     }
-                    
+
                 }
-                
+
             })
         }, 30000)
 
