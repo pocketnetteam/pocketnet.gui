@@ -51,14 +51,14 @@ module.exports.__inject__ = function (shadowRoot) {
 // ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"476efc6e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/views/settings.vue?vue&type=template&id=205bee18&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"24656860-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/views/settings.vue?vue&type=template&id=205bee18&scoped=true&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"page settings"},[_c('topheader',{staticClass:"topheader"}),_c('maincontent',{scopedSlots:_vm._u([{key:"content",fn:function(){return [_c('settings')]},proxy:true}])})],1)}
 var staticRenderFns = []
 
 
 // CONCATENATED MODULE: ./src/views/settings.vue?vue&type=template&id=205bee18&scoped=true&
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"476efc6e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/settings/index.vue?vue&type=template&id=43d9722e&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"24656860-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/settings/index.vue?vue&type=template&id=43d9722e&scoped=true&
 var settingsvue_type_template_id_43d9722e_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:{mobile : !_vm.pocketnet},attrs:{"id":"settings"}},[_c('div',{staticClass:"infoPart"},_vm._l((_vm.settings),function(value){return _c('div',{class:'inputWrapper ' + value.id},[_c('div',{staticClass:"forInput"},[_c('toggle-button',{attrs:{"value":_vm.get_settings(value.id)},on:{"change":function (e) { return _vm.set_settings(value.id, e); }}})],1),_c('div',{staticClass:"label"},[_c('label',{attrs:{"for":'settings_' + value.id}},[_vm._v(_vm._s(_vm.$t(value.label)))])])])}),0)])}
 var settingsvue_type_template_id_43d9722e_scoped_true_staticRenderFns = []
 
@@ -73,7 +73,7 @@ var vuex_esm = __webpack_require__("2f62");
 /* harmony default export */ var settings_vue_type_script_lang_js_ = ({
   name: 'settings',
   props: {},
-  data: function data() {
+  data: function () {
     return {
       loading: false,
       settings: [{
@@ -89,47 +89,35 @@ var vuex_esm = __webpack_require__("2f62");
       }]
     };
   },
-  created: function created() {},
+  created: () => {},
   watch: {//$route: 'getdata'
   },
   computed: Object(vuex_esm["c" /* mapState */])({
-    auth: function auth(state) {
-      return state.auth;
-    },
-    themes: function themes(state) {
-      return state.themes;
-    },
-    theme: function theme(state) {
-      return state.theme;
-    },
-    settings_pin: function settings_pin(state) {
-      return state.pinchat;
-    },
-    settings_read: function settings_read(state) {
-      return !state.dontreadreceipts;
-    },
-    pocketnet: function pocketnet(state) {
-      return state.pocketnet;
-    }
+    auth: state => state.auth,
+    themes: state => state.themes,
+    theme: state => state.theme,
+    settings_pin: state => state.pinchat,
+    settings_read: state => !state.dontreadreceipts,
+    pocketnet: state => state.pocketnet
   }),
   methods: {
-    setTheme: function setTheme(evt) {
+    setTheme: function (evt) {
       var theme = evt.target.value;
       this.$store.commit('theme', {
         value: theme,
         root: this.$root.$el
       });
     },
-    set_settings_pin: function set_settings_pin(value) {
+    set_settings_pin: function (value) {
       this.$store.commit('pinchat', value);
     },
-    set_settings_read: function set_settings_read(value) {
+    set_settings_read: function (value) {
       this.$store.commit('dontreadreceipts', !value);
     },
-    set_settings: function set_settings(id, e) {
+    set_settings: function (id, e) {
       return this['set_settings_' + id](e.value);
     },
-    get_settings: function get_settings(id) {
+    get_settings: function (id) {
       return this['settings_' + id];
     }
   }
@@ -164,7 +152,7 @@ var component = Object(componentNormalizer["a" /* default */])(
 )
 
 /* harmony default export */ var settings = (component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"476efc6e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/settings/topheader/index.vue?vue&type=template&id=7cd6d492&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"24656860-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/settings/topheader/index.vue?vue&type=template&id=7cd6d492&scoped=true&
 var topheadervue_type_template_id_7cd6d492_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{attrs:{"id":"settingsTopheader"}},[_c('topheader',{scopedSlots:_vm._u([{key:"left",fn:function(){return [_c('backButton',{attrs:{"action":"back"}})]},proxy:true},{key:"info",fn:function(){return [_c('span',[_vm._v(_vm._s(_vm.$t("caption.settings")))])]},proxy:true},{key:"right",fn:function(){return undefined},proxy:true}])})],1)}
 var topheadervue_type_template_id_7cd6d492_scoped_true_staticRenderFns = []
 
@@ -176,18 +164,16 @@ var topheadervue_type_template_id_7cd6d492_scoped_true_staticRenderFns = []
 /* harmony default export */ var topheader_vue_type_script_lang_js_ = ({
   name: 'settingsTopheader',
   props: {},
-  data: function data() {
+  data: function () {
     return {
       loading: false
     };
   },
-  created: function created() {},
+  created: () => {},
   watch: {//$route: 'getdata'
   },
   computed: Object(vuex_esm["c" /* mapState */])({
-    auth: function auth(state) {
-      return state.auth;
-    }
+    auth: state => state.auth
   }),
   methods: {}
 });
@@ -253,15 +239,13 @@ var topheader_component = Object(componentNormalizer["a" /* default */])(
     topheader: topheader
   },
   computed: Object(vuex_esm["c" /* mapState */])({
-    pocketnet: function pocketnet(state) {
-      return state.pocketnet;
-    },
-    minimized: function minimized(state) {
-      return state.minimized;
-    }
+    pocketnet: state => state.pocketnet,
+    minimized: state => state.minimized
   }),
   methods: {},
-  mounted: function mounted() {}
+
+  mounted() {}
+
 });
 // CONCATENATED MODULE: ./src/views/settings.vue?vue&type=script&lang=js&
  /* harmony default export */ var views_settingsvue_type_script_lang_js_ = (settingsvue_type_script_lang_js_); 

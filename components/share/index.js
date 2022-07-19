@@ -400,7 +400,7 @@ var share = (function(){
 				if (type === 'addVideo') {
 
 					if(currentShare.images.v.length){
-						dialog({
+						new dialog({
 							html : self.app.localization.e('removeimageswhenvideo'),
 							btn1text : self.app.localization.e('dyes'),
 							btn2text : self.app.localization.e('dno'),
@@ -450,7 +450,7 @@ var share = (function(){
 
 				if(type == 'times'){
 
-					dialog({
+					new dialog({
 						html : self.app.localization.e('e14002'),
 						btn1text : self.app.localization.e('dyes'),
 						btn2text : self.app.localization.e('dno'),
@@ -656,7 +656,7 @@ var share = (function(){
 
 
 				setTimeout(function(){
-					dialog({
+					new dialog({
 						html : self.app.localization.e('removevideoShareQuestion'),
 						btn1text : self.app.localization.e('removevideoShareQuestionDelete'),
 						btn2text : self.app.localization.e('removevideoShareQuestionLeave'),
@@ -865,7 +865,7 @@ var share = (function(){
 
 						// 	topPreloader(100)
 
-						// 	dialog({
+						// 	new dialog({
 						// 		html : self.app.localization.e('videotranscodingdelayedpost'),
 						// 		btn1text : self.app.localization.e('daccept'),
 						// 		class : "zindex one",
@@ -1188,7 +1188,7 @@ var share = (function(){
 
 				self.fastTemplate('sharedate', function(html){
 
-					dialog({
+					new dialog({
 						html : html,
 
 						btn1text : self.app.localization.e('daccept'),
@@ -1252,7 +1252,7 @@ var share = (function(){
 
 				if (type == 'p'){
 
-					dialog({
+					new dialog({
 						html : self.app.localization.e('sharenow'),
 						btn1text : self.app.localization.e('dyes'),
 						btn2text : self.app.localization.e('dno'),
@@ -1358,7 +1358,7 @@ var share = (function(){
 				var error = actions.error();
 
 				if (external && external.uploading()) {
-					dialog({
+					new dialog({
 						html : "Video is still uploading. Do you want to cancel it?",
 						btn1text : "Wait",
 						btn2text : "Cancel uploading",
@@ -1397,7 +1397,7 @@ var share = (function(){
 
 				if (type == 'poll'){
 
-					dialog({
+					new dialog({
 						header: "Create new poll",
 						class : "one joinbeta zindex",
 						poll: true,

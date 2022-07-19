@@ -81,7 +81,17 @@ var PeertubeRequest = function (app = {}) {
 					return Promise.resolve(r.text());
 				}
 
-				return r.text().then((data) => (data ? JSON.parse(data) : {}));
+				return r.text().then((data) => {
+					var v = {}
+
+					try{
+						v = data ? JSON.parse(data) : {}
+					}catch(e) {
+						return Promise.reject('Unable parse: ' + (data || "Empty data"))
+					}
+
+					return Promise.resolve(v)
+				});
 			})
 			.then((result) => {
 				if (resp.ok) {
@@ -437,6 +447,8 @@ PeerTubePocketnet = function (app) {
 
 					return (typeof proxyAxios != 'undefined' ? proxyAxios : axios)({ method, url, data, ...axiosoptions })
 						.then((r) => {
+
+
 							if (meta.fullreport) {
 								return r;
 							}
@@ -478,7 +490,11 @@ PeerTubePocketnet = function (app) {
 					meta.path + params,
 					data,
 					requestoptions,
-				).catch((err, data) => {
+				).then(data => {
+
+
+					return Promise.resolve(data)
+				}).catch((err, data) => {
 					return Promise.reject(err);
 				});
 			}).catch(e => {
@@ -1014,6 +1030,8 @@ PeerTubePocketnet = function (app) {
 						return Promise.resolve(r);
 					}
 
+					console.log("R", r)
+
 					return Promise.reject(error('videoQuotaUsedDaily'));
 				});
 			},
@@ -1052,6 +1070,8 @@ PeerTubePocketnet = function (app) {
 						videoQuota: deep(r, 'videoQuota'),
 						username: deep(r, 'username'),
 					};
+
+					console.log("R", r)
 
 					if (!data.channelId || !data.videoQuotaDaily)
 						return Promise.reject(error('usersMe'));
@@ -1102,6 +1122,9 @@ PeerTubePocketnet = function (app) {
 					},
 				)
 					.then(({ client_id, client_secret }) => {
+
+						console.log('client_id, client_secret', client_id, client_secret)
+
 						if (!client_id || !client_secret) {
 							return Promise.reject(error('oauthClientsLocal'));
 						}
