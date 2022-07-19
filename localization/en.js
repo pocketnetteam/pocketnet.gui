@@ -89,7 +89,7 @@ ____loclib.continue = "continue";
 
 ____loclib.chooseThemes = "Choose interesting themes";
 ____loclib.bloggers = "Bloggers";
-____loclib.chooseBloggers = "Subscribe interesting bloggers";
+____loclib.chooseBloggers = "Follow Popular Bloggers";
 ____loclib.showmorebloggers = "Show more bloggers";
 //user page
 
