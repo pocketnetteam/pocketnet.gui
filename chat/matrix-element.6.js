@@ -788,7 +788,7 @@ var recordProgressvue_type_template_id_5cbd823e_scoped_true_staticRenderFns = []
     resize() {
       let timer = null;
 
-      function re() {
+      var re = () => {
         if (!timer) {
           timer = setTimeout(() => {
             timer = null;
@@ -796,9 +796,9 @@ var recordProgressvue_type_template_id_5cbd823e_scoped_true_staticRenderFns = []
             this.width = width - width % 100;
           }, 50);
         }
-      }
+      };
 
-      re.call(this);
+      re();
     },
 
     draw() {
