@@ -30,15 +30,15 @@
 		%>
 			<div class="wrk">
 	
-				<div class="user" address="<%-address%>">
-					<div class="addressWrapper" address="<%-address%>">
-						<div class="iconWrapper">
+				<div class="user">
+					<div class="addressWrapper">
+						<div class="iconWrapper" address="<%-address%>">
 							
-							<a href="<%-app.platform.api.authorlink(address)%>" mobilepreview='{"id":"channel", "essenseData":{"id":"<%-address%>", "openprofilebutton":true}}'>
+							<div href="<%-app.platform.api.authorlink(address)%>" mobilepreview='{"id":"channel", "essenseData":{"id":"<%-address%>", "openprofilebutton":true}}'>
 								<div class="icon">
-	
+									
+									<div class="usericon">
 									<% 
-	
 										var src = u.i;
 										var name = u.name
 										var letter = name ? name[0] : ''; 
@@ -49,27 +49,35 @@
 	
 										<img class="usericonQ" src="<%-src || '*'%>">
 	
-										<% } else if(!src && letter) {%>
-											<div class="usericon">
-												<span class="letter">
-													<%-letter.toUpperCase()%>
-												</span>
-											</div>
+									<% } else if(!src && letter) {%>
+										<div class="usericon">
+											<span class="letter">
+												<%-letter.toUpperCase()%>
+											</span>
+										</div>
+
+									<% } else if (!src) { %>
+				
+										<svg width="30" height="30" data-jdenticon-value="<%-address%>"></svg>
+				
+									<% } %>
+
+									<% if(app.platform.ui.markUser) {%>
+
+										<%= app.platform.ui.markUser(address)%>
 	
-										<% } else if (!src) { %>
-					
-											<svg width="30" height="30" data-jdenticon-value="<%-address%>"></svg>
-					
-										<% } %>
+									<% } %>
+									</div>
+
 								</div>
-							</a>
+							</div>
 						</div>
 	
 						<div class="userbody">
 							<div class="name">
-								<a href="<%-app.platform.api.authorlink(address)%>" mobilepreview='{"id":"channel", "essenseData":{"id":"<%-address%>", "openprofilebutton":true}}'>
+								<div href="<%-app.platform.api.authorlink(address)%>" address="<%-address%>" mobilepreview='{"id":"channel", "essenseData":{"id":"<%-address%>", "openprofilebutton":true}}'>
 									<%- u.name %>		
-								</a>					
+								</div>					
 							</div>		
 							<% var s = u.subscribers_count || 0 %>
 		

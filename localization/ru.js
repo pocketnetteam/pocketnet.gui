@@ -87,7 +87,7 @@ ____loclib.continue = "Продолжить";
 
 ____loclib.chooseThemes = "Выберите темы, которые Вам интересны";
 ____loclib.bloggers = "Блогеры";
-____loclib.chooseBloggers = "Подпишитесь на блогеров, которые Вам интересны";
+____loclib.chooseBloggers = "Подпишитесь на популярных блоггеров";
 ____loclib.showmorebloggers = "Показать больше блогеров";
 //user page
 

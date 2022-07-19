@@ -784,6 +784,8 @@ var registration = (function(){
 					el.on('click', '.subscribeButton', events.subscribe);
 					el.on('click', '.unsubscribeButton', events.unsubscribe);
 
+					el.on('click', '.user [address]', events.showprofile)
+
 					next.on('click', function(){
 
 						actions.next()
@@ -1017,6 +1019,20 @@ var registration = (function(){
 
 		var actions = {
 
+			showprofile: function(address){
+				self.nav.api.load({
+					open : true,
+					id : 'channel',
+					inWnd : true,
+					history : true,
+
+					essenseData : {
+						id : address,
+						openprofilebutton : true
+					}
+				})
+			},
+
 			unsubscribe : function(address){
 
 				dialog({
@@ -1047,7 +1063,7 @@ var registration = (function(){
 			},
 			subscribe : function(address){
 
-				self.app.platform.api.actions.subscribeWithDialog(address, function(tx, err){
+				self.app.platform.api.actions.notificationsTurnOn(address, function(tx, err){
 
 					if(tx){
 
@@ -1059,6 +1075,20 @@ var registration = (function(){
 					}
 
 				})
+				 
+
+				// self.app.platform.api.actions.subscribeWithDialog(address, function(tx, err){
+
+				// 	if(tx){
+
+				// 		el.c.find('.user[address="'+address+'"] .subscribeWrapper').addClass('following')
+				// 	}
+				// 	else
+				// 	{
+				// 		self.app.platform.errorHandler(err, true)
+				// 	}
+
+				// })
 			},
 
 			preloader : function(sh){
@@ -1242,6 +1272,14 @@ var registration = (function(){
 		}
 
 		var events = {
+
+			showprofile : function(){
+				var address = $(this).attr('address');
+
+				console.log('showprofile', address);
+
+				actions.showprofile(address)
+			},
 
 			unsubscribe : function(){
 
