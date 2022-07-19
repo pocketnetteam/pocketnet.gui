@@ -25,7 +25,8 @@ const commentBanner = (function() {
 			closeBanner() {
 				el.c.removeClass('show');
 				destroyDelay = setTimeout(() => {
-					el.c.empty();
+					if (el.c)
+						el.c.empty();
 				}, 1000);
 
 				el.c.off('click');
@@ -56,7 +57,8 @@ const commentBanner = (function() {
 			},
 
 			destroy: function() {
-				el.c.empty();
+				if (el.c)
+					el.c.empty();
 				el = {};
 			},
 			
