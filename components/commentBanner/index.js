@@ -47,11 +47,6 @@ const commentBanner = (function() {
 			el.c.on('click', '.closeBannerBtn', renders.closeBanner)
 		};
 
-		const destroyEvents = function() {
-			el.c.off('click', '.noShowAgain', actions.dontShowAgain)
-			el.c.off('click', '.closeBannerBtn', renders.closeBanner)
-		};
-
 		return {
 			primary: primary,
 
@@ -65,13 +60,6 @@ const commentBanner = (function() {
 				if (el.c)
 					el.c.empty();
 				el = {};
-
-				if (destroyDelay)
-					clearTimeout(destroyDelay)
-
-					destroyDelay = null
-
-					destroyEvents()
 			},
 			
 			init: function(p) {
