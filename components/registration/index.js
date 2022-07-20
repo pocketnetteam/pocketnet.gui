@@ -786,7 +786,8 @@ var registration = (function(){
 						'PGegspsgRqvMiZCP8PGufKMYBk3yekDaEE',
 						'PB8wu7hQwo5xMsVG4F4HshrW39t2Y4eN37',
 						'PKYwaiikhUoPWmpWmYec4Xf3TPWwJQCqUt',
-						'PSBhEi8AUasemizUHyJ64t6xXonsxwp73y'
+						'PSBhEi8AUasemizUHyJ64t6xXonsxwp73y',
+						'PLZsQmsRUDMJGc61pGMLdDQ58UuqQ8kU5Z'
 					];
 
 					var bloggers = _.shuffle(self.app.test ? testBloggers : prodBloggers);
