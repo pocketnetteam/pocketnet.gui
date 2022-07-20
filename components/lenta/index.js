@@ -2380,10 +2380,12 @@ var lenta = (function(){
 									if(!el.share[id]) return
 	
 									self.app.platform.effects.templates.commentstars(el.share[id], value, function(){
-										if (initedcommentes[id]){
-											initedcommentes[id].attention(self.app.localization.e('starssendcomment' + reason))
-										}
+										
 									})
+
+									if (initedcommentes[id]){
+										initedcommentes[id].attention(self.app.localization.e('starssendcomment' + reason))
+									}
 	
 								}, 300)
 							}
