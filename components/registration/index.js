@@ -899,12 +899,18 @@ var registration = (function(){
 
 					var ch = function(){
 
+						globalpreloader(true)
+
 
 						self.app.platform.sdk.node.transactions.get.allBalance(function(amount){
 							
 							topPreloader(100);
 
+							setTimeout(() => {
+								globalpreloader(false)
+							}, 500)
 
+							
 	
 							b()
 							
@@ -915,7 +921,12 @@ var registration = (function(){
 					b()
 
 					el.find('.tryagain').on('click', function(){
+
+						globalpreloader(true)
+
 						balance.request(function(r){
+
+							globalpreloader(false)
 
 							if(r){
 								actions.next()
