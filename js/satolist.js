@@ -277,7 +277,8 @@ Platform = function (app, listofnodes) {
         'PGvRUM7jXqHdUn7Let2QyTi1t2LHq7RgX7',
         'P9EkPPJPPRYxmK541WJkmH8yBM4GuWDn2m',
         'PReLEpaGEGTCeWKiqnK85eXrqmmTxYQ9Tw',
-        'TAqR1ncH95eq9XKSDRR18DtpXqktxh74UU'
+        'TAqR1ncH95eq9XKSDRR18DtpXqktxh74UU',
+        'PP6bNhVaXy7YK19UbLHXbQPKa7oV4yx1rr',
     ];
     self.whiteList = [
       'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd',
