@@ -858,9 +858,6 @@ ModFlag = function(){
 	
 
 	self.validation = function(){
-		if(!self.s2.v){
-			return 'share'
-		}
 
 		if(!self.s3.v){
 			return 'address'
@@ -1956,6 +1953,7 @@ pUserInfo = function(){
 
 		if (v.blocking) self.blocking = v.blocking;
 		if (v.flags) self.flags = v.flags;
+		if (v.hash) self.hash = v.hash;
 		if (v.firstFlags) self.firstFlags = v.firstFlags;
 
 		self.keys = (v.k || v.keys || '')

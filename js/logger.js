@@ -72,6 +72,10 @@ class FrontendLogger {
       id: 'BEST_VIDEO_CLICKED',
       description: 'One of the best videos selected',
     },
+    USER_COMPLAIN : {
+      id: 'USER_COMPLAIN',
+      description: 'user send complain'
+    }
 
     SESSION_STARTED: {
       id: 'SESSION_STARTED',
@@ -178,16 +182,16 @@ class FrontendLogger {
     let errorBody;
 
     try {
+      const serverResponse = deep(error, 'payload.response.data') || error.payload;
       errorBody = JSON.stringify(
-        error.payload,
-        Object.getOwnPropertyNames(error.payload),
+        serverResponse,
+        Object.getOwnPropertyNames(serverResponse),
       );
     } catch (errorFormat) {
       errorBody = `{ "error": "Unable to stringify received error. Report: ${errorFormat}", "type": "ERROR_PROCESSING_FAILED"}`;
     }
 
     const formattedError = { ...error, guid, userAgent, payload: errorBody };
-    debugger;
 
     _errorsCache.push(formattedError);
   }
@@ -264,6 +268,7 @@ class FrontendLogger {
       userAgent,
       language,
     };
+
 
     if (_addLogWithAggregation[infoType]) {
       _addLogWithAggregation[infoType](info, _logsCache);

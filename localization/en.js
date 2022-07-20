@@ -1,4 +1,4 @@
-﻿
+
 var appname = window.pocketnetproject || "Pocketnet"
 
 if(typeof loclib == "undefined" || !loclib)
@@ -272,6 +272,11 @@ ____loclib.lprivatepublic = "Do you want to make a Private or Public subscriptio
 ____loclib.lprivate = "Private";
 ____loclib.lpublic = "Public";
 
+//inviteComment
+____loclib.commentBannerTitle = "Comment on this post";
+____loclib.commentBannerDescription = "Commenting unlocks features on Bastyon and helps you find friends 😀";
+____loclib.dontShowAgain = "Don't show again";
+
 //share
 ____loclib.newShare = "New Post";
 ____loclib.firstShare = "Share Your First Post in "+appname+"";
@@ -499,6 +504,7 @@ ____loclib.e13038 = "Comment Now"
 ____loclib.e13039 = "Comment Now"
 ____loclib.e13040 = "You do not have commenting priviliges"
 ____loclib.complain = "Complain"
+____loclib.complain_success =  "Your complaint has been successfully submitted"
 ____loclib.next = "Next"
 ____loclib.post = "Post"
 ____loclib.e13041 = ""+appname+" Connection"
@@ -690,9 +696,9 @@ ____loclib.repost = "Repost"
 ____loclib.reposted = "Repost"
 ____loclib.e13160 = "Hello Pocketeers!"
 
-____loclib.e13161 = "Add Tags For Your Post"
-____loclib.e13162 = "You can enter less than 5 tags"
-____loclib.e13163 = "There aren't changes in Post"
+____loclib.e13161 = "Add tags for your post"
+____loclib.e13162 = "You can enter a maximum of 5 tags"
+____loclib.e13163 = "There are no changes in the post"
 ____loclib.e13164 = "Please add a few words to tell Pocketpeople about your link. What is it about? Why is it important? What is your opinion?"
 ____loclib.e13165 = "Your link to video is invalid. Please load valid video URL."
 ____loclib.e13166 = "You rescued"
@@ -706,9 +712,9 @@ ____loclib.e13171 = "Great news. I gained my independence from social media mono
 ____loclib.e13172 = "I want to invite you to a new decentralized blockchain social called "+appname+"! You will find a ton of interesting stuff and if you sign up, both of us will get Pocketcoin cryptocurrency bonus!"
 ____loclib.e13173 = "Send by email"
 ____loclib.e13174 = "Social sharing"
-____loclib.e13175 = "Popular Tags"
-____loclib.e13176 = "Address Type"
-____loclib.e13177 = "Upload Photo"
+____loclib.e13175 = "Popular tags"
+____loclib.e13176 = "Address type"
+____loclib.e13177 = "Upload photo"
 
 ____loclib.requiredfields = "required fields"
 ____loclib.e13178 = "Not linked to your profile"
@@ -2233,3 +2239,8 @@ ____loclib.postInRelay = "This post is being processed before publishing to bloc
 
 ____loclib.continuesubscribefeedCaption = "Would you like to continue seeing posts from the people you follow?"
 ____loclib.continuesubscribefeedButton = "Continue in the subscription feed"
+
+____loclib['dust (code 64)'] = "You are trying to send an amount too small, it cannot be done"
+
+____loclib.videoNameIsIncorrectShort = "Video name should be at least 3 characters long"
+____loclib.videoNameIsIncorrectLong = "Video name should be no more than 120 characters long"
