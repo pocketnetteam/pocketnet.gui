@@ -2283,6 +2283,8 @@ Platform = function (app, listofnodes) {
 
             if(!_.isArray(ids)) ids = [ids]
 
+            console.log("IDS", ids)
+
             app.nav.api.load({
 
                 open : true,
