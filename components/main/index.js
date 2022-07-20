@@ -66,7 +66,7 @@ var main = (function(){
 
 			{
 				link : "index?r=recommended",
-				label : () => self.app.localization.e('e13138'),
+				label : () => self.app.localization.e('discussed'),
 				value : 'recommended'
 			},
 		]
