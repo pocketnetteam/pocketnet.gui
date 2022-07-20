@@ -244,8 +244,12 @@ Platform = function (app, listofnodes) {
         'PQkNpRfXbCGXJ2o1mRfsJMvMtsvq3uvZU9' : true,
         'PGegspsgRqvMiZCP8PGufKMYBk3yekDaEE' : true,
         'PB8wu7hQwo5xMsVG4F4HshrW39t2Y4eN37' : true,
+        'PSBhEi8AUasemizUHyJ64t6xXonsxwp73y' : true,
         'PKYwaiikhUoPWmpWmYec4Xf3TPWwJQCqUt' : true,
-        'PSBhEi8AUasemizUHyJ64t6xXonsxwp73y' : true
+        'PST4P2KEweDQJ2RAtG3scUmXAgPJJ5JJRL' : true,
+        'PCfvhqHEYG3zdWXvLJrjPPDVK2H8qwwXn5' : true,
+        'PLZsQmsRUDMJGc61pGMLdDQ58UuqQ8kU5Z' : true
+
 
     }
 
