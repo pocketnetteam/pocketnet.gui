@@ -21,6 +21,10 @@
 			var followers = u.subscribers_count;
 			var following  = u.subscribes_count;
 			var about = u.a;
+			var src = u.i;
+			var name = u.name
+			var letter = name ? name[0] : ''; 
+			var r = u.reputation;
 	
 			if (me && me.relation(address, 'subscribes')){ _class="following" };
 	
@@ -37,10 +41,6 @@
 								
 								<div class="usericon">
 								<% 
-									var src = u.i;
-									var name = u.name
-									var letter = name ? name[0] : ''; 
-									var r = u.reputation;
 
 									if (src){
 								%>
@@ -70,58 +70,60 @@
 							</div>
 							<div class="modal">
 								<div class="topInfo">
-									<div address="<%-address%>">
-										<div class="iconWrapper">
-											<div>
-												<div class="icon">
-							
-													<div class="usericon" image="<%-src || ''%>">
-							
-														<% if(!src && letter) {%>
-							
-															<span class="letter">
-																<%-letter.toUpperCase()%>
-															</span>
-									
-														<% } else if (!src) { %>
-									
-															<svg width="30" height="30" data-jdenticon-value="<%-address%>"></svg>
-									
-														<% } %>
+									<div class="iconWrapper">
+										<div class="icon">
+								
+											<div class="usericon">
+											<% 
 			
-														<% if(app.platform.ui.markUser) {%>
+												if (src){
+											%>
 			
-															<%= app.platform.ui.markUser(address)%>
+												<img class="usericonQ" src="<%-src || '*'%>">
+			
+											<% } else if(!src && letter) {%>
+												<div class="usericon">
+													<span class="letter">
+														<%-letter.toUpperCase()%>
+													</span>
+												</div>
+			
+											<% } else if (!src) { %>
 						
-														<% } %>
+												<svg width="30" height="30" data-jdenticon-value="<%-address%>"></svg>
+						
+											<% } %>
 			
-													</div>
-												</div>
+											<% if(app.platform.ui.markUser) {%>
+			
+												<%= app.platform.ui.markUser(address)%>
+			
+											<% } %>
 											</div>
+			
 										</div>
-										<div class="label">
-											<div>
-							
-												<div class="top">
-													<div class="name">
-														<%- u.name %>							
-													</div>		
-							
-													<% if (r) {%>
-							
-													<% } %>
-							
-												</div>	
-							
-												<div class="reputation">
-													<%=e('reputation') %> <span class="value"><%- Number(r).toFixed(0) %></span> 
-												</div>
-							
-							
-											</div>			
-							
-										</div>
-							
+									</div>
+									<div class="label">
+										<div>
+						
+											<div class="top">
+												<div class="name">
+													<%- u.name %>							
+												</div>		
+						
+												<% if (r) {%>
+						
+												<% } %>
+						
+											</div>	
+						
+											<div class="reputation">
+												<%=e('reputation') %> <span class="value"><%- Number(r).toFixed(0) %></span> 
+											</div>
+						
+						
+										</div>			
+						
 									</div>
 								</div>				
 								<div class="follow">
