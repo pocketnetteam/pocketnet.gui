@@ -236,17 +236,13 @@ var recommendations = (function(){
 
 		var make = function(loader, clbk){
 
-			console.log("HERE")
 			
 			load.contents(loader, function(recommendations){
-				console.log("HERE4")
 				renders.list(recommendations, function(_p){
-					console.log("HERE54")
 					load.info(recommendations, function(){
 						renders.lazyinfo(recommendations, _p)
 					})
 
-					console.log("HERE2")
 
 					if(clbk) clbk()
 
@@ -263,7 +259,6 @@ var recommendations = (function(){
 				making = true
 				el.c.addClass('loading')
 
-				console.log('needmake', needmake)
 
 				make(needmake[0], function(){
 					el.c.removeClass('loading')
@@ -356,8 +351,6 @@ var recommendations = (function(){
 				el.c = p.el.find('#' + self.map.id);
 
 				initEvents()
-
-				console.log('ed.startload', ed.startload)
 
 
 				if (ed.startload)

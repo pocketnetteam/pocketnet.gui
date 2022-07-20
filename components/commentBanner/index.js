@@ -5,7 +5,7 @@ const commentBanner = (function() {
 	const Essense = function(p) {
 		const primary = deep(p, 'history');
 
-		let anchor, el, essenseData, destroyDelay;
+		let el, destroyDelay;
 
 		const actions = {
 			dontShowAgain() {
@@ -25,7 +25,9 @@ const commentBanner = (function() {
 			closeBanner() {
 				el.c.removeClass('show');
 				destroyDelay = setTimeout(() => {
-					el.c.empty();
+					if (el.c) {
+						el.c.empty();
+					}
 				}, 1000);
 
 				el.c.off('click');
@@ -46,6 +48,11 @@ const commentBanner = (function() {
 			el.c.on('click', '.closeBannerBtn', renders.closeBanner)
 		};
 
+		const destroyEvents = function() {
+			el.c.off('click', '.noShowAgain', actions.dontShowAgain)
+			el.c.off('click', '.closeBannerBtn', renders.closeBanner)
+		};
+
 		return {
 			primary: primary,
 
@@ -56,8 +63,18 @@ const commentBanner = (function() {
 			},
 
 			destroy: function() {
-				el.c.empty();
+				if (el.c) {
+					el.c.empty();
+				}
+
+				if (destroyDelay) {
+					clearTimeout(destroyDelay);
+					destroyDelay = null;
+				}
+
 				el = {};
+
+				destroyEvents()
 			},
 			
 			init: function(p) {

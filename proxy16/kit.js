@@ -198,8 +198,8 @@ var defaultSettings = {
 		addresses : {
 			registration : {
 				privatekey : "",
-				amount : 0.0002,
-				outs : 10,
+				amount : 0.0006,
+				outs : 30,
 				check : 'ipAndUniqAddress'
 			}
 		}

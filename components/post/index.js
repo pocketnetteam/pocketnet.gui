@@ -612,10 +612,12 @@ var post = (function () {
 						setTimeout(function(){
 							if(!el.c) return
 								self.app.platform.effects.templates.commentstars(el.c, value, function(){
-									if (inicomments){
-										inicomments.attention(self.app.localization.e('starssendcomment' + reason))
-									}
+									
 								})
+
+								if (inicomments){
+									inicomments.attention(self.app.localization.e('starssendcomment' + reason))
+								}
 						}, 300)
 					}
 					
