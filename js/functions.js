@@ -9889,7 +9889,7 @@
 		var subString = str.substr(0, n-1);
 		return decodeEntities(useWordBoundary
 			? subString.substr(0, subString.lastIndexOf(' '))
-			: subString) + "...";
+			: subString).replace(/(,|\.|\s)$/, '') + "...";
 	};
 
 	videoImage = function(url){
