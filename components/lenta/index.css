@@ -122,9 +122,6 @@
   max-width: 460px;
   margin: 0 auto;
 }
-#lenta .tosubscribeshares .tosubscribeshares_caption span {
-  font-size: 0.8em;
-}
 #lenta .tosubscribeshares .tosubscribeshares_buttonWrapper {
   margin-top: 2em;
 }
@@ -611,6 +608,9 @@
   #lenta .openoriginallabel {
     display: none;
   }
+  #lenta .fullScreenVideo .videoWrapper .js-player .video-js .vjs-volume-control {
+    display: none;
+  }
 }
 /*t*/
 @media only screen and (max-width: 768px) {
@@ -753,3 +753,4 @@ html.mobileview #lenta .fullScreenVideo .sharecnt {
 html.mobileview.fullscreen #lenta .fullScreenVideo #comments {
   display: none;
 }
+/*# sourceMappingURL=index.css.map */

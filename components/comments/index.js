@@ -29,6 +29,7 @@ var comments = (function(){
 		var rendered = {};
 		var areas = {};
 		var external = null;
+		var bannerComment = null;
 		var currentstate = {};
 		var wordsRegExp = /[,.!?;:() \n\r]/g
 		var sortby = 'interesting' 
@@ -237,7 +238,25 @@ var comments = (function(){
 				else
 					c.removeClass('hastext')
 			},
+			complain : function(comment){
+				self.nav.api.load({
+					open : true,
+					id : 'complain',
+					inWnd : true,
+					essenseData : {
+						item : 'post',
+						obj : comment,
 
+						success : function(){
+
+						}
+					},
+
+					clbk : function(){
+
+					}
+				})
+			},
 			myscores : function(){
 				_.each(rendered, function(c, id){
 					var comment = deep(self.app.platform.sdk, 'comments.storage.all.' + id)
@@ -499,7 +518,7 @@ var comments = (function(){
 
 							el.c.find('.sending').removeClass('sending')
 	
-							dialog({
+							new dialog({
 								html : self.app.localization.e('ratings123'),
 								btn1text :  self.app.localization.e('daccept'),
 								btn2text : self.app.localization.e('ucancel'),
@@ -1016,7 +1035,7 @@ var comments = (function(){
 
 					if (value < 0 && self.app.platform.sdk.user.scamcriteria()){
 
-						dialog({
+						new dialog({
 							html : self.app.localization.e('ratings123'),
 							btn1text :  self.app.localization.e('daccept'),
 							btn2text : self.app.localization.e('ucancel'),
@@ -1335,6 +1354,14 @@ var comments = (function(){
 
 					}, function(__el, f, close){
 
+						__el.find('.complain').on('click', function(){
+							self.app.mobile.vibration.small()
+							actions.complain(comment)
+
+							close()
+
+						})
+
 						__el.find('.edit').on('click', function(){
 
 							renders.edit(localParent, comment)
@@ -1380,7 +1407,7 @@ var comments = (function(){
 
 						__el.find('.remove').on('click', function(){
 
-							dialog({
+							new dialog({
 								html : self.app.localization.e('e13032'),
 								success : function(){
 
@@ -2732,6 +2759,9 @@ var comments = (function(){
 					}, 100)
 					
 				}
+
+				bannerComment = app.platform.ui.showCommentBanner(el.c);
+
 			},
 
 			authclbk : function(){
@@ -2778,6 +2808,10 @@ var comments = (function(){
 
 				if (caption)
 					caption.destroy()
+
+				if (bannerComment) {
+					bannerComment.destroy();
+				}
 
 				if (el.c) el.c.empty()
 
