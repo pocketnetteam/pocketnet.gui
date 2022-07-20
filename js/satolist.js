@@ -244,8 +244,12 @@ Platform = function (app, listofnodes) {
         'PQkNpRfXbCGXJ2o1mRfsJMvMtsvq3uvZU9' : true,
         'PGegspsgRqvMiZCP8PGufKMYBk3yekDaEE' : true,
         'PB8wu7hQwo5xMsVG4F4HshrW39t2Y4eN37' : true,
+        'PSBhEi8AUasemizUHyJ64t6xXonsxwp73y' : true,
         'PKYwaiikhUoPWmpWmYec4Xf3TPWwJQCqUt' : true,
-        'PSBhEi8AUasemizUHyJ64t6xXonsxwp73y' : true
+        'PST4P2KEweDQJ2RAtG3scUmXAgPJJ5JJRL' : true,
+        'PCfvhqHEYG3zdWXvLJrjPPDVK2H8qwwXn5' : true,
+        'PLZsQmsRUDMJGc61pGMLdDQ58UuqQ8kU5Z' : true
+
 
     }
 
@@ -2279,6 +2283,8 @@ Platform = function (app, listofnodes) {
             var id = makeid()
 
             if(!_.isArray(ids)) ids = [ids]
+
+            console.log("IDS", ids)
 
             app.nav.api.load({
 
@@ -17252,6 +17258,21 @@ Platform = function (app, listofnodes) {
                         }
                     })
                 },
+
+                /*hierarchicaltst : function(p, clbk, cache){
+
+                    self.app.platform.sdk.node.shares.hierarchical(p, clbk, cache, {
+                        method : 'gethierarchicalstrip'
+                    })
+
+
+
+                    self.app.platform.sdk.node.shares.hierarchical({...p, ...{height : 0}}, null, cache, {
+                        method : 'gethierarchicalstrip'
+                    })
+
+                },*/
+
 
                 hierarchical: function (p, clbk, cache, methodparams) {
 
