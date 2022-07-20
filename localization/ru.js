@@ -86,6 +86,9 @@ ____loclib.welcometopocketnet = "Приветствуем вас в "+appname+""
 ____loclib.continue = "Продолжить";
 
 ____loclib.chooseThemes = "Выберите темы, которые Вам интересны";
+____loclib.bloggers = "Блогеры";
+____loclib.chooseBloggers = "Подпишитесь на популярных блоггеров";
+____loclib.showmorebloggers = "Показать больше блогеров";
 //user page
 
 ____loclib.rstate = "Репутация";
@@ -1301,8 +1304,8 @@ ____loclib.aboutYoutubeThirdBoard18 = 'Жалобы на видео';
 ____loclib.aboutYoutubeThirdBoard19 = 'ДА, алгоритмы YouTube анализируют видео и автоматически удаляют или блокируют их, если считают, что они противоречат политике. Кроме того, YouTube может удалять сообщения и запрещать пользователей по своему усмотрению.';
 ____loclib.aboutYoutubeThirdBoard20 = 'ДА, однако только пользователи с высокой репутацией могут сообщать о постах, и пост становится "невидимым" на странице ленты (но остается доступным на странице профиля пользователя), только если о нем сообщит несколько десятков пользователей с высокой репутацией (сообщения могут быть сделаны только в отношении расизма, языка вражды и порнографии).';
 ____loclib.aboutYoutubeThirdBoard21 = 'Хэштеги для классификации видео';
-____loclib.aboutYoutubeThirdBoard22 = 'Видео можно распространять на нескольких платформах';
-____loclib.aboutYoutubeThirdBoard23 = 'Диктатура запретов';
+____loclib.aboutYoutubeThirdBoard22 = 'Диктатура запретов';
+____loclib.aboutYoutubeThirdBoard23 = 'Видео можно распространять на нескольких платформах';
 ____loclib.aboutYoutubeThirdBoard24 = 'Слишком много!';
 ____loclib.aboutYoutubeThirdBoard25 = 'Bastyon платит вам гораздо больше, чем YouTube!';
 ____loclib.aboutYoutubeThirdBoard26 = 'Вы можете зарабатывать деньги с Bastyon.';

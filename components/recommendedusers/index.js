@@ -86,7 +86,7 @@ var recommendedusers = (function(){
 						self.app.platform.api.actions.unsubscribe(address, function(tx, err){
 
 							if(tx){
-								
+								el.c.find('.user[address="'+address+'"] .subscribeWrapper').removeClass('following')
 							}
 							else
 							{
