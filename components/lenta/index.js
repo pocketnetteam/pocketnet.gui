@@ -18,6 +18,7 @@ var lenta = (function(){
 		var w, essenseData, recomended = [], initialized, recommended, mestate, initedcommentes = {}, canloadprev = false,
 		video = false, isotopeinited = false, videosVolume = 0, fullscreenvideoShowing = null, loadedcachedHeight;
 
+		var lastcache = null
 		var subloaded = false
 		var subloadedindex = 0
 
@@ -457,6 +458,7 @@ var lenta = (function(){
 				optimizedCount = 0;
 				subloaded = false;
 				subloadedindex = 0;
+				lastcache = null
 
 				_.each(shareInitedMap, function(s, id){
 					delete self.app.platform.sdk.node.shares.storage.trx[id]
@@ -568,6 +570,8 @@ var lenta = (function(){
 			loadmore : function(loadclbk){
 				actions.observe()
 
+				console.log('lastcache', lastcache)
+
 				load.shares(function(shares, error){
 
 
@@ -607,7 +611,9 @@ var lenta = (function(){
 					if (loadclbk)
 						loadclbk(shares)
 
-				})
+				}, lastcache || null)
+
+				lastcache = null
 			},
 			includeboost : function(clbk){
 
@@ -3781,8 +3787,6 @@ var lenta = (function(){
 				
 				var cache = (!self.app.platform.currentBlock || !boostloadedblock || boostloadedblock + 3 > self.app.platform.currentBlock) ? 'cache' : 'clear'
 
-				console.log('boost cache', cache, boostloadedblock, self.app.platform.currentBlock, (!self.app.platform.currentBlock || !boostloadedblock || boostloadedblock + 3 < self.app.platform.currentBlock))
-				
 				self.app.platform.sdk.node.shares.getboostfeed({
 
 					lang: essenseData.lang,
@@ -3908,6 +3912,7 @@ var lenta = (function(){
 					if (shares.length < pr.count || countshares >= 10){
 						subloaded = true
 						subloadedindex = countshares + shares.length
+						lastcache = 'clear'
 
 						self.app.platform.sdk.newmaterials.see('sub')
 					}
@@ -4162,6 +4167,8 @@ var lenta = (function(){
 
 							var _beginmaterial = ''
 
+							
+
 							if(!author){
 								loader = self.app.platform.sdk.lentaMethod.get();
 							}
@@ -4256,6 +4263,10 @@ var lenta = (function(){
 								includingsub = true
 
 							}
+
+							//if(loader == 'hierarchical') loader = 'hierarchicaltst'
+
+							console.log('loader', loader)
 
 							self.app.platform.sdk.node.shares[loader]({
 
