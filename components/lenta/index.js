@@ -90,6 +90,7 @@ var lenta = (function(){
 
 		var actions = {
 			destroyShare : function(share){
+
 				if (fullscreenvideoShowed == share.txid){
 					actions.exitFullScreenVideo(share.txid)
 				}
@@ -570,7 +571,6 @@ var lenta = (function(){
 			loadmore : function(loadclbk){
 				actions.observe()
 
-				console.log('lastcache', lastcache)
 
 				load.shares(function(shares, error){
 
@@ -4268,8 +4268,6 @@ var lenta = (function(){
 
 							//if(loader == 'hierarchical') loader = 'hierarchicaltst'
 
-							console.log('loader', loader)
-
 							self.app.platform.sdk.node.shares[loader]({
 
 								author : author,
@@ -5076,9 +5074,9 @@ var lenta = (function(){
 				fullscreenvideoShowed = null
 				fullscreenvideoShowing = null
 
-				_.each(shareInitedMap, function(s, id){
+				/*_.each(shareInitedMap, function(s, id){
 					delete self.app.platform.sdk.node.shares.storage.trx[id]
-				})
+				})*/
 
 				_.each(recommendations, function(p, id){
 					if (p)
