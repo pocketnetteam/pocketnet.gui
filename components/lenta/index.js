@@ -4001,10 +4001,11 @@ var lenta = (function(){
 
 								shares = _.filter(shares, function(share){
 
+									if(!me) return true 
+
 									var r = me.relation(share.address, 'blocking') 
 
 									if (r) return false
-
 
 									return true
 								})

@@ -2723,6 +2723,9 @@ Platform = function (app, listofnodes) {
         showCommentBanner : function(contextElem) {
 
             let bannerCommentComponent = null;
+            if (!contextElem) {
+                return bannerCommentComponent;
+            }
 
             const createComponent = () => {
                 app.nav.api.load({
@@ -2742,12 +2745,13 @@ Platform = function (app, listofnodes) {
 
             const alreadyShowed = ('nextCommentBanner' in localStorage);
             const isBannerDisabled = (localStorage.nextCommentBanner == -1);
-            const timeToShowBanner = (localStorage.nextCommentBanner <= unixTimeNow);
+            const timeToShowBanner = (unixTimeNow >= localStorage.nextCommentBanner);
 
             const regDate = app.platform.sdk.user.me().regdate;
             const regUnixTime = (regDate.getTime());
             const registeredTime = Date.now() - regUnixTime;
 
+            const repeat = (localStorage.nextCommentBanner == 1);
             const isOneDayOld = (registeredTime >= oneDayInSeconds);
 
             if (isBannerDisabled) {
@@ -2757,21 +2761,18 @@ Platform = function (app, listofnodes) {
 
             if (!isOneDayOld) {
                 createComponent();
-                console.log('banner showbanner', bannerCommentComponent);
                 return bannerCommentComponent;
             }
 
-            if (!alreadyShowed) {
-                localStorage.nextCommentBanner = 1;
+            if (repeat && timeToShowBanner) {
+                localStorage.nextCommentBanner = unixTimeNow + oneDayInSeconds;
                 createComponent();
-                console.log('banner showbanner', bannerCommentComponent);
                 return bannerCommentComponent;
             }
 
             if (timeToShowBanner || !alreadyShowed) {
-                localStorage.nextCommentBanner = unixTimeNow + oneDayInSeconds;
+                localStorage.nextCommentBanner = 1;
                 createComponent();
-                console.log('banner showbanner', bannerCommentComponent);
                 return bannerCommentComponent;
             }
 
