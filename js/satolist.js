@@ -17252,6 +17252,21 @@ Platform = function (app, listofnodes) {
                     })
                 },
 
+                /*hierarchicaltst : function(p, clbk, cache){
+
+                    self.app.platform.sdk.node.shares.hierarchical(p, clbk, cache, {
+                        method : 'gethierarchicalstrip'
+                    })
+
+
+
+                    self.app.platform.sdk.node.shares.hierarchical({...p, ...{height : 0}}, null, cache, {
+                        method : 'gethierarchicalstrip'
+                    })
+
+                },*/
+
+
                 hierarchical: function (p, clbk, cache, methodparams) {
 
                     if(!methodparams) methodparams = {}
