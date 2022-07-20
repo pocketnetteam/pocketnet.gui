@@ -248,7 +248,8 @@ Platform = function (app, listofnodes) {
         'PKYwaiikhUoPWmpWmYec4Xf3TPWwJQCqUt' : true,
         'PST4P2KEweDQJ2RAtG3scUmXAgPJJ5JJRL' : true,
         'PCfvhqHEYG3zdWXvLJrjPPDVK2H8qwwXn5' : true,
-        'PLZsQmsRUDMJGc61pGMLdDQ58UuqQ8kU5Z' : true
+        'PLZsQmsRUDMJGc61pGMLdDQ58UuqQ8kU5Z' : true,
+        'PMC3pwutfiYpGWUMHhiB1NRjiHL7iWHiyi' : true
 
 
     }
@@ -26495,6 +26496,8 @@ Platform = function (app, listofnodes) {
                             })
 
                             .catch(function (err) {
+
+                                console.error(err)
 
                                 if (clbk)
                                     clbk('')

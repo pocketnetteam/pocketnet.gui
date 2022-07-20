@@ -359,7 +359,7 @@ var functions = __webpack_require__("3139");
     navigateToProfile(id) {
       this.$router.push({
         path: `/contact?id=${functions["a" /* default */].getmatrixid(id)}`
-      });
+      }).catch(e => {});
     },
 
     getuserinfo: function () {
@@ -418,7 +418,7 @@ var functions = __webpack_require__("3139");
           }).then(r => {
             this.$router.push({
               path: '/chats'
-            });
+            }).catch(e => {});
           });
         });
         this.$refs.dropdownMenu.hidePopup();
@@ -838,7 +838,7 @@ var membersvue_type_template_id_1f8aeb6f_scoped_true_staticRenderFns = []
     navigateToProfile(id) {
       this.$router.push({
         path: `/contact?id=${functions["a" /* default */].getmatrixid(id)}`
-      });
+      }).catch(e => {});
     },
 
     menuItemClickHandler(item, rowObject, utils) {
@@ -1526,7 +1526,7 @@ var avatarsList_component = Object(componentNormalizer["a" /* default */])(
             this.$store.commit('DELETE_ROOM', this.chat.roomId);
             this.$router.push({
               path: '/chats'
-            });
+            }).catch(e => {});
           });
         });
       });

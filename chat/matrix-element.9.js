@@ -139,7 +139,7 @@ var vuex_esm = __webpack_require__("2f62");
   methods: {
     minimizeall: function () {
       this.$store.commit('minimize', true);
-      this.$router.push('/chats');
+      this.$router.push('/chats').catch(e => {});
     }
   }
 });

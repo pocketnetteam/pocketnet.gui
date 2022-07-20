@@ -649,7 +649,7 @@ var userRoomStatusvue_type_template_id_85cc32fa_scoped_true_staticRenderFns = [f
       }).then(r => {
         this.$router.push({
           path: '/chats'
-        });
+        }).catch(e => {});
       });
     }
 
@@ -1245,7 +1245,7 @@ var contacts = __webpack_require__("71da");
     navigateToProfile(id) {
       this.$router.push({
         path: `/contact?id=${functions["a" /* default */].getmatrixid(id)}`
-      });
+      }).catch(e => {});
     },
 
     getuserinfo: function () {
@@ -1304,7 +1304,7 @@ var contacts = __webpack_require__("71da");
           }).then(r => {
             this.$router.push({
               path: '/chats'
-            });
+            }).catch(e => {});
           });
         });
         this.$refs.dropdownMenu.hidePopup();
