@@ -264,6 +264,7 @@
   overflow: hidden;
 }
 .share_common .videoWrapper .videoTips {
+  z-index: 2;
   position: absolute;
   left: 0;
   right: 0;
