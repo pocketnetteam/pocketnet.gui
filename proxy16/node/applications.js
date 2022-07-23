@@ -7,7 +7,7 @@ var path = require('path');
 var Datastore = require('nedb');
 var progress = require('request-progress');
 var targz = require('targz');
-
+const request = require("request");
 
 var Applications = function(settings, applications = {}, proxy) {
     if(!settings) settings = {}
@@ -197,16 +197,7 @@ var Applications = function(settings, applications = {}, proxy) {
         let endFile = path.resolve(dest, meta[key].name)
 
         return new Promise(async (resolve, reject) => {
-            let req;
-
-            try {
-                req = await proxy.transports.request({url: meta[key].url});
-            } catch(err) {
-                console.log(err);
-                reject(err);
-
-                return;
-            }
+            let req = request(meta[key].url);
 
             progress(req, {
                 throttle: 500,                    // Throttle the progress event to 2000ms, defaults to 1000ms
