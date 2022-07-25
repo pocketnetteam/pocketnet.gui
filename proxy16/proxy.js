@@ -889,6 +889,20 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 						cantuploading: true,
 					}
 				],
+
+				26: [
+					{
+						host : 'peertube20.pocketnet.app',
+						ip: '157.90.240.231',
+					}
+				],
+
+				27: [
+					{
+						host : 'peertube21.pocketnet.app',
+						ip: '116.203.16.185',
+					}
+				],
       		};
 
 			if (test){
