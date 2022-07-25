@@ -62,7 +62,8 @@
   display: block;
   margin: 0 auto;
   position: relative;
-  left: 20px;
+  top: -10px;
+  left: 8px;
   min-height: 300px;
   min-width: 300px;
   width: 300px;

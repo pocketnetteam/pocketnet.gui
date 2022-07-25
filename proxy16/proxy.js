@@ -2173,17 +2173,17 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					captchaip[ip] || (captchaip[ip] = 0);
 					captchaip[ip]++;
 					
-					captcha = hexCaptcha();
+					captcha = hexCaptcha({
+						text: {
+							chars: 'ABCDEFGHJKMNPQRSTUVWXZabcdefghjkmnpqrstuvwxz23456789'
+						}
+					});
 					captcha.id = f.makeid();
 					
 					return new Promise((resolve, reject) => {
-						captcha.create({
-							captcha3d: {
-								chars: 'ABCDEFGHJKMNPQRSTUVWXZabcdefghjkmnpqrstuvwxz23456789'
-							}
-						}).then(({ frames, overlay }) => {
+						captcha.generate().then(({ frames, layers }) => {
 							captchas[captcha.id] = {
-								text: captcha.text,
+								text: captcha.text.toLowerCase(),
 								angle: captcha.angle,
 								id: captcha.id,
 								done: false,
@@ -2194,7 +2194,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 								data: {
 									id: captcha.id,
 									frames: frames,
-									overlay: overlay,
+									overlay: layers,
 									result: self.test ? captcha.text : null, ///
 									done: false
 								}

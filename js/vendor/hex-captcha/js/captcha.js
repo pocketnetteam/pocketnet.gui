@@ -42,8 +42,8 @@ class HexCaptcha {
   constructor (options) {
     this.#options = Object.assign(
       this.#options, options,
-      { puzzle: Object.assign(this.#options.puzzle, options.puzzle || {}) },
-      { data: Object.assign(this.#options.data, options.data || {}) }
+      { puzzle: Object.assign(this.#options.puzzle, options?.puzzle || {}) },
+      { data: Object.assign(this.#options.data, options?.data || {}) }
     );
   
     /*Attach jigsaw*/
@@ -172,7 +172,7 @@ class HexCaptcha {
   #startAnimation() {
     /*Set 1st frame*/
     const
-      set = (img, frame) => img.style.setProperty('--data-image', 'url(data:image/png;base64,' + frame+')'),
+      set = (img, frame) => img.style.setProperty('--data-image', 'url(' + frame+')'),
       
       frames = Array.from(this.#canvas.querySelectorAll('span')).map((img, i) => {
         set(img, img.frames[0]);
