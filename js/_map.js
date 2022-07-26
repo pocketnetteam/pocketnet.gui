@@ -60,11 +60,10 @@ __map =  {
 		"js/vendor/isotope.pkgd.js", //
 		"js/vendor/circular-progress.js", //
 		{path : "js/vendor/workbox-v6.1.5/workbox-sw.js", babelify : true},
-		{path : "js/vendor/shadow-popup/popup.js", babelify : true},
 		"js/vendor/ion.sound/ion.sound.js",
 		"js/vendor/hammer.min.js",
-		"js/vendor/owl/owl.carousel.min.js"
-
+		"js/vendor/owl/owl.carousel.min.js",
+		{path : "js/vendor/shadow-popup/popup.js", babelify : true}
 	],
 
 	__sourcesfirst : [
@@ -79,7 +78,8 @@ __map =  {
 		"js/_map.js",
 		{path : "js/logger.js", babelify : true},
 		{path : "js/app.js", babelify : true},
-		"js/main.js"
+		"js/main.js",
+		{path : "js/popups/index.js", babelify : true}
 	],
 
 	__sourceslast : [
