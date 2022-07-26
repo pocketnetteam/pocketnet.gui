@@ -6,9 +6,10 @@ on:
 
 jobs:
   build:
-    if: github.event.base_ref == 'refs/heads/release'
+    
     runs-on: ubuntu-latest
     steps:
+      
       - name: Check Out Repo 
         uses: actions/checkout@v2
         
