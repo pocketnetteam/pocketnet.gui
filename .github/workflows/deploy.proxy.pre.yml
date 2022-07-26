@@ -1,4 +1,4 @@
-name: Deploy Proxy
+name: Deploy Proxy Pre
 
 on:
   push:
