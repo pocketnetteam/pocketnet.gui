@@ -1,0 +1,129 @@
+@import "../../css/__cssvar";
+
+.camera{
+    height: 100vh;
+    & *:not(.cameraUi, .cameraUi *, .sitemessage, .sitemessage *){
+        display: none !important;
+      }
+} 
+ 
+.cameraUi{
+    background-image: url(../../css/img/scan-frame.png);
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    position: relative;
+    .roundclosebutton{
+        position: absolute;
+        right: 0;
+    }
+}
+
+.wndinner.scanorimportqr{
+	max-width: 571px;
+    max-height: 427px !important;
+	.windowmainbuttons{
+		display: none !important;
+	}
+	.wndcontent{
+		overflow-y: hidden;
+		padding: 0;
+        height: 100%;
+        padding-bottom: 0 !important;
+        top: 0;
+	}
+}
+#scanorimportqr{
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background: @color-nrml;
+    .loader{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    .error{
+        display: none;
+        color: rgba(var(--text-on-bg-ac-color));
+        position: absolute;
+        padding: 1em;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+        text-align: center;
+    }
+    #reader{
+        width: 100%;
+        height: 100%;
+        #qr-shaded-region{
+            height: 101.5%;
+            & div{
+                opacity: 0.5;
+            }
+        }
+    }
+     .uploadFile{
+        position: absolute;
+        bottom: 10px;
+        left: 10px;
+        opacity: 0.8;
+        .fileUploader{
+            display: flex;
+            flex-direction: column;
+            position: initial;
+            .elContent{
+                color: @color-main-light;
+                position: initial;
+                display: flex;
+                align-items: center;
+                .icon{
+                    text-align: center;
+                    margin-right: 5px;
+                }
+                .label{
+					width: 100%;
+					font-size: 0.9em;
+					color : @color-main-light;
+					font-weight: 700;
+				}
+            }
+            .inputWrapper{
+                & input{
+                    &::after{
+                        content: "";
+                        position: absolute;
+                         width: 100%;
+                        height: 100%;
+                        top: 0;
+                        left: 0;
+                        cursor: pointer;
+                    }
+                }
+            }
+        }
+    } 
+}
+
+/*t*/ @media only screen and (max-width: 768px){
+    .wndinner.scanorimportqr{
+        max-width: 570px;
+        max-height: 292px;
+    }
+    #scanorimportqr{
+        #reader{
+            & video{
+                height: 101%;
+            }
+        }
+         .uploadFile{
+            top: 10px;
+            bottom: initial;
+            left: 10px;
+        } 
+    }
+}

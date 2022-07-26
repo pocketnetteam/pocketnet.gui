@@ -1,5 +1,5 @@
 <div id="<%-module.map.id%>">
-	
+	<div id="fleReader"></div>
 	<div class="maket topCaption">
 		<div class="work">
 			<div class="caption section">
@@ -26,14 +26,17 @@
 
 				    		<div>
 				    			<div class="inputWrapperKey">
+								<div id="mnemonicInput">
+								   </div>
+								   <div class="qrcode">
+										<div class="icon">
+											<i class="fas fa-qrcode"></i></div>
+										<div class="label"></div>
+									</div>  
 									<input elementsid="yourprivateloginkey" type="password" class="loginValue" value="" placeholder="Your Private Login Key" autocomplete="on"/>
 								</div>
 							</div>
 							<div class="actionButtonsWrapper">
-								<div elementsid="uploadqrcode" class="uploadFile">
-									<div class="icon"><i class="fas fa-qrcode"></i></div>
-									<div class="label"><%=e('loadqrcode')%></div>
-								</div>
 								<div elementsid="showpassword" class="showPassword hidden" tabindex="1000">
 									<div class="icon"><i class="fas fa-eye"></i></div>
 								</div>
