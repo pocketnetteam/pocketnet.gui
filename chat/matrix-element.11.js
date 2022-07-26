@@ -1,192 +1,65 @@
 (window["matrixElement_jsonp"] = window["matrixElement_jsonp"] || []).push([[11],{
 
-/***/ "52fc":
+/***/ "./node_modules/cache-loader/dist/cjs.js?!./node_modules/babel-loader/lib/index.js!./node_modules/cache-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./src/views/teamroom.vue?vue&type=script&lang=js&":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_26ae2533_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("cf37");
-/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_26ae2533_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_26ae2533_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_26ae2533_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_26ae2533_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _components_assets_topheader_index_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(\"./src/components/assets/topheader/index.vue\");\n/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(\"./node_modules/vuex/dist/vuex.esm.js\");\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n\n\n/* harmony default export */ __webpack_exports__[\"default\"] = ({\n  name: 'teamroom',\n  components: {\n    topheader: _components_assets_topheader_index_vue__WEBPACK_IMPORTED_MODULE_0__[\"default\"]\n  },\n  props: {},\n  data: function () {\n    return {};\n  },\n  computed: Object(vuex__WEBPACK_IMPORTED_MODULE_1__[\"mapState\"])({\n    pocketnet: state => state.pocketnet,\n    minimized: state => state.minimized,\n    pocketteammessages: state => state.pocketteammessages\n  }),\n  methods: {},\n\n  mounted() {}\n\n});\n\n//# sourceURL=webpack:///./src/views/teamroom.vue?./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options");
 
 /***/ }),
 
-/***/ "9b2b":
-/***/ (function(module, exports, __webpack_require__) {
-
-// Imports
-var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
-exports = ___CSS_LOADER_API_IMPORT___(false);
-// Module
-exports.push([module.i, "#complain .preloaderwrapperCpm[data-v-26ae2533]{padding:1em;text-align:center}#complain .caption[data-v-26ae2533],#complain .sendWrapper[data-v-26ae2533]{padding:1em}#complain .formWrapper input[data-v-26ae2533],#complain .formWrapper textarea[data-v-26ae2533]{width:100%;padding:1em;background:rgb(var(--background-secondary-theme))}#complain .formWrapper textarea[data-v-26ae2533]{min-height:200px}", ""]);
-// Exports
-module.exports = exports;
-
-
-/***/ }),
-
-/***/ "c27d":
+/***/ "./node_modules/cache-loader/dist/cjs.js?{\"cacheDirectory\":\"node_modules/.cache/vue-loader\",\"cacheIdentifier\":\"11fb7574-vue-loader-template\"}!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/cache-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./src/views/teamroom.vue?vue&type=template&id=0b836ed2&scoped=true&":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-// ESM COMPAT FLAG
-__webpack_require__.r(__webpack_exports__);
-
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"05b06f0d-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/complain/index.vue?vue&type=template&id=26ae2533&scoped=true&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{attrs:{"id":"complain"}},[(!_vm.loading)?_c('div',{staticClass:"wrapper"},[_vm._m(0),_c('div',{staticClass:"formWrapper"},[_c('input',{ref:"youremail",attrs:{"type":"email"},domProps:{"value":_vm.youremail},on:{"change":_vm.setyouremail}})]),_vm._m(1),_c('div',{staticClass:"formWrapper"},[_c('textarea',{ref:"reason",domProps:{"value":_vm.reason},on:{"change":_vm.setvalue}})]),_c('div',{staticClass:"sendWrapper"},[_c('button',{staticClass:"button orange small rounded",on:{"click":_vm.send}},[_vm._v("Send")])])]):_c('div',[_c('div',{staticClass:"preloaderwrapperCpm"},[_c('linepreloader')],1)])])}
-var staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"caption"},[_c('span',[_vm._v("Your e-mail address")])])},function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"caption"},[_c('span',[_vm._v("State the reason for your complaint")])])}]
-
-
-// CONCATENATED MODULE: ./src/components/complain/index.vue?vue&type=template&id=26ae2533&scoped=true&
-
-// EXTERNAL MODULE: ./node_modules/vuex/dist/vuex.esm.js
-var vuex_esm = __webpack_require__("2f62");
-
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./src/components/complain?vue&type=script&lang=js&
-
-/* harmony default export */ var complain_vue_type_script_lang_js_ = ({
-  name: 'complain',
-  props: {
-    p: Object
-  },
-  data: function () {
-    return {
-      loading: false,
-      reason: '',
-      youremail: ''
-    };
-  },
-  created: () => {},
-  watch: {//$route: 'getdata'
-  },
-  computed: Object(vuex_esm["c" /* mapState */])({
-    auth: state => state.auth
-  }),
-  methods: {
-    send: function () {
-      if (this.loading) return;
-
-      if (!this.reason) {
-        this.$refs['reason'].focus();
-        this.$store.commit('icon', {
-          icon: 'error',
-          message: "State the reason for your complaint"
-        });
-        return;
-      }
-
-      if (!this.youremail) {
-        this.$refs['youremail'].focus();
-        this.$store.commit('icon', {
-          icon: 'error',
-          message: "Please enter your email for feedback"
-        });
-        return;
-      }
-
-      if (!window.POCKETNETINSTANCE) {
-        this.$store.commit('icon', {
-          icon: 'error',
-          message: "Something went wrong, please try again later"
-        });
-        return;
-      }
-
-      var ps = {};
-
-      _.each(this.p, function (v, i) {
-        ps[i] = v;
-      });
-
-      ps.reason = this.reason;
-      ps.email = this.youremail;
-      var id = 'common';
-
-      if (ps.address2) {
-        id = 'user';
-      }
-
-      if (ps.roomid) {
-        id = 'room';
-      }
-
-      this.loading = true;
-      window.POCKETNETINSTANCE.complainletters[id](ps, r => {
-        this.loading = false;
-
-        if (!r) {
-          this.$store.commit('icon', {
-            icon: 'error',
-            message: "Something went wrong, please try again later"
-          });
-        } else {
-          this.$store.commit('icon', {
-            icon: 'success',
-            message: "The complaint was successfully sent"
-          });
-          this.core.store.commit('setmodal', null);
-        }
-      });
-    },
-    setvalue: function (e) {
-      this.reason = e.target.value || '';
-    },
-    setyouremail: function (e) {
-      this.youremail = e.target.value || '';
-    }
-  }
-});
-// CONCATENATED MODULE: ./src/components/complain?vue&type=script&lang=js&
- /* harmony default export */ var components_complain_vue_type_script_lang_js_ = (complain_vue_type_script_lang_js_); 
-// EXTERNAL MODULE: ./node_modules/vue-loader/lib/runtime/componentNormalizer.js
-var componentNormalizer = __webpack_require__("2877");
-
-// CONCATENATED MODULE: ./src/components/complain/index.vue
-
-
-
-function injectStyles (context) {
-  
-  var style0 = __webpack_require__("52fc")
-if (style0.__inject__) style0.__inject__(context)
-
-}
-
-/* normalize component */
-
-var component = Object(componentNormalizer["a" /* default */])(
-  components_complain_vue_type_script_lang_js_,
-  render,
-  staticRenderFns,
-  false,
-  injectStyles,
-  "26ae2533",
-  null
-  ,true
-)
-
-/* harmony default export */ var complain = __webpack_exports__["default"] = (component.exports);
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"render\", function() { return render; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"staticRenderFns\", function() { return staticRenderFns; });\nvar render = function () {\n  var _vm = this\n  var _h = _vm.$createElement\n  var _c = _vm._self._c || _h\n  return _c(\n    \"div\",\n    { staticClass: \"page chats\" },\n    [\n      _c(\"topheader\", {\n        staticClass: \"topheader\",\n        scopedSlots: _vm._u([\n          {\n            key: \"left\",\n            fn: function () {\n              return [_c(\"backButton\", { attrs: { action: \"chats\" } })]\n            },\n            proxy: true,\n          },\n          {\n            key: \"info\",\n            fn: function () {\n              return [\n                _c(\"span\", { staticClass: \"nameline\" }, [_vm._v(\"Bastyon\")]),\n              ]\n            },\n            proxy: true,\n          },\n        ]),\n      }),\n      _c(\"maincontent\", {\n        scopedSlots: _vm._u([\n          {\n            key: \"content\",\n            fn: function () {\n              return _vm._l(_vm.pocketteammessages, function (message) {\n                return _c(\n                  \"div\",\n                  { key: message.id, staticClass: \"messageRow\" },\n                  [\n                    _c(\"div\", { staticClass: \"logo\" }),\n                    _c(\"div\", { staticClass: \"maxcontent\" }, [\n                      _c(\"div\", { staticClass: \"messageText\" }, [\n                        _c(\"div\", { staticClass: \"sendername\" }, [\n                          _c(\"span\", [_vm._v(\"Bastyon\")]),\n                        ]),\n                        _c(\"div\", { staticClass: \"msgtext\" }, [\n                          _c(\"div\", {\n                            domProps: { innerHTML: _vm._s(message.text) },\n                          }),\n                        ]),\n                      ]),\n                    ]),\n                  ]\n                )\n              })\n            },\n            proxy: true,\n          },\n        ]),\n      }),\n    ],\n    1\n  )\n}\nvar staticRenderFns = []\nrender._withStripped = true\n\n\n\n//# sourceURL=webpack:///./src/views/teamroom.vue?./node_modules/cache-loader/dist/cjs.js?%7B%22cacheDirectory%22:%22node_modules/.cache/vue-loader%22,%22cacheIdentifier%22:%2211fb7574-vue-loader-template%22%7D!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options");
 
 /***/ }),
 
-/***/ "cf37":
+/***/ "./node_modules/css-loader/dist/cjs.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/cache-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./src/views/teamroom.vue?vue&type=style&index=0&id=0b836ed2&scoped=true&lang=sass&":
 /***/ (function(module, exports, __webpack_require__) {
 
-// style-loader: Adds some css to the DOM by adding a <style> tag
+eval("// Imports\nvar ___CSS_LOADER_API_IMPORT___ = __webpack_require__(\"./node_modules/css-loader/dist/runtime/api.js\");\nexports = ___CSS_LOADER_API_IMPORT___(false);\n// Module\nexports.push([module.i, \".topheader[data-v-0b836ed2] {\\n  top: 0;\\n  z-index: 999;\\n}\\n.logo[data-v-0b836ed2] {\\n  background-image: url(https://pocketnet.app/img/logo20.svg);\\n  background-size: cover;\\n  background-position: center center;\\n  background-repeat: no-repeat;\\n  height: 30px;\\n  width: 30px;\\n  margin-left: .25em;\\n}\\n[data-v-0b836ed2] .messageRow {\\n  display: flex;\\n  align-items: flex-end;\\n  overflow: hidden;\\n  padding: .5em 0;\\n}\\n[data-v-0b836ed2] .messageRow .mt {\\n    margin-top: 1em;\\n}\\n[data-v-0b836ed2] .messageRow .mb {\\n    margin-bottom: 1em;\\n}\\n[data-v-0b836ed2] .messageRow .maxcontent {\\n    max-width: 85%;\\n}\\n[data-v-0b836ed2] .messageRow.allscreen {\\n    flex-wrap: wrap;\\n}\\n[data-v-0b836ed2] .messageRow .metaMsg {\\n    width: 100%;\\n}\\n[data-v-0b836ed2] .messageRow .sendername {\\n    order: 3;\\n    opacity: 0.6;\\n    overflow: hidden;\\n    font-size: 0.7em;\\n}\\n[data-v-0b836ed2] .messageRow .messageText {\\n    margin-left: 0.5em;\\n    background: #FB1063;\\n    color: #fff;\\n    padding: 0.5em 0.75em;\\n    padding-top: 0.5em;\\n    border-radius: 1em;\\n    white-space: normal;\\n}\\n[data-v-0b836ed2] .messageRow .messageText .msgtext {\\n      text-align: left;\\n}\\n\", \"\"]);\n// Exports\nmodule.exports = exports;\n\n\n//# sourceURL=webpack:///./src/views/teamroom.vue?./node_modules/css-loader/dist/cjs.js??ref--10-oneOf-1-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--10-oneOf-1-2!./node_modules/sass-loader/dist/cjs.js??ref--10-oneOf-1-3!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options");
 
-// load the styles
-var content = __webpack_require__("9b2b");
-if(content.__esModule) content = content.default;
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add CSS to Shadow Root
-var add = __webpack_require__("35d6").default
-module.exports.__inject__ = function (shadowRoot) {
-  add("34202e4d", content, shadowRoot)
-};
+/***/ }),
+
+/***/ "./node_modules/vue-style-loader/index.js?!./node_modules/css-loader/dist/cjs.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/cache-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./src/views/teamroom.vue?vue&type=style&index=0&id=0b836ed2&scoped=true&lang=sass&":
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("// style-loader: Adds some css to the DOM by adding a <style> tag\n\n// load the styles\nvar content = __webpack_require__(\"./node_modules/css-loader/dist/cjs.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/cache-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./src/views/teamroom.vue?vue&type=style&index=0&id=0b836ed2&scoped=true&lang=sass&\");\nif(content.__esModule) content = content.default;\nif(typeof content === 'string') content = [[module.i, content, '']];\nif(content.locals) module.exports = content.locals;\n// add CSS to Shadow Root\nvar add = __webpack_require__(\"./node_modules/vue-style-loader/lib/addStylesShadow.js\").default\nmodule.exports.__inject__ = function (shadowRoot) {\n  add(\"599f46da\", content, shadowRoot)\n};\n\n//# sourceURL=webpack:///./src/views/teamroom.vue?./node_modules/vue-style-loader??ref--10-oneOf-1-0!./node_modules/css-loader/dist/cjs.js??ref--10-oneOf-1-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--10-oneOf-1-2!./node_modules/sass-loader/dist/cjs.js??ref--10-oneOf-1-3!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options");
+
+/***/ }),
+
+/***/ "./src/views/teamroom.vue":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* WEBPACK VAR INJECTION */(function(module) {/* harmony import */ var _teamroom_vue_vue_type_template_id_0b836ed2_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(\"./src/views/teamroom.vue?vue&type=template&id=0b836ed2&scoped=true&\");\n/* harmony import */ var _teamroom_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(\"./src/views/teamroom.vue?vue&type=script&lang=js&\");\n/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(\"./node_modules/vue-loader/lib/runtime/componentNormalizer.js\");\n\n\n\nvar disposed = false\n\nfunction injectStyles (context) {\n  if (disposed) return\n  var style0 = __webpack_require__(\"./src/views/teamroom.vue?vue&type=style&index=0&id=0b836ed2&scoped=true&lang=sass&\")\nif (style0.__inject__) style0.__inject__(context)\n\n}\n\n\n  module.hot && false\n\n/* normalize component */\n\nvar component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__[\"default\"])(\n  _teamroom_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[\"default\"],\n  _teamroom_vue_vue_type_template_id_0b836ed2_scoped_true___WEBPACK_IMPORTED_MODULE_0__[\"render\"],\n  _teamroom_vue_vue_type_template_id_0b836ed2_scoped_true___WEBPACK_IMPORTED_MODULE_0__[\"staticRenderFns\"],\n  false,\n  injectStyles,\n  \"0b836ed2\",\n  null\n  ,true\n)\n\n/* hot reload */\nif (false) { var api; }\ncomponent.options.__file = \"src/views/teamroom.vue\"\n/* harmony default export */ __webpack_exports__[\"default\"] = (component.exports);\n/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(\"./node_modules/webpack/buildin/harmony-module.js\")(module)))\n\n//# sourceURL=webpack:///./src/views/teamroom.vue?");
+
+/***/ }),
+
+/***/ "./src/views/teamroom.vue?vue&type=script&lang=js&":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _node_modules_cache_loader_dist_cjs_js_ref_13_0_node_modules_babel_loader_lib_index_js_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_teamroom_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(\"./node_modules/cache-loader/dist/cjs.js?!./node_modules/babel-loader/lib/index.js!./node_modules/cache-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./src/views/teamroom.vue?vue&type=script&lang=js&\");\n/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__[\"default\"] = (_node_modules_cache_loader_dist_cjs_js_ref_13_0_node_modules_babel_loader_lib_index_js_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_teamroom_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__[\"default\"]); \n\n//# sourceURL=webpack:///./src/views/teamroom.vue?");
+
+/***/ }),
+
+/***/ "./src/views/teamroom.vue?vue&type=style&index=0&id=0b836ed2&scoped=true&lang=sass&":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_teamroom_vue_vue_type_style_index_0_id_0b836ed2_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(\"./node_modules/vue-style-loader/index.js?!./node_modules/css-loader/dist/cjs.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/cache-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./src/views/teamroom.vue?vue&type=style&index=0&id=0b836ed2&scoped=true&lang=sass&\");\n/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_teamroom_vue_vue_type_style_index_0_id_0b836ed2_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_teamroom_vue_vue_type_style_index_0_id_0b836ed2_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__);\n/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_teamroom_vue_vue_type_style_index_0_id_0b836ed2_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__) if([\"default\"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_teamroom_vue_vue_type_style_index_0_id_0b836ed2_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));\n\n\n//# sourceURL=webpack:///./src/views/teamroom.vue?");
+
+/***/ }),
+
+/***/ "./src/views/teamroom.vue?vue&type=template&id=0b836ed2&scoped=true&":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _node_modules_cache_loader_dist_cjs_js_cacheDirectory_node_modules_cache_vue_loader_cacheIdentifier_11fb7574_vue_loader_template_node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_teamroom_vue_vue_type_template_id_0b836ed2_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(\"./node_modules/cache-loader/dist/cjs.js?{\\\"cacheDirectory\\\":\\\"node_modules/.cache/vue-loader\\\",\\\"cacheIdentifier\\\":\\\"11fb7574-vue-loader-template\\\"}!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/cache-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./src/views/teamroom.vue?vue&type=template&id=0b836ed2&scoped=true&\");\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"render\", function() { return _node_modules_cache_loader_dist_cjs_js_cacheDirectory_node_modules_cache_vue_loader_cacheIdentifier_11fb7574_vue_loader_template_node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_teamroom_vue_vue_type_template_id_0b836ed2_scoped_true___WEBPACK_IMPORTED_MODULE_0__[\"render\"]; });\n\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"staticRenderFns\", function() { return _node_modules_cache_loader_dist_cjs_js_cacheDirectory_node_modules_cache_vue_loader_cacheIdentifier_11fb7574_vue_loader_template_node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_teamroom_vue_vue_type_template_id_0b836ed2_scoped_true___WEBPACK_IMPORTED_MODULE_0__[\"staticRenderFns\"]; });\n\n\n\n//# sourceURL=webpack:///./src/views/teamroom.vue?");
 
 /***/ })
 
 }]);
-//# sourceMappingURL=matrix-element.11.js.map
