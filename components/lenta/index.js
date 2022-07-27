@@ -2347,7 +2347,7 @@ var lenta = (function(){
 
 						if (value > 4){
 
-							bannerComment = app.platform.ui.showCommentBanner(el.c);
+							bannerComment = app.platform.ui.showCommentBanner(el.c.find('#' + id));
 
 							var reason = null
 

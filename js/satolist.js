@@ -2702,13 +2702,17 @@ Platform = function (app, listofnodes) {
         },
 
         showCommentBanner : function(contextElem) {
-
             let bannerCommentComponent = null;
             if (!contextElem) {
                 return bannerCommentComponent;
             }
 
             const createComponent = () => {
+                self.app.Logger.info({
+                    actionId: 'COMMENT_BANNER_ALLOWED',
+                    value: true,
+                });
+
                 app.nav.api.load({
                     open: true,
                     id: 'commentBanner',
@@ -2717,6 +2721,17 @@ Platform = function (app, listofnodes) {
 
                     clbk : function(e, p){
                         bannerCommentComponent = p;
+
+                        console.log('bannerCommentComponent', e, p);
+
+                        if (p.el[0].constructor.name === 'HTMLDivElement') {
+                            self.app.Logger.info({
+                                actionId: 'COMMENT_BANNER_SHOWED',
+                                value: p.el[0].constructor.name,
+                            });
+
+                            return;
+                        }
                     }
                 });
             };
