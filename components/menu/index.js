@@ -243,7 +243,7 @@ var menu = (function(){
 			activate : {
 				click : function(){
 
-					dialog({
+					new dialog({
 						header : self.app.localization.e('id167'),
 						html : self.app.localization.e('id168'),
 						class : "one",

@@ -45,7 +45,7 @@ var usersettings = (function(){
 
 					deleteButton.on('click', function() {
 						// Ask user for confirmation
-						dialog({
+						new dialog({
 							html:  self.app.localization.e('deleteAllVideoDialog'),
 							btn1text: self.app.localization.e('dyes'),
 							btn2text: self.app.localization.e('dno'),
@@ -217,7 +217,7 @@ var usersettings = (function(){
 					p.el.find('.clear').on('click', function(){
 
 
-						dialog({
+						new dialog({
 							class : 'zindex',
 							html : "Do you really want to clear temporary application information?",
 							btn1text : self.app.localization.e('dyes'),

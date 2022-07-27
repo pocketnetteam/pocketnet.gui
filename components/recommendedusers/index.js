@@ -74,7 +74,7 @@ var recommendedusers = (function(){
 
 			unsubscribe : function(address){
 
-				dialog({
+				new dialog({
 					html : self.app.localization.e('e13022'),
 					btn1text : self.app.localization.e('unsub'),
 					btn2text :  self.app.localization.e('ucancel'),
@@ -86,7 +86,7 @@ var recommendedusers = (function(){
 						self.app.platform.api.actions.unsubscribe(address, function(tx, err){
 
 							if(tx){
-								
+								el.c.find('.user[address="'+address+'"] .subscribeWrapper').removeClass('following')
 							}
 							else
 							{

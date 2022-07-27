@@ -73,7 +73,7 @@ var video = (function(){
 			},
 			joinSuccess : function(email){
 				self.fastTemplate('joinSuccess', function(rendered){
-					dialog({
+					new dialog({
 						html : rendered,
 						class : "one joinbeta",
 
@@ -88,7 +88,7 @@ var video = (function(){
 
 				self.fastTemplate('join', function(rendered){
 
-					dialog({
+					new dialog({
 						html : rendered,
 
 						wrap : true,

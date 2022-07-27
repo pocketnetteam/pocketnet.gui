@@ -328,7 +328,13 @@ var pkview = (function(){
 
 			if (mnemonic){
 
+
+				console.log('mnemonic', mnemonic)
+				
+
 				self.app.platform.cryptography.api.aeswc.decryption(mnemonic, self.app.options.fingerPrint, {}, function(m){
+
+					console.log('m', m)
 				
 					if(m){						
 

@@ -47,7 +47,7 @@ var authorization = (function(){
 
 				if(v){
 
-					/*dialog({
+					/*new dialog({
 						html : self.app.localization.e('staysafe'),
 
 						btn1text : self.app.localization.e('dyes'),

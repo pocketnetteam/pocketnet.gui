@@ -155,7 +155,7 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
                 <span elementsid="sbtnxs-follow" class="sbtnxs">
                     &middot; <span class="subscribeLabel asubscribe"><%=e('sub')%></span><span class="subscribedLabel aunsubscribe"><i class="far fa-check-circle"></i>  <%=e('subi')%></span>
                     
-                    <% if(state && !my && user.address.value) {
+                    <% if(state && !my && user.address.value && me) {
                         
                         var r = me.relation(share.address, 'subscribes')  %>
                         

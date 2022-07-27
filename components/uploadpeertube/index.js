@@ -633,11 +633,13 @@ var uploadpeertube = (function () {
 					})
 					.catch((e = {}) => {
 
+						console.error(e)
+
 						if(e.response) e = e.response
 
 						self.app.peertubeHandler.clear()
 
-						data.e = e;
+						data.e = e.response || e;
 						error = true;
 
 						self.app.platform.sdk.ustate.canincrease(

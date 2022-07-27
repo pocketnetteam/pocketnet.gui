@@ -18,10 +18,12 @@ var lenta = (function(){
 		var w, essenseData, recomended = [], initialized, recommended, mestate, initedcommentes = {}, canloadprev = false,
 		video = false, isotopeinited = false, videosVolume = 0, fullscreenvideoShowing = null, loadedcachedHeight;
 
+		var lastcache = null
 		var subloaded = false
 		var subloadedindex = 0
 
 		var boosted = [],
+			boostloadedblock = 0,
 			boostplaces = {}
 
 		var extra = {}, extraloading = {}, recommendations = {}, recommendationsMaking = {};
@@ -88,6 +90,7 @@ var lenta = (function(){
 
 		var actions = {
 			destroyShare : function(share){
+
 				if (fullscreenvideoShowed == share.txid){
 					actions.exitFullScreenVideo(share.txid)
 				}
@@ -456,6 +459,7 @@ var lenta = (function(){
 				optimizedCount = 0;
 				subloaded = false;
 				subloadedindex = 0;
+				lastcache = null
 
 				_.each(shareInitedMap, function(s, id){
 					delete self.app.platform.sdk.node.shares.storage.trx[id]
@@ -530,11 +534,20 @@ var lenta = (function(){
 
 				if(essenseData.observe){
 
-					var last = _.min(sharesInview, (s) => {
+					var k = ''
+					var larray = sharesInview
+
+					var first = _.max(sharesInview, (s) => {
 						return s.id
 					})
 
-					var first = _.max(sharesInview, (s) => {
+					if(sharesFromSub[first.txid]){
+						k = '_sub'
+
+						larray = _.toArray(sharesFromSub)
+					}
+
+					var last = _.min(larray, (s) => {
 						return s.id
 					})
 
@@ -542,11 +555,11 @@ var lenta = (function(){
 
 					if (first && last){
 
-						var k = ''
+						/*
 
 						if(sharesFromSub[last.txid] || sharesFromSub[first.txid]){
 							k = '_sub'
-						}
+						}*/
 
 						self.app.platform.sdk.sharesObserver.view(essenseData.observe + k, first.id, last.id)
 					}
@@ -557,6 +570,7 @@ var lenta = (function(){
 
 			loadmore : function(loadclbk){
 				actions.observe()
+
 
 				load.shares(function(shares, error){
 
@@ -597,7 +611,9 @@ var lenta = (function(){
 					if (loadclbk)
 						loadclbk(shares)
 
-				})
+				}, lastcache || null)
+
+				lastcache = null
 			},
 			includeboost : function(clbk){
 
@@ -1167,7 +1183,7 @@ var lenta = (function(){
 
 
 					self.fastTemplate('donation', function(rendered){
-						dialog({
+						new dialog({
 							html : rendered,
 							class : "one donation",
 
@@ -1641,7 +1657,7 @@ var lenta = (function(){
 						if(clbk)
 							clbk(false)
 
-						dialog({
+						new dialog({
 							html : self.app.localization.e('ratings123'),
 							btn1text :  self.app.localization.e('daccept'),
 							btn2text : self.app.localization.e('ucancel'),
@@ -2364,10 +2380,12 @@ var lenta = (function(){
 									if(!el.share[id]) return
 	
 									self.app.platform.effects.templates.commentstars(el.share[id], value, function(){
-										if (initedcommentes[id]){
-											initedcommentes[id].attention(self.app.localization.e('starssendcomment' + reason))
-										}
+										
 									})
+
+									if (initedcommentes[id]){
+										initedcommentes[id].attention(self.app.localization.e('starssendcomment' + reason))
+									}
 	
 								}, 300)
 							}
@@ -2516,7 +2534,7 @@ var lenta = (function(){
 				var _el = $(this).closest('.share')
 
 
-				dialog({
+				new dialog({
 					html : self.app.localization.e('e13022'),
 					btn1text :  self.app.localization.e('unsub'),
 					btn2text : self.app.localization.e('ucancel'),
@@ -2661,10 +2679,8 @@ var lenta = (function(){
 			loadprev : function(){
 				actions.loadprev();
 
-			},
-
-			
-		}	
+			}
+		}
 
 		var renders = {
 
@@ -2738,7 +2754,7 @@ var lenta = (function(){
 					var _el = null;
 					
 					if (p.position) {
-						var share = sharesInview[p.position]
+						var share = sharesInview[p.position - 1]
 
 						if (share && el.share[share.txid]){
 							_el = $("<div/>", {'class' : 'extra'})
@@ -3338,17 +3354,27 @@ var lenta = (function(){
 						el.share[s.txid] = el.c.find('#' + s.txid)
 					})
 
+
 					renders.extras()
 
 					if(subloaded && subloadedindex > 0){
 
-						console.log('shares', shares)
+						var sushares = _.toArray(sharesFromSub)
+						var position = subloadedindex
+
+						if (boostplaces){
+							_.each(boostplaces, (v, i) => {
+								if(i < subloadedindex && v){
+									position++
+								}
+							})
+						}
 
 						renders.extra({
 							key : 'tosubscribeshares',
 							render : 'tosubscribeshares',
-							position : subloadedindex,
-							share : shares[shares.length - 1]
+							position : position,
+							share : sushares.length ? sushares[sushares.length - 1] : null
 						})
 					}	
 
@@ -3746,8 +3772,6 @@ var lenta = (function(){
 					noview : true
 				})
 			},
-
-			
 		}
 
 		var load = {
@@ -3763,7 +3787,8 @@ var lenta = (function(){
 				if (essenseData.read){ type = 'article'}
 				if (essenseData.tags) tagsfilter = essenseData.tags
 				
-				
+				var cache = (!self.app.platform.currentBlock || !boostloadedblock || boostloadedblock + 3 > self.app.platform.currentBlock) ? 'cache' : 'clear'
+
 				self.app.platform.sdk.node.shares.getboostfeed({
 
 					lang: essenseData.lang,
@@ -3776,10 +3801,13 @@ var lenta = (function(){
 
 				}, function(shares, error, pr){
 
+
+					boostloadedblock = self.app.platform.currentBlock
+
 				
 					if(clbk) clbk(shares)
 
-				}, _.toArray(boostplaces).length, 'cache')
+				}, _.toArray(boostplaces).length, cache)
 			},
 
 			recomended : function(clbk, firstshares){
@@ -3858,6 +3886,8 @@ var lenta = (function(){
 
 				if(!bshares) bshares = []
 
+				var allshares = [].concat(shares, bshares)
+
 				if(includingsub) {
 								
 					shares = _.filter(shares, function(share){
@@ -3866,18 +3896,27 @@ var lenta = (function(){
 
 							var obs = self.sdk.sharesObserver.storage.viewed[essenseData.observe + '_sub']
 
+
 							if(!obs) return true
+
 
 							return (!obs.first || share.id > obs.first) || (!obs.last || share.id < obs.last)
 						}
 
 						return true
 					})
+					//temp
+					/*_.each(shares, (s) => {
+						s.__fromSUB = true
+					})*/
 
 
 					if (shares.length < pr.count || countshares >= 10){
 						subloaded = true
-						subloadedindex = countshares + shares.length 
+						subloadedindex = countshares + shares.length
+						lastcache = 'clear'
+
+						self.app.platform.sdk.newmaterials.see('sub')
 					}
 
 					_.each(shares, function(share){
@@ -3885,8 +3924,6 @@ var lenta = (function(){
 					})
 
 				}
-
-				var allshares = [].concat(shares, bshares)
 
 				var author = essenseData.author;
 
@@ -3971,10 +4008,11 @@ var lenta = (function(){
 
 								shares = _.filter(shares, function(share){
 
+									if(!me) return true 
+
 									var r = me.relation(share.address, 'blocking') 
 
 									if (r) return false
-
 
 									return true
 								})
@@ -4131,6 +4169,8 @@ var lenta = (function(){
 
 							var _beginmaterial = ''
 
+							
+
 							if(!author){
 								loader = self.app.platform.sdk.lentaMethod.get();
 							}
@@ -4225,6 +4265,8 @@ var lenta = (function(){
 								includingsub = true
 
 							}
+
+							//if(loader == 'hierarchical') loader = 'hierarchicaltst'
 
 							self.app.platform.sdk.node.shares[loader]({
 
@@ -5032,9 +5074,9 @@ var lenta = (function(){
 				fullscreenvideoShowed = null
 				fullscreenvideoShowing = null
 
-				_.each(shareInitedMap, function(s, id){
+				/*_.each(shareInitedMap, function(s, id){
 					delete self.app.platform.sdk.node.shares.storage.trx[id]
-				})
+				})*/
 
 				_.each(recommendations, function(p, id){
 					if (p)
