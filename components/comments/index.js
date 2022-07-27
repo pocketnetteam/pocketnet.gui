@@ -2733,9 +2733,6 @@ var comments = (function(){
 					}, 100)
 					
 				}
-
-				bannerComment = app.platform.ui.showCommentBanner(el.c);
-
 			},
 
 			authclbk : function(){
