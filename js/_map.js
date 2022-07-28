@@ -350,7 +350,8 @@ __map =  {
 
 		relations : [
 			/*{src : 'js/vendor/qr/qrscanner.js',			   f : 'js'},*/
-			{src : 'js/validation.js',			   f : 'js'},		
+			{src : 'js/validation.js',			   f : 'js'},
+			{src : 'js/vendor/hex-captcha/js/captcha.js', f : 'js'},
 			/*{src : 'js/vendor/qr/qrcode.min.js',			   f : 'js', require : function(){
 				QRCode = require('./js/vendor/qr/qrcode.min.js')
 			}},	*/

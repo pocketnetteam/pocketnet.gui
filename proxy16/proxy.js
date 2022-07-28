@@ -8,6 +8,7 @@ const { performance } = require('perf_hooks');
 ////////////
 var f = require('./functions');
 var svgCaptcha = require('svg-captcha');
+var hexCaptcha = require('hex-captcha');
 /*
 var WSS = require('./wss.js');
 const Firebase = require('../proxy/firebase');
@@ -2164,6 +2165,55 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 							result: self.test ? captcha.text : null, ///
 							done: false,
 						},
+					});
+				},
+			},
+			
+			getHex: {
+				authorization: 'signaturelight',
+				path: '/captchaHex',
+				
+				action: function ({ captcha, ip }) {
+					if (captcha && captchas[captcha]?.done) {
+						return Promise.resolve({
+							data: {
+								id: captchas[captcha].id,
+								done: true,
+								result: captchas[captcha].text,
+							},
+						});
+					}
+					
+					captchaip[ip] || (captchaip[ip] = 0);
+					captchaip[ip]++;
+					
+					captcha = hexCaptcha({
+						text: {
+							chars: 'ABCDEFGHJKMNPQRSTUVWXZabcdefghjkmnpqrstuvwxz23456789'
+						}
+					});
+					captcha.id = f.makeid();
+					
+					return new Promise((resolve, reject) => {
+						captcha.generate().then(({ frames, layers }) => {
+							captchas[captcha.id] = {
+								text: captcha.text.toLowerCase(),
+								angle: captcha.angle,
+								id: captcha.id,
+								done: false,
+								time: f.now(),
+							};
+							
+							resolve({
+								data: {
+									id: captcha.id,
+									frames: frames,
+									overlay: layers,
+									result: self.test ? captcha.text : null, ///
+									done: false
+								}
+							});
+						});
 					});
 				},
 			},

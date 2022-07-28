@@ -497,6 +497,7 @@ ____loclib.e13107 = "El node se podéis controlar usando una aplicación de escr
 ____loclib.e13108 = "No tiene conexión con interfaz proxy Electron"
 
 ____loclib.e13109 = "Ingrese las palabras de la imagen para recibir una bolsa de coinmonedas y continuar con el registro"
+____loclib.e13109h = "Haga clic en los hexágonos para ensamblar la imagen, luego ingrese el texto en la imagen resultante"
 ____loclib.e13110 = "Ingresar captcha"
 ____loclib.next = "Siguiente"
 ____loclib.refresh = "Actualizar"

@@ -421,7 +421,7 @@ var registration = (function(){
 						}
 						else
 						{
-							self.sdk.captcha.get(function(captcha, error){
+							self.sdk.captcha.getHex(function(captcha, error){
 
 								if (error){
 
@@ -461,7 +461,23 @@ var registration = (function(){
 				},
 
 				after : function(el, pel){
-
+					/*Create canvas*/
+					var hexCaptcha = new HexCaptcha({
+						styleSheet: [
+							'js/vendor/hex-captcha/css/captcha.css'
+						],
+						holder: '.captchaImage',
+						data: {
+							frames: steps.captcha.current?.frames,
+							overlay: steps.captcha.current?.overlay,
+							duration: 250
+						}
+					});
+					
+					window.addEventListener('beforeunload', () => {
+						hexCaptcha.destruct();
+					});
+					
 					var input = el.find('.ucaptchainput');
 					var redo = el.find('.redo')
 					var save = el.find('.addCaptcha')
@@ -523,7 +539,7 @@ var registration = (function(){
 								if (error){
 									sitemessage(self.app.localization.e('e13118'))
 
-									return 
+									return
 								}
 							
 								if (captcha.done){

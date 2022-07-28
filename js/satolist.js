@@ -11715,7 +11715,52 @@ Platform = function (app, listofnodes) {
 
 
             },
-
+            getHex: function (clbk, refresh, proxyoptions) {
+                if (refresh) this.current = null;
+        
+                self.app.api.fetchauth('captchaHex', {
+                    captcha: this.done || this.current || null,
+                    language: self.app.localization.key
+                }, proxyoptions).then(d => {
+            
+            
+                    self.sdk.captcha.current = d.id
+            
+                    if (d.id != self.sdk.captcha.done) {
+                        self.sdk.captcha.done = null
+                    }
+            
+                    self.sdk.captcha.save()
+            
+                    if (d.result && !d.done) {
+                        self.sdk.captcha.make(d.result, function (err) {
+                    
+                            if (!err) {
+                        
+                                d.done = true
+                        
+                                if (clbk)
+                                    clbk(d)
+                        
+                            }
+                            else {
+                                if (clbk)
+                                    clbk(null, err)
+                            }
+                        }, proxyoptions)
+                    }
+                    else {
+                        if (clbk)
+                            clbk(d)
+                    }
+            
+                }).catch(e => {
+                    if (clbk)
+                        clbk(null, e)
+                })
+        
+        
+            },
             make: function (text, clbk, proxyoptions) {
 
                 self.app.api.fetchauth('makecaptcha', {

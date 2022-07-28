@@ -520,6 +520,7 @@ ____loclib.e13107 = "Netzwerkknoten Management kann durch die Anwendung ausgefü
 ____loclib.e13108 = "Es gibt keine Verbindung mit dem Electron proxy Interface"
 
 ____loclib.e13109 = "Bitte geben Sie die Wörter in dem Bild ein, um Pocketcoins zu empfangen und mit der Registrierung fortzufahren"
+____loclib.e13109h = "Klicken Sie auf die Sechsecke, um das Bild zusammenzusetzen, und geben Sie dann Text in das resultierende Bild ein."
 ____loclib.e13110 = "Wörter eingeben"
 ____loclib.next = "Weiter"
 ____loclib.refresh = "Neu laden"
