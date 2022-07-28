@@ -620,6 +620,8 @@ var post = (function () {
 
 				if (value > 4){
 
+					bannerComment = app.platform.ui.showCommentBanner(el.c);
+
 					var reason = null
 
 					if (self.app.platform.sdk.user.newuser()){

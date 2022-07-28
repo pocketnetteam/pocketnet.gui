@@ -219,7 +219,7 @@ Platform = function (app, listofnodes) {
         'PVATJhZqKdYXLp1nmPdrssRhygJApmAALR' : true,
         'PJtnXwKNPDdEpJhaKH2fbPEyLrcS77oj46' : true,
         'PSoCtc8FbPaagG6spsqbS2HJjRM8oPG16b' : true,
-        'PPxDNqCB2oWp3JffCiRXwJTzxRQuRjb5Bc' : true, 
+        'PPxDNqCB2oWp3JffCiRXwJTzxRQuRjb5Bc' : true,
         'PVRWuvwCNfZWUUD5gQzDsqabnTcMXoqgbV' : true,
         'P8sSu2qFnVPGEtnSTKYRMUzuG3xBHsj3ms' : true,
         'PUF8bsAYyHZQCtaMbrTwyRDcC3wMLKhFFX' : true,
@@ -2745,6 +2745,11 @@ Platform = function (app, listofnodes) {
             }
 
             const createComponent = () => {
+                self.app.Logger.info({
+                    actionId: 'COMMENT_BANNER_ALLOWED',
+                    value: true,
+                });
+
                 app.nav.api.load({
                     open: true,
                     id: 'commentBanner',
@@ -2753,6 +2758,15 @@ Platform = function (app, listofnodes) {
 
                     clbk : function(e, p){
                         bannerCommentComponent = p;
+
+                        if (p.el[0].constructor.name === 'HTMLDivElement') {
+                            self.app.Logger.info({
+                                actionId: 'COMMENT_BANNER_SHOWED',
+                                value: p.el[0].constructor.name,
+                            });
+
+                            return;
+                        }
                     }
                 });
             };
@@ -6371,7 +6385,7 @@ Platform = function (app, listofnodes) {
                                     a : 'Критерии для получения бонуса за оригинальный контент:  Каждые 15 тысяч просмотров видео + 1500 пятизвёздочных рейтингов от уникальных пользователей + 1500 реферальных пользователей <br />PKOIN или Bitcoin:  1,000 USDT <br />Как ускорить получение бонуса?<br />Делитесь ссылкой на видео в социальных сетях, с помощью мессенджеров или через почту. Выставляйте эксклюзивные материалы для подписчиков в Бастионе (это делается при создании поста, выбрать Для Подписчиков). Эксклюзивные материалы увеличат количество реферальных подписок.<br />Делитесь ссылкой на ваш профиль.<br />Всегда выбирайте Реферальная Ссылка, когда делитесь ссылкой на Бастион (на видео или профиль).<br />Если вы пригласите блоггера и докажете это, вы получите бонус в размере до 25% от первых 4 бонусов.<br />По вопросам обращайтесь support@bastyon.com.',
                                     img: ''
                                 },
-                                
+
                             ]
 
                         },
@@ -8271,7 +8285,7 @@ Platform = function (app, listofnodes) {
 
                         return self.sdk.sharesObserver.storage.viewed[key].new > 0
                     }
-                }   
+                }
             },
 
             view : function(key, first, last){
@@ -8290,14 +8304,14 @@ Platform = function (app, listofnodes) {
                     self.sdk.sharesObserver.storage.viewed[key].new = 0
 
                 }
-                    
+
 
                 if (!self.sdk.sharesObserver.storage.viewed[key].last || self.sdk.sharesObserver.storage.viewed[key].last > last)
                     self.sdk.sharesObserver.storage.viewed[key].last = last
 
                 self.sdk.sharesObserver.storage.viewed[key].time = new Date()
                 self.sdk.sharesObserver.storage.viewed[key].block = self.currentBlock || (self.app.api.getCurrentBlock ? self.app.api.getCurrentBlock() : 0)
-                
+
 
                 self.sdk.sharesObserver.save()
 
@@ -11417,7 +11431,7 @@ Platform = function (app, listofnodes) {
             },
 
             replacePattern: function (str, h, p) {
-                
+
                 var sreg = /(?:^|\s)@([a-zA-Z0-9_]+)/g
 
                 var name = str.match(sreg);
@@ -11717,31 +11731,31 @@ Platform = function (app, listofnodes) {
             },
             getHex: function (clbk, refresh, proxyoptions) {
                 if (refresh) this.current = null;
-        
+
                 self.app.api.fetchauth('captchaHex', {
                     captcha: this.done || this.current || null,
                     language: self.app.localization.key
                 }, proxyoptions).then(d => {
-            
-            
+
+
                     self.sdk.captcha.current = d.id
-            
+
                     if (d.id != self.sdk.captcha.done) {
                         self.sdk.captcha.done = null
                     }
-            
+
                     self.sdk.captcha.save()
-            
+
                     if (d.result && !d.done) {
                         self.sdk.captcha.make(d.result, function (err) {
-                    
+
                             if (!err) {
-                        
+
                                 d.done = true
-                        
+
                                 if (clbk)
                                     clbk(d)
-                        
+
                             }
                             else {
                                 if (clbk)
@@ -11753,13 +11767,13 @@ Platform = function (app, listofnodes) {
                         if (clbk)
                             clbk(d)
                     }
-            
+
                 }).catch(e => {
                     if (clbk)
                         clbk(null, e)
                 })
-        
-        
+
+
             },
             make: function (text, clbk, proxyoptions) {
 
@@ -12817,7 +12831,7 @@ Platform = function (app, listofnodes) {
 
                         if (!s[url])
                             f[url] = true
-    
+
                         if (clbk) {
                             if (s[url].title) s[url].title = decodeEntities(s[url].title);
                             if (s[url].description) s[url].description = decodeEntities(s[url].description);
@@ -17583,7 +17597,7 @@ Platform = function (app, listofnodes) {
 
                         self.app.platform.sdk.node.shares.getbyid(txids, function (shares) {
 
-                            
+
                             self.app.platform.sdk.node.shares.users(shares, function(){
 
                                 shares = _.filter(shares, function(s){
@@ -17594,13 +17608,13 @@ Platform = function (app, listofnodes) {
                                     else{
                                     }
                                 })
-    
-    
+
+
                                 if (clbk)
                                     clbk(shares, null, p)
                             })
 
-                            
+
 
                         })
 
@@ -17644,13 +17658,13 @@ Platform = function (app, listofnodes) {
 
                     var n = -1
                     var uservout = _.find(tx.vout, (v) => {
-                        n ++ 
+                        n ++
                         return _.find(deep(v, 'scriptPubKey.addresses') || [], (a) => {
                             return a == address
                         })
                     })
-                    
-                    
+
+
                     /**/
                     var l = tx.vout.length
 
@@ -24384,7 +24398,7 @@ Platform = function (app, listofnodes) {
                     if(!slowMadeRelayTransactions)
 
                         slowMadeRelayTransactions = slowMade(function(){
-                            
+
                             platform.sdk.relayTransactions.send()
                             slowMadeRelayTransactions = null
 
@@ -26073,7 +26087,7 @@ Platform = function (app, listofnodes) {
                 txid: "65fee9b1e925833c5ff623178efecc436d3af0c9f6a4baa0b73c52907a9d1d7b"
             })*/
 
-            // test coin 
+            // test coin
 
             //self.messageHandler({"addr":"TSVui5YmA3JNYvSjGK23Y2S8Rckb2eV3kn","msg":"transaction","txid":"a6819e0de29c148a193932da4581b79cae02163f717962a86ccbf259f915a4be","time":1657701744,"amount":"1000000","nout":"2","node":"116.203.219.28:39091:6067"})
 
@@ -27285,7 +27299,7 @@ Platform = function (app, listofnodes) {
                 self.app.peertubeHandler = new PeerTubePocketnet(self.app);
             }
 
-            
+
 
             self.prepareUser(function() {
 
@@ -27421,7 +27435,7 @@ Platform = function (app, listofnodes) {
 
         checkfeatures()
 
-        
+
 
         app.user.isState(function(state){
 
@@ -27532,22 +27546,22 @@ Platform = function (app, listofnodes) {
                             self.ui.popup('application');
                         }
                         else{
-                            
+
                             var a = self.sdk.address.pnet()
-    
+
                             if (a){
                                 var regs = self.sdk.registrations.value(a.address)
-    
+
                                 if(!regs){
                                     self.ui.popup('application');
                                 }
                             }
-                            
+
                         }
                     }
-                    
+
                 }
-                
+
             })
         }, 30000)
 
