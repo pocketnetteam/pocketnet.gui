@@ -314,7 +314,6 @@ class ShadowPopup {
     this.popup.classList.add('transition');
     
     if (this.isFunction(this.options.onTransitionStart)) this.options.onTransitionStart(this);
-    console.log(this.options.onTransitionStart)
     
     clearTimeout(this.popup.timeout);
     /*Change class after animation*/
@@ -322,7 +321,6 @@ class ShadowPopup {
       this.popup.classList.remove('transition');
       if (this.isFunction(cb)) cb();
       if (this.isFunction(this.options.onTransitionEnd)) this.options.onTransitionEnd(this);
-      console.log(this.options.onTransitionEnd)
     }, duration);
   }
   

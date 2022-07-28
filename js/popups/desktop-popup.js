@@ -39,10 +39,7 @@ options = {
     date.setDate(date.getDate() + days);
     return date.getTime();
   },
-  onTransitionEnd: (instance) => {
-    console.log(instance, instance.popup)
-  },
-  appear: (instance) => {
+  appear: () => {
     const state = (() => {
             return new Date() > localStorage.getItem('desktop-app');
           })(),

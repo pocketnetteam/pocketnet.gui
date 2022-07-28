@@ -19,12 +19,14 @@
 }
 
 .popup.hidden {
-  display: none !important;
+  display: none;
+  visibility: hidden;
 }
 
 .popup.transition,
 .popup.visible {
-  display: block !important;
+  display: block;
+  visibility: visible;
 }
 
 .popup.visible {
