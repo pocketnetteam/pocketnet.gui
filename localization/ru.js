@@ -155,6 +155,7 @@ ____loclib.tacaddress = "Адрес аккаунта";
 ____loclib.twallet = "Кошелек";
 ____loclib.twalletaddresses = "Адреса кошелька";
 ____loclib.tTotal = "Итого";
+____loclib.totalBalance = "Всего средств";
 ____loclib.wsselect = "Выберите источник";
 ____loclib.wsenter = "Введите адрес или выберите";
 ____loclib.wsreciever = "Адрес получателя";
