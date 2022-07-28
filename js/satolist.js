@@ -19021,7 +19021,7 @@ Platform = function (app, listofnodes) {
                                     //sitemessage(self.app.localization.e('e13117'))
 
                                     if (clbk){
-                                        clbk(null, self.app.localization.e('e13117'));
+                                        clbk(null, self.app.localization.e('incoins'));
                                     }
 
                                     return;
@@ -19326,7 +19326,7 @@ Platform = function (app, listofnodes) {
                                     if (obj.donate && obj.donate.v.length){
 
                                         obj.donate.v.forEach(function(d){
-                                            var donate = Number(d.amount) * smulti;
+                                            var donate = Math.round(Number(d.amount) * smulti);
 
                                             totalDonate += donate
 
