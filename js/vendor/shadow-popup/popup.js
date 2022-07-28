@@ -53,6 +53,9 @@ class ShadowPopup {
       }*/
     },
     
+    onTransitionStart: () => {},
+    onTransitionEnd: () => {},
+    
     appear: (instance) => {
       /*Should return true if popup needs to appear immediately
       also possible to bind "instance.show()" on some event here*/
@@ -310,11 +313,14 @@ class ShadowPopup {
     
     this.popup.classList.add('transition');
     
+    if (this.isFunction(this.options.onTransitionStart)) this.options.onTransitionStart(this);
+    
     clearTimeout(this.popup.timeout);
     /*Change class after animation*/
     this.popup.timeout = setTimeout(() => {
       this.popup.classList.remove('transition');
       if (this.isFunction(cb)) cb();
+      if (this.isFunction(this.options.onTransitionEnd)) this.options.onTransitionEnd(this);
     }, duration);
   }
   

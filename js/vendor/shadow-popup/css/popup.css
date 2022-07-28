@@ -18,9 +18,15 @@
   transition: opacity .25s ease-in-out;
 }
 
+.popup.hidden {
+  display: none;
+  visibility: hidden;
+}
+
 .popup.transition,
 .popup.visible {
-  display: block !important;
+  display: block;
+  visibility: visible;
 }
 
 .popup.visible {
