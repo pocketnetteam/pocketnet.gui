@@ -72,10 +72,7 @@ class FrontendLogger {
       id: 'BEST_VIDEO_CLICKED',
       description: 'One of the best videos selected',
     },
-    BEST_VIDEO_CLICKED: {
-      id: 'BEST_VIDEO_CLICKED',
-      description: 'One of the best videos selected',
-    },
+
     USER_COMPLAIN : {
       id: 'USER_COMPLAIN',
       description: 'user send complain'
