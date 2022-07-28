@@ -236,7 +236,22 @@ Platform = function (app, listofnodes) {
         'PCkX8n2e6aD6Ji37hSpHCJpqvaaJjVWt1m' : true,
         'PT4fvQ7jMicg6McC52BmFFkL2M6AEWc7vo' : true,
         'PGegspsgRqvMiZCP8PGufKMYBk3yekDaEE' : true,
-        'PB8wu7hQwo5xMsVG4F4HshrW39t2Y4eN37' : true
+        'PB8wu7hQwo5xMsVG4F4HshrW39t2Y4eN37' : true,
+        'PUhvX53ueD2Sxa3q7av83vNcEHuS8M7kRS' : true,
+        'PAqPD7P3iFtz7e2epSP4V8FMPXrJKASeqD' : true,
+        'PUopiRZvD6BAjF9CcWtMfpeJtxp411dxKM' : true,
+        'PUhvX53ueD2Sxa3q7av83vNcEHuS8M7kRS' : true,
+        'PQkNpRfXbCGXJ2o1mRfsJMvMtsvq3uvZU9' : true,
+        'PGegspsgRqvMiZCP8PGufKMYBk3yekDaEE' : true,
+        'PB8wu7hQwo5xMsVG4F4HshrW39t2Y4eN37' : true,
+        'PSBhEi8AUasemizUHyJ64t6xXonsxwp73y' : true,
+        'PKYwaiikhUoPWmpWmYec4Xf3TPWwJQCqUt' : true,
+        'PST4P2KEweDQJ2RAtG3scUmXAgPJJ5JJRL' : true,
+        'PCfvhqHEYG3zdWXvLJrjPPDVK2H8qwwXn5' : true,
+        'PLZsQmsRUDMJGc61pGMLdDQ58UuqQ8kU5Z' : true,
+        'PMC3pwutfiYpGWUMHhiB1NRjiHL7iWHiyi' : true
+
+
     }
 
     self.bch = {
@@ -2269,6 +2284,8 @@ Platform = function (app, listofnodes) {
 
             if(!_.isArray(ids)) ids = [ids]
 
+            console.log("IDS", ids)
+
             app.nav.api.load({
 
                 open : true,
@@ -2723,6 +2740,9 @@ Platform = function (app, listofnodes) {
         showCommentBanner : function(contextElem) {
 
             let bannerCommentComponent = null;
+            if (!contextElem) {
+                return bannerCommentComponent;
+            }
 
             const createComponent = () => {
                 app.nav.api.load({
@@ -2742,12 +2762,13 @@ Platform = function (app, listofnodes) {
 
             const alreadyShowed = ('nextCommentBanner' in localStorage);
             const isBannerDisabled = (localStorage.nextCommentBanner == -1);
-            const timeToShowBanner = (localStorage.nextCommentBanner <= unixTimeNow);
+            const timeToShowBanner = (unixTimeNow >= localStorage.nextCommentBanner);
 
             const regDate = app.platform.sdk.user.me().regdate;
             const regUnixTime = (regDate.getTime());
             const registeredTime = Date.now() - regUnixTime;
 
+            const repeat = (localStorage.nextCommentBanner == 1);
             const isOneDayOld = (registeredTime >= oneDayInSeconds);
 
             if (isBannerDisabled) {
@@ -2757,21 +2778,18 @@ Platform = function (app, listofnodes) {
 
             if (!isOneDayOld) {
                 createComponent();
-                console.log('banner showbanner', bannerCommentComponent);
                 return bannerCommentComponent;
             }
 
-            if (!alreadyShowed) {
-                localStorage.nextCommentBanner = 1;
+            if (repeat && timeToShowBanner) {
+                localStorage.nextCommentBanner = unixTimeNow + oneDayInSeconds;
                 createComponent();
-                console.log('banner showbanner', bannerCommentComponent);
                 return bannerCommentComponent;
             }
 
             if (timeToShowBanner || !alreadyShowed) {
-                localStorage.nextCommentBanner = unixTimeNow + oneDayInSeconds;
+                localStorage.nextCommentBanner = 1;
                 createComponent();
-                console.log('banner showbanner', bannerCommentComponent);
                 return bannerCommentComponent;
             }
 
@@ -17241,6 +17259,21 @@ Platform = function (app, listofnodes) {
                     })
                 },
 
+                /*hierarchicaltst : function(p, clbk, cache){
+
+                    self.app.platform.sdk.node.shares.hierarchical(p, clbk, cache, {
+                        method : 'gethierarchicalstrip'
+                    })
+
+
+
+                    self.app.platform.sdk.node.shares.hierarchical({...p, ...{height : 0}}, null, cache, {
+                        method : 'gethierarchicalstrip'
+                    })
+
+                },*/
+
+
                 hierarchical: function (p, clbk, cache, methodparams) {
 
                     if(!methodparams) methodparams = {}
@@ -26463,6 +26496,8 @@ Platform = function (app, listofnodes) {
                             })
 
                             .catch(function (err) {
+
+                                console.error(err)
 
                                 if (clbk)
                                     clbk('')
