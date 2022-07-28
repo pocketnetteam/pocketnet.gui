@@ -202,6 +202,27 @@ var authorization = (function(){
 
 			},
 
+			keyAutocomplete: function(){
+				const autocompleteValue = el.c.find('.loginValue').val()
+				if(autocompleteValue){
+					const mnemonic = autocompleteValue.split(' ')
+					if(mnemonic.length === 12){
+						var mnemonicInputs = el.c.find('.mnemonicItem')
+						mnemonicArray.forEach((item, index)=>{
+							if(item){
+								mnemonicInputs[index].classList.remove('errorClass')
+								mnemonicInputs[index].value = item
+								mnemonicInputs[index].focus()
+							}
+						})
+					}else{
+						el.c.find('.actionButtonsWrapper').css({'display': 'table-cell'})
+						el.c.find('.loginValue').css({'display': 'initial'})
+						el.c.find('.loginValue').trigger( "focus" )
+					}
+				}
+			},
+
 			addInputControle : function(){
 				el.c.find('.mnemonicItem').on('keyup',function (e) {
 					var currentInputId = +activeMnemonicInput.attr("id").replace('mnemonicItem','')
@@ -821,6 +842,7 @@ var authorization = (function(){
 				events.privateKeyInputHandler()
 				events.setFocus()
 				events.addQrHandler()
+				events.keyAutocomplete()
 				p.clbk(null, p);
 
 			},
