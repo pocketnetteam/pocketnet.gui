@@ -2772,7 +2772,7 @@ Platform = function (app, listofnodes) {
             };
 
             const unixTimeNow = Math.floor(Date.now() / 1000);
-            const oneDayInSeconds = 86400000;
+            const oneDayInSeconds = 86400;
 
             const alreadyShowed = ('nextCommentBanner' in localStorage);
             const isBannerDisabled = (localStorage.nextCommentBanner == -1);
