@@ -84,7 +84,7 @@ Application = function(p)
     self.test = true
   }
 
-  self.boost = true
+  self.boost = !(window.cordova && isios());
 
   self.options = {
 
