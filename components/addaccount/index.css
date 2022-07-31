@@ -39,6 +39,40 @@
   color: rgb(var(--color-text-ac-2));
   border-color: rgb(var(--color-text-ac-2));
 }
+#addaccount .tabsWrapper {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 4px;
+  display: flex;
+  width: fit-content;
+}
+#addaccount .tabsWrapper .tabItem {
+  height: 44px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95em;
+  font-weight: bold;
+  padding: 0 20px;
+  cursor: pointer;
+  opacity: 0.65;
+  transition: opacity 0.1s ease-out;
+}
+#addaccount .tabsWrapper .tabItem:hover {
+  background-color: #f7f8fa;
+  opacity: 1;
+}
+#addaccount .tabsWrapper .tabItem:not(:last-child) {
+  margin-right: 3px;
+}
+#addaccount .tabsWrapper .tabItem-active {
+  background-color: white;
+  opacity: 1;
+}
+#addaccount .tabsWrapper .tabItem-active:hover {
+  background-color: white;
+}
 #addaccount .qrcode {
   text-align: center;
   cursor: pointer;

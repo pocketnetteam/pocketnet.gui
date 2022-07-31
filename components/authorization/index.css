@@ -39,6 +39,40 @@
   color: rgb(var(--color-text-ac-2));
   border-color: rgb(var(--color-text-ac-2));
 }
+#authorization .tabsWrapper {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 4px;
+  display: flex;
+  width: fit-content;
+}
+#authorization .tabsWrapper .tabItem {
+  height: 44px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95em;
+  font-weight: bold;
+  padding: 0 20px;
+  cursor: pointer;
+  opacity: 0.65;
+  transition: opacity 0.1s ease-out;
+}
+#authorization .tabsWrapper .tabItem:hover {
+  background-color: #f7f8fa;
+  opacity: 1;
+}
+#authorization .tabsWrapper .tabItem:not(:last-child) {
+  margin-right: 3px;
+}
+#authorization .tabsWrapper .tabItem-active {
+  background-color: #f1f2f5;
+  opacity: 1;
+}
+#authorization .tabsWrapper .tabItem-active:hover {
+  background-color: #f1f2f5;
+}
 #authorization #mnemonicInput {
   display: flex;
   flex-wrap: wrap;
@@ -259,6 +293,9 @@
 				background: #F7F7F9;
 			}
 		}*/
+  }
+  #authorization .tabsWrapper {
+    margin: 0 auto;
   }
   #authorization .inputWrapperKey {
     flex-direction: column;

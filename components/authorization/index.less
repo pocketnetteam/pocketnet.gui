@@ -56,6 +56,40 @@
 	}
 }
 #authorization{
+	.tabsWrapper{
+		border: 1px solid #ccc;
+		border-radius: 8px;
+		padding: 4px;
+		display: flex;
+    	width: fit-content;
+		& .tabItem{
+			height: 44px;
+			border-radius: 8px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 0.95em;
+			font-weight: bold;
+			padding: 0 20px;
+			cursor: pointer;
+			opacity: .65;
+			transition: opacity .1s ease-out;
+			&:hover{
+				background-color: #f7f8fa;
+				opacity: 1;
+			}
+			&:not(:last-child){
+				margin-right: 3px;
+			}
+			&-active{
+				background-color: #f1f2f5;
+				opacity: 1;
+				&:hover{
+					background-color: #f1f2f5;
+				}
+			}
+		}
+	}
 	#mnemonicInput{
 		display: flex;
 		flex-wrap: wrap;
@@ -345,6 +379,9 @@
 
 /*t*/ @media only screen and (max-width: 768px){
 	#authorization{	
+		.tabsWrapper{
+			margin: 0 auto;
+		}
 		.inputWrapperKey{
 			flex-direction: column;
 		}

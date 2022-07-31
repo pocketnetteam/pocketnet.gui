@@ -251,12 +251,14 @@ var leftpanel = (function(){
 				window.addEventListener('scroll', function(){
 						let lastBlock = document.querySelector('.rightbottomnav.wrpmobclass');
 						let header = document.querySelector('#mainMenuWrapper');
-						let lastBlockRect = lastBlock.getBoundingClientRect();
-						let headerRect = header.getBoundingClientRect();
-						if(lastBlockRect.bottom - headerRect.height <= 0){
-							$(".menu.wrpmobclass").css("position", "fixed")
-						}else{
-							$(".menu.wrpmobclass").css("position", "initial")
+						let lastBlockRect = lastBlock?.getBoundingClientRect();
+						let headerRect = header?.getBoundingClientRect();
+						if(lastBlockRect && headerRect){
+							if(lastBlockRect.bottom - headerRect.height <= 0){
+								$(".menu.wrpmobclass").css("position", "fixed")
+							}else{
+								$(".menu.wrpmobclass").css("position", "initial")
+							}
 						}
 					})
 				}

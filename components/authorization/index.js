@@ -216,6 +216,10 @@ var authorization = (function(){
 							}
 						})
 					}else{
+						el.c.find('#mnemonicTab').removeClass('tabItem-active')
+						el.c.find('#privateKeyTab').addClass('tabItem-active')
+						el.c.find('#mnemonicInput').css({'display': 'none'})
+						el.c.find('.qrcode').css({'display': 'none'})
 						el.c.find('.actionButtonsWrapper').css({'display': 'table-cell'})
 						el.c.find('.loginValue').css({'display': 'initial'})
 						el.c.find('.loginValue').trigger( "focus" )
@@ -310,15 +314,15 @@ var authorization = (function(){
 						
 						el.autocompleteStart.html(autocompleteWordStart)
 						el.autocompleteEnd.html(autocompleteWordEnd)
-						if(e.target.value.length > 2 && !autocompleteWord && $(this).attr("id") === 'mnemonicItem1'){
-							el.c.find('.loginValue').val($(this).val())
-							$(this).val('')
-							el.c.find('#mnemonicInput').css({'display': 'none'})
-							el.c.find('.qrcode').css({'display': 'none'})
-							el.c.find('.actionButtonsWrapper').css({'display': 'table-cell'})
-							el.c.find('.loginValue').css({'display': 'initial'})
-							el.c.find('.loginValue').trigger( "focus" )
-						}
+						// if(e.target.value.length > 2 && !autocompleteWord && $(this).attr("id") === 'mnemonicItem1'){
+						// 	el.c.find('.loginValue').val($(this).val())
+						// 	$(this).val('')
+						// 	el.c.find('#mnemonicInput').css({'display': 'none'})
+						// 	el.c.find('.qrcode').css({'display': 'none'})
+						// 	el.c.find('.actionButtonsWrapper').css({'display': 'table-cell'})
+						// 	el.c.find('.loginValue').css({'display': 'initial'})
+						// 	el.c.find('.loginValue').trigger( "focus" )
+						// }
 				});	
 			},
 
@@ -393,6 +397,35 @@ var authorization = (function(){
 						el.c.find('.qrcode').css({'display': 'initial'})
 						el.c.find('.mnemonicItem')[0].focus()
 					} 
+				})
+			},
+
+			privateKeyTabHandler : function(){
+				el.c.find('#privateKeyTab').on('click', function(){
+					var mnemonicInputs = el.c.find('.mnemonicItem')
+					mnemonicInputs.each(function(index){
+						mnemonicInputs[index].value = ''
+					})
+					el.c.find('#mnemonicTab').removeClass('tabItem-active')
+					$(this).addClass('tabItem-active')
+					el.c.find('#mnemonicInput').css({'display': 'none'})
+					el.c.find('.qrcode').css({'display': 'none'})
+					el.c.find('.actionButtonsWrapper').css({'display': 'table-cell'})
+					el.c.find('.loginValue').css({'display': 'initial'})
+					el.c.find('.loginValue').trigger( "focus" )
+				})
+			},
+
+			mnemonicTabHandler : function(){
+				el.c.find('#mnemonicTab').on('click', function(){
+					el.c.find('.loginValue').val('')
+					el.c.find('#privateKeyTab').removeClass('tabItem-active')
+					$(this).addClass('tabItem-active')
+					el.c.find('.loginValue').css({'display': 'none'})
+					el.c.find('.actionButtonsWrapper').css({'display': 'none'})
+					el.c.find('#mnemonicInput').css({'display': 'flex'})
+					el.c.find('.qrcode').css({'display': 'initial'})
+					el.c.find('.mnemonicItem')[0].focus()
 				})
 			},
 
@@ -839,10 +872,12 @@ var authorization = (function(){
 				events.checkAutocompleteValue()
 				events.mnemonicInputBlurHandler()
 				events.pasteMnemonicPhrase()
-				events.privateKeyInputHandler()
+				// events.privateKeyInputHandler()
 				events.setFocus()
 				events.addQrHandler()
 				events.keyAutocomplete()
+				events.privateKeyTabHandler()
+				events.mnemonicTabHandler()
 				p.clbk(null, p);
 
 			},
