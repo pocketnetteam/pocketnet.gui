@@ -11284,8 +11284,18 @@ Platform = function (app, listofnodes) {
                 }
                 else {
                     var cname = h(name, p)
-                    return cname
-                    // return str.replace(sreg, cname)
+                    // return cname
+                    var counter = 0
+                    return str.replace(sreg, (match)=>{
+                        if(match){
+                            counter++
+                        }
+                        if(counter === 1 ){
+                            return cname
+                        }else{
+                            return ' '
+                        }
+                    })
                 }
 
             },
