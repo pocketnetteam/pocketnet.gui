@@ -169,8 +169,8 @@
   padding-left: 0.5em;
 }
 #pkoin .content .fieldsWrapper .fields .sum .inputWrapper .notion .errorWrapper {
-  padding-left: 0.5em;
-  padding-right: 1.5em;
+  margin-top: 0.5em;
+  padding-left: 1em;
   color: rgb(var(--color-bad));
 }
 #pkoin .content .fieldsWrapper .fields .comment .text {
