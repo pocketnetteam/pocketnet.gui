@@ -26,7 +26,7 @@
         "minimize:cordova": "node minimize.js -prodaction=true -vendor=30045 -path=/pocketnet/ -project=Bastyon -composetemplates=true",
         "minimize:bastyon": "node minimize.js -prodaction=true -vendor=30045 -path=/ -project=Bastyon",
         "minimize:bastyon:test": "node minimize.js -prodaction=true -vendor=30045 -test=true -path=/ -project=Bastyon",
-        "dev:bastyon": "node minimize.js -prodaction=false -path=/ -project=Bastyon",
+        "dev:bastyon": "node minimize.js -prodaction=false -path=/pocketnet/ -project=Bastyon",
         "dev:bastyon:test": "node minimize.js -prodaction=false -test=true -path=/pocketnet/ -project=Bastyon",
         "node:embedding": "node minimize.js -prodaction=true -vendor=30045 -path=/web/"
     },
@@ -122,7 +122,7 @@
         "sortablejs": "^1.8.3",
         "standard": "^11.0.1",
         "svg-captcha": "^1.4.0",
-        "hex-captcha": "^2.0.1",
+        "hex-captcha": "^2.0.2",
         "swagger-ui-express": "^4.1.4",
         "targz": "^1.0.1",
         "tcp-port-used": "^1.0.1",
