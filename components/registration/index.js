@@ -174,7 +174,7 @@ var registration = (function(){
 						}
 						else
 						{
-							self.sdk.captcha.getHex(function(captcha, error){
+							self.sdk.captcha[self.sdk.captcha.hexCaptcha ? 'getHex' : 'get'](function(captcha, error){
 
 								if (error){
 
@@ -215,21 +215,19 @@ var registration = (function(){
 
 				after : function(el, pel){
 					/*Create canvas*/
-					var hexCaptcha = new HexCaptcha({
-						styleSheet: [
-							'js/vendor/hex-captcha/css/captcha.css'
-						],
-						holder: '.captchaImage',
-						data: {
-							frames: steps.captcha.current?.frames,
-							overlay: steps.captcha.current?.overlay,
-							duration: 250
-						}
-					});
-					
-					window.addEventListener('beforeunload', () => {
-						hexCaptcha.destruct();
-					});
+					if (self.sdk.captcha.hexCaptcha) {
+						new HexCaptcha({
+							styleSheet: [
+								'js/vendor/hex-captcha/css/captcha.css'
+							],
+							holder: '.captchaImage',
+							data: {
+								frames: steps.captcha.current?.frames,
+								overlay: steps.captcha.current?.overlay,
+								duration: 250
+							}
+						})
+					}
 					
 					var input = el.find('.ucaptchainput');
 					var redo = el.find('.redo')
@@ -999,7 +997,8 @@ var registration = (function(){
 					name :  'captcha',
 					el :   el,
 					data : {
-						captcha : steps.captcha.current
+						captcha : steps.captcha.current,
+						hexCaptcha: self.sdk.captcha.hexCaptcha
 					},
 
 				}, function(_p){
@@ -1309,11 +1308,19 @@ var registration = (function(){
 				}*/
 
 				self.app.api.get.proxywithwallet().then(r => {
+					const isHex = (p) => p?.info?.captcha?.hexCaptcha;
 
-					if(r && !regproxy) regproxy = r
+					if(r && !regproxy) {
+						regproxy = r
+						self.sdk.captcha.hexCaptcha = isHex()
+					}
 
 					if (regproxy){
 						localStorage['regproxy'] = regproxy.id
+						
+						regproxy.get.info().then(p => {
+							self.sdk.captcha.hexCaptcha = isHex()
+						})
 					}
 
 

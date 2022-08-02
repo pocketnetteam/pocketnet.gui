@@ -1786,9 +1786,12 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 			info: {
 				path: '/info',
 				action: function (message) {
+					const info = self.kit.info(true);
+								info.captcha.hexCaptcha = true;
+					
 					return Promise.resolve({
 						data: {
-							info: self.kit.info(true),
+							info: info,
 						},
 					});
 				},

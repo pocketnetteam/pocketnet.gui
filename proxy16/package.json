@@ -44,7 +44,7 @@
         "socks-proxy-agent": "^7.0.0",
         "string": "^3.3.3",
         "svg-captcha": "^1.4.0",
-        "hex-captcha": "^2.0.1",
+        "hex-captcha": "^2.0.2",
         "targz": "^1.0.1",
         "tcp-port-used": "^1.0.1",
         "underscore": "^1.12.1",
