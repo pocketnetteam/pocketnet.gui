@@ -3,11 +3,11 @@ if(typeof _OpenApi == 'undefined') _OpenApi = false;
 if(typeof _SEO == 'undefined') 	_SEO = false;
 
 if(!_Node)
-{	
+{
 
 	var _listofproxies =  [
-	
-			
+
+
 		{
 			host : 'pocketnet.app',
 			port : 8899,
@@ -19,7 +19,7 @@ if(!_Node)
 			port : 8899,
 			wss : 8099
 	    },*/
-	
+
 	    {
 			host : '1.pocketnet.app',
 			port : 8899,
@@ -44,7 +44,7 @@ if(!_Node)
 			wss : 8099
 		},
 
-		
+
 		{
 			host : '5.pocketnet.app',
 			port : 8899,
@@ -70,6 +70,10 @@ if(!_Node)
 	    }]
 
 		matrix = 'test.matrix.pocketnet.app'
+	}
+
+	if (window.location.host === 'pre.pocketnet.app') {
+		_listofproxies = [{ host : 'pre.pocketnet.app', port : 8899, wss : 8099 }];
 	}
 
 
@@ -101,7 +105,7 @@ if(!_Node)
 					var ids = p.ids || ''
 
 					var embeddingSettigns = {}
-					
+
 					try{
 						embeddingSettigns = JSON.parse(hexDecode(p.embeddingSettigns || "7B7D"))
 					}catch(e){}
@@ -117,15 +121,15 @@ if(!_Node)
 						$('.openapipromolink').each(function(){
 							var h = $(this).attr('href')
 
-							h += '?ref=' + app.ref 
+							h += '?ref=' + app.ref
 
 							$(this).attr('href', h)
 						})
 					}
 
-					
+
 					embeddingSettigns.openapi = true
-					
+
 					if (app.platform.papi[action] && (id || ids)){
 						app.platform.papi[action](id || ids.split(','), el, null, embeddingSettigns)
 					}
@@ -133,7 +137,7 @@ if(!_Node)
 				}
 			}
 		});
-		
+
 	})
 
 
