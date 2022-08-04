@@ -8427,6 +8427,11 @@ Platform = function (app, listofnodes) {
                 t.set()
 
                 if (clbk) clbk()
+
+                self.sdk.syncStorage.on('change', 'usertheme', (e) => {
+                    t.current = localStorage.usertheme;
+                    t.set();
+                });
             },
 
             setstyles : function(){
