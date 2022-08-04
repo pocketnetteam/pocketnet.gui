@@ -11428,7 +11428,7 @@ Platform = function (app, listofnodes) {
             },
 
             replacePattern: function (str, h, p) {
-
+                
                 var sreg = /(?:^|\s)@([a-zA-Z0-9_]+)/g
 
                 var name = str.match(sreg);
@@ -11438,8 +11438,18 @@ Platform = function (app, listofnodes) {
                 }
                 else {
                     var cname = h(name, p)
-
-                    return str.replace(sreg, cname)
+                    // return cname
+                    var counter = 0
+                    return str.replace(sreg, (match)=>{
+                        if(match){
+                            counter++
+                        }
+                        if(counter === 1 ){
+                            return cname
+                        }else{
+                            return ' '
+                        }
+                    })
                 }
 
             },
