@@ -282,7 +282,18 @@ Platform = function (app, listofnodes) {
         'PGvRUM7jXqHdUn7Let2QyTi1t2LHq7RgX7',
         'P9EkPPJPPRYxmK541WJkmH8yBM4GuWDn2m',
         'PReLEpaGEGTCeWKiqnK85eXrqmmTxYQ9Tw',
-        'TAqR1ncH95eq9XKSDRR18DtpXqktxh74UU'
+        'TAqR1ncH95eq9XKSDRR18DtpXqktxh74UU',
+        'PUGBtfmivvcg1afnEt9vqVi3yZ7v6S9BcC',
+        'PDtuJDVXaq82HH7fafgwBmcoxbqqWdJ9u9',
+        'PDCNrwP1i8BJQWh2bctuJyAaXxozgMcRYT',
+        'PVJ1rRdS9y9sUpaBJc8quiSTJGrC3xW8EH',
+        'PAF1BvWEH7pA24QbbEvCEasViC2Pw9BVj3',
+        'PSADH5AY5M9RaWrDVdaMrR2C2s6dCGfNK4',
+        'PMyjUzHtzsmbejB87ATbrcQNatiGsT4NzG',
+        'PHdW4pwWbFdoofVhSEfPSHgradmrvZdbE5',
+        'PDJpNY6Hm9WuA4MGSRefAGcTiDtfWKRKQD',
+        'PUJjhGLa7KesEa3Ee8K9pi49u1mW9xqQZB',
+        'PFWx4RKpggTjeDNq6oyWJfejP5z8oiKGE5',
     ];
     self.whiteList = [
       'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd',
