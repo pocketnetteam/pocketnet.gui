@@ -294,6 +294,7 @@ Platform = function (app, listofnodes) {
         'PDJpNY6Hm9WuA4MGSRefAGcTiDtfWKRKQD',
         'PUJjhGLa7KesEa3Ee8K9pi49u1mW9xqQZB',
         'PFWx4RKpggTjeDNq6oyWJfejP5z8oiKGE5',
+        'PFr6sDvtJq3wJejQce5RJ5L8u1oYKgjW9o',
     ];
     self.whiteList = [
       'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd',
