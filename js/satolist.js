@@ -12783,9 +12783,12 @@ Platform = function (app, listofnodes) {
 
                         if (!s[url])
                             f[url] = true
-
-                        if (clbk)
-                            clbk(s[url])
+    
+                        if (clbk) {
+                            if (s[url].title) s[url].title = decodeEntities(s[url].title);
+                            if (s[url].description) s[url].description = decodeEntities(s[url].description);
+                            clbk(s[url]);
+                        }
 
                     }).catch(e => {
                         f[url] = true
