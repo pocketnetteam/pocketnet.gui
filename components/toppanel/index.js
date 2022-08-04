@@ -38,7 +38,7 @@ var toppanel = (function(){
 				var video = parameters(self.app.nav.current.completeHref, true).video || false
 				var value = links[r]
 
-				var labels = [self.app.localization.e('e13136'), self.app.localization.e('e13137'), self.app.localization.e('e13138')]
+				var labels = [self.app.localization.e('e13136'), self.app.localization.e('e13137'), self.app.localization.e('discussed')]
 
 				if (self.app.platform.videoenabled ){
 					value = links[video ? 'video' : r]
