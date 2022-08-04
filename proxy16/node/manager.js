@@ -27,7 +27,8 @@ const queuemethods = {
     getusercontents : true,
     getcontentsstatistic : true,
     getboostfeed : true,
-    getprofilefeed : true
+    getprofilefeed : true,
+    getnotifications : true
 }
 
 const exepmethods = {

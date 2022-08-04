@@ -70,7 +70,7 @@ const publics = {
     getuserstate: true,
     getaccountsetting: true,
     getaddressregistration: true,
-    
+
     signrawtransactionwithkey: true,
     getrecommendedposts: true,
     gettime: true,
@@ -85,6 +85,8 @@ const publics = {
     sendcomment: true,
     getnodeinfo: true,
     getaddressscores: true,
+    getaccountsetting : true,
+    getnotifications: true,
     getpostscores:true,
     getpagescores:true,
     getrandomcontents : true,
@@ -130,7 +132,7 @@ const publics = {
     getrecommendedcontentbyaddress: true,
     gettopaccounts: true,
     getrecommendedaccountbyaddress: true,
-    getcontentactions: true,    
+    getcontentactions: true,
 }
 
 const keepAliveAgent = new http.Agent({ keepAlive: true });
@@ -142,9 +144,9 @@ function rpca(request, obj){
             rpc(request, function(err, res){
 
                 if(err) return reject(err)
-    
+
                 resolve(res)
-    
+
             }, obj)
         }
         catch(e) {
@@ -180,7 +182,7 @@ function rpc(request, callback, obj) {
 
         return
     }
-    
+
     var signal = null
 
     ///need to test
@@ -220,8 +222,8 @@ function rpc(request, callback, obj) {
     var called = false;
     var errorMessage = 'Bitcoin JSON-RPC: ';
 
-    
-   
+
+
     var req = self.protocol.request(options, function(res) {
 
         var buf = '';
@@ -244,7 +246,7 @@ function rpc(request, callback, obj) {
                 exceededError = {
                     error : errorMessage + 'Connection Rejected: 401 Unnauthorized',
                     code : 401
-                } 
+                }
 
             }
 
@@ -253,7 +255,7 @@ function rpc(request, callback, obj) {
                 exceededError = {
                     error : errorMessage + 'Connection Rejected: 403 Forbidden',
                     code : 403
-                } 
+                }
 
             }
 
@@ -262,7 +264,7 @@ function rpc(request, callback, obj) {
                 exceededError = {
                     error : 'Bitcoin JSON-RPC: ' + buf.toString('utf8'),
                     code : 429
-                } 
+                }
 
             }
 
@@ -270,12 +272,12 @@ function rpc(request, callback, obj) {
 
                 try {
                     parsedBuf = JSON.parse(buf);
-                } 
+                }
                 catch (e) {
                     exceededError = {
                         error : 'Error Parsing JSON: ' + e.message,
                         code : res.statusCode || 500
-                    }   
+                    }
                 }
 
             }
@@ -291,7 +293,7 @@ function rpc(request, callback, obj) {
             else{
                 callback(parsedBuf.error, parsedBuf);
             }
-            
+
             buf = '';
             parsedBuf = null;
             exceededError = null;
@@ -305,7 +307,7 @@ function rpc(request, callback, obj) {
         if(!called) {
 
             if(lg) console.log("requesterror", self.host, m, e)
-            
+
 
             callback({
                 code : 408,
@@ -314,7 +316,7 @@ function rpc(request, callback, obj) {
 
             called = true;
         }
-        
+
     }).setTimeout(timeout, function(){
 
         if(!called) {
@@ -395,6 +397,7 @@ RpcClient.callspec = {
     getTransaction: '',
     getTxOut: 'str int bool',
     getTxOutSetInfo: '',
+    getnotifications: 'obj',
     //getWalletInfo: '',
     getWork: '',
     help: '',
@@ -482,16 +485,16 @@ RpcClient.callspec = {
     getrecomendedcontentsbyscoresfromaddress : 'str obj int int int',
     getrecommendedaccountbyaddress: 'str str obj str int',
 
-    getcontentactions : 'str',  
+    getcontentactions : 'str',
 
-    
+
     getcompactblock: "str int",
     searchbyhash: "str",
     getstatisticbyhours: 'int int',
     getstatisticbydays: 'int int',
     getstatisticcontentbyhours : 'int int',
     getstatisticcontentbydays : 'int int',
-    
+
     // Control
     stop: '',
     dumpwallet: 'str',
@@ -530,7 +533,7 @@ function generateRPCMethods(constructor, apiCalls, rpc) {
                 });
 
                 return Promise.resolve()
-                
+
             } else {
 
                 return rpca({
