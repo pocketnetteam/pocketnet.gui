@@ -75,11 +75,6 @@ class FrontendLogger {
     USER_COMPLAIN : {
       id: 'USER_COMPLAIN',
       description: 'user send complain'
-    }
-
-    USER_COMPLAIN : {
-      id: 'USER_COMPLAIN',
-      description: 'user send complain'
     },
 
     SESSION_STARTED: {
