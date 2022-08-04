@@ -1,6 +1,116 @@
 @import "../../css/__cssvar";
+.qrmenu{
+	.qrmenuitem{
+		cursor: pointer;
+		height: 80px;
+			.fileUploader{
+				.elContent{
+					display: flex;
+					.icon{
+						width: 30px;
+						padding: 2em 0px 2em 1.5em;
+					}
+					.label{
+						padding: 2em 0em 2em 1em;
+					}
+				}
+			}
+		>div{
+			padding : 2*  @rhythm;
+			border-bottom: 1px solid rgb(var(--neutral-grad-1));
+			.transition(0.3s);
 
-#addaccount{	
+			span{
+				font-size: 0.9em;
+			}
+
+			&.icon{
+				width: 30px;
+				text-align: center;
+			}
+		}
+
+		&:nth-last-child(1){
+			>div{
+				border-bottom: 0;
+			}
+		}
+
+		&:hover{
+			>div{
+				color : rgb(var(--color-text-ac));
+				border-color: rgb(var(--color-text-ac));
+			}
+		}
+
+		&.block,
+		&.complain{
+			&:hover{
+				>div{
+					color : rgb(var(--color-text-ac-2));
+					border-color: rgb(var(--color-text-ac-2));
+				}
+			}
+		}
+
+	}
+}
+#addaccount{
+	.tabsWrapper{
+		border: 1px solid #ccc;
+		border-radius: 8px;
+		padding: 4px;
+		display: flex;
+    	width: fit-content;
+		& .tabItem{
+			height: 44px;
+			border-radius: 8px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 0.95em;
+			font-weight: bold;
+			padding: 0 20px;
+			cursor: pointer;
+			opacity: .65;
+			transition: opacity .1s ease-out;
+			&:hover{
+				background-color: #f7f8fa;
+				opacity: 1;
+			}
+			&:not(:last-child){
+				margin-right: 3px;
+			}
+			&-active{
+				background-color: white;
+				opacity: 1;
+				&:hover{
+					background-color: white;
+				}
+			}
+		}
+	}	
+	.qrcode{
+		text-align: center;
+		cursor: pointer;
+	}
+	.icon {
+		& i{
+			color : rgb(var(--color-txt-ac));
+		}
+	}
+	#mnemonicInput{
+		display: flex;
+		flex-wrap: wrap;
+		.mnemonicItem{
+			margin-bottom: 0.3em;
+			width: 16%;
+			font-size: 1.2em;
+			padding: 0.2em;
+			border-color: transparent;
+			background-color: rgb(var(--neutral-grad-0));
+		}
+	}
 	.work{
 		padding-top: 4 * @rhythm!important;
 		padding-bottom : 4 * @rhythm!important;
@@ -36,7 +146,7 @@
 
 			&.actionButtonsWrapper{
 				width: 120px;
-
+				display: none;
 				text-align: center;
 
 				.fileUploader{
@@ -144,7 +254,7 @@
 
 				&.actionButtonsWrapper{
 					width: 120px;
-	
+					display: none;
 					text-align: center;
 	
 					.fileUploader{
@@ -166,7 +276,11 @@
 
 /*t*/ @media only screen and (max-width: 768px){
 	#addaccount{	
-		
+		#mnemonicInput{
+			.mnemonicItem{
+				width: 49%;
+			}
+		}
 		.work{
 			padding-top: 2 * @rhythm!important;
 			padding-bottom : 2 * @rhythm!important;
@@ -195,8 +309,15 @@
 
 				&.actionButtonsWrapper{
 					width: 50%;
+					display: none;
 				}
 			}
 		}
 	}
+}
+.loginValue{
+	display: none;
+}
+.errorClass{
+	border-color: @color-bad !important;
 }

@@ -160,7 +160,7 @@ User = function(app, p) {
 			})
 		}
 
-		if(!bitcoin.bip39.validateMnemonic(mnemonic)){
+		if(!bitcoin.bip39.validateMnemonickWithLangDetection(mnemonic)){
 
 			self.setKeysPairFromPrivate(mnemonic, function(result){
 
@@ -279,7 +279,7 @@ User = function(app, p) {
 
 
 					if(m){
-						if(!bitcoin.bip39.validateMnemonic(m)){
+						if(!bitcoin.bip39.validateMnemonickWithLangDetection(m)){
 
 							self.setKeysPairFromPrivate(m, function(){
 								self.isState(clbk)
@@ -407,7 +407,7 @@ User = function(app, p) {
 		if(!_private) _private = ''
 
 		var keyPair = null;
-		if (bitcoin.bip39.validateMnemonic(_private.toLowerCase())) {
+		if (bitcoin.bip39.validateMnemonickWithLangDetection(_private.toLowerCase())) {
 			keyPair = self.keysFromMnemo(_private)
 		}
 		else{

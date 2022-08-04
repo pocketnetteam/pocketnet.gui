@@ -1,3 +1,81 @@
+#pkview .approveMnemonic,
+#pkview .qrCode {
+  position: relative;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+}
+#pkview .approveMnemonic canvas,
+#pkview .qrCode canvas {
+  align-self: center;
+}
+#pkview .approveMnemonic .approveMnemonicNote,
+#pkview .qrCode .approveMnemonicNote {
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 15px;
+}
+#pkview .approveMnemonic .shuffledMnemonicWrapper,
+#pkview .qrCode .shuffledMnemonicWrapper,
+#pkview .approveMnemonic .randomWordsWrapper,
+#pkview .qrCode .randomWordsWrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: 20px;
+  justify-content: start;
+  align-content: start;
+}
+#pkview .approveMnemonic .shuffledMnemonicWrapper .shuffledMnemonicItem,
+#pkview .qrCode .shuffledMnemonicWrapper .shuffledMnemonicItem,
+#pkview .approveMnemonic .randomWordsWrapper .shuffledMnemonicItem,
+#pkview .qrCode .randomWordsWrapper .shuffledMnemonicItem {
+  width: 32%;
+  height: 40px;
+  background: #0992DF;
+  border-radius: 6px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1em;
+}
+#pkview .approveMnemonic .shuffledMnemonicWrapper .shuffledMnemonicItem:hover,
+#pkview .qrCode .shuffledMnemonicWrapper .shuffledMnemonicItem:hover,
+#pkview .approveMnemonic .randomWordsWrapper .shuffledMnemonicItem:hover,
+#pkview .qrCode .randomWordsWrapper .shuffledMnemonicItem:hover {
+  cursor: pointer;
+  background: #112035;
+  color: #fff;
+}
+#pkview .approveMnemonic .randomWordsWrapper,
+#pkview .qrCode .randomWordsWrapper {
+  height: 62px;
+  padding: 10px;
+  margin-bottom: 2em;
+  border: 1px dashed #3c4146;
+  border-radius: 8px;
+}
+#pkview .approveMnemonic .approveMnemonicButtons,
+#pkview .qrCode .approveMnemonicButtons {
+  display: flex;
+  justify-content: space-between;
+}
+#pkview .approveMnemonic .submitButton:disabled,
+#pkview .qrCode .submitButton:disabled,
+#pkview .approveMnemonic .submitButton [disabled],
+#pkview .qrCode .submitButton [disabled] {
+  opacity: 0.5;
+  cursor: default;
+  pointer-events: none;
+}
+#pkview .approveMnemonic .hide,
+#pkview .qrCode .hide {
+  background: #555770 !important;
+  color: #555770 !important;
+  pointer-events: none;
+  text-indent: -9999px;
+}
 #pkview .buttonWrapper {
   padding: 1em;
   text-align: center;
@@ -143,6 +221,10 @@
 }
 /*t*/
 @media only screen and (max-width: 768px) {
+  .wnd.pkviewwnd #pkview .approveMnemonic {
+    padding-bottom: 10px;
+    padding-top: 5px;
+  }
   .wnd.pkviewwnd #pkview .keywrapper {
     padding-left: 0.5em;
     padding-right: 0.5em;
