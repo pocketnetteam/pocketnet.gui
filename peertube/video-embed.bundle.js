@@ -24945,10 +24945,11 @@ class VideoFetcher {
         return this.loadVideo(videoId, host).then(({ videoResponse }) => {
             return videoResponse.json();
         }).then((json) => {
+            console.log('json', json);
             if (json && Object.keys(json).length != 0) {
                 window.peertubeglobalcache[videoId] = json;
             }
-            return json;
+            return { videoDetails: json };
         });
     }
     loadVideoWithLive(video, host) {
@@ -29284,6 +29285,7 @@ class PeerTubeEmbed {
     }*/
     // ---------------------------------------------------------------------------
     async loadVideoAndBuildPlayer(host, uuid, parameters, clbk) {
+        console.log('uuid, host', uuid, host);
         try {
             const { videoDetails } = await this.videoFetcher.loadVideoCache(uuid, host);
             videoDetails.host = host;

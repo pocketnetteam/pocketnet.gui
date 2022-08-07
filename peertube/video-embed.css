@@ -3702,6 +3702,25 @@ html.mobileview .video-js .vjs-control-bar .vjs-volume-control {
   margin-bottom: 1em;
 }
 
+.standalone-video-embed {
+  margin: 0 !important;
+  background-color: black;
+  overflow: hidden;
+}
+.standalone-video-embed .video-js-wrapper {
+  position: absolute;
+  left: 0%;
+  top: 0%;
+  height: 100%;
+  width: 100%;
+}
+.standalone-video-embed .vjs-picture-in-picture-control {
+  display: none !important;
+}
+.standalone-video-embed .pocketnet-logo-video-player {
+  display: none !important;
+}
+
 @media screen and (max-width: 300px) {
   #error-block {
     font-size: 36px;
