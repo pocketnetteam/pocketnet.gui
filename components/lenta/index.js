@@ -877,6 +877,8 @@ var lenta = (function(){
 
 					var callback = (player) => {
 
+						console.log("player clbk", player)
+
 						if (player){
 							players[share.txid] || (players[share.txid] = {})
 							players[share.txid].p = player
@@ -931,6 +933,7 @@ var lenta = (function(){
 						},
 
 						pictureInPictureRequest : function(){
+							console.log('pictureInPictureRequest')
 							
 							var player = players[share.txid].p
 
@@ -948,6 +951,7 @@ var lenta = (function(){
 						},	
 						
 						volumeChange : function(v){
+							console.log("VHC")
 							videosVolume = v
 							self.sdk.videos.volume = videosVolume 
 							self.sdk.videos.save()

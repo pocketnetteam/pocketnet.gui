@@ -9208,7 +9208,7 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
 
         var host = options.app.peertubeHandler.helpers.url(parsed.host, true)
 
-        PeerTubeEmbeding.main(target, parsed.id, {
+        PeerTubeEmbeding.main(target, parsed.id, host, {
 
           host : host,
           wautoplay : options.wautoplay,
@@ -9236,6 +9236,8 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
 
   
         }).then(function(embed){
+
+          console.log("THEN", embed)
 
           if(!embed || !embed.api){
             if (clbk) clbk(null);
