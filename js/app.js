@@ -922,6 +922,18 @@ Application = function(p)
     })
   }
 
+  self.initvideodb = function(){
+
+    if(typeof initIndexedDbVideo != 'undefined'){
+      
+      initIndexedDbVideo().then(db => {
+        self.videoAssetsStorage = new IdbAssetsStorage(db);
+        self.videoSegmentsStorage = new IdbSegmentsStorage(db);
+      })
+    }
+
+  }
+
   self.init = function(p){
 
     if (navigator.webdriver && !self.test && !parameters().webdrivertest) return
@@ -937,6 +949,8 @@ Application = function(p)
     prepareMap();
 
     self.options.fingerPrint = hexEncode('fakefingerprint');
+
+    self.initvideodb()
 
     self.localization.init(function(){
 
@@ -2580,6 +2594,8 @@ Application = function(p)
   localStorage['device'] = self.options.device
 
   if(typeof window != 'undefined'){ self.fref = deep(window, 'location.href') }
+
+  
 
   return self;
 }

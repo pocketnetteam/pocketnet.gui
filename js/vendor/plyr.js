@@ -9212,7 +9212,7 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
 
           host : host,
           wautoplay : options.wautoplay,
-          useP2P : options.useP2P,
+          p2pEnabled : options.useP2P,
           enableHotkeys : options.enableHotkeys,
           logoType : options.logoType,
           localVideo : localVideo,
@@ -9220,7 +9220,11 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
           localTransport,
           hlsError : options.hlsError,
           light : options.light,
-          pathfunction : options.app.peertubeHandler.helpers.url
+          pathfunction : options.app.peertubeHandler.helpers.url,
+          mobile : options.mobile,
+
+          assetsStorage : localVideo ? null : options.app.videoAssetsStorage,
+          segmentsStorage : localVideo ? null : options.app.videoSegmentsStorage
 
         },{
           hlsError : options.hlsError,
@@ -9232,12 +9236,11 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
           playbackStatusUpdate : options.playbackStatusUpdate,
           pictureInPictureRequest: options.pictureInPictureRequest,
           play : options.play,
-          pause : options.pause
+          pause : options.pause,
+          
 
   
         }).then(function(embed){
-
-          console.log("THEN", embed)
 
           if(!embed || !embed.api){
             if (clbk) clbk(null);

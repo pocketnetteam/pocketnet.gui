@@ -380,7 +380,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _root_helpers_web_browser__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! @root-helpers/web-browser */ "./src/root-helpers/web-browser.ts");
 /* harmony import */ var _peertube_player_local_storage__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./peertube-player-local-storage */ "./src/assets/player/peertube-player-local-storage.ts");
 /* harmony import */ var _shared_manager_options__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./shared/manager-options */ "./src/assets/player/shared/manager-options/index.ts");
-/* harmony import */ var _translations_manager__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./translations-manager */ "./src/assets/player/translations-manager.ts");
 
 
 
@@ -392,7 +391,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 //import './shared/control-bar/peertube-link-button'
-
 
 
 
@@ -540,7 +538,7 @@ class PeertubePlayerManager {
             ]);
             this.p2pMediaLoaderModule = p2pMediaLoaderModule;
         }
-        await _translations_manager__WEBPACK_IMPORTED_MODULE_29__.TranslationsManager.loadLocaleInVideoJS(options.common.serverUrl, options.common.language, (video_js__WEBPACK_IMPORTED_MODULE_24___default()));
+        //await TranslationsManager.loadLocaleInVideoJS(options.common.serverUrl, options.common.language, videojs)
         return this.buildPlayer(mode, options);
     }
     static async buildPlayer(mode, options) {
@@ -571,7 +569,7 @@ class PeertubePlayerManager {
                     self.alreadyPlayed = true;
                 });
                 self.addContextMenu(videojsOptionsBuilder, player, options.common);
-                if ((0,_root_helpers_web_browser__WEBPACK_IMPORTED_MODULE_26__.isMobile)())
+                if ((0,_root_helpers_web_browser__WEBPACK_IMPORTED_MODULE_26__.isMobile)() || options.mobile)
                     player.peertubeMobile();
                 if (options.common.enableHotkeys === true)
                     player.peerTubeHotkeysPlugin();
@@ -1466,6 +1464,7 @@ class HLSOptionsBuilder {
         const redundancyUrlManager = new _p2p_media_loader_redundancy_url_manager__WEBPACK_IMPORTED_MODULE_3__.RedundancyUrlManager(this.options.p2pMediaLoader.redundancyBaseUrls);
         const p2pMediaLoaderConfig = this.getP2PMediaLoaderOptions(redundancyUrlManager);
         const loader = new this.p2pMediaLoaderModule.Engine(p2pMediaLoaderConfig).createLoaderClass();
+        console.log('p2pMediaLoaderConfig', p2pMediaLoaderConfig);
         const p2pMediaLoader = {
             redundancyUrlManager,
             type: 'application/x-mpegURL',
@@ -1505,8 +1504,9 @@ class HLSOptionsBuilder {
             ? this.getP2PMediaLoaderLiveOptions()
             : this.getP2PMediaLoaderVODOptions();
         return {
-            loader: Object.assign({ trackerAnnounce, rtcConfig: (0,_common__WEBPACK_IMPORTED_MODULE_2__.getRtcConfig)(), simultaneousHttpDownloads: 1, httpFailedSegmentTimeout: 1000, segmentValidator: (0,_p2p_media_loader_segment_validator__WEBPACK_IMPORTED_MODULE_5__.segmentValidatorFactory)(this.options.p2pMediaLoader.segmentsSha256Url, this.options.common.isLive), segmentUrlBuilder: (0,_p2p_media_loader_segment_url_builder__WEBPACK_IMPORTED_MODULE_4__.segmentUrlBuilderFactory)(redundancyUrlManager), useP2P: this.options.common.p2pEnabled, consumeOnly }, specificLiveOrVODOptions),
+            loader: Object.assign({ trackerAnnounce, rtcConfig: (0,_common__WEBPACK_IMPORTED_MODULE_2__.getRtcConfig)(), simultaneousHttpDownloads: 1, httpFailedSegmentTimeout: 1000, segmentValidator: (0,_p2p_media_loader_segment_validator__WEBPACK_IMPORTED_MODULE_5__.segmentValidatorFactory)(this.options.p2pMediaLoader.segmentsSha256Url, this.options.common.isLive), segmentUrlBuilder: (0,_p2p_media_loader_segment_url_builder__WEBPACK_IMPORTED_MODULE_4__.segmentUrlBuilderFactory)(redundancyUrlManager), useP2P: this.options.common.p2pEnabled, consumeOnly, segmentsStorage: this.options.segmentsStorage }, specificLiveOrVODOptions),
             segments: {
+                assetsStorage: this.options.assetsStorage,
                 swarmId: this.options.p2pMediaLoader.playlistUrl,
                 forwardSegmentCount: (_b = specificLiveOrVODOptions.p2pDownloadMaxPriority) !== null && _b !== void 0 ? _b : 20
             }
@@ -1638,7 +1638,7 @@ class ManagerOptionsBuilder {
                 //  'videoCaptions',
                 'stopTime',
                 'isLive',
-                'videoUUID'
+                'videoUUID',
             ]))
         };
         /*if (commonOptions.playlist) {
@@ -1671,6 +1671,7 @@ class ManagerOptionsBuilder {
             inactivityTimeout: commonOptions.inactivityTimeout,
             playbackRates: [0.5, 0.75, 1, 1.25, 1.5, 1.75, 2],
             plugins,
+            sources: commonOptions.sources,
             controlBar: {
                 children: controlBarOptionsBuilder.getChildrenOptions() // FIXME: typings
             }
@@ -4032,69 +4033,6 @@ class UpNextPlugin extends Plugin {
 }
 video_js__WEBPACK_IMPORTED_MODULE_0___default().registerPlugin('upnext', UpNextPlugin);
 
-
-
-/***/ }),
-
-/***/ "./src/assets/player/translations-manager.ts":
-/*!***************************************************!*\
-  !*** ./src/assets/player/translations-manager.ts ***!
-  \***************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "TranslationsManager": () => (/* binding */ TranslationsManager)
-/* harmony export */ });
-/* harmony import */ var _root_helpers_logger__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @root-helpers/logger */ "./src/root-helpers/logger.ts");
-/* harmony import */ var _shared_core_utils_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @shared/core-utils/i18n */ "../shared/core-utils/i18n/index.ts");
-
-
-class TranslationsManager {
-    static getServerTranslations(serverUrl, locale) {
-        const path = TranslationsManager.getLocalePath(serverUrl, locale);
-        // It is the default locale, nothing to translate
-        if (!path)
-            return Promise.resolve(undefined);
-        return fetch(path + '/server.json')
-            .then(res => res.json())
-            .catch(err => {
-            _root_helpers_logger__WEBPACK_IMPORTED_MODULE_0__.logger.error('Cannot get server translations', err);
-            return undefined;
-        });
-    }
-    static loadLocaleInVideoJS(serverUrl, locale, videojs) {
-        const path = TranslationsManager.getLocalePath(serverUrl, locale);
-        // It is the default locale, nothing to translate
-        if (!path)
-            return Promise.resolve(undefined);
-        let p;
-        if (TranslationsManager.videojsLocaleCache[path]) {
-            p = Promise.resolve(TranslationsManager.videojsLocaleCache[path]);
-        }
-        else {
-            p = fetch(path + '/player.json')
-                .then(res => res.json())
-                .then(json => {
-                TranslationsManager.videojsLocaleCache[path] = json;
-                return json;
-            })
-                .catch(err => {
-                _root_helpers_logger__WEBPACK_IMPORTED_MODULE_0__.logger.error('Cannot get player translations', err);
-                return undefined;
-            });
-        }
-        const completeLocale = (0,_shared_core_utils_i18n__WEBPACK_IMPORTED_MODULE_1__.getCompleteLocale)(locale);
-        return p.then(json => videojs.addLanguage((0,_shared_core_utils_i18n__WEBPACK_IMPORTED_MODULE_1__.getShortLocale)(completeLocale), json));
-    }
-    static getLocalePath(serverUrl, locale) {
-        const completeLocale = (0,_shared_core_utils_i18n__WEBPACK_IMPORTED_MODULE_1__.getCompleteLocale)(locale);
-        if (!(0,_shared_core_utils_i18n__WEBPACK_IMPORTED_MODULE_1__.is18nLocale)(completeLocale) || (0,_shared_core_utils_i18n__WEBPACK_IMPORTED_MODULE_1__.isDefaultLocale)(completeLocale))
-            return undefined;
-        return serverUrl + '/client/locales/' + completeLocale;
-    }
-}
-TranslationsManager.videojsLocaleCache = {};
 
 
 /***/ }),

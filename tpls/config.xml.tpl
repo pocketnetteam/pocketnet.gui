@@ -154,7 +154,7 @@
         </config-file>
 
         <edit-config file="AndroidManifest.xml" target="/manifest/application/activity[@android:name='MainActivity']" mode="merge">
-            <activity android:windowSoftInputMode="adjustPan" />
+            <activity android:windowSoftInputMode="adjustPan" android:supportsPictureInPicture="true"/>
         </edit-config>
 
         <preference name="AndroidPersistentFileLocation" value="Compatibility" />

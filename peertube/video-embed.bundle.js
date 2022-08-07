@@ -24005,7 +24005,6 @@ class PeerTubeEmbedApi {
     constructor(embed, clbk) {
         this.embed = embed;
         this.clbk = clbk;
-        console.log('clbk', clbk);
         this.ignoreChange = false;
     }
     initialize() {
@@ -24042,7 +24041,6 @@ class PeerTubeEmbedApi {
         this.ignoreChange = false;
     }
     async prepare() {
-        console.log("prepare");
         await this.embed.getplayer();
     }
     play() {
@@ -24188,7 +24186,6 @@ class PeerTubeEmbedApi {
             });
         }
         this.embed.player.on('pictureInPictureRequest', function (ev) {
-            console.log("ASAS");
             slf.answer({ method: 'pictureInPictureRequest' });
         });
         this.embed.player.on('play', function (ev) {
@@ -24599,6 +24596,7 @@ class PlayerManagerOptions {
         this.enableApi = false;
         this.startTime = 0;
         this.scope = 'peertube';
+        this.mobile = false;
     }
     hasAPIEnabled() {
         return this.enableApi;
@@ -24649,18 +24647,22 @@ class PlayerManagerOptions {
             this.enableApi = (0,_root_helpers__WEBPACK_IMPORTED_MODULE_0__.getToggle)(params, 'api', this.enableApi);
             this.warningTitle = (0,_root_helpers__WEBPACK_IMPORTED_MODULE_0__.getToggle)(params, 'warningTitle', true);
             this.peertubeLink = (0,_root_helpers__WEBPACK_IMPORTED_MODULE_0__.getToggle)(params, 'peertubeLink', true);
+            this.mobile = (0,_root_helpers__WEBPACK_IMPORTED_MODULE_0__.getToggle)(params, 'mobile', false);
             this.p2pEnabled = (0,_root_helpers__WEBPACK_IMPORTED_MODULE_0__.getToggle)(params, 'p2p', true); //getToggle(params, 'p2p', this.isP2PEnabled(config, video))
             this.scope = (0,_root_helpers__WEBPACK_IMPORTED_MODULE_0__.getString)(params, 'scope', this.scope);
             this.subtitle = (0,_root_helpers__WEBPACK_IMPORTED_MODULE_0__.getString)(params, 'subtitle');
             this.startTime = (0,_root_helpers__WEBPACK_IMPORTED_MODULE_0__.getString)(params, 'start');
             this.stopTime = (0,_root_helpers__WEBPACK_IMPORTED_MODULE_0__.getString)(params, 'stop');
+            this.assetsStorage = params.assetsStorage;
+            this.segmentsStorage = params.segmentsStorage;
             //this.localVideo = getString(params, 'localvideo', false)
             /*this.bigPlayBackgroundColor = getString(params, 'bigPlayBackgroundColor')
             this.foregroundColor = getString(params, 'foregroundColor')*/
             //const modeParam = getString(params, 'mode')
             this.mode = 'p2p-media-loader';
-            if ((0,_root_helpers__WEBPACK_IMPORTED_MODULE_0__.getString)(params, 'localvideo', ''))
+            if (params.localVideo)
                 this.mode = 'localvideo';
+            console.log("LOCALVIDEO", this);
             /*if (modeParam) {
               if (modeParam === 'p2p-media-loader') this.mode = 'p2p-media-loader'
               else this.mode = 'webtorrent'
@@ -24677,9 +24679,9 @@ class PlayerManagerOptions {
     async getPlayerOptions(options) {
         const { video, alreadyHadPlayer, 
         //playlistTracker,
-        live, serverConfig } = options;
+        live, serverConfig, sources, poster } = options;
         //const videoCaptions = await this.buildCaptions(captionsResponse, translations)
-        const playerOptions = Object.assign({ common: Object.assign({ 
+        const playerOptions = Object.assign(Object.assign({ common: Object.assign({ 
                 // Autoplay in playlist mode
                 autoplay: alreadyHadPlayer ? true : this.autoplay, controls: this.controls, controlBar: this.controlBar, muted: this.muted, loop: this.loop, p2pEnabled: this.p2pEnabled, 
                 //captions: videoCaptions.length !== 0,
@@ -24689,11 +24691,11 @@ class PlayerManagerOptions {
                     this.playerHTML.setPlayerElement(element);
                 }, videoDuration: video.duration, enableHotkeys: true, peertubeLink: this.peertubeLink, 
                 //instanceName: serverConfig.instance.name,
-                poster: video.host + video.previewPath, theaterButton: false, serverUrl: video.host, language: navigator.language, embedUrl: video.host + video.embedPath, embedTitle: video.name, errorNotifier: () => {
+                poster: poster ? poster : video.host + video.previewPath, theaterButton: false, serverUrl: video.host, language: navigator.language, embedUrl: video.host + video.embedPath, embedTitle: video.name, sources: sources, errorNotifier: () => {
                     // Empty, we don't have a notifier in the embed
                 } }, this.buildLiveOptions(video, live)), webtorrent: {
                 videoFiles: video.files
-            } }, this.buildP2PMediaLoaderOptions(video));
+            }, mobile: this.mobile }, this.buildP2PMediaLoaderOptions(video)), { assetsStorage: this.assetsStorage, segmentsStorage: this.segmentsStorage });
         return playerOptions;
     }
     buildLiveOptions(video, live) {
@@ -24704,28 +24706,6 @@ class PlayerManagerOptions {
             liveOptions: {
                 latencyMode: live.latencyMode
             }
-        };
-    }
-    buildPlaylistOptions(options) {
-        const { playlistTracker, playNextPlaylistVideo, playPreviousPlaylistVideo, onVideoUpdate } = options;
-        if (!playlistTracker)
-            return {};
-        return {
-            playlist: {
-                elements: playlistTracker.getPlaylistElements(),
-                playlist: playlistTracker.getPlaylist(),
-                getCurrentPosition: () => playlistTracker.getCurrentPosition(),
-                /*onItemClicked: (videoPlaylistElement: VideoPlaylistElement) => {
-                  playlistTracker.setCurrentElement(videoPlaylistElement)
-        
-                  onVideoUpdate(videoPlaylistElement.video.uuid)
-                }*/
-            },
-            /*nextVideo: () => playNextPlaylistVideo(),
-            hasNextVideo: () => playlistTracker.hasNextPlaylistElement(),
-      
-            previousVideo: () => playPreviousPlaylistVideo(),
-            hasPreviousVideo: () => playlistTracker.hasPreviousPlaylistElement()*/
         };
     }
     buildP2PMediaLoaderOptions(video) {
@@ -29250,7 +29230,6 @@ class PeerTubeEmbed {
     }
     async getplayer() {
         if (this.lightclbk) {
-            console.log("ASDADSD");
             await this.lightclbk();
         }
         return this.player;
@@ -29306,7 +29285,6 @@ class PeerTubeEmbed {
     // ---------------------------------------------------------------------------
     async loadVideoAndBuildPlayer(host, uuid, parameters, clbk) {
         try {
-            console.log('host', host, uuid);
             const { videoDetails } = await this.videoFetcher.loadVideoCache(uuid, host);
             videoDetails.host = host;
             if (parameters.light) {
@@ -29367,7 +29345,13 @@ class PeerTubeEmbed {
             onVideoUpdate: (uuid, host) => this.loadVideoAndBuildPlayer(host, uuid, parameters, clbk),
             //playNextPlaylistVideo: () => this.playNextPlaylistVideo(),
             //playPreviousPlaylistVideo: () => this.playPreviousPlaylistVideo(),
-            live
+            live,
+            poster: !parameters.localVideo ? null : parameters.localVideo.infos.thumbnail,
+            sources: !parameters.localVideo ? null : [{
+                    src: parameters.localVideo.video.internalURL,
+                    type: 'video/mp4',
+                    size: parseInt(parameters.localVideo.video.name)
+                }]
         });
         this.player = await PlayerManager.initialize(this.playerManagerOptions.getMode(), options, (player) => {
             this.player = player;
@@ -29402,6 +29386,16 @@ class PeerTubeEmbed {
         this.initializeApi(clbk);
         // @ts-ignore
         this.playerHTML.setARElement(video, this.player.el_);
+        // @ts-ignore
+        if (window.cordova) {
+            try {
+                // @ts-ignore
+                (this.player.tech_.el_ || this.player.el_).setAttribute('poster', options.common.poster);
+            }
+            catch (e) {
+                console.error(e);
+            }
+        }
         //if (this.isPlaylistEmbed()) {
         //await this.buildPlayerPlaylistUpnext()
         //this.player.playlist().updateSelected()
