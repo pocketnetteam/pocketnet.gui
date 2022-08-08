@@ -2473,6 +2473,8 @@ Platform = function (app, listofnodes) {
 
             var id = p.id || makeid()
 
+            console.log("P", p)
+
             app.nav.api.load({
 
                 open : true,
