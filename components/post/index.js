@@ -600,10 +600,7 @@ var post = (function () {
 
 				if (value > 4){
 
-						const bannerComment = inicomments.showBanner(inicomments);
-						if (!bannerComment) {
-							return;
-						}
+					var reason = null
 
 					if (self.app.platform.sdk.user.newuser()){
 						reason = 'n'
