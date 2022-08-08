@@ -30,26 +30,26 @@ var post = (function () {
 						self.app.platform.sdk.node.transactions.get.balance(function(amount){
 
 							var balance = amount.toFixed(3);
-	
+
 							var userinfo = deep(app, 'platform.sdk.usersl.storage.' + share.address) || {
 								address : share.address,
 								addresses : [],
 							}
-		
+
 							self.nav.api.load({
 								open : true,
 								href : 'pkoin',
 								history : true,
 								inWnd : true,
-			
+
 								essenseData : {
 									userinfo: userinfo,
 									id : share.txid
 								}
 							})
-	
+
 						})
-	
+
 					}, share.txid)
 
 
@@ -74,9 +74,9 @@ var post = (function () {
 			changeSavingStatus : function(shareId, deleted){
 
 				if(self.app.playingvideo && !deleted) return
-		
+
 				renders.share()
-			},	
+			},
 
 			changeSavingStatusLight : function(share){
 
@@ -241,7 +241,7 @@ var post = (function () {
 
 			},
 
-			
+
 
 			sharesocial: function (clbk) {
 				var url = 'https://' + self.app.options.url + '/' + (ed.hr || 'index?') + 's=' + share.txid + '&mpost=true'
@@ -377,7 +377,7 @@ var post = (function () {
 					button.one('click', function(){
 
 
-						$(this).closest('.jsPlayerLoading').addClass('loading') 
+						$(this).closest('.jsPlayerLoading').addClass('loading')
 						$(this).closest('.js-player-dummy').addClass('js-player-ini')
 
 
@@ -397,7 +397,7 @@ var post = (function () {
 				}
 
 				button = null
-			},	
+			},
 
 			initVideo: function (clbk) {
 
@@ -438,7 +438,7 @@ var post = (function () {
 						volumeChange : function(v){
 							videosVolume = v
 
-							self.sdk.videos.volume = videosVolume 
+							self.sdk.videos.volume = videosVolume
 
 							self.sdk.videos.save()
 						},
@@ -467,11 +467,11 @@ var post = (function () {
 									startTime
 								})
 							}, 300)
-							
-						},	
+
+						},
 
 						pause : function(){
-							if(!p.pip)	
+							if(!p.pip)
 								self.app.actions.playingvideo(null)
 						},
 
@@ -497,7 +497,7 @@ var post = (function () {
 									payload: JSON.stringify(error.data),
 									code: 401,
 								});*/
-								
+
 						},
 
 						useP2P : self.app.platform.sdk.usersettings.meta.videop2p.value,
@@ -522,15 +522,15 @@ var post = (function () {
 								if (wa) {
 
 									player.play()
-	
+
 									if (player.setVolume)
 										player.setVolume(self.sdk.videos.volume)
 									else{
 										player.muted = false
 									}
-	
+
 								}
-	
+
 								if (player.enableHotKeys && !ed.repost) player.enableHotKeys()
 							}
 
@@ -547,13 +547,10 @@ var post = (function () {
 			},
 
 			like: function (value, clbk) {
-
-
 				var checkvisibility = app.platform.sdk.node.shares.checkvisibility(share);
 				var reputation = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.reputation') || 0
 
 				if (checkvisibility && reputation >= 50) return
-
 
 				if(value <= 3 && !self.app.test){
 					if(self.app.platform.sdk.user.scamcriteria()){
@@ -565,9 +562,9 @@ var post = (function () {
 								html : self.app.localization.e('ratings123'),
 								btn1text :  self.app.localization.e('daccept'),
 								btn2text : self.app.localization.e('ucancel'),
-			
+
 								class : 'zindex one',
-			
+
 								success : function(){
 								}
 							})
@@ -585,8 +582,6 @@ var post = (function () {
 					}
 				}
 
-				
-
 				var upvoteShare = share.upvote(value);
 
 				if(!upvoteShare) {
@@ -598,29 +593,23 @@ var post = (function () {
 					return
 				}
 
-				if (value > 4){
+				if (value == 5){
+					setTimeout(function(){
+						if(!el.c) return
 
-					var reason = null
+						const bannerComment = initedcommentes[id].showBanner();
+						if (!bannerComment) {
+							return;
+						}
 
-					if (self.app.platform.sdk.user.newuser()){
-						reason = 'n'
-					}
+						self.app.platform.effects.templates.commentstars(el.c, value, function(){
 
-					if (share.scnt == '0') reason = 's'
-
-					if (reason) {
-						setTimeout(function(){
-							if(!el.c) return
-								self.app.platform.effects.templates.commentstars(el.c, value, function(){
-									
 								})
 
 								if (inicomments){
-									inicomments.attention(self.app.localization.e('starssendcomment' + reason))
+								inicomments.attention(self.app.localization.e('starssendcomments'))
 								}
-						}, 300)
-					}
-					
+					}, 300)
 				}
 
 				self.app.platform.sdk.upvote.checkvalue(value, function(){
@@ -824,7 +813,7 @@ var post = (function () {
 		var events = {
 			gotouserprofile : function(){
 				var name = $(this).attr('name')
-				var address = $(this).attr('address') 
+				var address = $(this).attr('address')
 
 				self.nav.api.load({
 					open : true,
@@ -849,17 +838,17 @@ var post = (function () {
 					href : 'authorization',
 					history : true,
 					open : true
-				})	
-			
+				})
+
 			},
-			
+
 			shareSave : function(){
 
 				self.app.platform.ui.saveShare(share, function(id, deleted){
 
 					if (actions.changeSavingStatus)
 						actions.changeSavingStatus(share.txid, deleted)
-						
+
 				}, {
 					before : actions.changeSavingStatusLight,
 					after : actions.changeSavingStatusLight
@@ -882,7 +871,7 @@ var post = (function () {
 
 			},
 
-			
+
 
 			unsubscribe: function (clbk) {
 				actions.unsubscribe(function () {
@@ -1044,7 +1033,7 @@ var post = (function () {
 		var renders = {
 			comments: function (clbk) {
 				if ((!ed.repost || ed.fromempty) && ed.comments != 'no') {
-					
+
 					self.fastTemplate(
 						'commentspreview',
 						function (rendered) {
@@ -1086,7 +1075,7 @@ var post = (function () {
 
 										var c = el.c.find('.commentsAction .count span');
 											c.html(Number(c.html() || '0') + 1);
-											
+
 									},
 									txid: ed.commentsid || share.txid,
 
@@ -1163,7 +1152,7 @@ var post = (function () {
 							if((isMobile() || ed.repost) && image.images.length > 1){
 
 								var aspectRatio = 0
-								
+
 								_.each(image.images, function(img){
 									var _img = img.img;
 
@@ -1178,7 +1167,7 @@ var post = (function () {
 
 									images.find('.imagesWrapper').height( Math.min( 400, images.width() )* aspectRatio)
 								}
-								
+
 							}
 							else{
 
@@ -1205,7 +1194,7 @@ var post = (function () {
 										if (w > imageswidth){
 											w = imageswidth
 
-											h = w * ( _img.height / _img.width) 
+											h = w * ( _img.height / _img.width)
 
 											el.height(h);
 										}
@@ -1222,7 +1211,7 @@ var post = (function () {
 									if(ac){
 										el.addClass(ac)
 									}
-									
+
 								})
 
 
@@ -1233,7 +1222,7 @@ var post = (function () {
 						var isclbk = function(){
 
 
-							
+
 							images.addClass('active');
 
 							_el.addClass('active');
@@ -1255,7 +1244,7 @@ var post = (function () {
 										'<i class="fas fa-chevron-left"></i> ',
 										'<i class="fas fa-chevron-right"></i>'
 										]
-								  
+
 								});
 
 								isclbk()
@@ -1271,24 +1260,24 @@ var post = (function () {
 									},
 									initLayout: false
 								});
-	
+
 								images.on('arrangeComplete', function(){
 									isclbk()
 								});
-	
+
 								images.isotope()
 							}
 
-							
 
-							
+
+
 						}
 						else
 						{
 							isclbk()
 						}
 
-						
+
 					}, self.app);
 
 
@@ -1315,7 +1304,7 @@ var post = (function () {
 							preview : ed.preview
 						},
 
-						
+
 					},
 					function (_p) {
 
@@ -1336,7 +1325,7 @@ var post = (function () {
 
 						el.wr.addClass('active');
 
-						
+
 
 						renders.stars(function () {
 
@@ -1389,15 +1378,15 @@ var post = (function () {
 											el.share.find('.shareSave').on('click', events.shareSave);
 
 											el.share.find('.piptest').on('click', function(){
-												
-												
+
+
 											});
 
 											el.share.find('.toregistration').on('click', events.toregistration)
 
 											el.share.find('.txid').on('click', events.getTransaction);
 											el.share.find('.donate').on('click', events.donate);
-											
+
 											el.share
 												.find('.asubscribe')
 												.on('click', events.subscribe);
@@ -1421,7 +1410,7 @@ var post = (function () {
 										})
 
 										el.share.find('.openetc').on('click', function(){
-											
+
 
 											self.closeContainer()
 
@@ -1438,7 +1427,7 @@ var post = (function () {
 										if (clbk) clbk();
 									});
 
-									
+
 								});
 							});
 						});
@@ -1446,7 +1435,7 @@ var post = (function () {
 						if (share.itisarticle()){
 							renders.articlespart(_p.el.find('.sharearticle'))
 						}
-						
+
 					},
 				);
 			},
@@ -1454,7 +1443,7 @@ var post = (function () {
 
 				self.app.platform.ui.articledecoration(wr, share, true)
 
-				
+
 			},
 			showmoreby: function () {
 
@@ -1491,13 +1480,13 @@ var post = (function () {
 								history : true
 							})
 						}
-						
+
 					},
 
 					compact : true
 				})
 			},
-			
+
 			mystars: function (clbk) {
 				if (typeof share.myVal == 'undefined' && !ed.preview) {
 					var ids = [share.txid];
@@ -1525,7 +1514,7 @@ var post = (function () {
 							fastars(p.el.find('.stars'));
 
 							el.share.find('.stars i').on('click', events.like);
-	
+
 							p.el.find('.count').on('click', events.postscores);
 						}
 
@@ -1616,11 +1605,11 @@ var post = (function () {
 							}
 						});
 
-						
+
 					}, self.app);
 
 					if (clbk) clbk();
-					
+
 				})
 
 
@@ -1670,7 +1659,7 @@ var post = (function () {
 					},
 
 					el : p.inWnd ? el.c.closest('.wndcontent') : null
-					
+
 				}, function(e, p){
 					recommendations = p
 
@@ -1678,7 +1667,7 @@ var post = (function () {
 				})
 
 			},
-			
+
 		};
 
 		var state = {
@@ -1703,7 +1692,7 @@ var post = (function () {
 
 				}
 				else{
-					
+
 				}
 			}
 
@@ -1775,7 +1764,7 @@ var post = (function () {
 
 					el.c.find('.shareTable[address="' + address + '"]').addClass('subscribed');
 					el.c.find('.shareTable[address="' + address + '"] .notificationturn').removeClass('turnon')
-				
+
 					remake()
 				}
 
@@ -1788,7 +1777,7 @@ var post = (function () {
 
 					el.c.find('.shareTable').removeClass('subscribed');
 					el.c.find('.shareTable[address="' + address + '"] .notificationturn').removeClass('turnon')
-				
+
 					remake()
 				}
 			}
@@ -1824,7 +1813,7 @@ var post = (function () {
 				if(self.app.platform.sdk.user.reputationBlockedNotMe(share.address)){
 
 					renders.lockedaccount()
-					
+
 				}
 				else{
 					renders.share(function () {
@@ -1843,7 +1832,7 @@ var post = (function () {
 					})
 				}
 
-				
+
 
 			}
 			else {
@@ -1880,7 +1869,7 @@ var post = (function () {
 
 			getdata: function (clbk, p) {
 
-				
+
 				recommendationsenabled = true ///self.app.platform.istest()
 
 				_repost = null
@@ -1903,7 +1892,7 @@ var post = (function () {
 
 					if (!share) {
 
-						share = self.app.platform.sdk.node.shares.getWithTemp(id) 
+						share = self.app.platform.sdk.node.shares.getWithTemp(id)
 
 						/*var temp = _.find(self.sdk.node.transactions.temp.share, function (s) {
 							return s.txid == id
@@ -1944,7 +1933,7 @@ var post = (function () {
 
 					}
 				})
-				
+
 			},
 
 			authclbk: function () {
@@ -1957,7 +1946,7 @@ var post = (function () {
 
 			destroy: function (key) {
 
-				
+
 				if (external){
 					external.destroy()
 					external = null
@@ -1969,7 +1958,7 @@ var post = (function () {
 				}
 
 				self.app.actions.playingvideo(null)
-				
+
 				//self.app.el.menu.find('#menu').removeClass('static')
 
 				if (ed.close) ed.close()
@@ -2010,7 +1999,7 @@ var post = (function () {
 				el = {};
 				ed = {}
 
-				
+
 
 			},
 
@@ -2031,8 +2020,8 @@ var post = (function () {
 				el.wr = el.c.find('.postWrapper')
 				el.wnd = el.c.closest('.wndcontent');
 
-				
-				
+
+
 				if (share.itisarticle()){
 					el.c.closest('.wnd').addClass('articlewindow')
 					el.c.addClass('sharec')
@@ -2069,7 +2058,7 @@ var post = (function () {
 				if (player){
 					return player.getState()
 				}
-				
+
 			}
 
 

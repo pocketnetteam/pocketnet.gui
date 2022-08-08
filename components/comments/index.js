@@ -32,10 +32,10 @@ var comments = (function(){
 		var bannerComment = null;
 		var currentstate = {};
 		var wordsRegExp = /[,.!?;:() \n\r]/g
-		var sortby = 'interesting' 
+		var sortby = 'interesting'
 
 		var isotopes = {}
-		
+
 
 		var clbks = {
 			upvote : function(err, comment, value, address, temp){
@@ -57,7 +57,7 @@ var comments = (function(){
 							d_el.find('.scoreUp').removeClass('ratedScore')
 							d_el.find('.scoreDown').removeClass('ratedScore')
 						}
-						
+
 					}
 					else{
 						_el.addClass('rated')
@@ -84,7 +84,7 @@ var comments = (function(){
 			},
 
 			post : function(err, alias, _txid, pid, aid, editid, id, manual){
-				
+
 				if(_txid != txid) return
 
 				el.c.find('.sending').removeClass('sending')
@@ -167,8 +167,8 @@ var comments = (function(){
 						p.el = el.c.find("#" + id + ' .answers')
 
 						delete areas[id]
-					}								
-					
+					}
+
 				}
 
 				p.newcomments = 'newcomments'
@@ -184,7 +184,7 @@ var comments = (function(){
 					if (manual){
 						actions.tocomment(alias.id)
 					}
-					
+
 				})
 
 				if (!editid && ed.send){
@@ -210,7 +210,7 @@ var comments = (function(){
 						id : 'channel',
 						inWnd : true,
 						history : true,
-	
+
 						essenseData : {
 							id : address,
 							openprofilebutton : true
@@ -225,14 +225,14 @@ var comments = (function(){
 					})
 				}*/
 
-				
+
 			},
 			lightarea : function(id, c){
 
 				var comment = currents[id]
 
-				
-				
+
+
 				if(comment && (comment.message.v || comment.images.v.length))
 					c.addClass('hastext')
 				else
@@ -264,9 +264,9 @@ var comments = (function(){
 					if (comment){
 						clbks.upvote(null, comment, Number(comment.myScore), self.app.platform.sdk.address.pnet().address)
 					}
-				})	
+				})
 			},
-			
+
 
 			stateAction : function(clbk){
 
@@ -315,7 +315,7 @@ var comments = (function(){
 											clbk()
 									})
 
-									
+
 								}
 							}
 						})
@@ -328,14 +328,14 @@ var comments = (function(){
 					var hr = ed.hr + "&commentid=" + comment.id;
 
 					if(comment.parentid && comment.parentid != '0') hr = hr + "&parentid=" + comment.parentid;
-					
-					
+
+
 					self.nav.api.load({
 						open : true,
 						href : 'socialshare2',
 						history : true,
 						inWnd : true,
-						
+
 
 						essenseData : {
 							url : hr,
@@ -349,7 +349,7 @@ var comments = (function(){
 							}
 						}
 					})
-				
+
 			},
 			editImage : function(id, r, p){
 
@@ -361,7 +361,7 @@ var comments = (function(){
 						original : src,
 						index : i
 					}
-					
+
 				})
 
 				var f = m; /*_.filter(m, function(f){
@@ -383,7 +383,7 @@ var comments = (function(){
 						images : f,
 
 						close : function(){
-							
+
 						},
 
 						success : function(images, clbk){
@@ -444,7 +444,7 @@ var comments = (function(){
 					areas[id].___inited = true
 
 				var storage = currents[id].export(true)
-	
+
 				self.nav.api.load({
 					open : true,
 					id : 'embeding',
@@ -455,7 +455,7 @@ var comments = (function(){
 						type : 'images',
 						storage : storage,
 						on : {
-						
+
 							added : function(value){
 
 								var result = true;
@@ -472,9 +472,9 @@ var comments = (function(){
 
 									sitemessage(errors[type])
 
-								}		
-								
-								
+								}
+
+
 								renders.images(id, p)
 
 								actions.lightarea(id, p.el.find('.postbody'))
@@ -488,7 +488,7 @@ var comments = (function(){
 					}
 				})
 			},
-			
+
 			removeForm : function(id){
 
 				delete areas[id]
@@ -517,24 +517,24 @@ var comments = (function(){
 						if (self.app.platform.sdk.user.scamcriteria()){
 
 							el.c.find('.sending').removeClass('sending')
-	
+
 							new dialog({
 								html : self.app.localization.e('ratings123'),
 								btn1text :  self.app.localization.e('daccept'),
 								btn2text : self.app.localization.e('ucancel'),
-			
+
 								class : 'zindex one',
-			
+
 								success : function(){
 								}
 							})
-	
+
 							return
 						}
-						
+
 
 						if(current.loading) return;
-						
+
 
 						current.loading = true;
 
@@ -547,10 +547,10 @@ var comments = (function(){
 								if(!error){
 									successCheck()
 								}
-							
+
 							}, pid, aid, editid, id)
 						})
-							
+
 					}
 				}
 				else{
@@ -558,9 +558,9 @@ var comments = (function(){
 					sitemessage(errors['content'])
 				}
 
-				
+
 			},
-			send : function(comment, clbk, pid, aid, editid, id){	
+			send : function(comment, clbk, pid, aid, editid, id){
 
 				self.app.platform.sdk.comments.send(txid, comment, pid, aid, function(err, alias){
 					if (el.c)
@@ -595,9 +595,9 @@ var comments = (function(){
 				if (current)
 
 					if(!current.url.v){
-						
+
 						var l = null
-						var r = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi; 
+						var r = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
 
 						var matches = text.match(r);
 
@@ -609,7 +609,7 @@ var comments = (function(){
 							current.url.set(l)
 
 					}
-				
+
 			},
 			process : function(id){
 
@@ -617,7 +617,7 @@ var comments = (function(){
 
 				if(!currents[id])
 					currents[id] = new Comment(txid)
-		
+
 			},
 			message : function(id, v){
 
@@ -676,7 +676,7 @@ var comments = (function(){
 
 					var _el = el.c.find('#' + id);
 					var answer = _el.find('.answer');
-				
+
 					renders.post(function(area, el){
 
 						var pid = '0'
@@ -720,10 +720,10 @@ var comments = (function(){
 					actions.replies(id, false)
 
 				})
-				
+
 				if (ed.lastComment)
 					actions.replies(ed.lastComment.id, false)
-				
+
 			},
 			replies : function(id, show, clbk, _p){
 
@@ -761,10 +761,10 @@ var comments = (function(){
 				if (show){
 					load.level(id, function(comments){
 
-						
+
 
 						p.comments = self.app.platform.sdk.comments.storage[txid][id]
-						
+
 						c.addClass('showedreplies')
 
 						renders.list(p, function(){
@@ -776,7 +776,7 @@ var comments = (function(){
 
 							if (clbk)
 								clbk()
-							
+
 
 						}, id)
 
@@ -799,7 +799,7 @@ var comments = (function(){
 					p.el.html('')
 				}
 
-			
+
 			},
 			getid : function(el){
 				if (el.attr('answer')){
@@ -829,11 +829,11 @@ var comments = (function(){
 						return "0"
 					}
 
-					
+
 				}
 			},
 			tocomment : function(id){
-				
+
 				if(ed.openapi) return
 
 				_scrollTo(el.c.find("#" + id), _in)
@@ -892,22 +892,22 @@ var comments = (function(){
 			hiddenCounts : function(c){
 				if(c > 0){
 					el.showall.find('.ccounts').html("(" + c + ")")
-					
+
 				}
 				else
 				{
 					el.showall.find('.ccounts').html()
-					
+
 				}
 			},
 			showall : function(){
 
 				showedall = true;
 
-				el.c.addClass('showedall')	
-							
-				actions.showhideLabel()	
-				
+				el.c.addClass('showedall')
+
+				actions.showhideLabel()
+
 				ed.showall = true
 
 				if (listpreview){
@@ -926,7 +926,7 @@ var comments = (function(){
 							el.c.find('.loaderWrapper').addClass('hidden')
 
 							showedall = false;
-							el.c.removeClass('showedall')				
+							el.c.removeClass('showedall')
 							actions.showhideLabel()
 
 							return
@@ -952,7 +952,7 @@ var comments = (function(){
 
 				else
 				{
-					renders.caption()	
+					renders.caption()
 				}
 			},
 
@@ -985,7 +985,7 @@ var comments = (function(){
 					}
 				}
 
-				
+
 			},
 			openGallery : function(comment, initialValue, clbk){
 				var images = _.map(comment.images, function(i){
@@ -996,7 +996,7 @@ var comments = (function(){
 
 				var num = findIndex(images, function(image){
 
-					if (image.src == initialValue) return true;						
+					if (image.src == initialValue) return true;
 
 				})
 
@@ -1019,7 +1019,7 @@ var comments = (function(){
 							clbk()
 					}
 				})
-				
+
 			},
 			upvoteComment : function(value, id){
 
@@ -1028,7 +1028,7 @@ var comments = (function(){
 					var comment = deep(self.app.platform.sdk, 'comments.storage.all.' + id)
 
 					if(!comment) return
-					
+
 					if (comment.address == self.app.platform.sdk.address.pnet().address){
 						return
 					}
@@ -1039,9 +1039,9 @@ var comments = (function(){
 							html : self.app.localization.e('ratings123'),
 							btn1text :  self.app.localization.e('daccept'),
 							btn2text : self.app.localization.e('ucancel'),
-		
+
 							class : 'zindex one',
-		
+
 							success : function(){
 							}
 						})
@@ -1053,16 +1053,16 @@ var comments = (function(){
 
 					self.app.platform.sdk.comments.upvote(upvoteComment, function(err, alias){
 
-						
+
 						if (err){
-							self.app.platform.errorHandler(err, true)	
+							self.app.platform.errorHandler(err, true)
 						}
 
 					})
 
 				})
 
-				
+
 			},
 			scrollToComment : function(el) {
 
@@ -1079,16 +1079,16 @@ var comments = (function(){
 		}
 
 		var sortParameter = function(){
-			
+
 			var ps = new Parameter({
 
 				type : "VALUES",
 				name : "Contents",
 				id : 'contents',
-				possibleValues : ['interesting', 'timeup', 'time'], 
+				possibleValues : ['interesting', 'timeup', 'time'],
 				possibleValuesLabels : [self.app.localization.e('comments_interesting'),self.app.localization.e('comments_timeup'),self.app.localization.e('comments_time')],
 				defaultValue : sortby
-			
+
 			})
 
 			ps.value = sortby
@@ -1155,7 +1155,7 @@ var comments = (function(){
 					return _.sortBy(comments, function(c){
 						return c.time
 					})
-	
+
 				}
 
 				if(sortby == 'timeup'){
@@ -1163,14 +1163,14 @@ var comments = (function(){
 					return _.sortBy(comments, function(c){
 						return - (c.time || new Date()) / 1000
 					})
-	
+
 				}
 
 				var oldest = (_.min(comments, function(c){return c.time}).time).getTime() / 1000
 				var newest = (_.max(comments, function(c){return c.time}).time).getTime() / 1000
 
 				var cbyauthors = group(comments, function(c){ return c.address })
-	
+
 				comments = _.sortBy(comments, function(c){
 
 					if (self.app.platform.sdk.comments.blocked[c.address]) {
@@ -1180,12 +1180,12 @@ var comments = (function(){
 
 					var ms = (c.time || new Date()) / 1000
 
-					var timec = ((ms - oldest) / (newest - oldest)) 
+					var timec = ((ms - oldest) / (newest - oldest))
 
 					var count = cbyauthors[c.address].length
 
 					return - (commentPoint(c) + (timec * 3000) ) / count
-				}) 
+				})
 
 				return comments
 			}
@@ -1196,7 +1196,7 @@ var comments = (function(){
 				return []
 			}
 
-			
+
 
 		}
 
@@ -1221,7 +1221,7 @@ var comments = (function(){
 
 				var id = $(this).closest('.comment').attr('id');
 				var pid = $(this).closest('.comment').attr('pid');
-				
+
 				actions.upvoteComment(value, id, pid)
 			},
 
@@ -1269,7 +1269,7 @@ var comments = (function(){
 				var _id = cf.attr('id')
 				var _aid = c.attr('id')
 
-				
+
 
 				actions.replies(id, true, function() {
 					// Scroll comment section to top of the screen
@@ -1277,13 +1277,13 @@ var comments = (function(){
 					actions.reply(_id, _aid)
 				});
 
-				
+
 			},
 			replies : function(){
 				var id = $(this).closest('.firstcomment').attr('id')
 
 				actions.replies(id)
-			},	
+			},
 			emessage : function(editor, e){
 
 
@@ -1349,7 +1349,7 @@ var comments = (function(){
 				self.fastTemplate('metmenu', function(rendered, template){
 
 					self.app.platform.api.tooltip(_el, function(){
-						
+
 						return template(d);
 
 					}, function(__el, f, close){
@@ -1388,9 +1388,9 @@ var comments = (function(){
                             })
 								close()
 
-							
+
 						})
-						
+
 						__el.find('.unblock').on('click', function(){
 							self.app.mobile.vibration.small()
 							self.app.platform.api.actions.unblocking(d.caddress, function(tx, error){
@@ -1425,7 +1425,7 @@ var comments = (function(){
 											c.find('.commentimages').remove()
 											c.find('.reply').remove()
 										}
-											
+
 									})
 
 								},
@@ -1440,7 +1440,7 @@ var comments = (function(){
 
 							actions.sharesocial(comment)
 
-							close()	
+							close()
 
 						})
 
@@ -1450,7 +1450,7 @@ var comments = (function(){
 
 				}, d)
 
-				
+
 
 			}
 
@@ -1466,7 +1466,7 @@ var comments = (function(){
 
 			_p.el.find('.leaveComment').emojioneArea({
 				pickerPosition : 'top',
-				
+
 				search : false,
 				tones : false,
 				autocomplete : false,
@@ -1476,7 +1476,7 @@ var comments = (function(){
 				},
 
 				shortnames : !isTablet(),
-		
+
 				filters : isTablet() ? null : {
 					smileys_people: {
 						icon: "yum",
@@ -1548,7 +1548,7 @@ var comments = (function(){
 						if (e.ctrlKey && e.keyCode == 13) {
 							return
 						}
-						
+
 						actions.message(p.id || '0', text)
 
 						renders.limits(c, text)
@@ -1582,7 +1582,7 @@ var comments = (function(){
 						if (p.value) {
 							this.setText(p.value)
 
-							
+
 						}
 
 						if (p.donation && p.amount && p.editid){
@@ -1600,8 +1600,8 @@ var comments = (function(){
 
 								comment.images.v = _.clone(p.images)
 
-								renders.images(p.editid, p)									
-								
+								renders.images(p.editid, p)
+
 							}
 						}
 
@@ -1621,10 +1621,10 @@ var comments = (function(){
 			});
 
 			_p.el.find('.emojionearea-editor').on('focus', function(){
-				actions.process(p.id || '0')	
+				actions.process(p.id || '0')
 
 				 _p.el.addClass('active')
-			
+
 			})
 
 			_p.el.find('.emojionearea-editor').on('blur', function(){
@@ -1632,7 +1632,7 @@ var comments = (function(){
 				setTimeout(function(){
 					_p.el.removeClass('active')
 				}, 150)
-				
+
 			})
 
 			_p.el.find('.postaction').on('click', function(){
@@ -1664,9 +1664,9 @@ var comments = (function(){
 
 				resize(data.dataURL, 1920, 1080, function(resized){
 					var r = resized.split(',');
-	
+
 					if (r[1]){
-	
+
 						var r  = currents[id].images.set(resized)
 
 						if(!r){
@@ -1677,14 +1677,14 @@ var comments = (function(){
 							if (renders.images)
 								renders.images(id, _p);
 						}
-	
+
 					}
 					else{
 						sitemessage("Image upload error")
 					}
 
-					
-				
+
+
 				})
 
 
@@ -1707,10 +1707,10 @@ var comments = (function(){
 				try{
 
 					_.each(isotopes, function(i){
-						
+
 							i.isotope('destroy')
-						
-						
+
+
 					})
 
 					isotopes = {}
@@ -1831,16 +1831,16 @@ var comments = (function(){
 
 							if (clbk)
 								clbk();
-		
+
 								p.el.find('.newcommentimages').addClass('active')
 
 						});
 
 						elimages.isotope()
-						
+
 					}, self.app);
 
-					
+
 				})
 			},
 
@@ -1859,15 +1859,15 @@ var comments = (function(){
 						el.find('.limits').addClass('active').addClass('bad').html('You are '+ (-l) +' characters over')
 					}
 
-					
 
-				}	
+
+				}
 
 				else{
 					el.find('.limits').removeClass('active')
 				}
 
-				
+
 			},
 
 			cpreview : function(h){
@@ -1917,7 +1917,7 @@ var comments = (function(){
 						p.el.find('.top .cact').on('click', function(){
 
 							_scrollToTop(el.c.find('.list'), _in, undefined, -150)
-						
+
 						})
 
 						p.el.find('.bottom .cact').on('click', function(){
@@ -1929,7 +1929,7 @@ var comments = (function(){
 
 						if (clbk)
 							clbk();
-						
+
 					})
 				}
 
@@ -1963,7 +1963,7 @@ var comments = (function(){
 
 					ecaretPosition(el, i - 1, j - 1)*/
 
-					
+
 
 				}, p)
 			},
@@ -2000,14 +2000,14 @@ var comments = (function(){
 							receiver: receiver
 						},
 
-					}, function(_p){				
+					}, function(_p){
 
 						var ini = function(_clbk, unfocus){
 
 							if(!preview) return
 
 							preview = false;
-								
+
 							p.init = true;
 							el.c.removeClass('preview')
 
@@ -2020,7 +2020,7 @@ var comments = (function(){
 								if (_clbk){
 									_clbk(a, b)
 								}
-								
+
 							}
 
 							if(unfocus) p.unfocus = true
@@ -2028,7 +2028,7 @@ var comments = (function(){
 							postEvents(p, _p, __clbk)
 						}
 
-						
+
 
 						_p.el.find('.embedimages').off('click').on('click', function(){
 
@@ -2040,7 +2040,7 @@ var comments = (function(){
 
 								if(!p.answer && !p.editid){
 									ini(null, true)
-								}	
+								}
 							}
 							else if (_preview){
 								actions.stateAction(function(){
@@ -2066,7 +2066,7 @@ var comments = (function(){
 
 								})
 
-								
+
 							})
 
 							_p.el.find('.embedEmojiPrivew').on('click', function(){
@@ -2074,15 +2074,15 @@ var comments = (function(){
 								if(state){
 									ini(function(t, a){
 										t.showPicker()
-									})	
+									})
 								}
 								else{
 									actions.stateAction(function(){
 									})
 								}
-								
-								
-								
+
+
+
 							})
 
 							if(clbk) clbk()
@@ -2105,19 +2105,19 @@ var comments = (function(){
 
 								})
 
-								
+
 							})
 						}
 
 						postEvents(p, _p, clbk)
 
-						
+
 					})
 
 
 				})
 
-				
+
 			},
 
 
@@ -2163,7 +2163,7 @@ var comments = (function(){
 							if (w > images.width()){
 								w = images.width()
 
-								h = w * ( _img.height / _img.width) 
+								h = w * ( _img.height / _img.width)
 
 								el.height(h);
 							}
@@ -2180,7 +2180,7 @@ var comments = (function(){
 						if(ac){
 							el.addClass(ac)
 						}
-						
+
 					})*/
 
 					if(ed.renderClbk) ed.renderClbk()
@@ -2192,7 +2192,7 @@ var comments = (function(){
 					return
 
 				}, self.app);
-				
+
 			},
 
 			list : function(p, clbk, pid){
@@ -2202,7 +2202,7 @@ var comments = (function(){
 				var commentslength
 				var comments = p.comments
 				var sort = null
-				
+
 				if(!preview || showedall)
 					sort = new sortParameter()
 
@@ -2210,22 +2210,26 @@ var comments = (function(){
 
 				if(!p.replace){
 
+					let address = app.platform.sdk.user.me().address;
+
 					if (ed.commentPs){
 						comments = _.filter(comments || [], function(c){
-							if(c.id == ed.commentPs.commentid || c.id == ed.commentPs.parentid) return true
+							if(c.id == ed.commentPs.commentid || c.id == ed.commentPs.parentid) {
+								return true
+							}
 						})
 					}
-	
+
 					comments = sorting(comments, pid)
-	
+
 					commentslength = comments.length
-	
+
 					if (pid){
 						currentstate.levels[pid] = pid
 					}
-	
+
 					currentstate.pagination[ pid || '0' ] || (currentstate.pagination[ pid || '0' ] = 1)
-	
+
 					var pg = currentstate.pagination[ pid || '0' ]
 
 					if(!ed.commentPs && !ed.reply){
@@ -2245,7 +2249,7 @@ var comments = (function(){
 							if (addcomment){
 								if(ed.fromtop)
 									comments.unshift(addcomment)
-								else	
+								else
 									comments.push(addcomment)
 							}
 						}
@@ -2254,7 +2258,7 @@ var comments = (function(){
 				}
 
 				p.el || (p.el = el.list)
-				
+
 				if(!preview && p.el)
 					p.el.addClass('listloading')
 
@@ -2267,7 +2271,7 @@ var comments = (function(){
 						inner : p.replace ? replaceWith : html,
 
 						//inner : p.inner || _in, /// html
-						
+
 						data : {
 
 							showedall,
@@ -2302,7 +2306,7 @@ var comments = (function(){
 							p.el.removeClass('listloading')
 
 						if(!p.replace){
-						
+
 							if(!pid){
 								makeCurrentLevels()
 
@@ -2327,7 +2331,7 @@ var comments = (function(){
 
 									ParametersLive([sort], _p.el)
 								}
-									
+
 							}
 
 							if (el.list){
@@ -2337,7 +2341,7 @@ var comments = (function(){
 
 									renders.list(p, null, pid)
 								})
-								
+
 							}
 						}
 						if (el.list){
@@ -2356,7 +2360,7 @@ var comments = (function(){
 							clbk();
 
 						if(ed.renderClbk) ed.renderClbk()
-						
+
 					})
 
 				})
@@ -2364,7 +2368,7 @@ var comments = (function(){
 		}
 
 		var initEvents = function(){
-				
+
 			el.c.find('.showall').on('click', function(){
 				actions.showall()
 			})
@@ -2378,7 +2382,7 @@ var comments = (function(){
 				return //// TODO
 
 				if (data.posttxid == txid){
-					
+
 					var p = {};
 						p.comments = [data.comment]
 
@@ -2399,14 +2403,14 @@ var comments = (function(){
 
 					}
 					else
-					{	
+					{
 						p.el = el.c.find(".list")
 						p.class = 'firstcomment'
 					}
 
 					renders.list(p)
 				}
-			
+
 			}
 
 			self.app.platform.ws.messages.cScore.clbks[eid] = function(data){
@@ -2416,7 +2420,7 @@ var comments = (function(){
 
 					clbks.upvote(null, data.comment, data.upvoteVal || data.value, data.addrFrom)
 				}
-			
+
 			}
 
 
@@ -2429,27 +2433,27 @@ var comments = (function(){
 				var lvls = _.map(currentstate.levels, function(id){
 					return id
 				})
-	
+
 				if(lvls.length){
-	
+
 					lazyEach({
 						array : lvls,
 						action : function(p){
-	
+
 							var id = p.item;
-	
+
 							load.level(id, function(comments){
 								p.success()
 							})
 						},
-	
+
 						all : {
 							success : function(){
 								if(clbk) clbk()
 							}
 						}
 					})
-	
+
 				}
 				else{
 					if(clbk) clbk()
@@ -2462,10 +2466,10 @@ var comments = (function(){
 			else{
 				load.level(null, function(){
 					lc()
-				})	
+				})
 			}
 
-			
+
 		}
 
 		var makeCurrentLevels = function(clbk){
@@ -2510,8 +2514,8 @@ var comments = (function(){
 
 			if (preview && !showedall){
 				f = makePreview
-			}	
-		
+			}
+
 			f(function(){
 
 				var lvls = _.map(currentstate.levels, function(id){
@@ -2523,14 +2527,14 @@ var comments = (function(){
 					lazyEach({
 						array : lvls,
 						action : function(p){
-	
+
 							var id = p.item;
-	
+
 							actions.replies(id, true, p.success, {
 								in : html
 							})
 						},
-	
+
 						all : {
 							success : function(){
 								if(clbk) clbk()
@@ -2543,13 +2547,13 @@ var comments = (function(){
 					if(clbk) clbk()
 				}
 
-				
+
 
 
 			})
 		}
 
-		var makePreview = function(clbk){	
+		var makePreview = function(clbk){
 
 
 			var p = {};
@@ -2568,7 +2572,7 @@ var comments = (function(){
 				el.list.html('')
 
 				renders.list(p, function(){
-					
+
 					if (clbk)
 						clbk()
 
@@ -2576,12 +2580,12 @@ var comments = (function(){
 
 			})
 
-				
+
 		}
 
 		var make = function(clbk){
 
-			var p = {};			
+			var p = {};
 
 
 			load.level(null, function(comments){
@@ -2589,7 +2593,7 @@ var comments = (function(){
 				p.comments = self.app.platform.sdk.comments.storage[txid]['0']
 				p.class = "firstcomment"
 
-				actions.showhideLabel()	
+				actions.showhideLabel()
 
 				if (el.list)
 					el.list.html('')
@@ -2602,7 +2606,7 @@ var comments = (function(){
 
 
 					renders.post(function(area){
-						
+
 
 						if (ed.reply){
 							actions.fastreply(ed.reply)
@@ -2629,7 +2633,7 @@ var comments = (function(){
 
 			})
 
-			
+
 		}
 
 		var load = {
@@ -2646,7 +2650,7 @@ var comments = (function(){
 						clbk(comments)
 
 				})
-			},	
+			},
 			level : function(pid, clbk, ccha){
 
 				self.app.platform.sdk.comments.getclear(txid, pid || "", function(comments, e){
@@ -2673,7 +2677,7 @@ var comments = (function(){
 					self.app.settings.delete(self.map.id, txid, '');
 				}
 
-				
+
 			},
 			load : function(){
 				var last = self.app.settings.get(self.map.id, txid)
@@ -2683,7 +2687,7 @@ var comments = (function(){
 			}
 		}
 
-		
+
 
 		return {
 			primary : primary,
@@ -2726,7 +2730,7 @@ var comments = (function(){
 
 						mestate = _mestate
 
-						clbk(data); 
+						clbk(data);
 
 					})
 				}
@@ -2734,7 +2738,6 @@ var comments = (function(){
 			},
 
 			attention : function(text){
-
 				if(isMobile() || !text){
 					el.c.find('.post').addClass('attention')
 				}
@@ -2751,21 +2754,62 @@ var comments = (function(){
 							el.c.find('.leaveCommentPreview').attr('placeholder', text)
 
 						setTimeout(function(){
-
 							if(!el.c) return
 
 							el.c.find('.leaveCommentPreview').css('opacity', '')
 						}, 100)
 					}, 100)
-					
+				}
+			},
+
+			showBanner : function(c) {
+				let alredyCommented;
+
+				if (c.essenseData.lastComment) {
+					const address = c.essenseData.lastComment.address;
+					const me = app.platform.sdk.user.me();
+
+					const firstLikeIsMine = (address == me.address);
+
+					if (firstLikeIsMine) {
+						alredyCommented = true;
+					}
+				}
+
+				if (areas && !alredyCommented) {
+					const len = Object.keys(areas).length;
+
+					const isPost = len && areas[0];
+					const isReply = len && len >= 2;
+
+					let hasContent;
+
+					//leaveComment (post) isn't empty
+					if (isPost) {
+						hasContent = areas[0].content != '';
+					}
+
+					//leaveComment (reply) isn't empty
+					if (isReply) {
+						hasContent = Object.values(areas)[1].content != '';
+					}
+
+					//if isn't empty
+					if (hasContent) {
+						alredyCommented = true;
+					}
+				}
+
+				if (alredyCommented) {
+					return;
 				}
 
 				bannerComment = app.platform.ui.showCommentBanner(el.c);
-
+				return bannerComment;
 			},
 
 			authclbk : function(){
-				
+
 				if (el.c){
 
 					authblock = true
@@ -2781,7 +2825,7 @@ var comments = (function(){
 						})
 
 					})
-				
+
 				}
 			},
 
@@ -2791,7 +2835,7 @@ var comments = (function(){
 
 				delete self.app.platform.sdk.comments.sendclbks[eid]
 				delete self.app.platform.ws.messages.comment.clbks[eid]
-				
+
 				delete self.app.platform.sdk.comments.upvoteClbks[eid]
 				delete self.app.platform.ws.messages.cScore.clbks[eid]
 
@@ -2803,7 +2847,7 @@ var comments = (function(){
 				areas = {}; ///
 				currents = {};
 
-				if (external) 
+				if (external)
 					external.destroy()
 
 				if (caption)
@@ -2817,11 +2861,11 @@ var comments = (function(){
 
 				el = {};
 				ed = {};
-				
+
 
 				_in = null
 			},
-			
+
 			init : function(p){
 
 				//state.load();
@@ -2859,14 +2903,14 @@ var comments = (function(){
 					} else {
 						top = 0
 					}
-					
+
 				}
 				else
 				{
 					top = 0
 				}
 
-				
+
 
 				if (listpreview){
 					makePreview()
@@ -2874,13 +2918,13 @@ var comments = (function(){
 				else{
 					make();
 
-					
+
 					if (ed.showall){
 						actions.showall()
 					}
 				}
 
-				
+
 
 				initEvents();
 
@@ -2890,7 +2934,7 @@ var comments = (function(){
 			freeze : function(){
 
 				if(caption) caption.destroy()
-				
+
 			},
 
 			hideall : function(preview){
@@ -2900,8 +2944,8 @@ var comments = (function(){
 				if(typeof preview != 'undefined')
 					listpreview = preview || false;
 
-				if (listpreview){ 
-					
+				if (listpreview){
+
 					el.c.addClass('listpreview')
 
 					if (caption)
@@ -2973,7 +3017,7 @@ var comments = (function(){
 		_.each(essenses, function(e){
 			e.authclbk()
 		})
-	} 
+	}
 
 	self.stop = function(){
 

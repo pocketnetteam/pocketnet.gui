@@ -2999,6 +2999,14 @@ Platform = function (app, listofnodes) {
 
                     clbk : function(e, p){
                         bannerCommentComponent = p;
+                        if (p.el[0].constructor.name === 'HTMLDivElement') {
+                            self.app.Logger.info({
+                                actionId: 'COMMENT_BANNER_SHOWED',
+                                value: p.el[0].constructor.name,
+                            });
+
+                            return;
+                        }
                     }
                 });
             };
@@ -3017,7 +3025,6 @@ Platform = function (app, listofnodes) {
             const isOneDayOld = (registeredTime >= oneDayInSeconds);
 
             if (isBannerDisabled) {
-                console.log('banner showbanner', bannerCommentComponent);
                 return bannerCommentComponent;
             }
 
@@ -7801,7 +7808,7 @@ Platform = function (app, listofnodes) {
             },
 
             add: function (address, value) {
-                
+
                 self.app.Logger.info({
                     actionId: 'USER_REGISTRATION_PROCESS',
                     actionSubType: self.sdk.registrations.mappings.loggingMapping[value] || value,
@@ -27602,7 +27609,7 @@ Platform = function (app, listofnodes) {
 
 
         app.user.isState(function(state){
-            
+
             if (state) {
 
                 lazyActions([
