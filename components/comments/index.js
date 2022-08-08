@@ -2210,8 +2210,6 @@ var comments = (function(){
 
 				if(!p.replace){
 
-					let address = app.platform.sdk.user.me().address;
-
 					if (ed.commentPs){
 						comments = _.filter(comments || [], function(c){
 							if(c.id == ed.commentPs.commentid || c.id == ed.commentPs.parentid) {
