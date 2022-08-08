@@ -768,6 +768,7 @@ ____loclib.e13268 = "Coinstake win";
 ____loclib.e13269 = "Transazioni ricevute";
 ____loclib.e13270 = "Voti alti ricevuti";
 ____loclib.e13271 = "Commento ricevuto";
+____loclib.downvote = "Valutazione negativa"
 ____loclib.e13272 = "Risposta ricevuta";
 ____loclib.e13273 = "Nuovi followers";
 ____loclib.e13274 = "Utenti invitati";

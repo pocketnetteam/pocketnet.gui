@@ -728,6 +728,7 @@ ____loclib.e13268 = 'Coinstake gagne'
 ____loclib.e13269 = 'Les transactions reçoivent'
 ____loclib.e13270 = 'Les votes positifs reçoivent'
 ____loclib.e13271 = 'Comment recevoir'
+____loclib.downvote = "Évaluation négative"
 ____loclib.e13272 = 'Répondre reçu'
 ____loclib.e13273 = 'Nouveaux adeptes'
 ____loclib.e13274 = 'Utilisateurs enregistrés'

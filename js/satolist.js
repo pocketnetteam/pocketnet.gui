@@ -8665,7 +8665,7 @@ Platform = function (app, listofnodes) {
                 },
 
                 downvotes: {
-                    name: 'Downvotes receive',
+                    name: self.app.localization.e('downvote'),
                     id: 'downvotes',
                     type: "BOOLEAN",
                     value: false
