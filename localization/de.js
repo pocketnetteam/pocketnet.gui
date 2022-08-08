@@ -199,7 +199,10 @@ ____loclib.sprofile = "Profil";
 ____loclib.spc = "Beitragszähler";
 ____loclib.ssc = "Sternezähler";
 ____loclib.ccc = "Kommentarezähler";
-____loclib.crc = "Kommentierratenzähler";
+____loclib.crc = "Anzahl der Kommentarbewertungen";
+____loclib.artc = "Artikel zählen";
+
+
 ____loclib.stp = "Testphase";
 ____loclib.srep = "Ansehen";
 

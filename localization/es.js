@@ -201,6 +201,9 @@ ____loclib.spc = "Número de publicaciones";
 ____loclib.ssc = "Número de estrellas";
 ____loclib.ccc = "Número de comentarios";
 ____loclib.crc = "Número de valoraciones de comentarios";
+____loclib.artc = "Recuento de artículos";
+
+
 ____loclib.stp = "Periodo trial";
 ____loclib.srep = "Reputación";
 

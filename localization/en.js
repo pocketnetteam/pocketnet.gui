@@ -208,6 +208,7 @@ ____loclib.spv = "Video Post count";
 ____loclib.ssc = "Stars count";
 ____loclib.ccc = "Comments count";
 ____loclib.crc = "Comment Rate count";
+____loclib.artc = "Articles count";
 
 ____loclib.stp = "Beginner";
 ____loclib.stpg = "Top";

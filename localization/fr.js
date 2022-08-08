@@ -194,6 +194,10 @@ ____loclib.spc = "Nombre de messages";
 ____loclib.ssc = "Les toiles comptent";
 ____loclib.ccc = "Les commentaires comptent";
 ____loclib.crc = "Nombre de taux de commentaires";
+____loclib.artc = "Nombre d'articles";
+
+
+
 ____loclib.stp = "Période d'essai";
 ____loclib.srep = "Réputation";
 
