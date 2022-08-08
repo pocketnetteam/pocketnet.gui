@@ -3017,8 +3017,7 @@ Platform = function (app, listofnodes) {
             const isOneDayOld = (registeredTime >= oneDayInSeconds);
 
             if (isBannerDisabled) {
-                console.log('banner showbanner', bannerCommentComponent);
-                return bannerCommentComponent;
+                return isBannerDisabled;
             }
 
             if (!isOneDayOld) {
