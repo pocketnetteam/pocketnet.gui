@@ -476,7 +476,7 @@ RpcClient.callspec = {
     getlastblocks: 'int int',
     checkstringtype: 'str',
     getstatistic: 'int int',
-    getuserstatistic : 'obj int int',
+    getuserstatistic : 'str int int int int',
 
     getrecomendedaccountsbysubscriptions : 'str',
     getrecomendedaccountsbyscoresonsimilaraccounts : 'str',

@@ -969,6 +969,13 @@ __map =  {
 
 		
 	},
+
+	statistic : {
+		uri : "statistic",
+		href : "statistic",
+		add : insertingfunc,
+	},
+
 	videoCabinet : {
 		uri : "videoCabinet",
 		href : "videoCabinet",
