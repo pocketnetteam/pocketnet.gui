@@ -2703,12 +2703,6 @@ input[type=radio].radio:checked + label {
   height: auto;
   z-index: 999;
 }
-.wnd.pipmini .recomandationsFromContent {
-  display: none!important;
-}
-.wnd.pipmini .wndinner {
-  box-shadow: none;
-}
 .wnd.pipmini ._changeplace {
   display: none;
 }
