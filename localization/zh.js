@@ -199,6 +199,9 @@ ____loclib.spc = "发帖量";
 ____loclib.ssc = "星级数";
 ____loclib.ccc = "评论数";
 ____loclib.crc = "评论等级";
+____loclib.artc = "文章计数";
+
+
 ____loclib.stp = "试用期";
 ____loclib.srep = "信誉";
 

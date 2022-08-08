@@ -10403,7 +10403,16 @@ Platform = function (app, listofnodes) {
                         bad : function(v){
                             if(v <= 3) return true
                         }
-                    }
+                    },
+
+                    article : {
+                      key : 'article',
+                      vis : 'scale',
+                      name : self.app.localization.e('artc'),
+                      bad : function(v){
+                        if(v <= 10) return true
+                      }
+                    },
                 }
             }
 

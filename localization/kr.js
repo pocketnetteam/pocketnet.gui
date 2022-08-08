@@ -199,6 +199,9 @@ ____loclib.spc = "게시물 수";
 ____loclib.ssc = "별 개수";
 ____loclib.ccc = "댓글 수";
 ____loclib.crc = "댓글 비율 수";
+____loclib.artc = "기사 수";
+
+
 ____loclib.stp = "시험 기간";
 ____loclib.srep = "평판";
 

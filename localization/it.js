@@ -208,6 +208,8 @@ ____loclib.spv = "Conteggio dei messaggi video";
 ____loclib.ssc = "Conteggio delle stelle";
 ____loclib.ccc = "Conteggio dei commenti";
 ____loclib.crc = "Conteggio del tasso di commento";
+____loclib.artc = "Conteggio articoli";
+
 ____loclib.stp = "Periodo di prova";
 ____loclib.srep = "Reputazione";
 
