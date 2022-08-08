@@ -91,8 +91,6 @@ Application = function(p)
     self.test = true
   }
 
-  self.boost = false;
-
   self.options = {
 
     url : url,
