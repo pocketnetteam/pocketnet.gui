@@ -1,0 +1,70 @@
+.statistic .title {
+  max-width: 700px;
+  padding-top: 1em;
+  padding-bottom: 1em;
+  font-size: 2em;
+  font-weight: 100;
+}
+.statistic .metric-wrapper {
+  display: flex;
+  width: 100%;
+}
+.statistic .wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-right: 0.5em;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+.statistic .wrapper > div {
+  margin: 0 0.5em;
+  width: 50%;
+  padding: 0.5em;
+  background: rgb(var(--background-secondary-theme));
+}
+@media (min-width: 600px) and (max-width: 860px) {
+  .statistic .wrapper > div {
+    width: 100%;
+  }
+}
+.statistic .count {
+  padding-top: 1em;
+  padding-bottom: 1em;
+  font-size: 2em;
+  font-weight: 100;
+}
+.statistic form {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2em;
+}
+.statistic form label {
+  margin: 0 0.5em;
+}
+.statistic form label input {
+  margin-left: 0.5em;
+}
+.statistic form button {
+  margin-left: 1em;
+}
+.statistic .button {
+  padding: 0.5em 1.4em;
+  background: rgb(var(--color-bg-ac-bright));
+  color: rgb(var(--text-on-bg-ac-color));
+  border: 1px solid rgb(var(--color-bg-ac-bright));
+  text-align: center;
+  font-size: 0.9em;
+  font-weight: 600;
+  border-radius: 8px;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+.statistic .button:hover {
+  background: transparent;
+  color: rgb(var(--color-bg-ac-bright));
+}
