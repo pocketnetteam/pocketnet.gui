@@ -732,7 +732,7 @@
   padding-top: 0.5em;
 }
 .peertube-server-hint {
-  z-index: 1;
+  z-index: 3;
   position: absolute;
   margin: 10px;
   padding: 5px 7px;
