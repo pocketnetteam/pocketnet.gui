@@ -130,7 +130,7 @@
 
 				<% if(typeof video == 'undefined' || !video) { %> 
 					<div class="videoTips">
-						<div class="videoTip">
+						<div class="videoTip" style="<%- (app.platform.istest()) ? 'text-align: right' : '' %>" >
 							<span><%=e('expandvideo')%></span>
 						</div>
 					</div>
