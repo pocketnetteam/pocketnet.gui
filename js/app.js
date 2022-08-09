@@ -983,6 +983,10 @@ Application = function(p)
 
     self.mobile.inputs.init()
     self.mobile.reload.initparallax()
+  
+    /*Launch popup*/
+    new ShadowPopup({ url: './js/popups/android-popup.js' });
+    new ShadowPopup({ url: './js/popups/desktop-popup.js' });
   }
 
   self.reload = function(p){

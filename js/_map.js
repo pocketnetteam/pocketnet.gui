@@ -78,8 +78,7 @@ __map =  {
 		"js/_map.js",
 		{path : "js/logger.js", babelify : true},
 		{path : "js/app.js", babelify : true},
-		"js/main.js",
-		{path : "js/popups/index.js", babelify : true}
+		"js/main.js"
 	],
 
 	__sourceslast : [
