@@ -450,7 +450,6 @@ var bestposts = (function(){
 					} else {
 
 						var parameters = ['15', '4320', '', self.app.localization.key]
-
 						self.sdk.node.shares.get(parameters, function (c, error) {
 	
 							if (!error && c.length){
@@ -469,7 +468,6 @@ var bestposts = (function(){
 	
 	
 						}, 'gethotposts')
-
 					}
 
 
