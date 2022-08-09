@@ -985,8 +985,7 @@ Application = function(p)
     self.mobile.reload.initparallax()
   
     /*Launch popup*/
-    new ShadowPopup({ url: './js/popups/android-popup.js' });
-    new ShadowPopup({ url: './js/popups/desktop-popup.js' });
+    initShadowPopups()
   }
 
   self.reload = function(p){
