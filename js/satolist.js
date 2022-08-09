@@ -16976,7 +16976,7 @@ Platform = function (app, listofnodes) {
                             // parameters = ['30', '259200', '', self.app.localization.key];
 
                             if (p.type){
-                                parameters.push(p.type)
+                                parameters[5].push(p.type)
                             }
 
                             self.sdk.node.shares.get(parameters, function (shares, error) {
