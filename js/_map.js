@@ -63,7 +63,8 @@ __map =  {
 		"js/vendor/ion.sound/ion.sound.js",
 		"js/vendor/hammer.min.js",
 		"js/vendor/owl/owl.carousel.min.js",
-		{path : "js/vendor/shadow-popup/popup.js", babelify : true}
+		{path : "js/vendor/shadow-popup/popup.js", babelify : true},
+		"js/popups/index.js"
 	],
 
 	__sourcesfirst : [
@@ -78,8 +79,7 @@ __map =  {
 		"js/_map.js",
 		{path : "js/logger.js", babelify : true},
 		{path : "js/app.js", babelify : true},
-		"js/main.js",
-		{path : "js/popups/index.js", babelify : true}
+		"js/main.js"
 	],
 
 	__sourceslast : [
