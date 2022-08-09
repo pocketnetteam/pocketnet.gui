@@ -582,33 +582,20 @@ var post = (function () {
 					}
 				}
 
-				var upvoteShare = share.upvote(value);
-
-				if(!upvoteShare) {
-					self.app.platform.errorHandler('4', true)
-
-					if (clbk)
-						clbk(false)
-
-					return
-				}
-
 				if (value == 5){
 					setTimeout(function(){
 						if(!el.c) return
 
-						const bannerComment = initedcommentes[id].showBanner();
+						const bannerComment = inicomments.showBanner(inicomments);
 						if (!bannerComment) {
 							return;
 						}
 
 						self.app.platform.effects.templates.commentstars(el.c, value, function(){
-
-								})
-
-								if (inicomments){
+							if (inicomments){
 								inicomments.attention(self.app.localization.e('starssendcomments'))
-								}
+							}
+						})
 					}, 300)
 				}
 
