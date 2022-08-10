@@ -2747,11 +2747,6 @@ Platform = function (app, listofnodes) {
             }
 
             const createComponent = () => {
-                self.app.Logger.info({
-                    actionId: 'COMMENT_BANNER_ALLOWED',
-                    value: true,
-                });
-
                 app.nav.api.load({
                     open: true,
                     id: 'commentBanner',
@@ -2760,20 +2755,12 @@ Platform = function (app, listofnodes) {
 
                     clbk : function(e, p){
                         bannerCommentComponent = p;
-                        if (p.el[0].constructor.name === 'HTMLDivElement') {
-                            self.app.Logger.info({
-                                actionId: 'COMMENT_BANNER_SHOWED',
-                                value: p.el[0].constructor.name,
-                            });
-
-                            return;
-                        }
                     }
                 });
             };
 
             const unixTimeNow = Math.floor(Date.now() / 1000);
-            const oneDayInSeconds = 86400;
+            const oneDayInSeconds = 86400000;
 
             const alreadyShowed = ('nextCommentBanner' in localStorage);
             const isBannerDisabled = (localStorage.nextCommentBanner == -1);
@@ -2787,7 +2774,8 @@ Platform = function (app, listofnodes) {
             const isOneDayOld = (registeredTime >= oneDayInSeconds);
 
             if (isBannerDisabled) {
-                return isBannerDisabled;
+                console.log('banner showbanner', bannerCommentComponent);
+                return bannerCommentComponent;
             }
 
             if (!isOneDayOld) {
@@ -15159,29 +15147,6 @@ Platform = function (app, listofnodes) {
                 else {
                     if (clbk)
                         clbk()
-                }
-            },
-
-            likeDelay: function(delayedTransaction, delayedLikes, id) {
-                function createTimeOut(id) {
-                    const timer = setTimeout(()=>{
-                        if (delayedLikes[id].delayedTransaction) {
-                            delayedLikes[id].delayedTransaction();
-
-                            delete delayedLikes[id];
-                        }
-                    }, 9000);
-                    return timer;
-                }
-
-                if (!delayedLikes[id]) {
-                    delayedLikes[id] = {};
-                    delayedLikes[id].timer = createTimeOut(id);
-                    delayedLikes[id].delayedTransaction = delayedTransaction;
-                } else {
-                    delayedTransaction();
-                    clearTimeout(delayedLikes[id].timer);
-                    delete delayedLikes[id];
                 }
             }
         },

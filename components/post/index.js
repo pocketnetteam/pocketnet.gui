@@ -19,8 +19,6 @@ var post = (function () {
 
 		var authblock = false;
 
-		delayedLikes = {};
-
 		var actions = {
 
 			pkoin : function(id){
@@ -548,7 +546,7 @@ var post = (function () {
 
 			},
 
-			like: function (obj, value, clbk) {
+			like: function (value, clbk) {
 
 
 				var checkvisibility = app.platform.sdk.node.shares.checkvisibility(share);
@@ -587,56 +585,73 @@ var post = (function () {
 					}
 				}
 
-				if (value == 5){
-					setTimeout(function(){
-						if(!el.c) return
+				
 
-						const bannerComment = inicomments.showBanner(inicomments);
-						if (!bannerComment) {
-							return;
-						}
+				var upvoteShare = share.upvote(value);
 
-						self.app.platform.effects.templates.commentstars(el.c, value, function(){
-							if (inicomments){
-								inicomments.attention(self.app.localization.e('starssendcomments'))
-							}
-						})
-					}, 300)
+				if(!upvoteShare) {
+					self.app.platform.errorHandler('4', true)
+
+					if (clbk)
+						clbk(false)
+
+					return
+				}
+
+				if (value > 4){
+
+					var reason = null
+
+					if (self.app.platform.sdk.user.newuser()){
+						reason = 'n'
+					}
+
+					if (share.scnt == '0') reason = 's'
+
+					if (reason) {
+						setTimeout(function(){
+							if(!el.c) return
+								self.app.platform.effects.templates.commentstars(el.c, value, function(){
+									
+								})
+
+								if (inicomments){
+									inicomments.attention(self.app.localization.e('starssendcomment' + reason))
+								}
+						}, 300)
+					}
+					
 				}
 
 				self.app.platform.sdk.upvote.checkvalue(value, function(){
-					const callback = (tx, error) => {
-						topPreloader(100)
 
-						if (!tx) {
-							share.myVal = null;
+					self.sdk.node.transactions.create.commonFromUnspent(
 
-							self.app.platform.errorHandler(error, true)
+						upvoteShare,
 
-							if (clbk)
-								clbk(false)
+						function (tx, error) {
 
-						} else {
-							if (clbk)
-								clbk(true)
+
+							topPreloader(100)
+
+							if (!tx) {
+
+								share.myVal = null;
+
+								self.app.platform.errorHandler(error, true)
+
+								if (clbk)
+									clbk(false)
+
+							}
+							else {
+
+								if (clbk)
+									clbk(true)
+							}
+
 						}
-					}
-
-					const delayedTransaction = () => {
-						var upvoteShare = share.upvote(value);
-
-						if(!upvoteShare) {
-							self.app.platform.errorHandler('4', true)
-
-							if (clbk)
-								clbk(false)
-
-							return
-						}
-						self.sdk.node.transactions.create.commonFromUnspent(upvoteShare, callback);
-					}
-
-					app.platform.sdk.likes.likeDelay(delayedTransaction, delayedLikes, obj.id);
+					)
 
 				}, function(){
 					if (clbk)
@@ -925,32 +940,25 @@ var post = (function () {
 			},
 
 			like: function () {
-				const p = $(this).closest('.stars');
-				const value = $(this).attr('value');
 
-				let s = self.app.platform.sdk.node.shares.storage.trx[share.txid];
-
-				const isSameLikeId = delayedLikes[s.id];
-
-				const isAlredyLiked = p.attr('value');
-
-				if (isAlredyLiked && !isSameLikeId){
-					return;
-				}
-
-				if (isAlredyLiked && isSameLikeId) {
-					p.removeAttr('value');
-					p.removeClass('liked');
-				}
+				var value = $(this).attr('value')
 
 				actions.stateAction(function () {
 
 					if (!self.app.platform.sdk.address.pnet() || share.address == self.app.platform.sdk.address.pnet().address) return
 
+					var p = $(this).closest('.stars');
+
+					if (p.attr('value')) {
+
+
+						return
+					}
+
 					p.attr('value', value)
 					p.addClass('liked')
 
-					actions.like(s, value, function (r) {
+					actions.like(value, function (r) {
 						if (r) {
 							share.scnt || (share.scnt = 0)
 							share.score || (share.score = 0)

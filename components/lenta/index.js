@@ -53,7 +53,6 @@ var lenta = (function(){
 			cachedHeight = 0,
 			optimizedCount = 0,
 			fullscreenvideoShowed = null;
-			delayedLikes = {};
 
 		var countshares = 0;
 		
@@ -1684,48 +1683,46 @@ var lenta = (function(){
 
 				self.app.platform.sdk.upvote.checkvalue(value, function(){
 
-						topPreloader(100)
+					var upvoteShare = obj.upvote(value);
 
-						if(!tx){
+					if(!upvoteShare){
+						self.app.platform.errorHandler('4', true)	
 
-							upvoteShare.myVal = null;
-							obj.myVal = 0;
+						if(clbk)
+							clbk(false)
 
-							self.app.platform.errorHandler(error, true)
-
-
-							if(clbk)
-								clbk(false)
-
-						}
-						else
-						{
-
-							if (clbk)
-								clbk(true)
-						}
+						return
 					}
 
-					const delayedTransaction = () => {
-						var upvoteShare = obj.upvote(value);
+					self.sdk.node.transactions.create.commonFromUnspent(
 
-						if(!upvoteShare){
-							self.app.platform.errorHandler('4', true)
+						upvoteShare,
 
-							if(clbk)
-								clbk(false)
+						function(tx, error){
 
-							return
+							topPreloader(100)
+
+							if(!tx){				
+
+								upvoteShare.myVal = null;	
+								obj.myVal = 0;	
+
+								self.app.platform.errorHandler(error, true)	
+
+
+								if(clbk)
+									clbk(false)
+								
+							}
+							else
+							{
+
+								if (clbk)
+									clbk(true)
+							}
+
 						}
-
-						self.sdk.node.transactions.create.commonFromUnspent(
-							upvoteShare,
-							callback
-						)
-						console.log('transaction', value, obj.id);
-					}
-
-					app.platform.sdk.likes.likeDelay(delayedTransaction, delayedLikes, obj.id);
+					)
 
 				}, function(){
 					if (clbk)
@@ -2343,49 +2340,62 @@ var lenta = (function(){
 			
 
 			like : function(){
-				const p = $(this).closest('.stars');
-				const value = $(this).attr('value');
+				var p = $(this).closest('.stars');
 
-				let id = $(this).closest('.share').attr('id');
+				if (p.attr('value')){
+					return
+				}
+
+				var id = $(this).closest('.share').attr('id');
+				var value = $(this).attr('value')
+
 				if(!id) id = $(this).closest('.truerepost').attr('stxid')
-
-				let s = self.app.platform.sdk.node.shares.storage.trx[id]
-
-				const isSameLikeId = delayedLikes[s.id];
-
-				const isAlredyLiked = p.attr('value');
-
-				if (isAlredyLiked && !isSameLikeId){
-					return;
-				}
-
-				if (isAlredyLiked && isSameLikeId) {
-					p.removeAttr('value');
-					p.removeClass('liked');
-				}
 
 				self.app.mobile.vibration.small()
 
 				actions.stateAction('_this', function(){
+
 					self.app.platform.sdk.node.shares.getbyid(id, function(){
+
+						var s = self.app.platform.sdk.node.shares.storage.trx[id]
+
 						if (self.app.platform.sdk.address.pnet() && s.address == self.app.platform.sdk.address.pnet().address) return
 
-						if (value == 5){
-							setTimeout(function(){
-								if(!el.share[id]) return
+						if (value > 4){
 
-								const bannerComment = initedcommentes[id].showBanner(initedcommentes[id]);
-								if (!bannerComment) {
-									return;
-								}
+							var reason = null
 
-								self.app.platform.effects.templates.commentstars(el.share[id], value, function(){
+							//if(!rand(0,9)) reason = 'p'
+
+							if (self.app.platform.sdk.user.newuser()){
+								reason = 'n'
+							}
+							
+
+							if(s.scnt == '0') reason = 's'
+
+							if(reason) {
+								setTimeout(function(){
+
+									if(!el.share[id]) return
+	
+									self.app.platform.effects.templates.commentstars(el.share[id], value, function(){
+										
+									})
+
 									if (initedcommentes[id]){
-										initedcommentes[id].attention(self.app.localization.e('starssendcomments'))
+										initedcommentes[id].attention(self.app.localization.e('starssendcomment' + reason))
 									}
-								})
-							}, 300)
+	
+								}, 300)
+							}
+
+							
+							
+
 						}
+
+							
 
 						p.attr('value', value)
 						p.addClass('liked')
