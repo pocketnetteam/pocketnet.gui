@@ -75,7 +75,7 @@ class FrontendLogger {
 
     USER_COMPLAIN: {
       id: 'USER_COMPLAIN',
-      description: 'user send complain'
+      description: 'user send complain',
     },
 
     SESSION_STARTED: {
@@ -102,73 +102,42 @@ class FrontendLogger {
   errorCounters = {};
 
   sendLogsBatch() {
-    const {
-      _logsCache,
-      _errorsCache,
-      instance,
-      _createErrorBody,
-      _createLogBody,
-    } = this;
+    const { _logsCache, _errorsCache, instance, _createLogBody } = this;
 
     const logsBatch = _logsCache
       .splice(0, 10)
       .map((log) => _createLogBody(log));
+
     const errorsBatch = _errorsCache
       .splice(0, 10)
-      .map((err) => _createErrorBody(err));
+      .map((err) => _createLogBody(err));
 
     if (logsBatch.length) {
-      instance.post('front/action/v2', logsBatch.join(','));
+      instance.post('front/action/v3', logsBatch.join(','));
     }
 
     if (errorsBatch.length) {
-      instance.post('front/add', errorsBatch.join(','));
+      instance.post('front/action/v3', errorsBatch.join(','));
     }
   }
 
-  _createErrorBody({
-    level = 'error',
-    date = moment().format('YYYY-MM-DD hh:mm:ss'),
-    moduleVersion = '',
-    code = 400,
-    payload = '',
-    err = '',
-    guid = '',
-    userAgent = '',
-  }) {
-    const parametersOrder = [
-      level,
-      date,
-      moduleVersion,
-      code,
-      payload,
-      err,
-      userAgent,
-      guid,
-    ].map((element) =>
-      typeof element !== 'number' ? `'${element}'` : element,
-    );
-
-    return `(${parametersOrder.join(',')})`;
-  }
-
   _createLogBody({
-    type = 'DEFAULT_LOG',
-    subType = 'DEFAULT_SUBTYPE',
-    value = 'NO_VALUE',
+    level = 'info',
     date = moment().format('YYYY-MM-DD hh:mm:ss'),
-    moduleVersion = '0.0.1',
+    path = 'UNDEFINED_PATH',
+    payload = '',
     userAgent = '',
+    moduleVersion = '0.0.1',
     guid = '',
     language = 'no',
   }) {
     const parametersOrder = [
-      type,
-      subType,
-      value,
+      level,
       date,
-      moduleVersion,
+      path,
+      payload,
       userAgent,
+      moduleVersion,
       guid,
       language,
     ].map((element) =>
@@ -201,8 +170,17 @@ class FrontendLogger {
     } catch (errorFormat) {
       errorBody = `{ "error": "Unable to stringify received error. Report: ${errorFormat}", "type": "ERROR_PROCESSING_FAILED"}`;
     }
+    const language = (app.localization || {}).key || 'no';
 
-    const formattedError = { ...error, guid, userAgent, payload: errorBody };
+    const formattedError = {
+      ...error,
+      guid,
+      userAgent,
+      payload: errorBody,
+      level: 'error',
+      path: 'APPLICATION_ERROR',
+      language,
+    };
 
     if (_addLogWithAggregation[error.err]) {
       _addLogWithAggregation[error.err](
@@ -213,8 +191,6 @@ class FrontendLogger {
     } else {
       _addLogWithAggregation.default(formattedError, _errorsCache);
     }
-
-    console.log('Cache', _errorsCache);
   }
 
   _addLogWithAggregation = {
@@ -332,11 +308,15 @@ class FrontendLogger {
     const language = (app.localization || {}).key || 'no';
 
     const info = {
-      type: infoType,
-      subType: actionSubType,
-      value: actionValue,
-      guid,
+      level: 'info',
+      path: `ACTIVITY_LOG`,
+      payload: JSON.stringify({
+        type: infoType,
+        subType: actionSubType,
+        value: actionValue,
+      }),
       userAgent,
+      guid,
       language,
     };
 
