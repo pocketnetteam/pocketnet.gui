@@ -59,8 +59,6 @@ var userpage = (function(){
 		
 				}
 			}
-			
-			
 
 			reports.push({
 				name : self.app.localization.e('notifications'),
@@ -71,6 +69,13 @@ var userpage = (function(){
 				if : function(){
 					return true
 				}
+			})
+
+			reports.push({
+				name : self.app.localization.e('rstatistic'),
+				id : 'statistic',
+				report : 'statistic',
+				mobile : true,
 			})
 
 			reports.push({
