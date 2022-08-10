@@ -208,6 +208,7 @@ ____loclib.spv = "Video Post count";
 ____loclib.ssc = "Stars count";
 ____loclib.ccc = "Comments count";
 ____loclib.crc = "Comment Rate count";
+____loclib.artc = "Articles count";
 
 ____loclib.stp = "Beginner";
 ____loclib.stpg = "Top";
@@ -434,6 +435,7 @@ ____loclib.nodeEnableNote = "That turning on a node may take up to 5GB of RAM. M
 
 
 /// 1301
+
 
 ____loclib.address = "Address"
 ____loclib.privatekey = "Private Key"
