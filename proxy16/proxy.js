@@ -27,6 +27,7 @@ var Exchanges = require('./exchanges.js');
 var Peertube = require('./peertube/index.js');
 var Bots = require('./bots.js');
 var SystemNotify = require('./systemnotify.js');
+var Notifications = require('./node/notifications')
 var Transports = require("./transports")
 var Applications = require('./node/applications');
 const Path = require("path");
@@ -62,6 +63,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 	var peertube = new Peertube(self)
 	var bots = new Bots(settings.bots)
 	var systemnotify = new SystemNotify(settings.systemnotify)
+	var notifications = new Notifications()
 
 	var torapplications = new TorControl(settings.tor, self)
 
@@ -79,7 +81,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 		wss, server, pocketnet, nodeControl,
 		remote, firebase, nodeManager, wallet,
 		proxies, exchanges, peertube, bots,
-		systemnotify,
+		systemnotify, notifications,
 		logger,
 		proxy: self
 	})
@@ -339,6 +341,18 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 		}
 	}
 
+	self.notifications = {
+		init: function () {
+			return notifications.init(self, firebase, nodeManager);
+		},
+
+		sendBlock: function (block){
+			return notifications.sendBlock(block);
+		},
+
+		destroy: function () {
+		}
+	}
 
 	self.wallet = {
 
@@ -1047,7 +1061,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 			status = 1
 
-			return this.initlist(['server', 'wss', 'nodeManager', 'wallet', 'firebase', 'nodeControl', 'torapplications', 'exchanges', 'peertube', 'bots']).then(r => {
+			return this.initlist(['server', 'wss', 'nodeManager', 'wallet', 'firebase', 'nodeControl', 'torapplications', 'exchanges', 'peertube', 'bots', 'notifications']).then(r => {
 
 				status = 2
 
