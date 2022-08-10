@@ -72,7 +72,7 @@
 					border : 0;
 				}
 			}
-		
+
 			.vc_valuecustom .vc_textInput {
 				.vc_iconWrapper,
 				.vc_inputWrapper{
@@ -80,7 +80,7 @@
 				}
 			}
 
-			
+
 		}
 	}
 
@@ -105,7 +105,7 @@
 		.draggablemarkerwrapper{
 			display: none;
 		}
-		
+
 		.iconWrapper{
 			padding : @rhythm;
 			padding-right: 0;
@@ -176,7 +176,7 @@
 			padding-right: 0;
 		}
 
-		
+
 	}
 
 	.iconWrapper{
@@ -243,9 +243,9 @@
 			}
 		}
 
-	}	
-	
-	
+	}
+
+
 
 	select{
 		background: transparent;
@@ -302,7 +302,7 @@
 				margin-right: 0;
 			}
 		}
-		
+
 		.emojionearea-editor{
 			padding : 2 * @rhythm 0;
 			padding-left : @rhythm;
@@ -325,7 +325,7 @@
 		.wallpaperShareInput {
 			display: none;
 		}
-	
+
 		.wallpaperShareLabel {
 			cursor: pointer;
 
@@ -360,8 +360,8 @@
 		&.itisvideopart{
 			padding-right: 4 * @rhythm;
 		}
-		
-		
+
+
 		.draggablewrapper{
 			height: auto;
 			>div {
@@ -396,7 +396,7 @@
 			}
 		}
 
-		
+
 	}
 
 	.pollWrapper{
@@ -409,14 +409,14 @@
 			.title{
 				color: rgb(var(--color-txt-ac));
 			}
-	
+
 			.removeWrapper{
 				position: absolute;
 				left: 70px;
 				bottom: 40px;
-				
+
 				.removelink {
-			
+
 					width: 40px;
 					height: 40px;
 					line-height: 40px;
@@ -427,20 +427,20 @@
 					background : rgba(var(--color-shadow-base), 0.1);
 					.transition(0.3s);
 					opacity: 0;
-	
+
 					&:hover{
 						background :rgba(var(--color-shadow-base), 0.2);
 					}
 				}
-				
+
 			}
-	
+
 			&:hover{
 				.removelink{
 					opacity: 1;
 				}
 			}
-	
+
 		};
 	}
 
@@ -479,7 +479,7 @@
 				border-radius : 20px;
 				padding : 5px;
 				margin-left: -34px;
-				
+
 				.item{
 					margin-left: 6px;
 					border-radius : 15px;
@@ -560,7 +560,7 @@
 			.videoWrapper{
 				margin-top: @rhythm;
 				margin-bottom : @rhythm;
-				
+
 			}
 
 			.verticalVideo {
@@ -591,7 +591,7 @@
 					}
 				}
 			}
-			
+
 
 		}
 
@@ -663,7 +663,7 @@
 				.ogtable{
 					max-width: 600px;
 					border-radius: 6px;
-					
+
 					display: block;
 
 					>div{
@@ -733,8 +733,8 @@
 				.shadowText();
 			}
 		}
-		
-		
+
+
 
 		.videoWrapper{
 			position: relative;
@@ -802,13 +802,13 @@
 				}
 			}
 		}
-		
-		
+
+
     }
-    
+
     .postlineWrapper{
 		margin-top : @rhythm;
-    }   
+    }
 
 	.postpanel{
 
@@ -827,7 +827,7 @@
 				opacity: 1;
 			}
 		}
-		
+
 		>div{
 			vertical-align: middle;
 
@@ -839,7 +839,7 @@
 				.element{
 					float : right;
 				}
-				
+
 				button{
 					min-width: 140px;
 					font-size: 0.7em;
@@ -850,7 +850,7 @@
 				}
 
 				.selectedTimeWrapper{
-					padding : 2 * @rhythm 0;	
+					padding : 2 * @rhythm 0;
 					margin-right : 2 * @rhythm;
 
 					span,
@@ -864,39 +864,39 @@
 
 		.panel{
 			height: 35px;
-	
+
 			.hide{
 				display: none;
 			}
-	
+
 			>div{
 				width : 32px;
 				height: 32px;
 				border-radius: 50%;
 				line-height: 32px;
 				color : rgb(var(--color-txt-gray-dark));
-			
+
 				float: left;
 				text-align: center;
 				font-size: 0.8em;
 				margin-right : 1 * @rhythm;
 				cursor: pointer;
 				.transition(0.3s);
-	
+
 				&.nowidth{
 					width: auto;
 					i{
 						width: 32px;
 					}
 				}
-	
+
 				&:hover{
 					color : rgb(var(--color-txt-ac));
 				}
 			}
 		}
 	}
-	
+
 
 	.error{
 		text-align : right;
@@ -953,6 +953,35 @@
 	}
 }
 
+.peertube-server-hint {
+	z-index: 3;
+	position: absolute;
+	margin: 10px;
+	padding: 5px 7px;
+	border-radius: 4px;
+	font-family: monospace;
+	font-size: 0.9em;
+	background: #000000bb;
+	color: #fff;
+
+	i.fa {
+		font-size: 0.8em;
+		margin-top: 1px;
+		margin-right: 5px;
+	}
+
+	a {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+	}
+}
+
+.topvideosWrapper .peertube-server-hint {
+	bottom: 0;
+	font-size: 0.6em;
+}
+
 .sharedate{
 	.selectDateTableWrapper{
 		width : 500px;
@@ -996,9 +1025,9 @@
 
     .wndinner{
 		max-height: 550px;
-		
+
     }
-	
+
 	.wndcontent{
         overflow: hidden;
         padding-right: 4 * @rhythm;
@@ -1015,7 +1044,7 @@
 			right: 0;
 			top : 0;
 			bottom : 0;
-			
+
 			.txtwrapper{
 				>div{
 					&.iconWrapper{
@@ -1036,7 +1065,7 @@
                     font-size: 1.5em;
                 }
 			}
-			
+
 			.absolutetxwrapper{
 				position: absolute;
 				left : 0;
@@ -1045,7 +1074,7 @@
 				padding-bottom : 0;
 				bottom : 50px;
 				overflow-y: auto;
-				
+
 
 				.txtwrapper{
 					height: 100%;
@@ -1054,7 +1083,7 @@
 						&.shareWrapper{
 							height: 100%;
 							position: relative;
-							
+
 							.relativeContainer{
 								width : 100%;
 								left: 0;
@@ -1083,7 +1112,7 @@
 				background: rgb(var(--background-secondary-theme));
 			}
 
-		
+
 
 			#taginput .tgs .search .searchFastResultWrapper{
 				top : auto;
@@ -1096,7 +1125,7 @@
 				bottom : 100%;
 				max-height: 170px;
 			}
-			
+
 			.sLoader{
 				left : 8 * @rhythm;
 				top : 6 * @rhythm;
@@ -1116,7 +1145,7 @@ html.mobileview{
 		.wndcontent{
 
 			overflow-y: overlay;
-	
+
 			#share{
 				padding-top : 0;
 				.mobilecaption{
@@ -1126,8 +1155,8 @@ html.mobileview{
 				.absolutetxwrapper{
 					bottom : 50px;
 				}
-				
-				
+
+
 			}
 		}
 	}
@@ -1153,7 +1182,7 @@ html.mobileview{
 
 			#share{
 				position: static;
-				
+
 
 				.iconWrapper{
 					width : 3.5em;
@@ -1161,7 +1190,7 @@ html.mobileview{
 				.cntwrk{
 					margin-left: 3.5em;
 				}
-				
+
 				.absolutetxwrapper{
 					overflow-y: visible;
 				}
@@ -1188,7 +1217,7 @@ html.mobileview{
 						font-size: 1.5em;
 					}
 				}
-				
+
 				.absolutetxwrapper{
 					position: static;
 					padding-bottom : 0;
@@ -1201,7 +1230,7 @@ html.mobileview{
 							&.shareWrapper{
 								height: 100%;
 								position: relative;
-								
+
 								.relativeContainer{
 									width : 100%;
 									left: 0;
@@ -1223,7 +1252,7 @@ html.mobileview{
 					text-align: center;
 				}
 
-				
+
 
 				.postpanel>div.postWrapper{
 					width: 100%;
@@ -1263,7 +1292,7 @@ html.mobileview{
 		}
 
 		.tgsWrapperMain{
-	
+
 			#taginput{
 				.inputWrapper{
 					background: rgb(var(--background-total-theme));
@@ -1286,8 +1315,8 @@ html.mobileview{
 				top : 2 * @rhythm;
 			}
 
-			
-		}	
+
+		}
 
 		.settingsWrapper{
 			.settings{
@@ -1323,7 +1352,7 @@ html.mobileview{
 					}
 				}
 			}
-			
+
 		}
 
 		.poctelc{
@@ -1337,11 +1366,11 @@ html.mobileview{
 				padding-right: 0;
 				display: block;
 			}
-		
+
 			.cntswrk{
 				padding-left : @rhythm;
 				padding-right : 0;
-		
+
 				&.formeta{
 					margin-left: 8 * @rhythm;
 					padding-left : @rhythm;
@@ -1361,16 +1390,16 @@ html.mobileview{
 				.imagesWrapper{
 					width: 100%;
 					margin-bottom : 2 * @rhythm;
-				
+
 					background: transparent;
-					
+
 
 					.image{
 						opacity: 0;
 						width: 100%;
 						height: 100%;
 						margin : 0 auto;
-						
+
 						.transition(0.3s);
 						cursor: pointer;
 
@@ -1447,13 +1476,13 @@ html.mobileview{
 
 		.emojionearea, .emojionearea.form-control{
 			font-size: 1em;
-			
+
 		}
 
 		.emojionearea .emojionearea-button-close{
 			right: 32px;
 		}
-		
+
 		.draggablepart.itisvideopart{
 			padding-right: 0;
 		}
@@ -1488,8 +1517,8 @@ html.mobileview{
 				}
 			}
 		}
-		
-		
+
+
 		.txtwrapper{
 			>div{
 				vertical-align: top;
@@ -1521,24 +1550,24 @@ html.mobileview{
 				background : rgb(var(--background-total-theme));
 			}
 		}
-		
+
 		.tgs{
 			margin-bottom: @rhythm;
 
-			
-			.tagsWrapper{	
-				display: block;		
+
+			.tagsWrapper{
+				display: block;
 
 				>div{
 					display: block;
 					width: 100%;
 
 					&.tagsCont{
-						
+
 					}
 
 					&.tagsInputWrapper{
-						
+
 						width: 100%;
 
 						.inputWrapper{
@@ -1624,7 +1653,7 @@ html.mobileview{
 		.attachements{
 
 			padding : 0 @rhythm;
-			
+
 			.urlcnt{
 
 				.removelink{
@@ -1682,7 +1711,7 @@ html.mobileview{
 						}
 					}
 				}
-				
+
 
 			}
 
@@ -1725,7 +1754,7 @@ html.mobileview{
 				display: none;
 			}
 
-			
+
 		}
 
 		.repostWrapper {
@@ -1737,7 +1766,7 @@ html.mobileview{
 		}
 
 		.draggablepart{
-			
+
 			.draggablewrapper{
 				display: block;
 				>div {
@@ -1757,9 +1786,9 @@ html.mobileview{
 				height: auto;
 				color : rgb(var(--neutral-grad-1));
 			}
-			
+
 		}
-		
+
 		.postlineWrapper{
 			margin : 0;
 			padding-left: 0;
@@ -1776,7 +1805,7 @@ html.mobileview{
 		.postpanel{
 			display: block;
 			margin-top : 0;
-			
+
 
 
 			>div{
@@ -1815,13 +1844,13 @@ html.mobileview{
 						margin-right: 0;
 					}
 
-					
+
 				}
 
 				&.panelWrapper{
 					width: 100%;
 
-					
+
 
 					.panel{
 						height: auto;
@@ -1870,7 +1899,7 @@ html.mobileview{
 			.panel{
 				overflow: hidden;
 				height: auto;
-	
+
 				>div{
 					width : 32px;
 					height: 32px;
@@ -1885,17 +1914,17 @@ html.mobileview{
 					margin-right : 1 * @rhythm;
 					cursor: pointer;
 					.transition(0.3s);
-	
+
 					&:hover{
 						background : rgb(var(--color-bg-ac-1));
 					}
-	
+
 					&.nowidth{
 						width: auto;
 						i{
 							width: auto;
 						}
-	
+
 						span{
 							margin-left: @rhythm;
 						}
@@ -1903,19 +1932,19 @@ html.mobileview{
 				}
 			}
 		}
-		
+
 
 		.error{
 			font-size: 1em;
 			min-height: 0;
 		}
 
-		
+
 
 		.paddingmobilewrapper{
 			background: rgb(var(--background-total-theme));
 		}
-	}	
+	}
 
 	.wnd{
 		#share{

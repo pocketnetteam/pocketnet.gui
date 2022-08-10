@@ -1,18 +1,18 @@
-<% if(url){ 
+<% if(url){
 	var meta = app.platform.parseUrl(url);
 
 	if(typeof share == 'undefined') share = {};
 
-	if((meta.type == 'youtube') || meta.type == 'vimeo' || meta.type == 'bitchute' || meta.type == 'peertube'){ 
-		
+	if((meta.type == 'youtube') || meta.type == 'vimeo' || meta.type == 'bitchute' || meta.type == 'peertube'){
+
 
 			var info = app.platform.sdk.videos.storage[url] || app.platform.sdk.videos.storage[meta.id] || {}
 			var aspectRatio = (info.data || {}).aspectRatio || 0;
-			
+
 			var image = videoImage(url)
 	%>
 		<div class="videoWrapper fullscreenActive <%- (aspectRatio < 1.25) && (aspectRatio >= 0.9) ? 'squareVideo' : ''%> <%- (aspectRatio < 0.9) && (aspectRatio != 0) ? 'verticalVideo' : ''%>" pid="<%- makeid() %>">
-			
+
 			<% if(meta.type != 'peertube' && (!fullplayer || !app.platform.sdk.usersettings.meta.embedvideo.value || (meta.type == 'youtube' && window.cordova))) {%>
 
 				<div class="js-player-dummy " data-plyr-provider="<%-meta.type%>" data-plyr-embed-id="<%-meta.url%>" data-plyr-video-id="<%-meta.id%>" data-plyr-host-name="<%-meta.host_name || ''%>">
@@ -47,13 +47,23 @@
 						</div>
 					</div>
 				</div>
-		
-			<% } else { %> 
-				
+
+			<% } else { %>
+				<% if (app.platform.istest()) { %>
+					<% const videoLink = `https://${meta.host_name}/videos/embed/${meta.id}` %>
+
+					<div class="peertube-server-hint">
+						<a href="<%- videoLink %>">
+							<i class="fa fa-link"></i>
+							<span><%- meta.host_name %></span>
+						</a>
+					</div>
+				<% } %>
+
 				<div class="js-player js-player-ini" data-plyr-provider="<%-meta.type%>" data-plyr-embed-id="<%-meta.url%>" data-plyr-video-id="<%-meta.id%>" data-plyr-host-name="<%-meta.host_name || ''%>">
-					
-					<% if(typeof preview != 'undefined' && preview) {  
-						
+
+					<% if(typeof preview != 'undefined' && preview) {
+
 						%>
 
 						<div class="jsPlayerPreview">
@@ -73,16 +83,16 @@
 								<% } %>
 									<div class="statswrapper">
 										<!--<%-compressedNumber(info.data.views)%> Просмотров -->
-										
+
 										<% if(info.data.views) {%>
 											<div class="viewsWrapper">
 												<i class="far fa-eye"></i> <span><%-compressedNumber(info.data.views)%></span>
 											</div>
 										<% } %>
 
-			
+
 										<% if(share) {
-											
+
 											var value = Number(share.score)
 
 											if (Number(share.scnt) && _.isNumber(Number(share.scnt))) {
@@ -91,7 +101,7 @@
 											else {
 												value = 0
 											}
-											
+
 											%>
 											<div class="starsRatingWrapper">
 												<i class="far fa-star"></i> <span><%-Number(value).toFixed(1)%></span>
@@ -112,15 +122,15 @@
 							<div class="jsPlayerLoading-matte"></div>
 							<div class="preloader5"><img src="./img/three-dots.svg"/></div>
 						</div>
-						
+
 					<% } %>
 
-				
-				</div>	
 
-				<% if(typeof video == 'undefined' || !video) { %> 
+				</div>
+
+				<% if(typeof video == 'undefined' || !video) { %>
 					<div class="videoTips">
-						<div class="videoTip">
+						<div class="videoTip" style="<%- (app.platform.istest()) ? 'text-align: right' : '' %>" >
 							<span><%=e('expandvideo')%></span>
 						</div>
 					</div>
@@ -151,11 +161,11 @@
 					</div>
 
 				<% } %>
-	
+
 			<% } %>
 
 
-			
+
 		</div>
 
 		<% if(meta.type == 'peertube' && (fullplayer || app.platform.sdk.usersettings.meta.embedvideo.value || (meta.type != 'youtube' && !window.cordova))) {%>
@@ -177,7 +187,7 @@
 		<% } %>
 
 
-	<% } else { %> 
+	<% } else { %>
 
 		<% if(og && !_.isEmpty(og) && !app.platform.sdk.usersettings.meta.preview.value) {%>
 
@@ -189,12 +199,12 @@
 
 						if (imagesetting == 'a'){ %>
 
-							<div class="image">							
-								<img src="<%- og.image %>">		
+							<div class="image">
+								<img src="<%- og.image %>">
 
 								<div elementsid="removeImage" class="removeImage">
 									<i class="fas fa-times-circle"></i>
-								</div>					
+								</div>
 							</div>
 
 						<% } %>
@@ -220,11 +230,11 @@
 
 		<% } %>
 
-		
-	<% } %> 
+
+	<% } %>
 
 	<% if( (typeof remove != 'undefined' || (!og || _.isEmpty(og)) ) && !share.itisvideo()  ) {
-		
+
 		if(!meta.type || typeof remove != 'undefined'){
 		%>
 
@@ -248,7 +258,7 @@
 
 			<% } %>
 
-			
+
 		</div>
 	</div>
 
