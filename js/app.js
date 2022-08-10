@@ -983,15 +983,7 @@ Application = function(p)
 
     self.mobile.inputs.init()
     self.mobile.reload.initparallax()
-  
-    /**
-     * Launch Shadow Popups located in popups/index.js
-     * all conditions of appearing contains each popup
-     * i.e. self-checking for android and self-checking
-     * for desktop popup before we had created popup
-     * conditional checking in appear method of instance
-     */
-    if (typeof initShadowPopups === 'function') initShadowPopups()
+
   }
 
   self.reload = function(p){
