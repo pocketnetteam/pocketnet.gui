@@ -1312,17 +1312,20 @@ var registration = (function(){
 
 					if(r && !regproxy) {
 						regproxy = r
-						self.sdk.captcha.hexCaptcha = isHex()
+						// self.sdk.captcha.hexCaptcha = isHex()
 					}
 
 					if (regproxy){
 						localStorage['regproxy'] = regproxy.id
 						
 						regproxy.get.info().then(p => {
-							self.sdk.captcha.hexCaptcha = isHex()
+							// self.sdk.captcha.hexCaptcha = isHex()
 						})
 					}
 
+					if (location.href.includes('pre.pocketnet.app')) {
+						self.sdk.captcha.hexCaptcha = isHex()
+					}
 
 					clbk(data);
 				})
