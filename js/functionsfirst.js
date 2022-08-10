@@ -38,6 +38,10 @@ deep = function(obj, key){
     }
 }
 
+isios = function () {
+    return (window.cordova && window.device && deep(window, 'device.platform') == 'iOS') || (navigator || {}).platform &&  /iPad|iPhone|iPod/.test(navigator.platform || '')
+}
+
 getbaseorientation = function(){
 	
 	var angle90 = {
