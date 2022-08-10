@@ -6802,6 +6802,23 @@ Platform = function (app, listofnodes) {
             saving : {},
             key : '',
 
+            getByMasterSwarmId : function(masterSwarmId){
+                var s = self.sdk.localshares.storage
+
+                var video = null
+
+                _.find(s, (share) => {
+                    return _.find(share.videos, function(v){
+                        if(v.infos && v.infos.videoDetails && v.infos.masterSwarmId == masterSwarmId) {
+                            video = v;
+                            return true
+                        }
+                    })
+                })
+
+                return video
+            },
+
             status : function(id){
                 if(self.sdk.localshares.storage[id]) return 'saved'
                 if(self.sdk.localshares.saving[id]) return 'saving'
@@ -7018,7 +7035,8 @@ Platform = function (app, listofnodes) {
 
                                     var infos = {
                                         thumbnail: 'https://' + videoDetails.from + videoDetails.thumbnailPath,
-                                        videoDetails : videoDetails
+                                        videoDetails : videoDetails,
+                                        masterSwarmId : videoDetails.streamingPlaylists[0].playlistUrl
                                     }
 
                                     dirEntry4.getFile('info.json', { create: true }, function (infoFile) {
@@ -7243,6 +7261,7 @@ Platform = function (app, listofnodes) {
 
                                                                             try {
                                                                                 to.videos[videoFolder.name].infos = JSON.parse(this.result);
+                                                                                to.videos[videoFolder.name].infos.masterSwarmId = to.videos[videoFolder.name].infos.streamingPlaylists[0].playlistUrl
 
                                                                             } catch(err){
 
@@ -7324,6 +7343,8 @@ Platform = function (app, listofnodes) {
 
                         const videoData = await electron.ipcRenderer
                             .invoke('getVideoData', shareId, videoId);
+
+                            console.log('videoData', videoData)
 
                         videosDataList[videoId] = videoData;
 

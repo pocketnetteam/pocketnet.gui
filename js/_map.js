@@ -77,6 +77,7 @@ __map =  {
 		{path : "js/image-uploader.js", babelify : true},
 		"js/_map.js",
 		{path : "js/logger.js", babelify : true},
+		{path : "js/videotransport.js", babelify : true},
 		{path : "js/app.js", babelify : true},
 		"js/main.js"
 	],

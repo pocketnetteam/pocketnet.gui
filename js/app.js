@@ -49,6 +49,11 @@ Application = function(p)
   var self = this;
   var realtimeInterval = null;
   var baseorientation = typeof getbaseorientation != undefined ? getbaseorientation() : 'portrait'
+  var electron = null
+  
+  if (typeof _Electron != 'undefined' && _Electron){
+    electron = require('electron');
+  }
 
   self._meta = {
     Pocketnet : {
@@ -924,12 +929,12 @@ Application = function(p)
 
   self.initvideodb = function(){
 
-    if(typeof initIndexedDbVideo != 'undefined'){
-      
-      initIndexedDbVideo().then(db => {
-        self.videoAssetsStorage = new IdbAssetsStorage(db);
-        self.videoSegmentsStorage = new IdbSegmentsStorage(db);
-      })
+
+
+    if(typeof VideoTransport != 'undefined'){
+
+      self.videotransport = new VideoTransport(self, electron ? electron.ipcRenderer : null)
+      self.videotransport.init()
     }
 
   }

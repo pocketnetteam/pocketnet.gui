@@ -885,9 +885,12 @@ function createWindow() {
 
         const jsonData = fs.readFileSync(jsonPath, { encoding:'utf8', flag:'r' });
 
+        var details =  JSON.parse(jsonData)
+
         videoData.infos = {
             thumbnail : '',
-            videoDetails : JSON.parse(jsonData)
+            videoDetails : details,
+            masterSwarmId : details.streamingPlaylists[0].playlistUrl
         }
 
         const playlistName = videosList.find(fN => (
