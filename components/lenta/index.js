@@ -4235,7 +4235,6 @@ var lenta = (function(){
 							if (essenseData.tags) tagsfilter = essenseData.tags
 
 							var page = essenseData.page || parameters().page || 0
-
 							var type = null
 
 							if(video || essenseData.videomobile){ type = 'video'}

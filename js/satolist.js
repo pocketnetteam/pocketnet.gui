@@ -16936,18 +16936,18 @@ Platform = function (app, listofnodes) {
                         }
                         else {
 
-                            var period = p.period || self.sdk.node.shares.parameters.stor.period || self.sdk.node.shares.parameters.defaults.period || '4320' ///self.sdk.node.shares.parameters.defaults.period
+                            var period = p.period || self.sdk.node.shares.parameters.stor.period || 4320 ///self.sdk.node.shares.parameters.defaults.period
 
-                            var page = p.page || 0
+                            var depth = +p.page ? self.currentBlock - (period * p.page) : 0
 
                             var parameters = []
 
-                            parameters = [p.count.toString(), period, (period * page) || '', self.app.localization.key]
+                             parameters = [depth,'',10, self.app.localization.key,[],[],[],[],[],"",period]
 
-                            //parameters = ['30', '259200', '', self.app.localization.key];
+                            // parameters = ['30', '259200', '', self.app.localization.key];
 
                             if (p.type){
-                                parameters.push(p.type)
+                                parameters[5].push(p.type)
                             }
 
                             self.sdk.node.shares.get(parameters, function (shares, error) {
@@ -16996,7 +16996,7 @@ Platform = function (app, listofnodes) {
                                         clbk(shares, error, p)
                                 }
 
-                            }, methodparams.method || 'gethotposts')
+                            }, methodparams.method || 'getmostcommentedfeed')
 
 
                         }
