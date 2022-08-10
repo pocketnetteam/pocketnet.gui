@@ -9195,12 +9195,12 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
       const isElectron = (typeof _Electron !== 'undefined');
       const isCordova = (typeof window.cordova != 'undefined');
 
-      /*let localTransport;
+      let localTransport;
 
       if (isElectron) {
         localTransport = peertubeTransport(electron.ipcRenderer, localVideo);
         localVideo = undefined;
-      }*/
+      }
 
       retry(function(){
         return typeof PeerTubeEmbeding != 'undefined'
@@ -9217,7 +9217,7 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
           logoType : options.logoType,
           localVideo : localVideo,
           start : options.startTime || 0,
-          //localTransport,
+          localTransport,
           hlsError : options.hlsError,
           light : options.light,
           pathfunction : options.app.peertubeHandler.helpers.url,

@@ -530,6 +530,8 @@ var post = (function () {
 									}
 	
 								}
+
+								console.log('player', player)
 	
 								if (player.enableHotKeys && !ed.repost) player.enableHotKeys()
 							}
