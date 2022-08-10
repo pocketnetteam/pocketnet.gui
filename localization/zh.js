@@ -1010,3 +1010,11 @@ ____loclib.lowstar_reason_3 = "直接的暴力威脅"
 ____loclib.lowstar_reason_4 = "非法藥物"
 ____loclib.lowstar2 = "請不要出於其他原因使用 1 星和 2 星評級。在新的審核在中旬發布後。希望您能夠出於其他原因使用低評級"
 ____loclib.lowstaragree = "我確認這篇文章包含四種禁止內容之一"
+
+____loclib.androidPopupTitle = "在 Bastyon 移动应用中获取未经审查的信息"
+____loclib.androidPopupAgree = "切换到应用"
+____loclib.androidPopupDisagree = "不是现在"
+
+____loclib.desktopPopupTitle = "在 Bastyon 桌面应用程序中获取未经审查的信息"
+____loclib.desktopPopupAgree = "下载应用程序"
+____loclib.desktopPopupDisagree = "不是现在"
