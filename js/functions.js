@@ -10253,10 +10253,6 @@
 
 	}
 
-	isios = function () {
-		return (window.cordova && window.device && deep(window, 'device.platform') == 'iOS') || (navigator || {}).platform &&  /iPad|iPhone|iPod/.test(navigator.platform || '')
-	}
-
 	numberToBool = function(v){
 
 		if(v) return true;
