@@ -988,7 +988,26 @@ var lenta = (function(){
 						},
 
 						hlsError : function(error){
+							const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection || {};
+							const payload = {
+								...error,
+								rtt: connection.rtt || 'Undefined',
+								connection: connection.effectiveType || 'Undefined',
+								mobile: isMobile(),
+								location: 'IN_POST',
+								video: share.url,
+							};
 
+							self.app.Logger.error({
+								err: 'VIDEO_LOADING_ERROR',
+								videoErrorId: share.url,
+								videoErrorType: error.details,
+								payload: {
+									...payload,
+								},
+								code: 611,
+								level: 'warning',
+							});
 						},
 
 						useP2P : self.app.platform.sdk.usersettings.meta.videop2p.value,
