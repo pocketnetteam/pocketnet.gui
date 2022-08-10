@@ -754,6 +754,21 @@ Platform = function (app, listofnodes) {
                 value: true
             },
 
+            commentsOrder: {
+                type: "VALUES",
+                name: self.app.localization.e('commentsOrder'),
+                id: 'commentsOrder',
+                placeholder: self.app.localization.e('commentsOrderPlaceholder'),
+                defaultValue: self.app.localization.e('comments_interesting'),
+                value: "",
+                possibleValues: ['interesting', 'timeup', 'time'],
+                possibleValuesLabels: [
+                    self.app.localization.e('comments_interesting'), 
+                    self.app.localization.e('comments_timeup'), 
+                    self.app.localization.e('comments_time')
+                ]
+            },
+
             telegram: {
                 type: "STRINGANY",
                 name: self.app.localization.e('e13282'),
