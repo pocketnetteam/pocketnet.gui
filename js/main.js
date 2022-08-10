@@ -72,6 +72,10 @@ if(!_Node)
 		matrix = 'test.matrix.pocketnet.app'
 	}
 
+	if (window.location.host === 'pre.pocketnet.app') {
+		_listofproxies = [{ host : 'pre.pocketnet.app', port : 8899, wss : 8099 }];
+	}
+
 
 	app = new Application({
 		listofproxies : _listofproxies,
