@@ -8934,7 +8934,8 @@ Platform = function (app, listofnodes) {
             },
 
             createall: function () {
-                var create = self.sdk.usersettings.create
+
+                var create = self.sdk.usersettings.create;
                 var m = self.sdk.usersettings.meta;
 
                 var options = {};
@@ -8962,7 +8963,8 @@ Platform = function (app, listofnodes) {
                         name: self.app.localization.e('posts'),
                         options: {
 
-                            preview: options.preview
+                            preview: options.preview,
+                            commentsOrder: options.commentsOrder
 
                         }
                     },
@@ -9034,6 +9036,7 @@ Platform = function (app, listofnodes) {
 
                 }
 
+
                 c.system.options.useanimations = options.useanimations
 
                 if (electron) {
@@ -9067,10 +9070,18 @@ Platform = function (app, listofnodes) {
 
                         if (m[i].type === "VALUES") {
 
+                            if (m[i].tgto){
 
-                            const idx = m[i].possibleValues.indexOf(String(v));
-                            m[i].value = m[i].possibleValuesLabels[idx];
-                            m[i].valueId = Number(v);
+                                const idx = m[i].possibleValues.indexOf(String(v));
+                                m[i].value = m[i].possibleValuesLabels[idx];
+                                m[i].valueId = Number(v);
+
+                            } else {
+
+                                m[i].value = v;
+
+                            }
+
 
                         }
 
@@ -9223,10 +9234,15 @@ Platform = function (app, listofnodes) {
                             } else {
 
                                 m[i].value = v.value;
-                                m[i].possibleValues = v.possibleValues && v.possibleValues.map(function(i){
-                                    return String(i);
-                                })
-                                m[i].possibleValuesLabels = v.possibleValuesLabels;
+
+                                if (!(m[i].possibleValues && m[i].possibleValues.length)){
+
+                                    m[i].possibleValues = v.possibleValues && v.possibleValues.map(function(i){
+                                        return String(i);
+                                    })
+                                    m[i].possibleValuesLabels = v.possibleValuesLabels;
+                                    
+                                } 
 
                             }
 
