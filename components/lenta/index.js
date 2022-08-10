@@ -924,7 +924,7 @@ var lenta = (function(){
 						muted : true,
 						resetOnEnd : true,
 						startTime : startTime,
-						mobile : self.app.mobileview || essenseData.openapi,
+						mobile : self.app.mobileview,
 						controls : ['play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'fullscreen'],
 						speed : {
 							selected : 1,
