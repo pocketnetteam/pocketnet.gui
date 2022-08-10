@@ -1577,15 +1577,13 @@ var es2019_module = __webpack_require__("0319");
             return;
           }
 
-          _this2.isRecording = true;
+          _this2.startRecording();
         } catch (e) {
           _this2.microphoneDisabled = true;
           return _this2.$dialog.confirm('Access to the microphone is restricted, please check your browser settings.', {
             okText: 'Yes'
           });
         }
-
-        _this2.startRecording();
       })();
     },
 
@@ -1596,6 +1594,7 @@ var es2019_module = __webpack_require__("0319");
         this.recordTime = 0;
         this.record = null;
         this.mediaRecorder.start();
+        this.isRecording = true;
         this.interval = setInterval(() => {
           this.dataArray = new Uint8Array(this.audioAnalyser.frequencyBinCount);
           this.audioAnalyser.getByteFrequencyData(this.dataArray);
