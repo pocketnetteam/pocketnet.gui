@@ -49,8 +49,8 @@ const commentBanner = (function() {
 		};
 
 		const destroyEvents = function() {
-			el.c.off('click', '.noShowAgain', actions.dontShowAgain)
-			el.c.off('click', '.closeBannerBtn', renders.closeBanner)
+			el.c.off?.('click', '.noShowAgain', actions.dontShowAgain)
+			el.c.off?.('click', '.closeBannerBtn', renders.closeBanner)
 		};
 
 		return {
