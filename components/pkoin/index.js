@@ -340,6 +340,8 @@ var pkoin = (function(){
 						}, 200)
 					}
 
+					disabled = false;
+
 				}
 
 				if (!disabled){
@@ -359,6 +361,8 @@ var pkoin = (function(){
 								sitemessage(self.app.localization.e('minPkoin', 0.05))
 	
 							} else if (valSum < Number(balance)){
+
+								disabled = true;
 	
 								if (optionsValue === 'pkoinComment'){
 	
