@@ -1,4 +1,9 @@
-# Bastyon Desktop Browser
+<p align="center">
+  <img src="./img/logo_color/blue_250.png">
+</p>
+
+<h1 align="center">Bastyon Desktop Browser</h1>
+
 ![GitHub](https://img.shields.io/github/license/pocketnetteam/pocketnet.api)
 ![contributors](https://img.shields.io/github/contributors/pocketnetteam/pocketnet.gui)
 ![last_commit](https://img.shields.io/github/last-commit/pocketnetteam/pocketnet.gui)
