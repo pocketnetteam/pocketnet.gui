@@ -2212,9 +2212,7 @@ var comments = (function(){
 
 					if (ed.commentPs){
 						comments = _.filter(comments || [], function(c){
-							if(c.id == ed.commentPs.commentid || c.id == ed.commentPs.parentid) {
-								return true
-							}
+							if(c.id == ed.commentPs.commentid || c.id == ed.commentPs.parentid) return true
 						})
 					}
 	
@@ -2759,56 +2757,11 @@ var comments = (function(){
 							el.c.find('.leaveCommentPreview').css('opacity', '')
 						}, 100)
 					}, 100)
-				}
-
-				bannerComment = app.platform.ui.showCommentBanner(el.c);
-
-			},
-
-			showBanner : function(c) {
-				let alredyCommented;
-
-				if (c.essenseData.lastComment) {
-					const address = c.essenseData.lastComment.address;
-					const me = app.platform.sdk.user.me();
 					
-					const firstLikeIsMine = (address == me.address);
-
-					if (firstLikeIsMine) {
-						alredyCommented = true;
-					}
-				}
-
-				if (areas && !alredyCommented) {
-					const len = Object.keys(areas).length;
-
-					const isPost = len && areas[0];
-					const isReply = len && len >= 2;
-
-					let hasContent;
-
-					//leaveComment (post) isn't empty
-					if (isPost) {
-						hasContent = areas[0].content != '';
-					}
-
-					//leaveComment (reply) isn't empty
-					if (isReply) {
-						hasContent = Object.values(areas)[1].content != '';
-					}
-
-					//if isn't empty
-					if (hasContent) {
-						alredyCommented = true;
-					}
-				}
-
-				if (alredyCommented) {
-					return false;
 				}
 
 				bannerComment = app.platform.ui.showCommentBanner(el.c);
-				return bannerComment;
+
 			},
 
 			authclbk : function(){
