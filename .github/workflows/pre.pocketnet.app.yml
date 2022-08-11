@@ -3,13 +3,11 @@ name: Deploy to pre.pocketnet.app
 on:
   workflow_dispatch:
   push:
-    tags: v*.*.*
+    tags: v*.*.*-pre
 
 jobs:
   build:
   
-    if: github.event.base_ref == 'refs/heads/release'
-    
     runs-on: gui 
 
     steps:
