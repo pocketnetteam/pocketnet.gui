@@ -343,9 +343,6 @@ var pnuser = __webpack_require__("42cd");
 // EXTERNAL MODULE: ./node_modules/vue-awesome-swiper/dist/vue-awesome-swiper.js
 var vue_awesome_swiper = __webpack_require__("7212a");
 
-// EXTERNAL MODULE: ./node_modules/swiper/swiper-bundle.css
-var swiper_bundle = __webpack_require__("bbe3");
-
 // EXTERNAL MODULE: ./node_modules/vue-carousel/dist/vue-carousel.min.js
 var vue_carousel_min = __webpack_require__("0a63");
 
@@ -353,8 +350,8 @@ var vue_carousel_min = __webpack_require__("0a63");
 
 
 
-
- //
+ // import 'swiper/css/swiper.css'
+//
 
 
 //
