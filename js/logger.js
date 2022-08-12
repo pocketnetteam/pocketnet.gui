@@ -75,9 +75,11 @@ class FrontendLogger {
 
     USER_COMPLAIN : {
       id: 'USER_COMPLAIN',
-      description: 'user send complain'
-    }
+      description: 'user send complain',
+    },
   };
+
+  errorCounters = {};
 
   sendLogsBatch() {
     const {
@@ -155,13 +157,21 @@ class FrontendLogger {
   }
 
   error(error = {}) {
-    const { _errorsCache, guid, userAgent, loggerActive } = this;
+    const {
+      _errorsCache,
+      guid,
+      userAgent,
+      _addLogWithAggregation,
+      errorCounters,
+      loggerActive,
+    } = this;
     //protection from incorrect error formats or logger is turned off
     // if (typeof error !== 'object' || !loggerActive) return;
     let errorBody;
 
     try {
-      const serverResponse = deep(error, 'payload.response.data') || error.payload;
+      const serverResponse =
+        deep(error, 'payload.response.data') || error.payload;
       errorBody = JSON.stringify(
         serverResponse,
         Object.getOwnPropertyNames(serverResponse),
@@ -172,7 +182,17 @@ class FrontendLogger {
 
     const formattedError = { ...error, guid, userAgent, payload: errorBody };
 
-    _errorsCache.push(formattedError);
+    if (_addLogWithAggregation[error.err]) {
+      _addLogWithAggregation[error.err](
+        formattedError,
+        _errorsCache,
+        errorCounters,
+      );
+    } else {
+      _addLogWithAggregation.default(formattedError, _errorsCache);
+    }
+
+    console.log('Cache', _errorsCache);
   }
 
   _addLogWithAggregation = {
@@ -221,6 +241,56 @@ class FrontendLogger {
 
       return;
     },
+
+    VIDEO_LOADING_ERROR(info, array, errorCounters) {
+      const existingLog = array.find(
+        (element) =>
+          element.videoErrorId === info.videoErrorId &&
+          element.videoErrorType === info.videoErrorType,
+      );
+
+      if (
+        info.videoErrorType === 'bufferStalledError' ||
+        info.videoErrorType === 'bufferNudgeOnStall'
+      ) {
+        if (!errorCounters[info.videoErrorType])
+          errorCounters[info.videoErrorType] = {};
+        if (!errorCounters[info.videoErrorType][info.videoErrorId])
+          errorCounters[info.videoErrorType][info.videoErrorId] = {
+            counter: 0,
+            performance: performance.now(),
+          };
+
+        const logContainer =
+          errorCounters[info.videoErrorType][info.videoErrorId];
+
+        logContainer.counter += 1;
+        const timePassed = performance.now() - logContainer.performance;
+
+        if (logContainer.counter > 3 && timePassed > 60000) {
+          logContainer.counter = 0;
+          logContainer.performance = performance.now();
+
+          if (!existingLog) return array.push(info);
+
+          existingLog.counter
+            ? (existingLog.counter += 1)
+            : (existingLog.counter = 1);
+
+          return;
+        }
+
+        return;
+      }
+
+      if (!existingLog) return array.push(info);
+
+      existingLog.counter
+        ? (existingLog.counter += 1)
+        : (existingLog.counter = 1);
+
+      return;
+    },
   };
 
   info({ actionId = '', actionSubType = '', actionValue = '' }) {
@@ -244,12 +314,10 @@ class FrontendLogger {
       userAgent,
     };
 
-
     if (_addLogWithAggregation[infoType]) {
       _addLogWithAggregation[infoType](info, _logsCache);
     } else {
       _addLogWithAggregation.default(info, _logsCache);
     }
-
   }
 }
