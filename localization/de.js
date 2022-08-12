@@ -199,7 +199,10 @@ ____loclib.sprofile = "Profil";
 ____loclib.spc = "Beitragszähler";
 ____loclib.ssc = "Sternezähler";
 ____loclib.ccc = "Kommentarezähler";
-____loclib.crc = "Kommentierratenzähler";
+____loclib.crc = "Anzahl der Kommentarbewertungen";
+____loclib.artc = "Artikel zählen";
+
+
 ____loclib.stp = "Testphase";
 ____loclib.srep = "Ansehen";
 
@@ -732,6 +735,7 @@ ____loclib.e13268 = "Coinstake Gewinn"
 ____loclib.e13269 = "Überweisung erhalten"
 ____loclib.e13270 = "Likes erhalten"
 ____loclib.e13271 = "Kommentar erhalten"
+____loclib.downvote = "Negative Bewertung"
 ____loclib.e13272 = "Antwort erhalten"
 ____loclib.e13273 = "Neuer Follower"
 ____loclib.e13274 = "Gerettete Benutzer"
