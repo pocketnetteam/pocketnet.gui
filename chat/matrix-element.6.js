@@ -1688,7 +1688,12 @@ var es2019_module = __webpack_require__("0319");
             error: e
           });
 
-          return Promise.resolve();
+          const timeoutId = setTimeout(() => {
+            _this4.core.mtrx.sendAudio(_this4.chat, base64, null, meta, {
+              relation: _this4.relationEvent
+            });
+          }, 1000);
+          return Promise.resolve(timeoutId);
         });
       })();
     },
