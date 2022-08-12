@@ -77,6 +77,26 @@ class FrontendLogger {
       id: 'USER_COMPLAIN',
       description: 'user send complain',
     },
+
+    SESSION_STARTED: {
+      id: 'SESSION_STARTED',
+      description: 'User session has started',
+    },
+
+    VIDEO_LOADED_WITH_RECOMMENDATIONS: {
+      id: 'VIDEO_LOADED_WITH_RECOMMENDATIONS',
+      description: 'User opened video with recommendations',
+    },
+
+    USER_STARTED_REGISTRATION: {
+      id: 'USER_STARTED_REGISTRATION',
+      description: 'Userhas started a registration process',
+    },
+
+    USER_REGISTRATION_PROCESS: {
+      id: 'USER_REGISTRATION_PROCESS',
+      description: 'USER_REGISTRATION_PROCESS',
+    },
   };
 
   errorCounters = {};
