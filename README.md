@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./img/logo_color/blue_250.png">
+  <img src="./img/logo_color/blue_250.png" width="150">
 </p>
 
 <h1 align="center">Bastyon Desktop Browser</h1>
