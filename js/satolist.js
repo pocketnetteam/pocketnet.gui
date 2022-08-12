@@ -600,6 +600,241 @@ Platform = function (app, listofnodes) {
         }
     }
 
+    self.__getSettingsMeta = function(){
+        return {
+
+            preview: {
+                name: self.app.localization.e('disablePreview'),
+                id: 'preview',
+                type: "BOOLEAN",
+                value: false
+            },
+
+            sound: {
+                name: self.app.localization.e('sound'),
+                id: 'sound',
+                type: "BOOLEAN",
+                value: true
+            },
+
+            win: {
+                name: self.app.localization.e('e13268'),
+                id: 'win',
+                type: "BOOLEAN",
+                value: true
+            },
+
+            transactions: {
+                name: self.app.localization.e('e13269'),
+                id: 'transactions',
+                type: "BOOLEAN",
+                value: true
+            },
+
+            upvotes: {
+                name: self.app.localization.e('e13270'),
+                id: 'upvotes',
+                type: "BOOLEAN",
+                value: true
+            },
+
+            downvotes: {
+                name: 'Downvotes receive',
+                id: 'downvotes',
+                type: "BOOLEAN",
+                value: false
+            },
+
+            comments: {
+                name: self.app.localization.e('e13271'),
+                id: 'comments',
+                type: "BOOLEAN",
+                value: true
+            },
+
+            answers: {
+                name: self.app.localization.e('e13272'),
+                id: 'answers',
+                type: "BOOLEAN",
+                value: true
+            },
+
+            followers: {
+                name: self.app.localization.e('e13273'),
+                id: 'followers',
+                type: "BOOLEAN",
+                value: true
+            },
+
+            rescued: {
+                name: self.app.localization.e('e13274'),
+                id: 'rescued',
+                type: "BOOLEAN",
+                value: true
+            },
+
+            commentScore: {
+                name: self.app.localization.e('e13275'),
+                id: 'commentScore',
+                type: "BOOLEAN",
+                value: true
+            },
+
+            embedvideo: {
+                name: self.app.localization.e('e13276'),
+                id: 'embedvideo',
+                type: "BOOLEAN",
+                value: true
+            },
+
+            videoautoplay2: {
+                name: self.app.localization.e('e13277'),
+                id: 'videoautoplay2',
+                type: "BOOLEAN",
+                value: false
+            },
+
+            videop2p: {
+                name: self.app.localization.e('videop2psettings'),
+                id: 'videop2p',
+                type: "BOOLEAN",
+                value: true
+            },
+
+            videoTranscoding: {
+                name: self.app.localization.e('settingsTranscoding'),
+                id: 'transcoding',
+                type: "BOOLEAN",
+                value: true
+            },
+
+            autostart: {
+                name: self.app.localization.e('e13278'),
+                id: 'autostart',
+                type: "BOOLEAN",
+                value: undefined
+            },
+
+            vidgetchat: {
+                name: self.app.localization.e('e13279'),
+                id: 'vidgetchat',
+                type: "BOOLEAN",
+                value: true
+            },
+
+            vidgettags: {
+                name: self.app.localization.e('e13280'),
+                id: 'vidgettags',
+                type: "BOOLEAN",
+                value: true
+            },
+
+            vidgetlastcomments: {
+                name: self.app.localization.e('e13281'),
+                id: 'vidgetlastcomments',
+                type: "BOOLEAN",
+                value: true
+            },
+
+            vidgetstaking: {
+                name: 'Staking Pocketcoin vidget',
+                id: 'vidgetstaking',
+                type: "BOOLEAN",
+                value: true
+            },
+
+            telegram: {
+                type: "STRINGANY",
+                name: self.app.localization.e('e13282'),
+                id: 'telegram',
+                placeholder: self.app.localization.e('e13282'),
+                value: (JSON.parse(localStorage.getItem('telegrambot')) && JSON.parse(localStorage.getItem('telegrambot')).token) || "",
+            },
+
+            tgfrom: {
+                type: "VALUES",
+                name: self.app.localization.e('e13283'),
+                id: 'tgfrom',
+                placeholder: self.app.localization.e('e13284'),
+                possibleValues: [],
+                possibleValuesLabels: [],
+                value: "",
+            },
+            tgto: {
+                type: "VALUES",
+                name: self.app.localization.e('e13287'),
+                id: 'tgto',
+                placeholder: self.app.localization.e('e13284'),
+                defaultValue: "",
+                value: "",
+                possibleValues: [],
+                possibleValuesLabels: [],
+
+            },
+            tgfromask: {
+                name: self.app.localization.e('e13285'),
+                id: 'tgfromask',
+                type: "BOOLEAN",
+                value: false
+            },
+            tgtoask: {
+                name: self.app.localization.e('e13286'),
+                id: 'tgtoask',
+                type: "BOOLEAN",
+                value: false
+            },
+            enablePeertube : {
+                name: 'Use PeerTube for uploading videos',
+                id : 'enablePeertube',
+                type : "BOOLEAN",
+                value : false,
+            },
+
+            hierarchicalShares : {
+                name: 'Hierarchical Post Feed',
+                id : 'hierarchicalShares',
+                type : "BOOLEAN",
+                value : false,
+            },
+
+            historicalShares : {
+                name: 'Historical Post Feed',
+                id : 'historicalShares',
+                type : "BOOLEAN",
+                value : false,
+            },
+
+            openlinksinelectron : {
+                name: self.app.localization.e('openlinkssettings'),
+                id : 'openlinksinelectron',
+                type : "BOOLEAN",
+                value : false,
+            },
+
+            sendUserStatistics : {
+                name: self.app.localization.e('sendUserStatistics'),
+                id : 'sendUserStatistics',
+                type : "BOOLEAN",
+                value : true,
+            },
+
+            canuseip: {
+                name: self.app.localization.e('canuseipsetting'),
+                id: 'canuseip',
+                type: "BOOLEAN",
+                value: false
+            },
+
+            useanimations: {
+                name: self.app.localization.e('useanimations'),
+                id: 'useanimations',
+                type: "BOOLEAN",
+                value: true
+            },
+
+        }
+    },
+
     self.errorHandler = function (key, action, akey) {
 
         var er = null
@@ -8626,245 +8861,7 @@ Platform = function (app, listofnodes) {
 
         usersettings: {
 
-            meta: {
-
-                preview: {
-                    name: self.app.localization.e('disablePreview'),
-                    id: 'preview',
-                    type: "BOOLEAN",
-                    value: false
-                },
-
-                sound: {
-                    name: self.app.localization.e('sound'),
-                    id: 'sound',
-                    type: "BOOLEAN",
-                    value: true
-                },
-
-                win: {
-                    name: self.app.localization.e('e13268'),
-                    id: 'win',
-                    type: "BOOLEAN",
-                    value: true
-                },
-
-                transactions: {
-                    name: self.app.localization.e('e13269'),
-                    id: 'transactions',
-                    type: "BOOLEAN",
-                    value: true
-                },
-
-                upvotes: {
-                    name: self.app.localization.e('e13270'),
-                    id: 'upvotes',
-                    type: "BOOLEAN",
-                    value: true
-                },
-
-                downvotes: {
-                    name: 'Downvotes receive',
-                    id: 'downvotes',
-                    type: "BOOLEAN",
-                    value: false
-                },
-
-                comments: {
-                    name: self.app.localization.e('e13271'),
-                    id: 'comments',
-                    type: "BOOLEAN",
-                    value: true
-                },
-
-                answers: {
-                    name: self.app.localization.e('e13272'),
-                    id: 'answers',
-                    type: "BOOLEAN",
-                    value: true
-                },
-
-                followers: {
-                    name: self.app.localization.e('e13273'),
-                    id: 'followers',
-                    type: "BOOLEAN",
-                    value: true
-                },
-
-                rescued: {
-                    name: self.app.localization.e('e13274'),
-                    id: 'rescued',
-                    type: "BOOLEAN",
-                    value: true
-                },
-
-                commentScore: {
-                    name: self.app.localization.e('e13275'),
-                    id: 'commentScore',
-                    type: "BOOLEAN",
-                    value: true
-                },
-
-                embedvideo: {
-                    name: self.app.localization.e('e13276'),
-                    id: 'embedvideo',
-                    type: "BOOLEAN",
-                    value: true
-                },
-
-                videoautoplay2: {
-                    name: self.app.localization.e('e13277'),
-                    id: 'videoautoplay2',
-                    type: "BOOLEAN",
-                    value: false
-                },
-
-                videop2p: {
-                    name: self.app.localization.e('videop2psettings'),
-                    id: 'videop2p',
-                    type: "BOOLEAN",
-                    value: true
-                },
-
-                videoTranscoding: {
-                    name: self.app.localization.e('settingsTranscoding'),
-                    id: 'transcoding',
-                    type: "BOOLEAN",
-                    value: true
-                },
-
-                videoTranscoding: {
-                    name: self.app.localization.e('settingsTranscoding'),
-                    id: 'transcoding',
-                    type: "BOOLEAN",
-                    value: true
-                },
-
-                autostart: {
-                    name: self.app.localization.e('e13278'),
-                    id: 'autostart',
-                    type: "BOOLEAN",
-                    value: undefined
-                },
-
-                vidgetchat: {
-                    name: self.app.localization.e('e13279'),
-                    id: 'vidgetchat',
-                    type: "BOOLEAN",
-                    value: true
-                },
-
-                vidgettags: {
-                    name: self.app.localization.e('e13280'),
-                    id: 'vidgettags',
-                    type: "BOOLEAN",
-                    value: true
-                },
-
-                vidgetlastcomments: {
-                    name: self.app.localization.e('e13281'),
-                    id: 'vidgetlastcomments',
-                    type: "BOOLEAN",
-                    value: true
-                },
-
-                vidgetstaking: {
-                    name: 'Staking Pocketcoin vidget',
-                    id: 'vidgetstaking',
-                    type: "BOOLEAN",
-                    value: true
-                },
-
-                telegram: {
-                    type: "STRINGANY",
-                    name: self.app.localization.e('e13282'),
-                    id: 'telegram',
-                    placeholder: self.app.localization.e('e13282'),
-                    value: (JSON.parse(localStorage.getItem('telegrambot')) && JSON.parse(localStorage.getItem('telegrambot')).token) || "",
-                },
-
-                tgfrom: {
-                    type: "VALUES",
-                    name: self.app.localization.e('e13283'),
-                    id: 'tgfrom',
-                    placeholder: self.app.localization.e('e13284'),
-                    possibleValues: [],
-                    possibleValuesLabels: [],
-                    value: "",
-                },
-                tgto: {
-                    type: "VALUES",
-                    name: self.app.localization.e('e13287'),
-                    id: 'tgto',
-                    placeholder: self.app.localization.e('e13284'),
-                    defaultValue: "",
-                    value: "",
-                    possibleValues: [],
-                    possibleValuesLabels: [],
-
-                },
-                tgfromask: {
-                    name: self.app.localization.e('e13285'),
-                    id: 'tgfromask',
-                    type: "BOOLEAN",
-                    value: false
-                },
-                tgtoask: {
-                    name: self.app.localization.e('e13286'),
-                    id: 'tgtoask',
-                    type: "BOOLEAN",
-                    value: false
-                },
-                enablePeertube : {
-                    name: 'Use PeerTube for uploading videos',
-                    id : 'enablePeertube',
-                    type : "BOOLEAN",
-                    value : false,
-                },
-
-                hierarchicalShares : {
-                    name: 'Hierarchical Post Feed',
-                    id : 'hierarchicalShares',
-                    type : "BOOLEAN",
-                    value : false,
-                },
-
-                historicalShares : {
-                    name: 'Historical Post Feed',
-                    id : 'historicalShares',
-                    type : "BOOLEAN",
-                    value : false,
-                },
-
-                openlinksinelectron : {
-                    name: self.app.localization.e('openlinkssettings'),
-                    id : 'openlinksinelectron',
-                    type : "BOOLEAN",
-                    value : false,
-                },
-
-                sendUserStatistics : {
-                    name: self.app.localization.e('sendUserStatistics'),
-                    id : 'sendUserStatistics',
-                    type : "BOOLEAN",
-                    value : true,
-                },
-
-                canuseip: {
-                    name: self.app.localization.e('canuseipsetting'),
-                    id: 'canuseip',
-                    type: "BOOLEAN",
-                    value: false
-                },
-
-                useanimations: {
-                    name: self.app.localization.e('useanimations'),
-                    id: 'useanimations',
-                    type: "BOOLEAN",
-                    value: true
-                },
-
-            },
+            meta: self.__getSettingsMeta(),
 
             //self.canuseip
 
@@ -8891,6 +8888,7 @@ Platform = function (app, listofnodes) {
             },
 
             compose: function (make) {
+
                 var s = self.sdk.usersettings;
 
                 var options = s.createall()
@@ -9124,8 +9122,9 @@ Platform = function (app, listofnodes) {
             },
 
             init: function (clbk) {
+
                 var values = self.sdk.usersettings.load();
-                var m = self.sdk.usersettings.meta;
+                var m = self.sdk.usersettings.meta = self.__getSettingsMeta();
 
                 if (self.app.platform.sdk.address.pnet() && self.istest()){
 
