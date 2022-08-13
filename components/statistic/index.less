@@ -1,4 +1,5 @@
 @import "../../css/__cssvar";
+
 .statistic {
   .title {
     max-width: 700px;
@@ -9,9 +10,10 @@
   }
 
   .metric-wrapper {
-    display:  flex;
+    display: flex;
     width: 100%;
   }
+
   .wrapper {
     width: 100%;
     display: flex;
@@ -28,15 +30,16 @@
       padding: 0.5em;
       background: rgb(var(--background-secondary-theme));
 
-
-    }
-    @media (min-width: 600px) and (max-width: 860px) {
-      & > div {
+      @media only screen and (max-width: 600px) {
         width: 100%;
+        margin: .5em 0;
       }
     }
-
+    @media only screen and (max-width: 600px) {
+      flex-wrap: wrap;
+    }
   }
+
   .count {
     padding-top: 1em;
     padding-bottom: 1em;
@@ -48,15 +51,36 @@
     display: flex;
     align-items: center;
     margin-bottom: 2em;
+
     label {
-      margin: 0 0.5em ;
+      margin: 0 0.5em;
+
       input {
         margin-left: 0.5em;
       }
     }
+
     button {
       margin-left: 1em;
     }
+
+
+    @media only screen and (max-width: 768px) {
+
+      flex-wrap: wrap;
+      justify-content: center;
+      label {
+        display: flex;
+        width: 100%;
+        margin-bottom: 1.5em;
+        justify-content: space-between;
+      }
+      button {
+        width: 100%;
+      }
+    }
+
+
   }
 
   .button {
@@ -72,9 +96,21 @@
     -o-transition: 0.3s;
     -webkit-transition: 0.3s;
     transition: 0.3s;
+
     &:hover {
       background: transparent;
       color: rgb(var(--color-bg-ac-bright));
+      //@media only screen and (max-width: 768px) {
+      //  background: rgb(var(--color-bg-ac-bright));
+      //  color: rgb(var(--text-on-bg-ac-color));
+      //}
     }
+
+
+
+
+
   }
+
+
 }
