@@ -70,3 +70,11 @@
     transform: translate(0%, 0%);
   }
 }
+@media (max-width: 767px) {
+  .bannerComment {
+    font-size: 0.8em;
+  }
+  .bannerComment.show {
+    padding: 0 0.5em 1em 0.5em;
+  }
+}
