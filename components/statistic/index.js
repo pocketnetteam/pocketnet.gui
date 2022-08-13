@@ -23,8 +23,9 @@ var statistic = (function () {
 
         let block = await self.app.api.fetch('ping', {}, {timeout: 4000})
 
-        let from = (period?.from?.block && period?.from?.block > 0) ? block.height - period.from.block : 0
-        let to = (period?.to?.block && (block.height - period.to.block)> 0) ? period.to.block : 0
+        let from = (period?.from?.block && period?.from?.block > 0) ? period.from.block : 0
+        let to = (period?.to?.block && (block.height - period.to.block)> 0) ? block.height - period.to.block : 0
+        debugger
         fields = await self.app.api.rpc('getuserstatistic', [self.user.address.value, to, from, from,  1])
         renders.block()
       },
