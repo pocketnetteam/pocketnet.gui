@@ -1720,7 +1720,7 @@ Application = function(p)
 
     getStorageLocation: function() {
 
-      if (!device || !device.platform || !cordova || !cordova.file)
+      if (!device || !cordova || !cordova.file)
         return undefined;
 
       return (window.cordova.file.externalDataDirectory) ? window.cordova.file.externalDataDirectory : window.cordova.file.dataDirectory;
@@ -1741,6 +1741,8 @@ Application = function(p)
         var storageLocation = self.storage.getStorageLocation();
         // var blob = new Blob([file], { type: "image/png" });
         var name = $.md5(url);
+
+        console.log("storageLocation", storageLocation)
 
         window.resolveLocalFileSystemURL(storageLocation, function (fileSystem) {
           fileSystem.getDirectory(self.storage.getStorageDirectory(), {
