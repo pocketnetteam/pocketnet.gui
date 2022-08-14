@@ -7036,7 +7036,6 @@ Platform = function (app, listofnodes) {
                                     var infos = {
                                         thumbnail: 'https://' + videoDetails.from + videoDetails.thumbnailPath,
                                         videoDetails : videoDetails,
-                                        masterSwarmId : videoDetails.streamingPlaylists[0].playlistUrl
                                     }
 
                                     dirEntry4.getFile('info.json', { create: true }, function (infoFile) {
@@ -7261,7 +7260,6 @@ Platform = function (app, listofnodes) {
 
                                                                             try {
                                                                                 to.videos[videoFolder.name].infos = JSON.parse(this.result);
-                                                                                to.videos[videoFolder.name].infos.masterSwarmId = to.videos[videoFolder.name].infos.streamingPlaylists[0].playlistUrl
 
                                                                             } catch(err){
 

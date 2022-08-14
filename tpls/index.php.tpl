@@ -27,7 +27,7 @@
         default-src blob: 'self' __VAR__.domain:*;
         connect-src blob: 'self' http: ws: https: wss:;
         img-src 'self' blob: data: http: https: __VAR__.domain:*;
-        script-src 'self' blob: __VAR__.domain player.vimeo.com www.youtube.com s.ytimg.com cdn.jsdelivr.net/joypixels/ 'unsafe-eval' 'unsafe-inline';
+        script-src 'self' blob: __VAR__.domain player.vimeo.com www.youtube.com s.ytimg.com cdnjs.cloudflare.com/ajax/libs/lamejs/ cdn.jsdelivr.net/joypixels/ 'unsafe-eval' 'unsafe-inline';
         frame-src 'self' __VAR__.domain player.vimeo.com www.youtube.com;
         style-src 'self' data: __VAR__.domain:* cdn.jsdelivr.net/joypixels/ use.fontawesome.com 'unsafe-inline';
         font-src 'self' data: __VAR__.domain:* use.fontawesome.com;

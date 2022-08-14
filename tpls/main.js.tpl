@@ -890,7 +890,6 @@ function createWindow() {
         videoData.infos = {
             thumbnail : '',
             videoDetails : details,
-            masterSwarmId : details.streamingPlaylists[0].playlistUrl
         }
 
         const playlistName = videosList.find(fN => (
