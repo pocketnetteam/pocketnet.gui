@@ -11555,4 +11555,3 @@ isDeviceMobile = function() {
 	return check;
 };
 
-

@@ -2,26 +2,11 @@
  * Programatically add the following
  */
 
-/*!
- * The buffer module from node.js, for the browser.
- *
- * @author   Feross Aboukhadijeh <https://feross.org>
- * @license  MIT
- */
-
-/*! @name videojs-contextmenu-pt @version 5.4.1 @license Apache-2.0 */
-
-/*! @name videojs-contrib-quality-levels @version 2.1.0 @license Apache-2.0 */
-
-/*! @name videojs-dock @version 2.2.0 @license Apache-2.0 */
-
 /*! @name videojs-overlay @version 2.1.5 @license Apache-2.0 */
-
-/*! ieee754. BSD-3-Clause License. Feross Aboukhadijeh <https://feross.org/opensource> */
 
 /**
  * @license
- * Video.js 7.18.1 <http://videojs.com/>
+ * Video.js 7.20.1 <http://videojs.com/>
  * Copyright Brightcove, Inc. <https://www.brightcove.com/>
  * Available under Apache License Version 2.0
  * <https://github.com/videojs/video.js/blob/main/LICENSE>

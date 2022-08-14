@@ -924,6 +924,7 @@ var lenta = (function(){
 						muted : true,
 						resetOnEnd : true,
 						startTime : startTime,
+						mobile : self.app.mobileview,
 						controls : ['play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'fullscreen'],
 						speed : {
 							selected : 1,
@@ -1091,11 +1092,15 @@ var lenta = (function(){
 								clbk();
 	
 						}
-					
+
+						var prefix = 's'
+
+
+						if(video) prefix = 'v'
 
 						self.nav.api.load({
 							open : true,
-							href : 'post?s=' + id,
+							href : 'post?'+prefix+'=' + id,
 							inWnd : true,
 							history : true,
 							clbk : c,
@@ -1446,6 +1451,7 @@ var lenta = (function(){
 
 			fullScreenVideo : function(id, clbk, auto){
 
+				console.log('fullScreenVideo', id)
 				if (fullscreenvideoShowing) { return }
 				if (fullscreenvideoShowed) { return }
 				if (essenseData.openapi){ return }
@@ -1467,6 +1473,8 @@ var lenta = (function(){
 					share.temp = true;
 					share.address = self.app.platform.sdk.address.pnet().address
 				}*/
+
+				console.log('fullScreenVideo2', id)
 
 
 				actions.initVideo(share, function(res){
