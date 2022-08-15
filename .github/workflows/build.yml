@@ -30,7 +30,7 @@ jobs:
           restore-keys: npm-
       - name: Install Cordova
         run: |
-          npm ci -g cordova@10
+          npm i -g cordova@10
           cordova --version
       - name: Prepare building
         run: |
