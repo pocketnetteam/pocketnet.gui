@@ -20,7 +20,7 @@ jobs:
           node-version: 14
       - name: Prepare building
         run: |
-          NPM_ROOT=${npm root -g}
+          NPM_ROOT=$(npm root -g)
           export PATH="$NPM_ROOT:$PATH"
           npm i -g cordova
           cordova --version
