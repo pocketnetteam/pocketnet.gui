@@ -18,8 +18,11 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 14
+      - name: Install Cordova
+        run: |
+          npm i -g cordova@10
+          cordova --version
       - name: Prepare building
-        uses: oxr463/setup-cordova@0.0.3
         with:
           exec: |
             npm i
@@ -27,24 +30,20 @@ jobs:
             cd ./cordova
             npm i
       - name: Prepare configuration
-        uses: oxr463/setup-cordova@0.0.3
-        with:
-          exec: |
-            cd ./cordova
-            echo -n "${{ secrets.ANDROID_SECRET_KEY }}" | base64 -d > key
-            echo -n "${{ secrets.ANDROID_BUILD_CONF }}" | base64 -d > build.json
-            echo -n "${{ secrets.ANDROID_FIREBASE_CONF }}" | base64 -d > google-services.json
+        run: |
+          cd ./cordova
+          echo -n "${{ secrets.ANDROID_SECRET_KEY }}" | base64 -d > key
+          echo -n "${{ secrets.ANDROID_BUILD_CONF }}" | base64 -d > build.json
+          echo -n "${{ secrets.ANDROID_FIREBASE_CONF }}" | base64 -d > google-services.json
       - name: Building
-        uses: oxr463/setup-cordova@0.0.3
-        with:
-          exec: |
-            cd ./cordova
-            chmod -R 777 $ANDROID_HOME
-            npm run android-add
-            npm run android-build
-            cd ./platforms/android/app/build/outputs/apk/release
-            ls -lh
-            mv app-release.apk Bastyon.apk
+        run: |
+          cd ./cordova
+          chmod -R 777 $ANDROID_HOME
+          npm run android-add
+          npm run android-build
+          cd ./platforms/android/app/build/outputs/apk/release
+          ls -lh
+          mv app-release.apk Bastyon.apk
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
