@@ -1,0 +1,53 @@
+name: Build Desktop App
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest, windows-latest]
+
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v1
+
+      - name: Install Node.js, NPM and Yarn
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14
+
+      - name: Prepare for app notarization
+        if: startsWith(matrix.os, 'macos')
+        run: |
+          mkdir -p ~/private_keys/
+          echo '${{ secrets.APPLE_API_KEY }}' > ~/private_keys/AuthKey_${{ secrets.APPLE_API_KEY_ID }}.p8
+          
+      - name: Prepare building
+        run: |
+          npm i
+          npm run dev:bastyon
+          
+      - name: Building MacOS
+        if: startsWith(matrix.os, 'macos')
+        run: |
+          npm run distm
+          ls -lh ./dist/
+        
+      - name: Building Win
+        if: startsWith(matrix.os, 'windows')
+        run: |
+          npm run dist
+          ls .\dist\
+          
+      - name: Building Unix
+        if: startsWith(matrix.os, 'ubuntu')
+        run: |
+          npm run distl
+          ls -lh ./dist/
+      
+      # - name: Save all artifacts
+      #  run: 
