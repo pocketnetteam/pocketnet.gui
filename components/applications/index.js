@@ -137,8 +137,7 @@ var applications = (function(){
 					return
 				}
 			}
-			else{
-				if (parameters().re) {
+			else if (parameters().re) {
 
 					self.nav.api.load({
 						open : true,
@@ -148,9 +147,7 @@ var applications = (function(){
 					})
 
 					return
-				}
-			}
-			else{
+			} else{
 				if (parameters().re) {
 
 					self.nav.api.load({
