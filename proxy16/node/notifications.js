@@ -8,19 +8,23 @@ class Notifications{
         // this.test()
         return this;
     }
-    
+
     async sendBlock(block){
         try {
-            const notifications = await this.proxy.nodeControl.request.getNotifications([block.height])
-            for (const type of Object.keys(notifications)) {
-                if(type === 'pocketnetteam'){
-                    for (const notification of notifications?.[type] || []) {
-                        await this.firebase.sendToAll(notification)
-                    }
-                }else {
-                    for (const address of Object.keys(notifications?.[type] || [])) {
-                        for (const notification of notifications?.[type]?.[address] || []) {
-                            await this.firebase.sendToDevices(notification, null, address)
+            const node = this.nodeManager.selectProbabilityByVersion();
+            // const notifications = await this.proxy.nodeControl.request.getNotifications([block.height])
+            if(node) {
+                const notifications = await node.rpcs("getnotifications", [block.height])
+                for (const type of Object.keys(notifications)) {
+                    if (type === 'pocketnetteam') {
+                        for (const notification of notifications?.[type] || []) {
+                            await this.firebase.sendToAll(notification)
+                        }
+                    } else {
+                        for (const address of Object.keys(notifications?.[type] || [])) {
+                            for (const notification of notifications?.[type]?.[address] || []) {
+                                await this.firebase.sendToDevices(notification, null, address)
+                            }
                         }
                     }
                 }

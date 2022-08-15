@@ -1052,6 +1052,29 @@ var Nodemanager = function(p){
         return null
     }
 
+    self.selectProbabilityByVersion = function(){
+        var np = _.map(self.initednodes(), function(node){
+            return {
+                node : node,
+                probability : (Number(node.statistic.probability()) || 0) + Math.random() / 10000
+            }
+        })
+
+        np = _.filter(np, function(elem){
+            return +elem.node.version.split(".").join("") >= 2026
+        })
+
+        var r = f.randmap(np)
+
+        if (r && r.node){
+            return r.node
+        }
+
+
+        return null
+    }
+
+
     self.selectbest = function(){
 
         var canuse = _.filter(self.initednodes(), function(node) { return node.export().canuse })
