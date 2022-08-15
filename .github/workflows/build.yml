@@ -20,8 +20,8 @@ jobs:
           node-version: 14
       - name: Prepare building
         run: |
-          npm i -g cordova
-          which cordova
+          echo $PATH
+          npm i cordova
           cordova --version
           npm i
           npm run minimize:cordova
