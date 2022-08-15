@@ -16,10 +16,6 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '8'
-      - name: java check
-        run: |
-          java -version
-          exit 1
       - name: Check out Git repository
         uses: actions/checkout@v1
       - name: Install Node.js, NPM and Yarn
