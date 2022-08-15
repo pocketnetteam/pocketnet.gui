@@ -77,9 +77,32 @@ jobs:
         run: |
           npm run dist
           ls .\dist\
-        
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
           name: windows
           path: ./dist/BastyonSetup.exe
+
+    
+#  build-android:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Check out Git repository
+#        uses: actions/checkout@v1
+#      - name: Install Node.js, NPM and Yarn
+#        uses: actions/setup-node@v1
+#        with:
+#          node-version: 14
+#      - name: Prepare building
+#        run: |
+#          npm i
+#          npm run dev:bastyon
+#      - name: Building
+#        run: |
+#          npm run dist
+#          ls .\dist\        
+#      - name: Upload artifact
+#        uses: actions/upload-artifact@v3
+#        with:
+#          name: windows
+#          path: ./dist/BastyonSetup.exe
