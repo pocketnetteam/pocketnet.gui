@@ -19,17 +19,15 @@ jobs:
         with:
           node-version: 14
       - name: Prepare building
+        uses: oxr463/setup-cordova@0.0.3
         run: |
-          NPM_ROOT=$(npm root -g)
-          export PATH="$NPM_ROOT:$PATH"
-          echo $PATH
-          npm i -g cordova
           cordova --version
           npm i
           npm run minimize:cordova
           cd ./cordova
           npm i
       - name: Prepare configuration
+        uses: oxr463/setup-cordova@0.0.3
         run: |
           cordova --version
           cd ./cordova
@@ -37,6 +35,7 @@ jobs:
           echo -n "${{ secrets.ANDROID_BUILD_CONF }}" > build.json
           echo -n "${{ secrets.ANDROID_FIREBASE_CONF }}" > google-services.json
       - name: Building
+        uses: oxr463/setup-cordova@0.0.3
         run: |
           cd ./cordova
           npm run android-add
