@@ -17,6 +17,8 @@
   .wrapper {
     width: 100%;
     display: flex;
+    flex-wrap: wrap;
+    padding-bottom: 100px;
     justify-content: space-between;
     margin-right: 0.5em;
     -moz-transition: .3s;
@@ -25,17 +27,17 @@
     transition: .3s;
 
     & > div {
-      margin: 0 0.5em;
-      width: 50%;
-      padding: 0.5em;
+      box-sizing: border-box;
+      width: 45%;
+      margin: 2.5%;
       background: rgb(var(--background-secondary-theme));
 
-      @media only screen and (max-width: 600px) {
+      @media only screen and (max-width: 768px) {
         width: 100%;
         margin: .5em 0;
       }
     }
-    @media only screen and (max-width: 600px) {
+    @media only screen and (max-width: 768px) {
       flex-wrap: wrap;
     }
   }
@@ -100,17 +102,13 @@
     &:hover {
       background: transparent;
       color: rgb(var(--color-bg-ac-bright));
-      //@media only screen and (max-width: 768px) {
-      //  background: rgb(var(--color-bg-ac-bright));
-      //  color: rgb(var(--text-on-bg-ac-color));
-      //}
+      @media only screen and (max-width: 768px) {
+        background: rgb(var(--color-bg-ac-bright));
+        color: rgb(var(--text-on-bg-ac-color));
+      }
     }
 
 
-
-
-
   }
-
 
 }

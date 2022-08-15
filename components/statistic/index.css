@@ -1,0 +1,100 @@
+.statistic .title {
+  max-width: 700px;
+  padding-top: 1em;
+  padding-bottom: 1em;
+  font-size: 2em;
+  font-weight: 100;
+}
+.statistic .metric-wrapper {
+  display: flex;
+  width: 100%;
+}
+.statistic .wrapper {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  padding-bottom: 100px;
+  justify-content: space-between;
+  margin-right: 0.5em;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+.statistic .wrapper > div {
+  box-sizing: border-box;
+  width: 45%;
+  margin: 2.5%;
+  background: rgb(var(--background-secondary-theme));
+}
+@media only screen and (max-width: 768px) {
+  .statistic .wrapper > div {
+    width: 100%;
+    margin: 0.5em 0;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .statistic .wrapper {
+    flex-wrap: wrap;
+  }
+}
+.statistic .count {
+  padding-top: 1em;
+  padding-bottom: 1em;
+  font-size: 2em;
+  font-weight: 100;
+}
+.statistic form {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2em;
+}
+.statistic form label {
+  margin: 0 0.5em;
+}
+.statistic form label input {
+  margin-left: 0.5em;
+}
+.statistic form button {
+  margin-left: 1em;
+}
+@media only screen and (max-width: 768px) {
+  .statistic form {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .statistic form label {
+    display: flex;
+    width: 100%;
+    margin-bottom: 1.5em;
+    justify-content: space-between;
+  }
+  .statistic form button {
+    width: 100%;
+  }
+}
+.statistic .button {
+  padding: 0.5em 1.4em;
+  background: rgb(var(--color-bg-ac-bright));
+  color: rgb(var(--text-on-bg-ac-color));
+  border: 1px solid rgb(var(--color-bg-ac-bright));
+  text-align: center;
+  font-size: 0.9em;
+  font-weight: 600;
+  border-radius: 8px;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+.statistic .button:hover {
+  background: transparent;
+  color: rgb(var(--color-bg-ac-bright));
+}
+@media only screen and (max-width: 768px) {
+  .statistic .button:hover {
+    background: rgb(var(--color-bg-ac-bright));
+    color: rgb(var(--text-on-bg-ac-color));
+  }
+}
+/*# sourceMappingURL=index.css.map */

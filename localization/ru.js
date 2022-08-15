@@ -204,8 +204,10 @@ ____loclib.uaddresesd = "Адреса для пожертвований";
 ____loclib.usavechanges = "Вы хотите сохранить изменения?";
 
 // statistic
-____loclib.referralsCount = 'Реферальные пользователи.';
-____loclib.commentatorsCount = 'Количество комментаторов.';
+____loclib.referralsCount = 'Пользователей воспользовавшихся реферальной ссылкой';
+____loclib.commentatorsCount_0 = 'Пользователей прокомментировавших вас более 1 раза';
+____loclib.commentatorsCount_1 = 'Пользователей прокомментировавших вас более 3 раз';
+____loclib.commentatorsCount_2 = ' Пользователей прокомментировавших вас более 7 раз';
 ____loclib.from = 'За период с';
 ____loclib.to = 'по';
 ____loclib.empty = 'Информация не найдена';
