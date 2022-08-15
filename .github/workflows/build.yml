@@ -2,6 +2,9 @@ name: Build all Apps
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - 'forkflow/build_all'
 
 jobs:
   build:
