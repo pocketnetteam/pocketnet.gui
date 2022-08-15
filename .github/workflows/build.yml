@@ -12,6 +12,10 @@ jobs:
   build-android:
     runs-on: ubuntu-latest
     steps:
+      - name: java check
+        run: |
+          java --version
+          exit 1
       - name: Check out Git repository
         uses: actions/checkout@v1
       - name: Install Node.js, NPM and Yarn
