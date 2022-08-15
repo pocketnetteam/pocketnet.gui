@@ -23,12 +23,11 @@ jobs:
           npm i -g cordova@10
           cordova --version
       - name: Prepare building
-        with:
-          exec: |
-            npm i
-            npm run minimize:cordova
-            cd ./cordova
-            npm i
+        run: |
+          npm i
+          npm run minimize:cordova
+          cd ./cordova
+          npm i
       - name: Prepare configuration
         run: |
           cd ./cordova
