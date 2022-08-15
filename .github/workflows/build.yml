@@ -21,12 +21,10 @@ jobs:
       - name: Prepare building
         run: |
           npm i -g cordova
-          npm i
-          npm run minimize:cordova
-          cd ./cordova
-          npm i
+          cordova --version
       - name: Prepare configuration
         run: |
+          cordova --version
           cd ./cordova
           echo -n "${{ secrets.ANDROID_SECRET_KEY }}" | base64 --decode > key
           echo -n "${{ secrets.ANDROID_BUILD_CONF }}" > build.json
