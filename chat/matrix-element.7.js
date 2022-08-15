@@ -1139,6 +1139,11 @@ var CancelablePromise = __webpack_require__("0bb9");
       }
     }
   },
+
+  beforeDestroy() {
+    if (this.audioContext) this.audioContext.close();
+  },
+
   computed: {
     voiceEnable() {
       return this.$store.state.voiceMessagesEnabled;
@@ -1911,9 +1916,6 @@ var CancelablePromise = __webpack_require__("0bb9");
     clear() {
       this.record = null;
       this.recordRmsData = [];
-      this.audioContext.close();
-      this.audioAnalyser = null;
-      this.audioContext = null;
     },
 
     /*async convertAudioToBase64(blob) {

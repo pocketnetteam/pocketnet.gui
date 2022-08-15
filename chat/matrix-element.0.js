@@ -213,7 +213,9 @@ var index_all = __webpack_require__("c46f");
   },
   computed: {
     sortedVoiceMessageQueue() {
-      return this.voiceMessageQueue.sort((a, b) => a.id - b.id);
+      return index_all["sortBy"](this.voiceMessageQueue, a => {
+        return a.id;
+      });
     },
 
     ios() {
