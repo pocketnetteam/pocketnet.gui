@@ -1901,6 +1901,7 @@ var system16 = (function(){
 						class : 'close',
 						html : '<i class="fas fa-times"></i> ' + self.app.localization.e('close'),
 						fn : function(wnd, wndObj){
+							console.log("CLOSE")
 							wndObj.close();
 						}
 					},

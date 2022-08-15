@@ -59,8 +59,6 @@ var userpage = (function(){
 		
 				}
 			}
-			
-			
 
 			reports.push({
 				name : self.app.localization.e('notifications'),
@@ -72,6 +70,7 @@ var userpage = (function(){
 					return true
 				}
 			})
+
 
 			reports.push({
 				name :  self.app.localization.e('rstate'),
@@ -175,6 +174,13 @@ var userpage = (function(){
 		
 
 			if(self.app.user.validate()) {
+
+				reports.push({
+					name : self.app.localization.e('rstatistic'),
+					id : 'statistic',
+					report : 'statistic',
+					mobile : true,
+				})
 
 				reports.push({
 					name : self.app.localization.e('e13186'),
