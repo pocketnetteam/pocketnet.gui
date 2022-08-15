@@ -22,16 +22,22 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 14
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: npm-${{ hashFiles('package-lock.json') }}
+          restore-keys: npm-
       - name: Install Cordova
         run: |
-          npm i -g cordova@10
+          npm ci -g cordova@10
           cordova --version
       - name: Prepare building
         run: |
-          npm i
+          npm ci --ignore-scripts
           npm run minimize:cordova
           cd ./cordova
-          npm i
+          npm ci --ignore-scripts
       - name: Prepare configuration
         run: |
           cd ./cordova
