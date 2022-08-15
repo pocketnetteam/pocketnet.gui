@@ -10,8 +10,12 @@ jobs:
   
     
   build-android:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-18.04
     steps:
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '8'
       - name: java check
         run: |
           java --version
