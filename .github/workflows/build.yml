@@ -96,13 +96,25 @@ jobs:
      - name: Prepare building
        run: |
          npm i
-         npm run dev:bastyon
+         npm run minimize:cordova
+         cd ./cordova
+         npm i
+
+       # TODO:
+       # - Copy keystore file (./cordova or any other, but path is provided in build configuration)
+       # - Copy build configuration (./cordova)
+       # - Copy Firebase configuration (./cordova/platforms/android/app)
+
      - name: Building
        run: |
-         npm run dist
-         ls .\dist\
+         cd ./cordova
+         npm run android-add
+         npm run android-build
+         cd ./platforms/android/app/build/outputs/apk/release
+         ls
+         mv app-release.apk Bastyon.apk
      - name: Upload artifact
        uses: actions/upload-artifact@v3
        with:
-         name: windows
-         path: ./dist/BastyonSetup.exe
+         name: android
+         path: ./cordova/platforms/android/app/build/outputs/apk/release/Bastyon.apk
