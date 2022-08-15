@@ -40,8 +40,8 @@ jobs:
           exec: |
             cd ./cordova
             echo $ANDROID_HOME
-            chown -R $(whoami):$(whoami) /opt/android-sdk-linux/
-            ls -lh /opt/android-sdk-linux/
+            chown -R $(whoami):$(whoami) $ANDROID_HOME
+            chmod -R 777 $ANDROID_HOME
             ls -lh $ANDROID_HOME
             npm run android-add
             npm run android-build
