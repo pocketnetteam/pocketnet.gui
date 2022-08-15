@@ -10,7 +10,7 @@ jobs:
   
     
   build-android:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     steps:
       - uses: actions/setup-java@v3
         with:
@@ -22,22 +22,16 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 14
-      - name: Cache dependencies
-        uses: actions/cache@v2
-        with:
-          path: ~/.npm
-          key: npm-${{ hashFiles('package-lock.json') }}
-          restore-keys: npm-
       - name: Install Cordova
         run: |
           npm i -g cordova@10
           cordova --version
       - name: Prepare building
         run: |
-          npm ci --ignore-scripts
+          npm i
           npm run minimize:cordova
           cd ./cordova
-          npm ci --ignore-scripts
+          npm i
       - name: Prepare configuration
         run: |
           cd ./cordova
