@@ -10,34 +10,55 @@ var statistic = (function () {
 
     var el;
 
-    var period = {
+    var selectedPeriod = {
       from: {},
       to: {}
     }
-    var fields = []
+    var fields
+
+    var loading = false
+
+    var prevPeriod
 
     var actions = {
-      getStat: async function () {
 
-        // let novblock = 1766504
-
-        let block = await self.app.api.fetch('ping', {}, {timeout: 4000})
-
-        let from = (period?.from?.block && period?.from?.block > 0) ? period.from.block : 0
-        let to = (period?.to?.block && (block.height - period.to.block)> 0) ? block.height - period.to.block : 0
-        debugger
-        fields = await self.app.api.rpc('getuserstatistic', [self.user.address.value, to, from, from,  1])
+      loading: function (sh) {
+        loading = sh
         renders.block()
       },
 
+      getStat: async function () {
+
+        if (prevPeriod?.to.block === selectedPeriod.to.block && prevPeriod?.from.block === selectedPeriod.from.block ) {
+          return
+        }
+
+        prevPeriod = JSON.parse(JSON.stringify(selectedPeriod))
+        actions.loading(true)
+        fields = []
+
+        let block = await self.app.api.fetch('ping', {}, {timeout: 4000})
+
+        let from = (selectedPeriod?.from?.block && selectedPeriod?.from?.block > 0) ? selectedPeriod.from.block : 0
+        let to = (selectedPeriod?.to?.block && (block.height - selectedPeriod.to.block) > 0) ? block.height - selectedPeriod.to.block : 0
+
+
+        fields.push(...await self.app.api.rpc('getuserstatistic', [self.user.address.value, to, from, from, 1]))
+        fields.push(...await self.app.api.rpc('getuserstatistic', [self.user.address.value, to, from, from, 3]))
+        fields.push(...await self.app.api.rpc('getuserstatistic', [self.user.address.value, to, from, from, 7]))
+
+
+        actions.loading(false)
+      },
+
       from: function (e) {
-        period.from.date = e.target.value
-        period.from.block = Math.floor((moment().unix() - moment(e.target.value).unix()) / 60)
+        selectedPeriod.from.date = e.target.value
+        selectedPeriod.from.block = Math.floor((moment().unix() - moment(e.target.value).unix()) / 60)
         renders.form()
       },
       to: function (e) {
-        period.to.date = e.target.value
-        period.to.block = Math.floor((moment().unix() - moment(e.target.value).unix()) / 60)
+        selectedPeriod.to.date = e.target.value
+        selectedPeriod.to.block = Math.floor((moment().unix() - moment(e.target.value).unix()) / 60) - 1439
         renders.form()
       }
     }
@@ -51,7 +72,7 @@ var statistic = (function () {
           name: 'form',
           el: el.form,
           data: {
-            period: period,
+            period: selectedPeriod,
           },
         }, function (_p) {
           _p.el.find('.button').on('click', (e) => {
@@ -71,6 +92,7 @@ var statistic = (function () {
           el: el.block,
           data: {
             fields: fields,
+            loading: loading
           },
         }, function (_p) {
 
@@ -97,7 +119,7 @@ var statistic = (function () {
       getdata: async function (clbk) {
 
         var data = {
-          period: period
+          period: selectedPeriod
         };
 
         clbk(data);
@@ -108,7 +130,7 @@ var statistic = (function () {
         el = {};
       },
 
-      init: async  function (p) {
+      init: async function (p) {
 
         state.load();
 
@@ -119,8 +141,8 @@ var statistic = (function () {
         el.block = p.el.find('.block');
         el.form = p.el.find('.form')
 
-        period.to.block = 0
-        period.from.block = Math.floor((moment().unix() - moment('2022-07-01').unix()) / 60)
+        selectedPeriod.to.block = 0
+        selectedPeriod.from.block = Math.floor((moment().unix() - moment('2022-07-01').unix()) / 60)
         renders.form()
 
         initEvents();

@@ -12,6 +12,8 @@
 .statistic .wrapper {
   width: 100%;
   display: flex;
+  flex-wrap: wrap;
+  padding-bottom: 100px;
   justify-content: space-between;
   margin-right: 0.5em;
   -moz-transition: 0.3s;
@@ -20,14 +22,20 @@
   transition: 0.3s;
 }
 .statistic .wrapper > div {
-  margin: 0 0.5em;
-  width: 50%;
-  padding: 0.5em;
+  box-sizing: border-box;
+  width: 45%;
+  margin: 2.5%;
   background: rgb(var(--background-secondary-theme));
 }
-@media (min-width: 600px) and (max-width: 860px) {
+@media only screen and (max-width: 768px) {
   .statistic .wrapper > div {
     width: 100%;
+    margin: 0.5em 0;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .statistic .wrapper {
+    flex-wrap: wrap;
   }
 }
 .statistic .count {
@@ -50,6 +58,21 @@
 .statistic form button {
   margin-left: 1em;
 }
+@media only screen and (max-width: 768px) {
+  .statistic form {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .statistic form label {
+    display: flex;
+    width: 100%;
+    margin-bottom: 1.5em;
+    justify-content: space-between;
+  }
+  .statistic form button {
+    width: 100%;
+  }
+}
 .statistic .button {
   padding: 0.5em 1.4em;
   background: rgb(var(--color-bg-ac-bright));
@@ -68,3 +91,10 @@
   background: transparent;
   color: rgb(var(--color-bg-ac-bright));
 }
+@media only screen and (max-width: 768px) {
+  .statistic .button:hover {
+    background: rgb(var(--color-bg-ac-bright));
+    color: rgb(var(--text-on-bg-ac-color));
+  }
+}
+/*# sourceMappingURL=index.css.map */

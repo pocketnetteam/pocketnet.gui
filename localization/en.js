@@ -201,8 +201,10 @@ ____loclib.usavechanges = "Do you want to save your changes?";
 
 //statistic
 
-____loclib.referralsCount = 'Referral users.';
-____loclib.commentatorsCount = 'Commentators.';
+____loclib.referralsCount = 'Users who have used the referral link.';
+____loclib.commentatorsCount_0 = 'Users have commented on you more than 1 time';
+____loclib.commentatorsCount_1 = 'Users have commented on you more than 3 times';
+____loclib.commentatorsCount_2 = 'Users have commented on you more than 7 time';
 ____loclib.from = 'Period from';
 ____loclib.to = 'to';
 ____loclib.empty = 'Information not found';
