@@ -1,66 +1,84 @@
-var statistic = (function(){
+var statistic = (function () {
 
   var self = new nModule();
 
   var essenses = {};
 
-  var Essense = function(p){
+  var Essense = function (p) {
 
     var primary = deep(p, 'history');
 
     var el;
 
-    var period = {
+    var selectedPeriod = {
       from: {},
       to: {}
     }
-    var fields = []
+    var fields
+
+    var loading = false
+
+    var prevPeriod
 
     var actions = {
-        getStat: async function() {
 
-          let novblock = 1766504
+      loading: function (sh) {
+        loading = sh
+        renders.block()
+      },
 
-          let block = await self.app.api.fetch('ping', {}, {timeout : 4000})
+      getStat: async function () {
 
-          let from = (period?.from?.block && period?.from?.block > 0) ? period.from.block : block.height - novblock
-
-          let to = (period?.to?.block && period?.to?.block > 0) ? period.to.block : 0
-
-          fields = await self.app.api.rpc('getuserstatistic', [self.user.address.value, to, from, from, 1] )
-          renders.block()
-        },
-
-        from: function (e) {
-          period.from.date = e.target.value
-          period.from.block = Math.floor((moment().unix() - moment(e.target.value).unix()) / 60)
-          renders.form()
-        },
-        to: function (e) {
-          period.to.date = e.target.value
-          period.to.block = Math.floor((moment().unix() - moment(e.target.value).unix()) / 60)
-          renders.form()
+        if (prevPeriod?.to.block === selectedPeriod.to.block && prevPeriod?.from.block === selectedPeriod.from.block ) {
+          return
         }
+
+        prevPeriod = JSON.parse(JSON.stringify(selectedPeriod))
+        actions.loading(true)
+        fields = []
+
+        let block = await self.app.api.fetch('ping', {}, {timeout: 4000})
+
+        let from = (selectedPeriod?.from?.block && selectedPeriod?.from?.block > 0) ? selectedPeriod.from.block : 0
+        let to = (selectedPeriod?.to?.block && (block.height - selectedPeriod.to.block) > 0) ? block.height - selectedPeriod.to.block : 0
+
+
+        fields.push(...await self.app.api.rpc('getuserstatistic', [self.user.address.value, to, from, from, 1]))
+        fields.push(...await self.app.api.rpc('getuserstatistic', [self.user.address.value, to, from, from, 3]))
+        fields.push(...await self.app.api.rpc('getuserstatistic', [self.user.address.value, to, from, from, 7]))
+
+
+        actions.loading(false)
+      },
+
+      from: function (e) {
+        selectedPeriod.from.date = e.target.value
+        selectedPeriod.from.block = Math.floor((moment().unix() - moment(e.target.value).unix()) / 60)
+        renders.form()
+      },
+      to: function (e) {
+        selectedPeriod.to.date = e.target.value
+        selectedPeriod.to.block = Math.floor((moment().unix() - moment(e.target.value).unix()) / 60) - 1439
+        renders.form()
+      }
     }
 
-    var events = {
-
-    }
+    var events = {}
 
     var renders = {
       form: function (clbk) {
         self.shell({
 
-          name :  'form',
-          el :   el.form,
-          data : {
-            period: period,
+          name: 'form',
+          el: el.form,
+          data: {
+            period: selectedPeriod,
           },
-        }, function(_p) {
+        }, function (_p) {
           _p.el.find('.button').on('click', (e) => {
             e.preventDefault()
             actions.getStat()
-          } );
+          });
 
           _p.el.find('.from').on('change', actions.from)
           _p.el.find('.to').on('change', actions.to)
@@ -70,48 +88,49 @@ var statistic = (function(){
       block: function (clbk) {
         self.shell({
 
-          name :  'block',
-          el :   el.block,
-          data : {
+          name: 'block',
+          el: el.block,
+          data: {
             fields: fields,
+            loading: loading
           },
-        }, function(_p) {
+        }, function (_p) {
 
         })
       }
     }
 
     var state = {
-      save : function(){
+      save: function () {
 
       },
-      load : function(){
+      load: function () {
 
       }
     }
 
-    var initEvents = function(){
+    var initEvents = function () {
 
     }
 
     return {
-      primary : primary,
+      primary: primary,
 
-      getdata : async function(clbk){
+      getdata: async function (clbk) {
 
         var data = {
-          period: period
+          period: selectedPeriod
         };
 
-            clbk(data);
+        clbk(data);
 
       },
 
-      destroy : function(){
+      destroy: function () {
         el = {};
       },
 
-      init : function(p){
+      init: async function (p) {
 
         state.load();
 
@@ -122,6 +141,8 @@ var statistic = (function(){
         el.block = p.el.find('.block');
         el.form = p.el.find('.form')
 
+        selectedPeriod.to.block = 0
+        selectedPeriod.from.block = Math.floor((moment().unix() - moment('2022-07-01').unix()) / 60)
         renders.form()
 
         initEvents();
@@ -133,8 +154,7 @@ var statistic = (function(){
   };
 
 
-
-  self.run = function(p){
+  self.run = function (p) {
 
     var essense = self.addEssense(essenses, Essense, p);
 
@@ -142,9 +162,9 @@ var statistic = (function(){
 
   };
 
-  self.stop = function(){
+  self.stop = function () {
 
-    _.each(essenses, function(essense){
+    _.each(essenses, function (essense) {
 
       essense.destroy();
 
@@ -156,11 +176,9 @@ var statistic = (function(){
 })();
 
 
-if(typeof module != "undefined")
-{
+if (typeof module != "undefined") {
   module.exports = statistic;
-}
-else{
+} else {
 
   app.modules.statistic = {};
   app.modules.statistic.module = statistic;

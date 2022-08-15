@@ -1,31 +1,35 @@
 
 
-<% if(fields) {
-_.each(fields, function(field){
-%>
+
 
 <div class="metric-wrapper">
+  <% if(fields && !loading){ %>
   <div class="wrapper">
+    <% _.each(fields, function(field,id){ %>
     <div class="commentators">
                 <span>
-                  <%= e('commentatorsCount') %>
+                  <%= e(`commentatorsCount_${id}`) %>
               </span>
       <div class="count">
         <%= field.commentators %>
       </div>
     </div>
+    <% }) %>
     <div class="histreferals">
               <span>
                 <%= e('referralsCount') %>
               </span>
       <div class="count">
-        <%= field.histreferals %>
+        <%= fields[0].histreferals %>
       </div>
     </div>
   </div>
+  <% } else {%>
+  <div class="preloaderWrapper">
+    <div class="preloader5"><img src="./img/three-dots.svg"/></div>
+  </div>
+  <%}%>
+
 </div>
 
-<% })} else {%>
 
-<h1><%= e('empty') %></h1>
-<%}%>

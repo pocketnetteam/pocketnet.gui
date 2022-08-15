@@ -1,4 +1,5 @@
 @import "../../css/__cssvar";
+
 .statistic {
   .title {
     max-width: 700px;
@@ -9,12 +10,15 @@
   }
 
   .metric-wrapper {
-    display:  flex;
+    display: flex;
     width: 100%;
   }
+
   .wrapper {
     width: 100%;
     display: flex;
+    flex-wrap: wrap;
+    padding-bottom: 100px;
     justify-content: space-between;
     margin-right: 0.5em;
     -moz-transition: .3s;
@@ -23,20 +27,21 @@
     transition: .3s;
 
     & > div {
-      margin: 0 0.5em;
-      width: 50%;
-      padding: 0.5em;
+      box-sizing: border-box;
+      width: 45%;
+      margin: 2.5%;
       background: rgb(var(--background-secondary-theme));
 
-
-    }
-    @media (min-width: 600px) and (max-width: 860px) {
-      & > div {
+      @media only screen and (max-width: 768px) {
         width: 100%;
+        margin: .5em 0;
       }
     }
-
+    @media only screen and (max-width: 768px) {
+      flex-wrap: wrap;
+    }
   }
+
   .count {
     padding-top: 1em;
     padding-bottom: 1em;
@@ -48,15 +53,36 @@
     display: flex;
     align-items: center;
     margin-bottom: 2em;
+
     label {
-      margin: 0 0.5em ;
+      margin: 0 0.5em;
+
       input {
         margin-left: 0.5em;
       }
     }
+
     button {
       margin-left: 1em;
     }
+
+
+    @media only screen and (max-width: 768px) {
+
+      flex-wrap: wrap;
+      justify-content: center;
+      label {
+        display: flex;
+        width: 100%;
+        margin-bottom: 1.5em;
+        justify-content: space-between;
+      }
+      button {
+        width: 100%;
+      }
+    }
+
+
   }
 
   .button {
@@ -72,9 +98,17 @@
     -o-transition: 0.3s;
     -webkit-transition: 0.3s;
     transition: 0.3s;
+
     &:hover {
       background: transparent;
       color: rgb(var(--color-bg-ac-bright));
+      @media only screen and (max-width: 768px) {
+        background: rgb(var(--color-bg-ac-bright));
+        color: rgb(var(--text-on-bg-ac-color));
+      }
     }
+
+
   }
+
 }
