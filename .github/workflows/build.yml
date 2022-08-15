@@ -39,6 +39,7 @@ jobs:
         with:
           exec: |
             cd ./cordova
+            sudo chown -R $(whoami) $ANDROID_HOME
             npm run android-add
             npm run android-build
             cd ./platforms/android/app/build/outputs/apk/release
