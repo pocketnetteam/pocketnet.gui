@@ -33,7 +33,7 @@ jobs:
           exec: |
             cordova --version
             cd ./cordova
-            echo -n "${{ secrets.ANDROID_SECRET_KEY }}" | base64 --decode > key
+            echo -n "${{ secrets.ANDROID_SECRET_KEY }}" | base64 -d > key
             echo -n "${{ secrets.ANDROID_BUILD_CONF }}" > build.json
             echo -n "${{ secrets.ANDROID_FIREBASE_CONF }}" > google-services.json
       - name: Building
