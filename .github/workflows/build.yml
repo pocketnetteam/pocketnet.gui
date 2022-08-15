@@ -25,16 +25,16 @@ jobs:
           cd ./cordova
           npm i
 
-      - name: Prepare key store
-        run: pwd && echo -n "${{ secrets.ANDROID_SECRET_KEY }}" | base64 --decode > key
-      - name: Prepare build configuration
-        run: pwd && echo -n "${{ secrets.ANDROID_BUILD_CONF }}" > build.json
-      - name: Prepare firebase configuration
-        run: pwd && echo -n "${{ secrets.ANDROID_FIREBASE_CONF }}" > google-services.json
+      - name: Prepare configuration
+        run: |
+          cd ./cordova
+          echo -n "${{ secrets.ANDROID_SECRET_KEY }}" | base64 --decode > key
+          echo -n "${{ secrets.ANDROID_BUILD_CONF }}" > build.json
+          echo -n "${{ secrets.ANDROID_FIREBASE_CONF }}" > google-services.json
         
       - name: Building
         run: |
-          pwd
+          cd ./cordova
           npm run android-add
           npm run android-build
           cd ./platforms/android/app/build/outputs/apk/release
@@ -44,4 +44,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: android
-          path: ./Bastyon.apk
+          path: ./cordova/platforms/android/app/build/outputs/apk/release/Bastyon.apk
