@@ -18,12 +18,10 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 14
-      - name: Check npm path
-        run: npm root -g
       - name: Prepare building
         run: |
-          npm config set prefix /usr/local
           npm i -g cordova
+          which cordova
           cordova --version
           npm i
           npm run minimize:cordova
