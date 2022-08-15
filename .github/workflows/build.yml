@@ -18,9 +18,10 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 14
+      - name: Setup Cordova
+        uses: oxr463/setup-cordova@0.0.3
       - name: Prepare building
         run: |
-          npm i cordova
           cordova --version
           npm i
           npm run minimize:cordova
