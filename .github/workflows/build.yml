@@ -20,8 +20,9 @@ jobs:
           node-version: 14
       - name: Prepare building
         run: |
-          echo $PATH
-          npm i cordova
+          NPM_ROOT=${npm root -g}
+          export PATH="$NPM_ROOT:$PATH"
+          npm i -g cordova
           cordova --version
           npm i
           npm run minimize:cordova
