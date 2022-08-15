@@ -20,8 +20,11 @@ jobs:
           node-version: 14
       - name: Prepare building
         run: |
-          npm i -g cordova
-          cordova --version
+          npm i cordova
+          npm i
+          npm run minimize:cordova
+          cd ./cordova
+          npm i
       - name: Prepare configuration
         run: |
           cordova --version
