@@ -1758,12 +1758,15 @@ var CancelablePromise = __webpack_require__("0bb9");
         }));
 
         _this.prepareRecording.then(recorder => {
+          console.log("recorder", recorder);
           _this.mediaRecorder = recorder;
           _this.microphoneDisabled = false;
           _this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
-          _this.audioAnalyser = _this.audioContext.createAnalyser();
+          _this.audioAnalyser = _this.audioContext.createAnalyser(); //var audioDataArray = new Uint8Array(this.audioAnalyser.frequencyBinCount)
 
-          _this.audioContext.createMediaStreamSource(_this.mediaRecorder.stream).connect(_this.audioAnalyser);
+          var src = _this.audioContext.createMediaStreamSource(_this.mediaRecorder.stream);
+
+          src.connect(_this.audioAnalyser);
 
           _this.startRecording();
         }).catch(err => {
