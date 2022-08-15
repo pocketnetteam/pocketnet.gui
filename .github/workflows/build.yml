@@ -7,50 +7,79 @@ on:
       - 'forkflow/build_all'
 
 jobs:
-  build:
-    runs-on: ${{ matrix.os }}
-
-    strategy:
-      matrix:
-        os: [macos-latest, ubuntu-latest, windows-latest]
-
+  
+  build-macos:
+    runs-on: macos-latest
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v1
-
       - name: Install Node.js, NPM and Yarn
         uses: actions/setup-node@v1
         with:
           node-version: 14
-
       - name: Prepare for app notarization
-        if: startsWith(matrix.os, 'macos')
         run: |
           mkdir -p ~/private_keys/
           echo '${{ secrets.APPLE_API_KEY }}' > ~/private_keys/AuthKey_${{ secrets.APPLE_API_KEY_ID }}.p8
-          
       - name: Prepare building
         run: |
           npm i
           npm run dev:bastyon
-          
-      - name: Building MacOS
-        if: startsWith(matrix.os, 'macos')
+      - name: Building
         run: |
           npm run distm
           ls -lh ./dist/
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: macos
+          path: ./dist/BastyonSetup.dmg
         
-      - name: Building Win
-        if: startsWith(matrix.os, 'windows')
+  build-unix:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v1
+      - name: Install Node.js, NPM and Yarn
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14
+      - name: Prepare building
         run: |
-          npm run dist
-          ls .\dist\
-          
-      - name: Building Unix
-        if: startsWith(matrix.os, 'ubuntu')
+          npm i
+          npm run dev:bastyon
+      - name: Building
         run: |
           npm run distl
           ls -lh ./dist/
-      
-      # - name: Save all artifacts
-      #  run: 
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: unix
+          path: |
+            ./dist/BastyonSetup.deb
+            ./dist/Bastyon.AppImage
+    
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v1
+      - name: Install Node.js, NPM and Yarn
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14
+      - name: Prepare building
+        run: |
+          npm i
+          npm run dev:bastyon
+      - name: Building
+        run: |
+          npm run dist
+          ls .\dist\
+        
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: windows
+          path: ./dist/BastyonSetup.exe
