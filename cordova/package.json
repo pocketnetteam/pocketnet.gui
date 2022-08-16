@@ -54,6 +54,7 @@
     "cordova-plugin-firebasex": "^14.1.0-cli",
     "cordova-plugin-insomnia": "github:EddyVerbruggen/Insomnia-PhoneGap-Plugin",
     "cordova-plugin-ionic-keyboard": "^2.2.0",
+    "cordova-plugin-media": "^5.0.4",
     "cordova-plugin-navigationbar-color": "^0.1.0",
     "cordova-plugin-pip": "file:cordova-plugin-pip",
     "cordova-plugin-statusbar": "github:apache/cordova-plugin-statusbar",
@@ -121,7 +122,8 @@
       "cordova-plugin-android-packagemanager": {},
       "cordova-plugin-apkupdater": {},
       "cordova-plugin-file-transfer": {},
-      "cordova-plugin-pip": {}
+      "cordova-plugin-pip": {},
+      "cordova-plugin-media": {}
     },
     "platforms": [
       "ios",
