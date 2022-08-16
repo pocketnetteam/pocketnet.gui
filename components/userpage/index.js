@@ -219,18 +219,20 @@ var userpage = (function(){
 				mobile : false
 			})
 
-			reports.push({
-				name : 'Pocketcoin',
-				id : 'staking',
-				report : 'staking',
-				mobile : true,
-				if : function(){
-					return self.app.mobileview
-				},
-				//openReportPageMobileInWindow : true
-			})
+			if (self.app.showPkoinInfo) {
+				reports.push({
+					name : 'Pocketcoin',
+					id : 'staking',
+					report : 'staking',
+					mobile : true,
+					if : function(){
+						return self.app.mobileview
+					},
+					//openReportPageMobileInWindow : true
+				})
+			}
 
-			if(self.app.user.validate()) {
+			if(self.app.user.validate() && self.app.showPkoinInfo) {
 
 				reports.push({
 					name : self.app.localization.e('videoCabinet'),
