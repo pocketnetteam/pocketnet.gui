@@ -37,6 +37,8 @@ jobs:
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v1
+      - name: Save HEAD information
+        run: git --no-pager log --decorate=short --pretty=oneline -n1 > head.txt
       - name: Install Node.js, NPM and Yarn
         uses: actions/setup-node@v1
         with:
@@ -56,6 +58,7 @@ jobs:
           path: |
             ./dist/BastyonSetup.deb
             ./dist/Bastyon.AppImage
+            ./head.txt
     
   build-windows:
     runs-on: windows-latest
@@ -141,13 +144,7 @@ jobs:
     steps:
       - name: Download artifact
         uses: actions/download-artifact@v3
-        with:
-          name: |
-            macos
-            unix
-            windows
-            android
-      - name: Save HEAD information
-        run: git --no-pager log --decorate=short --pretty=oneline -n1 > /data/dev/binaries/head.txt
       - name: Copy artifacts
-        run: cp Bastyon* /data/dev/binaries/
+        run: cp ./**/Bastyon* /data/dev/binaries/
+      - name: Copy HEAD information
+        run: cp ./unix/head.txt /data/dev/binaries/head.txt
