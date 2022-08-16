@@ -36,6 +36,7 @@
   },
   "devDependencies": {
     "@globules-io/cordova-plugin-ios-xhr": "^1.2.1",
+    "np": "^5.0.3",
     "cc.fovea.cordova.openwith": "file:cc.fovea.cordova.openwith",
     "cordova-android": "^9.1.0",
     "cordova-ios": "^6.2.0",
@@ -51,7 +52,7 @@
     "cordova-plugin-file": "^6.0.2",
     "cordova-plugin-file-opener2": "^3.0.5",
     "cordova-plugin-file-transfer": "file:cordova-plugin-file-transfer",
-    "cordova-plugin-firebasex": "^13.0.1",
+    "cordova-plugin-firebasex": "^14.1.0-cli",
     "cordova-plugin-insomnia": "file:cordova-plugin-insomnia",
     "cordova-plugin-ionic-keyboard": "file:cordova-plugin-ionic-keyboard",
     "cordova-plugin-navigationbar-color": "^0.1.0",
