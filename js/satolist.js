@@ -19060,7 +19060,7 @@ Platform = function (app, listofnodes) {
                                 }
 
 
-                                if (!overInput || overInput.amount > amountSeveralInputs){
+                                if (!overInput || (min < amountSeveralInputs && overInput.amount > amountSeveralInputs)){
 
                                     var slicedInputs = preparedInputs;
 

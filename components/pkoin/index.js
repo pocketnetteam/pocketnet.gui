@@ -13,7 +13,7 @@ var pkoin = (function(){
 
 			fields: function(){
 				
-				self.app.platform.sdk.node.transactions.get.canSpend(null, function (balance, total) {
+				self.app.platform.sdk.node.transactions.get.allBalance(function (total) {
 
 					self.app.platform.sdk.node.transactions.get.canSpend(self.sdk.address.pnet().address, function (balance) {
 	
