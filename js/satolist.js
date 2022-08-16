@@ -3012,7 +3012,7 @@ Platform = function (app, listofnodes) {
             const oneDayInSeconds = 86400;
 
             const alreadyShowed = ('nextCommentBanner' in localStorage);
-            const isBannerDisabled = (localStorage.nextCommentBanner == -1);
+            let isBannerDisabled = (localStorage.nextCommentBanner == -1);
             const timeToShowBanner = (localStorage.nextCommentBanner <= unixTimeNow);
 
             const regDate = app.platform.sdk.user.me().regdate;
@@ -3021,30 +3021,44 @@ Platform = function (app, listofnodes) {
 
             const isOneDayOld = (registeredTime >= oneDayInSeconds);
 
-            if (isBannerDisabled) {
-                return isBannerDisabled;
+            if (alredyCommented || isBannerDisabled) {
+                isBannerDisabled = true;
             }
 
             if (!isOneDayOld) {
+                if (isBannerDisabled) {
+                    callback(null);
+                    return;
+                }
                 createComponent();
-                console.log('banner showbanner', bannerCommentComponent);
-                return bannerCommentComponent;
+                return;
             }
 
-            if (!alreadyShowed) {
-                localStorage.nextCommentBanner = 1;
+            if (repeat && timeToShowBanner) {
+                localStorage.nextCommentBanner = unixTimeNow + oneDayInSeconds;
+
+                if (isBannerDisabled) {
+                    callback(null);
+                    return;
+                }
+
                 createComponent();
-                console.log('banner showbanner', bannerCommentComponent);
-                return bannerCommentComponent;
+                return;
             }
 
             if (timeToShowBanner || !alreadyShowed) {
-                localStorage.nextCommentBanner = unixTimeNow + oneDayInSeconds;
+                localStorage.nextCommentBanner = 1;
+
+                if (isBannerDisabled) {
+                    callback(null);
+                    return;
+                }
+
                 createComponent();
-                console.log('banner showbanner', bannerCommentComponent);
-                return bannerCommentComponent;
+                return;
             }
 
+            callback(null);
         },
 
         carousel : function(el, clbk){
