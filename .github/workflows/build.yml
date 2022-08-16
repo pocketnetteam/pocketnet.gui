@@ -21,20 +21,20 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 14
-          cache: 'npm'
-          cache-dependency-path: |
-            package-lock.json
-            cordova/package-lock.json
+          # cache: 'npm'
+          # cache-dependency-path: |
+          #   package-lock.json
+          #   cordova/package-lock.json
       - name: Install Cordova
         run: |
           npm i -g cordova@10
           cordova --version
       - name: Prepare building
         run: |
-          npm ci
+          npm i
           npm run minimize:cordova
           cd ./cordova
-          npm ci
+          npm i
       - name: Prepare configuration
         run: |
           cd ./cordova
