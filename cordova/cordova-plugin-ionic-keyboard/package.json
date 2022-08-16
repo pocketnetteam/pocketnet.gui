@@ -35,10 +35,6 @@
     "url": "https://github.com/ionic-team/cordova-plugin-ionic-keyboard/issues"
   },
   "description": "Ionic Keyboard Plugin",
-  "devDependencies": {
-    "np": "^5.0.3",
-    "sync-cordova-xml": "^0.4.0"
-  },
   "homepage": "https://github.com/ionic-team/cordova-plugin-ionic-keyboard#readme",
   "keywords": [
     "cordova",
