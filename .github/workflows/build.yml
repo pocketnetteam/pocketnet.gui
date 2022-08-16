@@ -18,16 +18,13 @@ jobs:
           java-version: '8'
       - name: Check out Git repository
         uses: actions/checkout@v1
-      - name: Install Node.js, NPM and Yarn
-        uses: actions/setup-node@v1
+      - uses: actions/setup-node@v3
         with:
           node-version: 14
-      - name: Cache dependencies
-        uses: actions/cache@v2
-        with:
-          path: ~/.npm
-          key: npm-${{ hashFiles('package-lock.json') }}
-          restore-keys: npm-
+          cache: 'npm'
+          cache-dependency-path: |
+            package-lock.json
+            cordova/package-lock.json
       - name: Install Cordova
         run: |
           npm i -g cordova@10
