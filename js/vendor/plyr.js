@@ -9208,6 +9208,8 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
 
         var host = options.app.peertubeHandler.helpers.url(parsed.host, true)
 
+        console.log('options.startTime', options.startTime)
+
         PeerTubeEmbeding.main(target, parsed.id, host, {
 
           host : host,

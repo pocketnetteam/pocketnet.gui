@@ -480,6 +480,9 @@ var post = (function () {
 							playbackState,
 							duration
 						}){
+
+							console.log('playbackState', playbackState, player.getPosition())
+
 							if(playbackState == 'playing' && ((position > 15 && duration > 120) || startTime)){
 
 								self.app.platform.sdk.videos.historyset(share.txid, {
