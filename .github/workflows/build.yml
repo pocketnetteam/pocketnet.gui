@@ -21,26 +21,28 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 14
-          # cache: 'npm'
-          # cache-dependency-path: |
-          #   package-lock.json
-          #   cordova/package-lock.json
+          cache: 'npm'
+          cache-dependency-path: |
+            package-lock.json
+            cordova/package-lock.json
       - name: Install Cordova
         run: |
           npm i -g cordova@10
           cordova --version
       - name: Prepare building
         run: |
-          npm i
+          npm ci
           npm run minimize:cordova
           cd ./cordova
-          npm i --verbose
+          npm ci
       - name: Prepare configuration
         run: |
           cd ./cordova
           echo -n "${{ secrets.ANDROID_SECRET_KEY }}" | base64 -d > cert.keystore
           echo -n "${{ secrets.ANDROID_BUILD_CONF }}" | base64 -d > build.json
           echo -n "${{ secrets.ANDROID_FIREBASE_CONF }}" | base64 -d > google-services.json
+          ls -l cert.keystore
+          ls -l build.json
       - name: Fixing Android Build Tool Issue
         run: |
             cd $ANDROID_HOME/build-tools/33.0.0
