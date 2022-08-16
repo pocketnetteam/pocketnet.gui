@@ -2,7 +2,7 @@ name: Deploy Proxy Pre
 
 on:
   push:
-    tags: v*.*.*-proxy-pre
+    tags: v*.*.*-proxy-pre*
 
 jobs:
   build:
