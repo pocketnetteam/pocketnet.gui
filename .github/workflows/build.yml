@@ -82,7 +82,7 @@ jobs:
         with:
           name: windows
           path: ./dist/BastyonSetup.exe
-    
+
   build-android:
     runs-on: ubuntu-20.04
     steps:
@@ -137,3 +137,20 @@ jobs:
         with:
           name: android
           path: ./cordova/platforms/android/app/build/outputs/apk/release/Bastyon.apk
+
+  deploy-binaries:
+    needs: [ build-macos, build-unix, build-windows, build-android ]
+    runs-on: dev.pocketnet.app
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: |
+            macos
+            unix
+            windows
+            android
+      - name: Save HEAD information
+        run: git --no-pager log --decorate=short --pretty=oneline -n1 > /data/dev/binaries/head.txt
+      - name: Copy artifacts
+        run: cp Bastyon* /data/dev/binaries/
