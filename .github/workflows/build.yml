@@ -41,12 +41,23 @@ jobs:
           echo -n "${{ secrets.ANDROID_SECRET_KEY }}" | base64 -d > key
           echo -n "${{ secrets.ANDROID_BUILD_CONF }}" | base64 -d > build.json
           echo -n "${{ secrets.ANDROID_FIREBASE_CONF }}" | base64 -d > google-services.json
-      - name: Building
+      - name: Fixing Android Build Tool Issue
+        run: |
+            cd $ANDROID_HOME/build-tools/33.0.0
+            mv d8 dx
+            cd lib
+            mv d8.jar dx.jar
+      - name: Configure Cordova Plugins
         run: |
           cd ./cordova
           npm run android-add
+      - name: Building
+        run: |
+          cd ./cordova
           npm run android-build
-          cd ./platforms/android/app/build/outputs/apk/release
+      - name: Rename apk binary
+        run: |
+          cd ./cordova/platforms/android/app/build/outputs/apk/release
           ls -lh
           mv app-release.apk Bastyon.apk
       - name: Upload artifact
