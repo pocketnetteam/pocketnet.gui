@@ -93,6 +93,8 @@ Application = function(p)
 
   self.boost = !(window.cordova && isios());
 
+  self.showPkoinInfo = !(window.cordova && isios())
+
   self.options = {
 
     url : url,
