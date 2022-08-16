@@ -37,6 +37,8 @@
   "devDependencies": {
     "@globules-io/cordova-plugin-ios-xhr": "^1.2.1",
     "np": "^5.0.3",
+    "@cordova/eslint-config": "^4.0.0",
+    "sync-cordova-xml": "^0.4.0",
     "cc.fovea.cordova.openwith": "file:cc.fovea.cordova.openwith",
     "cordova-android": "^9.1.0",
     "cordova-ios": "^6.2.0",
