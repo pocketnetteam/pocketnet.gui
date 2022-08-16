@@ -2,7 +2,7 @@ name: Deploy Proxy Test
 
 on:
   push:
-    tags: v*.*.*-proxy-test
+    tags: v*.*.*-proxy-test*
 
 jobs:
   build:
