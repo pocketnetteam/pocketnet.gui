@@ -459,7 +459,8 @@ var lenta = (function(){
 				optimizedCount = 0;
 				subloaded = false;
 				subloadedindex = 0;
-				lastcache = null
+				lastcache = null;
+				isotopeinited = false
 
 				_.each(shareInitedMap, function(s, id){
 					delete self.app.platform.sdk.node.shares.storage.trx[id]
@@ -655,8 +656,14 @@ var lenta = (function(){
 
 											if(isotopeinited){
 
-												var content = $(html)
+												try{
+													var content = $(html)
 													lel.append( content ).isotope( 'appended', content )
+												}
+												catch(e){
+													console.error(e)
+												}
+												
 							
 											}
 											else{
@@ -3261,7 +3268,7 @@ var lenta = (function(){
 						success : function(){
 
 				
-								renders.mystars(shares)
+							renders.mystars(shares)
 
 							if (essenseData.includeboost){ actions.includeboost() }
 
@@ -4739,6 +4746,24 @@ var lenta = (function(){
 			
 		}
 
+		var makeboost = function(){
+			if (essenseData.includeboost){
+
+				boostplaces = {
+					4 : false,
+					13 : false,
+					27 : false
+				}
+
+				load.boosted(function(shares){
+					boosted = shares
+
+
+					actions.includeboost()
+				})
+			}
+		}
+
 		var make = function(clbk, _p){
 			initialized = new Date()
 
@@ -4891,24 +4916,16 @@ var lenta = (function(){
 							}
 
 							_p = null
+
+							if (video && !isMobile()){
+								makeboost()
+							}
 						
 						})
 					})
 
-					if (essenseData.includeboost){
-
-						boostplaces = {
-							4 : false,
-							13 : false,
-							27 : false
-						}
-
-						load.boosted(function(shares){
-							boosted = shares
-
-
-							actions.includeboost()
-						})
+					if (!(video && !isMobile())){
+						makeboost()
 					}
 						
 				}
