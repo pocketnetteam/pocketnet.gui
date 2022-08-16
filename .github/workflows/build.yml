@@ -141,9 +141,7 @@ jobs:
     steps:
       - name: Download artifact
         uses: actions/download-artifact@v3
-      - name: Display structure of downloaded files
-        run: ls -R
       - name: Save HEAD information
         run: git --no-pager log --decorate=short --pretty=oneline -n1 > /data/dev/binaries/head.txt
       - name: Copy artifacts
-        run: cp Bastyon* /data/dev/binaries/
+        run: cp ./**/Bastyon* /data/dev/binaries/
