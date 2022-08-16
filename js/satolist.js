@@ -18955,6 +18955,7 @@ Platform = function (app, listofnodes) {
                     },
 
                     commonFromUnspent: function (obj, clbk, p, telegram) {
+
                         if (!p) p = {};
 
                         if (self.sdk.address.pnet() && !obj.fromrelay) {
@@ -19005,13 +19006,84 @@ Platform = function (app, listofnodes) {
 
                             if(!(obj.donate && obj.donate.v.length) && obj.type !== 'contentBoost'){
                                 inputs = self.sdk.node.transactions.create.selectBestInputs(unspent)
-                            }
-
-                            var totalInputs = _.reduce(inputs, function(m, i){
-                                return m + i.amount
-                            }, 0)
+                            };
 
                             var feerate = TXFEE;
+
+                            unspent.sort((a, b) => a.amount > b.amount ? 1 : -1);
+
+                            var selectBestUnspent = (arr, min) => {
+
+                                if (!(arr && arr.length)) return [];
+
+                                var slicedArr = [];
+
+                                for (var u of arr){
+                                    
+                                   slicedArr.push({
+                                        txId: u.txid,
+                                        vout: u.vout,
+                                        amount: u.amount,
+                                        scriptPubKey: u.scriptPubKey,
+                                    });    
+
+                                   if (u.amount > min) break;
+
+                                }
+
+                                var overInput;
+
+                                var lastIdx = slicedArr.length - 1
+                                
+                                if (slicedArr[lastIdx].amount > min){
+
+                                    overInput = slicedArr.splice(lastIdx, 1)[0];
+
+                                }
+
+
+                                var preparedInputs = [];
+                                var amountSeveralInputs = 0;
+
+                                for (var u of slicedArr){
+
+                                    amountSeveralInputs += u.amount;
+
+                                    preparedInputs.push(u)
+
+                                    if (amountSeveralInputs > min){
+
+                                        break;
+
+                                    }
+
+                                }
+
+
+                                if (!overInput || overInput.amount > amountSeveralInputs){
+
+                                    var slicedInputs = preparedInputs;
+
+                                    for (let i = 0; i < preparedInputs.length; i++){
+
+                                        if (min >= amountSeveralInputs - slicedInputs[0].amount){
+
+                                            break;
+                                        } 
+
+                                        amountSeveralInputs -= slicedInputs[0].amount;
+                                        slicedInputs = slicedInputs.slice(1);
+
+
+                                    }
+
+                                    return {inputs: slicedInputs, totalInputs: amountSeveralInputs};
+                                }
+
+                                return {inputs: [overInput], totalInputs: overInput.amount};
+
+
+                            }
 
                             if (obj.donate && obj.donate.v.length){
 
@@ -19025,29 +19097,10 @@ Platform = function (app, listofnodes) {
 
                                 })
 
-                                var lastUnspent = _.clone(unspent).reverse();
+                                var best = selectBestUnspent(unspent, totalDonate + feerate);
 
-
-                                for (var u of lastUnspent){
-
-                                    if (totalDonate + feerate >= totalInputs){
-
-                                        totalInputs += u.amount;
-
-                                        inputs.push({
-                                            txId: u.txid,
-                                            vout: u.vout,
-                                            amount: u.amount,
-                                            scriptPubKey: u.scriptPubKey,
-                                        })
-
-
-                                    } else {
-
-                                        break;
-                                    }
-
-                                }
+                                var totalInputs = best.totalInputs;
+                                var inputs = best.inputs;
 
                                 if (totalDonate >= totalInputs){
 
@@ -19067,28 +19120,11 @@ Platform = function (app, listofnodes) {
                             if (obj.type === 'contentBoost' && obj.amount.v){
 
                                 feerate = 0;
+                                
+                                var best = selectBestUnspent(unspent, obj.amount.v + 0.00001);
 
-                                var lastUnspent = _.clone(unspent).reverse();
-
-                                for (var u of lastUnspent){
-
-                                    if (obj.amount.v >= totalInputs){
-
-                                        totalInputs += u.amount;
-
-                                        inputs.push({
-                                            txId: u.txid,
-                                            vout: u.vout,
-                                            amount: u.amount,
-                                            scriptPubKey: u.scriptPubKey,
-                                        })
-
-                                    } else {
-
-                                        break;
-                                    }
-
-                                }
+                                var totalInputs = best.totalInputs;
+                                var inputs = best.inputs;
 
                                 if (obj.amount.v > totalInputs){
 
@@ -19385,7 +19421,7 @@ Platform = function (app, listofnodes) {
                                     if (obj.donate && obj.donate.v.length && (totalReturn < 0 || totalDonate <= fees)){
 
                                         if (clbk){
-                                            clbk(null, 'tosmallamount')
+                                            clbk(null, self.app.localization.e('tosmallamount'))
                                         }
 
                                         return;
