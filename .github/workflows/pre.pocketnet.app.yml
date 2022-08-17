@@ -2,13 +2,11 @@ name: Deploy to pre.pocketnet.app
 
 on:
   workflow_dispatch:
-  push:
-    tags: v*.*.*-pre*
 
 jobs:
   build:
-  
-    runs-on: gui 
+
+    runs-on: gui
 
     steps:
       - uses: actions/checkout@v2

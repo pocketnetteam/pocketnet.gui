@@ -2,13 +2,11 @@ name: Deploy to test.pocketnet.app
 
 on:
   workflow_dispatch:
-  push:
-    tags: v*.*.*-test*
 
 jobs:
   build:
-  
-    runs-on: gui 
+
+    runs-on: gui
 
     steps:
       - uses: actions/checkout@v2
