@@ -2,8 +2,6 @@ name: Deploy to test.pocketnet.app
 
 on:
   workflow_dispatch:
-  push:
-    tags: v*.*.*-test*
 
 jobs:
   build:

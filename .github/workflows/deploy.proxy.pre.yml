@@ -1,8 +1,7 @@
 name: Deploy Proxy Pre
 
 on:
-  push:
-    tags: v*.*.*-proxy-pre*
+  workflow_dispatch:
 
 jobs:
   build:

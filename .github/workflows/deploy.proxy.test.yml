@@ -1,8 +1,7 @@
 name: Deploy Proxy Test
 
 on:
-  push:
-    tags: v*.*.*-proxy-test*
+  workflow_dispatch:
 
 jobs:
   build:
