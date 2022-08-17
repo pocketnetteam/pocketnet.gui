@@ -2638,6 +2638,7 @@ Platform = function (app, listofnodes) {
             var caption = wr.find('.shareBgCaption')
             var capiontextclass = 'caption_small'
 
+
             if(share.caption.length > 10) capiontextclass = 'caption_medium'
             if(share.caption.length > 60) capiontextclass = 'caption_long'
 
@@ -2661,7 +2662,10 @@ Platform = function (app, listofnodes) {
 
                 setTimeout(function(){
                     wr.addClass('ready')
+                    if(clbk) clbk()
                 }, 150)
+
+                
 
             }
             else{
@@ -2693,6 +2697,7 @@ Platform = function (app, listofnodes) {
 
                     setTimeout(function(){
                         wr.addClass('ready')
+                        if(clbk) clbk()
                     }, 150)
 
 

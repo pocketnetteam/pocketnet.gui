@@ -2869,7 +2869,9 @@ var comments = (function(){
 				
 
 				if (listpreview){
-					makePreview()
+					makePreview(() => {
+						if(ed.previewClbk) ed.previewClbk()
+					})
 				}
 				else{
 					make();

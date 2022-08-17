@@ -16,6 +16,26 @@
 		text-align: right;
 	}*/
 
+	.shareinlenta{
+		min-height: 400px;
+		opacity: 0;
+		.transition(0.3s);
+		.sharecnt{
+			display: none;
+		}
+		
+		
+
+		&.rendered{
+			opacity: 1;
+			min-height: 0;
+			.sharecnt{
+				display: block;
+			}
+			
+		}
+	}
+
 	.optimizationTip{
 		height: 150px;
 		display: flex;
