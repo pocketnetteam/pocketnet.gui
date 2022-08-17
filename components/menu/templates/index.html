@@ -178,7 +178,7 @@
 
 										
 										<a elementsid="<%-app.platform.api.authorlink(user.address.value.toString('hex'))%>" href="<%-app.platform.api.authorlink(user.address.value.toString('hex'))%>">	
-											<div class="usericon" <% if(src) {%> style="background-image: url(<%-src%>); background-size: cover; background-position: center center; background-repeat: no-repeat;" <% } %>>
+											<div class="usericon" contain="none" <% if(src) {%> style="background-image: url(<%-src%>); background-size: cover; background-position: center center; background-repeat: no-repeat;" <% } %>>
 
 												<% if(!src && letter) {%>
 
