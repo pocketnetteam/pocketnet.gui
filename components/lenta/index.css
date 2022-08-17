@@ -3,6 +3,11 @@
 		width: 30px;
 		text-align: right;
 	}*/
+  /*
+		.loader{
+			display: block;
+		}
+	}*/
   /*.authorCell a,
 	.sbtnxs,
 	.spsp{
@@ -63,11 +68,11 @@
   height: 111px;
   contain: strict;
 }
-#lenta.loading .loader {
+#lenta .loader.loading {
   display: block;
 }
 #lenta.sharesEnded .loader {
-  display: none;
+  display: none!important;
 }
 #lenta .panel {
   overflow: hidden;

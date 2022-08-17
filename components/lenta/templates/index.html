@@ -1,22 +1,13 @@
-<div id="<%-module.map.id%>" class="loading common_share_article_wrapper">
+<div id="<%-module.map.id%>" class="common_share_article_wrapper">
 
 	<div class="mlwr">
 
 		<div elementsid="lenta_loadprev" class="loadprev"><button><span><%=e('lloadprev')%></span></button></div>
 
-		<div class="circularprogress">	
-			<div class="circularprogressWrapper"></div>
-		</div>
-	
 		<div class="shares">
-			<div class="bspacer"></div>		
 		</div>
-
-		<div class="tspacer"></div>
 
 		<% if(!app.curation()) {%>
-
-			<!--<div elementsid="lenta_loadmore" class="loadmore"><button><%=e('lloadmore')%></button></div>-->
 
 			<% if(recommended == 'recommended') {%>	
 
@@ -45,8 +36,7 @@
 			<div><button class="button ghost"><%=e('refresh')%></button></div>
 		</div>	
 
-
-		<div class="loader">
+		<div class="loading loader">
 			<div class="work">
 				<div class="preloader5"><img src="./img/three-dots.svg"/></div>
 			</div>

@@ -409,7 +409,7 @@ var lenta = (function(){
 			},
 
 			loadprev : function(clbk){
-				el.c.find('.shares').html('<div class="bspacer"></div>')
+				el.c.find('.shares').html('')
 				el.c.removeClass('showprev')
 
 				el.c.removeClass("sharesEnded")
@@ -572,9 +572,11 @@ var lenta = (function(){
 			loadmore : function(loadclbk){
 				actions.observe()
 
+				if(!el.loader.hasClass('loading'))
+					el.loader.addClass('loading')
 
 				load.shares(function(shares, error){
-
+					el.loader.removeClass('loading')
 
 					if (error){
 						making = false;
@@ -587,11 +589,12 @@ var lenta = (function(){
 							self.iclbks.lenta = actions.loadmore
 						}
 
-						el.c.removeClass('loading')
+						
 
 						return;
 					}
-	
+					
+					
 					el.c.removeClass('networkError')
 
 					if(!shares){
@@ -3489,7 +3492,7 @@ var lenta = (function(){
 								/*var _w = imagesWrapperWidth;
 								var _h = imagesWrapperHeight*/
 
-								var _w = el.width();
+								var _w = isMobile() ? self.app.width : el.width();
 								var _h = el.height()
 
 
@@ -4814,9 +4817,14 @@ var lenta = (function(){
 
 			}
 
+			if(!el.loader.hasClass('loading'))
+				el.loader.addClass('loading')
+
 			load.shares(function(shares, error){
 
 				if(!el.c) return
+
+				el.loader.removeClass('loading')
 
 				if (error){
 					making = false;
@@ -5233,7 +5241,6 @@ var lenta = (function(){
 				el.loader = el.c.find('.loader');
 				el.lentacnt = el.c.find('.lentacell .cnt');
 				el.w = essenseData.window || w;
-
 				
 
 				el.share = {};

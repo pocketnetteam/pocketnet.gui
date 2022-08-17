@@ -27689,9 +27689,11 @@ Platform = function (app, listofnodes) {
                     if (clbk)
                         clbk()
 
+
+                    console.log("HERE")
+
                     setTimeout(function(){
                         self.matrixchat.init()
-
                     }, 300)
 
                     setTimeout(self.acceptterms, 5000)
@@ -27970,7 +27972,11 @@ Platform = function (app, listofnodes) {
 
                                 constraints : function(e){
 
-                                    if(_.find(e.path, function(el){
+                                    var path = e.path
+
+                                    if(!e.path && e.composedPath) path = e.composedPath()
+
+                                    if(_.find(path, function(el){
                                         return el.className && el.className.indexOf('noswipepnt') > -1
                                     })) return false
 
