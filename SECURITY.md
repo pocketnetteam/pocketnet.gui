@@ -2,16 +2,15 @@
 
 ## Supported Versions
 
-At the moment Bastyon considers the very latest commit to be supported.
-We combine that with our fast response to incidents and the automated updates
-to minimize the time between vulnerability publication and patch release.
+Use this section to tell people about which versions of your project are
+currently being supported with security updates.
 
-| Version        | Supported          |
-|:-------------- |:------------------ |
-| master         | :white_check_mark: |
-| other commits  | :x:                |
-
-In the near future we will introduce versioning, so expect this section to change.
+| Version | Supported          |
+| ------- | ------------------ |
+| Latest Release   | :white_check_mark: |
+| Older Release   | :x:                |
+| master branch  | :x: |
+| release branch   | :x:                |
 
 ## Reporting a Vulnerability
 
