@@ -1061,7 +1061,7 @@ var Nodemanager = function(p){
         })
 
         np = _.filter(np, function(elem){
-            return +elem.node.version.split(".").join("") >= 2026
+            return elem.node?.version ? +elem.node?.version?.split(".")?.join("") : 0 >= 2026
         })
 
         var r = f.randmap(np)
