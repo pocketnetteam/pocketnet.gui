@@ -22,7 +22,7 @@ var activities = (function(){
 
     var actions = {
         getactivities: async function() {
-          activities = await self.app.api.rpc('getactivities', [self.user.address.value])
+          activities = await self.app.api.rpc('getactivities', [self.user.address.value, self.app.platform.currentBlock, 0 ,["contentscore"]])
           activities.map(i => {
             if (i.description) {
               i.description = JSON.parse(i.description)
