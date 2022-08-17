@@ -80,7 +80,7 @@ var testnodes = [
 var activenodes = [
 	{
 		host : '188.187.45.218',
-		port : 39091,
+		port : 38081,
 		ws : 8087,
 		name : '188.187.45.218',
 		stable : true
