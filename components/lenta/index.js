@@ -3486,7 +3486,7 @@ var lenta = (function(){
 								/*var _w = imagesWrapperWidth;
 								var _h = imagesWrapperHeight*/
 
-								var _w = el.width();
+								var _w = isMobile() ? self.app.width : el.width();
 								var _h = el.height()
 
 

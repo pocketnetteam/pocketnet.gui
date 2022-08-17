@@ -286,7 +286,7 @@ html.testpocketnet .testpocketnetbg {
 }
 [image] {
   will-change: opacity, background;
-  contain: strict;
+  /*contain: strict;*/
   opacity: 0;
   -moz-transition: opacity 0.3s;
   -o-transition: opacity 0.3s;
@@ -5625,6 +5625,7 @@ html.mobileview.fullscreen #navigationWrapper {
    ========================================================================== */
 #splashScreen {
   position: fixed;
+  contain: strict;
   top: 0;
   left: 0;
   width: 100%;

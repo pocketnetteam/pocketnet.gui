@@ -346,7 +346,7 @@ html {
 
 [image]{
     will-change : opacity, background;
-    contain: strict;
+    /*contain: strict;*/
     opacity: 0;
     .transition(0.3s, opacity);
 
@@ -6899,6 +6899,7 @@ html.mobileview.fullscreen{
    ========================================================================== */
 #splashScreen {
     position: fixed;
+    contain: strict;
     top: 0;
     left: 0;
     width: 100%;
