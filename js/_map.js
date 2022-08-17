@@ -115,6 +115,7 @@ __map =  {
 		"peertube/video-embed.css",
 		"js/vendor/owl/assets/owl.carousel.min.css",
 		"js/vendor/owl/assets/owl.theme.default.min.css",
+		"js/vendor/shadow-popup/css/popup.css"
 	],
 
 	__exportcss : {
