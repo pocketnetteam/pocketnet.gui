@@ -11,13 +11,13 @@
   line-height: 36px;
   font-weight: 600;
 }
-.container .tabs {
+.container .filters {
   display: flex;
   margin: 0 -4em;
   padding: 0 4em 12px;
   border-bottom: solid #E3E4EB 1px;
 }
-.container .tabs .tab {
+.container .filters .tab {
   font-weight: 400;
   cursor: pointer;
   font-size: 16px;
@@ -25,11 +25,11 @@
   margin-right: 24px;
   transition: all 0.3s ease;
 }
-.container .tabs .tab.active {
+.container .filters .tab.active {
   color: #2F80ED;
   position: relative;
 }
-.container .tabs .tab.active::after {
+.container .filters .tab.active::after {
   position: absolute;
   content: ' ';
   bottom: -12px;

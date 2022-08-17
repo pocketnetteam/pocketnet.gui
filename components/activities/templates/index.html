@@ -1,17 +1,7 @@
  <div id="<%-module.map.id%>">
     <div class="container">
         <h3 class="title"><%=e('ractivities')%></h3>
-        <div class="tabs">
-            <%
-            _.each(tabs, function(tab){
-            %>
-
-            <div class="tab <%-tab.isActive ? 'active' : ''%>"> <%=tab.name %> </div>
-
-            <% })%>
-        </div>
-        <div class="content">
-
-        </div>
+        <div class="filters"></div>
+        <div class="content"></div>
     </div>
  </div>

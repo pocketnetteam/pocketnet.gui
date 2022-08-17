@@ -1,157 +1,182 @@
 var activities = (function(){
 
-  var self = new nModule();
+	var self = new nModule();
 
-  var essenses = {};
+	var essenses = {};
 
-  var Essense = function(p){
+	var Essense = function(p){
 
-    var primary = deep(p, 'history');
+		var primary = deep(p, 'history');
 
-    var el;
+		var el;
 
-    var tabs = [
-      {name: 'all', isActive: true},
-      {name: 'rating', isActive: false},
-      {name: 'comments', isActive: false},
-      {name: 'following', isActive: false},
-      {name: 'donates', isActive: false},
-    ]
+		var filtersList = ['all', 'rating', 'comments', 'following', 'donates']
 
-    var activities
+		var activities
 
-    var actions = {
-        getactivities: async function() {
-          activities = await self.app.api.rpc('getactivities', [self.user.address.value, self.app.platform.currentBlock, 0 ,["contentscore"]])
-          activities.map(i => {
-            if (i.description) {
-              i.description = JSON.parse(i.description)
-            }
+		var actions = {
+			getactivities : async function(filter){
+				self.app.api.fetch('ping', {}, {timeout : 4000}).then( async (r) => {
+					activities = await self.app.api.rpc('getactivities', [self.user.address.value, r.height, 99999, filter ? [filter] : []])
+				}).then(() => {
+					activities.map(i => {
+						if (i.description) {
+							i.description = JSON.parse(i.description)
+						}
 
-            if (!i.description && i.relatedContent.description) {
-              try {
-                i.description = JSON.parse(i.relatedContent.description)
-              } catch (e) {
-                i.description = {}
-                i.description.message = i.relatedContent.description
-              }
-            }
-            if (i.height){
+						if (!i.description && i.relatedContent.description) {
+							try {
+								i.description = JSON.parse(i.relatedContent.description)
+							} catch (e) {
+								i.description = {}
+								i.description.message = i.relatedContent.description
+							}
+						}
+						if (i.height) {
 
-              let range = (self.app.platform.currentBlock - i.height) / 2
-              console.log(range)
-              i.date = moment().subtract(range, 'minute').calendar();
-            }
-          })
+							let range = (self.app.platform.currentBlock - i.height) / 2
+							i.date = moment().subtract(range, 'minute').calendar();
+						}
+					})
+					renders.content()
+				})
 
-          renders.content()
-        }
-    }
+			}
+		}
 
-    var events = {
+		var events = {
 
-    }
+			filter : function(e){
+				var id = $(this).attr('rid');
 
-    var renders = {
-      content: function (type) {
-        self.shell({
+				try {
+					actions.getactivities(id)
+				} catch (e) {
+					return
+				}
+				el.c.find('.tab').removeClass('active')
 
-          name :  'content',
-          el :   el.content,
-          data : {
-            activities: activities,
-          },
-        }, function(_p) {
+				el.c.find('[rid="' + id + '"]').addClass('active')
 
-        })
-      }
-    }
+			}
 
-    var state = {
-      save : function(){
+		}
 
-      },
-      load : function(){
+		var renders = {
+			filters : function(clbk){
+				self.shell({
 
-      }
-    }
+					name : 'filters',
+					el : el.filters,
+					data : {
+						filters : filtersList,
+					},
+				}, function(_p){
+					_p.el.find('.tab').on('click', events.filter)
+					if (clbk){
+						clbk()
+					}
+				})
+			},
 
-    var initEvents = function(){
+			content : function(type){
+				self.shell({
 
-
-    }
-
-    return {
-      primary : primary,
-
-      getdata : function(clbk){
-
-
-
-        var data = {
-          tabs: tabs
-        };
-
-        clbk(data);
-
-      },
-
-      destroy : function(){
-        el = {};
-      },
-
-      init : function(p){
-
-        state.load();
-
-        el = {};
-        el.c = p.el.find('#' + self.map.id);
-        el.content = p.el.find('.content');
-        initEvents();
-
-        actions.getactivities()
-
-        p.clbk(null, p);
-      },
-      wnd : {
-        //header : "notifications",
-        class : 'wndactivities normalizedmobile maxheight',
-        parallaxselector : '.wndback,.wndheader'
-      }
-    }
-  };
+					name : 'content',
+					el : el.content,
+					data : {
+						activities : activities,
+					},
+				}, function(_p){
 
 
+				})
+			}
+		}
 
-  self.run = function(p){
+		var state = {
+			save : function(){
 
-    var essense = self.addEssense(essenses, Essense, p);
+			},
+			load : function(){
 
-    self.init(essense, p);
+			}
+		}
 
-  };
+		var initEvents = function(){
 
-  self.stop = function(){
+		}
 
-    _.each(essenses, function(essense){
+		return {
+			primary : primary,
 
-      essense.destroy();
+			getdata : function(clbk){
 
-    })
+				var data = {};
 
-  }
+				clbk(data);
 
-  return self;
+
+			},
+
+			destroy : function(){
+				el = {};
+			},
+
+			init : function(p){
+
+				state.load();
+
+				el = {};
+				el.c = p.el.find('#' + self.map.id);
+				el.filters = p.el.find('.filters');
+				el.content = p.el.find('.content');
+
+				renders.filters()
+
+				actions.getactivities()
+
+				initEvents();
+
+
+				p.clbk(null, p);
+			},
+			wnd : {
+				//header : "notifications",
+				class : 'wndactivities normalizedmobile maxheight',
+				parallaxselector : '.wndback,.wndheader'
+			}
+		}
+	};
+
+
+	self.run = function(p){
+
+		var essense = self.addEssense(essenses, Essense, p);
+
+		self.init(essense, p);
+
+	};
+
+	self.stop = function(){
+
+		_.each(essenses, function(essense){
+
+			essense.destroy();
+
+		})
+
+	}
+
+	return self;
 })();
 
 
-if(typeof module != "undefined")
-{
-  module.exports = activities;
-}
-else{
+if (typeof module != "undefined") {
+	module.exports = activities;
+} else {
 
-  app.modules.activities = {};
-  app.modules.activities.module = activities;
+	app.modules.activities = {};
+	app.modules.activities.module = activities;
 
 }
