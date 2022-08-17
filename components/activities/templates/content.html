@@ -12,9 +12,9 @@ _.each(activities, function(activity){
     <% } %>
   </div>
   <div class="description">
-    <div class="head">Вы прокомментировали публикацию <strong><%-activity.relatedContent.account.name%></strong></div>
-    <div class="message"></div>
-    <div class="date"></div>
+    <div class="head"> <%=e('commented')%> <strong><%-activity.relatedContent.account.name%></strong></div>
+    <div class="message"><%- decodeURIComponent(activity.description.message) %></div>
+    <div class="date"><%- activity.date  %></div>
   </div>
 </div>
 <%}%>
@@ -29,9 +29,9 @@ _.each(activities, function(activity){
     <% } %>
   </div>
   <div class="description">
-    <div class="head">Вам нравится комментарий <strong><%-activity.relatedContent.account.name%></strong></div>
-    <div class="message"></div>
-    <div class="date"></div>
+    <div class="head"><%=e(activity.val > 0 ? 'commentscorelike' : 'commentscoredislike')%> <strong><%-activity.relatedContent.account.name%></strong></div>
+    <div class="message"><%- decodeURIComponent(activity.description.message) %></div>
+    <div class="date"><%- activity.date  %></div>
   </div>
 </div>
 <%}%>
@@ -46,9 +46,8 @@ _.each(activities, function(activity){
     <% } %>
   </div>
   <div class="description">
-    <div class="head">Вы подписались на <strong><%-activity.relatedContent.account.name%></strong></div>
-    <div class="message"></div>
-    <div class="date"></div>
+    <div class="head"><%=e('subscribe')%> <strong><%-activity.relatedContent.account.name%></strong></div>
+    <div class="date"><%- activity.date  %></div>
   </div>
 </div>
 <%}%>
@@ -63,8 +62,8 @@ _.each(activities, function(activity){
     <% } %>
   </div>
   <div class="description">
-    <div class="head">Вы оставили оценку публикации <strong><%-activity.relatedContent.account.name%></strong></div>
-
+    <div class="head"><%=e('contentscore')%> <strong><%-activity.relatedContent.account.name%></strong></div>
+    <div class="message"><%- decodeURIComponent(activity?.description?.message) %></div>
     <div class="stars">
       <%
       for(i = 0; i < activity.val; i++){
@@ -73,7 +72,7 @@ _.each(activities, function(activity){
       <%}%>
     </div>
 
-    <div class="date"></div>
+    <div class="date"><%- activity.date  %></div>
   </div>
 </div>
 <%}%>

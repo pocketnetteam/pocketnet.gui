@@ -38,10 +38,10 @@ var testnodes = [
 	},
 
 	{
-		host : '157.90.235.121',
+		host : '157.90.228.34',
 		port : 39091,
 		ws : 6067,
-		name : 'test.1.pocketnet.app',
+		name : 'test.2.pocketnet.app',
 		stable : true
 	},
 

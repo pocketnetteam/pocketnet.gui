@@ -23,6 +23,27 @@ var activities = (function(){
     var actions = {
         getactivities: async function() {
           activities = await self.app.api.rpc('getactivities', [self.user.address.value])
+          activities.map(i => {
+            if (i.description) {
+              i.description = JSON.parse(i.description)
+            }
+
+            if (!i.description && i.relatedContent.description) {
+              try {
+                i.description = JSON.parse(i.relatedContent.description)
+              } catch (e) {
+                i.description = {}
+                i.description.message = i.relatedContent.description
+              }
+            }
+            if (i.height){
+
+              let range = (self.app.platform.currentBlock - i.height) / 2
+              console.log(range)
+              i.date = moment().subtract(range, 'minute').calendar();
+            }
+          })
+
           renders.content()
         }
     }

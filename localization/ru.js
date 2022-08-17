@@ -262,6 +262,15 @@ ____loclib.blockedusers = "Заблокированные";
 ____loclib.anoblocked = "Этот пользователь еще никого не заблокировал";
 ____loclib.aynoblocked = "Вы еще никого не заблокировали";
 
+//activities
+____loclib.contentscore = "Вы оставили оценку публикации";
+____loclib.commentscorelike = "Вам нравится комментарий";
+____loclib.commentscoredislike = "Вам не нравится комментарий	";
+____loclib.commented= "Вы прокомментировали публикацию";
+____loclib.unsubscribe= "Вы отписались от";
+____loclib.subscribe= "Вы подписались на";
+
+
 //lenta
 ____loclib.lloadmore = "Загрузить больше публикаций!";
 ____loclib.lloadprev = "Загрузить свежие материалы"
