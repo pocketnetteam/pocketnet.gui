@@ -1754,12 +1754,21 @@ var CancelablePromise = __webpack_require__("0bb9");
             okText: this.$i18n.t("button.ok")
           });
         }
-      } else {
-        this.$dialog.confirm(this.$i18n.t('micaccesscommonproblem'), {
+
+        return;
+      }
+
+      if (err.toString && err.toString().indexOf('device not found') > -1) {
+        this.$dialog.confirm(this.$i18n.t('micdevicenotfound'), {
           okText: this.$i18n.t("button.ok")
         });
-        console.error(err);
+        return;
       }
+
+      this.$dialog.confirm(this.$i18n.t('micaccesscommonproblem'), {
+        okText: this.$i18n.t("button.ok")
+      });
+      console.error(err);
     },
 
     initRecordingCordova() {

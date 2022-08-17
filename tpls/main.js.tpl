@@ -202,7 +202,7 @@ function createTray() {
     tray.setToolTip(appName);
 
     var contextMenu = Menu.buildFromTemplate([{
-        label: 'Open',
+        role: 'unhide',
         click: function() {
             if(is.macOS()){
                 if(win.isDestroyed())
@@ -214,7 +214,7 @@ function createTray() {
             }
         }
     }, {
-        label: 'Quit',
+        role: 'quit',
         click: function() {
 
             if (ipcbridge)
