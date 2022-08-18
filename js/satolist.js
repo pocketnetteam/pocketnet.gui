@@ -2740,9 +2740,6 @@ Platform = function (app, listofnodes) {
         showCommentBanner : function(contextElem) {
 
             let bannerCommentComponent = null;
-            if (!contextElem) {
-                return bannerCommentComponent;
-            }
 
             const createComponent = () => {
                 app.nav.api.load({
@@ -2762,13 +2759,12 @@ Platform = function (app, listofnodes) {
 
             const alreadyShowed = ('nextCommentBanner' in localStorage);
             const isBannerDisabled = (localStorage.nextCommentBanner == -1);
-            const timeToShowBanner = (unixTimeNow >= localStorage.nextCommentBanner);
+            const timeToShowBanner = (localStorage.nextCommentBanner <= unixTimeNow);
 
             const regDate = app.platform.sdk.user.me().regdate;
             const regUnixTime = (regDate.getTime());
             const registeredTime = Date.now() - regUnixTime;
 
-            const repeat = (localStorage.nextCommentBanner == 1);
             const isOneDayOld = (registeredTime >= oneDayInSeconds);
 
             if (isBannerDisabled) {
@@ -2778,18 +2774,21 @@ Platform = function (app, listofnodes) {
 
             if (!isOneDayOld) {
                 createComponent();
+                console.log('banner showbanner', bannerCommentComponent);
                 return bannerCommentComponent;
             }
 
-            if (repeat && timeToShowBanner) {
-                localStorage.nextCommentBanner = unixTimeNow + oneDayInSeconds;
+            if (!alreadyShowed) {
+                localStorage.nextCommentBanner = 1;
                 createComponent();
+                console.log('banner showbanner', bannerCommentComponent);
                 return bannerCommentComponent;
             }
 
             if (timeToShowBanner || !alreadyShowed) {
-                localStorage.nextCommentBanner = 1;
+                localStorage.nextCommentBanner = unixTimeNow + oneDayInSeconds;
                 createComponent();
+                console.log('banner showbanner', bannerCommentComponent);
                 return bannerCommentComponent;
             }
 
@@ -8728,6 +8727,13 @@ Platform = function (app, listofnodes) {
                 videop2p: {
                     name: self.app.localization.e('videop2psettings'),
                     id: 'videop2p',
+                    type: "BOOLEAN",
+                    value: true
+                },
+
+                videoTranscoding: {
+                    name: self.app.localization.e('settingsTranscoding'),
+                    id: 'transcoding',
                     type: "BOOLEAN",
                     value: true
                 },
@@ -22760,7 +22766,7 @@ Platform = function (app, listofnodes) {
                 return self.request.info(proxy).then(r => {
 
                     var apps = (r.id || "").split(',')
-
+                    console.log("APPID ", appid)
                     if (apps.indexOf(appid) == -1){
                         return Promise.reject('proxyfirebaseid')
                     }
@@ -22779,7 +22785,7 @@ Platform = function (app, listofnodes) {
         }
 
         self.set = function(proxy){
-
+            console.log(currenttoken)
             if(!currenttoken) return Promise.reject('emptytoken')
 
             var address = getaddress()
@@ -22787,16 +22793,19 @@ Platform = function (app, listofnodes) {
 
 
             return self.api.checkProxy(proxy).then(r => {
+                console.log("1")
                 return  self.api.exist(proxy, address, token)
             }).then(exist => {
-
+                console.log("2")
                 if(exist) return Promise.resolve()
-
+                console.log("3")
                 if(self.api.existanother(proxy, address)) return self.request.revokeall()
-
+                console.log("4")
             }).then(r => {
+                console.log("5")
                 return self.api.setToken(address, token, proxy)
             }).catch(e => {
+                console.log("6 ", e)
                 return Promise.resolve()
             })
 
@@ -22953,12 +22962,132 @@ Platform = function (app, listofnodes) {
                 if (data.tap) {
 
                     platform.ws.destroyMessages()
+                    const body = JSON.parse(data?.json);
+                    if(body?.type){
+                        switch (body?.type){
+                            case "boosts":
+                                platform.app.nav.api.load({
+                                    open : true,
+                                    href : 'post?s=' + body?.relatedContent?.hash,
+                                    inWnd : true,
+                                    history : true,
+                                    clbk : function(d, p){
+                                        app.nav.wnds['post'] = p
+                                    },
 
-                    platform.app.nav.api.load({
-                        open: true,
-                        href: 'notifications',
-                        history: true
-                    })
+                                    essenseData : {
+                                        share : body?.relatedContent?.hash,
+                                        hr : 'index?',
+
+                                        reply : {
+                                            answerid : body?.hash,
+                                            parentid : "",
+                                            noaction : true
+                                        }
+                                    }
+                                })
+                                break;
+                            case "answer":
+                                platform.app.nav.api.load({
+                                    open : true,
+                                    href : 'post?s=' + body?.relatedContent?.hash,
+                                    inWnd : true,
+                                    history : true,
+                                    clbk : function(d, p){
+                                        app.nav.wnds['post'] = p
+                                    },
+
+                                    essenseData : {
+                                        share : body?.relatedContent?.hash,
+                                        hr : 'index?',
+
+                                        reply : {
+                                            answerid : body?.hash,
+                                            parentid : "",
+                                            noaction : true
+                                        }
+                                    }
+                                })
+                                break;
+                            case "pocketnetteam":
+                                platform.app.nav.api.load({
+                                    open: true,
+                                    href: `index?s=${body?.hash}`,
+                                    history: true,
+                                    handler : true
+                                })
+                                break;
+                            case "privatecontent":
+                                platform.app.nav.api.load({
+                                    open: true,
+                                    href: `index?s=${body?.hash}`,
+                                    history: true,
+                                    handler : true
+                                })
+                                break;
+                            case "money":
+                                platform.app.nav.api.load({
+                                    open: true,
+                                    href: 'userpage?id=wallet',
+                                    history: true,
+                                    handler : true
+                                })
+                                break;
+                            default:
+                                platform.app.nav.api.load({
+                                    open: true,
+                                    href: 'notifications',
+                                    history: true
+                                })
+                        }
+
+                    }else{
+                        platform.app.nav.api.load({
+                            open: true,
+                            href: 'notifications',
+                            history: true
+                        })
+                    }
+                    // app.nav.api.load({
+                    //
+                    //     open : true,
+                    //     id : 'lenta',
+                    //     el : el,
+                    //     eid : id,
+                    //     mid : id,
+
+                    // self.app.nav.api.load({
+                    //     open : true,
+                    //     href : 'post?s=' + txid,
+                    //     inWnd : true,
+                    //     history : true,
+                    //     essenseData : {
+                    //         share : txid,
+                    //         video : true,
+                    //         autoplay : true,
+                    //         startTime : d.startTime || 0
+                    //     }
+                    // })
+
+                    // app.nav.api.load({
+                    //     open : true,
+                    //     id : 'comments',
+                    //     el : el,
+                    //     eid : id + 'post',
+                    //
+                    //     essenseData : {
+                    //         txid : id,
+                    //         showall : true,
+                    //         init : true,
+                    //         preview : false,
+                    //         fromtop : true,
+                    //         commentPs : additional.commentPs || p.commentPs,
+                    //         openapi : p.openapi,
+                    //
+                    //     },
+                    //
+                    //     clbk : clbk
+                    // })
 
                     return
                 }
@@ -22998,7 +23127,7 @@ Platform = function (app, listofnodes) {
             if (token){
 
                 var proxy = platform.app.api.get.current()
-
+                console.log(proxy);
                 if (proxy){
                     self.set(proxy.id).catch(e => {
                         console.log("error", e)
