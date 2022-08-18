@@ -1,7 +1,9 @@
 .container {
+  min-height: 70vh;
   border-radius: 6px;
   background: rgb(var(--background-main));
   padding: 1em 4em 2em;
+  margin-bottom: 2em;
 }
 .container .title {
   display: block;
@@ -92,5 +94,105 @@
   margin-right: 7px;
 }
 .normalizedmobile .container {
+  min-height: 70vh;
+  border-radius: 6px;
+  background: initial;
   padding: 1em 2em 2em;
+  margin-bottom: 2em;
+}
+.normalizedmobile .title {
+  display: block;
+  margin-top: 25px;
+  margin-bottom: 45px;
+  font-size: 36px;
+  line-height: 36px;
+  font-weight: 600;
+}
+.normalizedmobile .filters {
+  display: flex;
+  margin: 0 -2em;
+  padding: 0 2em 12px;
+  border-bottom: solid #E3E4EB 1px;
+  overflow: auto;
+  -ms-overflow-style: none;
+  /* for Internet Explorer, Edge */
+  scrollbar-width: none;
+}
+.normalizedmobile .filters::-webkit-scrollbar {
+  display: none !important;
+  /*chrome*/
+}
+.normalizedmobile .filters .tab {
+  font-weight: 400;
+  cursor: pointer;
+  font-size: 20px;
+  line-height: 20px;
+  margin-right: 24px;
+  transition: all 0.3s ease;
+}
+.normalizedmobile .filters .tab.active {
+  color: #2F80ED;
+  position: relative;
+}
+.normalizedmobile .filters .tab.active::after {
+  position: absolute;
+  content: ' ';
+  bottom: -12px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #2F80ED;
+}
+.normalizedmobile .content {
+  margin-top: 25px;
+}
+.normalizedmobile .comment {
+  padding-bottom: 16px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid #E3E4EB;
+  display: flex;
+  flex-wrap: nowrap;
+}
+.normalizedmobile .comment .description {
+  font-size: 14px;
+  line-height: 14px;
+  display: flex;
+  flex-direction: column;
+}
+.normalizedmobile .comment .description div:not(:first-child) {
+  margin-top: 8px;
+}
+.normalizedmobile .comment .avatar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 16px;
+  background: rgb(var(--neutral-grad-0));
+  color: rgb(var(--color-txt-gray-dark));
+  box-shadow: 0 5px 10px -5px rgba(var(--color-shadow-base), 0.4);
+  border-radius: 50%;
+  height: 48px;
+  min-width: 48px;
+  line-height: 3em;
+  font-size: 1em;
+  position: relative;
+  overflow: hidden;
+}
+.normalizedmobile .comment .avatar img {
+  height: 100%;
+  width: 100%;
+}
+.normalizedmobile .comment .message {
+  color: rgb(var(--neutral-grad-3));
+}
+.normalizedmobile .comment .date {
+  color: rgb(var(--neutral-grad-2));
+}
+.normalizedmobile .comment .stars {
+  display: flex;
+}
+.normalizedmobile .comment .stars i {
+  width: 20px;
+  color: rgb(var(--color-star-yellow));
+  margin-right: 7px;
 }

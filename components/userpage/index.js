@@ -66,9 +66,8 @@ var userpage = (function(){
 				id : 'activities',
 				report : 'activities',
 				mobile : true,
-				openReportPageMobileInWindow : true,
 				if : function(){
-					return true
+					return self.app.mobileview && !self.app.curation()
 				}
 			})
 			
@@ -80,7 +79,7 @@ var userpage = (function(){
 				mobile : true,
 				openReportPageMobileInWindow : true,
 				if : function(){
-					return true
+					return self.app.mobileview && !self.app.curation()
 				}
 			})
 
@@ -521,7 +520,6 @@ var userpage = (function(){
 						inWnd : true,
 						history : true
 					})
-
 					return
 				}
 				

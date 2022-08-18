@@ -8,17 +8,36 @@ var activities = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el;
+		var el, loading;
 
-		var filtersList = ['all', 'rating', 'comments', 'following', 'donates']
+		var filtersList = ['all', 'rating', 'comment', 'subscriber']
 
 		var activities
 
+		var getters = {
+			getFilters : function(filter){
+				if (filter === 'all') return []
+				if (filter === 'rating') return ['contentscore']
+				if (filter === 'comment') return ['commentscore', 'comment']
+				if (!filter) return []
+				return [filter]
+			}
+		}
+
 		var actions = {
-			getactivities : async function(filter){
-				self.app.api.fetch('ping', {}, {timeout : 4000}).then( async (r) => {
-					activities = await self.app.api.rpc('getactivities', [self.user.address.value, r.height, 99999, filter ? [filter] : []])
-				}).then(() => {
+			getdata : async function(filter){
+
+				return self.app.api.fetch('ping', {}, { timeout : 4000 }).then(async (r) => {
+
+					try {
+
+						activities = await self.app.api.rpc('getactivities', [self.user.address.value, r.height, , getters.getFilters(filter)])
+					} catch (e) {
+						return e
+					}
+
+				}).then((e) => {
+					if (e) return e
 					activities.map(i => {
 						if (i.description) {
 							i.description = JSON.parse(i.description)
@@ -39,24 +58,29 @@ var activities = (function(){
 						}
 					})
 					renders.content()
+					return e
 				})
-
 			}
 		}
 
 		var events = {
 
-			filter : function(e){
-				var id = $(this).attr('rid');
-
-				try {
-					actions.getactivities(id)
-				} catch (e) {
+			filter : function(){
+				if (this.classList.contains('active')) {
 					return
 				}
-				el.c.find('.tab').removeClass('active')
 
-				el.c.find('[rid="' + id + '"]').addClass('active')
+				var id = $(this).attr('rid');
+
+				actions.getdata(id).then((e) => {
+
+					if (e) return sitemessage(e.error.message)
+
+					el.c.find('.tab').removeClass('active')
+
+					el.c.find('[rid="' + id + '"]').addClass('active')
+
+				})
 
 			}
 
@@ -73,7 +97,7 @@ var activities = (function(){
 					},
 				}, function(_p){
 					_p.el.find('.tab').on('click', events.filter)
-					if (clbk){
+					if (clbk) {
 						clbk()
 					}
 				})
@@ -134,7 +158,7 @@ var activities = (function(){
 
 				renders.filters()
 
-				actions.getactivities()
+				actions.getdata()
 
 				initEvents();
 
@@ -142,9 +166,7 @@ var activities = (function(){
 				p.clbk(null, p);
 			},
 			wnd : {
-				//header : "notifications",
 				class : 'wndactivities normalizedmobile maxheight',
-				parallaxselector : '.wndback,.wndheader'
 			}
 		}
 	};

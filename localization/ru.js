@@ -92,8 +92,17 @@ ____loclib.showmorebloggers = "Показать больше блогеров";
 
 //Activities
 
-____loclib.ractivities = "Мои активности";
-
+____loclib.ractivities = "Моя активность";
+____loclib.rall = "Все";
+____loclib.rrating = "Рейтинги";
+____loclib.rcomment = "Комментарии";
+____loclib.rsubscriber = "Подписки";
+____loclib.contentscore = "Вы оставили оценку публикации";
+____loclib.commentscorelike = "Вам нравится комментарий";
+____loclib.commentscoredislike = "Вам не нравится комментарий	";
+____loclib.commented= "Вы прокомментировали публикацию";
+____loclib.unsubscribe= "Вы отписались от";
+____loclib.subscribe= "Вы подписались на";
 
 
 //user page
@@ -262,13 +271,11 @@ ____loclib.blockedusers = "Заблокированные";
 ____loclib.anoblocked = "Этот пользователь еще никого не заблокировал";
 ____loclib.aynoblocked = "Вы еще никого не заблокировали";
 
-//activities
-____loclib.contentscore = "Вы оставили оценку публикации";
-____loclib.commentscorelike = "Вам нравится комментарий";
-____loclib.commentscoredislike = "Вам не нравится комментарий	";
-____loclib.commented= "Вы прокомментировали публикацию";
-____loclib.unsubscribe= "Вы отписались от";
-____loclib.subscribe= "Вы подписались на";
+
+____loclib.all= "Все";
+____loclib.ratings= "Все";
+____loclib.all= "Все";
+____loclib.all= "Все";
 
 
 //lenta
