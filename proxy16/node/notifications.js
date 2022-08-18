@@ -9,7 +9,7 @@ class Notifications{
         return this;
     }
 
-    async sendBlock(block){
+    async sendBlock(block, reRequest){
         try {
             const node = this.nodeManager.selectProbabilityByVersion();
             // const notifications = await this.proxy.nodeControl.request.getNotifications([block.height])
@@ -30,7 +30,13 @@ class Notifications{
                 }
             }
         }catch (e){
-            console.log("ERRR ", e)
+            if(!reRequest){
+                setTimeout(()=>{
+                    this.sendBlock(block, true)
+                }, 5000)
+            }else {
+                console.log('Error:  ', e)
+            }
         }
 
     }
