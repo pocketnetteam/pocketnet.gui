@@ -21,6 +21,11 @@ jobs:
         run: |
           npm i
           npm run dev:bastyon
+      - name: Prepare for app notarization
+        if: startsWith(matrix.os, 'macos')
+        run: |
+          mkdir -p ~/private_keys/
+          echo '${{ secrets.APPLE_API_KEY }}' > ~/private_keys/AuthKey_${{ secrets.APPLE_API_KEY_ID }}.p8
       - name: Building
         env:
           APPLEID: ${{ secrets.APPLEID }}
