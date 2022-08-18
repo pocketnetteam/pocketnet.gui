@@ -28,9 +28,9 @@ jobs:
           npm i
           npm run dev:bastyon
       - name: Building
-          env:
-            CSC_KEY_PASSWORD: '${{ secrets.APPLECERTPWD }}'
-            CSC_LINK: 'file://applecert.p12'
+        env:
+          CSC_KEY_PASSWORD: '${{ secrets.APPLECERTPWD }}'
+          CSC_LINK: 'file://applecert.p12'
         run: |
           npm run distm
           ls -lh ./dist/
