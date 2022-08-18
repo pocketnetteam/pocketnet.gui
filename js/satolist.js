@@ -22621,6 +22621,7 @@ Platform = function (app, listofnodes) {
         //var FirebasePlugin = new FakeFirebasePlugin()
 
         var using = typeof window != 'undefined' && window.cordova && typeof FirebasePlugin != 'undefined';
+        var usingWeb = typeof window != 'undefined' && typeof _Electron === 'undefined' || !window.cordova
 
         var currenttoken = null;
 
@@ -22870,10 +22871,7 @@ Platform = function (app, listofnodes) {
 
 
         self.get = function (clbk) {
-
-            if (!using) {
-            }
-            else {
+            if (using) {
 
                 FirebasePlugin.getToken(function(token) {
 
@@ -22895,245 +22893,254 @@ Platform = function (app, listofnodes) {
                 });
 
 
-            }
+            }else if(usingWeb) {
+                const messaging = firebase.messaging();
+                messaging.getToken().then(token=>{
+                    currenttoken = token
+                    platform.fcmtoken = token
+                    platform.matrixchat.changeFcm()
+                    self.events()
 
-            if (clbk)
-                clbk()
+                    if (clbk)
+                            clbk(token)
+                })
+            }
         }
 
         self.permissions = function(clbk){
-			FirebasePlugin.hasPermission(function(hasPermission){
+            if(using) {
+                FirebasePlugin.hasPermission(function (hasPermission) {
 
-                if(!hasPermission){
-                    FirebasePlugin.grantPermission(function(hasPermission){
+                    if (!hasPermission) {
+                        FirebasePlugin.grantPermission(function (hasPermission) {
 
-                        if(hasPermission){
-                            self.get(clbk)
-                        }
-
-                    });
-                }
-                else{
-                    self.get(clbk)
-                }
-
-            });
-		}
-
-        self.events = function () {
-
-            FirebasePlugin.onMessageReceived((data) => {
-
-                if(!data) data = {}
-
-                if (data.data)
-                    platform.ws.messageHandler(data.data)
-
-
-                if (data.room_id) {
-
-                    if(data.tap){
-                         // Wait until we can navigate Matrix
-                        retry(function(){
-
-                            return platform && platform.matrixchat && platform.matrixchat.core;
-
-                        }, function(){
-
-                            setTimeout(function(){
-
-                                platform.matrixchat.core.goto(data.room_id);
-
-                                if (platform.matrixchat.core.apptochat)
-                                    platform.matrixchat.core.apptochat();
-
-                            }, 50)
-
-
+                            if (hasPermission) {
+                                self.get(clbk)
+                            }
 
                         });
+                    } else {
+                        self.get(clbk)
                     }
 
+                });
+            }else if (usingWeb){
+                const messaging = firebase.messaging();
+                messaging.requestPermission().then(perm=>{
+                    self.get(clbk)
+                })
+            }
+        }
+
+        self.events = function () {
+            if(using) {
+                FirebasePlugin.onMessageReceived((data) => {
+
+                    if (!data) data = {}
+
+                    if (data.data)
+                        platform.ws.messageHandler(data.data)
 
 
-                    return;
-                }
+                    if (data.room_id) {
 
-                if (data.tap) {
+                        if (data.tap) {
+                            // Wait until we can navigate Matrix
+                            retry(function () {
 
-                    platform.ws.destroyMessages()
-                    const body = JSON.parse(data?.json);
-                    if(body?.type){
-                        switch (body?.type){
-                            case "boosts":
-                                platform.app.nav.api.load({
-                                    open : true,
-                                    href : 'post?s=' + body?.relatedContent?.hash,
-                                    inWnd : true,
-                                    history : true,
-                                    clbk : function(d, p){
-                                        app.nav.wnds['post'] = p
-                                    },
+                                return platform && platform.matrixchat && platform.matrixchat.core;
 
-                                    essenseData : {
-                                        share : body?.relatedContent?.hash,
-                                        hr : 'index?',
+                            }, function () {
 
-                                        reply : {
-                                            answerid : body?.hash,
-                                            parentid : "",
-                                            noaction : true
-                                        }
-                                    }
-                                })
-                                break;
-                            case "answer":
-                                platform.app.nav.api.load({
-                                    open : true,
-                                    href : 'post?s=' + body?.relatedContent?.hash,
-                                    inWnd : true,
-                                    history : true,
-                                    clbk : function(d, p){
-                                        app.nav.wnds['post'] = p
-                                    },
+                                setTimeout(function () {
 
-                                    essenseData : {
-                                        share : body?.relatedContent?.hash,
-                                        hr : 'index?',
+                                    platform.matrixchat.core.goto(data.room_id);
 
-                                        reply : {
-                                            answerid : body?.hash,
-                                            parentid : "",
-                                            noaction : true
-                                        }
-                                    }
-                                })
-                                break;
-                            case "pocketnetteam":
-                                platform.app.nav.api.load({
-                                    open: true,
-                                    href: `index?s=${body?.hash}`,
-                                    history: true,
-                                    handler : true
-                                })
-                                break;
-                            case "privatecontent":
-                                platform.app.nav.api.load({
-                                    open: true,
-                                    href: `index?s=${body?.hash}`,
-                                    history: true,
-                                    handler : true
-                                })
-                                break;
-                            case "money":
-                                platform.app.nav.api.load({
-                                    open: true,
-                                    href: 'userpage?id=wallet',
-                                    history: true,
-                                    handler : true
-                                })
-                                break;
-                            default:
-                                platform.app.nav.api.load({
-                                    open: true,
-                                    href: 'notifications',
-                                    history: true
-                                })
+                                    if (platform.matrixchat.core.apptochat)
+                                        platform.matrixchat.core.apptochat();
+
+                                }, 50)
+
+
+                            });
                         }
 
-                    }else{
-                        platform.app.nav.api.load({
-                            open: true,
-                            href: 'notifications',
-                            history: true
-                        })
-                    }
-                    // app.nav.api.load({
-                    //
-                    //     open : true,
-                    //     id : 'lenta',
-                    //     el : el,
-                    //     eid : id,
-                    //     mid : id,
 
-                    // self.app.nav.api.load({
-                    //     open : true,
-                    //     href : 'post?s=' + txid,
-                    //     inWnd : true,
-                    //     history : true,
-                    //     essenseData : {
-                    //         share : txid,
-                    //         video : true,
-                    //         autoplay : true,
-                    //         startTime : d.startTime || 0
-                    //     }
-                    // })
-
-                    // app.nav.api.load({
-                    //     open : true,
-                    //     id : 'comments',
-                    //     el : el,
-                    //     eid : id + 'post',
-                    //
-                    //     essenseData : {
-                    //         txid : id,
-                    //         showall : true,
-                    //         init : true,
-                    //         preview : false,
-                    //         fromtop : true,
-                    //         commentPs : additional.commentPs || p.commentPs,
-                    //         openapi : p.openapi,
-                    //
-                    //     },
-                    //
-                    //     clbk : clbk
-                    // })
-
-                    return
-                }
-                else {
-
-                    if (typeof cordova != 'undefined') {
-
-                        var cordovabadge = deep(cordova, 'plugins.notification.badge')
-
-                        if (cordovabadge)
-                            cordovabadge.increase(1, function (badge) { });
+                        return;
                     }
 
-                }
+                    if (data.tap) {
+
+                        platform.ws.destroyMessages()
+                        const body = JSON.parse(data?.json);
+                        if (body?.type) {
+                            switch (body?.type) {
+                                case "boosts":
+                                    platform.app.nav.api.load({
+                                        open: true,
+                                        href: 'post?s=' + body?.relatedContent?.hash,
+                                        inWnd: true,
+                                        history: true,
+                                        clbk: function (d, p) {
+                                            app.nav.wnds['post'] = p
+                                        },
+
+                                        essenseData: {
+                                            share: body?.relatedContent?.hash,
+                                            hr: 'index?',
+
+                                            reply: {
+                                                answerid: body?.hash,
+                                                parentid: "",
+                                                noaction: true
+                                            }
+                                        }
+                                    })
+                                    break;
+                                case "answer":
+                                    platform.app.nav.api.load({
+                                        open: true,
+                                        href: 'post?s=' + body?.relatedContent?.hash,
+                                        inWnd: true,
+                                        history: true,
+                                        clbk: function (d, p) {
+                                            app.nav.wnds['post'] = p
+                                        },
+
+                                        essenseData: {
+                                            share: body?.relatedContent?.hash,
+                                            hr: 'index?',
+
+                                            reply: {
+                                                answerid: body?.hash,
+                                                parentid: "",
+                                                noaction: true
+                                            }
+                                        }
+                                    })
+                                    break;
+                                case "pocketnetteam":
+                                    platform.app.nav.api.load({
+                                        open: true,
+                                        href: `index?s=${body?.hash}`,
+                                        history: true,
+                                        handler: true
+                                    })
+                                    break;
+                                case "privatecontent":
+                                    platform.app.nav.api.load({
+                                        open: true,
+                                        href: `index?s=${body?.hash}`,
+                                        history: true,
+                                        handler: true
+                                    })
+                                    break;
+                                case "money":
+                                    platform.app.nav.api.load({
+                                        open: true,
+                                        href: 'userpage?id=wallet',
+                                        history: true,
+                                        handler: true
+                                    })
+                                    break;
+                                default:
+                                    platform.app.nav.api.load({
+                                        open: true,
+                                        href: 'notifications',
+                                        history: true
+                                    })
+                            }
+
+                        } else {
+                            platform.app.nav.api.load({
+                                open: true,
+                                href: 'notifications',
+                                history: true
+                            })
+                        }
+                        // app.nav.api.load({
+                        //
+                        //     open : true,
+                        //     id : 'lenta',
+                        //     el : el,
+                        //     eid : id,
+                        //     mid : id,
+
+                        // self.app.nav.api.load({
+                        //     open : true,
+                        //     href : 'post?s=' + txid,
+                        //     inWnd : true,
+                        //     history : true,
+                        //     essenseData : {
+                        //         share : txid,
+                        //         video : true,
+                        //         autoplay : true,
+                        //         startTime : d.startTime || 0
+                        //     }
+                        // })
+
+                        // app.nav.api.load({
+                        //     open : true,
+                        //     id : 'comments',
+                        //     el : el,
+                        //     eid : id + 'post',
+                        //
+                        //     essenseData : {
+                        //         txid : id,
+                        //         showall : true,
+                        //         init : true,
+                        //         preview : false,
+                        //         fromtop : true,
+                        //         commentPs : additional.commentPs || p.commentPs,
+                        //         openapi : p.openapi,
+                        //
+                        //     },
+                        //
+                        //     clbk : clbk
+                        // })
+
+                        return
+                    } else {
+
+                        if (typeof cordova != 'undefined') {
+
+                            var cordovabadge = deep(cordova, 'plugins.notification.badge')
+
+                            if (cordovabadge)
+                                cordovabadge.increase(1, function (badge) {
+                                });
+                        }
+
+                    }
 
 
-            });
+                });
 
 
-            // When token is refreshed, update the matrix element for the Vue app
-            FirebasePlugin.onTokenRefresh(function(token) {
+                // When token is refreshed, update the matrix element for the Vue app
+                FirebasePlugin.onTokenRefresh(function (token) {
 
-                platform.fcmtoken = token
-                currenttoken = token
-                platform.matrixchat.changeFcm()
+                    platform.fcmtoken = token
+                    currenttoken = token
+                    platform.matrixchat.changeFcm()
 
-                //prepareclbk(token)
+                    //prepareclbk(token)
 
-            }, function(error) {
-                console.error(error);
-            });
-
+                }, function (error) {
+                    console.error(error);
+                });
+            }
         }
 
         var prepareclbk = function(token){
-
+            console.log(token)
             if (token){
-
                 var proxy = platform.app.api.get.current()
-                console.log(proxy);
                 if (proxy){
                     self.set(proxy.id).catch(e => {
                         console.log("error", e)
                     })
                 }
-
             }
 
         }
@@ -23153,7 +23160,7 @@ Platform = function (app, listofnodes) {
 
             self.storage.load()
 
-			if (using) {
+            if (using || usingWeb) {
 
 				self.permissions(clbk)
 			}
@@ -23168,7 +23175,7 @@ Platform = function (app, listofnodes) {
 
             currenttoken = null
 
-            if (using){
+            if (using || usingWeb){
                 self.revokeall().then(clbk).catch(e => {})
 
                 return
