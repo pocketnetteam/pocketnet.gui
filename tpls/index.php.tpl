@@ -146,7 +146,7 @@
 
         <link rel="stylesheet" href="css/fontawesome/css/all.min.css">
         <script  join src="js/vendor/firebase-app.js"></script>
-        <script  join src="js/vendor/firebase-messaging.js"></script
+        <script  join src="js/vendor/firebase-messaging.js"></script>
         <script async src="js/pwa-service-worker.js?v=v__PACKAGE-VERSION__"></script>
         
 
