@@ -1053,6 +1053,7 @@ var Nodemanager = function(p){
     }
 
     self.selectProbabilityByVersion = function(){
+
         var np = _.map(self.initednodes(), function(node){
             return {
                 node : node,
@@ -1060,11 +1061,11 @@ var Nodemanager = function(p){
             }
         })
 
-        np = _.filter(np, function(elem){
-            return elem.node?.version ? +elem.node?.version?.split(".")?.join("") : 0 >= 2026
+        const npv = np.filter(function(elem){
+            return (elem.node?.version ? +elem.node?.version?.split(".")?.join("") : 0) >= 2026
         })
 
-        var r = f.randmap(np)
+        var r = f.randmap(npv)
 
         if (r && r.node){
             return r.node

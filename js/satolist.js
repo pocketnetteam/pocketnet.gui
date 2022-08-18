@@ -22776,7 +22776,9 @@ Platform = function (app, listofnodes) {
         }
 
         self.revokeall = function(){
-            FirebasePlugin?.unregister();
+            if(using) {
+                FirebasePlugin?.unregister();
+            }
 
             self.storage.clear();
 
@@ -23109,7 +23111,7 @@ Platform = function (app, listofnodes) {
 
 
                 // When token is refreshed, update the matrix element for the Vue app
-                FirebasePlugin.onTokenRefresh(function (token) {
+                FirebasePlugin?.onTokenRefresh(function (token) {
 
                     platform.fcmtoken = token
                     currenttoken = token
