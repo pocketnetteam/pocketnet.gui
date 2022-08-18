@@ -3851,7 +3851,7 @@
 						}
 
 
-						_el.find('.vc_value').on(clickAction(), function(){
+						_el.find('.vc_value').on('click', function(){
 							bkp = null;
 
 							var value = $(this).attr('value');
@@ -3863,7 +3863,7 @@
 							take().removeClass('error')
 						})
 
-						_el.find('.vc_selected_value_icon').on(clickAction(), function(){
+						_el.find('.vc_selected_value_icon').on('click', function(){
 							var value = $(this).closest('.vc_selected_value').attr('value');
 
 							parameter.set(value);
