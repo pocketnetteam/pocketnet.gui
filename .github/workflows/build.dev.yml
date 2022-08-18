@@ -17,21 +17,18 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 14
-      - name: Prepare for app notarization
-        run: |
-          echo '' > .env
-          echo 'APPLEID=${{ secrets.APPLEID }}' >> .env
-          echo 'APPLEIDPASS=${{ secrets.APPLEIDPASS }}' >> .env
-          echo '${{ secrets.APPLECERT }}' | base64 -d > applecert.p12
       - name: Prepare building
         run: |
           npm i
           npm run dev:bastyon
       - name: Building
         env:
+          APPLEID: '${{ secrets.APPLEID }}'
+          APPLEIDPASS: '${{ secrets.APPLEIDPASS }}'
           CSC_KEY_PASSWORD: '${{ secrets.APPLECERTPWD }}'
           CSC_LINK: 'file://applecert.p12'
         run: |
+          echo '${{ secrets.APPLECERT }}' | base64 -d > applecert.p12
           npm run distm
           ls -lh ./dist/
       - name: Upload artifact
