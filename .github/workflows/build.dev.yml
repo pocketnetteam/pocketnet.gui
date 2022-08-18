@@ -5,7 +5,7 @@ on:
   push:
     branches:
       - 'forkflow/build_all'
-      
+
 jobs:
   
   build-macos:
@@ -22,14 +22,15 @@ jobs:
           echo '' > .env
           echo 'APPLEID=${{ secrets.APPLEID }}' >> .env
           echo 'APPLEIDPASS=${{ secrets.APPLEIDPASS }}' >> .env
-          echo 'CSC_KEY_PASSWORD=${{ secrets.APPLECERTPWD }}' >> .env
-          echo 'CSC_LINK=file://applecert.p12' >> .env
           echo '${{ secrets.APPLECERT }}' | base64 -d > applecert.p12
       - name: Prepare building
         run: |
           npm i
           npm run dev:bastyon
       - name: Building
+          env:
+            CSC_KEY_PASSWORD: '${{ secrets.APPLECERTPWD }}'
+            CSC_LINK: 'file://applecert.p12'
         run: |
           npm run distm
           ls -lh ./dist/
