@@ -22625,8 +22625,9 @@ Platform = function (app, listofnodes) {
 
         var currenttoken = null;
 
-        var appid = deep(window, 'BuildInfo.packageName') || window.location.hostname || window.pocketnetdomain
-        if (appid == 'localhost' || appid == '127.0.0.1') appid = 'pocketnet.app' /// url
+        // var appid = deep(window, 'BuildInfo.packageName') || window.location.hostname || window.pocketnetdomain
+        // if (appid == 'localhost' || appid == '127.0.0.1') appid = 'pocketnet.app' /// url
+        var appid = 'pocketnet.app'
 
         var device = function () {
             var id = platform.app.options.device

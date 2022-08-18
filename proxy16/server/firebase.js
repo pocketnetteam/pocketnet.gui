@@ -89,7 +89,7 @@ var Firebase = function(p){
     }
 
     var adduser = function(user){
-
+        console.log("Login user: ", user)
         if(!finduser(user) && self.inited){
 
             self.users.push(user)
@@ -329,7 +329,6 @@ var Firebase = function(p){
         }){
             var date = f.time()
             var fbtoken = new Fbtoken({token, device, address : U, id, date})
-
             if(!fbtoken.check()) return Promise.reject('checkToken')
 
             return new Promise((resolve, reject) => {
@@ -553,6 +552,7 @@ var Firebase = function(p){
 
     self.sendToDevices = function(data, device, address){
         var users = getusers(address, device)
+        console.log("Send to users: ", users)
         for(const user of users) {
             return self.send({data, user})
         }
