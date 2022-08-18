@@ -87,6 +87,7 @@ const publics = {
     getaccountsetting : true,
     getpostscores:true,
     getpagescores:true,
+    getactivities: true,
     getrandomcontents : true,
     getrecomendedaccountsbysubscriptions : true,
     getrecomendedaccountsbyscoresonsimilaraccounts : true,
@@ -453,6 +454,7 @@ RpcClient.callspec = {
     getaddressscores: 'str',
     getaccountsetting : 'str',
     getpostscores: 'str',
+    getactivities : 'str int int obj',
     getpagescores: 'obj str',
 
     gettopfeed : 'int str int str obj obj obj obj obj str int',
