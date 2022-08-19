@@ -10,7 +10,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Building dmg
-        uses: ./.github/actions/build.macos
+        uses: ./.github/actions/build.macos.yml
         
   # build-unix:
   #   runs-on: ubuntu-latest
