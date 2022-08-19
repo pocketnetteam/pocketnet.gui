@@ -1,6 +1,6 @@
 name: Deploy DEV Pulls
 on:
-  dispatch_workflow:
+  workflow_dispatch:
   push:
     branches: [ git-workflow ]
 jobs:
