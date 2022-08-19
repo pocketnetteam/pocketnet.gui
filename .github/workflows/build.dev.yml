@@ -25,14 +25,16 @@ jobs:
         run: |
           mkdir -p ~/private_keys/
           echo '${{ secrets.APPLE_API_KEY }}' > ~/private_keys/AuthKey_${{ secrets.APPLE_API_KEY_ID }}.p8
+          echo '${{ secrets.APPLECERT }}' | base64 -d > applecert.p12
       - name: Building
         env:
           APPLEID: ${{ secrets.APPLEID }}
           APPLEIDPASS: ${{ secrets.APPLEIDPASS }}
-          CSC_KEY_PASSWORD: ${{ secrets.APPLECERTPWD }}
+          API_KEY_ID: ${{ secrets.APPLE_API_KEY_ID }}
+          API_KEY_ISSUER_ID: ${{ secrets.APPLE_API_KEY_ISSUER_ID }}
           CSC_LINK: 'file://applecert.p12'
+          CSC_KEY_PASSWORD: ${{ secrets.APPLECERTPWD }}
         run: |
-          echo '${{ secrets.APPLECERT }}' | base64 -d > applecert.p12
           npm run distm
           ls -lh ./dist/
       - name: Upload artifact
