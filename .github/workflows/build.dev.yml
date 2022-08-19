@@ -1,10 +1,7 @@
-name: Build all Apps
+name: Build Dev
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - 'forkflow/build_all'
 
 jobs:
   
@@ -17,15 +14,23 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 14
-      - name: Prepare for app notarization
-        run: |
-          mkdir -p ~/private_keys/
-          echo '${{ secrets.APPLE_API_KEY }}' > ~/private_keys/AuthKey_${{ secrets.APPLE_API_KEY_ID }}.p8
       - name: Prepare building
         run: |
           npm i
           npm run dev:bastyon
+      - name: Prepare for app notarization
+        run: |
+          mkdir -p ~/private_keys/
+          echo '${{ secrets.APPLE_API_KEY }}' > ~/private_keys/AuthKey_${{ secrets.APPLE_API_KEY_ID }}.p8
+          echo '${{ secrets.APPLECERT }}' | base64 -d > applecert.p12
       - name: Building
+        env:
+          APPLEID: ${{ secrets.APPLEID }}
+          APPLEIDPASS: ${{ secrets.APPLEIDPASS }}
+          API_KEY_ID: ${{ secrets.APPLE_API_KEY_ID }}
+          API_KEY_ISSUER_ID: ${{ secrets.APPLE_API_KEY_ISSUER_ID }}
+          CSC_LINK: 'file://applecert.p12'
+          CSC_KEY_PASSWORD: ${{ secrets.APPLECERTPWD }}
         run: |
           npm run distm
           ls -lh ./dist/
@@ -40,6 +45,8 @@ jobs:
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v1
+      - name: Save HEAD information
+        run: git --no-pager log --decorate=short --pretty=oneline -n1 > head.txt
       - name: Install Node.js, NPM and Yarn
         uses: actions/setup-node@v1
         with:
@@ -59,6 +66,7 @@ jobs:
           path: |
             ./dist/BastyonSetup.deb
             ./dist/Bastyon.AppImage
+            ./head.txt
     
   build-windows:
     runs-on: windows-latest
@@ -82,7 +90,7 @@ jobs:
         with:
           name: windows
           path: ./dist/BastyonSetup.exe
-    
+
   build-android:
     runs-on: ubuntu-20.04
     steps:
@@ -108,9 +116,9 @@ jobs:
       - name: Prepare configuration
         run: |
           cd ./cordova
-          echo -n "${{ secrets.ANDROID_SECRET_KEY }}" | base64 -d > cert.keystore
-          echo -n "${{ secrets.ANDROID_BUILD_CONF }}" | base64 -d > build.json
-          echo -n "${{ secrets.ANDROID_FIREBASE_CONF }}" | base64 -d > google-services.json
+          echo "${{ secrets.ANDROID_SECRET_KEY }}" | base64 -d > cert.keystore
+          echo "${{ secrets.ANDROID_BUILD_CONF }}" | base64 -d > build.json
+          echo "${{ secrets.ANDROID_FIREBASE_CONF }}" | base64 -d > google-services.json
           ls -l cert.keystore
           ls -l build.json
       - name: Fixing Android Build Tool Issue
@@ -137,3 +145,14 @@ jobs:
         with:
           name: android
           path: ./cordova/platforms/android/app/build/outputs/apk/release/Bastyon.apk
+
+  deploy-binaries:
+    needs: [ build-macos, build-unix, build-windows, build-android ]
+    runs-on: dev.pocketnet.app
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+      - name: Copy artifacts
+        run: cp ./**/Bastyon* /data/dev/binaries/
+      - name: Copy HEAD information
+        run: cp ./unix/head.txt /data/dev/binaries/head.txt
