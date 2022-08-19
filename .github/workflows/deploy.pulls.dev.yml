@@ -21,7 +21,7 @@ jobs:
       - name: Prepare merged repo
         run: |
           mkdir /tmp/repo
-          rsync -ah --exclude={'.git/','.github/','node_modules/'} ./ /tmp/repo
+          rsync -ah --exclude={'.git','.gitignore','.github','package.json','node_modules','.well-known','assets','proxy16','cordova','res','build'} ./ /tmp/repo
           cd /tmp/repo
           tar czf /tmp/repo.tgz ./
       - name: Upload artifact
