@@ -22625,10 +22625,9 @@ Platform = function (app, listofnodes) {
 
         var currenttoken = null;
 
-        //ToDo
-        // var appid = deep(window, 'BuildInfo.packageName') || window.location.hostname || window.pocketnetdomain
-        // if (appid == 'localhost' || appid == '127.0.0.1') appid = 'pocketnet.app' /// url
-        var appid = 'pocketnet.app'
+
+        var appid = deep(window, 'BuildInfo.packageName') || window.location.hostname || window.pocketnetdomain
+        if (appid == 'localhost' || appid == '127.0.0.1') appid = 'pocketnet.app' /// url
 
         var device = function () {
             var id = platform.app.options.device
@@ -22767,11 +22766,10 @@ Platform = function (app, listofnodes) {
 
             checkProxy : function(proxy){
                 return self.request.info(proxy).then(r => {
-                    //ToDo
-                    // var apps = (r.id || "").split(',')
-                    // if (apps.indexOf(appid) == -1){
-                    //     return Promise.reject('proxyfirebaseid')
-                    // }
+                    var apps = (r.id || "").split(',')
+                    if (apps.indexOf(appid) == -1){
+                        return Promise.reject('proxyfirebaseid')
+                    }
                     return Promise.resolve(appid)
                 })
             }
