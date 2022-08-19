@@ -84,7 +84,7 @@ Application = function(p)
     self.test = true
   }
 
-  self.boost = true
+  self.boost = !(window.cordova && isios());
 
   self.options = {
 
@@ -2573,10 +2573,14 @@ Application = function(p)
 
   }
 
+  self.dsubref = false
   self.ref = null;
 
   try{
     self.ref = parameters().ref || localStorage['ref'];
+    self.dsubref = parameters().dsubref || localStorage['dsubref'];
+
+    localStorage['dsubref'] = self.dsubref
   }catch(e){}
 
 

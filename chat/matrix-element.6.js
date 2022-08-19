@@ -18,29 +18,21 @@ module.exports.__inject__ = function (shadowRoot) {
 
 /***/ }),
 
-/***/ "23c6":
+/***/ "3edc":
 /***/ (function(module, exports, __webpack_require__) {
 
-// Imports
-var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
-exports = ___CSS_LOADER_API_IMPORT___(false);
-// Module
-exports.push([module.i, ".input_component[data-v-e98d4fac]{width:100%;display:flex;justify-content:center;align-items:center;padding:0 1em;padding-right:0}.input_component[data-v-e98d4fac] .emoji-mart .emoji-mart-emoji{width:25%;height:40px;cursor:pointer}.input_component[data-v-e98d4fac] .emoji-mart .emoji-mart-emoji span{cursor:pointer}.input_component[data-v-e98d4fac] .emoji-mart .emoji-mart-emoji:hover{background:none;box-shadow:none}.input_component[data-v-e98d4fac] .emoji-mart .emoji-mart-emoji:hover:before{display:none}.input_component .input-wrapper[data-v-e98d4fac]{display:flex;flex-direction:column;justify-content:center;align-items:flex-start;position:relative;width:100%}.input_component .right[data-v-e98d4fac]{margin:0 .5em}.input_component .iconbutton .leftdummy[data-v-e98d4fac]{width:20px}.input_component .iconbutton .rightdummy[data-v-e98d4fac]{width:35px}.input_component .iconbutton .idummy[data-v-e98d4fac]{width:100%;height:35px;line-height:35px}.input_component .iconbutton .idummy i[data-v-e98d4fac]{line-height:35px!important}.input_component .previews[data-v-e98d4fac]{width:100%;max-width:198px;height:30px;display:flex;align-items:flex-start;padding:2px 0;overflow:hidden}.input_component .previews[data-v-e98d4fac]:first-child{margin-left:0}.input_component .textarea[data-v-e98d4fac]{width:100%;display:flex;justify-content:flex-start;align-items:center}.chat-input[data-v-e98d4fac]{width:100%;max-height:100px;overflow-y:auto;resize:none}.chat-input[data-v-e98d4fac]::-webkit-scrollbar{width:0!important}.fade-enter-active[data-v-e98d4fac],.fade-leave-active[data-v-e98d4fac]{transition:all .2s ease-in}.fade-enter[data-v-e98d4fac],.fade-leave-to[data-v-e98d4fac]{opacity:0}", ""]);
-// Exports
-module.exports = exports;
+// style-loader: Adds some css to the DOM by adding a <style> tag
 
-
-/***/ }),
-
-/***/ "44f7":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_InputField_vue_vue_type_style_index_0_id_e98d4fac_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("a105");
-/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_InputField_vue_vue_type_style_index_0_id_e98d4fac_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_InputField_vue_vue_type_style_index_0_id_e98d4fac_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_InputField_vue_vue_type_style_index_0_id_e98d4fac_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_InputField_vue_vue_type_style_index_0_id_e98d4fac_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-
+// load the styles
+var content = __webpack_require__("fab8");
+if(content.__esModule) content = content.default;
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add CSS to Shadow Root
+var add = __webpack_require__("35d6").default
+module.exports.__inject__ = function (shadowRoot) {
+  add("2bb68a16", content, shadowRoot)
+};
 
 /***/ }),
 
@@ -55,24 +47,6 @@ exports.push([module.i, ".wrapper[data-v-4b882d9f]{position:relative}.fas[data-v
 // Exports
 module.exports = exports;
 
-
-/***/ }),
-
-/***/ "a105":
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__("23c6");
-if(content.__esModule) content = content.default;
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add CSS to Shadow Root
-var add = __webpack_require__("35d6").default
-module.exports.__inject__ = function (shadowRoot) {
-  add("191f9b68", content, shadowRoot)
-};
 
 /***/ }),
 
@@ -162,6 +136,18 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "e4da":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_InputField_vue_vue_type_style_index_0_id_036f9580_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("3edc");
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_InputField_vue_vue_type_style_index_0_id_036f9580_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_InputField_vue_vue_type_style_index_0_id_036f9580_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_InputField_vue_vue_type_style_index_0_id_036f9580_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_InputField_vue_vue_type_style_index_0_id_036f9580_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+
+
+/***/ }),
+
 /***/ "ee23":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -169,7 +155,21 @@ __webpack_require__.r(__webpack_exports__);
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, ".recordProgress[data-v-5cbd823e]{display:flex;position:relative;height:20px;justify-content:flex-start;padding:0 1em;align-items:center;max-width:90%;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none}.recordProgress .indicator[data-v-5cbd823e]{margin-right:1em;min-width:8px;height:8px;background:red;border-radius:50%}.recordProgress .indicator.recording[data-v-5cbd823e]{-webkit-animation:pulse-data-v-5cbd823e 1.2s ease infinite;animation:pulse-data-v-5cbd823e 1.2s ease infinite}.recordProgress .del[data-v-5cbd823e]{cursor:pointer;display:flex;justify-content:center;align-items:center;width:20px;height:20px;margin-right:1em}.recordProgress .del i[data-v-5cbd823e]{color:red;font-size:13px}.recordProgress .timer[data-v-5cbd823e]{margin-right:1em}.recordProgress .graph[data-v-5cbd823e]{width:calc(100vw - 150px);min-width:100px}.cancel[data-v-5cbd823e],.recordProgress .graph[data-v-5cbd823e]{display:flex;justify-content:center}.cancel[data-v-5cbd823e]{position:absolute;left:80px;right:0;top:0;bottom:0;background:#fff;opacity:0}@-webkit-keyframes pulse-data-v-5cbd823e{0%{opacity:1}50%{opacity:.1}to{opacity:1}}@keyframes pulse-data-v-5cbd823e{0%{opacity:1}50%{opacity:.1}to{opacity:1}}", ""]);
+exports.push([module.i, ".recordProgress[data-v-5cbd823e]{display:flex;position:relative;height:20px;justify-content:flex-start;padding:0 1em;align-items:center;max-width:90%}.recordProgress .indicator[data-v-5cbd823e]{margin-right:1em;min-width:8px;height:8px;background:red;border-radius:50%}.recordProgress .indicator.recording[data-v-5cbd823e]{-webkit-animation:pulse-data-v-5cbd823e 1.2s ease infinite;animation:pulse-data-v-5cbd823e 1.2s ease infinite}.recordProgress .del[data-v-5cbd823e]{cursor:pointer;display:flex;justify-content:center;align-items:center;width:20px;height:20px;margin-right:1em}.recordProgress .del i[data-v-5cbd823e]{color:red;font-size:13px}.recordProgress .timer[data-v-5cbd823e]{margin-right:1em}.recordProgress .graph[data-v-5cbd823e]{width:calc(100vw - 150px);min-width:100px}.cancel[data-v-5cbd823e],.recordProgress .graph[data-v-5cbd823e]{display:flex;justify-content:center}.cancel[data-v-5cbd823e]{position:absolute;left:80px;right:0;top:0;bottom:0;background:#fff;opacity:0}@-webkit-keyframes pulse-data-v-5cbd823e{0%{opacity:1}50%{opacity:.1}to{opacity:1}}@keyframes pulse-data-v-5cbd823e{0%{opacity:1}50%{opacity:.1}to{opacity:1}}", ""]);
+// Exports
+module.exports = exports;
+
+
+/***/ }),
+
+/***/ "fab8":
+/***/ (function(module, exports, __webpack_require__) {
+
+// Imports
+var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
+exports = ___CSS_LOADER_API_IMPORT___(false);
+// Module
+exports.push([module.i, ".input_component[data-v-036f9580]{width:100%;display:flex;justify-content:center;align-items:center;padding:0 1em;padding-right:0}.input_component[data-v-036f9580] .emoji-mart .emoji-mart-emoji{width:25%;height:40px;cursor:pointer}.input_component[data-v-036f9580] .emoji-mart .emoji-mart-emoji span{cursor:pointer}.input_component[data-v-036f9580] .emoji-mart .emoji-mart-emoji:hover{background:none;box-shadow:none}.input_component[data-v-036f9580] .emoji-mart .emoji-mart-emoji:hover:before{display:none}.input_component .input-wrapper[data-v-036f9580]{display:flex;flex-direction:column;justify-content:center;align-items:flex-start;position:relative;width:100%}.input_component .right[data-v-036f9580]{margin:0 .5em}.input_component .iconbutton .leftdummy[data-v-036f9580]{width:20px}.input_component .iconbutton .rightdummy[data-v-036f9580]{width:35px}.input_component .iconbutton .idummy[data-v-036f9580]{width:100%;height:35px;line-height:35px}.input_component .iconbutton .idummy i[data-v-036f9580]{line-height:35px!important}.input_component .previews[data-v-036f9580]{width:100%;max-width:198px;height:30px;display:flex;align-items:flex-start;padding:2px 0;overflow:hidden}.input_component .previews[data-v-036f9580]:first-child{margin-left:0}.input_component .textarea[data-v-036f9580]{width:100%;display:flex;justify-content:flex-start;align-items:center}.chat-input[data-v-036f9580]{width:100%;max-height:100px;overflow-y:auto;resize:none}.chat-input[data-v-036f9580]::-webkit-scrollbar{width:0!important}.fade-enter-active[data-v-036f9580],.fade-leave-active[data-v-036f9580]{transition:all .2s ease-in}.fade-enter[data-v-036f9580],.fade-leave-to[data-v-036f9580]{opacity:0}", ""]);
 // Exports
 module.exports = exports;
 
@@ -183,7 +183,7 @@ module.exports = exports;
 // ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"476efc6e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/chat/input/index.vue?vue&type=template&id=22eb6a42&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"05b06f0d-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/chat/input/index.vue?vue&type=template&id=22eb6a42&scoped=true&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{attrs:{"id":"chatInput"}},[(_vm.ready)?_c('div',{staticClass:"work"},[(_vm.chat)?_c('div',{staticClass:"inputWrapper"},[(_vm.tipusers.length)?_c('div',{staticClass:"tipusers"},_vm._l((_vm.tipusers),function(user,i){return _c('div',{key:user.id,staticClass:"previewWrapperExt",class:{selected : _vm.tipuserindex == i},on:{"click":function($event){return _vm.insertuser(user)}}},[_c('preview',{attrs:{"contact":user,"mode":""}})],1)}),0):_vm._e(),_c('div',{staticClass:"center"},[(_vm.voiceEnable && (_vm.isRecording || _vm.recordViewData.length))?_c('record-progress',{attrs:{"recordTime":_vm.recordTime,"isRecording":_vm.isRecording,"rmsData":_vm.recordViewData,"opacity":_vm.cancelOpacity},on:{"onClear":_vm.clear}}):_c('InputField',{ref:"newinput",attrs:{"storagekey":'chatinput' + _vm.chat.roomId,"tipusers":_vm.tipusers},on:{"transaction":_vm.sendtransaction,"chatMessage":_vm.sendinput,"setMetaUrl":_vm.emitUrl,"emptyInput":_vm.emitInputData,"FilledInput":_vm.HideUploadPic,"base64":_vm.pasteImage,"focused":_vm.focused,"tipsearchrequest":_vm.tipBySearch,"browsetip":_vm.browsetip,"selectcurrenttip":_vm.selectcurrenttip}}),(_vm.upload && _vm.chat)?_c('div',{staticClass:"left",class:{extended: _vm.voiceEnable}},[(!_vm.isRecording && !_vm.recordViewData.length)?_c('div',{staticClass:"iconbutton"},[_c('dropdownMenu',{ref:"dropdownMenu",attrs:{"menuItems":_vm.menuItems,"rowObject":{},"icon":"fas fa-plus"},scopedSlots:_vm._u([{key:"default",fn:function(slotProps){return [(!slotProps.item.upload)?_c('div',{staticClass:"menu-item",on:{"click":function($event){return _vm.menuItemClick(slotProps.item)}}},[_c('div',{staticClass:"iconWrapper"},[(slotProps.item.icon)?_c('i',{class:slotProps.item.icon}):_vm._e()]),_c('div',{staticClass:"title"},[_vm._v(" "+_vm._s(slotProps.item.title)+" ")])]):_c('upload',{attrs:{"multiple":slotProps.item.upload.multiple,"extensions":slotProps.item.upload.extensions,"images":slotProps.item.upload.images},on:{"start":function (files) { return _vm.uploadStart(slotProps.item, files); },"uploaded":function (data) { return _vm.uploadUploaded(slotProps.item, data); },"uploadedAll":function (result) { return _vm.uploadUploadedAll(slotProps.item, result); },"error":function (error) { return _vm.uploadError(slotProps.item, error); }},scopedSlots:_vm._u([{key:"content",fn:function(){return [_c('div',{staticClass:"menu-item"},[_c('div',{staticClass:"iconWrapper"},[(slotProps.item.icon)?_c('i',{class:slotProps.item.icon}):_vm._e()]),_c('div',{staticClass:"title"},[_vm._v(" "+_vm._s(slotProps.item.title)+" ")])])]},proxy:true},{key:"dropzone",fn:function(){return undefined},proxy:true}],null,true)})]}}],null,false,2831926823)})],1):_vm._e(),(_vm.voiceEnable)?[((_vm.isRecording || !_vm.recordRmsData.length) && !_vm.microphoneDisabled)?_c('div',{staticClass:"iconbutton"},[_c('recordVoice',{attrs:{"isRecording":_vm.isRecording},on:{"onRecordingStart":_vm.initRecording,"onRecordingStop":_vm.stopRecording,"onClear":_vm.clear,"canceling":_vm.setOpacity}})],1):_vm._e(),(_vm.microphoneDisabled)?_c('div',{staticClass:"disabled"},[_c('i',{staticClass:"icon fas fa-microphone-slash",on:{"click":_vm.initRecording}})]):_vm._e()]:_vm._e(),(!_vm.isRecording && _vm.recordViewData.length)?_c('div',{staticClass:"iconbutton",on:{"click":_vm.sendVoiceMessage}},[_vm._m(0)]):_vm._e()],2):_vm._e()],1)]):_vm._e()]):_c('div',{staticClass:"notready"},[_c('linepreloader')],1)])}
 var staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('i',{staticClass:"icon fas fa-paper-plane"})])}]
 
@@ -192,13 +192,6 @@ var staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js
 var asyncToGenerator = __webpack_require__("1da1");
-
-// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/objectSpread2.js
-var objectSpread2 = __webpack_require__("5530");
-
-// EXTERNAL MODULE: ./node_modules/@babel/runtime/regenerator/index.js
-var regenerator = __webpack_require__("a34a");
-var regenerator_default = /*#__PURE__*/__webpack_require__.n(regenerator);
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.error.cause.js
 var es_error_cause = __webpack_require__("d9e2");
@@ -209,12 +202,12 @@ var es_typed_array_at = __webpack_require__("907a");
 // EXTERNAL MODULE: ./src/application/functions.js
 var functions = __webpack_require__("3139");
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"476efc6e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/chat/input/InputField/InputField.vue?vue&type=template&id=e98d4fac&scoped=true&
-var InputFieldvue_type_template_id_e98d4fac_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"input_component"},[_c('div',{staticClass:"input-wrapper"},[_c('div',{staticClass:"textarea"},[_c('textarea',{ref:"textarea",staticClass:"chat-input",attrs:{"id":"textInput","type":"text","row":"1","spellcheck":"true","autocorrect":"on","placeholder":_vm.$t('caption.sendmessage')},domProps:{"value":_vm.text},on:{"focus":_vm.focused,"blur":_vm.blured,"keydown":_vm.keydown,"input":_vm.textchange,"keyup":_vm.keyup,"click":_vm.keyup,"paste":_vm.paste_image}}),(!_vm.mobile)?_c('transition',{attrs:{"name":"fade","mode":"out-in"}},[_c('picker',{directives:[{name:"show",rawName:"v-show",value:(_vm.display_emoji),expression:"display_emoji"},{name:"click-outside",rawName:"v-click-outside",value:(_vm.close_emoji_picker),expression:"close_emoji_picker"}],style:({ width: '325px', position: 'absolute', bottom: '32px', right: _vm.recording ? '-100px' :'-60px', fontSize: '0.8em', fontFamily: 'Segoe UI' }),attrs:{"data":_vm.emojiIndex,"exclude":_vm.exclude,"showPreview":false,"showSearch":false,"native":true,"set":"emojione"},on:{"select":_vm.insert_emoji}})],1):_vm._e()],1)]),(!_vm.mobile)?_c('div',{staticClass:"iconbutton emojipicker",on:{"click":function($event){return _vm.toggle_emoji_picker()}}},[_c('div',{staticClass:"leftdummy"},[_c('div',{staticClass:"idummy"},[(_vm.display_emoji)?_c('i',{staticClass:"fas fa-times"}):_c('i',{staticClass:"far fa-smile"})])])]):_vm._e(),(_vm.send)?_c('div',{staticClass:"iconbutton",on:{"click":function($event){return _vm.send_text($event)}}},[_vm._m(0)]):_vm._e()])}
-var InputFieldvue_type_template_id_e98d4fac_scoped_true_staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"rightdummy"},[_c('div',{staticClass:"idummy"},[_c('i',{staticClass:"far fa-paper-plane"})])])}]
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"05b06f0d-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/chat/input/InputField/InputField.vue?vue&type=template&id=036f9580&scoped=true&
+var InputFieldvue_type_template_id_036f9580_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"input_component"},[_c('div',{staticClass:"input-wrapper"},[_c('div',{staticClass:"textarea"},[_c('textarea',{ref:"textarea",staticClass:"chat-input",attrs:{"id":"textInput","type":"text","row":"1","spellcheck":"true","autocorrect":"on","placeholder":_vm.$t('caption.sendmessage')},domProps:{"value":_vm.text},on:{"focus":_vm.focused,"blur":_vm.blured,"keydown":_vm.keydown,"input":_vm.textchange,"keyup":_vm.keyup,"click":_vm.keyup,"paste":_vm.paste_image}}),(!_vm.mobile)?_c('transition',{attrs:{"name":"fade","mode":"out-in"}},[_c('picker',{directives:[{name:"show",rawName:"v-show",value:(_vm.display_emoji),expression:"display_emoji"},{name:"click-outside",rawName:"v-click-outside",value:(_vm.close_emoji_picker),expression:"close_emoji_picker"}],style:({ width: '325px', position: 'absolute', bottom: '32px', right: '-60px', fontSize: '0.8em', fontFamily: 'Segoe UI' }),attrs:{"data":_vm.emojiIndex,"exclude":_vm.exclude,"showPreview":false,"showSearch":false,"native":true,"set":"emojione"},on:{"select":_vm.insert_emoji}})],1):_vm._e()],1)]),(!_vm.mobile)?_c('div',{staticClass:"iconbutton emojipicker",on:{"click":function($event){return _vm.toggle_emoji_picker()}}},[_c('div',{staticClass:"leftdummy"},[_c('div',{staticClass:"idummy"},[(_vm.display_emoji)?_c('i',{staticClass:"fas fa-times"}):_c('i',{staticClass:"far fa-smile"})])])]):_vm._e(),(_vm.send)?_c('div',{staticClass:"iconbutton",on:{"click":function($event){return _vm.send_text($event)}}},[_vm._m(0)]):_vm._e()])}
+var InputFieldvue_type_template_id_036f9580_scoped_true_staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"rightdummy"},[_c('div',{staticClass:"idummy"},[_c('i',{staticClass:"far fa-paper-plane"})])])}]
 
 
-// CONCATENATED MODULE: ./src/components/chat/input/InputField/InputField.vue?vue&type=template&id=e98d4fac&scoped=true&
+// CONCATENATED MODULE: ./src/components/chat/input/InputField/InputField.vue?vue&type=template&id=036f9580&scoped=true&
 
 // EXTERNAL MODULE: ./src/application/utils/images.js
 var utils_images = __webpack_require__("5059");
@@ -232,7 +225,7 @@ var dist_emoji_mart = __webpack_require__("41fb");
 var v_click_outside_umd = __webpack_require__("c28b");
 var v_click_outside_umd_default = /*#__PURE__*/__webpack_require__.n(v_click_outside_umd);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"476efc6e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/chat/input/picturePreview/picturePreview.vue?vue&type=template&id=4b882d9f&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"05b06f0d-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/chat/input/picturePreview/picturePreview.vue?vue&type=template&id=4b882d9f&scoped=true&
 var picturePreviewvue_type_template_id_4b882d9f_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return (_vm.is_opened)?_c('div',{staticClass:"wrapper"},[_c('img',{staticClass:"preview-picture",attrs:{"src":_vm.base64,"alt":"picture preview"}}),_c('i',{staticClass:"fas fa-times fa-sm",on:{"click":_vm.hide}})]):_vm._e()}
 var picturePreviewvue_type_template_id_4b882d9f_scoped_true_staticRenderFns = []
 
@@ -250,15 +243,18 @@ var picturePreviewvue_type_template_id_4b882d9f_scoped_true_staticRenderFns = []
 /* harmony default export */ var picturePreviewvue_type_script_lang_js_ = ({
   name: 'picturePreview',
   props: ['base64'],
-  data: function data() {
+
+  data() {
     return {
       is_opened: true
     };
   },
+
   methods: {
-    hide: function hide() {
+    hide() {
       this.is_opened = false;
     }
+
   }
 });
 // CONCATENATED MODULE: ./src/components/chat/input/picturePreview/picturePreview.vue?vue&type=script&lang=js&
@@ -358,7 +354,7 @@ var component = Object(componentNormalizer["a" /* default */])(
 
 
 
-var InputFieldvue_type_script_lang_js_images = new utils_images["a" /* default */]();
+let InputFieldvue_type_script_lang_js_images = new utils_images["a" /* default */]();
 /* harmony default export */ var InputFieldvue_type_script_lang_js_ = ({
   name: 'InputField',
   components: {
@@ -371,7 +367,7 @@ var InputFieldvue_type_script_lang_js_images = new utils_images["a" /* default *
   watch: {
     text: {
       immediately: true,
-      handler: function handler(current, prev) {
+      handler: function (current, prev) {
         if (current) {
           this.send = true;
           this.$emit('FilledInput');
@@ -385,13 +381,10 @@ var InputFieldvue_type_script_lang_js_images = new utils_images["a" /* default *
     }
   },
   computed: {
-    mobile: function mobile() {
+    mobile: function () {
       return !this.$store.state.pocketnet && this.$store.state.mobile;
     },
-    recording: function recording() {
-      return this.$store.state.voiceMessagesEnabled === 'true';
-    },
-    emojiIndex: function emojiIndex() {
+    emojiIndex: function () {
       if (!window.emojiIndex) {
         window.emojiIndex = new dist_emoji_mart["EmojiIndex"](data_all);
       }
@@ -400,48 +393,51 @@ var InputFieldvue_type_script_lang_js_images = new utils_images["a" /* default *
     }
   },
   methods: {
-    setText: function setText(text) {
-      var _this = this;
-
+    setText: function (text) {
       this.text = text;
       this.savetextinstorage();
-      setTimeout(function () {
-        _this.textarea_resize();
-
-        _this.focus();
+      setTimeout(() => {
+        this.textarea_resize();
+        this.focus();
       });
     },
-    focused: function focused() {
+    focused: function () {
       this.$emit('focused');
     },
-    textchange: function textchange(e) {
+    textchange: function (e) {
       this.text = e.target.value || '';
     },
-    savetextinstorage: function savetextinstorage() {
+    savetextinstorage: function () {
       if (this.storagekey) {
         localStorage[this.storagekey] = this.text || '';
       }
     },
-    send_empty_array: function send_empty_array() {
+
+    send_empty_array() {
       this.$emit('userSearched', []);
     },
-    focus: function focus() {
+
+    focus() {
       this.$refs['textarea'].focus();
     },
-    blur: function blur() {
+
+    blur() {
       this.$refs['textarea'].blur();
     },
-    blurifempty: function blurifempty() {
+
+    blurifempty() {
       if (!this.text) this.blur();
     },
-    close_emoji_picker: function close_emoji_picker(event) {
+
+    close_emoji_picker(event) {
       if (event.target.localName !== 'i') {
         if (event.target.localName !== 'matrix-element') {
           this.display_emoji = false;
         }
       }
     },
-    textarea_resize: function textarea_resize() {
+
+    textarea_resize() {
       if (!this.text) {
         this.textarea_resize_reset();
       } else {
@@ -450,13 +446,16 @@ var InputFieldvue_type_script_lang_js_images = new utils_images["a" /* default *
         this.display_emoji = false;
       }
     },
-    textarea_resize_reset: function textarea_resize_reset() {
+
+    textarea_resize_reset() {
       this.$refs.textarea.style.height = '26px';
     },
-    toggle_emoji_picker: function toggle_emoji_picker() {
+
+    toggle_emoji_picker() {
       this.display_emoji = !this.display_emoji;
     },
-    send_text: function send_text(event) {
+
+    send_text(event) {
       if (this.text && this.text !== '\n') {
         this.display_emoji = false;
         this.$emit('chatMessage', this.text);
@@ -467,67 +466,55 @@ var InputFieldvue_type_script_lang_js_images = new utils_images["a" /* default *
 
       this.savetextinstorage();
     },
-    insert_emoji: function insert_emoji(emoji) {
+
+    insert_emoji(emoji) {
       this.text += emoji.native;
       this.savetextinstorage();
     },
-    paste_image: function paste_image(event) {
+
+    paste_image(event) {
       this.get_base64(event);
     },
-    get_base64: function get_base64(event) {
-      var _this2 = this;
 
+    get_base64(event) {
       this.pasted_data = event.clipboardData.items;
 
       if (this.pasted_data.length) {
-        var _loop = function _loop(index) {
-          var item = _this2.pasted_data[index];
-
-          var correct_image_type = _this2.upload.extensions.includes(item.type);
+        for (let index in this.pasted_data) {
+          let item = this.pasted_data[index];
+          let correct_image_type = this.upload.extensions.includes(item.type);
 
           if (correct_image_type) {
-            blob = item.getAsFile();
-            reader = new FileReader();
+            var blob = item.getAsFile();
+            var reader = new FileReader();
 
-            reader.onload = function (event) {
-              _this2.$dialog.confirm('Do you really want to send attachment?', {
+            reader.onload = event => {
+              this.$dialog.confirm('Do you really want to send attachment?', {
                 okText: 'Yes',
                 cancelText: 'No, cancel'
-              }).then(function (dialog) {
+              }).then(dialog => {
                 var base64 = event.target.result;
-
-                _this2.resize_image(base64, item.type);
+                this.resize_image(base64, item.type);
               });
             };
 
             reader.readAsDataURL(blob);
           }
-        };
-
-        for (var index in this.pasted_data) {
-          var blob;
-          var reader;
-
-          _loop(index);
         }
       }
     },
-    resize_image: function resize_image(data, type) {
-      var _this3 = this;
 
-      return InputFieldvue_type_script_lang_js_images.autorotation(null, data).then(function (base64) {
-        var _type = _this3.upload.images.resize.type || 'def';
+    resize_image(data, type) {
+      return InputFieldvue_type_script_lang_js_images.autorotation(null, data).then(base64 => {
+        let _type = this.upload.images.resize.type || 'def';
 
-        return InputFieldvue_type_script_lang_js_images.resize[_type](base64, 1024, 1024, type, 0.9).then(function (base64) {
-          _this3.$emit('base64', base64);
-        }).catch(function (error) {
-          return console.error('Failed to resize image', error);
-        });
-      }).catch(function (error) {
-        return console.error('Failed to resize image', error);
-      });
+        return InputFieldvue_type_script_lang_js_images.resize[_type](base64, 1024, 1024, type, 0.9).then(base64 => {
+          this.$emit('base64', base64);
+        }).catch(error => console.error('Failed to resize image', error));
+      }).catch(error => console.error('Failed to resize image', error));
     },
-    getsearchposition: function getsearchposition(position) {
+
+    getsearchposition(position) {
       if (!position.start || !this.text.length) return null;
       var sposition = {
         start: position.start,
@@ -577,12 +564,14 @@ var InputFieldvue_type_script_lang_js_images = new utils_images["a" /* default *
 
       return sposition;
     },
-    getsearch: function getsearch(position) {
+
+    getsearch(position) {
       var sposition = this.getsearchposition(position);
       if (!sposition) return null;
       return this.text.substring(sposition.start, sposition.middle);
     },
-    keydown: function keydown(event) {
+
+    keydown(event) {
       if (event.keyCode === 40 || event.keyCode === 38) {
         if (this.tipusers && this.tipusers.length) {
           this.$emit('browsetip', event.keyCode === 40 ? true : false);
@@ -610,7 +599,8 @@ var InputFieldvue_type_script_lang_js_images = new utils_images["a" /* default *
         return false;
       }
     },
-    keyup: function keyup(event) {
+
+    keyup(event) {
       if (this.block) {
         event.preventDefault();
         return false;
@@ -621,16 +611,14 @@ var InputFieldvue_type_script_lang_js_images = new utils_images["a" /* default *
       this.$emit('tipsearchrequest', value);
       this.savetextinstorage();
     },
-    blured: function blured() {
-      var _this4 = this;
 
-      setTimeout(function () {
-        _this4.$emit('tipsearchrequest', null);
+    blured() {
+      setTimeout(() => {
+        this.$emit('tipsearchrequest', null);
       }, 300);
     },
-    inserttip: function inserttip(text) {
-      var _this5 = this;
 
+    inserttip(text) {
       this.$emit('tipsearchrequest', null);
       this.block = true;
       this.$refs['textarea'];
@@ -643,16 +631,18 @@ var InputFieldvue_type_script_lang_js_images = new utils_images["a" /* default *
 
       if (!this.text[position.end + 1] == ' ') position.end++;
       functions["a" /* default */].setCaretPosition(this.$refs['textarea'], position.end + 1, position.end + 1);
-      setTimeout(function () {
-        _this5.block = false;
+      setTimeout(() => {
+        this.block = false;
       }, 350);
     }
+
   },
   props: {
     storagekey: String,
     tipusers: Array
   },
-  data: function data() {
+
+  data() {
     return {
       send: false,
       toMatch: [/Android/i, /webOS/i, /iPhone/i, /iPad/i, /iPod/i, /BlackBerry/i, /Windows Phone/i],
@@ -678,13 +668,15 @@ var InputFieldvue_type_script_lang_js_images = new utils_images["a" /* default *
       hidden_previews: null
     };
   },
-  creared: function creared() {},
-  mounted: function mounted() {
+
+  creared() {},
+
+  mounted() {
     if (!this.mobile) {
       this.focus();
     }
 
-    this.isPhone = this.toMatch.some(function (toMatchItem) {
+    this.isPhone = this.toMatch.some(toMatchItem => {
       return navigator.userAgent.match(toMatchItem);
     });
     this.$refs.textarea.style.height = '26px';
@@ -693,6 +685,7 @@ var InputFieldvue_type_script_lang_js_images = new utils_images["a" /* default *
       this.text = localStorage[this.storagekey];
     }
   }
+
 });
 // CONCATENATED MODULE: ./src/components/chat/input/InputField/InputField.vue?vue&type=script&lang=js&
  /* harmony default export */ var InputField_InputFieldvue_type_script_lang_js_ = (InputFieldvue_type_script_lang_js_); 
@@ -702,7 +695,7 @@ var InputFieldvue_type_script_lang_js_images = new utils_images["a" /* default *
 
 function InputField_injectStyles (context) {
   
-  var style0 = __webpack_require__("44f7")
+  var style0 = __webpack_require__("e4da")
 if (style0.__inject__) style0.__inject__(context)
 
 }
@@ -711,11 +704,11 @@ if (style0.__inject__) style0.__inject__(context)
 
 var InputField_component = Object(componentNormalizer["a" /* default */])(
   InputField_InputFieldvue_type_script_lang_js_,
-  InputFieldvue_type_template_id_e98d4fac_scoped_true_render,
-  InputFieldvue_type_template_id_e98d4fac_scoped_true_staticRenderFns,
+  InputFieldvue_type_template_id_036f9580_scoped_true_render,
+  InputFieldvue_type_template_id_036f9580_scoped_true_staticRenderFns,
   false,
   InputField_injectStyles,
-  "e98d4fac",
+  "036f9580",
   null
   ,true
 )
@@ -733,7 +726,7 @@ var list = __webpack_require__("f978");
 // EXTERNAL MODULE: ./src/components/contacts/preview/index.vue + 4 modules
 var preview = __webpack_require__("92a6");
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"476efc6e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/assets/recordProgress/index.vue?vue&type=template&id=5cbd823e&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"05b06f0d-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/assets/recordProgress/index.vue?vue&type=template&id=5cbd823e&scoped=true&
 var recordProgressvue_type_template_id_5cbd823e_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"recordProgress"},[(_vm.isRecording)?_c('div',{staticClass:"indicator",class:{'recording': _vm.isRecording}}):_c('div',{staticClass:"del",on:{"click":_vm.clear}},[_c('i',{staticClass:"fas fa-trash"})]),_c('div',{staticClass:"timer"},[_vm._v(_vm._s(_vm.timer))]),_c('div',{ref:"graph",staticClass:"graph"},[_c('canvas',{ref:"canvas",attrs:{"id":"canvas","width":_vm.width,"height":"60"}})]),_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.isRecording && _vm.opacity),expression:"isRecording && opacity"}],ref:"cancel",staticClass:"cancel"},[_c('i'),_vm._v(" "),_c('span',[_vm._v("Slide left to cancel")])])])}
 var recordProgressvue_type_template_id_5cbd823e_scoped_true_staticRenderFns = []
 
@@ -757,67 +750,73 @@ var recordProgressvue_type_template_id_5cbd823e_scoped_true_staticRenderFns = []
     },
     opacity: {}
   },
-  data: function data() {
+
+  data() {
     return {
       width: 0
     };
   },
+
   computed: {
-    timer: function timer() {
-      var minute = Math.floor(this.recordTime / 60000);
-      var sec = Math.floor(this.recordTime / 1000) % 60;
-      return "".concat(minute ? minute + ':' : '0:').concat(sec < 10 ? '0' + sec : sec);
+    timer() {
+      let minute = Math.floor(this.recordTime / 60000);
+      let sec = Math.floor(this.recordTime / 1000) % 60;
+      return `${minute ? minute + ':' : '0:'}${sec < 10 ? '0' + sec : sec}`;
     }
+
   },
-  mounted: function mounted() {
+
+  mounted() {
     this.$refs.cancel.style.opacity = 0;
-    var width = this.$refs.graph.offsetWidth;
+    let width = this.$refs.graph.offsetWidth;
     this.width = width - width % 100;
     window.addEventListener("resize", this.resize);
   },
-  beforeDestroy: function beforeDestroy() {
+
+  beforeDestroy() {
     window.removeEventListener('resize', this.resize);
   },
-  updated: function updated() {
-    var _this = this;
 
+  updated() {
     this.draw();
-    this.$nextTick(function () {
-      _this.$refs.cancel.style.opacity = _this.opacity;
+    this.$nextTick(() => {
+      this.$refs.cancel.style.opacity = this.opacity;
     });
   },
+
   methods: {
-    resize: function resize() {
-      var timer = null;
+    resize() {
+      let timer = null;
 
-      function re() {
-        var _this2 = this;
-
+      var re = () => {
         if (!timer) {
-          timer = setTimeout(function () {
+          timer = setTimeout(() => {
             timer = null;
-            var width = _this2.$refs.graph.offsetWidth;
-            _this2.width = width - width % 100;
+            let width = this.$refs.graph.offsetWidth;
+            this.width = width - width % 100;
           }, 50);
         }
-      }
+      };
 
-      re.call(this);
+      re();
     },
-    draw: function draw() {
-      var ctx = this.$refs.canvas.getContext("2d");
-      var x = 0;
-      var width = this.width / 200;
+
+    draw() {
+      const ctx = this.$refs.canvas.getContext(`2d`);
+      let x = 0;
+      let width = this.width / 200;
       ctx.clearRect(0, 0, this.width, 60);
 
-      for (var i = 0; i < this.rmsData.length; i++) {
+      for (let i = 0; i < this.rmsData.length; i++) {
         ctx.fillStyle = '#00a4ff';
         ctx.fillRect(i * 2 * width, 30 - this.rmsData[i] / 8, width, this.rmsData[i] / 4 + 1);
       }
     },
-    clear: function clear() {
+
+    clear() {
       this.$emit('onClear');
     }
+
   }
 });
 // CONCATENATED MODULE: ./src/components/assets/recordProgress?vue&type=script&lang=js&
@@ -847,12 +846,10 @@ var recordProgress_component = Object(componentNormalizer["a" /* default */])(
 )
 
 /* harmony default export */ var recordProgress = (recordProgress_component.exports);
-// EXTERNAL MODULE: ./node_modules/extendable-media-recorder/build/es2019/module.js + 966 modules
+// EXTERNAL MODULE: ./node_modules/extendable-media-recorder/build/es2019/module.js + 229 modules
 var es2019_module = __webpack_require__("0319");
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./src/components/chat/input?vue&type=script&lang=js&
-
-
 
 
 
@@ -877,7 +874,7 @@ var es2019_module = __webpack_require__("0319");
     preview: preview["a" /* default */],
     recordProgress: recordProgress
   },
-  data: function data() {
+  data: function () {
     return {
       upload: true,
       test: [],
@@ -906,13 +903,12 @@ var es2019_module = __webpack_require__("0319");
       microphoneDisabled: false
     };
   },
-  inject: ['blockTextSelection', 'unblockTextSelection'],
   watch: {
     usersForKeysHash: {
       //immediate: true,
-      handler: function handler() {}
+      handler: function () {}
     },
-    tipusers: function tipusers() {
+    tipusers: function () {
       if (!this.tipusers.length) {
         this.tipuserindex = 0;
       } else {
@@ -922,14 +918,15 @@ var es2019_module = __webpack_require__("0319");
       }
     }
   },
-  computed: Object(objectSpread2["a" /* default */])(Object(objectSpread2["a" /* default */])({
-    voiceEnable: function voiceEnable() {
+  computed: {
+    voiceEnable() {
       return this.$store.state.voiceMessagesEnabled;
     },
-    connect: function connect() {
+
+    connect: function () {
       return this.$store.state.contact;
     },
-    menuItems: function menuItems() {
+    menuItems: function () {
       var menuItems = [];
 
       if (!this.relationEvent) {
@@ -974,40 +971,38 @@ var es2019_module = __webpack_require__("0319");
       }
 
       return menuItems;
-    }
-  }, Object(vuex_esm["c" /* mapState */])(['chats'])), {}, {
-    userlist: function userlist() {
+    },
+    ...Object(vuex_esm["c" /* mapState */])(['chats']),
+    userlist: function () {
       if (!this.chat) return [];
       return this.core.mtrx.chatUsersInfo(this.chat.roomId, 'anotherChatUsers');
     },
-    transaction: function transaction() {
+    transaction: function () {
       return functions["a" /* default */].deep(window, 'POCKETNETINSTANCE.platform.ui.wallet.send');
     },
-    uusers: function uusers() {
+    uusers: function () {
       if (this.u) {
-        return index_all["default"].map(this.u.split(','), function (u) {
+        return index_all["default"].map(this.u.split(','), u => {
           return u;
         });
       }
 
       return [];
     },
-    ausers: function ausers() {
-      var _this = this;
-
+    ausers: function () {
       if (this.u) {
-        return index_all["default"].map(this.u.split(','), function (u) {
-          return _this.core.user.matrixId(u);
+        return index_all["default"].map(this.u.split(','), u => {
+          return this.core.user.matrixId(u);
         });
       }
 
       return [];
     },
-    stateChat: function stateChat() {
+    stateChat: function () {
       var id = this.$route.query.id;
       return this.$store.state.chatsMap[id];
     },
-    invited: function invited() {
+    invited: function () {
       if (!this.chat) {
         if (this.u) return this.ausers;
         return [];
@@ -1019,12 +1014,12 @@ var es2019_module = __webpack_require__("0319");
         return u.userId;
       });
     },
-    joined: function joined() {
+    joined: function () {
       if (!this.chat) return [];
-      var roomId = this.chat.roomId;
-      var self = this;
-      var arr = [];
-      var members = 0;
+      let roomId = this.chat.roomId;
+      let self = this;
+      let arr = [];
+      let members = 0;
       this.chat.currentState.getMembers().forEach(function (user) {
         if (user.membership === 'join') {
           arr.push(user.userId);
@@ -1032,7 +1027,7 @@ var es2019_module = __webpack_require__("0319");
       });
       return arr;
     },
-    tipusers: function tipusers() {
+    tipusers: function () {
       if (this.tipvalue === null) return [];
       if (this.tipvalue === '') return this.userlist;
       var value = this.tipvalue.toLowerCase();
@@ -1043,22 +1038,23 @@ var es2019_module = __webpack_require__("0319");
 
       return u;
     },
-    maintipuser: function maintipuser() {
+    maintipuser: function () {
       if (this.tipusers.length) {
         return this.tipusers[this.tipuserindex || 0];
       }
 
       return null;
     },
-    recordViewData: function recordViewData() {
+
+    recordViewData() {
       if (this.recordRmsData.length) {
-        var length = this.recordRmsData.length;
-        var step = this.recordRmsData.length / 100;
+        let length = this.recordRmsData.length;
+        let step = this.recordRmsData.length / 100;
 
         if (length > 100) {
-          var result = [];
+          let result = [];
 
-          for (var i = 0; i < 100; i++) {
+          for (let i = 0; i < 100; i++) {
             result.push(this.recordRmsData[Math.round(i * step)]);
           }
 
@@ -1068,27 +1064,29 @@ var es2019_module = __webpack_require__("0319");
 
       return this.recordRmsData;
     }
-  }),
-  created: function created() {},
+
+  },
+
+  created() {},
+
   ///
-  mounted: function mounted() {
+  mounted() {
     this.ready = true;
 
     if (!this.chat && this.core.mtrx.client) {
-      this.newchat().catch(function (e) {
+      this.newchat().catch(e => {
         return Promise.resolve();
       });
     }
   },
-  methods: {
-    wait: function wait() {
-      var _this2 = this;
 
-      return this.$f.pretry(function () {
-        return _this2.core.mtrx.client && _this2.core.mtrx.access;
+  methods: {
+    wait: function () {
+      return this.$f.pretry(() => {
+        return this.core.mtrx.client && this.core.mtrx.access;
       });
     },
-    browsetip: function browsetip(increase) {
+    browsetip: function (increase) {
       increase ? this.tipuserindex++ : this.tipuserindex--;
 
       if (this.tipuserindex > this.tipusers.length - 1) {
@@ -1099,31 +1097,29 @@ var es2019_module = __webpack_require__("0319");
         this.tipuserindex = this.tipusers.length - 1;
       }
     },
-    selectcurrenttip: function selectcurrenttip() {
+    selectcurrenttip: function () {
       this.insertuser(this.tipusers[this.tipuserindex || 0]);
     },
-    insertuser: function insertuser() {
-      var user = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    insertuser: function () {
+      let user = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
       var name = user.name || '';
       this.$refs['newinput'].inserttip(name);
     },
-    tipBySearch: function tipBySearch(value) {
+    tipBySearch: function (value) {
       this.tipvalue = value;
     },
-    showuserselected: function showuserselected(contact, action) {
+    showuserselected: function (contact, action) {
       this[action](contact);
     },
-    sendtransactionWrapper: function sendtransactionWrapper() {
-      var _this3 = this;
-
+    sendtransactionWrapper: function () {
       this.menuIsVisible = false;
 
-      var users = index_all["default"].filter(index_all["default"].map(this.joined, function (j) {
-        return _this3.$f.deep(_this3, '$store.state.users.' + _this3.$f.getmatrixid(j)) || null;
-      }), function (r) {
-        var _this3$core$user$user;
+      var users = index_all["default"].filter(index_all["default"].map(this.joined, j => {
+        return this.$f.deep(this, '$store.state.users.' + this.$f.getmatrixid(j)) || null;
+      }), r => {
+        var _this$core$user$useri;
 
-        return r && r.source && r.id != ((_this3$core$user$user = _this3.core.user.userinfo) === null || _this3$core$user$user === void 0 ? void 0 : _this3$core$user$user.id);
+        return r && r.source && r.id != ((_this$core$user$useri = this.core.user.userinfo) === null || _this$core$user$useri === void 0 ? void 0 : _this$core$user$useri.id);
       });
 
       if (!users.length) {
@@ -1137,8 +1133,8 @@ var es2019_module = __webpack_require__("0319");
           data: {
             users: users,
             action: 'sendtransaction',
-            userselected: function userselected(c) {
-              _this3.showuserselected(c, 'sendtransaction');
+            userselected: c => {
+              this.showuserselected(c, 'sendtransaction');
             }
           }
         });
@@ -1152,7 +1148,7 @@ var es2019_module = __webpack_require__("0319");
 
       this.$refs.dropdownMenu.hidePopup();
     },
-    sendtransaction: function sendtransaction(user) {
+    sendtransaction: function (user) {
       var api = this.transaction; //TODO get address and send transaction
 
       api({
@@ -1160,22 +1156,23 @@ var es2019_module = __webpack_require__("0319");
         address: user.source.address
       });
       /*.then(({txid, from}) => {
-          return this.core.mtrx.transaction(this.chat.roomId, txid)
-        })*/
+         return this.core.mtrx.transaction(this.chat.roomId, txid)
+       })*/
     },
-    emitInputData: function emitInputData() {
+    emitInputData: function () {
       this.$emit('emptyInput');
       this.upload = true;
     },
-    HideUploadPic: function HideUploadPic() {
+
+    HideUploadPic() {
       this.upload = false;
     },
-    emitUrl: function emitUrl(url) {
+
+    emitUrl: function (url) {
       this.$emit('setMetaUrl', url);
     },
-    newchat: function newchat() {
-      var _this4 = this;
 
+    newchat() {
       if (this.u) {
         this.$store.state.globalpreloader = true;
         var matrixId = null;
@@ -1183,27 +1180,25 @@ var es2019_module = __webpack_require__("0319");
         var chat = null;
         var id = '';
         this.creating = true;
-        return this.core.user.usersInfo(this.uusers).then(function (info) {
-          if (_this4.uusers.length == 1) {
+        return this.core.user.usersInfo(this.uusers).then(info => {
+          if (this.uusers.length == 1) {
             var _info = info[0];
 
             if (!_info || !_info.keys || _info.keys.length < 12) {
-              _this4.$emit('cantchatcrypto');
-
+              this.$emit('cantchatcrypto');
               return Promise.reject('ny2');
             }
           }
 
-          if (_this4.core.user.userinfo.keys.length < 12) {
-            _this4.$emit('cantchatcrypto');
-
+          if (this.core.user.userinfo.keys.length < 12) {
+            this.$emit('cantchatcrypto');
             return Promise.reject('ny2');
           } //return Promise.reject('ny3')
 
 
-          id = _this4.core.mtrx.kit.tetatetid(info[0], _this4.core.user.userinfo);
-          matrixId = _this4.core.user.matrixId(info[0].id);
-          myMatrixId = _this4.core.user.matrixId(_this4.core.user.userinfo.id);
+          id = this.core.mtrx.kit.tetatetid(info[0], this.core.user.userinfo);
+          matrixId = this.core.user.matrixId(info[0].id);
+          myMatrixId = this.core.user.matrixId(this.core.user.userinfo.id);
           var initialstate = [{
             "type": "m.set.encrypted",
             "state_key": "",
@@ -1211,37 +1206,34 @@ var es2019_module = __webpack_require__("0319");
               encrypted: true
             }
           }];
-          return _this4.core.mtrx.client.createRoom({
+          return this.core.mtrx.client.createRoom({
             room_alias_name: id,
             visibility: 'private',
             invite: [matrixId],
             name: '#' + id,
             initial_state: initialstate
           });
-        }).then(function (_chat) {
+        }).then(_chat => {
           chat = _chat;
-          _this4.$store.state.globalpreloader = false;
+          this.$store.state.globalpreloader = false;
+          let m_chat = this.core.mtrx.client.getRoom(_chat.room_id);
+          let event = m_chat.currentState.getStateEvents("m.room.power_levels");
+          return this.core.mtrx.client.setPowerLevel(chat.room_id, matrixId, 100, event[0]).catch(e => {});
+        }).then(r => {
+          this.creating = false;
 
-          var m_chat = _this4.core.mtrx.client.getRoom(_chat.room_id);
-
-          var event = m_chat.currentState.getStateEvents("m.room.power_levels");
-          return _this4.core.mtrx.client.setPowerLevel(chat.room_id, matrixId, 100, event[0]).catch(function (e) {});
-        }).then(function (r) {
-          _this4.creating = false;
-
-          if (_this4.connect && _this4.connect == id) {
-            _this4.greetings();
+          if (this.connect && this.connect == id) {
+            this.greetings();
           }
 
-          _this4.$store.commit('CONTACT', false);
-
+          this.$store.commit('CONTACT', false);
           return Promise.resolve();
-        }).catch(function (e) {
-          _this4.creating = false;
-          _this4.$store.state.globalpreloader = false;
+        }).catch(e => {
+          this.creating = false;
+          this.$store.state.globalpreloader = false;
 
           if (e && e.errcode == 'M_ROOM_IN_USE') {
-            return _this4.core.mtrx.client.joinRoom('#' + id + ':' + _this4.core.mtrx.baseUrl.replace("https://", "")).then(function () {}).catch(function (e) {});
+            return this.core.mtrx.client.joinRoom('#' + id + ':' + this.core.mtrx.baseUrl.replace("https://", "")).then(() => {}).catch(e => {});
           }
 
           return Promise.reject(e);
@@ -1250,37 +1242,41 @@ var es2019_module = __webpack_require__("0319");
         return Promise.reject('u');
       }
     },
-    maySendMessage: function maySendMessage() {
+
+    maySendMessage() {
       return this.chat && this.chat.maySendMessage();
     },
-    greetings: function greetings() {
-      this.send('👋').then(function (r) {
+
+    greetings() {
+      this.send('👋').then(r => {
         return Promise.resolve(r);
       });
     },
-    sendinput: function sendinput(text) {
-      this.send(text).then(function (r) {
+
+    sendinput(text) {
+      this.send(text).then(r => {
         return Promise.resolve(r);
       });
     },
-    textCutLimit: function textCutLimit(text, limit) {
+
+    textCutLimit: function (text, limit) {
       text = text.trim();
       if (text.length <= limit) return text;
       text = text.slice(0, limit);
       return text.trim() + "...";
     },
-    replaceMentions: function replaceMentions(text) {
+
+    replaceMentions(text) {
       index_all["default"].each(this.userlist, function (user) {
         text = text.replace(new RegExp('@' + user.name, 'g'), '@' + user.id + ':' + user.name);
       });
 
       return text;
     },
-    send: function send(text) {
-      var _this5 = this;
 
+    send(text) {
       if (!this.chat) {
-        this.newchat().catch(function (e) {});
+        this.newchat().catch(e => {});
       }
 
       this.$emit("sending");
@@ -1289,60 +1285,58 @@ var es2019_module = __webpack_require__("0319");
         this.focus();
       }
 
-      return this.$f.pretry(function () {
-        return _this5.chat && !_this5.creating;
-      }).then(function (r) {
-        _this5.$emit('sent');
+      return this.$f.pretry(() => {
+        return this.chat && !this.creating;
+      }).then(r => {
+        this.$emit('sent');
+        text = this.replaceMentions(text);
 
-        text = _this5.replaceMentions(text);
-
-        if (_this5.relationEvent) {
-          if (_this5.relationEvent.type == 'm.replace' && _this5.relationEvent.event) {
-            return _this5.core.mtrx.textEvent(_this5.chat, text).then(function (r) {
+        if (this.relationEvent) {
+          if (this.relationEvent.type == 'm.replace' && this.relationEvent.event) {
+            return this.core.mtrx.textEvent(this.chat, text).then(r => {
               r['m.relates_to'] = {
                 "rel_type": "m.replace",
-                "event_id": _this5.core.mtrx.clearEventId(_this5.relationEvent.event) || functions["a" /* default */].makeid()
+                "event_id": this.core.mtrx.clearEventId(this.relationEvent.event) || functions["a" /* default */].makeid()
               };
               var editEvent = r;
-              _this5.relationEvent.event.event.content.body = r.body;
-              _this5.relationEvent.event.event.content.block = r.block;
-              _this5.relationEvent.event.event.content.msgtype = r.msgtype;
-              delete _this5.relationEvent.event.event.decryptKey;
-              delete _this5.relationEvent.event.event.decrypted;
-              return _this5.core.mtrx.client.sendEvent(_this5.chat.roomId, 'm.room.message', editEvent);
-            }).then(function (r) {
-              _this5.core.store.dispatch('FETCH_EVENTS');
-
-              _this5.$emit('clearRelationEvent');
-
-              _this5.$emit('force');
-
+              this.relationEvent.event.event.content.body = r.body;
+              this.relationEvent.event.event.content.block = r.block;
+              this.relationEvent.event.event.content.msgtype = r.msgtype;
+              delete this.relationEvent.event.event.decryptKey;
+              delete this.relationEvent.event.event.decrypted;
+              return this.core.mtrx.client.sendEvent(this.chat.roomId, 'm.room.message', editEvent);
+            }).then(r => {
+              this.core.store.dispatch('FETCH_EVENTS');
+              this.$emit('clearRelationEvent');
+              this.$emit('force');
               return Promise.resolve();
-            }).catch(function (e) {
+            }).catch(e => {
               return Promise.reject(e);
             });
           }
         }
 
-        return _this5.core.mtrx.sendtext(_this5.chat, text, {
-          relation: _this5.relationEvent
+        return this.core.mtrx.sendtext(this.chat, text, {
+          relation: this.relationEvent
         });
-      }).catch(function (e) {
-        _this5.$emit('sentMessageError', {
+      }).catch(e => {
+        this.$emit('sentMessageError', {
           error: e
         });
       });
     },
-    pasteImage: function pasteImage(data) {
+
+    pasteImage(data) {
       this.sendImage({
         base64: data
       });
     },
-    sendImage: function sendImage(_ref) {
-      var _this6 = this;
 
-      var base64 = _ref.base64,
-          file = _ref.file;
+    sendImage: function (_ref) {
+      let {
+        base64,
+        file
+      } = _ref;
       var id = functions["a" /* default */].makeid();
       var meta = {
         type: "image",
@@ -1351,29 +1345,27 @@ var es2019_module = __webpack_require__("0319");
       };
       this.$emit("sendingData", meta); //setTimeout(() => {
 
-      this.$f.pretry(function () {
-        return _this6.chat;
-      }).then(function () {
+      this.$f.pretry(() => {
+        return this.chat;
+      }).then(() => {
         if (meta.aborted) return Promise.reject('aborted');
-        return _this6.core.mtrx.sendImage(_this6.chat, base64, null, meta, {
-          relation: _this6.relationEvent
+        return this.core.mtrx.sendImage(this.chat, base64, null, meta, {
+          relation: this.relationEvent
         });
-      }).then(function (r) {
-        _this6.$emit("sentData", {
+      }).then(r => {
+        this.$emit("sentData", {
           id: id
         });
-
         return Promise.resolve();
-      }).catch(function (e) {
-        _this6.$emit('sentError', {
+      }).catch(e => {
+        this.$emit('sentError', {
           id: id,
           error: e
         });
-
         return Promise.resolve();
       }); //}, 5000)
     },
-    canencryptfilesize: function canencryptfilesize(file) {
+    canencryptfilesize: function (file) {
       var s = 10 * 1024 * 1024;
 
       if (!this.chat.pcrypto.canBeEncrypt()) {
@@ -1384,19 +1376,19 @@ var es2019_module = __webpack_require__("0319");
         return this.$dialog.confirm('Files larger than 10 megabytes are not encrypted. Do you want to send the file unencrypted?', {
           okText: 'Yes',
           cancelText: 'No, cancel'
-        }).then(function (dialog) {
+        }).then(dialog => {
           return Promise.resolve(true);
-        }).catch(function (e) {
+        }).catch(e => {
           return Promise.reject('cancel');
         });
       }
 
       return Promise.resolve(false);
     },
-    sendFile: function sendFile(_ref2) {
-      var _this7 = this;
-
-      var file = _ref2.file;
+    sendFile: function (_ref2) {
+      let {
+        file
+      } = _ref2;
       var id = functions["a" /* default */].makeid();
       var meta = {
         type: "file",
@@ -1407,45 +1399,44 @@ var es2019_module = __webpack_require__("0319");
         }
       };
       this.$emit("sendingData", meta);
-      this.$f.pretry(function () {
-        return _this7.chat;
-      }).then(function () {
-        return _this7.canencryptfilesize(file);
-      }).then(function (notenc) {
-        return _this7.core.mtrx.sendFile(_this7.chat, file, meta, {
-          relation: _this7.relationEvent
+      this.$f.pretry(() => {
+        return this.chat;
+      }).then(() => {
+        return this.canencryptfilesize(file);
+      }).then(notenc => {
+        return this.core.mtrx.sendFile(this.chat, file, meta, {
+          relation: this.relationEvent
         }, notenc);
-      }).then(function () {
-        _this7.$emit("sentData", {
+      }).then(() => {
+        this.$emit("sentData", {
           id: id
         });
-
         return Promise.resolve();
-      }).catch(function (e) {
-        _this7.$emit('sentError', {
+      }).catch(e => {
+        this.$emit('sentError', {
           id: id,
           error: e
         });
       });
     },
-    focus: function focus() {
+    focus: function () {
       if (this.$refs['newinput']) this.$refs['newinput'].focus();
     },
-    focused: function focused() {
+    focused: function () {
       this.$emit('focused');
     },
-    blur: function blur() {
+    blur: function () {
       if (this.$refs['newinput']) this.$refs['newinput'].blur();
     },
-    blurifempty: function blurifempty() {
+    blurifempty: function () {
       if (this.$refs['newinput']) this.$refs['newinput'].blurifempty();
     },
-    change: function change() {},
-    setText: function setText(text) {
+    change: function () {},
+    setText: function (text) {
       this.text = text;
       if (this.$refs['newinput']) this.$refs['newinput'].setText(text);
     },
-    keyup: function keyup(evt) {
+    keyup: function (evt) {
       var value = evt.target.value;
 
       if (value === '') {
@@ -1466,30 +1457,37 @@ var es2019_module = __webpack_require__("0319");
 
       if (this.chat) this.core.mtrx.client.sendTyping(this.chat.roomId, true, 100);
     },
-    menuItemClick: function menuItemClick(item, rowObject) {
+
+    menuItemClick(item, rowObject) {
       this[item.click](rowObject);
     },
-    menuItemLoadedHandler: function menuItemLoadedHandler(value) {
+
+    menuItemLoadedHandler: function (value) {
       this.menuIsVisible = value;
       return this.menuIsVisible;
     },
-    uploadStart: function uploadStart(item, files) {},
-    uploadError: function uploadError(item, error) {
+
+    uploadStart(item, files) {},
+
+    uploadError(item, error) {
       this.$store.commit('icon', {
         icon: 'error',
         message: error.text
       });
     },
-    getImg: function getImg() {
+
+    getImg() {
       return this.imgs = true;
     },
-    uploadSizeError: function uploadSizeError(value) {
+
+    uploadSizeError(value) {
       if (!value) {
         this.$refs.dropdownMenu.hidePopup();
       }
     },
-    uploadUploaded: function uploadUploaded(item, data) {
-      var validImageTypes = ['image/gif', 'image/jpeg', 'image/png', 'image/webp'];
+
+    uploadUploaded(item, data) {
+      const validImageTypes = ['image/gif', 'image/jpeg', 'image/png', 'image/webp'];
 
       if (!validImageTypes.includes(data.file.type)) {
         this.sendFile(data);
@@ -1497,10 +1495,11 @@ var es2019_module = __webpack_require__("0319");
         return this.sendImage(data);
       }
     },
-    imageWH: function imageWH(file) {
-      var img = new Image();
+
+    imageWH(file) {
+      const img = new Image();
       var imgInfo = {};
-      return new Promise(function (resolve, reject) {
+      return new Promise((resolve, reject) => {
         img.onload = function () {
           imgInfo.w = this.width;
           imgInfo.h = this.height;
@@ -1514,303 +1513,207 @@ var es2019_module = __webpack_require__("0319");
         img.src = file.base64;
       });
     },
-    uploadUploadedAll: function uploadUploadedAll(item, result) {
+
+    uploadUploadedAll(item, result) {
       this.$store.state.loading = false;
       this.$refs.dropdownMenu.hidePopup();
     },
-    initMediaRecorder: function initMediaRecorder() {
-      var _this8 = this;
 
-      return Object(asyncToGenerator["a" /* default */])( /*#__PURE__*/regenerator_default.a.mark(function _callee() {
-        return regenerator_default.a.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                if (!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia)) {
-                  _context.next = 5;
-                  break;
-                }
+    initMediaRecorder() {
+      var _this = this;
 
-                console.log('getUserMedia supported.');
-                return _context.abrupt("return", navigator.mediaDevices.getUserMedia({
-                  audio: true
-                }).then(function (stream) {
-                  var mediaRecorder = new es2019_module["a" /* MediaRecorder */](stream, {
-                    mimeType: 'audio/wav'
-                  });
-                  mediaRecorder.stream = stream;
-                  return mediaRecorder;
-                }).catch(function (err) {
-                  console.log('The following getUserMedia error occured: ' + err);
-                  this.microphoneDisabled = true;
-                  throw new Error(err);
-                }));
-
-              case 5:
-                console.log('getUserMedia not supported on your browser!');
-                _this8.microphoneDisabled = true;
-                return _context.abrupt("return", false);
-
-              case 8:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee);
-      }))();
+      return Object(asyncToGenerator["a" /* default */])(function* () {
+        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+          console.log('getUserMedia supported.');
+          return navigator.mediaDevices.getUserMedia({
+            audio: true
+          }).then(stream => {
+            let mediaRecorder = new es2019_module["a" /* MediaRecorder */](stream, {
+              mimeType: 'audio/wav'
+            });
+            mediaRecorder.stream = stream;
+            return mediaRecorder;
+          }).catch(function (err) {
+            console.log('The following getUserMedia error occured: ' + err);
+            this.microphoneDisabled = true;
+            throw new Error(err);
+          });
+        } else {
+          console.log('getUserMedia not supported on your browser!');
+          _this.microphoneDisabled = true;
+          return false;
+        }
+      })();
     },
-    initRecording: function initRecording() {
-      var _this9 = this;
 
-      return Object(asyncToGenerator["a" /* default */])( /*#__PURE__*/regenerator_default.a.mark(function _callee3() {
-        return regenerator_default.a.wrap(function _callee3$(_context3) {
-          while (1) {
-            switch (_context3.prev = _context3.next) {
-              case 0:
-                _context3.prev = 0;
+    initRecording() {
+      var _this2 = this;
 
-                if (_this9.mediaRecorder) {
-                  _context3.next = 12;
-                  break;
-                }
+      return Object(asyncToGenerator["a" /* default */])(function* () {
+        try {
+          if (!_this2.mediaRecorder) {
+            _this2.mediaRecorder = yield _this2.initMediaRecorder();
+            _this2.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            _this2.audioAnalyser = _this2.audioContext.createAnalyser();
+            _this2.audioDataArray = new Uint8Array(_this2.audioAnalyser.frequencyBinCount);
 
-                console.log('init recorder');
-                _context3.next = 5;
-                return _this9.initMediaRecorder();
+            _this2.mediaRecorder.ondataavailable = /*#__PURE__*/function () {
+              var _ref3 = Object(asyncToGenerator["a" /* default */])(function* (event) {
+                return _this2.createVoiceMessage(event);
+              });
 
-              case 5:
-                _this9.mediaRecorder = _context3.sent;
-                _this9.audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                _this9.audioAnalyser = _this9.audioContext.createAnalyser();
-                _this9.audioDataArray = new Uint8Array(_this9.audioAnalyser.frequencyBinCount);
+              return function (_x) {
+                return _ref3.apply(this, arguments);
+              };
+            }();
 
-                _this9.mediaRecorder.ondataavailable = /*#__PURE__*/function () {
-                  var _ref3 = Object(asyncToGenerator["a" /* default */])( /*#__PURE__*/regenerator_default.a.mark(function _callee2(event) {
-                    return regenerator_default.a.wrap(function _callee2$(_context2) {
-                      while (1) {
-                        switch (_context2.prev = _context2.next) {
-                          case 0:
-                            return _context2.abrupt("return", _this9.createVoiceMessage(event));
+            _this2.src = _this2.audioContext.createMediaStreamSource(_this2.mediaRecorder.stream);
 
-                          case 1:
-                          case "end":
-                            return _context2.stop();
-                        }
-                      }
-                    }, _callee2);
-                  }));
-
-                  return function (_x) {
-                    return _ref3.apply(this, arguments);
-                  };
-                }();
-
-                _this9.src = _this9.audioContext.createMediaStreamSource(_this9.mediaRecorder.stream);
-
-                _this9.src.connect(_this9.audioAnalyser);
-
-              case 12:
-                if (!(_this9.microphoneDisabled && _this9.mediaRecorder)) {
-                  _context3.next = 15;
-                  break;
-                }
-
-                _this9.microphoneDisabled = false;
-                return _context3.abrupt("return");
-
-              case 15:
-                _this9.isRecording = true;
-                _context3.next = 22;
-                break;
-
-              case 18:
-                _context3.prev = 18;
-                _context3.t0 = _context3["catch"](0);
-                _this9.microphoneDisabled = true;
-                return _context3.abrupt("return", _this9.$dialog.confirm('Access to the microphone is restricted, please check your browser settings.', {
-                  okText: 'Yes'
-                }));
-
-              case 22:
-                _this9.startRecording();
-
-              case 23:
-              case "end":
-                return _context3.stop();
-            }
+            _this2.src.connect(_this2.audioAnalyser);
           }
-        }, _callee3, null, [[0, 18]]);
-      }))();
-    },
-    startRecording: function startRecording() {
-      var _this10 = this;
 
+          if (_this2.microphoneDisabled && _this2.mediaRecorder) {
+            _this2.microphoneDisabled = false;
+            return;
+          }
+
+          _this2.isRecording = true;
+        } catch (e) {
+          _this2.microphoneDisabled = true;
+          return _this2.$dialog.confirm('Access to the microphone is restricted, please check your browser settings.', {
+            okText: 'Yes'
+          });
+        }
+
+        _this2.startRecording();
+      })();
+    },
+
+    startRecording() {
       try {
-        this.blockTextSelection();
         this.cancelOpacity = 0;
         this.recordRmsData = [];
         this.recordTime = 0;
         this.record = null;
-        this.mediaRecorder.stream.getTracks().forEach(function (track) {
-          track.enabled = true;
-        });
         this.mediaRecorder.start();
-        this.interval = setInterval(function () {
-          _this10.dataArray = new Uint8Array(_this10.audioAnalyser.frequencyBinCount);
-
-          _this10.audioAnalyser.getByteFrequencyData(_this10.dataArray);
-
-          _this10.recordRmsData.push(_this10.generateRms(_this10.dataArray));
-
-          _this10.recordTime = _this10.recordTime + 50;
+        this.interval = setInterval(() => {
+          this.dataArray = new Uint8Array(this.audioAnalyser.frequencyBinCount);
+          this.audioAnalyser.getByteFrequencyData(this.dataArray);
+          this.recordRmsData.push(this.generateRms(this.dataArray));
+          this.recordTime = this.recordTime + 50;
         }, 50);
       } catch (e) {
-        this.unblockTextSelection();
         console.log('startRecord', e);
       }
     },
-    createVoiceMessage: function createVoiceMessage(event) {
-      var _this11 = this;
 
-      return Object(asyncToGenerator["a" /* default */])( /*#__PURE__*/regenerator_default.a.mark(function _callee4() {
-        var audioUrl, audio, track, id;
-        return regenerator_default.a.wrap(function _callee4$(_context4) {
-          while (1) {
-            switch (_context4.prev = _context4.next) {
-              case 0:
-                console.log('createVoiceMessage', event);
-                audioUrl = URL.createObjectURL(event.data);
-                audio = new Audio(audioUrl);
-                track = _this11.audioContext.createMediaElementSource(audio);
-                id = functions["a" /* default */].makeid();
-                audio.addEventListener('loadedmetadata', function () {
-                  var getDuration = function getDuration() {
-                    audio.removeEventListener('timeupdate', getDuration);
-                    audio.currentTime = 0;
+    createVoiceMessage(event) {
+      var _this3 = this;
 
-                    if (audio.duration < 1) {
-                      _this11.clear();
+      return Object(asyncToGenerator["a" /* default */])(function* () {
+        const audioUrl = URL.createObjectURL(event.data);
+        const audio = new Audio(audioUrl);
 
-                      return;
-                    }
+        const track = _this3.audioContext.createMediaElementSource(audio);
 
-                    _this11.record.duration = audio.duration.toPrecision(4);
-                  };
+        const id = functions["a" /* default */].makeid();
+        audio.addEventListener('loadedmetadata', () => {
+          const getDuration = () => {
+            audio.removeEventListener('timeupdate', getDuration);
+            audio.currentTime = 0;
 
-                  if (audio.duration === Infinity) {
-                    audio.currentTime = 1e101;
-                    audio.addEventListener('timeupdate', getDuration);
-                  }
-                });
-                _this11.record = {
-                  audio: audio,
-                  file: event.data,
-                  track: track,
-                  id: id,
-                  isPlaying: false
-                };
-                console.log('create message', _this11.record);
+            if (audio.duration < 1) {
+              _this3.clear();
 
-              case 8:
-              case "end":
-                return _context4.stop();
+              return;
             }
+
+            _this3.record.duration = audio.duration.toPrecision(4);
+          };
+
+          if (audio.duration === Infinity) {
+            audio.currentTime = 1e101;
+            audio.addEventListener('timeupdate', getDuration);
           }
-        }, _callee4);
-      }))();
+        });
+        _this3.record = {
+          audio,
+          file: event.data,
+          track,
+          id,
+          isPlaying: false
+        };
+
+        _this3.mediaRecorder.stream.getTracks()[0].stop();
+
+        _this3.mediaRecorder = null;
+      })();
     },
-    generateRms: function generateRms(frequencies) {
-      return +Math.sqrt(frequencies.reduce(function (a, b) {
-        return a + Math.pow(b, 2);
-      }) / frequencies.length).toPrecision(4);
+
+    generateRms(frequencies) {
+      return +Math.sqrt(frequencies.reduce((a, b) => a + b ** 2) / frequencies.length).toPrecision(4);
     },
-    stopRecording: function stopRecording() {
-      this.mediaRecorder.stream.getTracks().forEach(function (track) {
-        track.enabled = false;
-      });
-      this.mediaRecorder.stop();
-      this.isRecording = false;
+
+    stopRecording() {
       clearInterval(this.interval);
-      console.log('stop recording', this.record);
-      this.unblockTextSelection();
+      this.isRecording = false;
+
+      if (this.mediaRecorder) {
+        this.mediaRecorder.stop();
+      }
     },
-    sendVoiceMessage: function sendVoiceMessage() {
-      var _this12 = this;
 
-      return Object(asyncToGenerator["a" /* default */])( /*#__PURE__*/regenerator_default.a.mark(function _callee5() {
-        var base64, id, meta;
-        return regenerator_default.a.wrap(function _callee5$(_context5) {
-          while (1) {
-            switch (_context5.prev = _context5.next) {
-              case 0:
-                _this12.recordRmsData = [];
-                _context5.next = 3;
-                return _this12.convertAudioToBase64(_this12.record.file);
+    sendVoiceMessage() {
+      var _this4 = this;
 
-              case 3:
-                base64 = _context5.sent;
-                id = functions["a" /* default */].makeid();
-                meta = {
-                  type: "audio",
-                  id: id,
-                  base64: base64
-                };
+      return Object(asyncToGenerator["a" /* default */])(function* () {
+        _this4.recordRmsData = [];
+        const base64 = yield _this4.convertAudioToBase64(_this4.record.file);
+        const id = functions["a" /* default */].makeid();
+        const meta = {
+          type: "audio",
+          id: id,
+          base64: base64
+        };
 
-                _this12.$f.pretry(function () {
-                  return _this12.chat;
-                }).then(function () {
-                  return _this12.core.mtrx.sendAudio(_this12.chat, base64, null, meta, {
-                    relation: _this12.relationEvent
-                  });
-                }).catch(function (e) {
-                  _this12.$emit('sentError', {
-                    id: id,
-                    error: e
-                  });
+        _this4.$f.pretry(() => {
+          return _this4.chat;
+        }).then(() => {
+          return _this4.core.mtrx.sendAudio(_this4.chat, base64, null, meta, {
+            relation: _this4.relationEvent
+          });
+        }).catch(e => {
+          _this4.$emit('sentError', {
+            id: id,
+            error: e
+          });
 
-                  return Promise.resolve();
-                });
-
-                console.log('message sended');
-
-              case 8:
-              case "end":
-                return _context5.stop();
-            }
-          }
-        }, _callee5);
-      }))();
+          return Promise.resolve();
+        });
+      })();
     },
-    clear: function clear() {
+
+    clear() {
       this.record = null;
       this.recordRmsData = [];
     },
-    convertAudioToBase64: function convertAudioToBase64(blob) {
-      return Object(asyncToGenerator["a" /* default */])( /*#__PURE__*/regenerator_default.a.mark(function _callee6() {
-        var reader;
-        return regenerator_default.a.wrap(function _callee6$(_context6) {
-          while (1) {
-            switch (_context6.prev = _context6.next) {
-              case 0:
-                reader = new FileReader();
-                reader.readAsDataURL(blob);
-                return _context6.abrupt("return", new Promise(function (resolve) {
-                  reader.onloadend = function () {
-                    resolve(reader.result);
-                  };
-                }));
 
-              case 3:
-              case "end":
-                return _context6.stop();
-            }
-          }
-        }, _callee6);
-      }))();
+    convertAudioToBase64(blob) {
+      return Object(asyncToGenerator["a" /* default */])(function* () {
+        const reader = new FileReader();
+        reader.readAsDataURL(blob);
+        return new Promise(resolve => {
+          reader.onloadend = () => {
+            resolve(reader.result);
+          };
+        });
+      })();
     },
-    setOpacity: function setOpacity(opacity) {
+
+    setOpacity(opacity) {
       this.cancelOpacity = opacity;
     }
+
   }
 });
 // CONCATENATED MODULE: ./src/components/chat/input?vue&type=script&lang=js&

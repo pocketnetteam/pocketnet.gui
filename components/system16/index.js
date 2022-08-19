@@ -1990,7 +1990,7 @@ var system16 = (function(){
 						html : '<i class="fas fa-trash"></i> ' + self.app.localization.e('delete'),
 						fn : function(wnd, wndObj){
 
-							dialog({
+							new dialog({
 								class : 'zindex',
 								html : self.app.localization.e('e13059'),
 								success : function(){
@@ -2172,7 +2172,7 @@ var system16 = (function(){
 
 								if (proxy){
 
-									dialog({
+									new dialog({
 										class : 'zindex',
 										html : self.app.localization.e('e13059'),
 										success : function(){
@@ -2556,7 +2556,7 @@ var system16 = (function(){
 
 								var t = 'Do you really want to remove selected bot from Proxy server bot list?'
 
-								dialog({
+								new dialog({
 									class : 'zindex',
 									html : t,
 									btn1text : self.app.localization.e('dyes'),
@@ -2682,7 +2682,7 @@ var system16 = (function(){
 					
 
 					p.el.find('.closeallwss').on('click', function(){
-						dialog({
+						new dialog({
 							class : 'zindex',
 							html : "Do you really want to close all sockets?",
 							btn1text : self.app.localization.e('dyes'),
@@ -2708,7 +2708,7 @@ var system16 = (function(){
 					})
 
 					p.el.find('.heapdump').on('click', function(){
-						dialog({
+						new dialog({
 							class : 'zindex',
 							html : "Do you really want to make heap dump?",
 							btn1text : self.app.localization.e('dyes'),
@@ -2734,7 +2734,7 @@ var system16 = (function(){
 					})
 
 					p.el.find('.clearrmt').on('click', function(){
-						dialog({
+						new dialog({
 							class : 'zindex',
 							html : "Do you really want to clear RMT cache?",
 							btn1text : self.app.localization.e('dyes'),
@@ -2760,7 +2760,7 @@ var system16 = (function(){
 					})
 
 					p.el.find('.clearcache').on('click', function(){
-						dialog({
+						new dialog({
 							class : 'zindex',
 							html : "Do you really want to clear cache?",
 							btn1text : self.app.localization.e('dyes'),
@@ -2786,7 +2786,7 @@ var system16 = (function(){
 					})
 
 					p.el.find('.clearlogs').on('click', function(){
-						dialog({
+						new dialog({
 							class : 'zindex',
 							html : "Do you really want to clear logs?",
 							btn1text : self.app.localization.e('dyes'),
@@ -2839,7 +2839,7 @@ var system16 = (function(){
 						actions.settings(p.el)
 
 						p.el.find('.todefaultcert').on('click', function(){
-							dialog({
+							new dialog({
 								class : 'zindex',
 								html : "Do you really want to cancel Certificate changes and set Default self-signed Certificate?",
 								btn1text : self.app.localization.e('dyes'),
@@ -2918,7 +2918,7 @@ var system16 = (function(){
 							}
 							
 							if(typeof changes.server.enabledtor != 'undefined' || typeof changes.server.enabled != 'undefined' || changes.server.https || changes.server.wss || changes.server.ssl){
-								dialog({
+								new dialog({
 									class : 'zindex',
 									html : "Do you really want to change this settings?",
 									btn1text : self.app.localization.e('dyes'),
@@ -2938,7 +2938,7 @@ var system16 = (function(){
 
 						p.el.find('.clearfirebase').on('click', function(){
 							
-							dialog({
+							new dialog({
 								class : 'zindex',
 								html : "Do you really want to clear all firebase settings?",
 								btn1text : self.app.localization.e('dyes'),
@@ -3075,7 +3075,7 @@ var system16 = (function(){
 									t = 'Do you really want to remove Your account from Proxy server admin list?'
 								}
 
-								dialog({
+								new dialog({
 									class : 'zindex',
 									html : t,
 									btn1text : self.app.localization.e('dyes'),
@@ -3121,7 +3121,7 @@ var system16 = (function(){
 
 							if (address){
 
-								dialog({
+								new dialog({
 									class : 'zindex',
 									html : 'Do you really want to send 1 PKOIN to this coin distribution address?',
 									btn1text : self.app.localization.e('dyes'),
@@ -3138,7 +3138,7 @@ var system16 = (function(){
 											topPreloader(100);
 
 											if(!err){
-												dialog({
+												new dialog({
 													class : 'one',
 													html : 'Pocketcoins sent to address. They will be available in several minutes',
 												})
@@ -3236,7 +3236,7 @@ var system16 = (function(){
 
 						if (key){
 						
-							dialog({
+							new dialog({
 								class : 'zindex',
 								html : 'Do you really want to remove this private key from coins distribution process?',
 								btn1text : self.app.localization.e('dyes'),
@@ -3292,7 +3292,7 @@ var system16 = (function(){
 					renders.webdistributionwallets(p.el)
 
 					p.el.find('.refreshwallet').on('click', function(){
-						dialog({
+						new dialog({
 							class : 'zindex',
 							html : "Do you really want to refresh wallet?",
 							btn1text : self.app.localization.e('dyes'),
@@ -3471,7 +3471,7 @@ var system16 = (function(){
 					})
 
 					el.c.find('.clearnodesstats').on('click', function(){
-						dialog({
+						new dialog({
 							class : 'zindex',
 							html : "Do you really want to clear nodes history statistic?",
 							btn1text : self.app.localization.e('dyes'),
@@ -3548,7 +3548,7 @@ var system16 = (function(){
 								renders.nodescontenttable(elc)	
 							}
 							else{
-								dialog({
+								new dialog({
 									class : 'zindex',
 									html : "Do you really want to fix selected "+self.app.meta.fullname+" Node?",
 									btn1text : self.app.localization.e('dyes'),
@@ -3566,7 +3566,7 @@ var system16 = (function(){
 						}
 						else{
 
-							dialog({
+							new dialog({
 								class : 'zindex',
 								html : "Do you really want reconnect to selected "+self.app.meta.fullname+" Node?",
 								btn1text : self.app.localization.e('dyes'),
@@ -3623,7 +3623,7 @@ var system16 = (function(){
 							var node = $(this).attr('node')
 
 							
-							dialog({
+							new dialog({
 								class : 'zindex',
 								html : "do you really want to make it possible to use this node?",
 								btn1text : self.app.localization.e('dyes'),
