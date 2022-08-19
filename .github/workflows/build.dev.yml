@@ -5,12 +5,12 @@ on:
 
 jobs:
   
-  build-macos:
-    runs-on: macos-latest
-    steps:
-      - uses: actions/checkout@v1
-      - name: Building dmg
-        uses: .github/actions/build.macos.yml
+  # build-macos:
+  #   runs-on: macos-latest
+  #   steps:
+  #     - uses: actions/checkout@v1
+  #     - name: Building dmg
+  #       uses: ./.github/actions/build.macos
         
   # build-unix:
   #   runs-on: ubuntu-latest

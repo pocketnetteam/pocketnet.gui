@@ -16,7 +16,7 @@ jobs:
           fetch-depth: 0
       - uses: bobvanderlinden/combine-pull-requests@v3
         with:
-          label: deploy-dev
+          label: deploy.dev
           repo-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Prepare merged repo
         run: |
