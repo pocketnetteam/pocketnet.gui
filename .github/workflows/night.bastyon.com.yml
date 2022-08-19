@@ -1,7 +1,10 @@
-name: Deploy to pre.pocketnet.app
+name: Deploy to night.bastyon.com
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - master
 
 jobs:
   build:
@@ -20,4 +23,8 @@ jobs:
           npm run minimize:bastyon
 
       - name: Copy to dest dir
-        run: rsync -ah --exclude={'.git/','.github/','node_modules/'} ./ /docker/pre/
+        run: rsync -ah --exclude={'.git/','.github/','node_modules/'} ./ /docker/night/
+        
+      - name: Reset nginx cache
+        run: /data/reset_cache.sh
+        shell: bash
