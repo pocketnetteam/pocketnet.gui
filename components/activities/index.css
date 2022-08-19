@@ -11,7 +11,7 @@
   margin-bottom: 45px;
   font-size: 36px;
   line-height: 36px;
-  font-weight: 600;
+  font-weight: 300;
 }
 .container .filters {
   display: flex;
@@ -43,6 +43,11 @@
 .container .content {
   margin-top: 25px;
 }
+.container .period {
+  margin: 36px 0;
+  font-weight: 600;
+  line-height: 20px;
+}
 .container .comment {
   padding-bottom: 16px;
   margin-bottom: 16px;
@@ -56,8 +61,23 @@
   display: flex;
   flex-direction: column;
 }
+.container .comment .description .head {
+  line-height: 20px;
+}
 .container .comment .description div:not(:first-child) {
   margin-top: 8px;
+}
+.container .comment .description i {
+  font-size: 16px;
+  line-height: 20px;
+}
+.container .comment .description i.fa-thumbs-up {
+  margin: 8px 0;
+  color: rgb(var(--color-bg-ac-bright));
+}
+.container .comment .description i.fa-thumbs-down {
+  margin: 8px 0;
+  color: rgb(var(--color-txt-red));
 }
 .container .comment .avatar {
   display: flex;

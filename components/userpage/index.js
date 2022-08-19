@@ -65,9 +65,9 @@ var userpage = (function(){
 				name : self.app.localization.e('ractivities'),
 				id : 'activities',
 				report : 'activities',
-				mobile : true,
+				mobile : false,
 				if : function(){
-					return self.app.mobileview && !self.app.curation()
+					return true
 				}
 			})
 			
@@ -79,7 +79,7 @@ var userpage = (function(){
 				mobile : true,
 				openReportPageMobileInWindow : true,
 				if : function(){
-					return self.app.mobileview && !self.app.curation()
+					return true
 				}
 			})
 

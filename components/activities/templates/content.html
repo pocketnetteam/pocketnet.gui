@@ -1,81 +1,110 @@
 <% if(activities) {
-_.each(activities, function(activity){
+
+_.each(activities, function(period, index){
+%>
+<div class="period"><%=e(index)%></div>
+<%
+  _.each(period, function(activity){
+
+  %>
+
+    <% if(activity.txType === 204) { %>
+     <div class="comment">
+      <div class="avatar">
+        <% if(activity?.relatedContent?.account?.avatar){%>
+        <img src="<%-activity.relatedContent.account.avatar%>"/>
+        <%} else {%>
+        <%-activity.relatedContent.account.name[0].toUpperCase()%>
+        <% } %>
+      </div>
+      <div class="description">
+        <div class="head"> <%=e('commented')%> <strong><%-activity.relatedContent.account.name%></strong></div>
+        <% if(activity.description) { %>
+        <div class="message"><%- decodeURIComponent(activity.description.message) %></div>
+        <% } %>
+        <div class="date"><%- activity.date.calendar() %></div>
+      </div>
+    </div>
+    <%}%>
+
+    <% if(activity.txType === 301) { %>
+     <div class="comment">
+      <div class="avatar">
+        <% if(activity?.relatedContent?.account?.avatar){%>
+        <img src="<%-activity.relatedContent.account.avatar%>"/>
+        <%} else {%>
+        <%-activity.relatedContent.account.name[0].toUpperCase()%>
+        <% } %>
+      </div>
+      <div class="description">
+        <div class="head"><%=e(activity.val > 0 ? 'commentscorelike' : 'commentscoredislike')%> <strong><%-activity.relatedContent.account.name%></strong>
+        </div>
+        <% if(activity.description) { %>
+        <div class="message"><%- decodeURIComponent(activity.description.message) %></div>
+        <% } %>
+        <% if(activity.val === 1) { %>
+        <i class="fas fa-thumbs-up"></i>
+        <% } %>
+        <% if(activity.val === -1) { %>
+        <i class="fas fa-thumbs-down"></i>
+        <% } %>
+        <div class="date"><%- activity.date.calendar() %></div>
+      </div>
+    </div>
+    <%}%>
+
+    <% if(activity.txType === 302) { %>
+     <div class="comment">
+      <div class="avatar">
+        <% if(activity?.relatedContent?.account?.avatar){%>
+        <img src="<%-activity.relatedContent.account.avatar%>"/>
+        <%} else {%>
+        <%-activity.relatedContent.account.name[0].toUpperCase()%>
+        <% } %>
+      </div>
+      <div class="description">
+        <div class="head"><%=e('subscribe')%> <strong><%-activity.relatedContent.account.name%></strong></div>
+        <div class="date"><%- activity.date.calendar() %></div>
+      </div>
+    </div>
+    <%}%>
+
+    <% if(activity.txType === 300) { %>
+      <div class="comment">
+      <div class="avatar">
+        <% if(activity?.relatedContent?.account?.avatar){%>
+        <img src="<%-activity.relatedContent.account.avatar%>"/>
+        <%} else {%>
+        <%-activity.relatedContent.account.name[0].toUpperCase()%>
+        <% } %>
+      </div>
+      <div class="description">
+        <div class="head"><%=e('contentscore')%> <strong><%-activity.relatedContent.account.name%></strong></div>
+        <% if(activity.description) { %>
+        <div class="message"><%- decodeURIComponent(activity.description.message) %></div>
+        <% } %>
+        <div class="stars">
+          <%
+          for(i = 0; i < activity.val; i++){
+          %>
+          <i class="fas fa-star"></i>
+          <%}%>
+        </div>
+
+        <div class="date"><%- activity.date.calendar() %></div>
+      </div>
+    </div>
+    <%}%>
+
+  <%
+  })
+  %>
+
+<%
+})
 %>
 
-<% if(activity.txType === 204) { %>
-<div class="comment">
-  <div class="avatar">
-    <% if(activity?.relatedContent?.account?.avatar){%>
-    <img src="<%-activity.relatedContent.account.avatar%>"/>
-    <%} else {%>
-    <%-activity.relatedContent.account.name[0].toUpperCase()%>
-    <% } %>
-  </div>
-  <div class="description">
-    <div class="head"> <%=e('commented')%> <strong><%-activity.relatedContent.account.name%></strong></div>
-    <div class="message"><%- decodeURIComponent(activity.description.message) %></div>
-    <div class="date"><%- activity.date  %></div>
-  </div>
-</div>
-<%}%>
 
-<% if(activity.txType === 301) { %>
-<div class="comment">
-  <div class="avatar">
-    <% if(activity?.relatedContent?.account?.avatar){%>
-    <img src="<%-activity.relatedContent.account.avatar%>"/>
-    <%} else {%>
-    <%-activity.relatedContent.account.name[0].toUpperCase()%>
-    <% } %>
-  </div>
-  <div class="description">
-    <div class="head"><%=e(activity.val > 0 ? 'commentscorelike' : 'commentscoredislike')%> <strong><%-activity.relatedContent.account.name%></strong></div>
-    <div class="message"><%- decodeURIComponent(activity.description.message) %></div>
-    <div class="date"><%- activity.date  %></div>
-  </div>
-</div>
-<%}%>
-
-<% if(activity.txType === 302) { %>
-<div class="comment">
-  <div class="avatar">
-    <% if(activity?.relatedContent?.account?.avatar){%>
-    <img src="<%-activity.relatedContent.account.avatar%>"/>
-    <%} else {%>
-    <%-activity.relatedContent.account.name[0].toUpperCase()%>
-    <% } %>
-  </div>
-  <div class="description">
-    <div class="head"><%=e('subscribe')%> <strong><%-activity.relatedContent.account.name%></strong></div>
-    <div class="date"><%- activity.date  %></div>
-  </div>
-</div>
-<%}%>
-
-<% if(activity.txType === 300) { %>
-<div class="comment">
-  <div class="avatar">
-    <% if(activity?.relatedContent?.account?.avatar){%>
-    <img src="<%-activity.relatedContent.account.avatar%>"/>
-    <%} else {%>
-    <%-activity.relatedContent.account.name[0].toUpperCase()%>
-    <% } %>
-  </div>
-  <div class="description">
-    <div class="head"><%=e('contentscore')%> <strong><%-activity.relatedContent.account.name%></strong></div>
-    <div class="message"><%- decodeURIComponent(activity?.description?.message) %></div>
-    <div class="stars">
-      <%
-      for(i = 0; i < activity.val; i++){
-      %>
-        <i class="fas fa-star"></i>
-      <%}%>
-    </div>
-
-    <div class="date"><%- activity.date  %></div>
-  </div>
-</div>
-<%}%>
 <%
-})}
+}
 %>

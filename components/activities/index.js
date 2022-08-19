@@ -54,8 +54,23 @@ var activities = (function(){
 						if (i.height) {
 
 							let range = (self.app.platform.currentBlock - i.height) / 2
-							i.date = moment().subtract(range, 'minute').calendar();
+							i.date = moment().subtract(range, 'minute');
 						}
+					})
+
+					activities = group(activities, function(n){
+						var currentDate = new Date();
+
+						var d = n.date._d
+						if (d.addMinutes(60) > currentDate) return 'ntlasthour';
+
+						if (d.addMinutes(1440) > currentDate) return 'nttoday';
+						if (d.addMinutes(2880) > currentDate) return 'ntyesterday';
+
+						if (d.getFullYear().toString() + (d.getMonth() + 1).toString() == currentDate.getFullYear().toString() + (currentDate.getMonth() + 1).toString()) return 'ntmounth';
+
+						return 'ntearlier';
+
 					})
 					renders.content()
 					return e

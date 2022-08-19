@@ -1,18 +1,18 @@
 
-
-.container  {
+.container {
   min-height: 70vh;
   border-radius: 6px;
   background: rgb(var(--background-main));
   padding: 1em 4em 2em;
   margin-bottom: 2em;
+
   .title {
     display: block;
     margin-top: 25px;
     margin-bottom: 45px;
     font-size: 36px;
     line-height: 36px;
-    font-weight: 600;
+    font-weight: 300;
   }
 
   .filters {
@@ -20,6 +20,7 @@
     margin: 0 -4em;
     padding: 0 4em 12px;
     border-bottom: solid #E3E4EB 1px;
+
     .tab {
       font-weight: 400;
       cursor: pointer;
@@ -27,9 +28,11 @@
       line-height: 20px;
       margin-right: 24px;
       transition: all .3s ease;
+
       &.active {
         color: #2F80ED;
         position: relative;
+
         &::after {
           position: absolute;
           content: ' ';
@@ -37,14 +40,20 @@
           left: 0;
           width: 100%;
           height: 2px;
-          background-color:#2F80ED;;
+          background-color: #2F80ED;;
         }
       }
 
     }
   }
+
   .content {
     margin-top: 25px;
+  }
+  .period {
+    margin: 36px 0;
+    font-weight: 600;
+    line-height: 20px;
   }
   .comment {
     padding-bottom: 16px;
@@ -52,15 +61,35 @@
     border-bottom: 1px solid #E3E4EB;
     display: flex;
     flex-wrap: nowrap;
+
     .description {
       font-size: 14px;
       line-height: 14px;
       display: flex;
       flex-direction: column;
+      .head {
+        line-height: 20px;
+      }
       & div:not(:first-child) {
         margin-top: 8px;
       }
+
+      i {
+        font-size: 16px;
+        line-height: 20px;
+
+        &.fa-thumbs-up {
+          margin: 8px 0;
+          color: rgb(var(--color-bg-ac-bright));
+        }
+
+        &.fa-thumbs-down {
+          margin: 8px 0;
+          color: rgb(var(--color-txt-red));
+        }
+      }
     }
+
     .avatar {
       display: flex;
       justify-content: center;
@@ -76,24 +105,29 @@
       font-size: 1em;
       position: relative;
       overflow: hidden;
+
       img {
         height: 100%;
         width: 100%;
       }
     }
+
     .message {
       color: rgb(var(--neutral-grad-3));
     }
+
     .date {
       color: rgb(var(--neutral-grad-2));
     }
+
     .stars {
       display: flex;
-        i {
-          width: 20px;
-          color :rgb(var(--color-star-yellow));
-          margin-right: 7px;
-        }
+
+      i {
+        width: 20px;
+        color: rgb(var(--color-star-yellow));
+        margin-right: 7px;
+      }
     }
   }
 }
@@ -107,6 +141,7 @@
     margin-bottom: 2em;
 
   }
+
   .title {
     display: block;
     margin-top: 25px;
@@ -124,9 +159,11 @@
     overflow: auto;
     -ms-overflow-style: none; /* for Internet Explorer, Edge */
     scrollbar-width: none;
+
     &::-webkit-scrollbar {
       display: none !important; /*chrome*/
     }
+
     .tab {
       font-weight: 400;
       cursor: pointer;
@@ -134,9 +171,11 @@
       line-height: 20px;
       margin-right: 24px;
       transition: all .3s ease;
+
       &.active {
         color: #2F80ED;
         position: relative;
+
         &::after {
           position: absolute;
           content: ' ';
@@ -144,30 +183,35 @@
           left: 0;
           width: 100%;
           height: 2px;
-          background-color:#2F80ED;;
+          background-color: #2F80ED;;
         }
       }
 
     }
   }
+
   .content {
     margin-top: 25px;
   }
+
   .comment {
     padding-bottom: 16px;
     margin-bottom: 16px;
     border-bottom: 1px solid #E3E4EB;
     display: flex;
     flex-wrap: nowrap;
+
     .description {
       font-size: 14px;
       line-height: 14px;
       display: flex;
       flex-direction: column;
+
       & div:not(:first-child) {
         margin-top: 8px;
       }
     }
+
     .avatar {
       display: flex;
       justify-content: center;
@@ -183,22 +227,27 @@
       font-size: 1em;
       position: relative;
       overflow: hidden;
+
       img {
         height: 100%;
         width: 100%;
       }
     }
+
     .message {
       color: rgb(var(--neutral-grad-3));
     }
+
     .date {
       color: rgb(var(--neutral-grad-2));
     }
+
     .stars {
       display: flex;
+
       i {
         width: 20px;
-        color :rgb(var(--color-star-yellow));
+        color: rgb(var(--color-star-yellow));
         margin-right: 7px;
       }
     }
