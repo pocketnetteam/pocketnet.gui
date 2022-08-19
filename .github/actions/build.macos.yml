@@ -5,8 +5,6 @@ description: "Build MacOS dmg, Sign, Notirize and save artifact"
 runs:
   using: composite
   steps:
-    - name: Check out Git repository
-      uses: actions/checkout@v1
     - name: Install Node.js, NPM and Yarn
       uses: actions/setup-node@v1
       with:
