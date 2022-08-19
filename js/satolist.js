@@ -22808,7 +22808,7 @@ Platform = function (app, listofnodes) {
         self.request = {
 
             revokeall : function(){
-                console.log('firebase/revokedevice)
+                console.log('firebase/revokedevice')
                 return platform.app.api.fetchauthall('firebase/revokedevice', {
                     device : device()
                 })
