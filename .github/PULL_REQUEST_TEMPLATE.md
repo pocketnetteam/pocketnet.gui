@@ -7,6 +7,7 @@ Pull request must have next naming format:
   - For patches use "patch:" prefix, e.g. "patch: docker image change"
   - For features use "feat:" prefix, e.g. "feat: voice messages"
   - For refactoring use "refactor:" prefix, e.g. "refactor: workflow actions"
+  - For documentation use "docs:" prefix, e.g. "docs: readme.md header logo"
 
 // TODO: Airbnb code style guide
 
