@@ -3067,7 +3067,6 @@ input[type=radio].radio:checked + label {
   width: 30px;
 }
 .preloader5 {
-  contain: strict;
   display: flex;
   justify-content: center;
   align-items: center;

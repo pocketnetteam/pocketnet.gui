@@ -3379,7 +3379,6 @@ var lenta = (function(){
 
 					all : {
 						success : function(){
-
 				
 							renders.mystars(shares)
 
@@ -3624,10 +3623,6 @@ var lenta = (function(){
 								var _w = isMobile() ? self.app.width : el.width();
 								var _h = el.height()
 
-
-								console.log("IMG W", _w)
-
-
 								if(_img.width >= _img.height && (/*!self.app.mobileview && */!essenseData.openapi || image.images.length == 1)){
 									ac = 'w2'
 
@@ -3708,7 +3703,9 @@ var lenta = (function(){
 
 						}
 						else{
-							images.isotope({
+							images.addClass('manyImagesView')
+							isclbk()
+							/*images.isotope({
 								layoutMode: 'packery',
 								itemSelector: '.imagesWrapper',
 								packery: {
@@ -3721,7 +3718,7 @@ var lenta = (function(){
 								isclbk()
 							});
 
-							images.isotope()
+							images.isotope()*/
 						}
 
 						
