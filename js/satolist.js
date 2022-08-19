@@ -28239,9 +28239,7 @@ Platform = function (app, listofnodes) {
                     self.app.mobile.pip.enable(self.app.pipwindow.el)
                 }
                 else{
-                    if (self.app.playingvideo){
-                        self.app.playingvideo.pause()
-                    }
+                    
                 }
 
             }, 200)
@@ -28280,6 +28278,27 @@ Platform = function (app, listofnodes) {
 
                 electron.ipcRenderer.on('pause-message', ufel)
                 electron.ipcRenderer.on('resume-message', f)
+
+
+                electron.ipcRenderer.on('win-cross', () => {
+                    setTimeout(function(){
+
+                        if (self.focus) return
+        
+                        if (self.app.pipwindow && self.app.pipwindow.playerstatus && self.app.pipwindow.playerstatus() == 'playing'){
+                           
+                        }
+                        else{
+                            if (self.app.playingvideo){
+                                self.app.playingvideo.pause()
+                            }
+                        }
+        
+                    }, 200)
+                })
+
+
+                
 
             }
 

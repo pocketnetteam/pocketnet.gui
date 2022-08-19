@@ -600,6 +600,10 @@ function createWindow() {
                     return
                 }
             }
+
+            
+
+            win.webContents.send('win-cross')
             
             win.hide();
             destroyBadge()
