@@ -1,31 +1,34 @@
-name: Deploy Proxy
+name: Deploy Proxy Test
 
 on:
-  push:
-    tags: v*.*.*-proxy
+  workflow_dispatch:
 
 jobs:
   build:
-    if: github.event.base_ref == 'refs/heads/master'
     
     runs-on: ubuntu-latest
     steps:
+      
       - name: Check Out Repo 
         uses: actions/checkout@v2
+        
       - name: Docker meta
         id: meta
         uses: docker/metadata-action@v3
         with:
           images: ${{ secrets.DOCKER_HUB_USERNAME }}/proxy
-          tags: type=ref,event=tag
+          tags: type=raw,value=test
+          
       - name: Login to Docker Hub
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+          
       - name: Set up Docker Buildx
         id: buildx
         uses: docker/setup-buildx-action@v1
+        
       - name: Cache Docker layers
         uses: actions/cache@v2
         with:
@@ -33,6 +36,7 @@ jobs:
           key: ${{ runner.os }}-buildx-${{ github.sha }}
           restore-keys: |
             ${{ runner.os }}-buildx-
+            
       - name: Build and push
         id: docker_build
         uses: docker/build-push-action@v2
@@ -44,6 +48,7 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
+          
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
   
@@ -52,10 +57,10 @@ jobs:
     runs-on: ${{ matrix.runner }}
     strategy:
       matrix:
-        runner: [ proxy.1, proxy.2, proxy.3, proxy.4, proxy.5, proxy.6 ]
+        runner: [ proxy.test ]
     steps:
       - name: Pull && Up proxy container
-        run: /data/proxy_pull_up.sh
+        run: /data/proxy_test_pull_up.sh
         shell: bash
       - name: Reset nginx cache
         run: /data/reset_cache.sh
