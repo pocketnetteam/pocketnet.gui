@@ -55,11 +55,13 @@ var statistic = (function () {
         selectedPeriod.from.date = e.target.value
         selectedPeriod.from.block = Math.floor((moment().unix() - moment(e.target.value).unix()) / 60)
         renders.form()
+        actions.getStat()
       },
       to: function (e) {
         selectedPeriod.to.date = e.target.value
         selectedPeriod.to.block = Math.floor((moment().unix() - moment(e.target.value).unix()) / 60) - 1439
         renders.form()
+        actions.getStat()
       }
     }
 
@@ -75,11 +77,6 @@ var statistic = (function () {
             period: selectedPeriod,
           },
         }, function (_p) {
-          _p.el.find('.button').on('click', (e) => {
-            e.preventDefault()
-            actions.getStat()
-          });
-
           _p.el.find('.from').on('change', actions.from)
           _p.el.find('.to').on('change', actions.to)
         })
