@@ -14,7 +14,7 @@ jobs:
         with:
           ref: master
           fetch-depth: 0
-      - uses: andyoknen/combine-pull-requests@v1
+      - uses: andyoknen/combine-pull-requests@v2
         with:
           label: deploy.dev
           repo-token: ${{ secrets.GITHUB_TOKEN }}
