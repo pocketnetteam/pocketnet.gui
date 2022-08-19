@@ -8,9 +8,9 @@ jobs:
   build-macos:
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v1
       - name: Building dmg
-        uses: ./.github/actions/build.macos.yml
+        uses: .github/actions/build.macos.yml
         
   # build-unix:
   #   runs-on: ubuntu-latest
