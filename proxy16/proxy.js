@@ -888,6 +888,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					{
 						host : 'peertube19mirror.pocketnet.app',
 						ip: '64.235.50.17',
+						cantuploading: true,
 					}
 				],
 
