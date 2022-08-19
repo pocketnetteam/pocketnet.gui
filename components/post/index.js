@@ -517,7 +517,12 @@ var post = (function () {
 
 						PlyrEx(el2, options, (_player) => {
 
-							if(!el.c) return
+
+							if(!el.c) {
+								_player.destroy()
+								console.log("Shadow player clbk")
+								return
+							}
 
 							player = _player
 

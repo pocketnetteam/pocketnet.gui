@@ -179,6 +179,35 @@ function quit(){
     app.quit()
 }
 
+function destroyAppSafe(){
+    if (ipcbridge)
+        ipcbridge.destroy()
+
+    // Check safe destroy
+    if (proxyInterface){
+        proxyInterface.candestroy().then(e => {
+            if (!e.includes('nodeControl')) { // Destroy all
+                destroyApp()
+            } else { // Need first stop node
+                dialog.showMessageBox(null, {
+                    type: 'question',
+                    buttons: ['Cancel', 'Yes, close'],
+                    defaultId: 1,
+                    title: 'Warning',
+                    message: 'Your node is running. Close the app anyway?',
+                }).then(r => {
+                    if (r.response == 1) {
+                        proxyInterface.nodeStop().then(e => {
+                            destroyApp()
+                        })
+                    }
+                })
+            }
+
+        })
+    }
+}
+
 function destroyApp() {
     proxyInterface.destroy().then(r => {
         quit()
@@ -202,7 +231,7 @@ function createTray() {
     tray.setToolTip(appName);
 
     var contextMenu = Menu.buildFromTemplate([{
-        role: 'unhide',
+        label: 'Open',
         click: function() {
             if(is.macOS()){
                 if(win.isDestroyed())
@@ -214,34 +243,11 @@ function createTray() {
             }
         }
     }, {
-        role: 'quit',
+        label: 'Quit',
         click: function() {
 
-            if (ipcbridge)
-                ipcbridge.destroy()
-
-            // Check safe destroy
-            if (proxyInterface)
-                proxyInterface.candestroy().then(e => {
-                    if (!e.includes('nodeControl')) { // Destroy all
-                        destroyApp()
-                    } else { // Need first stop node
-                        dialog.showMessageBox(null, {
-                            type: 'question',
-                            buttons: ['Cancel', 'Yes, close'],
-                            defaultId: 1,
-                            title: 'Warning',
-                            message: 'Your node is running. Close the app anyway?',
-                        }).then(r => {
-                            if (r.response == 1) {
-                                proxyInterface.nodeStop().then(e => {
-                                    destroyApp()
-                                })
-                            }
-                        })
-                    }
-
-                })
+            destroyAppSafe()
+                
         }
     }]);
 
@@ -490,7 +496,7 @@ function createWindow() {
                     label: 'Quit',
                     accelerator: 'Cmd+Q',
                     click: async () => {
-                      quit()
+                      destroyAppSafe()
                     }
                 }
               ]
@@ -597,6 +603,7 @@ function createWindow() {
             
             win.hide();
             destroyBadge()
+            
         } else {
             destroyBadge()
             destroyTray()
