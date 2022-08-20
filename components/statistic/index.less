@@ -5,6 +5,9 @@
     max-width: 700px;
     font-size: 2em;
     font-weight: 100;
+    @media only screen and (max-width: 768px) {
+      font-size: 1.5em;
+    }
   }
 
   .metric-wrapper {
@@ -18,7 +21,6 @@
     flex-wrap: wrap;
     padding-bottom: 100px;
     justify-content: space-between;
-    margin-right: 0.5em;
     -moz-transition: .3s;
     -o-transition: .3s;
     -webkit-transition: .3s;
@@ -33,12 +35,13 @@
       transition: 0.3s ease all;
       cursor: pointer;
       & > div {
+        height: 100%;
         background: rgb(var(--background-secondary-theme));
         padding: .5em;
         span {
           display: block;
           font-size: 12px;
-          min-height: 36px;
+          min-height: 50px;
         }
       }
       @media only screen and (max-width: 992px) {
@@ -46,7 +49,7 @@
       }
       @media only screen and (max-width: 768px) {
         width: 100%;
-        padding: 0;
+        padding: 0 0 .5em;
         & > div {
           padding: .5em 1em;
           margin-bottom: 0.5em;
@@ -71,39 +74,46 @@
     flex-wrap: wrap;
     padding: 2em 0;
   }
-  form {
+  .form {
     display: flex;
-    align-items: center;
-    color: rgb(var(--neutral-grad-3));
-    -webkit-tap-highlight-color: transparent;
-    label {
+    form {
       display: flex;
       align-items: center;
-      margin-right: 0.5em;
-
-      input {
-        margin-left: 1em;
-        padding: 5px;
-        border: none;
-        outline: none;
-        background-color: rgb(var(--background-secondary-theme));
-        border-radius: 5px;
+      color: rgb(var(--neutral-grad-3));
+      -webkit-tap-highlight-color: transparent;
+      label {
+        display: flex;
+        align-items: center;
+        margin-right: 0.5em;
+        input {
+          margin-left: .5em;
+          padding: 5px;
+          border: none;
+          outline: none;
+          max-width: 120px;
+          border-radius: 5px;
+          background-color: rgb(var(--text-on-bg-ac-color));
+        }
+        ::-webkit-calendar-picker-indicator {
+          background-color: rgb(var(--background-main));
+          padding: 5px;
+          border-radius: 5px;
+          cursor: pointer;
+        }
       }
-      ::-webkit-calendar-picker-indicator {
-        background-color: rgb(var(--text-on-bg-ac-color));
-        padding: 5px;
-        border-radius: 5px;
-        cursor: pointer;
+
+      @media only screen and (max-width: 992px) {
+        margin: 1em 0 0;
+      }
+
+      @media only screen and (max-width: 768px) {
+        //flex-wrap: wrap;
+        width: 100%;
+        justify-content: space-between;
       }
     }
-
-    @media only screen and (max-width: 992px) {
-      margin: 1em 0 0;
-    }
-
     @media only screen and (max-width: 768px) {
-      flex-wrap: wrap;
-      justify-content: center;
+      width: 100%;
     }
   }
 }

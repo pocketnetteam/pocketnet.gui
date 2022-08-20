@@ -146,7 +146,14 @@ var ustate = (function(){
 						clbk()
 				})
 			},
-
+			statistic : function(){
+				self.app.nav.api.load({
+					open: true,
+					id : 'statistic',
+					el : el.c.find('.stat'),
+					animation: false
+				})
+			},
 			lowlimits : function(clbk){
 
 				var lowlimits = self.app.platform.sdk.ustate.haslowlimits(mestate)
@@ -295,8 +302,10 @@ var ustate = (function(){
 
 							el.ustatecontent = el.c.find('.ustatecontent')
 							el.lowlimits = el.c.find('.lowlimits')
+							el.stat = el.c.find('.stat')
 	
 							renders.ustatecontent()
+							renders.statistic()
 							renders.reputationsteps()
 							renders.lowlimits()
 	
