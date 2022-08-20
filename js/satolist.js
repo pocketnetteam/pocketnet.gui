@@ -22621,7 +22621,7 @@ Platform = function (app, listofnodes) {
         //var FirebasePlugin = new FakeFirebasePlugin()
 
         var using = typeof window != 'undefined' && window.cordova && typeof FirebasePlugin != 'undefined';
-        var usingWeb = typeof window != 'undefined' && typeof _Electron === 'undefined' || !window.cordova
+        var usingWeb = typeof window != 'undefined' && typeof _Electron === 'undefined' && !window.cordova && typeof firebase != 'undefined'
 
         var currenttoken = null;
 
@@ -22889,16 +22889,27 @@ Platform = function (app, listofnodes) {
 
 
             }else if(usingWeb) {
-                const messaging = firebase.messaging();
-                messaging.getToken().then(token=>{
-                    currenttoken = token
-                    platform.fcmtoken = token
-                    platform.matrixchat.changeFcm()
-                    self.events()
 
-                    if (clbk)
-                            clbk(token)
-                })
+                try{
+                    const messaging = firebase.messaging();
+
+
+                    messaging.getToken().then(token=>{
+                        currenttoken = token
+                        platform.fcmtoken = token
+                        platform.matrixchat.changeFcm()
+                        self.events()
+
+                        if (clbk)
+                                clbk(token)
+                    }).catch(e => {
+                        console.log("E", e)
+                    })
+                }
+                catch (e) {
+                    console.log("E", e)
+                }
+                
             }
         }
 
@@ -22920,10 +22931,12 @@ Platform = function (app, listofnodes) {
 
                 });
             }else if (usingWeb){
+
                 const messaging = firebase.messaging();
                 messaging.requestPermission().then(perm=>{
                     self.get(clbk)
                 })
+
             }
         }
 
@@ -23141,11 +23154,17 @@ Platform = function (app, listofnodes) {
         }
 
         self.init = function(clbk){
-            self.prepare(function(token){
-                prepareclbk(token)
-            })
 
             if(clbk) clbk()
+
+            setTimeout(() => {
+                self.prepare(function(token){
+                    prepareclbk(token)
+                })
+            }, 20)
+            
+
+            
         }
 
         self.prepare = function(clbk){

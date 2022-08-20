@@ -5,13 +5,16 @@ if(typeof _Electron != 'undefined'){
     pwaFetch = (...args) => proxyFetch(...args);
 }
 if ('serviceWorker' in navigator) {
-    firebase.initializeApp({
-        messagingSenderId: "1020521924918"
-    });
+    if(typeof firebase != 'undefined')
+        firebase.initializeApp({
+            messagingSenderId: "1020521924918"
+        });
 
     navigator.serviceWorker.register('./service-worker.js').then(function (registration) {
         console.log('Service worker registration succeeded:', registration);
-        firebase.messaging().useServiceWorker(registration);
+        if(typeof firebase != 'undefined')
+
+            firebase.messaging().useServiceWorker(registration);
     }, /*catch*/ function (error) {
         console.log('Service worker registration failed:', error);
     });

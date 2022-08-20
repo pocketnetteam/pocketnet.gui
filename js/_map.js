@@ -64,7 +64,9 @@ __map =  {
 		"js/vendor/hammer.min.js",
 		"js/vendor/owl/owl.carousel.min.js",
 		{path : "js/vendor/shadow-popup/popup.js", babelify : true},
-		"js/popups/index.js"
+		"js/popups/index.js",
+		"js/vendor/firebase-app.js",
+		"js/vendor/firebase-messaging.js",
 	],
 
 	__sourcesfirst : [
@@ -95,6 +97,10 @@ __map =  {
 		{path : "js/navn.js", babelify : true},
 		{path : "js/validation.js", babelify : true},
 		{path : "js/kit.js", babelify : true},
+		
+
+		
+
 		{path : "js/satolist.js", babelify : true},
 		{path : "js/peertube.js", babelify : true},
 		{path : "js/widgets.js", babelify : true},
