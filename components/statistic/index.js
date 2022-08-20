@@ -52,14 +52,16 @@ var statistic = (function () {
       },
 
       from: function (e) {
-        selectedPeriod.from.date = e.target.value
-        selectedPeriod.from.block = Math.floor((moment().unix() - moment(e.target.value).unix()) / 60)
+        selectedPeriod.from.date = e.target ? e.target.value : e
+        selectedPeriod.from.block = Math.floor((moment(selectedPeriod.to.date).unix() - moment(selectedPeriod.from.date).unix()) / 60)
+
         renders.form()
         actions.getStat()
       },
       to: function (e) {
         selectedPeriod.to.date = e.target.value
         selectedPeriod.to.block = Math.floor((moment().unix() - moment(e.target.value).unix()) / 60) - 1439
+        selectedPeriod.from.date? actions.from(selectedPeriod.from.date): actions.from('2022-07-01')
         renders.form()
         actions.getStat()
       }
