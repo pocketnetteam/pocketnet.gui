@@ -299,7 +299,7 @@ html.testpocketnet .testpocketnetbg {
 [image][visibleimage] {
   opacity: 1;
 }
-[image="*"] {
+[imageloaded="true"] {
   opacity: 1;
 }
 .joypixels,

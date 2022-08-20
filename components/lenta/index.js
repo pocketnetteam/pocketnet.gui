@@ -1446,7 +1446,6 @@ var lenta = (function(){
 
 			fullScreenVideo : function(id, clbk, auto){
 
-				console.log('fullScreenVideo', id)
 				if (fullscreenvideoShowing) { return }
 				if (fullscreenvideoShowed) { return }
 				if (essenseData.openapi){ return }
@@ -1468,8 +1467,6 @@ var lenta = (function(){
 					share.temp = true;
 					share.address = self.app.platform.sdk.address.pnet().address
 				}*/
-
-				console.log('fullScreenVideo2', id)
 
 
 				actions.initVideo(share, function(res){
@@ -3053,22 +3050,17 @@ var lenta = (function(){
 					var promises = []
 
 					promises.push(new Promise((resolve, reject) => {
-						console.log("STARS")
 
 						renders.stars(share, () => {
-							console.log("STARS2")
 							resolve()
 						})
 					}))
 
 					if(!share.temp && !share.relay){
 
-						console.log("GOCOMMENTS")
-
 						promises.push(new Promise((resolve, reject) => {
 
 							renders.comments(share.txid, false, false, true, () => {
-								console.log("GOCOMMENTS2")
 								resolve()
 							})
 						}))
@@ -3076,7 +3068,6 @@ var lenta = (function(){
 					}
 
 					promises.push(new Promise((resolve, reject) => {
-						console.log("GOURL")
 
 						renders.url(p.el.find('.url'), share.url, share, function(){
 
@@ -3092,9 +3083,6 @@ var lenta = (function(){
 								if(isotopeinited) el.shares.isotope()
 	
 								shareInitingMap[share.txid] = false;	
-
-								console.log("GOURL2")
-								
 								
 								resolve()
 												
@@ -3111,18 +3099,14 @@ var lenta = (function(){
 
 					if (!video) {
 						promises.push(new Promise((resolve, reject) => {
-							console.log("IMAGES")
 							renders.images(p.el.find('.postcontent'), share, () => {
-								console.log("IMAGES2")
 								resolve()
 							})
 						}))
 						
 						if (share.itisarticle()){
 							promises.push(new Promise((resolve, reject) => {
-								console.log("ARTICLE")
 								renders.articlespart(p.el.find('.sharearticle'), share, () => {
-									console.log("ARTICLE2")
 									resolve()
 								})
 							}))
@@ -3142,16 +3126,10 @@ var lenta = (function(){
 						}
 					}
 
-					var bytime = false
-					var pr = false
-
-					var t = (new Date).getTime()
 
 					Promise.all(promises).catch(e => {}).then(() => {
 						pr = true
-						if(!bytime)
-							console.log("ALLRENDERED", (new Date).getTime() - t)
-
+					
 						if(!p.el.hasClass('rendered'))
 							p.el.addClass('rendered')
 					})
@@ -3160,12 +3138,13 @@ var lenta = (function(){
 
 					if(!index) time = 300
 
+					console.log('p.el.find(".shareImages").length', p.el.find(".shareImages").length)
+
+					if(p.el.find(".shareImages .image").length > 1) p.el.addClass('rendered')
+
 
 					setTimeout(() => {
 						bytime = true
-
-						if(!pr)
-							console.log("ALLRENDEREDTIME")
 
 						if(!p.el.hasClass('rendered'))
 							p.el.addClass('rendered')
@@ -3623,6 +3602,8 @@ var lenta = (function(){
 								var _w = isMobile() ? self.app.width : el.width();
 								var _h = el.height()
 
+								console.log('_img.width, _img.height', _img.width, _img.height)
+
 								if(_img.width >= _img.height && (/*!self.app.mobileview && */!essenseData.openapi || image.images.length == 1)){
 									ac = 'w2'
 
@@ -3681,6 +3662,9 @@ var lenta = (function(){
 						if (isMobile() || essenseData.openapi) {
 
 							if(carousels[s.txid]) carousels[s.txid].owlCarousel('destroy')
+
+
+							console.log('cwidth', cwidth)
 
 							carousels[s.txid] = sel.find('.imagesContainer').height(ch + 50).owlCarousel({
 								items: 1,
@@ -4964,7 +4948,6 @@ var lenta = (function(){
 
 				setTimeout(() => {
 
-					console.log("???")
 					if (el.loader)
 						el.loader.removeClass('loading')
 				}, 2000)

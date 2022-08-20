@@ -332,7 +332,10 @@
     var url = elem.getAttribute('image'), self = this
 
     if (url) url == '*' ? url = elem.getAttribute('data-image') : elem.setAttribute('data-image', url)
-    if(!url) return
+    if(!url) {
+      elem.setAttribute('imageloaded', 'true')
+      return
+    }
 
     var ban = (elem.getAttribute('ban') || '').split(',')
 
@@ -558,6 +561,10 @@
   ImageAttrImage.prototype.confirm = function( isLoaded, message ) {
     this.isLoaded = isLoaded;
     this.emitEvent( 'progress', [ this, this.element, message ] );
+
+    if(isLoaded){
+      this.element.setAttribute('imageloaded', 'true')
+    }
   };
   
   // -------------------------- Background -------------------------- //
