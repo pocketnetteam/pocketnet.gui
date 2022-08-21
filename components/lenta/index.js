@@ -3086,8 +3086,7 @@ var lenta = (function(){
 								
 								resolve()
 												
-								if (clbk)
-									clbk();
+								
 	
 							});
 	
@@ -3126,28 +3125,30 @@ var lenta = (function(){
 						}
 					}
 
+					var c = function(){
 
-					Promise.all(promises).catch(e => {}).then(() => {
-						pr = true
-					
 						if(!p.el.hasClass('rendered'))
 							p.el.addClass('rendered')
+
+						if (clbk)
+							clbk();
+
+							clbk = null
+					}
+
+
+					Promise.all(promises).catch(e => {}).then(() => {
+						c()
 					})
 
 					var time = 3000
 
 					if(!index) time = 300
 
-					console.log('p.el.find(".shareImages").length', p.el.find(".shareImages").length)
-
 					if(p.el.find(".shareImages .image").length > 1) p.el.addClass('rendered')
 
-
 					setTimeout(() => {
-						bytime = true
-
-						if(!p.el.hasClass('rendered'))
-							p.el.addClass('rendered')
+						c()
 					}, time)
 					
 				})

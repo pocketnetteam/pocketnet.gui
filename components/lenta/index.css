@@ -637,11 +637,13 @@
 }
 /*t*/
 @media only screen and (max-width: 768px) {
+  #lenta.horizontal.compact {
+    /*.share_common .jsPlayerPreview .wpl{
+					opacity: 1;
+				}*/
+  }
   #lenta.horizontal.compact.mainvideo .shares .formeta {
     margin-left: 0.25em;
-  }
-  #lenta.horizontal.compact .share_common .jsPlayerPreview .wpl {
-    opacity: 1;
   }
   #lenta .loadprev.fxdp {
     position: fixed;
