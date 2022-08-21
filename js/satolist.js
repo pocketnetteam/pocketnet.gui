@@ -22808,7 +22808,6 @@ Platform = function (app, listofnodes) {
         self.request = {
 
             revokeall : function(){
-                console.log('firebase/revokedevice')
                 return platform.app.api.fetchauthall('firebase/revokedevice', {
                     device : device()
                 })
@@ -22816,21 +22815,18 @@ Platform = function (app, listofnodes) {
             },
 
             info : function(proxy){
-                console.log('firebase/info')
                 return platform.app.api.fetchauth('firebase/info', {}, {
                     proxy : proxy
                 })
             },
 
             mytokens : function(proxy){
-                console.log('firebase/mytokens')
                 return platform.app.api.fetchauth('firebase/mytokens', {}, {
                     proxy : proxy
                 })
             },
 
             revoke: function (token, proxy) {
-                console.log('firebase/revoke')
                 return platform.app.api.fetchauth('firebase/revoke', {
                     token
                 }, {
@@ -22840,7 +22836,6 @@ Platform = function (app, listofnodes) {
             },
 
             revokeDevice: function (proxy) {
-                console.log('firebase/revokedevice')
                 return platform.app.api.fetchauth('firebase/revokedevice', {
                     device : device()
                 }, {
@@ -22851,8 +22846,6 @@ Platform = function (app, listofnodes) {
             },
 
             setToken: function (token, proxy) {
-
-                console.log('firebase/set')
                 return platform.app.api.fetchauth('firebase/set', {
                     device : device(),
                     token : token,
@@ -22895,6 +22888,7 @@ Platform = function (app, listofnodes) {
 
 
                     messaging.getToken().then(token=>{
+                        console.log("GET ", token)
                         currenttoken = token
                         platform.fcmtoken = token
                         platform.matrixchat.changeFcm()
@@ -22935,6 +22929,9 @@ Platform = function (app, listofnodes) {
                 const messaging = firebase.messaging();
                 messaging.requestPermission().then(perm=>{
                     self.get(clbk)
+                }).catch(e=>{
+                    usingWeb = false;
+                    console.log("Disabled firebase permissions")
                 })
 
             }
@@ -23157,14 +23154,10 @@ Platform = function (app, listofnodes) {
 
             if(clbk) clbk()
 
-            setTimeout(() => {
-                self.prepare(function(token){
-                    prepareclbk(token)
-                })
-            }, 20)
-            
+            self.prepare(function(token){
+                prepareclbk(token)
+            })
 
-            
         }
 
         self.prepare = function(clbk){

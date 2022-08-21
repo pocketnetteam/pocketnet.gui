@@ -5,29 +5,33 @@ class Notifications{
         this.proxy = proxy;
         this.firebase = firebase;
         this.nodeManager = nodeManager;
+        this.lastBlock = "";
         // this.test()
         return this;
     }
 
     async sendBlock(block, reRequest){
         try {
-            const node = this.nodeManager.selectProbabilityByVersion();
-            // const notifications = await this.proxy.nodeControl.request.getNotifications([block.height])
-            if(node) {
-                const notifications = await node.rpcs("getnotifications", [block.height])
-                for (const type of Object.keys(notifications)) {
-                    if (type === 'pocketnetteam') {
-                        for (const notification of notifications?.[type] || []) {
-                            await this.firebase.sendToAll(notification)
-                        }
-                    } else {
-                        for (const address of Object.keys(notifications?.[type] || [])) {
-                            for (const notification of notifications?.[type]?.[address] || []) {
-                                await this.firebase.sendToDevices(notification, null, address)
+            if(this.lastBlock!==block.height) {
+                const node = this.nodeManager.selectProbabilityByVersion();
+                // const notifications = await this.proxy.nodeControl.request.getNotifications([block.height])
+                if (node) {
+                    const notifications = await node.rpcs("getnotifications", [block.height])
+                    for (const type of Object.keys(notifications)) {
+                        if (type === 'pocketnetteam') {
+                            for (const notification of notifications?.[type] || []) {
+                                await this.firebase.sendToAll(notification)
+                            }
+                        } else {
+                            for (const address of Object.keys(notifications?.[type] || [])) {
+                                for (const notification of notifications?.[type]?.[address] || []) {
+                                    await this.firebase.sendToDevices(notification, null, address)
+                                }
                             }
                         }
                     }
                 }
+                this.lastBlock = block.height
             }
         }catch (e){
             if(!reRequest){

@@ -327,6 +327,7 @@ var Firebase = function(p){
         addToken : function({
             token, device, U, id
         }){
+            console.log("Change token user: ", token)
             var date = f.time()
             var fbtoken = new Fbtoken({token, device, address : U, id, date})
             if(!fbtoken.check()) return Promise.reject('checkToken')
@@ -460,11 +461,11 @@ var Firebase = function(p){
     }
 
     self.send = function({
-        data, user
+        data, users
     }){
 
 
-        if(!data || !user) return Promise.reject('empty')
+        if(!data || !users?.length) return Promise.reject()
 
         if(!self.app) return Promise.reject('app')
 
@@ -489,56 +490,53 @@ var Firebase = function(p){
         if (data.type && !m) m = messages[data.type]
 
         if (m){
-            var notification = m(data, user)
+            var notification = m(data)
+            var tokens = users?.map(el=>el.tokens) || []
+            if (notification) {
+                for (let i = 0; i < tokens.length; i += 999) {
+                    const maxSizeTokens = tokens.slice(i, 999);
 
-            if (notification){
-                
-                var message = {
+                    var message = {
 
-                    data: {json: JSON.stringify(data)},
-                    token: user.token,
-                    notification : notification,
-                    android : { 
+                        data: {json: JSON.stringify(data)},
+                        tokens: maxSizeTokens,
+                        notification: notification,
+                        android: {
 
-                        notification: {
-                            priority : "MAX",
-                            visibility : "PUBLIC",
-                            icon: 'notification_icon',
-                            color : '#00A3F7',
-                            defaultSound : "true",
-                            defaultVibrateTimings : "true",
-                            ticker : "Pocketnet"
-                        }
-                    },
-                    apns: {
-                        payload: {
-                            aps: {
-                                sound: 'default',
-                                'content-available': '1'
+                            notification: {
+                                priority: "MAX",
+                                visibility: "PUBLIC",
+                                icon: 'notification_icon',
+                                color: '#00A3F7',
+                                defaultSound: "true",
+                                defaultVibrateTimings: "true",
+                                ticker: "Pocketnet"
+                            }
+                        },
+                        apns: {
+                            payload: {
+                                aps: {
+                                    sound: 'default',
+                                    'content-available': '1'
+                                }
                             }
                         }
-                    }
 
-                };
+                    };
 
-                return admin.messaging().send(message).then((response) => {
-                    return Promise.resolve(response)
-                })
-                .catch((error) => {
-
-                    if (f.deep(error,'errorInfo.code') == 'messaging/registration-token-not-registered' ||
-                        f.deep(error,'errorInfo.code') == 'messaging/invalid-argument'){
-
-                        self.kit.revokeToken(user.token)
-
-
-                        return Promise.resolve()
-                    }
-
-                    return Promise.reject(error)
-                });
-
-            }   
+                    return admin.messaging().sendMulticast(message).then((response) => {
+                        for(const responseIndex in response.responses) {
+                            if(!response.responses[responseIndex].success){
+                                    self.kit.revokeToken(users[responseIndex].token)
+                            }
+                        }
+                        return Promise.resolve(response)
+                    })
+                    .catch((error) => {
+                        return Promise.reject(error)
+                    });
+                }
+            }
         }
 
         return Promise.resolve()
@@ -547,22 +545,20 @@ var Firebase = function(p){
 
     self.sendToDevice = function(data, device, address){
         var user = getuser(address, device)
-        return self.send({data, user})
+        if(user)
+            return self.send({data, users:[user]})
     }
 
     self.sendToDevices = function(data, device, address){
         var users = getusers(address, device)
-        console.log("Send to users: ", users)
-        for(const user of users) {
-            return self.send({data, user})
-        }
+        if(users?.length)
+            return self.send({data, users})
     }
 
     self.sendToAll = function(data){
         var users = getAllUsers()
-        for(const user of users) {
-            self.send({data, user})
-        }
+        if(users?.length)
+            self.send({data, users})
     }
 
     self.init = function(p){
