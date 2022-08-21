@@ -27449,11 +27449,9 @@ Platform = function (app, listofnodes) {
                         clbk()
 
 
-                    console.log("HERE")
-
-                    setTimeout(function(){
+                    //setTimeout(function(){
                         self.matrixchat.init()
-                    }, 300)
+                    //}, 300)
 
                     setTimeout(self.acceptterms, 5000)
 
