@@ -1,11 +1,9 @@
 name: Deploy Dev PR
 
-
 on:
   workflow_dispatch:
   push:
     branches: [ git-workflow ]
-
 
 jobs:
 
