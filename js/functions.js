@@ -1809,9 +1809,7 @@
 		try{
 
 			els.imagesLoadedPN({ imageAttr: true }, function(image) {
-
 				if(typeof p.clbk === 'function') p.clbk(image);
-
 			});
 
 		}
@@ -1820,48 +1818,62 @@
 
 			console.error(e)
 
-			/*els.each(function(){
-
-				var _el = $(this);
-				var image = _el.attr('image')
-
-				if (image && image != '*'){
+		}
 
 
-						image = image.replace('bastyon.com:8092', 'pocketnet.app:8092')
+	}
 
-						_el.css({
-							'background-image': 'url('+image+')',
-							'background-size': p.size || 'cover',
-							'background-position': p.position || 'center center',
-							'background-repeat': p.repeat || 'no-repeat'
-						});
+	bgImagesCl = function(el, p){
 
-						_el.attr('image', '*')
+		if(!p) p = {};
 
+		var els = el.find('[image]')
+
+		if(!els.length){
+
+			if(typeof p.clbk === 'function') p.clbk();
+
+			return
+		}
+
+		return Promise.all(els.map((i, el) => {
+
+			return new Promise((resolve) => {
+
+				var src = el.getAttribute('image')
+
+				if(!src || src == '*') {
+					el.setAttribute('imageloaded', 'true')
+					return Promise.resolve()
+				}
+
+				var image = new Image()
+
+				src = src.replace('bastyon.com:8092', 'pocketnet.app:8092').replace('test.pocketnet', 'pocketnet')
+
+				image.src = src
+				image.onload = () => {
+					el.setAttribute('image', '*')
+					el.setAttribute('imageloaded', 'true')
+					el.style['background-image'] = 'url('+src+')';
+					el.style['background-size'] = 'cover';
+					el.style['background-position'] = 'center center';
+					el.style['background-repeat'] = 'no-repeat';
+
+					resolve()
+				}
+
+				image.onerror = () => {
+					el.setAttribute('image', '*')
+
+					resolve()
 				}
 
 			})
 
-			if(p.clbk)
-			{
-				if (els.imagesLoaded)
-					els.imagesLoaded({ background: true }, function(image) {
-
-						if(typeof p.clbk === 'function') p.clbk(image);
-
-					});
-
-				else{
-					if(typeof p.clbk === 'function') p.clbk(image);
-				}
-			}*/
-		}
-
-
-
-		return
-
+		})).then(() => {
+			if(typeof p.clbk === 'function') p.clbk(image);
+		})
 
 	}
 
@@ -7226,7 +7238,7 @@
 			caption.addClass(classes.caption);
 
 			caption.css(pos, offset[0] + 'px');
-			caption.css('z-index', '3');
+			caption.css('z-index', p.zIndex || '3');
 
 			caption.width(w);
 

@@ -52,8 +52,6 @@
             </div> 
         </div>
 
-        <div class="bodyshadow">
-        </div>     
 
         <div class="topPreloader" id="_topPreloader">
         </div>

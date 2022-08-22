@@ -2873,16 +2873,6 @@ input[type=radio].radio:checked + label {
     opacity: 0.7;
   }
 }
-.bodyshadow {
-  position: fixed;
-  z-index: 4;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(var(--background-total-theme), 0.6);
-  display: none;
-}
 .overflowWrapper {
   overflow-x: hidden;
 }

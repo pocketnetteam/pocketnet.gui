@@ -577,10 +577,8 @@ var lenta = (function(){
 
 				load.shares(function(shares, error){
 
-					setTimeout(() => {
 						if (el.loader)
 							el.loader.removeClass('loading')
-					}, 2000)
 
 					if (error){
 						making = false;
@@ -3335,7 +3333,7 @@ var lenta = (function(){
 
 				lazyEach({
 					array : rs,
-					sync : true,
+					//sync : true,
 
 					action : function(_p, index ){
 						var share = _p.item;
@@ -4947,11 +4945,9 @@ var lenta = (function(){
 
 				if(!el.c) return
 
-				setTimeout(() => {
 
 					if (el.loader)
 						el.loader.removeClass('loading')
-				}, 2000)
 				
 
 				if (error){

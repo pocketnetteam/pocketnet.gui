@@ -967,17 +967,21 @@ Application = function(p)
 
         self.realtime();
 
-        if (typeof hideSplashScreen != 'undefined'){
-          hideSplashScreen();
-        }
-        else{
-          $('#splashScreen').remove()
-        }
+        
 
         // TODO (brangr): DEBUG!
         //p.nav.href = "userpage?id=system16"
 
-        self.nav.init(p.nav);
+        self.nav.init(p.nav, function(){
+          console.log("OPENED")
+
+          if (typeof hideSplashScreen != 'undefined'){
+            hideSplashScreen();
+          }
+          else{
+            $('#splashScreen').remove()
+          }
+        });
 
         if (p.clbk)
           p.clbk();
