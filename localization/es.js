@@ -700,7 +700,7 @@ ____loclib.e13257 = "Su reputación de "+appname+" aún no le permite registrar 
 ____loclib.e13258 = "Ha alcanzado su límite de quejas en 24 horas"
 
 ____loclib.e13259 = "No podéis denunciar su publicación"
-____loclib.e13260 = "Ya ha presentado una queja sobre esta publicación"
+____loclib.e13260 = "Ya ha presentado una queja contra este usuario."
 ____loclib.e13261 = "Guardar clave"
 ____loclib.e13262 = "Más tarde"
 ____loclib.e13263 = "Suscríbete y incluyes las notificaciones de nuevas publicaciones de este usuario"

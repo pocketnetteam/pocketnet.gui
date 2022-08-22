@@ -721,7 +721,7 @@ ____loclib.e13257 = "Ihre "+appname+" Ansehens-Punkte erlauben es noch nicht, ei
 ____loclib.e13258 = "Sie haben Ihr Limit an Beschwerden pro 24 Stunden erreicht"
 
 ____loclib.e13259 = "Sie können Sich nicht über Ihren eigenen Beitrag beschweren"
-____loclib.e13260 = "Sie haben bereits Beschwerde über diesen Beitrag eingereicht"
+____loclib.e13260 = "Sie haben bereits eine Beschwerde gegen diesen Benutzer eingereicht."
 ____loclib.e13261 = "Schlüssel speichern"
 ____loclib.e13262 = "Später"
 ____loclib.e13263 = "Abonnieren und Benachrichtigungen für diesen Nutzer aktivieren"

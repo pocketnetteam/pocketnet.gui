@@ -67,6 +67,7 @@ var complain = (function(){
             if(ess == 'post'){
 
               if((typeof mestate!= 'undefined' && mestate.badges && Object.values(mestate.badges).includes('shark'))){
+                debugger
                 var modFlag = sobj.modFlag(selected);
 
                 topPreloader(30);
@@ -126,7 +127,7 @@ var complain = (function(){
 
             if(ess == 'user'){
               if((typeof mestate!= 'undefined' && mestate.badges && Object.values(mestate.badges).includes('shark'))){
-
+                debugger
                 var modFlag = sobj.data.modFlag(selected);
 
                 topPreloader(30);
