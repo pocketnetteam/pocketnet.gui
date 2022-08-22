@@ -208,6 +208,8 @@ ____loclib.spv = "Conteggio dei messaggi video";
 ____loclib.ssc = "Conteggio delle stelle";
 ____loclib.ccc = "Conteggio dei commenti";
 ____loclib.crc = "Conteggio del tasso di commento";
+____loclib.artc = "Conteggio articoli";
+
 ____loclib.stp = "Periodo di prova";
 ____loclib.srep = "Reputazione";
 
@@ -766,6 +768,7 @@ ____loclib.e13268 = "Coinstake win";
 ____loclib.e13269 = "Transazioni ricevute";
 ____loclib.e13270 = "Voti alti ricevuti";
 ____loclib.e13271 = "Commento ricevuto";
+____loclib.downvote = "Valutazione negativa"
 ____loclib.e13272 = "Risposta ricevuta";
 ____loclib.e13273 = "Nuovi followers";
 ____loclib.e13274 = "Utenti invitati";
@@ -1202,3 +1205,11 @@ ____loclib.lowstar_reason_3 = "Minaccia diretta di violenza"
 ____loclib.lowstar_reason_4 = "Droghe illegali"
 ____loclib.lowstar2 = "Non utilizzare valutazioni a 1 e 2 stelle per altri motivi. Dopo il rilascio della nuova moderazione a metà. Potresti essere in grado di utilizzare valutazioni basse per altri motivi"
 ____loclib.lowstaragree = "Confermo che questo post contiene uno dei quattro tipi di contenuto proibito"
+
+____loclib.androidPopupTitle = "Ottieni informazioni non censurate nell'app mobile Bastyon"
+____loclib.androidPopupAgree = "Passa all'app"
+____loclib.androidPopupDisagree = "Non ora"
+
+____loclib.desktopPopupTitle = "Ottieni informazioni non censurate nell'app desktop Bastyon"
+____loclib.desktopPopupAgree = "Scarica l'app"
+____loclib.desktopPopupDisagree = "Non ora"

@@ -199,6 +199,9 @@ ____loclib.spc = "发帖量";
 ____loclib.ssc = "星级数";
 ____loclib.ccc = "评论数";
 ____loclib.crc = "评论等级";
+____loclib.artc = "文章计数";
+
+
 ____loclib.stp = "试用期";
 ____loclib.srep = "信誉";
 
@@ -736,6 +739,7 @@ ____loclib.e13268 = '投幣 獲勝'
 ____loclib.e13269 = '收到的交易'
 ____loclib.e13270 = '收到的赞'
 ____loclib.e13271 = '收到的评论'
+____loclib.downvote = "负面评价"
 ____loclib.e13272 = '收到的回答'
 ____loclib.e13273 = '新粉丝'
 ____loclib.e13274 = '拯救的用户'
@@ -1008,3 +1012,11 @@ ____loclib.lowstar_reason_3 = "直接的暴力威脅"
 ____loclib.lowstar_reason_4 = "非法藥物"
 ____loclib.lowstar2 = "請不要出於其他原因使用 1 星和 2 星評級。在新的審核在中旬發布後。希望您能夠出於其他原因使用低評級"
 ____loclib.lowstaragree = "我確認這篇文章包含四種禁止內容之一"
+
+____loclib.androidPopupTitle = "在 Bastyon 移动应用中获取未经审查的信息"
+____loclib.androidPopupAgree = "切换到应用"
+____loclib.androidPopupDisagree = "不是现在"
+
+____loclib.desktopPopupTitle = "在 Bastyon 桌面应用程序中获取未经审查的信息"
+____loclib.desktopPopupAgree = "下载应用程序"
+____loclib.desktopPopupDisagree = "不是现在"

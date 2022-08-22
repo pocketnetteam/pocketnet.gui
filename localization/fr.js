@@ -194,6 +194,10 @@ ____loclib.spc = "Nombre de messages";
 ____loclib.ssc = "Les toiles comptent";
 ____loclib.ccc = "Les commentaires comptent";
 ____loclib.crc = "Nombre de taux de commentaires";
+____loclib.artc = "Nombre d'articles";
+
+
+
 ____loclib.stp = "Période d'essai";
 ____loclib.srep = "Réputation";
 
@@ -724,6 +728,7 @@ ____loclib.e13268 = 'Coinstake gagne'
 ____loclib.e13269 = 'Les transactions reçoivent'
 ____loclib.e13270 = 'Les votes positifs reçoivent'
 ____loclib.e13271 = 'Comment recevoir'
+____loclib.downvote = "Évaluation négative"
 ____loclib.e13272 = 'Répondre reçu'
 ____loclib.e13273 = 'Nouveaux adeptes'
 ____loclib.e13274 = 'Utilisateurs enregistrés'
@@ -1359,3 +1364,11 @@ ____loclib.lowstar_reason_3 = "Menace directe de violence"
 ____loclib.lowstar_reason_4 = "Drogues illégales"
 ____loclib.lowstar2 = "Veuillez ne pas utiliser les classements 1 et 2 étoiles pour d'autres raisons. Après la publication de la nouvelle modération à la mi-journée, vous pourrez utiliser les classements bas pour d'autres raisons"
 ____loclib.lowstaragree = "Je confirme que ce message contient l'un des quatre types de contenu interdit"
+
+____loclib.androidPopupTitle = "Obtenir des informations non censurées dans l'application mobile Bastyon"
+____loclib.androidPopupAgree = "Basculer vers l'application"
+____loclib.androidPopupDisagree = "Pas maintenant"
+
+____loclib.desktopPopupTitle = "Obtenir des informations non censurées dans l'application de bureau Bastyon"
+____loclib.desktopPopupAgree = "Télécharger l'application"
+____loclib.desktopPopupDisagree = "Pas maintenant"
