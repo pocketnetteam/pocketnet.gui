@@ -4,17 +4,21 @@ if(typeof _Electron != 'undefined'){
     electron = require('electron');
     pwaFetch = (...args) => proxyFetch(...args);
 }
-if ('serviceWorker' in navigator) {
-    if(typeof firebase != 'undefined')
-        firebase.initializeApp({
-            messagingSenderId: "1020521924918"
-        });
 
+const initFirebase = (registration)=>{
+   if(!firebase.apps.length) {
+       firebase.initializeApp({
+           messagingSenderId: "1020521924918"
+       });
+   }
+    firebase.messaging().useServiceWorker(registration);
+}
+
+if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('./service-worker.js').then(function (registration) {
         console.log('Service worker registration succeeded:', registration);
         if(typeof firebase != 'undefined')
-
-            firebase.messaging().useServiceWorker(registration);
+            initFirebase(registration)
     }, /*catch*/ function (error) {
         console.log('Service worker registration failed:', error);
     });
@@ -36,6 +40,8 @@ if ('serviceWorker' in navigator) {
         }
 
     });
+
+
 
 
 

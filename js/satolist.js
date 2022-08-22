@@ -23151,6 +23151,13 @@ Platform = function (app, listofnodes) {
         }
 
         self.init = function(clbk){
+            if(usingWeb){
+                if(!firebase.apps.length) {
+                    firebase.initializeApp({
+                        messagingSenderId: "1020521924918"
+                    });
+                }
+            }
 
             if(clbk) clbk()
 

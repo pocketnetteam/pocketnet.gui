@@ -491,15 +491,14 @@ var Firebase = function(p){
 
         if (m){
             var notification = m(data)
-            var tokens = users?.map(el=>el.tokens) || []
-            if (notification) {
+            var tokens = users?.map(el=>el.token) || []
+            if (notification && tokens.length) {
                 for (let i = 0; i < tokens.length; i += 999) {
                     const maxSizeTokens = tokens.slice(i, 999);
 
                     var message = {
-
-                        data: {json: JSON.stringify(data)},
                         tokens: maxSizeTokens,
+                        data: {json: JSON.stringify(data)},
                         notification: notification,
                         android: {
 
@@ -523,10 +522,9 @@ var Firebase = function(p){
                         }
 
                     };
-
                     return admin.messaging().sendMulticast(message).then((response) => {
                         for(const responseIndex in response.responses) {
-                            if(!response.responses[responseIndex].success){
+                            if(!response.responses[responseIndex].success && users[responseIndex]){
                                     self.kit.revokeToken(users[responseIndex].token)
                             }
                         }
