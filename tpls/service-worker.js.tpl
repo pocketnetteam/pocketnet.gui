@@ -1,4 +1,50 @@
 importScripts('./js/vendor/workbox-v6.1.5/workbox-sw.js');
+importScripts('./js/vendor/firebase-app.js');
+importScripts('./js/vendor/firebase-messaging.js');
+
+firebase.initializeApp({
+  messagingSenderId: "1020521924918"
+});
+
+const messaging = firebase.messaging();
+
+messaging.setBackgroundMessageHandler(function(payload) {
+  console.log(
+      "[firebase-messaging-sw.js] Received background message ",
+      payload,
+  );
+  // Customize notification here
+  const notificationTitle = "Background Message Title";
+  const notificationOptions = {
+    body: "Background Message body.",
+    icon: "/itwonders-web-logo.png",
+  };
+
+  return self.registration.showNotification(
+      notificationTitle,
+      notificationOptions,
+  );
+});
+
+self.addEventListener('notificationclick', function(event) {
+  const data = event.notification.data || '';
+  event.notification.close();
+  console.log(data)
+
+  event.waitUntil(clients.matchAll({
+    type: 'window',
+    includeUncontrolled: true
+  }).then(function(clientList) {
+    for (var i = 0; i < clientList.length; i++) {
+      var client = clientList[i];
+      if (client.url === target && 'focus' in client) {
+        return client.focus();
+      }
+    }
+
+    return clients.openWindow("http://127.0.0.1:8080/userpage?id=notifications&report=notifications");
+  }));
+});
 
 workbox.setConfig({
   modulePathPrefix: './js/vendor/workbox-v6.1.5/',

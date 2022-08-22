@@ -66,7 +66,19 @@ var Firebase = function(p){
 
     var getuser = function(address, device){
         return _.find(self.users, function(user){
-            return user.address == address && (!device || device == user.device)
+            return user.address === address && (!device || device === user.device)
+        })
+    }
+
+    var getusers = function(address, device){
+        return _.filter(self.users, function(user){
+            return user.address === address && (!device || device === user.device)
+        })
+    }
+
+    var getAllUsers = function(){
+        return _.filter(self.users, function(user){
+            return user.address !== undefined
         })
     }
 
@@ -77,7 +89,7 @@ var Firebase = function(p){
     }
 
     var adduser = function(user){
-
+        console.log("Login user: ", user)
         if(!finduser(user) && self.inited){
 
             self.users.push(user)
@@ -104,32 +116,105 @@ var Firebase = function(p){
 
     var messages = {
 
-        comment : function(data){
+        // comment : function(data){
+        //
+        //     if (data.reason == 'post') {
+        //         n.body = data.username + " commented your post."
+        //         n.title = "New Comment"
+        //     }
+        //
+        //     if (data.reason == 'answer' && data.comment && data.share && data.user) {
+        //         n.body = data.username + " answered on your comment."
+        //         n.title = "New Comment"
+        //     }
+        //
+        //     return m
+        // },
 
-            if (data.reason == 'post') {
-                n.body = data.username + " commented your post."
-                n.title = "New Comment"
-            }
 
-            if (data.reason == 'answer' && data.comment && data.share && data.user) {
-                n.body = data.username + " answered on your comment."
-                n.title = "New Comment"
-            }
-
-            return m
-        },
-
-        cScore : function(data){
+        commentscore : function(data){
 
             var m = {
                 title : "New Comment Rate",
-                body : data.username + " rated your comment!"
+                body : data?.account?.name + " is your new referral!"
             }
 
             return m
         },
 
-        reshare : function(data){
+        answer : function(data){
+
+            var m = {
+                body : data?.account?.name + " answered on your comment.",
+                title : "New answer"
+            }
+
+            return m
+        },
+
+        comment : function(data){
+
+            var m = {
+                body : data?.account?.name + " commented your post.",
+                title : "New Comment"
+            }
+
+            return m
+        },
+
+        subscriber : function(data){
+
+            var m = {
+                body : data?.account?.name + ' followed you',
+                title : "New Follower"
+            }
+
+            return m
+        },
+
+        contentscore : function(data){
+
+            var m = {
+                title : "New Content Rate",
+                body : data?.account?.name + " is your new referral!"
+            }
+
+            return m
+        },
+
+
+        boost : function(data){
+
+            var m = {
+                title : "New boost",
+                body : data?.account?.name + " is your new boost!"
+            }
+
+            return m
+        },
+
+        privatecontent : function(data){
+
+            var m = {
+                title : "New private content",
+                body : data?.account?.name + " sent you the content"
+            }
+
+            return m
+        },
+        
+
+        referal : function(data){
+
+            var m = {
+                title : "You have a new referral",
+                body : data?.account?.name + " is your new referral!"
+            }
+
+            return m
+        },
+
+        repost : function(data){
 
             var m = {
                 title : "New Post Reshare",
@@ -139,11 +224,20 @@ var Firebase = function(p){
             return m
         },
 
+        pocketnetteam: function (data){
+            var m = {
+                title : "New post from the team",
+                body : data?.description
+            }
+
+            return m
+        },
+
         postfromprivate : function(data){
 
             var m = {
                 title : "New Post From Pocketnet User",
-                body : data.username + " has a brand new post!"
+                body : data.account?.name + " has a brand new post!"
             }
 
             return m
@@ -157,6 +251,15 @@ var Firebase = function(p){
             }
             
             return m
+        },
+
+        money : function(data){
+
+            var m = {}
+                m.body = (data?.account?.name || "User") + " replenished coins!"
+                m.title = 'Congrats!'
+            return m
+
         },
 
         event : function(data){
@@ -224,9 +327,9 @@ var Firebase = function(p){
         addToken : function({
             token, device, U, id
         }){
+            console.log("Change token user: ", token)
             var date = f.time()
             var fbtoken = new Fbtoken({token, device, address : U, id, date})
-
             if(!fbtoken.check()) return Promise.reject('checkToken')
 
             return new Promise((resolve, reject) => {
@@ -237,7 +340,7 @@ var Firebase = function(p){
                         return reject(err)
                     }
 
-                    adduser(fbtoken)
+                    adduser(fbtoken.export())
 
                     resolve(docs)
                 });
@@ -358,11 +461,11 @@ var Firebase = function(p){
     }
 
     self.send = function({
-        data, user
+        data, users
     }){
 
 
-        if(!data || !user) return Promise.reject('empty')
+        if(!data || !users?.length) return Promise.reject()
 
         if(!self.app) return Promise.reject('app')
 
@@ -384,59 +487,54 @@ var Firebase = function(p){
 
         if (data.mesType) m = messages[data.mesType]
         if (data.msg && !m) m = messages[data.msg]
-
+        if (data.type && !m) m = messages[data.type]
 
         if (m){
-            var notification = m(data, user)
+            var notification = m(data)
+            var tokens = users?.map(el=>el.token) || []
+            if (notification && tokens.length) {
+                for (let i = 0; i < tokens.length; i += 999) {
+                    const maxSizeTokens = tokens.slice(i, 999);
 
-            if (notification){
-                
-                var message = {
+                    var message = {
+                        tokens: maxSizeTokens,
+                        data: {json: JSON.stringify(data)},
+                        notification: notification,
+                        android: {
 
-                    data: data,    
-                    token: user.token,
-                    notification : notification,
-                    android : { 
-
-                        notification: {
-                            priority : "MAX",
-                            visibility : "PUBLIC",
-                            icon: 'notification_icon',
-                            color : '#00A3F7',
-                            defaultSound : "true",
-                            defaultVibrateTimings : "true",
-                            ticker : "Pocketnet"
-                        }
-                    },
-                    apns: {
-                        payload: {
-                            aps: {
-                                sound: 'default',
-                                'content-available': '1'
+                            notification: {
+                                priority: "MAX",
+                                visibility: "PUBLIC",
+                                icon: 'notification_icon',
+                                color: '#00A3F7',
+                                defaultSound: "true",
+                                defaultVibrateTimings: "true",
+                                ticker: "Pocketnet"
+                            }
+                        },
+                        apns: {
+                            payload: {
+                                aps: {
+                                    sound: 'default',
+                                    'content-available': '1'
+                                }
                             }
                         }
-                    }
 
-                };
-
-                return admin.messaging().send(message).then((response) => {
-                    return Promise.resolve(response)
-                })
-                .catch((error) => {
-
-                    if (f.deep(error,'errorInfo.code') == 'messaging/registration-token-not-registered' || 
-                        f.deep(error,'errorInfo.code') == 'messaging/invalid-argument'){
-
-                        self.kit.revokeToken(user.token)
-
-
-                        return Promise.resolve()
-                    }
-
-                    return Promise.reject(error)
-                });
-
-            }   
+                    };
+                    return admin.messaging().sendMulticast(message).then((response) => {
+                        for(const responseIndex in response.responses) {
+                            if(!response.responses[responseIndex].success && users[responseIndex]){
+                                    self.kit.revokeToken(users[responseIndex].token)
+                            }
+                        }
+                        return Promise.resolve(response)
+                    })
+                    .catch((error) => {
+                        return Promise.reject(error)
+                    });
+                }
+            }
         }
 
         return Promise.resolve()
@@ -445,11 +543,21 @@ var Firebase = function(p){
 
     self.sendToDevice = function(data, device, address){
         var user = getuser(address, device)
-
-        return self.send({data, user})
+        if(user)
+            return self.send({data, users:[user]})
     }
 
-     
+    self.sendToDevices = function(data, device, address){
+        var users = getusers(address, device)
+        if(users?.length)
+            return self.send({data, users})
+    }
+
+    self.sendToAll = function(data){
+        var users = getAllUsers()
+        if(users?.length)
+            self.send({data, users})
+    }
 
     self.init = function(p){
 

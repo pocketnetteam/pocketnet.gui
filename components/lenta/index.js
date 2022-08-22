@@ -2365,7 +2365,9 @@ var lenta = (function(){
 				}
 
 				var id = $(this).closest('.share').attr('id');
-				var value = $(this).attr('value')
+				var value = $(this).attr('value');
+
+				let s = self.app.platform.sdk.node.shares.storage.trx[id]
 
 				if(!id) id = $(this).closest('.truerepost').attr('stxid')
 
@@ -2374,39 +2376,23 @@ var lenta = (function(){
 				actions.stateAction('_this', function(){
 
 					self.app.platform.sdk.node.shares.getbyid(id, function(){
-
-						var s = self.app.platform.sdk.node.shares.storage.trx[id]
-
 						if (self.app.platform.sdk.address.pnet() && s.address == self.app.platform.sdk.address.pnet().address) return
 
-						if (value > 4){
+						if (value == 5){
+							setTimeout(function(){
+								if(!el.share[id]) return
 
-							var reason = null
+								const bannerComment = initedcommentes[id].showBanner(initedcommentes[id]);
+								if (!bannerComment) {
+									return;
+								}
 
-							//if(!rand(0,9)) reason = 'p'
-
-							if (self.app.platform.sdk.user.newuser()){
-								reason = 'n'
-							}
-							
-
-							if(s.scnt == '0') reason = 's'
-
-							if(reason) {
-								setTimeout(function(){
-
-									if(!el.share[id]) return
-	
-									self.app.platform.effects.templates.commentstars(el.share[id], value, function(){
-										
-									})
-
+								self.app.platform.effects.templates.commentstars(el.share[id], value, function(){
 									if (initedcommentes[id]){
-										initedcommentes[id].attention(self.app.localization.e('starssendcomment' + reason))
+										initedcommentes[id].attention(self.app.localization.e('starssendcomments'))
 									}
-	
-								}, 300)
-							}
+								})
+							}, 300)
 
 							
 							
