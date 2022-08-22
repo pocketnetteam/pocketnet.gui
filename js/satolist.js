@@ -8258,6 +8258,9 @@ Platform = function (app, listofnodes) {
             },
 
             newmaterials : function(counts){
+
+                if(!self.sdk.sharesObserver.storage.viewed) self.sdk.sharesObserver.storage.viewed = {}
+
                 _.each(counts, (c, i) => {
                     if (self.sdk.sharesObserver.storage.viewed[i]){
                         self.sdk.sharesObserver.storage.viewed[i].new = (self.sdk.sharesObserver.storage.viewed[i].new || 0) + c
@@ -8275,6 +8278,7 @@ Platform = function (app, listofnodes) {
 
             hasnew : function(key){
 
+                if(!self.sdk.sharesObserver.storage.viewed) self.sdk.sharesObserver.storage.viewed = {}
 
                 if(!self.sdk.sharesObserver.storage.viewed[key]) return true
 
@@ -8299,6 +8303,8 @@ Platform = function (app, listofnodes) {
 
 
                 if(key == 'saved') return
+
+                if(!self.sdk.sharesObserver.storage.viewed) self.sdk.sharesObserver.storage.viewed = {}
 
                 if(!self.sdk.sharesObserver.storage.viewed[key]) self.sdk.sharesObserver.storage.viewed[key] = {}
 
