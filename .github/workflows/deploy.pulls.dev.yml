@@ -124,7 +124,7 @@ jobs:
         run: /data/reset_cache.sh
         shell: bash
 
-  deploy-proxy:
+  deploy-proxy-test:
     needs: build-proxy
     runs-on: proxy.test
     steps:
