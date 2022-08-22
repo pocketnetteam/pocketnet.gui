@@ -32,7 +32,7 @@ jobs:
       - name: Archive merged proxy repo
         run: |
           mkdir -p /tmp/proxy
-          cp ./proxy16
+          cd ./proxy16
           rsync -ah ./ /tmp/proxy/
           cd /tmp/proxy
           tar czf /tmp/proxy.tgz ./
