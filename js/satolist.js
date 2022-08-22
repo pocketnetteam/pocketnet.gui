@@ -2749,6 +2749,11 @@ Platform = function (app, listofnodes) {
             }
 
             const createComponent = () => {
+                self.app.Logger.info({
+                    actionId: 'COMMENT_BANNER_ALLOWED',
+                    value: true,
+                });
+
                 app.nav.api.load({
                     open: true,
                     id: 'commentBanner',
@@ -2757,12 +2762,20 @@ Platform = function (app, listofnodes) {
 
                     clbk : function(e, p){
                         bannerCommentComponent = p;
+                        if (p.el[0].constructor.name === 'HTMLDivElement') {
+                            self.app.Logger.info({
+                                actionId: 'COMMENT_BANNER_SHOWED',
+                                value: p.el[0].constructor.name,
+                            });
+
+                            return;
+                        }
                     }
                 });
             };
 
             const unixTimeNow = Math.floor(Date.now() / 1000);
-            const oneDayInSeconds = 86400000;
+            const oneDayInSeconds = 86400;
 
             const alreadyShowed = ('nextCommentBanner' in localStorage);
             const isBannerDisabled = (localStorage.nextCommentBanner == -1);
@@ -2776,8 +2789,7 @@ Platform = function (app, listofnodes) {
             const isOneDayOld = (registeredTime >= oneDayInSeconds);
 
             if (isBannerDisabled) {
-                console.log('banner showbanner', bannerCommentComponent);
-                return bannerCommentComponent;
+                return isBannerDisabled;
             }
 
             if (!isOneDayOld) {
