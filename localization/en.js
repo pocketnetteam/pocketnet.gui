@@ -151,6 +151,7 @@ ____loclib.tacaddress = "Account Address";
 ____loclib.twallet = "Wallet";
 ____loclib.twalletaddresses = "Wallet addresses";
 ____loclib.tTotal = "Total";
+____loclib.totalBalance = "Total balance";
 ____loclib.wsselect = "Select Source From Menu";
 ____loclib.wsenter = "Enter Address Or Select From Menu";
 ____loclib.wsreciever = "Receiver address";
@@ -1208,7 +1209,7 @@ ____loclib.transactionnotfound = "Transaction not found";
 
 ____loclib.donateself = "You can't donate yourself";
 ____loclib.donated = "commented your post and donated"
-____loclib.incoins = "Not enough coins"
+____loclib.incoins = "Not enough coins";
 ____loclib.yourbalance = "Your balance"
 ____loclib.sumoftransaction = "Sum of transaction"
 
