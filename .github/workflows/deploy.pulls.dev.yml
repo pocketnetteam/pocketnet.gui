@@ -18,17 +18,29 @@ jobs:
         with:
           label: deploy.dev
           repo-token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Prepare merged repo
+      - name: Archive merged repo
         run: |
-          mkdir /tmp/repo
-          rsync -ah --exclude={'.git','.gitignore','.github','package.json','node_modules','.well-known','assets','proxy16','cordova','res','build'} ./ /tmp/repo
+          mkdir -p /tmp/repo
+          rsync -ah --exclude={'.git','.gitignore','.github','package.json','node_modules','.well-known','assets','proxy16','cordova','res','build'} ./ /tmp/repo/
           cd /tmp/repo
           tar czf /tmp/repo.tgz ./
-      - name: Upload artifact
+      - name: Upload artifact repo.tgz
         uses: actions/upload-artifact@v1
         with:
           name: repo.tgz
           path: /tmp/repo.tgz
+      - name: Archive merged proxy repo
+        run: |
+          mkdir -p /tmp/proxy
+          cp ./proxy16
+          rsync -ah ./ /tmp/proxy/
+          cd /tmp/proxy
+          tar czf /tmp/proxy.tgz ./
+      - name: Upload artifact proxy.tgz
+        uses: actions/upload-artifact@v1
+        with:
+          name: proxy.tgz
+          path: /tmp/proxy.tgz
 
   deploy-pre:
     needs: merge
@@ -73,11 +85,11 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v3
         with:
-          name: repo.tgz
+          name: proxy.tgz
       - name: Prepare
         run: |
-          mkdir ./repo
-          tar xzf repo.tgz -C ./repo/
+          mkdir -p ./repo
+          tar xzf proxy.tgz -C ./repo/
       - name: Docker meta
         id: meta
         uses: docker/metadata-action@v3
