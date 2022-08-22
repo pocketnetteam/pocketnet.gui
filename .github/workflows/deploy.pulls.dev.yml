@@ -7,6 +7,7 @@ on:
 
 jobs:
 
+  # Merge all 'deploy.dev' PRs to master branch
   merge:
     runs-on: ubuntu-latest
     steps:
@@ -21,7 +22,7 @@ jobs:
       - name: Archive merged repo
         run: |
           mkdir -p /tmp/repo
-          rsync -ah --exclude={'.git','.gitignore','.github','package.json','node_modules','.well-known','assets','proxy16','cordova','res','build'} ./ /tmp/repo/
+          rsync -ah --exclude={'.git','.gitignore','.github','node_modules','.well-known'} ./ /tmp/repo/
           cd /tmp/repo
           tar czf /tmp/repo.tgz ./
       - name: Upload artifact repo.tgz
@@ -29,19 +30,13 @@ jobs:
         with:
           name: repo.tgz
           path: /tmp/repo.tgz
-      - name: Archive merged proxy repo
-        run: |
-          mkdir -p /tmp/proxy
-          cd ./proxy16
-          rsync -ah ./ /tmp/proxy/
-          cd /tmp/proxy
-          tar czf /tmp/proxy.tgz ./
-      - name: Upload artifact proxy.tgz
+      - name: Save artifact head.txt
         uses: actions/upload-artifact@v1
         with:
-          name: proxy.tgz
-          path: /tmp/proxy.tgz
+          name: head
+          path: ./head.txt
 
+  # Deploy test & pre sites
   deploy-pre:
     needs: merge
     runs-on: gui
@@ -52,13 +47,11 @@ jobs:
           name: repo.tgz
       - name: Prepare
         run: |
-          mkdir -p ./repo
-          tar xzf repo.tgz -C ./repo/
-          cd ./repo
+          tar xzf repo.tgz
           npm i
           npm run minimize:bastyon
       - name: Copy to dest dir
-        run: rsync -ah --exclude={'.git','.gitignore','.github','package.json','node_modules','.well-known','assets','proxy16','cordova','res','build'} ./ /docker/pre/
+        run: rsync -ah --exclude={'.git','.gitignore','.github','package.json','package-lock.json','minimize.json','node_modules','.well-known','assets','proxy16','cordova','res','build'} ./ /docker/pre/
 
   deploy-test:
     needs: merge
@@ -70,14 +63,13 @@ jobs:
           name: repo.tgz
       - name: Prepare
         run: |
-          mkdir -p ./repo
-          tar xzf repo.tgz -C ./repo/
-          cd ./repo
+          tar xzf repo.tgz
           npm i
           npm run minimize:bastyon:test
       - name: Copy to dest dir
-        run: rsync -ah --exclude={'.git','.gitignore','.github','package.json','node_modules','.well-known','assets','proxy16','cordova','res','build'} ./ /docker/gui/
+        run: rsync -ah --exclude={'.git','.gitignore','.github','package.json','package-lock.json','minimize.json','node_modules','.well-known','assets','proxy16','cordova','res','build'} ./ /docker/gui/
 
+  # Build & Deploy proxy services
   build-proxy:
     needs: merge
     runs-on: ubuntu-latest
@@ -85,11 +77,9 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v3
         with:
-          name: proxy.tgz
+          name: repo.tgz
       - name: Prepare
-        run: |
-          mkdir -p ./repo
-          tar xzf proxy.tgz -C ./repo/
+        run: tar xzf repo.tgz
       - name: Docker meta
         id: meta
         uses: docker/metadata-action@v3
@@ -115,8 +105,8 @@ jobs:
         id: docker_build
         uses: docker/build-push-action@v2
         with:
-          context: ./repo/
-          file: ./repo/dockerfile
+          context: ./proxy16
+          file: ./proxy16/dockerfile
           builder: ${{ steps.buildx.outputs.name }}
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
@@ -146,3 +136,174 @@ jobs:
       - name: Reset nginx cache
         run: /data/reset_cache.sh
         shell: bash
+  
+  # Build applications
+  build-app-macos:
+    needs: merge
+    runs-on: macos-latest
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: repo.tgz
+      - name: Unpack artifact
+        run: tar xzf repo.tgz
+      - name: Install Node.js, NPM and Yarn
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14
+      - name: Prepare building
+        run: |
+          npm i
+          npm run dev:bastyon
+      - name: Prepare for app notarization
+        run: |
+          mkdir -p ~/private_keys/
+          echo '${{ secrets.APPLE_API_KEY }}' > ~/private_keys/AuthKey_${{ secrets.APPLE_API_KEY_ID }}.p8
+          echo '${{ secrets.APPLECERT }}' | base64 -d > applecert.p12
+      - name: Building
+        env:
+          APPLEID: ${{ secrets.APPLEID }}
+          APPLEIDPASS: ${{ secrets.APPLEIDPASS }}
+          API_KEY_ID: ${{ secrets.APPLE_API_KEY_ID }}
+          API_KEY_ISSUER_ID: ${{ secrets.APPLE_API_KEY_ISSUER_ID }}
+          CSC_LINK: 'file://applecert.p12'
+          CSC_KEY_PASSWORD: ${{ secrets.APPLECERTPWD }}
+        run: |
+          npm run distm
+          ls -lh ./dist/
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: macos
+          path: ./dist/BastyonSetup.dmg
+        
+  build-app-unix:
+    needs: merge
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: repo.tgz
+      - name: Unpack artifact
+        run: tar xzf repo.tgz
+      - name: Install Node.js, NPM and Yarn
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14
+      - name: Prepare building
+        run: |
+          npm i
+          npm run dev:bastyon
+      - name: Building
+        run: |
+          npm run distl
+          ls -lh ./dist/
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: unix
+          path: |
+            ./dist/BastyonSetup.deb
+            ./dist/Bastyon.AppImage
+    
+  build-app-windows:
+    needs: merge
+    runs-on: windows-latest
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: repo.tgz
+      - name: Unpack artifact
+        run: tar xzf repo.tgz
+      - name: Install Node.js, NPM and Yarn
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14
+      - name: Prepare building
+        run: |
+          npm i
+          npm run dev:bastyon
+      - name: Building
+        run: |
+          npm run dist
+          ls .\dist\
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: windows
+          path: ./dist/BastyonSetup.exe
+
+  build-app-android:
+    needs: merge
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: repo.tgz
+      - name: Unpack artifact
+        run: tar xzf repo.tgz
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '8'
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 14
+      - name: Install Cordova
+        run: |
+          npm i -g cordova@10
+          cordova --version
+      - name: Prepare building
+        run: |
+          npm i
+          npm run minimize:cordova
+          cd ./cordova
+          npm i
+      - name: Prepare configuration
+        run: |
+          cd ./cordova
+          echo "${{ secrets.ANDROID_SECRET_KEY }}" | base64 -d > cert.keystore
+          echo "${{ secrets.ANDROID_BUILD_CONF }}" | base64 -d > build.json
+          echo "${{ secrets.ANDROID_FIREBASE_CONF }}" | base64 -d > google-services.json
+          ls -l cert.keystore
+          ls -l build.json
+      - name: Fixing Android Build Tool Issue
+        run: |
+            cd $ANDROID_HOME/build-tools/33.0.0
+            mv d8 dx
+            cd lib
+            mv d8.jar dx.jar
+      - name: Configure Cordova Plugins
+        run: |
+          cd ./cordova
+          npm run android-add
+      - name: Building
+        run: |
+          cd ./cordova
+          npm run android-build
+      - name: Rename apk binary
+        run: |
+          cd ./cordova/platforms/android/app/build/outputs/apk/release
+          ls -lh
+          mv app-release.apk Bastyon.apk
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: android
+          path: ./cordova/platforms/android/app/build/outputs/apk/release/Bastyon.apk
+
+  deploy-app-binaries:
+    needs: [ build-app-macos, build-app-unix, build-app-windows, build-app-android ]
+    runs-on: dev.pocketnet.app
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+      - name: Copy artifacts
+        run: cp ./**/Bastyon* /data/dev/binaries/
+      - name: Copy HEAD information
+        run: cp ./head/head.txt /data/dev/binaries/head.txt
+      
