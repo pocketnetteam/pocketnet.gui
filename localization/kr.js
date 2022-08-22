@@ -199,6 +199,9 @@ ____loclib.spc = "게시물 수";
 ____loclib.ssc = "별 개수";
 ____loclib.ccc = "댓글 수";
 ____loclib.crc = "댓글 비율 수";
+____loclib.artc = "기사 수";
+
+
 ____loclib.stp = "시험 기간";
 ____loclib.srep = "평판";
 
@@ -729,6 +732,7 @@ ____loclib.e13268 = "Coinstake 승리"
 ____loclib.e13269 = "거래 수신"
 ____loclib.e13270 = "업보 수신"
 ____loclib.e13271 = "댓글 받기"
+____loclib.downvote = "부정적인 평가"
 ____loclib.e13272 = "응답 받기"
 ____loclib.e13273 = "새 팔로워"
 ____loclib.e13274 = "구출된 사용자"
@@ -839,3 +843,11 @@ ____loclib.lowstar_reason_3 = "직접적인 폭력 위협"
 ____loclib.lowstar_reason_4 = "불법 마약"
 ____loclib.lowstar2 = "다른 이유로 별점 1 및 2를 사용하지 마십시오. 새로운 중재가 중반에 릴리스된 후. 다른 이유로 낮은 평점을 사용할 수 있습니다."
 ____loclib.lowstaragree = "이 게시물에는 4가지 유형의 금지된 콘텐츠 중 하나가 포함되어 있음을 확인합니다."
+
+____loclib.androidPopupTitle = "Bastyon 모바일 앱에서 무수정 정보 가져오기"
+____loclib.androidPopupAgree = "앱으로 전환"
+____loclib.androidPopupDisagree = "지금은 아닙니다"
+
+____loclib.desktopPopupTitle = "Bastyon 데스크탑 앱에서 무수정 정보 가져오기"
+____loclib.desktopPopupAgree = "앱 다운로드"
+____loclib.desktopPopupDisagree = "지금은 아닙니다"

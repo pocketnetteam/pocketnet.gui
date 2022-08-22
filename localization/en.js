@@ -208,6 +208,7 @@ ____loclib.spv = "Video Post count";
 ____loclib.ssc = "Stars count";
 ____loclib.ccc = "Comments count";
 ____loclib.crc = "Comment Rate count";
+____loclib.artc = "Articles count";
 
 ____loclib.stp = "Beginner";
 ____loclib.stpg = "Top";
@@ -434,6 +435,7 @@ ____loclib.nodeEnableNote = "That turning on a node may take up to 5GB of RAM. M
 
 
 /// 1301
+
 
 ____loclib.address = "Address"
 ____loclib.privatekey = "Private Key"
@@ -2247,3 +2249,11 @@ ____loclib['dust (code 64)'] = "You are trying to send an amount too small, it c
 
 ____loclib.videoNameIsIncorrectShort = "Video name should be at least 3 characters long"
 ____loclib.videoNameIsIncorrectLong = "Video name should be no more than 120 characters long"
+
+____loclib.androidPopupTitle = "Get uncensored information in Bastyon mobile app"
+____loclib.androidPopupAgree = "Switch to the app"
+____loclib.androidPopupDisagree = "Not now"
+
+____loclib.desktopPopupTitle = "Get uncensored information in Bastyon desktop app"
+____loclib.desktopPopupAgree = "Download the app"
+____loclib.desktopPopupDisagree = "Not now"

@@ -8454,6 +8454,11 @@ Platform = function (app, listofnodes) {
                 t.set()
 
                 if (clbk) clbk()
+
+                self.sdk.syncStorage.on('change', 'usertheme', (e) => {
+                    t.current = localStorage.usertheme;
+                    t.set();
+                });
             },
 
             setstyles : function(){
@@ -8692,7 +8697,7 @@ Platform = function (app, listofnodes) {
                 },
 
                 downvotes: {
-                    name: 'Downvotes receive',
+                    name: self.app.localization.e('downvote'),
                     id: 'downvotes',
                     type: "BOOLEAN",
                     value: false
@@ -10430,7 +10435,16 @@ Platform = function (app, listofnodes) {
                         bad : function(v){
                             if(v <= 3) return true
                         }
-                    }
+                    },
+
+                    article : {
+                      key : 'article',
+                      vis : 'scale',
+                      name : self.app.localization.e('artc'),
+                      bad : function(v){
+                        if(v <= 10) return true
+                      }
+                    },
                 }
             }
 
@@ -11444,7 +11458,7 @@ Platform = function (app, listofnodes) {
             },
 
             replacePattern: function (str, h, p) {
-
+                
                 var sreg = /(?:^|\s)@([a-zA-Z0-9_]+)/g
 
                 var name = str.match(sreg);
@@ -11454,8 +11468,18 @@ Platform = function (app, listofnodes) {
                 }
                 else {
                     var cname = h(name, p)
-
-                    return str.replace(sreg, cname)
+                    // return cname
+                    var counter = 0
+                    return str.replace(sreg, (match)=>{
+                        if(match){
+                            counter++
+                        }
+                        if(counter === 1 ){
+                            return cname
+                        }else{
+                            return ' '
+                        }
+                    })
                 }
 
             },
@@ -12799,9 +12823,12 @@ Platform = function (app, listofnodes) {
 
                         if (!s[url])
                             f[url] = true
-
-                        if (clbk)
-                            clbk(s[url])
+    
+                        if (clbk) {
+                            if (s[url].title) s[url].title = decodeEntities(s[url].title);
+                            if (s[url].description) s[url].description = decodeEntities(s[url].description);
+                            clbk(s[url]);
+                        }
 
                     }).catch(e => {
                         f[url] = true
@@ -22557,7 +22584,40 @@ Platform = function (app, listofnodes) {
 
                 if(clbk) clbk()
             }
-        }
+        },
+
+        syncStorage: {
+            eventListeners: {},
+            on(eventType, lStorageProp, callback) {
+                if (typeof this.eventListeners[lStorageProp] !== 'object') {
+                    this.eventListeners[lStorageProp] = {};
+                }
+
+                this.eventListeners[lStorageProp][eventType] = callback;
+            },
+            off(eventType, lStorageProp) {
+                delete this.eventListeners[lStorageProp][eventType];
+
+                if (Object.keys(this.eventListeners[lStorageProp]).length === 0) {
+                    delete this.eventListeners[lStorageProp];
+                }
+            },
+            init() {
+                window.addEventListener('storage', (e) => {
+                    if (!e.oldValue) {
+                        this.eventListeners[e.key]?.create?.(e);
+                        return;
+                    }
+
+                    if (!e.newValue) {
+                        this.eventListeners[e.key]?.delete?.(e);
+                        return;
+                    }
+
+                    this.eventListeners[e.key]?.change?.(e);
+                });
+            },
+        },
     }
 
 
@@ -27138,6 +27198,10 @@ Platform = function (app, listofnodes) {
     }
 
     self.prepare = function (clbk) {
+
+        if (typeof _Electron === 'undefined' && !window.cordova) {
+            self.sdk.syncStorage.init();
+        }
 
         self.nodeControlUpdateNodeLast = new Date()
         self.nodeControlUpdateNodePopup = false

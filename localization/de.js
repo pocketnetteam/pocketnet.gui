@@ -199,7 +199,10 @@ ____loclib.sprofile = "Profil";
 ____loclib.spc = "Beitragszähler";
 ____loclib.ssc = "Sternezähler";
 ____loclib.ccc = "Kommentarezähler";
-____loclib.crc = "Kommentierratenzähler";
+____loclib.crc = "Anzahl der Kommentarbewertungen";
+____loclib.artc = "Artikel zählen";
+
+
 ____loclib.stp = "Testphase";
 ____loclib.srep = "Ansehen";
 
@@ -730,6 +733,7 @@ ____loclib.e13268 = "Coinstake Gewinn"
 ____loclib.e13269 = "Überweisung erhalten"
 ____loclib.e13270 = "Likes erhalten"
 ____loclib.e13271 = "Kommentar erhalten"
+____loclib.downvote = "Negative Bewertung"
 ____loclib.e13272 = "Antwort erhalten"
 ____loclib.e13273 = "Neuer Follower"
 ____loclib.e13274 = "Gerettete Benutzer"
@@ -841,3 +845,11 @@ ____loclib.lowstar_reason_3 = "Direkte Androhung von Gewalt"
 ____loclib.lowstar_reason_4 = "Illegale Drogen"
 ____loclib.lowstar2 = "Bitte verwenden Sie keine 1- und 2-Sterne-Bewertungen aus anderen Gründen. Nachdem die neue Moderation Mitte Mai veröffentlicht wurde, können Sie niedrige Bewertungen aus anderen Gründen verwenden."
 ____loclib.lowstaragree = "Ich bestätige, dass dieser Beitrag eine von vier Arten von verbotenen Inhalten enthält"
+
+____loclib.androidPopupTitle = "Erhalte unzensierte Informationen in der mobilen Bastion-App"
+____loclib.androidPopupAgree = "Zur App wechseln"
+____loclib.androidPopupDisagree = "Nicht jetzt"
+
+____loclib.desktopPopupTitle = "Unzensierte Informationen in der Bastyon-Desktop-App abrufen"
+____loclib.desktopPopupAgree = "App herunterladen"
+____loclib.desktopPopupDisagree = "Nicht jetzt"
