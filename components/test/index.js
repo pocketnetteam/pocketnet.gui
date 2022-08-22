@@ -5,6 +5,8 @@ var test = (function(){
 	var mdl = self;
 
 	var essenses = {};
+	
+	var userOptions;
 
 	var Essense = function(p){
 
@@ -631,7 +633,7 @@ var test = (function(){
 			},
 		}
 
-		var userOptions = {
+		userOptions = {
 			name : new Parameter({
 				name : self.app.localization.e('unickname'),
 				placeholder : self.app.localization.e('unickname'),

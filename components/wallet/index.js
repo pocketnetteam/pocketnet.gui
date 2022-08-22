@@ -4,6 +4,8 @@ var wallet = (function(){
 
 	var essenses = {};
 
+	var addressesGroup, send, htls, recv, deposit;
+
 	var Essense = function(p){
 
 		var primary = deep(p, 'history');
@@ -39,7 +41,7 @@ var wallet = (function(){
 			{name: 'New Economy Movement (XEM)', code: 'XEM', image : "nem-xem-logo.svg"},
 		]
 
-		var addressesGroup = {
+		addressesGroup = {
 
 			pnetwallet : {
 				label : self.app.localization.e('tacaddress'),
@@ -73,7 +75,7 @@ var wallet = (function(){
 
 		}
 
-		var send = {
+		send = {
 			parameters : {
 
 				source : new Parameter({
@@ -163,7 +165,7 @@ var wallet = (function(){
 			}
 		}
 
-		var htls = {
+		htls = {
 			parameters : {
 
 				source : new Parameter({
@@ -198,14 +200,14 @@ var wallet = (function(){
 			}
 		}
 
-		var recv = {
+		recv = {
 
 			wallet : self.app.localization.e('twallet'),
 			pnetwallet : self.app.localization.e('tacaddress')
 
 		}
 
-		var deposit = {
+		deposit = {
 			active : false,
 			parameters : {
 				deposit : new Parameter({
@@ -2827,6 +2829,8 @@ var wallet = (function(){
 	self.run = function(p){
 
 		var essense = self.addEssense(essenses, Essense, p);
+
+		console.log('essense', Essense, self)
 
 		self.init(essense, p);
 
