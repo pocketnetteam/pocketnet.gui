@@ -76,10 +76,10 @@ class FrontendLogger {
       id: 'BEST_VIDEO_CLICKED',
       description: 'One of the best videos selected',
     },
-    USER_COMPLAIN: {
+    USER_COMPLAIN : {
       id: 'USER_COMPLAIN',
-      description: 'user send complain',
-    },
+      description: 'user send complain'
+    }
   };
 
   errorCounters = {};
@@ -317,10 +317,12 @@ class FrontendLogger {
       userAgent,
     };
 
+
     if (_addLogWithAggregation[infoType]) {
       _addLogWithAggregation[infoType](info, _logsCache);
     } else {
       _addLogWithAggregation.default(info, _logsCache);
     }
+
   }
 }
