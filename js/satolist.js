@@ -8670,7 +8670,7 @@ Platform = function (app, listofnodes) {
                 },
 
                 downvotes: {
-                    name: 'Downvotes receive',
+                    name: self.app.localization.e('downvote'),
                     id: 'downvotes',
                     type: "BOOLEAN",
                     value: false
@@ -10408,7 +10408,16 @@ Platform = function (app, listofnodes) {
                         bad : function(v){
                             if(v <= 3) return true
                         }
-                    }
+                    },
+
+                    article : {
+                      key : 'article',
+                      vis : 'scale',
+                      name : self.app.localization.e('artc'),
+                      bad : function(v){
+                        if(v <= 10) return true
+                      }
+                    },
                 }
             }
 

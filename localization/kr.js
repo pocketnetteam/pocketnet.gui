@@ -199,6 +199,9 @@ ____loclib.spc = "게시물 수";
 ____loclib.ssc = "별 개수";
 ____loclib.ccc = "댓글 수";
 ____loclib.crc = "댓글 비율 수";
+____loclib.artc = "기사 수";
+
+
 ____loclib.stp = "시험 기간";
 ____loclib.srep = "평판";
 
@@ -729,6 +732,7 @@ ____loclib.e13268 = "Coinstake 승리"
 ____loclib.e13269 = "거래 수신"
 ____loclib.e13270 = "업보 수신"
 ____loclib.e13271 = "댓글 받기"
+____loclib.downvote = "부정적인 평가"
 ____loclib.e13272 = "응답 받기"
 ____loclib.e13273 = "새 팔로워"
 ____loclib.e13274 = "구출된 사용자"

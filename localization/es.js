@@ -201,6 +201,9 @@ ____loclib.spc = "Número de publicaciones";
 ____loclib.ssc = "Número de estrellas";
 ____loclib.ccc = "Número de comentarios";
 ____loclib.crc = "Número de valoraciones de comentarios";
+____loclib.artc = "Recuento de artículos";
+
+
 ____loclib.stp = "Periodo trial";
 ____loclib.srep = "Reputación";
 
@@ -709,6 +712,7 @@ ____loclib.e13268 = "Coinstake win"
 ____loclib.e13269 = "Transacción recibida"
 ____loclib.e13270 = "Nueva evaluación"
 ____loclib.e13271 = "Nuevo comentario"
+____loclib.downvote = "Valoración negativa"
 ____loclib.e13272 = "Nueva respuesta al comentario"
 ____loclib.e13273 = "Nuevo suscriptor"
 ____loclib.e13274 = "Usuario liberado"

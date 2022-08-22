@@ -199,6 +199,9 @@ ____loclib.spc = "发帖量";
 ____loclib.ssc = "星级数";
 ____loclib.ccc = "评论数";
 ____loclib.crc = "评论等级";
+____loclib.artc = "文章计数";
+
+
 ____loclib.stp = "试用期";
 ____loclib.srep = "信誉";
 
@@ -736,6 +739,7 @@ ____loclib.e13268 = '投幣 獲勝'
 ____loclib.e13269 = '收到的交易'
 ____loclib.e13270 = '收到的赞'
 ____loclib.e13271 = '收到的评论'
+____loclib.downvote = "负面评价"
 ____loclib.e13272 = '收到的回答'
 ____loclib.e13273 = '新粉丝'
 ____loclib.e13274 = '拯救的用户'
