@@ -2247,3 +2247,11 @@ ____loclib['dust (code 64)'] = "You are trying to send an amount too small, it c
 
 ____loclib.videoNameIsIncorrectShort = "Video name should be at least 3 characters long"
 ____loclib.videoNameIsIncorrectLong = "Video name should be no more than 120 characters long"
+
+____loclib.androidPopupTitle = "Get uncensored information in Bastyon mobile app"
+____loclib.androidPopupAgree = "Switch to the app"
+____loclib.androidPopupDisagree = "Not now"
+
+____loclib.desktopPopupTitle = "Get uncensored information in Bastyon desktop app"
+____loclib.desktopPopupAgree = "Download the app"
+____loclib.desktopPopupDisagree = "Not now"
