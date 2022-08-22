@@ -2644,7 +2644,7 @@ pComment = function(){
 		modFlag.s2.set(self.id);
 		modFlag.s3.set(self.address);
 		modFlag.i1.set(reason);
-		debugger
+
 		return modFlag;
 	}
 
