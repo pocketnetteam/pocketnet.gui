@@ -849,7 +849,7 @@ ____loclib.e13258 = "You have reached the limit of complaints in a 24 hour perio
 ____loclib.e2000 = "Connection error. Please try again"
 
 ____loclib.e13259 = "Cannot complain about your own post"
-____loclib.e13260 = "You have already registered your complaint about this post"
+____loclib.e13260 = "You have already filed a complaint against this user."
 ____loclib.e13261 = "Save Key"
 ____loclib.e13262 = "Later"
 ____loclib.e13263 = "Subscribe and Turn On notifications from this user"

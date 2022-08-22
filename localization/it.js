@@ -756,7 +756,7 @@ ____loclib.e13257 = "Il tuo punteggio di reputazione di " + appname + " non perm
 ____loclib.e13258 = "Hai raggiunto il limite di segnalazioni in 24 ore";
 
 ____loclib.e13259 = "Non puoi segnalare il tuo stesso post";
-____loclib.e13260 = "Hai già segnalato questo post";
+____loclib.e13260 = "Hai già presentato un reclamo contro questo utente.";
 ____loclib.e13261 = "Salva la chiave";
 ____loclib.e13262 = "Più tardi";
 ____loclib.e13263 = "Iscriviti e attiva le notifiche per questo utente";
