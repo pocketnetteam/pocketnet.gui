@@ -40,7 +40,7 @@ jobs:
           name: repo.tgz
       - name: Prepare
         run: |
-          mkdir ./repo
+          mkdir -p ./repo
           tar xzf repo.tgz -C ./repo/
           cd ./repo
           npm i
@@ -58,7 +58,7 @@ jobs:
           name: repo.tgz
       - name: Prepare
         run: |
-          mkdir ./repo
+          mkdir -p ./repo
           tar xzf repo.tgz -C ./repo/
           cd ./repo
           npm i
