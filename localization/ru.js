@@ -1093,7 +1093,7 @@ ____loclib.videosDeleted = "Видео удалено!";
 ____loclib.enterVideoName = "Введите название видео";
 ____loclib.enterVideoDescription = "Введите описание видео";
 
-____loclib.doyouwantseepk = "Вы действительно хотите увидедь ваш приватный ключ?";
+____loclib.doyouwantseepk = "Вы действительно хотите показать ваш приватный ключ?";
 ____loclib.copycode = "Скопировать приватный ключ";
 ____loclib.privatekeyqr = "Приватный ключ в формате QR кода";
 ____loclib.saveimage = "Сохранить изображение";

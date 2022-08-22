@@ -480,6 +480,9 @@ var post = (function () {
 							playbackState,
 							duration
 						}){
+
+							console.log('playbackState', playbackState, player.getPosition())
+
 							if(playbackState == 'playing' && ((position > 15 && duration > 120) || startTime)){
 
 								self.app.platform.sdk.videos.historyset(share.txid, {
@@ -534,7 +537,12 @@ var post = (function () {
 
 						PlyrEx(el2, options, (_player) => {
 
-							if(!el.c) return
+
+							if(!el.c) {
+								_player.destroy()
+								console.log("Shadow player clbk")
+								return
+							}
 
 							player = _player
 
@@ -550,6 +558,8 @@ var post = (function () {
 									}
 	
 								}
+
+								console.log('player', player)
 	
 								if (player.enableHotKeys && !ed.repost) player.enableHotKeys()
 							}
@@ -618,28 +628,21 @@ var post = (function () {
 					return
 				}
 
-				if (value > 4){
+				if (value == 5){
+					setTimeout(function(){
+						if(!el.c) return
 
-					var reason = null
+						const bannerComment = inicomments.showBanner(inicomments);
+						if (!bannerComment) {
+							return;
+						}
 
-					if (self.app.platform.sdk.user.newuser()){
-						reason = 'n'
-					}
-
-					if (share.scnt == '0') reason = 's'
-
-					if (reason) {
-						setTimeout(function(){
-							if(!el.c) return
-								self.app.platform.effects.templates.commentstars(el.c, value, function(){
-									
-								})
-
-								if (inicomments){
-									inicomments.attention(self.app.localization.e('starssendcomment' + reason))
-								}
-						}, 300)
-					}
+						self.app.platform.effects.templates.commentstars(el.c, value, function(){
+							if (inicomments){
+								inicomments.attention(self.app.localization.e('starssendcomments'))
+							}
+						})
+					}, 300)
 					
 				}
 

@@ -132,7 +132,6 @@ Platform = function (app, listofnodes) {
         'PUXG7rfX19Xoco1FXjXBW8qt6NEZpp8maL' : true,
         'PSanUFKb1vd5ua4U3BXMmsSZ2zm3sN2nyj' : true,
         'PERF5kDM32ebkq8SeSj8ZaLqfCoqz8FRgh' : true,
-        'PGD5jUBQ7qNnHDuW85RRBxY1msywEdCm7r' : true,
         'PApFYMrbm3kXMV7kjrEG1v6ULv6ZFDHb9j' : true,
         'PUBRMTAUhy51gkbuP1tRJLMMAzEDt9C2X6' : true,
         'P9i55BxFWpjMyqgHyCKtazDN1HDiZxTSzJ' : true,
@@ -169,7 +168,6 @@ Platform = function (app, listofnodes) {
         'PP7Sz6pjbgv4XdnnCRnRm4avfxD2TEoMoC' : true,
         'PN9is9RTq2MW6yHw7ggz77vyeKX1a4XJQt' : true,
         'PLAj8RmQg2ehTVEx8pSWnd2QeFvjHnYtRZ' : true,
-        'PGD5jUBQ7qNnHDuW85RRBxY1msywEdCm7r' : true,
         'PXupozgNg1Ee6Nrbapj8DEfMGCVgWi4GB1' : true,
         'PD4pWxVke4Yz2y5UnNWnSsVHd45Vy6izCr' : true,
         'PW3tfEkGLKv4LFREpJYYpWxenKHSizB8rQ' : true,
@@ -219,13 +217,11 @@ Platform = function (app, listofnodes) {
         'PVATJhZqKdYXLp1nmPdrssRhygJApmAALR' : true,
         'PJtnXwKNPDdEpJhaKH2fbPEyLrcS77oj46' : true,
         'PSoCtc8FbPaagG6spsqbS2HJjRM8oPG16b' : true,
-        'PPxDNqCB2oWp3JffCiRXwJTzxRQuRjb5Bc' : true, 
+        'PPxDNqCB2oWp3JffCiRXwJTzxRQuRjb5Bc' : true,
         'PVRWuvwCNfZWUUD5gQzDsqabnTcMXoqgbV' : true,
         'P8sSu2qFnVPGEtnSTKYRMUzuG3xBHsj3ms' : true,
         'PUF8bsAYyHZQCtaMbrTwyRDcC3wMLKhFFX' : true,
         'PSFpsP19aHs7ZfGPnnt19yQC258y1HFYKD' : true,
-        'PCkX8n2e6aD6Ji37hSpHCJpqvaaJjVWt1m' : true,
-        'PT4fvQ7jMicg6McC52BmFFkL2M6AEWc7vo' : true,
         'PGecwCERTkoFd82E3e471SvxSxnJpC4cWk' : true,
         'PRZEXQXTmz1jW6YmH1e83nkRRiDUqkE6fw' : true,
         'PCM3fmcUikLbSNCeqtQ7MEk4yQbn6qQRJt' : true,
@@ -233,25 +229,21 @@ Platform = function (app, listofnodes) {
         'P8gfyLfXyeHzyAvq4Yqw6EW39ifCyVJ9f6' : true,
         'PSKLx4k7ehAtvipwpo2ohBeCYzpf4SiKHj' : true,
         'PK8dRanrBFxfSo3qw1P4gm6veaQQssZXxB' : true,
-        'PCkX8n2e6aD6Ji37hSpHCJpqvaaJjVWt1m' : true,
-        'PT4fvQ7jMicg6McC52BmFFkL2M6AEWc7vo' : true,
-        'PGegspsgRqvMiZCP8PGufKMYBk3yekDaEE' : true,
-        'PB8wu7hQwo5xMsVG4F4HshrW39t2Y4eN37' : true,
-        'PUhvX53ueD2Sxa3q7av83vNcEHuS8M7kRS' : true,
         'PAqPD7P3iFtz7e2epSP4V8FMPXrJKASeqD' : true,
         'PUopiRZvD6BAjF9CcWtMfpeJtxp411dxKM' : true,
-        'PUhvX53ueD2Sxa3q7av83vNcEHuS8M7kRS' : true,
         'PQkNpRfXbCGXJ2o1mRfsJMvMtsvq3uvZU9' : true,
-        'PGegspsgRqvMiZCP8PGufKMYBk3yekDaEE' : true,
-        'PB8wu7hQwo5xMsVG4F4HshrW39t2Y4eN37' : true,
         'PSBhEi8AUasemizUHyJ64t6xXonsxwp73y' : true,
         'PKYwaiikhUoPWmpWmYec4Xf3TPWwJQCqUt' : true,
         'PST4P2KEweDQJ2RAtG3scUmXAgPJJ5JJRL' : true,
         'PCfvhqHEYG3zdWXvLJrjPPDVK2H8qwwXn5' : true,
         'PLZsQmsRUDMJGc61pGMLdDQ58UuqQ8kU5Z' : true,
-        'PMC3pwutfiYpGWUMHhiB1NRjiHL7iWHiyi' : true
-
-
+        'PMC3pwutfiYpGWUMHhiB1NRjiHL7iWHiyi' : true,
+        'PEd7HQKaGj36sgPAidCvm62KidQQGL5sD8' : true,
+        'PMTrhcppMJpaRz4Xnv7CogJPHPMKtcg6bA' : true,
+        'PCYeapWncohMda9vfrFe26EDEiFa89kDZ1' : true,
+        'PQEYtpgvtfETFVfhk467SyuGRhwtMcvKUd' : true,
+        'PGnshbCvNGRiBYGxUpVNqLkaM8Ku1xvbaw' : true,
+        'PF3oocNVVz5gfdFJGQF4J4xf2bCaxRxYTh' : true,
     }
 
     self.bch = {
@@ -282,7 +274,19 @@ Platform = function (app, listofnodes) {
         'PGvRUM7jXqHdUn7Let2QyTi1t2LHq7RgX7',
         'P9EkPPJPPRYxmK541WJkmH8yBM4GuWDn2m',
         'PReLEpaGEGTCeWKiqnK85eXrqmmTxYQ9Tw',
-        'TAqR1ncH95eq9XKSDRR18DtpXqktxh74UU'
+        'TAqR1ncH95eq9XKSDRR18DtpXqktxh74UU',
+        'PUGBtfmivvcg1afnEt9vqVi3yZ7v6S9BcC',
+        'PDtuJDVXaq82HH7fafgwBmcoxbqqWdJ9u9',
+        'PDCNrwP1i8BJQWh2bctuJyAaXxozgMcRYT',
+        'PVJ1rRdS9y9sUpaBJc8quiSTJGrC3xW8EH',
+        'PAF1BvWEH7pA24QbbEvCEasViC2Pw9BVj3',
+        'PSADH5AY5M9RaWrDVdaMrR2C2s6dCGfNK4',
+        'PMyjUzHtzsmbejB87ATbrcQNatiGsT4NzG',
+        'PHdW4pwWbFdoofVhSEfPSHgradmrvZdbE5',
+        'PDJpNY6Hm9WuA4MGSRefAGcTiDtfWKRKQD',
+        'PUJjhGLa7KesEa3Ee8K9pi49u1mW9xqQZB',
+        'PFWx4RKpggTjeDNq6oyWJfejP5z8oiKGE5',
+        'PFr6sDvtJq3wJejQce5RJ5L8u1oYKgjW9o',
     ];
     self.whiteList = [
       'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd',
@@ -310,16 +314,16 @@ Platform = function (app, listofnodes) {
 
     var onlinetnterval;
     var unspentoptimizationInterval = null;
-   // var blockps = self.currentBlock - 30000;
+    // var blockps = self.currentBlock - 30000;
     var nshowed = false;
     var TXFEE = 1;
 
     var smulti = 100000000
 
     var sm = new nModule();
-        sm.ajax = app.ajax;
-        sm.app = app;
-        sm.user = app.user;
+    sm.ajax = app.ajax;
+    sm.app = app;
+    sm.user = app.user;
 
     self.released = {
         vidgets : {
@@ -2461,6 +2465,8 @@ Platform = function (app, listofnodes) {
 
             var id = p.id || makeid()
 
+            console.log("P", p)
+
             app.nav.api.load({
 
                 open : true,
@@ -2847,23 +2853,23 @@ Platform = function (app, listofnodes) {
 
         popup : function(key, always, data){
 
-			var showed = localStorage['popup_' + key] || false;
+            var showed = localStorage['popup_' + key] || false;
 
-			if(!showed || always){
+            if(!showed || always){
 
-				app.nav.api.load({
-					open : true,
-					id : 'popup',
-					key : key,
-					inWnd : true,
+                app.nav.api.load({
+                    open : true,
+                    id : 'popup',
+                    key : key,
+                    inWnd : true,
 
-					essenseData : {
-						key : key,
-						always : always,
-						data : data
-					}
-				})
-			}
+                    essenseData : {
+                        key : key,
+                        always : always,
+                        data : data
+                    }
+                })
+            }
 
         },
 
@@ -2975,11 +2981,13 @@ Platform = function (app, listofnodes) {
         showCommentBanner : function(contextElem) {
 
             let bannerCommentComponent = null;
-            if (!contextElem) {
-                return bannerCommentComponent;
-            }
 
             const createComponent = () => {
+                self.app.Logger.info({
+                    actionId: 'COMMENT_BANNER_ALLOWED',
+                    value: true,
+                });
+
                 app.nav.api.load({
                     open: true,
                     id: 'commentBanner',
@@ -2988,50 +2996,59 @@ Platform = function (app, listofnodes) {
 
                     clbk : function(e, p){
                         bannerCommentComponent = p;
+                        if (p.el[0].constructor.name === 'HTMLDivElement') {
+                            self.app.Logger.info({
+                                actionId: 'COMMENT_BANNER_SHOWED',
+                                value: p.el[0].constructor.name,
+                            });
+
+                            return;
+                        }
                     }
                 });
             };
 
             const unixTimeNow = Math.floor(Date.now() / 1000);
-            const oneDayInSeconds = 86400000;
+            const oneDayInSeconds = 86400;
 
             const alreadyShowed = ('nextCommentBanner' in localStorage);
             const isBannerDisabled = (localStorage.nextCommentBanner == -1);
-            const timeToShowBanner = (unixTimeNow >= localStorage.nextCommentBanner);
+            const timeToShowBanner = (localStorage.nextCommentBanner <= unixTimeNow);
 
             const regDate = app.platform.sdk.user.me().regdate;
             const regUnixTime = (regDate.getTime());
             const registeredTime = Date.now() - regUnixTime;
 
-            const repeat = (localStorage.nextCommentBanner == 1);
             const isOneDayOld = (registeredTime >= oneDayInSeconds);
 
             if (isBannerDisabled) {
-                console.log('banner showbanner', bannerCommentComponent);
-                return bannerCommentComponent;
+                return isBannerDisabled;
             }
 
             if (!isOneDayOld) {
                 createComponent();
+                console.log('banner showbanner', bannerCommentComponent);
                 return bannerCommentComponent;
             }
 
-            if (repeat && timeToShowBanner) {
-                localStorage.nextCommentBanner = unixTimeNow + oneDayInSeconds;
+            if (!alreadyShowed) {
+                localStorage.nextCommentBanner = 1;
                 createComponent();
+                console.log('banner showbanner', bannerCommentComponent);
                 return bannerCommentComponent;
             }
 
             if (timeToShowBanner || !alreadyShowed) {
-                localStorage.nextCommentBanner = 1;
+                localStorage.nextCommentBanner = unixTimeNow + oneDayInSeconds;
                 createComponent();
+                console.log('banner showbanner', bannerCommentComponent);
                 return bannerCommentComponent;
             }
 
         },
 
         carousel : function(el, clbk){
-			var images = el.find('[image]');
+            var images = el.find('[image]');
 
             var w = el.width()
 
@@ -3062,7 +3079,7 @@ Platform = function (app, listofnodes) {
                     navText: [
                         '<i class="fas fa-chevron-left"></i> ',
                         '<i class="fas fa-chevron-right"></i>'
-                        ]
+                    ]
 
                 });
 
@@ -3974,8 +3991,8 @@ Platform = function (app, listofnodes) {
                 app.events.scroll[id] = events.scroll
                 app.events.resize[id] = events.resize
 
-               /**window.addEventListener('scroll', events.scroll)
-                window.addEventListener('resize', events.resize)*/
+                /**window.addEventListener('scroll', events.scroll)
+                 window.addEventListener('resize', events.resize)*/
 
                 up.on('click', events.click)
 
@@ -4432,7 +4449,7 @@ Platform = function (app, listofnodes) {
 
             unsubscribe: function (address, clbk) {
                 var unsubscribe = new Unsubscribe();
-                    unsubscribe.address.set(address);
+                unsubscribe.address.set(address);
 
                 topPreloader(10)
 
@@ -4574,7 +4591,7 @@ Platform = function (app, listofnodes) {
             htls : function(id){
                 self.app.platform.ui.wallet.send({id : id}, function(){
 
-				})
+                })
             },
 
         },
@@ -4719,8 +4736,8 @@ Platform = function (app, listofnodes) {
 
                                     pinPost(d.share, function(err, result){
 
-										if(!err)
-										{
+                                        if(!err)
+                                        {
 
                                             var shares = self.sdk.node.shares.storage.trx;
                                             var alreadyPinned = Object.values(shares).find(function(share){
@@ -4768,8 +4785,8 @@ Platform = function (app, listofnodes) {
 
                                     pinPost(d.share, function(err, result){
 
-										if(!err)
-										{
+                                        if(!err)
+                                        {
 
                                             d.share.pin = false;
                                             var metatable = _el.closest('.metatable');
@@ -4915,8 +4932,8 @@ Platform = function (app, listofnodes) {
 
                                     removePost(d.share, function(err, result){
 
-										if(!err)
-										{
+                                        if(!err)
+                                        {
 
                                             authorgroup.addClass('deleted');
 
@@ -5155,7 +5172,7 @@ Platform = function (app, listofnodes) {
 
 
 
-                                 {
+                                {
                                     id : 'app-store',
                                     q : 'What can be expected to purchase with PKOIN?',
                                     a : '<div>PKOIN has a multitude of uses on Bastyon. First, 50 PKOIN in your account removes all posting limitations and allows you to load video. PKOIN can be used to boost comments, making your comments visible to everyone. The PKOIN from boosted comments goes to the blogger, and bloggers should reply or feature such comments to encourage such boosts. You can boost a post to move it up in the feed. It is used for staking in nodes, you can run a node and earn more PKOIN by staking PKOIN. It will be used in a Decentralized Ad Marketplace with 100% of proceeds going to bloggers. It will also be used to buy special wallpaper profiles, animated profile images etc. </div>',
@@ -5379,7 +5396,7 @@ Platform = function (app, listofnodes) {
                                     q : 'Where can I see my video stats?',
                                     a : '<div> Go to your profile and see My Videos. </div> ',
                                 },
-                                 {
+                                {
                                     id : 'technology',
                                     q : 'What player do you use to play the video?',
                                     a : '<div> Bastyon has its own player, which is a significantly modified version of PeerTube. Same as PeerTube it uses WebTorrent technology to reduce the load on the server. This means that users watching the video are sharing it. Note, that in some cases it means users can see IP addresses of each other. Bastyon servers do not have any mechanism to record these IP addresses, however, if you really care about exposing your IP address, you should use a reliable VPN provider. If you want to minimize any peer-to-peer sharing, you can use download video function in Bastyon. </div> ',
@@ -5856,44 +5873,44 @@ Platform = function (app, listofnodes) {
                     ru : [
                         {
 
-                        name : 'Как '+self.app.meta.fullname+' работает?',
-                        id : 'how-it-works',
+                            name : 'Как '+self.app.meta.fullname+' работает?',
+                            id : 'how-it-works',
 
-                        group : [
+                            group : [
 
-                        {
-                        id : 'what-is',
-                        q : 'Что такое ' +self.app.meta.fullname+'?',
-                        a : '<div><p>' +self.app.meta.fullname+' это инновационная социальная сеть и платформа для обмена видео. В отличие от обычных социальных сетей, за ' +self.app.meta.fullname+' нет корпорации и он основан на модели Биткойн. Bastyon - это проект с открытым исходным кодом, которым управляет группа разработчиков и экспертов, и его цель - предоставить модерируемую сообществом платформу, в которой серьезно соблюдается свобода слова.  </p> <p>Автором проекта изначально был  Даниэль Сатчков, но сейчас команда ' +self.app.meta.fullname+' - это более 25 разработчиков и множество волонтеров по всему миру. Bastyon - это скорее протокол, чем платформа, поскольку любой разработчик может создать на нем собственное приложение. Платформа работает не на одном сервере, а в сети из <em> пользовательских узлов </em>, расположенных по всему миру.  </p> <p> Это означает, что пользователи всегда могут получать информацию и общаться, просматривать контент и публиковать сообщения, пока у них есть подключение к Интернету и только несколько узлов где-то в мире работают. </p> <p> Это преодолевает ограничения, которые цензоры устанавливают для блокировки или ограничения коммуникация и распространение информации. Информация должна свободно перемещаться. Хотя, например, в Китае некоторые социальные сети можно использовать только через VPN, в этом нет необходимости с '+ self.app.meta.fullname +'. </p> <p> Кроме того, '+ self.app.meta.fullname +' не собирает личную информацию: пользователи регистрируются без какого-либо адреса электронной почты или номера телефона, и никакие личные данные, такие как IP или MAC-адрес, никоим образом не сохраняются. Обратите внимание: хотя Bastyon не собирает никаких IP-адресов (как видно из открытого кода), невозможно полностью скрыть ваш IP-адрес при использовании Интернета, если только вы не используете VPN. </p> <p> Таким образом, '+ self.app.meta.fullname +' позволяет пользователям свободно обсуждать проблемы. Сегодня анонимность является требованием безопасности и конфиденциальности, и '+ self.app.meta.fullname +' может это гарантировать.  </p> <p> Кроме того, чтобы обеспечить полностью конфиденциальное и анонимное общение, '+ self.app.meta.fullname +' обеспечивает зашифрованную систему чата, не связанную с каким-либо номером телефона или личными данными, защищенную сквозным шифрованием  (обратите внимание, что групповые чаты не шифруются. Шифрование обеспечивается только на одноранговых, персональных чатах ( чатах 1-на-1)). Никто, кроме двух пользователей, участвующих в сеансе чата, не может получить доступ к сообщениям. Все утверждения легко проверить, поскольку приложение Bastyon и блокчейн Pocketnet имеют полностью открытый исходный код, а код виден всем. Более того, все сообщения чата автоматически удаляются через 7 дней. </p> <p> '+ self.app.meta.fullname +' - устойчивая к цензуре социальная платформа, где люди могут общаться и делиться контентом с другими пользователями абсолютно прозрачно, где одни правила для всех пользователей и разработчиков. </p> </div> ',
-                        },
+                                {
+                                    id : 'what-is',
+                                    q : 'Что такое ' +self.app.meta.fullname+'?',
+                                    a : '<div><p>' +self.app.meta.fullname+' это инновационная социальная сеть и платформа для обмена видео. В отличие от обычных социальных сетей, за ' +self.app.meta.fullname+' нет корпорации и он основан на модели Биткойн. Bastyon - это проект с открытым исходным кодом, которым управляет группа разработчиков и экспертов, и его цель - предоставить модерируемую сообществом платформу, в которой серьезно соблюдается свобода слова.  </p> <p>Автором проекта изначально был  Даниэль Сатчков, но сейчас команда ' +self.app.meta.fullname+' - это более 25 разработчиков и множество волонтеров по всему миру. Bastyon - это скорее протокол, чем платформа, поскольку любой разработчик может создать на нем собственное приложение. Платформа работает не на одном сервере, а в сети из <em> пользовательских узлов </em>, расположенных по всему миру.  </p> <p> Это означает, что пользователи всегда могут получать информацию и общаться, просматривать контент и публиковать сообщения, пока у них есть подключение к Интернету и только несколько узлов где-то в мире работают. </p> <p> Это преодолевает ограничения, которые цензоры устанавливают для блокировки или ограничения коммуникация и распространение информации. Информация должна свободно перемещаться. Хотя, например, в Китае некоторые социальные сети можно использовать только через VPN, в этом нет необходимости с '+ self.app.meta.fullname +'. </p> <p> Кроме того, '+ self.app.meta.fullname +' не собирает личную информацию: пользователи регистрируются без какого-либо адреса электронной почты или номера телефона, и никакие личные данные, такие как IP или MAC-адрес, никоим образом не сохраняются. Обратите внимание: хотя Bastyon не собирает никаких IP-адресов (как видно из открытого кода), невозможно полностью скрыть ваш IP-адрес при использовании Интернета, если только вы не используете VPN. </p> <p> Таким образом, '+ self.app.meta.fullname +' позволяет пользователям свободно обсуждать проблемы. Сегодня анонимность является требованием безопасности и конфиденциальности, и '+ self.app.meta.fullname +' может это гарантировать.  </p> <p> Кроме того, чтобы обеспечить полностью конфиденциальное и анонимное общение, '+ self.app.meta.fullname +' обеспечивает зашифрованную систему чата, не связанную с каким-либо номером телефона или личными данными, защищенную сквозным шифрованием  (обратите внимание, что групповые чаты не шифруются. Шифрование обеспечивается только на одноранговых, персональных чатах ( чатах 1-на-1)). Никто, кроме двух пользователей, участвующих в сеансе чата, не может получить доступ к сообщениям. Все утверждения легко проверить, поскольку приложение Bastyon и блокчейн Pocketnet имеют полностью открытый исходный код, а код виден всем. Более того, все сообщения чата автоматически удаляются через 7 дней. </p> <p> '+ self.app.meta.fullname +' - устойчивая к цензуре социальная платформа, где люди могут общаться и делиться контентом с другими пользователями абсолютно прозрачно, где одни правила для всех пользователей и разработчиков. </p> </div> ',
+                                },
 
-                        {
-                        id : 'как это-слова',
-                        q : 'С чего мне начать?',
-                        a : '<div><p>'+self.app.meta.fullname+' прост в использовании: вам нужно создать учетную запись и вы можете сразу же начать публиковать контент, подписываться на других пользователей и общаться в чате. </p> <p> Во время регистрации вам нужно создать уникальное имя и загрузить картинку или фотографию (не обязательно свою фотографию!). Ни электронной почты (вы можете оставить электронное письмо для списка рассылки, но оно не связано с вашей учетной записью на Bastyon), ни номера телефона, ни проверок. Даже пароль: система сгенерирует парольную фразу, которую вы должны использовать для входа в систему, эта парольная фраза - ваш личный ключ, который заменяет логин и пароль, это единственное, что вам нужно для входа в систему. Если вы потеряете личный ключ ключ, никто не может его восстановить, даже разработчики не имеют доступа к учетным записям пользователей.</p></div>',
-                        },
+                                {
+                                    id : 'как это-слова',
+                                    q : 'С чего мне начать?',
+                                    a : '<div><p>'+self.app.meta.fullname+' прост в использовании: вам нужно создать учетную запись и вы можете сразу же начать публиковать контент, подписываться на других пользователей и общаться в чате. </p> <p> Во время регистрации вам нужно создать уникальное имя и загрузить картинку или фотографию (не обязательно свою фотографию!). Ни электронной почты (вы можете оставить электронное письмо для списка рассылки, но оно не связано с вашей учетной записью на Bastyon), ни номера телефона, ни проверок. Даже пароль: система сгенерирует парольную фразу, которую вы должны использовать для входа в систему, эта парольная фраза - ваш личный ключ, который заменяет логин и пароль, это единственное, что вам нужно для входа в систему. Если вы потеряете личный ключ ключ, никто не может его восстановить, даже разработчики не имеют доступа к учетным записям пользователей.</p></div>',
+                                },
 
-                        {
-                        id : 'подписаться',
-                        q : 'В чем разница между парольной фразой из 12 слов и закрытым ключом?',
-                        a : '<div><p>При первом использовании '+ self.app.meta.fullname +' вам необходимо создать учетную запись, состоящую только из вашего уникального имени пользователя. </p> <p> <strong> Нет пароля. </strong> </p> <p> Вместо этого вам будет предоставлен уникальный ключ из 12 слов (кодовая фраза). В качестве альтернативы вы можете использовать закрытый ключ, представляющий собой длинный набор символов. <strong> Храните эти данные в безопасности и НИКОГДА не раскрывайте их никому. </strong> </p> <p> Затем, когда вам нужно войти в систему, вам просто нужно ввести кодовую фразу (или отсканировать QR из приложения). </p> <p> <strong> Помните </strong>: если вы потеряете кодовую фразу, ваша учетная запись будет заблокирована навсегда. Невозможно восстановить пароль, нет возможности для '+ self.app.meta.fullname +' каким-либо способом войти в систему без кодовой фразы или приватного ключа. Ваша кодовая фраза или приватный ключ - единственный способ получить доступ к вашей учетной записи, пожалуйста, запишите его где-нибудь на листке бумаги или сохраните в надежном месте. Вы можете найти его в своем профиле в разделе «Учетные записи» (щелкните символ ключа). </p> </div> ',
-                        },
+                                {
+                                    id : 'подписаться',
+                                    q : 'В чем разница между парольной фразой из 12 слов и закрытым ключом?',
+                                    a : '<div><p>При первом использовании '+ self.app.meta.fullname +' вам необходимо создать учетную запись, состоящую только из вашего уникального имени пользователя. </p> <p> <strong> Нет пароля. </strong> </p> <p> Вместо этого вам будет предоставлен уникальный ключ из 12 слов (кодовая фраза). В качестве альтернативы вы можете использовать закрытый ключ, представляющий собой длинный набор символов. <strong> Храните эти данные в безопасности и НИКОГДА не раскрывайте их никому. </strong> </p> <p> Затем, когда вам нужно войти в систему, вам просто нужно ввести кодовую фразу (или отсканировать QR из приложения). </p> <p> <strong> Помните </strong>: если вы потеряете кодовую фразу, ваша учетная запись будет заблокирована навсегда. Невозможно восстановить пароль, нет возможности для '+ self.app.meta.fullname +' каким-либо способом войти в систему без кодовой фразы или приватного ключа. Ваша кодовая фраза или приватный ключ - единственный способ получить доступ к вашей учетной записи, пожалуйста, запишите его где-нибудь на листке бумаги или сохраните в надежном месте. Вы можете найти его в своем профиле в разделе «Учетные записи» (щелкните символ ключа). </p> </div> ',
+                                },
 
 
-                        {
-                        id : 'закулисный',
-                        q : 'Как это работает за кадром? Где находятся серверы?',
-                        a : '<div><p>'+self.app.meta.fullname+' построен на основе децентрализованной криптовалюты Биткойн, не имеет центрального офиса и использует цепочку блоков для совершения транзакций и обеспечения безопасности.  </p> <p> Центрального сервера нет: вместо этого платформа полагается на сеть узлов, расположены по всему миру. Любой человек, имеющий компьютер, может фактически запустить узел (и получить за это вознаграждение в Pocketcoin). </p> <p> Хеш каждого сообщения, каждого комментария, каждого взаимодействия (кроме чата сообщения!) хранится в <a elementsid="https://en.wikipedia.org/wiki/Blockchain" href="https://en.wikipedia.org/wiki/Blockchain"> блокчейне </a>. Сами сообщения и комментарии находятся не в блокчейне, а в сопутствующей базе данных, привязанной к блокчейну. </p> <p> '+ self.app.meta.fullname +' использует выделенный блокчейн, полученный непосредственно из цепочки биткойнов.  </p> </div> ',
-                        },
+                                {
+                                    id : 'закулисный',
+                                    q : 'Как это работает за кадром? Где находятся серверы?',
+                                    a : '<div><p>'+self.app.meta.fullname+' построен на основе децентрализованной криптовалюты Биткойн, не имеет центрального офиса и использует цепочку блоков для совершения транзакций и обеспечения безопасности.  </p> <p> Центрального сервера нет: вместо этого платформа полагается на сеть узлов, расположены по всему миру. Любой человек, имеющий компьютер, может фактически запустить узел (и получить за это вознаграждение в Pocketcoin). </p> <p> Хеш каждого сообщения, каждого комментария, каждого взаимодействия (кроме чата сообщения!) хранится в <a elementsid="https://en.wikipedia.org/wiki/Blockchain" href="https://en.wikipedia.org/wiki/Blockchain"> блокчейне </a>. Сами сообщения и комментарии находятся не в блокчейне, а в сопутствующей базе данных, привязанной к блокчейну. </p> <p> '+ self.app.meta.fullname +' использует выделенный блокчейн, полученный непосредственно из цепочки биткойнов.  </p> </div> ',
+                                },
 
-                        {
-                        id : 'блоки',
-                        q : 'Что произойдет, если какая-то страна (страны) заблокирует доступ к Bastyon.com?',
-                        a : '<div><p>Bastyon.com перестанет работать,  но приложение для компьютера будет работать точно также после любых блокировок сайта.</p><p>Вы сможете использовать Bastyon, как будто ничего не произошло, поскольку настольное приложение Bastyon обращается напрямую к узлам и не использует веб-сайты. </p> <p> В этом сила сопротивления цензуре. <br /> Вы можете убедиться в этом сами, смоделировав исчезновение доменного имени bastyon.com. <br /> <br /> <strong> В Windows: </strong> <br /> просто откройте этот файл: <br /> Windows / System32 / hosts <br /> <br /> <strong> В Linux / Ubuntu: </strong> <br /> Откройте этот файл <br /> / etc / hosts <br /> <br /> Затем добавьте эту строку: <br /> 127.0.0.1 bastyon.com </p> <p > Это гарантирует, что bastyon.com указывает на ваш локальный компьютер, а это означает, что он не указывает ни на какой внешний IP-адрес. <br /> <br /> Затем запустите настольное приложение, и вы сможете продолжить использование Bastyon если ничего не произошло. <br /> Круто, да? </p> </div> <br /> <a href="https://github.com/pocketnetteam/pocketnet.gui/releases/">Скачать Приложение Для Компьютера</a> ',
+                                {
+                                    id : 'блоки',
+                                    q : 'Что произойдет, если какая-то страна (страны) заблокирует доступ к Bastyon.com?',
+                                    a : '<div><p>Bastyon.com перестанет работать,  но приложение для компьютера будет работать точно также после любых блокировок сайта.</p><p>Вы сможете использовать Bastyon, как будто ничего не произошло, поскольку настольное приложение Bastyon обращается напрямую к узлам и не использует веб-сайты. </p> <p> В этом сила сопротивления цензуре. <br /> Вы можете убедиться в этом сами, смоделировав исчезновение доменного имени bastyon.com. <br /> <br /> <strong> В Windows: </strong> <br /> просто откройте этот файл: <br /> Windows / System32 / hosts <br /> <br /> <strong> В Linux / Ubuntu: </strong> <br /> Откройте этот файл <br /> / etc / hosts <br /> <br /> Затем добавьте эту строку: <br /> 127.0.0.1 bastyon.com </p> <p > Это гарантирует, что bastyon.com указывает на ваш локальный компьютер, а это означает, что он не указывает ни на какой внешний IP-адрес. <br /> <br /> Затем запустите настольное приложение, и вы сможете продолжить использование Bastyon если ничего не произошло. <br /> Круто, да? </p> </div> <br /> <a href="https://github.com/pocketnetteam/pocketnet.gui/releases/">Скачать Приложение Для Компьютера</a> ',
 
-                        }
+                                }
 
-                        ]
+                            ]
 
 
                         },
@@ -5907,365 +5924,365 @@ Platform = function (app, listofnodes) {
 
 
 
-                            {
-                            id : 'магазин приложений',
-                            q : 'Как можно использовать PKOIN?',
-                            a : '<div>PKOIN имеет множество применений на Bastyon. Во-первых, 50 PKOIN в вашем аккаунте снимают все ограничения на публикацию и позволяют загружать ежедневно до 4ГБ видео. PKOIN можно использовать для того, чтобы сделать ваши комментарии более заметными для всех (Комментарии с донатами будут находиться в самом верху ленты комментариев). PKOIN от таких поднятых комментариев достается блоггеру, и блоггеры должны отвечать или размещать такие комментарии, чтобы поощрять подобные "поднятия" комментариев. Вы можете поднять пост, чтобы продвинуть его вверх в ленте. Он используется для стейкинга в узлах, вы можете запустить узел и заработать больше PKOIN, поставив PKOIN. Он будет использоваться на децентрализованной торговой площадке рекламы, при этом 100% доходов будут поступать блоггерам. Также на него можно будет купить специальные "обои" вашего личного профиля, анимированные изображения профиля и т. д. (Релиз с такими возможностями ожидается в марте) </div>',
-                            },
+                                {
+                                    id : 'магазин приложений',
+                                    q : 'Как можно использовать PKOIN?',
+                                    a : '<div>PKOIN имеет множество применений на Bastyon. Во-первых, 50 PKOIN в вашем аккаунте снимают все ограничения на публикацию и позволяют загружать ежедневно до 4ГБ видео. PKOIN можно использовать для того, чтобы сделать ваши комментарии более заметными для всех (Комментарии с донатами будут находиться в самом верху ленты комментариев). PKOIN от таких поднятых комментариев достается блоггеру, и блоггеры должны отвечать или размещать такие комментарии, чтобы поощрять подобные "поднятия" комментариев. Вы можете поднять пост, чтобы продвинуть его вверх в ленте. Он используется для стейкинга в узлах, вы можете запустить узел и заработать больше PKOIN, поставив PKOIN. Он будет использоваться на децентрализованной торговой площадке рекламы, при этом 100% доходов будут поступать блоггерам. Также на него можно будет купить специальные "обои" вашего личного профиля, анимированные изображения профиля и т. д. (Релиз с такими возможностями ожидается в марте) </div>',
+                                },
 
 
-                            {
-                            id : 'pocketcoinstock',
-                            q : 'Pocketcoin похож на долю акций в '+self.app.meta.fullname+' ?',
-                            a : '<div>Нет, это не так. '+self.app.meta.fullname+' даже не корпорация и не имеет никакой собственности. Это открытый код, который может скопировать и запустить каждый. Pocketcoin - это токен, который облегчает обмен ценностями, в частности, рекламные транзакции. Кроме того, '+ self.app.meta.fullname +' будет включать торговую площадку, где товары и услуги будут продаваться напрямую за Pocketcoin.</div>',
-                            },
+                                {
+                                    id : 'pocketcoinstock',
+                                    q : 'Pocketcoin похож на долю акций в '+self.app.meta.fullname+' ?',
+                                    a : '<div>Нет, это не так. '+self.app.meta.fullname+' даже не корпорация и не имеет никакой собственности. Это открытый код, который может скопировать и запустить каждый. Pocketcoin - это токен, который облегчает обмен ценностями, в частности, рекламные транзакции. Кроме того, '+ self.app.meta.fullname +' будет включать торговую площадку, где товары и услуги будут продаваться напрямую за Pocketcoin.</div>',
+                                },
 
-                            // {
-                            // id : 'pocketcoinbuy',
-                            // q : 'Могу ли я купить дополнительный Pocketcoin?',
-                            // a : '<div>Да, в настоящее время вы можете купить Pocketcoin на следующих биржах: DigiFinex, Bitforex, Mercatox. Вы также можете купить его за 19 различных криптовалют на https://pkoin.net/, а в Bastyon есть категория PKOIN / Peer-to-Peer, где вы можете покупать и продавать ее другим пользователям.</div>',
-                            // },
+                                // {
+                                // id : 'pocketcoinbuy',
+                                // q : 'Могу ли я купить дополнительный Pocketcoin?',
+                                // a : '<div>Да, в настоящее время вы можете купить Pocketcoin на следующих биржах: DigiFinex, Bitforex, Mercatox. Вы также можете купить его за 19 различных криптовалют на https://pkoin.net/, а в Bastyon есть категория PKOIN / Peer-to-Peer, где вы можете покупать и продавать ее другим пользователям.</div>',
+                                // },
 
-                            // {
-                            // id : 'pocketcoinbuyfiat',
-                            // q : 'Могу ли я купить Pocketcoin за доллары США или другую фиатную валюту? ',
-                            // a: '<div> Да, вы можете купить его в категории PKOIN / Peer-to-Peer или через компанию под названием Indacoin по адресу https://buy.pkoin.indacoin.io/ Indacoin не имеет ничего общего с Bastyon, они просто продают PKOIN за кредитные карты после покупки на биржах.</div>',
-                            // },
+                                // {
+                                // id : 'pocketcoinbuyfiat',
+                                // q : 'Могу ли я купить Pocketcoin за доллары США или другую фиатную валюту? ',
+                                // a: '<div> Да, вы можете купить его в категории PKOIN / Peer-to-Peer или через компанию под названием Indacoin по адресу https://buy.pkoin.indacoin.io/ Indacoin не имеет ничего общего с Bastyon, они просто продают PKOIN за кредитные карты после покупки на биржах.</div>',
+                                // },
 
-                            {
-                            id : 'pocketcoinbuyfiat',
-                            q : 'Зачем мне покупать Pocketcoin?',
-                            a : '<div>У Bastyon нет поддержки со стороны банкиров или венчурных капиталистов, это децентрализованная социальная платформа, поддерживаемая PKOIN. Когда вы используете Bastyon, вы используете пользовательские узлы, видео узлы, все они должны платить за компьютеры, Интернет и электричество. Блогерам нужно зарабатывать на контенте. Bastyon может работать только в том случае, если пользователи владеют и поддерживают PKOIN. Итак, покупка PKOIN - это способ поддержать децентрализацию и свободу. Однако есть еще одна важная причина для владения Pocketcoin. Вполне возможно, что скоро доступ к вашему банковскому счету будет ограничен без наличия у вас QR-кода.  Pocketcoin не привязан к вашему имени или паспорту и является одним из способ заниматься коммерцией в мире, где царит финансовая цензура. Не исключено, что PKOIN может стать одним из немногих способов покупки еды без определенного сертификата или QR-кода. Покупка PKOIN - отличный способ противостояния цензуре и ограничениям </div>',
-                            },
+                                {
+                                    id : 'pocketcoinbuyfiat',
+                                    q : 'Зачем мне покупать Pocketcoin?',
+                                    a : '<div>У Bastyon нет поддержки со стороны банкиров или венчурных капиталистов, это децентрализованная социальная платформа, поддерживаемая PKOIN. Когда вы используете Bastyon, вы используете пользовательские узлы, видео узлы, все они должны платить за компьютеры, Интернет и электричество. Блогерам нужно зарабатывать на контенте. Bastyon может работать только в том случае, если пользователи владеют и поддерживают PKOIN. Итак, покупка PKOIN - это способ поддержать децентрализацию и свободу. Однако есть еще одна важная причина для владения Pocketcoin. Вполне возможно, что скоро доступ к вашему банковскому счету будет ограничен без наличия у вас QR-кода.  Pocketcoin не привязан к вашему имени или паспорту и является одним из способ заниматься коммерцией в мире, где царит финансовая цензура. Не исключено, что PKOIN может стать одним из немногих способов покупки еды без определенного сертификата или QR-кода. Покупка PKOIN - отличный способ противостояния цензуре и ограничениям </div>',
+                                },
                             ]
-                            },
-
-                            {
-
-                                name : 'Как я могу купить PKOIN?',
-                                id : 'buy-pkoin',
-
-                                group : [
-
-                                    {
-                                        id : 'buy-pkoin1',
-                                        q : '  ',
-                                        a : 'Вы можете купить PKOIN следующими способами: Выберите категорию «PKOIN/Из рук в руки» и посмотрите на предложения о купле/продаже PKOIN, либо сами разместите свое предложение о купле/продаже PKOIN.	',
-                                        img: '<img src="img/wn.jpg" alt="" />'
-                                    },
-                                    {
-                                        id : 'buy-pkoin21',
-                                        q : '',
-                                        a : 'Покупку PKOIN также можно осуществить на следующих сайтах. 	<br> <a target="_blank" href="https://www.bitforex.com/en/spot/pkoin_usdt">https://www.bitforex.com/en/spot/pkoin_usdt</a> <br> <a target="_blank" href="https://www.digifinex.com/en-ww/trade/USDT/PKOIN">https://www.digifinex.com/en-ww/trade/USDT/PKOIN</a>  <br> <a target="_blank" href="https://pkoin.net/">https://pkoin.net/</a> - здесь приобрести  PKOIN можно за другие криптовалюты. <br>		<a target="_blank" href="https://buy.pkoin.indacoin.io/">https://buy.pkoin.indacoin.io/</a> - здесь приобрести PKOIN можно за кредитную карту.',
-                                        img: ''
-                                    },
-                                    {
-                                        id : 'buy-pkoin2',
-                                        q : 'Pkoin.net - для покупки PKOIN за другие криптовалюты ',
-                                        a : 'Выберите криптовалюту, за которую вы хотите приобрести PKOIN, укажите  количество PKOIN, а также введите адрес своего кошелька.',
-                                        img: '<img src="img/buy-pkoin2.jpg" alt="" />'
-                                    },
-                                    {
-                                        id : 'buy-pkoin3',
-                                        q : '  ',
-                                        a : 'Адрес вашего PKOIN-кошелька находится в вашем аккаунте на Бастионе. Чтобы его найти – кликните иконку вашего аватара, которая расположена в правом верхнем углу.',
-                                        img: '<img src="img/wn.jpg" alt="" />'
-                                    },
-                                    {
-                                        id : 'buy-pkoin4',
-                                        q : '  ',
-                                        a : 'Далее кликните по адресу PKOIN, чтобы его скопировать.',
-                                        img: '<img src="img/upl7.jpg" alt="" />'
-                                    },
-                                    {
-                                        id : 'buy-pkoin5',
-                                        q : '  ',
-                                        a : 'Далее, вам нужно ввести адрес вашего PKOIN-кошелька в соответствующее поле и нажать кнопку “Purchase”.',
-                                        img: '<img src="img/buy-pkoin5.jpg" alt="" />'
-                                    },
-                                    {
-                                        id : 'buy-pkoin6',
-                                        q : '  ',
-                                        a : 'После этого вы должны отправить BTC (или другую криптовалюту, которую вы выбрали) на предоставленный вам адрес. ',
-                                        img: '<img src="img/buy-pkoin6.jpg" alt="" />'
-                                    },
-                                    {
-                                        id : 'buy-pkoin7',
-                                        q : ' Купить PKOIN с помощью кредитной карты на <a href="Buy.pkoin.indacoin.io">indacoin.io</a>     ',
-                                        a : 'Для начала, выберите валюту, введите количество, ваш электронный адрес и адрес кошелька PKOIN. Далее, нажмите «Купить PKOIN»',
-                                        img: '<img src="img/buy-pkoin7.jpg" alt="" />'
-                                    },
-                                    {
-                                        id : 'buy-pkoin8',
-                                        q : '  ',
-                                        a : 'Вы увидите окно «Купить PKOIN с кредитной или дебетовой картой», нажмите  «Далее»',
-                                        img: '<img src="img/buy-pkoin8.jpg" alt="" />'
-                                    },
-                                    {
-                                        id : 'buy-pkoin9',
-                                        q : '  ',
-                                        a : 'Далее, введите ваш адрес, почтовый индекс и укажите вашу страну. ',
-                                        img: '<img src="img/buy-pkoin9.jpg" alt="" />'
-                                    },
-                                    {
-                                        id : 'buy-pkoin10',
-                                        q : '  ',
-                                        a : 'Далее, введите ваше имя, страну, номер телефона, дату рождения',
-                                        img: '<img src="img/buy-pkoin10.jpg" alt="" />'
-                                    },
-                                    {
-                                        id : 'buy-pkoin11',
-                                        q : '  ',
-                                        a : 'Введите номер вашей карты и нажмите «Далее».',
-                                        img: '<img src="img/buy-pkoin11.jpg" alt="" />'
-                                    },
-
-
-
-
-                                ]
-
-                            },
-                            {
-
-                                name : 'Как заработать PKOIN, используя легкую ноду?',
-                                id : 'earnbastyon',
-
-                                group : [
-
-                                    {
-                                        id : 'earnbastyon1',
-                                        q : '',
-                                        a : 'Требования: <br />- На вашем компьютере не установлено другое программное обеспечение Bastion/Pocket net node<br />- Ваш жесткий диск - SSD (не жесткий диск)<br />- На твердотельном накопителе вашего компьютера имеется не менее 50 ГБ свободного места<br />- На вашем компьютере имеется не менее 2 ГБ свободной оперативной памяти<br />- Ваша скорость интернета составляет не менее 10 Мбит/сек',
-                                        img: ''
-                                    },
-                                    {
-                                        id : 'earnbastyon2',
-                                        q : '',
-                                        a : 'Перейдите на вкладку “Нода” на странице “Управление”',
-                                        img: '<img src="img/earnbastyon2ru.jpg" alt="" />'
-                                    },
-                                    {
-                                        id : 'earnbastyon3',
-                                        q : '',
-                                        a : 'Вы можете изменить узел и каталог данных, если на вашем диске C недостаточно свободного места',
-                                        img: '<img src="img/earnbastyon3ru.jpg" alt="" />'
-                                    },
-                                    {
-                                        id : 'earnbastyon4',
-                                        q : '',
-                                        a : 'Кликните “Загрузить и установить ноду”',
-                                        img: '<img src="img/earnbastyon4ru.jpg" alt="" />'
-                                    },
-                                    {
-                                        id : 'earnbastyon5',
-                                        q : '',
-                                        a : 'Вы увидите индикатор установки ноды',
-                                        img: '<img src="img/earnbastyon5ru.jpg" alt="" />'
-                                    },
-                                    {
-                                        id : 'earnbastyon6',
-                                        q : '',
-                                        a : 'Подождите до следующего шага и статуса Запущено. Первый запуск ноды может занять несколько часов – НЕ ВЫКЛЮЧАЙТЕ КОМПЬЮТЕР',
-                                        img: '<img src="img/earnbastyon6ru.jpg" alt="" />'
-                                    },
-                                    {
-                                        id : 'earnbastyon7',
-                                        q : '',
-                                        a : '',
-                                        img: '<img src="img/earnbastyon7ru.jpg" alt="" />'
-                                    },
-                                    {
-                                        id : 'earnbastyon8',
-                                        q : '',
-                                        a : '',
-                                        img: '<img src="img/earnbastyon8ru.jpg" alt="" />'
-                                    },
-                                    {
-                                        id : 'earnbastyon9',
-                                        q : '',
-                                        a : 'Вам нужно будет внести PKOIN, чтобы заработать ставки, нажмите "Внести". После нажатия кнопки Пополнить счет вы увидите адрес пункта. Вы можете скопировать адрес и отправить по нему PKOIN. Если вы еще не купили PKOIN, вы можете купить его следующими способами: <br />1. Покупайте за криптовалюту на pkoin.net (или на биржах DigiFinex Orbit forex)<br />2. Купите его, выбрав тег "PKOIN/Из рук в руки" в левой части приложения Bastyon. Выберите продавца и напишите ему в чат (на свой страх и риск)',
-                                        img: '<img src="img/earnbastyon9ru99.jpg" alt="" />'
-                                    },
-                                    {
-                                        id : 'earnbastyon10',
-                                        q : '',
-                                        a : 'Доступны и другие функции: <br />– Вывод средств - вывод PKOIN (уменьшает ваши шансы на выигрыш монет)<br />– Сохранить кошелек (кошелек резервного узла, очень важно, сохраняет ваши личные ключи в случае сбоя вашего узла)<br />– Импорт кошелька (вы можете импортировать внешний кошелек с закрытыми ключами)',
-                                        img: '<img src="img/earnbastyon10ru.jpg" alt="" />'
-                                    },
-                                    {
-                                        id : 'earnbastyon11',
-                                        q : '',
-                                        a : 'В этом примере вы видите, что было внесено 500 PKOIN . Обратите внимание, что ваш кошелек узла отделен от вашего кошелька Бастиона по умолчанию, они не подключены. Вам нужно перевести монеты на узел из кошелька, чтобы выиграть ставки.',
-                                        img: ''
-                                    },
-                                    {
-                                        id : 'earnbastyon12',
-                                        q : '',
-                                        a : 'После того, как вы внесете PKOIN, необходимо пройти 60 блоков (около 60 минут). Как только вы увидите зеленую галочку с надписью "Стейкинг", вы готовы начать зарабатывать PKOIN. Вы можете периодически заходить и смотреть, как меняется ваш баланс в зависимости от выигрышных ставок. По любым вопросам пишите на support@bastyon.com',
-                                        img: '<img src="img/earnbastyon12ru.jpg" alt="" />'
-                                    },
-
-                                ]
-
-                            },
-
-                        {
-
-                        name: self.app.meta.fullname,
-                        id: 'дорожная карта',
-
-                        group : [
-
-                        {
-                        id : 'адреса кошельков',
-                        q : 'Я вижу адрес аккаунта и адрес кошелька. Связаны ли они между собой?',
-                        a: '<div> Адрес аккаунта - это адрес, который используется для публикации контента и использования '+self.app.meta.fullname + ' в целом. В нем также хранятся монеты, которые вы выигрываете за свои публикации с высоким рейтингом. </div> <div> Адреса кошельков предназначены для хранения остальных монет. Эти два адреса не связаны между собой. </div>',
                         },
 
                         {
-                        id : 'ссылка на профиль',
-                        q : 'Могу ли я сделать ссылку на свой профиль или на пост, чтобы я мог опубликовать его в других социальных сетях. ',
-                        a: '<div>Чтобы поделиться постом, просто щелкните кнопку "поделиться". <br />В браузере перейдите в свой профиль, щелкнув аватар в правом верхнем углу и нажмите «Поделиться», затем установите флажок «Использовать реферальную ссылку», всем, кто зарегистрируется по созданной ссылке, будет предложено подписаться на вас автоматически при регистрации. За каждого реферала, который зарегистрируется по вашей ссылке, вы получите бонус, равный 20% от Pocketcoin (PKOIN), который они зарабатывают, публикуя сообщения и комментируя в течение первых 6 месяцев. Чтобы было понятно, ваш реферал не зарабатывает меньше, вы получаете бонус.</div><div></div>',
-                        },
-                        // {
-                        // id : 'звездная система',
-                        // q : 'Система оценок. Есть ли ограничение на количество звезд, которые человек должен дать людям?',
-                        // a : '<div>Есть некоторые ограничения. Но по мере роста вашей репутации вы можете голосовать все больше и больше. Это сделано, поэтому боты не ломают нашу цепочку блоков. Первоначально вы получаете 100 оценок каждые 24 часа. По мере роста вашей репутации (это происходит благодаря публикациям и получению оценок) вы делаете 200 оценок в день.</div>',
-                        // },
+
+                            name : 'Как я могу купить PKOIN?',
+                            id : 'buy-pkoin',
+
+                            group : [
+
+                                {
+                                    id : 'buy-pkoin1',
+                                    q : '  ',
+                                    a : 'Вы можете купить PKOIN следующими способами: Выберите категорию «PKOIN/Из рук в руки» и посмотрите на предложения о купле/продаже PKOIN, либо сами разместите свое предложение о купле/продаже PKOIN.	',
+                                    img: '<img src="img/wn.jpg" alt="" />'
+                                },
+                                {
+                                    id : 'buy-pkoin21',
+                                    q : '',
+                                    a : 'Покупку PKOIN также можно осуществить на следующих сайтах. 	<br> <a target="_blank" href="https://www.bitforex.com/en/spot/pkoin_usdt">https://www.bitforex.com/en/spot/pkoin_usdt</a> <br> <a target="_blank" href="https://www.digifinex.com/en-ww/trade/USDT/PKOIN">https://www.digifinex.com/en-ww/trade/USDT/PKOIN</a>  <br> <a target="_blank" href="https://pkoin.net/">https://pkoin.net/</a> - здесь приобрести  PKOIN можно за другие криптовалюты. <br>		<a target="_blank" href="https://buy.pkoin.indacoin.io/">https://buy.pkoin.indacoin.io/</a> - здесь приобрести PKOIN можно за кредитную карту.',
+                                    img: ''
+                                },
+                                {
+                                    id : 'buy-pkoin2',
+                                    q : 'Pkoin.net - для покупки PKOIN за другие криптовалюты ',
+                                    a : 'Выберите криптовалюту, за которую вы хотите приобрести PKOIN, укажите  количество PKOIN, а также введите адрес своего кошелька.',
+                                    img: '<img src="img/buy-pkoin2.jpg" alt="" />'
+                                },
+                                {
+                                    id : 'buy-pkoin3',
+                                    q : '  ',
+                                    a : 'Адрес вашего PKOIN-кошелька находится в вашем аккаунте на Бастионе. Чтобы его найти – кликните иконку вашего аватара, которая расположена в правом верхнем углу.',
+                                    img: '<img src="img/wn.jpg" alt="" />'
+                                },
+                                {
+                                    id : 'buy-pkoin4',
+                                    q : '  ',
+                                    a : 'Далее кликните по адресу PKOIN, чтобы его скопировать.',
+                                    img: '<img src="img/upl7.jpg" alt="" />'
+                                },
+                                {
+                                    id : 'buy-pkoin5',
+                                    q : '  ',
+                                    a : 'Далее, вам нужно ввести адрес вашего PKOIN-кошелька в соответствующее поле и нажать кнопку “Purchase”.',
+                                    img: '<img src="img/buy-pkoin5.jpg" alt="" />'
+                                },
+                                {
+                                    id : 'buy-pkoin6',
+                                    q : '  ',
+                                    a : 'После этого вы должны отправить BTC (или другую криптовалюту, которую вы выбрали) на предоставленный вам адрес. ',
+                                    img: '<img src="img/buy-pkoin6.jpg" alt="" />'
+                                },
+                                {
+                                    id : 'buy-pkoin7',
+                                    q : ' Купить PKOIN с помощью кредитной карты на <a href="Buy.pkoin.indacoin.io">indacoin.io</a>     ',
+                                    a : 'Для начала, выберите валюту, введите количество, ваш электронный адрес и адрес кошелька PKOIN. Далее, нажмите «Купить PKOIN»',
+                                    img: '<img src="img/buy-pkoin7.jpg" alt="" />'
+                                },
+                                {
+                                    id : 'buy-pkoin8',
+                                    q : '  ',
+                                    a : 'Вы увидите окно «Купить PKOIN с кредитной или дебетовой картой», нажмите  «Далее»',
+                                    img: '<img src="img/buy-pkoin8.jpg" alt="" />'
+                                },
+                                {
+                                    id : 'buy-pkoin9',
+                                    q : '  ',
+                                    a : 'Далее, введите ваш адрес, почтовый индекс и укажите вашу страну. ',
+                                    img: '<img src="img/buy-pkoin9.jpg" alt="" />'
+                                },
+                                {
+                                    id : 'buy-pkoin10',
+                                    q : '  ',
+                                    a : 'Далее, введите ваше имя, страну, номер телефона, дату рождения',
+                                    img: '<img src="img/buy-pkoin10.jpg" alt="" />'
+                                },
+                                {
+                                    id : 'buy-pkoin11',
+                                    q : '  ',
+                                    a : 'Введите номер вашей карты и нажмите «Далее».',
+                                    img: '<img src="img/buy-pkoin11.jpg" alt="" />'
+                                },
 
 
-                        {
-                        id : 'время обновления профиля',
-                        q : 'Как часто я могу обновлять свой профиль? ',
-                        a : '<div>Вы можете обновлять свой профиль один раз в час.</div>',
-                        },
-
-                        {
-                        id : 'мобильное приложение',
-                        q : 'Есть ли мобильное приложение?',
-                        a : '<div>Есть приложение для Android, вы можете скачать его <a href="https://play.google.com/store/apps/details?id=pocketnet.app">здесь</a>.<br />Приложение для iPhone недоступно, потому что Apple требовала от нас цензуры любого контента в круглосуточном режиме. В Bastyon даже разработчики не могут удалять контент, он модерируется пользователями. Bastyon оптимизирован для мобильных браузеров, таких как Safari на iPhone.</div>',
-                        },
-
-                        {
-                        id : 'лимит публикации',
-                        q : 'Можете ли вы сказать мне, каков лимит публикаций и оценок каждый день или час?',
-                        a : '<div>Да, у нас действительно есть некоторые ограничения публикации материалов, основанные на математическом алгоритме. <br /> Система регистрации нового аккаунта устроена таким образом, что она не требует ни адреса электронной почты, ни номера мобильного телефона при его регистрации, поскольку Bastyon не нуждается в ваших персональных данных. При этом, описанная система регистрации имеет один недостаток – невозможно исключить «Ботов» на этапе регистрации нового аккаунта. <br />Поэтому мы решили, что целесообразно бороться с ботами не в процессе регистрации аккаунта, а после его регистрации, используя систему внутренней модерации Bastyon. Другими словами, борьба с ботами будет настолько эффективна, насколько активно пользователи Bastyon будут оценивать других пользователей Bastyon и насколько активно будут публиковатся интересные материалы.<br />Вот рекомендации, как зарабатывать рейтинги и перейти из категории «аккаунта-новичка» в категорию «аккаунт с высокой репутацией». <br />В целом, залог постоянного роста репутации и получения рейтингов очень прост – публикуйте интересный контент и получайте высокие оценки от других пользователей.<br /> <b> рейтинг 100  + 100 голосов «репутационных» пользователей <br /> или <br /> рейтинг 100 + 30 голосов «репутационных»  пользователей + 6 первых месяцев после регистрации. </b>  <br />В течение первых 6 месяцев после создания нового аккаунта:<br />вы можете размещать 5 постов и выставлять 15 оценок каждые 24 часа. Как только ваша репутация превысит 100 и будет по крайней мере 100 пользователей с высокой репутацией, которые проголосовали за вас, вы сможете делать до 30 постов и 200 оценок, а также 300 комментариев каждые 24 часа.<br /> При этом, если за 6 месяцев ваша репутация составила 100 и вы получили только 30 (и более) оценок от высокорейтинговых пользователей, то ваш аккаунта автоматически перейдет в категорию высокорейтинговых аккаунтов.<br />Примечание: и в одном и во втором случае появляется возможность публикации видео. Если вы не намерены ожидать, когда ваш рейтинг достигнет более 100 пунктов и когда вы получите более 100 (30) голосов от рейтинговых пользователей, вы можете получить доступ к загрузке видео		путем покупки PKOIN. <br />Квоты на загрузку видео составаят: <br />5PKOIN - до 500Мб видео ежедневно;<br />50PKOIN - до 4Гб видео ежедневно, а также 30 постов и 200 оценок, а также 300 комментариев каждые 24 часа.		</div>',
-                        },
-
-                        {
-                        id : 'репутация',
-                        q : 'Что такое репутация и как она рассчитывается?',
-                        a : "<div>Ваша репутация - это сумма ваших рейтингов. Обратите внимание, что пользователи с репутацией ниже 50 не влияют на чью-либо репутацию. Они могут оценивать контент, но это не влияет на репутацию. </div> <br /> <div> Итак, 5 звоздочек -> 2 рейтинга <br> 4 звездочки -> 1 <br> 3 звездочки -> 0 <br> 2 звездочки -> -1 рейтинг <br> 1 звездочка -> -2 рейтинга </div> <div> Приведем пример: если при публикации поста рейтинговые пользователи поставили вам две оценки по 5 звездочек и одну оценку в 1 звездочку, то формула рассчета будет выглядеть так:<br> 2 + 2 - 2 = 2. Таким образом ваш рейтинг повысится на 2 пункта. </div> ",
-                        },
-
-                        {
-                        id : 'удалить сообщение или пользователя',
-                        q : 'Есть ли способ удалить или отредактировать сообщение?',
-                        a : '<div>Да, вы можете редактировать и удалять сообщения.</div>',
-                        },
-
-                        {
-                        id : 'поиск пользователей',
-                        q : 'Есть ли способ найти пользователя?',
-                        a : '<div>Щелкните значок лупы поиска вверху и выполните поиск по имени пользователя или ключевым словам.</div>',
-                        },
-                        {
-                        id : 'следить',
-                        q : 'Как подписаться, чтобы отслеживать любимых блогеров?',
-                        a : '<div>Чтобы подписаться на автора/блогера (вверху поста) есть ссылка Подписаться, вы можете найти его посты в топ постов (красный огонь вверху страницы). Вы также скоро увидите ленту «Мои подписки», которая будет отличаться от основной ленты. В основной ленте будет все, что кто-либо публикует, но фид подписок будет содержать только сообщения пользователей, на которых вы подписаны. Итак, вы будете заходить в общую ленту в поисках хорошего контента, хотя вам может не все нравиться. Затем выберите те, которые хотите сохранить. </div>',
-                        },
 
 
-                        {
-                        id : 'другие браузеры',
-                        q : 'Можно ли его использовать в браузерах Brave или Duck Duck go?',
-                        a : '<div>'+self.app.meta.fullname + ' должен работать в этих браузерах. Он полностью функционален в Chrome и Firefox. Но мы настоятельно рекомендуем всем загрузить настольное приложение - загрузите '+ self.app.meta.fullname +' Setup.exe <a href="https://github.com/pocketnetteam/pocketnet.gui/releases"> здесь</a>. Настольное приложение невозможно заблокировать, даже если bastyon.com не работает или заблокирован по какой-либо причине. Подобные ограничения являются новым тоталитарным трендом.</div>',
-                        },
-
-                        {
-                        id : 'ответ на сообщение',
-                        q : 'Можем ли мы отвечать на собственные / и другие сообщения?',
-                        a : '<div>Да, комментирование доступно под каждым постом.</div>',
-                        },
-
-                        {
-                        id : 'добавить теги',
-                        q : 'Как добавить тег к посту?',
-                        a : '<div>Под постом выберите категорию или введите тег  и нажмите клавишу ВВОД. "#" добавлять не нужно - добавление происходит автоматически.</div>',
-                        },
-
-                        {
-                        id : 'использовать публичный адрес',
-                        q : 'Как я могу использовать публичный адрес?',
-                        a : '<div>Ваш публичный адрес - это то, что '+ self.app.meta.fullname +' использует для проверки вашей личности. По сути, ваш закрытый ключ - это большое число (которое может быть представлено последовательностью из 12 слов или приватным ключом, которые конвертируются в большое число). Это число умножается на другое, известное всем (называемое базовой точкой эллиптической кривой), и мы получаем открытый ключ. Когда вы вводите свой закрытый ключ, мы можем умножить его на базовую точку, чтобы получить ваш открытый ключ и сопоставить его с общедоступным адресом. Если они совпадают, мы знаем, что это вы. Невозможно вернуться назад, т.е. разделить открытый ключ на базовую точку, чтобы получить свой закрытый ключ. В криптографии умножение работает только в одну сторону и обратное деление невозможно, поэтому ваш ключ в безопасности. '+ self.app.meta.fullname +' использует ту же самую криптографию, что и Биткойн. </div>',
-                        },
-                        {
-                        id : 'настольный Mac',
-                        q : 'Будет ли загружаемый исполняемый файл для Mac?',
-                        a : '<div>Да, вы можете найти его <a target="_blank" href="https://github.com/pocketnetteam/pocketnet.gui/releases">здесь</a>.</div>',
-                        },
-                        {
-                        id : 'темный режим',
-                        q : 'Как изменить тему на темный режим?',
-                        a : '<div>Переключение режима можно найти в настройках. Если вы находитесь в браузере, щелкните изображение своего профиля> Управление> Настройки. Если вы используете мобильный телефон, щелкните "бургер-меню" в правом нижнем углу> Настройки. </div>',
-                        },
-                        {
-                        id : 'запрет ',
-                        q : 'Можно ли банить людей?',
-                        a : '<div>Да, Bastyon - это платформа, модерируемая сообществом, однако есть только определенные темы, которые будут отмечены сообществом, такие как порнография, наркотики и прямые угрозы насилия. Вас никогда не забанят за свое мнение или свободу слова, и даже по конкретным запрещенным темам должен быть консенсус опытных пользователей, при этом другие пользователи не защищают контент. В настоящее время пользователи с репутацией ниже -30 теряют свои привилегии учетной записи, но это временная система. К концу 2021 года Bastyon выпускает новую систему модерации, в которой сообщения изначально помечаются любым пользователем с высоким уровнем репутации, но учетные записи могут быть заблокированы только определенной группой присяжных, выбранных с помощью лотереи блокчейна. Таким образом, никто не может атаковать кого-то за мнение, присяжные будут выбраны для модерации определенного контента, и все они должны согласиться. Аккаунт не может быть заблокирован до тех пор, пока не будет определено два состава присяжных, и они не могут быть одинаковыми. Эта система защищает от любых правил мафии на Bastyon, одновременно защищая платформу от сомнительного контента.</div>',
-                        },
-                        {
-                        id : 'Приложение Apple',
-                        q : 'Когда в Apple добавят Bastyon?',
-                        a : '<div>Apple решила не допускать Bastyon из-за отсутствия у Bastyon возможностей централизованной цензуры. Мы гордимся этой оценке Apple.</div>',
-                        },
-                        {
-                        id : 'Отсутствует PKCOIN',
-                        q : 'Помощь! Мне не хватает моего PKOIN!',
-                        a : '<div>Если по какой-то причине кажется, что ваш PKOIN пропал, сначала проверьте обозреватель блоков через <a href="https://'+self.app.options.url+'/blockexplorer/"> BlockExplorer</a> на предмет того, что ваши монеты все еще там. Просто найдите адрес своего кошелька в строке поиска, и он покажет вам баланс вашей учетной записи. </div>',
-                        },
-
-                        ]
-
+                            ]
 
                         },
                         {
 
-                        name : 'Видео',
-                        id : 'видео',
+                            name : 'Как заработать PKOIN, используя легкую ноду?',
+                            id : 'earnbastyon',
 
-                        group : [
-                        {
-                        id : 'сохранить видео',
-                        q : 'Где вы сохраняете видеоконтент?',
-                        a : '<div>'+self.app.meta.fullname + ' использует модифицированную платформу с открытым исходным кодом под названием PeerTube, подключенную к блокчейну Pocketnet и приложению Bastyon. PeerTube полностью интегрирован с авторизацией '+ self.app.meta.fullname +', каждый видеосервер зарегистрирован в блокчейне.</div>',
+                            group : [
+
+                                {
+                                    id : 'earnbastyon1',
+                                    q : '',
+                                    a : 'Требования: <br />- На вашем компьютере не установлено другое программное обеспечение Bastion/Pocket net node<br />- Ваш жесткий диск - SSD (не жесткий диск)<br />- На твердотельном накопителе вашего компьютера имеется не менее 50 ГБ свободного места<br />- На вашем компьютере имеется не менее 2 ГБ свободной оперативной памяти<br />- Ваша скорость интернета составляет не менее 10 Мбит/сек',
+                                    img: ''
+                                },
+                                {
+                                    id : 'earnbastyon2',
+                                    q : '',
+                                    a : 'Перейдите на вкладку “Нода” на странице “Управление”',
+                                    img: '<img src="img/earnbastyon2ru.jpg" alt="" />'
+                                },
+                                {
+                                    id : 'earnbastyon3',
+                                    q : '',
+                                    a : 'Вы можете изменить узел и каталог данных, если на вашем диске C недостаточно свободного места',
+                                    img: '<img src="img/earnbastyon3ru.jpg" alt="" />'
+                                },
+                                {
+                                    id : 'earnbastyon4',
+                                    q : '',
+                                    a : 'Кликните “Загрузить и установить ноду”',
+                                    img: '<img src="img/earnbastyon4ru.jpg" alt="" />'
+                                },
+                                {
+                                    id : 'earnbastyon5',
+                                    q : '',
+                                    a : 'Вы увидите индикатор установки ноды',
+                                    img: '<img src="img/earnbastyon5ru.jpg" alt="" />'
+                                },
+                                {
+                                    id : 'earnbastyon6',
+                                    q : '',
+                                    a : 'Подождите до следующего шага и статуса Запущено. Первый запуск ноды может занять несколько часов – НЕ ВЫКЛЮЧАЙТЕ КОМПЬЮТЕР',
+                                    img: '<img src="img/earnbastyon6ru.jpg" alt="" />'
+                                },
+                                {
+                                    id : 'earnbastyon7',
+                                    q : '',
+                                    a : '',
+                                    img: '<img src="img/earnbastyon7ru.jpg" alt="" />'
+                                },
+                                {
+                                    id : 'earnbastyon8',
+                                    q : '',
+                                    a : '',
+                                    img: '<img src="img/earnbastyon8ru.jpg" alt="" />'
+                                },
+                                {
+                                    id : 'earnbastyon9',
+                                    q : '',
+                                    a : 'Вам нужно будет внести PKOIN, чтобы заработать ставки, нажмите "Внести". После нажатия кнопки Пополнить счет вы увидите адрес пункта. Вы можете скопировать адрес и отправить по нему PKOIN. Если вы еще не купили PKOIN, вы можете купить его следующими способами: <br />1. Покупайте за криптовалюту на pkoin.net (или на биржах DigiFinex Orbit forex)<br />2. Купите его, выбрав тег "PKOIN/Из рук в руки" в левой части приложения Bastyon. Выберите продавца и напишите ему в чат (на свой страх и риск)',
+                                    img: '<img src="img/earnbastyon9ru99.jpg" alt="" />'
+                                },
+                                {
+                                    id : 'earnbastyon10',
+                                    q : '',
+                                    a : 'Доступны и другие функции: <br />– Вывод средств - вывод PKOIN (уменьшает ваши шансы на выигрыш монет)<br />– Сохранить кошелек (кошелек резервного узла, очень важно, сохраняет ваши личные ключи в случае сбоя вашего узла)<br />– Импорт кошелька (вы можете импортировать внешний кошелек с закрытыми ключами)',
+                                    img: '<img src="img/earnbastyon10ru.jpg" alt="" />'
+                                },
+                                {
+                                    id : 'earnbastyon11',
+                                    q : '',
+                                    a : 'В этом примере вы видите, что было внесено 500 PKOIN . Обратите внимание, что ваш кошелек узла отделен от вашего кошелька Бастиона по умолчанию, они не подключены. Вам нужно перевести монеты на узел из кошелька, чтобы выиграть ставки.',
+                                    img: ''
+                                },
+                                {
+                                    id : 'earnbastyon12',
+                                    q : '',
+                                    a : 'После того, как вы внесете PKOIN, необходимо пройти 60 блоков (около 60 минут). Как только вы увидите зеленую галочку с надписью "Стейкинг", вы готовы начать зарабатывать PKOIN. Вы можете периодически заходить и смотреть, как меняется ваш баланс в зависимости от выигрышных ставок. По любым вопросам пишите на support@bastyon.com',
+                                    img: '<img src="img/earnbastyon12ru.jpg" alt="" />'
+                                },
+
+                            ]
+
                         },
 
                         {
-                        id : 'разрешения',
-                        q : 'Кто может загружать видео в Bastyon?',
-                        a : '<div> Bastyon не имеет централизованных серверов или венчурного финансирования, все видео хранится на серверах, обслуживаемых пользователями. Поэтому мы не можем позволить всем загружать видео, серверы быстро заполнятся. Для загрузки видео вам необходимо иметь в аккаунте 5 PKOIN (500 МБ) или 50 PKOIN (4 ГБ). Вы можете купить PKOIN у других пользователей, если выберете категорию PKOIN / Peer-to-Peer. </div>',
+
+                            name: self.app.meta.fullname,
+                            id: 'дорожная карта',
+
+                            group : [
+
+                                {
+                                    id : 'адреса кошельков',
+                                    q : 'Я вижу адрес аккаунта и адрес кошелька. Связаны ли они между собой?',
+                                    a: '<div> Адрес аккаунта - это адрес, который используется для публикации контента и использования '+self.app.meta.fullname + ' в целом. В нем также хранятся монеты, которые вы выигрываете за свои публикации с высоким рейтингом. </div> <div> Адреса кошельков предназначены для хранения остальных монет. Эти два адреса не связаны между собой. </div>',
+                                },
+
+                                {
+                                    id : 'ссылка на профиль',
+                                    q : 'Могу ли я сделать ссылку на свой профиль или на пост, чтобы я мог опубликовать его в других социальных сетях. ',
+                                    a: '<div>Чтобы поделиться постом, просто щелкните кнопку "поделиться". <br />В браузере перейдите в свой профиль, щелкнув аватар в правом верхнем углу и нажмите «Поделиться», затем установите флажок «Использовать реферальную ссылку», всем, кто зарегистрируется по созданной ссылке, будет предложено подписаться на вас автоматически при регистрации. За каждого реферала, который зарегистрируется по вашей ссылке, вы получите бонус, равный 20% от Pocketcoin (PKOIN), который они зарабатывают, публикуя сообщения и комментируя в течение первых 6 месяцев. Чтобы было понятно, ваш реферал не зарабатывает меньше, вы получаете бонус.</div><div></div>',
+                                },
+                                // {
+                                // id : 'звездная система',
+                                // q : 'Система оценок. Есть ли ограничение на количество звезд, которые человек должен дать людям?',
+                                // a : '<div>Есть некоторые ограничения. Но по мере роста вашей репутации вы можете голосовать все больше и больше. Это сделано, поэтому боты не ломают нашу цепочку блоков. Первоначально вы получаете 100 оценок каждые 24 часа. По мере роста вашей репутации (это происходит благодаря публикациям и получению оценок) вы делаете 200 оценок в день.</div>',
+                                // },
+
+
+                                {
+                                    id : 'время обновления профиля',
+                                    q : 'Как часто я могу обновлять свой профиль? ',
+                                    a : '<div>Вы можете обновлять свой профиль один раз в час.</div>',
+                                },
+
+                                {
+                                    id : 'мобильное приложение',
+                                    q : 'Есть ли мобильное приложение?',
+                                    a : '<div>Есть приложение для Android, вы можете скачать его <a href="https://play.google.com/store/apps/details?id=pocketnet.app">здесь</a>.<br />Приложение для iPhone недоступно, потому что Apple требовала от нас цензуры любого контента в круглосуточном режиме. В Bastyon даже разработчики не могут удалять контент, он модерируется пользователями. Bastyon оптимизирован для мобильных браузеров, таких как Safari на iPhone.</div>',
+                                },
+
+                                {
+                                    id : 'лимит публикации',
+                                    q : 'Можете ли вы сказать мне, каков лимит публикаций и оценок каждый день или час?',
+                                    a : '<div>Да, у нас действительно есть некоторые ограничения публикации материалов, основанные на математическом алгоритме. <br /> Система регистрации нового аккаунта устроена таким образом, что она не требует ни адреса электронной почты, ни номера мобильного телефона при его регистрации, поскольку Bastyon не нуждается в ваших персональных данных. При этом, описанная система регистрации имеет один недостаток – невозможно исключить «Ботов» на этапе регистрации нового аккаунта. <br />Поэтому мы решили, что целесообразно бороться с ботами не в процессе регистрации аккаунта, а после его регистрации, используя систему внутренней модерации Bastyon. Другими словами, борьба с ботами будет настолько эффективна, насколько активно пользователи Bastyon будут оценивать других пользователей Bastyon и насколько активно будут публиковатся интересные материалы.<br />Вот рекомендации, как зарабатывать рейтинги и перейти из категории «аккаунта-новичка» в категорию «аккаунт с высокой репутацией». <br />В целом, залог постоянного роста репутации и получения рейтингов очень прост – публикуйте интересный контент и получайте высокие оценки от других пользователей.<br /> <b> рейтинг 100  + 100 голосов «репутационных» пользователей <br /> или <br /> рейтинг 100 + 30 голосов «репутационных»  пользователей + 6 первых месяцев после регистрации. </b>  <br />В течение первых 6 месяцев после создания нового аккаунта:<br />вы можете размещать 5 постов и выставлять 15 оценок каждые 24 часа. Как только ваша репутация превысит 100 и будет по крайней мере 100 пользователей с высокой репутацией, которые проголосовали за вас, вы сможете делать до 30 постов и 200 оценок, а также 300 комментариев каждые 24 часа.<br /> При этом, если за 6 месяцев ваша репутация составила 100 и вы получили только 30 (и более) оценок от высокорейтинговых пользователей, то ваш аккаунта автоматически перейдет в категорию высокорейтинговых аккаунтов.<br />Примечание: и в одном и во втором случае появляется возможность публикации видео. Если вы не намерены ожидать, когда ваш рейтинг достигнет более 100 пунктов и когда вы получите более 100 (30) голосов от рейтинговых пользователей, вы можете получить доступ к загрузке видео		путем покупки PKOIN. <br />Квоты на загрузку видео составаят: <br />5PKOIN - до 500Мб видео ежедневно;<br />50PKOIN - до 4Гб видео ежедневно, а также 30 постов и 200 оценок, а также 300 комментариев каждые 24 часа.		</div>',
+                                },
+
+                                {
+                                    id : 'репутация',
+                                    q : 'Что такое репутация и как она рассчитывается?',
+                                    a : "<div>Ваша репутация - это сумма ваших рейтингов. Обратите внимание, что пользователи с репутацией ниже 50 не влияют на чью-либо репутацию. Они могут оценивать контент, но это не влияет на репутацию. </div> <br /> <div> Итак, 5 звоздочек -> 2 рейтинга <br> 4 звездочки -> 1 <br> 3 звездочки -> 0 <br> 2 звездочки -> -1 рейтинг <br> 1 звездочка -> -2 рейтинга </div> <div> Приведем пример: если при публикации поста рейтинговые пользователи поставили вам две оценки по 5 звездочек и одну оценку в 1 звездочку, то формула рассчета будет выглядеть так:<br> 2 + 2 - 2 = 2. Таким образом ваш рейтинг повысится на 2 пункта. </div> ",
+                                },
+
+                                {
+                                    id : 'удалить сообщение или пользователя',
+                                    q : 'Есть ли способ удалить или отредактировать сообщение?',
+                                    a : '<div>Да, вы можете редактировать и удалять сообщения.</div>',
+                                },
+
+                                {
+                                    id : 'поиск пользователей',
+                                    q : 'Есть ли способ найти пользователя?',
+                                    a : '<div>Щелкните значок лупы поиска вверху и выполните поиск по имени пользователя или ключевым словам.</div>',
+                                },
+                                {
+                                    id : 'следить',
+                                    q : 'Как подписаться, чтобы отслеживать любимых блогеров?',
+                                    a : '<div>Чтобы подписаться на автора/блогера (вверху поста) есть ссылка Подписаться, вы можете найти его посты в топ постов (красный огонь вверху страницы). Вы также скоро увидите ленту «Мои подписки», которая будет отличаться от основной ленты. В основной ленте будет все, что кто-либо публикует, но фид подписок будет содержать только сообщения пользователей, на которых вы подписаны. Итак, вы будете заходить в общую ленту в поисках хорошего контента, хотя вам может не все нравиться. Затем выберите те, которые хотите сохранить. </div>',
+                                },
+
+
+                                {
+                                    id : 'другие браузеры',
+                                    q : 'Можно ли его использовать в браузерах Brave или Duck Duck go?',
+                                    a : '<div>'+self.app.meta.fullname + ' должен работать в этих браузерах. Он полностью функционален в Chrome и Firefox. Но мы настоятельно рекомендуем всем загрузить настольное приложение - загрузите '+ self.app.meta.fullname +' Setup.exe <a href="https://github.com/pocketnetteam/pocketnet.gui/releases"> здесь</a>. Настольное приложение невозможно заблокировать, даже если bastyon.com не работает или заблокирован по какой-либо причине. Подобные ограничения являются новым тоталитарным трендом.</div>',
+                                },
+
+                                {
+                                    id : 'ответ на сообщение',
+                                    q : 'Можем ли мы отвечать на собственные / и другие сообщения?',
+                                    a : '<div>Да, комментирование доступно под каждым постом.</div>',
+                                },
+
+                                {
+                                    id : 'добавить теги',
+                                    q : 'Как добавить тег к посту?',
+                                    a : '<div>Под постом выберите категорию или введите тег  и нажмите клавишу ВВОД. "#" добавлять не нужно - добавление происходит автоматически.</div>',
+                                },
+
+                                {
+                                    id : 'использовать публичный адрес',
+                                    q : 'Как я могу использовать публичный адрес?',
+                                    a : '<div>Ваш публичный адрес - это то, что '+ self.app.meta.fullname +' использует для проверки вашей личности. По сути, ваш закрытый ключ - это большое число (которое может быть представлено последовательностью из 12 слов или приватным ключом, которые конвертируются в большое число). Это число умножается на другое, известное всем (называемое базовой точкой эллиптической кривой), и мы получаем открытый ключ. Когда вы вводите свой закрытый ключ, мы можем умножить его на базовую точку, чтобы получить ваш открытый ключ и сопоставить его с общедоступным адресом. Если они совпадают, мы знаем, что это вы. Невозможно вернуться назад, т.е. разделить открытый ключ на базовую точку, чтобы получить свой закрытый ключ. В криптографии умножение работает только в одну сторону и обратное деление невозможно, поэтому ваш ключ в безопасности. '+ self.app.meta.fullname +' использует ту же самую криптографию, что и Биткойн. </div>',
+                                },
+                                {
+                                    id : 'настольный Mac',
+                                    q : 'Будет ли загружаемый исполняемый файл для Mac?',
+                                    a : '<div>Да, вы можете найти его <a target="_blank" href="https://github.com/pocketnetteam/pocketnet.gui/releases">здесь</a>.</div>',
+                                },
+                                {
+                                    id : 'темный режим',
+                                    q : 'Как изменить тему на темный режим?',
+                                    a : '<div>Переключение режима можно найти в настройках. Если вы находитесь в браузере, щелкните изображение своего профиля> Управление> Настройки. Если вы используете мобильный телефон, щелкните "бургер-меню" в правом нижнем углу> Настройки. </div>',
+                                },
+                                {
+                                    id : 'запрет ',
+                                    q : 'Можно ли банить людей?',
+                                    a : '<div>Да, Bastyon - это платформа, модерируемая сообществом, однако есть только определенные темы, которые будут отмечены сообществом, такие как порнография, наркотики и прямые угрозы насилия. Вас никогда не забанят за свое мнение или свободу слова, и даже по конкретным запрещенным темам должен быть консенсус опытных пользователей, при этом другие пользователи не защищают контент. В настоящее время пользователи с репутацией ниже -30 теряют свои привилегии учетной записи, но это временная система. К концу 2021 года Bastyon выпускает новую систему модерации, в которой сообщения изначально помечаются любым пользователем с высоким уровнем репутации, но учетные записи могут быть заблокированы только определенной группой присяжных, выбранных с помощью лотереи блокчейна. Таким образом, никто не может атаковать кого-то за мнение, присяжные будут выбраны для модерации определенного контента, и все они должны согласиться. Аккаунт не может быть заблокирован до тех пор, пока не будет определено два состава присяжных, и они не могут быть одинаковыми. Эта система защищает от любых правил мафии на Bastyon, одновременно защищая платформу от сомнительного контента.</div>',
+                                },
+                                {
+                                    id : 'Приложение Apple',
+                                    q : 'Когда в Apple добавят Bastyon?',
+                                    a : '<div>Apple решила не допускать Bastyon из-за отсутствия у Bastyon возможностей централизованной цензуры. Мы гордимся этой оценке Apple.</div>',
+                                },
+                                {
+                                    id : 'Отсутствует PKCOIN',
+                                    q : 'Помощь! Мне не хватает моего PKOIN!',
+                                    a : '<div>Если по какой-то причине кажется, что ваш PKOIN пропал, сначала проверьте обозреватель блоков через <a href="https://'+self.app.options.url+'/blockexplorer/"> BlockExplorer</a> на предмет того, что ваши монеты все еще там. Просто найдите адрес своего кошелька в строке поиска, и он покажет вам баланс вашей учетной записи. </div>',
+                                },
+
+                            ]
+
+
                         },
                         {
-                        id : 'статистика',
-                        q : 'Где я могу посмотреть статистику моих видео?',
-                        a : '<div> Зайдите в свой профиль и посмотрите Мои видео. </div> ',
-                        },
-                        {
-                        id : 'технологии',
-                        q : 'Какой плеер вы используете для воспроизведения видео?',
 
-                        a : '<div> В Бастионе есть собственный плеер, который представляет собой значительно модифицированную версию PeerTube. Как и PeerTube, он использует технологию WebTorrent для снижения нагрузки на сервер. Это означает, что пользователи, просматривающие видео, делятся им. Обратите внимание, что в некоторых случаях это означает, что пользователи могут видеть IP-адреса друг друга. Серверы Bastyon не имеют никакого механизма для записи этих IP-адресов, однако, если вы действительно заботитесь о безопасности своего IP-адреса, вам следует использовать надежного поставщика VPN. Если вы хотите минимизировать одноранговое совместное использование, вы можете использовать функцию загрузки видео в Bastyon.</div> ',
-                        },
-                        {
-                        id : 'время',
-                        q : 'Почему для загрузки видео требуется время?',
-                        a : '<div> Опять же, у Bastyon нет ресурсов, которые есть у Google. Видео необходимо загрузить в один из видеоузлов, а также его необходимо перекодировать. Помните, что YouTube не является бесплатным, он извлекает ценность, используя вашу ЛИЧНУЮ информацию и монетизируя ее. Bastyon находится в ведении сообщества, и небольшая задержка - небольшая плата за конфиденциальность и свободу. Кроме того, разработчики Bastyon сделали процесс загрузки сверхлегким и гораздо более надежным, чем на других платформах, и ориентированным на свободу (часто они даже не перекодируют файлы различного качества). </div>',
-                        },
+                            name : 'Видео',
+                            id : 'видео',
+
+                            group : [
+                                {
+                                    id : 'сохранить видео',
+                                    q : 'Где вы сохраняете видеоконтент?',
+                                    a : '<div>'+self.app.meta.fullname + ' использует модифицированную платформу с открытым исходным кодом под названием PeerTube, подключенную к блокчейну Pocketnet и приложению Bastyon. PeerTube полностью интегрирован с авторизацией '+ self.app.meta.fullname +', каждый видеосервер зарегистрирован в блокчейне.</div>',
+                                },
+
+                                {
+                                    id : 'разрешения',
+                                    q : 'Кто может загружать видео в Bastyon?',
+                                    a : '<div> Bastyon не имеет централизованных серверов или венчурного финансирования, все видео хранится на серверах, обслуживаемых пользователями. Поэтому мы не можем позволить всем загружать видео, серверы быстро заполнятся. Для загрузки видео вам необходимо иметь в аккаунте 5 PKOIN (500 МБ) или 50 PKOIN (4 ГБ). Вы можете купить PKOIN у других пользователей, если выберете категорию PKOIN / Peer-to-Peer. </div>',
+                                },
+                                {
+                                    id : 'статистика',
+                                    q : 'Где я могу посмотреть статистику моих видео?',
+                                    a : '<div> Зайдите в свой профиль и посмотрите Мои видео. </div> ',
+                                },
+                                {
+                                    id : 'технологии',
+                                    q : 'Какой плеер вы используете для воспроизведения видео?',
+
+                                    a : '<div> В Бастионе есть собственный плеер, который представляет собой значительно модифицированную версию PeerTube. Как и PeerTube, он использует технологию WebTorrent для снижения нагрузки на сервер. Это означает, что пользователи, просматривающие видео, делятся им. Обратите внимание, что в некоторых случаях это означает, что пользователи могут видеть IP-адреса друг друга. Серверы Bastyon не имеют никакого механизма для записи этих IP-адресов, однако, если вы действительно заботитесь о безопасности своего IP-адреса, вам следует использовать надежного поставщика VPN. Если вы хотите минимизировать одноранговое совместное использование, вы можете использовать функцию загрузки видео в Bastyon.</div> ',
+                                },
+                                {
+                                    id : 'время',
+                                    q : 'Почему для загрузки видео требуется время?',
+                                    a : '<div> Опять же, у Bastyon нет ресурсов, которые есть у Google. Видео необходимо загрузить в один из видеоузлов, а также его необходимо перекодировать. Помните, что YouTube не является бесплатным, он извлекает ценность, используя вашу ЛИЧНУЮ информацию и монетизируя ее. Bastyon находится в ведении сообщества, и небольшая задержка - небольшая плата за конфиденциальность и свободу. Кроме того, разработчики Bastyon сделали процесс загрузки сверхлегким и гораздо более надежным, чем на других платформах, и ориентированным на свободу (часто они даже не перекодируют файлы различного качества). </div>',
+                                },
 
 
-                        ]
+                            ]
 
                         },
                         {
@@ -6379,144 +6396,144 @@ Platform = function (app, listofnodes) {
 
                         {
 
-                        name : 'Конфиденциальность',
-                        id : 'Конфиденциальность',
+                            name : 'Конфиденциальность',
+                            id : 'Конфиденциальность',
 
-                        group : [
-
-
-                        {
-                        id : 'анонимный',
-                        q : 'Анонимны ли люди, которые не вводят свои настоящие имена?',
-                        a : '<div>Да - ни имена, ни телефоны, ни электронная почта НЕ связаны с вашей учетной записью.  Ввод электронной почты необязателен. Вы можете ввести электронную почту для получения рассылок  от разработчиков.</div>',
-                        },
-
-                        {
-                        id : 'вид снаружи',
-                        q : 'Насколько Bastyon анонимный?',
-                        a : '<div>Блокчейн открыт для всех, но там видно лишь действия в соцсети вашего анонимного аккаунта, такие как пост или рейтинг другого поста. Никаких личных данных не видно, и все ваши сообщения зашифрованы сквозным шифрованием. Также вы можете иметь несколько учетных записей в Бастионе и переключаться между ними. Вы можете использовать одни со своим настоящим именем, а другие анонимно. Анонимность - отличный инструмент для защиты свободы слова от злоупотребления властью.</div>',
-                        },
+                            group : [
 
 
-                        // {
-                        // id : 'walletid',
-                        // q : 'Похож ли мой открытый ключ на идентификатор кошелька, который я ввожу в моем профиле и на который люди могут отправлять баллы?',
-                        // a : '<div>Exactly. И это безопасно. Но не секретная фраза - береги!</div>',
-                        // },
+                                {
+                                    id : 'анонимный',
+                                    q : 'Анонимны ли люди, которые не вводят свои настоящие имена?',
+                                    a : '<div>Да - ни имена, ни телефоны, ни электронная почта НЕ связаны с вашей учетной записью.  Ввод электронной почты необязателен. Вы можете ввести электронную почту для получения рассылок  от разработчиков.</div>',
+                                },
 
-                        {
-                        id : 'узел',
-                        q : 'Могу ли я запустить узел на моем автономном сервере?',
-                        a : '<div> Инструкции <a href="https://github.com/pocketnetteam/pocketnet.core/blob/master/README.md" target="_blank">здесь</a>  </div>',
-                        },
+                                {
+                                    id : 'вид снаружи',
+                                    q : 'Насколько Bastyon анонимный?',
+                                    a : '<div>Блокчейн открыт для всех, но там видно лишь действия в соцсети вашего анонимного аккаунта, такие как пост или рейтинг другого поста. Никаких личных данных не видно, и все ваши сообщения зашифрованы сквозным шифрованием. Также вы можете иметь несколько учетных записей в Бастионе и переключаться между ними. Вы можете использовать одни со своим настоящим именем, а другие анонимно. Анонимность - отличный инструмент для защиты свободы слова от злоупотребления властью.</div>',
+                                },
 
-                        {
-                        id : 'подписка ',
-                        q : 'Как я могу войти снова? ',
-                        a : '<div>Вы можете использовать свой закрытый ключ из 12 слов или закрытый ключ, состоящий из букв и цифр.</div>',
-                        }
-                        ]
-                        },
-                        {
 
-                        name : 'Модерация контента',
-                        id : 'курирование',
+                                // {
+                                // id : 'walletid',
+                                // q : 'Похож ли мой открытый ключ на идентификатор кошелька, который я ввожу в моем профиле и на который люди могут отправлять баллы?',
+                                // a : '<div>Exactly. И это безопасно. Но не секретная фраза - береги!</div>',
+                                // },
 
-                        group : [
+                                {
+                                    id : 'узел',
+                                    q : 'Могу ли я запустить узел на моем автономном сервере?',
+                                    a : '<div> Инструкции <a href="https://github.com/pocketnetteam/pocketnet.core/blob/master/README.md" target="_blank">здесь</a>  </div>',
+                                },
 
-                        {
-                        id : 'содержание',
-                        q : 'Есть ли контент, запрещенный к публикации на  '+ self.app.meta.fullname +'? Если какой-то контент запрещен, можно ли назвать платформу свободой слова?',
-                        a : '<div>Это очень важный вопрос. Начнем с того, что разрешены не все типы контента. Модерация производится непосредственно сообщенством '+self.app.meta.fullname+', о чем мы поясним ниже. Скрытые теневые запреты или выборочных запреты, практикуемые Кремниевой долиной, отсутствуют на '+self.app.meta.fullname+'.</div>',
+                                {
+                                    id : 'подписка ',
+                                    q : 'Как я могу войти снова? ',
+                                    a : '<div>Вы можете использовать свой закрытый ключ из 12 слов или закрытый ключ, состоящий из букв и цифр.</div>',
+                                }
+                            ]
                         },
                         {
-                        id : 'конкретный',
-                        q : 'Особенности модерации на '+self.app.meta.fullname+'.',
-                        a : '<div> В настоящее время модерация контента осуществляется с помощью оценок в 1 звезду пользователями с высокой репутацией. Когда репутация достигает -30, доступ к аккаунту ограничивается. Однако существует совершенно новый алгоритм модерации, который будет выпущен к концу 2021 года. Согласно новым алгоритмам, будет возможность пометить пользователя или сообщение любым высокопоставленным пользователем, но это не повлияет на счет напрямую. После того, как будет установлено определенное количество флагов, на блокчейне будет разыграна лотерея, и для этой учетной записи будет выбрана группа модераторов присяжных заседателей. Присяжные должны согласиться с тем, что этот пользователь разместил порнографию, наркотики или прямую угрозу насилия. Любое иное мнение или несогласие не является основанием для пометки или каких-либо санкций.</div> ',
-                        },
-                        {
-                        id : 'взаимный',
-                        q : 'Разрешено ли взаимное голосование?',
-                        a : '<div> Взаимность - нормальное человеческое поведение, поэтому в этом смысле с этим нет проблем. Однако механизмы курирования во многом зависят от того факта, что как высокие, так и низкие оценки связаны с контентом и не являются взаимными. Таким образом, Бастион ограничит ответные голоса двумя способами. Во-первых, вы не сможете вернуть пять или одну звезду в течение определенного периода времени. Кроме того, те, кто угрожает возмездием за голоса в одну звезду или обещают награду за голоса в пять звезд, считаются участниками запрещенного поведения. Другие пользователи могут отмечать такие случаи, и псевдослучайная лотерея создаст жюри для их рассмотрения. Хотя такое поведение не будет иметь тех же штрафов, что и незаконный контент, пользователям, задействованным в нем, могут быть предоставлены временные блокировки алгоритмом консенсуса узла. </div> ',
-                        },
-                        // {
-                        // id : 'расизм',
-                        // q : 'Важное примечание о расизме.',
-                        // a : '<div>Свобода мысли и свобода слова подвергаются нападкам со стороны основных социальных платформ и средств массовой информации. Мы должны говорить правду, и именно по этой причине эта платформа не является корпоративной и децентрализованной. Но мы просим всех высказывать свою точку зрения, не нападая на национальность или расу людей. Вы можете обосновать свою точку зрения на доказательствах. Мы не можем позволить себе превратить ' + self.app.meta.fullname + ' в маргинальную платформу. Говорите правду, но, пожалуйста, избегайте расизма и нападок на определенные национальности в целом. Мы знаем, что Кремниевая долина и СМИ превратили проблему расизма в свою игральную карту, которую они разыгрывают в необходимый момент. Одна из задач '+ self.app.meta.fullname +' - стать платформаой альтернативного мнения, создать техническую и социальную возможность обличать ложь СМИ, рассказывать о произволе властей, коррупции, не опасаясь потери опубликованных материалов. Пожалуйста, имейте это в виду и рассказывайте о платформе близким людям, чтобы свобода слова могла процветать. </div> <div> В конечном счете, именно сообщество будет определять направление платформы. Иметь кучу снежинок, которые жалуются на то, что их оскорбляет, так же плохо, как и когда люди хотят озвучить прямые насильственные угрозы. Однако первым признаком является то, что первые пользователи платформы, как правило, умны и основаны на доказательствах, поэтому будущее выглядит невероятно светлым. Команда '+ self.app.meta.fullname +' заметила после нескольких дней бета-тестирования, что мы перестали читать даже альтернативные новости, потому что на '+ self.app.meta.fullname +' было так много интересного контента. Так держать! </div> <div> Пожалуйста, примите участие в обсуждении этих тем. Это платформа сообщества. Мы всегда стремимся повысить прозрачность платформы, и вы должны сообщить нам, как мы можем улучшить контроль и контроль контента. Вы можете публиковать сообщения по этой теме в теге Bastyon / Pocketnet.</div>',
-                        // },
+
+                            name : 'Модерация контента',
+                            id : 'курирование',
+
+                            group : [
+
+                                {
+                                    id : 'содержание',
+                                    q : 'Есть ли контент, запрещенный к публикации на  '+ self.app.meta.fullname +'? Если какой-то контент запрещен, можно ли назвать платформу свободой слова?',
+                                    a : '<div>Это очень важный вопрос. Начнем с того, что разрешены не все типы контента. Модерация производится непосредственно сообщенством '+self.app.meta.fullname+', о чем мы поясним ниже. Скрытые теневые запреты или выборочных запреты, практикуемые Кремниевой долиной, отсутствуют на '+self.app.meta.fullname+'.</div>',
+                                },
+                                {
+                                    id : 'конкретный',
+                                    q : 'Особенности модерации на '+self.app.meta.fullname+'.',
+                                    a : '<div> В настоящее время модерация контента осуществляется с помощью оценок в 1 звезду пользователями с высокой репутацией. Когда репутация достигает -30, доступ к аккаунту ограничивается. Однако существует совершенно новый алгоритм модерации, который будет выпущен к концу 2021 года. Согласно новым алгоритмам, будет возможность пометить пользователя или сообщение любым высокопоставленным пользователем, но это не повлияет на счет напрямую. После того, как будет установлено определенное количество флагов, на блокчейне будет разыграна лотерея, и для этой учетной записи будет выбрана группа модераторов присяжных заседателей. Присяжные должны согласиться с тем, что этот пользователь разместил порнографию, наркотики или прямую угрозу насилия. Любое иное мнение или несогласие не является основанием для пометки или каких-либо санкций.</div> ',
+                                },
+                                {
+                                    id : 'взаимный',
+                                    q : 'Разрешено ли взаимное голосование?',
+                                    a : '<div> Взаимность - нормальное человеческое поведение, поэтому в этом смысле с этим нет проблем. Однако механизмы курирования во многом зависят от того факта, что как высокие, так и низкие оценки связаны с контентом и не являются взаимными. Таким образом, Бастион ограничит ответные голоса двумя способами. Во-первых, вы не сможете вернуть пять или одну звезду в течение определенного периода времени. Кроме того, те, кто угрожает возмездием за голоса в одну звезду или обещают награду за голоса в пять звезд, считаются участниками запрещенного поведения. Другие пользователи могут отмечать такие случаи, и псевдослучайная лотерея создаст жюри для их рассмотрения. Хотя такое поведение не будет иметь тех же штрафов, что и незаконный контент, пользователям, задействованным в нем, могут быть предоставлены временные блокировки алгоритмом консенсуса узла. </div> ',
+                                },
+                                // {
+                                // id : 'расизм',
+                                // q : 'Важное примечание о расизме.',
+                                // a : '<div>Свобода мысли и свобода слова подвергаются нападкам со стороны основных социальных платформ и средств массовой информации. Мы должны говорить правду, и именно по этой причине эта платформа не является корпоративной и децентрализованной. Но мы просим всех высказывать свою точку зрения, не нападая на национальность или расу людей. Вы можете обосновать свою точку зрения на доказательствах. Мы не можем позволить себе превратить ' + self.app.meta.fullname + ' в маргинальную платформу. Говорите правду, но, пожалуйста, избегайте расизма и нападок на определенные национальности в целом. Мы знаем, что Кремниевая долина и СМИ превратили проблему расизма в свою игральную карту, которую они разыгрывают в необходимый момент. Одна из задач '+ self.app.meta.fullname +' - стать платформаой альтернативного мнения, создать техническую и социальную возможность обличать ложь СМИ, рассказывать о произволе властей, коррупции, не опасаясь потери опубликованных материалов. Пожалуйста, имейте это в виду и рассказывайте о платформе близким людям, чтобы свобода слова могла процветать. </div> <div> В конечном счете, именно сообщество будет определять направление платформы. Иметь кучу снежинок, которые жалуются на то, что их оскорбляет, так же плохо, как и когда люди хотят озвучить прямые насильственные угрозы. Однако первым признаком является то, что первые пользователи платформы, как правило, умны и основаны на доказательствах, поэтому будущее выглядит невероятно светлым. Команда '+ self.app.meta.fullname +' заметила после нескольких дней бета-тестирования, что мы перестали читать даже альтернативные новости, потому что на '+ self.app.meta.fullname +' было так много интересного контента. Так держать! </div> <div> Пожалуйста, примите участие в обсуждении этих тем. Это платформа сообщества. Мы всегда стремимся повысить прозрачность платформы, и вы должны сообщить нам, как мы можем улучшить контроль и контроль контента. Вы можете публиковать сообщения по этой теме в теге Bastyon / Pocketnet.</div>',
+                                // },
 
 
-                        ]
-
-                        },
-
-
-                        {
-
-                        name : 'Чем '+self.app.meta.fullname+' отличается от...',
-                        id : 'разные',
-
-                        group : [
-
-                        {
-                        id : 'разные1',
-                        q : 'Twitter, Facebook, Reddit и другие централизованные платформы?',
-                        a : '<div>Нет центрального офиса или корпорации. Платформа управляется равными узлами в цепочке блоков. Вся прибыль делится между операторами узлов и создателями контента. Операторы узлов делают ставку на Pocketcoin, чтобы чеканить блоки с вознаграждениями и комиссиями за транзакции. Половина вознаграждений в каждом блоке достается создателям контента на основе оценок, которые их контент собирает от пользователей.</div>',
-                        },
-                        {
-                        id : 'разные2',
-                        q : 'Децентрализованные платформы, такие как Minds.com и Sola?',
-                        a : '<div>Обе эти платформы, хотя и великолепны, но они не являются самодостаточными. Обе сильно зависят от платформы Ethereum, поскольку их токены основаны на стандарте ERC-20 Ethereum. Это означает, что за операции с токенами взимается довольно большая плата. Кроме того, за этими организациями стоят корпорации, и корпорация всегда будет точкой централизации из-за своей экономической логики роста прибыли. Кроме того, корпорации очень легко подвергнуть цензуре.</div>',
-                        },
-                        {
-                        id : 'разные s3',
-                        q : 'От Steemit?',
-                        a : '<div>У Steemit есть собственный блокчейн, но это корпоративная структура со всей вытекающей из этого централизацией.</div>',
-                        },
-                        {
-                        id : 'разные ps4',
-                        q : 'Децентрализованные платформы, такие как Mastodon и другие?',
-                        a : '<div>Хотя Mastodon - полностью децентрализованная платформа, для ее использования требуются большие технические знания. Это является большим препятствием для потенциального широкого признания. '+ self.app.meta.fullname +' включает веб-приложения и настольные приложения, и пользователи могут входить в систему с любого устройства, извлекать свои личные настройки из цепочки блоков и сразу же начинать использовать платформу без каких-либо технических знаний.</div>',
-                        }
-
-                        ]
+                            ]
 
                         },
 
-                        {
-
-                        name : ''+self.app.meta.fullname+' экосистема',
-                        id : 'экосистема',
-
-                        group : [
 
                         {
-                        id : 'экосистема 1',
-                        q : 'Как финансируется развитие '+self.app.meta.fullname+' ?',
-                        a : '<div>'+self.app.meta.fullname+' имеет открытый исходный код и в настоящее время управляется группой добровольцев-экспертов по программированию и математике. После запуска '+self.app.meta.fullname+' привлек талантливых программистов, обещая создать децентрализованную социальную сеть. Программисты и маркетологи, работают за Pocketcoin, пожертвованынный крупными владельцами PKOIN.</div>',
+
+                            name : 'Чем '+self.app.meta.fullname+' отличается от...',
+                            id : 'разные',
+
+                            group : [
+
+                                {
+                                    id : 'разные1',
+                                    q : 'Twitter, Facebook, Reddit и другие централизованные платформы?',
+                                    a : '<div>Нет центрального офиса или корпорации. Платформа управляется равными узлами в цепочке блоков. Вся прибыль делится между операторами узлов и создателями контента. Операторы узлов делают ставку на Pocketcoin, чтобы чеканить блоки с вознаграждениями и комиссиями за транзакции. Половина вознаграждений в каждом блоке достается создателям контента на основе оценок, которые их контент собирает от пользователей.</div>',
+                                },
+                                {
+                                    id : 'разные2',
+                                    q : 'Децентрализованные платформы, такие как Minds.com и Sola?',
+                                    a : '<div>Обе эти платформы, хотя и великолепны, но они не являются самодостаточными. Обе сильно зависят от платформы Ethereum, поскольку их токены основаны на стандарте ERC-20 Ethereum. Это означает, что за операции с токенами взимается довольно большая плата. Кроме того, за этими организациями стоят корпорации, и корпорация всегда будет точкой централизации из-за своей экономической логики роста прибыли. Кроме того, корпорации очень легко подвергнуть цензуре.</div>',
+                                },
+                                {
+                                    id : 'разные s3',
+                                    q : 'От Steemit?',
+                                    a : '<div>У Steemit есть собственный блокчейн, но это корпоративная структура со всей вытекающей из этого централизацией.</div>',
+                                },
+                                {
+                                    id : 'разные ps4',
+                                    q : 'Децентрализованные платформы, такие как Mastodon и другие?',
+                                    a : '<div>Хотя Mastodon - полностью децентрализованная платформа, для ее использования требуются большие технические знания. Это является большим препятствием для потенциального широкого признания. '+ self.app.meta.fullname +' включает веб-приложения и настольные приложения, и пользователи могут входить в систему с любого устройства, извлекать свои личные настройки из цепочки блоков и сразу же начинать использовать платформу без каких-либо технических знаний.</div>',
+                                }
+
+                            ]
+
                         },
+
                         {
-                        id : 'экосистема 2',
-                        q : 'Что такое Pocketcoin?',
-                        a : '<div>Pocketcoin - это сетевой токен. Он используется исключительно для покупки рекламы на '+self.app.meta.fullname+' вкладчиков и платить комиссию за такие платежи. Он также используется для поднятия комментариев, публикаций и покупки привилегий для вашей учетной записи. В '+self.app.meta.fullname+' весь доход делится между создателями контента и узлами.</div>',
-                        },
-                        {
-                        id : 'экосистема 3',
-                        q : 'Как вознаграждаются создатели контента и операторы узлов?',
-                        a : '<div>'+self.app.meta.fullname+' имеет уникальную прямую торговую площадку, где создатели контента могут продавать рекламу покупателям рекламы. Создатели контента устанавливают свою цену и могут принимать массовую рекламу или могут предлагать высоко ценимые персонализированные места размещения (создатели продвигают продукт по-своему). Прямая торговая площадка - это, по сути, биржа для рекламы, которая позволяет покупателям рекламы нацеливаться на определенную аудиторию без каких-либо посредников. Все покупки рекламы и сама реклама связаны в блокчейне, поэтому покупка рекламы абсолютно надежна.</div>',
-                        },
-                        {
-                        id : 'экосистема 4',
-                        q : 'Что, если пользователи размещают незаконный контент, порнографию и СПАМ?',
+
+                            name : ''+self.app.meta.fullname+' экосистема',
+                            id : 'экосистема',
+
+                            group : [
+
+                                {
+                                    id : 'экосистема 1',
+                                    q : 'Как финансируется развитие '+self.app.meta.fullname+' ?',
+                                    a : '<div>'+self.app.meta.fullname+' имеет открытый исходный код и в настоящее время управляется группой добровольцев-экспертов по программированию и математике. После запуска '+self.app.meta.fullname+' привлек талантливых программистов, обещая создать децентрализованную социальную сеть. Программисты и маркетологи, работают за Pocketcoin, пожертвованынный крупными владельцами PKOIN.</div>',
+                                },
+                                {
+                                    id : 'экосистема 2',
+                                    q : 'Что такое Pocketcoin?',
+                                    a : '<div>Pocketcoin - это сетевой токен. Он используется исключительно для покупки рекламы на '+self.app.meta.fullname+' вкладчиков и платить комиссию за такие платежи. Он также используется для поднятия комментариев, публикаций и покупки привилегий для вашей учетной записи. В '+self.app.meta.fullname+' весь доход делится между создателями контента и узлами.</div>',
+                                },
+                                {
+                                    id : 'экосистема 3',
+                                    q : 'Как вознаграждаются создатели контента и операторы узлов?',
+                                    a : '<div>'+self.app.meta.fullname+' имеет уникальную прямую торговую площадку, где создатели контента могут продавать рекламу покупателям рекламы. Создатели контента устанавливают свою цену и могут принимать массовую рекламу или могут предлагать высоко ценимые персонализированные места размещения (создатели продвигают продукт по-своему). Прямая торговая площадка - это, по сути, биржа для рекламы, которая позволяет покупателям рекламы нацеливаться на определенную аудиторию без каких-либо посредников. Все покупки рекламы и сама реклама связаны в блокчейне, поэтому покупка рекламы абсолютно надежна.</div>',
+                                },
+                                {
+                                    id : 'экосистема 4',
+                                    q : 'Что, если пользователи размещают незаконный контент, порнографию и СПАМ?',
                         a : '<div>'+self.app.meta.fullname+'- это не платформа даркнета или какой-то порнхаб. Хотя '+self.app.meta.fullname+' децентрализован и устойчив к цензуре, он модерируется пользователями. Любой незаконный контент помечается и удаляется с платформы. Это означает, что модерировать платформу могут пользователи с наивысшей репутацией. Однако, не существуют гарантии (в рамках открытого исходного кода), что за деструктивный контент не проголосуют пользователи с высокой репутацией. Модераторы контента выбираются случайным образом с помощью лотереи на блокчейне, чтобы избежать каких-либо подтасовок. Модерируется только запрещённый контент (порнография, педофилия, пропаганда нелегальных нарктотиков и прямые угрозы насилия), а НЕ просто к контенту, который они считают оскорбительным. Bastyon является платформой для свободы слова, мы призываем каждого участвовать в модерации контента путем проставления оценок, публиковать интересный авторский контент, повышая таким образом свою репутацию и привнося вклад в развитие платформы.</div>',
-                        },
-                        {
-                        id : 'экосистема 5',
-                        q : 'Кто управляет '+self.app.meta.fullname+'?',
-                        a : '<div>Нет юридического лица или отдельного лица, которое владеет или контролирует '+self.app.meta.fullname+'. Блокчейн Pocketnet и Bastyon управляются группой программистов, но эта группа постоянно растет и меняется. Если какая-то группа программистов ошибется и нарушит принципы, на которых основан Bastyon, другие программисты могут просто разветвить открытый исходный код и продолжить платформу, устойчивую к цензуре. </div>',
-                        },
+                                },
+                                {
+                                    id : 'экосистема 5',
+                                    q : 'Кто управляет '+self.app.meta.fullname+'?',
+                                    a : '<div>Нет юридического лица или отдельного лица, которое владеет или контролирует '+self.app.meta.fullname+'. Блокчейн Pocketnet и Bastyon управляются группой программистов, но эта группа постоянно растет и меняется. Если какая-то группа программистов ошибется и нарушит принципы, на которых основан Bastyon, другие программисты могут просто разветвить открытый исходный код и продолжить платформу, устойчивую к цензуре. </div>',
+                                },
 
-                        ]
+                            ]
 
                         },
                         {
@@ -6606,7 +6623,7 @@ Platform = function (app, listofnodes) {
                                     a : 'Критерии для получения бонуса за оригинальный контент:  Каждые 15 тысяч просмотров видео + 1500 пятизвёздочных рейтингов от уникальных пользователей + 1500 реферальных пользователей <br />PKOIN или Bitcoin:  1,000 USDT <br />Как ускорить получение бонуса?<br />Делитесь ссылкой на видео в социальных сетях, с помощью мессенджеров или через почту. Выставляйте эксклюзивные материалы для подписчиков в Бастионе (это делается при создании поста, выбрать Для Подписчиков). Эксклюзивные материалы увеличат количество реферальных подписок.<br />Делитесь ссылкой на ваш профиль.<br />Всегда выбирайте Реферальная Ссылка, когда делитесь ссылкой на Бастион (на видео или профиль).<br />Если вы пригласите блоггера и докажете это, вы получите бонус в размере до 25% от первых 4 бонусов.<br />По вопросам обращайтесь support@bastyon.com.',
                                     img: ''
                                 },
-                                
+
                             ]
 
                         },
@@ -6685,7 +6702,7 @@ Platform = function (app, listofnodes) {
 
 
 
-                                 {
+                                {
                                     id : "app-store",
                                     q : "À quoi peut-on s`attendre pour acheter avec PKOIN?",
                                     a : "<div>PKOIN a une multitude d`utilisations sur Bastyon. Tout d`abord, 50 PKOIN dans votre compte supprime toutes les limitations de publication et vous permet de charger la vidéo. PKOIN peut être utilisé pour booster les commentaires, rendant vos commentaires visibles pour tout le monde. Le PKOIN des commentaires boostés va au blogueur, et les blogueurs doivent répondre ou présenter de tels commentaires pour encourager de tels boosts. Vous pouvez booster une publication pour la déplacer vers le haut dans le fil. Il est utilisé pour le jalonnement dans des nœuds, vous pouvez exécuter un nœud et gagner plus de PKOIN en jalonnant PKOIN. Il sera utilisé dans un marché publicitaire décentralisé et 100 % des bénéfices seront reversés aux blogueurs. Il sera également utilisé pour acheter des profils de papier peint spéciaux, des images de profil animées, etc. </div>",
@@ -6862,7 +6879,7 @@ Platform = function (app, listofnodes) {
                                     q : "Oû puis-je voir les statistiques de ma vidéo?",
                                     a : "<div> Allez sur votre profil et voir MES VIDÉOS. </div> ",
                                 },
-                                 {
+                                {
                                     id : "technology",
                                     q : "Quel lecteur utilisez-vous pour lire la vidéo?",
                                     a : "<div> Bastyon a son propre lecteur, qui est une version considérablement modifiée de PeerTube. Identique à PeerTube, il utilise la technologie WebTorrent pour réduire la charge sur le serveur. Cela signifie que les utilisateurs qui regardent la vidéo la partagent. Notez que dans certains cas, cela signifie que les utilisateurs peuvent voir les adresses IP les uns des autres. Les serveurs Bastyon ne disposent d`aucun mécanisme pour enregistrer ces adresses IP, cependant, si vous vous souciez vraiment d`exposer votre adresse IP, vous devez utiliser un fournisseur VPN fiable. Si vous souhaitez minimiser tout partage peer-to-peer, vous pouvez utiliser la fonction de téléchargement de vidéo dans Bastyon.</div> ",
@@ -6938,7 +6955,7 @@ Platform = function (app, listofnodes) {
                                     q : "Caractéristiques de la curation "+self.app.meta.fullname+".",
                                     a : "<div> Actuellement, la modération du contenu se fait par le biais de votes 1 étoile par des utilisateurs de haute réputation. Lorsque la réputation atteint -30, l`accès au compte est restreint. Cependant, il existe un tout nouvel algorithme de modération qui sera publié d`ici la fin de 2021. Sous les nouveaux algorithmes, il y aura une option pour signaler un utilisateur ou un message par n`importe quel utilisateur de haute réputation, mais cela ne va pas affecter le compte directement. Après un certain nombre de drapeaux, une loterie sur la blockchain sera tirée et un groupe de modérateurs jurés sera choisi pour ce compte. Les jurés doivent convenir que cet utilisateur a publié de la pornographie, des stupéfiants ou une menace directe de violence. Tout autre avis ou désaccord ne constitue pas un motif de signalement ni de sanction.</div> ",
                                 },
-                                    {
+                                {
                                     id : "reciprocal",
                                     q : "Est-ce que le vote reciproque est autorisé?",
                                     a : "<div> La réciprocité est un comportement humain normal, donc en ce sens, cela ne pose aucun problème. Cependant, les mécanismes de conservation dépendent fortement du fait que les notes élevées et faibles sont liées au contenu et ne sont pas réciproques. Ainsi, Bastyon limitera les votes réciproques de deux manières. Premièrement, vous ne pourrez pas retourner un vote cinq étoiles ou une étoile dans un certain délai. En outre, ceux qui menacent de se venger d`une étoile ou promettent une récompense pour cinq étoiles sont considérés comme se livrant à un comportement interdit. D`autres utilisateurs peuvent signaler de tels cas et une loterie pseudo-aléatoire créera un jury pour le juger. Bien qu`un tel comportement n`entraîne pas les mêmes sanctions qu`un contenu illicite, les utilisateurs qui l`utilisent peuvent se voir imposer des blocages temporaires par l`algorithme de consensus de nœud. </div> ",
@@ -7035,6 +7052,23 @@ Platform = function (app, listofnodes) {
             saving : {},
             key : '',
 
+            getByMasterSwarmId : function(masterSwarmId){
+                var s = self.sdk.localshares.storage
+
+                var video = null
+
+                _.find(s, (share) => {
+                    return _.find(share.videos, function(v){
+                        if(v.infos && v.infos.videoDetails && v.infos.masterSwarmId == masterSwarmId) {
+                            video = v;
+                            return true
+                        }
+                    })
+                })
+
+                return video
+            },
+
             status : function(id){
                 if(self.sdk.localshares.storage[id]) return 'saved'
                 if(self.sdk.localshares.saving[id]) return 'saving'
@@ -7104,7 +7138,7 @@ Platform = function (app, listofnodes) {
             },
 
             saveShare : function(share, p){
-               // var share = self.app.platform.sdk.node.shares.storage.trx[shareid];
+                // var share = self.app.platform.sdk.node.shares.storage.trx[shareid];
 
                 if(!p) p = {}
 
@@ -7239,8 +7273,8 @@ Platform = function (app, listofnodes) {
 
                         var fileDownloadUrl = _.find(
                             deep(videoDetails, 'streamingPlaylists.0.files') || [], function(file){
-                            return file.resolution.id == p.resolutionId
-                        })
+                                return file.resolution.id == p.resolutionId
+                            })
 
                         if(!fileDownloadUrl) return Promise.reject('fileDownloadUrl')
 
@@ -7251,7 +7285,7 @@ Platform = function (app, listofnodes) {
 
                                     var infos = {
                                         thumbnail: 'https://' + videoDetails.from + videoDetails.thumbnailPath,
-                                        videoDetails : videoDetails
+                                        videoDetails : videoDetails,
                                     }
 
                                     dirEntry4.getFile('info.json', { create: true }, function (infoFile) {
@@ -7339,31 +7373,31 @@ Platform = function (app, listofnodes) {
                         return new Promise((resolve, reject)=>{
 
                             // open target file for download
-                        window.resolveLocalFileSystemURL(storage, function(dirEntry) {
-                            // Create a posts folder
-                            dirEntry.getDirectory('posts', { create: true }, function (dirEntry11) {
-                                dirEntry11.getDirectory(share.id, { create: true }, function (dirEntry2) {
+                            window.resolveLocalFileSystemURL(storage, function(dirEntry) {
+                                // Create a posts folder
+                                dirEntry.getDirectory('posts', { create: true }, function (dirEntry11) {
+                                    dirEntry11.getDirectory(share.id, { create: true }, function (dirEntry2) {
 
-                                    // Create JSON file for share informations
-                                    dirEntry2.getFile('share.json', { create: true }, function (shareFile) {
-                                        // Write into file
-                                        shareFile.createWriter(function (fileWriter) {
-                                            fileWriter.write(share);
+                                        // Create JSON file for share informations
+                                        dirEntry2.getFile('share.json', { create: true }, function (shareFile) {
+                                            // Write into file
+                                            shareFile.createWriter(function (fileWriter) {
+                                                fileWriter.write(share);
 
-                                            resolve(dirEntry2)
+                                                resolve(dirEntry2)
+                                            });
                                         });
+
+
+                                    }, function(err) {
+                                        return reject(err);
                                     });
-
-
                                 }, function(err) {
                                     return reject(err);
                                 });
                             }, function(err) {
                                 return reject(err);
                             });
-                        }, function(err) {
-                            return reject(err);
-                        });
 
                         })
 
@@ -7557,6 +7591,8 @@ Platform = function (app, listofnodes) {
 
                         const videoData = await electron.ipcRenderer
                             .invoke('getVideoData', shareId, videoId);
+
+                            console.log('videoData', videoData)
 
                         videosDataList[videoId] = videoData;
 
@@ -8196,15 +8232,15 @@ Platform = function (app, listofnodes) {
                 var empty = self.sdk.articles.empty(null, 2)
 
 
-                    empty.visibility = (share.settings.f || 0) + ''
-                    empty.caption.value = share.caption.v
-                    empty.content = edjs.apply(JSON.parse(JSON.stringify(share.message.v)), decodeURIComponent)
-                    empty.tags = _.clone(share.tags.v)
-                    empty.language = share.language.v
-                    empty.time = share.time
-                    empty.cover = deep(share, 'images.v.0')
-                    empty.editing = share.aliasid
-                    empty.shash = share.shash()
+                empty.visibility = (share.settings.f || 0) + ''
+                empty.caption.value = share.caption.v
+                empty.content = edjs.apply(JSON.parse(JSON.stringify(share.message.v)), decodeURIComponent)
+                empty.tags = _.clone(share.tags.v)
+                empty.language = share.language.v
+                empty.time = share.time
+                empty.cover = deep(share, 'images.v.0')
+                empty.editing = share.aliasid
+                empty.shash = share.shash()
 
                 return empty
             },
@@ -8382,20 +8418,20 @@ Platform = function (app, listofnodes) {
 
                 var share = new Share(art.language || self.app.localization.key);
 
-                    share.tags.set(_.clone(art.tags))
-                    share.caption.set(art.caption.value)
-                    share.message.set({
-                        blocks : artcontent.blocks,
-                        version : artcontent.version
-                    })
+                share.tags.set(_.clone(art.tags))
+                share.caption.set(art.caption.value)
+                share.message.set({
+                    blocks : artcontent.blocks,
+                    version : artcontent.version
+                })
 
-                    share.settings.v = 'a'
-                    share.settings.version = art.version
-                    share.settings.f = (art.visibility || 0) + ''
+                share.settings.v = 'a'
+                share.settings.version = art.version
+                share.settings.f = (art.visibility || 0) + ''
 
-                    share.images.set([art.cover])
+                share.images.set([art.cover])
 
-                    share.address = deep(app, 'user.address.value')
+                share.address = deep(app, 'user.address.value')
 
                 if (art.editing){
                     share.aliasid = art.editing
@@ -8412,9 +8448,9 @@ Platform = function (app, listofnodes) {
                     }
 
                     return self.app.imageUploader.upload({ base64: e.data.file.url }).then( url => {
-						e.data.file.url = url
+                        e.data.file.url = url
                         return Promise.resolve()
-					})
+                    })
 
                 },
                 carousel : function(e){
@@ -8472,6 +8508,9 @@ Platform = function (app, listofnodes) {
             },
 
             newmaterials : function(counts){
+
+                if(!self.sdk.sharesObserver.storage.viewed) self.sdk.sharesObserver.storage.viewed = {}
+
                 _.each(counts, (c, i) => {
                     if (self.sdk.sharesObserver.storage.viewed[i]){
                         self.sdk.sharesObserver.storage.viewed[i].new = (self.sdk.sharesObserver.storage.viewed[i].new || 0) + c
@@ -8489,6 +8528,7 @@ Platform = function (app, listofnodes) {
 
             hasnew : function(key){
 
+                if(!self.sdk.sharesObserver.storage.viewed) self.sdk.sharesObserver.storage.viewed = {}
 
                 if(!self.sdk.sharesObserver.storage.viewed[key]) return true
 
@@ -8506,13 +8546,15 @@ Platform = function (app, listofnodes) {
 
                         return self.sdk.sharesObserver.storage.viewed[key].new > 0
                     }
-                }   
+                }
             },
 
             view : function(key, first, last){
 
 
                 if(key == 'saved') return
+
+                if(!self.sdk.sharesObserver.storage.viewed) self.sdk.sharesObserver.storage.viewed = {}
 
                 if(!self.sdk.sharesObserver.storage.viewed[key]) self.sdk.sharesObserver.storage.viewed[key] = {}
 
@@ -8525,14 +8567,14 @@ Platform = function (app, listofnodes) {
                     self.sdk.sharesObserver.storage.viewed[key].new = 0
 
                 }
-                    
+
 
                 if (!self.sdk.sharesObserver.storage.viewed[key].last || self.sdk.sharesObserver.storage.viewed[key].last > last)
                     self.sdk.sharesObserver.storage.viewed[key].last = last
 
                 self.sdk.sharesObserver.storage.viewed[key].time = new Date()
                 self.sdk.sharesObserver.storage.viewed[key].block = self.currentBlock || (self.app.api.getCurrentBlock ? self.app.api.getCurrentBlock() : 0)
-                
+
 
                 self.sdk.sharesObserver.save()
 
@@ -9285,17 +9327,17 @@ Platform = function (app, listofnodes) {
 
                     var userInfo = new UserInfo();
 
-						userInfo.name.set(me.name);
-						userInfo.language.set(me.language);
-						userInfo.about.set(me.about);
-						userInfo.site.set(me.site);
-						userInfo.image.set(me.image);
-						userInfo.addresses.set(me.addresses);
-						//userInfo.ref.set(me.ref);
+                    userInfo.name.set(me.name);
+                    userInfo.language.set(me.language);
+                    userInfo.about.set(me.about);
+                    userInfo.site.set(me.site);
+                    userInfo.image.set(me.image);
+                    userInfo.addresses.set(me.addresses);
+                    //userInfo.ref.set(me.ref);
 
-                        userInfo.keys.set(_.map(self.app.user.cryptoKeys(), function(k){
-                            return k.public
-                        }))
+                    userInfo.keys.set(_.map(self.app.user.cryptoKeys(), function(k){
+                        return k.public
+                    }))
 
                     var err = userInfo.validation()
 
@@ -9310,17 +9352,17 @@ Platform = function (app, listofnodes) {
 
                         var errtext = 'Undefined Error'
 
-						if(err == 'namelength'){
-							errtext = "The name length can't be more than 20 symbols"
-						}
+                        if(err == 'namelength'){
+                            errtext = "The name length can't be more than 20 symbols"
+                        }
 
-						if(err == 'pocketnet'){
-							errtext = 'To avoid user confusion using '+app.meta.fullname+' in name is reserved'
-						}
+                        if(err == 'pocketnet'){
+                            errtext = 'To avoid user confusion using '+app.meta.fullname+' in name is reserved'
+                        }
 
                         if(err == 'bastyon'){
-							errtext = 'To avoid user confusion using Bastyon in name is reserved'
-						}
+                            errtext = 'To avoid user confusion using Bastyon in name is reserved'
+                        }
 
                         self.sdk.keys.error(errtext)
 
@@ -9336,40 +9378,40 @@ Platform = function (app, listofnodes) {
 
                             success: function () {*/
 
-                                self.sdk.node.transactions.create.commonFromUnspent(
+                        self.sdk.node.transactions.create.commonFromUnspent(
 
-                                    userInfo,
+                            userInfo,
 
-                                    function(tx, error){
+                            function(tx, error){
 
-                                        if(!tx){
+                                if(!tx){
 
-                                            self.sdk.keys.error(self.errorHandler(error).text())
+                                    self.sdk.keys.error(self.errorHandler(error).text())
 
-                                            reject(error)
+                                    reject(error)
 
-                                        }
-                                        else
-                                        {
-                                            self.sdk.users.getone(self.app.platform.sdk.address.pnet().address, function(){
-                                                resolve('processing')
-                                            })
-                                        }
+                                }
+                                else
+                                {
+                                    self.sdk.users.getone(self.app.platform.sdk.address.pnet().address, function(){
+                                        resolve('processing')
+                                    })
+                                }
 
 
-                                    }
-                                )
-
-                            /*},
-
-                            fail: function () {
-                                reject('no')
-                            },
-
-                            close: function () {
-                                reject('close')
                             }
-                        })*/
+                        )
+
+                        /*},
+
+                        fail: function () {
+                            reject('no')
+                        },
+
+                        close: function () {
+                            reject('close')
+                        }
+                    })*/
 
                     })
 
@@ -9392,7 +9434,7 @@ Platform = function (app, listofnodes) {
 
                             var processing = _.toArray((self.sdk.node.transactions.temp.userInfo || {})).length > 0 ||
 
-                            (self.sdk.address.pnet() && deep(self.sdk.relayTransactions.storage, self.sdk.address.pnet().address + '.userInfo.length') > 0 )
+                                (self.sdk.address.pnet() && deep(self.sdk.relayTransactions.storage, self.sdk.address.pnet().address + '.userInfo.length') > 0 )
 
                             if (processing) {
                                 return reject('processing')
@@ -10837,9 +10879,9 @@ Platform = function (app, listofnodes) {
 
                     var notifications = d.slice(1) || []
 
-                        notifications = _.sortBy(notifications, function (n) {
-                            return -n.nblock
-                        })
+                    notifications = _.sortBy(notifications, function (n) {
+                        return -n.nblock
+                    })
 
                     d[0].msg = 'newblocks'
 
@@ -11231,20 +11273,20 @@ Platform = function (app, listofnodes) {
                                 clbk(null, e)
                         })
 
-                       /* self.app.ajax.rpc({
-                            method: 'getuserprofile',
-                            parameters: params,
-                            success: function (d) {
+                        /* self.app.ajax.rpc({
+                             method: 'getuserprofile',
+                             parameters: params,
+                             success: function (d) {
 
 
 
-                            },
+                             },
 
-                            fail: function (d, e) {
-                                if (clbk)
-                                    clbk(null, e)
-                            }
-                        })*/
+                             fail: function (d, e) {
+                                 if (clbk)
+                                     clbk(null, e)
+                             }
+                         })*/
                     })
                 }
                 else {
@@ -11280,7 +11322,7 @@ Platform = function (app, listofnodes) {
 
                             self.app.api.fetchauth('free/registration', prms, proxyoptions).then(d => {
                                 if (clbk)
-                                        clbk(true)
+                                    clbk(true)
 
                             }).catch(e => {
                                 if (clbk)
@@ -11543,19 +11585,19 @@ Platform = function (app, listofnodes) {
                 var my = self.app.user.address.value;
 
                 self.app.api.rpc('getrecomendedaccountsbyscoresfromaddress', [my, ['share', 'video'], 0, 20000, 15])
-                .then(function(d){
+                    .then(function(d){
 
-                    if (clbk){
-                        clbk(d)
-                    }
+                        if (clbk){
+                            clbk(d)
+                        }
 
-                })
-                .catch(function(e){
+                    })
+                    .catch(function(e){
 
-                    if (clbk){
-                        clbk(null)
-                    }
-                })
+                        if (clbk){
+                            clbk(null)
+                        }
+                    })
             },
 
             commonuserpoint : function(address, me){
@@ -11576,9 +11618,9 @@ Platform = function (app, listofnodes) {
 
                 var activities = self.app.platform.sdk.activity.has('users', address)
 
-				if (activities.point){
-					point = point * activities.point / 10
-				}
+                if (activities.point){
+                    point = point * activities.point / 10
+                }
 
 
 
@@ -11597,36 +11639,36 @@ Platform = function (app, listofnodes) {
                 var my = self.app.user.address.value;
 
                 self.app.api.rpc('getrecomendedcontentsbyscoresfromaddress', [my, ['share', 'video'], 0, 20000, 15])
-                .then(function(d){
+                    .then(function(d){
 
-                    if (clbk){
-                        clbk(d)
-                    }
+                        if (clbk){
+                            clbk(d)
+                        }
 
-                })
-                .catch(function(e){
+                    })
+                    .catch(function(e){
 
-                    if (clbk){
-                        clbk(null, e);
-                    }
-                })
+                        if (clbk){
+                            clbk(null, e);
+                        }
+                    })
             },
 
             getRecommendedPostsContents : function(parameters, clbk){
 
                 self.app.api.rpc('getrawtransactionwithmessagebyid', parameters)
-                .then(function(d){
+                    .then(function(d){
 
-                    if (clbk){
-                        clbk(d)
-                    }
-                })
-                .catch(function(e){
+                        if (clbk){
+                            clbk(d)
+                        }
+                    })
+                    .catch(function(e){
 
-                    if (clbk){
-                        clbk(null)
-                    }
-                })
+                        if (clbk){
+                            clbk(null)
+                        }
+                    })
             }
         },
 
@@ -11729,7 +11771,7 @@ Platform = function (app, listofnodes) {
                             }
                             else {
                                 if (clbk)
-                                clbk(null, err)
+                                    clbk(null, err)
                             }
                         }, proxyoptions)
                     }
@@ -12280,7 +12322,7 @@ Platform = function (app, listofnodes) {
                 self.sdk.wallet.txbaseFeesMeta(
                     address, outputs, keyPair, feerate,
                     self.sdk.wallet.txbase,
-                clbk)
+                    clbk)
 
             },
 
@@ -12933,7 +12975,7 @@ Platform = function (app, listofnodes) {
 
                     })
 
-                , function(v){ return v })
+                    , function(v){ return v })
 
                 return {
                     activities,
@@ -14331,7 +14373,7 @@ Platform = function (app, listofnodes) {
 
                 if(!onlytags)
                     s.selected[k] = {}
-                    s.excluded[k] = {}
+                s.excluded[k] = {}
 
                 s.tags[k] = {}
 
@@ -14438,32 +14480,32 @@ Platform = function (app, listofnodes) {
                 var k = _k || self.app.localization.key;
 
                 var added = _.map(self.sdk.categories.settings.added[k]|| {},
-                function(c){
-                    var cc = _.clone(c);
+                    function(c){
+                        var cc = _.clone(c);
 
-                    cc.added = true;
+                        cc.added = true;
 
 
-                    return cc
-                })
+                        return cc
+                    })
 
                 var categories = self.sdk.categories.data.all[k] || self.sdk.categories.data.all['en'];
 
                 var categoryIcons = self.sdk.categories.data.categoryIcons;
 
-				categories = _.map(categories, function(k){
-					var withIcon = categoryIcons.find(function(ki){
-						return ki.id === k.id;
-					})
+                categories = _.map(categories, function(k){
+                    var withIcon = categoryIcons.find(function(ki){
+                        return ki.id === k.id;
+                    })
 
-					if (withIcon){
-						k.icon = withIcon.icon;
-					} else {
+                    if (withIcon){
+                        k.icon = withIcon.icon;
+                    } else {
                         k.icon = 'fa fa-mouse-pointer'
                     }
 
-					return k;
-				})
+                    return k;
+                })
 
                 return (categories).concat(added)
             },
@@ -14606,7 +14648,7 @@ Platform = function (app, listofnodes) {
 
 
                 ///
-               // parameters.push(self.app.localization.key)
+                // parameters.push(self.app.localization.key)
 
                 parameters.push(localization || self.app.localization.key)
 
@@ -14728,7 +14770,7 @@ Platform = function (app, listofnodes) {
 
                                     if(!lt){
                                         var vs = _.clone(at)
-                                            s.cloud.push(vs)
+                                        s.cloud.push(vs)
                                     }
 
                                     if (lt){
@@ -14813,7 +14855,7 @@ Platform = function (app, listofnodes) {
                 if (!s[type][value][address]) s[type][value][address] = {}
 
                 if (!s[type][value][address][fixedBlock]) {
-                     s[type][value][address][fixedBlock] = result;
+                    s[type][value][address][fixedBlock] = result;
                 }
 
                 else {
@@ -15966,7 +16008,7 @@ Platform = function (app, listofnodes) {
                     self.app.api.rpc('getAccount', [address, 1]).then(d => {
 
                         if (clbk)
-                                clbk(d.result)
+                            clbk(d.result)
 
                     }).catch(e => {
                         if (clbk) {
@@ -17277,7 +17319,7 @@ Platform = function (app, listofnodes) {
 
                                 var shares = data.boosts || []
                                 var blocknumber = data.height
-                                    p.blocknumber = blocknumber
+                                p.blocknumber = blocknumber
 
 
                                 storage[key] = shares
@@ -17568,7 +17610,7 @@ Platform = function (app, listofnodes) {
 
                         self.app.platform.sdk.node.shares.getbyid(txids, function (shares) {
 
-                            
+
                             self.app.platform.sdk.node.shares.users(shares, function(){
 
                                 shares = _.filter(shares, function(s){
@@ -17579,13 +17621,13 @@ Platform = function (app, listofnodes) {
                                     else{
                                     }
                                 })
-    
-    
+
+
                                 if (clbk)
                                     clbk(shares, null, p)
                             })
 
-                            
+
 
                         })
 
@@ -17629,13 +17671,13 @@ Platform = function (app, listofnodes) {
 
                     var n = -1
                     var uservout = _.find(tx.vout, (v) => {
-                        n ++ 
+                        n ++
                         return _.find(deep(v, 'scriptPubKey.addresses') || [], (a) => {
                             return a == address
                         })
                     })
-                    
-                    
+
+
                     /**/
                     var l = tx.vout.length
 
@@ -17888,7 +17930,7 @@ Platform = function (app, listofnodes) {
                     self.app.api.rpc('signrawtransactionwithkey', [hex, []]).then(d => {
 
                         if (clbk)
-                                clbk(d)
+                            clbk(d)
 
                     }).catch(e => {
                         if (clbk) {
@@ -18479,7 +18521,7 @@ Platform = function (app, listofnodes) {
                         self.app.api.rpc('listUnspent', [1, 9999999, [p2pkh.address]]).then(d => {
 
                             if (clbk)
-                                    clbk(d || [])
+                                clbk(d || [])
 
                         }).catch(e => {
                             if (clbk) {
@@ -18701,17 +18743,17 @@ Platform = function (app, listofnodes) {
                                 if(!s.unspent)
                                     s.unspent = {};
 
-                                    _.each(d, function (u) {
-                                        self.sdk.node.transactions.clearTemp(u.txid, u.vout);
-                                    })
+                                _.each(d, function (u) {
+                                    self.sdk.node.transactions.clearTemp(u.txid, u.vout);
+                                })
 
-                                    s.unspent[address] = d || [];
+                                s.unspent[address] = d || [];
 
-                                    if (s.unspentLoading)
-                                        s.unspentLoading[address] = false;
+                                if (s.unspentLoading)
+                                    s.unspentLoading[address] = false;
 
-                                    if (clbk)
-                                        clbk(s.unspent[address])
+                                if (clbk)
+                                    clbk(s.unspent[address])
 
                             }).catch(e => {
                                 if (!s.unspent)
@@ -19213,7 +19255,7 @@ Platform = function (app, listofnodes) {
 
                         var keyPair = _kp || self.app.user.keys()
                         var txb = new bitcoin.TransactionBuilder();
-                            txb.addNTime(self.timeDifference || 0)
+                        txb.addNTime(self.timeDifference || 0)
                         var k = smulti;
 
 
@@ -19737,18 +19779,18 @@ Platform = function (app, listofnodes) {
                             referrerPolicy: 'no-referrer',
                             body: JSON.stringify(parameters)
                         })
-                        .then(function(data){
-                            return data.json();
-                        })
-                        .then(function(result){
+                            .then(function(data){
+                                return data.json();
+                            })
+                            .then(function(result){
 
-                            if (!result.ok){
+                                if (!result.ok){
 
-                                sitemessage('Telegram error. ' + result.description)
-                            }
+                                    sitemessage('Telegram error. ' + result.description)
+                                }
 
-                        })
-                        .catch(err => sitemessage('Telegram error'))
+                            })
+                            .catch(err => sitemessage('Telegram error'))
 
 
 
@@ -19763,22 +19805,22 @@ Platform = function (app, listofnodes) {
 
                         if (self.app.user.features.telegram && !fromTG && meta.telegram && meta.telegram.value && meta.tgto && meta.tgto.value) {
 
-                          if (!meta.tgtoask.value) {
+                            if (!meta.tgtoask.value) {
 
-                            this.telegramSend(share, meta);
+                                this.telegramSend(share, meta);
 
-                          } else {
-                            // this.telegramSend = this.telegramSend.bind(this)
+                            } else {
+                                // this.telegramSend = this.telegramSend.bind(this)
                             new dialog({
-                              html: "Do you really want send message to Telegram?",
-                              btn1text: "Send",
-                              btn2text: "Cancel",
-                              class: 'zindex',
-                              success: () => {
-                                this.telegramSend(savedShare, meta);
-                              }
-                            });
-                          }
+                                    html: "Do you really want send message to Telegram?",
+                                    btn1text: "Send",
+                                    btn2text: "Cancel",
+                                    class: 'zindex',
+                                    success: () => {
+                                        this.telegramSend(savedShare, meta);
+                                    }
+                                });
+                            }
                         }
 
                         this.common(inputs, share, TXFEE, clbk, p)
@@ -20073,8 +20115,8 @@ Platform = function (app, listofnodes) {
                     }
                     else
 
-                        if (clbk)
-                            clbk(pa.private[i])
+                    if (clbk)
+                        clbk(pa.private[i])
 
 
 
@@ -21013,33 +21055,33 @@ Platform = function (app, listofnodes) {
 
                     this.tickstate = {
                         settings:
-                        {
-                            nedbkey: 'settings',
-                            nedbpath: { settings: './data/settings' },
-                            nodes: { defaults: [Object], stable: [Array] },
-                            server: true,
-                            ports: { https: 8888, wss: 8088 },
-                            ssl:
                             {
-                                key: './cert/key.pem',
-                                cert: './cert/cert.pem',
-                                passphrase: 'password'
+                                nedbkey: 'settings',
+                                nedbpath: { settings: './data/settings' },
+                                nodes: { defaults: [Object], stable: [Array] },
+                                server: true,
+                                ports: { https: 8888, wss: 8088 },
+                                ssl:
+                                    {
+                                        key: './cert/key.pem',
+                                        cert: './cert/cert.pem',
+                                        passphrase: 'password'
+                                    },
+                                dbEnable: true,
+                                db:
+                                    {
+                                        host: 'localhost',
+                                        port: 5432,
+                                        max: 10,
+                                        idleTimeoutMillis: 30000,
+                                        user: 'postgres',
+                                        database: 'login',
+                                        password: 'password'
+                                    },
+                                refkey: '',
+                                captcha: true,
+                                iplimiter: true
                             },
-                            dbEnable: true,
-                            db:
-                            {
-                                host: 'localhost',
-                                port: 5432,
-                                max: 10,
-                                idleTimeoutMillis: 30000,
-                                user: 'postgres',
-                                database: 'login',
-                                password: 'password'
-                            },
-                            refkey: '',
-                            captcha: true,
-                            iplimiter: true
-                        },
                         state: {},
                         proxyReady: true
                     }
@@ -22248,8 +22290,8 @@ Platform = function (app, listofnodes) {
 
 
                     fetch(url, settings)
-                    .then(data => data.json())
-                    .then(data => telegramData(data))
+                        .then(data => data.json())
+                        .then(data => telegramData(data))
 
                 },
 
@@ -22657,11 +22699,13 @@ Platform = function (app, listofnodes) {
         //var FirebasePlugin = new FakeFirebasePlugin()
 
         var using = typeof window != 'undefined' && window.cordova && typeof FirebasePlugin != 'undefined';
+        var usingWeb = typeof window != 'undefined' && typeof _Electron === 'undefined' && !window.cordova && typeof firebase != 'undefined'
 
         var currenttoken = null;
 
+
         var appid = deep(window, 'BuildInfo.packageName') || window.location.hostname || window.pocketnetdomain
-        if (appid == 'localhost') appid = 'pocketnet.app' /// url
+        if (appid == 'localhost' || appid == '127.0.0.1') appid = 'pocketnet.app' /// url
 
         var device = function () {
             var id = platform.app.options.device
@@ -22800,20 +22844,19 @@ Platform = function (app, listofnodes) {
 
             checkProxy : function(proxy){
                 return self.request.info(proxy).then(r => {
-
                     var apps = (r.id || "").split(',')
-
                     if (apps.indexOf(appid) == -1){
                         return Promise.reject('proxyfirebaseid')
                     }
-
-
+                    return Promise.resolve(appid)
                 })
             }
         }
 
         self.revokeall = function(){
-            FirebasePlugin.unregister();
+            if(using) {
+                FirebasePlugin?.unregister();
+            }
 
             self.storage.clear();
 
@@ -22821,24 +22864,20 @@ Platform = function (app, listofnodes) {
         }
 
         self.set = function(proxy){
-
             if(!currenttoken) return Promise.reject('emptytoken')
 
             var address = getaddress()
             var token = currenttoken
 
-
             return self.api.checkProxy(proxy).then(r => {
                 return  self.api.exist(proxy, address, token)
             }).then(exist => {
-
                 if(exist) return Promise.resolve()
-
                 if(self.api.existanother(proxy, address)) return self.request.revokeall()
-
             }).then(r => {
                 return self.api.setToken(address, token, proxy)
             }).catch(e => {
+                console.log(e)
                 return Promise.resolve()
             })
 
@@ -22847,7 +22886,6 @@ Platform = function (app, listofnodes) {
         self.request = {
 
             revokeall : function(){
-
                 return platform.app.api.fetchauthall('firebase/revokedevice', {
                     device : device()
                 })
@@ -22867,7 +22905,6 @@ Platform = function (app, listofnodes) {
             },
 
             revoke: function (token, proxy) {
-
                 return platform.app.api.fetchauth('firebase/revoke', {
                     token
                 }, {
@@ -22877,7 +22914,6 @@ Platform = function (app, listofnodes) {
             },
 
             revokeDevice: function (proxy) {
-
                 return platform.app.api.fetchauth('firebase/revokedevice', {
                     device : device()
                 }, {
@@ -22888,8 +22924,6 @@ Platform = function (app, listofnodes) {
             },
 
             setToken: function (token, proxy) {
-
-
                 return platform.app.api.fetchauth('firebase/set', {
                     device : device(),
                     token : token,
@@ -22903,10 +22937,7 @@ Platform = function (app, listofnodes) {
 
 
         self.get = function (clbk) {
-
-            if (!using) {
-            }
-            else {
+            if (using) {
 
                 FirebasePlugin.getToken(function(token) {
 
@@ -22928,160 +22959,312 @@ Platform = function (app, listofnodes) {
                 });
 
 
-            }
+            }else if(usingWeb) {
 
-            if (clbk)
-                clbk()
+                try{
+                    const messaging = firebase.messaging();
+
+
+                    messaging.getToken().then(token=>{
+                        console.log("GET ", token)
+                        currenttoken = token
+                        platform.fcmtoken = token
+                        platform.matrixchat.changeFcm()
+                        self.events()
+
+                        if (clbk)
+                                clbk(token)
+                    }).catch(e => {
+                        console.log("E", e)
+                    })
+                }
+                catch (e) {
+                    console.log("E", e)
+                }
+                
+            }
         }
 
         self.permissions = function(clbk){
-			FirebasePlugin.hasPermission(function(hasPermission){
+            if(using) {
+                FirebasePlugin.hasPermission(function (hasPermission) {
 
-                if(!hasPermission){
-                    FirebasePlugin.grantPermission(function(hasPermission){
+                    if (!hasPermission) {
+                        FirebasePlugin.grantPermission(function (hasPermission) {
 
-                        if(hasPermission){
-                            self.get(clbk)
-                        }
-
-                    });
-                }
-                else{
-                    self.get(clbk)
-                }
-
-            });
-		}
-
-        self.events = function () {
-
-            FirebasePlugin.onMessageReceived((data) => {
-
-                if(!data) data = {}
-
-                if (data.data)
-                    platform.ws.messageHandler(data.data)
-
-
-                if (data.room_id) {
-
-                    if(data.tap){
-                         // Wait until we can navigate Matrix
-                        retry(function(){
-
-                            return platform && platform.matrixchat && platform.matrixchat.core;
-
-                        }, function(){
-
-                            setTimeout(function(){
-
-                                platform.matrixchat.core.goto(data.room_id);
-
-                                if (platform.matrixchat.core.apptochat)
-                                    platform.matrixchat.core.apptochat();
-
-                            }, 50)
-
-
+                            if (hasPermission) {
+                                self.get(clbk)
+                            }
 
                         });
+                    } else {
+                        self.get(clbk)
+                    }
+
+                });
+            }else if (usingWeb){
+
+                const messaging = firebase.messaging();
+                messaging.requestPermission().then(perm=>{
+                    self.get(clbk)
+                }).catch(e=>{
+                    usingWeb = false;
+                    console.log("Disabled firebase permissions")
+                })
+
+            }
+        }
+
+        self.events = function () {
+            if(using) {
+                FirebasePlugin.onMessageReceived((data) => {
+
+                    if (!data) data = {}
+
+                    if (data.data)
+                        platform.ws.messageHandler(data.data)
+
+
+                    if (data.room_id) {
+
+                        if (data.tap) {
+                            // Wait until we can navigate Matrix
+                            retry(function () {
+
+                                return platform && platform.matrixchat && platform.matrixchat.core;
+
+                            }, function () {
+
+                                setTimeout(function () {
+
+                                    platform.matrixchat.core.goto(data.room_id);
+
+                                    if (platform.matrixchat.core.apptochat)
+                                        platform.matrixchat.core.apptochat();
+
+                                }, 50)
+
+
+                            });
+                        }
+
+
+                        return;
+                    }
+
+                    if (data.tap) {
+
+                        platform.ws.destroyMessages()
+                        const body = JSON.parse(data?.json);
+                        if (body?.type) {
+                            switch (body?.type) {
+                                case "boosts":
+                                    platform.app.nav.api.load({
+                                        open: true,
+                                        href: 'post?s=' + body?.relatedContent?.hash,
+                                        inWnd: true,
+                                        history: true,
+                                        clbk: function (d, p) {
+                                            app.nav.wnds['post'] = p
+                                        },
+
+                                        essenseData: {
+                                            share: body?.relatedContent?.hash,
+                                            hr: 'index?',
+
+                                            reply: {
+                                                answerid: body?.hash,
+                                                parentid: "",
+                                                noaction: true
+                                            }
+                                        }
+                                    })
+                                    break;
+                                case "answer":
+                                    platform.app.nav.api.load({
+                                        open: true,
+                                        href: 'post?s=' + body?.relatedContent?.hash,
+                                        inWnd: true,
+                                        history: true,
+                                        clbk: function (d, p) {
+                                            app.nav.wnds['post'] = p
+                                        },
+
+                                        essenseData: {
+                                            share: body?.relatedContent?.hash,
+                                            hr: 'index?',
+
+                                            reply: {
+                                                answerid: body?.hash,
+                                                parentid: "",
+                                                noaction: true
+                                            }
+                                        }
+                                    })
+                                    break;
+                                case "pocketnetteam":
+                                    platform.app.nav.api.load({
+                                        open: true,
+                                        href: `index?s=${body?.hash}`,
+                                        history: true,
+                                        handler: true
+                                    })
+                                    break;
+                                case "privatecontent":
+                                    platform.app.nav.api.load({
+                                        open: true,
+                                        href: `index?s=${body?.hash}`,
+                                        history: true,
+                                        handler: true
+                                    })
+                                    break;
+                                case "money":
+                                    platform.app.nav.api.load({
+                                        open: true,
+                                        href: 'userpage?id=wallet',
+                                        history: true,
+                                        handler: true
+                                    })
+                                    break;
+                                default:
+                                    platform.app.nav.api.load({
+                                        open: true,
+                                        href: 'notifications',
+                                        history: true
+                                    })
+                            }
+
+                        } else {
+                            platform.app.nav.api.load({
+                                open: true,
+                                href: 'notifications',
+                                history: true
+                            })
+                        }
+                        // app.nav.api.load({
+                        //
+                        //     open : true,
+                        //     id : 'lenta',
+                        //     el : el,
+                        //     eid : id,
+                        //     mid : id,
+
+                        // self.app.nav.api.load({
+                        //     open : true,
+                        //     href : 'post?s=' + txid,
+                        //     inWnd : true,
+                        //     history : true,
+                        //     essenseData : {
+                        //         share : txid,
+                        //         video : true,
+                        //         autoplay : true,
+                        //         startTime : d.startTime || 0
+                        //     }
+                        // })
+
+                        // app.nav.api.load({
+                        //     open : true,
+                        //     id : 'comments',
+                        //     el : el,
+                        //     eid : id + 'post',
+                        //
+                        //     essenseData : {
+                        //         txid : id,
+                        //         showall : true,
+                        //         init : true,
+                        //         preview : false,
+                        //         fromtop : true,
+                        //         commentPs : additional.commentPs || p.commentPs,
+                        //         openapi : p.openapi,
+                        //
+                        //     },
+                        //
+                        //     clbk : clbk
+                        // })
+
+                        return
+                    } else {
+
+                        if (typeof cordova != 'undefined') {
+
+                            var cordovabadge = deep(cordova, 'plugins.notification.badge')
+
+                            if (cordovabadge)
+                                cordovabadge.increase(1, function (badge) {
+                                });
+                        }
+
                     }
 
 
-
-                    return;
-                }
-
-                if (data.tap) {
-
-                    platform.ws.destroyMessages()
-
-                    platform.app.nav.api.load({
-                        open: true,
-                        href: 'notifications',
-                        history: true
-                    })
-
-                    return
-                }
-                else {
-
-                    if (typeof cordova != 'undefined') {
-
-                        var cordovabadge = deep(cordova, 'plugins.notification.badge')
-
-                        if (cordovabadge)
-                            cordovabadge.increase(1, function (badge) { });
-                    }
-
-                }
+                });
 
 
-            });
+                // When token is refreshed, update the matrix element for the Vue app
+                FirebasePlugin?.onTokenRefresh(function (token) {
 
+                    platform.fcmtoken = token
+                    currenttoken = token
+                    platform.matrixchat.changeFcm()
 
-            // When token is refreshed, update the matrix element for the Vue app
-            FirebasePlugin.onTokenRefresh(function(token) {
+                    //prepareclbk(token)
 
-                platform.fcmtoken = token
-                currenttoken = token
-                platform.matrixchat.changeFcm()
-
-                //prepareclbk(token)
-
-            }, function(error) {
-                console.error(error);
-            });
-
+                }, function (error) {
+                    console.error(error);
+                });
+            }
         }
 
         var prepareclbk = function(token){
-
+            console.log(token)
             if (token){
-
                 var proxy = platform.app.api.get.current()
-
                 if (proxy){
                     self.set(proxy.id).catch(e => {
                         console.log("error", e)
                     })
                 }
-
             }
 
         }
 
         self.init = function(clbk){
-
-            self.prepare(function(token){
-
-                prepareclbk(token)
-
-            })
+            if(usingWeb){
+                if(!firebase.apps.length) {
+                    firebase.initializeApp({
+                        messagingSenderId: "1020521924918"
+                    });
+                }
+            }
 
             if(clbk) clbk()
+
+            self.prepare(function(token){
+                prepareclbk(token)
+            })
+
         }
 
         self.prepare = function(clbk){
 
             self.storage.load()
 
-			if (using) {
+            if (using || usingWeb) {
 
-				self.permissions(clbk)
-			}
+                self.permissions(clbk)
+            }
             else{
                 if (clbk)
-				    clbk()
+                    clbk()
             }
 
-		}
+        }
 
         self.destroy = function (clbk) {
 
             currenttoken = null
 
-            if (using){
+            if (using || usingWeb){
                 self.revokeall().then(clbk).catch(e => {})
 
                 return
@@ -23193,21 +23376,21 @@ Platform = function (app, listofnodes) {
 
                     h += '<div class="shareimages commentprev">'
                     h += '<div class="imagesContainer">'
-                        _.each(images, function (image) {
+                    _.each(images, function (image) {
 
-                            h += '<div class="imagesWrapper">'
-                            h += '<div class="image" image="' + image.i + '" i="' + image.i + '">'
+                        h += '<div class="imagesWrapper">'
+                        h += '<div class="image" image="' + image.i + '" i="' + image.i + '">'
 
-                            if (image.v) {
-                                h += '<div class="vstyle">'
-                                h += '<i class="fas fa-play"></i>'
-                                h += '</div>'
-                            }
-
+                        if (image.v) {
+                            h += '<div class="vstyle">'
+                            h += '<i class="fas fa-play"></i>'
                             h += '</div>'
-                            h += '</div>'
+                        }
 
-                        })
+                        h += '</div>'
+                        h += '</div>'
+
+                    })
 
                     h += '</div>'
                     h += '</div>'
@@ -23220,24 +23403,24 @@ Platform = function (app, listofnodes) {
 
                     var a = ' + '
 
-                        if (!meta.type){
-                            if (images.length) {
-                                a +=  flb(self.app.localization.e('timages')) + ' ('+images.length+') '
-                            }
-
-                            if (links.length) {
-                                a +=  flb(self.app.localization.e('tlinks')) + ' ('+links.length+') '
-                            }
-
-                            if (share.tags.length) {
-                                a +=  flb(self.app.localization.e('e13280')) + ' ('+share.tags.length+') '
-                            }
+                    if (!meta.type){
+                        if (images.length) {
+                            a +=  flb(self.app.localization.e('timages')) + ' ('+images.length+') '
                         }
 
-                        else
-                        {
-                            a += '<b>' + flb(self.app.localization.e('video')) + '</b> <i class="fas fa-play"></i> '
+                        if (links.length) {
+                            a +=  flb(self.app.localization.e('tlinks')) + ' ('+links.length+') '
                         }
+
+                        if (share.tags.length) {
+                            a +=  flb(self.app.localization.e('e13280')) + ' ('+share.tags.length+') '
+                        }
+                    }
+
+                    else
+                    {
+                        a += '<b>' + flb(self.app.localization.e('video')) + '</b> <i class="fas fa-play"></i> '
+                    }
 
                     h+=a
 
@@ -23281,7 +23464,7 @@ Platform = function (app, listofnodes) {
                 h += "+" + platform.mp.coin(clearStringXss(data.amountall || data.tx.amount));
 
 
-                    h+= " PKOIN"
+                h+= " PKOIN"
 
 
                 h += '</div>'
@@ -23798,19 +23981,19 @@ Platform = function (app, listofnodes) {
                     message.el.find('.sharepreview').on('click', function () {
 
 
-                            platform.app.nav.api.load({
-                                open: true,
-                                href: 'post?s=' + data.txid,
-                                inWnd: true,
-                                history: true,
-                                clbk: function (d, p) {
-                                    app.nav.wnds['post'] = p
-                                },
+                        platform.app.nav.api.load({
+                            open: true,
+                            href: 'post?s=' + data.txid,
+                            inWnd: true,
+                            history: true,
+                            clbk: function (d, p) {
+                                app.nav.wnds['post'] = p
+                            },
 
-                                essenseData: {
-                                    share: data.txid
-                                }
-                            })
+                            essenseData: {
+                                share: data.txid
+                            }
+                        })
 
 
                     })
@@ -23917,19 +24100,19 @@ Platform = function (app, listofnodes) {
                     message.el.find('.sharepreview').on('click', function () {
 
 
-                            platform.app.nav.api.load({
-                                open: true,
-                                href: 'post?s=' + data.txid,
-                                inWnd: true,
-                                history: true,
-                                clbk: function (d, p) {
-                                    app.nav.wnds['post'] = p
-                                },
+                        platform.app.nav.api.load({
+                            open: true,
+                            href: 'post?s=' + data.txid,
+                            inWnd: true,
+                            history: true,
+                            clbk: function (d, p) {
+                                app.nav.wnds['post'] = p
+                            },
 
-                                essenseData: {
-                                    share: data.txid
-                                }
-                            })
+                            essenseData: {
+                                share: data.txid
+                            }
+                        })
 
 
                     })
@@ -24025,19 +24208,19 @@ Platform = function (app, listofnodes) {
                     message.el.find('.sharepreview').on('click', function () {
 
 
-                            platform.app.nav.api.load({
-                                open: true,
-                                href: 'post?s=' + data.txid,
-                                inWnd: true,
-                                history: true,
-                                clbk: function (d, p) {
-                                    app.nav.wnds['post'] = p
-                                },
+                        platform.app.nav.api.load({
+                            open: true,
+                            href: 'post?s=' + data.txid,
+                            inWnd: true,
+                            history: true,
+                            clbk: function (d, p) {
+                                app.nav.wnds['post'] = p
+                            },
 
-                                essenseData: {
-                                    share: data.txid
-                                }
-                            })
+                            essenseData: {
+                                share: data.txid
+                            }
+                        })
 
 
                     })
@@ -24391,15 +24574,15 @@ Platform = function (app, listofnodes) {
 
                     }
 
-                        var s = platform.sdk.node.transactions;
+                    var s = platform.sdk.node.transactions;
 
-                        var dif = platform.currentBlock - data.block
+                    var dif = platform.currentBlock - data.block
 
-                        platform.currentBlock = data.block;
-                        platform.lasttimecheck = new Date()
+                    platform.currentBlock = data.block;
+                    platform.lasttimecheck = new Date()
                         platform.lastblocktime = new Date()
 
-                        lost = data.block;
+                    lost = data.block;
 
                     localStorage['lastblock'] = platform.currentBlock
 
@@ -24438,7 +24621,7 @@ Platform = function (app, listofnodes) {
                     if(!slowMadeRelayTransactions)
 
                         slowMadeRelayTransactions = slowMade(function(){
-                            
+
                             platform.sdk.relayTransactions.send()
                             slowMadeRelayTransactions = null
 
@@ -24574,25 +24757,25 @@ Platform = function (app, listofnodes) {
                     message.el.find('.commentprev').on('click', function () {
 
 
-                            platform.app.nav.api.load({
-                                open: true,
-                                href: 'post?s=' + data.posttxid,
-                                inWnd: true,
-                                history: true,
-                                clbk: function (d, p) {
-                                    app.nav.wnds['post'] = p
-                                },
+                        platform.app.nav.api.load({
+                            open: true,
+                            href: 'post?s=' + data.posttxid,
+                            inWnd: true,
+                            history: true,
+                            clbk: function (d, p) {
+                                app.nav.wnds['post'] = p
+                            },
 
-                                essenseData: {
-                                    share: data.posttxid,
+                            essenseData: {
+                                share: data.posttxid,
 
-                                    reply: {
-                                        answerid: data.commentid,
-                                        parentid: data.parentid || "",
-                                        noaction: true
-                                    }
+                                reply: {
+                                    answerid: data.commentid,
+                                    parentid: data.parentid || "",
+                                    noaction: true
                                 }
-                            })
+                            }
+                        })
 
 
                     })
@@ -24630,23 +24813,23 @@ Platform = function (app, listofnodes) {
 
                     var getpost = function (pid, clbk) {
 
-                       /* if (pid)
+                        /* if (pid)
 
-                            platform.sdk.node.shares.getbyid(pid, function (s, fromcashe) {
+                             platform.sdk.node.shares.getbyid(pid, function (s, fromcashe) {
 
-                                s || (s = []);
+                                 s || (s = []);
 
-                                if (s[0]) {
-                                    data.share = s[0];
-                                }
+                                 if (s[0]) {
+                                     data.share = s[0];
+                                 }
 
-                                clbk()
+                                 clbk()
 
-                            })
+                             })
 
-                        else*/
+                         else*/
 
-                            clbk()
+                        clbk()
                     }
 
                     platform.sdk.users.get([data.addrFrom], function () {
@@ -24670,7 +24853,7 @@ Platform = function (app, listofnodes) {
 
                                 if (data.comment) {
                                     platform.sdk.comments.storage[data.comment.txid] ||
-                                        (platform.sdk.comments.storage[data.comment.txid] = {})
+                                    (platform.sdk.comments.storage[data.comment.txid] = {})
 
                                     var pid = data.comment.parentid || '0';
 
@@ -24989,19 +25172,19 @@ Platform = function (app, listofnodes) {
                         message.el.find('.sharepreview').on('click', function () {
 
 
-                                platform.app.nav.api.load({
-                                    open: true,
-                                    href: 'post?s=' + data.posttxid,
-                                    inWnd: true,
-                                    history: true,
-                                    clbk: function (d, p) {
-                                        app.nav.wnds['post'] = p
-                                    },
+                            platform.app.nav.api.load({
+                                open: true,
+                                href: 'post?s=' + data.posttxid,
+                                inWnd: true,
+                                history: true,
+                                clbk: function (d, p) {
+                                    app.nav.wnds['post'] = p
+                                },
 
-                                    essenseData: {
-                                        share: data.posttxid
-                                    }
-                                })
+                                essenseData: {
+                                    share: data.posttxid
+                                }
+                            })
 
 
                         })
@@ -25096,11 +25279,11 @@ Platform = function (app, listofnodes) {
                             (data.upvoteVal > 2 &&  platform.sdk.usersettings.meta.upvotes.value)
 
                         )
-                            {
+                        {
 
-                                if(data.upvoteVal <= 2){
-                                    tkey = 'downvoteShareMessage'
-                                }
+                            if(data.upvoteVal <= 2){
+                                tkey = 'downvoteShareMessage'
+                            }
 
                             var star = self.tempates.star(data.upvoteVal)
 
@@ -25384,38 +25567,38 @@ Platform = function (app, listofnodes) {
 
         var arrangeMessages = function(){
 
-			var offset = 0;
+            var offset = 0;
 
-			var maxCount = 4;
+            var maxCount = 4;
             var showremove = 2;
 
-			var boffset = 0;
+            var boffset = 0;
 
             var mtbl = platform.app.mobileview
 
-			if (mtbl){
-				maxCount = 1;
+            if (mtbl){
+                maxCount = 1;
                 showremove = 0;
-			}
+            }
 
-			var remove = self.fastMessages.length - maxCount;
+            var remove = self.fastMessages.length - maxCount;
 
-			var s = false;
+            var s = false;
 
-			if(self.fastMessages.length >= maxCount){
-				_.each(self.fastMessages, function(m, i){
+            if(self.fastMessages.length >= maxCount){
+                _.each(self.fastMessages, function(m, i){
 
-					if(!mtbl && !m.expanded && !m.el.hasClass('smallsize')){
+                    if(!mtbl && !m.expanded && !m.el.hasClass('smallsize')){
 
-						m.el.addClass('smallsize');
+                        m.el.addClass('smallsize');
 
-						s = true
-					}
+                        s = true
+                    }
 
-				})
-			}
+                })
+            }
 
-			setTimeout(function(){
+            setTimeout(function(){
 
                 if (showremove && self.fastMessages.length >= showremove){
                     boffset = 50
@@ -25428,30 +25611,30 @@ Platform = function (app, listofnodes) {
 
                 offset = offset + boffset
 
-				_.each(self.fastMessages, function(m, i){
+                _.each(self.fastMessages, function(m, i){
 
-					if(i < remove){
-						destroyMessage(m, 1, true)
-					}
+                    if(i < remove){
+                        destroyMessage(m, 1, true)
+                    }
 
-					else
-					{
-						if(!mtbl){
-							offset += 5;
-						}
+                    else
+                    {
+                        if(!mtbl){
+                            offset += 5;
+                        }
 
-						if(!mtbl)
+                        if(!mtbl)
 
-							m.el.css('bottom', offset + 'px');
+                            m.el.css('bottom', offset + 'px');
 
-						offset += m.el.outerHeight();
-					}
+                        offset += m.el.outerHeight();
+                    }
 
-				})
-			}, s ? 300 : 3)
+                })
+            }, s ? 300 : 3)
 
 
-		}
+        }
 
         self.getMissed = function () {
 
@@ -25572,7 +25755,7 @@ Platform = function (app, listofnodes) {
 
 
 
-			})
+            })
 
             message.el.on('mouseenter', function () {
                 clearTimeout(message.timeout);
@@ -26105,7 +26288,7 @@ Platform = function (app, listofnodes) {
                 txid: "6119caaadaef37be8f3716be8280e88206adf043f38fc1665d7e42bdcf90128a"
             })*/
 
-			/*self.messageHandler({
+            /*self.messageHandler({
                 addr: "PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82",
                 addrFrom: "PTcArXMkhsKMUrzQKn2SXmaVZv4Q7sEpBt",
                 mesType: "postfromprivate",
@@ -26127,7 +26310,7 @@ Platform = function (app, listofnodes) {
                 txid: "65fee9b1e925833c5ff623178efecc436d3af0c9f6a4baa0b73c52907a9d1d7b"
             })*/
 
-            // test coin 
+            // test coin
 
             //self.messageHandler({"addr":"TSVui5YmA3JNYvSjGK23Y2S8Rckb2eV3kn","msg":"transaction","txid":"a6819e0de29c148a193932da4581b79cae02163f717962a86ccbf259f915a4be","time":1657701744,"amount":"1000000","nout":"2","node":"116.203.219.28:39091:6067"})
 
@@ -26230,8 +26413,8 @@ Platform = function (app, listofnodes) {
                         "raw",
                         aesjs.utils.utf8.toBytes(key),
                         {   //this is the algorithm options
-                        name: "AES-CBC",
-                    },
+                            name: "AES-CBC",
+                        },
                         false,
                         ["encrypt", "decrypt"]
                     )
@@ -26303,11 +26486,11 @@ Platform = function (app, listofnodes) {
 
                     crypto.subtle.generateKey(
                         {
-                        name: settings.name,
-                        modulusLength: settings.length, //can be 1024, 2048, or 4096
-                        publicExponent: new Uint8Array([0x01, 0x00, 0x01]),
+                            name: settings.name,
+                            modulusLength: settings.length, //can be 1024, 2048, or 4096
+                            publicExponent: new Uint8Array([0x01, 0x00, 0x01]),
                             hash: { name: "SHA-" + settings.hashL }, //can be "SHA-1", "SHA-256", "SHA-384", or "SHA-512"
-                    },
+                        },
                         true, //whether the key is extractable (i.e. can be used in exportKey)
                         ["encrypt", "decrypt"] //must be ["encrypt", "decrypt"] or ["wrapKey", "unwrapKey"]
                     )
@@ -26438,8 +26621,8 @@ Platform = function (app, listofnodes) {
 
                     crypto.subtle.encrypt(
                         {
-                        name: "RSA-OAEP",
-                    },
+                            name: "RSA-OAEP",
+                        },
                         publicKey,
                         data
                     )
@@ -26457,9 +26640,9 @@ Platform = function (app, listofnodes) {
 
                     crypto.subtle.decrypt(
                         {
-                        name: "RSA-OAEP",
+                            name: "RSA-OAEP",
 
-                    },
+                        },
                         privateKey,
                         data
                     )
@@ -26543,9 +26726,9 @@ Platform = function (app, listofnodes) {
                     self.helpers.keyForAes(key, function (akey) {
                         crypto.subtle.encrypt(
                             {
-                            name: "AES-CBC",
+                                name: "AES-CBC",
                                 iv: new Uint8Array(iv)/*window.crypto.getRandomValues(new Uint8Array(16)),*/
-                        },
+                            },
                             akey, //from generateKey or importKey above
                             strBytes //ArrayBuffer of data you want to encrypt
                         )
@@ -26582,9 +26765,9 @@ Platform = function (app, listofnodes) {
 
                         crypto.subtle.decrypt(
                             {
-                            name: "AES-CBC",
-                            iv: new Uint8Array(iv), //The initialization vector you used to encrypt
-                        },
+                                name: "AES-CBC",
+                                iv: new Uint8Array(iv), //The initialization vector you used to encrypt
+                            },
                             akey, //from generateKey or importKey above
                             encryptedBytes //ArrayBuffer of the data
                         )
@@ -27343,7 +27526,7 @@ Platform = function (app, listofnodes) {
                 self.app.peertubeHandler = new PeerTubePocketnet(self.app);
             }
 
-            
+
 
             self.prepareUser(function() {
 
@@ -27479,7 +27662,7 @@ Platform = function (app, listofnodes) {
 
         checkfeatures()
 
-        
+
 
         app.user.isState(function(state){
 
@@ -27528,9 +27711,11 @@ Platform = function (app, listofnodes) {
                     if (clbk)
                         clbk()
 
+
+                    console.log("HERE")
+
                     setTimeout(function(){
                         self.matrixchat.init()
-
                     }, 300)
 
                     setTimeout(self.acceptterms, 5000)
@@ -27590,22 +27775,22 @@ Platform = function (app, listofnodes) {
                             self.ui.popup('application');
                         }
                         else{
-                            
+
                             var a = self.sdk.address.pnet()
-    
+
                             if (a){
                                 var regs = self.sdk.registrations.value(a.address)
-    
+
                                 if(!regs){
                                     self.ui.popup('application');
                                 }
                             }
-                            
+
                         }
                     }
-                    
+
                 }
-                
+
             })
         }, 30000)*/
 
@@ -27734,7 +27919,7 @@ Platform = function (app, listofnodes) {
                                     address="${a}"
                                     privatekey="${privatekey}"
                                     pocketnet="`+( self.app.mobileview ? '' : 'true')+`"
-                                    recording="`+(self.istest() || self.app.test ? 'true' : '' )+`"
+                                    recording="true"
                                     mobile="`+( self.app.mobileview ? 'true' : '')+`" 
                                     ctheme="`+self.sdk.theme.current+`"
                                     localization="`+self.app.localization.key+`"
@@ -27805,7 +27990,11 @@ Platform = function (app, listofnodes) {
 
                                 constraints : function(e){
 
-                                    if(_.find(e.path, function(el){
+                                    var path = e.path
+
+                                    if(!e.path && e.composedPath) path = e.composedPath()
+
+                                    if(_.find(path, function(el){
                                         return el.className && el.className.indexOf('noswipepnt') > -1
                                     })) return false
 
@@ -27828,7 +28017,7 @@ Platform = function (app, listofnodes) {
                     }).init()
 
 
-				}
+                }
 
                 self.matrixchat.clbks.NOTIFICATION.global = self.matrixchat.notify.event
 
@@ -28039,7 +28228,7 @@ Platform = function (app, listofnodes) {
                 if (self.matrixchat.el){
 
                     if(!self.matrixchat.el.hasClass('active')) return
-                        self.matrixchat.el.removeClass('active')
+                    self.matrixchat.el.removeClass('active')
                 }
                 else{
                     return
@@ -28094,7 +28283,7 @@ Platform = function (app, listofnodes) {
 
                     if (self.matrixchat.el.hasClass('active')) return
 
-                        self.matrixchat.el.addClass('active')
+                    self.matrixchat.el.addClass('active')
 
 
                 }
@@ -28138,15 +28327,15 @@ Platform = function (app, listofnodes) {
             core.externalLink(self.matrixchat)
 
             self.app.platform.ws.messages["newblocks"].clbks.newsharesLenta =
-            self.app.platform.ws.messages["new block"].clbks.matrixchat = function(){
+                self.app.platform.ws.messages["new block"].clbks.matrixchat = function(){
 
-                core.update({
-                    block : {
-                        height : self.currentBlock
-                    }
-                })
+                    core.update({
+                        block : {
+                            height : self.currentBlock
+                        }
+                    })
 
-            }
+                }
 
             var cm = deep(app, 'modules.menu.module.restart')
 
@@ -28315,8 +28504,10 @@ Platform = function (app, listofnodes) {
                 if (self.focus) return
 
                 if (self.app.pipwindow && self.app.pipwindow.playerstatus && self.app.pipwindow.playerstatus() == 'playing'){
-
                     self.app.mobile.pip.enable(self.app.pipwindow.el)
+                }
+                else{
+                    
                 }
 
             }, 200)
@@ -28355,6 +28546,27 @@ Platform = function (app, listofnodes) {
 
                 electron.ipcRenderer.on('pause-message', ufel)
                 electron.ipcRenderer.on('resume-message', f)
+
+
+                electron.ipcRenderer.on('win-cross', () => {
+                    setTimeout(function(){
+
+                        if (self.focus) return
+        
+                        if (self.app.pipwindow && self.app.pipwindow.playerstatus && self.app.pipwindow.playerstatus() == 'playing'){
+                           
+                        }
+                        else{
+                            if (self.app.playingvideo){
+                                self.app.playingvideo.pause()
+                            }
+                        }
+        
+                    }, 200)
+                })
+
+
+                
 
             }
 
@@ -28558,46 +28770,46 @@ Platform = function (app, listofnodes) {
                         }*/
 
 
-                    return new Promise((resolve, reject) => {
+                        return new Promise((resolve, reject) => {
 
 
-                        if(utitomime[item.type]) item.type = utitomime[item.type]
+                            if(utitomime[item.type]) item.type = utitomime[item.type]
 
-                        if(item.base64 && isios()) item.data = 'data:' + item.type + ';base64,' + item.base64
+                            if(item.base64 && isios()) item.data = 'data:' + item.type + ';base64,' + item.base64
 
-                        if(!item.type || !mime[item.type] || item.data){
-                            resolve()
-                        }
-                        else{
-                            cordova.openwith.load(item, function(data) {
-
-                                item.data = 'data:' + item.type + ';base64,' + data
-
+                            if(!item.type || !mime[item.type] || item.data){
                                 resolve()
+                            }
+                            else{
+                                cordova.openwith.load(item, function(data) {
 
-                            });
-                        }
+                                    item.data = 'data:' + item.type + ';base64,' + data
 
+                                    resolve()
 
-                    }).then(r => {
-
-                        if (item.text){
-                            if(!sharing.messages) sharing.messages = []
-
-                            sharing.messages.push(item.text)
-                        }
-
-                        if(item.type && mime[item.type] && item.data){
-                            if(!sharing[mime[item.type]]){
-                                sharing[mime[item.type]] = []
+                                });
                             }
 
-                            sharing[mime[item.type]].push(item.data)
-                        }
 
-                        return Promise.resolve()
+                        }).then(r => {
+
+                            if (item.text){
+                                if(!sharing.messages) sharing.messages = []
+
+                                sharing.messages.push(item.text)
+                            }
+
+                            if(item.type && mime[item.type] && item.data){
+                                if(!sharing[mime[item.type]]){
+                                    sharing[mime[item.type]] = []
+                                }
+
+                                sharing[mime[item.type]].push(item.data)
+                            }
+
+                            return Promise.resolve()
+                        })
                     })
-                })
 
 
                 Promise.all(promises).then(r => {
@@ -28652,41 +28864,41 @@ Platform = function (app, listofnodes) {
 
                     route = (route || '').replace('pocketnet://', '').replace('https://test.pocketnet.app/', '').replace('https://pocketnet.app/', '').replace('bastyon://', '').replace('https://test.bastyon.com/', '').replace('https://bastyon.com/', '')
 
-                        if (route){
+                    if (route){
 
-                            if(!state || route.indexOf('welcome?') == -1){
-                                self.app.nav.api.load({
-                                    open: true,
-                                    href: route,
-                                    history: true
-                                })
-                            }
-                        }
-
-                        /////////////
-
-                        var w = parameters(url, true).connect
-                        var cr = parameters(url, true).publicroom
-                        var ps =  parameters(url, true).ps
-                        var ref =  parameters(url, true).ref
-
-                        self.matrixchat.connectWith = w || null
-                        self.matrixchat.joinRoom = cr || null
-
-
-                        if(!ps && !cr && !w && !app.curation()){
-                            self.matrixchat.backtoapp()
-                        }
-
-                        setTimeout(function(){
-                            self.matrixchat.wait().then(r => {
-                                self.matrixchat.connect()
+                        if(!state || route.indexOf('welcome?') == -1){
+                            self.app.nav.api.load({
+                                open: true,
+                                href: route,
+                                history: true
                             })
-                        }, 500)
-
-                        if (ref){
-                            self.app.setref(ref)
                         }
+                    }
+
+                    /////////////
+
+                    var w = parameters(url, true).connect
+                    var cr = parameters(url, true).publicroom
+                    var ps =  parameters(url, true).ps
+                    var ref =  parameters(url, true).ref
+
+                    self.matrixchat.connectWith = w || null
+                    self.matrixchat.joinRoom = cr || null
+
+
+                    if(!ps && !cr && !w && !app.curation()){
+                        self.matrixchat.backtoapp()
+                    }
+
+                    setTimeout(function(){
+                        self.matrixchat.wait().then(r => {
+                            self.matrixchat.connect()
+                        })
+                    }, 500)
+
+                    if (ref){
+                        self.app.setref(ref)
+                    }
 
                 })
 

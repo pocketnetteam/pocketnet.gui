@@ -64,10 +64,15 @@ __map =  {
 		"js/vendor/hammer.min.js",
 		"js/vendor/owl/owl.carousel.min.js",
 		{path : "js/vendor/shadow-popup/popup.js", babelify : true},
-		"js/popups/index.js"
+		"js/popups/index.js",
+		"js/vendor/lame.min.js",
+		"js/vendor/firebase-app.js",
+		"js/vendor/firebase-messaging.js",
 	],
 
 	__sourcesfirst : [
+		"js/vendor/firebase-app.js",
+		"js/vendor/firebase-messaging.js",
 		"js/vendor/axios.js",
 		"js/vendor/underscore-min.js",  
 		{path : "js/functionsfirst.js", babelify : true},
@@ -78,6 +83,7 @@ __map =  {
 		{path : "js/image-uploader.js", babelify : true},
 		"js/_map.js",
 		{path : "js/logger.js", babelify : true},
+		{path : "js/videotransport.js", babelify : true},
 		{path : "js/app.js", babelify : true},
 		"js/main.js"
 	],
@@ -95,6 +101,10 @@ __map =  {
 		{path : "js/navn.js", babelify : true},
 		{path : "js/validation.js", babelify : true},
 		{path : "js/kit.js", babelify : true},
+		
+
+		
+
 		{path : "js/satolist.js", babelify : true},
 		{path : "js/peertube.js", babelify : true},
 		{path : "js/widgets.js", babelify : true},

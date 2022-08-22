@@ -63,6 +63,9 @@ const commentBanner = (function() {
 			},
 
 			destroy: function() {
+
+				destroyEvents()
+				
 				if (el.c) {
 					el.c.empty();
 				}
@@ -74,7 +77,7 @@ const commentBanner = (function() {
 
 				el = {};
 
-				destroyEvents()
+				
 			},
 			
 			init: function(p) {

@@ -345,9 +345,15 @@ html {
 }
 
 [image]{
+    will-change : opacity, background;
+    /*contain: strict;*/
     opacity: 0;
     .transition(0.3s, opacity);
 
+}
+
+[image][contain]{
+    contain: none;
 }
 
 [image][visibleimage]{
@@ -3170,6 +3176,14 @@ input[type=radio].radio:checked + label {
         height: auto;
         z-index: 999;
 
+        .recomandationsFromContent{
+            display: none!important;
+        }
+
+        .wndinner{
+            box-shadow: none;
+        }
+
         ._changeplace{
             display: none;
         }
@@ -3588,6 +3602,11 @@ input[type=radio].radio:checked + label {
    }
 }
 .preloader5{
+    contain: strict;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 7.5px;
     img{
         height: 7.5px;
         width: 30px;
@@ -6880,6 +6899,7 @@ html.mobileview.fullscreen{
    ========================================================================== */
 #splashScreen {
     position: fixed;
+    contain: strict;
     top: 0;
     left: 0;
     width: 100%;

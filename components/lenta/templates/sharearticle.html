@@ -283,7 +283,7 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
     <div class="iconWrapper">
         <a elementsid="shareiconprofilelink" href="<%-app.platform.api.authorlink(share.address)%>">
             <div class="icon">
-                <div class="usericon usericonsbsa another" image="<%-src || '*'%>" ban=".gif">
+                <div class="usericon usericonsbsa another" image="<%-src || '*'%>" ban=".gif" contain="none">
 
                     <% if(!src && letter) { %>
 

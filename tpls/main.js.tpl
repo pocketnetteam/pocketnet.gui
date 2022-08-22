@@ -179,6 +179,35 @@ function quit(){
     app.quit()
 }
 
+function destroyAppSafe(){
+    if (ipcbridge)
+        ipcbridge.destroy()
+
+    // Check safe destroy
+    if (proxyInterface){
+        proxyInterface.candestroy().then(e => {
+            if (!e.includes('nodeControl')) { // Destroy all
+                destroyApp()
+            } else { // Need first stop node
+                dialog.showMessageBox(null, {
+                    type: 'question',
+                    buttons: ['Cancel', 'Yes, close'],
+                    defaultId: 1,
+                    title: 'Warning',
+                    message: 'Your node is running. Close the app anyway?',
+                }).then(r => {
+                    if (r.response == 1) {
+                        proxyInterface.nodeStop().then(e => {
+                            destroyApp()
+                        })
+                    }
+                })
+            }
+
+        })
+    }
+}
+
 function destroyApp() {
     proxyInterface.destroy().then(r => {
         quit()
@@ -217,31 +246,8 @@ function createTray() {
         label: 'Quit',
         click: function() {
 
-            if (ipcbridge)
-                ipcbridge.destroy()
-
-            // Check safe destroy
-            if (proxyInterface)
-                proxyInterface.candestroy().then(e => {
-                    if (!e.includes('nodeControl')) { // Destroy all
-                        destroyApp()
-                    } else { // Need first stop node
-                        dialog.showMessageBox(null, {
-                            type: 'question',
-                            buttons: ['Cancel', 'Yes, close'],
-                            defaultId: 1,
-                            title: 'Warning',
-                            message: 'Your node is running. Close the app anyway?',
-                        }).then(r => {
-                            if (r.response == 1) {
-                                proxyInterface.nodeStop().then(e => {
-                                    destroyApp()
-                                })
-                            }
-                        })
-                    }
-
-                })
+            destroyAppSafe()
+                
         }
     }]);
 
@@ -490,7 +496,7 @@ function createWindow() {
                     label: 'Quit',
                     accelerator: 'Cmd+Q',
                     click: async () => {
-                      quit()
+                      destroyAppSafe()
                     }
                 }
               ]
@@ -594,9 +600,14 @@ function createWindow() {
                     return
                 }
             }
+
+            
+
+            win.webContents.send('win-cross')
             
             win.hide();
             destroyBadge()
+            
         } else {
             destroyBadge()
             destroyTray()
@@ -885,9 +896,11 @@ function createWindow() {
 
         const jsonData = fs.readFileSync(jsonPath, { encoding:'utf8', flag:'r' });
 
+        var details =  JSON.parse(jsonData)
+
         videoData.infos = {
             thumbnail : '',
-            videoDetails : JSON.parse(jsonData)
+            videoDetails : details,
         }
 
         const playlistName = videosList.find(fN => (
