@@ -981,6 +981,7 @@ var post = (function () {
 					p.attr('value', value)
 					p.addClass('liked')
 
+
 					actions.like(value, function (r) {
 						if (r) {
 							share.scnt || (share.scnt = 0)

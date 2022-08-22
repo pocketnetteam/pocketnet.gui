@@ -95,6 +95,7 @@ ____loclib.rstate = "Репутация";
 ____loclib.rprofile = "Профиль";
 ____loclib.rsettings = "Настройки";
 ____loclib.rwallet = "Кошелек";
+____loclib.rstatistic = "Статистика";
 ____loclib.raccounts = "Аккаунты";
 ____loclib.rsystem = "Система";
 ____loclib.rconnection = "Подключение";
@@ -202,6 +203,16 @@ ____loclib.uabout = "О себе";
 ____loclib.uwebsite = "Веб сайт";
 ____loclib.uaddresesd = "Адреса для пожертвований";
 ____loclib.usavechanges = "Вы хотите сохранить изменения?";
+
+// statistic
+____loclib.referralsCount = 'Пользователей воспользовавшихся реферальной ссылкой';
+____loclib.commentatorsCount_0 = 'Пользователей прокомментировавших вас более 1 раза';
+____loclib.commentatorsCount_1 = 'Пользователей прокомментировавших вас более 3 раз';
+____loclib.commentatorsCount_2 = ' Пользователей прокомментировавших вас более 7 раз';
+____loclib.from = 'Период: ';
+____loclib.to = 'по';
+____loclib.empty = 'Информация не найдена';
+____loclib.apply = 'Применить';
 
 //ustate
 ____loclib.sreps = "Репутация и ограничения";

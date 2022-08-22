@@ -76,6 +76,7 @@ const publics = {
     gettime: true,
     getmissedinfo: true,
     gethotposts: true,
+    getmostcommentedfeed: true,
     getuseraddress: true,
     search: true,
     searchlinks: true,
@@ -445,6 +446,8 @@ RpcClient.callspec = {
     gettime: '',
     getmissedinfo: 'str int',
     gethotposts: 'str str str str',
+    getmostcommentedfeed: 'int str int str obj obj obj obj obj str int',
+
     getuseraddress: 'str int',
     search: 'str str str',
     searchlinks: 'obj str int int',
@@ -477,7 +480,7 @@ RpcClient.callspec = {
     getlastblocks: 'int int',
     checkstringtype: 'str',
     getstatistic: 'int int',
-    getuserstatistic : 'obj int int',
+    getuserstatistic : 'str int int int int',
 
     getrecomendedaccountsbysubscriptions : 'str',
     getrecomendedaccountsbyscoresonsimilaraccounts : 'str',

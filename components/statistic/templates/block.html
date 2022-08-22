@@ -1,0 +1,39 @@
+
+
+
+
+<div class="metric-wrapper">
+  <% if(fields && !loading){ %>
+  <div class="wrapper">
+    <% _.each(fields, function(field,id){ %>
+    <div class="wrap">
+      <div class="commentators">
+                <span>
+                  <%= e(`commentatorsCount_${id}`) %>
+              </span>
+        <div class="count">
+          <%= field.commentators %>
+        </div>
+      </div>
+    </div>
+    <% }) %>
+    <div class="wrap">
+      <div class="histreferals">
+              <span>
+                <%= e('referralsCount') %>
+              </span>
+        <div class="count">
+          <%= fields[0].histreferals %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <% } else {%>
+  <div class="preloaderWrapper">
+    <div class="preloader5"><img src="./img/three-dots.svg"/></div>
+  </div>
+  <%}%>
+
+</div>
+
+
