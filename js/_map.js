@@ -62,8 +62,7 @@ __map =  {
 		{path : "js/vendor/workbox-v6.1.5/workbox-sw.js", babelify : true},
 		"js/vendor/ion.sound/ion.sound.js",
 		"js/vendor/hammer.min.js",
-		"js/vendor/owl/owl.carousel.min.js",
-		"js/vendor/lame.min.js"
+		"js/vendor/owl/owl.carousel.min.js"
 		
 	],
 
