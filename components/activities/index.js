@@ -96,6 +96,8 @@ var activities = (function(){
 
 					el.c.find('[rid="' + id + '"]').addClass('active')
 
+					_scrollTo(el.c.find('.active'), el.c.find('.filters'), 0, 0, 'Left')
+
 				})
 
 			}
