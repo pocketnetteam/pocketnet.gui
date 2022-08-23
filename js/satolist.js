@@ -10366,7 +10366,9 @@ Platform = function (app, listofnodes) {
 
                     var l = Number(state[metrica.key + "_unspent"])
 
-                    return metrica.bad(l)
+                    var m = Number(state[metrica.key + "_unspent"]) + Number(state[metrica.key + "_spent"])
+
+                    return metrica.bad(l, m)
 
                 })
             },
@@ -10419,8 +10421,8 @@ Platform = function (app, listofnodes) {
                         key : 'post',
                         vis : 'scale',
                         name : self.app.localization.e('spc'),
-                        bad : function(v){
-                            if(v <= 3) return true
+                        bad : function(remains, limit){
+                            if(remains <= 3) return true
                         }
                     },
 
@@ -10428,8 +10430,8 @@ Platform = function (app, listofnodes) {
                         key : 'video',
                         vis : 'scale',
                         name : self.app.localization.e('spv'),
-                        bad : function(v){
-                            if(v <= 3) return true
+                        bad : function(remains, limit){
+                            if(remains <= 3) return true
                         }
                     },
 
@@ -10437,8 +10439,8 @@ Platform = function (app, listofnodes) {
                         key : 'score',
                         vis : 'scale',
                         name : self.app.localization.e('ssc'),
-                        bad : function(v){
-                            if(v <= 7) return true
+                        bad : function(remains, limit){
+                            if(remains <= 7) return true
                         }
                     },
 
@@ -10446,8 +10448,8 @@ Platform = function (app, listofnodes) {
                         key : 'comment',
                         vis : 'scale',
                         name : self.app.localization.e('ccc'),
-                        bad : function(v){
-                            if(v <= 7) return true
+                        bad : function(remains, limit){
+                            if(remains <= 7) return true
                         }
                     },
 
@@ -10455,7 +10457,7 @@ Platform = function (app, listofnodes) {
                         key : 'comment_score',
                         vis : 'scale',
                         name : self.app.localization.e('crc'),
-                        bad : function(v){
+                        bad : function(v, limit){
                             if(v <= 10) return true
                         }
                     },
@@ -10464,19 +10466,23 @@ Platform = function (app, listofnodes) {
                         key : 'complain',
                         vis : 'scale',
                         name : self.app.localization.e('ccpl'),
-                        bad : function(v){
-                            if(v <= 3) return true
+                        bad : function(remains, limit){
+                            if(remains <= 3) return true
                         }
                     },
 
                     article : {
-                      key : 'article',
-                      vis : 'scale',
-                      name : self.app.localization.e('artc'),
-                      bad : function(v){
-                        if(v <= 10) return true
-                      }
-                    },
+						key : 'article',
+						vis : 'scale',
+						name : self.app.localization.e('artc'),
+						bad : function(remains, limit){
+							if (limit && limit === 1) {
+								return false
+							} else if (remains <= 3) {
+								return true
+							}
+						},
+					}
                 }
             }
 
