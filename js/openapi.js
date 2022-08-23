@@ -1,9 +1,12 @@
 
 
 
+
 retry(function(){
 	return typeof app != 'undefined'
 }, function(){
+
+
 
 	app = new Application({
 

@@ -967,27 +967,29 @@ Application = function(p)
 
         self.realtime();
 
-        
+        console.log("ASDASDD")
 
         // TODO (brangr): DEBUG!
         //p.nav.href = "userpage?id=system16"
+        if(!_OpenApi)
+          self.nav.init(p.nav, function(){
 
-        self.nav.init(p.nav, function(){
-          console.log("OPENED")
-
-          if (typeof hideSplashScreen != 'undefined'){
-            hideSplashScreen();
-          }
-          else{
-            $('#splashScreen').remove()
-          }
-        });
+            if (typeof hideSplashScreen != 'undefined'){
+              hideSplashScreen();
+            }
+            else{
+              $('#splashScreen').remove()
+            }
+          });
 
         if (p.clbk)
           p.clbk();
 
         if(!_OpenApi)
           self.showuikeysfirstloading()
+        else{
+          $('#splashScreen').remove()
+        }
 
 
 

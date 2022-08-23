@@ -11,6 +11,7 @@ var ncp = require('ncp').ncp;
 const _path = require('path');
 ncp.limit = 16;
 
+var minifyHtml = require('html-minifier').minify;
 
 var args = {
 	test : false,
@@ -594,7 +595,14 @@ fs.exists(mapJsPath, function (exists) {
 
 									if(!scripted[i.c]) scripted[i.c] = {}
 
-									scripted[i.c][i.n] = data.toString()
+									scripted[i.c][i.n] = minifyHtml(data.toString(), {
+										collapseWhitespace : true,
+										removeComments : true
+									})
+
+									console.log('scripted[i.c][i.n]', scripted[i.c][i.n])
+
+									//var uglified = htmlUglify.process(htmlString);
 
 									p.success();
 								});

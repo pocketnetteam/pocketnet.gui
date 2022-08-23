@@ -1123,6 +1123,8 @@ var lenta = (function(){
 
 			sharesocial : function(id, clbk){
 
+				console.log("?")
+
 				if(!shareInitedMap[id]) return
 
 				var share = self.app.platform.sdk.node.shares.storage.trx[id];
@@ -5380,7 +5382,6 @@ var lenta = (function(){
 				}
 
 				initEvents();
-
 
 				clearnewmaterials()	
 

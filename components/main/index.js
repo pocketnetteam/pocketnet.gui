@@ -307,7 +307,11 @@ var main = (function(){
 
 				act.addClass('active')
 
-				_scrollTo(act, el.menu.find('.modes'), 0, 0, 'Left') 
+				setTimeout(() => {
+					if(el.menu)
+						_scrollTo(act, el.menu.find('.modes'), 0, 0, 'Left') 
+				}, 50)
+				
 
 			},
 			menu : function(){

@@ -97,7 +97,7 @@ __map =  {
 		{path : "js/kit.js", babelify : true},
 		{path : "js/satolist.js", babelify : true},
 		{path : "js/peertube.js", babelify : true},
-		{path : "js/widgets.js", babelify : true},
+		
 		{path : "js/effects.js", babelify : true},
 		{path : "js/video-uploader.js", babelify : true},
 		{path : "js/file-hash.js", babelify : true}
@@ -902,6 +902,7 @@ __map =  {
 		anonimus : true,
 
 		relations : [
+			{src : 'js/widgets.js',			   f : 'js'},
 			{src : 'js/vendor/SocialShare.min.js',			   f : 'js'},
 		],
 	},
