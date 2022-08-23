@@ -11000,6 +11000,10 @@ Platform = function (app, listofnodes) {
             }
         },
 
+        userscl: {
+            storage: {},
+        },
+
         usersl: {
             storage: {},
         },
@@ -11161,7 +11165,7 @@ Platform = function (app, listofnodes) {
                                 s[address] = u;
 
                                 self.sdk.usersl.storage[address] = u;
-
+                                self.sdk.userscl.storage[address] = data
 
                             }
 
@@ -11225,6 +11229,7 @@ Platform = function (app, listofnodes) {
 
                                 s[a] = u;
                                 self.sdk.usersl.storage[a] = u;
+                                self.sdk.userscl.storage[a] = data
 
                             })
 
@@ -18372,7 +18377,7 @@ Platform = function (app, listofnodes) {
                     },
 
                     balanceAr: function (clbk, addresses, update, canSpend) {
-                        this.unspents(function (us, e) {
+                        self.sdk.node.transactions.get.unspents(function (us, e) {
 
                             var total = 0;
 
@@ -18409,7 +18414,7 @@ Platform = function (app, listofnodes) {
                     allBalance: function (clbk, update) {
                         var addresses = [self.sdk.address.pnet().address].concat(self.sdk.addresses.storage.addresses || [])
 
-                        this.balanceAr(clbk, addresses, update)
+                        self.sdk.node.transactions.get.balanceAr(clbk, addresses, update)
                     },
 
                     canSpend: function (addresses, clbk) {
@@ -18418,7 +18423,7 @@ Platform = function (app, listofnodes) {
 
                         if (!_.isArray(addresses)) addresses = [addresses];
 
-                        this.balance(function (total, us) {
+                        self.sdk.node.transactions.get.balance(function (total, us) {
 
                             var usCanSpend = _.filter(us, self.sdk.node.transactions.canSpend);
 
@@ -18438,11 +18443,11 @@ Platform = function (app, listofnodes) {
                     balance: function (clbk, address, update, canSpend) {
 
                         if (_.isArray(address)) {
-                            this.balanceAr(clbk, address, update, canSpend)
+                            self.sdk.node.transactions.get.balanceAr(clbk, address, update, canSpend)
 
                         }
                         else {
-                            this.unspent(function (unspent, e) {
+                            self.sdk.node.transactions.get.unspent(function (unspent, e) {
 
                                 if (canSpend) {
                                     unspent = _.filter(unspent, self.sdk.node.transactions.canSpend)
@@ -27410,10 +27415,12 @@ Platform = function (app, listofnodes) {
                     self.sdk.node.transactions.loadTemp,
                     self.sdk.addresses.init,
                     self.sdk.ustate.me,
+                    self.sdk.user.get,
                     self.sdk.usersettings.init,
-
+                    self.matrixchat.importifneed,
                     self.ws.init,
                     self.firebase.init,
+                    /*self.app.platform.sdk.node.transactions.get.allBalance,*/
 
                     //self.sdk.exchanges.load,
                     self.sdk.articles.init,
@@ -27421,8 +27428,6 @@ Platform = function (app, listofnodes) {
                     self.sdk.activity.load,
                     self.sdk.node.shares.parameters.load,
                     self.sdk.sharesObserver.load,
-                    self.sdk.user.get,
-
                     self.sdk.comments.loadblocked
 
                 ], function () {
@@ -27442,18 +27447,15 @@ Platform = function (app, listofnodes) {
 
                     self.loadingWithErrors = !_.isEmpty(self.app.errors.state)
 
-
-
+                    setTimeout(() => {
+                        self.matrixchat.init()
+                    }, 10)
 
                     if (clbk)
                         clbk()
 
 
-                    if(!_OpenApi)  {
-                        setTimeout(function(){
-                            self.matrixchat.init()
-                        }, 10)
-                    }
+                  
                     
 
                     setTimeout(self.acceptterms, 5000)
@@ -27577,7 +27579,6 @@ Platform = function (app, listofnodes) {
 
         },
 
-
         import : function(clbk){
 
 
@@ -27624,13 +27625,27 @@ Platform = function (app, listofnodes) {
 
         },
 
+        importifneed : function(clbk){
+            
+            app.user.isState(function(state){
+
+                if(self.matrixchat.inited || self.matrixchat.initing || _OpenApi || !state) {
+                    if(clbk) clbk()
+
+                    return
+                }
+
+                    self.matrixchat.import(clbk)
+            })
+        },
+
         init : function(){
 
             if(self.matrixchat.inited) return
             if(self.matrixchat.initing) return
+            if(_OpenApi) return
 
             self.matrixchat.initing = true
-
 
             app.user.isState(function(state){
 
@@ -27679,6 +27694,11 @@ Platform = function (app, listofnodes) {
                     }
                 }
             })
+        },
+
+        initcl : function(clbk){
+            self.matrixchat.init()
+            if(clbk) clbk()
         },
 
         changeFcm : function(){
