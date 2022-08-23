@@ -2743,7 +2743,7 @@ Platform = function (app, listofnodes) {
 
         showCommentBanner : function(contextElem) {
 
-            if (!app.platform.sdk.user.me()?.regdate()) {
+            if (!app.platform.sdk.user.me()?.regdate) {
                 return null;
             }
 
