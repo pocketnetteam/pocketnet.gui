@@ -22,12 +22,12 @@ var insertingfunc = function(settings, p){
 __map =  { 
 
 	__vendor : [
-		"js/vendor/device.min.js", //
+		"js/vendor/device.js", //
 		"js/vendor/modernizr-2.8.3.min.js",//
-		"js/vendor/jquery-1.11.3.min.js",//
+		"js/vendor/jquery.js",//
         "js/vendor/tooltipster.core.js",//
         "js/vendor/tooltipster.bundle.js",//
-        "js/vendor/imagesloaded.pkgd.min.js",///
+        "js/vendor/imagesloaded.pkgd.js",///
         "js/vendor/timer.js",//
         
 		"js/vendor/aesjs.js",//
@@ -62,7 +62,7 @@ __map =  {
 		{path : "js/vendor/workbox-v6.1.5/workbox-sw.js", babelify : true},
 		"js/vendor/ion.sound/ion.sound.js",
 		"js/vendor/hammer.min.js",
-		"js/vendor/owl/owl.carousel.min.js"
+		"js/vendor/owl/owl.carousel.js"
 		
 	],
 

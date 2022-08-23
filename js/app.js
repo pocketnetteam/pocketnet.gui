@@ -1278,7 +1278,10 @@ Application = function(p)
     },
 
     emoji : function(text){
-      if(self.mobileview) return text
+      
+      //if(self.mobileview) return text
+
+      console.log('text', text)
 
       return joypixels.toImage(text)
     },

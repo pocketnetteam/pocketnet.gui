@@ -577,32 +577,25 @@ var lenta = (function(){
 
 				load.shares(function(shares, error){
 
-						if (el.loader)
-							el.loader.removeClass('loading')
+					if (el.loader)
+						el.loader.removeClass('loading')
 
 					if (error){
 						making = false;
-						
-						//if (self.app.errors.connection()){
-							el.c.addClass('networkError')
-						//}
+							
+						el.c.addClass('networkError')
 
 						if (self.app.errors.connectionRs()){
 							self.iclbks.lenta = actions.loadmore
 						}
 
-						
-
 						return;
 					}
 					
-					
-					el.c.removeClass('networkError')
+					if (el.c.hasClass('networkError'))
+						el.c.removeClass('networkError')
 
-					if(!shares){
-					}
-					else
-					{
+					if(shares){
 						renders.shares(shares, function(){
 
 							renders.sharesInview(shares, function(){
@@ -1122,8 +1115,6 @@ var lenta = (function(){
 			},
 
 			sharesocial : function(id, clbk){
-
-				console.log("?")
 
 				if(!shareInitedMap[id]) return
 
@@ -3132,7 +3123,6 @@ var lenta = (function(){
 
 						if (clbk)
 							clbk();
-
 							clbk = null
 					}
 
@@ -3143,13 +3133,12 @@ var lenta = (function(){
 
 					var time = 3000
 
-					if(!index) time = 300
+					if(p.el.find(".shareImages .image").length > 1 || !index) c()
+					else
 
-					if(p.el.find(".shareImages .image").length > 1) p.el.addClass('rendered')
-
-					setTimeout(() => {
-						c()
-					}, time)
+						setTimeout(() => {
+							c()
+						}, time)
 					
 				})
 

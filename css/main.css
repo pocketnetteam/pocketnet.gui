@@ -1080,6 +1080,9 @@ pie {
     width: 40px;
   }
 }
+html.mobileview #footerWrapper {
+  display: none;
+}
 html.mobileview .upbutton {
   display: none;
 }
