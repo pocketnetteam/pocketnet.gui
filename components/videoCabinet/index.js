@@ -1011,7 +1011,6 @@ var videoCabinet = (function () {
 			},
 			//render bonus program stats (rating or views)
 			bonusProgram(parameters = {}, element) {
-				debugger
 				self.shell(
 					{
 						name: 'bonusProgram',
