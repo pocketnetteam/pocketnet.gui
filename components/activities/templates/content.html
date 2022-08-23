@@ -7,6 +7,24 @@ _.each(activities, function(period, index){
   _.each(period, function(activity){
 
   %>
+    <% if(activity.txType === 1) { %>
+    <div class="comment">
+      <div class="avatar">
+        <% if(activity?.account?.avatar){%>
+        <img src="<%-activity.account.avatar%>"/>
+        <%} else {%>
+        <%-activity.relatedContent.account.name[0].toUpperCase()%>
+        <% } %>
+      </div>
+      <div class="description">
+        <div class="head"> <%=e('sentmoney')%> <% if(activity.account) { %> <strong><%-activity.account.name%></strong> <% } else { %> <strong><%-activity.account.name%></strong> <% } %></div>
+        <% if(activity.val) { %>
+         <div class="message"></div>
+        <% } %>
+        <div class="date"><%- activity.date.calendar() %></div>
+      </div>
+    </div>
+    <%}%>
 
     <% if(activity.txType === 204) { %>
      <div class="comment">

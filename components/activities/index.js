@@ -10,7 +10,7 @@ var activities = (function(){
 
 		var el, loading;
 
-		var filtersList = ['all', 'rating', 'comment', 'subscriber']
+		var filtersList = ['all', 'rating', 'comment', 'subscriber', 'money']
 
 		var activities
 
@@ -19,6 +19,7 @@ var activities = (function(){
 				if (filter === 'all') return []
 				if (filter === 'rating') return ['contentscore']
 				if (filter === 'comment') return ['commentscore', 'comment']
+				if (filter === 'money') return ['money']
 				if (!filter) return []
 				return [filter]
 			}
@@ -43,7 +44,7 @@ var activities = (function(){
 							i.description = JSON.parse(i.description)
 						}
 
-						if (!i.description && i.relatedContent.description) {
+						if (!i.description && i.relatedContent?.description) {
 							try {
 								i.description = JSON.parse(i.relatedContent.description)
 							} catch (e) {
@@ -89,7 +90,7 @@ var activities = (function(){
 
 				actions.getdata(id).then((e) => {
 
-					if (e) return sitemessage(e.error.message)
+					if (e) return sitemessage(e.error.message || e.error)
 
 					el.c.find('.tab').removeClass('active')
 

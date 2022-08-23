@@ -77,7 +77,7 @@
 }
 .container .comment .description i.fa-thumbs-down {
   margin: 8px 0;
-  color: rgb(var(--color-txt-red));
+  color: rgb(var(--color-bad));
 }
 .container .comment .avatar {
   display: flex;

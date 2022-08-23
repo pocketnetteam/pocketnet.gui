@@ -102,10 +102,12 @@ ____loclib.rall = "All";
 ____loclib.rrating = "Ratings";
 ____loclib.rcomment = "Comments";
 ____loclib.rsubscriber = "Subscriptions";
+____loclib.rmoney = "Donates";
 ____loclib.contentscore = "You have left a rating of the publication";
 ____loclib.commentscorelike = "You liked the comment.";
 ____loclib.commentscoredislike = "You don't like the comment";
 ____loclib.commented= "You commented on the publication";
+____loclib.sentmoney= "You transferred funds to";
 ____loclib.unsubscribe= "You have unsubscribed from";
 ____loclib.subscribe= "You have subscribed to";
 

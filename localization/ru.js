@@ -1,4 +1,4 @@
-if(typeof loclib == "undefined" || !loclib)
+﻿if(typeof loclib == "undefined" || !loclib)
 	loclib = {};
 
 	loclib.ru = {};
@@ -97,10 +97,12 @@ ____loclib.rall = "Все";
 ____loclib.rrating = "Рейтинги";
 ____loclib.rcomment = "Комментарии";
 ____loclib.rsubscriber = "Подписки";
+____loclib.rmoney = "Донаты";
 ____loclib.contentscore = "Вы оставили оценку публикации";
 ____loclib.commentscorelike = "Вам нравится комментарий";
 ____loclib.commentscoredislike = "Вам не нравится комментарий	";
 ____loclib.commented= "Вы прокомментировали публикацию";
+____loclib.sentmoney= "Вы перевели средства";
 ____loclib.unsubscribe= "Вы отписались от";
 ____loclib.subscribe= "Вы подписались на";
 

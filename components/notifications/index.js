@@ -149,7 +149,7 @@ var notifications = (function(){
 					if (p.now) return 'ntnow';
 
 					var d = new Date( (n.time || n.nTime)  * 1000);
-					debugger
+
 					if (d.addMinutes(60) > currentDate) return 'ntlasthour';
 
 					if (d.addMinutes(1440) > currentDate) return 'nttoday';
