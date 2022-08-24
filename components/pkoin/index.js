@@ -22,7 +22,7 @@ var pkoin = (function(){
 
 					var blocked = self.app.platform.sdk.user.reputationBlocked(share.address)
 
-					if (my){
+					if (self.app.boost && my){
 						values = []
 						labels = []
 
@@ -296,6 +296,9 @@ var pkoin = (function(){
 
 		var initEvents = function(_p){
 
+			if (_p.data.format){
+				optionsValue = _p.data.format;
+			}
 
 			var closeContainer = function(){
 
@@ -420,6 +423,7 @@ var pkoin = (function(){
 			getdata : function(clbk, p){
 
 				var essenseData = p.settings.essenseData;
+				var format = essenseData.format;
 				var userinfo = essenseData.userinfo;
 
 
@@ -427,7 +431,8 @@ var pkoin = (function(){
 					optionsValue = 'pkoinComment';
 
 				var data = {
-					userinfo: userinfo
+					userinfo: userinfo,
+					format: format
 				}
 
 				boost = null

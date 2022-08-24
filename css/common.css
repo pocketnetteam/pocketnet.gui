@@ -10,7 +10,11 @@
 .share_common .extrashare {
   display: none;
 }
+.share_common .bolt {
+  cursor: pointer;
+}
 .share_common .pkoin {
+  margin-left: 1.5em;
   display: flex;
   align-items: center;
   background: rgb(var(--color-bg-ac-bright));

@@ -1217,7 +1217,7 @@ var lenta = (function(){
 				}
 			},
 
-			pkoin : function(id){
+			pkoin : function(id, format){
 
 				var share = self.app.platform.sdk.node.shares.storage.trx[id];
 
@@ -1238,7 +1238,8 @@ var lenta = (function(){
 	
 						essenseData : {
 							userinfo: userinfo,
-							id : id
+							id : id,
+							format: format
 						}
 					})
 	
@@ -2227,7 +2228,15 @@ var lenta = (function(){
 
 				var shareId = $(this).closest('.share').attr('id');
 
-				actions.pkoin(shareId)
+				actions.pkoin(shareId, 'sendToAuthor')
+
+			},
+
+			boost : function(){
+
+				var shareId = $(this).closest('.share').attr('id');
+
+				actions.pkoin(shareId, 'liftUpThePost')
 
 			},
 
@@ -4397,6 +4406,7 @@ var lenta = (function(){
 			el.c.on('click', '.articleclick', events.openArticle)
 			el.c.on('click', '.forrepost', events.repost)
 			el.c.on('click', '.panel .pkoin', events.pkoin)
+			el.c.on('click', '.panel .boost', events.boost)
 			el.c.on('click', '.unblockbutton', events.unblock)
 			el.c.on('click', '.videoTips', events.fullScreenVideo)
 			el.c.on('click', '.videoOpen', events.fullScreenVideo)
