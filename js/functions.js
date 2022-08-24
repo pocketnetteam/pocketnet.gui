@@ -10259,8 +10259,6 @@
 
 	}
 
-
-
 	numberToBool = function(v){
 
 		if(v) return true;

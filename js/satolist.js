@@ -132,7 +132,6 @@ Platform = function (app, listofnodes) {
         'PUXG7rfX19Xoco1FXjXBW8qt6NEZpp8maL' : true,
         'PSanUFKb1vd5ua4U3BXMmsSZ2zm3sN2nyj' : true,
         'PERF5kDM32ebkq8SeSj8ZaLqfCoqz8FRgh' : true,
-        'PGD5jUBQ7qNnHDuW85RRBxY1msywEdCm7r' : true,
         'PApFYMrbm3kXMV7kjrEG1v6ULv6ZFDHb9j' : true,
         'PUBRMTAUhy51gkbuP1tRJLMMAzEDt9C2X6' : true,
         'P9i55BxFWpjMyqgHyCKtazDN1HDiZxTSzJ' : true,
@@ -169,7 +168,6 @@ Platform = function (app, listofnodes) {
         'PP7Sz6pjbgv4XdnnCRnRm4avfxD2TEoMoC' : true,
         'PN9is9RTq2MW6yHw7ggz77vyeKX1a4XJQt' : true,
         'PLAj8RmQg2ehTVEx8pSWnd2QeFvjHnYtRZ' : true,
-        'PGD5jUBQ7qNnHDuW85RRBxY1msywEdCm7r' : true,
         'PXupozgNg1Ee6Nrbapj8DEfMGCVgWi4GB1' : true,
         'PD4pWxVke4Yz2y5UnNWnSsVHd45Vy6izCr' : true,
         'PW3tfEkGLKv4LFREpJYYpWxenKHSizB8rQ' : true,
@@ -219,13 +217,11 @@ Platform = function (app, listofnodes) {
         'PVATJhZqKdYXLp1nmPdrssRhygJApmAALR' : true,
         'PJtnXwKNPDdEpJhaKH2fbPEyLrcS77oj46' : true,
         'PSoCtc8FbPaagG6spsqbS2HJjRM8oPG16b' : true,
-        'PPxDNqCB2oWp3JffCiRXwJTzxRQuRjb5Bc' : true, 
+        'PPxDNqCB2oWp3JffCiRXwJTzxRQuRjb5Bc' : true,
         'PVRWuvwCNfZWUUD5gQzDsqabnTcMXoqgbV' : true,
         'P8sSu2qFnVPGEtnSTKYRMUzuG3xBHsj3ms' : true,
         'PUF8bsAYyHZQCtaMbrTwyRDcC3wMLKhFFX' : true,
         'PSFpsP19aHs7ZfGPnnt19yQC258y1HFYKD' : true,
-        'PCkX8n2e6aD6Ji37hSpHCJpqvaaJjVWt1m' : true,
-        'PT4fvQ7jMicg6McC52BmFFkL2M6AEWc7vo' : true,
         'PGecwCERTkoFd82E3e471SvxSxnJpC4cWk' : true,
         'PRZEXQXTmz1jW6YmH1e83nkRRiDUqkE6fw' : true,
         'PCM3fmcUikLbSNCeqtQ7MEk4yQbn6qQRJt' : true,
@@ -233,25 +229,22 @@ Platform = function (app, listofnodes) {
         'P8gfyLfXyeHzyAvq4Yqw6EW39ifCyVJ9f6' : true,
         'PSKLx4k7ehAtvipwpo2ohBeCYzpf4SiKHj' : true,
         'PK8dRanrBFxfSo3qw1P4gm6veaQQssZXxB' : true,
-        'PCkX8n2e6aD6Ji37hSpHCJpqvaaJjVWt1m' : true,
-        'PT4fvQ7jMicg6McC52BmFFkL2M6AEWc7vo' : true,
-        'PGegspsgRqvMiZCP8PGufKMYBk3yekDaEE' : true,
-        'PB8wu7hQwo5xMsVG4F4HshrW39t2Y4eN37' : true,
-        'PUhvX53ueD2Sxa3q7av83vNcEHuS8M7kRS' : true,
         'PAqPD7P3iFtz7e2epSP4V8FMPXrJKASeqD' : true,
         'PUopiRZvD6BAjF9CcWtMfpeJtxp411dxKM' : true,
-        'PUhvX53ueD2Sxa3q7av83vNcEHuS8M7kRS' : true,
         'PQkNpRfXbCGXJ2o1mRfsJMvMtsvq3uvZU9' : true,
-        'PGegspsgRqvMiZCP8PGufKMYBk3yekDaEE' : true,
-        'PB8wu7hQwo5xMsVG4F4HshrW39t2Y4eN37' : true,
         'PSBhEi8AUasemizUHyJ64t6xXonsxwp73y' : true,
         'PKYwaiikhUoPWmpWmYec4Xf3TPWwJQCqUt' : true,
         'PST4P2KEweDQJ2RAtG3scUmXAgPJJ5JJRL' : true,
         'PCfvhqHEYG3zdWXvLJrjPPDVK2H8qwwXn5' : true,
         'PLZsQmsRUDMJGc61pGMLdDQ58UuqQ8kU5Z' : true,
-        'PMC3pwutfiYpGWUMHhiB1NRjiHL7iWHiyi' : true
-
-
+        'PMC3pwutfiYpGWUMHhiB1NRjiHL7iWHiyi' : true,
+        'PEd7HQKaGj36sgPAidCvm62KidQQGL5sD8' : true,
+        'PMTrhcppMJpaRz4Xnv7CogJPHPMKtcg6bA' : true,
+        'PCYeapWncohMda9vfrFe26EDEiFa89kDZ1' : true,
+        'PQEYtpgvtfETFVfhk467SyuGRhwtMcvKUd' : true,
+        'PGnshbCvNGRiBYGxUpVNqLkaM8Ku1xvbaw' : true,
+        'PF3oocNVVz5gfdFJGQF4J4xf2bCaxRxYTh' : true,
+        'PSGSnF7Diww2yJdQefuy3ZvuZEoBw8TGTV' : true,
     }
 
     self.bch = {
@@ -282,7 +275,19 @@ Platform = function (app, listofnodes) {
         'PGvRUM7jXqHdUn7Let2QyTi1t2LHq7RgX7',
         'P9EkPPJPPRYxmK541WJkmH8yBM4GuWDn2m',
         'PReLEpaGEGTCeWKiqnK85eXrqmmTxYQ9Tw',
-        'TAqR1ncH95eq9XKSDRR18DtpXqktxh74UU'
+        'TAqR1ncH95eq9XKSDRR18DtpXqktxh74UU',
+        'PUGBtfmivvcg1afnEt9vqVi3yZ7v6S9BcC',
+        'PDtuJDVXaq82HH7fafgwBmcoxbqqWdJ9u9',
+        'PDCNrwP1i8BJQWh2bctuJyAaXxozgMcRYT',
+        'PVJ1rRdS9y9sUpaBJc8quiSTJGrC3xW8EH',
+        'PAF1BvWEH7pA24QbbEvCEasViC2Pw9BVj3',
+        'PSADH5AY5M9RaWrDVdaMrR2C2s6dCGfNK4',
+        'PMyjUzHtzsmbejB87ATbrcQNatiGsT4NzG',
+        'PHdW4pwWbFdoofVhSEfPSHgradmrvZdbE5',
+        'PDJpNY6Hm9WuA4MGSRefAGcTiDtfWKRKQD',
+        'PUJjhGLa7KesEa3Ee8K9pi49u1mW9xqQZB',
+        'PFWx4RKpggTjeDNq6oyWJfejP5z8oiKGE5',
+        'PFr6sDvtJq3wJejQce5RJ5L8u1oYKgjW9o',
     ];
     self.whiteList = [
       'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd',
@@ -2741,12 +2746,21 @@ Platform = function (app, listofnodes) {
 
         showCommentBanner : function(contextElem) {
 
+            if (!app.platform.sdk.user.me()?.regdate) {
+                return null;
+            }
+
             let bannerCommentComponent = null;
             if (!contextElem) {
                 return bannerCommentComponent;
             }
 
             const createComponent = () => {
+                self.app.Logger.info({
+                    actionId: 'COMMENT_BANNER_ALLOWED',
+                    value: true,
+                });
+
                 app.nav.api.load({
                     open: true,
                     id: 'commentBanner',
@@ -2755,12 +2769,20 @@ Platform = function (app, listofnodes) {
 
                     clbk : function(e, p){
                         bannerCommentComponent = p;
+                        if (p.el[0].constructor.name === 'HTMLDivElement') {
+                            self.app.Logger.info({
+                                actionId: 'COMMENT_BANNER_SHOWED',
+                                value: p.el[0].constructor.name,
+                            });
+
+                            return;
+                        }
                     }
                 });
             };
 
             const unixTimeNow = Math.floor(Date.now() / 1000);
-            const oneDayInSeconds = 86400000;
+            const oneDayInSeconds = 86400;
 
             const alreadyShowed = ('nextCommentBanner' in localStorage);
             const isBannerDisabled = (localStorage.nextCommentBanner == -1);
@@ -2774,8 +2796,7 @@ Platform = function (app, listofnodes) {
             const isOneDayOld = (registeredTime >= oneDayInSeconds);
 
             if (isBannerDisabled) {
-                console.log('banner showbanner', bannerCommentComponent);
-                return bannerCommentComponent;
+                return isBannerDisabled;
             }
 
             if (!isOneDayOld) {
