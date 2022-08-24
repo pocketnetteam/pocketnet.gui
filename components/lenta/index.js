@@ -409,7 +409,7 @@ var lenta = (function(){
 			},
 
 			loadprev : function(clbk){
-				el.c.find('.shares').html('')
+				el.c.find('.shares').empty('')
 				el.c.removeClass('showprev')
 
 				el.c.removeClass("sharesEnded")
@@ -4580,7 +4580,7 @@ var lenta = (function(){
 
 			//////////////////////
 
-			if(self.app.mobileview && canloadprev && !essenseData.openapi){
+			/*if(self.app.mobileview && canloadprev && !essenseData.openapi){
 
 				var cc = el.c.find('.circularprogress');
 				var maxheight = 220;
@@ -4609,7 +4609,7 @@ var lenta = (function(){
 
 				var trueshold = 80
 
-			}
+			}*/
 
 			if(!essenseData.openapi){
 
@@ -5348,6 +5348,7 @@ var lenta = (function(){
 			init : function(p){
 
 				w = self.app.el.window
+
 				state.load();
 
 				el = {};
@@ -5356,19 +5357,16 @@ var lenta = (function(){
 				el.loader = el.c.find('.loader');
 				el.lentacnt = el.c.find('.lentacell .cnt');
 				el.w = essenseData.window || w;
-				
 
 				el.share = {};
 
-				if (essenseData.horizontal){
-
-
+				/*if (essenseData.horizontal){
 					el.c.addClass('horizontal')
 				}
 
 				if (essenseData.compact){
 					el.c.addClass('compact')
-				}
+				}*/
 
 				initEvents();
 
@@ -5378,13 +5376,13 @@ var lenta = (function(){
 
 				make(null, p);
 
-				if(essenseData.openapi){
+				/*if(essenseData.openapi){
 					el.c.addClass('openapi')
 				}
 
 				if (video){
 					el.c.addClass('mainvideo')
-				}
+				}*/
 
 				if(!essenseData.goback) p.clbk(null, p);
 

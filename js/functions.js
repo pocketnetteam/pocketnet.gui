@@ -6862,6 +6862,8 @@
 
 			var statusf = function(e, phase, direction, distance){
 
+				if(phase == 'start' && !direction) return // ?
+
 				if (self.destroyed) return
 
 				if (mainDirection && mainDirection.i != direction){

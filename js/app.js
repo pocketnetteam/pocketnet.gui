@@ -967,8 +967,6 @@ Application = function(p)
 
         self.realtime();
 
-        console.log("ASDASDD")
-
         // TODO (brangr): DEBUG!
         //p.nav.href = "userpage?id=system16"
         if(!_OpenApi)
@@ -1280,8 +1278,6 @@ Application = function(p)
     emoji : function(text){
       
       //if(self.mobileview) return text
-
-      console.log('text', text)
 
       return joypixels.toImage(text)
     },
@@ -1750,8 +1746,6 @@ Application = function(p)
         var storageLocation = self.storage.getStorageLocation();
         // var blob = new Blob([file], { type: "image/png" });
         var name = $.md5(url);
-
-        console.log("storageLocation", storageLocation)
 
         window.resolveLocalFileSystemURL(storageLocation, function (fileSystem) {
           fileSystem.getDirectory(self.storage.getStorageDirectory(), {
