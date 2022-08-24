@@ -97,6 +97,7 @@ ____loclib.rstate = "Reputation";
 ____loclib.rprofile = "Profile";
 ____loclib.rsettings = "Settings";
 ____loclib.rwallet = "Wallet";
+____loclib.rstatistic = "Statistic";
 ____loclib.raccounts = "Accounts";
 ____loclib.rsystem = "System";
 ____loclib.rconnection = "Connection";
@@ -197,6 +198,17 @@ ____loclib.uabout = "About myself";
 ____loclib.uwebsite = "Web Site";
 ____loclib.uaddresesd = "Addresses for Donations";
 ____loclib.usavechanges = "Do you want to save your changes?";
+
+//statistic
+
+____loclib.referralsCount = 'Users who have used the referral link.';
+____loclib.commentatorsCount_0 = 'Users have commented on you more than 1 time';
+____loclib.commentatorsCount_1 = 'Users have commented on you more than 3 times';
+____loclib.commentatorsCount_2 = 'Users have commented on you more than 7 times';
+____loclib.from = 'Period: ';
+____loclib.to = 'to';
+____loclib.empty = 'Information not found';
+____loclib.apply = 'Apply';
 
 //ustate
 ____loclib.sreps = "Reputation and Limitations";
