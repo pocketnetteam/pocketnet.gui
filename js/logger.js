@@ -212,7 +212,6 @@ class FrontendLogger {
       _addLogWithAggregation.default(formattedError, _errorsCache);
     }
 
-    console.log('Cache', _errorsCache);
   }
 
   _addLogWithAggregation = {

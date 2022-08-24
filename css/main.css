@@ -1081,7 +1081,7 @@ pie {
   }
 }
 html.mobileview #footerWrapper {
-  display: none;
+  /*display: none;*/
 }
 html.mobileview .upbutton {
   display: none;

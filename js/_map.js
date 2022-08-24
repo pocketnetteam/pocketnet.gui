@@ -772,7 +772,9 @@ __map =  {
 		now : true,
 		anonimus : true,
 		renew : true,
-		reload : true
+		reload : true,
+
+		viewchangereload : true
 	},
 
 	

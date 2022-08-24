@@ -1402,7 +1402,6 @@ var avatarsList_component = Object(componentNormalizer["a" /* default */])(
       return imgArr;
     },
     membersList: function () {
-      console.log(this.core.mtrx.chatUsers(this.chat.roomId));
       return this.core.mtrx.chatUsers(this.chat.roomId).filter(user => user.membership !== 'leave');
     },
     tetatet: function () {
@@ -1560,7 +1559,6 @@ var avatarsList_component = Object(componentNormalizer["a" /* default */])(
     },
 
     kickUser(user) {
-      console.log("TEST", functions["a" /* default */].getMatrixIdFull(user.userId, this.core.domain));
       this.core.mtrx.client.kick(this.m_chat.roomId, functions["a" /* default */].getMatrixIdFull(user.userId, this.core.domain), 'admin kicked').then(this.$nextTick(function () {}));
     },
 

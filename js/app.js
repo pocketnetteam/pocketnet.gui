@@ -266,22 +266,47 @@ Application = function(p)
     return true
   }
 
+  var istouchstylecalculate = function(){
+    let isIpad = /Macintosh/i.test(navigator.userAgent) && navigator.maxTouchPoints && navigator.maxTouchPoints > 1;
+
+    var mobileview = (isIpad || self.el.html.hasClass('mobile') || self.el.html.hasClass('ipad') || self.el.html.hasClass('tablet') || window.cordova || self.width < 768)
+
+
+    if ((typeof _Electron != 'undefined' && _Electron)){
+      mobileview = false
+    }
+
+    return mobileview
+  }
 
   var istouchstyle = function(){
 
-    let isIpad = /Macintosh/i.test(navigator.userAgent) && navigator.maxTouchPoints && navigator.maxTouchPoints > 1;
-
-    self.mobileview = (isIpad || self.el.html.hasClass('mobile') || self.el.html.hasClass('ipad') || self.el.html.hasClass('tablet') || window.cordova || self.width < 768)
-
-    if ((typeof _Electron != 'undefined' && _Electron)){
-      self.mobileview = false
-    }
+    self.mobileview = istouchstylecalculate()
 
     if(self.mobileview){
       self.el.html.addClass('mobileview').removeClass('wsview')
     }
     else{
       self.el.html.removeClass('mobileview').addClass('wsview')
+    }
+  }
+
+  var checkTouchStyle = function(){
+    var mobileview = istouchstylecalculate()
+
+    if(self.mobileview != mobileview){
+      istouchstyle()
+
+      self.platform.matrixchat.changeMobile()
+      self.platform.matrixchat.initevents()
+
+      _.each(self.modules, function(m){
+
+        if(m.module.map.viewchangereload){
+          m.module.restart()
+        }
+
+      })
     }
   }
 
@@ -1608,6 +1633,8 @@ Application = function(p)
       let vh = window.innerHeight * 0.01;
       document.documentElement.style.setProperty('--vh', `${vh}px`);
 
+      checkTouchStyle()
+
     }, 100)
 
     var t = false
@@ -1755,8 +1782,6 @@ Application = function(p)
         var storageLocation = self.storage.getStorageLocation();
         // var blob = new Blob([file], { type: "image/png" });
         var name = $.md5(url);
-
-        console.log("storageLocation", storageLocation)
 
         window.resolveLocalFileSystemURL(storageLocation, function (fileSystem) {
           fileSystem.getDirectory(self.storage.getStorageDirectory(), {

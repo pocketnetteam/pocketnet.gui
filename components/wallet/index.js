@@ -1837,7 +1837,6 @@ var wallet = (function(){
 
 
 								   if(err){
-									console.log("ERR", err)
 									   self.app.platform.sdk.node.transactions.releaseCS(inputs)
 									   sendpreloader(false)
 									   self.app.platform.errorHandler(err, true)
@@ -2022,7 +2021,6 @@ var wallet = (function(){
 
 											if(err){
 
-												console.log("ERR", err)
 
 												self.app.platform.sdk.node.transactions.releaseCS(inputs)
 												sendpreloader(false)
@@ -2829,8 +2827,6 @@ var wallet = (function(){
 	self.run = function(p){
 
 		var essense = self.addEssense(essenses, Essense, p);
-
-		console.log('essense', Essense, self)
 
 		self.init(essense, p);
 

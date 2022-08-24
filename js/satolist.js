@@ -2466,7 +2466,6 @@ Platform = function (app, listofnodes) {
 
             var id = p.id || makeid()
 
-            console.log("P", p)
 
             app.nav.api.load({
 
@@ -2526,7 +2525,6 @@ Platform = function (app, listofnodes) {
 
             if(!_.isArray(ids)) ids = [ids]
 
-            console.log("IDS", ids)
 
             app.nav.api.load({
 
@@ -7603,7 +7601,6 @@ Platform = function (app, listofnodes) {
                         const videoData = await electron.ipcRenderer
                             .invoke('getVideoData', shareId, videoId);
 
-                            console.log('videoData', videoData)
 
                         videosDataList[videoId] = videoData;
 
@@ -8568,9 +8565,6 @@ Platform = function (app, listofnodes) {
                 if(!self.sdk.sharesObserver.storage.viewed) self.sdk.sharesObserver.storage.viewed = {}
 
                 if(!self.sdk.sharesObserver.storage.viewed[key]) self.sdk.sharesObserver.storage.viewed[key] = {}
-
-
-                console.log('self.sdk.sharesObserver.storage.viewed[key].first < first', key, self.sdk.sharesObserver.storage.viewed[key].first , first)
 
                 if (!self.sdk.sharesObserver.storage.viewed[key].first || self.sdk.sharesObserver.storage.viewed[key].first <= first){
 
@@ -27836,6 +27830,13 @@ Platform = function (app, listofnodes) {
             }
         },
 
+        changeMobile : function(){
+            if (self.matrixchat.el){
+                self.matrixchat.el.find('matrix-element').attr('mobile', ( self.app.mobileview ? 'true' : ''))
+                self.matrixchat.el.find('matrix-element').attr('pocketnet', ( self.app.mobileview ? '' : 'true'))
+            }
+        },
+
         changePip : function(){
             if (self.matrixchat.el){
                 self.matrixchat.el.find('matrix-element').attr('pip', self.app.mobile.pip.enabled)
@@ -27855,10 +27856,19 @@ Platform = function (app, listofnodes) {
         },
 
         initevents : function(){
+            console.log('self.matrixchat.chatparallax')
             if (self.matrixchat.el){
 
-                if(self.app.mobileview){
+                console.log('self.matrixchat.chatparallax2')
 
+                if (self.app.mobileview){
+
+                    console.log('self.matrixchat.chatparallax3')
+
+                    if(self.matrixchat.chatparallax) return
+
+                    console.log("initevents")
+                    
                     self.matrixchat.chatparallax = new SwipeParallaxNew({
 
                         el : self.matrixchat.el,
@@ -27903,8 +27913,15 @@ Platform = function (app, listofnodes) {
 
                     }).init()
 
-
 				}
+
+                else{
+                    if (self.matrixchat.chatparallax) {
+                        console.log("destroy")
+                        self.matrixchat.chatparallax.destroy()
+                        self.matrixchat.chatparallax = null
+                    }
+                }
 
                 self.matrixchat.clbks.NOTIFICATION.global = self.matrixchat.notify.event
 

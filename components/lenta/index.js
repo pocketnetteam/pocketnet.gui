@@ -1460,7 +1460,6 @@ var lenta = (function(){
 
 			fullScreenVideo : function(id, clbk, auto){
 
-				console.log('fullScreenVideo', id)
 				if (fullscreenvideoShowing) { return }
 				if (fullscreenvideoShowed) { return }
 				if (essenseData.openapi){ return }
@@ -1483,7 +1482,6 @@ var lenta = (function(){
 					share.address = self.app.platform.sdk.address.pnet().address
 				}*/
 
-				console.log('fullScreenVideo2', id)
 
 
 				actions.initVideo(share, function(res){
@@ -2296,6 +2294,9 @@ var lenta = (function(){
 				if (fullscreenvideoShowed){
 					actions.videoPosition(fullscreenvideoShowed)
 				}
+
+
+				lwidth = el.c.width()
 				
 			},	
 
@@ -3608,7 +3609,6 @@ var lenta = (function(){
 								var _w = isMobile() ? self.app.width : el.width();
 								var _h = el.height()
 
-								console.log('_img.width, _img.height', _img.width, _img.height)
 
 								if(_img.width >= _img.height && (/*!self.app.mobileview && */!essenseData.openapi || image.images.length == 1)){
 									ac = 'w2'
@@ -3670,7 +3670,6 @@ var lenta = (function(){
 							if(carousels[s.txid]) carousels[s.txid].owlCarousel('destroy')
 
 
-							console.log('cwidth', cwidth)
 
 							carousels[s.txid] = sel.find('.imagesContainer').height(ch + 50).owlCarousel({
 								items: 1,
@@ -5215,6 +5214,7 @@ var lenta = (function(){
 				delete self.app.events.delayedscroll['videosinit' + mid]
 				delete self.app.events.delayedscroll['optimization' + mid]
 				delete self.app.events.scroll['loadmore' + mid]
+				
 				
 				delete self.app.errors.clbks[mid]
 

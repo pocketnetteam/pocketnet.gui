@@ -6862,7 +6862,7 @@
 
 			var statusf = function(e, phase, direction, distance){
 
-				if(phase == 'start' && !direction) return // ?
+				//if(phase == 'start' && !direction) return // ?
 
 				if (self.destroyed) return
 
