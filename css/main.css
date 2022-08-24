@@ -285,11 +285,16 @@ html.testpocketnet .testpocketnetbg {
   background-repeat: repeat-x repeat-y;
 }
 [image] {
+  will-change: opacity, background;
+  /*contain: strict;*/
   opacity: 0;
   -moz-transition: opacity 0.3s;
   -o-transition: opacity 0.3s;
   -webkit-transition: opacity 0.3s;
   transition: opacity 0.3s;
+}
+[image][contain] {
+  contain: none;
 }
 [image][visibleimage] {
   opacity: 1;
@@ -2703,6 +2708,12 @@ input[type=radio].radio:checked + label {
   height: auto;
   z-index: 999;
 }
+.wnd.pipmini .recomandationsFromContent {
+  display: none!important;
+}
+.wnd.pipmini .wndinner {
+  box-shadow: none;
+}
 .wnd.pipmini ._changeplace {
   display: none;
 }
@@ -3054,6 +3065,13 @@ input[type=radio].radio:checked + label {
 }
 .preloader6 img {
   width: 30px;
+}
+.preloader5 {
+  contain: strict;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 7.5px;
 }
 .preloader5 img {
   height: 7.5px;
@@ -5607,6 +5625,7 @@ html.mobileview.fullscreen #navigationWrapper {
    ========================================================================== */
 #splashScreen {
   position: fixed;
+  contain: strict;
   top: 0;
   left: 0;
   width: 100%;

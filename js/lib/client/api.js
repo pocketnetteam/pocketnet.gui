@@ -1209,6 +1209,10 @@ var Api = function(app){
             }
         },
 
+        directpr : function(){
+            return Promise.resolve(self.get.direct())
+        },
+
 
         proxywithwallet : function(){
 

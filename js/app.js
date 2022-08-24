@@ -49,6 +49,11 @@ Application = function(p)
   var self = this;
   var realtimeInterval = null;
   var baseorientation = typeof getbaseorientation != undefined ? getbaseorientation() : 'portrait'
+  var electron = null
+  
+  if (typeof _Electron != 'undefined' && _Electron){
+    electron = require('electron');
+  }
 
   self._meta = {
     Pocketnet : {
@@ -922,6 +927,18 @@ Application = function(p)
     })
   }
 
+  self.initvideodb = function(){
+
+
+
+    if(typeof VideoTransport != 'undefined'){
+
+      self.videotransport = new VideoTransport(self, electron ? electron.ipcRenderer : null)
+      self.videotransport.init()
+    }
+
+  }
+
   self.init = function(p){
 
     if (navigator.webdriver && !self.test && !parameters().webdrivertest) return
@@ -937,6 +954,8 @@ Application = function(p)
     prepareMap();
 
     self.options.fingerPrint = hexEncode('fakefingerprint');
+
+    self.initvideodb()
 
     self.localization.init(function(){
 
@@ -1710,7 +1729,7 @@ Application = function(p)
 
     getStorageLocation: function() {
 
-      if (!device || !device.platform || !cordova || !cordova.file)
+      if (!device || !cordova || !cordova.file)
         return undefined;
 
       return (window.cordova.file.externalDataDirectory) ? window.cordova.file.externalDataDirectory : window.cordova.file.dataDirectory;
@@ -1731,6 +1750,8 @@ Application = function(p)
         var storageLocation = self.storage.getStorageLocation();
         // var blob = new Blob([file], { type: "image/png" });
         var name = $.md5(url);
+
+        console.log("storageLocation", storageLocation)
 
         window.resolveLocalFileSystemURL(storageLocation, function (fileSystem) {
           fileSystem.getDirectory(self.storage.getStorageDirectory(), {
@@ -2421,7 +2442,7 @@ Application = function(p)
       needmanage : false,
       hasupdate : false,
 
-      playstore : true,  ///// TODO
+      playstore : false,  ///// TODO
 
       downloadAndInstall : function(){
 
@@ -2589,6 +2610,8 @@ Application = function(p)
   localStorage['device'] = self.options.device
 
   if(typeof window != 'undefined'){ self.fref = deep(window, 'location.href') }
+
+  
 
   return self;
 }

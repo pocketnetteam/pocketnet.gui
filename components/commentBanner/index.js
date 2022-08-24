@@ -49,8 +49,8 @@ const commentBanner = (function() {
 		};
 
 		const destroyEvents = function() {
-			el.c.off('click', '.noShowAgain', actions.dontShowAgain)
-			el.c.off('click', '.closeBannerBtn', renders.closeBanner)
+			el.c?.off?.('click', '.noShowAgain', actions.dontShowAgain)
+			el.c?.off?.('click', '.closeBannerBtn', renders.closeBanner)
 		};
 
 		return {
@@ -63,6 +63,9 @@ const commentBanner = (function() {
 			},
 
 			destroy: function() {
+
+				destroyEvents()
+				
 				if (el.c) {
 					el.c.empty();
 				}
@@ -74,7 +77,7 @@ const commentBanner = (function() {
 
 				el = {};
 
-				destroyEvents()
+				
 			},
 			
 			init: function(p) {

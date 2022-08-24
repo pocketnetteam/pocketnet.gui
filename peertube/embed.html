@@ -1,17 +1,42 @@
-<!doctype html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><meta property="og:platform" content="PeerTube"><link rel="icon" type="image/png" href="/client/assets/images/favicon.png"><link href="/pocketnet/peertube/video-embed.css" rel="stylesheet"><link href="./peertube/video-embed.css" rel="stylesheet"></head><body id="custom-css" class="standalone-video-embed"><div id="error-block"><h1 id="error-title"></h1><div id="error-content"></div></div><div class="video-js-wrapper"><div id="video-wrapper"></div></div><div id="placeholder-preview"></div><script src="/pocketnet/peertube/video-embed.bundle.js"></script><script>const addVideoToPage = () => {
-        const elem = document.getElementById("video-wrapper");
+<!doctype html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><meta property="og:platform" content="PeerTube"><script>// Thanks: https://mathiasbynens.be/notes/globalthis
+    (function() {
+      if (typeof globalThis === 'object') return;
+      Object.prototype.__defineGetter__('__magic__', function() {
+        return this;
+      });
+      __magic__.globalThis = __magic__
+      delete Object.prototype.__magic__;
+    }());</script><!-- /!\ The following comment is used by the server to prerender some tags /!\ --><!-- title tag --><!-- description tag --><!-- custom css tag --><!-- meta tags --><!-- server config --><!-- /!\ Do not remove it /!\ --><link rel="icon" type="image/png" href="/client/assets/images/favicon.png"><link href="./peertube/video-embed.css?v=925" rel="stylesheet"></head><body id="custom-css" class="standalone-video-embed"><div id="error-block"><h1 id="error-title"></h1><div id="error-content"></div></div><div id="video-wrapper"></div><div id="placeholder-preview"></div><script>// Can be called in embed.ts
+      window.displayIncompatibleBrowser = function () {
+        const text = 'The player is not compatible with your web browser. Please try latest Firefox version.'
 
-        const urlParams = new URLSearchParams(window.location.search);
+        document.title = 'Sorry' + ' - ' + text
 
-        const isVideEmbed = urlParams.get("embed");
+        const errorBlock = document.getElementById('error-block')
+        errorBlock.style.display = 'flex'
 
-        const [host, id] = [urlParams.get("host"), urlParams.get("id")];
+        const errorTitle = document.getElementById('error-title')
+        errorTitle.innerHTML = 'Sorry'
 
-        if (!isVideEmbed || !host || !id) return;
+        const errorText = document.getElementById('error-content')
+        errorText.innerHTML = text
 
-        PeerTubeEmbeding.main(elem, id, {
-          host,
-        });
-      };
+        const videoWrapper = document.getElementById('video-wrapper')
+        if (videoWrapper) videoWrapper.style.display = 'none'
 
-      addVideoToPage();</script><script src="./peertube/video-embed.bundle.js"></script></body></html>
+        const placeholderPreview = document.getElementById('placeholder-preview')
+        if (placeholderPreview) placeholderPreview.style.display = 'none'
+      }
+
+      window.onerror = function (msg) {
+        if (typeof msg === 'string' && msg.toLowerCase().includes(' ice ')) {
+          console.warn(msg)
+          return
+        }
+
+        window.displayIncompatibleBrowser()
+      }
+
+      if (/MSIE|Trident/.test(window.navigator.userAgent) ) {
+        window.displayIncompatibleBrowser()
+      }</script><script defer="defer" src="./peertube/video-embed.bundle.js"></script></body></html>

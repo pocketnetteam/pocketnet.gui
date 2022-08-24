@@ -72,18 +72,21 @@
 		border-radius: 12px;
 		height: 111px;
 		contain: strict;
+
+		&.loading{
+			display: block;
+		}
 	}
 
-	&.loading{
+	/*
 		.loader{
 			display: block;
 		}
-		
-	}
+	}*/
 
 	&.sharesEnded{
 		.loader{
-			display: none;
+			display: none!important;
 		}
 	}
 
