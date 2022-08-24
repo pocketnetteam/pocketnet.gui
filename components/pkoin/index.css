@@ -1,3 +1,9 @@
+#pkoin .content.liftUpThePost .options {
+  display: none;
+}
+#pkoin .content.liftUpThePost .wndinner {
+  height: 540px;
+}
 #pkoin .content .vc_valuecustom .vc_textInput {
   border: 0;
   background: transparent;
@@ -5,7 +11,7 @@
 #pkoin .content .top,
 #pkoin .content .fieldsWrapper,
 #pkoin .content .sendButtonWrapper {
-  padding: 1em;
+  padding: 2em 1em;
 }
 #pkoin .content .top {
   display: flex;

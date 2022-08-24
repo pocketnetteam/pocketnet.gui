@@ -1,10 +1,10 @@
 <div id="<%-module.map.id%>">
 
-	<div class="content keyboardsafe">
+	<div class="content keyboardsafe <%-format%>">
 		<div class="top">
 			<div class="title">
 				<span>
-					<%-e('thankTheAuthor')%>
+					<%-e(format === 'liftUpThePost' ? 'liftUpThePost' : 'thankTheAuthor')%>
 				</span>
 			</div>
 			<div class="buyButtonWrapper">

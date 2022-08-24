@@ -296,10 +296,6 @@ var pkoin = (function(){
 
 		var initEvents = function(_p){
 
-			if (_p.data.format){
-				optionsValue = _p.data.format;
-			}
-
 			var closeContainer = function(){
 
 				valSum = null;
@@ -426,9 +422,12 @@ var pkoin = (function(){
 				var format = essenseData.format;
 				var userinfo = essenseData.userinfo;
 
+				receiver = userinfo.address;
+				optionsValue = 'pkoinComment';
 
-					receiver = userinfo.address;
-					optionsValue = 'pkoinComment';
+				if (format){
+					optionsValue = format;
+				}
 
 				var data = {
 					userinfo: userinfo,
