@@ -889,6 +889,13 @@
 			},
 		}
 
+		self.unhidenormalized = function(){
+			console.log('unhidenormalized')
+			if (app.mobileview && wnd && (wnd.hasClass('normalizedmobile'))){
+				wnd.find('.wndcontent>div').css('opacity', 1)
+			}
+		}
+
 		self.buttonState = function(index, state){
 
 			var _class = 'disabled';

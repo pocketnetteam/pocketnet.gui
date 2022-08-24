@@ -307,6 +307,15 @@ Application = function(p)
         }
 
       })
+      
+      _.each(self.nav.wnds, (w) => {
+        var wnd = deep(w, 'module.container')
+
+        if (wnd){
+          if(self.mobileview)
+            wnd.unhidenormalized()
+        }
+      })
     }
   }
 
