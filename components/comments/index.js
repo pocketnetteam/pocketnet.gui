@@ -2734,6 +2734,7 @@ var comments = (function(){
 			},
 
 			attention : function(text){
+				if(!el.c) return
 
 				if(isMobile() || !text){
 					el.c.find('.post').addClass('attention')
