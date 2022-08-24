@@ -716,7 +716,7 @@ ____loclib.e13257 = "Votre score de réputation "+appname+" ne permet pas encore
 ____loclib.e13258 = 'Vous avez atteint la limite de réclamation dans un délai de 24 heures'
 
 ____loclib.e13259 = 'Je ne peux pas me plaindre de votre propre message'
-____loclib.e13260 = 'Vous avez déjà enregistré votre réclamation concernant ce message'
+____loclib.e13260 = 'Vous avez déjà déposé une plainte contre cet utilisateur.'
 ____loclib.e13261 = "Enregistrer la clé"
 ____loclib.e13262 = "Plus tard"
 ____loclib.e13263 = "Abonnez-vous et activez les notifications de cet utilisateur"
