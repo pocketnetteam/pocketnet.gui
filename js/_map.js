@@ -1005,7 +1005,6 @@ __map =  {
 	commentBanner : {
 		uri : "commentBanner",
 		href : "commentBanner",
-		preshell : true,
 		add : insertingfunc,
 		anonimus : true,
 		exportcss : true,
