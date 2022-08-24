@@ -3138,8 +3138,12 @@ var lenta = (function(){
 							clbk = null
 					}
 
+					setTimeout(() => {
+						c()
+					}, 300)
 
-					Promise.all(promises).catch(e => {}).then(() => {
+
+					/*Promise.all(promises).catch(e => {}).then(() => {
 						c()
 					})
 
@@ -3150,7 +3154,7 @@ var lenta = (function(){
 
 						setTimeout(() => {
 							c()
-						}, time)
+						}, time)*/
 					
 				})
 
