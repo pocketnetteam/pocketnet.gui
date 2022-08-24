@@ -49,6 +49,16 @@
 				</div>
 		
 			<% } else { %> 
+				<% if (app.platform.istest()) { %>
+					<% const videoLink = `https://${meta.host_name}/videos/embed/${meta.id}` %>
+
+					<div class="peertube-server-hint">
+						<a href="<%- videoLink %>">
+							<i class="fa fa-link"></i>
+							<span><%- meta.host_name %></span>
+						</a>
+					</div>
+				<% } %>
 				
 				<div class="js-player js-player-ini" data-plyr-provider="<%-meta.type%>" data-plyr-embed-id="<%-meta.url%>" data-plyr-video-id="<%-meta.id%>" data-plyr-host-name="<%-meta.host_name || ''%>">
 					
@@ -118,7 +128,7 @@
 
 				<% if(typeof video == 'undefined' || !video) { %> 
 					<div class="videoTips">
-						<div class="videoTip">
+						<div class="videoTip" style="<%- (app.platform.istest()) ? 'text-align: right' : '' %>" >
 							<span><%=e('expandvideo')%></span>
 						</div>
 					</div>

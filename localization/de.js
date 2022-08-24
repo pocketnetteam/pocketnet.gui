@@ -199,9 +199,11 @@ _l.sprofile = "Profil";
 _l.spc = "Beitragszähler";
 _l.ssc = "Sternezähler";
 _l.ccc = "Kommentarezähler";
-_l.crc = "Kommentierratenzähler";
+_l.crc = "Anzahl der Kommentarbewertungen";
 _l.stp = "Testphase";
+_l.artc = "Artikel zählen";
 _l.srep = "Ansehen";
+
 
 //accounts
 _l.aaddedacc = "Hinzugefügte Accounts";
@@ -718,7 +720,7 @@ _l.e13257 = "Ihre "+appname+" Ansehens-Punkte erlauben es noch nicht, eine Besch
 _l.e13258 = "Sie haben Ihr Limit an Beschwerden pro 24 Stunden erreicht"
 
 _l.e13259 = "Sie können Sich nicht über Ihren eigenen Beitrag beschweren"
-_l.e13260 = "Sie haben bereits Beschwerde über diesen Beitrag eingereicht"
+_l.e13260 = "Sie haben bereits eine Beschwerde gegen diesen Benutzer eingereicht."
 _l.e13261 = "Schlüssel speichern"
 _l.e13262 = "Später"
 _l.e13263 = "Abonnieren und Benachrichtigungen für diesen Nutzer aktivieren"
@@ -730,6 +732,7 @@ _l.e13268 = "Coinstake Gewinn"
 _l.e13269 = "Überweisung erhalten"
 _l.e13270 = "Likes erhalten"
 _l.e13271 = "Kommentar erhalten"
+_l.downvote = "Negative Bewertung"
 _l.e13272 = "Antwort erhalten"
 _l.e13273 = "Neuer Follower"
 _l.e13274 = "Gerettete Benutzer"
@@ -841,3 +844,11 @@ _l.lowstar_reason_3 = "Direkte Androhung von Gewalt"
 _l.lowstar_reason_4 = "Illegale Drogen"
 _l.lowstar2 = "Bitte verwenden Sie keine 1- und 2-Sterne-Bewertungen aus anderen Gründen. Nachdem die neue Moderation Mitte Mai veröffentlicht wurde, können Sie niedrige Bewertungen aus anderen Gründen verwenden."
 _l.lowstaragree = "Ich bestätige, dass dieser Beitrag eine von vier Arten von verbotenen Inhalten enthält"
+
+_l.androidPopupTitle = "Erhalte unzensierte Informationen in der mobilen Bastion-App"
+_l.androidPopupAgree = "Zur App wechseln"
+_l.androidPopupDisagree = "Nicht jetzt"
+
+_l.desktopPopupTitle = "Unzensierte Informationen in der Bastyon-Desktop-App abrufen"
+_l.desktopPopupAgree = "App herunterladen"
+_l.desktopPopupDisagree = "Nicht jetzt"

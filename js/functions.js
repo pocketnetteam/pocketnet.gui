@@ -3863,7 +3863,7 @@
 						}
 
 
-						_el.find('.vc_value').on(clickAction(), function(){
+						_el.find('.vc_value').on('click', function(){
 							bkp = null;
 
 							var value = $(this).attr('value');
@@ -3875,7 +3875,7 @@
 							take().removeClass('error')
 						})
 
-						_el.find('.vc_selected_value_icon').on(clickAction(), function(){
+						_el.find('.vc_selected_value_icon').on('click', function(){
 							var value = $(this).closest('.vc_selected_value').attr('value');
 
 							parameter.set(value);
@@ -9887,17 +9887,23 @@
 		return w[1];
 	}
 
-	truncateString = function(str, n, useWordBoundary ){
+	decodeEntities = function(s){
+		const temp = document.createElement('p');
+		temp.innerHTML = s;
+		return temp.textContent || temp.innerText;
+	}
 
+	truncateString = function(str, n, useWordBoundary ){
+		
 		if(!str) return str
 
 		if(!useWordBoundary) useWordBoundary = true
 
 		if (str.length <= n) { return str; }
 		var subString = str.substr(0, n-1);
-		return (useWordBoundary
-		   ? subString.substr(0, subString.lastIndexOf(' '))
-		   : subString) + "...";
+		return decodeEntities(useWordBoundary
+			? subString.substr(0, subString.lastIndexOf(' '))
+			: subString).replace(/(,|\.|\s)$/, '') + "...";
 	};
 
 	videoImage = function(url){
@@ -10266,7 +10272,6 @@
 		else return 0
 
 	}
-
 
 
 	numberToBool = function(v){

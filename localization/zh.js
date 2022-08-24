@@ -191,6 +191,7 @@ _l.uaddresesd = "捐款地址";
 _l.usavechanges = "是否保存你的修改？";
 
 //ustate
+
 _l.sreps = "信誉与限制";
 _l.sdisconnected = "与节点连接断开";
 _l.suseractivation = "用户激活";
@@ -199,6 +200,9 @@ _l.spc = "发帖量";
 _l.ssc = "星级数";
 _l.ccc = "评论数";
 _l.crc = "评论等级";
+_l.artc = "文章计数";
+
+
 _l.stp = "试用期";
 _l.srep = "信誉";
 
@@ -724,7 +728,7 @@ _l.e13257 = '你的口袋网信誉评分还没达到可登记投诉的标准'
 _l.e13258 = '你已经达到了24小时内投诉的上限'
 
 _l.e13259 = '不可投诉自己的帖子'
-_l.e13260 = '你已登记了对这个帖子的投诉'
+_l.e13260 = '您已经对此用户提出了投诉。'
 _l.e13261 = "保存密钥"
 _l.e13262 = "稍后"
 _l.e13263 = "订阅并开启来自该用户的消息提醒"
@@ -736,6 +740,7 @@ _l.e13268 = '投幣 獲勝'
 _l.e13269 = '收到的交易'
 _l.e13270 = '收到的赞'
 _l.e13271 = '收到的评论'
+_l.downvote = "负面评价"
 _l.e13272 = '收到的回答'
 _l.e13273 = '新粉丝'
 _l.e13274 = '拯救的用户'
@@ -1008,3 +1013,11 @@ _l.lowstar_reason_3 = "直接的暴力威脅"
 _l.lowstar_reason_4 = "非法藥物"
 _l.lowstar2 = "請不要出於其他原因使用 1 星和 2 星評級。在新的審核在中旬發布後。希望您能夠出於其他原因使用低評級"
 _l.lowstaragree = "我確認這篇文章包含四種禁止內容之一"
+
+_l.androidPopupTitle = "在 Bastyon 移动应用中获取未经审查的信息"
+_l.androidPopupAgree = "切换到应用"
+_l.androidPopupDisagree = "不是现在"
+
+_l.desktopPopupTitle = "在 Bastyon 桌面应用程序中获取未经审查的信息"
+_l.desktopPopupAgree = "下载应用程序"
+_l.desktopPopupDisagree = "不是现在"

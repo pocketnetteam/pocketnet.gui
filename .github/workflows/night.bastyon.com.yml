@@ -1,0 +1,30 @@
+name: Deploy to night.bastyon.com
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+  
+    runs-on: gui 
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Prepare
+        run: |
+          npm i
+          npm run minimize:bastyon
+
+      - name: Copy to dest dir
+        run: rsync -ah --exclude={'.git/','.github/','node_modules/'} ./ /docker/night/
+        
+      - name: Reset nginx cache
+        run: /data/reset_cache.sh
+        shell: bash

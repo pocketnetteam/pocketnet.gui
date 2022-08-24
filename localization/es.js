@@ -193,6 +193,7 @@ _l.usavechanges = "¿Quieres guardar sus cambios?";
 
 
 //ustate
+
 _l.sreps = "Reputación y restricciones";
 _l.sdisconnected = "Desconectado al node";
 _l.suseractivation = "Activación del usuario";
@@ -201,11 +202,11 @@ _l.spc = "Número de publicaciones";
 _l.ssc = "Número de estrellas";
 _l.ccc = "Número de comentarios";
 _l.crc = "Número de valoraciones de comentarios";
+_l.artc = "Recuento de artículos";
+
+
 _l.stp = "Periodo trial";
 _l.srep = "Reputación";
-
-
-
 
 //accounts
 _l.aaddedacc = "Cuentas agregadas";
@@ -697,7 +698,7 @@ _l.e13257 = "Su reputación de "+appname+" aún no le permite registrar quejas"
 _l.e13258 = "Ha alcanzado su límite de quejas en 24 horas"
 
 _l.e13259 = "No podéis denunciar su publicación"
-_l.e13260 = "Ya ha presentado una queja sobre esta publicación"
+_l.e13260 = "Ya ha presentado una queja contra este usuario."
 _l.e13261 = "Guardar clave"
 _l.e13262 = "Más tarde"
 _l.e13263 = "Suscríbete y incluyes las notificaciones de nuevas publicaciones de este usuario"
@@ -709,6 +710,7 @@ _l.e13268 = "Coinstake win"
 _l.e13269 = "Transacción recibida"
 _l.e13270 = "Nueva evaluación"
 _l.e13271 = "Nuevo comentario"
+_l.downvote = "Valoración negativa"
 _l.e13272 = "Nueva respuesta al comentario"
 _l.e13273 = "Nuevo suscriptor"
 _l.e13274 = "Usuario liberado"
@@ -838,3 +840,11 @@ _l.lowstar_reason_3 = "Amenaza directa de violencia"
 _l.lowstar_reason_4 = "Drogas ilegales"
 _l.lowstar2 = "Por favor, no use calificaciones de 1 y 2 estrellas por otras razones. Después de que se publique la nueva moderación a mediados. Puede que pueda usar calificaciones bajas por otras razones"
 _l.lowstaragree = "Confirmo que esta publicación contiene uno de los cuatro tipos de contenido prohibido"
+
+_l.androidPopupTitle = "Obtenga información sin censura en la aplicación móvil Bastyon"
+_l.androidPopupAgree = "Cambiar a la aplicación"
+_l.androidPopupDisagree = "Ahora no"
+
+_l.desktopPopupTitle = "Obtenga información sin censura en la aplicación de escritorio Bastyon"
+_l.desktopPopupAgree = "Descargar la aplicación"
+_l.desktopPopupDisagree = "Ahora no"

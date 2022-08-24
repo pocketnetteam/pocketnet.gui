@@ -186,6 +186,7 @@ _l.uaddresesd = "Adresses pour les dons";
 _l.usavechanges = "Voulez-vous enregistrer vos modifications?";
 
 //ustate
+
 _l.sreps = "Réputation et limites";
 _l.sdisconnected = "Déconnecté du nœud";
 _l.suseractivation = "Activation utilisateur";
@@ -194,6 +195,10 @@ _l.spc = "Nombre de messages";
 _l.ssc = "Les toiles comptent";
 _l.ccc = "Les commentaires comptent";
 _l.crc = "Nombre de taux de commentaires";
+_l.artc = "Nombre d'articles";
+
+
+
 _l.stp = "Période d'essai";
 _l.srep = "Réputation";
 
@@ -712,7 +717,7 @@ _l.e13257 = "Votre score de réputation "+appname+" ne permet pas encore l'enreg
 _l.e13258 = 'Vous avez atteint la limite de réclamation dans un délai de 24 heures'
 
 _l.e13259 = 'Je ne peux pas me plaindre de votre propre message'
-_l.e13260 = 'Vous avez déjà enregistré votre réclamation concernant ce message'
+_l.e13260 = 'Vous avez déjà déposé une plainte contre cet utilisateur.'
 _l.e13261 = "Enregistrer la clé"
 _l.e13262 = "Plus tard"
 _l.e13263 = "Abonnez-vous et activez les notifications de cet utilisateur"
@@ -724,6 +729,7 @@ _l.e13268 = 'Coinstake gagne'
 _l.e13269 = 'Les transactions reçoivent'
 _l.e13270 = 'Les votes positifs reçoivent'
 _l.e13271 = 'Comment recevoir'
+_l.downvote = "Évaluation négative"
 _l.e13272 = 'Répondre reçu'
 _l.e13273 = 'Nouveaux adeptes'
 _l.e13274 = 'Utilisateurs enregistrés'
@@ -1359,3 +1365,11 @@ _l.lowstar_reason_3 = "Menace directe de violence"
 _l.lowstar_reason_4 = "Drogues illégales"
 _l.lowstar2 = "Veuillez ne pas utiliser les classements 1 et 2 étoiles pour d'autres raisons. Après la publication de la nouvelle modération à la mi-journée, vous pourrez utiliser les classements bas pour d'autres raisons"
 _l.lowstaragree = "Je confirme que ce message contient l'un des quatre types de contenu interdit"
+
+_l.androidPopupTitle = "Obtenir des informations non censurées dans l'application mobile Bastyon"
+_l.androidPopupAgree = "Basculer vers l'application"
+_l.androidPopupDisagree = "Pas maintenant"
+
+_l.desktopPopupTitle = "Obtenir des informations non censurées dans l'application de bureau Bastyon"
+_l.desktopPopupAgree = "Télécharger l'application"
+_l.desktopPopupDisagree = "Pas maintenant"

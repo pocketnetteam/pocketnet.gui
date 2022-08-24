@@ -199,6 +199,7 @@ _l.uaddresesd = "Indirizzi per le donazioni";
 _l.usavechanges = "Vuoi salvare le tue modifiche?";
 
 //ustate
+
 _l.sreps = "Reputazione e limitazioni";
 _l.sdisconnected = "Disconnesso dal nodo";
 _l.suseractivation = "Attivazione utente";
@@ -208,6 +209,8 @@ _l.spv = "Conteggio dei messaggi video";
 _l.ssc = "Conteggio delle stelle";
 _l.ccc = "Conteggio dei commenti";
 _l.crc = "Conteggio del tasso di commento";
+_l.artc = "Conteggio articoli";
+
 _l.stp = "Periodo di prova";
 _l.srep = "Reputazione";
 
@@ -754,7 +757,7 @@ _l.e13257 = "Il tuo punteggio di reputazione di " + appname + " non permette anc
 _l.e13258 = "Hai raggiunto il limite di segnalazioni in 24 ore";
 
 _l.e13259 = "Non puoi segnalare il tuo stesso post";
-_l.e13260 = "Hai già segnalato questo post";
+_l.e13260 = "Hai già presentato un reclamo contro questo utente.";
 _l.e13261 = "Salva la chiave";
 _l.e13262 = "Più tardi";
 _l.e13263 = "Iscriviti e attiva le notifiche per questo utente";
@@ -766,6 +769,7 @@ _l.e13268 = "Coinstake win";
 _l.e13269 = "Transazioni ricevute";
 _l.e13270 = "Voti alti ricevuti";
 _l.e13271 = "Commento ricevuto";
+_l.downvote = "Valutazione negativa"
 _l.e13272 = "Risposta ricevuta";
 _l.e13273 = "Nuovi followers";
 _l.e13274 = "Utenti invitati";
@@ -1202,3 +1206,11 @@ _l.lowstar_reason_3 = "Minaccia diretta di violenza"
 _l.lowstar_reason_4 = "Droghe illegali"
 _l.lowstar2 = "Non utilizzare valutazioni a 1 e 2 stelle per altri motivi. Dopo il rilascio della nuova moderazione a metà. Potresti essere in grado di utilizzare valutazioni basse per altri motivi"
 _l.lowstaragree = "Confermo che questo post contiene uno dei quattro tipi di contenuto proibito"
+
+_l.androidPopupTitle = "Ottieni informazioni non censurate nell'app mobile Bastyon"
+_l.androidPopupAgree = "Passa all'app"
+_l.androidPopupDisagree = "Non ora"
+
+_l.desktopPopupTitle = "Ottieni informazioni non censurate nell'app desktop Bastyon"
+_l.desktopPopupAgree = "Scarica l'app"
+_l.desktopPopupDisagree = "Non ora"

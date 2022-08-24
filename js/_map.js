@@ -62,8 +62,9 @@ __map =  {
 		{path : "js/vendor/workbox-v6.1.5/workbox-sw.js", babelify : true},
 		"js/vendor/ion.sound/ion.sound.js",
 		"js/vendor/hammer.min.js",
-		"js/vendor/owl/owl.carousel.js"
+		"js/vendor/owl/owl.carousel.js",
 		
+		{path : "js/vendor/shadow-popup/popup.js", babelify : true},
 	],
 
 	__sourcesfirst : [
@@ -115,6 +116,7 @@ __map =  {
 		"peertube/video-embed.css",
 		"js/vendor/owl/assets/owl.carousel.min.css",
 		"js/vendor/owl/assets/owl.theme.default.min.css",
+		"js/vendor/shadow-popup/css/popup.css"
 	],
 
 	__exportcss : {
@@ -967,6 +969,13 @@ __map =  {
 
 		
 	},
+
+	statistic : {
+		uri : "statistic",
+		href : "statistic",
+		add : insertingfunc,
+	},
+
 	videoCabinet : {
 		uri : "videoCabinet",
 		href : "videoCabinet",
@@ -996,7 +1005,6 @@ __map =  {
 	commentBanner : {
 		uri : "commentBanner",
 		href : "commentBanner",
-		preshell : true,
 		add : insertingfunc,
 		anonimus : true,
 		exportcss : true,

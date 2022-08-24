@@ -93,10 +93,12 @@ _l.chooseBloggers = "Follow Popular Bloggers";
 _l.showmorebloggers = "Show more bloggers";
 //user page
 
+
 _l.rstate = "Reputation";
 _l.rprofile = "Profile";
 _l.rsettings = "Settings";
 _l.rwallet = "Wallet";
+_l.rstatistic = "Statistic";
 _l.raccounts = "Accounts";
 _l.rsystem = "System";
 _l.rconnection = "Connection";
@@ -147,10 +149,12 @@ _l.wsfees = "Fees";
 _l.wssendto = "SEND COINS TO";
 _l.wssendb = "SEND";
 
+
 _l.tacaddress = "Account Address";
 _l.twallet = "Wallet";
 _l.twalletaddresses = "Wallet addresses";
 _l.tTotal = "Total";
+_l.totalBalance = "Total balance";
 _l.wsselect = "Select Source From Menu";
 _l.wsenter = "Enter Address Or Select From Menu";
 _l.wsreciever = "Receiver address";
@@ -198,7 +202,18 @@ _l.uwebsite = "Web Site";
 _l.uaddresesd = "Addresses for Donations";
 _l.usavechanges = "Do you want to save your changes?";
 
-//ustate
+//statistic
+
+_l.referralsCount = 'Users who have used the referral link.';
+_l.commentatorsCount_0 = 'Users have commented on you more than 1 time';
+_l.commentatorsCount_1 = 'Users have commented on you more than 3 times';
+_l.commentatorsCount_2 = 'Users have commented on you more than 7 times';
+_l.from = 'Period: ';
+_l.to = 'to';
+_l.empty = 'Information not found';
+_l.apply = 'Apply';
+
+
 _l.sreps = "Reputation and Limitations";
 _l.sdisconnected = "Disconnected from node";
 _l.suseractivation = "User Activation";
@@ -208,6 +223,7 @@ _l.spv = "Video Post count";
 _l.ssc = "Stars count";
 _l.ccc = "Comments count";
 _l.crc = "Comment Rate count";
+_l.artc = "Articles count";
 
 _l.stp = "Beginner";
 _l.stpg = "Top";
@@ -434,6 +450,7 @@ _l.nodeEnableNote = "That turning on a node may take up to 5GB of RAM. Make sure
 
 
 /// 1301
+
 
 _l.address = "Address"
 _l.privatekey = "Private Key"
@@ -834,7 +851,7 @@ _l.e13258 = "You have reached the limit of complaints in a 24 hour period"
 _l.e2000 = "Connection error. Please try again"
 
 _l.e13259 = "Cannot complain about your own post"
-_l.e13260 = "You have already registered your complaint about this post"
+_l.e13260 = "You have already filed a complaint against this user."
 _l.e13261 = "Save Key"
 _l.e13262 = "Later"
 _l.e13263 = "Subscribe and Turn On notifications from this user"
@@ -1206,10 +1223,9 @@ _l.transactionnotfound = "Transaction not found";
 
 _l.donateself = "You can't donate yourself";
 _l.donated = "commented your post and donated"
-_l.incoins = "Not enough coins"
+_l.incoins = "Not enough coins";
 _l.yourbalance = "Your balance"
 _l.sumoftransaction = "Sum of transaction"
-
 
 _l.videoBitrateError = "Video bitrate is too high. Please, use file with lower quality/resolution"
 _l.videoQualityInfo = "Maximum allowed video bitrate  - 8 Mbit/s. If your file exceeds this limit, the download would be terminated. Maximum allowed resolution - 720p. <br/> Recommended bitrates: <br/> <b>1080p:</b> 5081 Kbps <br/> <b>720p:</b>  2680 Kbps <br/> <b>480p:</b>  1300 Kbps <br/> <b>360p:</b>  700 Kbps"
@@ -2245,5 +2261,14 @@ _l.continuesubscribefeedButton = "Continue in the subscription feed"
 
 _l['dust (code 64)'] = "You are trying to send an amount too small, it cannot be done"
 
+
 _l.videoNameIsIncorrectShort = "Video name should be at least 3 characters long"
 _l.videoNameIsIncorrectLong = "Video name should be no more than 120 characters long"
+
+_l.androidPopupTitle = "Get uncensored information in Bastyon mobile app"
+_l.androidPopupAgree = "Switch to the app"
+_l.androidPopupDisagree = "Not now"
+
+_l.desktopPopupTitle = "Get uncensored information in Bastyon desktop app"
+_l.desktopPopupAgree = "Download the app"
+_l.desktopPopupDisagree = "Not now"
