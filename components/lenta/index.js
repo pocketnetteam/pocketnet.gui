@@ -3008,7 +3008,7 @@ var lenta = (function(){
 			},
 			
 			share : function(share, clbk, all, p){
-				console.log("NREDDSA")
+
 				if(!p) p = {}
 
 				if(!share) {
@@ -3030,9 +3030,6 @@ var lenta = (function(){
 				));*/
 
 
-				console.log("RENDER RENDER")
-
-				
 				self.shell({
 					name : video ? 'sharevideolight' : share.itisarticle() ? 'sharearticle' : 'share',
 
@@ -3076,7 +3073,6 @@ var lenta = (function(){
 
 					promises.push(new Promise((resolve, reject) => {
 
-						console.log('share.url', share.url)
 
 						renders.url(p.el.find('.url'), share.url, share, function(){
 
@@ -3344,8 +3340,6 @@ var lenta = (function(){
 				}
 
 
-				console.log('sharesInview', shares)
-
 				lazyEach({
 					array : rs,
 					//sync : true,
@@ -3361,7 +3355,6 @@ var lenta = (function(){
 						{
 							shareInitedMap[share.txid] = true
 
-							console.log("RENDERSHARE", share.txid)
 
 							renders.share(share, _p.success, null, {
 								boosted : p.boosted,
@@ -3389,7 +3382,6 @@ var lenta = (function(){
 
 			shareall : function(shares){
 
-				console.log("???")
 
 				_.each(shares, function(share){
 					renders.share(share)
@@ -3399,7 +3391,6 @@ var lenta = (function(){
 
 			txidall : function(txids){
 
-				console.log("???2")
 				_.each(txids, function(txid){
 					var share = deep(self.app.platform, 'sdk.node.shares.storage.trx.' + txid)
 					renders.share(share)
@@ -5005,9 +4996,10 @@ var lenta = (function(){
 							var p = parameters()
 
 							if(!essenseData.second){
-								if (p.s && !p.msh){
+								if (p.s && !p.msh && !p.np){
 
 									setTimeout(function(){
+
 										actions.openPost(p.s, function(){
 											actions.scrollToPost(p.s)
 										}, null, null, p.commentid)
