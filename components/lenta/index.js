@@ -3008,11 +3008,11 @@ var lenta = (function(){
 			},
 			
 			share : function(share, clbk, all, p){
+				console.log("NREDDSA")
 				if(!p) p = {}
 
 				if(!share) {
 					if(clbk) clbk()
-
 					return
 				}
 
@@ -3028,6 +3028,9 @@ var lenta = (function(){
 				/*var shareRelayedFlag = _.find(relayTransactions, (transaction) => (
 					transaction.txid === share.txid
 				));*/
+
+
+				console.log("RENDER RENDER")
 
 				
 				self.shell({
@@ -3073,8 +3076,9 @@ var lenta = (function(){
 
 					promises.push(new Promise((resolve, reject) => {
 
-						renders.url(p.el.find('.url'), share.url, share, function(){
+						console.log('share.url', share.url)
 
+						renders.url(p.el.find('.url'), share.url, share, function(){
 
 							renders.urlContent(share, function(){
 	
@@ -3339,6 +3343,9 @@ var lenta = (function(){
 					})
 				}
 
+
+				console.log('sharesInview', shares)
+
 				lazyEach({
 					array : rs,
 					//sync : true,
@@ -3353,10 +3360,14 @@ var lenta = (function(){
 						else
 						{
 							shareInitedMap[share.txid] = true
+
+							console.log("RENDERSHARE", share.txid)
+
 							renders.share(share, _p.success, null, {
 								boosted : p.boosted,
 								index : index
 							})
+
 						}
 
 					},
@@ -3378,6 +3389,8 @@ var lenta = (function(){
 
 			shareall : function(shares){
 
+				console.log("???")
+
 				_.each(shares, function(share){
 					renders.share(share)
 				})
@@ -3386,6 +3399,7 @@ var lenta = (function(){
 
 			txidall : function(txids){
 
+				console.log("???2")
 				_.each(txids, function(txid){
 					var share = deep(self.app.platform, 'sdk.node.shares.storage.trx.' + txid)
 					renders.share(share)
@@ -5043,9 +5057,9 @@ var lenta = (function(){
 								_p.clbk(null, _p);
 							}
 
-							if (essenseData.notscrollloading && essenseData.txids){
+							/*if (essenseData.notscrollloading && essenseData.txids){
 								renders.txidall(essenseData.txids)
-							}
+							}*/
 
 
 							if(shares.length < 5 && essenseData.includesub && !loading && (!ended && recommended != 'recommended')){

@@ -2532,6 +2532,9 @@ Platform = function (app, listofnodes) {
             if(!_.isArray(ids)) ids = [ids]
 
 
+            console.log("LENTA", ids)
+
+
             app.nav.api.load({
 
                 open : true,
@@ -2612,6 +2615,8 @@ Platform = function (app, listofnodes) {
         },
 
         post: function (id, el, clbk, p) {
+
+            console.log("PAPI", id)
 
             if (!p) p = {}
 

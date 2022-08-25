@@ -42,7 +42,7 @@
         <link rel="stylesheet" href="css/fontawesome/css/all.css">
         <link rel="stylesheet" href="peertube/video-embed.css">
 
-        <script src="js/vendor/device.min.js?v=136"></script>
+        <script src="js/vendor/device.js?v=136"></script>
         <script src="js/vendor/modernizr-2.8.3.min.js?v=136"></script>
         <script src="https://__VAR__.domain/js/widgets.js?v=136"></script>
 
@@ -108,7 +108,7 @@
         </div>
 
         
-        <script>window.$ = window.jQuery = require('./js/vendor/jquery-1.11.3.min.js');</script>
+        <script>window.$ = window.jQuery = require('./js/vendor/jquery.js');</script>
         
 
         <script type="text/javascript">
@@ -173,7 +173,7 @@
         <script  join src="js/vendor/moment.min.js?v=89"></script>
         <script  join src="js/vendor/moment.locale.js?v=89"></script>
         
-        <!--<script src="js/vendor/imagesloaded.pkgd.min.js"></script> -->
+        <!--<script src="js/vendor/imagesloaded.pkgd.js"></script> -->
         <script src="js/vendor/timer.js"></script>
         <script src="js/vendor/autosize.min.js"></script>
         <script src="js/vendor/ion.sound/ion.sound.js"></script>   
@@ -194,8 +194,9 @@
 
         <script src="js/vendor/paste.js"></script> 
         <script src="js/vendor/jquery.md5.js?v=136"></script>
-        <script src="js/vendor/joypixels.min.js"></script>
+        <script src="js/vendor/joypixels.js"></script>
         <script join src="js/vendor/hammer.min.js?v=89"></script>
+        <script join src="js/vendor/owl/owl.carousel.js?v=90"></script>
         <script src="js/vendor/plyr.js?v=1"></script>
         <script src="js/vendor/reconnectingwebsocket.js?v=136"></script>
         <script src="js/vendor/mark.js"></script>

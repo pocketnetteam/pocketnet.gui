@@ -8,7 +8,7 @@ if (typeof _OpenApi == 'undefined') _OpenApi = false;
 
 if (typeof _Electron != 'undefined' && _Electron){
 
-  imagesLoaded = require('./js/vendor/imagesloaded.pkgd.min.js');
+  imagesLoaded = require('./js/vendor/imagesloaded.pkgd.js');
 
   emojione = require('emojione')
 
