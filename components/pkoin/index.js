@@ -23,15 +23,14 @@ var pkoin = (function(){
 					var blocked = self.app.platform.sdk.user.reputationBlocked(share.address)
 
 					if (self.app.boost && my){
-						values = []
-						labels = []
-
-						optionsValue = 'liftUpThePost'
+						values = [];
+						labels = [];
+						optionsValue = 'liftUpThePost';
 					}
 
-					if (self.app.boost && !blocked){
-						values.push('liftUpThePost')
-						labels.push(self.app.localization.e('liftUpThePost'))
+					if (self.app.boost && !blocked && optionsValue === 'liftUpThePost'){
+						values.push('liftUpThePost');
+						labels.push(self.app.localization.e('liftUpThePost'));
 					}
 
 					var options = new Parameter({

@@ -202,6 +202,41 @@ var comments = (function(){
 		}
 
 		var actions = {
+
+			
+			pkoin : function(id, format){
+
+				var share = self.app.platform.sdk.node.shares.storage.trx[id];
+
+				if (share){
+					
+					actions.stateAction(function(){
+
+						var userinfo = deep(app, 'platform.sdk.usersl.storage.' + share.address) || {
+							address : share.address,
+							addresses : [],
+						}
+
+						self.nav.api.load({
+							open : true,
+							href : 'pkoin',
+							history : true,
+							inWnd : true,
+		
+							essenseData : {
+								userinfo: userinfo,
+								id : id,
+								format: format
+							}
+						})
+		
+	
+					}, share.txid)	
+
+				}
+
+			},
+
 			showprofile : function(address){
 
 				if (self.app.mobileview){
@@ -1202,6 +1237,14 @@ var comments = (function(){
 
 		var events = {
 
+			pkoin : function(){
+
+				var shareId = $(this).closest('.share').attr('id');
+
+				actions.pkoin(shareId, 'pkoinComment')
+
+			},
+
 			showprofile : function(){
 				var address = $(this).attr('profile')
 
@@ -2047,6 +2090,9 @@ var comments = (function(){
 								})
 							}
 						})
+
+						_p.el.find('.embeddonate').on('click', events.pkoin)
+
 
 						if(_preview){
 

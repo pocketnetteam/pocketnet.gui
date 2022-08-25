@@ -11,7 +11,7 @@
 #pkoin .content .top,
 #pkoin .content .fieldsWrapper,
 #pkoin .content .sendButtonWrapper {
-  padding: 2em 1em;
+  padding: 1em 1em;
 }
 #pkoin .content .top {
   display: flex;
@@ -154,7 +154,7 @@
   color: rgb(var(--color-txt-ac));
   position: absolute;
   right: 12px;
-  top: 12px;
+  top: 14px;
 }
 #pkoin .content .fieldsWrapper .fields .sum .inputWrapper .notion {
   display: flex;
@@ -229,10 +229,16 @@
 #pkoin .boostinfodata .text span {
   font-size: 0.7em;
 }
-.wnd.pkoinwindow .wndinner.pkoin {
+.wnd.pkoinwindow .wndinner.pkoin,
+.wnd.pkoinwindow .wndinner.boost {
   max-width: 370px;
-  max-height: 620px;
   box-shadow: none;
+}
+.wnd.pkoinwindow .wndinner.pkoin {
+  max-height: 620px;
+}
+.wnd.pkoinwindow .wndinner.boost {
+  max-height: 500px;
 }
 .wnd.pkoinwindow .wndinner .wndheader {
   display: none;

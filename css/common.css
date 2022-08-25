@@ -14,7 +14,7 @@
   cursor: pointer;
 }
 .share_common .pkoin {
-  margin-left: 1.5em;
+  margin-left: 0.75em;
   display: flex;
   align-items: center;
   background: rgb(var(--color-bg-ac-bright));
@@ -28,6 +28,12 @@
 }
 .share_common .pkoin span {
   margin-left: 0.5em;
+}
+.share_common .boost {
+  color: #F2C94C;
+  border-radius: 8px;
+  padding: 4px 12px;
+  border: 1px solid rgb(var(--neutral-grad-3));
 }
 .share_common .commentsWrapper {
   background: rgb(var(--background-secondary-theme));

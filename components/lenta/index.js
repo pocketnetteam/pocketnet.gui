@@ -1219,6 +1219,8 @@ var lenta = (function(){
 
 			pkoin : function(id, format){
 
+				var type = format === 'liftUpThePost' ? 'boost' : 'pkoin';
+
 				var share = self.app.platform.sdk.node.shares.storage.trx[id];
 
 				if (share){
@@ -1239,7 +1241,8 @@ var lenta = (function(){
 						essenseData : {
 							userinfo: userinfo,
 							id : id,
-							format: format
+							format: format,
+							type: type
 						}
 					})
 	
