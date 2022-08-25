@@ -103,8 +103,6 @@
         __JSPOST__
 
 
-        <script src="js/openapi.js"></script>
-
 
         <link rel="stylesheet" href="css/fontawesome/css/all.min.css">
         
