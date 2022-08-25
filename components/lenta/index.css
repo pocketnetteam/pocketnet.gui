@@ -3,6 +3,11 @@
 		width: 30px;
 		text-align: right;
 	}*/
+  /*
+		.loader{
+			display: block;
+		}
+	}*/
   /*.authorCell a,
 	.sbtnxs,
 	.spsp{
@@ -14,6 +19,24 @@
 }
 #lenta .boostedlabel {
   color: rgb(var(--color-good));
+}
+#lenta .shareinlenta {
+  min-height: 400px;
+  opacity: 0;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+#lenta .shareinlenta .sharecnt {
+  display: none;
+}
+#lenta .shareinlenta.rendered {
+  opacity: 1;
+  min-height: 0;
+}
+#lenta .shareinlenta.rendered .sharecnt {
+  display: block;
 }
 #lenta .optimizationTip {
   height: 150px;
@@ -63,11 +86,11 @@
   height: 111px;
   contain: strict;
 }
-#lenta.loading .loader {
+#lenta .loader.loading {
   display: block;
 }
 #lenta.sharesEnded .loader {
-  display: none;
+  display: none!important;
 }
 #lenta .panel {
   overflow: hidden;
@@ -131,6 +154,7 @@
   border-radius: 12px;
 }
 #lenta .share .shareSpacer {
+  display: none;
   height: 400px;
   padding: 0 2em;
 }
@@ -614,11 +638,13 @@
 }
 /*t*/
 @media only screen and (max-width: 768px) {
+  #lenta.horizontal.compact {
+    /*.share_common .jsPlayerPreview .wpl{
+					opacity: 1;
+				}*/
+  }
   #lenta.horizontal.compact.mainvideo .shares .formeta {
     margin-left: 0.25em;
-  }
-  #lenta.horizontal.compact .share_common .jsPlayerPreview .wpl {
-    opacity: 1;
   }
   #lenta .loadprev.fxdp {
     position: fixed;

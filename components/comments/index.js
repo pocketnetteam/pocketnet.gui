@@ -1948,6 +1948,7 @@ var comments = (function(){
 							caption: el.c.find('.captionfwrapper'),
 							offset: [top, -100],
 							removeSpacer : true,
+							zIndex : 105,
 							iniHeight : true,
 							_in : _in
 						}).init();
@@ -2187,48 +2188,13 @@ var comments = (function(){
 
 				}
 
-				var h = sel.height()
+				//var h = sel.height()
 
-				_el.imagesLoadedPN({ imageAttr: true }, function(image) {
+				if (clbk)
+						clbk()
 
-					/*_.each(image.images, function(img, n){
-
-						var _img = img.img;
-
-						var el = $(image.elements[n]).closest('.imagesWrapper');
-						var ac = '';
-
-						var _w = el.width();
-						var _h = el.height()
-
-						if(_img.width > _img.height && !isMobile()){
-							ac = 'w2'
-
-							var w = _w * (_img.width / _img.height);
-
-							if (w > images.width()){
-								w = images.width()
-
-								h = w * ( _img.height / _img.width) 
-
-								el.height(h);
-							}
-
-							el.width(w);
-						}
-
-						if(_img.height > _img.width || isMobile()){
-							ac = 'h2'
-
-							el.height(_w * (_img.height / _img.width))
-						}
-
-						if(ac){
-							el.addClass(ac)
-						}
-						
-					})*/
-
+				/*_el.imagesLoadedPN({ imageAttr: true }, function(image) {
+					
 					if(ed.renderClbk) ed.renderClbk()
 
 					if (clbk)
@@ -2237,7 +2203,7 @@ var comments = (function(){
 
 					return
 
-				}, self.app);
+				}, self.app);*/
 				
 			},
 
@@ -2387,7 +2353,7 @@ var comments = (function(){
 							}
 						}
 						if (el.list){
-							bgImages(el.list)
+							//bgImages(el.list)
 
 							lazyEach({
 								array : p.comments,
@@ -2780,6 +2746,7 @@ var comments = (function(){
 			},
 
 			attention : function(text){
+				if(!el.c) return
 
 				if(isMobile() || !text){
 					el.c.find('.post').addClass('attention')
@@ -2803,11 +2770,53 @@ var comments = (function(){
 							el.c.find('.leaveCommentPreview').css('opacity', '')
 						}, 100)
 					}, 100)
+				}
+			},
+
+			showBanner : function(c) {
+				let alredyCommented;
+
+				if (c.essenseData.lastComment) {
+					const address = c.essenseData.lastComment.address;
+					const me = app.platform.sdk.user.me();
+
+					const firstLikeIsMine = (address == me.address);
+
+					if (firstLikeIsMine) {
+						alredyCommented = true;
+					}
+				}
+
+				if (areas && !alredyCommented) {
+					const len = Object.keys(areas).length;
+
+					const isPost = len && areas[0];
+					const isReply = len && len >= 2;
+
+					let hasContent;
+
+					//leaveComment (post) isn't empty
+					if (isPost) {
+						hasContent = areas[0].content != '';
+					}
+
+					//leaveComment (reply) isn't empty
+					if (isReply) {
+						hasContent = Object.values(areas)[1].content != '';
+					}
+
+					//if isn't empty
+					if (hasContent) {
+						alredyCommented = true;
+					}
+				}
 					
+				if (alredyCommented) {
+					return false;
 				}
 
 				bannerComment = app.platform.ui.showCommentBanner(el.c);
-
+				return bannerComment;
 			},
 
 			authclbk : function(){
@@ -2875,7 +2884,7 @@ var comments = (function(){
 				receiver = p.essenseData.receiver;
 
 				el = {};
-				el.c = p.el.find('#' + self.map.id);
+				el.c = p.el.find(">div")
 
 				el.post = el.c.find('.post')
 				el.list = el.c.find('.list')
@@ -2915,7 +2924,9 @@ var comments = (function(){
 				
 
 				if (listpreview){
-					makePreview()
+					makePreview(() => {
+						if(ed.previewClbk) ed.previewClbk()
+					})
 				}
 				else{
 					make();
@@ -2977,8 +2988,11 @@ var comments = (function(){
 					}
 					else
 					{
-						top = 0
+						/*if(self.app.mobileview) top = 65
+						else*/
+							top = 0
 					}
+
 
 					if(caption) {
 						if(_in)

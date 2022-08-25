@@ -22,6 +22,7 @@ nModule = function(){
 
 	}
 
+
 	self.inserts = {
 		wnd : {
 			obj : wnd,
@@ -89,7 +90,7 @@ nModule = function(){
 		}
 	}
 
-
+	
 
 	self.shell = function(p, clbk, fromModule){
 
@@ -104,7 +105,7 @@ nModule = function(){
 			if (p.el && !p.ignorelinksandimages)
 			{
 				self.nav.api.links(null, p.el, p.additionalActions || null);
-				bgImages(p.el, p.bgImages)
+				bgImagesCl(p.el, p.bgImages)
 			}
 
 			if (typeof clbk  === 'function'){
@@ -286,8 +287,13 @@ nModule = function(){
 			if (p.clear)
 				p.rendered = "";
 
-			if (clbk)
+
+			
+
+			if (clbk){
 				clbk(p.rendered)
+			}
+				
 
 		})
 	}
