@@ -14,13 +14,15 @@
         <meta name="keywords" content="Blockchain, Decentralized, Delete Facebook, Alternative Social Media, Social Network, Social Platform, No Censorship, Online Social Network, Facebook Alternative, Reddit Alternative, Twitter Alternative, Social Sharing Platform, Decentralized Social Network, Blockchain Social Network " />
 
         <meta http-equiv="Content-Security-Policy" content="
-        default-src https: 'self'; 
-        connect-src https: wss:;
-        img-src 'self' blob: data: https:;
-        script-src 'self' https://__VAR__.domain https://player.vimeo.com https://www.youtube.com https://s.ytimg.com https://cdn.rawgit.com https://embed.tawk.to https://cdn.jsdelivr.net 'unsafe-eval' 'unsafe-inline';
-        style-src 'self'  https://use.fontawesome.com https://fonts.googleapis.com https://cdn.jsdelivr.net 'unsafe-inline';
-        font-src 'self' data: https://fonts.gstatic.com https://static-v.tawk.to https://use.fontawesome.com;
-        media-src blob: *">
+        upgrade-insecure-requests;
+        default-src blob: 'self' __VAR__.domain:*;
+        connect-src blob: 'self' http: ws: https: wss:;
+        img-src 'self' blob: data: http: https: __VAR__.domain:*;
+        script-src 'self' blob: __VAR__.domain player.vimeo.com www.youtube.com s.ytimg.com cdnjs.cloudflare.com/ajax/libs/lamejs/ cdn.jsdelivr.net/joypixels/ 'unsafe-eval' 'unsafe-inline';
+        frame-src 'self' __VAR__.domain player.vimeo.com www.youtube.com;
+        style-src 'self' data: __VAR__.domain:* cdn.jsdelivr.net/joypixels/ use.fontawesome.com 'unsafe-inline';
+        font-src 'self' data: __VAR__.domain:* use.fontawesome.com;
+        media-src data: blob: *">
         <link rel="stylesheet" href="css/openapi.css">
         <style type="text/css">
             #splashScreen{position:fixed;top:0;left:0;width:100%;height:100%;background-color:#011621;z-index:5000;display:flex;justify-content:center;align-items:center;flex-direction:column;}#splashScreen h1{color:#fff;margin-top:1em;margin-bottom:0;font-size:1em}#splashScreen h1.fade-in{-webkit-animation:fade-in .3s ease-out both;animation:fade-in .3s ease-out both}#splashScreen.fade-out{-webkit-animation:fade-out .2s ease-in both;animation:fade-out .2s ease-in both;background-color:#0098eb}#splashScreen img{max-height:50px;max-width:50px}#splashScreen img.zoom-in{-webkit-animation:zoom-in .5s ease-out both;animation:zoom-in .5s ease-out both}#splashScreen img.zoom-out{-webkit-animation:zoom-out .5s ease-in both;animation:zoom-out .5s ease-in both}#splashScreen img.rotate{-webkit-animation:rotate 1s ease-in-out infinite both;animation:rotate 1s ease-in-out infinite both}#splashScreen img.zoom-out-rotate{-webkit-animation:zoom-out-rotate .5s ease-in both;animation:zoom-out-rotate .5s ease-in both}@media only screen and (max-width:640px){#splashScreen{display:flex}}@-webkit-keyframes zoom-out{0%{-webkit-transform:scale3d(1,1,1);transform:scale3d(1,1,1);opacity:1}50%{opacity:.25}100%{-webkit-transform:scale3d(50,50,50);transform:scale3d(50,50,50);opacity:0}}@keyframes zoom-out{0%{-webkit-transform:scale3d(1,1,1);transform:scale3d(1,1,1);opacity:1}50%{opacity:.25}100%{-webkit-transform:scale3d(50,50,50);transform:scale3d(50,50,50);opacity:0}}@-webkit-keyframes zoom-in{0%{-webkit-transform:scale3d(0,0,0);transform:scale3d(0,0,0);opacity:0}100%{-webkit-transform:scale3d(1,1,1);transform:scale3d(1,1,1);opacity:1}}@keyframes zoom-in{0%{-webkit-transform:scale3d(0,0,0);transform:scale3d(0,0,0);opacity:0}100%{-webkit-transform:scale3d(1,1,1);transform:scale3d(1,1,1);opacity:1}}@-webkit-keyframes zoom-out-rotate{0%{-webkit-transform:scale3d(1,1,1) rotate(0);transform:scale3d(1,1,1) rotate(0);opacity:1}50%{opacity:.25}100%{-webkit-transform:scale3d(75,75,75) rotate(310deg);transform:scale3d(75,75,75) rotate(310deg);opacity:0}}@keyframes zoom-out-rotate{0%{-webkit-transform:scale3d(1,1,1) rotate(0);transform:scale3d(1,1,1) rotate(0);opacity:1}50%{opacity:.25}100%{-webkit-transform:scale3d(75,75,75) rotate(310deg);transform:scale3d(75,75,75) rotate(310deg);opacity:0}}@-webkit-keyframes rotate{0%{-webkit-transform:rotate(0);transform:rotate(0)}100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}@keyframes rotate{0%{-webkit-transform:rotate(0);transform:rotate(0)}100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}@-webkit-keyframes fade-out{0%{opacity:1}100%{opacity:0}}@keyframes fade-out{0%{opacity:1}100%{opacity:0}}@-webkit-keyframes fade-in{0%{opacity:0}100%{opacity:1}}@keyframes fade-in{0%{opacity:0}100%{opacity:1}}
@@ -30,6 +32,9 @@
     </head>
     
     <body id="application" class="menu-hide openapi openapipnet">
+
+        <div id="windowsContainer">
+        </div>
       
         <div class="contentWrapper openapipnet"> 
             <div id="content">                
@@ -52,8 +57,6 @@
             </div> 
         </div>
 
-        <div class="bodyshadow">
-        </div>     
 
         <div class="topPreloader" id="_topPreloader">
         </div>
@@ -75,6 +78,7 @@
         </div>
 
         <script src="js/vendor/jquery-1.11.3.min.js"></script>
+        <script src="js/polyfills.js"></script>
 
         <script type="text/javascript">
 
@@ -84,6 +88,7 @@
            
             
         </script>
+        <script src="js/widgets.js?v=136"></script>
         <script join src="js/vendor/iframeResizer.contentWindow.min.js"></script>
 
         __JSENV__
@@ -95,6 +100,11 @@
         __JS__
 
         __CSS__
+
+        __JSPOST__
+
+
+        <script src="js/openapi.js"></script>
 
 
         <link rel="stylesheet" href="css/fontawesome/css/all.min.css">

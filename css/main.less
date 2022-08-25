@@ -360,7 +360,7 @@ html {
     opacity: 1;
 }
 
-[image="*"]{
+[imageloaded="true"]{
     opacity: 1;
 }
 
@@ -1338,7 +1338,9 @@ pie {
 }
 
 html.mobileview{
-
+    #footerWrapper{
+        /*display: none;*/
+    }
 
     .upbutton{
         display: none;
@@ -3376,17 +3378,6 @@ input[type=radio].radio:checked + label {
     }
 }
 
-.bodyshadow{
-    position: fixed;
-    z-index: 4;
-    left: 0;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(var(--background-total-theme), 0.6);
-    display: none;
-}
-
 
 ////////////////// SITE
 
@@ -3601,12 +3592,14 @@ input[type=radio].radio:checked + label {
        width: 30px;
    }
 }
+
 .preloader5{
-    contain: strict;
+
     display: flex;
     justify-content: center;
     align-items: center;
     height: 7.5px;
+
     img{
         height: 7.5px;
         width: 30px;

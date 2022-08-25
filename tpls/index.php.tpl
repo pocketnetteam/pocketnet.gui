@@ -75,18 +75,6 @@
         <div id="navigationWrapper">
         </div> 
 
-        <div class="contentWrapper "> 
-            <div id="content">                
-            </div>
-        </div>
-
-        <div id="footerWrapper">
-            
-        </div>
-
-        <div class="bodyshadow">
-        </div>     
-
         <div class="topPreloader" id="_topPreloader">
         </div>
 
@@ -94,9 +82,6 @@
             <img src="img/splashscreen/pocketnet-logo-19.svg" id="splashScreenImg" class="zoom-in rotate">
         </div>
 
-        <div class="chats">
-        </div>
-    
 
         <div id="matrix" class="matrix"></div>
         <div id="hideallnotifications"></div>
@@ -121,6 +106,17 @@
                
             </div>
         </div>
+
+        <div class="contentWrapper "> 
+            <div id="content">                
+            </div>
+        </div>
+
+        <div id="footerWrapper">
+        </div>
+
+
+        
 
 
        <!-- <script src="cordova.js"></script>-->

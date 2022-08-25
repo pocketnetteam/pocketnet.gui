@@ -11,6 +11,7 @@ var ncp = require('ncp').ncp;
 const _path = require('path');
 ncp.limit = 16;
 
+var minifyHtml = require('html-minifier').minify;
 
 var args = {
 	test : false,
@@ -594,7 +595,12 @@ fs.exists(mapJsPath, function (exists) {
 
 									if(!scripted[i.c]) scripted[i.c] = {}
 
-									scripted[i.c][i.n] = data.toString()
+									scripted[i.c][i.n] = minifyHtml(data.toString(), {
+										collapseWhitespace : true,
+										removeComments : true
+									})
+
+									//var uglified = htmlUglify.process(htmlString);
 
 									p.success();
 								});
@@ -633,7 +639,6 @@ fs.exists(mapJsPath, function (exists) {
 
 				fs.readdir(path, function(err, items) {
 
-					console.log('items', items)
 
 					lazyEach({
 						array : items,
@@ -641,7 +646,6 @@ fs.exists(mapJsPath, function (exists) {
 	
 							fs.readdir(path + p.item + '/templates/', function(err, items2) {
 
-								console.log('items2', items2)
 
 								_.each(items2, function(i){
 									__templates.push({
@@ -658,8 +662,6 @@ fs.exists(mapJsPath, function (exists) {
 						
 						all : {
 							success : function(){
-
-								console.log('__templates', __templates)
 
 								__joinTemplates(__templates, clbk)
 								

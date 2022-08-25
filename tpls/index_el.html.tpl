@@ -68,26 +68,8 @@
         <div id="navigationWrapper">
         </div> 
 
-        <div class="contentWrapper "> 
-            <div id="content">                
-            </div>
-        </div>
-
-        <div id="footerWrapper">
-            
-        </div>
-
-        <div class="bodyshadow">
-        </div>     
-
-        <div class="topPreloader" id="_topPreloader">
-        </div>
-
         <div id="splashScreen" class="cssanimation">
             <img src="img/splashscreen/pocketnet-logo-19.svg" id="splashScreenImg" class="zoom-in rotate">
-        </div>
-
-        <div class="chats">
         </div>
 
         </div>
@@ -109,22 +91,23 @@
         <div class="electronnav" id="electronnavContainer">
         </div>
 
-        <!--<div class="updatingFrontend">
-            <div class="table">
-                <div>
-                    <div class="text">
-                        <span>Please be Patient: Major Release of __VAR__.project is Being Prepared</span>
-                    </div>
+     
 
-                    <div class="icon">
-                        <i class="fas fa-wrench"></i>
-                    </div>
-                    
-                </div>
-               
+        <div class="contentWrapper "> 
+            <div id="content">                
             </div>
-        </div>-->
+        </div>
 
+        <div id="footerWrapper">
+            
+        </div>
+
+     
+
+        <div class="topPreloader" id="_topPreloader">
+        </div>
+
+        
         <script>window.$ = window.jQuery = require('./js/vendor/jquery-1.11.3.min.js');</script>
         
 

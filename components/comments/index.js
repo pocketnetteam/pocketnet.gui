@@ -1905,6 +1905,7 @@ var comments = (function(){
 							caption: el.c.find('.captionfwrapper'),
 							offset: [top, -100],
 							removeSpacer : true,
+							zIndex : 105,
 							iniHeight : true,
 							_in : _in
 						}).init();
@@ -2141,48 +2142,13 @@ var comments = (function(){
 
 				}
 
-				var h = sel.height()
+				//var h = sel.height()
 
-				_el.imagesLoadedPN({ imageAttr: true }, function(image) {
+				if (clbk)
+						clbk()
 
-					/*_.each(image.images, function(img, n){
-
-						var _img = img.img;
-
-						var el = $(image.elements[n]).closest('.imagesWrapper');
-						var ac = '';
-
-						var _w = el.width();
-						var _h = el.height()
-
-						if(_img.width > _img.height && !isMobile()){
-							ac = 'w2'
-
-							var w = _w * (_img.width / _img.height);
-
-							if (w > images.width()){
-								w = images.width()
-
-								h = w * ( _img.height / _img.width) 
-
-								el.height(h);
-							}
-
-							el.width(w);
-						}
-
-						if(_img.height > _img.width || isMobile()){
-							ac = 'h2'
-
-							el.height(_w * (_img.height / _img.width))
-						}
-
-						if(ac){
-							el.addClass(ac)
-						}
-						
-					})*/
-
+				/*_el.imagesLoadedPN({ imageAttr: true }, function(image) {
+					
 					if(ed.renderClbk) ed.renderClbk()
 
 					if (clbk)
@@ -2191,7 +2157,7 @@ var comments = (function(){
 
 					return
 
-				}, self.app);
+				}, self.app);*/
 				
 			},
 
@@ -2341,7 +2307,7 @@ var comments = (function(){
 							}
 						}
 						if (el.list){
-							bgImages(el.list)
+							//bgImages(el.list)
 
 							lazyEach({
 								array : p.comments,
@@ -2872,7 +2838,7 @@ var comments = (function(){
 				receiver = p.essenseData.receiver;
 
 				el = {};
-				el.c = p.el.find('#' + self.map.id);
+				el.c = p.el.find(">div")
 
 				el.post = el.c.find('.post')
 				el.list = el.c.find('.list')
@@ -2912,7 +2878,9 @@ var comments = (function(){
 				
 
 				if (listpreview){
-					makePreview()
+					makePreview(() => {
+						if(ed.previewClbk) ed.previewClbk()
+					})
 				}
 				else{
 					make();
@@ -2974,8 +2942,11 @@ var comments = (function(){
 					}
 					else
 					{
-						top = 0
+						/*if(self.app.mobileview) top = 65
+						else*/
+							top = 0
 					}
+
 
 					if(caption) {
 						if(_in)

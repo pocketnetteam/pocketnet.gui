@@ -6,40 +6,40 @@ loclib = {};
 
 loclib.en = {};
 
-var ____loclib = loclib.en;
+var _l = loclib.en;
 
 //time
 
-____loclib.fewseconds = "Few seconds ago";
-____loclib.oneminute = "One minute ago";
+_l.fewseconds = "Few seconds ago";
+_l.oneminute = "One minute ago";
 
-____loclib.minutes = function(v){
+_l.minutes = function(v){
 return v + " minutes ago"
 }
 
-____loclib.tenminutes = "Ten minutes ago";
-____loclib.halfanhour = "An hour ago";
-____loclib.anhour = "An hour ago";
-____loclib.today = "Today at";
+_l.tenminutes = "Ten minutes ago";
+_l.halfanhour = "An hour ago";
+_l.anhour = "An hour ago";
+_l.today = "Today at";
 
 //authorization
 
-____loclib.id0 = "Login to an existing account";
-____loclib.id1 = "If you are already registered, please sign in";
-____loclib.loadqrcode = "Upload QR Code";
-____loclib.stay = "Stay Signed In";
-____loclib.signin = "Sign In";
-____loclib.orcreate = "Or create a new account";
-____loclib.createnew = "Create a new account";
-____loclib.staysafe = "It is not safe. Do you want to proceed?";
-____loclib.or = "or";
+_l.id0 = "Login to an existing account";
+_l.id1 = "If you are already registered, please sign in";
+_l.loadqrcode = "Upload QR Code";
+_l.stay = "Stay Signed In";
+_l.signin = "Sign In";
+_l.orcreate = "Or create a new account";
+_l.createnew = "Create a new account";
+_l.staysafe = "It is not safe. Do you want to proceed?";
+_l.or = "or";
 
 // Register a New Account
-____loclib.id71 = "Create a New Account";
-____loclib.id72 = "Already a Member? Sign In";
+_l.id71 = "Create a New Account";
+_l.id72 = "Already a Member? Sign In";
 
-____loclib.rtip1 = "Take Note of Your Private Login Key!";
-____loclib.rtip2 = function(mobile){
+_l.rtip1 = "Take Note of Your Private Login Key!";
+_l.rtip2 = function(mobile){
 var h = "Below is your Private Key passphrase. Write it down and make sure to save your QR code"
 
 if(mobile){ h += "device" } else { h+="PC" }
@@ -49,1113 +49,1115 @@ h+=" and be sure not to lose it. We do not store your personal data. Private Key
 return h
 }
 
-____loclib.generatepkey = "Generate Private Key";
-____loclib.rtip3 = "Write this login key down. We do not store your personal data. It cannot be recovered if lost! ";
-____loclib.saveqrcode = "Save Qr Code"
-____loclib.copyprivkey = "Copy Private Key"
-____loclib.rcontinue = "Continue"
-____loclib.idle = "Idle for some time"
-____loclib.congratulations = "Congratulations! You are in <span class='pnlabel'>"+appname+"</span>"
-____loclib.creatingpreloader = "Creating Account"
-____loclib.removepaste = "We removed the paste option for this input."
-____loclib.filedamaged = "File doesn't contain a valid private key"
-____loclib.keysnotmatch = "Private login key does not match"
-____loclib.confirmkey = "Type Your Private Login Key or Upload QR Code From Previous Step"
-____loclib.successfullycopied = "Key was successfully copied"
-____loclib.urlsuccesscopied = "Link was successfully copied"
-____loclib.successcopied = "Text was successfully copied"
+_l.generatepkey = "Generate Private Key";
+_l.rtip3 = "Write this login key down. We do not store your personal data. It cannot be recovered if lost! ";
+_l.saveqrcode = "Save Qr Code"
+_l.copyprivkey = "Copy Private Key"
+_l.rcontinue = "Continue"
+_l.idle = "Idle for some time"
+_l.congratulations = "Congratulations! You are in <span class='pnlabel'>"+appname+"</span>"
+_l.creatingpreloader = "Creating Account"
+_l.removepaste = "We removed the paste option for this input."
+_l.filedamaged = "File doesn't contain a valid private key"
+_l.keysnotmatch = "Private login key does not match"
+_l.confirmkey = "Type Your Private Login Key or Upload QR Code From Previous Step"
+_l.successfullycopied = "Key was successfully copied"
+_l.urlsuccesscopied = "Link was successfully copied"
+_l.successcopied = "Text was successfully copied"
 
-____loclib.confirmkeyLabel = "Please Confirm Your Private Key. Type Key in form or <b>upload QR code</b>"
-____loclib.repeatetocreate = "Repeat to create private key again"
-____loclib.confirmcreate = "Create Account"
+_l.confirmkeyLabel = "Please Confirm Your Private Key. Type Key in form or <b>upload QR code</b>"
+_l.repeatetocreate = "Repeat to create private key again"
+_l.confirmcreate = "Create Account"
 
 
 //user activation
 
-____loclib.useractivation = "User activation";
-____loclib.wesentmoney = "We sent you a few coins for registration";
-____loclib.wesentmoneym = "We have already sent you a few coins for registration";
+_l.useractivation = "User activation";
+_l.wesentmoney = "We sent you a few coins for registration";
+_l.wesentmoneym = "We have already sent you a few coins for registration";
 
 
-____loclib.wesentmoneydelay = "The process is taking more time than usual, please wait a little longer";
+_l.wesentmoneydelay = "The process is taking more time than usual, please wait a little longer";
 
-____loclib.funetworkproblems = "There are some problems with the connection. Please try later";
+_l.funetworkproblems = "There are some problems with the connection. Please try later";
 
-____loclib.pleasewait = "Please Wait";
-____loclib.next = "Next";
-____loclib.welcome = "Welcome";
-____loclib.welcometopocketnet = "Welcome to "+appname+"";
-____loclib.continue = "continue";
+_l.pleasewait = "Please Wait";
+_l.next = "Next";
+_l.welcome = "Welcome";
+_l.welcometopocketnet = "Welcome to "+appname+"";
+_l.continue = "continue";
 
-____loclib.chooseThemes = "Choose interesting themes";
-____loclib.bloggers = "Bloggers";
-____loclib.chooseBloggers = "Follow Popular Bloggers";
-____loclib.showmorebloggers = "Show more bloggers";
+_l.chooseThemes = "Choose interesting themes";
+_l.bloggers = "Bloggers";
+_l.chooseBloggers = "Follow Popular Bloggers";
+_l.showmorebloggers = "Show more bloggers";
 //user page
 
-____loclib.rstate = "Reputation";
-____loclib.rprofile = "Profile";
-____loclib.rsettings = "Settings";
-____loclib.rwallet = "Wallet";
-____loclib.rstatistic = "Statistic";
-____loclib.raccounts = "Accounts";
-____loclib.rsystem = "System";
-____loclib.rconnection = "Connection";
-____loclib.pnetAddress = ""+appname+" Address";
-____loclib.profile = "Profile";
-____loclib.signout = "Sign out";
+
+_l.rstate = "Reputation";
+_l.rprofile = "Profile";
+_l.rsettings = "Settings";
+_l.rwallet = "Wallet";
+_l.rstatistic = "Statistic";
+_l.raccounts = "Accounts";
+_l.rsystem = "System";
+_l.rconnection = "Connection";
+_l.pnetAddress = ""+appname+" Address";
+_l.profile = "Profile";
+_l.signout = "Sign out";
 
 //send
 
-____loclib.postlabel = "Donation for post";
-____loclib.donationlabel = "Donation";
-____loclib.donationwel = "If you want to thank the author you can use a "+appname+" transaction";
-____loclib.donationwela = ""+appname+" transaction";
-____loclib.donationwelan = "Or you can use another crypto payment system";
-____loclib.successfullycopiedaddress = "Address was successfully copied";
+_l.postlabel = "Donation for post";
+_l.donationlabel = "Donation";
+_l.donationwel = "If you want to thank the author you can use a "+appname+" transaction";
+_l.donationwela = ""+appname+" transaction";
+_l.donationwelan = "Or you can use another crypto payment system";
+_l.successfullycopiedaddress = "Address was successfully copied";
 
 //wallet
 
-____loclib.wrecieve = "Receive Coins By Sharing Address";
-____loclib.wcopyshare = "Copy & Share Address:";
-____loclib.wqrcode = "Qr code";
-____loclib.wcopeaddress = "Copy Address";
-____loclib.wcreatelink = "Or Create Link For Your Payment";
-____loclib.required = "Required";
-____loclib.wgetlink = "Get Link";
-____loclib.waddresses = "Addresses";
-____loclib.waddress = "Address";
-____loclib.wbalance = "Balance";
-____loclib.wpercente = "Percente";
-____loclib.waddaddress = "Explore a new Wallet address";
-____loclib.wrecieve = "Receive";
-____loclib.wrecieveon = "Receive on";
-____loclib.wcopyshareorcreate = "Copy & Share Address or Create Payment Link";
-____loclib.wdgetlink = "Get Link";
-____loclib.wdqrcode = "Qr code";
-____loclib.wdcopyaddress = "Copy Address";
-____loclib.wdpleasefill = "Please fill in these fields";
-____loclib.wduseqr = "Use this QR code to receive funds";
-____loclib.wdaddress = "Address";
-____loclib.wdamount = "Amount";
-____loclib.wdlabel = "Label";
-____loclib.wdmessage = "Message";
-____loclib.wsend = "Send";
-____loclib.calcfeesandsend = "Calculate Fees And Send";
-____loclib.wstrfees = "Transaction Fees";
-____loclib.wsfees = "Fees";
+_l.wrecieve = "Receive Coins By Sharing Address";
+_l.wcopyshare = "Copy & Share Address:";
+_l.wqrcode = "Qr code";
+_l.wcopeaddress = "Copy Address";
+_l.wcreatelink = "Or Create Link For Your Payment";
+_l.required = "Required";
+_l.wgetlink = "Get Link";
+_l.waddresses = "Addresses";
+_l.waddress = "Address";
+_l.wbalance = "Balance";
+_l.wpercente = "Percente";
+_l.waddaddress = "Explore a new Wallet address";
+_l.wrecieve = "Receive";
+_l.wrecieveon = "Receive on";
+_l.wcopyshareorcreate = "Copy & Share Address or Create Payment Link";
+_l.wdgetlink = "Get Link";
+_l.wdqrcode = "Qr code";
+_l.wdcopyaddress = "Copy Address";
+_l.wdpleasefill = "Please fill in these fields";
+_l.wduseqr = "Use this QR code to receive funds";
+_l.wdaddress = "Address";
+_l.wdamount = "Amount";
+_l.wdlabel = "Label";
+_l.wdmessage = "Message";
+_l.wsend = "Send";
+_l.calcfeesandsend = "Calculate Fees And Send";
+_l.wstrfees = "Transaction Fees";
+_l.wsfees = "Fees";
 
-____loclib.wssendto = "SEND COINS TO";
-____loclib.wssendb = "SEND";
+_l.wssendto = "SEND COINS TO";
+_l.wssendb = "SEND";
 
-____loclib.tacaddress = "Account Address";
-____loclib.twallet = "Wallet";
-____loclib.twalletaddresses = "Wallet addresses";
-____loclib.tTotal = "Total";
-____loclib.totalBalance = "Total balance";
-____loclib.wsselect = "Select Source From Menu";
-____loclib.wsenter = "Enter Address Or Select From Menu";
-____loclib.wsreciever = "Receiver address";
-____loclib.wsamount = "Amount";
-____loclib.wsamountof = "Amount of your transaction";
-____loclib.wsincludefees = "Include Fees in Amount";
-____loclib.wsrecieverpay = "To be paid by Receiver";
-____loclib.wssenderpay = "To be paid by Sender";
-____loclib.wdselectfrom = "Select From menu";
 
-____loclib.wdenteramount = "Enter Amount";
-____loclib.wdmessageplaceholder = "What is this transaction for?";
-____loclib.wrenteraddress = "Enter Address";
-____loclib.wrenteraddressselect = "Enter Address Or Select From menu";
-____loclib.wreturntoeallet = "RETURN TO WALLET";
-____loclib.linkCreated = "LINK CREATED";
-____loclib.waddresswascop = "Address was successfully copied";
-____loclib.wqrcodecreated = "QR CODE CREATED";
-____loclib.wlinkcreating = "LINK CREATING";
-____loclib.wqrcodecreating = "QR CODE CREATING";
-____loclib.wdoptions = "OPTIONS";
-____loclib.wssuccessfully = "Transaction sent successfully";
-____loclib.wscalculatefees = "CALCULATE FEES";
-____loclib.wsaddressnotv = "Address is not valid";
+_l.tacaddress = "Account Address";
+_l.twallet = "Wallet";
+_l.twalletaddresses = "Wallet addresses";
+_l.tTotal = "Total";
+_l.totalBalance = "Total balance";
+_l.wsselect = "Select Source From Menu";
+_l.wsenter = "Enter Address Or Select From Menu";
+_l.wsreciever = "Receiver address";
+_l.wsamount = "Amount";
+_l.wsamountof = "Amount of your transaction";
+_l.wsincludefees = "Include Fees in Amount";
+_l.wsrecieverpay = "To be paid by Receiver";
+_l.wssenderpay = "To be paid by Sender";
+_l.wdselectfrom = "Select From menu";
+
+_l.wdenteramount = "Enter Amount";
+_l.wdmessageplaceholder = "What is this transaction for?";
+_l.wrenteraddress = "Enter Address";
+_l.wrenteraddressselect = "Enter Address Or Select From menu";
+_l.wreturntoeallet = "RETURN TO WALLET";
+_l.linkCreated = "LINK CREATED";
+_l.waddresswascop = "Address was successfully copied";
+_l.wqrcodecreated = "QR CODE CREATED";
+_l.wlinkcreating = "LINK CREATING";
+_l.wqrcodecreating = "QR CODE CREATING";
+_l.wdoptions = "OPTIONS";
+_l.wssuccessfully = "Transaction sent successfully";
+_l.wscalculatefees = "CALCULATE FEES";
+_l.wsaddressnotv = "Address is not valid";
 
 //user profile
-____loclib.uaddaddressdona = "Add address For Donations";
-____loclib.uaddaddressdonaplace = "Enter Address";
-____loclib.uchangeicon = "Upload Profile Image";
-____loclib.utip1 = "You must create name on blockchain before using "+appname+"";
-____loclib.utip2 = "You have only one step left";
-____loclib.upicset = "Set Profile Icon";
-____loclib.upic = "Profile Icon";
-____loclib.uuserinfo = "User Information";
-____loclib.usave = "Save";
-____loclib.ucancel = "Cancel";
-____loclib.uwaitb = "Wait for confirmation to save information ";
-____loclib.uchanges = "There are no changes";
-____loclib.uchangesvalid = "You need to type username";
-____loclib.uname = "Name";
-____loclib.unickname = "Nickname";
-____loclib.ulanguage = "Language";
-____loclib.uabout = "About myself";
-____loclib.uwebsite = "Web Site";
-____loclib.uaddresesd = "Addresses for Donations";
-____loclib.usavechanges = "Do you want to save your changes?";
+_l.uaddaddressdona = "Add address For Donations";
+_l.uaddaddressdonaplace = "Enter Address";
+_l.uchangeicon = "Upload Profile Image";
+_l.utip1 = "You must create name on blockchain before using "+appname+"";
+_l.utip2 = "You have only one step left";
+_l.upicset = "Set Profile Icon";
+_l.upic = "Profile Icon";
+_l.uuserinfo = "User Information";
+_l.usave = "Save";
+_l.ucancel = "Cancel";
+_l.uwaitb = "Wait for confirmation to save information ";
+_l.uchanges = "There are no changes";
+_l.uchangesvalid = "You need to type username";
+_l.uname = "Name";
+_l.unickname = "Nickname";
+_l.ulanguage = "Language";
+_l.uabout = "About myself";
+_l.uwebsite = "Web Site";
+_l.uaddresesd = "Addresses for Donations";
+_l.usavechanges = "Do you want to save your changes?";
 
 //statistic
 
-____loclib.referralsCount = 'Users who have used the referral link.';
-____loclib.commentatorsCount_0 = 'Users have commented on you more than 1 time';
-____loclib.commentatorsCount_1 = 'Users have commented on you more than 3 times';
-____loclib.commentatorsCount_2 = 'Users have commented on you more than 7 times';
-____loclib.from = 'Period: ';
-____loclib.to = 'to';
-____loclib.empty = 'Information not found';
-____loclib.apply = 'Apply';
-
-//ustate
-____loclib.sreps = "Reputation and Limitations";
-____loclib.sdisconnected = "Disconnected from node";
-____loclib.suseractivation = "User Activation";
-____loclib.sprofile = "Profile";
-____loclib.spc = "Post count";
-____loclib.spv = "Video Post count";
-____loclib.ssc = "Stars count";
-____loclib.ccc = "Comments count";
-____loclib.crc = "Comment Rate count";
-____loclib.artc = "Articles count";
-
-____loclib.stp = "Beginner";
-____loclib.stpg = "Top";
-____loclib.stpreal = "Verified";
-____loclib.stpdev = "Bastyon developer";
-
-____loclib.trialreputationtip = "To become a top user you need to have a valid reputation. It requires at least 100 different people with top reputation to upvote your content (after 3 months this requirement is relaxed to 30). The second requirement is minimum 100 overall reputation.";
-____loclib.trialreputationtipaction = "Learn more about reputation here"
+_l.referralsCount = 'Users who have used the referral link.';
+_l.commentatorsCount_0 = 'Users have commented on you more than 1 time';
+_l.commentatorsCount_1 = 'Users have commented on you more than 3 times';
+_l.commentatorsCount_2 = 'Users have commented on you more than 7 times';
+_l.from = 'Period: ';
+_l.to = 'to';
+_l.empty = 'Information not found';
+_l.apply = 'Apply';
 
 
-____loclib.srep = "Reputation";
-____loclib.ccpl = "Complains count";
+_l.sreps = "Reputation and Limitations";
+_l.sdisconnected = "Disconnected from node";
+_l.suseractivation = "User Activation";
+_l.sprofile = "Profile";
+_l.spc = "Post count";
+_l.spv = "Video Post count";
+_l.ssc = "Stars count";
+_l.ccc = "Comments count";
+_l.crc = "Comment Rate count";
+_l.artc = "Articles count";
+
+_l.stp = "Beginner";
+_l.stpg = "Top";
+_l.stpreal = "Verified";
+_l.stpdev = "Bastyon developer";
+
+_l.trialreputationtip = "To become a top user you need to have a valid reputation. It requires at least 100 different people with top reputation to upvote your content (after 3 months this requirement is relaxed to 30). The second requirement is minimum 100 overall reputation.";
+_l.trialreputationtipaction = "Learn more about reputation here"
+
+
+_l.srep = "Reputation";
+_l.ccpl = "Complains count";
 
 //accounts
-____loclib.aaddedacc = "Change Account";
-____loclib.acure = "Current";
-____loclib.aaddacc = "Add Account";
-____loclib.ascheduler = "Scheduler";
-____loclib.aused = "This address is already use in another addresses pool";
+_l.aaddedacc = "Change Account";
+_l.acure = "Current";
+_l.aaddacc = "Add Account";
+_l.ascheduler = "Scheduler";
+_l.aused = "This address is already use in another addresses pool";
 
-____loclib.accfailedkeypair = "Wrong Private Key";
-____loclib.acchasinthispack = "This address is already added";
-____loclib.acchasinanotherpack = "This address is already use in another addresses pool";
+_l.accfailedkeypair = "Wrong Private Key";
+_l.acchasinthispack = "This address is already added";
+_l.acchasinanotherpack = "This address is already use in another addresses pool";
 
 
 //author
-____loclib.sub = "Follow";
-____loclib.subi = "Following";
-____loclib.unsub = "Unfollow";
-____loclib.joined = "Joined";
-____loclib.shares = "SHARES";
-____loclib.uposts = "POSTS";
-____loclib.myuposts = "MY POSTS";
-____loclib.followers = "FOLLOWERS";
-____loclib.followers2 = "Followers";
-____loclib.following = "FOLLOWING";
-____loclib.following2 = "Following";
-____loclib.settings = "MANAGE";
-____loclib.anofollowers = "This user has no followers";
-____loclib.aynofollowers = "You have no followers";
-____loclib.anofollowing = "This user is not following anyone";
-____loclib.aynofollowing = "You are not following anyone";
+_l.sub = "Follow";
+_l.subi = "Following";
+_l.unsub = "Unfollow";
+_l.joined = "Joined";
+_l.shares = "SHARES";
+_l.uposts = "POSTS";
+_l.myuposts = "MY POSTS";
+_l.followers = "FOLLOWERS";
+_l.followers2 = "Followers";
+_l.following = "FOLLOWING";
+_l.following2 = "Following";
+_l.settings = "MANAGE";
+_l.anofollowers = "This user has no followers";
+_l.aynofollowers = "You have no followers";
+_l.anofollowing = "This user is not following anyone";
+_l.aynofollowing = "You are not following anyone";
 
-____loclib.blockedusers = "Blocked Users";
-____loclib.anoblocked = "This user is not blocked anyone";
-____loclib.aynoblocked = "You are not blocked anyone";
+_l.blockedusers = "Blocked Users";
+_l.anoblocked = "This user is not blocked anyone";
+_l.aynoblocked = "You are not blocked anyone";
 
 //lenta
-____loclib.lloadmore = "Load More Awesome Posts!";
-____loclib.lloadprev = "Load New Awesome Posts";
+_l.lloadmore = "Load More Awesome Posts!";
+_l.lloadprev = "Load New Awesome Posts";
 
 
-____loclib.lend = "End of Posts";
-____loclib.zerop = "There currently no posts by this author";
+_l.lend = "End of Posts";
+_l.zerop = "There currently no posts by this author";
 
 
-____loclib.zeroy = "You do not have any publications yet, share something!";
+_l.zeroy = "You do not have any publications yet, share something!";
 
 
 
-____loclib.llogin = "You must login before you can proceed";
-____loclib.lcomlaindialog = "Are you sure you want to report this post?";
-____loclib.lunsubscribe = "Do you really want to unfollow this account?";
-____loclib.lprivatepublic = "Do you want to make a Private or Public subscription?";
-____loclib.lprivate = "Private";
-____loclib.lpublic = "Public";
+_l.llogin = "You must login before you can proceed";
+_l.lcomlaindialog = "Are you sure you want to report this post?";
+_l.lunsubscribe = "Do you really want to unfollow this account?";
+_l.lprivatepublic = "Do you want to make a Private or Public subscription?";
+_l.lprivate = "Private";
+_l.lpublic = "Public";
 
 //inviteComment
-____loclib.commentBannerTitle = "Comment on this post";
-____loclib.commentBannerDescription = "Commenting unlocks features on Bastyon and helps you find friends 😀";
-____loclib.dontShowAgain = "Don't show again";
+_l.commentBannerTitle = "Comment on this post";
+_l.commentBannerDescription = "Commenting unlocks features on Bastyon and helps you find friends 😀";
+_l.dontShowAgain = "Don't show again";
 
 //share
-____loclib.newShare = "New Post";
-____loclib.firstShare = "Share Your First Post in "+appname+"";
-____loclib.scaption = "Caption";
-____loclib.whatsnew = "What's new?";
-____loclib.whatsnewrepost = "What's new?";
+_l.newShare = "New Post";
+_l.firstShare = "Share Your First Post in "+appname+"";
+_l.scaption = "Caption";
+_l.whatsnew = "What's new?";
+_l.whatsnewrepost = "What's new?";
 
 
 
-____loclib.saddlink = "Add link to external site or video";
-____loclib.saddimages = "Add Images to Post";
-____loclib.sarticle = "To write an article";
-____loclib.stelegram = "Send to telegram"
-____loclib.stimes = "Clear post"
+_l.saddlink = "Add link to external site or video";
+_l.saddimages = "Add Images to Post";
+_l.sarticle = "To write an article";
+_l.stelegram = "Send to telegram"
+_l.stimes = "Clear post"
 
 
-____loclib.snothing = "Nothing";
-____loclib.sposttime = "Post By Time";
-____loclib.spostnow = "Post Now";
-____loclib.stimenotselected = "Time Not Selected";
-____loclib.spost = "Post";
-____loclib.sdate = "Date";
-____loclib.stime = "Time";
-____loclib.snotags = "Add tag";
-____loclib.expandvideo = "Click to expand";
-____loclib.emptymessage = "Message is empty";
-____loclib.emptytags = "Please add Tags";
-____loclib.emptyutxo = "no money";
-____loclib.networkerror = "network error";
-____loclib.maximages = "You are alowed a maximum or 10 Images";
-____loclib.sharenow = "Do you want to share this content now?";
-____loclib.pastdate = "Past Date";
-____loclib.timenotselected = "Time Not Selected";
-____loclib.addtags = "Add tags";
-____loclib.tnews = "news";
-____loclib.timages = "images";
-____loclib.tlinks = "links";
-____loclib.tvideos = "videos";
-____loclib.tmarket = "market";
-____loclib.tsport = "sports";
+_l.snothing = "Nothing";
+_l.sposttime = "Post By Time";
+_l.spostnow = "Post Now";
+_l.stimenotselected = "Time Not Selected";
+_l.spost = "Post";
+_l.sdate = "Date";
+_l.stime = "Time";
+_l.snotags = "Add tag";
+_l.expandvideo = "Click to expand";
+_l.emptymessage = "Message is empty";
+_l.emptytags = "Please add Tags";
+_l.emptyutxo = "no money";
+_l.networkerror = "network error";
+_l.maximages = "You are alowed a maximum or 10 Images";
+_l.sharenow = "Do you want to share this content now?";
+_l.pastdate = "Past Date";
+_l.timenotselected = "Time Not Selected";
+_l.addtags = "Add tags";
+_l.tnews = "news";
+_l.timages = "images";
+_l.tlinks = "links";
+_l.tvideos = "videos";
+_l.tmarket = "market";
+_l.tsport = "sports";
 
 //menu
-____loclib.signinmenu = "Sign in";
-____loclib.signupmenu = "Sign up";
-____loclib.aboutmenu = "learn more";
+_l.signinmenu = "Sign in";
+_l.signupmenu = "Sign up";
+_l.aboutmenu = "learn more";
 
 //footer
-____loclib.aboutus = "About us";
+_l.aboutus = "About us";
 
 
 
 // Dialog Box Options
-____loclib.daccept = "Accept";
-____loclib.dcancel = "Cancel";
-____loclib.dyes = "Yes";
-____loclib.dno = "No";
-____loclib.dsa = "Do not Show Anymore";
-____loclib.dcode = "Code"
-____loclib.dcopyToClipboard = "Copy to ClipBoard"
-____loclib.dwarning = "Warning"
-____loclib.dyesclose = "Yes, close"
+_l.daccept = "Accept";
+_l.dcancel = "Cancel";
+_l.dyes = "Yes";
+_l.dno = "No";
+_l.dsa = "Do not Show Anymore";
+_l.dcode = "Code"
+_l.dcopyToClipboard = "Copy to ClipBoard"
+_l.dwarning = "Warning"
+_l.dyesclose = "Yes, close"
 
 
 // Messages
 
-____loclib.transactionCome = "Incoming transaction";
+_l.transactionCome = "Incoming transaction";
 
-____loclib.coinbaseSuccess = function(v){
+_l.coinbaseSuccess = function(v){
 return "Congratulations, you have won " + v + " PKOIN for your latest activity!"
 }
-____loclib.coinbaseSuccesspost = function(v){
+_l.coinbaseSuccesspost = function(v){
 return "Congratulations, you have won " + v + " PKOIN for your latest posts!"
 }
-____loclib.coinbaseSuccesscomment = function(v){
+_l.coinbaseSuccesscomment = function(v){
 return "Congratulations, you have won " + v + " PKOIN for your latest comments!"
 }
-____loclib.userSent = function(v){
+_l.userSent = function(v){
 return "sent <b>" + v + " PKOIN</b> to you"
 }
 
-____loclib.coinbaseSuccesspostref = function(v){
+_l.coinbaseSuccesspostref = function(v){
     return "Congrats, your referral just won " + v + " PKOIN for you!"
     }
-____loclib.coinbaseSuccesscommentref = function(v){
+_l.coinbaseSuccesscommentref = function(v){
     return "Congrats, your referral just won " + v + " PKOIN for you!"
 }
 
-____loclib.refferalUserMessage = "Congrats! You rescued someone from the censored web. Some coins are on their way!"
+_l.refferalUserMessage = "Congrats! You rescued someone from the censored web. Some coins are on their way!"
 
-____loclib.subscribeUserMessage = "followed you"
-____loclib.unsubscribeUserMessage = "unfollowed you"
-____loclib.gotoprofileMessage = "go to profile"
-____loclib.upvoteShareMessage = "upvoted your post"
+_l.subscribeUserMessage = "followed you"
+_l.unsubscribeUserMessage = "unfollowed you"
+_l.gotoprofileMessage = "go to profile"
+_l.upvoteShareMessage = "upvoted your post"
 
-____loclib.upvoteCommentMessage = " liked your comment"
+_l.upvoteCommentMessage = " liked your comment"
 
 // Errors
 
-____loclib.error = "Error";
-____loclib.checkScoreError = "Your account was not found on the blockchain. You must fill in required profile info before using "+appname+". Do you want to do it now?";
-____loclib.checkScoreErrorLight = "Account is not activated";
-____loclib.timestamperror = "Time in application and in node do not match";
+_l.error = "Error";
+_l.checkScoreError = "Your account was not found on the blockchain. You must fill in required profile info before using "+appname+". Do you want to do it now?";
+_l.checkScoreErrorLight = "Account is not activated";
+_l.timestamperror = "Time in application and in node do not match";
 
 // Error Page 404
-____loclib.e404 = "404";
-____loclib.e404e = "Page not Found. Return to Main Page";
-____loclib.postLimitLight = function(v){
+_l.e404 = "404";
+_l.e404e = "Page not Found. Return to Main Page";
+_l.postLimitLight = function(v){
 return "You have reached your limit of " + (v || 15) + " posts in a 24 hour period";
 }
-____loclib.postLimitLight = function(v){
+_l.postLimitLight = function(v){
 return "You have reached your limit of " + (v || 15) + " grading in a 24 hour period";
 }
 
-____loclib.doubleLimitLight = "You have already rated this";
+_l.doubleLimitLight = "You have already rated this";
 
-____loclib.SelfSubscribeError = "Cannot subscribe to yourself";
-____loclib.DoubleSubscribeError = "You already follow this user";
-____loclib.InvalideSubscribeError = "You are not subscribed to this user";
-____loclib.ChangeInfoLimitError = "You can only edit your profile once an hour. Please wait and try again. ";
-____loclib.SelfScoreError = "You cannot rate your own post";
+_l.SelfSubscribeError = "Cannot subscribe to yourself";
+_l.DoubleSubscribeError = "You already follow this user";
+_l.InvalideSubscribeError = "You are not subscribed to this user";
+_l.ChangeInfoLimitError = "You can only edit your profile once an hour. Please wait and try again. ";
+_l.SelfScoreError = "You cannot rate your own post";
 
-____loclib.unexperror10 = "Unknown Error (10)";
-____loclib.unexperror11 = "Unknown Error (11)";
-____loclib.unexperror12 = "Unknown Error (12)";
+_l.unexperror10 = "Unknown Error (10)";
+_l.unexperror11 = "Unknown Error (11)";
+_l.unexperror12 = "Unknown Error (12)";
 
-____loclib.networkerror = "There are some problems with node";
+_l.networkerror = "There are some problems with node";
 
-____loclib.canSpendError = "You have to wait for your previous transaction to clear in the blockchain. Please wait";
-____loclib.noMoneyError  = "You can't doing actions with zero account balance";
+_l.canSpendError = "You have to wait for your previous transaction to clear in the blockchain. Please wait";
+_l.noMoneyError  = "You can't doing actions with zero account balance";
 
-____loclib.scoreLimitLight = "You have reached your rating limit";
+_l.scoreLimitLight = "You have reached your rating limit";
 
-____loclib.waitConf = "You have to wait for your previous transaction to clear in the blockchain";
-____loclib.postWaitConf = "Post is waiting for a blockchain confirmation";
-____loclib.actionWaitConf = "Action is waiting for a blockchain confirmation";
+_l.waitConf = "You have to wait for your previous transaction to clear in the blockchain";
+_l.postWaitConf = "Post is waiting for a blockchain confirmation";
+_l.actionWaitConf = "Action is waiting for a blockchain confirmation";
 
 
 // notifications
 
-____loclib.ntnow = "Now"
-____loclib.ntlasthour = "This hour"
-____loclib.nttoday = "Today"
-____loclib.ntyesterday = "Yesterday"
+_l.ntnow = "Now"
+_l.ntlasthour = "This hour"
+_l.nttoday = "Today"
+_l.ntyesterday = "Yesterday"
 
-____loclib.ntmounth = "This month"
-____loclib.ntearlier = "Earlier"
+_l.ntmounth = "This month"
+_l.ntearlier = "Earlier"
 
 
-____loclib.nodeWalletAdd = "Adding an address may take some time. Continue?"
-____loclib.nodeEnableNoteHeader = "Note"
-____loclib.nodeEnableNote = "That turning on a node may take up to 5GB of RAM. Make sure you have enough. Happy staking!"
+_l.nodeWalletAdd = "Adding an address may take some time. Continue?"
+_l.nodeEnableNoteHeader = "Note"
+_l.nodeEnableNote = "That turning on a node may take up to 5GB of RAM. Make sure you have enough. Happy staking!"
 
 
 /// 1301
 
 
-____loclib.address = "Address"
-____loclib.privatekey = "Private Key"
-____loclib.qrcode = "QR Code"
-____loclib.addaccount = "Add Account"
-____loclib.entermnimo = "Enter Mnemonic Phrase or Private Key"
-____loclib.add = "Add"
-____loclib.e13011 = "You will now continue your registration after you install "+appname+" Desktop."
-____loclib.e13012 = "If "+appname+" did not start downloading, please click here to install it."
-____loclib.e13013 = "Type caption for image (optional)"
-____loclib.e13014 = "This file is not in a supported format:"
-____loclib.e13015 = "This file is too big:"
-____loclib.e13016 = "Paste a YouTube, Vimeo link and press Enter"
-____loclib.e13017 = "Loading to Blockchain"
-____loclib.e13018 = "Do You really want to remove this article?"
-____loclib.e13019 = "New"
-____loclib.e13020 = "Write New Article"
-____loclib.youarefollowing = "You are Following"
-____loclib.follow = "Follow"
-____loclib.blocked = "Blocked"
-____loclib.e13021 = "Show more"
+_l.address = "Address"
+_l.privatekey = "Private Key"
+_l.qrcode = "QR Code"
+_l.addaccount = "Add Account"
+_l.entermnimo = "Enter Mnemonic Phrase or Private Key"
+_l.add = "Add"
+_l.e13011 = "You will now continue your registration after you install "+appname+" Desktop."
+_l.e13012 = "If "+appname+" did not start downloading, please click here to install it."
+_l.e13013 = "Type caption for image (optional)"
+_l.e13014 = "This file is not in a supported format:"
+_l.e13015 = "This file is too big:"
+_l.e13016 = "Paste a YouTube, Vimeo link and press Enter"
+_l.e13017 = "Loading to Blockchain"
+_l.e13018 = "Do You really want to remove this article?"
+_l.e13019 = "New"
+_l.e13020 = "Write New Article"
+_l.youarefollowing = "You are Following"
+_l.follow = "Follow"
+_l.blocked = "Blocked"
+_l.e13021 = "Show more"
 
-____loclib.blockuser = "Block User"
-____loclib.unblockuser = "Unblock User"
-____loclib.e13022 = "Do you really want to unfollow user?"
-____loclib.unfollow = "Unfollow"
-____loclib.unblock = "Unblock"
-____loclib.share = "Share"
-____loclib.info = "Info"
-____loclib.copyLink = "Copy direct Link"
-____loclib.includeRefLink = "Include Referal Link"
-____loclib.shareVia = "Share via"
-____loclib.embedding = "Embedding"
-____loclib.copyEmbeddingCode = "Copy Embedding Code"
-____loclib.showCode = "Show Code"
-____loclib.embeddingSettings = "Embedding Settings"
-____loclib.blackTheme = "Black Theme"
-____loclib.includeComments = "Include comments"
-____loclib.showOnlyLast = "Show Only last comment"
-____loclib.showAll = "Show all comments"
-____loclib.dontShow = "Don't show comments"
-____loclib.removeDescription = "Remove description"
-____loclib.preview = "Preview"
-____loclib.autoplayVideo = "Autoplay Video"
-____loclib.onlyVideo = "Only video"
-____loclib.signToComment = "To view or post comments, you need to login or register"
+_l.blockuser = "Block User"
+_l.unblockuser = "Unblock User"
+_l.e13022 = "Do you really want to unfollow user?"
+_l.unfollow = "Unfollow"
+_l.unblock = "Unblock"
+_l.share = "Share"
+_l.info = "Info"
+_l.copyLink = "Copy direct Link"
+_l.includeRefLink = "Include Referal Link"
+_l.shareVia = "Share via"
+_l.embedding = "Embedding"
+_l.copyEmbeddingCode = "Copy Embedding Code"
+_l.showCode = "Show Code"
+_l.embeddingSettings = "Embedding Settings"
+_l.blackTheme = "Black Theme"
+_l.includeComments = "Include comments"
+_l.showOnlyLast = "Show Only last comment"
+_l.showAll = "Show all comments"
+_l.dontShow = "Don't show comments"
+_l.removeDescription = "Remove description"
+_l.preview = "Preview"
+_l.autoplayVideo = "Autoplay Video"
+_l.onlyVideo = "Only video"
+_l.signToComment = "To view or post comments, you need to login or register"
 
-____loclib.e13023 = "Do you really want to unblock user?"
-____loclib.e13024 = "Your Private Login Key"
-____loclib.e13025 = "Create a new account"
-____loclib.e13026 = "Registration "+appname+""
+_l.e13023 = "Do you really want to unblock user?"
+_l.e13024 = "Your Private Login Key"
+_l.e13025 = "Create a new account"
+_l.e13026 = "Registration "+appname+""
 
-____loclib.e13027 = "Stay Signed"
-____loclib.e13028 = "You entered not valid private key"
-____loclib.e13029 = "Message is empty"
-____loclib.e13030 = "Comments have 1000 character limit per comment"
-____loclib.e13031 = "Share Comment"
-____loclib.e13032 = "Do you really want to delete your comment?"
-____loclib.e13033 = "Comment has been removed"
-____loclib.postRemoved = "Post has been removed"
-____loclib.postNotFound = "Post not found"
-
-
-____loclib.e13034 = "Yes"
-____loclib.e13035 = "No, cancel"
-____loclib.hide = "Hide"
-____loclib.e13036 = "Show comments"
-____loclib.e13037 = "Replies"
-____loclib.remove = "Remove"
-____loclib.e13038 = "Comment Now"
-____loclib.e13039 = "Comment Now"
-____loclib.e13040 = "You do not have commenting priviliges"
-____loclib.complain = "Complain"
-____loclib.complain_success =  "Your complaint has been successfully submitted"
-____loclib.next = "Next"
-____loclib.post = "Post"
-____loclib.e13041 = ""+appname+" Connection"
-____loclib.e13042 = ""+appname+" Proxy"
-
-____loclib.e13043 = ""+appname+" Nodes"
-____loclib.e13044 = "Add node"
-____loclib.e13045 = "Nodes not found"
-____loclib.e13046 = "Address"
-____loclib.e13047 = "WS"
-____loclib.e13048 = "Name"
-____loclib.e13049 = "Status"
-____loclib.e13050 = "Proxies not found"
-____loclib.e13051 = "Don't use proxy"
-____loclib.e13052 = "Unable connect to proxy"
-____loclib.e13053 = "Unable connect to node"
-____loclib.e13054 = "Add Proxy"
-____loclib.e13055 = "Edit Proxy"
-____loclib.save = "Save"
-____loclib.e13056 = "Node Host"
-____loclib.close = "Close"
-____loclib.e13057 = "Please fill all fields"
-____loclib.e13058 = "You alredy have this proxy in list."
-____loclib.delete = "Delete"
-____loclib.e13059 = "Do you really want to delete this proxy from list?"
-____loclib.e13060 = "Proxies list"
-____loclib.e13061 = "Do you really want to stop use Proxy. It is usafe (Http connection)"
-
-____loclib.e13062 = "Edit Node"
-____loclib.onproxy = "On Proxy"
-____loclib.locally = "Locally"
-____loclib.nodehost = "Node Host"
-____loclib.e13063 = "RPC Port"
-____loclib.e13064 = "WS Port"
-____loclib.e13065 = "Name Of Node"
-____loclib.e13066 = "Please enter Node Name"
-____loclib.e13067 = "RPC login"
-____loclib.e13068 = "Login for PRC authorization"
-____loclib.e13069 = "RPC password"
-____loclib.e13070 = "Password for PRC authorization"
-____loclib.e13071 = "Please fill all fields"
-____loclib.e13072 = "Do you really want to delete this node from list?"
-____loclib.e13073 = "Do you really want to stop use Proxy. It is usafe (Http connection)"
-____loclib.notselected = "Not selected"
-____loclib.donation = "donation"
-____loclib.e13074 = "Awaitng Funds. Address will be valid for"
-____loclib.sminutes = "minutes"
-____loclib.e13075 = "Time to this deal has been expired."
-____loclib.reactivate = "Reactivate"
-____loclib.e13076 = "Scan this code to send"
-____loclib.back = "Back"
-____loclib.e13077 = "Add your profile to Donors List"
-____loclib.e13078 = "Why are we asking for donations?"
-____loclib.e13079 = "We have spent 14+ months in spare time from full time jobs bringing "+appname+" to people. In addition to time and effort, we have put in our own money to help launch the platform. Now we need the community to step up and help us with growth."
-____loclib.e13080 = "How will the funds be used?"
-____loclib.e13081 = "Funds will be used to purchase advertising and hire some specific subject matter experts to make "+appname+" even more secure. Current development team will not get any of these donations. Wherever possible, we will post here how we used the funds. "
-____loclib.e13082 = "What you will get for your donation besides knowing you supported freedom:"
-____loclib.e13083 = "As a sign of our gratitude for donation, you will receive a gift in some amount of Pocketcoin"
-____loclib.e13084 = "Also, when we build group chat, you will be a member of a special group of donors that will have direct access to "+appname+" team, even as the platform grows"
-____loclib.e13085 = "Link to your "+appname+" profile will be listed below driving more people to your posts (unless you ask us to not do that)"
-____loclib.e13086 = "Support Decentralized Web Now"
-____loclib.e13087 = "Bitcoin, Litecoin"
-
-____loclib.e13088 = ""+appname+" members who donated to support "+appname+""
-____loclib.thankyou = "Thank you!"
-____loclib.e13089 = "If you would like us to list your "+appname+" profile in the list of donors, please send us information about your donation"
-____loclib.e13090 = "Add me to donors list"
-____loclib.e13091 = "Or you can send us an email to"
-____loclib.e13092 = "with your public key and amount."
-____loclib.finish = "Finish"
-____loclib.e13093 = "Please choose donation way"
-____loclib.e13094 = "Something went wrong. Please reload page and try again (error: 0001)"
-____loclib.e13095 = "Thank you for supporting our work for freedom. We will make sure every penny counts."
-____loclib.e13096 = "Please fill amount of donation"
-____loclib.e130961 = "How much do you want to send?"
-____loclib.e130962 = "Available balance:"
-
-____loclib.e13097 = "Something went wrong. Please reload page and try again (error: 0002)"
-____loclib.e13098 = "Add link to external site or resource"
-____loclib.e13099 = "Upload Images"
-____loclib.e13100 = "Click here to select files for uploading"
-____loclib.e13101 = "or drag & drop"
-____loclib.e13102 = "Add link to external site"
-____loclib.e13103 = "Url doesn't valid"
-____loclib.e13104 = "Max 6 Images Allowed"
-____loclib.e13105 = "Node management"
-____loclib.e13106 = ""+appname+" Node"
-____loclib.e13107 = "Node management may be carried out with Application"
-____loclib.e13108 = "There isn't connection with Electron proxy interface"
-
-____loclib.e13109 = "Please enter the words in the picture to receive Pocketcoin and continue registration"
-____loclib.e13110 = "Enter words"
-____loclib.poll = "Create poll"
-____loclib.next = "Next"
-____loclib.refresh = "Refresh"
-____loclib.e13111 = "Add your email to get the latest "+appname+" updates"
-____loclib.e13112 = "Enter email"
-____loclib.e13113 = "Add email"
-____loclib.skip = "Skip"
-____loclib.e13114 = "There is some problem with your registration due to strange activity."
-____loclib.e13115 = "Please email"
-____loclib.e13116 = "to receive coins and open your account."
-____loclib.e13117 = "Check balance"
-____loclib.joinnow = "Join Now"
-____loclib.loading = "Loading"
-____loclib.e13118 = "Words doesn't match"
-____loclib.e13119 = "Add email and continue"
-____loclib.e13120 = "Download Application"
-____loclib.e13121 = "There aren't Images Here"
-____loclib.e13122 = "Latest Comments"
-
-____loclib.e13123 = "Show more posts"
-____loclib.e13124 = "More Awesome "+appname+" Posts!"
-____loclib.e13125 = "Top posts section is empty!"
-____loclib.e13126 = "Posts from people you follow will be shown here"
-____loclib.e13127 = "Posts from people you follow will be shown here "
-____loclib.e13128 = "Posts from people you follow will be shown here"
-____loclib.registration = "Registration"
-____loclib.editpost = "Edit Post"
-____loclib.removepost = "Remove Post"
-____loclib.removePostDialog = "Do you really want to remove post?"
-____loclib.opennewwindow = "Open Post in New Window"
-____loclib.opennew = "Open Post"
-____loclib.pin = "Pin Post"
-____loclib.pinned = "pinned"
-____loclib.pinPostDialog = "Do you realy want to pin this post?"
-____loclib.unpin = "Unpin Post"
-____loclib.unpinPostDialog = "Do you realy want to unpin this post?"
+_l.e13027 = "Stay Signed"
+_l.e13028 = "You entered not valid private key"
+_l.e13029 = "Message is empty"
+_l.e13030 = "Comments have 1000 character limit per comment"
+_l.e13031 = "Share Comment"
+_l.e13032 = "Do you really want to delete your comment?"
+_l.e13033 = "Comment has been removed"
+_l.postRemoved = "Post has been removed"
+_l.postNotFound = "Post not found"
 
 
-____loclib.unsubscribe = "Unsubscribe"
-____loclib.startchat = "Chat"
-____loclib.reportpost = "Report Post"
-____loclib.reportuser = "Report User"
+_l.e13034 = "Yes"
+_l.e13035 = "No, cancel"
+_l.hide = "Hide"
+_l.e13036 = "Show comments"
+_l.e13037 = "Replies"
+_l.remove = "Remove"
+_l.e13038 = "Comment Now"
+_l.e13039 = "Comment Now"
+_l.e13040 = "You do not have commenting priviliges"
+_l.complain = "Complain"
+_l.complain_success =  "Your complaint has been successfully submitted"
+_l.next = "Next"
+_l.post = "Post"
+_l.e13041 = ""+appname+" Connection"
+_l.e13042 = ""+appname+" Proxy"
 
-____loclib.donate = "Donate"
-____loclib.blockuser = "Block User"
-____loclib.more = "More"
-____loclib.showmore = "Show More"
-____loclib.e13129 = "Attached images"
-____loclib.e13130 = "Edited"
-____loclib.e13131 = "You have blocked this User"
-____loclib.e13132 = "rated"
-____loclib.e13133 = "Share"
-____loclib.e13134 = "There aren't any results for this search string"
-____loclib.e13135 = "User haven't private key"
-____loclib.e13136 = "All Posts"
-____loclib.e13137 = "My Subscriptions" // This is the equivalent of a ‘News feed’. Don’t change the word ‘Pocket’ however, it’s a feature of "+appname+".
-____loclib.e13138 = "Top posts"
-____loclib["Top Posts Over"] = "Top Posts Over"
-____loclib.bestFirst = "The best first"
-____loclib.topnext = "Next"
-____loclib.topprevious = "Previous"
-____loclib.topactual = "Return to the latest"
-____loclib.e13139 = "Search on "+appname+""
-____loclib.e13140 = "Search on"
-____loclib.notifications = "Notifications"
-____loclib.showall = "Show all"
-____loclib.e13141 = "You have no notifications"
+_l.e13043 = ""+appname+" Nodes"
+_l.e13044 = "Add node"
+_l.e13045 = "Nodes not found"
+_l.e13046 = "Address"
+_l.e13047 = "WS"
+_l.e13048 = "Name"
+_l.e13049 = "Status"
+_l.e13050 = "Proxies not found"
+_l.e13051 = "Don't use proxy"
+_l.e13052 = "Unable connect to proxy"
+_l.e13053 = "Unable connect to node"
+_l.e13054 = "Add Proxy"
+_l.e13055 = "Edit Proxy"
+_l.save = "Save"
+_l.e13056 = "Node Host"
+_l.close = "Close"
+_l.e13057 = "Please fill all fields"
+_l.e13058 = "You alredy have this proxy in list."
+_l.delete = "Delete"
+_l.e13059 = "Do you really want to delete this proxy from list?"
+_l.e13060 = "Proxies list"
+_l.e13061 = "Do you really want to stop use Proxy. It is usafe (Http connection)"
 
-____loclib.recommendations = "Recommendations"
-____loclib.e13142 = "I saved my key, do not remind me anymore"
-____loclib.e13143 = "Important!"
-____loclib.e13144 = "Copy Text"
-____loclib.e13145 = "Save key on device"
-____loclib.e13146 = "End of posts"
-____loclib.e13147 = "Share"
-____loclib.e13148 = "Do yor really want to complain on this post?"
-____loclib.e13149 = "user ratings"
-____loclib.e13150 = "Post Rating"
-____loclib.totalLikes = "Total likes"
-____loclib.e13151 = "Nobody rate this post"
-____loclib.e13152 = "User scores"
-____loclib.e13153 = "Skip and proceed to website"
-____loclib.e13154 = "Your Login Information"
-____loclib.e13155 = "To use "+appname+" you need to generate your private cryptographic key which replaces login plus password from centralized social networks."
-____loclib.users = "Users"
-____loclib.userstx = "Users"
-____loclib.user = "User"
-____loclib.postscount = "Posts count"
-____loclib.about = "About"
-____loclib.e13156 = "Next Results"
-____loclib.posts = "Posts"
-____loclib.disablePreview = "Disable link preview"
-____loclib.e13157 = "Search by"
-____loclib.e13158 = "hasn't any results"
-____loclib.e13159 = "The search phrase is empty"
-____loclib.repost = "Repost"
-____loclib.reposted = "Repost"
-____loclib.e13160 = "Hello Pocketeers!"
+_l.e13062 = "Edit Node"
+_l.onproxy = "On Proxy"
+_l.locally = "Locally"
+_l.nodehost = "Node Host"
+_l.e13063 = "RPC Port"
+_l.e13064 = "WS Port"
+_l.e13065 = "Name Of Node"
+_l.e13066 = "Please enter Node Name"
+_l.e13067 = "RPC login"
+_l.e13068 = "Login for PRC authorization"
+_l.e13069 = "RPC password"
+_l.e13070 = "Password for PRC authorization"
+_l.e13071 = "Please fill all fields"
+_l.e13072 = "Do you really want to delete this node from list?"
+_l.e13073 = "Do you really want to stop use Proxy. It is usafe (Http connection)"
+_l.notselected = "Not selected"
+_l.donation = "donation"
+_l.e13074 = "Awaitng Funds. Address will be valid for"
+_l.sminutes = "minutes"
+_l.e13075 = "Time to this deal has been expired."
+_l.reactivate = "Reactivate"
+_l.e13076 = "Scan this code to send"
+_l.back = "Back"
+_l.e13077 = "Add your profile to Donors List"
+_l.e13078 = "Why are we asking for donations?"
+_l.e13079 = "We have spent 14+ months in spare time from full time jobs bringing "+appname+" to people. In addition to time and effort, we have put in our own money to help launch the platform. Now we need the community to step up and help us with growth."
+_l.e13080 = "How will the funds be used?"
+_l.e13081 = "Funds will be used to purchase advertising and hire some specific subject matter experts to make "+appname+" even more secure. Current development team will not get any of these donations. Wherever possible, we will post here how we used the funds. "
+_l.e13082 = "What you will get for your donation besides knowing you supported freedom:"
+_l.e13083 = "As a sign of our gratitude for donation, you will receive a gift in some amount of Pocketcoin"
+_l.e13084 = "Also, when we build group chat, you will be a member of a special group of donors that will have direct access to "+appname+" team, even as the platform grows"
+_l.e13085 = "Link to your "+appname+" profile will be listed below driving more people to your posts (unless you ask us to not do that)"
+_l.e13086 = "Support Decentralized Web Now"
+_l.e13087 = "Bitcoin, Litecoin"
 
-____loclib.e13161 = "Add tags for your post"
-____loclib.e13162 = "You can enter a maximum of 5 tags"
-____loclib.e13163 = "There are no changes in the post"
-____loclib.e13164 = "Please add a few words to tell Pocketpeople about your link. What is it about? Why is it important? What is your opinion?"
-____loclib.e13165 = "Your link to video is invalid. Please load valid video URL."
-____loclib.e13166 = "You rescued"
-____loclib.e13167 = "people from the censored web"
-____loclib.e13168 = "Earn Pocketcoin for each signup through your link"
-____loclib.e13169 = "Direct link"
-____loclib.copy = "Copy"
-____loclib.e13170 = "Include "+appname+" sign up call-to-action "
-____loclib.more = "More"
-____loclib.e13171 = "Great news. I gained my independence from social media monopolies, Come join me at pocketnet.app so we can share and chat independently on the blockchain. Join me here"
-____loclib.e13172 = "I want to invite you to a new decentralized blockchain social called "+appname+"! You will find a ton of interesting stuff and if you sign up, both of us will get Pocketcoin cryptocurrency bonus!"
-____loclib.e13173 = "Send by email"
-____loclib.e13174 = "Social sharing"
-____loclib.e13175 = "Popular tags"
-____loclib.e13176 = "Address type"
-____loclib.e13177 = "Upload photo"
+_l.e13088 = ""+appname+" members who donated to support "+appname+""
+_l.thankyou = "Thank you!"
+_l.e13089 = "If you would like us to list your "+appname+" profile in the list of donors, please send us information about your donation"
+_l.e13090 = "Add me to donors list"
+_l.e13091 = "Or you can send us an email to"
+_l.e13092 = "with your public key and amount."
+_l.finish = "Finish"
+_l.e13093 = "Please choose donation way"
+_l.e13094 = "Something went wrong. Please reload page and try again (error: 0001)"
+_l.e13095 = "Thank you for supporting our work for freedom. We will make sure every penny counts."
+_l.e13096 = "Please fill amount of donation"
+_l.e130961 = "How much do you want to send?"
+_l.e130962 = "Available balance:"
 
-____loclib.requiredfields = "required fields"
-____loclib.e13178 = "Not linked to your profile"
-____loclib.e13179 = "Unspent List"
-____loclib.e13180 = "Your Invoice has Been Successfully Created"
-____loclib.e13181 = "An Error has Occurred During the offer creating process"
-____loclib.e13182 = "Block Explorer"
-____loclib.e13183 = "Help center"
-____loclib.e13184 = "Continue Registration"
-____loclib.e13185 = "Connection Lost"
-____loclib.e13186 = "Edit profile"
-____loclib.e13187 = "Contents"
-____loclib.e13188 = "Please save your private cryptographic key which replaces login plus password from centralized social networks"
-____loclib.e13189 = "Leave and lose my key forever!"
-____loclib.e13190 = ""+appname+" theme"
-____loclib.e13191 = "Set Theme"
-____loclib.uiScaleSetting = "Interface scaling"
-____loclib.uiScaleSettingTitle = "Set scaling"
-____loclib.e13192 = "Level"
-____loclib.e13193 = "BONUS"
-____loclib.e13194 = "Reputation and Status"
-____loclib.e13195 = "Limitations"
-____loclib.с= "It much take up"
-____loclib.e13197 = "Recieve Pocketcoins"
-____loclib.e13198 = "Approximate waiting time is"
-____loclib.e13199 = "Join "+appname+" Now"
+_l.e13097 = "Something went wrong. Please reload page and try again (error: 0002)"
+_l.e13098 = "Add link to external site or resource"
+_l.e13099 = "Upload Images"
+_l.e13100 = "Click here to select files for uploading"
+_l.e13101 = "or drag & drop"
+_l.e13102 = "Add link to external site"
+_l.e13103 = "Url doesn't valid"
+_l.e13104 = "Max 6 Images Allowed"
+_l.e13105 = "Node management"
+_l.e13106 = ""+appname+" Node"
+_l.e13107 = "Node management may be carried out with Application"
+_l.e13108 = "There isn't connection with Electron proxy interface"
 
-____loclib.e13200 = "Back To "+appname+""
-____loclib.e13201 = "JOIN BETA"
-____loclib.e13202 = ""+appname+" beta test will start on Jan 24"
-____loclib.e13203 = "Thank you for joining "+appname+" beta test email list. It is not required to use "+appname+", however, we will use this email to send your surveys to improve the platform. Thank you for helping to shape the future of internet."
-____loclib.e13204 = ""+appname+" Recieve Address"
-____loclib.e13205 = "Parameters"
-____loclib.e13206 = "Recieve Pocketcoin Amount"
-____loclib.e13207 = "Send Amount"
-____loclib.e13208 = "Available"
-____loclib.e13209 = "Crowdfunding List"
-____loclib.e13210 = "New deal"
-____loclib.e13211 = "Copy Link And Share"
-____loclib.amount = "Amount"
-____loclib.label = "Label"
-____loclib.message = "Message"
-____loclib.copylink = "Copy Link"
-____loclib.sendMessenger = "Send via messenger"
-____loclib.e13211 = "Please fill this fields"
-____loclib.e13212 = "Create Qr Code"
-____loclib.e13213 = "Recieve Address"
-____loclib.process = "Process"
-____loclib.source = "Source"
-____loclib.yourmessage = "Your message"
-____loclib.e13214 = "Pocketcoin Amount"
-____loclib.currency = "Currency"
+_l.e13109 = "Please enter the words in the picture to receive Pocketcoin and continue registration"
+_l.e13110 = "Enter words"
+_l.poll = "Create poll"
+_l.next = "Next"
+_l.refresh = "Refresh"
+_l.e13111 = "Add your email to get the latest "+appname+" updates"
+_l.e13112 = "Enter email"
+_l.e13113 = "Add email"
+_l.skip = "Skip"
+_l.e13114 = "There is some problem with your registration due to strange activity."
+_l.e13115 = "Please email"
+_l.e13116 = "to receive coins and open your account."
+_l.e13117 = "Check balance"
+_l.joinnow = "Join Now"
+_l.loading = "Loading"
+_l.e13118 = "Words doesn't match"
+_l.e13119 = "Add email and continue"
+_l.e13120 = "Download Application"
+_l.e13121 = "There aren't Images Here"
+_l.e13122 = "Latest Comments"
 
-
-____loclib.e13215 = "Select currency"
-____loclib.e13216 = "Currency Amount"
-____loclib.e13217 = "Time to this deal has been expired."
-____loclib.e13218 = "Waiting blockchain confirmations"
-____loclib.e13219 = "Send Pocketcoins to You"
-____loclib.e13220 = "Pocketcoins delivered"
-____loclib.errorreload = "Something went wrong. Please reload page and try again"
-____loclib.e13221 = "Do you really want to delete information about this deal? Deal can't be stop"
-____loclib.e13222 = "Download Desktop App - this is the most censorship resistant way to use "+appname+". Even if websites are shut down, desktop application will still run directly through the nodes."
+_l.e13123 = "Show more posts"
+_l.e13124 = "More Awesome "+appname+" Posts!"
+_l.e13125 = "Top posts section is empty!"
+_l.e13126 = "Posts from people you follow will be shown here"
+_l.e13127 = "Posts from people you follow will be shown here "
+_l.e13128 = "Posts from people you follow will be shown here"
+_l.registration = "Registration"
+_l.editpost = "Edit Post"
+_l.removepost = "Remove Post"
+_l.removePostDialog = "Do you really want to remove post?"
+_l.opennewwindow = "Open Post in New Window"
+_l.opennew = "Open Post"
+_l.pin = "Pin Post"
+_l.pinned = "pinned"
+_l.pinPostDialog = "Do you realy want to pin this post?"
+_l.unpin = "Unpin Post"
+_l.unpinPostDialog = "Do you realy want to unpin this post?"
 
 
+_l.unsubscribe = "Unsubscribe"
+_l.startchat = "Chat"
+_l.reportpost = "Report Post"
+_l.reportuser = "Report User"
 
-____loclib.e13223 = "Download "+appname+" for Windows"
-____loclib.e132232 = "Download "+appname+" for macOs"
-____loclib.e13224 = "Download "+appname+" for Linux"
+_l.donate = "Donate"
+_l.blockuser = "Block User"
+_l.more = "More"
+_l.showmore = "Show More"
+_l.e13129 = "Attached images"
+_l.e13130 = "Edited"
+_l.e13131 = "You have blocked this User"
+_l.e13132 = "rated"
+_l.e13133 = "Share"
+_l.e13134 = "There aren't any results for this search string"
+_l.e13135 = "User haven't private key"
+_l.e13136 = "All Posts"
+_l.e13137 = "My Subscriptions" // This is the equivalent of a ‘News feed’. Don’t change the word ‘Pocket’ however, it’s a feature of "+appname+".
+_l.e13138 = "Top posts"
+_l["Top Posts Over"] = "Top Posts Over"
+_l.bestFirst = "The best first"
+_l.topnext = "Next"
+_l.topprevious = "Previous"
+_l.topactual = "Return to the latest"
+_l.e13139 = "Search on "+appname+""
+_l.e13140 = "Search on"
+_l.notifications = "Notifications"
+_l.showall = "Show all"
+_l.e13141 = "You have no notifications"
 
-____loclib.e132233 = "Download "+appname+" for Android"
-____loclib.e132221 = "Download Mobile App - this is the most usefull way to use "+appname+"."
+_l.recommendations = "Recommendations"
+_l.e13142 = "I saved my key, do not remind me anymore"
+_l.e13143 = "Important!"
+_l.e13144 = "Copy Text"
+_l.e13145 = "Save key on device"
+_l.e13146 = "End of posts"
+_l.e13147 = "Share"
+_l.e13148 = "Do yor really want to complain on this post?"
+_l.e13149 = "user ratings"
+_l.e13150 = "Post Rating"
+_l.totalLikes = "Total likes"
+_l.e13151 = "Nobody rate this post"
+_l.e13152 = "User scores"
+_l.e13153 = "Skip and proceed to website"
+_l.e13154 = "Your Login Information"
+_l.e13155 = "To use "+appname+" you need to generate your private cryptographic key which replaces login plus password from centralized social networks."
+_l.users = "Users"
+_l.userstx = "Users"
+_l.user = "User"
+_l.postscount = "Posts count"
+_l.about = "About"
+_l.e13156 = "Next Results"
+_l.posts = "Posts"
+_l.disablePreview = "Disable link preview"
+_l.e13157 = "Search by"
+_l.e13158 = "hasn't any results"
+_l.e13159 = "The search phrase is empty"
+_l.repost = "Repost"
+_l.reposted = "Repost"
+_l.e13160 = "Hello Pocketeers!"
 
-____loclib.e13225 = ""+appname+" Node"
-____loclib.e13226 = "Download Node"
-____loclib.e13227 = "Download "+appname+" Node for Windows"
-____loclib.e13228 = "Download "+appname+" Node for Linux"
-____loclib.e13229 = "Invalid Private Key"
-____loclib.e13230 = "Undefined connection error"
+_l.e13161 = "Add tags for your post"
+_l.e13162 = "You can enter a maximum of 5 tags"
+_l.e13163 = "There are no changes in the post"
+_l.e13164 = "Please add a few words to tell Pocketpeople about your link. What is it about? Why is it important? What is your opinion?"
+_l.e13165 = "Your link to video is invalid. Please load valid video URL."
+_l.e13166 = "You rescued"
+_l.e13167 = "people from the censored web"
+_l.e13168 = "Earn Pocketcoin for each signup through your link"
+_l.e13169 = "Direct link"
+_l.copy = "Copy"
+_l.e13170 = "Include "+appname+" sign up call-to-action "
+_l.more = "More"
+_l.e13171 = "Great news. I gained my independence from social media monopolies, Come join me at pocketnet.app so we can share and chat independently on the blockchain. Join me here"
+_l.e13172 = "I want to invite you to a new decentralized blockchain social called "+appname+"! You will find a ton of interesting stuff and if you sign up, both of us will get Pocketcoin cryptocurrency bonus!"
+_l.e13173 = "Send by email"
+_l.e13174 = "Social sharing"
+_l.e13175 = "Popular tags"
+_l.e13176 = "Address type"
+_l.e13177 = "Upload photo"
 
-____loclib.e13231 = "Connection lost"
-____loclib.e13232 = "Unable to connect with node"
-____loclib.e13233 = "This comment was removed"
-____loclib.e13234 = "Opreturn error/41"
-____loclib.e13235 = "You cannot rate comment twice"
-____loclib.e13236 = "This comment was removed"
-____loclib.e13237 = "You cannot rate yourself"
-____loclib.e13238 = "Comment sending error. Please wait and try again/ 37"
-____loclib.e13239 = "Comment sending error. You are replying to a comment that was deleted"
-____loclib.e13240 = "The comment you are replying to has been deleted by the user"
-____loclib.e13241 = "This comment is too long, please break it up"
-____loclib.e13242 = "You have been blocked by this person, you will be unable to comment on their posts"
-____loclib.e13243 = "You have reached your limit of upvote comments in a 24 hour period"
-____loclib.e13244 = "You have reached your limit of editing comments in a 24 hour period"
-____loclib.e13245 = "You have reached your limit of sending comments in a 24 hour period"
+_l.requiredfields = "required fields"
+_l.e13178 = "Not linked to your profile"
+_l.e13179 = "Unspent List"
+_l.e13180 = "Your Invoice has Been Successfully Created"
+_l.e13181 = "An Error has Occurred During the offer creating process"
+_l.e13182 = "Block Explorer"
+_l.e13183 = "Help center"
+_l.e13184 = "Continue Registration"
+_l.e13185 = "Connection Lost"
+_l.e13186 = "Edit profile"
+_l.e13187 = "Contents"
+_l.e13188 = "Please save your private cryptographic key which replaces login plus password from centralized social networks"
+_l.e13189 = "Leave and lose my key forever!"
+_l.e13190 = ""+appname+" theme"
+_l.e13191 = "Set Theme"
+_l.uiScaleSetting = "Interface scaling"
+_l.uiScaleSettingTitle = "Set scaling"
+_l.e13192 = "Level"
+_l.e13193 = "BONUS"
+_l.e13194 = "Reputation and Status"
+_l.e13195 = "Limitations"
+_l.с= "It much take up"
+_l.e13197 = "Recieve Pocketcoins"
+_l.e13198 = "Approximate waiting time is"
+_l.e13199 = "Join "+appname+" Now"
 
-____loclib.e13246 = "You are trying to edit someone else's post"
-____loclib.e13247 = "You have reached your limit of editing 5 posts in a 24 hour period"
-____loclib.saveSettingsLimit = "You have reached your limit of saving settings in a 24 hour period"
+_l.e13200 = "Back To "+appname+""
+_l.e13201 = "JOIN BETA"
+_l.e13202 = ""+appname+" beta test will start on Jan 24"
+_l.e13203 = "Thank you for joining "+appname+" beta test email list. It is not required to use "+appname+", however, we will use this email to send your surveys to improve the platform. Thank you for helping to shape the future of internet."
+_l.e13204 = ""+appname+" Recieve Address"
+_l.e13205 = "Parameters"
+_l.e13206 = "Recieve Pocketcoin Amount"
+_l.e13207 = "Send Amount"
+_l.e13208 = "Available"
+_l.e13209 = "Crowdfunding List"
+_l.e13210 = "New deal"
+_l.e13211 = "Copy Link And Share"
+_l.amount = "Amount"
+_l.label = "Label"
+_l.message = "Message"
+_l.copylink = "Copy Link"
+_l.sendMessenger = "Send via messenger"
+_l.e13211 = "Please fill this fields"
+_l.e13212 = "Create Qr Code"
+_l.e13213 = "Recieve Address"
+_l.process = "Process"
+_l.source = "Source"
+_l.yourmessage = "Your message"
+_l.e13214 = "Pocketcoin Amount"
+_l.currency = "Currency"
 
-____loclib.e13248 = "You can only edit once per blockchain block. Please wait a minute, then try again"
-____loclib.e13249 = "You cannot block yourself"
-____loclib.e13250 = "You have already blocked this user"
-____loclib.e13251 = "You have not blocked this user"
-____loclib.e13252 = "Transaction is malformed"
-____loclib.e13253 = "You cannot refer yourself"
-____loclib.e13254 = "This username is too long"
-____loclib.e13255 = "This username is already in use"
-____loclib.e13256 = "This post is too long, please break it up."
-____loclib.e13257 = "Your "+appname+" reputation score does not allow for registering of complaints yet"
-____loclib.e13257_1 = "Your "+appname+" reputation score does not allow you to put negative ratings on publications"
 
-____loclib.e13258 = "You have reached the limit of complaints in a 24 hour period"
-____loclib.e2000 = "Connection error. Please try again"
+_l.e13215 = "Select currency"
+_l.e13216 = "Currency Amount"
+_l.e13217 = "Time to this deal has been expired."
+_l.e13218 = "Waiting blockchain confirmations"
+_l.e13219 = "Send Pocketcoins to You"
+_l.e13220 = "Pocketcoins delivered"
+_l.errorreload = "Something went wrong. Please reload page and try again"
+_l.e13221 = "Do you really want to delete information about this deal? Deal can't be stop"
+_l.e13222 = "Download Desktop App - this is the most censorship resistant way to use "+appname+". Even if websites are shut down, desktop application will still run directly through the nodes."
 
-____loclib.e13259 = "Cannot complain about your own post"
-____loclib.e13260 = "You have already filed a complaint against this user."
-____loclib.e13261 = "Save Key"
-____loclib.e13262 = "Later"
-____loclib.e13263 = "Subscribe and Turn On notifications from this user"
-____loclib.e13264 = "Subscribe without notifications"
-____loclib.e13265 = "Your name is no longer available, please choose another one"
-____loclib.e13266 = "White Theme"
-____loclib.e13267 = "Dark Theme"
-____loclib.e13268 = "Coinstake win"
-____loclib.e13269 = "Transactions receive"
-____loclib.e13270 = "Upvotes receive"
-____loclib.e13271 = "Comment receive"
-____loclib.e13272 = "Answer receive"
-____loclib.e13273 = "New Followers"
-____loclib.e13274 = "Rescued Users"
-____loclib.e13275 = "Comment Score"
-____loclib.e13276 = "Show embed videos"
-____loclib.e13277 = "Autoplay videos"
-____loclib.e13278 = "Start "+appname+" Automatically"
-____loclib.e13279 = "Chat"
-____loclib.e13280 = "Tags"
-____loclib.e13281 = "Last Comments"
-____loclib.e132812 = "Comments"
-____loclib.e13282 = "Telegram bot token"
-____loclib.e13283 = "Post from Telegram channel"
-____loclib.e13284 = "Add bot into chat and select"
-____loclib.e13285 = "Ask before post from telegram"
-____loclib.e13286 = "Ask before send to telegram"
-____loclib.e13287 = "Send to telegram channel"
-____loclib.video = "Video"
-____loclib.e13288 = "Main Widgets Page"
-____loclib.e13289 = "Integration with Telegram"
 
-____loclib.sound = "Sound"
-____loclib.system = "System"
-____loclib.e13290 = "Would do you like to follow"
-____loclib.e13291 = "Do you really want send message to Telegram?"
-____loclib.send = "Send"
-____loclib.e13292 = "You already have node on this host"
-____loclib.e13293 = "Internal Error"
-____loclib.e13294 = "PGSQL Database Enable"
-____loclib.e13295 = "DB Host"
-____loclib.e13296 = "DB Port"
-____loclib.e13297 = "DB Max"
-____loclib.e13298 = "DB Idle Timeout, ms"
-____loclib.e13298 = "DB Name"
-____loclib.e13300 = "DB User"
-____loclib.e13031 = "DB Password"
-____loclib.e13302 = "Proxy server on"
-____loclib.e13303 = "Proxy https server port"
-____loclib.e13304 = "Proxy wss server port"
-____loclib.e13305 = "Server SSL Key, pem"
-____loclib.e13306 = "Server SSL Cert, pem"
-____loclib.e13307 = "Server SSL Passphrase"
-____loclib.e13308 = "Firebase admin SDK"
-____loclib.e13309 = "Your Crane Address"
-____loclib.e13310 = "Captcha Enable"
-____loclib.e13311 = "Ip limiter enable"
-____loclib.e13312 = "Server"
 
-____loclib.e13313 = "Data Base, PG sql"
-____loclib.e13314 = "Firebase"
-____loclib.e13315 = "Other"
-____loclib.e13316 = "Enable"
-____loclib.e13317 = "Binary path"
-____loclib.e13318 = "Config path"
-____loclib.e13319 = "Data path"
-____loclib.e13320 = "Staking Address"
-____loclib.e13321 = "Import the account address to the node for stacking"
-____loclib.e13322 = "State"
-____loclib.e13323 = "Staking addresses"
-____loclib.e13324 = "Last Block"
-____loclib.control = "Control"
-____loclib.setup = "Setup"
-____loclib.e13325 = "Do you really want post messages from Telegram?"
-____loclib.e13326 = "Post"
-____loclib.e13327 = "Do you really want use proxy again?"
-____loclib.e13328 = "liked your comment!"
-____loclib.e13329 = "New Comment Like"
-____loclib.e13330 = "shared your post"
-____loclib.e13331 = "shared your post"
-____loclib.e13332 = "has a brand new post"
-____loclib.e13332v = "has a brand new video"
-____loclib.e13333 = "Incoming transaction"
-____loclib.e13334 = "Congratulations, you have won"
-____loclib.e13335 = "Pocketcoin for your latest"
-____loclib.e13336 = "with message"
-____loclib.e13337 = "commented your post"
-____loclib.e13338 = "answered on your comment"
-____loclib.reply = "Reply"
-____loclib.e13339 = "You rescued someone from the censored web. Some coins are on their way!"
-____loclib.e13340 = "Congrats!"
-____loclib.e13341 = "followed you"
+_l.e13223 = "Download "+appname+" for Windows"
+_l.e132232 = "Download "+appname+" for macOs"
+_l.e13224 = "Download "+appname+" for Linux"
+
+_l.e132233 = "Download "+appname+" for Android"
+_l.e132221 = "Download Mobile App - this is the most usefull way to use "+appname+"."
+
+_l.e13225 = ""+appname+" Node"
+_l.e13226 = "Download Node"
+_l.e13227 = "Download "+appname+" Node for Windows"
+_l.e13228 = "Download "+appname+" Node for Linux"
+_l.e13229 = "Invalid Private Key"
+_l.e13230 = "Undefined connection error"
+
+_l.e13231 = "Connection lost"
+_l.e13232 = "Unable to connect with node"
+_l.e13233 = "This comment was removed"
+_l.e13234 = "Opreturn error/41"
+_l.e13235 = "You cannot rate comment twice"
+_l.e13236 = "This comment was removed"
+_l.e13237 = "You cannot rate yourself"
+_l.e13238 = "Comment sending error. Please wait and try again/ 37"
+_l.e13239 = "Comment sending error. You are replying to a comment that was deleted"
+_l.e13240 = "The comment you are replying to has been deleted by the user"
+_l.e13241 = "This comment is too long, please break it up"
+_l.e13242 = "You have been blocked by this person, you will be unable to comment on their posts"
+_l.e13243 = "You have reached your limit of upvote comments in a 24 hour period"
+_l.e13244 = "You have reached your limit of editing comments in a 24 hour period"
+_l.e13245 = "You have reached your limit of sending comments in a 24 hour period"
+
+_l.e13246 = "You are trying to edit someone else's post"
+_l.e13247 = "You have reached your limit of editing 5 posts in a 24 hour period"
+_l.saveSettingsLimit = "You have reached your limit of saving settings in a 24 hour period"
+
+_l.e13248 = "You can only edit once per blockchain block. Please wait a minute, then try again"
+_l.e13249 = "You cannot block yourself"
+_l.e13250 = "You have already blocked this user"
+_l.e13251 = "You have not blocked this user"
+_l.e13252 = "Transaction is malformed"
+_l.e13253 = "You cannot refer yourself"
+_l.e13254 = "This username is too long"
+_l.e13255 = "This username is already in use"
+_l.e13256 = "This post is too long, please break it up."
+_l.e13257 = "Your "+appname+" reputation score does not allow for registering of complaints yet"
+_l.e13257_1 = "Your "+appname+" reputation score does not allow you to put negative ratings on publications"
+
+_l.e13258 = "You have reached the limit of complaints in a 24 hour period"
+_l.e2000 = "Connection error. Please try again"
+
+_l.e13259 = "Cannot complain about your own post"
+_l.e13260 = "You have already filed a complaint against this user."
+_l.e13261 = "Save Key"
+_l.e13262 = "Later"
+_l.e13263 = "Subscribe and Turn On notifications from this user"
+_l.e13264 = "Subscribe without notifications"
+_l.e13265 = "Your name is no longer available, please choose another one"
+_l.e13266 = "White Theme"
+_l.e13267 = "Dark Theme"
+_l.e13268 = "Coinstake win"
+_l.e13269 = "Transactions receive"
+_l.e13270 = "Upvotes receive"
+_l.e13271 = "Comment receive"
+_l.e13272 = "Answer receive"
+_l.e13273 = "New Followers"
+_l.e13274 = "Rescued Users"
+_l.e13275 = "Comment Score"
+_l.e13276 = "Show embed videos"
+_l.e13277 = "Autoplay videos"
+_l.e13278 = "Start "+appname+" Automatically"
+_l.e13279 = "Chat"
+_l.e13280 = "Tags"
+_l.e13281 = "Last Comments"
+_l.e132812 = "Comments"
+_l.e13282 = "Telegram bot token"
+_l.e13283 = "Post from Telegram channel"
+_l.e13284 = "Add bot into chat and select"
+_l.e13285 = "Ask before post from telegram"
+_l.e13286 = "Ask before send to telegram"
+_l.e13287 = "Send to telegram channel"
+_l.video = "Video"
+_l.e13288 = "Main Widgets Page"
+_l.e13289 = "Integration with Telegram"
+
+_l.sound = "Sound"
+_l.system = "System"
+_l.e13290 = "Would do you like to follow"
+_l.e13291 = "Do you really want send message to Telegram?"
+_l.send = "Send"
+_l.e13292 = "You already have node on this host"
+_l.e13293 = "Internal Error"
+_l.e13294 = "PGSQL Database Enable"
+_l.e13295 = "DB Host"
+_l.e13296 = "DB Port"
+_l.e13297 = "DB Max"
+_l.e13298 = "DB Idle Timeout, ms"
+_l.e13298 = "DB Name"
+_l.e13300 = "DB User"
+_l.e13031 = "DB Password"
+_l.e13302 = "Proxy server on"
+_l.e13303 = "Proxy https server port"
+_l.e13304 = "Proxy wss server port"
+_l.e13305 = "Server SSL Key, pem"
+_l.e13306 = "Server SSL Cert, pem"
+_l.e13307 = "Server SSL Passphrase"
+_l.e13308 = "Firebase admin SDK"
+_l.e13309 = "Your Crane Address"
+_l.e13310 = "Captcha Enable"
+_l.e13311 = "Ip limiter enable"
+_l.e13312 = "Server"
+
+_l.e13313 = "Data Base, PG sql"
+_l.e13314 = "Firebase"
+_l.e13315 = "Other"
+_l.e13316 = "Enable"
+_l.e13317 = "Binary path"
+_l.e13318 = "Config path"
+_l.e13319 = "Data path"
+_l.e13320 = "Staking Address"
+_l.e13321 = "Import the account address to the node for stacking"
+_l.e13322 = "State"
+_l.e13323 = "Staking addresses"
+_l.e13324 = "Last Block"
+_l.control = "Control"
+_l.setup = "Setup"
+_l.e13325 = "Do you really want post messages from Telegram?"
+_l.e13326 = "Post"
+_l.e13327 = "Do you really want use proxy again?"
+_l.e13328 = "liked your comment!"
+_l.e13329 = "New Comment Like"
+_l.e13330 = "shared your post"
+_l.e13331 = "shared your post"
+_l.e13332 = "has a brand new post"
+_l.e13332v = "has a brand new video"
+_l.e13333 = "Incoming transaction"
+_l.e13334 = "Congratulations, you have won"
+_l.e13335 = "Pocketcoin for your latest"
+_l.e13336 = "with message"
+_l.e13337 = "commented your post"
+_l.e13338 = "answered on your comment"
+_l.reply = "Reply"
+_l.e13339 = "You rescued someone from the censored web. Some coins are on their way!"
+_l.e13340 = "Congrats!"
+_l.e13341 = "followed you"
 // <%=e("e13352")%> <%=e("e13037").toUpperCase()%> <%=e("")%> self.app.localization.e("e13337")
-____loclib.e13342 = "New Follower"
-____loclib.e13343 = "upvoted your post"
-____loclib.e13344 = "New Upvote"
-____loclib.e13345 = "sent you private message"
+_l.e13342 = "New Follower"
+_l.e13343 = "upvoted your post"
+_l.e13344 = "New Upvote"
+_l.e13345 = "sent you private message"
 
-____loclib.e13346 = "You have new messages"
-____loclib.e13347 = "Updates to "+appname+" are available. Apply the updates now?"
-____loclib.e13348 = "No, later"
-____loclib.e13349 = "Updates to "+appname+" are available. Go to the page to download the new version?"
-____loclib.e13350 = "Join "+appname+" & Earn Pocketcoin Now"
-____loclib.e133512 = "Please write a few words about yourself to help people decide if they want to follow you"
-____loclib.e13351 = ""+appname+" chat"
-____loclib.e13352 = "You do not have chat priviliges"
+_l.e13346 = "You have new messages"
+_l.e13347 = "Updates to "+appname+" are available. Apply the updates now?"
+_l.e13348 = "No, later"
+_l.e13349 = "Updates to "+appname+" are available. Go to the page to download the new version?"
+_l.e13350 = "Join "+appname+" & Earn Pocketcoin Now"
+_l.e133512 = "Please write a few words about yourself to help people decide if they want to follow you"
+_l.e13351 = ""+appname+" chat"
+_l.e13352 = "You do not have chat priviliges"
 
-____loclib.e14001 = "Language of publication"
-____loclib.e14002 = "Are you sure you want to clear the post?"
-____loclib.e14003 = "Technical"
-____loclib.e14004 = "Where do I download the client?"
-____loclib.e14005 = "Where do I download the node?"
-____loclib.e14006 = "Click on "+appname+"Setup.exe"
-____loclib.e14007 = "With any questions email core@pocketnet.app"
-____loclib.e14008 = ""+appname+""
-____loclib.e14009 = "I see a PN address and a wallet address... are both these addresses on the PN blockchain?"
-____loclib.e14010 = "PN address is the one used for posting content and using social network in general. It also keeps coins that you win for your highly rated posts."
-____loclib.e14011 = "Wallet addresses are to keep the rest of coins."
-____loclib.e14012 = "Can I link to my profile? or my 'page'? So that i can post it into my community to bring members over."
-____loclib.e14013 = "In the browser, go to your profile by clicking on avatar in the upper right and just copy the browser address, everyone who will sign up from that link will follow you automatically and you will actually get rewards."
-____loclib.e14014 = "On the desktop,  from a desktop application go to your profile,  once there, there will be three icons to the right of your avatar first there will be a wallet with number of coins, then a bell with notifications and a third is a green cross icon click on that green cross  and click copy,  send that link around everyone who subscribes will follow you and you will get rewards."
-____loclib.e14015 = "The star system. is there a limit on how many stars a person has to give people?"
-____loclib.e14016 = "There are some limits. But as your reputation grows you can upvote more and more. This is done, so bots don&rsquo;t break down our blockchain. Initially you get 100 ratings every 24 hours. As your reputation grows (that happens by posting and getting rated), then you do 200 ratings a day."
-____loclib.e14017 = "How long until I&rsquo;m able to update my profile? "
-____loclib.e14018 = "You are able to update your profile once every hour."
-____loclib.e14019 = "Is there a Linux Desktop?"
-____loclib.e14020 = "Yes! It is in the works 2-3 weeks as the beta test progresses."
-____loclib.e14021 = "Where do you save the video content?"
-____loclib.e14022 = "We are working on video storage, in the meantime you can share from Bitchute, Youtube, Vimeo and other video sources."
-____loclib.e14023 = "Is there a mobile app?"
-____loclib.e14024 = "Yes. But we strongly encourage everyone to also download the desktop app, since, unlike Android or iPhone app, it cannot be taken away from you by Google or Apple."
-____loclib.e14025 = "Can you tell me what is the limit for posting each day or hour?"
-____loclib.e14026 = "We do have some limitations, but after testing it we have increased our limits. At the outset you can make 15 posts and issue 100 ratings every 24 hours. Once your reputation grows above 50, you will be able to make up to 30 posts and 200 ratings every 24 hours."
-____loclib.e14027 = "What is reputation and how is it calculated?"
-____loclib.e14028 = "Your reputation is the sum of your ratings calculated in the following way. Note, that users with reputation below 50 do not affect anyone`s reputation or coin winnings. They can rate the content, but it does not affect reputation."
-____loclib.e14029 = "So, if you have two 5 star ratings and one 1 star rating, the total will be"
-____loclib.e14030 = "Is there a way to delete or edit a post?"
-____loclib.e14031 = "Not at this point, as it is baked into blockchain. However, we are working on a feature to create an overwrite transaction as well &#10075;hide&#10076; transaction, which would effectively translate to edit or delete."
-____loclib.e14032 = "Is there a way to search for a user?"
-____loclib.e14033 = "Click the search magnifying glass on the top and search by username or by keywords."
-____loclib.e14034 = "How do you follow someone?"
-____loclib.e14035 = "Next to post author (on top of post) there is a Follow link, you can find his posts in Top posts (red flame on top of the page). You will also soon see Subscriptions feed, which is going to be different from the main feed. The main feed will be everything that anyone posts chronologically, but Subscriptions feed will only contain posts from people you follow. So, you will go into general feed in search of good content, though you may not like everything. Then select those you want to keep. Kind of like fishing :)"
-____loclib.e14036 = "Can it be used on Brave or Duck Duck go browsers?"
-____loclib.e14037 = ""+appname+" should work on those browsers. It is fully functional on Chrome and Firefox. But we strongly encourage everyone to download the desktop app (grab "+appname+"Setup.exe here: https://github.com/pocketnetteam/pocketnet.gui/releases/tag/v0.0.33-beta). It cannot be blocked ever (even if pocketnet.app is down or blocked for some reason). This is a serious consideration in totalitarian and quasi-totalitarian countries which, if you think about it, is beginning to include more and more of the globe."
-____loclib.e14038 = "Can we reply to our own/and other&rsquo;s posts?"
-____loclib.e14039 = "Yes, commenting is live below each post.."
-____loclib.e14040 = "How to add a tag to a post?"
-____loclib.e14041 = "Just type in the field tag and press enter. No need to specify #, it will be added automatically."
-____loclib.e14042 = "How can I use the public address?"
-____loclib.e14043 = "Your public address is what "+appname+" uses to verify your identity. Essentially, your private key is a really large number (that can be represented with a 12 word sequence or a QR code). This number gets multiplied by another that everyone knows (called a base point) and we get a public key. When you enter your private key, we can multiply it by the base point to get your public key and we can match it against public address. If they match, we know it is you. It is impossible to go back i.e. to divide public key by the base point to get your private key. The way multiplication in cryptography works is it is only one way and cannot be reversed, so your key is safe. "+appname+" uses the same exact cryptography as Bitcoin."
-____loclib.e14044 = "Will there be a downloadable executable for Mac?"
-____loclib.e14045 = "Yes - we are working of Mac platform. Target is for mid-April."
-____loclib.e14046 = "Pocketcoin"
-____loclib.e14047 = "What can I do with Pocketcoin?"
-____loclib.e14048 = "Currently you can win it or send as a gift. However, if and when "+appname+" takes off, Pocketcoin will be the main method of buying advertising on the platform. Advertisers will be able to easily find content authors with the right audience and then offer them advertising opportunities. This will be a trustless endeavor (i.e. neither side can cheat), because of something called multi-signature contracts. Multisig contract requires a digital signature of both parties to be valid. When advertiser offers an ad to the content creator, he creates the first of two required signatures. He signs the actual ad and the amount bid. Content creator reviews this partially signed multisig and if it is accepted, then he appends the second signature. When a blockchain sees both signatures, content creator is automatically paid and an ad is automatically shown on creator’s channel. These transactions will only be done through Pocketcoin. Thus, if Pocketcoin becomes big, it will be an immensely valuable token."
-____loclib.e14049 = "Is Pocketcoin like a share of stock in "+appname+"?"
-____loclib.e14050 = "Definitely no. "+appname+" is not even a corporation and does not have any ownership. It is an open source code that anyone can copy and run. Pocketcoin is a token that facilitates value exchange, specifically advertising transactions. In addition, "+appname+" will include a marketplace where goods and services will be sold directly for Pocketcoin"
-____loclib.e14051 = "Can I buy additional Pocketcoin?"
-____loclib.e14052 = "Yes, we will create a way to buy Pocketcoin for Bitcoin and a few other cryptocurrencies on pocketnet.app. All proceeds of sales will be used to advertise "+appname+" to the world. So, by buying a Pocketcoin you are positioning yourself for success of "+appname+", but just as importantly you are helping "+appname+" achieve this success. All major social networks had billion dollar advertising budgets. "+appname+" was funded by its founders and developers worked only for Pocketcoin. We need you to help us spread the word. To go the extra mile consider buying some Pocketcoin to help us advertise the site. To buy Pocketcoin you will need to first buy Bitcoin or some other cryptocurrency, which is exceedingly easy now."
-____loclib.e14053 = "Can I buy Pocketcoin for US Dollars or other fiat currency?"
-____loclib.e14054 = "No."
-____loclib.e14055 = "Privacy"
-____loclib.e14056 = "Are people who do not enter their real names anonymous?"
-____loclib.e14057 = "Yes - no names, phones, email is NOT connected to your account in any way, it is just optionally entered to receive newsletter updates."
-____loclib.e14058 = "Can someone view a profile (someone&rsquo;s posts) outside the garden? Is it a walled garden?"
-____loclib.e14059 = "Since the whole blockchain and all the posts are in opensource anyone can have access to your posts and profile. They just know that it is linked to your public address. In practice, you can have multiple accounts. You can use some with your real name and others anonymously. Anonymity is a great tool to protect free speech from abuse of power."
-____loclib.e14060 = "Is my public key like a wallet ID that I enter on my profile and people can send points to?"
-____loclib.e14061 = "Exactly. And it is safe to reveal. But not a secret phrase - keep it safe!"
-____loclib.e14062 = "Can I run a node on my headless server?"
-____loclib.e14063 = "We will put the node&rsquo;s sources into GitHub. Instructions for running a node will be made available in early April."
-____loclib.e14064 = "How can I sign back in?"
-____loclib.e14065 = "You can use your private 12-word key or a QR code to sign in."
-____loclib.e14066 = "Curation of content"
-____loclib.e14067 = "Is any content allowed on "+appname+"? If some content is not allowed, can the platform still be called free speech?"
-____loclib.e14068 = "This is a very important question and we will be releasing many videos and articles about it, as well as looking for your input. To begin with, not all types of content are allowed. However, and this is crucial, the enforcement is transparent and up to the community in the way we will explain below. Enforcement is done by the community and is in the open with no hidden shadow bans or selective banning practiced by the Silicon Valley."
-____loclib.e14069 = "Specifics of curation on "+appname+"."
-____loclib.e14070 = "When your reputation gets to 100 and you press on dots in the upper right of any post, you will see an option to Complain. If enough Complaints come in, the post will not be shown anymore. When someone has more than 2 posts that are voted off the platform in 24 hours, they cannot post for another 48 hours after the second post. Complain is completed when number of complaints is at least ⅓ of the number of 4 and 5 star ratings, subject to a minimum of 10 complaints (which will be adjusted over time in consultation with the community)."
-____loclib.e140701 = "We are extremely and passionately pro-speech. However, we do not want to turn "+appname+" into a marginal forum where lunatics reign. What would cause you to Complain?"
-____loclib.e140702 = "Do NOT complain about stuff that you simply don’t like or that offends you. That is not a high enough bar. Do not follow people who offend you, soon we will have a feature for not seeing their posts, but do not complain about them. Complain only about things that threaten long term viability of "+appname+" as a mass communication platform that intends to reach to all levels of society in many countries."
-____loclib.e140703 = "We strongly recommend that you complain about porn of any kind. There are plenty of porn sites on the web, we do not want to mix our free speech endeavor with that. We strongly encourage the community to vote off porn. Secondly, any type of a direct threat should be voted off and clear examples of racism should too. If we allow MSM to tie us to racism or violence directly, "+appname+" will cease to exist before we can even get it out there. Just because MSM media cries wolf about fake racism, doesn’t mean we should prove them right by tolerating it in our platform. It will detract from what we are trying to achieve, which is to challenge new totalitarianism created by the unholy alliance of media, finance and corrupt government officials."
-____loclib.e14071 = "Important Note on Racism."
-____loclib.e14072 = "Free thought and free speech is under attack on mainstream social platforms and in the media. We need to speak the truth and this platform is non-corporate and decentralized for that very reason. But we ask everyone make your point without attacking people&rsquo;s nationality or race. You can make your point based on evidence. We cannot afford to turn "+appname+" into a marginal platform. Speak the truth, but please avoid racism and attacks against specific nationalities on the whole. We know that Silicon Valley and MSM has turned the issue of racism into their playing card and they constantly cry wolf. Even more the reason for us to be measured and evidence based and not let them smear us with that. If we are not, we are not allowing most of the population to weigh the evidence of MSM corruption presented on "+appname+". Please keep that in mind, so that free speech can thrive and we can beat the facebokks of the world.</div><div>Ultimately, it is the community that will determine the direction of the platform. Having a bunch of snowflakes that complain about stuff that offends them is equally as bad as when people want to voice direct violent threats. However, the first indication is that early users of the platform are generally intelligent and evidence based, so the future looks incredibly bright. "+appname+" team has noticed after a few days of the beta test, that we stopped reading even alternative news, because there was so much interesting content on "+appname+". Keep it up!</div><div>Please get involved in the discussion on these topics. This is a community platform. We are always eager to improve transparency of the platform and you should let us know how we can improve our content curation and policing. Use group chat or email support(at)pocketnet*dot*app or make full posts on this topic."
-____loclib.e14073 = "Specifics of curation on "+appname+"."
-____loclib.e14074 = "Is any content allowed on "+appname+"? If some content is not allowed, can the platform still be called free speech?"
-____loclib.e14075 = "Sometimes we can have a user who comes in with a specific purpose to attack "+appname+" by posting a series of vile images. To protect against that we have a following mechanism. If someone’s reputation reaches -50 (negative 50), their account is automatically blocked. Getting a reputation of -50 is equivalent to having 25 one star ratings and no four or five star ratings. This is nearly impossible to achieve without having lots of bad posts."
-____loclib.e14076 = "Flagging a specific post"
-____loclib.e14077 = "When your reputation gets to 50 and you press on dots in the upper right of any post, you will see an option to Complain. If enough Complaints come in, the post will not be shown anymore. Complain is completed when number of complaints is at least ⅓ of the number of 4 and 5 star ratings, subject to a minimum of 10 complaints (which will be adjusted over time in consultation with the community).</div><div>We are extremely and passionately pro-speech. However, we do not want to turn "+appname+" into a marginal forum where lunatics reign. What would cause you to Complain?</div><div>Do NOT complain about stuff that you simply don’t like or that offends you. That is not a high enough bar. Do not follow people who offend you, soon we will have a feature for not seeing their posts, but do not complain about them. Complain only about things that threaten long term viability of "+appname+" as a mass communication platform that intends to reach to all levels of society in many countries.</div><div>We strongly recommend that you complain about porn of any kind. There are plenty of porn sites on the web, we do not want to mix our free speech endeavor with that. We strongly encourage the community to vote off porn. Secondly, any type of a direct threat should be voted off and clear examples of racism should too. If we allow MSM to tie us to racism or violence directly, "+appname+" will cease to exist before we can even get it out there. Just because MSM media cries wolf about fake racism, doesn’t mean we should prove them right by tolerating it in our platform. It will detract from what we are trying to achieve, which is to challenge new totalitarianism created by the unholy alliance of media, finance and corrupt government officials."
-____loclib.e14078 = "How is "+appname+" different from..."
-____loclib.e14079 = "Twitter, Facebook, Reddit & other centralized platforms?"
-____loclib.e14080 = "There is no central authority or corporation. Platform is run by equal nodes on a blockchain. All revenue is split between node operators and content creators. Node operators stake Pocketcoin in order to mint blocks with rewards and transactions fees. Half of rewards in each block go to content creators based on ratings their content gathers from users."
-____loclib.e14081 = "Decentralized platforms like Minds.com and Sola?"
-____loclib.e14082 = "Both of those platforms, while great, are not self-contained. Both are highly dependent on the Ethereum platform, because their tokens are based on ERC-20 Ethereum standard. That means that operations with tokens carry Ether gas fees. Also, those entities have corporations behind them and a corporation will always be a point of centralization due to its economic logic of growing profits. In addition, corporations are exceedingly easy to censor."
-____loclib.e14083 = "From Steemit?"
-____loclib.e14084 = "Steemit has its own blockchain, but is a corporate entity with all of the centralization that comes from that."
-____loclib.e14085 = "Decentralized platforms like Mastodon and others?"
-____loclib.e14086 = "While Mastodon is a fully decentralized platform, it requires a great deal of technical knowledge to use. This presents a great hindrance to potential widespread acceptance. "+appname+" features a web and desktop applications and users can log in from any device, pull in their personal settings from the blockchain and start using the platform immediately without any technial knowledge."
-____loclib.e14087 = ""+appname+" ecosystem"
-____loclib.e14088 = "How is "+appname+" develpment funded?"
-____loclib.e14089 = ""+appname+" is open sourced and is currently run by the group of volunteers with some serious programming and math skills. After launch "+appname+" will attract top programming talent based on its promise of creating a decentralized fair social network. Programmers and marketers working on Pocketcoin receive 5% of emission. The awards to developers and marketers will be assigned by nodes voting in a transparent manner."
-____loclib.e14090 = "What is Pocketcoin?"
-____loclib.e14091 = "Pocketcoin is a network token. It is used exclusively to buy advertising from "+appname+" contributors and to pay transaction fees for such payments. Pocketcoin emission depends on the number of users of "+appname+" and has inherent algorithmic factors tying its long term value to Annual Revenue Per User (ARPU). ARPU is a term in digital advertising which signifies the total amount of revenue platform receives for one active user per year. In Pocketent all of the revenue is split between content creators and nodes."
-____loclib.e14092 = "How are content creators and node operators rewarded?"
-____loclib.e14093 = ""+appname+" features unique Direct Marketplace where content creators can sell advertising to ad buyers. Content creators set their price and can accept mass-produced ads or can offer highly valued custom placements (creators pitching the product in their own way). Direct Marketplace is essentially an exchange for advertising that allows ad buyers target specific audiences without any intermediaries. All ad buys and ads themselves are linked on the blockchain, therefore ad buying is completely trustless."
-____loclib.e14094 = "What if users post illegal content, pornography and SPAM?"
-____loclib.e14095 = ""+appname+" is not a darknet platform or some sort of pornhub. While it is decentralized and censorship resistant, it is policed by the users. Any illegal content is flagged and removed from the platform using the Wikipedia model. This means that users with highest reputation can police the platform. However, there are safeguards in place (within the open source code) from same or very similar group(s) of people repeatedly voting content off the platform. Also, users are explicitly encouraged to flag illegal content OR content that threatens mass adoption of "+appname+", not simply the content they find offensive. To make sure that "+appname+" is a free speech platform, we encourage you to start participate, grow your reputation and police the platform properly without the censorship currently prevalent in centralized social media."
-____loclib.e14096 = "Who runs the "+appname+"?"
-____loclib.e14097 = "There is no corporate entity or single individual who owns or controls the "+appname+"."
-____loclib.e14098 = "The Designer of the "+appname+", Daniel Sachkov changed his main focus in the Summer of 2019 he is now doing research on further decentralization of blockchain technology that will benefit everyone. He handed control of the Project in accordance with the idea of a full decentralized social media architecture and design over to the community and the Nodes who run the Network."
-____loclib.e14099 = "A team of capable, changing developers and community volunteers is working on the realisation of his Vision ever since. "
+_l.e14001 = "Language of publication"
+_l.e14002 = "Are you sure you want to clear the post?"
+_l.e14003 = "Technical"
+_l.e14004 = "Where do I download the client?"
+_l.e14005 = "Where do I download the node?"
+_l.e14006 = "Click on "+appname+"Setup.exe"
+_l.e14007 = "With any questions email core@pocketnet.app"
+_l.e14008 = ""+appname+""
+_l.e14009 = "I see a PN address and a wallet address... are both these addresses on the PN blockchain?"
+_l.e14010 = "PN address is the one used for posting content and using social network in general. It also keeps coins that you win for your highly rated posts."
+_l.e14011 = "Wallet addresses are to keep the rest of coins."
+_l.e14012 = "Can I link to my profile? or my 'page'? So that i can post it into my community to bring members over."
+_l.e14013 = "In the browser, go to your profile by clicking on avatar in the upper right and just copy the browser address, everyone who will sign up from that link will follow you automatically and you will actually get rewards."
+_l.e14014 = "On the desktop,  from a desktop application go to your profile,  once there, there will be three icons to the right of your avatar first there will be a wallet with number of coins, then a bell with notifications and a third is a green cross icon click on that green cross  and click copy,  send that link around everyone who subscribes will follow you and you will get rewards."
+_l.e14015 = "The star system. is there a limit on how many stars a person has to give people?"
+_l.e14016 = "There are some limits. But as your reputation grows you can upvote more and more. This is done, so bots don&rsquo;t break down our blockchain. Initially you get 100 ratings every 24 hours. As your reputation grows (that happens by posting and getting rated), then you do 200 ratings a day."
+_l.e14017 = "How long until I&rsquo;m able to update my profile? "
+_l.e14018 = "You are able to update your profile once every hour."
+_l.e14019 = "Is there a Linux Desktop?"
+_l.e14020 = "Yes! It is in the works 2-3 weeks as the beta test progresses."
+_l.e14021 = "Where do you save the video content?"
+_l.e14022 = "We are working on video storage, in the meantime you can share from Bitchute, Youtube, Vimeo and other video sources."
+_l.e14023 = "Is there a mobile app?"
+_l.e14024 = "Yes. But we strongly encourage everyone to also download the desktop app, since, unlike Android or iPhone app, it cannot be taken away from you by Google or Apple."
+_l.e14025 = "Can you tell me what is the limit for posting each day or hour?"
+_l.e14026 = "We do have some limitations, but after testing it we have increased our limits. At the outset you can make 15 posts and issue 100 ratings every 24 hours. Once your reputation grows above 50, you will be able to make up to 30 posts and 200 ratings every 24 hours."
+_l.e14027 = "What is reputation and how is it calculated?"
+_l.e14028 = "Your reputation is the sum of your ratings calculated in the following way. Note, that users with reputation below 50 do not affect anyone`s reputation or coin winnings. They can rate the content, but it does not affect reputation."
+_l.e14029 = "So, if you have two 5 star ratings and one 1 star rating, the total will be"
+_l.e14030 = "Is there a way to delete or edit a post?"
+_l.e14031 = "Not at this point, as it is baked into blockchain. However, we are working on a feature to create an overwrite transaction as well &#10075;hide&#10076; transaction, which would effectively translate to edit or delete."
+_l.e14032 = "Is there a way to search for a user?"
+_l.e14033 = "Click the search magnifying glass on the top and search by username or by keywords."
+_l.e14034 = "How do you follow someone?"
+_l.e14035 = "Next to post author (on top of post) there is a Follow link, you can find his posts in Top posts (red flame on top of the page). You will also soon see Subscriptions feed, which is going to be different from the main feed. The main feed will be everything that anyone posts chronologically, but Subscriptions feed will only contain posts from people you follow. So, you will go into general feed in search of good content, though you may not like everything. Then select those you want to keep. Kind of like fishing :)"
+_l.e14036 = "Can it be used on Brave or Duck Duck go browsers?"
+_l.e14037 = ""+appname+" should work on those browsers. It is fully functional on Chrome and Firefox. But we strongly encourage everyone to download the desktop app (grab "+appname+"Setup.exe here: https://github.com/pocketnetteam/pocketnet.gui/releases/tag/v0.0.33-beta). It cannot be blocked ever (even if pocketnet.app is down or blocked for some reason). This is a serious consideration in totalitarian and quasi-totalitarian countries which, if you think about it, is beginning to include more and more of the globe."
+_l.e14038 = "Can we reply to our own/and other&rsquo;s posts?"
+_l.e14039 = "Yes, commenting is live below each post.."
+_l.e14040 = "How to add a tag to a post?"
+_l.e14041 = "Just type in the field tag and press enter. No need to specify #, it will be added automatically."
+_l.e14042 = "How can I use the public address?"
+_l.e14043 = "Your public address is what "+appname+" uses to verify your identity. Essentially, your private key is a really large number (that can be represented with a 12 word sequence or a QR code). This number gets multiplied by another that everyone knows (called a base point) and we get a public key. When you enter your private key, we can multiply it by the base point to get your public key and we can match it against public address. If they match, we know it is you. It is impossible to go back i.e. to divide public key by the base point to get your private key. The way multiplication in cryptography works is it is only one way and cannot be reversed, so your key is safe. "+appname+" uses the same exact cryptography as Bitcoin."
+_l.e14044 = "Will there be a downloadable executable for Mac?"
+_l.e14045 = "Yes - we are working of Mac platform. Target is for mid-April."
+_l.e14046 = "Pocketcoin"
+_l.e14047 = "What can I do with Pocketcoin?"
+_l.e14048 = "Currently you can win it or send as a gift. However, if and when "+appname+" takes off, Pocketcoin will be the main method of buying advertising on the platform. Advertisers will be able to easily find content authors with the right audience and then offer them advertising opportunities. This will be a trustless endeavor (i.e. neither side can cheat), because of something called multi-signature contracts. Multisig contract requires a digital signature of both parties to be valid. When advertiser offers an ad to the content creator, he creates the first of two required signatures. He signs the actual ad and the amount bid. Content creator reviews this partially signed multisig and if it is accepted, then he appends the second signature. When a blockchain sees both signatures, content creator is automatically paid and an ad is automatically shown on creator’s channel. These transactions will only be done through Pocketcoin. Thus, if Pocketcoin becomes big, it will be an immensely valuable token."
+_l.e14049 = "Is Pocketcoin like a share of stock in "+appname+"?"
+_l.e14050 = "Definitely no. "+appname+" is not even a corporation and does not have any ownership. It is an open source code that anyone can copy and run. Pocketcoin is a token that facilitates value exchange, specifically advertising transactions. In addition, "+appname+" will include a marketplace where goods and services will be sold directly for Pocketcoin"
+_l.e14051 = "Can I buy additional Pocketcoin?"
+_l.e14052 = "Yes, we will create a way to buy Pocketcoin for Bitcoin and a few other cryptocurrencies on pocketnet.app. All proceeds of sales will be used to advertise "+appname+" to the world. So, by buying a Pocketcoin you are positioning yourself for success of "+appname+", but just as importantly you are helping "+appname+" achieve this success. All major social networks had billion dollar advertising budgets. "+appname+" was funded by its founders and developers worked only for Pocketcoin. We need you to help us spread the word. To go the extra mile consider buying some Pocketcoin to help us advertise the site. To buy Pocketcoin you will need to first buy Bitcoin or some other cryptocurrency, which is exceedingly easy now."
+_l.e14053 = "Can I buy Pocketcoin for US Dollars or other fiat currency?"
+_l.e14054 = "No."
+_l.e14055 = "Privacy"
+_l.e14056 = "Are people who do not enter their real names anonymous?"
+_l.e14057 = "Yes - no names, phones, email is NOT connected to your account in any way, it is just optionally entered to receive newsletter updates."
+_l.e14058 = "Can someone view a profile (someone&rsquo;s posts) outside the garden? Is it a walled garden?"
+_l.e14059 = "Since the whole blockchain and all the posts are in opensource anyone can have access to your posts and profile. They just know that it is linked to your public address. In practice, you can have multiple accounts. You can use some with your real name and others anonymously. Anonymity is a great tool to protect free speech from abuse of power."
+_l.e14060 = "Is my public key like a wallet ID that I enter on my profile and people can send points to?"
+_l.e14061 = "Exactly. And it is safe to reveal. But not a secret phrase - keep it safe!"
+_l.e14062 = "Can I run a node on my headless server?"
+_l.e14063 = "We will put the node&rsquo;s sources into GitHub. Instructions for running a node will be made available in early April."
+_l.e14064 = "How can I sign back in?"
+_l.e14065 = "You can use your private 12-word key or a QR code to sign in."
+_l.e14066 = "Curation of content"
+_l.e14067 = "Is any content allowed on "+appname+"? If some content is not allowed, can the platform still be called free speech?"
+_l.e14068 = "This is a very important question and we will be releasing many videos and articles about it, as well as looking for your input. To begin with, not all types of content are allowed. However, and this is crucial, the enforcement is transparent and up to the community in the way we will explain below. Enforcement is done by the community and is in the open with no hidden shadow bans or selective banning practiced by the Silicon Valley."
+_l.e14069 = "Specifics of curation on "+appname+"."
+_l.e14070 = "When your reputation gets to 100 and you press on dots in the upper right of any post, you will see an option to Complain. If enough Complaints come in, the post will not be shown anymore. When someone has more than 2 posts that are voted off the platform in 24 hours, they cannot post for another 48 hours after the second post. Complain is completed when number of complaints is at least ⅓ of the number of 4 and 5 star ratings, subject to a minimum of 10 complaints (which will be adjusted over time in consultation with the community)."
+_l.e140701 = "We are extremely and passionately pro-speech. However, we do not want to turn "+appname+" into a marginal forum where lunatics reign. What would cause you to Complain?"
+_l.e140702 = "Do NOT complain about stuff that you simply don’t like or that offends you. That is not a high enough bar. Do not follow people who offend you, soon we will have a feature for not seeing their posts, but do not complain about them. Complain only about things that threaten long term viability of "+appname+" as a mass communication platform that intends to reach to all levels of society in many countries."
+_l.e140703 = "We strongly recommend that you complain about porn of any kind. There are plenty of porn sites on the web, we do not want to mix our free speech endeavor with that. We strongly encourage the community to vote off porn. Secondly, any type of a direct threat should be voted off and clear examples of racism should too. If we allow MSM to tie us to racism or violence directly, "+appname+" will cease to exist before we can even get it out there. Just because MSM media cries wolf about fake racism, doesn’t mean we should prove them right by tolerating it in our platform. It will detract from what we are trying to achieve, which is to challenge new totalitarianism created by the unholy alliance of media, finance and corrupt government officials."
+_l.e14071 = "Important Note on Racism."
+_l.e14072 = "Free thought and free speech is under attack on mainstream social platforms and in the media. We need to speak the truth and this platform is non-corporate and decentralized for that very reason. But we ask everyone make your point without attacking people&rsquo;s nationality or race. You can make your point based on evidence. We cannot afford to turn "+appname+" into a marginal platform. Speak the truth, but please avoid racism and attacks against specific nationalities on the whole. We know that Silicon Valley and MSM has turned the issue of racism into their playing card and they constantly cry wolf. Even more the reason for us to be measured and evidence based and not let them smear us with that. If we are not, we are not allowing most of the population to weigh the evidence of MSM corruption presented on "+appname+". Please keep that in mind, so that free speech can thrive and we can beat the facebokks of the world.</div><div>Ultimately, it is the community that will determine the direction of the platform. Having a bunch of snowflakes that complain about stuff that offends them is equally as bad as when people want to voice direct violent threats. However, the first indication is that early users of the platform are generally intelligent and evidence based, so the future looks incredibly bright. "+appname+" team has noticed after a few days of the beta test, that we stopped reading even alternative news, because there was so much interesting content on "+appname+". Keep it up!</div><div>Please get involved in the discussion on these topics. This is a community platform. We are always eager to improve transparency of the platform and you should let us know how we can improve our content curation and policing. Use group chat or email support(at)pocketnet*dot*app or make full posts on this topic."
+_l.e14073 = "Specifics of curation on "+appname+"."
+_l.e14074 = "Is any content allowed on "+appname+"? If some content is not allowed, can the platform still be called free speech?"
+_l.e14075 = "Sometimes we can have a user who comes in with a specific purpose to attack "+appname+" by posting a series of vile images. To protect against that we have a following mechanism. If someone’s reputation reaches -50 (negative 50), their account is automatically blocked. Getting a reputation of -50 is equivalent to having 25 one star ratings and no four or five star ratings. This is nearly impossible to achieve without having lots of bad posts."
+_l.e14076 = "Flagging a specific post"
+_l.e14077 = "When your reputation gets to 50 and you press on dots in the upper right of any post, you will see an option to Complain. If enough Complaints come in, the post will not be shown anymore. Complain is completed when number of complaints is at least ⅓ of the number of 4 and 5 star ratings, subject to a minimum of 10 complaints (which will be adjusted over time in consultation with the community).</div><div>We are extremely and passionately pro-speech. However, we do not want to turn "+appname+" into a marginal forum where lunatics reign. What would cause you to Complain?</div><div>Do NOT complain about stuff that you simply don’t like or that offends you. That is not a high enough bar. Do not follow people who offend you, soon we will have a feature for not seeing their posts, but do not complain about them. Complain only about things that threaten long term viability of "+appname+" as a mass communication platform that intends to reach to all levels of society in many countries.</div><div>We strongly recommend that you complain about porn of any kind. There are plenty of porn sites on the web, we do not want to mix our free speech endeavor with that. We strongly encourage the community to vote off porn. Secondly, any type of a direct threat should be voted off and clear examples of racism should too. If we allow MSM to tie us to racism or violence directly, "+appname+" will cease to exist before we can even get it out there. Just because MSM media cries wolf about fake racism, doesn’t mean we should prove them right by tolerating it in our platform. It will detract from what we are trying to achieve, which is to challenge new totalitarianism created by the unholy alliance of media, finance and corrupt government officials."
+_l.e14078 = "How is "+appname+" different from..."
+_l.e14079 = "Twitter, Facebook, Reddit & other centralized platforms?"
+_l.e14080 = "There is no central authority or corporation. Platform is run by equal nodes on a blockchain. All revenue is split between node operators and content creators. Node operators stake Pocketcoin in order to mint blocks with rewards and transactions fees. Half of rewards in each block go to content creators based on ratings their content gathers from users."
+_l.e14081 = "Decentralized platforms like Minds.com and Sola?"
+_l.e14082 = "Both of those platforms, while great, are not self-contained. Both are highly dependent on the Ethereum platform, because their tokens are based on ERC-20 Ethereum standard. That means that operations with tokens carry Ether gas fees. Also, those entities have corporations behind them and a corporation will always be a point of centralization due to its economic logic of growing profits. In addition, corporations are exceedingly easy to censor."
+_l.e14083 = "From Steemit?"
+_l.e14084 = "Steemit has its own blockchain, but is a corporate entity with all of the centralization that comes from that."
+_l.e14085 = "Decentralized platforms like Mastodon and others?"
+_l.e14086 = "While Mastodon is a fully decentralized platform, it requires a great deal of technical knowledge to use. This presents a great hindrance to potential widespread acceptance. "+appname+" features a web and desktop applications and users can log in from any device, pull in their personal settings from the blockchain and start using the platform immediately without any technial knowledge."
+_l.e14087 = ""+appname+" ecosystem"
+_l.e14088 = "How is "+appname+" develpment funded?"
+_l.e14089 = ""+appname+" is open sourced and is currently run by the group of volunteers with some serious programming and math skills. After launch "+appname+" will attract top programming talent based on its promise of creating a decentralized fair social network. Programmers and marketers working on Pocketcoin receive 5% of emission. The awards to developers and marketers will be assigned by nodes voting in a transparent manner."
+_l.e14090 = "What is Pocketcoin?"
+_l.e14091 = "Pocketcoin is a network token. It is used exclusively to buy advertising from "+appname+" contributors and to pay transaction fees for such payments. Pocketcoin emission depends on the number of users of "+appname+" and has inherent algorithmic factors tying its long term value to Annual Revenue Per User (ARPU). ARPU is a term in digital advertising which signifies the total amount of revenue platform receives for one active user per year. In Pocketent all of the revenue is split between content creators and nodes."
+_l.e14092 = "How are content creators and node operators rewarded?"
+_l.e14093 = ""+appname+" features unique Direct Marketplace where content creators can sell advertising to ad buyers. Content creators set their price and can accept mass-produced ads or can offer highly valued custom placements (creators pitching the product in their own way). Direct Marketplace is essentially an exchange for advertising that allows ad buyers target specific audiences without any intermediaries. All ad buys and ads themselves are linked on the blockchain, therefore ad buying is completely trustless."
+_l.e14094 = "What if users post illegal content, pornography and SPAM?"
+_l.e14095 = ""+appname+" is not a darknet platform or some sort of pornhub. While it is decentralized and censorship resistant, it is policed by the users. Any illegal content is flagged and removed from the platform using the Wikipedia model. This means that users with highest reputation can police the platform. However, there are safeguards in place (within the open source code) from same or very similar group(s) of people repeatedly voting content off the platform. Also, users are explicitly encouraged to flag illegal content OR content that threatens mass adoption of "+appname+", not simply the content they find offensive. To make sure that "+appname+" is a free speech platform, we encourage you to start participate, grow your reputation and police the platform properly without the censorship currently prevalent in centralized social media."
+_l.e14096 = "Who runs the "+appname+"?"
+_l.e14097 = "There is no corporate entity or single individual who owns or controls the "+appname+"."
+_l.e14098 = "The Designer of the "+appname+", Daniel Sachkov changed his main focus in the Summer of 2019 he is now doing research on further decentralization of blockchain technology that will benefit everyone. He handed control of the Project in accordance with the idea of a full decentralized social media architecture and design over to the community and the Nodes who run the Network."
+_l.e14099 = "A team of capable, changing developers and community volunteers is working on the realisation of his Vision ever since. "
 
-____loclib.e14100 = "Help Center"
-____loclib.e14101 = "Block Explorer"
-____loclib.e14102 = "F.A.Q."
-____loclib.e14103 = "Roadmap"
-____loclib.e14104 = "Node Setup"
-____loclib.e14105 = "Videos"
-____loclib.e14106 = "Applications"
-____loclib.e14107 = "Check for updates"
-____loclib.e14108 = "Share answer"
-____loclib.e141081 = "Menu"
-____loclib.e14109 = "Where do I download the Android App?"
-____loclib.e14110 = "Google Play Market"
+_l.e14100 = "Help Center"
+_l.e14101 = "Block Explorer"
+_l.e14102 = "F.A.Q."
+_l.e14103 = "Roadmap"
+_l.e14104 = "Node Setup"
+_l.e14105 = "Videos"
+_l.e14106 = "Applications"
+_l.e14107 = "Check for updates"
+_l.e14108 = "Share answer"
+_l.e141081 = "Menu"
+_l.e14109 = "Where do I download the Android App?"
+_l.e14110 = "Google Play Market"
 
 
-____loclib.peertubeAddVideo = "Upload Video"
-____loclib.peertubeAddStream = "Add live stream to post"
+_l.peertubeAddVideo = "Upload Video"
+_l.peertubeAddStream = "Add live stream to post"
 
-____loclib.e14111 = "There was a problem with loading images"
-____loclib.editcomment = "Edit Comment"
-____loclib.system16 = {
+_l.e14111 = "There was a problem with loading images"
+_l.editcomment = "Edit Comment"
+_l.system16 = {
     charts : {
 
     }
 }
 
 
-____loclib.downvoteShareMessage = "downvoted your post"
+_l.downvoteShareMessage = "downvoted your post"
 
-____loclib.shareviagroupemail = "Email"
-____loclib.shareviagroupmessenger = "Messengers"
-____loclib.shareviagroupsocial = "Social networks"
-____loclib.shareviagroupblog = "Blogs"
+_l.shareviagroupemail = "Email"
+_l.shareviagroupmessenger = "Messengers"
+_l.shareviagroupsocial = "Social networks"
+_l.shareviagroupblog = "Blogs"
 
-____loclib.anotherSiteCaption = "You follow an external link to a third-party site"
-____loclib.anotherSiteDisc = "We are not responsible for the content of the site and strongly recommend that you do not provide any of your personal data on third-party sites."
+_l.anotherSiteCaption = "You follow an external link to a third-party site"
+_l.anotherSiteDisc = "We are not responsible for the content of the site and strongly recommend that you do not provide any of your personal data on third-party sites."
 
-____loclib.Categories = "Categories"
-____loclib.addtagsCategories = "Categories and tags"
-____loclib.addcategory = "Add Category"
-____loclib.categoryname = "Category name"
-____loclib.entercategoryname = "Enter category name"
-____loclib.categoryfilter = "Category filter"
-____loclib.emptycategoryname = "Please enter name of category."
-____loclib.doublename = "Category with this name already exist. Please choose another name."
+_l.Categories = "Categories"
+_l.addtagsCategories = "Categories and tags"
+_l.addcategory = "Add Category"
+_l.categoryname = "Category name"
+_l.entercategoryname = "Enter category name"
+_l.categoryfilter = "Category filter"
+_l.emptycategoryname = "Please enter name of category."
+_l.doublename = "Category with this name already exist. Please choose another name."
 
-____loclib.showmoreusers = "Show more users"
-____loclib.zeron = "Nothing found";
-____loclib.maxtags = "Only 5 tags maximum allowed";
+_l.showmoreusers = "Show more users"
+_l.zeron = "Nothing found";
+_l.maxtags = "Only 5 tags maximum allowed";
 
-____loclib.videotitle = "Enter video/stream title";
-____loclib.videodesc = "Enter video/stream description";
-____loclib.entervideocaption = "Please, enter video title";
+_l.videotitle = "Enter video/stream title";
+_l.videodesc = "Enter video/stream description";
+_l.entervideocaption = "Please, enter video title";
 
-____loclib.period = "Period";
-____loclib.periodday = "One Day";
-____loclib.period3day = "Three Days";
-____loclib.period7day = "One week";
-____loclib.period31day = "One Month";
-____loclib.period182day = "Half of year";
+_l.period = "Period";
+_l.periodday = "One Day";
+_l.period3day = "Three Days";
+_l.period7day = "One week";
+_l.period31day = "One Month";
+_l.period182day = "Half of year";
 
-____loclib.shareBareLink = "Share Video Link";
-____loclib.videoCopied = "Video link successfully copied to clipboard";
+_l.shareBareLink = "Share Video Link";
+_l.videoCopied = "Video link successfully copied to clipboard";
 
-____loclib.editWallpaper = "Change Preview Image";
-____loclib.removeVideo = "Remove Video";
+_l.editWallpaper = "Change Preview Image";
+_l.removeVideo = "Remove Video";
 
-____loclib.removeVideoDialog = "Are you sure you want to delete this video?"
+_l.removeVideoDialog = "Are you sure you want to delete this video?"
 
-____loclib.pterror_meta = "Peertube: Undefined request"
-____loclib.pterror_host = "Peertube: Peertube server not found"
-____loclib.pterror_link = "Peertube: Unknown Peertube link"
-____loclib.pterror_removeerror = "Peertube: Unable to remove video. Pleasy try again"
-____loclib.pterror_updateempty = "Peertube: No changes found to update"
-____loclib.pterror_uploaderror = "Peertube: Video has not been uploaded"
-____loclib.pterror_dailyquotalimit = "Peertube: You have reached your video upload limit"
-____loclib.pterror_videoQuotaUsedDaily = "Peertube: Failed to get channel information (quota)"
-____loclib.pterror_usersMe = "Peertube: Failed to get channel information"
-____loclib.pterror_oauthClientsLocal = "Peertube: Failed to get oAuth information from server"
-____loclib.pterror_pocketnetAuth = "Peertube: Peertube-"+appname+" authorization failed"
-____loclib.pterror_getToken = "Peertube: Unable to get Token"
-____loclib.pterror_videonotselected = "Peertube: Video not Selected"
+_l.pterror_meta = "Peertube: Undefined request"
+_l.pterror_host = "Peertube: Peertube server not found"
+_l.pterror_link = "Peertube: Unknown Peertube link"
+_l.pterror_removeerror = "Peertube: Unable to remove video. Pleasy try again"
+_l.pterror_updateempty = "Peertube: No changes found to update"
+_l.pterror_uploaderror = "Peertube: Video has not been uploaded"
+_l.pterror_dailyquotalimit = "Peertube: You have reached your video upload limit"
+_l.pterror_videoQuotaUsedDaily = "Peertube: Failed to get channel information (quota)"
+_l.pterror_usersMe = "Peertube: Failed to get channel information"
+_l.pterror_oauthClientsLocal = "Peertube: Failed to get oAuth information from server"
+_l.pterror_pocketnetAuth = "Peertube: Peertube-"+appname+" authorization failed"
+_l.pterror_getToken = "Peertube: Unable to get Token"
+_l.pterror_videonotselected = "Peertube: Video not Selected"
 
 
-____loclib.settingsTranscoding = "On video upload transcode it on my device"
-____loclib.videoTranscodingNotOptimal = "Not optimal transcoding result. Continuing with original video"
-____loclib.videoTranscodingError = "There was an error with processing your video"
-____loclib.videoUploadingFinish = "Finishing uploading..."
-____loclib.uploadNewVideo = "Upload New Pocketvideo"
-____loclib.selectVideoFile = "Select video file"
-____loclib.uploadVideoProgress_binaries = "Preparing binaries:"
-____loclib.uploadVideoProgress_processing = "Processing video:"
-____loclib.uploadVideoProgress_uploading = "Uploading video:"
-____loclib.uploadVideoProgress_start = "Video download initialization:"
-____loclib.uploadCanceled = "Upload canceled"
+_l.settingsTranscoding = "On video upload transcode it on my device"
+_l.videoTranscodingNotOptimal = "Not optimal transcoding result. Continuing with original video"
+_l.videoTranscodingError = "There was an error with processing your video"
+_l.videoUploadingFinish = "Finishing uploading..."
+_l.uploadNewVideo = "Upload New Pocketvideo"
+_l.selectVideoFile = "Select video file"
+_l.uploadVideoProgress_binaries = "Preparing binaries:"
+_l.uploadVideoProgress_processing = "Processing video:"
+_l.uploadVideoProgress_uploading = "Uploading video:"
+_l.uploadVideoProgress_start = "Video download initialization:"
+_l.uploadCanceled = "Upload canceled"
 
-____loclib.pleaseTryAgain = "Something was wrong there. Please try again"
+_l.pleaseTryAgain = "Something was wrong there. Please try again"
 
 
 
@@ -1166,1107 +1168,1107 @@ ____loclib.pleaseTryAgain = "Something was wrong there. Please try again"
 
 
 
-____loclib.pbp_1 = "Bastyon Bonus Program"
-____loclib.pbp_2 = "Criteria for bonus for original content:"
-____loclib.pbp_3 = "Every 15k views + 1500 five star ratings from unique users  + 1500 referral users"
-____loclib.pbp_4 = "PKOIN Equivalent:"
-____loclib.pbp_5 = "1,000 USDT"
-____loclib.pbp_6 = "How You Speed Up Your Bonus?"
-____loclib.pbp_7 = "Embed your Bastyon video to external websites (click Share and choose Embed)"
-____loclib.pbp_8 = "Share your video to social networks and via email"
-____loclib.pbp_9 = "Share the link to your personal page (go to your profile and click Share). You can create special posts that are exclusive only for your Bastyon subscribers. When creating a post choose an option Visible Only for Subscribers. Exclusive materials will increase the number of referrals."
-____loclib.pbp_10 = "If you invite a video blogger and can prove it, you get a bonus equal to 25% of their earnings from the first 4 bonuses."
-____loclib.pbp_11 = "For any questions, email"
+_l.pbp_1 = "Bastyon Bonus Program"
+_l.pbp_2 = "Criteria for bonus for original content:"
+_l.pbp_3 = "Every 15k views + 1500 five star ratings from unique users  + 1500 referral users"
+_l.pbp_4 = "PKOIN Equivalent:"
+_l.pbp_5 = "1,000 USDT"
+_l.pbp_6 = "How You Speed Up Your Bonus?"
+_l.pbp_7 = "Embed your Bastyon video to external websites (click Share and choose Embed)"
+_l.pbp_8 = "Share your video to social networks and via email"
+_l.pbp_9 = "Share the link to your personal page (go to your profile and click Share). You can create special posts that are exclusive only for your Bastyon subscribers. When creating a post choose an option Visible Only for Subscribers. Exclusive materials will increase the number of referrals."
+_l.pbp_10 = "If you invite a video blogger and can prove it, you get a bonus equal to 25% of their earnings from the first 4 bonuses."
+_l.pbp_11 = "For any questions, email"
 
-____loclib.pbp_6_1 = ""
-____loclib.pbp_6_2 = ""
-____loclib.pbp_6_3 = ""
+_l.pbp_6_1 = ""
+_l.pbp_6_2 = ""
+_l.pbp_6_3 = ""
 
 
 
-____loclib["Top Videos"] = "Top Videos"
-____loclib["More videos by this author"] = "More videos by this author"
+_l["Top Videos"] = "Top Videos"
+_l["More videos by this author"] = "More videos by this author"
 
-____loclib["pdirectdialog"] = "External proxies are not responding, would you like to switch to a local proxy?"
+_l["pdirectdialog"] = "External proxies are not responding, would you like to switch to a local proxy?"
 
 
-____loclib.goLive = "Go Live"
-____loclib.streamInfo = "Stream Info"
-____loclib.streamCreating = "Creating Stream"
+_l.goLive = "Go Live"
+_l.streamInfo = "Stream Info"
+_l.streamCreating = "Creating Stream"
 
-____loclib.importFromExternal = "or import from YouTube"
+_l.importFromExternal = "or import from YouTube"
 
 
-____loclib.importHeading = "Import Video from YouTube"
-____loclib.importInputPlaceholder = "Paste link to your YouTube video"
-____loclib.importInputLabel = "Video Url"
+_l.importHeading = "Import Video from YouTube"
+_l.importInputPlaceholder = "Paste link to your YouTube video"
+_l.importInputLabel = "Video Url"
 
-____loclib.capitalWarning = "Stream quality limitations"
-____loclib.streamSettingsWarn = "For optimal performance, please use streaming settings no higher than following: 2000 kb/s bitrate, 1920x1080p resolution. Otherwise your live could be terminated or unstable"
+_l.capitalWarning = "Stream quality limitations"
+_l.streamSettingsWarn = "For optimal performance, please use streaming settings no higher than following: 2000 kb/s bitrate, 1920x1080p resolution. Otherwise your live could be terminated or unstable"
 
-____loclib.keygeneration = "Cryptography keys generation"
+_l.keygeneration = "Cryptography keys generation"
 
-____loclib.failedStreamGeneration = "Unable to start stream"
+_l.failedStreamGeneration = "Unable to start stream"
 
-____loclib.hideallnotifications = "Hide all notifications"
+_l.hideallnotifications = "Hide all notifications"
 
-____loclib.e133452 = "sent you message"
-____loclib.e133453 = "invite you in chat"
+_l.e133452 = "sent you message"
+_l.e133453 = "invite you in chat"
 
 
-____loclib.createnewcontinue = "Continue creating account";
+_l.createnewcontinue = "Continue creating account";
 
 
-____loclib.transactionnotfound = "Transaction not found";
+_l.transactionnotfound = "Transaction not found";
 
-____loclib.donateself = "You can't donate yourself";
-____loclib.donated = "commented your post and donated"
-____loclib.incoins = "Not enough coins";
-____loclib.yourbalance = "Your balance"
-____loclib.sumoftransaction = "Sum of transaction"
+_l.donateself = "You can't donate yourself";
+_l.donated = "commented your post and donated"
+_l.incoins = "Not enough coins";
+_l.yourbalance = "Your balance"
+_l.sumoftransaction = "Sum of transaction"
 
+_l.videoBitrateError = "Video bitrate is too high. Please, use file with lower quality/resolution"
+_l.videoQualityInfo = "Maximum allowed video bitrate  - 8 Mbit/s. If your file exceeds this limit, the download would be terminated. Maximum allowed resolution - 720p. <br/> Recommended bitrates: <br/> <b>1080p:</b> 5081 Kbps <br/> <b>720p:</b>  2680 Kbps <br/> <b>480p:</b>  1300 Kbps <br/> <b>360p:</b>  700 Kbps"
+_l.videoQualityCaption = "Video quality limitations"
+_l.videoFormats = "List of supported video formats: .mp4, .mkv, .mov, .avi, .wmv, .flv, .f4v, .3g2, .3gp, .mts, .m2ts, .mxf, .nut"
+_l.videoSizeError = "Selected video file exceeds the limit of 4 Gb per video. Please compress it or select another one."
+_l.videoSizeAtt = "Maximum allowed file size: 4 Gb."
+_l.videoFormatError = "Incorrect video format";
+_l.videoSelectError = "No video selected";
 
-____loclib.videoBitrateError = "Video bitrate is too high. Please, use file with lower quality/resolution"
-____loclib.videoQualityInfo = "Maximum allowed video bitrate  - 8 Mbit/s. If your file exceeds this limit, the download would be terminated. Maximum allowed resolution - 720p. <br/> Recommended bitrates: <br/> <b>1080p:</b> 5081 Kbps <br/> <b>720p:</b>  2680 Kbps <br/> <b>480p:</b>  1300 Kbps <br/> <b>360p:</b>  700 Kbps"
-____loclib.videoQualityCaption = "Video quality limitations"
-____loclib.videoFormats = "List of supported video formats: .mp4, .mkv, .mov, .avi, .wmv, .flv, .f4v, .3g2, .3gp, .mts, .m2ts, .mxf, .nut"
-____loclib.videoSizeError = "Selected video file exceeds the limit of 4 Gb per video. Please compress it or select another one."
-____loclib.videoSizeAtt = "Maximum allowed file size: 4 Gb."
-____loclib.videoFormatError = "Incorrect video format";
-____loclib.videoSelectError = "No video selected";
+_l.removevideoShareQuestion = "The uploaded video remains available in the video cabinet. Do you want to delete the video completely?";
+_l.removevideoShareQuestionDelete = "Delete video"
+_l.removevideoShareQuestionLeave = "No"
+_l.importingVideo = "Video is loading"
+_l.importingVideoSuccess = "Video loaded. You can continue posting"
 
-____loclib.removevideoShareQuestion = "The uploaded video remains available in the video cabinet. Do you want to delete the video completely?";
-____loclib.removevideoShareQuestionDelete = "Delete video"
-____loclib.removevideoShareQuestionLeave = "No"
-____loclib.importingVideo = "Video is loading"
-____loclib.importingVideoSuccess = "Video loaded. You can continue posting"
+_l.streamLinks = "Streaming software links"
+_l.linkRTMP = "RTMP Url"
+_l.linkStreamKey = "Stream Key"
 
-____loclib.streamLinks = "Streaming software links"
-____loclib.linkRTMP = "RTMP Url"
-____loclib.linkStreamKey = "Stream Key"
 
 
+_l.videoCabinet = "My Videos";
+_l.uploadQuota = "Daily Uploading Quota";
+_l.attachVideoToPost = "Create Post With This Video";
 
-____loclib.videoCabinet = "My Videos";
-____loclib.uploadQuota = "Daily Uploading Quota";
-____loclib.attachVideoToPost = "Create Post With This Video";
+_l.linkToPost = "Link to Post";
+_l.attachVideoToPostShort = "Post";
 
-____loclib.linkToPost = "Link to Post";
-____loclib.attachVideoToPostShort = "Post";
+_l.totalStars = "Average rating (Total Votes)";
+_l.totalComments = "Total Comments";
+_l.totalViews = "Video Views";
 
-____loclib.totalStars = "Average rating (Total Votes)";
-____loclib.totalComments = "Total Comments";
-____loclib.totalViews = "Video Views";
+_l.enterVideoName = "Search by video name";
 
-____loclib.enterVideoName = "Search by video name";
+_l.videoTranscoding = "Video is being processed and may not work properly / induce extended traffic consumption. Do you still want to post it?";
+_l.waitForTranscoding = "Wait for processing";
 
-____loclib.videoTranscoding = "Video is being processed and may not work properly / induce extended traffic consumption. Do you still want to post it?";
-____loclib.waitForTranscoding = "Wait for processing";
+_l.bonusProgram = "Bonus Program Status";
+_l.bonusProgramViews = "Total Video Views";
+_l.bonusProgramRatings = "Total Ratings";
 
-____loclib.bonusProgram = "Bonus Program Status";
-____loclib.bonusProgramViews = "Total Video Views";
-____loclib.bonusProgramRatings = "Total Ratings";
+_l.sortBy = "Sort by:";
+_l.sortDirection = "Sort direction:";
+_l.sortDirectionAsc = "Ascending";
+_l.sortDirectionDesc = "Descending";
+_l.sortByName = "Name";
+_l.sortByCreatedAt = "Creation Date";
+_l.sortByDuration = "Duration";
+_l.sortByViews = "Views";
 
-____loclib.sortBy = "Sort by:";
-____loclib.sortDirection = "Sort direction:";
-____loclib.sortDirectionAsc = "Ascending";
-____loclib.sortDirectionDesc = "Descending";
-____loclib.sortByName = "Name";
-____loclib.sortByCreatedAt = "Creation Date";
-____loclib.sortByDuration = "Duration";
-____loclib.sortByViews = "Views";
+_l.unableToAuthorize = "Unable to authorize";
+_l.unableToAuthorizeBody = "Unfortunately, the application cannot authenticate this account on the video server. You need at least 5 PKOIN or 50 reputation to upload videos.";
 
-____loclib.unableToAuthorize = "Unable to authorize";
-____loclib.unableToAuthorizeBody = "Unfortunately, the application cannot authenticate this account on the video server. You need at least 5 PKOIN or 50 reputation to upload videos.";
+_l.unableToAuthorizeConnection = "Unable to authorize";
+_l.unableToAuthorizeConnectionBody = "Unfortunately, the application cannot authenticate this account on the video server.  Please try again later";
 
-____loclib.unableToAuthorizeConnection = "Unable to authorize";
-____loclib.unableToAuthorizeConnectionBody = "Unfortunately, the application cannot authenticate this account on the video server.  Please try again later";
 
 
 
+_l.download = "Download";
+_l.downloaded = "Downloaded";
+_l.downloadedEmpty = "Downloaded posts will be shown here";
+_l.emptyDescription = "Description is empty";
+_l.transcodingShort = "Processing";
+_l.editVideoDescription = "Edit video name/description";
+_l.errorChangingDescription = "Unable to change video name/description";
+_l.downloadVideo = "Save video";
+_l.downloadingVideo = "Saving video";
+_l.deleteSavedVideo = "Delete saved video";
 
-____loclib.download = "Download";
-____loclib.downloaded = "Downloaded";
-____loclib.downloadedEmpty = "Downloaded posts will be shown here";
-____loclib.emptyDescription = "Description is empty";
-____loclib.transcodingShort = "Processing";
-____loclib.editVideoDescription = "Edit video name/description";
-____loclib.errorChangingDescription = "Unable to change video name/description";
-____loclib.downloadVideo = "Save video";
-____loclib.downloadingVideo = "Saving video";
-____loclib.deleteSavedVideo = "Delete saved video";
+_l.downloadShare = "Save Share";
+_l.deleteSavedShare = "Delete Share";
 
-____loclib.downloadShare = "Save Share";
-____loclib.deleteSavedShare = "Delete Share";
+_l.selectQuality = "Select the quality of the uploaded video";
+_l.downloadedVideos = "Downloaded videos";
+_l.deleteAllDownloadedVideos = "Delete all downloaded videos";
+_l.noDownloadedVideos = "No downloaded videos";
+_l.deleteVideoDialog = "Delete saved video";
+_l.deleteAllVideoDialog = "Are you sure you want to delete all the videos?";
+_l.videosDeleted = "Videos deleted!";
 
-____loclib.selectQuality = "Select the quality of the uploaded video";
-____loclib.downloadedVideos = "Downloaded videos";
-____loclib.deleteAllDownloadedVideos = "Delete all downloaded videos";
-____loclib.noDownloadedVideos = "No downloaded videos";
-____loclib.deleteVideoDialog = "Delete saved video";
-____loclib.deleteAllVideoDialog = "Are you sure you want to delete all the videos?";
-____loclib.videosDeleted = "Videos deleted!";
+_l.enterVideoName = "Enter video name";
+_l.enterVideoDescription = "Enter video description";
 
-____loclib.enterVideoName = "Enter video name";
-____loclib.enterVideoDescription = "Enter video description";
 
+_l.doyouwantseepk = "Do you really want to see your private key?";
+_l.copycode = "Copy Private Key";
+_l.privatekeyqr = "Private key QR code";
+_l.saveimage = "Save image";
 
-____loclib.doyouwantseepk = "Do you really want to see your private key?";
-____loclib.copycode = "Copy Private Key";
-____loclib.privatekeyqr = "Private key QR code";
-____loclib.saveimage = "Save image";
+_l.showAllButton = "Show all";
+_l.hideAllButton = "Hide";
 
-____loclib.showAllButton = "Show all";
-____loclib.hideAllButton = "Hide";
+_l.UniqueUsers = "Unique Raters";
+_l.ErrorLoadingRates = "Loading Error";
 
-____loclib.UniqueUsers = "Unique Raters";
-____loclib.ErrorLoadingRates = "Loading Error";
+_l.userGuides = "Guides";
+_l.liveSreamingGuide = "Live Streaming";
 
-____loclib.userGuides = "Guides";
-____loclib.liveSreamingGuide = "Live Streaming";
+_l.bastyonhelperTitle1 = "Pocketnet has moved",
+_l.bastyonhelperTitle2 = "Bastyon of Free Speech";
+_l.bastyonhelperSubtitle1 = "Pocketnet is now";
+_l.bastyonhelperSubtitle2 = "Please, follow the link bellow";
 
-____loclib.bastyonhelperTitle1 = "Pocketnet has moved",
-____loclib.bastyonhelperTitle2 = "Bastyon of Free Speech";
-____loclib.bastyonhelperSubtitle1 = "Pocketnet is now";
-____loclib.bastyonhelperSubtitle2 = "Please, follow the link bellow";
 
+_l.videotranscodingwait = "Please wait, this video is being processed. This may take some time, after it is transcoded, you will be able to post it on Bastyon.";
+_l.views = "Views";
 
-____loclib.videotranscodingwait = "Please wait, this video is being processed. This may take some time, after it is transcoded, you will be able to post it on Bastyon.";
-____loclib.views = "Views";
 
+_l.saveshare = "Download video";
+_l.gotosaved = "Go to downloaded";
+_l.successdownloaded = "Video downloaded";
 
-____loclib.saveshare = "Download video";
-____loclib.gotosaved = "Go to downloaded";
-____loclib.successdownloaded = "Video downloaded";
 
+_l.logoutaccount = "Sign out of your account";
+_l.closeapplication = "Exit the application";
 
-____loclib.logoutaccount = "Sign out of your account";
-____loclib.closeapplication = "Exit the application";
 
+_l.attachVideoLenta = "Attach video to post";
+_l.attachVideoLentaShort = "Attach";
 
-____loclib.attachVideoLenta = "Attach video to post";
-____loclib.attachVideoLentaShort = "Attach";
+_l.linkToPostLenta = "Already posted"
 
-____loclib.linkToPostLenta = "Already posted"
+_l.ReferralUsers = "Referral Users. Total/From&nbsp;01.11.2021"
+_l.lockedaccount = "Your account has been blocked due to a decrease in reputation or due to user complaints"
+_l.lockedaccounta = "Author account has been blocked due to a decrease in reputation or due to user complaints"
 
-____loclib.ReferralUsers = "Referral Users. Total/From&nbsp;01.11.2021"
-____loclib.lockedaccount = "Your account has been blocked due to a decrease in reputation or due to user complaints"
-____loclib.lockedaccounta = "Author account has been blocked due to a decrease in reputation or due to user complaints"
+_l.lockedaccountacomment = "Comment author account has been blocked due to a decrease in reputation or due to user complaints"
+_l.hiddenCommentLabel = "Comment hidden due to low rating"
 
-____loclib.lockedaccountacomment = "Comment author account has been blocked due to a decrease in reputation or due to user complaints"
-____loclib.hiddenCommentLabel = "Comment hidden due to low rating"
+_l.blockedbymeHiddenCommentLabel = "Comment hidden because you have blocked a user"
+_l.hiddenCommentsLabel = "Comment hidden due to low ratings of the commenter"
 
-____loclib.blockedbymeHiddenCommentLabel = "Comment hidden because you have blocked a user"
-____loclib.hiddenCommentsLabel = "Comment hidden due to low ratings of the commenter"
+_l.showhiddenComment = "Show"
 
-____loclib.showhiddenComment = "Show"
+_l.visibletoeveryone = 'Visible for everyone'
+_l.visibleonlytosubscribers = 'Visible only for subscribers'
+_l.visibleonlytoregistered = 'Visible only for Bastyon users'
 
-____loclib.visibletoeveryone = 'Visible for everyone'
-____loclib.visibleonlytosubscribers = 'Visible only for subscribers'
-____loclib.visibleonlytoregistered = 'Visible only for Bastyon users'
+_l.sharevisibility_sub = 'For subscribers'
+_l.sharevisibility_reg = 'For Bastyon users'
 
-____loclib.sharevisibility_sub = 'For subscribers'
-____loclib.sharevisibility_reg = 'For Bastyon users'
+_l.sharevisibilitylabel_sub_post = 'Author chose to make this <b>post</b> available only for subscribers'
+_l.sharevisibilitylabel_reg_post = 'Author chose to make this <b>post</b> available only for registered Bastyon users'
+_l.sharevisibilitylabel_sub_article = 'Author chose to make this <b>article</b> available only for subscribers'
+_l.sharevisibilitylabel_reg_article = 'Author chose to make this <b>article</b> available only for registered Bastyon users'
+_l.sharevisibilitylabel_sub_video = 'Author chose to make this <b>video</b> available only for subscribers'
+_l.sharevisibilitylabel_reg_video = 'Author chose to make this <b>video</b> available only for registered Bastyon users'
 
-____loclib.sharevisibilitylabel_sub_post = 'Author chose to make this <b>post</b> available only for subscribers'
-____loclib.sharevisibilitylabel_reg_post = 'Author chose to make this <b>post</b> available only for registered Bastyon users'
-____loclib.sharevisibilitylabel_sub_article = 'Author chose to make this <b>article</b> available only for subscribers'
-____loclib.sharevisibilitylabel_reg_article = 'Author chose to make this <b>article</b> available only for registered Bastyon users'
-____loclib.sharevisibilitylabel_sub_video = 'Author chose to make this <b>video</b> available only for subscribers'
-____loclib.sharevisibilitylabel_reg_video = 'Author chose to make this <b>video</b> available only for registered Bastyon users'
+_l.buy = 'Buy';
 
-____loclib.buy = 'Buy';
+_l.topAuthors = 'Recommended Authors';
+_l.recommendedPosts = 'Recommended Posts';
+_l.rating = 'Rating';
+_l.setupVideoNodeGuide = 'Setup Video Node'
+_l.subscribers3 = 'Subscribers';
 
-____loclib.topAuthors = 'Recommended Authors';
-____loclib.recommendedPosts = 'Recommended Posts';
-____loclib.rating = 'Rating';
-____loclib.setupVideoNodeGuide = 'Setup Video Node'
-____loclib.subscribers3 = 'Subscribers';
+_l.MainBoard = 'Stand up to censorship &';
+_l.MainBoard1 = 'gain financial independence';
+_l.MainBoard2 = 'The first censorship-resistant social network protocol';
+_l.MainBoard3 = 'Based on Blockchain technology, decentralized and secure.';
+_l.MainBoard4 = 'No corporation, no centralized servers, moderated by the community ';
+_l.MainBoard5 = 'Powered by Pocketcoin (PKOIN) to reward creators and contributors';
+_l.MainBoard55 = 'Open-source & transparent rules that are the same for everyone';
+_l.MainBoard6 = 'Get it on';
+_l.MainBoard7 = 'Google Play';
+_l.MainBoard8 = 'Download for';
 
-____loclib.MainBoard = 'Stand up to censorship &';
-____loclib.MainBoard1 = 'gain financial independence';
-____loclib.MainBoard2 = 'The first censorship-resistant social network protocol';
-____loclib.MainBoard3 = 'Based on Blockchain technology, decentralized and secure.';
-____loclib.MainBoard4 = 'No corporation, no centralized servers, moderated by the community ';
-____loclib.MainBoard5 = 'Powered by Pocketcoin (PKOIN) to reward creators and contributors';
-____loclib.MainBoard55 = 'Open-source & transparent rules that are the same for everyone';
-____loclib.MainBoard6 = 'Get it on';
-____loclib.MainBoard7 = 'Google Play';
-____loclib.MainBoard8 = 'Download for';
 
 
 
-
-____loclib.works = 'We Believe in Freedom';
-____loclib.works1 = 'Bastyon is an innovative network that can bypass common censorship tactics, such as blocking of domains and banning bloggers for dissent';
-____loclib.works2 = 'Bastyon is also a video sharing platform that, unlike traditional and mainstream social media, gives your privacy and freedom from arbitrary censorship';
-____loclib.works3 = 'Bastyon is also a private and freedom-oriented financial system powered by Pocketcoin (PKOIN) that is used to promote content and goods';
-____loclib.works4 = 'We are driven by FREEDOM';
-____loclib.works5 = 'Does not depend on corporate entities';
-____loclib.works6 = 'Does not depend on banks for financing and operations';
-____loclib.works7 = 'Does not depend on any domain or website which can be easily blocked';
+_l.works = 'We Believe in Freedom';
+_l.works1 = 'Bastyon is an innovative network that can bypass common censorship tactics, such as blocking of domains and banning bloggers for dissent';
+_l.works2 = 'Bastyon is also a video sharing platform that, unlike traditional and mainstream social media, gives your privacy and freedom from arbitrary censorship';
+_l.works3 = 'Bastyon is also a private and freedom-oriented financial system powered by Pocketcoin (PKOIN) that is used to promote content and goods';
+_l.works4 = 'We are driven by FREEDOM';
+_l.works5 = 'Does not depend on corporate entities';
+_l.works6 = 'Does not depend on banks for financing and operations';
+_l.works7 = 'Does not depend on any domain or website which can be easily blocked';
 
 
 //aboutHome
-____loclib.aboutServices = 'NO CENSORSHIP';
+_l.aboutServices = 'NO CENSORSHIP';
 
-____loclib.aboutServices1 = 'Censorship resistant';
-____loclib.aboutServices2 = 'Bastyon exists on decentralized node computers around the world run by users. Every node computer runs on the same exact transparent set of rules, preventing someone from arbitrarily banning content. Not even Bastyon developers can ban anyone, the platform is user moderated';
-____loclib.aboutServices3 = 'Not even Bastyon developers can ban anyone, the platform is user moderated';
+_l.aboutServices1 = 'Censorship resistant';
+_l.aboutServices2 = 'Bastyon exists on decentralized node computers around the world run by users. Every node computer runs on the same exact transparent set of rules, preventing someone from arbitrarily banning content. Not even Bastyon developers can ban anyone, the platform is user moderated';
+_l.aboutServices3 = 'Not even Bastyon developers can ban anyone, the platform is user moderated';
 
-____loclib.aboutServices4 = 'Bitcoin of Social Media';
-____loclib.aboutServices5 = 'Bastyon runs on the on the blockchain and does not depend on any website or a domain. As long as there are several nodes running somewhere in the world, the network can operate and creators will have access to the followers and users to content. ';
-____loclib.aboutServices6 = 'Bastyon is the “Bitcoin of social media”';
+_l.aboutServices4 = 'Bitcoin of Social Media';
+_l.aboutServices5 = 'Bastyon runs on the on the blockchain and does not depend on any website or a domain. As long as there are several nodes running somewhere in the world, the network can operate and creators will have access to the followers and users to content. ';
+_l.aboutServices6 = 'Bastyon is the “Bitcoin of social media”';
 
-____loclib.aboutServices7 = 'Privacy Protection';
-____loclib.aboutServices8 = 'Bastyon account is not tied to your identity or a phone number, only email verification is required. Multiple accounts are permitted to protect your privacy. No personal data is ever acquired or stored. Bastyon also features a peer-to-peer encrypted messenger. ';
-____loclib.aboutServices9 = 'Your privacy is the main goal of Bastyon. Your private key is known only to you and cannot be recovered even by the developers.';
-____loclib.aboutServices10 = 'In addition, hackers cannot enter your account and change your password.';
+_l.aboutServices7 = 'Privacy Protection';
+_l.aboutServices8 = 'Bastyon account is not tied to your identity or a phone number, only email verification is required. Multiple accounts are permitted to protect your privacy. No personal data is ever acquired or stored. Bastyon also features a peer-to-peer encrypted messenger. ';
+_l.aboutServices9 = 'Your privacy is the main goal of Bastyon. Your private key is known only to you and cannot be recovered even by the developers.';
+_l.aboutServices10 = 'In addition, hackers cannot enter your account and change your password.';
 
-____loclib.aboutServices11 = 'Earn with Bastyon';
-____loclib.aboutServices12 = 'You can get paid 1,000 USD';
-____loclib.aboutServices13 = 'There are many ways of monetizing your content using Pocketcoin (PKOIN). Unlike You earn PKOIN for popular content, users can attach PKOIN to featured comments. A decentralized ad marketplace with 100% proceeds going to bloggers is set to be released in December 2021.  ';
+_l.aboutServices11 = 'Earn with Bastyon';
+_l.aboutServices12 = 'You can get paid 1,000 USD';
+_l.aboutServices13 = 'There are many ways of monetizing your content using Pocketcoin (PKOIN). Unlike You earn PKOIN for popular content, users can attach PKOIN to featured comments. A decentralized ad marketplace with 100% proceeds going to bloggers is set to be released in December 2021.  ';
 
-____loclib.aboutServices14 = 'Upload your videos';
-____loclib.aboutServices15 = 'Bastyon lets you';
-____loclib.aboutServices16 = 'share your posts and videos';
-____loclib.aboutServices17 = ', Upload them safely, import them from YouTube (contact us so that we can help!), make sure to let them visible to everyone. Forever. No one will be able to remove or ban them.';
-
-
-____loclib.aboutServices18 = 'Open Source';
-____loclib.aboutServices19 = 'We believe that';
-____loclib.aboutServices20 = 'privacy and security';
-____loclib.aboutServices21 = 'have to pass through Open Source projects. The entire project is available on GitHub so that you can check that there are no backdoors and that Bastyon is not storing any personal data.';
+_l.aboutServices14 = 'Upload your videos';
+_l.aboutServices15 = 'Bastyon lets you';
+_l.aboutServices16 = 'share your posts and videos';
+_l.aboutServices17 = ', Upload them safely, import them from YouTube (contact us so that we can help!), make sure to let them visible to everyone. Forever. No one will be able to remove or ban them.';
 
 
-____loclib.aboutNewBlock = 'How to Earn with Bastyon';
-____loclib.aboutNewBlock1 = 'Popular Content & Featured Comments ';
-____loclib.aboutNewBlock2 = 'You earn PKOIN for votes from users that are active on the platform. So, if you bring over your audience, you will be protected from censorship, while earning for their interaction with your content. Your followers can also add PKOIN to their comments to feature them under your post, 100% of proceeds go to you, because there is no corporate entity.';
-____loclib.aboutNewBlock3 = 'Bonus Program';
-____loclib.aboutNewBlock4 = 'Bastyon has a limited time bonus program for video bloggers with 1,000 USD earnings for each 15k video views, 1000 invited users and 1,250 interactions. The bonus is paid in Bitcoin or PKOIN, depending on blogger preference. This is a limited time program.';
-____loclib.aboutNewBlock5 = 'Decentralized Ads ';
-____loclib.aboutNewBlock6 = 'A decentralized ad marketplace slated for release in December 2021 will allow advertisers to create posts and offer them to bloggers. A blogger can examine the ad post and repost if appropriate. All interactions on bloggers’ channel will go directly to blogger’s wallet, 100% of ad proceeds.';
+_l.aboutServices18 = 'Open Source';
+_l.aboutServices19 = 'We believe that';
+_l.aboutServices20 = 'privacy and security';
+_l.aboutServices21 = 'have to pass through Open Source projects. The entire project is available on GitHub so that you can check that there are no backdoors and that Bastyon is not storing any personal data.';
+
+
+_l.aboutNewBlock = 'How to Earn with Bastyon';
+_l.aboutNewBlock1 = 'Popular Content & Featured Comments ';
+_l.aboutNewBlock2 = 'You earn PKOIN for votes from users that are active on the platform. So, if you bring over your audience, you will be protected from censorship, while earning for their interaction with your content. Your followers can also add PKOIN to their comments to feature them under your post, 100% of proceeds go to you, because there is no corporate entity.';
+_l.aboutNewBlock3 = 'Bonus Program';
+_l.aboutNewBlock4 = 'Bastyon has a limited time bonus program for video bloggers with 1,000 USD earnings for each 15k video views, 1000 invited users and 1,250 interactions. The bonus is paid in Bitcoin or PKOIN, depending on blogger preference. This is a limited time program.';
+_l.aboutNewBlock5 = 'Decentralized Ads ';
+_l.aboutNewBlock6 = 'A decentralized ad marketplace slated for release in December 2021 will allow advertisers to create posts and offer them to bloggers. A blogger can examine the ad post and repost if appropriate. All interactions on bloggers’ channel will go directly to blogger’s wallet, 100% of ad proceeds.';
 
 
 
-____loclib.aboutOpen = 'Discover Bastyon';
-____loclib.aboutOpen1 = 'You can use Bastyon from your browser or dowload the mobile and desktop app.';
-____loclib.aboutOpen2 = 'Official Website';
-____loclib.aboutOpen3 = 'Contact us';
-____loclib.aboutOpen4 = 'Send us a message if you need help or if you are a content creator, blogger, influencer and would like to unlock your bonus and verify your profile!';
-____loclib.aboutOpen5 = 'Source Code';
-____loclib.aboutOpen5_1 = 'Email us at:';
+_l.aboutOpen = 'Discover Bastyon';
+_l.aboutOpen1 = 'You can use Bastyon from your browser or dowload the mobile and desktop app.';
+_l.aboutOpen2 = 'Official Website';
+_l.aboutOpen3 = 'Contact us';
+_l.aboutOpen4 = 'Send us a message if you need help or if you are a content creator, blogger, influencer and would like to unlock your bonus and verify your profile!';
+_l.aboutOpen5 = 'Source Code';
+_l.aboutOpen5_1 = 'Email us at:';
 
 /////////////aboutYoutube
-____loclib.aboutMainBoard = 'Bastyon - the best alternative to YouTube';
-____loclib.aboutYoutubeMainDescription1 = 'Some people ask us:';
-____loclib.aboutYoutubeMainDescription2 = '"Why should I use Bastyon?"';
-____loclib.aboutYoutubeMainDescription3 = 'The real question is:';
-____loclib.aboutYoutubeMainDescription4 = '"Why should you use YouTube?!"';
-____loclib.aboutYoutubeMainDescription5 = 'YOUTUBE HAS BEEN BANNING AND DEMONETIZING THOUSANDS OF ACCOUNTS';
-____loclib.aboutYoutubeMainDescription6 = 'PEOPLE WITH HUNDREDS OF THOUSANDS OF SUBSCRIBERS';
-____loclib.aboutYoutubeMainDescription7 = 'EVEN WHEN NOT BANNED, AUTHORS ARE SHADOWBANNED OR DEMONETIZED';
+_l.aboutMainBoard = 'Bastyon - the best alternative to YouTube';
+_l.aboutYoutubeMainDescription1 = 'Some people ask us:';
+_l.aboutYoutubeMainDescription2 = '"Why should I use Bastyon?"';
+_l.aboutYoutubeMainDescription3 = 'The real question is:';
+_l.aboutYoutubeMainDescription4 = '"Why should you use YouTube?!"';
+_l.aboutYoutubeMainDescription5 = 'YOUTUBE HAS BEEN BANNING AND DEMONETIZING THOUSANDS OF ACCOUNTS';
+_l.aboutYoutubeMainDescription6 = 'PEOPLE WITH HUNDREDS OF THOUSANDS OF SUBSCRIBERS';
+_l.aboutYoutubeMainDescription7 = 'EVEN WHEN NOT BANNED, AUTHORS ARE SHADOWBANNED OR DEMONETIZED';
 
-____loclib.aboutYoutubeThreeColumn1 = 'Imagine: one day you have 20k, 100k or even 1M subscribers on your YouTube channel.';
-____loclib.aboutYoutubeThreeColumn2 = 'The following day your account does not exist anymore.';
-____loclib.aboutYoutubeThreeColumn3 = 'Banned, forever. No chance to appeal.';
-____loclib.aboutYoutubeThreeColumn4 = 'You know, you have not only lost your subscribers.';
-____loclib.aboutYoutubeThreeColumn5 = 'You have lost a constant passive income generated by the ADS on your videos.';
-____loclib.aboutYoutubeThreeColumn6 = 'You have lost thousands of people that used to follow you and share your videos.';
-____loclib.aboutYoutubeThreeColumn7 = "You have lost access to your videos if you didn't have a backup.";
-____loclib.aboutYoutubeThreeColumn8 = 'The worst thing is: YouTube decisions are arbitrary and are typically final';
-____loclib.aboutYoutubeThreeColumn9 = 'The worst thing is: YouTube decisions are typically final.';
-____loclib.aboutYoutubeThreeColumn10 = "You have no way at all to get back your channel, subscribers and money. They're gone, forever.";
-____loclib.aboutYoutubeThreeColumn11 = 'Move to Bastyon before it’s too late. We can import your videos without effort, and you can get paid 1,000 $ for each 15,000 views! (plus 1,250 interactions and 1000 invited users to your channel)';
-____loclib.aboutYoutubeThreeColumn12 = 'What are you waiting for?!';
+_l.aboutYoutubeThreeColumn1 = 'Imagine: one day you have 20k, 100k or even 1M subscribers on your YouTube channel.';
+_l.aboutYoutubeThreeColumn2 = 'The following day your account does not exist anymore.';
+_l.aboutYoutubeThreeColumn3 = 'Banned, forever. No chance to appeal.';
+_l.aboutYoutubeThreeColumn4 = 'You know, you have not only lost your subscribers.';
+_l.aboutYoutubeThreeColumn5 = 'You have lost a constant passive income generated by the ADS on your videos.';
+_l.aboutYoutubeThreeColumn6 = 'You have lost thousands of people that used to follow you and share your videos.';
+_l.aboutYoutubeThreeColumn7 = "You have lost access to your videos if you didn't have a backup.";
+_l.aboutYoutubeThreeColumn8 = 'The worst thing is: YouTube decisions are arbitrary and are typically final';
+_l.aboutYoutubeThreeColumn9 = 'The worst thing is: YouTube decisions are typically final.';
+_l.aboutYoutubeThreeColumn10 = "You have no way at all to get back your channel, subscribers and money. They're gone, forever.";
+_l.aboutYoutubeThreeColumn11 = 'Move to Bastyon before it’s too late. We can import your videos without effort, and you can get paid 1,000 $ for each 15,000 views! (plus 1,250 interactions and 1000 invited users to your channel)';
+_l.aboutYoutubeThreeColumn12 = 'What are you waiting for?!';
 
-____loclib.aboutYoutubeH3Section = "Building a community of followers on YouTube is like building a home on a land you don't own.";
+_l.aboutYoutubeH3Section = "Building a community of followers on YouTube is like building a home on a land you don't own.";
 
-____loclib.aboutYoutubeImgAndText1 = "EARN WITH BASTYON NO DEMONETIZATION";
-____loclib.aboutYoutubeImgAndText2 = 'Bastyon pays you to post videos and for each interaction (like/comment) that you get. Right now Bastyon has a bonus program that gives you 1,000 $ (in crypto currency) for each 15,000 views + 1,250 interactions + 1,000 invited users to your channel';
-____loclib.aboutYoutubeImgAndText3 = 'And you can talk about "sensitive" topics. You will never be blocked or demonetized, if you do not post pornography or illegal content that will be moderated by the community. In addition, if you bring your subscribers, you get referrals, too.'
-____loclib.aboutYoutubeImgAndText4 = 'Free Speech Zone – Moderated by the Community ';
-____loclib.aboutYoutubeImgAndText5 = 'On Bastyon you can talk about sensitive topics (and they are multiplying by the day): COVID, politics, climate change, first and second amendment. Community of users moderates Bastyon and the only topics that are blocked are pornography and illicit content.';
-____loclib.aboutYoutubeImgAndText6 = 'We believe in real freedom of speech and community of users does not ban or moderate content based on disagreement of opinions. And Bastyon is not owned by a corporation and is independent of the banking system.';
-____loclib.aboutYoutubeImgAndText7 = 'PRIVATE AND SECURE';
-____loclib.aboutYoutubeImgAndText8 = 'Bastyon does not collect any personal information. No name, no phone number, no IP address, not your identity. Your login to the Bastyon account is your private key, only you have control over it, even developers could not access or restore it, if lost.';
-____loclib.aboutYoutubeImgAndText9 = 'NO CENSORSHIP';
-____loclib.aboutYoutubeImgAndText10 = 'Bastyon will not censor your videos. Not even admins can block your account and ban you. Your account is YOURS and your subscribers will always be free to follow you.';
-____loclib.aboutYoutubeImgAndText11 = 'Bastyon is based on the blockchain: there is no way, at all, to remove accounts and videos';
-____loclib.aboutYoutubeImgAndText12 = 'Each video is registered on the blockchain and, for its nature, it cannot be removed. By anyone.';
-____loclib.aboutYoutubeImgAndText13 = 'Each video you publish will be there forever. No one, really, can censor them. No one can remove your videos, subscribers and account.';
-____loclib.aboutYoutubeImgAndText14 = 'Censorship Resistance ';
-____loclib.aboutYoutubeImgAndText15 = "Bastyon runs on a network of nodes on users’ machines. Even if the main website Bastyon.com is blocked, the platform still runs normally through a desktop app. Because there is no corporation, nobody can impose censorship on Bastyon that users do not want.";
-____loclib.aboutYoutubeImgAndText16 = 'Bastyon is a Protocol, Not a Company or a Social Network  ';
-____loclib.aboutYoutubeImgAndText17 = 'Unlike Facebook and the main Social Networks, there is no company behind Bastyon. It is an open source project. This means that there is no company that can control the contents posted on Bastyon';
+_l.aboutYoutubeImgAndText1 = "EARN WITH BASTYON NO DEMONETIZATION";
+_l.aboutYoutubeImgAndText2 = 'Bastyon pays you to post videos and for each interaction (like/comment) that you get. Right now Bastyon has a bonus program that gives you 1,000 $ (in crypto currency) for each 15,000 views + 1,250 interactions + 1,000 invited users to your channel';
+_l.aboutYoutubeImgAndText3 = 'And you can talk about "sensitive" topics. You will never be blocked or demonetized, if you do not post pornography or illegal content that will be moderated by the community. In addition, if you bring your subscribers, you get referrals, too.'
+_l.aboutYoutubeImgAndText4 = 'Free Speech Zone – Moderated by the Community ';
+_l.aboutYoutubeImgAndText5 = 'On Bastyon you can talk about sensitive topics (and they are multiplying by the day): COVID, politics, climate change, first and second amendment. Community of users moderates Bastyon and the only topics that are blocked are pornography and illicit content.';
+_l.aboutYoutubeImgAndText6 = 'We believe in real freedom of speech and community of users does not ban or moderate content based on disagreement of opinions. And Bastyon is not owned by a corporation and is independent of the banking system.';
+_l.aboutYoutubeImgAndText7 = 'PRIVATE AND SECURE';
+_l.aboutYoutubeImgAndText8 = 'Bastyon does not collect any personal information. No name, no phone number, no IP address, not your identity. Your login to the Bastyon account is your private key, only you have control over it, even developers could not access or restore it, if lost.';
+_l.aboutYoutubeImgAndText9 = 'NO CENSORSHIP';
+_l.aboutYoutubeImgAndText10 = 'Bastyon will not censor your videos. Not even admins can block your account and ban you. Your account is YOURS and your subscribers will always be free to follow you.';
+_l.aboutYoutubeImgAndText11 = 'Bastyon is based on the blockchain: there is no way, at all, to remove accounts and videos';
+_l.aboutYoutubeImgAndText12 = 'Each video is registered on the blockchain and, for its nature, it cannot be removed. By anyone.';
+_l.aboutYoutubeImgAndText13 = 'Each video you publish will be there forever. No one, really, can censor them. No one can remove your videos, subscribers and account.';
+_l.aboutYoutubeImgAndText14 = 'Censorship Resistance ';
+_l.aboutYoutubeImgAndText15 = "Bastyon runs on a network of nodes on users’ machines. Even if the main website Bastyon.com is blocked, the platform still runs normally through a desktop app. Because there is no corporation, nobody can impose censorship on Bastyon that users do not want.";
+_l.aboutYoutubeImgAndText16 = 'Bastyon is a Protocol, Not a Company or a Social Network  ';
+_l.aboutYoutubeImgAndText17 = 'Unlike Facebook and the main Social Networks, there is no company behind Bastyon. It is an open source project. This means that there is no company that can control the contents posted on Bastyon';
 
-____loclib.aboutYoutubeSecondBoard1 = 'Bastyon - the best alternative to YouTube';
-____loclib.aboutYoutubeSecondBoard2 = 'Your personal data is not sold to external companies';
-____loclib.aboutYoutubeSecondBoard3 = 'No one can block your account or remove your videos and subscribers';
-____loclib.aboutYoutubeSecondBoard4 = 'No personal info from users';
-____loclib.aboutYoutubeSecondBoard5 = 'Access is always possible from any country and region of the world, even if the domain is not accessible.';
-____loclib.aboutYoutubeSecondBoard6 = 'Keep your subscribers forever, they are yours';
-____loclib.aboutYoutubeSecondBoard7 = 'Bastyon will not remove your subscribers, videos and money!';
-____loclib.aboutYoutubeSecondBoard8 = 'You will never get DEMONETIZED and you keep 100% of ad proceeds. Freedom of speech is real.';
-____loclib.aboutYoutubeSecondBoard9 = 'You will earn MORE to post your videos!';
-
-
-____loclib.aboutYoutubeThirdBoard1 = 'Account ownership';
-____loclib.aboutYoutubeThirdBoard2 = 'Property of YouTube.';
-____loclib.aboutYoutubeThirdBoard3 = 'Your Private Key Belongs to You';
-____loclib.aboutYoutubeThirdBoard4 = 'Censorship';
-____loclib.aboutYoutubeThirdBoard5 = 'Yes, selective and arbitrary censorship';
-____loclib.aboutYoutubeThirdBoard6 = 'Community moderates content with only a few topics such as pornography and illicit content moderated';
-____loclib.aboutYoutubeThirdBoard7 = 'Open Sourced Code';
-____loclib.aboutYoutubeThirdBoard8 = 'NO.';
-____loclib.aboutYoutubeThirdBoard9 = 'Yes, open to everyone';
-____loclib.aboutYoutubeThirdBoard10 = 'Same Rules for Everyone';
-____loclib.aboutYoutubeThirdBoard11 = 'Yes, based on open source code';
-____loclib.aboutYoutubeThirdBoard12 = 'Monetization';
-____loclib.aboutYoutubeThirdBoard13 = 'YouTube shares what it wants';
-____loclib.aboutYoutubeThirdBoard14 = '100% to blogger';
-____loclib.aboutYoutubeThirdBoard15 = 'What if Domain Blocked in Some Country?';
-____loclib.aboutYoutubeThirdBoard16 = 'YouTube inaccessible';
-____loclib.aboutYoutubeThirdBoard17 = 'Bastyon works directly with nodes';
-____loclib.aboutYoutubeThirdBoard18 = 'Internal Cryptocurency for Monetization & Payments';
-____loclib.aboutYoutubeThirdBoard19 = 'No';
-____loclib.aboutYoutubeThirdBoard20 = 'Yes';
-____loclib.aboutYoutubeThirdBoard21 = 'Ability to Send Crypto in Chat Messages';
-____loclib.aboutYoutubeThirdBoard22 = 'No';
-____loclib.aboutYoutubeThirdBoard23 = 'Yes';
-____loclib.aboutYoutubeThirdBoard24 = 'Personal Information';
-____loclib.aboutYoutubeThirdBoard25 = 'Name, phone number';
-____loclib.aboutYoutubeThirdBoard26 = 'No';
+_l.aboutYoutubeSecondBoard1 = 'Bastyon - the best alternative to YouTube';
+_l.aboutYoutubeSecondBoard2 = 'Your personal data is not sold to external companies';
+_l.aboutYoutubeSecondBoard3 = 'No one can block your account or remove your videos and subscribers';
+_l.aboutYoutubeSecondBoard4 = 'No personal info from users';
+_l.aboutYoutubeSecondBoard5 = 'Access is always possible from any country and region of the world, even if the domain is not accessible.';
+_l.aboutYoutubeSecondBoard6 = 'Keep your subscribers forever, they are yours';
+_l.aboutYoutubeSecondBoard7 = 'Bastyon will not remove your subscribers, videos and money!';
+_l.aboutYoutubeSecondBoard8 = 'You will never get DEMONETIZED and you keep 100% of ad proceeds. Freedom of speech is real.';
+_l.aboutYoutubeSecondBoard9 = 'You will earn MORE to post your videos!';
 
 
+_l.aboutYoutubeThirdBoard1 = 'Account ownership';
+_l.aboutYoutubeThirdBoard2 = 'Property of YouTube.';
+_l.aboutYoutubeThirdBoard3 = 'Your Private Key Belongs to You';
+_l.aboutYoutubeThirdBoard4 = 'Censorship';
+_l.aboutYoutubeThirdBoard5 = 'Yes, selective and arbitrary censorship';
+_l.aboutYoutubeThirdBoard6 = 'Community moderates content with only a few topics such as pornography and illicit content moderated';
+_l.aboutYoutubeThirdBoard7 = 'Open Sourced Code';
+_l.aboutYoutubeThirdBoard8 = 'NO.';
+_l.aboutYoutubeThirdBoard9 = 'Yes, open to everyone';
+_l.aboutYoutubeThirdBoard10 = 'Same Rules for Everyone';
+_l.aboutYoutubeThirdBoard11 = 'Yes, based on open source code';
+_l.aboutYoutubeThirdBoard12 = 'Monetization';
+_l.aboutYoutubeThirdBoard13 = 'YouTube shares what it wants';
+_l.aboutYoutubeThirdBoard14 = '100% to blogger';
+_l.aboutYoutubeThirdBoard15 = 'What if Domain Blocked in Some Country?';
+_l.aboutYoutubeThirdBoard16 = 'YouTube inaccessible';
+_l.aboutYoutubeThirdBoard17 = 'Bastyon works directly with nodes';
+_l.aboutYoutubeThirdBoard18 = 'Internal Cryptocurency for Monetization & Payments';
+_l.aboutYoutubeThirdBoard19 = 'No';
+_l.aboutYoutubeThirdBoard20 = 'Yes';
+_l.aboutYoutubeThirdBoard21 = 'Ability to Send Crypto in Chat Messages';
+_l.aboutYoutubeThirdBoard22 = 'No';
+_l.aboutYoutubeThirdBoard23 = 'Yes';
+_l.aboutYoutubeThirdBoard24 = 'Personal Information';
+_l.aboutYoutubeThirdBoard25 = 'Name, phone number';
+_l.aboutYoutubeThirdBoard26 = 'No';
 
 
 
 
-____loclib.aboutYoutubeThirdBoard18 = 'Reporting videos';
-____loclib.aboutYoutubeThirdBoard19 = 'YES, YouTube algorithms analyze videos and remove or block them automatically if they believe that they are against the policy. In addition YouTube can remove posts and ban users at its sole discretion.';
-____loclib.aboutYoutubeThirdBoard20 = "YES, however only users with a high reputation can report post and a post is made \"invisible\" on the feed page (but remains available on the user's profile page) only if several tens of high reputation users report it (reports can be made only for racism, hate speech and pornography).";
-____loclib.aboutYoutubeThirdBoard21 = 'Hashtags to classify videos';
-____loclib.aboutYoutubeThirdBoard22 = 'Videoa can be shared on multiple platforms';
-____loclib.aboutYoutubeThirdBoard23 = 'Dictatorship bans';
-____loclib.aboutYoutubeThirdBoard24 = 'Way too many!';
-____loclib.aboutYoutubeThirdBoard25 = 'Bastyon pays you way more than YouTube!';
-____loclib.aboutYoutubeThirdBoard26 = 'You can earn money with Bastyon.';
-____loclib.aboutYoutubeThirdBoard27 = 'Bastyon uses its own Cryptocurrency:';
-____loclib.aboutYoutubeThirdBoard28 = 'Each time your posts and videos receive comments and likes, you get PKOIN.';
-____loclib.aboutYoutubeThirdBoard29 = 'Each time one of your videos gets 15k views, plus 1250 reactions and 1000 referral users, you get 1,000 $ in PKOIN (you can convert them in USD!). THIS IS A LIMITED TIME OFFER!!!';
-____loclib.aboutYoutubeThirdBoard30 = 'Each time someone joins Bastyon with your referral link, you get PKOIN.';
-____loclib.aboutYoutubeThirdBoard31 = 'Contact us to learn more and to activate your account as “CREATOR” so that you can post unlimited videos and get paid!';
-
-____loclib.aboutYoutubeOpenBoard1 = 'Discover Bastyon';
-____loclib.aboutYoutubeOpenBoard2 = 'You can use Bastyon from your browser or dowload the mobile and desktop app.';
-____loclib.aboutYoutubeOpenBoard3 = 'Official Website';
-
-____loclib.sourceCode = 'Source Code';
-
-____loclib.aboutYoutubeDiscover1 = 'Join Bastyon Today and Own Your Destiny!';
-____loclib.aboutYoutubeDiscover2 = 'Send us a message if you need help or if you are a content creator, blogger, influencer and would like to unlock your bonus and verify your profile!';
-
-____loclib.aboutMainBoard = 'Bastyon, The best alternative to Twitter. Leave behind the bans and suspensions.';
-____loclib.aboutMainBoard1 = 'Free, private and secure social network';
-
-____loclib.aboutTwitterMainDescriptionText1 = 'Some people ask us:';
-____loclib.aboutTwitterMainDescriptionText2 = '"Why should I use Bastyon?"';
-____loclib.aboutTwitterMainDescriptionText3 = 'The real question is:';
-____loclib.aboutTwitterMainDescriptionText4 = '"Why should you use Twitter?!"';
-____loclib.aboutTwitterMainDescriptionText5 = 'TWITTER IS ACTING LIKE A DICTATORSHIP GOVERNMENT';
-____loclib.aboutTwitterMainDescriptionText6 = 'Yes, we know that this is a strong statement.';
-____loclib.aboutTwitterMainDescriptionText7 = 'But unfortunately, this is what has been happening on Twitter.';
-
-____loclib.aboutTwitterThreeColumn1 = 'Many, way too many accounts have been banned in the past few years. Some of them without any reason.';
-____loclib.aboutTwitterThreeColumn2 = 'Others just because they were from a specific political side (conservative)';
-____loclib.aboutTwitterThreeColumn3 = 'Here below you can find a short list of accounts that have been banned or suspended by Twitter, along with the reason.';
-____loclib.aboutTwitterThreeColumn4 = 'You can make your own considerations: you can easily realize how Twitter has been banning people for several unspecified reasons, for simply saying that the leader of Talibans was pro-sharia, for supporting the "Occupy" movement without breaking any policy.';
-____loclib.aboutTwitterThreeColumn5 = 'This is the kind of censorship that we do not want on Bastyon, and that is why the protocol was created in the first place';
-
-____loclib.aboutTitterBannedAcc1 = "Building a community on Twitter is like building a home on a land you don't own.";
-____loclib.aboutTitterBannedAcc2 = 'Click here to see the list of the accounts banned by Twitter in 2019';
-____loclib.aboutTitterBannedAcc3 = 'Account';
-____loclib.aboutTitterBannedAcc4 = 'Wikipedia';
-____loclib.aboutTitterBannedAcc5 = 'Individual/account';
-____loclib.aboutTitterBannedAcc6 = 'Description';
-____loclib.aboutTitterBannedAcc7 = 'Date';
-____loclib.aboutTitterBannedAcc8 = 'Duration';
-____loclib.aboutTitterBannedAcc9 = 'Reason for suspension';
-____loclib.aboutTitterBannedAcc10 = 'Followers at the time of suspension';
-____loclib.aboutTitterBannedAcc11 = '“Darren Mills” ';
-____loclib.aboutTitterBannedAcc12 = 'Russian-linked account ';
-____loclib.aboutTitterBannedAcc13 = '43285';
-____loclib.aboutTitterBannedAcc14 = 'Permanent';
-____loclib.aboutTitterBannedAcc15 = 'Unmasked as a fictitious person operated by a Russian troll factory.';
 
 
+_l.aboutYoutubeThirdBoard18 = 'Reporting videos';
+_l.aboutYoutubeThirdBoard19 = 'YES, YouTube algorithms analyze videos and remove or block them automatically if they believe that they are against the policy. In addition YouTube can remove posts and ban users at its sole discretion.';
+_l.aboutYoutubeThirdBoard20 = "YES, however only users with a high reputation can report post and a post is made \"invisible\" on the feed page (but remains available on the user's profile page) only if several tens of high reputation users report it (reports can be made only for racism, hate speech and pornography).";
+_l.aboutYoutubeThirdBoard21 = 'Hashtags to classify videos';
+_l.aboutYoutubeThirdBoard22 = 'Videoa can be shared on multiple platforms';
+_l.aboutYoutubeThirdBoard23 = 'Dictatorship bans';
+_l.aboutYoutubeThirdBoard24 = 'Way too many!';
+_l.aboutYoutubeThirdBoard25 = 'Bastyon pays you way more than YouTube!';
+_l.aboutYoutubeThirdBoard26 = 'You can earn money with Bastyon.';
+_l.aboutYoutubeThirdBoard27 = 'Bastyon uses its own Cryptocurrency:';
+_l.aboutYoutubeThirdBoard28 = 'Each time your posts and videos receive comments and likes, you get PKOIN.';
+_l.aboutYoutubeThirdBoard29 = 'Each time one of your videos gets 15k views, plus 1250 reactions and 1000 referral users, you get 1,000 $ in PKOIN (you can convert them in USD!). THIS IS A LIMITED TIME OFFER!!!';
+_l.aboutYoutubeThirdBoard30 = 'Each time someone joins Bastyon with your referral link, you get PKOIN.';
+_l.aboutYoutubeThirdBoard31 = 'Contact us to learn more and to activate your account as “CREATOR” so that you can post unlimited videos and get paid!';
 
-____loclib.aboutTitterH3Section1 = 'Why Bastyon?';
-____loclib.aboutTitterH3Section2 = 'NO GOVERNMENT CONTROL';
-____loclib.aboutTitterH3Section3 = 'Bastyon runs on a network of nodes that no government can block or limit. Even if the main website Bastyon.com is made unaccessible or compromised, the platform still runs normally. A government cannot impose its censorship or limitations on Bastyon.';
-____loclib.aboutTitterH3Section4 = 'PRIVATE AND SECURE';
-____loclib.aboutTitterH3Section5 = 'Bastyon does not collect any personal information. No IP Address, no email, no phone number. We believe in real privacy protection and data security.';
+_l.aboutYoutubeOpenBoard1 = 'Discover Bastyon';
+_l.aboutYoutubeOpenBoard2 = 'You can use Bastyon from your browser or dowload the mobile and desktop app.';
+_l.aboutYoutubeOpenBoard3 = 'Official Website';
+
+_l.sourceCode = 'Source Code';
+
+_l.aboutYoutubeDiscover1 = 'Join Bastyon Today and Own Your Destiny!';
+_l.aboutYoutubeDiscover2 = 'Send us a message if you need help or if you are a content creator, blogger, influencer and would like to unlock your bonus and verify your profile!';
+
+_l.aboutMainBoard = 'Bastyon, The best alternative to Twitter. Leave behind the bans and suspensions.';
+_l.aboutMainBoard1 = 'Free, private and secure social network';
+
+_l.aboutTwitterMainDescriptionText1 = 'Some people ask us:';
+_l.aboutTwitterMainDescriptionText2 = '"Why should I use Bastyon?"';
+_l.aboutTwitterMainDescriptionText3 = 'The real question is:';
+_l.aboutTwitterMainDescriptionText4 = '"Why should you use Twitter?!"';
+_l.aboutTwitterMainDescriptionText5 = 'TWITTER IS ACTING LIKE A DICTATORSHIP GOVERNMENT';
+_l.aboutTwitterMainDescriptionText6 = 'Yes, we know that this is a strong statement.';
+_l.aboutTwitterMainDescriptionText7 = 'But unfortunately, this is what has been happening on Twitter.';
+
+_l.aboutTwitterThreeColumn1 = 'Many, way too many accounts have been banned in the past few years. Some of them without any reason.';
+_l.aboutTwitterThreeColumn2 = 'Others just because they were from a specific political side (conservative)';
+_l.aboutTwitterThreeColumn3 = 'Here below you can find a short list of accounts that have been banned or suspended by Twitter, along with the reason.';
+_l.aboutTwitterThreeColumn4 = 'You can make your own considerations: you can easily realize how Twitter has been banning people for several unspecified reasons, for simply saying that the leader of Talibans was pro-sharia, for supporting the "Occupy" movement without breaking any policy.';
+_l.aboutTwitterThreeColumn5 = 'This is the kind of censorship that we do not want on Bastyon, and that is why the protocol was created in the first place';
+
+_l.aboutTitterBannedAcc1 = "Building a community on Twitter is like building a home on a land you don't own.";
+_l.aboutTitterBannedAcc2 = 'Click here to see the list of the accounts banned by Twitter in 2019';
+_l.aboutTitterBannedAcc3 = 'Account';
+_l.aboutTitterBannedAcc4 = 'Wikipedia';
+_l.aboutTitterBannedAcc5 = 'Individual/account';
+_l.aboutTitterBannedAcc6 = 'Description';
+_l.aboutTitterBannedAcc7 = 'Date';
+_l.aboutTitterBannedAcc8 = 'Duration';
+_l.aboutTitterBannedAcc9 = 'Reason for suspension';
+_l.aboutTitterBannedAcc10 = 'Followers at the time of suspension';
+_l.aboutTitterBannedAcc11 = '“Darren Mills” ';
+_l.aboutTitterBannedAcc12 = 'Russian-linked account ';
+_l.aboutTitterBannedAcc13 = '43285';
+_l.aboutTitterBannedAcc14 = 'Permanent';
+_l.aboutTitterBannedAcc15 = 'Unmasked as a fictitious person operated by a Russian troll factory.';
 
 
 
-____loclib.aboutTitterImgAndText1 = 'NO CENSORSHIP';
-____loclib.aboutTitterImgAndText2 = 'Bastyon will not censor your posts and videos. Not even admins can block your account and ban you.';
-____loclib.aboutTitterImgAndText3 = 'Unlike Twitter, Bastyon does not apply a dictatorship-like method to remove content and users. There is a loooong list of people that have been banned, temporarily or permanently, by Twitter for shallow reasons or for no apparent reason at all.';
-____loclib.aboutTitterImgAndText4 = 'On Bastyon bans are simply impossible: it is based on the blockchain and no one has the power to cancel a block from it. Every post will always remain there. Even if an admin or a user wants to ban your posts, he will never be able to do so.';
-____loclib.aboutTitterImgAndText5 = 'Censorship is banned by the technology itself. Even if one day Bastyon`s creators want to shut down the platform, the posts will always be there and the social network can be re-created again from the same point it was left.';
-____loclib.aboutTitterImgAndText6 = 'NO COMPANY BEHIND BASTYON';
-____loclib.aboutTitterImgAndText7 = 'Unlike Twitter and the main Social Networks, there is no company behind Bastyon. It is an open source project. This means that there is no company that can control the contents posted on Bastyon. No bans, no censorship.';
-____loclib.aboutTitterImgAndText8 = 'Unlike Twitter...';
-____loclib.aboutTitterImgAndText9 = 'You will never be blocked or banned for simply supporting your ideas, religions, movements without hurting other people.';
-____loclib.aboutTitterImgAndText10 = 'No one can block your account or remove your posts';
-____loclib.aboutTitterImgAndText11 = 'Privacy is complete and guaranteed';
-____loclib.aboutTitterImgAndText12 = 'Access is always possible from any country and region of the world';
-____loclib.aboutTitterImgAndText13 = 'Chat sessions are entirely private and encrypted and not even Bastyon can access them. Not even with a court warrant.';
-____loclib.aboutTitterImgAndText14 = 'Your posts can be longer';
+_l.aboutTitterH3Section1 = 'Why Bastyon?';
+_l.aboutTitterH3Section2 = 'NO GOVERNMENT CONTROL';
+_l.aboutTitterH3Section3 = 'Bastyon runs on a network of nodes that no government can block or limit. Even if the main website Bastyon.com is made unaccessible or compromised, the platform still runs normally. A government cannot impose its censorship or limitations on Bastyon.';
+_l.aboutTitterH3Section4 = 'PRIVATE AND SECURE';
+_l.aboutTitterH3Section5 = 'Bastyon does not collect any personal information. No IP Address, no email, no phone number. We believe in real privacy protection and data security.';
 
 
 
-____loclib.aboutTitterTable1 = 'TWITTER';
-____loclib.aboutTitterTable2 = 'BASTYON';
-____loclib.aboutTitterTable3 = 'Account ownership';
-____loclib.aboutTitterTable4 = 'Property of Twitter';
-____loclib.aboutTitterTable5 = 'Your Private Key Belongs to You';
-____loclib.aboutTitterTable6 = 'Your access to your audience';
-____loclib.aboutTitterTable7 = 'Not all of your followers see your post, Facebook controls the proportion of the audience that sees it';
-____loclib.aboutTitterTable8 = 'Every follower sees your post';
-____loclib.aboutTitterTable9 = 'Censorship';
-____loclib.aboutTitterTable10 = 'Yes, selective and arbitrary censorship, lots of shadowbanning';
-____loclib.aboutTitterTable11 = 'Community moderates content with only a few topics such as pornography and illicit content moderated';
-____loclib.aboutTitterTable12 = 'Open Sourced Code ';
-____loclib.aboutTitterTable13 = 'No';
-____loclib.aboutTitterTable14 = 'Yes, open to everyone';
-____loclib.aboutTitterTable15 = 'Same Rules for Everyone';
-____loclib.aboutTitterTable16 = 'No';
-____loclib.aboutTitterTable17 = 'Yes, based on open source code';
-____loclib.aboutTitterTable18 = 'Monetization';
-____loclib.aboutTitterTable19 = 'Twitter shares what it wants';
-____loclib.aboutTitterTable20 = '100% to blogger through PKOIN';
-____loclib.aboutTitterTable21 = 'What if Domain Blocked in Some Country?';
-____loclib.aboutTitterTable22 = 'Twiter inaccessible';
-____loclib.aboutTitterTable23 = 'Bastyon works directly with nodes';
-____loclib.aboutTitterTable24 = 'Personal Messages';
-____loclib.aboutTitterTable25 = 'Twitter can read every message';
-____loclib.aboutTitterTable26 = 'Bastyon uses peer-to-peer encryption for 1-on-1 chats, nobody can read them';
-____loclib.aboutTitterTable27 = 'Internal Cryptocurency for Monetization & Payments';
-____loclib.aboutTitterTable28 = 'No';
-____loclib.aboutTitterTable29 = 'Yes';
-____loclib.aboutTitterTable30 = 'Ability to Send Crypto in Chat Messages';
-____loclib.aboutTitterTable31 = 'No';
-____loclib.aboutTitterTable32 = 'Yes';
-____loclib.aboutTitterTable33 = 'Personal Information';
-____loclib.aboutTitterTable34 = 'Name, phone number';
-____loclib.aboutTitterTable35 = 'No';
+_l.aboutTitterImgAndText1 = 'NO CENSORSHIP';
+_l.aboutTitterImgAndText2 = 'Bastyon will not censor your posts and videos. Not even admins can block your account and ban you.';
+_l.aboutTitterImgAndText3 = 'Unlike Twitter, Bastyon does not apply a dictatorship-like method to remove content and users. There is a loooong list of people that have been banned, temporarily or permanently, by Twitter for shallow reasons or for no apparent reason at all.';
+_l.aboutTitterImgAndText4 = 'On Bastyon bans are simply impossible: it is based on the blockchain and no one has the power to cancel a block from it. Every post will always remain there. Even if an admin or a user wants to ban your posts, he will never be able to do so.';
+_l.aboutTitterImgAndText5 = 'Censorship is banned by the technology itself. Even if one day Bastyon`s creators want to shut down the platform, the posts will always be there and the social network can be re-created again from the same point it was left.';
+_l.aboutTitterImgAndText6 = 'NO COMPANY BEHIND BASTYON';
+_l.aboutTitterImgAndText7 = 'Unlike Twitter and the main Social Networks, there is no company behind Bastyon. It is an open source project. This means that there is no company that can control the contents posted on Bastyon. No bans, no censorship.';
+_l.aboutTitterImgAndText8 = 'Unlike Twitter...';
+_l.aboutTitterImgAndText9 = 'You will never be blocked or banned for simply supporting your ideas, religions, movements without hurting other people.';
+_l.aboutTitterImgAndText10 = 'No one can block your account or remove your posts';
+_l.aboutTitterImgAndText11 = 'Privacy is complete and guaranteed';
+_l.aboutTitterImgAndText12 = 'Access is always possible from any country and region of the world';
+_l.aboutTitterImgAndText13 = 'Chat sessions are entirely private and encrypted and not even Bastyon can access them. Not even with a court warrant.';
+_l.aboutTitterImgAndText14 = 'Your posts can be longer';
 
 
 
-____loclib.aboutTitterMainBoard31 = 'And there`s more! Bastyon pays you.';
-____loclib.aboutTitterMainBoard32 = 'You can earn money with Bastyon.';
-____loclib.aboutTitterMainBoard33 = 'Bastyon uses its own Cryptocurrency:';
-____loclib.aboutTitterMainBoard34 = 'Each time your posts and videos receive comments and likes, you get PKOIN.';
-____loclib.aboutTitterMainBoard35 = 'Each time one of your videos gets 15,000 views + 1,250 reactions, you get 1,000 $ in PKOIN (you can convert them in USD!). THIS IS A LIMITED TIME OFFER!!!';
-____loclib.aboutTitterMainBoard36 = 'Each time someone joins Bastyon with your referral link, you get PKOIN.';
-____loclib.aboutTitterMainBoard37 = 'Contact us to learn more and to activate your account as “CREATOR” so that you can post unlimited videos and get paid!';
+_l.aboutTitterTable1 = 'TWITTER';
+_l.aboutTitterTable2 = 'BASTYON';
+_l.aboutTitterTable3 = 'Account ownership';
+_l.aboutTitterTable4 = 'Property of Twitter';
+_l.aboutTitterTable5 = 'Your Private Key Belongs to You';
+_l.aboutTitterTable6 = 'Your access to your audience';
+_l.aboutTitterTable7 = 'Not all of your followers see your post, Facebook controls the proportion of the audience that sees it';
+_l.aboutTitterTable8 = 'Every follower sees your post';
+_l.aboutTitterTable9 = 'Censorship';
+_l.aboutTitterTable10 = 'Yes, selective and arbitrary censorship, lots of shadowbanning';
+_l.aboutTitterTable11 = 'Community moderates content with only a few topics such as pornography and illicit content moderated';
+_l.aboutTitterTable12 = 'Open Sourced Code ';
+_l.aboutTitterTable13 = 'No';
+_l.aboutTitterTable14 = 'Yes, open to everyone';
+_l.aboutTitterTable15 = 'Same Rules for Everyone';
+_l.aboutTitterTable16 = 'No';
+_l.aboutTitterTable17 = 'Yes, based on open source code';
+_l.aboutTitterTable18 = 'Monetization';
+_l.aboutTitterTable19 = 'Twitter shares what it wants';
+_l.aboutTitterTable20 = '100% to blogger through PKOIN';
+_l.aboutTitterTable21 = 'What if Domain Blocked in Some Country?';
+_l.aboutTitterTable22 = 'Twiter inaccessible';
+_l.aboutTitterTable23 = 'Bastyon works directly with nodes';
+_l.aboutTitterTable24 = 'Personal Messages';
+_l.aboutTitterTable25 = 'Twitter can read every message';
+_l.aboutTitterTable26 = 'Bastyon uses peer-to-peer encryption for 1-on-1 chats, nobody can read them';
+_l.aboutTitterTable27 = 'Internal Cryptocurency for Monetization & Payments';
+_l.aboutTitterTable28 = 'No';
+_l.aboutTitterTable29 = 'Yes';
+_l.aboutTitterTable30 = 'Ability to Send Crypto in Chat Messages';
+_l.aboutTitterTable31 = 'No';
+_l.aboutTitterTable32 = 'Yes';
+_l.aboutTitterTable33 = 'Personal Information';
+_l.aboutTitterTable34 = 'Name, phone number';
+_l.aboutTitterTable35 = 'No';
 
 
-____loclib.aboutTitterOpen1 = 'Discover Bastyon';
-____loclib.aboutTitterOpen2 = 'You can use Bastyon from your browser or dowload the mobile and desktop app.';
-____loclib.aboutTitterOpen3 = 'Official Website';
-____loclib.aboutTitterOpen4 = 'Source Code';
-____loclib.aboutTitterOpen5 = 'Contact us';
-____loclib.aboutTitterOpen6 = 'Send us a message if you need help or if you are a content creator, blogger, influencer and would like to unlock your bonus and verify your profile!';
+
+_l.aboutTitterMainBoard31 = 'And there`s more! Bastyon pays you.';
+_l.aboutTitterMainBoard32 = 'You can earn money with Bastyon.';
+_l.aboutTitterMainBoard33 = 'Bastyon uses its own Cryptocurrency:';
+_l.aboutTitterMainBoard34 = 'Each time your posts and videos receive comments and likes, you get PKOIN.';
+_l.aboutTitterMainBoard35 = 'Each time one of your videos gets 15,000 views + 1,250 reactions, you get 1,000 $ in PKOIN (you can convert them in USD!). THIS IS A LIMITED TIME OFFER!!!';
+_l.aboutTitterMainBoard36 = 'Each time someone joins Bastyon with your referral link, you get PKOIN.';
+_l.aboutTitterMainBoard37 = 'Contact us to learn more and to activate your account as “CREATOR” so that you can post unlimited videos and get paid!';
+
+
+_l.aboutTitterOpen1 = 'Discover Bastyon';
+_l.aboutTitterOpen2 = 'You can use Bastyon from your browser or dowload the mobile and desktop app.';
+_l.aboutTitterOpen3 = 'Official Website';
+_l.aboutTitterOpen4 = 'Source Code';
+_l.aboutTitterOpen5 = 'Contact us';
+_l.aboutTitterOpen6 = 'Send us a message if you need help or if you are a content creator, blogger, influencer and would like to unlock your bonus and verify your profile!';
 
 
 /////////////aboutFacebook
-____loclib.aboutFbMainBoard = 'Bastyon - the best alternative to Facebook';
-____loclib.aboutFbMainBoard1 = 'Social and financial protocol';
+_l.aboutFbMainBoard = 'Bastyon - the best alternative to Facebook';
+_l.aboutFbMainBoard1 = 'Social and financial protocol';
 
-____loclib.aboutFbMainDesc = '"Bastyon is not an alternative to Facebook.';
-____loclib.aboutFbMainDesc1 = 'Bastyon is the Anti-Facebook.';
-____loclib.aboutFbMainDesc2 = '-- John Milton';
-
-
-____loclib.aboutFbH3Section = 'Why Bastyon?';
-____loclib.aboutFbH3Section1 = 'NO GOVERNMENT CONTROL';
-____loclib.aboutFbH3Section2 = 'Bastyon runs on a network of nodes that no government can block or limit. Even if the main website Bastyon.com is made unaccessible or compromised, the platform still runs normally. A government cannot impose its censorship or limitations on Bastyon.';
-____loclib.aboutFbH3Section3 = 'PRIVATE AND SECURE';
-____loclib.aboutFbH3Section4 = 'Bastyon does not collect any personal information. No IP Address, no email, no phone number. We believe in real privacy protection and data security.';
+_l.aboutFbMainDesc = '"Bastyon is not an alternative to Facebook.';
+_l.aboutFbMainDesc1 = 'Bastyon is the Anti-Facebook.';
+_l.aboutFbMainDesc2 = '-- John Milton';
 
 
-
-____loclib.aboutFbImgAndText = 'NO CENSORSHIP';
-____loclib.aboutFbImgAndText2 = 'Bastyon will not censor your posts and videos. Not even admins can block your account and ban you.';
-____loclib.aboutFbImgAndText3 = 'Bastyon is based on the blockchain: there is no way, at all, to remove posts. Each post is registered on the blockchain and, for its nature, it cannot be removed. By anyone.';
-____loclib.aboutFbImgAndText4 = 'NO COMPANY BEHIND BASTYON';
-____loclib.aboutFbImgAndText5 = 'Unlike Facebook and the main Social Networks, there is no company behind Bastyon. It is an open source project. This means that there is no company that can control the contents posted on Bastyon. No bans, no censorship.';
-____loclib.aboutFbImgAndText6 = 'Unlike Facebook...';
-____loclib.aboutFbImgAndText7 = 'Your personal data is not sold to external companies';
-____loclib.aboutFbImgAndText8 = 'No arbitrary censorship';
-____loclib.aboutFbImgAndText9 = 'Does not take personal information';
-____loclib.aboutFbImgAndText10 = 'No corporation behind it';
-____loclib.aboutFbImgAndText11 = 'Chat sessions are entirely private and encrypted and not even Bastyon can access them.';
-____loclib.aboutFbImgAndText12 = 'Mark Zuckerberg won’t bother you!';
+_l.aboutFbH3Section = 'Why Bastyon?';
+_l.aboutFbH3Section1 = 'NO GOVERNMENT CONTROL';
+_l.aboutFbH3Section2 = 'Bastyon runs on a network of nodes that no government can block or limit. Even if the main website Bastyon.com is made unaccessible or compromised, the platform still runs normally. A government cannot impose its censorship or limitations on Bastyon.';
+_l.aboutFbH3Section3 = 'PRIVATE AND SECURE';
+_l.aboutFbH3Section4 = 'Bastyon does not collect any personal information. No IP Address, no email, no phone number. We believe in real privacy protection and data security.';
 
 
 
-____loclib.aboutFbTable = 'FACEBOOK';
-____loclib.aboutFbTable1 = 'BASTYON';
-____loclib.aboutFbTable2 = 'Account ownership';
-____loclib.aboutFbTable3 = 'Property of Facebook ';
-____loclib.aboutFbTable4 = 'Your Private Key Belongs to You';
-____loclib.aboutFbTable5 = 'Your access to your audience';
-____loclib.aboutFbTable6 = 'Not all of your followers see your post, Facebook controls the proportion of the audience that sees it';
-____loclib.aboutFbTable7 = 'Every follower sees your post';
-____loclib.aboutFbTable8 = 'Censorship';
-____loclib.aboutFbTable9 = 'Yes, selective and arbitrary censorship';
-____loclib.aboutFbTable10 = 'Community moderates content with only a few topics such as pornography and illicit content moderated';
-____loclib.aboutFbTable11 = 'Open Sourced Code ';
-____loclib.aboutFbTable12 = 'No';
-____loclib.aboutFbTable13 = 'Yes, open to everyone';
-____loclib.aboutFbTable14 = 'Same Rules for Everyone';
-____loclib.aboutFbTable15 = 'No';
-____loclib.aboutFbTable16 = 'Yes, based on open source code';
-____loclib.aboutFbTable17 = 'Monetization';
-____loclib.aboutFbTable18 = 'Facebook shares what it wants';
-____loclib.aboutFbTable19 = '100% to blogger through PKOIN';
-____loclib.aboutFbTable20 = 'What if Domain Blocked in Some Country?';
-____loclib.aboutFbTable21 = 'Facebook inaccessible';
-____loclib.aboutFbTable22 = 'Bastyon works directly with nodes';
-____loclib.aboutFbTable23 = 'Personal Messages';
-____loclib.aboutFbTable24 = 'Facebook can read every message';
-____loclib.aboutFbTable25 = 'Bastyon uses peer-to-peer encryption for 1-on-1 chats, nobody can read them';
-____loclib.aboutFbTable26 = 'Mark Zuckerberg';
-____loclib.aboutFbTable27 = 'Always besides you';
-____loclib.aboutFbTable28 = 'NO!';
-____loclib.aboutFbTable29 = 'Internal Cryptocurency for Monetization & Payments';
-____loclib.aboutFbTable30 = 'No';
-____loclib.aboutFbTable31 = 'Yes';
-____loclib.aboutFbTable32 = 'Ability to Send Crypto in Chat Messages';
-____loclib.aboutFbTable33 = 'No';
-____loclib.aboutFbTable34 = 'Yes';
-____loclib.aboutFbTable35 = 'Personal Information';
-____loclib.aboutFbTable36 = 'Name, phone number';
-____loclib.aboutFbTable37 = 'No';
+_l.aboutFbImgAndText = 'NO CENSORSHIP';
+_l.aboutFbImgAndText2 = 'Bastyon will not censor your posts and videos. Not even admins can block your account and ban you.';
+_l.aboutFbImgAndText3 = 'Bastyon is based on the blockchain: there is no way, at all, to remove posts. Each post is registered on the blockchain and, for its nature, it cannot be removed. By anyone.';
+_l.aboutFbImgAndText4 = 'NO COMPANY BEHIND BASTYON';
+_l.aboutFbImgAndText5 = 'Unlike Facebook and the main Social Networks, there is no company behind Bastyon. It is an open source project. This means that there is no company that can control the contents posted on Bastyon. No bans, no censorship.';
+_l.aboutFbImgAndText6 = 'Unlike Facebook...';
+_l.aboutFbImgAndText7 = 'Your personal data is not sold to external companies';
+_l.aboutFbImgAndText8 = 'No arbitrary censorship';
+_l.aboutFbImgAndText9 = 'Does not take personal information';
+_l.aboutFbImgAndText10 = 'No corporation behind it';
+_l.aboutFbImgAndText11 = 'Chat sessions are entirely private and encrypted and not even Bastyon can access them.';
+_l.aboutFbImgAndText12 = 'Mark Zuckerberg won’t bother you!';
 
 
 
-____loclib.aboutFbMainBoard3 = 'And there`s more! Bastyon pays you.';
-____loclib.aboutFbMainBoard31 = 'You can earn money with Bastyon.';
-____loclib.aboutFbMainBoard32 = 'Bastyon uses its own Cryptocurrency: ';
-____loclib.aboutFbMainBoard33 = 'Each time your posts and videos receive comments and likes, you get PKOIN.';
-____loclib.aboutFbMainBoard34 = 'Each time one of your videos gets 15,000 views + 1,250 reactions, you get 1,000 $ in PKOIN (you can convert them in USD!). THIS IS A LIMITED TIME OFFER!!!';
-____loclib.aboutFbMainBoard34 = 'Each time someone joins Bastyon with your referral link, you get PKOIN.';
-____loclib.aboutFbMainBoard35 = 'Contact us to learn more and to activate your account as “CREATOR” so that you can post unlimited videos and get paid!';
+_l.aboutFbTable = 'FACEBOOK';
+_l.aboutFbTable1 = 'BASTYON';
+_l.aboutFbTable2 = 'Account ownership';
+_l.aboutFbTable3 = 'Property of Facebook ';
+_l.aboutFbTable4 = 'Your Private Key Belongs to You';
+_l.aboutFbTable5 = 'Your access to your audience';
+_l.aboutFbTable6 = 'Not all of your followers see your post, Facebook controls the proportion of the audience that sees it';
+_l.aboutFbTable7 = 'Every follower sees your post';
+_l.aboutFbTable8 = 'Censorship';
+_l.aboutFbTable9 = 'Yes, selective and arbitrary censorship';
+_l.aboutFbTable10 = 'Community moderates content with only a few topics such as pornography and illicit content moderated';
+_l.aboutFbTable11 = 'Open Sourced Code ';
+_l.aboutFbTable12 = 'No';
+_l.aboutFbTable13 = 'Yes, open to everyone';
+_l.aboutFbTable14 = 'Same Rules for Everyone';
+_l.aboutFbTable15 = 'No';
+_l.aboutFbTable16 = 'Yes, based on open source code';
+_l.aboutFbTable17 = 'Monetization';
+_l.aboutFbTable18 = 'Facebook shares what it wants';
+_l.aboutFbTable19 = '100% to blogger through PKOIN';
+_l.aboutFbTable20 = 'What if Domain Blocked in Some Country?';
+_l.aboutFbTable21 = 'Facebook inaccessible';
+_l.aboutFbTable22 = 'Bastyon works directly with nodes';
+_l.aboutFbTable23 = 'Personal Messages';
+_l.aboutFbTable24 = 'Facebook can read every message';
+_l.aboutFbTable25 = 'Bastyon uses peer-to-peer encryption for 1-on-1 chats, nobody can read them';
+_l.aboutFbTable26 = 'Mark Zuckerberg';
+_l.aboutFbTable27 = 'Always besides you';
+_l.aboutFbTable28 = 'NO!';
+_l.aboutFbTable29 = 'Internal Cryptocurency for Monetization & Payments';
+_l.aboutFbTable30 = 'No';
+_l.aboutFbTable31 = 'Yes';
+_l.aboutFbTable32 = 'Ability to Send Crypto in Chat Messages';
+_l.aboutFbTable33 = 'No';
+_l.aboutFbTable34 = 'Yes';
+_l.aboutFbTable35 = 'Personal Information';
+_l.aboutFbTable36 = 'Name, phone number';
+_l.aboutFbTable37 = 'No';
 
 
-____loclib.aboutFbOpen = 'Discover Bastyon';
-____loclib.aboutFbOpen1 = 'You can use Bastyon from your browser or dowload the mobile and desktop app.';
-____loclib.aboutFbOpen2 = 'Official Website';
-____loclib.aboutFbOpen3 = 'Source Code';
-____loclib.aboutFbOpen4 = 'Contact us';
-____loclib.aboutFbOpen5 = 'Send us a message if you need help or if you are a content creator, blogger, influencer and would like to unlock your bonus and verify your profile!';
+
+_l.aboutFbMainBoard3 = 'And there`s more! Bastyon pays you.';
+_l.aboutFbMainBoard31 = 'You can earn money with Bastyon.';
+_l.aboutFbMainBoard32 = 'Bastyon uses its own Cryptocurrency: ';
+_l.aboutFbMainBoard33 = 'Each time your posts and videos receive comments and likes, you get PKOIN.';
+_l.aboutFbMainBoard34 = 'Each time one of your videos gets 15,000 views + 1,250 reactions, you get 1,000 $ in PKOIN (you can convert them in USD!). THIS IS A LIMITED TIME OFFER!!!';
+_l.aboutFbMainBoard34 = 'Each time someone joins Bastyon with your referral link, you get PKOIN.';
+_l.aboutFbMainBoard35 = 'Contact us to learn more and to activate your account as “CREATOR” so that you can post unlimited videos and get paid!';
+
+
+_l.aboutFbOpen = 'Discover Bastyon';
+_l.aboutFbOpen1 = 'You can use Bastyon from your browser or dowload the mobile and desktop app.';
+_l.aboutFbOpen2 = 'Official Website';
+_l.aboutFbOpen3 = 'Source Code';
+_l.aboutFbOpen4 = 'Contact us';
+_l.aboutFbOpen5 = 'Send us a message if you need help or if you are a content creator, blogger, influencer and would like to unlock your bonus and verify your profile!';
 
 
 /////aboutHIW
 
-____loclib.aboutHowItWMainBoard = 'HOW DOES BASTYON RESIST CENSORSHIP?';
-____loclib.aboutHowItWMainBoard1 = 'FREE, PRIVATE, SECURE AND WITHOUT CORPORATE CONTROL.';
-____loclib.aboutHowItWMainBoard2 = 'ENJOY THE FRESH AIR OF BASTYON.';
+_l.aboutHowItWMainBoard = 'HOW DOES BASTYON RESIST CENSORSHIP?';
+_l.aboutHowItWMainBoard1 = 'FREE, PRIVATE, SECURE AND WITHOUT CORPORATE CONTROL.';
+_l.aboutHowItWMainBoard2 = 'ENJOY THE FRESH AIR OF BASTYON.';
 
 
 
-____loclib.aboutHowItWMD = '"Bastyon is the Bitcoin of social networks."';
+_l.aboutHowItWMD = '"Bastyon is the Bitcoin of social networks."';
 
 
 
-____loclib.aboutHowItWImgAndText = 'Blockchain based';
-____loclib.aboutHowItWImgAndText1 = 'What is the blockchain?';
-____loclib.aboutHowItWImgAndText2 = 'As Wikipedia mentions, “A blockchain is a growing list of records, called blocks, that are linked together using cryptography.';
-____loclib.aboutHowItWImgAndText3 = 'It’s also described as a “trustless and fully decentralized peer-to-peer immutable data storage” that is spread over a network of participants often referred to as nodes. Each block contains a cryptographic hash of the previous block, a timestamp, and transaction data.';
-____loclib.aboutHowItWImgAndText4 = 'The timestamp proves that the transaction data existed when the block was published in order to get into its hash.';
-____loclib.aboutHowItWImgAndText5 = 'As blocks each contain information about the block previous to it, they form a chain, with each additional block reinforcing the ones before it.';
-____loclib.aboutHowItWImgAndText6 = 'Therefore, blockchains are resistant to modification of their data because once recorded, the data in any given block cannot be altered retroactively without altering all subsequent blocks.”';
-____loclib.aboutHowItWImgAndText7 = 'So, how does the blockchain  protects from censorship?';
-____loclib.aboutHowItWImgAndText8 = 'From Bitcoins to Bastyon.';
-____loclib.aboutHowItWImgAndText9 = 'The blockchain is the technology behind all the cryptocurrencies. Bitcoins, Ethereum, Dogecoins and so on are all powered by the Blockchain.';
-____loclib.aboutHowItWImgAndText10 = 'The principle is simple: what happens on the blockchain, stays on the blockchain. Forever.';
-____loclib.aboutHowItWImgAndText11 = 'All the existing blocks of the blockchain are immutable and permanent. ';
-____loclib.aboutHowItWImgAndText12 = 'Think about cryptocurrency: when you send some Bitcoins (or parts of it) to someone, the transaction is registered on the blockchain.';
-____loclib.aboutHowItWImgAndText13 = 'From that moment the transaction cannot be reverted, modified, changed, removed, suspended, edited in any of its parts. It is there and stays there forever. And you can explore the blocks on the blockchain to see all the transactions.';
-____loclib.aboutHowItWImgAndText14 = 'Bastyon works EXACTLY the same way. Each post, each account, each video is recorded on the blockchain. And once there, it cannot be removed.';
-____loclib.aboutHowItWImgAndText15 = 'Indeed, Bastyon works on a fork of the original Bitcoin blockchain.';
-____loclib.aboutHowItWImgAndText16 = 'Censorship-resistant';
-____loclib.aboutHowItWImgAndText17 = 'Not only the Blockchain.';
-____loclib.aboutHowItWImgAndText18 = 'Bastyon is not owned by a corporation';
-____loclib.aboutHowItWImgAndText19 = 'Bastyon is an open-source project';
-____loclib.aboutHowItWImgAndText20 = 'Bastyon runs on a network of decentralized nodes, if you are using the Bastyon desktop app, it speaks directly to the nodes around the world';
-____loclib.aboutHowItWImgAndText21 = 'In addition, even if a government wants to remove a post, it is technically impossible.';
-____loclib.aboutHowItWImgAndText22 = 'Likewise, since it runs on a network of nodes, there is no way to limit the access to Bastyon. Even in the event of a government blocking access to https://bastyon.com, you will always be able to access it using the mobile or desktop app, which connects directly to the nodes.';
-____loclib.aboutHowItWImgAndText23 = 'Privacy protection,';
-____loclib.aboutHowItWImgAndText24 = 'for your security';
-____loclib.aboutHowItWImgAndText25 = 'Bastyon does not know who you are.';
-____loclib.aboutHowItWImgAndText26 = 'Bastyon DOES NOT collect any personal information.';
-____loclib.aboutHowItWImgAndText27 = ' You can register without revealing your phone number (only email is required)';
-____loclib.aboutHowItWImgAndText28 = 'Bastyon does not ask for your real name to protect dissent';
-____loclib.aboutHowItWImgAndText29 = 'Bastyon does not collect IP addresses and does not track you';
-____loclib.aboutHowItWImgAndText291 = 'Bastyon allows multiple accounts for different purposes';
-____loclib.aboutHowItWImgAndText30 = 'Bastyon will never know who you are, unless you explicitly share your personal data.';
-____loclib.aboutHowItWImgAndText31 = 'If you don’t share your data, no one, no company, no government, can know who you are.';
+_l.aboutHowItWImgAndText = 'Blockchain based';
+_l.aboutHowItWImgAndText1 = 'What is the blockchain?';
+_l.aboutHowItWImgAndText2 = 'As Wikipedia mentions, “A blockchain is a growing list of records, called blocks, that are linked together using cryptography.';
+_l.aboutHowItWImgAndText3 = 'It’s also described as a “trustless and fully decentralized peer-to-peer immutable data storage” that is spread over a network of participants often referred to as nodes. Each block contains a cryptographic hash of the previous block, a timestamp, and transaction data.';
+_l.aboutHowItWImgAndText4 = 'The timestamp proves that the transaction data existed when the block was published in order to get into its hash.';
+_l.aboutHowItWImgAndText5 = 'As blocks each contain information about the block previous to it, they form a chain, with each additional block reinforcing the ones before it.';
+_l.aboutHowItWImgAndText6 = 'Therefore, blockchains are resistant to modification of their data because once recorded, the data in any given block cannot be altered retroactively without altering all subsequent blocks.”';
+_l.aboutHowItWImgAndText7 = 'So, how does the blockchain  protects from censorship?';
+_l.aboutHowItWImgAndText8 = 'From Bitcoins to Bastyon.';
+_l.aboutHowItWImgAndText9 = 'The blockchain is the technology behind all the cryptocurrencies. Bitcoins, Ethereum, Dogecoins and so on are all powered by the Blockchain.';
+_l.aboutHowItWImgAndText10 = 'The principle is simple: what happens on the blockchain, stays on the blockchain. Forever.';
+_l.aboutHowItWImgAndText11 = 'All the existing blocks of the blockchain are immutable and permanent. ';
+_l.aboutHowItWImgAndText12 = 'Think about cryptocurrency: when you send some Bitcoins (or parts of it) to someone, the transaction is registered on the blockchain.';
+_l.aboutHowItWImgAndText13 = 'From that moment the transaction cannot be reverted, modified, changed, removed, suspended, edited in any of its parts. It is there and stays there forever. And you can explore the blocks on the blockchain to see all the transactions.';
+_l.aboutHowItWImgAndText14 = 'Bastyon works EXACTLY the same way. Each post, each account, each video is recorded on the blockchain. And once there, it cannot be removed.';
+_l.aboutHowItWImgAndText15 = 'Indeed, Bastyon works on a fork of the original Bitcoin blockchain.';
+_l.aboutHowItWImgAndText16 = 'Censorship-resistant';
+_l.aboutHowItWImgAndText17 = 'Not only the Blockchain.';
+_l.aboutHowItWImgAndText18 = 'Bastyon is not owned by a corporation';
+_l.aboutHowItWImgAndText19 = 'Bastyon is an open-source project';
+_l.aboutHowItWImgAndText20 = 'Bastyon runs on a network of decentralized nodes, if you are using the Bastyon desktop app, it speaks directly to the nodes around the world';
+_l.aboutHowItWImgAndText21 = 'In addition, even if a government wants to remove a post, it is technically impossible.';
+_l.aboutHowItWImgAndText22 = 'Likewise, since it runs on a network of nodes, there is no way to limit the access to Bastyon. Even in the event of a government blocking access to https://bastyon.com, you will always be able to access it using the mobile or desktop app, which connects directly to the nodes.';
+_l.aboutHowItWImgAndText23 = 'Privacy protection,';
+_l.aboutHowItWImgAndText24 = 'for your security';
+_l.aboutHowItWImgAndText25 = 'Bastyon does not know who you are.';
+_l.aboutHowItWImgAndText26 = 'Bastyon DOES NOT collect any personal information.';
+_l.aboutHowItWImgAndText27 = ' You can register without revealing your phone number (only email is required)';
+_l.aboutHowItWImgAndText28 = 'Bastyon does not ask for your real name to protect dissent';
+_l.aboutHowItWImgAndText29 = 'Bastyon does not collect IP addresses and does not track you';
+_l.aboutHowItWImgAndText291 = 'Bastyon allows multiple accounts for different purposes';
+_l.aboutHowItWImgAndText30 = 'Bastyon will never know who you are, unless you explicitly share your personal data.';
+_l.aboutHowItWImgAndText31 = 'If you don’t share your data, no one, no company, no government, can know who you are.';
 
 
-____loclib.aboutHowItWImgAndText51 = 'Why is Cryptocurrency Good for Freedom?';
-____loclib.aboutHowItWImgAndText52 = 'Some people think that digital currency is a tool for enslavement. Ironically, many of those people are carrying bank cards with a microship in their pockets. Bank cards that track every purchase and tie directly to your identity. The reason cryptocurrency is good for freedom is that it is not tied to your identity. Both in Bitcoin and Pocketcoin, each user can create millions of addresses and change them as much as necessary.';
-
-
-
-____loclib.HIVTable1 = 'Credit Cards';
-____loclib.HIVTable2 = 'Cash';
-____loclib.HIVTable3 = 'Cryptocurrency';
-____loclib.HIVTable4 = 'Tied to your identity';
-____loclib.HIVTable5 = 'Yes';
-____loclib.HIVTable6 = 'No';
-____loclib.HIVTable7 = 'No';
-____loclib.HIVTable8 = 'Government controls money supply';
-____loclib.HIVTable9 = 'Yes';
-____loclib.HIVTable10 = 'Yes';
-____loclib.HIVTable11 = 'No';
-____loclib.HIVTable12 = 'Anonimity';
-____loclib.HIVTable13 = 'Non-Anonymous';
-____loclib.HIVTable14 = 'Anonymous';
-____loclib.HIVTable15 = 'Pseudonymous';
-____loclib.HIVTable16 = 'Easy to pay over large distances';
-____loclib.HIVTable17 = 'Yes';
-____loclib.HIVTable18 = 'No';
-____loclib.HIVTable19 = 'Yes';
-____loclib.HIVTable20 = 'Transparent, open to public';
-____loclib.HIVTable21 = 'No';
-____loclib.HIVTable22 = 'No';
-____loclib.HIVTable23 = 'Yes';
+_l.aboutHowItWImgAndText51 = 'Why is Cryptocurrency Good for Freedom?';
+_l.aboutHowItWImgAndText52 = 'Some people think that digital currency is a tool for enslavement. Ironically, many of those people are carrying bank cards with a microship in their pockets. Bank cards that track every purchase and tie directly to your identity. The reason cryptocurrency is good for freedom is that it is not tied to your identity. Both in Bitcoin and Pocketcoin, each user can create millions of addresses and change them as much as necessary.';
 
 
 
+_l.HIVTable1 = 'Credit Cards';
+_l.HIVTable2 = 'Cash';
+_l.HIVTable3 = 'Cryptocurrency';
+_l.HIVTable4 = 'Tied to your identity';
+_l.HIVTable5 = 'Yes';
+_l.HIVTable6 = 'No';
+_l.HIVTable7 = 'No';
+_l.HIVTable8 = 'Government controls money supply';
+_l.HIVTable9 = 'Yes';
+_l.HIVTable10 = 'Yes';
+_l.HIVTable11 = 'No';
+_l.HIVTable12 = 'Anonimity';
+_l.HIVTable13 = 'Non-Anonymous';
+_l.HIVTable14 = 'Anonymous';
+_l.HIVTable15 = 'Pseudonymous';
+_l.HIVTable16 = 'Easy to pay over large distances';
+_l.HIVTable17 = 'Yes';
+_l.HIVTable18 = 'No';
+_l.HIVTable19 = 'Yes';
+_l.HIVTable20 = 'Transparent, open to public';
+_l.HIVTable21 = 'No';
+_l.HIVTable22 = 'No';
+_l.HIVTable23 = 'Yes';
 
-____loclib.aboutHowItWImgAndText32 = 'And there`s more!';
-____loclib.aboutHowItWImgAndText33 = 'Bastyon pays you';
-____loclib.aboutHowItWImgAndText34 = 'You can earn money with Bastyon.';
-____loclib.aboutHowItWImgAndText35 = 'Bastyon uses its own Cryptocurrency:';
-____loclib.aboutHowItWImgAndText36 = 'Each time your posts receive comments and likes, you get PKOIN.';
-____loclib.aboutHowItWImgAndText37 = 'Each time your video gets 15,000 views + 750 “5 stars” reactions, you get 1,000 $ in PKOIN (you can convert them in USD!). THIS IS A LIMITED TIME OFFER!!! ';
-____loclib.aboutHowItWImgAndText38 = 'Each time someone joins Bastyon with your referral link, you get PKOIN.';
-____loclib.aboutHowItWImgAndText39 = 'Contact us to learn more and to activate your account as “CREATOR” so that you can post unlimited videos and get paid!';
-____loclib.aboutHowItWImgAndText40 = 'Next step: contact us to get your Bastyon account verified and to access the bonus program.';
-____loclib.aboutHowItWImgAndText41 = 'Contact Us Now';
 
 
-____loclib.aboutHowItWOpen = 'Discover Bastyon';
-____loclib.aboutHowItWOpen1 = 'You can use Bastyon from your browser or dowload the mobile and desktop app.';
-____loclib.aboutHowItWOpen2 = 'Official Website';
-____loclib.aboutHowItWOpen3 = 'Source Code';
-____loclib.aboutHowItWOpen4 = 'Contact us';
-____loclib.aboutHowItWOpen5 = 'Send us a message if you need help or if you are a content creator, blogger, influencer and would like to unlock your bonus and verify your profile!';
+
+_l.aboutHowItWImgAndText32 = 'And there`s more!';
+_l.aboutHowItWImgAndText33 = 'Bastyon pays you';
+_l.aboutHowItWImgAndText34 = 'You can earn money with Bastyon.';
+_l.aboutHowItWImgAndText35 = 'Bastyon uses its own Cryptocurrency:';
+_l.aboutHowItWImgAndText36 = 'Each time your posts receive comments and likes, you get PKOIN.';
+_l.aboutHowItWImgAndText37 = 'Each time your video gets 15,000 views + 750 “5 stars” reactions, you get 1,000 $ in PKOIN (you can convert them in USD!). THIS IS A LIMITED TIME OFFER!!! ';
+_l.aboutHowItWImgAndText38 = 'Each time someone joins Bastyon with your referral link, you get PKOIN.';
+_l.aboutHowItWImgAndText39 = 'Contact us to learn more and to activate your account as “CREATOR” so that you can post unlimited videos and get paid!';
+_l.aboutHowItWImgAndText40 = 'Next step: contact us to get your Bastyon account verified and to access the bonus program.';
+_l.aboutHowItWImgAndText41 = 'Contact Us Now';
+
+
+_l.aboutHowItWOpen = 'Discover Bastyon';
+_l.aboutHowItWOpen1 = 'You can use Bastyon from your browser or dowload the mobile and desktop app.';
+_l.aboutHowItWOpen2 = 'Official Website';
+_l.aboutHowItWOpen3 = 'Source Code';
+_l.aboutHowItWOpen4 = 'Contact us';
+_l.aboutHowItWOpen5 = 'Send us a message if you need help or if you are a content creator, blogger, influencer and would like to unlock your bonus and verify your profile!';
 
 //aboutContentCreator
 
-____loclib.ContentCreatorsMainBoard = 'Great Bonus Program for Content Creators';
-____loclib.ContentCreatorsMainBoard1 = '"There are many ways to earn money with Bastyon..."';
+_l.ContentCreatorsMainBoard = 'Great Bonus Program for Content Creators';
+_l.ContentCreatorsMainBoard1 = '"There are many ways to earn money with Bastyon..."';
 
 
-____loclib.ContentCreatorsImgAndText = 'Post your videos';
-____loclib.ContentCreatorsImgAndText1 = 'Post your videos on Bastyon';
-____loclib.ContentCreatorsImgAndText2 = '15,000 vides, 1500 reactions from different users and 1500 invited users to your channel';
-____loclib.ContentCreatorsImgAndText3 = 'Earns you $1,000 paid in Bitcoin or PKOIN';
-____loclib.ContentCreatorsImgAndText4 = 'Next step: contact us to get your Bastyon account verified and to access the bonus program.';
-____loclib.ContentCreatorsImgAndText5 = 'Contact Us Now ';
-____loclib.ContentCreatorsImgAndText6 = 'Invite your followers';
-____loclib.ContentCreatorsImgAndText7 = 'Share your personal referral link';
-____loclib.ContentCreatorsImgAndText8 = 'Invite your followers from other platforms (Youtube, Instagram, Facebook, Twitter...)';
-____loclib.ContentCreatorsImgAndText9 = 'Earn from the posts of your followers!';
-____loclib.ContentCreatorsImgAndText10 = 'Next step: contact us to get your "Verified" badge and to access the bonus program.';
-____loclib.ContentCreatorsImgAndText11 = 'Contact Us Now ';
-____loclib.ContentCreatorsImgAndText12 = 'Earn from every post';
-____loclib.ContentCreatorsImgAndText13 = 'Each time your post gets a like or a comment, you receive a small reward';
-____loclib.ContentCreatorsImgAndText14 = 'The more you post, the more your earn';
-____loclib.ContentCreatorsImgAndText15 = 'The more followers you have, the more your earn';
-____loclib.ContentCreatorsImgAndText16 = 'Next step: contact us to get your "Verified" badge and to access the bonus program.';
-____loclib.ContentCreatorsImgAndText17 = 'Contact Us Now';
-____loclib.ContentCreatorsImgAndText18 = 'Earn with Decentralized Ads';
-____loclib.ContentCreatorsImgAndText19 = 'Ads comes to you through Bastyon Ad Marketplace';
-____loclib.ContentCreatorsImgAndText20 = 'You can choose which ads to repost to your channel';
-____loclib.ContentCreatorsImgAndText21 = '100% of ad proceeds from interactions to go your wallet';
-____loclib.ContentCreatorsImgAndText22 = 'Next step: contact us to get your "Verified" badge and to access the bonus program.';
-____loclib.ContentCreatorsImgAndText23 = 'Contact Us Now';
-____loclib.ContentCreatorsImgAndText24 = 'Earn with Featured Comments';
-____loclib.ContentCreatorsImgAndText25 = 'Your followers can attach PKOIN to comments';
-____loclib.ContentCreatorsImgAndText26 = 'Comments with PKOIN are featured under your post';
-____loclib.ContentCreatorsImgAndText27 = 'You can mention comments on air encouraging users to add PKOIN';
-____loclib.ContentCreatorsImgAndText28 = 'Next step: contact us to get your "Verified" badge and to access the bonus program.';
-____loclib.ContentCreatorsImgAndText29 = 'Contact Us Now';
+_l.ContentCreatorsImgAndText = 'Post your videos';
+_l.ContentCreatorsImgAndText1 = 'Post your videos on Bastyon';
+_l.ContentCreatorsImgAndText2 = '15,000 vides, 1500 reactions from different users and 1500 invited users to your channel';
+_l.ContentCreatorsImgAndText3 = 'Earns you $1,000 paid in Bitcoin or PKOIN';
+_l.ContentCreatorsImgAndText4 = 'Next step: contact us to get your Bastyon account verified and to access the bonus program.';
+_l.ContentCreatorsImgAndText5 = 'Contact Us Now ';
+_l.ContentCreatorsImgAndText6 = 'Invite your followers';
+_l.ContentCreatorsImgAndText7 = 'Share your personal referral link';
+_l.ContentCreatorsImgAndText8 = 'Invite your followers from other platforms (Youtube, Instagram, Facebook, Twitter...)';
+_l.ContentCreatorsImgAndText9 = 'Earn from the posts of your followers!';
+_l.ContentCreatorsImgAndText10 = 'Next step: contact us to get your "Verified" badge and to access the bonus program.';
+_l.ContentCreatorsImgAndText11 = 'Contact Us Now ';
+_l.ContentCreatorsImgAndText12 = 'Earn from every post';
+_l.ContentCreatorsImgAndText13 = 'Each time your post gets a like or a comment, you receive a small reward';
+_l.ContentCreatorsImgAndText14 = 'The more you post, the more your earn';
+_l.ContentCreatorsImgAndText15 = 'The more followers you have, the more your earn';
+_l.ContentCreatorsImgAndText16 = 'Next step: contact us to get your "Verified" badge and to access the bonus program.';
+_l.ContentCreatorsImgAndText17 = 'Contact Us Now';
+_l.ContentCreatorsImgAndText18 = 'Earn with Decentralized Ads';
+_l.ContentCreatorsImgAndText19 = 'Ads comes to you through Bastyon Ad Marketplace';
+_l.ContentCreatorsImgAndText20 = 'You can choose which ads to repost to your channel';
+_l.ContentCreatorsImgAndText21 = '100% of ad proceeds from interactions to go your wallet';
+_l.ContentCreatorsImgAndText22 = 'Next step: contact us to get your "Verified" badge and to access the bonus program.';
+_l.ContentCreatorsImgAndText23 = 'Contact Us Now';
+_l.ContentCreatorsImgAndText24 = 'Earn with Featured Comments';
+_l.ContentCreatorsImgAndText25 = 'Your followers can attach PKOIN to comments';
+_l.ContentCreatorsImgAndText26 = 'Comments with PKOIN are featured under your post';
+_l.ContentCreatorsImgAndText27 = 'You can mention comments on air encouraging users to add PKOIN';
+_l.ContentCreatorsImgAndText28 = 'Next step: contact us to get your "Verified" badge and to access the bonus program.';
+_l.ContentCreatorsImgAndText29 = 'Contact Us Now';
 
 
 
-____loclib.ContentCreatorsOpen = 'Discover Bastyon';
-____loclib.ContentCreatorsOpen1 = 'You can use Bastyon from your browser or dowload the mobile and desktop app.';
-____loclib.ContentCreatorsOpen2 = 'Official Website';
-____loclib.ContentCreatorsOpen3 = 'Source Code';
-____loclib.ContentCreatorsOpen4 = 'Contact us';
-____loclib.ContentCreatorsOpen5 = 'Send us a message if you need help or if you are a content creator, blogger, influencer and would like to unlock your bonus and verify your profile!';
+_l.ContentCreatorsOpen = 'Discover Bastyon';
+_l.ContentCreatorsOpen1 = 'You can use Bastyon from your browser or dowload the mobile and desktop app.';
+_l.ContentCreatorsOpen2 = 'Official Website';
+_l.ContentCreatorsOpen3 = 'Source Code';
+_l.ContentCreatorsOpen4 = 'Contact us';
+_l.ContentCreatorsOpen5 = 'Send us a message if you need help or if you are a content creator, blogger, influencer and would like to unlock your bonus and verify your profile!';
 
 ///about menu
-____loclib.contentCreators = 'For content creators';
-____loclib.howItWorks = 'How it works';
-____loclib.insteadOf = 'Instead of';
-____loclib.alternativeTo = 'Alternative to...';
+_l.contentCreators = 'For content creators';
+_l.howItWorks = 'How it works';
+_l.insteadOf = 'Instead of';
+_l.alternativeTo = 'Alternative to...';
 
 
-____loclib.pkoin_commerce_tag_share_error = 'The "pkoin_commerce" tag can only be used as a separate tag. A post with this tag cannot contain videos or images'
+_l.pkoin_commerce_tag_share_error = 'The "pkoin_commerce" tag can only be used as a separate tag. A post with this tag cannot contain videos or images'
 
-____loclib.pkoin_commerce_info = 'Any peer-to-peer PKOIN transactions are not moderatred and at your own risk.'
-
-
-____loclib.buyforcrypto = 'Buy for crypto'
-____loclib.buywithcreditcard = 'Buy with credit card'
-____loclib.buylogo = 'Buy Pocketcoin (PKOIN)'
-
-____loclib.comment = 'Comment';
-____loclib.sendToAuthor = 'Send to author';
-____loclib.pkoinComment = 'PKOIN comment';
-____loclib.liftUpThePost = 'Lift up the post';
-
-____loclib.buypeertopeer = 'Buy Peer-to-Peer'
+_l.pkoin_commerce_info = 'Any peer-to-peer PKOIN transactions are not moderatred and at your own risk.'
 
 
-____loclib.comments_interesting = 'Interesting at first'
-____loclib.comments_timeup = 'New first'
-____loclib.comments_time = 'Old first'
-____loclib.comments_next = 'Show next'
+_l.buyforcrypto = 'Buy for crypto'
+_l.buywithcreditcard = 'Buy with credit card'
+_l.buylogo = 'Buy Pocketcoin (PKOIN)'
 
-____loclib.create = 'Create'
-____loclib.drafts = 'Drafts'
+_l.comment = 'Comment';
+_l.sendToAuthor = 'Send to author';
+_l.pkoinComment = 'PKOIN comment';
+_l.liftUpThePost = 'Lift up the post';
 
-____loclib.repostyourown = 'You cannot repost your own post'
-
-
-____loclib.reachedlimits = 'You reached your daily limit of actions. To increase your limit you need to have a valid reputation.'
-
-____loclib.closestreachedlimits = 'You are close to hitting your daily action limit. To increase your limit you need to have a valid reputation.'
+_l.buypeertopeer = 'Buy Peer-to-Peer'
 
 
-____loclib.sendUserStatistics = 'Send anonimous report of errors to Bastyon Team'
-____loclib.captionUserStats = 'Statistics'
+_l.comments_interesting = 'Interesting at first'
+_l.comments_timeup = 'New first'
+_l.comments_time = 'Old first'
+_l.comments_next = 'Show next'
 
-____loclib.editarticledraft = 'Edit article Draft'
-____loclib.deletearticledraft = 'Delete article Draft'
-____loclib.previewarticledraft = 'View article Draft'
-____loclib.deletedraftquestion = 'Are you sure you want to delete the draft article? Recovery is impossible'
-____loclib.publishquestion = 'Are you sure you want to public this article?'
+_l.create = 'Create'
+_l.drafts = 'Drafts'
 
-____loclib.etc = 'And so on...'
-____loclib.openlinkssettings = 'Do not open links in the desktop application'
-____loclib.nametaken = 'This username is taken in Bastyon'
-
-____loclib.accountnotfound = 'We could not find your account on the blockchain. Perhaps the registration process was not completed, or there is no Internet connection'
+_l.repostyourown = 'You cannot repost your own post'
 
 
-____loclib.name20symbols = "The name length can't be more than 20 symbols"
-____loclib.namereservedpn = 'To avoid user confusion using Pocketnet in name is reserved'
-____loclib.namereservedbn = 'To avoid user confusion using Bastyon in name is reserved'
+_l.reachedlimits = 'You reached your daily limit of actions. To increase your limit you need to have a valid reputation.'
 
-____loclib.photohassizegreater = function(v){
+_l.closestreachedlimits = 'You are close to hitting your daily action limit. To increase your limit you need to have a valid reputation.'
+
+
+_l.sendUserStatistics = 'Send anonimous report of errors to Bastyon Team'
+_l.captionUserStats = 'Statistics'
+
+_l.editarticledraft = 'Edit article Draft'
+_l.deletearticledraft = 'Delete article Draft'
+_l.previewarticledraft = 'View article Draft'
+_l.deletedraftquestion = 'Are you sure you want to delete the draft article? Recovery is impossible'
+_l.publishquestion = 'Are you sure you want to public this article?'
+
+_l.etc = 'And so on...'
+_l.openlinkssettings = 'Do not open links in the desktop application'
+_l.nametaken = 'This username is taken in Bastyon'
+
+_l.accountnotfound = 'We could not find your account on the blockchain. Perhaps the registration process was not completed, or there is no Internet connection'
+
+
+_l.name20symbols = "The name length can't be more than 20 symbols"
+_l.namereservedpn = 'To avoid user confusion using Pocketnet in name is reserved'
+_l.namereservedbn = 'To avoid user confusion using Bastyon in name is reserved'
+
+_l.photohassizegreater = function(v){
     return "Your photo has size greater than "+v+"MB. Please upload a photo under "+v+"MB in size."
 }
-____loclib.invalidformat = "Invalid format of picture. Only png and jpeg are allowed"
-____loclib.downloadDesctApp = "Download Bastyon for desktop"
-____loclib.downloadMobileApp = "Install Mobile Application"
+_l.invalidformat = "Invalid format of picture. Only png and jpeg are allowed"
+_l.downloadDesctApp = "Download Bastyon for desktop"
+_l.downloadMobileApp = "Install Mobile Application"
 
 
-____loclib.easyNode_e10000 = "Node"
-____loclib.easyNode_e10001 = "Download and install node"
-____loclib.easyNode_e10002 = "Bastyon Node"
-____loclib.easyNode_e10003 = "Loading"
-____loclib.easyNode_e10004 = "Node Installing"
-____loclib.easyNode_e10005 = "Node Removing"
-____loclib.easyNode_e10006 = "System Requirements"
-____loclib.easyNode_e10007 = "Node control is not yet available for your operating system"
-____loclib.easyNode_e10008 = "Synchronization"
-____loclib.easyNode_e10009 = "Configuration"
-____loclib.easyNode_e10010 = "Enabled"
-____loclib.easyNode_e10011 = "Daemon Path"
-____loclib.easyNode_e10012 = "Data Path"
-____loclib.easyNode_e10013 = "Set Paths to Default"
-____loclib.easyNode_e10014 = "To Default"
-____loclib.easyNode_e10015 = "Update Node"
-____loclib.easyNode_e10016 = "No Updates Available"
-____loclib.easyNode_e10017 = "Delete"
-____loclib.easyNode_e10018 = "Delete Daemon"
-____loclib.easyNode_e10019 = "Delete Daemon and Data"
-____loclib.easyNode_e10020 = "Wallet"
-____loclib.easyNode_e10021 = "Status"
-____loclib.easyNode_e10022 = "Requesting..."
-____loclib.easyNode_e10023 = "Staking"
-____loclib.easyNode_e10024 = "Node can't stake now. Add at least 50 PKOIN or wait for 60 minutes to activate coins"
-____loclib.easyNode_e10025 = "Balance"
-____loclib.easyNode_e10026 = "Control"
-____loclib.easyNode_e10027 = "Deposit"
-____loclib.easyNode_e10028 = "Withdraw"
-____loclib.easyNode_e10029 = "Export Wallet"
-____loclib.easyNode_e10030 = "Import Wallet"
-____loclib.easyNode_e10031 = "Active"
-____loclib.easyNode_e10032 = "Version"
-____loclib.easyNode_e10033 = "Chain"
-____loclib.easyNode_e10034 = "Description"
-____loclib.easyNode_e10035 = "Height"
-____loclib.easyNode_e10036 = "Less than an hour left"
-____loclib.easyNode_e10037 = function(v) { return v + " hour(s) remaining" }
-____loclib.easyNode_e10038 = "Block Hash"
-____loclib.easyNode_e10039 = "Disable Node"
-____loclib.easyNode_e10040 = "Enable Node"
-____loclib.easyNode_e10041 = "Your wallet saved to"
-____loclib.easyNode_e10042 = "Your wallet imported"
-____loclib.easyNode_e10043 = "Your new node address"
-____loclib.easyNode_e10044 = "Input Address and Amount for transfer PKOIN"
-____loclib.easyNode_e10045 = "Destination Address"
-____loclib.easyNode_e10046 = "Amount"
-____loclib.easyNode_e10047 = "Invalid arguments"
-____loclib.easyNode_e10048 = 'Invalid destination address'
-____loclib.easyNode_e10049 = "Invalid amount"
-____loclib.easyNode_e10050 = "Created transaction"
-____loclib.easyNode_e10051 = "Do you really want to Stop Node and Update It?"
-____loclib.easyNode_e10052 = "Make sure that you have made a backup of the wallet. Do you really want to delete the node and data directory?"
-____loclib.easyNode_e10053 = "Do you really want to remove Node Daemon?"
-____loclib.easyNode_e10054 = "Do you really want to install the node?"
-____loclib.easyNode_e10055 = "Do you really want to set Data Path to Default?"
-____loclib.easyNode_e10056 = "Gb free RAM"
-____loclib.easyNode_e10058 = "Gb free disk space"
-____loclib.easyNode_e10059 = "Mb/s internet speed"
-____loclib.easyNode_e10060 = "SSD drive"
-____loclib.easyNode_e10061 = "Your node is running. Close the app anyway?"
-____loclib.easyNode_e10062 = "Node update is available. Download a new version?"
-____loclib.easyNode_e10063 = "Node has been successfully updated"
+_l.easyNode_e10000 = "Node"
+_l.easyNode_e10001 = "Download and install node"
+_l.easyNode_e10002 = "Bastyon Node"
+_l.easyNode_e10003 = "Loading"
+_l.easyNode_e10004 = "Node Installing"
+_l.easyNode_e10005 = "Node Removing"
+_l.easyNode_e10006 = "System Requirements"
+_l.easyNode_e10007 = "Node control is not yet available for your operating system"
+_l.easyNode_e10008 = "Synchronization"
+_l.easyNode_e10009 = "Configuration"
+_l.easyNode_e10010 = "Enabled"
+_l.easyNode_e10011 = "Daemon Path"
+_l.easyNode_e10012 = "Data Path"
+_l.easyNode_e10013 = "Set Paths to Default"
+_l.easyNode_e10014 = "To Default"
+_l.easyNode_e10015 = "Update Node"
+_l.easyNode_e10016 = "No Updates Available"
+_l.easyNode_e10017 = "Delete"
+_l.easyNode_e10018 = "Delete Daemon"
+_l.easyNode_e10019 = "Delete Daemon and Data"
+_l.easyNode_e10020 = "Wallet"
+_l.easyNode_e10021 = "Status"
+_l.easyNode_e10022 = "Requesting..."
+_l.easyNode_e10023 = "Staking"
+_l.easyNode_e10024 = "Node can't stake now. Add at least 50 PKOIN or wait for 60 minutes to activate coins"
+_l.easyNode_e10025 = "Balance"
+_l.easyNode_e10026 = "Control"
+_l.easyNode_e10027 = "Deposit"
+_l.easyNode_e10028 = "Withdraw"
+_l.easyNode_e10029 = "Export Wallet"
+_l.easyNode_e10030 = "Import Wallet"
+_l.easyNode_e10031 = "Active"
+_l.easyNode_e10032 = "Version"
+_l.easyNode_e10033 = "Chain"
+_l.easyNode_e10034 = "Description"
+_l.easyNode_e10035 = "Height"
+_l.easyNode_e10036 = "Less than an hour left"
+_l.easyNode_e10037 = function(v) { return v + " hour(s) remaining" }
+_l.easyNode_e10038 = "Block Hash"
+_l.easyNode_e10039 = "Disable Node"
+_l.easyNode_e10040 = "Enable Node"
+_l.easyNode_e10041 = "Your wallet saved to"
+_l.easyNode_e10042 = "Your wallet imported"
+_l.easyNode_e10043 = "Your new node address"
+_l.easyNode_e10044 = "Input Address and Amount for transfer PKOIN"
+_l.easyNode_e10045 = "Destination Address"
+_l.easyNode_e10046 = "Amount"
+_l.easyNode_e10047 = "Invalid arguments"
+_l.easyNode_e10048 = 'Invalid destination address'
+_l.easyNode_e10049 = "Invalid amount"
+_l.easyNode_e10050 = "Created transaction"
+_l.easyNode_e10051 = "Do you really want to Stop Node and Update It?"
+_l.easyNode_e10052 = "Make sure that you have made a backup of the wallet. Do you really want to delete the node and data directory?"
+_l.easyNode_e10053 = "Do you really want to remove Node Daemon?"
+_l.easyNode_e10054 = "Do you really want to install the node?"
+_l.easyNode_e10055 = "Do you really want to set Data Path to Default?"
+_l.easyNode_e10056 = "Gb free RAM"
+_l.easyNode_e10058 = "Gb free disk space"
+_l.easyNode_e10059 = "Mb/s internet speed"
+_l.easyNode_e10060 = "SSD drive"
+_l.easyNode_e10061 = "Your node is running. Close the app anyway?"
+_l.easyNode_e10062 = "Node update is available. Download a new version?"
+_l.easyNode_e10063 = "Node has been successfully updated"
 
-____loclib.IHave = "I have";
-____loclib.downloadNode = "Download Windows Desktop Node";
-____loclib.months = "Months";
-____loclib.year = "Year";
-____loclib.stakingCalculator = "Staking Calculator - calculate how much you earn by putting Pocketcoin (PKOIN) into a node."
-____loclib.easyNode_e2000 = "Defend Freedom of Speech & "
-____loclib.easyNode_e2000_1 = "Earn"
-____loclib.easyNode_e2000_2 = " Cryptocurrency"
-____loclib.easyNode_e2001 = "What is Pocketcoin? Pocketcoin is a cryptocurrency that powers the decentralized social platform Bastyon. It is used to reward content creators, to boost posts and comments, to pay for ads and to unlock special features on Bastyon."
-____loclib.easyNode_e2002 = "What is a  node?  A node is a computer owned by any user of Bastyon that supports the network and"
-____loclib.easyNode_e2002_1 = " earns "
-____loclib.easyNode_e2002_2 = "Pocketcoin. Your computer can be one of those nodes, assuming you have at least 50 GB of free SSD space and a decent internet connection.  Node has to lock some Pocketcoin in it to"
-____loclib.easyNode_e2002_2_1 = " earn "
-____loclib.easyNode_e2002_2_2 = "more Pocketcoin. That is called staking in cryptocurency."
-____loclib.minPkoin = function (p){
+_l.IHave = "I have";
+_l.downloadNode = "Download Windows Desktop Node";
+_l.months = "Months";
+_l.year = "Year";
+_l.stakingCalculator = "Staking Calculator - calculate how much you earn by putting Pocketcoin (PKOIN) into a node."
+_l.easyNode_e2000 = "Defend Freedom of Speech & "
+_l.easyNode_e2000_1 = "Earn"
+_l.easyNode_e2000_2 = " Cryptocurrency"
+_l.easyNode_e2001 = "What is Pocketcoin? Pocketcoin is a cryptocurrency that powers the decentralized social platform Bastyon. It is used to reward content creators, to boost posts and comments, to pay for ads and to unlock special features on Bastyon."
+_l.easyNode_e2002 = "What is a  node?  A node is a computer owned by any user of Bastyon that supports the network and"
+_l.easyNode_e2002_1 = " earns "
+_l.easyNode_e2002_2 = "Pocketcoin. Your computer can be one of those nodes, assuming you have at least 50 GB of free SSD space and a decent internet connection.  Node has to lock some Pocketcoin in it to"
+_l.easyNode_e2002_2_1 = " earn "
+_l.easyNode_e2002_2_2 = "more Pocketcoin. That is called staking in cryptocurency."
+_l.minPkoin = function (p){
 	return  String(p) + " PKOIN Minimum"
 }
-____loclib.maxPkoin = function (p){
+_l.maxPkoin = function (p){
 	return  String(p) + " PKOIN Maximum"
 }
 
-____loclib.topPosts = "Top posts";
-____loclib.videop2psettings = "Use p2p when watching videos"
+_l.topPosts = "Top posts";
+_l.videop2psettings = "Use p2p when watching videos"
 
-____loclib.art_validatetags = "Please add Tags For Your Longread"
-____loclib.art_validatecover = "Please add Cover For Your Longread"
-____loclib.art_validatecaption = "Please add Caption For Your Longread"
-____loclib.art_validatecontent = "Please add Content of Your Longread"
-____loclib.art_nothingchange = "No changes"
-____loclib.art_newarticle = "New Longread"
-____loclib.art_myarticles = "My Longreads"
-____loclib.art_changecover = "Upload Cover"
-____loclib.art_removecover = "Remove Cover"
-____loclib.art_publish = "Publish"
-____loclib.art_editing = "Editing"
-____loclib.art_draftsaved = "Draft saved"
-____loclib.art_gotolastdraft = "go to last draft"
-____loclib.art_categoriestags = "Categories and tags"
-____loclib.art_preview = "Preview"
-____loclib.art_caption = "Caption of new Longread"
-____loclib.art_placeholder = "Let`s write an awesome story!"
+_l.art_validatetags = "Please add Tags For Your Longread"
+_l.art_validatecover = "Please add Cover For Your Longread"
+_l.art_validatecaption = "Please add Caption For Your Longread"
+_l.art_validatecontent = "Please add Content of Your Longread"
+_l.art_nothingchange = "No changes"
+_l.art_newarticle = "New Longread"
+_l.art_myarticles = "My Longreads"
+_l.art_changecover = "Upload Cover"
+_l.art_removecover = "Remove Cover"
+_l.art_publish = "Publish"
+_l.art_editing = "Editing"
+_l.art_draftsaved = "Draft saved"
+_l.art_gotolastdraft = "go to last draft"
+_l.art_categoriestags = "Categories and tags"
+_l.art_preview = "Preview"
+_l.art_caption = "Caption of new Longread"
+_l.art_placeholder = "Let`s write an awesome story!"
 
-____loclib.art_newarticlecreation = "Create a new Longread"
-____loclib.art_editingsh = "Editing a published Longread"
-____loclib.art_saveedited = "Save"
+_l.art_newarticlecreation = "Create a new Longread"
+_l.art_editingsh = "Editing a published Longread"
+_l.art_saveedited = "Save"
 
-____loclib.art_wordscount = "Number of words"
-____loclib.art_volumepercent = "Article size limit"
-____loclib.art_goback = "Come back"
+_l.art_wordscount = "Number of words"
+_l.art_volumepercent = "Article size limit"
+_l.art_goback = "Come back"
 
-____loclib.downloadingUpdate = "Downloading the update"
-____loclib.hasnotupdates = "No updates available"
-____loclib.cantmanageupdate = "Unable to manage update"
+_l.downloadingUpdate = "Downloading the update"
+_l.hasnotupdates = "No updates available"
+_l.cantmanageupdate = "Unable to manage update"
 
-____loclib.updateapplication = "Update Application"
-____loclib.applicationversion = "Application version"
-____loclib.installedusinggps = "The application was not installed using Google Play."
+_l.updateapplication = "Update Application"
+_l.applicationversion = "Application version"
+_l.installedusinggps = "The application was not installed using Google Play."
 
-____loclib.downloadplaystore = "Google Play Download"
-____loclib.downloadgithub = "Download APK"
+_l.downloadplaystore = "Google Play Download"
+_l.downloadgithub = "Download APK"
 
-____loclib.empty = "Empty"
+_l.empty = "Empty"
 
-____loclib.reputation = "Reputation";
-____loclib.subscriptions = "Subscriptions";
-____loclib.tothetop = "To the top"
-____loclib.menu = "Menu"
+_l.reputation = "Reputation";
+_l.subscriptions = "Subscriptions";
+_l.tothetop = "To the top"
+_l.menu = "Menu"
 
-____loclib.donotshowagain = "Do not show again"
-
-
-____loclib.postby = "Post by"
-____loclib.continueon = "Сontinue on"
-____loclib.bestwishes = "Best,"
-
-____loclib.ratings123 = "Only users with high reputation at least 10 publications in the feed can give 1, 2, 3 star ratings, make comments, give negative ratings on comments. This is done to protect authors, because Bastyon does NOT require any personal information for registration."
-
-____loclib.ratingss3 = "Only users with high reputation can give 1, 2, 3 star ratings. This is done to protect authors, because Bastyon does NOT require any personal information for registration."
-
-____loclib.clearfilters = "Clear filters"
-____loclib.clearcategories = "Do you really want to clear category filters?"
-____loclib.cleartags = "Do you really want to clear tags filters?"
-____loclib.fromsh = "From"
-
-____loclib.hodoiearnmore = "How do I earn more Pocketcoin?"
+_l.donotshowagain = "Do not show again"
 
 
-____loclib.removeaddress = "Do you really want to remove this address from this device?"
-____loclib.wanttoseekey = "Do you really want to see your private key?"
-____loclib.seeprivatekey = "See Private Key"
-____loclib.max5acc = "You have reached a maximum of 5 accounts. No more can be added"
+_l.postby = "Post by"
+_l.continueon = "Сontinue on"
+_l.bestwishes = "Best,"
+
+_l.ratings123 = "Only users with high reputation at least 10 publications in the feed can give 1, 2, 3 star ratings, make comments, give negative ratings on comments. This is done to protect authors, because Bastyon does NOT require any personal information for registration."
+
+_l.ratingss3 = "Only users with high reputation can give 1, 2, 3 star ratings. This is done to protect authors, because Bastyon does NOT require any personal information for registration."
+
+_l.clearfilters = "Clear filters"
+_l.clearcategories = "Do you really want to clear category filters?"
+_l.cleartags = "Do you really want to clear tags filters?"
+_l.fromsh = "From"
+
+_l.hodoiearnmore = "How do I earn more Pocketcoin?"
 
 
-____loclib.longreads = "Long Reads"
-____loclib.readarticle = "Read"
-
-____loclib.filters = "Filters"
-____loclib.dataenteredincorrectly = "Data entered incorrectly"
-
-____loclib.lloadprevwithtags = "Refresh Feed"
-
-____loclib.newRepost = "Make repost"
-____loclib.whatsnewrepost = "Your commentary"
-
-____loclib.art_goback = "Come back"
-
-____loclib.writesupport = "Write to support"
-____loclib.submitapplication = "Submit your application"
-
-____loclib.submitapplicationVideo = "Request PKOIN for video"
-____loclib.submitapplicationVideoSmall = "Send & request PKOIN"
-
-____loclib.videobloggerRequest = "If you are a blogger with an established audience, you can get a gift of PKOIN to load video. Click the button below if you are a blogger:"
+_l.removeaddress = "Do you really want to remove this address from this device?"
+_l.wanttoseekey = "Do you really want to see your private key?"
+_l.seeprivatekey = "See Private Key"
+_l.max5acc = "You have reached a maximum of 5 accounts. No more can be added"
 
 
-____loclib.videobloggerRequest_pl1 = "Link to existing channel 1"
-____loclib.videobloggerRequest_pl2 = "Link to existing channel 2"
-____loclib.videobloggerRequest_pl3 = "Link to existing channel 3"
+_l.longreads = "Long Reads"
+_l.readarticle = "Read"
 
-____loclib.videobloggerRequest_pl_notes = "Notes: any additional information"
-____loclib.videobloggerRequest_pl_email = "Contact email"
+_l.filters = "Filters"
+_l.dataenteredincorrectly = "Data entered incorrectly"
 
-____loclib.videobloggerRequest_caption = "Fill out this form to receive PKOIN"
+_l.lloadprevwithtags = "Refresh Feed"
 
-____loclib.videobloggerRequest_er_link = "Provide at least one link to an existing channel"
-____loclib.videobloggerRequest_er_info = "Additional information required"
-____loclib.videobloggerRequest_er_email = "Leave an email for feedback"
+_l.newRepost = "Make repost"
+_l.whatsnewrepost = "Your commentary"
 
-____loclib.videobloggerRequest_submitted = "Thank you for contacting us, we will review your application"
+_l.art_goback = "Come back"
 
-____loclib.canuseipsetting = "Allow connection via ip over http directly. Insecure connection"
+_l.writesupport = "Write to support"
+_l.submitapplication = "Submit your application"
 
-____loclib.optimizationtip = function(v){
+_l.submitapplicationVideo = "Request PKOIN for video"
+_l.submitapplicationVideoSmall = "Send & request PKOIN"
+
+_l.videobloggerRequest = "If you are a blogger with an established audience, you can get a gift of PKOIN to load video. Click the button below if you are a blogger:"
+
+
+_l.videobloggerRequest_pl1 = "Link to existing channel 1"
+_l.videobloggerRequest_pl2 = "Link to existing channel 2"
+_l.videobloggerRequest_pl3 = "Link to existing channel 3"
+
+_l.videobloggerRequest_pl_notes = "Notes: any additional information"
+_l.videobloggerRequest_pl_email = "Contact email"
+
+_l.videobloggerRequest_caption = "Fill out this form to receive PKOIN"
+
+_l.videobloggerRequest_er_link = "Provide at least one link to an existing channel"
+_l.videobloggerRequest_er_info = "Additional information required"
+_l.videobloggerRequest_er_email = "Leave an email for feedback"
+
+_l.videobloggerRequest_submitted = "Thank you for contacting us, we will review your application"
+
+_l.canuseipsetting = "Allow connection via ip over http directly. Insecure connection"
+
+_l.optimizationtip = function(v){
     return v + ' hidden viewed posts'
 }
 
-____loclib.optimizationtip_show = "Show"
+_l.optimizationtip_show = "Show"
 
-____loclib.thankTheAuthor = 'Thank the author';
+_l.thankTheAuthor = 'Thank the author';
 
-____loclib.encourageAuthor = "Encourage author";
+_l.encourageAuthor = "Encourage author";
 
-____loclib.gotoProfile2 = "Go to Profile";
+_l.gotoProfile2 = "Go to Profile";
 
-____loclib.countviews = "Views";
-____loclib.countview = "View";
+_l.countviews = "Views";
+_l.countview = "View";
 
-____loclib.popup_applications_header = "Important! Please download Bastyon Application";
+_l.popup_applications_header = "Important! Please download Bastyon Application";
 
-____loclib.popup_applications_feature_1 = "Desktop application is the most censorship resistant way to use Bastyon";
-____loclib.popup_applications_feature_2 = "Desktop application doesn't depend on bastyon.com";
-____loclib.popup_applications_feature_3 = "Desktop is like a built-in VPN";
+_l.popup_applications_feature_1 = "Desktop application is the most censorship resistant way to use Bastyon";
+_l.popup_applications_feature_2 = "Desktop application doesn't depend on bastyon.com";
+_l.popup_applications_feature_3 = "Desktop is like a built-in VPN";
 
-____loclib.popup_applications_button = " Download here";
-____loclib.norecommendedvideos = "No recommended videos found";
+_l.popup_applications_button = " Download here";
+_l.norecommendedvideos = "No recommended videos found";
 
-____loclib.boosted = "Boosted";
+_l.boosted = "Boosted";
 
 
-____loclib.probability = "Probability";
+_l.probability = "Probability";
 
-____loclib.probabilitytext = function(lang){
+_l.probabilitytext = function(lang){
 	return "Probability that a post will appear among the first <b>30</b> posts in the feed by language <b>"+lang+"</b> for approximately <b>300</b> minutes"
 };
 
-____loclib.probabilitytexterror = "Unable to calculate promotion probability";
+_l.probabilitytexterror = "Unable to calculate promotion probability";
 
-____loclib.image = "Image";
-____loclib.file = "File";
+_l.image = "Image";
+_l.file = "File";
 
-____loclib.othervideos = "Other videos";
+_l.othervideos = "Other videos";
 
-____loclib.starssendcomments = "Leave a comment for the author";
-____loclib.starssendcommentn = "Leave a comment for the author";
-____loclib.starssendcommentp = "Leave a comment for the author";
+_l.starssendcomments = "Leave a comment for the author";
+_l.starssendcommentn = "Leave a comment for the author";
+_l.starssendcommentp = "Leave a comment for the author";
 
-____loclib.savevideo = "Download video";
+_l.savevideo = "Download video";
 
-____loclib.useanimations = "Enable animations";
+_l.useanimations = "Enable animations";
 
-____loclib.welcomecaption1 = "Bastyon of Free Speech";
-____loclib.welcomecaption2 = "Read Content Banned by Big Tech";
-____loclib.welcomecaption3 = "Chat privately with friends - no SIM card";
-
-
-
-____loclib.shareexternal = "Another window is open";
-____loclib.shareexternaluploadpeertube = "Video upload window open";
-
-____loclib.removeimageswhenvideo = "The images attached to the post will be deleted if you continue to upload the video. Go to uploading video?";
+_l.welcomecaption1 = "Bastyon of Free Speech";
+_l.welcomecaption2 = "Read Content Banned by Big Tech";
+_l.welcomecaption3 = "Chat privately with friends - no SIM card";
 
 
-____loclib.lowstar1 = "Bastyon team is implementing a temporary moratorium on 1 and 2 star ratings, except prohibited content. Prohibited content is:"
-____loclib.lowstar_reason_1 = "Porno"
-____loclib.lowstar_reason_2 = "Child exploitation"
-____loclib.lowstar_reason_3 = "Direct threat of violence"
-____loclib.lowstar_reason_4 = "Illegal narcotics"
-____loclib.lowstar2 = "Please do not use 1 and 2 star ratings for other reasons. After the new moderation is released in mid. May you will be able to use low ratings for other reasons"
-____loclib.lowstaragree = "I confirm that this post contains one of four types of prohibited content"
 
-____loclib.usetor = "Connection via Tor network"
+_l.shareexternal = "Another window is open";
+_l.shareexternaluploadpeertube = "Video upload window open";
 
-____loclib.videotranscodingdelayedpost = "This video is being processed and will be posted as soon as the transcoding process ends. Please, do not close the tab untill then."
-
-____loclib.postInRelay = "This post is being processed before publishing to blockchain"
+_l.removeimageswhenvideo = "The images attached to the post will be deleted if you continue to upload the video. Go to uploading video?";
 
 
-____loclib.continuesubscribefeedCaption = "Would you like to continue seeing posts from the people you follow?"
-____loclib.continuesubscribefeedButton = "Continue in the subscription feed"
+_l.lowstar1 = "Bastyon team is implementing a temporary moratorium on 1 and 2 star ratings, except prohibited content. Prohibited content is:"
+_l.lowstar_reason_1 = "Porno"
+_l.lowstar_reason_2 = "Child exploitation"
+_l.lowstar_reason_3 = "Direct threat of violence"
+_l.lowstar_reason_4 = "Illegal narcotics"
+_l.lowstar2 = "Please do not use 1 and 2 star ratings for other reasons. After the new moderation is released in mid. May you will be able to use low ratings for other reasons"
+_l.lowstaragree = "I confirm that this post contains one of four types of prohibited content"
 
-____loclib['dust (code 64)'] = "You are trying to send an amount too small, it cannot be done"
+_l.usetor = "Connection via Tor network"
 
-____loclib.videoNameIsIncorrectShort = "Video name should be at least 3 characters long"
-____loclib.videoNameIsIncorrectLong = "Video name should be no more than 120 characters long"
+_l.videotranscodingdelayedpost = "This video is being processed and will be posted as soon as the transcoding process ends. Please, do not close the tab untill then."
 
-____loclib.androidPopupTitle = "Get uncensored information in Bastyon mobile app"
-____loclib.androidPopupAgree = "Switch to the app"
-____loclib.androidPopupDisagree = "Not now"
+_l.postInRelay = "This post is being processed before publishing to blockchain"
 
-____loclib.desktopPopupTitle = "Get uncensored information in Bastyon desktop app"
-____loclib.desktopPopupAgree = "Download the app"
-____loclib.desktopPopupDisagree = "Not now"
+
+_l.continuesubscribefeedCaption = "Would you like to continue seeing posts from the people you follow?"
+_l.continuesubscribefeedButton = "Continue in the subscription feed"
+
+_l['dust (code 64)'] = "You are trying to send an amount too small, it cannot be done"
+
+
+_l.videoNameIsIncorrectShort = "Video name should be at least 3 characters long"
+_l.videoNameIsIncorrectLong = "Video name should be no more than 120 characters long"
+
+_l.androidPopupTitle = "Get uncensored information in Bastyon mobile app"
+_l.androidPopupAgree = "Switch to the app"
+_l.androidPopupDisagree = "Not now"
+
+_l.desktopPopupTitle = "Get uncensored information in Bastyon desktop app"
+_l.desktopPopupAgree = "Download the app"
+_l.desktopPopupDisagree = "Not now"

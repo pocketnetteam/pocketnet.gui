@@ -481,8 +481,6 @@ var post = (function () {
 							duration
 						}){
 
-							console.log('playbackState', playbackState, player.getPosition())
-
 							if(playbackState == 'playing' && ((position > 15 && duration > 120) || startTime)){
 
 								self.app.platform.sdk.videos.historyset(share.txid, {
@@ -540,7 +538,6 @@ var post = (function () {
 
 							if(!el.c) {
 								_player.destroy()
-								console.log("Shadow player clbk")
 								return
 							}
 
@@ -559,8 +556,6 @@ var post = (function () {
 	
 								}
 
-								console.log('player', player)
-	
 								if (player.enableHotKeys && !ed.repost) player.enableHotKeys()
 							}
 

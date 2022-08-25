@@ -663,12 +663,24 @@
     .images{
         max-width: 590px;
         padding : 2 * @rhythm 0;
-        opacity: 0;
-        .transition(0.3s);
         overflow : hidden;
+        position: relative;
+
+        .imagesLoader{
+            position: absolute;
+            left: 0;
+            top : 0;
+            bottom : 0;
+            right: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
         &.active{
-            opacity: 1;
+            .imagesLoader{
+                display: none;
+            }
         }
 
         .imagesWrapper{
@@ -765,6 +777,20 @@
                         background-size: contain!important;
                     }
                 }
+            }
+        }
+
+        &.manyImagesView{
+            .imagesContainer{
+                display: flex;
+                flex-wrap: wrap;
+                grid-gap: @rhythm;
+
+                .imagesWrapper{
+                    float: none;
+                    max-width: 31%;
+                }
+
             }
         }
 

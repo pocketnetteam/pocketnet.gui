@@ -2472,7 +2472,6 @@ Platform = function (app, listofnodes) {
 
             var id = p.id || makeid()
 
-            console.log("P", p)
 
             app.nav.api.load({
 
@@ -2532,7 +2531,6 @@ Platform = function (app, listofnodes) {
 
             if(!_.isArray(ids)) ids = [ids]
 
-            console.log("IDS", ids)
 
             app.nav.api.load({
 
@@ -2884,6 +2882,7 @@ Platform = function (app, listofnodes) {
             var caption = wr.find('.shareBgCaption')
             var capiontextclass = 'caption_small'
 
+
             if(share.caption.length > 10) capiontextclass = 'caption_medium'
             if(share.caption.length > 60) capiontextclass = 'caption_long'
 
@@ -2907,7 +2906,10 @@ Platform = function (app, listofnodes) {
 
                 setTimeout(function(){
                     wr.addClass('ready')
+                    if(clbk) clbk()
                 }, 150)
+
+                
 
             }
             else{
@@ -2939,6 +2941,7 @@ Platform = function (app, listofnodes) {
 
                     setTimeout(function(){
                         wr.addClass('ready')
+                        if(clbk) clbk()
                     }, 150)
 
 
@@ -7604,7 +7607,6 @@ Platform = function (app, listofnodes) {
                         const videoData = await electron.ipcRenderer
                             .invoke('getVideoData', shareId, videoId);
 
-                            console.log('videoData', videoData)
 
                         videosDataList[videoId] = videoData;
 
@@ -8569,9 +8571,6 @@ Platform = function (app, listofnodes) {
                 if(!self.sdk.sharesObserver.storage.viewed) self.sdk.sharesObserver.storage.viewed = {}
 
                 if(!self.sdk.sharesObserver.storage.viewed[key]) self.sdk.sharesObserver.storage.viewed[key] = {}
-
-
-                console.log('self.sdk.sharesObserver.storage.viewed[key].first < first', key, self.sdk.sharesObserver.storage.viewed[key].first , first)
 
                 if (!self.sdk.sharesObserver.storage.viewed[key].first || self.sdk.sharesObserver.storage.viewed[key].first <= first){
 
@@ -11048,6 +11047,10 @@ Platform = function (app, listofnodes) {
             }
         },
 
+        userscl: {
+            storage: {},
+        },
+
         usersl: {
             storage: {},
         },
@@ -11209,7 +11212,7 @@ Platform = function (app, listofnodes) {
                                 s[address] = u;
 
                                 self.sdk.usersl.storage[address] = u;
-
+                                self.sdk.userscl.storage[address] = data
 
                             }
 
@@ -11273,6 +11276,7 @@ Platform = function (app, listofnodes) {
 
                                 s[a] = u;
                                 self.sdk.usersl.storage[a] = u;
+                                self.sdk.userscl.storage[a] = data
 
                             })
 
@@ -18433,7 +18437,7 @@ Platform = function (app, listofnodes) {
                     },
 
                     balanceAr: function (clbk, addresses, update, canSpend) {
-                        this.unspents(function (us, e) {
+                        self.sdk.node.transactions.get.unspents(function (us, e) {
 
                             var total = 0;
 
@@ -18470,7 +18474,7 @@ Platform = function (app, listofnodes) {
                     allBalance: function (clbk, update) {
                         var addresses = [self.sdk.address.pnet().address].concat(self.sdk.addresses.storage.addresses || [])
 
-                        this.balanceAr(clbk, addresses, update)
+                        self.sdk.node.transactions.get.balanceAr(clbk, addresses, update)
                     },
 
                     canSpend: function (addresses, clbk) {
@@ -18479,7 +18483,7 @@ Platform = function (app, listofnodes) {
 
                         if (!_.isArray(addresses)) addresses = [addresses];
 
-                        this.balance(function (total, us) {
+                        self.sdk.node.transactions.get.balance(function (total, us) {
 
                             var usCanSpend = _.filter(us, self.sdk.node.transactions.canSpend);
 
@@ -18499,11 +18503,11 @@ Platform = function (app, listofnodes) {
                     balance: function (clbk, address, update, canSpend) {
 
                         if (_.isArray(address)) {
-                            this.balanceAr(clbk, address, update, canSpend)
+                            self.sdk.node.transactions.get.balanceAr(clbk, address, update, canSpend)
 
                         }
                         else {
-                            this.unspent(function (unspent, e) {
+                            self.sdk.node.transactions.get.unspent(function (unspent, e) {
 
                                 if (canSpend) {
                                     unspent = _.filter(unspent, self.sdk.node.transactions.canSpend)
@@ -27544,10 +27548,12 @@ Platform = function (app, listofnodes) {
                     self.sdk.node.transactions.loadTemp,
                     self.sdk.addresses.init,
                     self.sdk.ustate.me,
+                    self.sdk.user.get,
                     self.sdk.usersettings.init,
-
+                    self.matrixchat.importifneed,
                     self.ws.init,
                     self.firebase.init,
+                    /*self.app.platform.sdk.node.transactions.get.allBalance,*/
 
                     //self.sdk.exchanges.load,
                     self.sdk.articles.init,
@@ -27555,8 +27561,6 @@ Platform = function (app, listofnodes) {
                     self.sdk.activity.load,
                     self.sdk.node.shares.parameters.load,
                     self.sdk.sharesObserver.load,
-                    self.sdk.user.get,
-
                     self.sdk.comments.loadblocked
 
                 ], function () {
@@ -27576,18 +27580,12 @@ Platform = function (app, listofnodes) {
 
                     self.loadingWithErrors = !_.isEmpty(self.app.errors.state)
 
-
-
+                    setTimeout(() => {
+                        self.matrixchat.init()
+                    }, 10)
 
                     if (clbk)
                         clbk()
-
-
-                    console.log("HERE")
-
-                    setTimeout(function(){
-                        self.matrixchat.init()
-                    }, 300)
 
                     setTimeout(self.acceptterms, 5000)
 
@@ -27710,7 +27708,6 @@ Platform = function (app, listofnodes) {
 
         },
 
-
         import : function(clbk){
 
 
@@ -27757,13 +27754,27 @@ Platform = function (app, listofnodes) {
 
         },
 
+        importifneed : function(clbk){
+            
+            app.user.isState(function(state){
+
+                if(self.matrixchat.inited || self.matrixchat.initing || _OpenApi || !state) {
+                    if(clbk) clbk()
+
+                    return
+                }
+
+                    self.matrixchat.import(clbk)
+            })
+        },
+
         init : function(){
 
             if(self.matrixchat.inited) return
             if(self.matrixchat.initing) return
+            if(_OpenApi) return
 
             self.matrixchat.initing = true
-
 
             app.user.isState(function(state){
 
@@ -27814,9 +27825,21 @@ Platform = function (app, listofnodes) {
             })
         },
 
+        initcl : function(clbk){
+            self.matrixchat.init()
+            if(clbk) clbk()
+        },
+
         changeFcm : function(){
             if (self.matrixchat.el){
                 self.matrixchat.el.find('matrix-element').attr('fcmtoken', self.fcmtoken)
+            }
+        },
+
+        changeMobile : function(){
+            if (self.matrixchat.el){
+                self.matrixchat.el.find('matrix-element').attr('mobile', ( self.app.mobileview ? 'true' : ''))
+                self.matrixchat.el.find('matrix-element').attr('pocketnet', ( self.app.mobileview ? '' : 'true'))
             }
         },
 
@@ -27839,10 +27862,19 @@ Platform = function (app, listofnodes) {
         },
 
         initevents : function(){
+            console.log('self.matrixchat.chatparallax')
             if (self.matrixchat.el){
 
-                if(self.app.mobileview){
+                console.log('self.matrixchat.chatparallax2')
 
+                if (self.app.mobileview){
+
+                    console.log('self.matrixchat.chatparallax3')
+
+                    if(self.matrixchat.chatparallax) return
+
+                    console.log("initevents")
+                    
                     self.matrixchat.chatparallax = new SwipeParallaxNew({
 
                         el : self.matrixchat.el,
@@ -27887,8 +27919,15 @@ Platform = function (app, listofnodes) {
 
                     }).init()
 
-
 				}
+
+                else{
+                    if (self.matrixchat.chatparallax) {
+                        console.log("destroy")
+                        self.matrixchat.chatparallax.destroy()
+                        self.matrixchat.chatparallax = null
+                    }
+                }
 
                 self.matrixchat.clbks.NOTIFICATION.global = self.matrixchat.notify.event
 

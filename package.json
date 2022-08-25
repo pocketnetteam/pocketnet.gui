@@ -37,8 +37,8 @@
         "babel-plugin-remove-use-strict": "^1.0.1",
         "electron": "",
         "electron-builder": "^23.0.4",
-        "electron-notarize": "",
         "electron-builder-notarize": "^1.5.0",
+        "electron-notarize": "",
         "electron-reload": "",
         "electron-reloader": "",
         "humanize": "0.0.9"
@@ -72,6 +72,7 @@
         "get-free-https-proxy": "^2.0.2",
         "github-download": "^0.5.0",
         "hash-files": "^1.1.1",
+        "html-uglify": "^1.2.1",
         "iconv-lite": "",
         "image-js": "^0.21.9",
         "image-type": "^4.1.0",

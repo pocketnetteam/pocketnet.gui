@@ -167,7 +167,6 @@ var complain = (function(){
                   clbk(true)
                   sitemessage(self.app.localization.e('complain_success'))
                 } catch (error) {
-                  console.log(error)
                   self.app.platform.errorHandler(error, true)
                 }
 

@@ -8,14 +8,8 @@ if(!_Node)
 	var _listofproxies =  [
 	
 			
-		{
-			host : 'pocketnet.app',
-			port : 8899,
-			wss : 8099
-	    },
-
 		/*{
-			host : 'wellai.health',
+			host : 'pocketnet.app',
 			port : 8899,
 			wss : 8099
 	    },*/
@@ -138,7 +132,7 @@ if(!_Node)
 			}
 		});
 		
-	})
+	}, 5)
 
 
 	window.POCKETNETINSTANCE = app
