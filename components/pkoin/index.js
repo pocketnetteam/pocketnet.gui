@@ -24,18 +24,18 @@ var pkoin = (function(){
 	
 						var blocked = self.app.platform.sdk.user.reputationBlocked(share.address)
 	
-						if (my){
+						if (self.app.boost && my){
 							values = []
 							labels = []
 	
 							optionsValue = 'liftUpThePost'
 						}
 	
-						if (self.app.boost && !blocked){
-							values.push('liftUpThePost')
-							labels.push(self.app.localization.e('liftUpThePost'))
+						if (self.app.boost && !blocked && optionsValue === 'liftUpThePost'){
+							values.push('liftUpThePost');
+							labels.push(self.app.localization.e('liftUpThePost'));
 						}
-	
+						
 						var options = new Parameter({
 	
 							type : "VALUES",
@@ -431,14 +431,20 @@ var pkoin = (function(){
 			getdata : function(clbk, p){
 
 				var essenseData = p.settings.essenseData;
+				var format = essenseData.format;
 				var userinfo = essenseData.userinfo;
 
 
 					receiver = userinfo.address;
 					optionsValue = 'pkoinComment';
 
+				if (format){
+					optionsValue = format;
+				}
+
 				var data = {
-					userinfo: userinfo
+					userinfo: userinfo,
+					format: format
 				}
 
 				boost = null

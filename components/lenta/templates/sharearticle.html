@@ -94,10 +94,11 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
 
         <% } %>
         <% if(!lockedaccount) {%>
-            <% if(!my || app.boost) {%>
+            <% if(app.boost) {%>
             <div class="bolt boost right">
                 <i class="fa fa-bolt"></i>
             </div>
+            <% } %>
 
             <% if(!my) { %> 
                 <div class="item pkoin unselectedtable">
@@ -108,7 +109,6 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
                 </div>
             <% } %>
 
-            <% } %>
         <% } %>
         
     </div>
