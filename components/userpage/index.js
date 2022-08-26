@@ -532,6 +532,7 @@ var userpage = (function(){
 						self.nav.api.history.addParameters({
 							id : id
 						}, {
+							replaceState : true,
 							removefromback : false
 						})
 

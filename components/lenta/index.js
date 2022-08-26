@@ -3131,8 +3131,15 @@ var lenta = (function(){
 
 					var c = function(){
 
-						if(!p.el.hasClass('rendered'))
+						if(!p.el.hasClass('rendered')){
 							p.el.addClass('rendered')
+
+							if (p.el.hasClass('hashiddengroup')){
+								p.el.closest('.authorgroup').find('.showmorebyauthor').addClass('active')
+							}
+							
+						}
+							
 
 						if (clbk)
 							clbk();
