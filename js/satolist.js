@@ -7383,6 +7383,7 @@ Platform = function (app, listofnodes) {
                         return Promise.reject('todo')
                     }
                 },
+             
                 share : {
                     cordova : function(share){
 
