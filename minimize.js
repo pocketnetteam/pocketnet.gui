@@ -46,6 +46,31 @@ _.each(argcli, function(a){
 	
 })
 
+var addzeros = function(v){
+    v = v.toString()
+
+    var zs = 5 - v.length
+
+    for(var i = 0; i < zs; i++){
+        v = '0' + v
+    }
+
+    return v
+}
+
+var numfromreleasestring = function(v){
+
+    var vss = v.split('.')
+
+    vss[2] = addzeros(vss[2])
+
+    v = vss.join('.').replace(/[^0-9]/g, '')
+
+    var vs = Number(v.substr(0, 1) + '.' + v.substr(1))
+
+    return vs
+}
+
 var mapJsPath = './js/_map.js';
 
 console.log("run")
@@ -817,20 +842,21 @@ fs.exists(mapJsPath, function (exists) {
 							}
 
 							JSENV += '<script>window.packageversion = "' + package.version + '";</script>';
+							JSENV += '<script>window.versionsuffix = "' + package.versionsuffix + '";</script>';
 
-							
+							vs = numfromreleasestring(package.version) + '_' + (package.versionsuffix || "0")
 	
 							if(args.prodaction)
 							{
 
 								//JS += '<script type="text/javascript">'+joinfirst.data+'</script>';
-								JS += '<script join src="js/joinfirst.min.js?v='+rand(1, 999999999999)+'"></script>';
-								JSPOST += '<script async join src="js/join.min.js?v='+rand(1, 999999999999)+'"></script>';
-								JSPOST += '<script async join src="js/joinlast.min.js?v='+rand(1, 999999999999)+'"></script>';
+								JS += '<script join src="js/joinfirst.min.js?v='+vs+'"></script>';
+								JSPOST += '<script async join src="js/join.min.js?v='+vs+'"></script>';
+								JSPOST += '<script async join src="js/joinlast.min.js?v='+vs+'"></script>';
 								VE = '<script async join src="js/vendor.min.js?v='+args.vendor+'"></script>';
-								CSS = '<link rel="stylesheet" href="css/master.css?v='+rand(1, 999999999999)+'">';
+								CSS = '<link rel="stylesheet" href="css/master.css?v='+vs+'">';
 	
-								index = index.replace(new RegExp(/\?v=([0-9]*)/g), '?v=' + rand(1, 999999999999));
+								index = index.replace(new RegExp(/\?v=([0-9]*)/g), '?v=' + vs);
 							}
 							else
 							{
@@ -897,7 +923,7 @@ fs.exists(mapJsPath, function (exists) {
 							index = index.replace("__CSS__" , CSS);
 							index = index.replace("__JSPOST__" , JSPOST);
 							index = index.replace("__CACHED-FILES__", CACHED_FILES);
-							index = index.replace("__PACKAGE-VERSION__", package.version);
+							index = index.replace("__PACKAGE-VERSION__", package.version + "_" + package.versionsuffix);
 							index = index.replace("__PACKAGE-CORDOVAVERSIONCODE__", package.cordovaversioncode);
 							index = index.replace("__PACKAGE-CORDOVAVERSION__", package.cordovaversion);
 

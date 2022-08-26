@@ -27731,7 +27731,7 @@ Platform = function (app, listofnodes) {
                     var vs = '10'
 
                     if (typeof numfromreleasestring != 'undefined'){
-                        vs = numfromreleasestring(window.packageversion)
+                        vs = numfromreleasestring(window.packageversion) + '_' + (window.versionsuffix || "0")
                     }
 
                     importScript('chat/matrix-element.min.js?v=' + vs, clbk)
