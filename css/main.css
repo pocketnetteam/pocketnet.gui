@@ -4543,6 +4543,8 @@ html.mobileview.fullscreen #navigationWrapper {
   }
   .brighteonVideoIframe {
     max-width: inherit;
+    border-radius: 0px;
+    margin-bottom: 10px;
   }
 }
 .thinput[value='1'] i:before {
