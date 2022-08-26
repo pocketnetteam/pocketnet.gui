@@ -1092,9 +1092,9 @@ var test = (function(){
 
 			renders.options();
 
-			self.sdk.node.transactions.get.unspent(function(unspent){
+			/*self.sdk.node.transactions.get.unspent(function(unspent){
 				renders.unspent(unspent)
-			})
+			})*/
 
 
 			self.app.platform.ws.messages.transaction.clbks.utemp = function(data){

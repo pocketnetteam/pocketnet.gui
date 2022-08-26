@@ -155,16 +155,21 @@ __map =  {
 		{ c : 'lenta', n : 'groupshares' },
 		{ c : 'lenta', n : 'commentspreview' },
 		{ c : 'lenta', n : 'tosubscribeshares' },
-
-		
 		{ c : 'comments', n : 'index' },
 		{ c : 'comments', n : 'post' },
 		{ c : 'comments', n : 'list' },
 		{ c : 'lastcomments', n : 'lastcommentslist'},
 		{ c : 'author', n : 'preshell'},
-		{ c : 'author', n : 'authorcaption'},
 		{ c : 'post', n : 'preshell'},
 		{ c : 'commentBanner', n : 'index' },
+
+		{ c : 'registration', n : 'index' },
+		{ c : 'test', n : 'options' },
+		{ c : 'test', n : 'icon' },
+		{ C : 'author', n : 'authorcaption'},
+		{ C : 'author', n : 'info'},
+		{ C : 'author', n : 'index'}
+
 
 	],
 
