@@ -9961,7 +9961,7 @@
 	parseVideo = function(url) {
 		var _url = url;
 
-	    var test = _url.match(/(peertube:\/\/)?(http:\/\/|https:\/\/|)?(player.|www.)?(pocketnetpeertube[0-9]*\.nohost\.me|peer\.tube|vimeo\.com|youtu(be\.com|\.be|be\.googleapis\.com)|bitchute\.com)\/((videos?\/|embed\/|watch\/?)*(\?v=|v\/)?)*([A-Za-z0-9._%-]*)(\&\S+)?/);
+	    var test = _url.match(/(peertube:\/\/)?(http:\/\/|https:\/\/|)?(player.|www.)?(pocketnetpeertube[0-9]*\.nohost\.me|peer\.tube|vimeo\.com|youtu(be\.com|\.be|be\.googleapis\.com)|bitchute\.com|brighteon\.com)\/((videos?\/|embed\/|watch\/?)*(\?v=|v\/)?)*([A-Za-z0-9._%-]*)(\&\S+)?/);
 	    var type = null
 		var id = null
 		var host_name = null
@@ -9989,6 +9989,10 @@
 					type = 'bitchute'
 					id = test[9]
 			    }
+				if (test.indexOf('brighteon.com') > -1) {
+					type = 'brighteon'
+					id = test[9]
+				}
 
 			}
 		}

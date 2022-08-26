@@ -1983,7 +1983,7 @@ var share = (function(){
 
 						} 
 						
-						else {
+						else if (meta.type != 'brighteon') {
 							self.app.platform.sdk.remote.get(meta.url, function(og){
 
 								if(og){
