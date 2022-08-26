@@ -4320,7 +4320,7 @@ input[type=radio].radio:checked + label {
   aspect-ratio: 1.62;
   max-width: 600px;
   border-radius: 10px;
-  margin-bottom: -25px;
+  margin-bottom: -14px;
 }
 html.mobileview .matrixchatwrapper {
   position: fixed;

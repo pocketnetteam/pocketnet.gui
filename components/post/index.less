@@ -20,6 +20,9 @@
 #post{
 	background: rgb(var(--background-main));
 	
+	.brighteonVideoIframe {
+		max-width: 650px;
+	}
 
 	.jsPlayerLoading,
 	.video-js:not(.vjs-fullscreen){
@@ -1013,6 +1016,12 @@ html.mobileview{
 					overflow: visible;
 				}
 			}
+		}
+
+		.brighteonVideoIframe {
+			width: 100%;
+			max-width: inherit;
+			border-radius: 0;
 		}
 
 		.sharearticle{
