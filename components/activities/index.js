@@ -8,75 +8,111 @@ var activities = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el, loading;
+		var el, loading, scnt, currentFilter, end = false, block;
 
-		var filtersList = ['all', 'rating', 'comment', 'subscriber', 'money']
+		var filtersList = ['all', 'rating', 'comment', 'subscriber']
 
-		var activities
+		var activities = []
 
 		var getters = {
 			getFilters : function(filter){
 				if (filter === 'all') return []
 				if (filter === 'rating') return ['contentscore']
 				if (filter === 'comment') return ['commentscore', 'comment']
-				if (filter === 'money') return ['money']
 				if (!filter) return []
 				return [filter]
-			}
+			},
+
+			formatActivities: function() {
+				let res = activities.map(i => {
+					if (i.description) {
+						try {
+							i.description = JSON.parse(i.description)
+						} catch (e) {
+
+						}
+
+					}
+
+					if (!i.description && i.relatedContent?.description) {
+						try {
+							i.description = JSON.parse(i.relatedContent.description)
+						} catch (e) {
+							i.description = {}
+							i.description.message = i.relatedContent.description
+						}
+					}
+					if (i.height) {
+
+						let range = (block.height - i.height) / 2
+						i.date = moment().subtract(range, 'minute');
+					}
+					return i
+				})
+
+				res = group(res, function(n){
+					var currentDate = new Date();
+
+					var d = n.date._d
+					if (d.addMinutes(60) > currentDate) return 'ntlasthour';
+
+					if (d.addMinutes(1440) > currentDate) return 'nttoday';
+					if (d.addMinutes(2880) > currentDate) return 'ntyesterday';
+
+					if (d.getFullYear().toString() + (d.getMonth() + 1).toString() == currentDate.getFullYear().toString() + (currentDate.getMonth() + 1).toString()) return 'ntmounth';
+
+					return 'ntearlier';
+
+				})
+
+				return res
+			},
+
 		}
 
 		var actions = {
-			getdata : async function(filter){
+			setloading: function(v){
+				loading = v
+				loading ? el.loader.addClass('.preloader5') : el.loader.removeClass('.preloader5') && renders.content()
+			},
 
-				return self.app.api.fetch('ping', {}, { timeout : 4000 }).then(async (r) => {
+			getdata : function(){
+				actions.setloading(true)
 
-					try {
-
-						activities = await self.app.api.rpc('getactivities', [self.user.address.value, r.height, , getters.getFilters(filter)])
-					} catch (e) {
-						return e
-					}
-
-				}).then((e) => {
-					if (e) return e
-					activities.map(i => {
-						if (i.description) {
-							i.description = JSON.parse(i.description)
+				if(!activities.length) {
+					return self.app.api.fetch('ping', {}, { timeout : 4000 }).then(async (r) => {
+						block = r
+						try {
+							activities = await self.app.api.rpc('getactivities', [self.user.address.value, r.height, , getters.getFilters(currentFilter)])
+						} catch (e) {
+							return e
 						}
 
-						if (!i.description && i.relatedContent?.description) {
-							try {
-								i.description = JSON.parse(i.relatedContent.description)
-							} catch (e) {
-								i.description = {}
-								i.description.message = i.relatedContent.description
+					}).finally(() => {
+						setTimeout(actions.setloading.bind(false),300)
+					})
+				} else {
+					return new Promise(async (resolve, reject) => {
+						try {
+							let data = await self.app.api.rpc('getactivities', [self.user.address.value, activities[activities.length - 1].height, , getters.getFilters(currentFilter)])
+							if (!data.length) {
+								end = true
 							}
+							activities.push(...data)
+							resolve()
+						} catch (e) {
+							reject(e)
+						} finally {
+							setTimeout(actions.setloading.bind(false),300)
 						}
-						if (i.height) {
-
-							let range = (self.app.platform.currentBlock - i.height) / 2
-							i.date = moment().subtract(range, 'minute');
-						}
-					})
-
-					activities = group(activities, function(n){
-						var currentDate = new Date();
-
-						var d = n.date._d
-						if (d.addMinutes(60) > currentDate) return 'ntlasthour';
-
-						if (d.addMinutes(1440) > currentDate) return 'nttoday';
-						if (d.addMinutes(2880) > currentDate) return 'ntyesterday';
-
-						if (d.getFullYear().toString() + (d.getMonth() + 1).toString() == currentDate.getFullYear().toString() + (currentDate.getMonth() + 1).toString()) return 'ntmounth';
-
-						return 'ntearlier';
 
 					})
-					renders.content()
-					return e
-				})
-			}
+				}
+
+			},
+
+
+
 		}
 
 		var events = {
@@ -85,23 +121,31 @@ var activities = (function(){
 				if (this.classList.contains('active')) {
 					return
 				}
+				activities = []
+				end = false
+				currentFilter = $(this).attr('rid');
 
-				var id = $(this).attr('rid');
-
-				actions.getdata(id).then((e) => {
-
-					if (e) return sitemessage(e.error.message || e.error)
+				actions.getdata().then((e) => {
+					if (e) return sitemessage(e.error.message || e.error?.error || e.error)
 
 					el.c.find('.tab').removeClass('active')
 
-					el.c.find('[rid="' + id + '"]').addClass('active')
+					el.c.find('[rid="' + currentFilter + '"]').addClass('active')
 
 					_scrollTo(el.c.find('.active'), el.c.find('.filters'), 0, 0, 'Left')
 
 				})
 
-			}
+			},
 
+
+			loadmorescroll : function(){
+
+				if (el.c.height() - scnt.scrollTop() < 800 && !loading && !end) {
+					console.log('get')
+					actions.getdata()
+				}
+			},
 		}
 
 		var renders = {
@@ -127,10 +171,19 @@ var activities = (function(){
 					name : 'content',
 					el : el.content,
 					data : {
-						activities : activities,
+						activities : getters.formatActivities(),
 					},
+					inner: (root, el) => {
+						el = el.replace(/\r/gm,"").replace(/(\/>)/gm,">")
+						let v = el.replace(root[0].innerHTML, "")
+						debugger
+						root.append(v)
+
+					}
+
 				}, function(_p){
 
+					console.log('render')
 
 				})
 			}
@@ -163,6 +216,8 @@ var activities = (function(){
 
 			destroy : function(){
 				el = {};
+				scnt.off('scroll', events.loadmorescroll)
+				delete self.app.events.scroll['activities']
 			},
 
 			init : function(p){
@@ -173,9 +228,20 @@ var activities = (function(){
 				el.c = p.el.find('#' + self.map.id);
 				el.filters = p.el.find('.filters');
 				el.content = p.el.find('.content');
+				el.loader = p.el.find('.preloaderWrapper');
 
+
+
+				scnt = el.c.closest('.customscroll:not(body)')
+				if(!scnt.length) scnt = $(window);
+
+				if(scnt.hasClass('applicationhtml')){
+					self.app.events.scroll['activities'] = events.loadmorescroll
+				}
+				else{
+					scnt.on('scroll', events.loadmorescroll)
+				}
 				renders.filters()
-
 				actions.getdata()
 
 				initEvents();
