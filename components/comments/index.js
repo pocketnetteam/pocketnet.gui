@@ -513,8 +513,11 @@ var comments = (function(){
 					}
 					else
 					{
+						var post = deep(self.app.platform, 'sdk.node.shares.storage.trx.' + txid)
 
-						if (self.app.platform.sdk.user.scamcriteria()){
+						var address = (self.app.platform.sdk.address.pnet() || {}).address
+
+						if (post.address && address && post.address != address && self.app.platform.sdk.user.scamcriteria()){
 
 							el.c.find('.sending').removeClass('sending')
 	
