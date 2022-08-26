@@ -3139,9 +3139,16 @@ var lenta = (function(){
 							clbk = null
 					}
 
-					setTimeout(() => {
+					
+					if(p.el.find(".shareImages .image").length > 1){
 						c()
-					}, 300)
+					}
+					else{
+						setTimeout(() => {
+							c()
+						}, 300)
+					}
+					
 
 
 					/*Promise.all(promises).catch(e => {}).then(() => {
