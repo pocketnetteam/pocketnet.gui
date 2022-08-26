@@ -1267,10 +1267,10 @@ html.mobileview.ios .share_common.fullScreenVideo .video-js {
   .share_common .shareWrapper {
     position: relative;
   }
-  .share_common .shareTable .authorTable > div span {
+  .share_common .shareTable .authorTable .authorCell span {
     font-size: 1em;
   }
-  .share_common .shareTable .authorTable > div span.adr {
+  .share_common .shareTable .authorTable .authorCell span.adr {
     font-size: 1.2em;
   }
   .share_common .shareTable.subscribed .iconWrapper .aunsubscribe {
