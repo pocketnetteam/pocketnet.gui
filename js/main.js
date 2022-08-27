@@ -120,12 +120,15 @@ if(!_Node)
 							$(this).attr('href', h)
 						})
 					}
-
 					
 					embeddingSettigns.openapi = true
 					
 					if (app.platform.papi[action] && (id || ids)){
-						app.platform.papi[action](id || ids.split(','), el, null, embeddingSettigns)
+						app.platform.papi[action](id || ids.split(','), el, () => {
+							setTimeout(() => {
+								$('html').addClass('openapiready')
+							}, 500)
+						}, embeddingSettigns)
 					}
 
 				}

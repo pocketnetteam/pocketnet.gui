@@ -211,7 +211,7 @@ Localization = function(app){
 			var vs = '23'
 
 			if(typeof numfromreleasestring != 'undefined'){
-				vs = numfromreleasestring(window.packageversion)
+				vs = numfromreleasestring(window.packageversion) + '_' + (window.versionsuffix || "0")
 			}
 
 

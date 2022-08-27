@@ -370,7 +370,7 @@ nModule = function(){
 			var vs = '131'
 
 			if (typeof numfromreleasestring != 'undefined'){
-				vs = numfromreleasestring(window.packageversion)
+				vs = numfromreleasestring(window.packageversion) + '_' + (window.versionsuffix || "0")
 			}
 
 			url += '/templates/' + p.name + '.html?v=' + vs;

@@ -2032,7 +2032,7 @@ var post = (function () {
 
 			},
 
-			clearparameters: ['s', 'commentid', 'parentid'],
+			clearparameters: ['s', 'v', 'commentid', 'parentid'],
 
 			init: function (p) {
 

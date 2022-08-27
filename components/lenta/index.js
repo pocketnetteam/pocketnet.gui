@@ -3008,11 +3008,11 @@ var lenta = (function(){
 			},
 			
 			share : function(share, clbk, all, p){
+
 				if(!p) p = {}
 
 				if(!share) {
 					if(clbk) clbk()
-
 					return
 				}
 
@@ -3029,7 +3029,7 @@ var lenta = (function(){
 					transaction.txid === share.txid
 				));*/
 
-				
+
 				self.shell({
 					name : video ? 'sharevideolight' : share.itisarticle() ? 'sharearticle' : 'share',
 
@@ -3073,8 +3073,8 @@ var lenta = (function(){
 
 					promises.push(new Promise((resolve, reject) => {
 
-						renders.url(p.el.find('.url'), share.url, share, function(){
 
+						renders.url(p.el.find('.url'), share.url, share, function(){
 
 							renders.urlContent(share, function(){
 	
@@ -3131,17 +3131,31 @@ var lenta = (function(){
 
 					var c = function(){
 
-						if(!p.el.hasClass('rendered'))
+						if(!p.el.hasClass('rendered')){
 							p.el.addClass('rendered')
+
+							if (p.el.hasClass('hashiddengroup')){
+								p.el.closest('.authorgroup').find('.showmorebyauthor').addClass('active')
+							}
+							
+						}
+							
 
 						if (clbk)
 							clbk();
 							clbk = null
 					}
 
-					setTimeout(() => {
+					
+					if(p.el.find(".shareImages .image").length > 1){
 						c()
-					}, 300)
+					}
+					else{
+						setTimeout(() => {
+							c()
+						}, 300)
+					}
+					
 
 
 					/*Promise.all(promises).catch(e => {}).then(() => {
@@ -3339,6 +3353,7 @@ var lenta = (function(){
 					})
 				}
 
+
 				lazyEach({
 					array : rs,
 					//sync : true,
@@ -3353,10 +3368,13 @@ var lenta = (function(){
 						else
 						{
 							shareInitedMap[share.txid] = true
+
+
 							renders.share(share, _p.success, null, {
 								boosted : p.boosted,
 								index : index
 							})
+
 						}
 
 					},
@@ -3377,6 +3395,7 @@ var lenta = (function(){
 			},
 
 			shareall : function(shares){
+
 
 				_.each(shares, function(share){
 					renders.share(share)
@@ -4991,9 +5010,10 @@ var lenta = (function(){
 							var p = parameters()
 
 							if(!essenseData.second){
-								if (p.s && !p.msh){
+								if (p.s && !p.msh && !p.np){
 
 									setTimeout(function(){
+
 										actions.openPost(p.s, function(){
 											actions.scrollToPost(p.s)
 										}, null, null, p.commentid)
@@ -5043,9 +5063,9 @@ var lenta = (function(){
 								_p.clbk(null, _p);
 							}
 
-							if (essenseData.notscrollloading && essenseData.txids){
+							/*if (essenseData.notscrollloading && essenseData.txids){
 								renders.txidall(essenseData.txids)
-							}
+							}*/
 
 
 							if(shares.length < 5 && essenseData.includesub && !loading && (!ended && recommended != 'recommended')){
