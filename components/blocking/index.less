@@ -1,0 +1,139 @@
+@import "../../css/__cssvar";
+
+.blockingwnd {
+  z-index: 2005;
+  bottom: 17px;
+  .wndinner {
+    max-width: 600px;
+    max-height: 800px;
+    .buttons {
+      display: flex !important;
+    }
+
+  }
+
+  .wndcontent {
+    padding: 0;
+  }
+  @media only screen and (max-width: 768px) {
+    .wndcontent {
+      padding-bottom: 140px !important;
+    }
+    &.wnd.normalizedmobile:not(.hiddenState) div.wndinner {
+      max-height: 93% !important;
+    }
+
+  }
+
+}
+
+
+#blocking {
+
+  .likers {
+    .liker {
+      display: flex;
+      align-items: flex-start;
+      padding: 1rem;
+      margin-bottom: 0.5rem;
+      box-shadow: 0 5px 10px -5px rgba(var(--color-shadow-base), 0.4);
+      cursor: pointer;
+    }
+
+    .checkbox {
+      margin-top: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      border: 1px solid rgb(var(--color-txt-ac));
+      border-radius: 50%;
+
+      color: rgb(var(--color-txt-ac));
+      text-shadow: none;
+
+
+      margin-right: 20px;
+      min-width : 30px;
+      height : 30px;
+
+      font-weight: 700;
+      font-size: 1em;
+      line-height: 20px;
+
+      -moz-transition: 0.3s;
+      -o-transition: 0.3s;
+      -webkit-transition: 0.3s;
+      transition: 0.3s;
+      &:before {
+        font-family: "Font Awesome 5 Free";
+
+        content: '';
+
+      }
+      &.checked {
+        border-color: rgb(var(--color-txt-ac));
+        &:before {
+          font-weight: 700;
+          font-size: 1.2em;
+          text-align: center;
+          content: '\f00c';
+        }
+      }
+    }
+
+
+    .info {
+      max-width: 90%;
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      .top {
+        display: flex;
+        align-items: center;
+
+        .avatar {
+          background: rgb(var(--neutral-grad-0));
+          color: rgb(var(--color-txt-gray-dark));
+          box-shadow: 0 5px 10px -5px rgba(var(--color-shadow-base), 0.4);
+          border-radius: 50%;
+          height: 3em;
+          width: 3em;
+          text-align: center;
+          line-height: 3em;
+          font-size: 1em;
+          margin-right: 1rem;
+        }
+        .name {
+          font-size: 1.2em;
+          position: relative;
+          width: fit-content;
+          .reputation{
+            position: absolute;
+            right: -23px;
+            top: 0;
+            font-size: 0.7em;
+            font-weight: bold;
+            width: 20px;
+          }
+        }
+        .rating {
+          font-size: 0.7em;
+          strong {
+            color: rgb(var(--color-txt-ac));
+          }
+        }
+      }
+      .bottom {
+        display: block;
+        .about {
+          max-width: 100%;
+          margin-top: 1rem;
+        }
+        .regdate {
+          margin-top: 1rem;
+        }
+      }
+    }
+  }
+}

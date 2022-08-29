@@ -1,0 +1,45 @@
+
+<div id="<%-module.map.id%>">
+  <% if(likers.length) {%>
+    <div class="likers">
+      <% if(likers.length) _.each(likers, function(liker){ %>
+      <div class="liker" address="<%-liker.address%>">
+        <div class="checkbox"></div>
+        <div class="info">
+          <div class="top">
+            <% if(liker.avatar) {%>
+              <img src="<%-liker.avatar %>"  class="avatar" alt=" ">
+            <% } %>
+            <% if(!liker.avatar) {%>
+            <div class="avatar">
+              <%-liker.name[0]%>
+            </div>
+            <% } %>
+
+            <div class="">
+              <div class="name">
+                <%- liker.name  %>
+                <div class="reputation">
+                  <%- liker.reputation  %>
+                </div>
+              </div>
+              <div class="rating">
+                Оценок:  <strong><%- liker.ratingscnt  %></strong>
+              </div>
+            </div>
+
+          </div>
+          <div class="bottom">
+            <% if(liker.about) {%>
+            <div class="about">
+              <%- decodeURIComponent(liker.about)  %>
+              <strong class="regdate"> Дата регистрации - </strong><%- moment.unix(liker.regdate).format('D MMMM YYYY')  %>
+            </div>
+            <% } %>
+          </div>
+        </div>
+      </div>
+      <% }) %>
+    </div>
+  <% } %>
+</div>
