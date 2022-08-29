@@ -1,0 +1,114 @@
+.blockingwnd {
+  z-index: 2005;
+  bottom: 17px;
+}
+.blockingwnd .wndinner {
+  max-width: 600px;
+  max-height: 800px;
+}
+.blockingwnd .wndinner .buttons {
+  display: flex !important;
+}
+.blockingwnd .wndcontent {
+  padding: 0;
+}
+@media only screen and (max-width: 768px) {
+  .blockingwnd .wndcontent {
+    padding-bottom: 140px !important;
+  }
+  .blockingwnd.wnd.normalizedmobile:not(.hiddenState) div.wndinner {
+    max-height: 93% !important;
+  }
+}
+#blocking .likers .liker {
+  display: flex;
+  align-items: flex-start;
+  padding: 1rem;
+  margin-bottom: 0.5rem;
+  box-shadow: 0 5px 10px -5px rgba(var(--color-shadow-base), 0.4);
+  cursor: pointer;
+}
+#blocking .likers .checkbox {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid rgb(var(--color-txt-ac));
+  border-radius: 50%;
+  color: rgb(var(--color-txt-ac));
+  text-shadow: none;
+  margin-right: 20px;
+  min-width: 30px;
+  height: 30px;
+  font-weight: 700;
+  font-size: 1em;
+  line-height: 20px;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+#blocking .likers .checkbox:before {
+  font-family: "Font Awesome 5 Free";
+  content: '';
+}
+#blocking .likers .checkbox.checked {
+  border-color: rgb(var(--color-txt-ac));
+}
+#blocking .likers .checkbox.checked:before {
+  font-weight: 700;
+  font-size: 1.2em;
+  text-align: center;
+  content: '\f00c';
+}
+#blocking .likers .info {
+  max-width: 90%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+#blocking .likers .info .top {
+  display: flex;
+  align-items: center;
+}
+#blocking .likers .info .top .avatar {
+  background: rgb(var(--neutral-grad-0));
+  color: rgb(var(--color-txt-gray-dark));
+  box-shadow: 0 5px 10px -5px rgba(var(--color-shadow-base), 0.4);
+  border-radius: 50%;
+  height: 3em;
+  width: 3em;
+  text-align: center;
+  line-height: 3em;
+  font-size: 1em;
+  margin-right: 1rem;
+}
+#blocking .likers .info .top .name {
+  font-size: 1.2em;
+  position: relative;
+  width: fit-content;
+}
+#blocking .likers .info .top .name .reputation {
+  position: absolute;
+  right: -23px;
+  top: 0;
+  font-size: 0.7em;
+  font-weight: bold;
+  width: 20px;
+}
+#blocking .likers .info .top .rating {
+  font-size: 0.7em;
+}
+#blocking .likers .info .top .rating strong {
+  color: rgb(var(--color-txt-ac));
+}
+#blocking .likers .info .bottom {
+  display: block;
+}
+#blocking .likers .info .bottom .about {
+  max-width: 100%;
+  margin-top: 1rem;
+}
+#blocking .likers .info .bottom .regdate {
+  margin-top: 1rem;
+}

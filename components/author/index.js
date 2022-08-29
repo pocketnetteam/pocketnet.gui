@@ -15,6 +15,24 @@ var author = (function(){
 		var wordsRegExp = /[,.!?;:() \n\r]/g
 
 		var actions = {
+      block : function(address, clbk){
+        self.app.nav.api.load({
+          open : true,
+          href : 'blocking',
+          inWnd : true,
+          history : true,
+
+          essenseData : {
+            address,
+          },
+
+          clbk : function(){
+            if (clbk)
+              clbk()
+          }
+        })
+      },
+
 			subscribeLabel : function(){
 
 				var user = self.app.user
@@ -502,14 +520,33 @@ var author = (function(){
 						})
 
 						el.find('.block').on('click', function(){
-							self.app.mobile.vibration.small()
-							self.app.platform.api.actions.blocking(author.address, function(tx, error){
-								if(!tx){
-									self.app.platform.errorHandler(error, true)	
-								}
-							})
 
-							close()
+							if (self.app.platform.sdk.node.transactions.hasUnspentMultyBlocking()){
+								sitemessage(self.app.localization.e('blockinginprogress'))
+								return
+							}
+
+							self.app.mobile.vibration.small()
+								self.app.platform.api.actions.blocking(author.address, function (tx, error) {
+									if (!tx) {
+										self.app.platform.errorHandler(error, true)
+										return
+									}
+								})
+								dialog({
+									html: self.app.localization.e('blockingdisclaimer'),
+									btn1text: "Yes",
+									btn2text: "No",
+									class: 'zindex',
+									success: () => {
+
+										actions.block(author.address, function (error) {
+											console.log(error)
+										})
+									}
+								});
+
+								close()
 
 						})
 
@@ -1304,8 +1341,6 @@ var author = (function(){
 						el.caption.addClass('blocking');
 					}
 				}
-				
-				
 
 			})
 			
