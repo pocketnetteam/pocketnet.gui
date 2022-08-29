@@ -20415,6 +20415,7 @@ Platform = function (app, listofnodes) {
                 },
 
                 hasUnspentMultyBlocking: function() {
+					if (!self.sdk.node.transactions.temp.blocking) return false
                     var s = Object.values(self.sdk.node.transactions.temp.blocking)
                     return s.some(blocking => {
                         return typeof blocking.vsaddress === 'object'

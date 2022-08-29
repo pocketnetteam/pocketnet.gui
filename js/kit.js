@@ -152,28 +152,49 @@ Blocking = function(){
 		v : ''
 	};
 
+	self.addresses = {
+		set : function(_v){
+			this.v = _v
+		},
+		v : ''
+	};
+
 	self.validation = function(){
-		if(!self.address.v){
+		if(!self.address.v && !self.addresses){
 			return 'address';
 		}
-	}
+	};
 
 	self.serialize = function(){
-		return self.address.v
-	}
+		let a = self.addresses.v
+		return self.address.v || self.addresses.v.join(',')
+	};
 
 	self.export = function(alias){
 
 		if(alias){
+			if (self.addresses.v) {
+				return {
+					vsaddress : self.addresses.v
+				}
+			}
 			return {
 				vsaddress : self.address.v
 			}
 		}
 
-		return {
-			address : self.address.v
+		if (self.address.v) {
+			return {
+				address : self.address.v
+			}
 		}
-	}
+
+		if (self.addresses.v) {
+			return {
+				addresses : self.addresses.v
+			}
+		}
+	};
 
 	self.import = function(p){
 
@@ -182,6 +203,12 @@ Blocking = function(){
 
 		if (p.vsaddress)
 			self.address.v =  p.vsaddress
+
+		if (p.addresses)
+			self.addresses.v = p.addresses
+
+		if (p.vsaddresses)
+			self.addresses.v =  p.vsaddresses
 			
 	}
 

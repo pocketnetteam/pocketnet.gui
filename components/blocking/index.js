@@ -62,15 +62,20 @@ var blocking = (function(){
         //Запрос лайкеров
         try {
           data.likers = await self.app.api.rpc('getaccountraters', [p.essenseData.address])
-          blocked = self.app.platform.sdk.user.storage.me.blocking
+          blocked = JSON.parse(JSON.stringify(self.app.platform.sdk.user.storage.me.blocking))
+          blocked.forEach((item, id) => {
+            if (typeof item === 'object') {
+              blocked.splice(id, 1)
+              blocked.push(...item)
+            }
+          })
           data.likers = data.likers.filter(liker => {
-
             let res = !(blocked.includes(liker.address) || liker.address === self.app.platform.sdk.user.storage.me.address)
 
             return res
           })
         } catch (e) {
-          console.log(e)
+          console.error(e)
         } finally {
           clbk(data);
         }
@@ -149,7 +154,7 @@ var blocking = (function(){
                 } catch (e){
                   self.closeContainer()
                   console.log('blocking',e)
-                  self.app.platform.errorHandler(err, true)
+                  self.app.platform.errorHandler(e, true)
                 }
               }
 
