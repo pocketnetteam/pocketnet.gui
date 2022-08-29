@@ -1181,6 +1181,12 @@ html.mobileview.ios .share_common.fullScreenVideo .video-js {
             }
         }*/
   }
+  .share_common .pkoin {
+    padding: 6px 8px;
+  }
+  .share_common .boost {
+    padding: 2px 10px;
+  }
   .share_common .jsPlayerLoading .preloader5 {
     display: none;
   }

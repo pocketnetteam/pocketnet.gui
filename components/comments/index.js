@@ -1239,7 +1239,7 @@ var comments = (function(){
 
 			pkoin : function(){
 
-				var shareId = $(this).closest('.share').attr('id');
+				var shareId = $(this).closest('.share').attr('id') || txid;
 
 				actions.pkoin(shareId, 'pkoinComment')
 
