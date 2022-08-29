@@ -4598,6 +4598,23 @@ Platform = function (app, listofnodes) {
         },
 
         actions: {
+			block : function(address, clbk){
+				self.app.nav.api.load({
+					open : true,
+					href : 'blocking',
+					inWnd : true,
+					history : true,
+
+					essenseData : {
+						address
+					},
+
+					clbk : function(){
+						if (clbk)
+							clbk()
+					}
+				})
+			},
 
             blocking: function (address, clbk) {
                 var blocking = new Blocking();
@@ -5252,13 +5269,14 @@ Platform = function (app, listofnodes) {
                                      self.errorHandler(error, true)
                                  }
                              })
+
                             dialog({
                                 html: self.app.localization.e('blockingdisclaimer'),
                                 btn1text: "Yes",
                                 btn2text: "No",
                                 class: 'zindex',
                                 success: () => {
-                                    actions.block(address, function (error) {
+									self.api.actions.block(address, function (error) {
                                         console.log(error)
                                     })
                                 }

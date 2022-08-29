@@ -15,24 +15,6 @@ var author = (function(){
 		var wordsRegExp = /[,.!?;:() \n\r]/g
 
 		var actions = {
-      block : function(address, clbk){
-        self.app.nav.api.load({
-          open : true,
-          href : 'blocking',
-          inWnd : true,
-          history : true,
-
-          essenseData : {
-            address,
-          },
-
-          clbk : function(){
-            if (clbk)
-              clbk()
-          }
-        })
-      },
-
 			subscribeLabel : function(){
 
 				var user = self.app.user
@@ -539,8 +521,7 @@ var author = (function(){
 									btn2text: "No",
 									class: 'zindex',
 									success: () => {
-
-										actions.block(author.address, function (error) {
+										self.app.platform.api.actions.block(author.address, function (error) {
 											console.log(error)
 										})
 									}

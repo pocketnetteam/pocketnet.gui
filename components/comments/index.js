@@ -452,24 +452,6 @@ var comments = (function(){
 					}
 				})	
 			},
-			block : function(address, clbk){
-				self.app.nav.api.load({
-					open : true,
-					href : 'blocking',
-					inWnd : true,
-					history : true,
-
-					essenseData : {
-						address
-					},
-
-					clbk : function(){
-						if (clbk)
-							clbk()
-					}
-				})
-			},
-
 
 			stateAction : function(clbk){
 
@@ -1634,8 +1616,7 @@ var comments = (function(){
 										btn2text: "No",
 										class: 'zindex',
 										success: () => {
-
-											actions.block(d.caddress, function (error) {
+											self.app.platform.api.actions.block(d.caddress, function (error) {
 												console.log(error)
 											})
 										}
