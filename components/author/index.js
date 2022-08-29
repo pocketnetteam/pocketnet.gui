@@ -501,13 +501,15 @@ var author = (function(){
 
 						})
 
-						el.find('.block').on('click', function(){
+						el.find('.block').on('click', async function(){
 
 							if (self.app.platform.sdk.node.transactions.hasUnspentMultyBlocking()){
 								sitemessage(self.app.localization.e('blockinginprogress'))
 								return
 							}
 
+							let likers = await self.app.api.rpc('getaccountraters', [author.address])
+							likers = self.app.platform.api.actions.getfilteredlikers(likers)
 							self.app.mobile.vibration.small()
 								self.app.platform.api.actions.blocking(author.address, function (tx, error) {
 									if (!tx) {
@@ -515,13 +517,15 @@ var author = (function(){
 										return
 									}
 								})
+							if (!likers.length) return close()
+
 								dialog({
 									html: self.app.localization.e('blockingdisclaimer'),
-									btn1text: "Yes",
-									btn2text: "No",
+									btn1text: self.app.localization.e('dyes'),
+									btn2text: self.app.localization.e('dno'),
 									class: 'zindex',
 									success: () => {
-										self.app.platform.api.actions.block(author.address, function (error) {
+										self.app.platform.api.actions.block(author.address, likers, function (error) {
 											console.log(error)
 										})
 									}

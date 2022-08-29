@@ -58,28 +58,9 @@ var blocking = (function(){
 
       getdata : async function(clbk){
         var data = {}
-        var blocked
-        //Запрос лайкеров
-        try {
-          data.likers = await self.app.api.rpc('getaccountraters', [p.essenseData.address])
-          blocked = JSON.parse(JSON.stringify(self.app.platform.sdk.user.storage.me.blocking))
-          blocked.forEach((item, id) => {
-            if (typeof item === 'object') {
-              blocked.splice(id, 1)
-              blocked.push(...item)
-            }
-          })
-          data.likers = data.likers.filter(liker => {
-            let res = !(blocked.includes(liker.address) || liker.address === self.app.platform.sdk.user.storage.me.address)
+        data.likers = this.essenseData.likers
 
-            return res
-          })
-        } catch (e) {
-          console.error(e)
-        } finally {
-          clbk(data);
-        }
-
+        if (clbk) clbk(data)
       },
 
       destroy : function(){
@@ -115,7 +96,7 @@ var blocking = (function(){
         header : `Users recommended for blocking`,
         buttons : {
           success : {
-            text : "Block",
+            text : self.app.localization.e('block'),
             fn : function() {
 
               if (blocklist.length) {
