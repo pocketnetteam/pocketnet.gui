@@ -1,12 +1,11 @@
 name: Deploy Web
 
 on:
-  push:
-    tags: v*.*.*-web
+  workflow_dispatch:
 
 jobs:
   build:
-    if: github.event.base_ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/master'
     
     runs-on: ubuntu-latest
     steps:
