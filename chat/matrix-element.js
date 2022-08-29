@@ -45798,7 +45798,6 @@ var VoiceMessage_component = Object(componentNormalizer["a" /* default */])(
       return d;
     },
     readyToRender: function () {
-      console.log('this.content', this.content);
       var r = this.content.msgtype === 'm.encrypted' && !this.textWithoutLinks && this.badenctypted || this.content.membership || (this.content.msgtype === 'm.text' || this.content.msgtype === 'm.encrypted') && this.textWithoutLinks || this.file || this.error || this.content.msgtype === 'm.image' && this.imageUrl || this.content.msgtype === 'm.audio' && this.audioUrl || this.urlpreview || this.preview;
       return r;
     },

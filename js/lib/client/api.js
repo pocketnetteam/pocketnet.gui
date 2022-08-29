@@ -70,6 +70,7 @@ var ProxyRequest = function(app = {}, proxy){
 
         var cancelled = false
 
+
         return new Promise((resolve, reject) => {
             const timer = setTimeout(() => {
 
@@ -147,6 +148,7 @@ var ProxyRequest = function(app = {}, proxy){
         else{
             if (app.user && (app.user.getstate && app.user.getstate() == 1)){ data.state = 1 }
         }
+
 
         return apiFetch(url, {
 
