@@ -3147,7 +3147,7 @@ var lenta = (function(){
 					}
 
 					
-					if(p.el.find(".shareImages .image").length > 1){
+					if(p.el.find(".shareImages .image").length > 1 || video){
 						c()
 					}
 					else{
