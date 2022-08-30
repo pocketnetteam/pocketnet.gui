@@ -8,13 +8,9 @@
 
 			var info = app.platform.sdk.videos.storage[url] || app.platform.sdk.videos.storage[meta.id] || {}
 			var localdata = app.platform.sdk.localshares.getVideo(meta.id) || {}
-		console.log('info', info)
-		console.log('info2', app.platform.sdk.localshares.getVideo(meta.id))
 
 			var aspectRatio = Number((info.data || deep(localdata, 'infos.videoDetails') || {}).aspectRatio || 0);
 
-			console.log('aspectRatio', aspectRatio, url)
-			
 			var image = videoImage(url)
 	%>
 		<div class="videoWrapper fullscreenActive <%- (aspectRatio < 1.25) && (aspectRatio >= 0.9) ? 'squareVideo' : ''%> <%- (aspectRatio < 0.9) && (aspectRatio != 0) ? 'verticalVideo' : ''%>" pid="<%- makeid() %>">

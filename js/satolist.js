@@ -9858,6 +9858,9 @@ Platform = function (app, listofnodes) {
                     return true
                 }
 
+                //console.log('ustate.regdate.addDays(7)', ustate.regdate.addDays(7) > new Date())
+                //ustate.regdate && ustate.regdate.addDays(7) > new Date() 
+                
                 if(moment().diff(ustate.regdate, 'days') <= 7 && totalComplains  > 20 ) {
                     return true
                 }

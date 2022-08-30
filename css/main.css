@@ -3424,6 +3424,7 @@ input[type=radio].radio:checked + label {
   width: 93%;
   margin: 0 auto;
   border: 0;
+  box-shadow: none;
 }
 .menudialog .buttons {
   display: none;
@@ -3443,7 +3444,7 @@ input[type=radio].radio:checked + label {
   text-align: center;
   background: rgb(var(--background-total-theme));
   cursor: pointer;
-  border-radius: 3px;
+  border-radius: 18px;
   margin-top: 0.25em;
 }
 .menudialog .text .item.itemmain {
@@ -3451,9 +3452,8 @@ input[type=radio].radio:checked + label {
 }
 .menudialog .text .item.itemclose {
   margin-top: 1em;
-  background: rgba(var(--neutral-grad-2), 0.1);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
+  background: rgba(var(--neutral-grad-4), 0.1);
+  color: rgb(var(--text-on-bg-ac-color));
 }
 .menudialog .text .item:nth-last-child(1) {
   border-bottom: 0;
@@ -4405,7 +4405,7 @@ html.mobileview .tooltipMobileDialog .menuitem {
   text-align: center;
   background: rgb(var(--background-total-theme));
   cursor: pointer;
-  border-radius: 3px;
+  border-radius: 18px;
   margin-top: 0.25em;
   text-align: left;
 }
