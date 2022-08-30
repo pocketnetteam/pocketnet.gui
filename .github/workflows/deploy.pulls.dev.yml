@@ -303,7 +303,7 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v3
       - name: Copy artifacts
-        run: cp ./**/Bastyon* /data/dev/binaries/
+        run: cp ./**/Bastyon* /data/dev/binaries/dev/
       - name: Copy HEAD information
-        run: cp ./head/head.txt /data/dev/binaries/head.txt
+        run: cp ./head/head.txt /data/dev/binaries/dev/head.txt
       

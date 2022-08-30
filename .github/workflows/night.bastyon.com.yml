@@ -23,11 +23,12 @@ jobs:
           npm run minimize:bastyon
 
       - name: Copy to dest dir
-        run: rsync -ah --exclude={'.git/','.github/','node_modules/'} ./ /docker/night/
+        run: rsync -ah --exclude={'.git','.gitignore','.github','package.json','package-lock.json','minimize.json','node_modules','.well-known','assets','proxy16','cordova','res','build'} ./ /docker/night/
         
       - name: Reset nginx cache
         run: /data/reset_cache.sh
         shell: bash
+
   build-macos:
     runs-on: macos-latest
     steps:
@@ -176,6 +177,6 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v3
       - name: Copy artifacts
-        run: cp ./**/Bastyon* /data/dev/binaries/
+        run: cp ./**/Bastyon* /data/dev/binaries/night/
       - name: Copy HEAD information
-        run: cp ./unix/head.txt /data/dev/binaries/head.txt
+        run: cp ./unix/head.txt /data/dev/binaries/night/head.txt
