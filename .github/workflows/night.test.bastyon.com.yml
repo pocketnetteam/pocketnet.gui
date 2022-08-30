@@ -20,7 +20,7 @@ jobs:
       - name: Prepare
         run: |
           npm i
-          npm run minimize:bastyon
+          npm run minimize:bastyon:test
 
       - name: Copy to dest dir
         run: rsync -ah --exclude={'.git','.gitignore','.github','package.json','package-lock.json','minimize.json','node_modules','.well-known','assets','proxy16','cordova','res','build'} ./ /docker/night/
@@ -41,7 +41,7 @@ jobs:
       - name: Prepare building
         run: |
           npm i
-          npm run dev:bastyon
+          npm run dev:bastyon:test
       - name: Prepare for app notarization
         run: |
           mkdir -p ~/private_keys/
@@ -78,7 +78,7 @@ jobs:
       - name: Prepare building
         run: |
           npm i
-          npm run dev:bastyon
+          npm run dev:bastyon:test
       - name: Building
         run: |
           npm run distl
@@ -104,7 +104,7 @@ jobs:
       - name: Prepare building
         run: |
           npm i
-          npm run dev:bastyon
+          npm run dev:bastyon:test
       - name: Building
         run: |
           npm run dist
@@ -134,7 +134,7 @@ jobs:
       - name: Prepare building
         run: |
           npm i
-          npm run minimize:cordova
+          npm run minimize:cordova:test
           cd ./cordova
           npm i
       - name: Prepare configuration
