@@ -29,6 +29,27 @@
 .share_common .pkoin span {
   margin-left: 0.5em;
 }
+.share_common .peertube-server-hint {
+  z-index: 3;
+  position: absolute;
+  margin: 10px;
+  padding: 5px 7px;
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 0.8em;
+  background: #000000bb;
+  color: #fff;
+}
+.share_common .peertube-server-hint i.fa {
+  font-size: 0.8em;
+  margin-top: 1px;
+  margin-right: 5px;
+}
+.share_common .peertube-server-hint a {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
 .share_common .boost {
   color: #F2C94C;
   border-radius: 8px;
@@ -625,6 +646,7 @@
 .share_common .sharecaption {
   margin-bottom: 0.5em;
   max-width: 590px;
+  hyphens: auto;
   cursor: pointer;
 }
 .share_common .sharecaption span {
@@ -1283,10 +1305,10 @@ html.mobileview.ios .share_common.fullScreenVideo .video-js {
   .share_common .shareWrapper {
     position: relative;
   }
-  .share_common .shareTable .authorTable > div span {
+  .share_common .shareTable .authorTable .authorCell span {
     font-size: 1em;
   }
-  .share_common .shareTable .authorTable > div span.adr {
+  .share_common .shareTable .authorTable .authorCell span.adr {
     font-size: 1.2em;
   }
   .share_common .shareTable.subscribed .iconWrapper .aunsubscribe {

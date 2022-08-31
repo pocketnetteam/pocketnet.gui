@@ -1,12 +1,11 @@
 name: Deploy Proxy
 
 on:
-  push:
-    tags: v*.*.*-proxy
+  workflow_dispatch:
 
 jobs:
   build:
-    if: github.event.base_ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/master'
     
     runs-on: ubuntu-latest
     steps:
@@ -17,7 +16,7 @@ jobs:
         uses: docker/metadata-action@v3
         with:
           images: ${{ secrets.DOCKER_HUB_USERNAME }}/proxy
-          tags: type=ref,event=tag
+          tags: type=raw,value=latest
       - name: Login to Docker Hub
         uses: docker/login-action@v1
         with:
