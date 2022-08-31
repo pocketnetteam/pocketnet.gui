@@ -2532,9 +2532,6 @@ Platform = function (app, listofnodes) {
             if(!_.isArray(ids)) ids = [ids]
 
 
-            console.log("LENTA", ids)
-
-
             app.nav.api.load({
 
                 open : true,
@@ -2616,7 +2613,6 @@ Platform = function (app, listofnodes) {
 
         post: function (id, el, clbk, p) {
 
-            console.log("PAPI", id)
 
             if (!p) p = {}
 
@@ -7107,7 +7103,6 @@ Platform = function (app, listofnodes) {
                 self.sdk.localshares.init().then(r => {
                     if(clbk) clbk()
                 }).catch(e => {
-                    console.error(e)
                     if(clbk) clbk()
                 })
             },
@@ -9863,6 +9858,9 @@ Platform = function (app, listofnodes) {
                     return true
                 }
 
+                //console.log('ustate.regdate.addDays(7)', ustate.regdate.addDays(7) > new Date())
+                //ustate.regdate && ustate.regdate.addDays(7) > new Date() 
+                
                 if(moment().diff(ustate.regdate, 'days') <= 7 && totalComplains  > 20 ) {
                     return true
                 }
@@ -27874,18 +27872,13 @@ Platform = function (app, listofnodes) {
         },
 
         initevents : function(){
-            console.log('self.matrixchat.chatparallax')
             if (self.matrixchat.el){
-
-                console.log('self.matrixchat.chatparallax2')
 
                 if (self.app.mobileview){
 
-                    console.log('self.matrixchat.chatparallax3')
 
                     if(self.matrixchat.chatparallax) return
 
-                    console.log("initevents")
                     
                     self.matrixchat.chatparallax = new SwipeParallaxNew({
 
@@ -27935,7 +27928,6 @@ Platform = function (app, listofnodes) {
 
                 else{
                     if (self.matrixchat.chatparallax) {
-                        console.log("destroy")
                         self.matrixchat.chatparallax.destroy()
                         self.matrixchat.chatparallax = null
                     }
@@ -28095,8 +28087,6 @@ Platform = function (app, listofnodes) {
 
         backtoapp : function(){
 
-            console.log('self.matrixchat', self.matrixchat.backtoapp.caller)
-
             if (self.matrixchat.core && !self.matrixchat.core.hiddenInParent){
                 self.matrixchat.core.backtoapp()
 
@@ -28131,7 +28121,6 @@ Platform = function (app, listofnodes) {
 
             core.backtoapp = function(link){
 
-                console.log("???core.backtoapp", core.backtoapp.caller)
 
                 if (self.app.mobileview)
                     app.nav.api.history.removeParameters(['pc'], null, {replaceState : true})
@@ -28139,7 +28128,6 @@ Platform = function (app, listofnodes) {
                 if (link){
                     link = link.replace('https://' + self.app.options.url + '/', '').replace('https://' + window.pocketnetdomain + '/', '')
 
-                    console.log('link', link)
 
                     if(link.indexOf('index') == '0' && link.indexOf('v=') == -1 &&
                         (link.indexOf('s=') > -1 || link.indexOf('i=') > -1 || link.indexOf('p=') > -1))
@@ -28323,7 +28311,6 @@ Platform = function (app, listofnodes) {
             if(!self.matrixchat.connectWith && !self.matrixchat.joinRoom) return
             if(!self.matrixchat.core) return
 
-            console.log('connect')
 
             self.matrixchat.core.apptochat()
 

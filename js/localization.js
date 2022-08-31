@@ -93,6 +93,8 @@ Localization = function(app){
 		{
 			self.key = key;
 
+			self.setlang()
+
 			self.locSave();
 
 			self.import(function(){
@@ -110,6 +112,11 @@ Localization = function(app){
 		}
 	}
 
+	self.setlang = function(){
+		if(typeof $ != 'undefined')
+			$('html').attr('lang', self.key)
+	}
+
 	self.set = function(key, clbk){
 
 		if(self.available[key] && self.key != key)
@@ -118,6 +125,8 @@ Localization = function(app){
 				app.nav.api.history.removeParameters(['loc'])
 
 			self.key = key;
+
+			self.setlang()
 
 			if(typeof moment != 'undefined')
 				moment.locale(self.key)
@@ -169,6 +178,8 @@ Localization = function(app){
 		if(!self.available[self.key]) self.key = 'en'
 
 		self.locSave();
+
+		self.setlang()
 
 		if(typeof moment != 'undefined')
 			moment.locale(self.key)

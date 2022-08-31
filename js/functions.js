@@ -1028,10 +1028,11 @@
 			})
 
 			h += '</div>'
+			
 
 			h += '<div class="closeButton">'
 				h += '<div class="item itemclose">'
-					h += '<i class="fas fa-times-circle"></i>'
+					h+='<i class="far fa-times-circle"></i> '+app.localization.e('close')+''
 				h += '</div>'
 			h += '</div>'
 
