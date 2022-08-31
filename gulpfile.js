@@ -118,9 +118,12 @@ exports.buildStyles.displayName = 'build:styles';
 /**
  * Task to clean CSS files.
  */
+const cleanComponentCss = () => gulp.src('./components/**/*.css', { allowEmpty: true }).pipe(clean());
+const cleanComponentCssMaps = () => gulp.src('./components/**/*.map', { allowEmpty: true }).pipe(clean());
+
 const cleanComponentStyles = gulp.series([
-    () => gulp.src('./components/**/*.css', { allowEmpty: true }).pipe(clean()),
-    () => gulp.src('./components/**/*.map', { allowEmpty: true }).pipe(clean()),
+    cleanComponentCss,
+    cleanComponentCssMaps,
 ]);
 const cleanMasterStyle = () => purgeCssFiles('./css/master.css');
 const cleanCssStyles = () => purgeCssFiles('./css/*.less');
