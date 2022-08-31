@@ -203,7 +203,7 @@ fs.exists(mapJsPath, function (exists) {
 
 				return true
 			},
-			copy : ['chat', /*'components',*/ 'css', 'images', 'img', 'js', 'localization', 'peertube', 'res', 'sounds', 'browserconfig.xml', 'crossdomain.xml', 'favicon.svg', 'indexcordova.html']
+			copy : ['chat', 'components', 'css', 'images', 'img', 'js', 'localization', 'peertube', 'res', 'sounds', 'browserconfig.xml', 'crossdomain.xml', 'favicon.svg', 'indexcordova.html']
 		}
 
 		var cordovaconfig = {
