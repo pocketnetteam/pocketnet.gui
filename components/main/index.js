@@ -365,6 +365,7 @@ var main = (function(){
 								items.push({
 									text : a.label(),
 									action : function (clbk) {
+
 				
 										self.nav.api.load({
 											open : true,
@@ -374,13 +375,15 @@ var main = (function(){
 											replace : true
 										})
 
+										d.destroy()
+
 										return true
 				
 									}
 								})
 							})
 				
-							menuDialog({
+							var d = menuDialog({
 								items: items
 							})
 						})

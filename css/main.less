@@ -4067,6 +4067,7 @@ input[type=radio].radio:checked + label {
         width: 93%;
         margin : 0 auto;
         border : 0;
+        box-shadow : none;
     }
 
     .buttons{
@@ -4091,7 +4092,7 @@ input[type=radio].radio:checked + label {
             text-align: center;
             background: rgb(var(--background-total-theme));
             cursor: pointer;
-            border-radius: 3px;
+            border-radius: 18px;
             margin-top : 0.5 * @rhythm;
 
             &.itemmain{
@@ -4100,9 +4101,8 @@ input[type=radio].radio:checked + label {
 
             &.itemclose{
                 margin-top : 2 * @rhythm;
-                background: rgba(var(--neutral-grad-2), 0.1);
-                backdrop-filter: blur(4px);
-                -webkit-backdrop-filter: blur(4px);  
+                background: rgba(var(--neutral-grad-4), 0.1);
+                color: rgb(var(--text-on-bg-ac-color));
             }
 
             &:nth-last-child(1){
@@ -5323,14 +5323,14 @@ html.mobileview{
                 padding-bottom : 2 * @rhythm;
             }
         }
-    
+        
         .closeButton,
         .menuitem{
             padding : 4 * @rhythm 2 * @rhythm;
             text-align: center;
             background: rgb(var(--background-total-theme));
             cursor: pointer;
-            border-radius: 3px;
+            border-radius: 18px;
             margin-top : 0.5 * @rhythm;
             text-align: left;
 
@@ -6608,7 +6608,12 @@ html.mobileview.fullscreen{
     z-index: 0!important;
 }
 
+.hyhpensenable{
+    .hyhpensenable()
+}
+
 .article_body{
+    
    
     h1{
         font-size: 2em;
