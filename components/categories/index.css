@@ -367,12 +367,12 @@
   }
   #categories .hideallcats span,
   #categories .showallcats span {
-    font-size: 1em;
+    font-size: 0.9em;
   }
   #categories .hideallcats i,
   #categories .showallcats i {
     font-weight: 600;
-    font-size: 1em;
+    font-size: 0.9em;
   }
   #categories .tg {
     margin-top: 0.5em;
@@ -384,6 +384,6 @@
     display: inline;
   }
   #categories .cat .cattable > div.catvalue .catname {
-    font-size: 1em;
+    font-size: 0.9em;
   }
 }

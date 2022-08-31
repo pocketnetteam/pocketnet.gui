@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        id="cordova-plugin-background-mode"
+        version="0.8.0">
+
+    <name>BackgroundMode</name>
+
+    <description>Prevent apps from going to sleep in background.</description>
+
+    <repo>https://bitbucket.org:TheBosZ/cordova-plugin-run-in-background.git</repo>
+
+    <keywords>appplant, background</keywords>
+
+    <license>Apache 2.0</license>
+
+    <author>Sebastián Katzer</author>
+
+    <!-- dependencies -->
+    <dependency id="cordova-plugin-device" />
+
+    <!-- cordova -->
+    <engines>
+        <engine name="cordova" version=">=3.0.0" />
+        <engine name="android-sdk" version=">=16" />
+    </engines>
+
+    <!-- js -->
+    <js-module src="www/background-mode.js" name="BackgroundMode">
+        <clobbers target="cordova.plugins.backgroundMode" />
+        <clobbers target="plugin.backgroundMode" />
+    </js-module>
+
+    <!-- ios -->
+    <platform name="ios">
+        <config-file target="config.xml" parent="/*">
+            <feature name="BackgroundMode">
+                <param name="ios-package" value="APPBackgroundMode" onload="true" />
+                <param name="onload" value="true" />
+            </feature>
+        </config-file>
+
+        <config-file target="*-Info.plist" parent="UIBackgroundModes">
+            <array>
+                <string>audio</string>
+            </array>
+        </config-file>
+
+        <resource-file src="appbeep.wav" />
+
+        <header-file src="src/ios/APPBackgroundMode.h" />
+        <source-file src="src/ios/APPBackgroundMode.m" />
+        <header-file src="src/ios/APPMethodMagic.h" />
+        <source-file src="src/ios/APPMethodMagic.m" />
+    </platform>
+
+    <!-- android -->
+    <platform name="android">
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="BackgroundMode">
+                <param name="android-package" value="de.appplant.cordova.plugin.background.BackgroundMode"/>
+            </feature>
+            <feature name="BackgroundModeExt">
+                <param name="android-package" value="de.appplant.cordova.plugin.background.BackgroundModeExt"/>
+            </feature>
+        </config-file>
+
+        <config-file target="res/xml/config.xml" parent="/*">
+            <preference name="KeepRunning" value="true" />
+        </config-file>
+
+        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+            <service android:name="de.appplant.cordova.plugin.background.ForegroundService" />
+        </config-file>
+
+        <config-file target="AndroidManifest.xml" parent="/manifest">
+            <uses-permission android:name="android.permission.WAKE_LOCK" />
+			<uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+            <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+            <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+        </config-file>
+
+        <source-file
+            src="src/android/BackgroundMode.java"
+            target-dir="src/de/appplant/cordova/plugin/background" />
+
+        <source-file
+            src="src/android/BackgroundModeExt.java"
+            target-dir="src/de/appplant/cordova/plugin/background" />
+
+        <source-file
+            src="src/android/ForegroundService.java"
+            target-dir="src/de/appplant/cordova/plugin/background" />
+
+        <framework src="androidx.core:core:1.0.0" />
+		<dependency id="cordova-androidx-build" />
+        <resource-file src="src/android/res/drawable/power.xml" target="res/drawable/power.xml" />
+        <resource-file src="src/android/res/drawable-hdpi/power.png" target="res/drawable-hdpi/power.png" />
+        <resource-file src="src/android/res/drawable-mdpi/power.png" target="res/drawable-mdpi/power.png" />
+        <resource-file src="src/android/res/drawable-xhdpi/power.png" target="res/drawable-xhdpi/power.png" />
+        <resource-file src="src/android/res/drawable-xxhdpi/power.png" target="res/drawable-xxhdpi/power.png" />
+    </platform>
+
+    <!-- browser -->
+    <platform name="browser">
+        <config-file target="config.xml" parent="/*">
+            <feature name="BackgroundMode">
+                <param name="browser-package" value="BackgroundMode"/>
+            </feature>
+        </config-file>
+
+        <js-module src="src/browser/BackgroundModeProxy.js" name="BackgroundMode.Proxy">
+            <runs />
+        </js-module>
+    </platform>
+
+</plugin>

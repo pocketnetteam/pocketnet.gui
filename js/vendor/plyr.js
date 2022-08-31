@@ -9198,6 +9198,9 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
       let localTransport;
 
       if (isElectron) {
+
+        console.log('localVideo', localVideo, parsed)
+
         localTransport = peertubeTransport(electron.ipcRenderer, localVideo);
         localVideo = undefined;
       }

@@ -218,10 +218,10 @@
     border-top: 0;
   }
   #tagcloud .tcaptiontable > div.mlab span {
-    font-size: 1em;
+    font-size: 0.9em;
   }
   #tagcloud .tag {
-    font-size: 1em;
+    font-size: 0.9em;
   }
   #tagcloud .tag > div.tagvalue {
     padding-top: 4px;
@@ -229,14 +229,14 @@
   }
   #tagcloud .tag > div.tagvalue span,
   #tagcloud .tag > div.tagvalue i {
-    font-size: 1em;
+    font-size: 0.9em;
   }
   #tagcloud .tag > div.iconWrapper i {
     font-size: 0.8em;
   }
   #tagcloud .tag > div.tagsearch i,
   #tagcloud .tag > div.tagcheck i {
-    font-size: 1em;
+    font-size: 0.9em;
   }
   #tagcloud .hidealltags,
   #tagcloud .showalltags {
@@ -246,6 +246,6 @@
   #tagcloud .showalltags span,
   #tagcloud .hidealltags i,
   #tagcloud .showalltags i {
-    font-size: 1em;
+    font-size: 0.9em;
   }
 }
