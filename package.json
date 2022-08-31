@@ -13,6 +13,8 @@
     "main": "main.js",
     "repository": "github:pocketnetapp/pocketnet.gui",
     "scripts": {
+        "gulp:clean": "gulp clean:styles",
+        "gulp:build": "gulp build:styles --debug",
         "start": "electron . --development",
         "start:test": "electron . --development --test",
         "pack": "electron-builder -w --dir --x64",
@@ -47,7 +49,16 @@
         "electron-notarize": "",
         "electron-reload": "",
         "electron-reloader": "",
-        "humanize": "0.0.9"
+        "glob": "^7.2.0",
+        "gulp": "^4.0.2",
+        "gulp-clean": "^0.4.0",
+        "gulp-clean-css": "^4.3.0",
+        "gulp-concat": "^2.6.1",
+        "gulp-if": "^3.0.0",
+        "gulp-less": "^5.0.0",
+        "gulp-sourcemaps": "^3.0.0",
+        "humanize": "0.0.9",
+        "yargs": "^17.3.1"
     },
     "dependencies": {
         "aes-js": "^3.1.2",

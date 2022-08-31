@@ -60,3 +60,14 @@ docs/
 posts/
 ./main.js
 cordova/cert.keystore
+
+# Excluding CSS files and
+# their mappings.
+#
+# To force the load use
+# git add --force <file>
+
+css/*/*.css
+css/*/*.css.map
+components/*/*.css
+components/*/*.css.map
