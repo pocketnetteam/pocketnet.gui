@@ -16,18 +16,17 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: '14'
-
       - name: Prepare
         run: |
           npm i
           npm run minimize:bastyon
-
       - name: Copy to dest dir
         run: rsync -ah --exclude={'.git','.gitignore','.github','package.json','package-lock.json','minimize.json','node_modules','.well-known','assets','proxy16','cordova','res','build'} ./ /docker/night/
-        
       - name: Reset nginx cache
         run: /data/reset_cache.sh
         shell: bash
+      - name: Clean work dir
+        run: rm -rf ./*
 
   build-macos:
     runs-on: macos-latest
@@ -180,3 +179,5 @@ jobs:
         run: cp ./**/Bastyon* /data/dev/binaries/night/
       - name: Copy HEAD information
         run: cp ./unix/head.txt /data/dev/binaries/night/head.txt
+      - name: Clean work dir
+        run: rm -rf ./*

@@ -46,6 +46,7 @@ jobs:
       - name: Prepare
         run: |
           tar xzf repo.tgz
+          rm -rf repo.tgz
           npm i
           npm run minimize:bastyon
       - name: Copy to dest dir
@@ -62,6 +63,7 @@ jobs:
       - name: Prepare
         run: |
           tar xzf repo.tgz
+          rm -rf repo.tgz
           npm i
           npm run minimize:bastyon:test
       - name: Copy to dest dir
@@ -304,4 +306,6 @@ jobs:
         run: cp ./**/Bastyon* /data/dev/binaries/dev/
       - name: Copy HEAD information
         run: cp ./head/head.txt /data/dev/binaries/dev/head.txt
+      - name: Clean work dir
+        run: rm -rf ./*
       
