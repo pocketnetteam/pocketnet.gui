@@ -199,7 +199,6 @@ var socialshare2 = (function(){
 			},
 
 			nativeshare : function(e){
-
 				e.target.blur();
 				self.app.mobile.vibration.small()
 
@@ -279,13 +278,15 @@ var socialshare2 = (function(){
 		var renders = {
 			sharebuttons : function(){
 
+				var socials = getsocials();
+				debugger;
 				if (ed.sharing){
 					self.shell({
 
 						name :  'sharebuttons',
 						el :   el.c.find('.sharebuttons'),
 						data : {
-							socials : getsocials(),
+							socials : socials,
 						},
 	
 					}, function(_p){
@@ -707,6 +708,7 @@ var socialshare2 = (function(){
 							}
 						}
 
+
 						_el.ShareLink({
 							title: ed.sharing.title,
 							text: text,
@@ -752,7 +754,6 @@ var socialshare2 = (function(){
 			})
 
 			el.c.find('.forrepost').on('click', events.repost)
-
 
 			el.c.find('.nativeshare .button').on('click', events.nativeshare)
 
@@ -906,8 +907,7 @@ var socialshare2 = (function(){
 
 				renders.sharebuttons()
 
-				
-
+			
 				ParametersLive(_.toArray(eparameters), el.c)
 			
 

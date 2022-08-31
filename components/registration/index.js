@@ -353,7 +353,7 @@ var registration = (function(){
 
 		var steps = {
 			settings : {
-				id : 'settings',
+				id : 'sharing',
 				nextindex : 'captcha',
 
 				prev : function(clbk){
@@ -362,11 +362,11 @@ var registration = (function(){
 			
 				},
 
-				render : 'settings',
+				render : 'sharing',
 
 				after : function(el, pel){
 
-					
+								
 				},
 
 				next : true				
@@ -822,6 +822,59 @@ var registration = (function(){
 					})
 
 					
+				}
+
+
+			},
+
+			sharing : {
+
+				id : 'sharing',
+
+				prev : function(clbk){
+
+					clbk()
+				},
+
+				render : 'sharing',
+
+				after : function(el){
+
+					debugger;
+
+					self.nav.api.load({
+						open : true,
+						href : 'socialshare2',
+						history : true,
+						inWnd : true,
+
+						essenseData : {
+							url : 'https://bastyon.com/welcome?connect=TT2CeQuHiM8E8hG4rkJcaMKQ8gWqhZmNUH',
+							sharing: {
+								image : '',
+								images : [],
+								title : "caption.joinApp",
+								html : {
+									body : "caption.joinApp" + ' ' + "caption.hasInvitedToJoin",
+									preview : "caption.joinApp" + ' ' + "caption.hasInvitedToJoin"
+								},
+					
+								text : {
+									body : "caption.joinApp" + ' ' + "caption.hasInvitedToJoin",
+									preview : "caption.joinApp"
+								}
+							},
+
+							embedding : {
+								type : 'post',
+							}
+						}
+					})
+
+
+	
+		
+
 				}
 
 
@@ -1492,12 +1545,34 @@ var registration = (function(){
 
 			bloggers : function(el, clbk){
 
+				var plugin = deep(window, 'plugins.socialsharing')
+
+				console.log('plugin', plugin);
+
 				self.shell({
 
 					name :  'bloggers',
 					el :   el,
 					data : {
 						addresses: addresses
+					},
+
+				}, function(_p){
+
+					if (clbk)
+						clbk(_p.el);
+
+				})
+			},
+
+			
+			sharing : function(el, clbk){
+
+				self.shell({
+
+					name :  'sharing',
+					el :   el,
+					data : {
 					},
 
 				}, function(_p){
