@@ -9,7 +9,7 @@ var usersettings = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el, composed, controlller;
+		var el, composed, controller;
 
 		var checking = false
 
@@ -154,7 +154,7 @@ var usersettings = (function(){
 							meta.tgto.value = '';
 
 						}
-
+						
 						composed = self.app.platform.sdk.usersettings.compose(make)
 
 						self.sdk.usersettings.save();
@@ -313,6 +313,8 @@ var usersettings = (function(){
 			primary : primary,
 
 			getdata : function(clbk){
+
+				self.app.platform.sdk.usersettings.init();
 
 				composed = self.app.platform.sdk.usersettings.compose(make)
 				var data = {};

@@ -1,0 +1,120 @@
+.statistic .title {
+  max-width: 700px;
+  font-size: 2em;
+  font-weight: 100;
+}
+@media only screen and (max-width: 768px) {
+  .statistic .title {
+    font-size: 1.5em;
+  }
+}
+.statistic .metric-wrapper {
+  display: flex;
+  width: 100%;
+}
+.statistic .wrapper {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  padding-bottom: 100px;
+  justify-content: space-between;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+  color: rgb(var(--neutral-grad-3));
+}
+.statistic .wrapper .wrap {
+  box-sizing: border-box;
+  width: 25%;
+  padding-bottom: 0.5em;
+  padding-right: 0.5em;
+  transition: 0.3s ease all;
+  cursor: pointer;
+}
+.statistic .wrapper .wrap > div {
+  height: 100%;
+  background: rgb(var(--background-secondary-theme));
+  padding: 0.5em;
+}
+.statistic .wrapper .wrap > div span {
+  display: block;
+  font-size: 12px;
+  min-height: 50px;
+}
+@media only screen and (max-width: 992px) {
+  .statistic .wrapper .wrap {
+    width: 50%;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .statistic .wrapper .wrap {
+    width: 100%;
+    padding: 0 0 0.5em;
+  }
+  .statistic .wrapper .wrap > div {
+    padding: 0.5em 1em;
+    margin-bottom: 0.5em;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .statistic .wrapper {
+    flex-wrap: wrap;
+  }
+}
+.statistic .count {
+  font-size: 1.5em;
+  font-weight: 200;
+}
+.statistic .top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 2em 0;
+}
+.statistic .form {
+  display: flex;
+}
+.statistic .form form {
+  display: flex;
+  align-items: center;
+  color: rgb(var(--neutral-grad-3));
+  -webkit-tap-highlight-color: transparent;
+}
+.statistic .form form label {
+  display: flex;
+  align-items: center;
+  margin-right: 0.5em;
+}
+.statistic .form form label input {
+  margin-left: 0.5em;
+  padding: 5px;
+  border: none;
+  outline: none;
+  max-width: 120px;
+  border-radius: 5px;
+  background-color: rgb(var(--text-on-bg-ac-color));
+}
+.statistic .form form label ::-webkit-calendar-picker-indicator {
+  background-color: rgb(var(--background-main));
+  padding: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+@media only screen and (max-width: 992px) {
+  .statistic .form form {
+    margin: 1em 0 0;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .statistic .form form {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .statistic .form {
+    width: 100%;
+  }
+}

@@ -138,7 +138,7 @@ var makecaption = function(){
 			c = findAndReplaceLink(filterXSS(clearScripts(c)), true)
 		%>
 			<div class="paddingWrapper">
-				<div class="sharecaption canmark">
+				<div class="sharecaption canmark hyhpensenable">
 					<span><%=app.actions.emoji(nl2br(trimrn(c)))%></span>
 				</div>
 			</div>
@@ -158,7 +158,7 @@ var makecaptionclear = function(){
 
 		%>
 			<div class="paddingWrapper hideOnFullVideo">
-				<div class="sharecaption canmark cancopy">
+				<div class="sharecaption canmark cancopy hyhpensenable">
 					<%=app.actions.emoji(nl2br(trimrn(cc)))%>
 				</div>
 			</div>
@@ -225,7 +225,7 @@ var arranges = {
 
 		%>
 			<div class="paddingWrapper ">
-				<div class="message canmark cancopy">
+				<div class="message canmark cancopy hyhpensenable">
 					<%=app.actions.emoji((clearScripts(((nm)))))%>
 				</div>
 			</div>
@@ -295,6 +295,13 @@ var arranges = {
 						
 							
 						</div>
+
+						<!--<div class="imagesLoader">
+							<div>
+								<div class="preloader5"><img src="./img/three-dots.svg"/></div>
+							</div>
+						</div>-->
+
 					</div>
 
 				<% } %>
@@ -323,7 +330,7 @@ var arranges = {
 
 } %>
 
-<div class="sharecnt <% if(typeof sharesFromSub != 'undefined' && sharesFromSub[share.txid]) {%>  fromsub <% } %> <% if(share.deleted) { %> deleted <% } %>">
+<div lang="<%-share.language%>" class="sharecnt <% if(typeof sharesFromSub != 'undefined' && sharesFromSub[share.txid]) {%>  fromsub <% } %> <% if(share.deleted) { %> deleted <% } %>">
 
 	<div class="work unselectablemobile">
 
@@ -341,7 +348,7 @@ var arranges = {
 						%>
 
 						<div class="icon">
-							<div class="usericon usericonsbsa another" image="<%-src || '*'%>" ban=".gif">
+							<div class="usericon usericonsbsa another" image="<%-src || '*'%>" ban=".gif" contain="none">
 
 								<% if(!src && letter) { %>
 

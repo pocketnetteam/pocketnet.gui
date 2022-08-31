@@ -285,16 +285,21 @@ html.testpocketnet .testpocketnetbg {
   background-repeat: repeat-x repeat-y;
 }
 [image] {
+  will-change: opacity, background;
+  /*contain: strict;*/
   opacity: 0;
   -moz-transition: opacity 0.3s;
   -o-transition: opacity 0.3s;
   -webkit-transition: opacity 0.3s;
   transition: opacity 0.3s;
 }
+[image][contain] {
+  contain: none;
+}
 [image][visibleimage] {
   opacity: 1;
 }
-[image="*"] {
+[imageloaded="true"] {
   opacity: 1;
 }
 .joypixels,
@@ -1074,6 +1079,9 @@ pie {
   .upbutton .full .fulltable > div.icon {
     width: 40px;
   }
+}
+html.mobileview #footerWrapper {
+  /*display: none;*/
 }
 html.mobileview .upbutton {
   display: none;
@@ -2703,6 +2711,12 @@ input[type=radio].radio:checked + label {
   height: auto;
   z-index: 999;
 }
+.wnd.pipmini .recomandationsFromContent {
+  display: none!important;
+}
+.wnd.pipmini .wndinner {
+  box-shadow: none;
+}
 .wnd.pipmini ._changeplace {
   display: none;
 }
@@ -2861,16 +2875,6 @@ input[type=radio].radio:checked + label {
     color: #fff;
     opacity: 0.7;
   }
-}
-.bodyshadow {
-  position: fixed;
-  z-index: 4;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(var(--background-total-theme), 0.6);
-  display: none;
 }
 .overflowWrapper {
   overflow-x: hidden;
@@ -3054,6 +3058,12 @@ input[type=radio].radio:checked + label {
 }
 .preloader6 img {
   width: 30px;
+}
+.preloader5 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 7.5px;
 }
 .preloader5 img {
   height: 7.5px;
@@ -3414,6 +3424,7 @@ input[type=radio].radio:checked + label {
   width: 93%;
   margin: 0 auto;
   border: 0;
+  box-shadow: none;
 }
 .menudialog .buttons {
   display: none;
@@ -3433,7 +3444,7 @@ input[type=radio].radio:checked + label {
   text-align: center;
   background: rgb(var(--background-total-theme));
   cursor: pointer;
-  border-radius: 3px;
+  border-radius: 18px;
   margin-top: 0.25em;
 }
 .menudialog .text .item.itemmain {
@@ -3441,9 +3452,8 @@ input[type=radio].radio:checked + label {
 }
 .menudialog .text .item.itemclose {
   margin-top: 1em;
-  background: rgba(var(--neutral-grad-2), 0.1);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
+  background: rgba(var(--neutral-grad-4), 0.1);
+  color: rgb(var(--text-on-bg-ac-color));
 }
 .menudialog .text .item:nth-last-child(1) {
   border-bottom: 0;
@@ -4395,7 +4405,7 @@ html.mobileview .tooltipMobileDialog .menuitem {
   text-align: center;
   background: rgb(var(--background-total-theme));
   cursor: pointer;
-  border-radius: 3px;
+  border-radius: 18px;
   margin-top: 0.25em;
   text-align: left;
 }
@@ -5374,6 +5384,30 @@ html.mobileview.fullscreen #navigationWrapper {
 .trumbowyg-modal {
   z-index: 0!important;
 }
+.hyhpensenable {
+  -webkit-hyphens: auto;
+  -webkit-hyphenate-limit-before: 3;
+  -webkit-hyphenate-limit-after: 3;
+  -webkit-hyphenate-limit-chars: 6 3 3;
+  -webkit-hyphenate-limit-lines: 2;
+  -webkit-hyphenate-limit-last: always;
+  -webkit-hyphenate-limit-zone: 8%;
+  -moz-hyphens: auto;
+  -moz-hyphenate-limit-chars: 6 3 3;
+  -moz-hyphenate-limit-lines: 2;
+  -moz-hyphenate-limit-last: always;
+  -moz-hyphenate-limit-zone: 8%;
+  -ms-hyphens: auto;
+  -ms-hyphenate-limit-chars: 6 3 3;
+  -ms-hyphenate-limit-lines: 2;
+  -ms-hyphenate-limit-last: always;
+  -ms-hyphenate-limit-zone: 8%;
+  hyphens: auto;
+  hyphenate-limit-chars: 6 3 3;
+  hyphenate-limit-lines: 2;
+  hyphenate-limit-last: always;
+  hyphenate-limit-zone: 8%;
+}
 .article_body h1 {
   font-size: 2em;
 }
@@ -5607,6 +5641,7 @@ html.mobileview.fullscreen #navigationWrapper {
    ========================================================================== */
 #splashScreen {
   position: fixed;
+  contain: strict;
   top: 0;
   left: 0;
   width: 100%;

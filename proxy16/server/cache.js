@@ -557,15 +557,15 @@ var Cache = function(p){
 
 
         _.each(ckeys, function(k, key){
-            if (typeof k.block != undefined){
+            if (k.block){
 
-                if (k.block < block.height){
+                if (k.block && k.block < block.height){
                     storage[key] = {}
 
                     if (k.smart){
                         smart[key] = {}
                     }
-                    //console.log("Invalidate cache", key, block.height)
+                    //console.log("Invalidate cache", key, k.block, block.height)
                 }
                     
             }

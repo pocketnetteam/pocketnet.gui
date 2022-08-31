@@ -332,6 +332,12 @@
   padding-left: 0;
   padding-right: 0;
 }
+#userpage .maketsWrapper .report #statistic {
+  min-height: 600px;
+}
+#userpage .maketsWrapper .report #statistic .mwork {
+  padding-bottom: 2em;
+}
 #userpage .tooltipPanel {
   margin-top: 0.5em;
   text-align: right;

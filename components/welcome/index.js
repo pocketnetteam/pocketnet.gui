@@ -76,8 +76,8 @@ var welcome = (function(){
 				if(p.state){
 					self.nav.api.load({
 						open : true,
-						href : 'userpage',
-						history : true
+						href : 'index',
+						//history : true
 					})
 
 					return

@@ -38,6 +38,10 @@ deep = function(obj, key){
     }
 }
 
+isios = function () {
+    return (window.cordova && window.device && deep(window, 'device.platform') == 'iOS') || (navigator || {}).platform &&  /iPad|iPhone|iPod/.test(navigator.platform || '')
+}
+
 getbaseorientation = function(){
 	
 	var angle90 = {
@@ -691,7 +695,7 @@ Date.prototype.addMinutes=function(b){a=new Date(this.valueOf());a.setMinutes(th
 Date.prototype.addSeconds=function(b){a=new Date(this.valueOf());a.setSeconds(this.getSeconds()+b);return a};
 Date.prototype.lastDayOfMonth=function(){return new Date(this.getFullYear(),this.getMonth()+1,0).getDate()};
 
-  Date.prototype.yyyymmdd = function(d) {
+Date.prototype.yyyymmdd = function(d) {
     var mm = this.getMonth() + 1; // getMonth() is zero-based
     var dd = this.getDate();
 
@@ -699,4 +703,6 @@ Date.prototype.lastDayOfMonth=function(){return new Date(this.getFullYear(),this
           (mm > 9 ? '' : '0') + mm,
           (dd > 9 ? '' : '0') + dd
     ].join(d || '');
- };
+};
+
+ 

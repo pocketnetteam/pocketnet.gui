@@ -1030,8 +1030,6 @@ PeerTubePocketnet = function (app) {
 						return Promise.resolve(r);
 					}
 
-					console.log("R", r)
-
 					return Promise.reject(error('videoQuotaUsedDaily'));
 				});
 			},
@@ -1071,7 +1069,6 @@ PeerTubePocketnet = function (app) {
 						username: deep(r, 'username'),
 					};
 
-					console.log("R", r)
 
 					if (!data.channelId || !data.videoQuotaDaily)
 						return Promise.reject(error('usersMe'));
@@ -1123,7 +1120,6 @@ PeerTubePocketnet = function (app) {
 				)
 					.then(({ client_id, client_secret }) => {
 
-						console.log('client_id, client_secret', client_id, client_secret)
 
 						if (!client_id || !client_secret) {
 							return Promise.reject(error('oauthClientsLocal'));

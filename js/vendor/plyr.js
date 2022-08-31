@@ -9198,6 +9198,9 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
       let localTransport;
 
       if (isElectron) {
+
+        console.log('localVideo', localVideo, parsed)
+
         localTransport = peertubeTransport(electron.ipcRenderer, localVideo);
         localVideo = undefined;
       }
@@ -9208,11 +9211,13 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
 
         var host = options.app.peertubeHandler.helpers.url(parsed.host, true)
 
-        PeerTubeEmbeding.main(target, parsed.id, {
+        console.log('options.startTime', options.startTime)
+
+        PeerTubeEmbeding.main(target, parsed.id, host, {
 
           host : host,
           wautoplay : options.wautoplay,
-          useP2P : options.useP2P,
+          p2pEnabled : options.useP2P,
           enableHotkeys : options.enableHotkeys,
           logoType : options.logoType,
           localVideo : localVideo,
@@ -9220,7 +9225,11 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
           localTransport,
           hlsError : options.hlsError,
           light : options.light,
-          pathfunction : options.app.peertubeHandler.helpers.url
+          pathfunction : options.app.peertubeHandler.helpers.url,
+          mobile : options.mobile,
+
+          assetsStorage : localVideo ? null : deep(options, 'app.videotransport.assets'),
+          segmentsStorage : localVideo ? null : deep(options, 'app.videotransport.segments')
 
         },{
           hlsError : options.hlsError,
@@ -9232,7 +9241,8 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
           playbackStatusUpdate : options.playbackStatusUpdate,
           pictureInPictureRequest: options.pictureInPictureRequest,
           play : options.play,
-          pause : options.pause
+          pause : options.pause,
+          
 
   
         }).then(function(embed){

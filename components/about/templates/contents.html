@@ -115,7 +115,7 @@ var letter = name ? name[0] : ''
 
         <div class="icon">
             <a elementsid="<%-app.platform.api.authorlink(user.address.value.toString('hex'))%>" href="<%-app.platform.api.authorlink(user.address.value.toString('hex'))%>">	
-                <div class="usericon" ban=".gif" image="<%-src || '*'%>">
+                <div class="usericon" ban=".gif" image="<%-src || '*'%>" contain="none">
 
                     <% if(!src && letter) {%>
 

@@ -302,9 +302,16 @@ var main = (function(){
 
 				el.menu.attr('fmode', fmode)
 				el.menu.find('.mode').removeClass('active')
-				el.menu.find('.mode[mode="'+value+'"]').addClass('active')
 
-				_scrollTo(el.menu.find('.active'), el.menu.find('.modes'), 0, 0, 'Left') 
+				var act = el.menu.find('.mode[mode="'+value+'"]')
+
+				act.addClass('active')
+
+				setTimeout(() => {
+					if(el.menu)
+						_scrollTo(act, el.menu.find('.modes'), 0, 0, 'Left') 
+				}, 50)
+				
 
 			},
 			menu : function(){
@@ -358,6 +365,7 @@ var main = (function(){
 								items.push({
 									text : a.label(),
 									action : function (clbk) {
+
 				
 										self.nav.api.load({
 											open : true,
@@ -367,13 +375,15 @@ var main = (function(){
 											replace : true
 										})
 
+										d.destroy()
+
 										return true
 				
 									}
 								})
 							})
 				
-							menuDialog({
+							var d = menuDialog({
 								items: items
 							})
 						})

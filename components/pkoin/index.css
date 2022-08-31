@@ -151,14 +151,12 @@
   top: 12px;
 }
 #pkoin .content .fieldsWrapper .fields .sum .inputWrapper .notion {
-  display: flex;
-  justify-content: space-between;
   font-size: 0.8em;
   margin-top: 0.5em;
 }
 #pkoin .content .fieldsWrapper .fields .sum .inputWrapper .notion .balance {
   display: flex;
-  padding-left: 1.5em;
+  padding-left: 1em;
 }
 #pkoin .content .fieldsWrapper .fields .sum .inputWrapper .notion .balance .text {
   color: rgb(var(--neutral-grad-3));
@@ -171,8 +169,8 @@
   padding-left: 0.5em;
 }
 #pkoin .content .fieldsWrapper .fields .sum .inputWrapper .notion .errorWrapper {
-  padding-left: 0.5em;
-  padding-right: 1.5em;
+  margin-top: 0.5em;
+  padding-left: 1em;
   color: rgb(var(--color-bad));
 }
 #pkoin .content .fieldsWrapper .fields .comment .text {

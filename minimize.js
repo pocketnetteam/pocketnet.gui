@@ -11,11 +11,12 @@ var ncp = require('ncp').ncp;
 const _path = require('path');
 ncp.limit = 16;
 
+var minifyHtml = require('html-minifier').minify;
 
 var args = {
 	test : false,
 	prodaction : true,
-	vendor : 89,
+	vendor : 90,
     path : '/',
     makewebnode: false,
 	project : "Pocketnet",
@@ -44,6 +45,31 @@ _.each(argcli, function(a){
 	}
 	
 })
+
+var addzeros = function(v){
+    v = v.toString()
+
+    var zs = 5 - v.length
+
+    for(var i = 0; i < zs; i++){
+        v = '0' + v
+    }
+
+    return v
+}
+
+var numfromreleasestring = function(v){
+
+    var vss = v.split('.')
+
+    vss[2] = addzeros(vss[2])
+
+    v = vss.join('.').replace(/[^0-9]/g, '')
+
+    var vs = Number(v.substr(0, 1) + '.' + v.substr(1))
+
+    return vs
+}
 
 var mapJsPath = './js/_map.js';
 
@@ -594,7 +620,12 @@ fs.exists(mapJsPath, function (exists) {
 
 									if(!scripted[i.c]) scripted[i.c] = {}
 
-									scripted[i.c][i.n] = data.toString()
+									scripted[i.c][i.n] = minifyHtml(data.toString(), {
+										collapseWhitespace : true,
+										removeComments : true
+									})
+
+									//var uglified = htmlUglify.process(htmlString);
 
 									p.success();
 								});
@@ -633,7 +664,6 @@ fs.exists(mapJsPath, function (exists) {
 
 				fs.readdir(path, function(err, items) {
 
-					console.log('items', items)
 
 					lazyEach({
 						array : items,
@@ -641,7 +671,6 @@ fs.exists(mapJsPath, function (exists) {
 	
 							fs.readdir(path + p.item + '/templates/', function(err, items2) {
 
-								console.log('items2', items2)
 
 								_.each(items2, function(i){
 									__templates.push({
@@ -658,8 +687,6 @@ fs.exists(mapJsPath, function (exists) {
 						
 						all : {
 							success : function(){
-
-								console.log('__templates', __templates)
 
 								__joinTemplates(__templates, clbk)
 								
@@ -815,20 +842,21 @@ fs.exists(mapJsPath, function (exists) {
 							}
 
 							JSENV += '<script>window.packageversion = "' + package.version + '";</script>';
+							JSENV += '<script>window.versionsuffix = "' + package.versionsuffix + '";</script>';
 
-							
+							vs = numfromreleasestring(package.version) + '_' + (package.versionsuffix || "0")
 	
 							if(args.prodaction)
 							{
 
 								//JS += '<script type="text/javascript">'+joinfirst.data+'</script>';
-								JS += '<script join src="js/joinfirst.min.js?v='+rand(1, 999999999999)+'"></script>';
-								JSPOST += '<script async join src="js/join.min.js?v='+rand(1, 999999999999)+'"></script>';
-								JSPOST += '<script async join src="js/joinlast.min.js?v='+rand(1, 999999999999)+'"></script>';
+								JS += '<script join src="js/joinfirst.min.js?v='+vs+'"></script>';
+								JSPOST += '<script async join src="js/join.min.js?v='+vs+'"></script>';
+								JSPOST += '<script async join src="js/joinlast.min.js?v='+vs+'"></script>';
 								VE = '<script async join src="js/vendor.min.js?v='+args.vendor+'"></script>';
-								CSS = '<link rel="stylesheet" href="css/master.css?v='+rand(1, 999999999999)+'">';
+								CSS = '<link rel="stylesheet" href="css/master.css?v='+vs+'">';
 	
-								index = index.replace(new RegExp(/\?v=([0-9]*)/g), '?v=' + rand(1, 999999999999));
+								index = index.replace(new RegExp(/\?v=([0-9]*)/g), '?v=' + vs);
 							}
 							else
 							{
@@ -895,7 +923,7 @@ fs.exists(mapJsPath, function (exists) {
 							index = index.replace("__CSS__" , CSS);
 							index = index.replace("__JSPOST__" , JSPOST);
 							index = index.replace("__CACHED-FILES__", CACHED_FILES);
-							index = index.replace("__PACKAGE-VERSION__", package.version);
+							index = index.replace("__PACKAGE-VERSION__", package.version + "_" + package.versionsuffix);
 							index = index.replace("__PACKAGE-CORDOVAVERSIONCODE__", package.cordovaversioncode);
 							index = index.replace("__PACKAGE-CORDOVAVERSION__", package.cordovaversion);
 

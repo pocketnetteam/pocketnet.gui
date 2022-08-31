@@ -39,7 +39,7 @@ _.each(groupshares, function(gs, address){ 	%>
 			if (j) h = 'hidden'
 
 		%>
-				<div class="share share_common <%-h%> <% if(me && me.relation(share.address, 'blocking')) {%>blocking<% } %> shareinlenta" id="<%-share.txid%>" style="">
+				<div class="share <% if(gs.length > 1) { %> hashiddengroup <% } %> share_common <%-h%> <% if(me && me.relation(share.address, 'blocking')) {%>blocking<% } %> shareinlenta" id="<%-share.txid%>" style="">
 					<div class="shareSpacer">
 						
 					</div>

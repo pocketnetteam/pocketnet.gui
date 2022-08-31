@@ -283,7 +283,7 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
     <div class="iconWrapper">
         <a elementsid="shareiconprofilelink" href="<%-app.platform.api.authorlink(share.address)%>">
             <div class="icon">
-                <div class="usericon usericonsbsa another" image="<%-src || '*'%>" ban=".gif">
+                <div class="usericon usericonsbsa another" image="<%-src || '*'%>" ban=".gif" contain="none">
 
                     <% if(!src && letter) { %>
 
@@ -380,7 +380,7 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
 	
 	%> 
 
-	<div class="article cancopy">
+	<div class="article cancopy hyhpensenable">
         <% if(txt) {%>
 
 		    <%=txt%>
@@ -396,9 +396,9 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
 
 <% } %>
 
-<div class="sharecnt ">
+<div class="sharecnt">
 
-    <div class="sharearticle  <% if(share.deleted) { %> deleted <% } %>">
+    <div class="sharearticle  <% if(share.deleted) { %> deleted <% } %>" lang="<%-share.language%>">
 
         <div class="shareTable <%-subscribed%>" address="<%-share.address%>" stxid="<%-share.txid%>">
 
@@ -439,7 +439,7 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
                             
                         </div>
 
-                        <div class="textscnts widthcontainer ">
+                        <div class="textscnts widthcontainer hyhpensenable">
 
                             <% if(all) { %>
 
