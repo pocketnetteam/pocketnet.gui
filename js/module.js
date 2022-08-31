@@ -227,19 +227,22 @@ nModule = function(){
 
 				}
 
-				if(typeof p.el == 'function') p.el = p.el();
-			
-				if(!inserted)
-				{
-					if (p.el) {
-						self.insertTemplate(p, html);
-					}
-				}
+				window.requestAnimationFrame(() => {
 
-				if(!p.animation)
-				{
-					completeClbk(p);
-				}
+					if(typeof p.el == 'function') p.el = p.el();
+			
+					if(!inserted)
+					{
+						if (p.el) {
+							self.insertTemplate(p, html);
+						}
+					}
+
+					if(!p.animation)
+					{
+						completeClbk(p);
+					}
+				})
 
 			} ,p)
 

@@ -321,6 +321,7 @@ var lenta = (function(){
 			},
 
 			scrollmode : function(m){
+				
 				if(m){
 					$('html').addClass('scrollmodedown')
 				}
@@ -393,9 +394,10 @@ var lenta = (function(){
 
 			rebuilddelay : function(){
 
-
-				if (el.c)
-					el.c.addClass('rebuilding')
+				window.requestAnimationFrame(() => {
+					if (el.c)
+						el.c.addClass('rebuilding')
+				})
 
 				delay = slowMade(function(){
 
@@ -691,7 +693,7 @@ var lenta = (function(){
 
 				
 			},
-			removeAdditionalByScroll : function(){
+			/*removeAdditionalByScroll : function(){
 
 				if(ascrollel){
 					var s = self.app.lastScrollTop;
@@ -719,7 +721,7 @@ var lenta = (function(){
 					el.w.on('scroll', actions.removeAdditionalByScroll);
 				}
 				
-			},
+			},*/
 
 			stateAction : function(link, clbk, txid){
 
@@ -2466,13 +2468,13 @@ var lenta = (function(){
 					
 			},
 
-			additional : function(){
+			/*additional : function(){
 
 				var _el = $(this).closest('.share');
 
 				actions.additional(_el, !_el.hasClass('showAdditional'))
 
-			},
+			},*/
 
 			openGallery : function(){
 				var id = $(this).closest('.shareinlenta').attr('id');
@@ -2480,20 +2482,6 @@ var lenta = (function(){
 
 				var share = self.app.platform.sdk.node.shares.getWithTemp(id) 
 				
-				/*self.app.platform.sdk.node.shares.storage.trx[id];
-
-				if(!share){
-					var temp = _.find(self.sdk.node.transactions.temp.share, function(s){
-						return s.txid == id
-					})
-
-
-					share = new pShare();
-					share._import(temp);
-					share.temp = true;
-					share.address = self.app.platform.sdk.address.pnet().address
-				}*/
-
 				self.app.mobile.vibration.small()
 				actions.openGalleryRec(share, src)
 			},
@@ -2713,11 +2701,16 @@ var lenta = (function(){
 
 						console.log("TIMEOUT")
 
-						if(el.loader && !el.loader.hasClass('loading')){
-							el.loader.addClass('loading')
-						}
+						window.requestAnimationFrame(() => {
 
-						loadertimeout = null
+							if(el.loader && !el.loader.hasClass('loading')){
+								el.loader.addClass('loading')
+							}
+
+							loadertimeout = null
+
+						})
+
 					}, 600)
 				}
 
@@ -2729,7 +2722,9 @@ var lenta = (function(){
 					}
 
 					if (el.loader && el.loader.hasClass('loading')){
-						el.loader.removeClass('loading')
+						window.requestAnimationFrame(() => {
+							el.loader.removeClass('loading')
+						})
 					}
 				}
 						
@@ -3158,19 +3153,23 @@ var lenta = (function(){
 
 					var c = function(){
 
-						if(!p.el.hasClass('rendered')){
-							p.el.addClass('rendered')
+						window.requestAnimationFrame(() => {
 
-							if (p.el.hasClass('hashiddengroup')){
-								p.el.closest('.authorgroup').find('.showmorebyauthor').addClass('active')
+							if(!p.el.hasClass('rendered')){
+								p.el.addClass('rendered')
+
+								if (p.el.hasClass('hashiddengroup')){
+									p.el.closest('.authorgroup').find('.showmorebyauthor').addClass('active')
+								}
+								
 							}
-							
-						}
-							
+								
 
-						if (clbk)
-							clbk();
-							clbk = null
+							if (clbk)
+								clbk();
+								clbk = null
+
+						})
 					}
 
 					
@@ -4600,7 +4599,7 @@ var lenta = (function(){
 			el.c.on('click', '.exitFull', events.exitFullScreenVideo)
 			el.c.on('click', '.sharecnt', events.clickOutsideOfWindow)
 			el.c.on('click', '.commentsWrapperHb', events.clickOutsideOfWindow)
-			el.c.on('click', '.additional', events.additional)
+			//el.c.on('click', '.additional', events.additional)
 			el.c.on('click', '.asubscribe', events.asubscribe)
 			el.c.on('click', '.aunsubscribe', events.aunsubscribe)
 			el.c.on('click', '.notificationturn', events.subscribePrivate)
@@ -4978,7 +4977,9 @@ var lenta = (function(){
 				}
 
 				if(essenseData.author && beginmaterial){
-					el.c.addClass('showprev')
+					window.requestAnimationFrame(() => {
+						el.c.addClass('showprev')
+					})
 				}
 
 				
@@ -5002,8 +5003,10 @@ var lenta = (function(){
 
 				if (error){
 					making = false;
-					
-					el.c.addClass('networkError')
+
+					window.requestAnimationFrame(() => {
+						el.c.addClass('networkError')
+					})
 				
 					//el.c.removeClass('loading')
 
@@ -5014,7 +5017,11 @@ var lenta = (function(){
 					return;
 				}
 
-				el.c.removeClass('networkError')
+				window.requestAnimationFrame(() => {
+					if (el.c.hasClass('networkError'))
+						el.c.removeClass('networkError')
+				})
+				
 
 				if(!shares){
 					making = false;
@@ -5281,7 +5288,7 @@ var lenta = (function(){
 
 				actions.cleardelay()
 
-				actions.scrollmode(false)
+				//actions.scrollmode(false)
 
 				isotopeinited = false
 
@@ -5421,14 +5428,6 @@ var lenta = (function(){
 
 				el.share = {};
 
-				/*if (essenseData.horizontal){
-					el.c.addClass('horizontal')
-				}
-
-				if (essenseData.compact){
-					el.c.addClass('compact')
-				}*/
-
 				initEvents();
 
 				clearnewmaterials()	
@@ -5436,14 +5435,6 @@ var lenta = (function(){
 				lwidth = el.c.width()
 
 				make(null, p);
-
-				/*if(essenseData.openapi){
-					el.c.addClass('openapi')
-				}
-
-				if (video){
-					el.c.addClass('mainvideo')
-				}*/
 
 				if(!essenseData.goback) p.clbk(null, p);
 

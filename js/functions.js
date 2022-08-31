@@ -572,93 +572,100 @@
 
 			var hiddenState = el.find('.hiddenState')
 
-			if (hiddenState.length){
-				hiddenState.before(wnd)
-			}	
-			else{	
-				el.append(wnd);
-			}
-			
+			window.requestAnimationFrame(() => {
 
-			wnd.find("._close").on('click', function(){
-				actions["close"](true);
-			});
-
-			wnd.find("._expand").on('click', function(){
-				actions["expand"](true);
-			});
-
-			wnd.find("._changeplace").on('click', function(){
-
-				var cur = localStorage['pipposition'] || 'default'
-
-				cur = nextElCircle(pippositions, cur)
-
-				localStorage['pipposition'] = cur
-
-				wnd.attr('position', cur)
-
-			});
-
-
-
-
-			////TODO
-
-			if (!p.noButtons) {
-				_.each(p.buttons, function(button, i){
-					var _el = wnd.find('.wndinner>div.buttons .button[bi="'+i+'"]')
-
-					var fn = button.fn || actions[button.action] || actions["close"];
-
-					_el.on('click', function(){fn(wnd, self)});
-				})
-			}
-
-			app.actions.playingvideo(null);
-
-			if(p.class) wnd.addClass(p.class);
-
-			wnd.css("display", "block");
-			wnd.addClass('asette')
-
-			if(p.showbetter) wnd.addClass('showbetter')
-
-
-			setTimeout(function(){
-				wnd.addClass('sette')
-			}, 20)
-
-			setTimeout(function(){
-				wnd.removeClass('asette')
-
-				if(!nooverflow){
-					app.actions.offScroll(wnd);
+				if (hiddenState.length){
+					hiddenState.before(wnd)
+				}	
+				else{	
+					el.append(wnd);
 				}
+				
+
+				wnd.find("._close").on('click', function(){
+					actions["close"](true);
+				});
+
+				wnd.find("._expand").on('click', function(){
+					actions["expand"](true);
+				});
+
+				wnd.find("._changeplace").on('click', function(){
+
+					var cur = localStorage['pipposition'] || 'default'
+
+					cur = nextElCircle(pippositions, cur)
+
+					localStorage['pipposition'] = cur
+
+					wnd.attr('position', cur)
+
+				});
+
+				if (!p.noButtons) {
+					_.each(p.buttons, function(button, i){
+						var _el = wnd.find('.wndinner>div.buttons .button[bi="'+i+'"]')
+
+						var fn = button.fn || actions[button.action] || actions["close"];
+
+						_el.on('click', function(){fn(wnd, self)});
+					})
+				}
+
+				app.actions.playingvideo(null);
+
+				if(p.class) wnd.addClass(p.class);
+
+				wnd.css("display", "block");
+				wnd.addClass('asette')
+
+				if(p.showbetter) wnd.addClass('showbetter')
+
+
+				setTimeout(function(){
+					window.requestAnimationFrame(() => {
+						wnd.addClass('sette')
+					})
+					
+				}, 20)
+
+				setTimeout(function(){
+					window.requestAnimationFrame(() => {
+						wnd.removeClass('asette')
+					})
+					
+
+					if(!nooverflow){
+						app.actions.offScroll(wnd);
+					}
+
+					if(app.mobileview && (wnd.hasClass('normalizedmobile'))){
+
+						setTimeout(function(){
+
+							if(clbk) clbk()
+
+							setTimeout(function(){
+								window.requestAnimationFrame(() => {
+									if (wnd)
+										wnd.find('.wndcontent>div').css('opacity', 1)
+								})
+							}, 100)
+
+						}, 30)
+
+					}
+
+				}, 220)
 
 				if(app.mobileview && (wnd.hasClass('normalizedmobile'))){
 
-					setTimeout(function(){
-
-						if(clbk) clbk()
-
-						setTimeout(function(){
-							if (wnd)
-								wnd.find('.wndcontent>div').css('opacity', 1)
-						}, 100)
-
-					}, 30)
-
+				}
+				else{
+					if(clbk) clbk()
 				}
 
-			}, 220)
-
-			if(app.mobileview && (wnd.hasClass('normalizedmobile'))){
-
-			}
-			else{
-				if(clbk) clbk()
-			}
+			})
 
 
 		}
@@ -1861,20 +1868,28 @@
 
 				image.src = src
 				image.onload = () => {
-					el.setAttribute('image', '*')
-					el.setAttribute('imageloaded', 'true')
-					el.style['background-image'] = 'url('+src+')';
-					el.style['background-size'] = 'cover';
-					el.style['background-position'] = 'center center';
-					el.style['background-repeat'] = 'no-repeat';
+
+					window.requestAnimationFrame(() => {
+
+						el.setAttribute('image', '*')
+						el.setAttribute('imageloaded', 'true')
+						el.style['background-image'] = 'url('+src+')';
+						el.style['background-size'] = 'cover';
+						el.style['background-position'] = 'center center';
+						el.style['background-repeat'] = 'no-repeat';
+
+					})
 
 					resolve()
 				}
 
 				image.onerror = () => {
-					el.setAttribute('image', '*')
 
-					resolve()
+					window.requestAnimationFrame(() => {
+						el.setAttribute('image', '*')
+
+						resolve()
+					})
 				}
 
 			})
@@ -11349,7 +11364,6 @@ function syntaxHighlight(json) {
 if(typeof window != 'undefined'){
 
 
-
 	var splashScreen = document.getElementById('splashScreen');
 
 	if (splashScreen) {
@@ -11399,13 +11413,13 @@ if(typeof window != 'undefined'){
 				}, zoomOutDuration * 2);
 			}
 			// Wait until half the rotation is done
-			setTimeout(() => {
+			/*setTimeout(() => {
 				// Change the logo image
 				if (splashScreenImg)
 					splashScreenImg.src = logos[nextLogoIndex];
 				// Increase index
 				nextLogoIndex = (nextLogoIndex >= (logos.length - 1)) ? 0 : nextLogoIndex + 1;
-			}, rotatingDuration * 0.5);
+			}, rotatingDuration * 0.5);*/
 		}
 
 		// Wait until the zoom in is done
