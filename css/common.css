@@ -10,6 +10,12 @@
 .share_common .extrashare {
   display: none;
 }
+.share_common .metadata .sys .fromrecommendationslabel {
+  color: rgb(var(--neutral-grad-2));
+}
+.share_common .metadata .sys .boostedlabel {
+  color: rgb(var(--color-good));
+}
 .share_common .pkoin {
   display: flex;
   align-items: center;

@@ -2068,3 +2068,5 @@ _l.androidPopupDisagree = "Не сейчас"
 _l.desktopPopupTitle = "Получайте информацию без цензуры в приложении Бастион"
 _l.desktopPopupAgree = "Скачать приложение"
 _l.desktopPopupDisagree = "Не сейчас"
+
+_l.recommended = 'Рекомендовано'

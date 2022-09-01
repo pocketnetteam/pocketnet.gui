@@ -100,6 +100,9 @@ var postscores = (function(){
 							else
 							{
 
+								self.app.platform.sdk.memtags.add(share.tags, 'l_' + share.txid, 1)
+								self.app.platform.sdk.recommendations.successRecommendation(share)
+
 								if (clbk)
 									clbk(true)
 							}

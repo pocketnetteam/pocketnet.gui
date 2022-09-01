@@ -488,6 +488,15 @@ var post = (function () {
 									percent : ((position/duration) * 100).toFixed(0)
 								})
 
+								self.app.platform.sdk.activity.adduser('video', share.address, 6 * position / duration)
+								self.app.platform.sdk.memtags.add(share.tags, 'v_' + obj.txid, 0.5)
+
+								return
+							}
+
+							if(playbackState == 'playing' && duration < 120 && position / duration > 0.2){
+								self.app.platform.sdk.activity.adduser('video', share.address, 6 * position / duration)
+								self.app.platform.sdk.memtags.add(share.tags, 'v_' + obj.txid, 0.5)
 							}
 						},
 
@@ -666,6 +675,10 @@ var post = (function () {
 
 								if (clbk)
 									clbk(true)
+
+								self.app.platform.sdk.memtags.add(share.tags, 'l_' + share.txid, 1)
+								self.app.platform.sdk.recommendations.successRecommendation(share)
+
 							}
 
 						}

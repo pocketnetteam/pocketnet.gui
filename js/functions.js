@@ -11543,7 +11543,7 @@ randomizer = function(ar, key){
         return sum + Number(r[key] || 0)
     }, 0)
 
-    if (total <= 0) return ar[f.rand(0, ar.length - 1)]
+    if (total <= 0) return ar[rand(0, ar.length - 1)]
 
     var seed = getRandomFloat(0, total, 8)
 

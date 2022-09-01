@@ -2272,3 +2272,6 @@ _l.androidPopupDisagree = "Not now"
 _l.desktopPopupTitle = "Get uncensored information in Bastyon desktop app"
 _l.desktopPopupAgree = "Download the app"
 _l.desktopPopupDisagree = "Not now"
+
+
+_l.recommended = 'Recommended'

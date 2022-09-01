@@ -26,6 +26,8 @@ var lenta = (function(){
 			boostloadedblock = 0,
 			boostplaces = {}
 
+		var sharesFromRecommendations = {}
+
 		var extra = {}, extraloading = {}, recommendations = {}, recommendationsMaking = {};
 
 		var progress, parallax;
@@ -465,6 +467,7 @@ var lenta = (function(){
 				lastcache = null;
 				isotopeinited = false
 				loadertimeout = null
+				sharesFromRecommendations = {}
 
 				_.each(shareInitedMap, function(s, id){
 					delete self.app.platform.sdk.node.shares.storage.trx[id]
@@ -994,7 +997,17 @@ var lenta = (function(){
 									percent : ((position/duration)* 100).toFixed(0),
 								})
 
+								self.app.platform.sdk.activity.adduser('video', share.address, 6 * position / duration)
+								self.app.platform.sdk.memtags.add(share.tags, 'v_' + share.txid, 0.5)
+								return
 							}
+
+							if(playbackState == 'playing' && duration < 120 && position / duration > 0.2){
+								self.app.platform.sdk.activity.adduser('video', share.address, 6 * position / duration)
+								self.app.platform.sdk.memtags.add(share.tags, 'v_' + share.txid, 0.5)
+							}
+							
+
 						},
 
 						hlsError : function(error){
@@ -1754,6 +1767,10 @@ var lenta = (function(){
 
 								if (clbk)
 									clbk(true)
+
+								self.app.platform.sdk.memtags.add(obj.tags, 'l_' + obj.txid, 1)
+
+								self.app.platform.sdk.recommendations.successRecommendation(obj)
 							}
 
 						}
@@ -2699,8 +2716,6 @@ var lenta = (function(){
 				if(show){
 					loadertimeout = setTimeout(() => {
 
-						console.log("TIMEOUT")
-
 						window.requestAnimationFrame(() => {
 
 							if(el.loader && !el.loader.hasClass('loading')){
@@ -3067,6 +3082,7 @@ var lenta = (function(){
 						sharesFromSub,
 						boosted : p.boosted,
 						shareRelayedFlag : false,
+						fromrecommendations : sharesFromRecommendations[share.txid] ? true : false
 					}					
 
 				}, function(p){
@@ -4100,11 +4116,6 @@ var lenta = (function(){
 
 						return true
 					})
-					//temp
-					/*_.each(shares, (s) => {
-						s.__fromSUB = true
-					})*/
-
 
 					if (shares.length < pr.count || countshares >= 10){
 						subloaded = true
@@ -4118,6 +4129,16 @@ var lenta = (function(){
 						sharesFromSub[share.txid] = share
 					})
 
+				}
+
+				var recommendations = []
+
+				if(essenseData.includerec && !includingsub){
+
+					recommendations = self.app.platform.sdk.recommendations.getshares(rand(0, 3)) || []
+
+					allshares = [].concat(allshares, recommendations)
+				
 				}
 
 				var author = essenseData.author;
@@ -4189,13 +4210,30 @@ var lenta = (function(){
 								})
 							}
 
-							shares.concat(bshares)
+							//shares.concat(bshares)
 
 							shares = [].concat(bshares, shares)
+
+							if(essenseData.includerec && !includingsub){
+								shares = [].concat(recommendations, shares)
+
+								_.each(recommendations, (r) => {
+									sharesFromRecommendations[r.txid] = true
+								})
+							}
 
 							if (essenseData.filter) {
 								shares = _.filter(shares, essenseData.filter)
 							}
+
+							shares = _.uniq(shares, (s) => {
+								return s.txid
+							})
+
+							shares = _.filter(shares, (s) => {
+								return !shareInitedMap[s.txid]
+							})	
+							
 
 							if(!essenseData.author && self.user.address && self.user.address.value){
 

@@ -17,9 +17,6 @@
 #lenta .boosted {
   min-height: 100px;
 }
-#lenta .boostedlabel {
-  color: rgb(var(--color-good));
-}
 #lenta .shareinlenta {
   min-height: 400px;
   opacity: 0;

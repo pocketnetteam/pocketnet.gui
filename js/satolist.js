@@ -12889,6 +12889,358 @@ Platform = function (app, listofnodes) {
 
             }
         },
+
+        recommendations : {
+            storage : {
+                status : [],
+                shares : [],
+                keys : {}
+            },
+
+            planned : [],
+            shares : [],
+
+            plans : function(data, type){
+
+                var time = self.currentTime()
+
+                var task = {
+                    
+                    created : time,
+                    id : makeid(),
+                    status : 'created', 
+
+                    type,
+                    
+                    ... data
+                }
+
+                if (type == 'users'){
+                    if(
+                        !_.find(self.sdk.recommendations.planned, (t) => {
+                            return t.address == task.address
+                        }) && 
+                        !_.find(self.sdk.recommendations.storage.status, (t) => {
+                            return t.address == task.address && (time - t.date > 60 * 24 * 14) 
+                        }) 
+                    ){
+                        self.sdk.recommendations.planned.push(task)
+                    }
+                }
+
+                if (type == 'tags'){
+                    if(
+                        !_.find(self.sdk.recommendations.planned, (t) => {
+                            return t.hash == task.hash
+                        }) && 
+                        !_.find(self.sdk.recommendations.storage.status, (t) => {
+                            return t.hash == task.hash && (time - t.date > 60 * 24 * 3) 
+                        }) 
+                    ){
+                        self.sdk.recommendations.planned.push(task)
+                    }
+                }
+            },
+
+            clearplanned : function(){
+                self.sdk.recommendations.planned = _.filter(self.sdk.recommendations.planned, (p) => {
+                    return p.status == 'created' || p.status == 'processing'
+                })
+            },
+
+            getshares : function(count, type){
+                if(!count) count = 1
+
+                var result = []
+                var remove = {}
+
+                _.find(self.sdk.recommendations.shares, (share, i) => {
+                    if(result.length >= count) return true
+
+                    self.sdk.recommendations.storage.shares.push({
+                        txid : share.txid,
+                        date : self.currentTime()
+                    })
+
+                    remove[i] = true
+
+                    result.push(share)
+                })  
+
+                self.sdk.recommendations.shares = _.filter(self.sdk.recommendations.shares, (a, i) => {
+                    return !remove[i]
+                })
+
+                if (result.length){
+                    self.sdk.recommendations.save()
+                }
+
+                return result
+            },
+            maketasks : function(){
+                console.log('self.sdk.recommendations.shares', self.sdk.recommendations.shares.length)
+                if (self.sdk.recommendations.planned.length && self.sdk.recommendations.shares.length < 6){
+                    if(!_.find(self.sdk.recommendations.planned, (p) => {
+                        return p.status == 'processing'
+                    })){
+                        self.sdk.recommendations.maketask(self.sdk.recommendations.planned[0]) 
+                    }
+                }
+            },
+
+            maketasksdebounced : _.debounce(() => {
+                self.sdk.recommendations.maketasks()
+            }, 1000),
+
+            point : function(recommendation){
+                
+                var p = Number(recommendation.score || 0)
+    
+                p += 10 * (recommendation.comments || 0)
+    
+                p += 50 * (recommendation.reposted || 0)
+    
+                var activities = self.app.platform.sdk.activity.has('users', recommendation.address)
+    
+                if (activities.point){
+                    p = p + activities.point * 10
+                }
+    
+                if(recommendation.itisvideo()){
+                    var h = self.app.platform.sdk.videos.historyget(recommendation.txid)
+    
+                    if (h.percent > 94){
+                        p = p / 100
+                    }
+                    else
+                    if (h.percent > 5){
+                        p = p * 10
+                    }
+                    
+                }
+    
+    
+                if (recommendation.myVal){
+                    p = p / 10
+                }
+    
+                return p
+    
+            },
+
+            prepareshares : function(){
+                var shares = self.sdk.recommendations.shares
+
+                var me = deep(self.app, 'platform.sdk.users.storage.' + (app.user.address.value || ''))
+
+                shares = _.filter(shares, (recommendation) => {
+                    if (me && me.relation(recommendation.address, 'blocking') ){
+                        return false
+                    }
+
+                    return true
+                })
+
+                var maxdate = _.max(shares, (u) => {
+                    return u.time
+                })
+
+                var mindate = _.min(shares, (u) => {
+                    return u.time
+                })
+
+                var difference = maxdate.time.getTime() - mindate.time.getTime()
+
+                if (difference <= 0) difference = 1
+
+
+                shares = _.sortBy(shares, (recommendation) => {
+                    recommendation.point = self.sdk.recommendations.point(recommendation) * (0.5 + recommendation.time.getTime() - mindate.time.getTime()) / difference
+                    return -self.sdk.recommendations.point(recommendation) * (0.5 + recommendation.time.getTime() - mindate.time.getTime()) / difference
+                })
+
+
+                self.sdk.recommendations.shares = _.first(shares, 12)
+
+            },
+
+            maketask : function(task){
+         
+                if (task.status != 'created') return
+
+                console.log('task', task)
+
+                if(task.type == 'users'){
+                    var p = {
+                        contentAddress: task.address,
+                        depth: 10000,
+                        count: 15,
+                        lang : self.app.localization.key
+                    }
+    
+                    task.status = 'processing'
+    
+                    self.app.platform.sdk.node.shares.getrecomendedcontents(p, (shares, error) => {
+    
+                        task.status = 'completed'
+    
+                        shares = _.filter(shares, (s) => {
+                            return s.address != task.address
+                        })
+    
+                        _.each(shares, (share) => {
+                            if(!_.find(self.sdk.recommendations.storage.shares.concat(self.sdk.recommendations.shares), (s) => {
+                                return s.txid == share.txid
+                            })){
+                                share.recommendationKey = 'users'
+                                self.sdk.recommendations.shares.push(share)
+    
+                            }
+                        })
+    
+                        self.sdk.recommendations.prepareshares()
+    
+                        self.sdk.recommendations.add(task)
+                        
+                    }, 'clear');
+                }
+
+                if(task.type == 'tags'){
+                    var p = {
+                        depth: 7000,
+                        count: 15,
+                        lang : self.app.localization.key,
+                        tagsfilter : task.tags
+                    }
+
+                    console.log("gettopfeed", task.tags)
+    
+                    task.status = 'processing'
+    
+                    self.app.platform.sdk.node.shares.gettopfeed(p, (shares, error) => {
+    
+                        task.status = 'completed'
+    
+                        shares = _.filter(shares, (s) => {
+                            return s.address != task.address
+                        })
+    
+                        _.each(shares, (share) => {
+                            if(!_.find(self.sdk.recommendations.storage.shares.concat(self.sdk.recommendations.shares), (s) => {
+                                return s.txid == share.txid
+                            })){
+                                share.recommendationKey = 'tags'
+                                self.sdk.recommendations.shares.push(share)
+    
+                            }
+                        })
+    
+                        self.sdk.recommendations.prepareshares()
+    
+                        self.sdk.recommendations.add(task)
+                        
+                    }, 'clear');
+                }
+
+            },
+
+            schedulers : {
+                users : function(){
+                    var users = self.sdk.activity.getinterestingUsers()
+
+                    var user = randomizer(users)
+
+                    console.log('user', user, users)
+
+                    if (user){
+                        self.sdk.recommendations.plans({address : user.address}, 'users')
+                    }
+
+                },
+
+                tags : function(){
+                    var tags = self.sdk.memtags.getprobtags(2)
+                    
+                    if (tags.length){
+
+                        var hash = bitcoin.crypto.hash256(JSON.stringify(_.sortBy(tags, (t) => {return t}))).toString('hex')
+
+                        self.sdk.recommendations.plans({tags : tags, hash : hash}, 'tags')
+                    }
+                }
+            },
+
+            successRecommendation : function(share){
+                if (share.recommendationKey){
+                    if(!self.sdk.recommendations.storage.keys[share.recommendationKey]) self.sdk.recommendations.storage.keys[share.recommendationKey] = 0
+                    self.sdk.recommendations.storage.keys[share.recommendationKey] ++ 
+                    self.sdk.recommendations.save()
+                }
+                    
+            },
+
+            schedulermake : function(){
+                self.sdk.recommendations.clearplanned()
+
+                var kf = [
+                    {
+                        a : self.sdk.recommendations.schedulers.users,
+                        probability : 50 + (self.sdk.recommendations.storage.keys['users'] || 1)
+                    },{
+                        a : self.sdk.recommendations.schedulers.tags,
+                        probability : 50 + (self.sdk.recommendations.storage.keys['tags'] || 1)
+                    }
+                ]
+
+                var action = randomizer(kf)
+
+
+                action.a()
+
+                self.sdk.recommendations.maketasksdebounced()
+            },
+
+            scheduler : _.debounce(() => {
+                self.sdk.recommendations.schedulermake()
+            }, 1000),
+
+            add : function(task){
+
+                self.sdk.recommendations.storage.status.unshift(task)
+
+                self.sdk.recommendations.storage.status = firstEls(self.sdk.recommendations.storage.status, 300)
+
+                self.sdk.recommendations.save()
+            },
+
+            save: function () {
+                localStorage['recommendations'] = JSON.stringify({
+                    status : self.sdk.recommendations.storage.status,
+                    shares : self.sdk.recommendations.storage.shares,
+                    keys : self.sdk.recommendations.storage.keys
+                })
+            },
+
+            load: function (clbk) {
+                var p = {};
+
+                try {
+                    p = JSON.parse(localStorage['recommendations'] || '{}');
+                }
+                catch (e) {}
+
+                self.sdk.recommendations.storage.status = p.status || []
+                self.sdk.recommendations.storage.shares = p.shares || []
+                self.sdk.recommendations.storage.keys = p.keys || {}
+
+                self.sdk.recommendations.scheduler()
+
+                if(clbk) clbk()
+            },
+        },
+
+        
+
         activity : {
             latest : {},
             allowRequestAfterFive : true,
@@ -12899,7 +13251,7 @@ Platform = function (app, listofnodes) {
 
                     var availablesLikes = this.latest.like.filter(function(like){
 
-                        return like.countOfFives && like.data.subscribers_count + like.data.subscribes_count;
+                        return like.value && like.data.subscribers_count + like.data.subscribes_count;
                     })
 
 
@@ -12908,12 +13260,12 @@ Platform = function (app, listofnodes) {
 
                     availablesLikes.forEach(function(like){
 
-                        if (like.countOfFives > bestCount){
+                        if (like.value > bestCount){
 
                             bestAddress = like.data.address;
-                            bestCount = like.countOfFives;
+                            bestCount = like.value;
 
-                        } else if (!bestAddress && (like.countOfFives === bestCount)){
+                        } else if (!bestAddress && (like.value === bestCount)){
 
                             bestAddress = like.data.address;
                         }
@@ -12926,6 +13278,75 @@ Platform = function (app, listofnodes) {
 
 
 
+            },
+
+            getinterestingUsers : function(){
+                var users = {}
+
+                var s = self.sdk.activity
+
+                if(self.sdk.address.pnet()){
+                
+                    _.each(s.latest || [], (a, i) => {
+
+                        if(i == 'visited' || i == 'search') return
+
+                        _.each(a, (o) => {
+                            if(o.type == 'user'){
+
+                                if(o.id != self.sdk.address.pnet().address){
+                                    users[o.id] || (users[o.id] = {
+                                        date : o.date,
+                                        address : o.id,
+                                        points : 0,
+                                        value : 0
+                                    })
+    
+                                    users[o.id].points = users[o.id].points + s.points.users[i] || 10
+                                    users[o.id].value = users[o.id].value + (o.data.value || 1)
+    
+                                    if(o.date > users[o.id].date) users[o.id].date = o.date
+                                }
+                                
+                               
+                            }
+                        })
+                        
+                    })
+
+                }
+
+                if(_.isEmpty(users)) return []
+
+                var maxdate = _.max(users, (u) => {
+                    return u.date
+                })
+
+                var mindate = _.min(users, (u) => {
+                    return u.date
+                })
+
+                var difference = maxdate.date - mindate.date
+
+                if (difference <= 0) difference = 1
+
+                var probabilitymap = _.map(users, (user) => {
+
+                    return {
+                        probability : (Math.max(user.value, 1000) + user.points) * (user.date - mindate.date) / difference,
+                        address : user.address
+                    }
+                })
+
+                return probabilitymap
+
+                /*var sorted = _.sortBy(users, (user) => {
+                    return (Math.max(user.value, 1000) + user.points) * (user.date - mindate) / difference
+                })
+
+                return _.map(sorted, (u) => {
+                    return u.address
+                })*/
             },
 
             clear : function(){
@@ -12965,9 +13386,11 @@ Platform = function (app, listofnodes) {
             points : {
                 users : {
                     like : 50,
+                    clike : 20,
                     search : 30,
                     subscribe : 100,
-                    visited : 20
+                    visited : 20,
+                    video : 30
                 }
             },
 
@@ -13027,7 +13450,7 @@ Platform = function (app, listofnodes) {
                             address : address,
                             subscribers_count: user.subscribers_count,
                             subscribes_count : user.subscribes_count,
-                            value: value
+                            value: Number(value || '0')
                         }
 
                         var error = self.sdk.activity.add(key, 'user', info)
@@ -13044,6 +13467,8 @@ Platform = function (app, listofnodes) {
 
                 if(!info.index) return 'index'
                 if(!info.id) return 'id'
+
+                l[key] || (l[key] = [])
 
                 var obj = {
                     index : info.index,
@@ -13063,6 +13488,31 @@ Platform = function (app, listofnodes) {
                         subscribes_count: info.subscribes_count,
                         subscribers_count: info.subscribers_count,
                     }
+
+                    var dvalue = 0
+
+                    if(key == 'like'){
+                        dvalue = 5
+                    }
+
+                    if(key == 'video'){
+                        dvalue = 0.1
+                    }
+
+                    if(dvalue){
+                        var prev = _.find(l[key], (o) => {
+                            return o.id == info.id
+                        })
+
+
+                        if (prev && prev.data){
+                            obj.data.value = Number( prev.data.value || (1) ) + Number(info.value)
+                        }
+                        else{
+                            obj.data.value = Number(info.value)
+                        }
+                        
+                    }
                 }
 
 
@@ -13078,29 +13528,6 @@ Platform = function (app, listofnodes) {
 
                 obj.date = self.currentTime()
 
-                l[key] || (l[key] = [])
-
-                var objectsIdx = l[key].findIndex(function(objects){
-                    return objects.id === info.id && objects.index === info.index;
-                })
-
-
-                if (objectsIdx > -1){
-
-                    if (info.value === '5'){
-                        var already = l[key][objectsIdx].countOfFives;
-                        obj.countOfFives = already ? already + 1 : 1;
-                    }
-
-                    l[key].splice(objectsIdx, 1);
-                } else {
-
-                    if (info.value === '5'){
-
-                        obj.countOfFives = 1;
-                    }
-                }
-
                 l[key] = _.filter(l[key], function(objects){
                     return objects.id != info.id && objects.index != info.index
                 })
@@ -13111,13 +13538,12 @@ Platform = function (app, listofnodes) {
 
                 self.sdk.activity.save();
 
-                if (this.allowRequestAfterFive && info.value === '5'){
-
-                    self.app.platform.sdk.categories.clbks.selected.topusers && self.app.platform.sdk.categories.clbks.selected.topusers();
-                    this.allowRequestAfterFive = false;
+                if(type == 'user' && (key != 'visited' && key == 'search')){
+                    self.sdk.recommendations.scheduler()
                 }
 
             },
+
             save: function () {
                 localStorage['latestactivity'] = JSON.stringify({
                     activity : self.sdk.activity.latest
@@ -13126,6 +13552,7 @@ Platform = function (app, listofnodes) {
 
             load: function (clbk) {
                 var p = {};
+
 
                 try {
                     p = JSON.parse(localStorage['latestactivity'] || '{}');
@@ -13138,7 +13565,6 @@ Platform = function (app, listofnodes) {
                 self.sdk.activity.latest = p.activity
 
                 self.sdk.activity.filladdressstorage()
-
 
                 if(clbk) clbk()
             },
@@ -14816,14 +15242,204 @@ Platform = function (app, listofnodes) {
                                 clbk(s.cloud[loc], error)
                             }
 
+                            self.sdk.recommendations.scheduler()
+
                         })
                     })
 
                 }
 
+            },
+
+            totals : function(){
+                var r = {max : 0}
+
+                _.each(this.storage.cloud, (c, loc) => {
+                    r[loc] = this.total(loc)
+
+                    if(r.max < r[loc]) r.max = r[loc]
+                })
 
 
+
+                return r
+            },
+
+            total : function(loc){
+                var s = this.storage;
+
+                loc || (loc = self.app.localization.key)
+
+                if(!s.cloud) s.cloud = {}
+
+                if(s.cloud[loc]){
+                    return _.reduce(s.cloud[loc], (m, tag) => {
+                        return m + tag.count
+                    }, 0)
+                }
+
+                return 0
+            },
+
+            maxs : function(){
+                var r = {max : 0}
+
+                _.each(this.storage.cloud, (c, loc) => {
+                    r[loc] = this.max(loc)
+
+                    if(r.max < r[loc]) r.max = r[loc]
+                })
+
+
+
+                return r
+            },
+
+
+            max : function(loc){
+                var s = this.storage;
+
+                loc || (loc = self.app.localization.key)
+
+                if(!s.cloud) s.cloud = {}
+
+                if(s.cloud[loc]){
+              
+                    return ((_.max(s.cloud[loc], (tag) => {
+                        return tag.count
+                    }) || {}).count) || 0
+                }
+
+                return 0
+            },
+
+            gettag : function(tag){
+                var s = this.storage;
+
+                if(!s.cloud) s.cloud = {}
+
+                var mincount = 2
+                var res = null
+                var l = self.app.localization.key
+
+                _.find(s.cloud, (lg, loc) => {
+                    return _.find(lg, (tg) => {
+
+                        if(mincount > tg.count) mincount = tg.count
+
+                        if(tg.tag == tag){
+                            res = tg
+
+                            l = loc
+
+                            return true
+                        }
+                    })
+                })
+
+                if(!res) {
+                    res = {
+                        tag : tag,
+                        count : mincount / 2,
+                        loc : l
+                    }
+                }
+
+                return res
             }
+
+        },
+
+        memtags : {
+            storage : {},
+            added : {},
+
+            getprobtags : function(count){
+              
+                return _.map(randomizerarray(this.gettags(), count || 3, 'probability') || [], (t) => {
+                    return t.tag
+                })
+            },
+
+            gettags : function(){
+                var totals = self.sdk.tags.maxs()
+                var result = []
+
+                var maxdate = _.max(this.storage.tags, (u) => {
+                    return u.date
+                })
+
+                var mindate = _.min(this.storage.tags, (u) => {
+                    return u.date
+                })
+
+                var difference = maxdate.date - mindate.date
+
+                if (difference <= 0) difference = 1
+
+                if (totals.max){
+
+                    var tgc = _.reduce(this.storage.tags, (m, tg) => {
+                        return m + tg.c
+                    }, 0)
+
+                    _.each(this.storage.tags, (tg, i) => {
+                        var tag = self.sdk.tags.gettag(i)
+                        var t = totals[tag.loc] || totals.max
+
+                        var p = tg.c / tgc + Math.sqrt((t - tag.count) / t) * (0.5 + (tg.date - mindate.date) / difference)
+
+                        result.push({
+                            tag : i,
+                            probability : p
+                        })
+                    })
+                }
+
+                return result
+
+            },
+
+            add : function(tags, id, value){
+                if(this.added[id]) return
+
+                if(!self.sdk.memtags.storage.tags) self.sdk.memtags.storage.tags = {}
+
+                //var total = 0
+
+                _.each(tags, (tag) => {
+                    self.sdk.memtags.storage.tags[tag] || (self.sdk.memtags.storage.tags[tag] = {c : 0})
+
+                    self.sdk.memtags.storage.tags[tag].c = self.sdk.memtags.storage.tags[tag].c + (value || 1)
+                    self.sdk.memtags.storage.tags[tag].date = self.currentTime()
+                    
+                })
+
+                this.added[id] = true
+
+                self.sdk.memtags.save()
+
+                self.sdk.recommendations.scheduler()
+            },
+
+            save: function () {
+                localStorage['memtags'] = JSON.stringify({
+                    tags : self.sdk.memtags.storage.tags,
+                })
+            },
+
+            load: function (clbk) {
+                var p = {};
+
+                try {
+                    p = JSON.parse(localStorage['memtags'] || '{}');
+                }
+                catch (e) {}
+
+                self.sdk.memtags.storage.tags = p.tags || {}
+
+                if(clbk) clbk()
+            },
         },
 
         search: {
@@ -16768,7 +17384,7 @@ Platform = function (app, listofnodes) {
                     var temp = self.sdk.node.transactions.temp;
 
                     d = _.filter(d || [], function (s) {
-                        if (s.address) return true
+                        if (s && s.txid && s.address) return true
                     })
 
 
@@ -16917,7 +17533,9 @@ Platform = function (app, listofnodes) {
 
                             d.contents = self.sdk.node.shares.transform(d.contents, state)
 
-                            self.sdk.node.shares.takeusers(clear, state)
+                            self.sdk.node.shares.takeusers(_.filter(clear, (c => {
+                                return c && c.txid && c.address
+                            })), state)
 
                             if (d.users)
                                 self.sdk.node.shares.takeusers(_.map(d.users, function(u){
@@ -19870,7 +20488,8 @@ Platform = function (app, listofnodes) {
                     upvoteShare: function (inputs, upvoteShare, clbk, p) {
                         this.common(inputs, upvoteShare, TXFEE, clbk, p)
 
-                        self.sdk.activity.adduser('like', upvoteShare.address.v, upvoteShare.value.v)
+                        if(upvoteShare.value.v > 3)
+                            self.sdk.activity.adduser('like', upvoteShare.address.v, upvoteShare.value.v)
                     },
 
                     complainShare: function (inputs, complainShare, clbk, p) {
@@ -19898,7 +20517,8 @@ Platform = function (app, listofnodes) {
                     cScore: function (inputs, cScore, clbk, p) {
                         this.common(inputs, cScore, TXFEE, clbk, p)
 
-                        self.sdk.activity.adduser('like', cScore.address.v, cScore.value.v)
+                        if (cScore.value.v > 0)
+                            self.sdk.activity.adduser('clike', cScore.address.v, cScore.value.v)
                     },
 
                     unsubscribe: function (inputs, unsubscribe, clbk, p) {
@@ -26237,8 +26857,8 @@ Platform = function (app, listofnodes) {
         return dateToStrUTCSS(created)
     }
 
-    self.currentTime = function () {
-        var created = Math.floor((new Date().getTime()) / 1000)
+    self.currentTime = function (date) {
+        var created = Math.floor(((date || new Date()).getTime()) / 1000)
 
         if (self.timeDifference) {
             created += self.timeDifference
@@ -27457,6 +28077,8 @@ Platform = function (app, listofnodes) {
             self.sdk.user.meUpdate,
             self.sdk.categories.load,
             self.sdk.activity.load,
+            self.sdk.recommendations.load,
+            self.sdk.memtags.load,
             self.sdk.node.shares.parameters.load,
 
 
@@ -27569,6 +28191,8 @@ Platform = function (app, listofnodes) {
                     self.sdk.articles.init,
                     self.sdk.categories.load,
                     self.sdk.activity.load,
+                    self.sdk.recommendations.load,
+                    self.sdk.memtags.load,
                     self.sdk.node.shares.parameters.load,
                     self.sdk.sharesObserver.load,
                     self.sdk.comments.loadblocked
@@ -27625,7 +28249,7 @@ Platform = function (app, listofnodes) {
                             $('html').addClass('testaddress')
                         }
                         else{
-                            if($('html').hasClass('testaddress'))
+                            if ($('html').hasClass('testaddress'))
                                 $('html').removeClass('testaddress')
                         }
 
