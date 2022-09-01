@@ -685,7 +685,7 @@ var userRoomStatus_component = Object(componentNormalizer["a" /* default */])(
   },
   components: {
     list: list["a" /* default */],
-    chatInput: () => Promise.all(/* import() */[__webpack_require__.e(12), __webpack_require__.e(6)]).then(__webpack_require__.bind(null, "fe01")),
+    chatInput: () => Promise.all(/* import() */[__webpack_require__.e(11), __webpack_require__.e(6)]).then(__webpack_require__.bind(null, "fe01")),
     join: join,
     attachement: attachement,
     userRoomStatus: userRoomStatus

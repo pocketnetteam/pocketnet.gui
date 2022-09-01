@@ -17,7 +17,7 @@ var lenta = (function(){
 		var making = false, ovf = false;
 		var w, essenseData, recomended = [], initialized, recommended, mestate, initedcommentes = {}, canloadprev = false,
 		video = false, isotopeinited = false, videosVolume = 0, fullscreenvideoShowing = null, loadedcachedHeight, lwidth = 0;
-
+		var loadertimeout = null
 		var lastcache = null
 		var subloaded = false
 		var subloadedindex = 0
@@ -462,6 +462,7 @@ var lenta = (function(){
 				subloadedindex = 0;
 				lastcache = null;
 				isotopeinited = false
+				loadertimeout = null
 
 				_.each(shareInitedMap, function(s, id){
 					delete self.app.platform.sdk.node.shares.storage.trx[id]
@@ -573,14 +574,12 @@ var lenta = (function(){
 			loadmore : function(loadclbk){
 				actions.observe()
 
-				if(!el.loader.hasClass('loading'))
-					el.loader.addClass('loading')
+				renders.loader(true)
 
 				load.shares(function(shares, error){
 
 
-					if (el.loader)
-						el.loader.removeClass('loading')
+					renders.loader(false)
 
 
 					if (error){
@@ -2719,6 +2718,34 @@ var lenta = (function(){
 
 		var renders = {
 
+			loader : function(show){
+
+				if(show){
+					loadertimeout = setTimeout(() => {
+
+						console.log("TIMEOUT")
+
+						if(el.loader && !el.loader.hasClass('loading')){
+							el.loader.addClass('loading')
+						}
+
+						loadertimeout = null
+					}, 600)
+				}
+
+				else{
+
+					if(loadertimeout){
+						clearTimeout(loadertimeout)
+						loadertimeout = null
+					}
+
+					if (el.loader && el.loader.hasClass('loading')){
+						el.loader.removeClass('loading')
+					}
+				}
+						
+			},
 
 			optimizationTip : function(el, count){
 				var html = ''
@@ -3020,11 +3047,11 @@ var lenta = (function(){
 			},
 			
 			share : function(share, clbk, all, p){
+
 				if(!p) p = {}
 
 				if(!share) {
 					if(clbk) clbk()
-
 					return
 				}
 
@@ -3041,7 +3068,7 @@ var lenta = (function(){
 					transaction.txid === share.txid
 				));*/
 
-				
+
 				self.shell({
 					name : video ? 'sharevideolight' : share.itisarticle() ? 'sharearticle' : 'share',
 
@@ -3085,8 +3112,8 @@ var lenta = (function(){
 
 					promises.push(new Promise((resolve, reject) => {
 
-						renders.url(p.el.find('.url'), share.url, share, function(){
 
+						renders.url(p.el.find('.url'), share.url, share, function(){
 
 							renders.urlContent(share, function(){
 	
@@ -3143,17 +3170,31 @@ var lenta = (function(){
 
 					var c = function(){
 
-						if(!p.el.hasClass('rendered'))
+						if(!p.el.hasClass('rendered')){
 							p.el.addClass('rendered')
+
+							if (p.el.hasClass('hashiddengroup')){
+								p.el.closest('.authorgroup').find('.showmorebyauthor').addClass('active')
+							}
+							
+						}
+							
 
 						if (clbk)
 							clbk();
 							clbk = null
 					}
 
-					setTimeout(() => {
+					
+					if(p.el.find(".shareImages .image").length > 1 || video){
 						c()
-					}, 300)
+					}
+					else{
+						setTimeout(() => {
+							c()
+						}, 300)
+					}
+					
 
 
 					/*Promise.all(promises).catch(e => {}).then(() => {
@@ -3351,6 +3392,7 @@ var lenta = (function(){
 					})
 				}
 
+
 				lazyEach({
 					array : rs,
 					//sync : true,
@@ -3365,10 +3407,13 @@ var lenta = (function(){
 						else
 						{
 							shareInitedMap[share.txid] = true
+
+
 							renders.share(share, _p.success, null, {
 								boosted : p.boosted,
 								index : index
 							})
+
 						}
 
 					},
@@ -3389,6 +3434,7 @@ var lenta = (function(){
 			},
 
 			shareall : function(shares){
+
 
 				_.each(shares, function(share){
 					renders.share(share)
@@ -4100,8 +4146,8 @@ var lenta = (function(){
 
 						if (!el.c) return
 
-						if (essenseData.openapi || essenseData.txids)
-							el.c.removeClass('loading')
+						/*if (essenseData.openapi || essenseData.txids)
+							el.c.removeClass('loading')*/
 
 						if(!error && !error2){
 
@@ -4957,15 +5003,14 @@ var lenta = (function(){
 
 			}
 
-			if(!el.loader.hasClass('loading'))
-				el.loader.addClass('loading')
+			renders.loader(true)
+
 
 			load.shares(function(shares, error){
 
 				if(!el.c) return
 
-					if (el.loader)
-						el.loader.removeClass('loading')
+				renders.loader(false)
 
 
 				if (error){
@@ -4973,7 +5018,7 @@ var lenta = (function(){
 					
 					el.c.addClass('networkError')
 				
-					el.c.removeClass('loading')
+					//el.c.removeClass('loading')
 
 					self.iclbks.lenta = function(){
 						make(null, _p)
@@ -5004,9 +5049,10 @@ var lenta = (function(){
 							var p = parameters()
 
 							if(!essenseData.second){
-								if (p.s && !p.msh){
+								if (p.s && !p.msh && !p.np){
 
 									setTimeout(function(){
+
 										actions.openPost(p.s, function(){
 											actions.scrollToPost(p.s)
 										}, null, null, p.commentid)
@@ -5056,9 +5102,9 @@ var lenta = (function(){
 								_p.clbk(null, _p);
 							}
 
-							if (essenseData.notscrollloading && essenseData.txids){
+							/*if (essenseData.notscrollloading && essenseData.txids){
 								renders.txidall(essenseData.txids)
-							}
+							}*/
 
 
 							if(shares.length < 5 && essenseData.includesub && !loading && (!ended && recommended != 'recommended')){

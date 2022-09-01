@@ -77,7 +77,6 @@
             </div>
         </div>
 
-        <script src="js/vendor/jquery-1.11.3.min.js"></script>
         <script src="js/polyfills.js"></script>
 
         <script type="text/javascript">
@@ -103,8 +102,6 @@
 
         __JSPOST__
 
-
-        <script src="js/openapi.js"></script>
 
 
         <link rel="stylesheet" href="css/fontawesome/css/all.min.css">

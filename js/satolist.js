@@ -2613,6 +2613,7 @@ Platform = function (app, listofnodes) {
 
         post: function (id, el, clbk, p) {
 
+
             if (!p) p = {}
 
             self.sdk.node.shares.getbyid(id, function (shares) {
@@ -7102,7 +7103,6 @@ Platform = function (app, listofnodes) {
                 self.sdk.localshares.init().then(r => {
                     if(clbk) clbk()
                 }).catch(e => {
-                    console.error(e)
                     if(clbk) clbk()
                 })
             },
@@ -7378,6 +7378,7 @@ Platform = function (app, listofnodes) {
                         return Promise.reject('todo')
                     }
                 },
+             
                 share : {
                     cordova : function(share){
 
@@ -9857,6 +9858,9 @@ Platform = function (app, listofnodes) {
                     return true
                 }
 
+                //console.log('ustate.regdate.addDays(7)', ustate.regdate.addDays(7) > new Date())
+                //ustate.regdate && ustate.regdate.addDays(7) > new Date() 
+                
                 if(moment().diff(ustate.regdate, 'days') <= 7 && totalComplains  > 20 ) {
                     return true
                 }
@@ -10366,7 +10370,9 @@ Platform = function (app, listofnodes) {
 
                     var l = Number(state[metrica.key + "_unspent"])
 
-                    return metrica.bad(l)
+                    var m = Number(state[metrica.key + "_unspent"]) + Number(state[metrica.key + "_spent"])
+
+                    return metrica.bad(l, m)
 
                 })
             },
@@ -10419,8 +10425,8 @@ Platform = function (app, listofnodes) {
                         key : 'post',
                         vis : 'scale',
                         name : self.app.localization.e('spc'),
-                        bad : function(v){
-                            if(v <= 3) return true
+                        bad : function(remains, limit){
+                            if(remains <= 3) return true
                         }
                     },
 
@@ -10428,8 +10434,8 @@ Platform = function (app, listofnodes) {
                         key : 'video',
                         vis : 'scale',
                         name : self.app.localization.e('spv'),
-                        bad : function(v){
-                            if(v <= 3) return true
+                        bad : function(remains, limit){
+                            if(remains <= 3) return true
                         }
                     },
 
@@ -10437,8 +10443,8 @@ Platform = function (app, listofnodes) {
                         key : 'score',
                         vis : 'scale',
                         name : self.app.localization.e('ssc'),
-                        bad : function(v){
-                            if(v <= 7) return true
+                        bad : function(remains, limit){
+                            if(remains <= 7) return true
                         }
                     },
 
@@ -10446,8 +10452,8 @@ Platform = function (app, listofnodes) {
                         key : 'comment',
                         vis : 'scale',
                         name : self.app.localization.e('ccc'),
-                        bad : function(v){
-                            if(v <= 7) return true
+                        bad : function(remains, limit){
+                            if(remains <= 7) return true
                         }
                     },
 
@@ -10455,7 +10461,7 @@ Platform = function (app, listofnodes) {
                         key : 'comment_score',
                         vis : 'scale',
                         name : self.app.localization.e('crc'),
-                        bad : function(v){
+                        bad : function(v, limit){
                             if(v <= 10) return true
                         }
                     },
@@ -10464,19 +10470,23 @@ Platform = function (app, listofnodes) {
                         key : 'complain',
                         vis : 'scale',
                         name : self.app.localization.e('ccpl'),
-                        bad : function(v){
-                            if(v <= 3) return true
+                        bad : function(remains, limit){
+                            if(remains <= 3) return true
                         }
                     },
 
                     article : {
-                      key : 'article',
-                      vis : 'scale',
-                      name : self.app.localization.e('artc'),
-                      bad : function(v){
-                        if(v <= 10) return true
-                      }
-                    },
+						key : 'article',
+						vis : 'scale',
+						name : self.app.localization.e('artc'),
+						bad : function(remains, limit){
+							if (limit && limit === 1) {
+								return false
+							} else if (remains <= 3) {
+								return true
+							}
+						},
+					}
                 }
             }
 
@@ -27725,7 +27735,7 @@ Platform = function (app, listofnodes) {
                     var vs = '10'
 
                     if (typeof numfromreleasestring != 'undefined'){
-                        vs = numfromreleasestring(window.packageversion)
+                        vs = numfromreleasestring(window.packageversion) + '_' + (window.versionsuffix || "0")
                     }
 
                     importScript('chat/matrix-element.min.js?v=' + vs, clbk)
@@ -27862,18 +27872,13 @@ Platform = function (app, listofnodes) {
         },
 
         initevents : function(){
-            console.log('self.matrixchat.chatparallax')
             if (self.matrixchat.el){
-
-                console.log('self.matrixchat.chatparallax2')
 
                 if (self.app.mobileview){
 
-                    console.log('self.matrixchat.chatparallax3')
 
                     if(self.matrixchat.chatparallax) return
 
-                    console.log("initevents")
                     
                     self.matrixchat.chatparallax = new SwipeParallaxNew({
 
@@ -27923,7 +27928,6 @@ Platform = function (app, listofnodes) {
 
                 else{
                     if (self.matrixchat.chatparallax) {
-                        console.log("destroy")
                         self.matrixchat.chatparallax.destroy()
                         self.matrixchat.chatparallax = null
                     }
@@ -28117,11 +28121,13 @@ Platform = function (app, listofnodes) {
 
             core.backtoapp = function(link){
 
+
                 if (self.app.mobileview)
                     app.nav.api.history.removeParameters(['pc'], null, {replaceState : true})
 
                 if (link){
-                    link = link.replace('https://' + self.app.options.url + '/', '')
+                    link = link.replace('https://' + self.app.options.url + '/', '').replace('https://' + window.pocketnetdomain + '/', '')
+
 
                     if(link.indexOf('index') == '0' && link.indexOf('v=') == -1 &&
                         (link.indexOf('s=') > -1 || link.indexOf('i=') > -1 || link.indexOf('p=') > -1))
@@ -28192,9 +28198,7 @@ Platform = function (app, listofnodes) {
                 if (self.matrixchat.el){
 
                     if (self.matrixchat.el.hasClass('active')) return
-
                         self.matrixchat.el.addClass('active')
-
 
                 }
                 else{
@@ -28306,6 +28310,7 @@ Platform = function (app, listofnodes) {
         connect : function(){
             if(!self.matrixchat.connectWith && !self.matrixchat.joinRoom) return
             if(!self.matrixchat.core) return
+
 
             self.matrixchat.core.apptochat()
 
