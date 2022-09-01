@@ -353,7 +353,7 @@ var registration = (function(){
 
 		var steps = {
 			settings : {
-				id : 'sharing',
+				id : 'settings',
 				nextindex : 'captcha',
 
 				prev : function(clbk){
@@ -362,7 +362,7 @@ var registration = (function(){
 			
 				},
 
-				render : 'sharing',
+				render : 'settings',
 
 				after : function(el, pel){
 
@@ -639,7 +639,7 @@ var registration = (function(){
 			categories : {
 
 				id : 'categories',
-				nextindex : 'welcome',
+				nextindex : 'sharing',
 
 				prev : function(clbk){
 
@@ -740,7 +740,7 @@ var registration = (function(){
 			bloggers : {
 
 				id : 'bloggers',
-				nextindex : 'welcome',
+				nextindex : 'sharing',
 
 				prev : function(clbk){
 
@@ -831,6 +831,8 @@ var registration = (function(){
 
 				id : 'sharing',
 
+				nextindex : 'welcome',
+
 				prev : function(clbk){
 
 					clbk()
@@ -840,40 +842,39 @@ var registration = (function(){
 
 				after : function(el){
 
-					debugger;
 
-					self.nav.api.load({
-						open : true,
-						href : 'socialshare2',
-						history : true,
-						inWnd : true,
+					el.find('.share').on('click', function(){
 
-						essenseData : {
-							url : 'https://bastyon.com/welcome?connect=TT2CeQuHiM8E8hG4rkJcaMKQ8gWqhZmNUH',
-							sharing: {
-								image : '',
-								images : [],
-								title : "caption.joinApp",
-								html : {
-									body : "caption.joinApp" + ' ' + "caption.hasInvitedToJoin",
-									preview : "caption.joinApp" + ' ' + "caption.hasInvitedToJoin"
-								},
-					
-								text : {
-									body : "caption.joinApp" + ' ' + "caption.hasInvitedToJoin",
-									preview : "caption.joinApp"
-								}
-							},
+						var my = self.app.user.address.value;
 
-							embedding : {
-								type : 'post',
-							}
-						}
-					})
-
-
+						self.nav.api.load({
+							open : true,
+							href : 'socialshare2',
+							history : true,
+							inWnd : true,
 	
-		
+							essenseData : {
+								url : 'https://bastyon.com/welcome?connect=' + my,
+								sharing: {
+									image : '',
+									images : [],
+									title : "Connect to Bastyon chat!",
+
+						
+									text : {
+										body : "",
+										preview : ""
+									}
+								},
+	
+								embedding : {
+									type : 'channel',
+									id : my
+								},
+							}
+						})
+					})
+	
 
 				}
 
@@ -1544,10 +1545,6 @@ var registration = (function(){
 			},
 
 			bloggers : function(el, clbk){
-
-				var plugin = deep(window, 'plugins.socialsharing')
-
-				console.log('plugin', plugin);
 
 				self.shell({
 

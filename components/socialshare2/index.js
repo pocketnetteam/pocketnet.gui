@@ -279,7 +279,7 @@ var socialshare2 = (function(){
 			sharebuttons : function(){
 
 				var socials = getsocials();
-				debugger;
+
 				if (ed.sharing){
 					self.shell({
 
