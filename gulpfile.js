@@ -50,7 +50,6 @@ function buildMasterStyle() {
             './css/tooltipster.core.min.css',
             './css/tooltipster.bundle.min.css',
             './css/main.css',
-            './css/stblack.css',
             './css/plyr.css',
             './css/pniframe.css',
 
