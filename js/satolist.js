@@ -13183,10 +13183,10 @@ Platform = function (app, listofnodes) {
                 self.sdk.recommendations.clearplanned()
 
                 var kf = [
-                    {
+                    /*{
                         a : self.sdk.recommendations.schedulers.users,
                         probability : 50 + (self.sdk.recommendations.storage.keys['users'] || 1)
-                    },{
+                    },*/{
                         a : self.sdk.recommendations.schedulers.tags,
                         probability : 50 + (self.sdk.recommendations.storage.keys['tags'] || 1)
                     }
