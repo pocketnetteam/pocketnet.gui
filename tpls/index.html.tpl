@@ -21,7 +21,7 @@
         connect-src blob: 'self' http: ws: https: wss:;
         img-src 'self' blob: data: http: https: __VAR__.domain:*;
         script-src 'self' blob: __VAR__.domain player.vimeo.com www.youtube.com s.ytimg.com cdnjs.cloudflare.com/ajax/libs/lamejs/ cdn.jsdelivr.net/joypixels/ 'unsafe-eval' 'unsafe-inline';
-        frame-src 'self' player.vimeo.com www.youtube.com www.brighteon.com;
+        frame-src 'self' player.vimeo.com www.youtube.com www.brighteon.com stream.brighteon.com;
         style-src 'self' data: __VAR__.domain:* cdn.jsdelivr.net/joypixels/ 'unsafe-inline' use.fontawesome.com;
         font-src 'self' data: __VAR__.domain:* use.fontawesome.com;
         media-src data: blob: *">

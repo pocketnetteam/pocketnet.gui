@@ -1583,6 +1583,20 @@ Platform = function (app, listofnodes) {
 
             }
 
+            if (meta.type == 'stream.brighteon' && url.indexOf("player") == -1) {
+
+                if (url.indexOf('embed') == -1) {
+
+                    _url = 'https://stream.brighteon.com/embed/' + meta.id;
+
+                } else {
+
+                    _url = url;
+
+                }
+
+            }
+
             meta.url = _url;
         }
 
@@ -17028,7 +17042,7 @@ Platform = function (app, listofnodes) {
 
                                                 var meta = app.platform.parseUrl(share.url);
 
-                                                if((meta.type == 'youtube') || meta.type == 'vimeo' || meta.type == 'bitchute' || meta.type == 'peertube' || meta.type == 'brighteon'){
+                                                if((meta.type == 'youtube') || meta.type == 'vimeo' || meta.type == 'bitchute' || meta.type == 'peertube' || meta.type == 'brighteon' || meta.type == 'stream.brighteon'){
 
                                                     if (self.sdk.videos.storage[share.url] && self.sdk.videos.storage[share.url].data)
                                                         return true
@@ -17584,7 +17598,7 @@ Platform = function (app, listofnodes) {
 
                                                 var meta = app.platform.parseUrl(share.url);
 
-                                                if((meta.type == 'youtube') || meta.type == 'vimeo' || meta.type == 'bitchute' || meta.type == 'peertube' || meta.type == 'brighteon'){
+                                                if((meta.type == 'youtube') || meta.type == 'vimeo' || meta.type == 'bitchute' || meta.type == 'peertube' || meta.type == 'brighteon' || meta.type == 'stream.brighteon'){
 
                                                     if (self.sdk.videos.storage[share.url] && self.sdk.videos.storage[share.url].data)
                                                         return true
