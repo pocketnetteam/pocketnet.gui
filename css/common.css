@@ -899,7 +899,7 @@
   display: none;
   position: fixed;
   right: 2em;
-  top: 1em;
+  top: calc(2 * 0.5em + var(--app-margin-top));
 }
 .share_common .sharecnt .removeDescription {
   display: none;

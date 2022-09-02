@@ -1357,6 +1357,8 @@ var author = (function(){
 
 					author.data = self.sdk.users.storage[author.address]
 
+					console.log('author', author, author.address, self.sdk.users.storage)
+
 
 					var data = {
 						author : author

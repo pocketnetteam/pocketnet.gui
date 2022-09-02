@@ -95,6 +95,8 @@ Application = function(p)
   self.pkoindisable = window.cordova && isios();
   self.cutversion = window.cordova && isios();
 
+  self.margintop  = 0
+
   self.options = {
 
     url : url,
@@ -1193,6 +1195,7 @@ Application = function(p)
 
         self.mobile.pip.init()
         self.mobile.keyboard.init()
+        self.mobile.safearea()
 
         if (window.Keyboard && window.Keyboard.disableScroll){
           window.Keyboard.disableScroll(false)
@@ -1211,7 +1214,7 @@ Application = function(p)
     {
 
 
-
+      self.mobile.safearea()
       self.init(p);
 
       setTimeout(function(){
@@ -1942,6 +1945,17 @@ Application = function(p)
 
   self.mobile = {
 
+    safearea : function(){
+      if(window.cordova){
+        document.documentElement.style.setProperty('--app-margin-top-default', `25px`);
+        margintop = 20
+      }
+      else{
+        document.documentElement.style.setProperty('--app-margin-top-default', `0px`);
+      }
+      
+    },
+
     inputs : {
 
       init : function(){
@@ -2214,31 +2228,37 @@ Application = function(p)
         }
 
         if (window.StatusBar) {
+          StatusBar.overlaysWebView(true);
+          window.StatusBar.backgroundColorByHexString('#00000000');
           self.platform.sdk.theme.current == 'white' ? window.StatusBar.styleDefault() : window.StatusBar.styleLightContent()
-          window.StatusBar.backgroundColorByHexString(colors[self.platform.sdk.theme.current] || "#FFF");
+          console.log("SETTRANSPARENT2")
+          
         }
 
-        if (window.NavigationBar)
-          window.NavigationBar.backgroundColorByHexString(colors[self.platform.sdk.theme.current] || "#FFF", self.platform.sdk.theme.current != 'white');
+        //if (window.NavigationBar)
+          //window.NavigationBar.backgroundColorByHexString(colors[self.platform.sdk.theme.current] || "#FFF", self.platform.sdk.theme.current != 'white');
       },
 
       gallerybackground : function(){
 
 
         if (window.StatusBar) {
+          
+          console.log("SETTRANSPARENT1")
+          StatusBar.overlaysWebView(true);
+          window.StatusBar.backgroundColorByHexString('#00000000');
           window.StatusBar.styleLightContent()
-          window.StatusBar.backgroundColorByHexString("#030F1B");
         }
 
-        if (window.NavigationBar)
-          window.NavigationBar.backgroundColorByHexString("#030F1B", true);
+        //if (window.NavigationBar)
+          //window.NavigationBar.backgroundColorByHexString("#030F1B", true);
 
       },
 
       hide : function(){
         if (window.StatusBar) {
           window.StatusBar.hide()
-          window.StatusBar.overlaysWebView(true);
+          //window.StatusBar.overlaysWebView(true);
         }
 
         if (window.NavigationBar){
@@ -2248,7 +2268,7 @@ Application = function(p)
       show : function(){
         if (window.StatusBar) {
           window.StatusBar.show()
-          window.StatusBar.overlaysWebView(false);
+          //window.StatusBar.overlaysWebView(false);
         }
 
         if (window.NavigationBar){
@@ -2288,8 +2308,11 @@ Application = function(p)
 
 
     fullscreenmode : function(v){
-      v ? self.mobile.screen.unlock() : self.mobile.screen.lock()
-      v ? self.mobile.statusbar.hide() : self.mobile.statusbar.show()
+      setTimeout(() => {
+        v ? self.mobile.screen.unlock() : self.mobile.screen.lock()
+        v ? self.mobile.statusbar.hide() : self.mobile.statusbar.show()
+      }, 100)
+      
 
       self.mobile.unsleep(v)
 
@@ -2465,10 +2488,12 @@ Application = function(p)
 
       init : function(){
         self.mobile.screen.clbks = {}
+        
 
+        if (window.cordova){
 
+        
 
-        if (window.cordova)
           window.screen.orientation.addEventListener('change', function(){
 
             _.each(self.mobile.screen.clbks, function(c){
@@ -2476,6 +2501,8 @@ Application = function(p)
             })
 
           });
+        }
+          
       },
 
       clbks : {}

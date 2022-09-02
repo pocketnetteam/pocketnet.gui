@@ -11274,7 +11274,11 @@ Platform = function (app, listofnodes) {
                             params.push('1')
                         }
 
+                        console.log('addresses', addresses)
+
                         self.app.api.rpc('getuserprofile', params).then(d => {
+
+                            console.log("D", d)
 
                             _.each(addresses || [], function (a) {
 
@@ -11283,6 +11287,8 @@ Platform = function (app, listofnodes) {
                                 })
 
                                 var u = self.sdk.users.prepareuser(data, a, state)
+
+                                console.log("UUU", u)
 
                                 s[a] = u;
                                 self.sdk.usersl.storage[a] = u;
@@ -11295,6 +11301,7 @@ Platform = function (app, listofnodes) {
                                 clbk(d)
 
                         }).catch(e => {
+                            console.error(e)
                             if (clbk)
                                 clbk(null, e)
                         })

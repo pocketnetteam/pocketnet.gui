@@ -174,7 +174,8 @@
   background: rgb(var(--background-total-theme));
   z-index: 300;
   width: 100%;
-  height: 65px;
+  height: calc(65px + var(--app-margin-top));
+  padding-top: var(--app-margin-top);
 }
 #about .maket .rightchatspacer {
   height: 100%;
@@ -279,7 +280,7 @@
   align-items: center;
 }
 #about .report {
-  margin-top: 65px;
+  margin-top: calc(65px + var(--app-margin-top));
 }
 #about .report #faq {
   max-width: 1280px;

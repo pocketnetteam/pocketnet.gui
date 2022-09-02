@@ -20,8 +20,8 @@
   position: fixed;
   left: 0;
   right: 0;
-  top: 0;
-  height: 65px;
+  height: calc(65px + var(--app-margin-top));
+  padding-top: var(--app-margin-top);
   z-index: 20;
   contain: strict;
   background: rgb(var(--background-total-theme));
@@ -809,6 +809,8 @@
     padding: 0.75em 0.75em;
   }
   html.allcontent #menu .menuWrapper {
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
     background: transparent;
   }
   html.allcontent #menu .menuWrapper .searchIconLabel i,

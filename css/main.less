@@ -176,6 +176,39 @@
     --color-yellow : 250, 230, 10;
     --color-not-catchy-grey: 72, 72, 72;
 }
+
+:root {
+	--app-margin-top-default: 0px;
+	--app-margin-top: max(env(safe-area-inset-top), var(--app-margin-top-default));
+}
+
+:root {
+	--safe-area-inset-top:      0px;
+	--safe-area-inset-right:    0px;
+	--safe-area-inset-bottom:   0px;
+	--safe-area-inset-left:     0px;
+}
+
+
+
+/* iOS 11.0: supports constant() css function. (Assume all other inset vars are supported.) */
+@supports (padding-top: constant(safe-area-inset-top))  {
+	:root {
+        --safe-area-inset-top:      constant(safe-area-inset-top, 0);
+        --safe-area-inset-right:    constant(safe-area-inset-right, 0);
+        --safe-area-inset-bottom:   constant(safe-area-inset-bottom, 0);
+        --safe-area-inset-left:     constant(safe-area-inset-left, 0);
+	}
+}
+/* iOS 11.2 and latest Chrome webviews support the env() css function. (Assume all other inset vars are supported.) */
+@supports (padding-top: env(safe-area-inset-top))  {
+	:root {
+        --safe-area-inset-top:      env(safe-area-inset-top, 0);
+        --safe-area-inset-right:    env(safe-area-inset-right, 0);
+        --safe-area-inset-bottom:   env(safe-area-inset-bottom, 0);
+        --safe-area-inset-left:     env(safe-area-inset-left, 0);
+	}
+}
    
    
 .disable-hover,
@@ -2886,7 +2919,8 @@ input[type=radio].radio:checked + label {
     }
 
     ._close{
-        top: @rhythm;
+        
+        top: calc(@rhythm + var(--app-margin-top));
         right: 1.5 * @rhythm;
     }
     ._expand{
@@ -3390,6 +3424,7 @@ input[type=radio].radio:checked + label {
 }
 
 .contentWrapper{
+    margin-top : var(--app-margin-top);
     #content{
         width: 100%;        
         margin : 0 auto;
@@ -7060,7 +7095,7 @@ html{
         &.scrollmodedown{
 
             #menu .menuWrapper{
-                transform:  translateY(-65px);
+                transform:  translateY(calc(-65px - var(--app-margin-top)));
             }
     
             #panelWrapper{
@@ -7070,7 +7105,7 @@ html{
 
             #comments{
                 .captionfwrapper{
-                    transform:  translateY(-65px);
+                    transform:  translateY(calc(-65px - var(--app-margin-top)));
                 }
             }
     
@@ -7154,7 +7189,7 @@ html{
         &.scrollmodedown{
     
             #menu .menuWrapper{
-                transform:  translateY(-65px);
+                transform:  translateY(calc(-65px - var(--app-margin-top)));
             }
     
             #panelWrapper{
@@ -7826,6 +7861,10 @@ html.mobileview{
         .contentWrapper{
             padding-top: 0;
         }
+        body{
+            background: #051b48;
+        }
+        
     }        
 
 }
@@ -7865,7 +7904,7 @@ html.mobileview{
         position: fixed;
         left: 0.5 * @rhythm;
         right: 0.5 * @rhythm;
-        top: 0.5 * @rhythm;
+        top: calc(0.5 * @rhythm + var(--app-margin-top));
         max-height: 210px;
         width: auto;
         min-width: 0;
