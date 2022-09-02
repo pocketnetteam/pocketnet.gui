@@ -5150,7 +5150,7 @@ Platform = function (app, listofnodes) {
                             share.user = deep(self.app, 'platform.sdk.usersl.storage.' + share.address).export();
 
                             // If we are on mobile/electron and post has a downloadable media (image/video)
-                            if ((share.itisvideo() || share.images.length > 0)  && self.app.savesupported()) {
+                            if (share.itisvideo()  && self.app.savesupported()) {
 
                                 // Ask user if he wants to download
                                 app.nav.api.load({
@@ -5178,20 +5178,9 @@ Platform = function (app, listofnodes) {
                                             }
 
                                             // Save the post with video
-                                            if (share.itisvideo()) {
+                                            self.ui.saveShare(share, function() {});
 
-                                                self.ui.saveShare(share, function() {});
-
-                                                return;
-
-                                            }
-
-                                            // Save the post with images
-                                            self.app.platform.sdk.localshares.saveShare(share).then(() =>{
-
-                                                sendSiteMessage();
-
-                                            });
+                                            return;
 
                                         }
                                     },
@@ -5204,9 +5193,11 @@ Platform = function (app, listofnodes) {
                             } else if (self.app.savesupported()) {
 
                                 // Save the post on the device
-                                self.app.platform.sdk.localshares.saveShare(share);
+                                self.app.platform.sdk.localshares.saveShare(share).then(() =>{
 
-                                sendSiteMessage();
+                                    sendSiteMessage();
+
+                                });
 
                             } else {
 
