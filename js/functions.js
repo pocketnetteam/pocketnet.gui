@@ -7023,10 +7023,9 @@
 
 				}
 
-				if(!direction) return
 
-				if(!p.directions[direction]){
-					return
+				if(!direction || !p.directions[direction]) {
+					return true
 				}
 
 				var dir = p.directions[direction]
