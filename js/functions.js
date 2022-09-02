@@ -1900,6 +1900,115 @@
 
 	}
 
+	carousel = function(el, _items, _container){
+
+		var self = this
+
+		var items = el.find(_items)
+		var container = el.find(_container)
+
+		var markershtml = ''
+		var markers = null
+		var currentscroll = 0
+		var currentitem = 0
+
+		window.requestAnimationFrame(() => {
+			if(!container.hasClass('carousel')) container.addClass('carousel')
+
+			for(var i = 0; i < items.length; i++){
+				markershtml+= '<div index="'+i+'" class="'+(!i ? 'active' : '')+'"><div></div></div>'
+			}
+
+			el.append('<div class="carousel_markers">'+markershtml+'</div>')
+
+			items.addClass('carousel_item')
+
+			markers = el.find('.carousel_markers >div')
+
+			markers.on('click', function() {
+				gotoslide(this.getAttribute('index'))
+				console.log(this)
+			})
+	
+		})
+
+		var findactive = function(){
+			
+			var activeindex = -1
+			
+			
+			_.find(items, (item, index) => {
+
+
+				if (Math.abs(currentscroll - item.offsetLeft) < 1){
+					activeindex = index
+
+					return true
+				} 
+			})
+
+			return activeindex
+
+		}
+
+		var setactive = function(index){
+
+			if(index == currentitem) return
+
+			currentitem = index
+
+			if (markers){
+				markers.removeClass('active')
+				markers[index].classList.add('active')
+			}
+		}
+
+		var gotoslide = function(index){
+			window.requestAnimationFrame(() => {
+
+				console.log('index', index, items[index].offsetLeft)
+				container[0].scrollLeft = items[index].offsetLeft
+
+			})
+
+			//container.scrollTo(items[index].offsetLeft)
+			
+		}
+
+		var scrollevent = _.debounce((el) => {
+
+			currentscroll = el.scrollLeft
+
+			console.log('currentscroll', currentscroll)
+			window.requestAnimationFrame(() => {
+				var activeindex = findactive()
+
+				console.log('activeindex', activeindex)
+
+				if (activeindex > -1){
+					setactive(activeindex)
+				}
+			})
+
+		}, 50)
+
+		container.on('scroll', () => {
+			scrollevent(container[0])
+		})
+
+		
+		self.destroy = function(){
+			container.off('scroll')
+			markers.off('click')
+			el = null
+			container = null
+			items = null
+			markers = null
+		}
+
+		return self
+	}
+
 	pathFromMD5Name = function(name){
 
 		return name.substr(0, 2) + "/" + name.substr(2, 2) + "/" + name.substr(4) + ".jpg";

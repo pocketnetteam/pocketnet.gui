@@ -547,7 +547,6 @@
 .share_common .images .imagesWrapper {
   width: 140px;
   height: 140px;
-  float: left;
   background: rgb(var(--background-secondary-theme));
   border-radius: 6px;
 }
@@ -606,12 +605,17 @@
 }
 .share_common .images .imagesContainer.owlcar .imagesWrapper {
   height: 500px;
-  float: none;
   width: 100%;
   background: transparent;
 }
 .share_common .images .imagesContainer.owlcar .imagesWrapper .image {
   background-size: contain!important;
+}
+.share_common .images .imagesContainer.carousel {
+  max-width: 400px;
+}
+.share_common .images .carousel_markers {
+  max-width: 400px;
 }
 .share_common .images.manyImagesView .imagesContainer {
   display: flex;

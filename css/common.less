@@ -28,6 +28,7 @@
     }
     
     
+    
 
     .pkoin{
         display: flex;
@@ -723,7 +724,6 @@
         .imagesWrapper{
             width: 140px;
             height: 140px;
-            float: left;
             background: rgb(var(--background-secondary-theme));
             border-radius: 6px;
             
@@ -806,7 +806,6 @@
 
                 .imagesWrapper{
                     height: 500px;
-                    float: none;
                     width: 100%;
                     background: transparent;
 
@@ -815,6 +814,14 @@
                     }
                 }
             }
+
+            &.carousel{
+                max-width: 400px;
+            }
+        }
+
+        .carousel_markers{
+            max-width: 400px;
         }
 
         &.manyImagesView{

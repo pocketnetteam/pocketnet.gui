@@ -4508,6 +4508,7 @@ input[type=radio].radio:checked + label {
 }
 
 #application{
+    /*
     .owl-dots {
         text-align: center;
         margin-top: @rhythm;
@@ -4573,7 +4574,7 @@ input[type=radio].radio:checked + label {
 
     .owl-carousel .owl-nav button.disabled {
         opacity: .5;
-    }
+    }*/
 
     .emojionearea {
 
@@ -5144,6 +5145,52 @@ input[type=radio].radio:checked + label {
             display: none;
         }
 
+    }
+}
+
+.carousel{
+    width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: scroll;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    scroll-snap-type: x mandatory;
+    align-items: center;
+    position: relative;
+    &::-webkit-scrollbar{
+        display: none!important;
+    }
+
+    .carousel_item{
+        width: 100%;
+        min-width: 100%;
+        scroll-snap-align: center;
+    }
+
+}
+
+.carousel_markers{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 3 * @rhythm;
+
+    >div{
+        padding : 0.5 * @rhythm;
+        
+        >div{
+            width: 8px;
+            height: 8px;
+            border-radius : 10px;
+            background : rgb(var(--neutral-grad-2));
+        }
+
+        &.active{
+            >div{
+                background : rgb(var(--color-bg-ac));
+            }
+        }
     }
 }
 

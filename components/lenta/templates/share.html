@@ -272,7 +272,7 @@ var arranges = {
 					<% } else {
 
 						if((thisrepost || isMobile() || (typeof openapi != 'undefined' && openapi)) && share.images.length + additionall > 1){
-							icClass = 'owlcar owl-carousel noswipepnt'
+							icClass = 'carousel noswipepnt'
 						}
 
 					} %>
@@ -281,7 +281,6 @@ var arranges = {
 	
 					<div class="images shareImages hideOnFullVideo unselectable noswipepnt">
 						<div class="imagesContainer <%-icClass%>">
-
 						
 							<% _.each(share.images, function(image){ %>
 
@@ -291,8 +290,6 @@ var arranges = {
 								</div>
 
 							<% }) %>
-
-						
 							
 						</div>
 

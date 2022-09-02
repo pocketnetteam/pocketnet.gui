@@ -105,7 +105,7 @@ var lenta = (function(){
 				if (initedcommentes[share.txid])
 					initedcommentes[share.txid].destroy()
 
-				if (carousels[share.txid]) carousels[share.txid].owlCarousel('destroy')
+				if (carousels[share.txid]) carousels[share.txid].destroy()
 
 				delete carousels[share.txid]
 
@@ -3189,7 +3189,7 @@ var lenta = (function(){
 					}
 
 					
-					if(p.el.find(".shareImages .image").length > 1 || video){
+					if (video){
 						c()
 					}
 					else{
@@ -3728,25 +3728,8 @@ var lenta = (function(){
 
 						if (isMobile() || essenseData.openapi) {
 
-							if(carousels[s.txid]) carousels[s.txid].owlCarousel('destroy')
 
-
-
-							carousels[s.txid] = sel.find('.imagesContainer').height(ch + 50).owlCarousel({
-								items: 1,
-								dots: true,
-								nav: !isMobile(),
-								navText: [
-									'<i class="fas fa-chevron-circle-left"></i> ',
-									'<i class="fas fa-chevron-circle-right"></i>'
-								],
-
-								width : cwidth,
-
-								checkVisibility: false,
-								//responsive : false
-								
-							});
+							carousels[s.txid] = new carousel(images, '.imagesWrapper', '.imagesContainer')
 
 
 							isclbk()
@@ -5318,8 +5301,7 @@ var lenta = (function(){
 				}
 
 				_.each(carousels, function(carousel){
-					carousel.owlCarousel('destroy')
-					carousel.empty()
+					carousel.destroy()
 				})
 
 				carousels = {}

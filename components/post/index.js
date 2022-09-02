@@ -1278,7 +1278,10 @@ var post = (function () {
 
 							if (isMobile() || ed.repost) {
 
-								images.find('.imagesContainer').owlCarousel({
+
+								new carousel(images, '.imagesWrapper', '.imagesContainer')
+
+								/*images.find('.imagesContainer').owlCarousel({
 									items: 1,
 									dots: true,
 									nav: !isMobile(),
@@ -1287,13 +1290,15 @@ var post = (function () {
 										'<i class="fas fa-chevron-right"></i>'
 										]
 								  
-								});
+								});*/
 
 								isclbk()
 
 							}
 							else{
-								images.isotope({
+								images.addClass('manyImagesView')
+								isclbk()
+								/*images.isotope({
 
 									layoutMode: 'packery',
 									itemSelector: '.imagesWrapper',
@@ -1307,7 +1312,7 @@ var post = (function () {
 									isclbk()
 								});
 	
-								images.isotope()
+								images.isotope()*/
 							}
 
 							
