@@ -28,7 +28,7 @@ var toppanel = (function(){
 					links.video = "index?video=1"
 				}
 
-				if (self.app.savesupported()) {
+				if (self.app.savesupported() || app.savesupportedForBrowser()) {
 					links.saved = "index?r=saved"
 				}
 
@@ -45,7 +45,7 @@ var toppanel = (function(){
 					labels.push(self.app.localization.e('video'))
 				}
 
-				if ((window.cordova) || (typeof _Electron != 'undefined' && window.electron)) {
+				if (self.app.savesupported()) {
 					labels.push(self.app.localization.e('downloaded'));
 				}
 

@@ -100,6 +100,18 @@ var all = {
 		icon : '<i class="fas fa-cubes"></i>',
 		text : 'HTLC BUY TEST',
 		class : 'htls'
+	},
+
+	savePost : {
+		icon : '<i class="fas fa-download"></i>',
+		text : e('savePost'),
+		class : 'savePost'
+	},
+
+	deleteSavedPost : {
+		icon : '<i class="fas fa-trash"></i>',
+		text : e('deleteSavedPost'),
+		class : 'deleteSavedPost'
 	}
 
 }
@@ -116,13 +128,26 @@ if(share){
 
 		m.push('shareBareVideoLink');
 
+		/*
 		if(app.platform.sdk.localshares.getShare(share.txid)){
 			m.unshift('deleteSavedVideo');
 		}
 		else{
 			m.unshift('downloadVideo');
 		}
+		*/
 
+	}
+
+	if (app.savesupported() || app.savesupportedForBrowser()) {
+
+		if (app.platform.sdk.localshares.getShare(share.txid)){
+			m.unshift('deleteSavedPost');
+		}
+		else{
+			m.unshift('savePost');
+		}
+	
 	}
 
 	m.push('opennewwindow');

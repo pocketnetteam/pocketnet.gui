@@ -1214,3 +1214,13 @@ _l.androidPopupDisagree = "Non ora"
 _l.desktopPopupTitle = "Ottieni informazioni non censurate nell'app desktop Bastyon"
 _l.desktopPopupAgree = "Scarica l'app"
 _l.desktopPopupDisagree = "Non ora"
+
+_l.saved = "Salvati";
+_l.savePost = "Salva il post";
+_l.postsaved = "Post salvato";
+_l.deleteSavedPost = "Elimina il post salvato";
+_l.downloadMedia = "Scaricare i media";
+_l.doYouDownloadMedia = "Vuoi scaricare i media (immagini/video) sul tuo dispositivo?";
+_l.gotosaved2 = "Vai a salvare";
+_l.yes = "Sì";
+_l.no = "No";

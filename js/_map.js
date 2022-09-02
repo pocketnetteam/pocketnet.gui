@@ -897,6 +897,12 @@ __map =  {
 		add : insertingfunc
 	},
 
+	downloadMedia : {
+		uri : "downloadMedia",
+		href : "downloadMedia",
+		add : insertingfunc
+	},
+
 	postscores : {
 		uri : "postscores",
 		href : "postscores",

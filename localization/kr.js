@@ -851,3 +851,13 @@ _l.androidPopupDisagree = "지금은 아닙니다"
 _l.desktopPopupTitle = "Bastyon 데스크탑 앱에서 무수정 정보 가져오기"
 _l.desktopPopupAgree = "앱 다운로드"
 _l.desktopPopupDisagree = "지금은 아닙니다"
+
+_l.saved = "저장됨";
+_l.savePost = "게시물 저장";
+_l.postsaved = "게시물이 저장되었습니다.";
+_l.deleteSavedPost = "저장된 게시물 삭제";
+_l.downloadMedia = "미디어 다운로드";
+_l.doYouDownloadMedia = "장치에 미디어(이미지/비디오)를 다운로드하시겠습니까?";
+_l.gotosaved2 = "저장된 항목으로 이동";
+_l.yes = "예";
+_l.no = "아니";

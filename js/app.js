@@ -329,9 +329,15 @@ Application = function(p)
     }
   }
 
+  self.isElectron = function(){
+    return (typeof _Electron !== 'undefined' && !!window.electron);
+  }
   self.savesupported = function(){
-    var isElectron = (typeof _Electron !== 'undefined' && !!window.electron);
+    var isElectron = self.isElectron();
     return isElectron || (window.cordova && !isios());
+  }
+  self.savesupportedForBrowser = function(){
+    return !self.savesupported() && localStorage;
   }
 
   self.useip = function(){

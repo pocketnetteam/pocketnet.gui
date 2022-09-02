@@ -852,3 +852,13 @@ _l.androidPopupDisagree = "Nicht jetzt"
 _l.desktopPopupTitle = "Unzensierte Informationen in der Bastyon-Desktop-App abrufen"
 _l.desktopPopupAgree = "App herunterladen"
 _l.desktopPopupDisagree = "Nicht jetzt"
+
+_l.saved = "Gespeicherte";
+_l.savePost = "Beitrag speichern";
+_l.postsaved = "Beitrag gespeichert";
+_l.deleteSavedPost = "Gespeicherten Beitrag löschen";
+_l.downloadMedia = "Medien herunterladen";
+_l.doYouDownloadMedia = "Möchten Sie die Medien (Bild/Video) auf Ihr Gerät herunterladen?";
+_l.gotosaved2 = "Gehe zu gespeichert";
+_l.yes = "Ja";
+_l.no = "Nein";

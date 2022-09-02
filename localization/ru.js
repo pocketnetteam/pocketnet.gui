@@ -2068,3 +2068,13 @@ _l.androidPopupDisagree = "Не сейчас"
 _l.desktopPopupTitle = "Получайте информацию без цензуры в приложении Бастион"
 _l.desktopPopupAgree = "Скачать приложение"
 _l.desktopPopupDisagree = "Не сейчас"
+
+_l.saved = "Сохранено";
+_l.savePost = "Сохранить пост";
+_l.postsaved = "Сохраненный пост";
+_l.deleteSavedPost = "Удалить сохраненный пост";
+_l.downloadMedia = "Загрузить медиа";
+_l.doYouDownloadMedia = "Вы хотите загрузить медиа (изображение/видео) на свое устройство?";
+_l.gotosaved2 = "Перейти к сохранению";
+_l.yes = "Да";
+_l.no = "Нет";

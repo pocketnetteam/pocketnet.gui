@@ -57,9 +57,9 @@ var main = (function(){
 
 			{
 				link : "index?r=saved",
-				label : () => self.app.localization.e('downloaded'),
+				label : () => self.app.localization.e('saved'),
 				if : function(){
-					return self.app.savesupported()
+					return self.app.savesupported() || self.app.savesupportedForBrowser()
 				},
 				value : 'saved'
 			},
@@ -104,7 +104,7 @@ var main = (function(){
 					read : "index?read=1"
 				}
 
-				if (window.cordova) {
+				if (self.app.savesupported() || self.app.savesupportedForBrowser()) {
 					links.saved = "index?r=saved"
 				}
 
