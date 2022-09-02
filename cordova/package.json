@@ -129,7 +129,9 @@
       "cordova-plugin-apkupdater": {},
       "cordova-plugin-file-transfer": {},
       "cordova-plugin-pip": {},
-      "cordova-plugin-media": {}
+      "cordova-plugin-media": {
+        "KEEP_AVAUDIOSESSION_ALWAYS_ACTIVE" : "NO"
+      }
     },
     "platforms": [
       "ios",
