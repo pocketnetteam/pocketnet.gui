@@ -125,15 +125,15 @@
 
         <% } %>
 
-
-        <div class="reportCaption">
-            <div class="label">
-                <a elementsid="hrefabout" href="about"><%=e('aboutus')%></a>
+        <% if(!app.cutversion) {%>
+            <div class="reportCaption">
+                <div class="label">
+                    <a elementsid="hrefabout" href="about"><%=e('aboutus')%></a>
+                </div>
             </div>
-        </div>
-
+        <% } %>
        
-        <% if(!window.cordova) {%>
+        <% if(!window.cordova && !app.cutversion) {%>
             <div class="reportCaption">
                 <div class="label">
                     <a elementsid="hrefdonations" href="donations"><%=e('donate')%></a>

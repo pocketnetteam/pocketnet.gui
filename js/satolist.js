@@ -12978,7 +12978,7 @@ Platform = function (app, listofnodes) {
                 return result
             },
             maketasks : function(){
-                console.log('self.sdk.recommendations.shares', self.sdk.recommendations.shares.length)
+
                 if (self.sdk.recommendations.planned.length && self.sdk.recommendations.shares.length < 6){
                     if(!_.find(self.sdk.recommendations.planned, (p) => {
                         return p.status == 'processing'
@@ -13041,6 +13041,10 @@ Platform = function (app, listofnodes) {
                     return true
                 })
 
+                if(!shares.length){
+                    return
+                }
+
                 var maxdate = _.max(shares, (u) => {
                     return u.time
                 })
@@ -13081,6 +13085,8 @@ Platform = function (app, listofnodes) {
                     task.status = 'processing'
     
                     self.app.platform.sdk.node.shares.getrecomendedcontents(p, (shares, error) => {
+
+                        if(!self.sdk.recommendations.storage.shares) return
     
                         task.status = 'completed'
     
@@ -13205,7 +13211,8 @@ Platform = function (app, listofnodes) {
             }, 1000),
 
             add : function(task){
-
+                if(!self.sdk.recommendations.storage.status) return
+                
                 self.sdk.recommendations.storage.status.unshift(task)
 
                 self.sdk.recommendations.storage.status = firstEls(self.sdk.recommendations.storage.status, 300)

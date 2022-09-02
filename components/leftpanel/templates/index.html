@@ -32,13 +32,17 @@
 			<div class="rightbottomlinks">
 				<a elementsid="https://<%-app.options.url%>/blockexplorer/" href="https://<%-app.options.url%>/blockexplorer/"><%= e('e13182') %></a>
 				<span>&middot;</span>
+				<% if(!app.cutversion) {%>
 				<a elementsid="aboutlink" href="about"><%= e('aboutus') %></a>
 				<span>&middot;</span>
 				<a elementsid="about?id=about-faq" href="about?id=about-faq">F.A.Q.</a>
 				<span>&middot;</span>
+				<% } %>
 				<a elementsid="help?page=applications" href="applications"><%= e('e14106') %></a>
+				<% if(!app.cutversion) {%>
 				<span>&middot;</span>
 				<a elementsid="help" href="help"><%= e('e14100') %></a>
+				<% } %>
 
 				<% var year = new Date().getFullYear() %>
 

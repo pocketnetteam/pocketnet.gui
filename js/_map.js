@@ -62,7 +62,7 @@ __map =  {
 		{path : "js/vendor/workbox-v6.1.5/workbox-sw.js", babelify : true},
 		"js/vendor/ion.sound/ion.sound.js",
 		"js/vendor/hammer.min.js",
-		//"js/vendor/owl/owl.carousel.js",
+		"js/vendor/owl/owl.carousel.js",
 		
 		{path : "js/vendor/shadow-popup/popup.js", babelify : true},
 	],
@@ -114,8 +114,8 @@ __map =  {
 		"css/plyr.css",
 		"css/pniframe.css",
 		"peertube/video-embed.css",
-		//"js/vendor/owl/assets/owl.carousel.min.css",
-		//"js/vendor/owl/assets/owl.theme.default.min.css",
+		"js/vendor/owl/assets/owl.carousel.min.css",
+		"js/vendor/owl/assets/owl.theme.default.min.css",
 		"js/vendor/shadow-popup/css/popup.css"
 	],
 
@@ -123,8 +123,8 @@ __map =  {
 		"css/main.css" : true,
 		"css/common.css" : true,
 		"css/plyr.css" : true,
-		//"js/vendor/owl/assets/owl.carousel.min.css" : true,
-		//"js/vendor/owl/assets/owl.theme.default.min.css" : true
+		"js/vendor/owl/assets/owl.carousel.min.css" : true,
+		"js/vendor/owl/assets/owl.theme.default.min.css" : true
 	},
 	
 	__templates : [

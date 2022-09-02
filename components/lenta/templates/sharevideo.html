@@ -466,7 +466,7 @@ var metadisplay = function(){ %>
 									<% } %>
 	
 									<% if(!lockedaccount) {%>
-										<% if(!my || app.boost) {%>
+										<% if(app.boost && !app.pkoindisable) {%>
 										
 										<div class="item pkoin right unselectedtable">
 											<img src="img/pocketnet_logo_white.svg" alt="">

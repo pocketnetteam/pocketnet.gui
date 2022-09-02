@@ -2234,6 +2234,11 @@ var wallet = (function(){
 
 			buy : function(clbk, _el){
 
+				if (self.app.pkoindisable){
+					clbk()
+					return
+				}
+
 				var a = self.app.platform.sdk.address.pnet() || {}
 
 				self.shell({
@@ -2790,8 +2795,8 @@ var wallet = (function(){
 									el.c.removeClass('loading')
 								})
 							}
-
-							if(_p.action == 'buy'){
+						
+							if(_p.action == 'buy' && !self.app.pkoindisable){
 								actions.showBuyInStep('buy', 1, '', function(){
 									el.c.removeClass('loading')
 								})
