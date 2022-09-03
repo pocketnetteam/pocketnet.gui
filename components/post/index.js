@@ -443,9 +443,7 @@ var post = (function () {
 							self.sdk.videos.save()
 						},
 
-						fullscreenchange : function(v){
-							self.app.mobile.fullscreenmode(v)
-						},
+						fullscreenchange : self.app.mobile.fullscreenmode,
 
 						play : function(){
 
