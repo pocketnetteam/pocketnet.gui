@@ -2312,7 +2312,7 @@ Application = function(p)
       setTimeout(() => {
         v ? self.mobile.screen.unlock() : self.mobile.screen.lock()
         v ? self.mobile.statusbar.hide() : self.mobile.statusbar.show()
-      }, 100)
+      }, 1000)
       
 
       self.mobile.unsleep(v)
@@ -2328,8 +2328,6 @@ Application = function(p)
       }
       else{
         self.fullscreenmode = v
-
-
       }
     },
 
