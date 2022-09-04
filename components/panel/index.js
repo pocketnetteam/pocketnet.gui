@@ -125,7 +125,7 @@ var panel = (function(){
 
 			if (
 				deep(self.app.platform, 'released.vidgets.staking') && 
-				deep(self.app.platform.sdk, 'usersettings.meta.vidgetstaking.value')
+				deep(self.app.platform.sdk, 'usersettings.meta.vidgetstaking.value') && !self.app.pkoindisable
 			)
 				renders.stacking()
 
