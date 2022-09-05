@@ -1,10 +1,6 @@
 var electron = null, fs, url, path, https;
 if (typeof _OpenApi == 'undefined') _OpenApi = false;
 
-console.log('linkify', linkify)
-
-linkify.registerCustomProtocol('pocketnet')
-linkify.registerCustomProtocol('bastyon')
 
 if (typeof _Electron != 'undefined') {
     electron = require('electron');
