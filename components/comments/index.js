@@ -2095,7 +2095,34 @@ var comments = (function(){
 							}
 						})
 
-						_p.el.find('.embeddonate').on('click', events.pkoin)
+						_p.el.find('.embeddonate').off('click').on('click', function(){
+
+							self.app.platform.sdk.node.transactions.get.balance(function(amount){
+
+								balance = amount.toFixed(3);
+								
+								var id = actions.getid(_p.el.find('.postbody'))
+
+								if(state){
+									actions.embeddonate(id, p)
+									if(!p.answer && !p.editid){
+		
+										ini()
+		
+									}	
+								}
+								else{
+									actions.stateAction(function(){
+									})
+								}
+
+
+							})
+
+
+						})
+
+						// _p.el.find('.embeddonate').on('click', events.pkoin)
 
 
 						if(_preview){
