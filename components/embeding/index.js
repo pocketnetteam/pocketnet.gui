@@ -27,6 +27,16 @@ var embeding = (function(){
 				value : []
 			},
 
+			donate : new Parameter({
+				name: self.app.localization.e('wsamountof'),
+				type: 'NUMBER',
+				id: 'amount',
+				placeholder : '0',
+				format: {
+					Precision: 3
+				}
+			})
+
 
 		}
 
@@ -36,6 +46,14 @@ var embeding = (function(){
 		}
 
 		var actions = {
+
+			donate : function(){
+				if (actions.check('donate')){
+					on.added(options.donate.value)
+
+					self.closeContainer();
+				}
+			},
 			
 			check : function(type){
 
