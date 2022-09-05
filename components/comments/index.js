@@ -203,6 +203,101 @@ var comments = (function(){
 
 		var actions = {
 
+			removeDonate : function(id, p){
+
+				var comment = currents[id]
+			
+				comment.donate.remove()
+			
+				renders.donate(id, p);
+			
+			},
+			
+			embeddonate : function(id, p){
+			
+				id || (id = '0')
+			
+				actions.process(id)
+			
+				if (areas[id])
+					areas[id].___inited = true
+			
+				var storage = currents[id].export(true)
+			
+				var sender = self.sdk.address.pnet().address;
+			
+				if (sender === receiver){
+			
+					sitemessage(self.app.localization.e('donateself'));
+			
+				} else {
+			
+					self.nav.api.load({
+						open : true,
+						id : 'embeding',
+						inWnd : true,
+			
+						essenseData : {
+							type : 'donate',
+							storage : storage,
+							sender: sender, 
+							receiver: receiver,
+							balance: balance,
+							on : {
+			
+								added : function(value){
+			
+									var result = Boolean(value);
+			
+			
+									if (Number(value) < balance){
+			
+										if(!_.isArray(value)) value = [value]
+			
+										currents[id].donate.remove();
+			
+										currents[id].donate.set({
+											address: receiver,
+											amount: Number(value)
+										})
+			
+										if(!result && errors[type]){
+			
+											sitemessage(errors[type])
+			
+										}
+			
+			
+										if (result){
+			
+											new Audio('sounds/donate.mp3').play();
+			
+											renders.donate(id, p)
+			
+										}	
+			
+								
+			
+									} else {
+			
+										sitemessage(self.app.localization.e('incoins'))
+									}
+			
+				
+			
+								}
+							}
+						},
+			
+						clbk : function(s, p){
+							external = p
+						}
+					})
+			
+				}
+			
+			}, 
+
 			
 			pkoin : function(id, format){
 
