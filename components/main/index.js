@@ -523,35 +523,43 @@ var main = (function(){
 			},
 
 			leftpanel: function(){
+				if (leftpanel && leftpanel.update){
+					leftpanel.update()
+				}
+				else{
+					self.nav.api.load({
 
-				self.nav.api.load({
-
-					open : true,
-					id : 'leftpanel',
-					el : el.leftpanel,
-					animation : false,
-
-					essenseData : {
-					
-						renderclbk : function(){
-							actions.refreshSticky(true)
+						open : true,
+						id : 'leftpanel',
+						el : el.leftpanel,
+						animation : false,
+	
+						essenseData : {
+						
+							renderclbk : function(){
+								actions.refreshSticky(true)
+							},
+	
+							changed : function(){
+								renders.lentawithsearch()
+							},
+	
+							close : function(){
+								showCategories(false)
+							}
 						},
-
-						changed : function(){
-							renders.lentawithsearch()
-						},
-
-						close : function(){
-							showCategories(false)
+						clbk : function(e, p){
+	
+							leftpanel = p;
+	
 						}
-					},
-					clbk : function(e, p){
+	
+					})
+				}
+				
+					
 
-						leftpanel = p;
-
-					}
-
-				})
+				
 			},
 
 			panel : function(){

@@ -131,19 +131,26 @@ var leftpanel = (function(){
 
 				if(!el.c) return
 
-				self.nav.api.load({
+				if (tags && tags.update){
+					tags.update()
+				}
+				else{
+					self.nav.api.load({
 
-					open : true,
-					id : 'tagcloud',
-					el : el.tags,
-					animation : false,
-					
-					clbk : function(e, p){
+						open : true,
+						id : 'tagcloud',
+						el : el.tags,
+						animation : false,
+						
+						clbk : function(e, p){
+	
+							tags = p
+						}
+	
+					})
+				}
 
-						tags = p
-					}
-
-				})
+				
 
 			},
 
@@ -151,19 +158,39 @@ var leftpanel = (function(){
 
 				if(!el.c) return
 
-				self.nav.api.load({
+				if (cats && cats.update){
+					cats.update()
+				}
+				else{
 
-					open : true,
-					id : 'categories',
-					el : el.cats,
-					animation : false,
-					
-					clbk : function(e, p){
-						cats = p
-					}
+					self.nav.api.load({
 
+						open : true,
+						id : 'categories',
+						el : el.cats,
+						animation : false,
+						
+						clbk : function(e, p){
+							cats = p
+						}
+
+					})
+				}
+
+			},
+
+			footer : function(){
+				if(!el.c) return
+
+				self.shell({
+					name :  'footer',
+					data : {
+					},
+					el : el.footer
+
+				}, function(_p){
+					if(clbk) clbk()
 				})
-
 			},
 
 			sub : function(value, clbk){
@@ -265,8 +292,6 @@ var leftpanel = (function(){
 				renders.tags()
 				renders.cats()
 				renders.best()
-
-
 			},
 
 			sub : function(){
@@ -282,6 +307,8 @@ var leftpanel = (function(){
 
 		var make = function(){
 			var pps = parameters()
+
+			renders.footer()
 
 			if (pps.sst || pps.ss){
 				makers.search()
@@ -303,6 +330,9 @@ var leftpanel = (function(){
 		}
 
 		return {
+			update : function(){
+				make()
+			},
 			getdata : function(clbk, p){
 
 				ed = p.settings.essenseData || {}
@@ -342,6 +372,8 @@ var leftpanel = (function(){
 			
 			init : function(p){
 
+				console.log("INIT")
+
 				state.load();
 
 				el = {};
@@ -351,6 +383,7 @@ var leftpanel = (function(){
 				el.tags = el.c.find('.tagscnt')
 				el.cats = el.c.find('.catscnt')
 				el.bestfirst = el.c.find('.bestfirst');
+				el.footer = el.c.find('.rightbottomnav')
 
 				el.currentsearch = el.c.find('.currentsearchcnt')
 				el.subtop = el.c.find('.subtop')

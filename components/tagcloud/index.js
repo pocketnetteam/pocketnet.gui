@@ -242,6 +242,10 @@ var tagcloud = (function(){
 
 		return {
 
+			update : function(){
+				make()
+			},
+
 			getdata : function(clbk, p){
 				essenseData = p.settings.essenseData || {};
 				var data = {};

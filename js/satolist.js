@@ -28807,6 +28807,9 @@ Platform = function (app, listofnodes) {
                     self.matrixchat.core.cancelshare ? self.matrixchat.core.cancelshare() : '' ;
 
                     self.matrixchat.core.hideInParent(self.app.mobileview ? true : false )
+
+                    if (self.app.mobileview)
+                        self.matrixchat.core.hideOptimization(true)
                 }
 
                 if (self.app.mobileview){
@@ -28867,6 +28870,10 @@ Platform = function (app, listofnodes) {
 
                 if (self.matrixchat.core){
                     self.matrixchat.core.hideInParent(false)
+
+
+                    if (self.app.mobileview)
+                        self.matrixchat.core.hideOptimization(false)
                 }
 
 

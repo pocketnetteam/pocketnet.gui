@@ -1005,6 +1005,16 @@ Application = function(p)
         self.platform.prepare
       ], function(){
 
+        retry(function () {
+          return typeof linkify != 'undefined'
+        }, function () {
+          if(typeof linkify != 'undefined'){
+            linkify.registerCustomProtocol('pocketnet')
+            linkify.registerCustomProtocol('bastyon')
+          }
+        }, 2000)
+
+
         self.realtime();
 
         // TODO (brangr): DEBUG!
@@ -1540,6 +1550,8 @@ Application = function(p)
       if (scrollmodechanging) return
       if (self.blockScroll) return
 
+      console.log('tscrolling')
+
       var lastScrollTop = self.lastScrollTop
 
       var scrollTop = self.actions.getScroll()
@@ -1649,6 +1661,8 @@ Application = function(p)
       let vh = window.innerHeight * 0.01;
       document.documentElement.style.setProperty('--vh', `${vh}px`);
 
+      self.blockScroll = false
+
       checkTouchStyle()
 
     }, 100)
@@ -1668,11 +1682,14 @@ Application = function(p)
     })
 
     window.addEventListener('scroll', function(){
+      //console.log("SCROLLL")
       scrolling()
       dbscrolling()
     })
 
     window.addEventListener('resize', function(){
+      console.log("RESIZE")
+      self.blockScroll = true
       dbresize()
     })
   }
@@ -2235,8 +2252,8 @@ Application = function(p)
           
         }
 
-        //if (window.NavigationBar)
-          //window.NavigationBar.backgroundColorByHexString(colors[self.platform.sdk.theme.current] || "#FFF", self.platform.sdk.theme.current != 'white');
+        if (window.NavigationBar)
+          window.NavigationBar.backgroundColorByHexString(colors[self.platform.sdk.theme.current] || "#FFF", self.platform.sdk.theme.current != 'white');
       },
 
       gallerybackground : function(){
@@ -2244,14 +2261,13 @@ Application = function(p)
 
         if (window.StatusBar) {
           
-          console.log("SETTRANSPARENT1")
           StatusBar.overlaysWebView(true);
           window.StatusBar.backgroundColorByHexString('#00000000');
           window.StatusBar.styleLightContent()
         }
 
-        //if (window.NavigationBar)
-          //window.NavigationBar.backgroundColorByHexString("#030F1B", true);
+        if (window.NavigationBar)
+          window.NavigationBar.backgroundColorByHexString("#030F1B", true);
 
       },
 
@@ -2304,21 +2320,31 @@ Application = function(p)
       }
 
 
-    },
+    },  
 
+
+    //// for video
 
     fullscreenmode : function(v){
-      console.log('fullscreenmode', v)
-      setTimeout(() => {
-        v ? self.mobile.screen.unlock() : self.mobile.screen.lock()
+
+      var cl = function(){
+        v ? self.mobile.screen.lock('landscape') : self.mobile.screen.lock()
         v ? self.mobile.statusbar.hide() : self.mobile.statusbar.show()
-      }, 1000)
+      }
       
 
+      if(isios()){
+        setTimeout(() => {
+          cl()
+        }, 1000)
+      }
+      else{
+        window.requestAnimationFrame(() => {
+          cl()
+        })
+      }
+
       self.mobile.unsleep(v)
-
-      //v ? self.el.html.addClass('fullscreen') : self.el.html.removeClass('fullscreen')
-
 
       if(!v){
         setTimeout(function(){
@@ -2329,6 +2355,7 @@ Application = function(p)
       else{
         self.fullscreenmode = v
       }
+
     },
 
     reload : {
@@ -2470,13 +2497,16 @@ Application = function(p)
 
     screen : {
 
-      lock : function(){
-        if (window.cordova && baseorientation)
-          window.screen.orientation.lock(baseorientation)
+      lock : function(orientation){
+        if (window.cordova && (orientation || baseorientation))
+          window.screen.orientation.lock(orientation || baseorientation)
       },
       unlock : function(){
-        if (window.cordova)
+        if (window.cordova){
+          window.screen.orientation.lock(baseorientation)
           window.screen.orientation.unlock()
+        }
+          
       },
 
       destroy : function(){

@@ -41340,14 +41340,15 @@ audio_recorder_polyfill.prototype.mimeType = 'audio/mpeg';
 class application_Core {
   constructor(vm, p) {
     Object(defineProperty["a" /* default */])(this, "hideOptimization", function (v) {
-      this.hideOptimization = v;
+      //this.hideOptimization = v
       this.store.commit('hideOptimization', v);
     });
 
     Object(defineProperty["a" /* default */])(this, "hideInParent", function (v) {
       this.hiddenInParent = v;
       this.store.commit('hiddenInParent', v);
-      if (!v) this.store.commit('wasunhidden', true);
+      /*if(!v)
+          this.store.commit('wasunhidden', true)*/
     });
 
     Object(defineProperty["a" /* default */])(this, "canback", function () {
@@ -65680,7 +65681,7 @@ var functions = __webpack_require__("3139");
     },
     ...Object(vuex_esm["c" /* mapState */])(['minimized', 'active', 'pocketnet', 'chatsready', 'prechats', 'chats', 'unauthorized', 'share', 'pocketteammessages', 'readedteammessages', 'deletedrooms', 'hideOptimization', 'wasunhidden']),
     showchatslist: function () {
-      return !this.hideOptimization || this.wasunhidden;
+      return !this.hideOptimization; // || this.wasunhidden
     },
     rooms: function () {
       return this.core.mtrx.client.getRooms();
