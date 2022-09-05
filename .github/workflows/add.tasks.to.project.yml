@@ -18,5 +18,5 @@ jobs:
         with:
           project-url: https://github.com/users/pocketnetteam/projects/3
           github-token: ${{ secrets.AUTO_PROJECT_TOKEN }}
-          # labeled: bug, needs-triage
+          # labeled: bug, deploy-dev
           # label-operator: OR or AND
