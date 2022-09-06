@@ -2733,7 +2733,7 @@ var comments = (function(){
 			showBanner : function(c) {
 				let alredyCommented;
 
-				if (c.essenseData.lastComment) {
+				if (c.essenseData && c.essenseData.lastComment) {
 					const address = c.essenseData.lastComment.address;
 					const me = app.platform.sdk.user.me();
 
@@ -2772,8 +2772,9 @@ var comments = (function(){
 					return false;
 				}
 
-				bannerComment = app.platform.ui.showCommentBanner(el.c);
-				return bannerComment;
+				app.platform.ui.showCommentBanner(el.c, (c) => {
+					bannerComment = c
+				});
 			},
 
 			authclbk : function(){

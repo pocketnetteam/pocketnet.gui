@@ -2400,10 +2400,8 @@ var lenta = (function(){
 							setTimeout(function(){
 								if(!el.share[id]) return
 
-								const bannerComment = initedcommentes[id].showBanner(initedcommentes[id]);
-								if (!bannerComment) {
-									return;
-								}
+								initedcommentes[id].showBanner(initedcommentes[id]);
+								
 
 								self.app.platform.effects.templates.commentstars(el.share[id], value, function(){
 									if (initedcommentes[id]){

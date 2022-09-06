@@ -627,10 +627,8 @@ var post = (function () {
 					setTimeout(function(){
 						if(!el.c) return
 
-						const bannerComment = inicomments.showBanner(inicomments);
-						if (!bannerComment) {
-							return;
-						}
+						inicomments.showBanner(inicomments);
+					
 
 						self.app.platform.effects.templates.commentstars(el.c, value, function(){
 							if (inicomments){
