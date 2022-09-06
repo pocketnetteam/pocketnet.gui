@@ -2990,15 +2990,16 @@ Platform = function (app, listofnodes) {
 
         },
 
-        showCommentBanner : function(contextElem) {
+        showCommentBanner : function(contextElem, clbk) {
 
             if (!app.platform.sdk.user.me()?.regdate) {
-                return null;
+                return 
             }
 
             let bannerCommentComponent = null;
+            
             if (!contextElem) {
-                return bannerCommentComponent;
+                return;
             }
 
             const createComponent = () => {
@@ -3015,14 +3016,19 @@ Platform = function (app, listofnodes) {
 
                     clbk : function(e, p){
                         bannerCommentComponent = p;
+
+                        if (clbk) {
+                            clbk(p)
+                        }
+
                         if (p.el[0].constructor.name === 'HTMLDivElement') {
                             self.app.Logger.info({
                                 actionId: 'COMMENT_BANNER_SHOWED',
                                 value: p.el[0].constructor.name,
                             });
-
-                            return;
                         }
+
+                        
                     }
                 });
             };
@@ -3047,19 +3053,19 @@ Platform = function (app, listofnodes) {
 
             if (!isOneDayOld) {
                 createComponent();
-                return bannerCommentComponent;
+                //return bannerCommentComponent;
             }
 
             if (repeat && timeToShowBanner) {
                 localStorage.nextCommentBanner = unixTimeNow + oneDayInSeconds;
                 createComponent();
-                return bannerCommentComponent;
+                //return bannerCommentComponent;
             }
 
             if (timeToShowBanner || !alreadyShowed) {
                 localStorage.nextCommentBanner = 1;
                 createComponent();
-                return bannerCommentComponent;
+                //return bannerCommentComponent;
             }
 
         },
