@@ -285,6 +285,8 @@ var accounts = (function(){
 
 				}, function(p){
 
+					if(!p || !p.el) return
+
 					p.el.find('.remove').on('click', events.remove)
 					p.el.find('.dumpkey').on('click', events.dumpkey)
 					

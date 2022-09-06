@@ -10441,7 +10441,11 @@ Platform = function (app, listofnodes) {
                         vis : 'scale',
                         name : self.app.localization.e('spv'),
                         bad : function(remains, limit){
-                            if(remains <= 3) return true
+                            if (limit <= 3) return false
+							
+							if (remains <= 1) {
+								return true
+							}
                         }
                     },
 
@@ -10486,9 +10490,10 @@ Platform = function (app, listofnodes) {
 						vis : 'scale',
 						name : self.app.localization.e('artc'),
 						bad : function(remains, limit){
-							if (limit && limit === 1) {
-								return false
-							} else if (remains <= 3) {
+
+                            if (limit <= 3) return false
+							
+							if (remains <= 1) {
 								return true
 							}
 						},
