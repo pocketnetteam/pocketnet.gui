@@ -248,8 +248,7 @@ var comments = (function(){
 								added : function(value){
 			
 									var result = Boolean(value);
-			
-			
+						
 									if (Number(value) < balance){
 			
 										if(!_.isArray(value)) value = [value]
@@ -2194,7 +2193,7 @@ var comments = (function(){
 
 							self.app.platform.sdk.node.transactions.get.balance(function(amount){
 
-								balance = amount.toFixed(3);
+								balance = Number(amount.toFixed(3));
 								
 								var id = actions.getid(_p.el.find('.postbody'))
 
