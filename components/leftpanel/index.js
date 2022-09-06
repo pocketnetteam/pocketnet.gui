@@ -179,7 +179,7 @@ var leftpanel = (function(){
 
 			},
 
-			footer : function(){
+			footer : function(clbk){
 				if(!el.c) return
 
 				self.shell({
