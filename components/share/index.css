@@ -20,6 +20,10 @@
 #share .emojionearea.form-control {
   font-size: 1em;
 }
+#share .peertube-server-hint {
+  right: 0;
+  bottom: 0;
+}
 #share .sLoader {
   display: none;
   position: absolute;
