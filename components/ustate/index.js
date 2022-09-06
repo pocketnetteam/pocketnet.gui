@@ -9,7 +9,7 @@ var ustate = (function(){
 		var primary = deep(p, 'history');
 		var id = makeid()
 
-		var el, mestate, waitActions, charts = {};
+		var el, mestate, waitActions, charts = {}, statistic;
 
 		
 
@@ -151,7 +151,11 @@ var ustate = (function(){
 					open: true,
 					id : 'statistic',
 					el : el.c.find('.stat'),
-					animation: false
+					animation: false,
+					clbk : (e, p) => {
+						console.log("O", p)
+						statistic = p
+					}
 				})
 			},
 			lowlimits : function(clbk){
@@ -338,6 +342,13 @@ var ustate = (function(){
 				el = {};
 				delete self.app.platform.ws.messages["new block"].clbks.ustate
 				delete self.app.platform.sdk.ustate.clbks[id]
+
+				console.log('statistic', statistic)
+
+				if (statistic){
+					statistic.destroy()
+					statistic = null
+				}
 			},
 			
 			init : function(p){				
