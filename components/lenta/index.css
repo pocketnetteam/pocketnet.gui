@@ -76,7 +76,7 @@
   position: relative;
 }
 #lenta .loader {
-  background: rgb(var(--background-total-theme));
+  /*background: rgb(var(--background-total-theme));*/
   padding: 3em 0;
   display: none;
   border-radius: 12px;
