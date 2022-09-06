@@ -372,7 +372,6 @@ var leftpanel = (function(){
 			
 			init : function(p){
 
-				console.log("INIT")
 
 				state.load();
 

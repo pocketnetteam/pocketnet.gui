@@ -11286,11 +11286,9 @@ Platform = function (app, listofnodes) {
                             params.push('1')
                         }
 
-                        console.log('addresses', addresses)
 
                         self.app.api.rpc('getuserprofile', params).then(d => {
 
-                            console.log("D", d)
 
                             _.each(addresses || [], function (a) {
 
@@ -11299,8 +11297,6 @@ Platform = function (app, listofnodes) {
                                 })
 
                                 var u = self.sdk.users.prepareuser(data, a, state)
-
-                                console.log("UUU", u)
 
                                 s[a] = u;
                                 self.sdk.usersl.storage[a] = u;
@@ -13093,8 +13089,6 @@ Platform = function (app, listofnodes) {
          
                 if (task.status != 'created') return
 
-                console.log('task', task)
-
                 if(task.type == 'users'){
                     var p = {
                         contentAddress: task.address,
@@ -13140,7 +13134,6 @@ Platform = function (app, listofnodes) {
                         tagsfilter : task.tags
                     }
 
-                    console.log("gettopfeed", task.tags)
     
                     task.status = 'processing'
     
@@ -13176,8 +13169,6 @@ Platform = function (app, listofnodes) {
                     var users = self.sdk.activity.getinterestingUsers()
 
                     var user = randomizer(users)
-
-                    console.log('user', user, users)
 
                     if (user){
                         self.sdk.recommendations.plans({address : user.address}, 'users')

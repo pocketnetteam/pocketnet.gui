@@ -4,7 +4,6 @@ if(typeof require != 'undefined' && typeof __map == 'undefined')
 	var __map = require("./_map.js");
 }*/
 
-console.log("APP")
 
 if (typeof _OpenApi == 'undefined') _OpenApi = false;
 
@@ -1550,8 +1549,6 @@ Application = function(p)
       if (scrollmodechanging) return
       if (self.blockScroll) return
 
-      console.log('tscrolling')
-
       var lastScrollTop = self.lastScrollTop
 
       var scrollTop = self.actions.getScroll()
@@ -1682,13 +1679,11 @@ Application = function(p)
     })
 
     window.addEventListener('scroll', function(){
-      //console.log("SCROLLL")
       scrolling()
       dbscrolling()
     })
 
     window.addEventListener('resize', function(){
-      console.log("RESIZE")
       self.blockScroll = true
       dbresize()
     })
@@ -2248,7 +2243,6 @@ Application = function(p)
           StatusBar.overlaysWebView(true);
           window.StatusBar.backgroundColorByHexString('#00000000');
           self.platform.sdk.theme.current == 'white' ? window.StatusBar.styleDefault() : window.StatusBar.styleLightContent()
-          console.log("SETTRANSPARENT2")
           
         }
 

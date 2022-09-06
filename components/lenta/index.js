@@ -4114,7 +4114,8 @@ var lenta = (function(){
 
 				var recommendations = []
 
-				if(essenseData.includerec && !includingsub){
+
+				if(essenseData.includerec && !includingsub && !self.app.platform.sdk.categories.gettags().length){
 
 					recommendations = self.app.platform.sdk.recommendations.getshares(rand(0, 3)) || []
 
@@ -4195,7 +4196,7 @@ var lenta = (function(){
 
 							shares = [].concat(bshares, shares)
 
-							if(essenseData.includerec && !includingsub){
+							if(essenseData.includerec && !includingsub && !self.app.platform.sdk.categories.gettags().length){
 								shares = [].concat(recommendations, shares)
 
 								_.each(recommendations, (r) => {
