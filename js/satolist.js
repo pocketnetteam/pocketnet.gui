@@ -12908,6 +12908,8 @@ Platform = function (app, listofnodes) {
             planned : [],
             shares : [],
 
+            enabled : true,
+
             plans : function(data, type){
 
                 var time = self.currentTime()
@@ -13194,6 +13196,9 @@ Platform = function (app, listofnodes) {
             },
 
             schedulermake : function(){
+
+                if(!self.sdk.recommendations.enabled) return
+
                 self.sdk.recommendations.clearplanned()
 
                 var kf = [
