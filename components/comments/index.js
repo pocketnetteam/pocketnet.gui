@@ -13,7 +13,7 @@ var comments = (function(){
 
 		var primary = false;
 
-		var el = {}, txid, ed, currents = {}, caption, _in, top, eid, preview = false, listpreview = false, showedall = false, receiver, balance = 0;
+		var el = {}, txid, ed, currents = {}, caption, _in, top, eid, preview = false, listpreview = false, showedall = false, receiver;
 
 		var authblock = false;
 
@@ -242,14 +242,22 @@ var comments = (function(){
 							storage : storage,
 							sender: sender, 
 							receiver: receiver,
-							balance: balance,
+							balance: p.balance,
+							total: p.total,
 							on : {
 			
 								added : function(value){
+
+									value = Number(value);
 			
 									var result = Boolean(value);
+
+									if (value < 0.5){
+										sitemessage(self.app.localization.e('minPkoin', 0.5))
+										return;
+									}
 						
-									if (Number(value) < balance){
+									if (value < p.balance){
 			
 										if(!_.isArray(value)) value = [value]
 			
@@ -2191,25 +2199,31 @@ var comments = (function(){
 
 						_p.el.find('.embeddonate').off('click').on('click', function(){
 
-							self.app.platform.sdk.node.transactions.get.balance(function(amount){
+							self.app.platform.sdk.node.transactions.get.allBalance(function (total) {
 
-								balance = Number(amount.toFixed(3));
-								
-								var id = actions.getid(_p.el.find('.postbody'))
+								self.app.platform.sdk.node.transactions.get.canSpend(self.sdk.address.pnet().address, function (amount) {
+									
+									var id = actions.getid(_p.el.find('.postbody'))
 
-								if(state){
-									actions.embeddonate(id, p)
-									if(!p.answer && !p.editid){
-		
-										ini()
-		
-									}	
-								}
-								else{
-									actions.stateAction(function(){
-									})
-								}
+									if(state){
 
+										p.total = Number(total.toFixed(3));
+										p.balance = Number(amount.toFixed(3));
+
+										actions.embeddonate(id, p)
+										if(!p.answer && !p.editid){
+			
+											ini()
+			
+										}	
+									}
+									else{
+										actions.stateAction(function(){
+										})
+									}
+
+
+								})
 
 							})
 

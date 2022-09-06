@@ -104,7 +104,7 @@ var embeding = (function(){
 					if(actions.check('donate')){
 
 						var val = options.donate.el.val();
-						on.added(Number(val))
+						on.added(val)
 
 						self.closeContainer()
 					}
@@ -335,7 +335,8 @@ var embeding = (function(){
 
 				sender = p.settings.essenseData.sender;
 				receiver = p.settings.essenseData.receiver;
-				balance = p.settings.essenseData.balance
+				balance = p.settings.essenseData.balance;
+				total = p.settings.essenseData.total;
 
 				ed = p.settings.essenseData;
 
