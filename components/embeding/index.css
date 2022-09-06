@@ -245,6 +245,12 @@
 #windowsContainer .wnd.embeding .wndinner.donate .buttons {
   background: inherit;
 }
+#windowsContainer .wnd.embeding .wndinner.donate .buttons {
+  padding: 1em;
+}
+#windowsContainer .wnd.embeding .wndinner.donate .buttons > div {
+  float: right;
+}
 #windowsContainer .wnd.embeding .wndinner.donate .buttons .close {
   color: white;
 }
