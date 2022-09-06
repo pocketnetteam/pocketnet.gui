@@ -113,7 +113,7 @@ var accounts = (function(){
 
 				var l = deep(pack, 'addresses.length')
 
-				if (l >= 5){
+				if (l >= window.testpocketnet ? 20 : 5){
 
 					sitemessage(self.app.localization.e('max5acc'))
 
