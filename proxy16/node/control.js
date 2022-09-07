@@ -17,7 +17,7 @@ var Control = function(settings, proxy) {
         win32: {
             bin: {
                 name: "_win_x64_daemon.bin",
-                url: 'https://api.github.com/repositories/172682555/releases/latest',
+                url: 'https://api.github.com/repos/pocketnetapp/pocketnet.core/releases/latest',
                 page: 'https://github.com/pocketnetteam/pocketnet.core/releases/latest'
             },
             snapshot_latest: {
