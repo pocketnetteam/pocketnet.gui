@@ -419,69 +419,56 @@ var author = (function(){
 			},
 
 			authorcaption : function(clbk){
-				self.shell({
 
-					name :  'authorcaption',
-					el :   el.authorcaption,
-
-					data : {
-						author
-					},
-
-
-				}, function(p){
-
-					el.menu = p.el.find('.usermenu')
-					el.panel = el.c.find('.panel')
-					el.caption = el.c.find('.bgCaption')
-					el.usericon = el.c.find('.usericon');
-					el.subscribe = el.c.find('.subscribebuttonstop');
-
-
-					el.subscribe.find('.subscribe').on('click', events.subscribe)
-					el.subscribe.find('.unsubscribe').on('click', events.unsubscribe)
-					el.caption.find('.startchat').on('click', events.startchat)
-					el.caption.find('.unblocking').on('click', function(){
-		
-						new dialog({
-							html : self.app.localization.e('e13023'),
-							btn1text : self.app.localization.e('unblock'),
-							btn2text : self.app.localization.e('ucancel'),
-		
-							class : 'zindex',
-		
-							success : function(){
-		
-								self.app.platform.api.actions.unblocking(author.address, function(tx, error){
-									if(!tx){
-										self.app.platform.errorHandler(error, true)	
-									}
-								})
-		
-							}
-						})
-		
-						
+				el.menu = el.authorcaption.find('.usermenu')
+				el.panel = el.c.find('.panel')
+				el.caption = el.c.find('.bgCaption')
+				el.usericon = el.c.find('.usericon');
+				el.subscribe = el.c.find('.subscribebuttonstop');
+				el.subscribe.find('.subscribe').on('click', events.subscribe)
+				el.subscribe.find('.unsubscribe').on('click', events.unsubscribe)
+				el.caption.find('.startchat').on('click', events.startchat)
+				el.caption.find('.unblocking').on('click', function(){
+	
+					new dialog({
+						html : self.app.localization.e('e13023'),
+						btn1text : self.app.localization.e('unblock'),
+						btn2text : self.app.localization.e('ucancel'),
+	
+						class : 'zindex',
+	
+						success : function(){
+	
+							self.app.platform.api.actions.unblocking(author.address, function(tx, error){
+								if(!tx){
+									self.app.platform.errorHandler(error, true)	
+								}
+							})
+	
+						}
 					})
-
-					p.el.find('.notificationturn').on('click', events.subscribePrivate)
-		
-					p.el.find('.changeaccount').on('click', function(){
-		
-						self.nav.api.go({
-							open : true,
-							href : 'accounts',
-							inWnd : true,
-							history : true,
-							essenseData : {
-								toaccpage : true
-							}
-		
-						})
-					})
-
-					renders.menu(clbk)
+	
+					
 				})
+
+				el.authorcaption.find('.notificationturn').on('click', events.subscribePrivate)
+	
+				el.authorcaption.find('.changeaccount').on('click', function(){
+	
+					self.nav.api.go({
+						open : true,
+						href : 'accounts',
+						inWnd : true,
+						history : true,
+						essenseData : {
+							toaccpage : true
+						}
+	
+					})
+				})
+
+				
+				if(clbk) clbk()
 			},
 			
 			metmenu : function(_el){
@@ -1267,8 +1254,7 @@ var author = (function(){
 			if (reports[r])
 				reports[r].active = true;
 
-				renders.info(el.c.find('.mobileinfo'))
-
+			renders.info(el.c.find('.mobileinfo'))
 			renders.report(reports[r], null, ini)
 			renders.menu()
 
@@ -1451,22 +1437,15 @@ var author = (function(){
 				initreports()
 
 				self.loadTemplate({
-					name : 'authorcaption'
+					name : 'info'
 				}, function(){
 
-					self.loadTemplate({
-						name : 'info'
-					}, function(){
-
-						self.sdk.users.addressByName(p.address, function(address){
-							preinit(address, clbk)
-						})
-
+					self.sdk.users.addressByName(p.address, function(address){
+						preinit(address, clbk)
 					})
 
 				})
 				
-
 			},
 
 			destroy : function(){

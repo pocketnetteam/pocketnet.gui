@@ -572,6 +572,10 @@ html.mobileview #author .authorlentawrappermain .authorsearchwrapper .search .se
     padding-bottom: 2em;
     background: #051b48;
   }
+  #author .bgCaption .usermenu {
+    min-height: 37px;
+    contain: strict;
+  }
   #author .bgCaption .cwrapper {
     display: block;
   }

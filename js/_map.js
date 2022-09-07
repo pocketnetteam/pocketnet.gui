@@ -166,9 +166,9 @@ __map =  {
 		{ c : 'registration', n : 'index' },
 		{ c : 'test', n : 'options' },
 		{ c : 'test', n : 'icon' },
-		{ c : 'author', n : 'authorcaption'},
 		{ c : 'author', n : 'info'},
-		{ c : 'author', n : 'index'}
+		{ c : 'author', n : 'index'},
+		{ c : 'author', n : 'menu'}
 
 
 	],

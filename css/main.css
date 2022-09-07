@@ -2046,6 +2046,9 @@ input[type=radio].radio:checked + label {
   bottom: 0.75em;
   width: auto;
 }
+.m-message-container.is-top-left {
+  top: calc(0.5em + var(--app-margin-top));
+}
 .m-message-container .notificationWrapper {
   display: block;
   max-width: none;
