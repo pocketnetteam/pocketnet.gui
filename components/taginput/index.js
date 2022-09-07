@@ -138,11 +138,11 @@ var taginput = (function(){
 							})
 
 							var olddefault = [
-								self.app.localization.e('tnews'), 
+								//self.app.localization.e('tnews'), 
 								self.app.localization.e('timages'), 
 								self.app.localization.e('tvideos'), 
 								self.app.localization.e('tmarket'), 
-								self.app.localization.e('tsport')
+								//self.app.localization.e('tsport')
 							]
 
 							olddefault = _.map(olddefault, function(t){
@@ -272,6 +272,7 @@ var taginput = (function(){
 							categories : []
 						}
 					}
+
 
 					self.shell({
 						name :  'tags',

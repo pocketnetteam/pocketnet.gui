@@ -578,7 +578,7 @@ _l.repost = "Volver a publicar"
 _l.e13160 = "¡Hola Pocketeers!"
 
 _l.e13161 = "Agrega etiquetas para tu publicación"
-_l.e13162 = "Podéis ingresar hasta 5 etiquetas"
+_l.e13162 = "Podéis ingresar hasta 15 etiquetas"
 _l.e13163 = "No se han realizado cambios en esta publicación"
 _l.e13164 = "Agrega algunas palabras para decirle a Pocketpeople sobre tu enlace. ¿De qué es eso? ¿Por qué es importante? ¿Cuál es tu opinión?"
 _l.e13165 = "Su enlace de video no es válido. Inténtelo descargar URL de video correcto."

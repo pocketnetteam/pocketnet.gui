@@ -1757,6 +1757,7 @@ var share = (function(){
 						el : el.tgsWrapperMain,
 						eid : 'sharetags' + (p.mid || 'mainshare'),
 						animation : false,
+						insertimmediately : true,
 						essenseData : {
 							tags : function(){
 								return currentShare.tags.get()
@@ -2593,8 +2594,10 @@ var share = (function(){
 				destroying = false
 				intro = false;
 				external = null
-				currentShare = deep(p, 'settings.essenseData.share') || new Share(self.app.localization.key);
+				currentShare = deep(p, 'settings.essenseData.share') || new Share(self.app.localization.key, self.app);
 				essenseData = deep(p, 'settings.essenseData') || {};
+
+				currentShare.app = self.app
 
 				if(!essenseData.share){
 

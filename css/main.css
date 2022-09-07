@@ -2768,6 +2768,9 @@ input[type=radio].radio:checked + label {
   -webkit-transition: 0.3s;
   transition: 0.3s;
 }
+.wnd.pipmini .peertube-server-hint {
+  display: none!important;
+}
 .wnd.pipmini ._changeplace {
   bottom: 0;
   left: 0;

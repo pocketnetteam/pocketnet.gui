@@ -339,7 +339,7 @@ var articlev = (function(){
 
 			_addtag : function(tag){
 
-				if (art.tags.length < 5){
+				if (art.tags.length < 15){
 					
 					removeEqual(art.tags, tag)
 

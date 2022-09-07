@@ -1675,9 +1675,23 @@ html.mobileview{
 			}
 		}
 
+		/*.post{
+			min-height: 70px;
+		}*/
+
+		/*.edit,
+		.answer{
+			display: none;
+
+			&.active{
+				display: block;
+			}
+		}*/
+
 		.edit,
 		.answer,
 		.post{
+			
 
 			.postbody{
 				.posttable{
@@ -1694,9 +1708,19 @@ html.mobileview{
 			}
 
 			&.active{
-				/*.newcommentimages.active {
-					display: none!important;
+				/*.postbody{
+					padding : @rhythm;
+					padding-top: 0;
+					padding-bottom: 50px;
+					position: fixed;
+					bottom: 0;
+					left: 0;
+					right: 0;
+					z-index: 1000;
+					background: rgba(var(--background-total-theme));
 				}*/
+				
+				
 
 				.postbody{
 

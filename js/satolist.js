@@ -4990,6 +4990,8 @@ Platform = function (app, listofnodes) {
                             var em = null;
                             var editing = d.share.alias()
 
+                            editing.app = app
+
                             var hash = editing.shash()
 
                             if (editing.settings.v == 'a') {
@@ -8438,7 +8440,7 @@ Platform = function (app, listofnodes) {
 
                 var artcontent = edjs.apply(art.content, encodeURIComponent)
 
-                var share = new Share(art.language || self.app.localization.key);
+                var share = new Share(art.language || self.app.localization.key, self.app);
 
                     share.tags.set(_.clone(art.tags))
                     share.caption.set(art.caption.value)
@@ -14704,9 +14706,24 @@ Platform = function (app, listofnodes) {
                 return tags
             },
 
+            getalltagsmap : function(){
+                var t = {}
+                _.each(self.sdk.categories.data.all, (l) => {
+                    _.each(l, (c) => {
+                        _.each(c.tags, (tg) => {
+                        
+                            t[tg] = true
+                        })
+                    })
+                })
+
+                return  t                
+            },
+
             gettagsmap : function(_k){
                 var ctags = self.sdk.categories.gettags(_k, true)
                 var alltags = self.sdk.categories.gettags(_k)
+
 
                 var mp = {}
 
@@ -15149,6 +15166,14 @@ Platform = function (app, listofnodes) {
 
             },
 
+            filterCats : function(tags){
+                var tm = self.sdk.categories.getalltagsmap()
+
+                return _.filter(tags, t => {
+                    return !tm[t.tag]
+                })
+            },
+
             filterEx: function (tags) {
 
                 var ex = this.ex
@@ -15229,7 +15254,7 @@ Platform = function (app, listofnodes) {
                         return self.currentBlock
                     }, function(){
 
-                        t.get('', 50, (round(self.currentBlock, 1000) - 23700), loc, function (d, error) {
+                        t.get('', 100, (round(self.currentBlock, 1000) - 23700), loc, function (d, error) {
                             if(!s.cloud) s.cloud = {}
 
                             if (!error) s.cloud[loc] = d
@@ -22577,6 +22602,7 @@ Platform = function (app, listofnodes) {
                         const clbk = (html) => {
 
                             const share = new Share();
+                            share.app = app
 
                             function tagsFromText(text) {
                                 var words = text.split(/[,.!?;:()<> \n\r]/g);

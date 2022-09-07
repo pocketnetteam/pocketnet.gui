@@ -602,7 +602,7 @@ _l.repost = "Repost"
 _l.e13160 = "Hallo Pocketeers!"
 
 _l.e13161 = "Fügen Sie Tags zu Ihren Beiträgen hinzu"
-_l.e13162 = "Sie können max. 5 Tags hinzufügen"
+_l.e13162 = "Sie können max. 15 Tags hinzufügen"
 _l.e13163 = "Es gibt keine Veränderungen im Beitrag"
 _l.e13164 = "Bitte füge einige Wörter hinzu, um den Pocketleuten über deinen Link zu erzählen. Um was geht es? Warum ist es wichtig? Was ist Ihre Meinung?"
 _l.e13165 = "Ihr Link zum Video ist ungültig. Bitte laden Sie eine gültige Video-URL."

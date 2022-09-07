@@ -338,6 +338,11 @@ var embeding = (function(){
 			},
 
 			destroy : function(){
+
+				if (on && on.destroy){
+					on.destroy()
+				}
+
 				el = {};
 			},
 			

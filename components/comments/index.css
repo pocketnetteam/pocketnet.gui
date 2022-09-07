@@ -1231,6 +1231,19 @@ html.mobileview #comments .emojionearea-editor {
 }
 /*t*/
 @media only screen and (max-width: 768px) {
+  #comments {
+    /*.post{
+			min-height: 70px;
+		}*/
+    /*.edit,
+		.answer{
+			display: none;
+
+			&.active{
+				display: block;
+			}
+		}*/
+  }
   #comments .repliesloaderWrapper,
   #comments .loaderWrapper {
     padding: 0.5em;
@@ -1389,8 +1402,16 @@ html.mobileview #comments .emojionearea-editor {
   #comments .edit.active,
   #comments .answer.active,
   #comments .post.active {
-    /*.newcommentimages.active {
-					display: none!important;
+    /*.postbody{
+					padding : @rhythm;
+					padding-top: 0;
+					padding-bottom: 50px;
+					position: fixed;
+					bottom: 0;
+					left: 0;
+					right: 0;
+					z-index: 1000;
+					background: rgba(var(--background-total-theme));
 				}*/
   }
   #comments .edit.active .postbody .posttable > div.lcpp,

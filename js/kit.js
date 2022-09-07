@@ -1146,7 +1146,14 @@ Share = function(lang){
 			else{
 				if(_.isArray(tags)){
 
-					if(tags.length > 5){
+					var bycategories = self.app.platform.sdk.categories.fromTags(tags, self.language.v)
+
+
+					if (bycategories.categories.length > 2){
+						return false
+					}
+
+					if(tags.length > 15){
 						return false;
 					}
 
@@ -1163,13 +1170,26 @@ Share = function(lang){
 
 						tags = clearTagString(tags)
 
-					if(this.v.length > 4){
+					var tta = _.uniq(_.clone(this.v).concat(tags))
+
+					var bycategories = self.app.platform.sdk.categories.fromTags(tta, self.language.v)
+
+					if (bycategories.categories.length > 2){
+						return false
+					}
+
+					console.log('bycategories', bycategories)
+	
+
+					if(tta.length > 15){
 						return false;
 					}
 
-					removeEqual(this.v, tags)
+					this.v = tta
 
-					this.v.push(tags)
+					//removeEqual(this.v, tags)
+
+					//this.v.push(tags)
 				}
 			}
 

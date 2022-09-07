@@ -1251,7 +1251,7 @@ var videoCabinet = (function () {
 					},
 
 					_addtag(tag) {
-						if (tagArray.length < 5) {
+						if (tagArray.length < 15) {
 							removeEqual(tagArray, tag);
 							tagArray.push(tag);
 							return true;

@@ -717,7 +717,7 @@ _l.reposted = "Repost"
 _l.e13160 = "Hello Pocketeers!"
 
 _l.e13161 = "Add tags for your post"
-_l.e13162 = "You can enter a maximum of 5 tags"
+_l.e13162 = "You can enter a maximum of 15 tags or 2 categories"
 _l.e13163 = "There are no changes in the post"
 _l.e13164 = "Please add a few words to tell Pocketpeople about your link. What is it about? Why is it important? What is your opinion?"
 _l.e13165 = "Your link to video is invalid. Please load valid video URL."

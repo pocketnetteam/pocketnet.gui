@@ -227,8 +227,7 @@ nModule = function(){
 
 				}
 
-				window.requestAnimationFrame(() => {
-
+				var c = function(){
 					if(typeof p.el == 'function') p.el = p.el();
 			
 					if(!inserted)
@@ -242,7 +241,19 @@ nModule = function(){
 					{
 						completeClbk(p);
 					}
-				})
+				}
+
+				if(p.insertimmediately){
+					c()
+				}
+				else{
+					window.requestAnimationFrame(() => {
+						c()
+					
+					})
+				}
+
+				
 
 			} ,p)
 

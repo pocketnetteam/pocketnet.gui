@@ -214,7 +214,7 @@ var tagcloud = (function(){
 			
 			self.app.platform.sdk.tags.cloud(function(tags, error){
 
-				tags = self.app.platform.sdk.tags.filterEx(tags)
+				tags = self.app.platform.sdk.tags.filterEx(self.app.platform.sdk.tags.filterCats(tags))
 
 				if (clbk)
 					clbk(tags, error)

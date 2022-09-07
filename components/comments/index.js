@@ -479,6 +479,10 @@ var comments = (function(){
 
 								actions.lightarea(id, p.el.find('.postbody'))
 
+							},
+
+							destroy(){
+								external = null
 							}
 						}
 					},
@@ -1524,7 +1528,7 @@ var comments = (function(){
 					change : events.emessage,
 					click : events.emessage,
 					keydown : function(editor, e){
-						if (e.ctrlKey && e.keyCode == 13) {
+						/*if (e.ctrlKey && e.keyCode == 13) {
 
 							if (c.hasClass('sending')) return
 
@@ -1535,9 +1539,26 @@ var comments = (function(){
 							e.preventDefault()
 
 							return false;
+						}*/
+					},
+					keydown : function(editor, e){
+						if(e.keyCode == 13){
+							if (isMobile()){
+
+								setTimeout(() => {
+									if (c.hasClass('sending')) return
+									c.addClass('sending')
+
+									_p.el.removeClass('active')
+
+									actions.post(p.id || '0', p.pid, p.aid, p.editid)
+								}, 100)
+								
+								e.preventDefault()
+
+								return false
+							}
 						}
-						// Scroll comment section to top of the screen
-						//actions.scrollToComment(_p.el);
 					},
 					keyup : function(editor, e){
 						var char = String.fromCharCode(e.keyCode || e.which);
@@ -1551,6 +1572,8 @@ var comments = (function(){
 						if (e.ctrlKey && e.keyCode == 13) {
 							return
 						}
+
+						
 						
 						actions.message(p.id || '0', text)
 
@@ -1631,9 +1654,12 @@ var comments = (function(){
 			})
 
 			_p.el.find('.emojionearea-editor').on('blur', function(){
-
+				
 				setTimeout(function(){
-					_p.el.removeClass('active')
+					//if(!external){
+						_p.el.removeClass('active')
+					//}
+					
 				}, 150)
 				
 			})
