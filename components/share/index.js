@@ -1587,6 +1587,8 @@ var share = (function(){
 
 					}, function(p){
 
+						if(!el.c) return
+
 						el.panel = el.c.find('.panel .item');
 						el.postWrapper = el.c.find('.postWrapper');					
 						el.changePostTime = el.c.find('.postTime')
@@ -2108,6 +2110,8 @@ var share = (function(){
 					})
 
 					p.el.find('.image').imagesLoadedPN({ imageAttr: true }, function(image) {
+
+						if(!el.c) return
 
 						if(!isMobile()){
 							var elimages = el.images.find('.imagesEmbWr')

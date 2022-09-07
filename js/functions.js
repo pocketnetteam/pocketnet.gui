@@ -462,7 +462,7 @@
 			nooverflow = (p.nooverflow || /*app.scrollRemoved || */p.pip),
 			el = p.el || p.app.el.windows;
 
-
+		var penable = false
 
 		var parallax = null
 		var showmoremobile = false
@@ -472,6 +472,7 @@
 
 		var wnd;
 		var cnt = null
+		var cntj = null
 
 		var find = function(s){
 			if (wnd) return wnd.find(s);
@@ -692,27 +693,18 @@
 
 		}
 
-		var initevents = function(){
-
-			if(!p.noCloseBack)
-				wnd.find('.wndback').one('click', function(){
-
-					if(p.allowHide && self.minimizeOnBgClick){
-						actions.hide()
-					}
-					else{
-						actions.close(true)
-					}
-					
-				});
-
-			if (p.allowHide) {
-				wnd.find('.hideButton').on('click', actions.hide);
-				wnd.find('.closeButton').on('click', actions.close);
-				wnd.find('.expandButton').on('click', actions.show);
+		var destroySwipable = function(){
+			if (parallax){
+				parallax.clear()
+				parallax.destroy()
+				parallax = null
 			}
+		}
 
-			if(isTablet() && (wnd.hasClass('normalizedmobile'))){
+		var initSwipable = function(){
+
+
+			if(isTablet() && !parallax && penable){
 
 				var trueshold = 20
 
@@ -754,27 +746,73 @@
 
 				}
 
+			console.log('initSwipable')
+
+
 				parallax = new SwipeParallaxNew({
 
-					///,.wndinner
-
-					el : wnd.find(p.parallaxselector || '.wndback,.wndheader'),
+					el : wnd.find(p.parallaxselector || '.wndinner'),
 					transformel : wnd.find('.wndinner'),
 					allowPageScroll : 'vertical',
 					directions : {
 						down : down
 					}
-
-
+	
+	
 				}).init()
+			}
+			
+		}
 
+		var scrolling = function(){
+			if (cntj){
+				if(!cntj.scrollTop){
+					initSwipable()
+				}
+				else{
+					destroySwipable()
+				}
+			}	
+		}
+
+		var initevents = function(){
+
+			if(!p.noCloseBack)
+				wnd.find('.wndback').one('click', function(){
+
+					if(p.allowHide && self.minimizeOnBgClick){
+						actions.hide()
+					}
+					else{
+						actions.close(true)
+					}
+					
+				});
+
+			if (p.allowHide) {
+				wnd.find('.hideButton').on('click', actions.hide);
+				wnd.find('.closeButton').on('click', actions.close);
+				wnd.find('.expandButton').on('click', actions.show);
+			}
+
+			
+
+			if(isTablet() && (wnd.hasClass('normalizedmobile'))){
 
 				cnt = wnd.find('.wndcontent')
+
+				penable = true
 
 				/*if(!p.showbetter)
 					cnt.on('scroll', _.throttle(wndcontentscrollmobile, 50))*/
 
 			}
+
+			initSwipable()
+
+			cntj = wnd.find('.wndcontent')[0];
+
+			wnd.find('.wndcontent').on('scroll', _.throttle(scrolling, 50))
 
 			app.events.resize[id] = resize
 			app.events.scroll[id] = wndfixed
@@ -785,6 +823,7 @@
 		var clearmem = function(){
 			wnd = null;
 			cnt = null
+			cntj = null
 
 			self.el = null
 			self.close = null
@@ -827,11 +866,7 @@
 
 				closing = true
 
-				if (parallax) {
-					parallax.clear()
-					parallax.destroy()
-					parallax = null
-				}
+				destroySwipable()
 
 				if(cl) if(p.closecross) p.closecross(wnd, self);
 
@@ -870,9 +905,7 @@
 				wnd.addClass('hiddenState');
 
 				wnd.find('.wndcontent > div').addClass('rolledUp');
-				/*wnd.find('.expandButton').removeClass('hidden');
-				wnd.find('.closeButton').addClass('hidden');
-				wnd.find('.hideButton').addClass('hidden');*/
+			
 
 				if(!nooverflow) {
 					app.actions.onScroll();
@@ -886,9 +919,7 @@
 				wnd.find('.buttons').removeClass('hidden');
 				wnd.removeClass('hiddenState');
 				wnd.find('.wndcontent > div').removeClass('rolledUp');
-				/*wnd.find('.expandButton').addClass('hidden');
-				wnd.find('.closeButton').removeClass('hidden');
-				wnd.find('.hideButton').removeClass('hidden');*/
+			
 
 				if(!nooverflow) {
 					app.actions.offScroll(wnd);
@@ -1975,15 +2006,12 @@
 			
 		}
 
-		var scrollevent = _.debounce((el) => {
+		var scrollevent = _.throttle((el) => {
 
 			currentscroll = el.scrollLeft
 
-			console.log('currentscroll', currentscroll)
 			window.requestAnimationFrame(() => {
 				var activeindex = findactive()
-
-				console.log('activeindex', activeindex)
 
 				if (activeindex > -1){
 					setactive(activeindex)

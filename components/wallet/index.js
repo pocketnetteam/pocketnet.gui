@@ -2822,7 +2822,7 @@ var wallet = (function(){
 			wnd : {
 				//header : 'rwallet',
 				class : 'withoutButtons walletwindow normalizedmobile maxheight',
-				parallaxselector : '.wndback,.wndheader'
+				//parallaxselector : '.wndback,.wndheader'
 			}
 		}
 	};
