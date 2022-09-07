@@ -60,6 +60,7 @@
     "cordova-plugin-navigationbar-color": "^0.1.0",
     "cordova-plugin-pip": "file:cordova-plugin-pip",
     "cordova-plugin-run-in-background": "file:cordova-plugin-run-in-background",
+    "cordova-plugin-splashscreen": "^6.0.2",
     "cordova-plugin-statusbar": "file:cordova-plugin-statusbar",
     "cordova-plugin-taptic-engine": "^2.2.0",
     "cordova-plugin-whitelist": "^1.3.5",
@@ -130,8 +131,9 @@
       "cordova-plugin-file-transfer": {},
       "cordova-plugin-pip": {},
       "cordova-plugin-media": {
-        "KEEP_AVAUDIOSESSION_ALWAYS_ACTIVE" : "NO"
-      }
+        "KEEP_AVAUDIOSESSION_ALWAYS_ACTIVE": "NO"
+      },
+      "cordova-plugin-splashscreen": {}
     },
     "platforms": [
       "ios",
