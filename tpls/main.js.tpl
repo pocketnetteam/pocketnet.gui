@@ -674,7 +674,7 @@ function createWindow() {
         willquit = true
 
         if (proxyInterface)
-            proxyInterface.destroy().then(r => {
+            proxyInterface.destroy().catch(e => {}).then(r => {
                 autoUpdater.quitAndInstall(true, true)
             })
 
