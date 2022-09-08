@@ -32,7 +32,8 @@ var comments = (function(){
 		var bannerComment = null;
 		var currentstate = {};
 		var wordsRegExp = /[,.!?;:() \n\r]/g
-		var sortby = 'interesting' 
+
+		var sortby = self.sdk.usersettings.meta.commentsOrder.value || 'interesting';
 
 		var isotopes = {}
 		
@@ -1223,6 +1224,7 @@ var comments = (function(){
 		}
 
 		var sortParameter = function(){
+
 			
 			var ps = new Parameter({
 

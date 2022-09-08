@@ -1721,6 +1721,8 @@ _l.comments_interesting = 'Сначала интересные'
 _l.comments_timeup = 'Сначала новые'
 _l.comments_time = 'Сначала старые'
 _l.comments_next = 'Показать следующие'
+_l.commentsOrder = 'Сортировка комментариев по умолчанию';
+_l.commentsOrderPlaceholder = 'Выберите сортировку';
 
 _l.create = 'Создать'
 _l.drafts = 'Черновики'

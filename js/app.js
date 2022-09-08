@@ -980,6 +980,8 @@ Application = function(p)
 
   self.init = function(p){
 
+    self.boost = !(window.cordova && isios());
+
     if (navigator.webdriver && !self.test && !parameters().webdrivertest) return
 
     if (typeof localStorage == 'undefined')

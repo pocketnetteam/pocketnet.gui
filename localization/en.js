@@ -1940,6 +1940,8 @@ _l.liftUpThePost = 'Lift up the post';
 
 _l.buypeertopeer = 'Buy Peer-to-Peer'
 
+_l.commentsOrder = 'Default sorting of comments';
+_l.commentsOrderPlaceholder = 'Choose sorting';
 
 _l.comments_interesting = 'Interesting at first'
 _l.comments_timeup = 'New first'
