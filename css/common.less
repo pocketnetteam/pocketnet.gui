@@ -27,10 +27,12 @@
         }
     }
     
-    
-    
+    .bolt{
+        cursor: pointer;
+    }
 
     .pkoin{
+        margin-left: @rhythm * 1.5;
         display: flex;
         align-items: center;
         background: rgb(var(--color-bg-ac-bright));
@@ -49,6 +51,13 @@
     }
 
     
+
+    .boost{
+        color: #F2C94C;
+        border-radius: 8px;
+        padding: 4px 10px;
+        border: 1px solid rgb(var(--neutral-grad-3));
+    }
 
     .commentsWrapper{			
         background: rgb(var(--background-secondary-theme));
@@ -1570,6 +1579,13 @@ html.mobileview.ios{
         cursor: default;
         padding-bottom : 0;
         border-radius: 0;
+
+        .pkoin{
+            padding: 6px 8px;
+        }
+        .boost{
+            padding: 2px 10px;
+        }
 
         .jsPlayerLoading{
             .preloader5{

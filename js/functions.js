@@ -550,7 +550,7 @@
 							(app ? ( app.localization.e(button.text) || button.text || '') :
 							(button.text || '')) )
 
-						var hb = '<div><div class="button '+(button.class || "")+'" bi="'+i+'">'+txt+'</div></div>'
+						var hb = '<div class="button '+(button.class || "")+'" bi="'+i+'">'+txt+'</div>'
 
 						h += hb
 

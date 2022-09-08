@@ -27,6 +27,16 @@ var embeding = (function(){
 				value : []
 			},
 
+			donate : new Parameter({
+				name: self.app.localization.e('wsamountof'),
+				type: 'NUMBER',
+				id: 'amount',
+				placeholder : '0',
+				format: {
+					Precision: 3
+				}
+			})
+
 
 		}
 
@@ -87,7 +97,19 @@ var embeding = (function(){
 						
 						self.closeContainer()
 					}
+				},
+
+				donate : function(){
+
+					if(actions.check('donate')){
+
+						var val = options.donate.el.val();
+						on.added(val)
+
+						self.closeContainer()
+					}
 				}
+
 			},
 			
 			slowUploadGif : function(file, clbk){
@@ -183,6 +205,7 @@ var embeding = (function(){
 
 		var events = {
 			action : function(){
+
 				var _type = $(this).attr('action') || type;
 
 				actions.add[_type]()
@@ -245,7 +268,9 @@ var embeding = (function(){
 				el.c.find('input').focus()
 			}, 300)
 			
-			el.c.find('input').on('change', events.action)
+			if (p.essenseData.type !== 'donate'){
+				el.c.find('input').on('change', events.action);
+			}
 
 			el.action.on('click', events.action)
 
@@ -310,7 +335,8 @@ var embeding = (function(){
 
 				sender = p.settings.essenseData.sender;
 				receiver = p.settings.essenseData.receiver;
-				balance = p.settings.essenseData.balance
+				balance = p.settings.essenseData.balance;
+				total = p.settings.essenseData.total;
 
 				ed = p.settings.essenseData;
 
@@ -357,7 +383,6 @@ var embeding = (function(){
 				el.upload = el.c.find('.upload');
 				el.images = el.c.find('.imagesMi')
 
-
 				initEvents();
 
 				p.clbk(null, p);
@@ -377,6 +402,7 @@ var embeding = (function(){
 					discard : {
 						class : "close",
 						html : '<i class="fa fa-times"></i> ' + self.app.localization.e('close'),
+
 					},
 				},
 				close : function(){

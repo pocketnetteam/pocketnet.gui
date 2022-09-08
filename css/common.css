@@ -16,7 +16,11 @@
 .share_common .metadata .sys .boostedlabel {
   color: rgb(var(--color-good));
 }
+.share_common .bolt {
+  cursor: pointer;
+}
 .share_common .pkoin {
+  margin-left: 0.75em;
   display: flex;
   align-items: center;
   background: rgb(var(--color-bg-ac-bright));
@@ -30,6 +34,33 @@
 }
 .share_common .pkoin span {
   margin-left: 0.5em;
+}
+.share_common .peertube-server-hint {
+  z-index: 3;
+  position: absolute;
+  margin: 10px;
+  padding: 5px 7px;
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 0.8em;
+  background: #000000bb;
+  color: #fff;
+}
+.share_common .peertube-server-hint i.fa {
+  font-size: 0.8em;
+  margin-top: 1px;
+  margin-right: 5px;
+}
+.share_common .peertube-server-hint a {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.share_common .boost {
+  color: #F2C94C;
+  border-radius: 8px;
+  padding: 4px 10px;
+  border: 1px solid rgb(var(--neutral-grad-3));
 }
 .share_common .commentsWrapper {
   background: rgb(var(--background-secondary-theme));
@@ -1181,6 +1212,12 @@ html.mobileview.ios .share_common.fullScreenVideo .video-js {
                 text-align: center;
             }
         }*/
+  }
+  .share_common .pkoin {
+    padding: 6px 8px;
+  }
+  .share_common .boost {
+    padding: 2px 10px;
   }
   .share_common .jsPlayerLoading .preloader5 {
     display: none;

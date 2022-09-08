@@ -4634,6 +4634,7 @@ html.mobileview.fullscreen #navigationWrapper {
 }
 .coinwithsmall > div.svlwr {
   font-size: 0.5em;
+  padding-left: 0.5em;
 }
 .coinwithsmall > div.svlwr .suffix {
   font-weight: 500;

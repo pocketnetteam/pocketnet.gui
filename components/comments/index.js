@@ -13,7 +13,7 @@ var comments = (function(){
 
 		var primary = false;
 
-		var el = {}, txid, ed, currents = {}, caption, _in, top, eid, preview = false, listpreview = false, showedall = false, receiver, balance = 0;
+		var el = {}, txid, ed, currents = {}, caption, _in, top, eid, preview = false, listpreview = false, showedall = false, receiver;
 
 		var authblock = false;
 
@@ -202,6 +202,143 @@ var comments = (function(){
 		}
 
 		var actions = {
+
+			removeDonate : function(id, p){
+
+				var comment = currents[id]
+			
+				comment.donate.remove()
+			
+				renders.donate(id, p);
+			
+			},
+			
+			embeddonate : function(id, p){
+			
+				id || (id = '0')
+			
+				actions.process(id)
+			
+				if (areas[id])
+					areas[id].___inited = true
+			
+				var storage = currents[id].export(true)
+			
+				var sender = self.sdk.address.pnet().address;
+			
+				if (sender === receiver){
+			
+					sitemessage(self.app.localization.e('donateself'));
+			
+				} else {
+			
+					self.nav.api.load({
+						open : true,
+						id : 'embeding',
+						inWnd : true,
+			
+						essenseData : {
+							type : 'donate',
+							storage : storage,
+							sender: sender, 
+							receiver: receiver,
+							balance: p.balance,
+							total: p.total,
+							on : {
+			
+								added : function(value){
+
+									value = Number(value);
+			
+									var result = Boolean(value);
+
+									if (value < 0.5){
+										sitemessage(self.app.localization.e('minPkoin', 0.5))
+										return;
+									}
+						
+									if (value < p.balance){
+			
+										if(!_.isArray(value)) value = [value]
+			
+										currents[id].donate.remove();
+			
+										currents[id].donate.set({
+											address: receiver,
+											amount: Number(value)
+										})
+			
+										if(!result && errors[type]){
+			
+											sitemessage(errors[type])
+			
+										}
+			
+			
+										if (result){
+			
+											new Audio('sounds/donate.mp3').play();
+			
+											renders.donate(id, p)
+			
+										}	
+			
+								
+			
+									} else {
+			
+										sitemessage(self.app.localization.e('incoins'))
+									}
+			
+				
+			
+								}
+							}
+						},
+			
+						clbk : function(s, p){
+							external = p
+						}
+					})
+			
+				}
+			
+			}, 
+
+			
+			pkoin : function(id, format){
+
+				var share = self.app.platform.sdk.node.shares.storage.trx[id];
+
+				if (share){
+					
+					actions.stateAction(function(){
+
+						var userinfo = deep(app, 'platform.sdk.usersl.storage.' + share.address) || {
+							address : share.address,
+							addresses : [],
+						}
+
+						self.nav.api.load({
+							open : true,
+							href : 'pkoin',
+							history : true,
+							inWnd : true,
+		
+							essenseData : {
+								userinfo: userinfo,
+								id : id,
+								format: format
+							}
+						})
+		
+	
+					}, share.txid)	
+
+				}
+
+			},
+
 			showprofile : function(address){
 
 				if (self.app.mobileview){
@@ -1209,6 +1346,14 @@ var comments = (function(){
 
 		var events = {
 
+			pkoin : function(){
+
+				var shareId = $(this).closest('.share').attr('id') || txid;
+
+				actions.pkoin(shareId, 'pkoinComment')
+
+			},
+
 			showprofile : function(){
 				var address = $(this).attr('profile')
 
@@ -2077,6 +2222,42 @@ var comments = (function(){
 								})
 							}
 						})
+
+						_p.el.find('.embeddonate').off('click').on('click', function(){
+
+							self.app.platform.sdk.node.transactions.get.allBalance(function (total) {
+
+								self.app.platform.sdk.node.transactions.get.canSpend(self.sdk.address.pnet().address, function (amount) {
+									
+									var id = actions.getid(_p.el.find('.postbody'))
+
+									if(state){
+
+										p.total = Number(total.toFixed(3));
+										p.balance = Number(amount.toFixed(3));
+
+										actions.embeddonate(id, p)
+										if(!p.answer && !p.editid){
+			
+											ini()
+			
+										}	
+									}
+									else{
+										actions.stateAction(function(){
+										})
+									}
+
+
+								})
+
+							})
+
+
+						})
+
+						// _p.el.find('.embeddonate').on('click', events.pkoin)
+
 
 						if(_preview){
 

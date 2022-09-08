@@ -1228,12 +1228,21 @@
 
 		.embeddonate{
 			position: absolute;
-			right : 68px;
-			top : 1px;
+			right : 38px;
+			top: 1px;
 			padding : 6px;
 			cursor: pointer;
 			color : rgb(var(--neutral-grad-3));
+			filter: grayscale(1) invert(74%) sepia(11%) saturate(657%) hue-rotate(197deg) brightness(77%) contrast(88%);
 			.transition(0.3s);
+
+			&.right{
+				right: 76px;
+			}
+
+			&:hover{
+				filter: none;
+			}
 
 			img{
 				height: 15px;

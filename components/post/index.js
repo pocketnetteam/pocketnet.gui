@@ -21,7 +21,9 @@ var post = (function () {
 
 		var actions = {
 
-			pkoin : function(id){
+			pkoin : function(format){
+
+				var type = format === 'liftUpThePost' ? 'boost' : 'pkoin';
 
 				if (share){
 
@@ -44,7 +46,9 @@ var post = (function () {
 			
 								essenseData : {
 									userinfo: userinfo,
-									id : share.txid
+									id : share.txid,
+									format : format,
+									type : type
 								}
 							})
 	
@@ -862,9 +866,13 @@ var post = (function () {
 
 			pkoin : function(){
 
-				var shareId = $(this).closest('.share').attr('id');
+				actions.pkoin('sendToAuthor')
 
-				actions.pkoin(shareId)
+			},
+
+			boost : function(){
+
+				actions.pkoin('liftUpThePost')
 
 			},
 
@@ -1356,6 +1364,7 @@ var post = (function () {
 
 						el.stars = el.share.find('.forstars');
 
+						_p.el.find('.boost').on('click', events.boost)
 						_p.el.find('.pkoin').on('click', events.pkoin)
 						_p.el.find('.gotouserprofile').on('click', events.gotouserprofile)
 
