@@ -249,7 +249,6 @@ nModule = function(){
 				else{
 					window.requestAnimationFrame(() => {
 						c()
-					
 					})
 				}
 

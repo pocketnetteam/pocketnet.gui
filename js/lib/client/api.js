@@ -943,6 +943,8 @@ var Api = function(app){
 
             if((!e.code || e.code == 2000) && trying < 2){
 
+                //// api.nodes.canchange
+
                 //if(isonline()){
                     return self.changeProxyIfNeedWithDirect().then(r => {
 

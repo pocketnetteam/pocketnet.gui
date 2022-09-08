@@ -339,16 +339,21 @@ var articlev = (function(){
 
 			_addtag : function(tag){
 
-				if (art.tags.length < 15){
-					
-					removeEqual(art.tags, tag)
+				var tta = _.uniq(_.clone(art.tags).concat([tag]))
 
-					art.tags.push(tag)
+				var bycategories = self.app.platform.sdk.categories.fromTags(tta, self.language.v)
 
-					return true
+				if (bycategories.categories.length > 2){
+					return false
 				}
 
-				return false
+				if (tta.length > 15){return false}
+
+				art.tags = tta
+
+				return true
+
+				
 			},
 
 			addTags : function(tags){
