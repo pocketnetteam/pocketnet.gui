@@ -3920,7 +3920,7 @@ Platform = function (app, listofnodes) {
                 h += '</div>'
 
                 h += '<div class="fullcell label">'
-                h +=  (p.text || 'To the top')
+                h +=  (p.text || app.localization.e('tothetop'))
                 h += '</div>'
 
                 h += '<div class="fullcell label likeicon">'
