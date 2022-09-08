@@ -1191,6 +1191,7 @@ Application = function(p)
         if(isTablet() && !isMobile()) baseorientation = null
 
         self.mobile.screen.lock()
+        if (navigator.splashscreen) navigator.splashscreen.hide();
 
         p || (p = {});
 
@@ -1198,8 +1199,7 @@ Application = function(p)
 
           self.appready = true
 
-          if (navigator.splashscreen)
-            navigator.splashscreen.hide();
+          
         }
 
         self.mobile.pip.init()
