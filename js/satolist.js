@@ -2532,9 +2532,6 @@ Platform = function (app, listofnodes) {
             if(!_.isArray(ids)) ids = [ids]
 
 
-            console.log("LENTA", ids)
-
-
             app.nav.api.load({
 
                 open : true,
@@ -2616,7 +2613,6 @@ Platform = function (app, listofnodes) {
 
         post: function (id, el, clbk, p) {
 
-            console.log("PAPI", id)
 
             if (!p) p = {}
 
@@ -2993,15 +2989,16 @@ Platform = function (app, listofnodes) {
 
         },
 
-        showCommentBanner : function(contextElem) {
+        showCommentBanner : function(contextElem, clbk) {
 
             if (!app.platform.sdk.user.me()?.regdate) {
-                return null;
+                return 
             }
 
             let bannerCommentComponent = null;
+            
             if (!contextElem) {
-                return bannerCommentComponent;
+                return;
             }
 
             const createComponent = () => {
@@ -3018,14 +3015,19 @@ Platform = function (app, listofnodes) {
 
                     clbk : function(e, p){
                         bannerCommentComponent = p;
+
+                        if (clbk) {
+                            clbk(p)
+                        }
+
                         if (p.el[0].constructor.name === 'HTMLDivElement') {
                             self.app.Logger.info({
                                 actionId: 'COMMENT_BANNER_SHOWED',
                                 value: p.el[0].constructor.name,
                             });
-
-                            return;
                         }
+
+                        
                     }
                 });
             };
@@ -3050,19 +3052,19 @@ Platform = function (app, listofnodes) {
 
             if (!isOneDayOld) {
                 createComponent();
-                return bannerCommentComponent;
+                //return bannerCommentComponent;
             }
 
             if (repeat && timeToShowBanner) {
                 localStorage.nextCommentBanner = unixTimeNow + oneDayInSeconds;
                 createComponent();
-                return bannerCommentComponent;
+                //return bannerCommentComponent;
             }
 
             if (timeToShowBanner || !alreadyShowed) {
                 localStorage.nextCommentBanner = 1;
                 createComponent();
-                return bannerCommentComponent;
+                //return bannerCommentComponent;
             }
 
         },
@@ -3837,7 +3839,6 @@ Platform = function (app, listofnodes) {
     self.api = {
 
         keypair: function (m) {
-
             let keyPair;
 
             if (bitcoin.bip39.validateMnemonic(m)) {
@@ -3852,7 +3853,6 @@ Platform = function (app, listofnodes) {
                 } catch (e) {
                     try {
                         keyPair = bitcoin.ECPair.fromWIF(m);
-                        console.log('keypair;, k', keyPair)
                     } catch (e) {
                         // TODO: Do something...
                     }
@@ -7109,7 +7109,6 @@ Platform = function (app, listofnodes) {
                 self.sdk.localshares.init().then(r => {
                     if(clbk) clbk()
                 }).catch(e => {
-                    console.error(e)
                     if(clbk) clbk()
                 })
             },
@@ -9865,6 +9864,9 @@ Platform = function (app, listofnodes) {
                     return true
                 }
 
+                //console.log('ustate.regdate.addDays(7)', ustate.regdate.addDays(7) > new Date())
+                //ustate.regdate && ustate.regdate.addDays(7) > new Date() 
+                
                 if(moment().diff(ustate.regdate, 'days') <= 7 && totalComplains  > 20 ) {
                     return true
                 }
@@ -10439,7 +10441,11 @@ Platform = function (app, listofnodes) {
                         vis : 'scale',
                         name : self.app.localization.e('spv'),
                         bad : function(remains, limit){
-                            if(remains <= 3) return true
+                            if (limit <= 3) return false
+							
+							if (remains <= 1) {
+								return true
+							}
                         }
                     },
 
@@ -10484,9 +10490,10 @@ Platform = function (app, listofnodes) {
 						vis : 'scale',
 						name : self.app.localization.e('artc'),
 						bad : function(remains, limit){
-							if (limit && limit === 1) {
-								return false
-							} else if (remains <= 3) {
+
+                            if (limit <= 3) return false
+							
+							if (remains <= 1) {
 								return true
 							}
 						},
@@ -27876,18 +27883,13 @@ Platform = function (app, listofnodes) {
         },
 
         initevents : function(){
-            console.log('self.matrixchat.chatparallax')
             if (self.matrixchat.el){
-
-                console.log('self.matrixchat.chatparallax2')
 
                 if (self.app.mobileview){
 
-                    console.log('self.matrixchat.chatparallax3')
 
                     if(self.matrixchat.chatparallax) return
 
-                    console.log("initevents")
                     
                     self.matrixchat.chatparallax = new SwipeParallaxNew({
 
@@ -27937,7 +27939,6 @@ Platform = function (app, listofnodes) {
 
                 else{
                     if (self.matrixchat.chatparallax) {
-                        console.log("destroy")
                         self.matrixchat.chatparallax.destroy()
                         self.matrixchat.chatparallax = null
                     }
@@ -28097,8 +28098,6 @@ Platform = function (app, listofnodes) {
 
         backtoapp : function(){
 
-            console.log('self.matrixchat', self.matrixchat.backtoapp.caller)
-
             if (self.matrixchat.core && !self.matrixchat.core.hiddenInParent){
                 self.matrixchat.core.backtoapp()
 
@@ -28133,7 +28132,6 @@ Platform = function (app, listofnodes) {
 
             core.backtoapp = function(link){
 
-                console.log("???core.backtoapp", core.backtoapp.caller)
 
                 if (self.app.mobileview)
                     app.nav.api.history.removeParameters(['pc'], null, {replaceState : true})
@@ -28141,7 +28139,6 @@ Platform = function (app, listofnodes) {
                 if (link){
                     link = link.replace('https://' + self.app.options.url + '/', '').replace('https://' + window.pocketnetdomain + '/', '')
 
-                    console.log('link', link)
 
                     if(link.indexOf('index') == '0' && link.indexOf('v=') == -1 &&
                         (link.indexOf('s=') > -1 || link.indexOf('i=') > -1 || link.indexOf('p=') > -1))
@@ -28322,18 +28319,15 @@ Platform = function (app, listofnodes) {
         },
 
         connect : function(){
-
             if(!self.matrixchat.connectWith && !self.matrixchat.joinRoom) return
             if(!self.matrixchat.core) return
-            
-            console.log('connect')
+
 
             self.matrixchat.core.apptochat()
 
 
             if (self.matrixchat.connectWith){
                 return self.matrixchat.core.connect(self.matrixchat.connectWith).then(r => {
-                    localStorage.removeItem('connectWith');
                     self.matrixchat.connectWith = null
                 }).catch(e => {
                     self.matrixchat.connectWith = null
@@ -28813,7 +28807,7 @@ Platform = function (app, listofnodes) {
                         var cr = parameters(url, true).publicroom
                         var ps =  parameters(url, true).ps
                         var ref =  parameters(url, true).ref
-                        
+
                         self.matrixchat.connectWith = w || null
                         self.matrixchat.joinRoom = cr || null
 
@@ -28873,20 +28867,7 @@ Platform = function (app, listofnodes) {
     self.autoUpdater()
     self.cordovaSetup()
 
-    var connect = parameters().connect;
-
-    if (connect){
-
-        localStorage.setItem('connectWith', connect);
-
-    } else {
-
-        connect = localStorage.getItem('connectWith');
-    }
-
-    self.matrixchat.connectWith = connect;
-
-    console.log('connectwith', self.matrixchat.connectWith)
+    self.matrixchat.connectWith = parameters().connect
 
     if(!self.matrixchat.connectWith)
         self.matrixchat.joinRoom = parameters().publicroom

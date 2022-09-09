@@ -77,6 +77,8 @@ export function proxifiedAxiosFactory(electronIpcRenderer: Electron.IpcRenderer)
             throw Error('ProxifiedAxios : Request - sent invalid data');
         }
 
+        console.log('request:a', id)
+
         return new Promise((resolve, reject) => {
             electronIpcRenderer.on(`ProxifiedAxios : Response[${id}]`, (event, response) => {
                 console.table(response);
