@@ -13,7 +13,7 @@
 
 					<% if(state) {%>
 
-						<% if(!share || !share.visibility() || share.visibility() == 'reg'){ %>
+						<% if(!ed.registration && (!share || !share.visibility() || share.visibility() == 'reg')){ %>
 
 							<div class="chat">
 								<div elementsid="chatbutton" class="button black ">

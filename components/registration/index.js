@@ -858,12 +858,10 @@ var registration = (function(){
 								sharing: {
 									image : '',
 									images : [],
-									title : "Connect to Bastyon chat!",
-
-						
+									title : self.app.localization.e('welcomecaption4'),
 									text : {
 										body : "",
-										preview : ""
+										preview :""
 									}
 								},
 	
@@ -871,9 +869,20 @@ var registration = (function(){
 									type : 'channel',
 									id : my
 								},
+
+								registration: true
 							}
 						})
 					})
+
+					var next = el.find('.next');
+
+					next.on('click', function(){
+
+						actions.next()
+							
+					})
+
 	
 
 				}

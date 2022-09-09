@@ -483,6 +483,7 @@ _l.info = "Info"
 _l.copyLink = "Copy direct Link"
 _l.includeRefLink = "Include Referal Link"
 _l.shareVia = "Share via"
+_l.invitefriends = "Invite friends"
 _l.embedding = "Embedding"
 _l.copyEmbeddingCode = "Copy Embedding Code"
 _l.showCode = "Show Code"
@@ -2232,6 +2233,7 @@ _l.useanimations = "Enable animations";
 _l.welcomecaption1 = "Bastyon of Free Speech";
 _l.welcomecaption2 = "Read Content Banned by Big Tech";
 _l.welcomecaption3 = "Chat privately with friends - no SIM card";
+_l.welcomecaption4 = "Chat privately with friends - no SIM card";
 
 
 

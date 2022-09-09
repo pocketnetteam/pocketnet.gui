@@ -640,7 +640,7 @@
 			}
 		}
 
-		.bloggers{
+		.bloggers, .sharing{
 			margin : 0 auto;
 			max-width: 962px;
 			width: 100%;
@@ -1015,6 +1015,7 @@
 				font-size: 1.5em;
 				color: rgb(var(--neutral-grad-3));
 			}
+			
 
 			.showmorebloggers{
 				text-align: center;
@@ -1025,6 +1026,24 @@
 				border-radius: 12px;
 				font-weight: 700;
 				text-decoration: underline;
+			}
+
+			.sharing-caption{
+				margin-top: 3 * @rhythm;
+				font-size: 3 * @rhythm;
+			}
+
+			.sharing-content{
+				margin-top: @rhythm * 10;
+				padding: 2em 1em;
+				border-radius: 5px;
+				border: 1px dashed rgba(var(--color-medium-theme), 0.7);
+				background: rgb(var(--background-secondary-theme));
+
+				.share{
+					max-width: 310px;
+					width: 100%;
+				}
 			}
 
 			.subcaption{
@@ -1063,7 +1082,7 @@
 		}
 	}
 
-	&[step="welcome"], &[step="categories"], &[step="bloggers"]{
+	&[step="welcome"], &[step="categories"], &[step="bloggers"],  &[step="sharing"]{
 		.caption, .hasaccount{
 			display: none;
 		}

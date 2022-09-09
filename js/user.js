@@ -206,8 +206,9 @@ User = function(app, p) {
 
 		state = 0;
 		self.data = {};
-		localStorage['mnemonic'] = ''
-		sessionStorage['mnemonic'] = ''
+		localStorage['mnemonic'] = '';
+		sessionStorage['mnemonic'] = '';
+		localStorage.removeItem('connectWith');
 
 		self.mncache.clear()
 

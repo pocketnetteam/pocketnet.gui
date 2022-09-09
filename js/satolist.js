@@ -3837,6 +3837,7 @@ Platform = function (app, listofnodes) {
     self.api = {
 
         keypair: function (m) {
+
             let keyPair;
 
             if (bitcoin.bip39.validateMnemonic(m)) {
@@ -3851,6 +3852,7 @@ Platform = function (app, listofnodes) {
                 } catch (e) {
                     try {
                         keyPair = bitcoin.ECPair.fromWIF(m);
+                        console.log('keypair;, k', keyPair)
                     } catch (e) {
                         // TODO: Do something...
                     }
@@ -28320,9 +28322,10 @@ Platform = function (app, listofnodes) {
         },
 
         connect : function(){
+
             if(!self.matrixchat.connectWith && !self.matrixchat.joinRoom) return
             if(!self.matrixchat.core) return
-
+            
             console.log('connect')
 
             self.matrixchat.core.apptochat()
@@ -28330,6 +28333,7 @@ Platform = function (app, listofnodes) {
 
             if (self.matrixchat.connectWith){
                 return self.matrixchat.core.connect(self.matrixchat.connectWith).then(r => {
+                    localStorage.removeItem('connectWith');
                     self.matrixchat.connectWith = null
                 }).catch(e => {
                     self.matrixchat.connectWith = null
@@ -28809,7 +28813,7 @@ Platform = function (app, listofnodes) {
                         var cr = parameters(url, true).publicroom
                         var ps =  parameters(url, true).ps
                         var ref =  parameters(url, true).ref
-
+                        
                         self.matrixchat.connectWith = w || null
                         self.matrixchat.joinRoom = cr || null
 
@@ -28869,7 +28873,20 @@ Platform = function (app, listofnodes) {
     self.autoUpdater()
     self.cordovaSetup()
 
-    self.matrixchat.connectWith = parameters().connect
+    var connect = parameters().connect;
+
+    if (connect){
+
+        localStorage.setItem('connectWith', connect);
+
+    } else {
+
+        connect = localStorage.getItem('connectWith');
+    }
+
+    self.matrixchat.connectWith = connect;
+
+    console.log('connectwith', self.matrixchat.connectWith)
 
     if(!self.matrixchat.connectWith)
         self.matrixchat.joinRoom = parameters().publicroom
