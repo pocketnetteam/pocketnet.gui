@@ -374,6 +374,7 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
         var message = edjs.apply(share.message, decodeURIComponent)
         txt = edjs.parse(message)
     } catch(e){
+        console.error(e)
     }
 	
 	%> 

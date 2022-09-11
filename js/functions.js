@@ -11172,7 +11172,9 @@ edjsHTML = function() {
 					return '<div class="js-player" data-plyr-provider="youtube" data-plyr-embed-id="'+_.escape(t.embed)+'"></div>';
 
 				default:
-                    throw new Error("Only Youtube and Vime Embeds are supported right now.")
+					//console.log(t)
+					//return '<iframe src="'+t.embed+'"></iframe>'
+					return '<div class="unsupportedplayer">Only Youtube and Vimeo Embeds are supported right now.</div>';
             }
         },
 

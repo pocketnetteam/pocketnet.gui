@@ -22,7 +22,7 @@
                 color : rgb(var(--neutral-grad-2));
             }
             .boostedlabel{
-                color : rgb(var(--color-good));
+                color : rgb(var(--color-star-yellow));
             }
         }
     }
@@ -53,10 +53,11 @@
     
 
     .boost{
-        color: #F2C94C;
+        color: rgb(var(--color-star-yellow));
         border-radius: 8px;
         padding: 4px 10px;
-        border: 1px solid rgb(var(--neutral-grad-3));
+        background: rgb(var(--background-secondary-theme));
+        .shadowSmaller();
     }
 
     .commentsWrapper{			
@@ -227,6 +228,10 @@
     }
 
     .article{
+        .unsupportedplayer{
+            padding : 2 * @rhythm;
+            text-align: center;
+        }
         .message{
             b{
                 font-size: 1em!important;

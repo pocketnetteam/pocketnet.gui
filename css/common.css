@@ -14,7 +14,7 @@
   color: rgb(var(--neutral-grad-2));
 }
 .share_common .metadata .sys .boostedlabel {
-  color: rgb(var(--color-good));
+  color: rgb(var(--color-star-yellow));
 }
 .share_common .bolt {
   cursor: pointer;
@@ -35,32 +35,12 @@
 .share_common .pkoin span {
   margin-left: 0.5em;
 }
-.share_common .peertube-server-hint {
-  z-index: 3;
-  position: absolute;
-  margin: 10px;
-  padding: 5px 7px;
-  border-radius: 4px;
-  font-family: monospace;
-  font-size: 0.8em;
-  background: #000000bb;
-  color: #fff;
-}
-.share_common .peertube-server-hint i.fa {
-  font-size: 0.8em;
-  margin-top: 1px;
-  margin-right: 5px;
-}
-.share_common .peertube-server-hint a {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
 .share_common .boost {
-  color: #F2C94C;
+  color: rgb(var(--color-star-yellow));
   border-radius: 8px;
   padding: 4px 10px;
-  border: 1px solid rgb(var(--neutral-grad-3));
+  background: rgb(var(--background-secondary-theme));
+  box-shadow: 0 5px 7px -5px rgba(var(--color-shadow-base), 0.4);
 }
 .share_common .commentsWrapper {
   background: rgb(var(--background-secondary-theme));
@@ -196,6 +176,10 @@
 }
 .share_common .repostShare .share .videoTips {
   display: none!important;
+}
+.share_common .article .unsupportedplayer {
+  padding: 1em;
+  text-align: center;
 }
 .share_common .article .message b {
   font-size: 1em!important;
