@@ -44,21 +44,17 @@ var statistic = (function () {
         }).then(() => {
           let block = self.app.platform.currentBlock 
 
-          console.log('block', block)
-
           let from = (selectedPeriod?.from?.block && selectedPeriod?.from?.block > 0) ? selectedPeriod.from.block : 0
           let to = (selectedPeriod?.to?.block && (block.height - selectedPeriod.to.block) > 0) ? block.height - selectedPeriod.to.block : 0
 
           return Promise.all(_.map([1, 3, 7], (i) => {
 
-            return self.app.api.rpc('getuserstatistic', [self.user.address.value, to, from, from, 1]).then(r => {
-              console.log("R", r)
+            return self.app.api.rpc('getuserstatistic', [self.user.address.value, to, from, from, i]).then(r => {
               fields.push(...r)
               return Promise.resolve()
             })
 
           })).then(() => {1
-            console.log("?")
             actions.loading(false)
           }).catch(e => {
             console.error(e)

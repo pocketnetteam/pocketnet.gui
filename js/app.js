@@ -998,6 +998,8 @@ Application = function(p)
 
     self.initvideodb()
 
+    
+
     self.localization.init(function(){
 
       newObjects(p);

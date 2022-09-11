@@ -98,7 +98,7 @@ __map =  {
 		{path : "js/kit.js", babelify : true},
 		{path : "js/satolist.js", babelify : true},
 		{path : "js/peertube.js", babelify : true},
-		
+		{path : "js/lib/client/p2pvideo.js", babelify : true},
 		{path : "js/effects.js", babelify : true},
 		{path : "js/video-uploader.js", babelify : true},
 		{path : "js/file-hash.js", babelify : true}

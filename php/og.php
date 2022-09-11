@@ -285,7 +285,7 @@ class OG {
 
         if($this->is_bot()){
             
-            $this->currentOg['user'] = $_SERVER['HTTP_USER_AGENT'];
+            ///$this->currentOg['user'] = $_SERVER['HTTP_USER_AGENT'];
 
             if($this->author != NULL){
 

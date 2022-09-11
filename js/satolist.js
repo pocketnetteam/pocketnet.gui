@@ -7092,6 +7092,12 @@ Platform = function (app, listofnodes) {
             saving : {},
             key : '',
 
+            getSegment :  function(dir, filename){
+
+                return electron.ipcRenderer.invoke('getSegment', dir, filename)
+
+            },
+
             getByMasterSwarmId : function(masterSwarmId){
                 var s = self.sdk.localshares.storage
 
@@ -7099,7 +7105,7 @@ Platform = function (app, listofnodes) {
 
                 _.find(s, (share) => {
                     return _.find(share.videos, function(v){
-                        if(v.infos && v.infos.videoDetails && v.infos.masterSwarmId == masterSwarmId) {
+                        if(v.infos && v.infos.videoDetails && v.infos.masterSwarmId == masterSwarmId && v.infos.segments && v.infos.dir) {
                             video = v;
                             return true
                         }
@@ -7174,6 +7180,27 @@ Platform = function (app, listofnodes) {
                 return _.map(self.sdk.localshares.storage, function(v, i){
                     return i
                 })
+            },
+
+            getAllVideos : function(){
+                var videos = []
+
+                var s = self.sdk.localshares.storage
+
+                _.find(s, (share) => {
+                    var v = _.find(share.videos, function(v){
+                        if(v.infos && v.infos.videoDetails && v.infos.masterSwarmId && v.infos.segments && v.infos.dir) {
+                            video = v;
+                            return true
+                        }
+                    })
+
+                    if (v){
+                        videos.push(v)
+                    }
+                })
+
+                return videos
             },
 
             saveShare : function(share, p){
@@ -7631,6 +7658,9 @@ Platform = function (app, listofnodes) {
 
                         const videoData = await electron.ipcRenderer
                             .invoke('getVideoData', shareId, videoId);
+
+
+                            console.log('videoData', videoData)
 
 
                         videosDataList[videoId] = videoData;
@@ -29462,7 +29492,20 @@ Platform = function (app, listofnodes) {
         }
 
 
-        self.sdk.localshares.initclbk()
+        self.sdk.localshares.initclbk(() => {
+            if (typeof _Electron != 'undefined') {
+                self.p2pvideo = new window.P2Pvideo(app)
+
+                /*setTimeout(() => {
+                    self.p2pvideo.initlocalsvideo()
+                }, 3000)*/
+                
+
+                console.log('self.p2pvideo', self.p2pvideo)
+            }
+            
+        })
+        
 
         if(window.cordova){
             setupOpenwith()

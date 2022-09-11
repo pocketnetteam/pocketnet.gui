@@ -218,6 +218,7 @@
         <script join src="js/satolist.js?v=439731354592"></script>
         <script join src="peertube/video-embed.bundle.js"></script>
         <script join src="js/peertube.js"></script>
+        <script join src="js/lib/client/p2pvideo.js"></script>
         <script join src="js/logger.js"></script>
         <script join src="js/videotransport.js"></script>
         <script join src="js/app.js?v=322676503798"></script>

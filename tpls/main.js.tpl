@@ -656,7 +656,7 @@ function createWindow() {
                 },
                 function (err, response, metadata) {
 
-                    if (response != 'timeout')
+                    if (response != 'timeout' && !_.isEmpty(metadata))
 
                         if (win) {
                             win.show();
@@ -882,7 +882,23 @@ function createWindow() {
         return JSON.parse(jsonData);
     });
 
+    ipcMain.removeHandler('getSegment');
+
+    ipcMain.handle('getSegment', async (event, videoDir, filename) => {
+
+        try{
+            const data = fs.readFileSync(path.join(videoDir, filename), {  flag:'r' });
+    
+            return data
+        }   
+        catch(e){
+            return null
+        }
+
+    })  
+
     ipcMain.removeHandler('getVideoData');
+
     ipcMain.handle('getVideoData', async (event, shareId, videoId) => {
         const videoDir = getVideoFolder(shareId, videoId);
 
@@ -903,6 +919,10 @@ function createWindow() {
             videoDetails : details,
         }
 
+        var sequence = 0
+
+        
+
         const playlistName = videosList.find(fN => (
             fN.endsWith('.m3u8')
         ));
@@ -911,6 +931,94 @@ function createWindow() {
 
         const fileStats = fs.statSync(playlistPath);
 
+        var masterSwarmId = details.streamingPlaylists[0].playlistUrl
+
+        var vurl = geturlfromm3u8(playlistPath)
+
+        var signatures = null
+            
+        try{
+            signatures = JSON.parse(fs.readFileSync(path.join(videoDir, 'signatures.json'), { encoding:'utf8', flag:'r' }));
+        }catch(e){
+            console.log(e)
+        }
+
+
+        if(masterSwarmId && vurl && signatures){
+
+
+            var url = masterSwarmId.split("/hls/")[0] + '/hls/' + details.uuid + '/' + vurl
+
+            var i = -1
+            var f = -1
+            
+            var fss = _.find(signatures, (a, index) => {
+                f++
+                if(index == vurl) {
+                    return true
+                }
+            })
+
+            if(fss) {
+                i = f
+            }
+
+
+            if(i > -1){
+
+
+                var segmentsFiles = _.sortBy(_.filter(videosList, (vl) => {
+                    if (vl.endsWith('.mp4')){return true}
+                }), (vl => {
+                    var n = Number(vl.replace('fragment_', '').replace('.mp4', '').split('-')[0])
+
+                    return n
+                }))
+
+                var segments = _.map(segmentsFiles, (vl, j) => {
+
+                    var j1 = j - 1
+
+                    var segment = {
+                        sequence : j1 + '',
+                        range : "bytes=" + vl.replace('fragment_', '').replace('.mp4', ''),
+                        priority : 1,
+                        downloadBandwidth : 10,
+                        streamId : 'V' + i,
+                        masterSwarmId : masterSwarmId,
+                        masterManifestUri : masterSwarmId,
+                        id : masterSwarmId + '+V'+i+'+' + j1,
+                        url,
+                        requestUrl : url,
+                        responseUrl : url
+
+                    }
+    
+                    return segment
+    
+        
+                    return null
+        
+                })
+
+
+                var map = new Map();
+
+                _.each(segments, (s) => {
+                    map.set(s.id, {segment : s})
+                })
+
+                videoData.infos.segments = map
+                videoData.infos.masterSwarmId = masterSwarmId
+                videoData.infos.streamSwarmId = masterSwarmId + '+V' + i
+                videoData.infos.dir = videoDir
+                videoData.infos.trackerUrls = details.trackerUrls
+            }
+
+            
+        }
+
+        
         videoData.size = fileStats.size;
         videoData.video = {
             internalURL: shareId,
@@ -962,6 +1070,28 @@ function createWindow() {
 
     // Вызывается, когда окно будет закрыто.
     return win
+}
+
+var geturlfromm3u8 = function(path){
+
+    try{
+        const playlistinfo = fs.readFileSync(path, { encoding:'utf8', flag:'r' });
+
+        var iarray = playlistinfo.split(/\r\n|\n/)
+
+        var str = _.find(iarray, (s) => {
+            return s.indexOf('#EXT-X-MAP:URI') > -1
+        })
+
+        console.log('str', str)
+
+        if (str){
+            return str.split('",')[0].replace('#EXT-X-MAP:URI="', '')
+        }
+    }   
+    catch(e){
+        return null
+    }
 }
 
 var _openlink = function(l, ini){
