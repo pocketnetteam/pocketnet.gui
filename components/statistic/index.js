@@ -50,7 +50,7 @@ var statistic = (function () {
           return Promise.all(_.map([1, 3, 7], (i) => {
 
             return self.app.api.rpc('getuserstatistic', [self.user.address.value, to, from, from, i]).then(r => {
-              fields.push(...r)
+              fields.push({...r[0], limit : i})
               return Promise.resolve()
             })
 
@@ -112,7 +112,9 @@ var statistic = (function () {
           name: 'block',
           el: el.block,
           data: {
-            fields: fields,
+            fields: _.sortBy(fields, function(c){
+              return c.limit
+            }),
             loading: loading
           },
         }, function (_p) {
