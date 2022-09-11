@@ -64,28 +64,30 @@ if (isMobile())
 		<% 
 			
 		
-		if(!state || !user.validate() || _.isEmpty(mestate) || (mestate.reputation >= -50)) { %> 
+		if(!state || !user.validate() || _.isEmpty(mestate) || (mestate.reputation >= -50)) { 
+			
+			var embedimage = app.platform.sdk.user.canuseimagesincomments(); 
+			var hasdonate = sender && sender !== receiver
+			var hasemoji = !isMobile() && !isTablet()
+			
+			%> 
  
-			<div class="lcpp">
+			<div class="lcpp <%- embedimage ? 'hasembedimage' : '' %> <%- hasdonate ? 'hasdonate' : '' %> <%- hasemoji ? 'hasemoji' : '' %> ">
 				<div class="txt">
 
 					<textarea elementsid="leaveCommentPreview" class="leaveCommentPreview" placeholder="<%- placeholder || dplace %>"></textarea>
 
 					<div class="leaveComment" placeholder="<%- placeholder || dplace %>"></div>
 					
-					<% 
-
-					var embedimage = app.platform.sdk.user.canuseimagesincomments(); 
-
-					if(embedimage) {%>
+					<% if(embedimage) {%>
 
 						<div elementsid="comments_embedimages" class="embedimages">
-							<i class="fas fa-image"></i>
+							<i class="fas fa-images"></i>
 						</div>
 
 					<% } %>
 
-					<% if(sender && sender !== receiver) { %> 
+					<% if(hasdonate) { %> 
 
 						<div elementsid="comments_embeddonate" class="embeddonate <%- embedimage ? 'right' : '' %>">
 							<img 
@@ -97,21 +99,21 @@ if (isMobile())
 
 					<% } %>
 
-					<% if(!isMobile() && !isTablet()) { %> 
+					<% if(hasemoji) { %> 
 						<div elementsid="comments_embedEmojiPrivew" class="embedEmojiPrivew">
 						</div>
 					<% } %>
 
 				</div>
 
-				<div class="limits">
-					
-				</div>
+				<div class="limits"></div>
 
-				<div class="newcommentdonate"></div>
-
-				<div class="newcommentimages"></div>
-
+				<% if(hasdonate) { %> 
+					<div class="newcommentdonate"></div>
+				<% } %>
+				<% if(embedimage) {%>
+					<div class="newcommentimages"></div>
+				<% } %>
 				
 				
 			</div>

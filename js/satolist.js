@@ -5005,8 +5005,6 @@ Platform = function (app, listofnodes) {
                             var em = null;
                             var editing = d.share.alias()
 
-                            editing.app = app
-
                             var hash = editing.shash()
 
                             if (editing.settings.v == 'a') {
@@ -7659,8 +7657,6 @@ Platform = function (app, listofnodes) {
                         const videoData = await electron.ipcRenderer
                             .invoke('getVideoData', shareId, videoId);
 
-
-                            console.log('videoData', videoData)
 
 
                         videosDataList[videoId] = videoData;
@@ -19808,6 +19804,7 @@ Platform = function (app, listofnodes) {
                             return;
                         }
 
+
                         self.sdk.node.transactions.get.unspent(function (unspent) {
 
                             unspent = _.filter(unspent, self.sdk.node.transactions.canSpend)
@@ -19912,6 +19909,8 @@ Platform = function (app, listofnodes) {
 
                             }
 
+
+
                             if (obj.donate && obj.donate.v.length){
 
                                 feerate = 0.00001;
@@ -19965,7 +19964,10 @@ Platform = function (app, listofnodes) {
 
                                 }
                             }
+
+
                             self.sdk.node.transactions.create[obj.type](inputs, obj, /*feerate,*/ function (a, er, data) {
+
                                 if (!a) {
                                     if ((er == -26 || er == -25 || er == 16) && !p.update) {
 
@@ -20097,6 +20099,7 @@ Platform = function (app, listofnodes) {
                             error = null
                         }
 
+
                         if (error) {
 
                             if (clbk)
@@ -20169,6 +20172,7 @@ Platform = function (app, listofnodes) {
 
                                     return
                                 }
+
 
                                 self.sdk.node.transactions.get.unspent(function (unspents) {
 
@@ -20551,31 +20555,43 @@ Platform = function (app, listofnodes) {
 
                     share: function (inputs, share, /*fees, */clbk, p = {}, fromTG) {
 
+
+                        try{
+
+
                         var meta = self.sdk.usersettings.meta;
 
-                        var savedShare = JSON.parse(JSON.stringify(share));
+                        
 
-                        if (self.app.user.features.telegram && !fromTG && meta.telegram && meta.telegram.value && meta.tgto && meta.tgto.value) {
+                        /*if (self.app.user.features.telegram && !fromTG && meta.telegram && meta.telegram.value && meta.tgto && meta.tgto.value) {
 
-                          if (!meta.tgtoask.value) {
+                            var savedShare = JSON.parse(JSON.stringify(share));
 
-                            this.telegramSend(share, meta);
+                            if (!meta.tgtoask.value) {
 
-                          } else {
-                            // this.telegramSend = this.telegramSend.bind(this)
-                            new dialog({
-                              html: "Do you really want send message to Telegram?",
-                              btn1text: "Send",
-                              btn2text: "Cancel",
-                              class: 'zindex',
-                              success: () => {
-                                this.telegramSend(savedShare, meta);
-                              }
-                            });
-                          }
-                        }
+                                this.telegramSend(share, meta);
+
+                            } else {
+                                // this.telegramSend = this.telegramSend.bind(this)
+                                new dialog({
+                                html: "Do you really want send message to Telegram?",
+                                btn1text: "Send",
+                                btn2text: "Cancel",
+                                class: 'zindex',
+                                success: () => {
+                                    this.telegramSend(savedShare, meta);
+                                }
+                                });
+                            }
+                        }*/
+
 
                         this.common(inputs, share, TXFEE, clbk, p)
+                    }
+
+                        catch(e){
+                            console.error(e)
+                        }
                     },
 
                     shareRelayed: function(inputs, obj, fees, clbk, p = {}) {},

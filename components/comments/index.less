@@ -1179,17 +1179,7 @@
 			}
 		}
 
-		.embedEmojiPrivew{
-			display: none;
-			width: 24px;
-			height: 24px;
-			position: absolute;
-			top : 7px;
-			right : 7px;
-			color : rgb(var(--neutral-grad-2));
-			cursor: pointer;
-		}
-
+		
 
 		.emojionearea-editor{
 		
@@ -1208,14 +1198,26 @@
 			right : 6px;
 		}
 
+		/**/
+
+		.embedEmojiPrivew{
+			display: none;
+			width: 24px;
+			height: 24px;
+			position: absolute;
+			top : 7px;
+			right : 7px;
+			color : rgb(var(--neutral-grad-2));
+			cursor: pointer;
+		}
+
 		.embedimages{
 			position: absolute;
-			right : 40px;
-			top : 3.5px;
+			right : 7px;
+			top : 3px;
 			padding : 6px;
 			cursor: pointer;
 			color : rgb(var(--neutral-grad-2));
-			.transition(0.3s);
 
 			&:hover{
 				color : rgb(var(--neutral-grad-4));
@@ -1226,9 +1228,10 @@
 			}
 		}
 
+
 		.embeddonate{
 			position: absolute;
-			right : 38px;
+			right : 7px;
 			top: 1px;
 			padding : 6px;
 			cursor: pointer;
@@ -1236,9 +1239,9 @@
 			filter: grayscale(1) invert(74%) sepia(11%) saturate(657%) hue-rotate(197deg) brightness(77%) contrast(88%);
 			.transition(0.3s);
 
-			&.right{
+			/*&.right{
 				right: 76px;
-			}
+			}*/
 
 			&:hover{
 				filter: none;
@@ -1257,6 +1260,29 @@
 			}
 		}
 
+		.hasemoji{
+			.embedimages{
+				right : 40px
+			}
+
+			.embeddonate{
+				right : 40px
+			}
+		}
+
+		.hasembedimage{
+			.embeddonate{
+				right : 40px
+			}
+		}
+
+		.hasemoji.hasembedimage{
+			.embeddonate{
+				right : 80px
+			}
+		}
+
+		/**/
 
 		.commentPanel{
 			display: none;
@@ -1296,6 +1322,7 @@
 			}
 		}
 
+		.embeddonate,
 		.embedimages,
 		.embedEmojiPrivew{
 			.transition(0.3s);
@@ -1424,13 +1451,13 @@ html.mobile{
 			display: none!important;
 		}
 
-		.embeddonate{
+		/*.embeddonate{
 			right: 40px!important;
 		}
 
 		.embedimages{
 			right: 12px!important;
-		}
+		}*/
 
 		.list{
 			.metatable{

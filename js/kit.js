@@ -1146,11 +1146,14 @@ Share = function(lang){
 			else{
 				if(_.isArray(tags)){
 
-					var bycategories = self.app.platform.sdk.categories.fromTags(tags, self.language.v)
+					if(typeof app != 'undefined'){
 
+						var bycategories = app.platform.sdk.categories.fromTags(tags, self.language.v)
 
-					if (bycategories.categories.length > 2){
-						return false
+						if (bycategories.categories.length > 2){
+							return false
+						}
+
 					}
 
 					if(tags.length > 15){
@@ -1172,14 +1175,16 @@ Share = function(lang){
 
 					var tta = _.uniq(_.clone(this.v).concat(tags))
 
-					var bycategories = self.app.platform.sdk.categories.fromTags(tta, self.language.v)
+					if(typeof app != 'undefined'){
+						var bycategories = app.platform.sdk.categories.fromTags(tta, self.language.v)
 
-					if (bycategories.categories.length > 2){
-						return false
+						if (bycategories.categories.length > 2){
+							return false
+						}
 					}
 
-					console.log('bycategories', bycategories)
-	
+					
+
 
 					if(tta.length > 15){
 						return false;

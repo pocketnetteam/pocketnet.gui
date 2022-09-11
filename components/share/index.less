@@ -837,7 +837,7 @@
 			vertical-align: middle;
 
 			&.postWrapper{
-				width: 140px;
+				width: 280px;
 				padding-right : 0;
 				text-align: right;
 
@@ -1091,6 +1091,7 @@
 
             .postlineWrapper{
                 position: absolute;
+				padding-left: 2 * @rhythm;
 				bottom : @rhythm;
 				background: rgb(var(--background-secondary-theme));
 			}
@@ -1272,6 +1273,13 @@ html.mobileview{
 
 		#taginput .tgs .tagsWrapper>div.tagsInputWrapper>div{
 			margin-right: 0;
+		}
+
+		.cpt{
+			
+			input{
+				background: rgb(var(--background-total-theme));
+			}
 		}
 
 		.tgsWrapperMain{

@@ -855,29 +855,15 @@ var share = (function(){
 
 				var SAVE = function(){
 
+					console.log("SAVE")
+
 					currentShare.language.set(self.app.localization.key)
 
 					actions.checktranscoding(function(result){
-
-						// if(!result){
-
-						// 	el.c.removeClass('loading')
-
-						// 	topPreloader(100)
-
-						// 	new dialog({
-						// 		html : self.app.localization.e('videotranscodingdelayedpost'),
-						// 		btn1text : self.app.localization.e('daccept'),
-						// 		class : "zindex one",
-						// 		success : function(){
-						// 		},
-		
-						// 		fail : function(){
-						// 		}
-						// 	})
-						// }
-
+						console.log("AS")
 						currentShare.uploadImages(self.app, function(){
+
+							console.log("AS2")
 
 							if (currentShare.hasexchangetag()){
 								currentShare.repost.v = ''
@@ -911,6 +897,8 @@ var share = (function(){
 								currentShare,
 		
 								function(_alias, error){
+
+									console.log("ASD", error)
 
 									topPreloader(100)
 		
@@ -1577,6 +1565,7 @@ var share = (function(){
 					self.shell({
 						name :  'postline',
 						el : el.postline,
+						
 						data : {
 							share : currentShare,
 							essenseData : essenseData,
@@ -1744,8 +1733,6 @@ var share = (function(){
 					}
 				})
 			},
-
-
 		
 			tgs : function(clbk){
 
@@ -2309,6 +2296,8 @@ var share = (function(){
 						share : currentShare,
 						ed : essenseData
 					},
+
+					insertimmediately : true
 
 				}, function(p){
 
