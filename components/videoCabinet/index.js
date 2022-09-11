@@ -1478,7 +1478,7 @@ var videoCabinet = (function () {
 				el.searchInput = el.c.find('.videoSearchInput');
 				el.searchButton = el.c.find('.videoSearchButton');
 
-				el.bonusProgramReferContainer = el.c.find('.referContainer');
+				// el.bonusProgramReferContainer = el.c.find('.referContainer');
 				el.bonusProgramContainerViews = el.c.find('.leaderBoardContainerViews');
 				el.bonusProgramContainerStars = el.c.find(
 					'.leaderBoardContainerRatings',
@@ -1514,17 +1514,17 @@ var videoCabinet = (function () {
 						return Promise.resolve(null);
 					})
 					.then((r) => {
-						var addtext = ' / ' + (r ? r.histreferals : '&mdash;');
-
-						renders.bonusProgram(
-							{
-								parameterName: 'ReferralUsers',
-								value:
-									(deep(app, 'platform.sdk.user.storage.me.rc') || '0') +
-									addtext,
-							},
-							el.bonusProgramReferContainer,
-						);
+						// var addtext = ' / ' + (r ? r.histreferals : '&mdash;');
+						//
+						// renders.bonusProgram(
+						// 	{
+						// 		parameterName: 'ReferralUsers',
+						// 		value:
+						// 			(deep(app, 'platform.sdk.user.storage.me.rc') || '0') +
+						// 			addtext,
+						// 	},
+						// 	el.bonusProgramReferContainer,
+						// );
 					});
 
 				const cabinetLoadingStartTime = performance.now();

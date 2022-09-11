@@ -16998,7 +16998,7 @@ Platform = function (app, listofnodes) {
                         }
                         else {
 
-                            var period = p.period || self.sdk.node.shares.parameters.stor.period || 60 ///self.sdk.node.shares.parameters.defaults.period
+                            var period = p.period || self.sdk.node.shares.parameters.stor.period || '60' ///self.sdk.node.shares.parameters.defaults.period
 
                             var depth = +p.page ? self.currentBlock - (period * p.page) : 0
 
