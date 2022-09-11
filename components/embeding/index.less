@@ -178,7 +178,6 @@
 					align-items: center;
 					width: 100%;
 					border: 2px solid white;
-					padding: @rhythm;
 				}
 	
 				.sender{
@@ -187,6 +186,7 @@
 	
 				.receiver{
 					border-left: 0;
+					line-height: 34px;
 	
 					input{
 						width: 72%;
@@ -195,6 +195,9 @@
 						text-align: right;
 						padding: 0;
 						padding-right: 5px;
+						height: 34px;
+						line-height: 34px;
+						color : #fff;
 					}
 					
 				}
@@ -304,9 +307,10 @@
 					width: 450px;
 	
 					.buttons{
+						color: white;
+						background: @color-main;
 						display: block!important;
 					}
-	
 					
 					.caption{
 						margin-bottom: 0!important;
@@ -315,10 +319,6 @@
 					.subcaption{
 						text-align: center;
 						font-size: .8em;
-					}
-	
-					.buttons{
-						background: inherit;
 					}
 	
 					.buttons{
@@ -395,6 +395,9 @@
 				}
 			}
 
+			&.donate{
+				padding : @rhythm;
+			}
 			
 			.donateWrapper{
 

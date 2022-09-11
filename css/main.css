@@ -6479,6 +6479,10 @@ html.mobileview .wnd.normalizedmobile:not(.hiddenState) .wndback {
   -webkit-transition: 0s;
   transition: 0s;
 }
+html.mobileview .wnd.normalizedmobile:not(.hiddenState) .buttons {
+  padding-bottom: 6em !important;
+  position: relative;
+}
 html.mobileview .wnd.normalizedmobile:not(.hiddenState) ._close {
   backdrop-filter: none!important;
   opacity: 0;
