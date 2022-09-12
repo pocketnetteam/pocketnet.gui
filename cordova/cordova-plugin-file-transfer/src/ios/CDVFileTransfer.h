@@ -20,7 +20,6 @@
 #import <Foundation/Foundation.h>
 #import <Cordova/CDVPlugin.h>
 #import "CDVFile.h"
-#import "WebKit/WKWebViewConfiguration.h"
 
 enum CDVFileTransferError {
     FILE_NOT_FOUND_ERR = 1,
@@ -72,7 +71,6 @@ extern NSString* const kOptionsKeyCookie;
 @property (nonatomic, strong) CDVFileTransfer* command;
 @property (nonatomic, assign) CDVFileTransferDirection direction;
 @property (nonatomic, strong) NSURLConnection* connection;
-@property (nonatomic, strong) IBOutlet WKWebViewConfiguration* configuration;
 @property (nonatomic, copy) NSString* callbackId;
 @property (nonatomic, copy) NSString* objectId;
 @property (nonatomic, copy) NSString* source;
