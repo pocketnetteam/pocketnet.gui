@@ -1929,6 +1929,36 @@ UserInfo = function(){
 	return self;
 }
 
+DeleteAccount = function(){
+	var self = this;
+	
+	self.txid = txid;
+
+	self.ustate = ''
+
+	self.validation = function(){
+		return false;
+	}
+
+	self.serialize = function(){
+		return ''
+	}
+
+	self.export = function(alias){
+		return {}
+	}
+
+	self.import = function(p){
+
+	}
+
+	self.type = 'accDel'
+
+	self.typeop = function(){
+        return self.type;
+	}
+}
+
 pUserInfo = function(){
 
 	var self = this;
@@ -2126,6 +2156,7 @@ pUserInfo = function(){
 
 	return self;
 }
+
 
 pShare = function(){
 
@@ -2789,7 +2820,8 @@ kits = {
 		unsubscribe : Unsubscribe,
 		subscribe : Subscribe,
 		subscribePrivate : SubscribePrivate,
-		contentBoost : ContentBoost
+		contentBoost : ContentBoost,
+		deleteAccount : DeleteAccount
 	},
 
 	ini : {

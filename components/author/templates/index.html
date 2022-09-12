@@ -4,8 +4,10 @@
 
 		<%
 			var me = null;
+			var deleted = self.app.platform.sdk.user.deletedaccount(author.address)
 
-			if(user.address.value) me = deep(app, 'platform.sdk.users.storage.' + user.address.value.toString('hex'))
+			if (user.address.value) 
+				me = deep(app, 'platform.sdk.users.storage.' + user.address.value.toString('hex'))
 
 			var name = app.platform.api.name(author.address)
 			var letter = name ? name[0] : '';
@@ -76,75 +78,93 @@
 				<div class="infoWrapper">
 					<div class="rightchatspacer">
 						<div class="work">
-							<div class="cwrapper table">
+							<% if(deleted) {%>
 
-								<div class="cell cellforimage">
-									<div class="icon">
+								<div class="deletedAccount">
+									<div class="deletedAccountText">
+										<span><%-e('deletedAccount_' + deleted)%></span>
+									</div>
 
-										<% 
-											var src = deep(author, 'data.image');
-										%>
-
-										<div elementsid="author_usericon_<%-src || ''%>" ban=".gif" class="usericon" contain="none" image="<%-src || '*'%>">
-
-											<% if(!src && letter) {%>
-
-												<span class="letter">
-													<%-letter.toUpperCase()%>
-												</span>
-
-											<% } else if (!src) { %>
-
-												<i class="far fa-user"></i>
-
-											<% } %>
-
-											<% if(app.platform.ui.markUser) {%>
-
-												<%= app.platform.ui.markUser(author.address)%>
-
-											<% } %>
-
-										</div>
+									<div class="deletedsettings">
+										<%- app.localization.e('settings').toUpperCase() %> <i class="fas fa-cog"></i>
 									</div>
 								</div>
 
-								<div class="ccell">
-									<div class="infomain">
+							<% } else { %> 
 
-										<div class="caption">
-											<% var reputation = deep(app, 'platform.sdk.usersl.storage.'+author.address+'.reputation') || 0 %>
+								<div class="cwrapper table">
 
-											<b class="adr"><%-name || author.address%></b>
+									<div class="cell cellforimage">
+										<div class="icon">
 
-											<% telements() %>
-											
+											<% 
+												var src = deep(author, 'data.image');
+											%>
+
+											<div elementsid="author_usericon_<%-src || ''%>" ban=".gif" class="usericon" contain="none" image="<%-src || '*'%>">
+
+												<% if(!src && letter) {%>
+
+													<span class="letter">
+														<%-letter.toUpperCase()%>
+													</span>
+
+												<% } else if (!src) { %>
+
+													<i class="far fa-user"></i>
+
+												<% } %>
+
+												<% if(app.platform.ui.markUser) {%>
+
+													<%= app.platform.ui.markUser(author.address)%>
+
+												<% } %>
+
+											</div>
 										</div>
+									</div>
 
-										<div class="mobileinfo">
-											
-										</div>
+									<div class="ccell">
+										<div class="infomain">
 
-										<div class="tips">
-											<div class="telements">
-												<div class="telement">
-													<div class="usermenu">
+											<div class="caption">
+												<% var reputation = deep(app, 'platform.sdk.usersl.storage.'+author.address+'.reputation') || 0 %>
 
+												<b class="adr"><%-name || author.address%></b>
+
+												<% telements() %>
+												
+											</div>
+
+											<div class="mobileinfo">
+												
+											</div>
+
+											<div class="tips">
+												<div class="telements">
+													<div class="telement">
+														<div class="usermenu">
+
+														</div>
 													</div>
 												</div>
 											</div>
+
 										</div>
 
 									</div>
-
 								</div>
-							</div>
+
+							<% } %>
 						</div>
 					</div>
 				</div>
 			</div>
 
 	</div>
+
+	<% if(!deleted) {%>
 
 	<div class="mworkwrapper " id="sticktop">
 		<div class="rightchatspacer">
@@ -154,7 +174,6 @@
 					<div class="authorinfoWrapper"></div>
 					<div class="contentswrapper"></div>
 				</div>
-				
 				
 				<div class="lentacell">
 					<div class="cnt">
@@ -172,5 +191,7 @@
 
 	<div elementsid="author_upbuttonwrapper" class="upbuttonwrapper light">
 	</div>
+
+	<% } %>
 	
 </div>

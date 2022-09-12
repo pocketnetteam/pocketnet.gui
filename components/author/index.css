@@ -267,6 +267,14 @@
   margin-bottom: 0;
   padding-bottom: 0;
 }
+#author .bgCaption .deletedAccount {
+  padding: 5em 3em;
+  text-align: center;
+}
+#author .bgCaption .deletedAccount .deletedsettings {
+  margin-top: 1em;
+  cursor: pointer;
+}
 #author .bgCaption .adr {
   max-width: 500px;
   overflow: hidden;

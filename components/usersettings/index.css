@@ -9,6 +9,16 @@
 #usersettings .mwork.wh {
   background: rgb(var(--background-secondary-theme));
 }
+#usersettings .removeAccauntWrapper {
+  margin-top: 4em;
+}
+#usersettings .removeAccauntWrapper .removeAccount {
+  cursor: pointer;
+}
+#usersettings .removeAccauntWrapper .removeAccount span {
+  font-size: 0.8em;
+  color: rgb(var(--color-bad));
+}
 #usersettings .tokenResult {
   display: inline-block;
   font-size: 30px;
@@ -265,6 +275,9 @@
 @media only screen and (max-width: 768px) {
   #usersettings {
     background: rgb(var(--background-total-theme));
+  }
+  #usersettings .removeAccauntWrapper {
+    text-align: center;
   }
   #usersettings .mwork {
     padding: 0 1em;

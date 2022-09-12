@@ -9,7 +9,7 @@ var commentpanel = function(comment, _class){
 
 		<div class="items">
 
-			<% if(!comment.deleted && !lockedaccount) { 
+			<% if(!comment.deleted && !lockedaccount && !app.platform.sdk.user.myaccauntdeleted()) { 
 				
 				
 				%> 

@@ -267,6 +267,8 @@ Platform = function (app, listofnodes) {
         'PQxuDLBaetWEq9Wcx33VjhRfqtof1o8hDz' : true
     }
 
+    self.deletedtest = {}
+
 
     self.testaddresses = [
         'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82',
@@ -10067,6 +10069,183 @@ Platform = function (app, listofnodes) {
                     if (clbk)
                         clbk([])
                 })
+            },
+
+            myaccauntdeleted : function(){
+                var address = deep(self.app.user, 'address.value')
+
+                if(!address) return null
+
+                return self.sdk.user.deletedaccount(address)
+            },
+
+            deletedaccount : function(address){
+                var temp = _.find(deep(self, 'sdk.node.transactions.temp.accDel') || {}, (txa) => {
+                    return txa.address == address
+                })
+
+                if (temp || self.deletedtest[address]){
+                    return 'temp'
+                }
+
+                var info = self.sdk.usersl.storage[address] || {}
+
+                if (info.deleted) return 'deleted'
+            },
+
+            deleteaccount : function(progress){
+
+                if(!progress) progress = () => {}
+
+                var prepare = function(){
+                    return new Promise((resolve, reject) => {
+
+                        self.sdk.ustate._me((info) => {
+
+                            console.log('info', info)
+    
+                            var address = self.sdk.address.pnet()
+    
+                            if(!info || _.isEmpty(info)){
+                                return reject('notprepared')
+                            }
+    
+                            if(!address){
+                                return reject('notprepared')
+                            }
+    
+                            self.sdk.node.transactions.get.balance(function (total, us) {
+    
+                                if(!us.length){
+                                    return reject('balance')
+                                }
+    
+    
+                                resolve()
+                                
+                            }, address.address, true)
+    
+                        }, true)
+        
+    
+                    })
+                }
+
+                var removePeertube = function(){
+
+                    var address = self.sdk.address.pnet()
+
+                    return self.app.peertubeHandler.api.proxy.allServers().then((peertubeservers) => {
+                        console.log('peertubeservers', _.flatten(peertubeservers))
+
+                        var s = []
+
+                        _.each(peertubeservers, (srv) => {
+                            s = s.concat(srv)
+                        })
+                        //
+                        var promises = _.map(s, (ps) => {
+
+                            console.log("PSS", ps)
+
+                            return self.app.peertubeHandler.api.videos.getMyAccountVideos({
+                                id : address.address
+                            }, {
+                                host: ps
+                            }).catch(e => {
+                                console.log("E", e)
+
+                                return Promise.resolve()
+                            })
+
+                        })
+
+                        return Promise.all(promises)
+                    })
+                }
+
+                var removeMatrix = function(){
+                    return new Promise((resolve, reject) => {
+                        setTimeout(() => {
+                            resolve()
+                        }, 1000)
+                    })
+                }
+
+                var removeBastyon = function(){
+
+                    self.sdk.node.transactions.clearTempHard()
+
+                    delete self.sdk.users.storage[self.sdk.address.pnet().address]
+                    delete self.sdk.usersl.storage[self.sdk.address.pnet().address]
+                    delete self.sdk.userscl.storage[self.sdk.address.pnet().address]
+
+                    self.app.settings.delete(a, 'last_user')
+                    self.app.settings.delete(a, 'last_ustate_2')
+
+                    self.deletedtest[self.sdk.address.pnet().address] = true
+
+                    
+                    self.matrixchat.destroy()
+                        
+
+                    /*var me1 = self.sdk.users.storage[self.sdk.address.pnet().address];
+
+                    if (me1) me1.accountDeleted = true
+
+                    var me2 = self.sdk.usersl.storage[self.sdk.address.pnet().address];
+
+                    if (me2) me2.accountDeleted = true
+
+                    var me3 = self.sdk.userscl.storage[self.sdk.address.pnet().address];
+
+                    if (me3) me3.accountDeleted = true*/
+
+
+                    return new Promise((resolve, reject) => {
+
+                        self.sdk.ustate._me((info) => {
+                            self.sdk.user.get(() => {
+
+                                setTimeout(() => {
+                                    resolve()
+                                }, 1000)
+
+                            }, true)
+                        }, true)
+                    })
+                }
+
+                progress('prepare')
+
+                return prepare().then(() => {
+
+                    progress('removePeertube')
+
+                    return removePeertube()
+                }).then(() => {
+
+                    progress('removeMatrix')
+
+                    return removeMatrix()
+                }).then(() => {
+
+                    progress('removeBastyon')
+
+                    return removeBastyon()
+                }).then(() => {
+
+                    progress()
+
+                }).catch(e => {
+
+                    progress()
+
+                    return Promise.reject(e)
+
+                })
+
+
             }
 
         },
@@ -20601,6 +20780,12 @@ Platform = function (app, listofnodes) {
                         this.common(inputs, settings, TXFEE, clbk, p)
                     },
 
+                    deleteAccount: function (inputs, settings, clbk, p) {
+                        this.common(inputs, settings, TXFEE, function(a, e){
+                            if(clbk) clbk(a, e)
+                        }, p)
+                    },
+
                     userInfo: function (inputs, userInfo, clbk, p) {
                         this.common(inputs, userInfo, TXFEE, clbk, p)
                     },
@@ -28542,6 +28727,8 @@ Platform = function (app, listofnodes) {
                 if (state) {
 
                     if(self.sdk.user.reputationBlockedMe()) return
+                    if(self.sdk.user.myaccauntdeleted()) return
+
 
                     var pnet = self.app.platform.sdk.address.pnet()
 

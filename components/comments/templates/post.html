@@ -2,8 +2,11 @@
 
 dplace = e('e13038');
 
-if (isMobile()) 
-	dplace = e('e13039')
+if (isMobile()) dplace = e('e13039')
+
+var deleted = app.platform.sdk.user.myaccauntdeleted();
+
+	
 
 %>
 
@@ -16,14 +19,19 @@ if (isMobile())
 
 			<%
 
-				var src = deep(app, 'platform.sdk.users.storage.'+(essenseData.daddress || user.address.value.toString('hex'))+'.image') || ''
+				var src = deep(app, 'platform.sdk.users.storage.'+(essenseData.daddress || user.address.value)+'.image') || ''
 				
-				var name = deep(app, 'platform.sdk.users.storage.'+(essenseData.daddress || user.address.value.toString('hex')) +'.name') || '';
+				var name = deep(app, 'platform.sdk.users.storage.'+(essenseData.daddress || user.address.value) +'.name') || '';
 
 				var letter = name ? name[0] : ''
 
 				if(!src){
 					src = deep(app, 'platform.sdk.user.storage.me.image') || ''
+				}
+
+				if(deleted){
+					src = ''
+					letter = ''
 				}
 			%>	
 			
@@ -63,8 +71,9 @@ if (isMobile())
 
 		<% 
 			
+			
 		
-		if(!state || !user.validate() || _.isEmpty(mestate) || (mestate.reputation >= -50)) { 
+		if((!state || !user.validate() || _.isEmpty(mestate) || (mestate.reputation >= -50)) && !deleted) { 
 			
 			var embedimage = app.platform.sdk.user.canuseimagesincomments(); 
 			var hasdonate = sender && sender !== receiver
@@ -135,7 +144,7 @@ if (isMobile())
 
 		<% } else { %> 
 			<div class="reputationFailCell">
-				<%=e('e13040')%>
+				<% if(deleted) {%><%=e('deletedAccount_' + deleted)%><% } else { %><%=e('e13040')%><% } %>
 			</div>
 		<% } %>
 

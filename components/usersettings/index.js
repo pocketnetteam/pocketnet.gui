@@ -15,11 +15,88 @@ var usersettings = (function(){
 
 
 		var actions = {
+			removeAccount : function(){
+				new dialog({
+					html: self.app.localization.e('removeAccountQuestion'),
+					btn1text: self.app.localization.e('ucancel'),
+					btn2text: self.app.localization.e('removeAccountYes'),
 
+					class: 'zindex accepting accepting2',
+
+					success: () => {
+
+						
+
+					},
+
+					fail: () => {
+
+						globalpreloader(true)
+
+						var ds = null
+
+						var mes = (t) => {
+							if (ds){
+								ds()
+								ds = null
+							}
+
+							console.log("TT",t)
+
+							if (t) ds = sitemessage(self.app.localization.e(t), null, 'inf')
+						}
+
+						self.app.platform.sdk.user.deleteaccount((progress) => {
+
+							if (progress)
+								mes('removeAccount_' + progress)
+
+						}).then(() => {
+
+							successCheck()
+
+							new dialog({
+								html : self.app.localization.e('removeAccount_success'),
+								class : "one zindex"
+							})
+
+							self.app.reload({
+								href : 'author'
+							});
+
+						}).catch(e => {
+
+							console.log("E", e)
+
+							var errors = {
+								notprepared : 'notprepared',
+								undefinedError : 'undefinedError',
+								balance : 'balance'
+							}
+
+							console.error(e)
+
+							new dialog({
+								html : self.app.localization.e('removeAccount_' + (!e || !errors[e] ? errors.undefinedError : errors[e])),
+								class : "one zindex"
+							})
+
+						}).finally(() => {
+
+							globalpreloader(false)
+
+							mes()
+						})
+
+					}
+				})
+			}
 		}
 
 		var events = {
-
+			removeAccount : function(){
+				actions.removeAccount()
+			}
 		}
 
 		var renders = {
@@ -259,6 +336,8 @@ var usersettings = (function(){
 			controller.abort();
 			self.app.platform.sdk.system.get.telegramUpdateAbort = new AbortController();
 
+
+			el.c.find('.removeAccount').on('click', events.removeAccount)
 
 			// self.app.platform.sdk.system.get.telegramGetMe(null, rerender);
 

@@ -48,9 +48,14 @@ var all = {
 
 
 	if(address == caddress){
+		
 		if(!app.platform.sdk.node.transactions.findTemp(txid)){
-			m.push('edit')
-			m.push('remove')
+			
+			if(!app.platform.sdk.user.myaccauntdeleted()){
+				m.push('edit')
+				m.push('remove')
+			}
+
 			m.push('share')
 		}
 		else{
@@ -60,13 +65,19 @@ var all = {
 	}
 	else{
 		m.push('share')
-		var me = app.platform.sdk.user.me()
-		if (me && me.relation(caddress, 'blocking')) {
-			m.push('unblock')
-		} else {
-			m.push('block')
+
+		if(!app.platform.sdk.user.myaccauntdeleted()){
+
+			var me = app.platform.sdk.user.me()
+
+			if (me && me.relation(caddress, 'blocking')) {
+				m.push('unblock')
+			} else {
+				m.push('block')
+			}
+
+			m.push('complain')
 		}
-				m.push('complain')
 
 	}
 	

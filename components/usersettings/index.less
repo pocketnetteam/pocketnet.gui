@@ -14,6 +14,18 @@
 		}
 	}
 
+	.removeAccauntWrapper{
+		margin-top: 8 * @rhythm;
+
+		.removeAccount{
+			cursor: pointer;
+			span{
+				font-size: 0.8em;
+				color : rgb(var(--color-bad))
+			}
+		}
+	}
+
 	.tokenResult{
 		display:inline-block;
 		font-size:30px;
@@ -360,6 +372,10 @@
 /*t*/ @media only screen and (max-width: 768px){
 	#usersettings{
 		background: rgb(var(--background-total-theme));
+
+		.removeAccauntWrapper{
+			text-align: center;
+		}
 
 		.mwork{
 			padding : 0 2 * @rhythm;

@@ -1821,11 +1821,14 @@
 			messageel.removeClass('removing')
 		})
 
-		setTimeout(function () {
+		if(delay != 'inf')
 
-			destroy()
+			setTimeout(function () {
+				destroy()
+			}, delay)
 
-		}, delay)
+
+		return destroy
 	}
 /* ______________________________ */
 

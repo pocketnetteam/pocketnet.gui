@@ -1,4 +1,9 @@
+<%
 
+var deleted = app.platform.sdk.user.myaccauntdeleted();
+
+
+%>
 
 <div id="<%-module.map.id%>" class="unselecmobile">
 	<div class="menuWrapper">
@@ -23,7 +28,7 @@
 
 					<% } else { %> 
 
-						<% if( !(state && (app.mobileview)) ) {%>
+						<% if( !(state  && (app.mobileview))  ) {%>
 
 							<div class="items sitenames">
 
@@ -92,37 +97,43 @@
 
 						<% if(state) { %>
 
-							<div elementsid="keyexportWrapper" class="items keyexportWrapper <% if(typeof key== 'undefined' || !key) {%> hidden <% } %>">
-								<div class="item  right onlyicon keyexport" events="keyexport">
+							<% if(!deleted) {%>
 
-									<div class="icon">
-										<div class="icn">
-											<i class="fas fa-key"></i>
-										</div>
+								<div elementsid="keyexportWrapper" class="items keyexportWrapper <% if(typeof key== 'undefined' || !key) {%> hidden <% } %>">
+									<div class="item  right onlyicon keyexport" events="keyexport">
 
-										<div class="amount">
-										</div>
+										<div class="icon">
+											<div class="icn">
+												<i class="fas fa-key"></i>
+											</div>
 
-									</div>
+											<div class="amount">
+											</div>
 
-								</div>
-							</div>
-
-							<div elementsid="notificationsWrapper" class="items notificationsWrapper">
-								<div class="item  right onlyicon notifications" events="notifications">
-
-									<div class="icon">
-										<div class="icn">
-											<i class="far fa-bell"></i>
-										</div>
-
-										<div class="amount">
 										</div>
 
 									</div>
-
 								</div>
-							</div>
+
+								
+
+								<div elementsid="notificationsWrapper" class="items notificationsWrapper">
+									<div class="item  right onlyicon notifications" events="notifications">
+
+										<div class="icon">
+											<div class="icn">
+												<i class="far fa-bell"></i>
+											</div>
+
+											<div class="amount">
+											</div>
+
+										</div>
+
+									</div>
+								</div>
+
+							<% } %>
 
 							<div elementsid="walletsWrapperOpen" class="items walletsWrapper">
 								<div class="item  right wallets onlyicon" events="wallets">
@@ -165,10 +176,16 @@
 
 									<% 
 									
-									var src = deep(app, 'platform.sdk.user.storage.me.image')  
+										var src = deep(app, 'platform.sdk.user.storage.me.image')  
 
-									var name = app.platform.api.clearname(deep(app, 'platform.sdk.user.storage.me.name') || (user.address.value && user.address.value.toString('hex')) )
-									var letter = name ? name[0] : ''
+										var name = app.platform.api.clearname(deep(app, 'platform.sdk.user.storage.me.name') || (user.address.value && user.address.value.toString('hex')) )
+										var letter = name ? name[0] : ''
+
+
+										if(deleted){
+											src = ''
+											letter = ''
+										}
 
 
 									%>
@@ -192,7 +209,7 @@
 
 												<% } %>
 
-												<% if(app.platform.ui.markUser) {%>
+												<% if(app.platform.ui.markUser && !deleted) {%>
 
 													<%= app.platform.ui.markUser(user.address.value && user.address.value.toString('hex'))%>
 				

@@ -290,6 +290,13 @@ PeerTubePocketnet = function (app) {
 			axios: true,
 		},
 
+		removeAccount: {
+			path: ({ id }) => `users/${id}`,
+			method: 'DELETE',
+			authorization: true,
+			axios: true,
+		},
+
 		removeVideo: {
 			path: function ({ id }) {
 				return 'api/v1/videos/' + id;
@@ -1042,6 +1049,12 @@ PeerTubePocketnet = function (app) {
 					},
 					options,
 				).then((r = {}) => r);
+			},
+
+			removeAccount(parameters = {}, options = {}) {
+				return request(
+					'getMyAccountVideos', parameters, options,
+				);
 			},
 
 			getDirectVideoInfo(parameters = {}, options = {}) {

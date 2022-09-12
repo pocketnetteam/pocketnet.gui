@@ -2234,7 +2234,7 @@ var wallet = (function(){
 
 			buy : function(clbk, _el){
 
-				if (self.app.pkoindisable){
+				if (self.app.pkoindisable || self.app.platform.sdk.user.myaccauntdeleted()){
 					clbk()
 					return
 				}

@@ -40,7 +40,7 @@ var main = (function(){
 				label : () => self.app.localization.e('e13137'),
 				value : 'sub',
 				if : function(){
-					return self.app.user.getstate()
+					return self.app.user.getstate() && !self.app.platform.sdk.user.myaccauntdeleted()
 				}
 			},
 			
@@ -113,7 +113,7 @@ var main = (function(){
 				var value = _.find(_modes, (m) => m.value == r)
 
 				return {
-					value : value.value,
+					value : value ? value.value : null,
 					modes : _modes
 				};
 
@@ -416,7 +416,7 @@ var main = (function(){
 			
 			share : function(){
 
-				if (!isMobile() && !videomain && !readmain && !searchvalue && !searchtags){
+				if (!isMobile() && !videomain && !readmain && !searchvalue && !searchtags && !app.platform.sdk.user.myaccauntdeleted()){
 
 					el.c.removeClass('wshar')
 

@@ -55,6 +55,10 @@ var userpage = (function(){
 						id : 'test',
 						report : 'fillUser',
 						mobile : true,
+
+						if : function(){
+							return !self.app.platform.sdk.user.myaccauntdeleted()
+						}
 					})
 		
 				}
@@ -67,7 +71,7 @@ var userpage = (function(){
 				mobile : true,
 				openReportPageMobileInWindow : true,
 				if : function(){
-					return true
+					return !self.app.platform.sdk.user.myaccauntdeleted()
 				}
 			})
 
@@ -80,7 +84,8 @@ var userpage = (function(){
 
 			
 				if : function(){
-					if(!self.app.curation()) return true
+					
+					if(!self.app.curation() && !self.app.platform.sdk.user.myaccauntdeleted()) return true
 				},
 
 				add : function(){
@@ -125,7 +130,7 @@ var userpage = (function(){
 				mobile : true,
 
 				if : function(){
-					return self.app.mobileview && !self.app.curation()
+					return self.app.mobileview && !self.app.curation() && !self.app.platform.sdk.user.myaccauntdeleted()
 				},
 
 				add : function(){
@@ -153,7 +158,7 @@ var userpage = (function(){
 				mobile : true,
 
 				if : function(){
-					return self.app.mobileview && !self.app.curation()
+					return self.app.mobileview && !self.app.curation() && !self.app.platform.sdk.user.myaccauntdeleted()
 				},
 
 				add : function(){
@@ -180,6 +185,9 @@ var userpage = (function(){
 					id : 'test',
 					report : 'test',
 					mobile : true,
+					if : function(){
+						return !self.app.platform.sdk.user.myaccauntdeleted()
+					}
 					//openReportPageMobile : true,
 				})
 
@@ -243,7 +251,9 @@ var userpage = (function(){
 					openReportPageMobileInWindow : true,
 					if : function(){
 
-						if (self.app.curation()) return false
+
+
+						if (self.app.curation() || self.app.platform.sdk.user.myaccauntdeleted()) return false
 
 						if (window.testpocketnet) return true
 
@@ -1030,7 +1040,7 @@ var userpage = (function(){
 					if(!id) {
 						if(self.app.user.validate()){
 
-							if(self.app.curation()){
+							if(self.app.curation() || self.app.platform.sdk.user.myaccauntdeleted()){
 								id = 'wallet'	
 							}
 							else{

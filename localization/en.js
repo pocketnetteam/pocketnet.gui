@@ -2277,3 +2277,25 @@ _l.desktopPopupDisagree = "Not now"
 
 
 _l.recommended = 'Recommended'
+
+_l.removeaccount = 'Remove Account'
+_l.removeAccountQuestion = 'Are you sure you want to permanently delete your account? This action cannot be undone.'
+_l.removeAccountYes = 'Yes, remove account'
+
+_l.removeAccount_prepare = 'Preparing'
+
+_l.removeAccount_removePeertube = 'Deleting data from video servers'
+_l.removeAccount_removeMatrix = 'Deleting data from the chat server'
+_l.removeAccount_removeBastyon = 'Removing an account from the blockchain'
+_l.removeAccount_finish = 'Success'
+_l.removeAccount_success = 'Deleting your account was successful. Within 10 minutes, the procedure should be completed completely.'
+
+
+_l.removeAccount_notprepared = 'Account not found on the blockchain, may need to wait a while'
+_l.removeAccount_balance = 'A situation has occurred in which it is impossible to delete an account. In order to perform an action, you must have a minimum balance of PKOIN'
+
+
+_l.removeAccount_undefinedError = 'An unexpected error occurred while deleting your account, please try restarting the app and performing the action again'
+
+_l.deletedAccount_temp = "Account is in the process of being deleted"
+_l.deletedAccount_deleted = "Account deleted"

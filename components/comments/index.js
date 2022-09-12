@@ -2155,7 +2155,12 @@ var comments = (function(){
 
 				self.app.user.isState(function(state){
 					//if(!state) return;
+					
+					if(state && self.app.platform.sdk.user.myaccauntdeleted()){
+						if(clbk) clbk()
 
+						return
+					}
 
 					if(!p) p = {};
 

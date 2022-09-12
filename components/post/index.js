@@ -29,6 +29,10 @@ var post = (function () {
 
 					actions.stateAction(function(){
 
+						if(self.app.platform.sdk.user.myaccauntdeleted()){
+							return
+						}
+
 						self.app.platform.sdk.node.transactions.get.balance(function(amount){
 
 							var balance = amount.toFixed(3);
@@ -985,8 +989,10 @@ var post = (function () {
 					var p = $(this).closest('.stars');
 
 					if (p.attr('value')) {
+						return
+					}
 
-
+					if(self.app.platform.sdk.user.myaccauntdeleted()){
 						return
 					}
 

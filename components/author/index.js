@@ -828,7 +828,7 @@ var author = (function(){
 		
 			share : function(_el){
 
-				if(!self.app.mobileview && !self.app.curation()){
+				if(!self.app.mobileview && !self.app.curation() && !self.app.platform.sdk.user.myaccauntdeleted()){
 					self.nav.api.load({
 
 						open : true,
@@ -1149,7 +1149,18 @@ var author = (function(){
 
 			el.up.on('click', events.up)
 
-
+			el.c.find('.deletedsettings').on('click', () => {
+				self.nav.api.go({
+					open : true,
+					href : 'userpage',
+					inWnd : isTablet(),
+					history : true,
+					
+					essenseData : {
+						rmhistory : true
+					}
+				})
+			})
 
 			self.app.platform.ws.messages.event.clbks.author = function(data){
 			
@@ -1306,65 +1317,74 @@ var author = (function(){
 			author = {};
 
 			if (address){
+
+				
 				
 				author.address = address
 
-				self.sdk.users.get(author.address, function(){
+				var deleted = self.app.platform.sdk.user.deletedaccount(author.address)
 
-					if(self.app.platform.sdk.user.reputationBlockedRedirect(address)){
+				if(!deleted || deleted == 'temp'){
 
-						self.app.el.html.removeClass('allcontent')
+					self.sdk.users.get(author.address, function(){
 
-						return
-					}
-
-					if(!self.app.platform.sdk.address.pnet() || author.address != self.app.platform.sdk.address.pnet().address){
-						reports.shares.name = self.app.localization.e('uposts')
-					}
-					else
-					{
-						reports.shares.name = self.app.localization.e('myuposts')
-
-						if(!self.app.user.validate()){
-
+						if(self.app.platform.sdk.user.reputationBlockedRedirect(address)){
+	
 							self.app.el.html.removeClass('allcontent')
-
-							self.nav.api.load({
-								href : 'userpage?id=test',
-								history : true,
-								open : true,
-								replaceState : true
-							})
-
-							return;
+	
+							return
 						}
-					
-					}
+	
+						if(!self.app.platform.sdk.address.pnet() || author.address != self.app.platform.sdk.address.pnet().address){
+							reports.shares.name = self.app.localization.e('uposts')
+						}
+						else
+						{
+							reports.shares.name = self.app.localization.e('myuposts')
+	
+							if(!self.app.user.validate()){
+	
+								self.app.el.html.removeClass('allcontent')
+	
+								self.nav.api.load({
+									href : 'userpage?id=test',
+									history : true,
+									open : true,
+									replaceState : true
+								})
+	
+								return;
+							}
+						
+						}
+	
+						author.data = self.sdk.users.storage[author.address]
+	
+						var data = {
+							author : author
+						};
+	
+						clbk(data);
+	
+					})
+	
+	
+					return
 
-					author.data = self.sdk.users.storage[author.address]
+				}
 
-					console.log('author', author, author.address, self.sdk.users.storage)
-
-
-					var data = {
-						author : author
-					};
-
-					clbk(data);
-
-				})
+				
+				
 			}
-			else{
 
-				self.app.el.html.removeClass('allcontent')
+			self.app.el.html.removeClass('allcontent')
 
-				self.app.nav.api.load({
-					open : true,
-					href : 'page404',
-					history : true,
-					replaceState : true
-				})
-			}
+			self.app.nav.api.load({
+				open : true,
+				href : 'page404',
+				history : true,
+				replaceState : true
+			})
 		}
 		
 

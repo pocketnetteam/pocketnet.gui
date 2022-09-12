@@ -113,7 +113,10 @@ var metadisplay = function(){ %>
 									<span class="adr"><%-(name || share.address) %></span><% if(reputation > 1 || reputation < -1) {%><sup class="spsp"><%-compressedNumber(reputation, 1)%></sup><% } %>
 								</a>
 
-								<% if((!state || !my) && (typeof repost == 'undefined' || !repost)) { %> 
+								
+			
+
+								<% if((!state || !my) && (typeof repost == 'undefined' || !repost) && !self.app.platform.sdk.user.myaccauntdeleted()) { %> 
 
 									<span class="sbtnxs">
 										&middot; <span class="subscribeLabel asubscribe"><%=e('sub')%></span><span class="subscribedLabel aunsubscribe"><%=e('subi')%></span>

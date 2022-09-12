@@ -6393,6 +6393,9 @@ html.mobileview #content .work {
   html.allcontent body {
     background: #051b48;
   }
+  html.allcontent #footerWrapper {
+    background: #051b28;
+  }
 }
 html.mobileview.keyboadrshown .focusedinput {
   position: fixed!important;

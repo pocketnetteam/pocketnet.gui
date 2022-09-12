@@ -2072,3 +2072,21 @@ _l.desktopPopupAgree = "Скачать приложение"
 _l.desktopPopupDisagree = "Не сейчас"
 
 _l.recommended = 'Рекомендовано'
+
+_l.removeaccount = 'Удалить аккаунт'
+_l.removeAccountQuestion = 'Вы действительно хотите удалить аккаунт навсегда? Это действие невозможно будет отменить.'
+_l.removeAccountYes = 'Да, удалить аккаунт навсегда'
+
+_l.removeAccount_prepare = 'Подготовка'
+
+_l.removeAccount_removePeertube = 'Удаление данных с видеосерверов'
+_l.removeAccount_removeMatrix = 'Удаление данных с сервера чата'
+_l.removeAccount_removeBastyon = 'Удаление аккаунта из блокчейна'
+_l.removeAccount_finish = 'Завершено'
+_l.removeAccount_success = 'Удаление вашего аккаунта прошло успешно. В течение 10 минут процедура должна завершиться полностью.'
+
+_l.removeAccount_notprepared = 'Аккаунт не найден в блокчейне, возможно требуется подождать некоторое время'
+_l.removeAccount_balance = 'Произошла ситуация, в которой удаление аккаунта невозможно. Для того, чтобы совершить действие необходимо иметь минимальный баланс PKOIN'
+
+
+_l.removeAccount_undefinedError = 'Возникла непредвиденная ошибка при удалении аккаунта, попробуйте перезапустить приложение и совершить действие снова'

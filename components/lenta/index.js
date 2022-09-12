@@ -1274,24 +1274,29 @@ var lenta = (function(){
 					
 					actions.stateAction('_this', function(){
 
-					var userinfo = deep(app, 'platform.sdk.usersl.storage.' + share.address) || {
-						address : share.address,
-						addresses : [],
-					}
-
-					self.nav.api.load({
-						open : true,
-						href : 'pkoin',
-						history : true,
-						inWnd : true,
-	
-						essenseData : {
-							userinfo: userinfo,
-							id : id,
-							format: format,
-							type: type
+						
+						if(self.app.platform.sdk.user.myaccauntdeleted()){
+							return
 						}
-					})
+
+						var userinfo = deep(app, 'platform.sdk.usersl.storage.' + share.address) || {
+							address : share.address,
+							addresses : [],
+						}
+
+						self.nav.api.load({
+							open : true,
+							href : 'pkoin',
+							history : true,
+							inWnd : true,
+		
+							essenseData : {
+								userinfo: userinfo,
+								id : id,
+								format: format,
+								type: type
+							}
+						})
 	
 					
 	
@@ -1703,6 +1708,8 @@ var lenta = (function(){
 
 					return
 				}
+
+				
 
 				if(value <= 3 && !self.app.test){
 					if(self.app.platform.sdk.user.scamcriteria()){
@@ -2289,6 +2296,7 @@ var lenta = (function(){
 
 			boost : function(){
 
+
 				var shareId = $(this).closest('.share').attr('id');
 
 				actions.pkoin(shareId, 'liftUpThePost')
@@ -2436,6 +2444,10 @@ var lenta = (function(){
 
 					self.app.platform.sdk.node.shares.getbyid(id, function(){
 						if (self.app.platform.sdk.address.pnet() && s.address == self.app.platform.sdk.address.pnet().address) return
+
+						if(self.app.platform.sdk.user.myaccauntdeleted()){
+							return
+						}
 
 						if (value == 5){
 							setTimeout(function(){
@@ -3086,7 +3098,7 @@ var lenta = (function(){
 					transaction.txid === share.txid
 				));*/
 
-
+					console.log('sharesFromRecommendations[share.txid]', sharesFromRecommendations[share.txid], share.txid)
 				self.shell({
 					name : video ? 'sharevideolight' : share.itisarticle() ? 'sharearticle' : 'share',
 
@@ -4218,6 +4230,8 @@ var lenta = (function(){
 
 							shares = [].concat(bshares, shares)
 
+							console.log('recommendations', recommendations, essenseData.includerec)
+
 							if(essenseData.includerec && !includingsub && !self.app.platform.sdk.categories.gettags().length){
 								shares = [].concat(recommendations, shares)
 
@@ -4425,6 +4439,8 @@ var lenta = (function(){
 								
 								else if(recommended == 'sub'){
 									loader = 'getsubscribesfeed'
+
+									
 								}
 
 								else if(recommended == 'hot'){
@@ -4494,6 +4510,14 @@ var lenta = (function(){
 							else if (recommended == 'recommended') count = 30
 							else if (video) count = 20
 
+
+							if(self.app.platform.sdk.user.myaccauntdeleted() && loader == 'getsubscribesfeed'){
+								ended = true
+								if(clbk) clbk()
+								
+								return
+							}
+							
 							if(state && essenseData.includesub && loader == 'hierarchical' && !subloaded){
 
 								loader = 'getsubscribesfeed'
@@ -4502,6 +4526,8 @@ var lenta = (function(){
 								includingsub = true
 
 							}
+
+							
 
 							//if(loader == 'hierarchical') loader = 'hierarchicaltst'
 

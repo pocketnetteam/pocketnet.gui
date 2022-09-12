@@ -1,83 +1,108 @@
 <% 
-var name = app.platform.api.clearname(deep(app, 'platform.sdk.user.storage.me.name') || user.address.value.toString('hex') ) 
-var letter = name ? name[0] : ''
+	var name = app.platform.api.clearname(deep(app, 'platform.sdk.user.storage.me.name') || user.address.value.toString('hex') ) 
+	var letter = name ? name[0] : ''
+
+	var deleted = app.platform.sdk.user.myaccauntdeleted()
+
+	if(deleted) letter = ''
 %>
 
 
 <div class="bgCaption">
+
+	
 	
 		<div class="bgCaptionInner">
 		
 			<div class="infoWrapper">
 				<div class="rightchatspacer">
 					<div class="work">
-						<div class="cwrapper table">
+						<% if(deleted) {%>
 
-							<div class="cell cellforimage">
-								<div class="icon">
-
-									<% var src = deep(app, 'platform.sdk.user.storage.me.image')  %>
-
-									<div class="usericon" image="<%-src || '*'%>">
-
-										<% if(!src && letter) {%>
-
-											<span class="letter">
-												<%-letter.toUpperCase()%>
-											</span>
-
-										<% } else if (!src) { %>
-
-											<i class="far fa-user"></i>
-
-										<% } %>
-
-									</div>
+							<div class="deletedAccount">
+								<div class="deletedAccountText">
+									<span><%-e('deletedAccount_' + deleted)%></span>
 								</div>
 							</div>
 
-							<div class="ccell">
-								<div class="infomain">
-									<div class="captionWrapperFloat">
-										<div class="caption">
-											<b class="adr"><%-name%></b>
+						<% } else { %> 
+							<div class="cwrapper table">
+
+								<div class="cell cellforimage">
+									<div class="icon">
+
+										<% var src = deep(app, 'platform.sdk.user.storage.me.image')  
+										
+										
+										if(deleted) src = ''
+										%>
+
+										<div class="usericon" image="<%-src || '*'%>">
+
+											<% if(!src && letter) {%>
+
+												<span class="letter">
+													<%-letter.toUpperCase()%>
+												</span>
+
+											<% } else if (!src) { %>
+
+												<i class="far fa-user"></i>
+
+											<% } %>
+
 										</div>
-										
-										<% if(deep(app, 'platform.sdk.user.storage.me.name')) {%>
-											<div class="addressseparateWrapper">
-												<div class="addressseparate">
-													<b><%=e('pnetAddress')%>:</b>
-												</div>
-												<div class="addressseparate">
-													<span elementsid="copyaddresshex" class="copyaddress">
-														<%- user.address.value.toString('hex') %>
-													</span>
-
-
-													<a elementsid='blockexplorer/address' external='external' href="https://<%-app.options.url%>/blockexplorer/address/<%- user.address.value.toString('hex') %>"> <i class="fas fa-th"></i></a>
-
-													
-												</div>
-											</div>
-
-										<% } %>
-									</div>
-
-									
-
-									<div class="tips">
-										<a elementsid='authorlink' href="<%-app.platform.api.authorlink(user.address.value.toString('hex'))%>">
-											<button class="profile"><%=e('profile')%></button>
-										</a>
-										
 									</div>
 								</div>
 
+								<div class="ccell">
+									<div class="infomain">
+										<div class="captionWrapperFloat">
+
+											<% if(!app.platform.sdk.user.myaccauntdeleted()) {%>
+											<div class="caption">
+												<b class="adr"><%-name%></b>
+											</div>
+											<% } %>
+											
+											<% if(deep(app, 'platform.sdk.user.storage.me.name') && !app.platform.sdk.user.myaccauntdeleted()) {%>
+												<div class="addressseparateWrapper">
+													<div class="addressseparate">
+														<b><%=e('pnetAddress')%>:</b>
+													</div>
+													<div class="addressseparate">
+														<span elementsid="copyaddresshex" class="copyaddress">
+															<%- user.address.value.toString('hex') %>
+														</span>
+
+
+														<a elementsid='blockexplorer/address' external='external' href="https://<%-app.options.url%>/blockexplorer/address/<%- user.address.value.toString('hex') %>"> <i class="fas fa-th"></i></a>
+
+														
+													</div>
+												</div>
+
+											<% } %>
+										</div>
+
+										
+
+										<div class="tips">
+											<a elementsid='authorlink' href="<%-app.platform.api.authorlink(user.address.value.toString('hex'))%>">
+												<button class="profile"><%=e('profile')%></button>
+											</a>
+											
+										</div>
+									</div>
+
+								</div>
 							</div>
-						</div>
+
+						<% } %>
 					</div>
 				</div>
 			</div>
 		</div>
 
 </div>
+
