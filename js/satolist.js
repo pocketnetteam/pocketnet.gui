@@ -7311,19 +7311,18 @@ Platform = function (app, listofnodes) {
 
                                             dirEntry4.getFile(p.resolutionId + '.mp4', { create: true }, function (targetFile) {
 
-                                                var downloader = new BackgroundTransfer.BackgroundDownloader();
-                                                // Create a new download operation.
-                                                var download = downloader.createDownload(fileDownloadUrl.fileDownloadUrl, targetFile, "Bastyon: Downloading video");
+                                                var fileTransfer = new FileTransfer();
 
-                                                // Start the download
-                                                download.startAsync().then(function(e) {
-                                                    // Success
-                                                    // Get file size
-                                                    targetFile.file(function(fileDetails) {
-                                                        // Resolve internal URL
-                                                        window.resolveLocalFileSystemURL(targetFile.nativeURL, function(entry) {
+                                                fileTransfer.download(
+                                                    fileDownloadUrl.fileDownloadUrl,
+                                                    targetFile.nativeURL,
+                                                    function (entry) {
 
-                                                            targetFile.internalURL = entry.toInternalURL();
+                                                        // Success
+                                                        // Get file size
+                                                        targetFile.file(function(fileDetails) {
+
+                                                            targetFile.internalURL = entry.toURL();
 
                                                             var result = {
                                                                 video: targetFile,
@@ -7338,13 +7337,18 @@ Platform = function (app, listofnodes) {
 
                                                         }, reject);
 
-                                                    }, reject);
+                                                    },
+                                                    function (error) {
+                                                        console.log("download error: ", error);
+                                                        reject(error);
+                                                    },
+                                                    null, {}
+                                                );
 
-                                                }, reject, function(pr) {
-
-                                                    if(p.progress) p.progress('video', 100* pr.bytesReceived / pr.totalBytesToReceive)
-
-                                                });
+                                                fileTransfer.onprogress = function(progressEvent) {
+                                                    if (progressEvent)
+                                                        p.progress('video', 100 * progressEvent.loaded / progressEvent.total);
+                                                }
 
                                             }, reject);
 
