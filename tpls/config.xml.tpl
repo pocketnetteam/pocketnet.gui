@@ -20,6 +20,7 @@
     <preference name="ShowSplashScreenSpinner" value="false" />
     <preference name="StatusBarOverlaysWebView" value="true" />
     <preference name="StatusBarBackgroundColor" value="#00000000" />
+    <preference name="BackgroundColor" value="#011621" />
     <preference name="StatusBarStyle" value="lightcontent" />
     <preference name="AndroidLaunchMode" value="singleTask" />
     <preference name="Fullscreen" value="false" />
@@ -143,7 +144,7 @@
             <application android:usesCleartextTraffic="true" android:requestLegacyExternalStorage="true"/>
         </edit-config>
 
-        <preference name="WINDOW_BACKGROUND_COLOR" />
+        <!--<preference name="WINDOW_BACKGROUND_COLOR" />
 
   		<edit-config file="AndroidManifest.xml" target="/manifest/application/activity[@android:name='MainActivity']" mode="merge">
   			<activity android:name="MainActivity" android:theme="@style/CordovaWindowBackgroundTheme"/>
@@ -160,7 +161,7 @@
   			<style name="CordovaWindowBackgroundTheme" parent="@android:style/Theme.NoTitleBar">
   				<item name="android:windowBackground">@color/cordova_window_background</item>
   			</style>
-  		</config-file>
+  		</config-file>-->
 
         <config-file target="AndroidManifest.xml" parent="/manifest">
             <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>

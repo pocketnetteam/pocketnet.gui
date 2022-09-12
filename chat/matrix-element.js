@@ -29635,10 +29635,16 @@ var store = new vuex_esm["a" /* default */].Store({
 
     GALLERY(state, v) {
       state.gallery = v || null;
-      var fullscreenmode = functions["a" /* default */].deep(window, 'window.POCKETNETINSTANCE.mobile.fullscreenmode');
+      var fu = null;
 
-      if (fullscreenmode) {
-        fullscreenmode(v);
+      if (v) {
+        fu = functions["a" /* default */].deep(window, 'window.POCKETNETINSTANCE.mobile.statusbar.gallerybackground');
+      } else {
+        fu = functions["a" /* default */].deep(window, 'window.POCKETNETINSTANCE.mobile.statusbar.background');
+      }
+
+      if (fu) {
+        fu();
       }
     },
 
@@ -41587,7 +41593,7 @@ class application_Core {
       }
     }).then(info => {
       var roomId = this.mtrx.kit.tetatetid(info[0], this.user.userinfo);
-      if (!roomId) return Promise.reject(e);
+      if (!roomId) return Promise.reject('roomId');
 
       if (this.store.state.chatsMap[roomId]) {
         /// old chat
