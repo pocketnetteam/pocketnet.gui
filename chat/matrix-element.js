@@ -100625,8 +100625,9 @@ class PNUser extends _user_js__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"] {
 
   initKeys() {
     if (!this.state) return Promise.reject();
+    console.log('this.userinfo', this.userinfo);
 
-    if (this.userinfo.name && (!this.userinfo.keys || !this.userinfo.keys.length)) {
+    if (this.userinfo.name && !this.userinfo.deleted && (!this.userinfo.keys || !this.userinfo.keys.length)) {
       if (window.POCKETNETINSTANCE) {
         window.POCKETNETINSTANCE.platform.sdk.keys.init().then(r => {
           if (r == 'exist') {
@@ -100727,13 +100728,14 @@ class PNUser extends _user_js__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"] {
 
   convertUser(info) {
     return {
-      image: info.i,
-      name: decodeURI(info.name),
+      image: info.i || '',
+      name: info.name ? decodeURI(info.name) : '',
       id: _functions_js__WEBPACK_IMPORTED_MODULE_2__[/* default */ "a"].hexEncode(info.address),
       source: info,
       keys: _.filter((info.k || "").split(','), function (f) {
         return f;
       }),
+      deleted: info.deleted,
       nocache: info.nocache || false
     };
   }

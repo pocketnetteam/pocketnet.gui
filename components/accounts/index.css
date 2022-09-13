@@ -17,11 +17,11 @@
 #accounts .addressTable {
   margin-bottom: 0.5em;
 }
-#accounts .addressTable > div.label {
-  padding-top: 0.5em;
-}
-#accounts .addressTable > div {
-  vertical-align: middle;
+#accounts .addressTable {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: space-around;
 }
 #accounts .addressTable > div.iconWrapper {
   width: 45px;
@@ -29,6 +29,14 @@
 }
 #accounts .addressTable > div.label {
   padding-left: 1em;
+  display: flex;
+  align-items: center;
+}
+#accounts .addressTable > div.label .name {
+  max-width: 150px;
+  text-overflow: ellipsis;
+  display: inline-block;
+  overflow: hidden;
 }
 #accounts .addressTable > div.label .cur {
   margin-left: 1em;
@@ -36,6 +44,7 @@
 }
 #accounts .addressTable > div.panel {
   width: 100px;
+  margin-left: auto;
 }
 #accounts .addressTable > div.panel > div {
   float: right;
@@ -153,9 +162,6 @@
   }
   #accounts .addressTable {
     margin-bottom: 0.5em;
-  }
-  #accounts .addressTable > div.label {
-    padding-top: 0.5em;
   }
   #accounts .addressAddTable > div.label,
   #accounts .addressTable > div.label {

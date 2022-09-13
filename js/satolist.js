@@ -10084,11 +10084,13 @@ Platform = function (app, listofnodes) {
                     return txa.address == address
                 })
 
-                console.log('self.sdk.node.transactions', self.sdk.node.transactions)
+                console.log('self.sdk.node.transactions', self.sdk.node.transactions.temp)
 
-                if (temp || self.deletedtest[address]){
+                if (temp/* || self.deletedtest[address]*/){
                     return 'temp'
                 }
+
+                console.log('self.sdk.usersl', self.sdk.usersl, address)
 
                 var info = self.sdk.usersl.storage[address] || {}
 
@@ -10180,6 +10182,8 @@ Platform = function (app, listofnodes) {
 
                         var obj = new DeleteAccount();
 
+                        self.sdk.node.transactions.clearTempHard()
+
                         self.sdk.node.transactions.create.commonFromUnspent(
                             obj,
                             function(tx, error){
@@ -10189,8 +10193,6 @@ Platform = function (app, listofnodes) {
                                     return reject(error)
                                     //self.app.platform.errorHandler(error, true)	
                                 }
-
-                                self.sdk.node.transactions.clearTempHard()
 
                                 delete self.sdk.users.storage[self.sdk.address.pnet().address]
                                 delete self.sdk.usersl.storage[self.sdk.address.pnet().address]
