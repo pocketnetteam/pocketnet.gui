@@ -8,6 +8,7 @@ html.openapipnet{
         background: fade(@color-gray-slight, 10);
         padding : 2 * @rhythm;
         text-align: center;
+        display: none;
 
         .text{
             padding : 0 2 * @rhythm;
@@ -19,6 +20,12 @@ html.openapipnet{
 
         .buttonWrapper{
             padding : 2 * @rhythm;
+        }
+    }
+
+    &.openapiready{
+        .calltoaction{
+            display: block;
         }
     }
 

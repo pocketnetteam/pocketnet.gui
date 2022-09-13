@@ -17,17 +17,7 @@ var Control = function(settings, proxy) {
         win32: {
             bin: {
                 name: "_win_x64_daemon.bin",
-                url: 'https://api.github.com/repos/pocketnetapp/pocketnet.core/releases/latest',
-                page: 'https://github.com/pocketnetteam/pocketnet.core/releases/latest'
-            },
-            checkpoint_main: {
-                name: "main.sqlite3",
-                url: 'https://api.github.com/repos/pocketnetapp/pocketnet.core/releases/latest',
-                page: 'https://github.com/pocketnetteam/pocketnet.core/releases/latest'
-            },
-            checkpoint_test: {
-                name: "test.sqlite3",
-                url: 'https://api.github.com/repos/pocketnetapp/pocketnet.core/releases/latest',
+                url: 'https://api.github.com/repositories/172682555/releases/latest',
                 page: 'https://github.com/pocketnetteam/pocketnet.core/releases/latest'
             },
             snapshot_latest: {
@@ -40,11 +30,6 @@ var Control = function(settings, proxy) {
                 name: "pocketcoind.exe",
                 url: 'https://snapshot.pocketnet.app/pocketcoind.exe'
             },
-            checkpoint_main_permanent: {
-                permanent: true,
-                name: "main.sqlite3",
-                url: 'https://snapshot.pocketnet.app/main.sqlite3'
-            }
         },
 
         linux: {
@@ -57,12 +42,7 @@ var Control = function(settings, proxy) {
                 permanent: true,
                 name: "latest.tgz",
                 url: 'https://snapshot.pocketnet.app/latest.tgz'
-            },
-            checkpoint_main: {
-                name: "main.sqlite3",
-                url: 'https://api.github.com/repos/pocketnetapp/pocketnet.core/releases/latest',
-                page: 'https://github.com/pocketnetteam/pocketnet.core/releases/latest'
-            },
+            }
         }
     }, proxy)
     
@@ -121,17 +101,6 @@ var Control = function(settings, proxy) {
             var binPath = Path.join( node.binPath, self.helpers.bin_name('pocketcoind'))
 
             return binPath
-        },
-
-        data_checkpoints_path : function(withFile = false) {
-            // TODO (brangr): add check test network
-            // if ('main')
-                return Path.join( node.dataPath, 'checkpoints', (withFile ? 'main.sqlite3' : '') );
-
-            // if ('test')
-            //     return Path.join( node.dataPath, 'checkpoints' );
-            
-            return '';
         },
 
         defaults : {
@@ -193,14 +162,6 @@ var Control = function(settings, proxy) {
                 fs.mkdirSync(node.dataPath, { recursive: true });
             }catch(e){
                 return Promise.reject('nodedatapath')
-            }
-        }
-
-        if(!fs.existsSync(self.helpers.data_checkpoints_path())){
-            try{
-                fs.mkdirSync(self.helpers.data_checkpoints_path(), { recursive: true });
-            }catch(e){
-                return Promise.reject('chkpPath')
             }
         }
 
@@ -505,17 +466,6 @@ var Control = function(settings, proxy) {
                 // return applications.downloadPermanent('bin_permanent', node.binPath, function(st) {
                 //     state.install.progress = st
                 //     state.install.title = `Installing binary files...`
-                // })
-
-            }).then(() => {
-                
-                state.install.progress = { percent: 1 }
-                state.install.title = 'Installing checkpoints database...'
-                return applications.install('checkpoint_main', self.helpers.data_checkpoints_path(true), false)
-
-                // return applications.downloadPermanent('checkpoint_main_permanent', self.helpers.data_checkpoints_path(false), function(st) {
-                //     state.install.progress = st
-                //     state.install.title = `Installing checkpoints database...`
                 // })
 
             }).then(() => {

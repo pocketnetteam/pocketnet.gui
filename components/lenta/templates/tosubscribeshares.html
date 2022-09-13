@@ -6,7 +6,7 @@
 
         <div class="tosubscribeshares_buttonWrapper">
             <% if(share) {%>
-                <a href="index?r=sub&s=<%-share.txid%>" handler="true">
+                <a href="index?r=sub&np=1&s=<%-share.txid%>" handler="true">
                     <button class="button"><%=e('continuesubscribefeedButton')%></button>
                 </a>
             <% } else { %>

@@ -1,0 +1,1 @@
+(globalThis.webpackChunkpeertube_client=globalThis.webpackChunkpeertube_client||[]).push([[470],{9354:()=>{},3762:()=>{},8333:()=>{},59:()=>{},2361:()=>{},4616:()=>{},3719:()=>{}}]);

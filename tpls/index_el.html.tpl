@@ -6,7 +6,7 @@
         <meta http-equiv="Pragma" content="no-cache" />
         <meta http-equiv="Cache-Control" content="no-cache">
         <meta http-equiv='expires' content='0'>
-        
+        <meta http-equiv="X-Frame-Options: SAMEORIGIN">
 
         <!-- <title>__VAR__.project</title> -->
         <meta name="description" content="">
@@ -18,7 +18,7 @@
         default-src https: 'self' file: __VAR__.domain:*; 
         connect-src https: wss: http: ws: file: data: blob:;
         img-src 'self' blob: data: http: https: file:;
-        script-src 'self' blob: https://__VAR__.domain https://player.vimeo.com https://www.youtube.com https://s.ytimg.com https://cdn.jsdelivr.net/joypixels/ 'unsafe-eval' 'unsafe-inline';
+        script-src 'self' blob: https://__VAR__.domain https://player.vimeo.com https://www.youtube.com https://s.ytimg.com https://cdn.jsdelivr.net/joypixels/ https://cdnjs.cloudflare.com/ajax/libs/lamejs/ 'unsafe-eval' 'unsafe-inline';
         frame-src 'self' https://__VAR__.domain https://player.vimeo.com https://www.youtube.com;
         style-src 'self' data: __VAR__.domain:* https://cdn.jsdelivr.net/joypixels/ https://use.fontawesome.com 'unsafe-inline' ;
         font-src 'self' data: __VAR__.domain:* https://use.fontawesome.com;
@@ -42,9 +42,13 @@
         <link rel="stylesheet" href="css/fontawesome/css/all.css">
         <link rel="stylesheet" href="peertube/video-embed.css">
 
-        <script src="js/vendor/device.min.js?v=136"></script>
+        <script src="js/vendor/device.js?v=136"></script>
         <script src="js/vendor/modernizr-2.8.3.min.js?v=136"></script>
         <script src="https://__VAR__.domain/js/widgets.js?v=136"></script>
+
+        <style type="text/css">
+            #splashScreen{contain:strict;position:fixed;top:0;left:0;width:100%;height:100%;background-color:#011621;z-index:5000;display:flex;justify-content:center;align-items:center;flex-direction:column;}#splashScreen h1{color:#fff;margin-top:1em;margin-bottom:0;font-size:1em}#splashScreen h1.fade-in{-webkit-animation:fade-in .3s ease-out both;animation:fade-in .3s ease-out both}#splashScreen.fade-out{-webkit-animation:fade-out .2s ease-in both;animation:fade-out .2s ease-in both;background-color:#0098eb}#splashScreen img{max-height:50px;max-width:50px}#splashScreen img.zoom-in{-webkit-animation:zoom-in .5s ease-out both;animation:zoom-in .5s ease-out both}#splashScreen img.zoom-out{-webkit-animation:zoom-out .5s ease-in both;animation:zoom-out .5s ease-in both}#splashScreen img.rotate{-webkit-animation:rotate 1s ease-in-out infinite both;animation:rotate 1s ease-in-out infinite both}#splashScreen img.zoom-out-rotate{-webkit-animation:zoom-out-rotate .5s ease-in both;animation:zoom-out-rotate .5s ease-in both}@media only screen and (max-width:640px){#splashScreen{display:flex}}@-webkit-keyframes zoom-out{0%{-webkit-transform:scale3d(1,1,1);transform:scale3d(1,1,1);opacity:1}50%{opacity:.25}100%{-webkit-transform:scale3d(50,50,50);transform:scale3d(50,50,50);opacity:0}}@keyframes zoom-out{0%{-webkit-transform:scale3d(1,1,1);transform:scale3d(1,1,1);opacity:1}50%{opacity:.25}100%{-webkit-transform:scale3d(50,50,50);transform:scale3d(50,50,50);opacity:0}}@-webkit-keyframes zoom-in{0%{-webkit-transform:scale3d(0,0,0);transform:scale3d(0,0,0);opacity:0}100%{-webkit-transform:scale3d(1,1,1);transform:scale3d(1,1,1);opacity:1}}@keyframes zoom-in{0%{-webkit-transform:scale3d(0,0,0);transform:scale3d(0,0,0);opacity:0}100%{-webkit-transform:scale3d(1,1,1);transform:scale3d(1,1,1);opacity:1}}@-webkit-keyframes zoom-out-rotate{0%{-webkit-transform:scale3d(1,1,1) rotate(0);transform:scale3d(1,1,1) rotate(0);opacity:1}50%{opacity:.25}100%{-webkit-transform:scale3d(75,75,75) rotate(310deg);transform:scale3d(75,75,75) rotate(310deg);opacity:0}}@keyframes zoom-out-rotate{0%{-webkit-transform:scale3d(1,1,1) rotate(0);transform:scale3d(1,1,1) rotate(0);opacity:1}50%{opacity:.25}100%{-webkit-transform:scale3d(75,75,75) rotate(310deg);transform:scale3d(75,75,75) rotate(310deg);opacity:0}}@-webkit-keyframes rotate{0%{-webkit-transform:rotate(0);transform:rotate(0)}100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}@keyframes rotate{0%{-webkit-transform:rotate(0);transform:rotate(0)}100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}@-webkit-keyframes fade-out{0%{opacity:1}100%{opacity:0}}@keyframes fade-out{0%{opacity:1}100%{opacity:0}}@-webkit-keyframes fade-in{0%{opacity:0}100%{opacity:1}}@keyframes fade-in{0%{opacity:0}100%{opacity:1}}
+        </style>
        
     </head>
     <body id="application" class="menu-hide ">
@@ -64,26 +68,8 @@
         <div id="navigationWrapper">
         </div> 
 
-        <div class="contentWrapper "> 
-            <div id="content">                
-            </div>
-        </div>
-
-        <div id="footerWrapper">
-            
-        </div>
-
-        <div class="bodyshadow">
-        </div>     
-
-        <div class="topPreloader" id="_topPreloader">
-        </div>
-
         <div id="splashScreen" class="cssanimation">
             <img src="img/splashscreen/pocketnet-logo-19.svg" id="splashScreenImg" class="zoom-in rotate">
-        </div>
-
-        <div class="chats">
         </div>
 
         </div>
@@ -105,23 +91,24 @@
         <div class="electronnav" id="electronnavContainer">
         </div>
 
-        <!--<div class="updatingFrontend">
-            <div class="table">
-                <div>
-                    <div class="text">
-                        <span>Please be Patient: Major Release of __VAR__.project is Being Prepared</span>
-                    </div>
+     
 
-                    <div class="icon">
-                        <i class="fas fa-wrench"></i>
-                    </div>
-                    
-                </div>
-               
+        <div class="contentWrapper "> 
+            <div id="content">                
             </div>
-        </div>-->
+        </div>
 
-        <script>window.$ = window.jQuery = require('./js/vendor/jquery-1.11.3.min.js');</script>
+        <div id="footerWrapper">
+            
+        </div>
+
+     
+
+        <div class="topPreloader" id="_topPreloader">
+        </div>
+
+        
+        <script>window.$ = window.jQuery = require('./js/vendor/jquery.js');</script>
         
 
         <script type="text/javascript">
@@ -186,7 +173,7 @@
         <script  join src="js/vendor/moment.min.js?v=89"></script>
         <script  join src="js/vendor/moment.locale.js?v=89"></script>
         
-        <!--<script src="js/vendor/imagesloaded.pkgd.min.js"></script> -->
+        <!--<script src="js/vendor/imagesloaded.pkgd.js"></script> -->
         <script src="js/vendor/timer.js"></script>
         <script src="js/vendor/autosize.min.js"></script>
         <script src="js/vendor/ion.sound/ion.sound.js"></script>   
@@ -207,8 +194,9 @@
 
         <script src="js/vendor/paste.js"></script> 
         <script src="js/vendor/jquery.md5.js?v=136"></script>
-        <script src="js/vendor/joypixels.min.js"></script>
+        <script src="js/vendor/joypixels.js"></script>
         <script join src="js/vendor/hammer.min.js?v=89"></script>
+        <script join src="js/vendor/owl/owl.carousel.js?v=90"></script>
         <script src="js/vendor/plyr.js?v=1"></script>
         <script src="js/vendor/reconnectingwebsocket.js?v=136"></script>
         <script src="js/vendor/mark.js"></script>
@@ -232,6 +220,7 @@
         <script join src="peertube/video-embed.bundle.js"></script>
         <script join src="js/peertube.js"></script>
         <script join src="js/logger.js"></script>
+        <script join src="js/videotransport.js"></script>
         <script join src="js/app.js?v=322676503798"></script>
         <script join src="js/main.js?v=723212304292"></script>       
         <script join src="chat/matrix-element.min.js"></script>    

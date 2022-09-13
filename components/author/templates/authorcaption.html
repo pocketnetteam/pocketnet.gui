@@ -81,7 +81,7 @@ var telements = function(){ %>
                                 var src = deep(author, 'data.image');
                             %>
 
-                            <div elementsid="author_usericon_<%-src || ''%>" ban=".gif" class="usericon" image="<%-src || '*'%>">
+                            <div elementsid="author_usericon_<%-src || ''%>" ban=".gif" class="usericon" contain="none" image="<%-src || '*'%>">
 
                                 <% if(!src && letter) {%>
 

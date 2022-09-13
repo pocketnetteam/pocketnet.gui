@@ -287,13 +287,13 @@
   }
   #leftpanel .rightbottomnav a,
   #leftpanel .rightbottomnav span {
-    font-size: 1em;
+    font-size: 0.9em;
   }
   #leftpanel .subtop .topnavigation button {
     width: 135px;
   }
   #leftpanel .menu .menupanel .tabs .tab .pcenterLabel .text {
-    font-size: 1em;
+    font-size: 0.9em;
   }
   #leftpanel .menu .menupanel .tabs .tab .pcenterLabel i {
     width: 30px;

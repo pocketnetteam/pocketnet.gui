@@ -79,7 +79,7 @@ var metadisplay = function(){ %>
 								%>
         
                                 <div class="icon">
-                                    <div class="usericon usericonsbsa another "  ban=".gif" elementsid="<%-src || 'userimg'%>" image="<%-src || '*'%>">
+                                    <div class="usericon usericonsbsa another " contain="none"  ban=".gif" elementsid="<%-src || 'userimg'%>" image="<%-src || '*'%>">
                                      
 			
 										<% if (!src && letter) {%>
@@ -285,7 +285,7 @@ var metadisplay = function(){ %>
 
 		%>
 
-		<div class="shareTable  <%-subscribed%> <%-view%> <% if(emptywithrepost) { %> emptywithrepost <% } else { %> truerepost <% } %>" address="<%-share.address%>" stxid="<%-share.txid%>">
+		<div lang="<%-share.language%>" class="shareTable  <%-subscribed%> <%-view%> <% if(emptywithrepost) { %> emptywithrepost <% } else { %> truerepost <% } %>" address="<%-share.address%>" stxid="<%-share.txid%>">
 
 			<% if(!checkvisibility) {%>
 				<div class="cntswrk forurl">

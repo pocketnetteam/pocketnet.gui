@@ -39,7 +39,7 @@ export function peertubeTransport(ipcRenderer: IpcRenderer, localVideo: LocalVid
         }
 
         // @ts-ignore
-        const proxy = await app.api.get.current();
+        const proxy = await app.api.get.directpr();
         const info = await proxy.get.info();
 
         if (info?.info?.tor?.enabled) {

@@ -4,11 +4,13 @@ if(typeof require != 'undefined' && typeof __map == 'undefined')
 	var __map = require("./_map.js");
 }*/
 
+console.log("APP")
+
 if (typeof _OpenApi == 'undefined') _OpenApi = false;
 
 if (typeof _Electron != 'undefined' && _Electron){
 
-  imagesLoaded = require('./js/vendor/imagesloaded.pkgd.min.js');
+  imagesLoaded = require('./js/vendor/imagesloaded.pkgd.js');
 
   emojione = require('emojione')
 
@@ -49,6 +51,11 @@ Application = function(p)
   var self = this;
   var realtimeInterval = null;
   var baseorientation = typeof getbaseorientation != undefined ? getbaseorientation() : 'portrait'
+  var electron = null
+  
+  if (typeof _Electron != 'undefined' && _Electron){
+    electron = require('electron');
+  }
 
   self._meta = {
     Pocketnet : {
@@ -84,7 +91,7 @@ Application = function(p)
     self.test = true
   }
 
-  self.boost = true
+  self.boost = !(window.cordova && isios());
 
   self.options = {
 
@@ -261,22 +268,56 @@ Application = function(p)
     return true
   }
 
+  var istouchstylecalculate = function(){
+    let isIpad = /Macintosh/i.test(navigator.userAgent) && navigator.maxTouchPoints && navigator.maxTouchPoints > 1;
+
+    var mobileview = (isIpad || self.el.html.hasClass('mobile') || self.el.html.hasClass('ipad') || self.el.html.hasClass('tablet') || window.cordova || self.width < 768)
+
+
+    if ((typeof _Electron != 'undefined' && _Electron)){
+      mobileview = false
+    }
+
+    return mobileview
+  }
 
   var istouchstyle = function(){
 
-    let isIpad = /Macintosh/i.test(navigator.userAgent) && navigator.maxTouchPoints && navigator.maxTouchPoints > 1;
-
-    self.mobileview = (isIpad || self.el.html.hasClass('mobile') || self.el.html.hasClass('ipad') || self.el.html.hasClass('tablet') || window.cordova || self.width < 768)
-
-    if ((typeof _Electron != 'undefined' && _Electron)){
-      self.mobileview = false
-    }
+    self.mobileview = istouchstylecalculate()
 
     if(self.mobileview){
       self.el.html.addClass('mobileview').removeClass('wsview')
     }
     else{
       self.el.html.removeClass('mobileview').addClass('wsview')
+    }
+  }
+
+  var checkTouchStyle = function(){
+    var mobileview = istouchstylecalculate()
+
+    if(self.mobileview != mobileview){
+      istouchstyle()
+
+      self.platform.matrixchat.changeMobile()
+      self.platform.matrixchat.initevents()
+
+      _.each(self.modules, function(m){
+
+        if(m.module.map.viewchangereload){
+          m.module.restart()
+        }
+
+      })
+      
+      _.each(self.nav.wnds, (w) => {
+        var wnd = deep(w, 'module.container')
+
+        if (wnd){
+          if(self.mobileview)
+            wnd.unhidenormalized()
+        }
+      })
     }
   }
 
@@ -922,6 +963,18 @@ Application = function(p)
     })
   }
 
+  self.initvideodb = function(){
+
+
+
+    if(typeof VideoTransport != 'undefined'){
+
+      self.videotransport = new VideoTransport(self, electron ? electron.ipcRenderer : null)
+      self.videotransport.init()
+    }
+
+  }
+
   self.init = function(p){
 
     if (navigator.webdriver && !self.test && !parameters().webdrivertest) return
@@ -938,6 +991,8 @@ Application = function(p)
 
     self.options.fingerPrint = hexEncode('fakefingerprint');
 
+    self.initvideodb()
+
     self.localization.init(function(){
 
       newObjects(p);
@@ -948,23 +1003,27 @@ Application = function(p)
 
         self.realtime();
 
-        if (typeof hideSplashScreen != 'undefined'){
-          hideSplashScreen();
-        }
-        else{
-          $('#splashScreen').remove()
-        }
-
         // TODO (brangr): DEBUG!
         //p.nav.href = "userpage?id=system16"
+        if(!_OpenApi)
+          self.nav.init(p.nav, function(){
 
-        self.nav.init(p.nav);
+            if (typeof hideSplashScreen != 'undefined'){
+              hideSplashScreen();
+            }
+            else{
+              $('#splashScreen').remove()
+            }
+          });
 
         if (p.clbk)
           p.clbk();
 
         if(!_OpenApi)
           self.showuikeysfirstloading()
+        else{
+          $('#splashScreen').remove()
+        }
 
 
 
@@ -983,6 +1042,15 @@ Application = function(p)
 
     self.mobile.inputs.init()
     self.mobile.reload.initparallax()
+  
+    /**
+     * Launch Shadow Popups located in popups/index.js
+     * all conditions of appearing contains each popup
+     * i.e. self-checking for android and self-checking
+     * for desktop popup before we had created popup
+     * conditional checking in appear method of instance
+     */
+    if (typeof initShadowPopups === 'function') initShadowPopups()
   }
 
   self.reload = function(p){
@@ -1253,7 +1321,8 @@ Application = function(p)
     },
 
     emoji : function(text){
-      if(self.mobileview) return text
+      
+      //if(self.mobileview) return text
 
       return joypixels.toImage(text)
     },
@@ -1575,6 +1644,8 @@ Application = function(p)
       let vh = window.innerHeight * 0.01;
       document.documentElement.style.setProperty('--vh', `${vh}px`);
 
+      checkTouchStyle()
+
     }, 100)
 
     var t = false
@@ -1701,7 +1772,7 @@ Application = function(p)
 
     getStorageLocation: function() {
 
-      if (!device || !device.platform || !cordova || !cordova.file)
+      if (!device || !cordova || !cordova.file)
         return undefined;
 
       return (window.cordova.file.externalDataDirectory) ? window.cordova.file.externalDataDirectory : window.cordova.file.dataDirectory;
@@ -2412,7 +2483,7 @@ Application = function(p)
       needmanage : false,
       hasupdate : false,
 
-      playstore : true,  ///// TODO
+      playstore : false,  ///// TODO
 
       downloadAndInstall : function(){
 
@@ -2580,6 +2651,8 @@ Application = function(p)
   localStorage['device'] = self.options.device
 
   if(typeof window != 'undefined'){ self.fref = deep(window, 'location.href') }
+
+  
 
   return self;
 }

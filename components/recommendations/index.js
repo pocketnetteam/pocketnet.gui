@@ -111,7 +111,7 @@ var recommendations = (function(){
 
 				})
 
-				bgImages(p.el)
+				bgImagesCl(p.el)
 
 			}
 		}

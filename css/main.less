@@ -345,16 +345,22 @@ html {
 }
 
 [image]{
+    will-change : opacity, background;
+    /*contain: strict;*/
     opacity: 0;
     .transition(0.3s, opacity);
 
+}
+
+[image][contain]{
+    contain: none;
 }
 
 [image][visibleimage]{
     opacity: 1;
 }
 
-[image="*"]{
+[imageloaded="true"]{
     opacity: 1;
 }
 
@@ -1332,7 +1338,9 @@ pie {
 }
 
 html.mobileview{
-
+    #footerWrapper{
+        /*display: none;*/
+    }
 
     .upbutton{
         display: none;
@@ -3170,6 +3178,14 @@ input[type=radio].radio:checked + label {
         height: auto;
         z-index: 999;
 
+        .recomandationsFromContent{
+            display: none!important;
+        }
+
+        .wndinner{
+            box-shadow: none;
+        }
+
         ._changeplace{
             display: none;
         }
@@ -3360,17 +3376,6 @@ input[type=radio].radio:checked + label {
         }
 
     }
-}
-
-.bodyshadow{
-    position: fixed;
-    z-index: 4;
-    left: 0;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(var(--background-total-theme), 0.6);
-    display: none;
 }
 
 
@@ -3587,7 +3592,14 @@ input[type=radio].radio:checked + label {
        width: 30px;
    }
 }
+
 .preloader5{
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 7.5px;
+
     img{
         height: 7.5px;
         width: 30px;
@@ -4055,6 +4067,7 @@ input[type=radio].radio:checked + label {
         width: 93%;
         margin : 0 auto;
         border : 0;
+        box-shadow : none;
     }
 
     .buttons{
@@ -4079,7 +4092,7 @@ input[type=radio].radio:checked + label {
             text-align: center;
             background: rgb(var(--background-total-theme));
             cursor: pointer;
-            border-radius: 3px;
+            border-radius: 18px;
             margin-top : 0.5 * @rhythm;
 
             &.itemmain{
@@ -4088,9 +4101,8 @@ input[type=radio].radio:checked + label {
 
             &.itemclose{
                 margin-top : 2 * @rhythm;
-                background: rgba(var(--neutral-grad-2), 0.1);
-                backdrop-filter: blur(4px);
-                -webkit-backdrop-filter: blur(4px);  
+                background: rgba(var(--neutral-grad-4), 0.1);
+                color: rgb(var(--text-on-bg-ac-color));
             }
 
             &:nth-last-child(1){
@@ -5311,14 +5323,14 @@ html.mobileview{
                 padding-bottom : 2 * @rhythm;
             }
         }
-    
+        
         .closeButton,
         .menuitem{
             padding : 4 * @rhythm 2 * @rhythm;
             text-align: center;
             background: rgb(var(--background-total-theme));
             cursor: pointer;
-            border-radius: 3px;
+            border-radius: 18px;
             margin-top : 0.5 * @rhythm;
             text-align: left;
 
@@ -6596,7 +6608,12 @@ html.mobileview.fullscreen{
     z-index: 0!important;
 }
 
+.hyhpensenable{
+    .hyhpensenable()
+}
+
 .article_body{
+    
    
     h1{
         font-size: 2em;
@@ -6880,6 +6897,7 @@ html.mobileview.fullscreen{
    ========================================================================== */
 #splashScreen {
     position: fixed;
+    contain: strict;
     top: 0;
     left: 0;
     width: 100%;

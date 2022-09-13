@@ -480,6 +480,7 @@ var post = (function () {
 							playbackState,
 							duration
 						}){
+
 							if(playbackState == 'playing' && ((position > 15 && duration > 120) || startTime)){
 
 								self.app.platform.sdk.videos.historyset(share.txid, {
@@ -491,6 +492,26 @@ var post = (function () {
 						},
 
 						hlsError : function(error){
+							const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection || {};
+							const payload = {
+								...error,
+								rtt: connection.rtt || 'Undefined',
+								connection: connection.effectiveType || 'Undefined',
+								mobile: isMobile(),
+								location: 'IN_POST',
+								video: share.url,
+							};
+
+							self.app.Logger.error({
+								err: 'VIDEO_LOADING_ERROR',
+								videoErrorId: share.url,
+								videoErrorType: error.details,
+								payload: {
+									...payload,
+								},
+								code: 611,
+								level: 'warning',
+							});
 							/*if(!window.cordova)
 								self.app.Logger.error({
 									err: 'hlsError',
@@ -514,7 +535,11 @@ var post = (function () {
 
 						PlyrEx(el2, options, (_player) => {
 
-							if(!el.c) return
+
+							if(!el.c) {
+								_player.destroy()
+								return
+							}
 
 							player = _player
 
@@ -530,7 +555,7 @@ var post = (function () {
 									}
 	
 								}
-	
+
 								if (player.enableHotKeys && !ed.repost) player.enableHotKeys()
 							}
 
@@ -598,28 +623,19 @@ var post = (function () {
 					return
 				}
 
-				if (value > 4){
+				if (value == 5){
+					setTimeout(function(){
+						if(!el.c) return
 
-					var reason = null
+						inicomments.showBanner(inicomments);
+					
 
-					if (self.app.platform.sdk.user.newuser()){
-						reason = 'n'
-					}
-
-					if (share.scnt == '0') reason = 's'
-
-					if (reason) {
-						setTimeout(function(){
-							if(!el.c) return
-								self.app.platform.effects.templates.commentstars(el.c, value, function(){
-									
-								})
-
-								if (inicomments){
-									inicomments.attention(self.app.localization.e('starssendcomment' + reason))
-								}
-						}, 300)
-					}
+						self.app.platform.effects.templates.commentstars(el.c, value, function(){
+							if (inicomments){
+								inicomments.attention(self.app.localization.e('starssendcomments'))
+							}
+						})
+					}, 300)
 					
 				}
 
@@ -957,6 +973,7 @@ var post = (function () {
 
 					p.attr('value', value)
 					p.addClass('liked')
+
 
 					actions.like(value, function (r) {
 						if (r) {
@@ -2013,7 +2030,7 @@ var post = (function () {
 
 			},
 
-			clearparameters: ['s', 'commentid', 'parentid'],
+			clearparameters: ['s', 'v', 'commentid', 'parentid'],
 
 			init: function (p) {
 

@@ -7,8 +7,10 @@
 		
 
 			var info = app.platform.sdk.videos.storage[url] || app.platform.sdk.videos.storage[meta.id] || {}
-			var aspectRatio = (info.data || {}).aspectRatio || 0;
-			
+			var localdata = app.platform.sdk.localshares.getVideo(meta.id) || {}
+
+			var aspectRatio = Number((info.data || deep(localdata, 'infos.videoDetails') || {}).aspectRatio || 0);
+
 			var image = videoImage(url)
 	%>
 		<div class="videoWrapper fullscreenActive <%- (aspectRatio < 1.25) && (aspectRatio >= 0.9) ? 'squareVideo' : ''%> <%- (aspectRatio < 0.9) && (aspectRatio != 0) ? 'verticalVideo' : ''%>" pid="<%- makeid() %>">
@@ -49,6 +51,16 @@
 				</div>
 		
 			<% } else { %> 
+				<% if (app.platform.istest()) { %>
+					<% const videoLink = `https://${meta.host_name}/videos/embed/${meta.id}` %>
+
+					<div class="peertube-server-hint">
+						<a href="<%- videoLink %>">
+							<i class="fa fa-link"></i>
+							<span><%- meta.host_name %></span>
+						</a>
+					</div>
+				<% } %>
 				
 				<div class="js-player js-player-ini" data-plyr-provider="<%-meta.type%>" data-plyr-embed-id="<%-meta.url%>" data-plyr-video-id="<%-meta.id%>" data-plyr-host-name="<%-meta.host_name || ''%>">
 					
@@ -72,8 +84,6 @@
 									</div>
 								<% } %>
 									<div class="statswrapper">
-										<!--<%-compressedNumber(info.data.views)%> Просмотров -->
-										
 										<% if(info.data.views) {%>
 											<div class="viewsWrapper">
 												<i class="far fa-eye"></i> <span><%-compressedNumber(info.data.views)%></span>
@@ -120,7 +130,7 @@
 
 				<% if(typeof video == 'undefined' || !video) { %> 
 					<div class="videoTips">
-						<div class="videoTip">
+						<div class="videoTip" style="<%- (app.platform.istest()) ? 'text-align: right' : '' %>" >
 							<span><%=e('expandvideo')%></span>
 						</div>
 					</div>

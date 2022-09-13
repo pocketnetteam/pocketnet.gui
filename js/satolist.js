@@ -132,7 +132,6 @@ Platform = function (app, listofnodes) {
         'PUXG7rfX19Xoco1FXjXBW8qt6NEZpp8maL' : true,
         'PSanUFKb1vd5ua4U3BXMmsSZ2zm3sN2nyj' : true,
         'PERF5kDM32ebkq8SeSj8ZaLqfCoqz8FRgh' : true,
-        'PGD5jUBQ7qNnHDuW85RRBxY1msywEdCm7r' : true,
         'PApFYMrbm3kXMV7kjrEG1v6ULv6ZFDHb9j' : true,
         'PUBRMTAUhy51gkbuP1tRJLMMAzEDt9C2X6' : true,
         'P9i55BxFWpjMyqgHyCKtazDN1HDiZxTSzJ' : true,
@@ -169,7 +168,6 @@ Platform = function (app, listofnodes) {
         'PP7Sz6pjbgv4XdnnCRnRm4avfxD2TEoMoC' : true,
         'PN9is9RTq2MW6yHw7ggz77vyeKX1a4XJQt' : true,
         'PLAj8RmQg2ehTVEx8pSWnd2QeFvjHnYtRZ' : true,
-        'PGD5jUBQ7qNnHDuW85RRBxY1msywEdCm7r' : true,
         'PXupozgNg1Ee6Nrbapj8DEfMGCVgWi4GB1' : true,
         'PD4pWxVke4Yz2y5UnNWnSsVHd45Vy6izCr' : true,
         'PW3tfEkGLKv4LFREpJYYpWxenKHSizB8rQ' : true,
@@ -219,13 +217,11 @@ Platform = function (app, listofnodes) {
         'PVATJhZqKdYXLp1nmPdrssRhygJApmAALR' : true,
         'PJtnXwKNPDdEpJhaKH2fbPEyLrcS77oj46' : true,
         'PSoCtc8FbPaagG6spsqbS2HJjRM8oPG16b' : true,
-        'PPxDNqCB2oWp3JffCiRXwJTzxRQuRjb5Bc' : true, 
+        'PPxDNqCB2oWp3JffCiRXwJTzxRQuRjb5Bc' : true,
         'PVRWuvwCNfZWUUD5gQzDsqabnTcMXoqgbV' : true,
         'P8sSu2qFnVPGEtnSTKYRMUzuG3xBHsj3ms' : true,
         'PUF8bsAYyHZQCtaMbrTwyRDcC3wMLKhFFX' : true,
         'PSFpsP19aHs7ZfGPnnt19yQC258y1HFYKD' : true,
-        'PCkX8n2e6aD6Ji37hSpHCJpqvaaJjVWt1m' : true,
-        'PT4fvQ7jMicg6McC52BmFFkL2M6AEWc7vo' : true,
         'PGecwCERTkoFd82E3e471SvxSxnJpC4cWk' : true,
         'PRZEXQXTmz1jW6YmH1e83nkRRiDUqkE6fw' : true,
         'PCM3fmcUikLbSNCeqtQ7MEk4yQbn6qQRJt' : true,
@@ -233,25 +229,28 @@ Platform = function (app, listofnodes) {
         'P8gfyLfXyeHzyAvq4Yqw6EW39ifCyVJ9f6' : true,
         'PSKLx4k7ehAtvipwpo2ohBeCYzpf4SiKHj' : true,
         'PK8dRanrBFxfSo3qw1P4gm6veaQQssZXxB' : true,
-        'PCkX8n2e6aD6Ji37hSpHCJpqvaaJjVWt1m' : true,
-        'PT4fvQ7jMicg6McC52BmFFkL2M6AEWc7vo' : true,
-        'PGegspsgRqvMiZCP8PGufKMYBk3yekDaEE' : true,
-        'PB8wu7hQwo5xMsVG4F4HshrW39t2Y4eN37' : true,
-        'PUhvX53ueD2Sxa3q7av83vNcEHuS8M7kRS' : true,
         'PAqPD7P3iFtz7e2epSP4V8FMPXrJKASeqD' : true,
         'PUopiRZvD6BAjF9CcWtMfpeJtxp411dxKM' : true,
-        'PUhvX53ueD2Sxa3q7av83vNcEHuS8M7kRS' : true,
         'PQkNpRfXbCGXJ2o1mRfsJMvMtsvq3uvZU9' : true,
-        'PGegspsgRqvMiZCP8PGufKMYBk3yekDaEE' : true,
-        'PB8wu7hQwo5xMsVG4F4HshrW39t2Y4eN37' : true,
         'PSBhEi8AUasemizUHyJ64t6xXonsxwp73y' : true,
         'PKYwaiikhUoPWmpWmYec4Xf3TPWwJQCqUt' : true,
         'PST4P2KEweDQJ2RAtG3scUmXAgPJJ5JJRL' : true,
         'PCfvhqHEYG3zdWXvLJrjPPDVK2H8qwwXn5' : true,
         'PLZsQmsRUDMJGc61pGMLdDQ58UuqQ8kU5Z' : true,
-        'PMC3pwutfiYpGWUMHhiB1NRjiHL7iWHiyi' : true
-
-
+        'PMC3pwutfiYpGWUMHhiB1NRjiHL7iWHiyi' : true,
+        'PEd7HQKaGj36sgPAidCvm62KidQQGL5sD8' : true,
+        'PMTrhcppMJpaRz4Xnv7CogJPHPMKtcg6bA' : true,
+        'PCYeapWncohMda9vfrFe26EDEiFa89kDZ1' : true,
+        'PQEYtpgvtfETFVfhk467SyuGRhwtMcvKUd' : true,
+        'PGnshbCvNGRiBYGxUpVNqLkaM8Ku1xvbaw' : true,
+        'PF3oocNVVz5gfdFJGQF4J4xf2bCaxRxYTh' : true,
+        'PSGSnF7Diww2yJdQefuy3ZvuZEoBw8TGTV' : true,
+        'PUhvX53ueD2Sxa3q7av83vNcEHuS8M7kRS' : true,
+        'PGegspsgRqvMiZCP8PGufKMYBk3yekDaEE' : true,
+        'PB8wu7hQwo5xMsVG4F4HshrW39t2Y4eN37' : true,
+        'PT4fvQ7jMicg6McC52BmFFkL2M6AEWc7vo' : true,
+        'PCkX8n2e6aD6Ji37hSpHCJpqvaaJjVWt1m' : true,
+        'PGD5jUBQ7qNnHDuW85RRBxY1msywEdCm7r' : true,
     }
 
     self.bch = {
@@ -282,7 +281,19 @@ Platform = function (app, listofnodes) {
         'PGvRUM7jXqHdUn7Let2QyTi1t2LHq7RgX7',
         'P9EkPPJPPRYxmK541WJkmH8yBM4GuWDn2m',
         'PReLEpaGEGTCeWKiqnK85eXrqmmTxYQ9Tw',
-        'TAqR1ncH95eq9XKSDRR18DtpXqktxh74UU'
+        'TAqR1ncH95eq9XKSDRR18DtpXqktxh74UU',
+        'PUGBtfmivvcg1afnEt9vqVi3yZ7v6S9BcC',
+        'PDtuJDVXaq82HH7fafgwBmcoxbqqWdJ9u9',
+        'PDCNrwP1i8BJQWh2bctuJyAaXxozgMcRYT',
+        'PVJ1rRdS9y9sUpaBJc8quiSTJGrC3xW8EH',
+        'PAF1BvWEH7pA24QbbEvCEasViC2Pw9BVj3',
+        'PSADH5AY5M9RaWrDVdaMrR2C2s6dCGfNK4',
+        'PMyjUzHtzsmbejB87ATbrcQNatiGsT4NzG',
+        'PHdW4pwWbFdoofVhSEfPSHgradmrvZdbE5',
+        'PDJpNY6Hm9WuA4MGSRefAGcTiDtfWKRKQD',
+        'PUJjhGLa7KesEa3Ee8K9pi49u1mW9xqQZB',
+        'PFWx4RKpggTjeDNq6oyWJfejP5z8oiKGE5',
+        'PFr6sDvtJq3wJejQce5RJ5L8u1oYKgjW9o',
     ];
     self.whiteList = [
       'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd',
@@ -599,6 +610,241 @@ Platform = function (app, listofnodes) {
             }
         }
     }
+
+    self.__getSettingsMeta = function(){
+        return {
+
+            preview: {
+                name: self.app.localization.e('disablePreview'),
+                id: 'preview',
+                type: "BOOLEAN",
+                value: false
+            },
+
+            sound: {
+                name: self.app.localization.e('sound'),
+                id: 'sound',
+                type: "BOOLEAN",
+                value: true
+            },
+
+            win: {
+                name: self.app.localization.e('e13268'),
+                id: 'win',
+                type: "BOOLEAN",
+                value: true
+            },
+
+            transactions: {
+                name: self.app.localization.e('e13269'),
+                id: 'transactions',
+                type: "BOOLEAN",
+                value: true
+            },
+
+            upvotes: {
+                name: self.app.localization.e('e13270'),
+                id: 'upvotes',
+                type: "BOOLEAN",
+                value: true
+            },
+
+            downvotes: {
+                name: 'Downvotes receive',
+                id: 'downvotes',
+                type: "BOOLEAN",
+                value: false
+            },
+
+            comments: {
+                name: self.app.localization.e('e13271'),
+                id: 'comments',
+                type: "BOOLEAN",
+                value: true
+            },
+
+            answers: {
+                name: self.app.localization.e('e13272'),
+                id: 'answers',
+                type: "BOOLEAN",
+                value: true
+            },
+
+            followers: {
+                name: self.app.localization.e('e13273'),
+                id: 'followers',
+                type: "BOOLEAN",
+                value: true
+            },
+
+            rescued: {
+                name: self.app.localization.e('e13274'),
+                id: 'rescued',
+                type: "BOOLEAN",
+                value: true
+            },
+
+            commentScore: {
+                name: self.app.localization.e('e13275'),
+                id: 'commentScore',
+                type: "BOOLEAN",
+                value: true
+            },
+
+            embedvideo: {
+                name: self.app.localization.e('e13276'),
+                id: 'embedvideo',
+                type: "BOOLEAN",
+                value: true
+            },
+
+            videoautoplay2: {
+                name: self.app.localization.e('e13277'),
+                id: 'videoautoplay2',
+                type: "BOOLEAN",
+                value: false
+            },
+
+            videop2p: {
+                name: self.app.localization.e('videop2psettings'),
+                id: 'videop2p',
+                type: "BOOLEAN",
+                value: true
+            },
+
+            videoTranscoding: {
+                name: self.app.localization.e('settingsTranscoding'),
+                id: 'transcoding',
+                type: "BOOLEAN",
+                value: true
+            },
+
+            autostart: {
+                name: self.app.localization.e('e13278'),
+                id: 'autostart',
+                type: "BOOLEAN",
+                value: undefined
+            },
+
+            vidgetchat: {
+                name: self.app.localization.e('e13279'),
+                id: 'vidgetchat',
+                type: "BOOLEAN",
+                value: true
+            },
+
+            vidgettags: {
+                name: self.app.localization.e('e13280'),
+                id: 'vidgettags',
+                type: "BOOLEAN",
+                value: true
+            },
+
+            vidgetlastcomments: {
+                name: self.app.localization.e('e13281'),
+                id: 'vidgetlastcomments',
+                type: "BOOLEAN",
+                value: true
+            },
+
+            vidgetstaking: {
+                name: 'Staking Pocketcoin vidget',
+                id: 'vidgetstaking',
+                type: "BOOLEAN",
+                value: true
+            },
+
+            telegram: {
+                type: "STRINGANY",
+                name: self.app.localization.e('e13282'),
+                id: 'telegram',
+                placeholder: self.app.localization.e('e13282'),
+                value: (JSON.parse(localStorage.getItem('telegrambot')) && JSON.parse(localStorage.getItem('telegrambot')).token) || "",
+            },
+
+            tgfrom: {
+                type: "VALUES",
+                name: self.app.localization.e('e13283'),
+                id: 'tgfrom',
+                placeholder: self.app.localization.e('e13284'),
+                possibleValues: [],
+                possibleValuesLabels: [],
+                value: "",
+            },
+            tgto: {
+                type: "VALUES",
+                name: self.app.localization.e('e13287'),
+                id: 'tgto',
+                placeholder: self.app.localization.e('e13284'),
+                defaultValue: "",
+                value: "",
+                possibleValues: [],
+                possibleValuesLabels: [],
+
+            },
+            tgfromask: {
+                name: self.app.localization.e('e13285'),
+                id: 'tgfromask',
+                type: "BOOLEAN",
+                value: false
+            },
+            tgtoask: {
+                name: self.app.localization.e('e13286'),
+                id: 'tgtoask',
+                type: "BOOLEAN",
+                value: false
+            },
+            enablePeertube : {
+                name: 'Use PeerTube for uploading videos',
+                id : 'enablePeertube',
+                type : "BOOLEAN",
+                value : false,
+            },
+
+            hierarchicalShares : {
+                name: 'Hierarchical Post Feed',
+                id : 'hierarchicalShares',
+                type : "BOOLEAN",
+                value : false,
+            },
+
+            historicalShares : {
+                name: 'Historical Post Feed',
+                id : 'historicalShares',
+                type : "BOOLEAN",
+                value : false,
+            },
+
+            openlinksinelectron : {
+                name: self.app.localization.e('openlinkssettings'),
+                id : 'openlinksinelectron',
+                type : "BOOLEAN",
+                value : false,
+            },
+
+            sendUserStatistics : {
+                name: self.app.localization.e('sendUserStatistics'),
+                id : 'sendUserStatistics',
+                type : "BOOLEAN",
+                value : true,
+            },
+
+            canuseip: {
+                name: self.app.localization.e('canuseipsetting'),
+                id: 'canuseip',
+                type: "BOOLEAN",
+                value: false
+            },
+
+            useanimations: {
+                name: self.app.localization.e('useanimations'),
+                id: 'useanimations',
+                type: "BOOLEAN",
+                value: true
+            },
+
+        }
+    },
 
     self.errorHandler = function (key, action, akey) {
 
@@ -2226,6 +2472,7 @@ Platform = function (app, listofnodes) {
 
             var id = p.id || makeid()
 
+
             app.nav.api.load({
 
                 open : true,
@@ -2284,7 +2531,6 @@ Platform = function (app, listofnodes) {
 
             if(!_.isArray(ids)) ids = [ids]
 
-            console.log("IDS", ids)
 
             app.nav.api.load({
 
@@ -2366,6 +2612,7 @@ Platform = function (app, listofnodes) {
         },
 
         post: function (id, el, clbk, p) {
+
 
             if (!p) p = {}
 
@@ -2636,6 +2883,7 @@ Platform = function (app, listofnodes) {
             var caption = wr.find('.shareBgCaption')
             var capiontextclass = 'caption_small'
 
+
             if(share.caption.length > 10) capiontextclass = 'caption_medium'
             if(share.caption.length > 60) capiontextclass = 'caption_long'
 
@@ -2659,7 +2907,10 @@ Platform = function (app, listofnodes) {
 
                 setTimeout(function(){
                     wr.addClass('ready')
+                    if(clbk) clbk()
                 }, 150)
+
+                
 
             }
             else{
@@ -2691,6 +2942,7 @@ Platform = function (app, listofnodes) {
 
                     setTimeout(function(){
                         wr.addClass('ready')
+                        if(clbk) clbk()
                     }, 150)
 
 
@@ -2737,14 +2989,24 @@ Platform = function (app, listofnodes) {
 
         },
 
-        showCommentBanner : function(contextElem) {
+        showCommentBanner : function(contextElem, clbk) {
+
+            if (!app.platform.sdk.user.me()?.regdate) {
+                return 
+            }
 
             let bannerCommentComponent = null;
+            
             if (!contextElem) {
-                return bannerCommentComponent;
+                return;
             }
 
             const createComponent = () => {
+                self.app.Logger.info({
+                    actionId: 'COMMENT_BANNER_ALLOWED',
+                    value: true,
+                });
+
                 app.nav.api.load({
                     open: true,
                     id: 'commentBanner',
@@ -2753,12 +3015,25 @@ Platform = function (app, listofnodes) {
 
                     clbk : function(e, p){
                         bannerCommentComponent = p;
+
+                        if (clbk) {
+                            clbk(p)
+                        }
+
+                        if (p.el[0].constructor.name === 'HTMLDivElement') {
+                            self.app.Logger.info({
+                                actionId: 'COMMENT_BANNER_SHOWED',
+                                value: p.el[0].constructor.name,
+                            });
+                        }
+
+                        
                     }
                 });
             };
 
             const unixTimeNow = Math.floor(Date.now() / 1000);
-            const oneDayInSeconds = 86400000;
+            const oneDayInSeconds = 86400;
 
             const alreadyShowed = ('nextCommentBanner' in localStorage);
             const isBannerDisabled = (localStorage.nextCommentBanner == -1);
@@ -2772,25 +3047,24 @@ Platform = function (app, listofnodes) {
             const isOneDayOld = (registeredTime >= oneDayInSeconds);
 
             if (isBannerDisabled) {
-                console.log('banner showbanner', bannerCommentComponent);
-                return bannerCommentComponent;
+                return isBannerDisabled;
             }
 
             if (!isOneDayOld) {
                 createComponent();
-                return bannerCommentComponent;
+                //return bannerCommentComponent;
             }
 
             if (repeat && timeToShowBanner) {
                 localStorage.nextCommentBanner = unixTimeNow + oneDayInSeconds;
                 createComponent();
-                return bannerCommentComponent;
+                //return bannerCommentComponent;
             }
 
             if (timeToShowBanner || !alreadyShowed) {
                 localStorage.nextCommentBanner = 1;
                 createComponent();
-                return bannerCommentComponent;
+                //return bannerCommentComponent;
             }
 
         },
@@ -6800,6 +7074,23 @@ Platform = function (app, listofnodes) {
             saving : {},
             key : '',
 
+            getByMasterSwarmId : function(masterSwarmId){
+                var s = self.sdk.localshares.storage
+
+                var video = null
+
+                _.find(s, (share) => {
+                    return _.find(share.videos, function(v){
+                        if(v.infos && v.infos.videoDetails && v.infos.masterSwarmId == masterSwarmId) {
+                            video = v;
+                            return true
+                        }
+                    })
+                })
+
+                return video
+            },
+
             status : function(id){
                 if(self.sdk.localshares.storage[id]) return 'saved'
                 if(self.sdk.localshares.saving[id]) return 'saving'
@@ -6818,7 +7109,6 @@ Platform = function (app, listofnodes) {
                 self.sdk.localshares.init().then(r => {
                     if(clbk) clbk()
                 }).catch(e => {
-                    console.error(e)
                     if(clbk) clbk()
                 })
             },
@@ -7016,7 +7306,7 @@ Platform = function (app, listofnodes) {
 
                                     var infos = {
                                         thumbnail: 'https://' + videoDetails.from + videoDetails.thumbnailPath,
-                                        videoDetails : videoDetails
+                                        videoDetails : videoDetails,
                                     }
 
                                     dirEntry4.getFile('info.json', { create: true }, function (infoFile) {
@@ -7094,6 +7384,7 @@ Platform = function (app, listofnodes) {
                         return Promise.reject('todo')
                     }
                 },
+             
                 share : {
                     cordova : function(share){
 
@@ -7322,6 +7613,7 @@ Platform = function (app, listofnodes) {
 
                         const videoData = await electron.ipcRenderer
                             .invoke('getVideoData', shareId, videoId);
+
 
                         videosDataList[videoId] = videoData;
 
@@ -8237,6 +8529,9 @@ Platform = function (app, listofnodes) {
             },
 
             newmaterials : function(counts){
+
+                if(!self.sdk.sharesObserver.storage.viewed) self.sdk.sharesObserver.storage.viewed = {}
+
                 _.each(counts, (c, i) => {
                     if (self.sdk.sharesObserver.storage.viewed[i]){
                         self.sdk.sharesObserver.storage.viewed[i].new = (self.sdk.sharesObserver.storage.viewed[i].new || 0) + c
@@ -8254,6 +8549,7 @@ Platform = function (app, listofnodes) {
 
             hasnew : function(key){
 
+                if(!self.sdk.sharesObserver.storage.viewed) self.sdk.sharesObserver.storage.viewed = {}
 
                 if(!self.sdk.sharesObserver.storage.viewed[key]) return true
 
@@ -8279,10 +8575,9 @@ Platform = function (app, listofnodes) {
 
                 if(key == 'saved') return
 
+                if(!self.sdk.sharesObserver.storage.viewed) self.sdk.sharesObserver.storage.viewed = {}
+
                 if(!self.sdk.sharesObserver.storage.viewed[key]) self.sdk.sharesObserver.storage.viewed[key] = {}
-
-
-                console.log('self.sdk.sharesObserver.storage.viewed[key].first < first', key, self.sdk.sharesObserver.storage.viewed[key].first , first)
 
                 if (!self.sdk.sharesObserver.storage.viewed[key].first || self.sdk.sharesObserver.storage.viewed[key].first <= first){
 
@@ -8427,6 +8722,11 @@ Platform = function (app, listofnodes) {
                 t.set()
 
                 if (clbk) clbk()
+
+                self.sdk.syncStorage.on('change', 'usertheme', (e) => {
+                    t.current = localStorage.usertheme;
+                    t.set();
+                });
             },
 
             setstyles : function(){
@@ -8627,238 +8927,7 @@ Platform = function (app, listofnodes) {
 
         usersettings: {
 
-            meta: {
-
-                preview: {
-                    name: self.app.localization.e('disablePreview'),
-                    id: 'preview',
-                    type: "BOOLEAN",
-                    value: false
-                },
-
-                sound: {
-                    name: self.app.localization.e('sound'),
-                    id: 'sound',
-                    type: "BOOLEAN",
-                    value: true
-                },
-
-                win: {
-                    name: self.app.localization.e('e13268'),
-                    id: 'win',
-                    type: "BOOLEAN",
-                    value: true
-                },
-
-                transactions: {
-                    name: self.app.localization.e('e13269'),
-                    id: 'transactions',
-                    type: "BOOLEAN",
-                    value: true
-                },
-
-                upvotes: {
-                    name: self.app.localization.e('e13270'),
-                    id: 'upvotes',
-                    type: "BOOLEAN",
-                    value: true
-                },
-
-                downvotes: {
-                    name: 'Downvotes receive',
-                    id: 'downvotes',
-                    type: "BOOLEAN",
-                    value: false
-                },
-
-                comments: {
-                    name: self.app.localization.e('e13271'),
-                    id: 'comments',
-                    type: "BOOLEAN",
-                    value: true
-                },
-
-                answers: {
-                    name: self.app.localization.e('e13272'),
-                    id: 'answers',
-                    type: "BOOLEAN",
-                    value: true
-                },
-
-                followers: {
-                    name: self.app.localization.e('e13273'),
-                    id: 'followers',
-                    type: "BOOLEAN",
-                    value: true
-                },
-
-                rescued: {
-                    name: self.app.localization.e('e13274'),
-                    id: 'rescued',
-                    type: "BOOLEAN",
-                    value: true
-                },
-
-                commentScore: {
-                    name: self.app.localization.e('e13275'),
-                    id: 'commentScore',
-                    type: "BOOLEAN",
-                    value: true
-                },
-
-                embedvideo: {
-                    name: self.app.localization.e('e13276'),
-                    id: 'embedvideo',
-                    type: "BOOLEAN",
-                    value: true
-                },
-
-                videoautoplay2: {
-                    name: self.app.localization.e('e13277'),
-                    id: 'videoautoplay2',
-                    type: "BOOLEAN",
-                    value: false
-                },
-
-                videop2p: {
-                    name: self.app.localization.e('videop2psettings'),
-                    id: 'videop2p',
-                    type: "BOOLEAN",
-                    value: true
-                },
-
-                videoTranscoding: {
-                    name: self.app.localization.e('settingsTranscoding'),
-                    id: 'transcoding',
-                    type: "BOOLEAN",
-                    value: true
-                },
-
-                autostart: {
-                    name: self.app.localization.e('e13278'),
-                    id: 'autostart',
-                    type: "BOOLEAN",
-                    value: undefined
-                },
-
-                vidgetchat: {
-                    name: self.app.localization.e('e13279'),
-                    id: 'vidgetchat',
-                    type: "BOOLEAN",
-                    value: true
-                },
-
-                vidgettags: {
-                    name: self.app.localization.e('e13280'),
-                    id: 'vidgettags',
-                    type: "BOOLEAN",
-                    value: true
-                },
-
-                vidgetlastcomments: {
-                    name: self.app.localization.e('e13281'),
-                    id: 'vidgetlastcomments',
-                    type: "BOOLEAN",
-                    value: true
-                },
-
-                vidgetstaking: {
-                    name: 'Staking Pocketcoin vidget',
-                    id: 'vidgetstaking',
-                    type: "BOOLEAN",
-                    value: true
-                },
-
-                telegram: {
-                    type: "STRINGANY",
-                    name: self.app.localization.e('e13282'),
-                    id: 'telegram',
-                    placeholder: self.app.localization.e('e13282'),
-                    value: (JSON.parse(localStorage.getItem('telegrambot')) && JSON.parse(localStorage.getItem('telegrambot')).token) || "",
-                },
-
-                tgfrom: {
-                    type: "VALUES",
-                    name: self.app.localization.e('e13283'),
-                    id: 'tgfrom',
-                    placeholder: self.app.localization.e('e13284'),
-                    possibleValues: [],
-                    possibleValuesLabels: [],
-                    value: "",
-                },
-                tgto: {
-                    type: "VALUES",
-                    name: self.app.localization.e('e13287'),
-                    id: 'tgto',
-                    placeholder: self.app.localization.e('e13284'),
-                    defaultValue: "",
-                    value: "",
-                    possibleValues: [],
-                    possibleValuesLabels: [],
-
-                },
-                tgfromask: {
-                    name: self.app.localization.e('e13285'),
-                    id: 'tgfromask',
-                    type: "BOOLEAN",
-                    value: false
-                },
-                tgtoask: {
-                    name: self.app.localization.e('e13286'),
-                    id: 'tgtoask',
-                    type: "BOOLEAN",
-                    value: false
-                },
-                enablePeertube : {
-					name: 'Use PeerTube for uploading videos',
-					id : 'enablePeertube',
-					type : "BOOLEAN",
-					value : false,
-				},
-
-                hierarchicalShares : {
-					name: 'Hierarchical Post Feed',
-					id : 'hierarchicalShares',
-					type : "BOOLEAN",
-					value : false,
-				},
-
-                historicalShares : {
-					name: 'Historical Post Feed',
-					id : 'historicalShares',
-					type : "BOOLEAN",
-					value : false,
-				},
-
-                openlinksinelectron : {
-					name: self.app.localization.e('openlinkssettings'),
-					id : 'openlinksinelectron',
-					type : "BOOLEAN",
-					value : false,
-				},
-
-                sendUserStatistics : {
-                    name: self.app.localization.e('sendUserStatistics'),
-					id : 'sendUserStatistics',
-					type : "BOOLEAN",
-					value : true,
-                },
-
-                canuseip: {
-                    name: self.app.localization.e('canuseipsetting'),
-                    id: 'canuseip',
-                    type: "BOOLEAN",
-                    value: false
-                },
-
-                useanimations: {
-                    name: self.app.localization.e('useanimations'),
-                    id: 'useanimations',
-                    type: "BOOLEAN",
-                    value: true
-                },
-
-            },
+            meta: self.__getSettingsMeta(),
 
             //self.canuseip
 
@@ -8885,6 +8954,7 @@ Platform = function (app, listofnodes) {
             },
 
             compose: function (make) {
+
                 var s = self.sdk.usersettings;
 
                 var options = s.createall()
@@ -9118,8 +9188,9 @@ Platform = function (app, listofnodes) {
             },
 
             init: function (clbk) {
+
                 var values = self.sdk.usersettings.load();
-                var m = self.sdk.usersettings.meta;
+                var m = self.sdk.usersettings.meta = self.__getSettingsMeta();
 
                 if (self.app.platform.sdk.address.pnet() && self.istest()){
 
@@ -9793,6 +9864,9 @@ Platform = function (app, listofnodes) {
                     return true
                 }
 
+                //console.log('ustate.regdate.addDays(7)', ustate.regdate.addDays(7) > new Date())
+                //ustate.regdate && ustate.regdate.addDays(7) > new Date() 
+                
                 if(moment().diff(ustate.regdate, 'days') <= 7 && totalComplains  > 20 ) {
                     return true
                 }
@@ -10302,7 +10376,9 @@ Platform = function (app, listofnodes) {
 
                     var l = Number(state[metrica.key + "_unspent"])
 
-                    return metrica.bad(l)
+                    var m = Number(state[metrica.key + "_unspent"]) + Number(state[metrica.key + "_spent"])
+
+                    return metrica.bad(l, m)
 
                 })
             },
@@ -10355,8 +10431,8 @@ Platform = function (app, listofnodes) {
                         key : 'post',
                         vis : 'scale',
                         name : self.app.localization.e('spc'),
-                        bad : function(v){
-                            if(v <= 3) return true
+                        bad : function(remains, limit){
+                            if(remains <= 3) return true
                         }
                     },
 
@@ -10364,8 +10440,12 @@ Platform = function (app, listofnodes) {
                         key : 'video',
                         vis : 'scale',
                         name : self.app.localization.e('spv'),
-                        bad : function(v){
-                            if(v <= 3) return true
+                        bad : function(remains, limit){
+                            if (limit <= 3) return false
+							
+							if (remains <= 1) {
+								return true
+							}
                         }
                     },
 
@@ -10373,8 +10453,8 @@ Platform = function (app, listofnodes) {
                         key : 'score',
                         vis : 'scale',
                         name : self.app.localization.e('ssc'),
-                        bad : function(v){
-                            if(v <= 7) return true
+                        bad : function(remains, limit){
+                            if(remains <= 7) return true
                         }
                     },
 
@@ -10382,8 +10462,8 @@ Platform = function (app, listofnodes) {
                         key : 'comment',
                         vis : 'scale',
                         name : self.app.localization.e('ccc'),
-                        bad : function(v){
-                            if(v <= 7) return true
+                        bad : function(remains, limit){
+                            if(remains <= 7) return true
                         }
                     },
 
@@ -10391,7 +10471,7 @@ Platform = function (app, listofnodes) {
                         key : 'comment_score',
                         vis : 'scale',
                         name : self.app.localization.e('crc'),
-                        bad : function(v){
+                        bad : function(v, limit){
                             if(v <= 10) return true
                         }
                     },
@@ -10400,10 +10480,24 @@ Platform = function (app, listofnodes) {
                         key : 'complain',
                         vis : 'scale',
                         name : self.app.localization.e('ccpl'),
-                        bad : function(v){
-                            if(v <= 3) return true
+                        bad : function(remains, limit){
+                            if(remains <= 3) return true
                         }
-                    }
+                    },
+
+                    article : {
+						key : 'article',
+						vis : 'scale',
+						name : self.app.localization.e('artc'),
+						bad : function(remains, limit){
+
+                            if (limit <= 3) return false
+							
+							if (remains <= 1) {
+								return true
+							}
+						},
+					}
                 }
             }
 
@@ -10974,6 +11068,10 @@ Platform = function (app, listofnodes) {
             }
         },
 
+        userscl: {
+            storage: {},
+        },
+
         usersl: {
             storage: {},
         },
@@ -11135,7 +11233,7 @@ Platform = function (app, listofnodes) {
                                 s[address] = u;
 
                                 self.sdk.usersl.storage[address] = u;
-
+                                self.sdk.userscl.storage[address] = data
 
                             }
 
@@ -11199,6 +11297,7 @@ Platform = function (app, listofnodes) {
 
                                 s[a] = u;
                                 self.sdk.usersl.storage[a] = u;
+                                self.sdk.userscl.storage[a] = data
 
                             })
 
@@ -11417,7 +11516,7 @@ Platform = function (app, listofnodes) {
             },
 
             replacePattern: function (str, h, p) {
-
+                
                 var sreg = /(?:^|\s)@([a-zA-Z0-9_]+)/g
 
                 var name = str.match(sreg);
@@ -11427,8 +11526,18 @@ Platform = function (app, listofnodes) {
                 }
                 else {
                     var cname = h(name, p)
-
-                    return str.replace(sreg, cname)
+                    // return cname
+                    var counter = 0
+                    return str.replace(sreg, (match)=>{
+                        if(match){
+                            counter++
+                        }
+                        if(counter === 1 ){
+                            return cname
+                        }else{
+                            return ' '
+                        }
+                    })
                 }
 
             },
@@ -12772,9 +12881,12 @@ Platform = function (app, listofnodes) {
 
                         if (!s[url])
                             f[url] = true
-
-                        if (clbk)
-                            clbk(s[url])
+    
+                        if (clbk) {
+                            if (s[url].title) s[url].title = decodeEntities(s[url].title);
+                            if (s[url].description) s[url].description = decodeEntities(s[url].description);
+                            clbk(s[url]);
+                        }
 
                     }).catch(e => {
                         f[url] = true
@@ -18346,7 +18458,7 @@ Platform = function (app, listofnodes) {
                     },
 
                     balanceAr: function (clbk, addresses, update, canSpend) {
-                        this.unspents(function (us, e) {
+                        self.sdk.node.transactions.get.unspents(function (us, e) {
 
                             var total = 0;
 
@@ -18383,7 +18495,7 @@ Platform = function (app, listofnodes) {
                     allBalance: function (clbk, update) {
                         var addresses = [self.sdk.address.pnet().address].concat(self.sdk.addresses.storage.addresses || [])
 
-                        this.balanceAr(clbk, addresses, update)
+                        self.sdk.node.transactions.get.balanceAr(clbk, addresses, update)
                     },
 
                     canSpend: function (addresses, clbk) {
@@ -18392,7 +18504,7 @@ Platform = function (app, listofnodes) {
 
                         if (!_.isArray(addresses)) addresses = [addresses];
 
-                        this.balance(function (total, us) {
+                        self.sdk.node.transactions.get.balance(function (total, us) {
 
                             var usCanSpend = _.filter(us, self.sdk.node.transactions.canSpend);
 
@@ -18412,11 +18524,11 @@ Platform = function (app, listofnodes) {
                     balance: function (clbk, address, update, canSpend) {
 
                         if (_.isArray(address)) {
-                            this.balanceAr(clbk, address, update, canSpend)
+                            self.sdk.node.transactions.get.balanceAr(clbk, address, update, canSpend)
 
                         }
                         else {
-                            this.unspent(function (unspent, e) {
+                            self.sdk.node.transactions.get.unspent(function (unspent, e) {
 
                                 if (canSpend) {
                                     unspent = _.filter(unspent, self.sdk.node.transactions.canSpend)
@@ -18955,6 +19067,7 @@ Platform = function (app, listofnodes) {
                     },
 
                     commonFromUnspent: function (obj, clbk, p, telegram) {
+
                         if (!p) p = {};
 
                         if (self.sdk.address.pnet() && !obj.fromrelay) {
@@ -19005,13 +19118,84 @@ Platform = function (app, listofnodes) {
 
                             if(!(obj.donate && obj.donate.v.length) && obj.type !== 'contentBoost'){
                                 inputs = self.sdk.node.transactions.create.selectBestInputs(unspent)
-                            }
-
-                            var totalInputs = _.reduce(inputs, function(m, i){
-                                return m + i.amount
-                            }, 0)
+                            };
 
                             var feerate = TXFEE;
+
+                            unspent.sort((a, b) => a.amount > b.amount ? 1 : -1);
+
+                            var selectBestUnspent = (arr, min) => {
+
+                                if (!(arr && arr.length)) return [];
+
+                                var slicedArr = [];
+
+                                for (var u of arr){
+                                    
+                                   slicedArr.push({
+                                        txId: u.txid,
+                                        vout: u.vout,
+                                        amount: u.amount,
+                                        scriptPubKey: u.scriptPubKey,
+                                    });    
+
+                                   if (u.amount > min) break;
+
+                                }
+
+                                var overInput;
+
+                                var lastIdx = slicedArr.length - 1
+                                
+                                if (slicedArr[lastIdx].amount > min){
+
+                                    overInput = slicedArr.splice(lastIdx, 1)[0];
+
+                                }
+
+
+                                var preparedInputs = [];
+                                var amountSeveralInputs = 0;
+
+                                for (var u of slicedArr){
+
+                                    amountSeveralInputs += u.amount;
+
+                                    preparedInputs.push(u)
+
+                                    if (amountSeveralInputs > min){
+
+                                        break;
+
+                                    }
+
+                                }
+
+
+                                if (!overInput || (min < amountSeveralInputs && overInput.amount > amountSeveralInputs)){
+
+                                    var slicedInputs = preparedInputs;
+
+                                    for (let i = 0; i < preparedInputs.length; i++){
+
+                                        if (min >= amountSeveralInputs - slicedInputs[0].amount){
+
+                                            break;
+                                        } 
+
+                                        amountSeveralInputs -= slicedInputs[0].amount;
+                                        slicedInputs = slicedInputs.slice(1);
+
+
+                                    }
+
+                                    return {inputs: slicedInputs, totalInputs: amountSeveralInputs};
+                                }
+
+                                return {inputs: [overInput], totalInputs: overInput.amount};
+
+
+                            }
 
                             if (obj.donate && obj.donate.v.length){
 
@@ -19025,36 +19209,17 @@ Platform = function (app, listofnodes) {
 
                                 })
 
-                                var lastUnspent = _.clone(unspent).reverse();
+                                var best = selectBestUnspent(unspent, totalDonate + feerate);
 
-
-                                for (var u of lastUnspent){
-
-                                    if (totalDonate + feerate >= totalInputs){
-
-                                        totalInputs += u.amount;
-
-                                        inputs.push({
-                                            txId: u.txid,
-                                            vout: u.vout,
-                                            amount: u.amount,
-                                            scriptPubKey: u.scriptPubKey,
-                                        })
-
-
-                                    } else {
-
-                                        break;
-                                    }
-
-                                }
+                                var totalInputs = best.totalInputs;
+                                var inputs = best.inputs;
 
                                 if (totalDonate >= totalInputs){
 
                                     //sitemessage(self.app.localization.e('e13117'))
 
                                     if (clbk){
-                                        clbk(null, self.app.localization.e('e13117'));
+                                        clbk(null, self.app.localization.e('incoins'));
                                     }
 
                                     return;
@@ -19067,28 +19232,11 @@ Platform = function (app, listofnodes) {
                             if (obj.type === 'contentBoost' && obj.amount.v){
 
                                 feerate = 0;
+                                
+                                var best = selectBestUnspent(unspent, obj.amount.v + 0.00001);
 
-                                var lastUnspent = _.clone(unspent).reverse();
-
-                                for (var u of lastUnspent){
-
-                                    if (obj.amount.v >= totalInputs){
-
-                                        totalInputs += u.amount;
-
-                                        inputs.push({
-                                            txId: u.txid,
-                                            vout: u.vout,
-                                            amount: u.amount,
-                                            scriptPubKey: u.scriptPubKey,
-                                        })
-
-                                    } else {
-
-                                        break;
-                                    }
-
-                                }
+                                var totalInputs = best.totalInputs;
+                                var inputs = best.inputs;
 
                                 if (obj.amount.v > totalInputs){
 
@@ -19359,7 +19507,7 @@ Platform = function (app, listofnodes) {
                                     if (obj.donate && obj.donate.v.length){
 
                                         obj.donate.v.forEach(function(d){
-                                            var donate = Number(d.amount) * smulti;
+                                            var donate = Math.round(Number(d.amount) * smulti);
 
                                             totalDonate += donate
 
@@ -19385,7 +19533,7 @@ Platform = function (app, listofnodes) {
                                     if (obj.donate && obj.donate.v.length && (totalReturn < 0 || totalDonate <= fees)){
 
                                         if (clbk){
-                                            clbk(null, 'tosmallamount')
+                                            clbk(null, self.app.localization.e('tosmallamount'))
                                         }
 
                                         return;
@@ -22530,7 +22678,40 @@ Platform = function (app, listofnodes) {
 
                 if(clbk) clbk()
             }
-        }
+        },
+
+        syncStorage: {
+            eventListeners: {},
+            on(eventType, lStorageProp, callback) {
+                if (typeof this.eventListeners[lStorageProp] !== 'object') {
+                    this.eventListeners[lStorageProp] = {};
+                }
+
+                this.eventListeners[lStorageProp][eventType] = callback;
+            },
+            off(eventType, lStorageProp) {
+                delete this.eventListeners[lStorageProp][eventType];
+
+                if (Object.keys(this.eventListeners[lStorageProp]).length === 0) {
+                    delete this.eventListeners[lStorageProp];
+                }
+            },
+            init() {
+                window.addEventListener('storage', (e) => {
+                    if (!e.oldValue) {
+                        this.eventListeners[e.key]?.create?.(e);
+                        return;
+                    }
+
+                    if (!e.newValue) {
+                        this.eventListeners[e.key]?.delete?.(e);
+                        return;
+                    }
+
+                    this.eventListeners[e.key]?.change?.(e);
+                });
+            },
+        },
     }
 
 
@@ -27112,6 +27293,10 @@ Platform = function (app, listofnodes) {
 
     self.prepare = function (clbk) {
 
+        if (typeof _Electron === 'undefined' && !window.cordova) {
+            self.sdk.syncStorage.init();
+        }
+
         self.nodeControlUpdateNodeLast = new Date()
         self.nodeControlUpdateNodePopup = false
         self.preparing = true;
@@ -27384,10 +27569,12 @@ Platform = function (app, listofnodes) {
                     self.sdk.node.transactions.loadTemp,
                     self.sdk.addresses.init,
                     self.sdk.ustate.me,
+                    self.sdk.user.get,
                     self.sdk.usersettings.init,
-
+                    self.matrixchat.importifneed,
                     self.ws.init,
                     self.firebase.init,
+                    /*self.app.platform.sdk.node.transactions.get.allBalance,*/
 
                     //self.sdk.exchanges.load,
                     self.sdk.articles.init,
@@ -27395,8 +27582,6 @@ Platform = function (app, listofnodes) {
                     self.sdk.activity.load,
                     self.sdk.node.shares.parameters.load,
                     self.sdk.sharesObserver.load,
-                    self.sdk.user.get,
-
                     self.sdk.comments.loadblocked
 
                 ], function () {
@@ -27416,16 +27601,12 @@ Platform = function (app, listofnodes) {
 
                     self.loadingWithErrors = !_.isEmpty(self.app.errors.state)
 
-
-
+                    setTimeout(() => {
+                        self.matrixchat.init()
+                    }, 10)
 
                     if (clbk)
                         clbk()
-
-                    setTimeout(function(){
-                        self.matrixchat.init()
-
-                    }, 300)
 
                     setTimeout(self.acceptterms, 5000)
 
@@ -27474,7 +27655,7 @@ Platform = function (app, listofnodes) {
 
         })
 
-        setTimeout(() => {
+        /*setTimeout(() => {
             app.user.isState(function(state){
 
                 if(app.nav.current.href == 'index'){
@@ -27501,7 +27682,7 @@ Platform = function (app, listofnodes) {
                 }
                 
             })
-        }, 30000)
+        }, 30000)*/
 
     }
 
@@ -27548,7 +27729,6 @@ Platform = function (app, listofnodes) {
 
         },
 
-
         import : function(clbk){
 
 
@@ -27566,7 +27746,7 @@ Platform = function (app, listofnodes) {
                     var vs = '10'
 
                     if (typeof numfromreleasestring != 'undefined'){
-                        vs = numfromreleasestring(window.packageversion)
+                        vs = numfromreleasestring(window.packageversion) + '_' + (window.versionsuffix || "0")
                     }
 
                     importScript('chat/matrix-element.min.js?v=' + vs, clbk)
@@ -27595,13 +27775,27 @@ Platform = function (app, listofnodes) {
 
         },
 
+        importifneed : function(clbk){
+            
+            app.user.isState(function(state){
+
+                if(self.matrixchat.inited || self.matrixchat.initing || _OpenApi || !state) {
+                    if(clbk) clbk()
+
+                    return
+                }
+
+                    self.matrixchat.import(clbk)
+            })
+        },
+
         init : function(){
 
             if(self.matrixchat.inited) return
             if(self.matrixchat.initing) return
+            if(_OpenApi) return
 
             self.matrixchat.initing = true
-
 
             app.user.isState(function(state){
 
@@ -27628,7 +27822,7 @@ Platform = function (app, listofnodes) {
                                     address="${a}"
                                     privatekey="${privatekey}"
                                     pocketnet="`+( self.app.mobileview ? '' : 'true')+`"
-                                    recording="`+(self.istest() || self.app.test ? 'true' : '' )+`"
+                                    recording="true"
                                     mobile="`+( self.app.mobileview ? 'true' : '')+`" 
                                     ctheme="`+self.sdk.theme.current+`"
                                     localization="`+self.app.localization.key+`"
@@ -27652,9 +27846,21 @@ Platform = function (app, listofnodes) {
             })
         },
 
+        initcl : function(clbk){
+            self.matrixchat.init()
+            if(clbk) clbk()
+        },
+
         changeFcm : function(){
             if (self.matrixchat.el){
                 self.matrixchat.el.find('matrix-element').attr('fcmtoken', self.fcmtoken)
+            }
+        },
+
+        changeMobile : function(){
+            if (self.matrixchat.el){
+                self.matrixchat.el.find('matrix-element').attr('mobile', ( self.app.mobileview ? 'true' : ''))
+                self.matrixchat.el.find('matrix-element').attr('pocketnet', ( self.app.mobileview ? '' : 'true'))
             }
         },
 
@@ -27679,8 +27885,12 @@ Platform = function (app, listofnodes) {
         initevents : function(){
             if (self.matrixchat.el){
 
-                if(self.app.mobileview){
+                if (self.app.mobileview){
 
+
+                    if(self.matrixchat.chatparallax) return
+
+                    
                     self.matrixchat.chatparallax = new SwipeParallaxNew({
 
                         el : self.matrixchat.el,
@@ -27699,7 +27909,11 @@ Platform = function (app, listofnodes) {
 
                                 constraints : function(e){
 
-                                    if(_.find(e.path, function(el){
+                                    var path = e.path
+
+                                    if(!e.path && e.composedPath) path = e.composedPath()
+
+                                    if(_.find(path, function(el){
                                         return el.className && el.className.indexOf('noswipepnt') > -1
                                     })) return false
 
@@ -27721,8 +27935,14 @@ Platform = function (app, listofnodes) {
 
                     }).init()
 
-
 				}
+
+                else{
+                    if (self.matrixchat.chatparallax) {
+                        self.matrixchat.chatparallax.destroy()
+                        self.matrixchat.chatparallax = null
+                    }
+                }
 
                 self.matrixchat.clbks.NOTIFICATION.global = self.matrixchat.notify.event
 
@@ -27912,11 +28132,13 @@ Platform = function (app, listofnodes) {
 
             core.backtoapp = function(link){
 
+
                 if (self.app.mobileview)
                     app.nav.api.history.removeParameters(['pc'], null, {replaceState : true})
 
                 if (link){
-                    link = link.replace('https://' + self.app.options.url + '/', '')
+                    link = link.replace('https://' + self.app.options.url + '/', '').replace('https://' + window.pocketnetdomain + '/', '')
+
 
                     if(link.indexOf('index') == '0' && link.indexOf('v=') == -1 &&
                         (link.indexOf('s=') > -1 || link.indexOf('i=') > -1 || link.indexOf('p=') > -1))
@@ -27987,9 +28209,7 @@ Platform = function (app, listofnodes) {
                 if (self.matrixchat.el){
 
                     if (self.matrixchat.el.hasClass('active')) return
-
                         self.matrixchat.el.addClass('active')
-
 
                 }
                 else{
@@ -28102,6 +28322,7 @@ Platform = function (app, listofnodes) {
             if(!self.matrixchat.connectWith && !self.matrixchat.joinRoom) return
             if(!self.matrixchat.core) return
 
+
             self.matrixchat.core.apptochat()
 
 
@@ -28209,8 +28430,10 @@ Platform = function (app, listofnodes) {
                 if (self.focus) return
 
                 if (self.app.pipwindow && self.app.pipwindow.playerstatus && self.app.pipwindow.playerstatus() == 'playing'){
-
                     self.app.mobile.pip.enable(self.app.pipwindow.el)
+                }
+                else{
+                    
                 }
 
             }, 200)
@@ -28249,6 +28472,27 @@ Platform = function (app, listofnodes) {
 
                 electron.ipcRenderer.on('pause-message', ufel)
                 electron.ipcRenderer.on('resume-message', f)
+
+
+                electron.ipcRenderer.on('win-cross', () => {
+                    setTimeout(function(){
+
+                        if (self.focus) return
+        
+                        if (self.app.pipwindow && self.app.pipwindow.playerstatus && self.app.pipwindow.playerstatus() == 'playing'){
+                           
+                        }
+                        else{
+                            if (self.app.playingvideo){
+                                self.app.playingvideo.pause()
+                            }
+                        }
+        
+                    }, 200)
+                })
+
+
+                
 
             }
 
