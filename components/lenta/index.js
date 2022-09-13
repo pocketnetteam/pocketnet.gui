@@ -572,6 +572,7 @@ var lenta = (function(){
 			},	
 
 			loadmore : function(loadclbk){
+				essenseData.page = ++essenseData.page
 				actions.observe()
 
 				renders.loader(true)
@@ -2304,7 +2305,7 @@ var lenta = (function(){
 
 				if(!essenseData.horizontal){
 					if (
-						!loading && !ended && (recommended != 'recommended' || isMobile()) &&
+						!loading && !ended &&
 
 						(self.app.lastScrollTop + self.app.height > document.body.scrollHeight - 2000) 
 
@@ -4137,7 +4138,7 @@ var lenta = (function(){
 
 						if(!error && !error2){
 
-							if(!shares || !shares.length || ((shares.length < pr.count) || recommended == 'recommended')){								
+							if(!shares || !shares.length || (shares.length < pr.count)){
 
 								if(!beginmaterial && !countshares && !includingsub){
 									el.c.addClass("sharesZero")
@@ -4145,7 +4146,7 @@ var lenta = (function(){
 								else
 								{
 		
-									if ( !essenseData.txids && (shares.length < pr.count || recommended == 'recommended') && (recommended || author || essenseData.search || essenseData.tags) ){
+									if ( !essenseData.txids && (shares.length < pr.count) && (recommended || author || essenseData.search || essenseData.tags) ){
 		
 										setTimeout(function(){
 											if (el.c)
@@ -4161,6 +4162,11 @@ var lenta = (function(){
 
 									if(essenseData.ended) {
 										ended = essenseData.ended(shares)
+									}
+
+									//720 is a month depth
+									if (pr.page < 720) {
+										ended = false
 									}
 
 									else
@@ -4384,6 +4390,10 @@ var lenta = (function(){
 									loader = 'getsubscribesfeed'
 								}
 
+								else if(recommended == 'best'){
+									loader = 'best'
+								}
+
 								else if(recommended == 'hot'){
 								}
 
@@ -4412,7 +4422,7 @@ var lenta = (function(){
 							}
 
 
-							var count = 10
+							var count = 20
 
 							if(essenseData.txids && recommended != 'b'){
 								loader = 'txids'
@@ -4448,7 +4458,6 @@ var lenta = (function(){
 							
 
 							if(essenseData.count) count = essenseData.count
-							else if (recommended == 'recommended') count = 30
 							else if (video) count = 20
 
 							if(state && essenseData.includesub && loader == 'hierarchical' && !subloaded){

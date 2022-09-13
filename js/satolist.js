@@ -16981,7 +16981,7 @@ Platform = function (app, listofnodes) {
 
                     self.app.user.isState(function (state) {
 
-                        p.count || (p.count = '30')
+                        p.count || (p.count = '20')
 
                         if (state) {
                             p.address = self.sdk.address.pnet().address;
@@ -16998,7 +16998,7 @@ Platform = function (app, listofnodes) {
                         }
                         else {
 
-                            var period = p.period || self.sdk.node.shares.parameters.stor.period || self.sdk.node.shares.parameters.defaults.period || '4320' ///self.sdk.node.shares.parameters.defaults.period
+                            var period = p.period || self.sdk.node.shares.parameters.stor.period || 60 ///self.sdk.node.shares.parameters.defaults.period
 
                             var page = p.page || 0
 
@@ -17011,6 +17011,95 @@ Platform = function (app, listofnodes) {
                             if (p.type){
                                 parameters.push(p.type)
                             }
+
+                            self.sdk.node.shares.get(parameters, function (shares, error) {
+
+                                if (shares) {
+
+                                    self.sdk.node.shares.loadvideoinfoifneed(shares, p.type == 'video', function(){
+
+                                        if (state) {
+                                            _.each(self.sdk.relayTransactions.withtemp('blocking'), function (block) {
+                                                _.each(shares, function (s) {
+                                                    if (s.address == block.address) s.blocking = true;
+                                                })
+                                            })
+                                        }
+
+
+
+                                        if(p.type == 'video'){
+                                            shares = _.filter(shares, function(share){
+
+                                                if(!share.url) return
+
+                                                var meta = app.platform.parseUrl(share.url);
+
+                                                if((meta.type == 'youtube') || meta.type == 'vimeo' || meta.type == 'bitchute' || meta.type == 'peertube'){
+
+                                                    if (self.sdk.videos.storage[share.url] && self.sdk.videos.storage[share.url].data)
+                                                        return true
+                                                }
+                                            })
+                                        }
+
+                                        storage[key] = shares;
+
+                                        if (clbk)
+                                            clbk(storage[key], error, p)
+
+                                    })
+
+
+                                }
+
+                                else {
+                                    if (clbk)
+                                        clbk(shares, error, p)
+                                }
+
+                            }, methodparams.method || 'gethotposts')
+
+
+                        }
+
+                    })
+                },
+				best: function (p, clbk, cache, methodparams) {
+
+                    if(!methodparams) methodparams = {}
+
+                    if (!p) p = {};
+
+
+                    self.app.user.isState(function (state) {
+
+                        p.count || (p.count = '20')
+
+                        if (state) {
+                            p.address = self.sdk.address.pnet().address;
+                        }
+
+                        var storage = self.sdk.node.shares.storage
+                        var key = 'best'
+
+                        if (cache == 'cache' && storage[key]) {
+
+                            if (clbk)
+                                clbk(storage[key], null, p)
+
+                        }
+                        else {
+
+							var period =  '60' ///self.sdk.node.shares.parameters.defaults.period
+
+							var page = p.page || 0
+                            var parameters = []
+							parameters = [p.count.toString(), period, (period * page) || '', self.app.localization.key]
+
+							if (p.type){
+								parameters.push(p.type)
+							}
 
                             self.sdk.node.shares.get(parameters, function (shares, error) {
 

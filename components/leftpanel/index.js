@@ -276,7 +276,8 @@ var leftpanel = (function(){
 
 			top : function(){
 				renders.menu()
-				renders.top()
+				//Period selector
+				// renders.top()
 			}
 		}
 
@@ -293,7 +294,7 @@ var leftpanel = (function(){
 				return
 			}
 
-			if(pps.r == 'recommended'){
+			if(pps.r == 'recommended' || pps.r == 'best'){
 				makers.top()
 				return
 			}
