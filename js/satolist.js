@@ -23192,7 +23192,7 @@ Platform = function (app, listofnodes) {
             },
 
             comment: function (comment, share) {
-				debugger
+
                 var t = comment.renders.previewEmojidis();
 
 
@@ -23430,7 +23430,7 @@ Platform = function (app, listofnodes) {
             },
 
             subscribe: function (author) {
-				debugger
+
                 var me = deep(app, 'platform.sdk.users.storage.' + platform.sdk.address.pnet().address) || deep(app, 'platform.sdk.usersl.storage.' + platform.sdk.address.pnet().address)
 
                 var d = ''

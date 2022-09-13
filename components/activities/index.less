@@ -1,3 +1,4 @@
+@import "../../css/__cssvar";
 
 .container {
   min-height: 70vh;
@@ -61,19 +62,33 @@
     margin-top: 25px;
   }
   .period {
+    margin: 36px 0;
+    background: rgb(var(--neutral-grad-1));
+    min-height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
     .title {
-      margin: 36px 0;
+      padding-left: 1em;
+      margin: 0;
       font-size: 14px;
       font-weight: 600;
       line-height: 20px;
     }
   }
   .comment {
-    padding-bottom: 16px;
+    padding: 12px;
     margin-bottom: 16px;
     border-bottom: 1px solid #E3E4EB;
     display: flex;
     flex-wrap: nowrap;
+    background: transparent;
+    transition: .3s ease all;
+    border-radius: 12px;
+    cursor: pointer;
+    &:hover {
+      background: rgb(var(--neutral-grad-1));
+    }
 
     .description {
       font-size: 14px;
@@ -113,18 +128,61 @@
       box-shadow: 0 5px 10px -5px rgba(var(--color-shadow-base), 0.4);
       border-radius: 50%;
       height: 48px;
-      min-width: 48px;
+      width: 48px;
       line-height: 3em;
       font-size: 1em;
       position: relative;
       overflow: hidden;
 
+      border: 1px solid transparent;
+
+      transition: .3s all ease;
+      &:hover {
+        border: 1px solid rgb(var(--color-bg-ac-bright));
+      }
+      a {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+      }
+
       img {
         height: 100%;
         width: 100%;
       }
-    }
 
+      &.multy {
+        flex-wrap: wrap;
+        align-items: flex-start;
+        justify-content: flex-start;
+        pointer-events: none;
+        img,div {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 50%;
+          height: 50%;
+        }
+
+      }
+    }
+    .donateSum{
+      margin: auto 0;
+      max-height: 28px;
+      display: inline;
+      border-radius: 25px;
+      padding: @rhythm;
+      padding-left: @rhythm * 2;
+      padding-right: @rhythm * 2;
+      color:  rgb(var(--text-on-bg-ac-color));
+      margin-left: auto;
+      font-size: .8em;
+      font-weight: 500;
+      white-space: nowrap;
+      background: linear-gradient(-45deg, #4FACFE , #09D5DF, #4FACFE, #09D5DF);
+      background-size: 400% 400%;
+    }
     .message {
       color: rgb(var(--neutral-grad-3));
     }

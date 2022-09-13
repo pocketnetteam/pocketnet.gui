@@ -99,10 +99,10 @@ ____loclib.showmorebloggers = "Show more bloggers";
 
 ____loclib.ractivities = "My activity";
 ____loclib.rall = "All";
-____loclib.rrating = "Ratings";
+____loclib.rinteractions = "Interactions";
+____loclib.rblocking = "Blocking";
 ____loclib.rcomment = "Comments";
 ____loclib.rsubscriber = "Subscriptions";
-____loclib.rmoney = "Donates";
 ____loclib.contentscore = "You have left a rating of the publication";
 ____loclib.commentscorelike = "You liked the comment.";
 ____loclib.commentscoredislike = "You don't like the comment";

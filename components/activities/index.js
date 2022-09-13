@@ -10,15 +10,17 @@ var activities = (function(){
 
 		var el, loading, scnt, currentFilter, end = false, block;
 
-		var filtersList = ['all', 'rating', 'comment', 'subscriber']
+		var filtersList = ['all', 'interactions', 'comment', 'subscriber', 'blocking']
 
 		var activities = []
 
 		var getters = {
 			getFilters : function(filter){
 				if (filter === 'all') return []
-				if (filter === 'rating') return ['contentscore']
+				if (filter === 'interactions') return ['contentscore']
 				if (filter === 'comment') return ['commentscore', 'comment']
+				if (filter === 'subscriber') return ['subscriber']
+				if (filter === 'blocking') return ['blocking']
 				if (!filter) return []
 				return [filter]
 			},
@@ -47,6 +49,12 @@ var activities = (function(){
 						let range = (block.height - i.height) / 2
 						i.date = moment().subtract(range, 'minute');
 					}
+					if (i.outputs) {
+						let money = i.outputs.filter(t => t.addresshash === i.relatedContent.address)
+						money = money.reduce( (a,b) => a+b.value,0)
+						i.value = money
+					}
+
 					return i
 				})
 
@@ -88,6 +96,7 @@ var activities = (function(){
 				if(!activities.length) {
 					return self.app.api.fetch('ping', {}, { timeout : 4000 }).then(async (r) => {
 						block = r
+						console.log('currrent block')
 						try {
 							activities = await self.app.api.rpc('getactivities', [self.user.address.value, r.height, , getters.getFilters(currentFilter)])
 						} catch (e) {

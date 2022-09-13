@@ -51,18 +51,34 @@
 .container .content {
   margin-top: 25px;
 }
-.container .period .title {
+.container .period {
   margin: 36px 0;
+  background: rgb(var(--neutral-grad-1));
+  min-height: 36px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+}
+.container .period .title {
+  padding-left: 1em;
+  margin: 0;
   font-size: 14px;
   font-weight: 600;
   line-height: 20px;
 }
 .container .comment {
-  padding-bottom: 16px;
+  padding: 12px;
   margin-bottom: 16px;
   border-bottom: 1px solid #E3E4EB;
   display: flex;
   flex-wrap: nowrap;
+  background: transparent;
+  transition: 0.3s ease all;
+  border-radius: 12px;
+  cursor: pointer;
+}
+.container .comment:hover {
+  background: rgb(var(--neutral-grad-1));
 }
 .container .comment .description {
   font-size: 14px;
@@ -98,15 +114,56 @@
   box-shadow: 0 5px 10px -5px rgba(var(--color-shadow-base), 0.4);
   border-radius: 50%;
   height: 48px;
-  min-width: 48px;
+  width: 48px;
   line-height: 3em;
   font-size: 1em;
   position: relative;
   overflow: hidden;
+  border: 1px solid transparent;
+  transition: 0.3s all ease;
+}
+.container .comment .avatar:hover {
+  border: 1px solid rgb(var(--color-bg-ac-bright));
+}
+.container .comment .avatar a {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 .container .comment .avatar img {
   height: 100%;
   width: 100%;
+}
+.container .comment .avatar.multy {
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: flex-start;
+  pointer-events: none;
+}
+.container .comment .avatar.multy img,
+.container .comment .avatar.multy div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  height: 50%;
+}
+.container .comment .donateSum {
+  margin: auto 0;
+  max-height: 28px;
+  display: inline;
+  border-radius: 25px;
+  padding: 0.5em;
+  padding-left: 1em;
+  padding-right: 1em;
+  color: rgb(var(--text-on-bg-ac-color));
+  margin-left: auto;
+  font-size: 0.8em;
+  font-weight: 500;
+  white-space: nowrap;
+  background: linear-gradient(-45deg, #4FACFE, #09D5DF, #4FACFE, #09D5DF);
+  background-size: 400% 400%;
 }
 .container .comment .message {
   color: rgb(var(--neutral-grad-3));

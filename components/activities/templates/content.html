@@ -1,5 +1,4 @@
 <%
-debugger
 if(activities) {
 
 _.each(activities, function(period, index){
@@ -14,15 +13,22 @@ _.each(period, function(activity){
 if(activity.txType === 1) { %>
 <div class="comment">
   <div class="avatar">
+    <a href="<%-activity.account.name%>">
     <% if(activity?.account?.avatar){%>
-    <img src="<%-activity.account.avatar%>"/>
-    <%} else {%>
-    <%-activity.relatedContent.account.name[0].toUpperCase()%>
-    <% } %>
+      <img src="<%-activity.account.avatar%>"/>
+      <%} else {%>
+      <%-activity?.relatedContent?.account.name[0].toUpperCase()%>
+      <% } %>
+    </a>
+
   </div>
   <div class="description">
     <div class="head"> <%=e('sentmoney')%> <% if(activity.account) { %> <strong><%-activity.account.name%></strong> <%
-      } else { %> <strong><%-activity.account.name%></strong> <% } %>
+      } else { %>
+      <a href="<%-activity.account.name%>">
+        <strong><%-activity?.account?.name%></strong>
+      </a>
+      <% } %>
     </div>
     <% if(activity.val) { %>
     <div class="message"></div>
@@ -36,33 +42,52 @@ if(activity.txType === 204)
 { %>
 <div class="comment">
   <div class="avatar">
+    <a href="<%-activity?.relatedContent?.account.name%>">
     <% if(activity?.relatedContent?.account?.avatar){%>
-    <img src="<%-activity.relatedContent.account.avatar%>"/>
-    <%} else {%>
-    <%-activity.relatedContent.account.name[0].toUpperCase()%>
-    <% } %>
+      <img src="<%-activity?.relatedContent?.account.avatar%>"/>
+      <%} else {%>
+      <%-activity?.relatedContent?.account.name[0].toUpperCase()%>
+      <% } %>
+    </a>
+
   </div>
   <div class="description">
-    <div class="head"> <%=e('commented')%> <strong><%-activity.relatedContent.account.name%></strong></div>
+    <div class="head"> <%=e('commented')%>
+      <a href="<%-activity?.relatedContent?.account.name%>">
+        <strong><%-activity?.relatedContent?.account.name%></strong>
+      </a>
+
+    </div>
     <% if(activity.description) { %>
     <div class="message"><%- decodeURIComponent(activity.description.message) %></div>
     <% } %>
     <div class="date"><%- activity.date.calendar() %></div>
   </div>
+  <% if(activity.value) {%>
+  <a class="donateSum" href="userpage?id=wallet">
+    <i class="fas fa-plus-circle"></i> <%=activity.value / 100000000 %> PKOIN
+  </a>
+  <% }%>
 </div>
 <%}
 //Comment score
 if(activity.txType === 301) { %>
 <div class="comment">
   <div class="avatar">
+    <a href="<%-activity?.relatedContent?.account.name%>">
     <% if(activity?.relatedContent?.account?.avatar){%>
-    <img src="<%-activity.relatedContent.account.avatar%>"/>
-    <%} else {%>
-    <%-activity.relatedContent.account.name[0].toUpperCase()%>
-    <% } %>
+      <img src="<%-activity?.relatedContent?.account.avatar%>"/>
+       <%} else {%>
+       <%-activity?.relatedContent?.account?.name[0].toUpperCase()%>
+       <% } %>
+    </a>
+
   </div>
   <div class="description">
-    <div class="head"><%=e(activity.val > 0 ? 'commentscorelike' : 'commentscoredislike')%> <strong><%-activity.relatedContent.account.name%></strong>
+    <div class="head"><%=e(activity.val > 0 ? 'commentscorelike' : 'commentscoredislike')%>
+      <a href="<%-activity?.relatedContent?.account.name%>">
+        <strong><%-activity?.relatedContent?.account.name%></strong>
+      </a>
     </div>
     <% if(activity.description) { %>
     <div class="message"><%- decodeURIComponent(activity.description.message) %></div>
@@ -81,14 +106,19 @@ if(activity.txType === 301) { %>
 if(activity.txType === 302 || activity.txType === 303) { %>
 <div class="comment">
   <div class="avatar">
+    <a href="<%-activity?.relatedContent?.account.name%>">
     <% if(activity?.relatedContent?.account?.avatar){%>
-    <img src="<%-activity.relatedContent.account.avatar%>"/>
-    <%} else {%>
-    <%-activity.relatedContent.account.name[0].toUpperCase()%>
-    <% } %>
+      <img src="<%-activity?.relatedContent?.account.avatar%>"/>
+       <%} else {%>
+       <%-activity?.relatedContent?.account.name[0].toUpperCase()%>
+       <% } %>
+    </a>
   </div>
   <div class="description">
-    <div class="head"><%=e(activity.txType === 302 ? 'a_subscribe' : 'a_unsubscribe')%> <strong><%-activity.relatedContent.account.name%></strong>
+    <div class="head"><%=e(activity.txType === 302 ? 'a_subscribe' : 'a_unsubscribe')%>
+      <a href="<%-activity?.relatedContent?.account.name%>">
+        <strong><%-activity?.relatedContent?.account.name%></strong>
+      </a>
     </div>
     <div class="date"><%- activity.date.calendar() %></div>
   </div>
@@ -101,8 +131,20 @@ if(activity.txType === 305 || activity.txType === 306) { %>
 if(activity.multipleAddresses) {
 %>
 <div class="comment">
+  <div class="avatar multy">
+    <%
+      _.each(Object.values(activity.multipleAddresses).slice(0,4), function(e) {
+      if(e.avatar){
+    %>
+      <img src="<%-e.avatar%>" alt="">
+    <%} else { %>
+    <div class="">
+      <%-e.name[0].toUpperCase()%>
+    </div>
+    <% }}) %>
+  </div>
   <div class="description">
-    <div class="head"><%=e(activity.txType === 305 ? 'a_block' : 'a_unblock')%>
+    <div class="head"><%-e('a_block', Object.keys(activity.multipleAddresses).length)%>
     </div>
     <div class="date"><%- activity.date.calendar() %></div>
   </div>
@@ -112,14 +154,19 @@ if(activity.multipleAddresses) {
 %>
 <div class="comment">
   <div class="avatar">
+    <a href="<%-activity.account.name%>">
     <% if(activity?.account?.avatar){%>
-    <img src="<%-activity.relatedContent.account.avatar%>"/>
-    <%} else {%>
-    <%-activity?.account?.name[0].toUpperCase()%>
-    <% } %>
+      <img src="<%-activity.account.avatar%>"/>
+      <%} else {%>
+      <%-activity?.account?.name[0].toUpperCase()%>
+      <% } %>
+    </a>
   </div>
   <div class="description">
-    <div class="head"><%=e(activity.txType === 305 ? 'a_block' : 'a_unblock')%> <strong><%-activity?.account?.name%></strong>
+    <div class="head"><%=e(activity.txType === 305 ? 'a_block' : 'a_unblock')%>
+      <a href="<%-activity.account.name%>">
+        <strong><%-activity?.account?.name%></strong>
+      </a>
     </div>
     <div class="date"><%- activity.date.calendar() %></div>
   </div>
@@ -131,14 +178,21 @@ if(activity.multipleAddresses) {
 if(activity.txType === 300) { %>
 <div class="comment">
   <div class="avatar">
+    <a href="<%-activity?.relatedContent?.account.name%>">
     <% if(activity?.relatedContent?.account?.avatar){%>
-    <img src="<%-activity.relatedContent.account.avatar%>"/>
-    <%} else {%>
-    <%-activity.relatedContent.account.name[0].toUpperCase()%>
-    <% } %>
+      <img src="<%-activity?.relatedContent?.account.avatar%>"/>
+       <%} else {%>
+       <%-activity?.relatedContent?.account.name[0].toUpperCase()%>
+       <% } %>
+    </a>
   </div>
   <div class="description">
-    <div class="head"><%=e('contentscore')%> <strong><%-activity.relatedContent.account.name%></strong></div>
+    <div class="head"><%=e('contentscore')%>
+      <a href="<%-activity?.relatedContent?.account.name%>">
+        <strong><%-activity?.relatedContent?.account.name%></strong>
+      </a>
+
+    </div>
     <% if(activity.description) { %>
     <div class="message"><%- decodeURIComponent(activity.description.message) %></div>
     <% } %>
