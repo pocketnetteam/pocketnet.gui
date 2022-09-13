@@ -293,6 +293,7 @@ PeerTubePocketnet = function (app) {
 		removeAccount: {
 			path: ({ id }) => `users/${id}`,
 			method: 'DELETE',
+			renew: true,
 			authorization: true,
 			axios: true,
 		},
@@ -1051,11 +1052,7 @@ PeerTubePocketnet = function (app) {
 				).then((r = {}) => r);
 			},
 
-			removeAccount(parameters = {}, options = {}) {
-				return request(
-					'getMyAccountVideos', parameters, options,
-				);
-			},
+			
 
 			getDirectVideoInfo(parameters = {}, options = {}) {
 				return request('video', parameters, options);
@@ -1073,6 +1070,23 @@ PeerTubePocketnet = function (app) {
 		},
 
 		user: {
+			removeAccount(parameters = {}, options = {}) {
+
+				return self.api.user.metotal().then(d => {
+
+					console.log("D", d)
+
+					return Promise.resolve()
+
+					return request(
+						'removeAccount', parameters, options,
+					);
+
+				})
+
+				
+			},
+
 			me: function (options = {}) {
 				return request('me', {}, options).then((r) => {
 					var data = {
@@ -1087,6 +1101,13 @@ PeerTubePocketnet = function (app) {
 						return Promise.reject(error('usersMe'));
 
 					return Promise.resolve(data);
+				});
+			},
+
+			metotal: function (options = {}) {
+				return request('me', {}, options).then((r) => {
+
+					return Promise.resolve(r);
 				});
 			},
 

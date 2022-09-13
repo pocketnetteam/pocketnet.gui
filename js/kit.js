@@ -1932,10 +1932,6 @@ UserInfo = function(){
 DeleteAccount = function(){
 	var self = this;
 	
-	self.txid = txid;
-
-	self.ustate = ''
-
 	self.validation = function(){
 		return false;
 	}

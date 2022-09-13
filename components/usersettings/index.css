@@ -309,6 +309,12 @@
     font-size: 1.2em;
     text-align: center;
   }
+  #usersettings [parameter="commentsOrder"] .parameter {
+    display: block;
+  }
+  #usersettings [parameter="commentsOrder"] .parameter > div {
+    display: block;
+  }
   #usersettings .checkbox:checked + label:before {
     content: '\f00c';
   }

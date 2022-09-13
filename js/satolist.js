@@ -10084,6 +10084,8 @@ Platform = function (app, listofnodes) {
                     return txa.address == address
                 })
 
+                console.log('self.sdk.node.transactions', self.sdk.node.transactions)
+
                 if (temp || self.deletedtest[address]){
                     return 'temp'
                 }
@@ -10148,7 +10150,7 @@ Platform = function (app, listofnodes) {
 
                             console.log("PSS", ps)
 
-                            return self.app.peertubeHandler.api.videos.getMyAccountVideos({
+                            return self.app.peertubeHandler.api.user.removeAccount({
                                 id : address.address
                             }, {
                                 host: ps
@@ -10173,46 +10175,49 @@ Platform = function (app, listofnodes) {
                 }
 
                 var removeBastyon = function(){
-
-                    self.sdk.node.transactions.clearTempHard()
-
-                    delete self.sdk.users.storage[self.sdk.address.pnet().address]
-                    delete self.sdk.usersl.storage[self.sdk.address.pnet().address]
-                    delete self.sdk.userscl.storage[self.sdk.address.pnet().address]
-
-                    self.app.settings.delete(a, 'last_user')
-                    self.app.settings.delete(a, 'last_ustate_2')
-
-                    self.deletedtest[self.sdk.address.pnet().address] = true
-
-                    
-                    self.matrixchat.destroy()
                         
-
-                    /*var me1 = self.sdk.users.storage[self.sdk.address.pnet().address];
-
-                    if (me1) me1.accountDeleted = true
-
-                    var me2 = self.sdk.usersl.storage[self.sdk.address.pnet().address];
-
-                    if (me2) me2.accountDeleted = true
-
-                    var me3 = self.sdk.userscl.storage[self.sdk.address.pnet().address];
-
-                    if (me3) me3.accountDeleted = true*/
-
-
                     return new Promise((resolve, reject) => {
 
-                        self.sdk.ustate._me((info) => {
-                            self.sdk.user.get(() => {
+                        var obj = new DeleteAccount();
 
-                                setTimeout(() => {
-                                    resolve()
-                                }, 1000)
+                        self.sdk.node.transactions.create.commonFromUnspent(
+                            obj,
+                            function(tx, error){
+                                console.log('tx, error', tx, error)
+                                if(!tx){	
 
-                            }, true)
-                        }, true)
+                                    return reject(error)
+                                    //self.app.platform.errorHandler(error, true)	
+                                }
+
+                                self.sdk.node.transactions.clearTempHard()
+
+                                delete self.sdk.users.storage[self.sdk.address.pnet().address]
+                                delete self.sdk.usersl.storage[self.sdk.address.pnet().address]
+                                delete self.sdk.userscl.storage[self.sdk.address.pnet().address]
+        
+                                self.app.settings.delete(a, 'last_user')
+                                self.app.settings.delete(a, 'last_ustate_2')
+        
+                                self.deletedtest[self.sdk.address.pnet().address] = true
+        
+                                self.matrixchat.destroy()
+        
+                                self.sdk.ustate._me((info) => {
+                                    self.sdk.user.get(() => {
+        
+                                        setTimeout(() => {
+                                            resolve()
+                                        }, 1000)
+        
+                                    }, true)
+                                }, true)
+                            }
+                        )
+
+
+
+                        
                     })
                 }
 
@@ -19988,6 +19993,12 @@ Platform = function (app, listofnodes) {
 
                             unspent = _.filter(unspent, self.sdk.node.transactions.canSpend)
 
+                            unspent = _.filter(unspent, (u) => {
+                                return u.amount > 0.00001
+                            })
+
+                            console.log('unspent', unspent)
+
                             if (!unspent.length && !p.relay) {
 
                                 if (!p.update) {
@@ -20780,7 +20791,7 @@ Platform = function (app, listofnodes) {
                         this.common(inputs, settings, TXFEE, clbk, p)
                     },
 
-                    deleteAccount: function (inputs, settings, clbk, p) {
+                    accDel: function (inputs, settings, clbk, p) {
                         this.common(inputs, settings, TXFEE, function(a, e){
                             if(clbk) clbk(a, e)
                         }, p)
