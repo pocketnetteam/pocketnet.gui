@@ -69,7 +69,7 @@ var PeertubeRequest = function (app = {}) {
 		if (data && !_.isEmpty(data) && ps.method !== 'GET')
 			ps.body = serialize(data);
 
-		return fetch(url, ps)
+		return (typeof proxyFetch == 'undefined' ? fetch : proxyFetch)(url, ps)
 			.then((r) => {
 
 				if (signal)
@@ -81,7 +81,17 @@ var PeertubeRequest = function (app = {}) {
 					return Promise.resolve(r.text());
 				}
 
-				return r.text().then((data) => (data ? JSON.parse(data) : {}));
+				return r.text().then((data) => {
+					var v = {}
+
+					try{
+						v = data ? JSON.parse(data) : {}
+					}catch(e) {
+						return Promise.reject('Unable parse: ' + (data || "Empty data"))
+					}
+
+					return Promise.resolve(v)
+				});
 			})
 			.then((result) => {
 				if (resp.ok) {
@@ -139,6 +149,21 @@ PeerTubePocketnet = function (app) {
 		return PEERTUBE_ID + host + '/' + videoid;
 	};
 
+	self.checkTranscoding = function(url) {
+		return app.api.fetch('peertube/videos', {
+			urls: [url],
+		}).then(r => {
+			var result = r[url]
+
+			if(!result || !result.state){
+				return true;
+			}
+			else{
+				return result.state.id != 2 && result.state.id != 3;
+			}
+		})
+	}
+
 	var error = function (code) {
 		return {
 			code: code,
@@ -164,7 +189,9 @@ PeerTubePocketnet = function (app) {
 		},
 
 		pocketnetAuth: {
-			path: app.test ? 'api/v1/users/blockChainAuth' : 'plugins/pocketnet-auth/router/code-cb',
+			path: () => {
+				return 'api/v1/users/blockChainAuth';
+			},
 			signature: true,
 			method: 'POST',
 			axios: true,
@@ -418,8 +445,10 @@ PeerTubePocketnet = function (app) {
 					var url = self.helpers.url(options.host + '/' + meta.path);
 
 
-					return axios({ method, url, data, ...axiosoptions })
+					return (typeof proxyAxios != 'undefined' ? proxyAxios : axios)({ method, url, data, ...axiosoptions })
 						.then((r) => {
+
+
 							if (meta.fullreport) {
 								return r;
 							}
@@ -461,7 +490,13 @@ PeerTubePocketnet = function (app) {
 					meta.path + params,
 					data,
 					requestoptions,
-				);
+				).then(data => {
+
+
+					return Promise.resolve(data)
+				}).catch((err, data) => {
+					return Promise.reject(err);
+				});
 			}).catch(e => {
 
 				return Promise.reject(e)
@@ -713,7 +748,6 @@ PeerTubePocketnet = function (app) {
 						}
 						return request('initResumableUploadVideo', data, optionsPrepared)
 							.then((r) => {
-								// console.log('INIT RESUMABLE UPLOAD VIDEO', r);
 
 								const handleResume = () => Promise.resolve({
 									responseType: 'resume_upload',
@@ -731,8 +765,28 @@ PeerTubePocketnet = function (app) {
 									case 200: return handleResume();
 									case 201: return handleCreated();
 
-									case 413: throw Error('max_file_size_reached or quota_reached'); // FIXME: Do separation
-									case 415: throw Error('Video type unsupported');
+									case 413:
+										const err413 = Error('Error 413: Video was rejected by Peertube server');
+
+										err413.video = {
+											size: parameters.video.size,
+											type: parameters.video.type,
+										};
+
+										return Promise.reject(err413);
+
+									case 415:
+										const err415 = Error('Error 415: Unsupported video type');
+
+										err415.video = {
+											type: parameters.video.type,
+										};
+
+										return Promise.reject(err415);
+
+									default: return Promise.reject(
+										Error(`Error ${r.status}: Undocumented Peertube error`)
+									);
 								}
 							})
 							.catch((e) => {
@@ -776,7 +830,6 @@ PeerTubePocketnet = function (app) {
 
 				return request('proceedResumableUploadVideo', data, optionsPrepared)
 					.then((r) => {
-						// console.log('RESUME RESUMABLE UPLOAD VIDEO', r);
 
 						const handleResume = () => Promise.resolve({
 							responseType: 'resume_upload',
@@ -815,7 +868,6 @@ PeerTubePocketnet = function (app) {
 
 				return request('cancelResumableUploadVideo', '', optionsPrepared)
 					.then((r) => {
-						// console.log('CANCEL RESUMABLE UPLOAD VIDEO', r);
 
 						const handleSuccess = () => Promise.resolve({ responseType: 'success' });
 						const handleNotFound = () => Promise.resolve({ responseType: 'not_found' });
@@ -843,8 +895,6 @@ PeerTubePocketnet = function (app) {
 					.then((data) =>
 						request('importVideo', data, options)
 							.then((r) => {
-
-								console.log("R", r)
 
 								if (!r.video) return Promise.reject(error('uploaderror'));
 
@@ -980,6 +1030,8 @@ PeerTubePocketnet = function (app) {
 						return Promise.resolve(r);
 					}
 
+					console.log("R", r)
+
 					return Promise.reject(error('videoQuotaUsedDaily'));
 				});
 			},
@@ -1018,6 +1070,8 @@ PeerTubePocketnet = function (app) {
 						videoQuota: deep(r, 'videoQuota'),
 						username: deep(r, 'username'),
 					};
+
+					console.log("R", r)
 
 					if (!data.channelId || !data.videoQuotaDaily)
 						return Promise.reject(error('usersMe'));
@@ -1068,6 +1122,9 @@ PeerTubePocketnet = function (app) {
 					},
 				)
 					.then(({ client_id, client_secret }) => {
+
+						console.log('client_id, client_secret', client_id, client_secret)
+
 						if (!client_id || !client_secret) {
 							return Promise.reject(error('oauthClientsLocal'));
 						}

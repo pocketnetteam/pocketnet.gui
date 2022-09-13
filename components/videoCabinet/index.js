@@ -79,7 +79,7 @@ var videoCabinet = (function () {
 			parseVideoServerError(error = {}) {
 				self.app.Logger.error({
 					err: error.text || 'videoCabinetError',
-					payload: JSON.stringify(error),
+					payload: error,
 					code: 502,
 				});
 
@@ -105,9 +105,20 @@ var videoCabinet = (function () {
 						[formattedData],
 						renders.newVideoContainer(true),
 					);
+				}).catch((err = {}) => {
+					if (!err.text) err.text = 'SINGLE_VIDEO_ADDING_VIDEOCABINET';
+
+					return sitemessage(helpers.parseVideoServerError(err));
 				});
 
-				actions.getQuota().then(() => renders.quota());
+				actions
+				.getQuota()
+				.then(() => renders.quota())
+				.catch((err = {}) => {
+					if (!err.text) err.text = 'QUOTA_RETIRIEVING_VIDEOCABINET';
+
+					return sitemessage(helpers.parseVideoServerError(err));
+				});
 			},
 
 			async getHosts() {
@@ -117,7 +128,13 @@ var videoCabinet = (function () {
 
 				serversList = await self.app.peertubeHandler.api.proxy
 					.allServers()
-					.catch(() => ({}));
+					.catch((err) => {
+						if (!err.text) err.text = 'SERVER_LIST_ERROR_VIDEOCABINET';
+
+					  	sitemessage(helpers.parseVideoServerError(err));
+
+						return {};
+					});
 
 				return Promise.resolve(serversList);
 			},
@@ -156,8 +173,15 @@ var videoCabinet = (function () {
 
 						return { ...data, data: filteredVideos };
 					})
-					.catch(() => {
+					.catch((err) => {
 						peertubeServers[server].isFull = true;
+
+						if (!err.text) err.text = 'GET_VIDEOS_FROM_SERVER_VIDEOCABINET';
+
+						helpers.parseVideoServerError(err)
+
+					  	//sitemessage(helpers.parseVideoServerError(err));
+
 
 						return [];
 					});
@@ -175,7 +199,12 @@ var videoCabinet = (function () {
 			async getQuota() {
 				return self.app.peertubeHandler.api.videos
 					.getQuotaStatus()
-					.then((res) => (userQuota = { ...res }));
+					.then((res) => (userQuota = { ...res }))
+					.catch((err) => {
+						if (!err.text) err.text = 'GET_QUOTA_VIDEOCABINET';
+
+					  	return sitemessage(helpers.parseVideoServerError(err));
+					});
 			},
 
 			getBlockchainPostByVideos: (videoArray = []) =>
@@ -191,7 +220,11 @@ var videoCabinet = (function () {
 						});
 
 					})
-					.catch((err) => { }),
+					.catch((err) => {
+						if (!err.text) err.text = 'GET_POSTED_STATUSES_VIDEOCABINET';
+
+					  	return sitemessage(helpers.parseVideoServerError(err));
+					}),
 
 			resetHosts() {
 				el.videoContainer.html('');
@@ -231,6 +264,11 @@ var videoCabinet = (function () {
 								}) || {};
 
 							return Promise.resolve(d);
+						})
+						.catch((err) => {
+							if (!err.text) err.text = 'GET_TOTAL_RATINGS_VIDEOCABINET';
+
+							return sitemessage(helpers.parseVideoServerError(err));
 						});
 				} else {
 					return Promise.reject();
@@ -271,6 +309,11 @@ var videoCabinet = (function () {
 						}
 
 						return cachedViews;
+					})
+					.catch((err) => {
+						if (!err.text) err.text = 'GET_TOTAL_VIEWS_VIDEOCABINET';
+
+					  	return sitemessage(helpers.parseVideoServerError(err));
 					});
 			},
 
@@ -420,9 +463,7 @@ var videoCabinet = (function () {
 								.update(`peertube://${backupHost}/${urlMeta.id}`, parameters, {
 									host,
 								})
-
 								.then(() => img)
-
 								.catch((e = {}) =>
 									sitemessage(helpers.parseVideoServerError(e)),
 								);
@@ -1000,7 +1041,7 @@ var videoCabinet = (function () {
 								element.find('.remove').on('click', function () {
 									const { host } = meta;
 
-									dialog({
+									new dialog({
 										html: self.app.localization.e('removeVideoDialog'),
 										btn1text: self.app.localization.e('remove'),
 										btn2text: self.app.localization.e('ucancel'),
@@ -1086,16 +1127,28 @@ var videoCabinet = (function () {
 										.getDirectVideoInfo({ id: meta.id }, { host: meta.host })
 										.then((videoData) => {
 											self.fastTemplate('editDescription', (rendered) => {
-												dialog({
+												new dialog({
 													html: rendered,
 
 													wrap: true,
 
 													success: function (d) {
-														const name = d.el.find('.videoNameInput').val();
+														const name = d.el.find('.videoNameInput').val() || '';
 														const description = d.el
 															.find('.videoDescriptionInput')
 															.val();
+
+														if (!name || name.length < 3) {
+															sitemessage(self.app.localization.e('videoNameIsIncorrectShort'));
+
+															return false;
+														}
+
+														if (name.length > 120) {
+															sitemessage(self.app.localization.e('videoNameIsIncorrectLong'));
+
+															return false;
+														}
 
 														const parameters = {};
 
@@ -1107,7 +1160,7 @@ var videoCabinet = (function () {
 
 														const { host } = videoLink;
 
-														return self.app.peertubeHandler.api.videos
+														self.app.peertubeHandler.api.videos
 															.update(videoLink, parameters, { host })
 															.then(() => {
 																const textContainert = el.videoContainer.find(
@@ -1123,14 +1176,14 @@ var videoCabinet = (function () {
 																		.find('.videoDescriptionText')
 																		.text(description);
 
-																d.close();
+                                d.destroy();
 																tagElement = {};
 																tagArray = [];
 															})
 															.catch((err = {}) => {
 																tagElement = {};
 																tagArray = [];
-																d.close();
+																d.destroy();
 
 																sitemessage(
 																	`${self.app.localization.e(
@@ -1345,20 +1398,27 @@ var videoCabinet = (function () {
 						self.app.platform.sdk.ustate.canincrease(
 							{ template: 'video' },
 							function (r) {
+
 								clbk({
 									hasAccess: false,
 									inLentaWindow: ed.inLentaWindow,
 									scrollElementName: ed.scrollElementName || '',
 									increase: r,
 								});
+
+								if (r.trial || !(r.balance && r.reputation)) {
+									self.app.Logger.error({
+										err: 'PEERTUBE_AUTH_ERROR_CABINET',
+										payload: err,
+										code: 501,
+									});
+								}
 							},
 						);
 					});
 			},
 
 			destroy: function () {
-
-				console.log("DESTROY")
 
 				if (el.windowElement)
 					el.windowElement.off('scroll', events.onPageScroll);
@@ -1467,6 +1527,7 @@ var videoCabinet = (function () {
 						);
 					});
 
+				const cabinetLoadingStartTime = performance.now();
 				//getting and rendering videos
 				actions
 					.getHosts()
@@ -1488,7 +1549,21 @@ var videoCabinet = (function () {
 						return Promise.allSettled(serverPromises);
 					})
 					.then(() => actions.getFullPageInfo(videoPortionElement))
-					.catch(() => actions.getFullPageInfo(videoPortionElement));
+					.catch(() => actions.getFullPageInfo(videoPortionElement))
+					.finally(() => {
+						const loadingTime = performance.now() - cabinetLoadingStartTime;
+
+						if (loadingTime > 10000) {
+							self.app.Logger.error({
+								err: 'LONG_CABINET_LOADING',
+								payload: {
+									loadingTime,
+								},
+								code: 485,
+								level: 'warning',
+							});
+						}
+					});
 
 				//getting and rendering video quota information
 				actions

@@ -135,6 +135,10 @@ var main = (function(){
 			},
 
 			addbutton : function(){
+				self.app.Logger.info({
+					actionId: 'POST_CREATING_STARTED',
+					actionSubType: 'FROM_SCROLL_BUTTON',
+				});
 
 				self.app.platform.ui.share()
 			},
@@ -665,8 +669,9 @@ var main = (function(){
 
 				self.app.user.isState(function(state){
 
-					console.log('(self.app.test || self.app.platform.istest())', (self.app.test || self.app.platform.istest()))
-				
+
+					var mode = actions.currentModeKey()
+
 					self.nav.api.load({
 						open : true,
 						id : 'lenta',
@@ -684,13 +689,16 @@ var main = (function(){
 							read : readmain,
 							video :  videomain && !isMobile(),
 							videomobile : videomain && isMobile(),
-							observe : actions.currentModeKey(),
+							observe : searchvalue || searchtags ? null : mode,
 							page : 0,
 
 							//recommendedUsers : self.app.mobileview,
 							//recommendedUsersCount : self.app.mobileview ? 15 : 3,
-							//includesub : true,
+
+
+							includesub : !searchvalue && !searchtags && (mode == 'index' /*|| mode == 'video' || mode == 'read'*/) ? true : false,
 							includeboost : self.app.boost,
+
 							//optimize : self.app.mobileview,
 							extra : (self.app.test || self.app.platform.istest()) && state && isMobile() ? [
 								{
@@ -818,7 +826,6 @@ var main = (function(){
 
 				else{
 
-					//console.log("OPEN PAPI", id)
 					
 					self.app.platform.papi.post(id, el.c.find('.renderposthere'), function(e, p){
 						openedpost = p
@@ -832,10 +839,6 @@ var main = (function(){
 						opensvi : function(id){
 
 							if (openedpost){
-
-								//console.log('clearessense')
-						
-								//openedpost.destroy()
 								openedpost.clearessense()
 								openedpost = null
 							}
@@ -1023,13 +1026,16 @@ var main = (function(){
 					return r
 				}));
 
-				
-
 				var nsearchtags = words.length ? words : null
 				var nsearchvalue = parameters().ss || ''
 				var ncurrentMode = parameters().r || 'common';
 
 				var nlentakey = parameters().video ? 'video' : parameters().read ? 'read' : (parameters().r || 'index')
+
+				self.app.Logger.info({
+					actionId: 'SELECT_FEED_SECTION',
+                    actionValue: nlentakey,
+				});
 
 				var nvideomain = nlentakey == 'video'
 				var nreadmain = nlentakey == 'read'
@@ -1172,7 +1178,7 @@ var main = (function(){
 
 					self.nav.api.load({
 						open : true,
-						href : 'post?s=' + (_s.v || _s.s),
+						href : 'post?s=' + (_s.v || _s.s) + (_s.commentid ? '&commentid=' + _s.commentid : ''),
 						history : true,
 						replaceState : true
 					})

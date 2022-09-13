@@ -1,7 +1,7 @@
-importScripts('/js/vendor/workbox-v6.1.5/workbox-sw.js');
+importScripts('./js/vendor/workbox-v6.1.5/workbox-sw.js');
 
 workbox.setConfig({
-  modulePathPrefix: '/js/vendor/workbox-v6.1.5/',
+  modulePathPrefix: './js/vendor/workbox-v6.1.5/',
   debug: false
 });
 
@@ -15,12 +15,34 @@ core.setCacheNameDetails({
   suffix: 'v__PACKAGE-VERSION__'
 });
 
+const proxyPlugin = {
+  requestWillFetch: async ({request, event}) => {
+    const client = await self.clients.get(event.clientId);
+    try {
+      const result = await new Promise((resolve, reject) => {
+        const channel = new BroadcastChannel(request.url);
+        client.postMessage(request.url)
+        channel.onmessage = (event) => {
+          resolve(event?.data)
+        }
+      })
+
+      if (request.url === result) {
+        return request;
+      }
+
+      return new Request(result, {headers: request.headers});
+    }catch (e){
+      return request
+    }
+  },
+};
 
 // Cache CSS, JS, and Web Worker requests with a Network First strategy
 routing.registerRoute(
   // Check to see if the request's destination is style for stylesheets, script for JavaScript, or worker for web worker
   ({ request }) => {
-    
+
     return request.destination === 'style' ||
       request.destination === 'script' ||
       request.destination === 'worker'},
@@ -40,6 +62,7 @@ routing.registerRoute(
   new strategies.CacheFirst({
     cacheName: 'image-cache',
     plugins: [
+      proxyPlugin,
       new expiration.ExpirationPlugin({
         maxAgeSeconds: 124 * 60 * 60,
         maxEntries: 500,

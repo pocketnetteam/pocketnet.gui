@@ -150,20 +150,13 @@ var test = (function(){
 
 				renders.options();
 			},
-			ref : function(resref){
+			ref : function(){
 
 
-				if (ref && firstTime){
+				if (ref && firstTime && !self.app.dsubref){
 					localStorage[self.app.platform.sdk.address.pnet().address + 'subscribeRef'] = ref.address										
 				}
 
-				/*if(ref && resref && firstTime){
-					var refaddress = deep(ref, 'address');		
-
-					self.sdk.users.requestFreeRef(refaddress, function(res, err){
-						console.log(res, err)
-					})
-				}*/
 			},
 
 			save : function(clbk){
@@ -379,7 +372,7 @@ var test = (function(){
 												
 												actions.upanel()
 
-												//actions.ref(resref)
+												actions.ref()
 
 												self.closeContainer()
 												
@@ -744,7 +737,7 @@ var test = (function(){
 
 					mdl.fastTemplate('addaddress', function(rendered){
 
-						dialog({
+						new dialog({
 							html : rendered,
 
 							wrap : true,

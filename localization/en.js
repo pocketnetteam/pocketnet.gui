@@ -1,4 +1,4 @@
-﻿
+
 var appname = window.pocketnetproject || "Pocketnet"
 
 if(typeof loclib == "undefined" || !loclib)
@@ -88,6 +88,9 @@ ____loclib.welcometopocketnet = "Welcome to "+appname+"";
 ____loclib.continue = "continue";
 
 ____loclib.chooseThemes = "Choose interesting themes";
+____loclib.bloggers = "Bloggers";
+____loclib.chooseBloggers = "Follow Popular Bloggers";
+____loclib.showmorebloggers = "Show more bloggers";
 //user page
 
 ____loclib.rstate = "Reputation";
@@ -271,6 +274,11 @@ ____loclib.lunsubscribe = "Do you really want to unfollow this account?";
 ____loclib.lprivatepublic = "Do you want to make a Private or Public subscription?";
 ____loclib.lprivate = "Private";
 ____loclib.lpublic = "Public";
+
+//inviteComment
+____loclib.commentBannerTitle = "Comment on this post";
+____loclib.commentBannerDescription = "Commenting unlocks features on Bastyon and helps you find friends 😀";
+____loclib.dontShowAgain = "Don't show again";
 
 //share
 ____loclib.newShare = "New Post";
@@ -499,6 +507,7 @@ ____loclib.e13038 = "Comment Now"
 ____loclib.e13039 = "Comment Now"
 ____loclib.e13040 = "You do not have commenting priviliges"
 ____loclib.complain = "Complain"
+____loclib.complain_success =  "Your complaint has been successfully submitted"
 ____loclib.next = "Next"
 ____loclib.post = "Post"
 ____loclib.e13041 = ""+appname+" Connection"
@@ -690,9 +699,9 @@ ____loclib.repost = "Repost"
 ____loclib.reposted = "Repost"
 ____loclib.e13160 = "Hello Pocketeers!"
 
-____loclib.e13161 = "Add Tags For Your Post"
-____loclib.e13162 = "You can enter less than 5 tags"
-____loclib.e13163 = "There aren't changes in Post"
+____loclib.e13161 = "Add tags for your post"
+____loclib.e13162 = "You can enter a maximum of 5 tags"
+____loclib.e13163 = "There are no changes in the post"
 ____loclib.e13164 = "Please add a few words to tell Pocketpeople about your link. What is it about? Why is it important? What is your opinion?"
 ____loclib.e13165 = "Your link to video is invalid. Please load valid video URL."
 ____loclib.e13166 = "You rescued"
@@ -706,9 +715,9 @@ ____loclib.e13171 = "Great news. I gained my independence from social media mono
 ____loclib.e13172 = "I want to invite you to a new decentralized blockchain social called "+appname+"! You will find a ton of interesting stuff and if you sign up, both of us will get Pocketcoin cryptocurrency bonus!"
 ____loclib.e13173 = "Send by email"
 ____loclib.e13174 = "Social sharing"
-____loclib.e13175 = "Popular Tags"
-____loclib.e13176 = "Address Type"
-____loclib.e13177 = "Upload Photo"
+____loclib.e13175 = "Popular tags"
+____loclib.e13176 = "Address type"
+____loclib.e13177 = "Upload photo"
 
 ____loclib.requiredfields = "required fields"
 ____loclib.e13178 = "Not linked to your profile"
@@ -1326,10 +1335,10 @@ ____loclib.attachVideoLentaShort = "Attach";
 ____loclib.linkToPostLenta = "Already posted"
 
 ____loclib.ReferralUsers = "Referral Users. Total/From&nbsp;01.11.2021"
-____loclib.lockedaccount = "Your account is locked due to reputation below -30"
-____loclib.lockedaccounta = "Author Account is locked due to reputation below -30"
+____loclib.lockedaccount = "Your account has been blocked due to a decrease in reputation or due to user complaints"
+____loclib.lockedaccounta = "Author account has been blocked due to a decrease in reputation or due to user complaints"
 
-____loclib.lockedaccountacomment = "Comment author Account is locked due to reputation below -30"
+____loclib.lockedaccountacomment = "Comment author account has been blocked due to a decrease in reputation or due to user complaints"
 ____loclib.hiddenCommentLabel = "Comment hidden due to low rating"
 
 ____loclib.blockedbymeHiddenCommentLabel = "Comment hidden because you have blocked a user"
@@ -1927,9 +1936,9 @@ ____loclib.drafts = 'Drafts'
 ____loclib.repostyourown = 'You cannot repost your own post'
 
 
-____loclib.reachedlimits = 'You reached your daily limit of actions. To increase your limit you need to have at least 50 PKOIN in your account or have a valid reputation.'
+____loclib.reachedlimits = 'You reached your daily limit of actions. To increase your limit you need to have a valid reputation.'
 
-____loclib.closestreachedlimits = 'You are close to hitting your daily action limit. To increase your limit you need to have at least 50 PKOIN in your account or have a valid reputation.'
+____loclib.closestreachedlimits = 'You are close to hitting your daily action limit. To increase your limit you need to have a valid reputation.'
 
 
 ____loclib.sendUserStatistics = 'Send anonimous report of errors to Bastyon Team'
@@ -2223,3 +2232,28 @@ ____loclib.lowstar_reason_3 = "Direct threat of violence"
 ____loclib.lowstar_reason_4 = "Illegal narcotics"
 ____loclib.lowstar2 = "Please do not use 1 and 2 star ratings for other reasons. After the new moderation is released in mid. May you will be able to use low ratings for other reasons"
 ____loclib.lowstaragree = "I confirm that this post contains one of four types of prohibited content"
+____loclib.mnemonicnote = "To confirm that you wrote down 12 words, choose the first 3 of them in the correct order."
+____loclib.mnemonicerror = "You entered the 3 words incorrectly. Please go back and write down the 12 word passphrase to use Bastyon."
+____loclib.confirm = "Confirm"
+____loclib.cameralocked = "Camera locked"
+____loclib.cameraunlocknote = "To scan, unlock the camera from your browser settings and try again."
+____loclib.videotranscodingdelayedpost = "This video is being processed and will be posted as soon as the transcoding process ends. Please, do not close the tab untill then."
+____loclib.postInRelay = "This post is being processed before publishing to blockchain"
+____loclib.scanqr = "Scan QR Code"
+____loclib.usetor = "Connection via Tor network"
+____loclib.videotranscodingdelayedpost = "This video is being processed and will be posted as soon as the transcoding process ends. Please, do not close the tab untill then."
+____loclib.postInRelay = "This post is being processed before publishing to blockchain"
+____loclib.cameraError1 = "The user denied camera access."
+____loclib.cameraError5 = "The camera is unavailable because it doesn't exist or is otherwise unable to be configured."
+
+
+____loclib.continuesubscribefeedCaption = "Would you like to continue seeing posts from the people you follow?"
+____loclib.continuesubscribefeedButton = "Continue in the subscription feed"
+
+____loclib['dust (code 64)'] = "You are trying to send an amount too small, it cannot be done"
+
+____loclib.videoNameIsIncorrectShort = "Video name should be at least 3 characters long"
+____loclib.videoNameIsIncorrectLong = "Video name should be no more than 120 characters long"
+____loclib.words12 = "12 Words"
+____loclib.privatekey = "Private kay"
+

@@ -4,7 +4,10 @@ if (typeof _OpenApi == 'undefined') _OpenApi = false;
 if (typeof _Electron != 'undefined') {
     electron = require('electron');
 
-    bastyonFsFetchFactory = require('./js/peertube/bastyon-fs-fetch').bastyonFsFetchFactory;
+    proxyAxios = require('./js/transports/proxified-axios').proxifiedAxiosFactory(electron.ipcRenderer);
+    proxyFetch = require('./js/transports/proxified-fetch').proxifiedFetchFactory(electron.ipcRenderer);
+    fsFetchFactory = require('./js/transports/fs-fetch').fsFetchFactory;
+    peertubeTransport = require('./js/transports/peertube-transport').peertubeTransport;
     TranscoderClient = require('./js/electron/transcoding2').Client;
 
     fs = require('fs');
@@ -67,6 +70,7 @@ Platform = function (app, listofnodes) {
 
     self.app = app;
 
+    self.lastblocktime = null
     self.lasttimecheck = null
     self.real = {
         'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd' : true,
@@ -190,7 +194,64 @@ Platform = function (app, listofnodes) {
         'PQ8PDzWy7hDV8gfgSgoP2BCU2CXngMPCvt' : true,
         'PHMjVgWj6HMiLeAhiR8eDLzVrXp8nyF2ji' : true,
         'PR54hSnPDbhPePLNQZCP4CU77TRFoMxYqg' : true,
-        'PARV591XENALBB5ApkR7WcQPhEZtLHfi2A' : true
+        'PARV591XENALBB5ApkR7WcQPhEZtLHfi2A' : true,
+        'PVgktx9ZmPnSXW83HmSF6MX76SV4u5a2hJ' : true,
+        'PSbwbtsVfALgykAUsCYofkPFTu9Chd6RUo' : true,
+        'PP3QYWu7ZRRm7NTAkXD7u3NbCKNGJhbEeL' : true,
+        'PP8AJb4X4uHxJw89UEGcNEom5RZy2RRxBY' : true,
+        'PRhLYR1TJegWzuzFa7FwT1iCCpNSeJrpjn' : true,
+        'PXb9rpCDax5NpU6m4tt2gdXyTp4urbTdS8' : true,
+        'PRDXZpyF7rm9cJw3y6DX2nFvK1AYgjpXdF' : true,
+        'P9D3ntMdwy4HGjBhg1uQDuQD99MXYZTqg3' : true,
+        'PWGhooqyrq1qL7NPgg2an8M69sHfJrDM8Y' : true,
+        'PUuNT7icKad8fm7ATPRn1s8gd19HXYKDqS' : true,
+        'PWkQMUTG6pKVA9bAbjLmLewB5eVgEnVk6f' : true,
+        'PUAQeTYUB9H5qjeSSXzeeAd6NKXAz8fzpP' : true,
+        'PQ4X2NQJD1ZA5Hy58ZU9eHcjpRco7ZMgTz' : true,
+        'PTMFZXMXYFjiN1UuSV4ZckepyEFVWMm6Zy' : true,
+        'PKwa3jVZXHpaVgG89WvnM8vBfpp745GGNN' : true,
+        'PHsHq6i4RKm9gCqFGhAr3yvF34yDocc5S7' : true,
+        'PNsx3cC4wDyfowrhvBgjf7VfeXHeFdRgX1' : true,
+        'PHEDVg12YtcHjHYNsmxzV8iexWyw81cQge' : true,
+        'PRKdjSJkqk15YFncjq1FUUXpHo1XWPbB9x' : true,
+        'PBw3aSQe6HCzX75xDy5X2SXx9y9JaUP9ke' : true,
+        'PCxXVA4quzXVjUM356t3FE2nvWmDVY47J7' : true,
+        'PVATJhZqKdYXLp1nmPdrssRhygJApmAALR' : true,
+        'PJtnXwKNPDdEpJhaKH2fbPEyLrcS77oj46' : true,
+        'PSoCtc8FbPaagG6spsqbS2HJjRM8oPG16b' : true,
+        'PPxDNqCB2oWp3JffCiRXwJTzxRQuRjb5Bc' : true, 
+        'PVRWuvwCNfZWUUD5gQzDsqabnTcMXoqgbV' : true,
+        'P8sSu2qFnVPGEtnSTKYRMUzuG3xBHsj3ms' : true,
+        'PUF8bsAYyHZQCtaMbrTwyRDcC3wMLKhFFX' : true,
+        'PSFpsP19aHs7ZfGPnnt19yQC258y1HFYKD' : true,
+        'PCkX8n2e6aD6Ji37hSpHCJpqvaaJjVWt1m' : true,
+        'PT4fvQ7jMicg6McC52BmFFkL2M6AEWc7vo' : true,
+        'PGecwCERTkoFd82E3e471SvxSxnJpC4cWk' : true,
+        'PRZEXQXTmz1jW6YmH1e83nkRRiDUqkE6fw' : true,
+        'PCM3fmcUikLbSNCeqtQ7MEk4yQbn6qQRJt' : true,
+        'PKXSw8Q4Kdy244Gb1R7GYPvTwiM22JssTf' : true,
+        'P8gfyLfXyeHzyAvq4Yqw6EW39ifCyVJ9f6' : true,
+        'PSKLx4k7ehAtvipwpo2ohBeCYzpf4SiKHj' : true,
+        'PK8dRanrBFxfSo3qw1P4gm6veaQQssZXxB' : true,
+        'PCkX8n2e6aD6Ji37hSpHCJpqvaaJjVWt1m' : true,
+        'PT4fvQ7jMicg6McC52BmFFkL2M6AEWc7vo' : true,
+        'PGegspsgRqvMiZCP8PGufKMYBk3yekDaEE' : true,
+        'PB8wu7hQwo5xMsVG4F4HshrW39t2Y4eN37' : true,
+        'PUhvX53ueD2Sxa3q7av83vNcEHuS8M7kRS' : true,
+        'PAqPD7P3iFtz7e2epSP4V8FMPXrJKASeqD' : true,
+        'PUopiRZvD6BAjF9CcWtMfpeJtxp411dxKM' : true,
+        'PUhvX53ueD2Sxa3q7av83vNcEHuS8M7kRS' : true,
+        'PQkNpRfXbCGXJ2o1mRfsJMvMtsvq3uvZU9' : true,
+        'PGegspsgRqvMiZCP8PGufKMYBk3yekDaEE' : true,
+        'PB8wu7hQwo5xMsVG4F4HshrW39t2Y4eN37' : true,
+        'PSBhEi8AUasemizUHyJ64t6xXonsxwp73y' : true,
+        'PKYwaiikhUoPWmpWmYec4Xf3TPWwJQCqUt' : true,
+        'PST4P2KEweDQJ2RAtG3scUmXAgPJJ5JJRL' : true,
+        'PCfvhqHEYG3zdWXvLJrjPPDVK2H8qwwXn5' : true,
+        'PLZsQmsRUDMJGc61pGMLdDQ58UuqQ8kU5Z' : true,
+        'PMC3pwutfiYpGWUMHhiB1NRjiHL7iWHiyi' : true
+
+
     }
 
     self.bch = {
@@ -218,7 +279,15 @@ Platform = function (app, listofnodes) {
         'PD4us1zniwrJv64xhPyhT2mgNrTvPur9YN',
         'PHiNjAhHbxVb6D8oaVVBe8DGigKuN4QFP6',
         'PANkQ994YKvCMiH8pHR8vtKvGqH9DQt8Bc',
-        'PGvRUM7jXqHdUn7Let2QyTi1t2LHq7RgX7'
+        'PGvRUM7jXqHdUn7Let2QyTi1t2LHq7RgX7',
+        'P9EkPPJPPRYxmK541WJkmH8yBM4GuWDn2m',
+        'PReLEpaGEGTCeWKiqnK85eXrqmmTxYQ9Tw',
+        'TAqR1ncH95eq9XKSDRR18DtpXqktxh74UU'
+    ];
+    self.whiteList = [
+      'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd',
+      'PJ3nv2jGyW2onqZVDKJf9TmfuLGpmkSK2X',
+      'TAqR1ncH95eq9XKSDRR18DtpXqktxh74UU'
     ];
 
     if (window.IpcBridge)
@@ -533,6 +602,13 @@ Platform = function (app, listofnodes) {
 
     self.errorHandler = function (key, action, akey) {
 
+        var er = null
+
+        if(_.isObject(key)){
+            er = key
+            key = er.code
+        }
+
         var eobj = self.errors[key] || self.errors['network'];
 
         if (!eobj) {
@@ -542,7 +618,7 @@ Platform = function (app, listofnodes) {
             var m = eobj.message;
 
             if (m) {
-                if (typeof m == 'function') m = m(akey);
+                if (typeof m == 'function') m = m(akey, er);
 
                 if (!m) return
 
@@ -589,7 +665,7 @@ Platform = function (app, listofnodes) {
                             topPreloader(100);
 
                             if (!cs) {
-                                dialog({
+                                new dialog({
                                     html: self.app.localization.e('canSpendError'),
                                     btn1text: self.app.localization.e('daccept'),
 
@@ -620,7 +696,7 @@ Platform = function (app, listofnodes) {
                                             self.errors["1"].action()
                                         }
                                         else {
-                                            dialog({
+                                            new dialog({
                                                 html: self.app.localization.e('noMoneyError'),
                                                 btn1text: self.app.localization.e('daccept'),
 
@@ -646,7 +722,7 @@ Platform = function (app, listofnodes) {
                             self.app.platform.sdk.user.waitActions(function (r) {
 
                                 if (!r) {
-                                    dialog({
+                                    new dialog({
                                         html: self.app.localization.e('noMoneyError'),
                                         btn1text: self.app.localization.e('daccept'),
 
@@ -654,7 +730,7 @@ Platform = function (app, listofnodes) {
                                     })
                                 }
                                 else {
-                                    dialog({
+                                    new dialog({
                                         html: self.app.localization.e('waitConf'),
                                         btn1text: self.app.localization.e('daccept'),
 
@@ -729,7 +805,36 @@ Platform = function (app, listofnodes) {
         },
 
         ///// NODE
+        "66": {
+            message: function () {
+                return self.app.localization.e('e13257')
+            }
+        },
 
+        "65": {
+            message: function () {
+                return self.app.localization.e('e13258')
+            }
+        },
+
+        "64": {
+            message: function () {
+                return self.app.localization.e('e13259')
+            }
+        },
+
+
+        "62": {
+            message: function () {
+                return self.app.localization.e('e13260')
+            }
+        },
+
+        "61": {
+            message: function () {
+                return self.app.localization.e('e13248')
+            }
+        },
 
         "60": {
             message: function () {
@@ -1018,7 +1123,7 @@ Platform = function (app, listofnodes) {
                                     var exist = self.sdk.users.storage[a]
 
                                     if(!exist){
-                                        dialog({
+                                        new dialog({
                                             html: self.app.localization.e('checkScoreError'),
                                             btn1text: self.app.localization.e('dyes'),
                                             btn2text: self.app.localization.e('dno'),
@@ -1039,7 +1144,7 @@ Platform = function (app, listofnodes) {
                                     }
                                     else{
 
-                                        dialog({
+                                        new dialog({
                                             html: self.app.localization.e('waitConf'),
                                             btn1text: self.app.localization.e('daccept'),
 
@@ -1068,7 +1173,7 @@ Platform = function (app, listofnodes) {
 
                             if(!mestate || _.isEmpty(mestate)){
 
-                                dialog({
+                                new dialog({
                                     html: self.app.localization.e('accountnotfound'),
                                     btn1text: self.app.localization.e('daccept'),
 
@@ -1078,7 +1183,7 @@ Platform = function (app, listofnodes) {
                             }
                             else{
 
-                                dialog({
+                                new dialog({
                                     html: self.app.localization.e('waitConf'),
                                     btn1text: self.app.localization.e('daccept'),
 
@@ -1110,10 +1215,11 @@ Platform = function (app, listofnodes) {
         },
 
         "-26": {
-            message: function () {
+            message: function (v, er) {
 
-                return self.app.localization.e('Error code: -26')
+                var loc = deep(er, 'error.message') || ''
 
+                return self.app.localization.e(loc || 'Error code: -26')
             },
 
             relay: true
@@ -2129,7 +2235,6 @@ Platform = function (app, listofnodes) {
                 mid : id,
                 animation : false,
                 essenseData : {
-
                     author : p.author,
                     video : p.video,
                     comments : p.comments,
@@ -2166,7 +2271,6 @@ Platform = function (app, listofnodes) {
                     ended : p.ended,
                     afterload : p.afterload,
                     count : p.count
-
                 },
 
                 clbk : clbk
@@ -2179,6 +2283,8 @@ Platform = function (app, listofnodes) {
             var id = makeid()
 
             if(!_.isArray(ids)) ids = [ids]
+
+            console.log("IDS", ids)
 
             app.nav.api.load({
 
@@ -2465,7 +2571,7 @@ Platform = function (app, listofnodes) {
             var p = {
                 href : 'post?s=' + txid,
                 clbk : clbk,
-               
+
                 essenseData : {
                     share : txid,
                     video : true,
@@ -2631,6 +2737,64 @@ Platform = function (app, listofnodes) {
 
         },
 
+        showCommentBanner : function(contextElem) {
+
+            let bannerCommentComponent = null;
+            if (!contextElem) {
+                return bannerCommentComponent;
+            }
+
+            const createComponent = () => {
+                app.nav.api.load({
+                    open: true,
+                    id: 'commentBanner',
+                    el: contextElem.find('.bannerComment'),
+                    essenseData: {},
+
+                    clbk : function(e, p){
+                        bannerCommentComponent = p;
+                    }
+                });
+            };
+
+            const unixTimeNow = Math.floor(Date.now() / 1000);
+            const oneDayInSeconds = 86400000;
+
+            const alreadyShowed = ('nextCommentBanner' in localStorage);
+            const isBannerDisabled = (localStorage.nextCommentBanner == -1);
+            const timeToShowBanner = (unixTimeNow >= localStorage.nextCommentBanner);
+
+            const regDate = app.platform.sdk.user.me().regdate;
+            const regUnixTime = (regDate.getTime());
+            const registeredTime = Date.now() - regUnixTime;
+
+            const repeat = (localStorage.nextCommentBanner == 1);
+            const isOneDayOld = (registeredTime >= oneDayInSeconds);
+
+            if (isBannerDisabled) {
+                console.log('banner showbanner', bannerCommentComponent);
+                return bannerCommentComponent;
+            }
+
+            if (!isOneDayOld) {
+                createComponent();
+                return bannerCommentComponent;
+            }
+
+            if (repeat && timeToShowBanner) {
+                localStorage.nextCommentBanner = unixTimeNow + oneDayInSeconds;
+                createComponent();
+                return bannerCommentComponent;
+            }
+
+            if (timeToShowBanner || !alreadyShowed) {
+                localStorage.nextCommentBanner = 1;
+                createComponent();
+                return bannerCommentComponent;
+            }
+
+        },
+
         carousel : function(el, clbk){
 			var images = el.find('[image]');
 
@@ -2781,8 +2945,10 @@ Platform = function (app, listofnodes) {
 
                     filter : function(recommendations){
 
+
                         recommendations = _.filter(recommendations, (_share) => {
-                            return _share.txid != share.txid && _share.address != self.app.user.address.value
+
+                            return _share.txid != share.txid && (!self.app.user.address.value || _share.address != self.app.user.address.value)
                         })
 
                         recommendations = _.first(recommendations, basecount)
@@ -2991,7 +3157,7 @@ Platform = function (app, listofnodes) {
 
             if (!p) p = {};
 
-            dialog({
+            new dialog({
                 html: p.text || self.app.localization.e('e13188'),
                 btn1text: p.successLabel || self.app.localization.e('e13261'),
                 btn2text: p.faillabel || self.app.localization.e('e13262'),
@@ -3245,7 +3411,7 @@ Platform = function (app, listofnodes) {
 
                                 if(info && info.original && info.original.isLive){
 
-                                    dialog({
+                                    new dialog({
                                         html: "Please wait, you will be able to download the video when the broadcast recording appears",
                                         btn1text: self.app.localization.e('daccept'),
                                         class : 'one',
@@ -3259,7 +3425,7 @@ Platform = function (app, listofnodes) {
 
                                 if(!items.length){
 
-                                    dialog({
+                                    new dialog({
                                         html: "Please wait, the video hasn't been transcoded yet",
                                         btn1text: self.app.localization.e('daccept'),
                                         class : 'one',
@@ -3303,9 +3469,7 @@ Platform = function (app, listofnodes) {
 
         effectinternal : function(el, name, parameters, clbk){
 
-            if (typeof _Electron != 'undefined' /*|| (!self.istest() && !self.app.test)*/) {
-                return
-            }
+
 
             if(!self.sdk.usersettings.meta.useanimations.value) return
 
@@ -3350,6 +3514,9 @@ Platform = function (app, listofnodes) {
         },
 
         make : function(place, name, parameters, clbk){
+
+            if (typeof _Electron != 'undefined') return
+
             var container = self.effects.container(place)
 
             self.effects.lib[name](container, parameters, function(){
@@ -3363,10 +3530,10 @@ Platform = function (app, listofnodes) {
 
         templates : {
             commentstars : function(el, value, clbk){
-
-                if(!el) return
-
-                if(self.effects.animation) return
+                if (typeof _Electron != 'undefined' || !el || self.effects.animation) {
+                    if(clbk) clbk()
+                    return
+                }
 
                 self.effects.animation = true
 
@@ -3423,7 +3590,7 @@ Platform = function (app, listofnodes) {
         },
 
         clearname: function (n) {
-            return (n || "").replace(/[^a-zA-Z0-9_ ]/g, "")
+            return (n || "").replace(/[^a-zA-Z0-9_. ]/g, "")
         },
 
         name: function (address) {
@@ -3432,7 +3599,6 @@ Platform = function (app, listofnodes) {
             if (n) {
                 n = this.clearname(n)
             }
-
             return n;
         },
 
@@ -3530,7 +3696,7 @@ Platform = function (app, listofnodes) {
                         currentmode = mode
 
                         if (mode == 'full') {
-                           
+
                             if (p.top) {
                                 up.css('top', p.top())
                             }
@@ -3578,7 +3744,7 @@ Platform = function (app, listofnodes) {
 
                 up.on('click', events.click)
 
-              
+
             }
 
             var removeEvents = function () {
@@ -3975,7 +4141,8 @@ Platform = function (app, listofnodes) {
                 )
             },
 
-            subscribeWithDialog: function (address, clbk) {
+            subscribeWithDialog: function (address, renderclbk) {
+
                 menuDialog({
 
                     items: [
@@ -3985,10 +4152,16 @@ Platform = function (app, listofnodes) {
                             class: 'itemmain',
                             action: function (clbk) {
 
+
                                 self.api.actions.notificationsTurnOn(address, function(tx, error){
                                     if (error) {
                                         self.errorHandler(error, true)
                                     }
+
+                                    if (renderclbk){
+                                        renderclbk(tx);
+                                    }
+
                                 })
 
                                 clbk()
@@ -4004,6 +4177,11 @@ Platform = function (app, listofnodes) {
                                     if (error) {
                                         self.errorHandler(error, true)
                                     }
+
+                                    if (renderclbk){
+                                        renderclbk(tx);
+                                    }
+
                                 })
 
                                 clbk()
@@ -4172,7 +4350,7 @@ Platform = function (app, listofnodes) {
             if (!share) {
                 var temp = _.find(self.sdk.node.transactions.temp.share, function (s) {
                     return s.txid == id
-                })
+                }) || (self.app.platform.sdk.relayTransactions.get().share || []).find(transaction => transaction.txid === id);
 
                 if (temp){
                     share = new pShare();
@@ -4297,7 +4475,7 @@ Platform = function (app, listofnodes) {
 
                             close()
 
-                            dialog({
+                            new dialog({
                                 class : 'zindex',
                                 html : self.app.localization.e('pinPostDialog'),
                                 btn1text : self.app.localization.e('dyes'),
@@ -4346,7 +4524,7 @@ Platform = function (app, listofnodes) {
 
                             close()
 
-                            dialog({
+                            new dialog({
                                 class : 'zindex',
                                 html : self.app.localization.e('unpinPostDialog'),
                                 btn1text : self.app.localization.e('dyes'),
@@ -4451,7 +4629,7 @@ Platform = function (app, listofnodes) {
                             close()
 
 
-                            dialog({
+                            new dialog({
                                 class : 'zindex',
                                 html : self.app.localization.e('removePostDialog'),
                                 btn1text : self.app.localization.e('dyes'),
@@ -4981,11 +5159,6 @@ Platform = function (app, listofnodes) {
                             ]
 
                         },
-
-
-
-
-
                         {
 
                             name : 'Uploading videos',
@@ -5422,6 +5595,22 @@ Platform = function (app, listofnodes) {
 
 
 
+                            ]
+
+                        },
+                        {
+
+                            name : 'How does reputation work in Bastyon and what is the use for it?',
+                            id : 'reputation',
+
+                            group : [
+
+                                {
+                                    id : 'reput-work',
+                                    q : '',
+                                    a : '<p>Bastyon values users’ privacy and does not require personal identification or connecting an account to a phone number. Also, Bastyon does not have centralized moderation and has to rely on users for moderation. <br /><br />     These two factors create the danger that multiple malicious accounts will be created impacting the moderation in negative ways. Reputation mechanism requires users to take certain actions to provide with some certainty that there is a human behind the account. There is a concept of valid reputation, meaning high enough reputation to partake in moderation. Also, votes from valid reputation users can impact earnings in PKOIN for the users.   <br />  </p> <p>What does valid reputation require?</p><br />    <ul><li>Reputation value of 100 or more</li><li>100 different valid reputation users who gave 5 stars of thumbs up to a comment of a given user</li><li>15 different valid reputation users who gave thumbs up specifically to a comment</li><li>3 months from registration</li></ul><br /><p>Note, that values such as 100 or 15 will change over time and will be calculated dynamically based on the growth of the platform. So, a valid reputation user can lose valid reputation with growth of the platform and lack of activity. In the future, valid reputation will be more heavily focused on interaction i.e. comments and especially replies to comments.</p>',
+                                    img: ''
+                                }
                             ]
 
                         },
@@ -6084,7 +6273,7 @@ Platform = function (app, listofnodes) {
                         {
                         id : 'экосистема 4',
                         q : 'Что, если пользователи размещают незаконный контент, порнографию и СПАМ?',
-                        a : '<div>'+self.app.meta.fullname+' это не платформа даркнета или какой-то порнхаб. Хотя '+self.app.meta.fullname+' децентрализован и устойчив к цензуре, он модерируется пользователями. Любой незаконный контент помечается и удаляется с платформы. Это означает, что модерировать платформу могут пользователи с наивысшей репутацией. Однако, не существуют гарантии (в рамках открытого исходного кода), что за деструктивный контент не проголосуют пользователи с высокой репутацией. Модераторы контента выбираются случайным образом с помощью лотереи на блокчейне, чтобы избежать каких-либо подтасовок. Модерируется только запрещённый контент (порнография, педофилия, пропаганда нелегальных нарктотиков и прямые угрозы насилия), а НЕ просто к контенту, который они считают оскорбительным. Bastyon является платформой для свободы слова, мы призываем каждого участвовать в модерации контента путем проставления оценок, публиковать интересный авторский контент, повышая таким образом свою репутацию и привнося вклад в развитие платформы.</div>',
+                        a : '<div>'+self.app.meta.fullname+'- это не платформа даркнета или какой-то порнхаб. Хотя '+self.app.meta.fullname+' децентрализован и устойчив к цензуре, он модерируется пользователями. Любой незаконный контент помечается и удаляется с платформы. Это означает, что модерировать платформу могут пользователи с наивысшей репутацией. Однако, не существуют гарантии (в рамках открытого исходного кода), что за деструктивный контент не проголосуют пользователи с высокой репутацией. Модераторы контента выбираются случайным образом с помощью лотереи на блокчейне, чтобы избежать каких-либо подтасовок. Модерируется только запрещённый контент (порнография, педофилия, пропаганда нелегальных нарктотиков и прямые угрозы насилия), а НЕ просто к контенту, который они считают оскорбительным. Bastyon является платформой для свободы слова, мы призываем каждого участвовать в модерации контента путем проставления оценок, публиковать интересный авторский контент, повышая таким образом свою репутацию и привнося вклад в развитие платформы.</div>',
                         },
                         {
                         id : 'экосистема 5',
@@ -6147,7 +6336,7 @@ Platform = function (app, listofnodes) {
                                 {
                                     id : 'honor1',
                                     q : 'Обязанности пользователей:',
-                                    a : '<ul><li>Уважайте различные мнения и старайтесь сделать платформу дружелюбной к новичкам</li><li>Отметить запрещенный контент:<ol><li>Любой вид порнографии</li><li>Прямые угрозы насилием</li><li>Продвижение незаконных наркотиков</li></ol></li><li>Дайте пять звезд любой публикации, которую вы просматриваете и считаете высококачественной</li><li>Точно так же ставьте 1 звезду плохому контенту, это помогает сети</li><li>Используйте 1 звезду, чтобы обеспечить соответствие контента используемым тегам</li><li>Не отмечайте и не голосуйте за простое несогласие, а только за запрещенный контент</li><li>Не участвуйте во взаимных оценках или любых рейтингах, не основанных на качестве контента</li></ul>',
+                                    a : '<ul><li>Уважайте различные мнения</li><li>Отметить запрещенный контент:<ol><li>Любой вид порнографии</li><li>Прямые угрозы насилием</li><li>Продвижение незаконных наркотиков</li></ol></li><li>Дайте пять звезд любой публикации, которую вы просматриваете и считаете высококачественной</li><li>Точно так же ставьте 1 звезду плохому контенту, это помогает сети</li><li>Используйте 1 звезду, чтобы обеспечить соответствие контента используемым тегам</li><li>Не отмечайте и не голосуйте за простое несогласие, а только за запрещенный контент</li><li>Не участвуйте во взаимных оценках или любых рейтингах, не основанных на качестве контента</li></ul>',
                                     img: ''
                                 },
                                 {
@@ -6182,6 +6371,23 @@ Platform = function (app, listofnodes) {
                                     a : 'Критерии для получения бонуса за оригинальный контент:  Каждые 15 тысяч просмотров видео + 1500 пятизвёздочных рейтингов от уникальных пользователей + 1500 реферальных пользователей <br />PKOIN или Bitcoin:  1,000 USDT <br />Как ускорить получение бонуса?<br />Делитесь ссылкой на видео в социальных сетях, с помощью мессенджеров или через почту. Выставляйте эксклюзивные материалы для подписчиков в Бастионе (это делается при создании поста, выбрать Для Подписчиков). Эксклюзивные материалы увеличат количество реферальных подписок.<br />Делитесь ссылкой на ваш профиль.<br />Всегда выбирайте Реферальная Ссылка, когда делитесь ссылкой на Бастион (на видео или профиль).<br />Если вы пригласите блоггера и докажете это, вы получите бонус в размере до 25% от первых 4 бонусов.<br />По вопросам обращайтесь support@bastyon.com.',
                                     img: ''
                                 },
+                                
+                            ]
+
+                        },
+                        {
+
+                            name : 'Как работает репутация в Бастионе и какая от нее польза?',
+                            id : 'reputation-ru',
+
+                            group : [
+
+                                {
+                                    id : 'reput-work-ru',
+                                    q : '',
+                                    a : '<p>Bastyon ценит конфиденциальность пользователей и не требует идентификации личности или привязки учетной записи к номеру телефона. Кроме того, Bastyon не имеет централизованной модерации и должен полагаться на пользователей для модерации. <br />Эти два фактора создают опасность того, что будет создано несколько вредоносных учетных записей, что негативно повлияет на модерацию. Механизм репутации требует от пользователей определенных действий, чтобы обеспечить некоторую уверенность в том, что за учетной записью стоит человек. Существует понятие действительной репутации, означающее достаточно высокую репутацию, чтобы участвовать в модерации. Кроме того, голоса пользователей с действительной репутацией могут повлиять на заработок пользователей в PKOIN.<br />  </p> <p>Что требует действительная репутация?</p><br />    <ul><li>Значение репутации 100 или более</li><li>100 различных пользователей с действительной репутацией, которые поставили 5 звезд большого пальца вверх комментарию данного пользователя</li><li>15 различных пользователей с действительной репутацией, которые положительно оценили комментарий</li><li>3 месяца с момента регистрации</li></ul><br /><p>Обратите внимание, что такие значения, как 100 или 15, со временем будут меняться и будут рассчитываться динамически в зависимости от роста платформы. Таким образом, пользователь с действующей репутацией может потерять действительную репутацию с ростом платформы и отсутствием активности. В будущем действующая репутация будет в большей степени ориентирована на взаимодействие, то есть на комментарии и особенно на ответы на комментарии.</p>',
+                                    img: ''
+                                }
                             ]
 
                         },
@@ -6642,10 +6848,10 @@ Platform = function (app, listofnodes) {
                     var fm = _.filter(r, function(u){
                         return u.share && u.share.user
                     })
-                    
+
 
                     self.sdk.node.shares.takeusers(_.map(fm, function(u){
-                        return {userprofile : u.share.user} 
+                        return {userprofile : u.share.user}
                     }), false)
 
 
@@ -7345,6 +7551,15 @@ Platform = function (app, listofnodes) {
                 _.each(this.clbks, function (c) { c(address) })
             },
 
+            value : function(address){
+                var regs = self.sdk.registrations.storage[address];
+                var rm = self.sdk.registrations.storage[address + 'rm']
+
+                if(rm) return 0
+
+                return regs
+            },
+
             showprivate : function(address){
                 if (!address && self.sdk.address.pnet()) address = self.sdk.address.pnet().address
 
@@ -7388,11 +7603,12 @@ Platform = function (app, listofnodes) {
 
             arranges: ['userInfo'],
 
+            clbks: {},
+
             send: function (clbk) {
 
                 var needaction = false
                 self.app.user.isState(function (state) {
-
                     if (state) {
                         var rs = self.sdk.relayTransactions.get();
 
@@ -7450,83 +7666,107 @@ Platform = function (app, listofnodes) {
                                                             return
                                                         }
 
-                                                        var c = kits.c[object.type]
+                                                        var successFullSendFunc = () => {
+                                                            var c = kits.c[object.type]
 
-                                                        var trobj = new c();
+                                                            var trobj = new c();
 
-                                                        trobj.import(object);
+                                                            trobj.import(object);
 
-                                                        trobj.fromrelay = true;
+                                                            trobj.fromrelay = true;
 
-                                                        object.sending = true;
+                                                            object.sending = true;
 
-                                                        self.sdk.node.transactions.create.commonFromUnspent(
+                                                            self.sdk.node.transactions.create.commonFromUnspent(
 
-                                                            trobj,
+                                                                trobj,
 
-                                                            function (_alias, error) {
+                                                                function (_alias, error) {
 
-                                                                var eh = self.errors[error] || {}
+                                                                    var eh = self.errors[error] || {}
 
-                                                                delete object.sending;
+                                                                    delete object.sending;
 
-                                                                if (error) {
-                                                                    if (key == 'userInfo') {
+                                                                    if (error) {
+                                                                        if (key == 'userInfo') {
 
-                                                                        var _nsh = bitcoin.crypto.hash256(JSON.stringify(object))
+                                                                            var _nsh = bitcoin.crypto.hash256(JSON.stringify(object))
 
-                                                                        needaction = true
+                                                                            needaction = true
 
-                                                                        if (error == '18' && _nsh != nshowed) {
+                                                                            if (error == '18' && _nsh != nshowed) {
 
-                                                                            nshowed = _nsh
+                                                                                nshowed = _nsh
 
-                                                                            app.nav.api.load({
-                                                                                open: true,
-                                                                                href: 'test',
-                                                                                inWnd: true,
+                                                                                app.nav.api.load({
+                                                                                    open: true,
+                                                                                    href: 'test',
+                                                                                    inWnd: true,
 
-                                                                                essenseData: {
-                                                                                    caption: self.app.localization.e('e13265'),
-                                                                                    failedrelay : trobj
-                                                                                }
+                                                                                    essenseData: {
+                                                                                        caption: self.app.localization.e('e13265'),
+                                                                                        failedrelay : trobj
+                                                                                    }
+                                                                                })
+                                                                            }
+
+                                                                            if (clbk)
+                                                                                clbk(needaction)
+
+                                                                            return
+                                                                        }
+                                                                    }
+
+                                                                    if (!error || (eh && !eh.relay)) {
+
+                                                                        if (key == 'userInfo') {
+
+                                                                            delete rs[key]
+
+                                                                        }
+                                                                        else {
+                                                                            rs[key] = _.filter(rs[key], function (t) {
+                                                                                return t.txid != object.txid
                                                                             })
                                                                         }
 
-                                                                        if (clbk)
-                                                                            clbk(needaction)
+                                                                        Object.values(self.sdk.relayTransactions.clbks).map(clbk => {
+                                                                            if (typeof clbk === 'function') clbk({
+                                                                                txid: object.txid,
+                                                                            });
+                                                                        });
 
-                                                                        return
-                                                                    }
-                                                                }
-
-                                                                if (!error || (eh && !eh.relay)) {
-
-                                                                    if (key == 'userInfo') {
-
-                                                                        delete rs[key]
+                                                                        self.sdk.relayTransactions.save()
 
                                                                     }
                                                                     else {
-                                                                        rs[key] = _.filter(rs[key], function (t) {
-                                                                            return t.txid != object.txid
-                                                                        })
+
                                                                     }
 
-                                                                    self.sdk.relayTransactions.save()
+                                                                    p.success()
 
                                                                 }
-                                                                else {
+                                                            );
+                                                        }
 
-                                                                }
+                                                        // Transcoding checking for functions
+                                                        if (object.checkSend && object.canSend) {
 
-                                                                p.success()
+                                                            obj.canSend(self.app, (result) => {
+                                                                if (result) return successFullSendFunc();
+                                                                // Skip if transcoding is not finished
+                                                                return p.success()
+                                                            })
 
-                                                            }
-                                                        )
+                                                            /*self.app.peertubeHandler.checkTranscoding(object.url).then((result) => {
+                                                                if (result) return successFullSendFunc();
 
-
-
+                                                                // Skip if transcoding is not finished
+                                                                return p.success()
+                                                            })*/
+                                                        } else {
+                                                            successFullSendFunc();
+                                                        }
                                                     },
 
                                                     all: {
@@ -7592,6 +7832,8 @@ Platform = function (app, listofnodes) {
 
                 s.storage[address] || (s.storage[address] = {})
                 s.storage[address][alias.type] || (s.storage[address][alias.type] = []);
+
+                var postsStack = s.storage[address][alias.type];
 
                 s.storage[address][alias.type].push(alias)
 
@@ -7994,20 +8236,68 @@ Platform = function (app, listofnodes) {
                 viewed : {}
             },
 
+            newmaterials : function(counts){
+                _.each(counts, (c, i) => {
+                    if (self.sdk.sharesObserver.storage.viewed[i]){
+                        self.sdk.sharesObserver.storage.viewed[i].new = (self.sdk.sharesObserver.storage.viewed[i].new || 0) + c
+                    }
+                })
+
+                self.sdk.sharesObserver.save()
+            },
+
+            hasnewkeys : function(keys){
+                return _.reduce(keys, (m, key) => {
+                    return m && self.sdk.sharesObserver.hasnew(key)
+                }, true)
+            },
+
+            hasnew : function(key){
+
+
+                if(!self.sdk.sharesObserver.storage.viewed[key]) return true
+
+                var block = self.currentBlock || (self.app.api.getCurrentBlock ? self.app.api.getCurrentBlock() : 0)
+
+                if (block){
+
+                    if (block >= (self.sdk.sharesObserver.storage.viewed[key].block || 0) + 30){
+
+
+                        return true
+                    }
+
+                    if (block > (self.sdk.sharesObserver.storage.viewed[key].block || 0)){
+
+                        return self.sdk.sharesObserver.storage.viewed[key].new > 0
+                    }
+                }   
+            },
+
             view : function(key, first, last){
+
 
                 if(key == 'saved') return
 
                 if(!self.sdk.sharesObserver.storage.viewed[key]) self.sdk.sharesObserver.storage.viewed[key] = {}
 
-                if (self.sdk.sharesObserver.storage.viewed[key].first < first)
-                    self.sdk.sharesObserver.storage.viewed[key].first = first
 
-                if (self.sdk.sharesObserver.storage.viewed[key].last > last)
+                console.log('self.sdk.sharesObserver.storage.viewed[key].first < first', key, self.sdk.sharesObserver.storage.viewed[key].first , first)
+
+                if (!self.sdk.sharesObserver.storage.viewed[key].first || self.sdk.sharesObserver.storage.viewed[key].first <= first){
+
+                    self.sdk.sharesObserver.storage.viewed[key].first = first
+                    self.sdk.sharesObserver.storage.viewed[key].new = 0
+
+                }
+                    
+
+                if (!self.sdk.sharesObserver.storage.viewed[key].last || self.sdk.sharesObserver.storage.viewed[key].last > last)
                     self.sdk.sharesObserver.storage.viewed[key].last = last
 
-
                 self.sdk.sharesObserver.storage.viewed[key].time = new Date()
+                self.sdk.sharesObserver.storage.viewed[key].block = self.currentBlock || (self.app.api.getCurrentBlock ? self.app.api.getCurrentBlock() : 0)
+                
 
                 self.sdk.sharesObserver.save()
 
@@ -8958,7 +9248,7 @@ Platform = function (app, listofnodes) {
             },
 
             error : function(text){
-                dialog({
+                new dialog({
                     html: app.meta.fullname + " chat ask you to generate encryption keys. But some error with your profile update was occuried:<br><b>" + text + "</b>",
                     btn1text: 'Edit profile',
                     class : 'one',
@@ -9365,7 +9655,7 @@ Platform = function (app, listofnodes) {
                                         h += '</div>'
                                         h += '</div>'
 
-                                        dialog({
+                                        new dialog({
                                             html: h,
                                             btn1text: self.app.localization.e('dyes'),
                                             btn2text: self.app.localization.e('dno'),
@@ -9480,7 +9770,14 @@ Platform = function (app, listofnodes) {
             },
 
             reputationBlocked : function(address, count){
-                var ustate = self.sdk.ustate.storage[address] || deep(self, 'sdk.usersl.storage.' + address) || deep(self, 'sdk.users.storage.' + address);
+                var ustate = deep(self, 'sdk.usersl.storage.' + address) || self.sdk.ustate.storage[address] || deep(self, 'sdk.users.storage.' + address);
+
+                if(!ustate) return false
+
+                var totalComplains = typeof ustate.flags === 'object' ? Object.values(ustate.flags).reduce((a,b) => a + +b, 0) : 0
+                var isOverComplained = typeof ustate.flags === 'object' ? Object.values(ustate.flags).some(el => el / (ustate.postcnt || 1) > 5) : false
+
+                var totalComplainsFirstFlags = typeof ustate.firstFlags === 'object' ? Object.values(ustate.firstFlags).reduce((a,b) => a + +b, 0) : 0
 
                 if(self.bch[address]) return true
 
@@ -9491,6 +9788,50 @@ Platform = function (app, listofnodes) {
                 ){
                     return true
                 }
+
+                if(isOverComplained) {
+                    return true
+                }
+
+                if(moment().diff(ustate.regdate, 'days') <= 7 && totalComplains  > 20 ) {
+                    return true
+                }
+
+                if(totalComplainsFirstFlags > 10){
+                    return true
+                }
+
+                if(totalComplains > 20 && ustate.likers_count * 2 < totalComplains) {
+                    return true
+                }
+
+                if(this.isNotAllowedName(ustate)) {
+                    return true
+                }
+            },
+
+            isNotAllowedName : function (user = {}) {
+                let name, address
+                if (user.name) {
+                    name = user.name
+                    address = user.address
+                }
+                if (user.data) {
+                    name = user.data.name
+                    address = user.data.address
+                }
+                if(typeof self.api.name(address) !== 'undefined' && self.api.name(address) !== name) {
+                    return true
+                }
+                name = name?.toLowerCase().replace(/[^a-z]/g,'') || ''
+
+                if(name.indexOf('pocketnet') !== -1 || name.indexOf('bastyon') !== -1) {
+                    if(self.whiteList.includes(address)){
+                        return false
+                    }
+                    return true
+                }
+
             },
 
             hiddenComment : function(comment){
@@ -10863,7 +11204,7 @@ Platform = function (app, listofnodes) {
 
 
                             if (clbk)
-                                clbk()
+                                clbk(d)
 
                         }).catch(e => {
                             if (clbk)
@@ -11095,7 +11436,7 @@ Platform = function (app, listofnodes) {
             getTopAccounts : function(p, rpc, clbk){
 
                 var method = 'gettopaccounts';
-     
+
                 p.height = 0;
                 p.tagsfilter = self.app.platform.sdk.categories.gettags();
                 p.tagsexcluded = self.app.platform.sdk.categories.gettagsexcluded();
@@ -11109,19 +11450,11 @@ Platform = function (app, listofnodes) {
                 })
 
                 p.depth || (p.depth = 10000);
-                    
+
                 var parameters = [p.height, p.count, p.lang, p.tagsfilter, p.type, '', p.tagsexcluded, p.depth];
 
                 var s = self.sdk.node.shares;
 
-                // s.getex(parameters, function(data, error){
-
-                //     console.log('gettopaccounts result', data, error);
-
-                //     clbk(data, error);
-                    
-
-                // }, method, rpc)
 
                 clbk();
 
@@ -11132,12 +11465,7 @@ Platform = function (app, listofnodes) {
                 var rpc = {
                     cache : true,
                     locally : true,
-                    fastvideo : true,
-                    meta : {
-                        host : '78.37.233.202',
-                        port : 31031,
-                        ws : 3037
-                    }
+                    fastvideo : true
                 }
 
                 var address = self.sdk.activity.getbestaddress();
@@ -11145,7 +11473,7 @@ Platform = function (app, listofnodes) {
                 var method = 'getrecommendedaccountbyaddress';
 
                 var p = {};
-                
+
                 p.addressexclude = '';
                 p.type = [];
                 p.lang = self.app.localization.key;
@@ -11156,15 +11484,13 @@ Platform = function (app, listofnodes) {
                     self.app.platform.sdk.users.getTopAccounts(p, rpc, clbk);
                     return;
 
-                } 
+                }
 
                 var parameters = [address, p.addressexclude, p.type, p.lang, p.count];
 
                 var s = self.sdk.node.shares;
 
                 s.getex(parameters, function(data, error){
-
-                    console.log('getrecommendedaccounts result', data, error);
 
                     if (!(data && data.length) || error){
 
@@ -11206,11 +11532,11 @@ Platform = function (app, listofnodes) {
                 var point = 1;
 
 
-                if (me.relation(address, 'subscribes')){
+                if (me && me.relation(address, 'subscribes')){
                     point += 100
                 }
 
-                if (me.relation(address, 'subscribers')){
+                if (me && me.relation(address, 'subscribers')){
                     point += 20
                 }
 
@@ -11287,8 +11613,12 @@ Platform = function (app, listofnodes) {
                     sub : data['sharesSubscr'] || 0,
                     video : deep(data, 'contentsLang.video.' + self.app.localization.key)|| 0,
                     article : deep(data, 'contentsLang.article.' + self.app.localization.key)|| 0,
-                    common : deep(data, 'sharesLang.' + self.app.localization.key) || ( (deep(data, 'contentsLang.share.' + self.app.localization.key) || 0) + (deep(data, 'contentsLang.video.' + self.app.localization.key)|| 0))
+                    common : deep(data, 'sharesLang.' + self.app.localization.key) || ( (deep(data, 'contentsLang.share.' + self.app.localization.key) || 0) + (deep(data, 'contentsLang.video.' + self.app.localization.key)|| 0)),
+
+                    index_sub : data['sharesSubscr'] || 0
                 }
+
+                counts.index = counts.common
 
                 _.each(counts, function(c, i){
                     // c = rand(1,3)
@@ -11299,7 +11629,7 @@ Platform = function (app, listofnodes) {
                     u(self.sdk.newmaterials.storage)
                 })
 
-
+                self.sdk.sharesObserver.newmaterials(counts)
             },
 
             clear : function(){
@@ -12471,23 +12801,23 @@ Platform = function (app, listofnodes) {
                         return like.countOfFives && like.data.subscribers_count + like.data.subscribes_count;
                     })
 
-    
+
                     var bestAddress = '';
                     var bestCount = 1;
-    
+
                     availablesLikes.forEach(function(like){
-    
+
                         if (like.countOfFives > bestCount){
 
                             bestAddress = like.data.address;
                             bestCount = like.countOfFives;
-                            
+
                         } else if (!bestAddress && (like.countOfFives === bestCount)){
 
                             bestAddress = like.data.address;
                         }
                     })
-    
+
                     return bestAddress;
                 }
 
@@ -12584,7 +12914,7 @@ Platform = function (app, listofnodes) {
 
                 self.sdk.users.get([address], function () {
 
-                    var user = self.sdk.users.storage[address] || self.sdk.usersl.storage[address] 
+                    var user = self.sdk.users.storage[address] || self.sdk.usersl.storage[address]
 
                     if (user){
 
@@ -13923,6 +14253,11 @@ Platform = function (app, listofnodes) {
 
                 s.tags[k] || (s.tags[k] = {})
 
+                self.app.Logger.info({
+                    actionId: 'SELECT_FEED_TAG',
+                    actionValue: tag,
+                    actionSubType: s.tags[k][tag] ? 'DESELECT' : 'SELECT'
+                });
 
                 if (s.tags[k][tag])
                     delete s.tags[k][tag]
@@ -13979,7 +14314,6 @@ Platform = function (app, listofnodes) {
             },
 
             select : function(id, _k){
-
                 if(!id) return 'emptyid'
 
                 var allcats = self.sdk.categories.get(_k)
@@ -13997,6 +14331,11 @@ Platform = function (app, listofnodes) {
 
                 s.selected[k] || (s.selected[k] = {})
 
+                self.app.Logger.info({
+                    actionId: 'SELECT_FEED_CATEGORY',
+                    actionValue: cat.name,
+                    actionSubType: s.selected[k][id] ? 'DESELECT' : 'SELECT'
+                });
 
                 if (s.selected[k][id])
                     delete s.selected[k][id]
@@ -14482,7 +14821,6 @@ Platform = function (app, listofnodes) {
             },
 
             get: function (value, type, start, count, fixedBlock, clbk, address, cached) {
-
                 if (!address) address = 'pocketnet'
 
                 var s = self.sdk.search;
@@ -14498,7 +14836,6 @@ Platform = function (app, listofnodes) {
                 value = trim(value.replace(/[^а-яА-Яa-zA-Z0-9\# _]+/g, ''))
 
                 if(cached && type && type != 'fs') {
-
                     var g =  self.sdk.search.getcached(value, fixedBlock, type, start, count, address)
 
                     if (g){
@@ -14515,8 +14852,25 @@ Platform = function (app, listofnodes) {
 
                 if (value.length) {
 
-                    self.app.api.rpc('search', np).then(d => {
+                    if(type === 'users') {
+                        self.app.api.rpc('searchusers', np).then(d => {
 
+                            d = {
+                                data: [...d]
+                            }
+
+                            s.add(value, fixedBlock, type, d, start, count, address)
+
+                            if (clbk)
+                                clbk(d, fixedBlock)
+                        }).catch(e => {
+                            if (clbk) {
+                                clbk({})
+                            }
+                        })
+                        return;
+                    }
+                    self.app.api.rpc('search', np).then(d => {
                         if (type != 'fs') {
 
                             if (type == 'all') {
@@ -14524,6 +14878,7 @@ Platform = function (app, listofnodes) {
                                     s.add(value, fixedBlock, k, d, start, count, address)
                                 })
                             }
+
                             else {
                                 d = d[type] || {
                                     data: []
@@ -14796,41 +15151,7 @@ Platform = function (app, listofnodes) {
 
         upvote : {
             checkvalue : function(value, clbk, fclbk){
-                if(value > 2){
-                    if(clbk) clbk()
-
-                    return
-                }
-
-                var h = '<div>'+self.app.localization.e('lowstar1')+'</div>'
-
-                h+='<div><ul>'
-                h+='<li>'+self.app.localization.e('lowstar_reason_1')+'</li>'
-                h+='<li>'+self.app.localization.e('lowstar_reason_2')+'</li>'
-                h+='<li>'+self.app.localization.e('lowstar_reason_3')+'</li>'
-                h+='<li>'+self.app.localization.e('lowstar_reason_4')+'</li>'
-                h+='</ul></div>'
-                h+='<div>'+self.app.localization.e('lowstar2')+'</div>'
-                if(self.app.localization.key == 'ru')
-                h+='<div class="b">'+self.app.localization.e('lowstar3')+'</div>'
-                
-                dialog({
-                    html: h,
-                    btn1text: self.app.localization.e('lowstaragree'),
-                    btn2text: self.app.localization.e('close'),
-
-                    class: 'zindex',
-
-                    success: function () {
-
-                        if(clbk) clbk()
-
-                    },
-
-                    fail: function () {
-                        if(fclbk) fclbk()
-                    }
-                })
+                if(clbk) clbk()
             },
         },
 
@@ -15824,7 +16145,8 @@ Platform = function (app, listofnodes) {
                         share._import(temp, true);
                         share.temp = true;
 
-                        if (s.relay) share.relay = true;
+                        if (temp.relay) share.relay = true;
+                        if (temp.checkSend) share.checkSend = true
 
                         share.address = self.app.platform.sdk.address.pnet().address
                     }
@@ -16719,12 +17041,12 @@ Platform = function (app, listofnodes) {
                                         if (!p.author || p.author == p.address) {
                                             _.each(self.sdk.relayTransactions.withtemp('share'), function (ps) {
 
-
                                                 var s = new pShare();
-                                                s._import(ps, true);
-                                                s.temp = true;
+                                                    s._import(ps, true);
+                                                    s.temp = true;
 
                                                 if (ps.relay) s.relay = true
+                                                if (ps.checkSend) s.checkSend = true
 
                                                 s.address = ps.address
 
@@ -16789,12 +17111,7 @@ Platform = function (app, listofnodes) {
                         rpc : {
                             cache : true,
                             locally : true,
-                            fastvideo : true,
-                            meta : {
-                                host : '78.37.233.202',
-                                port : 31031,
-                                ws : 3037
-                            }
+                            fastvideo : true
                         }
                     });
 
@@ -16806,13 +17123,7 @@ Platform = function (app, listofnodes) {
                         method : 'getrecommendedcontentbyaddress',
                         rpc : {
                             cache : true,
-                            locally : true,
-                            fastvideo : true,
-                            meta : {
-                                host : '78.37.233.202',
-                                port : 31031,
-                                ws : 3037
-                            }
+                            fastvideo : true
                         }
                     });
 
@@ -16947,6 +17258,21 @@ Platform = function (app, listofnodes) {
                         }
                     })
                 },
+
+                /*hierarchicaltst : function(p, clbk, cache){
+
+                    self.app.platform.sdk.node.shares.hierarchical(p, clbk, cache, {
+                        method : 'gethierarchicalstrip'
+                    })
+
+
+
+                    self.app.platform.sdk.node.shares.hierarchical({...p, ...{height : 0}}, null, cache, {
+                        method : 'gethierarchicalstrip'
+                    })
+
+                },*/
+
 
                 hierarchical: function (p, clbk, cache, methodparams) {
 
@@ -17106,6 +17432,7 @@ Platform = function (app, listofnodes) {
                                                 s.temp = true;
 
                                                 if (ps.relay) s.relay = true
+                                                if (ps.checkSend) s.checkSend = true
 
                                                 s.address = ps.address
 
@@ -17208,19 +17535,24 @@ Platform = function (app, listofnodes) {
 
                         self.app.platform.sdk.node.shares.getbyid(txids, function (shares) {
 
-                            console.log('include, shares', shares.length)
+                            
+                            self.app.platform.sdk.node.shares.users(shares, function(){
 
-                            shares = _.filter(shares, function(s){
-                                if(!self.sdk.user.reputationBlocked(s.address)){
-                                    return true
-                                }
+                                shares = _.filter(shares, function(s){
+
+                                    if(!self.sdk.user.reputationBlocked(s.address)){
+                                        return true
+                                    }
+                                    else{
+                                    }
+                                })
+    
+    
+                                if (clbk)
+                                    clbk(shares, null, p)
                             })
 
-                            console.log('include, shares2', shares.length)
-
-
-                            if (clbk)
-                                clbk(shares, null, p)
+                            
 
                         })
 
@@ -17261,49 +17593,49 @@ Platform = function (app, listofnodes) {
                     if(!tx.vout || !tx.vout.length || !address) return null
 
                     var firstout = tx.vout[0]
+
+                    var n = -1
+                    var uservout = _.find(tx.vout, (v) => {
+                        n ++ 
+                        return _.find(deep(v, 'scriptPubKey.addresses') || [], (a) => {
+                            return a == address
+                        })
+                    })
+                    
+                    
+                    /**/
                     var l = tx.vout.length
 
-                    if(!firstout || l <= 1) return null
+                    if(!firstout || l <= 1 || !uservout) return null
+
+                    n = l - n
 
                     try {
                         var chunks = bitcoin.script.decompile(Buffer.from(firstout.scriptPubKey.hex, 'hex'))
 
                         if(!chunks.length) return
 
-                        chunks = chunks[0]
-
                         var cl = chunks.length
+
                         if(!cl) return null
 
-                        var n = 0;
+                        if (chunks[cl - n]) {
+                            var ch = chunks[cl - n]
 
-                        for(var i = l - 1; i > 0; i--){
+                            if (ch == bitcoin.opcodes.OP_WINNER_POST) {
+                                type = 'post'
+                            }
 
-                            n++
+                            if (ch == bitcoin.opcodes.OP_WINNER_COMMENT) {
+                                type = 'comment'
+                            }
 
-                            var v = tx.vout[i]
+                            if (ch == bitcoin.opcodes.OP_WINNER_POST_REFERRAL) {
+                                type = 'postref'
+                            }
 
-                            var _address = deep(v, 'scriptPubKey.addresses.0')
-
-                            if (_address == address && chunks[cl - n]) {
-                                var ch = chunks[cl - n]
-
-
-                                if (ch == bitcoin.opcodes.OP_WINNER_POST) {
-                                    type = 'post'
-                                }
-
-                                if (ch == bitcoin.opcodes.OP_WINNER_COMMENT) {
-                                    type = 'comment'
-                                }
-
-                                if (ch == bitcoin.opcodes.OP_WINNER_POST_REFERRAL) {
-                                    type = 'postref'
-                                }
-
-                                if (ch == bitcoin.opcodes.OP_WINNER_COMMENT_REFERRAL) {
-                                    type = 'commentref'
-                                }
+                            if (ch == bitcoin.opcodes.OP_WINNER_COMMENT_REFERRAL) {
+                                type = 'commentref'
                             }
                         }
 
@@ -17742,7 +18074,6 @@ Platform = function (app, listofnodes) {
                     if (alias && alias.txid) {
 
                         self.sdk.node.transactions.get.tx(alias.txid, function (d, _error) {
-
 
                             if (clbk) {
 
@@ -18624,7 +18955,6 @@ Platform = function (app, listofnodes) {
                     },
 
                     commonFromUnspent: function (obj, clbk, p, telegram) {
-
                         if (!p) p = {};
 
                         if (self.sdk.address.pnet() && !obj.fromrelay) {
@@ -18772,9 +19102,7 @@ Platform = function (app, listofnodes) {
 
                                 }
                             }
-
                             self.sdk.node.transactions.create[obj.type](inputs, obj, /*feerate,*/ function (a, er, data) {
-
                                 if (!a) {
                                     if ((er == -26 || er == -25 || er == 16) && !p.update) {
 
@@ -18890,7 +19218,7 @@ Platform = function (app, listofnodes) {
 
                     },
 
-                    common: function (inputs, obj, fees, clbk, p) {
+                    common: function (inputs, obj = {}, fees, clbk, p) {
 
                         if (!p) p = {};
 
@@ -18914,281 +19242,318 @@ Platform = function (app, listofnodes) {
                         }
 
                         else {
-                            var keyPair = p.keys || self.app.user.keys()
 
-                            //var p2pkh = bitcoin.payments.p2pkh({ pubkey: keyPair.publicKey});
+                            var generateShare = () => {
+                                var keyPair = p.keys || self.app.user.keys()
 
-
-                            var address = p.address || self.sdk.address.pnet()
-
-                            var txb = new bitcoin.TransactionBuilder();
-
-                            txb.addNTime(self.timeDifference || 0)
-
-                            var amount = 0;
-
-                            _.each(inputs, function (i, index) {
-
-                                txb.addInput(i.txId, i.vout, null, Buffer.from(i.scriptPubKey, 'hex'))
-
-                                amount = amount + Number(i.amount);
-                            })
-
-                            amount = amount * smulti;
+                                //var p2pkh = bitcoin.payments.p2pkh({ pubkey: keyPair.publicKey});
 
 
-                            var data = Buffer.from(bitcoin.crypto.hash256(obj.serialize()), 'utf8');
-                            var optype = obj.typeop ? obj.typeop(self) : obj.type
-                            var optstype = optype
+                                var address = p.address || self.sdk.address.pnet()
 
-                            if (obj.optstype && obj.optstype(self)) optstype = obj.optstype(self)
+                                var txb = new bitcoin.TransactionBuilder();
 
-                            var opreturnData = [Buffer.from(optype, 'utf8'), data];
+                                txb.addNTime(self.timeDifference || 0)
 
-                            var outputs = [];
+                                var amount = 0;
 
-                            if (obj.opreturn) {
-                                opreturnData.push(Buffer.from(obj.opreturn()))
-                            }
+                                _.each(inputs, function (i, index) {
 
-                            var embed = bitcoin.payments.embed({ data: opreturnData });
-                            var i = 0;
+                                    txb.addInput(i.txId, i.vout, null, Buffer.from(i.scriptPubKey, 'hex'))
 
-                            if (obj.type !== 'contentBoost'){
-
-
-                                outputs.push({
-                                    amount : 0,
-                                    deleted : true,
-                                    address : address.address
+                                    amount = amount + Number(i.amount);
                                 })
 
+                                amount = amount * smulti;
 
-                            }
 
-                            txb.addOutput(embed.output, 0);
+                                var data = Buffer.from(bitcoin.crypto.hash256(obj.serialize()), 'utf8');
+                                var optype = obj.typeop ? obj.typeop(self) : obj.type
+                                var optstype = optype
 
-                            if(self.sdk.user.reputationBlockedMe()){
+                                if (obj.optstype && obj.optstype(self)) optstype = obj.optstype(self)
 
-                                if (clbk) {
-                                    clbk(null, 313, {})
+                                var opreturnData = [Buffer.from(optype, 'utf8'), data];
+
+                                var outputs = [];
+
+                                if (obj.opreturn) {
+                                    opreturnData.push(Buffer.from(obj.opreturn()))
                                 }
 
-                                return
-                            }
+                                var embed = bitcoin.payments.embed({ data: opreturnData });
+                                var i = 0;
 
-                            self.sdk.node.transactions.get.unspent(function (unspents) {
+                                if (obj.type !== 'contentBoost'){
 
-                                if (p.relay) {
 
-                                    var alias = obj.export(true);
-                                    alias.txid = makeid();
-                                    alias.address = p.relay;
-                                    alias.type = obj.type
-                                    alias.time = self.currentTime()
-                                    alias.timeUpd = alias.time
-                                    alias.optype = optype
+                                    outputs.push({
+                                        amount : 0,
+                                        deleted : true,
+                                        address : address.address
+                                    })
 
-                                    alias.relay = true;
 
-                                    self.sdk.relayTransactions.add(p.relay, alias)
+                                }
 
-                                    if (clbk)
-                                        clbk(alias)
+                                txb.addOutput(embed.output, 0);
+
+                                if(self.sdk.user.reputationBlockedMe()){
+
+                                    if (clbk) {
+                                        clbk(null, 313, {})
+                                    }
 
                                     return
                                 }
 
+                                self.sdk.node.transactions.get.unspent(function (unspents) {
 
-                                if (
-                                    !(obj.donate && obj.donate.v.length) &&
+                                    if (p.relay) {
 
+                                        var alias = obj.export(true);
+                                        alias.txid = makeid();
+                                        alias.address = p.relay;
+                                        alias.type = obj.type
+                                        alias.time = self.currentTime()
+                                        alias.timeUpd = alias.time
+                                        alias.optype = optype
 
-                                    unspents.length < 50 && amount > 0.2 * smulti && obj.type !== 'contentBoost') {
+                                        alias.relay = true;
 
-                                    var ds = Number((amount / 2).toFixed(0))
+                                        self.sdk.relayTransactions.add(p.relay, alias)
 
-                                    amount = amount - ds
+                                        if (clbk)
+                                            clbk(alias)
 
-
-                                    txb.addOutput(address.address, ds);
-
-                                    outputs.push({
-                                        address: address.address,
-                                        amount: ds
-                                    })
-
-                                }
-
-
-                                ///// add donations
-
-
-                                totalDonate = 0;
-
-                                if (obj.donate && obj.donate.v.length){
-
-                                    obj.donate.v.forEach(function(d){
-                                        var donate = Number(d.amount) * smulti;
-
-                                        totalDonate += donate
-
-                                        txb.addOutput(d.address, donate);
-                                        outputs.push({
-                                            address: d.address,
-                                            amount: donate
-                                        });
-
-                                    })
-                                }
-
-                                var totalReturn = Number((amount - totalDonate - (fees || 0)).toFixed(0));
-
-
-                                if (obj.type === 'contentBoost'){
-
-                                    var amountMulti = obj.amount.v * smulti;;
-                                    totalReturn -= amountMulti;
-
-                                }
-
-                                if (obj.donate && obj.donate.v.length && (totalReturn < 0 || totalDonate <= fees)){
-
-                                    if (clbk){
-                                        clbk(null, 'tosmallamount')
+                                        return
                                     }
 
-                                    return;
 
-                                } else {
+                                    if (
+                                        !(obj.donate && obj.donate.v.length) &&
 
-                                    txb.addOutput(address.address, totalReturn);
-                                    outputs.push({
-                                        address: address.address,
-                                        amount: totalReturn
-                                    })
 
-                                    _.each(inputs, function (input, index) {
-                                        txb.sign(index, keyPair);
-                                    })
+                                        unspents.length < 50 && amount > 0.2 * smulti && obj.type !== 'contentBoost') {
 
-                                    var tx = txb.build()
+                                        var ds = Number((amount / 2).toFixed(0))
 
-                                    if (obj.donate && obj.donate.v.length && !obj.fees.v){
+                                        amount = amount - ds
 
-                                        var totalFees = Math.min(tx.virtualSize() * fees / smulti, 0.0999);
 
-                                        obj.fees.set(totalFees);
+                                        txb.addOutput(address.address, ds);
 
-                                        self.sdk.node.transactions.create.common(inputs, obj, totalFees * smulti, clbk, p);
+                                        outputs.push({
+                                            address: address.address,
+                                            amount: ds
+                                        })
+
+                                    }
+
+
+                                    ///// add donations
+
+
+                                    totalDonate = 0;
+
+                                    if (obj.donate && obj.donate.v.length){
+
+                                        obj.donate.v.forEach(function(d){
+                                            var donate = Number(d.amount) * smulti;
+
+                                            totalDonate += donate
+
+                                            txb.addOutput(d.address, donate);
+                                            outputs.push({
+                                                address: d.address,
+                                                amount: donate
+                                            });
+
+                                        })
+                                    }
+
+                                    var totalReturn = Number((amount - totalDonate - (fees || 0)).toFixed(0));
+
+
+                                    if (obj.type === 'contentBoost'){
+
+                                        var amountMulti = obj.amount.v * smulti;;
+                                        totalReturn -= amountMulti;
+
+                                    }
+
+                                    if (obj.donate && obj.donate.v.length && (totalReturn < 0 || totalDonate <= fees)){
+
+                                        if (clbk){
+                                            clbk(null, 'tosmallamount')
+                                        }
+
+                                        return;
 
                                     } else {
 
-                                        var hex = tx.toHex();
+                                        txb.addOutput(address.address, totalReturn);
+                                        outputs.push({
+                                            address: address.address,
+                                            amount: totalReturn
+                                        })
 
-                                        if (p.pseudo) {
-                                            var alias = obj.export(true);
-                                            alias.txid = makeid();
+                                        _.each(inputs, function (input, index) {
+                                            txb.sign(index, keyPair);
+                                        })
 
-                                            if (clbk)
-                                                clbk(alias, null)
-                                        }
-                                        else {
+                                        var tx = txb.build()
 
-                                            var bids = _.map(inputs, function (i) {
-                                                return {
-                                                    txid : i.txId,
-                                                    vout : i.vout
-                                                }
-                                            })
+                                        if (obj.donate && obj.donate.v.length && !obj.fees.v){
 
-                                            self.app.platform.sdk.node.transactions.blockUnspents(bids)
+                                            var totalFees = Math.min(tx.virtualSize() * fees / smulti, 0.0999);
 
+                                            obj.fees.set(totalFees);
 
-                                            self.app.api.rpc('sendrawtransactionwithmessage', [hex, obj.export(), optstype]).then(d => {
+                                            self.sdk.node.transactions.create.common(inputs, obj, totalFees * smulti, clbk, p);
 
+                                        } else {
 
+                                            var hex = tx.toHex();
+
+                                            if (p.pseudo) {
                                                 var alias = obj.export(true);
-                                                    alias.txid = d;
-                                                    alias.address = address.address;
-                                                    alias.type = obj.type
-                                                    alias.time = self.currentTime()
-                                                    alias.timeUpd = alias.time
-                                                    alias.optype = optype
+                                                alias.txid = makeid();
 
-                                                    var count = deep(tempOptions, obj.type + ".count") || 'many'
+                                                if (clbk)
+                                                    clbk(alias, null)
+                                            }
+                                            else {
 
-
-                                                    if (!temp[obj.type] || count == 'one') {
-                                                        temp[obj.type] = {};
+                                                var bids = _.map(inputs, function (i) {
+                                                    return {
+                                                        txid : i.txId,
+                                                        vout : i.vout
                                                     }
+                                                })
 
-                                                    temp[obj.type][d] = alias;
+                                                self.app.platform.sdk.node.transactions.blockUnspents(bids)
 
-                                                    alias.inputs = inputs
 
-                                                    alias.outputs = _.map(outputs, function(output){
-                                                        return {
-                                                            address : output.address,
-                                                            amount : output.amount / smulti,
-                                                            deleted : output.deleted
+                                                self.app.api.rpc('sendrawtransactionwithmessage', [hex, obj.export(), optstype]).then(d => {
+
+
+                                                    var alias = obj.export(true);
+                                                        alias.txid = d;
+                                                        alias.address = address.address;
+                                                        alias.type = obj.type
+                                                        alias.time = self.currentTime()
+                                                        alias.timeUpd = alias.time
+                                                        alias.optype = optype
+                                                        alias.temp = true
+
+                                                        var count = deep(tempOptions, obj.type + ".count") || 'many'
+
+
+                                                        if (!temp[obj.type] || count == 'one') {
+                                                            temp[obj.type] = {};
                                                         }
-                                                    })
 
-                                                    self.sdk.node.transactions.saveTemp()
+                                                        temp[obj.type][d] = alias;
 
-                                                    var ids = _.map(inputs, function (i) {
+                                                        alias.inputs = inputs
 
-                                                        return {
-                                                            txid: i.txId || i.txid,
-                                                            vout: i.vout
-                                                        }
+                                                        alias.outputs = _.map(outputs, function(output){
+                                                            return {
+                                                                address : output.address,
+                                                                amount : output.amount / smulti,
+                                                                deleted : output.deleted
+                                                            }
+                                                        })
 
-                                                    })
+                                                        self.sdk.node.transactions.saveTemp()
 
-                                                    self.app.platform.sdk.node.transactions.clearUnspents(ids)
+                                                        var ids = _.map(inputs, function (i) {
 
-                                                    if (obj.ustate) {
-
-                                                        var ustate = obj.ustate;
-
-                                                        if (typeof obj.ustate == 'function') ustate = obj.ustate();
-
-                                                        if (ustate) {
-                                                            var us = self.sdk.ustate.storage;
-
-                                                            if (us[address.address] && !_.isEmpty(us[address.address])) {
-                                                                us[address.address][obj.ustate + "_spent"]++
-                                                                us[address.address][obj.ustate + "_unspent"]--
+                                                            return {
+                                                                txid: i.txId || i.txid,
+                                                                vout: i.vout
                                                             }
 
-                                                            _.each(self.sdk.ustate.clbks, function (c) {
-                                                                c()
-                                                            })
+                                                        })
+
+                                                        self.app.platform.sdk.node.transactions.clearUnspents(ids)
+
+                                                        if (obj.ustate) {
+
+                                                            var ustate = obj.ustate;
+
+                                                            if (typeof obj.ustate == 'function') ustate = obj.ustate();
+
+                                                            if (ustate) {
+                                                                var us = self.sdk.ustate.storage;
+
+                                                                if (us[address.address] && !_.isEmpty(us[address.address])) {
+                                                                    us[address.address][obj.ustate + "_spent"]++
+                                                                    us[address.address][obj.ustate + "_unspent"]--
+                                                                }
+
+                                                                _.each(self.sdk.ustate.clbks, function (c) {
+                                                                    c()
+                                                                })
+                                                            }
+
                                                         }
 
+
+                                                        if (clbk)
+                                                            clbk(alias)
+
+                                                }).catch(e => {
+                                                    self.app.platform.sdk.node.transactions.unblockUnspents(bids)
+
+                                                    console.error(e)
+
+                                                    if (clbk) {
+                                                        clbk(null, e.code, data)
                                                     }
-
-
-                                                    if (clbk)
-                                                        clbk(alias)
-
-                                            }).catch(e => {
-                                                self.app.platform.sdk.node.transactions.unblockUnspents(bids)
-
-                                                console.error(e)
-
-                                                if (clbk) {
-                                                    clbk(null, e.code, data)
-                                                }
-                                            })
+                                                })
+                                            }
                                         }
                                     }
-                                }
 
-                            }, address.address)
+                                }, address.address)
 
+                            };
 
+                            var generateShareRelayed = () => {
+                                var optype = obj.typeop ? obj.typeop(self) : obj.type
+
+                                var alias = obj.export(true);
+                                alias.txid = makeid();
+                                alias.address = addr.address;
+                                alias.type = obj.type
+                                alias.time = self.currentTime()
+                                alias.timeUpd = alias.time
+                                alias.optype = optype
+
+                                alias.relay = true;
+                                alias.checkSend = true;
+
+                                self.sdk.relayTransactions.add(addr.address, alias)
+
+                                if (clbk)
+                                    clbk(alias)
+
+                                return;
+                            };
+
+                            // If transaction is made from Share, check if it consist video that is in transcoding.
+                            if (obj.canSend) {
+                                return obj.canSend(self.app, (result) => {
+
+                                    if (result) return generateShare();
+
+                                    return generateShareRelayed();
+                                })
+                            }
+
+                            return generateShare();
                         }
 
                     },
@@ -19321,7 +19686,7 @@ Platform = function (app, listofnodes) {
 
                     },
 
-                    share: function (inputs, share, /*fees, */clbk, p, fromTG) {
+                    share: function (inputs, share, /*fees, */clbk, p = {}, fromTG) {
 
                         var meta = self.sdk.usersettings.meta;
 
@@ -19335,7 +19700,7 @@ Platform = function (app, listofnodes) {
 
                           } else {
                             // this.telegramSend = this.telegramSend.bind(this)
-                            dialog({
+                            new dialog({
                               html: "Do you really want send message to Telegram?",
                               btn1text: "Send",
                               btn2text: "Cancel",
@@ -19349,6 +19714,8 @@ Platform = function (app, listofnodes) {
 
                         this.common(inputs, share, TXFEE, clbk, p)
                     },
+
+                    shareRelayed: function(inputs, obj, fees, clbk, p = {}) {},
 
 
                     accSet: function (inputs, settings, clbk, p) {
@@ -19371,6 +19738,10 @@ Platform = function (app, listofnodes) {
 
                     complainShare: function (inputs, complainShare, clbk, p) {
                         this.common(inputs, complainShare, TXFEE, clbk, p)
+                    },
+
+                    modFlag: function (inputs, modFlag, clbk, p) {
+                        this.common(inputs, modFlag, TXFEE, clbk, p)
                     },
 
                     comment: function (inputs, comment, /*fees, */clbk, p) {
@@ -21602,7 +21973,7 @@ Platform = function (app, listofnodes) {
 
                         this.openedDialog = true;
 
-                        dialog({
+                        new dialog({
                             html: self.app.localization.e('e13325'),
                             btn1text: self.app.localization.e('e13326'),
                             btn2text: self.app.localization.e('ucancel'),
@@ -23583,6 +23954,7 @@ Platform = function (app, listofnodes) {
 
                     var _dataclbk = function (tx, err) {
 
+
                         if (err || !tx) {
 
                             if (clbk) clbk()
@@ -23696,6 +24068,7 @@ Platform = function (app, listofnodes) {
 
                         data.cointype = platform.sdk.node.transactions.getCoibaseTypeN(data.txinfo, platform.sdk.address.pnet().address)
 
+
                         platform.sdk.users.getone(data.address || '', function () {
 
                             if (data.address) {
@@ -23707,8 +24080,6 @@ Platform = function (app, listofnodes) {
                             _.each(platform.sdk.node.transactions.clbks, function (c) {
                                 c(data.amountall)
                             })
-
-
 
                             if (clbk)
                                 clbk(data)
@@ -23788,7 +24159,7 @@ Platform = function (app, listofnodes) {
                     if (data.tx) {
 
 
-                        if (data.tx.coinbase) {
+                        if (data.cointype) {
 
                             if (platform.sdk.usersettings.meta.win.value) {
 
@@ -23924,6 +24295,7 @@ Platform = function (app, listofnodes) {
 
                         platform.currentBlock = data.block;
                         platform.lasttimecheck = new Date()
+                        platform.lastblocktime = new Date()
 
                         lost = data.block;
 
@@ -23945,6 +24317,35 @@ Platform = function (app, listofnodes) {
                     platform.sdk.user.subscribeRef()
 
                     clbk(dif)
+
+                    ////////////////
+
+                    if(app.platform.sdk.address.pnet()){
+                        var addr = app.platform.sdk.address.pnet().address
+
+                        var regs = app.platform.sdk.registrations.storage[addr];
+
+                        if (regs == 5) {
+
+                            app.platform.sdk.registrations.add(addr, 6)
+
+                            platform.matrixchat.update()
+                        }
+                    }
+
+                    if(!slowMadeRelayTransactions)
+
+                        slowMadeRelayTransactions = slowMade(function(){
+                            
+                            platform.sdk.relayTransactions.send()
+                            slowMadeRelayTransactions = null
+
+                        }, slowMadeRelayTransactions, 10000)
+
+                    setTimeout(function(){
+                        platform.matrixchat.init()
+                    }, 100)
+                    ////////
                 },
 
                 refs: {
@@ -23978,6 +24379,7 @@ Platform = function (app, listofnodes) {
                     platform.currentBlock = data.height;
 
                     platform.lasttimecheck = new Date()
+                    platform.lastblocktime = new Date()
 
                     localStorage['lastblock'] = platform.currentBlock
 
@@ -24017,11 +24419,14 @@ Platform = function (app, listofnodes) {
 
                     ////////
 
+                    if(!slowMadeRelayTransactions)
 
-                    slowMadeRelayTransactions = slowMade(function(){
+                        slowMadeRelayTransactions = slowMade(function(){
 
-                        platform.sdk.relayTransactions.send()
-                    }, slowMadeRelayTransactions, 10000)
+                            platform.sdk.relayTransactions.send()
+                            slowMadeRelayTransactions = null
+
+                        }, slowMadeRelayTransactions, 10000)
 
                     clbk()
 
@@ -24721,11 +25126,12 @@ Platform = function (app, listofnodes) {
 
             platform.app.api.get.currentwss().then(wss => {
 
-                socket = wss.dummy || (new ReconnectingWebSocket(wss.url));
+                socket = wss.dummy || (new ReconnectingWebSocket(wss.url, null, {
+                    reconnectDecay : 1
+                }));
 
 
                 socket.onmessage = function (message) {
-
                     message = message.data ? message.data : message;
 
                     var jm = message;
@@ -24947,7 +25353,9 @@ Platform = function (app, listofnodes) {
 
         self.getMissed = function () {
 
-            if (lost < 1 || self.loadingMissed) return Promise.resolve()
+            if ((!platform.lastblocktime || (new Date() < platform.lastblocktime.addMinutes(3))) || (lost < 1)) return Promise.resolve()
+
+            if(self.loadingMissed) return Promise.resolve()
 
             self.loadingMissed = true;
 
@@ -25107,7 +25515,6 @@ Platform = function (app, listofnodes) {
         }
 
         self.messageHandler = function (data, clbk) {
-
 
             data || (data = {})
 
@@ -25618,9 +26025,11 @@ Platform = function (app, listofnodes) {
                 txid: "65fee9b1e925833c5ff623178efecc436d3af0c9f6a4baa0b73c52907a9d1d7b"
             })*/
 
+            // test coin 
 
+            //self.messageHandler({"addr":"TSVui5YmA3JNYvSjGK23Y2S8Rckb2eV3kn","msg":"transaction","txid":"a6819e0de29c148a193932da4581b79cae02163f717962a86ccbf259f915a4be","time":1657701744,"amount":"1000000","nout":"2","node":"116.203.219.28:39091:6067"})
 
-		}, 6000)
+		}, 3000)
     }
 
     self.convertUTCSS = function (str) {
@@ -26088,6 +26497,8 @@ Platform = function (app, listofnodes) {
 
                             .catch(function (err) {
 
+                                console.error(err)
+
                                 if (clbk)
                                     clbk('')
                             });
@@ -26378,7 +26789,7 @@ Platform = function (app, listofnodes) {
         var updateReady = function () {
 
             if (!d) {
-                d = dialog({
+                d = new dialog({
                     html: self.app.localization.e('e13347'),
                     btn1text: self.app.localization.e('dyes'),
                     btn2text: self.app.localization.e('e13348'),
@@ -26407,7 +26818,7 @@ Platform = function (app, listofnodes) {
                 if (self.app.platform.applications.ui[os()]) {
                     var _os = self.app.platform.applications.ui[os()]
                     if (_os.github && _os.github.url) {
-                        d = dialog({
+                        d = new dialog({
                             html:  self.app.localization.e('e13349'),
                             btn1text: self.app.localization.e('dyes'),
                             btn2text: self.app.localization.e('e13348'),
@@ -26553,9 +26964,9 @@ Platform = function (app, listofnodes) {
             self.clientrtctemp.destroy()
         }
 
-        if (self.focusListener) {
+        /*if (self.focusListener) {
             self.focusListener.destroy()
-        }
+        }*/
 
         if (onlinetnterval)
             clearInterval(onlinetnterval)
@@ -26669,7 +27080,7 @@ Platform = function (app, listofnodes) {
 
         return new Promise((resolve, reject) => {
 
-            var d = dialog({
+            var d = new dialog({
                 html:  self.app.localization.e('pdirectdialog'),
                 btn1text: self.app.localization.e('dyes'),
                 btn2text: self.app.localization.e('dno'),
@@ -26707,7 +27118,7 @@ Platform = function (app, listofnodes) {
         self.sdk.registrations.load();
         self.sdk.relayTransactions.load();
         self.applications = self.__applications()
-        
+
         self.sdk.lentaMethod.load()
 
         self.sdk.uiScale.load();
@@ -26771,7 +27182,7 @@ Platform = function (app, listofnodes) {
                             self.nodeControlUpdateNodeLast = new Date()
                             self.nodeControlUpdateNodePopup = true
 
-                            dialog({
+                            new dialog({
                                 html: self.app.localization.e('easyNode_e10062'),
                                 btn1text: self.app.localization.e('easyNode_e10015'),
                                 btn2text: self.app.localization.e('skip'),
@@ -26826,11 +27237,7 @@ Platform = function (app, listofnodes) {
                 self.app.peertubeHandler = new PeerTubePocketnet(self.app);
             }
 
-            if (typeof FrontendLogger !== 'undefined') {
-                self.app.Logger = new FrontendLogger(navigator.userAgent, self.app);
-            } else {
-                self.app.Logger = {}
-            }
+            
 
             self.prepareUser(function() {
 
@@ -26966,7 +27373,7 @@ Platform = function (app, listofnodes) {
 
         checkfeatures()
 
-        //self.ui.popup('application');
+        
 
         app.user.isState(function(state){
 
@@ -27044,12 +27451,12 @@ Platform = function (app, listofnodes) {
 
                         self.sdk.notifications.init().catch(e => {})
 
-                        if (self.sdk.address.pnet()){
-                            if(self.nvadr[self.sdk.address.pnet().address]) $('html').addClass('testaddress')
-                            else{
-                                if($('html').hasClass('testaddress'))
+                        if(self.istest()){
+                            $('html').addClass('testaddress')
+                        }
+                        else{
+                            if($('html').hasClass('testaddress'))
                                 $('html').removeClass('testaddress')
-                            }
                         }
 
                     }, 2000)
@@ -27067,7 +27474,34 @@ Platform = function (app, listofnodes) {
 
         })
 
+        setTimeout(() => {
+            app.user.isState(function(state){
 
+                if(app.nav.current.href == 'index'){
+
+                    if($(document.activeElement).is('#application')){
+                        if(!state){
+                            self.ui.popup('application');
+                        }
+                        else{
+                            
+                            var a = self.sdk.address.pnet()
+    
+                            if (a){
+                                var regs = self.sdk.registrations.value(a.address)
+    
+                                if(!regs){
+                                    self.ui.popup('application');
+                                }
+                            }
+                            
+                        }
+                    }
+                    
+                }
+                
+            })
+        }, 30000)
 
     }
 
@@ -27189,16 +27623,17 @@ Platform = function (app, listofnodes) {
 
                             var privatekey = self.app.user.private.value.toString('hex');
 
-
                             var matrix = `<div class="wrapper matrixchatwrapper">
                                 <matrix-element
                                     address="${a}"
                                     privatekey="${privatekey}"
                                     pocketnet="`+( self.app.mobileview ? '' : 'true')+`"
+                                    recording="`+(self.istest() || self.app.test ? 'true' : '' )+`"
                                     mobile="`+( self.app.mobileview ? 'true' : '')+`" 
                                     ctheme="`+self.sdk.theme.current+`"
                                     localization="`+self.app.localization.key+`"
                                     fcmtoken="`+(self.fcmtoken || "")+`"
+                                    isSoundAvailable="`+(self.sdk.usersettings.meta.sound.value)+`"
                                 >
                                 </matrix-element>
                             </div>`
@@ -27536,6 +27971,11 @@ Platform = function (app, listofnodes) {
 
             core.apptochat = function(link){
 
+                self.app.Logger.info({
+					actionId: 'CHAT_OPENED',
+					actionSubType: 'FROM_MOBILE_INTERFACE',
+				});
+
                 if (document.activeElement) document.activeElement.blur()
 
                 if (self.matrixchat.core){
@@ -27689,7 +28129,6 @@ Platform = function (app, listofnodes) {
     }
 
     self.initSounds = function () {
-
         if (typeof ion != 'undefined'){
             ion.prepare()
             ion.sound({
@@ -27744,6 +28183,8 @@ Platform = function (app, listofnodes) {
                     }, 500)
                 })
             }
+
+            platform.ws.getMissed()
 
             self.clbks.focus(time);
 

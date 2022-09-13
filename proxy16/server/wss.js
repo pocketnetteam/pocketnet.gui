@@ -16,6 +16,10 @@ var WSS = function(admins, manage){
     var allwss = {}
     var allws = {}
 
+    var terminated = 0,
+        edisconnect = 0,
+        econnect = 0;
+
     var gcinfointerval = null
 
     var subscribers = {
@@ -231,6 +235,8 @@ var WSS = function(admins, manage){
 
     var disconnectClient = function(ws) {
 
+       
+
         delete allwss[ws.id]
         delete allws[ws.id]
 
@@ -265,6 +271,9 @@ var WSS = function(admins, manage){
             delete users[key] 
         })
 
+        //console.log('disconnectClient', ws.id, _.toArray(users).length, Object.keys(allwss), Object.keys(allws))
+
+        edisconnect++
     }
 
 
@@ -479,6 +488,8 @@ var WSS = function(admins, manage){
         });
 
         all[ws.id] = ws
+
+        econnect++
         
     }
 
@@ -489,6 +500,10 @@ var WSS = function(admins, manage){
     
 
     self.init = function(settings){
+
+        terminated = 0
+        edisconnect = 0
+        econnect = 0
 
         var port = settings.port || 8099
         
@@ -503,7 +518,7 @@ var WSS = function(admins, manage){
                 }
 
                 if(!gcinfointerval) {
-                    gcinfointerval = setInterval(self.gc, 30000)
+                    gcinfointerval = setInterval(self.gc, 10000)
                 }
 
                 createWss(port, settings).then(() => {
@@ -511,7 +526,7 @@ var WSS = function(admins, manage){
                     return createWs(port - 1, settings)
 
                 }).then(resolve).catch(e => {
-                    console.log('e', e)
+                    console.log('init wss', e)
                     reject(e)
                 })
 
@@ -616,10 +631,17 @@ var WSS = function(admins, manage){
 
                     }
 
+                    if(!allwss[socket.id] && !allws[socket.id]){
+       
+                        terminated++
+                        socket.terminate();
+                    }
+
                 });
 
         }
         catch(e){
+            console.error('_gc', e)
         }
     }
 
@@ -629,8 +651,7 @@ var WSS = function(admins, manage){
             if (_wss && _wss.clients){
                 _wss.clients.forEach((socket) => {
 
-                    if (socket)
-                        socket.close();
+                    if (socket) socket.terminate();
 
                 });
             }
@@ -646,6 +667,7 @@ var WSS = function(admins, manage){
             if (_wss && _wss.clients){
                 _wss.clients.forEach((socket) => {
                     if ([socket.OPEN, socket.CLOSING].includes(socket.readyState)) {
+                        terminated++
                         socket.terminate();
                     }
                 });
@@ -836,7 +858,10 @@ var WSS = function(admins, manage){
             listening : self.listening,
             httplistening : self.httplistening,
             clients : clients,
-            open : open
+            open : open,
+            terminated,
+            edisconnect,
+            econnect
         }
 
         if(!compact) data.users = _.map(users, function(user){

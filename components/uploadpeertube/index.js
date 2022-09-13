@@ -161,16 +161,16 @@ var uploadpeertube = (function () {
 		self.added = {}
 		self.closed = {}
 
-		var add = function(v, name){
+		var add = function(v){
 
 			self.app.settings.set('common', 'lastuploadedvideo', {
 				link : v,
-				name : name || '',
+				name : '',
 				wasclbk : !_.isEmpty(self.added)
 			});
 
 			_.each(self.added, function(a){
-				a(v, name)
+				a(v)
 			})
 
 			if(_.isEmpty(self.added))
@@ -205,7 +205,7 @@ var uploadpeertube = (function () {
 				contentAsHTML: true,
 			});
 
-			el.cancelButton.one('click', () => {
+			el.cancelButton.on('click', () => {
 				//clear()
 
 				if(cancel) cancel()
@@ -405,7 +405,7 @@ var uploadpeertube = (function () {
 						return new Blob([chunkData.data]);
 					};
 				} else {
-					
+
 					uploader = new VideoUploader(data.video);
 				}
 
@@ -424,12 +424,6 @@ var uploadpeertube = (function () {
 					data.started = true;
 
 					if (data.showInfo) {
-						/*console.log('Video will be uploaded in chunks', Math.round(videoSize / chunkSize));
-						console.log('Expected time in seconds', (time / 1000) * Math.round(videoSize / chunkSize));
-						console.log('Started at', Date.now() / 1000);*/
-
-						//window.ct_expected = Math.floor((time / 1000) * Math.round(videoSize / chunkSize));
-
 						data.showInfo = false;
 					}
 
@@ -455,8 +449,10 @@ var uploadpeertube = (function () {
 					return 256 * 4096;
 				};
 
-				initCancelListener(() => uploader.cancel());
-
+				initCancelListener(() => {
+					uploader.cancel(); processing(false)
+				});
+				
 				uploader.uploadChunked().then((response) => {
 
 					if(!uploading) return
@@ -468,23 +464,23 @@ var uploadpeertube = (function () {
 
 						uploading = false
 
-						add(response.videoLink, data.title);
+						add(response.videoLink);
 
 						wndObj.close();
 
-						
+
 
 					}, 300);
 				})
 				.catch((e = {}) => {
 
-					console.error(e)
 
 					processing(false)
 
 					self.app.Logger.error({
 						err: e.text || 'videoUploadError',
 						code: 401,
+						payload: e,
 					});
 
 					if (!e.cancel) {
@@ -527,9 +523,6 @@ var uploadpeertube = (function () {
 						};
 
 						options.progress = function (percentComplete) {
-
-							console.log('percentComplete', percentComplete)
-
 							loadProgress(percentComplete, 'importingVideo');
 
 						};
@@ -561,7 +554,7 @@ var uploadpeertube = (function () {
 
 							self.app.Logger.error({
 								err: e.text || 'videoImportError',
-								payload: JSON.stringify(e),
+								payload: e,
 								code: 402,
 							});
 
@@ -639,30 +632,31 @@ var uploadpeertube = (function () {
 						clbk(data);
 					})
 					.catch((e = {}) => {
-						console.log("ERRR", e)
 
-						const errorBody = e.response || {};
+						console.error(e)
+
+						if(e.response) e = e.response
 
 						self.app.peertubeHandler.clear()
 
-						data.e = e;
+						data.e = e.response || e;
 						error = true;
 
 						self.app.platform.sdk.ustate.canincrease(
 							{ template: 'video' },
 							function (r) {
 
-								if (r.trial || !(r.balance && r.reputation)) {
-									self.app.Logger.error({
-										err: deep(errorBody, 'data.errors.name') || 'FRONTEND_DEFAULT_ERROR',
-										payload: JSON.stringify(deep(errorBody, 'data.errors') || {}),
-										code: errorBody.status || 501,
-									});
-								}
-
 								data.increase = r;
 
 								clbk(data);
+
+								if (r.trial || !(r.balance && r.reputation)) {
+									self.app.Logger.error({
+										err: 'PEERTIBE_AUTH_ERROR_VIDEOELEMENT',
+										payload: e,
+										code: 501,
+									});
+								}
 							},
 						);
 					})
@@ -686,7 +680,7 @@ var uploadpeertube = (function () {
 
 				uploading = false
 				cancel = null
-				
+
 			},
 
 			closehack : function(){

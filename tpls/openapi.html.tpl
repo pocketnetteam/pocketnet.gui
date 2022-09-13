@@ -16,7 +16,7 @@
         <meta http-equiv="Content-Security-Policy" content="
         default-src https: 'self'; 
         connect-src https: wss:;
-        img-src 'self' data: https:;
+        img-src 'self' blob: data: https:;
         script-src 'self' https://__VAR__.domain https://player.vimeo.com https://www.youtube.com https://s.ytimg.com https://cdn.rawgit.com https://embed.tawk.to https://cdn.jsdelivr.net 'unsafe-eval' 'unsafe-inline';
         style-src 'self'  https://use.fontawesome.com https://fonts.googleapis.com https://cdn.jsdelivr.net 'unsafe-inline';
         font-src 'self' data: https://fonts.gstatic.com https://static-v.tawk.to https://use.fontawesome.com;

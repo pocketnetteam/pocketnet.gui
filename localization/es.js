@@ -242,6 +242,12 @@ ____loclib.lunsubscribe = "¿Estais seguro de que deseais cancelar la suscripci�
 ____loclib.lprivatepublic = "¿Le gustaría hacer una suscripción pública o privada?";
 ____loclib.lprivate = "Privado";
 ____loclib.lpublic = "Público";
+
+//inviteComment
+____loclib.commentBannerTitle = "Deja un comentario para el autor";
+____loclib.commentBannerDescription = "Comentar te desbloquea nuevas funciones en Bastyon y te ayuda a encontrar amigos 😀";
+____loclib.dontShowAgain = 'No mostrar más';
+
 //share
 ____loclib.newShare = "Nueva publicación";
 ____loclib.scaption = "Título";
@@ -404,6 +410,7 @@ ____loclib.e13038 = "Comentas y ganas la reputación"
 ____loclib.e13039 = "Comentas y ganas la reputación"
 ____loclib.e13040 = "No tiene permisos para comentar"
 ____loclib.complain = "Quejarse"
+____loclib.complain_success = "Su queja ha sido enviada con éxito"
 ____loclib.next = "Siguiente"
 ____loclib.post = "Publicar"
 ____loclib.e13041 = "Conectando a "+appname+""
@@ -821,3 +828,13 @@ ____loclib.uploadCanceled = "Carga cancelada"
 ____loclib.pleaseTryAgain = "Algo está incorrecto. Por favor, inténtelo de nuevo"
 
 ____loclib.buy = 'Comprar';
+
+____loclib.usetor = "Conexión a través de la red Tor"
+
+____loclib.lowstar1 = "El equipo de Bastyon está implementando una moratoria temporal en las calificaciones de 1 y 2 estrellas, excepto el contenido prohibido. El contenido prohibido es:"
+____loclib.lowstar_reason_1 = "Porno"
+____loclib.lowstar_reason_2 = "Explotación de menores"
+____loclib.lowstar_reason_3 = "Amenaza directa de violencia"
+____loclib.lowstar_reason_4 = "Drogas ilegales"
+____loclib.lowstar2 = "Por favor, no use calificaciones de 1 y 2 estrellas por otras razones. Después de que se publique la nueva moderación a mediados. Puede que pueda usar calificaciones bajas por otras razones"
+____loclib.lowstaragree = "Confirmo que esta publicación contiene uno de los cuatro tipos de contenido prohibido"

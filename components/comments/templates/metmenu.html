@@ -19,11 +19,22 @@ var all = {
 		text : e('share'),
 		class : 'socialshare'
 	},
+	complain : {
+		icon : '<i class="fas fa-ban"></i>',
+		text : e('reportuser'),
+		class : 'complain'
+	},
 
 	block : {
 		icon : '<i class="fas fa-user-slash"></i>',
 		text : e('blockuser'),
 		class : 'block'
+	},
+
+	unblock : {
+		icon : '<i class="fas fa-user-check"></i>',
+		text : e('unblockuser'),
+		class : 'unblock'
 	},
 
 	waiting : {
@@ -37,8 +48,6 @@ var all = {
 
 
 	if(address == caddress){
-
-
 		if(!app.platform.sdk.node.transactions.findTemp(txid)){
 			m.push('edit')
 			m.push('remove')
@@ -50,10 +59,16 @@ var all = {
 
 	}
 	else{
-		m.push('block')
 		m.push('share')
-	}
+		var me = app.platform.sdk.user.me()
+		if (me && me.relation(caddress, 'blocking')) {
+			m.push('unblock')
+		} else {
+			m.push('block')
+		}
+				m.push('complain')
 
+	}
 	
 
 

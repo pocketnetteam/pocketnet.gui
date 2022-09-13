@@ -1,6 +1,112 @@
 @import "../../css/__cssvar";
+.qrmenu{
+	.qrmenuitem{
+		cursor: pointer;
+		height: 80px;
+			.fileUploader{
+				.elContent{
+					display: flex;
+					.icon{
+						width: 30px;
+						padding: 2em 0px 2em 1.5em;
+					}
+					.label{
+						padding: 2em 0em 2em 1em;
+					}
+				}
+			}
+		>div{
+			padding : 2*  @rhythm;
+			border-bottom: 1px solid rgb(var(--neutral-grad-1));
+			.transition(0.3s);
 
-#authorization{	
+			span{
+				font-size: 0.9em;
+			}
+
+			&.icon{
+				width: 30px;
+				text-align: center;
+			}
+		}
+
+		&:nth-last-child(1){
+			>div{
+				border-bottom: 0;
+			}
+		}
+
+		&:hover{
+			>div{
+				color : rgb(var(--color-text-ac));
+				border-color: rgb(var(--color-text-ac));
+			}
+		}
+
+		&.block,
+		&.complain{
+			&:hover{
+				>div{
+					color : rgb(var(--color-text-ac-2));
+					border-color: rgb(var(--color-text-ac-2));
+				}
+			}
+		}
+
+	}
+}
+#authorization{
+	.tabsWrapper{
+		border: 1px solid #ccc;
+		border-radius: 8px;
+		padding: 4px;
+		display: flex;
+    	width: fit-content;
+		& .tabItem{
+			height: 44px;
+			border-radius: 8px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 0.95em;
+			font-weight: bold;
+			padding: 0 20px;
+			cursor: pointer;
+			opacity: .65;
+			transition: opacity .1s ease-out;
+			&:hover{
+				background-color: #f7f8fa;
+				opacity: 1;
+			}
+			&:not(:last-child){
+				margin-right: 3px;
+			}
+			&-active{
+				background-color: #f1f2f5;
+				opacity: 1;
+				&:hover{
+					background-color: #f1f2f5;
+				}
+			}
+		}
+	}
+	#mnemonicInput{
+		display: flex;
+		flex-wrap: wrap;
+		margin-right: 10px;
+	}
+	.inputWrapperKey{
+		display: flex;
+    	align-items: center;
+		.qrcode{
+			cursor: pointer;
+		}
+	}
+	.icon {
+		& i{
+			color : rgb(var(--color-txt-ac));
+		}
+	}
 
 	#registration{
 		.caption{
@@ -62,7 +168,8 @@
 			}
 
 			&.actionButtonsWrapper{
-				width: 190px;
+				width: 80px;
+				display: none;
 
 				text-align: center;
 
@@ -121,15 +228,23 @@
 					font-weight: 100;
 					background: rgb(var(--background-total-theme));
 					color : rgb(var(--color-txt-ac));
-					border : 1px solid green;
+					border : 1px solid @color-gray;
 					.transition(0.4s);
-					
 
 					&:focus{
 						border : 1px solid rgb(var(--neutral-grad-1));
 						background: rgb(var(--background-total-theme));
 						color : rgb(var(--text-color));
 					}
+				}
+
+				.mnemonicItem{
+					margin-bottom: 0.3em;
+					width: 16%;
+					font-size: 1.4em;
+					padding: @rhythm;
+					border-color: transparent;
+					background-color: rgb(var(--neutral-grad-0));
 				}
 
 				.validationFail{
@@ -264,6 +379,28 @@
 
 /*t*/ @media only screen and (max-width: 768px){
 	#authorization{	
+		.tabsWrapper{
+			margin: 0 auto;
+		}
+		.inputWrapperKey{
+			flex-direction: column;
+		}
+		#mnemonicInput{
+			width: 90%;
+			margin-right: 0px;
+			.mnemonicItem{
+				margin-bottom: 0.3em;
+				width: 49%;
+				font-size: 1em;
+				padding: 5px !important;
+				border-color: transparent;
+				border-radius: 6px;
+				background-color: rgb(var(--neutral-grad-0));
+				&:focus{
+					border-color: rgb(var(--neutral-grad-1));
+				}
+			}
+		}
 		padding-bottom : 6 * @rhythm;
 		.work{
 			padding-top: 2 * @rhythm;
@@ -316,10 +453,8 @@
 			>div{
 				display: block;
 				&.actionButtonsWrapper{
-					/*width: 50%;*/
-					width: 80px;
 					text-align: center;
-					display: block;
+					display: none;
 					position: absolute;
 					right: 0;
 					bottom : 0;
@@ -337,6 +472,9 @@
 				input{
 					border-radius: 3px;
 					padding-right: 80px !important;
+					&[type="file"]{
+						padding: 0 !important;
+					}
 				}
 			}
 		}
@@ -386,7 +524,7 @@
 
 }
 .errorClass{
-	border-color: red !important;
+	border-color: @color-bad !important;
 }
 .loginValue{
 	display: none;

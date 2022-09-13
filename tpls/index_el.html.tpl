@@ -17,7 +17,7 @@
         <meta http-equiv="Content-Security-Policy" content="
         default-src https: 'self' file: __VAR__.domain:*; 
         connect-src https: wss: http: ws: file: data: blob:;
-        img-src 'self' data: http: https: file:;
+        img-src 'self' blob: data: http: https: file:;
         script-src 'self' blob: https://__VAR__.domain https://player.vimeo.com https://www.youtube.com https://s.ytimg.com https://cdn.jsdelivr.net/joypixels/ 'unsafe-eval' 'unsafe-inline';
         frame-src 'self' https://__VAR__.domain https://player.vimeo.com https://www.youtube.com;
         style-src 'self' data: __VAR__.domain:* https://cdn.jsdelivr.net/joypixels/ https://use.fontawesome.com 'unsafe-inline' ;
@@ -45,7 +45,6 @@
         <script src="js/vendor/device.min.js?v=136"></script>
         <script src="js/vendor/modernizr-2.8.3.min.js?v=136"></script>
         <script src="https://__VAR__.domain/js/widgets.js?v=136"></script>
-        
        
     </head>
     <body id="application" class="menu-hide ">
@@ -219,6 +218,7 @@
         __JSENV__
 
         <script>window.design = true;</script>
+        <script join src="js/vendor/html5-qrcode.min.js"></script>
         <script join src="js/functionsfirst.js?v=138441565214"></script>
         <script join src="js/functions.js?v=138441565214"></script>
         <script join src="js/kit.js"></script>
@@ -231,10 +231,10 @@
         <script join src="js/satolist.js?v=439731354592"></script>
         <script join src="peertube/video-embed.bundle.js"></script>
         <script join src="js/peertube.js"></script>
-        <script join src="js/app.js?v=322676503798"></script>
         <script join src="js/logger.js"></script>
+        <script join src="js/app.js?v=322676503798"></script>
         <script join src="js/main.js?v=723212304292"></script>       
         <script join src="chat/matrix-element.min.js"></script>    
-    
+        <script async src="js/pwa-service-worker.js"></script>
     </body>
 </html>

@@ -866,7 +866,6 @@
     }
   };
 
-  console.log("HERE")
 
   if (!String.prototype.includes) {
     String.prototype.includes = function(search, start) {
@@ -951,7 +950,6 @@ if (!String.prototype.repeat) {
 }
 
 // Your code can use `globalThis` now.
-console.log('globalThis', globalThis);
 
 /**
  * TextEncoder and TextDecoder polyfills

@@ -95,14 +95,14 @@ __webpack_require__.r(__webpack_exports__);
 // ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"7b7193d2-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/views/contacts.vue?vue&type=template&id=34b9b16f&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"05b06f0d-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/views/contacts.vue?vue&type=template&id=34b9b16f&scoped=true&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"page contacts"},[_c('topheader',{staticClass:"topheader",attrs:{"title":_vm.title}}),_c('maincontent',{scopedSlots:_vm._u([{key:"content",fn:function(){return [_c('contacts',{attrs:{"mode":_vm.mode}})]},proxy:true}])})],1)}
 var staticRenderFns = []
 
 
 // CONCATENATED MODULE: ./src/views/contacts.vue?vue&type=template&id=34b9b16f&scoped=true&
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"7b7193d2-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/contacts/topheader/index.vue?vue&type=template&id=a06dc160&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"05b06f0d-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/contacts/topheader/index.vue?vue&type=template&id=a06dc160&scoped=true&
 var topheadervue_type_template_id_a06dc160_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{attrs:{"id":"chatsTopheader"}},[_c('topheader',{attrs:{"sideSlotsWidth":100},scopedSlots:_vm._u([{key:"left",fn:function(){return [((!_vm.minimized || _vm.active) && _vm.pocketnet)?_c('div',{staticClass:"iconbutton",on:{"click":_vm.minimizeall}},[_c('i',{staticClass:"fas fa-times"})]):_vm._e()]},proxy:true},{key:"info",fn:function(){return [_c('span',[_vm._v(_vm._s(_vm.title))])]},proxy:true},{key:"right",fn:function(){return undefined},proxy:true}])})],1)}
 var topheadervue_type_template_id_a06dc160_scoped_true_staticRenderFns = []
 
@@ -123,7 +123,7 @@ var vuex_esm = __webpack_require__("2f62");
 
     }
   },
-  data: function data() {
+  data: function () {
     return {
       loading: false
     };
@@ -131,23 +131,15 @@ var vuex_esm = __webpack_require__("2f62");
   watch: {//$route: 'getdata'
   },
   computed: Object(vuex_esm["c" /* mapState */])({
-    auth: function auth(state) {
-      return state.auth;
-    },
-    minimized: function minimized(state) {
-      return state.minimized;
-    },
-    pocketnet: function pocketnet(state) {
-      return state.pocketnet;
-    },
-    active: function active(state) {
-      return state.active;
-    }
+    auth: state => state.auth,
+    minimized: state => state.minimized,
+    pocketnet: state => state.pocketnet,
+    active: state => state.active
   }),
   methods: {
-    minimizeall: function minimizeall() {
+    minimizeall: function () {
       this.$store.commit('minimize', true);
-      this.$router.push('/chats');
+      this.$router.push('/chats').catch(e => {});
     }
   }
 });
@@ -214,7 +206,7 @@ var contacts = __webpack_require__("71da");
 
 /* harmony default export */ var contactsvue_type_script_lang_js_ = ({
   name: 'pagecontacts',
-  data: function data() {
+  data: function () {
     return {
       page: 'Contacts',
       showInviteButton: false
@@ -225,17 +217,13 @@ var contacts = __webpack_require__("71da");
     topheader: topheader
   },
   computed: Object(vuex_esm["c" /* mapState */])({
-    pocketnet: function pocketnet(state) {
-      return state.pocketnet;
-    },
-    minimized: function minimized(state) {
-      return state.minimized;
-    },
-    title: function title() {
+    pocketnet: state => state.pocketnet,
+    minimized: state => state.minimized,
+    title: function () {
       if (this.$route.query.startnew) return this.$i18n.t("caption.startNewChat");
       return this.$i18n.t("caption.contacts");
     },
-    mode: function mode() {
+    mode: function () {
       if (this.$route.query.startnew) {
         return 'GroupsCreate';
       }
@@ -244,9 +232,11 @@ var contacts = __webpack_require__("71da");
     }
   }),
   methods: {},
-  mounted: function mounted() {
+
+  mounted() {
     this.$store.commit('SET_LAST_ROOM', null);
   }
+
 });
 // CONCATENATED MODULE: ./src/views/contacts.vue?vue&type=script&lang=js&
  /* harmony default export */ var views_contactsvue_type_script_lang_js_ = (contactsvue_type_script_lang_js_); 

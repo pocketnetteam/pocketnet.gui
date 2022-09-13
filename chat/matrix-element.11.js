@@ -33,7 +33,7 @@ module.exports = exports;
 // ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"7b7193d2-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/complain/index.vue?vue&type=template&id=26ae2533&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"05b06f0d-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/complain/index.vue?vue&type=template&id=26ae2533&scoped=true&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{attrs:{"id":"complain"}},[(!_vm.loading)?_c('div',{staticClass:"wrapper"},[_vm._m(0),_c('div',{staticClass:"formWrapper"},[_c('input',{ref:"youremail",attrs:{"type":"email"},domProps:{"value":_vm.youremail},on:{"change":_vm.setyouremail}})]),_vm._m(1),_c('div',{staticClass:"formWrapper"},[_c('textarea',{ref:"reason",domProps:{"value":_vm.reason},on:{"change":_vm.setvalue}})]),_c('div',{staticClass:"sendWrapper"},[_c('button',{staticClass:"button orange small rounded",on:{"click":_vm.send}},[_vm._v("Send")])])]):_c('div',[_c('div',{staticClass:"preloaderwrapperCpm"},[_c('linepreloader')],1)])])}
 var staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"caption"},[_c('span',[_vm._v("Your e-mail address")])])},function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"caption"},[_c('span',[_vm._v("State the reason for your complaint")])])}]
 
@@ -50,25 +50,21 @@ var vuex_esm = __webpack_require__("2f62");
   props: {
     p: Object
   },
-  data: function data() {
+  data: function () {
     return {
       loading: false,
       reason: '',
       youremail: ''
     };
   },
-  created: function created() {},
+  created: () => {},
   watch: {//$route: 'getdata'
   },
   computed: Object(vuex_esm["c" /* mapState */])({
-    auth: function auth(state) {
-      return state.auth;
-    }
+    auth: state => state.auth
   }),
   methods: {
-    send: function send() {
-      var _this = this;
-
+    send: function () {
       if (this.loading) return;
 
       if (!this.reason) {
@@ -116,28 +112,27 @@ var vuex_esm = __webpack_require__("2f62");
       }
 
       this.loading = true;
-      window.POCKETNETINSTANCE.complainletters[id](ps, function (r) {
-        _this.loading = false;
+      window.POCKETNETINSTANCE.complainletters[id](ps, r => {
+        this.loading = false;
 
         if (!r) {
-          _this.$store.commit('icon', {
+          this.$store.commit('icon', {
             icon: 'error',
             message: "Something went wrong, please try again later"
           });
         } else {
-          _this.$store.commit('icon', {
+          this.$store.commit('icon', {
             icon: 'success',
             message: "The complaint was successfully sent"
           });
-
-          _this.core.store.commit('setmodal', null);
+          this.core.store.commit('setmodal', null);
         }
       });
     },
-    setvalue: function setvalue(e) {
+    setvalue: function (e) {
       this.reason = e.target.value || '';
     },
-    setyouremail: function setyouremail(e) {
+    setyouremail: function (e) {
       this.youremail = e.target.value || '';
     }
   }

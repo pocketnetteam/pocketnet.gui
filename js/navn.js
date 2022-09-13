@@ -360,9 +360,6 @@ Nav = function(app)
 
 				historyManager.addParameters(pa)
 
-
-				console.log("ADD TO WNDS")
-
 				self.wnds[p.id] = p
 			
 
@@ -491,8 +488,6 @@ Nav = function(app)
 
 			_.each(self.wnds, function(pa, id){
 				if(!p['m' + id]){
-
-					console.log('pa', pa)
 
 					if (pa.independent) return
 
@@ -1312,11 +1307,19 @@ Nav = function(app)
 			pathnameSearch : function(){
 				var loc =  window.location; 
 
+				
+
 				return protocolActions.file.pathname() + loc.search
 			},
 
 			pathname : function(){
 				var loc =  window.location; 
+
+				if (electron){
+					var splitted = loc.pathname.split('/')
+
+					return splitted[splitted.length - 1].replace(options.navPrefix, '').replace(".html", "").replace("index_el", "index")
+				}
 
 				return loc.pathname.replace(options.navPrefix, '').replace(".html", "").replace('.cordova', "").replace('indexcordova', "index")
 			}

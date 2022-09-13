@@ -1,5 +1,6 @@
 const LOGGER_ENDPOINT_ADDRESS = 'https://metrix.pocketnet.app/';
 const DEFAULT_CONTENT_TYPE = 'text/plain';
+const SENDING_INTERVAL = 30000;
 
 class FrontendLogger {
   constructor(userAgent = '', app = {}) {
@@ -7,6 +8,8 @@ class FrontendLogger {
     this.app = app;
 
     this.guid = makeid();
+    this._logsCache = [];
+    this._errorsCache = [];
 
     //configuration of the axios instance
     this.instance = axios.create({
@@ -14,10 +17,94 @@ class FrontendLogger {
     });
     this.instance.defaults.headers.common['Content-Type'] =
       DEFAULT_CONTENT_TYPE;
+
+    const bindedLogSender = this.sendLogsBatch.bind(this);
+
+    this.sendLogsInterval = setInterval(() => {
+      bindedLogSender();
+    }, SENDING_INTERVAL);
   }
 
   get loggerActive() {
-    return this.app.platform.sdk.usersettings.meta.sendUserStatistics.value && !this.app.test;
+    return (
+      this.app.platform.sdk.usersettings.meta.sendUserStatistics.value &&
+      !this.app.test
+    );
+  }
+
+  logCodes = {
+    SELECT_FEED_CATEGORY: {
+      id: 'SELECT_FEED_CATEGORY',
+      description: 'User clicked on the feed category button',
+    },
+
+    SELECT_FEED_SECTION: {
+      id: 'SELECT_FEED_SECTION',
+      description: 'User clicked on the feed section button',
+    },
+
+    SELECT_FEED_TAG: {
+      id: 'SELECT_FEED_TAG',
+      description: 'User clicked on the feed tag button',
+    },
+
+    POST_CREATING_STARTED: {
+      id: 'POST_CREATING_STARTED',
+      description: 'User clicked clicked on post creating window',
+    },
+
+    POST_CREATED: {
+      id: 'POST_CREATED',
+      description: 'User created post',
+    },
+
+    CHAT_OPENED: {
+      id: 'CHAT_OPENED',
+      description: 'Chat window is opened',
+    },
+
+    RECOMMENDATION_SELECTED: {
+      id: 'RECOMMENDATION_SELECTED',
+      description: 'One of the recomendations is selected',
+    },
+
+    BEST_VIDEO_CLICKED: {
+      id: 'BEST_VIDEO_CLICKED',
+      description: 'One of the best videos selected',
+    },
+    BEST_VIDEO_CLICKED: {
+      id: 'BEST_VIDEO_CLICKED',
+      description: 'One of the best videos selected',
+    },
+    USER_COMPLAIN : {
+      id: 'USER_COMPLAIN',
+      description: 'user send complain'
+    }
+  };
+
+  sendLogsBatch() {
+    const {
+      _logsCache,
+      _errorsCache,
+      instance,
+      _createErrorBody,
+      _createLogBody,
+    } = this;
+
+    const logsBatch = _logsCache
+      .splice(0, 10)
+      .map((log) => _createLogBody(log));
+    const errorsBatch = _errorsCache
+      .splice(0, 10)
+      .map((err) => _createErrorBody(err));
+
+    if (logsBatch.length) {
+      instance.post('front/action', logsBatch.join(','));
+    }
+
+    if (errorsBatch.length) {
+      instance.post('front/add', errorsBatch.join(','));
+    }
   }
 
   _createErrorBody({
@@ -46,13 +133,126 @@ class FrontendLogger {
     return `(${parametersOrder.join(',')})`;
   }
 
+  _createLogBody({
+    type = 'DEFAULT_LOG',
+    subType = 'DEFAULT_SUBTYPE',
+    value = 'NO_VALUE',
+    date = moment().format('YYYY-MM-DD hh:mm:ss'),
+    moduleVersion = '0.0.1',
+    userAgent = '',
+    guid = '',
+  }) {
+    const parametersOrder = [
+      type,
+      subType,
+      value,
+      date,
+      moduleVersion,
+      userAgent,
+      guid,
+    ].map((element) =>
+      typeof element !== 'number' ? `'${element}'` : element,
+    );
+
+    return `(${parametersOrder.join(',')})`;
+  }
+
   error(error = {}) {
-    const { instance, _createErrorBody, guid, userAgent, loggerActive } = this;
+    const { _errorsCache, guid, userAgent, loggerActive } = this;
     //protection from incorrect error formats or logger is turned off
-    if (typeof error !== 'object' || !loggerActive) return;
+    // if (typeof error !== 'object' || !loggerActive) return;
+    let errorBody;
 
-    const formattedError = _createErrorBody({ ...error, guid, userAgent });
+    try {
+      const serverResponse = deep(error, 'payload.response.data') || error.payload;
+      errorBody = JSON.stringify(
+        serverResponse,
+        Object.getOwnPropertyNames(serverResponse),
+      );
+    } catch (errorFormat) {
+      errorBody = `{ "error": "Unable to stringify received error. Report: ${errorFormat}", "type": "ERROR_PROCESSING_FAILED"}`;
+    }
 
-    instance.post('front/add', formattedError);
+    const formattedError = { ...error, guid, userAgent, payload: errorBody };
+
+    _errorsCache.push(formattedError);
+  }
+
+  _addLogWithAggregation = {
+    default: (info, arr) => arr.push(info),
+
+    SELECT_FEED_CATEGORY(info, array) {
+      const existingLog = array.find(
+        (element) =>
+          element.type === info.type && element.subType === info.subType,
+      );
+
+      if (!existingLog) return array.push(info);
+
+      const valueArray = existingLog.value.split(',');
+
+      if (!valueArray.includes(info.value)) valueArray.push(info.value);
+
+      existingLog.value = valueArray.join(',');
+
+      return;
+    },
+
+    SELECT_FEED_SECTION(info, array) {
+      const existingLog = array.find(
+        (element) => element.type === info.type && element.value === info.value,
+      );
+
+      if (!existingLog) return array.push(info);
+
+      return;
+    },
+
+    SELECT_FEED_TAG(info, array) {
+      const existingLog = array.find(
+        (element) =>
+          element.type === info.type && element.subType === info.subType,
+      );
+
+      if (!existingLog) return array.push(info);
+
+      const valueArray = existingLog.value.split(',');
+
+      if (!valueArray.includes(info.value)) valueArray.push(info.value);
+
+      existingLog.value = valueArray.join(',');
+
+      return;
+    },
+  };
+
+  info({ actionId = '', actionSubType = '', actionValue = '' }) {
+    const {
+      _logsCache,
+      guid,
+      userAgent,
+      loggerActive,
+      logCodes,
+      _addLogWithAggregation,
+    } = this;
+
+    if (!loggerActive) return;
+
+    const infoType = logCodes[actionId] ? logCodes[actionId].id : '';
+    const info = {
+      type: infoType,
+      subType: actionSubType,
+      value: actionValue,
+      guid,
+      userAgent,
+    };
+
+
+    if (_addLogWithAggregation[infoType]) {
+      _addLogWithAggregation[infoType](info, _logsCache);
+    } else {
+      _addLogWithAggregation.default(info, _logsCache);
+    }
+
   }
 }

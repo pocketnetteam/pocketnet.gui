@@ -68,6 +68,7 @@
   --color-cc-form: 33, 42, 73, 0.6;
   --color-fb: 10, 35, 71;
   --color-menu-2: 100, 255, 237;
+  --color-not-catchy-grey: 171, 171, 171;
 }
 :root[theme='black'] {
   --background-hidden-layer: 10, 12, 23;
@@ -104,6 +105,7 @@
   --color-nrml: 180, 180, 180;
   --color-good: 7, 108, 52;
   --color-yellow: 255, 238, 0;
+  --color-not-catchy-grey: 94, 98, 100;
 }
 :root[theme='gray'] {
   --background-hidden-layer: 12, 12, 12;
@@ -140,6 +142,7 @@
   --color-nrml: 180, 180, 0180;
   --color-good: 0, 140, 40;
   --color-yellow: 250, 230, 10;
+  --color-not-catchy-grey: 72, 72, 72;
 }
 .disable-hover,
 .disable-hover * {
@@ -604,12 +607,9 @@ html.mobile .unselectablemobile {
   -ms-user-select: text!important;
   user-select: text!important;
 }
-/*
-html.testaddress{
-    .vjs-peertube{
-        display : block;
-    }
-}*/
+html.testaddress .vjs-peertube {
+  display: block;
+}
 div {
   -webkit-tap-highlight-color: transparent;
 }

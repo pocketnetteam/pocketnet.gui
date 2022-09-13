@@ -238,6 +238,13 @@ User = function(app, p) {
 	self.getstate = function(){
 		return state
 	}
+
+	self.isStatePromise = function(){
+		return new Promise((resolve, reject) => {
+			self.isState(resolve)
+		})
+	}
+
 	self.isState = function(clbk){
 
 		if(!p) p = {};
@@ -296,8 +303,6 @@ User = function(app, p) {
 						state = 0;	
 						clbk(state);
 					}
-
-						
 
 				})		
 

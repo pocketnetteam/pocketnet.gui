@@ -157,6 +157,11 @@ var defaultSettings = {
 		dbpath : 'data/nodes'
 	},
 
+	tor : {
+		dbpath : 'data/tor',
+		enabled: true,
+	},
+
 	server : {
 		enabled : false,
 
@@ -193,8 +198,8 @@ var defaultSettings = {
 		addresses : {
 			registration : {
 				privatekey : "",
-				amount : 0.0002,
-				outs : 10,
+				amount : 0.0006,
+				outs : 30,
 				check : 'ipAndUniqAddress'
 			}
 		}
@@ -269,6 +274,10 @@ var state = {
 			admins : settings.admins,
 			proxies : {
 				explore : settings.proxies.explore
+			},
+			tor : {
+				dbpath : settings.tor.dbpath,
+				enabled: settings.tor.enabled,
 			},
 			testkeys : state.exportkeys(),
 			systemnotify : settings.systemnotify
@@ -1058,6 +1067,46 @@ var kit = {
 				})
 			}
 		},
+		
+		tor : {
+			start : function(){
+				return kit.proxy().then(async proxy => {
+					await proxy.torapplications.start();
+					settings.tor.enabled = true
+					await state.save();
+				})
+			},
+			stop : function(){
+				return kit.proxy().then(async proxy => {
+					await proxy.torapplications.stop();
+					settings.tor.enabled = false
+					await state.save()
+				})
+			},
+			info : function(){
+				return kit.proxy().then(async proxy => {
+					return proxy.torapplications.info();
+				})
+			},
+		},
+
+		transports : {
+			axios : function(...args){
+				return kit.proxy().then(async proxy => {
+					return proxy.transports.axios(...args);
+				})
+			},
+			fetch : function(...args){
+				return kit.proxy().then(async proxy => {
+					return proxy.transports.fetch(...args);
+				})
+			},
+			request : function(option, callback){
+				return kit.proxy().then(async proxy => {
+					return proxy.transports.request(option, callback);
+				})
+			},
+		},
 
         quit : function() {
             return kit.destroy().then(r => {
@@ -1123,8 +1172,9 @@ var kit = {
 		if(!hck) hck = {}
 
 		settings = state.expand(environmentDefaultSettings, settings)
-        db = new Datastore(f.path(settingsPath));
-        
+
+		db = new Datastore(f.path(settingsPath));
+
 		return new Promise((resolve, reject) => {
 
 			var start = function(){

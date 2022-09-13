@@ -29,6 +29,7 @@ var comments = (function(){
 		var rendered = {};
 		var areas = {};
 		var external = null;
+		var bannerComment = null;
 		var currentstate = {};
 		var wordsRegExp = /[,.!?;:() \n\r]/g
 		var sortby = 'interesting' 
@@ -237,7 +238,25 @@ var comments = (function(){
 				else
 					c.removeClass('hastext')
 			},
+			complain : function(comment){
+				self.nav.api.load({
+					open : true,
+					id : 'complain',
+					inWnd : true,
+					essenseData : {
+						item : 'post',
+						obj : comment,
 
+						success : function(){
+
+						}
+					},
+
+					clbk : function(){
+
+					}
+				})
+			},
 			myscores : function(){
 				_.each(rendered, function(c, id){
 					var comment = deep(self.app.platform.sdk, 'comments.storage.all.' + id)
@@ -499,7 +518,7 @@ var comments = (function(){
 
 							el.c.find('.sending').removeClass('sending')
 	
-							dialog({
+							new dialog({
 								html : self.app.localization.e('ratings123'),
 								btn1text :  self.app.localization.e('daccept'),
 								btn2text : self.app.localization.e('ucancel'),
@@ -633,9 +652,9 @@ var comments = (function(){
 
 						else
 						{
-							actions.tocomment(reply.answerid)
+							actions.tocomment(reply.parentid || reply.answerid)
 
-							var cel = el.c.find("#" + reply.answerid)
+							var cel = el.c.find("#" + (reply.parentid || reply.answerid))
 
 							cel.addClass('newcommentsn')
 
@@ -1016,7 +1035,7 @@ var comments = (function(){
 
 					if (value < 0 && self.app.platform.sdk.user.scamcriteria()){
 
-						dialog({
+						new dialog({
 							html : self.app.localization.e('ratings123'),
 							btn1text :  self.app.localization.e('daccept'),
 							btn2text : self.app.localization.e('ucancel'),
@@ -1215,6 +1234,15 @@ var comments = (function(){
 				parent.removeClass('hiddenComment')
 			},
 
+			showBlockedUserComment: function(){
+
+				var _el = $(this)
+
+				var parent = _el.closest('.comment');
+
+				parent.removeClass('hiddenBlockedUserComment')
+			},
+
 			openGallery : function(){
 
 				var _el = $(this)
@@ -1326,6 +1354,14 @@ var comments = (function(){
 
 					}, function(__el, f, close){
 
+						__el.find('.complain').on('click', function(){
+							self.app.mobile.vibration.small()
+							actions.complain(comment)
+
+							close()
+
+						})
+
 						__el.find('.edit').on('click', function(){
 
 							renders.edit(localParent, comment)
@@ -1341,18 +1377,37 @@ var comments = (function(){
                                 }
 								else
 								{
-									parent.remove()
+									parent.addClass('hiddenBlockedUserComment');
+									var hiddenCommentLabel = $('<div></div>').html(self.app.localization.e('blockedbymeHiddenCommentLabel')).addClass('hiddenCommentLabel')
+									var ghostButton = $('<div></div>').append($('<button></button>').html(self.app.localization.e('showhiddenComment')).addClass('ghost showBlockedUserComment'))
+									var commentContentTable = localParent.find('.cbodyWrapper > .commentcontenttable')
+									commentContentTable.append(hiddenCommentLabel)
+									commentContentTable.append(ghostButton)
 								}
 
-								close()
                             })
+								close()
 
 							
+						})
+						
+						__el.find('.unblock').on('click', function(){
+							self.app.mobile.vibration.small()
+							self.app.platform.api.actions.unblocking(d.caddress, function(tx, error){
+								if(!tx){
+									self.app.platform.errorHandler(error, true)
+								} else {
+									localParent.find('.cbodyWrapper > .commentcontenttable div:not(.commentmessage)').remove()
+									parent.removeClass('hiddenBlockedUserComment')
+								}
+							})
+
+							close()
 						})
 
 						__el.find('.remove').on('click', function(){
 
-							dialog({
+							new dialog({
 								html : self.app.localization.e('e13032'),
 								success : function(){
 
@@ -1503,8 +1558,6 @@ var comments = (function(){
 
 					focus : function() {
 						// Scroll comment section to top of the screen
-
-						console.log('isios()', isios())
 
 						if(!isios())
 							actions.scrollToComment(_p.el);
@@ -2706,6 +2759,9 @@ var comments = (function(){
 					}, 100)
 					
 				}
+
+				bannerComment = app.platform.ui.showCommentBanner(el.c);
+
 			},
 
 			authclbk : function(){
@@ -2753,6 +2809,10 @@ var comments = (function(){
 				if (caption)
 					caption.destroy()
 
+				if (bannerComment) {
+					bannerComment.destroy();
+				}
+
 				if (el.c) el.c.empty()
 
 				el = {};
@@ -2788,6 +2848,7 @@ var comments = (function(){
 				el.list.on('click', '.tocomment', events.tocomment)
 				el.list.on('click', '.imageCommentOpen', events.openGallery)
 				el.list.on('click', '.hiddenCommentLabel', events.showHiddenComment)
+				el.list.on('click', '.showBlockedUserComment', events.showBlockedUserComment)
 				el.list.on('click', '[profile]', events.showprofile)
 
 				if(!_in.length) {
