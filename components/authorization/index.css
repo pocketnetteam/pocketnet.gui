@@ -83,7 +83,13 @@
   align-items: center;
 }
 #authorization .inputWrapperKey .qrcode {
+  min-width: 80px;
   cursor: pointer;
+}
+#authorization .inputWrapperKey .qrcode .icon {
+  height: 80px;
+  line-height: 80px;
+  text-align: center;
 }
 #authorization .icon i {
   color: rgb(var(--color-txt-ac));
