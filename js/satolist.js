@@ -2458,29 +2458,33 @@ Platform = function (app, listofnodes) {
             var tpl = `<div class="horizontalLentaWrapper"><div class="horizontalLentacaption"><span>`+(p.caption || '')+`</span><div class="controlhors"><div class="controlleft controlhor" dir="left"><i class="fas fa-arrow-left"></i></div><div class="controlright controlhor"><i class="fas fa-arrow-right"></i></div></div></div><div class="showmorebywrapper"><div class="showmoreby"></div></div>
             </div>`
 
-            el.html(tpl)
+            window.requestAnimationFrame(() => {
 
-            p.hcnt = el.find('.horizontalLentaWrapper')
+                el.html(tpl)
 
-            p.window = el.find('.showmorebywrapper')
+                p.hcnt = el.find('.horizontalLentaWrapper')
 
-            var _el = el.find('.showmoreby')
+                p.window = el.find('.showmorebywrapper')
 
-            self.papi.clenta(_el, clbk, p)
+                var _el = el.find('.showmoreby')
 
-            el.find('.controlhor').on('click', function(){
-                var dir = $(this).attr('dir') || 'right'
+                self.papi.clenta(_el, clbk, p)
 
-                var curscroll = p.window.scrollLeft()
-                var width = p.window.width()
+                el.find('.controlhor').on('click', function(){
+                    var dir = $(this).attr('dir') || 'right'
 
-                var to = width * 0.9
+                    var curscroll = p.window.scrollLeft()
+                    var width = p.window.width()
 
-                if(dir == 'left') to = -to
+                    var to = width * 0.9
 
-                to = curscroll + to
+                    if(dir == 'left') to = -to
 
-                p.window.animate({ scrollLeft: to }, 100);
+                    to = curscroll + to
+
+                    p.window.animate({ scrollLeft: to }, 100);
+                })
+
             })
         },
 
@@ -10084,13 +10088,11 @@ Platform = function (app, listofnodes) {
                     return txa.address == address
                 })
 
-                console.log('self.sdk.node.transactions', self.sdk.node.transactions.temp)
 
                 if (temp/* || self.deletedtest[address]*/){
                     return 'temp'
                 }
 
-                console.log('self.sdk.usersl', self.sdk.usersl, address)
 
                 var info = self.sdk.usersl.storage[address] || {}
 
@@ -19999,7 +20001,6 @@ Platform = function (app, listofnodes) {
                                 return u.amount > 0.00001
                             })
 
-                            console.log('unspent', unspent)
 
                             if (!unspent.length && !p.relay) {
 
@@ -29717,7 +29718,6 @@ Platform = function (app, listofnodes) {
                 }, 3000)*/
                 
 
-                console.log('self.p2pvideo', self.p2pvideo)
             }
             
         })

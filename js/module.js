@@ -243,6 +243,8 @@ nModule = function(){
 					}
 				}
 
+				//c()
+				
 				if(p.insertimmediately){
 					c()
 				}

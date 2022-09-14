@@ -816,14 +816,19 @@
             max-width: 450px;
         }
 
+        .imagesContainer{
+            display: flex;
+            flex-wrap: wrap;
+            grid-gap: @rhythm;
+
+            .imagesWrapper{
+                float: none;
+            }
+        }
+
         &.manyImagesView{
             .imagesContainer{
-                display: flex;
-                flex-wrap: wrap;
-                grid-gap: @rhythm;
-
                 .imagesWrapper{
-                    float: none;
                     max-width: 31%;
                 }
 

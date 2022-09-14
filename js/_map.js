@@ -130,7 +130,7 @@ __map =  {
 	__templates : [
 		{ c : 'navigation', n : 'menu' },
 		{ c : 'menu', n : 'index' },
-		{ c : 'share', n : 'body' },
+		
 		//{ c : 'toppanel', n : 'index' },
 		{ c : 'navigation', n : 'index' },
 		{ c : 'footer', n : 'index' },
@@ -150,11 +150,16 @@ __map =  {
 		{ c : 'lenta', n : 'sharevideo' },
 		{ c : 'lenta', n : 'sharevideopip' },
 		{ c : 'lenta', n : 'sharevideolight' },
-		{ c : 'share', n : 'url' },
 		{ c : 'lenta', n : 'stars' },
 		{ c : 'lenta', n : 'groupshares' },
 		{ c : 'lenta', n : 'commentspreview' },
 		{ c : 'lenta', n : 'tosubscribeshares' },
+
+		{ c : 'share', n : 'body' },
+		{ c : 'share', n : 'postline' },
+		{ c : 'share', n : 'index' },
+		{ c : 'share', n : 'url' },
+
 		{ c : 'comments', n : 'index' },
 		{ c : 'comments', n : 'post' },
 		{ c : 'comments', n : 'list' },
@@ -162,7 +167,6 @@ __map =  {
 		{ c : 'author', n : 'preshell'},
 		{ c : 'post', n : 'preshell'},
 		{ c : 'commentBanner', n : 'index' },
-
 		{ c : 'registration', n : 'index' },
 		{ c : 'test', n : 'options' },
 		{ c : 'test', n : 'icon' },

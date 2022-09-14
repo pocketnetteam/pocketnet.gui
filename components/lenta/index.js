@@ -3665,7 +3665,20 @@ var lenta = (function(){
 
 						if((isMobile() || essenseData.openapi) && image.images.length > 1 ){
 
-							var aspectRatio = 0
+							_.each(image.images, function(img, n){
+								var _img = img.img;
+
+								var el = $(image.elements[n]).closest('.imagesWrapper');
+
+								var aspectRatio = _img.naturalHeight / _img.naturalWidth
+
+								if(aspectRatio > 1.66) aspectRatio = 1.66
+
+
+								el.height( Math.min( 400, images.width() || lwidth || self.app.width) * aspectRatio)
+							})
+
+							/*var aspectRatio = 0
 							
 							_.each(image.images, function(img){
 								var _img = img.img;
@@ -3682,7 +3695,7 @@ var lenta = (function(){
 								ch = Math.min(400, cwidth ) * aspectRatio
 
 								sel.find('.imagesWrapper').height(ch)
-							}
+							}*/
 							
 						}
 						else{

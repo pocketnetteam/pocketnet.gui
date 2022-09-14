@@ -1821,10 +1821,12 @@ var share = (function(){
 
 					renders.repost();
 
-					renders.postline();
-					renders.settings();
+					
 
 				});
+
+				renders.postline();
+				renders.settings();
 
 			},
 
@@ -2297,7 +2299,6 @@ var share = (function(){
 						ed : essenseData
 					},
 
-					insertimmediately : true
 
 				}, function(p){
 

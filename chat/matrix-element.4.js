@@ -1405,8 +1405,7 @@ var avatarsList_component = Object(componentNormalizer["a" /* default */])(
   },
 
   mounted() {
-    const smthconstfortexst = this.events;
-    console.log('m.image', 'from info', smthconstfortexst); // this.changeName()
+    const smthconstfortexst = this.events; // this.changeName()
 
     this.eventsList();
 

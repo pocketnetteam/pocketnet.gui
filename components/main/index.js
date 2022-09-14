@@ -418,7 +418,7 @@ var main = (function(){
 
 				if (!isMobile() && !videomain && !readmain && !searchvalue && !searchtags && !app.platform.sdk.user.myaccauntdeleted()){
 
-					el.c.removeClass('wshar')
+					//el.c.removeClass('wshar')
 
 					self.nav.api.load({
 
@@ -447,7 +447,7 @@ var main = (function(){
 					})
 					
 				}else{
-					el.c.addClass('wshar')
+					//el.c.addClass('wshar')
 				}
 			},
 
@@ -456,8 +456,9 @@ var main = (function(){
 				if(!el.topvideos) return
 				
 				if (show){
-
-					el.topvideos.removeClass('hidden')
+					window.requestAnimationFrame(() => {
+						el.topvideos.removeClass('hidden')
+					})
 
 					if (external) {
 						external.clearessense()
@@ -513,8 +514,10 @@ var main = (function(){
 					}
 
 					if(el.topvideos){
-						el.topvideos.find('.wrpcn').html('')
-						el.topvideos.addClass('hidden')
+						window.requestAnimationFrame(() => {
+							el.topvideos.find('.wrpcn').html('')
+							el.topvideos.addClass('hidden')
+						})
 					}
 					
 				}
@@ -970,12 +973,16 @@ var main = (function(){
 						if (currentMode == 'common')
 						{
 							renders.share()
-							el.c.find('.bgCaption').removeClass('hidden')
+							window.requestAnimationFrame(() => {
+								el.c.find('.bgCaption').removeClass('hidden')
+							})
 						}
 						else
 						{
-							el.share.html('')
-							el.c.find('.bgCaption').addClass('hidden')
+							window.requestAnimationFrame(() => {
+								el.share.html('')
+								el.c.find('.bgCaption').addClass('hidden')
+							})
 						}
 
 					}
@@ -1370,7 +1377,9 @@ var main = (function(){
 				if(readmain) videomain = false
 
 				if(videomain && !isMobile()){
-					el.c.addClass('videomain')
+					window.requestAnimationFrame(() => {
+						el.c.addClass('videomain')
+					})
 				}
 
 				make(function(){

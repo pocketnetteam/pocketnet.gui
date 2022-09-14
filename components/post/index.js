@@ -1191,154 +1191,158 @@ var post = (function () {
 				var _el = el.c.find('.postcontent .image');
 				var images = el.c.find('.postcontent .images');
 
-				if (images.hasClass('active') || !_el.length || !images.length) {
-					if (clbk) clbk();
-				} else {
+
+					if (images.hasClass('active') || !_el.length || !images.length) {
+						if (clbk) clbk();
+					} else {
 
 
-					_el.imagesLoadedPN({ imageAttr: true, debug : true }, function (image) {
+						_el.imagesLoadedPN({ imageAttr: true, debug : true }, function (image) {
 
 
-						if (share.settings.v != 'a') {
+							if (share.settings.v != 'a') {
 
-							if((isMobile() || ed.repost) && image.images.length > 1){
+								if((isMobile() || ed.repost) && image.images.length > 1){
 
-								var aspectRatio = 0
+									
+									_.each(image.images, function(img, n){
+										var _img = img.img;
+
+										var el = $(image.elements[n]).closest('.imagesWrapper');
+
+										var aspectRatio = _img.naturalHeight / _img.naturalWidth
+
+										if(aspectRatio > 1.66) aspectRatio = 1.66
+
+										console.log("EL", el)
+
+										el.height( Math.min( 400, images.width() || self.app.width) * aspectRatio)
+									})
+
 								
-								_.each(image.images, function(img){
-									var _img = img.img;
-
-									var _aspectRatio = _img.naturalHeight / _img.naturalWidth
-
-									if(_aspectRatio > aspectRatio) aspectRatio = _aspectRatio
-								})
-
-								if (aspectRatio){
-
-									if(aspectRatio > 1.66) aspectRatio = 1.66
-
-									images.find('.imagesWrapper').height( Math.min( 400, images.width() )* aspectRatio)
 								}
-								
-							}
-							else{
+								else{
 
-								var imageswidth = images.width()
+									var imageswidth = images.width()
 
-								_.each(image.images, function(img, n){
+									_.each(image.images, function(img, n){
 
-									var _img = img.img;
-									var el = $(image.elements[n]).closest('.imagesWrapper');
+										var _img = img.img;
+										var el = $(image.elements[n]).closest('.imagesWrapper');
 
-									var ac = '';
+										var ac = '';
 
-									/*var _w = imagesWrapperWidth;
-									var _h = imagesWrapperHeight*/
+										/*var _w = imagesWrapperWidth;
+										var _h = imagesWrapperHeight*/
 
-									var _w = el.width();
-									var _h = el.height()
+										var _w = el.width();
+										var _h = el.height()
 
-									if(_img.width >= _img.height && (!isMobile() && self.app.width > 768 && !ed.openapi)){
-										ac = 'w2'
+										if(_img.width >= _img.height && (!isMobile() && self.app.width > 768 && !ed.openapi)){
+											ac = 'w2'
 
-										var w = _w * (_img.width / _img.height);
+											var w = _w * (_img.width / _img.height);
 
-										if (w > imageswidth){
-											w = imageswidth
+											if (w > imageswidth){
+												w = imageswidth
 
-											h = w * ( _img.height / _img.width) 
+												h = w * ( _img.height / _img.width) 
 
-											el.height(h);
+												el.height(h);
+											}
+
+											el.width(w);
 										}
 
-										el.width(w);
-									}
+										if(_img.height >= _img.width || (isMobile() || self.app.width <= 768 || ed.openapi)){
+											ac = 'h2'
 
-									if(_img.height >= _img.width || (isMobile() || self.app.width <= 768 || ed.openapi)){
-										ac = 'h2'
+											el.height(_w * (_img.height / _img.width))
+										}
 
-										el.height(_w * (_img.height / _img.width))
-									}
+										if(ac){
+											el.addClass(ac)
+										}
+										
+									})
 
-									if(ac){
-										el.addClass(ac)
-									}
+
+								}
+
+							}
+
+							var isclbk = function(){
+
+
+								
+								images.addClass('active');
+
+								_el.addClass('active');
+
+								if (clbk) clbk();
+							}
+
+							console.log('share.settings.v', share.settings.v, image.images)
+
+							if(share.settings.v != 'a' && image.images.length > 1){
+
+								var gutter = 5;
+
+								if (isMobile() || ed.repost) {
+
+
+									new carousel(images, '.imagesWrapper', '.imagesContainer')
+
+									/*images.find('.imagesContainer').owlCarousel({
+										items: 1,
+										dots: true,
+										nav: !isMobile(),
+										navText: [
+											'<i class="fas fa-chevron-left"></i> ',
+											'<i class="fas fa-chevron-right"></i>'
+											]
 									
-								})
+									});*/
 
-
-							}
-
-						}
-
-						var isclbk = function(){
-
-
-							
-							images.addClass('active');
-
-							_el.addClass('active');
-
-							if (clbk) clbk();
-						}
-
-						if(share.settings.v != 'a' && image.images.length > 1){
-
-							var gutter = 5;
-
-							if (isMobile() || ed.repost) {
-
-
-								new carousel(images, '.imagesWrapper', '.imagesContainer')
-
-								/*images.find('.imagesContainer').owlCarousel({
-									items: 1,
-									dots: true,
-									nav: !isMobile(),
-									navText: [
-										'<i class="fas fa-chevron-left"></i> ',
-										'<i class="fas fa-chevron-right"></i>'
-										]
-								  
-								});*/
-
-								isclbk()
-
-							}
-							else{
-								images.addClass('manyImagesView')
-								isclbk()
-								/*images.isotope({
-
-									layoutMode: 'packery',
-									itemSelector: '.imagesWrapper',
-									packery: {
-										gutter: gutter
-									},
-									initLayout: false
-								});
-	
-								images.on('arrangeComplete', function(){
 									isclbk()
-								});
-	
-								images.isotope()*/
+
+								}
+								else{
+									console.log("HERE???")
+									images.addClass('manyImagesView')
+									isclbk()
+									/*images.isotope({
+
+										layoutMode: 'packery',
+										itemSelector: '.imagesWrapper',
+										packery: {
+											gutter: gutter
+										},
+										initLayout: false
+									});
+		
+									images.on('arrangeComplete', function(){
+										isclbk()
+									});
+		
+									images.isotope()*/
+								}
+
+								
+
+								
+							}
+							else
+							{
+								isclbk()
 							}
 
 							
-
-							
-						}
-						else
-						{
-							isclbk()
-						}
-
-						
-					}, self.app);
+						}, self.app);
 
 
-				}
+					}
+
 			},
 			share: function (clbk) {
 

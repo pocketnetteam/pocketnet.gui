@@ -1896,15 +1896,17 @@
 					return Promise.resolve()
 				}
 
+				el.setAttribute('data-image', src)
+
 				var image = new Image()
 
 				src = src.replace('bastyon.com:8092', 'pocketnet.app:8092').replace('test.pocketnet', 'pocketnet')
-
+				
 				image.src = src
 				image.onload = () => {
 
 					window.requestAnimationFrame(() => {
-
+						
 						el.setAttribute('image', '*')
 						el.setAttribute('imageloaded', 'true')
 						el.style['background-image'] = 'url('+src+')';
@@ -1921,9 +1923,9 @@
 
 					window.requestAnimationFrame(() => {
 						el.setAttribute('image', '*')
-
-						resolve()
 					})
+
+					resolve()
 				}
 
 			})

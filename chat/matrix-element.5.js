@@ -1055,7 +1055,6 @@ var userRoomStatus_component = Object(componentNormalizer["a" /* default */])(
       this.isRemoveSelectedMessages = true;
     },
     cancelDataMessages: function () {
-      console.log('this.selectedMessages', this.selectedMessages);
       this.selectedMessages = [];
     },
     messagesIsDeleted: function (state) {

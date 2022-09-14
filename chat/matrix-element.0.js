@@ -205,8 +205,6 @@ var functions = __webpack_require__("3139");
       }
     },
     notificationCount: function () {
-      console.log('notificationCount');
-
       if (this.lscroll && this.lscroll.scrollTop < 180 && this.chat && this.chat.getUnreadNotificationCount()) {
         this.scrollToNew();
       }
@@ -379,8 +377,6 @@ var functions = __webpack_require__("3139");
     },
 
     selectMessage(message) {
-      console.log("this emit from liust");
-
       if (this.selectedMessages.filter(item => item.message_id === message.message_id).length === 0) {
         this.selectedMessages.push(message);
       }

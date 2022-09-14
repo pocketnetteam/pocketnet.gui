@@ -611,13 +611,15 @@
 .share_common .images .carousel_markers {
   max-width: 450px;
 }
-.share_common .images.manyImagesView .imagesContainer {
+.share_common .images .imagesContainer {
   display: flex;
   flex-wrap: wrap;
   grid-gap: 0.5em;
 }
-.share_common .images.manyImagesView .imagesContainer .imagesWrapper {
+.share_common .images .imagesContainer .imagesWrapper {
   float: none;
+}
+.share_common .images.manyImagesView .imagesContainer .imagesWrapper {
   max-width: 31%;
 }
 .share_common .images .videoOpen {

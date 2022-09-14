@@ -183,12 +183,9 @@ var icon = __webpack_require__("3094");
 
   methods: {
     saveEdited() {
-      console.log('this.core.mtrx.client', this.core.mtrx.client);
-      console.log('roomId', this.m_chat.roomId);
       this.core.mtrx.client.setRoomAvatarUrl(this.m_chat.roomId, this.userImagebase64 // "https://n1s1.hsmedia.ru/00/07/3b/00073b44cbcc628624197c16b01a91a0/728x1294_1_2052739535b7028fbe538a7278ecd7c8@1152x2048_0xac120003_19331758041591010989.jpg"
       );
       this.core.mtrx.client.setRoomName(this.m_chat.roomId, '@' + this.m_chat.name.replace(/[@]*/g, ""));
-      console.log(this.core.mtrx.client);
       this.core.mtrx.client.setRoomTopic(this.chat.roomId, this.topicTxt.replace(/ /g, '_')).then(r => {
         return r;
       });

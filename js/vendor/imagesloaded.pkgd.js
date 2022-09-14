@@ -332,6 +332,7 @@
     var url = elem.getAttribute('image'), self = this
 
     if (url) url == '*' ? url = elem.getAttribute('data-image') : elem.setAttribute('data-image', url)
+
     if(!url) {
       elem.setAttribute('imageloaded', 'true')
       return
@@ -382,6 +383,7 @@
   ImagesLoadedPN.prototype.addImageAttr = function( url, elem ) {
 
     var imageAttrImage = new ImageAttrImage( url, elem );
+    console.log('imageAttrImage', imageAttrImage)
     this.images.push( imageAttrImage );
     return imageAttrImage;
   };
@@ -391,6 +393,8 @@
     this.progressedCount = 0;
     this.hasAnyBroken = false;
     // complete if no images
+
+    console.log('this.images', this.images.length)
     if ( !this.images.length ) {
       this.complete();
       return;
