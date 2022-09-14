@@ -10,22 +10,22 @@
 
 	<% if(state) {%>
 
-	<div class="downloadedvideoscontentWrapper">
+		<div class="downloadedvideoscontentWrapper">
 
-	</div>
-	
-	<% if(!app.platform.sdk.user.myaccauntdeleted()) {%>
-		<div class="cache">
-			
 		</div>
-		<% if(window.testpocketnet) {%>
-			<div class="removeAccauntWrapper">
-				<div class="removeAccount">
-					<span><%- e('removeaccount') %></span>
-				</div>
+		
+		<% if(!app.platform.sdk.user.myaccauntdeleted()) {%>
+			<div class="cache">
+				
 			</div>
+			<% if(window.testpocketnet) {%>
+				<div class="removeAccauntWrapper">
+					<div class="removeAccount">
+						<span><%- e('removeaccount') %></span>
+					</div>
+				</div>
+			<% } %>
 		<% } %>
-	<% } %>
 
 
 	<% } %>
