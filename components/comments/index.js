@@ -232,8 +232,63 @@ var comments = (function(){
 					sitemessage(self.app.localization.e('donateself'));
 			
 				} else {
-			
+
 					self.nav.api.load({
+						open : true,
+						id : 'donate',
+						inWnd : true,
+			
+						essenseData : {
+							type : 'donate',
+							sender: sender, 
+							receiver: receiver,
+							value : storage.donate,
+							storage,
+							clbk  : function(value){
+
+								value = Number(value);
+		
+								var result = Boolean(value);
+
+								if (value < 0.5){
+									sitemessage(self.app.localization.e('minPkoin', 0.5))
+									return;
+								}
+					
+	
+								if(!_.isArray(value)) value = [value]
+	
+								currents[id].donate.remove();
+	
+								currents[id].donate.set({
+									address: receiver,
+									amount: Number(value)
+								})
+	
+								if(!result && errors[type]){
+	
+									sitemessage(errors[type])
+	
+								}
+	
+	
+								if (result){
+	
+									new Audio('sounds/donate.mp3').play();
+	
+									renders.donate(id, p)
+	
+								}	
+								
+							}
+						},
+			
+						clbk : function(s, p){
+							external = p
+						}
+					})
+			
+					/*self.nav.api.load({
 						open : true,
 						id : 'embeding',
 						inWnd : true,
@@ -300,7 +355,7 @@ var comments = (function(){
 						clbk : function(s, p){
 							external = p
 						}
-					})
+					})*/
 			
 				}
 			
@@ -2232,33 +2287,22 @@ var comments = (function(){
 
 						_p.el.find('.embeddonate').off('click').on('click', function(){
 
-							self.app.platform.sdk.node.transactions.get.allBalance(function (total) {
-
-								self.app.platform.sdk.node.transactions.get.canSpend(self.sdk.address.pnet().address, function (amount) {
 									
-									var id = actions.getid(_p.el.find('.postbody'))
+							
 
-									if(state){
+							if(state){
 
-										p.total = Number(total.toFixed(3));
-										p.balance = Number(amount.toFixed(3));
+								var id = actions.getid(_p.el.find('.postbody'))
 
-										actions.embeddonate(id, p)
-										if(!p.answer && !p.editid){
-			
-											ini()
-			
-										}	
-									}
-									else{
-										actions.stateAction(function(){
-										})
-									}
+								actions.embeddonate(id, p)
 
-
+								if(!p.answer && !p.editid){ ini() }	
+							}
+							else{
+								actions.stateAction(function(){
 								})
+							}
 
-							})
 
 
 						})
@@ -3211,7 +3255,9 @@ var comments = (function(){
 
 		_.each(essenses, function(essense){
 
-			essense.destroy();
+			window.requestAnimationFrame(() => {
+				essense.destroy();
+			})
 
 		})
 

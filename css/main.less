@@ -3151,8 +3151,6 @@ input[type=radio].radio:checked + label {
 
     &.withoutButtons{
         .wndinner{
-
-           
             >div{
                 &.buttons{
                     display: none!important;
@@ -5195,7 +5193,8 @@ input[type=radio].radio:checked + label {
 .carousel{
     width: 100%;
     display: flex;
-    flex-wrap: nowrap;
+    flex-wrap: nowrap!important;
+    grid-gap : @rhythm;
     overflow-x: scroll;
     scroll-behavior: smooth;
     scrollbar-width: none;

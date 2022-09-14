@@ -2146,8 +2146,11 @@ var post = (function () {
 
 		_.each(essenses, function (essense) {
 
-			if(!essense.pip)
-				essense.destroy();
+			if(!essense.pip){
+				window.requestAnimationFrame(() => {
+					essense.destroy();
+				})
+			}
 
 		})
 

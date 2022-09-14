@@ -4556,7 +4556,6 @@
 				var _change = function(){
 					var value = $(this).val();
 
-
 					if(parameter.type == 'boolean')
 						value = $(this).is(":checked") ? 1 : 0;
 
@@ -4606,9 +4605,15 @@
 				}
 
 				if (parameter.type == 'number'){
-					_el.on('keyup', function(){
+					_el.on('keyup', function(e){
+
+						if(e.originalEvent.key == '.' || e.originalEvent.key == ',' || e.originalEvent.key == 'Backspace'){
+							return false
+						}
 
 						var value = $(this).val();
+
+						console.log('value', value)
 
 						if(!value || value == '0') {
 
@@ -4617,15 +4622,33 @@
 
 						if(value.length > 1) {
 
-							if (value[0] == '0')
-								value = value.substr(1)
+							if (value[0] == '0') value = value.substr(1)
 
 							var l = value[value.length - 1]
 
-							if(l == '.' || l == '0' || l == ',') return
+							var hassep = value.indexOf('.') > -1 || value.indexOf(',') > -1
+
+							console.log('hassep', hassep)
+
+							if(l == '.' || (l == '0' && hassep) || l == ',') {
+								console.log("HERE")
+								return false
+							}
 						}
 
+
 						if(!isNaN(Number(value))){
+
+							
+
+							var max = deep(parameter, 'format.max')
+							var min = deep(parameter, 'format.min')
+
+							console.log('max', max)
+							console.log('min', min)
+
+							if(typeof max != 'undefined' && max < value) value = max
+							if(typeof min != 'undefined' && min > value) value = min
 
 							value = dround(value, deep(parameter, 'format.Precision') || 0)
 

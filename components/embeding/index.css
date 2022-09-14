@@ -237,7 +237,6 @@
 #windowsContainer .wnd.embeding .wndinner.donate .buttons {
   color: white;
   background: #00a4ff;
-  display: block!important;
 }
 #windowsContainer .wnd.embeding .wndinner.donate .caption {
   margin-bottom: 0!important;
@@ -285,7 +284,7 @@
 /*t*/
 @media only screen and (max-width: 768px) {
   #embeding .pg {
-    padding: 0;
+    padding: 1em;
     padding-top: 4em;
   }
   #embeding .pg .imagesWrapper .donateWrapper {

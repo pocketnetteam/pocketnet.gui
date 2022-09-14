@@ -639,6 +639,12 @@ __map =  {
 			add : insertingfunc
 		},
 
+		donate : {
+			uri : "donate",
+			href : "donate",
+			add : insertingfunc
+		},
+
 		userpage : {
 			uri : "userpage",
 			href : "userpage",

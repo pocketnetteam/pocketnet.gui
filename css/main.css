@@ -4304,7 +4304,8 @@ input[type=radio].radio:checked + label {
 .carousel {
   width: 100%;
   display: flex;
-  flex-wrap: nowrap;
+  flex-wrap: nowrap!important;
+  grid-gap: 0.5em;
   overflow-x: scroll;
   scroll-behavior: smooth;
   scrollbar-width: none;

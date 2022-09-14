@@ -28770,12 +28770,13 @@ Platform = function (app, listofnodes) {
                                 >
                                 </matrix-element>
                             </div>`
+                            window.requestAnimationFrame(() => {
+                                $('#matrix').html(matrix);
 
-                            $('#matrix').html(matrix);
-
-                            self.matrixchat.el = $('.matrixchatwrapper')
-                            self.matrixchat.initevents()
-                            self.matrixchat.connect()
+                                self.matrixchat.el = $('.matrixchatwrapper')
+                                self.matrixchat.initevents()
+                                self.matrixchat.connect()
+                            })
 
                         }, null, app);
 

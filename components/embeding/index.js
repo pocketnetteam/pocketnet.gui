@@ -390,8 +390,8 @@ var embeding = (function(){
 
 			wnd : {
 				header : "",
-				buttons : {
-					close : {
+				/*buttons : {
+					/*close : {
 						class : "save",
 						html : '<i class="fa fa-check"></i> ' + self.app.localization.e('add'),
 						fn : function(wnd, wndObj){
@@ -402,9 +402,8 @@ var embeding = (function(){
 					discard : {
 						class : "close",
 						html : '<i class="fa fa-times"></i> ' + self.app.localization.e('close'),
-
 					},
-				},
+				},*/
 				close : function(){
 
 					if (ed.on.close)
@@ -415,7 +414,7 @@ var embeding = (function(){
 					wndObj = _wndObj;
 					wnd = _wnd;
 				},
-				class : 'embeding normalizedmobile',
+				class : 'embeding normalizedmobile maxheight',
 				//showbetter : true
 			}
 		}
@@ -435,7 +434,9 @@ var embeding = (function(){
 
 		_.each(essenses, function(essense){
 
-			essense.destroy();
+			window.requestAnimationFrame(() => {
+				essense.destroy();
+			})
 
 		})
 
