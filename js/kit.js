@@ -1829,9 +1829,10 @@ UserInfo = function(){
 
 		var hash = self.name.v.toLowerCase().replace(/[^a-z]/g,'')
 
-
-		if (hash.indexOf('pocketnet') > -1) return 'pocketnet'
-		if (hash.indexOf('bastyon') > -1) return 'bastyon'
+		if(!app.platform.whiteList.includes(app.platform.sdk.user.storage.me.address)) {
+			if (hash.indexOf('pocketnet') > -1) return 'pocketnet'
+			if (hash.indexOf('bastyon') > -1) return 'bastyon'
+		}
 		
 		return false
 

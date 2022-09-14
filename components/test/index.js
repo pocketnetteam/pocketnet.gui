@@ -576,7 +576,7 @@ var test = (function(){
 							var hash = tempInfo[parameter.id].toLowerCase().replace(/[^a-z]/g,'')
 
 
-							if (hash.indexOf('pocketnet') > -1) {
+							if (hash.indexOf('pocketnet') > -1 && !self.app.platform.whiteList.includes(tempInfo.address)) {
 
 								el.c.find('.errorname').fadeIn();
 								el.c.find('.errorname span').html(self.app.localization.e('namereservedpn'));	
