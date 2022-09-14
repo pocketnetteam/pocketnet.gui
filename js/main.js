@@ -58,7 +58,7 @@ if(!_Node)
 
 	if (window.testpocketnet){
 		_listofproxies = [{
-			host : 'dev.rixtrema.net',
+			host : 'test.pocketnet.app',
 			port : 8899,
 			wss : 8099
 	    }]
