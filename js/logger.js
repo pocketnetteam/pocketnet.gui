@@ -97,6 +97,11 @@ class FrontendLogger {
       id: 'USER_REGISTRATION_PROCESS',
       description: 'USER_REGISTRATION_PROCESS',
     },
+
+    APP_LOADED_FROM_EXTERNAL_LINK: {
+      id: 'APP_LOADED_FROM_EXTERNAL_LINK',
+      description: 'User opened Bastyon via an external link',
+    },
   };
 
   errorCounters = {};

@@ -2639,6 +2639,11 @@ Application = function(p)
   self.ref = null;
 
   try{
+    self.Logger.info({
+      actionId: 'APP_LOADED_FROM_EXTERNAL_LINK',
+      actionSubType: 'USER_FROM_EXTERNAL_SESSION',
+    });
+
     self.ref = parameters().ref || localStorage['ref'];
     self.dsubref = parameters().dsubref || localStorage['dsubref'];
 
