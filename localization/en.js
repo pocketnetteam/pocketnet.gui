@@ -2336,3 +2336,8 @@ _l.removecategoryQestion = 'Do you really want to remove this category?'
 
 _l.searchbytext = "Search by text:"
 _l.searchbytags = "Search by tags:"
+
+_l.postedVideos = "Posted Videos"
+_l.unPostedVideos = "Unposted Videos"
+_l.videoIsPosting = "Posting"
+_l.noUnposted = "No Unposted Videos"
