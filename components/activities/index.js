@@ -17,7 +17,7 @@ var activities = (function(){
 		var getters = {
 			getFilters : function(filter){
 				if (filter === 'all') return []
-				if (filter === 'interactions') return ['contentscore']
+				if (filter === 'interactions') return ['contentscore', 'boost']
 				if (filter === 'comment') return ['commentscore', 'comment']
 				if (filter === 'subscriber') return ['subscriber']
 				if (filter === 'blocking') return ['blocking']
@@ -49,10 +49,19 @@ var activities = (function(){
 						let range = (block.height - i.height) / 2
 						i.date = moment().subtract(range, 'minute');
 					}
-					if (i.outputs) {
-						let money = i.outputs.filter(t => t.addresshash === i.relatedContent.address)
-						money = money.reduce( (a,b) => a+b.value,0)
-						i.value = money
+					if (i.outputs && i.inputs) {
+						let out
+						let inp
+						if (i.type === 'boost') {
+							out = i.outputs
+							inp = i.inputs
+							i.value = inp.reduce( (a,b) => a+b.value,0) - out.reduce( (a,b) => a+b.value,0)
+						} else {
+							out = i.outputs.filter(t => t.addresshash === i.relatedContent.address)
+							inp = i.inputs.filter(t => t.addresshash === i.relatedContent.address)
+							i.value = out.reduce( (a,b) => a+b.value,0) - inp.reduce( (a,b) => a+b.value,0)
+						}
+
 					}
 
 					return i

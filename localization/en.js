@@ -106,10 +106,14 @@ ____loclib.rsubscriber = "Subscriptions";
 ____loclib.contentscore = "You have left a rating of the publication";
 ____loclib.commentscorelike = "You liked the comment.";
 ____loclib.commentscoredislike = "You don't like the comment";
-____loclib.commented= "You commented on the publication";
-____loclib.sentmoney= "You transferred funds to";
-____loclib.unsubscribe= "You have unsubscribed from";
-____loclib.subscribe= "You have subscribed to";
+____loclib.commented = "You commented on the publication";
+____loclib.sentmoney = "You transferred funds to";
+____loclib.a_unsubscribe = "You have unsubscribed from";
+____loclib.a_subscribe = "You have subscribed to";
+____loclib.a_block = function(c){
+    return c ? `You have blocked ${c} users` : `You have blocked`
+};
+____loclib.a_unblock= "You have unblocked";
 
 //user page
 

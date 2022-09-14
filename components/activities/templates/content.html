@@ -37,7 +37,7 @@ if(activity.txType === 1) { %>
   </div>
 </div>
 <%}
-//Comment
+//  Comment
 if(activity.txType === 204)
 { %>
 <div class="comment">
@@ -70,7 +70,7 @@ if(activity.txType === 204)
   <% }%>
 </div>
 <%}
-//Comment score
+//  Comment score
 if(activity.txType === 301) { %>
 <div class="comment">
   <div class="avatar">
@@ -102,7 +102,7 @@ if(activity.txType === 301) { %>
   </div>
 </div>
 <%}
-//Subscribe
+//  Subscribe
 if(activity.txType === 302 || activity.txType === 303) { %>
 <div class="comment">
   <div class="avatar">
@@ -124,10 +124,8 @@ if(activity.txType === 302 || activity.txType === 303) { %>
   </div>
 </div>
 <%}
-//Blocking
-if(activity.txType === 305 || activity.txType === 306) { %>
-
-<%
+//  Blocking
+if(activity.txType === 305 || activity.txType === 306) {
 if(activity.multipleAddresses) {
 %>
 <div class="comment">
@@ -171,10 +169,41 @@ if(activity.multipleAddresses) {
     <div class="date"><%- activity.date.calendar() %></div>
   </div>
 </div>
-<%}%>
+<%}}
+//  Boost
+if(activity.txType === 208)
+{
+%>
+<div class="comment">
+  <div class="avatar">
+    <a href="<%-activity?.relatedContent?.account.name%>">
+      <% if(activity?.relatedContent?.account?.avatar){%>
+      <img src="<%-activity?.relatedContent?.account.avatar%>"/>
+      <%} else {%>
+      <%-activity?.relatedContent?.account.name[0].toUpperCase()%>
+      <% } %>
+    </a>
 
+  </div>
+  <div class="description">
+    <div class="head"> <%=e('a_boost')%>
+      <a href="<%-activity?.relatedContent?.account.name%>">
+        <strong><%-activity?.relatedContent?.account.name%></strong>
+      </a>
+
+    </div>
+    <% if(activity.description) { %>
+    <div class="message"><%- decodeURIComponent(activity.description.message) %></div>
+    <% } %>
+    <div class="date"><%- activity.date.calendar() %></div>
+  </div>
+  <% if(activity.value) {%>
+  <a class="boostSum" href="userpage?id=wallet">
+    <i class="fas fa-bolt"></i> <%=activity.value / 100000000 %> PKOIN
+  </a>
+  <% }%>
+</div>
 <%}
-//Content score
 if(activity.txType === 300) { %>
 <div class="comment">
   <div class="avatar">

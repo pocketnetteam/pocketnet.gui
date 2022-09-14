@@ -165,6 +165,22 @@
   background: linear-gradient(-45deg, #4FACFE, #09D5DF, #4FACFE, #09D5DF);
   background-size: 400% 400%;
 }
+.container .comment .boostSum {
+  margin: auto 0;
+  max-height: 28px;
+  display: inline;
+  border-radius: 25px;
+  padding: 0.5em;
+  padding-left: 1em;
+  padding-right: 1em;
+  color: rgb(var(--text-on-bg-ac-color));
+  margin-left: auto;
+  font-size: 0.8em;
+  font-weight: 500;
+  white-space: nowrap;
+  background: linear-gradient(-45deg, #F83600, #F9D423);
+  background-size: 400% 400%;
+}
 .container .comment .message {
   color: rgb(var(--neutral-grad-3));
 }
