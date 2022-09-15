@@ -53,6 +53,9 @@
     </head>
     <body id="application" class="menu-hide ">
 
+        <div id="camera">
+        </div>
+      
         <div id="windowsContainer">
         </div>
 

@@ -226,7 +226,7 @@ var authorization = (function(){
 				ext : ['txt', 'png', 'jpeg', 'jpg'],
 
 				notexif : true,
-
+				app : self.app,
 				dropZone : el.c,
 
 				action : function(file, clbk){

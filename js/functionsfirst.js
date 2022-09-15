@@ -38,10 +38,6 @@ deep = function(obj, key){
     }
 }
 
-isios = function () {
-    return (window.cordova && window.device && deep(window, 'device.platform') == 'iOS') /*|| (navigator || {}).platform &&  /iPad|iPhone|iPod/.test(navigator.platform || '')*/ || iOS()
-}
-
 function iOS() {
     return [
       'iPad Simulator',
@@ -54,6 +50,11 @@ function iOS() {
     // iPad on iOS 13 detection
     || (navigator.userAgent.includes("Mac") && "ontouchend" in document)
   }
+
+isios = function () {
+    return (window.cordova && window.device && deep(window, 'device.platform') == 'iOS') || iOS()
+}
+
 
 getbaseorientation = function(){
 	

@@ -44,15 +44,15 @@
   border: 1px dashed rgb(var(--neutral-grad-2));
   height: 60px;
 }
+#embeding .pg .imagesWrapper .title {
+  color: rgb(var(--color-txt-gray-dark));
+  font-weight: 700;
+  font-size: 0.9em;
+}
 #embeding .pg .imagesWrapper .elContent {
   display: flex;
   align-items: center;
   justify-content: center;
-}
-#embeding .pg .imagesWrapper .elContent .title {
-  color: rgb(var(--color-txt-gray-dark));
-  font-weight: 700;
-  font-size: 0.9em;
 }
 #embeding .pg .imagesWrapper .upload {
   cursor: pointer;

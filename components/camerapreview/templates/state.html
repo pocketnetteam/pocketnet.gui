@@ -1,0 +1,36 @@
+
+
+
+
+<% if(!cameraenabled && 1 == 0) {%>
+    <div class="notfound">
+        <div><span>Camera not available</span></div>
+    </div>
+
+<% } else { %> 
+
+    <% if(current) { %> 
+
+        <div class="currentpicture">
+            <div class="image" image="<%-current%>"></div>
+        </div>
+
+        <div class="removepicture mbtn left">
+            <i class="fas fa-redo-alt"></i>
+        </div>
+
+        <div class="selectpicture mbtn right">
+            <i class="fas fa-check"></i>
+        </div>
+        
+        
+    <% } else { %> 
+
+        <div class="takepicture mbtn">
+            <i class="fas fa-camera"></i>
+        </div>
+        
+    <% } %>
+
+    
+<% } %>

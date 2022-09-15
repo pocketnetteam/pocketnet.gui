@@ -27,6 +27,7 @@
     "cordova-plugin-gallery-refresh": "^1.0.61",
     "cordova-plugin-inappbrowser": "4.0.0",
     "cordova-plugin-network-information": "3.0.0",
+    "cordova-plugin-photo-library": "2.3.1",
     "cordova-plugin-screen-orientation": "^3.0.1",
     "cordova-plugin-vibration": "3.1.1",
     "cordova-support-android-plugin": "1.0.1",
@@ -49,6 +50,7 @@
     "cordova-plugin-apkupdater": "^4.0.0",
     "cordova-plugin-background-download": "0.0.2",
     "cordova-plugin-buildinfo": "^4.0.0",
+    "cordova-plugin-camera-preview": "^0.12.3",
     "cordova-plugin-contacts-x": "file:cordova-plugin-contacts-x",
     "cordova-plugin-device": "^1.1.7",
     "cordova-plugin-file": "^6.0.2",
@@ -134,7 +136,11 @@
       "cordova-plugin-media": {
         "KEEP_AVAUDIOSESSION_ALWAYS_ACTIVE": "NO"
       },
-      "cordova-plugin-splashscreen": {}
+      "cordova-plugin-splashscreen": {},
+      "cordova-plugin-photo-library": {
+        "PHOTO_LIBRARY_USAGE_DESCRIPTION": "Allow the application access to the gallery and the camera to select photos for publication"
+      },
+      "cordova-plugin-camera-preview": {}
     },
     "platforms": [
       "ios",

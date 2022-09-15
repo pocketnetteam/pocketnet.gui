@@ -637,6 +637,44 @@ var comments = (function(){
 					areas[id].___inited = true
 
 				var storage = currents[id].export(true)
+
+				var added = function(value){
+
+					var result = true;
+
+					if(!_.isArray(value)) value = [value]
+
+					_.each(value, function(v, i){
+
+						result = currents[id].images.set(v)
+
+					})
+
+					if(!result && errors[type]){
+
+						sitemessage(errors[type])
+
+					}		
+					
+					renders.images(id, p)
+
+					actions.lightarea(id, p.el.find('.postbody'))
+
+				}
+
+				if(self.app.mobile.supportimagegallery()){
+
+					app.platform.ui.uploadImage({
+						multiple : true,
+						
+						onSuccess : function(imgs){
+							_.each(imgs, added)
+						}
+					})
+
+
+					return
+				}
 	
 				self.nav.api.load({
 					open : true,
@@ -649,30 +687,7 @@ var comments = (function(){
 						storage : storage,
 						on : {
 						
-							added : function(value){
-
-								var result = true;
-
-								if(!_.isArray(value)) value = [value]
-
-								_.each(value, function(v, i){
-
-									result = currents[id].images.set(v)
-
-								})
-
-								if(!result && errors[type]){
-
-									sitemessage(errors[type])
-
-								}		
-								
-								
-								renders.images(id, p)
-
-								actions.lightarea(id, p.el.find('.postbody'))
-
-							},
+							added,
 
 							destroy(){
 								external = null

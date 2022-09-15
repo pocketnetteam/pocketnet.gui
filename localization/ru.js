@@ -2093,3 +2093,6 @@ _l.removeAccount_undefinedError = 'Возникла непредвиденная
 
 _l.utipdeleted = "Ваш аккаунт удалён, вы можете пользоваться только кошельком"
 _l.applydonate = "Применить"
+
+_l.imagegallery = "Галерея изображений"
+_l.useselected = "Использовать выбранные"

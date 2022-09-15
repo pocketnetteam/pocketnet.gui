@@ -292,10 +292,11 @@ var embeding = (function(){
 					el : el.upload,
 		
 					ext : ['png', 'jpeg', 'jpg', 'gif'],
-
+					app : self.app,
 					dropZone : el.c.closest('.wnd'),
 
 					multiple : true,
+					uploadImage : true,
 
 					action : function(file, clbk){
 

@@ -1151,6 +1151,7 @@ Application = function(p)
   self.deviceReadyInit = function(p){
 
     self.el = {
+      camera : 		$('#camera'),
       content : 		$('#content'),
       app : 			$('#application'),
       header : 		$('#headerWrapper'),
@@ -1960,6 +1961,10 @@ Application = function(p)
   }
 
   self.mobile = {
+
+    supportimagegallery : function(){
+      return window.cordova && !isios()
+    },
 
     safearea : function(){
       if(window.cordova){

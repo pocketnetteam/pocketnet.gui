@@ -1093,7 +1093,7 @@ var videoCabinet = (function () {
 									ext: ['png', 'jpeg', 'jpg', 'webp', 'jfif'],
 
 									dropZone: element.find('.editPreview'),
-
+									app : self.app,
 									multiple: false,
 
 									action: function (file, clbk) {

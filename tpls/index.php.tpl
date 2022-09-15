@@ -58,66 +58,50 @@
     </head>
     <body id="application" class="menu-hide ">
 
+        <div id="camera">
+        </div>
         <div id="windowsContainer">
         </div>
 
-        <div id="headerWrapper">
-        </div>
+        <div class="appcnt">
 
-        <div class="cordovatop">
-        </div>
+            <div id="headerWrapper">
+            </div>
 
-        <div id="menuWrapper">
-        </div> 
+            <div id="menuWrapper">
+            </div> 
 
-        <div id="panelWrapper">
-        </div> 
+            <div id="panelWrapper">
+            </div> 
 
-        <div id="navigationWrapper">
-        </div> 
+            <div id="navigationWrapper">
+            </div> 
 
-        <div class="topPreloader" id="_topPreloader">
-        </div>
+            <div class="topPreloader" id="_topPreloader">
+            </div>
 
-        <div id="splashScreen" class="cssanimation">
-            <img src="img/splashscreen/pocketnet-logo-19.svg" id="splashScreenImg" class="zoom-in rotate">
+            <div id="splashScreen" class="cssanimation">
+                <img src="img/splashscreen/pocketnet-logo-19.svg" id="splashScreenImg" class="zoom-in">
+            </div>
+
+            
+
+            
+
+            <div class="contentWrapper"> 
+                <div id="content">                
+                </div>
+            </div>
+            
+
+            <div id="footerWrapper">
+                
+            </div>
+
         </div>
 
 
         <div id="matrix" class="matrix"></div>
-        <div id="hideallnotifications"></div>
-
-        <div id="topsmallpreloader">
-            <div class="table">
-                <div>
-                    <div class="icon">
-                        <i class="fas fa-spinner fa-spin"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div id="globalpreloader">
-            <div class="table">
-                <div>
-                    <div class="icon">
-                        <i class="fas fa-spinner fa-spin"></i>
-                    </div>
-                </div>
-               
-            </div>
-        </div>
-
-        <div class="contentWrapper "> 
-            <div id="content">                
-            </div>
-        </div>
-
-        <div id="footerWrapper">
-        </div>
-
-
-        
 
 
        <!-- <script src="cordova.js"></script>-->

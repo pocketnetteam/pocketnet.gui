@@ -639,6 +639,12 @@ __map =  {
 			add : insertingfunc
 		},
 
+		camerapreview : {
+			uri : "camerapreview",
+			href : "camerapreview",
+			add : insertingfunc
+		},
+
 		donate : {
 			uri : "donate",
 			href : "donate",

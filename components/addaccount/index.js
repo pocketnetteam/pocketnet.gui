@@ -112,6 +112,8 @@ var addaccount = (function(){
 
 				dropZone : el.c,
 
+				app : self.app,
+
 				action : function(file, clbk){
 
 					if(file.ext == 'png' || file.ext == 'jpeg' || file.ext == 'jpg'){

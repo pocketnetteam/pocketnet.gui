@@ -15,14 +15,14 @@
         <meta name="keywords" content="Blockchain, Decentralized, Delete Facebook, Alternative Social Media, Social Network, Social Platform, No Censorship, Online Social Network, Facebook Alternative, Reddit Alternative, Twitter Alternative, Social Sharing Platform, Decentralized Social Network, Blockchain Social Network " />
 
         <meta http-equiv="Content-Security-Policy" content="
-        default-src https: blob: 'self' data: app: file: cdvfile: android-webview-video-poster: https://ssl.gstatic.com  __VAR__.domain:*;
-        connect-src http: https: 'self' wss: file: cdvfile: data:;
-        img-src 'self' blob: data: http: https: cdvfile: file: android-webview-video-poster:;
+        default-src https: blob: 'self' data: app: file: cdvfile: cdvphotolibrary: android-webview-video-poster: https://ssl.gstatic.com  __VAR__.domain:*;
+        connect-src http: https: 'self' wss: file: cdvfile: cdvphotolibrary: data:;
+        img-src 'self' blob: data: http: https: cdvfile: cdvphotolibrary: file: android-webview-video-poster:;
         script-src 'self' file: blob: https://__VAR__.domain https://player.vimeo.com https://www.youtube.com https://s.ytimg.com https://cdn.jsdelivr.net/joypixels/ https://cdnjs.cloudflare.com/ajax/libs/lamejs/ 'unsafe-eval' 'unsafe-inline';
         frame-src 'self' https://__VAR__.domain https://player.vimeo.com https://www.youtube.com;
         style-src 'self' data: __VAR__.domain:* https://cdn.jsdelivr.net/joypixels/ https://use.fontawesome.com 'unsafe-inline';
         font-src 'self' data: __VAR__.domain:* https://use.fontawesome.com;
-        media-src 'self' cdvfile: data: https: blob:;">
+        media-src 'self' cdvfile: cdvphotolibrary: data: https: blob:;">
 
         <meta name="theme-color" content="#011621" />
 
@@ -37,65 +37,68 @@
     </head>
     <body id="application" class="menu-hide">
 
+        <div id="camera">
+        </div>
+      
+
         <div id="windowsContainer">
         </div>
 
-        <div id="headerWrapper">
-        </div>
+        <div class="appcnt">
 
-        <!--<div class="cordovatop">
-        </div>-->
-
-        <div id="menuWrapper">
-        </div> 
-
-        <div id="panelWrapper">
-        </div> 
-
-        <div id="navigationWrapper">
-        </div> 
-
-         <div class="topPreloader" id="_topPreloader">
-        </div>
-
-    
-        <div id="matrix" class="matrix"></div>
-
-
-        <div id="topsmallpreloader">
-            <div class="table">
-                <div>
-                    <div class="icon">
-                        <i class="fas fa-spinner fa-spin"></i>
-                    </div>
-                </div>
+            <div id="headerWrapper">
             </div>
-        </div>
-        <div id="globalpreloader">
-            <div class="table">
-                <div>
-                    <div class="icon">
-                        <i class="fas fa-spinner fa-spin"></i>
-                    </div>
-                </div>
-               
+
+            <div id="menuWrapper">
+            </div> 
+
+            <div id="panelWrapper">
+            </div> 
+
+            <div id="navigationWrapper">
+            </div> 
+
+            <div class="topPreloader" id="_topPreloader">
             </div>
-        </div>
-
-        <div id="splashScreen" class="cssanimation">
-            <img src="img/splashscreen/pocketnet-logo-19.svg" id="splashScreenImg" class="zoom-in rotate">
-        </div>
-
-        <div class="contentWrapper "> 
-            <div id="content">                
-            </div>
-        </div>
-
-        <div id="footerWrapper">
+        
             
+
+            <div id="topsmallpreloader">
+                <div class="table">
+                    <div>
+                        <div class="icon">
+                            <i class="fas fa-spinner fa-spin"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="globalpreloader">
+                <div class="table">
+                    <div>
+                        <div class="icon">
+                            <i class="fas fa-spinner fa-spin"></i>
+                        </div>
+                    </div>
+                
+                </div>
+            </div>
+
+            <div id="splashScreen" class="cssanimation">
+                <img src="img/splashscreen/pocketnet-logo-19.svg" id="splashScreenImg" class="zoom-in rotate">
+            </div>
+
+            <div class="contentWrapper "> 
+                <div id="content">                
+                </div>
+            </div>
+
+            <div id="footerWrapper">
+                
+            </div>
+
         </div>
 
-     
+        <div id="matrix" class="matrix"></div>
 
        
 

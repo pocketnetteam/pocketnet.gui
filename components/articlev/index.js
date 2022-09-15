@@ -830,7 +830,7 @@ var articlev = (function(){
 				ext : ['png', 'jpeg', 'jpg', 'gif', 'jfif', 'webp'],
 
 				dropZone : el.c.find('.bgwrapper'),
-
+				app : self.app,
 				action : function(file, clbk){
 
 					self.app.platform.papi.editImage(file.base64, {

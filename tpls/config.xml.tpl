@@ -111,9 +111,15 @@
     <platform name="ios">
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
+
         <config-file parent="NSCameraUsageDescription" target="*-Info.plist">
-            <string>This Application can allow your camera to make avatar or post photo, if you want.</string>
+            <string>Allow the application access to the camera to select photos for publication.</string>
         </config-file>
+   
+        <config-file overwrite="true" parent="NSPhotoLibraryUsageDescription" target="*-Info.plist">
+            <string>Allow the application access to the photo gallery to select photos for publication.</string>
+        </config-file>
+       
 
         <preference name="NativeXHRLogging" value="full" />
         <preference name="AllowUntrustedCerts"  value="true" />

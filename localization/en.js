@@ -2302,3 +2302,6 @@ _l.deletedAccount_deleted = "Account deleted"
 
 _l.utipdeleted = "Your Account Deleted. You can use only wallet"
 _l.applydonate = "Apply"
+
+_l.imagegallery = "Image gallery"
+_l.useselected = "Use selected"

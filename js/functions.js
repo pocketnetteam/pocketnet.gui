@@ -9120,12 +9120,15 @@
 	initUpload = function(p){
 		if(!p) p = {};
 
+
 		var el = p.el,
 			multiple = p.multiple || false,
 			maxFileSize = (p.maxFileSize || 30) * 1024 * 1024,
 			dropZone,
 			input,
 			mode = p.mode || "FS";
+
+		var app = p.app
 
 		if(!p.data) p.data = {};
 
@@ -9553,31 +9556,44 @@
 
 		var initEvents = function(){
 
-			if(!dropZone[0]) return
+			if (dropZone[0]) {
+				dropZone[0].ondragover = function() {
+					dropZone.addClass('hover');
+					return false;
+				};
+	
+				dropZone.on('dragout',function(event){
+	
+					dropZone.removeClass('hover');
+					return false;
+	
+				});
+	
+				dropZone[0].ondrop = upload;
+			}
 
-			dropZone[0].ondragover = function() {
-			    dropZone.addClass('hover');
-			    return false;
-			};
+			if(p.uploadImage && app && app.mobile.supportimagegallery()){
 
-		/*	dropZone[0].ondragleave = function() {
-			    dropZone.removeClass('hover');
-			    return false;
-			};*/
+				input.on('click', function(e){
 
-			dropZone.on('dragout',function(event){
+					app.platform.ui.uploadImage(p)
 
-				dropZone.removeClass('hover');
-			    return false;
+					e.stopPropagation()
 
-			});
+					return false
+	
+				});
 
-			dropZone[0].ondrop = upload;
+				return
+			}
+			
 			input.on('change', upload);
 
 			input.on(clickAction(), function(){
+
 				if (p.onStart)
 					p.onStart();
+
 			});
 		}
 
@@ -9607,6 +9623,7 @@
 
 		init();
 	}
+
 
 	checkboxValue = function(el, value){
 
@@ -10892,6 +10909,14 @@ Base64Helper = {
         reader.onerror = error => reject(error);
     }),
 
+	fromFileToBase64: file => new Promise((resolve, reject) => {
+        const reader = new FileReader();
+
+        reader.readAsBinaryString(file);
+        reader.onloadend = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+    }),
+
     toFileFetch: function (base64) {
         return fetch(base64).then(res => {
             return res.blob()
@@ -10928,6 +10953,63 @@ Base64Helper = {
 
 
 }
+
+var fkit = {
+    extensions : {
+        'image/png' : 'png',
+        'image/jpeg' : 'jpg',
+        'image/jpg' : 'jpg',
+        'image/webp' : 'webp',
+        'image/jfif' : 'jfif'
+    },
+    getExtension: function (file) {
+        var name = file.name.split('.');
+        var ext = name[name.length - 1].toLowerCase();
+
+        return ext;
+    },
+    getName: function (file) {
+        var name = file.name.split('.');
+            name.pop()
+
+        return name.join('.');
+    },
+    checkExtension: function (file, extensions = []) {
+
+        if (extensions.length) {
+            if (_.indexOf(extensions, fkit.getExtension(file)) == -1) return false
+        }
+
+        return true;
+    }
+}
+
+fetchLocal = function (url, name = 'file') {
+    return new Promise(function (resolve, reject) {
+        var xhr = new XMLHttpRequest
+
+        xhr.onload = function () {
+
+            var type = xhr.getResponseHeader('content-type')
+
+            name = name + fkit.extensions[type] ? ('.' + fkit.extensions[type]) : ''
+
+            resolve({
+                data: new Blob([xhr.response], { type: type, name: name })
+            })
+
+            // resolve()
+        }
+
+        xhr.onerror = function () {
+            reject(new TypeError('Local request failed'))
+        }
+
+        xhr.open('GET', url)
+        xhr.responseType = "arraybuffer";
+        xhr.send(null)
+    })
+};
 
 /* ______________________________ */
 

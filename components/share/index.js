@@ -1602,10 +1602,13 @@ var share = (function(){
 							ext : ['png', 'jpeg', 'jpg', 'gif', 'jfif'],
 		
 							dropZone : el.c,
-		
+							app : self.app,
 							multiple : true,
+							uploadImage : true,
 		
 							action : function(file, clbk){
+
+								console.log("FILE", file)
 		
 								if (file.ext == 'gif'){
 									imagesHelper.slowUploadGif(file, tstorage, clbk)
@@ -1952,7 +1955,7 @@ var share = (function(){
 								el : el.urlWrapper.find('.uploadpeertubewp'),
 					
 								ext : ['png', 'jpeg', 'jpg', 'webp', 'jfif'],
-		
+								app : self.app,
 								dropZone : el.urlWrapper,
 		
 								multiple : false,

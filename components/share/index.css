@@ -1338,7 +1338,7 @@ html.mobileview .wnd.wndsharepost .wndcontent #share .absolutetxwrapper {
   }
   #share .postlineWrapper {
     margin: 0;
-    padding-left: 0;
+    padding-left: 0!important;
     padding-right: 0;
     position: static!important;
   }

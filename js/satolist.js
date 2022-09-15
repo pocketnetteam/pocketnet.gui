@@ -318,6 +318,7 @@ Platform = function (app, listofnodes) {
     self.videoenabled = true;
 
     var bastyonhelperOpened = false
+    self.uicamerapreview = null
     //////////////
     self.test = false;
     //////////////
@@ -2832,6 +2833,28 @@ Platform = function (app, listofnodes) {
     }
 
     self.ui = {
+
+        uploadImage : function(p){
+
+            
+
+            /*if (self.uicamerapreview){
+                self.uicamerapreview.destroy()
+                self.uicamerapreview = null
+            }*/
+
+            app.nav.api.load({
+                open : true,
+                id : 'camerapreview',
+                el : app.el.camera,
+                essenseData : p,
+
+                clbk : function(s, p){
+                    self.uicamerapreview = p
+                }
+            })
+            
+        },
 
         pipvideo : function(txid, clbk, d){
 
