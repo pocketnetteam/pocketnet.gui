@@ -15675,6 +15675,8 @@ Platform = function (app, listofnodes) {
 
                     tags = self.sdk.tags.filterEx(self.sdk.tags.filterCats(tags))
 
+                    //console.log( this.gettags(), self.sdk.tags.filterCats(tags), self.sdk.tags.filterEx(self.sdk.tags.filterCats(tags)))
+
                 return _.map(randomizerarray(tags, count || 3, 'probability') || [], (t) => {
                     return t.tag
                 })
