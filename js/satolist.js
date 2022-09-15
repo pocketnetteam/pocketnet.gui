@@ -15670,8 +15670,12 @@ Platform = function (app, listofnodes) {
             added : {},
 
             getprobtags : function(count){
-              
-                return _.map(randomizerarray(this.gettags(), count || 3, 'probability') || [], (t) => {
+
+                var tags = this.gettags()
+
+                    tags = self.sdk.tags.filterEx(self.sdk.tags.filterCats(tags))
+
+                return _.map(randomizerarray(tags, count || 3, 'probability') || [], (t) => {
                     return t.tag
                 })
             },
