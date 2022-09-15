@@ -26,7 +26,7 @@
         <meta http-equiv="Content-Security-Policy" content="
         upgrade-insecure-requests;
         default-src blob: 'self' __VAR__.domain:*;
-        connect-src blob: 'self' http: ws: https: wss:;
+        connect-src blob: data: 'self' http: ws: https: wss:;
         img-src 'self' blob: data: http: https: __VAR__.domain:*;
         script-src 'self' blob: __VAR__.domain player.vimeo.com www.youtube.com s.ytimg.com cdnjs.cloudflare.com/ajax/libs/lamejs/ cdn.jsdelivr.net/joypixels/ 'unsafe-eval' 'unsafe-inline';
         frame-src 'self' __VAR__.domain player.vimeo.com www.youtube.com;
@@ -84,9 +84,16 @@
                 <img src="img/splashscreen/pocketnet-logo-19.svg" id="splashScreenImg" class="zoom-in">
             </div>
 
-            
-
-            
+            <div id="globalpreloader">
+                <div class="table">
+                    <div>
+                        <div class="icon">
+                            <i class="fas fa-spinner fa-spin"></i>
+                        </div>
+                    </div>
+                
+                </div>
+            </div>
 
             <div class="contentWrapper"> 
                 <div id="content">                

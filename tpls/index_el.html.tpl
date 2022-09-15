@@ -16,7 +16,7 @@
 
         <meta http-equiv="Content-Security-Policy" content="
         default-src https: 'self' file: __VAR__.domain:*; 
-        connect-src https: wss: http: ws: file: data: blob:;
+        connect-src https: data: wss: http: ws: file: data: blob:;
         img-src 'self' blob: data: http: https: file:;
         script-src 'self' blob: https://__VAR__.domain https://player.vimeo.com https://www.youtube.com https://s.ytimg.com https://cdn.jsdelivr.net/joypixels/ https://cdnjs.cloudflare.com/ajax/libs/lamejs/ 'unsafe-eval' 'unsafe-inline';
         frame-src 'self' https://__VAR__.domain https://player.vimeo.com https://www.youtube.com;
@@ -59,56 +59,59 @@
         <div id="windowsContainer">
         </div>
 
-        <div id="headerWrapper">
-        </div>
+        <div class="appcnt">
 
-        <div id="menuWrapper">
-        </div> 
+            <div id="headerWrapper">
+            </div>
 
-        <div id="panelWrapper">
-        </div> 
+            <div id="menuWrapper">
+            </div> 
 
-        <div id="navigationWrapper">
-        </div> 
+            <div id="panelWrapper">
+            </div> 
 
-        <div id="splashScreen" class="cssanimation">
-            <img src="img/splashscreen/pocketnet-logo-19.svg" id="splashScreenImg" class="zoom-in rotate">
+            <div id="navigationWrapper">
+            </div> 
+
+            <div id="splashScreen" class="cssanimation">
+                <img src="img/splashscreen/pocketnet-logo-19.svg" id="splashScreenImg" class="zoom-in rotate">
+            </div>
+
+        
+            <div id="hideallnotifications"></div>
+
+            <div id="globalpreloader">
+                <div class="table">
+                    <div>
+                        <div class="icon">
+                            <i class="fas fa-spinner fa-spin"></i>
+                        </div>
+                    </div>
+                
+                </div>
+            </div>
+
+            <div class="electronnav" id="electronnavContainer">
+            </div>
+
+            <div class="contentWrapper "> 
+                <div id="content">                
+                </div>
+            </div>
+
+            <div id="footerWrapper">
+                
+            </div>
+
+            <div class="topPreloader" id="_topPreloader">
+            </div>
         </div>
 
         </div>
             <div id="matrix" class="matrix">
         </div>
-        <div id="hideallnotifications"></div>
 
-        <div id="globalpreloader">
-            <div class="table">
-                <div>
-                    <div class="icon">
-                        <i class="fas fa-spinner fa-spin"></i>
-                    </div>
-                </div>
-               
-            </div>
-        </div>
 
-        <div class="electronnav" id="electronnavContainer">
-        </div>
-
-     
-
-        <div class="contentWrapper "> 
-            <div id="content">                
-            </div>
-        </div>
-
-        <div id="footerWrapper">
-            
-        </div>
-
-     
-
-        <div class="topPreloader" id="_topPreloader">
-        </div>
 
         
         <script>window.$ = window.jQuery = require('./js/vendor/jquery.js');</script>
