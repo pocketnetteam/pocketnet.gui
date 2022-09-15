@@ -2305,3 +2305,4 @@ _l.applydonate = "Apply"
 
 _l.imagegallery = "Image gallery"
 _l.useselected = "Use selected"
+_l.pkoindisabledisclaimer = 'In the application, you can only receive money for a crypto wallet, but you will not be able to send it'

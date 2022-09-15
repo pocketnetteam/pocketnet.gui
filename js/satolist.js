@@ -28790,6 +28790,7 @@ Platform = function (app, listofnodes) {
                                     localization="`+self.app.localization.key+`"
                                     fcmtoken="`+(self.fcmtoken || "")+`"
                                     isSoundAvailable="`+(self.sdk.usersettings.meta.sound.value)+`"
+                                    pkoindisabled="`+(self.app.pkoindisable)+`"
                                 >
                                 </matrix-element>
                             </div>`

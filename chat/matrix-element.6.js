@@ -1471,6 +1471,9 @@ var CancelablePromise = __webpack_require__("0bb9");
     connect: function () {
       return this.$store.state.contact;
     },
+    pkoindisabled: function () {
+      return this.$store.state.pkoindisabled;
+    },
     menuItems: function () {
       var menuItems = [];
 
@@ -1516,7 +1519,7 @@ var CancelablePromise = __webpack_require__("0bb9");
         });
       }
 
-      if (this.transaction) {
+      if (this.transaction && !this.pkoindisabled) {
         menuItems.unshift({
           click: "sendtransactionWrapper",
           title: this.$i18n.t("button.sendCoins"),
