@@ -797,15 +797,20 @@
 }
 .share_common .tags {
   margin-bottom: 1em;
-  overflow: hidden;
   max-width: 650px;
   display: flex;
   flex-wrap: wrap;
 }
 .share_common .tags > div {
+  border-radius: 8px;
+  padding: 4px 10px;
+  background: rgb(var(--background-secondary-theme));
+  box-shadow: 0 5px 7px -5px rgba(var(--color-shadow-base), 0.4);
   margin-right: 0.5em;
+  margin-bottom: 0.25em;
 }
 .share_common .tags > div span {
+  font-weight: 500;
   font-size: 0.8em;
   color: rgb(var(--neutral-grad-4));
 }
