@@ -112,6 +112,10 @@
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
 
+        <config-file parent="NSMicrophoneUsageDescription" target="*-Info.plist">
+            <string>This Application uses your microphone to make voice messages</string>
+        </config-file>
+
         <config-file parent="NSCameraUsageDescription" target="*-Info.plist">
             <string>Allow the application access to the camera to select photos for publication.</string>
         </config-file>

@@ -13,18 +13,6 @@ var camerapreview = (function(){
 		var exim = ''
 
 		
-		var options = {
-			x: 0,
-			y: 0,
-			width: self.app.width,
-			height: self.app.height,
-			camera: typeof CameraPreview != 'undefined' ? CameraPreview.CAMERA_DIRECTION.BACK : '',
-			toBack: true,
-			tapFocus: true,
-			previewDrag: false,
-			storeToFile: false,
-			disableExifHeaderStripping: false
-		}
 
 		var ed = {}
 
@@ -32,7 +20,23 @@ var camerapreview = (function(){
 			current : null,
 			selected : {},
 			photolibraryaccessdecline : false,
-			gallery : false
+			gallery : false,
+			direction : 'BACK'
+		}
+
+		var getcameraoptions = function(){
+			return {
+				x: 0,
+				y: 0,
+				width: self.app.width,
+				height: self.app.height,
+				camera: typeof CameraPreview != 'undefined' ? CameraPreview.CAMERA_DIRECTION[data.direction] : '',
+				toBack: true,
+				tapFocus: true,
+				previewDrag: false,
+				storeToFile: false,
+				disableExifHeaderStripping: false
+			}
 		}
 
 		var photos = []
@@ -40,6 +44,8 @@ var camerapreview = (function(){
 		var images = {}
 		var thubnails = {}
 		var imagesadding = false
+
+		
 
 		var saveimage = function(url){
 
@@ -354,7 +360,7 @@ var camerapreview = (function(){
 		var actions = {
 			startcamera : function(){
 				if (data.cameraenabled){
-					CameraPreview.startCamera(options);
+					CameraPreview.startCamera(getcameraoptions());
 				}
 				else{
 				}
@@ -375,6 +381,17 @@ var camerapreview = (function(){
 				data.current = null
 	
 				renders.state()
+			},
+
+			changedirection : function(){
+				if (data.direction == 'BACK')
+					data.direction = 'FRONT'
+				else{
+					data.direction = 'BACK'
+				}
+	
+				actions.stopcamera()
+				actions.startcamera()
 			},
 
 			takepicture : function(){
@@ -443,6 +460,10 @@ var camerapreview = (function(){
 
 					p.el.find(".selectpicture").on('click', function(){
 						selectcurrent()
+					})
+
+					p.el.find('.changedirection').on('click', function(){
+						actions.changedirection()
 					})
 
 				})
