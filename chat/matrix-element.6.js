@@ -2166,7 +2166,8 @@ var CancelablePromise = __webpack_require__("0bb9");
           }).catch(e => {
             console.error(e);
           });
-        }, () => {
+        }, e => {
+          console.error(e);
           this.isRecording = false;
         });
         this.recordRmsData = [];
