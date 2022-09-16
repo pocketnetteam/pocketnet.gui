@@ -2136,10 +2136,8 @@ var CancelablePromise = __webpack_require__("0bb9");
     getFileIosCordova(path) {
       return new Promise((resolve, reject) => {
         window.resolveLocalFileSystemURL(path, entry => {
-          console.log('entry', entry);
-
           if (!entry) {
-            reject('noentry');
+            return reject('noentry');
           }
 
           entry.file(file => {
@@ -2151,10 +2149,12 @@ var CancelablePromise = __webpack_require__("0bb9");
                 type: file.type
               });
               console.log('blob', blob);
+              entry.remove();
               resolve(blob);
             };
 
             reader.onerror = e => {
+              entry.remove();
               reject(e);
             };
 
@@ -2165,7 +2165,6 @@ var CancelablePromise = __webpack_require__("0bb9");
     },
 
     initRecordingCordova() {
-      if (this.prepareRecording || this.isRecording) return;
       this.prepareRecording = Object(CancelablePromise["cancelable"])(this.core.media.permissions({
         audio: true
       }).then(() => {
@@ -2199,7 +2198,7 @@ var CancelablePromise = __webpack_require__("0bb9");
               });
             });
           } else {
-            functions["a" /* default */].fetchLocal(path);
+            fu = functions["a" /* default */].fetchLocal(path);
           }
 
           fu.then(r => {
@@ -2210,11 +2209,13 @@ var CancelablePromise = __webpack_require__("0bb9");
 
             this.createVoiceMessage(r, true);
           }).catch(e => {
+            this.clear();
             console.error(e);
           });
         }, e => {
           console.error(e);
           this.isRecording = false;
+          this.clear();
         });
         this.recordRmsData = [];
         var rmsdata = [];
@@ -2247,11 +2248,12 @@ var CancelablePromise = __webpack_require__("0bb9");
     },
 
     initRecording() {
+      if (this.prepareRecording || this.isRecording) return;
+
       if (window.cordova) {
         return this.initRecordingCordova();
       }
 
-      if (this.prepareRecording || this.isRecording) return;
       this.prepareRecording = Object(CancelablePromise["cancelable"])(this.core.initMediaRecorder().then(recorder => {
         this.microphoneDisabled = false;
 
@@ -2425,9 +2427,27 @@ var CancelablePromise = __webpack_require__("0bb9");
       this.record = null;
       this.recordRmsData = [];
 
-      if (this.audioContext) {
-        this.audioContext.close();
+      if (this.interval) {
+        clearInterval(this.interval);
+        this.interval = null;
       }
+
+      if (this.cordovaMediaRecorder) {
+        this.cordovaMediaRecorder.release();
+        this.cordovaMediaRecorder = null;
+      }
+
+      if (this.mediaRecorder) {
+        this.mediaRecorder.stop();
+        this.mediaRecorder.stream.getTracks().forEach(track => {
+          track.stop();
+        });
+        this.mediaRecorder = null;
+      }
+      /*if (this.audioContext){
+      	this.audioContext.close()
+      }*/
+
     },
 
     /*async convertAudioToBase64(blob) {
