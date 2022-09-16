@@ -735,7 +735,9 @@
 						}
 
 						if (sel.scrollTop == 0){
-							sel.scrollTop = 1
+
+							if (isios())
+								sel.scrollTop = 1
 
 							return true
 						}
@@ -770,7 +772,7 @@
 
 		var scrolling = function(){
 			if (cntj){
-				if(cntj.scrollTop <= 1){
+				if(!cntj.scrollTop || (isios() && cntj.scrollTop <= 1)){
 					initSwipable()
 				}
 				else{
