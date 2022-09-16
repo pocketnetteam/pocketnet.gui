@@ -734,7 +734,11 @@
 							return true;
 						}
 
-						return sel.scrollTop == 0
+						if (sel.scrollTop == 0){
+							sel.scrollTop = 1
+
+							return true
+						}
 					},
 
 					restrict : true,
@@ -766,7 +770,7 @@
 
 		var scrolling = function(){
 			if (cntj){
-				if(!cntj.scrollTop){
+				if(cntj.scrollTop <= 1){
 					initSwipable()
 				}
 				else{
@@ -7098,6 +7102,11 @@
 					}
 
 					return false
+				}
+
+				if (e.cancelable !== false){
+					e.stopPropagation();
+					e.preventDefault();
 				}
 
 				if (phase == 'start'){

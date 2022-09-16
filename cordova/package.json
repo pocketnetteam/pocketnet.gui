@@ -49,6 +49,7 @@
     "cordova-plugin-androidx-adapter": "^1.1.3",
     "cordova-plugin-apkupdater": "^4.0.0",
     "cordova-plugin-background-download": "0.0.2",
+    "cordova-plugin-background-mode": "^0.7.3",
     "cordova-plugin-buildinfo": "^4.0.0",
     "cordova-plugin-camera-preview": "^0.12.3",
     "cordova-plugin-contacts-x": "file:cordova-plugin-contacts-x",
@@ -59,6 +60,7 @@
     "cordova-plugin-firebasex": "^14.1.0-cli",
     "cordova-plugin-insomnia": "file:cordova-plugin-insomnia",
     "cordova-plugin-ionic-keyboard": "file:cordova-plugin-ionic-keyboard",
+    "cordova-plugin-iosrtc": "^8.0.3",
     "cordova-plugin-media": "^5.0.4",
     "cordova-plugin-navigationbar-color": "^0.1.0",
     "cordova-plugin-pip": "file:cordova-plugin-pip",
@@ -116,7 +118,8 @@
         "FIREBASE_ANALYTICS_COLLECTION_ENABLED": "true",
         "FIREBASE_PERFORMANCE_COLLECTION_ENABLED": "true",
         "FIREBASE_CRASHLYTICS_COLLECTION_ENABLED": "true",
-        "FIREBASE_FCM_AUTOINIT_ENABLED": "true"
+        "FIREBASE_FCM_AUTOINIT_ENABLED": "true",
+        "IOS_USE_PRECOMPILED_FIRESTORE_POD": "false"
       },
       "cordova-plugin-camera": {
         "ANDROIDX_CORE_VERSION": "1.6.+",
@@ -140,11 +143,14 @@
       "cordova-plugin-photo-library": {
         "PHOTO_LIBRARY_USAGE_DESCRIPTION": "Allow the application access to the gallery and the camera to select photos for publication"
       },
-      "cordova-plugin-camera-preview": {}
+      "cordova-plugin-camera-preview": {},
+      "cordova-plugin-iosrtc": {
+        "MANUAL_INIT_AUDIO_DEVICE": "FALSE"
+      }
     },
     "platforms": [
-      "ios",
-      "android"
+      "android",
+      "ios"
     ]
   }
 }
