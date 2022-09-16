@@ -2190,13 +2190,19 @@ var CancelablePromise = __webpack_require__("0bb9");
             return;
           }
 
-          var fu = functions["a" /* default */].fetchLocal;
+          var fu = null;
 
           if (functions["a" /* default */].isios()) {
-            fu = this.getFileIosCordova;
+            fu = this.getFileIosCordova(path).then(blob => {
+              return Promise.resolve({
+                data: blob
+              });
+            });
+          } else {
+            functions["a" /* default */].fetchLocal(path);
           }
 
-          fu(path).then(r => {
+          fu.then(r => {
             console.log("R", r);
             /*var e = {
             	data : r.data
