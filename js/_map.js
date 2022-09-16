@@ -47,7 +47,8 @@ __map =  {
         "js/vendor/jquery.md5.js",
 		"js/vendor/jquery.animate-number.js", //
 		"js/vendor/jquery.touchSwipe.js", //
-        "js/vendor/joypixels.js", //
+        "js/vendor/joypixels.js",
+		"js/vendor/unmute.js", //
         {path : "js/vendor/plyr.js", babelify : true}, // later
         "js/vendor/reconnectingwebsocket.js", //
         "js/vendor/xss.min.js", //
