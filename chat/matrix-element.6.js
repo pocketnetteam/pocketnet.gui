@@ -2424,6 +2424,10 @@ var CancelablePromise = __webpack_require__("0bb9");
     clear() {
       this.record = null;
       this.recordRmsData = [];
+
+      if (this.audioContext) {
+        this.audioContext.close();
+      }
     },
 
     /*async convertAudioToBase64(blob) {

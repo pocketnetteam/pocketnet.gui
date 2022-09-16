@@ -1312,6 +1312,17 @@ var author = (function(){
 			
 		}
 
+		var redir404 = function(){
+			self.app.el.html.removeClass('allcontent')
+
+			self.app.nav.api.load({
+				open : true,
+				href : 'page404',
+				history : true,
+				replaceState : true
+			})
+		}
+
 		var preinit = function(address, clbk){
 
 			author = {};
@@ -1322,11 +1333,14 @@ var author = (function(){
 				
 				author.address = address
 
-				var deleted = self.app.platform.sdk.user.deletedaccount(author.address)
+				
 
-				if(!deleted || deleted == 'temp'){
+				self.sdk.users.get(author.address, function(){
 
-					self.sdk.users.get(author.address, function(){
+					var deleted = typeof self.app.platform.sdk.user.deletedaccount != 'undefined' ? self.app.platform.sdk.user.deletedaccount(author.address) : false
+
+
+					if(!deleted || self.app.user.isItMe(author.address)){
 
 						if(self.app.platform.sdk.user.reputationBlockedRedirect(address)){
 	
@@ -1365,26 +1379,21 @@ var author = (function(){
 						};
 	
 						clbk(data);
-	
-					})
-	
-	
-					return
 
-				}
+					}
 
-				
-				
+					else{
+						redir404()
+					}
+	
+				})
+	
+	
+				return
+
 			}
 
-			self.app.el.html.removeClass('allcontent')
-
-			self.app.nav.api.load({
-				open : true,
-				href : 'page404',
-				history : true,
-				replaceState : true
-			})
+			redir404()
 		}
 		
 

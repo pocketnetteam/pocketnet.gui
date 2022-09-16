@@ -4,7 +4,7 @@
 
 		<%
 			var me = null;
-			var deleted = self.app.platform.sdk.user.deletedaccount(author.address)
+			var deleted = typeof app.platform.sdk.user.deletedaccount != 'undefined' ? app.platform.sdk.user.deletedaccount(author.address) : false
 
 			if (user.address.value) 
 				me = deep(app, 'platform.sdk.users.storage.' + user.address.value.toString('hex'))
@@ -85,9 +85,15 @@
 										<span><%-e('deletedAccount_' + deleted)%></span>
 									</div>
 
+									<% if(user.isItMe(author.address)) { %>
+
 									<div class="deletedsettings">
-										<%- app.localization.e('settings').toUpperCase() %> <i class="fas fa-cog"></i>
+										<button class="button black">
+											<span><%- app.localization.e('menu') %></span>
+										</button>
 									</div>
+
+									<% } %>
 								</div>
 
 							<% } else { %> 
