@@ -859,6 +859,8 @@ var vuex_esm = __webpack_require__("2f62");
     },
 
     handleTouchStart(e) {
+      console.log("E", e, this.isHold, this.isRecording);
+
       if (!this.isRecording) {
         this.$emit('onRecordingStart');
       } else {
@@ -873,6 +875,7 @@ var vuex_esm = __webpack_require__("2f62");
     },
 
     handleTouchEnd(e) {
+      console.log("E", e, this.isHold);
       if (this.isHold) return;
 
       if (this.isRecording || this.prepareRecording) {
@@ -900,6 +903,7 @@ var vuex_esm = __webpack_require__("2f62");
     handleMove(e) {
       var _e$changedTouches;
 
+      console.log("E", e, this.isRecording);
       if (!this.isRecording) return;
       let deltaY = this.start.Y - e.pageY;
       let deltaX = this.start.X - e.pageX;
@@ -1072,6 +1076,7 @@ var recordProgressvue_type_template_id_3f87c0fa_scoped_true_staticRenderFns = []
     },
 
     draw() {
+      if (!this.$refs.canvas) return;
       const ctx = this.$refs.canvas.getContext(`2d`);
       let x = 0;
       let count = 50;
@@ -2158,6 +2163,8 @@ var CancelablePromise = __webpack_require__("0bb9");
             	data : r.data
             }*/
             this.createVoiceMessage(r, true);
+          }).catch(e => {
+            console.error(e);
           });
         }, () => {
           this.isRecording = false;
@@ -2185,7 +2192,9 @@ var CancelablePromise = __webpack_require__("0bb9");
         }, 50);
         this.isRecording = true;
         this.cordovaMediaRecorder.startRecord();
-      }).catch(() => {}).finally(() => {
+      }).catch(e => {
+        console.error(e);
+      }).finally(() => {
         this.prepareRecording = null;
       });
     },
