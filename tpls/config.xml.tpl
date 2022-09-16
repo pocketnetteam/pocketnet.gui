@@ -124,7 +124,7 @@
             <string>Allow the application access to the photo gallery to select photos for publication.</string>
         </config-file>
        
-
+        <preference name="UseSwiftLanguageVersion" value="4.2" />
         <preference name="NativeXHRLogging" value="full" />
         <preference name="AllowUntrustedCerts"  value="true" />
         <preference name="InterceptRemoteRequests" value="all" />
