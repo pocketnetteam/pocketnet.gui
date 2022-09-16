@@ -1173,7 +1173,7 @@ html.mobileview .upbutton {
   white-space: nowrap;
   padding: 0.375em 0.75em;
   border-radius: 2em;
-  border: 1px solid rgb(var(--neutral-grad-3));
+  border: 1px solid rgba(var(--neutral-grad-2), 0.5);
   color: rgb(var(--neutral-grad-3));
   display: flex;
   align-items: center;

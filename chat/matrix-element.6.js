@@ -2133,6 +2133,37 @@ var CancelablePromise = __webpack_require__("0bb9");
       console.error(err);
     },
 
+    getFileIosCordova(path) {
+      return new Promise((resolve, reject) => {
+        window.resolveLocalFileSystemURL(path, entry => {
+          console.log('entry', entry);
+
+          if (!entry) {
+            reject('noentry');
+          }
+
+          entry.file(file => {
+            var reader = new FileReader();
+            console.log('file', file);
+
+            reader.onloadend = () => {
+              var blob = new Blob([new Uint8Array(this.result)], {
+                type: file.type
+              });
+              console.log('blob', blob);
+              resolve(blob);
+            };
+
+            reader.onerror = e => {
+              reject(e);
+            };
+
+            reader.readAsArrayBuffer(file);
+          });
+        });
+      });
+    },
+
     initRecordingCordova() {
       if (this.prepareRecording || this.isRecording) return;
       this.prepareRecording = Object(CancelablePromise["cancelable"])(this.core.media.permissions({
@@ -2159,10 +2190,18 @@ var CancelablePromise = __webpack_require__("0bb9");
             return;
           }
 
-          functions["a" /* default */].fetchLocal(path).then(r => {
+          var fu = functions["a" /* default */].fetchLocal;
+
+          if (functions["a" /* default */].isios()) {
+            fu = this.getFileIosCordova;
+          }
+
+          fu(path).then(r => {
+            console.log("R", r);
             /*var e = {
             	data : r.data
             }*/
+
             this.createVoiceMessage(r, true);
           }).catch(e => {
             console.error(e);
