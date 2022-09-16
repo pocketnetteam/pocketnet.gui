@@ -66,13 +66,25 @@ var camerapreview = (function(){
                     resolve(libraryItem)
                 }
                 if (window.cordova && window.cordova.plugins.photoLibrary && window.cordova.plugins.photoLibrary.saveImage ){
-                    window.cordova.plugins.photoLibrary.saveImage(url, 'Bastyon', function (libraryItem) {
-                        resolve(libraryItem)
-                    }, (e) => {
-    
-                        dummy()
-                        
-                    });
+
+					permissions.get().then(() => {
+						window.cordova.plugins.photoLibrary.saveImage(url, 'Bastyon', function (libraryItem) {
+							resolve(libraryItem)
+						}, (e) => {
+	
+							console.error('e', e)
+		
+							dummy()
+							
+						});
+					}).catch(e => {
+						console.error(e)
+						dummy()
+					})
+					
+					
+				
+
                 }
                 else{
                     dummy()
@@ -233,7 +245,8 @@ var camerapreview = (function(){
 		
 							reject('decline')
 						}, {
-							read: true
+							read: true,
+							write : true
 						});
 					}
 	
