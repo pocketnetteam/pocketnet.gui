@@ -154,25 +154,6 @@
             <application android:usesCleartextTraffic="true" android:requestLegacyExternalStorage="true"/>
         </edit-config>
 
-        <!--<preference name="WINDOW_BACKGROUND_COLOR" />
-
-  		<edit-config file="AndroidManifest.xml" target="/manifest/application/activity[@android:name='MainActivity']" mode="merge">
-  			<activity android:name="MainActivity" android:theme="@style/CordovaWindowBackgroundTheme"/>
-  		</edit-config>
-
-  		<source-file src="cordova-window-background-strings.xml" target-dir="app/src/main/res/values" />
-  		<source-file src="cordova-window-background-styles.xml" target-dir="app/src/main/res/values" />
-
-  		<config-file target="app/src/main/res/values/cordova-window-background-strings.xml" parent="/*">
-  			<color name="cordova_window_background">#011621</color>
-  		</config-file>
-
-  		<config-file target="app/src/main/res/values/cordova-window-background-styles.xml" parent="/*">
-  			<style name="CordovaWindowBackgroundTheme" parent="@android:style/Theme.NoTitleBar">
-  				<item name="android:windowBackground">@color/cordova_window_background</item>
-  			</style>
-  		</config-file>-->
-
         <config-file target="AndroidManifest.xml" parent="/manifest">
             <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
             <uses-permission android:name="android.permission.RECORD_AUDIO" />

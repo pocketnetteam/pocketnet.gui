@@ -40825,10 +40825,19 @@ var media_Media = function () {
     ios: {
       audio: function () {
         return new Promise((resolve, reject) => {
-          var needMic = true;
-          var needCamera = false;
-          cordova.plugins.iosrtc.requestPermission(needMic, needCamera, function (permissionApproved) {
-            if (permissionApproved) resolve();else reject('permissions');
+          window.audioinput.checkMicrophonePermission(function (hasPermission) {
+            if (hasPermission) {
+              resolve();
+            } else {
+              // Ask the user for permission to access the microphone
+              window.audioinput.getMicrophonePermission(function (hasPermission, message) {
+                if (hasPermission) {
+                  resolve();
+                } else {
+                  reject('permissions');
+                }
+              });
+            }
           });
         });
       },
@@ -41803,7 +41812,7 @@ class application_Core {
 
     this.audioContext = new (window.AudioContext || window.webkitAudioContext)() || null;
 
-    if (window.unmute) {
+    if (functions["a" /* default */].isios() && window.unmute) {
       unmute(this.audioContext, false, false);
     }
 

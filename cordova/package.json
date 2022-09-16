@@ -48,6 +48,7 @@
     "cordova-plugin-android-permissions": "^1.1.3",
     "cordova-plugin-androidx-adapter": "^1.1.3",
     "cordova-plugin-apkupdater": "^4.0.0",
+    "cordova-plugin-audioinput": "^1.0.2",
     "cordova-plugin-background-download": "0.0.2",
     "cordova-plugin-background-mode": "^0.7.3",
     "cordova-plugin-buildinfo": "^4.0.0",
@@ -60,7 +61,6 @@
     "cordova-plugin-firebasex": "^14.1.0-cli",
     "cordova-plugin-insomnia": "file:cordova-plugin-insomnia",
     "cordova-plugin-ionic-keyboard": "file:cordova-plugin-ionic-keyboard",
-    "cordova-plugin-iosrtc": "^8.0.3",
     "cordova-plugin-media": "^5.0.4",
     "cordova-plugin-navigationbar-color": "^0.1.0",
     "cordova-plugin-pip": "file:cordova-plugin-pip",
@@ -86,8 +86,8 @@
       "cordova-plugin-statusbar": {},
       "cordova-plugin-x-socialsharing": {
         "ANDROID_SUPPORT_V4_VERSION": "24.1.1+",
-        "PHOTO_LIBRARY_ADD_USAGE_DESCRIPTION": "This app requires photo library access to function properly.",
-        "PHOTO_LIBRARY_USAGE_DESCRIPTION": "This app requires photo library access to function properly."
+        "PHOTO_LIBRARY_ADD_USAGE_DESCRIPTION": "Allow the application access to the photo gallery to select photos for publication.",
+        "PHOTO_LIBRARY_USAGE_DESCRIPTION": "Allow the application access to the photo gallery to select photos for publication."
       },
       "cordova-plugin-buildinfo": {},
       "cordova-plugin-inappbrowser": {},
@@ -123,10 +123,10 @@
       },
       "cordova-plugin-camera": {
         "ANDROIDX_CORE_VERSION": "1.6.+",
-        "PHOTO_LIBRARY_ADD_USAGE_DESCRIPTION": "This app requires photo library access to function properly.",
-        "PHOTO_LIBRARY_USAGE_DESCRIPTION": "This app requires photo library access to function properly.",
-        "CAMERA_USAGE_DESCRIPTION": "This Application can allow your camera to make avatar or post photo, if you want.",
-        "PHOTOLIBRARY_USAGE_DESCRIPTION": "This app requires photo library access to function properly."
+        "PHOTO_LIBRARY_ADD_USAGE_DESCRIPTION": "Allow the application access to the photo gallery to select photos for publication.",
+        "PHOTO_LIBRARY_USAGE_DESCRIPTION": "Allow the application access to the photo gallery to select photos for publication.",
+        "CAMERA_USAGE_DESCRIPTION": "Allow the application access to the camera to select photos for publication.",
+        "PHOTOLIBRARY_USAGE_DESCRIPTION": "Allow the application access to the photo gallery to select photos for publication."
       },
       "cordova-plugin-network-information": {},
       "cordova-plugin-vibration": {},
@@ -141,12 +141,10 @@
       },
       "cordova-plugin-splashscreen": {},
       "cordova-plugin-photo-library": {
-        "PHOTO_LIBRARY_USAGE_DESCRIPTION": "Allow the application access to the gallery and the camera to select photos for publication"
+        "PHOTO_LIBRARY_USAGE_DESCRIPTION": "Allow the application access to the photo gallery to select photos for publication."
       },
       "cordova-plugin-camera-preview": {},
-      "cordova-plugin-iosrtc": {
-        "MANUAL_INIT_AUDIO_DEVICE": "FALSE"
-      }
+      "cordova-plugin-audioinput": {}
     },
     "platforms": [
       "android",
