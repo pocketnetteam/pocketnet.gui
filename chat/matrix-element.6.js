@@ -2146,7 +2146,7 @@ var CancelablePromise = __webpack_require__("0bb9");
             var reader = new FileReader();
             console.log('file', file);
 
-            reader.onloadend = () => {
+            reader.onloadend = function () {
               var blob = new Blob([new Uint8Array(this.result)], {
                 type: file.type
               });
