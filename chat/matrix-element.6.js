@@ -2148,7 +2148,7 @@ var CancelablePromise = __webpack_require__("0bb9");
       this.prepareRecording.then(() => {
         this.microphoneDisabled = false;
         var path = 'cdvfile://localhost/temporary/recording.mp3';
-        if (functions["a" /* default */].isios()) path = 'recording.mp3';
+        if (functions["a" /* default */].isios()) path = 'documents://recording.mp3';
         var sec = 0;
         this.audioContext = this.core.getAudioContext();
         this.cordovaMediaRecorder = new Media(path, () => {
