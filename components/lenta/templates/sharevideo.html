@@ -116,7 +116,7 @@ var metadisplay = function(){ %>
 								
 			
 
-								<% if((!state || !my) && (typeof repost == 'undefined' || !repost) && !self.app.platform.sdk.user.myaccauntdeleted()) { %> 
+								<% if((!state || !my) && (typeof repost == 'undefined' || !repost) && (typeof app.platform.sdk.user.myaccauntdeleted == 'undefined' || !app.platform.sdk.user.myaccauntdeleted())) { %> 
 
 									<span class="sbtnxs">
 										&middot; <span class="subscribeLabel asubscribe"><%=e('sub')%></span><span class="subscribedLabel aunsubscribe"><%=e('subi')%></span>

@@ -14,7 +14,7 @@
 
 		</div>
 		
-		<% if(!app.platform.sdk.user.myaccauntdeleted()) {%>
+		<% if((typeof app.platform.sdk.user.myaccauntdeleted == 'undefined' || !app.platform.sdk.user.myaccauntdeleted())) {%>
 			<div class="cache">
 				
 			</div>

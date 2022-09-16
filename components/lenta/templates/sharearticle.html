@@ -148,7 +148,7 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
                 <b><span class="adr gotouserprofile" address="<%-share.address%>" name="<%-name %>"><%-(name || share.address) %></span></b><%if(typeof preview == 'undefined' || !preview){%><% if(reputation && !app.curation()) {%><sup class="spsp"><%-compressedNumber(reputation, 1)%></sup><% } %><% } %>
 
 
-            <% if((!state || !my) && (typeof repost == 'undefined' || !repost) && !app.platform.sdk.user.myaccauntdeleted()) { %> 
+            <% if((!state || !my) && (typeof repost == 'undefined' || !repost) && (typeof app.platform.sdk.user.myaccauntdeleted == 'undefined' || !app.platform.sdk.user.myaccauntdeleted())) { %> 
 
                 <span elementsid="sbtnxs-follow" class="sbtnxs">
                     &middot; <span class="subscribeLabel asubscribe"><%=e('sub')%></span><span class="subscribedLabel aunsubscribe"><i class="far fa-check-circle"></i>  <%=e('subi')%></span>

@@ -4,7 +4,7 @@ dplace = e('e13038');
 
 if (isMobile()) dplace = e('e13039')
 
-var deleted = app.platform.sdk.user.myaccauntdeleted();
+var deleted = typeof app.platform.sdk.user.myaccauntdeleted != 'undefined' && app.platform.sdk.user.myaccauntdeleted();
 
 	
 

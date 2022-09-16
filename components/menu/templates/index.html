@@ -1,6 +1,6 @@
 <%
 
-var deleted = app.platform.sdk.user.myaccauntdeleted();
+var deleted = typeof app.platform.sdk.user.myaccauntdeleted == 'undefined' && app.platform.sdk.user.myaccauntdeleted();
 
 
 %>

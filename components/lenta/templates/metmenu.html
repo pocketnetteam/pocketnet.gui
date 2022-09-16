@@ -129,7 +129,7 @@ if(share){
 
 	
 
-	if(share.address && user.address.value && !app.platform.sdk.user.myaccauntdeleted()){
+	if(share.address && user.address.value && (typeof app.platform.sdk.user.myaccauntdeleted == 'undefined' || !app.platform.sdk.user.myaccauntdeleted())){
 		
 		var my = (user.address.value && share.address == user.address.value.toString('hex'))
 		var subscribed = '';

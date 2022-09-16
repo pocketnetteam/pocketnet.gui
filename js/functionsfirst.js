@@ -639,7 +639,7 @@ importScript = function(src, callback, appendTo, app, module, _require) {
     }
 
     if (src.indexOf('v=') == -1)
-        src += "?v=119"
+        src += "?v=120"
 
     script.src = src;
     

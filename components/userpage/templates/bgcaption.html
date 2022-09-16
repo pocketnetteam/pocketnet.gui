@@ -2,7 +2,7 @@
 	var name = app.platform.api.clearname(deep(app, 'platform.sdk.user.storage.me.name') || user.address.value.toString('hex') ) 
 	var letter = name ? name[0] : ''
 
-	var deleted = app.platform.sdk.user.myaccauntdeleted()
+	var deleted = typeof app.platform.sdk.user.myaccauntdeleted != 'undefined' && app.platform.sdk.user.myaccauntdeleted()
 
 	if(deleted) letter = ''
 %>
@@ -59,13 +59,13 @@
 									<div class="infomain">
 										<div class="captionWrapperFloat">
 
-											<% if(!app.platform.sdk.user.myaccauntdeleted()) {%>
+											<% if((typeof app.platform.sdk.user.myaccauntdeleted == 'undefined' || !app.platform.sdk.user.myaccauntdeleted())) {%>
 											<div class="caption">
 												<b class="adr"><%-name%></b>
 											</div>
 											<% } %>
 											
-											<% if(deep(app, 'platform.sdk.user.storage.me.name') && !app.platform.sdk.user.myaccauntdeleted()) {%>
+											<% if(deep(app, 'platform.sdk.user.storage.me.name') && (typeof app.platform.sdk.user.myaccauntdeleted == 'undefined' || !app.platform.sdk.user.myaccauntdeleted())) {%>
 												<div class="addressseparateWrapper">
 													<div class="addressseparate">
 														<b><%=e('pnetAddress')%>:</b>
