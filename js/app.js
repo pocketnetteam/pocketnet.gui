@@ -2016,7 +2016,15 @@ Application = function(p)
           });
         }
 
+        self.mobile.keyboard.style()
 
+      },
+
+      style : function(){
+        if(window.cordova && typeof Keyboard != 'undefined'){
+          Keyboard.setKeyboardStyle(self.platform.sdk.theme.current == 'white' ? 'light' : 'dark')
+        }
+        
       }
     },
 

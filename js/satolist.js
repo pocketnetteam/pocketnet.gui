@@ -8857,6 +8857,8 @@ Platform = function (app, listofnodes) {
 
                     self.matrixchat.changeTheme()
 
+                    self.app.mobile.keyboard.style()
+
                     t.save()
 
                     var cm = deep(app, 'modules.menu.module.restart')

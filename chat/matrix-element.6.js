@@ -2324,12 +2324,16 @@ var CancelablePromise = __webpack_require__("0bb9");
     },
 
     createVoiceMessage(event, sendnow) {
-      this.record = {
-        file: event.data,
-        id: functions["a" /* default */].makeid()
-      };
+      console.log('event', event);
       functions["a" /* default */].readFile(event.data).then(arraybuffer => {
+        console.log('arraybuffer', arraybuffer);
         return this.audioContext.decodeAudioData(arraybuffer, buffer => {
+          console.log('this.record', this.record);
+          console.log('this.buffer', buffer);
+          this.record = {
+            file: event.data,
+            id: functions["a" /* default */].makeid()
+          };
           this.record.duration = buffer.duration;
           this.checkaudioForSend(sendnow);
         });
