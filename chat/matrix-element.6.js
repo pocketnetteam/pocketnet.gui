@@ -2182,10 +2182,11 @@ var CancelablePromise = __webpack_require__("0bb9");
         var sec = 0;
         this.audioContext = this.core.getAudioContext();
         var startedTime = new Date().getTime() / 1000;
-        this.cordovaMediaRecorder = new Media(path, () => {
+        var media = this.cordovaMediaRecorder = new Media(path, () => {
           this.recordTime = 0;
 
           if (this.cancelledCordovaMediaRecorder) {
+            media.release();
             this.cancelledCordovaMediaRecorder = false;
             return;
           }
@@ -2203,16 +2204,20 @@ var CancelablePromise = __webpack_require__("0bb9");
           }
 
           fu.then(r => {
-            r.duration = new Date().getTime() / 1000 - startedTime;
+            ///temp
+            if (functions["a" /* default */].isios()) r.duration = new Date().getTime() / 1000 - startedTime;
             console.log("R", r);
             /*var e = {
             	data : r.data
             }*/
 
             this.createVoiceMessage(r, true);
+            return Promise.resolve();
           }).catch(e => {
             this.clear();
             console.error(e);
+          }).finally(() => {
+            media.release();
           });
         }, e => {
           console.error(e);
@@ -2437,7 +2442,6 @@ var CancelablePromise = __webpack_require__("0bb9");
         }
 
         this.cordovaMediaRecorder.stopRecord();
-        this.cordovaMediaRecorder.release();
         this.cordovaMediaRecorder = null;
       }
     },
@@ -2490,7 +2494,6 @@ var CancelablePromise = __webpack_require__("0bb9");
       }
 
       if (this.cordovaMediaRecorder) {
-        this.cordovaMediaRecorder.release();
         this.cordovaMediaRecorder = null;
       }
 

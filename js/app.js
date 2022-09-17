@@ -2008,19 +2008,16 @@ Application = function(p)
             self.mobile.keyboard.height = self.mobile.keyboard.lastheight = event.keyboardHeight
 
             document.documentElement.style.setProperty('--keyboardheight', `${event.keyboardHeight}px`);
-
             if(isios()){
-              window.Keyboard.disableScroll(true)
+              self.actions.offScroll()
             }
 
           });
 
           window.addEventListener('keyboardDidShow', (event) => {
-
             if(isios()){
-              window.Keyboard.disableScroll(false)
+              self.actions.onScroll()
             }
-
           });
 
           window.addEventListener('keyboardWillHide', () => {
