@@ -2001,13 +2001,25 @@ Application = function(p)
       lastheight : 0,
       init : function(){
 
-        if(window.cordova && !isios()){
+        if(window.cordova){
 
           window.addEventListener('keyboardWillShow', (event) => {
 
             self.mobile.keyboard.height = self.mobile.keyboard.lastheight = event.keyboardHeight
 
             document.documentElement.style.setProperty('--keyboardheight', `${event.keyboardHeight}px`);
+
+            if(isios()){
+              window.Keyboard.disableScroll(true)
+            }
+
+          });
+
+          window.addEventListener('keyboardDidShow', (event) => {
+
+            if(isios()){
+              window.Keyboard.disableScroll(false)
+            }
 
           });
 
