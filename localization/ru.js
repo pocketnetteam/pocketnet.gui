@@ -2100,3 +2100,4 @@ _l.applydonate = "Применить"
 _l.imagegallery = "Галерея изображений"
 _l.useselected = "Использовать выбранные"
 _l.pkoindisabledisclaimer = 'В приложении вы можете только получить деньги на криптокошелёк, но отослать вы их не сможете'
+_l.txbase_total = _l.txbase_unspents = _l.txbase_err_money = 'Не хватает средств для перевода с учётом комиссии'

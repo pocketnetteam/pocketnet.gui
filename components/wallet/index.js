@@ -855,7 +855,7 @@ var wallet = (function(){
 					self.app.platform.sdk.wallet.txbase(addresses, _.clone(outputs), 0, feesMode, function(err, inputs, _outputs){
 
 						if(err){
-							sitemessage(err)
+							sitemessage(self.app.localization.e('txbase_err_' + err))
 
 							return
 						}

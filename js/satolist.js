@@ -909,6 +909,8 @@ Platform = function (app, listofnodes) {
 
             action: function (key, action, akey) {
 
+                console.log("HERE")
+
                 var adr = self.app.platform.sdk.address.pnet().address;
 
                 topPreloader(10);
