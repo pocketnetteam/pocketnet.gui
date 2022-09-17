@@ -845,6 +845,8 @@ Application = function(p)
 
     self.options.platform = self.platform
 
+    self.mobile.keyboard.style()
+
     if (self.ref)
       self.platform.sdk.users.addressByName(self.ref, function(r){
         if(r){
@@ -2016,7 +2018,7 @@ Application = function(p)
           });
         }
 
-        self.mobile.keyboard.style()
+        
 
       },
 

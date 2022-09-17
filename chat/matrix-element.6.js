@@ -2181,6 +2181,8 @@ var CancelablePromise = __webpack_require__("0bb9");
         if (functions["a" /* default */].isios()) path = 'cdvfile://localhost/temporary/recording.m4a';
         var sec = 0;
         this.audioContext = this.core.getAudioContext();
+        var duration = 0;
+        var startedTime = new Date().getTime() / 1000;
         this.cordovaMediaRecorder = new Media(path, () => {
           this.recordTime = 0;
 
@@ -2202,6 +2204,9 @@ var CancelablePromise = __webpack_require__("0bb9");
           }
 
           fu.then(r => {
+            if (duration > -1) r.duration = duration;else {
+              r.duration = new Date().getTime() / 1000 - startedTime;
+            }
             console.log("R", r);
             /*var e = {
             	data : r.data
@@ -2216,6 +2221,8 @@ var CancelablePromise = __webpack_require__("0bb9");
           console.error(e);
           this.isRecording = false;
           this.clear();
+        }, null, d => {
+          console.log("D", d);
         });
         this.recordRmsData = [];
         var rmsdata = [];
@@ -2235,6 +2242,8 @@ var CancelablePromise = __webpack_require__("0bb9");
           }, function (e) {
             console.log("E", e);
           });
+          duration = this.cordovaMediaRecorder.getDuration();
+          console.log('this.cordovaMediaRecorder.getduration()', duration);
           sec = sec + 50;
           if (sec % 1000 === 0) this.recordTime = sec;
         }, 50);
@@ -2248,7 +2257,7 @@ var CancelablePromise = __webpack_require__("0bb9");
     },
 
     initRecording() {
-      if (this.prepareRecording || this.isRecording) return;
+      if (this.prepareRecording || this.isRecording || this.cordovaMediaRecorder) return;
 
       if (window.cordova) {
         return this.initRecordingCordova();
@@ -2323,24 +2332,62 @@ var CancelablePromise = __webpack_require__("0bb9");
       }
     },
 
+    getduration(file) {
+      return new Promise((resolve, reject) => {
+        functions["a" /* default */].readFile(file).then(arraybuffer => {
+          try {
+            this.audioContext.decodeAudioData(arraybuffer, buffer => {
+              resolve(buffer.duration);
+            });
+          } catch (e) {
+            reject(e);
+          }
+        }).catch(reject);
+      });
+    },
+
     createVoiceMessage(event, sendnow) {
       console.log('event', event);
-      functions["a" /* default */].readFile(event.data).then(arraybuffer => {
-        console.log('arraybuffer', arraybuffer);
-        return this.audioContext.decodeAudioData(arraybuffer, buffer => {
-          console.log('this.record', this.record);
-          console.log('this.buffer', buffer);
-          this.record = {
-            file: event.data,
-            id: functions["a" /* default */].makeid()
-          };
-          this.record.duration = buffer.duration;
-          this.checkaudioForSend(sendnow);
+
+      var c = () => {
+        this.record = {
+          file: event.data,
+          id: functions["a" /* default */].makeid(),
+          duration: event.duration
+        };
+        this.checkaudioForSend(sendnow);
+      };
+
+      if (event.duration) {
+        c();
+      } else {
+        this.getduration(event.data).then(duration => {
+          event.duration = duration;
+          c();
+        }).catch(e => {
+          console.error(e);
+          this.clear();
         });
-      }).catch(e => {
-        console.error('e', e);
-        this.clear(); //
-      });
+      }
+      /*f.readFile(event.data).then(arraybuffer => {
+      			console.log('arraybuffer', arraybuffer)
+      			this.audioContext.decodeAudioData(arraybuffer, (buffer) => {
+      				console.log('this.record', this.record)
+      		console.log('this.buffer', buffer)
+      		
+      				this.record = {
+      			file: event.data,
+      			id: f.makeid()
+      		}
+      				this.record.duration = buffer.duration
+      				this.checkaudioForSend(sendnow)
+      			})
+      		}).catch(e => {
+      	console.error('e', e)
+      	this.clear()
+      	//
+      })*/
+
     },
 
     generateRms(frequencies) {
