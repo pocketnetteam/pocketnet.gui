@@ -2181,7 +2181,6 @@ var CancelablePromise = __webpack_require__("0bb9");
         if (functions["a" /* default */].isios()) path = 'cdvfile://localhost/temporary/recording.m4a';
         var sec = 0;
         this.audioContext = this.core.getAudioContext();
-        var duration = 0;
         var startedTime = new Date().getTime() / 1000;
         this.cordovaMediaRecorder = new Media(path, () => {
           this.recordTime = 0;
@@ -2204,9 +2203,7 @@ var CancelablePromise = __webpack_require__("0bb9");
           }
 
           fu.then(r => {
-            if (duration > -1) r.duration = duration;else {
-              r.duration = new Date().getTime() / 1000 - startedTime;
-            }
+            r.duration = new Date().getTime() / 1000 - startedTime;
             console.log("R", r);
             /*var e = {
             	data : r.data
@@ -2221,8 +2218,6 @@ var CancelablePromise = __webpack_require__("0bb9");
           console.error(e);
           this.isRecording = false;
           this.clear();
-        }, null, d => {
-          console.log("D", d);
         });
         this.recordRmsData = [];
         var rmsdata = [];
@@ -2234,16 +2229,21 @@ var CancelablePromise = __webpack_require__("0bb9");
 
         this.interval = setInterval(() => {
           // get media amplitude
-          this.cordovaMediaRecorder.getCurrentAmplitude( // success callback
-          amp => {
-            rmsdata.push(amp * 1000);
+          if (functions["a" /* default */].isios()) {
+            rmsdata.push(1);
             if (rmsdata.length > 50) rmsdata = _.last(rmsdata, 50);
             this.recordRmsData = _.clone(rmsdata);
-          }, function (e) {
-            console.log("E", e);
-          });
-          duration = this.cordovaMediaRecorder.getDuration();
-          console.log('this.cordovaMediaRecorder.getduration()', duration);
+          } else {
+            this.cordovaMediaRecorder.getCurrentAmplitude( // success callback
+            amp => {
+              rmsdata.push(amp * 1000);
+              if (rmsdata.length > 50) rmsdata = _.last(rmsdata, 50);
+              this.recordRmsData = _.clone(rmsdata);
+            }, function (e) {
+              console.log("E", e);
+            });
+          }
+
           sec = sec + 50;
           if (sec % 1000 === 0) this.recordTime = sec;
         }, 50);
