@@ -100,7 +100,13 @@ var all = {
 		icon : '<i class="fas fa-cubes"></i>',
 		text : 'HTLC BUY TEST',
 		class : 'htls'
-	}
+	},
+
+	recommendationinfo : {
+		icon : '<i class="fas fa-info-circle"></i>',
+		text : e('recommendations_menu_caption'),
+		class : 'recommendationinfo'
+	},
 
 }
 
@@ -162,8 +168,14 @@ if(share){
 			if(true){
 				m.push('complain')
 			}
+
 			if(app.platform.matrixchat.core){
 				m.push('startchat')
+			}
+
+
+			if(share._recommendationInfo && share.recommendationKey){
+				m.push('recommendationinfo')
 			}
 
 			/*m.push('donation')*/

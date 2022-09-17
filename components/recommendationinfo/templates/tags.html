@@ -1,0 +1,84 @@
+<div class="existingtags">
+    <% if(info.tags) {%>
+        <div class="tags">
+            <% _.each(info.tags, function(tag){ %>
+
+                <div class="tag">
+                    <span>#<%-tag%></span>
+                </div>
+
+            <% }) %>
+            
+        </div>
+    <% } %>
+</div>
+
+<div class="probtags">
+
+    <div class="subcaptiontable">
+        <span>
+            <%- e('recommendations_tags_table_caption') %>
+        </span>
+    </div>
+
+    <% _.each(info.probtags, (t, i) => { 
+        
+        var mtag = info.memtags[t.tag]
+
+        var date = new Date(mtag.date * 1000)
+
+        var using = info.usedtagsmap[t.tag]
+
+        var recused = info.recmap[t.tag]
+
+        %> 
+
+        <div class="taginfo <%- using ? 'using' : ''%> <%- recused ? 'recused' : '' %> <%- i > 20 && !recused ? 'hiddendefault' : '' %>">
+            <div class="tag"><span>#<%-t.tag%></span></div>
+            <div class="probability"><span><%-(100 * t.probability / info.totalprobability).toFixed(1)%> %</span></div>
+            <div class="points"><span class="nu">(<%-mtag.c%>)</span></div>
+            <div class="lastdate"><span class="realtime" time="<%-date%>"><%- app.reltime(date) %></span></div>
+        </div>
+
+        <% if(i == 20) { %>
+
+            <div class="showmorewrapper">
+                <span><%-e('e13021')%></span>
+            </div>
+
+        <% } %>
+        
+    <% }) %>
+</div>
+
+<div class="completed">
+
+    <div class="subcaptiontable">
+        <span>
+            <%- e('recommendations_tags_completed_caption') %>
+        </span>
+    </div>
+
+    <% _.each(info.completed, (task) => { 
+        
+        var date = new Date(task.created * 1000)
+        
+        %>
+
+        <div class="task">
+
+            <div class="tags">
+                <% _.each(task.tags, function(tag){ %>
+
+                    <div class="tag">
+                        <span>#<%-tag%></span>
+                    </div>
+                <% }) %>
+            </div>
+            <div class="lastdate">
+                <span class="realtime" time="<%-date%>"><%- app.reltime(date) %></span>
+            </div>
+        </div>
+
+    <% }) %>
+</div>

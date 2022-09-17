@@ -2101,3 +2101,12 @@ _l.imagegallery = "Галерея изображений"
 _l.useselected = "Использовать выбранные"
 _l.pkoindisabledisclaimer = 'В приложении вы можете только получить деньги на криптокошелёк, но отослать вы их не сможете'
 _l.txbase_total = _l.txbase_unspents = _l.txbase_err_money = 'Не хватает средств для перевода с учётом комиссии'
+
+_l.recommendations_menu_caption = 'Информация о рекомендации'
+
+_l.recommendations_caption_tags = 'Рекомендация на основе тегов'
+_l.recommendations_caption_users = 'Рекомендации на основе информации о взаимодействиями с другими пользователями'
+_l.recommendations_caption_disclamer = "Статистика хранится только на вашем устройстве, не отправляется на сервера Bastyon, не передаётся третьим лицам"
+
+_l.recommendations_tags_table_caption = 'Тэг, вероятность, очки, дата последнего взаимодействия'
+_l.recommendations_tags_completed_caption = 'Запрошенные рекомендации'

@@ -1333,7 +1333,11 @@ var author = (function(){
 				
 				author.address = address
 
-				
+				console.log("GETSTATE")
+
+				/*self.sdk.ustate.get(author.address, function(){
+					
+				})*/
 
 				self.sdk.users.get(author.address, function(){
 

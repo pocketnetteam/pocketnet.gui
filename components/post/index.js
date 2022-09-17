@@ -487,6 +487,11 @@ var post = (function () {
 							duration
 						}){
 
+							//// interest score later
+
+							if (duration > 0 && playbackState == 'playing') 
+								self.app.platform.sdk.memtags.add(share.tags, null, 0.500 / duration)
+
 							if(playbackState == 'playing' && ((position > 15 && duration > 120) || startTime)){
 
 								self.app.platform.sdk.videos.historyset(share.txid, {
@@ -495,14 +500,13 @@ var post = (function () {
 								})
 
 								self.app.platform.sdk.activity.adduser('video', share.address, 6 * position / duration)
-								self.app.platform.sdk.memtags.add(share.tags, 'v_' + share.txid, 0.5)
-
+								
 								return
 							}
 
 							if(playbackState == 'playing' && duration < 120 && position / duration > 0.2){
 								self.app.platform.sdk.activity.adduser('video', share.address, 6 * position / duration)
-								self.app.platform.sdk.memtags.add(share.tags, 'v_' + share.txid, 0.5)
+								
 							}
 						},
 
@@ -680,7 +684,7 @@ var post = (function () {
 								if (clbk)
 									clbk(true)
 
-								self.app.platform.sdk.memtags.add(share.tags, 'l_' + share.txid, 1)
+								self.app.platform.sdk.memtags.add(share.tags, 'l_' + share.txid, (value - 3) / 2)
 								self.app.platform.sdk.recommendations.successRecommendation(share)
 
 							}

@@ -4702,7 +4702,21 @@ Platform = function (app, listofnodes) {
 
                     }, function (el, f, close) {
 
+                        el.find('.recommendationinfo').on('click', function(){
+                            self.app.nav.api.load({
+                                open : true,
+                                href : 'recommendationinfo',
+                                inWnd : true,
+                                history : true,
+            
+                                essenseData : {
+                                    info : share._recommendationInfo,
+                                    type : share.recommendationKey
+                                }
+                            })
 
+                            close()
+                        })
 
                         el.find('.opennewwindow').on('click', function(){
 
@@ -13189,6 +13203,12 @@ Platform = function (app, listofnodes) {
 
             enabled : true,
 
+            getcompleted : function(type){
+                return _.filter(self.sdk.recommendations.storage.status, (s) => {
+                    return s.type == type && s.status == 'completed'
+                })
+            },
+
             plans : function(data, type){
 
                 var time = self.currentTime()
@@ -13256,9 +13276,9 @@ Platform = function (app, listofnodes) {
                     result.push(share)
                 })  
 
-                self.sdk.recommendations.shares = _.filter(self.sdk.recommendations.shares, (a, i) => {
+                self.sdk.recommendations.shares = _.last(_.filter(self.sdk.recommendations.shares, (a, i) => {
                     return !remove[i]
-                })
+                }), 300)
 
                 if (result.length){
                     self.sdk.recommendations.save()
@@ -13368,6 +13388,11 @@ Platform = function (app, listofnodes) {
                         count: 15,
                         lang : self.app.localization.key
                     }
+
+                    var info = {
+                        address : task.address,
+                        lang : self.app.localization.key
+                    }
     
                     task.status = 'processing'
     
@@ -13386,6 +13411,8 @@ Platform = function (app, listofnodes) {
                                 return s.txid == share.txid
                             })){
                                 share.recommendationKey = 'users'
+                                share._recommendationInfo = info
+
                                 self.sdk.recommendations.shares.push(share)
     
                             }
@@ -13406,6 +13433,11 @@ Platform = function (app, listofnodes) {
                         tagsfilter : task.tags
                     }
 
+                    var info = {
+                        lang : self.app.localization.key,
+                        tags : task.tags
+                    }
+
     
                     task.status = 'processing'
     
@@ -13422,6 +13454,7 @@ Platform = function (app, listofnodes) {
                                 return s.txid == share.txid
                             })){
                                 share.recommendationKey = 'tags'
+                                share._recommendationInfo = info
                                 self.sdk.recommendations.shares.push(share)
     
                             }
@@ -15671,6 +15704,7 @@ Platform = function (app, listofnodes) {
             storage : {},
             added : {},
 
+            
             getprobtags : function(count){
 
                 var tags = this.gettags()
@@ -15703,10 +15737,16 @@ Platform = function (app, listofnodes) {
                 if (totals.max){
 
                     var tgc = _.reduce(this.storage.tags, (m, tg) => {
+
+                        if(tg.c < 0) return m
+
                         return m + tg.c
                     }, 0)
 
                     _.each(this.storage.tags, (tg, i) => {
+
+                        if(tg.c < 0) return
+                        
                         var tag = self.sdk.tags.gettag(i)
                         var t = totals[tag.loc] || totals.max
 
@@ -15724,9 +15764,11 @@ Platform = function (app, listofnodes) {
             },
 
             add : function(tags, id, value){
-                if(this.added[id]) return
+                if(id && this.added[id]) return
 
                 if(!self.sdk.memtags.storage.tags) self.sdk.memtags.storage.tags = {}
+
+                console.log(tags, value)
 
                 //var total = 0
 
@@ -15738,18 +15780,28 @@ Platform = function (app, listofnodes) {
                     
                 })
 
-                this.added[id] = true
+                if (id)
+                    this.added[id] = true
 
+                self.sdk.memtags.saveandrun()
+            },
+
+            saveandrunfast : function(){
+                console.log('saveandrunfast')
                 self.sdk.memtags.save()
 
                 self.sdk.recommendations.scheduler()
             },
 
-            save: function () {
+            
+
+            save : function(){
+                console.log("SAVE")
                 localStorage['memtags'] = JSON.stringify({
                     tags : self.sdk.memtags.storage.tags,
                 })
             },
+
 
             load: function (clbk) {
                 var p = {};
@@ -23678,6 +23730,8 @@ Platform = function (app, listofnodes) {
         },
     }
 
+    self.sdk.memtags.saveandrun = _.debounce(self.sdk.memtags.saveandrunfast, 3000)
+
 
     var FakeFirebasePlugin = function(){
         var self = this;
@@ -28375,6 +28429,7 @@ Platform = function (app, listofnodes) {
 
             setTimeout(function(){
                 self.sdk.tags.getfastsearch()
+                self.sdk.tags.cloud()
                 self.sdk.node.get.time()
             }, 1000)
 

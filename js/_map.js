@@ -652,6 +652,12 @@ __map =  {
 			add : insertingfunc
 		},
 
+		recommendationinfo: {
+			uri : "recommendationinfo",
+			href : "recommendationinfo",
+			add : insertingfunc
+		},
+
 		userpage : {
 			uri : "userpage",
 			href : "userpage",

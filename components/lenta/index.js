@@ -91,6 +91,23 @@ var lenta = (function(){
 
 
 		var actions = {
+			recommendationinfo : function(share){
+				if(!share || !share._recommendationInfo || !share.recommendationKey) return
+
+
+				self.nav.api.load({
+					open : true,
+					href : 'recommendationinfo',
+					inWnd : true,
+					history : true,
+
+					essenseData : {
+						info : share._recommendationInfo,
+						type : share.recommendationKey
+					}
+				})
+
+			},
 			destroyShare : function(share){
 
 				if (fullscreenvideoShowed == share.txid){
@@ -990,6 +1007,11 @@ var lenta = (function(){
 							playbackState,
 							duration
 						}){
+
+							if (duration > 0 && playbackState == 'playing') 
+								self.app.platform.sdk.memtags.add(share.tags, null, 0.500 / duration)
+
+
 							if(playbackState == 'playing' && ((position > 15 && duration > 120) || startTime)){
 								
 								self.app.platform.sdk.videos.historyset(share.txid, {
@@ -998,13 +1020,11 @@ var lenta = (function(){
 								})
 
 								self.app.platform.sdk.activity.adduser('video', share.address, 6 * position / duration)
-								self.app.platform.sdk.memtags.add(share.tags, 'v_' + share.txid, 0.5)
 								return
 							}
 
 							if(playbackState == 'playing' && duration < 120 && position / duration > 0.2){
 								self.app.platform.sdk.activity.adduser('video', share.address, 6 * position / duration)
-								self.app.platform.sdk.memtags.add(share.tags, 'v_' + share.txid, 0.5)
 							}
 							
 
@@ -1779,7 +1799,7 @@ var lenta = (function(){
 								if (clbk)
 									clbk(true)
 
-								self.app.platform.sdk.memtags.add(obj.tags, 'l_' + obj.txid, 1)
+								self.app.platform.sdk.memtags.add(obj.tags, 'l_' + obj.txid, (value - 3) / 2)
 
 								self.app.platform.sdk.recommendations.successRecommendation(obj)
 							}
@@ -2164,6 +2184,18 @@ var lenta = (function(){
 		}
 
 		var events = {
+
+			recommendationinfo : function(){
+				console.log("??????")
+				var shareId = $(this).closest('.share').attr('id');
+
+				var share = self.app.platform.sdk.node.shares.storage.trx[shareId];
+
+				console.log('share', share, shareId)
+
+				actions.recommendationinfo(share)
+
+			},
 
 			gotouserprofile : function(){
 				var name = $(this).attr('name')
@@ -3098,7 +3130,6 @@ var lenta = (function(){
 					transaction.txid === share.txid
 				));*/
 
-					console.log('sharesFromRecommendations[share.txid]', sharesFromRecommendations[share.txid], share.txid)
 				self.shell({
 					name : video ? 'sharevideolight' : share.itisarticle() ? 'sharearticle' : 'share',
 
@@ -3114,7 +3145,7 @@ var lenta = (function(){
 						sharesFromSub,
 						boosted : p.boosted,
 						shareRelayedFlag : false,
-						fromrecommendations : sharesFromRecommendations[share.txid] ? true : false
+						fromrecommendations : sharesFromRecommendations[share.txid] && share._recommendationInfo ? true : false
 					}					
 
 				}, function(p){
@@ -4695,6 +4726,8 @@ var lenta = (function(){
 			el.c.find('.loadmore button').on('click', events.loadmore)
 			el.c.find('.loadprev button').on('click', events.loadprev)
 			el.c.on('click', '.gotouserprofile', events.gotouserprofile)
+
+			el.c.on('click', '.fromrecommendationslabel', events.recommendationinfo)
 
 			el.c.on('click','.openauthorwindow', events.openauthorwindow)
 

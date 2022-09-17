@@ -2309,3 +2309,14 @@ _l.pkoindisabledisclaimer = 'In the application, you can only receive money for 
 
 _l.txbase_total = _l.txbase_unspents = _l.txbase_err_money = 'Insufficient funds for the transfer, taking into account the commission'
 
+
+_l.recommendations_menu_caption = 'Recommendation Information'
+
+_l.recommendations_caption_tags = 'Tag based recommendation'
+_l.recommendations_caption_users = 'Recommendations based on information about interactions with other users'
+
+
+_l.recommendations_caption_disclamer = "Statistics are stored only on your device, are not sent to the Bastyon servers, are not transferred to third parties"
+
+_l.recommendations_tags_table_caption = 'Tag, probability, points, last interaction date'
+_l.recommendations_tags_completed_caption = 'Requested recommendations'

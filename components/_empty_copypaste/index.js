@@ -8,7 +8,7 @@ var _module_ = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el;
+		var el, ed;
 
 		var actions = {
 
@@ -39,15 +39,20 @@ var _module_ = (function(){
 		return {
 			primary : primary,
 
-			getdata : function(clbk){
+			getdata : function(clbk, p){
 
-				var data = {};
+				ed = p.settings.essenseData
+
+				var data = {
+					ed
+				};
 
 				clbk(data);
 
 			},
 
 			destroy : function(){
+				ed = {}
 				el = {};
 			},
 			
