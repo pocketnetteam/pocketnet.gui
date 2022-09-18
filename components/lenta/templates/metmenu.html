@@ -173,10 +173,10 @@ if(share){
 				m.push('startchat')
 			}
 
-
-			if(share._recommendationInfo && share.recommendationKey){
+			if(app.platform.sdk.recommendations.sharesinfo && app.platform.sdk.recommendations.sharesinfo[share.txid]){
 				m.push('recommendationinfo')
 			}
+
 
 			/*m.push('donation')*/
 			/*m.push('htls')*/

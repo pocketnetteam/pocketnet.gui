@@ -8,7 +8,7 @@ var recommendationinfo = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el, ed;
+		var el, ed, external;
 
 		var actions = {
 
@@ -19,6 +19,14 @@ var recommendationinfo = (function(){
 		}
 
 		var renders = {
+			shares : function(ids){
+				if(ids.length){
+					el.c.find('.anotherShares').addClass('hasshares')
+					self.app.platform.papi.lenta(ids, el.c.find('.sharesWrapper'), (e, p) => {
+						external = p
+					})
+				}
+			},
 			tags : function(){
 
 				
@@ -35,18 +43,12 @@ var recommendationinfo = (function(){
 
 					var usedtagsmap = {}
 
-					var sdf = self.sdk.tags.filterEx(self.sdk.tags.filterCats(_.map(probtags, t => {
-						return t.tag
-					})))
-
-
 					_.each( self.sdk.tags.filterEx(self.sdk.tags.filterCats(probtags)), t => {
 						usedtagsmap[t.tag] = true
 					})
 
 
 					var completed = _.first(self.app.platform.sdk.recommendations.getcompleted('tags'), 30) 
-
 
 					var data = {
 						...ed.info,
@@ -60,7 +62,6 @@ var recommendationinfo = (function(){
 
 					_.each(data.tags, (t) => data.recmap[t] = true)
 					
-
 					console.log('self.app.platform.sdk.tags.maxs()', self.app.platform.sdk.tags.maxs())
 	
 					console.log('data', data)
@@ -76,6 +77,16 @@ var recommendationinfo = (function(){
 						},
 	
 					}, function(_p) {
+
+						var task = _.find(completed, (task) => {
+							return ed.info.task == task.id
+						})
+
+						if (task && task.shares){
+							renders.shares(_.filter(task.shares, (txid) => {
+								return !ed.share || txid != ed.share
+							}))
+						}
 	
 						_p.el.find('.showmorewrapper').on('click', function(){
 							_p.el.find('.probtags').addClass('showall')
@@ -104,7 +115,7 @@ var recommendationinfo = (function(){
 		}
 
 		var make = function(){
-			renders[ed.type]()
+			renders[ed.key]()
 		}
 
 		return {
@@ -113,11 +124,13 @@ var recommendationinfo = (function(){
 			getdata : function(clbk, p){
 
 				/*ed = {
-					type : 'tags',
+					key : 'tags',
 					info : {
 						lang : 'ru',
-						tags : ['харьков', 'художники']
-					}
+						tags : ['чудиновских', 'коронавирус'],
+						task : '9d725b77-6a24-073f-28c7-cef605e490f1'
+					},
+					share : 'fee45495470aff2caf227725ff99266ac9b2e4bd2052735652c7818a4346fbdc'
 					
 				}*/ ///p.settings.essenseData
 
@@ -135,6 +148,12 @@ var recommendationinfo = (function(){
 			},
 
 			destroy : function(){
+
+				if (external){
+					external.destroy()
+					external = null
+				}
+
 				el = {};
 				ed = {}
 			},

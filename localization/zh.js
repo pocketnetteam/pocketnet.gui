@@ -1021,3 +1021,6 @@ _l.androidPopupDisagree = "不是现在"
 _l.desktopPopupTitle = "在 Bastyon 桌面应用程序中获取未经审查的信息"
 _l.desktopPopupAgree = "下载应用程序"
 _l.desktopPopupDisagree = "不是现在"
+
+
+_l.profanity_tag = '褻瀆'

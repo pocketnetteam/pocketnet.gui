@@ -92,7 +92,13 @@ var lenta = (function(){
 
 		var actions = {
 			recommendationinfo : function(share){
-				if(!share || !share._recommendationInfo || !share.recommendationKey) return
+				if(!share || !self.app.platform.sdk.recommendations.sharesinfo[share.txid]) return
+
+
+				var data = {
+					...self.app.platform.sdk.recommendations.sharesinfo[share.txid] || {},
+					share : share.txid
+				}
 
 
 				self.nav.api.load({
@@ -101,10 +107,13 @@ var lenta = (function(){
 					inWnd : true,
 					history : true,
 
-					essenseData : {
+					essenseData : data
+					
+					/*{
 						info : share._recommendationInfo,
-						type : share.recommendationKey
-					}
+						type : share.recommendationKey,
+						share : share.txid
+					}*/
 				})
 
 			},
@@ -620,11 +629,13 @@ var lenta = (function(){
 						el.c.removeClass('networkError')
 
 
-					if(shares){
+					if (shares){
 						renders.shares(shares, function(){
 
 							renders.sharesInview(shares, function(){
 								essenserenderclbk()
+
+								events.loadmorescroll()
 							})
 
 						}, {
@@ -2186,7 +2197,7 @@ var lenta = (function(){
 		var events = {
 
 			recommendationinfo : function(){
-				console.log("??????")
+			
 				var shareId = $(this).closest('.share').attr('id');
 
 				var share = self.app.platform.sdk.node.shares.storage.trx[shareId];
@@ -3145,7 +3156,7 @@ var lenta = (function(){
 						sharesFromSub,
 						boosted : p.boosted,
 						shareRelayedFlag : false,
-						fromrecommendations : sharesFromRecommendations[share.txid] && share._recommendationInfo ? true : false
+						fromrecommendations : sharesFromRecommendations[share.txid] && self.app.platform.sdk.recommendations.sharesinfo[share.txid] ? true : false
 					}					
 
 				}, function(p){

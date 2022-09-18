@@ -4703,16 +4703,20 @@ Platform = function (app, listofnodes) {
                     }, function (el, f, close) {
 
                         el.find('.recommendationinfo').on('click', function(){
+
+                            
+                            var data = {
+                                ...self.sdk.recommendations.sharesinfo[share.txid] || {},
+                                share : share.txid
+                            }
+
                             self.app.nav.api.load({
                                 open : true,
                                 href : 'recommendationinfo',
                                 inWnd : true,
                                 history : true,
             
-                                essenseData : {
-                                    info : share._recommendationInfo,
-                                    type : share.recommendationKey
-                                }
+                                essenseData : data
                             })
 
                             close()
@@ -13203,6 +13207,8 @@ Platform = function (app, listofnodes) {
             planned : [],
             shares : [],
 
+            sharesinfo : {},
+
             enabled : true,
 
             getcompleted : function(type){
@@ -13268,7 +13274,7 @@ Platform = function (app, listofnodes) {
                 _.find(self.sdk.recommendations.shares, (share, i) => {
                     if(result.length >= count) return true
 
-                    self.sdk.recommendations.storage.shares.push({
+                    self.sdk.recommendations.storage.shares.unshift({
                         txid : share.txid,
                         date : self.currentTime()
                     })
@@ -13278,9 +13284,12 @@ Platform = function (app, listofnodes) {
                     result.push(share)
                 })  
 
-                self.sdk.recommendations.shares = _.last(_.filter(self.sdk.recommendations.shares, (a, i) => {
+                self.sdk.recommendations.storage.shares = _.first(self.sdk.recommendations.storage.shares, 300)
+                
+
+                self.sdk.recommendations.shares = _.filter(self.sdk.recommendations.shares, (a, i) => {
                     return !remove[i]
-                }), 300)
+                })
 
                 if (result.length){
                     self.sdk.recommendations.save()
@@ -13388,12 +13397,13 @@ Platform = function (app, listofnodes) {
                         contentAddress: task.address,
                         depth: 10000,
                         count: 15,
-                        lang : self.app.localization.key
+                        lang : 'all', /*self.app.localization.key*/
                     }
 
                     var info = {
                         address : task.address,
-                        lang : self.app.localization.key
+                        lang : 'all', /*self.app.localization.key*/
+                        task : task.id
                     }
     
                     task.status = 'processing'
@@ -13412,12 +13422,21 @@ Platform = function (app, listofnodes) {
                             if(!_.find(self.sdk.recommendations.storage.shares.concat(self.sdk.recommendations.shares), (s) => {
                                 return s.txid == share.txid
                             })){
-                                share.recommendationKey = 'users'
-                                share._recommendationInfo = info
 
+                                self.sdk.recommendations.sharesinfo[share.txid] = {
+                                    key : 'users',
+                                    info : info
+                                }
+
+                                //share.recommendationKey = 'users'
+                                //share._recommendationInfo = info
                                 self.sdk.recommendations.shares.push(share)
     
                             }
+                        })
+
+                        task.shares = _.map(shares, (s) => {
+                            return s.txid
                         })
     
                         self.sdk.recommendations.prepareshares()
@@ -13427,17 +13446,20 @@ Platform = function (app, listofnodes) {
                     }, 'clear');
                 }
 
+                console.log("MAKE TASKS", task)
+
                 if(task.type == 'tags'){
                     var p = {
                         depth: 7000,
                         count: 15,
-                        lang : self.app.localization.key,
+                        lang : 'all', /*self.app.localization.key*/
                         tagsfilter : task.tags
                     }
 
                     var info = {
-                        lang : self.app.localization.key,
-                        tags : task.tags
+                        lang : 'all', /*self.app.localization.key*/
+                        tags : task.tags,
+                        task : task.id
                     }
 
     
@@ -13447,19 +13469,30 @@ Platform = function (app, listofnodes) {
     
                         task.status = 'completed'
     
-                        shares = _.filter(shares, (s) => {
+                        /*shares = _.filter(shares, (s) => {
                             return s.address != task.address
-                        })
+                        })*/
+
+                        console.log("COMPLETE TASK")
     
                         _.each(shares, (share) => {
                             if(!_.find(self.sdk.recommendations.storage.shares.concat(self.sdk.recommendations.shares), (s) => {
                                 return s.txid == share.txid
                             })){
-                                share.recommendationKey = 'tags'
-                                share._recommendationInfo = info
+
+                                self.sdk.recommendations.sharesinfo[share.txid] = {
+                                    key : 'tags',
+                                    info : info
+                                }
+
+                          
                                 self.sdk.recommendations.shares.push(share)
     
                             }
+                        })
+
+                        task.shares = _.map(shares, (s) => {
+                            return s.txid
                         })
     
                         self.sdk.recommendations.prepareshares()
@@ -15770,7 +15803,6 @@ Platform = function (app, listofnodes) {
 
                 if(!self.sdk.memtags.storage.tags) self.sdk.memtags.storage.tags = {}
 
-                console.log(tags, value)
 
                 //var total = 0
 
@@ -15778,7 +15810,9 @@ Platform = function (app, listofnodes) {
                     self.sdk.memtags.storage.tags[tag] || (self.sdk.memtags.storage.tags[tag] = {c : 0})
 
                     self.sdk.memtags.storage.tags[tag].c = self.sdk.memtags.storage.tags[tag].c + (value || 1)
-                    self.sdk.memtags.storage.tags[tag].date = self.currentTime()
+
+                    if ((value || 1) > 0)
+                        self.sdk.memtags.storage.tags[tag].date = self.currentTime()
                     
                 })
 
@@ -18393,9 +18427,10 @@ Platform = function (app, listofnodes) {
 
                         p.count || (p.count = 10)
 
-                        if(!p.lang){
+                        if (!p.lang){
                             (mtd == 'gethierarchicalstrip' || mtd == 'gethistoricalstrip') ? p.lang = self.app.localization.key : p.lang = ''
                         }
+
 
                         p.height || (p.height = 0)
                         p.tagsfilter || (p.tagsfilter = [])
@@ -18471,7 +18506,8 @@ Platform = function (app, listofnodes) {
                             /////temp
                             ////
 
-                            var parameters = [Number(p.height), p.txid, p.count, p.lang, p.tagsfilter, p.type ? [p.type] : [], [], [], p.tagsexcluded];
+                            var parameters = [Number(p.height), p.txid, p.count, p.lang == 'all' ? '' : p.lang, p.tagsfilter, p.type ? [p.type] : [], [], [], p.tagsexcluded];
+
 
                             if(p.author) {
                                 parameters.push('');

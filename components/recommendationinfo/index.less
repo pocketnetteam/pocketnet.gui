@@ -156,6 +156,27 @@
         
     }
 
+    .anotherShares{
+        .caption{
+            display: none;
+        }
+
+        &.hasshares{
+            .caption{
+                display: block;
+            }
+        }
+    }
+
+    .sharesWrapper{
+        padding : @rhythm;
+        .share{
+            padding : @rhythm;
+            border-radius: 12px;
+            border: 1px solid rgb(var(--neutral-grad-0));
+        }
+    }
+
     
 }
 

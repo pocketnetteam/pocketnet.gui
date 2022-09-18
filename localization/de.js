@@ -852,3 +852,5 @@ _l.androidPopupDisagree = "Nicht jetzt"
 _l.desktopPopupTitle = "Unzensierte Informationen in der Bastyon-Desktop-App abrufen"
 _l.desktopPopupAgree = "App herunterladen"
 _l.desktopPopupDisagree = "Nicht jetzt"
+
+_l.profanity_tag = 'profanität'

@@ -1214,3 +1214,5 @@ _l.androidPopupDisagree = "Non ora"
 _l.desktopPopupTitle = "Ottieni informazioni non censurate nell'app desktop Bastyon"
 _l.desktopPopupAgree = "Scarica l'app"
 _l.desktopPopupDisagree = "Non ora"
+
+_l.profanity_tag = 'volgarità'

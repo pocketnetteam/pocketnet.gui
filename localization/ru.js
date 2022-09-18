@@ -2110,3 +2110,7 @@ _l.recommendations_caption_disclamer = "Статистика хранится т
 
 _l.recommendations_tags_table_caption = 'Тэг, вероятность, очки, дата последнего взаимодействия'
 _l.recommendations_tags_completed_caption = 'Запрошенные рекомендации'
+
+_l.recommendations_tags_anotherShares = 'Другие публикации рекомендованные по этим тэгам'
+
+_l.profanity_tag = 'ненормативная_лексика'

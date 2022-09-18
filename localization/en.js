@@ -2320,3 +2320,7 @@ _l.recommendations_caption_disclamer = "Statistics are stored only on your devic
 
 _l.recommendations_tags_table_caption = 'Tag, probability, points, last interaction date'
 _l.recommendations_tags_completed_caption = 'Requested recommendations'
+
+_l.recommendations_tags_anotherShares = 'Other publications recommended by these tags'
+
+_l.profanity_tag = 'profanity'

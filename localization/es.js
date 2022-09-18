@@ -848,3 +848,6 @@ _l.androidPopupDisagree = "Ahora no"
 _l.desktopPopupTitle = "Obtenga información sin censura en la aplicación de escritorio Bastyon"
 _l.desktopPopupAgree = "Descargar la aplicación"
 _l.desktopPopupDisagree = "Ahora no"
+
+
+_l.profanity_tag = 'blasfemia'

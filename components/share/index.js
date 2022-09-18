@@ -789,6 +789,23 @@ var share = (function(){
 				}
 			},
 
+			getprofanitytag : function(text){
+				if(typeof window.LeoProfanity != 'undefined'){
+
+					window.LeoProfanity.loadDictionary(currentShare.language.get())
+					var badwords = window.LeoProfanity.badWordsUsed(text)
+
+					if (badwords.length){
+						var t = self.app.localization.e('profanity_tag')
+
+						if(!currentShare.tags.have(t)) return t
+					}
+
+				}
+
+				return null
+			},
+
 			tagsFromText : function(text){
 				var words = text.split(wordsRegExp);
 
@@ -803,6 +820,13 @@ var share = (function(){
 
 					}
 				})
+
+				var ptag = actions.getprofanitytag(text)
+
+				if (ptag){
+					newtags.push(ptag)
+				}
+				
 
 				if(newtags.length){
 

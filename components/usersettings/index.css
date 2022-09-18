@@ -64,6 +64,16 @@
 #usersettings .cacheContent .empty span {
   font-size: 0.9em;
 }
+#usersettings .cacheContent .tx {
+  display: flex;
+}
+#usersettings .cacheContent .tx div {
+  margin-right: 0.5em;
+  margin-bottom: 0.5em;
+}
+#usersettings .cacheContent .tx div.date {
+  margin-left: auto;
+}
 #usersettings .caption {
   max-width: 700px;
   padding-top: 1em;

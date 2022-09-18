@@ -383,7 +383,6 @@
   ImagesLoadedPN.prototype.addImageAttr = function( url, elem ) {
 
     var imageAttrImage = new ImageAttrImage( url, elem );
-    console.log('imageAttrImage', imageAttrImage)
     this.images.push( imageAttrImage );
     return imageAttrImage;
   };
@@ -394,7 +393,6 @@
     this.hasAnyBroken = false;
     // complete if no images
 
-    console.log('this.images', this.images.length)
     if ( !this.images.length ) {
       this.complete();
       return;

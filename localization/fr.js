@@ -1373,3 +1373,6 @@ _l.androidPopupDisagree = "Pas maintenant"
 _l.desktopPopupTitle = "Obtenir des informations non censurées dans l'application de bureau Bastyon"
 _l.desktopPopupAgree = "Télécharger l'application"
 _l.desktopPopupDisagree = "Pas maintenant"
+
+_l.profanity_tag = 'impiété'
+

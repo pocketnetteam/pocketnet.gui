@@ -33,7 +33,9 @@ __map =  {
 		"js/vendor/aesjs.js",//
 		"js/vendor/linkify.min.js",
 		"js/vendor/linkify-html.min.js",
-		
+
+		{path :"js/vendor/leoprofanity.js", babelify : true},
+
 		//new
 		{path : "js/lib/pocketnet/btc17.js", babelify : true}, //
 		{path : "js/lib/pocketnet/htls.js", babelify : true}, //
