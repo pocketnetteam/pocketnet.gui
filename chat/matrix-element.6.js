@@ -2176,13 +2176,15 @@ var CancelablePromise = __webpack_require__("0bb9");
         return Promise.reject(err);
       }));
       this.prepareRecording.then(() => {
+        console.log("START RECORDING");
         this.microphoneDisabled = false;
         var path = 'cdvfile://localhost/temporary/recording.mp3';
-        if (functions["a" /* default */].isios()) path = 'cdvfile://localhost/temporary/recording' + makeid() + '.m4a';
+        if (functions["a" /* default */].isios()) path = 'cdvfile://localhost/temporary/recording.m4a';
         var sec = 0;
-        this.audioContext = this.core.getAudioContext();
-        var startedTime = new Date().getTime() / 1000;
+        this.audioContext = this.core.getAudioContext(); //var startedTime = (new Date()).getTime() / 1000
+
         var media = this.cordovaMediaRecorder = new Media(path, () => {
+          console.log("MEDIA PREPARED", this.cancelledCordovaMediaRecorder);
           this.recordTime = 0;
 
           if (this.cancelledCordovaMediaRecorder) {
@@ -2205,11 +2207,18 @@ var CancelablePromise = __webpack_require__("0bb9");
 
           fu.then(r => {
             ///temp
-            if (functions["a" /* default */].isios()) r.duration = new Date().getTime() / 1000 - startedTime;
-            console.log("R", r);
-            /*var e = {
+
+            /*if (f.isios())
+            	r.duration = (new Date()).getTime() / 1000 - startedTime
+            		console.log("R", r)
+            		/*var e = {
             	data : r.data
             }*/
+            console.log('media.duration', media.duration);
+
+            if (media.duration && media.duration > 0) {
+              r.duration = media.duration;
+            }
 
             this.createVoiceMessage(r, true);
             return Promise.resolve();
@@ -2224,7 +2233,6 @@ var CancelablePromise = __webpack_require__("0bb9");
           this.isRecording = false;
           this.clear();
         });
-        this.recordRmsData = [];
         var rmsdata = [];
         let currentPlaying = this.$store.state.currentPlayingVoiceMessage;
 
@@ -2253,6 +2261,10 @@ var CancelablePromise = __webpack_require__("0bb9");
           if (sec % 1000 === 0) this.recordTime = sec;
         }, 50);
         this.isRecording = true;
+        this.cancelOpacity = 0;
+        this.recordRmsData = [];
+        this.recordTime = 0;
+        this.record = null;
         this.cordovaMediaRecorder.startRecord();
       }).catch(e => {
         console.error(e);
@@ -2263,6 +2275,7 @@ var CancelablePromise = __webpack_require__("0bb9");
 
     initRecording() {
       if (this.prepareRecording || this.isRecording || this.cordovaMediaRecorder) return;
+      console.log("INIT RECORDING");
 
       if (window.cordova) {
         return this.initRecordingCordova();
@@ -2404,6 +2417,7 @@ var CancelablePromise = __webpack_require__("0bb9");
         cancel,
         sendnow
       } = _ref4;
+      console.log("STOP RECORDING", this.isRecording);
       this.$store.commit('SET_VOICERECORDING', false);
 
       if (this.prepareRecording) {
