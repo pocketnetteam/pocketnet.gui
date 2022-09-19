@@ -305,7 +305,7 @@ _l.lloadprev = "Load New Awesome Posts";
 
 
 //blocking
-_l.blockinglimit_100 = "You cannot select more than 10 users at a time"
+_l.blockinglimit_100 = "You cannot select more than 100 users at a time"
 _l.blockingdisclaimer = "Do you want to block linked accounts as well? Do this only for suspected bots."
 _l.blockingsuccess = "The blocking was successful"
 _l.blockinginprogress = "Multiple blocking is currently in progress, try again later"

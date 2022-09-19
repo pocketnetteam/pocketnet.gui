@@ -24,7 +24,7 @@ var blocking = (function(){
             liker.children[0].classList.remove('checked')
           } else {
 
-            if (blocklist.length === 10) {
+            if (blocklist.length === 100) {
               sitemessage(self.app.localization.e('blockinglimit_100'))
               return
             }
@@ -88,8 +88,6 @@ var blocking = (function(){
         initEvents();
 
         p.clbk(null, p);
-
-        setTimeout(() => sitemessage(self.app.localization.e('blockinglimit_100')), 1000)
       },
       wnd : {
         class : 'blockingwnd normalizedmobile maxheight',
