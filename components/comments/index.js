@@ -1804,6 +1804,13 @@ var comments = (function(){
 
 						if(!isios())
 							actions.scrollToComment(_p.el);
+						else{
+							if(window.cordova){
+								setTimeout(() => {
+									actions.scrollToComment(_p.el);
+								}, 300)
+							}
+						}
 					},
 
 					blur : function(){
