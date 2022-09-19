@@ -8244,6 +8244,16 @@ Platform = function (app, listofnodes) {
             },
             save: function () {
                 localStorage['relayTransactions'] = JSON.stringify(self.sdk.relayTransactions.storage || {});
+            },
+
+            getRelTmpSubscriptions : function(){
+                var subs = self.sdk.relayTransactions.withtemp('subscribe').concat(self.sdk.relayTransactions.withtemp('subscribePrivate'))
+
+                console.log('subs', subs)
+
+                return _.filter(_.map(subs, (s) => {
+                    return s.vsaddress
+                }), (a) => {return a})
             }
         },
 
@@ -13517,7 +13527,7 @@ Platform = function (app, listofnodes) {
                 },
 
                 tags : function(){
-                    var tags = self.sdk.memtags.getprobtags(2)
+                    var tags = self.sdk.memtags.getprobtags(3)
                     
                     if (tags.length){
 
@@ -18286,6 +18296,11 @@ Platform = function (app, listofnodes) {
 
                 getsubscribesfeed : function(p, clbk, cache){
 
+                    p.tempSubscriptions = self.sdk.relayTransactions.getRelTmpSubscriptions()
+
+                    console.log('p.tempSubscriptions', p.tempSubscriptions)
+
+
                     self.app.platform.sdk.node.shares.hierarchical(p, clbk, cache, {
                         method : 'getsubscribesfeed'
                     })
@@ -18516,13 +18531,19 @@ Platform = function (app, listofnodes) {
                             if(mtd == 'getsubscribesfeed') {
                                 parameters.push('');
                                 parameters.push(p.address)
+
+                                if(p.tempSubscriptions && p.tempSubscriptions.length){
+                                    //parameters.push(p.tempSubscriptions) TODO
+                                }
                             }
+
+                            
 
 
                             if (methodparams.method == 'getrecommendedcontentbyaddress')
                                 parameters = [p.contentAddress, '', p.type ? [p.type] : [], p.lang || "", p.count];
 
-                            if(mtd == 'gettopfeed') {
+                            if (mtd == 'gettopfeed') {
                                 parameters.push('');
                                 parameters.push(p.depth)
 

@@ -62,15 +62,16 @@
   padding-left: 0;
 }
 #tagcloud .tag > div.tagvalue {
-  padding: 4px 8px;
   padding-top: 2px;
   width: auto;
-  border: 1px solid rgb(var(--color-medium-theme));
+  border-radius: 8px;
+  padding: 4px 10px;
+  background: rgb(var(--background-secondary-theme));
+  box-shadow: 0 5px 7px -5px rgba(var(--color-shadow-base), 0.4);
   margin: 4px 4px 0 0;
-  border-radius: 100px;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 120px;
+  max-width: 135px;
   white-space: nowrap;
 }
 #tagcloud .tag > div.tagvalue span,
@@ -194,7 +195,7 @@
   }
   #tagcloud .tag > div.tagvalue:hover {
     color: rgb(var(--color-txt-ac));
-    border: 1px solid rgb(var(--color-txt-ac));
+    /*border: 1px solid rgb(var(--color-txt-ac));*/
   }
   #tagcloud .tag > div.tagsearch:hover,
   #tagcloud .tag > div.tagcheck:hover {
