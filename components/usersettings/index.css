@@ -66,10 +66,20 @@
 }
 #usersettings .cacheContent .tx {
   display: flex;
+  border-radius: 6px;
+  padding: 0.5em;
+  margin-top: 0.5em;
+  padding-top: 1em;
+  background: rgba(var(--neutral-grad-0), 0.5);
+  flex-wrap: wrap;
 }
 #usersettings .cacheContent .tx div {
   margin-right: 0.5em;
   margin-bottom: 0.5em;
+}
+#usersettings .cacheContent .tx div.txid {
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 #usersettings .cacheContent .tx div.date {
   margin-left: auto;

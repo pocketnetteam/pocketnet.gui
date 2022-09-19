@@ -86,10 +86,21 @@
 
 		.tx{
 			display: flex;
+			border-radius: 6px;
+			padding : @rhythm;
+			margin-top: @rhythm;
+			padding-top: 2 * @rhythm;
+			background: rgba(var(--neutral-grad-0), 0.5);
+			flex-wrap: wrap;
 
 			div{
 				margin-right: @rhythm;
 				margin-bottom: @rhythm;
+
+				&.txid{
+					overflow: hidden;
+					text-overflow: ellipsis;
+				}
 
 				&.date{
 					margin-left: auto;
