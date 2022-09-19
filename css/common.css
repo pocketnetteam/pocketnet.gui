@@ -1568,6 +1568,9 @@ html.mobileview.ios .share_common.fullScreenVideo .video-js {
   height: 425px;
   position: relative;
 }
+.common_share_article_wrapper .share .sharearticle .shareBgCaption .boost {
+  background: rgba(var(--text-on-bg-shadow-color), 0.1);
+}
 .common_share_article_wrapper .share .sharearticle .shareBgCaption .blackmatte {
   background: linear-gradient(0deg, rgba(var(--background-secondary-theme-2), 0.96) 10%, rgba(255, 255, 255, 0) 75%), linear-gradient(180deg, rgb(var(--background-secondary-theme-2)) 0%, rgba(255, 255, 255, 0) 18%);
 }
@@ -1608,7 +1611,7 @@ html.mobileview.ios .share_common.fullScreenVideo .video-js {
   padding: 0 16px;
 }
 .common_share_article_wrapper .share .sharearticle .shareBgCaption .captioncnt .articleclick {
-  display: flex;
+  /*display: flex;*/
   height: 100%;
   flex-direction: column;
   cursor: pointer;

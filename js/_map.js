@@ -309,6 +309,13 @@ __map =  {
 		electronDontOpen : true
 	},
 
+	boost : {
+		uri : "boost",
+		href : "boost",
+		add : insertingfunc,
+		anonimus : true
+	},
+
 
 	terms : {
 		uri : "terms",

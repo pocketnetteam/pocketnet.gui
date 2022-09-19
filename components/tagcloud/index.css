@@ -189,9 +189,9 @@
   #tagcloud .tcaptiontable > div.mlab:hover {
     opacity: 1;
     color: rgb(var(--color-bad));
-  }
-  #tagcloud .tcaptiontable > div.mlab:hover .tagvalue {
-    border: 1px solid rgb(var(--color-bad));
+    /*.tagvalue{
+                            border: 1px solid rgb(var(--color-bad));
+                        }*/
   }
   #tagcloud .tag > div.tagvalue:hover {
     color: rgb(var(--color-txt-ac));
@@ -200,10 +200,10 @@
   #tagcloud .tag > div.tagsearch:hover,
   #tagcloud .tag > div.tagcheck:hover {
     color: rgb(var(--color-txt-ac));
-  }
-  #tagcloud .tag > div.tagsearch:hover .tagvalue,
-  #tagcloud .tag > div.tagcheck:hover .tagvalue {
-    border: 1px solid rgb(var(--color-txt-ac));
+    /*.tagvalue{
+                            border : 1px solid rgb(var(--color-txt-ac));
+    
+                        }*/
   }
   #tagcloud .tag:hover .tagvalue > div.tagcheck,
   #tagcloud .tag:hover .tagvalue > div.tagsearch {
@@ -227,6 +227,7 @@
   #tagcloud .tag > div.tagvalue {
     padding-top: 4px;
     margin: 4px 4px 0 0;
+    background: rgb(var(--background-total-theme));
   }
   #tagcloud .tag > div.tagvalue span,
   #tagcloud .tag > div.tagvalue i {

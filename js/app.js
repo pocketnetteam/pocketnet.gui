@@ -518,6 +518,10 @@ Application = function(p)
   self.map = __map;
   self.modules = {};
 
+  console.log(JSON.stringify(_.filter(_.map(self.map, (v, i) => {
+    return v.uri
+  }), (u) => {return u})))
+
   self.isElectron = function(){
     return typeof _Electron != 'undefined' && _Electron
   }
