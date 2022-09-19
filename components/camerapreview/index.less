@@ -29,6 +29,8 @@
         }
     }
 
+    
+
     .gallery{
         display: none;
         position: absolute;
@@ -38,6 +40,11 @@
         top : 0;
         background: rgba(var(--color-shadow-base), 0.95);
         z-index: 200;
+
+        .declinedlibrary{
+            display: none;
+            margin-top: 4 * @rhythm;
+        }
 
         .caption{
             padding : 2 * @rhythm 0;
@@ -104,6 +111,14 @@
                         }
                     }
                 }
+            }
+        }
+    }
+
+    &.photolibraryaccessdeclined{
+        .gallery{
+            .declinedlibrary{
+                display: block;
             }
         }
     }

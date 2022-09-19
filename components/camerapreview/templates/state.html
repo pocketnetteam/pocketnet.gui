@@ -2,11 +2,10 @@
 
 
 
-<% if(!cameraenabled && 1 == 0) {%>
+<% if(!cameraenabled) {%>
     <div class="notfound">
-        <div><span>Camera not available</span></div>
+        <div><span><%-e('cameranotavailable')%></span></div>
     </div>
-
 <% } else { %> 
 
     <% if(current) { %> 
@@ -43,6 +42,7 @@
         </div>
         
     <% } %>
+
 
     
 <% } %>

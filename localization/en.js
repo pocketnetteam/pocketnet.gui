@@ -2324,3 +2324,7 @@ _l.recommendations_tags_completed_caption = 'Requested recommendations'
 _l.recommendations_tags_anotherShares = 'Other publications recommended by these tags'
 
 _l.profanity_tag = 'profanity'
+_l.addAccessToLibrary = 'Grant access to the gallery'
+_l.cameranotavailable = 'Camera not available'
+
+_l.rtip4 = 'This key is your password! Do not lose it.'

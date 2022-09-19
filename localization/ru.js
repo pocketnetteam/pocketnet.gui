@@ -2114,3 +2114,7 @@ _l.recommendations_tags_completed_caption = 'Запрошенные рекоме
 _l.recommendations_tags_anotherShares = 'Другие публикации рекомендованные по этим тэгам'
 
 _l.profanity_tag = 'ненормативная_лексика'
+_l.addAccessToLibrary = 'Предоставить доступ к галерее'
+_l.cameranotavailable = 'Камера недоступна'
+
+_l.rtip4 = 'Этот ключ - ваш пароль! Не потеряйте его и не показывайте никому.'

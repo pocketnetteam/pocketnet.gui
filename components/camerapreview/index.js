@@ -237,11 +237,11 @@ var camerapreview = (function(){
 	
 					if (window.cordova && window.cordova.plugins.photoLibrary){
 						window.cordova.plugins.photoLibrary.requestAuthorization(() => {
-							data.photolibraryaccessdecline = false
+							setDeclineLibrary(false)
 	
 							resolve()
 						}, () => {
-							data.photolibraryaccessdecline = true
+							setDeclineLibrary(true)
 		
 							reject('decline')
 						}, {
@@ -284,9 +284,9 @@ var camerapreview = (function(){
 	
 								photos = result.library
 	
-								_.each(photos, (p) => {
+								/*_.each(photos, (p) => {
 									getthubnail(p.id)
-								})
+								})*/
 
 								//// ?
 
@@ -300,7 +300,9 @@ var camerapreview = (function(){
 	
 							},
 							{ // optional options
+								//chunkTimeSec: 0.5,
 								thumbnailWidth: 128,
+								//itemsInChunk: 20,
 								thumbnailHeight: 128,
 								quality: 0.85,
 								includeAlbumData: true // default
@@ -312,19 +314,32 @@ var camerapreview = (function(){
 
 			/**/ 
 
-			for(var i = 0; i < 40; i++){
+			/*for(var i = 0; i < 40; i++){
 				photos.push({id : i})
 				thubnails[i] = exim
 				images[i] = exim
-			}
+			}*/
 
 				
 
-			return Promise.resolve()
+			//return Promise.resolve()
 
 			/* */
 
+			setDeclineLibrary(true)
+
 			return Promise.reject('notsupported')
+		}
+
+		var setDeclineLibrary = function(v){
+			data.photolibraryaccessdecline = v
+
+			if(v){
+				el.c.addClass('photolibraryaccessdeclined')
+			}
+			else{
+				el.c.removeClass('photolibraryaccessdeclined')
+			}
 		}
 
 		var getimage = function(id){
@@ -620,6 +635,12 @@ var camerapreview = (function(){
 
 			}).init()
 
+			el.c.find('.addAccessToLibrary').on('click', function(){
+				permissions.getagain().catch(e => {
+
+				})
+			})
+
 			el.c.find('.gallerytoggle').on('click', () => {
 				data.gallery = !data.gallery
 
@@ -729,6 +750,7 @@ var camerapreview = (function(){
 			init : function(p){
 				renderedphotos = {}
 				imagesadding = false
+				photos = []
 
 				window.requestAnimationFrame(() => {
 			
@@ -770,8 +792,10 @@ var camerapreview = (function(){
 					data.gallery = true
 					renders.gallery()
 				}).catch((e) => {
-					data.gallery = false
+
+					data.gallery = true
 					renders.gallery()
+
 				}).then(() => {
 					renders.selectedButton()
 					actions.startcamera()

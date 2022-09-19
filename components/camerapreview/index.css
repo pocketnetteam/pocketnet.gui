@@ -37,6 +37,10 @@
   background: rgba(var(--color-shadow-base), 0.95);
   z-index: 200;
 }
+#camerapreview .gallery .declinedlibrary {
+  display: none;
+  margin-top: 2em;
+}
 #camerapreview .gallery .caption {
   padding: 1em 0;
   color: rgba(var(--text-on-bg-shadow-color), 0.8);
@@ -87,6 +91,9 @@
 }
 #camerapreview .gallery .images .imagewrapper[selected="selected"] .selector i:before {
   content: "\f058";
+}
+#camerapreview.photolibraryaccessdeclined .gallery .declinedlibrary {
+  display: block;
 }
 #camerapreview .gallerymode {
   display: none;
