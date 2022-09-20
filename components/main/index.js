@@ -1030,12 +1030,23 @@ var main = (function(){
 
 				if (t){
 					el.c.addClass('leftshowed')
+					
 					//setTimeout(self.app.actions.offScroll, 300)
 				}
 				else{
 					el.c.removeClass('leftshowed')
 					//setTimeout(self.app.actions.onScroll, 300)
 				}
+				
+			}
+
+			if(!t){
+				if(!self.app.actions.getScroll()){
+					self.app.mobile.reload.initparallax()
+				}
+			}
+			else{
+				self.app.mobile.reload.destroyparallax()
 				
 			}
 		}

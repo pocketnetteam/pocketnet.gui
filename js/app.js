@@ -2395,10 +2395,7 @@ Application = function(p)
       },
       initparallax : function(){
 
-
         if(isTablet() || isMobile()){
-
-
 
           if(self.mobile.reload.parallax) return
           if(self.mobile.reload.reloading) return
