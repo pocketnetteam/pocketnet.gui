@@ -1,4 +1,5 @@
 <%
+debugger
 if(activities) {
 
 _.each(activities, function(period, index){
@@ -30,6 +31,7 @@ if(activity.txType === 1) { %>
   </div>
 </div>
 <%}
+//Comment
 if(activity.txType === 204)
 { %>
 <div class="comment">
@@ -49,6 +51,7 @@ if(activity.txType === 204)
   </div>
 </div>
 <%}
+//Comment score
 if(activity.txType === 301) { %>
 <div class="comment">
   <div class="avatar">
@@ -74,6 +77,7 @@ if(activity.txType === 301) { %>
   </div>
 </div>
 <%}
+//Subscribe
 if(activity.txType === 302 || activity.txType === 303) { %>
 <div class="comment">
   <div class="avatar">
@@ -90,6 +94,40 @@ if(activity.txType === 302 || activity.txType === 303) { %>
   </div>
 </div>
 <%}
+//Blocking
+if(activity.txType === 305 || activity.txType === 306) { %>
+
+<%
+if(activity.multipleAddresses) {
+%>
+<div class="comment">
+  <div class="description">
+    <div class="head"><%=e(activity.txType === 305 ? 'a_block' : 'a_unblock')%>
+    </div>
+    <div class="date"><%- activity.date.calendar() %></div>
+  </div>
+</div>
+<%
+} else {
+%>
+<div class="comment">
+  <div class="avatar">
+    <% if(activity?.account?.avatar){%>
+    <img src="<%-activity.relatedContent.account.avatar%>"/>
+    <%} else {%>
+    <%-activity?.account?.name[0].toUpperCase()%>
+    <% } %>
+  </div>
+  <div class="description">
+    <div class="head"><%=e(activity.txType === 305 ? 'a_block' : 'a_unblock')%> <strong><%-activity?.account?.name%></strong>
+    </div>
+    <div class="date"><%- activity.date.calendar() %></div>
+  </div>
+</div>
+<%}%>
+
+<%}
+//Content score
 if(activity.txType === 300) { %>
 <div class="comment">
   <div class="avatar">

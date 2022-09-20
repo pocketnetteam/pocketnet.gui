@@ -72,8 +72,14 @@ var activities = (function(){
 
 		var actions = {
 			setloading: function(v){
+
 				loading = v
-				loading ? el.loader.addClass('.preloader5') : el.loader.removeClass('.preloader5') && renders.content()
+				if (loading) {
+					el.loader[0].style.display = 'block'
+				} else {
+					el.loader[0].style.display = 'none'
+					  renders.content()
+				}
 			},
 
 			getdata : function(){
@@ -103,7 +109,7 @@ var activities = (function(){
 						} catch (e) {
 							reject(e)
 						} finally {
-							setTimeout(actions.setloading.bind(false),300)
+							setTimeout(() => actions.setloading(false),300)
 						}
 
 					})
@@ -173,13 +179,12 @@ var activities = (function(){
 					data : {
 						activities : getters.formatActivities(),
 					},
-					inner: (root, el) => {
-						el = el.replace(/\r/gm,"").replace(/(\/>)/gm,">")
-						let v = el.replace(root[0].innerHTML, "")
-						debugger
-						root.append(v)
-
-					}
+					// inner: (root, el) => {
+					// 	el = el.replace(/\r/gm,"").replace(/(\/>)/gm,">")
+					// 	let v = el.replace(root[0].innerHTML, "")
+					// 	root.append(v)
+					//
+					// }
 
 				}, function(_p){
 
