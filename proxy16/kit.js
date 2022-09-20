@@ -29,8 +29,6 @@ var logger = new Logger(['general', 'rpc', 'system', 'remote', 'firebase', 'node
 
 var testnodes = [
 
-	
-
 	{
 		host : '78.37.233.202',
 		port : 39091,
@@ -46,99 +44,39 @@ var testnodes = [
 		name : 'test.1.pocketnet.app',
 		stable : true
 	},
+
+
+	// {
+	// 	host : '116.203.219.28',
+	// 	port : 39091,
+	// 	ws : 6067,
+	// 	name : 'test.pocketnet.app',
+	// 	stable : true
+	// },
+	// {
+	// 	host : '137.135.25.73',
+	// 	port : 39091,
+	// 	ws : 6067,
+	// 	name : 'tawmaz',
+	// 	stable : false
+	// },
+	// {
+	// 	host : '109.173.41.29',
+	// 	port : 39091,
+	// 	ws : 6067,
+	// 	name : 'lostystyg',
+	// 	stable : false
+	// }
+]
+
+
+var activenodes = [
+
 	{
 		host : '157.90.228.34',
 		port : 39091,
 		ws : 6067,
 		name : 'test.2.pocketnet.app',
-		stable : true
-	},
-	{
-		host : '116.203.219.28',
-		port : 39091,
-		ws : 6067,
-		name : 'test.pocketnet.app',
-		stable : true
-	},
-	{
-		host : '137.135.25.73',
-		port : 39091,
-		ws : 6067,
-		name : 'tawmaz',
-		stable : false
-	},
-	{
-		host : '109.173.41.29',
-		port : 39091,
-		ws : 6067,
-		name : 'lostystyg',
-		stable : false
-	}    
-]
-
-
-var activenodes = [
-	{
-		host : '135.181.196.243',
-		port : 38081,
-		ws : 8087,
-		name : '135.181.196.243',
-		stable : true
-	},
-	{
-		host : '65.21.56.203',
-		port : 38081,
-		ws : 8087,
-		name : '65.21.56.203',
-		stable : true
-	},
-	{
-		host : '178.217.159.227',
-		port : 38081,
-		ws : 8087,
-		name : '178.217.159.227',
-		stable : true
-	},
-	{
-		host : '178.217.159.221',
-		port : 38081,
-		ws : 8087,
-		name : '178.217.159.221',
-		stable : true
-	},
-	{
-		host : '46.175.122.243',
-		port : 38081,
-		ws : 8087,
-		name : '46.175.122.243',
-		stable : true
-	},
-	{
-		host : '46.175.123.77',
-		port : 38081,
-		ws : 8087,
-		name : '46.175.123.77',
-		stable : true
-	},
-	{
-		host : '178.217.155.169',
-		port : 38081,
-		ws : 8087,
-		name : '178.217.155.169',
-		stable : true
-	},
-	{
-		host : '178.217.155.170',
-		port : 38081,
-		ws : 8087,
-		name : '178.217.155.170',
-		stable : true
-	},
-	{
-		host : '93.100.117.108',
-		port : 38081,
-		ws : 8087,
-		name : '93.100.117.108',
 		stable : true
 	},
 ]

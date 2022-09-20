@@ -59,7 +59,18 @@ var userpage = (function(){
 		
 				}
 			}
-			
+
+
+			reports.push({
+				name : self.app.localization.e('ractivities'),
+				id : 'activities',
+				report : 'activities',
+				mobile : true,
+				openReportPageMobileInWindow : true,
+				if : function(){
+					return true
+				}
+			})
 			
 
 			reports.push({

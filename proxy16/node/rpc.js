@@ -85,6 +85,7 @@ const publics = {
     getnodeinfo: true,
     getaddressscores: true,
     getaccountsetting : true,
+    getactivities: true,
     getpostscores:true,
     getpagescores:true,
     getrandomcontents : true,
@@ -452,6 +453,7 @@ RpcClient.callspec = {
     getnodeinfo: '',
     getaddressscores: 'str',
     getaccountsetting : 'str',
+    getactivities : 'str int int obj',
     getpostscores: 'str',
     getpagescores: 'obj str',
 

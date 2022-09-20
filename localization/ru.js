@@ -89,6 +89,13 @@ ____loclib.chooseThemes = "Выберите темы, которые Вам ин
 ____loclib.bloggers = "Блогеры";
 ____loclib.chooseBloggers = "Подпишитесь на популярных блоггеров";
 ____loclib.showmorebloggers = "Показать больше блогеров";
+
+//Activities
+
+____loclib.ractivities = "Мои активности";
+
+
+
 //user page
 
 ____loclib.rstate = "Репутация";
@@ -104,18 +111,12 @@ ____loclib.signout = "Выйти";
 
 //send
 
-
-
-//send
-
 ____loclib.postlabel = "Пожертвование связанное с публикацией";
 ____loclib.donationlabel = "Пожертвование";
 ____loclib.donationwel = "Если вы хотите отблагодарить автора публикации вы можете воспользоваться транзакцией "+appname+"";
 ____loclib.donationwela = "Отправлено с помощью "+appname+"";
 ____loclib.donationwelan = "Также можно использовать другие криптовалютные системы";
 ____loclib.successfullycopiedaddress = "Адрес был успешно скопирован";
-
-
 
 //wallet
 

@@ -91,6 +91,13 @@ ____loclib.chooseThemes = "Choose interesting themes";
 ____loclib.bloggers = "Bloggers";
 ____loclib.chooseBloggers = "Follow Popular Bloggers";
 ____loclib.showmorebloggers = "Show more bloggers";
+
+
+//Activities
+
+____loclib.ractivities = "My activities";
+
+
 //user page
 
 ____loclib.rstate = "Reputation";

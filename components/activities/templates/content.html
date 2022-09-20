@@ -1,0 +1,82 @@
+<% if(activities) {
+_.each(activities, function(activity){
+%>
+
+<% if(activity.txType === 204) { %>
+<div class="comment">
+  <div class="avatar">
+    <% if(activity?.relatedContent?.account?.avatar){%>
+    <img src="<%-activity.relatedContent.account.avatar%>"/>
+    <%} else {%>
+    <%-activity.relatedContent.account.name[0].toUpperCase()%>
+    <% } %>
+  </div>
+  <div class="description">
+    <div class="head">Вы прокомментировали публикацию <strong><%-activity.relatedContent.account.name%></strong></div>
+    <div class="message"></div>
+    <div class="date"></div>
+  </div>
+</div>
+<%}%>
+
+<% if(activity.txType === 301) { %>
+<div class="comment">
+  <div class="avatar">
+    <% if(activity?.relatedContent?.account?.avatar){%>
+    <img src="<%-activity.relatedContent.account.avatar%>"/>
+    <%} else {%>
+    <%-activity.relatedContent.account.name[0].toUpperCase()%>
+    <% } %>
+  </div>
+  <div class="description">
+    <div class="head">Вам нравится комментарий <strong><%-activity.relatedContent.account.name%></strong></div>
+    <div class="message"></div>
+    <div class="date"></div>
+  </div>
+</div>
+<%}%>
+
+<% if(activity.txType === 302) { %>
+<div class="comment">
+  <div class="avatar">
+    <% if(activity?.relatedContent?.account?.avatar){%>
+    <img src="<%-activity.relatedContent.account.avatar%>"/>
+    <%} else {%>
+    <%-activity.relatedContent.account.name[0].toUpperCase()%>
+    <% } %>
+  </div>
+  <div class="description">
+    <div class="head">Вы подписались на <strong><%-activity.relatedContent.account.name%></strong></div>
+    <div class="message"></div>
+    <div class="date"></div>
+  </div>
+</div>
+<%}%>
+
+<% if(activity.txType === 300) { %>
+<div class="comment">
+  <div class="avatar">
+    <% if(activity?.relatedContent?.account?.avatar){%>
+    <img src="<%-activity.relatedContent.account.avatar%>"/>
+    <%} else {%>
+    <%-activity.relatedContent.account.name[0].toUpperCase()%>
+    <% } %>
+  </div>
+  <div class="description">
+    <div class="head">Вы оставили оценку публикации <strong><%-activity.relatedContent.account.name%></strong></div>
+
+    <div class="stars">
+      <%
+      for(i = 0; i < activity.val; i++){
+      %>
+        <i class="fas fa-star"></i>
+      <%}%>
+    </div>
+
+    <div class="date"></div>
+  </div>
+</div>
+<%}%>
+<%
+})}
+%>
