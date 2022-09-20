@@ -3,7 +3,36 @@
 
 	<div class="mlwr">
 
-		<div elementsid="lenta_loadprev" class="loadprev"><button><span><%=e('lloadprev')%></span></button></div>
+		<% 
+		
+		
+		
+		if(ed.searchTags || ed.searchValue) {
+			
+			var value = ed.searchValue || _.map(ed.searchTags, function(w){return '#' + w}).join(' ')
+			
+			
+			%>
+
+			<div class="searchInfo">
+				<div class="work">
+					<div class="caption">
+						<span><%=e('e13157')%></span>
+					</div>
+					<div class="value">
+
+					</div>
+					<%-value%>
+				</div>
+
+			</div>
+
+		<% } else { %> 
+
+			<div elementsid="lenta_loadprev" class="loadprev"><button><span><%=e('lloadprev')%></span></button></div>
+			
+		<% } %>
+
 
 		<div class="shares">
 		</div>

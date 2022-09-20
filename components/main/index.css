@@ -224,8 +224,10 @@
   min-height: 3000px;
   padding-bottom: 300px;
 }
-#main .lentacell .cf_spacer,
-#main .lentacell .bgCaption {
+#main .lentacell .cf_spacer {
+  margin-bottom: 0.5em;
+}
+#main .lentacell .bgCaption .share #share {
   margin-bottom: 0.5em;
 }
 #main .lentacell .cnt {
@@ -365,66 +367,86 @@
   height: auto;
   padding-bottom: 0;
   border-radius: 12px;
+  /*&.cf_caption{
+			padding : 0;
+			margin-bottom : 0;
+			
+			#share{
+
+				&.unfocus{
+
+					.attachements{
+						display: none!important;
+					}
+
+					.draggablepart .draggablewrapper>div.draggablemarkerwrapper{
+						display: none;
+					}
+	
+					.absolutetxwrapper{
+						height: 56px;
+	
+						.txtwrapper{
+							height: 100%;
+						}
+					}
+					.txtwrapper{
+						>div{
+							padding : 0 2 * @rhythm;
+							vertical-align: middle;
+	
+							&.iconWrapper{
+								padding : 0;
+							}
+						}
+					}
+					.txt{
+						margin-bottom : 0;
+						.emojionearea{
+							border-radius: 50px;	
+							border : 1px solid rgb(var(--neutral-grad-1));				
+	
+							.emojionearea-button{
+								top : 8px;
+								right : 8px;
+							}
+	
+						}
+						.emojionearea-editor{
+							border-radius: 50px;
+							min-height: 38px;
+							height: 38px;
+							padding-left: 2 * @rhythm;
+							padding-top : 0;
+							padding-bottom : 0;
+							line-height: 36px;
+							
+						}
+	
+						.emojionearea, 
+						.emojionearea.form-control{
+							box-shadow: none;
+						}
+					}
+					.tgs{
+						display: none;
+					}
+	
+					.postlineWrapper{
+						display: none;
+					}
+	
+					.error{
+						display: none;
+					}
+				}
+				
+			}
+		}*/
 }
 #main .bgCaption.sec {
   color: rgb(var(--text-color));
   background: rgb(var(--background-total-theme));
-}
-#main .bgCaption.cf_caption {
-  padding: 0;
-  margin-bottom: 0;
-}
-#main .bgCaption.cf_caption #share.unfocus .attachements {
-  display: none!important;
-}
-#main .bgCaption.cf_caption #share.unfocus .draggablepart .draggablewrapper > div.draggablemarkerwrapper {
-  display: none;
-}
-#main .bgCaption.cf_caption #share.unfocus .absolutetxwrapper {
-  height: 56px;
-}
-#main .bgCaption.cf_caption #share.unfocus .absolutetxwrapper .txtwrapper {
-  height: 100%;
-}
-#main .bgCaption.cf_caption #share.unfocus .txtwrapper > div {
-  padding: 0 1em;
-  vertical-align: middle;
-}
-#main .bgCaption.cf_caption #share.unfocus .txtwrapper > div.iconWrapper {
-  padding: 0;
-}
-#main .bgCaption.cf_caption #share.unfocus .txt {
-  margin-bottom: 0;
-}
-#main .bgCaption.cf_caption #share.unfocus .txt .emojionearea {
-  border-radius: 50px;
-  border: 1px solid rgb(var(--neutral-grad-1));
-}
-#main .bgCaption.cf_caption #share.unfocus .txt .emojionearea .emojionearea-button {
-  top: 8px;
-  right: 8px;
-}
-#main .bgCaption.cf_caption #share.unfocus .txt .emojionearea-editor {
-  border-radius: 50px;
-  min-height: 38px;
-  height: 38px;
-  padding-left: 1em;
-  padding-top: 0;
-  padding-bottom: 0;
-  line-height: 36px;
-}
-#main .bgCaption.cf_caption #share.unfocus .txt .emojionearea,
-#main .bgCaption.cf_caption #share.unfocus .txt .emojionearea.form-control {
-  box-shadow: none;
-}
-#main .bgCaption.cf_caption #share.unfocus .tgs {
-  display: none;
-}
-#main .bgCaption.cf_caption #share.unfocus .postlineWrapper {
-  display: none;
-}
-#main .bgCaption.cf_caption #share.unfocus .error {
-  display: none;
 }
 #main .fxdsmall,
 #main .fxd {

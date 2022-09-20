@@ -594,57 +594,38 @@ var main = (function(){
 
 			lentawithsearch : function(clbk, p){
 
-				if(searchvalue){
+				if(searchvalue || searchtags){
+					if (searchvalue){
+						self.app.platform.sdk.activity.addsearch(searchvalue)
 
-					var value = searchvalue.replace('tag:', "#");
+						self.app.platform.sdk.search.get(searchvalue, 'posts', 0, 10, null, function(r, block){
 
-					var c = deep(self, 'app.modules.menu.module.showsearch')
+							fixedBlock = block
+	
+							result = {
+								posts : r
+							};
+	
+							renders.lenta(clbk, p)
+						})
 
-					if (c)
-
-						c(value)
-
-					self.app.platform.sdk.search.get(searchvalue, 'posts', 0, 10, null, function(r, block){
-
-						if (r.count){
-							self.app.platform.sdk.activity.addsearch(searchvalue)
-						}
-
-						fixedBlock = block
-
-						result = {
-							posts : r
-						};
-
-						renders.lenta(clbk, p)
-					})
-
-				}
-				else{
-					result = {}
-					fixedBlock = null
-
-					var c = deep(self, 'app.modules.menu.module.showsearch')
-
-					if (c){
-
-						if(searchtags){
-
-							var val = _.map(searchtags, function(w){return '#' + w}).join(' ')
-
-							c(val)
-
-							self.app.platform.sdk.activity.addtagsearch(val)
-
-						}
-						else{
-							c('')
-						}
-
+						return
 					}
 
-					renders.lenta(clbk, p)
+					if (searchtags){
+
+						result = {}
+						fixedBlock = null
+
+						renders.lenta(clbk, p)
+
+						var val = _.map(searchtags, function(w){return '#' + w}).join(' ')
+
+						self.app.platform.sdk.activity.addtagsearch(val)
+
+					}
 				}
+
 			},
 
 			lenta : function(clbk, p){
@@ -705,8 +686,8 @@ var main = (function(){
 							hr : 'index?',
 							goback : p.goback,
 							searchValue : searchvalue || null,
-							search : searchvalue ? true : false,
-							tags : searchtags,
+							search : searchvalue || searchtags ? true : false,
+							searchTags : searchtags,
 							read : readmain,
 							video :  videomain && !isMobile(),
 							videomobile : videomain && isMobile(),
@@ -718,7 +699,7 @@ var main = (function(){
 
 							includerec : !searchvalue && !searchtags && (mode == 'index' /*|| mode == 'video' || mode == 'read'*/) ? true : false,
 							includesub : !searchvalue && !searchtags && (mode == 'index' /*|| mode == 'video' || mode == 'read'*/) ? true : false,
-							includeboost : self.app.boost && !self.app.pkoindisable,
+							includeboost : !searchvalue && !searchtags && self.app.boost && !self.app.pkoindisable,
 
 							//optimize : self.app.mobileview,
 							extra : (self.app.test || self.app.platform.istest()) && state && isMobile() ? [

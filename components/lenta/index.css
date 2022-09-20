@@ -75,6 +75,12 @@
 #lenta .mlwr {
   position: relative;
 }
+#lenta .searchInfo {
+  background: rgb(var(--background-total-theme));
+  padding: 1em 0;
+  margin-bottom: 0.5em;
+  border-radius: 12px;
+}
 #lenta .loader {
   /*background: rgb(var(--background-total-theme));*/
   padding: 3em 0;

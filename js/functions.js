@@ -8729,7 +8729,7 @@
 			closeResults : function(){
 				$('html').off('click', helpers.closeclickResults);
 
-					searchEl.removeClass('fastSearchShow');
+				searchEl.removeClass('fastSearchShow');
 			},
 			closeclickResults : function(e){
 				if (!searchEl || (searchEl.has(e.target).length === 0 && searchEl.hasClass('fastSearchShow'))) {

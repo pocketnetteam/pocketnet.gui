@@ -3555,7 +3555,7 @@ var lenta = (function(){
 
 				var tpl = 'groupshares';
 
-				if (essenseData.author || recommended || essenseData.horizontal || essenseData.txids || essenseData.search){
+				if (essenseData.author || recommended || essenseData.horizontal || essenseData.txids || essenseData.searchValue || essenseData.searchTags){
 					tpl = 'shares'
 				}
 
@@ -4238,7 +4238,7 @@ var lenta = (function(){
 								else
 								{
 		
-									if ( !essenseData.txids && (shares.length < pr.count || recommended == 'recommended') && (recommended || author || essenseData.search || essenseData.tags) ){
+									if ( !essenseData.txids && (shares.length < pr.count || recommended == 'recommended') && (recommended || author || essenseData.searchValue || essenseData.searchTags) ){
 		
 										setTimeout(function(){
 											if (el.c)
@@ -4250,7 +4250,7 @@ var lenta = (function(){
 								}
 
 								
-								if ((!shares.length || shares.length < pr.count) && (recommended || author || essenseData.search) && !includingsub){
+								if ((!shares.length || shares.length < pr.count) && (recommended || author || essenseData.searchValue || essenseData.searchTags) && !includingsub){
 
 									if(essenseData.ended) {
 										ended = essenseData.ended(shares)
@@ -4404,7 +4404,7 @@ var lenta = (function(){
 							}
 						}
 						
-						if (essenseData.byauthor && author && !sharesInview.length && !parameters().s && !parameters().ssa){
+						if (essenseData.byauthor && author && !sharesInview.length && !(essenseData.searchValue || essenseData.searchTags)){
 
 							if (self.app.platform.sdk.accountsettings.storage[author]){
 
@@ -4679,7 +4679,7 @@ var lenta = (function(){
 
 		var shownewmaterials = function(c){
 
-			if(/*!beginmaterial &&*/ recommended != 'recommended' && !essenseData.author && !essenseData.search){
+			if(/*!beginmaterial &&*/ recommended != 'recommended' && !essenseData.author && !(essenseData.searchValue || essenseData.searchTags)){
 
 				var ts =  _.toArray(self.sdk.node.transactions.temp.share || {})
 
@@ -5307,9 +5307,6 @@ var lenta = (function(){
 
 				if (typeof essenseData.r != 'undefined' && essenseData.r != null) recommended = essenseData.r;
 
-
-				
-
 				if (essenseData.second){
 					beginmaterial = null
 				}
@@ -5337,7 +5334,7 @@ var lenta = (function(){
 						beginmaterial : beginmaterial,
 						author : essenseData.author,
 						recommended : recommended,
-						filters : essenseData.search || essenseData.tags,
+						filters : essenseData.searchValue || essenseData.searchTags,
 						ed : essenseData
 					};
 

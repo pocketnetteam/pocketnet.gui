@@ -633,13 +633,13 @@ var menu = (function(){
 									menusearch.setactive(false)
 								}
 
-								if(parameters().sst || parameters().ss){
+								/*if(parameters().sst || parameters().ss){
 									self.nav.api.go({
 										href : 'index',
 										history : true,
 										open : true
 									})
-								}
+								}*/
 								
 							},
 
@@ -649,14 +649,14 @@ var menu = (function(){
 
 							active : function(a){
 
-								window.requestAnimationFrame(() => {
+								/*window.requestAnimationFrame(() => {
 									if (a || (parameters().ss || parameters().sst)){
 										el.c.addClass('searchactive')
 									}
 									else{
 										el.c.removeClass('searchactive')
 									}
-								})
+								})*/
 
 							},
 
@@ -972,7 +972,7 @@ var menu = (function(){
 
 			self.app.user.isState(function(state){
 
-				if((parameters().ss || parameters().sst) && (self.app.nav.get.pathname() == 'index')){
+				/*if((parameters().ss || parameters().sst) && (self.app.nav.get.pathname() == 'index')){
 
 					if (menusearch) {
 
@@ -985,7 +985,7 @@ var menu = (function(){
 						
 					}
 
-				}
+				}*/
 				
 			})
 
