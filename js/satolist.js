@@ -29295,7 +29295,7 @@ Platform = function (app, listofnodes) {
                         open: true,
                         href: link,
                         history: true,
-                        handler : true
+                        /*handler : true*/
                     })
                 }
 

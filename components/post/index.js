@@ -459,7 +459,7 @@ var post = (function () {
 								self.app.actions.playingvideo(player)
 
 							if(isMobile() && !ed.repost && !el.c.closest('.wndcontent').length && !ed.openapi){
-								self.app.actions.scroll(125)
+								self.app.actions.scroll(70)
 							}
 						},
 
