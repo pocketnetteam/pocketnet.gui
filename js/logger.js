@@ -97,6 +97,11 @@ class FrontendLogger {
       id: 'USER_REGISTRATION_PROCESS',
       description: 'USER_REGISTRATION_PROCESS',
     },
+
+    APP_LOADED_FROM_EXTERNAL_LINK: {
+      id: 'APP_LOADED_FROM_EXTERNAL_LINK',
+      description: 'User opened Bastyon via an external link',
+    },
   };
 
   errorCounters = {};
@@ -118,7 +123,7 @@ class FrontendLogger {
       .map((err) => _createErrorBody(err));
 
     if (logsBatch.length) {
-      instance.post('front/action', logsBatch.join(','));
+      instance.post('front/action/v2', logsBatch.join(','));
     }
 
     if (errorsBatch.length) {
@@ -160,6 +165,7 @@ class FrontendLogger {
     moduleVersion = '0.0.1',
     userAgent = '',
     guid = '',
+    language = 'no',
   }) {
     const parametersOrder = [
       type,
@@ -169,6 +175,7 @@ class FrontendLogger {
       moduleVersion,
       userAgent,
       guid,
+      language,
     ].map((element) =>
       typeof element !== 'number' ? `'${element}'` : element,
     );
@@ -320,17 +327,21 @@ class FrontendLogger {
       loggerActive,
       logCodes,
       _addLogWithAggregation,
+      app,
     } = this;
 
     if (!loggerActive) return;
 
     const infoType = logCodes[actionId] ? logCodes[actionId].id : '';
+    const language = (app.localization || {}).key || 'no';
+
     const info = {
       type: infoType,
       subType: actionSubType,
       value: actionValue,
       guid,
       userAgent,
+      language,
     };
 
 

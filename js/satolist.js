@@ -7924,6 +7924,17 @@ Platform = function (app, listofnodes) {
             storage: {},
             clbks: {},
 
+            mappings: {
+                loggingMapping: {
+                    1: 'USER_ADDRESS_GENERATED',
+                    2: 'USER_FILLED_ACCOUNT_INFO',
+                    3: 'COINS_REQUEST_SENT',
+                    4: 'COINS_REQUEST_COMPLETED',
+                    5: 'ACCOUNT_CREATING_TRANSACTION_SUCCESS',
+                    6: 'ACCOUNT_SUCCESSFULLY_CREATED',
+                },
+            },
+
             redirect : null,
 
             getredirectFromCurrentPage : function(){
@@ -7955,6 +7966,12 @@ Platform = function (app, listofnodes) {
             },
 
             add: function (address, value) {
+                
+                self.app.Logger.info({
+                    actionId: 'USER_REGISTRATION_PROCESS',
+                    actionSubType: self.sdk.registrations.mappings.loggingMapping[value] || value,
+                    actionValue: bitcoin.crypto.sha256(Buffer.from(address, 'utf8')).toString('hex'),
+                });
 
                 /*if(self.sdk.registrations.storage[address] && self.sdk.registrations.storage[address] > value) return*/
 
@@ -15273,9 +15290,11 @@ Platform = function (app, listofnodes) {
 
                 s.selected[k] || (s.selected[k] = {})
 
+                var categoryNameForLogs = self.sdk.categories.getByIdForLogs(cat.id);
+
                 self.app.Logger.info({
                     actionId: 'SELECT_FEED_CATEGORY',
-                    actionValue: cat.name,
+                    actionValue: categoryNameForLogs.name,
                     actionSubType: s.selected[k][id] ? 'DESELECT' : 'SELECT'
                 });
 
@@ -15375,6 +15394,12 @@ Platform = function (app, listofnodes) {
 				})
 
                 return (categories).concat(added)
+            },
+
+            getByIdForLogs : function(id) {
+                var categories = self.sdk.categories.data.all['en'];
+
+                return categories.find(category => category.id === id) || {};
             },
 
             getbyid : function(id, _k){
@@ -28669,7 +28694,7 @@ Platform = function (app, listofnodes) {
         
 
         app.user.isState(function(state){
-
+            
             if (state) {
 
                 lazyActions([
@@ -28710,6 +28735,11 @@ Platform = function (app, listofnodes) {
                     self.preparingUser = false;
 
                     self.loadingWithErrors = !_.isEmpty(self.app.errors.state)
+
+                    self.app.Logger.info({
+                        actionId: 'SESSION_STARTED',
+                        actionSubType: 'AUTHORIZED_SESSION',
+                    });
 
                     setTimeout(() => {
                         self.matrixchat.init()
@@ -28756,6 +28786,10 @@ Platform = function (app, listofnodes) {
                 })
             }
             else {
+                self.app.Logger.info({
+                    actionId: 'SESSION_STARTED',
+                    actionSubType: 'UNAUTHORIZED_SESSION',
+                });
 
                 self.preparingUser = false;
 
