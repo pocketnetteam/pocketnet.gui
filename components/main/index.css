@@ -234,6 +234,9 @@
   max-width: 720px;
   margin: 0 auto;
 }
+#main .lentacell #lenta .searchInfo {
+  display: none;
+}
 #main .lentacellsvi {
   margin-right: 0;
   padding-top: 0.5em;
@@ -622,6 +625,9 @@ html.mobileview #main .bgCaption {
   #main .lentacell {
     margin-right: 0;
     margin-left: 0;
+  }
+  #main .lentacell #lenta .searchInfo {
+    display: block;
   }
   #main.videomain .lentacell {
     margin-left: 0;

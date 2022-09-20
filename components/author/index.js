@@ -12,6 +12,7 @@ var author = (function(){
 		var upbutton;
 
 		var panel = null, uptimer = null, contentsready = false, fixedBlock = null, acsearch, share = null;
+		var wordsRegExp = /[,.!?;:() \n\r]/g
 
 		var actions = {
 			subscribeLabel : function(){
@@ -883,7 +884,7 @@ var author = (function(){
 					self.shell(pp, function(p){
 
 						if(!self.app.curation()){
-							if(self.user.isItMe(author.address) && !params.search) renders.share(_el)
+							if(self.user.isItMe(author.address) && !params.searchValue && !params.searchTags) renders.share(_el)
 
 						
 							self.nav.api.load({
@@ -951,8 +952,23 @@ var author = (function(){
 			
 									events : {							
 										search : function(value, clbk, e, helpers){
+
+											var href = '';
+
+											if (value.indexOf('#') > -1){
+
+												var wordsRegExp = /[,.!?;:() \n\r]/g
+
+												var words = _.uniq(_.filter(value.replace(/#/g, '').split(wordsRegExp), function(r){
+													return r
+												}));
+
+												href = '?report=shares&ssat=' + words.join(' ')
+											}
+											else{
+												href = '?report=shares&ssa=' + value
+											}
 			
-											var href = '?report=shares&ssa=' + value.replace("#", 'tag:')
 											clearsearch(true)
 			
 											var p = {
@@ -963,6 +979,8 @@ var author = (function(){
 											}	
 			
 											self.nav.api.go(p)
+
+											
 			
 											if (clbk)
 												clbk(true)
@@ -978,10 +996,6 @@ var author = (function(){
 								})
 
 
-								if (parameters().ssa){
-									c.addClass('searchactive')
-									c.find('.search input').val(parameters().ssa)
-								}
 
 								if(isTablet()){
 									c.addClass('searchactive')
@@ -1008,6 +1022,10 @@ var author = (function(){
 					byauthor : true,
 					hr : hr,
 					optimize : self.app.mobileview,
+					cancelsearch : function(){
+						console.log("clearsearch")
+						clearsearch()
+					},
 					renderclbk : function(){
 	
 
@@ -1057,6 +1075,17 @@ var author = (function(){
 						}
 					}
 
+					if (parameters().ssat){
+						var tgsi = decodeURI(parameters().ssat || '')
+
+						var words = _.uniq(_.filter(tgsi.split(wordsRegExp), function(r){
+							return r
+						}));
+
+						params.searchTags = words.length ? words : null
+
+					}
+
 					load()
 
 				}
@@ -1078,7 +1107,7 @@ var author = (function(){
 		var result = null;
 
 		var clearsearch = function(light){
-			if (parameters().ssa){
+			if (parameters().ssa || parameters().ssat){
 
 				self.app.platform.sdk.search.clear()
 
@@ -1086,7 +1115,7 @@ var author = (function(){
 				fixedBlock = null
 
 				if(!light){
-					self.app.nav.api.history.removeParameters(['ssa'])
+					self.app.nav.api.history.removeParameters(['ssa', 'ssat'])
 					renders.report(reports.shares, true)
 				}
 			}
@@ -1133,9 +1162,7 @@ var author = (function(){
 			posts : function(clbk, start, count){
 				self.app.platform.sdk.search.get(parameters().ssa, 'posts', start, count, fixedBlock || null, function(r, block){
 
-
 					fixedBlock = block
-
 					
 					result || (result = r);
 
@@ -1423,7 +1450,7 @@ var author = (function(){
 						return r.active
 					})
 
-					if (active && (active.id == r || (!r && active.id == 'shares') ) && !parameters().ssa){
+					if (active && (active.id == r || (!r && active.id == 'shares') ) && !parameters().ssa && !parameters().ssat){
 						return
 					}
 

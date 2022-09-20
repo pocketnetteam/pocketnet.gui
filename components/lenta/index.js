@@ -3193,6 +3193,12 @@ var lenta = (function(){
 								if(essenseData.searchValue){
 									p.el.find('.canmark').mark(essenseData.searchValue);
 								}
+
+								if(essenseData.searchTags){
+									p.el.find('.canmark').mark(_.map(essenseData.searchTags, (t) => {
+										return '#' + t
+									}).join(' '));
+								}
 	
 								if(!video) actions.initVideoLight(share)
 	
@@ -4550,7 +4556,7 @@ var lenta = (function(){
 								tagsexcluded = self.app.platform.sdk.categories.gettagsexcluded()
 							}
 
-							if (essenseData.tags) tagsfilter = essenseData.tags
+							if (essenseData.searchTags) tagsfilter = essenseData.searchTags
 
 							var page = essenseData.page || parameters().page || 0
 
@@ -4741,6 +4747,10 @@ var lenta = (function(){
 			el.c.on('click', '.fromrecommendationslabel', events.recommendationinfo)
 
 			el.c.on('click','.openauthorwindow', events.openauthorwindow)
+
+			el.c.find('.cancelsearch').on('click', function(){
+				if(essenseData.cancelsearch) essenseData.cancelsearch()
+			})
 
 			el.c.find('.networkErrorMessage button').on('click', function(){
 

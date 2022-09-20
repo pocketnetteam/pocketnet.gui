@@ -86,8 +86,30 @@
 	.searchInfo{
 		background: rgb(var(--background-total-theme));
 		padding : 2 * @rhythm 0;
+		padding-top: 3 * @rhythm;
 		margin-bottom: @rhythm;
+		text-align: center;
 		border-radius: 12px;
+
+		.searchcaption{
+			span{
+				font-size: 1em;
+				color : rgb(var(--neutral-grad-3));
+			}
+		}
+
+		.cancelsearch{
+			margin-top: 2 * @rhythm;
+		}
+		
+		.value{
+			span{
+				font-weight: 700;
+				color : rgb(var(--neutral-grad-4));
+				font-size: 2em;
+			}
+			
+		}
 	}
 	
 	
@@ -887,7 +909,12 @@
 			display: none;
 		}
 
-		
+		.searchInfo{
+			display: block;
+			padding-left : 2 * @rhythm;
+			padding-right : 2 * @rhythm;
+			border-radius: 0;
+		}
 		
 
 		.share{

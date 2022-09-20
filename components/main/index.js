@@ -623,8 +623,12 @@ var main = (function(){
 
 						self.app.platform.sdk.activity.addtagsearch(val)
 
+						return
 					}
 				}
+
+
+				renders.lenta(clbk, p)
 
 			},
 
@@ -714,6 +718,21 @@ var main = (function(){
 									}
 								}
 							] : [],
+
+							cancelsearch : function(){
+								var backlink = 'index'
+
+								if (parameters().video) backlink = 'index?video=1'
+								if (parameters().read) backlink = 'index?read=1'
+
+
+								self.nav.api.load({
+									open : true,
+									href : backlink,
+									history : true,
+									handler : true
+								})
+							},
 
 							afterload : function(ed, s, e){
 

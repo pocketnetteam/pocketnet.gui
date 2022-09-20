@@ -371,7 +371,10 @@ var menu = (function(){
 
 					if (menusearch) {
 						menusearch.setactive(true)
-						menusearch.focus()
+						window.requestAnimationFrame(() => {
+							menusearch.focus()
+
+						})
 					}
 
 					
@@ -432,6 +435,7 @@ var menu = (function(){
 								self.app.nav.api.links(null, el, function(){
 
 									helpers.closeResults()
+									menusearch.setactive(false)
 
 								});
 
@@ -448,6 +452,7 @@ var menu = (function(){
 									})
 
 									helpers.closeResults()
+									menusearch.setactive(false)
 
 									close()
 
@@ -618,7 +623,10 @@ var menu = (function(){
 
 								self.nav.api.go(p)
 
-								helpers.closeResults()
+								//helpers.closeResults()
+
+								menusearch.clear()
+								//menusearch.setactive(false)
 
 								if (clbk)
 									clbk(true)
@@ -649,19 +657,19 @@ var menu = (function(){
 
 							active : function(a){
 
-								/*window.requestAnimationFrame(() => {
-									if (a || (parameters().ss || parameters().sst)){
+								window.requestAnimationFrame(() => {
+									if (a){
 										el.c.addClass('searchactive')
+										//menusearch.focus()
 									}
 									else{
 										el.c.removeClass('searchactive')
 									}
-								})*/
+								})
 
 							},
 
 							blur : function(value){
-
 								setTimeout(function(){
 									if(!isTablet()){
 										menusearch.setactive(false)

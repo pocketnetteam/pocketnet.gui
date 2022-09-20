@@ -8816,6 +8816,8 @@
 			fastsearch : function(el, e, _currentFastId){
 				var value = el.val();
 
+				if(!searchEl) return
+
 				if (value && p.events && p.events.fastsearch &&!bsActive){
 
 					searchEl.addClass('searchActive')
