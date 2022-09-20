@@ -205,9 +205,9 @@ _l.usavechanges = "Do you want to save your changes?";
 //statistic
 
 _l.referralsCount = 'Users who have used the referral link.';
-_l.commentatorsCount_0 = 'Users have commented on you more than 1 time';
-_l.commentatorsCount_1 = 'Users have commented on you more than 3 times';
-_l.commentatorsCount_2 = 'Users have commented on you more than 7 times';
+_l.commentatorsCount = function(limit){
+    return `Users have commented on you more than ${limit + (limit === 1 ? ' time' : ' times')}`;
+};
 _l.from = 'Period: ';
 _l.to = 'to';
 _l.empty = 'Information not found';

@@ -300,7 +300,8 @@ Platform = function (app, listofnodes) {
     self.whiteList = [
       'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd',
       'PJ3nv2jGyW2onqZVDKJf9TmfuLGpmkSK2X',
-      'TAqR1ncH95eq9XKSDRR18DtpXqktxh74UU'
+      'TAqR1ncH95eq9XKSDRR18DtpXqktxh74UU',
+      'TFkhfcxXSWX5SsLcjhdiSDHEepWUcb7yi3',
     ];
 
     if (window.IpcBridge)
