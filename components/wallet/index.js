@@ -855,7 +855,7 @@ var wallet = (function(){
 					self.app.platform.sdk.wallet.txbase(addresses, _.clone(outputs), 0, feesMode, function(err, inputs, _outputs){
 
 						if(err){
-							sitemessage(err)
+							sitemessage(self.app.localization.e('txbase_err_' + err))
 
 							return
 						}
@@ -2234,6 +2234,11 @@ var wallet = (function(){
 
 			buy : function(clbk, _el){
 
+				if (self.app.pkoindisable || (typeof self.app.platform.sdk.user.myaccauntdeleted != 'undefined' && self.app.platform.sdk.user.myaccauntdeleted())){
+					clbk()
+					return
+				}
+
 				var a = self.app.platform.sdk.address.pnet() || {}
 
 				self.shell({
@@ -2790,8 +2795,8 @@ var wallet = (function(){
 									el.c.removeClass('loading')
 								})
 							}
-
-							if(_p.action == 'buy'){
+						
+							if(_p.action == 'buy' && !self.app.pkoindisable){
 								actions.showBuyInStep('buy', 1, '', function(){
 									el.c.removeClass('loading')
 								})
@@ -2817,7 +2822,7 @@ var wallet = (function(){
 			wnd : {
 				//header : 'rwallet',
 				class : 'withoutButtons walletwindow normalizedmobile maxheight',
-				parallaxselector : '.wndback,.wndheader'
+				//parallaxselector : '.wndback,.wndheader'
 			}
 		}
 	};
@@ -2836,7 +2841,9 @@ var wallet = (function(){
 
 		_.each(essenses, function(essense){
 
-			essense.destroy();
+			window.requestAnimationFrame(() => {
+				essense.destroy();
+			})
 
 		})
 

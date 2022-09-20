@@ -462,7 +462,7 @@
 			nooverflow = (p.nooverflow || /*app.scrollRemoved || */p.pip),
 			el = p.el || p.app.el.windows;
 
-
+		var penable = false
 
 		var parallax = null
 		var showmoremobile = false
@@ -472,6 +472,7 @@
 
 		var wnd;
 		var cnt = null
+		var cntj = null
 
 		var find = function(s){
 			if (wnd) return wnd.find(s);
@@ -549,7 +550,7 @@
 							(app ? ( app.localization.e(button.text) || button.text || '') :
 							(button.text || '')) )
 
-						var hb = '<div><div class="button '+(button.class || "")+'" bi="'+i+'">'+txt+'</div></div>'
+						var hb = '<div class="button '+(button.class || "")+'" bi="'+i+'">'+txt+'</div>'
 
 						h += hb
 
@@ -572,93 +573,100 @@
 
 			var hiddenState = el.find('.hiddenState')
 
-			if (hiddenState.length){
-				hiddenState.before(wnd)
-			}	
-			else{	
-				el.append(wnd);
-			}
-			
+			window.requestAnimationFrame(() => {
 
-			wnd.find("._close").on('click', function(){
-				actions["close"](true);
-			});
+				if (hiddenState.length){
+					hiddenState.before(wnd)
+				}	
+				else{	
+					el.append(wnd);
+				}
+				
 
-			wnd.find("._expand").on('click', function(){
-				actions["expand"](true);
-			});
+				wnd.find("._close").on('click', function(){
+					actions["close"](true);
+				});
 
-			wnd.find("._changeplace").on('click', function(){
+				wnd.find("._expand").on('click', function(){
+					actions["expand"](true);
+				});
 
-				var cur = localStorage['pipposition'] || 'default'
+				wnd.find("._changeplace").on('click', function(){
 
-				cur = nextElCircle(pippositions, cur)
+					var cur = localStorage['pipposition'] || 'default'
 
-				localStorage['pipposition'] = cur
+					cur = nextElCircle(pippositions, cur)
 
-				wnd.attr('position', cur)
+					localStorage['pipposition'] = cur
 
-			});
+					wnd.attr('position', cur)
 
+				});
 
+				if (!p.noButtons) {
+					_.each(p.buttons, function(button, i){
+						var _el = wnd.find('.wndinner>div.buttons .button[bi="'+i+'"]')
 
+						var fn = button.fn || actions[button.action] || actions["close"];
 
-			////TODO
-
-			if (!p.noButtons) {
-				_.each(p.buttons, function(button, i){
-					var _el = wnd.find('.wndinner>div.buttons .button[bi="'+i+'"]')
-
-					var fn = button.fn || actions[button.action] || actions["close"];
-
-					_el.on('click', function(){fn(wnd, self)});
-				})
-			}
-
-			app.actions.playingvideo(null);
-
-			if(p.class) wnd.addClass(p.class);
-
-			wnd.css("display", "block");
-			wnd.addClass('asette')
-
-			if(p.showbetter) wnd.addClass('showbetter')
-
-
-			setTimeout(function(){
-				wnd.addClass('sette')
-			}, 20)
-
-			setTimeout(function(){
-				wnd.removeClass('asette')
-
-				if(!nooverflow){
-					app.actions.offScroll(wnd);
+						_el.on('click', function(){fn(wnd, self)});
+					})
 				}
 
-				if(app.mobileview && (wnd.hasClass('normalizedmobile'))){
+				app.actions.playingvideo(null);
 
-					setTimeout(function(){
+				if(p.class) wnd.addClass(p.class);
 
-						if(clbk) clbk()
+				wnd.css("display", "block");
+				wnd.addClass('asette')
+
+				if(p.showbetter) wnd.addClass('showbetter')
+
+
+				setTimeout(function(){
+					window.requestAnimationFrame(() => {
+						wnd.addClass('sette')
+					})
+					
+				}, 20)
+
+				setTimeout(function(){
+					window.requestAnimationFrame(() => {
+						wnd.removeClass('asette')
+					})
+					
+
+					if(!nooverflow){
+						app.actions.offScroll(wnd);
+					}
+
+					if((wnd.hasClass('normalizedmobile'))){
 
 						setTimeout(function(){
-							if (wnd)
-								wnd.find('.wndcontent>div').css('opacity', 1)
-						}, 100)
 
-					}, 30)
+							if(clbk) clbk()
+
+							setTimeout(function(){
+								window.requestAnimationFrame(() => {
+									if (wnd)
+										wnd.find('.wndcontent>div').css('opacity', 1)
+								})
+							}, 100)
+
+						}, 30)
+
+					}
+
+				}, 220)
+
+				if((wnd.hasClass('normalizedmobile'))){
 
 				}
+				else{
+					if(clbk) clbk()
+				}
 
-			}, 220)
-
-			if(app.mobileview && (wnd.hasClass('normalizedmobile'))){
-
-			}
-			else{
-				if(clbk) clbk()
-			}
+			})
 
 
 		}
@@ -685,27 +693,18 @@
 
 		}
 
-		var initevents = function(){
-
-			if(!p.noCloseBack)
-				wnd.find('.wndback').one('click', function(){
-
-					if(p.allowHide && self.minimizeOnBgClick){
-						actions.hide()
-					}
-					else{
-						actions.close(true)
-					}
-					
-				});
-
-			if (p.allowHide) {
-				wnd.find('.hideButton').on('click', actions.hide);
-				wnd.find('.closeButton').on('click', actions.close);
-				wnd.find('.expandButton').on('click', actions.show);
+		var destroySwipable = function(){
+			if (parallax){
+				parallax.clear()
+				parallax.destroy()
+				parallax = null
 			}
+		}
 
-			if(isTablet() && (wnd.hasClass('normalizedmobile'))){
+		var initSwipable = function(){
+
+
+			if(isTablet() && !parallax && penable){
 
 				var trueshold = 20
 
@@ -735,7 +734,13 @@
 							return true;
 						}
 
-						return sel.scrollTop == 0
+						if (sel.scrollTop == 0){
+
+							if (isios())
+								sel.scrollTop = 1
+
+							return true
+						}
 					},
 
 					restrict : true,
@@ -747,27 +752,73 @@
 
 				}
 
+			console.log('initSwipable')
+
+
 				parallax = new SwipeParallaxNew({
 
-					///,.wndinner
-
-					el : wnd.find(p.parallaxselector || '.wndback,.wndheader'),
+					el : wnd.find(p.parallaxselector || '.wndinner'),
 					transformel : wnd.find('.wndinner'),
 					allowPageScroll : 'vertical',
 					directions : {
 						down : down
 					}
-
-
+	
+	
 				}).init()
+			}
+			
+		}
 
+		var scrolling = function(){
+			if (cntj){
+				if(!cntj.scrollTop || (isios() && cntj.scrollTop <= 1)){
+					initSwipable()
+				}
+				else{
+					destroySwipable()
+				}
+			}	
+		}
+
+		var initevents = function(){
+
+			if(!p.noCloseBack)
+				wnd.find('.wndback').one('click', function(){
+
+					if(p.allowHide && self.minimizeOnBgClick){
+						actions.hide()
+					}
+					else{
+						actions.close(true)
+					}
+					
+				});
+
+			if (p.allowHide) {
+				wnd.find('.hideButton').on('click', actions.hide);
+				wnd.find('.closeButton').on('click', actions.close);
+				wnd.find('.expandButton').on('click', actions.show);
+			}
+
+			
+
+			if(isTablet() && (wnd.hasClass('normalizedmobile'))){
 
 				cnt = wnd.find('.wndcontent')
+
+				penable = true
 
 				/*if(!p.showbetter)
 					cnt.on('scroll', _.throttle(wndcontentscrollmobile, 50))*/
 
 			}
+
+			initSwipable()
+
+			cntj = wnd.find('.wndcontent')[0];
+
+			wnd.find('.wndcontent').on('scroll', _.throttle(scrolling, 50))
 
 			app.events.resize[id] = resize
 			app.events.scroll[id] = wndfixed
@@ -778,6 +829,7 @@
 		var clearmem = function(){
 			wnd = null;
 			cnt = null
+			cntj = null
 
 			self.el = null
 			self.close = null
@@ -820,11 +872,7 @@
 
 				closing = true
 
-				if (parallax) {
-					parallax.clear()
-					parallax.destroy()
-					parallax = null
-				}
+				destroySwipable()
 
 				if(cl) if(p.closecross) p.closecross(wnd, self);
 
@@ -863,9 +911,7 @@
 				wnd.addClass('hiddenState');
 
 				wnd.find('.wndcontent > div').addClass('rolledUp');
-				/*wnd.find('.expandButton').removeClass('hidden');
-				wnd.find('.closeButton').addClass('hidden');
-				wnd.find('.hideButton').addClass('hidden');*/
+			
 
 				if(!nooverflow) {
 					app.actions.onScroll();
@@ -879,9 +925,7 @@
 				wnd.find('.buttons').removeClass('hidden');
 				wnd.removeClass('hiddenState');
 				wnd.find('.wndcontent > div').removeClass('rolledUp');
-				/*wnd.find('.expandButton').addClass('hidden');
-				wnd.find('.closeButton').removeClass('hidden');
-				wnd.find('.hideButton').removeClass('hidden');*/
+			
 
 				if(!nooverflow) {
 					app.actions.offScroll(wnd);
@@ -1028,10 +1072,11 @@
 			})
 
 			h += '</div>'
+			
 
 			h += '<div class="closeButton">'
 				h += '<div class="item itemclose">'
-					h += '<i class="fas fa-times-circle"></i>'
+					h+='<i class="far fa-times-circle"></i> '+app.localization.e('close')+''
 				h += '</div>'
 			h += '</div>'
 
@@ -1782,11 +1827,14 @@
 			messageel.removeClass('removing')
 		})
 
-		setTimeout(function () {
+		if(delay != 'inf')
 
-			destroy()
+			setTimeout(function () {
+				destroy()
+			}, delay)
 
-		}, delay)
+
+		return destroy
 	}
 /* ______________________________ */
 
@@ -1854,24 +1902,34 @@
 					return Promise.resolve()
 				}
 
+				el.setAttribute('data-image', src)
+
 				var image = new Image()
 
 				src = src.replace('bastyon.com:8092', 'pocketnet.app:8092').replace('test.pocketnet', 'pocketnet')
-
+				
 				image.src = src
 				image.onload = () => {
-					el.setAttribute('image', '*')
-					el.setAttribute('imageloaded', 'true')
-					el.style['background-image'] = 'url('+src+')';
-					el.style['background-size'] = 'cover';
-					el.style['background-position'] = 'center center';
-					el.style['background-repeat'] = 'no-repeat';
+
+					window.requestAnimationFrame(() => {
+						
+						el.setAttribute('image', '*')
+						el.setAttribute('imageloaded', 'true')
+						el.style['background-image'] = 'url('+src+')';
+						el.style['background-size'] = 'cover';
+						el.style['background-position'] = 'center center';
+						el.style['background-repeat'] = 'no-repeat';
+
+					})
 
 					resolve()
 				}
 
 				image.onerror = () => {
-					el.setAttribute('image', '*')
+
+					window.requestAnimationFrame(() => {
+						el.setAttribute('image', '*')
+					})
 
 					resolve()
 				}
@@ -1882,6 +1940,112 @@
 			if(typeof p.clbk === 'function') p.clbk(image);
 		})
 
+	}
+
+	carousel = function(el, _items, _container){
+
+		var self = this
+
+		var items = el.find(_items)
+		var container = el.find(_container)
+
+		var markershtml = ''
+		var markers = null
+		var currentscroll = 0
+		var currentitem = 0
+
+		window.requestAnimationFrame(() => {
+			if(!container.hasClass('carousel')) container.addClass('carousel')
+
+			for(var i = 0; i < items.length; i++){
+				markershtml+= '<div index="'+i+'" class="'+(!i ? 'active' : '')+'"><div></div></div>'
+			}
+
+			el.append('<div class="carousel_markers">'+markershtml+'</div>')
+
+			items.addClass('carousel_item')
+
+			markers = el.find('.carousel_markers >div')
+
+			markers.on('click', function() {
+				gotoslide(this.getAttribute('index'))
+				console.log(this)
+			})
+	
+		})
+
+		var findactive = function(){
+			
+			var activeindex = -1
+			
+			
+			_.find(items, (item, index) => {
+
+
+				if (Math.abs(currentscroll - item.offsetLeft) < 1){
+					activeindex = index
+
+					return true
+				} 
+			})
+
+			return activeindex
+
+		}
+
+		var setactive = function(index){
+
+			if(index == currentitem) return
+
+			currentitem = index
+
+			if (markers){
+				markers.removeClass('active')
+				markers[index].classList.add('active')
+			}
+		}
+
+		var gotoslide = function(index){
+			window.requestAnimationFrame(() => {
+
+				console.log('index', index, items[index].offsetLeft)
+				container[0].scrollLeft = items[index].offsetLeft
+
+			})
+
+			//container.scrollTo(items[index].offsetLeft)
+			
+		}
+
+		var scrollevent = _.throttle((el) => {
+
+			currentscroll = el.scrollLeft
+
+			window.requestAnimationFrame(() => {
+				var activeindex = findactive()
+
+				if (activeindex > -1){
+					setactive(activeindex)
+				}
+			})
+
+		}, 50)
+
+		container.on('scroll', () => {
+			scrollevent(container[0])
+		})
+
+		
+		self.destroy = function(){
+			container.off('scroll')
+			markers.off('click')
+			el = null
+			container = null
+			items = null
+			markers = null
+		}
+
+		return self
 	}
 
 	pathFromMD5Name = function(name){
@@ -4398,7 +4562,6 @@
 				var _change = function(){
 					var value = $(this).val();
 
-
 					if(parameter.type == 'boolean')
 						value = $(this).is(":checked") ? 1 : 0;
 
@@ -4448,9 +4611,15 @@
 				}
 
 				if (parameter.type == 'number'){
-					_el.on('keyup', function(){
+					_el.on('keyup', function(e){
+
+						if(e.originalEvent.key == '.' || e.originalEvent.key == ',' || e.originalEvent.key == 'Backspace'){
+							return false
+						}
 
 						var value = $(this).val();
+
+						console.log('value', value)
 
 						if(!value || value == '0') {
 
@@ -4459,15 +4628,33 @@
 
 						if(value.length > 1) {
 
-							if (value[0] == '0')
-								value = value.substr(1)
+							if (value[0] == '0') value = value.substr(1)
 
 							var l = value[value.length - 1]
 
-							if(l == '.' || l == '0' || l == ',') return
+							var hassep = value.indexOf('.') > -1 || value.indexOf(',') > -1
+
+							console.log('hassep', hassep)
+
+							if(l == '.' || (l == '0' && hassep) || l == ',') {
+								console.log("HERE")
+								return false
+							}
 						}
 
+
 						if(!isNaN(Number(value))){
+
+							
+
+							var max = deep(parameter, 'format.max')
+							var min = deep(parameter, 'format.min')
+
+							console.log('max', max)
+							console.log('min', min)
+
+							if(typeof max != 'undefined' && max < value) value = max
+							if(typeof min != 'undefined' && min > value) value = min
 
 							value = dround(value, deep(parameter, 'format.Precision') || 0)
 
@@ -6898,10 +7085,9 @@
 
 				}
 
-				if(!direction) return
 
-				if(!p.directions[direction]){
-					return
+				if(!direction || !p.directions[direction]) {
+					return true
 				}
 
 				var dir = p.directions[direction]
@@ -6918,6 +7104,11 @@
 					}
 
 					return false
+				}
+
+				if (e.cancelable !== false){
+					e.stopPropagation();
+					e.preventDefault();
 				}
 
 				if (phase == 'start'){
@@ -8940,12 +9131,15 @@
 	initUpload = function(p){
 		if(!p) p = {};
 
+
 		var el = p.el,
 			multiple = p.multiple || false,
 			maxFileSize = (p.maxFileSize || 30) * 1024 * 1024,
 			dropZone,
 			input,
 			mode = p.mode || "FS";
+
+		var app = p.app
 
 		if(!p.data) p.data = {};
 
@@ -9373,31 +9567,44 @@
 
 		var initEvents = function(){
 
-			if(!dropZone[0]) return
+			if (dropZone[0]) {
+				dropZone[0].ondragover = function() {
+					dropZone.addClass('hover');
+					return false;
+				};
+	
+				dropZone.on('dragout',function(event){
+	
+					dropZone.removeClass('hover');
+					return false;
+	
+				});
+	
+				dropZone[0].ondrop = upload;
+			}
 
-			dropZone[0].ondragover = function() {
-			    dropZone.addClass('hover');
-			    return false;
-			};
+			if(p.uploadImage && app && app.mobile.supportimagegallery()){
 
-		/*	dropZone[0].ondragleave = function() {
-			    dropZone.removeClass('hover');
-			    return false;
-			};*/
+				input.on('click', function(e){
 
-			dropZone.on('dragout',function(event){
+					app.platform.ui.uploadImage(p)
 
-				dropZone.removeClass('hover');
-			    return false;
+					e.stopPropagation()
 
-			});
+					return false
+	
+				});
 
-			dropZone[0].ondrop = upload;
+				return
+			}
+			
 			input.on('change', upload);
 
 			input.on(clickAction(), function(){
+
 				if (p.onStart)
 					p.onStart();
+
 			});
 		}
 
@@ -9427,6 +9634,7 @@
 
 		init();
 	}
+
 
 	checkboxValue = function(el, value){
 
@@ -10279,7 +10487,8 @@
 	}
 
 	clearTagString = function(t){
-		return trim(t.substr(0, 25).toLowerCase().replace(/[\-=!"#%&'*{},.\/:;?\(\)\[\]@\\$\^*+<>~`\u00a1\u00a7\u00b6\u00b7\u00bf\u037e\u0387\u055a-\u055f\u0589\u05c0\u05c3\u05c6\u05f3\u05f4\u0609\u060a\u060c\u060d\u061b\u061e\u061f\u066a-\u066d\u06d4\u0700-\u070d\u07f7-\u07f9\u0830-\u083e\u085e\u0964\u0965\u0970\u0af0\u0df4\u0e4f\u0e5a\u0e5b\u0f04-\u0f12\u0f14\u0f85\u0fd0-\u0fd4\u0fd9\u0fda\u104a-\u104f\u10fb\u1360-\u1368\u166d\u166e\u16eb-\u16ed\u1735\u1736\u17d4-\u17d6\u17d8-\u17da\u1800-\u1805\u1807-\u180a\u1944\u1945\u1a1e\u1a1f\u1aa0-\u1aa6\u1aa8-\u1aad\u1b5a-\u1b60\u1bfc-\u1bff\u1c3b-\u1c3f\u1c7e\u1c7f\u1cc0-\u1cc7\u1cd3\u2016\u2017\u2020-\u2027\u2030-\u2038\u203b-\u203e\u2041-\u2043\u2047-\u2051\u2053\u2055-\u205e\u2cf9-\u2cfc\u2cfe\u2cff\u2d70\u2e00\u2e01\u2e06-\u2e08\u2e0b\u2e0e-\u2e16\u2e18\u2e19\u2e1b\u2e1e\u2e1f\u2e2a-\u2e2e\u2e30-\u2e39\u3001-\u3003\u303d\u30fb\ua4fe\ua4ff\ua60d-\ua60f\ua673\ua67e\ua6f2-\ua6f7\ua874-\ua877\ua8ce\ua8cf\ua8f8-\ua8fa\ua92e\ua92f\ua95f\ua9c1-\ua9cd\ua9de\ua9df\uaa5c-\uaa5f\uaade\uaadf\uaaf0\uaaf1\uabeb\ufe10-\ufe16\ufe19\ufe30\ufe45\ufe46\ufe49-\ufe4c\ufe50-\ufe52\ufe54-\ufe57\ufe5f-\ufe61\ufe68\ufe6a\ufe6b\uff01-\uff03\uff05-\uff07\uff0a\uff0c\uff0e\uff0f\uff1a\uff1b\uff1f\uff20\uff3c\uff61\uff64\uff65]+/g, ""))
+
+		return trim(t.substr(0, 25).toLowerCase().replace(/[\-=!"#%&'*{},.\/:;?\(\)\[\]@\\$\^*+<>~`\u00a1\u00a7\u00b6\u00b7\u00bf\u037e\u0387\u055a-\u055f\u0589\u05c0\u05c3\u05c6\u05f3\u05f4\u0609\u060a\u060c\u060d\u061b\u061e\u061f\u066a-\u066d\u06d4\u0700-\u070d\u07f7-\u07f9\u0830-\u083e\u085e\u0964\u0965\u0970\u0af0\u0df4\u0e4f\u0e5a\u0e5b\u0f04-\u0f12\u0f14\u0f85\u0fd0-\u0fd4\u0fd9\u0fda\u104a-\u104f\u10fb\u1360-\u1368\u166d\u166e\u16eb-\u16ed\u1735\u1736\u17d4-\u17d6\u17d8-\u17da\u1800-\u1805\u1807-\u180a\u1944\u1945\u1a1e\u1a1f\u1aa0-\u1aa6\u1aa8-\u1aad\u1b5a-\u1b60\u1bfc-\u1bff\u1c3b-\u1c3f\u1c7e\u1c7f\u1cc0-\u1cc7\u1cd3\u2016\u2017\u2020-\u2027\u2030-\u2038\u203b-\u203e\u2041-\u2043\u2047-\u2051\u2053\u2055-\u205e\u2cf9-\u2cfc\u2cfe\u2cff\u2d70\u2e00\u2e01\u2e06-\u2e08\u2e0b\u2e0e-\u2e16\u2e18\u2e19\u2e1b\u2e1e\u2e1f\u2e2a-\u2e2e\u2e30-\u2e39\u3001-\u3003\u303d\u30fb\ua4fe\ua4ff\ua60d-\ua60f\ua673\ua67e\ua6f2-\ua6f7\ua874-\ua877\ua8ce\ua8cf\ua8f8-\ua8fa\ua92e\ua92f\ua95f\ua9c1-\ua9cd\ua9de\ua9df\uaa5c-\uaa5f\uaade\uaadf\uaaf0\uaaf1\uabeb\ufe10-\ufe16\ufe19\ufe30\ufe45\ufe46\ufe49-\ufe4c\ufe50-\ufe52\ufe54-\ufe57\ufe5f-\ufe61\ufe68\ufe6a\ufe6b\uff01-\uff03\uff05-\uff07\uff0a\uff0c\uff0e\uff0f\uff1a\uff1b\uff1f\uff20\uff3c\uff61\uff64\uff65]+/g, "")).replace(/[ ]+/g, ' ').replace(/ /g, '_')
 	}
 	
 
@@ -10723,6 +10932,14 @@ Base64Helper = {
         reader.onerror = error => reject(error);
     }),
 
+	fromFileToBase64: file => new Promise((resolve, reject) => {
+        const reader = new FileReader();
+
+        reader.readAsBinaryString(file);
+        reader.onloadend = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+    }),
+
     toFileFetch: function (base64) {
         return fetch(base64).then(res => {
             return res.blob()
@@ -10759,6 +10976,63 @@ Base64Helper = {
 
 
 }
+
+var fkit = {
+    extensions : {
+        'image/png' : 'png',
+        'image/jpeg' : 'jpg',
+        'image/jpg' : 'jpg',
+        'image/webp' : 'webp',
+        'image/jfif' : 'jfif'
+    },
+    getExtension: function (file) {
+        var name = file.name.split('.');
+        var ext = name[name.length - 1].toLowerCase();
+
+        return ext;
+    },
+    getName: function (file) {
+        var name = file.name.split('.');
+            name.pop()
+
+        return name.join('.');
+    },
+    checkExtension: function (file, extensions = []) {
+
+        if (extensions.length) {
+            if (_.indexOf(extensions, fkit.getExtension(file)) == -1) return false
+        }
+
+        return true;
+    }
+}
+
+fetchLocal = function (url, name = 'file') {
+    return new Promise(function (resolve, reject) {
+        var xhr = new XMLHttpRequest
+
+        xhr.onload = function () {
+
+            var type = xhr.getResponseHeader('content-type')
+
+            name = name + fkit.extensions[type] ? ('.' + fkit.extensions[type]) : ''
+
+            resolve({
+                data: new Blob([xhr.response], { type: type, name: name })
+            })
+
+            // resolve()
+        }
+
+        xhr.onerror = function () {
+            reject(new TypeError('Local request failed'))
+        }
+
+        xhr.open('GET', url)
+        xhr.responseType = "arraybuffer";
+        xhr.send(null)
+    })
+};
 
 /* ______________________________ */
 
@@ -11031,7 +11305,9 @@ edjsHTML = function() {
 					return '<div class="js-player" data-plyr-provider="youtube" data-plyr-embed-id="'+_.escape(t.embed)+'"></div>';
 
 				default:
-                    throw new Error("Only Youtube and Vime Embeds are supported right now.")
+					//console.log(t)
+					//return '<iframe src="'+t.embed+'"></iframe>'
+					return '<div class="unsupportedplayer">Only Youtube and Vimeo Embeds are supported right now.</div>';
             }
         },
 
@@ -11359,7 +11635,6 @@ function syntaxHighlight(json) {
 if(typeof window != 'undefined'){
 
 
-
 	var splashScreen = document.getElementById('splashScreen');
 
 	if (splashScreen) {
@@ -11409,13 +11684,13 @@ if(typeof window != 'undefined'){
 				}, zoomOutDuration * 2);
 			}
 			// Wait until half the rotation is done
-			setTimeout(() => {
+			/*setTimeout(() => {
 				// Change the logo image
 				if (splashScreenImg)
 					splashScreenImg.src = logos[nextLogoIndex];
 				// Increase index
 				nextLogoIndex = (nextLogoIndex >= (logos.length - 1)) ? 0 : nextLogoIndex + 1;
-			}, rotatingDuration * 0.5);
+			}, rotatingDuration * 0.5);*/
 		}
 
 		// Wait until the zoom in is done
@@ -11539,7 +11814,7 @@ randomizer = function(ar, key){
         return sum + Number(r[key] || 0)
     }, 0)
 
-    if (total <= 0) return ar[f.rand(0, ar.length - 1)]
+    if (total <= 0) return ar[rand(0, ar.length - 1)]
 
     var seed = getRandomFloat(0, total, 8)
 

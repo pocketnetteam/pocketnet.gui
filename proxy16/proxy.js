@@ -1208,9 +1208,16 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 			var result = null
 
+			console.log('method', method)
 
 
 			return rpc({ method, parameters, options, U }).then(r => {
+
+				if(!r.data.contents){
+					var contents = r.data
+
+					r.data = {contents}
+				}
 
 				var posts = r.data.contents || []
 
@@ -1234,10 +1241,12 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					})
 				})
 
-				if(method == 'gethierarchicalstrip'){
+				if(method == 'gethierarchicalstrip' || method == 'getsubscribesfeed'  || method == 'getprofilefeed'){
 					users = _.map(posts, function(p){
 						return f.deep(p, 'lastComment.address')
 					})
+
+					console.log('users', users, method)
 
 					users = _.filter(users, u => {return u && !_.find(posts, function(p){
 						return p.address == u
@@ -1302,7 +1311,11 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 	}
 
 	self.rpcscenarios.getrecommendedcontentbyaddress = self.rpcscenarios.gethierarchicalstrip
+	self.rpcscenarios.getprofilefeed = self.rpcscenarios.gethierarchicalstrip
+	self.rpcscenarios.getsubscribesfeed = self.rpcscenarios.gethierarchicalstrip
+	self.rpcscenarios.gethotposts = self.rpcscenarios.gethierarchicalstrip
 
+	
 	self.api = {
 		node: {
 			rpcex : {

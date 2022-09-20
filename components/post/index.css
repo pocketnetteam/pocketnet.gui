@@ -109,62 +109,69 @@
 }
 #post .share .images {
   max-width: 620px;
-}
-#post .share .images .imagesWrapper {
-  width: 180px;
-  height: 180px;
-}
-#post .share .images .imagesContainer.owlcar {
-  height: auto;
-  width: 100%;
-  max-width: 400px;
-}
-#post .share .images .imagesContainer.owlcar .imagesWrapper {
-  height: 500px;
-  float: none;
-  width: 100%;
-  background: transparent;
-}
-#post .share .images .imagesContainer.owlcar .imagesWrapper .image {
-  background-size: contain!important;
-}
-#post .share .images .imagesContainer.one .imagesWrapper {
-  width: 400px;
-  height: 400px;
-}
-#post .share .images .imagesContainer.one .imagesWrapper.w2 {
-  width: 600px;
-}
-#post .share .images .imagesContainer.one .imagesWrapper.h2 {
-  width: 400px;
-}
-#post .share .images .imagesContainer.two .imagesWrapper {
-  width: 200px;
-  height: 200px;
-}
-#post .share .images .imagesContainer.two .imagesWrapper.w2 {
-  width: 400px;
-}
-#post .share .images .imagesContainer.two .imagesWrapper.h2 {
-  width: 200px;
-}
-#post .share .images .imagesContainer.four .imagesWrapper {
-  width: 200px;
-  height: 200px;
-}
-#post .share .images .imagesContainer.four .imagesWrapper.w2 {
-  width: 400px;
-}
-#post .share .images .imagesContainer.four .imagesWrapper.h2 {
-  width: 200px;
-}
-#post .share .images .imagesContainer.articleImages .imagesWrapper {
-  width: 60px;
-  height: 60px;
-  border-radius: 30px;
-  overflow: hidden;
-  margin-right: 0.5em;
-  margin-bottom: 0.5em;
+  /*.imagesWrapper{
+				width: 180px;
+				height: 180px;
+			}
+
+			.imagesContainer{
+
+				&.one{
+					.imagesWrapper{
+						width: 400px;
+						height: 400px;
+
+						&.w2{
+							width: 600px
+						}
+
+						&.h2{
+							width: 400px;
+						}
+					}
+				}
+
+				&.two{
+					.imagesWrapper{
+						width: 200px;
+						height: 200px;
+
+						&.w2{
+							width: 400px
+						}
+
+						&.h2{
+							width: 200px; 
+						}
+					}
+				}
+
+				&.four{
+					.imagesWrapper{
+						width: 200px;
+						height: 200px;
+						&.w2{
+							width: 400px
+						}
+
+						&.h2{
+							width: 200px; 
+						}
+					}
+				}
+				
+
+				&.articleImages{
+					.imagesWrapper{
+						width: 60px;
+						height: 60px;
+						border-radius: 30px;
+						overflow: hidden;
+						margin-right: @rhythm;
+						margin-bottom: @rhythm;
+					}
+				}
+			}*/
 }
 #post .share .sharecaption {
   max-width: 620px;

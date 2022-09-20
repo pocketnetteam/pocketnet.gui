@@ -9198,6 +9198,8 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
       let localTransport;
 
       if (isElectron) {
+
+
         localTransport = peertubeTransport(electron.ipcRenderer, localVideo);
         localVideo = undefined;
       }
@@ -9208,7 +9210,6 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
 
         var host = options.app.peertubeHandler.helpers.url(parsed.host, true)
 
-        console.log('options.startTime', options.startTime)
 
         PeerTubeEmbeding.main(target, parsed.id, host, {
 

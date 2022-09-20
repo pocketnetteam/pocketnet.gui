@@ -16,7 +16,23 @@
         display: none;
     }
 
+    .metadata{
+        .sys{
+            .fromrecommendationslabel{
+                color : rgb(var(--neutral-grad-2));
+            }
+            .boostedlabel{
+                color : rgb(var(--color-star-yellow));
+            }
+        }
+    }
+    
+    .bolt{
+        cursor: pointer;
+    }
+
     .pkoin{
+        margin-left: @rhythm * 1.5;
         display: flex;
         align-items: center;
         background: rgb(var(--color-bg-ac-bright));
@@ -32,6 +48,16 @@
         span{
             margin-left: @rhythm;
         }
+    }
+
+    
+
+    .boost{
+        color: rgb(var(--color-star-yellow));
+        border-radius: 8px;
+        padding: 4px 10px;
+        background: rgb(var(--background-secondary-theme));
+        .shadowSmaller();
     }
 
     .commentsWrapper{			
@@ -202,6 +228,10 @@
     }
 
     .article{
+        .unsupportedplayer{
+            padding : 2 * @rhythm;
+            text-align: center;
+        }
         .message{
             b{
                 font-size: 1em!important;
@@ -686,7 +716,6 @@
         .imagesWrapper{
             width: 140px;
             height: 140px;
-            float: left;
             background: rgb(var(--background-secondary-theme));
             border-radius: 6px;
             
@@ -765,11 +794,10 @@
             &.owlcar{
                 height: auto;
                 width: 100%;
-                max-width: 400px;
+                max-width: 450px;
 
                 .imagesWrapper{
                     height: 500px;
-                    float: none;
                     width: 100%;
                     background: transparent;
 
@@ -778,16 +806,29 @@
                     }
                 }
             }
+
+            &.carousel{
+                max-width: 450px;
+            }
+        }
+
+        .carousel_markers{
+            max-width: 450px;
+        }
+
+        .imagesContainer{
+            display: flex;
+            flex-wrap: wrap;
+            grid-gap: @rhythm;
+
+            .imagesWrapper{
+                float: none;
+            }
         }
 
         &.manyImagesView{
             .imagesContainer{
-                display: flex;
-                flex-wrap: wrap;
-                grid-gap: @rhythm;
-
                 .imagesWrapper{
-                    float: none;
                     max-width: 31%;
                 }
 
@@ -818,6 +859,7 @@
     .sharecaption{
         margin-bottom: @rhythm;
         max-width: 590px;
+        hyphens: auto;
         cursor: pointer;
 
         span{
@@ -1029,16 +1071,23 @@
 
     .tags{
         margin-bottom: 2 * @rhythm;
-        overflow: hidden;
         max-width: 650px;
         display: flex;
         flex-wrap: wrap;
 
+    
+
         >div{
+            border-radius: 8px;
+            padding: 4px 10px;
+            background: rgb(var(--background-secondary-theme));
+            box-shadow: 0 5px 7px -5px rgba(var(--color-shadow-base), 0.4);
             margin-right: @rhythm;
+            margin-bottom: 0.5 * @rhythm;
 
             span{
-                font-size: 0.8em;
+                font-weight: 500;
+                font-size: 0.9em;
                 color : rgb(var(--neutral-grad-4));
             }
         }
@@ -1176,7 +1225,7 @@
         display: none;
         position : fixed;
         right: 4 * @rhythm;
-        top: 2 * @rhythm;
+        top: calc(2 * @rhythm + var(--app-margin-top));
     }
 
     .sharecnt{
@@ -1548,6 +1597,13 @@ html.mobileview.ios{
         padding-bottom : 0;
         border-radius: 0;
 
+        .pkoin{
+            padding: 6px 8px;
+        }
+        .boost{
+            padding: 2px 10px;
+        }
+
         .jsPlayerLoading{
             .preloader5{
                 display: none;
@@ -1693,7 +1749,7 @@ html.mobileview.ios{
         .shareTable{
 
 
-            .authorTable>div span{
+            .authorTable .authorCell span{
 				font-size: 1em;
 				&.adr{
 					font-size: 1.2em;
@@ -2090,7 +2146,9 @@ html.mobileview.ios{
 				height: 425px;
 				position: relative;
 
-				
+				.boost{
+                    background: rgba(var(--text-on-bg-shadow-color), 0.1);
+                }
 
 	
 				.blackmatte{
@@ -2144,7 +2202,7 @@ html.mobileview.ios{
 					}
 
 					.articleclick{
-						display: flex;
+						/*display: flex;*/
 						height: 100%;
 						flex-direction: column;
 						cursor: pointer;
@@ -2164,6 +2222,7 @@ html.mobileview.ios{
 						overflow-y: auto;
 						text-overflow: ellipsis;
 						overscroll-behavior:auto;
+                        
 						.shadowText();
 					}
 					
@@ -2171,6 +2230,10 @@ html.mobileview.ios{
 
 				.tags{
 					margin-bottom: 0;
+
+                    div{
+                        background: rgba(var(--text-on-bg-shadow-color), 0.1);
+                    }
 					div span {
 						.shadowText();
 					}

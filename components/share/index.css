@@ -20,6 +20,10 @@
 #share .emojionearea.form-control {
   font-size: 1em;
 }
+#share .peertube-server-hint {
+  right: 0;
+  bottom: 0;
+}
 #share .sLoader {
   display: none;
   position: absolute;
@@ -64,7 +68,7 @@
 }
 #share.minimized {
   padding: 0;
-  min-height: 0!important;
+  min-height: 60px!important;
 }
 #share.minimized .attachements {
   display: none;
@@ -633,7 +637,7 @@
   vertical-align: middle;
 }
 #share .postpanel > div.postWrapper {
-  width: 140px;
+  width: 280px;
   padding-right: 0;
   text-align: right;
 }
@@ -730,27 +734,6 @@
 #share .videoStatsWrapper {
   font-weight: 100;
   padding-top: 0.5em;
-}
-.peertube-server-hint {
-  z-index: 3;
-  position: absolute;
-  margin: 10px;
-  padding: 5px 7px;
-  border-radius: 4px;
-  font-family: monospace;
-  font-size: 0.8em;
-  background: #000000bb;
-  color: #fff;
-}
-.peertube-server-hint i.fa {
-  font-size: 0.8em;
-  margin-top: 1px;
-  margin-right: 5px;
-}
-.peertube-server-hint a {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
 }
 .topvideosWrapper .peertube-server-hint {
   bottom: 0;
@@ -853,6 +836,7 @@
 }
 .wnd.wndsharepost .wndcontent #share .postlineWrapper {
   position: absolute;
+  padding-left: 1em;
   bottom: 0.5em;
   background: rgb(var(--background-secondary-theme));
 }
@@ -986,6 +970,9 @@ html.mobileview .wnd.wndsharepost .wndcontent #share .absolutetxwrapper {
   }
   #share #taginput .tgs .tagsWrapper > div.tagsInputWrapper > div {
     margin-right: 0;
+  }
+  #share .cpt input {
+    background: rgb(var(--background-total-theme));
   }
   #share .tgsWrapperMain #taginput .inputWrapper {
     background: rgb(var(--background-total-theme));
@@ -1351,7 +1338,7 @@ html.mobileview .wnd.wndsharepost .wndcontent #share .absolutetxwrapper {
   }
   #share .postlineWrapper {
     margin: 0;
-    padding-left: 0;
+    padding-left: 0!important;
     padding-right: 0;
     position: static!important;
   }

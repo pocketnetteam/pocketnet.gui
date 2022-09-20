@@ -93,13 +93,18 @@ export function proxifiedFetchFactory(electronIpcRenderer: Electron.IpcRenderer)
                     });
 
                     electronIpcRenderer.once(`ProxifiedFetch : Error[${id}]`, (event) => {
+                        console.log(event)
                         if (!closed) {
                             controller.error('PROXIFIED_FETCH_ERROR');
                             closed = true;
 
                             const err = new TypeError('Failed to fetch');
                             reject(err);
+
+                            return
                         }
+
+                        reject(new DOMException('The user aborted a request.', 'AbortError'));
                     });
 
                     electronIpcRenderer.on(`ProxifiedFetch : PartialResponse[${id}]`, (event, data: Uint8Array) => {

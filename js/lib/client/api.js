@@ -70,6 +70,7 @@ var ProxyRequest = function(app = {}, proxy){
 
         var cancelled = false
 
+
         return new Promise((resolve, reject) => {
             const timer = setTimeout(() => {
 
@@ -147,6 +148,7 @@ var ProxyRequest = function(app = {}, proxy){
         else{
             if (app.user && (app.user.getstate && app.user.getstate() == 1)){ data.state = 1 }
         }
+
 
         return apiFetch(url, {
 
@@ -497,7 +499,7 @@ var Proxy16 = function(meta, app, api){
 
             if (options.fnode && e) e.code = 700
 
-            if ((e.code == 408 || e.code == 429 || e.code == -28) && options.node && trying < 2 && !options.fnode){
+            if ((e.code == 408 || e.code == 429 || e.code == -28 || (e.code == 2000 && freshping())) && options.node && trying < 2 && !options.fnode){
 
                 //if(isonline()){
                     return self.api.nodes.canchange(options.node).then(r => {
@@ -940,6 +942,8 @@ var Api = function(app){
             if(!e) e = 'TypeError: Failed to fetch'
 
             if((!e.code || e.code == 2000) && trying < 2){
+
+                //// api.nodes.canchange
 
                 //if(isonline()){
                     return self.changeProxyIfNeedWithDirect().then(r => {

@@ -339,16 +339,21 @@ var articlev = (function(){
 
 			_addtag : function(tag){
 
-				if (art.tags.length < 5){
-					
-					removeEqual(art.tags, tag)
+				var tta = _.uniq(_.clone(art.tags).concat([tag]))
 
-					art.tags.push(tag)
+				var bycategories = self.app.platform.sdk.categories.fromTags(tta, self.language.v)
 
-					return true
+				if (bycategories.categories.length > 2){
+					return false
 				}
 
-				return false
+				if (tta.length > 15){return false}
+
+				art.tags = tta
+
+				return true
+
+				
 			},
 
 			addTags : function(tags){
@@ -825,7 +830,7 @@ var articlev = (function(){
 				ext : ['png', 'jpeg', 'jpg', 'gif', 'jfif', 'webp'],
 
 				dropZone : el.c.find('.bgwrapper'),
-
+				app : self.app,
 				action : function(file, clbk){
 
 					self.app.platform.papi.editImage(file.base64, {
@@ -1132,7 +1137,9 @@ var articlev = (function(){
 
 		_.each(essenses, function(essense){
 
-			essense.destroy();
+			window.requestAnimationFrame(() => {
+				essense.destroy();
+			})
 
 		})
 

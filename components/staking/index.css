@@ -10,6 +10,9 @@
 #staking .wrp.hide .change.good .percent {
   color: rgb(var(--color-good));
 }
+#staking .wrp.hide .lastpriceCnt {
+  min-height: 0;
+}
 #staking .wrp.hide .lastpriceCnt .logo,
 #staking .wrp.hide .lastpriceCnt .caret {
   display: block;
@@ -195,6 +198,7 @@
   text-align: center;
   padding: 12px 16px;
   color: rgb(var(--color-txt-gray-dark));
+  min-height: 61px;
 }
 #staking .lastpriceCnt .logo,
 #staking .lastpriceCnt .caret {

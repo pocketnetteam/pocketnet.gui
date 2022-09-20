@@ -11,6 +11,11 @@ var name = app.platform.api.clearname(deep(app, 'platform.sdk.user.storage.me.na
 var letter = name ? name[0] : ''
 
 
+if(typeof app.platform.sdk.user.myaccauntdeleted != 'undefined' && app.platform.sdk.user.myaccauntdeleted()){
+    src = ''
+    letter = ''
+}
+
 %>
 <div class="rightchatspacer">
 <div class="contentsInner" id="contentsInner">

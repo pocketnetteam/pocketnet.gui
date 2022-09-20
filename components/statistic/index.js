@@ -29,6 +29,8 @@ var statistic = (function () {
 
       getStat: async function () {
 
+        console.log('prevPeriod', prevPeriod)
+
         if (prevPeriod?.to.block === selectedPeriod.to.block && prevPeriod?.from.block === selectedPeriod.from.block ) {
           return
         }
@@ -37,18 +39,38 @@ var statistic = (function () {
         actions.loading(true)
         fields = []
 
-        let block = await self.app.api.fetch('ping', {}, {timeout: 4000})
+        pretry(() => {
+          return self.app.platform.currentBlock > 0
+        }).then(() => {
+          let block = self.app.platform.currentBlock 
 
-        let from = (selectedPeriod?.from?.block && selectedPeriod?.from?.block > 0) ? selectedPeriod.from.block : 0
-        let to = (selectedPeriod?.to?.block && (block.height - selectedPeriod.to.block) > 0) ? block.height - selectedPeriod.to.block : 0
+          let from = (selectedPeriod?.from?.block && selectedPeriod?.from?.block > 0) ? selectedPeriod.from.block : 0
+          let to = (selectedPeriod?.to?.block && (block.height - selectedPeriod.to.block) > 0) ? block.height - selectedPeriod.to.block : 0
+
+          return Promise.all(_.map([1, 3, 7], (i) => {
+
+            return self.app.api.rpc('getuserstatistic', [self.user.address.value, to, from, from, i]).then(r => {
+              fields.push(...r)
+              return Promise.resolve()
+            })
+
+          })).then(() => {1
+            actions.loading(false)
+          }).catch(e => {
+            console.error(e)
+          })
+
+          /*fields.push(...await self.app.api.rpc('getuserstatistic', [self.user.address.value, to, from, from, 1]))
+          fields.push(...await self.app.api.rpc('getuserstatistic', [self.user.address.value, to, from, from, 3]))
+          fields.push(...await self.app.api.rpc('getuserstatistic', [self.user.address.value, to, from, from, 7]))*/
 
 
-        fields.push(...await self.app.api.rpc('getuserstatistic', [self.user.address.value, to, from, from, 1]))
-        fields.push(...await self.app.api.rpc('getuserstatistic', [self.user.address.value, to, from, from, 3]))
-        fields.push(...await self.app.api.rpc('getuserstatistic', [self.user.address.value, to, from, from, 7]))
+          
+        })
 
+        
 
-        actions.loading(false)
+        
       },
 
       from: function (e) {
@@ -126,6 +148,7 @@ var statistic = (function () {
       },
 
       destroy: function () {
+        prevPeriod = null
         el = {};
       },
 
@@ -165,7 +188,9 @@ var statistic = (function () {
 
     _.each(essenses, function (essense) {
 
-      essense.destroy();
+      window.requestAnimationFrame(() => {
+				essense.destroy();
+			})
 
     })
 
