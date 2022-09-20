@@ -2110,20 +2110,25 @@ pUserInfo = function(){
 
 		self[key] || (self[key] = [])
 
-		self[key].push(obj)	
+		try{
+			self[key].push(obj)	
 
-		if (key === 'subscribers'){
+			if (key === 'subscribers'){
 
-			self['subscribers_count'] || (self['subscribers_count'] = 0);
-			self['subscribers_count']++;
+				self['subscribers_count'] || (self['subscribers_count'] = 0);
+				self['subscribers_count']++;
 
+			}
+
+			if (key === 'subscribes'){
+
+				self['subscribes_count'] || (self['subscribes_count'] = 0);
+				self['subscribes_count']++;
+				
+			}
 		}
-
-		if (key === 'subscribes'){
-
-			self['subscribes_count'] || (self['subscribes_count'] = 0);
-			self['subscribes_count']++;
-			
+		catch(e){
+			console.error(e)
 		}
 
 	}

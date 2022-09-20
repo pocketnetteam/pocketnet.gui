@@ -488,6 +488,8 @@ var userpage = (function(){
 			closeReport : function(){
 				el.report.html('')
 				el.c.removeClass('reportshowed')
+
+				
 			},
 
 			openReport : function(id, addToHistory){
@@ -757,8 +759,13 @@ var userpage = (function(){
 	
 						ParametersLive([s], _p.el)
 
-						if (primary)
+						if (primary){
 							self.app.actions.scroll(0)
+						}
+							
+						else{
+							el.c.closest('.customscroll:not(body)').scrollTop(0)
+						}
 
 						_p.el.find('.showprivatekey').on('click', function(){
 							self.app.platform.ui.showmykey({
@@ -1059,6 +1066,7 @@ var userpage = (function(){
 						actions.openReport(id)
 					}
 					else{
+						console.log('closeReport')
 						actions.closeReport()
 					}
 
