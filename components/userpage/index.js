@@ -759,8 +759,10 @@ var userpage = (function(){
 	
 						ParametersLive([s], _p.el)
 
-						if (primary)
+						if (primary){
 							self.app.actions.scroll(0)
+						}
+							
 						else{
 							el.c.closest('.customscroll:not(body)').scrollTop(0)
 						}
