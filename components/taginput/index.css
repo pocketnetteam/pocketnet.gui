@@ -62,12 +62,8 @@
   font-weight: 700;
 }
 #taginput .tgs .tagsWrapper > div.tagsCont {
-  margin-top: 0.5em;
   display: flex;
   flex-wrap: wrap;
-}
-#taginput .tgs .tagsWrapper > div.tagsCont > div {
-  margin-right: 0.5em;
 }
 #taginput .tgs .tagsWrapper > div.tagsCont > div.inputWrapper {
   padding: 0;
@@ -87,13 +83,12 @@
 }
 #taginput .tgs .tag,
 #taginput .tgs .category {
-  margin-top: 0;
+  margin-top: 0.5em;
   border-radius: 8px;
   padding: 4px 10px;
   background: rgb(var(--background-total-theme));
   box-shadow: 0 5px 7px -5px rgba(var(--color-shadow-base), 0.4);
-  margin-right: 0.5em;
-  margin-bottom: 0.25em;
+  margin-left: 0.5em;
 }
 #taginput .tgs .tag .inne,
 #taginput .tgs .category .inne {

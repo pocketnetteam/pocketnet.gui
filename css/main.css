@@ -5797,6 +5797,43 @@ html.mobileview.fullscreen #navigationWrapper {
   .standartMobileCaption {
     display: flex;
   }
+  .search.fastSearchShow {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10000;
+    bottom: 0;
+    height: auto!important;
+    width: auto!important;
+  }
+  .search.fastSearchShow .searchInput {
+    border-radius: 0!important;
+    background: rgb(var(--background-main)) !important;
+    height: 65px!important;
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+  }
+  .search.fastSearchShow .searchFastResultWrapper {
+    position: absolute;
+    left: 0;
+    top: 66px;
+    right: 0;
+    bottom: 0;
+    max-height: none!important;
+    margin: 0!important;
+    border-top-left-radius: 0!important;
+    border-top-right-radius: 0!important;
+  }
+  .search.fastSearchShow .searchFastResultWrapper .result {
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+  }
+  .search.fastSearchShow .searchPanelWrapper > div[event="clear"] {
+    display: block;
+  }
 }
 /* ==========================================================================
    Splash screen

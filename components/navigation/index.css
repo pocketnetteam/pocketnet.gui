@@ -7,7 +7,7 @@
   bottom: 0;
   padding-bottom: 30px;
   height: 90px;
-  z-index: 200;
+  z-index: 19;
   contain: strict;
 }
 #navigation .fakem {

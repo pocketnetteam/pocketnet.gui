@@ -7094,6 +7094,63 @@ html.mobileview.fullscreen{
     .standartMobileCaption{
         display: flex;
     }
+
+    .search{
+        
+    
+    
+        &.fastSearchShow{
+            position: fixed;
+            top : 0;
+            left : 0;
+            right: 0;
+            z-index: 10000;
+            bottom :0;
+            height: auto!important;
+            width: auto!important;
+
+            .searchInput{
+                border-radius: 0!important;
+                background: rgb(var(--background-main))!important;
+                height: 65px!important;
+                position: absolute;
+                left : 0;
+                top : 0;
+                right: 0;
+            }
+
+            .searchFastResultWrapper{
+                position: absolute;
+                left : 0;
+                top : 66px;
+                right: 0;
+                bottom: 0;
+
+                max-height: none!important;
+                margin : 0!important;
+                border-top-left-radius: 0!important;
+                border-top-right-radius: 0!important;
+
+                .result{
+                    padding-top: @rhythm;
+                    padding-bottom: @rhythm;
+                }
+            }
+
+            .searchPanelWrapper{
+    
+                >div{
+    
+                    &[event="clear"]{
+                        display: block;
+                    }
+                }
+            }
+           
+        }
+    
+       
+    }
 }
 
 /* ==========================================================================

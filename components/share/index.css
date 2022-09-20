@@ -1172,9 +1172,6 @@ html.mobileview .wnd.wndsharepost .wndcontent #share .absolutetxwrapper {
     display: block;
     width: 100%;
   }
-  #share .tgs .tagsWrapper > div.tagsCont {
-    padding: 0.5em;
-  }
   #share .tgs .tagsWrapper > div.tagsInputWrapper {
     width: 100%;
   }

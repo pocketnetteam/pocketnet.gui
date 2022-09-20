@@ -105,11 +105,11 @@ var navigation = (function(){
 						self.nav.api.go({
 							open : true,
 							href : 'share',
-							inWnd : true,
+							/*inWnd : true,*/
 							history : true,
 							
 							essenseData : {
-								rmhistory : true
+								//rmhistory : true
 							}
 						})
 
