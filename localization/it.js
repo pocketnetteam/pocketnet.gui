@@ -638,7 +638,7 @@ _l.repost = "Repost";
 _l.e13160 = "Ciao Bastyards!";
 
 _l.e13161 = "Aggiungi tag per il tuo post";
-_l.e13162 = "Puoi inserire massimo 5 tag";
+_l.e13162 = "Puoi inserire massimo 15 tag";
 _l.e13163 = "Non ci sono modifiche nel post";
 _l.e13164 = "Aggiungi qualche parola per spiegare il tuo link. Di cosa si tratta? Perché è importante? Qual è la tua opinione?";
 _l.e13165 = "Il tuo link al video non è valido. Per favore, carica un URL video valido.";
@@ -1214,3 +1214,5 @@ _l.androidPopupDisagree = "Non ora"
 _l.desktopPopupTitle = "Ottieni informazioni non censurate nell'app desktop Bastyon"
 _l.desktopPopupAgree = "Scarica l'app"
 _l.desktopPopupDisagree = "Non ora"
+
+_l.profanity_tag = 'volgarità'

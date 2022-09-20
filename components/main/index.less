@@ -242,7 +242,7 @@
 		display : none;
 		opacity: 0;
 		z-index: 30;
-		.transition(0.3s);
+		.transition(0.3s, opacity);
 
 		span,
 		i{
@@ -290,7 +290,7 @@
 	.lentacell{
 		padding-top : 10px;
 		min-height: 3000px;
-		padding-bottom : 1000px;
+		padding-bottom : 300px;
 
 		.cf_spacer,
 		.bgCaption {
@@ -361,7 +361,7 @@
 	}
 
 	.maincntwrapper{
-		.transition(0.3s);
+		.transition(0.3s, transform);
 	}
 
 	.opensvi{
@@ -378,7 +378,7 @@
 
 	.upbackbuttonwrapper{
 		opacity: 0;
-		.transition(0.3s);
+		.transition(0.3s, opacity);
 		-webkit-transition-delay: 0.5s;
 		-o-transition-delay: 0.5s;
 		-moz-transition-delay: 0.5s;
@@ -394,7 +394,7 @@
 	}
 
 	.upbuttonwrapper{
-		.transition(0.3s);
+		.transition(0.3s, opacity);
 	}
 
 	&.opensvishowed{
@@ -779,7 +779,7 @@ html.mobileview{
 			padding-top : 0;
 			overflow-y: scroll;
 			padding-bottom: 90px;
-			.transition(0.3s);
+			.transition(0.3s, transform);
 			border: 1px solid rgba(--neutral-grad-1, 0.3);
 			.shadowSmaller();
 			border-top-right-radius: 0;

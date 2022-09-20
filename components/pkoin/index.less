@@ -3,13 +3,24 @@
 #pkoin{
 	.content{
 
+		&.liftUpThePost{
+			.options{
+				display: none;
+			}
+
+			.wndinner{
+				height: 540px;
+			}
+
+		}
+
 		.vc_valuecustom .vc_textInput{
 			border: 0;
 			background: transparent;
 		}
 
 		.top, .fieldsWrapper, .sendButtonWrapper{
-			padding : @rhythm * 2;
+			padding : @rhythm * 2 @rhythm * 2;
 		}
 
 		.top{
@@ -191,7 +202,7 @@
 							color: rgb(var(--color-txt-ac));
 							position: absolute;
 							right: 12px;
-							top: 12px;
+							top: 14px;
 						}
 
 						.notion{
@@ -295,12 +306,19 @@
 .wnd.pkoinwindow{
 	.wndinner{
 		
-		&.pkoin{
+		&.pkoin, &.boost{
             max-width: 370px;
-			max-height: 620px;
 			box-shadow: none;
-
         }
+
+		&.pkoin{
+			max-height: 620px;
+		}
+
+		&.boost{
+			max-height: 500px;
+		}
+
 		.wndheader{
 			display: none;
 		}

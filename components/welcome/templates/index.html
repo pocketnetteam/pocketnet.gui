@@ -48,11 +48,13 @@
 		<div>
 			<a elementsid="https://<%-app.options.url%>/blockexplorer/" href="https://<%-app.options.url%>/blockexplorer/"><%- e('e14101')%></a>
 			<span>&middot;</span>
+			<% if(!app.cutversion) {%>
 			<a elementsid="help?page=faq" href="help?page=faq"><%- e('e14102')%></a>
+			<% } %>
 			<span>&middot;</span>
 			<a elementsid="hrefuserpage" href="userpage"><%- e('e141081')%></a>
 
-			<% if(!app.curation()) {%>
+			<% if(!app.curation() && !app.cutversion) {%>
 				<span>&middot;</span>
 				<a elementsid="help?page=roadmap" href="help?page=roadmap"><%- e('e14103')%></a>
 				<span>&middot;</span>

@@ -17,7 +17,7 @@ var read = parameters(app.nav.current.completeHref, true).read;
                 
             </div>
 
-            <% if(state) { %> 
+            <% if(state && (typeof app.platform.sdk.user.myaccauntdeleted == 'undefined' || !app.platform.sdk.user.myaccauntdeleted())) { %> 
             <div class="tab">
                 <span class="pcenterLabel <% if(r == 'sub' && pathname=='index') {%> active <% } %>">
                     <a href="index?r=sub"  handler="true"><i class="far fa-heart"></i><span class="text"><%=e('e13137')%> </span> <span class="lentaunseen " key="sub"></span></a>

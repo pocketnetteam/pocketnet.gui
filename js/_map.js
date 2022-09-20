@@ -33,7 +33,9 @@ __map =  {
 		"js/vendor/aesjs.js",//
 		"js/vendor/linkify.min.js",
 		"js/vendor/linkify-html.min.js",
-		
+
+		{path :"js/vendor/leoprofanity.js", babelify : true},
+
 		//new
 		{path : "js/lib/pocketnet/btc17.js", babelify : true}, //
 		{path : "js/lib/pocketnet/htls.js", babelify : true}, //
@@ -47,7 +49,8 @@ __map =  {
         "js/vendor/jquery.md5.js",
 		"js/vendor/jquery.animate-number.js", //
 		"js/vendor/jquery.touchSwipe.js", //
-        "js/vendor/joypixels.js", //
+        "js/vendor/joypixels.js",
+		"js/vendor/unmute.js", //
         {path : "js/vendor/plyr.js", babelify : true}, // later
         "js/vendor/reconnectingwebsocket.js", //
         "js/vendor/xss.min.js", //
@@ -98,7 +101,7 @@ __map =  {
 		{path : "js/kit.js", babelify : true},
 		{path : "js/satolist.js", babelify : true},
 		{path : "js/peertube.js", babelify : true},
-		
+		{path : "js/lib/client/p2pvideo.js", babelify : true},
 		{path : "js/effects.js", babelify : true},
 		{path : "js/video-uploader.js", babelify : true},
 		{path : "js/file-hash.js", babelify : true}
@@ -130,7 +133,7 @@ __map =  {
 	__templates : [
 		{ c : 'navigation', n : 'menu' },
 		{ c : 'menu', n : 'index' },
-		{ c : 'share', n : 'body' },
+		
 		//{ c : 'toppanel', n : 'index' },
 		{ c : 'navigation', n : 'index' },
 		{ c : 'footer', n : 'index' },
@@ -150,11 +153,16 @@ __map =  {
 		{ c : 'lenta', n : 'sharevideo' },
 		{ c : 'lenta', n : 'sharevideopip' },
 		{ c : 'lenta', n : 'sharevideolight' },
-		{ c : 'share', n : 'url' },
 		{ c : 'lenta', n : 'stars' },
 		{ c : 'lenta', n : 'groupshares' },
 		{ c : 'lenta', n : 'commentspreview' },
 		{ c : 'lenta', n : 'tosubscribeshares' },
+
+		{ c : 'share', n : 'body' },
+		{ c : 'share', n : 'postline' },
+		{ c : 'share', n : 'index' },
+		{ c : 'share', n : 'url' },
+
 		{ c : 'comments', n : 'index' },
 		{ c : 'comments', n : 'post' },
 		{ c : 'comments', n : 'list' },
@@ -162,13 +170,12 @@ __map =  {
 		{ c : 'author', n : 'preshell'},
 		{ c : 'post', n : 'preshell'},
 		{ c : 'commentBanner', n : 'index' },
-
 		{ c : 'registration', n : 'index' },
 		{ c : 'test', n : 'options' },
 		{ c : 'test', n : 'icon' },
-		{ c : 'author', n : 'authorcaption'},
 		{ c : 'author', n : 'info'},
-		{ c : 'author', n : 'index'}
+		{ c : 'author', n : 'index'},
+		{ c : 'author', n : 'menu'}
 
 
 	],
@@ -300,6 +307,13 @@ __map =  {
 		add : insertingfunc,
 		anonimus : true,
 		electronDontOpen : true
+	},
+
+	boost : {
+		uri : "boost",
+		href : "boost",
+		add : insertingfunc,
+		anonimus : true
 	},
 
 
@@ -632,6 +646,24 @@ __map =  {
 		embeding : {
 			uri : "embeding",
 			href : "embeding",
+			add : insertingfunc
+		},
+
+		camerapreview : {
+			uri : "camerapreview",
+			href : "camerapreview",
+			add : insertingfunc
+		},
+
+		donate : {
+			uri : "donate",
+			href : "donate",
+			add : insertingfunc
+		},
+
+		recommendationinfo: {
+			uri : "recommendationinfo",
+			href : "recommendationinfo",
 			add : insertingfunc
 		},
 

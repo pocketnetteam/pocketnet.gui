@@ -55,6 +55,10 @@ var userpage = (function(){
 						id : 'test',
 						report : 'fillUser',
 						mobile : true,
+
+						if : function(){
+							return !self.app.platform.sdk.user.myaccauntdeleted()
+						}
 					})
 		
 				}
@@ -67,7 +71,7 @@ var userpage = (function(){
 				mobile : true,
 				openReportPageMobileInWindow : true,
 				if : function(){
-					return true
+					return !self.app.platform.sdk.user.myaccauntdeleted()
 				}
 			})
 
@@ -80,7 +84,8 @@ var userpage = (function(){
 
 			
 				if : function(){
-					if(!self.app.curation()) return true
+					
+					if(!self.app.curation() && !self.app.platform.sdk.user.myaccauntdeleted()) return true
 				},
 
 				add : function(){
@@ -125,7 +130,7 @@ var userpage = (function(){
 				mobile : true,
 
 				if : function(){
-					return self.app.mobileview && !self.app.curation()
+					return self.app.mobileview && !self.app.curation() && !self.app.platform.sdk.user.myaccauntdeleted()
 				},
 
 				add : function(){
@@ -153,7 +158,7 @@ var userpage = (function(){
 				mobile : true,
 
 				if : function(){
-					return self.app.mobileview && !self.app.curation()
+					return self.app.mobileview && !self.app.curation() && !self.app.platform.sdk.user.myaccauntdeleted()
 				},
 
 				add : function(){
@@ -180,6 +185,9 @@ var userpage = (function(){
 					id : 'test',
 					report : 'test',
 					mobile : true,
+					if : function(){
+						return !self.app.platform.sdk.user.myaccauntdeleted()
+					}
 					//openReportPageMobile : true,
 				})
 
@@ -219,18 +227,21 @@ var userpage = (function(){
 				mobile : false
 			})
 
-			reports.push({
-				name : 'Pocketcoin',
-				id : 'staking',
-				report : 'staking',
-				mobile : true,
-				if : function(){
-					return self.app.mobileview
-				},
-				//openReportPageMobileInWindow : true
-			})
+			if(!self.app.pkoindisable){
+				reports.push({
+					name : 'Pocketcoin',
+					id : 'staking',
+					report : 'staking',
+					mobile : true,
+					if : function(){
+						return self.app.mobileview
+					},
+					//openReportPageMobileInWindow : true
+				})
+			}
+			
 
-			if(self.app.user.validate()) {
+			if(self.app.user.validate() && !self.app.pkoindisable) {
 
 				reports.push({
 					name : self.app.localization.e('videoCabinet'),
@@ -240,7 +251,9 @@ var userpage = (function(){
 					openReportPageMobileInWindow : true,
 					if : function(){
 
-						if (self.app.curation()) return false
+
+
+						if (self.app.curation() || self.app.platform.sdk.user.myaccauntdeleted()) return false
 
 						if (window.testpocketnet) return true
 
@@ -1027,7 +1040,7 @@ var userpage = (function(){
 					if(!id) {
 						if(self.app.user.validate()){
 
-							if(self.app.curation()){
+							if(self.app.curation() || self.app.platform.sdk.user.myaccauntdeleted()){
 								id = 'wallet'	
 							}
 							else{
@@ -1114,6 +1127,8 @@ var userpage = (function(){
 
 					mestate = _mestate
 
+					
+
 					clbk(data);
 
 				})
@@ -1183,7 +1198,9 @@ var userpage = (function(){
 
 		_.each(essenses, function(essense){
 
-			essense.destroy();
+			window.requestAnimationFrame(() => {
+				essense.destroy();
+			})
 
 		})
 

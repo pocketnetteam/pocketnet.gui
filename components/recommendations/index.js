@@ -160,7 +160,7 @@ var recommendations = (function(){
 				p = p + activities.point * 10
 			}
 
-			if(recommendation.itisvideo){
+			if(recommendation.itisvideo()){
 				var h = self.app.platform.sdk.videos.historyget(recommendation.txid)
 
 				if (h.percent > 94){
@@ -375,7 +375,9 @@ var recommendations = (function(){
 
 		_.each(essenses, function(essense){
 
-			essense.destroy();
+			window.requestAnimationFrame(() => {
+				essense.destroy();
+			})
 
 		})
 

@@ -176,6 +176,39 @@
     --color-yellow : 250, 230, 10;
     --color-not-catchy-grey: 72, 72, 72;
 }
+
+:root {
+	--app-margin-top-default: 0px;
+	--app-margin-top: max(env(safe-area-inset-top), var(--app-margin-top-default));
+}
+
+:root {
+	--safe-area-inset-top:      0px;
+	--safe-area-inset-right:    0px;
+	--safe-area-inset-bottom:   0px;
+	--safe-area-inset-left:     0px;
+}
+
+
+
+/* iOS 11.0: supports constant() css function. (Assume all other inset vars are supported.) */
+@supports (padding-top: constant(safe-area-inset-top))  {
+	:root {
+        --safe-area-inset-top:      constant(safe-area-inset-top, 0);
+        --safe-area-inset-right:    constant(safe-area-inset-right, 0);
+        --safe-area-inset-bottom:   constant(safe-area-inset-bottom, 0);
+        --safe-area-inset-left:     constant(safe-area-inset-left, 0);
+	}
+}
+/* iOS 11.2 and latest Chrome webviews support the env() css function. (Assume all other inset vars are supported.) */
+@supports (padding-top: env(safe-area-inset-top))  {
+	:root {
+        --safe-area-inset-top:      env(safe-area-inset-top, 0);
+        --safe-area-inset-right:    env(safe-area-inset-right, 0);
+        --safe-area-inset-bottom:   env(safe-area-inset-bottom, 0);
+        --safe-area-inset-left:     env(safe-area-inset-left, 0);
+	}
+}
    
    
 .disable-hover,
@@ -1431,7 +1464,7 @@ html.mobileview{
             white-space: nowrap;
             padding: 0.75 * @rhythm 1.5 * @rhythm;
             border-radius: 4 * @rhythm;
-            border: 1px solid rgb(var(--neutral-grad-3));
+            border: 1px solid rgba(var(--neutral-grad-2), 0.5);
             color: rgb(var(--neutral-grad-3));
             display: flex;
             align-items: center;
@@ -2310,6 +2343,11 @@ input[type=radio].radio:checked + label {
     bottom : 1.5 * @rhythm;
     width: auto;
 }
+
+.m-message-container.is-top-left{
+    top : calc(0.5em + var(--app-margin-top))
+}
+    
     
 .m-message-container{
     .notificationWrapper {
@@ -2886,7 +2924,8 @@ input[type=radio].radio:checked + label {
     }
 
     ._close{
-        top: @rhythm;
+        
+        top: calc(@rhythm + var(--app-margin-top));
         right: 1.5 * @rhythm;
     }
     ._expand{
@@ -3112,8 +3151,6 @@ input[type=radio].radio:checked + label {
 
     &.withoutButtons{
         .wndinner{
-
-           
             >div{
                 &.buttons{
                     display: none!important;
@@ -3207,6 +3244,10 @@ input[type=radio].radio:checked + label {
             -webkit-backdrop-filter: none; 
             opacity: 0;
             .transition(0.3s);
+        }
+
+        .peertube-server-hint{
+            display: none!important;
         }
 
         ._changeplace{
@@ -3390,6 +3431,7 @@ input[type=radio].radio:checked + label {
 }
 
 .contentWrapper{
+    margin-top : var(--app-margin-top);
     #content{
         width: 100%;        
         margin : 0 auto;
@@ -4508,6 +4550,7 @@ input[type=radio].radio:checked + label {
 }
 
 #application{
+    
     .owl-dots {
         text-align: center;
         margin-top: @rhythm;
@@ -5147,6 +5190,53 @@ input[type=radio].radio:checked + label {
     }
 }
 
+.carousel{
+    width: 100%;
+    display: flex;
+    flex-wrap: nowrap!important;
+    grid-gap : @rhythm;
+    overflow-x: scroll;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    scroll-snap-type: x mandatory;
+    align-items: center;
+    position: relative;
+    &::-webkit-scrollbar{
+        display: none!important;
+    }
+
+    .carousel_item{
+        width: 100%;
+        min-width: 100%;
+        scroll-snap-align: center;
+    }
+
+}
+
+.carousel_markers{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 3 * @rhythm;
+
+    >div{
+        padding : 0.5 * @rhythm;
+        
+        >div{
+            width: 8px;
+            height: 8px;
+            border-radius : 10px;
+            background : rgb(var(--neutral-grad-2));
+        }
+
+        &.active{
+            >div{
+                background : rgb(var(--color-bg-ac));
+            }
+        }
+    }
+}
+
 .optimizationTip{
     background: rgb(var(--background-total-theme));
 }
@@ -5223,6 +5313,33 @@ input[type=radio].radio:checked + label {
 
 .matrixchatwrapper{
     font-size: 16px;
+}
+
+#camera{
+    display: none;
+    position: fixed;
+    left : 0;
+    top : 0;
+    bottom : 0;
+    right: 0;
+}
+
+#cameratransition{
+    position: fixed;
+    left : 0;
+    top : 0;
+    bottom : 0;
+    right: 0;
+    z-index: 1000000;
+    opacity: 0;
+    background: rgb(var(--color-shadow-base));
+    .transition(0.3s, opacity);
+}
+
+.brighteonVideoIframe {
+    aspect-ratio: 1.62;
+    max-width: 600px;
+    border-radius: 10px;
 }
 
 html.mobileview{
@@ -5389,6 +5506,85 @@ html.mobileview{
     }
 }
 
+html.cameraenabled{
+
+    background: transparent;
+
+    body{
+        background: transparent;
+        overflow: hidden;
+
+    }
+    #camera{
+        display: block;
+    }
+
+    //#windowsContainer,
+    
+    .matrixchatwrapper{
+        display: none;
+
+        &.active{
+            display: block;
+        }
+    }
+
+    .matrixchatwrapper.active,
+    .wnd,
+    .appcnt{
+        transition: all 50ms linear 0s;
+        transform: translate3d(100%,0,0);
+        /*display: none;*/
+    }
+
+   
+}
+
+html.cameraenabledend{
+    #camera{
+        display: block;
+        
+    }
+
+    #camerapreview{
+        transition: all 300ms linear 0s;
+        transform: translate3d(-100%,0,0);
+    }
+
+    .matrixchatwrapper.active,
+    .wnd,
+    .appcnt{
+        transition: all 300ms linear 0s;
+    }
+}
+
+html.cameraenabledrun{
+    body{
+        overflow: hidden;
+    }
+    
+    #camera{
+        display: block;
+    }
+
+    .matrixchatwrapper{
+        display: none;
+
+        &.active{
+            display: block;
+        }
+    }
+
+    .matrixchatwrapper.active,
+    .wnd,
+    .appcnt{
+        transition: all 300ms linear 0s;
+        transform: translate3d(100%,0,0);
+        /*display: none;*/
+    }
+    
+}
+
 @media only screen and (max-width: 768px){
     html.mobileview{
         .wnd{
@@ -5519,6 +5715,13 @@ html.mobileview.fullscreen{
            
         }
     }
+
+    .brighteonVideoIframe {
+		max-width: inherit;
+        border-radius: 0px;
+        margin-bottom: 10px;
+	}
+
 }
 
 .thinput{
@@ -5563,6 +5766,7 @@ html.mobileview.fullscreen{
 
         &.svlwr{
             font-size : 0.5em;
+            padding-left: @rhythm;
 
             .suffix{
                 font-weight: 500;
@@ -6929,8 +7133,9 @@ html.mobileview.fullscreen{
     }
 
     img {
-        max-height: 50px;
-        max-width: 50px;
+        max-height: 25px;
+        max-width: 25px;
+        will-change: transform;
 
         &.zoom-in {
             -webkit-animation: zoom-in 0.5s ease-out both;
@@ -7012,7 +7217,7 @@ html{
         &.scrollmodedown{
 
             #menu .menuWrapper{
-                transform:  translateY(-65px);
+                transform:  translateY(calc(-65px - var(--app-margin-top)));
             }
     
             #panelWrapper{
@@ -7022,7 +7227,7 @@ html{
 
             #comments{
                 .captionfwrapper{
-                    transform:  translateY(-65px);
+                    transform:  translateY(calc(-65px - var(--app-margin-top)));
                 }
             }
     
@@ -7106,7 +7311,7 @@ html{
         &.scrollmodedown{
     
             #menu .menuWrapper{
-                transform:  translateY(-65px);
+                transform:  translateY(calc(-65px - var(--app-margin-top)));
             }
     
             #panelWrapper{
@@ -7177,8 +7382,8 @@ html{
         opacity: 0.25;
     }
     100% {
-        -webkit-transform: scale3d(50, 50, 50);
-        transform: scale3d(50, 50, 50);
+        -webkit-transform: scale3d(5, 5, 5);
+        transform: scale3d(5, 5, 5);
         opacity: 0;
     }
 }
@@ -7192,8 +7397,8 @@ html{
         opacity: 0.25;
     }
     100% {
-        -webkit-transform: scale3d(50, 50, 50);
-        transform: scale3d(50, 50, 50);
+        -webkit-transform: scale3d(5, 5, 5);
+        transform: scale3d(5, 5, 5);
         opacity: 0;
     }
 }
@@ -7232,8 +7437,8 @@ html{
         opacity: 0.25;
     }
     100% {
-        -webkit-transform: scale3d(75, 75, 75) rotate(310deg);
-        transform: scale3d(75, 75, 75) rotate(310deg);
+        -webkit-transform: scale3d(5, 5, 5) rotate(310deg);
+        transform: scale3d(5, 5, 5) rotate(310deg);
         opacity: 0;
 
     }
@@ -7248,8 +7453,8 @@ html{
         opacity: 0.25;
     }
     100% {
-        -webkit-transform: scale3d(75, 75, 75) rotate(310deg);
-        transform: scale3d(75, 75, 75) rotate(310deg);
+        -webkit-transform: scale3d(5, 5, 5) rotate(310deg);
+        transform: scale3d(5, 5, 5) rotate(310deg);
         opacity: 0;
     }
 }
@@ -7778,6 +7983,14 @@ html.mobileview{
         .contentWrapper{
             padding-top: 0;
         }
+        body{
+            background: #051b48;
+        }
+
+        #footerWrapper{
+            background: #051b28;
+        }
+        
     }        
 
 }
@@ -7817,7 +8030,7 @@ html.mobileview{
         position: fixed;
         left: 0.5 * @rhythm;
         right: 0.5 * @rhythm;
-        top: 0.5 * @rhythm;
+        top: calc(0.5 * @rhythm + var(--app-margin-top));
         max-height: 210px;
         width: auto;
         min-width: 0;
@@ -7886,6 +8099,11 @@ html.mobileview{
                 backface-visibility: hidden;
                 .transition(0s);
                 
+            }
+
+            .buttons{
+                padding-bottom: 12 * @rhythm!important;
+                position: relative;
             }
 
             /*.hideButton{
@@ -8131,6 +8349,30 @@ html.pipmode{
     #content,
     .matrixchatwrapper{
         display: none;
+    }
+}
+
+.peertube-server-hint {
+    z-index: 3;
+    position: absolute;
+    margin: 10px;
+    padding: 5px 7px;
+    border-radius: 4px;
+    font-family: monospace;
+    font-size: 0.8em;
+    background: #000000bb;
+    color: #fff;
+
+    i.fa {
+        font-size: 0.8em;
+        margin-top: 1px;
+        margin-right: 5px;
+    }
+
+    a {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
     }
 }
 
@@ -8848,3 +9090,8 @@ html.pipmode{
 
 
 
+/*t*/ @media only screen and (max-width: 374px){
+	.brighteonVideoIframe {
+		aspect-ratio: 1.44;
+	}
+}

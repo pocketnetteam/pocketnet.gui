@@ -27,7 +27,7 @@
                 if(!share.hasexchangetag() && !share.repost.v){
 
                         
-                    if (!share.repost.v && !share.itisvideo() && !share.aliasid) { %>
+                    if (!share.repost.v && !share.itisvideo() && !share.aliasid && !app.pkoindisable) { %>
                         <div elementsid="peertubeAddVideo" class="item peertube tooltip nowidth" embeding="addVideo" title="<%=e('peertubeAddVideo')%>">
                             <i class="fas fa-video"></i> <span><%- e('peertubeAddVideo') %></span>
                         </div>

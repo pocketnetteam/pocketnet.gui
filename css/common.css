@@ -10,7 +10,17 @@
 .share_common .extrashare {
   display: none;
 }
+.share_common .metadata .sys .fromrecommendationslabel {
+  color: rgb(var(--neutral-grad-2));
+}
+.share_common .metadata .sys .boostedlabel {
+  color: rgb(var(--color-star-yellow));
+}
+.share_common .bolt {
+  cursor: pointer;
+}
 .share_common .pkoin {
+  margin-left: 0.75em;
   display: flex;
   align-items: center;
   background: rgb(var(--color-bg-ac-bright));
@@ -25,26 +35,12 @@
 .share_common .pkoin span {
   margin-left: 0.5em;
 }
-.share_common .peertube-server-hint {
-  z-index: 3;
-  position: absolute;
-  margin: 10px;
-  padding: 5px 7px;
-  border-radius: 4px;
-  font-family: monospace;
-  font-size: 0.8em;
-  background: #000000bb;
-  color: #fff;
-}
-.share_common .peertube-server-hint i.fa {
-  font-size: 0.8em;
-  margin-top: 1px;
-  margin-right: 5px;
-}
-.share_common .peertube-server-hint a {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
+.share_common .boost {
+  color: rgb(var(--color-star-yellow));
+  border-radius: 8px;
+  padding: 4px 10px;
+  background: rgb(var(--background-secondary-theme));
+  box-shadow: 0 5px 7px -5px rgba(var(--color-shadow-base), 0.4);
 }
 .share_common .commentsWrapper {
   background: rgb(var(--background-secondary-theme));
@@ -180,6 +176,10 @@
 }
 .share_common .repostShare .share .videoTips {
   display: none!important;
+}
+.share_common .article .unsupportedplayer {
+  padding: 1em;
+  text-align: center;
 }
 .share_common .article .message b {
   font-size: 1em!important;
@@ -541,7 +541,6 @@
 .share_common .images .imagesWrapper {
   width: 140px;
   height: 140px;
-  float: left;
   background: rgb(var(--background-secondary-theme));
   border-radius: 6px;
 }
@@ -596,24 +595,31 @@
 .share_common .images .imagesContainer.owlcar {
   height: auto;
   width: 100%;
-  max-width: 400px;
+  max-width: 450px;
 }
 .share_common .images .imagesContainer.owlcar .imagesWrapper {
   height: 500px;
-  float: none;
   width: 100%;
   background: transparent;
 }
 .share_common .images .imagesContainer.owlcar .imagesWrapper .image {
   background-size: contain!important;
 }
-.share_common .images.manyImagesView .imagesContainer {
+.share_common .images .imagesContainer.carousel {
+  max-width: 450px;
+}
+.share_common .images .carousel_markers {
+  max-width: 450px;
+}
+.share_common .images .imagesContainer {
   display: flex;
   flex-wrap: wrap;
   grid-gap: 0.5em;
 }
-.share_common .images.manyImagesView .imagesContainer .imagesWrapper {
+.share_common .images .imagesContainer .imagesWrapper {
   float: none;
+}
+.share_common .images.manyImagesView .imagesContainer .imagesWrapper {
   max-width: 31%;
 }
 .share_common .images .videoOpen {
@@ -791,16 +797,21 @@
 }
 .share_common .tags {
   margin-bottom: 1em;
-  overflow: hidden;
   max-width: 650px;
   display: flex;
   flex-wrap: wrap;
 }
 .share_common .tags > div {
+  border-radius: 8px;
+  padding: 4px 10px;
+  background: rgb(var(--background-secondary-theme));
+  box-shadow: 0 5px 7px -5px rgba(var(--color-shadow-base), 0.4);
   margin-right: 0.5em;
+  margin-bottom: 0.25em;
 }
 .share_common .tags > div span {
-  font-size: 0.8em;
+  font-weight: 500;
+  font-size: 0.9em;
   color: rgb(var(--neutral-grad-4));
 }
 .share_common .tags .newlabel {
@@ -889,7 +900,7 @@
   display: none;
   position: fixed;
   right: 2em;
-  top: 1em;
+  top: calc(2 * 0.5em + var(--app-margin-top));
 }
 .share_common .sharecnt .removeDescription {
   display: none;
@@ -1192,6 +1203,12 @@ html.mobileview.ios .share_common.fullScreenVideo .video-js {
                 text-align: center;
             }
         }*/
+  }
+  .share_common .pkoin {
+    padding: 6px 8px;
+  }
+  .share_common .boost {
+    padding: 2px 10px;
   }
   .share_common .jsPlayerLoading .preloader5 {
     display: none;
@@ -1551,6 +1568,9 @@ html.mobileview.ios .share_common.fullScreenVideo .video-js {
   height: 425px;
   position: relative;
 }
+.common_share_article_wrapper .share .sharearticle .shareBgCaption .boost {
+  background: rgba(var(--text-on-bg-shadow-color), 0.1);
+}
 .common_share_article_wrapper .share .sharearticle .shareBgCaption .blackmatte {
   background: linear-gradient(0deg, rgba(var(--background-secondary-theme-2), 0.96) 10%, rgba(255, 255, 255, 0) 75%), linear-gradient(180deg, rgb(var(--background-secondary-theme-2)) 0%, rgba(255, 255, 255, 0) 18%);
 }
@@ -1591,7 +1611,7 @@ html.mobileview.ios .share_common.fullScreenVideo .video-js {
   padding: 0 16px;
 }
 .common_share_article_wrapper .share .sharearticle .shareBgCaption .captioncnt .articleclick {
-  display: flex;
+  /*display: flex;*/
   height: 100%;
   flex-direction: column;
   cursor: pointer;
@@ -1613,6 +1633,9 @@ html.mobileview.ios .share_common.fullScreenVideo .video-js {
 }
 .common_share_article_wrapper .share .sharearticle .shareBgCaption .tags {
   margin-bottom: 0;
+}
+.common_share_article_wrapper .share .sharearticle .shareBgCaption .tags div {
+  background: rgba(var(--text-on-bg-shadow-color), 0.1);
 }
 .common_share_article_wrapper .share .sharearticle .shareBgCaption .tags div span {
   text-shadow: 0px 0px 2px rgba(var(--color-shadow-base), 0.714), 0 0 3px rgba(var(--color-shadow-base), 0.519);

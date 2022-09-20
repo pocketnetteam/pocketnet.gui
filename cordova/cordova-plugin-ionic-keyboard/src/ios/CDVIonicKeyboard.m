@@ -42,6 +42,7 @@ typedef enum : NSUInteger {
 @property (readwrite, assign, nonatomic) NSString* keyboardStyle;
 @property (nonatomic, readwrite) BOOL isWK;
 @property (nonatomic, readwrite) int paddingBottom;
+@property (nonatomic, readwrite) CGPoint oldoffset;
 
 @end
 
@@ -71,7 +72,7 @@ NSString* UITraitsClassString;
     self.disableScroll = ![settings cordovaBoolSettingForKey:@"ScrollEnabled" defaultValue:NO];
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(statusBarDidChangeFrame:) name: UIApplicationDidChangeStatusBarFrameNotification object:nil];
-
+    self.oldoffset = CGPointZero;
     self.keyboardResizes = ResizeNative;
     BOOL doesResize = [settings cordovaBoolSettingForKey:@"KeyboardResize" defaultValue:YES];
     if (!doesResize) {
@@ -150,6 +151,11 @@ NSString* UITraitsClassString;
 
 - (void)onKeyboardWillShow:(NSNotification *)note
 {
+
+    if (self.keyboardResizes == ResizeNone) {
+        self.disableScroll = true;
+    }
+
     if (hideTimer != nil) {
         [hideTimer invalidate];
     }
@@ -179,6 +185,10 @@ NSString* UITraitsClassString;
 
     NSString *js = [NSString stringWithFormat:@"Keyboard.fireOnShow(%d);", (int)height];
     [self.commandDelegate evalJs:js];
+
+    if (self.keyboardResizes == ResizeNone) {
+        self.disableScroll = false;
+    }
 }
 
 - (void)onKeyboardDidHide:(NSNotification *)sender
@@ -329,6 +339,7 @@ static IMP WKOriginalImp;
         return;
     }
     if (disableScroll) {
+        self.oldoffset = self.webView.scrollView.contentOffset;
         self.webView.scrollView.scrollEnabled = NO;
         self.webView.scrollView.delegate = self;
     }
@@ -340,7 +351,8 @@ static IMP WKOriginalImp;
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    [scrollView setContentOffset: CGPointZero];
+    /*[scrollView setContentOffset: CGPointZero];*/
+    [scrollView setContentOffset: self.oldoffset];
 }
 
 #pragma mark Plugin interface
