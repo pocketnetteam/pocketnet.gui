@@ -4413,6 +4413,11 @@ input[type=radio].radio:checked + label {
   -webkit-transition: opacity 0.3s;
   transition: opacity 0.3s;
 }
+.brighteonVideoIframe {
+  aspect-ratio: 1.62;
+  max-width: 600px;
+  border-radius: 10px;
+}
 html.mobileview .matrixchatwrapper {
   position: fixed;
   contain: strict;
@@ -4686,6 +4691,11 @@ html.mobileview.fullscreen #navigationWrapper {
   }
   .horizontalLentaWrapper .showmorebywrapper::-webkit-scrollbar {
     display: none!important;
+  }
+  .brighteonVideoIframe {
+    max-width: inherit;
+    border-radius: 0px;
+    margin-bottom: 10px;
   }
 }
 .thinput[value='1'] i:before {
@@ -7412,4 +7422,10 @@ body.dg-open {
 }
 .scroll-lock {
   overflow-y: hidden !important;
+}
+/*t*/
+@media only screen and (max-width: 374px) {
+  .brighteonVideoIframe {
+    aspect-ratio: 1.44;
+  }
 }

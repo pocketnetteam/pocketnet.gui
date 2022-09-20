@@ -2002,7 +2002,7 @@ var share = (function(){
 
 						} 
 						
-						else {
+						else if (meta.type != 'brighteon' && meta.type != 'stream.brighteon') {
 							self.app.platform.sdk.remote.get(meta.url, function(og){
 
 								if(og){

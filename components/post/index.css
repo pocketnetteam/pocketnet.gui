@@ -10,6 +10,9 @@
 #post {
   background: rgb(var(--background-main));
 }
+#post .brighteonVideoIframe {
+  max-width: 650px;
+}
 #post .jsPlayerLoading,
 #post .video-js:not(.vjs-fullscreen) {
   max-height: 80vh;
@@ -742,6 +745,11 @@ html.mobileview .wnd.normalizedmobile.articlewindow .wndinner .wndcontent {
   #post .videoWrapper .js-player .vjs-control-bar {
     border-radius: 0;
     overflow: visible;
+  }
+  #post .brighteonVideoIframe {
+    width: 100%;
+    max-width: inherit;
+    border-radius: 0;
   }
   #post .sharearticle .shareBgCaption.caption_small .captionmult {
     font-size: 1.1em;

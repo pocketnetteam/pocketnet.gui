@@ -5322,11 +5322,9 @@ input[type=radio].radio:checked + label {
     top : 0;
     bottom : 0;
     right: 0;
-
 }
 
 #cameratransition{
- 
     position: fixed;
     left : 0;
     top : 0;
@@ -5338,7 +5336,11 @@ input[type=radio].radio:checked + label {
     .transition(0.3s, opacity);
 }
 
-
+.brighteonVideoIframe {
+    aspect-ratio: 1.62;
+    max-width: 600px;
+    border-radius: 10px;
+}
 
 html.mobileview{
 
@@ -5713,6 +5715,13 @@ html.mobileview.fullscreen{
            
         }
     }
+
+    .brighteonVideoIframe {
+		max-width: inherit;
+        border-radius: 0px;
+        margin-bottom: 10px;
+	}
+
 }
 
 .thinput{
@@ -9081,3 +9090,8 @@ html.pipmode{
 
 
 
+/*t*/ @media only screen and (max-width: 374px){
+	.brighteonVideoIframe {
+		aspect-ratio: 1.44;
+	}
+}

@@ -215,6 +215,14 @@ var video = (function(){
 			if(info.source == 'peertube'){
                 code = '<iframe width="560" height="315" scrolling="no" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen src="https://pocketnetpeertube1.nohost.me/videos/embed/'+info.id+'/"></iframe>'
             }
+
+			if(info.source == 'brighteon'){
+				code = '<iframe src="https://www.brighteon.com/embed/'+info.id+'" width="560" height="315" frameborder="0" allowfullscreen></iframe>'
+			}
+
+			if(info.source == 'stream.brighteon'){
+				code = '<iframe src="https://stream.brighteon.com/embed/'+info.id+'" width="560" height="315" frameborder="0" allowfullscreen></iframe>'
+			}
             
 			
 			el.c.find('.container').html(code);

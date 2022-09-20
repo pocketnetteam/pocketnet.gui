@@ -252,6 +252,8 @@ var registration = (function(){
 				"firstFlags": {}
 			}
 		];
+
+		var prodBloggers = [];
 		
 		var categoryIcons = [
 			{
@@ -380,7 +382,74 @@ var registration = (function(){
 						return 'welcome'
 					}
 
+					
+					var bloggersEn = [
+						'PKSV2KXCdEtTtYb8rF3xMMgiiKe1oDstXR', 
+						'PXXaSczoZcuJEwxYKhaC9pV1JBvwi6UjSw', 
+						'P9eLPo3gXUqBr7wgxDSSLNfyNMyeDua7cn',
+						'PVpSK2qQXmG1SjAMJVMAMRLUkrzMjsJouL',
+						'PLJvEixJkj85C4jHM3mt5u1ATwZE9zgFaA',
+						'P8boyun9yF6QYn1fjGC1WABt4BQUL4STeh',
+						'PAVjp9nsNtgzUNF1VkUd74YzLaQHpv4g7v',
+						'PWvS62zsRm96Bw63qo9Adif97U18mLCpfN',
+						'PGQh5JW5c1shJTpi3iC2dkvov1pUqs1SqX',
+						'PXsjQA3fYDGCr1WwmNTNmrs9N7VA18gVuB',
+						"PQkNpRfXbCGXJ2o1mRfsJMvMtsvq3uvZU9",
+						'PUhvX53ueD2Sxa3q7av83vNcEHuS8M7kRS',
+						'PCfvhqHEYG3zdWXvLJrjPPDVK2H8qwwXn5',
+						'PGegspsgRqvMiZCP8PGufKMYBk3yekDaEE',
+						'PB8wu7hQwo5xMsVG4F4HshrW39t2Y4eN37',
+						'PKYwaiikhUoPWmpWmYec4Xf3TPWwJQCqUt',
+						'PSBhEi8AUasemizUHyJ64t6xXonsxwp73y',
+						'PLZsQmsRUDMJGc61pGMLdDQ58UuqQ8kU5Z',
+						'PQDxqrJqKM15weq1mbunEqK2uVNvZy1Z6d',
+						'PDUWW57W8DoV1dMTQYsrkwg66xEuaNckbd',
+						'PRH3aKqRb6UWcJE5EnwVvhmHAVGbT5D6nE',
+						'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd',
+					];
+
+					var bloggersRu = [
+						'PX7pM9CG9MhMCqJQD52ahLyqSssNK2WxEv',
+						'PA6biduJbWcQ97n5jz2jUqWHtenLpWTH7s',
+						'PCjhy4t6B2b5xeqVoJcN51XkhUqAXBuaq4',
+						'PXupozgNg1Ee6Nrbapj8DEfMGCVgWi4GB1',
+						'P9KXb7sS2JDjV5jnXu4t2WwwbvzYeu6yds',
+						'PUXG7rfX19Xoco1FXjXBW8qt6NEZpp8maL',
+						'PKwa3jVZXHpaVgG89WvnM8vBfpp745GGNN',
+						'PLTjskW3xi3oaLnyqTAwZQa1iAeQ3PzTuF',
+						'PDXGoy43t5RSqJY1UJBgswBu6phtW8Knwa',
+						'PSBePd5Tx5KG9vxwAzbaDTfjzDbq1GUTYw',
+						'PTft97ycE3N6ZKgvixdpbYj8qPxzCe2CxG',
+						'PJuW8LKT7LZY88fP7WM35NJURh3rAaeU3o',
+						'PBGqJGSrdsBrEsLmiAaeH22bxGg8irX3gC',
+						'PVjvMwapTA29biRTsksXUBuVVf2HVwY7ps',
+						'PTMFZXMXYFjiN1UuSV4ZckepyEFVWMm6Zy',
+						'PWbYmgG6PzqhrNDtuFmWrSaLHTDMwZWc26',
+						'P9VXZPHxop1ya7oP1kypubWwGvfYw8QQNK',
+						'PQUj7dS2QpamP9vapARCYaJaSqjXpcZk8p',
+						'PLfHpn9nJe9hKJ7UqvAuPsPUu9RjNpyTrN',
+						'PARV591XENALBB5ApkR7WcQPhEZtLHfi2A',
+						'PBvkW9txHLiKtQMX642DG1SmJC2UbBX5wy',
+						'P9N7jrhdsotZDz6r56ADxwxwP295HcF9QQ',
+						'PJuHmJS2iw9boRhy1Y4DSbe9uNQCBedBze',
+						'PMVvs8kvbskq6eVV8Q3oyjotbox9tBfvnp',
+						'PTcArXMkhsKMUrzQKn2SXmaVZv4Q7sEpBt',
+						'PQ4X2NQJD1ZA5Hy58ZU9eHcjpRco7ZMgTz',
+						'PHtxzCKFqNEfn8N8FDAUYhUhqSL2qJJZxY',
+						'PWyjwnA3Rr8Fuc6HQmcYFb3cYXDeaq679j',
+						'PEnqXhQU2MxZc4bFQJ4TSaCCT3f5wbqHJZ',
+						'PFCdnHww9UQLf2WQHPF8vtABgNuK4uaiXY',
+						'PSXmn4k7BDwwtZkTxdgC7yq1Cwh4Di7GLK'
+					]
+
 					if (self.app.localization.key === 'en'){
+						prodBloggers = bloggersEn;
+						return 'bloggers';
+					}
+
+					
+					if (self.app.localization.key === 'ru'){
+						prodBloggers = bloggersRu;
 						return 'bloggers';
 					}
 					
@@ -766,28 +835,6 @@ var registration = (function(){
 						'THy6Rd8xv35m8VkNwJQZKDwmCwKL6QYtwz',
 						'TBBbasLPUPaWgnb8UGxYA5eoBXxdXMDmw8',
 						'TJYKMFZKYhSpU7xT55tuR4jD8gpC1dAZ5c'
-					];
-
-					var prodBloggers = [
-						'PKSV2KXCdEtTtYb8rF3xMMgiiKe1oDstXR', 
-						'PXXaSczoZcuJEwxYKhaC9pV1JBvwi6UjSw', 
-						'P9eLPo3gXUqBr7wgxDSSLNfyNMyeDua7cn',
-						'PVpSK2qQXmG1SjAMJVMAMRLUkrzMjsJouL',
-						'PLJvEixJkj85C4jHM3mt5u1ATwZE9zgFaA',
-						'P8boyun9yF6QYn1fjGC1WABt4BQUL4STeh',
-						'PAVjp9nsNtgzUNF1VkUd74YzLaQHpv4g7v',
-						'PWvS62zsRm96Bw63qo9Adif97U18mLCpfN',
-						'PGQh5JW5c1shJTpi3iC2dkvov1pUqs1SqX',
-						'PXsjQA3fYDGCr1WwmNTNmrs9N7VA18gVuB',
-						'PJg4gur26sCRukHcn5aoDSRZTQF5dxTMUS',
-						"PQkNpRfXbCGXJ2o1mRfsJMvMtsvq3uvZU9",
-						'PUhvX53ueD2Sxa3q7av83vNcEHuS8M7kRS',
-						'PCfvhqHEYG3zdWXvLJrjPPDVK2H8qwwXn5',
-						'PGegspsgRqvMiZCP8PGufKMYBk3yekDaEE',
-						'PB8wu7hQwo5xMsVG4F4HshrW39t2Y4eN37',
-						'PKYwaiikhUoPWmpWmYec4Xf3TPWwJQCqUt',
-						'PSBhEi8AUasemizUHyJ64t6xXonsxwp73y',
-						'PLZsQmsRUDMJGc61pGMLdDQ58UuqQ8kU5Z'
 					];
 
 					var bloggers = _.shuffle(self.app.test ? testBloggers : prodBloggers);
@@ -1826,7 +1873,11 @@ var registration = (function(){
 
 				initEvents();
 
-				make()
+				make();
+
+				self.app.Logger.info({
+					actionId: 'USER_STARTED_REGISTRATION',
+				});
 
 				p.clbk(null, p);
 
