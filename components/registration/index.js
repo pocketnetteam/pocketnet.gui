@@ -394,7 +394,6 @@ var registration = (function(){
 						'PWvS62zsRm96Bw63qo9Adif97U18mLCpfN',
 						'PGQh5JW5c1shJTpi3iC2dkvov1pUqs1SqX',
 						'PXsjQA3fYDGCr1WwmNTNmrs9N7VA18gVuB',
-						'PJg4gur26sCRukHcn5aoDSRZTQF5dxTMUS',
 						"PQkNpRfXbCGXJ2o1mRfsJMvMtsvq3uvZU9",
 						'PUhvX53ueD2Sxa3q7av83vNcEHuS8M7kRS',
 						'PCfvhqHEYG3zdWXvLJrjPPDVK2H8qwwXn5',
