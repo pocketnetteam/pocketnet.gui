@@ -17000,11 +17000,11 @@ Platform = function (app, listofnodes) {
 
                             var period = p.period || self.sdk.node.shares.parameters.stor.period || '60' ///self.sdk.node.shares.parameters.defaults.period
 
-							var depth = p.offset ? self.currentBlock - p.offset : 0
+                            var depth = p.offset ? self.currentBlock - p.offset : 0
 
                             var parameters = []
 
-							parameters = [depth,'', p.count , self.app.localization.key,[],[],[],[],[],"",period]
+                            parameters = [depth,'', p.count , self.app.localization.key,[],[],[],[],[],'',period]
 
                             // parameters = ['30', '259200', '', self.app.localization.key];
 
@@ -17065,7 +17065,7 @@ Platform = function (app, listofnodes) {
 
                     })
                 },
-				best: function (p, clbk, cache, methodparams) {
+                best: function (p, clbk, cache, methodparams) {
 
                     if(!methodparams) methodparams = {}
 
@@ -17091,16 +17091,16 @@ Platform = function (app, listofnodes) {
                         }
                         else {
 
-							var period = p.period || self.sdk.node.shares.parameters.stor.period || '60'
+                            var period = p.period || self.sdk.node.shares.parameters.stor.period || '60'
 
-							var page = p.page || 0
-							var offset = p.offset
+                            var page = p.page || 0
+                            var offset = p.offset
                             var parameters = []
-							parameters = [p.count.toString(), period, offset || '', self.app.localization.key]
+                            parameters = [p.count.toString(), period, offset || '', self.app.localization.key]
 
-							if (p.type){
-								parameters.push(p.type)
-							}
+                            if (p.type){
+                                parameters.push(p.type)
+                            }
 
                             self.sdk.node.shares.get(parameters, function (shares, error) {
 
