@@ -15560,7 +15560,7 @@ Platform = function (app, listofnodes) {
 
                 parameters.push(localization || self.app.localization.key)
 
-                self.app.api.rpc('gettags', parameters).then(d => {
+                self.app.api.rpcwt('gettags', parameters).then(d => {
 
 
                     var _d = _.map(d, function(_d){
@@ -28567,7 +28567,8 @@ Platform = function (app, listofnodes) {
             self.sdk.captcha.load()
 
             setTimeout(function(){
-                self.sdk.tags.getfastsearch()
+                /*self.sdk.tags.getfastsearch()*/
+                self.sdk.tags.cloud()
                 self.sdk.node.get.time()
             }, 1000)
 

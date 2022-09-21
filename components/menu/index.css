@@ -533,7 +533,6 @@
 }
 #menu .searchFastResultWrapper .searchbywrapper .searchby .swrp > div.label {
   text-align: left;
-  padding-left: 0.5em;
 }
 #menu .searchFastResultWrapper .searchbywrapper .searchby .swrp:hover > div {
   color: rgb(var(--color-txt-gray-dark));
