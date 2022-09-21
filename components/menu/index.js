@@ -787,6 +787,8 @@ var menu = (function(){
 
 						    	numberStep: function(now, tween) {
 
+									console.log('step')
+
 						        	var number = Number(value + now).toFixed(8),
 						            	target = $(tween.elem);
 
@@ -796,7 +798,6 @@ var menu = (function(){
 						    	},
 
 						    }, rand(400, 1200), function(){
-
 						    	el.removeClass(c)
 						    });
 						}

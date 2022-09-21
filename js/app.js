@@ -1968,6 +1968,35 @@ Application = function(p)
 
   self.mobile = {
 
+    menu : function(items){
+
+      var theme = 'THEME_HOLO_LIGHT'
+
+      if(self.platform.sdk.theme.current != 'white') theme = 'THEME_HOLO_DARK'
+
+      var options = {
+        'buttonLabels': items,
+        'androidTheme': window.plugins.actionsheet.ANDROID_THEMES[theme],
+        'androidEnableCancelButton' : true, // default false
+        'winphoneEnableCancelButton' : true, // default false
+        'addCancelButtonWithLabel': self.localization.e('ucancel')
+      };
+
+      return new Promise((resolve, reject) => {
+        window.plugins.actionsheet.show(options, (i) => {
+
+          i = i - 1
+  
+          if(i == items.length) {
+            return reject()
+          }
+  
+          resolve(i)
+        });
+      })
+      
+    },
+
     supportimagegallery : function(){
       return window.cordova && !isios()
     },

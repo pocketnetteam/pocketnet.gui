@@ -2,6 +2,7 @@
 /* PDF */
 
 
+
 	var tableAlignmentCenter = function(obj){
 
 		obj.width = 'auto';
@@ -4046,7 +4047,37 @@
 						if(parameter.type == 'values' && !parameter.autoSearch)
 						{
 							_el.find('.vc_textInput').on(clickAction(), function(){
-								open()
+
+								if(window.cordova && window.plugins.actionsheet){
+
+									var items = _.map(parameter.possibleValues, (value) => {
+										var label = parameter.labelByValue(value);
+
+										return {
+											label,
+											value
+										}
+									})
+
+									app.mobile.menu(_.map(items, (i) => {return i.label})).then((i) => {
+
+										console.log("I", i)
+
+										bkp = null;
+
+										input.val(items[i].value);
+										input.change();
+
+									}).catch(e => {
+										console.error('e', e)
+									})
+								
+								}
+								else{
+									open()
+								}
+
+								
 							})
 						}
 

@@ -8253,7 +8253,7 @@ Platform = function (app, listofnodes) {
 
                 var a2 = _.toArray(self.sdk.node.transactions.temp[key] || {})
 
-                return a1.concat(a2);
+                return _.filter(a1.concat(a2), (v) => {return v});
 
             },
 
@@ -17355,7 +17355,7 @@ Platform = function (app, listofnodes) {
 
                     if (!share) {
                         var temp = _.find(self.sdk.relayTransactions.withtemp('share'), function (s) {
-                            return s.txid == id
+                            return s && s.txid == id
                         })
 
 
@@ -24789,6 +24789,41 @@ Platform = function (app, listofnodes) {
                 return h
             },
 
+            simple : function(json){
+
+                h += '<div class="cwrapper table">\
+                        <div class="cell cellforimage">\
+                            <div class="icon">'
+
+
+                h +=            '<div class="usericon" ban=".gif" image="' + (clearStringXss(json.image || '') || '*') + '">'
+                h +=            '</div>'
+
+                h +=        '</div>\
+                        </div>\
+                        <div class="ccell">\
+                            <div class="infomain">\
+                                <div class="caption">'
+
+                                if (json.caption) {
+                                    h += " " + clearStringXss(json.caption)
+                                }
+
+                h +=            '</div>\
+                                <div class="tips">' + (json.text) + '\
+                                </div>\
+                            </div>'
+
+                h +=        self.tempates.time(json.time)
+
+                h +=    '</div>'
+
+
+                h += '</div>'
+    
+                return h;
+            }
+
 
         }
 
@@ -26745,14 +26780,20 @@ Platform = function (app, listofnodes) {
             }, 301)
         }
 
-        self.fastMessage = function (html, destroyclbk) {
+        self.fastMessageByJson = function(json, destroyclbk, p = {}){
+            var html = self.tempates.simple(json)
+
+            return self.fastMessage(html, destroyclbk, p = {})
+        }
+
+        self.fastMessage = function (html, destroyclbk, p = {}) {
             var id = makeid(true);
 
             html = '<div class="fastMessage" elementsid="notificationmessage" id="' + id + '">\
-            <div class="fmCnt">' + html + '</div>\
-            <div class="close">\
-                <i class="fa fa-times" aria-hidden="true"></i>\
-            </div>\
+                <div class="fmCnt">' + html + '</div>\
+                <div class="close">\
+                    <i class="fa fa-times" aria-hidden="true"></i>\
+                </div>\
             </div>';
 
             $('body').append(html);
@@ -26778,6 +26819,14 @@ Platform = function (app, listofnodes) {
             destroyMessage(message, 5000, false, true);
 
             message.el.on('click', function(){
+
+                if (p.click) {
+
+                    p.click() 
+                    destroyMessage(message, 1)
+
+                    return
+                }
 
                 if (platform.app.mobileview){
 

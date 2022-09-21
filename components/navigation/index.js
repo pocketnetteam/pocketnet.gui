@@ -67,7 +67,8 @@ var navigation = (function(){
 				var search = parameters().ss || parameters().sst
 
 				var back = self.app.nav.api.backChainGet()
-
+				
+				console.log("k", k)
 
 				self.shell({
 					name :  'menu',
