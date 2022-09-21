@@ -15615,7 +15615,7 @@ Platform = function (app, listofnodes) {
 
                     var round = (a, b) => a - a % b
 
-                    t.get('', 150, round(self.currentBlock, 1000) - 20000, loc, function (d) {
+                    t.get('', 350, round(self.currentBlock, 1000) - 20000, loc, function (d) {
 
                         if(!s.all) s.all = {}
 
@@ -28568,7 +28568,6 @@ Platform = function (app, listofnodes) {
 
             setTimeout(function(){
                 self.sdk.tags.getfastsearch()
-                self.sdk.tags.cloud()
                 self.sdk.node.get.time()
             }, 1000)
 
