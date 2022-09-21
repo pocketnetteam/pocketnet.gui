@@ -6,7 +6,7 @@
   position: sticky;
   z-index: 1;
   left: 0;
-  top: 0;
+  top: var(--app-margin-top);
   right: 0;
   align-items: center;
   background: rgb(var(--background-secondary-theme));

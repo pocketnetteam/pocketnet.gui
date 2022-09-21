@@ -341,7 +341,7 @@ var articlev = (function(){
 
 				var tta = _.uniq(_.clone(art.tags).concat([tag]))
 
-				var bycategories = self.app.platform.sdk.categories.fromTags(tta, self.language.v)
+				var bycategories = self.app.platform.sdk.categories.fromTags(tta, art.language)
 
 				if (bycategories.categories.length > 2){
 					return false
@@ -621,13 +621,24 @@ var articlev = (function(){
 			},
 
 			tgs : function(clbk){
+
+				var addonlytags = false;
+
+				var bycategories = app.platform.sdk.categories.fromTags(_.clone(art.tags), art.language)
+
+				if (bycategories.categories.length >= 2){
+					addonlytags = true
+				}
+
 				self.nav.api.load({
 					open : true,
 					id : 'taginput',
 					el : el.tagsinputwrapper,
 					eid : 'sharetags' + (p.mid || 'articles'),
 					animation : false,
+					insertimmediately : true,
 					essenseData : {
+						addonlytagsFk : addonlytags,
 						tags : function(){
 							return art.tags
 						},

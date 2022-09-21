@@ -2705,6 +2705,18 @@ input[type=radio].radio:checked + label {
     
 }
 
+html.mobileview.android{
+    .wnd{
+
+        .wndback{
+            background: rgb(var(--color-shadow-base))!important;
+            backdrop-filter: none!important;
+            -webkit-backdrop-filter: none!important;  
+        }
+
+    }
+}
+
 .wnd{
     position: fixed;
     left: 0;
@@ -8131,6 +8143,13 @@ html.mobileview{
             .buttons{
                 padding-bottom: 12 * @rhythm!important;
                 position: relative;
+                height: auto!important;
+                border-radius: 0!important;
+                padding-right: 0!important;
+
+                .close{
+                    display: none!important;
+                }
             }
 
             /*.hideButton{

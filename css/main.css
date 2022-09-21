@@ -2338,6 +2338,11 @@ input[type=radio].radio:checked + label {
   backdrop-filter: none!important;
   -webkit-backdrop-filter: none!important;
 }
+html.mobileview.android .wnd .wndback {
+  background: rgb(var(--color-shadow-base)) !important;
+  backdrop-filter: none!important;
+  -webkit-backdrop-filter: none!important;
+}
 .wnd {
   position: fixed;
   left: 0;
@@ -6593,6 +6598,12 @@ html.mobileview .wnd.normalizedmobile:not(.hiddenState) .wndback {
 html.mobileview .wnd.normalizedmobile:not(.hiddenState) .buttons {
   padding-bottom: 6em !important;
   position: relative;
+  height: auto!important;
+  border-radius: 0!important;
+  padding-right: 0!important;
+}
+html.mobileview .wnd.normalizedmobile:not(.hiddenState) .buttons .close {
+  display: none!important;
 }
 html.mobileview .wnd.normalizedmobile:not(.hiddenState) ._close {
   backdrop-filter: none!important;

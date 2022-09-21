@@ -1769,9 +1769,6 @@ var share = (function(){
 
 					var bycategories = app.platform.sdk.categories.fromTags(currentShare.tags.get(), currentShare.language.v)
 
-
-					console.log('bycategories', bycategories)
-
 					if (bycategories.categories.length >= 2){
 						addonlytags = true
 					}
