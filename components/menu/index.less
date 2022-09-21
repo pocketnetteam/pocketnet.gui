@@ -30,8 +30,9 @@
 		position: fixed;
 		left: 0;
 		right: 0;
-		top: 0;
-		height: 65px;
+		top : 0;
+		height: calc(65px + var(--app-margin-top));
+		padding-top: var(--app-margin-top);
 		z-index: 20;
 		contain: strict;
 		background: rgb(var(--background-total-theme));
@@ -1116,8 +1117,9 @@
 	html.allcontent{
 		#menu{
 			.menuWrapper {
+				backdrop-filter: blur(2px);
+                -webkit-backdrop-filter: blur(2px);  
 				background: transparent;
-
 				.searchIconLabel i,
 				.icon i{
 					color : rgba(var(--color-bg-ac-bright), 0.9);

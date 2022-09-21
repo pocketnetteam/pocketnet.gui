@@ -36,7 +36,7 @@ var taginput = (function(){
 	
 								if ((/[,.!?;:() ]/).test(char)) {
 	
-									events.addTag(value.replace(/#/g,'').replace(/ /g,''))
+									events.addTag(value.replace(/#/g,''))
 	
 									//el.tagSearch.find('input').val('').focus()
 	
@@ -107,7 +107,7 @@ var taginput = (function(){
 	
 							value = value.replace(/#/g, ' ');
 	
-							value = value.split(" ");
+							/*value = value.split(" ");
 	
 							value = _.filter(value, function(v){
 								return v
@@ -115,7 +115,7 @@ var taginput = (function(){
 	
 							if (value.length == 1){
 								value = value[0]
-							}
+							}*/
 	
 							events.addTag(value)
 	
@@ -138,11 +138,11 @@ var taginput = (function(){
 							})
 
 							var olddefault = [
-								self.app.localization.e('tnews'), 
+								//self.app.localization.e('tnews'), 
 								self.app.localization.e('timages'), 
 								self.app.localization.e('tvideos'), 
 								self.app.localization.e('tmarket'), 
-								self.app.localization.e('tsport')
+								//self.app.localization.e('tsport')
 							]
 
 							olddefault = _.map(olddefault, function(t){
@@ -196,6 +196,8 @@ var taginput = (function(){
 
 					var c = self.app.platform.sdk.categories.getbyid(category, actions.language())
 
+					console.log("C", c)
+
 					events.addTags(c.tags)
 					
 				}
@@ -244,13 +246,15 @@ var taginput = (function(){
 
 			addTag : function(tag){
 				if (essenseData.addTag){
-					essenseData.addTag(tag)
+					essenseData.addTag(clearTagString(tag))
 				}
 			},
 
 			addTags: function(tags){
 				if (essenseData.addTags){
-					essenseData.addTags(tags)
+					essenseData.addTags(_.map(tags, (t) => {
+						return clearTagString(t)
+					}))
 				}
 			},
 		}
@@ -272,6 +276,7 @@ var taginput = (function(){
 							categories : []
 						}
 					}
+
 
 					self.shell({
 						name :  'tags',
@@ -371,7 +376,9 @@ var taginput = (function(){
 
 		_.each(essenses, function(essense){
 
-			essense.destroy();
+			window.requestAnimationFrame(() => {
+				essense.destroy();
+			})
 
 		})
 

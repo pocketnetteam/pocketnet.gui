@@ -54,6 +54,10 @@
   margin-bottom: 2em;
   margin-top: 1em;
 }
+#userpage .bgCaption .deletedAccount {
+  padding: 5em 3em;
+  text-align: center;
+}
 #userpage .bgCaption .rightchatspacer {
   height: 100%;
 }

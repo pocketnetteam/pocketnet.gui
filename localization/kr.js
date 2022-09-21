@@ -853,3 +853,5 @@ _l.androidPopupDisagree = "지금은 아닙니다"
 _l.desktopPopupTitle = "Bastyon 데스크탑 앱에서 무수정 정보 가져오기"
 _l.desktopPopupAgree = "앱 다운로드"
 _l.desktopPopupDisagree = "지금은 아닙니다"
+
+_l.profanity_tag = '욕설'

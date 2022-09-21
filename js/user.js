@@ -322,6 +322,8 @@ User = function(app, p) {
 
 		if(!self.address.value) return 'fu';
 
+		if(app.platform.sdk.user.myaccauntdeleted()) return 'deleted'
+
 		var me = deep(app, 'platform.sdk.user.storage.me');
 
 		if (me && me.relay){
@@ -334,12 +336,17 @@ User = function(app, p) {
 
 		}
 
+		
+
 		if(!(deep(app, 'platform.sdk.user.storage.me.name'))) return 'fu' 
 	}
 
 	self.validate = function(){
 
 		if(!self.address.value) return false;
+
+		if(app.platform.sdk.user.myaccauntdeleted()) return false
+
 
 		var me = deep(app, 'platform.sdk.user.storage.me');
 
@@ -354,6 +361,8 @@ User = function(app, p) {
 			}
 
 		}
+
+
 
 		return (deep(app, 'platform.sdk.user.storage.me.name'))
 

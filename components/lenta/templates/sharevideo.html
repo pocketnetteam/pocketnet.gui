@@ -113,7 +113,10 @@ var metadisplay = function(){ %>
 									<span class="adr"><%-(name || share.address) %></span><% if(reputation > 1 || reputation < -1) {%><sup class="spsp"><%-compressedNumber(reputation, 1)%></sup><% } %>
 								</a>
 
-								<% if((!state || !my) && (typeof repost == 'undefined' || !repost)) { %> 
+								
+			
+
+								<% if((!state || !my) && (typeof repost == 'undefined' || !repost) && (typeof app.platform.sdk.user.myaccauntdeleted == 'undefined' || !app.platform.sdk.user.myaccauntdeleted())) { %> 
 
 									<span class="sbtnxs">
 										&middot; <span class="subscribeLabel asubscribe"><%=e('sub')%></span><span class="subscribedLabel aunsubscribe"><%=e('subi')%></span>
@@ -466,16 +469,12 @@ var metadisplay = function(){ %>
 									<% } %>
 	
 									<% if(!lockedaccount) {%>
-										<% if(!my || app.boost) {%>
-										
-										<div class="item pkoin right unselectedtable">
-											<img src="img/pocketnet_logo_white.svg" alt="">
-											<span class='workstation'>
-												PKOIN
-											</span>
+										<% if((!my || app.boost) && !app.pkoindisable) {%>
+										<div class="bolt boost right">
+											<i class="fa fa-bolt"></i>
 										</div>
-
 										<% } %>
+
 									<% } %>
 									
 								</div>

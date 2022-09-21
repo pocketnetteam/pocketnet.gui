@@ -175,7 +175,35 @@ fs.exists(mapJsPath, function (exists) {
 
 		var cordova = {
 			path : './cordova/www',
-			copy : ['chat', 'components', 'css', 'images', 'img', 'js', 'localization', 'peertube', 'res', 'sounds', 'browserconfig.xml', 'crossdomain.xml', 'favicon.svg', 'indexcordova.html']
+			filter : function(component, name){
+				if(name.indexOf('.map') > -1) return false
+
+				if(component == 'peertube'){
+
+					if(name.indexOf('peertube') > -1) return true
+
+					if(name.indexOf('.html') > -1 || name.indexOf('.txt') > -1) return false
+
+					if(name.indexOf('.js') > -1 || name.indexOf('.css') > -1) return true
+
+					return false
+				}
+
+				if(component == 'chat'){
+					if(name.indexOf('.js') > -1 && name.indexOf('.min') == -1) return false
+
+					return true
+				}
+
+				if(component == 'css'){
+					if(name.indexOf('.less') > -1) return false
+
+					return true
+				}
+
+				return true
+			},
+			copy : ['chat', 'components', 'css', 'images', 'img', 'js', 'localization', 'peertube', 'sounds', 'browserconfig.xml', 'crossdomain.xml', 'favicon.svg', 'indexcordova.html']
 		}
 
 		var cordovaconfig = {
@@ -185,7 +213,7 @@ fs.exists(mapJsPath, function (exists) {
 
 		var cordovaiosfast = {
 			path : './cordova/platforms/ios/www',
-			copy : ['chat', 'components', 'css', 'images', 'img', 'js', 'localization', 'peertube', 'res', 'sounds', 'browserconfig.xml', 'crossdomain.xml', 'favicon.svg', 'indexcordova.html']
+			copy : ['chat', 'components', 'css', 'images', 'img', 'js', 'localization', 'peertube', 'sounds', 'browserconfig.xml', 'crossdomain.xml', 'favicon.svg', 'indexcordova.html']
 		}
 
 
@@ -1030,6 +1058,8 @@ var helpers = {
 
 var copycontent = function(options, clbk, nac) {
 
+	if(!options) options = {}
+
 	var ac = function(){
 		lazyEach({
 			sync : true,
@@ -1037,7 +1067,16 @@ var copycontent = function(options, clbk, nac) {
 			action : function(p){
 				ncp(p.item, options.path + '/' + p.item, {
 					filter : function(name){
+
+						console.log('p.item', p.item, name)
+
+						if(options.filter){
+							console.log('filter', options.filter(p.item, name))
+							return options.filter(p.item, name)
+						}
+						else
 						return name.indexOf('.map') == -1
+
 					},
 				}, function (err) {
 					if (err) {

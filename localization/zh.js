@@ -612,7 +612,7 @@ _l.repost = "转发"
 _l.e13160 = "你好口袋小子!"
 
 _l.e13161 = "为你的帖子添加标签"
-_l.e13162 = "标签不超过5个"
+_l.e13162 = "标签不超过15个"
 _l.e13163 = "该帖子没有任何修改"
 _l.e13164 = "请用几句话向口袋网民们介绍你的链接。内容是什么？有何重要性？你的观点是？"
 _l.e13165 = '视频链接无效，请使用有效的视频链接。'
@@ -1023,3 +1023,6 @@ _l.androidPopupDisagree = "不是现在"
 _l.desktopPopupTitle = "在 Bastyon 桌面应用程序中获取未经审查的信息"
 _l.desktopPopupAgree = "下载应用程序"
 _l.desktopPopupDisagree = "不是现在"
+
+
+_l.profanity_tag = '褻瀆'

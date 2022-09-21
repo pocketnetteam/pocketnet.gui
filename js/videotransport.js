@@ -4,7 +4,7 @@ var initIndexedDbVideo = function () {
         const request = window.indexedDB.open("assets", 1);
 
         request.onupgradeneeded = (event) => {
-            console.info("Upgrading from", event.oldVersion, "to", event.newVersion);
+  
             const db = event.target.result;
 
             switch (event.oldVersion) {
@@ -274,6 +274,76 @@ var VideoTransport = function (app, ipcRenderer) {
         },
         getSegment(id, masterSwarmId){
             return idb_segmentsStorage.getSegment(id, masterSwarmId)
+        },
+        clean() { },
+        destroy() { }
+    }
+
+    /*
+
+        export type Segment = {
+            readonly id: string;
+            readonly url: string;
+            readonly masterSwarmId: string;
+            readonly masterManifestUri: string;
+            readonly streamId: string | undefined;
+            readonly sequence: string;
+            readonly range: string | undefined;
+            readonly priority: number;
+            data?: ArrayBuffer;
+            downloadBandwidth?: number;
+            requestUrl?: string;
+            responseUrl?: string;
+        };
+
+    */
+
+    self.internal = {
+      
+        storeSegment(segment){
+            return Promise.resolve()
+        },
+        getSegmentsMap(masterSwarmId){
+
+            var video = app.platform.sdk.localshares.getByMasterSwarmId(masterSwarmId)
+
+            if(!video) return Promise.resolve([])
+
+            return Promise.resolve(video.infos.segments)
+        },
+        getSegment(id, masterSwarmId){
+
+
+            var video = app.platform.sdk.localshares.getByMasterSwarmId(masterSwarmId)
+
+            if(!video) return Promise.resolve(null)
+
+            var sm = video.infos.segments.get(id)
+
+
+            if(!sm) return Promise.resolve(null)
+
+            var segment = sm.segment
+
+            var filename = segment.range.replace('bytes=', 'fragment_') + '.mp4'
+
+            return app.platform.sdk.localshares.getSegment(video.infos.dir, filename).then(data => {
+
+
+                if(!data){
+                    return Promise.reject(null)
+                }
+
+                var buffer = data.buffer // new ArrayBuffer(data.length);
+
+                //data.map(function(value, i){buffer[i] = value});
+
+                return {
+                    ...segment,
+                    ...{data : buffer}
+                }
+            })
+
         },
         clean() { },
         destroy() { }

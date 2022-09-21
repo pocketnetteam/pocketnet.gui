@@ -41,11 +41,11 @@
             </feature>
         </config-file>
 
-        <config-file target="*-Info.plist" parent="UIBackgroundModes">
+        <!--<config-file target="*-Info.plist" parent="UIBackgroundModes">
             <array>
                 <string>audio</string>
             </array>
-        </config-file>
+        </config-file>-->
 
         <resource-file src="appbeep.wav" />
 

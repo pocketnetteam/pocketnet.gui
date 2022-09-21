@@ -601,7 +601,7 @@ _l.repost = "Republier"
 _l.e13160 = "Bonjour Pocketeers!"
 
 _l.e13161 = "Ajouter des étiquettes pour votre message"
-_l.e13162 = "Vous pouvez saisir moins de 5 étiquettes"
+_l.e13162 = "Vous pouvez saisir moins de 15 étiquettes"
 _l.e13163 = "Il n'y a pas de changements dans la publication"
 _l.e13164 = "Veuillez ajouter quelques mots pour informer Pocketpeople de votre lien. De quoi s'agit-il? Pourquoi c'est important? Quel est ton opinion?"
 _l.e13165 = "VNotre lien vers la vidéo n'est pas valide. Veuillez mettre en ligne une URL de vidéo valide."
@@ -1375,3 +1375,6 @@ _l.androidPopupDisagree = "Pas maintenant"
 _l.desktopPopupTitle = "Obtenir des informations non censurées dans l'application de bureau Bastyon"
 _l.desktopPopupAgree = "Télécharger l'application"
 _l.desktopPopupDisagree = "Pas maintenant"
+
+_l.profanity_tag = 'impiété'
+

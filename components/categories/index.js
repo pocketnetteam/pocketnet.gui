@@ -476,6 +476,10 @@ var categories = (function(){
 
 		return {
 
+			update : function(){
+				make()
+			},
+
 			getdata : function(clbk, p){
 				essenseData = p.settings.essenseData || {};
 
@@ -537,7 +541,9 @@ var categories = (function(){
 
 		_.each(essenses, function(essense){
 
-			essense.destroy();
+			window.requestAnimationFrame(() => {
+				essense.destroy();
+			})
 
 		})
 
