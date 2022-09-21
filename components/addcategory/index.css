@@ -37,6 +37,9 @@
 #addcategory .fieldwrapper .tagswrapper #taginput .tgs .category {
   background: rgb(var(--background-secondary-theme));
 }
+#addcategory .fieldwrapper .tagswrapper #taginput .tgs .search .searchFastResultWrapper {
+  max-height: 250px;
+}
 #addcategory .fieldwrapper .tagswrapper #taginput .tagsCont {
   padding: 0 1em;
 }
