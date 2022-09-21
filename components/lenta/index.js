@@ -55,7 +55,11 @@ var lenta = (function(){
 			fullscreenvideoShowed = null;
 
 		var countshares = 0;
-		
+
+		var newsharescount = 0
+
+		var offsetblock = 0
+		var emptyinarow = 0
 
 		var beginmaterial = null;
 		var beginmaterialloaded = false;
@@ -2326,9 +2330,9 @@ var lenta = (function(){
 				else{
 
 					if (
-						!loading &&  (!ended && recommended != 'recommended') && 
-						(el.w.scrollLeft() + el.w.width() > el.c.find('.shares').width() - 1000) 
-	
+						!loading &&  (!ended && (recommended != 'recommended' || recommended != 'best')) &&
+						(el.w.scrollLeft() + el.w.width() > el.c.find('.shares').width() - 1000)
+
 						) {
 
 							
@@ -4081,6 +4085,14 @@ var lenta = (function(){
 
 				if(!bshares) bshares = []
 
+				newsharescount = shares.length
+				if (!shares.length) {
+					emptyinarow++
+				} else {
+					emptyinarow = 0
+				}
+
+
 				var allshares = [].concat(shares, bshares)
 
 				if(includingsub) {
@@ -4174,7 +4186,7 @@ var lenta = (function(){
 
 								}
 
-								if(!shares.length && !essenseData.ended && !includingsub){
+								if(!shares.length && !essenseData.ended && !includingsub && (emptyinarow >= 3 || offsetblock >= 43200 )){
 									ended = true
 								}
 									
@@ -4450,6 +4462,10 @@ var lenta = (function(){
 
 							var page = essenseData.page || parameters().page || 0
 
+							if(page === 0) {
+								offsetblock = 0
+							}
+
 							var type = null
 
 							if(video || essenseData.videomobile){ type = 'video'}
@@ -4469,6 +4485,7 @@ var lenta = (function(){
 
 							}
 
+							var period = newsharescount ? Math.floor(60 * 20 / newsharescount) : page ? 4320 : 1440
 							//if(loader == 'hierarchical') loader = 'hierarchicaltst'
 
 							self.app.platform.sdk.node.shares[loader]({
@@ -4483,11 +4500,14 @@ var lenta = (function(){
 								type : type,
 
 								count : count,
+								offset : offsetblock,
 								page : page,
-								period : essenseData.period,
+								period : period,
 								tagsexcluded : tagsexcluded
 
 							}, function(shares, error, pr){
+
+								offsetblock = offsetblock + period
 
 								///
 
@@ -5101,7 +5121,7 @@ var lenta = (function(){
 							}*/
 
 
-							if(shares.length < 5 && essenseData.includesub && !loading && (!ended && recommended != 'recommended')){
+							if(shares.length < 5 && essenseData.includesub && !loading && (!ended && recommended != 'recommended' && recommended != 'best')){
 								actions.loadmore()
 							}
 

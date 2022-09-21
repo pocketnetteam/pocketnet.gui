@@ -671,6 +671,7 @@ _l.e13132 = "rated"
 _l.e13133 = "Share"
 _l.e13134 = "There aren't any results for this search string"
 _l.e13135 = "User haven't private key"
+_l.discussed = "Most Discussed"
 _l.e13136 = "All Posts"
 _l.e13137 = "My Subscriptions" // This is the equivalent of a ‘News feed’. Don’t change the word ‘Pocket’ however, it’s a feature of "+appname+".
 _l.e13138 = "Top posts"
