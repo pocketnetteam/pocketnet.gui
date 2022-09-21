@@ -14,7 +14,7 @@ const queuemethods = {
     getuserstate: true,
     getaddressregistration: true,
     getrecommendedposts: true,
-    gethotposts: true,
+    getmostcommentedfeed: true,
     getuseraddress: true,
     search: true,
     searchlinks: true,
