@@ -4549,6 +4549,27 @@ html.mobileview .wnd.pipmini ._expand,
 html.mobileview .wnd.pipmini ._close {
   opacity: 1;
 }
+.mainsearchresults .result {
+  min-height: 33px;
+}
+.mainsearchresults .swrp,
+.mainsearchresults .userTable {
+  display: flex;
+  align-items: center;
+}
+.mainsearchresults .swrp .rsicon,
+.mainsearchresults .userTable .rsicon,
+.mainsearchresults .swrp .iconWrapper,
+.mainsearchresults .userTable .iconWrapper {
+  max-width: 44px;
+  min-width: 44px;
+  text-align: center;
+}
+.mainsearchresults .swrp .label,
+.mainsearchresults .userTable .label {
+  margin-left: 0.5em;
+  text-align: center;
+}
 html.cameraenabled {
   background: transparent;
 }
@@ -6653,6 +6674,29 @@ html.mobileview .wnd.normalizedmobile:not(.hiddenState) .wndinner > div.buttons 
 html.mobileview .wnd.normalizedmobile:not(.hiddenState) .wndinner > div.buttons > div {
   max-width: 768px;
   margin: 0 auto;
+}
+html.mobileview .wnd.normalizedmobile:not(.hiddenState).fromtop .wndinner {
+  top: 0!important;
+  bottom: auto!important;
+  border-radius: 0!important;
+  -webkit-transform: translateY(-110%);
+  transform: translateY(-110%);
+}
+html.mobileview .wnd.normalizedmobile:not(.hiddenState).fromtop .wndinner .wndcontent {
+  padding-top: 0;
+  border-radius: 0;
+  border-bottom-right-radius: 24px;
+  border-bottom-left-radius: 24px;
+  max-height: calc(var(--vh, 1vh) * 52);
+  min-height: 0;
+}
+html.mobileview .wnd.normalizedmobile:not(.hiddenState).fromtop .closeline {
+  top: auto;
+  bottom: 120px;
+}
+html.mobileview .wnd.normalizedmobile:not(.hiddenState).fromtop.sette .wndinner {
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
 }
 html.mobileview .wnd.normalizedmobile:not(.hiddenState).asette .wndback {
   -moz-transition: 0.2s;

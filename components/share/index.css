@@ -41,6 +41,10 @@
 #share .tgsWrapperMain #taginput {
   margin-top: 0.5em;
 }
+#share .tgsWrapperMain #taginput .mobsearch {
+  cursor: pointer;
+  padding: 1.5em 1em;
+}
 #share .tgsWrapperMain #taginput .inputWrapper {
   background: rgb(var(--background-main));
   box-shadow: none;

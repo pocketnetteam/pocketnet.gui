@@ -8,12 +8,21 @@ var taginput = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el, essenseData;
+		var el, essenseData, s;
 
 		var actions = {
 			initsearch : function(){
-				new search(el.tagSearch, {
+
+				console.log("SSS", s)
+
+				if(s) s.destroy()
+
+				s = mobsearch(el.tagSearch, {
 					placeholder : essenseData.placeholder || self.app.localization.e('addtagsCategories'),
+
+					mobileSearch : self.app.width <= 768,
+
+					app : self.app,
 
 					id : 'addtagsCategories',
 	
@@ -72,7 +81,7 @@ var taginput = (function(){
 
 								if(essenseData.filter) all = _.filter(all, essenseData.filter)
 								
-								renders.tagsResults(all, function(tpl){
+								renders.tagsResults(all, value, function(tpl){
 	
 									clbk(tpl, function(_el, helpers){
 	
@@ -85,7 +94,7 @@ var taginput = (function(){
 	
 										_el.find('.empty').on('click', function(){
 	
-											var tag = trim(el.tagSearch.find('input').val())
+											var tag = trim(helpers.getvalue? helpers.getvalue() : el.tagSearch.find('input').val())
 	
 											if (tag){
 												helpers.closeResults();
@@ -160,7 +169,7 @@ var taginput = (function(){
 						},
 	
 						tpl : function(data, clbk){
-							renders.tagsResults(data, function(tpl){
+							renders.tagsResults(data, '', function(tpl){
 	
 								clbk(tpl, function(el, helpers){
 	
@@ -298,12 +307,13 @@ var taginput = (function(){
 				}
 			},
 
-			tagsResults : function(results, clbk){
+			tagsResults : function(results, value, clbk){
 
 				self.shell({
 					name :  'tagsResult',
 					data : {
-						results : results
+						results : results,
+						value
 					},
 
 				}, function(_p){
@@ -343,6 +353,11 @@ var taginput = (function(){
 			},
 
 			destroy : function(){
+
+				if(s) s.destroy()
+
+				s = null
+
 				el = {};
 			},
 			

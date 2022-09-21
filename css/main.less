@@ -5506,6 +5506,33 @@ html.mobileview{
     }
 }
 
+.mainsearchresults{
+    .result{
+        min-height: 33px;
+    }
+    .swrp,
+    .userTable{
+        display: flex;
+        align-items: center;
+
+        .rsicon,
+        .iconWrapper{
+            max-width: 44px;
+            min-width: 44px;
+            text-align: center;
+        }
+
+        .label{
+            margin-left: @rhythm;
+            text-align: center;
+        }
+    }
+
+    .swrp{
+
+    }
+}
+
 html.cameraenabled{
 
     background: transparent;
@@ -8191,6 +8218,40 @@ html.mobileview{
                 }
             }
 
+            &.fromtop{
+                .wndinner{
+                    top : 0!important;
+                    bottom : auto!important;
+                    border-radius: 0!important;
+                    -webkit-transform: translateY(-110%);
+                    transform: translateY(-110%);
+                    
+                    .wndcontent{
+                        padding-top: 0;
+                        border-radius: 0;
+                        border-bottom-right-radius: 24px;
+                        border-bottom-left-radius: 24px;
+                        max-height: calc(var(--vh, 1vh) * 52);
+                        min-height: 0;
+
+                    }
+                }
+
+                .closeline{
+                    top : auto;
+                    bottom : 120px;
+                }
+
+                &.sette{
+
+                    .wndinner{
+                        -webkit-transform: translate3d(0, 0, 0);
+                        transform: translate3d(0, 0, 0);
+                    }  
+                    
+                }
+            }
+
             &.asette{
                 .wndback{
                     .transition(0.2s);
@@ -8243,7 +8304,6 @@ html.mobileview{
                     border-top-left-radius: 10px;
                     border-top-right-radius: 10px;
                     overflow: hidden;
-                   
                 }
             }
 
@@ -8262,6 +8322,8 @@ html.mobileview{
                 }
             }
         }
+
+        
 
         &.maxheight{
             .wndinner{

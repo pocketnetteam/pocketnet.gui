@@ -1,0 +1,100 @@
+@import "../../css/__cssvar";
+
+#addcategory{
+    .namewrapper,
+    .fieldwrapper{
+        padding : 2 * @rhythm 0;
+        padding-bottom: 0;
+
+        .label{
+            padding : 0 2 * @rhythm;
+
+            span{
+                font-size: 0.9em;
+                font-weight: 700;
+            }
+        }
+    }
+
+    .namewrapper{
+        input{
+            width: 100%;
+            background: rgb(var(--background-secondary-theme));
+            border : 0;
+            padding : 2 * @rhythm;
+        }
+
+        .inputWrapper{
+            margin-top: @rhythm;
+        }
+    }
+
+    .fieldwrapper{
+        .tagswrapper{
+            margin-top: @rhythm;
+
+            #taginput{
+                .tgs{
+                    .tagsWrapper{
+                        >div{
+                            &.tagsInputWrapper{
+                                width: 100%;
+
+                                >div{
+                                    margin-right: 0;
+
+                                    &.inputWrapper{
+                                        box-shadow: none;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    .tag,
+                    .category{
+                        background: rgb(var(--background-secondary-theme));
+                    }
+                }
+
+                .tagsCont{
+                    padding : 0 2 * @rhythm;
+                }
+                .searchInput,
+                .mobsearch{
+                    width: 100%;
+                    background: rgb(var(--background-secondary-theme));
+                    border : 0;
+                    padding : 2 * @rhythm;
+                }
+
+            }
+        }
+    }
+
+    .buttonpanel{
+        display: flex;
+        opacity: 0;
+        padding : @rhythm 2 * @rhythm;
+        margin-top: 4 * @rhythm;
+        .transition(0.3s);
+
+        button{
+            margin-top: @rhythm;
+            margin-right: @rhythm;
+        }
+    }
+
+    &.ready{
+        .buttonpanel{
+            opacity: 1;
+        }
+    }
+}
+
+.wnd.addcategoryWindow{
+    .wndinner {
+        max-height: 550px;
+        max-width: 400px;
+    }
+}

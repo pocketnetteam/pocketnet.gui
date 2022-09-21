@@ -318,6 +318,7 @@ Platform = function (app, listofnodes) {
 
     var bastyonhelperOpened = false
     self.uicamerapreview = null
+    self.uimobilesearch=null
     //////////////
     self.test = false;
     //////////////
@@ -2862,6 +2863,22 @@ Platform = function (app, listofnodes) {
     }
 
     self.ui = {
+
+        mobilesearch : function(p){
+
+            app.nav.api.load({
+                open : true,
+                id : 'mobilesearch',
+                inWnd : true,
+
+                essenseData : p,
+
+                clbk : function(s, p){
+                    self.uimobilesearch = p
+                }
+            })
+
+        },
 
         uploadImage : function(p){
 

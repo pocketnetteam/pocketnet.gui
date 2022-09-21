@@ -416,7 +416,9 @@ var menu = (function(){
 						var pn = self.app.nav.current.href
 
 						if (cl){
-							menusearch.setvalue('')
+
+							if (menusearch)
+								menusearch.setvalue('')
 							closesearch()
 
 						}
@@ -435,7 +437,9 @@ var menu = (function(){
 								self.app.nav.api.links(null, el, function(){
 
 									helpers.closeResults()
-									menusearch.setactive(false)
+
+									if (menusearch)
+										menusearch.setactive(false)
 
 								});
 
@@ -452,7 +456,9 @@ var menu = (function(){
 									})
 
 									helpers.closeResults()
-									menusearch.setactive(false)
+
+									if (menusearch)
+										menusearch.setactive(false)
 
 									close()
 
@@ -466,11 +472,18 @@ var menu = (function(){
 						}, p)
 					}
 
-					if (menusearch) 
+					if (menusearch) {
 						menusearch.destroy()
 
-					menusearch = new search(el.postssearch, {
+						menusearch = null
+					}
+
+					menusearch = mobsearch(el.postssearch, {
 						placeholder : self.app.localization.e('e13139'),
+						icon : '<i class="fas fa-search"></i>',
+						app : self.app,
+						mobileSearch : self.app.width <= 768,
+
 
 						id : 'searchOnBastyon',
 
@@ -590,9 +603,13 @@ var menu = (function(){
 
 									if (clbk) clbk(true)
 
-									menusearch.setactive(true)
+									if (menusearch){
+										menusearch.setactive(true)
 									
-									menusearch.focus()
+										menusearch.focus()
+									}
+
+									
 
 									return
 								}
@@ -623,10 +640,9 @@ var menu = (function(){
 
 								self.nav.api.go(p)
 
-								//helpers.closeResults()
 
-								menusearch.clear()
-								//menusearch.setactive(false)
+								if (menusearch)
+									menusearch.clear()
 
 								if (clbk)
 									clbk(true)
@@ -635,19 +651,11 @@ var menu = (function(){
 
 							clear : function(value){
 								
-								//menusearch.blur()
 
-								if(isTablet()){
+								if(isTablet() && menusearch){
 									menusearch.setactive(false)
 								}
 
-								/*if(parameters().sst || parameters().ss){
-									self.nav.api.go({
-										href : 'index',
-										history : true,
-										open : true
-									})
-								}*/
 								
 							},
 
@@ -660,7 +668,6 @@ var menu = (function(){
 								window.requestAnimationFrame(() => {
 									if (a){
 										el.c.addClass('searchactive')
-										//menusearch.focus()
 									}
 									else{
 										el.c.removeClass('searchactive')
@@ -671,7 +678,7 @@ var menu = (function(){
 
 							blur : function(value){
 								setTimeout(function(){
-									if(!isTablet()){
+									if(!isTablet() && menusearch){
 										menusearch.setactive(false)
 									}
 								}, 300)
@@ -878,6 +885,16 @@ var menu = (function(){
 
 		var initEvents = function(){
 
+			self.app.events.resize.menu = function(){
+				if(self.app.width <= 768 && menusearch){
+					events.searchinit.init()
+				}
+
+				if(self.app.width > 768 && !menusearch){
+					events.searchinit.init()
+				}
+			}
+
 			self.app.platform.matrixchat.clbks.ALL_NOTIFICATIONS_COUNT.menu2 = function(count){
 				actions.ahnotify(null, count, 'chat')
 			}
@@ -980,20 +997,6 @@ var menu = (function(){
 
 			self.app.user.isState(function(state){
 
-				/*if((parameters().ss || parameters().sst) && (self.app.nav.get.pathname() == 'index')){
-
-					if (menusearch) {
-
-						var sr = ''
-
-						if(!parameters().ss && parameters().sst) sr = '#'
-
-						menusearch.setvalue(sr + (parameters().ss || parameters().sst).replace('tag:', "#"))
-						menusearch.setactive(true)
-						
-					}
-
-				}*/
 				
 			})
 
@@ -1059,7 +1062,7 @@ var menu = (function(){
 
 					menusearch = null
 
-
+				delete self.app.events.resize.menu
 
 				delete self.app.platform.sdk.newmaterials.clbks.update.menu
 
@@ -1096,7 +1099,7 @@ var menu = (function(){
 
 			blursearch : function(){
 
-				if(menusearch) {
+				if (menusearch) {
 					menusearch.blur()
 
 					if(!menusearch.getvalue() && isTablet()){

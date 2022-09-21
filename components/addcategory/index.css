@@ -1,0 +1,70 @@
+#addcategory .namewrapper,
+#addcategory .fieldwrapper {
+  padding: 1em 0;
+  padding-bottom: 0;
+}
+#addcategory .namewrapper .label,
+#addcategory .fieldwrapper .label {
+  padding: 0 1em;
+}
+#addcategory .namewrapper .label span,
+#addcategory .fieldwrapper .label span {
+  font-size: 0.9em;
+  font-weight: 700;
+}
+#addcategory .namewrapper input {
+  width: 100%;
+  background: rgb(var(--background-secondary-theme));
+  border: 0;
+  padding: 1em;
+}
+#addcategory .namewrapper .inputWrapper {
+  margin-top: 0.5em;
+}
+#addcategory .fieldwrapper .tagswrapper {
+  margin-top: 0.5em;
+}
+#addcategory .fieldwrapper .tagswrapper #taginput .tgs .tagsWrapper > div.tagsInputWrapper {
+  width: 100%;
+}
+#addcategory .fieldwrapper .tagswrapper #taginput .tgs .tagsWrapper > div.tagsInputWrapper > div {
+  margin-right: 0;
+}
+#addcategory .fieldwrapper .tagswrapper #taginput .tgs .tagsWrapper > div.tagsInputWrapper > div.inputWrapper {
+  box-shadow: none;
+}
+#addcategory .fieldwrapper .tagswrapper #taginput .tgs .tag,
+#addcategory .fieldwrapper .tagswrapper #taginput .tgs .category {
+  background: rgb(var(--background-secondary-theme));
+}
+#addcategory .fieldwrapper .tagswrapper #taginput .tagsCont {
+  padding: 0 1em;
+}
+#addcategory .fieldwrapper .tagswrapper #taginput .searchInput,
+#addcategory .fieldwrapper .tagswrapper #taginput .mobsearch {
+  width: 100%;
+  background: rgb(var(--background-secondary-theme));
+  border: 0;
+  padding: 1em;
+}
+#addcategory .buttonpanel {
+  display: flex;
+  opacity: 0;
+  padding: 0.5em 1em;
+  margin-top: 2em;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+#addcategory .buttonpanel button {
+  margin-top: 0.5em;
+  margin-right: 0.5em;
+}
+#addcategory.ready .buttonpanel {
+  opacity: 1;
+}
+.wnd.addcategoryWindow .wndinner {
+  max-height: 550px;
+  max-width: 400px;
+}

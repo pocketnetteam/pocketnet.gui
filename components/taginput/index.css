@@ -52,17 +52,12 @@
 #taginput .tgs .search .searchInput .searchInputIcon > div.searchIconLabel {
   display: none;
 }
-#taginput .tgs .tagsWrapper {
-  display: flex;
-  flex-wrap: wrap;
-}
 #taginput .tgs .tagsWrapper > div.label {
   padding-left: 0;
   color: rgb(var(--color-txt-ac));
   font-weight: 700;
 }
 #taginput .tgs .tagsWrapper > div.tagsCont {
-  margin-top: 0.5em;
   display: flex;
   flex-wrap: wrap;
 }
@@ -87,13 +82,12 @@
 }
 #taginput .tgs .tag,
 #taginput .tgs .category {
-  margin-top: 0;
   border-radius: 8px;
   padding: 4px 10px;
   background: rgb(var(--background-total-theme));
   box-shadow: 0 5px 7px -5px rgba(var(--color-shadow-base), 0.4);
   margin-right: 0.5em;
-  margin-bottom: 0.25em;
+  margin-top: 0.25em;
 }
 #taginput .tgs .tag .inne,
 #taginput .tgs .category .inne {

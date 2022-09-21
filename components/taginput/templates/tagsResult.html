@@ -13,11 +13,15 @@
 
 		</div>
 
-	<% } else { %>
+	<% } else { 
+
+	
+		
+		%>
 	
 		<div elementsid="snotags" class="empty">
 			<span>
-				<%=e('snotags')%>
+				<%=e('snotags')%> #<%-clearTagString(value)%>
 			</span>
 		</div>
 
