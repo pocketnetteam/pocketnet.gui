@@ -1764,7 +1764,18 @@ var share = (function(){
 			tgs : function(clbk){
 
 				if(!currentShare.repost.v) {
-					
+
+					var addonlytags = false;
+
+					var bycategories = app.platform.sdk.categories.fromTags(currentShare.tags.get(), currentShare.language.v)
+
+
+					console.log('bycategories', bycategories)
+
+					if (bycategories.categories.length >= 2){
+						addonlytags = true
+					}
+				
 					self.nav.api.load({
 						open : true,
 						id : 'taginput',
@@ -1773,6 +1784,7 @@ var share = (function(){
 						animation : false,
 						insertimmediately : true,
 						essenseData : {
+							addonlytagsFk : addonlytags,
 							tags : function(){
 								return currentShare.tags.get()
 							},

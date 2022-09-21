@@ -161,7 +161,18 @@ var taginput = (function(){
 								}
 							})
 
-							if (essenseData.addonlytags) cats = []
+							var myloc = self.app.platform.sdk.tags.storage.cloud[actions.language() || self.app.localization.key]
+
+							if (myloc) {
+								olddefault = _.sortBy(_.map(myloc, (ct) => {
+									return {tag : ct.tag, name : '#' + ct.tag}
+								}), (t) => {
+									return t.tag
+								})
+							}
+
+
+							if (essenseData.addonlytags || essenseData.addonlytagsFk) cats = []
 
 							var all = cats.concat(tags, olddefault)//firstEls(cats.concat(tags, olddefault), 7)
 

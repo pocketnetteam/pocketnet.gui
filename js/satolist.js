@@ -15715,6 +15715,17 @@ Platform = function (app, listofnodes) {
 
             },
 
+            getcloudall : function(){
+                var all = {}
+                _.each(this.storage.cloud, (c, loc) => {
+                    _.each(c, (tg) => {
+                        all[tg.tag] = tg
+                    })
+                })
+
+                return all
+            },
+
             totals : function(){
                 var r = {max : 0}
 
