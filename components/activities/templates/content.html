@@ -64,9 +64,9 @@ if(activity.txType === 204)
     <div class="date"><%- activity.date.calendar() %></div>
   </div>
   <% if(activity.value) {%>
-  <a class="donateSum" href="userpage?id=wallet">
+  <div class="donateSum">
     <i class="fas fa-plus-circle"></i> <%=activity.value / 100000000 %> PKOIN
-  </a>
+  </div>
   <% }%>
 </div>
 <%}
@@ -198,9 +198,9 @@ if(activity.txType === 208)
     <div class="date"><%- activity.date.calendar() %></div>
   </div>
   <% if(activity.value) {%>
-  <a class="boostSum" href="userpage?id=wallet">
+  <div class="boostSum">
     <i class="fas fa-bolt"></i> <%=activity.value / 100000000 %> PKOIN
-  </a>
+  </div>
   <% }%>
 </div>
 <%}
