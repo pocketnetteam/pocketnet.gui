@@ -955,6 +955,14 @@ var Api = function(app){
                 //}
             }
 
+            if (app.Logger) {
+                app.Logger.error({
+                    err: typeof e === 'string' ? e : (e.text || 'RPC_DEFAULT_ERROR'),
+                    payload: e,
+                    code: e.code || 423,
+                });
+            }
+
             if (e.code != 700){
 
                 if (e == 'TypeError: Failed to fetch' || e == 'proxy' || (e.code == 408 || e.code == -28)){
