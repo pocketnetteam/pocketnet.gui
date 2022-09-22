@@ -96,6 +96,7 @@ ____loclib.ractivities = "Моя активность";
 ____loclib.rall = "Все";
 ____loclib.rinteractions = "Взаимодействия";
 ____loclib.rblocking = "Блокировки";
+____loclib.rblockinglist = "Список заблокированных пользователей";
 ____loclib.rcomment = "Комментарии";
 ____loclib.rsubscriber = "Подписки";
 ____loclib.contentscore = "Вы оставили оценку публикации";

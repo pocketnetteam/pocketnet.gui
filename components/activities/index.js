@@ -44,10 +44,9 @@ var activities = (function(){
 							i.description.message = i.relatedContent.description
 						}
 					}
-					if (i.height) {
+					if (i.time) {
 
-						let range = (block.height - i.height) / 2
-						i.date = moment().subtract(range, 'minute');
+						i.date = moment.unix(i.time)
 					}
 					if (i.outputs && i.inputs) {
 						let out
@@ -84,7 +83,6 @@ var activities = (function(){
 
 				return res
 			},
-
 		}
 
 		var actions = {
@@ -135,7 +133,47 @@ var activities = (function(){
 
 			},
 
+			openPost(data) {
+				console.log('open post')
+				self.app.platform.app.nav.api.load({
+					open: true,
+					href: 'post?s=' + data.relatedContent.hash,
+					inWnd: true,
+					history: true,
+					clbk: function (d, p) {
+						app.nav.wnds['post'] = p
+					},
 
+					essenseData: {
+						share: data.relatedContent.hash,
+
+						reply: {
+							answerid: data.hash,
+							parentid:  data.commentParentId || "",
+							noaction: true
+						}
+					}
+				})
+			},
+			openMultiBlocks(data, clbk) {
+				console.log('open block')
+				self.app.nav.api.load({
+					open : true,
+					href : 'userslist',
+					inWnd : true,
+					history : true,
+
+					essenseData : {
+						addresses: Object.keys(data.multipleAddresses),
+						caption: self.app.localization.e('rblockinglist'),
+					},
+
+					clbk : function(){
+						if (clbk)
+							clbk()
+					}
+				})
+			}
 
 		}
 
@@ -196,6 +234,7 @@ var activities = (function(){
 					el : el.content,
 					data : {
 						activities : getters.formatActivities(),
+						openPost: actions.openPost,
 					},
 					// inner: (root, el) => {
 					// 	el = el.replace(/\r/gm,"").replace(/(\/>)/gm,">")
@@ -205,9 +244,25 @@ var activities = (function(){
 					// }
 
 				}, function(_p){
+					let interactions = _p.el.find('.interactive')
+					let multiblocking = _p.el.find('.blocking')
 
-					console.log('render')
+					_.each(interactions, function(i){
+					i.addEventListener('click',(e) =>{
+							e.stopPropagation();
+							actions.openPost(...activities.filter(ac => ac.time === +i.attributes.tid.value))
 
+						} )
+					})
+
+
+
+					_.each(multiblocking, function(i){
+					i.addEventListener('click',(e) =>{
+							e.stopPropagation();
+							actions.openMultiBlocks(...activities.filter(ac => ac.time === +i.attributes.tid.value))
+						} )
+					})
 				})
 			}
 		}
@@ -252,8 +307,6 @@ var activities = (function(){
 				el.filters = p.el.find('.filters');
 				el.content = p.el.find('.content');
 				el.loader = p.el.find('.preloaderWrapper');
-
-
 
 				scnt = el.c.closest('.customscroll:not(body)')
 				if(!scnt.length) scnt = $(window);

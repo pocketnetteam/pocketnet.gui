@@ -29,21 +29,21 @@ var logger = new Logger(['general', 'rpc', 'system', 'remote', 'firebase', 'node
 
 var testnodes = [
 
-	// {
-	// 	host : '78.37.233.202',
-	// 	port : 39091,
-	// 	ws : 6067,
-	// 	name : 'test.v.pocketnet.app',
-	// 	stable : true
-	// },
-
 	{
-		host : '157.90.228.34',
+		host : '157.90.235.121',
 		port : 39091,
 		ws : 6067,
-		name : 'test.2.pocketnet.app',
+		name : 'test.1.pocketnet.app',
 		stable : true
 	},
+
+	// {
+	// 	host : '157.90.228.34',
+	// 	port : 39091,
+	// 	ws : 6067,
+	// 	name : 'test.2.pocketnet.app',
+	// 	stable : true
+	// },
 
 
 	// {

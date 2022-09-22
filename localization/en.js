@@ -101,6 +101,7 @@ ____loclib.ractivities = "My activity";
 ____loclib.rall = "All";
 ____loclib.rinteractions = "Interactions";
 ____loclib.rblocking = "Blocking";
+____loclib.rblockinglist = "List of blocked users";
 ____loclib.rcomment = "Comments";
 ____loclib.rsubscriber = "Subscriptions";
 ____loclib.contentscore = "You have left a rating of the publication";
