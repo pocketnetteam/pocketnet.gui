@@ -135,9 +135,19 @@ var activities = (function(){
 
 			openPost(data) {
 				console.log('open post')
+
+				let href, answer, parent
+
+
+				href = data.txType === 301 ? data.relatedContent.postHash : data.type === "answer" ? data.postHash : data.relatedContent.hash
+
+				answer = data.type === "answer" ? data.hash : ''
+
+				parent = data.txType === 301 ? data.relatedContent.hash : data.type === "answer" ? data.relatedContent.hash : data.hash
+
 				self.app.platform.app.nav.api.load({
 					open: true,
-					href: 'post?s=' + data.relatedContent.hash,
+					href: 'post?s=' + href ,
 					inWnd: true,
 					history: true,
 					clbk: function (d, p) {
@@ -145,11 +155,11 @@ var activities = (function(){
 					},
 
 					essenseData: {
-						share: data.relatedContent.hash,
+						share: '',
 
 						reply: {
-							answerid: data.hash,
-							parentid:  data.commentParentId || "",
+							answerid: answer,
+							parentid:  parent,
 							noaction: true
 						}
 					}
