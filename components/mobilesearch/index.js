@@ -205,7 +205,7 @@ var mobilesearch = (function(){
 
 				setTimeout(() => {
 					el.input.focus()
-				}, 300)
+				}, 500)
 				
 
 				initEvents();
