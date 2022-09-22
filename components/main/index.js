@@ -601,57 +601,42 @@ var main = (function(){
 
 			lentawithsearch : function(clbk, p){
 
-				if(searchvalue){
+				if(searchvalue || searchtags){
+					if (searchvalue){
+						self.app.platform.sdk.activity.addsearch(searchvalue)
 
-					var value = searchvalue.replace('tag:', "#");
+						self.app.platform.sdk.search.get(searchvalue, 'posts', 0, 10, null, function(r, block){
 
-					var c = deep(self, 'app.modules.menu.module.showsearch')
+							fixedBlock = block
+	
+							result = {
+								posts : r
+							};
+	
+							renders.lenta(clbk, p)
+						})
 
-					if (c)
-
-						c(value)
-
-					self.app.platform.sdk.search.get(searchvalue, 'posts', 0, 10, null, function(r, block){
-
-						if (r.count){
-							self.app.platform.sdk.activity.addsearch(searchvalue)
-						}
-
-						fixedBlock = block
-
-						result = {
-							posts : r
-						};
-
-						renders.lenta(clbk, p)
-					})
-
-				}
-				else{
-					result = {}
-					fixedBlock = null
-
-					var c = deep(self, 'app.modules.menu.module.showsearch')
-
-					if (c){
-
-						if(searchtags){
-
-							var val = _.map(searchtags, function(w){return '#' + w}).join(' ')
-
-							c(val)
-
-							self.app.platform.sdk.activity.addtagsearch(val)
-
-						}
-						else{
-							c('')
-						}
-
+						return
 					}
 
-					renders.lenta(clbk, p)
+					if (searchtags){
+
+						result = {}
+						fixedBlock = null
+
+						renders.lenta(clbk, p)
+
+						var val = _.map(searchtags, function(w){return '#' + w}).join(' ')
+
+						self.app.platform.sdk.activity.addtagsearch(val)
+
+						return
+					}
 				}
+
+
+				renders.lenta(clbk, p)
+
 			},
 
 			lenta : function(clbk, p){
@@ -712,8 +697,8 @@ var main = (function(){
 							hr : 'index?',
 							goback : p.goback,
 							searchValue : searchvalue || null,
-							search : searchvalue ? true : false,
-							tags : searchtags,
+							search : searchvalue || searchtags ? true : false,
+							searchTags : searchtags,
 							read : readmain,
 							video :  videomain && !isMobile(),
 							videomobile : videomain && isMobile(),
@@ -725,7 +710,7 @@ var main = (function(){
 
 							includerec : !searchvalue && !searchtags && (mode == 'index' /*|| mode == 'video' || mode == 'read'*/) ? true : false,
 							includesub : !searchvalue && !searchtags && (mode == 'index' /*|| mode == 'video' || mode == 'read'*/) ? true : false,
-							includeboost : self.app.boost && !self.app.pkoindisable,
+							includeboost : !searchvalue && !searchtags && self.app.boost && !self.app.pkoindisable,
 
 							//optimize : self.app.mobileview,
 							extra : (self.app.test || self.app.platform.istest()) && state && isMobile() ? [
@@ -740,6 +725,21 @@ var main = (function(){
 									}
 								}
 							] : [],
+
+							cancelsearch : function(){
+								var backlink = 'index'
+
+								if (parameters().video) backlink = 'index?video=1'
+								if (parameters().read) backlink = 'index?read=1'
+
+
+								self.nav.api.load({
+									open : true,
+									href : backlink,
+									history : true,
+									handler : true
+								})
+							},
 
 							afterload : function(ed, s, e){
 
@@ -1037,12 +1037,23 @@ var main = (function(){
 
 				if (t){
 					el.c.addClass('leftshowed')
+					
 					//setTimeout(self.app.actions.offScroll, 300)
 				}
 				else{
 					el.c.removeClass('leftshowed')
 					//setTimeout(self.app.actions.onScroll, 300)
 				}
+				
+			}
+
+			if(!t){
+				if(!self.app.actions.getScroll()){
+					self.app.mobile.reload.initparallax()
+				}
+			}
+			else{
+				self.app.mobile.reload.destroyparallax()
 				
 			}
 		}

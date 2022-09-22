@@ -278,6 +278,17 @@
 }
 #articlev #taginput .tgs {
   margin-bottom: 0;
+  /*.search{
+            ::placeholder{
+                font-size: 0.8em;
+                font-weight: 700;
+                color :  rgba(var(--text-on-bg-shadow-color), 0.75);
+            }
+        }*/
+  /*.search input{
+            padding-left: 0!important;
+            color :  rgb(var(--text-on-bg-shadow-color));
+        }*/
 }
 #articlev #taginput .tgs .search .searchPanel,
 #articlev #taginput .tgs .search input {
@@ -286,26 +297,8 @@
 #articlev #taginput .tgs .tagsWrapper > div.tagsInputWrapper > div.inputWrapper {
   box-shadow: none;
 }
-#articlev #taginput .tgs .category,
-#articlev #taginput .tgs .tag {
-  background: rgba(var(--color-shadow-var), 0.1);
-  backdrop-filter: blur(7px) grayscale(30%);
-  -webkit-backdrop-filter: blur(7px) grayscale(30%);
-}
-#articlev #taginput .tgs .tag .tagInner > div.remove,
-#articlev #taginput .tgs .category .categoryInner > div.remove,
-#articlev #taginput .tgs .tag .tagInner > div.label,
-#articlev #taginput .tgs .category .categoryInner > div.label {
-  color: rgb(var(--text-on-bg-shadow-color));
-}
-#articlev #taginput .tgs .search ::placeholder {
-  font-size: 0.8em;
-  font-weight: 700;
-  color: rgba(var(--text-on-bg-shadow-color), 0.75);
-}
-#articlev #taginput .tgs .search input {
-  padding-left: 0!important;
-  color: rgb(var(--text-on-bg-shadow-color));
+#articlev #taginput .tgs .tagsWrapper .tagsInputWrapper {
+  padding-left: 0;
 }
 #articlev #taginput .tgs .searchFastResultWrapper {
   border: 0;
@@ -650,7 +643,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding-top: 0.5em;
+    padding-top: calc(0.5em + var(--app-margin-top));
   }
   #articlev .bgwrapper .changeBgWrapper {
     left: 0.5em;
@@ -695,11 +688,9 @@
     display: block;
     padding-bottom: 1.5em;
   }
-  #articlev #taginput .tgs .tagsWrapper > div {
-    display: block;
-  }
   #articlev #taginput .tgs .tagsWrapper .tagsInputWrapper {
     padding: 0.25em;
+    padding-left: 0;
     width: 100%;
     margin-top: 1em;
     margin-bottom: 0.5em;

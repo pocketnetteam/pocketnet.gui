@@ -518,10 +518,6 @@ Application = function(p)
   self.map = __map;
   self.modules = {};
 
-  console.log(JSON.stringify(_.filter(_.map(self.map, (v, i) => {
-    return v.uri
-  }), (u) => {return u})))
-
   self.isElectron = function(){
     return typeof _Electron != 'undefined' && _Electron
   }
@@ -782,7 +778,7 @@ Application = function(p)
 
     index : {
       href : 'index',
-      childrens : ['author', 'chat', 's', 'share', 'userpage']
+      childrens : ['author', 'chat', 's', 'share', 'userpage'],
     },
 
     s : {
@@ -792,7 +788,7 @@ Application = function(p)
 
     author : {
       href : 'author',
-      childrens : ['author', 's', 'chat', 'share', 'userpage']
+      childrens : ['author', 's', 'chat', 'share', 'userpage', 'post']
     },
 
     userpage : {
@@ -1968,6 +1964,35 @@ Application = function(p)
 
   self.mobile = {
 
+    menu : function(items){
+
+      var theme = 'THEME_HOLO_LIGHT'
+
+      if(self.platform.sdk.theme.current != 'white') theme = 'THEME_HOLO_DARK'
+
+      var options = {
+        'buttonLabels': items,
+        'androidTheme': window.plugins.actionsheet.ANDROID_THEMES[theme],
+        'androidEnableCancelButton' : true, // default false
+        'winphoneEnableCancelButton' : true, // default false
+        'addCancelButtonWithLabel': self.localization.e('ucancel')
+      };
+
+      return new Promise((resolve, reject) => {
+        window.plugins.actionsheet.show(options, (i) => {
+
+          i = i - 1
+  
+          if(i == items.length) {
+            return reject()
+          }
+  
+          resolve(i)
+        });
+      })
+      
+    },
+
     supportimagegallery : function(){
       return window.cordova && !isios()
     },
@@ -2395,10 +2420,7 @@ Application = function(p)
       },
       initparallax : function(){
 
-
         if(isTablet() || isMobile()){
-
-
 
           if(self.mobile.reload.parallax) return
           if(self.mobile.reload.reloading) return

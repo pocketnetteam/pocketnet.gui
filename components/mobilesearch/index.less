@@ -1,0 +1,68 @@
+@import "../../css/__cssvar";
+
+#mobilesearch{
+
+    .searchWrapper{
+        display: flex;
+        position: sticky;
+        z-index: 1;
+        left : 0;
+        top : 0;
+        padding-top: var(--app-margin-top);
+        right: 0;
+        align-items: center;
+        background: rgb(var(--background-secondary-theme));
+        padding-right: 2 * @rhythm;
+        padding-left: 2 * @rhythm;
+        
+    }
+    .searchIcon{
+        width: 44px;
+        text-align: center;
+        color : rgb(var(--neutral-grad-2));
+    }
+
+    .inputWrapper{
+        flex-grow: 2;
+        input{
+            
+            width: 100%;
+            height: 65px;
+            line-height: 65px;
+            border: none;
+            background: transparent;
+        }
+    }
+
+    .resultsWrapper{
+        .results{
+            >div{
+                padding : 2 * @rhythm 2 * @rhythm;
+            }
+        }
+
+        .empty{
+            padding : 2 * @rhythm;
+            text-align: center;
+        }
+    }
+    
+    .cancelWrapper{
+        padding : 2 * @rhythm 0;
+        margin-right: 2 * @rhythm;
+
+        span{
+            color : rgb(var(--color-txt-ac));
+            font-size : 0.9em;
+        }
+    }
+
+  
+
+}
+
+.wnd.mobsearch{
+    ._close{
+        display: none!important;
+    }
+}

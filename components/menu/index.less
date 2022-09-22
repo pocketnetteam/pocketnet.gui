@@ -598,6 +598,10 @@
 					cursor: pointer;
 					.transition(0.3s);
 
+					.numberWrp{
+						position: relative;
+					}
+
 					.icon{
 						width: 30px;
 						opacity: 0;
@@ -672,11 +676,14 @@
 		}
 
 		.results{
-			padding :  @rhythm 0;
+			padding : @rhythm 0;
+
+			.result{
+				padding : @rhythm 0;
+			}
 		}
 
 		.user{
-			padding : 0 @rhythm;
 			cursor: pointer;
 			.transition(0.3s);
 			
@@ -686,14 +693,14 @@
 		}
 
 		.stringresult{
-			padding : 2 * @rhythm @rhythm;
+			//padding : 2 * @rhythm @rhythm;
 		}
 
 		.searchbywrapper{
-			padding : 2 * @rhythm @rhythm;
+			//padding : 2 * @rhythm @rhythm;
 
 			&.small{
-				padding : 0 @rhythm;
+				//padding : 0 @rhythm;
 			}
 
 			.caption{
@@ -714,14 +721,13 @@
 						.transition(0.3s);
 
 						&.rsicon{
-							width: 33px;
+							width: 44px;
 							text-align: center;
 							font-size: 0.8em;
 						}
 	
 						&.label{
 							text-align: left;
-							padding-left: @rhythm;
 						}
 					}
 
@@ -740,23 +746,13 @@
 				padding :0;
 				vertical-align: middle;
 
-				&.iconWrapper{
-					width: 33px;
-					padding : @rhythm 0;
-				}
-
-				&.label{
-					padding-left: @rhythm;
-				}
-
 				.usericon{
-					width: 33px;
-					height: 33px;
+					width: 44px;
+					height: 44px;
 
 					.letter{
 						font-size: 1em;
-						top: -4px;
-						position: relative		
+						line-height: 44px;
 					}
 				}
 			}
@@ -1066,7 +1062,7 @@
 			font-size: 1.2em;
 		}*/
 
-		&.searchactive{
+		/*&.searchactive{
 
 			.sections{
 				padding : 0;
@@ -1111,7 +1107,7 @@
 					}
 				}
 			}
-		}
+		}*/
 	}
 
 	html.allcontent{
@@ -1130,6 +1126,12 @@
 					display: none;
 				}
 		
+			}
+
+			.mobsearch{
+				i{
+					color : rgba(var(--color-bg-ac-bright), 0.9);
+				}
 			}
 
 			//.centerpart,

@@ -75,6 +75,26 @@
 #lenta .mlwr {
   position: relative;
 }
+#lenta .searchInfo {
+  background: rgb(var(--background-total-theme));
+  padding: 1em 0;
+  padding-top: 1.5em;
+  margin-bottom: 0.5em;
+  text-align: center;
+  border-radius: 12px;
+}
+#lenta .searchInfo .searchcaption span {
+  font-size: 1em;
+  color: rgb(var(--neutral-grad-3));
+}
+#lenta .searchInfo .cancelsearch {
+  margin-top: 1em;
+}
+#lenta .searchInfo .value span {
+  font-weight: 700;
+  color: rgb(var(--neutral-grad-4));
+  font-size: 2em;
+}
 #lenta .loader {
   /*background: rgb(var(--background-total-theme));*/
   padding: 3em 0;
@@ -636,6 +656,12 @@
   }
   #lenta .openoriginallabel {
     display: none;
+  }
+  #lenta .searchInfo {
+    display: block;
+    padding-left: 1em;
+    padding-right: 1em;
+    border-radius: 0;
   }
   #lenta .fullScreenVideo .videoWrapper .js-player .video-js .vjs-volume-control {
     display: none;

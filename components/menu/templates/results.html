@@ -1,4 +1,4 @@
-<div class="fastresultswrapper">
+<div class="fastresultswrapper mainsearchresults">
 
 	<% if(results.length) {%>
 
@@ -12,7 +12,7 @@
 			else return true
 			})
 
-			if(isMobile()) c = 4
+			if(isMobile()) c = 12
 
 			_.each(filteredResults, function(r, i){
 
@@ -30,7 +30,7 @@
 						%>
 
 						<div class="user" elementsid="<%- user.address %>_open" address="<%- user.address %>" name="<%- decodeURIComponent(user.name) %>">
-							<div class="userTable table">
+							<div class="userTable">
 								<div class="iconWrapper">
 									<div class="usicon">
 
@@ -86,7 +86,7 @@
 						<div class="searchbywrapper small">
 
 							<div elementsid="searchbytag" class="searchby searchbytag">
-								<div class="swrp table">
+								<div class="swrp">
 									<div class="rsicon">
 										<i class="fas fa-hashtag"></i>
 									</div>
@@ -105,7 +105,7 @@
 						<div class="searchbywrapper small">
 							<a elementsid="index?ss=<%- r.data.value %>" href="index?ss=<%- r.data.value %>">
 								<div class="searchby searchbyusers">
-									<div class="swrp table">
+									<div class="swrp">
 										<div class="rsicon">
 											<i class="fas fa-search"></i>
 										</div>
@@ -125,7 +125,7 @@
 						<div class="searchbywrapper small">
 							<a elementsid="index?sst=<%- r.data.value.replace(/#/g, '') %>" href="index?sst=<%- r.data.value.replace(/#/g, '') %>">
 								<div class="searchby searchbyusers">
-									<div class="swrp table">
+									<div class="swrp">
 										<div class="rsicon">
 											<i class="fas fa-hashtag"></i>
 										</div>
@@ -186,7 +186,7 @@
 				<a elementsid="index?ss=<%-value%>" href="index?ss=<%-value%>">
 					<div class="searchby searchbyvalue">
 				
-						<div class="swrp table">
+						<div class="swrp">
 							<div class="rsicon">
 								<i class="fas fa-pencil-alt"></i>
 							</div>

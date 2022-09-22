@@ -1557,6 +1557,8 @@ var lenta = (function(){
 
 					fullscreenvideoShowed = id;
 
+					self.app.mobile.reload.destroyparallax()
+
 					self.app.pseudofullscreenmode = true
 
 					_el.addClass('fullScreenVideo')
@@ -1665,6 +1667,10 @@ var lenta = (function(){
 				el.w.scrollTop(lastscroll || 0)
 
 				fullscreenvideoShowed = null;
+
+				if(!self.app.actions.getScroll()){
+					self.app.mobile.reload.initparallax()
+				}
 
 				actions.removeRecommendationsFullScreenVideo(id)
 
@@ -3198,6 +3204,12 @@ var lenta = (function(){
 								if(essenseData.searchValue){
 									p.el.find('.canmark').mark(essenseData.searchValue);
 								}
+
+								if(essenseData.searchTags){
+									p.el.find('.canmark').mark(_.map(essenseData.searchTags, (t) => {
+										return '#' + t
+									}).join(' '));
+								}
 	
 								if(!video) actions.initVideoLight(share)
 	
@@ -3560,7 +3572,7 @@ var lenta = (function(){
 
 				var tpl = 'groupshares';
 
-				if (essenseData.author || recommended || essenseData.horizontal || essenseData.txids || essenseData.search){
+				if (essenseData.author || recommended || essenseData.horizontal || essenseData.txids || essenseData.searchValue || essenseData.searchTags){
 					tpl = 'shares'
 				}
 
@@ -4251,7 +4263,8 @@ var lenta = (function(){
 								else
 								{
 		
-									if ( !essenseData.txids && (shares.length < pr.count) && (recommended || author || essenseData.search || essenseData.tags) ){
+									if ( !essenseData.txids && (shares.length < pr.count || recommended == 'recommended') && (recommended || author || essenseData.searchValue || essenseData.searchTags) ){
+
 		
 										setTimeout(function(){
 											if (el.c)
@@ -4263,7 +4276,7 @@ var lenta = (function(){
 								}
 
 								
-								if ((!shares.length || shares.length < pr.count) && (recommended || author || essenseData.search) && !includingsub){
+								if ((!shares.length || shares.length < pr.count) && (recommended || author || essenseData.searchValue || essenseData.searchTags) && !includingsub){
 
 									if(essenseData.ended) {
 										ended = essenseData.ended(shares)
@@ -4422,7 +4435,7 @@ var lenta = (function(){
 							}
 						}
 						
-						if (essenseData.byauthor && author && !sharesInview.length && !parameters().s && !parameters().ssa){
+						if (essenseData.byauthor && author && !sharesInview.length && !(essenseData.searchValue || essenseData.searchTags)){
 
 							if (self.app.platform.sdk.accountsettings.storage[author]){
 
@@ -4572,7 +4585,7 @@ var lenta = (function(){
 								tagsexcluded = self.app.platform.sdk.categories.gettagsexcluded()
 							}
 
-							if (essenseData.tags) tagsfilter = essenseData.tags
+							if (essenseData.searchTags) tagsfilter = essenseData.searchTags
 
 							var page = essenseData.page || parameters().page || 0
 
@@ -4706,7 +4719,7 @@ var lenta = (function(){
 
 		var shownewmaterials = function(c){
 
-			if(/*!beginmaterial &&*/ recommended != 'recommended' && !essenseData.author && !essenseData.search){
+			if(/*!beginmaterial &&*/ recommended != 'recommended' && !essenseData.author && !(essenseData.searchValue || essenseData.searchTags)){
 
 				var ts =  _.toArray(self.sdk.node.transactions.temp.share || {})
 
@@ -4768,6 +4781,10 @@ var lenta = (function(){
 			el.c.on('click', '.fromrecommendationslabel', events.recommendationinfo)
 
 			el.c.on('click','.openauthorwindow', events.openauthorwindow)
+
+			el.c.find('.cancelsearch').on('click', function(){
+				if(essenseData.cancelsearch) essenseData.cancelsearch()
+			})
 
 			el.c.find('.networkErrorMessage button').on('click', function(){
 
@@ -5334,9 +5351,6 @@ var lenta = (function(){
 
 				if (typeof essenseData.r != 'undefined' && essenseData.r != null) recommended = essenseData.r;
 
-
-				
-
 				if (essenseData.second){
 					beginmaterial = null
 				}
@@ -5364,7 +5378,7 @@ var lenta = (function(){
 						beginmaterial : beginmaterial,
 						author : essenseData.author,
 						recommended : recommended,
-						filters : essenseData.search || essenseData.tags,
+						filters : essenseData.searchValue || essenseData.searchTags,
 						ed : essenseData
 					};
 
