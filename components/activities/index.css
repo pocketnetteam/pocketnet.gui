@@ -81,6 +81,7 @@
   background: rgb(var(--neutral-grad-1));
 }
 .container .comment .description {
+  width: 100%;
   font-size: 14px;
   line-height: 14px;
   display: flex;
@@ -114,7 +115,7 @@
   box-shadow: 0 5px 10px -5px rgba(var(--color-shadow-base), 0.4);
   border-radius: 50%;
   height: 48px;
-  width: 48px;
+  min-width: 48px;
   line-height: 3em;
   font-size: 1em;
   position: relative;
@@ -182,6 +183,11 @@
   background-size: 400% 400%;
 }
 .container .comment .message {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  height: 14px;
+  white-space: nowrap;
+  max-width: 90%;
   color: rgb(var(--neutral-grad-3));
 }
 .container .comment .date {

@@ -103,6 +103,7 @@ ____loclib.contentscore = "Вы оставили оценку публикаци
 ____loclib.commentscorelike = "Вам нравится комментарий";
 ____loclib.commentscoredislike = "Вам не нравится комментарий	";
 ____loclib.commented= "Вы прокомментировали публикацию";
+____loclib.ranswer= "Вы ответили на комментарий";
 ____loclib.sentmoney= "Вы перевели средства";
 ____loclib.a_unsubscribe= "Вы отписались от";
 ____loclib.a_subscribe= "Вы подписались на";

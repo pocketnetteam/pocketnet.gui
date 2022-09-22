@@ -52,7 +52,7 @@ if(activity.txType === 204)
 
   </div>
   <div class="description">
-    <div class="head"> <%=e('commented')%>
+    <div class="head"> <%=e( activity.type === "answer" ? 'ranswer' : 'commented')%>
       <a href="<%-activity?.relatedContent?.account.n%>">
         <strong><%-activity?.relatedContent?.account.n%></strong>
       </a>
