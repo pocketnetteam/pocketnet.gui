@@ -855,3 +855,11 @@ _l.desktopPopupAgree = "앱 다운로드"
 _l.desktopPopupDisagree = "지금은 아닙니다"
 
 _l.profanity_tag = '욕설'
+_l.saved = "저장됨";
+_l.savePost = "게시물 저장";
+_l.postsaved = "게시물이 저장되었습니다.";
+_l.deleteSavedPost = "저장된 게시물 삭제";
+_l.doYouDownloadVideo = "당신은 당신의 장치에 비디오를 다운로드 하시겠습니까?";
+_l.gotosaved2 = "저장된 항목으로 이동";
+_l.yes = "예";
+_l.no = "아니";

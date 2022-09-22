@@ -856,3 +856,11 @@ _l.desktopPopupAgree = "App herunterladen"
 _l.desktopPopupDisagree = "Nicht jetzt"
 
 _l.profanity_tag = 'profanität'
+_l.saved = "Gespeicherte";
+_l.savePost = "Beitrag speichern";
+_l.postsaved = "Beitrag gespeichert";
+_l.deleteSavedPost = "Gespeicherten Beitrag löschen";
+_l.doYouDownloadVideo = "Möchten Sie das Video auf Ihr Gerät herunterladen?";
+_l.gotosaved2 = "Gehe zu gespeichert";
+_l.yes = "Ja";
+_l.no = "Nein";
