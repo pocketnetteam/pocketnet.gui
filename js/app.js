@@ -518,10 +518,6 @@ Application = function(p)
   self.map = __map;
   self.modules = {};
 
-  console.log(JSON.stringify(_.filter(_.map(self.map, (v, i) => {
-    return v.uri
-  }), (u) => {return u})))
-
   self.isElectron = function(){
     return typeof _Electron != 'undefined' && _Electron
   }
@@ -782,7 +778,7 @@ Application = function(p)
 
     index : {
       href : 'index',
-      childrens : ['author', 'chat', 's', 'share', 'userpage']
+      childrens : ['author', 'chat', 's', 'share', 'userpage'],
     },
 
     s : {
@@ -792,7 +788,7 @@ Application = function(p)
 
     author : {
       href : 'author',
-      childrens : ['author', 's', 'chat', 'share', 'userpage']
+      childrens : ['author', 's', 'chat', 'share', 'userpage', 'post']
     },
 
     userpage : {

@@ -149,13 +149,11 @@ Nav = function(app)
 
 			var khref = href.split('?')[0];
 
-			console.log('href, href', href, href)
 
 			var np = parameters(href, true)
 
 				href = khref + collectParameters(np, ['back', 'ref']);
 
-				console.log("href2", href)
 
 			var wb = false;
 
@@ -175,22 +173,14 @@ Nav = function(app)
 			else{	
 
 				if (khref == indexpage && !np.video && !np.read && !np.r){
-					console.log("HERE?", np)
 					//// 
 					backManager.clearAll()
 				}
 				else{
 
-					console.log("HERE@", href, deep(backManager, 'chain.0.href'))
-
 					if(deep(backManager, 'chain.0.href') == href) return
-					console.log("HERE@1", khref)
-
 
 					var needadd = this.mapSearch(khref, firstEl(backManager.chain)) || (np.video || np.read || np.r);
-
-
-
 	
 					if (needadd){
 	
@@ -378,15 +368,12 @@ Nav = function(app)
 			if (options.history === true && !_Node && !_OpenApi)
 			{	
 
-				console.log("PPPP", p)
 
 				if(!p.removefromback){
-					console.log("ADDDDDDDDD")
 					p.goback = backManager.add(href, p.lastScroll, p.back)
 				}
 
 				if (history.state && history.state.href == href){
-					console.log("????SA")
 					return
 				}
 
@@ -539,7 +526,6 @@ Nav = function(app)
 					if (current.module && current.module.parametersHandler && p.handler){
 						
 						run = false;
-						console.log("?????", p)
 						historyManager.add(p.completeHref, p);
 
 						current.completeHref = p.completeHref;

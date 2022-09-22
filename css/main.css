@@ -1525,6 +1525,7 @@ html.mobileview .upbutton {
   top: 100%;
   height: 2px;
   background: rgb(var(--neutral-grad-0));
+  contain: strict;
 }
 .spendLine.bad {
   background: #ff0090;

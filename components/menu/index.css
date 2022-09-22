@@ -448,6 +448,9 @@
   -webkit-transition: 0.3s;
   transition: 0.3s;
 }
+#menu .sections .items .item.wallets .numberWrp {
+  position: relative;
+}
 #menu .sections .items .item.wallets .icon {
   width: 30px;
   opacity: 0;

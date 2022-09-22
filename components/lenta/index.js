@@ -1552,6 +1552,8 @@ var lenta = (function(){
 
 					fullscreenvideoShowed = id;
 
+					self.app.mobile.reload.destroyparallax()
+
 					self.app.pseudofullscreenmode = true
 
 					_el.addClass('fullScreenVideo')
@@ -1660,6 +1662,10 @@ var lenta = (function(){
 				el.w.scrollTop(lastscroll || 0)
 
 				fullscreenvideoShowed = null;
+
+				if(!self.app.actions.getScroll()){
+					self.app.mobile.reload.initparallax()
+				}
 
 				actions.removeRecommendationsFullScreenVideo(id)
 

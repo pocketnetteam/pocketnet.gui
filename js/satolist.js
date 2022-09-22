@@ -12651,34 +12651,36 @@ Platform = function (app, listofnodes) {
             drawSpendLine: function (el, clbk, addresses) {
                 self.app.platform.sdk.node.transactions.get.canSpend(addresses || null, function (amount, total) {
 
+                    window.requestAnimationFrame(() => {
+                        if (total > 0 && amount < total) {
 
-                    if (total > 0 && amount < total) {
-
-                        el.css('position', 'relative')
-
-                        if (!el.find('.spendLine').length) {
-                            el.append('<div class="spendLine"><div class="line"></div></div>')
-                        }
-
-                        var sline = el.find('.spendLine .line');;
-
-                        if (amount == 0) {
-                            sline.addClass('bad')
+                            if (!el.find('.spendLine').length) {
+                                el.append('<div class="spendLine"><div class="line"></div></div>')
+                            }
+    
+                            var sline = el.find('.spendLine .line');;
+    
+                            if (amount == 0) {
+                                if(!sline.hasClass('bad'))
+                                    sline.addClass('bad')
+                            }
+                            else {
+                                if (sline.hasClass('bad'))
+                                    sline.removeClass('bad')
+                            }
+    
+                            sline.css('width', (100 * amount / total) + "%")
+    
+    
                         }
                         else {
-                            sline.removeClass('bad')
+                            el.find('.spendLine').remove()
                         }
-
-                        sline.css('width', (100 * amount / total) + "%")
-
-
-                    }
-                    else {
-                        el.find('.spendLine').remove()
-                    }
-
-                    if (clbk)
-                        clbk()
+    
+                        if (clbk)
+                            clbk()
+                    })
+                    
                 })
             },
 
@@ -28446,7 +28448,7 @@ Platform = function (app, listofnodes) {
 
 
         self.restart(function () {
-            self.prepareUserData(function(){
+            //self.prepareUserData(function(){
 
                 self.app.reload({
                     clbk : function () {
@@ -28457,7 +28459,7 @@ Platform = function (app, listofnodes) {
                         if(clbk) clbk()
                     }
                 })
-            })
+            //})
 
         })
     }
