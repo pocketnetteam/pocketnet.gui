@@ -2318,7 +2318,7 @@ var comments = (function(){
 
 								actions.embeddonate(id, p)
 
-								if(!p.answer && !p.editid){ ini() }	
+								if(!p.answer && !p.editid){ ini(null, true) }	
 							}
 							else{
 								actions.stateAction(function(){
@@ -3147,7 +3147,7 @@ var comments = (function(){
 				if(!_in.length) {
 					_in = null
 
-					if(!self.app.el.html.hasClass('allcontent') || !isTablet()){
+					if(!isTablet()){
 						top = 65
 					} else {
 						top = 0

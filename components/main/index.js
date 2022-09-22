@@ -66,8 +66,13 @@ var main = (function(){
 
 			{
 				link : "index?r=recommended",
-				label : () => self.app.localization.e('e13138'),
+				label : () => self.app.localization.e('discussed'),
 				value : 'recommended'
+			},
+			{
+				link : "index?r=best",
+				label : () => self.app.localization.e('e13138'),
+				value : 'best'
 			},
 		]
 		
@@ -98,6 +103,8 @@ var main = (function(){
 					sub : "index?r=sub",
 		
 					recommended : "index?r=recommended",
+
+					best : "index?r=best",
 
 					video : "index?video=1",
 

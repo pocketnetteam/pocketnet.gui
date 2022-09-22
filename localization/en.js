@@ -205,9 +205,9 @@ _l.usavechanges = "Do you want to save your changes?";
 //statistic
 
 _l.referralsCount = 'Users who have used the referral link.';
-_l.commentatorsCount_0 = 'Users have commented on you more than 1 time';
-_l.commentatorsCount_1 = 'Users have commented on you more than 3 times';
-_l.commentatorsCount_2 = 'Users have commented on you more than 7 times';
+_l.commentatorsCount = function(limit){
+    return `Users have commented on you more than ${limit + (limit === 1 ? ' time' : ' times')}`;
+};
 _l.from = 'Period: ';
 _l.to = 'to';
 _l.empty = 'Information not found';
@@ -671,6 +671,7 @@ _l.e13132 = "rated"
 _l.e13133 = "Share"
 _l.e13134 = "There aren't any results for this search string"
 _l.e13135 = "User haven't private key"
+_l.discussed = "Most Discussed"
 _l.e13136 = "All Posts"
 _l.e13137 = "My Subscriptions" // This is the equivalent of a ‘News feed’. Don’t change the word ‘Pocket’ however, it’s a feature of "+appname+".
 _l.e13138 = "Top posts"

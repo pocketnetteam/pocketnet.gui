@@ -300,7 +300,8 @@ Platform = function (app, listofnodes) {
     self.whiteList = [
       'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd',
       'PJ3nv2jGyW2onqZVDKJf9TmfuLGpmkSK2X',
-      'TAqR1ncH95eq9XKSDRR18DtpXqktxh74UU'
+      'TAqR1ncH95eq9XKSDRR18DtpXqktxh74UU',
+      'TFkhfcxXSWX5SsLcjhdiSDHEepWUcb7yi3',
     ];
 
     if (window.IpcBridge)
@@ -18091,7 +18092,7 @@ Platform = function (app, listofnodes) {
 
                     self.app.user.isState(function (state) {
 
-                        p.count || (p.count = '30')
+                        p.count || (p.count = '20')
 
                         if (state) {
                             p.address = self.sdk.address.pnet().address;
@@ -18108,15 +18109,105 @@ Platform = function (app, listofnodes) {
                         }
                         else {
 
-                            var period = p.period || self.sdk.node.shares.parameters.stor.period || self.sdk.node.shares.parameters.defaults.period || '4320' ///self.sdk.node.shares.parameters.defaults.period
+                            var period = p.period || self.sdk.node.shares.parameters.stor.period || '60' ///self.sdk.node.shares.parameters.defaults.period
 
-                            var page = p.page || 0
+                            var depth = p.offset ? self.currentBlock - p.offset : 0
 
                             var parameters = []
 
-                            parameters = [p.count.toString(), period, (period * page) || '', self.app.localization.key]
+                            parameters = [depth,'', p.count , self.app.localization.key,[],[],[],[],[],'',period]
 
-                            //parameters = ['30', '259200', '', self.app.localization.key];
+                            // parameters = ['30', '259200', '', self.app.localization.key];
+
+                            if (p.type){
+                                parameters[5].push(p.type)
+                            }
+
+                            self.sdk.node.shares.get(parameters, function (shares, error) {
+
+                                if (shares) {
+
+                                    self.sdk.node.shares.loadvideoinfoifneed(shares, p.type == 'video', function(){
+
+                                        if (state) {
+                                            _.each(self.sdk.relayTransactions.withtemp('blocking'), function (block) {
+                                                _.each(shares, function (s) {
+                                                    if (s.address == block.address) s.blocking = true;
+                                                })
+                                            })
+                                        }
+
+
+
+                                        if(p.type == 'video'){
+                                            shares = _.filter(shares, function(share){
+
+                                                if(!share.url) return
+
+                                                var meta = app.platform.parseUrl(share.url);
+
+                                                if((meta.type == 'youtube') || meta.type == 'vimeo' || meta.type == 'bitchute' || meta.type == 'peertube'){
+
+                                                    if (self.sdk.videos.storage[share.url] && self.sdk.videos.storage[share.url].data)
+                                                        return true
+                                                }
+                                            })
+                                        }
+
+                                        storage[key] = shares;
+
+                                        if (clbk)
+                                            clbk(storage[key], error, p)
+
+                                    })
+
+
+                                }
+
+                                else {
+                                    if (clbk)
+                                        clbk(shares, error, p)
+                                }
+
+                            }, methodparams.method || 'getmostcommentedfeed')
+
+
+                        }
+
+                    })
+                },
+                best: function (p, clbk, cache, methodparams) {
+
+                    if(!methodparams) methodparams = {}
+
+                    if (!p) p = {};
+
+
+                    self.app.user.isState(function (state) {
+
+                        p.count || (p.count = '20')
+
+                        if (state) {
+                            p.address = self.sdk.address.pnet().address;
+                        }
+
+                        var storage = self.sdk.node.shares.storage
+                        var key = 'best'
+
+                        if (cache == 'cache' && storage[key]) {
+
+                            if (clbk)
+                                clbk(storage[key], null, p)
+
+                        }
+                        else {
+
+                            var period = p.period || self.sdk.node.shares.parameters.stor.period || '60'
+
+                            var page = p.page || 0
+                            var offset = p.offset
+                            var parameters = []
+                            parameters = [p.count.toString(), period, offset || '', self.app.localization.key]
 
                             if (p.type){
                                 parameters.push(p.type)
@@ -29374,7 +29465,7 @@ Platform = function (app, listofnodes) {
                         open: true,
                         href: link,
                         history: true,
-                        handler : true
+                        /*handler : true*/
                     })
                 }
 

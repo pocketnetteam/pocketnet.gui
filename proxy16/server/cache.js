@@ -192,6 +192,11 @@ var Cache = function(p){
                 block : 0
             },
 
+            getmostcommentedfeed: {
+                time : 460,
+                block : 0
+            },
+
             // node +
             getuserprofile: {
                 time : 560,

@@ -57,7 +57,11 @@ var lenta = (function(){
 			fullscreenvideoShowed = null;
 
 		var countshares = 0;
-		
+
+		var newsharescount = 0
+
+		var offsetblock = 0
+		var emptyinarow = 0
 
 		var beginmaterial = null;
 		var beginmaterialloaded = false;
@@ -108,7 +112,7 @@ var lenta = (function(){
 					history : true,
 
 					essenseData : data
-					
+
 					/*{
 						info : share._recommendationInfo,
 						type : share.recommendationKey,
@@ -349,7 +353,7 @@ var lenta = (function(){
 			},
 
 			scrollmode : function(m){
-				
+
 				if(m){
 					$('html').addClass('scrollmodedown')
 				}
@@ -603,6 +607,7 @@ var lenta = (function(){
 			},	
 
 			loadmore : function(loadclbk){
+				essenseData.page = ++essenseData.page
 				actions.observe()
 
 				renders.loader(true)
@@ -1019,7 +1024,7 @@ var lenta = (function(){
 							duration
 						}){
 
-							if (duration > 0 && playbackState == 'playing') 
+							if (duration > 0 && playbackState == 'playing')
 								self.app.platform.sdk.memtags.add(share.tags, null, 0.500 / duration)
 
 
@@ -1037,7 +1042,7 @@ var lenta = (function(){
 							if(playbackState == 'playing' && duration < 120 && position / duration > 0.2){
 								self.app.platform.sdk.activity.adduser('video', share.address, 6 * position / duration)
 							}
-							
+
 
 						},
 
@@ -1305,7 +1310,7 @@ var lenta = (function(){
 					
 					actions.stateAction('_this', function(){
 
-						
+
 						if(self.app.platform.sdk.user.myaccauntdeleted()){
 							return
 						}
@@ -1320,7 +1325,7 @@ var lenta = (function(){
 							href : 'pkoin',
 							history : true,
 							inWnd : true,
-		
+
 							essenseData : {
 								userinfo: userinfo,
 								id : id,
@@ -1746,7 +1751,7 @@ var lenta = (function(){
 					return
 				}
 
-				
+
 
 				if(value <= 3 && !self.app.test){
 					if(self.app.platform.sdk.user.scamcriteria()){
@@ -2203,7 +2208,7 @@ var lenta = (function(){
 		var events = {
 
 			recommendationinfo : function(){
-			
+
 				var shareId = $(this).closest('.share').attr('id');
 
 				var share = self.app.platform.sdk.node.shares.storage.trx[shareId];
@@ -2389,7 +2394,7 @@ var lenta = (function(){
 
 			loadmorescroll : function(){
 
-				
+
 
 
 				if(!essenseData.horizontal){
@@ -2397,7 +2402,7 @@ var lenta = (function(){
 					//console.log('loadedcachedHeight', loadedcachedHeight, cachedHeight, self.app.lastScrollTop+ self.app.height, document.body.scrollHeight - 2000)
 
 					if (
-						!loading && !ended && (recommended != 'recommended' || isMobile()) &&
+						!loading && !ended &&
 
 						(self.app.lastScrollTop + self.app.height > document.body.scrollHeight - 2000) 
 
@@ -2407,7 +2412,7 @@ var lenta = (function(){
 
 							loadedcachedHeight = cachedHeight
 
-	
+
 							actions.loadmore(function(s, e){
 								if(e){
 									loadedcachedHeight = 0
@@ -2423,9 +2428,9 @@ var lenta = (function(){
 				else{
 
 					if (
-						!loading &&  (!ended && recommended != 'recommended') && 
-						(el.w.scrollLeft() + el.w.width() > el.c.find('.shares').width() - 1000) 
-	
+						!loading &&  (!ended && (recommended != 'recommended' || recommended != 'best')) &&
+						(el.w.scrollLeft() + el.w.width() > el.c.find('.shares').width() - 1000)
+
 						) {
 
 							
@@ -2579,7 +2584,7 @@ var lenta = (function(){
 				var src = $(this).attr('i')
 
 				var share = self.app.platform.sdk.node.shares.getWithTemp(id) 
-				
+
 				self.app.mobile.vibration.small()
 				actions.openGalleryRec(share, src)
 			},
@@ -3163,7 +3168,7 @@ var lenta = (function(){
 						boosted : p.boosted,
 						shareRelayedFlag : false,
 						fromrecommendations : sharesFromRecommendations[share.txid] && self.app.platform.sdk.recommendations.sharesinfo[share.txid] ? true : false
-					}					
+					}
 
 				}, function(p){
 
@@ -3263,9 +3268,9 @@ var lenta = (function(){
 								if (p.el.hasClass('hashiddengroup')){
 									p.el.closest('.authorgroup').find('.showmorebyauthor').addClass('active')
 								}
-								
+
 							}
-								
+
 
 							if (clbk)
 								clbk();
@@ -4179,6 +4184,14 @@ var lenta = (function(){
 
 				if(!bshares) bshares = []
 
+				newsharescount = shares.length
+				if (!shares.length) {
+					emptyinarow++
+				} else {
+					emptyinarow = 0
+				}
+
+
 				var allshares = [].concat(shares, bshares)
 
 				if(includingsub) {
@@ -4221,7 +4234,7 @@ var lenta = (function(){
 					recommendations = self.app.platform.sdk.recommendations.getshares(rand(0, 3)) || []
 
 					allshares = [].concat(allshares, recommendations)
-				
+
 				}
 
 				var author = essenseData.author;
@@ -4242,7 +4255,7 @@ var lenta = (function(){
 
 						if(!error && !error2){
 
-							if(!shares || !shares.length || ((shares.length < pr.count) || recommended == 'recommended')){								
+							if(!shares || !shares.length || (shares.length < pr.count)){
 
 								if(!beginmaterial && !countshares && !includingsub){
 									el.c.addClass("sharesZero")
@@ -4251,6 +4264,7 @@ var lenta = (function(){
 								{
 		
 									if ( !essenseData.txids && (shares.length < pr.count || recommended == 'recommended') && (recommended || author || essenseData.searchValue || essenseData.searchTags) ){
+
 		
 										setTimeout(function(){
 											if (el.c)
@@ -4268,12 +4282,17 @@ var lenta = (function(){
 										ended = essenseData.ended(shares)
 									}
 
+									//720 is a month depth
+									if (pr.page < 720) {
+										ended = false
+									}
+
 									else
 										ended = true
 
 								}
 
-								if(!shares.length && !essenseData.ended && !includingsub){
+								if(!shares.length && !essenseData.ended && !includingsub && (emptyinarow >= 3 || offsetblock >= 43200 )){
 									ended = true
 								}
 									
@@ -4317,8 +4336,8 @@ var lenta = (function(){
 
 							shares = _.filter(shares, (s) => {
 								return !shareInitedMap[s.txid]
-							})	
-							
+							})
+
 
 							if(!essenseData.author && self.user.address && self.user.address.value){
 
@@ -4507,7 +4526,11 @@ var lenta = (function(){
 								else if(recommended == 'sub'){
 									loader = 'getsubscribesfeed'
 
-									
+
+								}
+
+								else if(recommended == 'best'){
+									loader = 'best'
 								}
 
 								else if(recommended == 'hot'){
@@ -4538,7 +4561,7 @@ var lenta = (function(){
 							}
 
 
-							var count = 10
+							var count = 20
 
 							if(essenseData.txids && recommended != 'b'){
 								loader = 'txids'
@@ -4566,6 +4589,10 @@ var lenta = (function(){
 
 							var page = essenseData.page || parameters().page || 0
 
+							if(page === 0) {
+								offsetblock = 0
+							}
+
 							var type = null
 
 							if(video || essenseData.videomobile){ type = 'video'}
@@ -4574,17 +4601,16 @@ var lenta = (function(){
 							
 
 							if(essenseData.count) count = essenseData.count
-							else if (recommended == 'recommended') count = 30
 							else if (video) count = 20
 
 
 							if(self.app.platform.sdk.user.myaccauntdeleted() && loader == 'getsubscribesfeed'){
 								ended = true
 								if(clbk) clbk()
-								
+
 								return
 							}
-							
+
 							if(state && essenseData.includesub && loader == 'hierarchical' && !subloaded){
 
 								loader = 'getsubscribesfeed'
@@ -4594,8 +4620,7 @@ var lenta = (function(){
 
 							}
 
-							
-
+							var period = newsharescount ? Math.floor(60 * 20 / newsharescount) : page ? 4320 : 1440
 							//if(loader == 'hierarchical') loader = 'hierarchicaltst'
 
 							self.app.platform.sdk.node.shares[loader]({
@@ -4610,11 +4635,14 @@ var lenta = (function(){
 								type : type,
 
 								count : count,
+								offset : offsetblock,
 								page : page,
-								period : essenseData.period,
+								period : period,
 								tagsexcluded : tagsexcluded
 
 							}, function(shares, error, pr){
+
+								offsetblock = offsetblock + period
 
 								///
 
@@ -5163,7 +5191,7 @@ var lenta = (function(){
 					if (el.c.hasClass('networkError'))
 						el.c.removeClass('networkError')
 				})
-				
+
 
 				if(!shares){
 					making = false;
@@ -5243,7 +5271,7 @@ var lenta = (function(){
 							}*/
 
 
-							if(shares.length < 5 && essenseData.includesub && !loading && (!ended && recommended != 'recommended')){
+							if(shares.length < 5 && essenseData.includesub && !loading && (!ended && recommended != 'recommended' && recommended != 'best')){
 								actions.loadmore()
 							}
 
