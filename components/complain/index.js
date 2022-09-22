@@ -67,6 +67,7 @@ var complain = (function(){
             if(ess == 'post'){
 
               if((typeof mestate!= 'undefined' && mestate.badges && Object.values(mestate.badges).includes('shark'))){
+
                 var modFlag = sobj.modFlag(selected);
 
                 topPreloader(30);
@@ -166,7 +167,6 @@ var complain = (function(){
                   clbk(true)
                   sitemessage(self.app.localization.e('complain_success'))
                 } catch (error) {
-                  console.log(error)
                   self.app.platform.errorHandler(error, true)
                 }
 
@@ -350,7 +350,9 @@ var complain = (function(){
 
     _.each(essenses, function(essense){
 
-      essense.destroy();
+      window.requestAnimationFrame(() => {
+				essense.destroy();
+			})
 
     })
 

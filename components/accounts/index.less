@@ -24,19 +24,15 @@
 
 	.addressTable{
 		margin-bottom: @rhythm;
-
-		>div{
-			&.label{
-				padding-top: @rhythm;
-			}
-		}
 	}
 
 	.addressTable{
+		display: flex;
+		align-items: center;
+		width: 100%;
+		justify-content: space-around;
+
 		>div{
-
-			vertical-align: middle;
-
 			&.iconWrapper{
 				width: 45px;
 				text-align: center;
@@ -44,6 +40,16 @@
 
 			&.label{
 				padding-left: 2 * @rhythm;
+				display: flex;
+				align-items: center;
+				margin-right: auto;
+
+				.name{
+					max-width: 150px;
+					text-overflow: ellipsis;
+					display: inline-block;
+					overflow: hidden;
+				}
 
 				.cur{
 					margin-left: 2 * @rhythm;
@@ -53,6 +59,7 @@
 
 			&.panel{
 				width : 100px;
+				margin-left: auto;
 
 				>div{
 					float: right;
@@ -222,12 +229,6 @@
 		
 		.addressTable{
 			margin-bottom: @rhythm;
-
-			>div{
-				&.label{
-					padding-top: @rhythm;
-				}
-			}
 		}
 
 		.addressAddTable,

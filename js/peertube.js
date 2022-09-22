@@ -290,6 +290,14 @@ PeerTubePocketnet = function (app) {
 			axios: true,
 		},
 
+		removeAccount: {
+			path: ({ id }) => `users/${id}`,
+			method: 'DELETE',
+			renew: true,
+			authorization: true,
+			axios: true,
+		},
+
 		removeVideo: {
 			path: function ({ id }) {
 				return 'api/v1/videos/' + id;
@@ -1030,8 +1038,6 @@ PeerTubePocketnet = function (app) {
 						return Promise.resolve(r);
 					}
 
-					console.log("R", r)
-
 					return Promise.reject(error('videoQuotaUsedDaily'));
 				});
 			},
@@ -1045,6 +1051,8 @@ PeerTubePocketnet = function (app) {
 					options,
 				).then((r = {}) => r);
 			},
+
+			
 
 			getDirectVideoInfo(parameters = {}, options = {}) {
 				return request('video', parameters, options);
@@ -1062,6 +1070,23 @@ PeerTubePocketnet = function (app) {
 		},
 
 		user: {
+			removeAccount(parameters = {}, options = {}) {
+
+				return self.api.user.metotal().then(d => {
+
+					console.log("D", d)
+
+					return Promise.resolve()
+
+					return request(
+						'removeAccount', parameters, options,
+					);
+
+				})
+
+				
+			},
+
 			me: function (options = {}) {
 				return request('me', {}, options).then((r) => {
 					var data = {
@@ -1071,12 +1096,18 @@ PeerTubePocketnet = function (app) {
 						username: deep(r, 'username'),
 					};
 
-					console.log("R", r)
 
 					if (!data.channelId || !data.videoQuotaDaily)
 						return Promise.reject(error('usersMe'));
 
 					return Promise.resolve(data);
+				});
+			},
+
+			metotal: function (options = {}) {
+				return request('me', {}, options).then((r) => {
+
+					return Promise.resolve(r);
 				});
 			},
 
@@ -1123,7 +1154,6 @@ PeerTubePocketnet = function (app) {
 				)
 					.then(({ client_id, client_secret }) => {
 
-						console.log('client_id, client_secret', client_id, client_secret)
 
 						if (!client_id || !client_secret) {
 							return Promise.reject(error('oauthClientsLocal'));

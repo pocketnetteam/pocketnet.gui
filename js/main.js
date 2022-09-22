@@ -13,14 +13,8 @@ if(!_Node)
 			wss : 8087
 		},
 			
-		{
-			host : 'pocketnet.app',
-			port : 8899,
-			wss : 8099
-	    },
-
 		/*{
-			host : 'wellai.health',
+			host : 'pocketnet.app',
 			port : 8899,
 			wss : 8099
 	    },*/
@@ -83,6 +77,10 @@ if(!_Node)
 		matrix = 'test.matrix.pocketnet.app'
 	}
 
+	if (window.location.host === 'pre.pocketnet.app') {
+		_listofproxies = [{ host : 'pre.pocketnet.app', port : 8899, wss : 8099 }];
+	}
+
 
 	app = new Application({
 		listofproxies : _listofproxies,
@@ -133,19 +131,22 @@ if(!_Node)
 							$(this).attr('href', h)
 						})
 					}
-
 					
 					embeddingSettigns.openapi = true
 					
 					if (app.platform.papi[action] && (id || ids)){
-						app.platform.papi[action](id || ids.split(','), el, null, embeddingSettigns)
+						app.platform.papi[action](id || ids.split(','), el, () => {
+							setTimeout(() => {
+								$('html').addClass('openapiready')
+							}, 500)
+						}, embeddingSettigns)
 					}
 
 				}
 			}
 		});
 		
-	})
+	}, 5)
 
 
 	window.POCKETNETINSTANCE = app

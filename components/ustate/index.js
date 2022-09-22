@@ -9,7 +9,7 @@ var ustate = (function(){
 		var primary = deep(p, 'history');
 		var id = makeid()
 
-		var el, mestate, waitActions, charts = {};
+		var el, mestate, waitActions, charts = {}, statistic;
 
 		
 
@@ -146,7 +146,18 @@ var ustate = (function(){
 						clbk()
 				})
 			},
-
+			statistic : function(){
+				self.app.nav.api.load({
+					open: true,
+					id : 'statistic',
+					el : el.c.find('.stat'),
+					animation: false,
+					clbk : (e, p) => {
+						console.log("O", p)
+						statistic = p
+					}
+				})
+			},
 			lowlimits : function(clbk){
 
 				var lowlimits = self.app.platform.sdk.ustate.haslowlimits(mestate)
@@ -295,10 +306,13 @@ var ustate = (function(){
 
 							el.ustatecontent = el.c.find('.ustatecontent')
 							el.lowlimits = el.c.find('.lowlimits')
+							el.stat = el.c.find('.stat')
 	
 							renders.ustatecontent()
+							renders.statistic()
 							renders.reputationsteps()
 							renders.lowlimits()
+							
 	
 							if(clbk) clbk()
 						})
@@ -328,6 +342,13 @@ var ustate = (function(){
 				el = {};
 				delete self.app.platform.ws.messages["new block"].clbks.ustate
 				delete self.app.platform.sdk.ustate.clbks[id]
+
+				console.log('statistic', statistic)
+
+				if (statistic){
+					statistic.destroy()
+					statistic = null
+				}
 			},
 			
 			init : function(p){				
@@ -381,7 +402,9 @@ var ustate = (function(){
 
 		_.each(essenses, function(essense){
 
-			essense.destroy();
+			window.requestAnimationFrame(() => {
+				essense.destroy();
+			})
 
 		})
 

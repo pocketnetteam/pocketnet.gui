@@ -206,7 +206,7 @@
 
 			<% if(state){ %>
 
-				<% if(user.validate()) {%>
+				<% if(user.validate() && (typeof app.platform.sdk.user.myaccauntdeleted == 'undefined' || !app.platform.sdk.user.myaccauntdeleted())) {%>
 
 					<div class="iconWrapper addshare shr <%-sharec%>">
 						<i class="fas fa-plus-circle"></i>
@@ -223,7 +223,7 @@
 			<% } else { %> 
 				<% if(!(!state && window.cordova)) {%>
 				<div elementsid="hrefregistration" class="iconWrapper reg toregistration" >
-					<i class="fas fa-user-plus"></i>
+					<i class="fas fa-user"></i>
 				</div>
 				<% } %>
 				

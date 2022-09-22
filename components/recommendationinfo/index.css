@@ -1,0 +1,130 @@
+#recommendationinfo .caption {
+  padding: 1em 0;
+}
+#recommendationinfo .caption span {
+  font-size: 1.2em;
+  font-weight: 700;
+  color: srgb(var(--neutral-grad-4));
+}
+#recommendationinfo .subcaption {
+  margin-bottom: 1em;
+}
+#recommendationinfo .subcaption span {
+  font-size: 0.8em;
+  color: srgb(var(--neutral-grad-2));
+}
+#recommendationinfo .subcaptiontable {
+  margin-bottom: 1em;
+  margin-top: 2em;
+}
+#recommendationinfo .subcaptiontable span {
+  font-size: 0.9em;
+  color: srgb(var(--neutral-grad-2));
+}
+#recommendationinfo .tags {
+  margin-bottom: 1em;
+  max-width: 650px;
+  display: flex;
+  flex-wrap: wrap;
+}
+#recommendationinfo .probability,
+#recommendationinfo .tag {
+  border-radius: 8px;
+  padding: 4px 10px;
+  background: rgb(var(--background-secondary-theme));
+  box-shadow: 0 5px 7px -5px rgba(var(--color-shadow-base), 0.4);
+  margin-right: 0.5em;
+  margin-bottom: 0.25em;
+}
+#recommendationinfo .probability span,
+#recommendationinfo .tag span {
+  font-weight: 500;
+  font-size: 0.8em;
+  color: rgb(var(--neutral-grad-4));
+}
+#recommendationinfo .lastdate {
+  white-space: nowrap;
+}
+#recommendationinfo .task {
+  display: flex;
+  align-items: center;
+}
+#recommendationinfo .task > div {
+  margin-right: 0.5em;
+  margin-bottom: 0.5em;
+}
+#recommendationinfo .task .lastdate {
+  margin-left: auto;
+}
+#recommendationinfo .task .lastdate span {
+  color: rgb(var(--neutral-grad-2));
+}
+#recommendationinfo .taginfo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  opacity: 0.3;
+}
+#recommendationinfo .taginfo.using {
+  opacity: 1;
+}
+#recommendationinfo .taginfo.hiddendefault {
+  display: none;
+}
+#recommendationinfo .taginfo.recused .tag,
+#recommendationinfo .taginfo.recused .probability {
+  background: rgb(var(--color-bg-ac-bright));
+}
+#recommendationinfo .taginfo.recused .tag span,
+#recommendationinfo .taginfo.recused .probability span {
+  color: rgb(var(--text-on-bg-shadow-color));
+}
+#recommendationinfo .taginfo > div {
+  margin-right: 0.5em;
+  margin-bottom: 0.5em;
+}
+#recommendationinfo .taginfo .points .label {
+  font-size: 0.8em;
+}
+#recommendationinfo .taginfo .points .nu {
+  font-weight: 700;
+}
+#recommendationinfo .taginfo .lastdate {
+  margin-left: auto;
+}
+#recommendationinfo .taginfo .lastdate span {
+  color: rgb(var(--neutral-grad-2));
+}
+#recommendationinfo .probtags.showall .showmorewrapper {
+  display: none;
+}
+#recommendationinfo .probtags.showall .taginfo.hiddendefault {
+  display: flex;
+}
+#recommendationinfo .showmorewrapper {
+  margin-top: 1em;
+  margin-bottom: 1em;
+  cursor: pointer;
+}
+#recommendationinfo .showmorewrapper span {
+  text-decoration: underline;
+  color: rgb(var(--color-txt-ac));
+}
+#recommendationinfo .anotherShares .caption {
+  display: none;
+}
+#recommendationinfo .anotherShares.hasshares .caption {
+  display: block;
+}
+#recommendationinfo .sharesWrapper {
+  padding: 0.5em;
+}
+#recommendationinfo .sharesWrapper .share {
+  padding: 0.5em;
+  border-radius: 12px;
+  border: 1px solid rgb(var(--neutral-grad-0));
+}
+.wnd.recommendationinfoWnd .wndinner {
+  width: 550px;
+  height: 80%;
+}

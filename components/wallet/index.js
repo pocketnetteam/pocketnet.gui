@@ -4,6 +4,8 @@ var wallet = (function(){
 
 	var essenses = {};
 
+	var addressesGroup, send, htls, recv, deposit;
+
 	var Essense = function(p){
 
 		var primary = deep(p, 'history');
@@ -39,7 +41,7 @@ var wallet = (function(){
 			{name: 'New Economy Movement (XEM)', code: 'XEM', image : "nem-xem-logo.svg"},
 		]
 
-		var addressesGroup = {
+		addressesGroup = {
 
 			pnetwallet : {
 				label : self.app.localization.e('tacaddress'),
@@ -73,7 +75,7 @@ var wallet = (function(){
 
 		}
 
-		var send = {
+		send = {
 			parameters : {
 
 				source : new Parameter({
@@ -163,7 +165,7 @@ var wallet = (function(){
 			}
 		}
 
-		var htls = {
+		htls = {
 			parameters : {
 
 				source : new Parameter({
@@ -198,14 +200,14 @@ var wallet = (function(){
 			}
 		}
 
-		var recv = {
+		recv = {
 
 			wallet : self.app.localization.e('twallet'),
 			pnetwallet : self.app.localization.e('tacaddress')
 
 		}
 
-		var deposit = {
+		deposit = {
 			active : false,
 			parameters : {
 				deposit : new Parameter({
@@ -853,7 +855,7 @@ var wallet = (function(){
 					self.app.platform.sdk.wallet.txbase(addresses, _.clone(outputs), 0, feesMode, function(err, inputs, _outputs){
 
 						if(err){
-							sitemessage(err)
+							sitemessage(self.app.localization.e('txbase_err_' + err))
 
 							return
 						}
@@ -1835,7 +1837,6 @@ var wallet = (function(){
 
 
 								   if(err){
-									console.log("ERR", err)
 									   self.app.platform.sdk.node.transactions.releaseCS(inputs)
 									   sendpreloader(false)
 									   self.app.platform.errorHandler(err, true)
@@ -2020,7 +2021,6 @@ var wallet = (function(){
 
 											if(err){
 
-												console.log("ERR", err)
 
 												self.app.platform.sdk.node.transactions.releaseCS(inputs)
 												sendpreloader(false)
@@ -2233,6 +2233,11 @@ var wallet = (function(){
 			////
 
 			buy : function(clbk, _el){
+
+				if (self.app.pkoindisable || (typeof self.app.platform.sdk.user.myaccauntdeleted != 'undefined' && self.app.platform.sdk.user.myaccauntdeleted())){
+					clbk()
+					return
+				}
 
 				var a = self.app.platform.sdk.address.pnet() || {}
 
@@ -2790,8 +2795,8 @@ var wallet = (function(){
 									el.c.removeClass('loading')
 								})
 							}
-
-							if(_p.action == 'buy'){
+						
+							if(_p.action == 'buy' && !self.app.pkoindisable){
 								actions.showBuyInStep('buy', 1, '', function(){
 									el.c.removeClass('loading')
 								})
@@ -2817,7 +2822,7 @@ var wallet = (function(){
 			wnd : {
 				//header : 'rwallet',
 				class : 'withoutButtons walletwindow normalizedmobile maxheight',
-				parallaxselector : '.wndback,.wndheader'
+				//parallaxselector : '.wndback,.wndheader'
 			}
 		}
 	};
@@ -2836,7 +2841,9 @@ var wallet = (function(){
 
 		_.each(essenses, function(essense){
 
-			essense.destroy();
+			window.requestAnimationFrame(() => {
+				essense.destroy();
+			})
 
 		})
 

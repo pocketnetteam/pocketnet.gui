@@ -889,6 +889,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					{
 						host : 'peertube19mirror.pocketnet.app',
 						ip: '64.235.50.17',
+						cantuploading: true,
 					}
 				],
 
@@ -903,6 +904,41 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					{
 						host : 'peertube21.pocketnet.app',
 						ip: '116.203.16.185',
+					}
+				],
+
+				28: [
+					{
+						host : 'peertube22.pocketnet.app',
+						ip: '104.168.136.179',
+					}
+				],
+
+				29: [
+					{
+						host : 'peertube23.pocketnet.app',
+						ip: '23.254.201.237',
+					}
+				],
+
+				30: [
+					{
+						host : 'peertube24.pocketnet.app',
+						ip: '23.254.224.63',
+					}
+				],
+
+				31: [
+					{
+						host : 'peertube25.pocketnet.app',
+						ip: '95.217.212.144',
+					}
+				],
+
+				32: [
+					{
+						host : 'peertube26.pocketnet.app',
+						ip: '49.12.106.120',
 					}
 				],
       		};
@@ -1172,9 +1208,16 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 			var result = null
 
+			console.log('method', method)
 
 
 			return rpc({ method, parameters, options, U }).then(r => {
+
+				if(!r.data.contents){
+					var contents = r.data
+
+					r.data = {contents}
+				}
 
 				var posts = r.data.contents || []
 
@@ -1198,10 +1241,12 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					})
 				})
 
-				if(method == 'gethierarchicalstrip'){
+				if(method == 'gethierarchicalstrip' || method == 'getsubscribesfeed'  || method == 'getprofilefeed'){
 					users = _.map(posts, function(p){
 						return f.deep(p, 'lastComment.address')
 					})
+
+					console.log('users', users, method)
 
 					users = _.filter(users, u => {return u && !_.find(posts, function(p){
 						return p.address == u
@@ -1266,7 +1311,11 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 	}
 
 	self.rpcscenarios.getrecommendedcontentbyaddress = self.rpcscenarios.gethierarchicalstrip
+	self.rpcscenarios.getprofilefeed = self.rpcscenarios.gethierarchicalstrip
+	self.rpcscenarios.getsubscribesfeed = self.rpcscenarios.gethierarchicalstrip
+	self.rpcscenarios.gethotposts = self.rpcscenarios.gethierarchicalstrip
 
+	
 	self.api = {
 		node: {
 			rpcex : {

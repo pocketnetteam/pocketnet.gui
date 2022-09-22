@@ -1,19 +1,28 @@
-# Bastyon Desktop Browser
-![GitHub](https://img.shields.io/github/license/pocketnetteam/pocketnet.api)
-![contributors](https://img.shields.io/github/contributors/pocketnetteam/pocketnet.gui)
-![last_commit](https://img.shields.io/github/last-commit/pocketnetteam/pocketnet.gui)
-![release_date](https://img.shields.io/github/release-date/pocketnetteam/pocketnet.gui)
-![version](https://img.shields.io/github/v/release/pocketnetteam/pocketnet.gui)
+<p align="center">
+  <img src="./img/logo_color/blue_250.png" width="150">
+</p>
+
+<h1 align="center">Bastyon Desktop Browser</h1>
+
+![apache](https://img.shields.io/github/license/pocketnetteam/pocketnet.api?label=License&logo=apache)
+![contributors](https://img.shields.io/github/contributors/pocketnetteam/pocketnet.gui?label=Contributors&logo=bastyon)
+![last_commit](https://img.shields.io/github/last-commit/pocketnetteam/pocketnet.gui?label=Last+commit&logo=bastyon)
+![release_date](https://img.shields.io/github/release-date/pocketnetteam/pocketnet.gui?label=Release+date&logo=bastyon)
+![version](https://img.shields.io/github/v/release/pocketnetteam/pocketnet.gui?label=Actual+version&logo=bastyon)
+<!--
 [![Auto Tests](https://github.com/pocketnetteam/pocketnet.gui/actions/workflows/autotests.yml/badge.svg)](https://github.com/pocketnetteam/pocketnet.gui/actions/workflows/autotests.yml)
+-->
 
-![GitHub release Win](https://img.shields.io/github/downloads/pocketnetteam/pocketnet.gui/latest/BastyonSetup.exe)
-![GitHub release Linux MacOS](https://img.shields.io/github/downloads/pocketnetteam/pocketnet.gui/latest/BastyonSetup.dmg)
-![GitHub release Linux Deb](https://img.shields.io/github/downloads/pocketnetteam/pocketnet.gui/latest/BastyonSetup.deb)
-![GitHub release Linux AppImage](https://img.shields.io/github/downloads/pocketnetteam/pocketnet.gui/latest/Bastyon.AppImage)
-![GitHub release Android APK](https://img.shields.io/github/downloads/pocketnetteam/pocketnet.gui/latest/Bastyon.apk)
+![GitHub release Win](https://img.shields.io/github/downloads/pocketnetteam/pocketnet.gui/latest/BastyonSetup.exe?label=Windows&logo=windows&suffix=)
+![GitHub release Linux MacOS](https://img.shields.io/github/downloads/pocketnetteam/pocketnet.gui/latest/BastyonSetup.dmg?label=MacOS&logo=apple)
+![GitHub release Linux Deb](https://img.shields.io/github/downloads/pocketnetteam/pocketnet.gui/latest/BastyonSetup.deb?label=Debian&logo=linux)
+![GitHub release Linux AppImage](https://img.shields.io/github/downloads/pocketnetteam/pocketnet.gui/latest/Bastyon.AppImage?label=AppImage&logo=linux)
+![GitHub release Android APK](https://img.shields.io/github/downloads/pocketnetteam/pocketnet.gui/latest/Bastyon.apk?label=Android&logo=android)
 
+<!--
 [![Deploy Proxy](https://github.com/pocketnetteam/pocketnet.gui/actions/workflows/deploy.proxy.yml/badge.svg)](https://github.com/pocketnetteam/pocketnet.gui/actions/workflows/deploy.proxy.yml)
 [![Deploy Web](https://github.com/pocketnetteam/pocketnet.gui/actions/workflows/deploy.web.yml/badge.svg)](https://github.com/pocketnetteam/pocketnet.gui/actions/workflows/deploy.web.yml)
+-->
 
 # What is Bastyon?
 

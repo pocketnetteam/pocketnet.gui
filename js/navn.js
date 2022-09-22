@@ -1495,7 +1495,7 @@ Nav = function(app)
 		}
 	}
 
-	self.init = function(p){
+	self.init = function(p, clbk){
 
 
 		if(!p) p = {};
@@ -1598,6 +1598,8 @@ Nav = function(app)
 
 				electronopen = true
 				
+
+				if(clbk) clbk()
 
 			});
 

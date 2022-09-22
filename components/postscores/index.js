@@ -100,6 +100,9 @@ var postscores = (function(){
 							else
 							{
 
+								self.app.platform.sdk.memtags.add(share.tags, 'l_' + share.txid, (value - 3) / 2)
+								self.app.platform.sdk.recommendations.successRecommendation(share)
+
 								if (clbk)
 									clbk(true)
 							}
@@ -415,7 +418,9 @@ var postscores = (function(){
 
 		_.each(essenses, function(essense){
 
-			essense.destroy();
+			window.requestAnimationFrame(() => {
+				essense.destroy();
+			})
 
 		})
 

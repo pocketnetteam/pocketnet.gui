@@ -22,6 +22,7 @@ nModule = function(){
 
 	}
 
+
 	self.inserts = {
 		wnd : {
 			obj : wnd,
@@ -89,7 +90,7 @@ nModule = function(){
 		}
 	}
 
-
+	
 
 	self.shell = function(p, clbk, fromModule){
 
@@ -104,7 +105,7 @@ nModule = function(){
 			if (p.el && !p.ignorelinksandimages)
 			{
 				self.nav.api.links(null, p.el, p.additionalActions || null);
-				bgImages(p.el, p.bgImages)
+				bgImagesCl(p.el, p.bgImages)
 			}
 
 			if (typeof clbk  === 'function'){
@@ -226,19 +227,34 @@ nModule = function(){
 
 				}
 
-				if(typeof p.el == 'function') p.el = p.el();
+				var c = function(){
+					if(typeof p.el == 'function') p.el = p.el();
 			
-				if(!inserted)
-				{
-					if (p.el) {
-						self.insertTemplate(p, html);
+					if(!inserted)
+					{
+						if (p.el) {
+							self.insertTemplate(p, html);
+						}
+					}
+
+					if(!p.animation)
+					{
+						completeClbk(p);
 					}
 				}
 
-				if(!p.animation)
-				{
-					completeClbk(p);
+				//c()
+				
+				if(p.insertimmediately){
+					c()
 				}
+				else{
+					window.requestAnimationFrame(() => {
+						c()
+					})
+				}
+
+				
 
 			} ,p)
 
@@ -286,8 +302,13 @@ nModule = function(){
 			if (p.clear)
 				p.rendered = "";
 
-			if (clbk)
+
+			
+
+			if (clbk){
 				clbk(p.rendered)
+			}
+				
 
 		})
 	}
@@ -364,7 +385,7 @@ nModule = function(){
 			var vs = '131'
 
 			if (typeof numfromreleasestring != 'undefined'){
-				vs = numfromreleasestring(window.packageversion)
+				vs = numfromreleasestring(window.packageversion) + '_' + (window.versionsuffix || "0")
 			}
 
 			url += '/templates/' + p.name + '.html?v=' + vs;
