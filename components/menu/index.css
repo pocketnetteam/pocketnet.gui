@@ -521,6 +521,9 @@
 #menu .searchFastResultWrapper .searchbywrapper .searchby .swrp {
   width: 100%;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 1em 0;
 }
 #menu .searchFastResultWrapper .searchbywrapper .searchby .swrp > div {
   color: rgba(var(--color-txt-gray-dark), 0.8);

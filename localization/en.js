@@ -2334,3 +2334,5 @@ _l.removecategory = 'Remove'
 _l.removecategoryQestion = 'Do you really want to remove this category?'
 
 
+_l.searchbytext = "Search by text:"
+_l.searchbytags = "Search by tags:"
