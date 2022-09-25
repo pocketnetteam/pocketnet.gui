@@ -879,15 +879,12 @@ var share = (function(){
 
 				var SAVE = function(){
 
-					console.log("SAVE")
 
 					currentShare.language.set(self.app.localization.key)
 
 					actions.checktranscoding(function(result){
-						console.log("AS")
 						currentShare.uploadImages(self.app, function(){
 
-							console.log("AS2")
 
 							if (currentShare.hasexchangetag()){
 								currentShare.repost.v = ''
@@ -922,7 +919,6 @@ var share = (function(){
 		
 								function(_alias, error){
 
-									console.log("ASD", error)
 
 									topPreloader(100)
 		
@@ -952,14 +948,15 @@ var share = (function(){
 											var alias = new pShare();
 												alias._import(_alias, true)
 
-
-
 												alias.temp = _alias.temp;
 												alias.relay = _alias.relay;
 												alias.checkSend = _alias.checkSend
 												alias.address = _alias.address
 		
-											if(currentShare.aliasid) alias.edit = "true"	
+											if(currentShare.aliasid) {
+												alias.edit = "true"	
+											}
+											
 											if(currentShare.time) alias.time = currentShare.time
 		
 											self.app.platform.sdk.node.shares.add(alias)
@@ -1631,8 +1628,6 @@ var share = (function(){
 							uploadImage : true,
 		
 							action : function(file, clbk){
-
-								console.log("FILE", file)
 		
 								if (file.ext == 'gif'){
 									imagesHelper.slowUploadGif(file, tstorage, clbk)
@@ -2661,10 +2656,12 @@ var share = (function(){
 					el.c.find('.emojionearea-editor').off('pasteImage')
 
 				try{
-					if (el.eMessage) el.eMessage[0].emojioneArea.destroy();
+					if (el.eMessage) {
+						el.eMessage[0].emojioneArea.destroy();
+					}
 				}
 				catch(e){
-
+					console.error('e', e)
 				}
 				
 

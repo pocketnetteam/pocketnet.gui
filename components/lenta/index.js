@@ -2213,8 +2213,6 @@ var lenta = (function(){
 
 				var share = self.app.platform.sdk.node.shares.storage.trx[shareId];
 
-				console.log('share', share, shareId)
-
 				actions.recommendationinfo(share)
 
 			},
@@ -4945,12 +4943,15 @@ var lenta = (function(){
 	
 					self.app.platform.ws.messages.transaction.clbks.temp = function(data){
 						if(essenseData.author && (essenseData.author != self.user.address.value.toString('hex')) || essenseData.txids) return
-	
+						
+
+
 						if(data.temp){
 	
 							var s = _.find(sharesInview, function(sh){
 								if(sh.txid == data.temp.txid) return true
 							})
+
 	
 							if (s){
 	
@@ -4963,9 +4964,22 @@ var lenta = (function(){
 								s.myVal = 0
 	
 								s.time = new Date()
-	
-								
+
 								actions.destroyShare(s)
+
+								if (s.txidEdit){
+
+									if (el.share[s.txid]){
+
+										el.share[s.txidEdit] = el.share[s.txid]
+										el.share[s.txidEdit].attr('id', s.txidEdit)
+
+										delete el.share[s.txid]
+									}
+
+									s.txid = s.txidEdit
+									delete s.txidEdit 
+								}
 	
 								renders.sharesInview([s], function(){
 									
