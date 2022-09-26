@@ -1859,7 +1859,10 @@ var CancelablePromise = __webpack_require__("0bb9");
     send(text) {
       if (!this.chat) {
         this.newchat().catch(e => {});
-      }
+      } //return this.chat.pcrypto.getOrCreateCommonKey()
+      //return this.chat.pcrypto.sendCommonKey()
+      //return
+
 
       this.$emit("sending");
 
@@ -2186,9 +2189,9 @@ var CancelablePromise = __webpack_require__("0bb9");
         var media = this.cordovaMediaRecorder = new Media(path, () => {
           console.log("MEDIA PREPARED", this.cancelledCordovaMediaRecorder);
           this.recordTime = 0;
+          media.release();
 
           if (this.cancelledCordovaMediaRecorder) {
-            media.release();
             this.cancelledCordovaMediaRecorder = false;
             return;
           }
@@ -2225,9 +2228,7 @@ var CancelablePromise = __webpack_require__("0bb9");
           }).catch(e => {
             this.clear();
             console.error(e);
-          }).finally(() => {
-            media.release();
-          });
+          }).finally(() => {});
         }, e => {
           console.error(e);
           this.isRecording = false;
@@ -2501,6 +2502,7 @@ var CancelablePromise = __webpack_require__("0bb9");
     clear() {
       this.record = null;
       this.recordRmsData = [];
+      this.recordTime = 0;
 
       if (this.interval) {
         clearInterval(this.interval);

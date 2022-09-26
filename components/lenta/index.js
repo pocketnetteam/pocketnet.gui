@@ -4966,6 +4966,20 @@ var lenta = (function(){
 	
 								
 								actions.destroyShare(s)
+
+								if (s.txidEdit){
+
+									if (el.share[s.txid]){
+
+										el.share[s.txidEdit] = el.share[s.txid]
+										el.share[s.txidEdit].attr('id', s.txidEdit)
+
+										delete el.share[s.txid]
+									}
+
+									s.txid = s.txidEdit
+									delete s.txidEdit 
+								}
 	
 								renders.sharesInview([s], function(){
 									
