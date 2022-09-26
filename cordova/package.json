@@ -164,7 +164,8 @@
       "cordova-plugin-camera-preview": {},
       "cordova-plugin-audioinput": {},
       "cordova-plugin-dialogs": {},
-      "cordova-plugin-actionsheet": {}
+      "cordova-plugin-actionsheet": {},
+      "cordova-plugin-run-in-background" : {}
     },
     "platforms": [
       "ios",
