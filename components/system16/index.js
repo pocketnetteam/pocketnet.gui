@@ -3568,7 +3568,7 @@ var system16 = (function(){
 
 							new dialog({
 								class : 'zindex',
-								html : "Do you really want reconnect to selected "+self.app.meta.fullname+" Node?",
+								html : self.app.localization.e('selectnode', self.app.meta.fullname),
 								btn1text : self.app.localization.e('dyes'),
 								btn2text : self.app.localization.e('dno'),
 								success : function(){	
