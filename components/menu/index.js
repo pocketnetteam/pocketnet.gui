@@ -754,8 +754,6 @@ var menu = (function(){
 			},
 			wallets : {
 				click : function(){
-
-					
 					self.nav.api.go({
 						open : true,
 						href : self.app.mobileview ? 'wallet' : 'userpage?id=wallet',

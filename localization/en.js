@@ -2244,6 +2244,7 @@ _l.shareexternaluploadpeertube = "Video upload window open";
 _l.removeimageswhenvideo = "The images attached to the post will be deleted if you continue to upload the video. Go to uploading video?";
 
 
+
 _l.lowstar1 = "Bastyon team is implementing a temporary moratorium on 1 and 2 star ratings, except prohibited content. Prohibited content is:"
 _l.lowstar_reason_1 = "Porno"
 _l.lowstar_reason_2 = "Child exploitation"
@@ -2251,8 +2252,15 @@ _l.lowstar_reason_3 = "Direct threat of violence"
 _l.lowstar_reason_4 = "Illegal narcotics"
 _l.lowstar2 = "Please do not use 1 and 2 star ratings for other reasons. After the new moderation is released in mid. May you will be able to use low ratings for other reasons"
 _l.lowstaragree = "I confirm that this post contains one of four types of prohibited content"
-
+_l.mnemonicnote = "To confirm that you wrote down 12 words, choose the first 3 of them in the correct order."
+_l.mnemonicerror = "You entered the 3 words incorrectly. Please go back and write down the 12 word passphrase to use Bastyon."
+_l.confirm = "Confirm"
+_l.cameralocked = "Camera locked"
+_l.cameraunlocknote = "To scan, unlock the camera from your browser settings and try again."
+_l.scanqr = "Scan QR Code"
 _l.usetor = "Connection via Tor network"
+_l.cameraError1 = "The user denied camera access."
+_l.cameraError5 = "The camera is unavailable because it doesn't exist or is otherwise unable to be configured."
 
 _l.videotranscodingdelayedpost = "This video is being processed and will be posted as soon as the transcoding process ends. Please, do not close the tab untill then."
 
@@ -2263,6 +2271,10 @@ _l.continuesubscribefeedCaption = "Would you like to continue seeing posts from 
 _l.continuesubscribefeedButton = "Continue in the subscription feed"
 
 _l['dust (code 64)'] = "You are trying to send an amount too small, it cannot be done"
+
+
+_l.words12 = "12 Words"
+_l.privatekey = "Private kay"
 
 
 _l.videoNameIsIncorrectShort = "Video name should be at least 3 characters long"

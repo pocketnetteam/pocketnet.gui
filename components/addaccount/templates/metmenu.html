@@ -1,0 +1,31 @@
+<%
+
+var m = {
+	loadqr : {
+		icon : '<i class="fas fa-file-upload"></i>',
+		text : e('loadqrcode'),
+		class : 'loadqr'
+	},
+
+	scanqr : {
+		icon : '<i class="fas fa-qrcode"></i>',
+		text : e('scanqr'),
+		class : 'scanqr'
+	},
+};
+%>
+
+<div class="qrmenu">
+
+	<% _.each(m, function(item){%>
+
+	<div elementsid="menuitem qrmenuitem" class="menuitem qrmenuitem table <%-item.class||''%>">
+		
+		<div class="icon"><span><%=item.icon%></span></div>
+		<div class="label"><span><%-item.text%></span></div>
+
+	</div>
+		
+	<% }) %>
+
+</div>

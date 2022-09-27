@@ -1,7 +1,6 @@
 <% var p1 = function(){ %> 
-
 	<div class="maket leftPart">
-
+		<div id="reader"></div>
 		<div class="work">
 
 			<div class="lptable table">
@@ -10,8 +9,13 @@
 				
 					<div class="sitelogin section">
 						
-						<div class="label formh">
-							<%=e('id1')%>
+						<div class="tabsWrapper">
+							<div class="tabItem tabItem-active" id="mnemonicTab">
+								<%=e('words12')%>
+							</div>
+							<div class="tabItem" id="privateKeyTab">
+								<%=e('privatekey')%>
+							</div>
 						</div>
 					
 						<div class="form">
@@ -28,19 +32,22 @@
 												<div class="inputWrapperKey">
 													
 													<input elementsid="hiddenname" autocomplete="username" value="user" type="text" name='username' class="hidden"/>
+													
+													<div id="mnemonicInput">
+													</div>
+
+													<div class="qrcode">
+														<div class="icon">
+															<i class="fas fa-qrcode"></i></div>
+														<div class="label"></div>
+												    </div>  
+													
 													<input elementsid="inputloginkey" autocomplete="current-password" type="password" name='password' class="loginValue" placeholder="<%=e('e13024')%>" />
 
 												</div>
 											</div>
 
 											<div class="actionButtonsWrapper">
-												<div
-													elementsid="uploadqrcode"
-													class="uploadFile"
-												>
-													<div class="icon"><i class="fas fa-qrcode"></i></div>
-													<div class="label"></div>
-												</div>
 												<div elementsid="showpassword" class="showPassword hidden" tabindex="1000">
 													<div class="icon"><i class="fas fa-eye"></i></div>
 												</div>
