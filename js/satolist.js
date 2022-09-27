@@ -7293,72 +7293,112 @@ Platform = function (app, listofnodes) {
 
                         if(!fileDownloadUrl) return Promise.reject('fileDownloadUrl')
 
-                        return new Promise((resolve, reject) => {
-                            folder.getDirectory('videos', { create: true }, function (dirEntry3) {
+                        var infos = {
+                            thumbnail: 'https://' + videoDetails.from + videoDetails.thumbnailPath,
+                            videoDetails : videoDetails,
+                        }
+                        var result = {
+                            infos: infos,
+                            id : id
+                        }
 
-                                dirEntry3.getDirectory(id, { create: true }, function (dirEntry4) {
-
-                                    var infos = {
-                                        thumbnail: 'https://' + videoDetails.from + videoDetails.thumbnailPath,
-                                        videoDetails : videoDetails,
-                                    }
-
-                                    dirEntry4.getFile('info.json', { create: true }, function (infoFile) {
-                                        // Write into file
-                                        infoFile.createWriter(function (fileWriter) {
-
-                                            fileWriter.write(infos);
-
-                                            dirEntry4.getFile(p.resolutionId + '.mp4', { create: true }, function (targetFile) {
-
-                                                var fileTransfer = new FileTransfer();
-
-                                                fileTransfer.download(
-                                                    fileDownloadUrl.fileDownloadUrl,
-                                                    targetFile.nativeURL,
-                                                    function (entry) {
-
-                                                        // Success
-                                                        // Get file size
-                                                        targetFile.file(function(fileDetails) {
-
-                                                            targetFile.internalURL = entry.toURL();
-
-                                                            var result = {
-                                                                video: targetFile,
-                                                                infos: infos,
-                                                                size : fileDetails.size || null,
-                                                                id : id
-                                                            }
-
-                                                            //self.sdk.local.shares.add(shareId, shareInfos);
-
-                                                            return resolve(result);
-
-                                                        }, reject);
-
-                                                    },
-                                                    function (error) {
-                                                        console.log("download error: ", error);
-                                                        reject(error);
-                                                    },
-                                                    null, {}
-                                                );
-
-                                                fileTransfer.onprogress = function(progressEvent) {
-                                                    if (progressEvent)
-                                                        p.progress('video', 100 * progressEvent.loaded / progressEvent.total);
-                                                }
-
-                                            }, reject);
-
+                        var downloadThumbnail = function() {
+                            return new Promise((resolve, reject) => {
+                                if (!infos || !infos.thumbnail || infos.thumbnail.length <= 0)
+                                    return reject();
+                                folder.getDirectory('videos', { create: true }, function (dirEntry3) {
+                                    dirEntry3.getDirectory(id, { create: true }, function (dirEntry4) {
+                                        // Download thumbnail
+                                        let thumbnailName = infos.thumbnail.substring(infos.thumbnail.lastIndexOf('/') + 1, infos.thumbnail.length);
+                                        dirEntry4.getFile(thumbnailName, { create: true }, function (thumbFile) {
+                                            var fileTransfer = new FileTransfer();
+                                            fileTransfer.download(
+                                                'https://' + videoDetails.from + videoDetails.thumbnailPath,
+                                                thumbFile.nativeURL,
+                                                function (entry) {
+                                                    // Success
+                                                    resolve(entry.toURL());
+                                                },
+                                                function (error) {
+                                                    console.log("download thumbnail error: ", error);
+                                                    reject('download thumbnail error');
+                                                },
+                                                null, {}
+                                            );
                                         }, reject);
-
                                     }, reject);
+                                }, reject);
+                            });
+                        }
 
+                        return new Promise((resolve, reject) => {
+
+                            // Download video thumbnail
+                            downloadThumbnail().then((thumbnailPath) => {
+                                // infos.thumbnail = thumbnailPath;
+                                // result.infos.thumbnail = thumbnailPath;
+                            }).finally(() => {
+
+                                // Download video
+                                folder.getDirectory('videos', { create: true }, function (dirEntry3) {
+
+                                    dirEntry3.getDirectory(id, { create: true }, function (dirEntry4) {
+    
+                                        dirEntry4.getFile('info.json', { create: true }, function (infoFile) {
+                                            // Write into file
+                                            infoFile.createWriter(function (fileWriter) {
+ 
+                                                fileWriter.write(infos);
+    
+                                                dirEntry4.getFile(p.resolutionId + '.mp4', { create: true }, function (targetFile) {
+    
+                                                    var fileTransfer = new FileTransfer();
+    
+                                                    fileTransfer.download(
+                                                        fileDownloadUrl.fileDownloadUrl,
+                                                        targetFile.nativeURL,
+                                                        function (entry) {
+    
+                                                            // Success
+                                                            // Get file size
+                                                            targetFile.file(function(fileDetails) {
+    
+                                                                targetFile.internalURL = entry.toURL();
+    
+                                                                result.video = targetFile;
+                                                                result.size = fileDetails.size || null;
+    
+                                                                //self.sdk.local.shares.add(shareId, shareInfos);
+    
+                                                                return resolve(result);
+    
+                                                            }, reject);
+    
+                                                        },
+                                                        function (error) {
+                                                            console.log("download error: ", error);
+                                                            reject(error);
+                                                        },
+                                                        null, {}
+                                                    );
+    
+                                                    fileTransfer.onprogress = function(progressEvent) {
+                                                        if (progressEvent)
+                                                            p.progress('video', 100 * progressEvent.loaded / progressEvent.total);
+                                                    }
+    
+                                                }, reject);
+    
+                                            }, reject);
+    
+                                        }, reject);
+    
+                                    }, reject)
+    
                                 }, reject)
 
-                            }, reject)
+                            });
+
                         })
 
                     },
