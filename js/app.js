@@ -339,7 +339,7 @@ Application = function(p)
   }
   self.savesupported = function(){
     var isElectron = self.isElectron();
-    return isElectron || (window.cordova && !isios());
+    return isElectron || window.cordova;
   }
   self.savesupportedForBrowser = function(){
     return !self.savesupported() && localStorage;
