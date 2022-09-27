@@ -2,8 +2,11 @@
 
 dplace = e('e13038');
 
-if (isMobile()) 
-	dplace = e('e13039')
+if (isMobile()) dplace = e('e13039')
+
+var deleted = typeof app.platform.sdk.user.myaccauntdeleted != 'undefined' && app.platform.sdk.user.myaccauntdeleted();
+
+	
 
 %>
 
@@ -16,14 +19,19 @@ if (isMobile())
 
 			<%
 
-				var src = deep(app, 'platform.sdk.users.storage.'+(essenseData.daddress || user.address.value.toString('hex'))+'.image') || ''
+				var src = deep(app, 'platform.sdk.users.storage.'+(essenseData.daddress || user.address.value)+'.image') || ''
 				
-				var name = deep(app, 'platform.sdk.users.storage.'+(essenseData.daddress || user.address.value.toString('hex')) +'.name') || '';
+				var name = deep(app, 'platform.sdk.users.storage.'+(essenseData.daddress || user.address.value) +'.name') || '';
 
 				var letter = name ? name[0] : ''
 
 				if(!src){
 					src = deep(app, 'platform.sdk.user.storage.me.image') || ''
+				}
+
+				if(deleted){
+					src = ''
+					letter = ''
 				}
 			%>	
 			
@@ -63,38 +71,58 @@ if (isMobile())
 
 		<% 
 			
+			
 		
-		if(!state || !user.validate() || _.isEmpty(mestate) || (mestate.reputation >= -50)) { %> 
+		if((!state || !user.validate() || _.isEmpty(mestate) || (mestate.reputation >= -50)) && !deleted) { 
+			
+			var embedimage = app.platform.sdk.user.canuseimagesincomments(); 
+			var hasdonate = sender && sender !== receiver
+			var hasemoji = !isMobile() && !isTablet()
+			
+			%> 
  
-			<div class="lcpp">
+			<div class="lcpp <%- embedimage ? 'hasembedimage' : '' %> <%- hasdonate ? 'hasdonate' : '' %> <%- hasemoji ? 'hasemoji' : '' %> ">
 				<div class="txt">
 
 					<textarea elementsid="leaveCommentPreview" class="leaveCommentPreview" placeholder="<%- placeholder || dplace %>"></textarea>
 
 					<div class="leaveComment" placeholder="<%- placeholder || dplace %>"></div>
-					<% if(app.platform.sdk.user.canuseimagesincomments()) {%>
+					
+					<% if(embedimage) {%>
 
 						<div elementsid="comments_embedimages" class="embedimages">
-							<i class="fas fa-image"></i>
+							<i class="fas fa-images"></i>
 						</div>
 
 					<% } %>
 
-					<% if(!isMobile() && !isTablet()) { %> 
+					<% if(hasdonate) { %> 
+
+						<div elementsid="comments_embeddonate" class="embeddonate <%- embedimage ? 'right' : '' %>">
+							<img 
+								class="donateIcon"
+								src="img/logo20.svg" 
+								alt=""
+							>
+						</div>
+
+					<% } %>
+
+					<% if(hasemoji) { %> 
 						<div elementsid="comments_embedEmojiPrivew" class="embedEmojiPrivew">
 						</div>
 					<% } %>
 
 				</div>
 
-				<div class="limits">
-					
-				</div>
+				<div class="limits"></div>
 
-				<div class="newcommentdonate"></div>
-
-				<div class="newcommentimages"></div>
-
+				<% if(hasdonate) { %> 
+					<div class="newcommentdonate"></div>
+				<% } %>
+				<% if(embedimage) {%>
+					<div class="newcommentimages"></div>
+				<% } %>
 				
 				
 			</div>
@@ -116,7 +144,7 @@ if (isMobile())
 
 		<% } else { %> 
 			<div class="reputationFailCell">
-				<%=e('e13040')%>
+				<% if(deleted) {%><%=e('deletedAccount_' + deleted)%><% } else { %><%=e('e13040')%><% } %>
 			</div>
 		<% } %>
 

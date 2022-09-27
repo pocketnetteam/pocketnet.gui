@@ -1,0 +1,32 @@
+<div id="<%-module.map.id%>">
+
+	<div class="addingcategory">
+		<div class="namewrapper">
+			<div class="label">
+				<span><%=e('categoryname')%></span>
+			</div>
+			<div class="inputWrapper">
+				<input elementsid="inputentercategoryname" type="text" class="name" value="<%-category.name%>" placeholder="<%=e('entercategoryname')%>">
+			</div>
+			
+		</div>
+		<div class="fieldwrapper">
+			<div class="label">
+				<span><%=e('categoryfilter')%></span>
+			</div>
+			<div class="tagswrapper">
+				
+			</div>
+		</div>
+
+		<div class="buttonpanel">
+			<button class="orange button medium save"><%-e('save')%></button>
+			<!--<button class="ghost button medium cancel">Cancel</button>-->
+			<% if(editing) {%>
+			<button class="ghost button medium remove"><%-e('removecategory')%></button>
+			<% } %>
+		</div>
+	
+	</div>
+
+</div>

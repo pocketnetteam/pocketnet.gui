@@ -589,72 +589,7 @@ var authorization = (function(){
 				el.c.toggleClass('signinshow')
 			})
 
-	        // initUpload({
-			// 	el : el.c.find('.uploadFile'),
-	
-			// 	ext : ['txt', 'png', 'jpeg', 'jpg'],
-
-			// 	notexif : true,
-
-			// 	dropZone : el.c,
-
-			// 	action : function(file, clbk){
-
-			
-			// 		if(file.ext == 'png' || file.ext == 'jpeg' || file.ext == 'jpg'){
-						
-
-			// 			grayscaleImage(file.base64, function(image){
-			// 				qrscanner.q.debug = true
-
-			// 				qrscanner.q.callback = function(data){
-
-
-			// 					if(data == 'error decoding QR Code'){
-			// 						sitemessage(self.app.localization.e('filedamaged'))
-			// 					}
-			// 					else
-			// 					{
-			// 						el.login.val(trim(data))
-
-			// 						el.hiddenform.submit()
-			// 					}
-			// 				}
-
-			// 				qrscanner.q.decode(image)
-			// 			})
-
-						
-					
-						
-			// 		}
-			// 		else
-			// 		{
-			// 			var b = file.base64.split(",")[1]
-
-			// 			var data = b64_to_utf8(b)
-
-			// 			var ds = data.split("/")
-
-
-			// 			if (ds[1]) {
-
-
-			// 				el.login.val(trim(ds[1]))
-
-			// 				events.login();
-							
-			// 			}
-			// 			else
-			// 			{
-			// 				sitemessage(self.app.localization.e('filedamaged'))
-			// 			}
-			// 		}
-
-					
-					
-			// 	}
-			// })
+	     
 
 			var v = function(){
 				if(!$(this).val()){
@@ -831,6 +766,7 @@ var authorization = (function(){
 			},
 
 			destroy : function(){
+				$("#autocomplete").remove()
 
 				if(el.c) el.c.empty()
 
@@ -845,7 +781,11 @@ var authorization = (function(){
 		
 
 			init : function(p){
+
+
 				$("body").prepend( "<span id='autocomplete'><span id='autocompleteStart'></span><span id='autocompleteEnd'></span></span>" );
+
+
 				el = {};
 				el.c = p.el.find('#' + self.map.id)
 				el.login = el.c.find(".loginValue");
@@ -911,10 +851,13 @@ var authorization = (function(){
 	};
 
 	self.stop = function(){
+		
 
 		_.each(essenses, function(essense){
-			$("#autocomplete").remove()
-			essense.destroy();
+
+			window.requestAnimationFrame(() => {
+				essense.destroy();
+			})
 
 		})
 

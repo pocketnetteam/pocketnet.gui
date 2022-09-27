@@ -205,9 +205,9 @@ _l.usavechanges = "Do you want to save your changes?";
 //statistic
 
 _l.referralsCount = 'Users who have used the referral link.';
-_l.commentatorsCount_0 = 'Users have commented on you more than 1 time';
-_l.commentatorsCount_1 = 'Users have commented on you more than 3 times';
-_l.commentatorsCount_2 = 'Users have commented on you more than 7 times';
+_l.commentatorsCount = function(limit){
+    return `Users have commented on you more than ${limit + (limit === 1 ? ' time' : ' times')}`;
+};
 _l.from = 'Period: ';
 _l.to = 'to';
 _l.empty = 'Information not found';
@@ -599,8 +599,8 @@ _l.e13093 = "Please choose donation way"
 _l.e13094 = "Something went wrong. Please reload page and try again (error: 0001)"
 _l.e13095 = "Thank you for supporting our work for freedom. We will make sure every penny counts."
 _l.e13096 = "Please fill amount of donation"
-_l.e130961 = "How much do you want to send?"
-_l.e130962 = "Available balance:"
+_l.e130961 = "How much do you want to donate?"
+_l.e130962 = "Available balance"
 
 _l.e13097 = "Something went wrong. Please reload page and try again (error: 0002)"
 _l.e13098 = "Add link to external site or resource"
@@ -671,6 +671,7 @@ _l.e13132 = "rated"
 _l.e13133 = "Share"
 _l.e13134 = "There aren't any results for this search string"
 _l.e13135 = "User haven't private key"
+_l.discussed = "Most Discussed"
 _l.e13136 = "All Posts"
 _l.e13137 = "My Subscriptions" // This is the equivalent of a ‘News feed’. Don’t change the word ‘Pocket’ however, it’s a feature of "+appname+".
 _l.e13138 = "Top posts"
@@ -717,7 +718,7 @@ _l.reposted = "Repost"
 _l.e13160 = "Hello Pocketeers!"
 
 _l.e13161 = "Add tags for your post"
-_l.e13162 = "You can enter a maximum of 5 tags"
+_l.e13162 = "You can enter a maximum of 15 tags or 2 categories"
 _l.e13163 = "There are no changes in the post"
 _l.e13164 = "Please add a few words to tell Pocketpeople about your link. What is it about? Why is it important? What is your opinion?"
 _l.e13165 = "Your link to video is invalid. Please load valid video URL."
@@ -1940,6 +1941,8 @@ _l.liftUpThePost = 'Lift up the post';
 
 _l.buypeertopeer = 'Buy Peer-to-Peer'
 
+_l.commentsOrder = 'Default sorting of comments';
+_l.commentsOrderPlaceholder = 'Choose sorting';
 
 _l.comments_interesting = 'Interesting at first'
 _l.comments_timeup = 'New first'
@@ -2284,3 +2287,64 @@ _l.androidPopupDisagree = "Not now"
 _l.desktopPopupTitle = "Get uncensored information in Bastyon desktop app"
 _l.desktopPopupAgree = "Download the app"
 _l.desktopPopupDisagree = "Not now"
+
+
+_l.recommended = 'Recommended'
+
+_l.removeaccount = 'Remove Account'
+_l.removeAccountQuestion = 'Are you sure you want to permanently delete your account? This action cannot be undone.'
+_l.removeAccountYes = 'Yes, remove account'
+
+_l.removeAccount_prepare = 'Preparing'
+
+_l.removeAccount_removePeertube = 'Deleting data from video servers'
+_l.removeAccount_removeMatrix = 'Deleting data from the chat server'
+_l.removeAccount_removeBastyon = 'Removing an account from the blockchain'
+_l.removeAccount_finish = 'Success'
+_l.removeAccount_success = 'Deleting your account was successful. Within 10 minutes, the procedure should be completed completely.'
+
+
+_l.removeAccount_notprepared = 'Account not found on the blockchain, may need to wait a while'
+_l.removeAccount_balance = 'A situation has occurred in which it is impossible to delete an account. In order to perform an action, you must have a minimum balance of PKOIN'
+
+
+_l.removeAccount_undefinedError = 'An unexpected error occurred while deleting your account, please try restarting the app and performing the action again'
+
+_l.deletedAccount_temp = "Account is in the process of being deleted"
+_l.deletedAccount_deleted = "Account deleted"
+
+_l.utipdeleted = "Your Account Deleted. You can use only wallet"
+_l.applydonate = "Apply"
+
+_l.imagegallery = "Image gallery"
+_l.useselected = "Use selected"
+_l.pkoindisabledisclaimer = 'In the application, you can only receive money for a crypto wallet, but you will not be able to send it'
+
+_l.txbase_total = _l.txbase_unspents = _l.txbase_err_money = 'Insufficient funds for the transfer, taking into account the commission'
+
+
+_l.recommendations_menu_caption = 'Recommendation Information'
+
+_l.recommendations_caption_tags = 'Tag based recommendation'
+_l.recommendations_caption_users = 'Recommendations based on information about interactions with other users'
+
+
+_l.recommendations_caption_disclamer = "Statistics are stored only on your device, are not sent to the Bastyon servers, are not transferred to third parties"
+
+_l.recommendations_tags_table_caption = 'Tag, probability, points, last interaction date'
+_l.recommendations_tags_completed_caption = 'Requested recommendations'
+
+_l.recommendations_tags_anotherShares = 'Other publications recommended by these tags'
+
+_l.profanity_tag = 'profanity'
+_l.addAccessToLibrary = 'Grant access to the gallery'
+_l.cameranotavailable = 'Camera not available'
+
+_l.rtip4 = 'This key is your password! Do not lose it.'
+
+_l.removecategory = 'Remove'
+_l.removecategoryQestion = 'Do you really want to remove this category?'
+
+
+_l.searchbytext = "Search by text:"
+_l.searchbytags = "Search by tags:"

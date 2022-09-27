@@ -24,7 +24,7 @@ var categories = (function(){
 			},
 			addcategory : function(_category){
 
-				var hasc = _category ? true : false
+				var editing = _category ? true : false
 
 				if(!_category){
 					_category = {
@@ -39,6 +39,42 @@ var categories = (function(){
 					tags : _.clone(_category.tags),
 					id : _category.id
 				}
+
+				self.nav.api.load({
+					open : true,
+					href : 'addcategory',
+					inWnd : true,
+
+					essenseData : {
+						category, editing,
+
+						save : function(category){
+							var error = self.app.platform.sdk.categories.add(category)
+
+							if (error){
+
+								return error
+							}
+
+							if(!editing) self.app.platform.sdk.categories.select(category.id)
+
+							make()
+						},
+
+						remove : function(category){
+							self.app.platform.sdk.categories.remove(category.id)
+							make()
+						}
+					}
+					
+					/*{
+						info : share._recommendationInfo,
+						type : share.recommendationKey,
+						share : share.txid
+					}*/
+				})
+
+				return
 
 				self.fastTemplate('addcategory', function(rendered){
 
@@ -476,6 +512,10 @@ var categories = (function(){
 
 		return {
 
+			update : function(){
+				make()
+			},
+
 			getdata : function(clbk, p){
 				essenseData = p.settings.essenseData || {};
 
@@ -537,7 +577,9 @@ var categories = (function(){
 
 		_.each(essenses, function(essense){
 
-			essense.destroy();
+			window.requestAnimationFrame(() => {
+				essense.destroy();
+			})
 
 		})
 

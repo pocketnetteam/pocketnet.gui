@@ -267,6 +267,7 @@ var addaccount = (function(){
 					var nextId = currentInputId + 1
 					if(e.target.value && e.target.selectionStart !== e.target.value.length){
 						return
+
 					}
 					if(autocompleteWord){
 						activeMnemonicInput.val(autocompleteWord)
@@ -554,7 +555,10 @@ var addaccount = (function(){
 
 	self.stop = function(){
 		_.each(essenses, function(essense){
-			essense.destroy();
+
+			window.requestAnimationFrame(() => {
+				essense.destroy();
+			})
 
 		})
 

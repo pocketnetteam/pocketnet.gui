@@ -5,11 +5,11 @@
 <div class="metric-wrapper">
   <% if(fields && !loading){ %>
   <div class="wrapper">
-    <% _.each(fields, function(field,id){ %>
+    <% _.each(fields, function(field){ %>
     <div class="wrap">
       <div class="commentators">
                 <span>
-                  <%= e(`commentatorsCount_${id}`) %>
+                  <%= e(`commentatorsCount`, field.limit) %>
               </span>
         <div class="count">
           <%= field.commentators %>

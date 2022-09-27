@@ -1146,7 +1146,17 @@ Share = function(lang){
 			else{
 				if(_.isArray(tags)){
 
-					if(tags.length > 5){
+					if(typeof app != 'undefined'){
+
+						var bycategories = app.platform.sdk.categories.fromTags(tags, self.language.v)
+
+						if (bycategories.categories.length > 2){
+							return false
+						}
+
+					}
+
+					if(tags.length > 15){
 						return false;
 					}
 
@@ -1163,13 +1173,28 @@ Share = function(lang){
 
 						tags = clearTagString(tags)
 
-					if(this.v.length > 4){
+					var tta = _.uniq(_.clone(this.v).concat(tags))
+
+					if(typeof app != 'undefined'){
+						var bycategories = app.platform.sdk.categories.fromTags(tta, self.language.v)
+
+						if (bycategories.categories.length > 2){
+							return false
+						}
+					}
+
+					
+
+
+					if(tta.length > 15){
 						return false;
 					}
 
-					removeEqual(this.v, tags)
+					this.v = tta
 
-					this.v.push(tags)
+					//removeEqual(this.v, tags)
+
+					//this.v.push(tags)
 				}
 			}
 
@@ -1829,9 +1854,10 @@ UserInfo = function(){
 
 		var hash = self.name.v.toLowerCase().replace(/[^a-z]/g,'')
 
-
-		if (hash.indexOf('pocketnet') > -1) return 'pocketnet'
-		if (hash.indexOf('bastyon') > -1) return 'bastyon'
+		if(!app.platform.whiteList.includes(app.platform.sdk.user.storage.me.address)) {
+			if (hash.indexOf('pocketnet') > -1) return 'pocketnet'
+			if (hash.indexOf('bastyon') > -1) return 'bastyon'
+		}
 		
 		return false
 
@@ -1904,6 +1930,32 @@ UserInfo = function(){
 	return self;
 }
 
+DeleteAccount = function(){
+	var self = this;
+	
+	self.validation = function(){
+		return false;
+	}
+
+	self.serialize = function(){
+		return ''
+	}
+
+	self.export = function(alias){
+		return {}
+	}
+
+	self.import = function(p){
+
+	}
+
+	self.type = 'accDel'
+
+	self.typeop = function(){
+        return self.type;
+	}
+}
+
 pUserInfo = function(){
 
 	var self = this;
@@ -1919,6 +1971,7 @@ pUserInfo = function(){
 	self.reputation = 0;
 	self.trial = true;
 	self.keys = []
+	self.deleted = false
 
 	self.subscribes = [];
 	self.subscribers = [];
@@ -1942,6 +1995,7 @@ pUserInfo = function(){
 		self.rc = v.rc || 0;
 		self.postcnt = v.postcnt || 0;
 		self.reputation = v.reputation || 0;
+		self.deleted = v.deleted || false
 
 		if (v.subscribes) self.subscribes = v.subscribes;
 		if (v.subscribers) self.subscribers = v.subscribers;
@@ -2056,20 +2110,25 @@ pUserInfo = function(){
 
 		self[key] || (self[key] = [])
 
-		self[key].push(obj)	
+		try{
+			self[key].push(obj)	
 
-		if (key === 'subscribers'){
+			if (key === 'subscribers'){
 
-			self['subscribers_count'] || (self['subscribers_count'] = 0);
-			self['subscribers_count']++;
+				self['subscribers_count'] || (self['subscribers_count'] = 0);
+				self['subscribers_count']++;
 
+			}
+
+			if (key === 'subscribes'){
+
+				self['subscribes_count'] || (self['subscribes_count'] = 0);
+				self['subscribes_count']++;
+				
+			}
 		}
-
-		if (key === 'subscribes'){
-
-			self['subscribes_count'] || (self['subscribes_count'] = 0);
-			self['subscribes_count']++;
-			
+		catch(e){
+			console.error(e)
 		}
 
 	}
@@ -2101,6 +2160,7 @@ pUserInfo = function(){
 
 	return self;
 }
+
 
 pShare = function(){
 
@@ -2764,7 +2824,8 @@ kits = {
 		unsubscribe : Unsubscribe,
 		subscribe : Subscribe,
 		subscribePrivate : SubscribePrivate,
-		contentBoost : ContentBoost
+		contentBoost : ContentBoost,
+		deleteAccount : DeleteAccount
 	},
 
 	ini : {

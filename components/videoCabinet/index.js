@@ -1093,7 +1093,7 @@ var videoCabinet = (function () {
 									ext: ['png', 'jpeg', 'jpg', 'webp', 'jfif'],
 
 									dropZone: element.find('.editPreview'),
-
+									app : self.app,
 									multiple: false,
 
 									action: function (file, clbk) {
@@ -1251,13 +1251,20 @@ var videoCabinet = (function () {
 					},
 
 					_addtag(tag) {
-						if (tagArray.length < 5) {
-							removeEqual(tagArray, tag);
-							tagArray.push(tag);
-							return true;
+
+						var tta = _.uniq(_.clone(tagArray).concat([tag]))
+
+						var bycategories = self.app.platform.sdk.categories.fromTags(tta, self.language.v)
+
+						if (bycategories.categories.length > 2){
+							return false
 						}
 
-						return false;
+						if (tta.length > 15){return false}
+
+						tagArray = tta
+
+						return true;
 					},
 
 					addTags(tags) {
@@ -1478,7 +1485,7 @@ var videoCabinet = (function () {
 				el.searchInput = el.c.find('.videoSearchInput');
 				el.searchButton = el.c.find('.videoSearchButton');
 
-				el.bonusProgramReferContainer = el.c.find('.referContainer');
+				// el.bonusProgramReferContainer = el.c.find('.referContainer');
 				el.bonusProgramContainerViews = el.c.find('.leaderBoardContainerViews');
 				el.bonusProgramContainerStars = el.c.find(
 					'.leaderBoardContainerRatings',
@@ -1514,17 +1521,17 @@ var videoCabinet = (function () {
 						return Promise.resolve(null);
 					})
 					.then((r) => {
-						var addtext = ' / ' + (r ? r.histreferals : '&mdash;');
-
-						renders.bonusProgram(
-							{
-								parameterName: 'ReferralUsers',
-								value:
-									(deep(app, 'platform.sdk.user.storage.me.rc') || '0') +
-									addtext,
-							},
-							el.bonusProgramReferContainer,
-						);
+						// var addtext = ' / ' + (r ? r.histreferals : '&mdash;');
+						//
+						// renders.bonusProgram(
+						// 	{
+						// 		parameterName: 'ReferralUsers',
+						// 		value:
+						// 			(deep(app, 'platform.sdk.user.storage.me.rc') || '0') +
+						// 			addtext,
+						// 	},
+						// 	el.bonusProgramReferContainer,
+						// );
 					});
 
 				const cabinetLoadingStartTime = performance.now();
@@ -1611,7 +1618,9 @@ var videoCabinet = (function () {
 
 	self.stop = function () {
 		_.each(essenses, function (essense) {
-			essense.destroy();
+			window.requestAnimationFrame(() => {
+				essense.destroy();
+			})
 		});
 	};
 

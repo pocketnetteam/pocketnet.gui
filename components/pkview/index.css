@@ -97,12 +97,18 @@
 #pkview .key .number {
   border: 1px solid rgb(var(--neutral-grad-2));
 }
+#pkview .key .subsubcaption {
+  text-align: center;
+  padding-top: 2em;
+  font-size: 0.9em;
+  font-weight: 700;
+}
 #pkview .key .subcaption {
   font-size: 1em;
   color: rgb(var(--neutral-grad-4));
   text-align: center;
   font-weight: 400;
-  padding-top: 2em;
+  padding-top: 1em;
 }
 #pkview .key .subcaption .bad {
   font-weight: 700;

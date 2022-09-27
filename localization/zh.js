@@ -575,6 +575,8 @@ _l.e13135 = "用戶沒有私鑰"
 _l.e13136 = "所有帖子"
 _l.e13137 = "你的口袋"
 _l.e13138 = "热门帖子"
+_l.discussed = "讨论最多"
+_l["Most Discussed Over"] = "期间"
 _l.e13139 = "在口袋网上搜索"
 _l.e13140 = "搜索"
 _l.notifications = "消息提醒"
@@ -610,7 +612,7 @@ _l.repost = "转发"
 _l.e13160 = "你好口袋小子!"
 
 _l.e13161 = "为你的帖子添加标签"
-_l.e13162 = "标签不超过5个"
+_l.e13162 = "标签不超过15个"
 _l.e13163 = "该帖子没有任何修改"
 _l.e13164 = "请用几句话向口袋网民们介绍你的链接。内容是什么？有何重要性？你的观点是？"
 _l.e13165 = '视频链接无效，请使用有效的视频链接。'
@@ -1021,3 +1023,6 @@ _l.androidPopupDisagree = "不是现在"
 _l.desktopPopupTitle = "在 Bastyon 桌面应用程序中获取未经审查的信息"
 _l.desktopPopupAgree = "下载应用程序"
 _l.desktopPopupDisagree = "不是现在"
+
+
+_l.profanity_tag = '褻瀆'

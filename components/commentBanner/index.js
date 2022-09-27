@@ -104,7 +104,9 @@ const commentBanner = (function() {
 
 	self.stop = function() {
 		essenses.forEach((essense) => {
-			essense.destroy();
+			window.requestAnimationFrame(() => {
+				essense.destroy();
+			})
 		});
 	};
 

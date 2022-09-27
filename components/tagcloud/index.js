@@ -214,7 +214,7 @@ var tagcloud = (function(){
 			
 			self.app.platform.sdk.tags.cloud(function(tags, error){
 
-				tags = self.app.platform.sdk.tags.filterEx(tags)
+				tags = self.app.platform.sdk.tags.filterEx(self.app.platform.sdk.tags.filterCats(tags))
 
 				if (clbk)
 					clbk(tags, error)
@@ -241,6 +241,10 @@ var tagcloud = (function(){
 		}
 
 		return {
+
+			update : function(){
+				make()
+			},
 
 			getdata : function(clbk, p){
 				essenseData = p.settings.essenseData || {};
@@ -294,7 +298,9 @@ var tagcloud = (function(){
 
 		_.each(essenses, function(essense){
 
-			essense.destroy();
+			window.requestAnimationFrame(() => {
+				essense.destroy();
+			})
 
 		})
 

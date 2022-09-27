@@ -227,19 +227,34 @@ nModule = function(){
 
 				}
 
-				if(typeof p.el == 'function') p.el = p.el();
+				var c = function(){
+					if(typeof p.el == 'function') p.el = p.el();
 			
-				if(!inserted)
-				{
-					if (p.el) {
-						self.insertTemplate(p, html);
+					if(!inserted)
+					{
+						if (p.el) {
+							self.insertTemplate(p, html);
+						}
+					}
+
+					if(!p.animation)
+					{
+						completeClbk(p);
 					}
 				}
 
-				if(!p.animation)
-				{
-					completeClbk(p);
+				//c()
+				
+				if(p.insertimmediately){
+					c()
 				}
+				else{
+					window.requestAnimationFrame(() => {
+						c()
+					})
+				}
+
+				
 
 			} ,p)
 
