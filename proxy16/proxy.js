@@ -2243,7 +2243,8 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					
 					captcha = hexCaptcha({
 						text: {
-							chars: 'ABCDEFGHJKMNPQRSTUVWXZ23456789'
+							chars: 'ABCDEFGHJKMNPRSTUVWXZ23456789',
+							font : 'black 22px Monospace'
 						}
 					});
 					captcha.id = f.makeid();
