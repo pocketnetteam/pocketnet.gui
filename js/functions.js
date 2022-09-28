@@ -11950,3 +11950,216 @@ isDeviceMobile = function() {
 	return check;
 };
 
+
+resizeGif = function (app) {
+    var self = this
+    var workerScript = null
+
+    var transparentThreshold = 127
+    var background = null
+    var speedMultiplier = 1
+
+	var relations = {}
+
+    var loadworker = async function () {
+        if (workerScript) {
+            return workerScript;
+        }
+
+        const { data } = await axios.get(
+            "https://cdnjs.cloudflare.com/ajax/libs/gif.js/0.2.0/gif.worker.js",
+            {
+                responseType: "blob"
+            }
+        );
+
+        const content = await data.text();
+
+        const blob = new Blob([content], {
+            type: "application/javascript"
+        });
+
+        workerScript = URL.createObjectURL(blob);
+
+        return workerScript;
+    }
+
+    var loadlib = function () {
+
+		return new Promise((resolve, reject) => {
+			var jsRelations = [
+				{src : 'js/vendor/gif.js',			   f : 'js'},
+				{src : 'js/vendor/gif-frames.min.js',			   f : 'js'},
+			]
+	
+			importScripts(jsRelations, relations, function(){
+	
+				resolve();
+	
+			}, null, null, app);
+		})
+
+    }
+
+    var fixEdgeSmoothing = function (image, options = {}) {
+        const { background = null, transparentThreshold = 127 } = options;
+
+        const canvas = document.createElement("canvas");
+        canvas.width = image.width;
+        canvas.height = image.height;
+        const ctx = canvas.getContext("2d");
+
+        if (background) {
+            ctx.fillStyle = background;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(image, 0, 0);
+        } else {
+            const data = image
+                .getContext("2d")
+                .getImageData(0, 0, canvas.width, canvas.height)
+                .data.map((data, index, dataArr) => {
+                    if (index % 4 === 3) {
+                        if (_.some(dataArr.slice(index - 3, index), data => data !== 0)) {
+                            return data <= transparentThreshold ? 0 : 255;
+                        }
+                    }
+
+                    return data;
+                });
+
+            ctx.putImageData(new ImageData(data, canvas.width, canvas.height), 0, 0);
+        }
+
+        return canvas;
+    }
+
+    var resizeFrame = function (frame, width, height) {
+        /*if (
+            typeof window.createImageBitmap !== "undefined" &&
+            typeof window.chrome !== "undefined"
+        ) {
+            return imageBitmapResize(frame, width, height);
+        }*/
+
+		console.log('frame', frame)
+
+        return canvasResize(frame, width, height);
+    }
+
+    var imageBitmapResize = async function (src, width, height) {
+        const canvas = newCanvas(width, height);
+
+        return createImageBitmap(src, 0, 0, src.width, src.height, {
+            premultiplyAlpha: "none",
+            resizeWidth: width,
+            resizeHeight: height,
+            resizeQuality: "high"
+        }).then(img => {
+            canvas.getContext("2d").drawImage(img, 0, 0);
+
+            return canvas;
+        });
+    }
+
+    var canvasResize = function (src, width, height) {
+        const canvas = newCanvas(width, height);
+
+		var w = src.width, h = src.height, s = w
+
+		if(h < w) s = h
+
+
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(src, (w - s) / 2, (h - s) / 2, s, s, 0, 0, width, height);
+
+        return Promise.resolve(canvas);
+    }
+
+    function newCanvas(width, height) {
+        if (typeof OffscreenCanvas !== "undefined") {
+            return new OffscreenCanvas(width, height);
+        }
+
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+
+        return canvas;
+    }
+
+    var getFrames = async function (url) {
+
+        const frames = await gifFrames({
+            url,
+            frames: "all",
+            outputType: "canvas"
+        });
+
+        return frames.map(frame => ({
+            image: frame.getImage(),
+            delay: frame.frameInfo.delay
+        }));
+    }
+
+    self.prepare = function () {
+
+        return Promise.all([loadlib(), loadworker()])
+
+    }
+
+    self.resize = async function (base64, {width, height}) {
+        if (typeof gifFrames == 'undefined') throw new Error('getFrames')
+        if (typeof GIF == 'undefined') throw new Error('GIF')
+
+
+        const frames = await getFrames(base64);
+        const resizedFrames = await Promise.all(
+            frames.map(({ image }) => resizeFrame(image, width, height))
+        ).then(images =>
+            images.map((image, index) => ({
+                image,
+                delay: frames[index].delay * 10
+            }))
+        );
+
+
+        const blob = await renderGif(resizedFrames, {
+            transparentThreshold,
+            speedMultiplier
+        });
+
+		return getBase64(blob)
+    }
+
+    var renderGif = async function (frames, options = {}) {
+        const { speedMultiplier = 1, background = null } = options;
+
+        const gif = new GIF({
+            workers: 2,
+            workerScript,
+            quality: 1,
+            transparent: background ? null : "rgba(0, 0, 0, 0)"
+        });
+
+        frames.forEach(({ image, delay }) =>
+            gif.addFrame(fixEdgeSmoothing(image, options), {
+                delay: delay / speedMultiplier
+            })
+        );
+
+        return new Promise((resolve, reject) => {
+            gif.on("finished", resolve);
+
+			console.log('frames', frames)
+
+            try {
+                gif.render();
+            } catch (e) {
+                reject(e);
+            }
+        });
+    }
+
+    return self
+}
+
