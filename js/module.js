@@ -22,6 +22,7 @@ nModule = function(){
 
 	}
 
+
 	self.inserts = {
 		wnd : {
 			obj : wnd,
@@ -89,7 +90,7 @@ nModule = function(){
 		}
 	}
 
-
+	
 
 	self.shell = function(p, clbk, fromModule){
 
@@ -104,7 +105,7 @@ nModule = function(){
 			if (p.el && !p.ignorelinksandimages)
 			{
 				self.nav.api.links(null, p.el, p.additionalActions || null);
-				bgImages(p.el, p.bgImages)
+				bgImagesCl(p.el, p.bgImages)
 			}
 
 			if (typeof clbk  === 'function'){
@@ -172,7 +173,7 @@ nModule = function(){
 								if (p.destroy) {
 									r = p.destroy(key)
 
-									if(!r)
+									if(!r && p.clearessense)
 										p.clearessense()
 								}
 							}
@@ -181,7 +182,8 @@ nModule = function(){
 							if (!r && p.inWnd){
 								delete self.app.nav.wnds[p.id]
 
-								p.clearessense()
+								if (p.clearessense)
+									p.clearessense()
 							}
 
 							//p = null
@@ -225,19 +227,34 @@ nModule = function(){
 
 				}
 
-				if(typeof p.el == 'function') p.el = p.el();
+				var c = function(){
+					if(typeof p.el == 'function') p.el = p.el();
 			
-				if(!inserted)
-				{
-					if (p.el) {
-						self.insertTemplate(p, html);
+					if(!inserted)
+					{
+						if (p.el) {
+							self.insertTemplate(p, html);
+						}
+					}
+
+					if(!p.animation)
+					{
+						completeClbk(p);
 					}
 				}
 
-				if(!p.animation)
-				{
-					completeClbk(p);
+				//c()
+				
+				if(p.insertimmediately){
+					c()
 				}
+				else{
+					window.requestAnimationFrame(() => {
+						c()
+					})
+				}
+
+				
 
 			} ,p)
 
@@ -277,7 +294,6 @@ nModule = function(){
 				p.rendered = template(p.data);
 			}
 			catch(e){
-				console.log(p)
 				console.error(e)
 				p.rendered = ''
 			}
@@ -286,8 +302,13 @@ nModule = function(){
 			if (p.clear)
 				p.rendered = "";
 
-			if (clbk)
+
+			
+
+			if (clbk){
 				clbk(p.rendered)
+			}
+				
 
 		})
 	}
@@ -364,7 +385,7 @@ nModule = function(){
 			var vs = '131'
 
 			if (typeof numfromreleasestring != 'undefined'){
-				vs = numfromreleasestring(window.packageversion)
+				vs = numfromreleasestring(window.packageversion) + '_' + (window.versionsuffix || "0")
 			}
 
 			url += '/templates/' + p.name + '.html?v=' + vs;
@@ -382,7 +403,6 @@ nModule = function(){
 					}
 
 					catch(e){
-						console.log('p.name', p.name, url)
 						console.error(e)
 					}
 
@@ -497,7 +517,21 @@ nModule = function(){
 			self.user.isState(function(state){	
 				
 				
-				settings.getdata(function(data){
+				settings.getdata(function(data, err){
+
+					if(err){
+
+						topPreloader(100);
+
+						if(globalpreloaderTimer){
+
+							globalpreloader(false)
+
+							clearTimeout(globalpreloaderTimer)
+						}
+
+						return
+					}
 
 					topPreloader(45);
 

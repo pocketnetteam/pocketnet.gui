@@ -138,10 +138,7 @@ var lastcomments = (function(){
 			self.app.platform.ws.messages['new block'].clbks['lastcomments'] = function(data, p){
 				
 				if(self.app.platform.focus){
-					if(!rand(0, 5)){
-						make()
-					}
-					
+					make()
 				}
 
 				//multimake()
@@ -234,7 +231,9 @@ var lastcomments = (function(){
 
 		_.each(essenses, function(essense){
 
-			essense.destroy();
+			window.requestAnimationFrame(() => {
+				essense.destroy();
+			})
 
 		})
 

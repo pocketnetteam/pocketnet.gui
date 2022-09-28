@@ -67,6 +67,17 @@ var popup = (function(){
 			application: {
 
 				if : function(){
+
+					var d = localStorage['popup_showed_' + key]
+
+					if (d){
+
+						if((new Date(d)).addDays(10) > new Date()){
+							return false
+						}
+						
+					}
+
 					return !self.app.mobileview && (typeof _Electron == 'undefined' || !_Electron)
 				},
 
@@ -74,6 +85,8 @@ var popup = (function(){
 				template : "application",
 
 				clbk : function(_el){
+
+					localStorage['popup_showed_' + key] = new Date()
 				
 					_el.find('.gotoapplications').on('click', function(){
 
@@ -91,8 +104,6 @@ var popup = (function(){
 						}
 
 						localStorage['popup_' + key] = true
-
-						
 
 					})
 				}
@@ -164,7 +175,7 @@ var popup = (function(){
 
 
 				if(!key || !popups[key]  || popups[key].dontshow ||  (popups[key].if && !popups[key].if()) ) {
-
+					clbk(null, true);
 					return;
 				}
 
@@ -249,7 +260,9 @@ var popup = (function(){
 
 		_.each(essenses, function(essense){
 
-			essense.destroy();
+			window.requestAnimationFrame(() => {
+				essense.destroy();
+			})
 
 		})
 

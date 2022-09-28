@@ -46,7 +46,7 @@ var authorization = (function(){
 
 				if(v){
 
-					/*dialog({
+					/*new dialog({
 						html : self.app.localization.e('staysafe'),
 
 						btn1text : self.app.localization.e('dyes'),
@@ -226,7 +226,7 @@ var authorization = (function(){
 				ext : ['txt', 'png', 'jpeg', 'jpg'],
 
 				notexif : true,
-
+				app : self.app,
 				dropZone : el.c,
 
 				action : function(file, clbk){
@@ -515,7 +515,9 @@ var authorization = (function(){
 
 		_.each(essenses, function(essense){
 
-			essense.destroy();
+			window.requestAnimationFrame(() => {
+				essense.destroy();
+			})
 
 		})
 

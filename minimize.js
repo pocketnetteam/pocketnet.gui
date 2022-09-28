@@ -11,11 +11,12 @@ var ncp = require('ncp').ncp;
 const _path = require('path');
 ncp.limit = 16;
 
+var minifyHtml = require('html-minifier').minify;
 
 var args = {
 	test : false,
 	prodaction : true,
-	vendor : 89,
+	vendor : 90,
     path : '/',
     makewebnode: false,
 	project : "Pocketnet",
@@ -44,6 +45,31 @@ _.each(argcli, function(a){
 	}
 	
 })
+
+var addzeros = function(v){
+    v = v.toString()
+
+    var zs = 5 - v.length
+
+    for(var i = 0; i < zs; i++){
+        v = '0' + v
+    }
+
+    return v
+}
+
+var numfromreleasestring = function(v){
+
+    var vss = v.split('.')
+
+    vss[2] = addzeros(vss[2])
+
+    v = vss.join('.').replace(/[^0-9]/g, '')
+
+    var vs = Number(v.substr(0, 1) + '.' + v.substr(1))
+
+    return vs
+}
 
 var mapJsPath = './js/_map.js';
 
@@ -149,7 +175,35 @@ fs.exists(mapJsPath, function (exists) {
 
 		var cordova = {
 			path : './cordova/www',
-			copy : ['chat', 'components', 'css', 'images', 'img', 'js', 'localization', 'peertube', 'res', 'sounds', 'browserconfig.xml', 'crossdomain.xml', 'favicon.svg', 'indexcordova.html']
+			filter : function(component, name){
+				if(name.indexOf('.map') > -1) return false
+
+				if(component == 'peertube'){
+
+					if(name.indexOf('peertube') > -1) return true
+
+					if(name.indexOf('.html') > -1 || name.indexOf('.txt') > -1) return false
+
+					if(name.indexOf('.js') > -1 || name.indexOf('.css') > -1) return true
+
+					return false
+				}
+
+				if(component == 'chat'){
+					if(name.indexOf('.js') > -1 && name.indexOf('.min') == -1) return false
+
+					return true
+				}
+
+				if(component == 'css'){
+					if(name.indexOf('.less') > -1) return false
+
+					return true
+				}
+
+				return true
+			},
+			copy : ['chat', 'components', 'css', 'images', 'img', 'js', 'localization', 'peertube', 'sounds', 'browserconfig.xml', 'crossdomain.xml', 'favicon.svg', 'indexcordova.html']
 		}
 
 		var cordovaconfig = {
@@ -159,7 +213,7 @@ fs.exists(mapJsPath, function (exists) {
 
 		var cordovaiosfast = {
 			path : './cordova/platforms/ios/www',
-			copy : ['chat', 'components', 'css', 'images', 'img', 'js', 'localization', 'peertube', 'res', 'sounds', 'browserconfig.xml', 'crossdomain.xml', 'favicon.svg', 'indexcordova.html']
+			copy : ['chat', 'components', 'css', 'images', 'img', 'js', 'localization', 'peertube', 'sounds', 'browserconfig.xml', 'crossdomain.xml', 'favicon.svg', 'indexcordova.html']
 		}
 
 
@@ -594,7 +648,12 @@ fs.exists(mapJsPath, function (exists) {
 
 									if(!scripted[i.c]) scripted[i.c] = {}
 
-									scripted[i.c][i.n] = data.toString()
+									scripted[i.c][i.n] = minifyHtml(data.toString(), {
+										collapseWhitespace : true,
+										removeComments : true
+									})
+
+									//var uglified = htmlUglify.process(htmlString);
 
 									p.success();
 								});
@@ -633,7 +692,6 @@ fs.exists(mapJsPath, function (exists) {
 
 				fs.readdir(path, function(err, items) {
 
-					console.log('items', items)
 
 					lazyEach({
 						array : items,
@@ -641,7 +699,6 @@ fs.exists(mapJsPath, function (exists) {
 	
 							fs.readdir(path + p.item + '/templates/', function(err, items2) {
 
-								console.log('items2', items2)
 
 								_.each(items2, function(i){
 									__templates.push({
@@ -658,8 +715,6 @@ fs.exists(mapJsPath, function (exists) {
 						
 						all : {
 							success : function(){
-
-								console.log('__templates', __templates)
 
 								__joinTemplates(__templates, clbk)
 								
@@ -815,20 +870,21 @@ fs.exists(mapJsPath, function (exists) {
 							}
 
 							JSENV += '<script>window.packageversion = "' + package.version + '";</script>';
+							JSENV += '<script>window.versionsuffix = "' + package.versionsuffix + '";</script>';
 
-							
+							vs = numfromreleasestring(package.version) + '_' + (package.versionsuffix || "0")
 	
 							if(args.prodaction)
 							{
 
 								//JS += '<script type="text/javascript">'+joinfirst.data+'</script>';
-								JS += '<script join src="js/joinfirst.min.js?v='+rand(1, 999999999999)+'"></script>';
-								JSPOST += '<script async join src="js/join.min.js?v='+rand(1, 999999999999)+'"></script>';
-								JSPOST += '<script async join src="js/joinlast.min.js?v='+rand(1, 999999999999)+'"></script>';
+								JS += '<script join src="js/joinfirst.min.js?v='+vs+'"></script>';
+								JSPOST += '<script async join src="js/join.min.js?v='+vs+'"></script>';
+								JSPOST += '<script async join src="js/joinlast.min.js?v='+vs+'"></script>';
 								VE = '<script async join src="js/vendor.min.js?v='+args.vendor+'"></script>';
-								CSS = '<link rel="stylesheet" href="css/master.css?v='+rand(1, 999999999999)+'">';
+								CSS = '<link rel="stylesheet" href="css/master.css?v='+vs+'">';
 	
-								index = index.replace(new RegExp(/\?v=([0-9]*)/g), '?v=' + rand(1, 999999999999));
+								index = index.replace(new RegExp(/\?v=([0-9]*)/g), '?v=' + vs);
 							}
 							else
 							{
@@ -895,7 +951,7 @@ fs.exists(mapJsPath, function (exists) {
 							index = index.replace("__CSS__" , CSS);
 							index = index.replace("__JSPOST__" , JSPOST);
 							index = index.replace("__CACHED-FILES__", CACHED_FILES);
-							index = index.replace("__PACKAGE-VERSION__", package.version);
+							index = index.replace("__PACKAGE-VERSION__", package.version + "_" + package.versionsuffix);
 							index = index.replace("__PACKAGE-CORDOVAVERSIONCODE__", package.cordovaversioncode);
 							index = index.replace("__PACKAGE-CORDOVAVERSION__", package.cordovaversion);
 
@@ -1002,6 +1058,8 @@ var helpers = {
 
 var copycontent = function(options, clbk, nac) {
 
+	if(!options) options = {}
+
 	var ac = function(){
 		lazyEach({
 			sync : true,
@@ -1009,7 +1067,16 @@ var copycontent = function(options, clbk, nac) {
 			action : function(p){
 				ncp(p.item, options.path + '/' + p.item, {
 					filter : function(name){
+
+						console.log('p.item', p.item, name)
+
+						if(options.filter){
+							console.log('filter', options.filter(p.item, name))
+							return options.filter(p.item, name)
+						}
+						else
 						return name.indexOf('.map') == -1
+
 					},
 				}, function (err) {
 					if (err) {

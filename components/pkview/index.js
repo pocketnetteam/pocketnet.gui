@@ -246,8 +246,9 @@ var pkview = (function(){
 
 			if (mnemonic){
 
+
 				self.app.platform.cryptography.api.aeswc.decryption(mnemonic, self.app.options.fingerPrint, {}, function(m){
-				
+
 					if(m){						
 
 						if(!bitcoin.bip39.validateMnemonic(m)){
@@ -350,7 +351,9 @@ var pkview = (function(){
 
 		_.each(essenses, function(essense){
 
-			essense.destroy();
+			window.requestAnimationFrame(() => {
+				essense.destroy();
+			})
 
 		})
 

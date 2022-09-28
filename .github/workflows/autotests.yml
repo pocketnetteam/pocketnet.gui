@@ -1,11 +1,13 @@
 name: Tests
 
 on:
-  push:
-    tags: v*.*.*
+  workflow_dispatch:
+  #push:
+  #  tags: v*.*.*
 
 jobs:
   build:
+    if: github.event.base_ref == 'refs/heads/master'
     runs-on: autotest
     steps:
       - name: Start

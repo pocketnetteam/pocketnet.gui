@@ -22,6 +22,11 @@
 		font-size: 1em;
 	}
 
+	.peertube-server-hint{
+		right: 0;
+		bottom: 0;
+	}
+
 	.sLoader{
 		display: none;
 		position: absolute;
@@ -47,6 +52,10 @@
 		#taginput{
 			margin-top : @rhythm;
 
+			.mobsearch{
+				cursor: pointer;
+				padding : 3 * @rhythm 2 * @rhythm;
+			}
 
 			.inputWrapper{
 				background: rgb(var(--background-main));
@@ -91,7 +100,7 @@
 
 	&.minimized{
 		padding : 0;
-		min-height: 0!important;
+		min-height: 60px!important;
 		.attachements{
 			display: none;
 
@@ -832,7 +841,7 @@
 			vertical-align: middle;
 
 			&.postWrapper{
-				width: 140px;
+				width: 280px;
 				padding-right : 0;
 				text-align: right;
 
@@ -951,6 +960,13 @@
 		font-weight: 100;
 		padding-top: @rhythm;
 	}
+}
+
+
+
+.topvideosWrapper .peertube-server-hint {
+	bottom: 0;
+	font-size: 0.6em;
 }
 
 .sharedate{
@@ -1079,6 +1095,7 @@
 
             .postlineWrapper{
                 position: absolute;
+				padding-left: 2 * @rhythm;
 				bottom : @rhythm;
 				background: rgb(var(--background-secondary-theme));
 			}
@@ -1262,9 +1279,17 @@ html.mobileview{
 			margin-right: 0;
 		}
 
+		.cpt{
+			
+			input{
+				background: rgb(var(--background-total-theme));
+			}
+		}
+
 		.tgsWrapperMain{
 	
 			#taginput{
+				
 				.inputWrapper{
 					background: rgb(var(--background-total-theme));
 				}
@@ -1475,6 +1500,7 @@ html.mobileview{
 		.sLoader{
 			left: 0;
 			background: rgba(var(-background-secondary-theme), 0.9);
+			position: fixed;
 
 			.prwrapper{
 				position : absolute;
@@ -1533,7 +1559,6 @@ html.mobileview{
 					width: 100%;
 
 					&.tagsCont{
-						
 					}
 
 					&.tagsInputWrapper{
@@ -1556,12 +1581,6 @@ html.mobileview{
 				}
 			}
 
-			.tag{
-				margin-top : @rhythm;
-				margin-right: 0.5 * @rhythm;
-				margin-left: 0.5 * @rhythm;
-				margin-bottom : 0;
-			}
 		}
 
 		.imagesWrapper{
@@ -1761,7 +1780,7 @@ html.mobileview{
 		
 		.postlineWrapper{
 			margin : 0;
-			padding-left: 0;
+			padding-left: 0!important;
 			padding-right: 0;
 			position: static!important;
 		}

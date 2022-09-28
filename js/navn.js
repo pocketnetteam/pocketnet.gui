@@ -149,9 +149,11 @@ Nav = function(app)
 
 			var khref = href.split('?')[0];
 
+
 			var np = parameters(href, true)
 
-				href = khref + collectParameters(np, ['back', 'ref', 'r']);
+				href = khref + collectParameters(np, ['back', 'ref']);
+
 
 			var wb = false;
 
@@ -170,8 +172,7 @@ Nav = function(app)
 
 			else{	
 
-				if (khref == indexpage){
-
+				if (khref == indexpage && !np.video && !np.read && !np.r){
 					//// 
 					backManager.clearAll()
 				}
@@ -179,9 +180,7 @@ Nav = function(app)
 
 					if(deep(backManager, 'chain.0.href') == href) return
 
-
-					var needadd = this.mapSearch(khref, firstEl(backManager.chain));
-
+					var needadd = this.mapSearch(khref, firstEl(backManager.chain)) || (np.video || np.read || np.r);
 	
 					if (needadd){
 	
@@ -360,9 +359,6 @@ Nav = function(app)
 
 				historyManager.addParameters(pa)
 
-
-				console.log("ADD TO WNDS")
-
 				self.wnds[p.id] = p
 			
 
@@ -371,6 +367,7 @@ Nav = function(app)
 
 			if (options.history === true && !_Node && !_OpenApi)
 			{	
+
 
 				if(!p.removefromback){
 					p.goback = backManager.add(href, p.lastScroll, p.back)
@@ -492,8 +489,6 @@ Nav = function(app)
 			_.each(self.wnds, function(pa, id){
 				if(!p['m' + id]){
 
-					console.log('pa', pa)
-
 					if (pa.independent) return
 
 					var c = deep(pa, 'module.closeContainer');
@@ -516,6 +511,7 @@ Nav = function(app)
 		
 		open : function(p){
 
+
 			if(!p) p = {};
 
 				p.clbk || (p.clbk = emptyFunction);
@@ -530,7 +526,6 @@ Nav = function(app)
 					if (current.module && current.module.parametersHandler && p.handler){
 						
 						run = false;
-
 						historyManager.add(p.completeHref, p);
 
 						current.completeHref = p.completeHref;
@@ -1500,7 +1495,7 @@ Nav = function(app)
 		}
 	}
 
-	self.init = function(p){
+	self.init = function(p, clbk){
 
 
 		if(!p) p = {};
@@ -1603,6 +1598,8 @@ Nav = function(app)
 
 				electronopen = true
 				
+
+				if(clbk) clbk()
 
 			});
 

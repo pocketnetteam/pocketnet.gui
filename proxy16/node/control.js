@@ -7,13 +7,44 @@ var f = require('../functions');
 const { clearTimeout } = require('timers');
 const { auth } = require('firebase-admin');
 
-var Control = function(settings) {
+var Control = function(settings, proxy) {
     if (!settings) settings = {};
 
     var isDevelopment = process.argv.find(function(el) { return el == '--development'; })
 
     var self = this;
-    var applications = new Applications(settings)
+    var applications = new Applications(settings, {
+        win32: {
+            bin: {
+                name: "_win_x64_daemon.bin",
+                url: 'https://api.github.com/repos/pocketnetapp/pocketnet.core/releases/latest',
+                page: 'https://github.com/pocketnetteam/pocketnet.core/releases/latest'
+            },
+            snapshot_latest: {
+                permanent: true,
+                name: "latest.tgz",
+                url: 'https://snapshot.pocketnet.app/latest.tgz'
+            },
+            bin_permanent: {
+                permanent: true,
+                name: "pocketcoind.exe",
+                url: 'https://snapshot.pocketnet.app/pocketcoind.exe'
+            },
+        },
+
+        linux: {
+            bin: {
+                name: "_linux_x64_daemon.bin",
+                url: 'https://api.github.com/repos/pocketnetapp/pocketnet.core/releases/latest',
+                page: 'https://github.com/pocketnetteam/pocketnet.core/releases/latest'
+            },
+            snapshot_latest: {
+                permanent: true,
+                name: "latest.tgz",
+                url: 'https://snapshot.pocketnet.app/latest.tgz'
+            }
+        }
+    }, proxy)
     
     var nodeStateTimer = null
     var nodeStateInterval = 15000
@@ -70,17 +101,6 @@ var Control = function(settings) {
             var binPath = Path.join( node.binPath, self.helpers.bin_name('pocketcoind'))
 
             return binPath
-        },
-
-        data_checkpoints_path : function(withFile = false) {
-            // TODO (brangr): add check test network
-            // if ('main')
-                return Path.join( node.dataPath, 'checkpoints', (withFile ? 'main.sqlite3' : '') );
-
-            // if ('test')
-            //     return Path.join( node.dataPath, 'checkpoints' );
-            
-            return '';
         },
 
         defaults : {
@@ -142,14 +162,6 @@ var Control = function(settings) {
                 fs.mkdirSync(node.dataPath, { recursive: true });
             }catch(e){
                 return Promise.reject('nodedatapath')
-            }
-        }
-
-        if(!fs.existsSync(self.helpers.data_checkpoints_path())){
-            try{
-                fs.mkdirSync(self.helpers.data_checkpoints_path(), { recursive: true });
-            }catch(e){
-                return Promise.reject('chkpPath')
             }
         }
 
@@ -454,17 +466,6 @@ var Control = function(settings) {
                 // return applications.downloadPermanent('bin_permanent', node.binPath, function(st) {
                 //     state.install.progress = st
                 //     state.install.title = `Installing binary files...`
-                // })
-
-            }).then(() => {
-                
-                state.install.progress = { percent: 1 }
-                state.install.title = 'Installing checkpoints database...'
-                return applications.install('checkpoint_main', self.helpers.data_checkpoints_path(true), false)
-
-                // return applications.downloadPermanent('checkpoint_main_permanent', self.helpers.data_checkpoints_path(false), function(st) {
-                //     state.install.progress = st
-                //     state.install.title = `Installing checkpoints database...`
                 // })
 
             }).then(() => {

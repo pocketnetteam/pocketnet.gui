@@ -1,12 +1,13 @@
 var kit = require('./kit.js');
 var f = require('./functions');
-var readline = require('readline'); 
+var readline = require('readline');
 
 //process.env.NODE_ENV = 'production'
 
 global.MIN_NODES_COUNT = 10
 global.WRITE_LOGS = true
 global.USE_TRUST_NODES_ONLY = false
+global.USE_PROXY_NODE = false
 
 var destroy = function(repeat){
 
@@ -43,7 +44,7 @@ var cli = {
         var action = inputs[0]
 
         var data = undefined;
-        
+
         try{
             data = JSON.parse(inputs[1] || "")
         }
@@ -56,7 +57,7 @@ var cli = {
 		if(!kaction || typeof kaction !== 'function') return Promise.reject('unknownAction')
 
         return kaction(data)
-        
+
     },
     waitcommand : function(){
         let rl = readline.createInterface({
@@ -64,9 +65,9 @@ var cli = {
             output: process.stdout,
             prompt: '>'
         });
-        
+
         rl.prompt();
-        
+
         rl.on('line', (input) => {
 
           input = input.toLowerCase();
@@ -104,7 +105,7 @@ kit.init({
     process.on('SIGTERM', () => {
         destroy()
     });
-    
+
     process.on('SIGINT', () => {
         destroy()
     });

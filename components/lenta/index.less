@@ -7,14 +7,32 @@
 		min-height: 100px;
 	}
 
-	.boostedlabel{
-		color : rgb(var(--color-good));
-	}
+	
 
 	/*i.boostedlabel{
 		width: 30px;
 		text-align: right;
 	}*/
+
+	.shareinlenta{
+		min-height: 400px;
+		opacity: 0;
+		.transition(0.3s);
+		.sharecnt{
+			display: none;
+		}
+		
+		
+
+		&.rendered{
+			opacity: 1;
+			min-height: 0;
+			.sharecnt{
+				display: block;
+			}
+			
+		}
+	}
 
 	.optimizationTip{
 		height: 150px;
@@ -64,26 +82,59 @@
 	.mlwr{
 		position: relative;
 	}
+
+	.searchInfo{
+		background: rgb(var(--background-total-theme));
+		padding : 2 * @rhythm 0;
+		padding-top: 3 * @rhythm;
+		margin-bottom: @rhythm;
+		text-align: center;
+		border-radius: 12px;
+
+		.searchcaption{
+			span{
+				font-size: 1em;
+				color : rgb(var(--neutral-grad-3));
+			}
+		}
+
+		.cancelsearch{
+			margin-top: 2 * @rhythm;
+		}
+		
+		.value{
+			span{
+				font-weight: 700;
+				color : rgb(var(--neutral-grad-4));
+				font-size: 2em;
+			}
+			
+		}
+	}
+	
 	
 	.loader{
-		background: rgb(var(--background-total-theme));
+		/*background: rgb(var(--background-total-theme));*/
 		padding : 6 * @rhythm 0;
 		display: none;
 		border-radius: 12px;
 		height: 111px;
 		contain: strict;
+
+		&.loading{
+			display: block;
+		}
 	}
 
-	&.loading{
+	/*
 		.loader{
 			display: block;
 		}
-		
-	}
+	}*/
 
 	&.sharesEnded{
 		.loader{
-			display: none;
+			display: none!important;
 		}
 	}
 
@@ -110,6 +161,8 @@
 	.spsp{
 		display: inline-block;
 	}*/
+
+	
 
 	.circularprogress{
 		overflow: hidden;
@@ -154,14 +207,35 @@
 		}
 	}
 
+	.tosubscribeshares{
+		margin-bottom: @rhythm;
+		border-radius: 12px;
+		background: rgb(var(--background-total-theme));
+		padding : 4 * @rhythm;
+		text-align: center;
+
+		.tosubscribesharesWrapper{
+			max-width: 460px;
+			margin : 0 auto;
+			
+		}
+
+		.tosubscribeshares_caption{
+		
+		}	
+
+		.tosubscribeshares_buttonWrapper{
+			margin-top: 4 * @rhythm;
+		}
+	}
+
 	.share{
 		margin-bottom: @rhythm;
 		padding-bottom : 0;
 		border-radius: 12px;
 
-		
-
 		.shareSpacer{
+			display: none;
 			height: 400px;
 			padding : 0 4 * @rhythm;
 		}
@@ -235,9 +309,16 @@
 			border-radius: 12px;
 			font-weight: 700;
 			text-decoration: underline;
+			opacity: 0;
+			.transition(0.3s);
+
+			&.active{
+				opacity: 1;
+			}
 		}
 		
 	}
+
 
 	.subc{
 		margin-top : 2 * @rhythm;
@@ -828,11 +909,29 @@
 			display: none;
 		}
 
-		
+		.searchInfo{
+			display: block;
+			padding-left : 2 * @rhythm;
+			padding-right : 2 * @rhythm;
+			border-radius: 0;
+		}
 		
 
 		.share{
 
+		}
+
+		.fullScreenVideo{
+			.videoWrapper{
+				.js-player{
+					.video-js{
+						.vjs-volume-control{
+							display: none;
+						}
+					
+					}
+				}
+			}
 		}
 		
 	}
@@ -849,9 +948,9 @@
 					}
 				}
 
-				.share_common .jsPlayerPreview .wpl{
+				/*.share_common .jsPlayerPreview .wpl{
 					opacity: 1;
-				}
+				}*/
 			}
 		}
 

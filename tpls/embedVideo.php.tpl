@@ -24,7 +24,6 @@
       <div id="error-content"></div>
     </div>
     <div class="video-js-wrapper"><div id="video-wrapper"></div></div>
-    <div id="placeholder-preview"></div>
     <script src="./peertube/video-embed.bundle.js"></script>
     <script>
       const addVideoToPage = () => {
@@ -38,11 +37,9 @@
 
         if (!isVideEmbed || !host || !id) return;
 
-        PeerTubeEmbeding.main(elem, id, {
-          host,
+        PeerTubeEmbeding.main(elem, id, 'https://' + host, {
           videoEmbedded: true,
-          txid: s || '',
-          logoType : "__VAR__.project"
+          txid: s || ''
         });
       };
 

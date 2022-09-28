@@ -8,7 +8,7 @@ var recommendations = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el, ed, places = {}, sel;
+		var el, ed, places = {}, sel, globalParams;
 
 		var needmake = [], making = false, empty = false
 
@@ -30,8 +30,12 @@ var recommendations = (function(){
 
 		var renders = {
 			list : function(contents, clbk){
+				if(!el.c) return;
 
-				if(!el.c) return
+				self.app.Logger.info({
+					actionId: 'VIDEO_LOADED_WITH_RECOMMENDATIONS',
+					actionValue: globalParams.v,
+				});
 
 				self.shell({
 
@@ -49,10 +53,15 @@ var recommendations = (function(){
 					if (!_p || !_p.el) return;
 
 					_p.el.find('.recoVideoDiv').click(function() {
-
+		
 						var txid = $(this).data('txid');
 
 						if (txid) {
+
+							self.app.Logger.info({
+								actionId: 'RECOMMENDATION_SELECTED',
+								actionValue: txid
+							});
 
 							if (ed.open){
 								ed.open(txid)
@@ -106,7 +115,7 @@ var recommendations = (function(){
 
 				})
 
-				bgImages(p.el)
+				bgImagesCl(p.el)
 
 			}
 		}
@@ -132,7 +141,7 @@ var recommendations = (function(){
 			var me = deep(self.app, 'platform.sdk.users.storage.' + (self.user.address.value || ''))
 
 
-			if (me.relation(recommendation.address, 'blocking') ){
+			if (me && me.relation(recommendation.address, 'blocking') ){
 				return false
 			}
 
@@ -155,7 +164,7 @@ var recommendations = (function(){
 				p = p + activities.point * 10
 			}
 
-			if(recommendation.itisvideo){
+			if(recommendation.itisvideo()){
 				var h = self.app.platform.sdk.videos.historyget(recommendation.txid)
 
 				if (h.percent > 94){
@@ -194,6 +203,7 @@ var recommendations = (function(){
 				
 				self.app.platform.sdk.node.shares[loader.loader || 'getrecomendedcontents'](p, function (recommendations) {
 
+
 					_.each(recommendations, function(r, i){
 						places[r.txid] = i + 1
 					})
@@ -208,12 +218,11 @@ var recommendations = (function(){
 
 					recommendations = sorting(_.filter(recommendations, filter))
 
-					
 				
 					_.each(recommendations, function(recommendation){
 						rendered[recommendation.txid] = true
 					})
-					
+			
 
 					if (clbk)
 						clbk(recommendations);
@@ -230,13 +239,14 @@ var recommendations = (function(){
 		}
 
 		var make = function(loader, clbk){
+
 			
 			load.contents(loader, function(recommendations){
 				renders.list(recommendations, function(_p){
-
 					load.info(recommendations, function(){
 						renders.lazyinfo(recommendations, _p)
 					})
+
 
 					if(clbk) clbk()
 
@@ -252,6 +262,7 @@ var recommendations = (function(){
 
 				making = true
 				el.c.addClass('loading')
+
 
 				make(needmake[0], function(){
 					el.c.removeClass('loading')
@@ -301,8 +312,9 @@ var recommendations = (function(){
 			primary : primary,
 
 			getdata : function(clbk, p){
+				needmake = [];
 
-				needmake = []
+				globalParams = parameters() || {};
 
 				empty = false
 				making = false
@@ -345,7 +357,6 @@ var recommendations = (function(){
 
 				initEvents()
 
-				console.log("ED", ed, needmake)
 
 				if (ed.startload)
 					makeneed()
@@ -369,7 +380,9 @@ var recommendations = (function(){
 
 		_.each(essenses, function(essense){
 
-			essense.destroy();
+			window.requestAnimationFrame(() => {
+				essense.destroy();
+			})
 
 		})
 

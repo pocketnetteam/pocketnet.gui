@@ -14,6 +14,18 @@
 		}
 	}
 
+	.removeAccauntWrapper{
+		margin-top: 8 * @rhythm;
+
+		.removeAccount{
+			cursor: pointer;
+			span{
+				font-size: 0.8em;
+				color : rgb(var(--color-bad))
+			}
+		}
+	}
+
 	.tokenResult{
 		display:inline-block;
 		font-size:30px;
@@ -69,6 +81,30 @@
 
 			span{
 				font-size: 0.9em;
+			}
+		}
+
+		.tx{
+			display: flex;
+			border-radius: 6px;
+			padding : @rhythm;
+			margin-top: @rhythm;
+			padding-top: 2 * @rhythm;
+			background: rgba(var(--neutral-grad-0), 0.5);
+			flex-wrap: wrap;
+
+			div{
+				margin-right: @rhythm;
+				margin-bottom: @rhythm;
+
+				&.txid{
+					overflow: hidden;
+					text-overflow: ellipsis;
+				}
+
+				&.date{
+					margin-left: auto;
+				}
 			}
 		}
 	}
@@ -361,6 +397,10 @@
 	#usersettings{
 		background: rgb(var(--background-total-theme));
 
+		.removeAccauntWrapper{
+			text-align: center;
+		}
+
 		.mwork{
 			padding : 0 2 * @rhythm;
 
@@ -396,6 +436,16 @@
 			content: '';
 			font-size: 1.2em;
 			text-align: center;
+		}
+
+		[parameter="commentsOrder"]{
+			.parameter{
+				display: block;
+
+				>div{
+					display: block;
+				}
+			}
 		}
 
 

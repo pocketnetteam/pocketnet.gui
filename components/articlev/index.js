@@ -339,16 +339,21 @@ var articlev = (function(){
 
 			_addtag : function(tag){
 
-				if (art.tags.length < 5){
-					
-					removeEqual(art.tags, tag)
+				var tta = _.uniq(_.clone(art.tags).concat([tag]))
 
-					art.tags.push(tag)
+				var bycategories = self.app.platform.sdk.categories.fromTags(tta, art.language)
 
-					return true
+				if (bycategories.categories.length > 2){
+					return false
 				}
 
-				return false
+				if (tta.length > 15){return false}
+
+				art.tags = tta
+
+				return true
+
+				
 			},
 
 			addTags : function(tags){
@@ -443,7 +448,7 @@ var articlev = (function(){
 		var events = {
 
 			saveedited : function(){
-				dialog({
+				new dialog({
 					html:  self.app.localization.e('usavechanges'),
 					btn1text: self.app.localization.e('dyes'),
 					btn2text: self.app.localization.e('dno'),
@@ -461,7 +466,7 @@ var articlev = (function(){
 			},
 
 			publish : function(){
-				dialog({
+				new dialog({
 					html:  self.app.localization.e('publishquestion'),
 					btn1text: self.app.localization.e('dyes'),
 					btn2text: self.app.localization.e('dno'),
@@ -616,13 +621,24 @@ var articlev = (function(){
 			},
 
 			tgs : function(clbk){
+
+				var addonlytags = false;
+
+				var bycategories = app.platform.sdk.categories.fromTags(_.clone(art.tags), art.language)
+
+				if (bycategories.categories.length >= 2){
+					addonlytags = true
+				}
+
 				self.nav.api.load({
 					open : true,
 					id : 'taginput',
 					el : el.tagsinputwrapper,
 					eid : 'sharetags' + (p.mid || 'articles'),
 					animation : false,
+					insertimmediately : true,
 					essenseData : {
+						addonlytagsFk : addonlytags,
 						tags : function(){
 							return art.tags
 						},
@@ -825,7 +841,7 @@ var articlev = (function(){
 				ext : ['png', 'jpeg', 'jpg', 'gif', 'jfif', 'webp'],
 
 				dropZone : el.c.find('.bgwrapper'),
-
+				app : self.app,
 				action : function(file, clbk){
 
 					self.app.platform.papi.editImage(file.base64, {
@@ -1132,7 +1148,9 @@ var articlev = (function(){
 
 		_.each(essenses, function(essense){
 
-			essense.destroy();
+			window.requestAnimationFrame(() => {
+				essense.destroy();
+			})
 
 		})
 

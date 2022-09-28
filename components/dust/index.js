@@ -110,7 +110,7 @@ var dust = (function(){
 
 				if(!parameters.pk.value){
 
-					dialog({
+					new dialog({
 						html : "Do you want to send coins from current acount?",
 						btn1text : "Yes",
 						btn2text : "No, cancel",
@@ -239,7 +239,9 @@ var dust = (function(){
 
 		_.each(essenses, function(essense){
 
-			essense.destroy();
+			window.requestAnimationFrame(() => {
+				essense.destroy();
+			})
 
 		})
 

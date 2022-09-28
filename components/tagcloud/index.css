@@ -62,15 +62,16 @@
   padding-left: 0;
 }
 #tagcloud .tag > div.tagvalue {
-  padding: 4px 8px;
   padding-top: 2px;
   width: auto;
-  border: 1px solid rgb(var(--color-medium-theme));
+  border-radius: 8px;
+  padding: 4px 10px;
+  background: rgb(var(--background-secondary-theme));
+  box-shadow: 0 5px 7px -5px rgba(var(--color-shadow-base), 0.4);
   margin: 4px 4px 0 0;
-  border-radius: 100px;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 120px;
+  max-width: 135px;
   white-space: nowrap;
 }
 #tagcloud .tag > div.tagvalue span,
@@ -188,21 +189,21 @@
   #tagcloud .tcaptiontable > div.mlab:hover {
     opacity: 1;
     color: rgb(var(--color-bad));
-  }
-  #tagcloud .tcaptiontable > div.mlab:hover .tagvalue {
-    border: 1px solid rgb(var(--color-bad));
+    /*.tagvalue{
+                            border: 1px solid rgb(var(--color-bad));
+                        }*/
   }
   #tagcloud .tag > div.tagvalue:hover {
     color: rgb(var(--color-txt-ac));
-    border: 1px solid rgb(var(--color-txt-ac));
+    /*border: 1px solid rgb(var(--color-txt-ac));*/
   }
   #tagcloud .tag > div.tagsearch:hover,
   #tagcloud .tag > div.tagcheck:hover {
     color: rgb(var(--color-txt-ac));
-  }
-  #tagcloud .tag > div.tagsearch:hover .tagvalue,
-  #tagcloud .tag > div.tagcheck:hover .tagvalue {
-    border: 1px solid rgb(var(--color-txt-ac));
+    /*.tagvalue{
+                            border : 1px solid rgb(var(--color-txt-ac));
+    
+                        }*/
   }
   #tagcloud .tag:hover .tagvalue > div.tagcheck,
   #tagcloud .tag:hover .tagvalue > div.tagsearch {
@@ -218,25 +219,26 @@
     border-top: 0;
   }
   #tagcloud .tcaptiontable > div.mlab span {
-    font-size: 1em;
+    font-size: 0.9em;
   }
   #tagcloud .tag {
-    font-size: 1em;
+    font-size: 0.9em;
   }
   #tagcloud .tag > div.tagvalue {
     padding-top: 4px;
     margin: 4px 4px 0 0;
+    background: rgb(var(--background-total-theme));
   }
   #tagcloud .tag > div.tagvalue span,
   #tagcloud .tag > div.tagvalue i {
-    font-size: 1em;
+    font-size: 0.9em;
   }
   #tagcloud .tag > div.iconWrapper i {
     font-size: 0.8em;
   }
   #tagcloud .tag > div.tagsearch i,
   #tagcloud .tag > div.tagcheck i {
-    font-size: 1em;
+    font-size: 0.9em;
   }
   #tagcloud .hidealltags,
   #tagcloud .showalltags {
@@ -246,6 +248,6 @@
   #tagcloud .showalltags span,
   #tagcloud .hidealltags i,
   #tagcloud .showalltags i {
-    font-size: 1em;
+    font-size: 0.9em;
   }
 }

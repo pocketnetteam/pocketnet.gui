@@ -3,8 +3,6 @@ if (global.WRITE_LOGS) {
     global.LOG_LEVEL = global.WRITE_LOGS.split("=").pop()
 }
 
-const notifier = require('node-notifier');
-
 var open = require("open");
 
 const {protocol} = require('electron');
@@ -13,32 +11,22 @@ const ProxyInterface = require('./proxy16/ipc.js')
 const IpcBridge =require('./js/electron/ipcbridge.js')
 
 const { Bridge: TranscoderBridge } = require('./js/electron/transcoding2.js');
-const { bastyonFsFetchBridge } = require('./js/peertube/bastyon-fs-fetch.js');
+const { initFsFetchBridge } = require('./js/transports/fs-fetch.js');
+
+const { ProxifiedAxiosBridge } = require('./js/transports/proxified-axios.js');
+const { ProxifiedFetchBridge } = require('./js/transports/proxified-fetch.js');
 
 const electronLocalshortcut = require('electron-localshortcut');
 
 var win, nwin, badge, tray, proxyInterface, ipcbridge;
 var willquit = false;
 
+const transports = require('./proxy16/transports')()
+
 const { app, BrowserWindow, Menu, MenuItem, Tray, ipcMain, Notification, nativeImage, dialog, globalShortcut, OSBrowser } = require('electron')
 app.allowRendererProcessReuse = false
 
-/*
-const ProxyList = require('free-proxy');
-const proxyList = new ProxyList();
-proxyList.get()
-    .then(function (proxies) {
-        proxies = proxies.sort((a,b)=>{
-            return (+a.speed_download > +b.speed_download) ? -1 : (+a.speed_download < +b.speed_download) ? 1 : 0
-        })
-        for(const proxy of proxies){
-            app.commandLine.appendSwitch('proxy-server', proxy.url)
-
-        }
-    })
-    .catch(function (error) {
-        console.error(error)
-    });*/
+// app.commandLine.appendSwitch('proxy-server', "socks5h://127.0.0.1:9050")
 
 const Badge = require('./js/vendor/electron-windows-badge.js');
 
@@ -54,7 +42,7 @@ const contextMenu = require('electron-context-menu');
 const path = require('path');
 const http = require('http');
 const https = require('https');
-const request = require('request');
+const notifier = require('node-notifier');
 
 contextMenu({
     showSearchWithGoogle : false,
@@ -191,7 +179,34 @@ function quit(){
     app.quit()
 }
 
+function destroyAppSafe(){
+    if (ipcbridge)
+        ipcbridge.destroy()
 
+    // Check safe destroy
+    if (proxyInterface){
+        proxyInterface.candestroy().then(e => {
+            if (!e.includes('nodeControl')) { // Destroy all
+                destroyApp()
+            } else { // Need first stop node
+                dialog.showMessageBox(null, {
+                    type: 'question',
+                    buttons: ['Cancel', 'Yes, close'],
+                    defaultId: 1,
+                    title: 'Warning',
+                    message: 'Your node is running. Close the app anyway?',
+                }).then(r => {
+                    if (r.response == 1) {
+                        proxyInterface.nodeStop().then(e => {
+                            destroyApp()
+                        })
+                    }
+                })
+            }
+
+        })
+    }
+}
 
 function destroyApp() {
     proxyInterface.destroy().then(r => {
@@ -231,31 +246,8 @@ function createTray() {
         label: 'Quit',
         click: function() {
 
-            if (ipcbridge)
-                ipcbridge.destroy()
-
-            // Check safe destroy
-            if (proxyInterface)
-                proxyInterface.candestroy().then(e => {
-                    if (!e.includes('nodeControl')) { // Destroy all
-                        destroyApp()
-                    } else { // Need first stop node
-                        dialog.showMessageBox(null, {
-                            type: 'question',
-                            buttons: ['Cancel', 'Yes, close'],
-                            defaultId: 1,
-                            title: 'Warning',
-                            message: 'Your node is running. Close the app anyway?',
-                        }).then(r => {
-                            if (r.response == 1) {
-                                proxyInterface.nodeStop().then(e => {
-                                    destroyApp()
-                                })
-                            }
-                        })
-                    }
-
-                })
+            destroyAppSafe()
+                
         }
     }]);
 
@@ -415,16 +407,16 @@ function createWindow() {
     electronLocalshortcut.register(win, 'f5', function() {
 		refresh()
 	})
-    
+
 
 	electronLocalshortcut.register(win, 'CommandOrControl+R', function() {
 		refresh()
 	})
 
-    electronLocalshortcut.register(win, 'f5', function() {
+  electronLocalshortcut.register(win, 'f5', function() {
 		refresh()
 	})
-    
+
 
 	electronLocalshortcut.register(win, 'CommandOrControl+R', function() {
 		refresh()
@@ -504,7 +496,7 @@ function createWindow() {
                     label: 'Quit',
                     accelerator: 'Cmd+Q',
                     click: async () => {
-                      quit()
+                      destroyAppSafe()
                     }
                 }
               ]
@@ -599,16 +591,27 @@ function createWindow() {
     });
 
     win.on('close', function(e) {
-        if(!is.macOS()) {
-            if (!willquit) {
-                e.preventDefault();
-                win.hide();
-                destroyBadge()
-            } else {
-                destroyBadge()
-                destroyTray()
-                win = null
+        if (!willquit) {
+            e.preventDefault();
+
+            if (is.macOS()){
+                if (win.isFullScreen()){
+                    win.setFullScreen(false)
+                    return
+                }
             }
+
+            
+
+            win.webContents.send('win-cross')
+            
+            win.hide();
+            destroyBadge()
+            
+        } else {
+            destroyBadge()
+            destroyTray()
+            win = null
         }
     });
 
@@ -629,12 +632,9 @@ function createWindow() {
         if(p.image){
             pathImage= await saveBlobToFile(p.image)
         }
-
         if (!is.windows()) {
-
-            const n = new Notification({ title: p.title, body: p.body, silent: true, icon: pathImage })
-
-            n.onclick = function () {
+            const n = new Notification({ title : p.title, body: p.body, silent :true, icon: pathImage})
+            n.onclick = function(){
 
                 if (win) {
                     win.show();
@@ -656,7 +656,7 @@ function createWindow() {
                 },
                 function (err, response, metadata) {
 
-                    if (response != 'timeout')
+                    if (response != 'timeout' && !_.isEmpty(metadata))
 
                         if (win) {
                             win.show();
@@ -674,7 +674,7 @@ function createWindow() {
         willquit = true
 
         if (proxyInterface)
-            proxyInterface.destroy().then(r => {
+            proxyInterface.destroy().catch(e => {}).then(r => {
                 autoUpdater.quitAndInstall(true, true)
             })
 
@@ -854,6 +854,8 @@ function createWindow() {
         fs.rmSync(shareDir, { recursive: true, force: true });
     });
 
+    ipcMain.removeHandler('proxyUrl');
+
     ipcMain.removeHandler('getShareList');
     ipcMain.handle('getShareList', async (event) => {
         const isShaHash = /[a-f0-9]{64}/;
@@ -880,7 +882,23 @@ function createWindow() {
         return JSON.parse(jsonData);
     });
 
+    ipcMain.removeHandler('getSegment');
+
+    ipcMain.handle('getSegment', async (event, videoDir, filename) => {
+
+        try{
+            const data = fs.readFileSync(path.join(videoDir, filename), {  flag:'r' });
+    
+            return data
+        }   
+        catch(e){
+            return null
+        }
+
+    })  
+
     ipcMain.removeHandler('getVideoData');
+
     ipcMain.handle('getVideoData', async (event, shareId, videoId) => {
         const videoDir = getVideoFolder(shareId, videoId);
 
@@ -894,10 +912,16 @@ function createWindow() {
 
         const jsonData = fs.readFileSync(jsonPath, { encoding:'utf8', flag:'r' });
 
+        var details =  JSON.parse(jsonData)
+
         videoData.infos = {
             thumbnail : '',
-            videoDetails : JSON.parse(jsonData)
+            videoDetails : details,
         }
+
+        var sequence = 0
+
+        
 
         const playlistName = videosList.find(fN => (
             fN.endsWith('.m3u8')
@@ -907,6 +931,94 @@ function createWindow() {
 
         const fileStats = fs.statSync(playlistPath);
 
+        var masterSwarmId = details.streamingPlaylists[0].playlistUrl
+
+        var vurl = geturlfromm3u8(playlistPath)
+
+        var signatures = null
+            
+        try{
+            signatures = JSON.parse(fs.readFileSync(path.join(videoDir, 'signatures.json'), { encoding:'utf8', flag:'r' }));
+        }catch(e){
+            console.log(e)
+        }
+
+
+        if(masterSwarmId && vurl && signatures){
+
+
+            var url = masterSwarmId.split("/hls/")[0] + '/hls/' + details.uuid + '/' + vurl
+
+            var i = -1
+            var f = -1
+            
+            var fss = _.find(signatures, (a, index) => {
+                f++
+                if(index == vurl) {
+                    return true
+                }
+            })
+
+            if(fss) {
+                i = f
+            }
+
+
+            if(i > -1){
+
+
+                var segmentsFiles = _.sortBy(_.filter(videosList, (vl) => {
+                    if (vl.endsWith('.mp4')){return true}
+                }), (vl => {
+                    var n = Number(vl.replace('fragment_', '').replace('.mp4', '').split('-')[0])
+
+                    return n
+                }))
+
+                var segments = _.map(segmentsFiles, (vl, j) => {
+
+                    var j1 = j - 1
+
+                    var segment = {
+                        sequence : j1 + '',
+                        range : "bytes=" + vl.replace('fragment_', '').replace('.mp4', ''),
+                        priority : 1,
+                        downloadBandwidth : 10,
+                        streamId : 'V' + i,
+                        masterSwarmId : masterSwarmId,
+                        masterManifestUri : masterSwarmId,
+                        id : masterSwarmId + '+V'+i+'+' + j1,
+                        url,
+                        requestUrl : url,
+                        responseUrl : url
+
+                    }
+    
+                    return segment
+    
+        
+                    return null
+        
+                })
+
+
+                var map = new Map();
+
+                _.each(segments, (s) => {
+                    map.set(s.id, {segment : s})
+                })
+
+                videoData.infos.segments = map
+                videoData.infos.masterSwarmId = masterSwarmId
+                videoData.infos.streamSwarmId = masterSwarmId + '+V' + i
+                videoData.infos.dir = videoDir
+                videoData.infos.trackerUrls = details.trackerUrls
+            }
+
+            
+        }
+
+        
         videoData.size = fileStats.size;
         videoData.video = {
             internalURL: shareId,
@@ -918,14 +1030,18 @@ function createWindow() {
     /**
      * Local files requestor bridge
      */
-    bastyonFsFetchBridge(ipcMain, Storage);
+    initFsFetchBridge(ipcMain, Storage);
 
     /**
      * Video transcoding handler
      */
     new TranscoderBridge(ipcMain, Storage);
 
-    proxyInterface = new ProxyInterface(ipcMain, win.webContents)
+    proxyInterface = new ProxyInterface(ipcMain, win.webContents, {
+      Axios: ProxifiedAxiosBridge,
+      Fetch: ProxifiedFetchBridge,
+    });
+
     proxyInterface.init()
 
 
@@ -954,6 +1070,28 @@ function createWindow() {
 
     // Вызывается, когда окно будет закрыто.
     return win
+}
+
+var geturlfromm3u8 = function(path){
+
+    try{
+        const playlistinfo = fs.readFileSync(path, { encoding:'utf8', flag:'r' });
+
+        var iarray = playlistinfo.split(/\r\n|\n/)
+
+        var str = _.find(iarray, (s) => {
+            return s.indexOf('#EXT-X-MAP:URI') > -1
+        })
+
+        console.log('str', str)
+
+        if (str){
+            return str.split('",')[0].replace('#EXT-X-MAP:URI="', '')
+        }
+    }   
+    catch(e){
+        return null
+    }
 }
 
 var _openlink = function(l, ini){
@@ -1038,6 +1176,10 @@ if(!r) {
         // после того, как на иконку в доке нажали, и других открытых окон нету.
         if (win === null) {
             createWindow()
+        }
+
+        else{
+            win.restore();
         }
     })
 

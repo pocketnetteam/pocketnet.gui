@@ -59,7 +59,7 @@ var support = (function(){
 
 						successCheck();
 
-						dialog({
+						new dialog({
 							html: self.app.localization.e('videobloggerRequest_submitted'),
 							btn1text: self.app.localization.e('daccept'),
 							btn2text: "Cancel",
@@ -248,7 +248,9 @@ var support = (function(){
 
 		_.each(essenses, function(essense){
 
-			essense.destroy();
+			window.requestAnimationFrame(() => {
+				essense.destroy();
+			})
 
 		})
 

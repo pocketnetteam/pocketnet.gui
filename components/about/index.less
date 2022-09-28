@@ -222,7 +222,8 @@
 		background: rgb(var(--background-total-theme));
 		z-index: 300;
 		width: 100%;
-		height: @reportMarginTop;
+		height: calc(@reportMarginTop + var(--app-margin-top));
+		padding-top: var(--app-margin-top);
 
 		.rightchatspacer{
 			height: 100%;
@@ -384,7 +385,7 @@
 	}
 
 	.report{
-		margin-top: @reportMarginTop;
+		margin-top: calc(@reportMarginTop + var(--app-margin-top));
 	
 		#faq{
 			max-width: 1280px;

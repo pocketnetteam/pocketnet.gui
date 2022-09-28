@@ -109,11 +109,11 @@ var Cache = function(p){
 
             // node +
             search: {
-                time : 6000
+                time : 2000
             },
 
             searchusers: {
-                time : 6000
+                time : 2000
             },
             
             // node +
@@ -188,6 +188,11 @@ var Cache = function(p){
 
             // node +
             gethotposts: {
+                time : 460,
+                block : 0
+            },
+
+            getmostcommentedfeed: {
                 time : 460,
                 block : 0
             },
@@ -557,15 +562,15 @@ var Cache = function(p){
 
 
         _.each(ckeys, function(k, key){
-            if (typeof k.block != undefined){
+            if (k.block){
 
-                if (k.block < block.height){
+                if (k.block && k.block < block.height){
                     storage[key] = {}
 
                     if (k.smart){
                         smart[key] = {}
                     }
-                    //console.log("Invalidate cache", key, block.height)
+                    //console.log("Invalidate cache", key, k.block, block.height)
                 }
                     
             }

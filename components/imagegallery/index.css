@@ -41,9 +41,8 @@
 }
 #imagegallery .panel {
   position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  left: 0.5em;
+  top: calc(0.5em + var(--app-margin-top));
   height: 40px;
 }
 #imagegallery .panel .items {

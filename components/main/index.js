@@ -40,7 +40,7 @@ var main = (function(){
 				label : () => self.app.localization.e('e13137'),
 				value : 'sub',
 				if : function(){
-					return self.app.user.getstate()
+					return self.app.user.getstate() && !self.app.platform.sdk.user.myaccauntdeleted()
 				}
 			},
 			
@@ -66,8 +66,13 @@ var main = (function(){
 
 			{
 				link : "index?r=recommended",
-				label : () => self.app.localization.e('e13138'),
+				label : () => self.app.localization.e('discussed'),
 				value : 'recommended'
+			},
+			{
+				link : "index?r=best",
+				label : () => self.app.localization.e('e13138'),
+				value : 'best'
 			},
 		]
 		
@@ -99,6 +104,8 @@ var main = (function(){
 		
 					recommended : "index?r=recommended",
 
+					best : "index?r=best",
+
 					video : "index?video=1",
 
 					read : "index?read=1"
@@ -113,7 +120,7 @@ var main = (function(){
 				var value = _.find(_modes, (m) => m.value == r)
 
 				return {
-					value : value.value,
+					value : value ? value.value : null,
 					modes : _modes
 				};
 
@@ -135,6 +142,10 @@ var main = (function(){
 			},
 
 			addbutton : function(){
+				self.app.Logger.info({
+					actionId: 'POST_CREATING_STARTED',
+					actionSubType: 'FROM_SCROLL_BUTTON',
+				});
 
 				self.app.platform.ui.share()
 			},
@@ -298,9 +309,16 @@ var main = (function(){
 
 				el.menu.attr('fmode', fmode)
 				el.menu.find('.mode').removeClass('active')
-				el.menu.find('.mode[mode="'+value+'"]').addClass('active')
 
-				_scrollTo(el.menu.find('.active'), el.menu.find('.modes'), 0, 0, 'Left') 
+				var act = el.menu.find('.mode[mode="'+value+'"]')
+
+				act.addClass('active')
+
+				setTimeout(() => {
+					if(el.menu)
+						_scrollTo(act, el.menu.find('.modes'), 0, 0, 'Left') 
+				}, 50)
+				
 
 			},
 			menu : function(){
@@ -354,6 +372,7 @@ var main = (function(){
 								items.push({
 									text : a.label(),
 									action : function (clbk) {
+
 				
 										self.nav.api.load({
 											open : true,
@@ -363,13 +382,15 @@ var main = (function(){
 											replace : true
 										})
 
+										d.destroy()
+
 										return true
 				
 									}
 								})
 							})
 				
-							menuDialog({
+							var d = menuDialog({
 								items: items
 							})
 						})
@@ -402,9 +423,9 @@ var main = (function(){
 			
 			share : function(){
 
-				if (!isMobile() && !videomain && !readmain && !searchvalue && !searchtags){
+				if (!isMobile() && !videomain && !readmain && !searchvalue && !searchtags && !app.platform.sdk.user.myaccauntdeleted()){
 
-					el.c.removeClass('wshar')
+					//el.c.removeClass('wshar')
 
 					self.nav.api.load({
 
@@ -433,7 +454,7 @@ var main = (function(){
 					})
 					
 				}else{
-					el.c.addClass('wshar')
+					//el.c.addClass('wshar')
 				}
 			},
 
@@ -442,8 +463,9 @@ var main = (function(){
 				if(!el.topvideos) return
 				
 				if (show){
-
-					el.topvideos.removeClass('hidden')
+					window.requestAnimationFrame(() => {
+						el.topvideos.removeClass('hidden')
+					})
 
 					if (external) {
 						external.clearessense()
@@ -499,8 +521,10 @@ var main = (function(){
 					}
 
 					if(el.topvideos){
-						el.topvideos.find('.wrpcn').html('')
-						el.topvideos.addClass('hidden')
+						window.requestAnimationFrame(() => {
+							el.topvideos.find('.wrpcn').html('')
+							el.topvideos.addClass('hidden')
+						})
 					}
 					
 				}
@@ -509,35 +533,43 @@ var main = (function(){
 			},
 
 			leftpanel: function(){
+				if (leftpanel && leftpanel.update){
+					leftpanel.update()
+				}
+				else{
+					self.nav.api.load({
 
-				self.nav.api.load({
-
-					open : true,
-					id : 'leftpanel',
-					el : el.leftpanel,
-					animation : false,
-
-					essenseData : {
-					
-						renderclbk : function(){
-							actions.refreshSticky(true)
+						open : true,
+						id : 'leftpanel',
+						el : el.leftpanel,
+						animation : false,
+	
+						essenseData : {
+						
+							renderclbk : function(){
+								actions.refreshSticky(true)
+							},
+	
+							changed : function(){
+								renders.lentawithsearch()
+							},
+	
+							close : function(){
+								showCategories(false)
+							}
 						},
-
-						changed : function(){
-							renders.lentawithsearch()
-						},
-
-						close : function(){
-							showCategories(false)
+						clbk : function(e, p){
+	
+							leftpanel = p;
+	
 						}
-					},
-					clbk : function(e, p){
+	
+					})
+				}
+				
+					
 
-						leftpanel = p;
-
-					}
-
-				})
+				
 			},
 
 			panel : function(){
@@ -569,57 +601,42 @@ var main = (function(){
 
 			lentawithsearch : function(clbk, p){
 
-				if(searchvalue){
+				if(searchvalue || searchtags){
+					if (searchvalue){
+						self.app.platform.sdk.activity.addsearch(searchvalue)
 
-					var value = searchvalue.replace('tag:', "#");
+						self.app.platform.sdk.search.get(searchvalue, 'posts', 0, 10, null, function(r, block){
 
-					var c = deep(self, 'app.modules.menu.module.showsearch')
+							fixedBlock = block
+	
+							result = {
+								posts : r
+							};
+	
+							renders.lenta(clbk, p)
+						})
 
-					if (c)
-
-						c(value)
-
-					self.app.platform.sdk.search.get(searchvalue, 'posts', 0, 10, null, function(r, block){
-
-						if (r.count){
-							self.app.platform.sdk.activity.addsearch(searchvalue)
-						}
-
-						fixedBlock = block
-
-						result = {
-							posts : r
-						};
-
-						renders.lenta(clbk, p)
-					})
-
-				}
-				else{
-					result = {}
-					fixedBlock = null
-
-					var c = deep(self, 'app.modules.menu.module.showsearch')
-
-					if (c){
-
-						if(searchtags){
-
-							var val = _.map(searchtags, function(w){return '#' + w}).join(' ')
-
-							c(val)
-
-							self.app.platform.sdk.activity.addtagsearch(val)
-
-						}
-						else{
-							c('')
-						}
-
+						return
 					}
 
-					renders.lenta(clbk, p)
+					if (searchtags){
+
+						result = {}
+						fixedBlock = null
+
+						renders.lenta(clbk, p)
+
+						var val = _.map(searchtags, function(w){return '#' + w}).join(' ')
+
+						self.app.platform.sdk.activity.addtagsearch(val)
+
+						return
+					}
 				}
+
+
+				renders.lenta(clbk, p)
+
 			},
 
 			lenta : function(clbk, p){
@@ -665,8 +682,9 @@ var main = (function(){
 
 				self.app.user.isState(function(state){
 
-					console.log('(self.app.test || self.app.platform.istest())', (self.app.test || self.app.platform.istest()))
-				
+
+					var mode = actions.currentModeKey()
+
 					self.nav.api.load({
 						open : true,
 						id : 'lenta',
@@ -679,18 +697,21 @@ var main = (function(){
 							hr : 'index?',
 							goback : p.goback,
 							searchValue : searchvalue || null,
-							search : searchvalue ? true : false,
-							tags : searchtags,
+							search : searchvalue || searchtags ? true : false,
+							searchTags : searchtags,
 							read : readmain,
 							video :  videomain && !isMobile(),
 							videomobile : videomain && isMobile(),
-							observe : actions.currentModeKey(),
+							observe : searchvalue || searchtags ? null : mode,
 							page : 0,
 
 							//recommendedUsers : self.app.mobileview,
 							//recommendedUsersCount : self.app.mobileview ? 15 : 3,
-							//includesub : true,
-							includeboost : self.app.boost,
+
+							includerec : !searchvalue && !searchtags && (mode == 'index' /*|| mode == 'video' || mode == 'read'*/) ? true : false,
+							includesub : !searchvalue && !searchtags && (mode == 'index' /*|| mode == 'video' || mode == 'read'*/) ? true : false,
+							includeboost : !searchvalue && !searchtags && self.app.boost && !self.app.pkoindisable,
+
 							//optimize : self.app.mobileview,
 							extra : (self.app.test || self.app.platform.istest()) && state && isMobile() ? [
 								{
@@ -704,6 +725,21 @@ var main = (function(){
 									}
 								}
 							] : [],
+
+							cancelsearch : function(){
+								var backlink = 'index'
+
+								if (parameters().video) backlink = 'index?video=1'
+								if (parameters().read) backlink = 'index?read=1'
+
+
+								self.nav.api.load({
+									open : true,
+									href : backlink,
+									history : true,
+									handler : true
+								})
+							},
 
 							afterload : function(ed, s, e){
 
@@ -818,7 +854,6 @@ var main = (function(){
 
 				else{
 
-					//console.log("OPEN PAPI", id)
 					
 					self.app.platform.papi.post(id, el.c.find('.renderposthere'), function(e, p){
 						openedpost = p
@@ -832,10 +867,6 @@ var main = (function(){
 						opensvi : function(id){
 
 							if (openedpost){
-
-								//console.log('clearessense')
-						
-								//openedpost.destroy()
 								openedpost.clearessense()
 								openedpost = null
 							}
@@ -949,12 +980,16 @@ var main = (function(){
 						if (currentMode == 'common')
 						{
 							renders.share()
-							el.c.find('.bgCaption').removeClass('hidden')
+							window.requestAnimationFrame(() => {
+								el.c.find('.bgCaption').removeClass('hidden')
+							})
 						}
 						else
 						{
-							el.share.html('')
-							el.c.find('.bgCaption').addClass('hidden')
+							window.requestAnimationFrame(() => {
+								el.share.html('')
+								el.c.find('.bgCaption').addClass('hidden')
+							})
 						}
 
 					}
@@ -1002,12 +1037,23 @@ var main = (function(){
 
 				if (t){
 					el.c.addClass('leftshowed')
+					
 					//setTimeout(self.app.actions.offScroll, 300)
 				}
 				else{
 					el.c.removeClass('leftshowed')
 					//setTimeout(self.app.actions.onScroll, 300)
 				}
+				
+			}
+
+			if(!t){
+				if(!self.app.actions.getScroll()){
+					self.app.mobile.reload.initparallax()
+				}
+			}
+			else{
+				self.app.mobile.reload.destroyparallax()
 				
 			}
 		}
@@ -1023,13 +1069,16 @@ var main = (function(){
 					return r
 				}));
 
-				
-
 				var nsearchtags = words.length ? words : null
 				var nsearchvalue = parameters().ss || ''
 				var ncurrentMode = parameters().r || 'common';
 
 				var nlentakey = parameters().video ? 'video' : parameters().read ? 'read' : (parameters().r || 'index')
+
+				self.app.Logger.info({
+					actionId: 'SELECT_FEED_SECTION',
+                    actionValue: nlentakey,
+				});
 
 				var nvideomain = nlentakey == 'video'
 				var nreadmain = nlentakey == 'read'
@@ -1144,7 +1193,7 @@ var main = (function(){
 
 				beginmaterial = _s.s || _s.i || _s.v || null;
 
-				if((!beginmaterial && !_s.ss && !_s.sst && !p.state && (self.app.mobileview || window.cordova || self.app.platform.matrixchat.connectWith))){
+				if((!beginmaterial && !_s.ss && !_s.sst && !p.state && (/*self.app.mobileview || */window.cordova || self.app.platform.matrixchat.connectWith))){
 					
 					self.nav.api.load({
 						open : true,
@@ -1172,7 +1221,7 @@ var main = (function(){
 
 					self.nav.api.load({
 						open : true,
-						href : 'post?s=' + (_s.v || _s.s),
+						href : 'post?s=' + (_s.v || _s.s) + (_s.commentid ? '&commentid=' + _s.commentid : ''),
 						history : true,
 						replaceState : true
 					})
@@ -1346,7 +1395,9 @@ var main = (function(){
 				if(readmain) videomain = false
 
 				if(videomain && !isMobile()){
-					el.c.addClass('videomain')
+					window.requestAnimationFrame(() => {
+						el.c.addClass('videomain')
+					})
 				}
 
 				make(function(){

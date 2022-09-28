@@ -9,6 +9,16 @@
 #usersettings .mwork.wh {
   background: rgb(var(--background-secondary-theme));
 }
+#usersettings .removeAccauntWrapper {
+  margin-top: 4em;
+}
+#usersettings .removeAccauntWrapper .removeAccount {
+  cursor: pointer;
+}
+#usersettings .removeAccauntWrapper .removeAccount span {
+  font-size: 0.8em;
+  color: rgb(var(--color-bad));
+}
 #usersettings .tokenResult {
   display: inline-block;
   font-size: 30px;
@@ -53,6 +63,26 @@
 }
 #usersettings .cacheContent .empty span {
   font-size: 0.9em;
+}
+#usersettings .cacheContent .tx {
+  display: flex;
+  border-radius: 6px;
+  padding: 0.5em;
+  margin-top: 0.5em;
+  padding-top: 1em;
+  background: rgba(var(--neutral-grad-0), 0.5);
+  flex-wrap: wrap;
+}
+#usersettings .cacheContent .tx div {
+  margin-right: 0.5em;
+  margin-bottom: 0.5em;
+}
+#usersettings .cacheContent .tx div.txid {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#usersettings .cacheContent .tx div.date {
+  margin-left: auto;
 }
 #usersettings .caption {
   max-width: 700px;
@@ -266,6 +296,9 @@
   #usersettings {
     background: rgb(var(--background-total-theme));
   }
+  #usersettings .removeAccauntWrapper {
+    text-align: center;
+  }
   #usersettings .mwork {
     padding: 0 1em;
   }
@@ -295,6 +328,12 @@
     content: '';
     font-size: 1.2em;
     text-align: center;
+  }
+  #usersettings [parameter="commentsOrder"] .parameter {
+    display: block;
+  }
+  #usersettings [parameter="commentsOrder"] .parameter > div {
+    display: block;
   }
   #usersettings .checkbox:checked + label:before {
     content: '\f00c';

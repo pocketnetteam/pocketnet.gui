@@ -74,7 +74,7 @@ var recommendedusers = (function(){
 
 			unsubscribe : function(address){
 
-				dialog({
+				new dialog({
 					html : self.app.localization.e('e13022'),
 					btn1text : self.app.localization.e('unsub'),
 					btn2text :  self.app.localization.e('ucancel'),
@@ -86,7 +86,7 @@ var recommendedusers = (function(){
 						self.app.platform.api.actions.unsubscribe(address, function(tx, err){
 
 							if(tx){
-								
+								el.c.find('.user[address="'+address+'"] .subscribeWrapper').removeClass('following')
 							}
 							else
 							{
@@ -237,20 +237,6 @@ var recommendedusers = (function(){
 		var initEvents = function(){
 
 
-			/*console.log("ASD")
-
-			self.app.platform.sdk.categories.clbks.excluded.recommendedusers =
-			self.app.platform.sdk.categories.clbks.tags.recommendedusers =
-			self.app.platform.sdk.categories.clbks.selected.recommendedusers = function(data){
-
-
-				if (el.users)
-					el.users.empty();
-
-				addresses = [];
-				state.load(renders.page);
-				
-			}*/
 
 			
 		}
@@ -324,7 +310,9 @@ var recommendedusers = (function(){
 
 		_.each(essenses, function(essense){
 
-			essense.destroy();
+			window.requestAnimationFrame(() => {
+				essense.destroy();
+			})
 
 		})
 

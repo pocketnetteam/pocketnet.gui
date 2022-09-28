@@ -793,7 +793,7 @@ ComplainShare = function(){
 		v : ''
 	};
 
-	
+
 
 	self.validation = function(){
 		if(!self.share.v){
@@ -823,11 +823,80 @@ ComplainShare = function(){
 
 		if (p.reason)
 			self.reason.v = p.reason
-			
+
 	}
 
 	self.type = 'complainShare'
 
+	return self;
+}
+
+ModFlag = function(){
+	var self = this;
+
+	self.s2 = {
+		set : function(_v){
+			this.v = _v
+		},
+		v : ''
+	};
+
+	self.s3 = {
+		set: function(_v){
+			this.v = _v
+		},
+		v : ''
+	};
+
+	self.i1 = {
+		set : function(_v){
+			this.v = _v
+		},
+		v : ''
+	};
+
+	
+
+	self.validation = function(){
+
+		if(!self.s3.v){
+			return 'address'
+		}
+
+		if(!self.i1.v){
+			return 'reason'
+		}
+	}
+
+	self.serialize = function(){
+		// return self.share.v + '_' + self.reason.v
+		return self.s2.v + self.s3.v + self.i1.v
+	}
+
+	self.export = function(){
+		return {
+			// share : self.share.v,
+			// reason : self.reason.v
+			s2 : self.s2.v,
+			s3 : self.s3.v,
+			i1 : self.i1.v
+		}
+	}
+
+	self.import = function(p){
+
+		if (p.s2)
+			self.s2.v = p.s2;
+
+		if (p.s3)
+			self.s3.v = p.s3;
+
+		if (p.i1)
+			self.i1.v = p.i1;
+			
+	}
+
+	self.type = 'modFlag'
 	return self;
 }
 
@@ -1077,7 +1146,17 @@ Share = function(lang){
 			else{
 				if(_.isArray(tags)){
 
-					if(tags.length > 5){
+					if(typeof app != 'undefined'){
+
+						var bycategories = app.platform.sdk.categories.fromTags(tags, self.language.v)
+
+						if (bycategories.categories.length > 2){
+							return false
+						}
+
+					}
+
+					if(tags.length > 15){
 						return false;
 					}
 
@@ -1094,13 +1173,28 @@ Share = function(lang){
 
 						tags = clearTagString(tags)
 
-					if(this.v.length > 4){
+					var tta = _.uniq(_.clone(this.v).concat(tags))
+
+					if(typeof app != 'undefined'){
+						var bycategories = app.platform.sdk.categories.fromTags(tta, self.language.v)
+
+						if (bycategories.categories.length > 2){
+							return false
+						}
+					}
+
+					
+
+
+					if(tta.length > 15){
 						return false;
 					}
 
-					removeEqual(this.v, tags)
+					this.v = tta
 
-					this.v.push(tags)
+					//removeEqual(this.v, tags)
+
+					//this.v.push(tags)
 				}
 			}
 
@@ -1266,13 +1360,10 @@ Share = function(lang){
 						base64: image
 					}).then( url => {
 
-						console.log("URL", url)
-
 						self.images.v[index] = url;
 						p.success();
 
 					}).catch(err => {
-						console.log("ER", err)
 
 						p.success();
 					})
@@ -1382,6 +1473,14 @@ Share = function(lang){
 		if(meta.type == 'peertube') return true
 	}
 
+	self.canSend = function(app, clbk) {
+		if (self.itisvideo() && !self.aliasid) {
+			return app.peertubeHandler.checkTranscoding(self.url.v).then(result => clbk(result));
+		}
+
+		return clbk(true);
+	}
+
 	self.itisarticle = function(){
 		return self.settings.v == 'a' && self.settings.version && self.settings.version >= 2
 	}
@@ -1427,7 +1526,6 @@ Share = function(lang){
 			l : self.language.v,
 			txidEdit : self.aliasid || "",
 			txidRepost : self.repost.v || ""
-
 		}
 	}
 
@@ -1469,8 +1567,6 @@ Share = function(lang){
 		var share = new pShare();
 
 			share.time = new Date();
-
-			console.log('self.export()', self.export())
 
 			share._import(self.export())
 
@@ -1758,9 +1854,10 @@ UserInfo = function(){
 
 		var hash = self.name.v.toLowerCase().replace(/[^a-z]/g,'')
 
-
-		if (hash.indexOf('pocketnet') > -1) return 'pocketnet'
-		if (hash.indexOf('bastyon') > -1) return 'bastyon'
+		if(!app.platform.whiteList.includes(app.platform.sdk.user.storage.me.address)) {
+			if (hash.indexOf('pocketnet') > -1) return 'pocketnet'
+			if (hash.indexOf('bastyon') > -1) return 'bastyon'
+		}
 		
 		return false
 
@@ -1833,6 +1930,32 @@ UserInfo = function(){
 	return self;
 }
 
+DeleteAccount = function(){
+	var self = this;
+	
+	self.validation = function(){
+		return false;
+	}
+
+	self.serialize = function(){
+		return ''
+	}
+
+	self.export = function(alias){
+		return {}
+	}
+
+	self.import = function(p){
+
+	}
+
+	self.type = 'accDel'
+
+	self.typeop = function(){
+        return self.type;
+	}
+}
+
 pUserInfo = function(){
 
 	var self = this;
@@ -1848,6 +1971,7 @@ pUserInfo = function(){
 	self.reputation = 0;
 	self.trial = true;
 	self.keys = []
+	self.deleted = false
 
 	self.subscribes = [];
 	self.subscribers = [];
@@ -1861,7 +1985,6 @@ pUserInfo = function(){
 
 
 	self._import = function(v){
-
 		self.name = clearStringXss(decodeURIComponent(v.n || v.name || ''));
 		self.image = clearStringXss(v.i || v.image);
 		self.about = clearStringXss(decodeURIComponent(v.a || v.about || ''));
@@ -1872,6 +1995,7 @@ pUserInfo = function(){
 		self.rc = v.rc || 0;
 		self.postcnt = v.postcnt || 0;
 		self.reputation = v.reputation || 0;
+		self.deleted = v.deleted || false
 
 		if (v.subscribes) self.subscribes = v.subscribes;
 		if (v.subscribers) self.subscribers = v.subscribers;
@@ -1882,6 +2006,9 @@ pUserInfo = function(){
 		if (v.recomendedSubscribes) self.recomendedSubscribes = v.recomendedSubscribes;
 
 		if (v.blocking) self.blocking = v.blocking;
+		if (v.flags) self.flags = v.flags;
+		if (v.hash) self.hash = v.hash;
+		if (v.firstFlags) self.firstFlags = v.firstFlags;
 
 		self.keys = (v.k || v.keys || '')
 
@@ -1958,6 +2085,17 @@ pUserInfo = function(){
 		self._import(v)
 	}
 
+	self.modFlag = function(reason){
+		var modFlag = new ModFlag();
+
+		modFlag.s2.set(self.hash);
+		modFlag.s3.set(self.address);
+		modFlag.i1.set(reason);
+
+
+		return modFlag;
+	}
+
 	self.relation = function(address, key){
 		if(!key) key = 'subscribes'
 
@@ -1972,20 +2110,25 @@ pUserInfo = function(){
 
 		self[key] || (self[key] = [])
 
-		self[key].push(obj)	
+		try{
+			self[key].push(obj)	
 
-		if (key === 'subscribers'){
+			if (key === 'subscribers'){
 
-			self['subscribers_count'] || (self['subscribers_count'] = 0);
-			self['subscribers_count']++;
+				self['subscribers_count'] || (self['subscribers_count'] = 0);
+				self['subscribers_count']++;
 
+			}
+
+			if (key === 'subscribes'){
+
+				self['subscribes_count'] || (self['subscribes_count'] = 0);
+				self['subscribes_count']++;
+				
+			}
 		}
-
-		if (key === 'subscribes'){
-
-			self['subscribes_count'] || (self['subscribes_count'] = 0);
-			self['subscribes_count']++;
-			
+		catch(e){
+			console.error(e)
 		}
 
 	}
@@ -2017,6 +2160,7 @@ pUserInfo = function(){
 
 	return self;
 }
+
 
 pShare = function(){
 
@@ -2394,6 +2538,15 @@ pShare = function(){
 
 		return complainShare;
 	}
+	self.modFlag = function(reason){
+		var modFlag = new ModFlag();
+
+		modFlag.s2.set(self.txid);
+		modFlag.s3.set(self.address);
+		modFlag.i1.set(reason);
+
+		return modFlag;
+	}
 
 	self.alias = function(){
 		var share = new Share();
@@ -2476,7 +2629,6 @@ pComment = function(){
 			}
 
 			catch(e){
-				console.log("ERROR", e, v.msgparsed)
 			}
 
 			
@@ -2544,6 +2696,16 @@ pComment = function(){
 		self.myScore = Number(value);
 
 		return upvoteComment;
+	}
+
+	self.modFlag = function(reason){
+		var modFlag = new ModFlag();
+
+		modFlag.s2.set(self.id);
+		modFlag.s3.set(self.address);
+		modFlag.i1.set(reason);
+
+		return modFlag;
 	}
 
 	self.delete = function(){
@@ -2653,6 +2815,7 @@ kits = {
 		userInfo : UserInfo,
 		share : Share,
 		complainShare : ComplainShare,
+		modFlag : ModFlag,
 		upvoteShare : UpvoteShare,
 		cScore : СScore,
 		comment : Comment,
@@ -2661,7 +2824,8 @@ kits = {
 		unsubscribe : Unsubscribe,
 		subscribe : Subscribe,
 		subscribePrivate : SubscribePrivate,
-		contentBoost : ContentBoost
+		contentBoost : ContentBoost,
+		deleteAccount : DeleteAccount
 	},
 
 	ini : {
