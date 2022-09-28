@@ -267,6 +267,14 @@
   margin-bottom: 0;
   padding-bottom: 0;
 }
+#author .bgCaption .deletedAccount {
+  padding: 5em 3em;
+  text-align: center;
+}
+#author .bgCaption .deletedAccount .deletedsettings {
+  margin-top: 1em;
+  cursor: pointer;
+}
 #author .bgCaption .adr {
   max-width: 500px;
   overflow: hidden;
@@ -572,6 +580,10 @@ html.mobileview #author .authorlentawrappermain .authorsearchwrapper .search .se
     padding-bottom: 2em;
     background: #051b48;
   }
+  #author .bgCaption .usermenu {
+    min-height: 37px;
+    contain: strict;
+  }
   #author .bgCaption .cwrapper {
     display: block;
   }
@@ -687,7 +699,7 @@ html.mobileview #author .authorlentawrappermain .authorsearchwrapper .search .se
     display: none;
   }
   html.allcontent #author .bgCaption {
-    padding-top: 44px;
+    padding-top: 52px;
   }
   #author .work.mwork {
     width: 100%;

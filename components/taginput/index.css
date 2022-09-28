@@ -52,20 +52,16 @@
 #taginput .tgs .search .searchInput .searchInputIcon > div.searchIconLabel {
   display: none;
 }
-#taginput .tgs .tagsWrapper > div {
-  vertical-align: top;
-}
 #taginput .tgs .tagsWrapper > div.label {
   padding-left: 0;
   color: rgb(var(--color-txt-ac));
   font-weight: 700;
 }
 #taginput .tgs .tagsWrapper > div.tagsCont {
-  padding: 0;
-  overflow: hidden;
+  display: flex;
+  flex-wrap: wrap;
 }
 #taginput .tgs .tagsWrapper > div.tagsCont > div {
-  float: left;
   margin-right: 0.5em;
 }
 #taginput .tgs .tagsWrapper > div.tagsCont > div.inputWrapper {
@@ -84,68 +80,44 @@
   background: rgb(var(--background-hidden-layer));
   box-shadow: 0 5px 10px -5px rgba(var(--color-shadow-base), 0.4);
 }
-#taginput .tgs .tag {
-  padding-top: 0;
-  padding-bottom: 0;
-  margin-top: 0.25em;
-  margin-bottom: 0.25em;
-  margin-right: 1em;
-  border-radius: 20px;
-  background: rgb(var(--background-secondary-theme));
-}
-#taginput .tgs .tag .tagInner {
-  height: auto;
-  width: auto;
-}
-#taginput .tgs .tag .tagInner > div {
-  vertical-align: middle;
-  padding: 0.25em 0.5em;
-}
-#taginput .tgs .tag .tagInner > div.label {
-  color: rgb(var(--color-txt-ac));
-}
-#taginput .tgs .tag .tagInner > div.remove {
-  cursor: pointer;
-  text-align: center;
-  color: rgb(var(--neutral-grad-2));
-}
-#taginput .tgs .tag .tagInner > div.remove:hover {
-  color: rgb(var(--color-txt-ac));
-}
-#taginput .tgs .tag .tagInner > div span,
-#taginput .tgs .tag .tagInner > div i {
-  font-size: 0.8em;
-}
+#taginput .tgs .tag,
 #taginput .tgs .category {
-  padding-top: 0;
-  padding-bottom: 0;
+  border-radius: 8px;
+  padding: 4px 10px;
+  background: rgb(var(--background-total-theme));
+  box-shadow: 0 5px 7px -5px rgba(var(--color-shadow-base), 0.4);
+  margin-right: 0.5em;
   margin-top: 0.25em;
-  margin-bottom: 0.25em;
-  margin-right: 1em;
-  border-radius: 20px;
-  background: rgb(var(--background-secondary-theme));
 }
-#taginput .tgs .category .categoryInner {
+#taginput .tgs .tag .inne,
+#taginput .tgs .category .inne {
   height: auto;
   width: auto;
+  display: flex;
+  align-items: center;
 }
-#taginput .tgs .category .categoryInner > div {
-  vertical-align: middle;
+#taginput .tgs .tag .inne > div,
+#taginput .tgs .category .inne > div {
   padding: 0.25em 0.5em;
 }
-#taginput .tgs .category .categoryInner > div.label {
+#taginput .tgs .tag .inne > div.label,
+#taginput .tgs .category .inne > div.label {
   color: rgb(var(--color-txt-ac));
 }
-#taginput .tgs .category .categoryInner > div.remove {
+#taginput .tgs .tag .inne > div.remove,
+#taginput .tgs .category .inne > div.remove {
   cursor: pointer;
   text-align: center;
   color: rgb(var(--neutral-grad-2));
 }
-#taginput .tgs .category .categoryInner > div.remove:hover {
+#taginput .tgs .tag .inne > div.remove:hover,
+#taginput .tgs .category .inne > div.remove:hover {
   color: rgb(var(--color-txt-ac));
 }
-#taginput .tgs .category .categoryInner > div span,
-#taginput .tgs .category .categoryInner > div i {
+#taginput .tgs .tag .inne > div span,
+#taginput .tgs .category .inne > div span,
+#taginput .tgs .tag .inne > div i,
+#taginput .tgs .category .inne > div i {
   font-size: 0.8em;
 }
 #taginput .tgs .empty {

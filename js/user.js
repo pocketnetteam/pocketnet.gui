@@ -209,6 +209,8 @@ User = function(app, p) {
 		localStorage['mnemonic'] = ''
 		sessionStorage['mnemonic'] = ''
 
+		self.mncache.clear()
+
 		settings.clear();
 
 		keys.public.set();
@@ -238,6 +240,13 @@ User = function(app, p) {
 	self.getstate = function(){
 		return state
 	}
+
+	self.isStatePromise = function(){
+		return new Promise((resolve, reject) => {
+			self.isState(resolve)
+		})
+	}
+
 	self.isState = function(clbk){
 
 		if(!p) p = {};
@@ -313,6 +322,8 @@ User = function(app, p) {
 
 		if(!self.address.value) return 'fu';
 
+		if(app.platform.sdk.user.myaccauntdeleted()) return 'deleted'
+
 		var me = deep(app, 'platform.sdk.user.storage.me');
 
 		if (me && me.relay){
@@ -325,12 +336,17 @@ User = function(app, p) {
 
 		}
 
+		
+
 		if(!(deep(app, 'platform.sdk.user.storage.me.name'))) return 'fu' 
 	}
 
 	self.validate = function(){
 
 		if(!self.address.value) return false;
+
+		if(app.platform.sdk.user.myaccauntdeleted()) return false
+
 
 		var me = deep(app, 'platform.sdk.user.storage.me');
 
@@ -346,6 +362,8 @@ User = function(app, p) {
 
 		}
 
+
+
 		return (deep(app, 'platform.sdk.user.storage.me.name'))
 
 	}
@@ -354,11 +372,57 @@ User = function(app, p) {
 		return self.address.value && self.address.value.toString('hex') == address
 	}
 
+	self.mncache = {
+		clear : function(){
+			try{
+				localStorage['mncache'] = ''
+			}
+			catch(e){
+				
+			}
+		},
+		set : function(m, seed){
+			var ls = self.mncache.getall()
+
+			ls[m] = seed
+
+			try{
+				localStorage['mncache'] = JSON.stringify(ls)
+			}
+			catch(e){
+				
+			}
+			
+		},
+		get : function(m){
+			var ls = self.mncache.getall()
+
+			if(ls[m]){
+				return Buffer.from(ls[m])
+			}
+
+			return 
+		},
+		getall : function(){
+			var ls = {}
+
+			try{
+				ls = JSON.parse(localStorage['mncache'] || "{}")
+			}catch(e){}
+
+			return ls
+		}
+	}
+
 	self.keysFromMnemo = function(mnemonic){
 
 		if(!mnemonic) mnemonic = ''
 
-		var seed = bitcoin.bip39.mnemonicToSeedSync(mnemonic.toLowerCase())
+		mnemonic = mnemonic.toLowerCase()
+
+		var seed = self.mncache.get(mnemonic) || bitcoin.bip39.mnemonicToSeedSync(mnemonic)
+
+		self.mncache.set(mnemonic, seed)
 
 		return self.keysFromSeed(seed)
 

@@ -100,7 +100,13 @@ var all = {
 		icon : '<i class="fas fa-cubes"></i>',
 		text : 'HTLC BUY TEST',
 		class : 'htls'
-	}
+	},
+
+	recommendationinfo : {
+		icon : '<i class="fas fa-info-circle"></i>',
+		text : e('recommendations_menu_caption'),
+		class : 'recommendationinfo'
+	},
 
 }
 
@@ -127,11 +133,14 @@ if(share){
 
 	m.push('opennewwindow');
 
-	if(share.address && user.address.value){
+	
+
+	if(share.address && user.address.value && (typeof app.platform.sdk.user.myaccauntdeleted == 'undefined' || !app.platform.sdk.user.myaccauntdeleted())){
 		
 		var my = (user.address.value && share.address == user.address.value.toString('hex'))
 		var subscribed = '';
 		var me = deep(app, 'platform.sdk.users.storage.' + user.address.value.toString('hex'))
+
 		if (my){
 
 			if (share.pin){
@@ -156,12 +165,18 @@ if(share){
 
 		if(!my && me){
 
-			if((typeof mestate!= 'undefined' && mestate.badges && Object.values(mestate.badges).includes('shark'))){
+			if(true){
 				m.push('complain')
 			}
+
 			if(app.platform.matrixchat.core){
 				m.push('startchat')
 			}
+
+			if(app.platform.sdk.recommendations.sharesinfo && app.platform.sdk.recommendations.sharesinfo[share.txid]){
+				m.push('recommendationinfo')
+			}
+
 
 			/*m.push('donation')*/
 			/*m.push('htls')*/

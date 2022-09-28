@@ -283,7 +283,7 @@ var donations = (function(){
 										actions.showpage()
 									}, 100)
 
-									dialog({
+									new dialog({
 										html : self.app.localization.e('e13095'),
 										class : 'one'
 									})
@@ -567,7 +567,9 @@ var donations = (function(){
 
 		_.each(essenses, function(essense){
 
-			essense.destroy();
+			window.requestAnimationFrame(() => {
+				essense.destroy();
+			})
 
 		})
 

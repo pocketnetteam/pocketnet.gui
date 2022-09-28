@@ -65,7 +65,7 @@ function peertubeTransport(ipcRenderer, localVideo) {
                             }
                             return [2 /*return*/, fsFetch(input, init)];
                         }
-                        return [4 /*yield*/, app.api.get.current()];
+                        return [4 /*yield*/, app.api.get.directpr()];
                     case 1:
                         proxy = _c.sent();
                         return [4 /*yield*/, proxy.get.info()];

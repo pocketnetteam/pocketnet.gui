@@ -125,13 +125,13 @@ var panel = (function(){
 
 			if (
 				deep(self.app.platform, 'released.vidgets.staking') && 
-				deep(self.app.platform.sdk, 'usersettings.meta.vidgetstaking.value')
+				deep(self.app.platform.sdk, 'usersettings.meta.vidgetstaking.value') && !self.app.pkoindisable
 			)
 				renders.stacking()
 
 			self.app.user.isState(function(state){
-				if ((self.app.test || self.app.platform.istest()) && state && !isMobile())
-					renders.topusers();
+				/*if ((self.app.test || self.app.platform.istest()) && state && !isMobile())
+					renders.topusers();*/
 			})
 				
 			// renders.bestposts();
@@ -230,7 +230,9 @@ var panel = (function(){
 
 		_.each(essenses, function(essense){
 
-			essense.destroy();
+			window.requestAnimationFrame(() => {
+				essense.destroy();
+			})
 
 		})
 

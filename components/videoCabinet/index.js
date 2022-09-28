@@ -178,7 +178,10 @@ var videoCabinet = (function () {
 
 						if (!err.text) err.text = 'GET_VIDEOS_FROM_SERVER_VIDEOCABINET';
 
-					  	sitemessage(helpers.parseVideoServerError(err));
+						helpers.parseVideoServerError(err)
+
+					  	//sitemessage(helpers.parseVideoServerError(err));
+
 
 						return [];
 					});
@@ -1038,7 +1041,7 @@ var videoCabinet = (function () {
 								element.find('.remove').on('click', function () {
 									const { host } = meta;
 
-									dialog({
+									new dialog({
 										html: self.app.localization.e('removeVideoDialog'),
 										btn1text: self.app.localization.e('remove'),
 										btn2text: self.app.localization.e('ucancel'),
@@ -1090,7 +1093,7 @@ var videoCabinet = (function () {
 									ext: ['png', 'jpeg', 'jpg', 'webp', 'jfif'],
 
 									dropZone: element.find('.editPreview'),
-
+									app : self.app,
 									multiple: false,
 
 									action: function (file, clbk) {
@@ -1124,16 +1127,28 @@ var videoCabinet = (function () {
 										.getDirectVideoInfo({ id: meta.id }, { host: meta.host })
 										.then((videoData) => {
 											self.fastTemplate('editDescription', (rendered) => {
-												dialog({
+												new dialog({
 													html: rendered,
 
 													wrap: true,
 
 													success: function (d) {
-														const name = d.el.find('.videoNameInput').val();
+														const name = d.el.find('.videoNameInput').val() || '';
 														const description = d.el
 															.find('.videoDescriptionInput')
 															.val();
+
+														if (!name || name.length < 3) {
+															sitemessage(self.app.localization.e('videoNameIsIncorrectShort'));
+
+															return false;
+														}
+
+														if (name.length > 120) {
+															sitemessage(self.app.localization.e('videoNameIsIncorrectLong'));
+
+															return false;
+														}
 
 														const parameters = {};
 
@@ -1145,7 +1160,7 @@ var videoCabinet = (function () {
 
 														const { host } = videoLink;
 
-														return self.app.peertubeHandler.api.videos
+														self.app.peertubeHandler.api.videos
 															.update(videoLink, parameters, { host })
 															.then(() => {
 																const textContainert = el.videoContainer.find(
@@ -1161,14 +1176,14 @@ var videoCabinet = (function () {
 																		.find('.videoDescriptionText')
 																		.text(description);
 
-																d.close();
+                                d.destroy();
 																tagElement = {};
 																tagArray = [];
 															})
 															.catch((err = {}) => {
 																tagElement = {};
 																tagArray = [];
-																d.close();
+																d.destroy();
 
 																sitemessage(
 																	`${self.app.localization.e(
@@ -1236,13 +1251,20 @@ var videoCabinet = (function () {
 					},
 
 					_addtag(tag) {
-						if (tagArray.length < 5) {
-							removeEqual(tagArray, tag);
-							tagArray.push(tag);
-							return true;
+
+						var tta = _.uniq(_.clone(tagArray).concat([tag]))
+
+						var bycategories = self.app.platform.sdk.categories.fromTags(tta, self.language.v)
+
+						if (bycategories.categories.length > 2){
+							return false
 						}
 
-						return false;
+						if (tta.length > 15){return false}
+
+						tagArray = tta
+
+						return true;
 					},
 
 					addTags(tags) {
@@ -1463,7 +1485,7 @@ var videoCabinet = (function () {
 				el.searchInput = el.c.find('.videoSearchInput');
 				el.searchButton = el.c.find('.videoSearchButton');
 
-				el.bonusProgramReferContainer = el.c.find('.referContainer');
+				// el.bonusProgramReferContainer = el.c.find('.referContainer');
 				el.bonusProgramContainerViews = el.c.find('.leaderBoardContainerViews');
 				el.bonusProgramContainerStars = el.c.find(
 					'.leaderBoardContainerRatings',
@@ -1499,17 +1521,17 @@ var videoCabinet = (function () {
 						return Promise.resolve(null);
 					})
 					.then((r) => {
-						var addtext = ' / ' + (r ? r.histreferals : '&mdash;');
-
-						renders.bonusProgram(
-							{
-								parameterName: 'ReferralUsers',
-								value:
-									(deep(app, 'platform.sdk.user.storage.me.rc') || '0') +
-									addtext,
-							},
-							el.bonusProgramReferContainer,
-						);
+						// var addtext = ' / ' + (r ? r.histreferals : '&mdash;');
+						//
+						// renders.bonusProgram(
+						// 	{
+						// 		parameterName: 'ReferralUsers',
+						// 		value:
+						// 			(deep(app, 'platform.sdk.user.storage.me.rc') || '0') +
+						// 			addtext,
+						// 	},
+						// 	el.bonusProgramReferContainer,
+						// );
 					});
 
 				const cabinetLoadingStartTime = performance.now();
@@ -1596,7 +1618,9 @@ var videoCabinet = (function () {
 
 	self.stop = function () {
 		_.each(essenses, function (essense) {
-			essense.destroy();
+			window.requestAnimationFrame(() => {
+				essense.destroy();
+			})
 		});
 	};
 

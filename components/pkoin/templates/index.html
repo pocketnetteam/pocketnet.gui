@@ -1,10 +1,10 @@
 <div id="<%-module.map.id%>">
 
-	<div class="content keyboardsafe">
+	<div class="content keyboardsafe <%-format%>">
 		<div class="top">
 			<div class="title">
 				<span>
-					<%-e('thankTheAuthor')%>
+					<%-e(format === 'liftUpThePost' ? 'liftUpThePost' : 'thankTheAuthor')%>
 				</span>
 			</div>
 			<div class="buyButtonWrapper">
@@ -65,7 +65,7 @@
 				</div>
 				<div class="description">
 					<div class="name"><%- name %></div>
-					<% if(about) {%><div class="about"><%- about %></div>
+					<% if(about) {%><div class="about"><%= about %></div>
 					<% } else { %> 
 						<% if(d) {%>
 							<div class="label"><%=e('joined')%> <b><%-_d.yyyymmdd('.')%></b></div>

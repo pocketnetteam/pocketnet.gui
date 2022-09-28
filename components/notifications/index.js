@@ -496,7 +496,7 @@ var notifications = (function(){
 			wnd : {
 				//header : "notifications",
 				class : 'wndnotifications normalizedmobile maxheight',
-				parallaxselector : '.wndback,.wndheader'
+				//parallaxselector : '.wndback,.wndheader'
 			}
 
 		}
@@ -516,7 +516,9 @@ var notifications = (function(){
 
 		_.each(essenses, function(essense){
 
-			essense.destroy();
+			window.requestAnimationFrame(() => {
+				essense.destroy();
+			})
 
 		})
 

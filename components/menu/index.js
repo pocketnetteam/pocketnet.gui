@@ -7,8 +7,6 @@ var menu = (function(){
 	var Essense = function(){
 
 		var el = {},
-			sitenameToNav = null,
-			plissing = null,
 			authorForSearch = null,
 			menusearch = null;
 
@@ -38,23 +36,26 @@ var menu = (function(){
 
 			var s = self.app.platform.sdk.newmaterials.storage
 
-			if(!el.c) return
+			window.requestAnimationFrame(() => {
 
-			_.each(s, function(v, k){
+				if(!el.c) return
+				
 
-				var _el = el.c.find('.lentaunseen[key="'+k+'"]')
+				_.each(s, function(v, k){
 
-				if(v > 99) v = '99'
+					var _el = el.c.find('.lentaunseen[key="'+k+'"]')
 
-				_el.html(v)
+					if(v > 99) v = '99'
 
-				if(v) _el.addClass('hasunseen')
-				else _el.removeClass('hasunseen')
+					_el.html(v)
+
+					if(v) _el.addClass('hasunseen')
+					else _el.removeClass('hasunseen')
+
+				})
 
 			})
 		}
-
-		var balanceHash;
 
 		var notifications = {}
 
@@ -93,62 +94,21 @@ var menu = (function(){
 			},
 
 			ah : function(el, c){
-				if (c > 0){
-					el.addClass('amountHave')
-				}
-				else
-				{
-					el.removeClass('amountHave')
-				}
 
-				el.find('.amount').html(c)
+				window.requestAnimationFrame(() => {
+					if (c > 0){
+						el.addClass('amountHave')
+					}
+					else
+					{
+						el.removeClass('amountHave')
+					}
+
+					el.find('.amount').html(c)
+				})
 			},
 
-			sitenameToNav : function(){
-
-				return
-				
-				if(!events.navinit.el) return
-				
-				var pn = self.app.nav.current.href
-				
-				if ( 
-					!((menusearch && menusearch.active) || parameters().ss) && 
-					(pn == 'index' || pn == 'author') && self.app.lastScrollTop > 45)
-					
-					{
-
-					if(!el.nav.hasClass('active')){
-
-						el.nav.addClass('active')
-						el.c.addClass('menupanelactive')
-
-						el.nav.find('.pcenterLabel').removeClass('active')
-
-						var r = parameters(self.app.nav.current.completeHref, true).r || 'empty'
-
-						var video = parameters(self.app.nav.current.completeHref, true).video;
-
-						if (video) r = 'video'
-
-						if (pn == 'index'){
-							el.nav.find('.pcenterLabel[r="'+r+'"]').addClass('active')
-						}
-
-					}
-						
-				}
-				else
-				{	
-
-					if (el.nav.hasClass('active')){
-						el.c.removeClass('menupanelactive')
-						el.nav.removeClass('active')
-					}
-					
-				}
-				
-			}
+			
 		}
 
 		var events = {
@@ -243,7 +203,7 @@ var menu = (function(){
 			activate : {
 				click : function(){
 
-					dialog({
+					new dialog({
 						header : self.app.localization.e('id167'),
 						html : self.app.localization.e('id168'),
 						class : "one",
@@ -272,15 +232,19 @@ var menu = (function(){
 
 					self.app.platform.sdk.registrations.clbks.menu = function(){
 
-						if (!self.app.platform.sdk.registrations.showprivate()){
-							
-							el.closest('.keyexportWrapper').addClass('hidden')
+						window.requestAnimationFrame(() => {
 
-						}
-						else
-						{
-							el.closest('.keyexportWrapper').removeClass('hidden')
-						}
+							if (!self.app.platform.sdk.registrations.showprivate()){
+								
+								el.closest('.keyexportWrapper').addClass('hidden')
+
+							}
+							else
+							{
+								el.closest('.keyexportWrapper').removeClass('hidden')
+							}
+
+						})
 
 						
 					}
@@ -407,7 +371,10 @@ var menu = (function(){
 
 					if (menusearch) {
 						menusearch.setactive(true)
-						menusearch.focus()
+						window.requestAnimationFrame(() => {
+							menusearch.focus()
+
+						})
 					}
 
 					
@@ -449,7 +416,9 @@ var menu = (function(){
 						var pn = self.app.nav.current.href
 
 						if (cl){
-							menusearch.setvalue('')
+
+							if (menusearch)
+								menusearch.setvalue('')
 							closesearch()
 
 						}
@@ -469,6 +438,9 @@ var menu = (function(){
 
 									helpers.closeResults()
 
+									if (menusearch)
+										menusearch.setactive(false)
+
 								});
 
 
@@ -485,6 +457,9 @@ var menu = (function(){
 
 									helpers.closeResults()
 
+									if (menusearch)
+										menusearch.setactive(false)
+
 									close()
 
 									if (name){
@@ -497,11 +472,18 @@ var menu = (function(){
 						}, p)
 					}
 
-					if (menusearch) 
+					if (menusearch) {
 						menusearch.destroy()
 
-					menusearch = new search(el.postssearch, {
+						menusearch = null
+					}
+
+					menusearch = mobsearch(el.postssearch, {
 						placeholder : self.app.localization.e('e13139'),
+						icon : '<i class="fas fa-search"></i>',
+						app : self.app,
+						mobileSearch : self.app.width <= 768,
+
 
 						id : 'searchOnBastyon',
 
@@ -621,9 +603,13 @@ var menu = (function(){
 
 									if (clbk) clbk(true)
 
-									menusearch.setactive(true)
+									if (menusearch){
+										menusearch.setactive(true)
 									
-									menusearch.focus()
+										menusearch.focus()
+									}
+
+									
 
 									return
 								}
@@ -654,7 +640,9 @@ var menu = (function(){
 
 								self.nav.api.go(p)
 
-								helpers.closeResults()
+
+								if (menusearch)
+									menusearch.clear()
 
 								if (clbk)
 									clbk(true)
@@ -663,19 +651,11 @@ var menu = (function(){
 
 							clear : function(value){
 								
-								//menusearch.blur()
 
-								if(isTablet()){
+								if(isTablet() && menusearch){
 									menusearch.setactive(false)
 								}
 
-								if(parameters().sst || parameters().ss){
-									self.nav.api.go({
-										href : 'index',
-										history : true,
-										open : true
-									})
-								}
 								
 							},
 
@@ -685,21 +665,20 @@ var menu = (function(){
 
 							active : function(a){
 
+								window.requestAnimationFrame(() => {
+									if (a){
+										el.c.addClass('searchactive')
+									}
+									else{
+										el.c.removeClass('searchactive')
+									}
+								})
 
-								if (a || (parameters().ss || parameters().sst)){
-									el.c.addClass('searchactive')
-								}
-								else{
-									el.c.removeClass('searchactive')
-								}
-
-								actions.sitenameToNav()
 							},
 
 							blur : function(value){
-
 								setTimeout(function(){
-									if(!isTablet()){
+									if(!isTablet() && menusearch){
 										menusearch.setactive(false)
 									}
 								}, 300)
@@ -716,13 +695,15 @@ var menu = (function(){
 				init : function(el){
 					
 					var action = function(){
-						if(!_.isEmpty(self.app.errors.state)){
-							el.removeClass('hidden')
-						}
+						window.requestAnimationFrame(() => {
+							if(!_.isEmpty(self.app.errors.state)){
+								el.removeClass('hidden')
+							}
 
-						else{
-							el.addClass('hidden')	
-						}
+							else{
+								el.addClass('hidden')	
+							}
+						})
 					}
 
 					action()
@@ -806,6 +787,8 @@ var menu = (function(){
 
 						    	numberStep: function(now, tween) {
 
+									console.log('step')
+
 						        	var number = Number(value + now).toFixed(8),
 						            	target = $(tween.elem);
 
@@ -815,7 +798,6 @@ var menu = (function(){
 						    	},
 
 						    }, rand(400, 1200), function(){
-
 						    	el.removeClass(c)
 						    });
 						}
@@ -903,6 +885,16 @@ var menu = (function(){
 		}
 
 		var initEvents = function(){
+
+			self.app.events.resize.menu = function(){
+				if(self.app.width <= 768 && menusearch){
+					events.searchinit.init()
+				}
+
+				if(self.app.width > 768 && !menusearch){
+					events.searchinit.init()
+				}
+			}
 
 			self.app.platform.matrixchat.clbks.ALL_NOTIFICATIONS_COUNT.menu2 = function(count){
 				actions.ahnotify(null, count, 'chat')
@@ -1006,20 +998,6 @@ var menu = (function(){
 
 			self.app.user.isState(function(state){
 
-				if((parameters().ss || parameters().sst) && (self.app.nav.get.pathname() == 'index')){
-
-					if (menusearch) {
-
-						var sr = ''
-
-						if(!parameters().ss && parameters().sst) sr = '#'
-
-						menusearch.setvalue(sr + (parameters().ss || parameters().sst).replace('tag:', "#"))
-						menusearch.setactive(true)
-						
-					}
-
-				}
 				
 			})
 
@@ -1049,7 +1027,7 @@ var menu = (function(){
 					data.lkey = app.localization.current()
 					data.theme = self.app.platform.sdk.theme.current == "white" ? 'white' : 'black'
 
-					data.haschat = self.app.platform.matrixchat.core
+					data.haschat = true ///self.app.platform.matrixchat.core || self.app.platform.matrixchat.inited || self.app.platform.matrixchat.initing
 
 				if(p.state){
 
@@ -1085,7 +1063,7 @@ var menu = (function(){
 
 					menusearch = null
 
-
+				delete self.app.events.resize.menu
 
 				delete self.app.platform.sdk.newmaterials.clbks.update.menu
 
@@ -1122,7 +1100,7 @@ var menu = (function(){
 
 			blursearch : function(){
 
-				if(menusearch) {
+				if (menusearch) {
 					menusearch.blur()
 
 					if(!menusearch.getvalue() && isTablet()){
@@ -1134,15 +1112,16 @@ var menu = (function(){
 			},
 
 			showsearch : function(v){
-
-				if (el.c){
-					if (v){
-						el.c.addClass('searchactive')
+				window.requestAnimationFrame(() => {
+					if (el.c){
+						if (v){
+							el.c.addClass('searchactive')
+						}
+						else{
+							el.c.removeClass('searchactive')
+						}
 					}
-					else{
-						el.c.removeClass('searchactive')
-					}
-				}
+				})
 
 				
 
@@ -1192,7 +1171,9 @@ var menu = (function(){
 
 		_.each(essenses, function(essense){
 
-			essense.destroy();
+			window.requestAnimationFrame(() => {
+				essense.destroy();
+			})
 
 		})
 

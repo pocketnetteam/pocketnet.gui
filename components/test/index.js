@@ -5,6 +5,8 @@ var test = (function(){
 	var mdl = self;
 
 	var essenses = {};
+	
+	var userOptions;
 
 	var Essense = function(p){
 
@@ -150,10 +152,10 @@ var test = (function(){
 
 				renders.options();
 			},
-			ref : function(resref){
+			ref : function(){
 
 
-				if (ref && firstTime){
+				if (ref && firstTime && !self.app.dsubref){
 					localStorage[self.app.platform.sdk.address.pnet().address + 'subscribeRef'] = ref.address										
 				}
 
@@ -372,7 +374,7 @@ var test = (function(){
 												
 												actions.upanel()
 
-												//actions.ref(resref)
+												actions.ref()
 
 												self.closeContainer()
 												
@@ -574,7 +576,7 @@ var test = (function(){
 							var hash = tempInfo[parameter.id].toLowerCase().replace(/[^a-z]/g,'')
 
 
-							if (hash.indexOf('pocketnet') > -1) {
+							if (hash.indexOf('pocketnet') > -1 && !self.app.platform.whiteList.includes(tempInfo.address)) {
 
 								el.c.find('.errorname').fadeIn();
 								el.c.find('.errorname span').html(self.app.localization.e('namereservedpn'));	
@@ -631,7 +633,7 @@ var test = (function(){
 			},
 		}
 
-		var userOptions = {
+		userOptions = {
 			name : new Parameter({
 				name : self.app.localization.e('unickname'),
 				placeholder : self.app.localization.e('unickname'),
@@ -737,7 +739,7 @@ var test = (function(){
 
 					mdl.fastTemplate('addaddress', function(rendered){
 
-						dialog({
+						new dialog({
 							html : rendered,
 
 							wrap : true,
@@ -1090,9 +1092,9 @@ var test = (function(){
 
 			renders.options();
 
-			self.sdk.node.transactions.get.unspent(function(unspent){
+			/*self.sdk.node.transactions.get.unspent(function(unspent){
 				renders.unspent(unspent)
-			})
+			})*/
 
 
 			self.app.platform.ws.messages.transaction.clbks.utemp = function(data){

@@ -6,6 +6,7 @@ html.openapipnet .calltoaction {
   background: rgba(228, 221, 222, 0.1);
   padding: 1em;
   text-align: center;
+  display: none;
 }
 html.openapipnet .calltoaction .text {
   padding: 0 1em;
@@ -15,6 +16,9 @@ html.openapipnet .calltoaction .text span {
 }
 html.openapipnet .calltoaction .buttonWrapper {
   padding: 1em;
+}
+html.openapipnet.openapiready .calltoaction {
+  display: block;
 }
 html.openapipnet .headeropenapi {
   display: flex;

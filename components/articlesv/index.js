@@ -53,7 +53,7 @@ var articlesv = (function(){
 
 			delete : function(article){
 
-				var d = dialog({
+				var d = new dialog({
 					html:  self.app.localization.e('deletedraftquestion'),
 					btn1text: self.app.localization.e('dyes'),
 					btn2text: self.app.localization.e('dno'),
@@ -253,7 +253,9 @@ var articlesv = (function(){
 
 		_.each(essenses, function(essense){
 
-			essense.destroy();
+			window.requestAnimationFrame(() => {
+				essense.destroy();
+			})
 
 		})
 
