@@ -254,10 +254,10 @@
   font-size: 1.7em;
   font-weight: 300;
   text-align: center;
-  max-width: 600px;
+  max-width: 300px;
 }
 #registration .mWrapper .ucaptcha .inputWrapper {
-  max-width: 600px;
+  max-width: 300px;
   margin: 1.5em auto;
 }
 #registration .mWrapper .ucaptcha input {
@@ -268,6 +268,7 @@
   -o-transition: 0.3s;
   -webkit-transition: 0.3s;
   transition: 0.3s;
+  border-radius: 0;
   width: 100%;
   background: transparent;
   text-align: center;

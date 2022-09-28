@@ -2243,16 +2243,19 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					
 					captcha = hexCaptcha({
 						text: {
-							chars: 'ABCDEFGHJKMNPQRSTUVWXZabcdefghjkmnpqrstuvwxz23456789'
+							chars: 'ABCDEFGHJKMNPQRSTUVWXZ23456789'
 						}
 					});
 					captcha.id = f.makeid();
 					
 					return new Promise((resolve, reject) => {
 						captcha.generate().then(({ frames, layers }) => {
+
+							console.log('captcha', captcha)
+
 							captchas[captcha.id] = {
 								text: captcha.text.toLowerCase(),
-								angle: captcha.angle,
+								angles: captcha.angles,
 								id: captcha.id,
 								done: false,
 								time: f.now(),
@@ -2276,7 +2279,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				authorization: 'signaturelight',
 				path: '/makecaptcha',
 
-				action: function ({ captcha, ip, text }) {
+				action: function ({ captcha, ip, text, angles = [0,0,0,0,0,0,0] }) {
 
 					var _captcha = captcha
 
@@ -2295,7 +2298,26 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 						});
 					}
 
+					if(captcha.angles && captcha.angles.length && captcha.angles.length == 7){
+
+						var check = angles.length && angles.length == 7 &&
+
+							angles[0] == -captcha.angles[0] &&
+							angles[1] == -captcha.angles[1] &&
+							angles[2] == -captcha.angles[2] &&
+							angles[3] == -captcha.angles[3] &&
+							angles[4] == -captcha.angles[4] &&
+							angles[5] == -captcha.angles[5] &&
+							angles[6] == -captcha.angles[6] 
+
+						if(!check)
+							return Promise.reject('captchanotequal_angles');
+					}
+
 					if (captcha.text == text.toLocaleLowerCase()) {
+
+						
+
 						captcha.done = true;
 
 						delete captchaip[ip];

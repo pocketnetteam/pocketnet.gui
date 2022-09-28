@@ -12254,11 +12254,12 @@ Platform = function (app, listofnodes) {
         
         
             },
-            make: function (text, clbk, proxyoptions) {
+            make: function (text, angles, clbk, proxyoptions) {
 
                 self.app.api.fetchauth('makecaptcha', {
                     captcha: this.current || null,
-                    text: text
+                    text: text,
+                    angles
                 }, proxyoptions).then(d => {
                     self.sdk.captcha.done = d.id
 
