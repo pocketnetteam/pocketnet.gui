@@ -2341,3 +2341,6 @@ _l.postedVideos = "Posted Videos"
 _l.unPostedVideos = "Unposted Videos"
 _l.videoIsPosting = "Posting"
 _l.noUnposted = "No Unposted Videos"
+
+_l.sortByComments = "Comments";
+_l.sortByRating = "Number of ratings";

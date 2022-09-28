@@ -18746,7 +18746,7 @@ Platform = function (app, listofnodes) {
                                 // orderby
                                 parameters.push(p.orderby || '');
                                 // ascdesc
-                                parameters.push(p.ascdesc || 'desc');
+                                // parameters.push(p.ascdesc || 'desc');
                             }
 
                             s.getex(parameters, function (data, error) {

@@ -2131,3 +2131,6 @@ _l.postedVideos = "Опубликованные Видео"
 _l.unPostedVideos = "Неопубликованные Видео"
 _l.videoIsPosting = "Загрузка"
 _l.noUnposted = "Неопубликованные видео отсутствуют"
+
+_l.sortByComments = "Количество комментариев";
+_l.sortByRating = "К-во оценок";

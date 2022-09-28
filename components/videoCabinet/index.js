@@ -44,8 +44,8 @@ var videoCabinet = (function () {
 		const descriptionCache = {};
 
 		const sorting = {
-			sortType: 'createdAt',
-			sortDirection: '-',
+			sortType: 'id',
+			sortDirection: 'desc',
 		};
 
 		//actions object for functions received from external object (for example, when loading from 'lenta')
@@ -490,6 +490,9 @@ var videoCabinet = (function () {
 					height: 0,
 					type: 'video',
 					keyword: encodeURI(ed.search || ''),
+					orderby: sorting.sortType || '',
+					// Return after new node release
+					// ascdesc: sorting.sortDirection || 'desc',
 				};
 
 				return new Promise((res) => {
@@ -719,7 +722,7 @@ var videoCabinet = (function () {
 						.filter((video) => video)
 						.flat()
 				).sort((videoA, videoB) => {
-					if (sorting.sortType === 'createdAt') {
+					if (sorting.sortType === 'id') {
 						const sortingValBool = sorting.sortDirection
 							? moment(videoB[sorting.sortType]).isAfter(
 								videoA[sorting.sortType],
@@ -1695,9 +1698,9 @@ var videoCabinet = (function () {
 						//get video sorting params from localstorage
 						var data = {
 							selectedType:
-								localStorage.getItem('videoCabinetSortType') || 'createdAt',
+								localStorage.getItem('videoCabinetSortType') || 'id',
 							selectedDirection:
-								localStorage.getItem('videoCabinetSortDirection') || '-',
+								localStorage.getItem('videoCabinetSortDirection') || 'desc',
 							hasAccess: true,
 							inLentaWindow: ed.inLentaWindow,
 							scrollElementName: ed.scrollElementName || '',
