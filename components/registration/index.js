@@ -1841,7 +1841,7 @@ var registration = (function(){
 					inauth : deep(p, 'settings.essenseData.inauth') || false
 				};
 
-				regproxy = self.app.api.get.byid('1.pocketnet.app:8899:8099')
+				//regproxy = self.app.api.get.byid('1.pocketnet.app:8899:8099')
 
 				if (localStorage['regproxy']){
 					regproxy = self.app.api.get.byid(localStorage['regproxy'])
@@ -1850,7 +1850,7 @@ var registration = (function(){
 				self.app.api.get.proxywithwallet().then(r => {
 					//const isHex = (p) => p?.info?.captcha?.hexCaptcha;
 
-					console.log('regproxy', regproxy)
+					console.log('regproxy', r, regproxy)
 
 					if(r && !regproxy) {
 						regproxy = r

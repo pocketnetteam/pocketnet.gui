@@ -1016,6 +1016,8 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				mem[i] = v / (1024 * 1024)
 			})
 
+			console.log('settings.server.hexCaptcha', settings.server.hexCaptcha)
+
 			return {
 				status: status,
 				test : self.test,
@@ -1028,11 +1030,13 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				wallet: self.wallet.info(compact),
 				remote: remote.info(compact),
 				admins: settings.admins,
+				
 				peertube : self.peertube.info(compact),
 				tor: self.torapplications.info(compact),
 				captcha: {
 					ip: _.toArray(captchaip).length,
-					all: _.toArray(captchas).length
+					all: _.toArray(captchas).length,
+					hexCaptcha : settings.server.hexCaptcha || false,
 				},
 
 				memory: mem,
@@ -1852,7 +1856,8 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				path: '/info',
 				action: function (message) {
 					const info = self.kit.info(true);
-								info.captcha.hexCaptcha = true;
+
+					//info.captcha.hexCaptcha = true;
 					
 					return Promise.resolve({
 						data: {

@@ -1262,6 +1262,8 @@ var Api = function(app){
             
                     var wallet = deep(r, 'info.wallet.addresses.registration') || {}
                     var hexCaptcha = p.hasHexCaptcha()
+
+                    console.log('hexCaptcha', hexCaptcha)
                     
                     if (wallet.ready && wallet.unspents /*&& hexCaptcha*/){
                         f = p
@@ -1285,6 +1287,9 @@ var Api = function(app){
             return pretry(function(){
                 return e || f
             }).then(() => {
+
+                console.log("E", e, f)
+
                 return Promise.resolve(f)
             })
 
