@@ -491,8 +491,7 @@ var videoCabinet = (function () {
 					type: 'video',
 					keyword: encodeURI(ed.search || ''),
 					orderby: sorting.sortType || '',
-					// Return after new node release
-					// ascdesc: sorting.sortDirection || 'desc',
+					ascdesc: sorting.sortDirection || 'desc',
 				};
 
 				return new Promise((res) => {
