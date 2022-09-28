@@ -6510,6 +6510,9 @@ html.mobileview #content .work {
   html.allcontent #footerWrapper {
     background: #051b28;
   }
+  html.allcontent.cameraenabled body {
+    background: transparent;
+  }
 }
 html.mobileview.keyboadrshown .focusedinput {
   position: fixed!important;
