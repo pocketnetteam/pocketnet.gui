@@ -2456,6 +2456,8 @@ Platform = function (app, listofnodes) {
         offline: {},
 
         _focus: {},
+        _unfocus: {},
+
 
         focus: function (time) {
 
@@ -2473,6 +2475,12 @@ Platform = function (app, listofnodes) {
 
             })
 
+        },
+
+        unfocus: function () {
+            _.each(self.clbks._unfocus, function (f) {
+                f()
+            })
         },
 
         api: {
@@ -29756,6 +29764,8 @@ Platform = function (app, listofnodes) {
             self.focus = false;
 
             unfocustime = platform.currentTime()
+
+            self.clbks.unfocus();
 
             setTimeout(function(){
 

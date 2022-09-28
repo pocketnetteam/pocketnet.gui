@@ -44,6 +44,7 @@ var camerapreview = (function(){
 		var images = {}
 		var thubnails = {}
 		var imagesadding = false
+		var libraryProcessId = null
 
 		
 
@@ -115,8 +116,9 @@ var camerapreview = (function(){
             }).then(imgs => {
 
 				var fls = _.map(imgs, (img) => {
+
 					return {
-						ext : 'jpg',
+						ext : fkit.extensionBase64(img),
 						base64 : img
 					}
 				})
@@ -279,10 +281,23 @@ var camerapreview = (function(){
 				if (window.cordova.plugins.photoLibrary)
 					return new Promise((resolve, reject) => {
 
+						var pid = libraryProcessId = makeid()
+
 						window.cordova.plugins.photoLibrary.getLibrary(
 							(result) => {
+
+								if(pid != libraryProcessId) return
+
+								console.log('photos', photos)
+
+								photos = photos.concat(result.library)
+
+								if(result.isLastChunk){
+									libraryProcessId = null
+								}
 	
-								photos = result.library
+								//photos = result.library
+								
 	
 								/*_.each(photos, (p) => {
 									getthubnail(p.id)
@@ -295,16 +310,18 @@ var camerapreview = (function(){
 	
 							},
 							(err) => {
+
+								libraryProcessId = null
 								
 								permissions.init().then(resolve).catch(reject)
 	
 							},
 							{ // optional options
-								//chunkTimeSec: 0.5,
-								thumbnailWidth: 128,
-								//itemsInChunk: 20,
-								thumbnailHeight: 128,
-								quality: 0.85,
+								chunkTimeSec: 0.5,
+								//thumbnailWidth: 128,
+								itemsInChunk: 20,
+								//thumbnailHeight: 128,
+								//quality: 0.5,
 								includeAlbumData: true // default
 							}
 						)
@@ -386,14 +403,18 @@ var camerapreview = (function(){
         }
 
 		var actions = {
-			startcamera : function(){
-				if (data.cameraenabled){
-					CameraPreview.startCamera(getcameraoptions());
+			camerastate : function(){
+				if(!data.gallery){
+					actions.startcamera()
 				}
 				else{
+					actions.stopcamera()
 				}
-
-				
+			},
+			startcamera : function(){
+				if (data.cameraenabled && !data.gallery){
+					CameraPreview.startCamera(getcameraoptions());
+				}
 			},
 			stopcamera : function(){
 				if (data.cameraenabled){
@@ -505,6 +526,8 @@ var camerapreview = (function(){
 				else{
 					el.c.removeClass('showgallery')
 				}
+
+				actions.camerastate()
 			},
 
 			selectedButton : function(){
@@ -685,6 +708,15 @@ var camerapreview = (function(){
 
 				
 			})
+
+			self.app.platform.clbks._focus.camera = function(time){
+				actions.startcamera()
+			}
+			self.app.platform.clbks._unfocus.camera = function(time){
+				actions.stopcamera()
+			}
+
+			
 		}
 
 		return {
@@ -699,6 +731,9 @@ var camerapreview = (function(){
 			},
 
 			destroy : function(){
+
+				delete self.app.platform.clbks._unfocus.camera
+				delete self.app.platform.clbks._focus.camera
 
 				data.selected = {}
 

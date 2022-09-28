@@ -11062,9 +11062,16 @@ var fkit = {
         'image/png' : 'png',
         'image/jpeg' : 'jpg',
         'image/jpg' : 'jpg',
+		'image/gif' : 'gif',
         'image/webp' : 'webp',
         'image/jfif' : 'jfif'
     },
+	extensionBase64 : function(base64){
+		if(!base64) return ''
+
+		return fkit.extensions[base64.split(';')[0].replace('data:', '')] || ''
+
+	},
     getExtension: function (file) {
         var name = file.name.split('.');
         var ext = name[name.length - 1].toLowerCase();
