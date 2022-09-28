@@ -197,12 +197,12 @@ var videoCabinet = (function () {
 
 				const videoPortionElement = renders.newVideoContainer();
 
-				Object.keys(peertubeServers).forEach((server) => {
-					peertubeServers[server] = {
-						videos: [],
-						start: 0,
-					};
-				});
+				// Object.keys(peertubeServers).forEach((server) => {
+				//   peertubeServers[server] = {
+				//     videos: [],
+				//     start: 0,
+				//   };
+				// });
 
 				return videoPortionElement;
 			},
@@ -273,7 +273,6 @@ var videoCabinet = (function () {
 			},
 
 			getFullPageInfo(videoPortionElement, videos = null, fromBlockChainFlag) {
-
 				renders.videos(videos, videoPortionElement, fromBlockChainFlag);
 
 				//getting and rendering bonus program status for views and ratings (same template)
@@ -490,6 +489,7 @@ var videoCabinet = (function () {
 					count: perServerCounter,
 					height: 0,
 					type: 'video',
+					keyword: encodeURI(ed.search || ''),
 				};
 
 				return new Promise((res) => {
@@ -670,38 +670,41 @@ var videoCabinet = (function () {
 			},
 
 			onSearchVideo() {
-				// const searchString = el.searchInput.val();
-				// if ((ed.search || '') == (searchString || '')) return;
-				// ed.search = searchString;
-				// const videoPortionElement = actions.resetHosts();
-				// actions
-				//   .updateAllHosts({ search: searchString })
-				//   .then(() => {
-				//     renders.videos(null, videoPortionElement);
-				//   })
-				//   .catch(() => {
-				//     renders.videos(null, videoPortionElement);
-				//   });
+				const searchString = el.searchInput.val();
+
+				if ((ed.search || '') == (searchString || '')) return;
+				ed.search = searchString;
+
+				const videoPortionElement = actions.resetHosts();
+
+				actions
+					.getBlockChainVideos('clear')
+					.then((data) => {
+						renders.videos(data, videoPortionElement, true);
+					})
+					.catch(() => {
+						renders.videos(null, videoPortionElement, false);
+					});
 			},
 
 			onVideoSort() {
-				// const sort = `${el.sortDirectionSelect.val()}${el.sortTypeSelect.val()}`;
-				// sorting.sortType = el.sortTypeSelect.val();
-				// sorting.sortDirection = el.sortDirectionSelect.val();
-				// localStorage.setItem('videoCabinetSortType', el.sortTypeSelect.val());
-				// localStorage.setItem(
-				//   'videoCabinetSortDirection',
-				//   el.sortDirectionSelect.val(),
-				// );
-				// const videoPortionElement = actions.resetHosts();
-				// actions
-				//   .updateAllHosts({ sort })
-				//   .then(() => {
-				//     renders.videos(null, videoPortionElement);
-				//   })
-				//   .catch(() => {
-				//     renders.videos(null, videoPortionElement);
-				//   });
+				sorting.sortType = el.sortTypeSelect.val();
+				sorting.sortDirection = el.sortDirectionSelect.val();
+				localStorage.setItem('videoCabinetSortType', el.sortTypeSelect.val());
+				localStorage.setItem(
+					'videoCabinetSortDirection',
+					el.sortDirectionSelect.val(),
+				);
+				const videoPortionElement = actions.resetHosts();
+
+				actions
+					.getBlockChainVideos('clear')
+					.then((data) => {
+						renders.videos(data, videoPortionElement, true);
+					})
+					.catch(() => {
+						renders.videos(null, videoPortionElement, false);
+					});
 			},
 		};
 
@@ -1627,7 +1630,6 @@ var videoCabinet = (function () {
 
 				//     return share.url;
 				//   });
-				//   debugger;
 				// if (unpostedVideosParsed[self.app.user.address.value]) {
 				//   unpostedVideosParsed[self.app.user.address.value].push(
 				//     ...postingVideos,

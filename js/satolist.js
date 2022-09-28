@@ -18482,6 +18482,7 @@ Platform = function (app, listofnodes) {
                         method : 'getprofilefeed'
                     })
 
+
                 },
 
                 getsubscribesfeed : function(p, clbk, cache){
@@ -18737,6 +18738,15 @@ Platform = function (app, listofnodes) {
                                 parameters.push('');
                                 parameters.push(p.depth)
 
+                            }
+                            
+                            if (mtd === 'getprofilefeed') {
+                                // keyword
+                                parameters.push(p.keyword || '');
+                                // orderby
+                                parameters.push(p.orderby || '');
+                                // ascdesc
+                                parameters.push(p.ascdesc || 'desc');
                             }
 
                             s.getex(parameters, function (data, error) {
