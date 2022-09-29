@@ -40,8 +40,10 @@ const os = require("os");
 const AutoLaunch = require('auto-launch');
 const contextMenu = require('electron-context-menu');
 const path = require('path');
+const url = require('url');
 const http = require('http');
 const https = require('https');
+const mime = require('mime-types');
 const notifier = require('node-notifier');
 
 contextMenu({
@@ -703,8 +705,10 @@ function createWindow() {
     const Storage = app.getPath('userData');
     const PostsDir = 'posts';
     const VideosDir = 'videos';
+    const ImagesDir = 'images';
     const getPostFolder = (postId) => path.join(Storage, PostsDir, postId);
     const getVideoFolder = (postId, videoId) => path.join(getPostFolder(postId), VideosDir, videoId);
+    const getImageFolder = (postId) => path.join(getPostFolder(postId), ImagesDir);
 
     ipcMain.removeHandler('saveShareData');
     ipcMain.handle('saveShareData', async (event, shareData) => {
@@ -717,7 +721,7 @@ function createWindow() {
 
         const jsonData = JSON.stringify(shareData);
 
-        await asyncFs.writeFile(jsonDir, jsonData, { overwrite: false });
+        await asyncFs.writeFile(jsonDir, jsonData, { overwrite: true });
 
         return shareDir;
     });
@@ -767,6 +771,30 @@ function createWindow() {
             });
         }
 
+        function writeImage(url, destinationPath) {
+            return new Promise((resolve, reject) => {
+                let isHttps = /^https:/;
+                let isHttp = /^http:/;
+                let protocol;
+
+                if (isHttp.test(url))
+                    protocol = http;
+                if (isHttps.test(url))
+                    protocol = https;
+
+                if (protocol) {
+                    protocol.get(url, (res) => {
+                        res.pipe(fs.createWriteStream(destinationPath));
+                        resolve();
+                    }).on('error', (err) => {
+                        reject('Error: ' + err);
+                    });
+                } else {
+                    reject('Unsupported protocol');
+                }
+            });
+        }
+
         const shareId = path.basename(folder);
         const videoDir = getVideoFolder(shareId, videoData.uuid);
         const jsonDir = path.join(videoDir, 'info.json');
@@ -780,6 +808,13 @@ function createWindow() {
         if (!fs.existsSync(videoDir)) {
             fs.mkdirSync(videoDir, { recursive: true });
         }
+
+        // Save thumbnail image
+        const thumbnailPath = 'https://' + videoData.from + videoData.thumbnailPath;
+        const thumbnailName = thumbnailPath.substring(thumbnailPath.lastIndexOf('/') + 1);
+        const thumbnailDest = path.join(videoDir, thumbnailName);
+        await writeImage(thumbnailPath, thumbnailDest);
+        videoData.previewPath = url.pathToFileURL(thumbnailDest);
 
         const jsonData = JSON.stringify(videoData);
         await asyncFs.writeFile(jsonDir, jsonData, { overwrite: false });
@@ -872,14 +907,77 @@ function createWindow() {
         return postsList;
     });
 
+    ipcMain.removeHandler('saveShareImages');
+    ipcMain.handle('saveShareImages', async (event, folder, images) => {
+        if (!folder || !images || !images.length)
+            return [];
+        
+        const resImages = [];
+
+        const shareId = path.basename(folder);
+        const imagesDir = getImageFolder(shareId);
+
+        if (!fs.existsSync(imagesDir))
+            fs.mkdirSync(imagesDir, { recursive: true });
+
+        function writeImage(url, destinationPath) {
+            return new Promise((resolve, reject) => {
+                let isHttps = /^https:/;
+                let isHttp = /^http:/;
+                let protocol;
+
+                if (isHttp.test(url))
+                    protocol = http;
+                if (isHttps.test(url))
+                    protocol = https;
+
+                if (protocol) {
+                    protocol.get(url, (res) => {
+                        res.pipe(fs.createWriteStream(destinationPath));
+                        resolve();
+                    }).on('error', (err) => {
+                        reject('Error: ' + err);
+                    });
+                } else {
+                    reject('Unsupported protocol');
+                }
+            });
+        }
+
+        for (var i = 0; i < images.length; i++) {
+            try {
+                let imageName = path.basename(images[i]);
+                let imagePath = path.join(imagesDir, imageName);
+                await writeImage(images[i], imagePath);
+                resImages.push(path.normalize(imagePath));
+            } catch(err) {
+                return Promise.reject('Cannot write image to device: ' + err);
+            }
+        }
+
+        return resImages;
+    });
+
     ipcMain.removeHandler('getShareData');
     ipcMain.handle('getShareData', async (event, shareId) => {
         const shareDir = getPostFolder(shareId);
         const jsonPath = path.join(shareDir, 'share.json');
 
-        const jsonData = fs.readFileSync(jsonPath, { encoding:'utf8', flag:'r' });
+        var jsonData = fs.readFileSync(jsonPath, { encoding:'utf8', flag:'r' });
+        jsonData = JSON.parse(jsonData);
 
-        return JSON.parse(jsonData);
+        if (jsonData && jsonData.share && jsonData.share.i && jsonData.share.i.length > 0) {
+            jsonData.share.i = jsonData.share.i.map((imgUrl) => {
+                if (fs.existsSync(imgUrl)) {
+                    let imgBase64 = fs.readFileSync(imgUrl, {encoding: 'base64'});
+                    if (imgBase64)
+                        return 'data:' + mime.lookup(imgUrl) + ';base64,' + imgBase64;
+                }
+                return imgUrl;
+            });
+        }
+
+        return jsonData;
     });
 
     ipcMain.removeHandler('getSegment');
@@ -904,13 +1002,23 @@ function createWindow() {
 
         const jsonPath = path.join(videoDir, 'info.json');
 
-        const videosList = fs.readdirSync(videoDir);
+        var videosList;
+        try {
+            videosList = fs.readdirSync(videoDir);
+        } catch(err) {
+            return;
+        }
 
         const videoData = {};
 
         videoData.id = videoId;
 
-        const jsonData = fs.readFileSync(jsonPath, { encoding:'utf8', flag:'r' });
+        var jsonData;
+        try {
+            jsonData = fs.readFileSync(jsonPath, { encoding:'utf8', flag:'r' });
+        } catch(err) {
+            return;
+        }
 
         var details =  JSON.parse(jsonData)
 

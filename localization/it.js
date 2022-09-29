@@ -1218,3 +1218,11 @@ _l.desktopPopupAgree = "Scarica l'app"
 _l.desktopPopupDisagree = "Non ora"
 
 _l.profanity_tag = 'volgarità'
+_l.saved = "Salvati";
+_l.savePost = "Salva il post";
+_l.postsaved = "Post salvato";
+_l.deleteSavedPost = "Elimina il post salvato";
+_l.doYouDownloadVideo = "Vuoi scaricare il video sul tuo dispositivo?";
+_l.gotosaved2 = "Vai a salvare";
+_l.yes = "Sì";
+_l.no = "No";

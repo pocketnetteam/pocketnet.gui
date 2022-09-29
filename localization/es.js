@@ -853,3 +853,11 @@ _l.desktopPopupDisagree = "Ahora no"
 
 
 _l.profanity_tag = 'blasfemia'
+_l.saved = "Guardado";
+_l.savePost = "Guardar puesto";
+_l.postsaved = "Puesto guardado";
+_l.deleteSavedPost = "Borrar post guardado";
+_l.doYouDownloadVideo = "Quieres descargar el vídeo en tu dispositivo?";
+_l.gotosaved2 = "Ir a guardado";
+_l.yes = "Sí";
+_l.no = "No";

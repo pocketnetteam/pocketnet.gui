@@ -3766,12 +3766,14 @@ Platform = function (app, listofnodes) {
                 return
             }
 
+            /*
             menuDialog({
                 items: [{
                     text: self.app.localization.e('saveshare'),
                     action: function (_clbk) {
 
                         if (share.itisvideo()){
+                            */
 
                             var info = share.url ? (app.platform.sdk.videos.storage[share.url] || {}).data || null : null
 
@@ -3829,6 +3831,7 @@ Platform = function (app, listofnodes) {
                             else{
                                 error('noinfo')
                             }
+                        /*
                         }
                         else{
                             error('todo')
@@ -3838,7 +3841,7 @@ Platform = function (app, listofnodes) {
 
                     }
                 }]
-            })
+            })*/
 
 
 
@@ -5244,6 +5247,108 @@ Platform = function (app, listofnodes) {
                             })
 
                             close()
+
+                        })
+
+                        el.find('.savePost').on('click', function(){
+
+                            var sendSiteMessage = function() {
+                                sitemessage(self.app.localization.e('postsaved'), null, 5000, {
+                                    action : {
+                                        text : self.app.localization.e('gotosaved2'),
+                                        do : function(){
+            
+                                            app.nav.api.load({
+                                                open: true,
+                                                href: 'index?r=saved',
+                                                history: true,
+                                                handler : true
+                                            })
+            
+                                        }
+                                    }
+                                })
+                            }
+
+                            if (!self.app.savesupported() && !self.app.savesupportedForBrowser()) {
+                                close();
+                                return;
+                            }
+
+                            share.user = deep(self.app, 'platform.sdk.usersl.storage.' + share.address).export();
+
+                            // If we are on mobile/electron and post has a downloadable media (image/video)
+                            if (share.itisvideo()  && self.app.savesupported()) {
+
+                                // Ask user if he wants to download
+                                app.nav.api.load({
+                                    open: true,
+                                    id: 'downloadMedia',
+                                    inWnd: true,
+                
+                                    essenseData: {
+                                        item : 'post',
+                                        obj : share,
+
+                                        success: function (saveMedia) {
+
+                                            // Save the post on the device without medias
+                                            if (!saveMedia) {
+
+                                                self.app.platform.sdk.localshares.saveShare(share, { doNotSaveMedia: true }).then(() =>{
+
+                                                    sendSiteMessage();
+    
+                                                });
+
+                                                return;
+
+                                            }
+
+                                            // Save the post with video
+                                            self.ui.saveShare(share, function() {});
+
+                                            return;
+
+                                        }
+                                    },
+                
+                                    clbk: function () {
+
+                                    }
+                                })
+
+                            } else if (self.app.savesupported()) {
+
+                                // Save the post on the device
+                                self.app.platform.sdk.localshares.saveShare(share).then(() =>{
+
+                                    sendSiteMessage();
+
+                                });
+
+                            } else {
+
+                                // Here, we have access to the localstorage (browser)
+                                self.app.platform.sdk.localshares.write.share.localstorage(share);
+
+                                sendSiteMessage();
+                                
+                            }
+
+                            close()
+
+                        })
+
+                        el.find('.deleteSavedPost').on('click', function(){
+
+                            if (self.app.platform.sdk.localshares.delete[self.sdk.localshares.key])
+                                self.app.platform.sdk.localshares.delete[self.sdk.localshares.key](share.txid);
+
+                            close()
+
+                            if (app.nav.current.completeHref && app.nav.current.completeHref.startsWith('index?r=saved'))
+                                _el.closest(`.share[id='${share.txid}']`).remove();
 
                         })
 
@@ -7343,14 +7448,36 @@ Platform = function (app, listofnodes) {
                     shareInfo.video = share.url ? (app.platform.sdk.videos.storage[share.url] || {}).data || null : null
 
                 return self.sdk.localshares.write.share[self.sdk.localshares.key](shareInfo.share).then(folder => {
-                    return self.sdk.localshares.write.video[self.sdk.localshares.key](folder, shareInfo, p).then(r => {
 
-                        shareInfo.share.videos || (shareInfo.share.videos = {})
-                        shareInfo.share.videos[r.id] = r
+                    if (share.itisvideo() && !p.doNotSaveMedia) {
 
+                        return self.sdk.localshares.write.video[self.sdk.localshares.key](folder, shareInfo, p).then(r => {
+
+                            shareInfo.share.videos || (shareInfo.share.videos = {})
+                            if (r)
+                                shareInfo.share.videos[r.id] = r
+
+                            return Promise.resolve()
+
+                        })
+
+                    }
+                    else if (share.images && share.images.length > 0 && !p.doNotSaveMedia)  {
+
+                        return self.sdk.localshares.write.image[self.sdk.localshares.key](folder, shareInfo, share.images, p).then(images => {
+
+                            shareInfo.share.share.i = images;
+
+                            self.sdk.localshares.write.share[self.sdk.localshares.key](shareInfo.share);
+
+                            return Promise.resolve()
+
+                        });
+
+                    }
+                    else
                         return Promise.resolve()
 
-                    })
                 }).then(r => {
                     self.sdk.localshares.storage = {}
 
@@ -7533,11 +7660,105 @@ Platform = function (app, listofnodes) {
                         return videoData;
                     },
 
-                    localstorage : function(){
+                    localstorage : function(folder, shareInfo, p = {}){
+                        if(!shareInfo.video) return Promise.resolve()
                         return Promise.reject('todo')
                     }
                 },
 
+                image : {
+
+                    cordova : async function(folder, shareInfo, images, p = {}){
+
+                        if (!folder || !images || images.length <= 0)
+                            return Promise.resolve([]);
+
+                        var nbToDo = images.length, nbDone = 0, resImages = [];
+
+                        return new Promise((resolve, reject) => {
+
+                            var checkDone = function() {
+
+                                nbDone += 1;
+                                
+                                if (nbDone >= nbToDo)
+                                    resolve(resImages);
+
+                            }
+
+                            // Create images folder
+                            folder.getDirectory('images', { create: true }, function (dirEntry) {
+
+                                // For each image
+                                images.forEach((imageUrl) => {
+
+                                    let filename = imageUrl.substring(imageUrl.lastIndexOf('/') + 1)
+
+                                    dirEntry.getFile(filename, { create: true }, function (targetFile) {
+
+                                        var downloader = new BackgroundTransfer.BackgroundDownloader();
+
+                                        // Create a new download operation.
+                                        var download = downloader.createDownload(imageUrl, targetFile, "Bastyon: Downloading image");
+
+                                        // Start the download
+                                        download.startAsync().then(function(e) {
+
+                                            // Success
+                                            // Resolve internal URL
+                                            window.resolveLocalFileSystemURL(targetFile.nativeURL, function(entry) {
+
+                                                resImages.push(entry.toInternalURL());
+                                                
+                                                checkDone();
+
+                                            }, function(err) {
+
+                                                console.log(err);
+                                                checkDone();
+
+                                            });
+
+                                        }, function(err) {
+
+                                            console.log(err);
+                                            checkDone();
+
+                                        });
+
+                                    }, function(err) {
+
+                                        console.log(err);
+                                        checkDone();
+
+                                    });
+
+                                });
+
+                            }, reject);
+
+                        });
+
+                    },
+
+                    electron : async function(folder, shareInfo, images, p = {}){
+                        var imagesData = [];
+
+                        try {
+                            imagesData = await electron.ipcRenderer
+                                .invoke('saveShareImages', folder, shareInfo.share.share.i);
+                        } catch(err) {
+                            console.log(err);
+                        }
+
+                        return Promise.resolve(imagesData);
+                    },
+
+                    localstorage : function(){
+                        return Promise.resolve();
+                    }
+                },
+             
                 share : {
                     cordova : function(share){
 
@@ -7585,8 +7806,24 @@ Platform = function (app, listofnodes) {
                         return shareDir;
                     },
 
-                    localstorage : function(){
-                        return Promise.reject('todo')
+                    // Write share in localstorage
+                    localstorage : function(share){
+
+                        if (localStorage && localStorage.setItem) {
+
+                            share.timestamp = new Date();
+                            delete share.share;
+
+                            localStorage.setItem('saved_share_' + share.txid, JSON.stringify(share));
+                            
+                            share.share = share;
+                            self.sdk.localshares.addtostorage({ id: share.txid, share: share});
+                            return Promise.resolve();
+
+                        }
+
+                        return Promise.reject();
+
                     }
                 }
             },
@@ -7632,8 +7869,23 @@ Platform = function (app, listofnodes) {
 
                     },
 
-                    localstorage : function(){
-                        return Promise.reject('todo')
+                    // Read shares in localstorage
+                    localstorage : function(shareId){
+
+                        var share;
+
+                        if (localStorage && localStorage.getItem) {
+                            let shareStr = localStorage.getItem('saved_share_' + shareId);
+                            if (shareStr) {
+                                try {
+                                    share = JSON.parse(shareStr);
+                                    // share.user = { adr: share.address };
+                                } catch(err) {}
+                            }
+                        }
+
+                        return share;
+                        
                     }
                 },
 
@@ -7790,7 +8042,8 @@ Platform = function (app, listofnodes) {
                     const videoId = shareDataList.share.share.u
                         .split('%2F').pop();
 
-                    shareDataList.videos = await self.sdk.localshares.read.video.electron(videoId, shareId);
+                    if (videoId)
+                        shareDataList.videos = await self.sdk.localshares.read.video.electron(videoId, shareId);
 
 
                     return shareDataList;
@@ -7828,8 +8081,14 @@ Platform = function (app, listofnodes) {
 
                 },
 
-                localstorage : function(){
-                    return Promise.reject('todo')
+                // Get a share from localstorage
+                localstorage : async function(shareId){
+
+                    const share = await self.sdk.localshares.read.share.localstorage(shareId);
+                    share.share = share;
+
+                    return share;
+
                 }
             },
 
@@ -7895,8 +8154,25 @@ Platform = function (app, listofnodes) {
 
                 },
 
-                localstorage : function(){
-                    return Promise.reject('todo')
+                localstorage : async function(){
+
+                    var shares = {};
+
+                    for (i in localStorage) {
+
+                        var matches = /^saved_share_([a-zA-Z\d]+)$/.exec(i);
+
+                        if (matches && matches.length >= 2) {
+
+                            try {
+                                let share = await self.sdk.localshares.get.localstorage(matches[1]);
+                                shares[share.txid] = { id: share.txid, share: share };
+                            } catch(err) {}
+
+                        }
+                    }
+
+                    return Promise.resolve(shares);
                 }
             },
 
@@ -7916,6 +8192,8 @@ Platform = function (app, listofnodes) {
             delete : {
                 localstorage : function(shareId){
                     self.sdk.localshares.clearfromstorage(shareId)
+                    if (localStorage && localStorage.removeItem)
+                        localStorage.removeItem('saved_share_' + shareId);
 
                     return Promise.resolve();
                 },
