@@ -7449,7 +7449,8 @@ Platform = function (app, listofnodes) {
 
                 return self.sdk.localshares.write.share[self.sdk.localshares.key](shareInfo.share).then(folder => {
 
-                    if (share.itisvideo() && !p.doNotSaveMedia) {
+                    // Only save videos on Android
+                    if (share.itisvideo() && !p.doNotSaveMedia && !isios()) {
 
                         return self.sdk.localshares.write.video[self.sdk.localshares.key](folder, shareInfo, p).then(r => {
 
@@ -7673,44 +7674,80 @@ Platform = function (app, listofnodes) {
                         if (!folder || !images || images.length <= 0)
                             return Promise.resolve([]);
 
-                        var nbToDo = images.length, nbDone = 0, resImages = [];
+                        var nbToDo = images.length, nbDone = 0, resImages = images.map((i) => i);
 
                         return new Promise((resolve, reject) => {
 
                             var checkDone = function() {
 
                                 nbDone += 1;
-                                
+
                                 if (nbDone >= nbToDo)
                                     resolve(resImages);
 
                             }
 
-                            // Create images folder
-                            folder.getDirectory('images', { create: true }, function (dirEntry) {
+                            // On IOS, we save the base64 strings instead of saving the images
+                            if (isios()) {
 
                                 // For each image
-                                images.forEach((imageUrl) => {
+                                images.forEach((imageUrl, imageIndex) => {
 
-                                    let filename = imageUrl.substring(imageUrl.lastIndexOf('/') + 1)
+                                    var xhr = new XMLHttpRequest();
+                                    xhr.onload = function() {
+                                        var reader = new FileReader();
+                                        reader.onloadend = function() {
+                                            resImages[imageIndex] = reader.result;
+                                            checkDone();
+                                        }
+                                        reader.onerror = function(err) {
+                                            console.log(err);
+                                            checkDone();
+                                        }
+                                        reader.readAsDataURL(xhr.response);
+                                    };
+                                    xhr.open('GET', imageUrl);
+                                    xhr.responseType = 'blob';
+                                    xhr.send();
 
-                                    dirEntry.getFile(filename, { create: true }, function (targetFile) {
+                                });
 
-                                        var downloader = new BackgroundTransfer.BackgroundDownloader();
+                            }
+                            // On Android, save the files in the device storage
+                            else {
 
-                                        // Create a new download operation.
-                                        var download = downloader.createDownload(imageUrl, targetFile, "Bastyon: Downloading image");
+                                // Create images folder
+                                folder.getDirectory('images', { create: true }, function (dirEntry) {
 
-                                        // Start the download
-                                        download.startAsync().then(function(e) {
+                                    // For each image
+                                    images.forEach((imageUrl) => {
 
-                                            // Success
-                                            // Resolve internal URL
-                                            window.resolveLocalFileSystemURL(targetFile.nativeURL, function(entry) {
+                                        let filename = imageUrl.substring(imageUrl.lastIndexOf('/') + 1)
 
-                                                resImages.push(entry.toInternalURL());
-                                                
-                                                checkDone();
+                                        dirEntry.getFile(filename, { create: true }, function (targetFile) {
+
+                                            var downloader = new BackgroundTransfer.BackgroundDownloader();
+
+                                            // Create a new download operation.
+                                            var download = downloader.createDownload(imageUrl, targetFile, "Bastyon: Downloading image");
+
+                                            // Start the download
+                                            download.startAsync().then(function(e) {
+
+                                                // Success
+                                                // Resolve internal URL
+                                                window.resolveLocalFileSystemURL(targetFile.nativeURL, function(entry) {
+
+                                                    resImages.push(entry.toInternalURL());
+
+                                                    checkDone();
+
+                                                }, function(err) {
+
+                                                    console.log(err);
+                                                    checkDone();
+
+                                                });
 
                                             }, function(err) {
 
@@ -7726,16 +7763,11 @@ Platform = function (app, listofnodes) {
 
                                         });
 
-                                    }, function(err) {
-
-                                        console.log(err);
-                                        checkDone();
-
                                     });
 
-                                });
+                                }, reject);
 
-                            }, reject);
+                            }
 
                         });
 
@@ -7778,7 +7810,7 @@ Platform = function (app, listofnodes) {
                                     dirEntry2.getFile('share.json', { create: true }, function (shareFile) {
                                         // Write into file
                                         shareFile.createWriter(function (fileWriter) {
-                                            fileWriter.write(share);
+                                            fileWriter.write(JSON.stringify(share));
 
                                             resolve(dirEntry2)
                                         });
@@ -8136,6 +8168,8 @@ Platform = function (app, listofnodes) {
 
                                             return Promise.resolve()
 
+                                        }).catch(err => {
+                                            return Promise.resolve()
                                         })
 
                                     })).then(r => {
