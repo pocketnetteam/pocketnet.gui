@@ -105,11 +105,7 @@
         </script>
         <script src="cordova.js"></script>
                 
-
-        <script src="js/vendor/jquery-1.11.3.min.js?v=12"></script>
-        <script src="js/widgets.js?v=136"></script>
-
-         <script type="text/javascript">
+        <script type="text/javascript">
 
             _Node = false;
             
