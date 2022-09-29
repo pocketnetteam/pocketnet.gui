@@ -40,6 +40,7 @@ const os = require("os");
 const AutoLaunch = require('auto-launch');
 const contextMenu = require('electron-context-menu');
 const path = require('path');
+const url = require('url');
 const http = require('http');
 const https = require('https');
 const mime = require('mime-types');
@@ -770,6 +771,30 @@ function createWindow() {
             });
         }
 
+        function writeImage(url, destinationPath) {
+            return new Promise((resolve, reject) => {
+                let isHttps = /^https:/;
+                let isHttp = /^http:/;
+                let protocol;
+
+                if (isHttp.test(url))
+                    protocol = http;
+                if (isHttps.test(url))
+                    protocol = https;
+
+                if (protocol) {
+                    protocol.get(url, (res) => {
+                        res.pipe(fs.createWriteStream(destinationPath));
+                        resolve();
+                    }).on('error', (err) => {
+                        reject('Error: ' + err);
+                    });
+                } else {
+                    reject('Unsupported protocol');
+                }
+            });
+        }
+
         const shareId = path.basename(folder);
         const videoDir = getVideoFolder(shareId, videoData.uuid);
         const jsonDir = path.join(videoDir, 'info.json');
@@ -783,6 +808,13 @@ function createWindow() {
         if (!fs.existsSync(videoDir)) {
             fs.mkdirSync(videoDir, { recursive: true });
         }
+
+        // Save thumbnail image
+        const thumbnailPath = 'https://' + videoData.from + videoData.thumbnailPath;
+        const thumbnailName = thumbnailPath.substring(thumbnailPath.lastIndexOf('/') + 1);
+        const thumbnailDest = path.join(videoDir, thumbnailName);
+        await writeImage(thumbnailPath, thumbnailDest);
+        videoData.previewPath = url.pathToFileURL(thumbnailDest);
 
         const jsonData = JSON.stringify(videoData);
         await asyncFs.writeFile(jsonDir, jsonData, { overwrite: false });
