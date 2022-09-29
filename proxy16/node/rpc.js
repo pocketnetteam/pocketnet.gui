@@ -206,7 +206,7 @@ function rpc(request, callback, obj) {
         method: 'POST',
         port: prv ? self.portPrivate : self.port,
         agent: keepAliveAgent,
-        signal : signal,
+        signal : signal
     };
 
     var lg = false //self.host == '135.181.196.243' || self.host == '65.21.56.203' || self.host == '51.174.99.18'
@@ -220,7 +220,8 @@ function rpc(request, callback, obj) {
     var called = false;
     var errorMessage = 'Bitcoin JSON-RPC: ';
 
-    
+    console.log('options', options)
+
    
     var req = self.protocol.request(options, function(res) {
 
@@ -339,7 +340,7 @@ function rpc(request, callback, obj) {
         req.setHeader('Authorization', 'Basic ' + Base64Helper.encode(self.user + ':' + self.pass));
     }
 
-    req.write(request);
+    req.write(request, 'binary');
     req.end();
 }
 

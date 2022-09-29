@@ -8823,13 +8823,17 @@
 			},
 			clear : function(el){
 
-				var value = searchEl.find('.sminput').val()
+				if(searchEl){
+					var value = searchEl.find('.sminput').val()
 
-				searchEl.find('.sminput').val('');
+					searchEl.find('.sminput').val('');
+	
+					searchEl.removeClass('searchActive');
+					searchEl.removeClass('searchFilled');
+	
+				}
 
-				searchEl.removeClass('searchActive');
-				searchEl.removeClass('searchFilled');
-
+				
 				helpers.closeResults();
 
 				if (p.events.clear) p.events.clear(value);

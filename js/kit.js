@@ -1444,12 +1444,12 @@ Share = function(lang){
 			textvalue = JSON.stringify(textvalue) //  Base64Helper.encode(JSON.stringify(textvalue))
 		}
 		
-		return encodeURIComponent(self.url.v) 
+		return (self.url.v) 
 		
-		+ encodeURIComponent(self.caption.v) 
-		+ (articleversion2 ? textvalue : encodeURIComponent(textvalue))
+		+ (self.caption.v) 
+		+ (articleversion2 ? textvalue : (textvalue))
 
-		+ _.map(self.tags.v, function(t){ return encodeURIComponent(t) }).join(',')
+		+ _.map(self.tags.v, function(t){ return (t) }).join(',')
 		+ self.images.v.join(',')
 
 		+ (self.aliasid || "")
@@ -1516,11 +1516,11 @@ Share = function(lang){
 		}
 
 		return {
-			c : encodeURIComponent(self.caption.v),
-			m : articleversion2 ? textvalue : encodeURIComponent(textvalue),
-			u : encodeURIComponent(self.url.v),
+			c : (self.caption.v),
+			m : articleversion2 ? textvalue : (textvalue),
+			u : (self.url.v),
 			p : _.clone(self.poll.v),
-			t : _.map(self.tags.v, function(t){ return encodeURIComponent(t) }),
+			t : _.map(self.tags.v, function(t){ return (t) }),
 			i : self.images.v,
 			s : _.clone(self.settings),
 			l : self.language.v,

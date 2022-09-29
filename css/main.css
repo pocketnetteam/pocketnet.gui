@@ -1187,6 +1187,7 @@ html.mobileview .upbutton {
   position: relative;
   font-size: 1.1em;
   color: rgb(var(--neutral-grad-3));
+  cursor: pointer;
   /*&.disabled{
         cursor: default!important;
 

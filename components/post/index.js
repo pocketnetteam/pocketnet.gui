@@ -2086,12 +2086,17 @@ var post = (function () {
 				el.wr = el.c.find('.postWrapper')
 				el.wnd = el.c.closest('.wndcontent');
 
+				window.requestAnimationFrame(() => {
+					if (share.itisarticle()){
+						el.c.closest('.wnd').addClass('articlewindow')
+						el.c.addClass('sharec')
+					}
+	
+					if (el.wnd){
+						el.wnd.closest('.postwindow').addClass('rendered')
+					}
+				})
 				
-				
-				if (share.itisarticle()){
-					el.c.closest('.wnd').addClass('articlewindow')
-					el.c.addClass('sharec')
-				}
 
 				if(share.itisvideo() && !p.pip){
 					self.app.actions.closepip()
