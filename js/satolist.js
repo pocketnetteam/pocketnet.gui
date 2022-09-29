@@ -3089,7 +3089,7 @@ Platform = function (app, listofnodes) {
 
         },
 
-        showCommentBanner : function(contextElem, clbk) {
+        showCommentBanner : function(contextElem, clbk, address) {
 
             if (!app.platform.sdk.user.me()?.regdate) {
                 return 
@@ -3111,7 +3111,9 @@ Platform = function (app, listofnodes) {
                     open: true,
                     id: 'commentBanner',
                     el: contextElem.find('.bannerComment'),
-                    essenseData: {},
+                    essenseData: {
+                        address: address
+                    },
 
                     clbk : function(e, p){
                         bannerCommentComponent = p;

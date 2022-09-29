@@ -56,8 +56,11 @@ const commentBanner = (function() {
 		return {
 			primary: primary,
 
-			getdata: function(clbk) {
-				const data = {};
+			getdata: function(clbk, p) {
+				
+				const data = {
+					address: p.settings.essenseData.address
+				};
 
 				clbk(data);
 			},
@@ -81,6 +84,7 @@ const commentBanner = (function() {
 			},
 			
 			init: function(p) {
+
 				state.load();
 
 				el = {};

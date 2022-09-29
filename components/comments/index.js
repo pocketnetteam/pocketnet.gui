@@ -3054,7 +3054,7 @@ var comments = (function(){
 
 				app.platform.ui.showCommentBanner(el.c, (c) => {
 					bannerComment = c
-				});
+				}, c.essenseData.receiver);
 			},
 
 			authclbk : function(){

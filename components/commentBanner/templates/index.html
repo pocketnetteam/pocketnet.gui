@@ -1,10 +1,72 @@
 <div id="<%-module.map.id%>" class="bannerBody">
-    <div class="bannerIcon" alt="<%= e('commentBannerTitle') %>"></div>
+
+    <% 
+        var name = app.platform.api.name(address); 
+        if(address) {
+    %>
+        <div class="iconWrapper">
+            <a elementsid="shareiconprofilelink" href="<%-app.platform.api.authorlink(address)%>">
+
+                <% 
+                    var src = deep(app.platform.sdk.usersl.storage, address + '.image');
+                    var letter = name ? name[0] : ''; 
+                    
+                %>
+
+                <div class="icon">
+                    <div class="usericon usericonsbsa another" image="<%-src || '*'%>" ban=".gif" contain="none">
+
+                        <% if(!src && letter) { %>
+
+                            <span class="letter">
+                                <%-letter.toUpperCase()%>
+                            </span>
+        
+                        <% } else if (!src) { %>
+        
+                            <svg width="30" height="30" data-jdenticon-value="<%-address%>"></svg>
+        
+                        <% } %>
+
+                        <% if(app.platform.ui.markUser) {%>
+
+                            <%= app.platform.ui.markUser(address)%>
+
+                        <% } %>
+                        
+                    </div>
+                </div>
+
+            </a>
+
+        </div>
+
+    <% } else { %>
+
+        <div class="bannerIcon" alt="<%= e('commentBannerTitle') %>"></div>
+
+    <% } %>
+
     <div class="text">
-        <strong><%= e('commentBannerTitle') %></strong>
-        <div class="bannerDescription"><%= e('commentBannerDescription') %></div>
+        <strong><%= e(address ? 'commentBannerTitle2' : 'commentBannerTitle', name) %></strong>
+        <div class="bannerDescription"><%= e(address ? 'commentBannerDescription2' : 'commentBannerDescription', name) %></div>
         <div class="noShowAgain"><%= e('dontShowAgain') %></div>
     </div>
+
+    <% if (address) {%>
+
+        <div class="subscribeWrapper">
+            <button class="subscribe funf">
+                <%=e('follow') %>
+            </button>	
+
+            <button class="unsubscribe funf">
+                <%=e('unfollow') %>
+            </button>	
+        </div>
+
+    <% } %>
+
     <div class="closeBannerBtn">
         <div class="container">
             <i class="fa fa-times" aria-hidden="true"></i>
