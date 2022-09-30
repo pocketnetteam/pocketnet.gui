@@ -2037,7 +2037,7 @@ pUserInfo = function(){
 
 		self.dev = v.dev;
 
-
+		self.id = v.id;
 	}
 
 	self.export = function(){
