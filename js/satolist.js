@@ -12050,7 +12050,17 @@ Platform = function (app, listofnodes) {
 
             },
 
-            getBlockingUsers: async function(address = self.sdk.user.me().address, options = {}) {
+            getBlockingUsers: async function(arg1, options = {}) {
+                let address = self.sdk.user.me().address;
+
+                if (typeof arg1 === 'object') {
+                    options = arg1;
+                } else if (typeof arg1 === 'string') {
+                    address = arg1;
+                }
+
+                console.log('Blocks for', address, options);
+
                 const blockersList = await self.app.api.rpc('getuserblockers', [address]);
 
                 /**
