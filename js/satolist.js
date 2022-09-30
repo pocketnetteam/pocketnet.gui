@@ -12048,7 +12048,29 @@ Platform = function (app, listofnodes) {
 
                 return point
 
-            }
+            },
+
+            getBlockingUsers: async function(address = self.sdk.user.me().address, options = {}) {
+                const blockersList = await self.app.api.rpc('getuserblockers', [address]);
+
+                /**
+                 * If populate is set, then UID will be converted to pUserInfo.
+                 *
+                 * Attention! It will do that while user is already cached.
+                 * If not, raw ID will be returned.
+                 **/
+                if (options.populate) {
+                    const usersStorageList = Object.values(self.sdk.users.storage);
+
+                    return blockersList.map((blockerId) => {
+                        const blockerAddress = usersStorageList.find(u => u.id === blockerId);
+
+                        return blockerAddress || blockerId;
+                    });
+                }
+
+                return blockersList;
+            },
         },
 
 

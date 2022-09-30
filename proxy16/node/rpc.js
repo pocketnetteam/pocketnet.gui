@@ -434,6 +434,7 @@ RpcClient.callspec = {
     getrawtransactionwithmessage: 'str',
     getuserprofile: 'obj',
     getuserstate: 'str',
+    getuserblockers: 'str',
     getaddressregistration: 'obj',
     signrawtransactionwithkey: 'str obj',
     getrecommendedposts: 'str',
