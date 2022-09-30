@@ -1887,7 +1887,7 @@ var post = (function () {
 						renders.comments(function () {
 						})
 
-						if (share.itisvideo() && !ed.repost && !p.pip && recommendationsenabled) {
+						if (share.itisvideo() && !ed.repost && !p.pip && recommendationsenabled && !_OpenApi && !ed.openapi) {
 
 							renders.recommendations();
 
