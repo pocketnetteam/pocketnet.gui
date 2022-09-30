@@ -158,7 +158,9 @@
       "cordova-plugin-media": {
         "KEEP_AVAUDIOSESSION_ALWAYS_ACTIVE": "NO"
       },
-      "cordova-plugin-photo-library": {},
+      "cordova-plugin-photo-library": {
+        "PHOTO_LIBRARY_USAGE_DESCRIPTION": "Allow the application access to the photo gallery to select photos for publication."
+      },
       "cordova-plugin-camera-preview": {},
       "cordova-plugin-audioinput": {},
       "cordova-plugin-dialogs": {},
