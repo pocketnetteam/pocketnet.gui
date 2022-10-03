@@ -10,8 +10,16 @@ var slides = (function(){
 
 		var el, ed, tag;
 
-		var rendered = []
+		var rendered = {}
 		var total = []
+
+		var getInterval = null;
+		var renderInterval = null;
+
+		var getTime = 30000
+		var renderTime = 3000
+		var maxshares = 250
+		var wshares = 3
 
 		var externals = []
 
@@ -24,7 +32,31 @@ var slides = (function(){
 		}
 
 		var renders = {
-			lenta : function(){
+			lenta : function(txids, clbk){
+
+				console.log('txids', txids)
+
+				if(!txids.length){
+					if(clbk) clbk()
+
+					return
+				} 
+
+				_.each(txids, (txid) => {
+					rendered[txid] = true
+				})
+
+				var element = $("<div></div>")
+
+				el.packs.prepend(element)
+
+				self.app.platform.papi.lenta(txids, element, (e, p) => {
+					externals.push(p)
+
+					if(clbk) clbk()
+
+					return
+				})
 
 			}
 		}
@@ -43,18 +75,73 @@ var slides = (function(){
 
 		}
 		
-		var get = function(){
-			
-		}
+		
 
 		var clear = function(){
+
 			_.each(externals, (e) => {
 				e.destroy()
 			})
 
-			externals = null
-			el.c.empty()
+			externals = []
 
+			el.packs.empty()
+
+			rendered = {}
+
+		}
+
+		var task = function(){
+
+
+			var newshares = _.last(_.filter(total, (t, i) => {
+				return !rendered[t]
+			}), 20)
+
+
+			if(_.toArray(rendered).length > maxshares && newshares.length > wshares){
+				console.log("CLEAR")
+				clear()
+			}
+
+			renders.lenta(newshares)
+		}
+
+		var get = function(){
+			var proxy = self.app.api.get.byidwithadd('pocketnet.app:8899:8099')
+
+			return proxy.fetch('slidemodule/get', {tag}).then(r => {
+
+				var sorted = _.sortBy(r, (r) => {
+					return new Date(r.dt)
+				})
+
+				total = _.map(sorted, (r) => {
+					return r.txid
+				})
+
+				total = _.uniq(total)
+				
+
+				console.log("total", total)
+
+				return Promise.resolve()
+			})
+		}
+
+		var make = function(){
+
+			globalpreloader(true)
+
+			get().then(() => {
+				task()
+			}).finally(() => {
+				globalpreloader(false)
+			})
+
+			getInterval = setInterval(get, getTime)
+
+			renderInterval = setInterval(task, renderTime)
 		}
 
 		return {
@@ -68,7 +155,7 @@ var slides = (function(){
 
 				tag = p.tag || "images"
 
-				rendered = []
+				rendered = {}
 				total = []
 
 				var data = {
@@ -81,12 +168,22 @@ var slides = (function(){
 
 			destroy : function(){
 
+				if(renderInterval){
+					clearInterval(renderInterval)
+					renderInterval = null
+				}
+
+				
+				if(getInterval){
+					clearInterval(getInterval)
+					getInterval = null
+				}
+
 				clear()
 
 				ed = {}
 				el = {};
 
-				rendered = []
 				total = []
 
 			},
@@ -97,8 +194,11 @@ var slides = (function(){
 
 				el = {};
 				el.c = p.el.find('#' + self.map.id);
+				el.packs = el.c.find('.packs')
 
 				initEvents();
+
+				make()
 
 				p.clbk(null, p);
 			}
