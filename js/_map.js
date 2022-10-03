@@ -651,6 +651,17 @@ __map =  {
 			add : insertingfunc,
 			anonimus : true,
 		},
+
+
+		slides: {
+			uri : "slides",
+			href : "slides",
+			add : insertingfunc,
+			anonimus : true,
+		},
+
+
+		
 	
 		embeding : {
 			uri : "embeding",
