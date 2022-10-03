@@ -29,6 +29,7 @@ var Bots = require('./bots.js');
 var SystemNotify = require('./systemnotify.js');
 var Transports = require("./transports")
 var Applications = require('./node/applications');
+var Slidemodule = require("./slidemodule") 
 const Path = require("path");
 const child_process = require("child_process");
 const {unlink} = require("nedb/browser-version/browser-specific/lib/storage");
@@ -62,6 +63,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 	var peertube = new Peertube(self)
 	var bots = new Bots(settings.bots)
 	var systemnotify = new SystemNotify(settings.systemnotify)
+	var slidemodule = new Slidemodule(settings.slidemodule)
 
 	var torapplications = new TorControl(settings.tor, self)
 
@@ -2066,6 +2068,8 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 			},
 		},
 
+		
+
 		firebase: {
 			set: {
 				authorization: 'signature',
@@ -2323,6 +2327,8 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				},
 			},
 
+
+
 			clearexecuting: {
 				path: '/wallet/clearexecuting',
 				authorization: 'signature',
@@ -2361,6 +2367,93 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 							data: r,
 						});
 					});
+				},
+			},
+		},
+
+		slidemodule : {
+			set: {
+				path: '/slidemodule/set',
+				authorization: 'signature',
+
+				action: function ({ A, tag, txid }) {
+
+					if (!A) return Promise.reject('admin');
+
+					return self.slidemodule.set(tag, txid)
+						.then((r) => {
+							return Promise.resolve({
+								data: 'done',
+
+								count : r.count
+							});
+						})
+						.catch((e) => {
+							return Promise.reject(e);
+						});
+				},
+			},
+
+			remove: {
+				path: '/slidemodule/remove',
+				authorization: 'signature',
+
+				action: function ({ A, tag, txid }) {
+
+					if (!A) return Promise.reject('admin');
+
+					return self.slidemodule.remove(tag, txid)
+						.then((r) => {
+							return Promise.resolve({
+								data: 'done',
+
+								count : r.count
+							});
+						})
+						.catch((e) => {
+							return Promise.reject(e);
+						});
+				},
+			},
+
+			removeAll: {
+				path: '/slidemodule/remove',
+				authorization: 'signature',
+
+				action: function ({ A, tag }) {
+
+					if (!A) return Promise.reject('admin');
+
+					return self.slidemodule.removeAll(tag)
+						.then((r) => {
+							return Promise.resolve({
+								data: 'done',
+
+								count : r.count
+							});
+						})
+						.catch((e) => {
+							return Promise.reject(e);
+						});
+				},
+			},
+
+			get: {
+				path: '/slidemodule/get',
+
+				action: function ({ tag }) {
+
+					if (!A) return Promise.reject('admin');
+
+					return self.slidemodule.get(tag)
+						.then((r) => {
+							return Promise.resolve({
+								data: r
+							});
+						})
+						.catch((e) => {
+							return Promise.reject(e);
+						});
 				},
 			},
 		},
