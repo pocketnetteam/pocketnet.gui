@@ -207,6 +207,10 @@ var defaultSettings = {
 		private : '',
 		public : ''
 	}*/
+	
+	slide : {
+		dbpath : 'data/slide',
+	},
 }
 
 
@@ -1081,6 +1085,14 @@ var kit = {
 					return proxy.transports.request(option, callback);
 				})
 			},
+		},
+
+		slide: {
+			add : function (...args) {
+				return kit.proxy().then(async proxy => {
+					return proxy.api.add(...args);
+				})
+			}
 		},
 
         quit : function() {
