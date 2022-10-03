@@ -63,7 +63,8 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 	var peertube = new Peertube(self)
 	var bots = new Bots(settings.bots)
 	var systemnotify = new SystemNotify(settings.systemnotify)
-	var slidemodule = new Slidemodule(settings.slidemodule)
+	var slidemodule = new Slidemodule(settings.slide)
+	slidemodule.init()
 
 	var torapplications = new TorControl(settings.tor, self)
 
@@ -1317,7 +1318,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 	self.rpcscenarios.getsubscribesfeed = self.rpcscenarios.gethierarchicalstrip
 	self.rpcscenarios.gethotposts = self.rpcscenarios.gethierarchicalstrip
 
-	
+	self.fakeAdminHash = '123'
 	self.api = {
 		node: {
 			rpcex : {
@@ -2372,20 +2373,20 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 		},
 
 		slidemodule : {
-			set: {
-				path: '/slidemodule/set',
-				authorization: 'signature',
+			add: {
+				path: '/slidemodule/add',
+				// authorization: 'signature',
 
-				action: function ({ A, tag, txid }) {
+				action: function ({ hash, tag, txid }) {
 
-					if (!A) return Promise.reject('admin');
+					if (hash != self.fakeAdminHash) return Promise.reject('admin');
+					if (!tag) return Promise.reject('tag is empty');
+					if (!txid || txid.length != 64) return Promise.reject('txid is empty or length mismatch');
 
-					return self.slidemodule.set(tag, txid)
+					return slidemodule.add(tag, txid)
 						.then((r) => {
 							return Promise.resolve({
-								data: 'done',
-
-								count : r.count
+								data: r
 							});
 						})
 						.catch((e) => {
@@ -2396,18 +2397,18 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 			remove: {
 				path: '/slidemodule/remove',
-				authorization: 'signature',
+				// authorization: 'signature',
 
-				action: function ({ A, tag, txid }) {
+				action: function ({ hash, tag, txid }) {
 
-					if (!A) return Promise.reject('admin');
+					if (hash != self.fakeAdminHash) return Promise.reject('admin');
+					if (!tag) return Promise.reject('tag is empty');
+					if (!txid || txid.length != 64) return Promise.reject('txid is empty or length mismatch');
 
-					return self.slidemodule.remove(tag, txid)
+					return slidemodule.remove(tag, txid)
 						.then((r) => {
 							return Promise.resolve({
-								data: 'done',
-
-								count : r.count
+								data: r
 							});
 						})
 						.catch((e) => {
@@ -2417,19 +2418,18 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 			},
 
 			removeAll: {
-				path: '/slidemodule/remove',
-				authorization: 'signature',
+				path: '/slidemodule/removeAll',
+				// authorization: 'signature',
 
-				action: function ({ A, tag }) {
+				action: function ({ hash, tag }) {
 
-					if (!A) return Promise.reject('admin');
+					if (hash != self.fakeAdminHash) return Promise.reject('admin');
+					if (!tag) return Promise.reject('tag is empty');
 
-					return self.slidemodule.removeAll(tag)
+					return slidemodule.removeAll(tag)
 						.then((r) => {
 							return Promise.resolve({
-								data: 'done',
-
-								count : r.count
+								data: r
 							});
 						})
 						.catch((e) => {
@@ -2443,9 +2443,9 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 				action: function ({ tag }) {
 
-					if (!A) return Promise.reject('admin');
+					if (!tag) return Promise.reject('tag is empty');
 
-					return self.slidemodule.get(tag)
+					return slidemodule.get(tag)
 						.then((r) => {
 							return Promise.resolve({
 								data: r
