@@ -944,6 +944,10 @@ function createWindow() {
             });
         }
 
+        function waitt(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
         for (var i = 0; i < images.length; i++) {
             try {
                 let imageName = path.basename(images[i]);
@@ -955,6 +959,8 @@ function createWindow() {
             }
         }
 
+        await waitt(500);
+        
         return resImages;
     });
 
