@@ -2495,6 +2495,7 @@ Platform = function (app, listofnodes) {
             }
         },
     }
+    
 
     self.papi = {
         horizontalLenta : function(el, clbk, p){
