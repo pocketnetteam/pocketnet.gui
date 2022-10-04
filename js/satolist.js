@@ -7366,9 +7366,11 @@ Platform = function (app, listofnodes) {
                     _.each(r, function(share){
                         self.sdk.localshares.addtostorage(share)
 
-                        _.each(share.videos, function(v){
-                            if(v.infos &&  v.infos.videoDetails) window.peertubeglobalcache[v.infos.videoDetails.uuid] = v.infos.videoDetails
-                        })
+                        if (share.videos) {
+                            _.each(share.videos, function(v){
+                                if(v && v.infos &&  v.infos.videoDetails) window.peertubeglobalcache[v.infos.videoDetails.uuid] = v.infos.videoDetails
+                            })
+                        }
 
                     })
 
