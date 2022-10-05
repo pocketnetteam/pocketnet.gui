@@ -9191,6 +9191,8 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
 
       // Check if we have downloaded the video already
       var localVideo = options.app.platform.sdk.localshares.getVideo(parsed.id);
+      if (localVideo)
+        localVideo.infos = localVideo.infos || {};
 
       const isElectron = (typeof _Electron !== 'undefined');
       const isCordova = (typeof window.cordova != 'undefined');
