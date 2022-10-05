@@ -902,6 +902,12 @@ __map =  {
 		
 	},
 
+	downloadMedia : {
+		uri : "downloadMedia",
+		href : "downloadMedia",
+		add : insertingfunc
+	},
+
 	panel : {
 		uri : "panel",
 		href : "panel",
