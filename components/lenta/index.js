@@ -232,7 +232,10 @@ var lenta = (function(){
 
 			subscribeunsubscribeclbk : function(address){
 
+
 				var addressEl = el.c.find('.shareTable[address="'+address+'"]')
+
+				var buttonsWrapper = addressEl.closest('.sharecnt').find('.bannerComment .buttonsWrapper');
 
 				var me = deep(self.app, 'platform.sdk.users.storage.' + self.user.address.value.toString('hex'))
 
@@ -242,6 +245,8 @@ var lenta = (function(){
 					if (r) {
 
 						addressEl.addClass('subscribed');
+
+						buttonsWrapper.addClass('following');
 
 						if((r.private == 'true' || r.private === true)){
 							addressEl.find('.notificationturn').addClass('turnon')	
@@ -258,6 +263,7 @@ var lenta = (function(){
 				}
 				else{
 					addressEl.removeClass('subscribed');
+					buttonsWrapper.removeClass('following');
 					addressEl.find('.notificationturn').removeClass('turnon')
 				}
 

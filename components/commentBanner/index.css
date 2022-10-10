@@ -35,13 +35,30 @@
 }
 .bannerComment .bannerBody .text .noShowAgain {
   text-decoration: underline;
-  padding-top: 3%;
+  padding-top: 2%;
   color: rgb(var(--color-not-catchy-grey));
   font-size: 0.8em;
   cursor: pointer;
 }
 .bannerComment .bannerBody .text .noShowAgain:hover {
   color: rgb(var(--color-cc-blue));
+}
+.bannerComment .bannerBody .text .buttonsWrapper {
+  margin-top: 0.5em;
+  display: flex;
+}
+.bannerComment .bannerBody .text .buttonsWrapper .unsubscribe {
+  display: none;
+}
+.bannerComment .bannerBody .text .buttonsWrapper button {
+  margin-right: 1em;
+  padding-left: 0.5em;
+}
+.bannerComment .bannerBody .text .buttonsWrapper.following .unsubscribe {
+  display: block;
+}
+.bannerComment .bannerBody .text .buttonsWrapper.following .subscribe {
+  display: none;
 }
 .bannerComment .bannerBody .closeBannerBtn .container {
   display: flex;

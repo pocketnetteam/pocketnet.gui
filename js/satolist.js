@@ -3101,7 +3101,7 @@ Platform = function (app, listofnodes) {
                 return;
             }
 
-            const createComponent = () => {
+            const createComponent = (subscribe) => {
                 self.app.Logger.info({
                     actionId: 'COMMENT_BANNER_ALLOWED',
                     value: true,
@@ -3112,7 +3112,7 @@ Platform = function (app, listofnodes) {
                     id: 'commentBanner',
                     el: contextElem.find('.bannerComment'),
                     essenseData: {
-                        address: address
+                        address: subscribe && address
                     },
 
                     clbk : function(e, p){
@@ -3137,16 +3137,15 @@ Platform = function (app, listofnodes) {
             const unixTimeNow = Math.floor(Date.now() / 1000);
             const oneDayInSeconds = 86400;
 
-            const alreadyShowed = ('nextCommentBanner' in localStorage);
-            const isBannerDisabled = (localStorage.nextCommentBanner == -1);
-            const timeToShowBanner = (unixTimeNow >= localStorage.nextCommentBanner);
+            const nextCommentBanner = Number(localStorage.nextCommentBanner) || 0;
+            const isBannerDisabled = nextCommentBanner == -1;
+            const timeToShowBanner = (unixTimeNow >= nextCommentBanner);
 
             const regDate = app.platform.sdk.user.me().regdate;
             const regUnixTime = (regDate.getTime());
             const registeredTime = Date.now() - regUnixTime;
 
-            const repeat = (localStorage.nextCommentBanner == 1);
-            const isOneDayOld = (registeredTime >= oneDayInSeconds);
+            const isOneDayOld = (registeredTime >= oneDayInSeconds * 1000);
 
             if (isBannerDisabled) {
                 return isBannerDisabled;
@@ -3154,20 +3153,32 @@ Platform = function (app, listofnodes) {
 
             if (!isOneDayOld) {
                 createComponent();
+                return;
                 //return bannerCommentComponent;
             }
 
-            if (repeat && timeToShowBanner) {
-                localStorage.nextCommentBanner = unixTimeNow + oneDayInSeconds;
-                createComponent();
-                //return bannerCommentComponent;
-            }
+            
+            if (timeToShowBanner) {
 
-            if (timeToShowBanner || !alreadyShowed) {
-                localStorage.nextCommentBanner = 1;
+                if (nextCommentBanner){
+                    
+                    localStorage.removeItem("nextCommentBanner");
+
+                } else {
+
+                    localStorage.nextCommentBanner = unixTimeNow + oneDayInSeconds;
+
+                }
+
                 createComponent();
                 //return bannerCommentComponent;
+            } else {
+
+                createComponent(true);
+
             }
+        
+
 
         },
 

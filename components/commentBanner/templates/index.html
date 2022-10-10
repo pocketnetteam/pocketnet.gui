@@ -1,3 +1,19 @@
+<%
+var me = null;
+var _class = '';
+
+if(user.address.value){
+
+	me = deep(app, 'platform.sdk.users.storage.' + user.address.value.toString('hex'))
+
+     if (me && me.relation(address, 'subscribes')){ _class="following" } 
+
+}
+
+%>
+
+
+
 <div id="<%-module.map.id%>" class="bannerBody">
 
     <% 
@@ -50,22 +66,21 @@
     <div class="text">
         <strong><%= e(address ? 'commentBannerTitle2' : 'commentBannerTitle', name) %></strong>
         <div class="bannerDescription"><%= e(address ? 'commentBannerDescription2' : 'commentBannerDescription', name) %></div>
-        <div class="noShowAgain"><%= e('dontShowAgain') %></div>
+        <div class="buttonsWrapper <%-_class%>">
+            <% if (address) {%>
+                <button class="subscribe funf">
+                    <%=e('follow') %>
+                </button>	
+    
+                <button class="unsubscribe funf">
+                    <%=e('unfollow') %>
+                </button>	
+        
+            <% } %>
+            <div class="noShowAgain"><%= e('dontShowAgain') %></div>
+        </div>
     </div>
 
-    <% if (address) {%>
-
-        <div class="subscribeWrapper">
-            <button class="subscribe funf">
-                <%=e('follow') %>
-            </button>	
-
-            <button class="unsubscribe funf">
-                <%=e('unfollow') %>
-            </button>	
-        </div>
-
-    <% } %>
 
     <div class="closeBannerBtn">
         <div class="container">
