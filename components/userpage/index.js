@@ -105,14 +105,16 @@ var userpage = (function(){
 				},
 			})
 
-		
-
 			reports.push({
 				name : self.app.localization.e('rwallet'),
 				id : 'wallet',
 				report : 'wallet',
 				mobile : true,
 				openReportPageMobileInWindow : true,
+				if : function(){
+					if(!app.pkoindisable) return true
+				},
+
 				add : function(){
 
 					if (self.app.mobileview && allbalance && !self.app.curation()){

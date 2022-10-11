@@ -135,6 +135,8 @@ var deleted = typeof app.platform.sdk.user.myaccauntdeleted == 'undefined' && ap
 
 							<% } %>
 
+							<% if(!app.pkoindisable) {%>
+
 							<div elementsid="walletsWrapperOpen" class="items walletsWrapper">
 								<div class="item  right wallets onlyicon" events="wallets">
 
@@ -146,6 +148,8 @@ var deleted = typeof app.platform.sdk.user.myaccauntdeleted == 'undefined' && ap
 
 								</div>
 							</div>
+
+							<% } %>
 
 						<% } %>
 

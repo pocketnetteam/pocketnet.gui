@@ -11062,9 +11062,16 @@ var fkit = {
         'image/png' : 'png',
         'image/jpeg' : 'jpg',
         'image/jpg' : 'jpg',
+		'image/gif' : 'gif',
         'image/webp' : 'webp',
         'image/jfif' : 'jfif'
     },
+	extensionBase64 : function(base64){
+		if(!base64) return ''
+
+		return fkit.extensions[base64.split(';')[0].replace('data:', '')] || ''
+
+	},
     getExtension: function (file) {
         var name = file.name.split('.');
         var ext = name[name.length - 1].toLowerCase();
@@ -11720,7 +11727,7 @@ if(typeof window != 'undefined'){
 	if (splashScreen) {
 
 
-		var splashScreenImg = document.getElementById('splashScreenImg');
+		var splashScreenIcon = document.querySelector('#splashScreen .icon');
 		var stopRotation = false;
 
 		// Logos variant color
@@ -11741,12 +11748,12 @@ if(typeof window != 'undefined'){
 
 		// Function triggered at the end of each rotating animation
 		rotatingAnimationEnded = function() {
-			if (!splashScreenImg)
+			if (!splashScreenIcon)
 				return;
 			// Check if we need to stop rotating and fade out
 			if (stopRotation) {
-				splashScreenImg.classList.remove("rotate");
-				splashScreenImg.classList.add('zoom-out-rotate');
+				splashScreenIcon.classList.remove("rotate");
+				splashScreenIcon.classList.add('zoom-out-rotate');
 				splashScreen.classList.add('fade-out');
 				// When zoom out animation is done, completely remove the splash screen
 				setTimeout(() => {
@@ -11758,7 +11765,7 @@ if(typeof window != 'undefined'){
 
 					if (splashScreen)
 						splashScreen.remove();
-						splashScreenImg = null
+						splashScreenIcon = null
 
 					splashScreen = null
 				}, zoomOutDuration * 2);
@@ -11766,8 +11773,8 @@ if(typeof window != 'undefined'){
 			// Wait until half the rotation is done
 			/*setTimeout(() => {
 				// Change the logo image
-				if (splashScreenImg)
-					splashScreenImg.src = logos[nextLogoIndex];
+				if (splashScreenIcon)
+					splashScreenIcon.style.backgroundImage = `url('${logos[nextLogoIndex]}')`;
 				// Increase index
 				nextLogoIndex = (nextLogoIndex >= (logos.length - 1)) ? 0 : nextLogoIndex + 1;
 			}, rotatingDuration * 0.5);*/
@@ -11775,11 +11782,11 @@ if(typeof window != 'undefined'){
 
 		// Wait until the zoom in is done
 		setTimeout(() => {
-			if (!splashScreenImg)
+			if (!splashScreenIcon)
 				return;
 			// Start rotating the logo
-			splashScreenImg.classList.remove('zoom-in');
-			splashScreenImg.classList.add('rotate');
+			splashScreenIcon.classList.remove('zoom-in');
+			splashScreenIcon.classList.add('rotate');
 			// Triggered every times we reached the end of the rotating animation
 			rotatingAnimationEnded();
 			splashScreeninterval = setInterval(rotatingAnimationEnded, rotatingDuration);

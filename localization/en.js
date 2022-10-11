@@ -2337,3 +2337,21 @@ _l.removecategoryQestion = 'Do you really want to remove this category?'
 
 _l.searchbytext = "Search by text:"
 _l.searchbytags = "Search by tags:"
+
+_l.boost_c1 = 'Advertise with PKOIN & get leads for your crypto project today'
+_l.boost_c2 = 'Web 2.0'
+_l.boost_c3 = 'Bastyon Web 3.0'
+_l.boost_c4 = 'Are you trying to be heard on the internet?'
+_l.boost_c5 = 'Would you like to get your content or product in front of a new dynamic audience for less than major ad networks?'
+_l.boost_c6 = 'Bastyon, the blockchain social network has just released a way of promoting content, including videos.'
+_l.boost_c7 = 'The cost of an impression on Bastyon is many times lower than on traditional ad networks.'
+_l.boost_c8 = 'Boosting posts on Bastyon is very simple, you just need some Pocketcoin, a native cryptocurrency of Bastyon. Click Boost below the post and enter the amount and your post is moved to the top!'
+_l.boost_c9 = 'Bastyon has millions of visitors and growing. Your content will be seen!'
+_l.boost_c10 = 'If you are an aspiring author who wants to increase your audience, Bastyon boosting of posts can work for you!'
+_l.boost_c11 = 'If you are an advertiser looking for a platform to promote your product, you can quickly get your ad up and running and get conversions.'
+_l.boost_c12 = 'Open source'
+_l.boost_c13 = 'Upload your videos'
+_l.boost_c14 = 'Earn with Bastyon'
+_l.boost_c15 = 'Privacy protection'
+_l.boost_c16 = 'Bitcoin of social media'
+_l.boost_c17 = 'Censorship resistant'

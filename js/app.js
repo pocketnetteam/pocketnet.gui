@@ -1229,7 +1229,7 @@ Application = function(p)
     else
     {
 
-
+      self.mobile.keyboard.init()
       self.mobile.safearea()
       self.init(p);
 
@@ -2049,6 +2049,17 @@ Application = function(p)
 
             self.mobile.keyboard.height = 0
           });
+        }
+        else{
+
+          if(navigator.virtualKeyboard && isTablet()){
+            navigator.virtualKeyboard.overlaysContent = true;
+
+            navigator.virtualKeyboard.addEventListener('geometrychange', (event) => {
+              document.documentElement.style.setProperty('--keyboardheight', `${event.target.boundingRect.height}px`);
+            });
+          }
+          
         }
 
         

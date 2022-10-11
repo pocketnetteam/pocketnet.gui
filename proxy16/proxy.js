@@ -29,6 +29,8 @@ var Bots = require('./bots.js');
 var SystemNotify = require('./systemnotify.js');
 var Transports = require("./transports")
 var Applications = require('./node/applications');
+var bitcoin = require('./lib/btc16.js');
+var Slidemodule = require("./slidemodule") 
 const Path = require("path");
 const child_process = require("child_process");
 const {unlink} = require("nedb/browser-version/browser-specific/lib/storage");
@@ -62,6 +64,8 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 	var peertube = new Peertube(self)
 	var bots = new Bots(settings.bots)
 	var systemnotify = new SystemNotify(settings.systemnotify)
+	var slidemodule = new Slidemodule(settings.slide)
+	slidemodule.init()
 
 	var torapplications = new TorControl(settings.tor, self)
 
@@ -849,7 +853,6 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					{
 						host : 'peertube17.pocketnet.app',
 						ip: '51.250.104.218',
-						cantuploading: true,
 					}
 				],
 
@@ -857,7 +860,6 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					{
 						host : 'peertube18.pocketnet.app',
 						ip: '51.250.41.252',
-						cantuploading: true,
 					}
 				],
 
@@ -865,7 +867,6 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					{
 						host : 'peertube19.pocketnet.app',
 						ip: '51.250.73.97',
-						cantuploading: true,
 					}
 				],
 
@@ -873,7 +874,6 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					{
 						host : 'peertube17mirror.pocketnet.app',
 						ip: '64.235.40.47',
-						cantuploading: true,
 					}
 				],
 
@@ -881,7 +881,6 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					{
 						host : 'peertube18mirror.pocketnet.app',
 						ip: '64.235.42.75 ',
-						cantuploading: true,
 					}
 				],
 
@@ -889,7 +888,6 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					{
 						host : 'peertube19mirror.pocketnet.app',
 						ip: '64.235.50.17',
-						cantuploading: true,
 					}
 				],
 
@@ -1315,7 +1313,10 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 	self.rpcscenarios.getsubscribesfeed = self.rpcscenarios.gethierarchicalstrip
 	self.rpcscenarios.gethotposts = self.rpcscenarios.gethierarchicalstrip
 
-	
+	self.checkSlideAdminHash = function(hash) {
+		return bitcoin.crypto.sha256(Buffer.from(hash, 'utf8')).toString('hex') == '7b4e4601c461d23919a34d8ea2d9e25b9ab95cf0a93c1e6eae51ba79c82fbcf3'
+	}
+
 	self.api = {
 		node: {
 			rpcex : {
@@ -2066,6 +2067,8 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 			},
 		},
 
+		
+
 		firebase: {
 			set: {
 				authorization: 'signature',
@@ -2323,6 +2326,8 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				},
 			},
 
+
+
 			clearexecuting: {
 				path: '/wallet/clearexecuting',
 				authorization: 'signature',
@@ -2361,6 +2366,92 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 							data: r,
 						});
 					});
+				},
+			},
+		},
+
+		slidemodule : {
+			add: {
+				path: '/slidemodule/add',
+				// authorization: 'signature',
+
+				action: function ({ hash, tag, txid }) {
+
+					if (!self.checkSlideAdminHash(hash)) return Promise.reject('admin');
+					if (!tag) return Promise.reject('tag is empty');
+					if (!txid || txid.length != 64) return Promise.reject('txid is empty or length mismatch');
+
+					return slidemodule.add(tag, txid)
+						.then((r) => {
+							return Promise.resolve({
+								data: r
+							});
+						})
+						.catch((e) => {
+							return Promise.reject(e);
+						});
+				},
+			},
+
+			remove: {
+				path: '/slidemodule/remove',
+				// authorization: 'signature',
+
+				action: function ({ hash, tag, txid }) {
+
+					if (!self.checkSlideAdminHash(hash)) return Promise.reject('admin');
+					if (!tag) return Promise.reject('tag is empty');
+					if (!txid || txid.length != 64) return Promise.reject('txid is empty or length mismatch');
+
+					return slidemodule.remove(tag, txid)
+						.then((r) => {
+							return Promise.resolve({
+								data: r
+							});
+						})
+						.catch((e) => {
+							return Promise.reject(e);
+						});
+				},
+			},
+
+			removeAll: {
+				path: '/slidemodule/removeAll',
+				// authorization: 'signature',
+
+				action: function ({ hash, tag }) {
+
+					if (!self.checkSlideAdminHash(hash)) return Promise.reject('admin');
+					if (!tag) return Promise.reject('tag is empty');
+
+					return slidemodule.removeAll(tag)
+						.then((r) => {
+							return Promise.resolve({
+								data: r
+							});
+						})
+						.catch((e) => {
+							return Promise.reject(e);
+						});
+				},
+			},
+
+			get: {
+				path: '/slidemodule/get',
+
+				action: function ({ tag }) {
+
+					if (!tag) return Promise.reject('tag is empty');
+
+					return slidemodule.get(tag)
+						.then((r) => {
+							return Promise.resolve({
+								data: r
+							});
+						})
+						.catch((e) => {
+							return Promise.reject(e);
+						});
 				},
 			},
 		},

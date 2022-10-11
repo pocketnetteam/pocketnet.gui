@@ -238,7 +238,7 @@ Platform = function (app, listofnodes) {
         'PCfvhqHEYG3zdWXvLJrjPPDVK2H8qwwXn5' : true,
         'PLZsQmsRUDMJGc61pGMLdDQ58UuqQ8kU5Z' : true,
         'PMC3pwutfiYpGWUMHhiB1NRjiHL7iWHiyi' : true,
-        'PEd7HQKaGj36sgPAidCvm62KidQQGL5sD8' : true,
+        // 'PEd7HQKaGj36sgPAidCvm62KidQQGL5sD8' : true, //??????????????????
         'PMTrhcppMJpaRz4Xnv7CogJPHPMKtcg6bA' : true,
         'PCYeapWncohMda9vfrFe26EDEiFa89kDZ1' : true,
         'PQEYtpgvtfETFVfhk467SyuGRhwtMcvKUd' : true,
@@ -2456,6 +2456,8 @@ Platform = function (app, listofnodes) {
         offline: {},
 
         _focus: {},
+        _unfocus: {},
+
 
         focus: function (time) {
 
@@ -2475,6 +2477,12 @@ Platform = function (app, listofnodes) {
 
         },
 
+        unfocus: function () {
+            _.each(self.clbks._unfocus, function (f) {
+                f()
+            })
+        },
+
         api: {
             actions: {
                 anysubscribe : {},
@@ -2487,6 +2495,7 @@ Platform = function (app, listofnodes) {
             }
         },
     }
+    
 
     self.papi = {
         horizontalLenta : function(el, clbk, p){
@@ -29769,6 +29778,8 @@ Platform = function (app, listofnodes) {
             self.focus = false;
 
             unfocustime = platform.currentTime()
+
+            self.clbks.unfocus();
 
             setTimeout(function(){
 
