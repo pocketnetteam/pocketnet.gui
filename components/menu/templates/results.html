@@ -10,50 +10,35 @@
 				</span>
 			</div>-->
 
-			<% if(value.indexOf("#") == -1) {%>
+			<% if(app.thislink(value)) {%>
 
-				<a elementsid="index?ss=<%-value%>" href="index?ss=<%-value%>">
-					<div class="searchby searchbyvalue">
-				
-						<div class="swrp managebutton">
-							<div class="rsicon">
-								<i class="fas fa-pencil-alt"></i>
-							</div>
-							<div class="label">
-								<span>
-									<%=e('searchbytext')%>
-								</span>
-								<span class="b">
-									<%-value%>
-								</span>
-							</div>
+				<div class="searchby gotopage" link="<%-value%>">
+					<div class="swrp managebutton">
+						<div class="rsicon">
+							<i class="fas fa-link"></i>
+						</div>
+						<div class="label">
+							<span>
+								<%=e('gotopage')%>
+							</span>
 						</div>
 					</div>
-				</a>
-			<% } %>
-			
+				</div>
 
-			<% 
+			<% } else { %> 
 
-				var clearedvalue = value.replace(/#/g, '');
-			
-				var wordsRegExp = /[,.!?;:() \n\r]/g
-				var words = _.uniq(_.filter(clearedvalue.split(wordsRegExp), function(r){
-					return r
-				}));
+				<% if(value.indexOf("#") == -1) {%>
 
-
-				if(words.length){ %>
-
-					<a elementsid="index?sst=<%-words.join(' ')%>" href="index?sst=<%-words.join(' ')%>">
-						<div class="searchby searchbytag">
+					<a elementsid="index?ss=<%-value%>" href="index?ss=<%-value%>">
+						<div class="searchby searchbyvalue">
+					
 							<div class="swrp managebutton">
 								<div class="rsicon">
-									<i class="fas fa-hashtag"></i>
+									<i class="fas fa-pencil-alt"></i>
 								</div>
 								<div class="label">
 									<span>
-										<%=e('searchbytags')%>
+										<%=e('searchbytext')%>
 									</span>
 									<span class="b">
 										<%-value%>
@@ -61,11 +46,45 @@
 								</div>
 							</div>
 						</div>
-					</a>	
+					</a>
+				<% } %>
+				
 
-				<% }
-			
-			%>
+				<% 
+
+					var clearedvalue = value.replace(/#/g, '');
+				
+					var wordsRegExp = /[,.!?;:() \n\r]/g
+					var words = _.uniq(_.filter(clearedvalue.split(wordsRegExp), function(r){
+						return r
+					}));
+
+
+					if(words.length){ %>
+
+						<a elementsid="index?sst=<%-words.join(' ')%>" href="index?sst=<%-words.join(' ')%>">
+							<div class="searchby searchbytag">
+								<div class="swrp managebutton">
+									<div class="rsicon">
+										<i class="fas fa-hashtag"></i>
+									</div>
+									<div class="label">
+										<span>
+											<%=e('searchbytags')%>
+										</span>
+										<span class="b">
+											<%-value%>
+										</span>
+									</div>
+								</div>
+							</div>
+						</a>	
+
+					<% }
+				
+				%>
+
+			<% } %>
 			
 	
 		</div>

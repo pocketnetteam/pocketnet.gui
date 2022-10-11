@@ -67818,7 +67818,7 @@ var PcryptoRoom = /*#__PURE__*/function () {
         return user.id;
       }), uid => {
         return uid && uid != pcrypto.user.userinfo.id;
-      }).join('') + '_v3');
+      }).join('') + '_v4');
       return hash;
     };
 

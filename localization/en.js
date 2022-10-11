@@ -2354,3 +2354,8 @@ _l.boost_c14 = 'Earn with Bastyon'
 _l.boost_c15 = 'Privacy protection'
 _l.boost_c16 = 'Bitcoin of social media'
 _l.boost_c17 = 'Censorship resistant'
+
+_l.gotopage = 'Go to page'
+
+
+
