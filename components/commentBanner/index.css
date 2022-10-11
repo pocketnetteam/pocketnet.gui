@@ -11,6 +11,9 @@
   border: solid rgb(var(--neutral-grad-3)) 1px;
   border-radius: 7px;
 }
+.bannerComment .bannerBody.subscribeUser .iconWrapper {
+  width: 3em;
+}
 .bannerComment .bannerBody .bannerIcon {
   width: 64px;
   background-image: url(../../images/comment.png);

@@ -1,6 +1,7 @@
 <%
 var me = null;
 var _class = '';
+var format = address ? 'subscribeUser ' : ''; 
 
 if(user.address.value){
 
@@ -14,7 +15,7 @@ if(user.address.value){
 
 
 
-<div id="<%-module.map.id%>" class="bannerBody">
+<div id="<%-module.map.id%>" class="<%-format + 'bannerBody'%>">
 
     <% 
         var name = app.platform.api.name(address); 
