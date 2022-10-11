@@ -3110,7 +3110,7 @@ Platform = function (app, listofnodes) {
                 return;
             }
 
-            const createComponent = (subscribe) => {
+            const createComponent = (address) => {
                 self.app.Logger.info({
                     actionId: 'COMMENT_BANNER_ALLOWED',
                     value: true,
@@ -3121,7 +3121,7 @@ Platform = function (app, listofnodes) {
                     id: 'commentBanner',
                     el: contextElem.find('.bannerComment'),
                     essenseData: {
-                        address: subscribe && address
+                        address: address
                     },
 
                     clbk : function(e, p){
@@ -3163,10 +3163,13 @@ Platform = function (app, listofnodes) {
             if (!isOneDayOld) {
                 createComponent();
                 return;
-                //return bannerCommentComponent;
+                //return bannerCommentComponent;t
             }
 
-            
+            var me = deep(app, 'platform.sdk.users.storage.' + self.app.user.address.value.toString('hex'));
+
+            if (me && me.relation(address, 'subscribes')){ return; } 
+        
             if (timeToShowBanner) {
 
                 if (nextCommentBanner){
@@ -3183,7 +3186,7 @@ Platform = function (app, listofnodes) {
                 //return bannerCommentComponent;
             } else {
 
-                createComponent(true);
+                createComponent(address);
 
             }
         
