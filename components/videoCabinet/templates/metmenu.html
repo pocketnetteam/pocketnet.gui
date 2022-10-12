@@ -29,12 +29,12 @@ var all = {
 	},
 }
 
-if (editableFlag === 'true') {
+if (editableFlag === true) {
 	m.push('editText');
 }
 
 if (!isVideoPosted) {
-	if (editableFlag === 'true') m.push('remove');
+	if (editableFlag === true) m.push('remove');
 } else {
 	m.push('removePost');
 }
