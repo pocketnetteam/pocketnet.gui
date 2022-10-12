@@ -808,7 +808,7 @@ var videoCabinet = (function () {
 
               const videoLink = menuActivatorElement.attr('videoLink');
               const backupHost = menuActivatorElement.attr('backupHost');
-              const editableFlag = menuActivatorElement.attr('editable');
+              const editableFlag = menuActivatorElement.attr('editable') === 'true' ? true : false;
 
               return renders.metmenu(
                 $(this),
