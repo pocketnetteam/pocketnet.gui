@@ -727,29 +727,12 @@ var videoCabinet = (function () {
       //table with video elements
       videos(videosForRender, videoPortionElement, inBlockChainFlag) {
         //additional sorting due to different servers
-        const videos = (
+        const videos =
           videosForRender ||
           Object.values(peertubeServers)
             .map((value) => value.videos)
             .filter((video) => video)
-            .flat()
-        ).sort((videoA, videoB) => {
-          if (sorting.sortType === 'id') {
-            const sortingValBool = sorting.sortDirection
-              ? moment(videoB[sorting.sortType]).isAfter(
-                  videoA[sorting.sortType],
-                )
-              : moment(videoB[sorting.sortType]).isBefore(
-                  videoA[sorting.sortType],
-                );
-
-            return sortingValBool ? 1 : -1;
-          }
-
-          return sorting.sortDirection
-            ? videoB[sorting.sortType] - videoA[sorting.sortType]
-            : videoB[sorting.sortType] - videoA[sorting.sortType];
-        });
+            .flat();
 
         videos.forEach((video) => {
           if (video.description) {
