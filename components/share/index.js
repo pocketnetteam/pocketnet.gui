@@ -1016,7 +1016,7 @@ var share = (function(){
 										})
 		
 										intro = false
-		
+
 										if (essenseData.post){
 											essenseData.post(alias)
 										}
@@ -2649,6 +2649,7 @@ var share = (function(){
 				intro = false;
 				external = null
 				currentShare = deep(p, 'settings.essenseData.share') || new Share(self.app.localization.key, self.app);
+
 				essenseData = deep(p, 'settings.essenseData') || {};
 
 				currentShare.app = self.app
@@ -2733,9 +2734,7 @@ var share = (function(){
 					sortable = null
 				}
 
-
 				el = {};
-				essenseData = {}
 					
 			},
 			

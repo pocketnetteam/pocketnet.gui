@@ -594,8 +594,8 @@ var videoCabinet = (function () {
       },
 
       onVideoPost(videoLink, linkElement) {
-		debugger;
         state.removeVideo(self.app.peertubeHandler.parselink(videoLink).id);
+
         linkElement.html(
           `<i class="fas fa-spinner fa-spin"></i>${self.app.localization.e(
             'videoIsPosting',
@@ -612,9 +612,12 @@ var videoCabinet = (function () {
         const { id, host } = self.app.peertubeHandler.parselink(videoUrl);
 
         el.c.find(`.singleVideoSection[uuid="${id}"]`).addClass('hidden');
+
         actions
           .getSingleVideo(videoUrl)
           .then((dataVideo) => {
+            debugger;
+
             const formattedData = {
               ...dataVideo,
               server: host,
@@ -622,6 +625,11 @@ var videoCabinet = (function () {
               txid: deep(data, 'temp.txid'),
               editable: true,
             };
+
+            if (formattedData.description)
+              formattedData.description = actions.replaceNetLinks(
+                formattedData.description,
+              );
 
             renders.videos(
               [formattedData],
@@ -662,7 +670,6 @@ var videoCabinet = (function () {
         return actions
           .getBlockChainVideos()
           .then((data = []) => {
-
             if (!data.length) allVideosLoaded = true;
 
             newVideosAreUploading = false;
@@ -1042,7 +1049,6 @@ var videoCabinet = (function () {
       },
       //button in video table for adding post with video to blockchain
       addButton(parameters) {
-		debugger;
         self.app.platform.ui.share(parameters);
       },
       //get link to existing video post
@@ -1386,7 +1392,7 @@ var videoCabinet = (function () {
                               if (name) parameters.name = name;
                               if (description)
                                 parameters.description = description;
-							debugger;
+
                               parameters.tags = tagArray;
 
                               const { host } = videoLink;
@@ -1484,7 +1490,6 @@ var videoCabinet = (function () {
           },
 
           _addtag(tag) {
-			debugger;
             var tta = _.uniq(_.clone(tagArray).concat([tag]));
 
             var bycategories = self.app.platform.sdk.categories.fromTags(
