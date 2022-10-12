@@ -594,6 +594,7 @@ var videoCabinet = (function () {
       },
 
       onVideoPost(videoLink, linkElement) {
+		debugger;
         state.removeVideo(self.app.peertubeHandler.parselink(videoLink).id);
         linkElement.html(
           `<i class="fas fa-spinner fa-spin"></i>${self.app.localization.e(
@@ -1058,6 +1059,7 @@ var videoCabinet = (function () {
       },
       //button in video table for adding post with video to blockchain
       addButton(parameters) {
+		debugger;
         self.app.platform.ui.share(parameters);
       },
       //get link to existing video post
@@ -1381,6 +1383,7 @@ var videoCabinet = (function () {
                           },
                         });
                       }
+
                       return self.fastTemplate(
                         'editDescription',
                         (rendered) => {
@@ -1400,7 +1403,7 @@ var videoCabinet = (function () {
                               if (name) parameters.name = name;
                               if (description)
                                 parameters.description = description;
-
+							debugger;
                               parameters.tags = tagArray;
 
                               const { host } = videoLink;
@@ -1442,7 +1445,7 @@ var videoCabinet = (function () {
                               tagElement =
                                 editDialogEl.find('.videoTagsWrapper');
                               tagArray = [...videoData.tags];
-                              renders.tags(tagElement, tagArray);
+                              renders.tags(tagElement);
 
                               editDialogEl
                                 .find('.videoNameInput')
@@ -1474,7 +1477,7 @@ var videoCabinet = (function () {
         );
       },
       //render tagline
-      tags(element, tagArray) {
+      tags(element) {
         const tagActions = {
           //tag-related funcitons
           tagsFromText(text) {
@@ -1498,11 +1501,12 @@ var videoCabinet = (function () {
           },
 
           _addtag(tag) {
+			debugger;
             var tta = _.uniq(_.clone(tagArray).concat([tag]));
 
             var bycategories = self.app.platform.sdk.categories.fromTags(
               tta,
-              self.language.v,
+              null,
             );
 
             if (bycategories.categories.length > 2) {
@@ -1562,22 +1566,22 @@ var videoCabinet = (function () {
 
             removeTag: function (tag) {
               tagActions.removeTag(tag);
-              renders.tags(tagElement, tagArray);
+              renders.tags(tagElement);
             },
 
             removeTags: function (tag) {
               tagActions.removeTags(tag);
-              renders.tags(tagElement, tagArray);
+              renders.tags(tagElement);
             },
 
             addTag: function (tag) {
               tagActions.addTag(tag);
-              renders.tags(tagElement, tagArray);
+              renders.tags(tagElement);
             },
 
             addTags: function (tags) {
               tagActions.addTags(tags);
-              renders.tags(tagElement, tagArray);
+              renders.tags(tagElement);
             },
           },
 

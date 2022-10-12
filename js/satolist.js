@@ -3501,6 +3501,7 @@ Platform = function (app, listofnodes) {
                         close : function(){
                         },
                         post : function(){
+                            debugger;
                             if (p.onPost) p.onPost();
                         },
                         absolute : true,
