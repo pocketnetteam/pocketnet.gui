@@ -182,6 +182,7 @@
   border-bottom-left-radius: 5px;
   bottom: 0;
   padding: 0.5em;
+  left: 0;
 }
 #videoCabinet .videoAvatar .backgroundPreloader {
   position: absolute;
