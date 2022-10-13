@@ -1217,6 +1217,25 @@ var Api = function(app){
             })
         },
 
+        byidwithadd : function(id){
+            var p = self.get.byid(id)
+
+            if(!p){
+
+                var mp = id.split(':')
+
+                var meta = {
+                    host : mp[0],
+                    port : mp[1],
+                    wss : mp[2]
+                }
+
+                var proxy = new Proxy16(meta, app, self)
+
+                return proxy
+            }
+        },
+
         working : function(){
 
             var _proxies = _.filter(proxies, function(proxy){

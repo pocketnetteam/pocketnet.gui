@@ -238,7 +238,7 @@ Platform = function (app, listofnodes) {
         'PCfvhqHEYG3zdWXvLJrjPPDVK2H8qwwXn5' : true,
         'PLZsQmsRUDMJGc61pGMLdDQ58UuqQ8kU5Z' : true,
         'PMC3pwutfiYpGWUMHhiB1NRjiHL7iWHiyi' : true,
-        'PEd7HQKaGj36sgPAidCvm62KidQQGL5sD8' : true,
+        // 'PEd7HQKaGj36sgPAidCvm62KidQQGL5sD8' : true, //??????????????????
         'PMTrhcppMJpaRz4Xnv7CogJPHPMKtcg6bA' : true,
         'PCYeapWncohMda9vfrFe26EDEiFa89kDZ1' : true,
         'PQEYtpgvtfETFVfhk467SyuGRhwtMcvKUd' : true,
@@ -2495,6 +2495,7 @@ Platform = function (app, listofnodes) {
             }
         },
     }
+    
 
     self.papi = {
         horizontalLenta : function(el, clbk, p){
@@ -13679,22 +13680,32 @@ Platform = function (app, listofnodes) {
 
                 self.sdk.recommendations.clearplanned()
 
-                var kf = [
-                    /*{
-                        a : self.sdk.recommendations.schedulers.users,
-                        probability : 50 + (self.sdk.recommendations.storage.keys['users'] || 1)
-                    },*/{
-                        a : self.sdk.recommendations.schedulers.tags,
-                        probability : 50 + (self.sdk.recommendations.storage.keys['tags'] || 1)
+                if(!self.sdk.recommendations.storage.keys) self.sdk.recommendations.storage.keys = {}
+
+                self.app.user.isState(function (state) {
+                    if(state){
+
+                        var kf = [
+                            /*{
+                                a : self.sdk.recommendations.schedulers.users,
+                                probability : 50 + (self.sdk.recommendations.storage.keys['users'] || 1)
+                            },*/{
+                                a : self.sdk.recommendations.schedulers.tags,
+                                probability : 50 + (self.sdk.recommendations.storage.keys['tags'] || 1)
+                            }
+                        ]
+        
+                        var action = randomizer(kf)
+        
+        
+                        action.a()
+        
+                        self.sdk.recommendations.maketasksdebounced()
+                        
                     }
-                ]
+                })
 
-                var action = randomizer(kf)
-
-
-                action.a()
-
-                self.sdk.recommendations.maketasksdebounced()
+               
             },
 
             scheduler : _.debounce(() => {
@@ -13720,20 +13731,25 @@ Platform = function (app, listofnodes) {
             },
 
             load: function (clbk) {
-                var p = {};
 
-                try {
-                    p = JSON.parse(localStorage['recommendations'] || '{}');
-                }
-                catch (e) {}
+              
 
-                self.sdk.recommendations.storage.status = p.status || []
-                self.sdk.recommendations.storage.shares = p.shares || []
-                self.sdk.recommendations.storage.keys = p.keys || {}
+                    var p = {};
 
-                self.sdk.recommendations.scheduler()
+                    try {
+                        p = JSON.parse(localStorage['recommendations'] || '{}');
+                    }
+                    catch (e) {}
 
-                if(clbk) clbk()
+                    self.sdk.recommendations.storage.status = p.status || []
+                    self.sdk.recommendations.storage.shares = p.shares || []
+                    self.sdk.recommendations.storage.keys = p.keys || {}
+
+                    self.sdk.recommendations.scheduler()
+
+                    if(clbk) clbk()
+
+              
             },
         },
 

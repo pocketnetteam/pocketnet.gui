@@ -601,9 +601,6 @@
                     padding-right: 0;
                 }*/
 }
-#system16 .nodescontent .node > div.name {
-  width: 120px;
-}
 #system16 .nodescontent .node > div.use {
   cursor: pointer;
 }
