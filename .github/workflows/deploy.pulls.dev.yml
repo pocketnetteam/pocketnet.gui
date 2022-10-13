@@ -155,6 +155,7 @@ jobs:
       - name: Prepare building
         run: |
           npm i
+          npm rebuild
           npm run dev:bastyon
       - name: Prepare for app notarization
         run: |
@@ -195,6 +196,7 @@ jobs:
       - name: Prepare building
         run: |
           npm i
+          npm rebuild
           npm run dev:bastyon
       - name: Building
         run: |
@@ -225,6 +227,7 @@ jobs:
       - name: Prepare building
         run: |
           npm i
+          npm rebuild
           npm run dev:bastyon
       - name: Building
         run: |
@@ -256,10 +259,12 @@ jobs:
       - name: Install Cordova
         run: |
           npm i -g cordova@10
+          npm rebuild
           cordova --version
       - name: Prepare building
         run: |
           npm i
+          npm rebuild
           npm run minimize:cordova
           cd ./cordova
           npm i

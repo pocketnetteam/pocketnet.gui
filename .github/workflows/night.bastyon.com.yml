@@ -20,6 +20,7 @@ jobs:
       - name: Prepare
         run: |
           npm i
+          npm rebuild
           npm run minimize:bastyon
 
       - name: Copy to dest dir

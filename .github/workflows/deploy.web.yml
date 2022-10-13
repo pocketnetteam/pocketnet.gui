@@ -18,6 +18,7 @@ jobs:
       - name: Prepare
         run: |
           npm i
+          npm rebuild
           npm run minimize:bastyon
         
       - name: Prepare archive
