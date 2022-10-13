@@ -10,7 +10,11 @@ const commentBanner = (function() {
 		const actions = {
 			dontShowAgain() {
 				renders.closeBanner();
-				localStorage.nextCommentBanner = -1;
+				
+				const commentBanner = JSON.parse(localStorage.commentBanner || '{}');
+				commentBanner.count = -1;
+				localStorage.setItem('commentBanner', JSON.stringify(commentBanner));
+
 			},
 			unsubscribe : function(address, clbk){
 

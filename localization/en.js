@@ -293,6 +293,7 @@ _l.lpublic = "Public";
 
 //inviteComment
 _l.commentBannerTitle = "Comment on this post";
+_l.commentBannerDescription = "Commenting unlocks features on Bastyon and helps you find friends 😀";
 _l.commentBannerTitle2 = function(v){ return "Follow " + v + " to see more posts for them"};
 _l.commentBannerDescription2 = function(v){ return "Following " + v + " will show more content like this in your feed." };
 _l.dontShowAgain = "Don't show again";

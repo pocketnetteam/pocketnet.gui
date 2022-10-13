@@ -3146,9 +3146,14 @@ Platform = function (app, listofnodes) {
             const unixTimeNow = Math.floor(Date.now() / 1000);
             const oneDayInSeconds = 86400;
 
-            const nextCommentBanner = Number(localStorage.nextCommentBanner) || 0;
-            const isBannerDisabled = nextCommentBanner == -1;
-            const timeToShowBanner = (unixTimeNow >= nextCommentBanner);
+
+            const commentBanner = JSON.parse(localStorage.commentBanner || '{}');
+            let {next, count} = commentBanner; 
+
+            if (!count) count = 0;
+            if (!next) next = 0;
+
+            const isBannerDisabled = count == -1;
 
             const regDate = app.platform.sdk.user.me().regdate;
             const regUnixTime = (regDate.getTime());
@@ -3158,7 +3163,9 @@ Platform = function (app, listofnodes) {
 
             if (isBannerDisabled) {
                 return isBannerDisabled;
+
             }
+
 
             if (!isOneDayOld) {
                 createComponent();
@@ -3169,26 +3176,34 @@ Platform = function (app, listofnodes) {
             var me = deep(app, 'platform.sdk.users.storage.' + self.app.user.address.value.toString('hex'));
 
             if (me && me.relation(address, 'subscribes')){ return; } 
+
+            count++;
+
+            if (unixTimeNow - oneDayInSeconds > next){
+                count = 1;
+                next = Date.now() / 1000;
+            }
+
+            const timeToShowBanner = count <= 4;
+
+            debugger;
         
             if (timeToShowBanner) {
 
-                if (nextCommentBanner){
-                    
-                    localStorage.removeItem("nextCommentBanner");
+                if (count <= 2){
 
-                } else {
+                    createComponent();
 
-                    localStorage.nextCommentBanner = unixTimeNow + oneDayInSeconds;
+                } else if (count <= 4){
+
+                    createComponent(address);
 
                 }
 
-                createComponent();
-                //return bannerCommentComponent;
-            } else {
+                localStorage.setItem('commentBanner', JSON.stringify({count, next}));
 
-                createComponent(address);
 
-            }
+            } 
         
 
 
