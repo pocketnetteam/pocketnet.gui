@@ -13635,22 +13635,32 @@ Platform = function (app, listofnodes) {
 
                 self.sdk.recommendations.clearplanned()
 
-                var kf = [
-                    /*{
-                        a : self.sdk.recommendations.schedulers.users,
-                        probability : 50 + (self.sdk.recommendations.storage.keys['users'] || 1)
-                    },*/{
-                        a : self.sdk.recommendations.schedulers.tags,
-                        probability : 50 + (self.sdk.recommendations.storage.keys['tags'] || 1)
+                if(!self.sdk.recommendations.storage.keys) self.sdk.recommendations.storage.keys = {}
+
+                self.app.user.isState(function (state) {
+                    if(state){
+
+                        var kf = [
+                            /*{
+                                a : self.sdk.recommendations.schedulers.users,
+                                probability : 50 + (self.sdk.recommendations.storage.keys['users'] || 1)
+                            },*/{
+                                a : self.sdk.recommendations.schedulers.tags,
+                                probability : 50 + (self.sdk.recommendations.storage.keys['tags'] || 1)
+                            }
+                        ]
+        
+                        var action = randomizer(kf)
+        
+        
+                        action.a()
+        
+                        self.sdk.recommendations.maketasksdebounced()
+                        
                     }
-                ]
+                })
 
-                var action = randomizer(kf)
-
-
-                action.a()
-
-                self.sdk.recommendations.maketasksdebounced()
+               
             },
 
             scheduler : _.debounce(() => {
@@ -13676,20 +13686,25 @@ Platform = function (app, listofnodes) {
             },
 
             load: function (clbk) {
-                var p = {};
 
-                try {
-                    p = JSON.parse(localStorage['recommendations'] || '{}');
-                }
-                catch (e) {}
+              
 
-                self.sdk.recommendations.storage.status = p.status || []
-                self.sdk.recommendations.storage.shares = p.shares || []
-                self.sdk.recommendations.storage.keys = p.keys || {}
+                    var p = {};
 
-                self.sdk.recommendations.scheduler()
+                    try {
+                        p = JSON.parse(localStorage['recommendations'] || '{}');
+                    }
+                    catch (e) {}
 
-                if(clbk) clbk()
+                    self.sdk.recommendations.storage.status = p.status || []
+                    self.sdk.recommendations.storage.shares = p.shares || []
+                    self.sdk.recommendations.storage.keys = p.keys || {}
+
+                    self.sdk.recommendations.scheduler()
+
+                    if(clbk) clbk()
+
+              
             },
         },
 
