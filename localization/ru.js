@@ -2150,4 +2150,12 @@ _l.boost_c17 = 'Устойчивость к цензуре'
 
 _l.gotopage = 'Перейти на страницу'
 
+_l.postedVideos = "Опубликованные Видео"
+_l.unPostedVideos = "Неопубликованные Видео"
+_l.videoIsPosting = "Загрузка"
+_l.noUnposted = "Неопубликованные видео отсутствуют"
+
+_l.sortByComments = "Количество комментариев";
+_l.sortByRating = "К-во оценок";
+
 _l.captchanotequal_angles = "Сегменты капчи должны быть повёрнуты на правильный угол"
