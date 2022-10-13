@@ -58,8 +58,7 @@
     "cordova-plugin-camera-preview": "^0.12.3",
     "cordova-plugin-contacts-x": "file:cordova-plugin-contacts-x",
     "cordova-plugin-device": "^1.1.7",
-    "cordova-plugin-dialogs": "^2.0.2",
-    "cordova-plugin-file": "^6.0.2",
+    "cordova-plugin-file": "^7.0.0",
     "cordova-plugin-file-opener2": "^3.0.5",
     "cordova-plugin-file-transfer": "file:cordova-plugin-file-transfer",
     "cordova-plugin-firebasex": "^14.1.0-cli",
@@ -95,7 +94,9 @@
       "cordova-plugin-buildinfo": {},
       "cordova-plugin-inappbrowser": {},
       "@globules-io/cordova-plugin-ios-xhr": {},
-      "cordova-plugin-file": {},
+      "cordova-plugin-file": {
+        "ANDROIDX_WEBKIT_VERSION": "1.4.0"
+      },
       "cordova-plugin-file-opener2": {
         "ANDROID_SUPPORT_V4_VERSION": "27.+"
       },
