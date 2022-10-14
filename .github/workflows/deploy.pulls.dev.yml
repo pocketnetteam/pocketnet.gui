@@ -259,7 +259,6 @@ jobs:
       - name: Install Cordova
         run: |
           npm i -g cordova@10
-          npm rebuild
           cordova --version
       - name: Prepare building
         run: |
