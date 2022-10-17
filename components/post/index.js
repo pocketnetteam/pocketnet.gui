@@ -544,6 +544,9 @@ var post = (function () {
 						enableHotkeys : !p.pip
 					};
 
+    				self.app.mobile.audiosession.apply('play').catch(e => {})
+					
+
 					$.each(pels, function (key, el2) {
 
 						var videoId = el2.getAttribute('data-plyr-video-id');
@@ -2041,6 +2044,9 @@ var post = (function () {
 				delete self.app.platform.matrixchat.clbks.SHOWING.post
 
 				authblock = false;
+
+				self.app.mobile.audiosession.apply('').catch(e => {})
+
 
 				if (player) {
 

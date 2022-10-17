@@ -846,6 +846,7 @@ Application = function(p)
     self.options.platform = self.platform
 
     self.mobile.keyboard.style()
+    self.mobile.audiosession.apply().catch(e => {})
 
     if (self.ref)
       self.platform.sdk.users.addressByName(self.ref, function(r){
@@ -1398,6 +1399,9 @@ Application = function(p)
 
       if(self.playingvideo){
 
+				self.mobile.audiosession.apply('play').catch(e => {})
+
+
         setTimeout(function(){
 
           var scrollTop = self.actions.getScroll()
@@ -1409,6 +1413,10 @@ Application = function(p)
           }
 
         }, 1000)
+      }
+      else{
+				self.mobile.audiosession.apply('').catch(e => {})
+
       }
 
       setTimeout(function(){
@@ -1963,6 +1971,43 @@ Application = function(p)
   }
 
   self.mobile = {
+
+    audiosession : {
+      default : 'default',
+      current : '',
+
+      categories : {
+        default : ['AMBIENT', 'MIX_WITH_OTHERS'],
+        call : ['PLAY_AND_RECORD', 'DUCK_OTHERS'],
+        record : ['RECORD', 'DUCK_OTHERS'],
+        play : ['PLAYBACK', 'DUCK_OTHERS']
+      },
+
+      apply : function(category){
+
+        if(!window.cordova || !isios() || !window.AVAudioSession) return Promise.resolve()
+
+        if(!category) category = 'default'
+        if(self.mobile.audiosession.current == category)  return Promise.resolve()
+        if(!self.mobile.audiosession.categories[category])  return Promise.reject('category')
+
+        self.mobile.audiosession.current = category
+
+        return new Promise((resolve, reject) => {
+
+          var c = self.mobile.audiosession.categories[category][0]
+          var o = self.mobile.audiosession.categories[category][1]
+
+          window.AVAudioSession.setCategoryWithOptions(window.AVAudioSession.Categories[c], window.AVAudioSession.CategoryOptions[o], () => {
+            resolve()
+          }, (e) => {
+            console.log(e)
+            resolve()
+          })
+        })
+        
+      }
+    },
 
     menu : function(items){
 
