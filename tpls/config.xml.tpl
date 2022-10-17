@@ -28,7 +28,7 @@
     <preference name="Fullscreen" value="false" />
     <preference name="AllowInlineMediaPlayback" value="true"/>
     <preference name="AndroidExtraFilesystems" value="files-external,documents,sdcard,cache,cache-external,assets,root" />
-    <preference name="AndroidWindowSplashScreenAnimatedIcon" value="resources/android/splash/drawable-port-xxxhdpi-screen.png" />
+    <preference name="AndroidWindowSplashScreenAnimatedIcon" value="resources/android/splash/drawable-port-hsp.png" />
    
     <preference name="KeyboardResize" value="false" />
 
