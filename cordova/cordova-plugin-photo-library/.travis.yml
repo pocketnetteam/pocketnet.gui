@@ -1,0 +1,121 @@
+language:
+  #- android
+  - objective-c
+
+os:
+  # The value of the $TRAVIS_OS_NAME variable is set to linux or osx according to the operating system a particular build is running on
+  # Usage: - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then command; fi
+  #- linux
+  - osx
+
+# jdk is for Android only, commend on osx to prevent error
+# jdk:
+#   - oraclejdk8
+
+osx_image: xcode8.2
+
+env:
+  global:
+    # To get a list of available targets run the command android list targets
+    - EMULATOR_API_LEVEL=23
+    - EMULATOR_TARGET=android-$EMULATOR_API_LEVEL
+    - EMULATOR_ABI=google_apis/armeabi-v7a # armeabi-v7a
+
+    - SIMULATOR_TYPE=iPhone-7-Plus
+    - IOS_VERSION=10.2 # 10.1 for xcode8.1
+
+sudo: false
+
+android:
+  components:
+    # To get a list of available exact component names and descriptions run the command android list sdk --no-ui --all --extended
+
+    # We want to use the latest revision of Android SDK Tools
+    - tools # to get the new `repository-11.xml`
+    - platform-tools
+    - tools # to install Android SDK tools 25.x.x, see https://github.com/travis-ci/travis-ci/issues/6040#issuecomment-219367943
+
+    # The BuildTools version used by your project
+    - build-tools-25.1.7
+
+    # The SDK version used to compile your project
+    - android-24
+
+    # Needed by emulator
+    - android-$EMULATOR_API_LEVEL
+
+    # Additional components
+    # - extra-google-google_play_services
+    # - extra-google-m2repository
+    # - extra-android-m2repository
+    # - addon-google_apis-google-19
+
+    # Specify at least one system image, if you need to run emulator(s) during your tests
+    #- sys-img-armeabi-v7a-android-$EMULATOR_API_LEVEL
+    - sys-img-armeabi-v7a-google_apis-$EMULATOR_API_LEVEL
+
+before_install:
+  #- sudo apt-get update -qq
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then android list targets; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update; fi
+  - nvm install 6
+  - node --version
+  # Workaround for 8.2 causes multiple simulators error: https://github.com/travis-ci/travis-ci/issues/7031
+  # - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then xcrun simctl delete 7B6F8C6B-B67A-4F64-BB70-AE1FF077ACC2; fi # 7-plus
+  # - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then xcrun simctl delete 9464677E-9962-4C3B-91E8-C969B6337A68; fi # 7-plus
+  # - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then xcrun simctl delete 2AAA645C-1882-4F81-B866-6241B900C185; fi # 5s
+
+install:
+  - npm install
+  - npm install -g cordova
+  - cordova --version
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then npm install -g ios-deploy; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then npm install -g ios-sim; fi
+
+before_script:
+  - pwd
+  - echo $PATH
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then echo no | android create avd --force -n test -t "$EMULATOR_TARGET" --abi $EMULATOR_ABI; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then emulator -avd test -no-audio -no-window -memory 1024 & fi
+  #- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then timeout 540 android-wait-for-emulator; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then bash tests/android/wait-for-emulator-boot.sh; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then adb shell input keyevent 82; fi #KEYCODE_MENU
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then npm run copy-test-images:android:emulator; fi
+  #- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cat ./node_modules/adb-ci/adb-ci.txt; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then ios-sim start --devicetypeid "com.apple.CoreSimulator.SimDeviceType.$SIMULATOR_TYPE, $IOS_VERSION"; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then npm run copy-test-images:ios:simulator; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then bash tests/ios/grant-simulator-permissions.sh; fi
+
+script:
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then timeout 540 npm run test:android; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then npm run test:ios -- --target "'$SIMULATOR_TYPE,\\ $IOS_VERSION'"; fi
+
+# TODO: remove
+after_success:
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then adb shell /system/bin/screencap -p /sdcard/screenshot.png; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then adb pull /sdcard/screenshot.png screenshot.png; fi
+  - ls -l
+  #- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cat ./node_modules/adb-ci/adb-ci.txt; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then adb logcat -d; fi
+
+after_failure:
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then adb shell /system/bin/screencap -p /sdcard/screenshot.png; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then adb pull /sdcard/screenshot.png screenshot.png; fi
+  #- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cat ./node_modules/adb-ci/adb-ci.txt; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then adb logcat -d; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then cat ~/Library/Logs/CoreSimulator/CoreSimulator.log; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then cat ~/Library/Logs/CoreSimulator/$(bash tests/ios/get-booted-simulator.sh)/system.log; fi
+
+before_cache:
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+cache:
+  directories:
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
+
+# addons:
+#   artifacts:
+#     s3_region: "eu-west-1"
+#     paths:
+#       - screenshot.png
