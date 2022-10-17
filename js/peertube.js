@@ -1072,6 +1072,10 @@ PeerTubePocketnet = function (app) {
 		user: {
 			removeAccount(parameters = {}, options = {}) {
 
+				return request(
+					'removeAccount', parameters, options,
+				);
+
 				return self.api.user.metotal().then(d => {
 
 					console.log("D", d)

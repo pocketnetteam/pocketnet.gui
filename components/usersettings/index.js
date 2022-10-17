@@ -41,7 +41,6 @@ var usersettings = (function(){
 								ds = null
 							}
 
-							console.log("TT",t)
 
 							if (t) ds = sitemessage(self.app.localization.e(t), null, 'inf')
 						}
