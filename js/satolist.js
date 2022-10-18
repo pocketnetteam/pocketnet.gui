@@ -24268,8 +24268,6 @@ Platform = function (app, listofnodes) {
             },
 
             setToken: function (token, proxy) {
-                const settings = platform.sdk.usersettings.meta;
-                settings.isWeb = Boolean(!window.cordova)
                 return platform.app.api.fetchauth('firebase/set', {
                     device : device(),
                     token : token,
@@ -24282,8 +24280,6 @@ Platform = function (app, listofnodes) {
             },
 
             setSettings: function (proxy) {
-                const settings = platform.sdk.usersettings.meta;
-                settings.isWeb = Boolean(!window.cordova)
                 return platform.app.api.fetchauth('firebase/settings', {
                     device : device(),
                     settings: self.getSettings()
@@ -24297,10 +24293,10 @@ Platform = function (app, listofnodes) {
         self.getSettings = function (){
             const data = {}
             const settings = platform.sdk.usersettings.meta;
-            data.isWeb = Boolean(!window.cordova)
             for(const key in settings){
                 data[key] = settings[key].value;
             }
+            data['web'] = Boolean(!window.cordova)
             return data;
         }
 
