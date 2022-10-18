@@ -22,11 +22,27 @@
 }
 #videoCabinet .singleVideoSection {
   display: flex;
+  position: relative;
   justify-content: space-between;
   align-items: top;
   padding: 1em 0;
   border-bottom: 1px solid rgb(var(--neutral-grad-1));
   font-size: 1.1em;
+}
+#videoCabinet .singleVideoSection .loadingContainer {
+  display: none;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  font-weight: 900;
+  text-align: center;
+  font-size: 2em;
+  line-height: 3.5em;
+  background-color: rgba(255, 255, 255, 0.5);
+  z-index: 1;
+}
+#videoCabinet .singleVideoSection.loading .loadingContainer {
+  display: block;
 }
 #videoCabinet .singleVideoSection > div {
   padding: 0 1em;
@@ -166,6 +182,21 @@
   border-bottom-left-radius: 5px;
   bottom: 0;
   padding: 0.5em;
+  left: 0;
+}
+#videoCabinet .videoAvatar .backgroundPreloader {
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  width: 150px;
+  height: 90px;
+  text-align: center;
+  background-color: rgba(var(--color-shadow-base), 0.3);
+  color: rgb(var(--text-on-bg-shadow-color));
+  border-radius: 5px;
+  line-height: 50px;
 }
 #videoCabinet .moduleHeader {
   display: flex;
@@ -176,6 +207,20 @@
   padding-bottom: 1em;
 }
 #videoCabinet .cabinetName {
+  max-width: 700px;
+  padding-top: 1em;
+  padding-bottom: 1em;
+  font-size: 2em;
+  font-weight: 100;
+}
+#videoCabinet .postedVideosHeader {
+  max-width: 700px;
+  padding-top: 1em;
+  padding-bottom: 1em;
+  font-size: 2em;
+  font-weight: 100;
+}
+#videoCabinet .unpostedVideosHeader {
   max-width: 700px;
   padding-top: 1em;
   padding-bottom: 1em;

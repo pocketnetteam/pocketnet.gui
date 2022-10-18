@@ -3501,6 +3501,7 @@ Platform = function (app, listofnodes) {
                         close : function(){
                         },
                         post : function(){
+                            if (p.onPost) p.onPost();
                         },
                         absolute : true,
                         repost  : p.repost,
@@ -12209,12 +12210,58 @@ Platform = function (app, listofnodes) {
 
 
             },
-
-            make: function (text, clbk, proxyoptions) {
+            getHex: function (clbk, refresh, proxyoptions) {
+                if (refresh) this.current = null;
+        
+                self.app.api.fetchauth('captchaHex', {
+                    captcha: this.done || this.current || null,
+                    language: self.app.localization.key
+                }, proxyoptions).then(d => {
+            
+            
+                    self.sdk.captcha.current = d.id
+            
+                    if (d.id != self.sdk.captcha.done) {
+                        self.sdk.captcha.done = null
+                    }
+            
+                    self.sdk.captcha.save()
+            
+                    if (d.result && !d.done) {
+                        self.sdk.captcha.make(d.result, function (err) {
+                    
+                            if (!err) {
+                        
+                                d.done = true
+                        
+                                if (clbk)
+                                    clbk(d)
+                        
+                            }
+                            else {
+                                if (clbk)
+                                    clbk(null, err)
+                            }
+                        }, proxyoptions)
+                    }
+                    else {
+                        if (clbk)
+                            clbk(d)
+                    }
+            
+                }).catch(e => {
+                    if (clbk)
+                        clbk(null, e)
+                })
+        
+        
+            },
+            make: function (text, angles, clbk, proxyoptions) {
 
                 self.app.api.fetchauth('makecaptcha', {
                     captcha: this.current || null,
-                    text: text
+                    text: text,
+                    angles
                 }, proxyoptions).then(d => {
                     self.sdk.captcha.done = d.id
 
@@ -18497,6 +18544,7 @@ Platform = function (app, listofnodes) {
                         method : 'getprofilefeed'
                     })
 
+
                 },
 
                 getsubscribesfeed : function(p, clbk, cache){
@@ -18752,6 +18800,15 @@ Platform = function (app, listofnodes) {
                                 parameters.push('');
                                 parameters.push(p.depth)
 
+                            }
+                            
+                            if (mtd === 'getprofilefeed') {
+                                // keyword
+                                parameters.push(p.keyword || '');
+                                // orderby
+                                parameters.push(p.orderby || '');
+                                // ascdesc
+                                parameters.push(p.ascdesc || 'desc');
                             }
 
                             s.getex(parameters, function (data, error) {

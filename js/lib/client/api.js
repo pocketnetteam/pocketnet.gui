@@ -249,6 +249,8 @@ var Proxy16 = function(meta, app, api){
     self.direct = meta.direct
     self.user = meta.user || false
 
+    self.lastinfo = {}
+
     self.current = null //current node
 
     self.id = self.host + ":" + self.port + ":" + self.wss
@@ -291,6 +293,10 @@ var Proxy16 = function(meta, app, api){
             return true
         }
         
+    }
+
+    self.hasHexCaptcha = function(){
+        return deep(self, 'lastinfo.captcha.hexCaptcha') || false
     }
 
     self.export = function(){
@@ -561,7 +567,12 @@ var Proxy16 = function(meta, app, api){
         },
 
         info : function(){
-            return self.fetchauth('info')
+            return self.fetchauth('info').then((r) => {
+                console.log("R", r)
+                self.lastinfo = (r || {}).info || {}
+
+                return Promise.resolve(r)
+            })
         },
 
         stats : function(){
@@ -1267,24 +1278,27 @@ var Api = function(app){
 
             _.each(proxies, function(p){
                 p.get.info().then(r => {
-
+            
                     var wallet = deep(r, 'info.wallet.addresses.registration') || {}
+                    var hexCaptcha = p.hasHexCaptcha()
 
-                    if (wallet.ready && wallet.unspents){
+                    console.log('hexCaptcha', hexCaptcha)
+                    
+                    if (wallet.ready && wallet.unspents /*&& hexCaptcha*/){
                         f = p
                     }
-
+            
                     return Promise.resolve()
-
+            
                 }).catch(e => {
                     return Promise.resolve()
                 }).finally(() => {
                     es++
-
+            
                     if(es >= proxies.length){
                         e = true
                     }
-
+            
                     return Promise.resolve()
                 })
             })
@@ -1292,6 +1306,9 @@ var Api = function(app){
             return pretry(function(){
                 return e || f
             }).then(() => {
+
+                console.log("E", e, f)
+
                 return Promise.resolve(f)
             })
 

@@ -549,6 +549,8 @@ _l.e13107 = "La gestione dei nodi può essere effettuata con l'applicazione";
 _l.e13108 = "Non c'è connessione con l'interfaccia proxy Electron";
 
 _l.e13109 = "Inserisci le parole nell'immagine per ricevere PKOIN e continuare la registrazione";
+_l.e13109h = "Fai clic sugli esagoni per assemblare l'immagine, quindi inserisci il testo nell'immagine risultante"
+
 _l.e13110 = "Inserire le parole";
 _l.poll = "Crea sondaggio";
 _l.next = "Avanti";

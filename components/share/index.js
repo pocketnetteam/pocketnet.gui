@@ -962,8 +962,36 @@ var share = (function(){
 											if(currentShare.aliasid) alias.edit = "true"	
 											if(currentShare.time) alias.time = currentShare.time
 		
-											self.app.platform.sdk.node.shares.add(alias)
-		
+											self.app.platform.sdk.node.shares.add(alias);
+
+											if (alias.itisvideo()) {
+												var unpostedVideos;
+
+												try {
+													unpostedVideos = JSON.parse(localStorage.getItem('unpostedVideos') || '{}');
+												} catch (error) {
+													unpostedVideos = {};
+
+													self.app.Logger.error({
+														err: 'DAMAGED_LOCAL_STORAGE',
+														code: 801,
+														payload: error,
+													  });
+												};
+
+												if (unpostedVideos[self.app.user.address.value]) {
+													unpostedVideos[self.app.user.address.value] =
+														unpostedVideos[self.app.user.address.value].filter(
+															(video) => video !== alias.url,
+														);
+
+													localStorage.setItem(
+														'unpostedVideos',
+														JSON.stringify(unpostedVideos),
+													);
+												}
+											}
+
 											if(!essenseData.notClear){
 												currentShare.clear();
 												self.app.nav.api.history.removeParameters(['repost'])
@@ -988,9 +1016,9 @@ var share = (function(){
 										})
 		
 										intro = false
-		
+
 										if (essenseData.post){
-											essenseData.post()
+											essenseData.post(alias)
 										}
 										else{
 		
@@ -2621,6 +2649,7 @@ var share = (function(){
 				intro = false;
 				external = null
 				currentShare = deep(p, 'settings.essenseData.share') || new Share(self.app.localization.key, self.app);
+
 				essenseData = deep(p, 'settings.essenseData') || {};
 
 				currentShare.app = self.app
@@ -2705,9 +2734,7 @@ var share = (function(){
 					sortable = null
 				}
 
-
 				el = {};
-				essenseData = {}
 					
 			},
 			

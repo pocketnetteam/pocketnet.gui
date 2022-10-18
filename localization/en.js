@@ -615,7 +615,10 @@ _l.e13106 = ""+appname+" Node"
 _l.e13107 = "Node management may be carried out with Application"
 _l.e13108 = "There isn't connection with Electron proxy interface"
 
+
 _l.e13109 = "Please enter the words in the picture to receive Pocketcoin and continue registration"
+_l.e13109h = "Click on the hexagons to assemble the picture, then enter text from the resulting image"
+
 _l.e13110 = "Enter words"
 _l.poll = "Create poll"
 _l.next = "Next"
@@ -2357,5 +2360,12 @@ _l.boost_c17 = 'Censorship resistant'
 
 _l.gotopage = 'Go to page'
 
+_l.postedVideos = "Posted Videos"
+_l.unPostedVideos = "Unposted Videos"
+_l.videoIsPosting = "Posting"
+_l.noUnposted = "No Unposted Videos"
 
+_l.sortByComments = "Comments";
+_l.sortByRating = "Number of ratings";
 
+_l.captchanotequal_angles = "Captcha segments must be rotated to the correct angle"

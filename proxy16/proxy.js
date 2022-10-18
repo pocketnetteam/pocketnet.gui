@@ -8,6 +8,7 @@ const { performance } = require('perf_hooks');
 ////////////
 var f = require('./functions');
 var svgCaptcha = require('svg-captcha');
+var hexCaptcha = require('hex-captcha');
 /*
 var WSS = require('./wss.js');
 const Firebase = require('../proxy/firebase');
@@ -1027,6 +1028,8 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				mem[i] = v / (1024 * 1024)
 			})
 
+			console.log('settings.server.hexCaptcha', settings.server.hexCaptcha)
+
 			return {
 				status: status,
 				test : self.test,
@@ -1039,11 +1042,13 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				wallet: self.wallet.info(compact),
 				remote: remote.info(compact),
 				admins: settings.admins,
+				
 				peertube : self.peertube.info(compact),
 				tor: self.torapplications.info(compact),
 				captcha: {
 					ip: _.toArray(captchaip).length,
-					all: _.toArray(captchas).length
+					all: _.toArray(captchas).length,
+					hexCaptcha : settings.server.hexCaptcha || false,
 				},
 
 				memory: mem,
@@ -1865,9 +1870,13 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 			info: {
 				path: '/info',
 				action: function (message) {
+					const info = self.kit.info(true);
+
+					//info.captcha.hexCaptcha = true;
+					
 					return Promise.resolve({
 						data: {
-							info: self.kit.info(true),
+							info: info,
 						},
 					});
 				},
@@ -2235,12 +2244,65 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					});
 				},
 			},
+			
+			getHex: {
+				authorization: 'signaturelight',
+				path: '/captchaHex',
+				
+				action: function ({ captcha, ip }) {
+					if (captcha && captchas[captcha]?.done) {
+						return Promise.resolve({
+							data: {
+								id: captchas[captcha].id,
+								done: true,
+								result: captchas[captcha].text,
+							},
+						});
+					}
+					
+					captchaip[ip] || (captchaip[ip] = 0);
+					captchaip[ip]++;
+					
+					captcha = hexCaptcha({
+						text: {
+							chars: 'ABCDEFGHJKMNPRSTUVWXZ23456789',
+							font : 'black 22px Monospace'
+						}
+					});
+					captcha.id = f.makeid();
+					
+					return new Promise((resolve, reject) => {
+						captcha.generate().then(({ frames, layers }) => {
+
+							console.log('captcha', captcha)
+
+							captchas[captcha.id] = {
+								text: captcha.text.toLowerCase(),
+								angles: captcha.angles,
+								id: captcha.id,
+								done: false,
+								time: f.now(),
+							};
+							
+							resolve({
+								data: {
+									id: captcha.id,
+									frames: frames,
+									overlay: layers,
+									result: self.test ? captcha.text : null, ///
+									done: false
+								}
+							});
+						});
+					});
+				},
+			},
 
 			make: {
 				authorization: 'signaturelight',
 				path: '/makecaptcha',
 
-				action: function ({ captcha, ip, text }) {
+				action: function ({ captcha, ip, text, angles = [0,0,0,0,0,0,0] }) {
 
 					var _captcha = captcha
 
@@ -2259,7 +2321,26 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 						});
 					}
 
+					if(captcha.angles && captcha.angles.length && captcha.angles.length == 7){
+
+						var check = angles.length && angles.length == 7 &&
+
+							angles[0] == -captcha.angles[0] &&
+							angles[1] == -captcha.angles[1] &&
+							angles[2] == -captcha.angles[2] &&
+							angles[3] == -captcha.angles[3] &&
+							angles[4] == -captcha.angles[4] &&
+							angles[5] == -captcha.angles[5] &&
+							angles[6] == -captcha.angles[6] 
+
+						if(!check)
+							return Promise.reject('captchanotequal_angles');
+					}
+
 					if (captcha.text == text.toLocaleLowerCase()) {
+
+						
+
 						captcha.done = true;
 
 						delete captchaip[ip];

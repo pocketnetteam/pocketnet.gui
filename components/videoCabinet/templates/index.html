@@ -71,10 +71,10 @@
                   <i class="fas fa-sort-amount-down-alt"></i>
                 </div>
                 <select class="videoSelect sortTypeSelect">
-                  <option value="name" <%- selectedType === 'name' ? 'selected' : '' %>><%- e('sortByName') %></option>
-                  <option value="createdAt" <%- selectedType === 'createdAt' ? 'selected' : '' %>><%- e('sortByCreatedAt') %></option>
-                  <option value="duration" <%- selectedType === 'duration' ? 'selected' : '' %>><%- e('sortByDuration') %></option>
-                  <option value="views" <%- selectedType === 'views' ? 'selected' : '' %>><%- e('sortByViews') %></option>
+                  <!-- <option value="name" <%- selectedType === 'name' ? 'selected' : '' %>><%- e('sortByName') %></option> -->
+                  <option value="id" <%- selectedType === 'id' ? 'selected' : '' %>><%- e('sortByCreatedAt') %></option>
+                  <option value="comment" <%- selectedType === 'comment' ? 'selected' : '' %>><%- e('sortByComments') %></option>
+                  <option value="score" <%- selectedType === 'score' ? 'selected' : '' %>><%- e('sortByRating') %></option>
                 </select>
               </div>
 
@@ -84,8 +84,8 @@
                   <i class="fas fa-sort-amount-down-alt"></i>
                 </div>
                 <select class="videoSelect sortDirectionSelect">
-                  <option value="" <%- selectedDirection === '' ? 'selected' : '' %>><%- e('sortDirectionAsc') %></option>
-                  <option value="-" <%- selectedDirection === '-' ? 'selected' : '' %>><%- e('sortDirectionDesc') %></option>
+                  <option value="asc" <%- selectedDirection === 'asc' ? 'selected' : '' %>><%- e('sortDirectionAsc') %></option>
+                  <option value="desc" <%- selectedDirection === 'desc' ? 'selected' : '' %>><%- e('sortDirectionDesc') %></option>
                 </select>
               </div>
             </div>
@@ -97,7 +97,11 @@
             </button> -->
           </div>
         </div>
-        <div class="userVideos"></div>
+        <div class="unPostedVideos"></div>
+        <div class="postedVideosWrapper">
+          <div class="postedVideosHeader"><%- e('postedVideos') %></div>
+          <div class="userVideos"></div>
+        </div>
       </div>
     <% } else { %>
       <div class="work">

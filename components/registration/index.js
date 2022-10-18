@@ -542,7 +542,9 @@ var registration = (function(){
 						}
 						else
 						{
-							self.sdk.captcha.get(function(captcha, error){
+
+						
+							self.sdk.captcha[regproxy.hasHexCaptcha() ? 'getHex' : 'get'](function(captcha, error){
 
 								if (error){
 
@@ -582,7 +584,24 @@ var registration = (function(){
 				},
 
 				after : function(el, pel){
+					/*Create canvas*/
 
+					var hc = null
+
+					if (regproxy.hasHexCaptcha()) {
+						hc = new HexCaptcha({
+							styleSheet: [
+								'js/vendor/hex-captcha/css/captcha.css'
+							],
+							holder: '.captchaImage',
+							data: {
+								frames: steps.captcha.current?.frames,
+								overlay: steps.captcha.current?.overlay,
+								duration: 250
+							}
+						})
+					}
+					
 					var input = el.find('.ucaptchainput');
 					var redo = el.find('.redo')
 					var save = el.find('.addCaptcha')
@@ -626,11 +645,12 @@ var registration = (function(){
 
 					save.on('click', function(){
 
+
 						var text = input.val()
 
 						if (validate(text)){
 							
-							self.sdk.captcha.make(text, function(error, captcha){
+							self.sdk.captcha.make(text, hc ? hc.angles : null, function(error, captcha){
 
 								if (error == 'captchashots'){
 
@@ -641,10 +661,17 @@ var registration = (function(){
 									return
 								}
 
+								if (error == 'captchanotequal_angles'){
+
+									sitemessage(self.app.localization.e('captchanotequal_angles'))
+
+									return
+								}
+
 								if (error){
 									sitemessage(self.app.localization.e('e13118'))
 
-									return 
+									return
 								}
 							
 								if (captcha.done){
@@ -1543,7 +1570,8 @@ var registration = (function(){
 					name :  'captcha',
 					el :   el,
 					data : {
-						captcha : steps.captcha.current
+						captcha : steps.captcha.current,
+						hexCaptcha: regproxy.hasHexCaptcha()
 					},
 
 				}, function(_p){
@@ -1866,20 +1894,32 @@ var registration = (function(){
 					inauth : deep(p, 'settings.essenseData.inauth') || false
 				};
 
-				regproxy = self.app.api.get.byid('pocketnet.app:8899:8099')
+				//regproxy = self.app.api.get.byid('1.pocketnet.app:8899:8099')
 
-				/*if (localStorage['regproxy']){
+				if (localStorage['regproxy']){
 					regproxy = self.app.api.get.byid(localStorage['regproxy'])
-				}*/
+				}
 
 				self.app.api.get.proxywithwallet().then(r => {
+					//const isHex = (p) => p?.info?.captcha?.hexCaptcha;
 
-					if(r && !regproxy) regproxy = r
+					console.log('regproxy', r, regproxy)
+
+					if(r && !regproxy) {
+						regproxy = r
+					}
 
 					if (regproxy){
 						localStorage['regproxy'] = regproxy.id
+						
+						/*regproxy.get.info().then(p => {
+							// self.sdk.captcha.hexCaptcha = isHex()
+						})*/
 					}
 
+					/*if (location.href.includes('pre.pocketnet.app')) {
+						self.sdk.captcha.hexCaptcha = isHex()
+					}*/
 
 					clbk(data);
 				})

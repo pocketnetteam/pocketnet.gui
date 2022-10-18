@@ -497,7 +497,10 @@ _l.e13106 = "Node "+appname+""
 _l.e13107 = "El node se podéis controlar usando una aplicación de escritorio"
 _l.e13108 = "No tiene conexión con interfaz proxy Electron"
 
+
 _l.e13109 = "Ingrese las palabras de la imagen para recibir una bolsa de coinmonedas y continuar con el registro"
+_l.e13109h = "Haga clic en los hexágonos para ensamblar la imagen, luego ingrese el texto en la imagen resultante"
+
 _l.e13110 = "Ingresar captcha"
 _l.next = "Siguiente"
 _l.refresh = "Actualizar"

@@ -65,6 +65,7 @@ __map =  {
 		{path : "js/vendor/workbox-v6.1.5/workbox-sw.js", babelify : true},
 		"js/vendor/ion.sound/ion.sound.js",
 		"js/vendor/hammer.min.js",
+
 		"js/vendor/owl/owl.carousel.js",
 		
 		{path : "js/vendor/shadow-popup/popup.js", babelify : true},
@@ -377,7 +378,8 @@ __map =  {
 
 		relations : [
 			/*{src : 'js/vendor/qr/qrscanner.js',			   f : 'js'},*/
-			{src : 'js/validation.js',			   f : 'js'},		
+			{src : 'js/validation.js',			   f : 'js'},
+			{src : 'js/vendor/hex-captcha/js/captcha.js', f : 'js'},
 			/*{src : 'js/vendor/qr/qrcode.min.js',			   f : 'js', require : function(){
 				QRCode = require('./js/vendor/qr/qrcode.min.js')
 			}},	*/
