@@ -233,7 +233,7 @@
         <script join src="js/videotransport.js"></script>
         <script join src="js/app.js?v=322676503798"></script>
         <script join src="js/main.js?v=723212304292"></script>       
-        <script join src="chat/matrix-element.min.js"></script>    
+        <script join src="chat/matrix-element.min.js"></script>
         <script async src="js/pwa-service-worker.js"></script>
     </body>
 </html>

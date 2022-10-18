@@ -1,8 +1,11 @@
 var Datastore = require('nedb');
 var f = require('../functions');
+var dictionary = require('../node/notificationsDictionary');
+const admin = require("firebase-admin");
+const errorCodeList = ['messaging/registration-token-not-registered']
 
 var Fbtoken = function({
-    token, device, address, id, app, date
+    token, device, address, id, app, date, settings
 }){
     var self = this;
 
@@ -21,6 +24,7 @@ var Fbtoken = function({
             address,
             id : id,
             date : date,
+            settings: settings,
             key : key()
         }
     }
@@ -39,6 +43,7 @@ var Firebase = function(p){
     
     self.users = [];
     self.inited = false;
+    self.useNotifications = false;
 
     var loaddb = function(){
 
@@ -66,7 +71,25 @@ var Firebase = function(p){
 
     var getuser = function(address, device){
         return _.find(self.users, function(user){
-            return user.address == address && (!device || device == user.device)
+            return user.address === address && (!device || device === user.device)
+        })
+    }
+
+    var getusers = function(address, device){
+        return _.filter(self.users, function(user){
+            return user.address === address && (!device || device === user.device)
+        })
+    }
+
+    var getAllUsers = function(){
+        return _.filter(self.users, function(user){
+            return user.address !== undefined
+        })
+    }
+
+    var getUsersByAddresses = function(addresses){
+        return _.filter(self.users, function(user){
+            return addresses.some(el=>el===user.address)
         })
     }
 
@@ -77,11 +100,9 @@ var Firebase = function(p){
     }
 
     var adduser = function(user){
-
         if(!finduser(user) && self.inited){
 
             self.users.push(user)
-
             setTimeout(function(){
 
                 try{
@@ -100,93 +121,6 @@ var Firebase = function(p){
 
     var removeuserclbk = function(user){
         self.wss.clbks.firebase.removeUser(user)
-    }
-
-    var messages = {
-
-        comment : function(data){
-
-            if (data.reason == 'post') {
-                n.body = data.username + " commented your post."
-                n.title = "New Comment"
-            }
-
-            if (data.reason == 'answer' && data.comment && data.share && data.user) {
-                n.body = data.username + " answered on your comment."
-                n.title = "New Comment"
-            }
-
-            return m
-        },
-
-        cScore : function(data){
-
-            var m = {
-                title : "New Comment Rate",
-                body : data.username + " rated your comment!"
-            }
-
-            return m
-        },
-
-        reshare : function(data){
-
-            var m = {
-                title : "New Post Reshare",
-                body : data.username + " reshared your post!"
-            }
-
-            return m
-        },
-
-        postfromprivate : function(data){
-
-            var m = {
-                title : "New Post From Pocketnet User",
-                body : data.username + " has a brand new post!"
-            }
-
-            return m
-        },
-
-        sharepocketnet : function(data){
-
-            var m = {
-                title : "New Post From Pocketnet Team",
-                body : "Pocketnet team has a brand new post!"
-            }
-            
-            return m
-        },
-
-        event : function(data){
-
-            var m = {}
-
-            if (data.mesType == 'userInfo') {
-                m.body = "You rescued someone from the censored web!"
-                m.title = 'Congrats!'
-            }
-
-            if (data.mesType == 'subscribe') {
-                m.body = data.username + ' followed you'
-                m.title = "New Follower"
-            }
-
-            if (data.mesType == 'upvoteShare') {
-
-                if (data.upvoteVal > 2) {
-                    m.body = data.username + " upvoted your post, " + data.upvoteVal + ' ★'
-                    m.title = "New Upvote"
-                }
-                else{
-                    return null
-                }
-            }
-
-            return m
-         
-        },
     }
 
     self.getall = function(){
@@ -222,11 +156,10 @@ var Firebase = function(p){
 
     self.kit = {
         addToken : function({
-            token, device, U, id
+            token, device, U, id, settings
         }){
             var date = f.time()
-            var fbtoken = new Fbtoken({token, device, address : U, id, date})
-
+            var fbtoken = new Fbtoken({token, device, address : U, id, date, settings})
             if(!fbtoken.check()) return Promise.reject('checkToken')
 
             return new Promise((resolve, reject) => {
@@ -237,12 +170,27 @@ var Firebase = function(p){
                         return reject(err)
                     }
 
-                    adduser(fbtoken)
+                    adduser(fbtoken.export())
 
                     resolve(docs)
                 });
 
             })
+        },
+
+        setSettings : function({device, settings}){
+            return new Promise((resolve, reject) => {
+                    const userIndex = self.users.findIndex(el=>el.device===device)
+                    if(userIndex >=0){
+                        db.update({ device: device }, { $set: { settings: settings } }, {}, function (err) {
+                            if(err) return reject(err)
+                            resolve()
+                        });
+                        self.users[userIndex].settings = settings
+                        resolve(self.users[userIndex])
+                    }
+                }
+            )
         },
 
         revokeOtherTokens : function({device, token}){
@@ -351,105 +299,156 @@ var Firebase = function(p){
             })
 
         },
-
         info : function(){
             return Promise.resolve({id : self.id})
         }
     }
 
-    self.send = function({
-        data, user
+    self.checkPermissions = function (type, settings) {
+        switch (type) {
+            case 'money':
+                return settings?.transactions
+            case 'winPost':
+                return settings?.win
+            case 'winComment':
+                return settings?.win
+            case 'winCommentref':
+                return settings?.win
+            case 'winPostref':
+                return settings?.win
+            case 'comment':
+                return settings?.comments
+            case 'privatecontent':
+                return settings?.comments
+            case 'commentDonate':
+                return settings?.transactions
+            case 'answer':
+                return settings?.answers
+            case 'answerDonate':
+                return settings?.transactions
+            case 'subscriber':
+                return settings?.followers
+            case 'contentscore':
+                return true
+            case 'commentscore':
+                return settings?.commentScore
+            default:
+                return true
+        }
+    }
+
+    self.send = async function({
+        data, users
     }){
-
-
-        if(!data || !user) return Promise.reject('empty')
-
-        if(!self.app) return Promise.reject('app')
-
-        if (data.nameFrom) data.username = data.nameFrom
-
-        if(!data.username){
-
-            data.username = 'Somebody'
-
-            //return Promise.reject('username')
+        for(const user of users){
+            if(!self.checkPermissions(data.type, user?.settings)){
+                users = users.filter(el=>el.token !== user.token)
+            }
         }
 
-        var m = null;
+        if(!data || !users?.length) throw 'data or users error'
 
-        if (data.msg == 'transaction' && data.mesType) {
-            data.type = data.mesType
-            delete data.mesType
-        }
+        if(!self.app) throw 'app'
 
-        if (data.mesType) m = messages[data.mesType]
-        if (data.msg && !m) m = messages[data.msg]
-
-
-        if (m){
-            var notification = m(data, user)
-
-            if (notification){
-                
-                var message = {
-
-                    data: data,    
-                    token: user.token,
-                    notification : notification,
-                    android : { 
-
-                        notification: {
-                            priority : "MAX",
-                            visibility : "PUBLIC",
-                            icon: 'notification_icon',
-                            color : '#00A3F7',
-                            defaultSound : "true",
-                            defaultVibrateTimings : "true",
-                            ticker : "Pocketnet"
+        if (data.header){
+            var message = {
+                data: {json: JSON.stringify(data)},
+                android: {
+                    notification: {
+                        priority: "MAX",
+                        visibility: "PUBLIC",
+                        icon: 'notification_icon',
+                        color: '#00A3F7',
+                        defaultSound: "true",
+                        defaultVibrateTimings: "true",
+                        ticker: "Pocketnet"
+                    }
+                },
+                apns: {
+                    payload: {
+                        aps: {
+                            sound: 'default',
+                            'content-available': '1'
                         }
-                    },
-                    apns: {
-                        payload: {
-                            aps: {
-                                sound: 'default',
-                                'content-available': '1'
+                    }
+                }
+            };
+
+            const sendPush = async (message, tokens)=>{
+                const resendTokens = [];
+                for(let i = 0; i < tokens.length; i += 999) {
+                    message.tokens = tokens.slice(i, 999);
+                    try {
+                        const response = await admin.messaging().sendMulticast(message)
+                        for (const responseIndex in response.responses) {
+                            if (!response.responses[responseIndex]?.success) {
+                                if (message?.tokens[responseIndex] && errorCodeList.includes(response.responses[responseIndex]?.error?.errorInfo?.code)) {
+                                //    console.log("Token is inactive, delete user", message?.tokens[responseIndex])
+                                    self.kit.revokeToken(message?.tokens[responseIndex])
+                                } else if (message?.tokens[responseIndex]) {
+                                   // console.log("Resend push after 35 seconds, because token is temporarily blocked by firebase:", message?.tokens[responseIndex])
+                                    resendTokens.push(message?.tokens[responseIndex])
+                                }
                             }
                         }
+                    }catch (e) {
+                      //  console.log("Push notifications sending limit exceeded, waiting 35 seconds");
+                        await new Promise(resolve => setTimeout(resolve, 35000))
+                        resendTokens.push(tokens.slice(i, 999))
                     }
+                }
+                return resendTokens
+            }
 
-                };
+            const resend = [];
 
-                return admin.messaging().send(message).then((response) => {
-                    return Promise.resolve(response)
-                })
-                .catch((error) => {
-
-                    if (f.deep(error,'errorInfo.code') == 'messaging/registration-token-not-registered' || 
-                        f.deep(error,'errorInfo.code') == 'messaging/invalid-argument'){
-
-                        self.kit.revokeToken(user.token)
+            var tokens = users?.filter?.(el=>!el?.settings?.isWeb).map(el=>el.token) || []
+            if (tokens.length) {
+                message.notification = data.header;
+                const resendTokens = await sendPush(message, tokens);
+                resend.push(...resendTokens)
+            }
 
 
-                        return Promise.resolve()
-                    }
+            var tokensWeb = users?.filter?.(el=>el?.settings?.isWeb).map(el=>el.token) || []
+            if (tokensWeb.length) {
+                const resendTokens = await sendPush(message, tokens)
+                resend.push(...resendTokens)
+            }
 
-                    return Promise.reject(error)
-                });
-
-            }   
+            if(resend?.length > 0) {
+                await new Promise(resolve => setTimeout(resolve, 35000))
+                self.send({data, users: users.filter(el=>resend.includes(el.token))})
+            }
         }
-
-        return Promise.resolve()
+        return true
 
     }
 
     self.sendToDevice = function(data, device, address){
         var user = getuser(address, device)
-
-        return self.send({data, user})
+        if(user)
+            return self.send({data, users:[user]})
     }
 
-     
+    self.sendToDevices = function(data, device, address){
+        var users = getusers(address, device)
+        if(users?.length)
+            return self.send({data, users})
+    }
+
+    self.sendToAll = async function(data){
+        var users = getAllUsers()
+
+        if (users?.length) return await self.send({data, users})
+    }
+
+    self.sendEvents = async function(events){
+        for(const event of events) {
+            var users = getUsersByAddresses(event.addresses)
+            if (users?.length) return await self.send({data: event.notification, users})
+        }
+    }
 
     self.init = function(p){
 
@@ -509,7 +508,8 @@ var Firebase = function(p){
     self.info = function(){
         return {
             inited : self.inited,
-            users : self.users.length
+            users : self.users.length,
+            useNotifications: self.useNotifications,
         }
     }
 

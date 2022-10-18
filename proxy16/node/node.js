@@ -192,12 +192,16 @@ var Node = function(options, manager){
         return chain
     }
 
+    self.notification = function(block){
+        manager.notifications.addblock(block, self)
+    }
+
     self.addblock = function(block){
 
 
         if ((block.hash || block.blockhash) && block.time && block.height){
 
-            
+
 
             var lastblock = self.lastblock()
 
@@ -211,6 +215,10 @@ var Node = function(options, manager){
     
                 timedifference(block.time)
 
+                /*if(block?.msg === 'new block') {
+
+                    manager.notifications.sendBlock(block, self.id)
+                }*/
             }
 
             chain = f.lastelements(chain, 150, 10)

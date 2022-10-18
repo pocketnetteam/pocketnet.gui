@@ -285,6 +285,7 @@ var Testnode = function(node, manager){
 
             return [0, "", 30, lang, t]
         },
+        getnotifications : [],
         getnodeinfo : [],
         getcontentsstatistic :  ['getrandomaddress2', "video"],
         search : ["getrandomstring", "users", 946114, "0", "10"],

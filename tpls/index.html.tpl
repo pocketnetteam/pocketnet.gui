@@ -121,6 +121,7 @@
         __JSPOST__
 
         <link rel="stylesheet" href="css/fontawesome/css/all.min.css">
+        
         <script async src="js/pwa-service-worker.js?v=v__PACKAGE-VERSION__"></script>
 
     </body>

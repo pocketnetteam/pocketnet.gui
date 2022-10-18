@@ -14,42 +14,42 @@ if(!_Node)
 			wss : 8099
 	    },*/
 	
-	    {
-			host : '1.pocketnet.app',
-			port : 8899,
-			wss : 8099
-		},
-
+	    // {
+		// 	host : '1.pocketnet.app',
+		// 	port : 8899,
+		// 	wss : 8099
+		// },
+		//
+		// {
+		// 	host : '2.pocketnet.app',
+		// 	port : 8899,
+		// 	wss : 8099
+		// },
+		//
+		// {
+		// 	host : '3.pocketnet.app',
+		// 	port : 8899,
+		// 	wss : 8099
+		// },
+		//
+		// {
+		// 	host : '4.pocketnet.app',
+		// 	port : 8899,
+		// 	wss : 8099
+		// },
+		//
+		//
 		{
-			host : '2.pocketnet.app',
-			port : 8899,
-			wss : 8099
-		},
-
-		{
-			host : '3.pocketnet.app',
-			port : 8899,
-			wss : 8099
-		},
-
-		{
-			host : '4.pocketnet.app',
-			port : 8899,
-			wss : 8099
-		},
-
-		
-		{
-			host : '5.pocketnet.app',
-			port : 8899,
-			wss : 8099
-		},
-
-		/*{
 			host : '6.pocketnet.app',
 			port : 8899,
 			wss : 8099
-		}*/
+		},
+
+		{
+			host : 'pre.pocketnet.app',
+			port : 8899,
+			wss : 8099
+		}
 
 	]
 
@@ -57,17 +57,36 @@ if(!_Node)
 	var matrix = 'matrix.pocketnet.app'
 
 	if (window.testpocketnet){
-		_listofproxies = [{
-			host : 'test.pocketnet.app',
+		_listofproxies = [
+			{
+			host : 'pre.pocketnet.app',
 			port : 8899,
 			wss : 8099
-	    }]
+	    },
+		{
+			host : '6.pocketnet.app',
+			port : 8899,
+			wss : 8099
+		},
+		]
 
 		matrix = 'test.matrix.pocketnet.app'
 	}
 
 	if (window.location.host === 'pre.pocketnet.app') {
-		_listofproxies = [{ host : 'pre.pocketnet.app', port : 8899, wss : 8099 }];
+		_listofproxies = [
+			{
+				host : 'pre.pocketnet.app',
+				port : 8899,
+				wss : 8099
+			},
+			{
+				host : '6.pocketnet.app',
+				port : 8899,
+				wss : 8099
+			},
+		];
+
 	}
 
 

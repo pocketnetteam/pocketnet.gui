@@ -88,21 +88,3 @@ self.addEventListener('activate', event => {
     }));
   });
 });
-
-
-
-self.addEventListener('notificationclick', function(event) {
-  console.log('Notification clicked: ', event.notification);
-  event.notification.close();
-  // This looks to see if the current is already open and focuses if it is
-  event.waitUntil(clients.matchAll({
-    type: "window"
-  }).then(function(clientList) {
-    // Focus the first client
-    if (clientList && clientList.length > 0 && clientList[0].focus)
-      clientList[0].focus();
-    // Make a redirection
-    // if (clients.openWindow)
-    //   return clients.openWindow('/');
-  }));
-});

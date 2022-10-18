@@ -27,7 +27,8 @@ const queuemethods = {
     getusercontents : true,
     getcontentsstatistic : true,
     getboostfeed : true,
-    getprofilefeed : true
+    getprofilefeed : true,
+    getnotifications : true
 }
 
 const exepmethods = {
@@ -1050,6 +1051,28 @@ var Nodemanager = function(p){
 
         return null
     }
+
+    self.selectProbabilityByVersion = function(nodeId){
+
+        var np = _.map(self.initednodes(), function(node){
+            return {
+                node : node,
+                probability : (Number(node.statistic.probability()) || 0) + Math.random() / 10000
+            }
+        })
+
+        const r = np.find(function(elem){
+            return (elem.node?.version ? +elem.node?.version?.split(".")?.join("") : 0) >= 2026 && elem.node?.id === nodeId
+        })
+
+        if (r && r.node){
+            return r.node
+        }
+
+
+        return null
+    }
+
 
     self.selectbest = function(){
 

@@ -29,93 +29,139 @@ var logger = new Logger(['general', 'rpc', 'system', 'remote', 'firebase', 'node
 
 var testnodes = [
 	{
-		host : '116.203.219.28',
-		port : 39091,
-		ws : 6067,
-		name : 'test.pocketnet.app',
+		host : '188.187.45.218',
+		port: 29092,
+		ws: 29097,
+		name : 'test3.v.pocketnet.app',
 		stable : true
 	},
-	{
-		host : '157.90.235.121',
-		port : 39091,
-		ws : 6067,
-		name : 'test.1.pocketnet.app',
-		stable : true
-	},
-	{
-		host : '157.90.228.34',
-		port : 39091,
-		ws : 6067,
-		name : 'test.2.pocketnet.app',
-		stable : true
-	},
+	
+	//
+	// {
+	// 	host : '188.187.45.218',
+	// 	port : 39091,
+	// 	ws : 6067,
+	// 	name : 'push.v.pocketnet.app',
+	// 	stable : true
+	// },
+	//
+	// {
+	// 	host : '78.37.233.202',
+	// 	port : 39091,
+	// 	ws : 6067,
+	// 	name : 'test.v.pocketnet.app',
+	// 	stable : true
+	// },
+	//
+	// {
+	// 	host : '157.90.235.121',
+	// 	port : 39091,
+	// 	ws : 6067,
+	// 	name : 'test.1.pocketnet.app',
+	// 	stable : true
+	// },
+	// {
+	// 	host : '157.90.228.34',
+	// 	port : 39091,
+	// 	ws : 6067,
+	// 	name : 'test.2.pocketnet.app',
+	// 	stable : true
+	// },
+	// {
+	// 	host : '116.203.219.28',
+	// 	port : 39091,
+	// 	ws : 6067,
+	// 	name : 'test.pocketnet.app',
+	// 	stable : true
+	// },
+	// {
+	// 	host : '137.135.25.73',
+	// 	port : 39091,
+	// 	ws : 6067,
+	// 	name : 'tawmaz',
+	// 	stable : false
+	// },
+	// {
+	// 	host : '109.173.41.29',
+	// 	port : 39091,
+	// 	ws : 6067,
+	// 	name : 'lostystyg',
+	// 	stable : false
+	// }
 ]
 
 
 var activenodes = [
 	{
-		host : '135.181.196.243',
-		port : 38081,
-		ws : 8087,
-		name : '135.181.196.243',
+		host : '188.187.45.218',
+		port : 29092,
+		ws : 29097,
+		name : 'Push Testing',
 		stable : true
 	},
-	{
-		host : '65.21.56.203',
-		port : 38081,
-		ws : 8087,
-		name : '65.21.56.203',
-		stable : true
-	},
-	{
-		host : '178.217.159.227',
-		port : 38081,
-		ws : 8087,
-		name : '178.217.159.227',
-		stable : true
-	},
-	{
-		host : '178.217.159.221',
-		port : 38081,
-		ws : 8087,
-		name : '178.217.159.221',
-		stable : true
-	},
-	{
-		host : '46.175.122.243',
-		port : 38081,
-		ws : 8087,
-		name : '46.175.122.243',
-		stable : true
-	},
-	{
-		host : '46.175.123.77',
-		port : 38081,
-		ws : 8087,
-		name : '46.175.123.77',
-		stable : true
-	},
-	{
-		host : '178.217.155.169',
-		port : 38081,
-		ws : 8087,
-		name : '178.217.155.169',
-		stable : true
-	},
-	{
-		host : '178.217.155.170',
-		port : 38081,
-		ws : 8087,
-		name : '178.217.155.170',
-		stable : true
-	},
-	{
-		host : '93.100.117.108',
-		port : 38081,
-		ws : 8087,
-		name : '93.100.117.108',
-		stable : true
-	},
+	// {
+	// 	host : '135.181.196.243',
+	// 	port : 38081,
+	// 	ws : 8087,
+	// 	name : '135.181.196.243',
+	// 	stable : true
+	// },
+	// {
+	// 	host : '65.21.56.203',
+	// 	port : 38081,
+	// 	ws : 8087,
+	// 	name : '65.21.56.203',
+	// 	stable : true
+	// },
+	// {
+	// 	host : '178.217.159.227',
+	// 	port : 38081,
+	// 	ws : 8087,
+	// 	name : '178.217.159.227',
+	// 	stable : true
+	// },
+	// {
+	// 	host : '178.217.159.221',
+	// 	port : 38081,
+	// 	ws : 8087,
+	// 	name : '178.217.159.221',
+	// 	stable : true
+	// },
+	// {
+	// 	host : '46.175.122.243',
+	// 	port : 38081,
+	// 	ws : 8087,
+	// 	name : '46.175.122.243',
+	// 	stable : true
+	// },
+	// {
+	// 	host : '46.175.123.77',
+	// 	port : 38081,
+	// 	ws : 8087,
+	// 	name : '46.175.123.77',
+	// 	stable : true
+	// },
+	// {
+	// 	host : '178.217.155.169',
+	// 	port : 38081,
+	// 	ws : 8087,
+	// 	name : '178.217.155.169',
+	// 	stable : true
+	// },
+	// {
+	// 	host : '178.217.155.170',
+	// 	port : 38081,
+	// 	ws : 8087,
+	// 	name : '178.217.155.170',
+	// 	stable : true
+	// },
+	// {
+	// 	host : '93.100.117.108',
+	// 	port : 38081,
+	// 	ws : 8087,
+	// 	name : '93.100.117.108',
+	// 	stable : true
+	// },
 ]
 
 var nodes = activenodes
@@ -1065,6 +1111,14 @@ var kit = {
 			info : function(){
 				return kit.proxy().then(async proxy => {
 					return proxy.torapplications.info();
+				})
+			},
+		},
+
+		notifications: {
+			info : function(){
+				return kit.proxy().then(async proxy => {
+					return proxy.notifications.info();
 				})
 			},
 		},
