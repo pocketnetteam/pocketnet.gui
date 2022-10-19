@@ -201,7 +201,7 @@ var Node = function(options, manager){
 
         if ((block.hash || block.blockhash) && block.time && block.height){
 
-
+            
 
             var lastblock = self.lastblock()
 

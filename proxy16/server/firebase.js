@@ -100,9 +100,11 @@ var Firebase = function(p){
     }
 
     var adduser = function(user){
+
         if(!finduser(user) && self.inited){
 
             self.users.push(user)
+
             setTimeout(function(){
 
                 try{
@@ -299,6 +301,7 @@ var Firebase = function(p){
             })
 
         },
+
         info : function(){
             return Promise.resolve({id : self.id})
         }
@@ -442,7 +445,7 @@ var Firebase = function(p){
 
         if (users?.length) return await self.send({data, users})
     }
-
+     
     self.sendEvents = async function(events){
         for(const event of events) {
             var users = getUsersByAddresses(event.addresses)
