@@ -271,7 +271,24 @@ var lenta = (function(){
 			changeSavingStatusLight : function(share){
 
 				if (el && el.share && el.share[share.txid]){
-					el.share[share.txid].find('.shareSave').attr('status', self.app.platform.sdk.localshares.status(share.txid))
+					const status = self.app.platform.sdk.localshares.status(share.txid);
+					const isSaving = (status === 'saving');
+
+					const shareSaveElem = el.share[share.txid].find('.shareSave');
+
+					if (isSaving) {
+						const loadingBarHolderElem = el.share[share.txid].find('.loadingBar');
+						const loadingBarElem = el.share[share.txid].find('.loading-bar');
+
+						const lb = new LoadingBar(loadingBarElem[0]);
+						lb.setValue(60);
+
+						loadingBarHolderElem.removeAttr('hidden');
+						shareSaveElem.attr('hidden', '');
+						return;
+					}
+
+					shareSaveElem.attr('status', status);
 				}
 
 			},
