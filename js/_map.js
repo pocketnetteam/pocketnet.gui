@@ -71,6 +71,8 @@ __map =  {
 	],
 
 	__sourcesfirst : [
+		"js/vendor/firebase-app.js",
+		"js/vendor/firebase-messaging.js",
 		"js/vendor/axios.js",
 		"js/vendor/underscore-min.js",  
 		{path : "js/functionsfirst.js", babelify : true},
