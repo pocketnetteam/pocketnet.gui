@@ -1061,3 +1061,11 @@ html.pipmode .wnd.postwindow.pipmini #post .videoWrapper .video-js {
 html.pipmode .wnd.postwindow.pipmini #post .videoWrapper .video-js .vjs-control-bar {
   padding-left: 0;
 }
+.item.loadingBar {
+  display: flex;
+  width: 40px;
+  height: 40px;
+}
+.item.loadingBar .loading-bar {
+  margin: auto;
+}

@@ -89,7 +89,24 @@ var post = (function () {
 			changeSavingStatusLight : function(share){
 
 				if (el.c){
-					el.c.find('.shareSave').attr('status', self.app.platform.sdk.localshares.status(share.txid))
+					const status = self.app.platform.sdk.localshares.status(share.txid);
+					const isSaving = (status === 'saving');
+
+					const shareSaveElem = el.c.find('.shareSave');
+
+					if (isSaving) {
+						const loadingBarHolderElem = el.c.find('.loadingBar');
+						const loadingBarElem = el.c.find('.loading-bar');
+
+						const lb = new LoadingBar(loadingBarElem[0]);
+						lb.setValue(60);
+
+						loadingBarHolderElem.removeAttr('hidden');
+						shareSaveElem.attr('hidden', '');
+						return;
+					}
+
+					shareSaveElem.attr('status', status);
 				}
 
 			},
