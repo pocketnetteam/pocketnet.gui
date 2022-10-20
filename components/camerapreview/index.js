@@ -369,21 +369,17 @@ var camerapreview = (function(){
 
                 return new Promise((resolve, reject) => {
 
-                    cordova.plugins.photoLibrary.getPhotoURL(id, (url) => {
+                    cordova.plugins.photoLibrary.getPhoto(id, (data) => {
 
-                        fetchLocal(url).then(({data}) => {
 
-							console.log("DATA", data)
+						return Base64Helper.fromFile(data).then(base64 => {
+							images[id] = base64;
 
-							return Base64Helper.fromFile(data).then(base64 => {
-								images[id] = base64;
-    
-								resolve(images[id])
-							})
+							console.log('base64', base64)
 
-                            
+							resolve(images[id])
+						})
 
-                        }).catch(reject)
     
                     }, (e) => {
     

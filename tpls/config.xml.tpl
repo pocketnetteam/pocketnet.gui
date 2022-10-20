@@ -22,13 +22,13 @@
     <preference name="StatusBarBackgroundColor" value="#00000000" />
     <preference name="AndroidWindowSplashScreenBackground" value="#011621" />
     <preference name="AndroidWindowSplashScreenIconBackgroundColor" value="#011621" />
-    <preference name="BackgroundColor" value="#011621" />
+    <preference name="BackgroundColor" value="0xff011621" />
     <preference name="StatusBarStyle" value="lightcontent" />
     <preference name="AndroidLaunchMode" value="singleTask" />
     <preference name="Fullscreen" value="false" />
     <preference name="AllowInlineMediaPlayback" value="true"/>
     <preference name="AndroidExtraFilesystems" value="files-external,documents,sdcard,cache,cache-external,assets,root" />
-    <preference name="AndroidWindowSplashScreenAnimatedIcon" value="resources/android/splash/drawable-port-xxxhdpi-screen.png" />
+    <preference name="AndroidWindowSplashScreenAnimatedIcon" value="resources/android/splash/splash-screen-logo.xml" />
    
     <preference name="KeyboardResize" value="false" />
 
@@ -39,7 +39,10 @@
         <icon density="xhdpi" src="resources/android/icon/drawable-xhdpi-icon.png" />
         <icon density="xxhdpi" src="resources/android/icon/drawable-xxhdpi-icon.png" />
         <icon density="xxxhdpi" src="resources/android/icon/drawable-xxxhdpi-icon.png" />
-        <splash density="land-ldpi" src="resources/android/splash/drawable-land-ldpi-screen.png" />
+
+        <resource-file src="resources/android/colors.xml" target="app/src/main/res/values/colors.xml" />
+        
+        <!--<splash density="land-ldpi" src="resources/android/splash/drawable-land-ldpi-screen.png" />
         <splash density="land-mdpi" src="resources/android/splash/drawable-land-mdpi-screen.png" />
         <splash density="land-hdpi" src="resources/android/splash/drawable-land-hdpi-screen.png" />
         <splash density="land-xhdpi" src="resources/android/splash/drawable-land-xhdpi-screen.png" />
@@ -50,7 +53,7 @@
         <splash density="port-hdpi" src="resources/android/splash/drawable-port-hdpi-screen.png" />
         <splash density="port-xhdpi" src="resources/android/splash/drawable-port-xhdpi-screen.png" />
         <splash density="port-xxhdpi" src="resources/android/splash/drawable-port-xxhdpi-screen.png" />
-        <splash density="port-xxxhdpi" src="resources/android/splash/drawable-port-xxxhdpi-screen.png" />
+        <splash density="port-xxxhdpi" src="resources/android/splash/drawable-port-xxxhdpi-screen.png" />-->
       
     </platform>
     <platform name="ios">
