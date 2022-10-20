@@ -24019,7 +24019,7 @@ Platform = function (app, listofnodes) {
 
         var using = typeof window != 'undefined' && window.cordova && typeof FirebasePlugin != 'undefined';
         var usingWeb = typeof window != 'undefined' && typeof _Electron === 'undefined' && !window.cordova && typeof firebase != 'undefined'
-
+        
         var currenttoken = null;
 
         var appid = deep(window, 'BuildInfo.packageName') || window.location.hostname || window.pocketnetdomain
@@ -24217,6 +24217,7 @@ Platform = function (app, listofnodes) {
         }
 
         self.settings = async function(current){
+            console.log("HERE")
             if(!current){
                 for(const proxy of platform.app.api.get.proxies()){
                     const {info} = await proxy.get.info();
@@ -24337,6 +24338,13 @@ Platform = function (app, listofnodes) {
 
 
             }else if(usingWeb) {
+
+                console.log("HERE")
+
+                if (clbk)
+                    clbk()
+
+                return
 
                 try{
                     if(!firebase.apps.length) {

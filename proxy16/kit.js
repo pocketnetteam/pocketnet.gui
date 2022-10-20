@@ -80,7 +80,10 @@ var activenodes = [
 		port: 29092,
 		ws: 29097,
 		name : 'test3.v.pocketnet.app',
-		stable : true
+		stable : true,
+		single : true,
+		allowRpc : false,
+		alwaysrun : true
 	},
 	{
 		host : '135.181.196.243',

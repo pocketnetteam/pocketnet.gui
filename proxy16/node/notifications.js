@@ -134,9 +134,13 @@ class Notifications{
     }
 
     addblock(block, node){
-        if(node.version && f.numfromreleasestring(node.version) > 0.2000025 && this.height < block.height){
+        if(node.version && f.numfromreleasestring(node.version) >= 0.21 && this.height < block.height){
             const info = this?.firebase?.info();
             console.log(info)
+            console.log("Block height:", block.height)
+
+            this.height = block.height
+            
             if(!this.firebase.inited) {
                 console.log("WARNING FIREBASE")
                 return
@@ -150,8 +154,7 @@ class Notifications{
                 node: node,
                 reRequest: false
             }
-            console.log("Block height:", block.height)
-            this.height = block.height
+            
             this.queue.push(notification)
             this.startWorker()
         }
