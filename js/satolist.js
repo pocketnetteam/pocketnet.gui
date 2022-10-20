@@ -7231,6 +7231,11 @@ Platform = function (app, listofnodes) {
                 return 'cansave'
             },
 
+            videoDlProgress : async function(id){
+                const progress = await electron.ipcRenderer.invoke('getShareVideoDlProgress', id);
+                return progress;
+            },
+
             clearfromstorage : function(shareId){
                 delete self.sdk.localshares.storage[shareId]
             },

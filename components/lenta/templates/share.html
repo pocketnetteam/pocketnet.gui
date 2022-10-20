@@ -526,15 +526,19 @@ var arranges = {
 									%>
 
 									<% if(!checkvisibility) {%>
+									<% const isSaving = (status === 'saving') %>
 
-									<div elementsid="lenta_shareSave" class="item shareSave" status="<%-status%>">
+									<div class="item loadingBar" <%- (isSaving) ? '' : 'hidden' %>>
+										<div class="loading-bar" data-loading="true"></div>
+									</div>
+
+									<div elementsid="lenta_shareSave" class="item shareSave" status="<%-status%>" <%- (isSaving) ? 'hidden' : '' %>>
 
 										<div class="itemwr table">
 
 											<div class="iconwr">											
 												<div class="icon">
 													<i class="fas fa-download cansave"></i>
-													<i class="fas fa-spinner fa-spin saving"></i>
 													<i class="fas fa-trash saved"></i>
 												</div>
 											</div>

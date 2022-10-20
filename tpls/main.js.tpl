@@ -705,6 +705,7 @@ function createWindow() {
     const VideosDir = 'videos';
     const getPostFolder = (postId) => path.join(Storage, PostsDir, postId);
     const getVideoFolder = (postId, videoId) => path.join(getPostFolder(postId), VideosDir, videoId);
+    const videosDownloadProgress = {};
 
     ipcMain.removeHandler('saveShareData');
     ipcMain.handle('saveShareData', async (event, shareData) => {
@@ -768,6 +769,7 @@ function createWindow() {
         }
 
         const shareId = path.basename(folder);
+        videosDownloadProgress[shareId] = 0;
         const videoDir = getVideoFolder(shareId, videoData.uuid);
         const jsonDir = path.join(videoDir, 'info.json');
         const signsDir = path.join(videoDir, 'signatures.json');
@@ -811,6 +813,9 @@ function createWindow() {
         const targetVideoUrl = `${targetStreamBaseUrl}/${targetVideo}`;
 
         for(let i = 0; i < fragmentsList.length; i++) {
+
+            videosDownloadProgress[shareId] = i / fragmentsList.length;
+
             let fragRange = fragmentsList[i].split('@');
             fragRange = fragRange.reverse();
 
@@ -831,6 +836,8 @@ function createWindow() {
             });
         }
 
+        videosDownloadProgress[shareId] = 1;
+
         const videoInfo = {
             thumbnail: 'https://' + videoData.from + videoData.thumbnailPath,
             videoDetails : videoData,
@@ -845,6 +852,13 @@ function createWindow() {
         };
 
         return result;
+    });
+
+    ipcMain.removeHandler('getShareVideoDlProgress');
+    ipcMain.handle('getShareVideoDlProgress', async (event, shareId) => {
+        if (videosDownloadProgress[shareId] != undefined)
+            return videosDownloadProgress[shareId];
+        return;
     });
 
     ipcMain.removeHandler('deleteShareWithVideo');

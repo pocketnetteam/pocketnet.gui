@@ -58,6 +58,8 @@ var lenta = (function(){
 
 		var countshares = 0;
 
+		var progressInterval = {};
+
 		var newsharescount = 0
 
 		var offsetblock = 0
@@ -280,8 +282,18 @@ var lenta = (function(){
 						const loadingBarHolderElem = el.share[share.txid].find('.loadingBar');
 						const loadingBarElem = el.share[share.txid].find('.loading-bar');
 
+						if (!loadingBarElem || loadingBarElem.length <= 0)
+							return;
 						const lb = new LoadingBar(loadingBarElem[0]);
-						lb.setValue(60);
+						if (progressInterval[share.txid]) clearInterval(progressInterval[share.txid]);
+						// Watch progress and update progress bar
+						progressInterval[share.txid] = setInterval(async function() {
+							const progress = await self.app.platform.sdk.localshares.videoDlProgress(share.txid);
+							if (progress >= 1 || progress == undefined)
+								clearInterval(progressInterval[share.txid]);
+							if (progress != undefined && !isNaN(progress))
+								lb.setValue(progress * 100);
+						}, 500);
 
 						loadingBarHolderElem.removeAttr('hidden');
 						shareSaveElem.attr('hidden', '');
@@ -5240,6 +5252,10 @@ var lenta = (function(){
 								events.videosInview()
 							}, 50)
 							
+							_.each(shares, function(share) {
+								if (share && share.itisvideo && share.itisvideo())
+									actions.changeSavingStatusLight(share);
+							});
 
 							var p = parameters()
 
@@ -5466,6 +5482,9 @@ var lenta = (function(){
 				delete self.app.events.delayedscroll['optimization' + mid]
 				delete self.app.events.scroll['loadmore' + mid]
 				
+				for (const txId in progressInterval) {
+					if (progressInterval[txId]) clearInterval(progressInterval[txId]);
+				}
 				
 				delete self.app.errors.clbks[mid]
 
