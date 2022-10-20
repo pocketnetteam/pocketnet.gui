@@ -953,6 +953,20 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 						ip: '138.201.91.156',
 					}
 				],
+
+				35: [
+					{
+						host : 'peertube29.pocketnet.app',
+						ip: '157.90.171.8',
+					}
+				],
+
+				36: [
+					{
+						host : 'peertube30.pocketnet.app',
+						ip: '95.217.165.102',
+					}
+				],
       		};
 
 			if (test){
