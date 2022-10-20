@@ -123,7 +123,47 @@ var Pocketnet = function(){
                     rpcpass : '',
                 }
             }
-        }
+        },
+
+        getCoibaseType : function (v) {
+
+            var type = null;
+                try {
+                    var chunks = bitcoin.script.decompile(Buffer.from(v.scriptpubkey, 'hex'))
+
+                    var ch = _.find(chunks, function (c) {
+                        return c == bitcoin.opcodes.OP_WINNER_POST || c == bitcoin.opcodes.OP_WINNER_COMMENT|| c == bitcoin.opcodes.OP_WINNER_POST_REFERRAL|| c == bitcoin.opcodes.OP_WINNER_COMMENT_REFERRAL
+                    })
+
+                    type = ch;
+
+
+                    if (type == bitcoin.opcodes.OP_WINNER_POST) {
+                        type = 'winPost'
+                    }
+
+                    if (type == bitcoin.opcodes.OP_WINNER_COMMENT) {
+                        type = 'winComment'
+                    }
+
+                    if (type == bitcoin.opcodes.OP_WINNER_POST_REFERRAL) {
+                        type = 'winPostref'
+                    }
+
+                    if (type == bitcoin.opcodes.OP_WINNER_COMMENT_REFERRAL) {
+                        type = 'winCommentref'
+                    }
+
+
+
+                }
+                catch (e) {
+
+                    console.log("ERR", e)
+
+                }
+            return type
+        },
     }
 
     self.pobjects = {

@@ -3146,13 +3146,12 @@ Platform = function (app, listofnodes) {
 
             const alreadyShowed = ('nextCommentBanner' in localStorage);
             const isBannerDisabled = (localStorage.nextCommentBanner == -1);
-            const timeToShowBanner = (unixTimeNow >= localStorage.nextCommentBanner);
+            const timeToShowBanner = (localStorage.nextCommentBanner <= unixTimeNow);
 
             const regDate = app.platform.sdk.user.me().regdate;
             const regUnixTime = (regDate.getTime());
             const registeredTime = Date.now() - regUnixTime;
 
-            const repeat = (localStorage.nextCommentBanner == 1);
             const isOneDayOld = (registeredTime >= oneDayInSeconds);
 
             if (isBannerDisabled) {
@@ -3164,14 +3163,14 @@ Platform = function (app, listofnodes) {
                 //return bannerCommentComponent;
             }
 
-            if (repeat && timeToShowBanner) {
-                localStorage.nextCommentBanner = unixTimeNow + oneDayInSeconds;
+            if (!alreadyShowed) {
+                localStorage.nextCommentBanner = 1;
                 createComponent();
                 //return bannerCommentComponent;
             }
 
             if (timeToShowBanner || !alreadyShowed) {
-                localStorage.nextCommentBanner = 1;
+                localStorage.nextCommentBanner = unixTimeNow + oneDayInSeconds;
                 createComponent();
                 //return bannerCommentComponent;
             }
@@ -9363,6 +9362,7 @@ Platform = function (app, listofnodes) {
                 })
 
                 localStorage['usersettings'] = JSON.stringify(values);
+                self?.firebase?.settings()
             },
 
             load: function () {
@@ -24033,11 +24033,12 @@ Platform = function (app, listofnodes) {
         //var FirebasePlugin = new FakeFirebasePlugin()
 
         var using = typeof window != 'undefined' && window.cordova && typeof FirebasePlugin != 'undefined';
-
+        var usingWeb = typeof window != 'undefined' && typeof _Electron === 'undefined' && !window.cordova && typeof firebase != 'undefined'
+        
         var currenttoken = null;
 
         var appid = deep(window, 'BuildInfo.packageName') || window.location.hostname || window.pocketnetdomain
-        if (appid == 'localhost') appid = 'pocketnet.app' /// url
+        if (appid == 'localhost' || appid == '127.0.0.1') appid = 'pocketnet.app' /// url
 
         var device = function () {
             var id = platform.app.options.device
@@ -24133,6 +24134,13 @@ Platform = function (app, listofnodes) {
 
             },
 
+            setSettings: function (proxy) {
+                if(!proxy) return Promise.reject('proxy')
+                return self.request.setSettings(proxy).then(r => {
+                    return Promise.resolve()
+                })
+            },
+
             existanother : function(proxy, address){
                 var obj = self.storage.data[appid] || {}
 
@@ -24182,14 +24190,16 @@ Platform = function (app, listofnodes) {
                     if (apps.indexOf(appid) == -1){
                         return Promise.reject('proxyfirebaseid')
                     }
-
+                    return Promise.resolve(appid)
 
                 })
             }
         }
 
         self.revokeall = function(){
-            FirebasePlugin.unregister();
+            if(using) {
+                FirebasePlugin?.unregister();
+            }
 
             self.storage.clear();
 
@@ -24215,9 +24225,30 @@ Platform = function (app, listofnodes) {
             }).then(r => {
                 return self.api.setToken(address, token, proxy)
             }).catch(e => {
+                console.log(e)
                 return Promise.resolve()
             })
 
+        }
+
+        self.settings = async function(current){
+            console.log("HERE")
+            if(!current){
+                for(const proxy of platform.app.api.get.proxies()){
+                    const {info} = await proxy.get.info();
+                    if(info.firebase.useNotifications && info.firebase.inited){
+                        current = proxy;
+                    }
+                }
+            }
+            if(!current) return Promise.reject('proxy')
+
+            return self.api.checkProxy(current).then(r => {
+                return  self.api.setSettings(current)
+            }).catch(e => {
+                console.log(e)
+                return Promise.resolve()
+            })
         }
 
         self.request = {
@@ -24269,7 +24300,18 @@ Platform = function (app, listofnodes) {
                 return platform.app.api.fetchauth('firebase/set', {
                     device : device(),
                     token : token,
-                    id : appid
+                    id : appid,
+                    settings: self.getSettings()
+                }, {
+                    proxy : proxy
+                })
+
+            },
+
+            setSettings: function (proxy) {
+                return platform.app.api.fetchauth('firebase/settings', {
+                    device : device(),
+                    settings: self.getSettings()
                 }, {
                     proxy : proxy
                 })
@@ -24277,12 +24319,18 @@ Platform = function (app, listofnodes) {
             }
         }
 
+        self.getSettings = function (){
+            const data = {}
+            const settings = platform.sdk.usersettings.meta;
+            for(const key in settings){
+                data[key] = settings[key].value;
+            }
+            data['web'] = Boolean(!window.cordova)
+            return data;
+        }
 
         self.get = function (clbk) {
-
-            if (!using) {
-            }
-            else {
+            if (using) {
 
                 FirebasePlugin.getToken(function(token) {
 
@@ -24304,121 +24352,204 @@ Platform = function (app, listofnodes) {
                 });
 
 
-            }
+            }else if(usingWeb) {
 
-            if (clbk)
-                clbk()
+                console.log("HERE")
+
+                if (clbk)
+                    clbk()
+
+                return
+
+                try{
+                    if(!firebase.apps.length) {
+                        firebase.initializeApp({
+                            messagingSenderId: "1020521924918",
+                            projectId: 'pocketnet',
+                            apiKey: 'AIzaSyC_Jeet2gpKRZp44iATwlFFA7iGNYsabkk',
+                            appId: '1:1020521924918:ios:ab35cc84f0d10d86aacb97',
+                        });
+                    }
+                    const messaging = firebase.messaging();
+                    messaging.getToken().then(token=>{
+                        console.log(token)
+                        currenttoken = token
+                        platform.fcmtoken = token
+                        platform.matrixchat.changeFcm()
+                        self.events()
+                        if (clbk)
+                            clbk(token)
+                    }).catch(e => {
+                        console.log("E", e)
+                    })
+
+                }
+                catch (e) {
+                    console.log("E", e)
+                }
+                
+            }
         }
 
         self.permissions = function(clbk){
-			FirebasePlugin.hasPermission(function(hasPermission){
+            if(using) {
+                FirebasePlugin.hasPermission(function (hasPermission) {
 
-                if(!hasPermission){
-                    FirebasePlugin.grantPermission(function(hasPermission){
+                    if (!hasPermission) {
+                        FirebasePlugin.grantPermission(function (hasPermission) {
 
-                        if(hasPermission){
-                            self.get(clbk)
-                        }
+                            if (hasPermission) {
+                                self.get(clbk)
+                            }
 
-                    });
-                }
-                else{
-                    self.get(clbk)
-                }
+                        });
+                    } else {
+                        self.get(clbk)
+                    }
 
-            });
+                });
+            }else if (usingWeb){
+                Notification.requestPermission().then((permission) => {
+                    if (permission === 'granted') {
+                        console.log('Notification permission granted.');
+                        self.get(clbk)
+                    } else {
+                        usingWeb = false;
+                        console.log('Unable to get permission to notify.');
+                    }
+                });
+            }
 		}
 
         self.events = function () {
+            if(using) {
+                FirebasePlugin.onMessageReceived((data) => {
 
-            FirebasePlugin.onMessageReceived((data) => {
+                    if (!data) data = {}
 
-                if(!data) data = {}
-
-                if (data.data)
-                    platform.ws.messageHandler(data.data)
+                    if (data.data)
+                        platform.ws.messageHandler(data.data)
 
 
-                if (data.room_id) {
+                    if (data.room_id) {
 
-                    if(data.tap){
-                         // Wait until we can navigate Matrix
-                        retry(function(){
+                        if (data.tap) {
+                            // Wait until we can navigate Matrix
+                            retry(function () {
 
-                            return platform && platform.matrixchat && platform.matrixchat.core;
+                                return platform && platform.matrixchat && platform.matrixchat.core;
 
-                        }, function(){
+                            }, function () {
 
-                            setTimeout(function(){
+                                setTimeout(function () {
 
-                                platform.matrixchat.core.goto(data.room_id);
+                                    platform.matrixchat.core.goto(data.room_id);
 
                                 if (platform.matrixchat.core.apptochat)
                                     platform.matrixchat.core.apptochat();
 
-                            }, 50)
+                                }, 50)
 
 
 
-                        });
+                            });
+                        }
+
+
+
+                        return;
                     }
 
+                    if (data.tap) {
 
+                        platform.ws.destroyMessages();
+                        const body = JSON.parse(data?.json);
+                        body.url = body?.url.replace("/index", "");
+                        if(body.url) {
+                            if(body.url === "/userpage?id=wallet"){
+                                platform.app.nav.api.go({
+                                    open: true,
+                                    href: 'wallet',
+                                    history: true,
+                                    inWnd: true,
+                                    essenseData: {
+                                    },
+                                });
+                            }else {
+                                const params = new URLSearchParams(body.url);
+                                platform.app.nav.api.load({
+                                    open: true,
+                                    href: 'post?s=' + params.get('s'),
+                                    inWnd: true,
+                                    history: true,
+                                    clbk: function (d, p) {
+                                        app.nav.wnds['post'] = p
+                                    },
 
-                    return;
-                }
+                                    essenseData: {
+                                        share: params.get('s'),
 
-                if (data.tap) {
+                                        reply: {
+                                            answerid: params.get('commentid') || "",
+                                            parentid: params.get('parentid') || "",
+                                            noaction: true
+                                        }
+                                    }
+                                })
+                            }
+                        }else{
+                            platform.app.nav.api.go({
+                                open : true,
+                                href : 'notifications',
+                                inWnd : true,
+                                history : true,
+                                essenseData : {
+                                }
+                            })
+                        }
+                    } else {
 
-                    platform.ws.destroyMessages()
+                        if (typeof cordova != 'undefined') {
 
-                    platform.app.nav.api.load({
-                        open: true,
-                        href: 'notifications',
-                        history: true
-                    })
+                            var cordovabadge = deep(cordova, 'plugins.notification.badge')
 
-                    return
-                }
-                else {
+                            if (cordovabadge)
+                                cordovabadge.increase(1, function (badge) {
+                                });
+                        }
 
-                    if (typeof cordova != 'undefined') {
-
-                        var cordovabadge = deep(cordova, 'plugins.notification.badge')
-
-                        if (cordovabadge)
-                            cordovabadge.increase(1, function (badge) { });
                     }
-
-                }
 
 
             });
 
 
-            // When token is refreshed, update the matrix element for the Vue app
-            FirebasePlugin.onTokenRefresh(function(token) {
+                // When token is refreshed, update the matrix element for the Vue app
+                FirebasePlugin?.onTokenRefresh(function (token) {
 
-                platform.fcmtoken = token
-                currenttoken = token
+                    platform.fcmtoken = token
+                    currenttoken = token
                 platform.matrixchat.changeFcm()
 
-                //prepareclbk(token)
+                    //prepareclbk(token)
 
-            }, function(error) {
-                console.error(error);
-            });
-
+                }, function (error) {
+                    console.error(error);
+                });
+            }
         }
 
-        var prepareclbk = function(token){
-
+        var prepareclbk = async function(token){
             if (token){
-
-                var proxy = platform.app.api.get.current()
-
-                if (proxy){
-                    self.set(proxy.id).catch(e => {
+                let current = null;
+                for(const proxy of platform.app.api.get.proxies()){
+                    const {info} = await proxy.get.info();
+                    if(info.firebase.useNotifications && info.firebase.inited){
+                        current = proxy;
+                    }
+                }
+                if (current){
+                    self.set(current.id).catch(e => {
                         console.log("error", e)
                     })
                 }
@@ -24428,6 +24559,7 @@ Platform = function (app, listofnodes) {
         }
 
         self.init = function(clbk){
+            if(clbk) clbk()
 
             self.prepare(function(token){
 
@@ -24435,14 +24567,13 @@ Platform = function (app, listofnodes) {
 
             })
 
-            if(clbk) clbk()
         }
 
         self.prepare = function(clbk){
 
             self.storage.load()
 
-			if (using) {
+            if (using || usingWeb) {
 
 				self.permissions(clbk)
 			}
@@ -24457,7 +24588,7 @@ Platform = function (app, listofnodes) {
 
             currenttoken = null
 
-            if (using){
+            if (using || usingWeb){
                 self.revokeall().then(clbk).catch(e => {})
 
                 return
@@ -29584,7 +29715,7 @@ Platform = function (app, listofnodes) {
                 if (self.matrixchat.el){
 
                     if (self.matrixchat.el.hasClass('active')) return
-                        self.matrixchat.el.addClass('active')
+                    self.matrixchat.el.addClass('active')
 
                 }
                 else{

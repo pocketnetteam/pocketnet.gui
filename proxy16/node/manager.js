@@ -27,7 +27,8 @@ const queuemethods = {
     getusercontents : true,
     getcontentsstatistic : true,
     getboostfeed : true,
-    getprofilefeed : true
+    getprofilefeed : true,
+    getnotifications : true
 }
 
 const exepmethods = {
@@ -489,7 +490,7 @@ var Nodemanager = function(p){
 
         return _.filter(self.nodes, function(n){
 
-            if(!n.inited) return false
+            if(!n.inited || !n.allowRpc) return false
 
             var s = n.statistic.get5min()
             var r = n.statistic.rating()
@@ -510,7 +511,7 @@ var Nodemanager = function(p){
 
         var workingNodes = getWorkingNodes()
 
-        if (workingNodes.length < minnodescount || !usersfornode || self.proxy.users() / usersfornode >= workingNodes.length){
+        if (workingNodes.length < minnodescount || !usersfornode || self.proxy.users() / usersfornode >= workingNodes.length || node.alwaysrun){
 
             node.init()
         }
@@ -528,7 +529,7 @@ var Nodemanager = function(p){
 
             _.each(self.nodes, function(n){
 
-                if(n.inited){
+                if(n.inited && !n.alwaysrun){
 
                     if(!n.wss.count()){
 
@@ -1034,7 +1035,11 @@ var Nodemanager = function(p){
 
     self.selectProbability = function(){
 
-        var np = _.map(self.initednodes(), function(node){
+        var nds = _.filter(self.initednodes(), (nd) => {
+            return nd.allowRpc
+        })
+
+        var np = _.map(nds, function(node){
             return {
                 node : node,
                 probability : (Number(node.statistic.probability()) || 0) + Math.random() / 10000
@@ -1050,6 +1055,28 @@ var Nodemanager = function(p){
 
         return null
     }
+
+    self.selectProbabilityByVersion = function(nodeId){
+
+        var np = _.map(self.initednodes(), function(node){
+            return {
+                node : node,
+                probability : (Number(node.statistic.probability()) || 0) + Math.random() / 10000
+            }
+        })
+
+        const r = np.find(function(elem){
+            return (elem.node?.version ? +elem.node?.version?.split(".")?.join("") : 0) >= 2026 && elem.node?.id === nodeId
+        })
+
+        if (r && r.node){
+            return r.node
+        }
+
+
+        return null
+    }
+
 
     self.selectbest = function(){
 
