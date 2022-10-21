@@ -56,7 +56,7 @@ if(!_Node)
 	/* test */
 
 	if(window.cordova){
-		listofproxies.push({
+		_listofproxies.push({
 			host : '6.pocketnet.app',
 			port : 8899,
 			wss : 8099
