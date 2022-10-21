@@ -5266,6 +5266,8 @@ Platform = function (app, listofnodes) {
                                                 handler : true
                                             })
 
+                                            app.actions.scrollToTop()
+
                                         }
                                     }
                                 })
@@ -5279,7 +5281,8 @@ Platform = function (app, listofnodes) {
                             share.user = deep(self.app, 'platform.sdk.usersl.storage.' + share.address).export();
 
                             // If we are on mobile/electron and post has a downloadable media video
-                            if (share.itisvideo() && self.app.savesupported()) {
+                            // Do not download video on iOS
+                            if (share.itisvideo() && self.app.savesupported() && !isios()) {
 
                                 // Ask user if he wants to download
                                 app.nav.api.load({
@@ -7451,36 +7454,40 @@ Platform = function (app, listofnodes) {
 
                 return self.sdk.localshares.write.share[self.sdk.localshares.key](shareInfo.share).then(folder => {
 
-                    // Only save videos on Android
-                    if (share.itisvideo() && !p.doNotSaveMedia && !isios()) {
+                    return new Promise((resolve) => {
 
-                        return self.sdk.localshares.write.video[self.sdk.localshares.key](folder, shareInfo, p).then(r => {
+                        // Only save videos on Android
+                        if (share.itisvideo() && !p.doNotSaveMedia && !isios()) {
 
-                            shareInfo.share.videos || (shareInfo.share.videos = {})
-                            if (r)
-                                shareInfo.share.videos[r.id] = r
+                            self.sdk.localshares.write.video[self.sdk.localshares.key](folder, shareInfo, p).then(r => {
 
-                            return Promise.resolve()
+                                shareInfo.share.videos || (shareInfo.share.videos = {})
+                                if (r)
+                                    shareInfo.share.videos[r.id] = r
 
-                        })
+                                return resolve()
 
-                    }
-                    else if (share.images && share.images.length > 0 && !p.doNotSaveMedia)  {
+                            })
 
-                        return self.sdk.localshares.write.image[self.sdk.localshares.key](folder, shareInfo, share.images, p).then(images => {
+                        }
+                        else if (share.images && share.images.length > 0 && !p.doNotSaveMedia)  {
 
-                            shareInfo.share.share.i = images;
+                            self.sdk.localshares.write.image[self.sdk.localshares.key](folder, shareInfo, share.images, p).then(images => {
 
-                            self.sdk.localshares.write.share[self.sdk.localshares.key](shareInfo.share);
+                                shareInfo.share.share.i = images;
 
-                            return Promise.resolve()
+                                self.sdk.localshares.write.share[self.sdk.localshares.key](shareInfo.share).finally(() => {
+                                    return resolve()
+                                });
 
-                        });
+                            });
 
-                    }
-                    else
+                        }
+                        else
 
-                        return Promise.resolve()
+                            return resolve()
+
+                    });
 
                 }).then(r => {
                     self.sdk.localshares.storage = {}
