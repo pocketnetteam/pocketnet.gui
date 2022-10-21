@@ -258,12 +258,20 @@ export class ProxifiedFetchBridge {
     }
 
     private answer(sender: Electron.WebContents, event: string, id: string, data?: any) {
+        if (!this.selfStatic) {
+            return;
+        }
+
         const eventName = `${this.selfStatic.eventGroup} : ${event}[${id}]`;
 
         sender.send(eventName, data);
     }
 
     private listen(event: string, callback: (...args) => void) {
+        if (!this.selfStatic) {
+            return;
+        }
+
         const eventName = `${this.selfStatic.eventGroup} : ${event}`;
 
         this.ipc.on(eventName, (...args) => {
@@ -275,6 +283,10 @@ export class ProxifiedFetchBridge {
     }
 
     private listenOnce(event: string, callback: (...args) => void) {
+        if (!this.selfStatic) {
+            return;
+        }
+
         const eventName = `${this.selfStatic.eventGroup} : ${event}`;
 
         this.ipc.once(eventName, (...args) => {
@@ -286,6 +298,10 @@ export class ProxifiedFetchBridge {
     }
 
     private stopListen(event: string) {
+        if (!this.selfStatic) {
+            return;
+        }
+
         const eventName = `${this.selfStatic.eventGroup} : ${event}`;
 
         this.ipc.removeAllListeners(eventName);
