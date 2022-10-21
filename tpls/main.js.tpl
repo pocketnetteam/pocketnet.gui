@@ -769,7 +769,7 @@ function createWindow() {
         }
 
         const shareId = path.basename(folder);
-        videosDownloadProgress[shareId] = 0;
+        videosDownloadProgress[shareId] = { status: 'downloading', progress: 0 };
         const videoDir = getVideoFolder(shareId, videoData.uuid);
         const jsonDir = path.join(videoDir, 'info.json');
         const signsDir = path.join(videoDir, 'signatures.json');
@@ -814,7 +814,7 @@ function createWindow() {
 
         for(let i = 0; i < fragmentsList.length; i++) {
 
-            videosDownloadProgress[shareId] = i / fragmentsList.length;
+            videosDownloadProgress[shareId].progress = i / fragmentsList.length;
 
             let fragRange = fragmentsList[i].split('@');
             fragRange = fragRange.reverse();
@@ -836,7 +836,8 @@ function createWindow() {
             });
         }
 
-        videosDownloadProgress[shareId] = 1;
+        videosDownloadProgress[shareId].progress = 1;
+        videosDownloadProgress[shareId].status = 'downloaded';
 
         const videoInfo = {
             thumbnail: 'https://' + videoData.from + videoData.thumbnailPath,

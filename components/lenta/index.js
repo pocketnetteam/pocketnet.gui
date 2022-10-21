@@ -289,10 +289,10 @@ var lenta = (function(){
 						// Watch progress and update progress bar
 						progressInterval[share.txid] = setInterval(async function() {
 							const progress = await self.app.platform.sdk.localshares.videoDlProgress(share.txid);
-							if (progress >= 1 || progress == undefined)
-								clearInterval(progressInterval[share.txid]);
-							if (progress != undefined && !isNaN(progress))
-								lb.setValue(progress * 100);
+							if (progress != undefined && progress.progress >= 1)
+								clearInterval(progressInterval);
+							if (progress != undefined && !isNaN(progress.progress))
+								lb.setValue(progress.progress * 100);
 						}, 500);
 
 						loadingBarHolderElem.removeAttr('hidden');

@@ -107,10 +107,10 @@ var post = (function () {
 						// Watch progress and update progress bar
 						progressInterval = setInterval(async function() {
 							const progress = await self.app.platform.sdk.localshares.videoDlProgress(share.txid);
-							if (progress >= 1 || progress == undefined)
+							if (progress != undefined && progress.progress >= 1)
 								clearInterval(progressInterval);
-							if (progress != undefined && !isNaN(progress))
-								lb.setValue(progress * 100);
+							if (progress != undefined && !isNaN(progress.progress))
+								lb.setValue(progress.progress * 100);
 						}, 500);
 
 						loadingBarHolderElem.removeAttr('hidden');
