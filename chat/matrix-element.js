@@ -1277,6 +1277,20 @@ module.exports = function isBuffer (obj) {
 
 /***/ }),
 
+/***/ "04e6":
+/***/ (function(module, exports, __webpack_require__) {
+
+// Imports
+var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
+exports = ___CSS_LOADER_API_IMPORT___(false);
+// Module
+exports.push([module.i, "", ""]);
+// Exports
+module.exports = exports;
+
+
+/***/ }),
+
 /***/ "0594":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3607,6 +3621,18 @@ exports.f = DESCRIPTORS ? $getOwnPropertyDescriptor : function getOwnPropertyDes
 
 /***/ }),
 
+/***/ "0745":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ContactsContainer_vue_vue_type_style_index_0_id_650f3273_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("438e");
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ContactsContainer_vue_vue_type_style_index_0_id_650f3273_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ContactsContainer_vue_vue_type_style_index_0_id_650f3273_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ContactsContainer_vue_vue_type_style_index_0_id_650f3273_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ContactsContainer_vue_vue_type_style_index_0_id_650f3273_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+
+
+/***/ }),
+
 /***/ "07c6":
 /***/ (function(module, exports) {
 
@@ -3734,7 +3760,7 @@ module.exports = function (obj) {
 /***/ "0825":
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"caption\":{\"create\":\"Crea\",\"addGroupNamePlaceHolder\":\"Aggiungi il nome del gruppo\",\"addPublicChatName\":\"Aggiungi nome chat pubblica\",\"createPublicChat\":\"Crea chat pubblica\",\"chatTopic\":\"Argomento rinominato\",\"publicRoomTitle\":\"Stanza pubblica\",\"asModerator\":\"come moderatore\",\"marked\":\"contrassegnato\",\"unmarked\":\"non segnato\",\"removeBan\":\"Rimuovi divieto\",\"cancelModeration\":\"Rimuovere la moderazione\",\"uploadFiles\":\"Carica file\",\"header\":\"intestazione\",\"dragAndDropAFile\":\"Drag and drop file\",\"chatInvite\":\"Sei stato invitato a chattare con:\",\"cantJoin\":\"Non puoi entrare in chat con:\",\"chatInviteDecline\":\"Puoi unirti in chat o declinare l'invito\",\"creatorLeft\":\"Perché il creatore ha lasciato la chat\",\"encrypted\":\"Criptato\",\"noImages\":\"Non ci sono ancora immagini in questa chat\",\"noFiles\":\"Non ci sono ancora files in questa chat\",\"inviteUser\":\"Invita utente\",\"invite\":\"Invita\",\"add\":\"Aggiungi\",\"mute\":\"Disattiva audio\",\"unmute\":\"Riattiva audio\",\"leave\":\"Lascia\",\"Info\":\"Info\",\"new\":\"Nuovo\",\"typing\":\"sta scrivendo\",\"accNotFound\":\"La tua registrazione è in corso, attendi...\",\"emptyList\":\"la lista è vuota (filtrata o semplicemente vuota)\",\"welcome\":\"Benvenuto in chat\",\"startNewChat\":\"Inizia una nuova chat\",\"chats\":\"Chat\",\"shareWith\":\"Condividi con\",\"newChat\":\"Nuova chat\",\"moveToChat\":\"Sposta in chat\",\"queryNoResults\":\"La ricerca non ha dato risultati\",\"needMoreCharacters\":\"Scrivi più caratteri\",\"createGroup\":\"Crea gruppo\",\"unabletoDecrypt\":\"* Impossibile decifrare\",\"messageDeleted\":\"Messaggio eliminato\",\"sentImage\":\"Immagine inviata\",\"sentVoiceMessage\":\"inviato un messaggio vocale\",\"invitationToChat\":\"Invito alla chat\",\"invitationToRoom\":\"Invitation to room\",\"leftChat\":\"ha lasciato la chat\",\"joined\":\"si è aggiunto\",\"chatRenamed\":\"Chat rinominata in \",\"recentComment\":\"Commento recente: \",\"share\":\"CONDIVIDI\",\"followers\":\"Followers\",\"reputation\":\"Reputazione\",\"unsubscribe\":\"Annullare l'iscrizione\",\"following\":\"Following\",\"theme\":\"Tema:\",\"contacts\":\"Contatti\",\"phoneContacts\":\"Contatti del telefono\",\"chooseInviteMedia\":\"Scegli come vuoi invitare:\",\"admin\":\"Admin\",\"moderator\":\"Moderatore\",\"videocall\":\"Videochiamata\",\"call\":\"Chiama\",\"leaveAndDelete\":\"Lascia e Cancella\",\"donate\":\"Dona\",\"makeModerator\":\"Rendi moderatore\",\"ban\":\"Ban\",\"kick\":\"Butta fuori\",\"members\":\"Membri\",\"media\":\"Media\",\"files\":\"Files\",\"contactsList\":\"Lista contatti\",\"send\":\"invia\",\"pageCaption\":\"Didascalia pagina\",\"caption\":\"didascalia\",\"text\":\"testo\",\"placeholder\":\"placeholder\",\"sendTransactionTo\":\"Invia transazione a\",\"toBePaidByReceiver\":\"Da pagare da parte del ricevente\",\"toBePaidBySender\":\"Da pagare da parte del mittente\",\"source\":\"Fonte\",\"amount\":\"Importo\",\"receiver\":\"Ricevente\",\"message\":\"Messaggio\",\"includeFeesInAmount\":\"Includere le commissioni nell'importo\",\"transactionFees\":\"Commissioni di transazione\",\"totalAmount\":\"Importo totale\",\"balanceTooLow\":\"Saldo non sufficiente\",\"transactionError\":\"Errore. non è possibile effettuare la transazione\",\"calculateFees\":\"Calcolare le commissioni\",\"startChatWith\":\"Iniziare la chat con\",\"searchResult\":\"Risultato della ricerca\",\"joinedInTheChat\":\"si è unito alla chat\",\"invited\":\"invitato \",\"hasInvited\":\"invitato \",\"inTheChat\":\" nella chat\",\"banned\":\"bannato\",\"andRoom\":\"e stanza\",\"left\":\"ha lasciato\",\"theChat\":\" la chat \",\"made\":\"ha rest \",\"aModerator\":\" un moderatore\",\"editedChatNameTo \":\"ha modificato il nome della chat in \",\"somebody\":\"qualcuno\",\"sent\":\"inviato\",\"PKOINto\":\" PKOIN a \",\"response\":\"Risposta\",\"messagefrom\":\"Messaggio inoltrato da\",\"edited\":\"Modificato\",\"settings\":\"Impostazioni\",\"unauthorized\":\"Non autorizzato\",\"search\":\"Ricerca\",\"replyOnMessage\":\"Rispondi\",\"editMessage\":\"Modifica messaggio\",\"inviteFriend\":\"Invita amici\",\"emptyContactList\":\"La lista dei contatti è vuota\",\"joinApp\":\"Connettiti in una chat privata con me\",\"hasInvitedToJoin\":\"È privata e NON è collegata al tuo numero di telefono. Chattiamo!\",\"contactsempty\":\"Non hai ancora contatti, cercali e aggiungili\",\"usernotgen\":\"L'utente non ha ancora generato le sue chiavi di crittografia. Potrai chattare con loro quando le loro chiavi saranno generate..\",\"younotgen\":\"Per favore aspetta un minuto mentre generiamo le tue chiavi crittografiche\",\"messageRead\":\"Messaggio letto\",\"open\":\"Apri\",\"You\":\"Tu\",\"chatsearchingempty\":\"No chats found for the specified filter\",\"sendmessage\":\"Send message\"},\"input\":{\"patientEmailPlaceholder\":\"Email\",\"refillNamePlaceholder\":\"Refill name\"},\"message\":{},\"button\":{\"starChatButton\":\"Iniziare la chat\",\"decline\":\"Rifiuta\",\"declineandignore\":\"Ignora utente\",\"join\":\"Unisciti\",\"ok\":\"Ok\",\"save\":\"Salva\",\"copy\":\"Copia\",\"forward\":\"Inoltra\",\"delete\":\"Elimina\",\"reply\":\"Rispondi\",\"share\":\"Condividere\",\"download\":\"Download\",\"downloaded\":\"Scaricato\",\"goToPocketnetProfile\":\"Vai al profilo\",\"sendFile\":\"Invia file\",\"takePhotoOrVideo\":\"Invia immagine\",\"sendCoins\":\"Invia PKOIN\",\"edit\":\"Modifica\",\"select\":\"Selezionare\",\"block\":\"Blocca\",\"unblock\":\"Sblocca\",\"blockUser\":\"Blocca utente\",\"Complain\":\"Segnala\"},\"type\":{\"publicgroup\":\"Crea gruppo pubblico\",\"privategroup\":\"Crea gruppo privato\",\"one\":\"Chat privata con un utente\"},\"typelabel\":{\"publicgroup\":\"Creazione gruppo pubblico\",\"privategroup\":\"Creazione gruppo privato\",\"one\":\"Creazione di una chat privata\"},\"yes\":\"Sì\",\"cancel\":\"Annulla\",\"teamMessages\":{\"1-title\":\"Benvenuti nella chat privata di Bastyon\",\"1-list1\":\"Chat privata NON collegata al tuo numero di telefono\",\"1-list2\":\"Crittografia End-To-End di ogni conversazione 1-on-1 di default\",\"1-list3\":\"Tutte le immagini inviate o ricevute attraverso la chat sono memorizzate in modo criptato\",\"1-list4\":\"La cronologia dei messaggi viene salvata solo per 7 giorni\",\"2-title\":\"Annuncio importante!! L'applicazione Pocketnet è ora chiamata Bastyon!\",\"2-message1\":\"Il dominio sarà spostato su Bastyon.com. Recentemente abbiamo rilasciato i seguenti importanti aggiornamenti:\",\"2-list1\":\"Chat privata criptata non collegata al tuo numero di telefono\",\"2-list2\":\"Possibilità di donare PKOIN ai blogger\",\"2-list3\":\"Video e Live Streaming\",\"2-message2\":\"Invita i tuoi amici ora e fai parte del grande futuro dell'internet decentralizzato!\",\"2-button\":\"Invita i tuoi amici\"},\"sendingerror\":\"An error occurred while sending the message\",\"details\":\"Details\",\"settings_pin\":\"Pin chat window\",\"checked\":\"Yes\",\"unchecked\":\"No\",\"settings_read\":\"Send read receipts\",\"messagewasburn\":\"This message remains only in the memory of your device\",\"messagewillburn\":\"The message will be deleted soon\",\"micaccessbrowser\":\"Access to the microphone is restricted, please check your browser settings.\",\"micaccesscommonproblem\":\"Sorry, for some reason it is not possible to record voice messages on the device\",\"micaccesscordova\":\"Access to the microphone is restricted, please check your device settings.\",\"micdevicenotfound\":\"Audio recording device not found\"}");
+module.exports = JSON.parse("{\"caption\":{\"create\":\"Crea\",\"addGroupNamePlaceHolder\":\"Aggiungi il nome del gruppo\",\"addPublicChatName\":\"Aggiungi nome chat pubblica\",\"createPublicChat\":\"Crea chat pubblica\",\"chatTopic\":\"Argomento rinominato\",\"publicRoomTitle\":\"Stanza pubblica\",\"asModerator\":\"come moderatore\",\"marked\":\"contrassegnato\",\"unmarked\":\"non segnato\",\"removeBan\":\"Rimuovi divieto\",\"cancelModeration\":\"Rimuovere la moderazione\",\"uploadFiles\":\"Carica file\",\"header\":\"intestazione\",\"dragAndDropAFile\":\"Drag and drop file\",\"chatInvite\":\"Sei stato invitato a chattare con:\",\"cantJoin\":\"Non puoi entrare in chat con:\",\"chatInviteDecline\":\"Puoi unirti in chat o declinare l'invito\",\"creatorLeft\":\"Perché il creatore ha lasciato la chat\",\"encrypted\":\"Criptato\",\"noImages\":\"Non ci sono ancora immagini in questa chat\",\"noFiles\":\"Non ci sono ancora files in questa chat\",\"inviteUser\":\"Invita utente\",\"invite\":\"Invita\",\"add\":\"Aggiungi\",\"mute\":\"Disattiva audio\",\"unmute\":\"Riattiva audio\",\"leave\":\"Lascia\",\"Info\":\"Info\",\"new\":\"Nuovo\",\"typing\":\"sta scrivendo\",\"accNotFound\":\"La tua registrazione è in corso, attendi...\",\"emptyList\":\"la lista è vuota (filtrata o semplicemente vuota)\",\"welcome\":\"Benvenuto in chat\",\"startNewChat\":\"Inizia una nuova chat\",\"chats\":\"Chat\",\"shareWith\":\"Condividi con\",\"newChat\":\"Nuova chat\",\"moveToChat\":\"Sposta in chat\",\"queryNoResults\":\"La ricerca non ha dato risultati\",\"needMoreCharacters\":\"Scrivi più caratteri\",\"createGroup\":\"Crea gruppo\",\"unabletoDecrypt\":\"* Impossibile decifrare\",\"messageDeleted\":\"Messaggio eliminato\",\"sentImage\":\"Immagine inviata\",\"sentVoiceMessage\":\"inviato un messaggio vocale\",\"invitationToChat\":\"Invito alla chat\",\"invitationToRoom\":\"Invitation to room\",\"leftChat\":\"ha lasciato la chat\",\"joined\":\"si è aggiunto\",\"chatRenamed\":\"Chat rinominata in \",\"recentComment\":\"Commento recente: \",\"share\":\"CONDIVIDI\",\"followers\":\"Followers\",\"reputation\":\"Reputazione\",\"unsubscribe\":\"Annullare l'iscrizione\",\"following\":\"Following\",\"theme\":\"Tema:\",\"contacts\":\"Contatti\",\"phoneContacts\":\"Contatti del telefono\",\"chooseInviteMedia\":\"Scegli come vuoi invitare:\",\"admin\":\"Admin\",\"moderator\":\"Moderatore\",\"videocall\":\"Videochiamata\",\"call\":\"Chiama\",\"leaveAndDelete\":\"Lascia e Cancella\",\"donate\":\"Dona\",\"makeModerator\":\"Rendi moderatore\",\"ban\":\"Ban\",\"kick\":\"Butta fuori\",\"members\":\"Membri\",\"media\":\"Media\",\"files\":\"Files\",\"contactsList\":\"Lista contatti\",\"send\":\"invia\",\"pageCaption\":\"Didascalia pagina\",\"caption\":\"didascalia\",\"text\":\"testo\",\"placeholder\":\"placeholder\",\"sendTransactionTo\":\"Invia transazione a\",\"toBePaidByReceiver\":\"Da pagare da parte del ricevente\",\"toBePaidBySender\":\"Da pagare da parte del mittente\",\"source\":\"Fonte\",\"amount\":\"Importo\",\"receiver\":\"Ricevente\",\"message\":\"Messaggio\",\"includeFeesInAmount\":\"Includere le commissioni nell'importo\",\"transactionFees\":\"Commissioni di transazione\",\"totalAmount\":\"Importo totale\",\"balanceTooLow\":\"Saldo non sufficiente\",\"transactionError\":\"Errore. non è possibile effettuare la transazione\",\"calculateFees\":\"Calcolare le commissioni\",\"startChatWith\":\"Iniziare la chat con\",\"searchResult\":\"Risultato della ricerca\",\"joinedInTheChat\":\"si è unito alla chat\",\"invited\":\"invitato \",\"hasInvited\":\"invitato \",\"inTheChat\":\" nella chat\",\"banned\":\"bannato\",\"andRoom\":\"e stanza\",\"left\":\"ha lasciato\",\"theChat\":\" la chat \",\"made\":\"ha rest \",\"aModerator\":\" un moderatore\",\"editedChatNameTo \":\"ha modificato il nome della chat in \",\"somebody\":\"qualcuno\",\"sent\":\"inviato\",\"PKOINto\":\" PKOIN a \",\"response\":\"Risposta\",\"messagefrom\":\"Messaggio inoltrato da\",\"edited\":\"Modificato\",\"settings\":\"Impostazioni\",\"unauthorized\":\"Non autorizzato\",\"search\":\"Ricerca\",\"replyOnMessage\":\"Rispondi\",\"editMessage\":\"Modifica messaggio\",\"inviteFriend\":\"Invita amici\",\"emptyContactList\":\"La lista dei contatti è vuota\",\"joinApp\":\"Connettiti in una chat privata con me\",\"hasInvitedToJoin\":\"È privata e NON è collegata al tuo numero di telefono. Chattiamo!\",\"contactsempty\":\"Non hai ancora contatti, cercali e aggiungili\",\"usernotgen\":\"L'utente non ha ancora generato le sue chiavi di crittografia. Potrai chattare con loro quando le loro chiavi saranno generate..\",\"younotgen\":\"Per favore aspetta un minuto mentre generiamo le tue chiavi crittografiche\",\"messageRead\":\"Messaggio letto\",\"open\":\"Apri\",\"You\":\"Tu\",\"chatsearchingempty\":\"No chats found for the specified filter\",\"sendmessage\":\"Send message\",\"clearHistory\":\"Clear history\"},\"input\":{\"patientEmailPlaceholder\":\"Email\",\"refillNamePlaceholder\":\"Refill name\"},\"message\":{},\"button\":{\"starChatButton\":\"Iniziare la chat\",\"decline\":\"Rifiuta\",\"declineandignore\":\"Ignora utente\",\"join\":\"Unisciti\",\"ok\":\"Ok\",\"save\":\"Salva\",\"copy\":\"Copia\",\"forward\":\"Inoltra\",\"delete\":\"Elimina\",\"reply\":\"Rispondi\",\"share\":\"Condividere\",\"download\":\"Download\",\"downloaded\":\"Scaricato\",\"goToPocketnetProfile\":\"Vai al profilo\",\"sendFile\":\"Invia file\",\"takePhotoOrVideo\":\"Invia immagine\",\"sendCoins\":\"Invia PKOIN\",\"edit\":\"Modifica\",\"select\":\"Selezionare\",\"block\":\"Blocca\",\"unblock\":\"Sblocca\",\"blockUser\":\"Blocca utente\",\"Complain\":\"Segnala\"},\"type\":{\"publicgroup\":\"Crea gruppo pubblico\",\"privategroup\":\"Crea gruppo privato\",\"one\":\"Chat privata con un utente\"},\"typelabel\":{\"publicgroup\":\"Creazione gruppo pubblico\",\"privategroup\":\"Creazione gruppo privato\",\"one\":\"Creazione di una chat privata\"},\"yes\":\"Sì\",\"cancel\":\"Annulla\",\"teamMessages\":{\"1-title\":\"Benvenuti nella chat privata di Bastyon\",\"1-list1\":\"Chat privata NON collegata al tuo numero di telefono\",\"1-list2\":\"Crittografia End-To-End di ogni conversazione 1-on-1 di default\",\"1-list3\":\"Tutte le immagini inviate o ricevute attraverso la chat sono memorizzate in modo criptato\",\"1-list4\":\"La cronologia dei messaggi viene salvata solo per 7 giorni\",\"2-title\":\"Annuncio importante!! L'applicazione Pocketnet è ora chiamata Bastyon!\",\"2-message1\":\"Il dominio sarà spostato su Bastyon.com. Recentemente abbiamo rilasciato i seguenti importanti aggiornamenti:\",\"2-list1\":\"Chat privata criptata non collegata al tuo numero di telefono\",\"2-list2\":\"Possibilità di donare PKOIN ai blogger\",\"2-list3\":\"Video e Live Streaming\",\"2-message2\":\"Invita i tuoi amici ora e fai parte del grande futuro dell'internet decentralizzato!\",\"2-button\":\"Invita i tuoi amici\"},\"sendingerror\":\"An error occurred while sending the message\",\"details\":\"Details\",\"settings_pin\":\"Pin chat window\",\"checked\":\"Yes\",\"unchecked\":\"No\",\"settings_read\":\"Send read receipts\",\"messagewasburn\":\"This message remains only in the memory of your device\",\"messagewillburn\":\"The message will be deleted soon\",\"micaccessbrowser\":\"Access to the microphone is restricted, please check your browser settings.\",\"micaccesscommonproblem\":\"Sorry, for some reason it is not possible to record voice messages on the device\",\"micaccesscordova\":\"Access to the microphone is restricted, please check your device settings.\",\"micdevicenotfound\":\"Audio recording device not found\"}");
 
 /***/ }),
 
@@ -4083,12 +4109,18 @@ module.exports = Sha
 
 "use strict";
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/assets/topheader/index.vue?vue&type=template&id=52afd868&scoped=true&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"fixedOnPageTop",class:{'bin' : _vm.pocketnet, 'bout' : !_vm.pocketnet, minimized: _vm.minimized, fix : _vm.pocketnet, active: _vm.active},attrs:{"id":"topheader"},on:{"mouseleave":_vm.mouseleave}},[_c('div',{staticClass:"topheader "},[_c('div',{staticClass:"work"},[_c('div',{staticClass:"headerLine"},[_c('div',{staticClass:"leftIcon icon",on:{"mouseenter":_vm.mouseenter}},[_vm._t("left",function(){return [_vm._v("   ")]})],2),_c('div',{staticClass:"leftaddIcon iconsmall"},[_vm._t("leftadd",function(){return [_vm._v("   ")]})],2),_c('div',{staticClass:"infoPart",on:{"mouseenter":_vm.mouseenter}},[_c('div',[_vm._t("info",function(){return [_vm._v("   ")]})],2)]),_c('div',{staticClass:"rightaddIcons iconsmall"},[_vm._t("rightadd",function(){return [_vm._v("   ")]})],2),_c('div',{staticClass:"rightIcons icon"},[_vm._t("right",function(){return [_vm._v("   ")]})],2)]),_vm._t("additional")],2)])])}
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/assets/topheader/index.vue?vue&type=template&id=4b228a6e&scoped=true&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"fixedOnPageTop",class:{
+    bin: _vm.pocketnet,
+    bout: !_vm.pocketnet,
+    minimized: _vm.minimized,
+    fix: _vm.pocketnet,
+    active: _vm.active,
+  },attrs:{"id":"topheader"},on:{"mouseleave":_vm.mouseleave}},[_c('div',{staticClass:"topheader"},[_c('div',{staticClass:"work"},[_c('div',{staticClass:"headerLine"},[_c('div',{staticClass:"leftIcon icon",on:{"mouseenter":_vm.mouseenter}},[_vm._t("left",function(){return [_vm._v("   ")]})],2),_c('div',{staticClass:"leftaddIcon iconsmall"},[_vm._t("leftadd",function(){return [_vm._v("   ")]})],2),_c('div',{staticClass:"infoPart",on:{"mouseenter":_vm.mouseenter}},[_c('div',[_vm._t("info",function(){return [_vm._v("   ")]})],2)]),_c('div',{staticClass:"rightaddIcons iconsmall"},[_vm._t("rightadd",function(){return [_vm._v("   ")]})],2),_c('div',{staticClass:"rightIcons icon"},[_vm._t("right",function(){return [_vm._v("   ")]})],2)]),_vm._t("additional")],2)])])}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/assets/topheader/index.vue?vue&type=template&id=52afd868&scoped=true&
+// CONCATENATED MODULE: ./src/components/assets/topheader/index.vue?vue&type=template&id=4b228a6e&scoped=true&
 
 // EXTERNAL MODULE: ./node_modules/vuex/dist/vuex.esm.js
 var vuex_esm = __webpack_require__("2f62");
@@ -4140,7 +4172,7 @@ var componentNormalizer = __webpack_require__("2877");
 
 function injectStyles (context) {
   
-  var style0 = __webpack_require__("7212")
+  var style0 = __webpack_require__("2e5f")
 if (style0.__inject__) style0.__inject__(context)
 
 }
@@ -4153,7 +4185,7 @@ var component = Object(componentNormalizer["a" /* default */])(
   staticRenderFns,
   false,
   injectStyles,
-  "52afd868",
+  "4b228a6e",
   null
   ,true
 )
@@ -5413,20 +5445,6 @@ module.exports.__inject__ = function (shadowRoot) {
 
 /***/ }),
 
-/***/ "0cd0":
-/***/ (function(module, exports, __webpack_require__) {
-
-// Imports
-var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
-exports = ___CSS_LOADER_API_IMPORT___(false);
-// Module
-exports.push([module.i, ".toggleChatGroup[data-v-06594ccd]{list-style:none;padding:0;margin:0;display:flex;justify-content:flex-start;align-items:center}.toggleChatGroup li[data-v-06594ccd]{margin-right:10px;padding:10px 0}.logo20[data-v-06594ccd]{width:20px;height:20px}.iconbuttonsmall[data-v-06594ccd]{color:rgb(var(--neutral-grad-3))}.iconbuttonsmall.active[data-v-06594ccd],.iconbuttonsmall[data-v-06594ccd]:hover{color:rgb(var(--color-txt-ac))}.iconbuttonsmall.active[data-v-06594ccd]:hover{color:rgb(var(--neutral-grad-3))}", ""]);
-// Exports
-module.exports = exports;
-
-
-/***/ }),
-
 /***/ "0cfb":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -5458,6 +5476,24 @@ module.exports = function (argument) {
   }
 };
 
+
+/***/ }),
+
+/***/ "0d7c":
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__("236c");
+if(content.__esModule) content = content.default;
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add CSS to Shadow Root
+var add = __webpack_require__("35d6").default
+module.exports.__inject__ = function (shadowRoot) {
+  add("68e13971", content, shadowRoot)
+};
 
 /***/ }),
 
@@ -5576,6 +5612,20 @@ var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
 exports.push([module.i, ".viewWrapper[data-v-7650772c]{padding:1em 0;background:rgb(var(--background-secondary-theme));position:relative}.viewWrapper .uviewwr[data-v-7650772c]{max-width:500px;margin:0 auto}.actionsWrapper[data-v-7650772c]{padding:.5em 0}.youw[data-v-7650772c]{text-align:center;padding:1.5em;font-size:.9em}#contact.minimized[data-v-7650772c]:not(.active) .gotoprofile{display:none}#contact.minimized[data-v-7650772c]:not(.active) .userpic{height:44px;width:44px;line-height:44px}#contact.minimized[data-v-7650772c]:not(.active) .name{display:none}#contact.minimized[data-v-7650772c]:not(.active) .viewWrapper{width:44px;background:transparent!important}#contact.minimized[data-v-7650772c]:not(.active) .haskeys{display:none}#contact.minimized[data-v-7650772c]:not(.active) .info{flex-direction:column;box-shadow:none;padding:0;background:transparent!important;margin:0}#contact.minimized[data-v-7650772c]:not(.active) .info .infoPart{width:100%;padding-left:0;padding-right:0}#contact.minimized[data-v-7650772c]:not(.active) .info .infoPart .label{font-size:.8em}", ""]);
+// Exports
+module.exports = exports;
+
+
+/***/ }),
+
+/***/ "135a":
+/***/ (function(module, exports, __webpack_require__) {
+
+// Imports
+var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
+exports = ___CSS_LOADER_API_IMPORT___(false);
+// Module
+exports.push([module.i, "@media only screen and (min-width:768px){.footer-chat[data-v-f00ed472]{width:40%;max-width:400px}.footer-chat.bout[data-v-f00ed472]{width:100%}}", ""]);
 // Exports
 module.exports = exports;
 
@@ -5728,7 +5778,7 @@ __webpack_require__.r(__webpack_exports__);
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, ".pmenu.minimized[data-v-6078dda8]{display:none}.pmenu.minimized.active[data-v-6078dda8]{display:block}.pmenu.minimized.active .menubgwrapper[data-v-6078dda8]{top:0;z-index:9000;border-radius:10px;overflow:hidden;border-top-right-radius:0;border-top-left-radius:0;width:344px;left:auto}.menubgwrapper[data-v-6078dda8]{position:absolute;z-index:100;bottom:0;left:0;top:-55px;right:0}.menubgwrapper[data-v-6078dda8] .items{max-height:500px;overflow-y:auto;border-radius:3px;padding-left:.5em;padding-right:.5em;padding-bottom:.5em}.menuwrapper[data-v-6078dda8]{padding:1em;z-index:100}.backgr[data-v-6078dda8],.menuwrapper[data-v-6078dda8]{position:absolute;bottom:0;left:0;right:0}.backgr[data-v-6078dda8]{background:rgba(var(--background-total-theme),.15);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);top:0;transition:.3s}[data-v-6078dda8] .contentWrapper{margin-top:.25em;border-radius:10px;overflow:hidden;border-top:1px solid rgba(var(--neutral-grad-3),.5);box-shadow:0 5px 7px -5px rgba(var(--color-shadow-base),.7)}.cancelWrapper[data-v-6078dda8]{border-radius:3px;padding-left:.5em;padding-right:.5em;color:rgb(var(--neutral-grad-3))}.cancelWrapper .menu-item[data-v-6078dda8]{margin-top:0;background:transparent;box-shadow:none;box-shadow:0 5px 5px -3px rgba(var(--color-shadow-base),.4)}.menu-item[data-v-6078dda8]{padding:.5em;background:rgb(var(--background-total-theme));border-top:1px solid rgba(var(--neutral-grad-3),.5);line-height:44px;margin-top:.25em;display:flex;border-radius:10px;box-shadow:0 5px 7px -5px rgba(var(--color-shadow-base),.7);cursor:pointer}.menu-item .title[data-v-6078dda8]{flex-grow:2;padding-right:44px;text-align:center}.menu-item .iconWrapper[data-v-6078dda8]{width:44px;text-align:center}", ""]);
+exports.push([module.i, ".pmenu.minimized[data-v-6078dda8]{display:none}.pmenu.minimized.active[data-v-6078dda8]{display:block}.pmenu.minimized.active .menubgwrapper[data-v-6078dda8]{top:0;z-index:9000;border-radius:10px;overflow:hidden;border-top-right-radius:0;border-top-left-radius:0;width:100%;left:auto}.menubgwrapper[data-v-6078dda8]{position:absolute;z-index:100;bottom:0;left:0;top:-55px;right:-22px;width:100%}.menubgwrapper[data-v-6078dda8] .items{max-height:500px;overflow-y:auto;border-radius:3px;padding-left:.5em;padding-right:.5em;padding-bottom:.5em}.menuwrapper[data-v-6078dda8]{padding:1em;z-index:100;right:-22px;width:100%}.backgr[data-v-6078dda8],.menuwrapper[data-v-6078dda8]{position:absolute;bottom:0;left:0}.backgr[data-v-6078dda8]{background:rgba(var(--background-total-theme),.15);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);right:0;top:0;transition:.3s}[data-v-6078dda8] .contentWrapper{margin-top:.25em;border-radius:10px;overflow:hidden;border-top:1px solid rgba(var(--neutral-grad-3),.5);box-shadow:0 5px 7px -5px rgba(var(--color-shadow-base),.7)}.cancelWrapper[data-v-6078dda8]{border-radius:3px;padding-left:.5em;padding-right:.5em;color:rgb(var(--neutral-grad-3))}.cancelWrapper .menu-item[data-v-6078dda8]{margin-top:0;background:transparent;box-shadow:none;box-shadow:0 5px 5px -3px rgba(var(--color-shadow-base),.4)}.menu-item[data-v-6078dda8]{padding:.5em;background:rgb(var(--background-total-theme));border-top:1px solid rgba(var(--neutral-grad-3),.5);line-height:44px;margin-top:.25em;display:flex;border-radius:10px;box-shadow:0 5px 7px -5px rgba(var(--color-shadow-base),.7);cursor:pointer}.menu-item .title[data-v-6078dda8]{flex-grow:2;padding-right:44px;text-align:center}.menu-item .iconWrapper[data-v-6078dda8]{width:44px;text-align:center}", ""]);
 // Exports
 module.exports = exports;
 
@@ -6080,6 +6130,24 @@ exports.CallEventHandler = CallEventHandler;
 
 /***/ }),
 
+/***/ "171c":
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__("bb85");
+if(content.__esModule) content = content.default;
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add CSS to Shadow Root
+var add = __webpack_require__("35d6").default
+module.exports.__inject__ = function (shadowRoot) {
+  add("6883aa59", content, shadowRoot)
+};
+
+/***/ }),
+
 /***/ "17e1":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -6092,14 +6160,14 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "191a":
+/***/ "18bc":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_57da332f_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("810b");
-/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_57da332f_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_57da332f_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_57da332f_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_57da332f_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_7fe8f542_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("f8c3");
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_7fe8f542_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_7fe8f542_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_7fe8f542_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_7fe8f542_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
 
 
 /***/ }),
@@ -8032,6 +8100,42 @@ function _asyncToGenerator(fn) {
 
 /***/ }),
 
+/***/ "1e09":
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__("f700");
+if(content.__esModule) content = content.default;
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add CSS to Shadow Root
+var add = __webpack_require__("35d6").default
+module.exports.__inject__ = function (shadowRoot) {
+  add("b2d8f2b0", content, shadowRoot)
+};
+
+/***/ }),
+
+/***/ "1f54":
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__("d45f");
+if(content.__esModule) content = content.default;
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add CSS to Shadow Root
+var add = __webpack_require__("35d6").default
+module.exports.__inject__ = function (shadowRoot) {
+  add("ead4f35a", content, shadowRoot)
+};
+
+/***/ }),
+
 /***/ "1fb5":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8323,6 +8427,20 @@ module.exports = function (password, salt, iterations, keylen, digest, callback)
 
 /***/ }),
 
+/***/ "20f4":
+/***/ (function(module, exports, __webpack_require__) {
+
+// Imports
+var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
+exports = ___CSS_LOADER_API_IMPORT___(false);
+// Module
+exports.push([module.i, ".topheader[data-v-650f3273]{top:0;z-index:999}", ""]);
+// Exports
+module.exports = exports;
+
+
+/***/ }),
+
 /***/ "2100":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8559,6 +8677,20 @@ var add = __webpack_require__("35d6").default
 module.exports.__inject__ = function (shadowRoot) {
   add("6ba75335", content, shadowRoot)
 };
+
+/***/ }),
+
+/***/ "236c":
+/***/ (function(module, exports, __webpack_require__) {
+
+// Imports
+var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
+exports = ___CSS_LOADER_API_IMPORT___(false);
+// Module
+exports.push([module.i, "#chatsTopheader .infoPart[data-v-a06dc160]{flex-grow:4!important}#chatsTopheader .rightIcons[data-v-a06dc160]{flex-grow:1!important;height:30px}#chatsTopheader .inviteButton[data-v-a06dc160]{background-color:rgb(var(--color-bg-orange));color:#fff;width:100%;height:34px;font-size:.9em;border-radius:.2em}", ""]);
+// Exports
+module.exports = exports;
+
 
 /***/ }),
 
@@ -9986,20 +10118,6 @@ module.exports.__inject__ = function (shadowRoot) {
 
 /***/ }),
 
-/***/ "2931":
-/***/ (function(module, exports, __webpack_require__) {
-
-// Imports
-var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
-exports = ___CSS_LOADER_API_IMPORT___(false);
-// Module
-exports.push([module.i, ".deletedMessage[data-v-659136c0]{font-size:.8em;text-align:center;opacity:.6}.event[data-v-659136c0]{opacity:0;transition:.3s}.event.readyToRender[data-v-659136c0]{opacity:1}.event .loading[data-v-659136c0]{width:100%;height:100%;text-align:center}.event .deletedMessage[data-v-659136c0],.event .loading[data-v-659136c0]{position:relative;left:0;top:0;padding:.5em}", ""]);
-// Exports
-module.exports = exports;
-
-
-/***/ }),
-
 /***/ "2a7f":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10449,6 +10567,18 @@ var call = FunctionPrototype.call;
 module.exports = typeof Reflect == 'object' && Reflect.apply || (NATIVE_BIND ? call.bind(apply) : function () {
   return call.apply(apply, arguments);
 });
+
+
+/***/ }),
+
+/***/ "2cdf":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_b5befc24_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("860c");
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_b5befc24_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_b5befc24_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_b5befc24_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_b5befc24_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
 
 
 /***/ }),
@@ -11227,6 +11357,18 @@ var add = __webpack_require__("35d6").default
 module.exports.__inject__ = function (shadowRoot) {
   add("53ab5eb3", content, shadowRoot)
 };
+
+/***/ }),
+
+/***/ "2e5f":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_4b228a6e_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("2fe3");
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_4b228a6e_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_4b228a6e_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_4b228a6e_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_4b228a6e_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+
 
 /***/ }),
 
@@ -12452,6 +12594,24 @@ var index = {
 
 /***/ }),
 
+/***/ "2fe3":
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__("562d");
+if(content.__esModule) content = content.default;
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add CSS to Shadow Root
+var add = __webpack_require__("35d6").default
+module.exports.__inject__ = function (shadowRoot) {
+  add("149dedfc", content, shadowRoot)
+};
+
+/***/ }),
+
 /***/ 3:
 /***/ (function(module, exports) {
 
@@ -12474,20 +12634,6 @@ var add = __webpack_require__("35d6").default
 module.exports.__inject__ = function (shadowRoot) {
   add("ef92c6aa", content, shadowRoot)
 };
-
-/***/ }),
-
-/***/ "306eb":
-/***/ (function(module, exports, __webpack_require__) {
-
-// Imports
-var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
-exports = ___CSS_LOADER_API_IMPORT___(false);
-// Module
-exports.push([module.i, ".referenceTop[data-v-c8f458dc]{margin-left:.25em;margin-right:.25em;border-radius:10px;border-bottom-left-radius:0;overflow:hidden;margin-bottom:.5em}.referenceTop.my[data-v-c8f458dc]{border-bottom-right-radius:0;border-bottom-left-radius:10px}.actionsWrapper[data-v-c8f458dc]{opacity:1}.actionsWrapper i.fa-check-circle[data-v-c8f458dc]{color:rgb(var(--color-txt-ac));opacity:1!important}.actionsWrapper .mnwrapper[data-v-c8f458dc]{opacity:0;transition:.3s}.actionsWrapper .multiSelect[data-v-c8f458dc]{position:absolute;top:50%;transform:translateY(-50%);left:0;padding:.5em;width:100%;height:100%;display:flex;flex-direction:column;justify-content:center}.actionsWrapper .multiSelect:hover i[data-v-c8f458dc]{opacity:1}@media (pointer:fine){.messageRow:hover .actionsWrapper .mnwrapper[data-v-c8f458dc]{opacity:1}}.burn.big[data-v-c8f458dc]{color:rgb(var(--color-bad))}.burn.medium[data-v-c8f458dc]{opacity:.8}.showImage[data-v-c8f458dc]{width:100%;position:relative;overflow:hidden}.showImage .abswrapper[data-v-c8f458dc]{position:absolute;left:0;top:0;bottom:0;right:0;display:flex;text-align:center;align-items:center;justify-content:center}.preloaderImage[data-v-c8f458dc]{padding-bottom:100px;border-radius:10px;background:rgba(var(--neutral-grad-0),.5);width:100%;position:relative}.preloaderImage .abswrapper[data-v-c8f458dc]{position:absolute;left:0;top:0;bottom:0;right:0;display:flex;text-align:center;align-items:center;justify-content:center}.preloaderImage .abswrapper>div[data-v-c8f458dc]{opacity:.2}.statusWrapper[data-v-c8f458dc]{padding:.5em;margin-top:.5em;border-top:.5em solid rgb(var(--neutral-grad-0))}.statusWrapper .my[data-v-c8f458dc]{font-size:.7em;opacity:.5;text-align:center}.messageRow[data-v-c8f458dc]{display:flex;align-items:flex-end;padding-left:.25em;min-height:34px}.messageRow.aligncenter[data-v-c8f458dc]{align-items:center}.messageRow.my[data-v-c8f458dc]{padding-left:0;padding-right:.25em}.messageRow.my .messageImg .imgMsg .showImage .abswrapper[data-v-c8f458dc]{border-radius:1em;border-top-right-radius:0;border-top-left-radius:1em}.messageRow .maxcontent[data-v-c8f458dc]{max-width:82%}.messageRow .maxcontent.my[data-v-c8f458dc]{max-width:87%}.messageRow.allscreen[data-v-c8f458dc]{flex-wrap:wrap}.messageRow.allscreen .userpic[data-v-c8f458dc]{position:relative}.messageRow.allscreen .userpic[data-v-c8f458dc]:after{border-radius:50%;content:\"\";position:absolute;left:-5px;right:-5px;top:-5px;bottom:-5px;border:5px solid rgb(var(--neutral-grad-0));z-index:1;box-shadow:0 5px 7px -5px rgba(var(--color-shadow-base),.7)}.messageRow .badenctyptedText .decryptagain[data-v-c8f458dc]{font-size:.8em}.messageRow .metaMsg[data-v-c8f458dc]{width:100%}.messageRow .badencrypted[data-v-c8f458dc]{position:absolute;background:rgb(var(--background-main));left:0;right:0;top:0;bottom:0;padding:.5em}.messageRow .encryptedDataIcon[data-v-c8f458dc]{position:absolute;color:rgb(var(--text-on-bg-ac-color));opacity:.3;padding:.25em .5em;text-shadow:0 0 2px rgba(var(--color-shadow-base),.714),0 0 3px rgba(var(--color-shadow-base),.519);left:0;top:0;z-index:1}.messageRow .encryptedDataIcon i[data-v-c8f458dc]{font-size:.7em}.messageRow .filePreview .encryptedDataIcon[data-v-c8f458dc]{color:rgb(var(--neutral-grad-2));text-shadow:none;right:0;left:auto}.messageRow .messageAudio[data-v-c8f458dc]{margin-left:.5em;height:50px}.messageRow .messageImg[data-v-c8f458dc]{width:85%;position:relative;margin-top:.125em}.messageRow .messageImg .img[data-v-c8f458dc]{display:block;border-radius:.5em;position:relative;max-width:100%}.messageRow .messageImg .loadingImg[data-v-c8f458dc]{display:flex;align-items:center;justify-content:center;border-radius:.5em;position:relative;max-width:300px;height:250px}.messageRow .messageImg .loadingImg .imgPreview[data-v-c8f458dc]{border-radius:.5em;position:relative;max-width:100%;height:100%;opacity:.6}.messageRow .messageImg .loadingImg .clipLoader[data-v-c8f458dc]{position:absolute;z-index:9999;left:50%;right:0;top:50%;bottom:0;transform:translate(-50,50);display:flex;align-items:center;justify-content:center}.messageRow .messageImg .imgMsg .showImage[data-v-c8f458dc]{display:flex}.messageRow .messageImg .imgMsg img[data-v-c8f458dc]{max-width:100%;-o-object-fit:cover;object-fit:cover;display:block}.messageRow .messageImg .imgMsg .abswrapper[data-v-c8f458dc]{border-radius:1em;border-top-left-radius:0;overflow:hidden;background:rgb(var(--neutral-grad-0))}.messageRow .messageImg .metaLink[data-v-c8f458dc]{background:#000}.messageRow .messageImg .metaLink .metaMessageLink .metaTitle[data-v-c8f458dc]{font-weight:700;font-size:.9em}.messageRow .messageImg .metaLink .metaMessageLink .metaDescription[data-v-c8f458dc]{margin:.5em 0;font-size:.8em}.messageRow .messageImg .metaLink .metaMessageLink .metaImgWrapper[data-v-c8f458dc]{display:block;max-width:300px;-o-object-fit:cover;object-fit:cover}.messageRow .messageImg .metaLink .metaMessageLink .metaImgWrapper img[data-v-c8f458dc]{display:block;width:100%;height:100%}.messageRow .filePreview[data-v-c8f458dc]{width:90%;border:1px solid rgb(var(--neutral-grad-1));overflow:hidden;border-radius:10px;position:relative;margin-top:.5em;height:100px}.messageRow .filePreview .table[data-v-c8f458dc]{height:100%}.messageRow .linkPreview[data-v-c8f458dc]{width:100%}.messageRow .messagePreview[data-v-c8f458dc]{width:100%;overflow:hidden;text-overflow:ellipsis}.messageRow .messagePreview span[data-v-c8f458dc]{word-break:break-all;white-space:normal}.messageRow .fromimagesfiles[data-v-c8f458dc]{order:5;padding:.5em .25em;padding-right:.5em}.messageRow .fromimagesfiles .fromCaption[data-v-c8f458dc]{font-size:.8em}.messageRow .actionsWrapper[data-v-c8f458dc]{order:4;padding-left:.5em;padding-right:1.25em;cursor:pointer;text-align:right;margin-left:auto;display:flex;align-items:center}.messageRow .actionsWrapper i[data-v-c8f458dc]{opacity:.3;transition:.4s}.messageRow .actionsWrapper i.fa-ellipsis-h[data-v-c8f458dc]{font-size:.7em}.messageRow .actionsWrapper i[data-v-c8f458dc]:hover{opacity:1;transition:.4s}.messageRow .statusWrapper[data-v-c8f458dc]{order:5;padding:.5em .25em;opacity:.6}.messageRow .statusWrapper div[data-v-c8f458dc],.messageRow .statusWrapper span[data-v-c8f458dc]{font-size:.7em}.messageRow .sendername[data-v-c8f458dc]{order:3;opacity:.6;overflow:hidden;font-size:.7em}.messageRow .timeWrapper[data-v-c8f458dc]{text-align:left;order:2;padding:0 .25em;line-height:33px;opacity:.6;flex-grow:1}.messageRow .timeWrapper span[data-v-c8f458dc]{white-space:nowrap;font-size:.7em}.messageRow .showreference[data-v-c8f458dc]{cursor:pointer}.messageRow.referenceshowed .messageText[data-v-c8f458dc]{background:rgba(var(--neutral-grad-1),.8)!important;color:rgb(var(--color-txt-gray))!important}.messageRow.referenceshowed .reference[data-v-c8f458dc]{padding-bottom:0!important}.messageRow.referenceshowed .referenceCaption button[data-v-c8f458dc]{width:100%}.messageRow .messageText[data-v-c8f458dc]{margin-left:.25em;background:rgba(var(--neutral-grad-1),.8);color:rgb(var(--text-color));padding:.5em .75em;padding-top:.5em;border-radius:1em;border-bottom-left-radius:0;font-weight:400;white-space:normal;display:flex;flex-direction:column-reverse}.messageRow .messageText .msgtext[data-v-c8f458dc]{text-align:left;white-space:pre-wrap}.messageRow .messageText .reference[data-v-c8f458dc]{height:32px}.messageRow .messageText .from[data-v-c8f458dc],.messageRow .messageText .reference[data-v-c8f458dc]{opacity:.8;border-bottom:1px solid rgb(var(--text-on-bg-ac-color));padding:.5em 0;padding-top:0;margin-bottom:.5em;display:flex}.messageRow .messageText .from .event[data-v-c8f458dc],.messageRow .messageText .reference .event[data-v-c8f458dc]{max-height:38px;text-align:left}.messageRow .messageText .from i[data-v-c8f458dc],.messageRow .messageText .reference i[data-v-c8f458dc]{width:30px;text-align:center;font-size:.8em}.messageRow .messageText .from .referenceCaption[data-v-c8f458dc],.messageRow .messageText .reference .referenceCaption[data-v-c8f458dc]{min-width:28px}.messageRow .messageText .from .fromCaption[data-v-c8f458dc],.messageRow .messageText .from .referenceCaption[data-v-c8f458dc],.messageRow .messageText .reference .fromCaption[data-v-c8f458dc],.messageRow .messageText .reference .referenceCaption[data-v-c8f458dc]{font-size:.8em}.messageRow .messageText .from .sendername[data-v-c8f458dc],.messageRow .messageText .reference .sendername[data-v-c8f458dc]{white-space:nowrap}.messageRow .messageText .from[data-v-c8f458dc] .messagePreview,.messageRow .messageText .reference[data-v-c8f458dc] .messagePreview{font-size:.9em;height:22px}.messageRow .messageText .from[data-v-c8f458dc] .messagePreview .previewMessage,.messageRow .messageText .reference[data-v-c8f458dc] .messagePreview .previewMessage{white-space:nowrap}.messageRow .messageText .edited[data-v-c8f458dc]{font-size:.7em;opacity:.5;text-align:right}.messageRow .messageText div[data-v-c8f458dc]{overflow:hidden;text-overflow:ellipsis}.messageRow .badenctyptedText[data-v-c8f458dc]{margin-left:.5em;color:rgb(var(--text-on-bg-ac-color));padding:.5em .75em;border-radius:1em;background:rgb(var(--neutral-grad-3));word-break:break-all;white-space:normal}.messageRow .badenctyptedText span[data-v-c8f458dc]{font-size:.9em}.messageRow .iconWrapper[data-v-c8f458dc]{width:33px;min-width:33px}.messageRow .withsendername[data-v-c8f458dc]{position:relative}.messageRow .withsendername .sendername[data-v-c8f458dc]{position:absolute;top:100%;margin-top:-5px;left:20px;color:rgb(var(--neutral-grad-3))}.messageRow .withsendername .sendername span[data-v-c8f458dc]{font-size:.7em}.messageRow[my=true][data-v-c8f458dc]{justify-content:flex-end;flex-wrap:wrap}.messageRow[my=true] .iconWrapper[data-v-c8f458dc]{margin-left:.5em;order:1;align-self:flex-start}.messageRow[my=true] .fromimagesfiles[data-v-c8f458dc]{order:-5}.messageRow[my=true] .actionsWrapper[data-v-c8f458dc]{text-align:left;margin-right:auto;margin-left:0;padding-left:.75em;padding-right:.25em;order:-4}.messageRow[my=true] .statusWrapper[data-v-c8f458dc]{order:-3}.messageRow[my=true] .timeWrapper[data-v-c8f458dc]{order:-2;text-align:right}.messageRow[my=true] .messageText[data-v-c8f458dc]{background:rgb(var(--color-bg-ac-bright));color:rgb(var(--text-on-bg-ac-color));text-align:right;border-radius:1em;border-bottom-left-radius:1em;border-top-right-radius:0}.messageRow[my=true] .messageAudio[data-v-c8f458dc]{margin-left:0}.messageRow[my=true] .messageAudio .voiceMessage[data-v-c8f458dc]{justify-content:flex-end}.messageRow.urlpreview[data-v-c8f458dc]{background:rgb(var(--background-total-theme));padding:.5em;padding-left:.25em;padding-bottom:1em}.messageRow.urlpreview .actionsWrapper[data-v-c8f458dc]{padding-right:.5em;padding-left:.5em}.messageRow.allscreen .filePreview[data-v-c8f458dc],.messageRow.allscreen .linkPreview[data-v-c8f458dc],.messageRow.allscreen .messageImg[data-v-c8f458dc],.messageRow.allscreen .metaMsg[data-v-c8f458dc]{order:4;padding-left:.125em}.messageRow.allscreen[my=true] .filePreview[data-v-c8f458dc],.messageRow.allscreen[my=true] .linkPreview[data-v-c8f458dc],.messageRow.allscreen[my=true] .messageImg[data-v-c8f458dc],.messageRow.allscreen[my=true] .metaMsg[data-v-c8f458dc]{order:6}.messageRow.not-preview[data-v-c8f458dc]{align-items:center;justify-content:center;color:rgb(var(--neutral-grad-3));text-align:center;flex-direction:column-reverse}.messageRow.not-preview .messageNoticeWithLink[data-v-c8f458dc]{color:#004680}", ""]);
-// Exports
-module.exports = exports;
-
 
 /***/ }),
 
@@ -16195,12 +16341,38 @@ f.stringify = stringify;
 
 /***/ }),
 
+/***/ "33c6":
+/***/ (function(module, exports, __webpack_require__) {
+
+// Imports
+var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
+exports = ___CSS_LOADER_API_IMPORT___(false);
+// Module
+exports.push([module.i, ".topheader[data-v-224a5c51]{top:0;z-index:999}.newChat[data-v-224a5c51] #maincontent .headerSpacer,.newChat[data-v-224a5c51] #maincontent .headerSpacerWrapper{overflow:visible!important}.newChat[data-v-224a5c51] #maincontent .headerSpacerWrapperOvf{background:#fff;overflow:visible!important}.newChat.minimized.active[data-v-224a5c51] #maincontent .desktopList{display:none}", ""]);
+// Exports
+module.exports = exports;
+
+
+/***/ }),
+
 /***/ "342f":
 /***/ (function(module, exports, __webpack_require__) {
 
 var getBuiltIn = __webpack_require__("d066");
 
 module.exports = getBuiltIn('navigator', 'userAgent') || '';
+
+
+/***/ }),
+
+/***/ "35a9":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ChatsContainer_vue_vue_type_style_index_0_id_224a5c51_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("d590");
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ChatsContainer_vue_vue_type_style_index_0_id_224a5c51_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ChatsContainer_vue_vue_type_style_index_0_id_224a5c51_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ChatsContainer_vue_vue_type_style_index_0_id_224a5c51_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ChatsContainer_vue_vue_type_style_index_0_id_224a5c51_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
 
 
 /***/ }),
@@ -22389,6 +22561,24 @@ module.exports = uncurryThis({}.isPrototypeOf);
 
 /***/ }),
 
+/***/ "3af4":
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__("d898");
+if(content.__esModule) content = content.default;
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add CSS to Shadow Root
+var add = __webpack_require__("35d6").default
+module.exports.__inject__ = function (shadowRoot) {
+  add("932d87ce", content, shadowRoot)
+};
+
+/***/ }),
+
 /***/ "3b29":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -23627,20 +23817,6 @@ function ctz(value) {
     return CTZ_TABLE[value];
 }
 exports.ctz = ctz;
-
-
-/***/ }),
-
-/***/ "3dc4":
-/***/ (function(module, exports, __webpack_require__) {
-
-// Imports
-var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
-exports = ___CSS_LOADER_API_IMPORT___(false);
-// Module
-exports.push([module.i, ".footer-chat[data-v-517e1e1f]{bottom:0;left:0;right:0;background:rgb(var(--background-total-theme));border-top:1px solid rgb(var(--background-secondary-theme));position:absolute;height:90px;padding-bottom:30px}.footer-chat.bout[data-v-517e1e1f]{position:fixed;will-change:transform}.footer-chat .work[data-v-517e1e1f]{height:100%;padding:0!important}.footer-chat.bin[data-v-517e1e1f]{border-top:0;position:static}.footer-chat.fix[data-v-517e1e1f]{position:absolute;height:auto}.footer-chat.fix.minimized[data-v-517e1e1f]{background:transparent;padding-bottom:0}.footer-chat.fix.minimized .menuItems[data-v-517e1e1f]{display:block;transition:.3s;padding-top:.5em}.footer-chat.fix.minimized .menuItems a[data-v-517e1e1f]{padding:0}.footer-chat.fix.minimized .menuItems .menuItem[data-v-517e1e1f]{width:44px;height:44px;background:rgba(var(--neutral-grad-3),.4);color:rgba(var(--neutral-grad-3),.8);border-radius:50%;border:1px solid transparent;margin-bottom:.25em;line-height:40px;transition:.3s}.footer-chat.fix.minimized .menuItems .menuItem .icon[data-v-517e1e1f]{color:rgb(var(--background-total-theme))}.footer-chat.fix.minimized .menuItems .menuItem .label[data-v-517e1e1f]{display:none}.footer-chat.fix.minimized .menuItems .menuItem i[data-v-517e1e1f]{vertical-align:middle;font-size:.8em}.footer-chat.fix.minimized .menuItems .menuItem.active[data-v-517e1e1f]{text-shadow:0 0 20px rgb(var(--color-bg-ac-bright)),0 0 20px rgb(var(--color-bg-ac-bright)),0 0 20px rgb(var(--color-bg-ac-bright)),0 0 20px rgb(var(--color-bg-ac-bright)),0 0 20px rgb(var(--color-bg-ac-bright));background:rgba(var(--color-bg-ac-bright),.9);border:1px solid rgba(var(--color-bg-ac-bright),.9);color:rgb(var(--background-total-theme))}.footer-chat.fix.minimized .menuItems .menuItem.active .icon[data-v-517e1e1f]{color:rgb(var(--background-total-theme))}.footer-chat.fix.minimized .menuItems .menuItem[data-v-517e1e1f]:hover:not(.active){background:rgba(var(--color-bg-ac-bright),.95);color:#fff;text-shadow:0 0 10px rgb(var(--color-bg-ac-bright)),0 0 15px rgb(var(--color-bg-ac-bright)),0 0 20px rgb(var(--color-bg-ac-bright)),0 0 25px rgb(var(--color-bg-ac-bright)),0 0 30px #02061a,0 0 35px rgb(var(--color-bg-ac-bright)),0 0 40px #02061a}.footer-chat.fix.minimized.active .menuItems[data-v-517e1e1f]{border-top:0}.menuItems[data-v-517e1e1f]{display:flex;justify-content:space-around;align-items:center;height:100%}.menuItems a[data-v-517e1e1f]{display:block;flex-grow:1;text-align:center;padding:1em;color:#213850}.menuItems .icon[data-v-517e1e1f]{font-size:.9em;color:rgba(var(--color-txt-gray-dark),.7)}.menuItems .label[data-v-517e1e1f]{font-size:.7em;position:absolute;bottom:0;left:0;right:0;line-height:1em;text-align:center;opacity:.7}.menuItems .menuItem[data-v-517e1e1f]{position:relative;text-align:center;cursor:pointer;width:64px;height:44px;line-height:44px}.menuItems .menuItem.active .icon[data-v-517e1e1f]{color:rgb(var(--color-txt-ac))}.menuItems .menuItem .unseen[data-v-517e1e1f]{position:absolute;width:22px;height:22px;right:-10%;bottom:-10%;background:rgba(var(--color-txt-ac),.9);line-height:22px;text-align:center;font-weight:500;border-radius:50%;z-index:2;font-size:.6em;color:rgb(var(--text-on-bg-ac-color))}", ""]);
-// Exports
-module.exports = exports;
 
 
 /***/ }),
@@ -25616,6 +25792,24 @@ __webpack_require__.r(__webpack_exports__);
 /***/ "438e":
 /***/ (function(module, exports, __webpack_require__) {
 
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__("20f4");
+if(content.__esModule) content = content.default;
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add CSS to Shadow Root
+var add = __webpack_require__("35d6").default
+module.exports.__inject__ = function (shadowRoot) {
+  add("51a09af1", content, shadowRoot)
+};
+
+/***/ }),
+
+/***/ "438e7":
+/***/ (function(module, exports, __webpack_require__) {
+
 // Imports
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
 exports = ___CSS_LOADER_API_IMPORT___(false);
@@ -25623,6 +25817,18 @@ exports = ___CSS_LOADER_API_IMPORT___(false);
 exports.push([module.i, ".minimized.active .dummyline[data-v-33d22462]{height:44px;opacity:.3}.minimized.active .dummyicon[data-v-33d22462]{width:44px;height:44px;opacity:.3}.previewWrapper[data-v-33d22462]{cursor:pointer;display:flex;align-items:center;padding:10px 0}.previewWrapper .dummyline[data-v-33d22462]{margin-top:.25em;height:22px;border-radius:5px;transition:.3s}.previewWrapper .dummyicon[data-v-33d22462]{width:22px;height:22px;border-radius:50%;margin:0 auto;transition:.3s}.previewWrapper .iconWrapper[data-v-33d22462]{width:44px;display:flex;align-items:center;min-width:44px}.previewWrapper .iconWrapper .oneuser i[data-v-33d22462]{font-size:.7em}.previewWrapper .infoWrapper[data-v-33d22462]{padding-left:.5em;flex-grow:1;overflow:hidden;text-overflow:ellipsis;min-height:50px}.emptyEvent span[data-v-33d22462]{color:rgb(var(--color-good));font-size:.8em}.eventsLine[data-v-33d22462]{position:relative}.eventsLine .roomMuted[data-v-33d22462]{position:absolute;right:8px;top:0}.eventsLine .roomMuted i[data-v-33d22462]{color:rgb(var(--neutral-grad-3))}.eventsLine[data-v-33d22462] .previewMessage{max-width:90%;overflow:hidden;text-overflow:ellipsis}.eventsLine[data-v-33d22462] .deletedMessage{text-align:left;font-size:.9em}.eventsLine[data-v-33d22462] span{color:rgb(var(--neutral-grad-4));opacity:.8;font-size:.9em;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}.roomMuted[data-v-33d22462]{position:relative;top:-3px;left:6px}.roomMuted i[data-v-33d22462]{font-size:.7em}.summaryLine[data-v-33d22462]{display:flex;min-height:25px}.summaryLine .time[data-v-33d22462]{padding-top:.25em;opacity:.3;font-weight:500;text-align:right;white-space:nowrap;text-overflow:ellipsis;padding-right:.5em}.summaryLine .time[data-v-33d22462] span{font-size:.8em;display:block}.summaryLine .caption[data-v-33d22462]{flex-grow:1;display:flex;align-items:center}.summaryLine .caption[data-v-33d22462] span{font-size:1em;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font-weight:500;display:inline-block;max-width:190px}", ""]);
 // Exports
 module.exports = exports;
+
+
+/***/ }),
+
+/***/ "438f":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_f00ed472_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("8d59");
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_f00ed472_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_f00ed472_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_f00ed472_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_f00ed472_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
 
 
 /***/ }),
@@ -25761,6 +25967,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_792279b0_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("2369");
 /* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_792279b0_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_792279b0_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__);
 /* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_792279b0_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_792279b0_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+
+
+/***/ }),
+
+/***/ "467e":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_chats_vue_vue_type_style_index_0_id_1bb44da9_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("6ed4");
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_chats_vue_vue_type_style_index_0_id_1bb44da9_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_chats_vue_vue_type_style_index_0_id_1bb44da9_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_chats_vue_vue_type_style_index_0_id_1bb44da9_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_chats_vue_vue_type_style_index_0_id_1bb44da9_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
 
 
 /***/ }),
@@ -25908,6 +26126,18 @@ module.exports = {
   errorOrDestroy: errorOrDestroy
 };
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__("4362")))
+
+/***/ }),
+
+/***/ "4784":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_216856d2_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("e6d7");
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_216856d2_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_216856d2_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_216856d2_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_216856d2_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+
 
 /***/ }),
 
@@ -26206,14 +26436,14 @@ module.exports = exports;
 
 /***/ }),
 
-/***/ "4cbb":
+/***/ "4bf6":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_06594ccd_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("73c2");
-/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_06594ccd_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_06594ccd_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_06594ccd_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_06594ccd_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_1_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("3af4");
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_1_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_1_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_1_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_1_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
 
 
 /***/ }),
@@ -26301,6 +26531,18 @@ module.exports = {
   // https://tc39.es/ecma262/#sec-array.prototype.indexof
   indexOf: createMethod(false)
 };
+
+
+/***/ }),
+
+/***/ "4da8":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_069eb0aa_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("5688");
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_069eb0aa_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_069eb0aa_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_069eb0aa_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_069eb0aa_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
 
 
 /***/ }),
@@ -27539,6 +27781,464 @@ module.exports = Sha512
 
 /***/ }),
 
+/***/ "4fd2":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/chats/list/index.vue?vue&type=template&id=b5befc24&scoped=true&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"chats-list",class:{
+    bin: _vm.pocketnet,
+    bout: !_vm.pocketnet,
+    minimized: _vm.minimized,
+    fix: _vm.pocketnet,
+    active: _vm.active,
+    empty: _vm.empty,
+  }},[(!_vm.unauthorized)?_c('div',[(!_vm.minimized || _vm.active)?_c('div',{staticClass:"work searchWrapperEA"},[_c('search',{attrs:{"minimize":_vm.minimized},on:{"search":_vm.search}})],1):_vm._e(),(!_vm.searchText && this.chats.length <= 2 && _vm.chatsready == true)?_c('teamroom',{on:{"click":_vm.openTeamRoom}}):_vm._e(),(_vm.chatsready !== true)?_c('div',{staticClass:"listChatLoading"},[_c('dummypreviews')],1):_c('div',{staticClass:"Swipes"},[_c('transition',{attrs:{"name":"fade"}},[(_vm.showchatslist || _vm.mobile)?_c('div',{staticClass:"desktopList"},[(_vm.filteredchats.length || !_vm.searchText)?_c('div',{staticClass:"chatswrapper"},[_c('RecycleScroller',{staticClass:"scroller",attrs:{"page-mode":"","items":_vm.filteredchats,"item-size":_vm.pocketnet ? 60 : 70,"key-field":"roomId","buffer":_vm.pocketnet ? 400 : 700},scopedSlots:_vm._u([{key:"default",fn:function(ref){
+  var item = ref.item;
+  var active = ref.active;
+return [(item)?_c('div',{ref:"content",staticClass:"card-content",on:{"click":function (e) { return _vm.itemClick(item); }}},[(active)?_c('preview',{attrs:{"chat":item}}):_vm._e()],1):_vm._e()]}}],null,false,363748812)})],1):_c('div',{staticClass:"work"},[_c('div',{staticClass:"chatsearchingempty"},[_c('span',[_vm._v(_vm._s(_vm.$t("caption.chatsearchingempty")))])])])]):_vm._e()])],1)],1):_c('div',{staticClass:"dmdv"})])}
+var staticRenderFns = []
+
+
+// CONCATENATED MODULE: ./src/components/chats/list/index.vue?vue&type=template&id=b5befc24&scoped=true&
+
+// EXTERNAL MODULE: ./node_modules/vuex/dist/vuex.esm.js
+var vuex_esm = __webpack_require__("2f62");
+
+// EXTERNAL MODULE: ./src/components/chats/dummypreviews/index.vue + 4 modules
+var dummypreviews = __webpack_require__("a54c");
+
+// EXTERNAL MODULE: ./src/components/chats/preview/index.vue + 9 modules
+var preview = __webpack_require__("087d");
+
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/teamroom/index.vue?vue&type=template&id=9b340a7a&scoped=true&
+var teamroomvue_type_template_id_9b340a7a_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:{'bin' : _vm.pocketnet, 'bout' : !_vm.pocketnet, minimized: _vm.minimized, fix : _vm.pocketnet, active: _vm.active, mobile: _vm.mobile},attrs:{"id":"teamroom"}},[_c('div',{staticClass:"teamChatWrapper",on:{"click":_vm.click}},[_c('div',{staticClass:"iconWrapper"},[_vm._m(0),(_vm.teamNotifications > 0)?_c('div',{staticClass:"unseen"},[_vm._v(" "+_vm._s(_vm.teamNotifications))]):_vm._e()]),_c('div',{staticClass:"infoWrapper"},[_vm._m(1),_c('div',{staticClass:"previewMessage"},[(_vm.pocketteammessages && _vm.pocketteammessages.length > 0)?_c('span',[_vm._v(" "+_vm._s(_vm.pocketteammessages[_vm.pocketteammessages.length - 1].previewText)+" ")]):_vm._e()])])])])}
+var teamroomvue_type_template_id_9b340a7a_scoped_true_staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"logo"},[_c('img',{attrs:{"src":"https://pocketnet.app/img/logo20.svg"}})])},function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"infoName"},[_c('span',[_vm._v("Bastyon")])])}]
+
+
+// CONCATENATED MODULE: ./src/components/teamroom/index.vue?vue&type=template&id=9b340a7a&scoped=true&
+
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./src/components/teamroom?vue&type=script&lang=js&
+
+/* harmony default export */ var teamroom_vue_type_script_lang_js_ = ({
+  name: 'teamroom',
+  props: {},
+  data: function () {
+    return {};
+  },
+  created: () => {},
+  watch: {},
+  computed: Object(vuex_esm["c" /* mapState */])({ ...Object(vuex_esm["c" /* mapState */])(['minimized', 'active', 'pocketnet', 'pocketteammessages', 'readedteammessages']),
+    mobile: function () {
+      return this.$store.state.mobile;
+    },
+    teamNotifications: function () {
+      var self = this;
+      return _.filter(this.pocketteammessages, function (m) {
+        return !self.readedteammessages[m.id];
+      }).length;
+    }
+  }),
+  methods: {
+    click: function () {
+      this.$emit('click');
+    }
+  }
+});
+// CONCATENATED MODULE: ./src/components/teamroom?vue&type=script&lang=js&
+ /* harmony default export */ var components_teamroom_vue_type_script_lang_js_ = (teamroom_vue_type_script_lang_js_); 
+// EXTERNAL MODULE: ./node_modules/vue-loader/lib/runtime/componentNormalizer.js
+var componentNormalizer = __webpack_require__("2877");
+
+// CONCATENATED MODULE: ./src/components/teamroom/index.vue
+
+
+
+function injectStyles (context) {
+  
+  var style0 = __webpack_require__("f9d6")
+if (style0.__inject__) style0.__inject__(context)
+
+}
+
+/* normalize component */
+
+var component = Object(componentNormalizer["a" /* default */])(
+  components_teamroom_vue_type_script_lang_js_,
+  teamroomvue_type_template_id_9b340a7a_scoped_true_render,
+  teamroomvue_type_template_id_9b340a7a_scoped_true_staticRenderFns,
+  false,
+  injectStyles,
+  "9b340a7a",
+  null
+  ,true
+)
+
+/* harmony default export */ var teamroom = (component.exports);
+// EXTERNAL MODULE: ./src/application/functions.js
+var functions = __webpack_require__("3139");
+
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./src/components/chats/list?vue&type=script&lang=js&
+
+
+
+
+
+/* harmony default export */ var list_vue_type_script_lang_js_ = ({
+  name: "list",
+  data: function () {
+    return {
+      loading: false,
+      enabled: true,
+      page: 0,
+      revealed: {},
+      lastEventDescription: "",
+      blocked: false,
+      searchText: ""
+    };
+  },
+  components: {
+    preview: preview["a" /* default */],
+
+    /* SwipeOut,*
+    SwipeList,*/
+    dummypreviews: dummypreviews["a" /* default */],
+    teamroom: teamroom
+  },
+  props: {
+    user_data: {
+      type: String,
+      default: () => {}
+    }
+  },
+  created: () => {},
+  watch: {
+    topchatid: function () {
+      if (this.hmode) {
+        this.$emit("scrolltop");
+      }
+    },
+    active: function () {
+      this.searchText = "";
+    } //$route: 'getdata'
+
+  },
+
+  beforeDestroy() {
+    window.removeEventListener("keydown", this.onKeyDown);
+    window.removeEventListener("keyup", this.onKeyUp);
+  },
+
+  computed: Object(vuex_esm["c" /* mapState */])({
+    window: function () {
+      return window;
+    },
+    auth: state => state.auth,
+    teamNotifications: function () {
+      var self = this;
+      return _.filter(this.pocketteammessages, function (m) {
+        return !self.readedteammessages[m.id];
+      }).length;
+    },
+    ...Object(vuex_esm["c" /* mapState */])(["minimized", "mobile", "active", "pocketnet", "chatsready", "prechats", "chats", "unauthorized", "share", "pocketteammessages", "readedteammessages", "deletedrooms", "hideOptimization", "wasunhidden"]),
+    rooms: function () {
+      return this.core.mtrx.client.getRooms();
+    },
+    empty: function () {
+      return this.core.mtrx.ready && this.chats.length === 0;
+    },
+    showchatslist: function () {
+      return !this.hideOptimization; // || this.wasunhidden
+    },
+    topchatid: function () {
+      if (this.chats && this.chats.length) {
+        return this.chats[this.chats.length - 1].roomId;
+      }
+    },
+    chats: function (state) {
+      var self = this;
+      var chats = [];
+
+      _.each(state.chats, chat => {
+        if (this.deletedrooms[chat.roomId]) return;
+        this.core.mtrx.kit.tetatetchat(this.m_chat);
+        var users = this.core.mtrx.chatUsersInfo(chat.roomId, "anotherChatUsers");
+
+        if (users.length === 1 && users[0] && self.core.mtrx.client.isUserIgnored(functions["a" /* default */].getMatrixIdFull(users[0].id, self.core.domain))) {
+          return;
+        } else {
+          chats.push(chat);
+        }
+      });
+
+      return _.sortBy(chats, function (o) {
+        return o.lastModified;
+      }).reverse();
+    },
+    filteredchats: function () {
+      var chats = this.chats;
+
+      if (this.searchText) {
+        var mc = _.filter(_.map(chats, c => {
+          var users = this.core.mtrx.chatUsersInfo(c.roomId, "anotherChatUsers");
+          var m_chat = this.core.mtrx.client.getRoom(c.roomId);
+
+          var usersnamestring = _.reduce(users, function (m, u) {
+            return m + u.name.toLowerCase();
+          }, "");
+
+          var chatname = "";
+
+          if (m_chat && m_chat.getJoinRule() === "public" && m_chat.currentState.getStateEvents("m.room.name").length > 0) {
+            chatname = m_chat.currentState.getStateEvents("m.room.name")[0].getContent().name;
+          }
+
+          if (!chatname) {
+            chatname = m_chat.name;
+            if (chatname[0] == "#") chatname = "";
+          }
+
+          var sstring = (chatname + usersnamestring).toLowerCase();
+          var point = 0;
+
+          if (sstring.indexOf(this.searchText) > -1) {
+            point = this.searchText.length / sstring.length;
+          }
+
+          return {
+            chat: m_chat.summary,
+            point
+          };
+        }), function (cc) {
+          return cc.point;
+        });
+
+        mc = _.sortBy(mc, function (cc) {
+          return cc.point;
+        }).reverse();
+        chats = _.map(mc, c => {
+          return c.chat;
+        });
+      }
+
+      return chats;
+    },
+    withoutBlockedChats: function () {
+      var self = this;
+
+      if (this.share) {
+        _.map(self.chats, function (chat) {});
+      }
+    },
+    activeuser: function () {
+      return this.core.user.userinfo;
+    },
+
+    hmode() {
+      return this.pocketnet && this.minimized && !this.active;
+    }
+
+  }),
+  methods: {
+    search(text) {
+      this.searchText = text.toLowerCase();
+    },
+
+    invitepnt() {
+      this.core.invitepnt();
+    },
+
+    generatekeys: function () {},
+
+    moment() {
+      return moment();
+    },
+
+    dd(v) {},
+
+    revealFirstRight() {
+      this.$refs.list.revealRight(0);
+    },
+
+    revealFirstLeft() {
+      this.$refs.list.revealLeft(0);
+    },
+
+    remove(item) {
+      this.$set(this.mockSwipeList, this.page, this.mockSwipeList[this.page].filter(i => i !== item));
+    },
+
+    setLastEvent(name, _ref) {
+      let {
+        item,
+        index
+      } = _ref;
+      this.lastEventDescription = {
+        name,
+        index,
+        id: item.id
+      };
+    },
+
+    itemClick(chat) {
+      if (this.hmode) {
+        this.$store.commit("active", true);
+        this.$store.commit("blockactive", {
+          value: true,
+          item: "main"
+        });
+        this.$store.commit("setiteraction", true);
+        /*if (
+        !this.share &&
+        this.$store.state.lastroom &&
+        this.$store.state.lastroom.id == chat.roomId) {
+        this.$router.push('chat?id=' + this.$store.state.lastroom.id)
+        }*/
+      } else {
+        if (this.share) {
+          var _share = this.share;
+          this.$store.commit('SHARE', null);
+          this.$store.commit('icon', {
+            icon: 'loading',
+            message: "",
+            manual: true
+          });
+          this.core.mtrx.shareInChat(chat.roomId, _share).then(r => {
+            this.$store.commit('icon', {
+              icon: 'success',
+              message: ""
+            });
+            this.$router.push({
+              path: 'chat',
+              query: { ...this.$route.query,
+                id: chat.roomId
+              }
+            });
+          }).catch(e => {
+            console.error(e);
+            this.$store.commit('icon', {
+              icon: 'error',
+              message: ""
+            });
+
+            if (_share.route) {
+              this.$router.push({
+                path: 'chat',
+                query: { ...this.$route.query,
+                  id: chat.roomId
+                }
+              });
+            }
+          });
+        } else {
+          this.$router.push('chat?id=' + chat.roomId).catch(e => {});
+        }
+      }
+    },
+
+    fbClick(e) {},
+
+    sbClick(e) {},
+
+    openTeamRoom: function () {
+      if (this.hmode) {
+        this.$store.commit('active', true);
+        this.$store.commit('blockactive', {
+          value: true,
+          item: 'main'
+        });
+        this.$store.commit('setiteraction', true);
+      } else {
+        setTimeout(() => {
+          this.$store.commit('SET_READEDTEAMMESSAGES', this.pocketteammessages);
+          this.$store.commit('ALL_NOTIFICATIONS_COUNT', this.core.mtrx.client.getRooms());
+        }, 500);
+        this.$router.push('/teamroom').catch(e => {});
+      }
+    },
+
+    // keyboard
+    onKeyDown(e) {
+      if (e.keyCode !== 16) return;
+      this.enabled = false;
+    },
+
+    onKeyUp(e) {
+      if (e.keyCode !== 16) return;
+      this.enabled = true;
+    },
+
+    removeRoom(room) {
+      this.$dialog.confirm('Do you really want to leave room?', {
+        okText: this.$i18n.t("yes"),
+        cancelText: this.$i18n.t("cancel")
+      }).then(dialog => {
+        this.core.mtrx.client.leave(room).then(r => {
+          this.core.mtrx.client.forget(room, true).then(r => {
+            return r;
+          }).then(r => {
+            this.$store.commit('DELETE_ROOM', room);
+            this.$router.push({
+              path: '/chats'
+            }).catch(e => {});
+          });
+        });
+      });
+    },
+
+    tetatetchat(room) {
+      if (!room) return true;
+      var m_ch = this.core.mtrx.client.getRoom(room.roomId);
+      if (!m_ch) return true;
+      return this.core.mtrx.kit.tetatetchat(this.core.mtrx.client.getRoom(room.roomId));
+    }
+
+  },
+
+  mounted() {
+    // ideally should be in some global handler/store
+    window.addEventListener('keydown', this.onKeyDown);
+    window.addEventListener('keyup', this.onKeyUp);
+
+    if (!this.hmode) {
+      this.$store.commit('SET_LAST_ROOM', null);
+    } else {}
+  }
+
+});
+// CONCATENATED MODULE: ./src/components/chats/list?vue&type=script&lang=js&
+ /* harmony default export */ var chats_list_vue_type_script_lang_js_ = (list_vue_type_script_lang_js_); 
+// CONCATENATED MODULE: ./src/components/chats/list/index.vue
+
+
+
+function list_injectStyles (context) {
+  
+  var style0 = __webpack_require__("2cdf")
+if (style0.__inject__) style0.__inject__(context)
+var style1 = __webpack_require__("b551")
+if (style1.__inject__) style1.__inject__(context)
+
+}
+
+/* normalize component */
+
+var list_component = Object(componentNormalizer["a" /* default */])(
+  chats_list_vue_type_script_lang_js_,
+  render,
+  staticRenderFns,
+  false,
+  list_injectStyles,
+  "b5befc24",
+  null
+  ,true
+)
+
+/* harmony default export */ var list = __webpack_exports__["a"] = (list_component.exports);
+
+/***/ }),
+
 /***/ 5:
 /***/ (function(module, exports) {
 
@@ -27989,18 +28689,6 @@ module.exports = function dispatchRequest(config) {
 
 /***/ }),
 
-/***/ "52ce":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_a8a70f9c_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("8157");
-/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_a8a70f9c_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_a8a70f9c_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_a8a70f9c_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_a8a70f9c_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-
-
-/***/ }),
-
 /***/ "52ef":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -28200,6 +28888,38 @@ module.exports = exports;
 
 /***/ }),
 
+/***/ "562d":
+/***/ (function(module, exports, __webpack_require__) {
+
+// Imports
+var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
+exports = ___CSS_LOADER_API_IMPORT___(false);
+// Module
+exports.push([module.i, "#topheader[data-v-4b228a6e]{background:rgb(var(--background-total-theme));top:0;padding-top:var(--app-margin-top);left:0;right:0;position:absolute;z-index:4;color:rgb(var(--text-color));border-bottom:1px solid rgb(var(--neutral-grad-0))}#topheader .iconbutton[data-v-4b228a6e]{cursor:pointer}#topheader .headerLine[data-v-4b228a6e]{display:flex;align-items:center;padding:0;height:64px}#topheader .headerLine>div[data-v-4b228a6e]{text-align:center}#topheader .headerLine .iconsmall[data-v-4b228a6e]{width:22px;min-width:22px}#topheader .headerLine .icon[data-v-4b228a6e]{color:rgb(var(--color-txt-ac));width:44px;min-width:44px}#topheader .headerLine .rightaddIcons[data-v-4b228a6e]{margin-right:11px}#topheader .headerLine .leftaddIcon[data-v-4b228a6e]{margin-left:11px}#topheader .headerLine .infoPart[data-v-4b228a6e]{flex-grow:1;padding:0 1em;overflow:hidden}#topheader .headerLine .infoPart[data-v-4b228a6e] span,#topheader .headerLine .infoPart span[data-v-4b228a6e]{font-size:.9em;font-weight:500}#topheader .rightaddIcons[data-v-4b228a6e],#topheader .rightIcons[data-v-4b228a6e]{justify-content:space-between}#topheader.bin[data-v-4b228a6e]{position:relative}#topheader.minimized[data-v-4b228a6e]{right:auto;transition:.3s}#topheader.minimized .headerLine[data-v-4b228a6e]{height:54px}#topheader.minimized.fix[data-v-4b228a6e]{width:344px;position:absolute;background:transparent;overflow:hidden;will-change:transform;right:0}#topheader.minimized.fix .headerLine[data-v-4b228a6e]{padding:0}#topheader.minimized.fix .icon[data-v-4b228a6e]{width:44px;height:44px;line-height:44px;transition:transform .3s}#topheader.minimized.fix .icon .iconbutton[data-v-4b228a6e]{border-radius:50%;background:rgba(var(--neutral-grad-4),.1);color:rgb(var(--color-txt-ac));cursor:pointer}@media (pointer:fine){#topheader.minimized.fix .icon .iconbutton[data-v-4b228a6e]:hover{background:rgba(var(--neutral-grad-4),.05)}}#topheader.minimized.fix .infoPart[data-v-4b228a6e],#topheader.minimized.fix .leftIcon[data-v-4b228a6e]{display:none}#topheader.minimized.fix.active[data-v-4b228a6e]{transform:translate3d(-300px,-56px,0);border-radius:8px;border-bottom-left-radius:0;border-bottom-right-radius:0;background:rgb(var(--background-total-theme));border:1px solid rgba(var(--neutral-grad-4),.2);box-shadow:0 5px 7px -5px rgba(var(--color-shadow-base),.7)}#topheader.minimized.fix.active .infoPart[data-v-4b228a6e],#topheader.minimized.fix.active .leftIcon[data-v-4b228a6e]{display:block}#topheader.minimized.fix[data-v-4b228a6e]:not(.active){border-bottom:0!important}", ""]);
+// Exports
+module.exports = exports;
+
+
+/***/ }),
+
+/***/ "5688":
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__("79c1");
+if(content.__esModule) content = content.default;
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add CSS to Shadow Root
+var add = __webpack_require__("35d6").default
+module.exports.__inject__ = function (shadowRoot) {
+  add("90e99cf6", content, shadowRoot)
+};
+
+/***/ }),
+
 /***/ "5692":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -28390,21 +29110,17 @@ module.exports = function (argument) {
 
 /***/ }),
 
-/***/ "5a2d":
+/***/ "59f8":
 /***/ (function(module, exports, __webpack_require__) {
 
-// style-loader: Adds some css to the DOM by adding a <style> tag
+// Imports
+var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
+exports = ___CSS_LOADER_API_IMPORT___(false);
+// Module
+exports.push([module.i, ".infoPart .table>div[data-v-216856d2]{vertical-align:middle}.infoPart .table .iconCell[data-v-216856d2]{width:44px}.infoPart .table .labelCell[data-v-216856d2]{color:rgb(var(--neutral-grad-3));padding-left:1em}.inputWrapper[data-v-216856d2]{padding:.5em 1em;display:flex}.inputWrapper .label[data-v-216856d2]{padding:0 .5em;color:rgb(var(--neutral-grad-3))}.inputWrapper .label label[data-v-216856d2]{display:inline-block;font-size:.8em;font-weight:700;width:100%}.forInput.work[data-v-216856d2]{padding:0 2em}#settings[data-v-216856d2]{padding-top:1em}#settings.mobile .inputWrapper.pin[data-v-216856d2]{display:none}", ""]);
+// Exports
+module.exports = exports;
 
-// load the styles
-var content = __webpack_require__("3dc4");
-if(content.__esModule) content = content.default;
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add CSS to Shadow Root
-var add = __webpack_require__("35d6").default
-module.exports.__inject__ = function (shadowRoot) {
-  add("37939c28", content, shadowRoot)
-};
 
 /***/ }),
 
@@ -28420,7 +29136,7 @@ __webpack_require__.r(__webpack_exports__);
 
 if (typeof window !== 'undefined') {
   var currentScript = window.document.currentScript
-  if (Object({"NODE_ENV":"production","BASE_URL":"/"}).NEED_CURRENTSCRIPT_POLYFILL) {
+  if (Object({"NODE_ENV":"production","BASE_URL":""}).NEED_CURRENTSCRIPT_POLYFILL) {
     var getCurrentScript = __webpack_require__("8875")
     currentScript = getCurrentScript()
 
@@ -28720,26 +29436,41 @@ var addStylesShadow = __webpack_require__("35d6");
 // EXTERNAL MODULE: ./node_modules/vue-loader/lib/runtime/componentNormalizer.js
 var componentNormalizer = __webpack_require__("2877");
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App.vue?vue&type=template&id=01d24e5e&shadow
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"app",attrs:{"id":"matrix-root","theme":_vm.theme}},[_c('div',{staticClass:"rootcontent",class:{pip: _vm.pip, 'bin' : _vm.pocketnet, 'fix' : _vm.pocketnet, 'bout' : !_vm.pocketnet, minimized: _vm.minimized, active: _vm.active, mobile: _vm.mobile, unselect: _vm.unselect}},[_c('div',{staticClass:"chatwrapper",on:{"click":_vm.iteraction}},[_c('div',[(_vm.closebybg)?_c('div',{staticClass:"backface",on:{"click":_vm.hide}}):_vm._e(),_c('MainWrapper'),(_vm.globalpreloader)?_c('preloader'):_vm._e(),_c('transition',{attrs:{"name":"fade"}},[(_vm.unauthorized)?_c('div',{staticClass:"fixedallwrapper likeoffline"},[_c('userUnauthorized')],1):_vm._e()])],1)])]),_c('div',{attrs:{"hidden":"","id":"sprite-plyr"}},[_c('svg',{attrs:{"xmlns":"http://www.w3.org/2000/svg","xmlns:xlink":"http://www.w3.org/1999/xlink"}},[_c('symbol',{attrs:{"id":"plyr-airplay"}},[_c('path',{attrs:{"d":"M16 1H2a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3v-2H3V3h12v8h-2v2h3a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1z"}}),_c('path',{attrs:{"d":"M4 17h10l-5-6z"}})]),_c('symbol',{attrs:{"id":"plyr-captions-off"}},[_c('path',{attrs:{"d":"M1 1c-.6 0-1 .4-1 1v11c0 .6.4 1 1 1h4.6l2.7 2.7c.2.2.4.3.7.3.3 0 .5-.1.7-.3l2.7-2.7H17c.6 0 1-.4 1-1V2c0-.6-.4-1-1-1H1zm4.52 10.15c1.99 0 3.01-1.32 3.28-2.41l-1.29-.39c-.19.66-.78 1.45-1.99 1.45-1.14 0-2.2-.83-2.2-2.34 0-1.61 1.12-2.37 2.18-2.37 1.23 0 1.78.75 1.95 1.43l1.3-.41C8.47 4.96 7.46 3.76 5.5 3.76c-1.9 0-3.61 1.44-3.61 3.7 0 2.26 1.65 3.69 3.63 3.69zm7.57 0c1.99 0 3.01-1.32 3.28-2.41l-1.29-.39c-.19.66-.78 1.45-1.99 1.45-1.14 0-2.2-.83-2.2-2.34 0-1.61 1.12-2.37 2.18-2.37 1.23 0 1.78.75 1.95 1.43l1.3-.41c-.28-1.15-1.29-2.35-3.25-2.35-1.9 0-3.61 1.44-3.61 3.7 0 2.26 1.65 3.69 3.63 3.69z","fill-rule":"evenodd","fill-opacity":".5"}})]),_c('symbol',{attrs:{"id":"plyr-captions-on"}},[_c('path',{attrs:{"d":"M1 1c-.6 0-1 .4-1 1v11c0 .6.4 1 1 1h4.6l2.7 2.7c.2.2.4.3.7.3.3 0 .5-.1.7-.3l2.7-2.7H17c.6 0 1-.4 1-1V2c0-.6-.4-1-1-1H1zm4.52 10.15c1.99 0 3.01-1.32 3.28-2.41l-1.29-.39c-.19.66-.78 1.45-1.99 1.45-1.14 0-2.2-.83-2.2-2.34 0-1.61 1.12-2.37 2.18-2.37 1.23 0 1.78.75 1.95 1.43l1.3-.41C8.47 4.96 7.46 3.76 5.5 3.76c-1.9 0-3.61 1.44-3.61 3.7 0 2.26 1.65 3.69 3.63 3.69zm7.57 0c1.99 0 3.01-1.32 3.28-2.41l-1.29-.39c-.19.66-.78 1.45-1.99 1.45-1.14 0-2.2-.83-2.2-2.34 0-1.61 1.12-2.37 2.18-2.37 1.23 0 1.78.75 1.95 1.43l1.3-.41c-.28-1.15-1.29-2.35-3.25-2.35-1.9 0-3.61 1.44-3.61 3.7 0 2.26 1.65 3.69 3.63 3.69z","fill-rule":"evenodd"}})]),_c('symbol',{attrs:{"id":"plyr-download"}},[_c('path',{attrs:{"d":"M9 13c.3 0 .5-.1.7-.3L15.4 7 14 5.6l-4 4V1H8v8.6l-4-4L2.6 7l5.7 5.7c.2.2.4.3.7.3zm-7 2h14v2H2z"}})]),_c('symbol',{attrs:{"id":"plyr-enter-fullscreen"}},[_c('path',{attrs:{"d":"M10 3h3.6l-4 4L11 8.4l4-4V8h2V1h-7zM7 9.6l-4 4V10H1v7h7v-2H4.4l4-4z"}})]),_c('symbol',{attrs:{"id":"plyr-exit-fullscreen"}},[_c('path',{attrs:{"d":"M1 12h3.6l-4 4L2 17.4l4-4V17h2v-7H1zM16 .6l-4 4V1h-2v7h7V6h-3.6l4-4z"}})]),_c('symbol',{attrs:{"id":"plyr-fast-forward"}},[_c('path',{attrs:{"d":"M7.875 7.171L0 1v16l7.875-6.171V17L18 9 7.875 1z"}})]),_c('symbol',{attrs:{"id":"plyr-logo-vimeo"}},[_c('path',{attrs:{"d":"M17 5.3c-.1 1.6-1.2 3.7-3.3 6.4-2.2 2.8-4 4.2-5.5 4.2-.9 0-1.7-.9-2.4-2.6C5 10.9 4.4 6 3 6c-.1 0-.5.3-1.2.8l-.8-1c.8-.7 3.5-3.4 4.7-3.5 1.2-.1 2 .7 2.3 2.5.3 2 .8 6.1 1.8 6.1.9 0 2.5-3.4 2.6-4 .1-.9-.3-1.9-2.3-1.1.8-2.6 2.3-3.8 4.5-3.8 1.7.1 2.5 1.2 2.4 3.3z"}})]),_c('symbol',{attrs:{"id":"plyr-logo-youtube"}},[_c('path',{attrs:{"d":"M16.8 5.8c-.2-1.3-.8-2.2-2.2-2.4C12.4 3 9 3 9 3s-3.4 0-5.6.4C2 3.6 1.3 4.5 1.2 5.8 1 7.1 1 9 1 9s0 1.9.2 3.2c.2 1.3.8 2.2 2.2 2.4C5.6 15 9 15 9 15s3.4 0 5.6-.4c1.4-.3 2-1.1 2.2-2.4.2-1.3.2-3.2.2-3.2s0-1.9-.2-3.2zM7 12V6l5 3-5 3z"}})]),_c('symbol',{attrs:{"id":"plyr-muted"}},[_c('path',{attrs:{"d":"M12.4 12.5l2.1-2.1 2.1 2.1 1.4-1.4L15.9 9 18 6.9l-1.4-1.4-2.1 2.1-2.1-2.1L11 6.9 13.1 9 11 11.1zM3.786 6.008H.714C.286 6.008 0 6.31 0 6.76v4.512c0 .452.286.752.714.752h3.072l4.071 3.858c.5.3 1.143 0 1.143-.602V2.752c0-.601-.643-.977-1.143-.601L3.786 6.008z"}})]),_c('symbol',{attrs:{"id":"plyr-pause"}},[_c('path',{attrs:{"d":"M6 1H3c-.6 0-1 .4-1 1v14c0 .6.4 1 1 1h3c.6 0 1-.4 1-1V2c0-.6-.4-1-1-1zm6 0c-.6 0-1 .4-1 1v14c0 .6.4 1 1 1h3c.6 0 1-.4 1-1V2c0-.6-.4-1-1-1h-3z"}})]),_c('symbol',{attrs:{"id":"plyr-pip"}},[_c('path',{attrs:{"d":"M13.293 3.293L7.022 9.564l1.414 1.414 6.271-6.271L17 7V1h-6z"}}),_c('path',{attrs:{"d":"M13 15H3V5h5V3H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-6h-2v5z"}})]),_c('symbol',{attrs:{"id":"plyr-play"}},[_c('path',{attrs:{"d":"M15.562 8.1L3.87.225c-.818-.562-1.87 0-1.87.9v15.75c0 .9 1.052 1.462 1.87.9L15.563 9.9c.584-.45.584-1.35 0-1.8z"}})]),_c('symbol',{attrs:{"id":"plyr-restart"}},[_c('path',{attrs:{"d":"M9.7 1.2l.7 6.4 2.1-2.1c1.9 1.9 1.9 5.1 0 7-.9 1-2.2 1.5-3.5 1.5-1.3 0-2.6-.5-3.5-1.5-1.9-1.9-1.9-5.1 0-7 .6-.6 1.4-1.1 2.3-1.3l-.6-1.9C6 2.6 4.9 3.2 4 4.1 1.3 6.8 1.3 11.2 4 14c1.3 1.3 3.1 2 4.9 2 1.9 0 3.6-.7 4.9-2 2.7-2.7 2.7-7.1 0-9.9L16 1.9l-6.3-.7z"}})]),_c('symbol',{attrs:{"id":"plyr-rewind"}},[_c('path',{attrs:{"d":"M10.125 1L0 9l10.125 8v-6.171L18 17V1l-7.875 6.171z"}})]),_c('symbol',{attrs:{"id":"plyr-settings"}},[_c('path',{attrs:{"d":"M16.135 7.784a2 2 0 0 1-1.23-2.969c.322-.536.225-.998-.094-1.316l-.31-.31c-.318-.318-.78-.415-1.316-.094a2 2 0 0 1-2.969-1.23C10.065 1.258 9.669 1 9.219 1h-.438c-.45 0-.845.258-.997.865a2 2 0 0 1-2.969 1.23c-.536-.322-.999-.225-1.317.093l-.31.31c-.318.318-.415.781-.093 1.317a2 2 0 0 1-1.23 2.969C1.26 7.935 1 8.33 1 8.781v.438c0 .45.258.845.865.997a2 2 0 0 1 1.23 2.969c-.322.536-.225.998.094 1.316l.31.31c.319.319.782.415 1.316.094a2 2 0 0 1 2.969 1.23c.151.607.547.865.997.865h.438c.45 0 .845-.258.997-.865a2 2 0 0 1 2.969-1.23c.535.321.997.225 1.316-.094l.31-.31c.318-.318.415-.781.094-1.316a2 2 0 0 1 1.23-2.969c.607-.151.865-.547.865-.997v-.438c0-.451-.26-.846-.865-.997zM9 12a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"}})]),_c('symbol',{attrs:{"id":"plyr-volume"}},[_c('path',{attrs:{"d":"M15.6 3.3c-.4-.4-1-.4-1.4 0-.4.4-.4 1 0 1.4C15.4 5.9 16 7.4 16 9c0 1.6-.6 3.1-1.8 4.3-.4.4-.4 1 0 1.4.2.2.5.3.7.3.3 0 .5-.1.7-.3C17.1 13.2 18 11.2 18 9s-.9-4.2-2.4-5.7z"}}),_c('path',{attrs:{"d":"M11.282 5.282a.909.909 0 0 0 0 1.316c.735.735.995 1.458.995 2.402 0 .936-.425 1.917-.995 2.487a.909.909 0 0 0 0 1.316c.145.145.636.262 1.018.156a.725.725 0 0 0 .298-.156C13.773 11.733 14.13 10.16 14.13 9c0-.17-.002-.34-.011-.51-.053-.992-.319-2.005-1.522-3.208a.909.909 0 0 0-1.316 0zm-7.496.726H.714C.286 6.008 0 6.31 0 6.76v4.512c0 .452.286.752.714.752h3.072l4.071 3.858c.5.3 1.143 0 1.143-.602V2.752c0-.601-.643-.977-1.143-.601L3.786 6.008z"}})])])])])}
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App.vue?vue&type=template&id=91b695c4&shadow
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"app",attrs:{"id":"matrix-root","theme":_vm.theme}},[_c('div',{staticClass:"rootcontent",class:{
+      pip: _vm.pip,
+      bin: _vm.pocketnet,
+      fix: _vm.pocketnet,
+      bout: !_vm.pocketnet,
+      minimized: _vm.minimized ,
+      active: _vm.active,
+      mobile: _vm.mobile,
+      unselect: _vm.unselect
+    }},[_c('div',{staticClass:"chatwrapper",on:{"click":_vm.iteraction}},[_c('div',[(_vm.closebybg)?_c('div',{staticClass:"backface",on:{"click":_vm.hide}}):_vm._e(),_c('MainWrapper'),(_vm.globalpreloader)?_c('preloader'):_vm._e(),_c('transition',{attrs:{"name":"fade"}},[(_vm.unauthorized)?_c('div',{staticClass:"fixedallwrapper likeoffline"},[_c('userUnauthorized')],1):_vm._e()])],1)])]),_c('div',{attrs:{"hidden":"","id":"sprite-plyr"}},[_c('svg',{attrs:{"xmlns":"http://www.w3.org/2000/svg","xmlns:xlink":"http://www.w3.org/1999/xlink"}},[_c('symbol',{attrs:{"id":"plyr-airplay"}},[_c('path',{attrs:{"d":"M16 1H2a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3v-2H3V3h12v8h-2v2h3a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1z"}}),_c('path',{attrs:{"d":"M4 17h10l-5-6z"}})]),_c('symbol',{attrs:{"id":"plyr-captions-off"}},[_c('path',{attrs:{"d":"M1 1c-.6 0-1 .4-1 1v11c0 .6.4 1 1 1h4.6l2.7 2.7c.2.2.4.3.7.3.3 0 .5-.1.7-.3l2.7-2.7H17c.6 0 1-.4 1-1V2c0-.6-.4-1-1-1H1zm4.52 10.15c1.99 0 3.01-1.32 3.28-2.41l-1.29-.39c-.19.66-.78 1.45-1.99 1.45-1.14 0-2.2-.83-2.2-2.34 0-1.61 1.12-2.37 2.18-2.37 1.23 0 1.78.75 1.95 1.43l1.3-.41C8.47 4.96 7.46 3.76 5.5 3.76c-1.9 0-3.61 1.44-3.61 3.7 0 2.26 1.65 3.69 3.63 3.69zm7.57 0c1.99 0 3.01-1.32 3.28-2.41l-1.29-.39c-.19.66-.78 1.45-1.99 1.45-1.14 0-2.2-.83-2.2-2.34 0-1.61 1.12-2.37 2.18-2.37 1.23 0 1.78.75 1.95 1.43l1.3-.41c-.28-1.15-1.29-2.35-3.25-2.35-1.9 0-3.61 1.44-3.61 3.7 0 2.26 1.65 3.69 3.63 3.69z","fill-rule":"evenodd","fill-opacity":".5"}})]),_c('symbol',{attrs:{"id":"plyr-captions-on"}},[_c('path',{attrs:{"d":"M1 1c-.6 0-1 .4-1 1v11c0 .6.4 1 1 1h4.6l2.7 2.7c.2.2.4.3.7.3.3 0 .5-.1.7-.3l2.7-2.7H17c.6 0 1-.4 1-1V2c0-.6-.4-1-1-1H1zm4.52 10.15c1.99 0 3.01-1.32 3.28-2.41l-1.29-.39c-.19.66-.78 1.45-1.99 1.45-1.14 0-2.2-.83-2.2-2.34 0-1.61 1.12-2.37 2.18-2.37 1.23 0 1.78.75 1.95 1.43l1.3-.41C8.47 4.96 7.46 3.76 5.5 3.76c-1.9 0-3.61 1.44-3.61 3.7 0 2.26 1.65 3.69 3.63 3.69zm7.57 0c1.99 0 3.01-1.32 3.28-2.41l-1.29-.39c-.19.66-.78 1.45-1.99 1.45-1.14 0-2.2-.83-2.2-2.34 0-1.61 1.12-2.37 2.18-2.37 1.23 0 1.78.75 1.95 1.43l1.3-.41c-.28-1.15-1.29-2.35-3.25-2.35-1.9 0-3.61 1.44-3.61 3.7 0 2.26 1.65 3.69 3.63 3.69z","fill-rule":"evenodd"}})]),_c('symbol',{attrs:{"id":"plyr-download"}},[_c('path',{attrs:{"d":"M9 13c.3 0 .5-.1.7-.3L15.4 7 14 5.6l-4 4V1H8v8.6l-4-4L2.6 7l5.7 5.7c.2.2.4.3.7.3zm-7 2h14v2H2z"}})]),_c('symbol',{attrs:{"id":"plyr-enter-fullscreen"}},[_c('path',{attrs:{"d":"M10 3h3.6l-4 4L11 8.4l4-4V8h2V1h-7zM7 9.6l-4 4V10H1v7h7v-2H4.4l4-4z"}})]),_c('symbol',{attrs:{"id":"plyr-exit-fullscreen"}},[_c('path',{attrs:{"d":"M1 12h3.6l-4 4L2 17.4l4-4V17h2v-7H1zM16 .6l-4 4V1h-2v7h7V6h-3.6l4-4z"}})]),_c('symbol',{attrs:{"id":"plyr-fast-forward"}},[_c('path',{attrs:{"d":"M7.875 7.171L0 1v16l7.875-6.171V17L18 9 7.875 1z"}})]),_c('symbol',{attrs:{"id":"plyr-logo-vimeo"}},[_c('path',{attrs:{"d":"M17 5.3c-.1 1.6-1.2 3.7-3.3 6.4-2.2 2.8-4 4.2-5.5 4.2-.9 0-1.7-.9-2.4-2.6C5 10.9 4.4 6 3 6c-.1 0-.5.3-1.2.8l-.8-1c.8-.7 3.5-3.4 4.7-3.5 1.2-.1 2 .7 2.3 2.5.3 2 .8 6.1 1.8 6.1.9 0 2.5-3.4 2.6-4 .1-.9-.3-1.9-2.3-1.1.8-2.6 2.3-3.8 4.5-3.8 1.7.1 2.5 1.2 2.4 3.3z"}})]),_c('symbol',{attrs:{"id":"plyr-logo-youtube"}},[_c('path',{attrs:{"d":"M16.8 5.8c-.2-1.3-.8-2.2-2.2-2.4C12.4 3 9 3 9 3s-3.4 0-5.6.4C2 3.6 1.3 4.5 1.2 5.8 1 7.1 1 9 1 9s0 1.9.2 3.2c.2 1.3.8 2.2 2.2 2.4C5.6 15 9 15 9 15s3.4 0 5.6-.4c1.4-.3 2-1.1 2.2-2.4.2-1.3.2-3.2.2-3.2s0-1.9-.2-3.2zM7 12V6l5 3-5 3z"}})]),_c('symbol',{attrs:{"id":"plyr-muted"}},[_c('path',{attrs:{"d":"M12.4 12.5l2.1-2.1 2.1 2.1 1.4-1.4L15.9 9 18 6.9l-1.4-1.4-2.1 2.1-2.1-2.1L11 6.9 13.1 9 11 11.1zM3.786 6.008H.714C.286 6.008 0 6.31 0 6.76v4.512c0 .452.286.752.714.752h3.072l4.071 3.858c.5.3 1.143 0 1.143-.602V2.752c0-.601-.643-.977-1.143-.601L3.786 6.008z"}})]),_c('symbol',{attrs:{"id":"plyr-pause"}},[_c('path',{attrs:{"d":"M6 1H3c-.6 0-1 .4-1 1v14c0 .6.4 1 1 1h3c.6 0 1-.4 1-1V2c0-.6-.4-1-1-1zm6 0c-.6 0-1 .4-1 1v14c0 .6.4 1 1 1h3c.6 0 1-.4 1-1V2c0-.6-.4-1-1-1h-3z"}})]),_c('symbol',{attrs:{"id":"plyr-pip"}},[_c('path',{attrs:{"d":"M13.293 3.293L7.022 9.564l1.414 1.414 6.271-6.271L17 7V1h-6z"}}),_c('path',{attrs:{"d":"M13 15H3V5h5V3H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-6h-2v5z"}})]),_c('symbol',{attrs:{"id":"plyr-play"}},[_c('path',{attrs:{"d":"M15.562 8.1L3.87.225c-.818-.562-1.87 0-1.87.9v15.75c0 .9 1.052 1.462 1.87.9L15.563 9.9c.584-.45.584-1.35 0-1.8z"}})]),_c('symbol',{attrs:{"id":"plyr-restart"}},[_c('path',{attrs:{"d":"M9.7 1.2l.7 6.4 2.1-2.1c1.9 1.9 1.9 5.1 0 7-.9 1-2.2 1.5-3.5 1.5-1.3 0-2.6-.5-3.5-1.5-1.9-1.9-1.9-5.1 0-7 .6-.6 1.4-1.1 2.3-1.3l-.6-1.9C6 2.6 4.9 3.2 4 4.1 1.3 6.8 1.3 11.2 4 14c1.3 1.3 3.1 2 4.9 2 1.9 0 3.6-.7 4.9-2 2.7-2.7 2.7-7.1 0-9.9L16 1.9l-6.3-.7z"}})]),_c('symbol',{attrs:{"id":"plyr-rewind"}},[_c('path',{attrs:{"d":"M10.125 1L0 9l10.125 8v-6.171L18 17V1l-7.875 6.171z"}})]),_c('symbol',{attrs:{"id":"plyr-settings"}},[_c('path',{attrs:{"d":"M16.135 7.784a2 2 0 0 1-1.23-2.969c.322-.536.225-.998-.094-1.316l-.31-.31c-.318-.318-.78-.415-1.316-.094a2 2 0 0 1-2.969-1.23C10.065 1.258 9.669 1 9.219 1h-.438c-.45 0-.845.258-.997.865a2 2 0 0 1-2.969 1.23c-.536-.322-.999-.225-1.317.093l-.31.31c-.318.318-.415.781-.093 1.317a2 2 0 0 1-1.23 2.969C1.26 7.935 1 8.33 1 8.781v.438c0 .45.258.845.865.997a2 2 0 0 1 1.23 2.969c-.322.536-.225.998.094 1.316l.31.31c.319.319.782.415 1.316.094a2 2 0 0 1 2.969 1.23c.151.607.547.865.997.865h.438c.45 0 .845-.258.997-.865a2 2 0 0 1 2.969-1.23c.535.321.997.225 1.316-.094l.31-.31c.318-.318.415-.781.094-1.316a2 2 0 0 1 1.23-2.969c.607-.151.865-.547.865-.997v-.438c0-.451-.26-.846-.865-.997zM9 12a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"}})]),_c('symbol',{attrs:{"id":"plyr-volume"}},[_c('path',{attrs:{"d":"M15.6 3.3c-.4-.4-1-.4-1.4 0-.4.4-.4 1 0 1.4C15.4 5.9 16 7.4 16 9c0 1.6-.6 3.1-1.8 4.3-.4.4-.4 1 0 1.4.2.2.5.3.7.3.3 0 .5-.1.7-.3C17.1 13.2 18 11.2 18 9s-.9-4.2-2.4-5.7z"}}),_c('path',{attrs:{"d":"M11.282 5.282a.909.909 0 0 0 0 1.316c.735.735.995 1.458.995 2.402 0 .936-.425 1.917-.995 2.487a.909.909 0 0 0 0 1.316c.145.145.636.262 1.018.156a.725.725 0 0 0 .298-.156C13.773 11.733 14.13 10.16 14.13 9c0-.17-.002-.34-.011-.51-.053-.992-.319-2.005-1.522-3.208a.909.909 0 0 0-1.316 0zm-7.496.726H.714C.286 6.008 0 6.31 0 6.76v4.512c0 .452.286.752.714.752h3.072l4.071 3.858c.5.3 1.143 0 1.143-.602V2.752c0-.601-.643-.977-1.143-.601L3.786 6.008z"}})])])])])}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/App.vue?vue&type=template&id=01d24e5e&shadow
+// CONCATENATED MODULE: ./src/App.vue?vue&type=template&id=91b695c4&shadow
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/main/index.vue?vue&type=template&id=c44504aa&scoped=true&
-var mainvue_type_template_id_c44504aa_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"main-wrapper",class:{minimized: _vm.minimized, active: _vm.active}},[(!_vm.mobile)?_c('vue-page-transition',{attrs:{"name":"fade-in-right"}},[_c('router-view')],1):_c('router-view'),(_vm.showFooter)?_c('FooterChat'):_vm._e(),(_vm.gallery)?_c('gallery',{attrs:{"images":_vm.gallery.images,"index":_vm.gallery.index},on:{"close":_vm.closeGallery}}):_vm._e()],1)}
-var mainvue_type_template_id_c44504aa_scoped_true_staticRenderFns = []
-
-
-// CONCATENATED MODULE: ./src/components/main/index.vue?vue&type=template&id=c44504aa&scoped=true&
-
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/layouts/footerChat/index.vue?vue&type=template&id=517e1e1f&scoped=true&
-var footerChatvue_type_template_id_517e1e1f_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"footer-chat",class:{'bin' : _vm.pocketnet, 'bout' : !_vm.pocketnet, minimized: _vm.minimized, fix : _vm.pocketnet, active: _vm.active}},[_c('div',{staticClass:"work"},[_c('div',{staticClass:"menuItems"},[_c('div',{staticClass:"menuItem bottom-nav__icon",class:{active : _vm.activecontacts},on:{"click":function($event){return _vm.gotona('/contacts')}}},[_vm._m(0),_c('div',{staticClass:"label"},[_vm._v(" "+_vm._s(_vm.$t("caption.contacts"))+" ")])]),_c('div',{staticClass:"menuItem bottom-nav__icon",class:{active : _vm.activechats},on:{"click":function($event){return _vm.gotona('/chats')}}},[_vm._m(1),_c('div',{staticClass:"label"},[_vm._v(" "+_vm._s(_vm.$t("caption.chats"))+" ")]),(_vm.notificationCount)?_c('div',{staticClass:"unseen chatMessages"},[_vm._v(" "+_vm._s(_vm.notificationCount > 99 ? '99' : _vm.notificationCount)+" ")]):_vm._e()]),(!_vm.pocketnet)?_c('div',{staticClass:"menuItem bottom-nav__icon",class:{active : _vm.activesettings},on:{"click":function($event){return _vm.gotona('/settings')}}},[_vm._m(2),_c('div',{staticClass:"label"},[_vm._v(" "+_vm._s(_vm.$t("caption.settings"))+" ")])]):_vm._e()])])])}
-var footerChatvue_type_template_id_517e1e1f_scoped_true_staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"icon"},[_c('i',{staticClass:"fas fa-user-friends"})])},function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"icon"},[_c('i',{staticClass:"fas fa-comments"})])},function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"icon"},[_c('i',{staticClass:"fas fa-cog"})])}]
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/main/index.vue?vue&type=template&id=7171cf6c&scoped=true&
+var mainvue_type_template_id_7171cf6c_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"main-wrapper",class:{minimized: _vm.minimized, active: _vm.active}},[_c('div',{staticClass:"chat-container"},[(_vm.page === 'contacts')?_c('ContactsContainer'):_vm._e(),(_vm.page === 'chats')?_c('ChatsContainer'):_vm._e(),(_vm.page === 'settings')?_c('SettingsContainer'):_vm._e(),_c('FooterChat')],1),(_vm.showPage)?_c('div',{staticClass:"chat-container-pages",class:{minimized: _vm.minimized}},[(!_vm.mobile)?_c('vue-page-transition',{attrs:{"name":"fade-in-right"}},[_c('router-view')],1):_c('router-view'),(_vm.gallery)?_c('gallery',{attrs:{"images":_vm.gallery.images,"index":_vm.gallery.index},on:{"close":_vm.closeGallery}}):_vm._e()],1):_vm._e(),(!_vm.showPage && !_vm.pocketnet)?_c('div',{staticClass:"chat-container-pages-empty"},[_c('i',{staticClass:"fas fa-comments"})]):_vm._e()])}
+var mainvue_type_template_id_7171cf6c_scoped_true_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/layouts/footerChat/index.vue?vue&type=template&id=517e1e1f&scoped=true&
+// CONCATENATED MODULE: ./src/components/main/index.vue?vue&type=template&id=7171cf6c&scoped=true&
+
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/layouts/footerChat/index.vue?vue&type=template&id=f00ed472&scoped=true&
+var footerChatvue_type_template_id_f00ed472_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"footer-chat",class:{
+    bin: _vm.pocketnet,
+    bout: !_vm.pocketnet,
+    minimized: _vm.minimized,
+    fix: _vm.pocketnet,
+    active: _vm.active,
+  }},[_c('div',{staticClass:"work"},[_c('div',{staticClass:"menuItems"},[_c('div',{staticClass:"menuItem bottom-nav__icon",class:{ active: _vm.activecontacts },on:{"click":function($event){return _vm.gotona('contacts')}}},[_vm._m(0),_c('div',{staticClass:"label"},[_vm._v(" "+_vm._s(_vm.$t("caption.contacts"))+" ")])]),_c('div',{staticClass:"menuItem bottom-nav__icon",class:{ active: _vm.activechats },on:{"click":function($event){return _vm.gotona('chats')}}},[_vm._m(1),_c('div',{staticClass:"label"},[_vm._v(" "+_vm._s(_vm.$t("caption.chats"))+" ")]),(_vm.notificationCount)?_c('div',{staticClass:"unseen chatMessages"},[_vm._v(" "+_vm._s(_vm.notificationCount > 99 ? "99" : _vm.notificationCount)+" ")]):_vm._e()]),(!_vm.pocketnet)?_c('div',{staticClass:"menuItem bottom-nav__icon",class:{ active: _vm.activesettings },on:{"click":function($event){return _vm.gotona('settings')}}},[_vm._m(2),_c('div',{staticClass:"label"},[_vm._v(" "+_vm._s(_vm.$t("caption.settings"))+" ")])]):_vm._e()])])])}
+var footerChatvue_type_template_id_f00ed472_scoped_true_staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"icon"},[_c('i',{staticClass:"fas fa-user-friends"})])},function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"icon"},[_c('i',{staticClass:"fas fa-comments"})])},function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"icon"},[_c('i',{staticClass:"fas fa-cog"})])}]
+
+
+// CONCATENATED MODULE: ./src/components/layouts/footerChat/index.vue?vue&type=template&id=f00ed472&scoped=true&
 
 // EXTERNAL MODULE: ./node_modules/vuex/dist/vuex.esm.js
 var vuex_esm = __webpack_require__("2f62");
@@ -28765,14 +29496,20 @@ var vuex_esm = __webpack_require__("2f62");
     current: function () {
       return this.$route.name;
     },
+    query: function () {
+      return this.$route.query;
+    },
+    query: function () {
+      return this.$route.query;
+    },
     activesettings: function () {
-      return this.current == 'settings';
+      return this.query.page == 'settings';
     },
     activecontacts: function () {
-      return this.current == 'contact' || this.current == 'contacts';
+      return this.query.page == 'contacts';
     },
     activechats: function () {
-      return this.current == 'chat' || this.current == 'chats';
+      return this.query.page === undefined || this.query.page == 'chats';
     },
     mobile: function () {
       return this.$store.state.mobile;
@@ -28780,7 +29517,12 @@ var vuex_esm = __webpack_require__("2f62");
   }),
   methods: {
     gotona(r) {
-      this.$router.push(r).catch(e => {});
+      this.$router.push({
+        path: this.$router.path,
+        query: { ...this.$route.query,
+          page: r
+        }
+      });
       this.$store.commit('active', true);
       this.$store.commit('setiteraction', true);
     },
@@ -28798,8 +29540,10 @@ var vuex_esm = __webpack_require__("2f62");
 
 function injectStyles (context) {
   
-  var style0 = __webpack_require__("9e80")
+  var style0 = __webpack_require__("438f")
 if (style0.__inject__) style0.__inject__(context)
+var style1 = __webpack_require__("71e1")
+if (style1.__inject__) style1.__inject__(context)
 
 }
 
@@ -28807,11 +29551,11 @@ if (style0.__inject__) style0.__inject__(context)
 
 var component = Object(componentNormalizer["a" /* default */])(
   layouts_footerChat_vue_type_script_lang_js_,
-  footerChatvue_type_template_id_517e1e1f_scoped_true_render,
-  footerChatvue_type_template_id_517e1e1f_scoped_true_staticRenderFns,
+  footerChatvue_type_template_id_f00ed472_scoped_true_render,
+  footerChatvue_type_template_id_f00ed472_scoped_true_staticRenderFns,
   false,
   injectStyles,
-  "517e1e1f",
+  "f00ed472",
   null
   ,true
 )
@@ -28839,7 +29583,7 @@ var galleryvue_type_template_id_d609e530_staticRenderFns = []
   components: {
     //vPhotoswipe : PhotoSwipe,
     vPhotoswipe: () => {
-      return Promise.all(/* import() */[__webpack_require__.e(17), __webpack_require__.e(7)]).then(__webpack_require__.bind(null, "29a3")).then(p => {
+      return Promise.all(/* import() */[__webpack_require__.e(16), __webpack_require__.e(7)]).then(__webpack_require__.bind(null, "29a3")).then(p => {
         return p.PhotoSwipe;
       });
     }
@@ -28908,7 +29652,391 @@ var gallery_component = Object(componentNormalizer["a" /* default */])(
 )
 
 /* harmony default export */ var gallery = (gallery_component.exports);
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/main/components/ChatsContainer.vue?vue&type=template&id=224a5c51&scoped=true&
+var ChatsContainervue_type_template_id_224a5c51_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"page chats",class:{ pocketnet: _vm.pocketnet, mobile: _vm.mobile, minimized: _vm.minimized, active: _vm.active, newChat: _vm.newChat }},[_c('topheader',{staticClass:"topheader",attrs:{"share":_vm.share},on:{"newchat":_vm.newchat}}),_c('maincontent',{ref:"maincontent",attrs:{"rbackexp":true},scopedSlots:_vm._u([{key:"content",fn:function(){return [_c('list',{attrs:{"share":_vm.share},on:{"scrolltop":_vm.scrolltop}}),(_vm.newChat && !_vm.hiddenInParent)?_c('modal',{on:{"close":_vm.closeNewChat},scopedSlots:_vm._u([{key:"header",fn:function(){return [_vm._v(_vm._s(_vm.$t("caption.newChat")))]},proxy:true},{key:"body",fn:function(){return [_c('chatcreate',{on:{"completed":_vm.chatcreated}})]},proxy:true},{key:"footer",fn:function(){return undefined},proxy:true}],null,false,1284178828)}):_vm._e()]},proxy:true}])})],1)}
+var ChatsContainervue_type_template_id_224a5c51_scoped_true_staticRenderFns = []
+
+
+// CONCATENATED MODULE: ./src/components/main/components/ChatsContainer.vue?vue&type=template&id=224a5c51&scoped=true&
+
+// EXTERNAL MODULE: ./src/components/chats/list/index.vue + 9 modules
+var list = __webpack_require__("4fd2");
+
+// EXTERNAL MODULE: ./src/components/chats/topheader/index.vue + 4 modules
+var topheader = __webpack_require__("d136");
+
+// EXTERNAL MODULE: ./src/components/contacts/index.vue + 4 modules
+var contacts = __webpack_require__("71da");
+
+// EXTERNAL MODULE: ./src/components/chat/create/index.vue + 4 modules
+var create = __webpack_require__("78a2");
+
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/main/components/ChatsContainer.vue?vue&type=script&lang=js&
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+
+/* harmony default export */ var ChatsContainervue_type_script_lang_js_ = ({
+  name: "pagechats",
+  components: {
+    list: list["a" /* default */],
+    topheader: topheader["a" /* default */],
+    contacts: contacts["a" /* default */],
+    chatcreate: create["a" /* default */]
+  },
+  props: {
+    share: Object
+  },
+  data: function () {
+    return {
+      newChat: false
+    };
+  },
+  computed: Object(vuex_esm["c" /* mapState */])({
+    pocketnet: state => state.pocketnet,
+    minimized: state => state.minimized,
+    active: state => state.active,
+    mobile: state => state.mobile,
+    hiddenInParent: state => state.hiddenInParent
+  }),
+  methods: {
+    newchat: function () {
+      this.newChat = true;
+    },
+    closeNewChat: function () {
+      this.newChat = false;
+    },
+    chatcreated: function (chat) {
+      this.$router.push({
+        path: "chat",
+        query: {
+          id: chat.room_id
+        }
+      });
+    },
+    scrolltop: function () {
+      this.$refs["maincontent"].scroll(0);
+    }
+  },
+
+  mounted() {}
+
+});
+// CONCATENATED MODULE: ./src/components/main/components/ChatsContainer.vue?vue&type=script&lang=js&
+ /* harmony default export */ var components_ChatsContainervue_type_script_lang_js_ = (ChatsContainervue_type_script_lang_js_); 
+// CONCATENATED MODULE: ./src/components/main/components/ChatsContainer.vue
+
+
+
+function ChatsContainer_injectStyles (context) {
+  
+  var style0 = __webpack_require__("35a9")
+if (style0.__inject__) style0.__inject__(context)
+
+}
+
+/* normalize component */
+
+var ChatsContainer_component = Object(componentNormalizer["a" /* default */])(
+  components_ChatsContainervue_type_script_lang_js_,
+  ChatsContainervue_type_template_id_224a5c51_scoped_true_render,
+  ChatsContainervue_type_template_id_224a5c51_scoped_true_staticRenderFns,
+  false,
+  ChatsContainer_injectStyles,
+  "224a5c51",
+  null
+  ,true
+)
+
+/* harmony default export */ var ChatsContainer = (ChatsContainer_component.exports);
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/main/components/ContactsContainer.vue?vue&type=template&id=650f3273&scoped=true&
+var ContactsContainervue_type_template_id_650f3273_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"page contacts"},[_c('topheader',{staticClass:"topheader",attrs:{"title":_vm.title}}),_c('maincontent',{scopedSlots:_vm._u([{key:"content",fn:function(){return [_c('contacts',{attrs:{"mode":_vm.mode}})]},proxy:true}])})],1)}
+var ContactsContainervue_type_template_id_650f3273_scoped_true_staticRenderFns = []
+
+
+// CONCATENATED MODULE: ./src/components/main/components/ContactsContainer.vue?vue&type=template&id=650f3273&scoped=true&
+
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/contacts/topheader/index.vue?vue&type=template&id=a06dc160&scoped=true&
+var topheadervue_type_template_id_a06dc160_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{attrs:{"id":"chatsTopheader"}},[_c('topheader',{attrs:{"sideSlotsWidth":100},scopedSlots:_vm._u([{key:"left",fn:function(){return [((!_vm.minimized || _vm.active) && _vm.pocketnet)?_c('div',{staticClass:"iconbutton",on:{"click":_vm.minimizeall}},[_c('i',{staticClass:"fas fa-times"})]):_vm._e()]},proxy:true},{key:"info",fn:function(){return [_c('span',[_vm._v(_vm._s(_vm.title))])]},proxy:true},{key:"right",fn:function(){return undefined},proxy:true}])})],1)}
+var topheadervue_type_template_id_a06dc160_scoped_true_staticRenderFns = []
+
+
+// CONCATENATED MODULE: ./src/components/contacts/topheader/index.vue?vue&type=template&id=a06dc160&scoped=true&
+
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./src/components/contacts/topheader?vue&type=script&lang=js&
+
+/* harmony default export */ var topheader_vue_type_script_lang_js_ = ({
+  name: 'contactsTopheader',
+  props: {
+    title: {
+      type: String,
+      default: 'Contacts' // default : this.$i18n.t("caption.contacts")
+
+    }
+  },
+  data: function () {
+    return {
+      loading: false
+    };
+  },
+  watch: {//$route: 'getdata'
+  },
+  computed: Object(vuex_esm["c" /* mapState */])({
+    auth: state => state.auth,
+    minimized: state => state.minimized,
+    pocketnet: state => state.pocketnet,
+    active: state => state.active
+  }),
+  methods: {
+    minimizeall: function () {
+      this.$store.commit('minimize', true);
+      this.$router.push('/chats').catch(e => {});
+    }
+  }
+});
+// CONCATENATED MODULE: ./src/components/contacts/topheader?vue&type=script&lang=js&
+ /* harmony default export */ var contacts_topheader_vue_type_script_lang_js_ = (topheader_vue_type_script_lang_js_); 
+// CONCATENATED MODULE: ./src/components/contacts/topheader/index.vue
+
+
+
+function topheader_injectStyles (context) {
+  
+  var style0 = __webpack_require__("7905")
+if (style0.__inject__) style0.__inject__(context)
+
+}
+
+/* normalize component */
+
+var topheader_component = Object(componentNormalizer["a" /* default */])(
+  contacts_topheader_vue_type_script_lang_js_,
+  topheadervue_type_template_id_a06dc160_scoped_true_render,
+  topheadervue_type_template_id_a06dc160_scoped_true_staticRenderFns,
+  false,
+  topheader_injectStyles,
+  "a06dc160",
+  null
+  ,true
+)
+
+/* harmony default export */ var contacts_topheader = (topheader_component.exports);
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/main/components/ContactsContainer.vue?vue&type=script&lang=js&
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ var ContactsContainervue_type_script_lang_js_ = ({
+  name: "pagecontacts",
+  data: function () {
+    return {
+      page: "Contacts",
+      showInviteButton: false
+    };
+  },
+  components: {
+    contacts: contacts["a" /* default */],
+    topheader: contacts_topheader
+  },
+  computed: Object(vuex_esm["c" /* mapState */])({
+    pocketnet: state => state.pocketnet,
+    minimized: state => state.minimized,
+    title: function () {
+      if (this.$route.query.startnew) return this.$i18n.t("caption.startNewChat");
+      return this.$i18n.t("caption.contacts");
+    },
+    mode: function () {
+      if (this.$route.query.startnew) {
+        return "GroupsCreate";
+      }
+
+      return this.page;
+    }
+  }),
+  methods: {},
+
+  mounted() {
+    this.$store.commit("SET_LAST_ROOM", null);
+  }
+
+});
+// CONCATENATED MODULE: ./src/components/main/components/ContactsContainer.vue?vue&type=script&lang=js&
+ /* harmony default export */ var components_ContactsContainervue_type_script_lang_js_ = (ContactsContainervue_type_script_lang_js_); 
+// CONCATENATED MODULE: ./src/components/main/components/ContactsContainer.vue
+
+
+
+function ContactsContainer_injectStyles (context) {
+  
+  var style0 = __webpack_require__("0745")
+if (style0.__inject__) style0.__inject__(context)
+
+}
+
+/* normalize component */
+
+var ContactsContainer_component = Object(componentNormalizer["a" /* default */])(
+  components_ContactsContainervue_type_script_lang_js_,
+  ContactsContainervue_type_template_id_650f3273_scoped_true_render,
+  ContactsContainervue_type_template_id_650f3273_scoped_true_staticRenderFns,
+  false,
+  ContactsContainer_injectStyles,
+  "650f3273",
+  null
+  ,true
+)
+
+/* harmony default export */ var ContactsContainer = (ContactsContainer_component.exports);
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/main/components/SettingsContainer.vue?vue&type=template&id=64f4fef6&scoped=true&
+var SettingsContainervue_type_template_id_64f4fef6_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"page settings"},[_c('topheader',{staticClass:"topheader"}),_c('maincontent',{scopedSlots:_vm._u([{key:"content",fn:function(){return [_c('settings')]},proxy:true}])})],1)}
+var SettingsContainervue_type_template_id_64f4fef6_scoped_true_staticRenderFns = []
+
+
+// CONCATENATED MODULE: ./src/components/main/components/SettingsContainer.vue?vue&type=template&id=64f4fef6&scoped=true&
+
+// EXTERNAL MODULE: ./src/components/settings/index.vue + 4 modules
+var settings = __webpack_require__("7334");
+
+// EXTERNAL MODULE: ./src/components/settings/topheader/index.vue + 4 modules
+var settings_topheader = __webpack_require__("ce3e");
+
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/main/components/SettingsContainer.vue?vue&type=script&lang=js&
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ var SettingsContainervue_type_script_lang_js_ = ({
+  name: "pagesettings",
+  components: {
+    settings: settings["a" /* default */],
+    topheader: settings_topheader["a" /* default */]
+  },
+  computed: Object(vuex_esm["c" /* mapState */])({
+    pocketnet: state => state.pocketnet,
+    minimized: state => state.minimized
+  }),
+  methods: {},
+
+  mounted() {}
+
+});
+// CONCATENATED MODULE: ./src/components/main/components/SettingsContainer.vue?vue&type=script&lang=js&
+ /* harmony default export */ var components_SettingsContainervue_type_script_lang_js_ = (SettingsContainervue_type_script_lang_js_); 
+// CONCATENATED MODULE: ./src/components/main/components/SettingsContainer.vue
+
+
+
+function SettingsContainer_injectStyles (context) {
+  
+  var style0 = __webpack_require__("6e67")
+if (style0.__inject__) style0.__inject__(context)
+
+}
+
+/* normalize component */
+
+var SettingsContainer_component = Object(componentNormalizer["a" /* default */])(
+  components_SettingsContainervue_type_script_lang_js_,
+  SettingsContainervue_type_template_id_64f4fef6_scoped_true_render,
+  SettingsContainervue_type_template_id_64f4fef6_scoped_true_staticRenderFns,
+  false,
+  SettingsContainer_injectStyles,
+  "64f4fef6",
+  null
+  ,true
+)
+
+/* harmony default export */ var SettingsContainer = (SettingsContainer_component.exports);
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./src/components/main?vue&type=script&lang=js&
+
+
+
 
 
 
@@ -28916,16 +30044,41 @@ var gallery_component = Object(componentNormalizer["a" /* default */])(
   name: "mainWrapper",
   components: {
     FooterChat: footerChat,
-    gallery: gallery
+    gallery: gallery,
+    ChatsContainer: ChatsContainer,
+    ContactsContainer: ContactsContainer,
+    SettingsContainer: SettingsContainer
   },
   data: function () {
     return {
       prevRoute: null,
-      loading: false
+      loading: false,
+      page: this.$route.query.page ? this.$route.query.page : 'chats',
+      showPage: this.$route.path === '/chat' || this.$route.path === '/contact' || this.$route.path === '/publicPreview' || this.$route.path === '/chatSettings' || this.$route.path === '/chatInfo' || this.$route.path === '/teamRoom' || this.$route.path === '/invite',
+      minimized: this.$store.state.mobile
     };
   },
   created: () => {},
-  watch: {//$route: 'getdata'
+  watch: {
+    '$route.query.page': {
+      handler: function (page) {
+        this.page = page ? page : 'chats';
+      },
+      deep: true,
+      immediate: true
+    },
+    '$route.path': {
+      handler: function (path) {
+        this.showPage = path === '/chat' || path === '/contact' || path === '/publicPreview' || path === '/chatSettings' || path === '/chatInfo' || path === '/teamRoom' || path === '/invite';
+      },
+      deep: true,
+      immediate: true
+    }
+  },
+
+  mounted() {
+    this.page = this.$route.query.page ? this.$route.query.page : 'chats';
+    this.showPage = this.$route.path === '/chat' || this.$route.path === '/contact' || this.$route.path === '/publicPreview' || this.$route.path === '/chatSettings' || this.$route.path === '/chatInfo' || this.$route.path === '/teamRoom' || this.$route.path === '/invite';
   },
 
   beforeRouteEnter(to, from, next) {
@@ -28935,20 +30088,21 @@ var gallery_component = Object(componentNormalizer["a" /* default */])(
   },
 
   beforeRouteLeave(to, from, next) {
-    this.$store.commit('setmodal', null);
+    this.$store.commit("setmodal", null);
     next();
   },
 
   computed: Object(vuex_esm["c" /* mapState */])({
     auth: state => state.auth,
-    ...Object(vuex_esm["c" /* mapState */])(['currentUserChat', 'minimized', 'gallery', 'active', 'mobile']),
+    pocketnet: state => state.pocketnet,
+    ...Object(vuex_esm["c" /* mapState */])(["currentUserChat", "minimized", "gallery", "active", "mobile"]),
     showFooter: function () {
-      return this.$route.name != 'chat' || this.minimized;
+      return this.$route.name != "chat" || this.minimized;
     }
   }),
   methods: {
     closeGallery: function () {
-      this.$store.commit('GALLERY', null);
+      this.$store.commit("GALLERY", null);
     }
   }
 });
@@ -28960,8 +30114,10 @@ var gallery_component = Object(componentNormalizer["a" /* default */])(
 
 function main_injectStyles (context) {
   
-  var style0 = __webpack_require__("a36f")
+  var style0 = __webpack_require__("d546")
 if (style0.__inject__) style0.__inject__(context)
+var style1 = __webpack_require__("4bf6")
+if (style1.__inject__) style1.__inject__(context)
 
 }
 
@@ -28969,11 +30125,11 @@ if (style0.__inject__) style0.__inject__(context)
 
 var main_component = Object(componentNormalizer["a" /* default */])(
   components_main_vue_type_script_lang_js_,
-  mainvue_type_template_id_c44504aa_scoped_true_render,
-  mainvue_type_template_id_c44504aa_scoped_true_staticRenderFns,
+  mainvue_type_template_id_7171cf6c_scoped_true_render,
+  mainvue_type_template_id_7171cf6c_scoped_true_staticRenderFns,
   false,
   main_injectStyles,
-  "c44504aa",
+  "7171cf6c",
   null
   ,true
 )
@@ -29283,7 +30439,7 @@ var store = new vuex_esm["a" /* default */].Store({
     voiceMessagesEnabled: '',
     currentPlayingVoiceMessage: null,
     current_user: {},
-    minimized: true,
+    minimized: false,
     active: false,
     activeBlock: {},
     globalpreloader: false,
@@ -29311,7 +30467,8 @@ var store = new vuex_esm["a" /* default */].Store({
     dontreadreceipts: false,
     voicerecording: false,
     deletedrooms: {},
-    pkoindisabled: false //share : {url : 'https://yandex.ru/'} //null
+    pkoindisabled: false,
+    isLocalStorageChatAuth: false //share : {url : 'https://yandex.ru/'} //null
 
   },
   getters: {
@@ -29374,7 +30531,7 @@ var store = new vuex_esm["a" /* default */].Store({
         state.iteraction = false;
         state.minimized = false;
         return;
-      } else state.minimized = true;
+      } else state.minimized = false;
 
       if (activetimeout) {
         clearTimeout(activetimeout);
@@ -29491,6 +30648,10 @@ var store = new vuex_esm["a" /* default */].Store({
 
     setMobile(state, mobile) {
       state.mobile = mobile;
+    },
+
+    setIsLocalStorageChatAuth(state, isLocalStorageChatAuth) {
+      state.isLocalStorageChatAuth = isLocalStorageChatAuth;
     },
 
     setVoiceMessagesEnabled(state, voiceMessagesEnabled) {
@@ -29929,7 +31090,308 @@ var store = new vuex_esm["a" /* default */].Store({
         });
       });
 
-      commit('SET_EVENTS_TO_STORE', events); //store._vm.core.mtrx.kit.usersInfoForChatsStore(m_chats).then(i => {
+      commit('SET_EVENTS_TO_STORE', events);
+      allTrue(data.typing);
+    },
+
+    DELETE_ROOM(state, roomid) {
+      vue_esm["default"].set(state.deletedrooms, roomid, true);
+    },
+
+    SET_CONTACTS(state, v) {
+      var mp = {};
+
+      _.each(v, function (c) {
+        mp[c.id] = c;
+      });
+
+      state.contacts = mp;
+      store.commit("SET_CONTACTS_MAP");
+    },
+
+    SET_CHATS_USERS(state, v) {
+      _.each(v || {}, function (u, i) {
+        if (!state.chatusers[i] || !_.isEqual(state.chatusers[i], u)) {
+          vue_esm["default"].set(state.chatusers, i, u);
+        }
+      }); //state.chatusers = v || {}
+
+    },
+
+    SET_CONTACTS_FROM_MATRIX(state, v) {
+      var mp = {};
+
+      _.each(v, function (c) {
+        if (functions["a" /* default */].getmatrixid(c.id) != (store._vm.core.user.userinfo && store._vm.core.user.userinfo.id)) mp[c.id] = c;
+      });
+
+      state.contactsFromMatrix = mp;
+      store.commit("SET_CONTACTS_MAP");
+    },
+
+    SET_CONTACTS_MAP(state) {
+      var contactsMap = {};
+
+      _.each(state.contacts, function (contact) {
+        contactsMap[contact.id] = contact;
+      });
+
+      _.each(state.contactsFromMatrix, function (contact) {
+        contactsMap[contact.id] = contact;
+      });
+
+      state.contactsMap = contactsMap;
+    },
+
+    SET_UNAUTHORIZED(state, v) {
+      state.unauthorized = v;
+    },
+
+    SET_USERINFO(state, v) {
+      if (!v.info) return;
+      if (v.reload || !state.users[v.info.id]) vue_esm["default"].set(state.users, v.info.id, v.info);
+    },
+
+    SET_CURRENT_ROOM(state, v) {
+      state.currentRoom = v;
+    },
+
+    CLEAR_USERSINFO(state, v) {
+      state.users = {};
+    },
+
+    GALLERY(state, v) {
+      state.gallery = v || null;
+      var fullscreenmode = functions["a" /* default */].deep(window, "window.POCKETNETINSTANCE.mobile.fullscreenmode");
+
+      if (fullscreenmode) {
+        fullscreenmode(v);
+      }
+    },
+
+    SHARE(state, v) {
+      state.share = v || null;
+
+      if (!state.mobile) {
+        state.activeBlock.share = true;
+        state.active = true;
+      }
+    },
+
+    CONNECT(state, v) {
+      state.connect = v;
+    },
+
+    JOINROOM(state, v) {
+      state.joinroom = v;
+    },
+
+    CONTACT(state, v) {
+      state.contact = v || null;
+    },
+
+    theme(state, value) {
+      mex.theme(state, value);
+    },
+
+    SET_POCKETTEAMMESSAGES(state, v) {
+      state.pocketteammessages = v; // Check local storage
+
+      var readedMessagesStr = localStorage.getItem("readedpocketteammessages");
+
+      if (readedMessagesStr) {
+        try {
+          var readedMessages = JSON.parse(readedMessagesStr);
+          state.readedteammessages = readedMessages;
+        } catch (e) {
+          localStorage.removeItem("readedpocketteammessages");
+          state.readedteammessages = {};
+        }
+      }
+    },
+
+    SET_READEDTEAMMESSAGES(state, v) {
+      if (v && v.length > 0) {
+        var readedMessages = {};
+
+        _.each(v, function (m) {
+          readedMessages[m.id] = true;
+        });
+
+        state.readedteammessages = readedMessages; // Update local storage
+
+        localStorage.setItem("readedpocketteammessages", JSON.stringify(readedMessages));
+      }
+    },
+
+    SET_MENU(state, v) {
+      state.menu = v;
+    }
+
+  },
+  actions: {
+    SET_CHAT_MEMBERS(_ref11, chat) {
+      let {
+        commit
+      } = _ref11;
+    },
+
+    TYPING_EVENT(_ref12, member) {
+      let {
+        commit
+      } = _ref12;
+      let room = member.roomId;
+      let name = member.name;
+      let data = {
+        room,
+        name,
+        typing: member.typing
+      };
+      commit("SET_TYPING_TO_STORE", data);
+    },
+
+    CHAT_MEMBERS(_ref13) {
+      let {
+        commit
+      } = _ref13;
+    },
+
+    SHOW_GALLERY_FROMEVENTS(_ref14, _ref15) {
+      let {
+        commit,
+        dispatch
+      } = _ref14;
+      let {
+        events,
+        event
+      } = _ref15;
+      var images = [],
+          index = 0;
+
+      var encrypted = function (event) {
+        return functions["a" /* default */].deep(event, "event.content.info.secrets") ? true : false;
+      };
+
+      _.each(events, event => {
+        if (event.event.content.msgtype === "m.image") {
+          var url = event.event.content.url;
+
+          if (encrypted(event)) {
+            url = event.event.decryptedImage;
+          }
+
+          images.push({
+            src: url,
+            w: event.event.content.info.w || 500,
+            h: event.event.content.info.h || 500,
+            eventId: event.event.event_id
+          });
+        }
+      });
+
+      images = _.filter(images, function (i) {
+        return i.src;
+      });
+      index = images.map(function (e) {
+        return e.eventId;
+      }).indexOf(event.event.event_id);
+      dispatch("SHOW_GALLERY", {
+        images,
+        index
+      });
+    },
+
+    SHOW_GALLERY(_ref16, _ref17) {
+      let {
+        commit
+      } = _ref16;
+      let {
+        images,
+        index
+      } = _ref17;
+      if (!index) index = 0;
+      if (!images) images = [];
+
+      if (images.length) {
+        commit("GALLERY", {
+          images: images,
+          index: index
+        });
+      } else {
+        commit("GALLERY", null);
+      }
+    },
+
+    RELOAD_CHAT_USERS(_ref18, m_chats) {
+      let {
+        commit
+      } = _ref18;
+      return store._vm.core.mtrx.kit.usersInfoForChats(m_chats, true).then(i => {
+        commit("SET_CHATS_USERS", store._vm.core.mtrx.kit.usersFromChats(m_chats));
+        return Promise.resolve();
+      }).catch(e => {
+        return Promise.resolve();
+      });
+    },
+
+    FETCH_CHATS(_ref19) {
+      let {
+        commit
+      } = _ref19;
+      var m_chats = functions["a" /* default */].deep(store._vm, "core.mtrx.store.rooms") || {};
+
+      var id = store._vm.core.user.myMatrixId();
+
+      var chats = _.map(m_chats, function (r) {
+        if (r.getLastActiveTimestamp() === -9007199254740991) {
+          if (r.getMember(id)) {
+            r.summary.lastModified = r.getMember(id).events.member.event.origin_server_ts;
+          }
+        } else {
+          r.summary.lastModified = r.getLastActiveTimestamp();
+        }
+
+        return r.summary;
+      });
+
+      commit("SET_PRECHATS_TO_STORE", chats);
+      return store._vm.core.mtrx.kit.allchatmembers(m_chats).then(r => {
+        commit("SET_CHATS_TO_STORE", chats);
+        commit("SET_CHATS_USERS", store._vm.core.mtrx.kit.usersFromChats(m_chats));
+        return store._vm.core.mtrx.kit.fillContacts(m_chats);
+      });
+      return Promise.resolve();
+      return store._vm.core.mtrx.kit.usersInfoForChats(m_chats).then(i => {
+        commit("SET_CHATS_USERS", store._vm.core.mtrx.kit.usersFromChats(m_chats));
+        commit("SET_CONTACTS_FROM_MATRIX", _.filter(i, m => {
+          return m.id !== (store._vm.core.user.userinfo && store._vm.core.user.userinfo.id);
+        }));
+        return Promise.resolve();
+      }).catch(e => {
+        return Promise.resolve();
+      });
+    },
+
+    FETCH_EVENTS(_ref20) {
+      let {
+        commit
+      } = _ref20;
+      var m_chats = functions["a" /* default */].deep(store._vm, "core.mtrx.store.rooms") || {};
+      var events = {};
+
+      _.each(m_chats, function (chat) {
+        events[chat.roomId] = {};
+        var timeline = [].concat(chat.timeline, chat.currentState.getStateEvents("m.room.member"));
+        events[chat.roomId].timeline = timeline;
+      });
+
+      _.each(events, function (e) {
+        e.timeline = _.sortBy(e.timeline, function (event) {
+          return event.getDate();
+        });
+      });
+
+      commit("SET_EVENTS_TO_STORE", events); //store._vm.core.mtrx.kit.usersInfoForChatsStore(m_chats).then(i => {
       //})
     }
 
@@ -32965,19 +34427,25 @@ if (inBrowser && window.Vue) {
 
 /* harmony default export */ var vue_router_esm = (VueRouter);
 
+// CONCATENATED MODULE: ./src/application/isMessenger.js
+function isMessenger() {
+  return false;
+}
 // CONCATENATED MODULE: ./src/router/router.js
 
 
 vue_esm["default"].use(vue_router_esm);
+
 const router = new vue_router_esm({
+  base: isMessenger() ? '/messenger' : "/",
   routes: [{
     path: '/contacts',
     name: 'contacts',
-    component: () => __webpack_require__.e(/* import() */ 13).then(__webpack_require__.bind(null, "bfc0"))
+    component: () => __webpack_require__.e(/* import() */ 17).then(__webpack_require__.bind(null, "bfc0"))
   }, {
     path: '/contact',
     name: 'contact',
-    component: () => __webpack_require__.e(/* import() */ 15).then(__webpack_require__.bind(null, "4fe8"))
+    component: () => __webpack_require__.e(/* import() */ 13).then(__webpack_require__.bind(null, "4fe8"))
   }, {
     path: '/chats',
     name: 'chats',
@@ -32985,27 +34453,27 @@ const router = new vue_router_esm({
   }, {
     path: '/chat',
     name: 'chat',
-    component: () => Promise.all(/* import() */[__webpack_require__.e(1), __webpack_require__.e(18), __webpack_require__.e(0), __webpack_require__.e(5)]).then(__webpack_require__.bind(null, "ee79"))
+    component: () => Promise.all(/* import() */[__webpack_require__.e(1), __webpack_require__.e(18), __webpack_require__.e(0), __webpack_require__.e(4)]).then(__webpack_require__.bind(null, "ee79"))
   }, {
     path: '/publicPreview',
     name: 'publicPreview',
-    component: () => __webpack_require__.e(/* import() */ 10).then(__webpack_require__.bind(null, "5500"))
+    component: () => __webpack_require__.e(/* import() */ 9).then(__webpack_require__.bind(null, "5500"))
   }, {
     path: '/chatSettings',
     name: 'chatSettings',
-    component: () => __webpack_require__.e(/* import() */ 12).then(__webpack_require__.bind(null, "9394"))
+    component: () => __webpack_require__.e(/* import() */ 11).then(__webpack_require__.bind(null, "9394"))
   }, {
     path: '/chatInfo',
     name: 'chatInfo',
-    component: () => Promise.all(/* import() */[__webpack_require__.e(1), __webpack_require__.e(0), __webpack_require__.e(4)]).then(__webpack_require__.bind(null, "266d"))
+    component: () => Promise.all(/* import() */[__webpack_require__.e(1), __webpack_require__.e(0), __webpack_require__.e(5)]).then(__webpack_require__.bind(null, "266d"))
   }, {
     path: '/teamRoom',
     name: 'teamRoom',
-    component: () => __webpack_require__.e(/* import() */ 16).then(__webpack_require__.bind(null, "4779"))
+    component: () => __webpack_require__.e(/* import() */ 15).then(__webpack_require__.bind(null, "4779"))
   }, {
     path: '/settings',
     name: 'settings',
-    component: () => __webpack_require__.e(/* import() */ 9).then(__webpack_require__.bind(null, "8a21"))
+    component: () => __webpack_require__.e(/* import() */ 14).then(__webpack_require__.bind(null, "8a21"))
   }, {
     path: '/invite',
     name: 'invite',
@@ -33014,12 +34482,12 @@ const router = new vue_router_esm({
   mode: document.getElementById('automomous') ? 'history' : 'abstract'
 });
 /* harmony default export */ var router_router = (router);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/assets/modal/index.vue?vue&type=template&id=0f016832&
-var modalvue_type_template_id_0f016832_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('transition',{attrs:{"name":"fade"}},[_c('div',{class:{'bin' : _vm.pocketnet, 'bout' : !_vm.pocketnet, minimized: _vm.minimized, active: _vm.active, mobile: _vm.mobile},attrs:{"id":"modal"}},[_c('div',{staticClass:"modal-backdrop",on:{"click":_vm.close}}),_c('div',{staticClass:"modal-wrapper"},[_c('div',{staticClass:"modal",attrs:{"role":"dialog","aria-labelledby":"modalTitle","aria-describedby":"modalDescription"}},[_c('div',{staticClass:"modal-header"},[_vm._t("header",function(){return [_vm._v(" "+_vm._s(_vm.$t("caption.header"))+" ")]})],2),_c('div',{staticClass:"modal-body",attrs:{"id":"modalDescription"}},[_vm._t("body")],2),(_vm.displayFooter)?_c('div',{staticClass:"modal-footer"}):_vm._e(),_c('div',{staticClass:"modal-close",on:{"click":_vm.close}},[_c('i',{staticClass:"fas fa-times"})])])])])])}
-var modalvue_type_template_id_0f016832_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/assets/modal/index.vue?vue&type=template&id=007d95e7&
+var modalvue_type_template_id_007d95e7_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('transition',{attrs:{"name":"fade"}},[_c('div',{class:{'bin' : _vm.pocketnet, 'bout' : !_vm.pocketnet, minimized: !_vm.minimized, active: _vm.active, mobile: _vm.mobile},attrs:{"id":"modal"}},[_c('div',{staticClass:"modal-backdrop",on:{"click":_vm.close}}),_c('div',{staticClass:"modal-wrapper"},[_c('div',{staticClass:"modal",attrs:{"role":"dialog","aria-labelledby":"modalTitle","aria-describedby":"modalDescription"}},[_c('div',{staticClass:"modal-header"},[_vm._t("header",function(){return [_vm._v(" "+_vm._s(_vm.$t("caption.header"))+" ")]})],2),_c('div',{staticClass:"modal-body",attrs:{"id":"modalDescription"}},[_vm._t("body")],2),(_vm.displayFooter)?_c('div',{staticClass:"modal-footer"}):_vm._e(),_c('div',{staticClass:"modal-close",on:{"click":_vm.close}},[_c('i',{staticClass:"fas fa-times"})])])])])])}
+var modalvue_type_template_id_007d95e7_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/assets/modal/index.vue?vue&type=template&id=0f016832&
+// CONCATENATED MODULE: ./src/components/assets/modal/index.vue?vue&type=template&id=007d95e7&
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./src/components/assets/modal?vue&type=script&lang=js&
 
@@ -33085,8 +34553,8 @@ if (style0.__inject__) style0.__inject__(context)
 
 var modal_component = Object(componentNormalizer["a" /* default */])(
   assets_modal_vue_type_script_lang_js_,
-  modalvue_type_template_id_0f016832_render,
-  modalvue_type_template_id_0f016832_staticRenderFns,
+  modalvue_type_template_id_007d95e7_render,
+  modalvue_type_template_id_007d95e7_staticRenderFns,
   false,
   modal_injectStyles,
   null,
@@ -39333,8 +40801,6 @@ const sdk = __webpack_require__("0a00");
 
 var mtrx_axios = __webpack_require__("bc3a");
 
-console.log("sdk", sdk);
-
 class mtrx_MTRX {
   constructor(core, p) {
     Object(defineProperty["a" /* default */])(this, "fastsync", function () {
@@ -39342,7 +40808,7 @@ class mtrx_MTRX {
 
       if (state === "PREPARED" || state === "SYNCING") {} else {
         return this.client.retryImmediately().catch(e => {
-          console.log('fastsyncerror', e);
+          console.log("fastsyncerror", e);
         });
       }
     });
@@ -39361,7 +40827,7 @@ class mtrx_MTRX {
     this.backup = {};
     this.db = null;
     this.customrequest = true;
-    this.devicekey = 'm8_device';
+    this.devicekey = "m8_device";
   }
 
   setCredentials() {
@@ -39376,7 +40842,7 @@ class mtrx_MTRX {
   }
 
   getDevices() {
-    var devices = localStorage[this.devicekey] || '';
+    var devices = localStorage[this.devicekey] || "";
 
     if (devices) {
       try {
@@ -39430,15 +40896,15 @@ class mtrx_MTRX {
 
       if (error) {
         try {
-          parsederror = JSON.parse(functions["a" /* default */].deep(response, 'request.responseText'));
+          parsederror = JSON.parse(functions["a" /* default */].deep(response, "request.responseText"));
           error = new sdk.MatrixError(parsederror);
         } catch (e) {} //error.error = parsederror
 
       }
 
-      clbk(error, response, functions["a" /* default */].deep(response, 'request.responseText') || '');
+      clbk(error, response, functions["a" /* default */].deep(response, "request.responseText") || "");
       /*if (error)
-        return Promise.reject(parsederror)*/
+      return Promise.reject(parsederror)*/
     });
 
     req.abort = function () {
@@ -39471,8 +40937,8 @@ class mtrx_MTRX {
 
     client.getProfileInfo = function () {
       return Promise.resolve({
-        avatar_url: '',
-        displayname: 'test'
+        avatar_url: "",
+        displayname: "test"
       });
     };
 
@@ -39495,7 +40961,7 @@ class mtrx_MTRX {
       var client = _this3.createMtrxClient(opts);
 
       try {
-        var userData = yield client.login('m.login.password', {
+        var userData = yield client.login("m.login.password", {
           user: _this3.credentials.username,
           password: _this3.credentials.password
         });
@@ -39507,18 +40973,18 @@ class mtrx_MTRX {
 
         if (yield client.isUsernameAvailable(_this3.credentials.username)) {
           userData = yield client.register(_this3.credentials.username, _this3.credentials.password, null, {
-            type: 'm.login.dummy' //signature : this.core.user.signature('matrix')
+            type: "m.login.dummy" //signature : this.core.user.signature('matrix')
 
           });
         } else {
-          throw 'Signup error, username is not available: ' + e;
+          throw "Signup error, username is not available: " + e;
         }
       }
 
       localStorage.accessToken = userData.access_token;
       var store = new sdk.IndexedDBStore({
         indexedDB: window.indexedDB,
-        dbName: 'matrix-js-sdk:' + _this3.credentials.username
+        dbName: "matrix-js-sdk:" + _this3.credentials.username
       });
       yield store.startup();
       Object.assign(userClientData, {
@@ -39557,15 +41023,15 @@ class mtrx_MTRX {
   }
 
   clearstore() {
-    var version = Number(localStorage.matrixversion || '0');
+    var version = Number(localStorage.matrixversion || "0");
 
     if (version < this.version) {
-      this.clearstorage('crypto.');
-      this.clearstorage('session.');
-      var keys = ['', '2', '3', '4', '5', '6', '8'];
+      this.clearstorage("crypto.");
+      this.clearstorage("session.");
+      var keys = ["", "2", "3", "4", "5", "6", "8"];
 
       _.each(keys, function (key) {
-        delete localStorage['m' + key + '_device'];
+        delete localStorage["m" + key + "_device"];
       });
     }
 
@@ -39660,8 +41126,7 @@ class mtrx_MTRX {
 
         return Promise.resolve(response.data);
       });
-    }; // Check if file is saved in the storage
-
+    };
 
     if (window.POCKETNETINSTANCE && window.POCKETNETINSTANCE.storage && window.cordova) {
       return window.POCKETNETINSTANCE.storage.loadFile(url).then(file => {
@@ -39696,7 +41161,7 @@ class mtrx_MTRX {
     return this.reciepts(event).then(reciepts => {
       return Promise.resolve(_.find(reciepts, reciept => {
         var m = this.me(reciept.userId);
-        return reciept.type == 'm.read' && (me && m || !m && !me);
+        return reciept.type == "m.read" && (me && m || !m && !me);
       }));
     });
   }
@@ -39715,27 +41180,27 @@ class mtrx_MTRX {
       if (!this.chatsready) return;
       if (!message.event.content) return;
 
-      if (message.event.content.msgtype === 'm.file') {
+      if (message.event.content.msgtype === "m.file") {
         message.event.content.pbody = JSON.parse(message.event.content.body);
       }
 
       if (message.getSender() !== userId) {
         var m_chat = this.core.mtrx.client.getRoom(message.event.room_id);
-        if (message.event.content['m.relates_to'] && message.event.content['m.relates_to']["rel_type"] == 'm.replace') return false;
+        if (message.event.content["m.relates_to"] && message.event.content["m.relates_to"]["rel_type"] == "m.replace") return false;
         if (m_chat && this.core.pcrypto.rooms[message.event.room_id]) this.core.notifier.event(message, m_chat);
       }
     });
     this.client.on("RoomMember.typing", (event, member) => {
-      this.core.store.dispatch('TYPING_EVENT', member);
+      this.core.store.dispatch("TYPING_EVENT", member);
     });
-    this.client.on('sync', (state, prevState, res) => {
-      if (state === 'PREPARED') {
+    this.client.on("sync", (state, prevState, res) => {
+      if (state === "PREPARED") {
         this.setready();
       }
 
-      this.core.store.dispatch('FETCH_CHATS').then(r => {
-        this.core.store.dispatch('FETCH_EVENTS');
-        this.core.store.commit('ALL_NOTIFICATIONS_COUNT', this.client.getRooms());
+      this.core.store.dispatch("FETCH_CHATS").then(r => {
+        this.core.store.dispatch("FETCH_EVENTS");
+        this.core.store.commit("ALL_NOTIFICATIONS_COUNT", this.client.getRooms());
       });
     });
   }
@@ -39743,7 +41208,7 @@ class mtrx_MTRX {
   setready() {
     if (!this.chatsready) {
       this.chatsready = true;
-      this.core.store.commit('SET_CHATS_READY', true);
+      this.core.store.commit("SET_CHATS_READY", true);
     }
   }
 
@@ -39764,7 +41229,8 @@ class mtrx_MTRX {
 
       return this.initdb();
     }).then(() => {
-      this.initEvents();
+      this.initEvents(); /// ?
+
       return Promise.resolve();
     });
   }
@@ -39797,18 +41263,18 @@ class mtrx_MTRX {
     // Try to get a saved token
     if (!window.cordova) return;
     var savedToken;
-    if (localStorage) savedToken = localStorage.getItem('fcmtoken5');
+    if (localStorage) savedToken = localStorage.getItem("fcmtoken5");
 
     if (savedToken && this.client.setPusher) {
-      var appName = 'pocketnet';
+      var appName = "pocketnet";
       var pusherData = {
         app_display_name: appName,
         app_id: appName + window.cordova.platformId,
         data: {
-          url: this.core.mtrx.baseUrl + '/_matrix/push/v1/notify',
+          url: this.core.mtrx.baseUrl + "/_matrix/push/v1/notify",
           default_payload: {
             aps: {
-              "sound": "default",
+              sound: "default",
               "content-available": 1
             }
           }
@@ -39816,11 +41282,11 @@ class mtrx_MTRX {
         device_display_name: window.device.manufacturer + " " + window.device.model,
         kind: null,
         // Set to null to delete the pusher
-        lang: localStorage.getItem('loc') || 'en',
+        lang: localStorage.getItem("loc") || "en",
         pushkey: savedToken
       };
       this.core.mtrx.client.setPusher(pusherData).then(() => {
-        localStorage.removeItem('fcmtoken5');
+        localStorage.removeItem("fcmtoken5");
       }, err => {
         console.log(err);
       });
@@ -39851,7 +41317,7 @@ class mtrx_MTRX {
 
 
   originalEvent(id, timeline) {
-    var rtr = timeline._timelineSet.getRelationsForEvent(e.event.event_id, 'm.reference', 'm.room.message');
+    var rtr = timeline._timelineSet.getRelationsForEvent(e.event.event_id, "m.reference", "m.room.message");
 
     if (rtr) {
       var events = rtr.getRelations();
@@ -39861,7 +41327,7 @@ class mtrx_MTRX {
 
   clearEventId(event) {
     var previd = null;
-    if (event.event.content['m.relates_to'] && event.event.content['m.relates_to']['rel_type'] == 'm.replace') previd = event.event.content['m.relates_to']['event_id'];
+    if (event.event.content["m.relates_to"] && event.event.content["m.relates_to"]["rel_type"] == "m.replace") previd = event.event.content["m.relates_to"]["event_id"];
     return previd || event.getId();
   }
 
@@ -39880,18 +41346,18 @@ class mtrx_MTRX {
     } = _ref;
     return this.textEvent(chat, text).then(r => {
       if (relation) {
-        r['m.relates_to'] = {
-          "rel_type": relation.type,
-          "event_id": this.clearEventId(relation.event)
+        r["m.relates_to"] = {
+          rel_type: relation.type,
+          event_id: this.clearEventId(relation.event)
         };
       }
 
       if (from) {
-        r['from'] = from;
+        r["from"] = from;
       }
 
       if (chat.pcrypto.canBeEncrypt()) {
-        return this.client.sendEvent(chat.roomId, 'm.room.message', r);
+        return this.client.sendEvent(chat.roomId, "m.room.message", r);
       } else return this.client.sendMessage(chat.roomId, r);
     });
   }
@@ -39922,25 +41388,25 @@ class mtrx_MTRX {
       if (promise.abort) meta.abort = promise.abort;
       return promise;
     }).then(src => {
-      if (meta.aborted) return Promise.reject('aborted');
+      if (meta.aborted) return Promise.reject("aborted");
       return Promise.resolve(this.client.mxcUrlToHttp(src));
     }).then(url => {
       fileInfo.url = url;
       let body = JSON.stringify(fileInfo);
       var r = {
         body: body,
-        msgtype: 'm.file'
+        msgtype: "m.file"
       };
 
       if (relation) {
-        r['m.relates_to'] = {
-          "rel_type": relation.type,
-          "event_id": this.clearEventId(relation.event)
+        r["m.relates_to"] = {
+          rel_type: relation.type,
+          event_id: this.clearEventId(relation.event)
         };
       }
 
       if (from) {
-        r['from'] = from;
+        r["from"] = from;
       }
 
       return this.client.sendMessage(chat.roomId, r);
@@ -39948,16 +41414,16 @@ class mtrx_MTRX {
   }
 
   sendImageBase64(chat, base64, meta, p) {
-    var method = 'toFileFetch';
-    if (base64.indexOf('data:') > -1) method = 'toFile';
+    var method = "toFileFetch";
+    if (base64.indexOf("data:") > -1) method = "toFile";
     return functions["a" /* default */].Base64[method](base64).then(file => {
       return this.sendImage(chat, base64, file, meta, p);
     });
   }
 
   sendAudioBase64(chat, base64, meta, p) {
-    var method = 'toFileFetch';
-    if (base64.indexOf('data:') > -1) method = 'toFile';
+    var method = "toFileFetch";
+    if (base64.indexOf("data:") > -1) method = "toFile";
     return functions["a" /* default */].Base64[method](base64).then(file => {
       return this.sendAudio(chat, base64, file, meta, p);
     });
@@ -39985,11 +41451,23 @@ class mtrx_MTRX {
 
       return Promise.resolve(file);
     }).then(file => {
+      var promise = this.core.mtrx.uploadContent(file);
+      if (promise.abort) meta.abort = promise.abort;
+      return Promise.resolve(file);
+    }).then(file => {
       var promise = this.core.mtrx.uploadContent(file, true);
       if (promise.abort) meta.abort = promise.abort;
       return promise;
     }).then(image => {
       if (meta.aborted) return Promise.reject('aborted');
+
+      if (meta.event && meta.event.event) {
+        info["m.relates_to"] = {
+          rel_type: meta.event.type,
+          event_id: this.clearEventId(meta.event.event)
+        };
+      }
+
       return this.client.sendImageMessage(chat.roomId, image, info, 'Image');
     });
   }
@@ -40002,9 +41480,16 @@ class mtrx_MTRX {
     if (!file) return this.sendAudioBase64(chat, base64, meta);
     let info = {};
     info.from = from;
+
+    if (meta.event && meta.event.event) {
+      info["m.relates_to"] = {
+        rel_type: meta.event.type,
+        event_id: this.clearEventId(meta.event.event)
+      };
+    }
+
     return new Promise(resolve => {
       if (chat.pcrypto.canBeEncrypt()) {
-        console.log("??????????");
         return chat.pcrypto.encryptFile(file).then(r => {
           info.secrets = r.secrets;
           return resolve(r.file);
@@ -40020,6 +41505,14 @@ class mtrx_MTRX {
       console.log(audio, info);
       if (meta.aborted) return Promise.reject('aborted');
       return this.client.sendAudioMessage(chat.roomId, audio, info, 'Audio');
+    }).then(file => {
+      let promise = this.core.mtrx.uploadContent(file);
+      if (promise.abort) meta.abort = promise.abort;
+      return promise;
+    }).then(audio => {
+      if (meta.aborted) return Promise.reject("aborted");
+      console.log("info", info);
+      return this.client.sendAudioMessage(chat.roomId, audio, info, "Audio");
     });
   }
 
@@ -40059,7 +41552,7 @@ class mtrx_MTRX {
                 console.error(e);
               }
 
-              if (!e) resolve();else reject('unable');
+              if (!e) resolve();else reject("unable");
             });
           });
         }
@@ -40190,9 +41683,9 @@ class mtrx_MTRX {
   }
 
   opencontact(contact) {
-    this.core.store.commit('setmodal', {
+    this.core.store.commit("setmodal", {
       caption: contact.name,
-      type: 'contact',
+      type: "contact",
       data: {
         contact: contact
       }
@@ -40200,9 +41693,9 @@ class mtrx_MTRX {
   }
 
   complain(caption, p) {
-    this.core.store.commit('setmodal', {
+    this.core.store.commit("setmodal", {
       caption: caption,
-      type: 'complain',
+      type: "complain",
       data: p
     });
   }
@@ -40243,7 +41736,7 @@ class mtrx_MTRX {
   }
 
   chatUsersInfo(roomId, m) {
-    if (!m) m = 'chatUsers';
+    if (!m) m = "chatUsers";
     var _users = this.core.store.state.users;
     return _.filter(_.map(this[m](roomId), user => {
       return _users[user.userId];
@@ -41611,6 +43104,7 @@ class application_Core {
     });
 
     if (!p) p = {};
+    console.log('p', p);
     this.options = {
       listofproxies: p.listofproxies
     };
@@ -42589,26 +44083,38 @@ var backButton_component = Object(componentNormalizer["a" /* default */])(
 
 /* harmony default export */ var backButton = (backButton_component.exports);
 // EXTERNAL MODULE: ./src/components/assets/topheader/index.vue + 4 modules
-var topheader = __webpack_require__("08da");
+var assets_topheader = __webpack_require__("08da");
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/assets/maincontent/index.vue?vue&type=template&id=a8a70f9c&scoped=true&
-var maincontentvue_type_template_id_a8a70f9c_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"fixedOnPageTop",class:{'bin' : _vm.pocketnet, 'bout' : !_vm.pocketnet, minimized: _vm.minimized, fix : _vm.pocketnet, active: _vm.active, unauthorized: _vm.unauthorized, modalShowed : _vm.modalShowed ? true : false, mobile: _vm.mobile},attrs:{"id":"maincontent"},on:{"mouseenter":_vm.mouseenter,"mouseleave":_vm.mouseleave}},[_c('div',{staticClass:"headerSpacerWrapper"},[_c('div',{staticClass:"headerSpacerWrapperOvf"},[_c('div',{ref:"scrollable",staticClass:"headerSpacer"},[_vm._t("content",function(){return [_vm._v("   ")]})],2)]),_c('pmenu'),(_vm.modalShowed && _vm.modalShowed.data && !_vm.hiddenInParent)?_c('modal',{on:{"close":_vm.closeModal},scopedSlots:_vm._u([{key:"header",fn:function(){return [_vm._v(_vm._s(_vm.modalShowed.caption))]},proxy:true},{key:"body",fn:function(){return [_c('div',{staticClass:"modalcommoncontent"},[(_vm.modalShowed.type == 'complain')?_c('complain',{attrs:{"p":_vm.modalShowed.data}}):_vm._e(),(_vm.modalShowed.type == 'contact')?_c('contact',{attrs:{"contact":_vm.modalShowed.data.contact}}):_vm._e(),(_vm.modalShowed.type == 'showuserselect')?_c('contacts',{attrs:{"users":_vm.modalShowed.data.users,"mode":"Select"},on:{"close":_vm.closeModal,"select":function (contact) {_vm.modalShowed.data.userselected(contact); _vm.closeModal()}}}):_vm._e()],1)]},proxy:true},{key:"footer",fn:function(){return undefined},proxy:true}],null,false,3972288297)}):_vm._e(),(!_vm.unauthorized && _vm.rbackexp)?_c('div',{staticClass:"expandp",on:{"click":_vm.setactive,"mousemove":_vm.effect}},[_vm._m(0)]):_vm._e()],1),(_vm.iconshow)?_c('transition',{attrs:{"name":"fade"}},[_c('fixedmessageicon')],1):_vm._e()],1)}
-var maincontentvue_type_template_id_a8a70f9c_scoped_true_staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"etablew"},[_c('div',{staticClass:"etable table"},[_c('div',[_c('i',{staticClass:"fas fa-expand-arrows-alt"})])])])}]
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/assets/maincontent/index.vue?vue&type=template&id=422735dc&scoped=true&
+var maincontentvue_type_template_id_422735dc_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"fixedOnPageTop",class:{
+    bin: _vm.pocketnet,
+    bout: !_vm.pocketnet,
+    minimized: _vm.minimized,
+    fix: _vm.pocketnet,
+    active: _vm.active,
+    unauthorized: _vm.unauthorized,
+    modalShowed: _vm.modalShowed ? true : false,
+    mobile: _vm.mobile,
+  },attrs:{"id":"maincontent"},on:{"mouseenter":_vm.mouseenter,"mouseleave":_vm.mouseleave}},[_c('div',{staticClass:"headerSpacerWrapper"},[_c('div',{staticClass:"headerSpacerWrapperOvf"},[_c('div',{ref:"scrollable",staticClass:"headerSpacer"},[_vm._t("content",function(){return [_vm._v("   ")]})],2)]),_c('pmenu'),(_vm.modalShowed && _vm.modalShowed.data && !_vm.hiddenInParent)?_c('modal',{on:{"close":_vm.closeModal},scopedSlots:_vm._u([{key:"header",fn:function(){return [_vm._v(_vm._s(_vm.modalShowed.caption))]},proxy:true},{key:"body",fn:function(){return [_c('div',{staticClass:"modalcommoncontent"},[(_vm.modalShowed.type == 'complain')?_c('complain',{attrs:{"p":_vm.modalShowed.data}}):_vm._e(),(_vm.modalShowed.type == 'contact')?_c('contact',{attrs:{"contact":_vm.modalShowed.data.contact}}):_vm._e(),(_vm.modalShowed.type == 'showuserselect')?_c('contacts',{attrs:{"users":_vm.modalShowed.data.users,"mode":"Select"},on:{"close":_vm.closeModal,"select":function (contact) {
+                _vm.modalShowed.data.userselected(contact);
+                _vm.closeModal();
+              }}}):_vm._e()],1)]},proxy:true},{key:"footer",fn:function(){return undefined},proxy:true}],null,false,2266927641)}):_vm._e(),(!_vm.unauthorized && _vm.rbackexp)?_c('div',{staticClass:"expandp",on:{"click":_vm.setactive,"mousemove":_vm.effect}},[_vm._m(0)]):_vm._e()],1),(_vm.iconshow)?_c('transition',{attrs:{"name":"fade"}},[_c('fixedmessageicon')],1):_vm._e()],1)}
+var maincontentvue_type_template_id_422735dc_scoped_true_staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"etablew"},[_c('div',{staticClass:"etable table"},[_c('div',[_c('i',{staticClass:"fas fa-expand-arrows-alt"})])])])}]
 
 
-// CONCATENATED MODULE: ./src/components/assets/maincontent/index.vue?vue&type=template&id=a8a70f9c&scoped=true&
+// CONCATENATED MODULE: ./src/components/assets/maincontent/index.vue?vue&type=template&id=422735dc&scoped=true&
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./src/components/assets/maincontent?vue&type=script&lang=js&
 
 /* harmony default export */ var maincontent_vue_type_script_lang_js_ = ({
-  name: 'maincontent',
+  name: "maincontent",
   props: {
     rbackexp: Boolean
   },
   components: {
-    'contact': () => Promise.resolve(/* import() */).then(__webpack_require__.bind(null, "d3ff")),
-    'contacts': () => Promise.resolve(/* import() */).then(__webpack_require__.bind(null, "f978")),
-    'complain': () => __webpack_require__.e(/* import() */ 14).then(__webpack_require__.bind(null, "c27d"))
+    contact: () => Promise.resolve(/* import() */).then(__webpack_require__.bind(null, "d3ff")),
+    contacts: () => Promise.resolve(/* import() */).then(__webpack_require__.bind(null, "f978")),
+    complain: () => __webpack_require__.e(/* import() */ 12).then(__webpack_require__.bind(null, "c27d"))
   },
   data: function () {
     return {
@@ -42633,38 +44139,38 @@ var maincontentvue_type_template_id_a8a70f9c_scoped_true_staticRenderFns = [func
   }),
   methods: {
     setactive: function () {
-      this.$store.commit('active', true);
-      this.$store.commit('blockactive', {
+      this.$store.commit("active", true);
+      this.$store.commit("blockactive", {
         value: true,
-        item: 'main'
+        item: "main"
       });
-      this.$store.commit('setiteraction', true);
+      this.$store.commit("setiteraction", true);
     },
     mouseenter: function () {
       /*this.$store.commit('active', true)
-      this.$store.commit('blockactive', {value : true, item : 'main'})*/
+            this.$store.commit('blockactive', {value : true, item : 'main'})*/
     },
     mouseleave: function () {
       if (this.$store.state.autohide) {
-        this.$store.commit('active', false);
+        this.$store.commit("active", false);
       }
 
-      this.$store.commit('blockactive', {
+      this.$store.commit("blockactive", {
         value: false,
-        item: 'main'
+        item: "main"
       });
     },
     effect: function (e) {
       /*const x = e.pageX - e.target.offsetLeft
-      const y = e.pageY - e.target.offsetTop
-        e.target.style.setProperty('--x', `${ x }px`)
-      e.target.style.setProperty('--y', `${ y }px`)*/
+            const y = e.pageY - e.target.offsetTop
+              e.target.style.setProperty('--x', `${ x }px`)
+            e.target.style.setProperty('--y', `${ y }px`)*/
     },
     closeModal: function () {
-      this.$store.commit('setmodal', null);
+      this.$store.commit("setmodal", null);
     },
     scroll: function (v) {
-      this.$refs['scrollable'].scrollTop = v || 0;
+      this.$refs["scrollable"].scrollTop = v || 0;
     }
   }
 });
@@ -42676,7 +44182,7 @@ var maincontentvue_type_template_id_a8a70f9c_scoped_true_staticRenderFns = [func
 
 function maincontent_injectStyles (context) {
   
-  var style0 = __webpack_require__("52ce")
+  var style0 = __webpack_require__("7069")
 if (style0.__inject__) style0.__inject__(context)
 
 }
@@ -42685,11 +44191,11 @@ if (style0.__inject__) style0.__inject__(context)
 
 var maincontent_component = Object(componentNormalizer["a" /* default */])(
   assets_maincontent_vue_type_script_lang_js_,
-  maincontentvue_type_template_id_a8a70f9c_scoped_true_render,
-  maincontentvue_type_template_id_a8a70f9c_scoped_true_staticRenderFns,
+  maincontentvue_type_template_id_422735dc_scoped_true_render,
+  maincontentvue_type_template_id_422735dc_scoped_true_staticRenderFns,
   false,
   maincontent_injectStyles,
-  "a8a70f9c",
+  "422735dc",
   null
   ,true
 )
@@ -42828,10 +44334,45 @@ var linepreloader_component = Object(componentNormalizer["a" /* default */])(
 )
 
 /* harmony default export */ var linepreloader = (linepreloader_component.exports);
-// EXTERNAL MODULE: ./src/views/chats.vue + 24 modules
+// EXTERNAL MODULE: ./src/views/chats.vue + 4 modules
 var views_chats = __webpack_require__("9a41");
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App.vue?vue&type=script&lang=js&shadow
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -42948,7 +44489,7 @@ var views_chats = __webpack_require__("9a41");
 vue_esm["default"].use(vuejs_dialog_min_default.a);
 
 
-vue_esm["default"].component('eventsEvent', events_event["default"]); ////////
+vue_esm["default"].component("eventsEvent", events_event["default"]); ////////
 
 vue_esm["default"].use(vue_m_message_src);
 vue_esm["default"].use(vue_textarea_autosize_esm);
@@ -42979,6 +44520,7 @@ vue_esm["default"].prototype.$f = functions["a" /* default */];
 
 
 
+
  ////////
 
 vue_esm["default"].component('pmenu', pmenu);
@@ -42992,7 +44534,7 @@ vue_esm["default"].component('bgimage', bgimage);
 vue_esm["default"].component('logotype', logotype);
 vue_esm["default"].component('dropdownMenu', dropdownMenu);
 vue_esm["default"].component('backButton', backButton);
-vue_esm["default"].component('topheader', topheader["a" /* default */]);
+vue_esm["default"].component('topheader', assets_topheader["a" /* default */]);
 vue_esm["default"].component('maincontent', maincontent);
 vue_esm["default"].component('search', search);
 vue_esm["default"].component('linepreloader', linepreloader);
@@ -43005,10 +44547,10 @@ vue_esm["default"].directive('click-outside', {
       }
     };
 
-    document.body.addEventListener('click', el.clickOutsideEvent);
+    document.body.addEventListener("click", el.clickOutsideEvent);
   },
   unbind: function (el) {
-    document.body.removeEventListener('click', el.clickOutsideEvent);
+    document.body.removeEventListener("click", el.clickOutsideEvent);
   }
 }); /// localization
 
@@ -43038,7 +44580,7 @@ const {
   messages
 } = loadMessages();
 const i18n = new vue_i18n_esm({
-  locale: 'en',
+  locale: "en",
   messages: messages,
   silentTranslationWarn: true
 }); ///
@@ -43046,7 +44588,7 @@ const i18n = new vue_i18n_esm({
 var Appvue_type_script_lang_js_shadow_core = null;
 var g = {
   install: function (Vue) {
-    Object.defineProperty(Vue.prototype, 'core', {
+    Object.defineProperty(Vue.prototype, "core", {
       get() {
         return Appvue_type_script_lang_js_shadow_core;
       }
@@ -43070,7 +44612,7 @@ var scriptsadded = false;
   i18n,
   store: vuex_store,
   router: router_router,
-  name: 'App',
+  name: "App",
   components: {
     MainWrapper: main,
     chats: views_chats["default"],
@@ -43079,23 +44621,23 @@ var scriptsadded = false;
   props: {
     address: {
       type: String,
-      default: ''
+      default: ""
     },
     privatekey: {
       type: String,
-      defautt: ''
+      defautt: ""
     },
     pocketnet: {
       type: String,
-      default: ''
+      default: ""
     },
     mobile: {
       type: String,
-      default: ''
+      default: ""
     },
     recording: {
       type: String,
-      default: ''
+      default: ""
     },
     pkoindisabled: {
       type: String,
@@ -43119,7 +44661,7 @@ var scriptsadded = false;
         if (availableLocales[this.localization]) {
           i18n.locale = this.localization;
         } else {
-          i18n.locale = 'en';
+          i18n.locale = "en";
         } // Update the teamroom messages
 
 
@@ -43156,8 +44698,7 @@ var scriptsadded = false;
       return this.$store.state.minimized;
     },
     active: function () {
-      if (this.mobile) return false;
-      return this.$store.state.active;
+      return true;
     },
     globalpreloader: function () {
       return this.$store.state.globalpreloader;
@@ -43174,7 +44715,7 @@ var scriptsadded = false;
   },
   methods: {
     hide: function () {
-      this.$store.commit('minimize', true);
+      this.$store.commit("minimize", true);
       setTimeout(() => {
         if (this.$route.name !== 'chats' &&
         /*this.$route.name !== 'chat' &&*/
@@ -43186,7 +44727,7 @@ var scriptsadded = false;
       }, 500);
     },
     iteraction: function () {
-      this.$store.commit('setiteraction', true);
+      this.$store.commit("setiteraction", true);
     },
 
     importInitialScripts() {
@@ -43205,28 +44746,28 @@ var scriptsadded = false;
     setPusher(fcmtoken) {
       // Try to get a saved token
       var savedToken;
-      if (localStorage) savedToken = localStorage.getItem('fcmtoken5'); // If we need to set a new pusher, or delete one
+      if (localStorage) savedToken = localStorage.getItem("fcmtoken5"); // If we need to set a new pusher, or delete one
 
       if (savedToken != fcmtoken) {
         // Wait for Matrix client
         this.core.mtrx.wait().then(r => {
           this.core.mtrx.deletePusher();
           var data = {
-            url: this.core.mtrx.baseUrl + '/_matrix/push/v1/notify'
+            url: this.core.mtrx.baseUrl + "/_matrix/push/v1/notify"
           };
-          var appName = 'pocketnet';
+          var appName = "pocketnet";
           var pusherData = {
             app_display_name: appName,
             app_id: appName + window.cordova.platformId,
             data: data,
             user_id: this.core.mtrx.client.credentials.userId,
             device_display_name: window.device.manufacturer + " " + window.device.model,
-            kind: 'http',
-            lang: localStorage.getItem('loc') || 'en',
+            kind: "http",
+            lang: localStorage.getItem("loc") || "en",
             pushkey: fcmtoken
           };
           this.core.mtrx.client.setPusher(pusherData).then(() => {
-            localStorage.setItem('fcmtoken5', fcmtoken);
+            localStorage.setItem("fcmtoken5", fcmtoken);
           }, err => {
             console.log(err);
           });
@@ -43236,53 +44777,61 @@ var scriptsadded = false;
 
     // Generate the teamrooms messages
     generateTeamroomMessages() {
-      this.$store.commit('SET_POCKETTEAMMESSAGES', [{
+      this.$store.commit("SET_POCKETTEAMMESSAGES", [{
         id: 1,
         text: `
-							<h4>${this.$i18n.t('teamMessages.1-title')}</h4>
+							<h4>${this.$i18n.t("teamMessages.1-title")}</h4>
 							<ul>
-								<li>${this.$i18n.t('teamMessages.1-list1')}</li>
-								<li class="mt">${this.$i18n.t('teamMessages.1-list2')}</li>
-								<li class="mt">${this.$i18n.t('teamMessages.1-list3')}</li>
+								<li>${this.$i18n.t("teamMessages.1-list1")}</li>
+								<li class="mt">${this.$i18n.t("teamMessages.1-list2")}</li>
+								<li class="mt">${this.$i18n.t("teamMessages.1-list3")}</li>
 							</ul>
 						`,
-        previewText: this.$i18n.t('teamMessages.1-title')
+        previewText: this.$i18n.t("teamMessages.1-title")
       } //<li class="mt">${this.$i18n.t('teamMessages.1-list4')}</li>
 
       /*,
-      {
-        id: 2,
-        text: `
-          <h4>${this.$i18n.t('teamMessages.2-title')}</h4>
-          <span>${this.$i18n.t('teamMessages.2-message1')}</span>
-          <ul>
-            <li>${this.$i18n.t('teamMessages.2-list1')}</li>
-            <li class="mt">${this.$i18n.t('teamMessages.2-list2')}</li>
-            <li class="mt">${this.$i18n.t('teamMessages.2-list3')}</li>
-          </ul>
-          <span>${this.$i18n.t('teamMessages.2-message2')}</span>
-        `,
-        previewText: this.$i18n.t('teamMessages.2-title')
-      }*/
+        {
+          id: 2,
+          text: `
+            <h4>${this.$i18n.t('teamMessages.2-title')}</h4>
+            <span>${this.$i18n.t('teamMessages.2-message1')}</span>
+            <ul>
+              <li>${this.$i18n.t('teamMessages.2-list1')}</li>
+              <li class="mt">${this.$i18n.t('teamMessages.2-list2')}</li>
+              <li class="mt">${this.$i18n.t('teamMessages.2-list3')}</li>
+            </ul>
+            <span>${this.$i18n.t('teamMessages.2-message2')}</span>
+          `,
+          previewText: this.$i18n.t('teamMessages.2-title')
+        }*/
       ]);
     }
 
   },
 
   beforeCreate() {
-    this.$store.commit('init');
+    this.$store.commit("init");
   },
 
   created() {
-    /*this.pocketnet = false
-    this.mobile = !this.pocketnet
-    this.recording = TransformStreamDefaultController*/
-    this.$store.commit('setPocketnet', this.pocketnet);
-    this.$store.commit('setMobile', this.mobile);
-    this.$store.commit('setVoiceMessagesEnabled', this.recording);
-    this.$store.commit('pkoindisabled', this.pkoindisabled);
-    this.$store.commit('clearall');
-    this.$store.commit('ls');
+    // this.pocketnet = true
+    // this.mobile = false
+    // this.recording = true
+    this.$store.commit('setIsLocalStorageChatAuth', isMessenger());
+
+    if (this.$store.state.isLocalStorageChatAuth) {
+      const fromMnemonic = getDecryptedMnemonic();
+      this.address = fromMnemonic.addressUser;
+      this.privatekey = fromMnemonic.privateKey.toString('hex');
+      this.recording = true;
+    }
+
+    this.$store.commit("setPocketnet", this.pocketnet);
+    this.$store.commit("setMobile", this.mobile);
+    this.$store.commit("setVoiceMessagesEnabled", this.recording);
+    this.$store.commit("clearall");
+    this.$store.commit("ls");
     this.importInitialScripts();
     this.generateTeamroomMessages();
     setTimeout(() => {
@@ -43290,186 +44839,217 @@ var scriptsadded = false;
     }, 5000);
     var testUsers = {
       matrixMan: {
-        address: functions["a" /* default */].hexEncode('PToMRMsMVh9dj4Cpa7yu1pB5iq65g4jrVC'),
-        privateKey: '510aa931cdee36b9ac467ad04a2619f46be88815812b46e976e36bc8dbcdc41b'
+        address: functions["a" /* default */].hexEncode("PToMRMsMVh9dj4Cpa7yu1pB5iq65g4jrVC"),
+        privateKey: "510aa931cdee36b9ac467ad04a2619f46be88815812b46e976e36bc8dbcdc41b"
       },
       ltme: {
-        address: functions["a" /* default */].hexEncode('PKszvjHwMWubQpeEKnQhRonGBVFWcJDbNJ'),
-        privateKey: '513bc6a5014e7dd203537227fb0a78f7b974853478fcf95103125f6d793a5f8b'
+        address: functions["a" /* default */].hexEncode("PKszvjHwMWubQpeEKnQhRonGBVFWcJDbNJ"),
+        privateKey: "513bc6a5014e7dd203537227fb0a78f7b974853478fcf95103125f6d793a5f8b"
       },
       travisnoscot1: {
-        address: functions["a" /* default */].hexEncode('PDjvHUQjcDX8Vq6rtpKveUDPtwPVUZEW7m'),
-        privateKey: '63d91d001f7b5167a707dd4ee7e2638fc13e1fa3ff7171b040b432bcd1054e28'
+        address: functions["a" /* default */].hexEncode("PDjvHUQjcDX8Vq6rtpKveUDPtwPVUZEW7m"),
+        privateKey: "63d91d001f7b5167a707dd4ee7e2638fc13e1fa3ff7171b040b432bcd1054e28"
       },
       mobRoocky: {
-        address: functions["a" /* default */].hexEncode('PCMnk8T3Edu81iGcTEpVCFq8FQd6UBXi2y'),
-        privateKey: '0bbf6fb0dbf78a26f00345f6f96d4f76f52e0093417c51a1b7bccb7ca92e55df'
+        address: functions["a" /* default */].hexEncode("PCMnk8T3Edu81iGcTEpVCFq8FQd6UBXi2y"),
+        privateKey: "0bbf6fb0dbf78a26f00345f6f96d4f76f52e0093417c51a1b7bccb7ca92e55df"
       },
       user1: {
-        address: functions["a" /* default */].hexEncode('PKxqtUuK3B6qwAxs6HLhvxrQVExuMwKWd5'),
-        privateKey: '28f0fdc30094d517bc08abca3f219d77fc32230e313bbf0b699ecd42f80de82a0'
+        address: functions["a" /* default */].hexEncode("PKxqtUuK3B6qwAxs6HLhvxrQVExuMwKWd5"),
+        privateKey: "28f0fdc30094d517bc08abca3f219d77fc32230e313bbf0b699ecd42f80de82a0"
       },
       user2: {
-        address: functions["a" /* default */].hexEncode('PGe4xVAJRJtbD8swPipE2ug9Zk1rhSTa1y'),
-        privateKey: '0b4562275da7e60a57e10432bdc7e3318dd9699b8b928224ba360b9fb951c77b'
+        address: functions["a" /* default */].hexEncode("PGe4xVAJRJtbD8swPipE2ug9Zk1rhSTa1y"),
+        privateKey: "0b4562275da7e60a57e10432bdc7e3318dd9699b8b928224ba360b9fb951c77b"
       },
       FakeBadash: {
-        address: functions["a" /* default */].hexEncode('PDWPDFikMhLJHtiKLLXZGzfgphRcd19eHe'),
-        privateKey: '99d8ce99383ccc5d6404535b98f2b43ce5ab939a28bfc52a442565b2351039fa'
+        address: functions["a" /* default */].hexEncode("PDWPDFikMhLJHtiKLLXZGzfgphRcd19eHe"),
+        privateKey: "99d8ce99383ccc5d6404535b98f2b43ce5ab939a28bfc52a442565b2351039fa"
       },
       Faketravis: {
-        address: functions["a" /* default */].hexEncode('PGURYzvoXuSvuwCuDty2wW37omjiKgzV5a'),
-        privateKey: '93641f20095aa15b89b78d395ebe0a5a9b149ea2b54c57d896091c0ea9b86dfd'
+        address: functions["a" /* default */].hexEncode("PGURYzvoXuSvuwCuDty2wW37omjiKgzV5a"),
+        privateKey: "93641f20095aa15b89b78d395ebe0a5a9b149ea2b54c57d896091c0ea9b86dfd"
       },
       fakeRocky: {
-        address: functions["a" /* default */].hexEncode('PRDKVP4yvF2wW8p5FUVkzrCvXYE8SMGkQK'),
-        privateKey: '80d213d272405d4ff51752f91e79c639919f5f9f302583bdaa1c767b044ce2c0'
+        address: functions["a" /* default */].hexEncode("PRDKVP4yvF2wW8p5FUVkzrCvXYE8SMGkQK"),
+        privateKey: "80d213d272405d4ff51752f91e79c639919f5f9f302583bdaa1c767b044ce2c0"
       },
       fakeFuture2: {
-        address: 'PBHvKTH5TGQYDbRHgQHTTvaBf7tuww6ho7',
-        privateKey: '71cacb25f90b18e356e33bc12c428c2e8b6b7c6e2950ab6344412f226aab0b2c'
+        address: "PBHvKTH5TGQYDbRHgQHTTvaBf7tuww6ho7",
+        privateKey: "71cacb25f90b18e356e33bc12c428c2e8b6b7c6e2950ab6344412f226aab0b2c"
       },
       fakeFuture: {
-        address: functions["a" /* default */].hexEncode('PBHvKTH5TGQYDbRHgQHTTvaBf7tuww6ho7'),
-        privateKey: '71cacb25f90b18e356e33bc12c428c2e8b6b7c6e2950ab6344412f226aab0b2c'
+        address: functions["a" /* default */].hexEncode("PBHvKTH5TGQYDbRHgQHTTvaBf7tuww6ho7"),
+        privateKey: "71cacb25f90b18e356e33bc12c428c2e8b6b7c6e2950ab6344412f226aab0b2c"
       },
       encMan: {
-        address: functions["a" /* default */].hexEncode('PEkKrb7WJgfU3rCkkU9JYT8jbGiQsw8Qy8'),
-        privateKey: '616fd57f7610288978f4c01797a90d56b0c30392e598a2504b98c7a7246569a5'
+        address: functions["a" /* default */].hexEncode("PEkKrb7WJgfU3rCkkU9JYT8jbGiQsw8Qy8"),
+        privateKey: "616fd57f7610288978f4c01797a90d56b0c30392e598a2504b98c7a7246569a5"
       },
       harisCalvin: {
-        address: functions["a" /* default */].hexEncode('PXEWRce8siwbQWArQWyjnooogAEieHwhVd'),
-        privateKey: '218bcb76df20438c1431c0394a42947f78f279bea987d7b238bfbd1cb1533b62'
+        address: functions["a" /* default */].hexEncode("PXEWRce8siwbQWArQWyjnooogAEieHwhVd"),
+        privateKey: "218bcb76df20438c1431c0394a42947f78f279bea987d7b238bfbd1cb1533b62"
       },
       oneSomeoneNigga: {
-        address: functions["a" /* default */].hexEncode('PGyjEoqmmK2tm6xmg69hGoSNM6hUrc4VfE'),
-        privateKey: '254f5b9394f0490e78b41c6bf615bfd8e290fde3fb6d862f166b181b35764b06'
+        address: functions["a" /* default */].hexEncode("PGyjEoqmmK2tm6xmg69hGoSNM6hUrc4VfE"),
+        privateKey: "254f5b9394f0490e78b41c6bf615bfd8e290fde3fb6d862f166b181b35764b06"
       },
       gomer: {
-        address: functions["a" /* default */].hexEncode('PVSdoFQqAg86p6tbAW8Y6CGGGjhiXkr4qh'),
-        privateKey: '105de1935fa665bdc23b1b02bcdb3f62e01a3ad48823d5348edb5b94ec1b4526'
+        address: functions["a" /* default */].hexEncode("PVSdoFQqAg86p6tbAW8Y6CGGGjhiXkr4qh"),
+        privateKey: "105de1935fa665bdc23b1b02bcdb3f62e01a3ad48823d5348edb5b94ec1b4526"
       },
       bart: {
-        address: functions["a" /* default */].hexEncode('PWioUw52q4iNpMQUauNYaWg9JpsPE1u9Ut'),
-        privateKey: 'a74bc4ee63290dd051d659fe46962176d2b9193e04104dea63116d25703bad72'
+        address: functions["a" /* default */].hexEncode("PWioUw52q4iNpMQUauNYaWg9JpsPE1u9Ut"),
+        privateKey: "a74bc4ee63290dd051d659fe46962176d2b9193e04104dea63116d25703bad72"
       },
       edSheeran: {
-        address: functions["a" /* default */].hexEncode('PVeqjqJk2GthxBK6QdhCCfQVEX1SAK92As'),
-        privateKey: 'd89952018721e6762de13fa2f1891b0dc2d1f1e75402ba483251086b2ba181ac'
+        address: functions["a" /* default */].hexEncode("PVeqjqJk2GthxBK6QdhCCfQVEX1SAK92As"),
+        privateKey: "d89952018721e6762de13fa2f1891b0dc2d1f1e75402ba483251086b2ba181ac"
       },
       duftPunkMan: {
-        address: functions["a" /* default */].hexEncode('PFnN8SExxLsUjMKzs2avdvBdcA3ZKXPPkF'),
-        privateKey: '7d1a31cc49a05692cfd992359cd27e8b3783cd186d98053ea0b9307b00a19018'
+        address: functions["a" /* default */].hexEncode("PFnN8SExxLsUjMKzs2avdvBdcA3ZKXPPkF"),
+        privateKey: "7d1a31cc49a05692cfd992359cd27e8b3783cd186d98053ea0b9307b00a19018"
       },
       jcole: {
-        address: functions["a" /* default */].hexEncode('P93cWU7X31wqn3R9GcUZ7c3fD11asXum5y'),
-        privateKey: '900099127ad048d64523c4701d72d67b5b7f2afb18debbfdc53587f04a29c808'
+        address: functions["a" /* default */].hexEncode("P93cWU7X31wqn3R9GcUZ7c3fD11asXum5y"),
+        privateKey: "900099127ad048d64523c4701d72d67b5b7f2afb18debbfdc53587f04a29c808"
       },
       flowMan: {
-        address: functions["a" /* default */].hexEncode('PM4gVCcWnTmysUXhMukoQA2mT7GpfWQvck'),
-        privateKey: '12d28e4c950193665dcaaa32129c061b2213e736ffe20918f0f13b6a2857cc32'
+        address: functions["a" /* default */].hexEncode("PM4gVCcWnTmysUXhMukoQA2mT7GpfWQvck"),
+        privateKey: "12d28e4c950193665dcaaa32129c061b2213e736ffe20918f0f13b6a2857cc32"
       },
       JokeMan: {
-        address: functions["a" /* default */].hexEncode('PMSULgjrsCsEnWgNigCga5jSjhCvYBFSA8'),
-        privateKey: 'f7a2518393db3779a4394f4084473847bc4260a5aad20859eff9d32ab03c310e'
+        address: functions["a" /* default */].hexEncode("PMSULgjrsCsEnWgNigCga5jSjhCvYBFSA8"),
+        privateKey: "f7a2518393db3779a4394f4084473847bc4260a5aad20859eff9d32ab03c310e"
       },
       omgMan: {
-        address: functions["a" /* default */].hexEncode('P9R3aNvyjRbqTWfy5q1h5qvXFYaDtqaRi2'),
-        privateKey: '80b4350df8c033a63fd7c6b71516ae05ab3a23a604a39afba5874b87b4effbf8'
+        address: functions["a" /* default */].hexEncode("P9R3aNvyjRbqTWfy5q1h5qvXFYaDtqaRi2"),
+        privateKey: "80b4350df8c033a63fd7c6b71516ae05ab3a23a604a39afba5874b87b4effbf8"
       },
       nineBot: {
-        address: functions["a" /* default */].hexEncode('PNcvYsMXzf4RVmS9AjRYEqeeGjk1PiDjvF'),
-        privateKey: '447554f94a3512a420ef6d089411dff3bc6d170f65e246cc52fc30aa9ed2216c'
+        address: functions["a" /* default */].hexEncode("PNcvYsMXzf4RVmS9AjRYEqeeGjk1PiDjvF"),
+        privateKey: "447554f94a3512a420ef6d089411dff3bc6d170f65e246cc52fc30aa9ed2216c"
       },
       tenBot: {
-        address: functions["a" /* default */].hexEncode('PS9F8hzGSxeL1Lc2VGvPoqXHotZvpoVkkX'),
-        privateKey: '659bd118d33e541bb042015723cab1e6b644a9d330a988b10e6d593f9abe3542'
+        address: functions["a" /* default */].hexEncode("PS9F8hzGSxeL1Lc2VGvPoqXHotZvpoVkkX"),
+        privateKey: "659bd118d33e541bb042015723cab1e6b644a9d330a988b10e6d593f9abe3542"
       },
       bikeBot: {
-        address: functions["a" /* default */].hexEncode('PBK1GDpiLNVFrKsPVAaNLU92byFY5P5KBr'),
-        privateKey: '4c1ee4ae821a1ca885d77db84518b4dcbcd4efbed69603c8706b9557618529f9'
+        address: functions["a" /* default */].hexEncode("PBK1GDpiLNVFrKsPVAaNLU92byFY5P5KBr"),
+        privateKey: "4c1ee4ae821a1ca885d77db84518b4dcbcd4efbed69603c8706b9557618529f9"
       },
       angryBot: {
-        address: functions["a" /* default */].hexEncode('PBMcLRBQNWtNQZYUbRZZAd5FuZ8yb7HMX2'),
-        privateKey: '87bec25e930671a06e032dca484083d4b79e23aa985781995882d5d4594f8d8d'
+        address: functions["a" /* default */].hexEncode("PBMcLRBQNWtNQZYUbRZZAd5FuZ8yb7HMX2"),
+        privateKey: "87bec25e930671a06e032dca484083d4b79e23aa985781995882d5d4594f8d8d"
       },
       test099090: {
-        address: functions["a" /* default */].hexEncode('PP582V47P8vCvXjdV3inwYNgxScZCuTWsq'),
-        privateKey: '14ede296d13f8111c77a1da82519939329ee1b81ab23203da48df3f5e52fee3d'
+        address: functions["a" /* default */].hexEncode("PP582V47P8vCvXjdV3inwYNgxScZCuTWsq"),
+        privateKey: "14ede296d13f8111c77a1da82519939329ee1b81ab23203da48df3f5e52fee3d"
       },
       tony: {
-        address: functions["a" /* default */].hexEncode('TLENU8HFyz8PqzpKBDWeN6Xix6rM8wjYKd'),
-        privateKey: '8cf816c1c7a51cbc114db9aac8896b8654260f9b3a985232f27cf32823c7f45f'
+        address: functions["a" /* default */].hexEncode("TLENU8HFyz8PqzpKBDWeN6Xix6rM8wjYKd"),
+        privateKey: "8cf816c1c7a51cbc114db9aac8896b8654260f9b3a985232f27cf32823c7f45f"
       },
       invoker: {
-        address: functions["a" /* default */].hexEncode('TPjN8Dy4BpGDezMNw2ePuEdHiHetTvR3Mb'),
-        privateKey: 'a7ded16bd9d3350d6c3d233e6905b51e61bd879ba152ae24d0f8def76c4581c7'
+        address: functions["a" /* default */].hexEncode("TPjN8Dy4BpGDezMNw2ePuEdHiHetTvR3Mb"),
+        privateKey: "a7ded16bd9d3350d6c3d233e6905b51e61bd879ba152ae24d0f8def76c4581c7"
       },
       drowRanger: {
-        address: functions["a" /* default */].hexEncode('TU8fAf96kSfQzmxmpjRDSSqvCiPWzWt67J'),
-        privateKey: '38484a2047b5c8170847a97fc5cddf3d485c934c6532a51a73f64ec7e4659891'
+        address: functions["a" /* default */].hexEncode("TU8fAf96kSfQzmxmpjRDSSqvCiPWzWt67J"),
+        privateKey: "38484a2047b5c8170847a97fc5cddf3d485c934c6532a51a73f64ec7e4659891"
       },
       nevermore: {
-        address: functions["a" /* default */].hexEncode('TKJ7xAC18XC4zQBvkNAWhkr3i7cARu11Uv'),
-        privateKey: '8ec7f71d16b07d29bb49b3bc3054b5a4d2e65fb559e0ae695503568227584f53'
+        address: functions["a" /* default */].hexEncode("TKJ7xAC18XC4zQBvkNAWhkr3i7cARu11Uv"),
+        privateKey: "8ec7f71d16b07d29bb49b3bc3054b5a4d2e65fb559e0ae695503568227584f53"
       },
       stormSpirit: {
-        address: functions["a" /* default */].hexEncode('TZBHmnZwLedPtHcJfJnFsbxobGuDKGf9uA'),
-        privateKey: '642aaa706fe94ea77239468cb9aad6b463472793a2c4e1f60acf22078770c45f'
+        address: functions["a" /* default */].hexEncode("TZBHmnZwLedPtHcJfJnFsbxobGuDKGf9uA"),
+        privateKey: "642aaa706fe94ea77239468cb9aad6b463472793a2c4e1f60acf22078770c45f"
       },
       morph: {
-        address: functions["a" /* default */].hexEncode('TXyieuLsCntT1p4ougtiKURtYTxcdvWN1L'),
-        privateKey: '8f59a6a6b7b8c1f63be47a6f571a11d726e9d7cde2baff52a51dc72326b6abb4'
+        address: functions["a" /* default */].hexEncode("TXyieuLsCntT1p4ougtiKURtYTxcdvWN1L"),
+        privateKey: "8f59a6a6b7b8c1f63be47a6f571a11d726e9d7cde2baff52a51dc72326b6abb4"
       },
       alchemist: {
-        address: functions["a" /* default */].hexEncode('TT2CeQuHiM8E8hG4rkJcaMKQ8gWqhZmNUH'),
-        privateKey: '957ad5e2a009e4c0f06f0ae2737ea4c36c48fa8312555fcd104ca9cff7db6848'
+        address: functions["a" /* default */].hexEncode("TT2CeQuHiM8E8hG4rkJcaMKQ8gWqhZmNUH"),
+        privateKey: "957ad5e2a009e4c0f06f0ae2737ea4c36c48fa8312555fcd104ca9cff7db6848"
       },
       public_user_test: {
-        address: functions["a" /* default */].hexEncode('TLMXdC2UYSfMVbLzKtmJJTi4oK9LNHNVju'),
-        privateKey: '509b219c5cead9545039ae38d428813af6671dbee3e37cadd2cd22f152013f2a'
+        address: functions["a" /* default */].hexEncode("TLMXdC2UYSfMVbLzKtmJJTi4oK9LNHNVju"),
+        privateKey: "509b219c5cead9545039ae38d428813af6671dbee3e37cadd2cd22f152013f2a"
       },
       cleanUser: {
-        address: functions["a" /* default */].hexEncode('THCRHFtVAoeDGLg548C4bQxXeDg9bwrs5K'),
-        privateKey: '666919a742eb63bededea3fddc44b526148d8b0eb1126b0aaff480a2af888d92'
+        address: functions["a" /* default */].hexEncode("THCRHFtVAoeDGLg548C4bQxXeDg9bwrs5K"),
+        privateKey: "666919a742eb63bededea3fddc44b526148d8b0eb1126b0aaff480a2af888d92"
       },
       userwithoutavatar: {
-        address: functions["a" /* default */].hexEncode('TVcPMgVQ9TxgpzNrQyEAei5cnnR9jzXtzE'),
-        privateKey: '2a3e96562c23a40e3d439b823453fb8fe6f8fb2c0267e8d2411734b3bdff90dd'
+        address: functions["a" /* default */].hexEncode("TVcPMgVQ9TxgpzNrQyEAei5cnnR9jzXtzE"),
+        privateKey: "2a3e96562c23a40e3d439b823453fb8fe6f8fb2c0267e8d2411734b3bdff90dd"
       },
       unnamed: {
-        address: functions["a" /* default */].hexEncode('THsA8rwdeAkq5bePA71Nw5CGtFg2duyDSq'),
-        privateKey: '27b42dfba3d20ae7a945e09dd0688137fa7963fd48b94f7b4027dc4eed874a96'
+        address: functions["a" /* default */].hexEncode("THsA8rwdeAkq5bePA71Nw5CGtFg2duyDSq"),
+        privateKey: "27b42dfba3d20ae7a945e09dd0688137fa7963fd48b94f7b4027dc4eed874a96"
       }
     };
     var actualUser = {
-      address: this.address ? functions["a" /* default */].hexEncode(this.address) : '',
+      address: this.address ? functions["a" /* default */].hexEncode(this.address) : "",
       privateKey: this.privatekey
     };
-    var username = 'nevermore';
+    var username = "nevermore";
     var user = this.address && this.privatekey ? actualUser : testUsers[`${username}`];
-    var listofproxies = functions["a" /* default */].deep(window, 'window.POCKETNETINSTANCE.options.listofproxies') || [{
-      host: 'test.pocketnet.app',
-      port: 8899,
-      wss: 8099
+
+    if (this.$store.state.isLocalStorageChatAuth) {
+      var listofproxies = [{
+        host: '5.pocketnet.app',
+        port: 8899,
+        wss: 8099
+      }, {
+        host: '1.pocketnet.app',
+        port: 8899,
+        wss: 8099
+      }, {
+        host: '2.pocketnet.app',
+        port: 8899,
+        wss: 8099
+      }, {
+        host: '3.pocketnet.app',
+        port: 8899,
+        wss: 8099
+      }, {
+        host: '4.pocketnet.app',
+        port: 8899,
+        wss: 8099
+      }];
+    } else {
+      var listofproxies = functions["a" /* default */].deep(window, "window.POCKETNETINSTANCE.options.listofproxies") || [{
+        host: "test.pocketnet.app",
+        port: 8899,
+        wss: 8099
+      }
+      /*{
+          host : 'pocketnet.app',
+          port : 8899,
+          wss : 8099
+      },
+      {
+          host : '1.pocketnet.app',
+          port : 8899,
+          wss : 8099
+      }*/
+      ];
     }
-    /*{
-        host : 'pocketnet.app',
-        port : 8899,
-        wss : 8099
-    },
-    {
-        host : '1.pocketnet.app',
-        port : 8899,
-        wss : 8099
-    }*/
-    ];
     /*
       ////////// new server
         var sarr = ['vamily.ru', 'pnt.com','bst.app', 'sd.ci']
         */
 
-    var domain = functions["a" /* default */].deep(window, 'window.POCKETNETINSTANCE.options.matrix') || 'test.matrix.pocketnet.app';
+
+    if (this.$store.state.isLocalStorageChatAuth) {
+      var domain = "matrix.pocketnet.app";
+    } else {
+      var domain = functions["a" /* default */].deep(window, "window.POCKETNETINSTANCE.options.matrix") || "test.matrix.pocketnet.app";
+    }
+
     Appvue_type_script_lang_js_shadow_core = new application(this, {
       domain: domain,
       mtrx: {
@@ -43477,7 +45057,7 @@ var scriptsadded = false;
       },
       listofproxies: listofproxies,
       servers: {
-        pocketnet: 'https://pocketnet.app:8888'
+        pocketnet: "https://pocketnet.app:8888"
       }
     });
     Appvue_type_script_lang_js_shadow_core.init();
@@ -43507,13 +45087,17 @@ var scriptsadded = false;
           this.$route.name !== 'publicPreview' && this.$route.name !== 'chatSettings' && this.$route.name !== 'contact' && Appvue_type_script_lang_js_shadow_core.cancelDefaultRoute !== true) {
             this.$router.push('/chats').catch(e => {});
           }
-        }, 100); //this.connectCustomRecorder();
+        }, 100);
       });
     }).catch(g => {});
     setInterval(() => {
-      if (this.$store.state.autohide || !this.$store.state.iteraction) this.$store.commit('active', false);
+      if (this.$store.state.autohide || !this.$store.state.iteraction) this.$store.commit("active", false);
     }, 3000);
     window.matrixchat = Appvue_type_script_lang_js_shadow_core;
+  },
+
+  mounted() {
+    this.$store.commit('minimize', true);
   }
 
 });
@@ -43533,6 +45117,8 @@ var style1 = __webpack_require__("fca4")
 if (style1.__inject__) style1.__inject__(context)
 var style2 = __webpack_require__("7cd7")
 if (style2.__inject__) style2.__inject__(context)
+var style3 = __webpack_require__("f031")
+if (style3.__inject__) style3.__inject__(context)
 
 }
 
@@ -44653,12 +46239,12 @@ function exists(indexedDB, dbName) {
 // ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/events/event/index.vue?vue&type=template&id=659136c0&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/events/event/index.vue?vue&type=template&id=069eb0aa&scoped=true&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return (!_vm.event.localRedactionEvent() && !_vm.event.getRedactionEvent() && !_vm.removed)?_c('div',{ref:"msgElement",staticClass:"event",class:{readyToRender: _vm.readyToRender, my: _vm.my}},[(_vm.type === 'member' && !_vm.preview)?_c('member',{attrs:{"chat":_vm.chat,"event":_vm.event,"userinfo":_vm.userinfo,"readed":_vm.readed,"preview":_vm.preview || false},on:{"readyToRender":_vm.setReadyToRender}}):_vm._e(),(_vm.type === 'message' || _vm.preview)?_c('message',{attrs:{"chat":_vm.chat,"event":_vm.event,"prevevent":_vm.prevevent,"origin":_vm.event,"decryptEvent":_vm.decryptEvent,"decryptedInfo":_vm.decryptedInfo,"encryptedData":_vm.encryptedData,"imgEvent":_vm.galleryData,"userinfo":_vm.userinfo,"readed":_vm.readed,"preview":_vm.preview || false,"withImage":_vm.withImage || false,"clientWidth":_vm.clientWidth,"encrypted":_vm.encrypted,"subtype":_vm.subtype,"error":_vm.error,"reference":_vm.reference,"downloaded":_vm.downloaded,"last":_vm.last,"showmyicontrue":_vm.showmyicontrue,"fromreference":_vm.fromreference,"multiSelect":_vm.multiSelect,"selectedMessages":_vm.selectedMessages,"audioBuffer":_vm.audioBuffer,"isRemoveSelectedMessages":_vm.isRemoveSelectedMessages},on:{"openGalleryImg":_vm.openImage,"readyToRender":_vm.setReadyToRender,"remove":_vm.removeEvent,"download":_vm.downloadFile,"decryptagain":_vm.decryptAgain,"showMultiSelect":function($event){return _vm.$emit('showMultiSelect')},"selectMessage":_vm.selectMessage,"removeMessage":_vm.removeMessage,"messagesIsDeleted":_vm.messagesIsDeleted,"editing":_vm.editing,"reply":_vm.reply,"share":_vm.share,"menuIsVisible":_vm.menuIsVisibleHandler}}):_vm._e(),(_vm.type === 'common')?_c('common',{attrs:{"event":_vm.event,"userinfo":_vm.userinfo,"readed":_vm.readed,"preview":_vm.preview || false}}):_vm._e(),(_vm.downloading)?_c('div',{staticClass:"loading"},[_c('linepreloader')],1):_vm._e()],1):_c('div',{staticClass:"deletedMessage"},[_c('i',{staticClass:"fas fa-eraser"}),_vm._v(" "+_vm._s(_vm.$t("caption.messageDeleted"))+" ")])}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/events/event/index.vue?vue&type=template&id=659136c0&scoped=true&
+// CONCATENATED MODULE: ./src/components/events/event/index.vue?vue&type=template&id=069eb0aa&scoped=true&
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js
 var asyncToGenerator = __webpack_require__("1da1");
@@ -44848,12 +46434,12 @@ var member_component = Object(componentNormalizer["a" /* default */])(
 )
 
 /* harmony default export */ var member = (member_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/events/event/message/index.vue?vue&type=template&id=c8f458dc&scoped=true&
-var messagevue_type_template_id_c8f458dc_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"eventsMessage"},[(_vm.referenceshowed && _vm.reference && !_vm.preview && !_vm.fromreference)?_c('div',{staticClass:"reference referenceTop",class:{my: _vm.my}},[_c('eventsEvent',{attrs:{"event":_vm.reference,"chat":_vm.chat,"preview":false,"fromreference":true}})],1):_vm._e(),(!_vm.preview && _vm.content.msgtype !== 'm.notice')?_c('div',{directives:[{name:"touch",rawName:"v-touch:touchhold",value:(_vm.dropDownMenuShow),expression:"dropDownMenuShow",arg:"touchhold"}],class:{referenceshowed: _vm.referenceshowed, showmeta : _vm.showmeta, my: _vm.my,'messageRow': 'messageRow', urlpreview : _vm.urlpreview, allscreen : _vm.urlpreview || _vm.content.msgtype === 'm.image'|| _vm.file, aligncenter : _vm.content.msgtype === 'm.audio'},attrs:{"my":_vm.my}},[((_vm.urlpreview || _vm.imageUrl || _vm.content.msgtype === 'm.image') || (_vm.showmeta && (_vm.my)) || _vm.file)?_c('div',{staticClass:"timeWrapper"},[(_vm.showburn)?_c('i',{class:'fas fa-fire burn ' + _vm.showburn,on:{"click":_vm.showwhenburn}}):_vm._e(),_c('span',[_vm._v(" "+_vm._s(_vm.format_date(_vm.origin._localTimestamp) || "Now")+" ")])]):_vm._e(),(_vm.content.msgtype !== 'm.file')?_c('div',{staticClass:"actionsWrapper"},[(_vm.multiSelect)?_c('div',{staticClass:"multiSelect",on:{"click":function($event){return _vm.eventMessage(_vm.selectedMessage)}}},[(_vm.selectedMessage)?_c('i',{staticClass:"far fa-check-circle"}):_c('i',{staticClass:"far fa-circle"})]):_c('div',{staticClass:"mnwrapper"},[_c('i',{staticClass:"fas fa-ellipsis-h",on:{"click":_vm.setmenu}})])]):_vm._e(),(!_vm.my || _vm.showmyicon)?_c('div',{staticClass:"iconWrapper",on:{"click":function($event){return _vm.core.mtrx.opencontact(_vm.userinfo)}}},[_c('userpic',{attrs:{"userinfo":_vm.userinfo}})],1):_vm._e(),((_vm.content.from || _vm.imageFrom) && (_vm.file || (_vm.content.msgtype === 'm.image' && _vm.imageUrl) || ( _vm.content.msgtype === 'm.audio' && _vm.audioUrl)))?_c('div',{staticClass:"fromimagesfiles"},[_c('div',{staticClass:"fromCaption"},[_c('i',{staticClass:"fas fa-share-alt"}),_vm._v(" "),_c('span',[_vm._v(_vm._s(_vm.$t("caption.messagefrom")))])])]):_vm._e(),(_vm.content.msgtype === 'm.image')?_c('div',{staticClass:"messageImg"},[(_vm.imageUrl)?_c('div',{},[(_vm.encryptedData)?_c('div',{staticClass:"encryptedDataIcon"},[_c('i',{staticClass:"fas fa-lock"})]):_vm._e(),_c('div',{staticClass:"imgMsg"},[_c('div',{staticClass:"showImage",style:(_vm.imagePaddingStyle(_vm.content)),on:{"click":function($event){return _vm.openImageGallery(_vm.origin)}}},[_c('div',{staticClass:"abswrapper"},[_c('img',{directives:[{name:"images-loaded",rawName:"v-images-loaded:on.loaded",value:(_vm.imagesLoaded),expression:"imagesLoaded",arg:"on",modifiers:{"loaded":true}}],attrs:{"src":_vm.imageUrl,"alt":""}})])])])]):_c('div',{staticClass:"preloaderImage",style:(_vm.imagePaddingStyle(_vm.content))},[_c('div',{staticClass:"abswrapper"},[_c('linepreloader')],1)])]):_vm._e(),(_vm.content.msgtype === 'm.audio')?_c('div',{staticClass:"messageAudio"},[(_vm.audioUrl)?_c('VoiceMessage',{attrs:{"audioBuffer":_vm.audioUrl,"decryptedInfo":_vm.decryptedInfo,"id":_vm.event._localTimestamp || Date.now()}}):_vm._e()],1):_vm._e(),(_vm.content.msgtype === 'm.encrypted' && !_vm.textWithoutLinks && _vm.badenctypted)?_c('div',{staticClass:"maxcontent",class:{'my' : _vm.my }},[_c('div',{staticClass:"badenctyptedText"},[_c('span',[_vm._v(_vm._s(_vm.$t("caption.unabletoDecrypt")))]),_vm._v(" "),_c('i',{staticClass:"fas fa-undo decryptagain",on:{"click":_vm.decryptagain}})])]):_vm._e(),((_vm.content.msgtype === 'm.text' || _vm.content.msgtype === 'm.encrypted') && _vm.textWithoutLinks)?_c('div',{staticClass:"maxcontent",class:{'my' : _vm.my }},[_c('div',{staticClass:"messageText"},[(_vm.edited)?_c('div',{staticClass:"edited"},[_c('i',{staticClass:"fas fa-pen"}),_vm._v(" "+_vm._s(_vm.$t("caption.edited"))+" ")]):_vm._e(),_c('div',{staticClass:"msgtext"},[_c('IncomingMessage',{attrs:{"message":_vm.textWithoutLinks}})],1),((!_vm.content.from && !_vm.my && _vm.showmeta) || (_vm.showmyicon && !_vm.my))?_c('div',{staticClass:"sendername"},[_c('span',[_c('b',[_vm._v(_vm._s(_vm.userinfo.name))])]),_vm._v(" · "),_c('span',[_vm._v(" "+_vm._s(_vm.format_date(_vm.origin._localTimestamp) || "Now")+" ")])]):_vm._e(),(_vm.reference && !_vm.preview && !_vm.fromreference)?_c('div',{staticClass:"reference showreference",on:{"click":_vm.showreference}},[(!_vm.referenceshowed)?_c('eventsEvent',{attrs:{"event":_vm.reference,"chat":_vm.chat,"preview":true}}):_vm._e(),_c('div',{staticClass:"referenceCaption"},[(!_vm.referenceshowed)?_c('span',[_c('i',{staticClass:"fas fa-share"})]):_c('button',{staticClass:"button ghost small"},[_vm._v("Hide")])])],1):_vm._e(),(_vm.content.from)?_c('div',{staticClass:"from"},[_c('div',{staticClass:"fromCaption"},[_c('i',{staticClass:"fas fa-share-alt"}),_c('span',[_vm._v(_vm._s(_vm.$t("caption.messagefrom"))+" "+_vm._s(this.userinfo.name))])])]):_vm._e()])]):_vm._e(),(_vm.file)?_c('div',{staticClass:"filePreview"},[_c('fileMessage',{attrs:{"encryptedData":_vm.encryptedData,"file":_vm.file,"downloaded":_vm.downloaded},on:{"download":_vm.download}}),(_vm.encryptedData)?_c('div',{staticClass:"encryptedDataIcon"},[_c('i',{staticClass:"fas fa-lock"})]):_vm._e(),(_vm.error)?_c('div',{staticClass:"badencrypted"},[_c('span',[_vm._v(_vm._s(_vm.$t("caption.unabletoDecrypt")))])]):_vm._e()],1):_vm._e(),(_vm.urlpreview)?_c('div',{staticClass:"linkPreview"},[(!_vm.sending)?_c('div',{staticClass:"pr"},[(!_vm.origin.localRedactionEvent() && !_vm.origin.getRedactionEvent())?_c('url',{attrs:{"url":_vm.urlpreview,"urllink":_vm.urlpreview,"preview":true},on:{"updatedSize":_vm.updatedSize}}):_vm._e()],1):_c('div',[_c('linepreloader')],1)]):_vm._e()]):_vm._e(),(_vm.preview)?_c('div',{staticClass:"messagePreview"},[_c('listPreview',{attrs:{"my":_vm.my,"event":_vm.origin,"decryptEvent":_vm.decryptEvent,"userinfo":_vm.userinfo,"chat":_vm.chat,"readed":_vm.readed}})],1):_vm._e(),(_vm.my && _vm.readed && !_vm.preview && !_vm.fromreference)?_c('div',{staticClass:"statusWrapper"},[_c('div',{staticClass:"my"},[_c('i',{staticClass:"fas fa-check-double"}),_vm._v(" "),_c('span',[_vm._v(_vm._s(_vm.$t("caption.messageRead")))])])]):_vm._e()])}
-var messagevue_type_template_id_c8f458dc_scoped_true_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/events/event/message/index.vue?vue&type=template&id=73391fe2&scoped=true&
+var messagevue_type_template_id_73391fe2_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"eventsMessage"},[(_vm.referenceshowed && _vm.reference && !_vm.preview && !_vm.fromreference)?_c('div',{staticClass:"reference referenceTop",class:{my: _vm.my}},[_c('eventsEvent',{attrs:{"event":_vm.reference,"chat":_vm.chat,"preview":false,"fromreference":true}})],1):_vm._e(),(!_vm.preview && _vm.content.msgtype !== 'm.notice')?_c('div',{directives:[{name:"touch",rawName:"v-touch:touchhold",value:(_vm.dropDownMenuShow),expression:"dropDownMenuShow",arg:"touchhold"}],class:{referenceshowed: _vm.referenceshowed, showmeta : _vm.showmeta, my: _vm.my,'messageRow': 'messageRow', urlpreview : _vm.urlpreview, allscreen : _vm.urlpreview || _vm.content.msgtype === 'm.image'|| _vm.file, aligncenter : _vm.content.msgtype === 'm.audio'},attrs:{"my":_vm.my}},[((_vm.urlpreview || _vm.imageUrl || _vm.content.msgtype === 'm.image') || (_vm.showmeta && (_vm.my)) || _vm.file)?_c('div',{staticClass:"timeWrapper"},[(_vm.showburn)?_c('i',{class:'fas fa-fire burn ' + _vm.showburn,on:{"click":_vm.showwhenburn}}):_vm._e(),_c('span',[_vm._v(" "+_vm._s(_vm.format_date(_vm.origin._localTimestamp) || "Now")+" ")])]):_vm._e(),_c('div',{staticClass:"actionsWrapper"},[(_vm.multiSelect)?_c('div',{staticClass:"multiSelect",on:{"click":function($event){return _vm.eventMessage(_vm.selectedMessage)}}},[(_vm.selectedMessage)?_c('i',{staticClass:"far fa-check-circle"}):_c('i',{staticClass:"far fa-circle"})]):_c('div',{staticClass:"mnwrapper"},[_c('i',{staticClass:"fas fa-ellipsis-h",on:{"click":_vm.setmenu}})])]),(!_vm.my || _vm.showmyicon)?_c('div',{staticClass:"iconWrapper",on:{"click":function($event){return _vm.core.mtrx.opencontact(_vm.userinfo)}}},[_c('userpic',{attrs:{"userinfo":_vm.userinfo}})],1):_vm._e(),((_vm.content.from || _vm.imageFrom) && (_vm.file || (_vm.content.msgtype === 'm.image' && _vm.imageUrl) || ( _vm.content.msgtype === 'm.audio' && _vm.audioUrl)))?_c('div',{staticClass:"fromimagesfiles"},[_c('div',{staticClass:"fromCaption"},[_c('i',{staticClass:"fas fa-share-alt"}),_vm._v(" "),_c('span',[_vm._v(_vm._s(_vm.$t("caption.messagefrom")))])])]):_vm._e(),(_vm.content.msgtype === 'm.image')?_c('div',{staticClass:"messageImg",class:{referenceImg:_vm.reference}},[(_vm.reference && !_vm.preview && !_vm.fromreference)?_c('div',{staticClass:"reference showreference",on:{"click":_vm.showreference}},[(!_vm.referenceshowed)?_c('eventsEvent',{attrs:{"event":_vm.reference,"chat":_vm.chat,"preview":true}}):_vm._e(),_c('div',{staticClass:"referenceCaption"},[(!_vm.referenceshowed)?_c('span',[_c('i',{staticClass:"fas fa-share"})]):_c('button',{staticClass:"button ghost small"},[_vm._v("Hide")])])],1):_vm._e(),(_vm.imageUrl)?_c('div',{},[(_vm.encryptedData)?_c('div',{staticClass:"encryptedDataIcon"},[_c('i',{staticClass:"fas fa-lock"})]):_vm._e(),_c('div',{staticClass:"imgMsg"},[_c('div',{staticClass:"showImage",style:(_vm.imagePaddingStyle(_vm.content)),on:{"click":function($event){return _vm.openImageGallery(_vm.origin)}}},[_c('div',{staticClass:"abswrapper"},[_c('img',{directives:[{name:"images-loaded",rawName:"v-images-loaded:on.loaded",value:(_vm.imagesLoaded),expression:"imagesLoaded",arg:"on",modifiers:{"loaded":true}}],attrs:{"src":_vm.imageUrl,"alt":""}})])])])]):_c('div',{staticClass:"preloaderImage",style:(_vm.imagePaddingStyle(_vm.content))},[_c('div',{staticClass:"abswrapper"},[_c('linepreloader')],1)])]):_vm._e(),(_vm.content.msgtype === 'm.audio')?_c('div',{staticClass:"messageAudio"},[(_vm.reference && !_vm.preview && !_vm.fromreference)?_c('div',{staticClass:"reference showreference",on:{"click":_vm.showreference}},[(!_vm.referenceshowed)?_c('eventsEvent',{attrs:{"event":_vm.reference,"chat":_vm.chat,"preview":true}}):_vm._e(),_c('div',{staticClass:"referenceCaption"},[(!_vm.referenceshowed)?_c('span',[_c('i',{staticClass:"fas fa-share"})]):_c('button',{staticClass:"button ghost small"},[_vm._v("Hide")])])],1):_vm._e(),(_vm.audioUrl)?_c('VoiceMessage',{attrs:{"audioBuffer":_vm.audioUrl,"decryptedInfo":_vm.decryptedInfo,"id":_vm.event._localTimestamp || Date.now()}}):_vm._e()],1):_vm._e(),(_vm.content.msgtype === 'm.encrypted' && !_vm.textWithoutLinks && _vm.badenctypted)?_c('div',{staticClass:"maxcontent",class:{'my' : _vm.my }},[_c('div',{staticClass:"badenctyptedText"},[_c('span',[_vm._v(_vm._s(_vm.$t("caption.unabletoDecrypt")))]),_vm._v(" "),_c('i',{staticClass:"fas fa-undo decryptagain",on:{"click":_vm.decryptagain}})])]):_vm._e(),((_vm.content.msgtype === 'm.text' || _vm.content.msgtype === 'm.encrypted') && _vm.textWithoutLinks)?_c('div',{staticClass:"maxcontent",class:{'my' : _vm.my }},[_c('div',{staticClass:"messageText"},[(_vm.edited)?_c('div',{staticClass:"edited"},[_c('i',{staticClass:"fas fa-pen"}),_vm._v(" "+_vm._s(_vm.$t("caption.edited"))+" ")]):_vm._e(),_c('div',{staticClass:"msgtext"},[_c('IncomingMessage',{attrs:{"message":_vm.textWithoutLinks}})],1),((!_vm.content.from && !_vm.my && _vm.showmeta) || (_vm.showmyicon && !_vm.my))?_c('div',{staticClass:"sendername"},[_c('span',[_c('b',[_vm._v(_vm._s(_vm.userinfo.name))])]),_vm._v(" · "),_c('span',[_vm._v(" "+_vm._s(_vm.format_date(_vm.origin._localTimestamp) || "Now")+" ")])]):_vm._e(),(_vm.reference && !_vm.preview && !_vm.fromreference)?_c('div',{staticClass:"reference showreference",on:{"click":_vm.showreference}},[(!_vm.referenceshowed)?_c('eventsEvent',{attrs:{"event":_vm.reference,"chat":_vm.chat,"preview":true}}):_vm._e(),_c('div',{staticClass:"referenceCaption"},[(!_vm.referenceshowed)?_c('span',[_c('i',{staticClass:"fas fa-share"})]):_c('button',{staticClass:"button ghost small"},[_vm._v("Hide")])])],1):_vm._e(),(_vm.content.from)?_c('div',{staticClass:"from"},[_c('div',{staticClass:"fromCaption"},[_c('i',{staticClass:"fas fa-share-alt"}),_c('span',[_vm._v(_vm._s(_vm.$t("caption.messagefrom"))+" "+_vm._s(this.userinfo.name))])])]):_vm._e()])]):_vm._e(),(_vm.file)?_c('div',{staticClass:"filePreview",class:{reference:_vm.reference}},[(_vm.reference && !_vm.preview && !_vm.fromreference)?_c('div',{staticClass:"reference showreference",on:{"click":_vm.showreference}},[(!_vm.referenceshowed)?_c('eventsEvent',{attrs:{"event":_vm.reference,"chat":_vm.chat,"preview":true}}):_vm._e(),_c('div',{staticClass:"referenceCaption"},[(!_vm.referenceshowed)?_c('span',[_c('i',{staticClass:"fas fa-share"})]):_c('button',{staticClass:"button ghost small"},[_vm._v("Hide")])])],1):_vm._e(),_c('fileMessage',{attrs:{"encryptedData":_vm.encryptedData,"file":_vm.file,"downloaded":_vm.downloaded},on:{"download":_vm.download}}),(_vm.encryptedData)?_c('div',{staticClass:"encryptedDataIcon"},[_c('i',{staticClass:"fas fa-lock"})]):_vm._e(),(_vm.error)?_c('div',{staticClass:"badencrypted"},[_c('span',[_vm._v(_vm._s(_vm.$t("caption.unabletoDecrypt")))])]):_vm._e()],1):_vm._e(),(_vm.urlpreview)?_c('div',{staticClass:"linkPreview"},[(!_vm.sending)?_c('div',{staticClass:"pr"},[(!_vm.origin.localRedactionEvent() && !_vm.origin.getRedactionEvent())?_c('url',{attrs:{"url":_vm.urlpreview,"urllink":_vm.urlpreview,"preview":true},on:{"updatedSize":_vm.updatedSize}}):_vm._e()],1):_c('div',[_c('linepreloader')],1)]):_vm._e()]):_vm._e(),(_vm.preview)?_c('div',{staticClass:"messagePreview"},[_c('listPreview',{attrs:{"my":_vm.my,"event":_vm.origin,"decryptEvent":_vm.decryptEvent,"userinfo":_vm.userinfo,"chat":_vm.chat,"readed":_vm.readed}})],1):_vm._e(),(_vm.my && _vm.readed && !_vm.preview && !_vm.fromreference)?_c('div',{staticClass:"statusWrapper"},[_c('div',{staticClass:"my"},[_c('i',{staticClass:"fas fa-check-double"}),_vm._v(" "),_c('span',[_vm._v(_vm._s(_vm.$t("caption.messageRead")))])])]):_vm._e()])}
+var messagevue_type_template_id_73391fe2_scoped_true_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/events/event/message/index.vue?vue&type=template&id=c8f458dc&scoped=true&
+// CONCATENATED MODULE: ./src/components/events/event/message/index.vue?vue&type=template&id=73391fe2&scoped=true&
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/events/event/actions/index.vue?vue&type=template&id=9d2b1700&scoped=true&
 var actionsvue_type_template_id_9d2b1700_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"msgAction"},[_c('div',{staticClass:"contentAction",style:({'margin': _vm.position})},[_c('ul',[_c('li',[_c('a',{attrs:{"href":"google.com"}},[_vm._v(_vm._s(_vm.$t("button.reply"))+" "),_c('i',{staticClass:"fas fa-reply"})])]),_c('li',[_vm._v(_vm._s(_vm.$t("button.copy"))+" "),_c('i',{staticClass:"far fa-copy"})]),_c('li',[_vm._v(_vm._s(_vm.$t("button.select"))+" "),_c('i',{staticClass:"far fa-check-circle"})]),_c('li',[_vm._v(_vm._s(_vm.$t("button.forward"))+" "),_c('i',{staticClass:"fas fa-share"})]),_c('li',[_vm._v(_vm._s(_vm.$t("button.delete"))+" "),_c('i',{staticClass:"far fa-trash-alt"})])])])])}
@@ -45504,12 +47090,12 @@ var url_component = Object(componentNormalizer["a" /* default */])(
 var vueimagesloaded = __webpack_require__("8ff0");
 var vueimagesloaded_default = /*#__PURE__*/__webpack_require__.n(vueimagesloaded);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/events/event/VoiceMessage/index.vue?vue&type=template&id=0438bc11&scoped=true&
-var VoiceMessagevue_type_template_id_0438bc11_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"voiceMessage",class:{playing:_vm.isPlaying}},[_c('div',{staticClass:"voiceMessage_wrapper"},[_c('button',{staticClass:"voiceMessage_toggle",class:{encrypted: _vm.encrypted},on:{"touchend":_vm.audioToggle,"click":_vm.audioToggleClick}},[_c('i',{class:_vm.isPlaying ? 'fas fa-pause': 'fas fa-play'})]),_c('div',{staticClass:"voiceMessage_graph"},[_c('canvas',{ref:"canvas",attrs:{"width":"100","height":"50"},on:{"mousedown":_vm.goTo}})]),_c('div',{staticClass:"voiceMessage_options"},[(!_vm.error)?_c('span',[_vm._v(_vm._s(_vm.getDurationString))]):_vm._e(),(_vm.error)?_c('i',{staticClass:"fas fa-exclamation-circle"}):_vm._e()]),(_vm.encrypted && !_vm.error)?_c('div',{staticClass:"encsign"},[_c('i',{staticClass:"fas fa-lock"})]):_vm._e()])])}
-var VoiceMessagevue_type_template_id_0438bc11_scoped_true_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/events/event/VoiceMessage/index.vue?vue&type=template&id=7221e80e&scoped=true&
+var VoiceMessagevue_type_template_id_7221e80e_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"voiceMessage",class:{playing:_vm.isPlaying}},[_c('div',{staticClass:"voiceMessage_wrapper"},[_c('button',{staticClass:"voiceMessage_toggle",class:{encrypted: _vm.encrypted},on:{"touchend":_vm.audioToggle,"click":_vm.audioToggleClick}},[_c('i',{class:_vm.isPlaying ? 'fas fa-pause': 'fas fa-play'})]),_c('div',{staticClass:"voiceMessage_graph"},[_c('canvas',{ref:"canvas",attrs:{"width":"100","height":"50"},on:{"mousedown":_vm.goTo}})]),_c('div',{staticClass:"voiceMessage_options"},[(!_vm.error)?_c('span',[_vm._v(_vm._s(_vm.getDurationString))]):_vm._e(),(_vm.error)?_c('i',{staticClass:"fas fa-exclamation-circle"}):_vm._e()]),(_vm.encrypted && !_vm.error)?_c('div',{staticClass:"encsign"},[_c('i',{staticClass:"fas fa-lock"})]):_vm._e()])])}
+var VoiceMessagevue_type_template_id_7221e80e_scoped_true_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/events/event/VoiceMessage/index.vue?vue&type=template&id=0438bc11&scoped=true&
+// CONCATENATED MODULE: ./src/components/events/event/VoiceMessage/index.vue?vue&type=template&id=7221e80e&scoped=true&
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/events/event/VoiceMessage/index.vue?vue&type=script&lang=js&
 
@@ -45539,7 +47125,7 @@ var VoiceMessagevue_type_template_id_0438bc11_scoped_true_staticRenderFns = []
 /* harmony default export */ var VoiceMessagevue_type_script_lang_js_ = ({
   name: "VoiceMessage",
   props: {
-    decryptedInfo: Object,
+    decryptedInfo: [Object, ArrayBuffer],
     audioBuffer: {
       type: String | null,
       required: true
@@ -45825,7 +47411,7 @@ var VoiceMessagevue_type_template_id_0438bc11_scoped_true_staticRenderFns = []
 
 function VoiceMessage_injectStyles (context) {
   
-  var style0 = __webpack_require__("e86a")
+  var style0 = __webpack_require__("6e3c")
 if (style0.__inject__) style0.__inject__(context)
 
 }
@@ -45834,11 +47420,11 @@ if (style0.__inject__) style0.__inject__(context)
 
 var VoiceMessage_component = Object(componentNormalizer["a" /* default */])(
   event_VoiceMessagevue_type_script_lang_js_,
-  VoiceMessagevue_type_template_id_0438bc11_scoped_true_render,
-  VoiceMessagevue_type_template_id_0438bc11_scoped_true_staticRenderFns,
+  VoiceMessagevue_type_template_id_7221e80e_scoped_true_render,
+  VoiceMessagevue_type_template_id_7221e80e_scoped_true_staticRenderFns,
   false,
   VoiceMessage_injectStyles,
-  "0438bc11",
+  "7221e80e",
   null
   ,true
 )
@@ -46065,15 +47651,17 @@ var VoiceMessage_component = Object(componentNormalizer["a" /* default */])(
         click: "showMultiSelect",
         title: this.$i18n.t("button.select"),
         icon: "fas fa-check-circle"
-      }];
-
-      if (!this.file) {
-        menu.push({
-          click: "share",
-          title: this.$i18n.t("button.share"),
-          icon: "fas fa-share-alt"
-        });
-      }
+      }, {
+        click: "share",
+        title: this.$i18n.t("button.share"),
+        icon: "fas fa-share-alt"
+      }]; // if(!this.file){
+      //   menu.push({
+      //     click: "share",
+      //     title: this.$i18n.t("button.share"),
+      //     icon: "fas fa-share-alt"
+      //   })
+      // }
 
       if (this.my) {
         menu.push({
@@ -46128,9 +47716,6 @@ var VoiceMessage_component = Object(componentNormalizer["a" /* default */])(
       return ((_elem$ = elem[0]) === null || _elem$ === void 0 ? void 0 : _elem$.message_id) === this.origin.event.event_id ? true : false;
     }
   },
-
-  mounted() {},
-
   methods: {
     gotoreference: function () {
       var id = this.reference.getId();
@@ -46171,15 +47756,20 @@ var VoiceMessage_component = Object(componentNormalizer["a" /* default */])(
     },
     menushare: function () {
       var sharing = {};
-      var trimmed = this.$f.trim(this.body);
+      var trimmed;
+
+      if (this.content.msgtype !== 'm.file') {
+        trimmed = this.$f.trim(this.body);
+      }
+
+      if (this.content.msgtype === 'm.file' || this.content.msgtype === 'm.encrypted') sharing.files = [this.file];
       if (this.content.msgtype === 'm.image' && this.imageUrl) sharing.images = [this.imageUrl];
       if (this.content.msgtype === 'm.audio' && this.audioUrl) sharing.audio = [this.audioUrl];
       if ((this.content.msgtype === 'm.text' || this.content.msgtype === 'm.encrypted') && trimmed) sharing.messages = [trimmed]; //if(this.urlpreview) sharing.urls = [urlpreview]
-
-      if (this.file) {
-        sharing.download = true;
-      } //sharing.route = 'chat?id=' + this.chat.roomId
-
+      // if (this.file) {
+      //   sharing.download = true
+      // }
+      //sharing.route = 'chat?id=' + this.chat.roomId
 
       sharing.from = this.userinfo.id;
       this.$emit('share', sharing);
@@ -46301,15 +47891,20 @@ var VoiceMessage_component = Object(componentNormalizer["a" /* default */])(
     },
     selectMessage: function () {
       var sharing = {};
-      var trimmed = this.$f.trim(this.body);
+      var trimmed;
+
+      if (this.content.msgtype !== 'm.file') {
+        trimmed = this.$f.trim(this.body);
+      }
+
+      if (this.content.msgtype === 'm.file' || this.content.msgtype === 'm.encrypted') sharing.files = [this.file];
       if (this.content.msgtype === 'm.image' && this.imageUrl) sharing.images = [this.imageUrl];
       if (this.content.msgtype === 'm.audio' && this.decryptedInfo) sharing.audio = [this.decryptedInfo];
       if ((this.content.msgtype === 'm.text' || this.content.msgtype === 'm.encrypted') && trimmed) sharing.messages = [trimmed]; //if(this.urlpreview) sharing.urls = [urlpreview]
-
-      if (this.file) {
-        sharing.download = true;
-      } //sharing.route = 'chat?id=' + this.chat.roomId
-
+      // if (this.file) {
+      //   sharing.download = true;
+      // }
+      //sharing.route = 'chat?id=' + this.chat.roomId
 
       sharing.from = this.userinfo.id;
       this.$emit('selectMessage', {
@@ -46335,7 +47930,7 @@ var VoiceMessage_component = Object(componentNormalizer["a" /* default */])(
 
 function message_injectStyles (context) {
   
-  var style0 = __webpack_require__("dd47")
+  var style0 = __webpack_require__("c600")
 if (style0.__inject__) style0.__inject__(context)
 
 }
@@ -46344,11 +47939,11 @@ if (style0.__inject__) style0.__inject__(context)
 
 var message_component = Object(componentNormalizer["a" /* default */])(
   event_message_vue_type_script_lang_js_,
-  messagevue_type_template_id_c8f458dc_scoped_true_render,
-  messagevue_type_template_id_c8f458dc_scoped_true_staticRenderFns,
+  messagevue_type_template_id_73391fe2_scoped_true_render,
+  messagevue_type_template_id_73391fe2_scoped_true_staticRenderFns,
   false,
   message_injectStyles,
-  "c8f458dc",
+  "73391fe2",
   null
   ,true
 )
@@ -46827,7 +48422,7 @@ var message_component = Object(componentNormalizer["a" /* default */])(
 
 function event_injectStyles (context) {
   
-  var style0 = __webpack_require__("72a7")
+  var style0 = __webpack_require__("4da8")
 if (style0.__inject__) style0.__inject__(context)
 
 }
@@ -46840,7 +48435,7 @@ var event_component = Object(componentNormalizer["a" /* default */])(
   staticRenderFns,
   false,
   event_injectStyles,
-  "659136c0",
+  "069eb0aa",
   null
   ,true
 )
@@ -49955,14 +51550,14 @@ module.exports = function bind(fn, thisArg) {
 
 /***/ }),
 
-/***/ "654a":
+/***/ "6539":
 /***/ (function(module, exports, __webpack_require__) {
 
 // Imports
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, ".topheader[data-v-62a1ab6a]{top:0;z-index:999}.newChat[data-v-62a1ab6a] #maincontent .headerSpacer,.newChat[data-v-62a1ab6a] #maincontent .headerSpacerWrapper,.newChat[data-v-62a1ab6a] #maincontent .headerSpacerWrapperOvf{overflow:visible!important}.newChat.minimized.active[data-v-62a1ab6a] #maincontent .desktopList{display:none}", ""]);
+exports.push([module.i, "#maincontent .expandp[data-v-422735dc]{position:absolute;left:0;right:-.5em;top:0;bottom:0;cursor:pointer;overflow-y:hidden;z-index:3}#maincontent .expandp .etablew[data-v-422735dc]{position:absolute;left:0;right:0;top:0;bottom:0;z-index:2}#maincontent .expandp .etable[data-v-422735dc]{height:100%;width:100%}#maincontent .expandp .etable>div[data-v-422735dc]{transition:.3s;opacity:0;color:rgb(var(--text-on-bg-ac-color));vertical-align:middle;text-align:center}#maincontent .expandp[data-v-422735dc]:before{--size:0;content:\"\";position:absolute;left:var(--x);top:50%;width:var(--size);height:var(--size);background:radial-gradient(circle closest-side,rgba(0,24,48,.34902),transparent);transform:translate(-50%,-50%);transition:.3s}#maincontent .expandp:hover .etable>div[data-v-422735dc]{opacity:1}#maincontent .expandp[data-v-422735dc]:hover:before{--size:400px}#maincontent.bout .expandp[data-v-422735dc]{display:none}#maincontent[data-v-422735dc] .resize-observer{height:1px;overflow:hidden}#maincontent .headerSpacer[data-v-422735dc]{position:static;left:0;right:0;top:0;bottom:0;padding-bottom:0;margin:0 auto;max-width:100%}#maincontent .headerSpacerWrapper[data-v-422735dc]{position:absolute;left:0;right:0;top:calc(65px + var(--app-margin-top));bottom:90px;overflow-y:auto;overflow-x:hidden;width:100%;max-width:702px;margin:0 auto}#maincontent .headerSpacerWrapperOvf[data-v-422735dc]{position:absolute;left:0;right:0;top:0;bottom:0;overflow-y:scroll;overflow-x:hidden;overscroll-behavior:contain;background:#fff}#maincontent.minimized .headerSpacerWrapper[data-v-422735dc]{top:55px}#maincontent.minimized.fix .headerSpacerWrapper[data-v-422735dc]{overflow-y:inherit;overflow-x:inherit;top:0;bottom:103px;will-change:transform;transition:transform .3s}#maincontent.minimized.fix:not(.active):not(.unauthorized) .headerSpacerWrapperOvf[data-v-422735dc]{-webkit-mask-image:linear-gradient(0deg,transparent 3%,#000 10%);mask-image:linear-gradient(0deg,transparent 3%,#000 10%);background:#fff}#maincontent.minimized.fix[data-v-422735dc]:not(.active):not(.unauthorized) .maskedtop{-webkit-mask-image:linear-gradient(180deg,transparent 3%,#000 10%);mask-image:linear-gradient(180deg,transparent 3%,#000 10%)}#maincontent.minimized.fix .headerSpacerWrapperOvf[data-v-422735dc]{position:relative;width:344px;height:100%;overflow:visible;will-change:transform;transition:transform .3s;background:#fff}#maincontent.minimized.fix .headerSpacer[data-v-422735dc]{position:absolute;height:100%;left:0;width:344px;padding:0;overflow-x:hidden;will-change:transform;overscroll-behavior:contain}#maincontent.minimized.fix.active .expandp[data-v-422735dc]{display:none}#maincontent.minimized.fix.active .headerSpacerWrapper[data-v-422735dc]{transform:translateZ(0);z-index:130}#maincontent.minimized.fix.active .headerSpacerWrapperOvf[data-v-422735dc]{transform:translate3d(-300px,4px,0);background:#fff}#maincontent.minimized.fix.active .headerSpacerWrapperOvf .headerSpacer[data-v-422735dc]{border-radius:8px;border-top-left-radius:0;border-top-right-radius:0;background:rgb(var(--background-total-theme));border:1px solid rgba(var(--neutral-grad-2),.2);box-shadow:0 5px 7px -5px rgba(var(--color-shadow-base),.7);right:0}.modalcommoncontent[data-v-422735dc] .previewContact{padding-left:.75em}", ""]);
 // Exports
 module.exports = exports;
 
@@ -50530,6 +52125,24 @@ function zeroArray(arr, length) {
 
 module.exports = Color;
 
+
+/***/ }),
+
+/***/ "6962":
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__("04e6");
+if(content.__esModule) content = content.default;
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add CSS to Shadow Root
+var add = __webpack_require__("35d6").default
+module.exports.__inject__ = function (shadowRoot) {
+  add("0f2d69e3", content, shadowRoot)
+};
 
 /***/ }),
 
@@ -51200,6 +52813,20 @@ module.exports = exports;
 
 /***/ }),
 
+/***/ "69ed":
+/***/ (function(module, exports, __webpack_require__) {
+
+// Imports
+var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
+exports = ___CSS_LOADER_API_IMPORT___(false);
+// Module
+exports.push([module.i, ".rootcontent.minimized .chat-container-pages-empty{display:none!important}.rootcontent.minimized .headerSpacerWrapperOvf{background:transparent!important}.rootcontent.minimized .messageRow .maxcontent{max-width:295px!important}.rootcontent.bout #maincontent .headerSpacerWrapper{height:82%!important}.rootcontent.bout .main-wrapper.minimized:not(.active) .topheader{opacity:1!important}.rootcontent.bout .minimized:not(.active) .chatDescription,.rootcontent.bout .minimized:not(.active) .chatNameEdit{display:block!important}.rootcontent.bout .main-wrapper.minimized .input_component{width:100%!important}.rootcontent.bout .main-wrapper.minimized .noswipepnt .work{display:flex;align-items:center;justify-content:center}.rootcontent.bout .main-wrapper.minimized .inputWrapper{margin:0!important;width:100%!important;display:flex;align-items:center;justify-content:center}.rootcontent.fix .chat-container-pages{position:absolute!important;left:23px!important;width:344px!important;border-left:0!important}.rootcontent.fix .chat-container-pages #topheader{transform:translate3d(-279px,-56px,0)!important}.rootcontent.fix .chat-container-pages #chatsTopheader.topheader,.rootcontent.fix .chat-container-pages .input_component{width:344px}.rootcontent.fix .chat-container-pages #events{left:0!important;width:344px!important}.rootcontent.fix .chat-container-pages .inputWrapper{width:344px!important;margin-left:-347px!important}.rootcontent.fix .chat-container-pages .dropdown.visible{width:344px!important;left:-171px!important}.rootcontent.fix .chat-container-pages .menubgwrapper{left:-300px!important;width:344px!important}.rootcontent.fix .chat-container-pages .relationEvent{max-width:702px!important;margin:0 auto!important}.rootcontent.fix #wai-fixedmessageicon.active .wrapper{position:fixed;top:15px;right:8px;left:auto;width:344px!important;transform:none}.rootcontent.fix .fixedOnPageTop{min-width:344px!important}", ""]);
+// Exports
+module.exports = exports;
+
+
+/***/ }),
+
 /***/ "69f2":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -51453,38 +53080,6 @@ exports.default = Block;
 
 /***/ }),
 
-/***/ "6a45":
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__("76a3");
-if(content.__esModule) content = content.default;
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add CSS to Shadow Root
-var add = __webpack_require__("35d6").default
-module.exports.__inject__ = function (shadowRoot) {
-  add("0017b470", content, shadowRoot)
-};
-
-/***/ }),
-
-/***/ "6b38":
-/***/ (function(module, exports, __webpack_require__) {
-
-// Imports
-var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
-exports = ___CSS_LOADER_API_IMPORT___(false);
-// Module
-exports.push([module.i, ".main-wrapper.minimized[data-v-c44504aa]:not(.active) .topheader{opacity:0}.main-wrapper.minimized[data-v-c44504aa]:not(.active) .encrypted{display:none}", ""]);
-// Exports
-module.exports = exports;
-
-
-/***/ }),
-
 /***/ "6beb":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -51514,7 +53109,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ "6ce2":
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"caption\":{\"create\":\"Create\",\"addPublicChatName\":\"Add Public Chat Name\",\"addGroupNamePlaceHolder\":\"Add Group Name\",\"createPublicChat\":\"Create public chat\",\"chatTopic\":\"Topic renamed\",\"asModerator\":\"as moderator\",\"marked\":\"marked\",\"unmarked\":\"unmarked\",\"removeBan\":\"Remove Ban\",\"cancelModeration\":\"Remove moderation\",\"uploadFiles\":\"Herunterladen von Dateien\",\"header\":\"Header\",\"dragAndDropAFile\":\"Drag & Drop-Datei\",\"chatInvite\":\"Sie wurden eingeladen mit Benutzer zu chatten:\",\"cantJoion\":\"Sie können den Chat mit dem Benutzer nicht beitreten:\",\"chatInviteDecline\":\"Sie können im Chat teilnehmen oder Einladung ablehnen\",\"creatorLeft\":\"Weil der Schöpfer den Raum verlassen hat\",\"encrypted\":\"Verschlüssel\",\"noImages\":\"Es gibt noch keine Bilder in diesem Chat\",\"noFiles\":\"There are no files in this chat yet\",\"inviteUser\":\"Benutzer einladen\",\"invite\":\"Einladen\",\"add\":\"Hinzufügen\",\"mute\":\"Stumm\",\"unmute\":\"Ton aktivieren\",\"leave\":\"Verlassen\",\"Info\":\"Info\",\"new\":\"Neue\",\"typing\":\"Tippt\",\"accNotFound\":\"Ihr Konto wurde nicht in der Blockchain gefunden. Vielleicht müssen Sie warten\",\"emptyList\":\"liste ist leer ( gefiltert oder nur leer )\",\"welcome\":\"Willkommen bei Pocketnet Chat\",\"startNewChat\":\"Fangen Sie einen neuen chat an\",\"chats\":\"Chats\",\"shareWith\":\"Teilen mit\",\"newChat\":\"Neuer Chat\",\"moveToChat\":\"Zum Chat wechseln\",\"queryNoResults\":\"Abfrage meldet keine Ergebnisse\",\"needMoreCharacters\":\"Benötigen Sie mehr Zeichen für das Ergebnis\",\"createGroup\":\"Gruppe erstellen\",\"unabletoDecrypt\":\"* Kann nicht entschlüsselnt\",\"messageDeleted\":\"Nachricht gelöscht\",\"sentImage\":\"gesendetes Bild\",\"sentVoiceMessage\":\"eine Sprachnachricht gesendet\",\"invitationToChat\":\"Einladung zum Chat\",\"invitationToRoom\":\"Invitation to room\",\"leftChat\":\"Hat den chat verlasst\",\"joined\":\"beitretet\",\"chatRenamed\":\"Chat umbenannt in\",\"recentComment\":\"Letzter Kommentar:\",\"share\":\"AKTIE\",\"followers\":\"Anhänger:\",\"reputation\":\"Reputation:\",\"following\":\"Folgen:\",\"theme\":\"Thema:\",\"contacts\":\"Kontakte\",\"phoneContacts\":\"Telefonische Kontakte\",\"chooseInviteMedia\":\"Bitte wählen Sie, wie Sie einladen möchten\",\"admin\":\"Admin\",\"moderator\":\"Moderator\",\"videocall\":\"Videoanrufe\",\"call\":\"Anruf\",\"leaveAndDelete\":\"Verlassen und Löschen\",\"donate\":\"Donate\",\"makeModerator\":\"Als Moderator ernennen\",\"ban\":\"Ban\",\"kick\":\"Kick\",\"members\":\"Mitglieds\",\"media\":\"Media\",\"files\":\"Datei\",\"contactsList\":\"Kontaktliste\",\"send\":\"Senden\",\"pageCaption\":\"Seite Beschriftung\",\"caption\":\"Beschriftung\",\"text\":\"Text\",\"placeholder\":\"Platzhalter\",\"sendTransactionTo\":\"Transaktion senden an\",\"toBePaidByReceiver\":\"Zahlung durch den Empfänger\",\"toBePaidBySender\":\"Zahlung durch Absender\",\"source\":\"Quelle\",\"amount\":\"Anzahl\",\"receiver\":\"Empfänger\",\"message\":\"Nachricht\",\"includeFeesInAmount\":\"Gebühren in den Betrag einbeziehen\",\"transactionFees\":\"Gebühren pro Transaktion\",\"totalAmount\":\"Insgesamt\",\"balanceTooLow\":\"Bilanz zu niedrig\",\"transactionError\":\"Fehler: Transaktion kann nicht ausgeführt werden\",\"calculateFees\":\"Gebühren berechnen\",\"startChatWith\":\"Chat anfangen mit\",\"searchResult\":\"Ergebnis der Suche\",\"joinedInTheChat\":\"in den Chat eingeloggt\",\"invited\":\"eingeladet \",\"hasInvited\":\"eingeladen \",\"inTheChat\":\" in den chat\",\"banned\":\"banned\",\"andRoom\":\"und Zimmer\",\"left\":\"verließt\",\"theChat\":\" Chat \",\"made\":\"Gemacht \",\"aModerator\":\" Moderator\",\"editedChatNameTo \":\"änderte den Chat-Namen in \",\"somebody\":\"Jemand\",\"sent\":\"gesendet\",\"PKOINto\":\" PKOIN für \",\"response\":\"Antwort\",\"edited\":\"Bearbeitet\",\"settings\":\"Einstellungen\",\"unauthorized\":\"Nicht autorisiert\",\"search\":\"Suche\",\"replyOnMessage\":\"Antwort auf Nachricht\",\"editMessage\":\"Nachricht bearbeiten\",\"inviteFriend\":\"Пригласите друзей\",\"emptyContactList\":\"Список контактов пуст\",\"joinApp\":\"Pocketnet beitreten\",\"hasInvitedToJoin\":\"hat Sie eingeladen, Pocketnet beizutreten\",\"messagefrom\":\"Forwarded message from\",\"usernotgen\":\"User did not generate their encryption keys yet. You will be able to chat them when their keys are generated.\",\"younotgen\":\"Please wait a minute, Your encryption keys are being generated...\",\"chatsearchingempty\":\"No chats found for the specified filter\",\"sendmessage\":\"Send message\"},\"input\":{\"patientEmailPlaceholder\":\"Email\",\"refillNamePlaceholder\":\"Den Namen Nachfüllen\"},\"message\":{},\"button\":{\"starChatButton\":\"Chat anfangen\",\"decline\":\"Ablehnen\",\"join\":\"Beitreten\",\"ok\":\"Ok\",\"copy\":\"Kopieren\",\"forward\":\"Weiterleiten\",\"delete\":\"Löschen\",\"save\":\"Speichern\",\"reply\":\"Antworten\",\"share\":\"Share\",\"download\":\"Herunterladen\",\"downloaded\":\"Herunterladen\",\"goToPocketnetProfile\":\"Zum Pocketnet Profil\",\"sendFile\":\"Datai senden\",\"takePhotoOrVideo\":\"Foto machen\",\"sendCoins\":\"Münzen senden\",\"edit\":\"Bearbeiten\",\"select\":\"Auswählen\",\"block\":\"Sperren\",\"unblock\":\"Entsperren\",\"blockUser\":\"Benutzer sperren\"},\"yes\":\"Ja\",\"cancel\":\"Abbrechen\",\"teamMessages\":{\"1-title\":\"Willkommen beim privaten Bastyon-Chat!\",\"1-list1\":\"Privater Messenger, der NICHT mit Ihrer Telefonnummer verbunden ist.\",\"1-list2\":\"Standardmäßig Ende-zu-Ende-Verschlüsselung jedes 1-zu-1-Gesprächs\",\"1-list3\":\"Alle per Chat gesendeten oder empfangenen Bilder werden verschlüsselt gespeichert\",\"1-list4\":\"Der Nachrichtenverlauf wird nur 7 Tage lang gespeichert\",\"2-title\":\"Eine riesige Ankündigung! Die Pocketnet-Anwendung heißt jetzt Bastyon!\",\"2-message1\":\"Die Domain wird auf Bastyon.com verschoben. Wir haben kürzlich die folgenden wichtigen Updates veröffentlicht:\",\"2-list1\":\"Privater verschlüsselter Messenger, der nicht mit Ihrer Telefonnummer verbunden ist\",\"2-list2\":\"Möglichkeit, PKOIN an Blogger zu spenden\",\"2-list3\":\"Video- und Live-Streaming\",\"2-message2\":\"Laden Sie jetzt Ihre Freunde ein und werden Sie Teil der großen Zukunft des dezentralen Internets!\",\"2-button\":\"Freunde einladen\"},\"sendingerror\":\"An error occurred while sending the message\",\"details\":\"Details\",\"settings_pin\":\"Pin chat window\",\"checked\":\"Yes\",\"unchecked\":\"No\",\"settings_read\":\"Send read receipts\",\"messagewasburn\":\"This message remains only in the memory of your device\",\"messagewillburn\":\"The message will be deleted soon\",\"micaccessbrowser\":\"Access to the microphone is restricted, please check your browser settings.\",\"micaccesscommonproblem\":\"Sorry, for some reason it is not possible to record voice messages on the device\",\"micaccesscordova\":\"Access to the microphone is restricted, please check your device settings.\",\"micdevicenotfound\":\"Audio recording device not found\"}");
+module.exports = JSON.parse("{\"caption\":{\"create\":\"Create\",\"addPublicChatName\":\"Add Public Chat Name\",\"addGroupNamePlaceHolder\":\"Add Group Name\",\"createPublicChat\":\"Create public chat\",\"chatTopic\":\"Topic renamed\",\"asModerator\":\"as moderator\",\"marked\":\"marked\",\"unmarked\":\"unmarked\",\"removeBan\":\"Remove Ban\",\"cancelModeration\":\"Remove moderation\",\"uploadFiles\":\"Herunterladen von Dateien\",\"header\":\"Header\",\"dragAndDropAFile\":\"Drag & Drop-Datei\",\"chatInvite\":\"Sie wurden eingeladen mit Benutzer zu chatten:\",\"cantJoion\":\"Sie können den Chat mit dem Benutzer nicht beitreten:\",\"chatInviteDecline\":\"Sie können im Chat teilnehmen oder Einladung ablehnen\",\"creatorLeft\":\"Weil der Schöpfer den Raum verlassen hat\",\"encrypted\":\"Verschlüssel\",\"noImages\":\"Es gibt noch keine Bilder in diesem Chat\",\"noFiles\":\"There are no files in this chat yet\",\"inviteUser\":\"Benutzer einladen\",\"invite\":\"Einladen\",\"add\":\"Hinzufügen\",\"mute\":\"Stumm\",\"unmute\":\"Ton aktivieren\",\"leave\":\"Verlassen\",\"Info\":\"Info\",\"new\":\"Neue\",\"typing\":\"Tippt\",\"accNotFound\":\"Ihr Konto wurde nicht in der Blockchain gefunden. Vielleicht müssen Sie warten\",\"emptyList\":\"liste ist leer ( gefiltert oder nur leer )\",\"welcome\":\"Willkommen bei Pocketnet Chat\",\"startNewChat\":\"Fangen Sie einen neuen chat an\",\"chats\":\"Chats\",\"shareWith\":\"Teilen mit\",\"newChat\":\"Neuer Chat\",\"moveToChat\":\"Zum Chat wechseln\",\"queryNoResults\":\"Abfrage meldet keine Ergebnisse\",\"needMoreCharacters\":\"Benötigen Sie mehr Zeichen für das Ergebnis\",\"createGroup\":\"Gruppe erstellen\",\"unabletoDecrypt\":\"* Kann nicht entschlüsselnt\",\"messageDeleted\":\"Nachricht gelöscht\",\"sentImage\":\"gesendetes Bild\",\"sentVoiceMessage\":\"eine Sprachnachricht gesendet\",\"invitationToChat\":\"Einladung zum Chat\",\"invitationToRoom\":\"Invitation to room\",\"leftChat\":\"Hat den chat verlasst\",\"joined\":\"beitretet\",\"chatRenamed\":\"Chat umbenannt in\",\"recentComment\":\"Letzter Kommentar:\",\"share\":\"AKTIE\",\"followers\":\"Anhänger:\",\"reputation\":\"Reputation:\",\"following\":\"Folgen:\",\"theme\":\"Thema:\",\"contacts\":\"Kontakte\",\"phoneContacts\":\"Telefonische Kontakte\",\"chooseInviteMedia\":\"Bitte wählen Sie, wie Sie einladen möchten\",\"admin\":\"Admin\",\"moderator\":\"Moderator\",\"videocall\":\"Videoanrufe\",\"call\":\"Anruf\",\"leaveAndDelete\":\"Verlassen und Löschen\",\"donate\":\"Donate\",\"makeModerator\":\"Als Moderator ernennen\",\"ban\":\"Ban\",\"kick\":\"Kick\",\"members\":\"Mitglieds\",\"media\":\"Media\",\"files\":\"Datei\",\"contactsList\":\"Kontaktliste\",\"send\":\"Senden\",\"pageCaption\":\"Seite Beschriftung\",\"caption\":\"Beschriftung\",\"text\":\"Text\",\"placeholder\":\"Platzhalter\",\"sendTransactionTo\":\"Transaktion senden an\",\"toBePaidByReceiver\":\"Zahlung durch den Empfänger\",\"toBePaidBySender\":\"Zahlung durch Absender\",\"source\":\"Quelle\",\"amount\":\"Anzahl\",\"receiver\":\"Empfänger\",\"message\":\"Nachricht\",\"includeFeesInAmount\":\"Gebühren in den Betrag einbeziehen\",\"transactionFees\":\"Gebühren pro Transaktion\",\"totalAmount\":\"Insgesamt\",\"balanceTooLow\":\"Bilanz zu niedrig\",\"transactionError\":\"Fehler: Transaktion kann nicht ausgeführt werden\",\"calculateFees\":\"Gebühren berechnen\",\"startChatWith\":\"Chat anfangen mit\",\"searchResult\":\"Ergebnis der Suche\",\"joinedInTheChat\":\"in den Chat eingeloggt\",\"invited\":\"eingeladet \",\"hasInvited\":\"eingeladen \",\"inTheChat\":\" in den chat\",\"banned\":\"banned\",\"andRoom\":\"und Zimmer\",\"left\":\"verließt\",\"theChat\":\" Chat \",\"made\":\"Gemacht \",\"aModerator\":\" Moderator\",\"editedChatNameTo \":\"änderte den Chat-Namen in \",\"somebody\":\"Jemand\",\"sent\":\"gesendet\",\"PKOINto\":\" PKOIN für \",\"response\":\"Antwort\",\"edited\":\"Bearbeitet\",\"settings\":\"Einstellungen\",\"unauthorized\":\"Nicht autorisiert\",\"search\":\"Suche\",\"replyOnMessage\":\"Antwort auf Nachricht\",\"editMessage\":\"Nachricht bearbeiten\",\"inviteFriend\":\"Пригласите друзей\",\"emptyContactList\":\"Список контактов пуст\",\"joinApp\":\"Pocketnet beitreten\",\"hasInvitedToJoin\":\"hat Sie eingeladen, Pocketnet beizutreten\",\"messagefrom\":\"Forwarded message from\",\"usernotgen\":\"User did not generate their encryption keys yet. You will be able to chat them when their keys are generated.\",\"younotgen\":\"Please wait a minute, Your encryption keys are being generated...\",\"chatsearchingempty\":\"No chats found for the specified filter\",\"sendmessage\":\"Send message\",\"clearHistory\":\"Clear history\"},\"input\":{\"patientEmailPlaceholder\":\"Email\",\"refillNamePlaceholder\":\"Den Namen Nachfüllen\"},\"message\":{},\"button\":{\"starChatButton\":\"Chat anfangen\",\"decline\":\"Ablehnen\",\"join\":\"Beitreten\",\"ok\":\"Ok\",\"copy\":\"Kopieren\",\"forward\":\"Weiterleiten\",\"delete\":\"Löschen\",\"save\":\"Speichern\",\"reply\":\"Antworten\",\"share\":\"Share\",\"download\":\"Herunterladen\",\"downloaded\":\"Herunterladen\",\"goToPocketnetProfile\":\"Zum Pocketnet Profil\",\"sendFile\":\"Datai senden\",\"takePhotoOrVideo\":\"Foto machen\",\"sendCoins\":\"Münzen senden\",\"edit\":\"Bearbeiten\",\"select\":\"Auswählen\",\"block\":\"Sperren\",\"unblock\":\"Entsperren\",\"blockUser\":\"Benutzer sperren\"},\"yes\":\"Ja\",\"cancel\":\"Abbrechen\",\"teamMessages\":{\"1-title\":\"Willkommen beim privaten Bastyon-Chat!\",\"1-list1\":\"Privater Messenger, der NICHT mit Ihrer Telefonnummer verbunden ist.\",\"1-list2\":\"Standardmäßig Ende-zu-Ende-Verschlüsselung jedes 1-zu-1-Gesprächs\",\"1-list3\":\"Alle per Chat gesendeten oder empfangenen Bilder werden verschlüsselt gespeichert\",\"1-list4\":\"Der Nachrichtenverlauf wird nur 7 Tage lang gespeichert\",\"2-title\":\"Eine riesige Ankündigung! Die Pocketnet-Anwendung heißt jetzt Bastyon!\",\"2-message1\":\"Die Domain wird auf Bastyon.com verschoben. Wir haben kürzlich die folgenden wichtigen Updates veröffentlicht:\",\"2-list1\":\"Privater verschlüsselter Messenger, der nicht mit Ihrer Telefonnummer verbunden ist\",\"2-list2\":\"Möglichkeit, PKOIN an Blogger zu spenden\",\"2-list3\":\"Video- und Live-Streaming\",\"2-message2\":\"Laden Sie jetzt Ihre Freunde ein und werden Sie Teil der großen Zukunft des dezentralen Internets!\",\"2-button\":\"Freunde einladen\"},\"sendingerror\":\"An error occurred while sending the message\",\"details\":\"Details\",\"settings_pin\":\"Pin chat window\",\"checked\":\"Yes\",\"unchecked\":\"No\",\"settings_read\":\"Send read receipts\",\"messagewasburn\":\"This message remains only in the memory of your device\",\"messagewillburn\":\"The message will be deleted soon\",\"micaccessbrowser\":\"Access to the microphone is restricted, please check your browser settings.\",\"micaccesscommonproblem\":\"Sorry, for some reason it is not possible to record voice messages on the device\",\"micaccesscordova\":\"Access to the microphone is restricted, please check your device settings.\",\"micdevicenotfound\":\"Audio recording device not found\"}");
 
 /***/ }),
 
@@ -51522,6 +53117,30 @@ module.exports = JSON.parse("{\"caption\":{\"create\":\"Create\",\"addPublicChat
 /***/ (function(module) {
 
 module.exports = JSON.parse("{\"0\":\"O\",\"1\":\"l\",\"֭\":\"֖\",\"֮\":\"֘\",\"֨\":\"֙\",\"֤\":\"֚\",\"᪴\":\"ۛ\",\"⃛\":\"ۛ\",\"ؙ\":\"̓\",\"ࣳ\":\"̓\",\"̓\":\"̓\",\"̕\":\"̓\",\"ُ\":\"̓\",\"ٝ\":\"̔\",\"֜\":\"́\",\"֝\":\"́\",\"ؘ\":\"́\",\"݇\":\"́\",\"́\":\"́\",\"॔\":\"́\",\"َ\":\"́\",\"̀\":\"̀\",\"॓\":\"̀\",\"̌\":\"̆\",\"꙼\":\"̆\",\"٘\":\"̆\",\"ٚ\":\"̆\",\"ͮ\":\"̆\",\"ۨ\":\"̆̇\",\"̐\":\"̆̇\",\"ँ\":\"̆̇\",\"ঁ\":\"̆̇\",\"ઁ\":\"̆̇\",\"ଁ\":\"̆̇\",\"ఀ\":\"̆̇\",\"ಁ\":\"̆̇\",\"ഁ\":\"̆̇\",\"𑒿\":\"̆̇\",\"᳐\":\"̂\",\"̑\":\"̂\",\"ٛ\":\"̂\",\"߮\":\"̂\",\"꛰\":\"̂\",\"֯\":\"̊\",\"۟\":\"̊\",\"៓\":\"̊\",\"゚\":\"̊\",\"ْ\":\"̊\",\"ஂ\":\"̊\",\"ံ\":\"̊\",\"ំ\":\"̊\",\"𑌀\":\"̊\",\"ํ\":\"̊\",\"ໍ\":\"̊\",\"ͦ\":\"̊\",\"ⷪ\":\"̊\",\"࣫\":\"̈\",\"߳\":\"̈\",\"ً\":\"̋\",\"ࣰ\":\"̋\",\"͂\":\"̃\",\"ٓ\":\"̃\",\"ׄ\":\"̇\",\"۬\":\"̇\",\"݀\":\"̇\",\"࣪\":\"̇\",\"݁\":\"̇\",\"͘\":\"̇\",\"ֹ\":\"̇\",\"ֺ\":\"̇\",\"ׂ\":\"̇\",\"ׁ\":\"̇\",\"߭\":\"̇\",\"ं\":\"̇\",\"ਂ\":\"̇\",\"ં\":\"̇\",\"்\":\"̇\",\"̷\":\"̸\",\"᪷\":\"̨\",\"̢\":\"̨\",\"ͅ\":\"̨\",\"᳒\":\"̄\",\"̅\":\"̄\",\"ٙ\":\"̄\",\"߫\":\"̄\",\"꛱\":\"̄\",\"᳚\":\"̎\",\"ٗ\":\"̒\",\"͗\":\"͐\",\"ࣿ\":\"͐\",\"ࣸ\":\"͐\",\"ऀ\":\"͒\",\"᳭\":\"̖\",\"᳜\":\"̩\",\"ٖ\":\"̩\",\"᳕\":\"̫\",\"͇\":\"̳\",\"ࣹ\":\"͔\",\"ࣺ\":\"͕\",\"゛\":\"ﾞ\",\"゜\":\"ﾟ\",\"̶\":\"̵\",\"〬\":\"̉\",\"ׅ\":\"̣\",\"࣭\":\"̣\",\"᳝\":\"̣\",\"ִ\":\"̣\",\"ٜ\":\"̣\",\"़\":\"̣\",\"়\":\"̣\",\"਼\":\"̣\",\"઼\":\"̣\",\"଼\":\"̣\",\"𑇊\":\"̣\",\"𑓃\":\"̣\",\"𐨺\":\"̣\",\"࣮\":\"̤\",\"᳞\":\"̤\",\"༷\":\"̥\",\"〭\":\"̥\",\"̧\":\"̦\",\"̡\":\"̦\",\"̹\":\"̦\",\"᳙\":\"̭\",\"᳘\":\"̮\",\"॒\":\"̱\",\"̠\":\"̱\",\"ࣱ\":\"ٌ\",\"ࣨ\":\"ٌ\",\"ࣥ\":\"ٌ\",\"ﱞ\":\"ﹲّ\",\"ࣲ\":\"ٍ\",\"ﱟ\":\"ﹴّ\",\"ﳲ\":\"ﹷّ\",\"ﱠ\":\"ﹶّ\",\"ﳳ\":\"ﹹّ\",\"ﱡ\":\"ﹸّ\",\"ؚ\":\"ِ\",\"̗\":\"ِ\",\"ﳴ\":\"ﹻّ\",\"ﱢ\":\"ﹺّ\",\"ﱣ\":\"ﹼٰ\",\"ٟ\":\"ٕ\",\"̍\":\"ٰ\",\"݂\":\"ܼ\",\"ਃ\":\"ঃ\",\"ః\":\"ঃ\",\"ಃ\":\"ঃ\",\"ഃ\":\"ঃ\",\"ඃ\":\"ঃ\",\"း\":\"ঃ\",\"𑓁\":\"ঃ\",\"់\":\"่\",\"່\":\"่\",\"້\":\"้\",\"໊\":\"๊\",\"໋\":\"๋\",\"꙯\":\"⃩\",\"\\u2028\":\" \",\"\\u2029\":\" \",\" \":\" \",\" \":\" \",\" \":\" \",\" \":\" \",\" \":\" \",\" \":\" \",\" \":\" \",\" \":\" \",\" \":\" \",\" \":\" \",\" \":\" \",\" \":\" \",\" \":\" \",\" \":\" \",\" \":\" \",\"ߺ\":\"_\",\"﹍\":\"_\",\"﹎\":\"_\",\"﹏\":\"_\",\"‐\":\"-\",\"‑\":\"-\",\"‒\":\"-\",\"–\":\"-\",\"﹘\":\"-\",\"۔\":\"-\",\"⁃\":\"-\",\"˗\":\"-\",\"−\":\"-\",\"➖\":\"-\",\"Ⲻ\":\"-\",\"⨩\":\"-̓\",\"⸚\":\"-̈\",\"﬩\":\"-̇\",\"∸\":\"-̇\",\"⨪\":\"-̣\",\"꓾\":\"-.\",\"～\":\"〜\",\"؍\":\",\",\"٫\":\",\",\"‚\":\",\",\"¸\":\",\",\"ꓹ\":\",\",\"⸲\":\"،\",\"٬\":\"،\",\";\":\";\",\"⸵\":\"؛\",\"ः\":\":\",\"ઃ\":\":\",\"：\":\":\",\"։\":\":\",\"܃\":\":\",\"܄\":\":\",\"᛬\":\":\",\"︰\":\":\",\"᠃\":\":\",\"᠉\":\":\",\"⁚\":\":\",\"׃\":\":\",\"˸\":\":\",\"꞉\":\":\",\"∶\":\":\",\"ː\":\":\",\"ꓽ\":\":\",\"⩴\":\"::=\",\"⧴\":\":→\",\"！\":\"!\",\"ǃ\":\"!\",\"ⵑ\":\"!\",\"‼\":\"!!\",\"⁉\":\"!?\",\"ʔ\":\"?\",\"Ɂ\":\"?\",\"ॽ\":\"?\",\"Ꭾ\":\"?\",\"ꛫ\":\"?\",\"⁈\":\"?!\",\"⁇\":\"??\",\"⸮\":\"؟\",\"𝅭\":\".\",\"․\":\".\",\"܁\":\".\",\"܂\":\".\",\"꘎\":\".\",\"𐩐\":\".\",\"٠\":\".\",\"۰\":\".\",\"ꓸ\":\".\",\"ꓻ\":\".,\",\"‥\":\"..\",\"ꓺ\":\"..\",\"…\":\"...\",\"꛴\":\"꛳꛳\",\"・\":\"·\",\"･\":\"·\",\"᛫\":\"·\",\"·\":\"·\",\"⸱\":\"·\",\"𐄁\":\"·\",\"•\":\"·\",\"‧\":\"·\",\"∙\":\"·\",\"⋅\":\"·\",\"ꞏ\":\"·\",\"ᐧ\":\"·\",\"⋯\":\"···\",\"ⵈ\":\"···\",\"ᑄ\":\"·<\",\"⋗\":\"·>\",\"ᐷ\":\"·>\",\"ᑀ\":\"·>\",\"ᔯ\":\"·4\",\"ᑾ\":\"·b\",\"ᒀ\":\"·ḃ\",\"ᑺ\":\"·d\",\"ᒘ\":\"·J\",\"ᒶ\":\"·L\",\"ᑶ\":\"·P\",\"ᑗ\":\"·U\",\"ᐺ\":\"·V\",\"ᐼ\":\"·Ʌ\",\"ᒮ\":\"·Γ\",\"ᐎ\":\"·Δ\",\"ᑙ\":\"·Ո\",\"ᐌ\":\"·ᐁ\",\"ᐐ\":\"·ᐄ\",\"ᐒ\":\"·ᐅ\",\"ᐔ\":\"·ᐆ\",\"ᐗ\":\"·ᐊ\",\"ᐙ\":\"·ᐋ\",\"ᐾ\":\"·ᐲ\",\"ᑂ\":\"·ᐴ\",\"ᑆ\":\"·ᐹ\",\"ᑛ\":\"·ᑏ\",\"ᑔ\":\"·ᑐ\",\"ᑝ\":\"·ᑐ\",\"ᑟ\":\"·ᑑ\",\"ᑡ\":\"·ᑕ\",\"ᑣ\":\"·ᑖ\",\"ᑴ\":\"·ᑫ\",\"ᑸ\":\"·ᑮ\",\"ᑼ\":\"·ᑰ\",\"ᒒ\":\"·ᒉ\",\"ᒔ\":\"·ᒋ\",\"ᒖ\":\"·ᒌ\",\"ᒚ\":\"·ᒎ\",\"ᒜ\":\"·ᒐ\",\"ᒞ\":\"·ᒑ\",\"ᒬ\":\"·ᒣ\",\"ᒰ\":\"·ᒦ\",\"ᒲ\":\"·ᒧ\",\"ᒴ\":\"·ᒨ\",\"ᒸ\":\"·ᒫ\",\"ᓉ\":\"·ᓀ\",\"ᣆ\":\"·ᓂ\",\"ᣈ\":\"·ᓃ\",\"ᣊ\":\"·ᓄ\",\"ᣌ\":\"·ᓅ\",\"ᓋ\":\"·ᓇ\",\"ᓍ\":\"·ᓈ\",\"ᓜ\":\"·ᓓ\",\"ᓞ\":\"·ᓕ\",\"ᓠ\":\"·ᓖ\",\"ᓢ\":\"·ᓗ\",\"ᓤ\":\"·ᓘ\",\"ᓦ\":\"·ᓚ\",\"ᓨ\":\"·ᓛ\",\"ᓶ\":\"·ᓭ\",\"ᓸ\":\"·ᓯ\",\"ᓺ\":\"·ᓰ\",\"ᓼ\":\"·ᓱ\",\"ᓾ\":\"·ᓲ\",\"ᔀ\":\"·ᓴ\",\"ᔂ\":\"·ᓵ\",\"ᔗ\":\"·ᔐ\",\"ᔙ\":\"·ᔑ\",\"ᔛ\":\"·ᔒ\",\"ᔝ\":\"·ᔓ\",\"ᔟ\":\"·ᔔ\",\"ᔡ\":\"·ᔕ\",\"ᔣ\":\"·ᔖ\",\"ᔱ\":\"·ᔨ\",\"ᔳ\":\"·ᔩ\",\"ᔵ\":\"·ᔪ\",\"ᔷ\":\"·ᔫ\",\"ᔹ\":\"·ᔭ\",\"ᔻ\":\"·ᔮ\",\"ᣎ\":\"·ᕃ\",\"ᣏ\":\"·ᕆ\",\"ᣐ\":\"·ᕇ\",\"ᣑ\":\"·ᕈ\",\"ᣒ\":\"·ᕉ\",\"ᣓ\":\"·ᕋ\",\"ᕎ\":\"·ᕌ\",\"ᕛ\":\"·ᕚ\",\"ᕨ\":\"·ᕧ\",\"ᢳ\":\"·ᢱ\",\"ᢶ\":\"·ᢴ\",\"ᢹ\":\"·ᢸ\",\"ᣂ\":\"·ᣀ\",\"꠰\":\"।\",\"॥\":\"।।\",\"᰼\":\"᰻᰻\",\"။\":\"၊၊\",\"᪩\":\"᪨᪨\",\"᪫\":\"᪪᪨\",\"᭟\":\"᭞᭞\",\"𐩗\":\"𐩖𐩖\",\"𑑌\":\"𑑋𑑋\",\"𑙂\":\"𑙁𑙁\",\"𑱂\":\"𑱁𑱁\",\"᱿\":\"᱾᱾\",\"՝\":\"'\",\"＇\":\"'\",\"‘\":\"'\",\"’\":\"'\",\"‛\":\"'\",\"′\":\"'\",\"‵\":\"'\",\"՚\":\"'\",\"׳\":\"'\",\"`\":\"'\",\"`\":\"'\",\"｀\":\"'\",\"´\":\"'\",\"΄\":\"'\",\"´\":\"'\",\"᾽\":\"'\",\"᾿\":\"'\",\"῾\":\"'\",\"ʹ\":\"'\",\"ʹ\":\"'\",\"ˈ\":\"'\",\"ˊ\":\"'\",\"ˋ\":\"'\",\"˴\":\"'\",\"ʻ\":\"'\",\"ʽ\":\"'\",\"ʼ\":\"'\",\"ʾ\":\"'\",\"ꞌ\":\"'\",\"י\":\"'\",\"ߴ\":\"'\",\"ߵ\":\"'\",\"ᑊ\":\"'\",\"ᛌ\":\"'\",\"𖽑\":\"'\",\"𖽒\":\"'\",\"᳓\":\"''\",\"\\\"\":\"''\",\"＂\":\"''\",\"“\":\"''\",\"”\":\"''\",\"‟\":\"''\",\"″\":\"''\",\"‶\":\"''\",\"〃\":\"''\",\"״\":\"''\",\"˝\":\"''\",\"ʺ\":\"''\",\"˶\":\"''\",\"ˮ\":\"''\",\"ײ\":\"''\",\"‴\":\"'''\",\"‷\":\"'''\",\"⁗\":\"''''\",\"Ɓ\":\"'B\",\"Ɗ\":\"'D\",\"ŉ\":\"'n\",\"Ƥ\":\"'P\",\"Ƭ\":\"'T\",\"Ƴ\":\"'Y\",\"［\":\"(\",\"❨\":\"(\",\"❲\":\"(\",\"〔\":\"(\",\"﴾\":\"(\",\"⸨\":\"((\",\"㈠\":\"(ー)\",\"⑵\":\"(2)\",\"⒇\":\"(2O)\",\"⑶\":\"(3)\",\"⑷\":\"(4)\",\"⑸\":\"(5)\",\"⑹\":\"(6)\",\"⑺\":\"(7)\",\"⑻\":\"(8)\",\"⑼\":\"(9)\",\"⒜\":\"(a)\",\"🄐\":\"(A)\",\"⒝\":\"(b)\",\"🄑\":\"(B)\",\"⒞\":\"(c)\",\"🄒\":\"(C)\",\"⒟\":\"(d)\",\"🄓\":\"(D)\",\"⒠\":\"(e)\",\"🄔\":\"(E)\",\"⒡\":\"(f)\",\"🄕\":\"(F)\",\"⒢\":\"(g)\",\"🄖\":\"(G)\",\"⒣\":\"(h)\",\"🄗\":\"(H)\",\"⒤\":\"(i)\",\"⒥\":\"(j)\",\"🄙\":\"(J)\",\"⒦\":\"(k)\",\"🄚\":\"(K)\",\"⑴\":\"(l)\",\"🄘\":\"(l)\",\"⒧\":\"(l)\",\"🄛\":\"(L)\",\"⑿\":\"(l2)\",\"⒀\":\"(l3)\",\"⒁\":\"(l4)\",\"⒂\":\"(l5)\",\"⒃\":\"(l6)\",\"⒄\":\"(l7)\",\"⒅\":\"(l8)\",\"⒆\":\"(l9)\",\"⑾\":\"(ll)\",\"⑽\":\"(lO)\",\"🄜\":\"(M)\",\"⒩\":\"(n)\",\"🄝\":\"(N)\",\"⒪\":\"(o)\",\"🄞\":\"(O)\",\"⒫\":\"(p)\",\"🄟\":\"(P)\",\"⒬\":\"(q)\",\"🄠\":\"(Q)\",\"⒭\":\"(r)\",\"🄡\":\"(R)\",\"⒨\":\"(rn)\",\"⒮\":\"(s)\",\"🄢\":\"(S)\",\"🄪\":\"(S)\",\"⒯\":\"(t)\",\"🄣\":\"(T)\",\"⒰\":\"(u)\",\"🄤\":\"(U)\",\"⒱\":\"(v)\",\"🄥\":\"(V)\",\"⒲\":\"(w)\",\"🄦\":\"(W)\",\"⒳\":\"(x)\",\"🄧\":\"(X)\",\"⒴\":\"(y)\",\"🄨\":\"(Y)\",\"⒵\":\"(z)\",\"🄩\":\"(Z)\",\"㈀\":\"(ᄀ)\",\"㈎\":\"(가)\",\"㈁\":\"(ᄂ)\",\"㈏\":\"(나)\",\"㈂\":\"(ᄃ)\",\"㈐\":\"(다)\",\"㈃\":\"(ᄅ)\",\"㈑\":\"(라)\",\"㈄\":\"(ᄆ)\",\"㈒\":\"(마)\",\"㈅\":\"(ᄇ)\",\"㈓\":\"(바)\",\"㈆\":\"(ᄉ)\",\"㈔\":\"(사)\",\"㈇\":\"(ᄋ)\",\"㈕\":\"(아)\",\"㈝\":\"(오전)\",\"㈞\":\"(오후)\",\"㈈\":\"(ᄌ)\",\"㈖\":\"(자)\",\"㈜\":\"(주)\",\"㈉\":\"(ᄎ)\",\"㈗\":\"(차)\",\"㈊\":\"(ᄏ)\",\"㈘\":\"(카)\",\"㈋\":\"(ᄐ)\",\"㈙\":\"(타)\",\"㈌\":\"(ᄑ)\",\"㈚\":\"(파)\",\"㈍\":\"(ᄒ)\",\"㈛\":\"(하)\",\"㈦\":\"(七)\",\"㈢\":\"(三)\",\"🉁\":\"(三)\",\"㈨\":\"(九)\",\"㈡\":\"(二)\",\"🉂\":\"(二)\",\"㈤\":\"(五)\",\"㈹\":\"(代)\",\"㈽\":\"(企)\",\"㉁\":\"(休)\",\"㈧\":\"(八)\",\"㈥\":\"(六)\",\"㈸\":\"(労)\",\"🉇\":\"(勝)\",\"㈩\":\"(十)\",\"㈿\":\"(協)\",\"㈴\":\"(名)\",\"㈺\":\"(呼)\",\"㈣\":\"(四)\",\"㈯\":\"(土)\",\"㈻\":\"(学)\",\"🉃\":\"(安)\",\"🉅\":\"(打)\",\"🉈\":\"(敗)\",\"㈰\":\"(日)\",\"㈪\":\"(月)\",\"㈲\":\"(有)\",\"㈭\":\"(木)\",\"🉀\":\"(本)\",\"㈱\":\"(株)\",\"㈬\":\"(水)\",\"㈫\":\"(火)\",\"🉄\":\"(点)\",\"㈵\":\"(特)\",\"🉆\":\"(盗)\",\"㈼\":\"(監)\",\"㈳\":\"(社)\",\"㈷\":\"(祝)\",\"㉀\":\"(祭)\",\"㉂\":\"(自)\",\"㉃\":\"(至)\",\"㈶\":\"(財)\",\"㈾\":\"(資)\",\"㈮\":\"(金)\",\"］\":\")\",\"❩\":\")\",\"❳\":\")\",\"〕\":\")\",\"﴿\":\")\",\"⸩\":\"))\",\"❴\":\"{\",\"𝄔\":\"{\",\"❵\":\"}\",\"〚\":\"⟦\",\"〛\":\"⟧\",\"⟨\":\"❬\",\"〈\":\"❬\",\"〈\":\"❬\",\"㇛\":\"❬\",\"く\":\"❬\",\"𡿨\":\"❬\",\"⟩\":\"❭\",\"〉\":\"❭\",\"〉\":\"❭\",\"＾\":\"︿\",\"⸿\":\"¶\",\"⁎\":\"*\",\"٭\":\"*\",\"∗\":\"*\",\"𐌟\":\"*\",\"᜵\":\"/\",\"⁁\":\"/\",\"∕\":\"/\",\"⁄\":\"/\",\"╱\":\"/\",\"⟋\":\"/\",\"⧸\":\"/\",\"𝈺\":\"/\",\"㇓\":\"/\",\"〳\":\"/\",\"Ⳇ\":\"/\",\"ノ\":\"/\",\"丿\":\"/\",\"⼃\":\"/\",\"⧶\":\"/̄\",\"⫽\":\"//\",\"⫻\":\"///\",\"＼\":\"\\\\\",\"﹨\":\"\\\\\",\"∖\":\"\\\\\",\"⟍\":\"\\\\\",\"⧵\":\"\\\\\",\"⧹\":\"\\\\\",\"𝈏\":\"\\\\\",\"𝈻\":\"\\\\\",\"㇔\":\"\\\\\",\"丶\":\"\\\\\",\"⼂\":\"\\\\\",\"⳹\":\"\\\\\\\\\",\"⑊\":\"\\\\\\\\\",\"⟈\":\"\\\\ᑕ\",\"ꝸ\":\"&\",\"૰\":\"॰\",\"𑂻\":\"॰\",\"𑇇\":\"॰\",\"⚬\":\"॰\",\"𑇛\":\"꣼\",\"៙\":\"๏\",\"៕\":\"๚\",\"៚\":\"๛\",\"༌\":\"་\",\"༎\":\"།།\",\"˄\":\"^\",\"ˆ\":\"^\",\"꙾\":\"ˇ\",\"˘\":\"ˇ\",\"‾\":\"ˉ\",\"﹉\":\"ˉ\",\"﹊\":\"ˉ\",\"﹋\":\"ˉ\",\"﹌\":\"ˉ\",\"¯\":\"ˉ\",\"￣\":\"ˉ\",\"▔\":\"ˉ\",\"ъ\":\"ˉb\",\"ꙑ\":\"ˉbi\",\"͵\":\"ˏ\",\"˻\":\"˪\",\"꜖\":\"˪\",\"꜔\":\"˫\",\"。\":\"˳\",\"⸰\":\"°\",\"˚\":\"°\",\"∘\":\"°\",\"○\":\"°\",\"◦\":\"°\",\"⍜\":\"°̲\",\"⍤\":\"°̈\",\"℃\":\"°C\",\"℉\":\"°F\",\"௵\":\"௳\",\"༛\":\"༚༚\",\"༟\":\"༚༝\",\"࿎\":\"༝༚\",\"༞\":\"༝༝\",\"Ⓒ\":\"©\",\"Ⓡ\":\"®\",\"Ⓟ\":\"℗\",\"𝈛\":\"⅄\",\"⯬\":\"↞\",\"⯭\":\"↟\",\"⯮\":\"↠\",\"⯯\":\"↡\",\"↵\":\"↲\",\"⥥\":\"⇃⇂\",\"⥯\":\"⇃ᛚ\",\"𝛛\":\"∂\",\"𝜕\":\"∂\",\"𝝏\":\"∂\",\"𝞉\":\"∂\",\"𝟃\":\"∂\",\"𞣌\":\"∂\",\"𞣍\":\"∂̵\",\"ð\":\"∂̵\",\"⌀\":\"∅\",\"𝛁\":\"∇\",\"𝛻\":\"∇\",\"𝜵\":\"∇\",\"𝝯\":\"∇\",\"𝞩\":\"∇\",\"𑢨\":\"∇\",\"⍢\":\"∇̈\",\"⍫\":\"∇̴\",\"█\":\"∎\",\"■\":\"∎\",\"⨿\":\"∐\",\"᛭\":\"+\",\"➕\":\"+\",\"𐊛\":\"+\",\"⨣\":\"+̂\",\"⨢\":\"+̊\",\"⨤\":\"+̃\",\"∔\":\"+̇\",\"⨥\":\"+̣\",\"⨦\":\"+̰\",\"⨧\":\"+₂\",\"➗\":\"÷\",\"‹\":\"<\",\"❮\":\"<\",\"˂\":\"<\",\"𝈶\":\"<\",\"ᐸ\":\"<\",\"ᚲ\":\"<\",\"⋖\":\"<·\",\"Ⲵ\":\"<·\",\"ᑅ\":\"<·\",\"≪\":\"<<\",\"⋘\":\"<<<\",\"᐀\":\"=\",\"⹀\":\"=\",\"゠\":\"=\",\"꓿\":\"=\",\"≚\":\"=̆\",\"≙\":\"=̂\",\"≗\":\"=̊\",\"≐\":\"=̇\",\"≑\":\"=̣̇\",\"⩮\":\"=⃰\",\"⩵\":\"==\",\"⩶\":\"===\",\"≞\":\"=ͫ\",\"›\":\">\",\"❯\":\">\",\"˃\":\">\",\"𝈷\":\">\",\"ᐳ\":\">\",\"𖼿\":\">\",\"ᑁ\":\">·\",\"⪥\":\"><\",\"≫\":\">>\",\"⨠\":\">>\",\"⋙\":\">>>\",\"⁓\":\"~\",\"˜\":\"~\",\"῀\":\"~\",\"∼\":\"~\",\"⍨\":\"~̈\",\"⸞\":\"~̇\",\"⩪\":\"~̇\",\"⸟\":\"~̣\",\"𞣈\":\"∠\",\"⋀\":\"∧\",\"∯\":\"∮∮\",\"∰\":\"∮∮∮\",\"⸫\":\"∴\",\"⸪\":\"∵\",\"⸬\":\"∷\",\"𑇞\":\"≈\",\"♎\":\"≏\",\"🝞\":\"≏\",\"≣\":\"≡\",\"⨃\":\"⊍\",\"⨄\":\"⊎\",\"𝈸\":\"⊏\",\"𝈹\":\"⊐\",\"⨅\":\"⊓\",\"⨆\":\"⊔\",\"⨂\":\"⊗\",\"⍟\":\"⊛\",\"🝱\":\"⊠\",\"🝕\":\"⊡\",\"◁\":\"⊲\",\"▷\":\"⊳\",\"⍣\":\"⋆̈\",\"︴\":\"⌇\",\"◠\":\"⌒\",\"⨽\":\"⌙\",\"⌥\":\"⌤\",\"⧇\":\"⌻\",\"◎\":\"⌾\",\"⦾\":\"⌾\",\"⧅\":\"⍂\",\"⦰\":\"⍉\",\"⏃\":\"⍋\",\"⏂\":\"⍎\",\"⏁\":\"⍕\",\"⏆\":\"⍭\",\"☸\":\"⎈\",\"︵\":\"⏜\",\"︶\":\"⏝\",\"︷\":\"⏞\",\"︸\":\"⏟\",\"︹\":\"⏠\",\"︺\":\"⏡\",\"▱\":\"⏥\",\"⏼\":\"⏻\",\"︱\":\"│\",\"｜\":\"│\",\"┃\":\"│\",\"┏\":\"┌\",\"┣\":\"├\",\"▐\":\"▌\",\"▗\":\"▖\",\"▝\":\"▘\",\"☐\":\"□\",\"￭\":\"▪\",\"▸\":\"▶\",\"►\":\"▶\",\"⳩\":\"☧\",\"🜊\":\"☩\",\"🌒\":\"☽\",\"🌙\":\"☽\",\"⏾\":\"☾\",\"🌘\":\"☾\",\"⧙\":\"⦚\",\"🜺\":\"⧟\",\"⨾\":\"⨟\",\"𐆠\":\"⳨\",\"♩\":\"𝅘𝅥\",\"♪\":\"𝅘𝅥𝅮\",\"⓪\":\"🄍\",\"↺\":\"🄎\",\"˙\":\"ॱ\",\"ൎ\":\"ॱ\",\"－\":\"ー\",\"—\":\"ー\",\"―\":\"ー\",\"─\":\"ー\",\"━\":\"ー\",\"㇐\":\"ー\",\"ꟷ\":\"ー\",\"ᅳ\":\"ー\",\"ㅡ\":\"ー\",\"一\":\"ー\",\"⼀\":\"ー\",\"ᆖ\":\"ーー\",\"ힹ\":\"ーᅡ\",\"ힺ\":\"ーᅥ\",\"ힻ\":\"ーᅥ丨\",\"ힼ\":\"ーᅩ\",\"ᆕ\":\"ーᅮ\",\"ᅴ\":\"ー丨\",\"ㅢ\":\"ー丨\",\"ᆗ\":\"ー丨ᅮ\",\"🄏\":\"$⃠\",\"₤\":\"£\",\"〒\":\"₸\",\"〶\":\"₸\",\"᭜\":\"᭐\",\"꧆\":\"꧐\",\"𑓑\":\"১\",\"೧\":\"౧\",\"ၥ\":\"၁\",\"①\":\"➀\",\"⑩\":\"➉\",\"⏨\":\"₁₀\",\"𝟐\":\"2\",\"𝟚\":\"2\",\"𝟤\":\"2\",\"𝟮\":\"2\",\"𝟸\":\"2\",\"🯲\":\"2\",\"Ꝛ\":\"2\",\"Ƨ\":\"2\",\"Ϩ\":\"2\",\"Ꙅ\":\"2\",\"ᒿ\":\"2\",\"ꛯ\":\"2\",\"ꧏ\":\"٢\",\"۲\":\"٢\",\"૨\":\"२\",\"𑓒\":\"২\",\"೨\":\"౨\",\"②\":\"➁\",\"ƻ\":\"2̵\",\"🄃\":\"2,\",\"⒉\":\"2.\",\"㏵\":\"22日\",\"㍮\":\"22点\",\"㏶\":\"23日\",\"㍯\":\"23点\",\"㏷\":\"24日\",\"㍰\":\"24点\",\"㏸\":\"25日\",\"㏹\":\"26日\",\"㏺\":\"27日\",\"㏻\":\"28日\",\"㏼\":\"29日\",\"㏴\":\"2l日\",\"㍭\":\"2l点\",\"⒛\":\"2O.\",\"㏳\":\"2O日\",\"㍬\":\"2O点\",\"෩\":\"෨ා\",\"෯\":\"෨ී\",\"㏡\":\"2日\",\"㋁\":\"2月\",\"㍚\":\"2点\",\"𝈆\":\"3\",\"𝟑\":\"3\",\"𝟛\":\"3\",\"𝟥\":\"3\",\"𝟯\":\"3\",\"𝟹\":\"3\",\"🯳\":\"3\",\"Ɜ\":\"3\",\"Ȝ\":\"3\",\"Ʒ\":\"3\",\"Ꝫ\":\"3\",\"Ⳍ\":\"3\",\"З\":\"3\",\"Ӡ\":\"3\",\"𖼻\":\"3\",\"𑣊\":\"3\",\"۳\":\"٣\",\"𞣉\":\"٣\",\"૩\":\"३\",\"③\":\"➂\",\"Ҙ\":\"3̦\",\"🄄\":\"3,\",\"⒊\":\"3.\",\"㏾\":\"3l日\",\"㏽\":\"3O日\",\"㏢\":\"3日\",\"㋂\":\"3月\",\"㍛\":\"3点\",\"𝟒\":\"4\",\"𝟜\":\"4\",\"𝟦\":\"4\",\"𝟰\":\"4\",\"𝟺\":\"4\",\"🯴\":\"4\",\"Ꮞ\":\"4\",\"𑢯\":\"4\",\"۴\":\"٤\",\"૪\":\"४\",\"④\":\"➃\",\"🄅\":\"4,\",\"⒋\":\"4.\",\"ᔰ\":\"4·\",\"㏣\":\"4日\",\"㋃\":\"4月\",\"㍜\":\"4点\",\"𝟓\":\"5\",\"𝟝\":\"5\",\"𝟧\":\"5\",\"𝟱\":\"5\",\"𝟻\":\"5\",\"🯵\":\"5\",\"Ƽ\":\"5\",\"𑢻\":\"5\",\"⑤\":\"➄\",\"🄆\":\"5,\",\"⒌\":\"5.\",\"㏤\":\"5日\",\"㋄\":\"5月\",\"㍝\":\"5点\",\"𝟔\":\"6\",\"𝟞\":\"6\",\"𝟨\":\"6\",\"𝟲\":\"6\",\"𝟼\":\"6\",\"🯶\":\"6\",\"Ⳓ\":\"6\",\"б\":\"6\",\"Ꮾ\":\"6\",\"𑣕\":\"6\",\"۶\":\"٦\",\"𑓖\":\"৬\",\"⑥\":\"➅\",\"🄇\":\"6,\",\"⒍\":\"6.\",\"㏥\":\"6日\",\"㋅\":\"6月\",\"㍞\":\"6点\",\"𝈒\":\"7\",\"𝟕\":\"7\",\"𝟟\":\"7\",\"𝟩\":\"7\",\"𝟳\":\"7\",\"𝟽\":\"7\",\"🯷\":\"7\",\"𐓒\":\"7\",\"𑣆\":\"7\",\"⑦\":\"➆\",\"🄈\":\"7,\",\"⒎\":\"7.\",\"㏦\":\"7日\",\"㋆\":\"7月\",\"㍟\":\"7点\",\"ଃ\":\"8\",\"৪\":\"8\",\"੪\":\"8\",\"𞣋\":\"8\",\"𝟖\":\"8\",\"𝟠\":\"8\",\"𝟪\":\"8\",\"𝟴\":\"8\",\"𝟾\":\"8\",\"🯸\":\"8\",\"ȣ\":\"8\",\"Ȣ\":\"8\",\"𐌚\":\"8\",\"૮\":\"८\",\"⑧\":\"➇\",\"🄉\":\"8,\",\"⒏\":\"8.\",\"㏧\":\"8日\",\"㋇\":\"8月\",\"㍠\":\"8点\",\"੧\":\"9\",\"୨\":\"9\",\"৭\":\"9\",\"൭\":\"9\",\"𝟗\":\"9\",\"𝟡\":\"9\",\"𝟫\":\"9\",\"𝟵\":\"9\",\"𝟿\":\"9\",\"🯹\":\"9\",\"Ꝯ\":\"9\",\"Ⳋ\":\"9\",\"𑣌\":\"9\",\"𑢬\":\"9\",\"𑣖\":\"9\",\"१\":\"٩\",\"𑣤\":\"٩\",\"۹\":\"٩\",\"೯\":\"౯\",\"⑨\":\"➈\",\"🄊\":\"9,\",\"⒐\":\"9.\",\"㏨\":\"9日\",\"㋈\":\"9月\",\"㍡\":\"9点\",\"⍺\":\"a\",\"ａ\":\"a\",\"𝐚\":\"a\",\"𝑎\":\"a\",\"𝒂\":\"a\",\"𝒶\":\"a\",\"𝓪\":\"a\",\"𝔞\":\"a\",\"𝕒\":\"a\",\"𝖆\":\"a\",\"𝖺\":\"a\",\"𝗮\":\"a\",\"𝘢\":\"a\",\"𝙖\":\"a\",\"𝚊\":\"a\",\"ɑ\":\"a\",\"α\":\"a\",\"𝛂\":\"a\",\"𝛼\":\"a\",\"𝜶\":\"a\",\"𝝰\":\"a\",\"𝞪\":\"a\",\"а\":\"a\",\"ⷶ\":\"ͣ\",\"Ａ\":\"A\",\"𝐀\":\"A\",\"𝐴\":\"A\",\"𝑨\":\"A\",\"𝒜\":\"A\",\"𝓐\":\"A\",\"𝔄\":\"A\",\"𝔸\":\"A\",\"𝕬\":\"A\",\"𝖠\":\"A\",\"𝗔\":\"A\",\"𝘈\":\"A\",\"𝘼\":\"A\",\"𝙰\":\"A\",\"Α\":\"A\",\"𝚨\":\"A\",\"𝛢\":\"A\",\"𝜜\":\"A\",\"𝝖\":\"A\",\"𝞐\":\"A\",\"А\":\"A\",\"Ꭺ\":\"A\",\"ᗅ\":\"A\",\"ꓮ\":\"A\",\"𖽀\":\"A\",\"𐊠\":\"A\",\"⍶\":\"a̲\",\"ǎ\":\"ă\",\"Ǎ\":\"Ă\",\"ȧ\":\"å\",\"Ȧ\":\"Å\",\"ẚ\":\"ả\",\"℀\":\"a/c\",\"℁\":\"a/s\",\"ꜳ\":\"aa\",\"Ꜳ\":\"AA\",\"æ\":\"ae\",\"ӕ\":\"ae\",\"Æ\":\"AE\",\"Ӕ\":\"AE\",\"ꜵ\":\"ao\",\"Ꜵ\":\"AO\",\"🜇\":\"AR\",\"ꜷ\":\"au\",\"Ꜷ\":\"AU\",\"ꜹ\":\"av\",\"ꜻ\":\"av\",\"Ꜹ\":\"AV\",\"Ꜻ\":\"AV\",\"ꜽ\":\"ay\",\"Ꜽ\":\"AY\",\"ꭺ\":\"ᴀ\",\"∀\":\"Ɐ\",\"𝈗\":\"Ɐ\",\"ᗄ\":\"Ɐ\",\"ꓯ\":\"Ɐ\",\"𐐟\":\"Ɒ\",\"𝐛\":\"b\",\"𝑏\":\"b\",\"𝒃\":\"b\",\"𝒷\":\"b\",\"𝓫\":\"b\",\"𝔟\":\"b\",\"𝕓\":\"b\",\"𝖇\":\"b\",\"𝖻\":\"b\",\"𝗯\":\"b\",\"𝘣\":\"b\",\"𝙗\":\"b\",\"𝚋\":\"b\",\"Ƅ\":\"b\",\"Ь\":\"b\",\"Ꮟ\":\"b\",\"ᑲ\":\"b\",\"ᖯ\":\"b\",\"Ｂ\":\"B\",\"ℬ\":\"B\",\"𝐁\":\"B\",\"𝐵\":\"B\",\"𝑩\":\"B\",\"𝓑\":\"B\",\"𝔅\":\"B\",\"𝔹\":\"B\",\"𝕭\":\"B\",\"𝖡\":\"B\",\"𝗕\":\"B\",\"𝘉\":\"B\",\"𝘽\":\"B\",\"𝙱\":\"B\",\"Ꞵ\":\"B\",\"Β\":\"B\",\"𝚩\":\"B\",\"𝛣\":\"B\",\"𝜝\":\"B\",\"𝝗\":\"B\",\"𝞑\":\"B\",\"В\":\"B\",\"Ᏼ\":\"B\",\"ᗷ\":\"B\",\"ꓐ\":\"B\",\"𐊂\":\"B\",\"𐊡\":\"B\",\"𐌁\":\"B\",\"ɓ\":\"b̔\",\"ᑳ\":\"ḃ\",\"ƃ\":\"b̄\",\"Ƃ\":\"b̄\",\"Б\":\"b̄\",\"ƀ\":\"b̵\",\"ҍ\":\"b̵\",\"Ҍ\":\"b̵\",\"ѣ\":\"b̵\",\"Ѣ\":\"b̵\",\"ᑿ\":\"b·\",\"ᒁ\":\"ḃ·\",\"ᒈ\":\"b'\",\"Ы\":\"bl\",\"в\":\"ʙ\",\"ᏼ\":\"ʙ\",\"ｃ\":\"c\",\"ⅽ\":\"c\",\"𝐜\":\"c\",\"𝑐\":\"c\",\"𝒄\":\"c\",\"𝒸\":\"c\",\"𝓬\":\"c\",\"𝔠\":\"c\",\"𝕔\":\"c\",\"𝖈\":\"c\",\"𝖼\":\"c\",\"𝗰\":\"c\",\"𝘤\":\"c\",\"𝙘\":\"c\",\"𝚌\":\"c\",\"ᴄ\":\"c\",\"ϲ\":\"c\",\"ⲥ\":\"c\",\"с\":\"c\",\"ꮯ\":\"c\",\"𐐽\":\"c\",\"ⷭ\":\"ͨ\",\"🝌\":\"C\",\"𑣲\":\"C\",\"𑣩\":\"C\",\"Ｃ\":\"C\",\"Ⅽ\":\"C\",\"ℂ\":\"C\",\"ℭ\":\"C\",\"𝐂\":\"C\",\"𝐶\":\"C\",\"𝑪\":\"C\",\"𝒞\":\"C\",\"𝓒\":\"C\",\"𝕮\":\"C\",\"𝖢\":\"C\",\"𝗖\":\"C\",\"𝘊\":\"C\",\"𝘾\":\"C\",\"𝙲\":\"C\",\"Ϲ\":\"C\",\"Ⲥ\":\"C\",\"С\":\"C\",\"Ꮯ\":\"C\",\"ꓚ\":\"C\",\"𐊢\":\"C\",\"𐌂\":\"C\",\"𐐕\":\"C\",\"𐔜\":\"C\",\"¢\":\"c̸\",\"ȼ\":\"c̸\",\"₡\":\"C⃫\",\"🅮\":\"C⃠\",\"ç\":\"c̦\",\"ҫ\":\"c̦\",\"Ç\":\"C̦\",\"Ҫ\":\"C̦\",\"Ƈ\":\"C'\",\"℅\":\"c/o\",\"℆\":\"c/u\",\"🅭\":\"㏄\\t⃝\",\"⋴\":\"ꞓ\",\"ɛ\":\"ꞓ\",\"ε\":\"ꞓ\",\"ϵ\":\"ꞓ\",\"𝛆\":\"ꞓ\",\"𝛜\":\"ꞓ\",\"𝜀\":\"ꞓ\",\"𝜖\":\"ꞓ\",\"𝜺\":\"ꞓ\",\"𝝐\":\"ꞓ\",\"𝝴\":\"ꞓ\",\"𝞊\":\"ꞓ\",\"𝞮\":\"ꞓ\",\"𝟄\":\"ꞓ\",\"ⲉ\":\"ꞓ\",\"є\":\"ꞓ\",\"ԑ\":\"ꞓ\",\"ꮛ\":\"ꞓ\",\"𑣎\":\"ꞓ\",\"𐐩\":\"ꞓ\",\"€\":\"Ꞓ\",\"Ⲉ\":\"Ꞓ\",\"Є\":\"Ꞓ\",\"⍷\":\"ꞓ̲\",\"ͽ\":\"ꜿ\",\"Ͽ\":\"Ꜿ\",\"ⅾ\":\"d\",\"ⅆ\":\"d\",\"𝐝\":\"d\",\"𝑑\":\"d\",\"𝒅\":\"d\",\"𝒹\":\"d\",\"𝓭\":\"d\",\"𝔡\":\"d\",\"𝕕\":\"d\",\"𝖉\":\"d\",\"𝖽\":\"d\",\"𝗱\":\"d\",\"𝘥\":\"d\",\"𝙙\":\"d\",\"𝚍\":\"d\",\"ԁ\":\"d\",\"Ꮷ\":\"d\",\"ᑯ\":\"d\",\"ꓒ\":\"d\",\"Ⅾ\":\"D\",\"ⅅ\":\"D\",\"𝐃\":\"D\",\"𝐷\":\"D\",\"𝑫\":\"D\",\"𝒟\":\"D\",\"𝓓\":\"D\",\"𝔇\":\"D\",\"𝔻\":\"D\",\"𝕯\":\"D\",\"𝖣\":\"D\",\"𝗗\":\"D\",\"𝘋\":\"D\",\"𝘿\":\"D\",\"𝙳\":\"D\",\"Ꭰ\":\"D\",\"ᗞ\":\"D\",\"ᗪ\":\"D\",\"ꓓ\":\"D\",\"ɗ\":\"d̔\",\"ɖ\":\"d̨\",\"ƌ\":\"d̄\",\"đ\":\"d̵\",\"Đ\":\"D̵\",\"Ð\":\"D̵\",\"Ɖ\":\"D̵\",\"₫\":\"ḏ̵\",\"ꝺ\":\"Ꝺ\",\"ᑻ\":\"d·\",\"ᒇ\":\"d'\",\"ʤ\":\"dȝ\",\"ǳ\":\"dz\",\"ʣ\":\"dz\",\"ǲ\":\"Dz\",\"Ǳ\":\"DZ\",\"ǆ\":\"dž\",\"ǅ\":\"Dž\",\"Ǆ\":\"DŽ\",\"ʥ\":\"dʑ\",\"ꭰ\":\"ᴅ\",\"⸹\":\"ẟ\",\"δ\":\"ẟ\",\"𝛅\":\"ẟ\",\"𝛿\":\"ẟ\",\"𝜹\":\"ẟ\",\"𝝳\":\"ẟ\",\"𝞭\":\"ẟ\",\"ծ\":\"ẟ\",\"ᕷ\":\"ẟ\",\"℮\":\"e\",\"ｅ\":\"e\",\"ℯ\":\"e\",\"ⅇ\":\"e\",\"𝐞\":\"e\",\"𝑒\":\"e\",\"𝒆\":\"e\",\"𝓮\":\"e\",\"𝔢\":\"e\",\"𝕖\":\"e\",\"𝖊\":\"e\",\"𝖾\":\"e\",\"𝗲\":\"e\",\"𝘦\":\"e\",\"𝙚\":\"e\",\"𝚎\":\"e\",\"ꬲ\":\"e\",\"е\":\"e\",\"ҽ\":\"e\",\"ⷷ\":\"ͤ\",\"⋿\":\"E\",\"Ｅ\":\"E\",\"ℰ\":\"E\",\"𝐄\":\"E\",\"𝐸\":\"E\",\"𝑬\":\"E\",\"𝓔\":\"E\",\"𝔈\":\"E\",\"𝔼\":\"E\",\"𝕰\":\"E\",\"𝖤\":\"E\",\"𝗘\":\"E\",\"𝘌\":\"E\",\"𝙀\":\"E\",\"𝙴\":\"E\",\"Ε\":\"E\",\"𝚬\":\"E\",\"𝛦\":\"E\",\"𝜠\":\"E\",\"𝝚\":\"E\",\"𝞔\":\"E\",\"Е\":\"E\",\"ⴹ\":\"E\",\"Ꭼ\":\"E\",\"ꓰ\":\"E\",\"𑢦\":\"E\",\"𑢮\":\"E\",\"𐊆\":\"E\",\"ě\":\"ĕ\",\"Ě\":\"Ĕ\",\"ɇ\":\"e̸\",\"Ɇ\":\"E̸\",\"ҿ\":\"ę\",\"ꭼ\":\"ᴇ\",\"ə\":\"ǝ\",\"ә\":\"ǝ\",\"∃\":\"Ǝ\",\"ⴺ\":\"Ǝ\",\"ꓱ\":\"Ǝ\",\"ɚ\":\"ǝ˞\",\"ᴔ\":\"ǝo\",\"ꭁ\":\"ǝo̸\",\"ꭂ\":\"ǝo̵\",\"Ә\":\"Ə\",\"𝈡\":\"Ɛ\",\"ℇ\":\"Ɛ\",\"Ԑ\":\"Ɛ\",\"Ꮛ\":\"Ɛ\",\"𖼭\":\"Ɛ\",\"𐐁\":\"Ɛ\",\"ᶟ\":\"ᵋ\",\"ᴈ\":\"ɜ\",\"з\":\"ɜ\",\"ҙ\":\"ɜ̦\",\"𐑂\":\"ɞ\",\"ꞝ\":\"ʚ\",\"𐐪\":\"ʚ\",\"𝐟\":\"f\",\"𝑓\":\"f\",\"𝒇\":\"f\",\"𝒻\":\"f\",\"𝓯\":\"f\",\"𝔣\":\"f\",\"𝕗\":\"f\",\"𝖋\":\"f\",\"𝖿\":\"f\",\"𝗳\":\"f\",\"𝘧\":\"f\",\"𝙛\":\"f\",\"𝚏\":\"f\",\"ꬵ\":\"f\",\"ꞙ\":\"f\",\"ſ\":\"f\",\"ẝ\":\"f\",\"ք\":\"f\",\"𝈓\":\"F\",\"ℱ\":\"F\",\"𝐅\":\"F\",\"𝐹\":\"F\",\"𝑭\":\"F\",\"𝓕\":\"F\",\"𝔉\":\"F\",\"𝔽\":\"F\",\"𝕱\":\"F\",\"𝖥\":\"F\",\"𝗙\":\"F\",\"𝘍\":\"F\",\"𝙁\":\"F\",\"𝙵\":\"F\",\"Ꞙ\":\"F\",\"Ϝ\":\"F\",\"𝟊\":\"F\",\"ᖴ\":\"F\",\"ꓝ\":\"F\",\"𑣂\":\"F\",\"𑢢\":\"F\",\"𐊇\":\"F\",\"𐊥\":\"F\",\"𐔥\":\"F\",\"ƒ\":\"f̦\",\"Ƒ\":\"F̦\",\"ᵮ\":\"f̴\",\"℻\":\"FAX\",\"ﬀ\":\"ff\",\"ﬃ\":\"ffi\",\"ﬄ\":\"ffl\",\"ﬁ\":\"fi\",\"ﬂ\":\"fl\",\"ʩ\":\"fŋ\",\"ᖵ\":\"Ⅎ\",\"ꓞ\":\"Ⅎ\",\"𝈰\":\"ꟻ\",\"ᖷ\":\"ꟻ\",\"ｇ\":\"g\",\"ℊ\":\"g\",\"𝐠\":\"g\",\"𝑔\":\"g\",\"𝒈\":\"g\",\"𝓰\":\"g\",\"𝔤\":\"g\",\"𝕘\":\"g\",\"𝖌\":\"g\",\"𝗀\":\"g\",\"𝗴\":\"g\",\"𝘨\":\"g\",\"𝙜\":\"g\",\"𝚐\":\"g\",\"ɡ\":\"g\",\"ᶃ\":\"g\",\"ƍ\":\"g\",\"ց\":\"g\",\"𝐆\":\"G\",\"𝐺\":\"G\",\"𝑮\":\"G\",\"𝒢\":\"G\",\"𝓖\":\"G\",\"𝔊\":\"G\",\"𝔾\":\"G\",\"𝕲\":\"G\",\"𝖦\":\"G\",\"𝗚\":\"G\",\"𝘎\":\"G\",\"𝙂\":\"G\",\"𝙶\":\"G\",\"Ԍ\":\"G\",\"Ꮐ\":\"G\",\"Ᏻ\":\"G\",\"ꓖ\":\"G\",\"ᶢ\":\"ᵍ\",\"ɠ\":\"g̔\",\"ǧ\":\"ğ\",\"Ǧ\":\"Ğ\",\"ǵ\":\"ģ\",\"ǥ\":\"g̵\",\"Ǥ\":\"G̵\",\"Ɠ\":\"G'\",\"ԍ\":\"ɢ\",\"ꮐ\":\"ɢ\",\"ᏻ\":\"ɢ\",\"ｈ\":\"h\",\"ℎ\":\"h\",\"𝐡\":\"h\",\"𝒉\":\"h\",\"𝒽\":\"h\",\"𝓱\":\"h\",\"𝔥\":\"h\",\"𝕙\":\"h\",\"𝖍\":\"h\",\"𝗁\":\"h\",\"𝗵\":\"h\",\"𝘩\":\"h\",\"𝙝\":\"h\",\"𝚑\":\"h\",\"һ\":\"h\",\"հ\":\"h\",\"Ꮒ\":\"h\",\"Ｈ\":\"H\",\"ℋ\":\"H\",\"ℌ\":\"H\",\"ℍ\":\"H\",\"𝐇\":\"H\",\"𝐻\":\"H\",\"𝑯\":\"H\",\"𝓗\":\"H\",\"𝕳\":\"H\",\"𝖧\":\"H\",\"𝗛\":\"H\",\"𝘏\":\"H\",\"𝙃\":\"H\",\"𝙷\":\"H\",\"Η\":\"H\",\"𝚮\":\"H\",\"𝛨\":\"H\",\"𝜢\":\"H\",\"𝝜\":\"H\",\"𝞖\":\"H\",\"Ⲏ\":\"H\",\"Н\":\"H\",\"Ꮋ\":\"H\",\"ᕼ\":\"H\",\"ꓧ\":\"H\",\"𐋏\":\"H\",\"ᵸ\":\"ᴴ\",\"ɦ\":\"h̔\",\"ꚕ\":\"h̔\",\"Ᏺ\":\"h̔\",\"Ⱨ\":\"H̩\",\"Ң\":\"H̩\",\"ħ\":\"h̵\",\"ℏ\":\"h̵\",\"ћ\":\"h̵\",\"Ħ\":\"H̵\",\"Ӊ\":\"H̦\",\"Ӈ\":\"H̦\",\"н\":\"ʜ\",\"ꮋ\":\"ʜ\",\"ң\":\"ʜ̩\",\"ӊ\":\"ʜ̦\",\"ӈ\":\"ʜ̦\",\"Ԋ\":\"Ƕ\",\"ꮀ\":\"ⱶ\",\"Ͱ\":\"Ⱶ\",\"Ꭸ\":\"Ⱶ\",\"Ꮀ\":\"Ⱶ\",\"ꚱ\":\"Ⱶ\",\"ꞕ\":\"ꜧ\",\"˛\":\"i\",\"⍳\":\"i\",\"ｉ\":\"i\",\"ⅰ\":\"i\",\"ℹ\":\"i\",\"ⅈ\":\"i\",\"𝐢\":\"i\",\"𝑖\":\"i\",\"𝒊\":\"i\",\"𝒾\":\"i\",\"𝓲\":\"i\",\"𝔦\":\"i\",\"𝕚\":\"i\",\"𝖎\":\"i\",\"𝗂\":\"i\",\"𝗶\":\"i\",\"𝘪\":\"i\",\"𝙞\":\"i\",\"𝚒\":\"i\",\"ı\":\"i\",\"𝚤\":\"i\",\"ɪ\":\"i\",\"ɩ\":\"i\",\"ι\":\"i\",\"ι\":\"i\",\"ͺ\":\"i\",\"𝛊\":\"i\",\"𝜄\":\"i\",\"𝜾\":\"i\",\"𝝸\":\"i\",\"𝞲\":\"i\",\"і\":\"i\",\"ꙇ\":\"i\",\"ӏ\":\"i\",\"ꭵ\":\"i\",\"Ꭵ\":\"i\",\"𑣃\":\"i\",\"ⓛ\":\"Ⓘ\",\"⍸\":\"i̲\",\"ǐ\":\"ĭ\",\"Ǐ\":\"Ĭ\",\"ɨ\":\"i̵\",\"ᵻ\":\"i̵\",\"ᵼ\":\"i̵\",\"ⅱ\":\"ii\",\"ⅲ\":\"iii\",\"ĳ\":\"ij\",\"ⅳ\":\"iv\",\"ⅸ\":\"ix\",\"ｊ\":\"j\",\"ⅉ\":\"j\",\"𝐣\":\"j\",\"𝑗\":\"j\",\"𝒋\":\"j\",\"𝒿\":\"j\",\"𝓳\":\"j\",\"𝔧\":\"j\",\"𝕛\":\"j\",\"𝖏\":\"j\",\"𝗃\":\"j\",\"𝗷\":\"j\",\"𝘫\":\"j\",\"𝙟\":\"j\",\"𝚓\":\"j\",\"ϳ\":\"j\",\"ј\":\"j\",\"Ｊ\":\"J\",\"𝐉\":\"J\",\"𝐽\":\"J\",\"𝑱\":\"J\",\"𝒥\":\"J\",\"𝓙\":\"J\",\"𝔍\":\"J\",\"𝕁\":\"J\",\"𝕵\":\"J\",\"𝖩\":\"J\",\"𝗝\":\"J\",\"𝘑\":\"J\",\"𝙅\":\"J\",\"𝙹\":\"J\",\"Ʝ\":\"J\",\"Ϳ\":\"J\",\"Ј\":\"J\",\"Ꭻ\":\"J\",\"ᒍ\":\"J\",\"ꓙ\":\"J\",\"ɉ\":\"j̵\",\"Ɉ\":\"J̵\",\"ᒙ\":\"J·\",\"𝚥\":\"ȷ\",\"յ\":\"ȷ\",\"ꭻ\":\"ᴊ\",\"𝐤\":\"k\",\"𝑘\":\"k\",\"𝒌\":\"k\",\"𝓀\":\"k\",\"𝓴\":\"k\",\"𝔨\":\"k\",\"𝕜\":\"k\",\"𝖐\":\"k\",\"𝗄\":\"k\",\"𝗸\":\"k\",\"𝘬\":\"k\",\"𝙠\":\"k\",\"𝚔\":\"k\",\"K\":\"K\",\"Ｋ\":\"K\",\"𝐊\":\"K\",\"𝐾\":\"K\",\"𝑲\":\"K\",\"𝒦\":\"K\",\"𝓚\":\"K\",\"𝔎\":\"K\",\"𝕂\":\"K\",\"𝕶\":\"K\",\"𝖪\":\"K\",\"𝗞\":\"K\",\"𝘒\":\"K\",\"𝙆\":\"K\",\"𝙺\":\"K\",\"Κ\":\"K\",\"𝚱\":\"K\",\"𝛫\":\"K\",\"𝜥\":\"K\",\"𝝟\":\"K\",\"𝞙\":\"K\",\"Ⲕ\":\"K\",\"К\":\"K\",\"Ꮶ\":\"K\",\"ᛕ\":\"K\",\"ꓗ\":\"K\",\"𐔘\":\"K\",\"ƙ\":\"k̔\",\"Ⱪ\":\"K̩\",\"Қ\":\"K̩\",\"₭\":\"K̵\",\"Ꝁ\":\"K̵\",\"Ҟ\":\"K̵\",\"Ƙ\":\"K'\",\"׀\":\"l\",\"|\":\"l\",\"∣\":\"l\",\"⏽\":\"l\",\"￨\":\"l\",\"١\":\"l\",\"۱\":\"l\",\"𐌠\":\"l\",\"𞣇\":\"l\",\"𝟏\":\"l\",\"𝟙\":\"l\",\"𝟣\":\"l\",\"𝟭\":\"l\",\"𝟷\":\"l\",\"🯱\":\"l\",\"I\":\"l\",\"Ｉ\":\"l\",\"Ⅰ\":\"l\",\"ℐ\":\"l\",\"ℑ\":\"l\",\"𝐈\":\"l\",\"𝐼\":\"l\",\"𝑰\":\"l\",\"𝓘\":\"l\",\"𝕀\":\"l\",\"𝕴\":\"l\",\"𝖨\":\"l\",\"𝗜\":\"l\",\"𝘐\":\"l\",\"𝙄\":\"l\",\"𝙸\":\"l\",\"Ɩ\":\"l\",\"ｌ\":\"l\",\"ⅼ\":\"l\",\"ℓ\":\"l\",\"𝐥\":\"l\",\"𝑙\":\"l\",\"𝒍\":\"l\",\"𝓁\":\"l\",\"𝓵\":\"l\",\"𝔩\":\"l\",\"𝕝\":\"l\",\"𝖑\":\"l\",\"𝗅\":\"l\",\"𝗹\":\"l\",\"𝘭\":\"l\",\"𝙡\":\"l\",\"𝚕\":\"l\",\"ǀ\":\"l\",\"Ι\":\"l\",\"𝚰\":\"l\",\"𝛪\":\"l\",\"𝜤\":\"l\",\"𝝞\":\"l\",\"𝞘\":\"l\",\"Ⲓ\":\"l\",\"І\":\"l\",\"Ӏ\":\"l\",\"ו\":\"l\",\"ן\":\"l\",\"ا\":\"l\",\"𞸀\":\"l\",\"𞺀\":\"l\",\"ﺎ\":\"l\",\"ﺍ\":\"l\",\"ߊ\":\"l\",\"ⵏ\":\"l\",\"ᛁ\":\"l\",\"ꓲ\":\"l\",\"𖼨\":\"l\",\"𐊊\":\"l\",\"𐌉\":\"l\",\"𝈪\":\"L\",\"Ⅼ\":\"L\",\"ℒ\":\"L\",\"𝐋\":\"L\",\"𝐿\":\"L\",\"𝑳\":\"L\",\"𝓛\":\"L\",\"𝔏\":\"L\",\"𝕃\":\"L\",\"𝕷\":\"L\",\"𝖫\":\"L\",\"𝗟\":\"L\",\"𝘓\":\"L\",\"𝙇\":\"L\",\"𝙻\":\"L\",\"Ⳑ\":\"L\",\"Ꮮ\":\"L\",\"ᒪ\":\"L\",\"ꓡ\":\"L\",\"𖼖\":\"L\",\"𑢣\":\"L\",\"𑢲\":\"L\",\"𐐛\":\"L\",\"𐔦\":\"L\",\"ﴼ\":\"l̋\",\"ﴽ\":\"l̋\",\"ł\":\"l̸\",\"Ł\":\"L̸\",\"ɭ\":\"l̨\",\"Ɨ\":\"l̵\",\"ƚ\":\"l̵\",\"ɫ\":\"l̴\",\"إ\":\"lٕ\",\"ﺈ\":\"lٕ\",\"ﺇ\":\"lٕ\",\"ٳ\":\"lٕ\",\"ŀ\":\"l·\",\"Ŀ\":\"l·\",\"ᒷ\":\"l·\",\"🄂\":\"l,\",\"⒈\":\"l.\",\"ױ\":\"l'\",\"⒓\":\"l2.\",\"㏫\":\"l2日\",\"㋋\":\"l2月\",\"㍤\":\"l2点\",\"⒔\":\"l3.\",\"㏬\":\"l3日\",\"㍥\":\"l3点\",\"⒕\":\"l4.\",\"㏭\":\"l4日\",\"㍦\":\"l4点\",\"⒖\":\"l5.\",\"㏮\":\"l5日\",\"㍧\":\"l5点\",\"⒗\":\"l6.\",\"㏯\":\"l6日\",\"㍨\":\"l6点\",\"⒘\":\"l7.\",\"㏰\":\"l7日\",\"㍩\":\"l7点\",\"⒙\":\"l8.\",\"㏱\":\"l8日\",\"㍪\":\"l8点\",\"⒚\":\"l9.\",\"㏲\":\"l9日\",\"㍫\":\"l9点\",\"ǉ\":\"lj\",\"Ĳ\":\"lJ\",\"ǈ\":\"Lj\",\"Ǉ\":\"LJ\",\"‖\":\"ll\",\"∥\":\"ll\",\"Ⅱ\":\"ll\",\"ǁ\":\"ll\",\"װ\":\"ll\",\"𐆙\":\"l̵l̵\",\"⒒\":\"ll.\",\"Ⅲ\":\"lll\",\"𐆘\":\"l̵l̵S̵\",\"㏪\":\"ll日\",\"㋊\":\"ll月\",\"㍣\":\"ll点\",\"Ю\":\"lO\",\"⒑\":\"lO.\",\"㏩\":\"lO日\",\"㋉\":\"lO月\",\"㍢\":\"lO点\",\"ʪ\":\"ls\",\"₶\":\"lt\",\"Ⅳ\":\"lV\",\"Ⅸ\":\"lX\",\"ɮ\":\"lȝ\",\"ʫ\":\"lz\",\"أ\":\"lٴ\",\"ﺄ\":\"lٴ\",\"ﺃ\":\"lٴ\",\"ٲ\":\"lٴ\",\"ٵ\":\"lٴ\",\"ﷳ\":\"lكبر\",\"ﷲ\":\"lللّٰo\",\"㏠\":\"l日\",\"㋀\":\"l月\",\"㍙\":\"l点\",\"ⳑ\":\"ʟ\",\"ꮮ\":\"ʟ\",\"𐑃\":\"ʟ\",\"Ｍ\":\"M\",\"Ⅿ\":\"M\",\"ℳ\":\"M\",\"𝐌\":\"M\",\"𝑀\":\"M\",\"𝑴\":\"M\",\"𝓜\":\"M\",\"𝔐\":\"M\",\"𝕄\":\"M\",\"𝕸\":\"M\",\"𝖬\":\"M\",\"𝗠\":\"M\",\"𝘔\":\"M\",\"𝙈\":\"M\",\"𝙼\":\"M\",\"Μ\":\"M\",\"𝚳\":\"M\",\"𝛭\":\"M\",\"𝜧\":\"M\",\"𝝡\":\"M\",\"𝞛\":\"M\",\"Ϻ\":\"M\",\"Ⲙ\":\"M\",\"М\":\"M\",\"Ꮇ\":\"M\",\"ᗰ\":\"M\",\"ᛖ\":\"M\",\"ꓟ\":\"M\",\"𐊰\":\"M\",\"𐌑\":\"M\",\"Ӎ\":\"M̦\",\"🝫\":\"MB\",\"ⷨ\":\"ᷟ\",\"𝐧\":\"n\",\"𝑛\":\"n\",\"𝒏\":\"n\",\"𝓃\":\"n\",\"𝓷\":\"n\",\"𝔫\":\"n\",\"𝕟\":\"n\",\"𝖓\":\"n\",\"𝗇\":\"n\",\"𝗻\":\"n\",\"𝘯\":\"n\",\"𝙣\":\"n\",\"𝚗\":\"n\",\"ո\":\"n\",\"ռ\":\"n\",\"Ｎ\":\"N\",\"ℕ\":\"N\",\"𝐍\":\"N\",\"𝑁\":\"N\",\"𝑵\":\"N\",\"𝒩\":\"N\",\"𝓝\":\"N\",\"𝔑\":\"N\",\"𝕹\":\"N\",\"𝖭\":\"N\",\"𝗡\":\"N\",\"𝘕\":\"N\",\"𝙉\":\"N\",\"𝙽\":\"N\",\"Ν\":\"N\",\"𝚴\":\"N\",\"𝛮\":\"N\",\"𝜨\":\"N\",\"𝝢\":\"N\",\"𝞜\":\"N\",\"Ⲛ\":\"N\",\"ꓠ\":\"N\",\"𐔓\":\"N\",\"𐆎\":\"N̊\",\"ɳ\":\"n̨\",\"ƞ\":\"n̩\",\"η\":\"n̩\",\"𝛈\":\"n̩\",\"𝜂\":\"n̩\",\"𝜼\":\"n̩\",\"𝝶\":\"n̩\",\"𝞰\":\"n̩\",\"Ɲ\":\"N̦\",\"ᵰ\":\"n̴\",\"ǌ\":\"nj\",\"ǋ\":\"Nj\",\"Ǌ\":\"NJ\",\"№\":\"No\",\"ͷ\":\"ᴎ\",\"и\":\"ᴎ\",\"𐑍\":\"ᴎ\",\"ņ\":\"ɲ\",\"ం\":\"o\",\"ಂ\":\"o\",\"ം\":\"o\",\"ං\":\"o\",\"०\":\"o\",\"੦\":\"o\",\"૦\":\"o\",\"௦\":\"o\",\"౦\":\"o\",\"೦\":\"o\",\"൦\":\"o\",\"๐\":\"o\",\"໐\":\"o\",\"၀\":\"o\",\"٥\":\"o\",\"۵\":\"o\",\"ｏ\":\"o\",\"ℴ\":\"o\",\"𝐨\":\"o\",\"𝑜\":\"o\",\"𝒐\":\"o\",\"𝓸\":\"o\",\"𝔬\":\"o\",\"𝕠\":\"o\",\"𝖔\":\"o\",\"𝗈\":\"o\",\"𝗼\":\"o\",\"𝘰\":\"o\",\"𝙤\":\"o\",\"𝚘\":\"o\",\"ᴏ\":\"o\",\"ᴑ\":\"o\",\"ꬽ\":\"o\",\"ο\":\"o\",\"𝛐\":\"o\",\"𝜊\":\"o\",\"𝝄\":\"o\",\"𝝾\":\"o\",\"𝞸\":\"o\",\"σ\":\"o\",\"𝛔\":\"o\",\"𝜎\":\"o\",\"𝝈\":\"o\",\"𝞂\":\"o\",\"𝞼\":\"o\",\"ⲟ\":\"o\",\"о\":\"o\",\"ჿ\":\"o\",\"օ\":\"o\",\"ס\":\"o\",\"ه\":\"o\",\"𞸤\":\"o\",\"𞹤\":\"o\",\"𞺄\":\"o\",\"ﻫ\":\"o\",\"ﻬ\":\"o\",\"ﻪ\":\"o\",\"ﻩ\":\"o\",\"ھ\":\"o\",\"ﮬ\":\"o\",\"ﮭ\":\"o\",\"ﮫ\":\"o\",\"ﮪ\":\"o\",\"ہ\":\"o\",\"ﮨ\":\"o\",\"ﮩ\":\"o\",\"ﮧ\":\"o\",\"ﮦ\":\"o\",\"ە\":\"o\",\"ഠ\":\"o\",\"ဝ\":\"o\",\"𐓪\":\"o\",\"𑣈\":\"o\",\"𑣗\":\"o\",\"𐐬\":\"o\",\"߀\":\"O\",\"০\":\"O\",\"୦\":\"O\",\"〇\":\"O\",\"𑓐\":\"O\",\"𑣠\":\"O\",\"𝟎\":\"O\",\"𝟘\":\"O\",\"𝟢\":\"O\",\"𝟬\":\"O\",\"𝟶\":\"O\",\"🯰\":\"O\",\"Ｏ\":\"O\",\"𝐎\":\"O\",\"𝑂\":\"O\",\"𝑶\":\"O\",\"𝒪\":\"O\",\"𝓞\":\"O\",\"𝔒\":\"O\",\"𝕆\":\"O\",\"𝕺\":\"O\",\"𝖮\":\"O\",\"𝗢\":\"O\",\"𝘖\":\"O\",\"𝙊\":\"O\",\"𝙾\":\"O\",\"Ο\":\"O\",\"𝚶\":\"O\",\"𝛰\":\"O\",\"𝜪\":\"O\",\"𝝤\":\"O\",\"𝞞\":\"O\",\"Ⲟ\":\"O\",\"О\":\"O\",\"Օ\":\"O\",\"ⵔ\":\"O\",\"ዐ\":\"O\",\"ଠ\":\"O\",\"𐓂\":\"O\",\"ꓳ\":\"O\",\"𑢵\":\"O\",\"𐊒\":\"O\",\"𐊫\":\"O\",\"𐐄\":\"O\",\"𐔖\":\"O\",\"⁰\":\"º\",\"ᵒ\":\"º\",\"ǒ\":\"ŏ\",\"Ǒ\":\"Ŏ\",\"ۿ\":\"ô\",\"Ő\":\"Ö\",\"ø\":\"o̸\",\"ꬾ\":\"o̸\",\"Ø\":\"O̸\",\"ⵁ\":\"O̸\",\"Ǿ\":\"Ó̸\",\"ɵ\":\"o̵\",\"ꝋ\":\"o̵\",\"ө\":\"o̵\",\"ѳ\":\"o̵\",\"ꮎ\":\"o̵\",\"ꮻ\":\"o̵\",\"⊖\":\"O̵\",\"⊝\":\"O̵\",\"⍬\":\"O̵\",\"𝈚\":\"O̵\",\"🜔\":\"O̵\",\"Ɵ\":\"O̵\",\"Ꝋ\":\"O̵\",\"θ\":\"O̵\",\"ϑ\":\"O̵\",\"𝛉\":\"O̵\",\"𝛝\":\"O̵\",\"𝜃\":\"O̵\",\"𝜗\":\"O̵\",\"𝜽\":\"O̵\",\"𝝑\":\"O̵\",\"𝝷\":\"O̵\",\"𝞋\":\"O̵\",\"𝞱\":\"O̵\",\"𝟅\":\"O̵\",\"Θ\":\"O̵\",\"ϴ\":\"O̵\",\"𝚯\":\"O̵\",\"𝚹\":\"O̵\",\"𝛩\":\"O̵\",\"𝛳\":\"O̵\",\"𝜣\":\"O̵\",\"𝜭\":\"O̵\",\"𝝝\":\"O̵\",\"𝝧\":\"O̵\",\"𝞗\":\"O̵\",\"𝞡\":\"O̵\",\"Ө\":\"O̵\",\"Ѳ\":\"O̵\",\"ⴱ\":\"O̵\",\"Ꮎ\":\"O̵\",\"Ꮻ\":\"O̵\",\"ꭴ\":\"ơ\",\"ﳙ\":\"oٰ\",\"🄁\":\"O,\",\"🄀\":\"O.\",\"ơ\":\"o'\",\"Ơ\":\"O'\",\"Ꭴ\":\"O'\",\"%\":\"º/₀\",\"٪\":\"º/₀\",\"⁒\":\"º/₀\",\"‰\":\"º/₀₀\",\"؉\":\"º/₀₀\",\"‱\":\"º/₀₀₀\",\"؊\":\"º/₀₀₀\",\"œ\":\"oe\",\"Œ\":\"OE\",\"ɶ\":\"oᴇ\",\"∞\":\"oo\",\"ꝏ\":\"oo\",\"ꚙ\":\"oo\",\"Ꝏ\":\"OO\",\"Ꚙ\":\"OO\",\"ﳗ\":\"oج\",\"ﱑ\":\"oج\",\"ﳘ\":\"oم\",\"ﱒ\":\"oم\",\"ﶓ\":\"oمج\",\"ﶔ\":\"oمم\",\"ﱓ\":\"oى\",\"ﱔ\":\"oى\",\"ൟ\":\"oരo\",\"တ\":\"oာ\",\"㍘\":\"O点\",\"ↄ\":\"ɔ\",\"ᴐ\":\"ɔ\",\"ͻ\":\"ɔ\",\"𐑋\":\"ɔ\",\"Ↄ\":\"Ɔ\",\"Ͻ\":\"Ɔ\",\"ꓛ\":\"Ɔ\",\"𐐣\":\"Ɔ\",\"ꬿ\":\"ɔ̸\",\"ꭢ\":\"ɔe\",\"𐐿\":\"ɷ\",\"⍴\":\"p\",\"ｐ\":\"p\",\"𝐩\":\"p\",\"𝑝\":\"p\",\"𝒑\":\"p\",\"𝓅\":\"p\",\"𝓹\":\"p\",\"𝔭\":\"p\",\"𝕡\":\"p\",\"𝖕\":\"p\",\"𝗉\":\"p\",\"𝗽\":\"p\",\"𝘱\":\"p\",\"𝙥\":\"p\",\"𝚙\":\"p\",\"ρ\":\"p\",\"ϱ\":\"p\",\"𝛒\":\"p\",\"𝛠\":\"p\",\"𝜌\":\"p\",\"𝜚\":\"p\",\"𝝆\":\"p\",\"𝝔\":\"p\",\"𝞀\":\"p\",\"𝞎\":\"p\",\"𝞺\":\"p\",\"𝟈\":\"p\",\"ⲣ\":\"p\",\"р\":\"p\",\"Ｐ\":\"P\",\"ℙ\":\"P\",\"𝐏\":\"P\",\"𝑃\":\"P\",\"𝑷\":\"P\",\"𝒫\":\"P\",\"𝓟\":\"P\",\"𝔓\":\"P\",\"𝕻\":\"P\",\"𝖯\":\"P\",\"𝗣\":\"P\",\"𝘗\":\"P\",\"𝙋\":\"P\",\"𝙿\":\"P\",\"Ρ\":\"P\",\"𝚸\":\"P\",\"𝛲\":\"P\",\"𝜬\":\"P\",\"𝝦\":\"P\",\"𝞠\":\"P\",\"Ⲣ\":\"P\",\"Р\":\"P\",\"Ꮲ\":\"P\",\"ᑭ\":\"P\",\"ꓑ\":\"P\",\"𐊕\":\"P\",\"ƥ\":\"p̔\",\"ᵽ\":\"p̵\",\"ᑷ\":\"p·\",\"ᒆ\":\"P'\",\"ᴩ\":\"ᴘ\",\"ꮲ\":\"ᴘ\",\"φ\":\"ɸ\",\"ϕ\":\"ɸ\",\"𝛗\":\"ɸ\",\"𝛟\":\"ɸ\",\"𝜑\":\"ɸ\",\"𝜙\":\"ɸ\",\"𝝋\":\"ɸ\",\"𝝓\":\"ɸ\",\"𝞅\":\"ɸ\",\"𝞍\":\"ɸ\",\"𝞿\":\"ɸ\",\"𝟇\":\"ɸ\",\"ⲫ\":\"ɸ\",\"ф\":\"ɸ\",\"𝐪\":\"q\",\"𝑞\":\"q\",\"𝒒\":\"q\",\"𝓆\":\"q\",\"𝓺\":\"q\",\"𝔮\":\"q\",\"𝕢\":\"q\",\"𝖖\":\"q\",\"𝗊\":\"q\",\"𝗾\":\"q\",\"𝘲\":\"q\",\"𝙦\":\"q\",\"𝚚\":\"q\",\"ԛ\":\"q\",\"գ\":\"q\",\"զ\":\"q\",\"ℚ\":\"Q\",\"𝐐\":\"Q\",\"𝑄\":\"Q\",\"𝑸\":\"Q\",\"𝒬\":\"Q\",\"𝓠\":\"Q\",\"𝔔\":\"Q\",\"𝕼\":\"Q\",\"𝖰\":\"Q\",\"𝗤\":\"Q\",\"𝘘\":\"Q\",\"𝙌\":\"Q\",\"𝚀\":\"Q\",\"ⵕ\":\"Q\",\"ʠ\":\"q̔\",\"🜀\":\"QE\",\"ᶐ\":\"ɋ\",\"ᴋ\":\"ĸ\",\"κ\":\"ĸ\",\"ϰ\":\"ĸ\",\"𝛋\":\"ĸ\",\"𝛞\":\"ĸ\",\"𝜅\":\"ĸ\",\"𝜘\":\"ĸ\",\"𝜿\":\"ĸ\",\"𝝒\":\"ĸ\",\"𝝹\":\"ĸ\",\"𝞌\":\"ĸ\",\"𝞳\":\"ĸ\",\"𝟆\":\"ĸ\",\"ⲕ\":\"ĸ\",\"к\":\"ĸ\",\"ꮶ\":\"ĸ\",\"қ\":\"ĸ̩\",\"ҟ\":\"ĸ̵\",\"𝐫\":\"r\",\"𝑟\":\"r\",\"𝒓\":\"r\",\"𝓇\":\"r\",\"𝓻\":\"r\",\"𝔯\":\"r\",\"𝕣\":\"r\",\"𝖗\":\"r\",\"𝗋\":\"r\",\"𝗿\":\"r\",\"𝘳\":\"r\",\"𝙧\":\"r\",\"𝚛\":\"r\",\"ꭇ\":\"r\",\"ꭈ\":\"r\",\"ᴦ\":\"r\",\"ⲅ\":\"r\",\"г\":\"r\",\"ꮁ\":\"r\",\"𝈖\":\"R\",\"ℛ\":\"R\",\"ℜ\":\"R\",\"ℝ\":\"R\",\"𝐑\":\"R\",\"𝑅\":\"R\",\"𝑹\":\"R\",\"𝓡\":\"R\",\"𝕽\":\"R\",\"𝖱\":\"R\",\"𝗥\":\"R\",\"𝘙\":\"R\",\"𝙍\":\"R\",\"𝚁\":\"R\",\"Ʀ\":\"R\",\"Ꭱ\":\"R\",\"Ꮢ\":\"R\",\"𐒴\":\"R\",\"ᖇ\":\"R\",\"ꓣ\":\"R\",\"𖼵\":\"R\",\"ɽ\":\"r̨\",\"ɼ\":\"r̩\",\"ɍ\":\"r̵\",\"ғ\":\"r̵\",\"ᵲ\":\"r̴\",\"ґ\":\"r'\",\"𑣣\":\"rn\",\"m\":\"rn\",\"ⅿ\":\"rn\",\"𝐦\":\"rn\",\"𝑚\":\"rn\",\"𝒎\":\"rn\",\"𝓂\":\"rn\",\"𝓶\":\"rn\",\"𝔪\":\"rn\",\"𝕞\":\"rn\",\"𝖒\":\"rn\",\"𝗆\":\"rn\",\"𝗺\":\"rn\",\"𝘮\":\"rn\",\"𝙢\":\"rn\",\"𝚖\":\"rn\",\"𑜀\":\"rn\",\"₥\":\"rn̸\",\"ɱ\":\"rn̦\",\"ᵯ\":\"rn̴\",\"₨\":\"Rs\",\"ꭱ\":\"ʀ\",\"ꮢ\":\"ʀ\",\"я\":\"ᴙ\",\"ᵳ\":\"ɾ̴\",\"℩\":\"ɿ\",\"ｓ\":\"s\",\"𝐬\":\"s\",\"𝑠\":\"s\",\"𝒔\":\"s\",\"𝓈\":\"s\",\"𝓼\":\"s\",\"𝔰\":\"s\",\"𝕤\":\"s\",\"𝖘\":\"s\",\"𝗌\":\"s\",\"𝘀\":\"s\",\"𝘴\":\"s\",\"𝙨\":\"s\",\"𝚜\":\"s\",\"ꜱ\":\"s\",\"ƽ\":\"s\",\"ѕ\":\"s\",\"ꮪ\":\"s\",\"𑣁\":\"s\",\"𐑈\":\"s\",\"Ｓ\":\"S\",\"𝐒\":\"S\",\"𝑆\":\"S\",\"𝑺\":\"S\",\"𝒮\":\"S\",\"𝓢\":\"S\",\"𝔖\":\"S\",\"𝕊\":\"S\",\"𝕾\":\"S\",\"𝖲\":\"S\",\"𝗦\":\"S\",\"𝘚\":\"S\",\"𝙎\":\"S\",\"𝚂\":\"S\",\"Ѕ\":\"S\",\"Տ\":\"S\",\"Ꮥ\":\"S\",\"Ꮪ\":\"S\",\"ꓢ\":\"S\",\"𖼺\":\"S\",\"𐊖\":\"S\",\"𐐠\":\"S\",\"ʂ\":\"s̨\",\"ᵴ\":\"s̴\",\"ꞵ\":\"ß\",\"β\":\"ß\",\"ϐ\":\"ß\",\"𝛃\":\"ß\",\"𝛽\":\"ß\",\"𝜷\":\"ß\",\"𝝱\":\"ß\",\"𝞫\":\"ß\",\"Ᏸ\":\"ß\",\"🝜\":\"sss\",\"ﬆ\":\"st\",\"∫\":\"ʃ\",\"ꭍ\":\"ʃ\",\"∑\":\"Ʃ\",\"⅀\":\"Ʃ\",\"Σ\":\"Ʃ\",\"𝚺\":\"Ʃ\",\"𝛴\":\"Ʃ\",\"𝜮\":\"Ʃ\",\"𝝨\":\"Ʃ\",\"𝞢\":\"Ʃ\",\"ⵉ\":\"Ʃ\",\"∬\":\"ʃʃ\",\"∭\":\"ʃʃʃ\",\"⨌\":\"ʃʃʃʃ\",\"𝐭\":\"t\",\"𝑡\":\"t\",\"𝒕\":\"t\",\"𝓉\":\"t\",\"𝓽\":\"t\",\"𝔱\":\"t\",\"𝕥\":\"t\",\"𝖙\":\"t\",\"𝗍\":\"t\",\"𝘁\":\"t\",\"𝘵\":\"t\",\"𝙩\":\"t\",\"𝚝\":\"t\",\"⊤\":\"T\",\"⟙\":\"T\",\"🝨\":\"T\",\"Ｔ\":\"T\",\"𝐓\":\"T\",\"𝑇\":\"T\",\"𝑻\":\"T\",\"𝒯\":\"T\",\"𝓣\":\"T\",\"𝔗\":\"T\",\"𝕋\":\"T\",\"𝕿\":\"T\",\"𝖳\":\"T\",\"𝗧\":\"T\",\"𝘛\":\"T\",\"𝙏\":\"T\",\"𝚃\":\"T\",\"Τ\":\"T\",\"𝚻\":\"T\",\"𝛵\":\"T\",\"𝜯\":\"T\",\"𝝩\":\"T\",\"𝞣\":\"T\",\"Ⲧ\":\"T\",\"Т\":\"T\",\"Ꭲ\":\"T\",\"ꓔ\":\"T\",\"𖼊\":\"T\",\"𑢼\":\"T\",\"𐊗\":\"T\",\"𐊱\":\"T\",\"𐌕\":\"T\",\"ƭ\":\"t̔\",\"⍡\":\"T̈\",\"Ⱦ\":\"T̸\",\"Ț\":\"Ţ\",\"Ʈ\":\"T̨\",\"Ҭ\":\"T̩\",\"₮\":\"T⃫\",\"ŧ\":\"t̵\",\"Ŧ\":\"T̵\",\"ᵵ\":\"t̴\",\"Ⴀ\":\"Ꞇ\",\"Ꜩ\":\"T3\",\"ʨ\":\"tɕ\",\"℡\":\"TEL\",\"ꝷ\":\"tf\",\"ʦ\":\"ts\",\"ʧ\":\"tʃ\",\"ꜩ\":\"tȝ\",\"τ\":\"ᴛ\",\"𝛕\":\"ᴛ\",\"𝜏\":\"ᴛ\",\"𝝉\":\"ᴛ\",\"𝞃\":\"ᴛ\",\"𝞽\":\"ᴛ\",\"т\":\"ᴛ\",\"ꭲ\":\"ᴛ\",\"ҭ\":\"ᴛ̩\",\"ţ\":\"ƫ\",\"ț\":\"ƫ\",\"Ꮏ\":\"ƫ\",\"𝐮\":\"u\",\"𝑢\":\"u\",\"𝒖\":\"u\",\"𝓊\":\"u\",\"𝓾\":\"u\",\"𝔲\":\"u\",\"𝕦\":\"u\",\"𝖚\":\"u\",\"𝗎\":\"u\",\"𝘂\":\"u\",\"𝘶\":\"u\",\"𝙪\":\"u\",\"𝚞\":\"u\",\"ꞟ\":\"u\",\"ᴜ\":\"u\",\"ꭎ\":\"u\",\"ꭒ\":\"u\",\"ʋ\":\"u\",\"υ\":\"u\",\"𝛖\":\"u\",\"𝜐\":\"u\",\"𝝊\":\"u\",\"𝞄\":\"u\",\"𝞾\":\"u\",\"ս\":\"u\",\"𐓶\":\"u\",\"𑣘\":\"u\",\"∪\":\"U\",\"⋃\":\"U\",\"𝐔\":\"U\",\"𝑈\":\"U\",\"𝑼\":\"U\",\"𝒰\":\"U\",\"𝓤\":\"U\",\"𝔘\":\"U\",\"𝕌\":\"U\",\"𝖀\":\"U\",\"𝖴\":\"U\",\"𝗨\":\"U\",\"𝘜\":\"U\",\"𝙐\":\"U\",\"𝚄\":\"U\",\"Ս\":\"U\",\"ሀ\":\"U\",\"𐓎\":\"U\",\"ᑌ\":\"U\",\"ꓴ\":\"U\",\"𖽂\":\"U\",\"𑢸\":\"U\",\"ǔ\":\"ŭ\",\"Ǔ\":\"Ŭ\",\"ᵾ\":\"u̵\",\"ꮜ\":\"u̵\",\"Ʉ\":\"U̵\",\"Ꮜ\":\"U̵\",\"ᑘ\":\"U·\",\"ᑧ\":\"U'\",\"ᵫ\":\"ue\",\"ꭣ\":\"uo\",\"ṃ\":\"ꭑ\",\"պ\":\"ɰ\",\"ሣ\":\"ɰ\",\"℧\":\"Ʊ\",\"ᘮ\":\"Ʊ\",\"ᘴ\":\"Ʊ\",\"ᵿ\":\"ʊ̵\",\"∨\":\"v\",\"⋁\":\"v\",\"ｖ\":\"v\",\"ⅴ\":\"v\",\"𝐯\":\"v\",\"𝑣\":\"v\",\"𝒗\":\"v\",\"𝓋\":\"v\",\"𝓿\":\"v\",\"𝔳\":\"v\",\"𝕧\":\"v\",\"𝖛\":\"v\",\"𝗏\":\"v\",\"𝘃\":\"v\",\"𝘷\":\"v\",\"𝙫\":\"v\",\"𝚟\":\"v\",\"ᴠ\":\"v\",\"ν\":\"v\",\"𝛎\":\"v\",\"𝜈\":\"v\",\"𝝂\":\"v\",\"𝝼\":\"v\",\"𝞶\":\"v\",\"ѵ\":\"v\",\"ט\":\"v\",\"𑜆\":\"v\",\"ꮩ\":\"v\",\"𑣀\":\"v\",\"𝈍\":\"V\",\"٧\":\"V\",\"۷\":\"V\",\"Ⅴ\":\"V\",\"𝐕\":\"V\",\"𝑉\":\"V\",\"𝑽\":\"V\",\"𝒱\":\"V\",\"𝓥\":\"V\",\"𝔙\":\"V\",\"𝕍\":\"V\",\"𝖁\":\"V\",\"𝖵\":\"V\",\"𝗩\":\"V\",\"𝘝\":\"V\",\"𝙑\":\"V\",\"𝚅\":\"V\",\"Ѵ\":\"V\",\"ⴸ\":\"V\",\"Ꮩ\":\"V\",\"ᐯ\":\"V\",\"ꛟ\":\"V\",\"ꓦ\":\"V\",\"𖼈\":\"V\",\"𑢠\":\"V\",\"𐔝\":\"V\",\"𐆗\":\"V̵\",\"ᐻ\":\"V·\",\"🝬\":\"VB\",\"ⅵ\":\"vi\",\"ⅶ\":\"vii\",\"ⅷ\":\"viii\",\"Ⅵ\":\"Vl\",\"Ⅶ\":\"Vll\",\"Ⅷ\":\"Vlll\",\"🜈\":\"Vᷤ\",\"ᴧ\":\"ʌ\",\"𐓘\":\"ʌ\",\"٨\":\"Ʌ\",\"۸\":\"Ʌ\",\"Λ\":\"Ʌ\",\"𝚲\":\"Ʌ\",\"𝛬\":\"Ʌ\",\"𝜦\":\"Ʌ\",\"𝝠\":\"Ʌ\",\"𝞚\":\"Ʌ\",\"Л\":\"Ʌ\",\"ⴷ\":\"Ʌ\",\"𐒰\":\"Ʌ\",\"ᐱ\":\"Ʌ\",\"ꛎ\":\"Ʌ\",\"ꓥ\":\"Ʌ\",\"𖼽\":\"Ʌ\",\"𐊍\":\"Ʌ\",\"Ӆ\":\"Ʌ̦\",\"ᐽ\":\"Ʌ·\",\"ɯ\":\"w\",\"𝐰\":\"w\",\"𝑤\":\"w\",\"𝒘\":\"w\",\"𝓌\":\"w\",\"𝔀\":\"w\",\"𝔴\":\"w\",\"𝕨\":\"w\",\"𝖜\":\"w\",\"𝗐\":\"w\",\"𝘄\":\"w\",\"𝘸\":\"w\",\"𝙬\":\"w\",\"𝚠\":\"w\",\"ᴡ\":\"w\",\"ѡ\":\"w\",\"ԝ\":\"w\",\"ա\":\"w\",\"𑜊\":\"w\",\"𑜎\":\"w\",\"𑜏\":\"w\",\"ꮃ\":\"w\",\"𑣯\":\"W\",\"𑣦\":\"W\",\"𝐖\":\"W\",\"𝑊\":\"W\",\"𝑾\":\"W\",\"𝒲\":\"W\",\"𝓦\":\"W\",\"𝔚\":\"W\",\"𝕎\":\"W\",\"𝖂\":\"W\",\"𝖶\":\"W\",\"𝗪\":\"W\",\"𝘞\":\"W\",\"𝙒\":\"W\",\"𝚆\":\"W\",\"Ԝ\":\"W\",\"Ꮃ\":\"W\",\"Ꮤ\":\"W\",\"ꓪ\":\"W\",\"ѽ\":\"w҆҇\",\"𑓅\":\"ẇ\",\"₩\":\"W̵\",\"ꝡ\":\"w̦\",\"ᴍ\":\"ʍ\",\"м\":\"ʍ\",\"ꮇ\":\"ʍ\",\"ӎ\":\"ʍ̦\",\"᙮\":\"x\",\"×\":\"x\",\"⤫\":\"x\",\"⤬\":\"x\",\"⨯\":\"x\",\"ｘ\":\"x\",\"ⅹ\":\"x\",\"𝐱\":\"x\",\"𝑥\":\"x\",\"𝒙\":\"x\",\"𝓍\":\"x\",\"𝔁\":\"x\",\"𝔵\":\"x\",\"𝕩\":\"x\",\"𝖝\":\"x\",\"𝗑\":\"x\",\"𝘅\":\"x\",\"𝘹\":\"x\",\"𝙭\":\"x\",\"𝚡\":\"x\",\"х\":\"x\",\"ᕁ\":\"x\",\"ᕽ\":\"x\",\"ⷯ\":\"ͯ\",\"᙭\":\"X\",\"╳\":\"X\",\"𐌢\":\"X\",\"𑣬\":\"X\",\"Ｘ\":\"X\",\"Ⅹ\":\"X\",\"𝐗\":\"X\",\"𝑋\":\"X\",\"𝑿\":\"X\",\"𝒳\":\"X\",\"𝓧\":\"X\",\"𝔛\":\"X\",\"𝕏\":\"X\",\"𝖃\":\"X\",\"𝖷\":\"X\",\"𝗫\":\"X\",\"𝘟\":\"X\",\"𝙓\":\"X\",\"𝚇\":\"X\",\"Ꭓ\":\"X\",\"Χ\":\"X\",\"𝚾\":\"X\",\"𝛸\":\"X\",\"𝜲\":\"X\",\"𝝬\":\"X\",\"𝞦\":\"X\",\"Ⲭ\":\"X\",\"Х\":\"X\",\"ⵝ\":\"X\",\"ᚷ\":\"X\",\"ꓫ\":\"X\",\"𐊐\":\"X\",\"𐊴\":\"X\",\"𐌗\":\"X\",\"𐔧\":\"X\",\"⨰\":\"ẋ\",\"Ҳ\":\"X̩\",\"𐆖\":\"X̵\",\"ⅺ\":\"xi\",\"ⅻ\":\"xii\",\"Ⅺ\":\"Xl\",\"Ⅻ\":\"Xll\",\"ɣ\":\"y\",\"ᶌ\":\"y\",\"ｙ\":\"y\",\"𝐲\":\"y\",\"𝑦\":\"y\",\"𝒚\":\"y\",\"𝓎\":\"y\",\"𝔂\":\"y\",\"𝔶\":\"y\",\"𝕪\":\"y\",\"𝖞\":\"y\",\"𝗒\":\"y\",\"𝘆\":\"y\",\"𝘺\":\"y\",\"𝙮\":\"y\",\"𝚢\":\"y\",\"ʏ\":\"y\",\"ỿ\":\"y\",\"ꭚ\":\"y\",\"γ\":\"y\",\"ℽ\":\"y\",\"𝛄\":\"y\",\"𝛾\":\"y\",\"𝜸\":\"y\",\"𝝲\":\"y\",\"𝞬\":\"y\",\"у\":\"y\",\"ү\":\"y\",\"ყ\":\"y\",\"𑣜\":\"y\",\"Ｙ\":\"Y\",\"𝐘\":\"Y\",\"𝑌\":\"Y\",\"𝒀\":\"Y\",\"𝒴\":\"Y\",\"𝓨\":\"Y\",\"𝔜\":\"Y\",\"𝕐\":\"Y\",\"𝖄\":\"Y\",\"𝖸\":\"Y\",\"𝗬\":\"Y\",\"𝘠\":\"Y\",\"𝙔\":\"Y\",\"𝚈\":\"Y\",\"Υ\":\"Y\",\"ϒ\":\"Y\",\"𝚼\":\"Y\",\"𝛶\":\"Y\",\"𝜰\":\"Y\",\"𝝪\":\"Y\",\"𝞤\":\"Y\",\"Ⲩ\":\"Y\",\"У\":\"Y\",\"Ү\":\"Y\",\"Ꭹ\":\"Y\",\"Ꮍ\":\"Y\",\"ꓬ\":\"Y\",\"𖽃\":\"Y\",\"𑢤\":\"Y\",\"𐊲\":\"Y\",\"ƴ\":\"y̔\",\"ɏ\":\"y̵\",\"ұ\":\"y̵\",\"¥\":\"Y̵\",\"Ɏ\":\"Y̵\",\"Ұ\":\"Y̵\",\"ʒ\":\"ȝ\",\"ꝫ\":\"ȝ\",\"ⳍ\":\"ȝ\",\"ӡ\":\"ȝ\",\"ჳ\":\"ȝ\",\"𝐳\":\"z\",\"𝑧\":\"z\",\"𝒛\":\"z\",\"𝓏\":\"z\",\"𝔃\":\"z\",\"𝔷\":\"z\",\"𝕫\":\"z\",\"𝖟\":\"z\",\"𝗓\":\"z\",\"𝘇\":\"z\",\"𝘻\":\"z\",\"𝙯\":\"z\",\"𝚣\":\"z\",\"ᴢ\":\"z\",\"ꮓ\":\"z\",\"𑣄\":\"z\",\"𐋵\":\"Z\",\"𑣥\":\"Z\",\"Ｚ\":\"Z\",\"ℤ\":\"Z\",\"ℨ\":\"Z\",\"𝐙\":\"Z\",\"𝑍\":\"Z\",\"𝒁\":\"Z\",\"𝒵\":\"Z\",\"𝓩\":\"Z\",\"𝖅\":\"Z\",\"𝖹\":\"Z\",\"𝗭\":\"Z\",\"𝘡\":\"Z\",\"𝙕\":\"Z\",\"𝚉\":\"Z\",\"Ζ\":\"Z\",\"𝚭\":\"Z\",\"𝛧\":\"Z\",\"𝜡\":\"Z\",\"𝝛\":\"Z\",\"𝞕\":\"Z\",\"Ꮓ\":\"Z\",\"ꓜ\":\"Z\",\"𑢩\":\"Z\",\"ʐ\":\"z̨\",\"ƶ\":\"z̵\",\"Ƶ\":\"Z̵\",\"ȥ\":\"z̦\",\"Ȥ\":\"Z̦\",\"ᵶ\":\"z̴\",\"ƿ\":\"þ\",\"ϸ\":\"þ\",\"Ϸ\":\"Þ\",\"𐓄\":\"Þ\",\"⁹\":\"ꝰ\",\"ᴤ\":\"ƨ\",\"ϩ\":\"ƨ\",\"ꙅ\":\"ƨ\",\"ь\":\"ƅ\",\"ꮟ\":\"ƅ\",\"ы\":\"ƅi\",\"ꭾ\":\"ɂ\",\"ˤ\":\"ˁ\",\"ꛍ\":\"ʡ\",\"⊙\":\"ʘ\",\"☉\":\"ʘ\",\"⨀\":\"ʘ\",\"Ꙩ\":\"ʘ\",\"ⵙ\":\"ʘ\",\"𐓃\":\"ʘ\",\"ℾ\":\"Γ\",\"𝚪\":\"Γ\",\"𝛤\":\"Γ\",\"𝜞\":\"Γ\",\"𝝘\":\"Γ\",\"𝞒\":\"Γ\",\"Ⲅ\":\"Γ\",\"Г\":\"Γ\",\"Ꮁ\":\"Γ\",\"ᒥ\":\"Γ\",\"𖼇\":\"Γ\",\"Ғ\":\"Γ̵\",\"ᒯ\":\"Γ·\",\"Ґ\":\"Γ'\",\"∆\":\"Δ\",\"△\":\"Δ\",\"🜂\":\"Δ\",\"𝚫\":\"Δ\",\"𝛥\":\"Δ\",\"𝜟\":\"Δ\",\"𝝙\":\"Δ\",\"𝞓\":\"Δ\",\"Ⲇ\":\"Δ\",\"ⵠ\":\"Δ\",\"ᐃ\":\"Δ\",\"𖼚\":\"Δ\",\"𐊅\":\"Δ\",\"𐊣\":\"Δ\",\"⍙\":\"Δ̲\",\"ᐏ\":\"Δ·\",\"ᐬ\":\"Δᐠ\",\"𝟋\":\"ϝ\",\"𝛇\":\"ζ\",\"𝜁\":\"ζ\",\"𝜻\":\"ζ\",\"𝝵\":\"ζ\",\"𝞯\":\"ζ\",\"ⳤ\":\"ϗ\",\"𝛌\":\"λ\",\"𝜆\":\"λ\",\"𝝀\":\"λ\",\"𝝺\":\"λ\",\"𝞴\":\"λ\",\"Ⲗ\":\"λ\",\"𐓛\":\"λ\",\"µ\":\"μ\",\"𝛍\":\"μ\",\"𝜇\":\"μ\",\"𝝁\":\"μ\",\"𝝻\":\"μ\",\"𝞵\":\"μ\",\"𝛏\":\"ξ\",\"𝜉\":\"ξ\",\"𝝃\":\"ξ\",\"𝝽\":\"ξ\",\"𝞷\":\"ξ\",\"𝚵\":\"Ξ\",\"𝛯\":\"Ξ\",\"𝜩\":\"Ξ\",\"𝝣\":\"Ξ\",\"𝞝\":\"Ξ\",\"ϖ\":\"π\",\"ℼ\":\"π\",\"𝛑\":\"π\",\"𝛡\":\"π\",\"𝜋\":\"π\",\"𝜛\":\"π\",\"𝝅\":\"π\",\"𝝕\":\"π\",\"𝝿\":\"π\",\"𝞏\":\"π\",\"𝞹\":\"π\",\"𝟉\":\"π\",\"ᴨ\":\"π\",\"п\":\"π\",\"∏\":\"Π\",\"ℿ\":\"Π\",\"𝚷\":\"Π\",\"𝛱\":\"Π\",\"𝜫\":\"Π\",\"𝝥\":\"Π\",\"𝞟\":\"Π\",\"Ⲡ\":\"Π\",\"П\":\"Π\",\"ꛛ\":\"Π\",\"𐊭\":\"Ϙ\",\"𐌒\":\"Ϙ\",\"ϛ\":\"ς\",\"𝛓\":\"ς\",\"𝜍\":\"ς\",\"𝝇\":\"ς\",\"𝞁\":\"ς\",\"𝞻\":\"ς\",\"𝚽\":\"Φ\",\"𝛷\":\"Φ\",\"𝜱\":\"Φ\",\"𝝫\":\"Φ\",\"𝞥\":\"Φ\",\"Ⲫ\":\"Φ\",\"Ф\":\"Φ\",\"Փ\":\"Φ\",\"ቀ\":\"Φ\",\"ᛰ\":\"Φ\",\"𐊳\":\"Φ\",\"ꭓ\":\"χ\",\"ꭕ\":\"χ\",\"𝛘\":\"χ\",\"𝜒\":\"χ\",\"𝝌\":\"χ\",\"𝞆\":\"χ\",\"𝟀\":\"χ\",\"ⲭ\":\"χ\",\"𝛙\":\"ψ\",\"𝜓\":\"ψ\",\"𝝍\":\"ψ\",\"𝞇\":\"ψ\",\"𝟁\":\"ψ\",\"ѱ\":\"ψ\",\"𐓹\":\"ψ\",\"𝚿\":\"Ψ\",\"𝛹\":\"Ψ\",\"𝜳\":\"Ψ\",\"𝝭\":\"Ψ\",\"𝞧\":\"Ψ\",\"Ⲯ\":\"Ψ\",\"Ѱ\":\"Ψ\",\"𐓑\":\"Ψ\",\"ᛘ\":\"Ψ\",\"𐊵\":\"Ψ\",\"⍵\":\"ω\",\"ꞷ\":\"ω\",\"𝛚\":\"ω\",\"𝜔\":\"ω\",\"𝝎\":\"ω\",\"𝞈\":\"ω\",\"𝟂\":\"ω\",\"ⲱ\":\"ω\",\"ꙍ\":\"ω\",\"Ω\":\"Ω\",\"𝛀\":\"Ω\",\"𝛺\":\"Ω\",\"𝜴\":\"Ω\",\"𝝮\":\"Ω\",\"𝞨\":\"Ω\",\"ᘯ\":\"Ω\",\"ᘵ\":\"Ω\",\"𐊶\":\"Ω\",\"⍹\":\"ω̲\",\"ώ\":\"ῴ\",\"☰\":\"Ⲷ\",\"Ⳝ\":\"Ϭ\",\"җ\":\"ж̩\",\"Җ\":\"Ж̩\",\"𝈋\":\"И\",\"Ͷ\":\"И\",\"ꚡ\":\"И\",\"𐐥\":\"И\",\"Й\":\"Ѝ\",\"Ҋ\":\"Ѝ̦\",\"ѝ\":\"й\",\"ҋ\":\"й̦\",\"𐒼\":\"Ӄ\",\"ᴫ\":\"л\",\"ӆ\":\"л̦\",\"ꭠ\":\"љ\",\"𐓫\":\"ꙩ\",\"ᷮ\":\"ⷬ\",\"𐓍\":\"Ћ\",\"𝈂\":\"Ӿ\",\"𝈢\":\"Ѡ\",\"Ꮗ\":\"Ѡ\",\"ᗯ\":\"Ѡ\",\"Ѽ\":\"Ѡ҆҇\",\"ᣭ\":\"Ѡ·\",\"Ꞷ\":\"Ꙍ\",\"ӌ\":\"ҷ\",\"Ӌ\":\"Ҷ\",\"Ҿ\":\"Ҽ̨\",\"ⲽ\":\"ш\",\"Ⲽ\":\"Ш\",\"Ꙑ\":\"Ъl\",\"℈\":\"Э\",\"🜁\":\"Ꙙ\",\"𖼜\":\"Ꙙ\",\"ꦒ\":\"ⰿ\",\"և\":\"եւ\",\"ኔ\":\"ձ\",\"ﬔ\":\"մե\",\"ﬕ\":\"մի\",\"ﬗ\":\"մխ\",\"ﬓ\":\"մն\",\"∩\":\"Ո\",\"⋂\":\"Ո\",\"𝉅\":\"Ո\",\"በ\":\"Ո\",\"ᑎ\":\"Ո\",\"ꓵ\":\"Ո\",\"ᑚ\":\"Ո·\",\"ᑨ\":\"Ո'\",\"ﬖ\":\"վն\",\"₽\":\"Ք\",\"˓\":\"ՙ\",\"ʿ\":\"ՙ\",\"ℵ\":\"א\",\"ﬡ\":\"א\",\"אָ\":\"אַ\",\"אּ\":\"אַ\",\"ﭏ\":\"אל\",\"ℶ\":\"ב\",\"ℷ\":\"ג\",\"ℸ\":\"ד\",\"ﬢ\":\"ד\",\"ﬣ\":\"ה\",\"יּ\":\"יִ\",\"ﬤ\":\"כ\",\"ﬥ\":\"ל\",\"ﬦ\":\"ם\",\"ﬠ\":\"ע\",\"ﬧ\":\"ר\",\"שׂ\":\"שׁ\",\"שּ\":\"שׁ\",\"שּׂ\":\"שּׁ\",\"ﬨ\":\"ת\",\"ﺀ\":\"ء\",\"۽\":\"ء͈\",\"ﺂ\":\"آ\",\"ﺁ\":\"آ\",\"ﭑ\":\"ٱ\",\"ﭐ\":\"ٱ\",\"𞸁\":\"ب\",\"𞸡\":\"ب\",\"𞹡\":\"ب\",\"𞺁\":\"ب\",\"𞺡\":\"ب\",\"ﺑ\":\"ب\",\"ﺒ\":\"ب\",\"ﺐ\":\"ب\",\"ﺏ\":\"ب\",\"ݑ\":\"بۛ\",\"ࢶ\":\"بۢ\",\"ࢡ\":\"بٔ\",\"ﲠ\":\"بo\",\"ﳢ\":\"بo\",\"ﲜ\":\"بج\",\"ﰅ\":\"بج\",\"ﲝ\":\"بح\",\"ﰆ\":\"بح\",\"ﷂ\":\"بحى\",\"ﲞ\":\"بخ\",\"ﰇ\":\"بخ\",\"ﳒ\":\"بخ\",\"ﱋ\":\"بخ\",\"ﶞ\":\"بخى\",\"ﱪ\":\"بر\",\"ﱫ\":\"بز\",\"ﲟ\":\"بم\",\"ﳡ\":\"بم\",\"ﱬ\":\"بم\",\"ﰈ\":\"بم\",\"ﱭ\":\"بن\",\"ﱮ\":\"بى\",\"ﰉ\":\"بى\",\"ﱯ\":\"بى\",\"ﰊ\":\"بى\",\"ﭔ\":\"ٻ\",\"ﭕ\":\"ٻ\",\"ﭓ\":\"ٻ\",\"ﭒ\":\"ٻ\",\"ې\":\"ٻ\",\"ﯦ\":\"ٻ\",\"ﯧ\":\"ٻ\",\"ﯥ\":\"ٻ\",\"ﯤ\":\"ٻ\",\"ﭜ\":\"ڀ\",\"ﭝ\":\"ڀ\",\"ﭛ\":\"ڀ\",\"ﭚ\":\"ڀ\",\"ࢩ\":\"ݔ\",\"ݧ\":\"ݔ\",\"⍥\":\"ة\",\"ö\":\"ة\",\"ﺔ\":\"ة\",\"ﺓ\":\"ة\",\"ۃ\":\"ة\",\"𞸕\":\"ت\",\"𞸵\":\"ت\",\"𞹵\":\"ت\",\"𞺕\":\"ت\",\"𞺵\":\"ت\",\"ﺗ\":\"ت\",\"ﺘ\":\"ت\",\"ﺖ\":\"ت\",\"ﺕ\":\"ت\",\"ﲥ\":\"تo\",\"ﳤ\":\"تo\",\"ﲡ\":\"تج\",\"ﰋ\":\"تج\",\"ﵐ\":\"تجم\",\"ﶠ\":\"تجى\",\"ﶟ\":\"تجى\",\"ﲢ\":\"تح\",\"ﰌ\":\"تح\",\"ﵒ\":\"تحج\",\"ﵑ\":\"تحج\",\"ﵓ\":\"تحم\",\"ﲣ\":\"تخ\",\"ﰍ\":\"تخ\",\"ﵔ\":\"تخم\",\"ﶢ\":\"تخى\",\"ﶡ\":\"تخى\",\"ﱰ\":\"تر\",\"ﱱ\":\"تز\",\"ﲤ\":\"تم\",\"ﳣ\":\"تم\",\"ﱲ\":\"تم\",\"ﰎ\":\"تم\",\"ﵕ\":\"تمج\",\"ﵖ\":\"تمح\",\"ﵗ\":\"تمخ\",\"ﶤ\":\"تمى\",\"ﶣ\":\"تمى\",\"ﱳ\":\"تن\",\"ﱴ\":\"تى\",\"ﰏ\":\"تى\",\"ﱵ\":\"تى\",\"ﰐ\":\"تى\",\"ﭠ\":\"ٺ\",\"ﭡ\":\"ٺ\",\"ﭟ\":\"ٺ\",\"ﭞ\":\"ٺ\",\"ﭤ\":\"ٿ\",\"ﭥ\":\"ٿ\",\"ﭣ\":\"ٿ\",\"ﭢ\":\"ٿ\",\"𞸂\":\"ج\",\"𞸢\":\"ج\",\"𞹂\":\"ج\",\"𞹢\":\"ج\",\"𞺂\":\"ج\",\"𞺢\":\"ج\",\"ﺟ\":\"ج\",\"ﺠ\":\"ج\",\"ﺞ\":\"ج\",\"ﺝ\":\"ج\",\"ﲧ\":\"جح\",\"ﰕ\":\"جح\",\"ﶦ\":\"جحى\",\"ﶾ\":\"جحى\",\"ﷻ\":\"جل جلlلo\",\"ﲨ\":\"جم\",\"ﰖ\":\"جم\",\"ﵙ\":\"جمح\",\"ﵘ\":\"جمح\",\"ﶧ\":\"جمى\",\"ﶥ\":\"جمى\",\"ﴝ\":\"جى\",\"ﴁ\":\"جى\",\"ﴞ\":\"جى\",\"ﴂ\":\"جى\",\"ﭸ\":\"ڃ\",\"ﭹ\":\"ڃ\",\"ﭷ\":\"ڃ\",\"ﭶ\":\"ڃ\",\"ﭴ\":\"ڄ\",\"ﭵ\":\"ڄ\",\"ﭳ\":\"ڄ\",\"ﭲ\":\"ڄ\",\"ﭼ\":\"چ\",\"ﭽ\":\"چ\",\"ﭻ\":\"چ\",\"ﭺ\":\"چ\",\"ﮀ\":\"ڇ\",\"ﮁ\":\"ڇ\",\"ﭿ\":\"ڇ\",\"ﭾ\":\"ڇ\",\"𞸇\":\"ح\",\"𞸧\":\"ح\",\"𞹇\":\"ح\",\"𞹧\":\"ح\",\"𞺇\":\"ح\",\"𞺧\":\"ح\",\"ﺣ\":\"ح\",\"ﺤ\":\"ح\",\"ﺢ\":\"ح\",\"ﺡ\":\"ح\",\"څ\":\"حۛ\",\"ځ\":\"حٔ\",\"ݲ\":\"حٔ\",\"ﲩ\":\"حج\",\"ﰗ\":\"حج\",\"ﶿ\":\"حجى\",\"ﲪ\":\"حم\",\"ﰘ\":\"حم\",\"ﵛ\":\"حمى\",\"ﵚ\":\"حمى\",\"ﴛ\":\"حى\",\"ﳿ\":\"حى\",\"ﴜ\":\"حى\",\"ﴀ\":\"حى\",\"𞸗\":\"خ\",\"𞸷\":\"خ\",\"𞹗\":\"خ\",\"𞹷\":\"خ\",\"𞺗\":\"خ\",\"𞺷\":\"خ\",\"ﺧ\":\"خ\",\"ﺨ\":\"خ\",\"ﺦ\":\"خ\",\"ﺥ\":\"خ\",\"ﲫ\":\"خج\",\"ﰙ\":\"خج\",\"ﰚ\":\"خح\",\"ﲬ\":\"خم\",\"ﰛ\":\"خم\",\"ﴟ\":\"خى\",\"ﴃ\":\"خى\",\"ﴠ\":\"خى\",\"ﴄ\":\"خى\",\"𐋡\":\"د\",\"𞸃\":\"د\",\"𞺃\":\"د\",\"𞺣\":\"د\",\"ﺪ\":\"د\",\"ﺩ\":\"د\",\"ڈ\":\"دؕ\",\"ﮉ\":\"دؕ\",\"ﮈ\":\"دؕ\",\"ڎ\":\"دۛ\",\"ﮇ\":\"دۛ\",\"ﮆ\":\"دۛ\",\"ۮ\":\"د̂\",\"ࢮ\":\"د̤̣\",\"𞸘\":\"ذ\",\"𞺘\":\"ذ\",\"𞺸\":\"ذ\",\"ﺬ\":\"ذ\",\"ﺫ\":\"ذ\",\"ﱛ\":\"ذٰ\",\"ڋ\":\"ڊؕ\",\"ﮅ\":\"ڌ\",\"ﮄ\":\"ڌ\",\"ﮃ\":\"ڍ\",\"ﮂ\":\"ڍ\",\"𞸓\":\"ر\",\"𞺓\":\"ر\",\"𞺳\":\"ر\",\"ﺮ\":\"ر\",\"ﺭ\":\"ر\",\"ڑ\":\"رؕ\",\"ﮍ\":\"رؕ\",\"ﮌ\":\"رؕ\",\"ژ\":\"رۛ\",\"ﮋ\":\"رۛ\",\"ﮊ\":\"رۛ\",\"ڒ\":\"ر̆\",\"ࢹ\":\"ر̆̇\",\"ۯ\":\"ر̂\",\"ݬ\":\"رٔ\",\"ﱜ\":\"رٰ\",\"ﷶ\":\"رسول\",\"﷼\":\"رىlل\",\"𞸆\":\"ز\",\"𞺆\":\"ز\",\"𞺦\":\"ز\",\"ﺰ\":\"ز\",\"ﺯ\":\"ز\",\"ࢲ\":\"ز̂\",\"ݱ\":\"ڗؕ\",\"𞸎\":\"س\",\"𞸮\":\"س\",\"𞹎\":\"س\",\"𞹮\":\"س\",\"𞺎\":\"س\",\"𞺮\":\"س\",\"ﺳ\":\"س\",\"ﺴ\":\"س\",\"ﺲ\":\"س\",\"ﺱ\":\"س\",\"ش\":\"سۛ\",\"𞸔\":\"سۛ\",\"𞸴\":\"سۛ\",\"𞹔\":\"سۛ\",\"𞹴\":\"سۛ\",\"𞺔\":\"سۛ\",\"𞺴\":\"سۛ\",\"ﺷ\":\"سۛ\",\"ﺸ\":\"سۛ\",\"ﺶ\":\"سۛ\",\"ﺵ\":\"سۛ\",\"ݾ\":\"س̂\",\"ﴱ\":\"سo\",\"ﳨ\":\"سo\",\"ﴲ\":\"سۛo\",\"ﳪ\":\"سۛo\",\"ﲭ\":\"سج\",\"ﴴ\":\"سج\",\"ﰜ\":\"سج\",\"ﴭ\":\"سۛج\",\"ﴷ\":\"سۛج\",\"ﴥ\":\"سۛج\",\"ﴉ\":\"سۛج\",\"ﵝ\":\"سجح\",\"ﵞ\":\"سجى\",\"ﵩ\":\"سۛجى\",\"ﲮ\":\"سح\",\"ﴵ\":\"سح\",\"ﰝ\":\"سح\",\"ﴮ\":\"سۛح\",\"ﴸ\":\"سۛح\",\"ﴦ\":\"سۛح\",\"ﴊ\":\"سۛح\",\"ﵜ\":\"سحج\",\"ﵨ\":\"سۛحم\",\"ﵧ\":\"سۛحم\",\"ﶪ\":\"سۛحى\",\"ﲯ\":\"سخ\",\"ﴶ\":\"سخ\",\"ﰞ\":\"سخ\",\"ﴯ\":\"سۛخ\",\"ﴹ\":\"سۛخ\",\"ﴧ\":\"سۛخ\",\"ﴋ\":\"سۛخ\",\"ﶨ\":\"سخى\",\"ﷆ\":\"سخى\",\"ﴪ\":\"سر\",\"ﴎ\":\"سر\",\"ﴩ\":\"سۛر\",\"ﴍ\":\"سۛر\",\"ﲰ\":\"سم\",\"ﳧ\":\"سم\",\"ﰟ\":\"سم\",\"ﴰ\":\"سۛم\",\"ﳩ\":\"سۛم\",\"ﴨ\":\"سۛم\",\"ﴌ\":\"سۛم\",\"ﵡ\":\"سمج\",\"ﵠ\":\"سمح\",\"ﵟ\":\"سمح\",\"ﵫ\":\"سۛمخ\",\"ﵪ\":\"سۛمخ\",\"ﵣ\":\"سمم\",\"ﵢ\":\"سمم\",\"ﵭ\":\"سۛمم\",\"ﵬ\":\"سۛمم\",\"ﴗ\":\"سى\",\"ﳻ\":\"سى\",\"ﴘ\":\"سى\",\"ﳼ\":\"سى\",\"ﴙ\":\"سۛى\",\"ﳽ\":\"سۛى\",\"ﴚ\":\"سۛى\",\"ﳾ\":\"سۛى\",\"𐋲\":\"ص\",\"𞸑\":\"ص\",\"𞸱\":\"ص\",\"𞹑\":\"ص\",\"𞹱\":\"ص\",\"𞺑\":\"ص\",\"𞺱\":\"ص\",\"ﺻ\":\"ص\",\"ﺼ\":\"ص\",\"ﺺ\":\"ص\",\"ﺹ\":\"ص\",\"ڞ\":\"صۛ\",\"ࢯ\":\"ص̤̣\",\"ﲱ\":\"صح\",\"ﰠ\":\"صح\",\"ﵥ\":\"صحح\",\"ﵤ\":\"صحح\",\"ﶩ\":\"صحى\",\"ﲲ\":\"صخ\",\"ﴫ\":\"صر\",\"ﴏ\":\"صر\",\"ﷵ\":\"صلعم\",\"ﷹ\":\"صلى\",\"ﷰ\":\"صلى\",\"ﷺ\":\"صلى lللo علىo وسلم\",\"ﲳ\":\"صم\",\"ﰡ\":\"صم\",\"ﷅ\":\"صمم\",\"ﵦ\":\"صمم\",\"ﴡ\":\"صى\",\"ﴅ\":\"صى\",\"ﴢ\":\"صى\",\"ﴆ\":\"صى\",\"𞸙\":\"ض\",\"𞸹\":\"ض\",\"𞹙\":\"ض\",\"𞹹\":\"ض\",\"𞺙\":\"ض\",\"𞺹\":\"ض\",\"ﺿ\":\"ض\",\"ﻀ\":\"ض\",\"ﺾ\":\"ض\",\"ﺽ\":\"ض\",\"ﲴ\":\"ضج\",\"ﰢ\":\"ضج\",\"ﲵ\":\"ضح\",\"ﰣ\":\"ضح\",\"ﵮ\":\"ضحى\",\"ﶫ\":\"ضحى\",\"ﲶ\":\"ضخ\",\"ﰤ\":\"ضخ\",\"ﵰ\":\"ضخم\",\"ﵯ\":\"ضخم\",\"ﴬ\":\"ضر\",\"ﴐ\":\"ضر\",\"ﲷ\":\"ضم\",\"ﰥ\":\"ضم\",\"ﴣ\":\"ضى\",\"ﴇ\":\"ضى\",\"ﴤ\":\"ضى\",\"ﴈ\":\"ضى\",\"𐋨\":\"ط\",\"𞸈\":\"ط\",\"𞹨\":\"ط\",\"𞺈\":\"ط\",\"𞺨\":\"ط\",\"ﻃ\":\"ط\",\"ﻄ\":\"ط\",\"ﻂ\":\"ط\",\"ﻁ\":\"ط\",\"ڟ\":\"طۛ\",\"ﲸ\":\"طح\",\"ﰦ\":\"طح\",\"ﴳ\":\"طم\",\"ﴺ\":\"طم\",\"ﰧ\":\"طم\",\"ﵲ\":\"طمح\",\"ﵱ\":\"طمح\",\"ﵳ\":\"طمم\",\"ﵴ\":\"طمى\",\"ﴑ\":\"طى\",\"ﳵ\":\"طى\",\"ﴒ\":\"طى\",\"ﳶ\":\"طى\",\"𞸚\":\"ظ\",\"𞹺\":\"ظ\",\"𞺚\":\"ظ\",\"𞺺\":\"ظ\",\"ﻇ\":\"ظ\",\"ﻈ\":\"ظ\",\"ﻆ\":\"ظ\",\"ﻅ\":\"ظ\",\"ﲹ\":\"ظم\",\"ﴻ\":\"ظم\",\"ﰨ\":\"ظم\",\"؏\":\"ع\",\"𞸏\":\"ع\",\"𞸯\":\"ع\",\"𞹏\":\"ع\",\"𞹯\":\"ع\",\"𞺏\":\"ع\",\"𞺯\":\"ع\",\"ﻋ\":\"ع\",\"ﻌ\":\"ع\",\"ﻊ\":\"ع\",\"ﻉ\":\"ع\",\"ﲺ\":\"عج\",\"ﰩ\":\"عج\",\"ﷄ\":\"عجم\",\"ﵵ\":\"عجم\",\"ﷷ\":\"علىo\",\"ﲻ\":\"عم\",\"ﰪ\":\"عم\",\"ﵷ\":\"عمم\",\"ﵶ\":\"عمم\",\"ﵸ\":\"عمى\",\"ﶶ\":\"عمى\",\"ﴓ\":\"عى\",\"ﳷ\":\"عى\",\"ﴔ\":\"عى\",\"ﳸ\":\"عى\",\"𞸛\":\"غ\",\"𞸻\":\"غ\",\"𞹛\":\"غ\",\"𞹻\":\"غ\",\"𞺛\":\"غ\",\"𞺻\":\"غ\",\"ﻏ\":\"غ\",\"ﻐ\":\"غ\",\"ﻎ\":\"غ\",\"ﻍ\":\"غ\",\"ﲼ\":\"غج\",\"ﰫ\":\"غج\",\"ﲽ\":\"غم\",\"ﰬ\":\"غم\",\"ﵹ\":\"غمم\",\"ﵻ\":\"غمى\",\"ﵺ\":\"غمى\",\"ﴕ\":\"غى\",\"ﳹ\":\"غى\",\"ﴖ\":\"غى\",\"ﳺ\":\"غى\",\"𞸐\":\"ف\",\"𞸰\":\"ف\",\"𞹰\":\"ف\",\"𞺐\":\"ف\",\"𞺰\":\"ف\",\"ﻓ\":\"ف\",\"ﻔ\":\"ف\",\"ﻒ\":\"ف\",\"ﻑ\":\"ف\",\"ڧ\":\"ف\",\"ﲾ\":\"فج\",\"ﰭ\":\"فج\",\"ﲿ\":\"فح\",\"ﰮ\":\"فح\",\"ﳀ\":\"فخ\",\"ﰯ\":\"فخ\",\"ﵽ\":\"فخم\",\"ﵼ\":\"فخم\",\"ﳁ\":\"فم\",\"ﰰ\":\"فم\",\"ﷁ\":\"فمى\",\"ﱼ\":\"فى\",\"ﰱ\":\"فى\",\"ﱽ\":\"فى\",\"ﰲ\":\"فى\",\"𞸞\":\"ڡ\",\"𞹾\":\"ڡ\",\"ࢻ\":\"ڡ\",\"ٯ\":\"ڡ\",\"𞸟\":\"ڡ\",\"𞹟\":\"ڡ\",\"ࢼ\":\"ڡ\",\"ڤ\":\"ڡۛ\",\"ﭬ\":\"ڡۛ\",\"ﭭ\":\"ڡۛ\",\"ﭫ\":\"ڡۛ\",\"ﭪ\":\"ڡۛ\",\"ڨ\":\"ڡۛ\",\"ࢤ\":\"ڢۛ\",\"ﭰ\":\"ڦ\",\"ﭱ\":\"ڦ\",\"ﭯ\":\"ڦ\",\"ﭮ\":\"ڦ\",\"𞸒\":\"ق\",\"𞸲\":\"ق\",\"𞹒\":\"ق\",\"𞹲\":\"ق\",\"𞺒\":\"ق\",\"𞺲\":\"ق\",\"ﻗ\":\"ق\",\"ﻘ\":\"ق\",\"ﻖ\":\"ق\",\"ﻕ\":\"ق\",\"ﳂ\":\"قح\",\"ﰳ\":\"قح\",\"ﷱ\":\"قلى\",\"ﳃ\":\"قم\",\"ﰴ\":\"قم\",\"ﶴ\":\"قمح\",\"ﵾ\":\"قمح\",\"ﵿ\":\"قمم\",\"ﶲ\":\"قمى\",\"ﱾ\":\"قى\",\"ﰵ\":\"قى\",\"ﱿ\":\"قى\",\"ﰶ\":\"قى\",\"𞸊\":\"ك\",\"𞸪\":\"ك\",\"𞹪\":\"ك\",\"ﻛ\":\"ك\",\"ﻜ\":\"ك\",\"ﻚ\":\"ك\",\"ﻙ\":\"ك\",\"ک\":\"ك\",\"ﮐ\":\"ك\",\"ﮑ\":\"ك\",\"ﮏ\":\"ك\",\"ﮎ\":\"ك\",\"ڪ\":\"ك\",\"ڭ\":\"كۛ\",\"ﯕ\":\"كۛ\",\"ﯖ\":\"كۛ\",\"ﯔ\":\"كۛ\",\"ﯓ\":\"كۛ\",\"ݣ\":\"كۛ\",\"ﲀ\":\"كl\",\"ﰷ\":\"كl\",\"ﳄ\":\"كج\",\"ﰸ\":\"كج\",\"ﳅ\":\"كح\",\"ﰹ\":\"كح\",\"ﳆ\":\"كخ\",\"ﰺ\":\"كخ\",\"ﳇ\":\"كل\",\"ﳫ\":\"كل\",\"ﲁ\":\"كل\",\"ﰻ\":\"كل\",\"ﳈ\":\"كم\",\"ﳬ\":\"كم\",\"ﲂ\":\"كم\",\"ﰼ\":\"كم\",\"ﷃ\":\"كمم\",\"ﶻ\":\"كمم\",\"ﶷ\":\"كمى\",\"ﲃ\":\"كى\",\"ﰽ\":\"كى\",\"ﲄ\":\"كى\",\"ﰾ\":\"كى\",\"ݢ\":\"ڬ\",\"ﮔ\":\"گ\",\"ﮕ\":\"گ\",\"ﮓ\":\"گ\",\"ﮒ\":\"گ\",\"ࢰ\":\"گ\",\"ڴ\":\"گۛ\",\"ﮜ\":\"ڱ\",\"ﮝ\":\"ڱ\",\"ﮛ\":\"ڱ\",\"ﮚ\":\"ڱ\",\"ﮘ\":\"ڳ\",\"ﮙ\":\"ڳ\",\"ﮗ\":\"ڳ\",\"ﮖ\":\"ڳ\",\"𞸋\":\"ل\",\"𞸫\":\"ل\",\"𞹋\":\"ل\",\"𞺋\":\"ل\",\"𞺫\":\"ل\",\"ﻟ\":\"ل\",\"ﻠ\":\"ل\",\"ﻞ\":\"ل\",\"ﻝ\":\"ل\",\"ڷ\":\"لۛ\",\"ڵ\":\"ل̆\",\"ﻼ\":\"لl\",\"ﻻ\":\"لl\",\"ﻺ\":\"لlٕ\",\"ﻹ\":\"لlٕ\",\"ﻸ\":\"لlٴ\",\"ﻷ\":\"لlٴ\",\"ﳍ\":\"لo\",\"ﻶ\":\"لآ\",\"ﻵ\":\"لآ\",\"ﳉ\":\"لج\",\"ﰿ\":\"لج\",\"ﶃ\":\"لجج\",\"ﶄ\":\"لجج\",\"ﶺ\":\"لجم\",\"ﶼ\":\"لجم\",\"ﶬ\":\"لجى\",\"ﳊ\":\"لح\",\"ﱀ\":\"لح\",\"ﶵ\":\"لحم\",\"ﶀ\":\"لحم\",\"ﶂ\":\"لحى\",\"ﶁ\":\"لحى\",\"ﳋ\":\"لخ\",\"ﱁ\":\"لخ\",\"ﶆ\":\"لخم\",\"ﶅ\":\"لخم\",\"ﳌ\":\"لم\",\"ﳭ\":\"لم\",\"ﲅ\":\"لم\",\"ﱂ\":\"لم\",\"ﶈ\":\"لمح\",\"ﶇ\":\"لمح\",\"ﶭ\":\"لمى\",\"ﲆ\":\"لى\",\"ﱃ\":\"لى\",\"ﲇ\":\"لى\",\"ﱄ\":\"لى\",\"𞸌\":\"م\",\"𞸬\":\"م\",\"𞹬\":\"م\",\"𞺌\":\"م\",\"𞺬\":\"م\",\"ﻣ\":\"م\",\"ﻤ\":\"م\",\"ﻢ\":\"م\",\"ﻡ\":\"م\",\"ࢧ\":\"مۛ\",\"۾\":\"م͈\",\"ﲈ\":\"مl\",\"ﳎ\":\"مج\",\"ﱅ\":\"مج\",\"ﶌ\":\"مجح\",\"ﶒ\":\"مجخ\",\"ﶍ\":\"مجم\",\"ﷀ\":\"مجى\",\"ﳏ\":\"مح\",\"ﱆ\":\"مح\",\"ﶉ\":\"محج\",\"ﶊ\":\"محم\",\"ﷴ\":\"محمد\",\"ﶋ\":\"محى\",\"ﳐ\":\"مخ\",\"ﱇ\":\"مخ\",\"ﶎ\":\"مخج\",\"ﶏ\":\"مخم\",\"ﶹ\":\"مخى\",\"ﳑ\":\"مم\",\"ﲉ\":\"مم\",\"ﱈ\":\"مم\",\"ﶱ\":\"ممى\",\"ﱉ\":\"مى\",\"ﱊ\":\"مى\",\"𞸍\":\"ن\",\"𞸭\":\"ن\",\"𞹍\":\"ن\",\"𞹭\":\"ن\",\"𞺍\":\"ن\",\"𞺭\":\"ن\",\"ﻧ\":\"ن\",\"ﻨ\":\"ن\",\"ﻦ\":\"ن\",\"ﻥ\":\"ن\",\"ݨ\":\"نؕ\",\"ݩ\":\"ن̆\",\"ﳖ\":\"نo\",\"ﳯ\":\"نo\",\"ﶸ\":\"نجح\",\"ﶽ\":\"نجح\",\"ﶘ\":\"نجم\",\"ﶗ\":\"نجم\",\"ﶙ\":\"نجى\",\"ﷇ\":\"نجى\",\"ﳓ\":\"نح\",\"ﱌ\":\"نح\",\"ﶕ\":\"نحم\",\"ﶖ\":\"نحى\",\"ﶳ\":\"نحى\",\"ﳔ\":\"نخ\",\"ﱍ\":\"نخ\",\"ﲊ\":\"نر\",\"ﲋ\":\"نز\",\"ﳕ\":\"نم\",\"ﳮ\":\"نم\",\"ﲌ\":\"نم\",\"ﱎ\":\"نم\",\"ﶛ\":\"نمى\",\"ﶚ\":\"نمى\",\"ﲍ\":\"نن\",\"ﲎ\":\"نى\",\"ﱏ\":\"نى\",\"ﲏ\":\"نى\",\"ﱐ\":\"نى\",\"ۂ\":\"ۀ\",\"ﮥ\":\"ۀ\",\"ﮤ\":\"ۀ\",\"𐋤\":\"و\",\"𞸅\":\"و\",\"𞺅\":\"و\",\"𞺥\":\"و\",\"ﻮ\":\"و\",\"ﻭ\":\"و\",\"ࢱ\":\"و\",\"ۋ\":\"وۛ\",\"ﯟ\":\"وۛ\",\"ﯞ\":\"وۛ\",\"ۇ\":\"و̓\",\"ﯘ\":\"و̓\",\"ﯗ\":\"و̓\",\"ۆ\":\"و̆\",\"ﯚ\":\"و̆\",\"ﯙ\":\"و̆\",\"ۉ\":\"و̂\",\"ﯣ\":\"و̂\",\"ﯢ\":\"و̂\",\"ۈ\":\"وٰ\",\"ﯜ\":\"وٰ\",\"ﯛ\":\"وٰ\",\"ؤ\":\"وٴ\",\"ﺆ\":\"وٴ\",\"ﺅ\":\"وٴ\",\"ٶ\":\"وٴ\",\"ٷ\":\"و̓ٴ\",\"ﯝ\":\"و̓ٴ\",\"ﷸ\":\"وسلم\",\"ﯡ\":\"ۅ\",\"ﯠ\":\"ۅ\",\"ٮ\":\"ى\",\"𞸜\":\"ى\",\"𞹼\":\"ى\",\"ں\":\"ى\",\"𞸝\":\"ى\",\"𞹝\":\"ى\",\"ﮟ\":\"ى\",\"ﮞ\":\"ى\",\"ࢽ\":\"ى\",\"ﯨ\":\"ى\",\"ﯩ\":\"ى\",\"ﻰ\":\"ى\",\"ﻯ\":\"ى\",\"ي\":\"ى\",\"𞸉\":\"ى\",\"𞸩\":\"ى\",\"𞹉\":\"ى\",\"𞹩\":\"ى\",\"𞺉\":\"ى\",\"𞺩\":\"ى\",\"ﻳ\":\"ى\",\"ﻴ\":\"ى\",\"ﻲ\":\"ى\",\"ﻱ\":\"ى\",\"ی\":\"ى\",\"ﯾ\":\"ى\",\"ﯿ\":\"ى\",\"ﯽ\":\"ى\",\"ﯼ\":\"ى\",\"ے\":\"ى\",\"ﮯ\":\"ى\",\"ﮮ\":\"ى\",\"ٹ\":\"ىؕ\",\"ﭨ\":\"ىؕ\",\"ﭩ\":\"ىؕ\",\"ﭧ\":\"ىؕ\",\"ﭦ\":\"ىؕ\",\"ڻ\":\"ىؕ\",\"ﮢ\":\"ىؕ\",\"ﮣ\":\"ىؕ\",\"ﮡ\":\"ىؕ\",\"ﮠ\":\"ىؕ\",\"پ\":\"ىۛ\",\"ﭘ\":\"ىۛ\",\"ﭙ\":\"ىۛ\",\"ﭗ\":\"ىۛ\",\"ﭖ\":\"ىۛ\",\"ث\":\"ىۛ\",\"𞸖\":\"ىۛ\",\"𞸶\":\"ىۛ\",\"𞹶\":\"ىۛ\",\"𞺖\":\"ىۛ\",\"𞺶\":\"ىۛ\",\"ﺛ\":\"ىۛ\",\"ﺜ\":\"ىۛ\",\"ﺚ\":\"ىۛ\",\"ﺙ\":\"ىۛ\",\"ڽ\":\"ىۛ\",\"ۑ\":\"ىۛ\",\"ؿ\":\"ىۛ\",\"ࢷ\":\"ىۛۢ\",\"ݖ\":\"ى̆\",\"ێ\":\"ى̆\",\"ࢺ\":\"ى̆̇\",\"ؽ\":\"ى̂\",\"ࢨ\":\"ىٔ\",\"ﲐ\":\"ىٰ\",\"ﱝ\":\"ىٰ\",\"ﳞ\":\"ىo\",\"ﳱ\":\"ىo\",\"ﳦ\":\"ىۛo\",\"ئ\":\"ىٴ\",\"ﺋ\":\"ىٴ\",\"ﺌ\":\"ىٴ\",\"ﺊ\":\"ىٴ\",\"ﺉ\":\"ىٴ\",\"ٸ\":\"ىٴ\",\"ﯫ\":\"ىٴl\",\"ﯪ\":\"ىٴl\",\"ﲛ\":\"ىٴo\",\"ﳠ\":\"ىٴo\",\"ﯭ\":\"ىٴo\",\"ﯬ\":\"ىٴo\",\"ﯸ\":\"ىٴٻ\",\"ﯷ\":\"ىٴٻ\",\"ﯶ\":\"ىٴٻ\",\"ﲗ\":\"ىٴج\",\"ﰀ\":\"ىٴج\",\"ﲘ\":\"ىٴح\",\"ﰁ\":\"ىٴح\",\"ﲙ\":\"ىٴخ\",\"ﱤ\":\"ىٴر\",\"ﱥ\":\"ىٴز\",\"ﲚ\":\"ىٴم\",\"ﳟ\":\"ىٴم\",\"ﱦ\":\"ىٴم\",\"ﰂ\":\"ىٴم\",\"ﱧ\":\"ىٴن\",\"ﯯ\":\"ىٴو\",\"ﯮ\":\"ىٴو\",\"ﯱ\":\"ىٴو̓\",\"ﯰ\":\"ىٴو̓\",\"ﯳ\":\"ىٴو̆\",\"ﯲ\":\"ىٴو̆\",\"ﯵ\":\"ىٴوٰ\",\"ﯴ\":\"ىٴوٰ\",\"ﯻ\":\"ىٴى\",\"ﯺ\":\"ىٴى\",\"ﱨ\":\"ىٴى\",\"ﯹ\":\"ىٴى\",\"ﰃ\":\"ىٴى\",\"ﱩ\":\"ىٴى\",\"ﰄ\":\"ىٴى\",\"ﳚ\":\"ىج\",\"ﱕ\":\"ىج\",\"ﰑ\":\"ىۛج\",\"ﶯ\":\"ىجى\",\"ﳛ\":\"ىح\",\"ﱖ\":\"ىح\",\"ﶮ\":\"ىحى\",\"ﳜ\":\"ىخ\",\"ﱗ\":\"ىخ\",\"ﲑ\":\"ىر\",\"ﱶ\":\"ىۛر\",\"ﲒ\":\"ىز\",\"ﱷ\":\"ىۛز\",\"ﳝ\":\"ىم\",\"ﳰ\":\"ىم\",\"ﲓ\":\"ىم\",\"ﱘ\":\"ىم\",\"ﲦ\":\"ىۛم\",\"ﳥ\":\"ىۛم\",\"ﱸ\":\"ىۛم\",\"ﰒ\":\"ىۛم\",\"ﶝ\":\"ىمم\",\"ﶜ\":\"ىمم\",\"ﶰ\":\"ىمى\",\"ﲔ\":\"ىن\",\"ﱹ\":\"ىۛن\",\"ﲕ\":\"ىى\",\"ﱙ\":\"ىى\",\"ﲖ\":\"ىى\",\"ﱚ\":\"ىى\",\"ﱺ\":\"ىۛى\",\"ﰓ\":\"ىۛى\",\"ﱻ\":\"ىۛى\",\"ﰔ\":\"ىۛى\",\"ﮱ\":\"ۓ\",\"ﮰ\":\"ۓ\",\"𐊸\":\"ⵀ\",\"⁞\":\"ⵂ\",\"⸽\":\"ⵂ\",\"⦙\":\"ⵂ\",\"︙\":\"ⵗ\",\"⁝\":\"ⵗ\",\"⋮\":\"ⵗ\",\"Մ\":\"ሆ\",\"Ռ\":\"ቡ\",\"Ի\":\"ኮ\",\"Պ\":\"ጣ\",\"आ\":\"अा\",\"ऒ\":\"अाॆ\",\"ओ\":\"अाे\",\"औ\":\"अाै\",\"ऄ\":\"अॆ\",\"ऑ\":\"अॉ\",\"ऍ\":\"एॅ\",\"ऎ\":\"एॆ\",\"ऐ\":\"एे\",\"ई\":\"र्इ\",\"ઽ\":\"ऽ\",\"𑇜\":\"ꣻ\",\"𑇋\":\"ऺ\",\"ુ\":\"ु\",\"ૂ\":\"ू\",\"ੋ\":\"ॆ\",\"੍\":\"्\",\"્\":\"्\",\"আ\":\"অা\",\"ৠ\":\"ঋৃ\",\"ৡ\":\"ঋৃ\",\"𑒒\":\"ঘ\",\"𑒔\":\"চ\",\"𑒖\":\"জ\",\"𑒘\":\"ঞ\",\"𑒙\":\"ট\",\"𑒛\":\"ড\",\"𑒪\":\"ণ\",\"𑒞\":\"ত\",\"𑒟\":\"থ\",\"𑒠\":\"দ\",\"𑒡\":\"ধ\",\"𑒢\":\"ন\",\"𑒣\":\"প\",\"𑒩\":\"ব\",\"𑒧\":\"ম\",\"𑒨\":\"য\",\"𑒫\":\"র\",\"𑒝\":\"ল\",\"𑒭\":\"ষ\",\"𑒮\":\"স\",\"𑓄\":\"ঽ\",\"𑒰\":\"া\",\"𑒱\":\"ি\",\"𑒹\":\"ে\",\"𑒼\":\"ো\",\"𑒾\":\"ৌ\",\"𑓂\":\"্\",\"𑒽\":\"ৗ\",\"ਉ\":\"ੳੁ\",\"ਊ\":\"ੳੂ\",\"ਆ\":\"ਅਾ\",\"ਐ\":\"ਅੈ\",\"ਔ\":\"ਅੌ\",\"ਇ\":\"ੲਿ\",\"ਈ\":\"ੲੀ\",\"ਏ\":\"ੲੇ\",\"આ\":\"અા\",\"ઑ\":\"અાૅ\",\"ઓ\":\"અાે\",\"ઔ\":\"અાૈ\",\"ઍ\":\"અૅ\",\"એ\":\"અે\",\"ઐ\":\"અૈ\",\"ଆ\":\"ଅା\",\"௮\":\"அ\",\"ர\":\"ஈ\",\"ா\":\"ஈ\",\"௫\":\"ஈு\",\"௨\":\"உ\",\"ഉ\":\"உ\",\"ஊ\":\"உள\",\"ഊ\":\"உൗ\",\"௭\":\"எ\",\"௷\":\"எவ\",\"ஜ\":\"ஐ\",\"ജ\":\"ஐ\",\"௧\":\"க\",\"௪\":\"ச\",\"௬\":\"சு\",\"௲\":\"சூ\",\"ഺ\":\"டி\",\"ണ\":\"ண\",\"௺\":\"நீ\",\"௴\":\"மீ\",\"௰\":\"ய\",\"ഴ\":\"ழ\",\"ௗ\":\"ள\",\"ை\":\"ன\",\"ശ\":\"ஶ\",\"௸\":\"ஷ\",\"ി\":\"ி\",\"ീ\":\"ி\",\"ொ\":\"ெஈ\",\"ௌ\":\"ெள\",\"ோ\":\"ேஈ\",\"ಅ\":\"అ\",\"ಆ\":\"ఆ\",\"ಇ\":\"ఇ\",\"ౠ\":\"ఋా\",\"ౡ\":\"ఌా\",\"ಒ\":\"ఒ\",\"ఔ\":\"ఒౌ\",\"ಔ\":\"ఒౌ\",\"ఓ\":\"ఒౕ\",\"ಓ\":\"ఒౕ\",\"ಜ\":\"జ\",\"ಞ\":\"ఞ\",\"ఢ\":\"డ̣\",\"ಣ\":\"ణ\",\"థ\":\"ధּ\",\"భ\":\"బ̣\",\"ಯ\":\"య\",\"ఠ\":\"రּ\",\"ಱ\":\"ఱ\",\"ಲ\":\"ల\",\"ష\":\"వ̣\",\"హ\":\"వా\",\"మ\":\"వు\",\"ూ\":\"ుా\",\"ౄ\":\"ృా\",\"ೡ\":\"ಌಾ\",\"ഈ\":\"ഇൗ\",\"ഐ\":\"എെ\",\"ഓ\":\"ഒാ\",\"ഔ\":\"ഒൗ\",\"ൡ\":\"ഞ\",\"൫\":\"ദ്ര\",\"൹\":\"നു\",\"ഌ\":\"നു\",\"ങ\":\"നു\",\"൯\":\"ന്\",\"ൻ\":\"ന്\",\"൬\":\"ന്ന\",\"൚\":\"ന്മ\",\"റ\":\"ര\",\"൪\":\"ര്\",\"ർ\":\"ര്\",\"൮\":\"വ്ര\",\"൶\":\"ഹ്മ\",\"ൂ\":\"ു\",\"ൃ\":\"ു\",\"ൈ\":\"െെ\",\"෪\":\"ජ\",\"෫\":\"ද\",\"𑐓\":\"𑐴𑑂𑐒\",\"𑐙\":\"𑐴𑑂𑐘\",\"𑐤\":\"𑐴𑑂𑐣\",\"𑐪\":\"𑐴𑑂𑐩\",\"𑐭\":\"𑐴𑑂𑐬\",\"𑐯\":\"𑐴𑑂𑐮\",\"𑗘\":\"𑖂\",\"𑗙\":\"𑖂\",\"𑗚\":\"𑖃\",\"𑗛\":\"𑖄\",\"𑗜\":\"𑖲\",\"𑗝\":\"𑖳\",\"ฃ\":\"ข\",\"ด\":\"ค\",\"ต\":\"ค\",\"ม\":\"ฆ\",\"ຈ\":\"จ\",\"ซ\":\"ช\",\"ฏ\":\"ฎ\",\"ท\":\"ฑ\",\"ບ\":\"บ\",\"ປ\":\"ป\",\"ຝ\":\"ฝ\",\"ພ\":\"พ\",\"ຟ\":\"ฟ\",\"ฦ\":\"ภ\",\"ຍ\":\"ย\",\"។\":\"ฯ\",\"ๅ\":\"า\",\"ำ\":\"̊า\",\"ិ\":\"ิ\",\"ី\":\"ี\",\"ឹ\":\"ึ\",\"ឺ\":\"ื\",\"ຸ\":\"ุ\",\"ູ\":\"ู\",\"แ\":\"เเ\",\"ໜ\":\"ຫນ\",\"ໝ\":\"ຫມ\",\"ຳ\":\"̊າ\",\"༂\":\"འུྂཿ\",\"༃\":\"འུྂ༔\",\"ཪ\":\"ར\",\"ༀ\":\"ཨོཾ\",\"ཷ\":\"ྲཱྀ\",\"ཹ\":\"ླཱྀ\",\"𑲲\":\"𑲪\",\"ႁ\":\"ဂှ\",\"က\":\"ဂာ\",\"ၰ\":\"ဃှ\",\"ၦ\":\"ပှ\",\"ဟ\":\"ပာ\",\"ၯ\":\"ပာှ\",\"ၾ\":\"ၽှ\",\"ဩ\":\"သြ\",\"ဪ\":\"သြော်\",\"႞\":\"ႃ̊\",\"ឣ\":\"អ\",\"᧐\":\"ᦞ\",\"᧑\":\"ᦱ\",\"᪀\":\"ᩅ\",\"᪐\":\"ᩅ\",\"꩓\":\"ꨁ\",\"꩖\":\"ꨣ\",\"᭒\":\"ᬍ\",\"᭓\":\"ᬑ\",\"᭘\":\"ᬨ\",\"ꦣ\":\"ꦝ\",\"ᢖ\":\"ᡜ\",\"ᡕ\":\"ᠵ\",\"ῶ\":\"Ꮿ\",\"ᐍ\":\"ᐁ·\",\"ᐫ\":\"ᐁᐠ\",\"ᐑ\":\"ᐄ·\",\"ᐓ\":\"ᐅ·\",\"ᐭ\":\"ᐅᐠ\",\"ᐕ\":\"ᐆ·\",\"ᐘ\":\"ᐊ·\",\"ᐮ\":\"ᐊᐠ\",\"ᐚ\":\"ᐋ·\",\"ᣝ\":\"ᐞᣟ\",\"ᓑ\":\"ᐡ\",\"ᕀ\":\"ᐩ\",\"ᐿ\":\"ᐲ·\",\"ᑃ\":\"ᐴ·\",\"⍩\":\"ᐵ\",\"ᑇ\":\"ᐹ·\",\"ᑜ\":\"ᑏ·\",\"⸧\":\"ᑐ\",\"⊃\":\"ᑐ\",\"ᑞ\":\"ᑐ·\",\"ᑩ\":\"ᑐ'\",\"⟉\":\"ᑐ/\",\"⫗\":\"ᑐᑕ\",\"ᑠ\":\"ᑑ·\",\"⸦\":\"ᑕ\",\"⊂\":\"ᑕ\",\"ᑢ\":\"ᑕ·\",\"ᑪ\":\"ᑕ'\",\"ᑤ\":\"ᑖ·\",\"ᑵ\":\"ᑫ·\",\"ᒅ\":\"ᑫ'\",\"ᑹ\":\"ᑮ·\",\"ᑽ\":\"ᑰ·\",\"ᘃ\":\"ᒉ\",\"ᒓ\":\"ᒉ·\",\"ᒕ\":\"ᒋ·\",\"ᒗ\":\"ᒌ·\",\"ᒛ\":\"ᒎ·\",\"ᘂ\":\"ᒐ\",\"ᒝ\":\"ᒐ·\",\"ᒟ\":\"ᒑ·\",\"ᒭ\":\"ᒣ·\",\"ᒱ\":\"ᒦ·\",\"ᒳ\":\"ᒧ·\",\"ᒵ\":\"ᒨ·\",\"ᒹ\":\"ᒫ·\",\"ᓊ\":\"ᓀ·\",\"ᣇ\":\"ᓂ·\",\"ᣉ\":\"ᓃ·\",\"ᣋ\":\"ᓄ·\",\"ᣍ\":\"ᓅ·\",\"ᓌ\":\"ᓇ·\",\"ᓎ\":\"ᓈ·\",\"ᘄ\":\"ᓓ\",\"ᓝ\":\"ᓓ·\",\"ᓟ\":\"ᓕ·\",\"ᓡ\":\"ᓖ·\",\"ᓣ\":\"ᓗ·\",\"ᓥ\":\"ᓘ·\",\"ᘇ\":\"ᓚ\",\"ᓧ\":\"ᓚ·\",\"ᓩ\":\"ᓛ·\",\"ᓷ\":\"ᓭ·\",\"ᓹ\":\"ᓯ·\",\"ᓻ\":\"ᓰ·\",\"ᓽ\":\"ᓱ·\",\"ᓿ\":\"ᓲ·\",\"ᔁ\":\"ᓴ·\",\"ᔃ\":\"ᓵ·\",\"ᔌ\":\"ᔋ<\",\"ᔎ\":\"ᔋb\",\"ᔍ\":\"ᔋᑕ\",\"ᔏ\":\"ᔋᒐ\",\"ᔘ\":\"ᔐ·\",\"ᔚ\":\"ᔑ·\",\"ᔜ\":\"ᔒ·\",\"ᔞ\":\"ᔓ·\",\"ᔠ\":\"ᔔ·\",\"ᔢ\":\"ᔕ·\",\"ᔤ\":\"ᔖ·\",\"ᔲ\":\"ᔨ·\",\"ᔴ\":\"ᔩ·\",\"ᔶ\":\"ᔪ·\",\"ᔸ\":\"ᔫ·\",\"ᔺ\":\"ᔭ·\",\"ᔼ\":\"ᔮ·\",\"ᘢ\":\"ᕃ\",\"ᣠ\":\"ᕃ·\",\"ᘣ\":\"ᕆ\",\"ᘤ\":\"ᕊ\",\"ᕏ\":\"ᕌ·\",\"ᖃ\":\"ᕐb\",\"ᖄ\":\"ᕐḃ\",\"ᖁ\":\"ᕐd\",\"ᕿ\":\"ᕐP\",\"ᙯ\":\"ᕐᑫ\",\"ᕾ\":\"ᕐᑬ\",\"ᖀ\":\"ᕐᑮ\",\"ᖂ\":\"ᕐᑰ\",\"ᖅ\":\"ᕐᒃ\",\"ᕜ\":\"ᕚ·\",\"ᣣ\":\"ᕞ·\",\"ᣤ\":\"ᕦ·\",\"ᕩ\":\"ᕧ·\",\"ᣥ\":\"ᕫ·\",\"ᣨ\":\"ᖆ·\",\"ᖑ\":\"ᖕJ\",\"ᙰ\":\"ᖕᒉ\",\"ᖎ\":\"ᖕᒊ\",\"ᖏ\":\"ᖕᒋ\",\"ᖐ\":\"ᖕᒌ\",\"ᖒ\":\"ᖕᒎ\",\"ᖓ\":\"ᖕᒐ\",\"ᖔ\":\"ᖕᒑ\",\"ᙳ\":\"ᖖJ\",\"ᙱ\":\"ᖖᒋ\",\"ᙲ\":\"ᖖᒌ\",\"ᙴ\":\"ᖖᒎ\",\"ᙵ\":\"ᖖᒐ\",\"ᙶ\":\"ᖖᒑ\",\"ᣪ\":\"ᖗ·\",\"ᙷ\":\"ᖧ·\",\"ᙸ\":\"ᖨ·\",\"ᙹ\":\"ᖩ·\",\"ᙺ\":\"ᖪ·\",\"ᙻ\":\"ᖫ·\",\"ᙼ\":\"ᖬ·\",\"ᙽ\":\"ᖭ·\",\"⪫\":\"ᗒ\",\"⪪\":\"ᗕ\",\"ꓷ\":\"ᗡ\",\"ᣰ\":\"ᗴ·\",\"ᣲ\":\"ᘛ·\",\"ᶻ\":\"ᙆ\",\"ꓭ\":\"ᙠ\",\"ᶺ\":\"ᣔ\",\"ᴾ\":\"ᣖ\",\"ᣜ\":\"ᣟᐞ\",\"ˡ\":\"ᣳ\",\"ʳ\":\"ᣴ\",\"ˢ\":\"ᣵ\",\"ᣛ\":\"ᣵ\",\"ꚰ\":\"ᚹ\",\"ᛡ\":\"ᚼ\",\"⍿\":\"ᚽ\",\"ᛂ\":\"ᚽ\",\"𝈿\":\"ᛋ\",\"↑\":\"ᛏ\",\"↿\":\"ᛐ\",\"⥮\":\"ᛐ⇂\",\"⥣\":\"ᛐᛚ\",\"ⵣ\":\"ᛯ\",\"↾\":\"ᛚ\",\"⨡\":\"ᛚ\",\"⋄\":\"ᛜ\",\"◇\":\"ᛜ\",\"◊\":\"ᛜ\",\"♢\":\"ᛜ\",\"🝔\":\"ᛜ\",\"𑢷\":\"ᛜ\",\"𐊔\":\"ᛜ\",\"⍚\":\"ᛜ̲\",\"⋈\":\"ᛞ\",\"⨝\":\"ᛞ\",\"𐓐\":\"ᛦ\",\"↕\":\"ᛨ\",\"𐳼\":\"𐲂\",\"𐳺\":\"𐲥\",\"ㄱ\":\"ᄀ\",\"ᆨ\":\"ᄀ\",\"ᄁ\":\"ᄀᄀ\",\"ㄲ\":\"ᄀᄀ\",\"ᆩ\":\"ᄀᄀ\",\"ᇺ\":\"ᄀᄂ\",\"ᅚ\":\"ᄀᄃ\",\"ᇃ\":\"ᄀᄅ\",\"ᇻ\":\"ᄀᄇ\",\"ᆪ\":\"ᄀᄉ\",\"ㄳ\":\"ᄀᄉ\",\"ᇄ\":\"ᄀᄉᄀ\",\"ᇼ\":\"ᄀᄎ\",\"ᇽ\":\"ᄀᄏ\",\"ᇾ\":\"ᄀᄒ\",\"ㄴ\":\"ᄂ\",\"ᆫ\":\"ᄂ\",\"ᄓ\":\"ᄂᄀ\",\"ᇅ\":\"ᄂᄀ\",\"ᄔ\":\"ᄂᄂ\",\"ㅥ\":\"ᄂᄂ\",\"ᇿ\":\"ᄂᄂ\",\"ᄕ\":\"ᄂᄃ\",\"ㅦ\":\"ᄂᄃ\",\"ᇆ\":\"ᄂᄃ\",\"ퟋ\":\"ᄂᄅ\",\"ᄖ\":\"ᄂᄇ\",\"ᅛ\":\"ᄂᄉ\",\"ᇇ\":\"ᄂᄉ\",\"ㅧ\":\"ᄂᄉ\",\"ᅜ\":\"ᄂᄌ\",\"ᆬ\":\"ᄂᄌ\",\"ㄵ\":\"ᄂᄌ\",\"ퟌ\":\"ᄂᄎ\",\"ᇉ\":\"ᄂᄐ\",\"ᅝ\":\"ᄂᄒ\",\"ᆭ\":\"ᄂᄒ\",\"ㄶ\":\"ᄂᄒ\",\"ᇈ\":\"ᄂᅀ\",\"ㅨ\":\"ᄂᅀ\",\"ㄷ\":\"ᄃ\",\"ᆮ\":\"ᄃ\",\"ᄗ\":\"ᄃᄀ\",\"ᇊ\":\"ᄃᄀ\",\"ᄄ\":\"ᄃᄃ\",\"ㄸ\":\"ᄃᄃ\",\"ퟍ\":\"ᄃᄃ\",\"ퟎ\":\"ᄃᄃᄇ\",\"ᅞ\":\"ᄃᄅ\",\"ᇋ\":\"ᄃᄅ\",\"ꥠ\":\"ᄃᄆ\",\"ꥡ\":\"ᄃᄇ\",\"ퟏ\":\"ᄃᄇ\",\"ꥢ\":\"ᄃᄉ\",\"ퟐ\":\"ᄃᄉ\",\"ퟑ\":\"ᄃᄉᄀ\",\"ꥣ\":\"ᄃᄌ\",\"ퟒ\":\"ᄃᄌ\",\"ퟓ\":\"ᄃᄎ\",\"ퟔ\":\"ᄃᄐ\",\"ㄹ\":\"ᄅ\",\"ᆯ\":\"ᄅ\",\"ꥤ\":\"ᄅᄀ\",\"ᆰ\":\"ᄅᄀ\",\"ㄺ\":\"ᄅᄀ\",\"ꥥ\":\"ᄅᄀᄀ\",\"ퟕ\":\"ᄅᄀᄀ\",\"ᇌ\":\"ᄅᄀᄉ\",\"ㅩ\":\"ᄅᄀᄉ\",\"ퟖ\":\"ᄅᄀᄒ\",\"ᄘ\":\"ᄅᄂ\",\"ᇍ\":\"ᄅᄂ\",\"ꥦ\":\"ᄅᄃ\",\"ᇎ\":\"ᄅᄃ\",\"ㅪ\":\"ᄅᄃ\",\"ꥧ\":\"ᄅᄃᄃ\",\"ᇏ\":\"ᄅᄃᄒ\",\"ᄙ\":\"ᄅᄅ\",\"ᇐ\":\"ᄅᄅ\",\"ퟗ\":\"ᄅᄅᄏ\",\"ꥨ\":\"ᄅᄆ\",\"ᆱ\":\"ᄅᄆ\",\"ㄻ\":\"ᄅᄆ\",\"ᇑ\":\"ᄅᄆᄀ\",\"ᇒ\":\"ᄅᄆᄉ\",\"ퟘ\":\"ᄅᄆᄒ\",\"ꥩ\":\"ᄅᄇ\",\"ᆲ\":\"ᄅᄇ\",\"ㄼ\":\"ᄅᄇ\",\"ퟙ\":\"ᄅᄇᄃ\",\"ꥪ\":\"ᄅᄇᄇ\",\"ᇓ\":\"ᄅᄇᄉ\",\"ㅫ\":\"ᄅᄇᄉ\",\"ꥫ\":\"ᄅᄇᄋ\",\"ᇕ\":\"ᄅᄇᄋ\",\"ퟚ\":\"ᄅᄇᄑ\",\"ᇔ\":\"ᄅᄇᄒ\",\"ꥬ\":\"ᄅᄉ\",\"ᆳ\":\"ᄅᄉ\",\"ㄽ\":\"ᄅᄉ\",\"ᇖ\":\"ᄅᄉᄉ\",\"ᄛ\":\"ᄅᄋ\",\"ퟝ\":\"ᄅᄋ\",\"ꥭ\":\"ᄅᄌ\",\"ꥮ\":\"ᄅᄏ\",\"ᇘ\":\"ᄅᄏ\",\"ᆴ\":\"ᄅᄐ\",\"ㄾ\":\"ᄅᄐ\",\"ᆵ\":\"ᄅᄑ\",\"ㄿ\":\"ᄅᄑ\",\"ᄚ\":\"ᄅᄒ\",\"ㅀ\":\"ᄅᄒ\",\"ᄻ\":\"ᄅᄒ\",\"ᆶ\":\"ᄅᄒ\",\"ퟲ\":\"ᄅᄒ\",\"ᇗ\":\"ᄅᅀ\",\"ㅬ\":\"ᄅᅀ\",\"ퟛ\":\"ᄅᅌ\",\"ᇙ\":\"ᄅᅙ\",\"ㅭ\":\"ᄅᅙ\",\"ퟜ\":\"ᄅᅙᄒ\",\"ㅁ\":\"ᄆ\",\"ᆷ\":\"ᄆ\",\"ꥯ\":\"ᄆᄀ\",\"ᇚ\":\"ᄆᄀ\",\"ퟞ\":\"ᄆᄂ\",\"ퟟ\":\"ᄆᄂᄂ\",\"ꥰ\":\"ᄆᄃ\",\"ᇛ\":\"ᄆᄅ\",\"ퟠ\":\"ᄆᄆ\",\"ᄜ\":\"ᄆᄇ\",\"ㅮ\":\"ᄆᄇ\",\"ᇜ\":\"ᄆᄇ\",\"ퟡ\":\"ᄆᄇᄉ\",\"ꥱ\":\"ᄆᄉ\",\"ᇝ\":\"ᄆᄉ\",\"ㅯ\":\"ᄆᄉ\",\"ᇞ\":\"ᄆᄉᄉ\",\"ᄝ\":\"ᄆᄋ\",\"ㅱ\":\"ᄆᄋ\",\"ᇢ\":\"ᄆᄋ\",\"ퟢ\":\"ᄆᄌ\",\"ᇠ\":\"ᄆᄎ\",\"ᇡ\":\"ᄆᄒ\",\"ᇟ\":\"ᄆᅀ\",\"ㅰ\":\"ᄆᅀ\",\"ㅂ\":\"ᄇ\",\"ᆸ\":\"ᄇ\",\"ᄞ\":\"ᄇᄀ\",\"ㅲ\":\"ᄇᄀ\",\"ᄟ\":\"ᄇᄂ\",\"ᄠ\":\"ᄇᄃ\",\"ㅳ\":\"ᄇᄃ\",\"ퟣ\":\"ᄇᄃ\",\"ᇣ\":\"ᄇᄅ\",\"ퟤ\":\"ᄇᄅᄑ\",\"ퟥ\":\"ᄇᄆ\",\"ᄈ\":\"ᄇᄇ\",\"ㅃ\":\"ᄇᄇ\",\"ퟦ\":\"ᄇᄇ\",\"ᄬ\":\"ᄇᄇᄋ\",\"ㅹ\":\"ᄇᄇᄋ\",\"ᄡ\":\"ᄇᄉ\",\"ㅄ\":\"ᄇᄉ\",\"ᆹ\":\"ᄇᄉ\",\"ᄢ\":\"ᄇᄉᄀ\",\"ㅴ\":\"ᄇᄉᄀ\",\"ᄣ\":\"ᄇᄉᄃ\",\"ㅵ\":\"ᄇᄉᄃ\",\"ퟧ\":\"ᄇᄉᄃ\",\"ᄤ\":\"ᄇᄉᄇ\",\"ᄥ\":\"ᄇᄉᄉ\",\"ᄦ\":\"ᄇᄉᄌ\",\"ꥲ\":\"ᄇᄉᄐ\",\"ᄫ\":\"ᄇᄋ\",\"ㅸ\":\"ᄇᄋ\",\"ᇦ\":\"ᄇᄋ\",\"ᄧ\":\"ᄇᄌ\",\"ㅶ\":\"ᄇᄌ\",\"ퟨ\":\"ᄇᄌ\",\"ᄨ\":\"ᄇᄎ\",\"ퟩ\":\"ᄇᄎ\",\"ꥳ\":\"ᄇᄏ\",\"ᄩ\":\"ᄇᄐ\",\"ㅷ\":\"ᄇᄐ\",\"ᄪ\":\"ᄇᄑ\",\"ᇤ\":\"ᄇᄑ\",\"ꥴ\":\"ᄇᄒ\",\"ᇥ\":\"ᄇᄒ\",\"ㅅ\":\"ᄉ\",\"ᆺ\":\"ᄉ\",\"ᄭ\":\"ᄉᄀ\",\"ㅺ\":\"ᄉᄀ\",\"ᇧ\":\"ᄉᄀ\",\"ᄮ\":\"ᄉᄂ\",\"ㅻ\":\"ᄉᄂ\",\"ᄯ\":\"ᄉᄃ\",\"ㅼ\":\"ᄉᄃ\",\"ᇨ\":\"ᄉᄃ\",\"ᄰ\":\"ᄉᄅ\",\"ᇩ\":\"ᄉᄅ\",\"ᄱ\":\"ᄉᄆ\",\"ퟪ\":\"ᄉᄆ\",\"ᄲ\":\"ᄉᄇ\",\"ㅽ\":\"ᄉᄇ\",\"ᇪ\":\"ᄉᄇ\",\"ᄳ\":\"ᄉᄇᄀ\",\"ퟫ\":\"ᄉᄇᄋ\",\"ᄊ\":\"ᄉᄉ\",\"ㅆ\":\"ᄉᄉ\",\"ᆻ\":\"ᄉᄉ\",\"ퟬ\":\"ᄉᄉᄀ\",\"ퟭ\":\"ᄉᄉᄃ\",\"ꥵ\":\"ᄉᄉᄇ\",\"ᄴ\":\"ᄉᄉᄉ\",\"ᄵ\":\"ᄉᄋ\",\"ᄶ\":\"ᄉᄌ\",\"ㅾ\":\"ᄉᄌ\",\"ퟯ\":\"ᄉᄌ\",\"ᄷ\":\"ᄉᄎ\",\"ퟰ\":\"ᄉᄎ\",\"ᄸ\":\"ᄉᄏ\",\"ᄹ\":\"ᄉᄐ\",\"ퟱ\":\"ᄉᄐ\",\"ᄺ\":\"ᄉᄑ\",\"ퟮ\":\"ᄉᅀ\",\"ㅇ\":\"ᄋ\",\"ᆼ\":\"ᄋ\",\"ᅁ\":\"ᄋᄀ\",\"ᇬ\":\"ᄋᄀ\",\"ᇭ\":\"ᄋᄀᄀ\",\"ᅂ\":\"ᄋᄃ\",\"ꥶ\":\"ᄋᄅ\",\"ᅃ\":\"ᄋᄆ\",\"ᅄ\":\"ᄋᄇ\",\"ᅅ\":\"ᄋᄉ\",\"ᇱ\":\"ᄋᄉ\",\"ㆂ\":\"ᄋᄉ\",\"ᅇ\":\"ᄋᄋ\",\"ㆀ\":\"ᄋᄋ\",\"ᇮ\":\"ᄋᄋ\",\"ᅈ\":\"ᄋᄌ\",\"ᅉ\":\"ᄋᄎ\",\"ᇯ\":\"ᄋᄏ\",\"ᅊ\":\"ᄋᄐ\",\"ᅋ\":\"ᄋᄑ\",\"ꥷ\":\"ᄋᄒ\",\"ᅆ\":\"ᄋᅀ\",\"ᇲ\":\"ᄋᅀ\",\"ㆃ\":\"ᄋᅀ\",\"ㅈ\":\"ᄌ\",\"ᆽ\":\"ᄌ\",\"ퟷ\":\"ᄌᄇ\",\"ퟸ\":\"ᄌᄇᄇ\",\"ᅍ\":\"ᄌᄋ\",\"ᄍ\":\"ᄌᄌ\",\"ㅉ\":\"ᄌᄌ\",\"ퟹ\":\"ᄌᄌ\",\"ꥸ\":\"ᄌᄌᄒ\",\"ㅊ\":\"ᄎ\",\"ᆾ\":\"ᄎ\",\"ᅒ\":\"ᄎᄏ\",\"ᅓ\":\"ᄎᄒ\",\"ㅋ\":\"ᄏ\",\"ᆿ\":\"ᄏ\",\"ㅌ\":\"ᄐ\",\"ᇀ\":\"ᄐ\",\"ꥹ\":\"ᄐᄐ\",\"ㅍ\":\"ᄑ\",\"ᇁ\":\"ᄑ\",\"ᅖ\":\"ᄑᄇ\",\"ᇳ\":\"ᄑᄇ\",\"ퟺ\":\"ᄑᄉ\",\"ᅗ\":\"ᄑᄋ\",\"ㆄ\":\"ᄑᄋ\",\"ᇴ\":\"ᄑᄋ\",\"ퟻ\":\"ᄑᄐ\",\"ꥺ\":\"ᄑᄒ\",\"ㅎ\":\"ᄒ\",\"ᇂ\":\"ᄒ\",\"ᇵ\":\"ᄒᄂ\",\"ᇶ\":\"ᄒᄅ\",\"ᇷ\":\"ᄒᄆ\",\"ᇸ\":\"ᄒᄇ\",\"ꥻ\":\"ᄒᄉ\",\"ᅘ\":\"ᄒᄒ\",\"ㆅ\":\"ᄒᄒ\",\"ᄽ\":\"ᄼᄼ\",\"ᄿ\":\"ᄾᄾ\",\"ㅿ\":\"ᅀ\",\"ᇫ\":\"ᅀ\",\"ퟳ\":\"ᅀᄇ\",\"ퟴ\":\"ᅀᄇᄋ\",\"ㆁ\":\"ᅌ\",\"ᇰ\":\"ᅌ\",\"ퟵ\":\"ᅌᄆ\",\"ퟶ\":\"ᅌᄒ\",\"ᅏ\":\"ᅎᅎ\",\"ᅑ\":\"ᅐᅐ\",\"ㆆ\":\"ᅙ\",\"ᇹ\":\"ᅙ\",\"ꥼ\":\"ᅙᅙ\",\"ㅤ\":\"ᅠ\",\"ㅏ\":\"ᅡ\",\"ᆣ\":\"ᅡー\",\"ᅶ\":\"ᅡᅩ\",\"ᅷ\":\"ᅡᅮ\",\"ᅢ\":\"ᅡ丨\",\"ㅐ\":\"ᅡ丨\",\"ㅑ\":\"ᅣ\",\"ᅸ\":\"ᅣᅩ\",\"ᅹ\":\"ᅣᅭ\",\"ᆤ\":\"ᅣᅮ\",\"ᅤ\":\"ᅣ丨\",\"ㅒ\":\"ᅣ丨\",\"ㅓ\":\"ᅥ\",\"ᅼ\":\"ᅥー\",\"ᅺ\":\"ᅥᅩ\",\"ᅻ\":\"ᅥᅮ\",\"ᅦ\":\"ᅥ丨\",\"ㅔ\":\"ᅥ丨\",\"ㅕ\":\"ᅧ\",\"ᆥ\":\"ᅧᅣ\",\"ᅽ\":\"ᅧᅩ\",\"ᅾ\":\"ᅧᅮ\",\"ᅨ\":\"ᅧ丨\",\"ㅖ\":\"ᅧ丨\",\"ㅗ\":\"ᅩ\",\"ᅪ\":\"ᅩᅡ\",\"ㅘ\":\"ᅩᅡ\",\"ᅫ\":\"ᅩᅡ丨\",\"ㅙ\":\"ᅩᅡ丨\",\"ᆦ\":\"ᅩᅣ\",\"ᆧ\":\"ᅩᅣ丨\",\"ᅿ\":\"ᅩᅥ\",\"ᆀ\":\"ᅩᅥ丨\",\"ힰ\":\"ᅩᅧ\",\"ᆁ\":\"ᅩᅧ丨\",\"ᆂ\":\"ᅩᅩ\",\"ힱ\":\"ᅩᅩ丨\",\"ᆃ\":\"ᅩᅮ\",\"ᅬ\":\"ᅩ丨\",\"ㅚ\":\"ᅩ丨\",\"ㅛ\":\"ᅭ\",\"ힲ\":\"ᅭᅡ\",\"ힳ\":\"ᅭᅡ丨\",\"ᆄ\":\"ᅭᅣ\",\"ㆇ\":\"ᅭᅣ\",\"ᆆ\":\"ᅭᅣ\",\"ᆅ\":\"ᅭᅣ丨\",\"ㆈ\":\"ᅭᅣ丨\",\"ힴ\":\"ᅭᅥ\",\"ᆇ\":\"ᅭᅩ\",\"ᆈ\":\"ᅭ丨\",\"ㆉ\":\"ᅭ丨\",\"ㅜ\":\"ᅮ\",\"ᆉ\":\"ᅮᅡ\",\"ᆊ\":\"ᅮᅡ丨\",\"ᅯ\":\"ᅮᅥ\",\"ㅝ\":\"ᅮᅥ\",\"ᆋ\":\"ᅮᅥー\",\"ᅰ\":\"ᅮᅥ丨\",\"ㅞ\":\"ᅮᅥ丨\",\"ힵ\":\"ᅮᅧ\",\"ᆌ\":\"ᅮᅧ丨\",\"ᆍ\":\"ᅮᅮ\",\"ᅱ\":\"ᅮ丨\",\"ㅟ\":\"ᅮ丨\",\"ힶ\":\"ᅮ丨丨\",\"ㅠ\":\"ᅲ\",\"ᆎ\":\"ᅲᅡ\",\"ힷ\":\"ᅲᅡ丨\",\"ᆏ\":\"ᅲᅥ\",\"ᆐ\":\"ᅲᅥ丨\",\"ᆑ\":\"ᅲᅧ\",\"ㆊ\":\"ᅲᅧ\",\"ᆒ\":\"ᅲᅧ丨\",\"ㆋ\":\"ᅲᅧ丨\",\"ힸ\":\"ᅲᅩ\",\"ᆓ\":\"ᅲᅮ\",\"ᆔ\":\"ᅲ丨\",\"ㆌ\":\"ᅲ丨\",\"ㆍ\":\"ᆞ\",\"ퟅ\":\"ᆞᅡ\",\"ᆟ\":\"ᆞᅥ\",\"ퟆ\":\"ᆞᅥ丨\",\"ᆠ\":\"ᆞᅮ\",\"ᆢ\":\"ᆞᆞ\",\"ᆡ\":\"ᆞ丨\",\"ㆎ\":\"ᆞ丨\",\"ヘ\":\"へ\",\"⍁\":\"〼\",\"⧄\":\"〼\",\"꒞\":\"ꁊ\",\"꒬\":\"ꁐ\",\"꒜\":\"ꃀ\",\"꒨\":\"ꄲ\",\"꒿\":\"ꉙ\",\"꒾\":\"ꊱ\",\"꒔\":\"ꋍ\",\"꓀\":\"ꎫ\",\"꓂\":\"ꎵ\",\"꒺\":\"ꎿ\",\"꒰\":\"ꏂ\",\"꒧\":\"ꑘ\",\"⊥\":\"ꓕ\",\"⟂\":\"ꓕ\",\"𝈜\":\"ꓕ\",\"Ʇ\":\"ꓕ\",\"Ꞟ\":\"ꓤ\",\"⅁\":\"ꓨ\",\"⅂\":\"ꓶ\",\"𝈕\":\"ꓶ\",\"𝈫\":\"ꓶ\",\"𖼦\":\"ꓶ\",\"𐐑\":\"ꓶ\",\"⅃\":\"𖼀\",\"𑫦\":\"𑫥𑫯\",\"𑫨\":\"𑫥𑫥\",\"𑫩\":\"𑫥𑫥𑫯\",\"𑫪\":\"𑫥𑫥𑫰\",\"𑫧\":\"𑫥𑫰\",\"𑫴\":\"𑫳𑫯\",\"𑫶\":\"𑫳𑫳\",\"𑫷\":\"𑫳𑫳𑫯\",\"𑫸\":\"𑫳𑫳𑫰\",\"𑫵\":\"𑫳𑫰\",\"𑫬\":\"𑫫𑫯\",\"𑫭\":\"𑫫𑫫\",\"𑫮\":\"𑫫𑫫𑫯\",\"⊕\":\"𐊨\",\"⨁\":\"𐊨\",\"🜨\":\"𐊨\",\"Ꚛ\":\"𐊨\",\"▽\":\"𐊼\",\"𝈔\":\"𐊼\",\"🜄\":\"𐊼\",\"⧖\":\"𐋀\",\"ꞛ\":\"𐐺\",\"Ꞛ\":\"𐐒\",\"𐒠\":\"𐒆\",\"𐏑\":\"𐎂\",\"𐏓\":\"𐎓\",\"𒀸\":\"𐎚\",\"☥\":\"𐦞\",\"𓋹\":\"𐦞\",\"〹\":\"卄\",\"不\":\"不\",\"丽\":\"丽\",\"並\":\"並\",\"⎜\":\"丨\",\"⎟\":\"丨\",\"⎢\":\"丨\",\"⎥\":\"丨\",\"⎪\":\"丨\",\"⎮\":\"丨\",\"㇑\":\"丨\",\"ᅵ\":\"丨\",\"ㅣ\":\"丨\",\"⼁\":\"丨\",\"ᆜ\":\"丨ー\",\"ᆘ\":\"丨ᅡ\",\"ᆙ\":\"丨ᅣ\",\"ힽ\":\"丨ᅣᅩ\",\"ힾ\":\"丨ᅣ丨\",\"ힿ\":\"丨ᅧ\",\"ퟀ\":\"丨ᅧ丨\",\"ᆚ\":\"丨ᅩ\",\"ퟁ\":\"丨ᅩ丨\",\"ퟂ\":\"丨ᅭ\",\"ᆛ\":\"丨ᅮ\",\"ퟃ\":\"丨ᅲ\",\"ᆝ\":\"丨ᆞ\",\"ퟄ\":\"丨丨\",\"串\":\"串\",\"丸\":\"丸\",\"丹\":\"丹\",\"乁\":\"乁\",\"㇠\":\"乙\",\"⼄\":\"乙\",\"㇟\":\"乚\",\"⺃\":\"乚\",\"㇖\":\"乛\",\"⺂\":\"乛\",\"⻲\":\"亀\",\"亂\":\"亂\",\"㇚\":\"亅\",\"⼅\":\"亅\",\"了\":\"了\",\"ニ\":\"二\",\"⼆\":\"二\",\"𠄢\":\"𠄢\",\"⼇\":\"亠\",\"亮\":\"亮\",\"⼈\":\"人\",\"イ\":\"亻\",\"⺅\":\"亻\",\"什\":\"什\",\"仌\":\"仌\",\"令\":\"令\",\"你\":\"你\",\"倂\":\"併\",\"倂\":\"併\",\"侀\":\"侀\",\"來\":\"來\",\"例\":\"例\",\"侮\":\"侮\",\"侮\":\"侮\",\"侻\":\"侻\",\"便\":\"便\",\"值\":\"値\",\"倫\":\"倫\",\"偺\":\"偺\",\"備\":\"備\",\"像\":\"像\",\"僚\":\"僚\",\"僧\":\"僧\",\"僧\":\"僧\",\"㒞\":\"㒞\",\"⼉\":\"儿\",\"兀\":\"兀\",\"⺎\":\"兀\",\"充\":\"充\",\"免\":\"免\",\"免\":\"免\",\"兔\":\"兔\",\"兤\":\"兤\",\"⼊\":\"入\",\"內\":\"內\",\"全\":\"全\",\"兩\":\"兩\",\"ハ\":\"八\",\"⼋\":\"八\",\"六\":\"六\",\"具\":\"具\",\"𠔜\":\"𠔜\",\"𠔥\":\"𠔥\",\"冀\":\"冀\",\"㒹\":\"㒹\",\"⼌\":\"冂\",\"再\":\"再\",\"𠕋\":\"𠕋\",\"冒\":\"冒\",\"冕\":\"冕\",\"㒻\":\"㒻\",\"最\":\"最\",\"⼍\":\"冖\",\"冗\":\"冗\",\"冤\":\"冤\",\"⼎\":\"冫\",\"冬\":\"冬\",\"况\":\"况\",\"况\":\"况\",\"冷\":\"冷\",\"凉\":\"凉\",\"凌\":\"凌\",\"凜\":\"凜\",\"凞\":\"凞\",\"⼏\":\"几\",\"𠘺\":\"𠘺\",\"凵\":\"凵\",\"⼐\":\"凵\",\"⼑\":\"刀\",\"⺉\":\"刂\",\"刃\":\"刃\",\"切\":\"切\",\"切\":\"切\",\"列\":\"列\",\"利\":\"利\",\"㓟\":\"㓟\",\"刺\":\"刺\",\"刻\":\"刻\",\"剆\":\"剆\",\"割\":\"割\",\"剷\":\"剷\",\"劉\":\"劉\",\"𠠄\":\"𠠄\",\"カ\":\"力\",\"力\":\"力\",\"⼒\":\"力\",\"劣\":\"劣\",\"㔕\":\"㔕\",\"劳\":\"劳\",\"勇\":\"勇\",\"勇\":\"勇\",\"勉\":\"勉\",\"勉\":\"勉\",\"勒\":\"勒\",\"勞\":\"勞\",\"勤\":\"勤\",\"勤\":\"勤\",\"勵\":\"勵\",\"⼓\":\"勹\",\"勺\":\"勺\",\"勺\":\"勺\",\"包\":\"包\",\"匆\":\"匆\",\"𠣞\":\"𠣞\",\"⼔\":\"匕\",\"北\":\"北\",\"北\":\"北\",\"⼕\":\"匚\",\"⼖\":\"匸\",\"匿\":\"匿\",\"⼗\":\"十\",\"〸\":\"十\",\"〺\":\"卅\",\"卉\":\"卉\",\"࿖\":\"卍\",\"࿕\":\"卐\",\"卑\":\"卑\",\"卑\":\"卑\",\"博\":\"博\",\"ト\":\"卜\",\"⼘\":\"卜\",\"⼙\":\"卩\",\"⺋\":\"㔾\",\"即\":\"即\",\"卵\":\"卵\",\"卽\":\"卽\",\"卿\":\"卿\",\"卿\":\"卿\",\"卿\":\"卿\",\"⼚\":\"厂\",\"𠨬\":\"𠨬\",\"⼛\":\"厶\",\"參\":\"參\",\"⼜\":\"又\",\"及\":\"及\",\"叟\":\"叟\",\"𠭣\":\"𠭣\",\"ロ\":\"口\",\"⼝\":\"口\",\"囗\":\"口\",\"⼞\":\"口\",\"句\":\"句\",\"叫\":\"叫\",\"叱\":\"叱\",\"吆\":\"吆\",\"吏\":\"吏\",\"吝\":\"吝\",\"吸\":\"吸\",\"呂\":\"呂\",\"呈\":\"呈\",\"周\":\"周\",\"咞\":\"咞\",\"咢\":\"咢\",\"咽\":\"咽\",\"䎛\":\"㖈\",\"哶\":\"哶\",\"唐\":\"唐\",\"啓\":\"啓\",\"啟\":\"啓\",\"啕\":\"啕\",\"啣\":\"啣\",\"善\":\"善\",\"善\":\"善\",\"喇\":\"喇\",\"喙\":\"喙\",\"喙\":\"喙\",\"喝\":\"喝\",\"喝\":\"喝\",\"喫\":\"喫\",\"喳\":\"喳\",\"嗀\":\"嗀\",\"嗂\":\"嗂\",\"嗢\":\"嗢\",\"嘆\":\"嘆\",\"嘆\":\"嘆\",\"噑\":\"噑\",\"噴\":\"噴\",\"器\":\"器\",\"囹\":\"囹\",\"圖\":\"圖\",\"圗\":\"圗\",\"⼟\":\"土\",\"士\":\"土\",\"⼠\":\"土\",\"型\":\"型\",\"城\":\"城\",\"㦳\":\"㘽\",\"埴\":\"埴\",\"堍\":\"堍\",\"報\":\"報\",\"堲\":\"堲\",\"塀\":\"塀\",\"塚\":\"塚\",\"塚\":\"塚\",\"塞\":\"塞\",\"填\":\"塡\",\"壿\":\"墫\",\"墬\":\"墬\",\"墳\":\"墳\",\"壘\":\"壘\",\"壟\":\"壟\",\"𡓤\":\"𡓤\",\"壮\":\"壮\",\"売\":\"売\",\"壷\":\"壷\",\"⼡\":\"夂\",\"夆\":\"夆\",\"⼢\":\"夊\",\"タ\":\"夕\",\"⼣\":\"夕\",\"多\":\"多\",\"夢\":\"夢\",\"⼤\":\"大\",\"奄\":\"奄\",\"奈\":\"奈\",\"契\":\"契\",\"奔\":\"奔\",\"奢\":\"奢\",\"女\":\"女\",\"⼥\":\"女\",\"𡚨\":\"𡚨\",\"𡛪\":\"𡛪\",\"姘\":\"姘\",\"姬\":\"姬\",\"娛\":\"娛\",\"娧\":\"娧\",\"婢\":\"婢\",\"婦\":\"婦\",\"嬀\":\"媯\",\"㛮\":\"㛮\",\"㛼\":\"㛼\",\"媵\":\"媵\",\"嬈\":\"嬈\",\"嬨\":\"嬨\",\"嬾\":\"嬾\",\"嬾\":\"嬾\",\"⼦\":\"子\",\"⼧\":\"宀\",\"宅\":\"宅\",\"𡧈\":\"𡧈\",\"寃\":\"寃\",\"寘\":\"寘\",\"寧\":\"寧\",\"寧\":\"寧\",\"寧\":\"寧\",\"寮\":\"寮\",\"寳\":\"寳\",\"𡬘\":\"𡬘\",\"⼨\":\"寸\",\"寿\":\"寿\",\"将\":\"将\",\"⼩\":\"小\",\"尢\":\"尢\",\"⺐\":\"尢\",\"⼪\":\"尢\",\"⺏\":\"尣\",\"㞁\":\"㞁\",\"⼫\":\"尸\",\"尿\":\"尿\",\"屠\":\"屠\",\"屢\":\"屢\",\"層\":\"層\",\"履\":\"履\",\"屮\":\"屮\",\"屮\":\"屮\",\"⼬\":\"屮\",\"𡴋\":\"𡴋\",\"⼭\":\"山\",\"峀\":\"峀\",\"岍\":\"岍\",\"𡷤\":\"𡷤\",\"𡷦\":\"𡷦\",\"崙\":\"崙\",\"嵃\":\"嵃\",\"嵐\":\"嵐\",\"嵫\":\"嵫\",\"嵮\":\"嵮\",\"嵼\":\"嵼\",\"嶲\":\"嶲\",\"嶺\":\"嶺\",\"⼮\":\"巛\",\"巢\":\"巢\",\"エ\":\"工\",\"⼯\":\"工\",\"⼰\":\"己\",\"⺒\":\"巳\",\"㠯\":\"㠯\",\"巽\":\"巽\",\"⼱\":\"巾\",\"帲\":\"帡\",\"帨\":\"帨\",\"帽\":\"帽\",\"幩\":\"幩\",\"㡢\":\"㡢\",\"𢆃\":\"𢆃\",\"⼲\":\"干\",\"年\":\"年\",\"𢆟\":\"𢆟\",\"⺓\":\"幺\",\"⼳\":\"幺\",\"⼴\":\"广\",\"度\":\"度\",\"㡼\":\"㡼\",\"庰\":\"庰\",\"庳\":\"庳\",\"庶\":\"庶\",\"廊\":\"廊\",\"廊\":\"廊\",\"廉\":\"廉\",\"廒\":\"廒\",\"廓\":\"廓\",\"廙\":\"廙\",\"廬\":\"廬\",\"⼵\":\"廴\",\"廾\":\"廾\",\"⼶\":\"廾\",\"𢌱\":\"𢌱\",\"𢌱\":\"𢌱\",\"弄\":\"弄\",\"⼷\":\"弋\",\"⼸\":\"弓\",\"弢\":\"弢\",\"弢\":\"弢\",\"⼹\":\"彐\",\"⺔\":\"彑\",\"当\":\"当\",\"㣇\":\"㣇\",\"⼺\":\"彡\",\"形\":\"形\",\"彩\":\"彩\",\"彫\":\"彫\",\"⼻\":\"彳\",\"律\":\"律\",\"㣣\":\"㣣\",\"徚\":\"徚\",\"復\":\"復\",\"徭\":\"徭\",\"⼼\":\"心\",\"⺖\":\"忄\",\"⺗\":\"㣺\",\"忍\":\"忍\",\"志\":\"志\",\"念\":\"念\",\"忹\":\"忹\",\"怒\":\"怒\",\"怜\":\"怜\",\"恵\":\"恵\",\"㤜\":\"㤜\",\"㤺\":\"㤺\",\"悁\":\"悁\",\"悔\":\"悔\",\"悔\":\"悔\",\"惇\":\"惇\",\"惘\":\"惘\",\"惡\":\"惡\",\"𢛔\":\"𢛔\",\"愈\":\"愈\",\"慨\":\"慨\",\"慄\":\"慄\",\"慈\":\"慈\",\"慌\":\"慌\",\"慌\":\"慌\",\"慎\":\"慎\",\"慎\":\"慎\",\"慠\":\"慠\",\"慺\":\"慺\",\"憎\":\"憎\",\"憎\":\"憎\",\"憎\":\"憎\",\"憐\":\"憐\",\"憤\":\"憤\",\"憯\":\"憯\",\"憲\":\"憲\",\"𢡄\":\"𢡄\",\"𢡊\":\"𢡊\",\"懞\":\"懞\",\"懲\":\"懲\",\"懲\":\"懲\",\"懲\":\"懲\",\"懶\":\"懶\",\"懶\":\"懶\",\"戀\":\"戀\",\"⼽\":\"戈\",\"成\":\"成\",\"戛\":\"戛\",\"戮\":\"戮\",\"戴\":\"戴\",\"⼾\":\"戶\",\"戸\":\"戶\",\"⼿\":\"手\",\"⺘\":\"扌\",\"扝\":\"扝\",\"抱\":\"抱\",\"拉\":\"拉\",\"拏\":\"拏\",\"拓\":\"拓\",\"拔\":\"拔\",\"拼\":\"拼\",\"拾\":\"拾\",\"𢬌\":\"𢬌\",\"挽\":\"挽\",\"捐\":\"捐\",\"捨\":\"捨\",\"捻\":\"捻\",\"掃\":\"掃\",\"掠\":\"掠\",\"掩\":\"掩\",\"揄\":\"揄\",\"揤\":\"揤\",\"摒\":\"摒\",\"𢯱\":\"𢯱\",\"搜\":\"搜\",\"搢\":\"搢\",\"揅\":\"揅\",\"摩\":\"摩\",\"摷\":\"摷\",\"摾\":\"摾\",\"㨮\":\"㨮\",\"搉\":\"㩁\",\"撚\":\"撚\",\"撝\":\"撝\",\"擄\":\"擄\",\"㩬\":\"㩬\",\"⽀\":\"支\",\"⽁\":\"攴\",\"⺙\":\"攵\",\"敏\":\"敏\",\"敏\":\"敏\",\"敖\":\"敖\",\"敬\":\"敬\",\"數\":\"數\",\"𣀊\":\"𣀊\",\"⽂\":\"文\",\"⻫\":\"斉\",\"⽃\":\"斗\",\"料\":\"料\",\"⽄\":\"斤\",\"⽅\":\"方\",\"旅\":\"旅\",\"⽆\":\"无\",\"⺛\":\"旡\",\"既\":\"既\",\"旣\":\"旣\",\"⽇\":\"日\",\"易\":\"易\",\"曶\":\"㫚\",\"㫤\":\"㫤\",\"晉\":\"晉\",\"晩\":\"晚\",\"晴\":\"晴\",\"晴\":\"晴\",\"暑\":\"暑\",\"暑\":\"暑\",\"暈\":\"暈\",\"㬈\":\"㬈\",\"暜\":\"暜\",\"暴\":\"暴\",\"曆\":\"曆\",\"㬙\":\"㬙\",\"𣊸\":\"𣊸\",\"⽈\":\"曰\",\"更\":\"更\",\"書\":\"書\",\"⽉\":\"月\",\"𣍟\":\"𣍟\",\"肦\":\"朌\",\"胐\":\"朏\",\"胊\":\"朐\",\"脁\":\"朓\",\"胶\":\"㬵\",\"朗\":\"朗\",\"朗\":\"朗\",\"朗\":\"朗\",\"脧\":\"朘\",\"望\":\"望\",\"望\":\"望\",\"幐\":\"㬺\",\"䐠\":\"㬻\",\"𣎓\":\"𣎓\",\"膧\":\"朣\",\"𣎜\":\"𣎜\",\"⽊\":\"木\",\"李\":\"李\",\"杓\":\"杓\",\"杖\":\"杖\",\"杞\":\"杞\",\"𣏃\":\"𣏃\",\"柿\":\"杮\",\"杻\":\"杻\",\"枅\":\"枅\",\"林\":\"林\",\"㭉\":\"㭉\",\"𣏕\":\"𣏕\",\"柳\":\"柳\",\"柺\":\"柺\",\"栗\":\"栗\",\"栟\":\"栟\",\"桒\":\"桒\",\"𣑭\":\"𣑭\",\"梁\":\"梁\",\"梅\":\"梅\",\"梅\":\"梅\",\"梎\":\"梎\",\"梨\":\"梨\",\"椔\":\"椔\",\"楂\":\"楂\",\"㮝\":\"㮝\",\"㮝\":\"㮝\",\"槩\":\"㮣\",\"樧\":\"榝\",\"榣\":\"榣\",\"槪\":\"槪\",\"樂\":\"樂\",\"樂\":\"樂\",\"樂\":\"樂\",\"樓\":\"樓\",\"𣚣\":\"𣚣\",\"檨\":\"檨\",\"櫓\":\"櫓\",\"櫛\":\"櫛\",\"欄\":\"欄\",\"㰘\":\"㰘\",\"⽋\":\"欠\",\"次\":\"次\",\"𣢧\":\"𣢧\",\"歔\":\"歔\",\"㱎\":\"㱎\",\"⽌\":\"止\",\"⻭\":\"歯\",\"歲\":\"歲\",\"歷\":\"歷\",\"歹\":\"歹\",\"⽍\":\"歹\",\"⺞\":\"歺\",\"殟\":\"殟\",\"殮\":\"殮\",\"⽎\":\"殳\",\"殺\":\"殺\",\"殺\":\"殺\",\"殺\":\"殺\",\"殻\":\"殻\",\"𣪍\":\"𣪍\",\"⽏\":\"毋\",\"⺟\":\"母\",\"𣫺\":\"𣫺\",\"⽐\":\"比\",\"⽑\":\"毛\",\"⽒\":\"氏\",\"⺠\":\"民\",\"⽓\":\"气\",\"⽔\":\"水\",\"⺡\":\"氵\",\"⺢\":\"氺\",\"汎\":\"汎\",\"汧\":\"汧\",\"沈\":\"沈\",\"沿\":\"沿\",\"泌\":\"泌\",\"泍\":\"泍\",\"泥\":\"泥\",\"𣲼\":\"𣲼\",\"洛\":\"洛\",\"洞\":\"洞\",\"洴\":\"洴\",\"派\":\"派\",\"流\":\"流\",\"流\":\"流\",\"流\":\"流\",\"洖\":\"洖\",\"浩\":\"浩\",\"浪\":\"浪\",\"海\":\"海\",\"海\":\"海\",\"浸\":\"浸\",\"涅\":\"涅\",\"𣴞\":\"𣴞\",\"淋\":\"淋\",\"淚\":\"淚\",\"淪\":\"淪\",\"淹\":\"淹\",\"渚\":\"渚\",\"港\":\"港\",\"湮\":\"湮\",\"潙\":\"溈\",\"滋\":\"滋\",\"滋\":\"滋\",\"溜\":\"溜\",\"溺\":\"溺\",\"滇\":\"滇\",\"滑\":\"滑\",\"滛\":\"滛\",\"㴳\":\"㴳\",\"漏\":\"漏\",\"漢\":\"漢\",\"漢\":\"漢\",\"漣\":\"漣\",\"𣻑\":\"𣻑\",\"潮\":\"潮\",\"𣽞\":\"𣽞\",\"𣾎\":\"𣾎\",\"濆\":\"濆\",\"濫\":\"濫\",\"濾\":\"濾\",\"瀛\":\"瀛\",\"瀞\":\"瀞\",\"瀞\":\"瀞\",\"瀹\":\"瀹\",\"灊\":\"灊\",\"㶖\":\"㶖\",\"⽕\":\"火\",\"⺣\":\"灬\",\"灰\":\"灰\",\"灷\":\"灷\",\"災\":\"災\",\"炙\":\"炙\",\"炭\":\"炭\",\"烈\":\"烈\",\"烙\":\"烙\",\"煮\":\"煮\",\"煮\":\"煮\",\"𤉣\":\"𤉣\",\"煅\":\"煅\",\"煉\":\"煉\",\"𤋮\":\"𤋮\",\"熜\":\"熜\",\"燎\":\"燎\",\"燐\":\"燐\",\"𤎫\":\"𤎫\",\"爐\":\"爐\",\"爛\":\"爛\",\"爨\":\"爨\",\"⽖\":\"爪\",\"爫\":\"爫\",\"⺤\":\"爫\",\"爵\":\"爵\",\"爵\":\"爵\",\"⽗\":\"父\",\"⽘\":\"爻\",\"⺦\":\"丬\",\"⽙\":\"爿\",\"⽚\":\"片\",\"牐\":\"牐\",\"⽛\":\"牙\",\"𤘈\":\"𤘈\",\"⽜\":\"牛\",\"牢\":\"牢\",\"犀\":\"犀\",\"犕\":\"犕\",\"⽝\":\"犬\",\"⺨\":\"犭\",\"犯\":\"犯\",\"狀\":\"狀\",\"𤜵\":\"𤜵\",\"狼\":\"狼\",\"猪\":\"猪\",\"猪\":\"猪\",\"𤠔\":\"𤠔\",\"獵\":\"獵\",\"獺\":\"獺\",\"⽞\":\"玄\",\"率\":\"率\",\"率\":\"率\",\"⽟\":\"玉\",\"王\":\"王\",\"㺬\":\"㺬\",\"玥\":\"玥\",\"玲\":\"玲\",\"㺸\":\"㺸\",\"㺸\":\"㺸\",\"珞\":\"珞\",\"琉\":\"琉\",\"理\":\"理\",\"琢\":\"琢\",\"瑇\":\"瑇\",\"瑜\":\"瑜\",\"瑩\":\"瑩\",\"瑱\":\"瑱\",\"瑱\":\"瑱\",\"璅\":\"璅\",\"璉\":\"璉\",\"璘\":\"璘\",\"瓊\":\"瓊\",\"⽠\":\"瓜\",\"⽡\":\"瓦\",\"㼛\":\"㼛\",\"甆\":\"甆\",\"⽢\":\"甘\",\"⽣\":\"生\",\"甤\":\"甤\",\"⽤\":\"用\",\"⽥\":\"田\",\"画\":\"画\",\"甾\":\"甾\",\"𤰶\":\"𤰶\",\"留\":\"留\",\"略\":\"略\",\"異\":\"異\",\"異\":\"異\",\"𤲒\":\"𤲒\",\"⽦\":\"疋\",\"⽧\":\"疒\",\"痢\":\"痢\",\"瘐\":\"瘐\",\"瘟\":\"瘟\",\"瘝\":\"瘝\",\"療\":\"療\",\"癩\":\"癩\",\"⽨\":\"癶\",\"⽩\":\"白\",\"𤾡\":\"𤾡\",\"𤾸\":\"𤾸\",\"⽪\":\"皮\",\"⽫\":\"皿\",\"𥁄\":\"𥁄\",\"㿼\":\"㿼\",\"益\":\"益\",\"益\":\"益\",\"盛\":\"盛\",\"盧\":\"盧\",\"䀈\":\"䀈\",\"⽬\":\"目\",\"直\":\"直\",\"直\":\"直\",\"𥃲\":\"𥃲\",\"𥃳\":\"𥃳\",\"省\":\"省\",\"䀘\":\"䀘\",\"𥄙\":\"𥄙\",\"眞\":\"眞\",\"真\":\"真\",\"真\":\"真\",\"𥄳\":\"𥄳\",\"着\":\"着\",\"睊\":\"睊\",\"睊\":\"睊\",\"鿃\":\"䀹\",\"䀹\":\"䀹\",\"䀹\":\"䀹\",\"晣\":\"䀿\",\"䁆\":\"䁆\",\"瞋\":\"瞋\",\"𥉉\":\"𥉉\",\"瞧\":\"瞧\",\"⽭\":\"矛\",\"⽮\":\"矢\",\"⽯\":\"石\",\"䂖\":\"䂖\",\"𥐝\":\"𥐝\",\"硏\":\"研\",\"硎\":\"硎\",\"硫\":\"硫\",\"碌\":\"碌\",\"碌\":\"碌\",\"碑\":\"碑\",\"磊\":\"磊\",\"磌\":\"磌\",\"磌\":\"磌\",\"磻\":\"磻\",\"䃣\":\"䃣\",\"礪\":\"礪\",\"⽰\":\"示\",\"⺭\":\"礻\",\"礼\":\"礼\",\"社\":\"社\",\"祈\":\"祈\",\"祉\":\"祉\",\"𥘦\":\"𥘦\",\"祐\":\"祐\",\"祖\":\"祖\",\"祖\":\"祖\",\"祝\":\"祝\",\"神\":\"神\",\"祥\":\"祥\",\"視\":\"視\",\"視\":\"視\",\"祿\":\"祿\",\"𥚚\":\"𥚚\",\"禍\":\"禍\",\"禎\":\"禎\",\"福\":\"福\",\"福\":\"福\",\"𥛅\":\"𥛅\",\"禮\":\"禮\",\"⽱\":\"禸\",\"⽲\":\"禾\",\"秊\":\"秊\",\"䄯\":\"䄯\",\"秫\":\"秫\",\"稜\":\"稜\",\"穊\":\"穊\",\"穀\":\"穀\",\"穀\":\"穀\",\"穏\":\"穏\",\"⽳\":\"穴\",\"突\":\"突\",\"𥥼\":\"𥥼\",\"窱\":\"窱\",\"立\":\"立\",\"⽴\":\"立\",\"⻯\":\"竜\",\"𥪧\":\"𥪧\",\"𥪧\":\"𥪧\",\"竮\":\"竮\",\"⽵\":\"竹\",\"笠\":\"笠\",\"節\":\"節\",\"節\":\"節\",\"䈂\":\"䈂\",\"𥮫\":\"𥮫\",\"篆\":\"篆\",\"䈧\":\"䈧\",\"築\":\"築\",\"𥲀\":\"𥲀\",\"𥳐\":\"𥳐\",\"簾\":\"簾\",\"籠\":\"籠\",\"⽶\":\"米\",\"类\":\"类\",\"粒\":\"粒\",\"精\":\"精\",\"糒\":\"糒\",\"糖\":\"糖\",\"糨\":\"糨\",\"䊠\":\"䊠\",\"糣\":\"糣\",\"糧\":\"糧\",\"⽷\":\"糸\",\"⺯\":\"糹\",\"𥾆\":\"𥾆\",\"紀\":\"紀\",\"紐\":\"紐\",\"索\":\"索\",\"累\":\"累\",\"絶\":\"絕\",\"絣\":\"絣\",\"絛\":\"絛\",\"綠\":\"綠\",\"綾\":\"綾\",\"緇\":\"緇\",\"練\":\"練\",\"練\":\"練\",\"練\":\"練\",\"縂\":\"縂\",\"䌁\":\"䌁\",\"縉\":\"縉\",\"縷\":\"縷\",\"繁\":\"繁\",\"繅\":\"繅\",\"𦇚\":\"𦇚\",\"䌴\":\"䌴\",\"⽸\":\"缶\",\"𦈨\":\"𦈨\",\"缾\":\"缾\",\"𦉇\":\"𦉇\",\"⽹\":\"网\",\"⺫\":\"罒\",\"⺲\":\"罒\",\"⺱\":\"罓\",\"䍙\":\"䍙\",\"署\":\"署\",\"𦋙\":\"𦋙\",\"罹\":\"罹\",\"罺\":\"罺\",\"羅\":\"羅\",\"𦌾\":\"𦌾\",\"⽺\":\"羊\",\"羕\":\"羕\",\"羚\":\"羚\",\"羽\":\"羽\",\"⽻\":\"羽\",\"翺\":\"翺\",\"老\":\"老\",\"⽼\":\"老\",\"⺹\":\"耂\",\"者\":\"者\",\"者\":\"者\",\"者\":\"者\",\"⽽\":\"而\",\"𦓚\":\"𦓚\",\"⽾\":\"耒\",\"𦔣\":\"𦔣\",\"⽿\":\"耳\",\"聆\":\"聆\",\"聠\":\"聠\",\"𦖨\":\"𦖨\",\"聯\":\"聯\",\"聰\":\"聰\",\"聾\":\"聾\",\"⾀\":\"聿\",\"⺺\":\"肀\",\"⾁\":\"肉\",\"肋\":\"肋\",\"肭\":\"肭\",\"育\":\"育\",\"䏕\":\"䏕\",\"䏙\":\"䏙\",\"腁\":\"胼\",\"脃\":\"脃\",\"脾\":\"脾\",\"䐋\":\"䐋\",\"朡\":\"朡\",\"𦞧\":\"𦞧\",\"𦞵\":\"𦞵\",\"朦\":\"䑃\",\"臘\":\"臘\",\"⾂\":\"臣\",\"臨\":\"臨\",\"⾃\":\"自\",\"臭\":\"臭\",\"⾄\":\"至\",\"⾅\":\"臼\",\"舁\":\"舁\",\"舁\":\"舁\",\"舄\":\"舄\",\"⾆\":\"舌\",\"舘\":\"舘\",\"⾇\":\"舛\",\"⾈\":\"舟\",\"䑫\":\"䑫\",\"⾉\":\"艮\",\"良\":\"良\",\"⾊\":\"色\",\"⾋\":\"艸\",\"艹\":\"艹\",\"艹\":\"艹\",\"⺾\":\"艹\",\"⺿\":\"艹\",\"⻀\":\"艹\",\"芋\":\"芋\",\"芑\":\"芑\",\"芝\":\"芝\",\"花\":\"花\",\"芳\":\"芳\",\"芽\":\"芽\",\"若\":\"若\",\"若\":\"若\",\"苦\":\"苦\",\"𦬼\":\"𦬼\",\"茶\":\"茶\",\"荒\":\"荒\",\"荣\":\"荣\",\"茝\":\"茝\",\"茣\":\"茣\",\"莽\":\"莽\",\"荓\":\"荓\",\"菉\":\"菉\",\"菊\":\"菊\",\"菌\":\"菌\",\"菜\":\"菜\",\"菧\":\"菧\",\"華\":\"華\",\"菱\":\"菱\",\"著\":\"著\",\"著\":\"著\",\"𦰶\":\"𦰶\",\"莭\":\"莭\",\"落\":\"落\",\"葉\":\"葉\",\"蔿\":\"蒍\",\"𦳕\":\"𦳕\",\"𦵫\":\"𦵫\",\"蓮\":\"蓮\",\"蓱\":\"蓱\",\"蓳\":\"蓳\",\"蓼\":\"蓼\",\"蔖\":\"蔖\",\"䔫\":\"䔫\",\"蕤\":\"蕤\",\"𦼬\":\"𦼬\",\"藍\":\"藍\",\"䕝\":\"䕝\",\"𦾱\":\"𦾱\",\"䕡\":\"䕡\",\"藺\":\"藺\",\"蘆\":\"蘆\",\"䕫\":\"䕫\",\"蘒\":\"蘒\",\"蘭\":\"蘭\",\"𧃒\":\"𧃒\",\"虁\":\"蘷\",\"蘿\":\"蘿\",\"⾌\":\"虍\",\"⻁\":\"虎\",\"虐\":\"虐\",\"虜\":\"虜\",\"虜\":\"虜\",\"虧\":\"虧\",\"虩\":\"虩\",\"⾍\":\"虫\",\"蚩\":\"蚩\",\"蚈\":\"蚈\",\"蛢\":\"蛢\",\"蜎\":\"蜎\",\"蜨\":\"蜨\",\"蝫\":\"蝫\",\"蟡\":\"蟡\",\"蝹\":\"蝹\",\"蝹\":\"蝹\",\"螆\":\"螆\",\"䗗\":\"䗗\",\"𧏊\":\"𧏊\",\"螺\":\"螺\",\"蠁\":\"蠁\",\"䗹\":\"䗹\",\"蠟\":\"蠟\",\"⾎\":\"血\",\"行\":\"行\",\"⾏\":\"行\",\"衠\":\"衠\",\"衣\":\"衣\",\"⾐\":\"衣\",\"⻂\":\"衤\",\"裂\":\"裂\",\"𧙧\":\"𧙧\",\"裏\":\"裏\",\"裗\":\"裗\",\"裞\":\"裞\",\"裡\":\"裡\",\"裸\":\"裸\",\"裺\":\"裺\",\"䘵\":\"䘵\",\"褐\":\"褐\",\"襁\":\"襁\",\"襤\":\"襤\",\"⾑\":\"襾\",\"⻄\":\"西\",\"⻃\":\"覀\",\"覆\":\"覆\",\"見\":\"見\",\"⾒\":\"見\",\"𧢮\":\"𧢮\",\"⻅\":\"见\",\"⾓\":\"角\",\"⾔\":\"言\",\"𧥦\":\"𧥦\",\"詽\":\"訮\",\"訞\":\"䚶\",\"䚾\":\"䚾\",\"䛇\":\"䛇\",\"誠\":\"誠\",\"說\":\"說\",\"說\":\"說\",\"調\":\"調\",\"請\":\"請\",\"諒\":\"諒\",\"論\":\"論\",\"諭\":\"諭\",\"諭\":\"諭\",\"諸\":\"諸\",\"諸\":\"諸\",\"諾\":\"諾\",\"諾\":\"諾\",\"謁\":\"謁\",\"謁\":\"謁\",\"謹\":\"謹\",\"謹\":\"謹\",\"識\":\"識\",\"讀\":\"讀\",\"讏\":\"讆\",\"變\":\"變\",\"變\":\"變\",\"⻈\":\"讠\",\"⾕\":\"谷\",\"⾖\":\"豆\",\"豈\":\"豈\",\"豕\":\"豕\",\"⾗\":\"豕\",\"豣\":\"豜\",\"⾘\":\"豸\",\"𧲨\":\"𧲨\",\"⾙\":\"貝\",\"貫\":\"貫\",\"賁\":\"賁\",\"賂\":\"賂\",\"賈\":\"賈\",\"賓\":\"賓\",\"贈\":\"贈\",\"贈\":\"贈\",\"贛\":\"贛\",\"⻉\":\"贝\",\"⾚\":\"赤\",\"⾛\":\"走\",\"起\":\"起\",\"趆\":\"赿\",\"𧻓\":\"𧻓\",\"𧼯\":\"𧼯\",\"⾜\":\"足\",\"跋\":\"跋\",\"趼\":\"趼\",\"跺\":\"跥\",\"路\":\"路\",\"跰\":\"跰\",\"躛\":\"躗\",\"⾝\":\"身\",\"車\":\"車\",\"⾞\":\"車\",\"軔\":\"軔\",\"輧\":\"軿\",\"輦\":\"輦\",\"輪\":\"輪\",\"輸\":\"輸\",\"輸\":\"輸\",\"輻\":\"輻\",\"轢\":\"轢\",\"⻋\":\"车\",\"⾟\":\"辛\",\"辞\":\"辞\",\"辰\":\"辰\",\"⾠\":\"辰\",\"⾡\":\"辵\",\"辶\":\"辶\",\"⻌\":\"辶\",\"⻍\":\"辶\",\"巡\":\"巡\",\"連\":\"連\",\"逸\":\"逸\",\"逸\":\"逸\",\"遲\":\"遲\",\"遼\":\"遼\",\"𨗒\":\"𨗒\",\"𨗭\":\"𨗭\",\"邏\":\"邏\",\"⾢\":\"邑\",\"邔\":\"邔\",\"郎\":\"郎\",\"郞\":\"郎\",\"郞\":\"郎\",\"郱\":\"郱\",\"都\":\"都\",\"𨜮\":\"𨜮\",\"鄑\":\"鄑\",\"鄛\":\"鄛\",\"⾣\":\"酉\",\"酪\":\"酪\",\"醙\":\"醙\",\"醴\":\"醴\",\"⾤\":\"釆\",\"里\":\"里\",\"⾥\":\"里\",\"量\":\"量\",\"金\":\"金\",\"⾦\":\"金\",\"鈴\":\"鈴\",\"鈸\":\"鈸\",\"鉶\":\"鉶\",\"鋗\":\"鋗\",\"鋘\":\"鋘\",\"鉼\":\"鉼\",\"錄\":\"錄\",\"鍊\":\"鍊\",\"鎮\":\"鎭\",\"鏹\":\"鏹\",\"鐕\":\"鐕\",\"𨯺\":\"𨯺\",\"⻐\":\"钅\",\"⻑\":\"長\",\"⾧\":\"長\",\"⻒\":\"镸\",\"⻓\":\"长\",\"⾨\":\"門\",\"開\":\"開\",\"䦕\":\"䦕\",\"閭\":\"閭\",\"閷\":\"閷\",\"𨵷\":\"𨵷\",\"⻔\":\"门\",\"⾩\":\"阜\",\"⻏\":\"阝\",\"⻖\":\"阝\",\"阮\":\"阮\",\"陋\":\"陋\",\"降\":\"降\",\"陵\":\"陵\",\"陸\":\"陸\",\"陼\":\"陼\",\"隆\":\"隆\",\"隣\":\"隣\",\"䧦\":\"䧦\",\"⾪\":\"隶\",\"隷\":\"隷\",\"隸\":\"隷\",\"隸\":\"隷\",\"⾫\":\"隹\",\"雃\":\"雃\",\"離\":\"離\",\"難\":\"難\",\"難\":\"難\",\"⾬\":\"雨\",\"零\":\"零\",\"雷\":\"雷\",\"霣\":\"霣\",\"𩅅\":\"𩅅\",\"露\":\"露\",\"靈\":\"靈\",\"⾭\":\"靑\",\"⻘\":\"青\",\"靖\":\"靖\",\"靖\":\"靖\",\"𩇟\":\"𩇟\",\"⾮\":\"非\",\"⾯\":\"面\",\"𩈚\":\"𩈚\",\"⾰\":\"革\",\"䩮\":\"䩮\",\"䩶\":\"䩶\",\"⾱\":\"韋\",\"韛\":\"韛\",\"韠\":\"韠\",\"⻙\":\"韦\",\"⾲\":\"韭\",\"𩐊\":\"𩐊\",\"⾳\":\"音\",\"響\":\"響\",\"響\":\"響\",\"⾴\":\"頁\",\"䪲\":\"䪲\",\"頋\":\"頋\",\"頋\":\"頋\",\"頋\":\"頋\",\"領\":\"領\",\"頩\":\"頩\",\"𩒖\":\"𩒖\",\"頻\":\"頻\",\"頻\":\"頻\",\"類\":\"類\",\"⻚\":\"页\",\"⾵\":\"風\",\"𩖶\":\"𩖶\",\"⻛\":\"风\",\"⾶\":\"飛\",\"⻜\":\"飞\",\"⻝\":\"食\",\"⾷\":\"食\",\"⻟\":\"飠\",\"飢\":\"飢\",\"飯\":\"飯\",\"飼\":\"飼\",\"䬳\":\"䬳\",\"館\":\"館\",\"餩\":\"餩\",\"⻠\":\"饣\",\"⾸\":\"首\",\"⾹\":\"香\",\"馧\":\"馧\",\"⾺\":\"馬\",\"駂\":\"駂\",\"駱\":\"駱\",\"駾\":\"駾\",\"驪\":\"驪\",\"⻢\":\"马\",\"⾻\":\"骨\",\"䯎\":\"䯎\",\"⾼\":\"高\",\"⾽\":\"髟\",\"𩬰\":\"𩬰\",\"鬒\":\"鬒\",\"鬒\":\"鬒\",\"⾾\":\"鬥\",\"⾿\":\"鬯\",\"⿀\":\"鬲\",\"⿁\":\"鬼\",\"⻤\":\"鬼\",\"⿂\":\"魚\",\"魯\":\"魯\",\"鱀\":\"鱀\",\"鱗\":\"鱗\",\"⻥\":\"鱼\",\"⿃\":\"鳥\",\"鳽\":\"鳽\",\"䳎\":\"䳎\",\"鵧\":\"鵧\",\"䳭\":\"䳭\",\"𪃎\":\"𪃎\",\"鶴\":\"鶴\",\"𪄅\":\"𪄅\",\"䳸\":\"䳸\",\"鷺\":\"鷺\",\"𪈎\":\"𪈎\",\"鸞\":\"鸞\",\"鹃\":\"鹂\",\"⿄\":\"鹵\",\"鹿\":\"鹿\",\"⿅\":\"鹿\",\"𪊑\":\"𪊑\",\"麗\":\"麗\",\"麟\":\"麟\",\"⿆\":\"麥\",\"⻨\":\"麦\",\"麻\":\"麻\",\"⿇\":\"麻\",\"𪎒\":\"𪎒\",\"⿈\":\"黃\",\"⻩\":\"黄\",\"⿉\":\"黍\",\"黎\":\"黎\",\"䵖\":\"䵖\",\"⿊\":\"黑\",\"黒\":\"黑\",\"墨\":\"墨\",\"黹\":\"黹\",\"⿋\":\"黹\",\"⿌\":\"黽\",\"鼅\":\"鼅\",\"黾\":\"黾\",\"⿍\":\"鼎\",\"鼏\":\"鼏\",\"⿎\":\"鼓\",\"鼖\":\"鼖\",\"⿏\":\"鼠\",\"鼻\":\"鼻\",\"⿐\":\"鼻\",\"齃\":\"齃\",\"⿑\":\"齊\",\"⻬\":\"齐\",\"⿒\":\"齒\",\"𪘀\":\"𪘀\",\"⻮\":\"齿\",\"龍\":\"龍\",\"⿓\":\"龍\",\"龎\":\"龎\",\"⻰\":\"龙\",\"龜\":\"龜\",\"龜\":\"龜\",\"龜\":\"龜\",\"⿔\":\"龜\",\"⻳\":\"龟\",\"⿕\":\"龠\"}");
+
+/***/ }),
+
+/***/ "6e3c":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_7221e80e_scoped_true_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("1e09");
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_7221e80e_scoped_true_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_7221e80e_scoped_true_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_7221e80e_scoped_true_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_7221e80e_scoped_true_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+
+
+/***/ }),
+
+/***/ "6e67":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SettingsContainer_vue_vue_type_style_index_0_id_64f4fef6_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("d071");
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SettingsContainer_vue_vue_type_style_index_0_id_64f4fef6_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SettingsContainer_vue_vue_type_style_index_0_id_64f4fef6_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SettingsContainer_vue_vue_type_style_index_0_id_64f4fef6_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SettingsContainer_vue_vue_type_style_index_0_id_64f4fef6_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+
 
 /***/ }),
 
@@ -51548,6 +53167,24 @@ exports.push([module.i, "", ""]);
 // Exports
 module.exports = exports;
 
+
+/***/ }),
+
+/***/ "6ed4":
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__("ec59");
+if(content.__esModule) content = content.default;
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add CSS to Shadow Root
+var add = __webpack_require__("35d6").default
+module.exports.__inject__ = function (shadowRoot) {
+  add("7c35a53d", content, shadowRoot)
+};
 
 /***/ }),
 
@@ -53650,7 +55287,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;(function() {
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "body{color:#02061a;background:rgb(var(--background-total-theme))}a{text-decoration:none}select{-moz-appearance:none!important;-webkit-appearance:none!important;appearance:none!important}input{outline:none}input:focus{border:10px}.unselectable{-webkit-touch-callout:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.loadinggradient{background:linear-gradient(-45deg,rgb(var(--background-secondary-theme)),rgb(var(--background-total-theme)),rgb(var(--background-main)));background-size:400% 400%;-webkit-animation:gradient 2s ease infinite;animation:gradient 2s ease infinite}.messagesLine{display:flex;justify-content:flex-start;align-items:center;margin:20px 0;transition:.3s}.circlePreview{width:22px;height:22px;margin:0 10px 0 0;background-color:#000;border-radius:50%;transition:.3s}.messageLine{margin:0 auto 0 0}.messageLine,.myMessageLine{border-radius:13px;height:34px;transition:.3s}.myMessageLine{margin:0 0 0 auto}.dg-container{font-family:Segoe UI Variable,Segoe UI,SegoeUI,Helvetica Neue,Helvetica,Arial,sans-serif}.dg-container .dg-main-content{padding:1.5em;border:0;border-radius:0;background:rgb(var(--background-total-theme));color:rgb(var(--text-color))}.dg-container .dg-content-footer{overflow:hidden}.dg-container .dg-content-footer button{margin-left:.5em;display:block;float:right;font-size:1em;font-weight:400;color:rgb(var(--color-bg-ac));background:transparent;border:1px solid transparent}.dg-container .dg-content-footer button.dg-pull-right{border:1px solid rgb(var(--color-bg-ac));background:rgb(var(--color-bg-ac));color:rgb(var(--text-on-bg-ac-color))}.dg-container .dg-content-body{border:0;padding-bottom:0}.dg-container .dg-content-body .dg-content{font-size:2em;font-weight:100}@-webkit-keyframes gradient{0%{background-position:0 50%}50%{background-position:100% 50%}to{background-position:0 50%}}@keyframes gradient{0%{background-position:0 50%}50%{background-position:100% 50%}to{background-position:0 50%}}mark{background-color:rgb(var(--color-bg-selection))!important}button.button{background:rgb(var(--color-bg-ac));border:1px solid rgb(var(--color-bg-ac));color:rgb(var(--text-on-bg-ac-color));padding:1em;text-align:center;transition:.3s;min-width:200px;cursor:pointer;outline:none;text-decoration:none}button.button.small{padding:.5em 1em;min-width:150px;font-size:.8em}button.button.good{background:rgb(var(--color-good));border:1px solid rgb(var(--color-good))}@media (pointer:fine){button.button.good:hover{background:rgba(var(--color-good),.9);color:rgb(var(--text-on-bg-ac-color))}}button.button.black{background:rgb(var(--neutral-grad-0));border:1px solid rgb(var(--neutral-grad-0));color:rgb(var(--neutral-grad-3))}@media (pointer:fine){button.button.black:hover{background:rgba(var(--neutral-grad-3),.9);color:rgb(var(--text-on-bg-ac-color))}}button.button.orange{background:rgb(var(--color-bg-orange));border:1px solid rgb(var(--color-bg-orange))}@media (pointer:fine){button.button.orange:hover{background:rgba(var(--color-bg-orange),.9);color:rgb(var(--text-on-bg-ac-color))}}button.button.round{width:44px;height:44px;border-radius:50%;font-size:.8em;min-width:0;padding:0;line-height:42px}button.button.rounded{border-radius:22px}button.button.border{font-size:.8em}button.button.border,button.button.ghost{background:transparent;color:rgb(var(--color-txt-ac))}button.button.ghost{border:1px solid transparent}@media (pointer:fine){button.button.ghost:hover{color:rgb(var(--color-txt-gray))}}@media (pointer:fine){button.button:hover{background:transparent;color:rgb(var(--color-txt-ac))}}button.button.underscored{text-decoration:underline}button.button.badbutton{background:transparent;border:1px solid transparent;font-weight:500;color:rgb(var(--color-bad))}button.button[disabled=disabled]{cursor:default}button.button[disabled=disabled],button.button[disabled=disabled]:hover{background:rgb(var(--neutral-grad-2));border-color:rgb(var(--neutral-grad-2))}button.button[disabled=disabled]:hover{color:#fff}.rootcontent.pip *{transform:none!important}.rootcontent.pip .js-player #vjs-forward-button,.rootcontent.pip .js-player #vjs-rewind-button,.rootcontent.pip .js-player .vjs-big-play-button,.rootcontent.pip .js-player .vjs-control-bar,.rootcontent.pip .js-player .vjs-overlay{display:none!important}.iconbuttonRound{width:44px;height:44px;line-height:42px;text-align:center;cursor:pointer;color:rgb(var(--color-txt-ac));font-size:.9em;border-radius:50%;transition:.3s}@media (pointer:fine){.iconbuttonRound:hover{color:rgb(var(--neutral-grad-4))}}.iconbuttonRound.second{background:rgb(var(--neutral-grad-2))}@media (pointer:fine){.iconbuttonRound.second:hover{color:rgb(var(--color-txt-ac))}}.iconbuttonRound.bright{color:rgb(var(--text-on-bg-ac-color));background:rgb(var(--color-txt-ac))}@media (pointer:fine){.iconbuttonRound.bright:hover{color:rgb(var(--color-txt-ac-1))}}.iconbuttonsmall{cursor:pointer;color:rgb(var(--color-txt-ac));text-align:center;transition:.3s}.iconbuttonsmall i{font-size:.8em}@media (pointer:fine){.iconbuttonsmall:hover{color:rgb(var(--neutral-grad-3))}}.iconbutton{cursor:pointer;color:rgb(var(--color-txt-ac));text-align:center;transition:.3s}@media (pointer:fine){.iconbutton:hover{color:rgb(var(--neutral-grad-3))}}.internalpocketnetlink a{cursor:pointer;display:block;text-align:center;padding:1.5em;font-size:.8em;background:rgba(var(--neutral-grad-2),.1);color:rgb(var(--neutral-grad-3));border-radius:5px}.rootcontent{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;font-family:Segoe UI Variable,Segoe UI,SegoeUI,Helvetica Neue,Helvetica,Arial,sans-serif;color:rgb(var(--text-color));font-size:1.1em}.rootcontent .dmdv{width:1px;height:1px;opacity:0;background:rgb(var(--background-total-theme))}.rootcontent.mobile,.rootcontent.unselect{-webkit-touch-callout:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.rootcontent *{scrollbar-width:none}.rootcontent ::-webkit-scrollbar{width:0!important}.rootcontent .backface{position:fixed;left:100%;top:100%;bottom:-1%;right:-1%;transition:background .3s;background:transparent}.rootcontent .chatwrapper,.rootcontent .chatwrapper .main-wrapper{position:absolute;left:0;right:0;top:0;bottom:0}.rootcontent.fix{font-size:.9em}.rootcontent.fix .chatwrapper{transition:.3s;position:fixed;width:340px;top:70px;left:auto;right:.5em;bottom:.5em;z-index:1000}.rootcontent.fix .likeoffline{bottom:103px}.rootcontent.fix.minimized #modal .work,.rootcontent.fix.minimized .page .work{transition:.3s}.rootcontent.fix.minimized .work{padding:0}.rootcontent.fix.minimized #modal .work{padding:0 .5em}.rootcontent.fix.minimized .chatwrapper{width:44px}.rootcontent.fix.minimized:not(.active) .likeoffline,.rootcontent.fix.minimized:not(.active) .offline{background:transparent}.rootcontent.fix.minimized:not(.active) .likeoffline .table>div .icon,.rootcontent.fix.minimized:not(.active) .offline .table>div .icon{font-size:.8em;padding:0}.rootcontent.fix.minimized.active .page .work{padding:0 .25em}.rootcontent.fix.minimized.active .backface{top:0;bottom:0;right:0;left:0}.rootcontent .likeoffline,.rootcontent .offline{color:rgb(var(--neutral-grad-1));background:rgb(var(--background-secondary-theme))}.rootcontent .likeoffline .table,.rootcontent .offline .table{width:100%;height:100%}.rootcontent .likeoffline .table>div,.rootcontent .offline .table>div{vertical-align:middle;text-align:center;padding-bottom:45%}.rootcontent .likeoffline .table>div .icon,.rootcontent .offline .table>div .icon{font-size:2.3em;padding:.5em;color:rgb(var(--color-bg-ac))}.rootcontent .likeoffline .table>div .label,.rootcontent .offline .table>div .label{font-size:1em;padding:0 4em}.rootcontent .likeoffline{background:transparent}.rootcontent .fixedallwrapper,.rootcontent .fixedallwrapperDisplayed,.rootcontent .preloaderWrapper{position:absolute;left:0;right:0;top:0;bottom:0;z-index:998;transition:.3s}.rootcontent .fixedallwrapperDisplayed{background:rgb(var(--background-total-theme))}.rootcontent .fixedOnPageBottom,.rootcontent .fixedOnPageTop{transition:.3s}.rootcontent .fade-in-right-enter-to .fixedallwrapper,.rootcontent .fade-in-right-enter-to .preloaderWrapper,.rootcontent .fade-in-right-enter .fixedallwrapper,.rootcontent .fade-in-right-enter .preloaderWrapper,.rootcontent .fade-in-right-leave-to .fixedallwrapper,.rootcontent .fade-in-right-leave-to .preloaderWrapper{opacity:0}.rootcontent .fade-in-right-enter-to .fixedOnPageBottom,.rootcontent .fade-in-right-enter .fixedOnPageBottom,.rootcontent .fade-in-right-leave-to .fixedOnPageBottom{opacity:0;bottom:-1.5em}.rootcontent .fade-in-right-enter-to .fixedOnPageTop,.rootcontent .fade-in-right-enter .fixedOnPageTop,.rootcontent .fade-in-right-leave-to .fixedOnPageTop{opacity:0;top:-1.5em}.rootcontent .content{padding-top:66px}.rootcontent .work{padding:0 .5em;margin:0 auto;max-width:640px}.rootcontent .pwork{max-width:640px;background:transparent;margin:0 auto;padding:0 4em}.rootcontent .effects{position:fixed;left:0;top:0;bottom:0;right:0;z-index:2020}.rootcontent .speechWrapper{position:fixed;left:0;bottom:0;padding-bottom:2em;right:0;z-index:2000;height:80px}.rootcontent .speechWrapper .speechAbsWrapper{position:relative;width:100%;height:100%}.rootcontent .emptyRec{padding:10em 2em;text-align:center;font-size:.8em}.rootcontent .enablevoice .forbutton{margin-top:2em}.table{display:table;table-layout:fixed;width:100%}.table>div{display:table-cell}.m-message-container.is-bottom-right{padding:0;right:56px;bottom:.75em;width:auto}.m-message-container.is-top-left{top:calc(.5em + var(--app-margin-top))}.notificationWrapper{display:block;max-width:none;font-family:Segoe UI Variable,Segoe UI,SegoeUI,Helvetica Neue,Helvetica,Arial,sans-serif}.notificationWrapper.m-message-wrapper+.m-message-wrapper{margin-top:.5em}.notificationWrapper .m-message{padding:.5em .5em;border:1px solid rgba(var(--neutral-grad-0),.9);border-radius:5px;box-shadow:none;background:rgb(var(--background-secondary-theme));font-size:1em}.notificationWrapper .m-message--title{font-weight:700;color:rgb(var(--color-txt-gray-dark));font-size:.8em}.notificationWrapper .m-message--title:first-letter{text-transform:capitalize}.notificationWrapper .m-message--description{margin-top:0}.notificationWrapper .m-message-content{flex-grow:1}.notificationWrapper .m-message-content .listPreview{cursor:pointer}.notificationWrapper .m-message-content .listPreview .invitedEvent{width:180px;text-overflow:ellipsis;white-space:nowrap;overflow:hidden;display:flex;justify-content:space-between;align-items:center}.notificationWrapper .m-message-content .listPreview .invitedEvent span{display:block;font-size:.8em}.notificationWrapper .m-message-content .listPreview .invitedEvent .txt{color:rgb(var(--color-txt-gray-dark))}.notificationWrapper .m-message-content .listPreview .invitedEvent .txtNew{color:rgb(var(--color-good))}.notificationWrapper .m-message-content .listPreview .linkPreview span:first-letter{text-transform:uppercase}.notificationWrapper .m-message-content .listPreview .linkPreview .senderName{font-weight:700;color:rgb(var(--color-txt-gray-dark))}.notificationWrapper .m-message-content .listPreview .linkPreview .linkTitle{color:#707070}.notificationWrapper .m-message-content .listPreview .linkPreview .pocketnetLink{color:rgb(var(--color-txt-gray-dark))}.notificationWrapper .m-message-content .listPreview .previewMessageList span{color:rgb(var(--color-txt-gray-dark));text-overflow:ellipsis;overflow:hidden;white-space:nowrap;text-align:left}.notificationWrapper .m-message-content .listPreview .previewMessage{display:flex;justify-content:flex-start;align-items:center;width:100%}.notificationWrapper .m-message-content .listPreview .previewMessage span{display:block;color:rgb(var(--color-txt-gray-dark));font-size:.8em;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;text-align:left;max-width:150px}.notificationWrapper .m-message-icons{float:none}.notificationWrapper .m-message--icon{display:block;vertical-align:top}.notificationWrapper .m-message--button.m-message--arrow-down{display:none}.is-top-left{padding:.5em}.is-top-left .notificationWrapper{width:100%;box-shadow:0 5px 7px -5px rgba(var(--color-shadow-base),.7)}@media only screen and (max-width:640px){#app{width:100%}#app .pwork{padding:0 .5em}#app .work{padding:0 .5em 10px}}.collapse{max-width:768px;margin:0 auto;position:relative;z-index:999;padding:.5em 0}.collapse .iconbutton{width:50px;margin-left:auto;color:grey}@media (pointer:fine){.collapse .iconbutton{opacity:.5}.collapse .iconbutton:hover{opacity:1}}.collapsed{display:flex;justify-content:space-between;padding:1em 0;max-width:768px;margin:auto}.angle{display:flex;justify-content:center;width:50px;cursor:pointer}.expand{margin-right:.5em}.bout .collapse{display:none}.resize-observer{position:absolute;right:-20000px}.pswp__img{-o-object-fit:contain;object-fit:contain}.vue-js-switch{display:inline-block;position:relative;vertical-align:middle;-webkit-user-select:none;-moz-user-select:none;user-select:none;font-size:10px;cursor:pointer}.vue-js-switch .v-switch-input{opacity:0;position:absolute;width:1px;height:1px}.vue-js-switch .v-switch-label{position:absolute;top:0;font-weight:600;color:#fff;z-index:1}.vue-js-switch .v-switch-label.v-left{left:10px}.vue-js-switch .v-switch-label.v-right{right:10px}.vue-js-switch .v-switch-core{display:block;position:relative;box-sizing:border-box;outline:0;margin:0;transition:border-color .3s,background-color .3s;-webkit-user-select:none;-moz-user-select:none;user-select:none}.vue-js-switch .v-switch-core .v-switch-button{display:block;position:absolute;overflow:hidden;top:0;left:0;border-radius:100%;background-color:rgb(var(--background-total-theme));z-index:2}.vue-js-switch.disabled{pointer-events:none;opacity:.6}", ""]);
+exports.push([module.i, "body{color:#02061a;background:rgb(var(--background-total-theme))}a{text-decoration:none}select{-moz-appearance:none!important;-webkit-appearance:none!important;appearance:none!important}input{outline:none}input:focus{border:10px}.unselectable{-webkit-touch-callout:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.loadinggradient{background:linear-gradient(-45deg,rgb(var(--background-secondary-theme)),rgb(var(--background-total-theme)),rgb(var(--background-main)));background-size:400% 400%;-webkit-animation:gradient 2s ease infinite;animation:gradient 2s ease infinite}.messagesLine{display:flex;justify-content:flex-start;align-items:center;margin:20px 0;transition:.3s}.circlePreview{width:22px;height:22px;margin:0 10px 0 0;background-color:#000;border-radius:50%;transition:.3s}.messageLine{margin:0 auto 0 0}.messageLine,.myMessageLine{border-radius:13px;height:34px;transition:.3s}.myMessageLine{margin:0 0 0 auto}.dg-container{font-family:Segoe UI Variable,Segoe UI,SegoeUI,Helvetica Neue,Helvetica,Arial,sans-serif}.dg-container .dg-main-content{padding:1.5em;border:0;border-radius:0;background:rgb(var(--background-total-theme));color:rgb(var(--text-color))}.dg-container .dg-content-footer{overflow:hidden}.dg-container .dg-content-footer button{margin-left:.5em;display:block;float:right;font-size:1em;font-weight:400;color:rgb(var(--color-bg-ac));background:transparent;border:1px solid transparent}.dg-container .dg-content-footer button.dg-pull-right{border:1px solid rgb(var(--color-bg-ac));background:rgb(var(--color-bg-ac));color:rgb(var(--text-on-bg-ac-color))}.dg-container .dg-content-body{border:0;padding-bottom:0}.dg-container .dg-content-body .dg-content{font-size:2em;font-weight:100}@-webkit-keyframes gradient{0%{background-position:0 50%}50%{background-position:100% 50%}to{background-position:0 50%}}@keyframes gradient{0%{background-position:0 50%}50%{background-position:100% 50%}to{background-position:0 50%}}mark{background-color:rgb(var(--color-bg-selection))!important}button.button{background:rgb(var(--color-bg-ac));border:1px solid rgb(var(--color-bg-ac));color:rgb(var(--text-on-bg-ac-color));padding:1em;text-align:center;transition:.3s;min-width:200px;cursor:pointer;outline:none;text-decoration:none}button.button.small{padding:.5em 1em;min-width:150px;font-size:.8em}button.button.good{background:rgb(var(--color-good));border:1px solid rgb(var(--color-good))}@media (pointer:fine){button.button.good:hover{background:rgba(var(--color-good),.9);color:rgb(var(--text-on-bg-ac-color))}}button.button.black{background:rgb(var(--neutral-grad-0));border:1px solid rgb(var(--neutral-grad-0));color:rgb(var(--neutral-grad-3))}@media (pointer:fine){button.button.black:hover{background:rgba(var(--neutral-grad-3),.9);color:rgb(var(--text-on-bg-ac-color))}}button.button.orange{background:rgb(var(--color-bg-orange));border:1px solid rgb(var(--color-bg-orange))}@media (pointer:fine){button.button.orange:hover{background:rgba(var(--color-bg-orange),.9);color:rgb(var(--text-on-bg-ac-color))}}button.button.round{width:44px;height:44px;border-radius:50%;font-size:.8em;min-width:0;padding:0;line-height:42px}button.button.rounded{border-radius:22px}button.button.border{font-size:.8em}button.button.border,button.button.ghost{background:transparent;color:rgb(var(--color-txt-ac))}button.button.ghost{border:1px solid transparent}@media (pointer:fine){button.button.ghost:hover{color:rgb(var(--color-txt-gray))}}@media (pointer:fine){button.button:hover{background:transparent;color:rgb(var(--color-txt-ac))}}button.button.underscored{text-decoration:underline}button.button.badbutton{background:transparent;border:1px solid transparent;font-weight:500;color:rgb(var(--color-bad))}button.button[disabled=disabled]{cursor:default}button.button[disabled=disabled],button.button[disabled=disabled]:hover{background:rgb(var(--neutral-grad-2));border-color:rgb(var(--neutral-grad-2))}button.button[disabled=disabled]:hover{color:#fff}.rootcontent.pip *{transform:none!important}.rootcontent.pip .js-player #vjs-forward-button,.rootcontent.pip .js-player #vjs-rewind-button,.rootcontent.pip .js-player .vjs-big-play-button,.rootcontent.pip .js-player .vjs-control-bar,.rootcontent.pip .js-player .vjs-overlay{display:none!important}.iconbuttonRound{width:44px;height:44px;line-height:42px;text-align:center;cursor:pointer;color:rgb(var(--color-txt-ac));font-size:.9em;border-radius:50%;transition:.3s}@media (pointer:fine){.iconbuttonRound:hover{color:rgb(var(--neutral-grad-4))}}.iconbuttonRound.second{background:rgb(var(--neutral-grad-2))}@media (pointer:fine){.iconbuttonRound.second:hover{color:rgb(var(--color-txt-ac))}}.iconbuttonRound.bright{color:rgb(var(--text-on-bg-ac-color));background:rgb(var(--color-txt-ac))}@media (pointer:fine){.iconbuttonRound.bright:hover{color:rgb(var(--color-txt-ac-1))}}.iconbuttonsmall{cursor:pointer;color:rgb(var(--color-txt-ac));text-align:center;transition:.3s}.iconbuttonsmall i{font-size:.8em}@media (pointer:fine){.iconbuttonsmall:hover{color:rgb(var(--neutral-grad-3))}}.iconbutton{cursor:pointer;color:rgb(var(--color-txt-ac));text-align:center;transition:.3s}@media (pointer:fine){.iconbutton:hover{color:rgb(var(--neutral-grad-3))}}.internalpocketnetlink a{cursor:pointer;display:block;text-align:center;padding:1.5em;font-size:.8em;background:rgba(var(--neutral-grad-2),.1);color:rgb(var(--neutral-grad-3));border-radius:5px}.rootcontent{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;font-family:Segoe UI Variable,Segoe UI,SegoeUI,Helvetica Neue,Helvetica,Arial,sans-serif;color:rgb(var(--text-color));font-size:1.1em}.rootcontent .dmdv{width:1px;height:1px;opacity:0;background:rgb(var(--background-total-theme))}.rootcontent.mobile,.rootcontent.unselect{-webkit-touch-callout:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.rootcontent *{scrollbar-width:none}.rootcontent ::-webkit-scrollbar{width:0!important}.rootcontent .backface{position:fixed;left:100%;top:100%;bottom:-1%;right:-1%;transition:background .3s;background:transparent}.rootcontent .chatwrapper,.rootcontent .chatwrapper .main-wrapper{position:absolute;left:0;right:0;top:0;bottom:0}.rootcontent.fix{font-size:.9em}.rootcontent.fix .chatwrapper{transition:.3s;position:fixed;width:340px;top:70px;left:auto;right:.5em;bottom:.5em;z-index:1000}.rootcontent.fix .likeoffline{bottom:103px}.rootcontent.fix.minimized #modal .work,.rootcontent.fix.minimized .page .work{transition:.3s}.rootcontent.fix.minimized .work{padding:0}.rootcontent.fix.minimized #modal .work{padding:0 .5em}.rootcontent.fix.minimized .chatwrapper{width:44px}.rootcontent.fix.minimized:not(.active) .likeoffline,.rootcontent.fix.minimized:not(.active) .offline{background:transparent}.rootcontent.fix.minimized:not(.active) .likeoffline .table>div .icon,.rootcontent.fix.minimized:not(.active) .offline .table>div .icon{font-size:.8em;padding:0}.rootcontent.fix.minimized.active .page .work{padding:0 .25em}.rootcontent.fix.minimized.active .backface{top:0;bottom:0;right:0;left:0}.rootcontent .likeoffline,.rootcontent .offline{color:rgb(var(--neutral-grad-1));background:rgb(var(--background-secondary-theme))}.rootcontent .likeoffline .table,.rootcontent .offline .table{width:100%;height:100%}.rootcontent .likeoffline .table>div,.rootcontent .offline .table>div{vertical-align:middle;text-align:center;padding-bottom:45%}.rootcontent .likeoffline .table>div .icon,.rootcontent .offline .table>div .icon{font-size:2.3em;padding:.5em;color:rgb(var(--color-bg-ac))}.rootcontent .likeoffline .table>div .label,.rootcontent .offline .table>div .label{font-size:1em;padding:0 4em}.rootcontent .likeoffline{background:transparent}.rootcontent .fixedallwrapper,.rootcontent .fixedallwrapperDisplayed,.rootcontent .preloaderWrapper{position:absolute;left:0;right:0;top:0;bottom:0;z-index:998;transition:.3s}.rootcontent .fixedallwrapperDisplayed{background:rgb(var(--background-total-theme))}.rootcontent .fixedOnPageBottom{transition:.3s}.rootcontent .fixedOnPageTop{transition:.3s;width:100%;max-width:100%}.rootcontent .fade-in-right-enter-to .fixedallwrapper,.rootcontent .fade-in-right-enter-to .preloaderWrapper,.rootcontent .fade-in-right-enter .fixedallwrapper,.rootcontent .fade-in-right-enter .preloaderWrapper,.rootcontent .fade-in-right-leave-to .fixedallwrapper,.rootcontent .fade-in-right-leave-to .preloaderWrapper{opacity:0}.rootcontent .fade-in-right-enter-to .fixedOnPageBottom,.rootcontent .fade-in-right-enter .fixedOnPageBottom,.rootcontent .fade-in-right-leave-to .fixedOnPageBottom{opacity:0;bottom:-1.5em}.rootcontent .fade-in-right-enter-to .fixedOnPageTop,.rootcontent .fade-in-right-enter .fixedOnPageTop,.rootcontent .fade-in-right-leave-to .fixedOnPageTop{opacity:0;top:-1.5em}.rootcontent .content{padding-top:66px}.rootcontent .work{padding:0 .5em;margin:0 auto;width:100%;max-width:100%}.rootcontent .pwork{max-width:640px;background:transparent;margin:0 auto;padding:0 4em}.rootcontent .effects{position:fixed;left:0;top:0;bottom:0;right:0;z-index:2020}.rootcontent .speechWrapper{position:fixed;left:0;bottom:0;padding-bottom:2em;right:0;z-index:2000;height:80px}.rootcontent .speechWrapper .speechAbsWrapper{position:relative;width:100%;height:100%}.rootcontent .emptyRec{padding:10em 2em;text-align:center;font-size:.8em}.rootcontent .enablevoice .forbutton{margin-top:2em}.table{display:table;table-layout:fixed;width:100%}.table>div{display:table-cell}.m-message-container.is-bottom-right{padding:0;right:56px;bottom:.75em;width:auto}.m-message-container.is-top-left{top:calc(.5em + var(--app-margin-top))}.notificationWrapper{display:block;max-width:none;font-family:Segoe UI Variable,Segoe UI,SegoeUI,Helvetica Neue,Helvetica,Arial,sans-serif}.notificationWrapper.m-message-wrapper+.m-message-wrapper{margin-top:.5em}.notificationWrapper .m-message{padding:.5em .5em;border:1px solid rgba(var(--neutral-grad-0),.9);border-radius:5px;box-shadow:none;background:rgb(var(--background-secondary-theme));font-size:1em}.notificationWrapper .m-message--title{font-weight:700;color:rgb(var(--color-txt-gray-dark));font-size:.8em}.notificationWrapper .m-message--title:first-letter{text-transform:capitalize}.notificationWrapper .m-message--description{margin-top:0}.notificationWrapper .m-message-content{flex-grow:1}.notificationWrapper .m-message-content .listPreview{cursor:pointer}.notificationWrapper .m-message-content .listPreview .invitedEvent{width:180px;text-overflow:ellipsis;white-space:nowrap;overflow:hidden;display:flex;justify-content:space-between;align-items:center}.notificationWrapper .m-message-content .listPreview .invitedEvent span{display:block;font-size:.8em}.notificationWrapper .m-message-content .listPreview .invitedEvent .txt{color:rgb(var(--color-txt-gray-dark))}.notificationWrapper .m-message-content .listPreview .invitedEvent .txtNew{color:rgb(var(--color-good))}.notificationWrapper .m-message-content .listPreview .linkPreview span:first-letter{text-transform:uppercase}.notificationWrapper .m-message-content .listPreview .linkPreview .senderName{font-weight:700;color:rgb(var(--color-txt-gray-dark))}.notificationWrapper .m-message-content .listPreview .linkPreview .linkTitle{color:#707070}.notificationWrapper .m-message-content .listPreview .linkPreview .pocketnetLink{color:rgb(var(--color-txt-gray-dark))}.notificationWrapper .m-message-content .listPreview .previewMessageList span{color:rgb(var(--color-txt-gray-dark));text-overflow:ellipsis;overflow:hidden;white-space:nowrap;text-align:left}.notificationWrapper .m-message-content .listPreview .previewMessage{display:flex;justify-content:flex-start;align-items:center;width:100%}.notificationWrapper .m-message-content .listPreview .previewMessage span{display:block;color:rgb(var(--color-txt-gray-dark));font-size:.8em;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;text-align:left;max-width:150px}.notificationWrapper .m-message-icons{float:none}.notificationWrapper .m-message--icon{display:block;vertical-align:top}.notificationWrapper .m-message--button.m-message--arrow-down{display:none}.is-top-left{padding:.5em}.is-top-left .notificationWrapper{width:100%;box-shadow:0 5px 7px -5px rgba(var(--color-shadow-base),.7)}@media only screen and (max-width:640px){#app{width:100%}#app .pwork{padding:0 .5em}#app .work{padding:0 .5em 10px}}.collapse{max-width:768px;margin:0 auto;position:relative;z-index:999;padding:.5em 0}.collapse .iconbutton{width:50px;margin-left:auto;color:grey}@media (pointer:fine){.collapse .iconbutton{opacity:.5}.collapse .iconbutton:hover{opacity:1}}.collapsed{display:flex;justify-content:space-between;padding:1em 0;max-width:768px;margin:auto}.angle{display:flex;justify-content:center;width:50px;cursor:pointer}.expand{margin-right:.5em}.bout .collapse{display:none}.resize-observer{position:absolute;right:-20000px}.pswp__img{-o-object-fit:contain;object-fit:contain}.vue-js-switch{display:inline-block;position:relative;vertical-align:middle;-webkit-user-select:none;-moz-user-select:none;user-select:none;font-size:10px;cursor:pointer}.vue-js-switch .v-switch-input{opacity:0;position:absolute;width:1px;height:1px}.vue-js-switch .v-switch-label{position:absolute;top:0;font-weight:600;color:#fff;z-index:1}.vue-js-switch .v-switch-label.v-left{left:10px}.vue-js-switch .v-switch-label.v-right{right:10px}.vue-js-switch .v-switch-core{display:block;position:relative;box-sizing:border-box;outline:0;margin:0;transition:border-color .3s,background-color .3s;-webkit-user-select:none;-moz-user-select:none;user-select:none}.vue-js-switch .v-switch-core .v-switch-button{display:block;position:absolute;overflow:hidden;top:0;left:0;border-radius:100%;background-color:rgb(var(--background-total-theme));z-index:2}.vue-js-switch.disabled{pointer-events:none;opacity:.6}", ""]);
 // Exports
 module.exports = exports;
 
@@ -54369,20 +56006,6 @@ module.exports = _typeof, module.exports.__esModule = true, module.exports["defa
 
 /***/ }),
 
-/***/ "703d":
-/***/ (function(module, exports, __webpack_require__) {
-
-// Imports
-var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
-exports = ___CSS_LOADER_API_IMPORT___(false);
-// Module
-exports.push([module.i, ".searchWrapperEA.work[data-v-12492b0b]{margin-bottom:.5em!important;padding-top:.5em!important}#contacts.minimized:not(.active) .inviteUserDiv[data-v-12492b0b]{width:44px}#contacts.minimized:not(.active) .inviteUserDiv .inviteButton[data-v-12492b0b]{height:44px;text-align:center;line-height:44px}#contacts.minimized:not(.active) .inviteUserDiv .inviteButton i[data-v-12492b0b]{width:auto;position:relative}#contacts.minimized:not(.active) .inviteUserDiv span[data-v-12492b0b],#contacts.minimized:not(.active) .titleContacts[data-v-12492b0b]{display:none}.titleContacts[data-v-12492b0b],.titleSearchResult[data-v-12492b0b]{text-align:center}.titleContacts span[data-v-12492b0b],.titleSearchResult span[data-v-12492b0b]{font-size:.8em}.titleContacts.empty[data-v-12492b0b],.titleSearchResult.empty[data-v-12492b0b]{padding:2em;text-align:center}.titleContacts.empty span[data-v-12492b0b],.titleSearchResult.empty span[data-v-12492b0b]{font-size:1.5em;font-weight:100}.searchResult[data-v-12492b0b]{position:relative}.searchResult .linepreloaderWrapper[data-v-12492b0b]{padding:.5em;text-align:center}.searchResult .noSearchResult[data-v-12492b0b]{left:0;right:0;top:50%;padding:3em;text-align:center}.searchResult .noSearchResult i[data-v-12492b0b]{display:block;font-size:1.5em;color:stgb(--neutral-grad-3)}.searchResult .noSearchResult span[data-v-12492b0b]{color:stgb(--neutral-grad-3);display:block;margin:1em 0;font-size:2em;font-weight:100}.groupNameInputCaption[data-v-12492b0b]{padding:.5em 0;text-align:center}.groupNameInputCaption span[data-v-12492b0b]{font-size:.8em}.groupList .groupCaption[data-v-12492b0b]{position:relative;padding:.5em;text-align:center;display:flex;justify-content:space-between;align-items:center}.groupList .groupCaption .label[data-v-12492b0b]{font-size:.8em;font-weight:500}.groupList .groupCaption .selectWrapper[data-v-12492b0b]{position:relative}.groupList .groupCaption .selectWrapper i[data-v-12492b0b]{position:absolute;right:0;top:4px;color:stgb(--color-txt-ac)}.groupList .groupCaption .selectWrapper .selectRoomVisible[data-v-12492b0b]{padding-right:15px;font-size:.8em;cursor:pointer;color:stgb(--color-txt-ac);-webkit-appearance:none;-moz-appearance:none;appearance:none;overflow:hidden;position:relative}.groupList .groupCaption .selectWrapper .selectRoomVisible[data-v-12492b0b]::-ms-expand{display:none}.groupList .groupCaption .selectWrapper .selectRoomVisible option[data-v-12492b0b]{font-size:.8em}.participants[data-v-12492b0b]{display:flex;background:rgba(var(--neutral-grad-0),.5);flex-wrap:wrap;border-radius:15px;padding:.5em;margin-bottom:.5em;max-height:123px;overflow-y:auto}.participants>div[data-v-12492b0b]{flex-grow:1}.participants .groupListName[data-v-12492b0b]{margin-bottom:.25em}.participants[data-v-12492b0b] .iconWrapper{width:33px}.participants[data-v-12492b0b] .iconWrapper .userpic{width:33px;height:33px;line-height:33px}.participants[data-v-12492b0b] .summaryLine{font-size:.8em}.participants .groupListName[data-v-12492b0b]{margin-right:1em;margin-top:0;border-radius:1em;display:flex;align-items:center}.participants .groupListName span[data-v-12492b0b]{color:rgb(var(--text-on-bg-ac-color));font-size:.9em;display:block;margin-right:5px}.participants .groupListName i[data-v-12492b0b]{text-align:center;width:33px}.chatBtnWrapper[data-v-12492b0b],.GroupBtnWrapper[data-v-12492b0b],.inviteBtnWrapper[data-v-12492b0b]{z-index:2;padding:.5em;text-align:center;left:0;right:0}.minimized .chatBtnWrapper[data-v-12492b0b],.minimized .GroupBtnWrapper[data-v-12492b0b],.minimized .inviteBtnWrapper[data-v-12492b0b]{position:sticky}#contacts.minimized .inviteUserDiv[data-v-12492b0b]{margin-top:.5em}.unauthorized.minimized[data-v-12492b0b]:not(.active){display:none}.unauthorized[data-v-12492b0b]{padding:3em 0;text-align:center}.unauthorized .buttonWrapper[data-v-12492b0b]{padding:1em}.unauthorized .captionWrapper[data-v-12492b0b]{padding:1em;text-align:center}.unauthorized .captionWrapper span[data-v-12492b0b]{font-size:1.5em;font-weight:100}.groupNameInput[data-v-12492b0b]{padding:.5em 1em}.groupNameInput label[data-v-12492b0b]{display:block}.groupNameInput input[data-v-12492b0b]{height:35px;width:100%;padding-right:0}#contacts .inviteUserDiv[data-v-12492b0b]{margin-top:.4em}#contacts .inviteUserDiv .inviteButton[data-v-12492b0b]{background-color:rgb(var(--color-bg-ac-bright));color:rgb(var(--text-on-bg-ac-color));width:100%;height:34px;font-size:.9em;border-radius:30px;position:relative;cursor:pointer}#contacts .inviteUserDiv .inviteButton i[data-v-12492b0b]{position:absolute;right:0;top:0;line-height:34px;width:50px;text-align:center}#contacts .inviteUserDiv .inviteButton.colored[data-v-12492b0b]{background-color:rgb(var(--color-bg-orange))}", ""]);
-// Exports
-module.exports = exports;
-
-
-/***/ }),
-
 /***/ "704f":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -54398,6 +56021,18 @@ var add = __webpack_require__("35d6").default
 module.exports.__inject__ = function (shadowRoot) {
   add("63f17088", content, shadowRoot)
 };
+
+/***/ }),
+
+/***/ "7069":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_422735dc_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("a227");
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_422735dc_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_422735dc_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_422735dc_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_422735dc_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+
 
 /***/ }),
 
@@ -54443,12 +56078,28 @@ module.exports = function ($this, dummy, Wrapper) {
 
 "use strict";
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/contacts/index.vue?vue&type=template&id=12492b0b&scoped=true&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:{'bin' : _vm.pocketnet, 'bout' : !_vm.pocketnet, minimized: _vm.minimized, fix : _vm.pocketnet, active: _vm.active},attrs:{"id":"contacts"}},[(!_vm.unauthorized)?_c('div',[(_vm.mode === 'Contacts' && _vm.window.cordova)?_c('div',{staticClass:"work"},[_c('div',{staticClass:"inviteUserDiv"},[_c('router-link',{staticClass:"inviteButton",class:{ colored: true },attrs:{"to":"/invite","tag":"button"}},[_c('span',[_vm._v(_vm._s(_vm.$i18n.t("caption.inviteFriend")))]),_vm._v(" "),_c('i',{staticClass:"fas fa-address-card"})])],1)]):_vm._e(),(_vm.mode === 'Contacts' && !_vm.window.cordova)?_c('div',{staticClass:"work"},[_c('div',{staticClass:"inviteUserDiv"},[_c('button',{staticClass:"inviteButton",class:{ colored: true },on:{"click":_vm.invitepnt}},[_c('span',[_vm._v(_vm._s(_vm.$i18n.t("caption.inviteFriend")))]),_vm._v(" "),_c('i',{staticClass:"fas fa-address-card"})])])]):_vm._e(),_c('div',{staticClass:"namebuttoncreate"},[(_vm.mode === 'Selectmany' && _vm.selectedlength)?_c('div',{},[_c('div',{staticClass:"work"},[_c('div',{staticClass:"groupList"},[_c('div',{staticClass:"groupCaption"},[_c('span',{staticClass:"label"},[_vm._v("Selected ("+_vm._s(_vm.selectedlength)+")")])])]),_c('div',{staticClass:"participants"},_vm._l((_vm.selected),function(v){return _c('div',{key:v.id || v,staticClass:"groupListName"},[_c('preview',{attrs:{"contact":_vm.usersinfo[v.id || v],"mode":"mini"}}),(!v.id)?_c('i',{staticClass:"far fa-times-circle",on:{"click":function($event){return _vm.toggleUser(v)}}}):_vm._e()],1)}),0)])]):_vm._e()]),_c('div',{staticClass:"work searchWrapperEA"},[_c('search',{attrs:{"minimize":_vm.minimized},on:{"search":_vm.search}})],1),_c('div',{staticClass:"work"},[(_vm.users.contacts.length !== 0)?_c('div',{staticClass:"titleContacts"},[_c('span',[_vm._v(_vm._s(_vm.$t("caption.contacts")))])]):_vm._e(),_c('list',{attrs:{"mode":_vm.mode,"selected":_vm.selected,"users":_vm.users.contacts,"title":'Contacts'},on:{"toggleUser":_vm.toggleUser,"select":_vm.select}})],1),_c('div',{staticClass:"work"},[(_vm.users.contacts.length === 0 && !_vm.searching && !_vm.loading && !_vm.inputText)?_c('div',{staticClass:"titleContacts empty"},[_c('span',[_vm._v(_vm._s(_vm.$t("caption.contactsempty")))])]):_vm._e()]),(_vm.inputText.length && (_vm.searching || _vm.users.contacts.length === 0 || _vm.users.search.length))?_c('div',{staticClass:"searchResult"},[_c('div',{staticClass:"work"},[(_vm.users.search.length !== 0)?_c('div',{staticClass:"titleSearchResult"},[_c('span',[_vm._v(_vm._s(_vm.$t("caption.searchResult")))])]):_vm._e(),(_vm.users.search.length)?_c('list',{attrs:{"mode":_vm.mode,"selected":_vm.selected,"users":_vm.users.search,"title":'Search results'},on:{"toggleUser":_vm.toggleUser,"select":_vm.select}}):_vm._e()],1),(_vm.inputText.length >= 3 && !_vm.users.search.length && !_vm.loading && !_vm.searching)?_c('div',{staticClass:"noSearchResult"},[_c('span',[_vm._v(_vm._s(_vm.$t("caption.queryNoResults")))]),_c('i',{staticClass:"fas fa-search"})]):_vm._e(),(_vm.searching)?_c('div',{staticClass:"searching"},[_c('div',{staticClass:"linepreloaderWrapper"},[_c('linepreloader')],1)]):_vm._e()]):_vm._e()]):_c('div',{staticClass:"dmdv"})])}
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/contacts/index.vue?vue&type=template&id=3ad2c96e&scoped=true&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:{
+    bin: _vm.pocketnet,
+    bout: !_vm.pocketnet,
+    minimized: _vm.minimized,
+    fix: _vm.pocketnet,
+    active: _vm.active,
+  },attrs:{"id":"contacts"}},[(!_vm.unauthorized)?_c('div',[(_vm.mode === 'Contacts' && _vm.window.cordova)?_c('div',{staticClass:"work"},[_c('div',{staticClass:"inviteUserDiv"},[_c('router-link',{staticClass:"inviteButton",class:{ colored: true },attrs:{"to":"/invite","tag":"button"}},[_c('span',[_vm._v(_vm._s(_vm.$i18n.t("caption.inviteFriend")))]),_c('i',{staticClass:"fas fa-address-card"})])],1)]):_vm._e(),(_vm.mode === 'Contacts' && !_vm.window.cordova)?_c('div',{staticClass:"work"},[_c('div',{staticClass:"inviteUserDiv"},[_c('button',{staticClass:"inviteButton",class:{ colored: true },on:{"click":_vm.invitepnt}},[_c('span',[_vm._v(_vm._s(_vm.$i18n.t("caption.inviteFriend")))]),_c('i',{staticClass:"fas fa-address-card"})])])]):_vm._e(),_c('div',{staticClass:"namebuttoncreate"},[(_vm.mode === 'Selectmany' && _vm.selectedlength)?_c('div',{},[_c('div',{staticClass:"work"},[_c('div',{staticClass:"groupList"},[_c('div',{staticClass:"groupCaption"},[_c('span',{staticClass:"label"},[_vm._v("Selected ("+_vm._s(_vm.selectedlength)+")")])])]),_c('div',{staticClass:"participants"},_vm._l((_vm.selected),function(v){return _c('div',{key:v.id || v,staticClass:"groupListName"},[_c('preview',{attrs:{"contact":_vm.usersinfo[v.id || v],"mode":"mini"}}),(!v.id)?_c('i',{staticClass:"far fa-times-circle",on:{"click":function($event){return _vm.toggleUser(v)}}}):_vm._e()],1)}),0)])]):_vm._e()]),_c('div',{staticClass:"work searchWrapperEA"},[_c('search',{attrs:{"minimize":_vm.minimized},on:{"search":_vm.search}})],1),_c('div',{staticClass:"work"},[(_vm.users.contacts.length !== 0)?_c('div',{staticClass:"titleContacts"},[_c('span',[_vm._v(_vm._s(_vm.$t("caption.contacts")))])]):_vm._e(),_c('list',{attrs:{"mode":_vm.mode,"selected":_vm.selected,"users":_vm.users.contacts,"title":'Contacts'},on:{"toggleUser":_vm.toggleUser,"select":_vm.select}})],1),_c('div',{staticClass:"work"},[(
+          _vm.users.contacts.length === 0 && !_vm.searching && !_vm.loading && !_vm.inputText
+        )?_c('div',{staticClass:"titleContacts empty"},[_c('span',[_vm._v(_vm._s(_vm.$t("caption.contactsempty")))])]):_vm._e()]),(
+        _vm.inputText.length &&
+        (_vm.searching || _vm.users.contacts.length === 0 || _vm.users.search.length)
+      )?_c('div',{staticClass:"searchResult"},[_c('div',{staticClass:"work"},[(_vm.users.search.length !== 0)?_c('div',{staticClass:"titleSearchResult"},[_c('span',[_vm._v(_vm._s(_vm.$t("caption.searchResult")))])]):_vm._e(),(_vm.users.search.length)?_c('list',{attrs:{"mode":_vm.mode,"selected":_vm.selected,"users":_vm.users.search,"title":'Search results'},on:{"toggleUser":_vm.toggleUser,"select":_vm.select}}):_vm._e()],1),(
+          _vm.inputText.length >= 3 &&
+          !_vm.users.search.length &&
+          !_vm.loading &&
+          !_vm.searching
+        )?_c('div',{staticClass:"noSearchResult"},[_c('span',[_vm._v(_vm._s(_vm.$t("caption.queryNoResults")))]),_c('i',{staticClass:"fas fa-search"})]):_vm._e(),(_vm.searching)?_c('div',{staticClass:"searching"},[_c('div',{staticClass:"linepreloaderWrapper"},[_c('linepreloader')],1)]):_vm._e()]):_vm._e()]):_c('div',{staticClass:"dmdv"})])}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/contacts/index.vue?vue&type=template&id=12492b0b&scoped=true&
+// CONCATENATED MODULE: ./src/components/contacts/index.vue?vue&type=template&id=3ad2c96e&scoped=true&
 
 // EXTERNAL MODULE: ./node_modules/vuex/dist/vuex.esm.js
 var vuex_esm = __webpack_require__("2f62");
@@ -54621,7 +56272,7 @@ var componentNormalizer = __webpack_require__("2877");
 
 function injectStyles (context) {
   
-  var style0 = __webpack_require__("b4f6")
+  var style0 = __webpack_require__("a9b7")
 if (style0.__inject__) style0.__inject__(context)
 
 }
@@ -54634,12 +56285,24 @@ var component = Object(componentNormalizer["a" /* default */])(
   staticRenderFns,
   false,
   injectStyles,
-  "12492b0b",
+  "3ad2c96e",
   null
   ,true
 )
 
 /* harmony default export */ var contacts = __webpack_exports__["a"] = (component.exports);
+
+/***/ }),
+
+/***/ "71e1":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_1_id_f00ed472_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("75a3");
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_1_id_f00ed472_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_1_id_f00ed472_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_1_id_f00ed472_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_1_id_f00ed472_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+
 
 /***/ }),
 
@@ -54653,18 +56316,6 @@ exports = ___CSS_LOADER_API_IMPORT___(false);
 exports.push([module.i, ".v-spinner{text-align:center}.v-spinner .v-clip{-webkit-animation:v-clipDelay .75s linear 0s infinite;animation:v-clipDelay .75s linear 0s infinite;-webkit-animation-fill-mode:both;animation-fill-mode:both;display:inline-block}@-webkit-keyframes v-clipDelay{0%{transform:rotate(0deg) scale(1)}50%{transform:rotate(180deg) scale(.8)}to{transform:rotate(1turn) scale(1)}}@keyframes v-clipDelay{0%{transform:rotate(0deg) scale(1)}50%{transform:rotate(180deg) scale(.8)}to{transform:rotate(1turn) scale(1)}}", ""]);
 // Exports
 module.exports = exports;
-
-
-/***/ }),
-
-/***/ "7212":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_52afd868_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("b0a4");
-/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_52afd868_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_52afd868_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_52afd868_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_52afd868_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
 
 
 /***/ }),
@@ -55165,18 +56816,6 @@ function b64_enc (data) {
 
 /***/ }),
 
-/***/ "72a7":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_659136c0_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("de24");
-/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_659136c0_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_659136c0_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_659136c0_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_659136c0_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-
-
-/***/ }),
-
 /***/ "72aa":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -55237,6 +56876,108 @@ module.exports = Sha224
 
 /***/ }),
 
+/***/ "7334":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/settings/index.vue?vue&type=template&id=216856d2&scoped=true&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:{mobile : !_vm.pocketnet},attrs:{"id":"settings"}},[_c('div',{staticClass:"infoPart"},_vm._l((_vm.settings),function(value,index){return _c('div',{key:index,class:'inputWrapper ' + value.id},[_c('div',{staticClass:"forInput"},[_c('toggle-button',{attrs:{"value":_vm.get_settings(value.id)},on:{"change":function (e) { return _vm.set_settings(value.id, e); }}})],1),_c('div',{staticClass:"label"},[_c('label',{attrs:{"for":'settings_' + value.id}},[_vm._v(_vm._s(_vm.$t(value.label)))])])])}),0)])}
+var staticRenderFns = []
+
+
+// CONCATENATED MODULE: ./src/components/settings/index.vue?vue&type=template&id=216856d2&scoped=true&
+
+// EXTERNAL MODULE: ./node_modules/vuex/dist/vuex.esm.js
+var vuex_esm = __webpack_require__("2f62");
+
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./src/components/settings?vue&type=script&lang=js&
+
+/* harmony default export */ var settings_vue_type_script_lang_js_ = ({
+  name: 'settings',
+  props: {},
+  data: function () {
+    return {
+      loading: false,
+      settings: [{
+        id: 'pin',
+        checked: 'yes',
+        unchecked: 'no',
+        label: 'settings_pin'
+      }, {
+        id: 'read',
+        checked: 'yes',
+        unchecked: 'no',
+        label: 'settings_read'
+      }]
+    };
+  },
+  created: () => {},
+  watch: {//$route: 'getdata'
+  },
+  computed: Object(vuex_esm["c" /* mapState */])({
+    auth: state => state.auth,
+    themes: state => state.themes,
+    theme: state => state.theme,
+    settings_pin: state => state.pinchat,
+    settings_read: state => !state.dontreadreceipts,
+    pocketnet: state => state.pocketnet
+  }),
+  methods: {
+    setTheme: function (evt) {
+      var theme = evt.target.value;
+      this.$store.commit('theme', {
+        value: theme,
+        root: this.$root.$el
+      });
+    },
+    set_settings_pin: function (value) {
+      this.$store.commit('pinchat', value);
+    },
+    set_settings_read: function (value) {
+      this.$store.commit('dontreadreceipts', !value);
+    },
+    set_settings: function (id, e) {
+      return this['set_settings_' + id](e.value);
+    },
+    get_settings: function (id) {
+      return this['settings_' + id];
+    }
+  }
+});
+// CONCATENATED MODULE: ./src/components/settings?vue&type=script&lang=js&
+ /* harmony default export */ var components_settings_vue_type_script_lang_js_ = (settings_vue_type_script_lang_js_); 
+// EXTERNAL MODULE: ./node_modules/vue-loader/lib/runtime/componentNormalizer.js
+var componentNormalizer = __webpack_require__("2877");
+
+// CONCATENATED MODULE: ./src/components/settings/index.vue
+
+
+
+function injectStyles (context) {
+  
+  var style0 = __webpack_require__("4784")
+if (style0.__inject__) style0.__inject__(context)
+
+}
+
+/* normalize component */
+
+var component = Object(componentNormalizer["a" /* default */])(
+  components_settings_vue_type_script_lang_js_,
+  render,
+  staticRenderFns,
+  false,
+  injectStyles,
+  "216856d2",
+  null
+  ,true
+)
+
+/* harmony default export */ var settings = __webpack_exports__["a"] = (component.exports);
+
+/***/ }),
+
 /***/ "738c":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -55269,30 +57010,30 @@ module.exports.__inject__ = function (shadowRoot) {
 
 /***/ }),
 
-/***/ "73c2":
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__("0cd0");
-if(content.__esModule) content = content.default;
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add CSS to Shadow Root
-var add = __webpack_require__("35d6").default
-module.exports.__inject__ = function (shadowRoot) {
-  add("237d0f98", content, shadowRoot)
-};
-
-/***/ }),
-
 /***/ "7418":
 /***/ (function(module, exports) {
 
 // eslint-disable-next-line es-x/no-object-getownpropertysymbols -- safe
 exports.f = Object.getOwnPropertySymbols;
 
+
+/***/ }),
+
+/***/ "75a3":
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__("135a");
+if(content.__esModule) content = content.default;
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add CSS to Shadow Root
+var add = __webpack_require__("35d6").default
+module.exports.__inject__ = function (shadowRoot) {
+  add("684736e1", content, shadowRoot)
+};
 
 /***/ }),
 
@@ -55314,20 +57055,6 @@ module.exports.__inject__ = function (shadowRoot) {
 
 /***/ }),
 
-/***/ "76a3":
-/***/ (function(module, exports, __webpack_require__) {
-
-// Imports
-var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
-exports = ___CSS_LOADER_API_IMPORT___(false);
-// Module
-exports.push([module.i, ".voiceMessage[data-v-0438bc11]{-webkit-tap-highlight-color:transparent;display:flex;contain:strict;width:230px;height:100%}.voiceMessage_wrapper[data-v-0438bc11]{display:flex;justify-content:flex-end;align-items:center;overflow:hidden;min-width:10em;padding:0 .5em;padding-right:1em;border-radius:2em;background:rgb(var(--background-secondary-theme))}.voiceMessage_toggle[data-v-0438bc11]{cursor:pointer;height:33px;width:33px;margin-right:.5em;border-radius:50%;background:rgb(var(--neutral-grad-1));display:flex;align-items:center;justify-content:center;color:rgb(var(--color-bg-ac))}.voiceMessage_toggle i[data-v-0438bc11]{font-size:.5em}.voiceMessage_graph[data-v-0438bc11]{position:relative;cursor:pointer}.voiceMessage_options[data-v-0438bc11]{display:flex;justify-content:center;margin-left:10px;padding:2px 10px;min-width:40px;background:rgb(var(--neutral-grad-1));border-radius:10px}.voiceMessage_options span[data-v-0438bc11]{font-size:.8em;color:rgb(var(--neutral-grad-3))}.voiceMessage.playing .voiceMessage_options span[data-v-0438bc11]{font-size:.8em;color:rgb(var(--color-bg-ac-bright))}.voiceMessage .fa-exclamation-circle[data-v-0438bc11]{font-size:.7em;color:rgb(var(--color-bad));padding:.5em}.voiceMessage .encsign[data-v-0438bc11]{position:absolute;right:0;top:0;bottom:0;display:flex;align-items:center;padding-right:.35em}.voiceMessage .encsign i[data-v-0438bc11]{font-size:.5em;color:rgb(var(--neutral-grad-2));opacity:.6}", ""]);
-// Exports
-module.exports = exports;
-
-
-/***/ }),
-
 /***/ "76df":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -55345,7 +57072,7 @@ module.exports = exports;
 /***/ "7704":
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"caption\":{\"create\":\"Создать\",\"addPublicChatName\":\"Имя Публичной комнаты\",\"addGroupNamePlaceHolder\":\"Имя Чата\",\"createPublicChat\":\"Создать публичный чат\",\"chatTopic\":\"Топик изменён\",\"publicRoomTitle\":\"Публичная комната\",\"asModerator\":\"права модерации\",\"marked\":\"Передал\",\"unmarked\":\"Снял\",\"removeBan\":\"Снять Бан\",\"cancelModeration\":\"Снять модерцию\",\"uploadFiles\":\"Загрузить файлы\",\"header\":\"Заголовок\",\"dragAndDropAFile\":\"Перетятите файл в эту область\",\"chatInvite\":\"Вы приглашены в чат с\",\"cantJoion\":\"Вы не можете присоединиться к чату с\",\"chatInviteDecline\":\"Вы можете присоединиться к чату или отклонить приглашение\",\"creatorLeft\":\"Так как создатель чата покинул его\",\"encrypted\":\"Зашифровано \",\"noImages\":\"В чате пока нет изображений\",\"noFiles\":\"В чате пока нет файлов\",\"inviteUser\":\"Пригласить пользователя\",\"invite\":\"Пригласить\",\"add\":\"Добавить\",\"mute\":\"Отключить звук\",\"unmute\":\"Включить звук\",\"leave\":\"Покинуть\",\"Info\":\"Информация\",\"new\":\"Новый\",\"typing\":\"печатает\",\"accNotFound\":\"Ваш аккаунт находится в процессе регистрации, пожалуйста, подождите...\",\"emptyList\":\"Список пуст\",\"welcome\":\"Добро пожаловать в чат!\",\"startNewChat\":\"Начать новый чат\",\"chats\":\"Чаты\",\"shareWith\":\"Поделиться с\",\"newChat\":\"Новый чат\",\"moveToChat\":\"Перейти в чат\",\"queryNoResults\":\"Нет результатов по запросу\",\"needMoreCharacters\":\"Введите больше символов для поиска\",\"createGroup\":\"Создать группу\",\"unabletoDecrypt\":\"* Невозможно расшифровать\",\"messageDeleted\":\"Сообщение удалено\",\"sentImage\":\"отправлено изображение\",\"sentVoiceMessage\":\"отправлено голосовое сообщение\",\"invitationToChat\":\"Приглашение в чат\",\"invitationToRoom\":\"Приглашение в комнату\",\"leftChat\":\"покинул чат\",\"joined\":\"присоединился\",\"chatRenamed\":\"Чат переименован в \",\"recentComment\":\"Последний комментарий:\",\"share\":\"Поделиться\",\"followers\":\"Подписались\",\"reputation\":\"Репутация\",\"unsubscribe\":\"Отписаться\",\"following\":\"Подписан\",\"theme\":\"Тема:\",\"contacts\":\"Контакты\",\"phoneContacts\":\"Телефонные контакты\",\"chooseInviteMedia\":\"Пожалуйста, выберите, способ приглашения\",\"admin\":\"Админ\",\"moderator\":\"Модератор\",\"videocall\":\"Видеозвонок\",\"call\":\"Звонок\",\"leaveAndDelete\":\"Покинуть и удалить чат\",\"donate\":\"Донат\",\"makeModerator\":\"Сделать модератором\",\"ban\":\"Бан\",\"kick\":\"Исключить\",\"members\":\"Участники\",\"media\":\"Медиа\",\"files\":\"Файлы\",\"contactsList\":\"Список контактов\",\"send\":\"Отправить\",\"pageCaption\":\"Заголовок страницы\",\"caption\":\"Заголовок\",\"text\":\"текст\",\"placeholder\":\"плейсхолдер\",\"sendTransactionTo\":\"Послать транзакрию\",\"toBePaidByReceiver\":\"Оплата получателем\",\"toBePaidBySender\":\"Оплата отправителем\",\"source\":\"Источник\",\"amount\":\"Количество\",\"receiver\":\"Получатель\",\"message\":\"Сообщение\",\"includeFeesInAmount\":\"Включить комиссию в сумму\",\"transactionFees\":\"Комиссия за транзакцию\",\"totalAmount\":\"Итого\",\"balanceTooLow\":\"Баланс слишком низкий\",\"transactionError\":\"Ошибка: нельзя совершить транзакцию\",\"calculateFees\":\"Подсчитать комиссию\",\"startChatWith\":\"Начать чат с\",\"searchResult\":\"Результат поиска\",\"joinedInTheChat\":\"вошел в чат\",\"invited\":\"приглашен \",\"hasInvited\":\"приглашен \",\"inTheChat\":\" в чат\",\"banned\":\"забанен\",\"andRoom\":\"и комната\",\"inRoom\":\"в комнате\",\"left\":\"покинул\",\"theChat\":\" чат \",\"made\":\"сделал \",\"aModerator\":\" модератором\",\"editedChatNameTo \":\"изменил имя чата на \",\"somebody\":\"Кто-то\",\"sent\":\"отправлено\",\"PKOINto\":\" PKOIN для \",\"response\":\"Ответ\",\"edited\":\"Отредактировано\",\"settings\":\"Настройки\",\"unauthorized\":\"Неавторизован\",\"search\":\"Поиск\",\"replyOnMessage\":\"Ответить на сообщение\",\"editMessage\":\"Редактировать сообщение\",\"inviteFriend\":\"Пригласить друзей\",\"emptyContactList\":\"Ваша книга контактов пуста\",\"joinApp\":\"Присоединяйтесь ко мне в защищенном чате.\",\"hasInvitedToJoin\":\"Это зашифрованный чат, который не привязывается к номеру телефона.\",\"messagefrom\":\"Пересланное сообщение от\",\"usernotgen\":\"User did not generate their encryption keys yet. You will be able to chat them when their keys are generated.\",\"younotgen\":\"Please wait a minute, Your encryption keys are being generated...\",\"messageRead\":\"Сообщение прочитано\",\"open\":\"Открыть\",\"You\":\"Вы\",\"chatsearchingempty\":\"Чатов по данному фильтру не найдено\",\"sendmessage\":\"Отправить сообщение\"},\"input\":{\"patientEmailPlaceholder\":\"Электронная почта\",\"refillNamePlaceholder\":\"Заполнить имя еще раз\"},\"message\":{},\"button\":{\"starChatButton\":\"Начать чат\",\"decline\":\"Отклонить\",\"join\":\"Присоединиться\",\"ok\":\"Ок\",\"copy\":\"Скопировать\",\"forward\":\"Переслать\",\"delete\":\"Удалить\",\"save\":\"Сохранить\",\"reply\":\"Ответить\",\"share\":\"Переслать\",\"download\":\"Загрузить\",\"downloaded\":\"Загружено\",\"goToPocketnetProfile\":\"Перейти в профиль\",\"sendFile\":\"Отправить файл\",\"takePhotoOrVideo\":\"Отправить фотографию\",\"sendCoins\":\"Отправить коины\",\"edit\":\"Редактировать\",\"select\":\"Выбрать\",\"block\":\"Заблокировать\",\"unblock\":\"Разблокировать\",\"blockUser\":\"Заблокировать пользователя\",\"Complain\":\"Пожаловаться\"},\"type\":{\"publicgroup\":\"Создать публичную группу\",\"privategroup\":\"Создать приватную группу\",\"one\":\"Чат один на один\"},\"typelabel\":{\"publicgroup\":\"Создание публичной группы\",\"privategroup\":\"Создание приватной группы\",\"one\":\"Создание чата один на один\"},\"yes\":\"Да\",\"cancel\":\"Отменить\",\"teamMessages\":{\"1-title\":\"Добро пожаловать в приватный чат Bastyon!\",\"1-list1\":\"Личный мессенджер, который НЕ связан с вашим номером телефона\",\"1-list2\":\"Конечное шифрование каждого разговора 1 на 1 по умолчанию\",\"1-list3\":\"Все изображения, отправленные или полученные через чат, хранятся в зашифрованном виде\",\"1-list4\":\"История сообщений сохраняется только в течение 7 дней\",\"2-title\":\"Огромное объявление! Приложение Pocketnet теперь называется Bastyon!\",\"2-message1\":\"Домен будет перенесен на Bastyon.com. Недавно мы выпустили следующие крупные обновления:\",\"2-list1\":\"Частный зашифрованный мессенджер, не связанный с вашим номером телефона\",\"2-list2\":\"Возможность пожертвовать PKOIN блогерам\",\"2-list3\":\"Видео и прямая трансляция\",\"2-message2\":\"Пригласите своих друзей сейчас и станьте частью большого будущего децентрализованного интернета!\",\"2-button\":\"Пригласите друзей\"},\"sendingerror\":\"Возникла ошибка при отправке сообщения\",\"details\":\"Подробнее\",\"settings_pin\":\"Закрепить окно чата\",\"checked\":\"Да\",\"unchecked\":\"Нет\",\"settings_read\":\"Отправлять отчёты о прочтении\",\"messagewasburn\":\"Данное сообщение осталось только лишь в памяти вашего устройства\",\"messagewillburn\":\"Сообщение скоро будет удалено\",\"micaccessbrowser\":\"Доступ к микрофону запрещен настройками браузера, пожалуйста проверьте настройки.\",\"micaccesscommonproblem\":\"Извините, по какой-то причине запись голосовых сообщений невозможна на устройстве.\",\"micaccesscordova\":\"Доступ к микрофону запрещен настройками устройства, пожалуйста разрешите доступ к микрофону в настройках устройства.\",\"micdevicenotfound\":\"Устройство для записи звука не найдено\"}");
+module.exports = JSON.parse("{\"caption\":{\"create\":\"Создать\",\"addPublicChatName\":\"Имя Публичной комнаты\",\"addGroupNamePlaceHolder\":\"Имя Чата\",\"createPublicChat\":\"Создать публичный чат\",\"chatTopic\":\"Топик изменён\",\"publicRoomTitle\":\"Публичная комната\",\"asModerator\":\"права модерации\",\"marked\":\"Передал\",\"unmarked\":\"Снял\",\"removeBan\":\"Снять Бан\",\"cancelModeration\":\"Снять модерцию\",\"uploadFiles\":\"Загрузить файлы\",\"header\":\"Заголовок\",\"dragAndDropAFile\":\"Перетятите файл в эту область\",\"chatInvite\":\"Вы приглашены в чат с\",\"cantJoion\":\"Вы не можете присоединиться к чату с\",\"chatInviteDecline\":\"Вы можете присоединиться к чату или отклонить приглашение\",\"creatorLeft\":\"Так как создатель чата покинул его\",\"encrypted\":\"Зашифровано \",\"noImages\":\"В чате пока нет изображений\",\"noFiles\":\"В чате пока нет файлов\",\"inviteUser\":\"Пригласить пользователя\",\"invite\":\"Пригласить\",\"add\":\"Добавить\",\"mute\":\"Отключить звук\",\"unmute\":\"Включить звук\",\"leave\":\"Покинуть\",\"Info\":\"Информация\",\"new\":\"Новый\",\"typing\":\"печатает\",\"accNotFound\":\"Ваш аккаунт находится в процессе регистрации, пожалуйста, подождите...\",\"emptyList\":\"Список пуст\",\"welcome\":\"Добро пожаловать в чат!\",\"startNewChat\":\"Начать новый чат\",\"chats\":\"Чаты\",\"shareWith\":\"Поделиться с\",\"newChat\":\"Новый чат\",\"moveToChat\":\"Перейти в чат\",\"queryNoResults\":\"Нет результатов по запросу\",\"needMoreCharacters\":\"Введите больше символов для поиска\",\"createGroup\":\"Создать группу\",\"unabletoDecrypt\":\"* Невозможно расшифровать\",\"messageDeleted\":\"Сообщение удалено\",\"sentImage\":\"отправлено изображение\",\"sentVoiceMessage\":\"отправлено голосовое сообщение\",\"invitationToChat\":\"Приглашение в чат\",\"invitationToRoom\":\"Приглашение в комнату\",\"leftChat\":\"покинул чат\",\"joined\":\"присоединился\",\"chatRenamed\":\"Чат переименован в \",\"recentComment\":\"Последний комментарий:\",\"share\":\"Поделиться\",\"followers\":\"Подписались\",\"reputation\":\"Репутация\",\"unsubscribe\":\"Отписаться\",\"following\":\"Подписан\",\"theme\":\"Тема:\",\"contacts\":\"Контакты\",\"phoneContacts\":\"Телефонные контакты\",\"chooseInviteMedia\":\"Пожалуйста, выберите, способ приглашения\",\"admin\":\"Админ\",\"moderator\":\"Модератор\",\"videocall\":\"Видеозвонок\",\"call\":\"Звонок\",\"leaveAndDelete\":\"Покинуть и удалить чат\",\"donate\":\"Донат\",\"makeModerator\":\"Сделать модератором\",\"ban\":\"Бан\",\"kick\":\"Исключить\",\"members\":\"Участники\",\"media\":\"Медиа\",\"files\":\"Файлы\",\"contactsList\":\"Список контактов\",\"send\":\"Отправить\",\"pageCaption\":\"Заголовок страницы\",\"caption\":\"Заголовок\",\"text\":\"текст\",\"placeholder\":\"плейсхолдер\",\"sendTransactionTo\":\"Послать транзакрию\",\"toBePaidByReceiver\":\"Оплата получателем\",\"toBePaidBySender\":\"Оплата отправителем\",\"source\":\"Источник\",\"amount\":\"Количество\",\"receiver\":\"Получатель\",\"message\":\"Сообщение\",\"includeFeesInAmount\":\"Включить комиссию в сумму\",\"transactionFees\":\"Комиссия за транзакцию\",\"totalAmount\":\"Итого\",\"balanceTooLow\":\"Баланс слишком низкий\",\"transactionError\":\"Ошибка: нельзя совершить транзакцию\",\"calculateFees\":\"Подсчитать комиссию\",\"startChatWith\":\"Начать чат с\",\"searchResult\":\"Результат поиска\",\"joinedInTheChat\":\"вошел в чат\",\"invited\":\"приглашен \",\"hasInvited\":\"приглашен \",\"inTheChat\":\" в чат\",\"banned\":\"забанен\",\"andRoom\":\"и комната\",\"inRoom\":\"в комнате\",\"left\":\"покинул\",\"theChat\":\" чат \",\"made\":\"сделал \",\"aModerator\":\" модератором\",\"editedChatNameTo \":\"изменил имя чата на \",\"somebody\":\"Кто-то\",\"sent\":\"отправлено\",\"PKOINto\":\" PKOIN для \",\"response\":\"Ответ\",\"edited\":\"Отредактировано\",\"settings\":\"Настройки\",\"unauthorized\":\"Неавторизован\",\"search\":\"Поиск\",\"replyOnMessage\":\"Ответить на сообщение\",\"editMessage\":\"Редактировать сообщение\",\"inviteFriend\":\"Пригласить друзей\",\"emptyContactList\":\"Ваша книга контактов пуста\",\"joinApp\":\"Присоединяйтесь ко мне в защищенном чате.\",\"hasInvitedToJoin\":\"Это зашифрованный чат, который не привязывается к номеру телефона.\",\"messagefrom\":\"Пересланное сообщение от\",\"usernotgen\":\"User did not generate their encryption keys yet. You will be able to chat them when their keys are generated.\",\"younotgen\":\"Please wait a minute, Your encryption keys are being generated...\",\"messageRead\":\"Сообщение прочитано\",\"open\":\"Открыть\",\"You\":\"Вы\",\"chatsearchingempty\":\"Чатов по данному фильтру не найдено\",\"sendmessage\":\"Отправить сообщение\",\"clearHistory\":\"Очистить чат\"},\"input\":{\"patientEmailPlaceholder\":\"Электронная почта\",\"refillNamePlaceholder\":\"Заполнить имя еще раз\"},\"message\":{},\"button\":{\"starChatButton\":\"Начать чат\",\"decline\":\"Отклонить\",\"join\":\"Присоединиться\",\"ok\":\"Ок\",\"copy\":\"Скопировать\",\"forward\":\"Переслать\",\"delete\":\"Удалить\",\"save\":\"Сохранить\",\"reply\":\"Ответить\",\"share\":\"Переслать\",\"download\":\"Загрузить\",\"downloaded\":\"Загружено\",\"goToPocketnetProfile\":\"Перейти в профиль\",\"sendFile\":\"Отправить файл\",\"takePhotoOrVideo\":\"Отправить фотографию\",\"sendCoins\":\"Отправить коины\",\"edit\":\"Редактировать\",\"select\":\"Выбрать\",\"block\":\"Заблокировать\",\"unblock\":\"Разблокировать\",\"blockUser\":\"Заблокировать пользователя\",\"Complain\":\"Пожаловаться\"},\"type\":{\"publicgroup\":\"Создать публичную группу\",\"privategroup\":\"Создать приватную группу\",\"one\":\"Чат один на один\"},\"typelabel\":{\"publicgroup\":\"Создание публичной группы\",\"privategroup\":\"Создание приватной группы\",\"one\":\"Создание чата один на один\"},\"yes\":\"Да\",\"cancel\":\"Отменить\",\"teamMessages\":{\"1-title\":\"Добро пожаловать в приватный чат Bastyon!\",\"1-list1\":\"Личный мессенджер, который НЕ связан с вашим номером телефона\",\"1-list2\":\"Конечное шифрование каждого разговора 1 на 1 по умолчанию\",\"1-list3\":\"Все изображения, отправленные или полученные через чат, хранятся в зашифрованном виде\",\"1-list4\":\"История сообщений сохраняется только в течение 7 дней\",\"2-title\":\"Огромное объявление! Приложение Pocketnet теперь называется Bastyon!\",\"2-message1\":\"Домен будет перенесен на Bastyon.com. Недавно мы выпустили следующие крупные обновления:\",\"2-list1\":\"Частный зашифрованный мессенджер, не связанный с вашим номером телефона\",\"2-list2\":\"Возможность пожертвовать PKOIN блогерам\",\"2-list3\":\"Видео и прямая трансляция\",\"2-message2\":\"Пригласите своих друзей сейчас и станьте частью большого будущего децентрализованного интернета!\",\"2-button\":\"Пригласите друзей\"},\"sendingerror\":\"Возникла ошибка при отправке сообщения\",\"details\":\"Подробнее\",\"settings_pin\":\"Закрепить окно чата\",\"checked\":\"Да\",\"unchecked\":\"Нет\",\"settings_read\":\"Отправлять отчёты о прочтении\",\"messagewasburn\":\"Данное сообщение осталось только лишь в памяти вашего устройства\",\"messagewillburn\":\"Сообщение скоро будет удалено\",\"micaccessbrowser\":\"Доступ к микрофону запрещен настройками браузера, пожалуйста проверьте настройки.\",\"micaccesscommonproblem\":\"Извините, по какой-то причине запись голосовых сообщений невозможна на устройстве.\",\"micaccesscordova\":\"Доступ к микрофону запрещен настройками устройства, пожалуйста разрешите доступ к микрофону в настройках устройства.\",\"micdevicenotfound\":\"Устройство для записи звука не найдено\"}");
 
 /***/ }),
 
@@ -55490,6 +57217,180 @@ exports.SERVICE_TYPES = SERVICE_TYPES;
 
 /***/ }),
 
+/***/ "78a2":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/chat/create/index.vue?vue&type=template&id=f0734632&scoped=true&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{attrs:{"id":"chatcreate"}},[_c('div',{staticClass:"selecttype"},[_c('div',{staticClass:"work"},[(!_vm.type)?_c('div',{staticClass:"types"},_vm._l((_vm.types),function(type){return _c('div',{key:type.id,staticClass:"type",on:{"click":function (e) { return _vm.selecttype(type.id); }}},[_c('div',{staticClass:"icon"},[_c('i',{class:type.icon})]),_c('div',[_c('span',[_vm._v(_vm._s(_vm.$t('type.' + type.id)))])])])}),0):_vm._e(),(_vm.type)?_c('div',{staticClass:"selectedtype"},[_c('div',{staticClass:"icon",on:{"click":_vm.unselecttype}},[_c('i',{staticClass:"fas fa-arrow-left"})]),_c('div',{staticClass:"label"},[_vm._v(" "+_vm._s(_vm.$t('typelabel.' + _vm.type.id))+" ")]),_c('div',{staticClass:"completewrapper"},[_c('button',{staticClass:"button small rounded",class:{orange : _vm.cancomplete, ghost : !_vm.cancomplete},on:{"click":function($event){return _vm.complete()}}},[_vm._v(" "+_vm._s(_vm.$t('caption.create'))+" "),_c('i',{class:_vm.type.icon}),_vm._v(" "),(_vm.selectedLength)?_c('span',[_vm._v(_vm._s(_vm.selectedLength))]):_vm._e()])])]):_vm._e()]),_c('div',{staticClass:"creationbody"},[(_vm.type)?_c('div',{staticClass:"groupsettigns"},[_c('div',{staticClass:"namebuttoncreate"},[_c('div',{staticClass:"groupNameInput"},[_c('label',[_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.groupName),expression:"groupName"}],attrs:{"type":"text","placeholder":_vm.type.id === 'privategroup'? this.$i18n.t('caption.addGroupNamePlaceHolder') : this.$i18n.t('caption.addPublicChatName')},domProps:{"value":(_vm.groupName)},on:{"input":function($event){if($event.target.composing){ return; }_vm.groupName=$event.target.value}}})])])])]):_vm._e(),(!_vm.type)?_c('div',{staticClass:"contactswrapper oneonone"},[_c('contacts',{attrs:{"mode":'Select'},on:{"select":_vm.selectoneuser}})],1):_vm._e(),(_vm.type)?_c('div',{staticClass:"contactswrapper"},[_c('contacts',{attrs:{"mode":'Selectmany'},on:{"selectedUsers":_vm.selectedUsers}})],1):_vm._e()])])])}
+var staticRenderFns = []
+
+
+// CONCATENATED MODULE: ./src/components/chat/create/index.vue?vue&type=template&id=f0734632&scoped=true&
+
+// EXTERNAL MODULE: ./node_modules/vuex/dist/vuex.esm.js
+var vuex_esm = __webpack_require__("2f62");
+
+// EXTERNAL MODULE: ./src/components/contacts/index.vue + 4 modules
+var contacts = __webpack_require__("71da");
+
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./src/components/chat/create?vue&type=script&lang=js&
+
+
+/* harmony default export */ var create_vue_type_script_lang_js_ = ({
+  name: 'chatcreate',
+  props: {},
+  components: {
+    contacts: contacts["a" /* default */]
+  },
+  data: function () {
+    return {
+      loading: false,
+      types: {
+        privategroup: {
+          id: 'privategroup',
+          icon: 'fas fa-user-friends',
+          value: 'private'
+        },
+        publicgroup: {
+          id: 'publicgroup',
+          icon: 'fas fa-users',
+          value: 'public'
+        }
+      },
+      type: null,
+      groupName: '',
+      selected: {}
+    };
+  },
+  created: () => {},
+  watch: {//$route: 'getdata'
+  },
+  computed: Object(vuex_esm["c" /* mapState */])({
+    auth: state => state.auth,
+    cancomplete: function () {
+      if (!this.type) return false;
+
+      if (this.type.id == 'privategroup') {
+        return this.selectedLength > 1;
+      }
+
+      if (this.type.id == 'publicgroup') {
+        if (this.groupName) return true;
+        return false;
+      }
+    },
+    selectedLength: function () {
+      return _.toArray(this.selected).length;
+    }
+  }),
+  methods: {
+    unselecttype: function () {
+      this.type = null;
+      this.selected = {};
+    },
+    selecttype: function (id) {
+      this.type = this.types[id];
+      this.selected = {};
+    },
+    selectedUsers: function (u) {
+      this.selected = u;
+    },
+    selectoneuser: function (u) {
+      var tetatetid = this.core.mtrx.kit.tetatetid(u, this.core.user.userinfo);
+      this.$router.push('chat?id=' + tetatetid + '&u=' + u.id).catch(e => {});
+    },
+
+    complete() {
+      this.createGroupAction(this.selected).then(chat => {
+        this.$emit('completed', chat);
+        this.$store.commit('icon', {
+          icon: 'success',
+          message: ""
+        });
+      }).catch(e => {
+        var text = 'An unexpected error occurred';
+        if (e == 'cantcomplete') text = 'Please enter a group name and add chat members';
+        this.$store.commit('icon', {
+          icon: 'error',
+          message: text
+        });
+      });
+    },
+
+    createGroupAction(users) {
+      if (!this.cancomplete) {
+        return Promise.reject('cantcomplete');
+      }
+
+      if (!this.type) {
+        return Promise.reject('type');
+      }
+
+      if (_.isEmpty(users)) {
+        return Promise.reject('users');
+      }
+
+      const data = this.core.mtrx.kit.groupIdLight(users);
+      this.$store.state.globalpreloader = true;
+      return this.core.mtrx.client.createRoom({
+        //room_alias_name: '#' + data.hash,
+        visibility: this.type.value,
+        // this.selectedValue === 'Private' ? 'private' : 'public',
+        invite: data.idForInviting,
+        name: '@' + (this.groupName ? this.groupName : "New Room"),
+        initial_state: [{
+          "type": "m.room.guest_access",
+          "state_key": "",
+          "content": {
+            "guest_access": "can_join"
+          }
+        }]
+      }).then(chat => {
+        this.$store.state.globalpreloader = false;
+        return chat;
+      }).catch(e => {
+        this.$store.state.globalpreloader = false;
+        return Promise.reject(e);
+      });
+    }
+
+  }
+});
+// CONCATENATED MODULE: ./src/components/chat/create?vue&type=script&lang=js&
+ /* harmony default export */ var chat_create_vue_type_script_lang_js_ = (create_vue_type_script_lang_js_); 
+// EXTERNAL MODULE: ./node_modules/vue-loader/lib/runtime/componentNormalizer.js
+var componentNormalizer = __webpack_require__("2877");
+
+// CONCATENATED MODULE: ./src/components/chat/create/index.vue
+
+
+
+function injectStyles (context) {
+  
+  var style0 = __webpack_require__("e8d4")
+if (style0.__inject__) style0.__inject__(context)
+
+}
+
+/* normalize component */
+
+var component = Object(componentNormalizer["a" /* default */])(
+  chat_create_vue_type_script_lang_js_,
+  render,
+  staticRenderFns,
+  false,
+  injectStyles,
+  "f0734632",
+  null
+  ,true
+)
+
+/* harmony default export */ var create = __webpack_exports__["a"] = (component.exports);
+
+/***/ }),
+
 /***/ "78ad":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -55512,6 +57413,18 @@ exports = ___CSS_LOADER_API_IMPORT___(false);
 exports.push([module.i, "/*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */html{-webkit-text-size-adjust:100%}body{margin:0}main{display:block}h1{font-size:2em;margin:.67em 0}hr{box-sizing:content-box;height:0;overflow:visible}pre{font-family:monospace,monospace;font-size:1em}a{background-color:transparent}abbr[title]{border-bottom:none;text-decoration:underline;-webkit-text-decoration:underline dotted;text-decoration:underline dotted}b,strong{font-weight:bolder}code,kbd,samp{font-family:monospace,monospace;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}img{border-style:none}button,input,optgroup,select,textarea{font-family:inherit;font-size:100%;margin:0}button,input,select,textarea{background-color:transparent;border-style:none;color:inherit;outline:none}button,input{overflow:visible}button,select{text-transform:none}[type=button],[type=reset],[type=submit],button{-webkit-appearance:button}[type=button]::-moz-focus-inner,[type=reset]::-moz-focus-inner,[type=submit]::-moz-focus-inner,button::-moz-focus-inner{border-style:none;padding:0}[type=button]:-moz-focusring,[type=reset]:-moz-focusring,[type=submit]:-moz-focusring,button:-moz-focusring{outline:1px dotted ButtonText}fieldset{padding:.35em .75em .625em}legend{box-sizing:border-box;color:inherit;display:table;max-width:100%;padding:0;white-space:normal}progress{vertical-align:baseline}textarea{overflow:auto}[type=checkbox],[type=radio]{box-sizing:border-box;padding:0}[type=number]::-webkit-inner-spin-button,[type=number]::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}[type=search]::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}details{display:block}summary{display:list-item}[hidden],template{display:none}", ""]);
 // Exports
 module.exports = exports;
+
+
+/***/ }),
+
+/***/ "7905":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_a06dc160_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("0d7c");
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_a06dc160_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_a06dc160_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_a06dc160_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_a06dc160_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
 
 
 /***/ }),
@@ -55542,6 +57455,20 @@ var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
 exports.push([module.i, ".namebuttoncreate[data-v-f0734632],.selectedtype[data-v-f0734632],.type[data-v-f0734632]{padding:1em;display:flex;align-items:center;border-bottom:1px solid rgb(var(--neutral-grad-0));white-space:nowrap;text-overflow:ellipsis;overflow:hidden;cursor:pointer}.namebuttoncreate .icon i[data-v-f0734632],.selectedtype .icon i[data-v-f0734632],.type .icon i[data-v-f0734632]{width:30px;opacity:.7;font-size:.8em}.namebuttoncreate span[data-v-f0734632],.selectedtype span[data-v-f0734632],.type span[data-v-f0734632]{font-size:.9em}.namebuttoncreate button[data-v-f0734632],.selectedtype button[data-v-f0734632],.type button[data-v-f0734632]{white-space:nowrap;min-width:0!important}.namebuttoncreate input[data-v-f0734632],.selectedtype input[data-v-f0734632],.type input[data-v-f0734632]{width:auto}.namebuttoncreate .completewrapper[data-v-f0734632],.selectedtype .completewrapper[data-v-f0734632],.type .completewrapper[data-v-f0734632]{flex-grow:1;text-align:right}.namebuttoncreate[data-v-f0734632]{padding-top:0;padding-bottom:0}.namebuttoncreate>div[data-v-f0734632]{flex-grow:1}.namebuttoncreate input[data-v-f0734632]{width:100%;padding-top:1em;padding-bottom:1em}.selectedtype[data-v-f0734632]{background:rgb(var(--background-total-theme));position:sticky;top:-1px;z-index:12}.selectedtype .icon[data-v-f0734632]{cursor:pointer;transition:.3s}.selectedtype .icon[data-v-f0734632]:hover{opacity:.5}.selectedtype .label[data-v-f0734632]{font-weight:700;font-size:.8em}.oneonone[data-v-f0734632] .namebuttoncreate{display:none}.oneonone[data-v-f0734632] .searchWrapperEA{background:rgb(var(--background-total-theme));position:sticky;top:-1px;z-index:12;padding-bottom:.5em}", ""]);
+// Exports
+module.exports = exports;
+
+
+/***/ }),
+
+/***/ "79c1":
+/***/ (function(module, exports, __webpack_require__) {
+
+// Imports
+var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
+exports = ___CSS_LOADER_API_IMPORT___(false);
+// Module
+exports.push([module.i, ".deletedMessage[data-v-069eb0aa]{font-size:.8em;text-align:center;opacity:.6}.event[data-v-069eb0aa]{opacity:0;transition:.3s}.event.readyToRender[data-v-069eb0aa]{opacity:1}.event .loading[data-v-069eb0aa]{width:100%;height:100%;text-align:center}.event .deletedMessage[data-v-069eb0aa],.event .loading[data-v-069eb0aa]{position:relative;left:0;top:0;padding:.5em}", ""]);
 // Exports
 module.exports = exports;
 
@@ -56433,20 +58360,6 @@ module.exports.__inject__ = function (shadowRoot) {
 
 /***/ }),
 
-/***/ "7e59":
-/***/ (function(module, exports, __webpack_require__) {
-
-// Imports
-var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
-exports = ___CSS_LOADER_API_IMPORT___(false);
-// Module
-exports.push([module.i, "#maincontent .expandp[data-v-a8a70f9c]{position:absolute;left:0;right:-.5em;top:0;bottom:0;cursor:pointer;overflow-y:hidden;z-index:3}#maincontent .expandp .etablew[data-v-a8a70f9c]{position:absolute;left:0;right:0;top:0;bottom:0;z-index:2}#maincontent .expandp .etable[data-v-a8a70f9c]{height:100%;width:100%}#maincontent .expandp .etable>div[data-v-a8a70f9c]{transition:.3s;opacity:0;color:rgb(var(--text-on-bg-ac-color));vertical-align:middle;text-align:center}#maincontent .expandp[data-v-a8a70f9c]:before{--size:0;content:\"\";position:absolute;left:var(--x);top:50%;width:var(--size);height:var(--size);background:radial-gradient(circle closest-side,rgba(0,24,48,.34902),transparent);transform:translate(-50%,-50%);transition:.3s}#maincontent .expandp:hover .etable>div[data-v-a8a70f9c]{opacity:1}#maincontent .expandp[data-v-a8a70f9c]:hover:before{--size:400px}#maincontent.bout .expandp[data-v-a8a70f9c]{display:none}#maincontent[data-v-a8a70f9c] .resize-observer{height:1px;overflow:hidden}#maincontent .headerSpacer[data-v-a8a70f9c]{position:static;left:0;right:0;top:0;bottom:0;padding-bottom:0;margin:0 auto;max-width:640px}#maincontent .headerSpacerWrapper[data-v-a8a70f9c]{position:absolute;left:0;right:0;top:calc(65px + var(--app-margin-top));bottom:90px;overflow-y:auto;overflow-x:hidden}#maincontent .headerSpacerWrapperOvf[data-v-a8a70f9c]{position:absolute;left:0;right:0;top:0;bottom:0;overflow-y:scroll;overflow-x:hidden;overscroll-behavior:contain}#maincontent.minimized .headerSpacerWrapper[data-v-a8a70f9c]{top:55px}#maincontent.minimized.fix .headerSpacerWrapper[data-v-a8a70f9c]{overflow-y:inherit;overflow-x:inherit;top:0;bottom:103px;will-change:transform;transition:transform .3s}#maincontent.minimized.fix:not(.active):not(.unauthorized) .headerSpacerWrapperOvf[data-v-a8a70f9c]{-webkit-mask-image:linear-gradient(0deg,transparent 3%,#000 10%);mask-image:linear-gradient(0deg,transparent 3%,#000 10%)}#maincontent.minimized.fix[data-v-a8a70f9c]:not(.active):not(.unauthorized) .maskedtop{-webkit-mask-image:linear-gradient(180deg,transparent 3%,#000 10%);mask-image:linear-gradient(180deg,transparent 3%,#000 10%)}#maincontent.minimized.fix .headerSpacerWrapperOvf[data-v-a8a70f9c]{position:relative;width:344px;height:100%;overflow:visible;will-change:transform;transition:transform .3s}#maincontent.minimized.fix .headerSpacer[data-v-a8a70f9c]{position:absolute;height:100%;left:0;width:344px;padding:0;overflow-x:hidden;will-change:transform;overscroll-behavior:contain}#maincontent.minimized.fix.active .expandp[data-v-a8a70f9c]{display:none}#maincontent.minimized.fix.active .headerSpacerWrapper[data-v-a8a70f9c]{transform:translateZ(0);z-index:130}#maincontent.minimized.fix.active .headerSpacerWrapperOvf[data-v-a8a70f9c]{transform:translate3d(-300px,4px,0)}#maincontent.minimized.fix.active .headerSpacerWrapperOvf .headerSpacer[data-v-a8a70f9c]{border-radius:8px;border-top-left-radius:0;border-top-right-radius:0;background:rgb(var(--background-total-theme));border:1px solid rgba(var(--neutral-grad-2),.2);box-shadow:0 5px 7px -5px rgba(var(--color-shadow-base),.7);right:0}.modalcommoncontent[data-v-a8a70f9c] .previewContact{padding-left:.75em}", ""]);
-// Exports
-module.exports = exports;
-
-
-/***/ }),
-
 /***/ "7e78":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -56581,39 +58494,17 @@ module.exports = exports;
 
 /***/ }),
 
-/***/ "810b":
+/***/ "80fe":
 /***/ (function(module, exports, __webpack_require__) {
 
-// style-loader: Adds some css to the DOM by adding a <style> tag
+// Imports
+var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
+exports = ___CSS_LOADER_API_IMPORT___(false);
+// Module
+exports.push([module.i, ".main-wrapper.minimized[data-v-7171cf6c]:not(.active) .topheader{opacity:0}.main-wrapper.minimized[data-v-7171cf6c]:not(.active) .encrypted{display:none}", ""]);
+// Exports
+module.exports = exports;
 
-// load the styles
-var content = __webpack_require__("d270");
-if(content.__esModule) content = content.default;
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add CSS to Shadow Root
-var add = __webpack_require__("35d6").default
-module.exports.__inject__ = function (shadowRoot) {
-  add("2d214bb3", content, shadowRoot)
-};
-
-/***/ }),
-
-/***/ "8157":
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__("7e59");
-if(content.__esModule) content = content.default;
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add CSS to Shadow Root
-var add = __webpack_require__("35d6").default
-module.exports.__inject__ = function (shadowRoot) {
-  add("6b42ebab", content, shadowRoot)
-};
 
 /***/ }),
 
@@ -56912,6 +58803,20 @@ module.exports = {
   assertOptions: assertOptions,
   validators: validators
 };
+
+
+/***/ }),
+
+/***/ "8557":
+/***/ (function(module, exports, __webpack_require__) {
+
+// Imports
+var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
+exports = ___CSS_LOADER_API_IMPORT___(false);
+// Module
+exports.push([module.i, ".footer-chat[data-v-f00ed472]{bottom:0;left:0;right:0;background:rgb(var(--background-total-theme));border-top:1px solid rgb(var(--background-secondary-theme));position:absolute;height:90px;padding-bottom:30px}.footer-chat.bout[data-v-f00ed472]{position:fixed;will-change:transform}.footer-chat .work[data-v-f00ed472]{height:100%;padding:0!important}.footer-chat.bin[data-v-f00ed472]{border-top:0;position:static}.footer-chat.fix[data-v-f00ed472]{position:absolute;height:auto}.footer-chat.fix.minimized[data-v-f00ed472]{background:transparent;padding-bottom:0}.footer-chat.fix.minimized .menuItems[data-v-f00ed472]{display:block;transition:.3s;padding-top:.5em}.footer-chat.fix.minimized .menuItems a[data-v-f00ed472]{padding:0}.footer-chat.fix.minimized .menuItems .menuItem[data-v-f00ed472]{width:44px;height:44px;background:rgba(var(--neutral-grad-3),.4);color:rgba(var(--neutral-grad-3),.8);border-radius:50%;border:1px solid transparent;margin-bottom:.25em;line-height:40px;transition:.3s}.footer-chat.fix.minimized .menuItems .menuItem .icon[data-v-f00ed472]{color:rgb(var(--background-total-theme))}.footer-chat.fix.minimized .menuItems .menuItem .label[data-v-f00ed472]{display:none}.footer-chat.fix.minimized .menuItems .menuItem i[data-v-f00ed472]{vertical-align:middle;font-size:.8em}.footer-chat.fix.minimized .menuItems .menuItem.active[data-v-f00ed472]{text-shadow:0 0 20px rgb(var(--color-bg-ac-bright)),0 0 20px rgb(var(--color-bg-ac-bright)),0 0 20px rgb(var(--color-bg-ac-bright)),0 0 20px rgb(var(--color-bg-ac-bright)),0 0 20px rgb(var(--color-bg-ac-bright));background:rgba(var(--color-bg-ac-bright),.9);border:1px solid rgba(var(--color-bg-ac-bright),.9);color:rgb(var(--background-total-theme))}.footer-chat.fix.minimized .menuItems .menuItem.active .icon[data-v-f00ed472]{color:rgb(var(--background-total-theme))}.footer-chat.fix.minimized .menuItems .menuItem[data-v-f00ed472]:hover:not(.active){background:rgba(var(--color-bg-ac-bright),.95);color:#fff;text-shadow:0 0 10px rgb(var(--color-bg-ac-bright)),0 0 15px rgb(var(--color-bg-ac-bright)),0 0 20px rgb(var(--color-bg-ac-bright)),0 0 25px rgb(var(--color-bg-ac-bright)),0 0 30px #02061a,0 0 35px rgb(var(--color-bg-ac-bright)),0 0 40px #02061a}.footer-chat.fix.minimized.active .menuItems[data-v-f00ed472]{border-top:0}.menuItems[data-v-f00ed472]{display:flex;justify-content:space-around;align-items:center;height:100%}.menuItems a[data-v-f00ed472]{display:block;flex-grow:1;text-align:center;padding:1em;color:#213850}.menuItems .icon[data-v-f00ed472]{font-size:.9em;color:rgba(var(--color-txt-gray-dark),.7)}.menuItems .label[data-v-f00ed472]{font-size:.7em;position:absolute;bottom:0;left:0;right:0;line-height:1em;text-align:center;opacity:.7}.menuItems .menuItem[data-v-f00ed472]{position:relative;text-align:center;cursor:pointer;width:64px;height:44px;line-height:44px}.menuItems .menuItem.active .icon[data-v-f00ed472]{color:rgb(var(--color-txt-ac))}.menuItems .menuItem .unseen[data-v-f00ed472]{position:absolute;width:22px;height:22px;right:-10%;bottom:-10%;background:rgba(var(--color-txt-ac),.9);line-height:22px;text-align:center;font-weight:500;border-radius:50%;z-index:2;font-size:.6em;color:rgb(var(--text-on-bg-ac-color))}", ""]);
+// Exports
+module.exports = exports;
 
 
 /***/ }),
@@ -57226,6 +59131,24 @@ if (GlobalVue) {
 
 
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__("c8ba")))
+
+/***/ }),
+
+/***/ "860c":
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__("d601");
+if(content.__esModule) content = content.default;
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add CSS to Shadow Root
+var add = __webpack_require__("35d6").default
+module.exports.__inject__ = function (shadowRoot) {
+  add("7532a795", content, shadowRoot)
+};
 
 /***/ }),
 
@@ -57918,6 +59841,24 @@ module.exports = function (thing, encoding, name) {
 
 /***/ }),
 
+/***/ "8c7e":
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__("69ed");
+if(content.__esModule) content = content.default;
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add CSS to Shadow Root
+var add = __webpack_require__("35d6").default
+module.exports.__inject__ = function (shadowRoot) {
+  add("7a77a3f2", content, shadowRoot)
+};
+
+/***/ }),
+
 /***/ "8cd8":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -57927,6 +59868,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_0f8b05de_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_0f8b05de_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__);
 /* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_0f8b05de_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_0f8b05de_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
 
+
+/***/ }),
+
+/***/ "8d59":
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__("8557");
+if(content.__esModule) content = content.default;
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add CSS to Shadow Root
+var add = __webpack_require__("35d6").default
+module.exports.__inject__ = function (shadowRoot) {
+  add("7a1c607a", content, shadowRoot)
+};
 
 /***/ }),
 
@@ -58205,24 +60164,6 @@ exports.push([module.i, ".name[data-v-d18e99d2]{text-align:center}.name span[dat
 // Exports
 module.exports = exports;
 
-
-/***/ }),
-
-/***/ "8fc3":
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__("703d");
-if(content.__esModule) content = content.default;
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add CSS to Shadow Root
-var add = __webpack_require__("35d6").default
-module.exports.__inject__ = function (shadowRoot) {
-  add("78a51160", content, shadowRoot)
-};
 
 /***/ }),
 
@@ -59222,7 +61163,7 @@ module.exports.__inject__ = function (shadowRoot) {
 /***/ "96ee":
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"caption\":{\"create\":\"Create\",\"addPublicChatName\":\"Add Public Chat Name\",\"addGroupNamePlaceHolder\":\"Add Group Name\",\"createPublicChat\":\"Create public chat\",\"chatTopic\":\"Topic renamed\",\"publicRoomTitle\":\"Public Room Preview\",\"asModerator\":\"as moderator\",\"marked\":\"marked\",\"unmarked\":\"unmarked\",\"removeBan\":\"Remove Ban\",\"cancelModeration\":\"Remove moderation\",\"uploadFiles\":\"上传文件\",\"header\":\"头\",\"dragAndDropAFile\":\"拖放文件\",\"chatInvite\":\"你被邀请与之聊天：\",\"cantJoin\":\"您不能加入与以下人员的聊天：\",\"chatInviteDecline\":\"你可以加入聊天或拒绝邀请\",\"creatorLeft\":\"因为创建者离开了房间\",\"encrypted\":\"加密的\",\"noImages\":\"此聊天中还没有图片\",\"noFiles\":\"There are no files in this chat yet\",\"inviteUser\":\"邀请用户\",\"invite\":\"邀请\",\"add\":\"添加\",\"mute\":\"静音\",\"unmute\":\"取消静音\",\"leave\":\"离开\",\"Info\":\"信息\",\"new\":\"新\",\"tying\":\"打字\",\"accNotFound\":\"您的注册正在进行中，请等待...\",\"emptyList\":\"列表为空（已过滤或只是空）\",\"welcome\":\"欢迎来到Pocketnet聊天\",\"startNewChat\":\"开始一个新的聊天\",\"chats\":\"Chats\",\"shareWith\":\"与人分享\",\"newChat\":\"新聊天\",\"moveToChat\":\"移动到聊天\",\"queryNoResults\":\"查询报告没有结果\",\"needMoreCharacters\":\"需要更多的字符来获得结果\",\"createGroup\":\"创建群组\",\"unabletoDecrypt\":\"* 无法解密\",\"messageDeleted\":\"信息已删除\",\"sentImage\":\"已发送的图片\",\"sentVoiceMessage\":\"发了一条语音信息\",\"invitationToChat\":\"邀请聊天\",\"invitationToRoom\":\"Invitation to room\",\"leftChat\":\"离开聊天\",\"joined\":\"加入\",\"chatRenamed\":\"聊天记录重命名为\",\"recentComment\":\"最近的评论：\",\"share\":\"SHARE\",\"followers\":\"Followers:\",\"reputation\":\"声誉:\",\"following\":\"关注：\",\"theme\":\"主题:\",\"contacts\":\"联系人\",\"phoneContacts\":\"电话联系人\",\"chooseInviteMedia\":\"请选择你的邀请方式：\",\"admin\":\"管理员\",\"moderator\":\"版主\",\"videocall\":\"视频通话\",\"call\":\"呼叫\",\"leaveAndDelete\":\"离开和删除\",\"donate\":\"捐献\",\"makeModerator\":\"做版主\",\"ban\":\"禁止\",\"kick\":\"踢\",\"members\":\"会员\",\"media\":\"媒体\",\"files\":\"文件\",\"contactsList\":\"联系人列表\",\"send\":\"发送\",\"pageCaption\":\"页面标题\",\"caption\":\"标题\",\"text\":\"文本\",\"placeholder\":\"占位符\",\"sendTransactionTo\":\"发送交易到\",\"toBePaidByReceiver\":\"由收件人支付\",\"toBePaidBySender\":\"将由发送方支付\",\"source\":\"来源\",\"amount\":\"金额\",\"receiver\":\"收件人\",\"message\":\"消息\",\"includeFeesInAmount\":\"在金额中包括费用\",\"transactionFees\":\"交易费用\",\"totalAmount\":\"总金额\",\"balanceTooLow\":\"余额太低\",\"transactionError\":\"Error, can't make the transaction\",\"calculateFees\":\"计算费用\",\"startChatWith\":\"开始与之聊天\",\"searchResult\":\"搜索结果\",\"joinInTheChat\":\"加入到聊天中\",\"invested\":\"被邀请\",\"inTheChat\":\"在聊天中\",\"banned\":\"被禁止的\",\"andRoom\":\"和室\",\"left\":\"左边\",\"theChat\":\" 聊天\",\"made\":\"制造\",\"aModerator\":\"一个版主\",\"editedChatNameTo\":\"将聊天名称编辑为\",\"somebody\":\"某人\",\"sent\":\"已发送\",\"PKOINto\":\" PKOIN to \",\"response\":\"回应\",\"messagefrom\":\"轉發的消息來自\",\"edited\":\"已编辑\",\"settings\":\"设置\",\"unauthorized\":\"未经授权\",\"search\":\"搜索\",\"replyOnMessage\":\"在信息中回复\",\"editMessage\":\"编辑信息\",\"inviteFriend\":\"邀请朋友\",\"emptyContactList\":\"联系人列表是空的\",\"joinApp\":\"加入口袋网\",\"hasInvitedToJoin\":\"已邀请您加入口袋网\",\"contactsempty\":\"您还没有联系人，请在搜索中找到他们\",\"sendmessage\":\"Send message\"},\"input\":{\"patientEmailPlaceholder\":\"电子邮件\",\"refillNamePlaceholder\":\"补货名称\"},\"message\":{},\"button\":{\"starChatButton\":\"开始聊天\",\"decline\":\"拒绝\",\"declineandignore\":\"忽略用户\",\"join\":\"加入\",\"ok\":\"好的\",\"copy\":\"复制\",\"forward\":\"转发\",\"delete\":\"删除\",\"reply\":\"回复\",\"save\":\"Save\",\"share\":\"分享\",\"download\":\"下载\",\"downloaded\":\"已下载\",\"goToPocketnetProfile\":\"转到Pocketnet配置文件\",\"sendFile\":\"发送文件\",\"takePhotoOrVideo\":\"发送图像\",\"sendCoins\":\"发送硬币\",\"edit\":\"编辑\",\"select\":\"選擇\",\"block\":\"阻止\",\"unblock\":\"解除封锁\",\"blockUser\":\"阻止用户\"},\"yes\":\"是的\",\"cancel\":\"取消\",\"teamMessages\":{\"1-title\":\"欢迎来到巴斯蒂昂私人聊天室!\",\"1-list1\":\"与你的手机号码无关的私人信使\",\"1-list2\":\"默认对每一次1对1对话进行端对端加密\",\"1-list3\":\"通过聊天发送或接收的所有图像都是加密存储的\",\"1-list4\":\"信息的历史记录只保存7天\",\"2-title\":\"一个巨大的公告! 口袋网的应用程序现在被称为Bastyon!\",\"2-message1\":\"该域名将被转移到Bastyon.com。我们最近发布了以下重大更新\",\"2-list1\":\"不与你的电话号码相连的私人加密信使\",\"2-list2\":\"能够将PKOIN捐赠给博主\",\"2-list3\":\"视频和实时流媒体\",\"2-message2\":\"现在就邀请你的朋友，成为去中心化的互联网大未来的一部分吧\",\"2-button\":\"邀请朋友\"},\"settings_pin\":\"Pin chat window\",\"checked\":\"Yes\",\"unchecked\":\"No\",\"settings_read\":\"Send read receipts\",\"messagewasburn\":\"This message remains only in the memory of your device\",\"messagewillburn\":\"The message will be deleted soon\",\"micaccessbrowser\":\"Access to the microphone is restricted, please check your browser settings.\",\"micaccesscommonproblem\":\"Sorry, for some reason it is not possible to record voice messages on the device\",\"micaccesscordova\":\"Access to the microphone is restricted, please check your device settings.\",\"micdevicenotfound\":\"Audio recording device not found\"}");
+module.exports = JSON.parse("{\"caption\":{\"create\":\"Create\",\"addPublicChatName\":\"Add Public Chat Name\",\"addGroupNamePlaceHolder\":\"Add Group Name\",\"createPublicChat\":\"Create public chat\",\"chatTopic\":\"Topic renamed\",\"publicRoomTitle\":\"Public Room Preview\",\"asModerator\":\"as moderator\",\"marked\":\"marked\",\"unmarked\":\"unmarked\",\"removeBan\":\"Remove Ban\",\"cancelModeration\":\"Remove moderation\",\"uploadFiles\":\"上传文件\",\"header\":\"头\",\"dragAndDropAFile\":\"拖放文件\",\"chatInvite\":\"你被邀请与之聊天：\",\"cantJoin\":\"您不能加入与以下人员的聊天：\",\"chatInviteDecline\":\"你可以加入聊天或拒绝邀请\",\"creatorLeft\":\"因为创建者离开了房间\",\"encrypted\":\"加密的\",\"noImages\":\"此聊天中还没有图片\",\"noFiles\":\"There are no files in this chat yet\",\"inviteUser\":\"邀请用户\",\"invite\":\"邀请\",\"add\":\"添加\",\"mute\":\"静音\",\"unmute\":\"取消静音\",\"leave\":\"离开\",\"Info\":\"信息\",\"new\":\"新\",\"tying\":\"打字\",\"accNotFound\":\"您的注册正在进行中，请等待...\",\"emptyList\":\"列表为空（已过滤或只是空）\",\"welcome\":\"欢迎来到Pocketnet聊天\",\"startNewChat\":\"开始一个新的聊天\",\"chats\":\"Chats\",\"shareWith\":\"与人分享\",\"newChat\":\"新聊天\",\"moveToChat\":\"移动到聊天\",\"queryNoResults\":\"查询报告没有结果\",\"needMoreCharacters\":\"需要更多的字符来获得结果\",\"createGroup\":\"创建群组\",\"unabletoDecrypt\":\"* 无法解密\",\"messageDeleted\":\"信息已删除\",\"sentImage\":\"已发送的图片\",\"sentVoiceMessage\":\"发了一条语音信息\",\"invitationToChat\":\"邀请聊天\",\"invitationToRoom\":\"Invitation to room\",\"leftChat\":\"离开聊天\",\"joined\":\"加入\",\"chatRenamed\":\"聊天记录重命名为\",\"recentComment\":\"最近的评论：\",\"share\":\"SHARE\",\"followers\":\"Followers:\",\"reputation\":\"声誉:\",\"following\":\"关注：\",\"theme\":\"主题:\",\"contacts\":\"联系人\",\"phoneContacts\":\"电话联系人\",\"chooseInviteMedia\":\"请选择你的邀请方式：\",\"admin\":\"管理员\",\"moderator\":\"版主\",\"videocall\":\"视频通话\",\"call\":\"呼叫\",\"leaveAndDelete\":\"离开和删除\",\"donate\":\"捐献\",\"makeModerator\":\"做版主\",\"ban\":\"禁止\",\"kick\":\"踢\",\"members\":\"会员\",\"media\":\"媒体\",\"files\":\"文件\",\"contactsList\":\"联系人列表\",\"send\":\"发送\",\"pageCaption\":\"页面标题\",\"caption\":\"标题\",\"text\":\"文本\",\"placeholder\":\"占位符\",\"sendTransactionTo\":\"发送交易到\",\"toBePaidByReceiver\":\"由收件人支付\",\"toBePaidBySender\":\"将由发送方支付\",\"source\":\"来源\",\"amount\":\"金额\",\"receiver\":\"收件人\",\"message\":\"消息\",\"includeFeesInAmount\":\"在金额中包括费用\",\"transactionFees\":\"交易费用\",\"totalAmount\":\"总金额\",\"balanceTooLow\":\"余额太低\",\"transactionError\":\"Error, can't make the transaction\",\"calculateFees\":\"计算费用\",\"startChatWith\":\"开始与之聊天\",\"searchResult\":\"搜索结果\",\"joinInTheChat\":\"加入到聊天中\",\"invested\":\"被邀请\",\"inTheChat\":\"在聊天中\",\"banned\":\"被禁止的\",\"andRoom\":\"和室\",\"left\":\"左边\",\"theChat\":\" 聊天\",\"made\":\"制造\",\"aModerator\":\"一个版主\",\"editedChatNameTo\":\"将聊天名称编辑为\",\"somebody\":\"某人\",\"sent\":\"已发送\",\"PKOINto\":\" PKOIN to \",\"response\":\"回应\",\"messagefrom\":\"轉發的消息來自\",\"edited\":\"已编辑\",\"settings\":\"设置\",\"unauthorized\":\"未经授权\",\"search\":\"搜索\",\"replyOnMessage\":\"在信息中回复\",\"editMessage\":\"编辑信息\",\"inviteFriend\":\"邀请朋友\",\"emptyContactList\":\"联系人列表是空的\",\"joinApp\":\"加入口袋网\",\"hasInvitedToJoin\":\"已邀请您加入口袋网\",\"contactsempty\":\"您还没有联系人，请在搜索中找到他们\",\"sendmessage\":\"Send message\",\"clearHistory\":\"Clear history\"},\"input\":{\"patientEmailPlaceholder\":\"电子邮件\",\"refillNamePlaceholder\":\"补货名称\"},\"message\":{},\"button\":{\"starChatButton\":\"开始聊天\",\"decline\":\"拒绝\",\"declineandignore\":\"忽略用户\",\"join\":\"加入\",\"ok\":\"好的\",\"copy\":\"复制\",\"forward\":\"转发\",\"delete\":\"删除\",\"reply\":\"回复\",\"save\":\"Save\",\"share\":\"分享\",\"download\":\"下载\",\"downloaded\":\"已下载\",\"goToPocketnetProfile\":\"转到Pocketnet配置文件\",\"sendFile\":\"发送文件\",\"takePhotoOrVideo\":\"发送图像\",\"sendCoins\":\"发送硬币\",\"edit\":\"编辑\",\"select\":\"選擇\",\"block\":\"阻止\",\"unblock\":\"解除封锁\",\"blockUser\":\"阻止用户\"},\"yes\":\"是的\",\"cancel\":\"取消\",\"teamMessages\":{\"1-title\":\"欢迎来到巴斯蒂昂私人聊天室!\",\"1-list1\":\"与你的手机号码无关的私人信使\",\"1-list2\":\"默认对每一次1对1对话进行端对端加密\",\"1-list3\":\"通过聊天发送或接收的所有图像都是加密存储的\",\"1-list4\":\"信息的历史记录只保存7天\",\"2-title\":\"一个巨大的公告! 口袋网的应用程序现在被称为Bastyon!\",\"2-message1\":\"该域名将被转移到Bastyon.com。我们最近发布了以下重大更新\",\"2-list1\":\"不与你的电话号码相连的私人加密信使\",\"2-list2\":\"能够将PKOIN捐赠给博主\",\"2-list3\":\"视频和实时流媒体\",\"2-message2\":\"现在就邀请你的朋友，成为去中心化的互联网大未来的一部分吧\",\"2-button\":\"邀请朋友\"},\"settings_pin\":\"Pin chat window\",\"checked\":\"Yes\",\"unchecked\":\"No\",\"settings_read\":\"Send read receipts\",\"messagewasburn\":\"This message remains only in the memory of your device\",\"messagewillburn\":\"The message will be deleted soon\",\"micaccessbrowser\":\"Access to the microphone is restricted, please check your browser settings.\",\"micaccesscommonproblem\":\"Sorry, for some reason it is not possible to record voice messages on the device\",\"micaccesscordova\":\"Access to the microphone is restricted, please check your device settings.\",\"micdevicenotfound\":\"Audio recording device not found\"}");
 
 /***/ }),
 
@@ -62714,7 +64655,7 @@ MatrixClient.prototype.sendEmoteMessage = function (roomId, body, txnId, callbac
  */
 
 
-MatrixClient.prototype.sendImageMessage = function (roomId, url, info, text, callback) {
+MatrixClient.prototype.sendImageMessage = function (roomId, url, info, text, callback, event) {
   if (utils.isFunction(text)) {
     callback = text;
     text = undefined;
@@ -62728,7 +64669,8 @@ MatrixClient.prototype.sendImageMessage = function (roomId, url, info, text, cal
     msgtype: "m.image",
     url: url,
     info: info,
-    body: text
+    body: text,
+    "m.relates_to": info["m.relates_to"]
   };
   return this.sendMessage(roomId, content, callback);
 };
@@ -62757,7 +64699,8 @@ MatrixClient.prototype.sendAudioMessage = function (roomId, url, info, text, cal
     msgtype: "m.audio",
     url: url,
     info: info,
-    body: text
+    body: text,
+    "m.relates_to": info["m.relates_to"]
   };
   return this.sendMessage(roomId, content, callback);
 };
@@ -65730,6 +67673,20 @@ module.exports.__inject__ = function (shadowRoot) {
 
 /***/ }),
 
+/***/ "9859":
+/***/ (function(module, exports, __webpack_require__) {
+
+// Imports
+var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
+exports = ___CSS_LOADER_API_IMPORT___(false);
+// Module
+exports.push([module.i, ".toggleChatGroup[data-v-7fe8f542]{list-style:none;padding:0;margin:0;display:flex;justify-content:flex-start;align-items:center}.toggleChatGroup li[data-v-7fe8f542]{margin-right:10px;padding:10px 0}.logo20[data-v-7fe8f542]{width:20px;height:20px}.iconbuttonsmall[data-v-7fe8f542]{color:rgb(var(--neutral-grad-3))}.iconbuttonsmall.active[data-v-7fe8f542],.iconbuttonsmall[data-v-7fe8f542]:hover{color:rgb(var(--color-txt-ac))}.iconbuttonsmall.active[data-v-7fe8f542]:hover{color:rgb(var(--neutral-grad-3))}", ""]);
+// Exports
+module.exports = exports;
+
+
+/***/ }),
+
 /***/ "98e6":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -65787,733 +67744,29 @@ __webpack_require__.r(__webpack_exports__);
 // ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/views/chats.vue?vue&type=template&id=62a1ab6a&scoped=true&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"page chats",class:{pocketnet: _vm.pocketnet, mobile: _vm.mobile, minimized: _vm.minimized, active: _vm.active, newChat: _vm.newChat}},[_c('topheader',{staticClass:"topheader",attrs:{"share":_vm.share},on:{"newchat":_vm.newchat}}),_c('maincontent',{ref:"maincontent",attrs:{"rbackexp":true},scopedSlots:_vm._u([{key:"content",fn:function(){return [_c('list',{attrs:{"share":_vm.share},on:{"scrolltop":_vm.scrolltop}}),(_vm.newChat && !_vm.hiddenInParent)?_c('modal',{on:{"close":_vm.closeNewChat},scopedSlots:_vm._u([{key:"header",fn:function(){return [_vm._v(_vm._s(_vm.$t("caption.newChat")))]},proxy:true},{key:"body",fn:function(){return [_c('chatcreate',{on:{"completed":_vm.chatcreated}})]},proxy:true},{key:"footer",fn:function(){return undefined},proxy:true}],null,false,1284178828)}):_vm._e()]},proxy:true}])})],1)}
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/views/chats.vue?vue&type=template&id=1bb44da9&scoped=true&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"page chats",class:{ pocketnet: _vm.pocketnet, mobile: _vm.mobile, minimized: _vm.minimized, active: _vm.active, newChat: _vm.newChat }},[_c('topheader',{staticClass:"topheader",attrs:{"share":_vm.share},on:{"newchat":_vm.newchat}}),_c('maincontent',{ref:"maincontent",attrs:{"rbackexp":true},scopedSlots:_vm._u([{key:"content",fn:function(){return [_c('list',{attrs:{"share":_vm.share},on:{"scrolltop":_vm.scrolltop}}),(_vm.newChat && !_vm.hiddenInParent)?_c('modal',{on:{"close":_vm.closeNewChat},scopedSlots:_vm._u([{key:"header",fn:function(){return [_vm._v(_vm._s(_vm.$t("caption.newChat")))]},proxy:true},{key:"body",fn:function(){return [_c('chatcreate',{on:{"completed":_vm.chatcreated}})]},proxy:true},{key:"footer",fn:function(){return undefined},proxy:true}],null,false,1284178828)}):_vm._e()]},proxy:true}])})],1)}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/views/chats.vue?vue&type=template&id=62a1ab6a&scoped=true&
+// CONCATENATED MODULE: ./src/views/chats.vue?vue&type=template&id=1bb44da9&scoped=true&
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/chats/list/index.vue?vue&type=template&id=57da332f&scoped=true&
-var listvue_type_template_id_57da332f_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"chats-list",class:{'bin' : _vm.pocketnet, 'bout' : !_vm.pocketnet, minimized: _vm.minimized, fix : _vm.pocketnet, active: _vm.active, empty: _vm.empty}},[(!_vm.unauthorized)?_c('div',[(!_vm.minimized || _vm.active)?_c('div',{staticClass:"work searchWrapperEA"},[_c('search',{attrs:{"minimize":_vm.minimized},on:{"search":_vm.search}})],1):_vm._e(),(!_vm.searchText && this.chats.length <= 2 && _vm.chatsready == true)?_c('teamroom',{on:{"click":_vm.openTeamRoom}}):_vm._e(),(_vm.chatsready !== true)?_c('div',{staticClass:"listChatLoading"},[_c('dummypreviews')],1):_c('div',{staticClass:"Swipes"},[_c('transition',{attrs:{"name":"fade"}},[(_vm.showchatslist)?_c('div',{staticClass:"desktopList"},[(_vm.filteredchats.length || !_vm.searchText)?_c('div',{staticClass:"chatswrapper"},[_c('RecycleScroller',{staticClass:"scroller",attrs:{"page-mode":"","items":_vm.filteredchats,"item-size":_vm.pocketnet ? 60 : 70,"key-field":"roomId","buffer":_vm.pocketnet ? 400 : 700},scopedSlots:_vm._u([{key:"default",fn:function(ref){
-var item = ref.item;
-var active = ref.active;
-return [(item)?_c('div',{ref:"content",staticClass:"card-content",on:{"click":function (e){ return _vm.itemClick(item); }}},[(active)?_c('preview',{attrs:{"chat":item}}):_vm._e()],1):_vm._e()]}}],null,false,127139565)})],1):_c('div',{staticClass:"work"},[_c('div',{staticClass:"chatsearchingempty"},[_c('span',[_vm._v(_vm._s(_vm.$t("caption.chatsearchingempty")))])])])]):_vm._e()])],1)],1):_c('div',{staticClass:"dmdv"})])}
-var listvue_type_template_id_57da332f_scoped_true_staticRenderFns = []
+// EXTERNAL MODULE: ./src/components/chats/list/index.vue + 9 modules
+var list = __webpack_require__("4fd2");
 
-
-// CONCATENATED MODULE: ./src/components/chats/list/index.vue?vue&type=template&id=57da332f&scoped=true&
+// EXTERNAL MODULE: ./src/components/chats/topheader/index.vue + 4 modules
+var topheader = __webpack_require__("d136");
 
 // EXTERNAL MODULE: ./node_modules/vuex/dist/vuex.esm.js
 var vuex_esm = __webpack_require__("2f62");
 
-// EXTERNAL MODULE: ./src/components/chats/dummypreviews/index.vue + 4 modules
-var dummypreviews = __webpack_require__("a54c");
-
-// EXTERNAL MODULE: ./src/components/chats/preview/index.vue + 9 modules
-var preview = __webpack_require__("087d");
-
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/teamroom/index.vue?vue&type=template&id=9b340a7a&scoped=true&
-var teamroomvue_type_template_id_9b340a7a_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:{'bin' : _vm.pocketnet, 'bout' : !_vm.pocketnet, minimized: _vm.minimized, fix : _vm.pocketnet, active: _vm.active, mobile: _vm.mobile},attrs:{"id":"teamroom"}},[_c('div',{staticClass:"teamChatWrapper",on:{"click":_vm.click}},[_c('div',{staticClass:"iconWrapper"},[_vm._m(0),(_vm.teamNotifications > 0)?_c('div',{staticClass:"unseen"},[_vm._v(" "+_vm._s(_vm.teamNotifications))]):_vm._e()]),_c('div',{staticClass:"infoWrapper"},[_vm._m(1),_c('div',{staticClass:"previewMessage"},[(_vm.pocketteammessages && _vm.pocketteammessages.length > 0)?_c('span',[_vm._v(" "+_vm._s(_vm.pocketteammessages[_vm.pocketteammessages.length - 1].previewText)+" ")]):_vm._e()])])])])}
-var teamroomvue_type_template_id_9b340a7a_scoped_true_staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"logo"},[_c('img',{attrs:{"src":"https://pocketnet.app/img/logo20.svg"}})])},function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"infoName"},[_c('span',[_vm._v("Bastyon")])])}]
-
-
-// CONCATENATED MODULE: ./src/components/teamroom/index.vue?vue&type=template&id=9b340a7a&scoped=true&
-
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./src/components/teamroom?vue&type=script&lang=js&
-
-/* harmony default export */ var teamroom_vue_type_script_lang_js_ = ({
-  name: 'teamroom',
-  props: {},
-  data: function () {
-    return {};
-  },
-  created: () => {},
-  watch: {},
-  computed: Object(vuex_esm["c" /* mapState */])({ ...Object(vuex_esm["c" /* mapState */])(['minimized', 'active', 'pocketnet', 'pocketteammessages', 'readedteammessages']),
-    mobile: function () {
-      return this.$store.state.mobile;
-    },
-    teamNotifications: function () {
-      var self = this;
-      return _.filter(this.pocketteammessages, function (m) {
-        return !self.readedteammessages[m.id];
-      }).length;
-    }
-  }),
-  methods: {
-    click: function () {
-      this.$emit('click');
-    }
-  }
-});
-// CONCATENATED MODULE: ./src/components/teamroom?vue&type=script&lang=js&
- /* harmony default export */ var components_teamroom_vue_type_script_lang_js_ = (teamroom_vue_type_script_lang_js_); 
-// EXTERNAL MODULE: ./node_modules/vue-loader/lib/runtime/componentNormalizer.js
-var componentNormalizer = __webpack_require__("2877");
-
-// CONCATENATED MODULE: ./src/components/teamroom/index.vue
-
-
-
-function injectStyles (context) {
-  
-  var style0 = __webpack_require__("f9d6")
-if (style0.__inject__) style0.__inject__(context)
-
-}
-
-/* normalize component */
-
-var component = Object(componentNormalizer["a" /* default */])(
-  components_teamroom_vue_type_script_lang_js_,
-  teamroomvue_type_template_id_9b340a7a_scoped_true_render,
-  teamroomvue_type_template_id_9b340a7a_scoped_true_staticRenderFns,
-  false,
-  injectStyles,
-  "9b340a7a",
-  null
-  ,true
-)
-
-/* harmony default export */ var teamroom = (component.exports);
-// EXTERNAL MODULE: ./src/application/functions.js
-var functions = __webpack_require__("3139");
-
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./src/components/chats/list?vue&type=script&lang=js&
-
-
-
-
-
-/* harmony default export */ var list_vue_type_script_lang_js_ = ({
-  name: "list",
-  data: function () {
-    return {
-      loading: false,
-      enabled: true,
-      page: 0,
-      revealed: {},
-      lastEventDescription: '',
-      blocked: false,
-      searchText: ''
-    };
-  },
-  components: {
-    preview: preview["a" /* default */],
-
-    /* SwipeOut,*
-     SwipeList,*/
-    dummypreviews: dummypreviews["a" /* default */],
-    teamroom: teamroom
-  },
-  props: {
-    user_data: {
-      type: String,
-      default: () => {}
-    }
-  },
-  created: () => {},
-  watch: {
-    topchatid: function () {
-      if (this.hmode) {
-        this.$emit('scrolltop');
-      }
-    },
-    active: function () {
-      this.searchText = '';
-    } //$route: 'getdata'
-
-  },
-
-  beforeDestroy() {
-    window.removeEventListener('keydown', this.onKeyDown);
-    window.removeEventListener('keyup', this.onKeyUp);
-  },
-
-  computed: Object(vuex_esm["c" /* mapState */])({
-    window: function () {
-      return window;
-    },
-    auth: state => state.auth,
-    teamNotifications: function () {
-      var self = this;
-      return _.filter(this.pocketteammessages, function (m) {
-        return !self.readedteammessages[m.id];
-      }).length;
-    },
-    ...Object(vuex_esm["c" /* mapState */])(['minimized', 'active', 'pocketnet', 'chatsready', 'prechats', 'chats', 'unauthorized', 'share', 'pocketteammessages', 'readedteammessages', 'deletedrooms', 'hideOptimization', 'wasunhidden']),
-    showchatslist: function () {
-      return !this.hideOptimization; // || this.wasunhidden
-    },
-    rooms: function () {
-      return this.core.mtrx.client.getRooms();
-    },
-    empty: function () {
-      return this.core.mtrx.ready && this.chats.length === 0;
-    },
-    topchatid: function () {
-      if (this.chats && this.chats.length) {
-        return this.chats[this.chats.length - 1].roomId;
-      }
-    },
-    chats: function (state) {
-      var self = this;
-      var chats = [];
-
-      _.each(state.chats, chat => {
-        if (this.deletedrooms[chat.roomId]) return;
-        this.core.mtrx.kit.tetatetchat(this.m_chat);
-        var users = this.core.mtrx.chatUsersInfo(chat.roomId, 'anotherChatUsers');
-
-        if (users.length === 1 && users[0] && self.core.mtrx.client.isUserIgnored(functions["a" /* default */].getMatrixIdFull(users[0].id, self.core.domain))) {
-          return;
-        } else {
-          chats.push(chat);
-        }
-      });
-
-      return _.sortBy(chats, function (o) {
-        return o.lastModified;
-      }).reverse();
-    },
-    filteredchats: function () {
-      var chats = this.chats;
-
-      if (this.searchText) {
-        var mc = _.filter(_.map(chats, c => {
-          var users = this.core.mtrx.chatUsersInfo(c.roomId, 'anotherChatUsers');
-          var m_chat = this.core.mtrx.client.getRoom(c.roomId);
-
-          var usersnamestring = _.reduce(users, function (m, u) {
-            return m + u.name.toLowerCase();
-          }, '');
-
-          var chatname = '';
-
-          if (m_chat && m_chat.getJoinRule() === 'public' && m_chat.currentState.getStateEvents('m.room.name').length > 0) {
-            chatname = m_chat.currentState.getStateEvents('m.room.name')[0].getContent().name;
-          }
-
-          if (!chatname) {
-            chatname = m_chat.name;
-            if (chatname[0] == '#') chatname = '';
-          }
-
-          var sstring = (chatname + usersnamestring).toLowerCase();
-          var point = 0;
-
-          if (sstring.indexOf(this.searchText) > -1) {
-            point = this.searchText.length / sstring.length;
-          }
-
-          return {
-            chat: m_chat.summary,
-            point
-          };
-        }), function (cc) {
-          return cc.point;
-        });
-
-        mc = _.sortBy(mc, function (cc) {
-          return cc.point;
-        }).reverse();
-        chats = _.map(mc, c => {
-          return c.chat;
-        });
-      }
-
-      return chats;
-    },
-    withoutBlockedChats: function () {
-      var self = this;
-
-      if (this.share) {
-        _.map(self.chats, function (chat) {});
-      }
-    },
-    activeuser: function () {
-      return this.core.user.userinfo;
-    },
-
-    hmode() {
-      return this.pocketnet && this.minimized && !this.active;
-    }
-
-  }),
-  methods: {
-    search(text) {
-      this.searchText = text.toLowerCase();
-    },
-
-    invitepnt() {
-      this.core.invitepnt();
-    },
-
-    generatekeys: function () {},
-
-    moment() {
-      return moment();
-    },
-
-    dd(v) {},
-
-    revealFirstRight() {
-      this.$refs.list.revealRight(0);
-    },
-
-    revealFirstLeft() {
-      this.$refs.list.revealLeft(0);
-    },
-
-    remove(item) {
-      this.$set(this.mockSwipeList, this.page, this.mockSwipeList[this.page].filter(i => i !== item));
-    },
-
-    setLastEvent(name, _ref) {
-      let {
-        item,
-        index
-      } = _ref;
-      this.lastEventDescription = {
-        name,
-        index,
-        id: item.id
-      };
-    },
-
-    itemClick(chat) {
-      if (this.hmode) {
-        this.$store.commit('active', true);
-        this.$store.commit('blockactive', {
-          value: true,
-          item: 'main'
-        });
-        this.$store.commit('setiteraction', true);
-        /*if (
-        	!this.share &&
-        	this.$store.state.lastroom &&
-        	this.$store.state.lastroom.id == chat.roomId) {
-        	this.$router.push('chat?id=' + this.$store.state.lastroom.id)
-        }*/
-      } else {
-        if (this.share) {
-          var _share = this.share;
-          this.$store.commit('SHARE', null);
-          this.$store.commit('icon', {
-            icon: 'loading',
-            message: "",
-            manual: true
-          });
-          this.core.mtrx.shareInChat(chat.roomId, _share).then(r => {
-            this.$store.commit('icon', {
-              icon: 'success',
-              message: ""
-            });
-            this.$router.push(_share.route || 'chat?id=' + chat.roomId).catch(e => {});
-          }).catch(e => {
-            console.error(e);
-            this.$store.commit('icon', {
-              icon: 'error',
-              message: ""
-            });
-
-            if (_share.route) {
-              this.$router.push(_share.route).catch(e => {});
-            }
-          });
-        } else {
-          this.$router.push('chat?id=' + chat.roomId).catch(e => {});
-        }
-      }
-    },
-
-    fbClick(e) {},
-
-    sbClick(e) {},
-
-    openTeamRoom: function () {
-      if (this.hmode) {
-        this.$store.commit('active', true);
-        this.$store.commit('blockactive', {
-          value: true,
-          item: 'main'
-        });
-        this.$store.commit('setiteraction', true);
-      } else {
-        setTimeout(() => {
-          this.$store.commit('SET_READEDTEAMMESSAGES', this.pocketteammessages);
-          this.$store.commit('ALL_NOTIFICATIONS_COUNT', this.core.mtrx.client.getRooms());
-        }, 500);
-        this.$router.push('/teamroom').catch(e => {});
-      }
-    },
-
-    // keyboard
-    onKeyDown(e) {
-      if (e.keyCode !== 16) return;
-      this.enabled = false;
-    },
-
-    onKeyUp(e) {
-      if (e.keyCode !== 16) return;
-      this.enabled = true;
-    },
-
-    removeRoom(room) {
-      this.$dialog.confirm('Do you really want to leave room?', {
-        okText: this.$i18n.t("yes"),
-        cancelText: this.$i18n.t("cancel")
-      }).then(dialog => {
-        this.core.mtrx.client.leave(room).then(r => {
-          this.core.mtrx.client.forget(room, true).then(r => {
-            return r;
-          }).then(r => {
-            this.$store.commit('DELETE_ROOM', room);
-            this.$router.push({
-              path: '/chats'
-            }).catch(e => {});
-          });
-        });
-      });
-    },
-
-    tetatetchat(room) {
-      if (!room) return true;
-      var m_ch = this.core.mtrx.client.getRoom(room.roomId);
-      if (!m_ch) return true;
-      return this.core.mtrx.kit.tetatetchat(this.core.mtrx.client.getRoom(room.roomId));
-    }
-
-  },
-
-  mounted() {
-    // ideally should be in some global handler/store
-    window.addEventListener('keydown', this.onKeyDown);
-    window.addEventListener('keyup', this.onKeyUp);
-
-    if (!this.hmode) {
-      this.$store.commit('SET_LAST_ROOM', null);
-    } else {}
-  }
-
-});
-// CONCATENATED MODULE: ./src/components/chats/list?vue&type=script&lang=js&
- /* harmony default export */ var chats_list_vue_type_script_lang_js_ = (list_vue_type_script_lang_js_); 
-// CONCATENATED MODULE: ./src/components/chats/list/index.vue
-
-
-
-function list_injectStyles (context) {
-  
-  var style0 = __webpack_require__("191a")
-if (style0.__inject__) style0.__inject__(context)
-var style1 = __webpack_require__("b551")
-if (style1.__inject__) style1.__inject__(context)
-
-}
-
-/* normalize component */
-
-var list_component = Object(componentNormalizer["a" /* default */])(
-  chats_list_vue_type_script_lang_js_,
-  listvue_type_template_id_57da332f_scoped_true_render,
-  listvue_type_template_id_57da332f_scoped_true_staticRenderFns,
-  false,
-  list_injectStyles,
-  "57da332f",
-  null
-  ,true
-)
-
-/* harmony default export */ var list = (list_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/chats/topheader/index.vue?vue&type=template&id=06594ccd&scoped=true&
-var topheadervue_type_template_id_06594ccd_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{attrs:{"id":"chatsTopheader"}},[_c('topheader',{scopedSlots:_vm._u([{key:"left",fn:function(){return [(_vm.share)?_c('div',{staticClass:"iconbutton",on:{"click":_vm.cancelShare}},[_c('i',{staticClass:"fas fa-times"})]):_vm._e(),((!_vm.minimized || _vm.active) && _vm.pocketnet && !_vm.share)?_c('div',{staticClass:"iconbutton",on:{"click":_vm.minimizeall}},[_c('i',{staticClass:"fas fa-times"})]):_vm._e(),(!_vm.pocketnet && !_vm.share)?_c('div',{staticClass:"iconbutton",on:{"click":_vm.gotoapp}},[_c('i',{staticClass:"fas fa-angle-left"})]):_vm._e()]},proxy:true},{key:"leftadd",fn:function(){return undefined},proxy:true},{key:"info",fn:function(){return [(!_vm.share)?_c('span',[_vm._v(_vm._s(_vm.$t("caption.chats")))]):_vm._e(),(_vm.share)?_c('span',[_vm._v(_vm._s(_vm.$t("caption.shareWith")))]):_vm._e()]},proxy:true},{key:"rightadd",fn:function(){return [(!_vm.share && _vm.pocketnet)?_c('router-link',{attrs:{"to":"settings"}},[_c('div',{staticClass:"iconbuttonsmall"},[_c('i',{staticClass:"fas fa-cog"})])]):_vm._e()]},proxy:true},{key:"right",fn:function(){return [(!_vm.share && (!_vm.minimized || _vm.active))?_c('div',{staticClass:"iconbutton",on:{"click":_vm.newchat}},[_c('i',{staticClass:"fas fa-plus"})]):_c('div',[(_vm.window.cordova)?_c('div',{staticClass:"iconbutton",on:{"click":_vm.cordovashare}},[_c('i',{staticClass:"fas fa-share-alt"})]):_vm._e()])]},proxy:true}])})],1)}
-var topheadervue_type_template_id_06594ccd_scoped_true_staticRenderFns = []
-
-
-// CONCATENATED MODULE: ./src/components/chats/topheader/index.vue?vue&type=template&id=06594ccd&scoped=true&
-
 // EXTERNAL MODULE: ./src/components/contacts/index.vue + 4 modules
 var contacts = __webpack_require__("71da");
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./src/components/chats/topheader?vue&type=script&lang=js&
+// EXTERNAL MODULE: ./src/components/chat/create/index.vue + 4 modules
+var create = __webpack_require__("78a2");
 
-
-/* harmony default export */ var topheader_vue_type_script_lang_js_ = ({
-  name: 'chatsTopheader',
-  props: {},
-  components: {
-    contacts: contacts["a" /* default */]
-  },
-  data: function () {
-    return {
-      loading: false,
-      newchatopened: false,
-      createGroup: false,
-      contacts: false
-    };
-  },
-
-  created() {
-    this.$store.commit('SET_CURRENT_ROOM', 'all');
-  },
-
-  destroyed() {
-    this.$store.commit('SET_CURRENT_ROOM', false);
-  },
-
-  watch: {//$route: 'getdata'
-  },
-  computed: Object(vuex_esm["c" /* mapState */])({
-    auth: state => state.auth,
-    minimized: state => state.minimized,
-    pocketnet: state => state.pocketnet,
-    active: state => state.active,
-    ...Object(vuex_esm["c" /* mapState */])(['share', 'closebybg']),
-    window: function () {
-      return window;
-    }
-  }),
-  methods: {
-    changeCloseByBg: function () {
-      this.$store.commit('closebybg', !this.closebybg);
-    },
-    gotoapp: function () {
-      if (this.core.backtoapp) this.core.backtoapp();
-    },
-    cordovashare: function () {
-      var share = this.share;
-      var options = {//subject : "Message"
-      };
-      if (share.messages) options.message = share.messages.join('. ');
-
-      if (share.images || share.files) {
-        options.files = [].concat(share.images, share.files);
-        options.files = _.filter(options.files, function (f) {
-          return f;
-        });
-      }
-
-      if (window.plugins && window.plugins.socialsharing) {
-        window.plugins.socialsharing.shareWithOptions(options);
-      }
-
-      this.cancelShare();
-    },
-    cancelShare: function () {
-      if (this.share) {
-        if (this.share.route) {
-          this.$router.push(this.share.route).catch(e => {});
-        }
-      }
-
-      this.$store.commit('SHARE', null);
-    },
-    newchatmenu: function () {
-      this.newchatopened = !this.newchatopened;
-    },
-    minimizeall: function () {
-      this.$store.commit('minimize', true);
-    },
-    newchat: function () {
-      this.$emit('newchat');
-    }
-  }
-});
-// CONCATENATED MODULE: ./src/components/chats/topheader?vue&type=script&lang=js&
- /* harmony default export */ var chats_topheader_vue_type_script_lang_js_ = (topheader_vue_type_script_lang_js_); 
-// CONCATENATED MODULE: ./src/components/chats/topheader/index.vue
-
-
-
-function topheader_injectStyles (context) {
-  
-  var style0 = __webpack_require__("4cbb")
-if (style0.__inject__) style0.__inject__(context)
-
-}
-
-/* normalize component */
-
-var topheader_component = Object(componentNormalizer["a" /* default */])(
-  chats_topheader_vue_type_script_lang_js_,
-  topheadervue_type_template_id_06594ccd_scoped_true_render,
-  topheadervue_type_template_id_06594ccd_scoped_true_staticRenderFns,
-  false,
-  topheader_injectStyles,
-  "06594ccd",
-  null
-  ,true
-)
-
-/* harmony default export */ var topheader = (topheader_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/chat/create/index.vue?vue&type=template&id=f0734632&scoped=true&
-var createvue_type_template_id_f0734632_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{attrs:{"id":"chatcreate"}},[_c('div',{staticClass:"selecttype"},[_c('div',{staticClass:"work"},[(!_vm.type)?_c('div',{staticClass:"types"},_vm._l((_vm.types),function(type){return _c('div',{key:type.id,staticClass:"type",on:{"click":function (e) { return _vm.selecttype(type.id); }}},[_c('div',{staticClass:"icon"},[_c('i',{class:type.icon})]),_c('div',[_c('span',[_vm._v(_vm._s(_vm.$t('type.' + type.id)))])])])}),0):_vm._e(),(_vm.type)?_c('div',{staticClass:"selectedtype"},[_c('div',{staticClass:"icon",on:{"click":_vm.unselecttype}},[_c('i',{staticClass:"fas fa-arrow-left"})]),_c('div',{staticClass:"label"},[_vm._v(" "+_vm._s(_vm.$t('typelabel.' + _vm.type.id))+" ")]),_c('div',{staticClass:"completewrapper"},[_c('button',{staticClass:"button small rounded",class:{orange : _vm.cancomplete, ghost : !_vm.cancomplete},on:{"click":function($event){return _vm.complete()}}},[_vm._v(" "+_vm._s(_vm.$t('caption.create'))+" "),_c('i',{class:_vm.type.icon}),_vm._v(" "),(_vm.selectedLength)?_c('span',[_vm._v(_vm._s(_vm.selectedLength))]):_vm._e()])])]):_vm._e()]),_c('div',{staticClass:"creationbody"},[(_vm.type)?_c('div',{staticClass:"groupsettigns"},[_c('div',{staticClass:"namebuttoncreate"},[_c('div',{staticClass:"groupNameInput"},[_c('label',[_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.groupName),expression:"groupName"}],attrs:{"type":"text","placeholder":_vm.type.id === 'privategroup'? this.$i18n.t('caption.addGroupNamePlaceHolder') : this.$i18n.t('caption.addPublicChatName')},domProps:{"value":(_vm.groupName)},on:{"input":function($event){if($event.target.composing){ return; }_vm.groupName=$event.target.value}}})])])])]):_vm._e(),(!_vm.type)?_c('div',{staticClass:"contactswrapper oneonone"},[_c('contacts',{attrs:{"mode":'Select'},on:{"select":_vm.selectoneuser}})],1):_vm._e(),(_vm.type)?_c('div',{staticClass:"contactswrapper"},[_c('contacts',{attrs:{"mode":'Selectmany'},on:{"selectedUsers":_vm.selectedUsers}})],1):_vm._e()])])])}
-var createvue_type_template_id_f0734632_scoped_true_staticRenderFns = []
-
-
-// CONCATENATED MODULE: ./src/components/chat/create/index.vue?vue&type=template&id=f0734632&scoped=true&
-
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./src/components/chat/create?vue&type=script&lang=js&
-
-
-/* harmony default export */ var create_vue_type_script_lang_js_ = ({
-  name: 'chatcreate',
-  props: {},
-  components: {
-    contacts: contacts["a" /* default */]
-  },
-  data: function () {
-    return {
-      loading: false,
-      types: {
-        privategroup: {
-          id: 'privategroup',
-          icon: 'fas fa-user-friends',
-          value: 'private'
-        },
-        publicgroup: {
-          id: 'publicgroup',
-          icon: 'fas fa-users',
-          value: 'public'
-        }
-      },
-      type: null,
-      groupName: '',
-      selected: {}
-    };
-  },
-  created: () => {},
-  watch: {//$route: 'getdata'
-  },
-  computed: Object(vuex_esm["c" /* mapState */])({
-    auth: state => state.auth,
-    cancomplete: function () {
-      if (!this.type) return false;
-
-      if (this.type.id == 'privategroup') {
-        return this.selectedLength > 1;
-      }
-
-      if (this.type.id == 'publicgroup') {
-        if (this.groupName) return true;
-        return false;
-      }
-    },
-    selectedLength: function () {
-      return _.toArray(this.selected).length;
-    }
-  }),
-  methods: {
-    unselecttype: function () {
-      this.type = null;
-      this.selected = {};
-    },
-    selecttype: function (id) {
-      this.type = this.types[id];
-      this.selected = {};
-    },
-    selectedUsers: function (u) {
-      this.selected = u;
-    },
-    selectoneuser: function (u) {
-      var tetatetid = this.core.mtrx.kit.tetatetid(u, this.core.user.userinfo);
-      this.$router.push('chat?id=' + tetatetid + '&u=' + u.id).catch(e => {});
-    },
-
-    complete() {
-      this.createGroupAction(this.selected).then(chat => {
-        this.$emit('completed', chat);
-        this.$store.commit('icon', {
-          icon: 'success',
-          message: ""
-        });
-      }).catch(e => {
-        var text = 'An unexpected error occurred';
-        if (e == 'cantcomplete') text = 'Please enter a group name and add chat members';
-        this.$store.commit('icon', {
-          icon: 'error',
-          message: text
-        });
-      });
-    },
-
-    createGroupAction(users) {
-      if (!this.cancomplete) {
-        return Promise.reject('cantcomplete');
-      }
-
-      if (!this.type) {
-        return Promise.reject('type');
-      }
-
-      if (_.isEmpty(users)) {
-        return Promise.reject('users');
-      }
-
-      const data = this.core.mtrx.kit.groupIdLight(users);
-      this.$store.state.globalpreloader = true;
-      return this.core.mtrx.client.createRoom({
-        //room_alias_name: '#' + data.hash,
-        visibility: this.type.value,
-        // this.selectedValue === 'Private' ? 'private' : 'public',
-        invite: data.idForInviting,
-        name: '@' + (this.groupName ? this.groupName : "New Room"),
-        initial_state: [{
-          "type": "m.room.guest_access",
-          "state_key": "",
-          "content": {
-            "guest_access": "can_join"
-          }
-        }]
-      }).then(chat => {
-        this.$store.state.globalpreloader = false;
-        return chat;
-      }).catch(e => {
-        this.$store.state.globalpreloader = false;
-        return Promise.reject(e);
-      });
-    }
-
-  }
-});
-// CONCATENATED MODULE: ./src/components/chat/create?vue&type=script&lang=js&
- /* harmony default export */ var chat_create_vue_type_script_lang_js_ = (create_vue_type_script_lang_js_); 
-// CONCATENATED MODULE: ./src/components/chat/create/index.vue
-
-
-
-function create_injectStyles (context) {
-  
-  var style0 = __webpack_require__("e8d4")
-if (style0.__inject__) style0.__inject__(context)
-
-}
-
-/* normalize component */
-
-var create_component = Object(componentNormalizer["a" /* default */])(
-  chat_create_vue_type_script_lang_js_,
-  createvue_type_template_id_f0734632_scoped_true_render,
-  createvue_type_template_id_f0734632_scoped_true_staticRenderFns,
-  false,
-  create_injectStyles,
-  "f0734632",
-  null
-  ,true
-)
-
-/* harmony default export */ var create = (create_component.exports);
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/views/chats.vue?vue&type=script&lang=js&
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -66568,12 +67821,12 @@ var create_component = Object(componentNormalizer["a" /* default */])(
 
 
 /* harmony default export */ var chatsvue_type_script_lang_js_ = ({
-  name: 'pagechats',
+  name: "pagechats",
   components: {
-    list: list,
-    topheader: topheader,
+    list: list["a" /* default */],
+    topheader: topheader["a" /* default */],
     contacts: contacts["a" /* default */],
-    chatcreate: create
+    chatcreate: create["a" /* default */]
   },
   props: {
     share: Object
@@ -66599,14 +67852,14 @@ var create_component = Object(componentNormalizer["a" /* default */])(
     },
     chatcreated: function (chat) {
       this.$router.push({
-        path: 'chat',
+        path: "chat",
         query: {
-          'id': chat.room_id
+          id: chat.room_id
         }
-      }).catch(e => {});
+      });
     },
     scrolltop: function () {
-      this.$refs['maincontent'].scroll(0);
+      this.$refs["maincontent"].scroll(0);
     }
   },
 
@@ -66615,31 +67868,34 @@ var create_component = Object(componentNormalizer["a" /* default */])(
 });
 // CONCATENATED MODULE: ./src/views/chats.vue?vue&type=script&lang=js&
  /* harmony default export */ var views_chatsvue_type_script_lang_js_ = (chatsvue_type_script_lang_js_); 
+// EXTERNAL MODULE: ./node_modules/vue-loader/lib/runtime/componentNormalizer.js
+var componentNormalizer = __webpack_require__("2877");
+
 // CONCATENATED MODULE: ./src/views/chats.vue
 
 
 
-function chats_injectStyles (context) {
+function injectStyles (context) {
   
-  var style0 = __webpack_require__("b051")
+  var style0 = __webpack_require__("467e")
 if (style0.__inject__) style0.__inject__(context)
 
 }
 
 /* normalize component */
 
-var chats_component = Object(componentNormalizer["a" /* default */])(
+var component = Object(componentNormalizer["a" /* default */])(
   views_chatsvue_type_script_lang_js_,
   render,
   staticRenderFns,
   false,
-  chats_injectStyles,
-  "62a1ab6a",
+  injectStyles,
+  "1bb44da9",
   null
   ,true
 )
 
-/* harmony default export */ var views_chats = __webpack_exports__["default"] = (chats_component.exports);
+/* harmony default export */ var chats = __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
@@ -69140,18 +70396,6 @@ module.exports = function (str, opts) {
 
     return utils.compact(obj);
 };
-
-
-/***/ }),
-
-/***/ "9e80":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_517e1e1f_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("5a2d");
-/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_517e1e1f_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_517e1e1f_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_517e1e1f_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_517e1e1f_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
 
 
 /***/ }),
@@ -81544,6 +82788,24 @@ module.exports.__inject__ = function (shadowRoot) {
 
 /***/ }),
 
+/***/ "a227":
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__("6539");
+if(content.__esModule) content = content.default;
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add CSS to Shadow Root
+var add = __webpack_require__("35d6").default
+module.exports.__inject__ = function (shadowRoot) {
+  add("70ede962", content, shadowRoot)
+};
+
+/***/ }),
+
 /***/ "a255":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -81793,19 +83055,7 @@ module.exports = function (fromModel) {
 /***/ "a306":
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"caption\":{\"create\":\"Create\",\"addPublicChatName\":\"Add Public Chat Name\",\"addGroupNamePlaceHolder\":\"Add Group Name\",\"createPublicChat\":\"Create public chat\",\"publicRoomTitle\":\"Public Room Preview\",\"chatTopic\":\"Topic renamed\",\"asModerator\":\"as moderator\",\"marked\":\"marked\",\"unmarked\":\"unmarked\",\"removeBan\":\"Remove Ban\",\"cancelModeration\":\"Remove moderation\",\"uploadFiles\":\"Subir archivos\",\"header\":\"cabecera\",\"dragAndDropAFile\":\"Arrastrar y soltar archivo\",\"chatInvite\":\"Te han invitado a chatear con:\",\"cantJoin\":\"No puedes unirte al chat con:\",\"chatInviteDecline\":\"Puedes unirte al chat o rechazar la invitación\",\"creatorLeft\":\"Porque el creador dejó la sala\",\"encrypted\":\"Cifrado\",\"noImages\":\"Todavía no hay imágenes en este chat\",\"noFiles\":\"Todavía no hay files en este chat\",\"inviteUser\":\"Invitar a un usuario\",\"invite\":\"Invitar\",\"add\":\"Añadir\",\"mute\":\"Mute\",\"unmute\":\"Unmute\",\"leave\":\"Dejar\",\"Info\":\"Info\",\"new\":\"New\",\"typing\":\"typing\",\"accNotFound\":\"Su registro está en curso, por favor espere...\",\"emptyList\":\"La lista está vacía ( filtrada o simplemente vacía )\",\"welcome\":\"Bienvenido al chat\",\"startNewChat\":\"Iniciar un nuevo chat\",\"chats\":\"Chats\",\"shareWith\":\"Compartir con\",\"newChat\":\"Nuevo chat\",\"moveToChat\":\"Mover al chat\",\"queryNoResults\":\"La consulta no reporta resultados\",\"needMoreCharacters\":\"Necesita más caracteres para el resultado\",\"createGroup\":\"Crear grupo\",\"unabletoDecrypt\":\"* Imposible descifrar\",\"messageDeleted\":\"Mensaje eliminado\",\"sentImage\":\"Imagen enviada\",\"sentVoiceMessage\":\"envió un mensaje de voz\",\"invitationToChat\":\"Invitación al chat\",\"invitationToRoom\":\"Invitation to room\",\"leftChat\":\"abandonó el chat\",\"joined\":\"unido\",\"chatRenamed\":\"Chat renombrado a \",\"recentComment\":\"Comentario reciente:\",\"share\":\"SHARE\",\"followers\":\"Seguidores:\",\"reputation\":\"Reputación:\",\"following\":\"Following:\",\"theme\":\"Tema:\",\"contacts\":\"Contactos\",\"phoneContacts\":\"Contactos telefónicos\",\"chooseInviteMedia\":\"Por favor, elige cómo quieres invitar:\",\"admin\":\"Admin\",\"moderator\":\"Moderador\",\"videocall\":\"Videollamada\",\"call\":\"Llamada\",\"leaveAndDelete\":\"Dejar y borrar\",\"donate\":\"Donar\",\"makeModerator\":\"Hacer Moderador\",\"ban\":\"Ban\",\"kick\":\"Kick\",\"members\":\"Miembros\",\"media\":\"Media\",\"files\":\"Files\",\"contactsList\":\"Lista de contactos\",\"send\":\"send\",\"pageCaption\":\"Título de la página\",\"caption\":\"Caption\",\"text\":\"text\",\"placeholder\":\"placeholder\",\"sendTransactionTo\":\"Enviar transacción a\",\"toBePaidByReceiver\":\"A pagar por el receptor\",\"toBePaidBySender\":\"A pagar por el remitente\",\"source\":\"Fuente\",\"amount\":\"Importe\",\"receiver\":\"Receptor\",\"message\":\"Mensaje\",\"includeFeesInAmount\":\"Incluir tasas en el importe\",\"transactionFees\":\"Tasas de transacción\",\"totalAmount\":\"Importe total\",\"balanceTooLow\":\"Saldo demasiado bajo\",\"transactionError\":\"Error, no se puede realizar la transacción\",\"calculateFees\":\"Calculate Fees\",\"startChatWith\":\"Iniciar chat con\",\"searchResult\":\"Resultado de la búsqueda\",\"joinedInTheChat\":\"unido en el chat\",\"invited\":\"invitado\",\"hasInvited\":\"invitado \",\"inTheChat\":\"en el chat\",\"banned\":\"prohibido\",\"andRoom\":\"y sala\",\"left\":\"izquierda\",\"theChat\":\"el chat\",\"made\":\"made\",\"aModerator\":\" un moderador\",\"editedChatNameTo \":\"editado el nombre del chat a \",\"somebody\":\"alguien\",\"sent\":\"enviado\",\"PKOINto\":\"PKOIN to\",\"response\":\"Respuesta\",\"messagefrom\":\"Mensaje reenviado de\",\"edited\":\"Editado\",\"settings\":\"Ajustes\",\"unauthorized\":\"No autorizado\",\"search\":\"Buscar\",\"replyOnMessage\":\"Respuesta en mensaje\",\"editMessage\":\"Editar mensaje\",\"inviteFriend\":\"Invitar a amigos\",\"emptyContactList\":\"La lista de contactos está vacía\",\"joinApp\":\"Unirse a Pocketnet\",\"hasInvitedToJoin\":\"te ha invitado a unirte a Pocketnet\",\"contactsempty\":\"Todavía no tienes contactos, encuéntralos en la búsqueda\",\"chatsearchingempty\":\"No chats found for the specified filter\",\"sendmessage\":\"Send message\"},\"input\":{\"patientEmailPlaceholder\":\"Email\",\"refillNamePlaceholder\":\"Refill name\"},\"message\":{},\"button\":{\"starChatButton\":\"Iniciar chat\",\"decline\":\"Declinar\",\"declineandignore\":\"Ignorar usuario\",\"join\":\"Unase\",\"ok\":\"Ok\",\"save\":\"ahorrar\",\"copy\":\"Copiar\",\"forward\":\"Adelante\",\"delete\":\"Borrar\",\"reply\":\"Responder\",\"share\":\"Compartir\",\"download\":\"Descargar\",\"downloaded\":\"Descargado\",\"goToPocketnetProfile\":\"Ir al perfil de Pocketnet\",\"sendFile\":\"Enviar archivo\",\"takePhotoOrVideo\":\"Enviar imagen\",\"sendCoins\":\"Enviar monedas\",\"edit\":\"Editar\",\"select\":\"Seleccione\",\"block\":\"Bloquear\",\"unblock\":\"Desbloquear\",\"blockUser\":\"Bloquear usuario\"},\"yes\":\"sí\",\"cancel\":\"Cancelar\",\"teamMessages\":{\"1-title\":\"¡Bienvenido al chat privado de Bastyon!\",\"1-list1\":\"Mensajería privada que NO está conectada a tu número de teléfono\",\"1-list2\":\"Cifrado de extremo a extremo de cada conversación 1 a 1 por defecto\",\"1-list3\":\"Todas las imágenes enviadas o recibidas a través del chat se almacenan encriptadas\",\"1-list4\":\"El historial de mensajes se guarda sólo durante 7 días\",\"2-title\":\"¡Un gran anuncio! ¡La aplicación Pocketnet se llama ahora Bastyon!\",\"2-message1\":\"El dominio se trasladará a Bastyon.com. Recientemente hemos lanzado las siguientes actualizaciones importantes:\",\"2-list1\":\"Mensajería privada encriptada no conectada a tu número de teléfono\",\"2-list2\":\"Posibilidad de donar PKOIN a los bloggers\",\"2-list3\":\"Vídeo y transmisión en directo\",\"2-message2\":\"Invita a tus amigos ahora y forma parte del gran futuro de la Internet descentralizada!\",\"2-button\":\"Invitar a los amigos\"},\"sendingerror\":\"An error occurred while sending the message\",\"details\":\"Details\",\"settings_pin\":\"Pin chat window\",\"checked\":\"Yes\",\"unchecked\":\"No\",\"settings_read\":\"Send read receipts\",\"messagewasburn\":\"This message remains only in the memory of your device\",\"messagewillburn\":\"The message will be deleted soon\",\"micaccessbrowser\":\"Access to the microphone is restricted, please check your browser settings.\",\"micaccesscommonproblem\":\"Sorry, for some reason it is not possible to record voice messages on the device\",\"micaccesscordova\":\"Access to the microphone is restricted, please check your device settings.\",\"micdevicenotfound\":\"Audio recording device not found\"}");
-
-/***/ }),
-
-/***/ "a36f":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_c44504aa_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("b465");
-/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_c44504aa_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_c44504aa_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_c44504aa_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_c44504aa_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-
+module.exports = JSON.parse("{\"caption\":{\"create\":\"Create\",\"addPublicChatName\":\"Add Public Chat Name\",\"addGroupNamePlaceHolder\":\"Add Group Name\",\"createPublicChat\":\"Create public chat\",\"publicRoomTitle\":\"Public Room Preview\",\"chatTopic\":\"Topic renamed\",\"asModerator\":\"as moderator\",\"marked\":\"marked\",\"unmarked\":\"unmarked\",\"removeBan\":\"Remove Ban\",\"cancelModeration\":\"Remove moderation\",\"uploadFiles\":\"Subir archivos\",\"header\":\"cabecera\",\"dragAndDropAFile\":\"Arrastrar y soltar archivo\",\"chatInvite\":\"Te han invitado a chatear con:\",\"cantJoin\":\"No puedes unirte al chat con:\",\"chatInviteDecline\":\"Puedes unirte al chat o rechazar la invitación\",\"creatorLeft\":\"Porque el creador dejó la sala\",\"encrypted\":\"Cifrado\",\"noImages\":\"Todavía no hay imágenes en este chat\",\"noFiles\":\"Todavía no hay files en este chat\",\"inviteUser\":\"Invitar a un usuario\",\"invite\":\"Invitar\",\"add\":\"Añadir\",\"mute\":\"Mute\",\"unmute\":\"Unmute\",\"leave\":\"Dejar\",\"Info\":\"Info\",\"new\":\"New\",\"typing\":\"typing\",\"accNotFound\":\"Su registro está en curso, por favor espere...\",\"emptyList\":\"La lista está vacía ( filtrada o simplemente vacía )\",\"welcome\":\"Bienvenido al chat\",\"startNewChat\":\"Iniciar un nuevo chat\",\"chats\":\"Chats\",\"shareWith\":\"Compartir con\",\"newChat\":\"Nuevo chat\",\"moveToChat\":\"Mover al chat\",\"queryNoResults\":\"La consulta no reporta resultados\",\"needMoreCharacters\":\"Necesita más caracteres para el resultado\",\"createGroup\":\"Crear grupo\",\"unabletoDecrypt\":\"* Imposible descifrar\",\"messageDeleted\":\"Mensaje eliminado\",\"sentImage\":\"Imagen enviada\",\"sentVoiceMessage\":\"envió un mensaje de voz\",\"invitationToChat\":\"Invitación al chat\",\"invitationToRoom\":\"Invitation to room\",\"leftChat\":\"abandonó el chat\",\"joined\":\"unido\",\"chatRenamed\":\"Chat renombrado a \",\"recentComment\":\"Comentario reciente:\",\"share\":\"SHARE\",\"followers\":\"Seguidores:\",\"reputation\":\"Reputación:\",\"following\":\"Following:\",\"theme\":\"Tema:\",\"contacts\":\"Contactos\",\"phoneContacts\":\"Contactos telefónicos\",\"chooseInviteMedia\":\"Por favor, elige cómo quieres invitar:\",\"admin\":\"Admin\",\"moderator\":\"Moderador\",\"videocall\":\"Videollamada\",\"call\":\"Llamada\",\"leaveAndDelete\":\"Dejar y borrar\",\"donate\":\"Donar\",\"makeModerator\":\"Hacer Moderador\",\"ban\":\"Ban\",\"kick\":\"Kick\",\"members\":\"Miembros\",\"media\":\"Media\",\"files\":\"Files\",\"contactsList\":\"Lista de contactos\",\"send\":\"send\",\"pageCaption\":\"Título de la página\",\"caption\":\"Caption\",\"text\":\"text\",\"placeholder\":\"placeholder\",\"sendTransactionTo\":\"Enviar transacción a\",\"toBePaidByReceiver\":\"A pagar por el receptor\",\"toBePaidBySender\":\"A pagar por el remitente\",\"source\":\"Fuente\",\"amount\":\"Importe\",\"receiver\":\"Receptor\",\"message\":\"Mensaje\",\"includeFeesInAmount\":\"Incluir tasas en el importe\",\"transactionFees\":\"Tasas de transacción\",\"totalAmount\":\"Importe total\",\"balanceTooLow\":\"Saldo demasiado bajo\",\"transactionError\":\"Error, no se puede realizar la transacción\",\"calculateFees\":\"Calculate Fees\",\"startChatWith\":\"Iniciar chat con\",\"searchResult\":\"Resultado de la búsqueda\",\"joinedInTheChat\":\"unido en el chat\",\"invited\":\"invitado\",\"hasInvited\":\"invitado \",\"inTheChat\":\"en el chat\",\"banned\":\"prohibido\",\"andRoom\":\"y sala\",\"left\":\"izquierda\",\"theChat\":\"el chat\",\"made\":\"made\",\"aModerator\":\" un moderador\",\"editedChatNameTo \":\"editado el nombre del chat a \",\"somebody\":\"alguien\",\"sent\":\"enviado\",\"PKOINto\":\"PKOIN to\",\"response\":\"Respuesta\",\"messagefrom\":\"Mensaje reenviado de\",\"edited\":\"Editado\",\"settings\":\"Ajustes\",\"unauthorized\":\"No autorizado\",\"search\":\"Buscar\",\"replyOnMessage\":\"Respuesta en mensaje\",\"editMessage\":\"Editar mensaje\",\"inviteFriend\":\"Invitar a amigos\",\"emptyContactList\":\"La lista de contactos está vacía\",\"joinApp\":\"Unirse a Pocketnet\",\"hasInvitedToJoin\":\"te ha invitado a unirte a Pocketnet\",\"contactsempty\":\"Todavía no tienes contactos, encuéntralos en la búsqueda\",\"chatsearchingempty\":\"No chats found for the specified filter\",\"sendmessage\":\"Send message\",\"clearHistory\":\"Clear history\"},\"input\":{\"patientEmailPlaceholder\":\"Email\",\"refillNamePlaceholder\":\"Refill name\"},\"message\":{},\"button\":{\"starChatButton\":\"Iniciar chat\",\"decline\":\"Declinar\",\"declineandignore\":\"Ignorar usuario\",\"join\":\"Unase\",\"ok\":\"Ok\",\"save\":\"ahorrar\",\"copy\":\"Copiar\",\"forward\":\"Adelante\",\"delete\":\"Borrar\",\"reply\":\"Responder\",\"share\":\"Compartir\",\"download\":\"Descargar\",\"downloaded\":\"Descargado\",\"goToPocketnetProfile\":\"Ir al perfil de Pocketnet\",\"sendFile\":\"Enviar archivo\",\"takePhotoOrVideo\":\"Enviar imagen\",\"sendCoins\":\"Enviar monedas\",\"edit\":\"Editar\",\"select\":\"Seleccione\",\"block\":\"Bloquear\",\"unblock\":\"Desbloquear\",\"blockUser\":\"Bloquear usuario\"},\"yes\":\"sí\",\"cancel\":\"Cancelar\",\"teamMessages\":{\"1-title\":\"¡Bienvenido al chat privado de Bastyon!\",\"1-list1\":\"Mensajería privada que NO está conectada a tu número de teléfono\",\"1-list2\":\"Cifrado de extremo a extremo de cada conversación 1 a 1 por defecto\",\"1-list3\":\"Todas las imágenes enviadas o recibidas a través del chat se almacenan encriptadas\",\"1-list4\":\"El historial de mensajes se guarda sólo durante 7 días\",\"2-title\":\"¡Un gran anuncio! ¡La aplicación Pocketnet se llama ahora Bastyon!\",\"2-message1\":\"El dominio se trasladará a Bastyon.com. Recientemente hemos lanzado las siguientes actualizaciones importantes:\",\"2-list1\":\"Mensajería privada encriptada no conectada a tu número de teléfono\",\"2-list2\":\"Posibilidad de donar PKOIN a los bloggers\",\"2-list3\":\"Vídeo y transmisión en directo\",\"2-message2\":\"Invita a tus amigos ahora y forma parte del gran futuro de la Internet descentralizada!\",\"2-button\":\"Invitar a los amigos\"},\"sendingerror\":\"An error occurred while sending the message\",\"details\":\"Details\",\"settings_pin\":\"Pin chat window\",\"checked\":\"Yes\",\"unchecked\":\"No\",\"settings_read\":\"Send read receipts\",\"messagewasburn\":\"This message remains only in the memory of your device\",\"messagewillburn\":\"The message will be deleted soon\",\"micaccessbrowser\":\"Access to the microphone is restricted, please check your browser settings.\",\"micaccesscommonproblem\":\"Sorry, for some reason it is not possible to record voice messages on the device\",\"micaccesscordova\":\"Access to the microphone is restricted, please check your device settings.\",\"micdevicenotfound\":\"Audio recording device not found\"}");
 
 /***/ }),
 
@@ -82112,6 +83362,24 @@ if(content.locals) module.exports = content.locals;
 var add = __webpack_require__("35d6").default
 module.exports.__inject__ = function (shadowRoot) {
   add("354273b2", content, shadowRoot)
+};
+
+/***/ }),
+
+/***/ "a4a0":
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__("80fe");
+if(content.__esModule) content = content.default;
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add CSS to Shadow Root
+var add = __webpack_require__("35d6").default
+module.exports.__inject__ = function (shadowRoot) {
+  add("088f7e14", content, shadowRoot)
 };
 
 /***/ }),
@@ -82536,24 +83804,6 @@ module.exports = {
 
 /***/ }),
 
-/***/ "a5cd":
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__("654a");
-if(content.__esModule) content = content.default;
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add CSS to Shadow Root
-var add = __webpack_require__("35d6").default
-module.exports.__inject__ = function (shadowRoot) {
-  add("68076bb0", content, shadowRoot)
-};
-
-/***/ }),
-
 /***/ "a63f":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -82577,6 +83827,18 @@ module.exports.__inject__ = function (shadowRoot) {
 
 // eslint-disable-next-line es-x/no-typed-arrays -- safe
 module.exports = typeof ArrayBuffer != 'undefined' && typeof DataView != 'undefined';
+
+
+/***/ }),
+
+/***/ "a9b7":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_3ad2c96e_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("171c");
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_3ad2c96e_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_3ad2c96e_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_3ad2c96e_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_3ad2c96e_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
 
 
 /***/ }),
@@ -82850,7 +84112,7 @@ module.exports = function (O, options) {
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, ".previewWrapper[data-v-691bf714]{height:60px;position:absolute;top:0;width:100%;display:flex;align-items:center;justify-content:flex-start;padding:0;border-bottom:1px solid rgb(var(--background-main))}.previewWrapper .previewContact[data-v-691bf714],.previewWrapper .previewContactSelect[data-v-691bf714]{width:100%}.previewWrapper .previewBox[data-v-691bf714]{width:100%;display:flex;justify-content:space-between;align-items:center}.previewWrapper .previewBox .previewWrapper[data-v-691bf714]{flex-grow:1;width:100%}.previewWrapper .checkBox[data-v-691bf714]{text-align:center;position:absolute;right:12px;top:50%;transform:translateY(-50%)}.previewWrapper[data-v-691bf714]:last-child{border-bottom:0}.contactList[data-v-691bf714]{margin-bottom:8px}.contactList .title[data-v-691bf714]{padding:0 .5em}.contactList.minimized .title[data-v-691bf714]{display:none}.contactList.minimized .previewWrapper[data-v-691bf714]{padding:.5em 0;border-bottom:0;cursor:pointer}.contactList.minimized .previewWrapper[data-v-691bf714]:last-child{border-bottom:0}.contactList.minimized .previewWrapper[data-v-691bf714] .previewWrapper{padding:0}", ""]);
+exports.push([module.i, ".previewWrapper[data-v-691bf714]{height:60px;position:absolute;top:0;width:100%;display:flex;align-items:center;justify-content:flex-start;padding:0;border-bottom:1px solid rgb(var(--background-main))}.previewWrapper .previewContact[data-v-691bf714]{width:100%;cursor:pointer}.previewWrapper .previewContactSelect[data-v-691bf714]{width:100%}.previewWrapper .previewBox[data-v-691bf714]{width:100%;display:flex;justify-content:space-between;align-items:center}.previewWrapper .previewBox .previewWrapper[data-v-691bf714]{flex-grow:1;width:100%}.previewWrapper .checkBox[data-v-691bf714]{text-align:center;position:absolute;right:12px;top:50%;transform:translateY(-50%)}.previewWrapper[data-v-691bf714]:last-child{border-bottom:0}.contactList[data-v-691bf714]{margin-bottom:8px}.contactList .title[data-v-691bf714]{padding:0 .5em}.contactList.minimized .title[data-v-691bf714]{display:none}.contactList.minimized .previewWrapper[data-v-691bf714]{padding:.5em 0;border-bottom:0;cursor:pointer}.contactList.minimized .previewWrapper[data-v-691bf714]:last-child{border-bottom:0}.contactList.minimized .previewWrapper[data-v-691bf714] .previewWrapper{padding:0}", ""]);
 // Exports
 module.exports = exports;
 
@@ -82878,7 +84140,7 @@ module.exports = exports;
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, ".outer-div[data-v-e4f39dca]{line-height:inherit;border-radius:50%}.dropDownIcon[data-v-e4f39dca]{width:35px;height:35px;line-height:35px}.dropDownIcon i[data-v-e4f39dca]{line-height:35px!important}.menuwrapper[data-v-e4f39dca]{padding-left:1em;padding-right:1em;padding-bottom:1em;position:absolute;z-index:100;bottom:0;left:0;right:0}.menuwrapper[data-v-e4f39dca] .items{max-height:500px;overflow-y:auto;border-radius:3px;padding-left:.5em;padding-right:.5em;padding-bottom:.5em}.dropdown[data-v-e4f39dca]{z-index:10000;position:absolute;width:100%;right:0;height:auto;color:rgb(var(--text-color));transition:.3s;bottom:-100em;top:100em}.dropdown .backgr[data-v-e4f39dca]{background:rgba(var(--background-total-theme),.15);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);position:fixed;z-index:100;left:0;right:0;top:0;bottom:0;opacity:0;transition:.3s}.dropdown.visible[data-v-e4f39dca]{bottom:0;top:0}.dropdown.visible .backgr[data-v-e4f39dca]{opacity:1}.dropdown[data-v-e4f39dca] .contentWrapper{margin-top:.25em;border-radius:10px;overflow:hidden}.dropdown .contentWrapper[data-v-e4f39dca],.dropdown[data-v-e4f39dca] .contentWrapper{border-top:1px solid rgba(var(--neutral-grad-1),.5);box-shadow:0 5px 7px -5px rgba(var(--color-shadow-base),.7)}.dropdown .cancelWrapper .menu-item[data-v-e4f39dca]{margin-top:0;box-shadow:none;color:rgb(var(--neutral-grad-3));box-shadow:0 5px 5px -3px rgba(var(--color-shadow-base),.4)}.dropdown .menu-item[data-v-e4f39dca]{padding:.5em;background:rgb(var(--background-total-theme));color:rgb(var(--neutral-grad-3));line-height:44px;margin-top:.25em;display:flex;border-radius:10px;box-shadow:0 5px 7px -5px rgba(var(--color-shadow-base),.7)}.dropdown .menu-item .title[data-v-e4f39dca]{flex-grow:2;padding-right:44px;text-align:center}.dropdown .menu-item .iconWrapper[data-v-e4f39dca]{width:44px;text-align:center}.dropdown .blocker[data-v-e4f39dca]{position:fixed;top:0;left:0;bottom:0;right:0;content:\" \"}.cancelWrapper[data-v-e4f39dca]{border-radius:3px;padding-left:.5em;padding-right:.5em;color:rgb(var(--neutral-grad-3))}.small[data-v-e4f39dca]{font-size:.85em}.outer-div.mobile .menuwrapper[data-v-e4f39dca]{position:fixed}.outer-div.minimized[data-v-e4f39dca]{position:static}.outer-div.minimized .backgr[data-v-e4f39dca]{border-radius:4px;height:1000px;bottom:0;top:auto;background:transparent;position:absolute}.outer-div.minimized .dropdown[data-v-e4f39dca]{z-index:10000;right:0}.outer-div.minimized .menuwrapper[data-v-e4f39dca]{border-radius:4px;padding-top:.5em}.outer-div.minimized .menuwrapper[data-v-e4f39dca] .menu-item{margin-top:.25em;border-radius:5px;background:rgba(var(--background-total-theme),.95)}", ""]);
+exports.push([module.i, ".outer-div[data-v-e4f39dca]{line-height:inherit;border-radius:50%}.dropDownIcon[data-v-e4f39dca]{width:35px;height:35px;line-height:35px}.dropDownIcon i[data-v-e4f39dca]{line-height:35px!important}.menuwrapper[data-v-e4f39dca]{padding-left:1em;padding-right:1em;padding-bottom:1em;position:absolute;z-index:100;bottom:0;left:0;right:0}.menuwrapper[data-v-e4f39dca] .items{max-height:500px;overflow-y:auto;border-radius:3px;padding-left:.5em;padding-right:.5em;padding-bottom:.5em}.dropdown[data-v-e4f39dca]{z-index:10000;position:absolute;width:100%;right:0;height:auto;color:rgb(var(--text-color));transition:.3s;bottom:-100em;top:100em;width:702px;left:50%;transform:translateX(-50%)}.dropdown .backgr[data-v-e4f39dca]{background:rgba(var(--background-total-theme),.15);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);position:fixed;z-index:100;left:0;right:0;top:0;bottom:0;opacity:0;transition:.3s}.dropdown.visible[data-v-e4f39dca]{bottom:0;top:0}.dropdown.visible .backgr[data-v-e4f39dca]{opacity:1}.dropdown[data-v-e4f39dca] .contentWrapper{margin-top:.25em;border-radius:10px;overflow:hidden}.dropdown .contentWrapper[data-v-e4f39dca],.dropdown[data-v-e4f39dca] .contentWrapper{border-top:1px solid rgba(var(--neutral-grad-1),.5);box-shadow:0 5px 7px -5px rgba(var(--color-shadow-base),.7)}.dropdown .cancelWrapper .menu-item[data-v-e4f39dca]{margin-top:0;box-shadow:none;color:rgb(var(--neutral-grad-3));box-shadow:0 5px 5px -3px rgba(var(--color-shadow-base),.4)}.dropdown .menu-item[data-v-e4f39dca]{padding:.5em;background:rgb(var(--background-total-theme));color:rgb(var(--neutral-grad-3));line-height:44px;margin-top:.25em;display:flex;border-radius:10px;box-shadow:0 5px 7px -5px rgba(var(--color-shadow-base),.7)}.dropdown .menu-item .title[data-v-e4f39dca]{flex-grow:2;padding-right:44px;text-align:center}.dropdown .menu-item .iconWrapper[data-v-e4f39dca]{width:44px;text-align:center}.dropdown .blocker[data-v-e4f39dca]{position:fixed;top:0;left:0;bottom:0;right:0;content:\" \"}.cancelWrapper[data-v-e4f39dca]{border-radius:3px;padding-left:.5em;padding-right:.5em;color:rgb(var(--neutral-grad-3))}.small[data-v-e4f39dca]{font-size:.85em}.outer-div.mobile .menuwrapper[data-v-e4f39dca]{position:fixed}.outer-div.minimized[data-v-e4f39dca]{position:static}.outer-div.minimized .backgr[data-v-e4f39dca]{border-radius:4px;height:1000px;bottom:0;top:auto;background:transparent;position:absolute}.outer-div.minimized .dropdown[data-v-e4f39dca]{z-index:10000;right:0}.outer-div.minimized .menuwrapper[data-v-e4f39dca]{border-radius:4px;padding-top:.5em}.outer-div.minimized .menuwrapper[data-v-e4f39dca] .menu-item{margin-top:.25em;border-radius:5px;background:rgba(var(--background-total-theme),.95)}", ""]);
 // Exports
 module.exports = exports;
 
@@ -84156,18 +85418,6 @@ module.exports = __webpack_require__("6ffa");
 
 /***/ }),
 
-/***/ "b051":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_chats_vue_vue_type_style_index_0_id_62a1ab6a_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("a5cd");
-/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_chats_vue_vue_type_style_index_0_id_62a1ab6a_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_chats_vue_vue_type_style_index_0_id_62a1ab6a_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_chats_vue_vue_type_style_index_0_id_62a1ab6a_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_chats_vue_vue_type_style_index_0_id_62a1ab6a_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-
-
-/***/ }),
-
 /***/ "b07c":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -84206,24 +85456,6 @@ class PolyfillCryptoProvider {
 }
 exports.PolyfillCryptoProvider = PolyfillCryptoProvider;
 
-
-/***/ }),
-
-/***/ "b0a4":
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__("b466");
-if(content.__esModule) content = content.default;
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add CSS to Shadow Root
-var add = __webpack_require__("35d6").default
-module.exports.__inject__ = function (shadowRoot) {
-  add("55290954", content, shadowRoot)
-};
 
 /***/ }),
 
@@ -85127,38 +86359,6 @@ module.exports = Math.trunc || function trunc(x) {
 
 /***/ }),
 
-/***/ "b465":
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__("6b38");
-if(content.__esModule) content = content.default;
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add CSS to Shadow Root
-var add = __webpack_require__("35d6").default
-module.exports.__inject__ = function (shadowRoot) {
-  add("1c8940c8", content, shadowRoot)
-};
-
-/***/ }),
-
-/***/ "b466":
-/***/ (function(module, exports, __webpack_require__) {
-
-// Imports
-var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
-exports = ___CSS_LOADER_API_IMPORT___(false);
-// Module
-exports.push([module.i, "#topheader[data-v-52afd868]{background:rgb(var(--background-total-theme));top:0;padding-top:var(--app-margin-top);left:0;right:0;position:absolute;z-index:4;color:rgb(var(--text-color));border-bottom:1px solid rgb(var(--neutral-grad-0))}#topheader .iconbutton[data-v-52afd868]{cursor:pointer}#topheader .headerLine[data-v-52afd868]{display:flex;align-items:center;padding:0;height:64px}#topheader .headerLine>div[data-v-52afd868]{text-align:center}#topheader .headerLine .iconsmall[data-v-52afd868]{width:22px;min-width:22px}#topheader .headerLine .icon[data-v-52afd868]{color:rgb(var(--color-txt-ac));width:44px;min-width:44px}#topheader .headerLine .rightaddIcons[data-v-52afd868]{margin-right:11px}#topheader .headerLine .leftaddIcon[data-v-52afd868]{margin-left:11px}#topheader .headerLine .infoPart[data-v-52afd868]{flex-grow:1;padding:0 1em;overflow:hidden}#topheader .headerLine .infoPart[data-v-52afd868] span,#topheader .headerLine .infoPart span[data-v-52afd868]{font-size:.9em;font-weight:500}#topheader .rightaddIcons[data-v-52afd868],#topheader .rightIcons[data-v-52afd868]{justify-content:space-between}#topheader.bin[data-v-52afd868]{position:relative}#topheader.minimized[data-v-52afd868]{right:auto;transition:.3s}#topheader.minimized .headerLine[data-v-52afd868]{height:54px}#topheader.minimized.fix[data-v-52afd868]{width:344px;position:absolute;background:transparent;overflow:hidden;will-change:transform;right:0}#topheader.minimized.fix .headerLine[data-v-52afd868]{padding:0}#topheader.minimized.fix .icon[data-v-52afd868]{width:44px;height:44px;line-height:44px;transition:transform .3s}#topheader.minimized.fix .icon .iconbutton[data-v-52afd868]{border-radius:50%;background:rgba(var(--neutral-grad-4),.1);color:rgb(var(--color-txt-ac));cursor:pointer}@media (pointer:fine){#topheader.minimized.fix .icon .iconbutton[data-v-52afd868]:hover{background:rgba(var(--neutral-grad-4),.05)}}#topheader.minimized.fix .infoPart[data-v-52afd868],#topheader.minimized.fix .leftIcon[data-v-52afd868]{display:none}#topheader.minimized.fix.active[data-v-52afd868]{transform:translate3d(-300px,-56px,0);border-radius:8px;border-bottom-left-radius:0;border-bottom-right-radius:0;background:rgb(var(--background-total-theme));border:1px solid rgba(var(--neutral-grad-4),.2);box-shadow:0 5px 7px -5px rgba(var(--color-shadow-base),.7)}#topheader.minimized.fix.active .infoPart[data-v-52afd868],#topheader.minimized.fix.active .leftIcon[data-v-52afd868]{display:block}#topheader.minimized.fix[data-v-52afd868]:not(.active){border-bottom:0!important}", ""]);
-// Exports
-module.exports = exports;
-
-
-/***/ }),
-
 /***/ "b480":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -85174,18 +86374,6 @@ var add = __webpack_require__("35d6").default
 module.exports.__inject__ = function (shadowRoot) {
   add("8a42ff40", content, shadowRoot)
 };
-
-/***/ }),
-
-/***/ "b4f6":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_12492b0b_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("8fc3");
-/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_12492b0b_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_12492b0b_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_12492b0b_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_12492b0b_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-
 
 /***/ }),
 
@@ -89097,7 +90285,7 @@ convert.rgb.gray = function (rgb) {
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__("438e");
+var content = __webpack_require__("438e7");
 if(content.__esModule) content = content.default;
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
@@ -89650,6 +90838,20 @@ EventContext.prototype.addEvents = function (events, atStart) {
 
 /***/ }),
 
+/***/ "bb85":
+/***/ (function(module, exports, __webpack_require__) {
+
+// Imports
+var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
+exports = ___CSS_LOADER_API_IMPORT___(false);
+// Module
+exports.push([module.i, ".searchWrapperEA.work[data-v-3ad2c96e]{margin-bottom:.5em!important;padding-top:.5em!important}#contacts.minimized:not(.active) .inviteUserDiv[data-v-3ad2c96e]{width:44px}#contacts.minimized:not(.active) .inviteUserDiv .inviteButton[data-v-3ad2c96e]{height:44px;text-align:center;line-height:44px}#contacts.minimized:not(.active) .inviteUserDiv .inviteButton i[data-v-3ad2c96e]{width:auto;position:relative}#contacts.minimized:not(.active) .inviteUserDiv span[data-v-3ad2c96e],#contacts.minimized:not(.active) .titleContacts[data-v-3ad2c96e]{display:none}.titleContacts[data-v-3ad2c96e],.titleSearchResult[data-v-3ad2c96e]{text-align:center}.titleContacts span[data-v-3ad2c96e],.titleSearchResult span[data-v-3ad2c96e]{font-size:.8em}.titleContacts.empty[data-v-3ad2c96e],.titleSearchResult.empty[data-v-3ad2c96e]{padding:2em;text-align:center}.titleContacts.empty span[data-v-3ad2c96e],.titleSearchResult.empty span[data-v-3ad2c96e]{font-size:1.5em;font-weight:100}.searchResult[data-v-3ad2c96e]{position:relative}.searchResult .linepreloaderWrapper[data-v-3ad2c96e]{padding:.5em;text-align:center}.searchResult .noSearchResult[data-v-3ad2c96e]{left:0;right:0;top:50%;padding:3em;text-align:center}.searchResult .noSearchResult i[data-v-3ad2c96e]{display:block;font-size:1.5em;color:stgb(--neutral-grad-3)}.searchResult .noSearchResult span[data-v-3ad2c96e]{color:stgb(--neutral-grad-3);display:block;margin:1em 0;font-size:2em;font-weight:100}.groupNameInputCaption[data-v-3ad2c96e]{padding:.5em 0;text-align:center}.groupNameInputCaption span[data-v-3ad2c96e]{font-size:.8em}.groupList .groupCaption[data-v-3ad2c96e]{position:relative;padding:.5em;text-align:center;display:flex;justify-content:space-between;align-items:center}.groupList .groupCaption .label[data-v-3ad2c96e]{font-size:.8em;font-weight:500}.groupList .groupCaption .selectWrapper[data-v-3ad2c96e]{position:relative}.groupList .groupCaption .selectWrapper i[data-v-3ad2c96e]{position:absolute;right:0;top:4px;color:stgb(--color-txt-ac)}.groupList .groupCaption .selectWrapper .selectRoomVisible[data-v-3ad2c96e]{padding-right:15px;font-size:.8em;cursor:pointer;color:stgb(--color-txt-ac);-webkit-appearance:none;-moz-appearance:none;appearance:none;overflow:hidden;position:relative}.groupList .groupCaption .selectWrapper .selectRoomVisible[data-v-3ad2c96e]::-ms-expand{display:none}.groupList .groupCaption .selectWrapper .selectRoomVisible option[data-v-3ad2c96e]{font-size:.8em}.participants[data-v-3ad2c96e]{display:flex;background:rgba(var(--neutral-grad-0),.5);flex-wrap:wrap;border-radius:15px;padding:.5em;margin-bottom:.5em;max-height:123px;overflow-y:auto}.participants>div[data-v-3ad2c96e]{flex-grow:1}.participants .groupListName[data-v-3ad2c96e]{margin-bottom:.25em}.participants[data-v-3ad2c96e] .iconWrapper{width:33px}.participants[data-v-3ad2c96e] .iconWrapper .userpic{width:33px;height:33px;line-height:33px}.participants[data-v-3ad2c96e] .summaryLine{font-size:.8em}.participants .groupListName[data-v-3ad2c96e]{margin-right:1em;margin-top:0;border-radius:1em;display:flex;align-items:center}.participants .groupListName span[data-v-3ad2c96e]{color:rgb(var(--text-on-bg-ac-color));font-size:.9em;display:block;margin-right:5px}.participants .groupListName i[data-v-3ad2c96e]{text-align:center;width:33px}.chatBtnWrapper[data-v-3ad2c96e],.GroupBtnWrapper[data-v-3ad2c96e],.inviteBtnWrapper[data-v-3ad2c96e]{z-index:2;padding:.5em;text-align:center;left:0;right:0}.minimized .chatBtnWrapper[data-v-3ad2c96e],.minimized .GroupBtnWrapper[data-v-3ad2c96e],.minimized .inviteBtnWrapper[data-v-3ad2c96e]{position:sticky}#contacts.minimized .inviteUserDiv[data-v-3ad2c96e]{margin-top:.5em}.unauthorized.minimized[data-v-3ad2c96e]:not(.active){display:none}.unauthorized[data-v-3ad2c96e]{padding:3em 0;text-align:center}.unauthorized .buttonWrapper[data-v-3ad2c96e]{padding:1em}.unauthorized .captionWrapper[data-v-3ad2c96e]{padding:1em;text-align:center}.unauthorized .captionWrapper span[data-v-3ad2c96e]{font-size:1.5em;font-weight:100}.groupNameInput[data-v-3ad2c96e]{padding:.5em 1em}.groupNameInput label[data-v-3ad2c96e]{display:block}.groupNameInput input[data-v-3ad2c96e]{height:35px;width:100%;padding-right:0}#contacts .inviteUserDiv[data-v-3ad2c96e]{margin-top:.4em}#contacts .inviteUserDiv .inviteButton[data-v-3ad2c96e]{background-color:rgb(var(--color-bg-ac-bright));color:rgb(var(--text-on-bg-ac-color));width:100%;height:34px;font-size:.9em;border-radius:30px;position:relative;cursor:pointer}#contacts .inviteUserDiv .inviteButton i[data-v-3ad2c96e]{position:absolute;right:0;top:0;line-height:34px;width:50px;text-align:center}#contacts .inviteUserDiv .inviteButton.colored[data-v-3ad2c96e]{background-color:rgb(var(--color-bg-orange))}", ""]);
+// Exports
+module.exports = exports;
+
+
+/***/ }),
+
 /***/ "bbd4":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -89755,24 +90957,6 @@ function incrementCounter(counter) {
 
 /***/ }),
 
-/***/ "be6a":
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__("306eb");
-if(content.__esModule) content = content.default;
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add CSS to Shadow Root
-var add = __webpack_require__("35d6").default
-module.exports.__inject__ = function (shadowRoot) {
-  add("57d84a74", content, shadowRoot)
-};
-
-/***/ }),
-
 /***/ "bfa8":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -89844,7 +91028,7 @@ module.exports = exports;
 /***/ "c1af":
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"caption\":{\"create\":\"Create\",\"addPublicChatName\":\"Add Public Chat Name\",\"addGroupNamePlaceHolder\":\"Add Group Name\",\"createPublicChat\":\"Create public chat\",\"chatTopic\":\"Topic renamed\",\"publicRoomTitle\":\"Public Room\",\"asModerator\":\"as moderator\",\"marked\":\"marked\",\"unmarked\":\"unmarked\",\"removeBan\":\"Remove Ban\",\"cancelModeration\":\"Remove moderation\",\"uploadFiles\":\"파일 업로드\",\"header\":\"헤더\",\"dragAndDropAFile\":\"파일 끌어서 놓기\",\"chatInvite\":\"다음과 채팅하도록 초대되었습니다:\",\"cantJoin\":\"다음과 채팅하기 위해 참여할 수 없습니다:\",\"chatInviteDecline\":\"채팅에 참여하거나 초대를 거부할 수 있습니다.\",\"creatorLeft\":\"크리에이터가 방을 나갔기 때문에\",\"encrypted\":\"암호화\",\"noImages\":\"이 채팅에는 아직 이미지가 없습니다\",\"noFiles\":\"There are no files in this chat yet\",\"inviteUser\":\"사용자 초대\",\"invite\":\"초대하다\",\"add\":\"추가\",\"mute\":\"음소거\",\"unmute\":\"음소거 해제\",\"leave\":\"떠나다\",\"Info\":\"정보\",\"new\":\"신규\",\"typing\":\"타자\",\"accNotFound\":\"등록이 진행 중입니다. 잠시만 기다려 주십시오...\",\"emptyList\":\"목록이 비어 있습니다(필터링되었거나 비어 있음)\",\"welcome\":\"포켓넷 채팅에 오신 것을 환영합니다\",\"startNewChat\":\"새 채팅 시작\",\"chats\":\"채팅\",\"shareWith\":\"공유\",\"newChat\":\"새 채팅\",\"moveToChat\":\"채팅으로 이동\",\"queryNoResults\":\"쿼리가 결과를 보고하지 않음\",\"needMoreCharacters\":\"결과에 대해 더 많은 문자가 필요합니다\",\"createGroup\":\"그룹 만들기\",\"unabletoDecrypt\":\"* 해독할 수 없음\",\"messageDeleted\":\"메시지 삭제됨\",\"sentImage\":\"전송된 이미지\",\"sentVoiceMessage\":\"음성 메시지를 보냈다\",\"invitationToChat\":\"채팅 초대\",\"invitationToRoom\":\"Invitation to room\",\"leftChat\":\"채팅에서 나감\",\"joined\":\"가입\",\"chatRenamed\":\"채팅 이름이 (으)로 변경되었습니다 \",\"recentComment\":\"최근 댓글:\",\"share\":\"공유\",\"followers\":\"팔로워:\",\"reputation\":\"평판:\",\"following\":\"팔로잉:\",\"theme\":\"테마:\",\"contacts\":\"연락처\",\"phoneContacts\":\"전화 연락처\",\"chooseInviteMedia\":\"초대 방법을 선택하십시오:\",\"admin\":\"관리자\",\"moderator\":\"진행자\",\"videocall\":\"영상통화\",\"call\":\"전화\",\"leaveAndDelete\":\"나가서 삭제\",\"donate\":\"기부하다\",\"makeModerator\":\"모더레이터 만들기\",\"ban\":\"금지\",\"kick\":\"킥\",\"members\":\"회원\",\"media\":\"미디어\",\"files\":\"파일\",\"contactsList\":\"연락처 목록\",\"send\":\"보내다\",\"pageCaption\":\"페이지 캡션\",\"caption\":\"캡션\",\"text\":\"텍스트\",\"placeholder\":\"자리 표시자\",\"sendTransactionTo\":\"트랜잭션 보내기\",\"toBePaidByReceiver\":\"수취인이 지불함\",\"toBePaidBySender\":\"발신인이 지불함\",\"source\":\"소스\",\"amount\":\"금액\",\"receiver\":\"수신자\",\"message\":\"메시지\",\"includeFeesInAmount\":\"금액에 수수료 포함\",\"transactionFees\":\"거래 수수료\",\"totalAmount\":\"총 금액\",\"balanceTooLow\":\"밸런스가 너무 낮음\",\"transactionError\":\"오류, 거래를 할 수 없습니다\",\"calculateFees\":\"수수료 계산\",\"startChatWith\":\"채팅 시작\",\"searchResult\":\"검색 결과\",\"joinedInTheChat\":\"채팅에 참여했습니다\",\"invited\":\"초대 \",\"hasInvited\":\"초대 \",\"inTheChat\":\" 채팅 중\",\"banned\":\"금지된\",\"andRoom\":\"그리고 방\",\"left\":\"왼쪽\",\"theChat\":\" 채팅 \",\"made\":\"만든 \",\"aModerator\":\" 중재자\",\"editedChatNameTo \":\"편집된 채팅 이름을 \",\"somebody\":\"누군가\",\"sent\":\"보낸\",\"PKOINto\":\" PKOIN to \",\"response\":\"응답\",\"messagefrom\":\"에서 전달된 메시지\",\"edited\":\"편집됨\",\"settings\":\"설정\",\"unauthorized\":\"무단\",\"search\":\"검색\",\"replyOnMessage\":\"메시지에 회신\",\"editMessage\":\"메시지 편집\",\"inviteFriend\":\"친구 초대\",\"emptyContactList\":\"연락처 목록이 비어 있습니다\",\"joinApp\":\"포켓넷 가입\",\"hasInvitedToJoin\":\"Pocketnet에 가입하도록 초대했습니다\",\"contactsempty\":\"아직 연락처가 없습니다. 검색에서 찾으십시오\",\"chatsearchingempty\":\"No chats found for the specified filter\",\"sendmessage\":\"Send message\"},\"input\":{\"patientEmailPlaceholder\":\"이메일\",\"refillNamePlaceholder\":\"리필 이름\"},\"message\":{},\"button\":{\"starChatButton\":\"채팅 시작\",\"decline\":\"거절\",\"declineandignore\":\"사용자 무시\",\"join\":\"가입\",\"ok\":\"그래\",\"copy\":\"복사\",\"forward\":\"앞으로\",\"delete\":\"삭제\",\"reply\":\"답장\",\"share\":\"공유\",\"save\":\"저장\",\"download\":\"다운로드\",\"downloaded\":\"다운로드\",\"goToPocketnetProfile\":\"Pocketnet 프로필로 이동\",\"sendFile\":\"파일 보내기\",\"takePhotoOrVideo\":\"이미지 보내기\",\"sendCoins\":\"코인 보내기\",\"edit\":\"편집\",\"select\":\"고르다\",\"block\":\"차단\",\"unblock\":\"차단 해제\",\"blockUser\":\"사용자 차단\"},\"yes\":\"예\",\"cancel\":\"취소\",\"teamMessages\":{\"1-title\":\"Bastyon 비공개 채팅에 오신 것을 환영합니다!\",\"1-list1\":\"전화번호와 연결되지 않은 비공개 메신저\",\"1-list2\":\"기본적으로 모든 1:1 대화의 종단 간 암호화\",\"1-list3\":\"채팅을 통해 주고받는 모든 이미지는 암호화되어 저장됩니다\",\"1-list4\":\"메시지 기록은 7일 동안만 저장됩니다\",\"2-title\":\"엄청난 발표! Pocketnet 응용 프로그램은 이제 Bastyon이라고 합니다!\",\"2-message1\":\"도메인이 Bastyon.com으로 이동됩니다. 최근에 다음과 같은 주요 업데이트를 발표했습니다\",\"2-list1\":\"귀하의 전화 번호에 연결되지 않은 개인 암호화 메신저\",\"2-list2\":\"블로거에게 PKOIN 기부 기능\",\"2-list3\":\"비디오 및 라이브 스트리밍\",\"2-message2\":\"지금 친구를 초대하고 탈중앙화 인터넷의 큰 미래의 일부가 되십시오!\",\"2-button\":\"친구를 초대\"},\"sendingerror\":\"An error occurred while sending the message\",\"details\":\"Details\",\"settings_pin\":\"Pin chat window\",\"checked\":\"Yes\",\"unchecked\":\"No\",\"settings_read\":\"Send read receipts\",\"messagewasburn\":\"This message remains only in the memory of your device\",\"messagewillburn\":\"The message will be deleted soon\",\"micaccessbrowser\":\"Access to the microphone is restricted, please check your browser settings.\",\"micaccesscommonproblem\":\"Sorry, for some reason it is not possible to record voice messages on the device\",\"micaccesscordova\":\"Access to the microphone is restricted, please check your device settings.\",\"micdevicenotfound\":\"Audio recording device not found\"}");
+module.exports = JSON.parse("{\"caption\":{\"create\":\"Create\",\"addPublicChatName\":\"Add Public Chat Name\",\"addGroupNamePlaceHolder\":\"Add Group Name\",\"createPublicChat\":\"Create public chat\",\"chatTopic\":\"Topic renamed\",\"publicRoomTitle\":\"Public Room\",\"asModerator\":\"as moderator\",\"marked\":\"marked\",\"unmarked\":\"unmarked\",\"removeBan\":\"Remove Ban\",\"cancelModeration\":\"Remove moderation\",\"uploadFiles\":\"파일 업로드\",\"header\":\"헤더\",\"dragAndDropAFile\":\"파일 끌어서 놓기\",\"chatInvite\":\"다음과 채팅하도록 초대되었습니다:\",\"cantJoin\":\"다음과 채팅하기 위해 참여할 수 없습니다:\",\"chatInviteDecline\":\"채팅에 참여하거나 초대를 거부할 수 있습니다.\",\"creatorLeft\":\"크리에이터가 방을 나갔기 때문에\",\"encrypted\":\"암호화\",\"noImages\":\"이 채팅에는 아직 이미지가 없습니다\",\"noFiles\":\"There are no files in this chat yet\",\"inviteUser\":\"사용자 초대\",\"invite\":\"초대하다\",\"add\":\"추가\",\"mute\":\"음소거\",\"unmute\":\"음소거 해제\",\"leave\":\"떠나다\",\"Info\":\"정보\",\"new\":\"신규\",\"typing\":\"타자\",\"accNotFound\":\"등록이 진행 중입니다. 잠시만 기다려 주십시오...\",\"emptyList\":\"목록이 비어 있습니다(필터링되었거나 비어 있음)\",\"welcome\":\"포켓넷 채팅에 오신 것을 환영합니다\",\"startNewChat\":\"새 채팅 시작\",\"chats\":\"채팅\",\"shareWith\":\"공유\",\"newChat\":\"새 채팅\",\"moveToChat\":\"채팅으로 이동\",\"queryNoResults\":\"쿼리가 결과를 보고하지 않음\",\"needMoreCharacters\":\"결과에 대해 더 많은 문자가 필요합니다\",\"createGroup\":\"그룹 만들기\",\"unabletoDecrypt\":\"* 해독할 수 없음\",\"messageDeleted\":\"메시지 삭제됨\",\"sentImage\":\"전송된 이미지\",\"sentVoiceMessage\":\"음성 메시지를 보냈다\",\"invitationToChat\":\"채팅 초대\",\"invitationToRoom\":\"Invitation to room\",\"leftChat\":\"채팅에서 나감\",\"joined\":\"가입\",\"chatRenamed\":\"채팅 이름이 (으)로 변경되었습니다 \",\"recentComment\":\"최근 댓글:\",\"share\":\"공유\",\"followers\":\"팔로워:\",\"reputation\":\"평판:\",\"following\":\"팔로잉:\",\"theme\":\"테마:\",\"contacts\":\"연락처\",\"phoneContacts\":\"전화 연락처\",\"chooseInviteMedia\":\"초대 방법을 선택하십시오:\",\"admin\":\"관리자\",\"moderator\":\"진행자\",\"videocall\":\"영상통화\",\"call\":\"전화\",\"leaveAndDelete\":\"나가서 삭제\",\"donate\":\"기부하다\",\"makeModerator\":\"모더레이터 만들기\",\"ban\":\"금지\",\"kick\":\"킥\",\"members\":\"회원\",\"media\":\"미디어\",\"files\":\"파일\",\"contactsList\":\"연락처 목록\",\"send\":\"보내다\",\"pageCaption\":\"페이지 캡션\",\"caption\":\"캡션\",\"text\":\"텍스트\",\"placeholder\":\"자리 표시자\",\"sendTransactionTo\":\"트랜잭션 보내기\",\"toBePaidByReceiver\":\"수취인이 지불함\",\"toBePaidBySender\":\"발신인이 지불함\",\"source\":\"소스\",\"amount\":\"금액\",\"receiver\":\"수신자\",\"message\":\"메시지\",\"includeFeesInAmount\":\"금액에 수수료 포함\",\"transactionFees\":\"거래 수수료\",\"totalAmount\":\"총 금액\",\"balanceTooLow\":\"밸런스가 너무 낮음\",\"transactionError\":\"오류, 거래를 할 수 없습니다\",\"calculateFees\":\"수수료 계산\",\"startChatWith\":\"채팅 시작\",\"searchResult\":\"검색 결과\",\"joinedInTheChat\":\"채팅에 참여했습니다\",\"invited\":\"초대 \",\"hasInvited\":\"초대 \",\"inTheChat\":\" 채팅 중\",\"banned\":\"금지된\",\"andRoom\":\"그리고 방\",\"left\":\"왼쪽\",\"theChat\":\" 채팅 \",\"made\":\"만든 \",\"aModerator\":\" 중재자\",\"editedChatNameTo \":\"편집된 채팅 이름을 \",\"somebody\":\"누군가\",\"sent\":\"보낸\",\"PKOINto\":\" PKOIN to \",\"response\":\"응답\",\"messagefrom\":\"에서 전달된 메시지\",\"edited\":\"편집됨\",\"settings\":\"설정\",\"unauthorized\":\"무단\",\"search\":\"검색\",\"replyOnMessage\":\"메시지에 회신\",\"editMessage\":\"메시지 편집\",\"inviteFriend\":\"친구 초대\",\"emptyContactList\":\"연락처 목록이 비어 있습니다\",\"joinApp\":\"포켓넷 가입\",\"hasInvitedToJoin\":\"Pocketnet에 가입하도록 초대했습니다\",\"contactsempty\":\"아직 연락처가 없습니다. 검색에서 찾으십시오\",\"chatsearchingempty\":\"No chats found for the specified filter\",\"sendmessage\":\"Send message\",\"clearHistory\":\"Clear history\"},\"input\":{\"patientEmailPlaceholder\":\"이메일\",\"refillNamePlaceholder\":\"리필 이름\"},\"message\":{},\"button\":{\"starChatButton\":\"채팅 시작\",\"decline\":\"거절\",\"declineandignore\":\"사용자 무시\",\"join\":\"가입\",\"ok\":\"그래\",\"copy\":\"복사\",\"forward\":\"앞으로\",\"delete\":\"삭제\",\"reply\":\"답장\",\"share\":\"공유\",\"save\":\"저장\",\"download\":\"다운로드\",\"downloaded\":\"다운로드\",\"goToPocketnetProfile\":\"Pocketnet 프로필로 이동\",\"sendFile\":\"파일 보내기\",\"takePhotoOrVideo\":\"이미지 보내기\",\"sendCoins\":\"코인 보내기\",\"edit\":\"편집\",\"select\":\"고르다\",\"block\":\"차단\",\"unblock\":\"차단 해제\",\"blockUser\":\"사용자 차단\"},\"yes\":\"예\",\"cancel\":\"취소\",\"teamMessages\":{\"1-title\":\"Bastyon 비공개 채팅에 오신 것을 환영합니다!\",\"1-list1\":\"전화번호와 연결되지 않은 비공개 메신저\",\"1-list2\":\"기본적으로 모든 1:1 대화의 종단 간 암호화\",\"1-list3\":\"채팅을 통해 주고받는 모든 이미지는 암호화되어 저장됩니다\",\"1-list4\":\"메시지 기록은 7일 동안만 저장됩니다\",\"2-title\":\"엄청난 발표! Pocketnet 응용 프로그램은 이제 Bastyon이라고 합니다!\",\"2-message1\":\"도메인이 Bastyon.com으로 이동됩니다. 최근에 다음과 같은 주요 업데이트를 발표했습니다\",\"2-list1\":\"귀하의 전화 번호에 연결되지 않은 개인 암호화 메신저\",\"2-list2\":\"블로거에게 PKOIN 기부 기능\",\"2-list3\":\"비디오 및 라이브 스트리밍\",\"2-message2\":\"지금 친구를 초대하고 탈중앙화 인터넷의 큰 미래의 일부가 되십시오!\",\"2-button\":\"친구를 초대\"},\"sendingerror\":\"An error occurred while sending the message\",\"details\":\"Details\",\"settings_pin\":\"Pin chat window\",\"checked\":\"Yes\",\"unchecked\":\"No\",\"settings_read\":\"Send read receipts\",\"messagewasburn\":\"This message remains only in the memory of your device\",\"messagewillburn\":\"The message will be deleted soon\",\"micaccessbrowser\":\"Access to the microphone is restricted, please check your browser settings.\",\"micaccesscommonproblem\":\"Sorry, for some reason it is not possible to record voice messages on the device\",\"micaccesscordova\":\"Access to the microphone is restricted, please check your device settings.\",\"micdevicenotfound\":\"Audio recording device not found\"}");
 
 /***/ }),
 
@@ -90445,6 +91629,18 @@ var add = __webpack_require__("35d6").default
 module.exports.__inject__ = function (shadowRoot) {
   add("1e5aa7e0", content, shadowRoot)
 };
+
+/***/ }),
+
+/***/ "c600":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_73391fe2_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("1f54");
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_73391fe2_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_73391fe2_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_73391fe2_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_73391fe2_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+
 
 /***/ }),
 
@@ -91309,6 +92505,72 @@ module.exports.__inject__ = function (shadowRoot) {
 
 /***/ }),
 
+/***/ "ce3e":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/settings/topheader/index.vue?vue&type=template&id=7cd6d492&scoped=true&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{attrs:{"id":"settingsTopheader"}},[_c('topheader',{scopedSlots:_vm._u([{key:"left",fn:function(){return [_c('backButton',{attrs:{"action":"back"}})]},proxy:true},{key:"info",fn:function(){return [_c('span',[_vm._v(_vm._s(_vm.$t("caption.settings")))])]},proxy:true},{key:"right",fn:function(){return undefined},proxy:true}])})],1)}
+var staticRenderFns = []
+
+
+// CONCATENATED MODULE: ./src/components/settings/topheader/index.vue?vue&type=template&id=7cd6d492&scoped=true&
+
+// EXTERNAL MODULE: ./node_modules/vuex/dist/vuex.esm.js
+var vuex_esm = __webpack_require__("2f62");
+
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./src/components/settings/topheader?vue&type=script&lang=js&
+
+/* harmony default export */ var topheader_vue_type_script_lang_js_ = ({
+  name: 'settingsTopheader',
+  props: {},
+  data: function () {
+    return {
+      loading: false
+    };
+  },
+  created: () => {},
+  watch: {//$route: 'getdata'
+  },
+  computed: Object(vuex_esm["c" /* mapState */])({
+    auth: state => state.auth
+  }),
+  methods: {}
+});
+// CONCATENATED MODULE: ./src/components/settings/topheader?vue&type=script&lang=js&
+ /* harmony default export */ var settings_topheader_vue_type_script_lang_js_ = (topheader_vue_type_script_lang_js_); 
+// EXTERNAL MODULE: ./node_modules/vue-loader/lib/runtime/componentNormalizer.js
+var componentNormalizer = __webpack_require__("2877");
+
+// CONCATENATED MODULE: ./src/components/settings/topheader/index.vue
+
+
+
+function injectStyles (context) {
+  
+  var style0 = __webpack_require__("fbb2")
+if (style0.__inject__) style0.__inject__(context)
+
+}
+
+/* normalize component */
+
+var component = Object(componentNormalizer["a" /* default */])(
+  settings_topheader_vue_type_script_lang_js_,
+  render,
+  staticRenderFns,
+  false,
+  injectStyles,
+  "7cd6d492",
+  null
+  ,true
+)
+
+/* harmony default export */ var topheader = __webpack_exports__["a"] = (component.exports);
+
+/***/ }),
+
 /***/ "cee4":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -91443,6 +92705,24 @@ module.exports = function (namespace, method) {
   return arguments.length < 2 ? aFunction(global[namespace]) : global[namespace] && global[namespace][method];
 };
 
+
+/***/ }),
+
+/***/ "d071":
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__("df48");
+if(content.__esModule) content = content.default;
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add CSS to Shadow Root
+var add = __webpack_require__("35d6").default
+module.exports.__inject__ = function (shadowRoot) {
+  add("39c93f5c", content, shadowRoot)
+};
 
 /***/ }),
 
@@ -93951,6 +95231,153 @@ MatrixBaseApis.prototype.getSpaceSummary = function (roomId, maxRoomsPerSpace, s
 
 /***/ }),
 
+/***/ "d136":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/chats/topheader/index.vue?vue&type=template&id=7fe8f542&scoped=true&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{attrs:{"id":"chatsTopheader"}},[_c('topheader',{scopedSlots:_vm._u([{key:"left",fn:function(){return [(_vm.share)?_c('div',{staticClass:"iconbutton",on:{"click":_vm.cancelShare}},[_c('i',{staticClass:"fas fa-times"})]):_vm._e(),((!_vm.minimized || _vm.active) && _vm.pocketnet && !_vm.share)?_c('div',{staticClass:"iconbutton",on:{"click":_vm.minimizeall}},[_c('i',{staticClass:"fas fa-times"})]):_vm._e(),(!_vm.pocketnet && _vm.mobile && !_vm.share && !_vm.isLocalStorageChatAuth)?_c('div',{staticClass:"iconbutton",on:{"click":_vm.gotoapp}},[_c('i',{staticClass:"fas fa-angle-left"})]):_vm._e()]},proxy:true},{key:"leftadd",fn:function(){return undefined},proxy:true},{key:"info",fn:function(){return [(!_vm.share)?_c('span',[_vm._v(_vm._s(_vm.$t("caption.chats")))]):_vm._e(),(_vm.share)?_c('span',[_vm._v(_vm._s(_vm.$t("caption.shareWith")))]):_vm._e()]},proxy:true},{key:"rightadd",fn:function(){return [(!_vm.share && _vm.pocketnet)?_c('router-link',{on:{"click":function($event){return _vm.gotona('settings')}}},[_c('div',{staticClass:"iconbuttonsmall"},[_c('i',{staticClass:"fas fa-cog"})])]):_vm._e()]},proxy:true},{key:"right",fn:function(){return [(!_vm.share && (!_vm.minimized || _vm.active))?_c('div',{staticClass:"iconbutton",on:{"click":_vm.newchat}},[_c('i',{staticClass:"fas fa-plus"})]):_c('div',[(_vm.window.cordova)?_c('div',{staticClass:"iconbutton",on:{"click":_vm.cordovashare}},[_c('i',{staticClass:"fas fa-share-alt"})]):_vm._e()])]},proxy:true}])})],1)}
+var staticRenderFns = []
+
+
+// CONCATENATED MODULE: ./src/components/chats/topheader/index.vue?vue&type=template&id=7fe8f542&scoped=true&
+
+// EXTERNAL MODULE: ./node_modules/vuex/dist/vuex.esm.js
+var vuex_esm = __webpack_require__("2f62");
+
+// EXTERNAL MODULE: ./src/components/contacts/index.vue + 4 modules
+var contacts = __webpack_require__("71da");
+
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./src/components/chats/topheader?vue&type=script&lang=js&
+
+
+/* harmony default export */ var topheader_vue_type_script_lang_js_ = ({
+  name: "chatsTopheader",
+  props: {},
+  components: {
+    contacts: contacts["a" /* default */]
+  },
+  data: function () {
+    return {
+      loading: false,
+      newchatopened: false,
+      createGroup: false,
+      contacts: false,
+      isLocalStorageChatAuth: this.$store.state.isLocalStorageChatAuth
+    };
+  },
+
+  created() {
+    this.$store.commit("SET_CURRENT_ROOM", "all");
+  },
+
+  destroyed() {
+    this.$store.commit("SET_CURRENT_ROOM", false);
+  },
+
+  watch: {//$route: 'getdata'
+  },
+  computed: Object(vuex_esm["c" /* mapState */])({
+    auth: state => state.auth,
+    minimized: state => state.minimized,
+    pocketnet: state => state.pocketnet,
+    mobile: state => state.mobile,
+    active: state => state.active,
+    ...Object(vuex_esm["c" /* mapState */])(["share", "closebybg"]),
+    window: function () {
+      return window;
+    }
+  }),
+  methods: {
+    changeCloseByBg: function () {
+      this.$store.commit('closebybg', !this.closebybg);
+    },
+    gotoapp: function () {
+      if (this.core.backtoapp) this.core.backtoapp();
+    },
+    cordovashare: function () {
+      var share = this.share;
+      var options = {//subject : "Message"
+      };
+      if (share.messages) options.message = share.messages.join('. ');
+
+      if (share.images || share.files) {
+        options.files = [].concat(share.images, share.files);
+        options.files = _.filter(options.files, function (f) {
+          return f;
+        });
+      }
+
+      if (window.plugins && window.plugins.socialsharing) {
+        window.plugins.socialsharing.shareWithOptions(options);
+      }
+
+      this.cancelShare();
+    },
+    cancelShare: function () {
+      if (this.share) {
+        if (this.share.route) {
+          this.$router.push(this.share.route).catch(e => {});
+        }
+      }
+
+      this.$store.commit('SHARE', null);
+    },
+    newchatmenu: function () {
+      this.newchatopened = !this.newchatopened;
+    },
+    minimizeall: function () {
+      this.$store.commit('minimize', true);
+    },
+    newchat: function () {
+      this.$emit('newchat');
+    },
+
+    gotona(r) {
+      this.$router.push({
+        path: this.$router.path,
+        query: { ...this.$route.query,
+          page: r
+        }
+      });
+    }
+
+  }
+});
+// CONCATENATED MODULE: ./src/components/chats/topheader?vue&type=script&lang=js&
+ /* harmony default export */ var chats_topheader_vue_type_script_lang_js_ = (topheader_vue_type_script_lang_js_); 
+// EXTERNAL MODULE: ./node_modules/vue-loader/lib/runtime/componentNormalizer.js
+var componentNormalizer = __webpack_require__("2877");
+
+// CONCATENATED MODULE: ./src/components/chats/topheader/index.vue
+
+
+
+function injectStyles (context) {
+  
+  var style0 = __webpack_require__("18bc")
+if (style0.__inject__) style0.__inject__(context)
+
+}
+
+/* normalize component */
+
+var component = Object(componentNormalizer["a" /* default */])(
+  chats_topheader_vue_type_script_lang_js_,
+  render,
+  staticRenderFns,
+  false,
+  injectStyles,
+  "7fe8f542",
+  null
+  ,true
+)
+
+/* harmony default export */ var topheader = __webpack_exports__["a"] = (component.exports);
+
+/***/ }),
+
 /***/ "d15f":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -94371,20 +95798,6 @@ module.exports = {
 
 /***/ }),
 
-/***/ "d270":
-/***/ (function(module, exports, __webpack_require__) {
-
-// Imports
-var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
-exports = ___CSS_LOADER_API_IMPORT___(false);
-// Module
-exports.push([module.i, ".chats-list .searchWrapperEA[data-v-57da332f]{margin-top:.5em}.removeRoom[data-v-57da332f]{width:62px;height:100%;background:rgb(var(--color-bad));border-radius:3px}.removeRoom i[data-v-57da332f]{color:#fff}.chatsearchingempty[data-v-57da332f]{padding:2em;text-align:center}.chatsearchingempty span[data-v-57da332f]{font-size:1.5em;font-weight:100}.generatekeys[data-v-57da332f],.inviteUserDiv[data-v-57da332f]{margin-top:.5em;margin-bottom:1em}.generatekeys .generatekeysButton[data-v-57da332f],.generatekeys .inviteButton[data-v-57da332f],.inviteUserDiv .generatekeysButton[data-v-57da332f],.inviteUserDiv .inviteButton[data-v-57da332f]{background-color:rgb(var(--color-bg-orange));color:#fff;width:100%;height:34px;font-size:.9em;border-radius:30px;position:relative;cursor:pointer}.generatekeys .generatekeysButton i[data-v-57da332f],.generatekeys .inviteButton i[data-v-57da332f],.inviteUserDiv .generatekeysButton i[data-v-57da332f],.inviteUserDiv .inviteButton i[data-v-57da332f]{position:absolute;right:0;top:0;line-height:34px;width:50px;text-align:center}[data-v-57da332f] .statusIcon{font-size:.8em}.desktopList .card-content[data-v-57da332f]{position:absolute;width:100%;left:0;right:0;height:60px}.bout .desktopList .card-content[data-v-57da332f]{height:70px;contain:strict}.selectedForShare[data-v-57da332f]{background:rgba(var(--color-shadow-base),.8)!important}.selectedForShare .paddingwrapper[data-v-57da332f]{position:absolute;left:50px;top:100px;bottom:100px;right:50px;overflow:hidden;border-radius:50%}.selectedForShare .paddingwrapper .chatwrapper[data-v-57da332f]{position:absolute;background:rgb(var(--background-total-theme));left:-50px;top:-100px;bottom:-100px;right:-50px}.selectedForShare[data-v-57da332f] .chatInputWrapper{display:none}.previewWrapper[data-v-57da332f]:last-child{border-bottom:0}.swipeout-list[data-v-57da332f]{display:flex;flex-direction:column}.startnewchat[data-v-57da332f],.unauthorized[data-v-57da332f]{padding:2em 0;text-align:center}.startnewchat .buttonWrapper[data-v-57da332f],.unauthorized .buttonWrapper[data-v-57da332f]{padding:1em}.startnewchat .captionWrapper[data-v-57da332f],.unauthorized .captionWrapper[data-v-57da332f]{padding:1em;text-align:center}.startnewchat .captionWrapper span[data-v-57da332f],.unauthorized .captionWrapper span[data-v-57da332f]{font-size:1.5em;font-weight:100}.card[data-v-57da332f]{width:100%;border-radius:3px}.inviteUserDivWrapper[data-v-57da332f]{transition:.3s}.chats-list.minimized:not(.active) .inviteUserDivWrapper[data-v-57da332f],.chats-list.minimized:not(.active) .startnewchat[data-v-57da332f],.chats-list.minimized:not(.active) .unauthorized[data-v-57da332f],.unauthorized.minimized[data-v-57da332f]:not(.active){display:none}", ""]);
-// Exports
-module.exports = exports;
-
-
-/***/ }),
-
 /***/ "d2bb":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -94780,6 +96193,20 @@ var contact_component = Object(componentNormalizer["a" /* default */])(
 
 /***/ }),
 
+/***/ "d45f":
+/***/ (function(module, exports, __webpack_require__) {
+
+// Imports
+var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
+exports = ___CSS_LOADER_API_IMPORT___(false);
+// Module
+exports.push([module.i, ".referenceTop[data-v-73391fe2]{margin-left:.25em;margin-right:.25em;border-radius:10px;border-bottom-left-radius:0;overflow:hidden;margin-bottom:.5em}.referenceTop.my[data-v-73391fe2]{border-bottom-right-radius:0;border-bottom-left-radius:10px}.actionsWrapper[data-v-73391fe2]{opacity:1}.actionsWrapper i.fa-check-circle[data-v-73391fe2]{color:rgb(var(--color-txt-ac));opacity:1!important}.actionsWrapper .mnwrapper[data-v-73391fe2]{opacity:0;transition:.3s}.actionsWrapper .multiSelect[data-v-73391fe2]{position:absolute;top:50%;transform:translateY(-50%);left:0;padding:.5em;width:100%;height:100%;display:flex;flex-direction:column;justify-content:center}.actionsWrapper .multiSelect:hover i[data-v-73391fe2]{opacity:1}@media (pointer:fine){.messageRow:hover .actionsWrapper .mnwrapper[data-v-73391fe2]{opacity:1}}.burn.big[data-v-73391fe2]{color:rgb(var(--color-bad))}.burn.medium[data-v-73391fe2]{opacity:.8}.showImage[data-v-73391fe2]{width:100%;position:relative;overflow:hidden}.showImage .abswrapper[data-v-73391fe2]{position:absolute;left:0;top:0;bottom:0;right:0;display:flex;text-align:center;align-items:center;justify-content:center}.preloaderImage[data-v-73391fe2]{padding-bottom:100px;border-radius:10px;background:rgba(var(--neutral-grad-0),.5);width:100%;position:relative}.preloaderImage .abswrapper[data-v-73391fe2]{position:absolute;left:0;top:0;bottom:0;right:0;display:flex;text-align:center;align-items:center;justify-content:center}.preloaderImage .abswrapper>div[data-v-73391fe2]{opacity:.2}.statusWrapper[data-v-73391fe2]{padding:.5em;margin-top:.5em;border-top:.5em solid rgb(var(--neutral-grad-0))}.statusWrapper .my[data-v-73391fe2]{font-size:.7em;opacity:.5;text-align:center}.messageRow[data-v-73391fe2]{display:flex;align-items:flex-end;padding-left:.25em;min-height:34px}.messageRow.aligncenter[data-v-73391fe2]{align-items:center}.messageRow.my[data-v-73391fe2]{padding-left:0;padding-right:.25em}.messageRow.my .messageImg .imgMsg .showImage .abswrapper[data-v-73391fe2]{border-radius:1em;border-top-right-radius:0;border-top-left-radius:1em}.messageRow .maxcontent[data-v-73391fe2],.messageRow .maxcontent.my[data-v-73391fe2]{max-width:320px}.messageRow.allscreen[data-v-73391fe2]{flex-wrap:wrap}.messageRow.allscreen .userpic[data-v-73391fe2]{position:relative}.messageRow.allscreen .userpic[data-v-73391fe2]:after{border-radius:50%;content:\"\";position:absolute;left:-5px;right:-5px;top:-5px;bottom:-5px;border:5px solid rgb(var(--neutral-grad-0));z-index:1;box-shadow:0 5px 7px -5px rgba(var(--color-shadow-base),.7)}.messageRow .badenctyptedText .decryptagain[data-v-73391fe2]{font-size:.8em}.messageRow .metaMsg[data-v-73391fe2]{width:100%}.messageRow .badencrypted[data-v-73391fe2]{position:absolute;background:rgb(var(--background-main));left:0;right:0;top:0;bottom:0;padding:.5em}.messageRow .encryptedDataIcon[data-v-73391fe2]{position:absolute;color:rgb(var(--text-on-bg-ac-color));opacity:.3;padding:.25em .5em;text-shadow:0 0 2px rgba(var(--color-shadow-base),.714),0 0 3px rgba(var(--color-shadow-base),.519);left:0;top:0;z-index:1}.messageRow .encryptedDataIcon i[data-v-73391fe2]{font-size:.7em}.messageRow .filePreview .encryptedDataIcon[data-v-73391fe2]{color:rgb(var(--neutral-grad-2));text-shadow:none;right:0;left:auto}.messageRow .messageAudio[data-v-73391fe2]{margin-left:.5em;height:50px}.messageRow .messageAudio .reference[data-v-73391fe2]{padding:.5em;font-size:.9em;height:30px;display:flex;justify-content:space-between;align-items:center;color:rgb(var(--neutral-grad-2));transition:.4s;white-space:nowrap!important}.messageRow .messageAudio .reference .referenceCaption[data-v-73391fe2]{width:100%;display:flex;justify-content:flex-end;align-items:center}.messageRow .messageAudio .reference .referenceCaption button[data-v-73391fe2]{width:100%;display:block;margin-top:-.5em}.messageRow .messageImg[data-v-73391fe2]{width:85%;position:relative;margin-top:.125em;max-width:320px}.messageRow .messageImg .img[data-v-73391fe2]{display:block;border-radius:.5em;position:relative;max-width:100%}.messageRow .messageImg .loadingImg[data-v-73391fe2]{display:flex;align-items:center;justify-content:center;border-radius:.5em;position:relative;max-width:300px;height:250px}.messageRow .messageImg .loadingImg .imgPreview[data-v-73391fe2]{border-radius:.5em;position:relative;max-width:100%;height:100%;opacity:.6}.messageRow .messageImg .loadingImg .clipLoader[data-v-73391fe2]{position:absolute;z-index:9999;left:50%;right:0;top:50%;bottom:0;transform:translate(-50,50);display:flex;align-items:center;justify-content:center}.messageRow .messageImg .imgMsg .showImage[data-v-73391fe2]{display:flex}.messageRow .messageImg .imgMsg img[data-v-73391fe2]{max-width:100%;-o-object-fit:cover;object-fit:cover;display:block}.messageRow .messageImg .imgMsg .abswrapper[data-v-73391fe2]{border-radius:1em;border-top-left-radius:0;overflow:hidden;background:rgb(var(--neutral-grad-0))}.messageRow .messageImg .metaLink[data-v-73391fe2]{background:#000}.messageRow .messageImg .metaLink .metaMessageLink .metaTitle[data-v-73391fe2]{font-weight:700;font-size:.9em}.messageRow .messageImg .metaLink .metaMessageLink .metaDescription[data-v-73391fe2]{margin:.5em 0;font-size:.8em}.messageRow .messageImg .metaLink .metaMessageLink .metaImgWrapper[data-v-73391fe2]{display:block;max-width:300px;-o-object-fit:cover;object-fit:cover}.messageRow .messageImg .metaLink .metaMessageLink .metaImgWrapper img[data-v-73391fe2]{display:block;width:100%;height:100%}.messageRow .messageImg.referenceImg[data-v-73391fe2]{display:flex;flex-direction:column;justify-content:space-between}.messageRow .messageImg.referenceImg .encryptedDataIcon[data-v-73391fe2]{top:30px}.messageRow .messageImg .reference[data-v-73391fe2]{padding:.5em;font-size:.9em;height:30px;display:flex;justify-content:space-between;align-items:center;color:rgb(var(--neutral-grad-2));transition:.4s;white-space:nowrap!important}.messageRow .messageImg .reference[data-v-73391fe2]:hover{transition:.4s;background:rgb(var(--neutral-grad-0))}.messageRow .messageImg .reference .referenceCaption[data-v-73391fe2]{width:100%;display:flex;justify-content:flex-end;align-items:center}.messageRow .messageImg .reference .referenceCaption button[data-v-73391fe2]{width:100%;display:block;margin-top:-.5em}.messageRow .filePreview[data-v-73391fe2]{width:90%;max-width:320px;border:1px solid rgb(var(--neutral-grad-1));overflow:hidden;border-radius:10px;position:relative;margin-top:.5em;height:100px;padding-left:0!important}.messageRow .filePreview .table[data-v-73391fe2]{height:100%}.messageRow .filePreview.reference[data-v-73391fe2]{height:130px;display:flex;flex-direction:column;justify-content:space-between}.messageRow .filePreview.reference .table[data-v-73391fe2]{height:calc(100% - 30px)}.messageRow .filePreview.reference .encryptedDataIcon[data-v-73391fe2]{top:30px}.messageRow .filePreview .reference[data-v-73391fe2]{padding:.5em;font-size:.9em;height:30px;display:flex;justify-content:space-between;align-items:center;color:rgb(var(--neutral-grad-2));transition:.4s;white-space:nowrap!important}.messageRow .filePreview .reference[data-v-73391fe2]:hover{transition:.4s;background:rgb(var(--neutral-grad-0))}.messageRow .filePreview .reference .referenceCaption[data-v-73391fe2]{width:100%;display:flex;justify-content:flex-end;align-items:center}.messageRow .filePreview .reference .referenceCaption button[data-v-73391fe2]{width:100%;display:block;margin-top:-.5em}.messageRow .linkPreview[data-v-73391fe2]{width:100%}.messageRow .messagePreview[data-v-73391fe2]{width:100%;overflow:hidden;text-overflow:ellipsis}.messageRow .messagePreview span[data-v-73391fe2]{word-break:break-all;white-space:normal}.messageRow .fromimagesfiles[data-v-73391fe2]{order:5;padding:.5em .25em;padding-right:.5em}.messageRow .fromimagesfiles .fromCaption[data-v-73391fe2]{font-size:.8em}.messageRow .actionsWrapper[data-v-73391fe2]{order:4;padding-left:.5em;padding-right:1.25em;cursor:pointer;text-align:right;margin-left:auto;display:flex;align-items:center}.messageRow .actionsWrapper i[data-v-73391fe2]{opacity:.3;transition:.4s}.messageRow .actionsWrapper i.fa-ellipsis-h[data-v-73391fe2]{font-size:.7em}.messageRow .actionsWrapper i[data-v-73391fe2]:hover{opacity:1;transition:.4s}.messageRow .statusWrapper[data-v-73391fe2]{order:5;padding:.5em .25em;opacity:.6}.messageRow .statusWrapper div[data-v-73391fe2],.messageRow .statusWrapper span[data-v-73391fe2]{font-size:.7em}.messageRow .sendername[data-v-73391fe2]{order:3;opacity:.6;overflow:hidden;font-size:.7em}.messageRow .timeWrapper[data-v-73391fe2]{text-align:left;order:2;padding:0 .25em;line-height:33px;opacity:.6;flex-grow:1}.messageRow .timeWrapper span[data-v-73391fe2]{white-space:nowrap;font-size:.7em}.messageRow .showreference[data-v-73391fe2]{cursor:pointer}.messageRow.referenceshowed .messageText[data-v-73391fe2]{background:rgba(var(--neutral-grad-1),.8)!important;color:rgb(var(--color-txt-gray))!important}.messageRow.referenceshowed .reference[data-v-73391fe2]{padding-bottom:0!important}.messageRow.referenceshowed .referenceCaption button[data-v-73391fe2]{width:100%}.messageRow .messageText[data-v-73391fe2]{margin-left:.25em;background:rgba(var(--neutral-grad-1),.8);color:rgb(var(--text-color));padding:.5em .75em;padding-top:.5em;border-radius:1em;border-bottom-left-radius:0;font-weight:400;white-space:normal;display:flex;flex-direction:column-reverse}.messageRow .messageText .msgtext[data-v-73391fe2]{text-align:left;white-space:pre-wrap}.messageRow .messageText .reference[data-v-73391fe2]{height:32px}.messageRow .messageText .from[data-v-73391fe2],.messageRow .messageText .reference[data-v-73391fe2]{opacity:.8;border-bottom:1px solid rgb(var(--text-on-bg-ac-color));padding:.5em 0;padding-top:0;margin-bottom:.5em;display:flex}.messageRow .messageText .from .event[data-v-73391fe2],.messageRow .messageText .reference .event[data-v-73391fe2]{max-height:38px;text-align:left}.messageRow .messageText .from i[data-v-73391fe2],.messageRow .messageText .reference i[data-v-73391fe2]{width:30px;text-align:center;font-size:.8em}.messageRow .messageText .from .referenceCaption[data-v-73391fe2],.messageRow .messageText .reference .referenceCaption[data-v-73391fe2]{min-width:28px}.messageRow .messageText .from .fromCaption[data-v-73391fe2],.messageRow .messageText .from .referenceCaption[data-v-73391fe2],.messageRow .messageText .reference .fromCaption[data-v-73391fe2],.messageRow .messageText .reference .referenceCaption[data-v-73391fe2]{font-size:.8em}.messageRow .messageText .from .sendername[data-v-73391fe2],.messageRow .messageText .reference .sendername[data-v-73391fe2]{white-space:nowrap}.messageRow .messageText .from[data-v-73391fe2] .messagePreview,.messageRow .messageText .reference[data-v-73391fe2] .messagePreview{font-size:.9em;height:22px}.messageRow .messageText .from[data-v-73391fe2] .messagePreview .previewMessage,.messageRow .messageText .reference[data-v-73391fe2] .messagePreview .previewMessage{white-space:nowrap}.messageRow .messageText .edited[data-v-73391fe2]{font-size:.7em;opacity:.5;text-align:right}.messageRow .messageText div[data-v-73391fe2]{overflow:hidden;text-overflow:ellipsis}.messageRow .badenctyptedText[data-v-73391fe2]{margin-left:.5em;color:rgb(var(--text-on-bg-ac-color));padding:.5em .75em;border-radius:1em;background:rgb(var(--neutral-grad-3));word-break:break-all;white-space:normal}.messageRow .badenctyptedText span[data-v-73391fe2]{font-size:.9em}.messageRow .iconWrapper[data-v-73391fe2]{width:33px;min-width:33px}.messageRow .withsendername[data-v-73391fe2]{position:relative}.messageRow .withsendername .sendername[data-v-73391fe2]{position:absolute;top:100%;margin-top:-5px;left:20px;color:rgb(var(--neutral-grad-3))}.messageRow .withsendername .sendername span[data-v-73391fe2]{font-size:.7em}.messageRow[my=true][data-v-73391fe2]{justify-content:flex-end;flex-wrap:wrap}.messageRow[my=true] .iconWrapper[data-v-73391fe2]{margin-left:.5em;order:1;align-self:flex-start}.messageRow[my=true] .fromimagesfiles[data-v-73391fe2]{order:-5}.messageRow[my=true] .actionsWrapper[data-v-73391fe2]{text-align:left;margin-right:auto;margin-left:0;padding-left:.75em;padding-right:.25em;order:-4}.messageRow[my=true] .statusWrapper[data-v-73391fe2]{order:-3}.messageRow[my=true] .timeWrapper[data-v-73391fe2]{order:-2;text-align:right}.messageRow[my=true] .messageText[data-v-73391fe2]{background:rgb(var(--color-bg-ac-bright));color:rgb(var(--text-on-bg-ac-color));text-align:right;border-radius:1em;border-bottom-left-radius:1em;border-top-right-radius:0}.messageRow[my=true] .messageAudio[data-v-73391fe2]{margin-left:0}.messageRow[my=true] .messageAudio .voiceMessage[data-v-73391fe2]{justify-content:flex-end}.messageRow.urlpreview[data-v-73391fe2]{background:rgb(var(--background-total-theme));padding:.5em;padding-left:.25em;padding-bottom:1em}.messageRow.urlpreview .actionsWrapper[data-v-73391fe2]{padding-right:.5em;padding-left:.5em}.messageRow.allscreen .filePreview[data-v-73391fe2],.messageRow.allscreen .linkPreview[data-v-73391fe2],.messageRow.allscreen .messageImg[data-v-73391fe2],.messageRow.allscreen .metaMsg[data-v-73391fe2]{order:4;padding-left:.125em}.messageRow.allscreen[my=true] .filePreview[data-v-73391fe2],.messageRow.allscreen[my=true] .linkPreview[data-v-73391fe2],.messageRow.allscreen[my=true] .messageImg[data-v-73391fe2],.messageRow.allscreen[my=true] .metaMsg[data-v-73391fe2]{order:6}.messageRow.not-preview[data-v-73391fe2]{align-items:center;justify-content:center;color:rgb(var(--neutral-grad-3));text-align:center;flex-direction:column-reverse}.messageRow.not-preview .messageNoticeWithLink[data-v-73391fe2]{color:#004680}", ""]);
+// Exports
+module.exports = exports;
+
+
+/***/ }),
+
 /***/ "d485":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -94914,6 +96341,36 @@ Stream.prototype.pipe = function(dest, options) {
 
 /***/ }),
 
+/***/ "d546":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_7171cf6c_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("a4a0");
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_7171cf6c_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_7171cf6c_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_7171cf6c_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_7171cf6c_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+
+
+/***/ }),
+
+/***/ "d590":
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__("33c6");
+if(content.__esModule) content = content.default;
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add CSS to Shadow Root
+var add = __webpack_require__("35d6").default
+module.exports.__inject__ = function (shadowRoot) {
+  add("405eac30", content, shadowRoot)
+};
+
+/***/ }),
+
 /***/ "d5de":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -94922,6 +96379,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_756bd822_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("704f");
 /* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_756bd822_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_756bd822_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__);
 /* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_756bd822_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_756bd822_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+
+
+/***/ }),
+
+/***/ "d601":
+/***/ (function(module, exports, __webpack_require__) {
+
+// Imports
+var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
+exports = ___CSS_LOADER_API_IMPORT___(false);
+// Module
+exports.push([module.i, ".chats-list .searchWrapperEA[data-v-b5befc24]{margin-top:.5em}.removeRoom[data-v-b5befc24]{width:62px;height:100%;background:rgb(var(--color-bad));border-radius:3px}.removeRoom i[data-v-b5befc24]{color:#fff}.chatsearchingempty[data-v-b5befc24]{padding:2em;text-align:center}.chatsearchingempty span[data-v-b5befc24]{font-size:1.5em;font-weight:100}.generatekeys[data-v-b5befc24],.inviteUserDiv[data-v-b5befc24]{margin-top:.5em;margin-bottom:1em}.generatekeys .generatekeysButton[data-v-b5befc24],.generatekeys .inviteButton[data-v-b5befc24],.inviteUserDiv .generatekeysButton[data-v-b5befc24],.inviteUserDiv .inviteButton[data-v-b5befc24]{background-color:rgb(var(--color-bg-orange));color:#fff;width:100%;height:34px;font-size:.9em;border-radius:30px;position:relative;cursor:pointer}.generatekeys .generatekeysButton i[data-v-b5befc24],.generatekeys .inviteButton i[data-v-b5befc24],.inviteUserDiv .generatekeysButton i[data-v-b5befc24],.inviteUserDiv .inviteButton i[data-v-b5befc24]{position:absolute;right:0;top:0;line-height:34px;width:50px;text-align:center}[data-v-b5befc24] .statusIcon{font-size:.8em}.desktopList .card-content[data-v-b5befc24]{position:absolute;width:100%;left:0;right:0;height:60px}.bout .desktopList .card-content[data-v-b5befc24]{height:70px;contain:strict}.selectedForShare[data-v-b5befc24]{background:rgba(var(--color-shadow-base),.8)!important}.selectedForShare .paddingwrapper[data-v-b5befc24]{position:absolute;left:50px;top:100px;bottom:100px;right:50px;overflow:hidden;border-radius:50%}.selectedForShare .paddingwrapper .chatwrapper[data-v-b5befc24]{position:absolute;background:rgb(var(--background-total-theme));left:-50px;top:-100px;bottom:-100px;right:-50px}.selectedForShare[data-v-b5befc24] .chatInputWrapper{display:none}.previewWrapper[data-v-b5befc24]:last-child{border-bottom:0}.swipeout-list[data-v-b5befc24]{display:flex;flex-direction:column}.startnewchat[data-v-b5befc24],.unauthorized[data-v-b5befc24]{padding:2em 0;text-align:center}.startnewchat .buttonWrapper[data-v-b5befc24],.unauthorized .buttonWrapper[data-v-b5befc24]{padding:1em}.startnewchat .captionWrapper[data-v-b5befc24],.unauthorized .captionWrapper[data-v-b5befc24]{padding:1em;text-align:center}.startnewchat .captionWrapper span[data-v-b5befc24],.unauthorized .captionWrapper span[data-v-b5befc24]{font-size:1.5em;font-weight:100}.card[data-v-b5befc24]{width:100%;border-radius:3px}.inviteUserDivWrapper[data-v-b5befc24]{transition:.3s}.chats-list.minimized:not(.active) .inviteUserDivWrapper[data-v-b5befc24],.chats-list.minimized:not(.active) .startnewchat[data-v-b5befc24],.chats-list.minimized:not(.active) .unauthorized[data-v-b5befc24],.unauthorized.minimized[data-v-b5befc24]:not(.active){display:none}", ""]);
+// Exports
+module.exports = exports;
 
 
 /***/ }),
@@ -95221,6 +96692,20 @@ function byError(_error) {
   return _error;
 }
 
+
+
+/***/ }),
+
+/***/ "d898":
+/***/ (function(module, exports, __webpack_require__) {
+
+// Imports
+var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
+exports = ___CSS_LOADER_API_IMPORT___(false);
+// Module
+exports.push([module.i, ".main-wrapper{display:flex}.main-wrapper.minimized .headerSpacerWrapperOvf{background:transparent!important}.main-wrapper.minimized .inputWrapper{width:334px;margin-left:-340px}.main-wrapper.minimized .input_component{width:300px}.main-wrapper.minimized .chat-container #chatsTopheader{width:344px}.main-wrapper.minimized .headerSpacer{left:-602px}.main-wrapper .chat-container{width:400px;height:100%;position:relative}.main-wrapper .chat-container #wai-fixedmessageicon,.main-wrapper .chat-container .menubgwrapper{display:none}.main-wrapper .chat-container-pages{position:relative;height:100%;width:calc(100% - 400px);border-left:1px solid #ebebf0}.main-wrapper .chat-container-pages #topheader.minimized.fix,.main-wrapper .chat-container-pages .minimized .headerSpacerWrapper{left:-44px!important}.main-wrapper .chat-container-pages .fixedOnPageTop{width:100%}.main-wrapper .chat-container-pages-empty{display:flex;flex-direction:column;justify-content:center;align-items:center;width:calc(100% - 400px);background:#f1f1f1}.main-wrapper .chat-container-pages-empty i{transform:scale(2);color:#00a4ff}.main-wrapper .chat-container-pages #wai-fixedmessageicon.active .wrapper{position:fixed;right:0;left:auto;width:calc(100vw - 400px)!important;transform:none}@media only screen and (max-width:768px){.main-wrapper{display:block}.main-wrapper .chat-container{width:100%}.main-wrapper .chat-container .fixedOnPageTop{width:400px}.main-wrapper .chat-container-pages{position:fixed;top:0;left:0;right:0;bottom:0;width:100%;z-index:999;background:#fff}.main-wrapper .chat-container-pages .fixedOnPageTop{width:100%}.main-wrapper .chat-container-pages-empty{display:none}.main-wrapper .chat-container-pages #wai-fixedmessageicon.active .wrapper{position:fixed;right:0;left:auto;width:100vw!important;transform:none}}", ""]);
+// Exports
+module.exports = exports;
 
 
 /***/ }),
@@ -97054,18 +98539,6 @@ function done(stream, er, data) {
 
 /***/ }),
 
-/***/ "dd47":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_c8f458dc_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("be6a");
-/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_c8f458dc_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_c8f458dc_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_c8f458dc_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_c8f458dc_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-
-
-/***/ }),
-
 /***/ "dd5f":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -97654,24 +99127,6 @@ InteractiveAuth.prototype = {
 
 /***/ }),
 
-/***/ "de24":
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__("2931");
-if(content.__esModule) content = content.default;
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add CSS to Shadow Root
-var add = __webpack_require__("35d6").default
-module.exports.__inject__ = function (shadowRoot) {
-  add("2456b184", content, shadowRoot)
-};
-
-/***/ }),
-
 /***/ "de56":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -97692,6 +99147,20 @@ var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
 exports.push([module.i, ".userspicwrapper[data-v-792279b0]{width:44px;height:44px;background:rgb(var(--background-main));line-height:44px;text-align:center;font-size:.8em;color:rgb(var(--color-bg-ac-2));position:relative}.userspicwrapper[data-v-792279b0],.userspicwrapper[data-v-792279b0] .bgimage{border-radius:50%}.swiperWrapperFlex[data-v-792279b0]{margin:0 auto}.icon[data-v-792279b0]{position:absolute;right:70%;top:70%;font-size:1em;width:20px;height:20px;line-height:20px;background:transparent;border-radius:20px;color:rgb(var(--color-txt-gray));opacity:.8;z-index:3}.icon.active[data-v-792279b0]{color:rgb(var(--color-txt-ac))}.unseen[data-v-792279b0]{position:absolute;width:22px;height:22px;right:-10%;bottom:-10%;background:rgba(var(--color-bg-ac),.9);line-height:22px;text-align:center;font-weight:500;border-radius:50%;z-index:5;font-size:.6em;color:rgb(var(--text-on-bg-ac-color))}.userspic[data-v-792279b0]{position:relative}.iconPreview[data-v-792279b0]{width:44px;height:44px;border-radius:50%}", ""]);
+// Exports
+module.exports = exports;
+
+
+/***/ }),
+
+/***/ "df48":
+/***/ (function(module, exports, __webpack_require__) {
+
+// Imports
+var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
+exports = ___CSS_LOADER_API_IMPORT___(false);
+// Module
+exports.push([module.i, ".topheader[data-v-64f4fef6]{top:0;z-index:999}", ""]);
 // Exports
 module.exports = exports;
 
@@ -100505,6 +101974,24 @@ module.exports = exports;
 
 /***/ }),
 
+/***/ "e6d7":
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__("59f8");
+if(content.__esModule) content = content.default;
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add CSS to Shadow Root
+var add = __webpack_require__("35d6").default
+module.exports.__inject__ = function (shadowRoot) {
+  add("1da73cf8", content, shadowRoot)
+};
+
+/***/ }),
+
 /***/ "e71b":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -101060,18 +102547,6 @@ class PNUser extends _user_js__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"] {
 
 /* harmony default export */ __webpack_exports__["a"] = (PNUser);
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__("b639").Buffer))
-
-/***/ }),
-
-/***/ "e86a":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_0438bc11_scoped_true_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("6a45");
-/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_0438bc11_scoped_true_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_0438bc11_scoped_true_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_0438bc11_scoped_true_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_0438bc11_scoped_true_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-
 
 /***/ }),
 
@@ -101745,6 +103220,20 @@ module.exports = {
 
 /***/ }),
 
+/***/ "ec59":
+/***/ (function(module, exports, __webpack_require__) {
+
+// Imports
+var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
+exports = ___CSS_LOADER_API_IMPORT___(false);
+// Module
+exports.push([module.i, ".topheader[data-v-1bb44da9]{top:0;z-index:999}.newChat[data-v-1bb44da9] #maincontent .headerSpacer,.newChat[data-v-1bb44da9] #maincontent .headerSpacerWrapper{overflow:visible!important}.newChat[data-v-1bb44da9] #maincontent .headerSpacerWrapperOvf{background:#fff;overflow:visible!important}.newChat.minimized.active[data-v-1bb44da9] #maincontent .desktopList{display:none}", ""]);
+// Exports
+module.exports = exports;
+
+
+/***/ }),
+
 /***/ "ecec":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -102250,7 +103739,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 /***/ "edd4":
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"caption\":{\"create\":\"Create\",\"addGroupNamePlaceHolder\":\"Add Group Name\",\"addPublicChatName\":\"Add Public Chat Name\",\"createPublicChat\":\"Create public chat\",\"chatTopic\":\"Topic renamed\",\"publicRoomTitle\":\"Public Room\",\"asModerator\":\"as moderator\",\"marked\":\"marked\",\"unmarked\":\"unmarked\",\"removeBan\":\"Remove Ban\",\"cancelModeration\":\"Remove moderation\",\"uploadFiles\":\"Upload files\",\"header\":\"header\",\"dragAndDropAFile\":\"Drag and drop file\",\"chatInvite\":\"You were invited to chat with:\",\"cantJoin\":\"You can't join to chat with:\",\"chatInviteDecline\":\"You can join in chat or decline invitation\",\"creatorLeft\":\"Because creator left the room\",\"encrypted\":\"Encrypted\",\"noImages\":\"There are no images in this chat yet\",\"noFiles\":\"There are no files in this chat yet\",\"inviteUser\":\"Invite User\",\"invite\":\"Invite\",\"add\":\"Add\",\"mute\":\"Mute\",\"unmute\":\"Unmute\",\"leave\":\"Leave\",\"Info\":\"Info\",\"new\":\"New\",\"typing\":\"typing\",\"accNotFound\":\"Your registration is in progress, please wait...\",\"emptyList\":\"list is empty ( filtered or just empty )\",\"welcome\":\"Welcome to chat\",\"startNewChat\":\"Start a new chat\",\"chats\":\"Chats\",\"shareWith\":\"Share with\",\"newChat\":\"New Chat\",\"moveToChat\":\"Move to chat\",\"queryNoResults\":\"Query reports no results\",\"needMoreCharacters\":\"Need more characters for result\",\"createGroup\":\"Create Group\",\"unabletoDecrypt\":\"* Unable to decrypt\",\"messageDeleted\":\"Message Deleted\",\"sentImage\":\"sent image\",\"sentVoiceMessage\":\"sent a voice message\",\"invitationToChat\":\"Invitation to chat\",\"invitationToRoom\":\"Invitation to room\",\"leftChat\":\"left the chat\",\"joined\":\"joined\",\"chatRenamed\":\"Chat renamed to \",\"recentComment\":\"Recent comment:\",\"share\":\"SHARE\",\"followers\":\"Followers\",\"reputation\":\"Reputation\",\"unsubscribe\":\"Unsubscribe\",\"following\":\"Following\",\"theme\":\"Theme:\",\"contacts\":\"Contacts\",\"phoneContacts\":\"Phone contacts\",\"chooseInviteMedia\":\"Please choose how you want to invite:\",\"admin\":\"Admin\",\"moderator\":\"Moderator\",\"videocall\":\"Video Call\",\"call\":\"Call\",\"leaveAndDelete\":\"Leave and Delete\",\"donate\":\"Donate\",\"makeModerator\":\"Make Moderator\",\"ban\":\"Ban\",\"kick\":\"Kick\",\"members\":\"Members\",\"media\":\"Media\",\"files\":\"Files\",\"contactsList\":\"Contacts List\",\"send\":\"send\",\"pageCaption\":\"Page caption\",\"caption\":\"Caption\",\"text\":\"text\",\"placeholder\":\"placeholder\",\"sendTransactionTo\":\"Send Transaction To\",\"toBePaidByReceiver\":\"To be paid by Receiver\",\"toBePaidBySender\":\"To be paid by Sender\",\"source\":\"Source\",\"amount\":\"Amount\",\"receiver\":\"Receiver\",\"message\":\"Message\",\"includeFeesInAmount\":\"Include Fees in Amount\",\"transactionFees\":\"Transaction Fees\",\"totalAmount\":\"Total amount\",\"balanceTooLow\":\"Balance too low\",\"transactionError\":\"Error, can't make the transaction\",\"calculateFees\":\"Calculate Fees\",\"startChatWith\":\"Start chat with\",\"searchResult\":\"Search result\",\"joinedInTheChat\":\"joined the chat\",\"invited\":\"invited \",\"hasInvited\":\"has invited \",\"inTheChat\":\" in the chat\",\"banned\":\"banned\",\"andRoom\":\"and room\",\"left\":\"left\",\"theChat\":\" the chat \",\"made\":\"made \",\"aModerator\":\" a moderator\",\"editedChatNameTo \":\"edited chat name to \",\"somebody\":\"Somebody\",\"sent\":\"sent\",\"PKOINto\":\" PKOIN to \",\"response\":\"Response\",\"messagefrom\":\"Forwarded message from\",\"edited\":\"Edited\",\"settings\":\"Settings\",\"unauthorized\":\"Unauthorized\",\"search\":\"Search\",\"replyOnMessage\":\"Reply on Message\",\"editMessage\":\"Edit Message\",\"inviteFriend\":\"Invite friends\",\"emptyContactList\":\"Contacts list is empty\",\"joinApp\":\"Please connect with me for secure chat.\",\"hasInvitedToJoin\":\"It is private and NOT connected to your phone number. Let's chat!\",\"contactsempty\":\"You do not have contacts yet, find them in the search\",\"usernotgen\":\"User did not generate their encryption keys yet. You will be able to chat them when their keys are generated.\",\"younotgen\":\"Please wait a minute, Your encryption keys are being generated...\",\"messageRead\":\"Message read\",\"open\":\"Open\",\"You\":\"You\",\"chatsearchingempty\":\"No chats found for the specified filter\",\"sendmessage\":\"Send message\"},\"input\":{\"patientEmailPlaceholder\":\"Email\",\"refillNamePlaceholder\":\"Refill name\"},\"message\":{},\"button\":{\"starChatButton\":\"Start chat\",\"decline\":\"Decline\",\"declineandignore\":\"Ignore User\",\"join\":\"Join\",\"ok\":\"Ok\",\"save\":\"Save\",\"copy\":\"Copy\",\"forward\":\"Forward\",\"delete\":\"Delete\",\"reply\":\"Reply\",\"share\":\"Share\",\"download\":\"Download\",\"downloaded\":\"Downloaded\",\"goToPocketnetProfile\":\"Go to profile\",\"sendFile\":\"Send File\",\"takePhotoOrVideo\":\"Send image\",\"sendCoins\":\"Send coins\",\"edit\":\"Edit\",\"select\":\"Select\",\"block\":\"Block\",\"unblock\":\"Unblock\",\"blockUser\":\"Block user\",\"Complain\":\"Complain\"},\"type\":{\"publicgroup\":\"Create Public group\",\"privategroup\":\"Create Private group\",\"one\":\"One on one chat\"},\"typelabel\":{\"publicgroup\":\"Public group creation\",\"privategroup\":\"Private group creation\",\"one\":\"One on one chat creation\"},\"yes\":\"Yes\",\"cancel\":\"Cancel\",\"teamMessages\":{\"1-title\":\"Welcome to Bastyon Private Chat!\",\"1-list1\":\"Private messenger that is NOT connected to your phone number\",\"1-list2\":\"End-To-End Encryption of every 1-on-1 conversation by default\",\"1-list3\":\"All images sent or received through chat are stored encrypted\",\"1-list4\":\"History of messages is saved for 7 days only\",\"2-title\":\"A Huge Announcement! Pocketnet application is now called Bastyon!\",\"2-message1\":\"The domain will be moved to Bastyon.com. We released the following major updates recently:\",\"2-list1\":\"Private encrypted messenger not connected to your phone number\",\"2-list2\":\"Ability to donate PKOIN to bloggers\",\"2-list3\":\"Video and Live Streaming\",\"2-message2\":\"Invite your friends now and be a part of the big future of decentralized internet!\",\"2-button\":\"Invite friends\"},\"sendingerror\":\"An error occurred while sending the message\",\"details\":\"Details\",\"settings_pin\":\"Pin chat window\",\"checked\":\"Yes\",\"unchecked\":\"No\",\"settings_read\":\"Send read receipts\",\"messagewasburn\":\"This message remains only in the memory of your device\",\"messagewillburn\":\"The message will be deleted soon\",\"micaccessbrowser\":\"Access to the microphone is restricted, please check your browser settings.\",\"micaccesscommonproblem\":\"Sorry, for some reason it is not possible to record voice messages on the device\",\"micaccesscordova\":\"Access to the microphone is restricted, please check your device settings.\",\"micdevicenotfound\":\"Audio recording device not found\"}");
+module.exports = JSON.parse("{\"caption\":{\"create\":\"Create\",\"addGroupNamePlaceHolder\":\"Add Group Name\",\"addPublicChatName\":\"Add Public Chat Name\",\"createPublicChat\":\"Create public chat\",\"chatTopic\":\"Topic renamed\",\"publicRoomTitle\":\"Public Room\",\"asModerator\":\"as moderator\",\"marked\":\"marked\",\"unmarked\":\"unmarked\",\"removeBan\":\"Remove Ban\",\"cancelModeration\":\"Remove moderation\",\"uploadFiles\":\"Upload files\",\"header\":\"header\",\"dragAndDropAFile\":\"Drag and drop file\",\"chatInvite\":\"You were invited to chat with:\",\"cantJoin\":\"You can't join to chat with:\",\"chatInviteDecline\":\"You can join in chat or decline invitation\",\"creatorLeft\":\"Because creator left the room\",\"encrypted\":\"Encrypted\",\"noImages\":\"There are no images in this chat yet\",\"noFiles\":\"There are no files in this chat yet\",\"inviteUser\":\"Invite User\",\"invite\":\"Invite\",\"add\":\"Add\",\"mute\":\"Mute\",\"unmute\":\"Unmute\",\"leave\":\"Leave\",\"Info\":\"Info\",\"new\":\"New\",\"typing\":\"typing\",\"accNotFound\":\"Your registration is in progress, please wait...\",\"emptyList\":\"list is empty ( filtered or just empty )\",\"welcome\":\"Welcome to chat\",\"startNewChat\":\"Start a new chat\",\"chats\":\"Chats\",\"shareWith\":\"Share with\",\"newChat\":\"New Chat\",\"moveToChat\":\"Move to chat\",\"queryNoResults\":\"Query reports no results\",\"needMoreCharacters\":\"Need more characters for result\",\"createGroup\":\"Create Group\",\"unabletoDecrypt\":\"* Unable to decrypt\",\"messageDeleted\":\"Message Deleted\",\"sentImage\":\"sent image\",\"sentVoiceMessage\":\"sent a voice message\",\"invitationToChat\":\"Invitation to chat\",\"invitationToRoom\":\"Invitation to room\",\"leftChat\":\"left the chat\",\"joined\":\"joined\",\"chatRenamed\":\"Chat renamed to \",\"recentComment\":\"Recent comment:\",\"share\":\"SHARE\",\"followers\":\"Followers\",\"reputation\":\"Reputation\",\"unsubscribe\":\"Unsubscribe\",\"following\":\"Following\",\"theme\":\"Theme:\",\"contacts\":\"Contacts\",\"phoneContacts\":\"Phone contacts\",\"chooseInviteMedia\":\"Please choose how you want to invite:\",\"admin\":\"Admin\",\"moderator\":\"Moderator\",\"videocall\":\"Video Call\",\"call\":\"Call\",\"leaveAndDelete\":\"Leave and Delete\",\"donate\":\"Donate\",\"makeModerator\":\"Make Moderator\",\"ban\":\"Ban\",\"kick\":\"Kick\",\"members\":\"Members\",\"media\":\"Media\",\"files\":\"Files\",\"contactsList\":\"Contacts List\",\"send\":\"send\",\"pageCaption\":\"Page caption\",\"caption\":\"Caption\",\"text\":\"text\",\"placeholder\":\"placeholder\",\"sendTransactionTo\":\"Send Transaction To\",\"toBePaidByReceiver\":\"To be paid by Receiver\",\"toBePaidBySender\":\"To be paid by Sender\",\"source\":\"Source\",\"amount\":\"Amount\",\"receiver\":\"Receiver\",\"message\":\"Message\",\"includeFeesInAmount\":\"Include Fees in Amount\",\"transactionFees\":\"Transaction Fees\",\"totalAmount\":\"Total amount\",\"balanceTooLow\":\"Balance too low\",\"transactionError\":\"Error, can't make the transaction\",\"calculateFees\":\"Calculate Fees\",\"startChatWith\":\"Start chat with\",\"searchResult\":\"Search result\",\"joinedInTheChat\":\"joined the chat\",\"invited\":\"invited \",\"hasInvited\":\"has invited \",\"inTheChat\":\" in the chat\",\"banned\":\"banned\",\"andRoom\":\"and room\",\"left\":\"left\",\"theChat\":\" the chat \",\"made\":\"made \",\"aModerator\":\" a moderator\",\"editedChatNameTo \":\"edited chat name to \",\"somebody\":\"Somebody\",\"sent\":\"sent\",\"PKOINto\":\" PKOIN to \",\"response\":\"Response\",\"messagefrom\":\"Forwarded message from\",\"edited\":\"Edited\",\"settings\":\"Settings\",\"unauthorized\":\"Unauthorized\",\"search\":\"Search\",\"replyOnMessage\":\"Reply on Message\",\"editMessage\":\"Edit Message\",\"inviteFriend\":\"Invite friends\",\"emptyContactList\":\"Contacts list is empty\",\"joinApp\":\"Please connect with me for secure chat.\",\"hasInvitedToJoin\":\"It is private and NOT connected to your phone number. Let's chat!\",\"contactsempty\":\"You do not have contacts yet, find them in the search\",\"usernotgen\":\"User did not generate their encryption keys yet. You will be able to chat them when their keys are generated.\",\"younotgen\":\"Please wait a minute, Your encryption keys are being generated...\",\"messageRead\":\"Message read\",\"open\":\"Open\",\"You\":\"You\",\"chatsearchingempty\":\"No chats found for the specified filter\",\"sendmessage\":\"Send message\",\"clearHistory\":\"Clear history\"},\"input\":{\"patientEmailPlaceholder\":\"Email\",\"refillNamePlaceholder\":\"Refill name\"},\"message\":{},\"button\":{\"starChatButton\":\"Start chat\",\"decline\":\"Decline\",\"declineandignore\":\"Ignore User\",\"join\":\"Join\",\"ok\":\"Ok\",\"save\":\"Save\",\"copy\":\"Copy\",\"forward\":\"Forward\",\"delete\":\"Delete\",\"reply\":\"Reply\",\"share\":\"Share\",\"download\":\"Download\",\"downloaded\":\"Downloaded\",\"goToPocketnetProfile\":\"Go to profile\",\"sendFile\":\"Send File\",\"takePhotoOrVideo\":\"Send image\",\"sendCoins\":\"Send coins\",\"edit\":\"Edit\",\"select\":\"Select\",\"block\":\"Block\",\"unblock\":\"Unblock\",\"blockUser\":\"Block user\",\"Complain\":\"Complain\"},\"type\":{\"publicgroup\":\"Create Public group\",\"privategroup\":\"Create Private group\",\"one\":\"One on one chat\"},\"typelabel\":{\"publicgroup\":\"Public group creation\",\"privategroup\":\"Private group creation\",\"one\":\"One on one chat creation\"},\"yes\":\"Yes\",\"cancel\":\"Cancel\",\"teamMessages\":{\"1-title\":\"Welcome to Bastyon Private Chat!\",\"1-list1\":\"Private messenger that is NOT connected to your phone number\",\"1-list2\":\"End-To-End Encryption of every 1-on-1 conversation by default\",\"1-list3\":\"All images sent or received through chat are stored encrypted\",\"1-list4\":\"History of messages is saved for 7 days only\",\"2-title\":\"A Huge Announcement! Pocketnet application is now called Bastyon!\",\"2-message1\":\"The domain will be moved to Bastyon.com. We released the following major updates recently:\",\"2-list1\":\"Private encrypted messenger not connected to your phone number\",\"2-list2\":\"Ability to donate PKOIN to bloggers\",\"2-list3\":\"Video and Live Streaming\",\"2-message2\":\"Invite your friends now and be a part of the big future of decentralized internet!\",\"2-button\":\"Invite friends\"},\"sendingerror\":\"An error occurred while sending the message\",\"details\":\"Details\",\"settings_pin\":\"Pin chat window\",\"checked\":\"Yes\",\"unchecked\":\"No\",\"settings_read\":\"Send read receipts\",\"messagewasburn\":\"This message remains only in the memory of your device\",\"messagewillburn\":\"The message will be deleted soon\",\"micaccessbrowser\":\"Access to the microphone is restricted, please check your browser settings.\",\"micaccesscommonproblem\":\"Sorry, for some reason it is not possible to record voice messages on the device\",\"micaccesscordova\":\"Access to the microphone is restricted, please check your device settings.\",\"micdevicenotfound\":\"Audio recording device not found\"}");
 
 /***/ }),
 
@@ -102797,6 +104286,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_33d22462_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("b79a");
 /* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_33d22462_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_33d22462_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__);
 /* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_33d22462_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_33d22462_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+
+
+/***/ }),
+
+/***/ "f031":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_App_vue_vue_type_style_index_3_lang_scss_shadow__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("8c7e");
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_App_vue_vue_type_style_index_3_lang_scss_shadow__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_App_vue_vue_type_style_index_3_lang_scss_shadow__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_App_vue_vue_type_style_index_3_lang_scss_shadow__WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_App_vue_vue_type_style_index_3_lang_scss_shadow__WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
 
 
 /***/ }),
@@ -104005,7 +105506,7 @@ SafeBuffer.allocUnsafeSlow = function (size) {
 /***/ "f693":
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"caption\":{\"create\":\"Create\",\"addPublicChatName\":\"Add Public Chat Name\",\"addGroupNamePlaceHolder\":\"Add Group Name\",\"createPublicChat\":\"Create public chat\",\"chatTopic\":\"Topic renamed\",\"publicRoomTitle\":\"Public Room\",\"asModerator\":\"as moderator\",\"marked\":\"marked\",\"unmarked\":\"unmarked\",\"removeBan\":\"Remove Ban\",\"cancelModeration\":\"Remove moderation\",\"uploadFiles\":\"Télécharger fichiers\",\"header\":\"En-tête\",\"dragAndDropAFile\":\"Glisser déposer fichier\",\"chatInvite\":\"Vous avez été invité à discuter avec:\",\"cantJoin\":\"Vous ne pouvez pas rejoindre la conversation avec:\",\"chatInviteDecline\":\"Vous pouvez rejoindre la conversation ou refuser l'invitation\",\"creatorLeft\":\"Car l'administrateur a quitté la conversation\",\"encrypted\":\"Encrypté\",\"noImages\":\"Il n'y a pas encore d'images dans la conversation\",\"noFiles\":\"Il n'y a pas encore d'files dans la conversation\",\"inviteUser\":\"Inviter utilisateur\",\"invite\":\"Inviter\",\"add\":\"Ajouter\",\"mute\":\"Mode silence\",\"unmute\":\"Mode son\",\"leave\":\"Quitter\",\"Info\":\"Info\",\"new\":\"Nouveau\",\"typing\":\"en train d'écrire\",\"accNotFound\":\"Votre inscription est en cours, veuillez patienter...\",\"emptyList\":\"liste vide (filtrée ou juste vide)\",\"welcome\":\"Bienvenue sur Pocketnet chat\",\"startNewChat\":\"Commencer une conversation\",\"chats\":\"Conversations\",\"shareWith\":\"Partager avec\",\"newChat\":\"Nouvelle conversation\",\"moveToChat\":\"Aller à la conversation\",\"queryNoResults\":\"Auncun résulats\",\"needMoreCharacters\":\"Veuillez saisir plus de caractères\",\"createGroup\":\"Créer groupe\",\"unabletoDecrypt\":\"* Impossible de decrypter\",\"messageDeleted\":\"Message supprimé\",\"sentImage\":\"envoyé image\",\"sentVoiceMessage\":\"envoyé un message vocal\",\"invitationToChat\":\"Invitation à discuter\",\"invitationToRoom\":\"Invitation to room\",\"leftChat\":\"a quitté la conversation\",\"joined\":\"a rejoint\",\"chatRenamed\":\"Conversation renommé en \",\"recentComment\":\"Commentaire récent:\",\"share\":\"PARTAGER\",\"followers\":\"Abonnés:\",\"reputation\":\"Réputation:\",\"following\":\"Abonnements:\",\"theme\":\"Thème:\",\"contacts\":\"Contacts\",\"phoneContacts\":\"Contacts téléphone\",\"chooseInviteMedia\":\"Veuillez choisir comment inviter:\",\"admin\":\"Administrateur\",\"moderator\":\"Modérateur\",\"videocall\":\"Appel Vidéo\",\"call\":\"Appel\",\"leaveAndDelete\":\"Quitter et supprimer\",\"donate\":\"Faire un don\",\"makeModerator\":\"Définir comme Modérateur\",\"ban\":\"Bannir\",\"kick\":\"Expulser\",\"members\":\"Membres\",\"media\":\"Médias\",\"files\":\"Fichiers\",\"contactsList\":\"Liste de contacts\",\"send\":\"envoyer\",\"pageCaption\":\"Légende de page\",\"caption\":\"Légende\",\"text\":\"Texte\",\"placeholder\":\"placeholder\",\"sendTransactionTo\":\"Envoyer transaction à\",\"toBePaidByReceiver\":\"Payé par le receveur\",\"toBePaidBySender\":\"Payé par l'expéditeur\",\"source\":\"Source\",\"amount\":\"Montant\",\"receiver\":\"Receveur\",\"message\":\"Message\",\"includeFeesInAmount\":\"Inclure les frais dans le montant\",\"transactionFees\":\"Frais de transaction\",\"totalAmount\":\"Montant total\",\"balanceTooLow\":\"Solde trop faible\",\"transactionError\":\"Erreur, la transaction ne peut être effectuée\",\"calculateFees\":\"Calculer les frais\",\"startChatWith\":\"Discuter avec:\",\"searchResult\":\"Résultat de la recherche\",\"joinedInTheChat\":\"à rejoint la conversation\",\"invited\":\"invité \",\"hasInvited\":\"invité \",\"inTheChat\":\" dans la conversation\",\"banned\":\"banni\",\"andRoom\":\"et conversation\",\"left\":\"quiité\",\"theChat\":\" la conversation \",\"made\":\"fait \",\"aModerator\":\" un modérateur\",\"editedChatNameTo \":\"edité le nom de la conversation en \",\"somebody\":\"Quelqu'un\",\"sent\":\"a envoyé\",\"PKOINto\":\" PKOIN à \",\"response\":\"Réponse\",\"messagefrom\":\"Transférer message de\",\"edited\":\"Edité\",\"settings\":\"Paramètres\",\"unauthorized\":\"Non autorisé\",\"search\":\"Recherche\",\"replyOnMessage\":\"Répondre au message\",\"editMessage\":\"Editer message\",\"inviteFriend\":\"Inviter des amis\",\"emptyContactList\":\"Liste de contacts vide\",\"joinApp\":\"Rejoindre Pocketnet\",\"hasInvitedToJoin\":\"vous a invité à rejoindre Pocketnet\",\"contactsempty\":\"Vous n'avez pas encore de contacts, vous pouvez utiliser la recherche\",\"usernotgen\":\"User did not generate their encryption keys yet. You will be able to chat them when their keys are generated.\",\"younotgen\":\"Please wait a minute, Your encryption keys are being generated...\",\"chatsearchingempty\":\"No chats found for the specified filter\",\"sendmessage\":\"Send message\"},\"input\":{\"patientEmailPlaceholder\":\"Email\",\"refillNamePlaceholder\":\"Saisissez à nouveau le nom\"},\"message\":{},\"button\":{\"starChatButton\":\"Commencer une conversation \",\"decline\":\"Refuser\",\"declineandignore\":\"Ignorer utilisateur\",\"join\":\"Rejoindre\",\"ok\":\"Ok\",\"copy\":\"Copier\",\"forward\":\"Transférer\",\"delete\":\"Supprimer\",\"save\":\"Enregistrer\",\"reply\":\"Répondre\",\"share\":\"Partager\",\"download\":\"Télécharger\",\"downloaded\":\"Téléchargé\",\"goToPocketnetProfile\":\"Aller au profile Pocketnet\",\"sendFile\":\"Envoyer fichier\",\"takePhotoOrVideo\":\"Envoyer image\",\"sendCoins\":\"Envoyer PKOIN\",\"edit\":\"Editer\",\"select\":\"Sélectionner\",\"block\":\"Bloquer\",\"unblock\":\"Débloquer\",\"blockUser\":\"Bloquer utilisateur\"},\"yes\":\"Oui\",\"cancel\":\"Annuler\",\"teamMessages\":{\"1-title\":\"Bienvenue sur la messagerie privée Bastyon!\",\"1-list1\":\"Messagerie privée qui n'est PAS connectée à votre numéro de téléphone\",\"1-list2\":\"Chiffrement de bout en bout pour chaque conversation\",\"1-list3\":\"Toutes les images envoyées ou reçues par le biais du chat sont stockées sous forme cryptée\",\"1-list4\":\"L'historique des messages est conservé pendant 7 jours uniquement\",\"2-title\":\"Bonne nouvelle! L'application Pocketnet s'appelle désormais Bastyon!\",\"2-message1\":\"Le domaine sera déplacé vers Bastyon.com. Nous avons récemment publié les mises à jour majeures suivantes:\",\"2-list1\":\"Messagerie privée cryptée non connectée à votre numéro de téléphone\",\"2-list2\":\"Possibilité de faire des dons en PKOIN aux blogueurs\",\"2-list3\":\"Vidéo et Streaming en direct\",\"2-message2\":\"Invitez dès maintenant vos amis et faites partie du grand avenir de l'internet décentralisé!\",\"2-button\":\"Inviter des amis\"},\"sendingerror\":\"An error occurred while sending the message\",\"details\":\"Details\",\"settings_pin\":\"Pin chat window\",\"checked\":\"Yes\",\"unchecked\":\"No\",\"settings_read\":\"Send read receipts\",\"messagewasburn\":\"This message remains only in the memory of your device\",\"messagewillburn\":\"The message will be deleted soon\",\"micaccessbrowser\":\"Access to the microphone is restricted, please check your browser settings.\",\"micaccesscommonproblem\":\"Sorry, for some reason it is not possible to record voice messages on the device\",\"micaccesscordova\":\"Access to the microphone is restricted, please check your device settings.\",\"micdevicenotfound\":\"Audio recording device not found\"}");
+module.exports = JSON.parse("{\"caption\":{\"create\":\"Create\",\"addPublicChatName\":\"Add Public Chat Name\",\"addGroupNamePlaceHolder\":\"Add Group Name\",\"createPublicChat\":\"Create public chat\",\"chatTopic\":\"Topic renamed\",\"publicRoomTitle\":\"Public Room\",\"asModerator\":\"as moderator\",\"marked\":\"marked\",\"unmarked\":\"unmarked\",\"removeBan\":\"Remove Ban\",\"cancelModeration\":\"Remove moderation\",\"uploadFiles\":\"Télécharger fichiers\",\"header\":\"En-tête\",\"dragAndDropAFile\":\"Glisser déposer fichier\",\"chatInvite\":\"Vous avez été invité à discuter avec:\",\"cantJoin\":\"Vous ne pouvez pas rejoindre la conversation avec:\",\"chatInviteDecline\":\"Vous pouvez rejoindre la conversation ou refuser l'invitation\",\"creatorLeft\":\"Car l'administrateur a quitté la conversation\",\"encrypted\":\"Encrypté\",\"noImages\":\"Il n'y a pas encore d'images dans la conversation\",\"noFiles\":\"Il n'y a pas encore d'files dans la conversation\",\"inviteUser\":\"Inviter utilisateur\",\"invite\":\"Inviter\",\"add\":\"Ajouter\",\"mute\":\"Mode silence\",\"unmute\":\"Mode son\",\"leave\":\"Quitter\",\"Info\":\"Info\",\"new\":\"Nouveau\",\"typing\":\"en train d'écrire\",\"accNotFound\":\"Votre inscription est en cours, veuillez patienter...\",\"emptyList\":\"liste vide (filtrée ou juste vide)\",\"welcome\":\"Bienvenue sur Pocketnet chat\",\"startNewChat\":\"Commencer une conversation\",\"chats\":\"Conversations\",\"shareWith\":\"Partager avec\",\"newChat\":\"Nouvelle conversation\",\"moveToChat\":\"Aller à la conversation\",\"queryNoResults\":\"Auncun résulats\",\"needMoreCharacters\":\"Veuillez saisir plus de caractères\",\"createGroup\":\"Créer groupe\",\"unabletoDecrypt\":\"* Impossible de decrypter\",\"messageDeleted\":\"Message supprimé\",\"sentImage\":\"envoyé image\",\"sentVoiceMessage\":\"envoyé un message vocal\",\"invitationToChat\":\"Invitation à discuter\",\"invitationToRoom\":\"Invitation to room\",\"leftChat\":\"a quitté la conversation\",\"joined\":\"a rejoint\",\"chatRenamed\":\"Conversation renommé en \",\"recentComment\":\"Commentaire récent:\",\"share\":\"PARTAGER\",\"followers\":\"Abonnés:\",\"reputation\":\"Réputation:\",\"following\":\"Abonnements:\",\"theme\":\"Thème:\",\"contacts\":\"Contacts\",\"phoneContacts\":\"Contacts téléphone\",\"chooseInviteMedia\":\"Veuillez choisir comment inviter:\",\"admin\":\"Administrateur\",\"moderator\":\"Modérateur\",\"videocall\":\"Appel Vidéo\",\"call\":\"Appel\",\"leaveAndDelete\":\"Quitter et supprimer\",\"donate\":\"Faire un don\",\"makeModerator\":\"Définir comme Modérateur\",\"ban\":\"Bannir\",\"kick\":\"Expulser\",\"members\":\"Membres\",\"media\":\"Médias\",\"files\":\"Fichiers\",\"contactsList\":\"Liste de contacts\",\"send\":\"envoyer\",\"pageCaption\":\"Légende de page\",\"caption\":\"Légende\",\"text\":\"Texte\",\"placeholder\":\"placeholder\",\"sendTransactionTo\":\"Envoyer transaction à\",\"toBePaidByReceiver\":\"Payé par le receveur\",\"toBePaidBySender\":\"Payé par l'expéditeur\",\"source\":\"Source\",\"amount\":\"Montant\",\"receiver\":\"Receveur\",\"message\":\"Message\",\"includeFeesInAmount\":\"Inclure les frais dans le montant\",\"transactionFees\":\"Frais de transaction\",\"totalAmount\":\"Montant total\",\"balanceTooLow\":\"Solde trop faible\",\"transactionError\":\"Erreur, la transaction ne peut être effectuée\",\"calculateFees\":\"Calculer les frais\",\"startChatWith\":\"Discuter avec:\",\"searchResult\":\"Résultat de la recherche\",\"joinedInTheChat\":\"à rejoint la conversation\",\"invited\":\"invité \",\"hasInvited\":\"invité \",\"inTheChat\":\" dans la conversation\",\"banned\":\"banni\",\"andRoom\":\"et conversation\",\"left\":\"quiité\",\"theChat\":\" la conversation \",\"made\":\"fait \",\"aModerator\":\" un modérateur\",\"editedChatNameTo \":\"edité le nom de la conversation en \",\"somebody\":\"Quelqu'un\",\"sent\":\"a envoyé\",\"PKOINto\":\" PKOIN à \",\"response\":\"Réponse\",\"messagefrom\":\"Transférer message de\",\"edited\":\"Edité\",\"settings\":\"Paramètres\",\"unauthorized\":\"Non autorisé\",\"search\":\"Recherche\",\"replyOnMessage\":\"Répondre au message\",\"editMessage\":\"Editer message\",\"inviteFriend\":\"Inviter des amis\",\"emptyContactList\":\"Liste de contacts vide\",\"joinApp\":\"Rejoindre Pocketnet\",\"hasInvitedToJoin\":\"vous a invité à rejoindre Pocketnet\",\"contactsempty\":\"Vous n'avez pas encore de contacts, vous pouvez utiliser la recherche\",\"usernotgen\":\"User did not generate their encryption keys yet. You will be able to chat them when their keys are generated.\",\"younotgen\":\"Please wait a minute, Your encryption keys are being generated...\",\"chatsearchingempty\":\"No chats found for the specified filter\",\"sendmessage\":\"Send message\",\"clearHistory\":\"Clear history\"},\"input\":{\"patientEmailPlaceholder\":\"Email\",\"refillNamePlaceholder\":\"Saisissez à nouveau le nom\"},\"message\":{},\"button\":{\"starChatButton\":\"Commencer une conversation \",\"decline\":\"Refuser\",\"declineandignore\":\"Ignorer utilisateur\",\"join\":\"Rejoindre\",\"ok\":\"Ok\",\"copy\":\"Copier\",\"forward\":\"Transférer\",\"delete\":\"Supprimer\",\"save\":\"Enregistrer\",\"reply\":\"Répondre\",\"share\":\"Partager\",\"download\":\"Télécharger\",\"downloaded\":\"Téléchargé\",\"goToPocketnetProfile\":\"Aller au profile Pocketnet\",\"sendFile\":\"Envoyer fichier\",\"takePhotoOrVideo\":\"Envoyer image\",\"sendCoins\":\"Envoyer PKOIN\",\"edit\":\"Editer\",\"select\":\"Sélectionner\",\"block\":\"Bloquer\",\"unblock\":\"Débloquer\",\"blockUser\":\"Bloquer utilisateur\"},\"yes\":\"Oui\",\"cancel\":\"Annuler\",\"teamMessages\":{\"1-title\":\"Bienvenue sur la messagerie privée Bastyon!\",\"1-list1\":\"Messagerie privée qui n'est PAS connectée à votre numéro de téléphone\",\"1-list2\":\"Chiffrement de bout en bout pour chaque conversation\",\"1-list3\":\"Toutes les images envoyées ou reçues par le biais du chat sont stockées sous forme cryptée\",\"1-list4\":\"L'historique des messages est conservé pendant 7 jours uniquement\",\"2-title\":\"Bonne nouvelle! L'application Pocketnet s'appelle désormais Bastyon!\",\"2-message1\":\"Le domaine sera déplacé vers Bastyon.com. Nous avons récemment publié les mises à jour majeures suivantes:\",\"2-list1\":\"Messagerie privée cryptée non connectée à votre numéro de téléphone\",\"2-list2\":\"Possibilité de faire des dons en PKOIN aux blogueurs\",\"2-list3\":\"Vidéo et Streaming en direct\",\"2-message2\":\"Invitez dès maintenant vos amis et faites partie du grand avenir de l'internet décentralisé!\",\"2-button\":\"Inviter des amis\"},\"sendingerror\":\"An error occurred while sending the message\",\"details\":\"Details\",\"settings_pin\":\"Pin chat window\",\"checked\":\"Yes\",\"unchecked\":\"No\",\"settings_read\":\"Send read receipts\",\"messagewasburn\":\"This message remains only in the memory of your device\",\"messagewillburn\":\"The message will be deleted soon\",\"micaccessbrowser\":\"Access to the microphone is restricted, please check your browser settings.\",\"micaccesscommonproblem\":\"Sorry, for some reason it is not possible to record voice messages on the device\",\"micaccesscordova\":\"Access to the microphone is restricted, please check your device settings.\",\"micdevicenotfound\":\"Audio recording device not found\"}");
 
 /***/ }),
 
@@ -104089,6 +105590,20 @@ module.exports.__inject__ = function (shadowRoot) {
 
 /***/ }),
 
+/***/ "f700":
+/***/ (function(module, exports, __webpack_require__) {
+
+// Imports
+var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
+exports = ___CSS_LOADER_API_IMPORT___(false);
+// Module
+exports.push([module.i, ".voiceMessage[data-v-7221e80e]{-webkit-tap-highlight-color:transparent;display:flex;contain:strict;width:230px;height:100%}.voiceMessage_wrapper[data-v-7221e80e]{display:flex;justify-content:flex-end;align-items:center;overflow:hidden;min-width:10em;padding:0 .5em;padding-right:1em;border-radius:2em;background:rgb(var(--background-secondary-theme))}.voiceMessage_toggle[data-v-7221e80e]{cursor:pointer;height:33px;width:33px;margin-right:.5em;border-radius:50%;background:rgb(var(--neutral-grad-1));display:flex;align-items:center;justify-content:center;color:rgb(var(--color-bg-ac))}.voiceMessage_toggle i[data-v-7221e80e]{font-size:.5em}.voiceMessage_graph[data-v-7221e80e]{position:relative;cursor:pointer}.voiceMessage_options[data-v-7221e80e]{display:flex;justify-content:center;margin-left:10px;padding:2px 10px;min-width:40px;background:rgb(var(--neutral-grad-1));border-radius:10px}.voiceMessage_options span[data-v-7221e80e]{font-size:.8em;color:rgb(var(--neutral-grad-3))}.voiceMessage.playing .voiceMessage_options span[data-v-7221e80e]{font-size:.8em;color:rgb(var(--color-bg-ac-bright))}.voiceMessage .fa-exclamation-circle[data-v-7221e80e]{font-size:.7em;color:rgb(var(--color-bad));padding:.5em}.voiceMessage .encsign[data-v-7221e80e]{position:absolute;right:0;top:0;bottom:0;display:flex;align-items:center;padding-right:.35em}.voiceMessage .encsign i[data-v-7221e80e]{font-size:.5em;color:rgb(var(--neutral-grad-2));opacity:.6}", ""]);
+// Exports
+module.exports = exports;
+
+
+/***/ }),
+
 /***/ "f726":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -104115,6 +105630,24 @@ module.exports = function (key) {
   return keys[key] || (keys[key] = uid(key));
 };
 
+
+/***/ }),
+
+/***/ "f8c3":
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__("9859");
+if(content.__esModule) content = content.default;
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add CSS to Shadow Root
+var add = __webpack_require__("35d6").default
+module.exports.__inject__ = function (shadowRoot) {
+  add("446bf163", content, shadowRoot)
+};
 
 /***/ }),
 
@@ -104228,7 +105761,7 @@ var component = Object(componentNormalizer["a" /* default */])(
   },
   props: {
     mode: {
-      default: '',
+      default: "",
       type: String
     },
     users: Array,
@@ -104240,12 +105773,12 @@ var component = Object(componentNormalizer["a" /* default */])(
   computed: Object(vuex_esm["c" /* mapState */])({
     auth: state => state.auth,
     minimized: state => state.minimized,
-    ...Object(vuex_esm["b" /* mapActions */])(['PREPARE_USERDATA']),
-    ...Object(vuex_esm["c" /* mapState */])(['contactsMap', 'signedUpUsers'])
+    ...Object(vuex_esm["b" /* mapActions */])(["PREPARE_USERDATA"]),
+    ...Object(vuex_esm["c" /* mapState */])(["contactsMap", "signedUpUsers"])
   }),
   methods: {
     select(contact) {
-      this.$emit('select', contact);
+      this.$emit("select", contact);
     },
 
     navigateToProfile(id, contact) {
@@ -104253,13 +105786,16 @@ var component = Object(componentNormalizer["a" /* default */])(
         this.select(contact);
       } else {
         this.$router.push({
-          path: `/contact?id=${id}`
-        }).catch(e => {});
+          path: '/contact',
+          query: { ...this.$route.query,
+            id: id
+          }
+        });
       }
     },
 
     toggleUser(contact) {
-      this.$emit('toggleUser', contact.id);
+      this.$emit("toggleUser", contact.id);
     }
 
   },
@@ -104829,6 +106365,18 @@ var add = __webpack_require__("35d6").default
 module.exports.__inject__ = function (shadowRoot) {
   add("662871c4", content, shadowRoot)
 };
+
+/***/ }),
+
+/***/ "fbb2":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_7cd6d492_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("6962");
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_7cd6d492_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_7cd6d492_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_7cd6d492_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_7cd6d492_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+
 
 /***/ }),
 
