@@ -20,42 +20,55 @@
       padding-bottom: 140px !important;
     }
     &.wnd.normalizedmobile:not(.hiddenState) div.wndinner {
-      max-height: 93% !important;
+      max-height: 82% !important;
+      .buttons {
+        padding-bottom: 0 !important;
+        position: absolute !important;
+      }
     }
-
   }
 
 }
 
 
 #blocking {
+  position: relative;
+  .selected {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 20px;
+    position: sticky;
+    top: 0;
+    color: rgb(var(--neutral-grad-3));
+    background: rgb(var(--background-total-theme));
+    z-index: 2;
+  }
 
   .likers {
     .liker {
       display: flex;
-      align-items: flex-start;
+      align-items: center;
       padding: 1rem;
       margin-bottom: 0.5rem;
-      box-shadow: 0 5px 10px -5px rgba(var(--color-shadow-base), 0.4);
+      box-shadow: 0 5px 1px -5px rgba(var(--color-shadow-base), 0.4);
       cursor: pointer;
     }
 
     .checkbox {
-      margin-top: 10px;
       display: flex;
       justify-content: center;
       align-items: center;
 
-      border: 1px solid rgb(var(--color-txt-ac));
-      border-radius: 50%;
+      border: 1px solid rgb(var(--neutral-grad-2));
+      border-radius: 4px;
 
-      color: rgb(var(--color-txt-ac));
+
       text-shadow: none;
 
 
       margin-right: 20px;
-      min-width : 30px;
-      height : 30px;
+      min-width : 16px;
+      height : 16px;
 
       font-weight: 700;
       font-size: 1em;
@@ -73,9 +86,11 @@
       }
       &.checked {
         border-color: rgb(var(--color-txt-ac));
+        background: rgb(var(--color-txt-ac));
+        color: rgb(var(--text-on-bg-ac-color));
         &:before {
           font-weight: 700;
-          font-size: 1.2em;
+          font-size: 0.5em;
           text-align: center;
           content: '\f00c';
         }
@@ -95,7 +110,7 @@
         .avatar {
           background: rgb(var(--neutral-grad-0));
           color: rgb(var(--color-txt-gray-dark));
-          box-shadow: 0 5px 10px -5px rgba(var(--color-shadow-base), 0.4);
+          box-shadow: 0 5px 1-px -5px rgba(var(--color-shadow-base), 0.4);
           border-radius: 50%;
           height: 3em;
           width: 3em;
@@ -109,8 +124,9 @@
           position: relative;
           width: fit-content;
           .reputation{
+            color: rgb(var(--color-txt-ac));
             position: absolute;
-            right: -23px;
+            right: -25px;
             top: 0;
             font-size: 0.7em;
             font-weight: bold;
@@ -118,9 +134,8 @@
           }
         }
         .rating {
-          font-size: 0.7em;
-          strong {
-            color: rgb(var(--color-txt-ac));
+          font-size: 0.8em;
+          color: rgb(var(--neutral-grad-3));
           }
         }
       }
@@ -135,5 +150,4 @@
         }
       }
     }
-  }
 }

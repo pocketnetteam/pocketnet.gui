@@ -32,7 +32,7 @@ var blocking = (function(){
             blocklist.push(address)
             liker.children[0].classList.add('checked')
           }
-
+          el.selected[0].innerHTML = blocklist.length
         }
     }
 
@@ -73,6 +73,8 @@ var blocking = (function(){
         el = {};
         el.c = p.el.find('#' + self.map.id);
         el.likers = el.c.find('.liker')
+        el.selected = el.c.find('.count')
+
         if (el.likers) {
           _.each(el.likers, function(liker) {
             liker.addEventListener('click',(e) =>{

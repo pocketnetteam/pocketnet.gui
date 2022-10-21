@@ -1,5 +1,9 @@
 
 <div id="<%-module.map.id%>">
+  <div class="selected">
+    <div class="count">0</div>
+    <div class="limit">/100</div>
+  </div>
   <% if(likers.length) {%>
     <div class="likers">
       <% if(likers.length) _.each(likers, function(liker){ %>
@@ -29,14 +33,14 @@
             </div>
 
           </div>
-          <div class="bottom">
-            <% if(liker.about) {%>
-            <div class="about">
-              <%- decodeURIComponent(liker.about)  %>
-              <strong class="regdate"> <%=e('regdate')%> - </strong><%- moment.unix(liker.regdate).format('D MMMM YYYY')  %>
-            </div>
-            <% } %>
-          </div>
+<!--          <div class="bottom">-->
+<!--            <% if(liker.about) {%>-->
+<!--            <div class="about">-->
+<!--              <%- decodeURIComponent(liker.about)  %>-->
+<!--              <strong class="regdate"> <%=e('regdate')%> - </strong><%- moment.unix(liker.regdate).format('D MMMM YYYY')  %>-->
+<!--            </div>-->
+<!--            <% } %>-->
+<!--          </div>-->
         </div>
       </div>
       <% }) %>
