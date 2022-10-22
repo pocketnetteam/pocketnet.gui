@@ -11665,6 +11665,7 @@ Platform = function (app, listofnodes) {
                     if (!a) return false
 
                     if (!s[a]) return true
+                    
                     if (s[a].temp || s[a].relay || s[a].fromstorage) return true
 
 
@@ -11699,6 +11700,22 @@ Platform = function (app, listofnodes) {
                                 self.sdk.userscl.storage[a] = data
 
                             })
+
+                            /*_.each(self.sdk.relayTransactions.withtemp('userInfo'), (tx) => {
+                                var a = _.find(addresses, (a) => {
+                                    return tx.address == a
+                                })
+
+                                if(a && !s[a]){
+
+
+                                    var u = self.sdk.users.prepareuser(tx, a, state)
+
+                                    s[a] = u;
+                                    self.sdk.usersl.storage[a] = u;
+                                    
+                                }
+                            })*/
 
 
                             if (clbk)
@@ -19451,6 +19468,8 @@ Platform = function (app, listofnodes) {
                             if (clbk) {
 
                                 var errorcode = deep(_error, 'code') || null
+
+                                console.log("errorcode", errorcode)
 
                                 clbk(
                                     (errorcode == -5) || (errorcode == -8) ||
