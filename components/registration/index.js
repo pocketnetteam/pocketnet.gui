@@ -252,6 +252,8 @@ var registration = (function(){
 				"firstFlags": {}
 			}
 		];
+
+		var prodBloggers = [];
 		
 		var categoryIcons = [
 			{
@@ -380,7 +382,126 @@ var registration = (function(){
 						return 'welcome'
 					}
 
+					
+					var bloggersEn = [
+						"PKSV2KXCdEtTtYb8rF3xMMgiiKe1oDstXR",
+						"PXXaSczoZcuJEwxYKhaC9pV1JBvwi6UjSw",
+						"P9eLPo3gXUqBr7wgxDSSLNfyNMyeDua7cn",
+						"PVpSK2qQXmG1SjAMJVMAMRLUkrzMjsJouL",
+						"PLJvEixJkj85C4jHM3mt5u1ATwZE9zgFaA",
+						"P8boyun9yF6QYn1fjGC1WABt4BQUL4STeh",
+						"PAVjp9nsNtgzUNF1VkUd74YzLaQHpv4g7v",
+						"PWvS62zsRm96Bw63qo9Adif97U18mLCpfN",
+						"PGQh5JW5c1shJTpi3iC2dkvov1pUqs1SqX",
+						"PXsjQA3fYDGCr1WwmNTNmrs9N7VA18gVuB",
+						// "PQkNpRfXbCGXJ2o1mRfsJMvMtsvq3uvZU9",
+						"PUhvX53ueD2Sxa3q7av83vNcEHuS8M7kRS",
+						"PCfvhqHEYG3zdWXvLJrjPPDVK2H8qwwXn5",
+						"PGegspsgRqvMiZCP8PGufKMYBk3yekDaEE",
+						"PB8wu7hQwo5xMsVG4F4HshrW39t2Y4eN37",
+						"PKYwaiikhUoPWmpWmYec4Xf3TPWwJQCqUt",
+						"PSBhEi8AUasemizUHyJ64t6xXonsxwp73y",
+						"PLZsQmsRUDMJGc61pGMLdDQ58UuqQ8kU5Z",
+						"PRH3aKqRb6UWcJE5EnwVvhmHAVGbT5D6nE",
+						"PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd",
+						"PLH8biT5rMdvE1zXFhsvNkzphVRK6cNM7p",
+						"PL9U1q1JmJezPh8GQb5dj5h5GavuCGcjYk",
+						"PHmvLy9b5m2b7fvU7MSTw4mAkdshhdY4Nt",
+						"PUYEkLb6szwxjw3cq6FvLxDPmedbyd3foq",
+						"PTPVArrxr4wZuget8phZ1eSNFsGmdSXXck",
+						"PQ8PDzWy7hDV8gfgSgoP2BCU2CXngMPCvt",
+						"PR54hSnPDbhPePLNQZCP4CU77TRFoMxYqg",
+						"P9D3ntMdwy4HGjBhg1uQDuQD99MXYZTqg3",
+						"PST4P2KEweDQJ2RAtG3scUmXAgPJJ5JJRL",
+						"PCYeapWncohMda9vfrFe26EDEiFa89kDZ1",
+						"PGnshbCvNGRiBYGxUpVNqLkaM8Ku1xvbaw",
+						"PPdfqTLnz2S6F1ng5N7rzMUh19H4e3pfZe",
+						"PNQ8drkeMEtZ44g7VyhxPPwPYubBsT6ekt",
+						"PCx1LKWdV1pc6TmKwYU8vqEn3CpAeTexDr",
+						"PPw4k3Zra7tYRM643QVm3V4UFrcZZb9H6H"
+					];
+
+					var bloggersRu = [
+						"PDUWW57W8DoV1dMTQYsrkwg66xEuaNckbd",
+						"PQDxqrJqKM15weq1mbunEqK2uVNvZy1Z6d",
+						'PX7pM9CG9MhMCqJQD52ahLyqSssNK2WxEv',
+						'PA6biduJbWcQ97n5jz2jUqWHtenLpWTH7s',
+						// 'PCjhy4t6B2b5xeqVoJcN51XkhUqAXBuaq4', //???
+						'PXupozgNg1Ee6Nrbapj8DEfMGCVgWi4GB1',
+						'P9KXb7sS2JDjV5jnXu4t2WwwbvzYeu6yds',
+						'PUXG7rfX19Xoco1FXjXBW8qt6NEZpp8maL',
+						'PKwa3jVZXHpaVgG89WvnM8vBfpp745GGNN',
+						'PLTjskW3xi3oaLnyqTAwZQa1iAeQ3PzTuF',
+						'PDXGoy43t5RSqJY1UJBgswBu6phtW8Knwa',
+						'PSBePd5Tx5KG9vxwAzbaDTfjzDbq1GUTYw',
+						'PTft97ycE3N6ZKgvixdpbYj8qPxzCe2CxG',
+						'PJuW8LKT7LZY88fP7WM35NJURh3rAaeU3o',
+						'PBGqJGSrdsBrEsLmiAaeH22bxGg8irX3gC',
+						'PVjvMwapTA29biRTsksXUBuVVf2HVwY7ps',
+						'PTMFZXMXYFjiN1UuSV4ZckepyEFVWMm6Zy',
+						'PWbYmgG6PzqhrNDtuFmWrSaLHTDMwZWc26',
+						'P9VXZPHxop1ya7oP1kypubWwGvfYw8QQNK',
+						'PQUj7dS2QpamP9vapARCYaJaSqjXpcZk8p',
+						'PLfHpn9nJe9hKJ7UqvAuPsPUu9RjNpyTrN',
+						'PARV591XENALBB5ApkR7WcQPhEZtLHfi2A',
+						'PBvkW9txHLiKtQMX642DG1SmJC2UbBX5wy',
+						'P9N7jrhdsotZDz6r56ADxwxwP295HcF9QQ',
+						'PJuHmJS2iw9boRhy1Y4DSbe9uNQCBedBze',
+						'PMVvs8kvbskq6eVV8Q3oyjotbox9tBfvnp',
+						'PTcArXMkhsKMUrzQKn2SXmaVZv4Q7sEpBt',
+						'PQ4X2NQJD1ZA5Hy58ZU9eHcjpRco7ZMgTz',
+						'PHtxzCKFqNEfn8N8FDAUYhUhqSL2qJJZxY',
+						'PWyjwnA3Rr8Fuc6HQmcYFb3cYXDeaq679j',
+						'PEnqXhQU2MxZc4bFQJ4TSaCCT3f5wbqHJZ',
+						'PFCdnHww9UQLf2WQHPF8vtABgNuK4uaiXY',
+						'PSXmn4k7BDwwtZkTxdgC7yq1Cwh4Di7GLK',
+
+
+						'PCVt7H4vgjBDxifLz3uokbc1tD3MZwWwQh',
+						'PR3BcnBziYoDgckdyaARgFayiZUiA7agSx',
+						'PGFKA1DieVsg9pQK4aBaEp5wpvaXpWtuVJ',
+						'PERF5kDM32ebkq8SeSj8ZaLqfCoqz8FRgh',
+						'P9i55BxFWpjMyqgHyCKtazDN1HDiZxTSzJ',
+						'PCkbxDvFQbFvEzPWnnrraey1QCUro2kMLU',
+						'PB1EShZbvkTSQgU8NLxEH8MN5UiKw1CBHb',
+						'PWAAzRuHNi5iNxQDaJ8ZVpqEJSoPWFFiRN',
+						'PD4pWxVke4Yz2y5UnNWnSsVHd45Vy6izCr',
+						'PQi77s3JtrUkavxN9t6Hy5sT3CNnHokNrK',
+						'PQ2hAPwkey8aACP548DtgLscQTk9PkAKnP',
+						'PFGMWt1cQFm6QEbcqH6YJxfabj4L5rHfLM',
+						'PHMjVgWj6HMiLeAhiR8eDLzVrXp8nyF2ji',
+						// 'PWGhooqyrq1qL7NPgg2an8M69sHfJrDM8Y', //!,
+						'PUuNT7icKad8fm7ATPRn1s8gd19HXYKDqS',
+						'PHsHq6i4RKm9gCqFGhAr3yvF34yDocc5S7',
+						'PBw3aSQe6HCzX75xDy5X2SXx9y9JaUP9ke',
+						'PCxXVA4quzXVjUM356t3FE2nvWmDVY47J7',
+						'PVATJhZqKdYXLp1nmPdrssRhygJApmAALR',
+						'PJtnXwKNPDdEpJhaKH2fbPEyLrcS77oj46',
+						'PVRWuvwCNfZWUUD5gQzDsqabnTcMXoqgbV',
+						'PKXSw8Q4Kdy244Gb1R7GYPvTwiM22JssTf',
+						'PSKLx4k7ehAtvipwpo2ohBeCYzpf4SiKHj',
+						'PUopiRZvD6BAjF9CcWtMfpeJtxp411dxKM',
+						// 'PEd7HQKaGj36sgPAidCvm62KidQQGL5sD8', //?????????????????
+						'PMTrhcppMJpaRz4Xnv7CogJPHPMKtcg6bA',
+						'PSGSnF7Diww2yJdQefuy3ZvuZEoBw8TGTV',
+						'PT4fvQ7jMicg6McC52BmFFkL2M6AEWc7vo',
+						'PCkX8n2e6aD6Ji37hSpHCJpqvaaJjVWt1m',
+						'PGD5jUBQ7qNnHDuW85RRBxY1msywEdCm7r',
+						'PVjhQyjrLur2ZGD5CspSu18ee7R2qsCjo6',
+						'PLZATQyqYzM6NLbH8M3LPicSU3cTAqW3SA',
+						'PKWM3oo6YTFFn5U2HLaBueqA3fcLd7BP8m',
+						'PHnvqSQzg5D3yKo5KgCiXqtFP84bsYyF7G'
+
+					]
+
 					if (self.app.localization.key === 'en'){
+						prodBloggers = bloggersEn;
+						return 'bloggers';
+					}
+
+					
+					if (self.app.localization.key === 'ru'){
+						prodBloggers = bloggersRu;
 						return 'bloggers';
 					}
 					
@@ -768,30 +889,7 @@ var registration = (function(){
 						'TJYKMFZKYhSpU7xT55tuR4jD8gpC1dAZ5c'
 					];
 
-					var prodBloggers = [
-						'PKSV2KXCdEtTtYb8rF3xMMgiiKe1oDstXR', 
-						'PXXaSczoZcuJEwxYKhaC9pV1JBvwi6UjSw', 
-						'P9eLPo3gXUqBr7wgxDSSLNfyNMyeDua7cn',
-						'PVpSK2qQXmG1SjAMJVMAMRLUkrzMjsJouL',
-						'PLJvEixJkj85C4jHM3mt5u1ATwZE9zgFaA',
-						'P8boyun9yF6QYn1fjGC1WABt4BQUL4STeh',
-						'PAVjp9nsNtgzUNF1VkUd74YzLaQHpv4g7v',
-						'PWvS62zsRm96Bw63qo9Adif97U18mLCpfN',
-						'PGQh5JW5c1shJTpi3iC2dkvov1pUqs1SqX',
-						'PXsjQA3fYDGCr1WwmNTNmrs9N7VA18gVuB',
-						'PJg4gur26sCRukHcn5aoDSRZTQF5dxTMUS',
-						"PQkNpRfXbCGXJ2o1mRfsJMvMtsvq3uvZU9",
-						'PUhvX53ueD2Sxa3q7av83vNcEHuS8M7kRS',
-						'PCfvhqHEYG3zdWXvLJrjPPDVK2H8qwwXn5',
-						'PGegspsgRqvMiZCP8PGufKMYBk3yekDaEE',
-						'PB8wu7hQwo5xMsVG4F4HshrW39t2Y4eN37',
-						'PKYwaiikhUoPWmpWmYec4Xf3TPWwJQCqUt',
-						'PSBhEi8AUasemizUHyJ64t6xXonsxwp73y',
-						'PLZsQmsRUDMJGc61pGMLdDQ58UuqQ8kU5Z'
-					];
-
-					var bloggers = _.shuffle(self.app.test ? testBloggers : prodBloggers);
-
+					var bloggers = self.app.test ? testBloggers : prodBloggers;
 
 					self.sdk.users.get(bloggers, function(data){
 
@@ -1492,6 +1590,8 @@ var registration = (function(){
 
 			bloggers : function(el, clbk){
 
+				addresses = _.shuffle(addresses);
+
 				self.shell({
 
 					name :  'bloggers',
@@ -1766,11 +1866,11 @@ var registration = (function(){
 					inauth : deep(p, 'settings.essenseData.inauth') || false
 				};
 
-				regproxy = self.app.api.get.byid('pocketnet.app:8899:8099')
+				//regproxy = self.app.api.get.byid('pocketnet.app:8899:8099')
 
-				/*if (localStorage['regproxy']){
+				if (localStorage['regproxy']){
 					regproxy = self.app.api.get.byid(localStorage['regproxy'])
-				}*/
+				}
 
 				self.app.api.get.proxywithwallet().then(r => {
 
@@ -1826,7 +1926,11 @@ var registration = (function(){
 
 				initEvents();
 
-				make()
+				make();
+
+				self.app.Logger.info({
+					actionId: 'USER_STARTED_REGISTRATION',
+				});
 
 				p.clbk(null, p);
 
@@ -1849,7 +1953,9 @@ var registration = (function(){
 
 		_.each(essenses, function(essense){
 
-			essense.destroy();
+			window.requestAnimationFrame(() => {
+				essense.destroy();
+			})
 
 		})
 

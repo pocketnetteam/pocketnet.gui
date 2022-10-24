@@ -4,7 +4,6 @@ if(typeof require != 'undefined' && typeof __map == 'undefined')
 	var __map = require("./_map.js");
 }*/
 
-console.log("APP")
 
 if (typeof _OpenApi == 'undefined') _OpenApi = false;
 
@@ -92,6 +91,10 @@ Application = function(p)
   }
 
   self.boost = !(window.cordova && isios());
+  self.pkoindisable = window.cordova && isios();
+  self.cutversion = window.cordova && isios();
+
+  self.margintop  = 0
 
   self.options = {
 
@@ -775,7 +778,7 @@ Application = function(p)
 
     index : {
       href : 'index',
-      childrens : ['author', 'chat', 's', 'share', 'userpage']
+      childrens : ['author', 'chat', 's', 'share', 'userpage'],
     },
 
     s : {
@@ -785,7 +788,7 @@ Application = function(p)
 
     author : {
       href : 'author',
-      childrens : ['author', 's', 'chat', 'share', 'userpage']
+      childrens : ['author', 's', 'chat', 'share', 'userpage', 'post']
     },
 
     userpage : {
@@ -841,6 +844,8 @@ Application = function(p)
     self.imageUploader = new ImageUploader(self);
 
     self.options.platform = self.platform
+
+    self.mobile.keyboard.style()
 
     if (self.ref)
       self.platform.sdk.users.addressByName(self.ref, function(r){
@@ -977,6 +982,8 @@ Application = function(p)
 
   self.init = function(p){
 
+    self.boost = !(window.cordova && isios());
+
     if (navigator.webdriver && !self.test && !parameters().webdrivertest) return
 
     if (typeof localStorage == 'undefined')
@@ -993,6 +1000,8 @@ Application = function(p)
 
     self.initvideodb()
 
+    
+
     self.localization.init(function(){
 
       newObjects(p);
@@ -1000,6 +1009,16 @@ Application = function(p)
       lazyActions([
         self.platform.prepare
       ], function(){
+
+        retry(function () {
+          return typeof linkify != 'undefined'
+        }, function () {
+          if(typeof linkify != 'undefined'){
+            linkify.registerCustomProtocol('pocketnet')
+            linkify.registerCustomProtocol('bastyon')
+          }
+        }, 2000)
+
 
         self.realtime();
 
@@ -1134,6 +1153,7 @@ Application = function(p)
   self.deviceReadyInit = function(p){
 
     self.el = {
+      camera : 		$('#camera'),
       content : 		$('#content'),
       app : 			$('#application'),
       header : 		$('#headerWrapper'),
@@ -1178,6 +1198,7 @@ Application = function(p)
         if(isTablet() && !isMobile()) baseorientation = null
 
         self.mobile.screen.lock()
+        if (navigator.splashscreen) navigator.splashscreen.hide();
 
         p || (p = {});
 
@@ -1185,12 +1206,12 @@ Application = function(p)
 
           self.appready = true
 
-          if (navigator.splashscreen)
-            navigator.splashscreen.hide();
+          
         }
 
         self.mobile.pip.init()
         self.mobile.keyboard.init()
+        self.mobile.safearea()
 
         if (window.Keyboard && window.Keyboard.disableScroll){
           window.Keyboard.disableScroll(false)
@@ -1208,8 +1229,8 @@ Application = function(p)
     else
     {
 
-
-
+      self.mobile.keyboard.init()
+      self.mobile.safearea()
       self.init(p);
 
       setTimeout(function(){
@@ -1644,6 +1665,8 @@ Application = function(p)
       let vh = window.innerHeight * 0.01;
       document.documentElement.style.setProperty('--vh', `${vh}px`);
 
+      self.blockScroll = false
+
       checkTouchStyle()
 
     }, 100)
@@ -1668,6 +1691,7 @@ Application = function(p)
     })
 
     window.addEventListener('resize', function(){
+      self.blockScroll = true
       dbresize()
     })
   }
@@ -1940,6 +1964,50 @@ Application = function(p)
 
   self.mobile = {
 
+    menu : function(items){
+
+      var theme = 'THEME_HOLO_LIGHT'
+
+      if(self.platform.sdk.theme.current != 'white') theme = 'THEME_HOLO_DARK'
+
+      var options = {
+        'buttonLabels': items,
+        'androidTheme': window.plugins.actionsheet.ANDROID_THEMES[theme],
+        'androidEnableCancelButton' : true, // default false
+        'winphoneEnableCancelButton' : true, // default false
+        'addCancelButtonWithLabel': self.localization.e('ucancel')
+      };
+
+      return new Promise((resolve, reject) => {
+        window.plugins.actionsheet.show(options, (i) => {
+
+          i = i - 1
+  
+          if(i == items.length) {
+            return reject()
+          }
+  
+          resolve(i)
+        });
+      })
+      
+    },
+
+    supportimagegallery : function(){
+      return window.cordova && !isios()
+    },
+
+    safearea : function(){
+      if(window.cordova){
+        document.documentElement.style.setProperty('--app-margin-top-default', `25px`);
+        margintop = 20
+      }
+      else{
+        document.documentElement.style.setProperty('--app-margin-top-default', `0px`);
+      }
+      
+    },
+
     inputs : {
 
       init : function(){
@@ -1962,14 +2030,18 @@ Application = function(p)
       lastheight : 0,
       init : function(){
 
-        if(window.cordova && !isios()){
+        if(window.cordova){
 
           window.addEventListener('keyboardWillShow', (event) => {
 
             self.mobile.keyboard.height = self.mobile.keyboard.lastheight = event.keyboardHeight
 
             document.documentElement.style.setProperty('--keyboardheight', `${event.keyboardHeight}px`);
+ 
+          });
 
+          window.addEventListener('keyboardDidShow', (event) => {
+            
           });
 
           window.addEventListener('keyboardWillHide', () => {
@@ -1978,8 +2050,27 @@ Application = function(p)
             self.mobile.keyboard.height = 0
           });
         }
+        else{
 
+          if(navigator.virtualKeyboard && isTablet()){
+            navigator.virtualKeyboard.overlaysContent = true;
 
+            navigator.virtualKeyboard.addEventListener('geometrychange', (event) => {
+              document.documentElement.style.setProperty('--keyboardheight', `${event.target.boundingRect.height}px`);
+            });
+          }
+          
+        }
+
+        
+
+      },
+
+      style : function(){
+        if(window.cordova && typeof Keyboard != 'undefined'){
+          Keyboard.setKeyboardStyle(self.platform.sdk.theme.current == 'white' ? 'light' : 'dark')
+        }
+        
       }
     },
 
@@ -2212,8 +2303,10 @@ Application = function(p)
         }
 
         if (window.StatusBar) {
+          StatusBar.overlaysWebView(true);
+          window.StatusBar.backgroundColorByHexString('#00000000');
           self.platform.sdk.theme.current == 'white' ? window.StatusBar.styleDefault() : window.StatusBar.styleLightContent()
-          window.StatusBar.backgroundColorByHexString(colors[self.platform.sdk.theme.current] || "#FFF");
+          
         }
 
         if (window.NavigationBar)
@@ -2224,8 +2317,10 @@ Application = function(p)
 
 
         if (window.StatusBar) {
+          
+          StatusBar.overlaysWebView(true);
+          window.StatusBar.backgroundColorByHexString('#00000000');
           window.StatusBar.styleLightContent()
-          window.StatusBar.backgroundColorByHexString("#030F1B");
         }
 
         if (window.NavigationBar)
@@ -2236,7 +2331,7 @@ Application = function(p)
       hide : function(){
         if (window.StatusBar) {
           window.StatusBar.hide()
-          window.StatusBar.overlaysWebView(true);
+          //window.StatusBar.overlaysWebView(true);
         }
 
         if (window.NavigationBar){
@@ -2246,7 +2341,7 @@ Application = function(p)
       show : function(){
         if (window.StatusBar) {
           window.StatusBar.show()
-          window.StatusBar.overlaysWebView(false);
+          //window.StatusBar.overlaysWebView(false);
         }
 
         if (window.NavigationBar){
@@ -2282,17 +2377,31 @@ Application = function(p)
       }
 
 
-    },
+    },  
 
+
+    //// for video
 
     fullscreenmode : function(v){
-      v ? self.mobile.screen.unlock() : self.mobile.screen.lock()
-      v ? self.mobile.statusbar.hide() : self.mobile.statusbar.show()
+
+      var cl = function(){
+        v ? self.mobile.screen.lock('landscape') : self.mobile.screen.lock()
+        v ? self.mobile.statusbar.hide() : self.mobile.statusbar.show()
+      }
+      
+
+      if(isios()){
+        setTimeout(() => {
+          cl()
+        }, 1000)
+      }
+      else{
+        window.requestAnimationFrame(() => {
+          cl()
+        })
+      }
 
       self.mobile.unsleep(v)
-
-      //v ? self.el.html.addClass('fullscreen') : self.el.html.removeClass('fullscreen')
-
 
       if(!v){
         setTimeout(function(){
@@ -2302,9 +2411,8 @@ Application = function(p)
       }
       else{
         self.fullscreenmode = v
-
-
       }
+
     },
 
     reload : {
@@ -2323,10 +2431,7 @@ Application = function(p)
       },
       initparallax : function(){
 
-
         if(isTablet() || isMobile()){
-
-
 
           if(self.mobile.reload.parallax) return
           if(self.mobile.reload.reloading) return
@@ -2446,13 +2551,16 @@ Application = function(p)
 
     screen : {
 
-      lock : function(){
-        if (window.cordova && baseorientation)
-          window.screen.orientation.lock(baseorientation)
+      lock : function(orientation){
+        if (window.cordova && (orientation || baseorientation))
+          window.screen.orientation.lock(orientation || baseorientation)
       },
       unlock : function(){
-        if (window.cordova)
+        if (window.cordova){
+          window.screen.orientation.lock(baseorientation)
           window.screen.orientation.unlock()
+        }
+          
       },
 
       destroy : function(){
@@ -2463,10 +2571,12 @@ Application = function(p)
 
       init : function(){
         self.mobile.screen.clbks = {}
+        
 
+        if (window.cordova){
 
+        
 
-        if (window.cordova)
           window.screen.orientation.addEventListener('change', function(){
 
             _.each(self.mobile.screen.clbks, function(c){
@@ -2474,6 +2584,8 @@ Application = function(p)
             })
 
           });
+        }
+          
       },
 
       clbks : {}
@@ -2619,8 +2731,13 @@ Application = function(p)
     var domain = self.options.url
 
     var m = _.find(groups, function(g){
-      return _.indexOf(g, url.host) > -1 &&  _.indexOf(g, domain) > -1
+
+      console.log('g', g, url.host, domain, _.indexOf(g, url.host))
+
+      return _.indexOf(g, url.host) > -1 &&  (_.indexOf(g, domain) > -1 || domain.indexOf('localhost') > -1)
     })
+
+    console.log("MMM", m)
 
     if(m) return true
 
@@ -2639,6 +2756,11 @@ Application = function(p)
   self.ref = null;
 
   try{
+    self.Logger.info({
+      actionId: 'APP_LOADED_FROM_EXTERNAL_LINK',
+      actionSubType: 'USER_FROM_EXTERNAL_SESSION',
+    });
+
     self.ref = parameters().ref || localStorage['ref'];
     self.dsubref = parameters().dsubref || localStorage['dsubref'];
 

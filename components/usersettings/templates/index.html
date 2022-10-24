@@ -10,14 +10,20 @@
 
 	<% if(state) {%>
 
-	<div class="downloadedvideoscontentWrapper">
+		<div class="downloadedvideoscontentWrapper">
 
-	</div>
-	
-
-	<div class="cache">
+		</div>
 		
-	</div>
+		<% if((typeof app.platform.sdk.user.myaccauntdeleted == 'undefined' || !app.platform.sdk.user.myaccauntdeleted())) {%>
+			<div class="cache">
+				
+			</div>
+			<div class="removeAccauntWrapper">
+				<div class="removeAccount">
+					<span><%- e('removeaccount') %></span>
+				</div>
+			</div>
+		<% } %>
 
 
 	<% } %>

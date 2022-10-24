@@ -598,6 +598,8 @@ _l.e13135 = "L'utente non ha la chiave privata";
 _l.e13136 = "Tutti i post";
 _l.e13137 = "Le mie sottoscrizioni"// Questo è l'equivalente di un 'News feed'. Non cambiare la parola 'Pocket' però, è una caratteristica di "+appname+".";
 _l.e13138 = "Top post";
+_l.discussed = "Più discusso"
+_l["Most Discussed Over"] = "Per il periodo"
 _l["Top Posts Over"] = "Top post su";
 _l.topnext = "Prossimo";
 _l.topprevious = "Precedente";
@@ -638,7 +640,7 @@ _l.repost = "Repost";
 _l.e13160 = "Ciao Bastyards!";
 
 _l.e13161 = "Aggiungi tag per il tuo post";
-_l.e13162 = "Puoi inserire massimo 5 tag";
+_l.e13162 = "Puoi inserire massimo 15 tag";
 _l.e13163 = "Non ci sono modifiche nel post";
 _l.e13164 = "Aggiungi qualche parola per spiegare il tuo link. Di cosa si tratta? Perché è importante? Qual è la tua opinione?";
 _l.e13165 = "Il tuo link al video non è valido. Per favore, carica un URL video valido.";
@@ -1214,3 +1216,5 @@ _l.androidPopupDisagree = "Non ora"
 _l.desktopPopupTitle = "Ottieni informazioni non censurate nell'app desktop Bastyon"
 _l.desktopPopupAgree = "Scarica l'app"
 _l.desktopPopupDisagree = "Non ora"
+
+_l.profanity_tag = 'volgarità'

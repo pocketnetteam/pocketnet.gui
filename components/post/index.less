@@ -20,6 +20,9 @@
 #post{
 	background: rgb(var(--background-main));
 	
+	.brighteonVideoIframe {
+		max-width: 650px;
+	}
 
 	.jsPlayerLoading,
 	.video-js:not(.vjs-fullscreen){
@@ -139,29 +142,12 @@
 		.images{
 			max-width: 620px;
 
-			.imagesWrapper{
+			/*.imagesWrapper{
 				width: 180px;
 				height: 180px;
 			}
 
 			.imagesContainer{
-				&.owlcar{
-					height: auto;
-					width: 100%;
-					max-width: 400px;
-					
-
-					.imagesWrapper{
-						height: 500px;
-						float: none;
-						width: 100%;
-						background: transparent;
-
-						.image{
-							background-size: contain!important;
-						}
-					}
-				}
 
 				&.one{
 					.imagesWrapper{
@@ -218,7 +204,7 @@
 						margin-bottom: @rhythm;
 					}
 				}
-			}
+			}*/
 
 		}
 
@@ -1013,6 +999,12 @@ html.mobileview{
 					overflow: visible;
 				}
 			}
+		}
+
+		.brighteonVideoIframe {
+			width: 100%;
+			max-width: inherit;
+			border-radius: 0;
 		}
 
 		.sharearticle{

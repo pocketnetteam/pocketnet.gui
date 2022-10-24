@@ -242,7 +242,7 @@
 		display : none;
 		opacity: 0;
 		z-index: 30;
-		.transition(0.3s);
+		.transition(0.3s, opacity);
 
 		span,
 		i{
@@ -290,17 +290,30 @@
 	.lentacell{
 		padding-top : 10px;
 		min-height: 3000px;
-		padding-bottom : 1000px;
+		padding-bottom : 300px;
 
-		.cf_spacer,
-		.bgCaption {
+		.cf_spacer {
 			margin-bottom : @rhythm;
+		}
+
+		.bgCaption{
+			.share{
+				#share{
+					margin-bottom: @rhythm;
+				}
+			}
 		}
 
 		.cnt{
 			max-width: 720px;
 			margin : 0 auto;
 		}
+		#lenta{
+			.searchInfo{
+				display: none;
+			}
+		}
+		
 	}
 
 	.lentacellsvi{
@@ -361,7 +374,7 @@
 	}
 
 	.maincntwrapper{
-		.transition(0.3s);
+		.transition(0.3s, transform);
 	}
 
 	.opensvi{
@@ -378,7 +391,7 @@
 
 	.upbackbuttonwrapper{
 		opacity: 0;
-		.transition(0.3s);
+		.transition(0.3s, opacity);
 		-webkit-transition-delay: 0.5s;
 		-o-transition-delay: 0.5s;
 		-moz-transition-delay: 0.5s;
@@ -394,7 +407,7 @@
 	}
 
 	.upbuttonwrapper{
-		.transition(0.3s);
+		.transition(0.3s, opacity);
 	}
 
 	&.opensvishowed{
@@ -484,7 +497,7 @@
 			background: rgb(var(--background-total-theme));
 		}
 
-		&.cf_caption{
+		/*&.cf_caption{
 			padding : 0;
 			margin-bottom : 0;
 			
@@ -559,7 +572,7 @@
 				}
 				
 			}
-		}
+		}*/
 	}
 
 	
@@ -779,7 +792,7 @@ html.mobileview{
 			padding-top : 0;
 			overflow-y: scroll;
 			padding-bottom: 90px;
-			.transition(0.3s);
+			.transition(0.3s, transform);
 			border: 1px solid rgba(--neutral-grad-1, 0.3);
 			.shadowSmaller();
 			border-top-right-radius: 0;
@@ -804,6 +817,13 @@ html.mobileview{
 		.lentacell{
 			margin-right: 0;
 			margin-left: 0;
+
+			#lenta{
+				.searchInfo{
+					display: block;
+				}
+			}
+			
 		}
 	
 		&.videomain {

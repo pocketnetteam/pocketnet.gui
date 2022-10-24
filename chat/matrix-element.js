@@ -3734,7 +3734,7 @@ module.exports = function (obj) {
 /***/ "0825":
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"caption\":{\"create\":\"Crea\",\"addGroupNamePlaceHolder\":\"Aggiungi il nome del gruppo\",\"addPublicChatName\":\"Aggiungi nome chat pubblica\",\"createPublicChat\":\"Crea chat pubblica\",\"chatTopic\":\"Argomento rinominato\",\"publicRoomTitle\":\"Stanza pubblica\",\"asModerator\":\"come moderatore\",\"marked\":\"contrassegnato\",\"unmarked\":\"non segnato\",\"removeBan\":\"Rimuovi divieto\",\"cancelModeration\":\"Rimuovere la moderazione\",\"uploadFiles\":\"Carica file\",\"header\":\"intestazione\",\"dragAndDropAFile\":\"Drag and drop file\",\"chatInvite\":\"Sei stato invitato a chattare con:\",\"cantJoin\":\"Non puoi entrare in chat con:\",\"chatInviteDecline\":\"Puoi unirti in chat o declinare l'invito\",\"creatorLeft\":\"Perché il creatore ha lasciato la chat\",\"encrypted\":\"Criptato\",\"noImages\":\"Non ci sono ancora immagini in questa chat\",\"noFiles\":\"Non ci sono ancora files in questa chat\",\"inviteUser\":\"Invita utente\",\"invite\":\"Invita\",\"add\":\"Aggiungi\",\"mute\":\"Disattiva audio\",\"unmute\":\"Riattiva audio\",\"leave\":\"Lascia\",\"Info\":\"Info\",\"new\":\"Nuovo\",\"typing\":\"sta scrivendo\",\"accNotFound\":\"La tua registrazione è in corso, attendi...\",\"emptyList\":\"la lista è vuota (filtrata o semplicemente vuota)\",\"welcome\":\"Benvenuto in chat\",\"startNewChat\":\"Inizia una nuova chat\",\"chats\":\"Chat\",\"shareWith\":\"Condividi con\",\"newChat\":\"Nuova chat\",\"moveToChat\":\"Sposta in chat\",\"queryNoResults\":\"La ricerca non ha dato risultati\",\"needMoreCharacters\":\"Scrivi più caratteri\",\"createGroup\":\"Crea gruppo\",\"unabletoDecrypt\":\"* Impossibile decifrare\",\"messageDeleted\":\"Messaggio eliminato\",\"sentImage\":\"Immagine inviata\",\"sentVoiceMessage\":\"inviato un messaggio vocale\",\"invitationToChat\":\"Invito alla chat\",\"invitationToRoom\":\"Invitation to room\",\"leftChat\":\"ha lasciato la chat\",\"joined\":\"si è aggiunto\",\"chatRenamed\":\"Chat rinominata in \",\"recentComment\":\"Commento recente: \",\"share\":\"CONDIVIDI\",\"followers\":\"Followers\",\"reputation\":\"Reputazione\",\"unsubscribe\":\"Annullare l'iscrizione\",\"following\":\"Following\",\"theme\":\"Tema:\",\"contacts\":\"Contatti\",\"phoneContacts\":\"Contatti del telefono\",\"chooseInviteMedia\":\"Scegli come vuoi invitare:\",\"admin\":\"Admin\",\"moderator\":\"Moderatore\",\"videocall\":\"Videochiamata\",\"call\":\"Chiama\",\"leaveAndDelete\":\"Lascia e Cancella\",\"donate\":\"Dona\",\"makeModerator\":\"Rendi moderatore\",\"ban\":\"Ban\",\"kick\":\"Butta fuori\",\"members\":\"Membri\",\"media\":\"Media\",\"files\":\"Files\",\"contactsList\":\"Lista contatti\",\"send\":\"invia\",\"pageCaption\":\"Didascalia pagina\",\"caption\":\"didascalia\",\"text\":\"testo\",\"placeholder\":\"placeholder\",\"sendTransactionTo\":\"Invia transazione a\",\"toBePaidByReceiver\":\"Da pagare da parte del ricevente\",\"toBePaidBySender\":\"Da pagare da parte del mittente\",\"source\":\"Fonte\",\"amount\":\"Importo\",\"receiver\":\"Ricevente\",\"message\":\"Messaggio\",\"includeFeesInAmount\":\"Includere le commissioni nell'importo\",\"transactionFees\":\"Commissioni di transazione\",\"totalAmount\":\"Importo totale\",\"balanceTooLow\":\"Saldo non sufficiente\",\"transactionError\":\"Errore. non è possibile effettuare la transazione\",\"calculateFees\":\"Calcolare le commissioni\",\"startChatWith\":\"Iniziare la chat con\",\"searchResult\":\"Risultato della ricerca\",\"joinedInTheChat\":\"si è unito alla chat\",\"invited\":\"invitato \",\"inTheChat\":\" nella chat\",\"banned\":\"bannato\",\"andRoom\":\"e stanza\",\"left\":\"ha lasciato\",\"theChat\":\" la chat \",\"made\":\"ha rest \",\"aModerator\":\" un moderatore\",\"editedChatNameTo \":\"ha modificato il nome della chat in \",\"somebody\":\"qualcuno\",\"sent\":\"inviato\",\"PKOINto\":\" PKOIN a \",\"response\":\"Risposta\",\"messagefrom\":\"Messaggio inoltrato\",\"edited\":\"Modificato\",\"settings\":\"Impostazioni\",\"unauthorized\":\"Non autorizzato\",\"search\":\"Ricerca\",\"replyOnMessage\":\"Rispondi\",\"editMessage\":\"Modifica messaggio\",\"inviteFriend\":\"Invita amici\",\"emptyContactList\":\"La lista dei contatti è vuota\",\"joinApp\":\"Connettiti in una chat privata con me\",\"hasInvitedToJoin\":\"È privata e NON è collegata al tuo numero di telefono. Chattiamo!\",\"contactsempty\":\"Non hai ancora contatti, cercali e aggiungili\",\"usernotgen\":\"L'utente non ha ancora generato le sue chiavi di crittografia. Potrai chattare con loro quando le loro chiavi saranno generate..\",\"younotgen\":\"Per favore aspetta un minuto mentre generiamo le tue chiavi crittografiche\",\"messageRead\":\"Messaggio letto\",\"open\":\"Apri\",\"You\":\"Tu\",\"chatsearchingempty\":\"No chats found for the specified filter\",\"sendmessage\":\"Send message\"},\"input\":{\"patientEmailPlaceholder\":\"Email\",\"refillNamePlaceholder\":\"Refill name\"},\"message\":{},\"button\":{\"starChatButton\":\"Iniziare la chat\",\"decline\":\"Rifiuta\",\"declineandignore\":\"Ignora utente\",\"join\":\"Unisciti\",\"ok\":\"Ok\",\"save\":\"Salva\",\"copy\":\"Copia\",\"forward\":\"Inoltra\",\"delete\":\"Elimina\",\"reply\":\"Rispondi\",\"share\":\"Condividere\",\"download\":\"Download\",\"downloaded\":\"Scaricato\",\"goToPocketnetProfile\":\"Vai al profilo\",\"sendFile\":\"Invia file\",\"takePhotoOrVideo\":\"Invia immagine\",\"sendCoins\":\"Invia PKOIN\",\"edit\":\"Modifica\",\"block\":\"Blocca\",\"unblock\":\"Sblocca\",\"blockUser\":\"Blocca utente\",\"Complain\":\"Segnala\"},\"type\":{\"publicgroup\":\"Crea gruppo pubblico\",\"privategroup\":\"Crea gruppo privato\",\"one\":\"Chat privata con un utente\"},\"typelabel\":{\"publicgroup\":\"Creazione gruppo pubblico\",\"privategroup\":\"Creazione gruppo privato\",\"one\":\"Creazione di una chat privata\"},\"yes\":\"Sì\",\"cancel\":\"Annulla\",\"teamMessages\":{\"1-title\":\"Benvenuti nella chat privata di Bastyon\",\"1-list1\":\"Chat privata NON collegata al tuo numero di telefono\",\"1-list2\":\"Crittografia End-To-End di ogni conversazione 1-on-1 di default\",\"1-list3\":\"Tutte le immagini inviate o ricevute attraverso la chat sono memorizzate in modo criptato\",\"1-list4\":\"La cronologia dei messaggi viene salvata solo per 7 giorni\",\"2-title\":\"Annuncio importante!! L'applicazione Pocketnet è ora chiamata Bastyon!\",\"2-message1\":\"Il dominio sarà spostato su Bastyon.com. Recentemente abbiamo rilasciato i seguenti importanti aggiornamenti:\",\"2-list1\":\"Chat privata criptata non collegata al tuo numero di telefono\",\"2-list2\":\"Possibilità di donare PKOIN ai blogger\",\"2-list3\":\"Video e Live Streaming\",\"2-message2\":\"Invita i tuoi amici ora e fai parte del grande futuro dell'internet decentralizzato!\",\"2-button\":\"Invita i tuoi amici\"},\"sendingerror\":\"An error occurred while sending the message\",\"details\":\"Details\",\"settings_pin\":\"Pin chat window\",\"checked\":\"Yes\",\"unchecked\":\"No\",\"settings_read\":\"Send read receipts\",\"messagewasburn\":\"This message remains only in the memory of your device\",\"messagewillburn\":\"The message will be deleted soon\",\"micaccessbrowser\":\"Access to the microphone is restricted, please check your browser settings.\",\"micaccesscommonproblem\":\"Sorry, for some reason it is not possible to record voice messages on the device\",\"micaccesscordova\":\"Access to the microphone is restricted, please check your device settings.\",\"micdevicenotfound\":\"Audio recording device not found\"}");
+module.exports = JSON.parse("{\"caption\":{\"create\":\"Crea\",\"addGroupNamePlaceHolder\":\"Aggiungi il nome del gruppo\",\"addPublicChatName\":\"Aggiungi nome chat pubblica\",\"createPublicChat\":\"Crea chat pubblica\",\"chatTopic\":\"Argomento rinominato\",\"publicRoomTitle\":\"Stanza pubblica\",\"asModerator\":\"come moderatore\",\"marked\":\"contrassegnato\",\"unmarked\":\"non segnato\",\"removeBan\":\"Rimuovi divieto\",\"cancelModeration\":\"Rimuovere la moderazione\",\"uploadFiles\":\"Carica file\",\"header\":\"intestazione\",\"dragAndDropAFile\":\"Drag and drop file\",\"chatInvite\":\"Sei stato invitato a chattare con:\",\"cantJoin\":\"Non puoi entrare in chat con:\",\"chatInviteDecline\":\"Puoi unirti in chat o declinare l'invito\",\"creatorLeft\":\"Perché il creatore ha lasciato la chat\",\"encrypted\":\"Criptato\",\"noImages\":\"Non ci sono ancora immagini in questa chat\",\"noFiles\":\"Non ci sono ancora files in questa chat\",\"inviteUser\":\"Invita utente\",\"invite\":\"Invita\",\"add\":\"Aggiungi\",\"mute\":\"Disattiva audio\",\"unmute\":\"Riattiva audio\",\"leave\":\"Lascia\",\"Info\":\"Info\",\"new\":\"Nuovo\",\"typing\":\"sta scrivendo\",\"accNotFound\":\"La tua registrazione è in corso, attendi...\",\"emptyList\":\"la lista è vuota (filtrata o semplicemente vuota)\",\"welcome\":\"Benvenuto in chat\",\"startNewChat\":\"Inizia una nuova chat\",\"chats\":\"Chat\",\"shareWith\":\"Condividi con\",\"newChat\":\"Nuova chat\",\"moveToChat\":\"Sposta in chat\",\"queryNoResults\":\"La ricerca non ha dato risultati\",\"needMoreCharacters\":\"Scrivi più caratteri\",\"createGroup\":\"Crea gruppo\",\"unabletoDecrypt\":\"* Impossibile decifrare\",\"messageDeleted\":\"Messaggio eliminato\",\"sentImage\":\"Immagine inviata\",\"sentVoiceMessage\":\"inviato un messaggio vocale\",\"invitationToChat\":\"Invito alla chat\",\"invitationToRoom\":\"Invitation to room\",\"leftChat\":\"ha lasciato la chat\",\"joined\":\"si è aggiunto\",\"chatRenamed\":\"Chat rinominata in \",\"recentComment\":\"Commento recente: \",\"share\":\"CONDIVIDI\",\"followers\":\"Followers\",\"reputation\":\"Reputazione\",\"unsubscribe\":\"Annullare l'iscrizione\",\"following\":\"Following\",\"theme\":\"Tema:\",\"contacts\":\"Contatti\",\"phoneContacts\":\"Contatti del telefono\",\"chooseInviteMedia\":\"Scegli come vuoi invitare:\",\"admin\":\"Admin\",\"moderator\":\"Moderatore\",\"videocall\":\"Videochiamata\",\"call\":\"Chiama\",\"leaveAndDelete\":\"Lascia e Cancella\",\"donate\":\"Dona\",\"makeModerator\":\"Rendi moderatore\",\"ban\":\"Ban\",\"kick\":\"Butta fuori\",\"members\":\"Membri\",\"media\":\"Media\",\"files\":\"Files\",\"contactsList\":\"Lista contatti\",\"send\":\"invia\",\"pageCaption\":\"Didascalia pagina\",\"caption\":\"didascalia\",\"text\":\"testo\",\"placeholder\":\"placeholder\",\"sendTransactionTo\":\"Invia transazione a\",\"toBePaidByReceiver\":\"Da pagare da parte del ricevente\",\"toBePaidBySender\":\"Da pagare da parte del mittente\",\"source\":\"Fonte\",\"amount\":\"Importo\",\"receiver\":\"Ricevente\",\"message\":\"Messaggio\",\"includeFeesInAmount\":\"Includere le commissioni nell'importo\",\"transactionFees\":\"Commissioni di transazione\",\"totalAmount\":\"Importo totale\",\"balanceTooLow\":\"Saldo non sufficiente\",\"transactionError\":\"Errore. non è possibile effettuare la transazione\",\"calculateFees\":\"Calcolare le commissioni\",\"startChatWith\":\"Iniziare la chat con\",\"searchResult\":\"Risultato della ricerca\",\"joinedInTheChat\":\"si è unito alla chat\",\"invited\":\"invitato \",\"hasInvited\":\"invitato \",\"inTheChat\":\" nella chat\",\"banned\":\"bannato\",\"andRoom\":\"e stanza\",\"left\":\"ha lasciato\",\"theChat\":\" la chat \",\"made\":\"ha rest \",\"aModerator\":\" un moderatore\",\"editedChatNameTo \":\"ha modificato il nome della chat in \",\"somebody\":\"qualcuno\",\"sent\":\"inviato\",\"PKOINto\":\" PKOIN a \",\"response\":\"Risposta\",\"messagefrom\":\"Messaggio inoltrato da\",\"edited\":\"Modificato\",\"settings\":\"Impostazioni\",\"unauthorized\":\"Non autorizzato\",\"search\":\"Ricerca\",\"replyOnMessage\":\"Rispondi\",\"editMessage\":\"Modifica messaggio\",\"inviteFriend\":\"Invita amici\",\"emptyContactList\":\"La lista dei contatti è vuota\",\"joinApp\":\"Connettiti in una chat privata con me\",\"hasInvitedToJoin\":\"È privata e NON è collegata al tuo numero di telefono. Chattiamo!\",\"contactsempty\":\"Non hai ancora contatti, cercali e aggiungili\",\"usernotgen\":\"L'utente non ha ancora generato le sue chiavi di crittografia. Potrai chattare con loro quando le loro chiavi saranno generate..\",\"younotgen\":\"Per favore aspetta un minuto mentre generiamo le tue chiavi crittografiche\",\"messageRead\":\"Messaggio letto\",\"open\":\"Apri\",\"You\":\"Tu\",\"chatsearchingempty\":\"No chats found for the specified filter\",\"sendmessage\":\"Send message\"},\"input\":{\"patientEmailPlaceholder\":\"Email\",\"refillNamePlaceholder\":\"Refill name\"},\"message\":{},\"button\":{\"starChatButton\":\"Iniziare la chat\",\"decline\":\"Rifiuta\",\"declineandignore\":\"Ignora utente\",\"join\":\"Unisciti\",\"ok\":\"Ok\",\"save\":\"Salva\",\"copy\":\"Copia\",\"forward\":\"Inoltra\",\"delete\":\"Elimina\",\"reply\":\"Rispondi\",\"share\":\"Condividere\",\"download\":\"Download\",\"downloaded\":\"Scaricato\",\"goToPocketnetProfile\":\"Vai al profilo\",\"sendFile\":\"Invia file\",\"takePhotoOrVideo\":\"Invia immagine\",\"sendCoins\":\"Invia PKOIN\",\"edit\":\"Modifica\",\"select\":\"Selezionare\",\"block\":\"Blocca\",\"unblock\":\"Sblocca\",\"blockUser\":\"Blocca utente\",\"Complain\":\"Segnala\"},\"type\":{\"publicgroup\":\"Crea gruppo pubblico\",\"privategroup\":\"Crea gruppo privato\",\"one\":\"Chat privata con un utente\"},\"typelabel\":{\"publicgroup\":\"Creazione gruppo pubblico\",\"privategroup\":\"Creazione gruppo privato\",\"one\":\"Creazione di una chat privata\"},\"yes\":\"Sì\",\"cancel\":\"Annulla\",\"teamMessages\":{\"1-title\":\"Benvenuti nella chat privata di Bastyon\",\"1-list1\":\"Chat privata NON collegata al tuo numero di telefono\",\"1-list2\":\"Crittografia End-To-End di ogni conversazione 1-on-1 di default\",\"1-list3\":\"Tutte le immagini inviate o ricevute attraverso la chat sono memorizzate in modo criptato\",\"1-list4\":\"La cronologia dei messaggi viene salvata solo per 7 giorni\",\"2-title\":\"Annuncio importante!! L'applicazione Pocketnet è ora chiamata Bastyon!\",\"2-message1\":\"Il dominio sarà spostato su Bastyon.com. Recentemente abbiamo rilasciato i seguenti importanti aggiornamenti:\",\"2-list1\":\"Chat privata criptata non collegata al tuo numero di telefono\",\"2-list2\":\"Possibilità di donare PKOIN ai blogger\",\"2-list3\":\"Video e Live Streaming\",\"2-message2\":\"Invita i tuoi amici ora e fai parte del grande futuro dell'internet decentralizzato!\",\"2-button\":\"Invita i tuoi amici\"},\"sendingerror\":\"An error occurred while sending the message\",\"details\":\"Details\",\"settings_pin\":\"Pin chat window\",\"checked\":\"Yes\",\"unchecked\":\"No\",\"settings_read\":\"Send read receipts\",\"messagewasburn\":\"This message remains only in the memory of your device\",\"messagewillburn\":\"The message will be deleted soon\",\"micaccessbrowser\":\"Access to the microphone is restricted, please check your browser settings.\",\"micaccesscommonproblem\":\"Sorry, for some reason it is not possible to record voice messages on the device\",\"micaccesscordova\":\"Access to the microphone is restricted, please check your device settings.\",\"micdevicenotfound\":\"Audio recording device not found\"}");
 
 /***/ }),
 
@@ -3743,7 +3743,7 @@ module.exports = JSON.parse("{\"caption\":{\"create\":\"Crea\",\"addGroupNamePla
 
 "use strict";
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"3c23d37e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/chats/preview/index.vue?vue&type=template&id=33d22462&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/chats/preview/index.vue?vue&type=template&id=33d22462&scoped=true&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"chatsPreview",class:{minimized: _vm.minimized, active: _vm.active}},[_c('div',{staticClass:"work"},[_c('div',{staticClass:"previewWrapper"},[_c('div',{staticClass:"iconWrapper"},[(!_vm.dummy)?_c('chatIcon',{key:_vm.key,attrs:{"m_chat":_vm.m_chat,"chat":_vm.chat,"dontuseslides":true}}):_c('div',{staticClass:"dummyicon loadinggradient"})],1),_c('div',{staticClass:"infoWrapper"},[(!_vm.dummy && _vm.ready)?_c('div',{staticClass:"summaryLine"},[_c('div',{staticClass:"caption flexBlock"},[_c('chatName',{attrs:{"preview":true,"chat":_vm.chat,"m_chat":_vm.m_chat}}),(_vm.roomMuted)?_c('div',{staticClass:"roomMuted"},[_c('i',{staticClass:"fas fa-bell-slash"})]):_vm._e()],1),_c('div',{staticClass:"time"},[_c('chatTime',{attrs:{"chat":_vm.chat,"m_chat":_vm.m_chat}})],1)]):_vm._e(),(!_vm.dummy && _vm.ready)?_c('div',{staticClass:"eventsLine maxwidth"},[(_vm.event)?_c('eventsEvent',{attrs:{"event":_vm.matrixevent,"chat":_vm.m_chat,"preview":true}}):_vm._e()],1):_vm._e(),(_vm.dummy)?_c('div',{staticClass:"eventsLine"},[_c('div',{staticClass:"dummyline loadinggradient"})]):_vm._e()])])])])}
 var staticRenderFns = []
 
@@ -3756,7 +3756,7 @@ var vuex_esm = __webpack_require__("2f62");
 // EXTERNAL MODULE: ./src/components/chats/assets/name.vue + 4 modules
 var assets_name = __webpack_require__("aa20");
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"3c23d37e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/chats/assets/time.vue?vue&type=template&id=9218004e&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/chats/assets/time.vue?vue&type=template&id=9218004e&scoped=true&
 var timevue_type_template_id_9218004e_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"chatTime"},[(_vm.time)?_c('date',{attrs:{"date":_vm.time}}):_c('span',{staticClass:"new"},[_vm._v(_vm._s(_vm.$t("caption.new")))])],1)}
 var timevue_type_template_id_9218004e_scoped_true_staticRenderFns = []
 
@@ -4083,7 +4083,7 @@ module.exports = Sha
 
 "use strict";
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"3c23d37e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/assets/topheader/index.vue?vue&type=template&id=52afd868&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/assets/topheader/index.vue?vue&type=template&id=52afd868&scoped=true&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"fixedOnPageTop",class:{'bin' : _vm.pocketnet, 'bout' : !_vm.pocketnet, minimized: _vm.minimized, fix : _vm.pocketnet, active: _vm.active},attrs:{"id":"topheader"},on:{"mouseleave":_vm.mouseleave}},[_c('div',{staticClass:"topheader "},[_c('div',{staticClass:"work"},[_c('div',{staticClass:"headerLine"},[_c('div',{staticClass:"leftIcon icon",on:{"mouseenter":_vm.mouseenter}},[_vm._t("left",function(){return [_vm._v("   ")]})],2),_c('div',{staticClass:"leftaddIcon iconsmall"},[_vm._t("leftadd",function(){return [_vm._v("   ")]})],2),_c('div',{staticClass:"infoPart",on:{"mouseenter":_vm.mouseenter}},[_c('div',[_vm._t("info",function(){return [_vm._v("   ")]})],2)]),_c('div',{staticClass:"rightaddIcons iconsmall"},[_vm._t("rightadd",function(){return [_vm._v("   ")]})],2),_c('div',{staticClass:"rightIcons icon"},[_vm._t("right",function(){return [_vm._v("   ")]})],2)]),_vm._t("additional")],2)])])}
 var staticRenderFns = []
 
@@ -4258,7 +4258,7 @@ var buildURL = __webpack_require__("30b5");
 var InterceptorManager = __webpack_require__("f6b4");
 var dispatchRequest = __webpack_require__("5270");
 var mergeConfig = __webpack_require__("4a7b");
-var validator = __webpack_require__("848ba");
+var validator = __webpack_require__("848b");
 
 var validators = validator.validators;
 /**
@@ -6088,6 +6088,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_1cf419f0_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("9783");
 /* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_1cf419f0_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_1cf419f0_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__);
 /* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_1cf419f0_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_1cf419f0_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+
+
+/***/ }),
+
+/***/ "191a":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_57da332f_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("810b");
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_57da332f_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_57da332f_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_57da332f_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_57da332f_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
 
 
 /***/ }),
@@ -8020,20 +8032,6 @@ function _asyncToGenerator(fn) {
 
 /***/ }),
 
-/***/ "1e35":
-/***/ (function(module, exports, __webpack_require__) {
-
-// Imports
-var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
-exports = ___CSS_LOADER_API_IMPORT___(false);
-// Module
-exports.push([module.i, ".chatIcon[data-v-252fb3ae]{width:100%;position:relative}.unknowngroupusersicon[data-v-252fb3ae]{position:absolute;left:0;top:0;bottom:0;right:0;font-size:.7em;display:flex;justify-content:center;align-items:center;color:#fff;text-shadow:0 0 2px rgba(0,11,58,.714),0 0 3px rgba(0,8,43,.519)}.unknowngroupusers .bgimage[data-v-252fb3ae]{transform:scale(.7)}", ""]);
-// Exports
-module.exports = exports;
-
-
-/***/ }),
-
 /***/ "1fb5":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8838,6 +8836,20 @@ var add = __webpack_require__("35d6").default
 module.exports.__inject__ = function (shadowRoot) {
   add("781df766", content, shadowRoot)
 };
+
+/***/ }),
+
+/***/ "24a6":
+/***/ (function(module, exports, __webpack_require__) {
+
+// Imports
+var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
+exports = ___CSS_LOADER_API_IMPORT___(false);
+// Module
+exports.push([module.i, ".card-content .chatGroupIcon img{width:100%!important}", ""]);
+// Exports
+module.exports = exports;
+
 
 /***/ }),
 
@@ -9971,6 +9983,20 @@ var add = __webpack_require__("35d6").default
 module.exports.__inject__ = function (shadowRoot) {
   add("08f900d1", content, shadowRoot)
 };
+
+/***/ }),
+
+/***/ "2931":
+/***/ (function(module, exports, __webpack_require__) {
+
+// Imports
+var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
+exports = ___CSS_LOADER_API_IMPORT___(false);
+// Module
+exports.push([module.i, ".deletedMessage[data-v-659136c0]{font-size:.8em;text-align:center;opacity:.6}.event[data-v-659136c0]{opacity:0;transition:.3s}.event.readyToRender[data-v-659136c0]{opacity:1}.event .loading[data-v-659136c0]{width:100%;height:100%;text-align:center}.event .deletedMessage[data-v-659136c0],.event .loading[data-v-659136c0]{position:relative;left:0;top:0;padding:.5em}", ""]);
+// Exports
+module.exports = exports;
+
 
 /***/ }),
 
@@ -12451,22 +12477,52 @@ module.exports.__inject__ = function (shadowRoot) {
 
 /***/ }),
 
+/***/ "306eb":
+/***/ (function(module, exports, __webpack_require__) {
+
+// Imports
+var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
+exports = ___CSS_LOADER_API_IMPORT___(false);
+// Module
+exports.push([module.i, ".referenceTop[data-v-c8f458dc]{margin-left:.25em;margin-right:.25em;border-radius:10px;border-bottom-left-radius:0;overflow:hidden;margin-bottom:.5em}.referenceTop.my[data-v-c8f458dc]{border-bottom-right-radius:0;border-bottom-left-radius:10px}.actionsWrapper[data-v-c8f458dc]{opacity:1}.actionsWrapper i.fa-check-circle[data-v-c8f458dc]{color:rgb(var(--color-txt-ac));opacity:1!important}.actionsWrapper .mnwrapper[data-v-c8f458dc]{opacity:0;transition:.3s}.actionsWrapper .multiSelect[data-v-c8f458dc]{position:absolute;top:50%;transform:translateY(-50%);left:0;padding:.5em;width:100%;height:100%;display:flex;flex-direction:column;justify-content:center}.actionsWrapper .multiSelect:hover i[data-v-c8f458dc]{opacity:1}@media (pointer:fine){.messageRow:hover .actionsWrapper .mnwrapper[data-v-c8f458dc]{opacity:1}}.burn.big[data-v-c8f458dc]{color:rgb(var(--color-bad))}.burn.medium[data-v-c8f458dc]{opacity:.8}.showImage[data-v-c8f458dc]{width:100%;position:relative;overflow:hidden}.showImage .abswrapper[data-v-c8f458dc]{position:absolute;left:0;top:0;bottom:0;right:0;display:flex;text-align:center;align-items:center;justify-content:center}.preloaderImage[data-v-c8f458dc]{padding-bottom:100px;border-radius:10px;background:rgba(var(--neutral-grad-0),.5);width:100%;position:relative}.preloaderImage .abswrapper[data-v-c8f458dc]{position:absolute;left:0;top:0;bottom:0;right:0;display:flex;text-align:center;align-items:center;justify-content:center}.preloaderImage .abswrapper>div[data-v-c8f458dc]{opacity:.2}.statusWrapper[data-v-c8f458dc]{padding:.5em;margin-top:.5em;border-top:.5em solid rgb(var(--neutral-grad-0))}.statusWrapper .my[data-v-c8f458dc]{font-size:.7em;opacity:.5;text-align:center}.messageRow[data-v-c8f458dc]{display:flex;align-items:flex-end;padding-left:.25em;min-height:34px}.messageRow.aligncenter[data-v-c8f458dc]{align-items:center}.messageRow.my[data-v-c8f458dc]{padding-left:0;padding-right:.25em}.messageRow.my .messageImg .imgMsg .showImage .abswrapper[data-v-c8f458dc]{border-radius:1em;border-top-right-radius:0;border-top-left-radius:1em}.messageRow .maxcontent[data-v-c8f458dc]{max-width:82%}.messageRow .maxcontent.my[data-v-c8f458dc]{max-width:87%}.messageRow.allscreen[data-v-c8f458dc]{flex-wrap:wrap}.messageRow.allscreen .userpic[data-v-c8f458dc]{position:relative}.messageRow.allscreen .userpic[data-v-c8f458dc]:after{border-radius:50%;content:\"\";position:absolute;left:-5px;right:-5px;top:-5px;bottom:-5px;border:5px solid rgb(var(--neutral-grad-0));z-index:1;box-shadow:0 5px 7px -5px rgba(var(--color-shadow-base),.7)}.messageRow .badenctyptedText .decryptagain[data-v-c8f458dc]{font-size:.8em}.messageRow .metaMsg[data-v-c8f458dc]{width:100%}.messageRow .badencrypted[data-v-c8f458dc]{position:absolute;background:rgb(var(--background-main));left:0;right:0;top:0;bottom:0;padding:.5em}.messageRow .encryptedDataIcon[data-v-c8f458dc]{position:absolute;color:rgb(var(--text-on-bg-ac-color));opacity:.3;padding:.25em .5em;text-shadow:0 0 2px rgba(var(--color-shadow-base),.714),0 0 3px rgba(var(--color-shadow-base),.519);left:0;top:0;z-index:1}.messageRow .encryptedDataIcon i[data-v-c8f458dc]{font-size:.7em}.messageRow .filePreview .encryptedDataIcon[data-v-c8f458dc]{color:rgb(var(--neutral-grad-2));text-shadow:none;right:0;left:auto}.messageRow .messageAudio[data-v-c8f458dc]{margin-left:.5em;height:50px}.messageRow .messageImg[data-v-c8f458dc]{width:85%;position:relative;margin-top:.125em}.messageRow .messageImg .img[data-v-c8f458dc]{display:block;border-radius:.5em;position:relative;max-width:100%}.messageRow .messageImg .loadingImg[data-v-c8f458dc]{display:flex;align-items:center;justify-content:center;border-radius:.5em;position:relative;max-width:300px;height:250px}.messageRow .messageImg .loadingImg .imgPreview[data-v-c8f458dc]{border-radius:.5em;position:relative;max-width:100%;height:100%;opacity:.6}.messageRow .messageImg .loadingImg .clipLoader[data-v-c8f458dc]{position:absolute;z-index:9999;left:50%;right:0;top:50%;bottom:0;transform:translate(-50,50);display:flex;align-items:center;justify-content:center}.messageRow .messageImg .imgMsg .showImage[data-v-c8f458dc]{display:flex}.messageRow .messageImg .imgMsg img[data-v-c8f458dc]{max-width:100%;-o-object-fit:cover;object-fit:cover;display:block}.messageRow .messageImg .imgMsg .abswrapper[data-v-c8f458dc]{border-radius:1em;border-top-left-radius:0;overflow:hidden;background:rgb(var(--neutral-grad-0))}.messageRow .messageImg .metaLink[data-v-c8f458dc]{background:#000}.messageRow .messageImg .metaLink .metaMessageLink .metaTitle[data-v-c8f458dc]{font-weight:700;font-size:.9em}.messageRow .messageImg .metaLink .metaMessageLink .metaDescription[data-v-c8f458dc]{margin:.5em 0;font-size:.8em}.messageRow .messageImg .metaLink .metaMessageLink .metaImgWrapper[data-v-c8f458dc]{display:block;max-width:300px;-o-object-fit:cover;object-fit:cover}.messageRow .messageImg .metaLink .metaMessageLink .metaImgWrapper img[data-v-c8f458dc]{display:block;width:100%;height:100%}.messageRow .filePreview[data-v-c8f458dc]{width:90%;border:1px solid rgb(var(--neutral-grad-1));overflow:hidden;border-radius:10px;position:relative;margin-top:.5em;height:100px}.messageRow .filePreview .table[data-v-c8f458dc]{height:100%}.messageRow .linkPreview[data-v-c8f458dc]{width:100%}.messageRow .messagePreview[data-v-c8f458dc]{width:100%;overflow:hidden;text-overflow:ellipsis}.messageRow .messagePreview span[data-v-c8f458dc]{word-break:break-all;white-space:normal}.messageRow .fromimagesfiles[data-v-c8f458dc]{order:5;padding:.5em .25em;padding-right:.5em}.messageRow .fromimagesfiles .fromCaption[data-v-c8f458dc]{font-size:.8em}.messageRow .actionsWrapper[data-v-c8f458dc]{order:4;padding-left:.5em;padding-right:1.25em;cursor:pointer;text-align:right;margin-left:auto;display:flex;align-items:center}.messageRow .actionsWrapper i[data-v-c8f458dc]{opacity:.3;transition:.4s}.messageRow .actionsWrapper i.fa-ellipsis-h[data-v-c8f458dc]{font-size:.7em}.messageRow .actionsWrapper i[data-v-c8f458dc]:hover{opacity:1;transition:.4s}.messageRow .statusWrapper[data-v-c8f458dc]{order:5;padding:.5em .25em;opacity:.6}.messageRow .statusWrapper div[data-v-c8f458dc],.messageRow .statusWrapper span[data-v-c8f458dc]{font-size:.7em}.messageRow .sendername[data-v-c8f458dc]{order:3;opacity:.6;overflow:hidden;font-size:.7em}.messageRow .timeWrapper[data-v-c8f458dc]{text-align:left;order:2;padding:0 .25em;line-height:33px;opacity:.6;flex-grow:1}.messageRow .timeWrapper span[data-v-c8f458dc]{white-space:nowrap;font-size:.7em}.messageRow .showreference[data-v-c8f458dc]{cursor:pointer}.messageRow.referenceshowed .messageText[data-v-c8f458dc]{background:rgba(var(--neutral-grad-1),.8)!important;color:rgb(var(--color-txt-gray))!important}.messageRow.referenceshowed .reference[data-v-c8f458dc]{padding-bottom:0!important}.messageRow.referenceshowed .referenceCaption button[data-v-c8f458dc]{width:100%}.messageRow .messageText[data-v-c8f458dc]{margin-left:.25em;background:rgba(var(--neutral-grad-1),.8);color:rgb(var(--text-color));padding:.5em .75em;padding-top:.5em;border-radius:1em;border-bottom-left-radius:0;font-weight:400;white-space:normal;display:flex;flex-direction:column-reverse}.messageRow .messageText .msgtext[data-v-c8f458dc]{text-align:left;white-space:pre-wrap}.messageRow .messageText .reference[data-v-c8f458dc]{height:32px}.messageRow .messageText .from[data-v-c8f458dc],.messageRow .messageText .reference[data-v-c8f458dc]{opacity:.8;border-bottom:1px solid rgb(var(--text-on-bg-ac-color));padding:.5em 0;padding-top:0;margin-bottom:.5em;display:flex}.messageRow .messageText .from .event[data-v-c8f458dc],.messageRow .messageText .reference .event[data-v-c8f458dc]{max-height:38px;text-align:left}.messageRow .messageText .from i[data-v-c8f458dc],.messageRow .messageText .reference i[data-v-c8f458dc]{width:30px;text-align:center;font-size:.8em}.messageRow .messageText .from .referenceCaption[data-v-c8f458dc],.messageRow .messageText .reference .referenceCaption[data-v-c8f458dc]{min-width:28px}.messageRow .messageText .from .fromCaption[data-v-c8f458dc],.messageRow .messageText .from .referenceCaption[data-v-c8f458dc],.messageRow .messageText .reference .fromCaption[data-v-c8f458dc],.messageRow .messageText .reference .referenceCaption[data-v-c8f458dc]{font-size:.8em}.messageRow .messageText .from .sendername[data-v-c8f458dc],.messageRow .messageText .reference .sendername[data-v-c8f458dc]{white-space:nowrap}.messageRow .messageText .from[data-v-c8f458dc] .messagePreview,.messageRow .messageText .reference[data-v-c8f458dc] .messagePreview{font-size:.9em;height:22px}.messageRow .messageText .from[data-v-c8f458dc] .messagePreview .previewMessage,.messageRow .messageText .reference[data-v-c8f458dc] .messagePreview .previewMessage{white-space:nowrap}.messageRow .messageText .edited[data-v-c8f458dc]{font-size:.7em;opacity:.5;text-align:right}.messageRow .messageText div[data-v-c8f458dc]{overflow:hidden;text-overflow:ellipsis}.messageRow .badenctyptedText[data-v-c8f458dc]{margin-left:.5em;color:rgb(var(--text-on-bg-ac-color));padding:.5em .75em;border-radius:1em;background:rgb(var(--neutral-grad-3));word-break:break-all;white-space:normal}.messageRow .badenctyptedText span[data-v-c8f458dc]{font-size:.9em}.messageRow .iconWrapper[data-v-c8f458dc]{width:33px;min-width:33px}.messageRow .withsendername[data-v-c8f458dc]{position:relative}.messageRow .withsendername .sendername[data-v-c8f458dc]{position:absolute;top:100%;margin-top:-5px;left:20px;color:rgb(var(--neutral-grad-3))}.messageRow .withsendername .sendername span[data-v-c8f458dc]{font-size:.7em}.messageRow[my=true][data-v-c8f458dc]{justify-content:flex-end;flex-wrap:wrap}.messageRow[my=true] .iconWrapper[data-v-c8f458dc]{margin-left:.5em;order:1;align-self:flex-start}.messageRow[my=true] .fromimagesfiles[data-v-c8f458dc]{order:-5}.messageRow[my=true] .actionsWrapper[data-v-c8f458dc]{text-align:left;margin-right:auto;margin-left:0;padding-left:.75em;padding-right:.25em;order:-4}.messageRow[my=true] .statusWrapper[data-v-c8f458dc]{order:-3}.messageRow[my=true] .timeWrapper[data-v-c8f458dc]{order:-2;text-align:right}.messageRow[my=true] .messageText[data-v-c8f458dc]{background:rgb(var(--color-bg-ac-bright));color:rgb(var(--text-on-bg-ac-color));text-align:right;border-radius:1em;border-bottom-left-radius:1em;border-top-right-radius:0}.messageRow[my=true] .messageAudio[data-v-c8f458dc]{margin-left:0}.messageRow[my=true] .messageAudio .voiceMessage[data-v-c8f458dc]{justify-content:flex-end}.messageRow.urlpreview[data-v-c8f458dc]{background:rgb(var(--background-total-theme));padding:.5em;padding-left:.25em;padding-bottom:1em}.messageRow.urlpreview .actionsWrapper[data-v-c8f458dc]{padding-right:.5em;padding-left:.5em}.messageRow.allscreen .filePreview[data-v-c8f458dc],.messageRow.allscreen .linkPreview[data-v-c8f458dc],.messageRow.allscreen .messageImg[data-v-c8f458dc],.messageRow.allscreen .metaMsg[data-v-c8f458dc]{order:4;padding-left:.125em}.messageRow.allscreen[my=true] .filePreview[data-v-c8f458dc],.messageRow.allscreen[my=true] .linkPreview[data-v-c8f458dc],.messageRow.allscreen[my=true] .messageImg[data-v-c8f458dc],.messageRow.allscreen[my=true] .metaMsg[data-v-c8f458dc]{order:6}.messageRow.not-preview[data-v-c8f458dc]{align-items:center;justify-content:center;color:rgb(var(--neutral-grad-3));text-align:center;flex-direction:column-reverse}.messageRow.not-preview .messageNoticeWithLink[data-v-c8f458dc]{color:#004680}", ""]);
+// Exports
+module.exports = exports;
+
+
+/***/ }),
+
 /***/ "3094":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"3c23d37e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/chats/assets/icon.vue?vue&type=template&id=252fb3ae&scoped=true&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"chatIcon",class:{ unknowngroupusers: _vm.unknowngroupusers }},[_c('userspic',{key:_vm.allnotifications,attrs:{"slidesPerView":_vm.slidesPerView,"users":_vm.usersinfo,"status":_vm.status,"unseen":_vm.unseen,"single":_vm.singleAvatar}}),(_vm.unknowngroupusers)?_c('div',{staticClass:"unknowngroupusersicon"},[_c('i',{staticClass:"fas fa-question"})]):_vm._e()],1)}
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/chats/assets/icon.vue?vue&type=template&id=332740e2&scoped=true&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"chatIcon",class:{ unknowngroupusers: _vm.unknowngroupusers }},[(_vm.groupAvatar)?_c('div',{staticClass:"chatGroupIcon"},[_c('img',{attrs:{"src":_vm.groupAvatar,"alt":""}})]):_vm._e(),_c('userspic',{key:_vm.allnotifications,class:{ opacity: _vm.groupAvatar },attrs:{"slidesPerView":_vm.slidesPerView,"users":_vm.usersinfo,"status":_vm.status,"unseen":_vm.unseen,"single":_vm.singleAvatar}}),(_vm.unknowngroupusers)?_c('div',{staticClass:"unknowngroupusersicon"},[_c('i',{staticClass:"fas fa-question"})]):_vm._e()],1)}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/chats/assets/icon.vue?vue&type=template&id=252fb3ae&scoped=true&
+// CONCATENATED MODULE: ./src/components/chats/assets/icon.vue?vue&type=template&id=332740e2&scoped=true&
 
 // EXTERNAL MODULE: ./src/application/functions.js
 var functions = __webpack_require__("3139");
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/chats/assets/icon.vue?vue&type=script&lang=js&
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -12591,6 +12647,12 @@ var functions = __webpack_require__("3139");
     },
     unknowngroupusers: function () {
       return this.core.mtrx.kit.unknowngroupusers(this.m_chat);
+    },
+    groupAvatar: function () {
+      var _this$m_chat$currentS;
+
+      const avatar = (_this$m_chat$currentS = this.m_chat.currentState.getStateEvents("m.room.avatar")[0]) === null || _this$m_chat$currentS === void 0 ? void 0 : _this$m_chat$currentS.event.content.avatarUrl;
+      return avatar !== "" ? avatar : "";
     }
   }
 });
@@ -12605,7 +12667,7 @@ var componentNormalizer = __webpack_require__("2877");
 
 function injectStyles (context) {
   
-  var style0 = __webpack_require__("f7d0")
+  var style0 = __webpack_require__("a071")
 if (style0.__inject__) style0.__inject__(context)
 
 }
@@ -12618,7 +12680,7 @@ var component = Object(componentNormalizer["a" /* default */])(
   staticRenderFns,
   false,
   injectStyles,
-  "252fb3ae",
+  "332740e2",
   null
   ,true
 )
@@ -15214,7 +15276,7 @@ var retry = function (_function, clbk, time, totaltime) {
   if (!time) time = 20;
   var totalTimeCounter = 0;
   var interval = setInterval(function () {
-    if (_function() || totaltime && totaltime >= totalTimeCounter) {
+    if (_function() || totaltime && totaltime <= totalTimeCounter) {
       clearInterval(interval);
       if (clbk) clbk();
     }
@@ -15779,7 +15841,7 @@ f.fetchLocal = function (url) {
     };
 
     xhr.onerror = function (e) {
-      console.error(e);
+      console.error(e, url);
       reject(new TypeError('Local request failed'));
     };
 
@@ -15863,8 +15925,13 @@ f.saveFileCordova = function (file, name, clbk, todownloads) {
   }
 };
 
+function iOS() {
+  return ['iPad Simulator', 'iPhone Simulator', 'iPod Simulator', 'iPad', 'iPhone', 'iPod'].includes(navigator.platform) // iPad on iOS 13 detection
+  || navigator.userAgent.includes("Mac") && "ontouchend" in document;
+}
+
 f.isios = function () {
-  return window.cordova && window.device && f.deep(window, 'device.platform') == 'iOS' || (navigator || {}).platform && /iPad|iPhone|iPod/.test(navigator.platform || '');
+  return window.cordova && window.device && deep(window, 'device.platform') == 'iOS' || iOS();
 };
 
 f.now = function (date) {
@@ -24096,20 +24163,34 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "40b6":
+/***/ "4072":
+/***/ (function(module, exports, __webpack_require__) {
+
+// Imports
+var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
+exports = ___CSS_LOADER_API_IMPORT___(false);
+// Module
+exports.push([module.i, ".nameofchat[data-v-72a9c575]{white-space:nowrap}.nameline[data-v-72a9c575]{display:flex;align-items:flex-end;justify-content:center}.iconGroup[data-v-72a9c575]{font-size:.4em;width:16px;text-align:center;height:16px;line-height:16px;border-radius:8px;background:rgb(var(--neutral-grad-2));margin-right:.5em;margin-block:.25em}.iconGroup i[data-v-72a9c575]{color:rgb(var(--neutral-grad-1))}", ""]);
+// Exports
+module.exports = exports;
+
+
+/***/ }),
+
+/***/ "40af":
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__("1e35");
+var content = __webpack_require__("57d8");
 if(content.__esModule) content = content.default;
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add CSS to Shadow Root
 var add = __webpack_require__("35d6").default
 module.exports.__inject__ = function (shadowRoot) {
-  add("43a0aef8", content, shadowRoot)
+  add("536929a6", content, shadowRoot)
 };
 
 /***/ }),
@@ -25385,7 +25466,7 @@ module.exports = __webpack_require__("faa1").EventEmitter;
 
 "use strict";
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"3c23d37e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/user/view/pnuser/index.vue?vue&type=template&id=d18e99d2&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/user/view/pnuser/index.vue?vue&type=template&id=d18e99d2&scoped=true&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:{'isBlocked': _vm.blocked},attrs:{"id":"userViewPnuser"}},[(_vm.userinfo.keys && _vm.userinfo.keys.length)?_c('div',{staticClass:"haskeys"},[_c('i',{staticClass:"fas fa-lock"})]):_vm._e(),_c('div',{staticClass:"name"},[_c('span',[_vm._v(" "+_vm._s(_vm.userinfo.name)+" ")])]),_c('div',{staticClass:"imageWrapper"},[_c('userpic',{attrs:{"mode":"Contact","userinfo":_vm.userinfo,"blocked":_vm.blocked}})],1),(_vm.activeuser.id != _vm.userinfo.id)?_c('div',{staticClass:"gotoprofile"},[_c('button',{staticClass:"button small black rounded",on:{"click":_vm.gotopocketnetprofile}},[_vm._v(" "+_vm._s(_vm.$t("button.goToPocketnetProfile"))+" ")])]):_vm._e(),_c('div',{staticClass:"info"},[(_vm.userinfo.source)?_c('div',{staticClass:"infoPart"},[_c('div',{staticClass:"label"},[_c('span',[_vm._v(" "+_vm._s(_vm.$t("caption.followers"))+" ")])]),_c('div',{staticClass:"value"},[_c('span',[_vm._v(_vm._s(_vm.userinfo.source.subscribers_count))])])]):_vm._e(),(_vm.userinfo.source &&  _vm.userinfo.source.reputation.toFixed)?_c('div',{staticClass:"infoPart"},[_c('div',{staticClass:"label"},[_c('span',[_vm._v(" "+_vm._s(_vm.$t("caption.reputation"))+" ")])]),_c('div',{staticClass:"value"},[_c('span',[_vm._v(_vm._s(_vm.userinfo.source.reputation.toFixed(1)))])])]):_vm._e(),(_vm.userinfo.source)?_c('div',{staticClass:"infoPart"},[_c('div',{staticClass:"label"},[_c('span',[_vm._v(" "+_vm._s(_vm.$t("caption.following"))+" ")])]),_c('div',{staticClass:"value"},[_c('span',[_vm._v(_vm._s(_vm.userinfo.source.subscribes_count))])])]):_vm._e()])])}
 var staticRenderFns = []
 
@@ -25598,18 +25679,6 @@ function RoomSummary(roomId, info) {
 
 /***/ }),
 
-/***/ "441c":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_20528478_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("56c6");
-/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_20528478_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_20528478_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_20528478_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_20528478_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-
-
-/***/ }),
-
 /***/ "44ad":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -25629,6 +25698,24 @@ module.exports = fails(function () {
   return classof(it) == 'String' ? split(it, '') : $Object(it);
 } : $Object;
 
+
+/***/ }),
+
+/***/ "44c8":
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__("b0be");
+if(content.__esModule) content = content.default;
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add CSS to Shadow Root
+var add = __webpack_require__("35d6").default
+module.exports.__inject__ = function (shadowRoot) {
+  add("34ec60f1", content, shadowRoot)
+};
 
 /***/ }),
 
@@ -25919,7 +26006,7 @@ module.exports = JSON.parse("{\"name\":\"axios\",\"version\":\"0.21.4\",\"descri
 
 "use strict";
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"3c23d37e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/editedplugins/vue-page-transition/src/components/VuePageTransition.vue?vue&type=template&id=108c57b8&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/editedplugins/vue-page-transition/src/components/VuePageTransition.vue?vue&type=template&id=108c57b8&scoped=true&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('transition',{attrs:{"name":_vm.transition,"mode":_vm.mode}},[_vm._t("default")],2),_c('div',{staticClass:"overlay-top"}),_c('div',{staticClass:"overlay-right"}),_c('div',{staticClass:"overlay-bottom"}),_c('div',{staticClass:"overlay-left"})],1)}
 var staticRenderFns = []
 
@@ -26116,24 +26203,6 @@ exports.push([module.i, "", ""]);
 // Exports
 module.exports = exports;
 
-
-/***/ }),
-
-/***/ "4c38":
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__("ba3b");
-if(content.__esModule) content = content.default;
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add CSS to Shadow Root
-var add = __webpack_require__("35d6").default
-module.exports.__inject__ = function (shadowRoot) {
-  add("0faa4014", content, shadowRoot)
-};
 
 /***/ }),
 
@@ -27812,15 +27881,21 @@ module.exports = __webpack_require__("0ac3").PassThrough
 
 /***/ }),
 
-/***/ "51f2":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ "51c5":
+/***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_715df6ec_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("6cfe");
-/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_715df6ec_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_715df6ec_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_715df6ec_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_715df6ec_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+// style-loader: Adds some css to the DOM by adding a <style> tag
 
+// load the styles
+var content = __webpack_require__("9dd7");
+if(content.__esModule) content = content.default;
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add CSS to Shadow Root
+var add = __webpack_require__("35d6").default
+module.exports.__inject__ = function (shadowRoot) {
+  add("a806657a", content, shadowRoot)
+};
 
 /***/ }),
 
@@ -27940,24 +28015,6 @@ if(content.locals) module.exports = content.locals;
 var add = __webpack_require__("35d6").default
 module.exports.__inject__ = function (shadowRoot) {
   add("3df99155", content, shadowRoot)
-};
-
-/***/ }),
-
-/***/ "5310":
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__("6d9d");
-if(content.__esModule) content = content.default;
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add CSS to Shadow Root
-var add = __webpack_require__("35d6").default
-module.exports.__inject__ = function (shadowRoot) {
-  add("0c7a8933", content, shadowRoot)
 };
 
 /***/ }),
@@ -28162,24 +28219,6 @@ var store = __webpack_require__("c6cd");
 
 /***/ }),
 
-/***/ "56c6":
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__("9ea1");
-if(content.__esModule) content = content.default;
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add CSS to Shadow Root
-var add = __webpack_require__("35d6").default
-module.exports.__inject__ = function (shadowRoot) {
-  add("68872f4d", content, shadowRoot)
-};
-
-/***/ }),
-
 /***/ "56ef":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -28228,14 +28267,14 @@ module.exports = function (argument) {
 
 /***/ }),
 
-/***/ "57fa":
+/***/ "57d8":
 /***/ (function(module, exports, __webpack_require__) {
 
 // Imports
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, ".actions[data-v-715df6ec]{padding-top:9em}.connect[data-v-715df6ec]{padding-top:2em}.connect[data-v-715df6ec] .previewWrapper{display:block;max-width:70%;margin:0 auto;padding:2em 0}.connect[data-v-715df6ec] .iconWrapper{margin:0 auto}.connect[data-v-715df6ec] .infoWrapper{padding:0}.connect .connectCaption[data-v-715df6ec]{max-width:70%;margin:0 auto}.connect .connectCaption span[data-v-715df6ec]{font-size:.8em}#userUnauthorized[data-v-715df6ec]{height:100%}#userUnauthorized.bin[data-v-715df6ec]{transition:.3s}#userUnauthorized.bin.minimized .wrapper[data-v-715df6ec]{top:60px;bottom:100px}#userUnauthorized.bin.minimized[data-v-715df6ec]:not(.active){width:44px}#userUnauthorized.bin.minimized:not(.active) .actions[data-v-715df6ec]{display:none}#userUnauthorized.bin.active .wrapper[data-v-715df6ec]{width:344px;transform:translateX(-300px)}.table[data-v-715df6ec]{height:100%}.table .cell[data-v-715df6ec]{vertical-align:middle}", ""]);
+exports.push([module.i, ".opacity[data-v-332740e2]{opacity:0}.chatIcon[data-v-332740e2]{width:100%;position:relative}.unknowngroupusersicon[data-v-332740e2]{position:absolute;left:0;top:0;bottom:0;right:0;font-size:.7em;display:flex;justify-content:center;align-items:center;color:#fff;text-shadow:0 0 2px rgba(0,11,58,.714),0 0 3px rgba(0,8,43,.519)}.unknowngroupusers .bgimage[data-v-332740e2]{transform:scale(.7)}.chatGroupIcon img[data-v-332740e2]{width:100%;height:100%;border-radius:50%;-o-object-fit:cover;object-fit:cover;-o-object-position:50% 50%;object-position:50% 50%;position:absolute;top:0;z-index:100}", ""]);
 // Exports
 module.exports = exports;
 
@@ -28681,21 +28720,21 @@ var addStylesShadow = __webpack_require__("35d6");
 // EXTERNAL MODULE: ./node_modules/vue-loader/lib/runtime/componentNormalizer.js
 var componentNormalizer = __webpack_require__("2877");
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"3c23d37e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App.vue?vue&type=template&id=6be074bd&shadow
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App.vue?vue&type=template&id=01d24e5e&shadow
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"app",attrs:{"id":"matrix-root","theme":_vm.theme}},[_c('div',{staticClass:"rootcontent",class:{pip: _vm.pip, 'bin' : _vm.pocketnet, 'fix' : _vm.pocketnet, 'bout' : !_vm.pocketnet, minimized: _vm.minimized, active: _vm.active, mobile: _vm.mobile, unselect: _vm.unselect}},[_c('div',{staticClass:"chatwrapper",on:{"click":_vm.iteraction}},[_c('div',[(_vm.closebybg)?_c('div',{staticClass:"backface",on:{"click":_vm.hide}}):_vm._e(),_c('MainWrapper'),(_vm.globalpreloader)?_c('preloader'):_vm._e(),_c('transition',{attrs:{"name":"fade"}},[(_vm.unauthorized)?_c('div',{staticClass:"fixedallwrapper likeoffline"},[_c('userUnauthorized')],1):_vm._e()])],1)])]),_c('div',{attrs:{"hidden":"","id":"sprite-plyr"}},[_c('svg',{attrs:{"xmlns":"http://www.w3.org/2000/svg","xmlns:xlink":"http://www.w3.org/1999/xlink"}},[_c('symbol',{attrs:{"id":"plyr-airplay"}},[_c('path',{attrs:{"d":"M16 1H2a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3v-2H3V3h12v8h-2v2h3a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1z"}}),_c('path',{attrs:{"d":"M4 17h10l-5-6z"}})]),_c('symbol',{attrs:{"id":"plyr-captions-off"}},[_c('path',{attrs:{"d":"M1 1c-.6 0-1 .4-1 1v11c0 .6.4 1 1 1h4.6l2.7 2.7c.2.2.4.3.7.3.3 0 .5-.1.7-.3l2.7-2.7H17c.6 0 1-.4 1-1V2c0-.6-.4-1-1-1H1zm4.52 10.15c1.99 0 3.01-1.32 3.28-2.41l-1.29-.39c-.19.66-.78 1.45-1.99 1.45-1.14 0-2.2-.83-2.2-2.34 0-1.61 1.12-2.37 2.18-2.37 1.23 0 1.78.75 1.95 1.43l1.3-.41C8.47 4.96 7.46 3.76 5.5 3.76c-1.9 0-3.61 1.44-3.61 3.7 0 2.26 1.65 3.69 3.63 3.69zm7.57 0c1.99 0 3.01-1.32 3.28-2.41l-1.29-.39c-.19.66-.78 1.45-1.99 1.45-1.14 0-2.2-.83-2.2-2.34 0-1.61 1.12-2.37 2.18-2.37 1.23 0 1.78.75 1.95 1.43l1.3-.41c-.28-1.15-1.29-2.35-3.25-2.35-1.9 0-3.61 1.44-3.61 3.7 0 2.26 1.65 3.69 3.63 3.69z","fill-rule":"evenodd","fill-opacity":".5"}})]),_c('symbol',{attrs:{"id":"plyr-captions-on"}},[_c('path',{attrs:{"d":"M1 1c-.6 0-1 .4-1 1v11c0 .6.4 1 1 1h4.6l2.7 2.7c.2.2.4.3.7.3.3 0 .5-.1.7-.3l2.7-2.7H17c.6 0 1-.4 1-1V2c0-.6-.4-1-1-1H1zm4.52 10.15c1.99 0 3.01-1.32 3.28-2.41l-1.29-.39c-.19.66-.78 1.45-1.99 1.45-1.14 0-2.2-.83-2.2-2.34 0-1.61 1.12-2.37 2.18-2.37 1.23 0 1.78.75 1.95 1.43l1.3-.41C8.47 4.96 7.46 3.76 5.5 3.76c-1.9 0-3.61 1.44-3.61 3.7 0 2.26 1.65 3.69 3.63 3.69zm7.57 0c1.99 0 3.01-1.32 3.28-2.41l-1.29-.39c-.19.66-.78 1.45-1.99 1.45-1.14 0-2.2-.83-2.2-2.34 0-1.61 1.12-2.37 2.18-2.37 1.23 0 1.78.75 1.95 1.43l1.3-.41c-.28-1.15-1.29-2.35-3.25-2.35-1.9 0-3.61 1.44-3.61 3.7 0 2.26 1.65 3.69 3.63 3.69z","fill-rule":"evenodd"}})]),_c('symbol',{attrs:{"id":"plyr-download"}},[_c('path',{attrs:{"d":"M9 13c.3 0 .5-.1.7-.3L15.4 7 14 5.6l-4 4V1H8v8.6l-4-4L2.6 7l5.7 5.7c.2.2.4.3.7.3zm-7 2h14v2H2z"}})]),_c('symbol',{attrs:{"id":"plyr-enter-fullscreen"}},[_c('path',{attrs:{"d":"M10 3h3.6l-4 4L11 8.4l4-4V8h2V1h-7zM7 9.6l-4 4V10H1v7h7v-2H4.4l4-4z"}})]),_c('symbol',{attrs:{"id":"plyr-exit-fullscreen"}},[_c('path',{attrs:{"d":"M1 12h3.6l-4 4L2 17.4l4-4V17h2v-7H1zM16 .6l-4 4V1h-2v7h7V6h-3.6l4-4z"}})]),_c('symbol',{attrs:{"id":"plyr-fast-forward"}},[_c('path',{attrs:{"d":"M7.875 7.171L0 1v16l7.875-6.171V17L18 9 7.875 1z"}})]),_c('symbol',{attrs:{"id":"plyr-logo-vimeo"}},[_c('path',{attrs:{"d":"M17 5.3c-.1 1.6-1.2 3.7-3.3 6.4-2.2 2.8-4 4.2-5.5 4.2-.9 0-1.7-.9-2.4-2.6C5 10.9 4.4 6 3 6c-.1 0-.5.3-1.2.8l-.8-1c.8-.7 3.5-3.4 4.7-3.5 1.2-.1 2 .7 2.3 2.5.3 2 .8 6.1 1.8 6.1.9 0 2.5-3.4 2.6-4 .1-.9-.3-1.9-2.3-1.1.8-2.6 2.3-3.8 4.5-3.8 1.7.1 2.5 1.2 2.4 3.3z"}})]),_c('symbol',{attrs:{"id":"plyr-logo-youtube"}},[_c('path',{attrs:{"d":"M16.8 5.8c-.2-1.3-.8-2.2-2.2-2.4C12.4 3 9 3 9 3s-3.4 0-5.6.4C2 3.6 1.3 4.5 1.2 5.8 1 7.1 1 9 1 9s0 1.9.2 3.2c.2 1.3.8 2.2 2.2 2.4C5.6 15 9 15 9 15s3.4 0 5.6-.4c1.4-.3 2-1.1 2.2-2.4.2-1.3.2-3.2.2-3.2s0-1.9-.2-3.2zM7 12V6l5 3-5 3z"}})]),_c('symbol',{attrs:{"id":"plyr-muted"}},[_c('path',{attrs:{"d":"M12.4 12.5l2.1-2.1 2.1 2.1 1.4-1.4L15.9 9 18 6.9l-1.4-1.4-2.1 2.1-2.1-2.1L11 6.9 13.1 9 11 11.1zM3.786 6.008H.714C.286 6.008 0 6.31 0 6.76v4.512c0 .452.286.752.714.752h3.072l4.071 3.858c.5.3 1.143 0 1.143-.602V2.752c0-.601-.643-.977-1.143-.601L3.786 6.008z"}})]),_c('symbol',{attrs:{"id":"plyr-pause"}},[_c('path',{attrs:{"d":"M6 1H3c-.6 0-1 .4-1 1v14c0 .6.4 1 1 1h3c.6 0 1-.4 1-1V2c0-.6-.4-1-1-1zm6 0c-.6 0-1 .4-1 1v14c0 .6.4 1 1 1h3c.6 0 1-.4 1-1V2c0-.6-.4-1-1-1h-3z"}})]),_c('symbol',{attrs:{"id":"plyr-pip"}},[_c('path',{attrs:{"d":"M13.293 3.293L7.022 9.564l1.414 1.414 6.271-6.271L17 7V1h-6z"}}),_c('path',{attrs:{"d":"M13 15H3V5h5V3H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-6h-2v5z"}})]),_c('symbol',{attrs:{"id":"plyr-play"}},[_c('path',{attrs:{"d":"M15.562 8.1L3.87.225c-.818-.562-1.87 0-1.87.9v15.75c0 .9 1.052 1.462 1.87.9L15.563 9.9c.584-.45.584-1.35 0-1.8z"}})]),_c('symbol',{attrs:{"id":"plyr-restart"}},[_c('path',{attrs:{"d":"M9.7 1.2l.7 6.4 2.1-2.1c1.9 1.9 1.9 5.1 0 7-.9 1-2.2 1.5-3.5 1.5-1.3 0-2.6-.5-3.5-1.5-1.9-1.9-1.9-5.1 0-7 .6-.6 1.4-1.1 2.3-1.3l-.6-1.9C6 2.6 4.9 3.2 4 4.1 1.3 6.8 1.3 11.2 4 14c1.3 1.3 3.1 2 4.9 2 1.9 0 3.6-.7 4.9-2 2.7-2.7 2.7-7.1 0-9.9L16 1.9l-6.3-.7z"}})]),_c('symbol',{attrs:{"id":"plyr-rewind"}},[_c('path',{attrs:{"d":"M10.125 1L0 9l10.125 8v-6.171L18 17V1l-7.875 6.171z"}})]),_c('symbol',{attrs:{"id":"plyr-settings"}},[_c('path',{attrs:{"d":"M16.135 7.784a2 2 0 0 1-1.23-2.969c.322-.536.225-.998-.094-1.316l-.31-.31c-.318-.318-.78-.415-1.316-.094a2 2 0 0 1-2.969-1.23C10.065 1.258 9.669 1 9.219 1h-.438c-.45 0-.845.258-.997.865a2 2 0 0 1-2.969 1.23c-.536-.322-.999-.225-1.317.093l-.31.31c-.318.318-.415.781-.093 1.317a2 2 0 0 1-1.23 2.969C1.26 7.935 1 8.33 1 8.781v.438c0 .45.258.845.865.997a2 2 0 0 1 1.23 2.969c-.322.536-.225.998.094 1.316l.31.31c.319.319.782.415 1.316.094a2 2 0 0 1 2.969 1.23c.151.607.547.865.997.865h.438c.45 0 .845-.258.997-.865a2 2 0 0 1 2.969-1.23c.535.321.997.225 1.316-.094l.31-.31c.318-.318.415-.781.094-1.316a2 2 0 0 1 1.23-2.969c.607-.151.865-.547.865-.997v-.438c0-.451-.26-.846-.865-.997zM9 12a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"}})]),_c('symbol',{attrs:{"id":"plyr-volume"}},[_c('path',{attrs:{"d":"M15.6 3.3c-.4-.4-1-.4-1.4 0-.4.4-.4 1 0 1.4C15.4 5.9 16 7.4 16 9c0 1.6-.6 3.1-1.8 4.3-.4.4-.4 1 0 1.4.2.2.5.3.7.3.3 0 .5-.1.7-.3C17.1 13.2 18 11.2 18 9s-.9-4.2-2.4-5.7z"}}),_c('path',{attrs:{"d":"M11.282 5.282a.909.909 0 0 0 0 1.316c.735.735.995 1.458.995 2.402 0 .936-.425 1.917-.995 2.487a.909.909 0 0 0 0 1.316c.145.145.636.262 1.018.156a.725.725 0 0 0 .298-.156C13.773 11.733 14.13 10.16 14.13 9c0-.17-.002-.34-.011-.51-.053-.992-.319-2.005-1.522-3.208a.909.909 0 0 0-1.316 0zm-7.496.726H.714C.286 6.008 0 6.31 0 6.76v4.512c0 .452.286.752.714.752h3.072l4.071 3.858c.5.3 1.143 0 1.143-.602V2.752c0-.601-.643-.977-1.143-.601L3.786 6.008z"}})])])])])}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/App.vue?vue&type=template&id=6be074bd&shadow
+// CONCATENATED MODULE: ./src/App.vue?vue&type=template&id=01d24e5e&shadow
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"3c23d37e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/main/index.vue?vue&type=template&id=c44504aa&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/main/index.vue?vue&type=template&id=c44504aa&scoped=true&
 var mainvue_type_template_id_c44504aa_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"main-wrapper",class:{minimized: _vm.minimized, active: _vm.active}},[(!_vm.mobile)?_c('vue-page-transition',{attrs:{"name":"fade-in-right"}},[_c('router-view')],1):_c('router-view'),(_vm.showFooter)?_c('FooterChat'):_vm._e(),(_vm.gallery)?_c('gallery',{attrs:{"images":_vm.gallery.images,"index":_vm.gallery.index},on:{"close":_vm.closeGallery}}):_vm._e()],1)}
 var mainvue_type_template_id_c44504aa_scoped_true_staticRenderFns = []
 
 
 // CONCATENATED MODULE: ./src/components/main/index.vue?vue&type=template&id=c44504aa&scoped=true&
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"3c23d37e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/layouts/footerChat/index.vue?vue&type=template&id=517e1e1f&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/layouts/footerChat/index.vue?vue&type=template&id=517e1e1f&scoped=true&
 var footerChatvue_type_template_id_517e1e1f_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"footer-chat",class:{'bin' : _vm.pocketnet, 'bout' : !_vm.pocketnet, minimized: _vm.minimized, fix : _vm.pocketnet, active: _vm.active}},[_c('div',{staticClass:"work"},[_c('div',{staticClass:"menuItems"},[_c('div',{staticClass:"menuItem bottom-nav__icon",class:{active : _vm.activecontacts},on:{"click":function($event){return _vm.gotona('/contacts')}}},[_vm._m(0),_c('div',{staticClass:"label"},[_vm._v(" "+_vm._s(_vm.$t("caption.contacts"))+" ")])]),_c('div',{staticClass:"menuItem bottom-nav__icon",class:{active : _vm.activechats},on:{"click":function($event){return _vm.gotona('/chats')}}},[_vm._m(1),_c('div',{staticClass:"label"},[_vm._v(" "+_vm._s(_vm.$t("caption.chats"))+" ")]),(_vm.notificationCount)?_c('div',{staticClass:"unseen chatMessages"},[_vm._v(" "+_vm._s(_vm.notificationCount > 99 ? '99' : _vm.notificationCount)+" ")]):_vm._e()]),(!_vm.pocketnet)?_c('div',{staticClass:"menuItem bottom-nav__icon",class:{active : _vm.activesettings},on:{"click":function($event){return _vm.gotona('/settings')}}},[_vm._m(2),_c('div',{staticClass:"label"},[_vm._v(" "+_vm._s(_vm.$t("caption.settings"))+" ")])]):_vm._e()])])])}
 var footerChatvue_type_template_id_517e1e1f_scoped_true_staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"icon"},[_c('i',{staticClass:"fas fa-user-friends"})])},function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"icon"},[_c('i',{staticClass:"fas fa-comments"})])},function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"icon"},[_c('i',{staticClass:"fas fa-cog"})])}]
 
@@ -28778,7 +28817,7 @@ var component = Object(componentNormalizer["a" /* default */])(
 )
 
 /* harmony default export */ var footerChat = (component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"3c23d37e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/gallery/index.vue?vue&type=template&id=d609e530&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/gallery/index.vue?vue&type=template&id=d609e530&
 var galleryvue_type_template_id_d609e530_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return (_vm.images && _vm.images.length)?_c('v-photoswipe',{attrs:{"isOpen":_vm.isOpen,"items":_vm.images,"options":_vm.options},on:{"close":_vm.close,"sharecordova":_vm.sharecordova}}):_vm._e()}
 var galleryvue_type_template_id_d609e530_staticRenderFns = []
 
@@ -28940,17 +28979,28 @@ var main_component = Object(componentNormalizer["a" /* default */])(
 )
 
 /* harmony default export */ var main = (main_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"3c23d37e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/user/unauthorized/index.vue?vue&type=template&id=715df6ec&scoped=true&
-var unauthorizedvue_type_template_id_715df6ec_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:{'bin' : _vm.pocketnet, 'fix' : _vm.pocketnet, 'bout' : !_vm.pocketnet, minimized: _vm.minimized, active: _vm.active},attrs:{"id":"userUnauthorized"}},[_c('div',{staticClass:"table"},[_c('div',{staticClass:"cell"},[_c('div',{staticClass:"wrapper"},[(!_vm.loading)?_c('div',[(_vm.unauthorized == 'unauthorized')?_c('div',[_vm._m(0),_c('div',{staticClass:"label"},[_vm._v(" Unauthorized user ")])]):_vm._e(),(_vm.unauthorized == 'unknown')?_c('div',[_vm._m(1),_c('div',{staticClass:"label"},[_vm._v(" "+_vm._s(_vm.$t('caption.accNotFound'))+" ")]),(_vm.connect && _vm.usersinfo[_vm.connect])?_c('div',{staticClass:"connect"},[_vm._m(2),_c('preview',{attrs:{"contact":_vm.usersinfo[_vm.connect],"mode":"mini"}})],1):_vm._e(),(_vm.joinroom && !_vm.connect)?_c('div',{staticClass:"connect joinroom"},[_vm._m(3)]):_vm._e()]):_vm._e(),_c('div',{staticClass:"actions"},[_c('button',{staticClass:"button small",on:{"click":_vm.refresh}},[_vm._v(" Refresh "),_c('i',{staticClass:"fas fa-sync"})]),(_vm.mobile)?_c('button',{staticClass:"button small ghost",on:{"click":_vm.movefromchat}},[_c('i',{staticClass:"fas fa-arrow-right"})]):_vm._e()])]):_c('div',[_c('i',{staticClass:"fas fa-spinner fa-spin"})])])])])])}
-var unauthorizedvue_type_template_id_715df6ec_scoped_true_staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"icon"},[_c('i',{staticClass:"fas fa-user-slash"})])},function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"icon"},[_c('i',{staticClass:"fas fa-spinner fa-spin"})])},function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"connectCaption"},[_c('span',[_vm._v(" When registration is complete, you will be connected to ")])])},function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"connectCaption"},[_c('span',[_vm._v(" When registration is complete, you will be redirect to public room ")])])}]
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/user/unauthorized/index.vue?vue&type=template&id=16157ecb&scoped=true&
+var unauthorizedvue_type_template_id_16157ecb_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:{'bin' : _vm.pocketnet, 'fix' : _vm.pocketnet, 'bout' : !_vm.pocketnet, minimized: _vm.minimized, active: _vm.active},attrs:{"id":"userUnauthorized"}},[_c('div',{staticClass:"table"},[_c('div',{staticClass:"cell"},[_c('div',{staticClass:"wrapper"},[(!_vm.loading)?_c('div',[(_vm.unauthorized == 'unauthorized')?_c('div',[_vm._m(0),_c('div',{staticClass:"label"},[_vm._v(" User unauthorized ")])]):_vm._e(),(_vm.unauthorized == 'deleted')?_c('div',[_vm._m(1),_c('div',{staticClass:"label"},[_vm._v(" User deleted ")])]):_vm._e(),(_vm.unauthorized == 'unknown')?_c('div',[_vm._m(2),_c('div',{staticClass:"label"},[_vm._v(" "+_vm._s(_vm.$t('caption.accNotFound'))+" ")]),(_vm.connect && _vm.usersinfo[_vm.connect])?_c('div',{staticClass:"connect"},[_vm._m(3),_c('preview',{attrs:{"contact":_vm.usersinfo[_vm.connect],"mode":"mini"}})],1):_vm._e(),(_vm.joinroom && !_vm.connect)?_c('div',{staticClass:"connect joinroom"},[_vm._m(4)]):_vm._e()]):_vm._e(),_c('div',{staticClass:"actions"},[_c('button',{staticClass:"button small",on:{"click":_vm.refresh}},[_vm._v(" Refresh "),_c('i',{staticClass:"fas fa-sync"})]),(_vm.mobile)?_c('button',{staticClass:"button small ghost",on:{"click":_vm.movefromchat}},[_c('i',{staticClass:"fas fa-arrow-right"})]):_vm._e()])]):_c('div',[_c('i',{staticClass:"fas fa-spinner fa-spin"})])])])])])}
+var unauthorizedvue_type_template_id_16157ecb_scoped_true_staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"icon"},[_c('i',{staticClass:"fas fa-user-slash"})])},function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"icon"},[_c('i',{staticClass:"fas fa-user-slash"})])},function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"icon"},[_c('i',{staticClass:"fas fa-spinner fa-spin"})])},function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"connectCaption"},[_c('span',[_vm._v(" When registration is complete, you will be connected to ")])])},function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"connectCaption"},[_c('span',[_vm._v(" When registration is complete, you will be redirect to public room ")])])}]
 
 
-// CONCATENATED MODULE: ./src/components/user/unauthorized/index.vue?vue&type=template&id=715df6ec&scoped=true&
+// CONCATENATED MODULE: ./src/components/user/unauthorized/index.vue?vue&type=template&id=16157ecb&scoped=true&
 
 // EXTERNAL MODULE: ./src/components/contacts/preview/index.vue + 4 modules
 var preview = __webpack_require__("92a6");
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/user/unauthorized/index.vue?vue&type=script&lang=js&
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -29170,7 +29220,7 @@ var preview = __webpack_require__("92a6");
 
 function unauthorized_injectStyles (context) {
   
-  var style0 = __webpack_require__("51f2")
+  var style0 = __webpack_require__("c412")
 if (style0.__inject__) style0.__inject__(context)
 
 }
@@ -29179,11 +29229,11 @@ if (style0.__inject__) style0.__inject__(context)
 
 var unauthorized_component = Object(componentNormalizer["a" /* default */])(
   user_unauthorizedvue_type_script_lang_js_,
-  unauthorizedvue_type_template_id_715df6ec_scoped_true_render,
-  unauthorizedvue_type_template_id_715df6ec_scoped_true_staticRenderFns,
+  unauthorizedvue_type_template_id_16157ecb_scoped_true_render,
+  unauthorizedvue_type_template_id_16157ecb_scoped_true_staticRenderFns,
   false,
   unauthorized_injectStyles,
-  "715df6ec",
+  "16157ecb",
   null
   ,true
 )
@@ -29260,7 +29310,8 @@ var store = new vuex_esm["a" /* default */].Store({
     lastroom: null,
     dontreadreceipts: false,
     voicerecording: false,
-    deletedrooms: {} //share : {url : 'https://yandex.ru/'} //null
+    deletedrooms: {},
+    pkoindisabled: false //share : {url : 'https://yandex.ru/'} //null
 
   },
   getters: {
@@ -29346,6 +29397,10 @@ var store = new vuex_esm["a" /* default */].Store({
       if (mv) {
         mv.small();
       }
+    },
+
+    pkoindisabled(state, value) {
+      state.pkoindisabled = value && value == 'true' ? true : false;
     },
 
     wasunhidden(state, value) {
@@ -29635,10 +29690,16 @@ var store = new vuex_esm["a" /* default */].Store({
 
     GALLERY(state, v) {
       state.gallery = v || null;
-      var fullscreenmode = functions["a" /* default */].deep(window, 'window.POCKETNETINSTANCE.mobile.fullscreenmode');
+      var fu = null;
 
-      if (fullscreenmode) {
-        fullscreenmode(v);
+      if (v) {
+        fu = functions["a" /* default */].deep(window, 'window.POCKETNETINSTANCE.mobile.statusbar.gallerybackground');
+      } else {
+        fu = functions["a" /* default */].deep(window, 'window.POCKETNETINSTANCE.mobile.statusbar.background');
+      }
+
+      if (fu) {
+        fu();
       }
     },
 
@@ -32912,7 +32973,7 @@ const router = new vue_router_esm({
   routes: [{
     path: '/contacts',
     name: 'contacts',
-    component: () => __webpack_require__.e(/* import() */ 12).then(__webpack_require__.bind(null, "bfc0"))
+    component: () => __webpack_require__.e(/* import() */ 13).then(__webpack_require__.bind(null, "bfc0"))
   }, {
     path: '/contact',
     name: 'contact',
@@ -32932,7 +32993,7 @@ const router = new vue_router_esm({
   }, {
     path: '/chatSettings',
     name: 'chatSettings',
-    component: () => __webpack_require__.e(/* import() */ 14).then(__webpack_require__.bind(null, "9394"))
+    component: () => __webpack_require__.e(/* import() */ 12).then(__webpack_require__.bind(null, "9394"))
   }, {
     path: '/chatInfo',
     name: 'chatInfo',
@@ -32953,7 +33014,7 @@ const router = new vue_router_esm({
   mode: document.getElementById('automomous') ? 'history' : 'abstract'
 });
 /* harmony default export */ var router_router = (router);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"3c23d37e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/assets/modal/index.vue?vue&type=template&id=0f016832&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/assets/modal/index.vue?vue&type=template&id=0f016832&
 var modalvue_type_template_id_0f016832_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('transition',{attrs:{"name":"fade"}},[_c('div',{class:{'bin' : _vm.pocketnet, 'bout' : !_vm.pocketnet, minimized: _vm.minimized, active: _vm.active, mobile: _vm.mobile},attrs:{"id":"modal"}},[_c('div',{staticClass:"modal-backdrop",on:{"click":_vm.close}}),_c('div',{staticClass:"modal-wrapper"},[_c('div',{staticClass:"modal",attrs:{"role":"dialog","aria-labelledby":"modalTitle","aria-describedby":"modalDescription"}},[_c('div',{staticClass:"modal-header"},[_vm._t("header",function(){return [_vm._v(" "+_vm._s(_vm.$t("caption.header"))+" ")]})],2),_c('div',{staticClass:"modal-body",attrs:{"id":"modalDescription"}},[_vm._t("body")],2),(_vm.displayFooter)?_c('div',{staticClass:"modal-footer"}):_vm._e(),_c('div',{staticClass:"modal-close",on:{"click":_vm.close}},[_c('i',{staticClass:"fas fa-times"})])])])])])}
 var modalvue_type_template_id_0f016832_staticRenderFns = []
 
@@ -33034,14 +33095,14 @@ var modal_component = Object(componentNormalizer["a" /* default */])(
 )
 
 /* harmony default export */ var modal = (modal_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"3c23d37e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/assets/pmenu/index.vue?vue&type=template&id=6078dda8&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/assets/pmenu/index.vue?vue&type=template&id=6078dda8&scoped=true&
 var pmenuvue_type_template_id_6078dda8_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"pmenu",class:{'bin' : _vm.pocketnet, 'bout' : !_vm.pocketnet, minimized: _vm.minimized, active: _vm.active, mobile: _vm.mobile}},[(_vm.menu)?_c('div',{staticClass:"menubgwrapper"},[_c('div',{staticClass:"backgr",on:{"click":function($event){return _vm.hidePopup()}}}),_c('div',{staticClass:"menuwrapper"},[_c('simpleMenu',{attrs:{"items":_vm.menu.items},scopedSlots:_vm._u([{key:"default",fn:function(slotProps){return [_vm._t("default",function(){return [_c('div',{staticClass:"menu-item",on:{"click":function($event){return _vm.menuItemClick(slotProps.item)}}},[_c('div',{staticClass:"iconWrapper"},[(slotProps.item.icon)?_c('i',{class:slotProps.item.icon}):_vm._e()]),_c('div',{staticClass:"title"},[_vm._v(" "+_vm._s(slotProps.item.title)+" ")])])]},{"item":slotProps.item})]}}],null,true)}),_c('div',{staticClass:"cancelWrapper"},[_c('div',{staticClass:"menu-item",on:{"click":function($event){return _vm.hidePopup()}}},[_c('div',{staticClass:"iconWrapper"}),_c('div',{staticClass:"title"},[_vm._v(_vm._s(_vm.$t("cancel")))])])])],1)]):_vm._e()])}
 var pmenuvue_type_template_id_6078dda8_scoped_true_staticRenderFns = []
 
 
 // CONCATENATED MODULE: ./src/components/assets/pmenu/index.vue?vue&type=template&id=6078dda8&scoped=true&
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"3c23d37e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/assets/simpleMenu/simpleMenu.vue?vue&type=template&id=79bb4e47&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/assets/simpleMenu/simpleMenu.vue?vue&type=template&id=79bb4e47&scoped=true&
 var simpleMenuvue_type_template_id_79bb4e47_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('div',{staticClass:"items"},[_c('transition-group',{attrs:{"name":"menulis2t","tag":"div"}},_vm._l((_vm.filteredItems),function(item){return _c('div',{key:item.click,staticClass:"item"},[_vm._t("default",function(){return [_c('router-link',{attrs:{"to":'/' + item.route}},[_c('div',{staticClass:"iwr"},[(item.icon)?_c('i',{class:item.icon}):_vm._e(),_c('span',[_vm._v(_vm._s(item.name && typeof item.name === 'string' ? item.name : 'undefined'))])])])]},{"item":item})],2)}),0)],1)])}
 var simpleMenuvue_type_template_id_79bb4e47_scoped_true_staticRenderFns = []
 
@@ -35658,7 +35719,7 @@ VueI18n.version = '8.27.0';
 
 /* harmony default export */ var vue_i18n_esm = (VueI18n);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"3c23d37e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/editedplugins/vue-m-message/src/message-template.vue?vue&type=template&id=7da7e992&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/editedplugins/vue-m-message/src/message-template.vue?vue&type=template&id=7da7e992&
 var message_templatevue_type_template_id_7da7e992_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('transition',{attrs:{"name":"m-message-fade","mode":"in-out"}},[_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.show),expression:"show"}],staticClass:"m-message-wrapper",class:_vm.wrapperClassName,style:({
       width: _vm.width
     })},[_c('mmessage',{class:[_vm.type && 'm-message--' + _vm.type, _vm.className],attrs:{"event":_vm.event,"chat":_vm.chat,"closable":_vm.showClose,"is-collapsed":_vm.isCollapsed,"close-handler":_vm.close,"click-handler":_vm.click,"title":_vm.title,"supportHTML":_vm.supportHTML},nativeOn:{"mouseenter":function($event){return _vm.clearTimer.apply(null, arguments)},"mouseleave":function($event){return _vm.startTimer.apply(null, arguments)}}},[_c('template',{slot:"icon"},[(_vm.iconImg)?_c('img',{staticClass:"m-message--icon",attrs:{"src":_vm.iconImg}}):(_vm.type)?_c('icon',{staticClass:"m-message--icon",attrs:{"name":_vm.type}}):_vm._e()],1)],2)],1)])}
@@ -35667,7 +35728,7 @@ var message_templatevue_type_template_id_7da7e992_staticRenderFns = []
 
 // CONCATENATED MODULE: ./src/editedplugins/vue-m-message/src/message-template.vue?vue&type=template&id=7da7e992&
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"3c23d37e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/editedplugins/vue-m-message/src/mmessage.vue?vue&type=template&id=03371e2c&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/editedplugins/vue-m-message/src/mmessage.vue?vue&type=template&id=03371e2c&
 var mmessagevue_type_template_id_03371e2c_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.visible),expression:"visible"}],staticClass:"m-message"},[(_vm.iconImg || _vm.$slots.icon)?_c('div',{staticClass:"m-message-icons",on:{"click":_vm.handleClick}},[(_vm.iconImg)?_c('img',{staticClass:"m-message--icon",attrs:{"src":_vm.iconImg,"alt":"Img"}}):_vm._t("icon")],2):_vm._e(),_c('div',{staticClass:"m-message-content",on:{"click":_vm.handleClick}},[(_vm.title || _vm.$slots.title)?_c('div',{staticClass:"m-message--title"},[_vm._t("title",function(){return [_vm._v(" "+_vm._s(_vm.title)+" ")]})],2):_vm._e(),(_vm.event && _vm.chat)?_c('event',{attrs:{"event":_vm.event,"chat":_vm.chat,"preview":true}}):_c('div',{staticClass:"m-message--body"},[_vm._t("message")],2)],1)])}
 var mmessagevue_type_template_id_03371e2c_staticRenderFns = []
 
@@ -36445,6 +36506,14 @@ class mtrxkit_MTRXKIT {
       hash: hash,
       idForInviting: idForInviting
     };
+  }
+
+  chatIsPublic(chat) {
+    var join_rules = chat.currentState.getStateEvents("m.room.join_rules");
+    console.log('join_rules', join_rules);
+    return _.find(join_rules, v => {
+      return functions["a" /* default */].deep(v, 'event.content.join_rule') == 'public';
+    }) ? true : false;
   }
 
 }
@@ -39264,6 +39333,8 @@ const sdk = __webpack_require__("0a00");
 
 var mtrx_axios = __webpack_require__("bc3a");
 
+console.log("sdk", sdk);
+
 class mtrx_MTRX {
   constructor(core, p) {
     Object(defineProperty["a" /* default */])(this, "fastsync", function () {
@@ -39429,6 +39500,11 @@ class mtrx_MTRX {
           password: _this3.credentials.password
         });
       } catch (e) {
+        if (e && e.indexOf && e.indexOf('M_USER_DEACTIVATED') > -1) {
+          _this3.error = 'M_USER_DEACTIVATED';
+          return null;
+        }
+
         if (yield client.isUsernameAvailable(_this3.credentials.username)) {
           userData = yield client.register(_this3.credentials.username, _this3.credentials.password, null, {
             type: 'm.login.dummy' //signature : this.core.user.signature('matrix')
@@ -39682,11 +39758,23 @@ class mtrx_MTRX {
 
   init() {
     return this.createClient().then(() => {
+      if (this.error) {
+        return Promise.reject(this.error);
+      }
+
       return this.initdb();
     }).then(() => {
       this.initEvents();
       return Promise.resolve();
     });
+  }
+
+  deactivateAccount() {
+    if (this.client) {
+      return this.client.deactivateAccount(this.credentials, true);
+    }
+
+    return Promise.reject('noclient');
   }
 
   destroy() {
@@ -39916,6 +40004,7 @@ class mtrx_MTRX {
     info.from = from;
     return new Promise(resolve => {
       if (chat.pcrypto.canBeEncrypt()) {
+        console.log("??????????");
         return chat.pcrypto.encryptFile(file).then(r => {
           info.secrets = r.secrets;
           return resolve(r.file);
@@ -39928,6 +40017,7 @@ class mtrx_MTRX {
       if (promise.abort) meta.abort = promise.abort;
       return promise;
     }).then(audio => {
+      console.log(audio, info);
       if (meta.aborted) return Promise.reject('aborted');
       return this.client.sendAudioMessage(chat.roomId, audio, info, 'Audio');
     });
@@ -39986,6 +40076,8 @@ class mtrx_MTRX {
     var _this7 = this;
 
     return Object(asyncToGenerator["a" /* default */])(function* () {
+      console.log('getAudioUnencrypt');
+
       if (event.event.content.audioData) {
         return Promise.resolve(event.event.content.audioData);
       }
@@ -40780,10 +40872,19 @@ var media_Media = function () {
     ios: {
       audio: function () {
         return new Promise((resolve, reject) => {
-          var needMic = true;
-          var needCamera = false;
-          cordova.plugins.iosrtc.requestPermission(needMic, needCamera, function (permissionApproved) {
-            if (permissionApproved) resolve();else reject('permissions');
+          window.audioinput.checkMicrophonePermission(function (hasPermission) {
+            if (hasPermission) {
+              resolve();
+            } else {
+              // Ask the user for permission to access the microphone
+              window.audioinput.getMicrophonePermission(function (hasPermission, message) {
+                if (hasPermission) {
+                  resolve();
+                } else {
+                  reject('permissions');
+                }
+              });
+            }
           });
         });
       },
@@ -41340,14 +41441,15 @@ audio_recorder_polyfill.prototype.mimeType = 'audio/mpeg';
 class application_Core {
   constructor(vm, p) {
     Object(defineProperty["a" /* default */])(this, "hideOptimization", function (v) {
-      this.hideOptimization = v;
+      //this.hideOptimization = v
       this.store.commit('hideOptimization', v);
     });
 
     Object(defineProperty["a" /* default */])(this, "hideInParent", function (v) {
       this.hiddenInParent = v;
       this.store.commit('hiddenInParent', v);
-      if (!v) this.store.commit('wasunhidden', true);
+      /*if(!v)
+          this.store.commit('wasunhidden', true)*/
     });
 
     Object(defineProperty["a" /* default */])(this, "canback", function () {
@@ -41410,6 +41512,10 @@ class application_Core {
           return Promise.reject('unknown');
         }
 
+        if (r.deleted) {
+          return Promise.reject('deleted');
+        }
+
         return this.pcrypto.prepare();
       }).then(r => {
         return this.mtrx.init();
@@ -41420,9 +41526,10 @@ class application_Core {
         if (functions["a" /* default */].deep(this.user, 'userinfo.name')) this.mtrx.client.setDisplayName(functions["a" /* default */].deep(this.user, 'userinfo.name'));
         return Promise.resolve();
       }).catch(e => {
+        console.log("E", e);
         this.loading = false;
 
-        if (e == 'unauthorized' || e == 'unknown') {
+        if (e == 'unauthorized' || e == 'unknown' || e == 'deleted') {
           this.setUnauthorized(e);
         }
 
@@ -41586,7 +41693,7 @@ class application_Core {
       }
     }).then(info => {
       var roomId = this.mtrx.kit.tetatetid(info[0], this.user.userinfo);
-      if (!roomId) return Promise.reject(e);
+      if (!roomId) return Promise.reject('roomId');
 
       if (this.store.state.chatsMap[roomId]) {
         /// old chat
@@ -41752,6 +41859,11 @@ class application_Core {
     } else {}
 
     this.audioContext = new (window.AudioContext || window.webkitAudioContext)() || null;
+
+    if (functions["a" /* default */].isios() && window.unmute) {
+      unmute(this.audioContext, false, false);
+    }
+
     return this.audioContext;
   }
 
@@ -41761,7 +41873,7 @@ class application_Core {
 // EXTERNAL MODULE: ./node_modules/vue-virtual-scroller/dist/vue-virtual-scroller.esm.js
 var vue_virtual_scroller_esm = __webpack_require__("e508");
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"3c23d37e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/assets/preloader/index.vue?vue&type=template&id=3e6353d6&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/assets/preloader/index.vue?vue&type=template&id=3e6353d6&scoped=true&
 var preloadervue_type_template_id_3e6353d6_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:{'bin' : _vm.pocketnet, 'bout' : !_vm.pocketnet, minimized: _vm.minimized, fix : _vm.pocketnet, active: _vm.active},attrs:{"id":"preloader","platform":_vm.platform}},[_vm._m(0)])}
 var preloadervue_type_template_id_3e6353d6_scoped_true_staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"variant "},[_c('div',{staticClass:"iospreloadercenter"},[_c('div',{staticClass:"spinner-eff spinner-eff-3"},[_c('div',{staticClass:"circle circle-1"}),_c('div',{staticClass:"circle circle-2"}),_c('div',{staticClass:"circle circle-3"})])])])}]
 
@@ -41812,14 +41924,14 @@ var preloader_component = Object(componentNormalizer["a" /* default */])(
 )
 
 /* harmony default export */ var preloader = (preloader_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"3c23d37e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/assets/fixedmessageicon/index.vue?vue&type=template&id=1cf419f0&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/assets/fixedmessageicon/index.vue?vue&type=template&id=1cf419f0&scoped=true&
 var fixedmessageiconvue_type_template_id_1cf419f0_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:{'bin' : _vm.pocketnet, 'bout' : !_vm.pocketnet, minimized: _vm.minimized, fix : _vm.pocketnet, active: _vm.active},attrs:{"id":"wai-fixedmessageicon"}},[_c('div',{staticClass:"wrapper"},[_c('div',{staticClass:"table"},[_c('div',{staticClass:"cell"},[(_vm.icon)?_c('div',{staticClass:"iconWrapper"},[_c('sweetalert',{attrs:{"icon":_vm.icon}})],1):_vm._e(),(_vm.message)?_c('div',{staticClass:"message"},[_c('div',[_vm._v(_vm._s(_vm.message))])]):_vm._e()])])])])}
 var fixedmessageiconvue_type_template_id_1cf419f0_scoped_true_staticRenderFns = []
 
 
 // CONCATENATED MODULE: ./src/components/assets/fixedmessageicon/index.vue?vue&type=template&id=1cf419f0&scoped=true&
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"3c23d37e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/editedplugins/vue-sweetalert-icons/src/components/icon.vue?vue&type=template&id=0635047f&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/editedplugins/vue-sweetalert-icons/src/components/icon.vue?vue&type=template&id=0635047f&scoped=true&
 var iconvue_type_template_id_0635047f_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"sa",style:(_vm.cssVars)},[(_vm.isIcon('error'))?_c('div',{staticClass:"sa-error"},[_vm._m(0),_c('div',{staticClass:"sa-error-placeholder"}),_c('div',{staticClass:"sa-error-fix"})]):(_vm.isIcon('warning'))?_c('div',{staticClass:"sa-warning"},[_c('div',{staticClass:"sa-warning-body"}),_c('div',{staticClass:"sa-warning-dot"})]):(_vm.isIcon('info'))?_c('div',{staticClass:"sa-info"},[_c('div',{staticClass:"sa-info-body"}),_c('div',{staticClass:"sa-info-dot"})]):(_vm.isIcon('loading'))?_c('div',{staticClass:"sa-loading"},[_c('div',{staticClass:"sa-loading-body"})]):_c('div',{staticClass:"sa-success"},[_c('div',{staticClass:"sa-success-tip"}),_c('div',{staticClass:"sa-success-long"}),_c('div',{staticClass:"sa-success-placeholder"}),_c('div',{staticClass:"sa-success-fix"})])])}
 var iconvue_type_template_id_0635047f_scoped_true_staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"sa-error-x"},[_c('div',{staticClass:"sa-error-left"}),_c('div',{staticClass:"sa-error-right"})])}]
 
@@ -42016,7 +42128,7 @@ var fixedmessageicon_component = Object(componentNormalizer["a" /* default */])(
 )
 
 /* harmony default export */ var fixedmessageicon = (fixedmessageicon_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"3c23d37e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/assets/date/index.vue?vue&type=template&id=eb4df516&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/assets/date/index.vue?vue&type=template&id=eb4df516&scoped=true&
 var datevue_type_template_id_eb4df516_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('span',{attrs:{"id":"wai-date"}},[_vm._v(_vm._s(_vm.label))])}
 var datevue_type_template_id_eb4df516_scoped_true_staticRenderFns = []
 
@@ -42063,7 +42175,7 @@ var date_component = Object(componentNormalizer["a" /* default */])(
 )
 
 /* harmony default export */ var assets_date = (date_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"3c23d37e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/assets/userpic/index.vue?vue&type=template&id=5034d1e2&scoped=true&functional=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/assets/userpic/index.vue?vue&type=template&id=5034d1e2&scoped=true&functional=true&
 var userpicvue_type_template_id_5034d1e2_scoped_true_functional_true_render = function (_h,_vm) {var _c=_vm._c;return _c('div',{staticClass:"userpic"},[_c('div',{staticClass:"userpicSquareWrapper"},[_c('div',{staticClass:"userpicSquareInnerWrapper"},[_c('div',{staticClass:"userpicSquareInnerWrapper",class:_vm.props.status},[(_vm.props.userinfo.image)?_c('bgimage',{attrs:{"src":_vm.props.userinfo.image}}):_vm._e(),(!_vm.props.userinfo.image && _vm.props.userinfo.name && (_vm.props.status != 'blocked' && _vm.props.status != 'invite' && _vm.props.status != 'ban'))?_c('div',{staticClass:"charAvatar"},[_c('span',[_vm._v(_vm._s(_vm.props.userinfo.name.charAt(0)))])]):_vm._e(),_c('div',{staticClass:"statusIcon"},[(_vm.props.status == 'blocked' || _vm.props.status == 'ban')?_c('i',{staticClass:"fas fa-ban"}):_vm._e(),(_vm.props.status == 'invite')?_c('i',{staticClass:"fas fa-user-plus"}):_vm._e()])],1)])])])}
 var userpicvue_type_template_id_5034d1e2_scoped_true_functional_true_staticRenderFns = []
 
@@ -42108,7 +42220,7 @@ var userpic_component = Object(componentNormalizer["a" /* default */])(
 )
 
 /* harmony default export */ var userpic = (userpic_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"3c23d37e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/assets/userspic/index.vue?vue&type=template&id=792279b0&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/assets/userspic/index.vue?vue&type=template&id=792279b0&scoped=true&
 var userspicvue_type_template_id_792279b0_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return (_vm.users)?_c('div',{staticClass:"userspic",class:{oneuser : _vm.users && _vm.users.length === 1}},[(_vm.users.length === 0)?_c('userpic',{attrs:{"userinfo":_vm.single,"status":_vm.single.status}}):_vm._e(),(_vm.users.length === 1)?_c('userpic',{attrs:{"status":_vm.status[_vm.users[0].id],"userinfo":_vm.users[0],"unseen":_vm.unseen}}):_vm._e(),(_vm.users.length > 1)?_c('many',{attrs:{"slidesPerView":_vm.slidesPerView,"status":_vm.status,"userinfo":_vm.users,"unseen":_vm.unseen}}):_vm._e(),(_vm.unseen)?_c('div',{staticClass:"unseen"},[_vm._v(" "+_vm._s(_vm.unseen > 99 ? '99' : _vm.unseen)+" ")]):_vm._e()],1):_vm._e()}
 var userspicvue_type_template_id_792279b0_scoped_true_staticRenderFns = []
 
@@ -42166,7 +42278,7 @@ var userspic_component = Object(componentNormalizer["a" /* default */])(
 )
 
 /* harmony default export */ var userspic = (userspic_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"3c23d37e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/assets/bgimage.vue?vue&type=template&id=5d20f73c&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/assets/bgimage.vue?vue&type=template&id=5d20f73c&scoped=true&
 var bgimagevue_type_template_id_5d20f73c_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"bgimage",class:{loaded: _vm.loaded, hasimage : _vm.src},style:('background-image:url('+_vm.imageSrc+'); background-size: cover; background-position: center center; background-repeat: no-repeat')},[_vm._t("cnt")],2)}
 var bgimagevue_type_template_id_5d20f73c_scoped_true_staticRenderFns = []
 
@@ -42256,7 +42368,7 @@ var bgimage_component = Object(componentNormalizer["a" /* default */])(
 )
 
 /* harmony default export */ var bgimage = (bgimage_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"3c23d37e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/assets/logotype/index.vue?vue&type=template&id=e33cd7cc&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/assets/logotype/index.vue?vue&type=template&id=e33cd7cc&scoped=true&
 var logotypevue_type_template_id_e33cd7cc_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{attrs:{"id":"wai-logotype"}},[_c('div',{staticClass:"items"},[_c('div',{staticClass:"item"},[_c('div',{staticClass:"logo"},[_c('img',{attrs:{"src":'img/ldpiwide-' + _vm.themeL + '.png'}})])])])])}
 var logotypevue_type_template_id_e33cd7cc_scoped_true_staticRenderFns = []
 
@@ -42316,7 +42428,7 @@ var logotype_component = Object(componentNormalizer["a" /* default */])(
 )
 
 /* harmony default export */ var logotype = (logotype_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"3c23d37e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/assets/dropdownMenu/index.vue?vue&type=template&id=e4f39dca&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/assets/dropdownMenu/index.vue?vue&type=template&id=e4f39dca&scoped=true&
 var dropdownMenuvue_type_template_id_e4f39dca_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"outer-div",class:{'bin' : _vm.pocketnet, 'bout' : !_vm.pocketnet, minimized: _vm.minimized, active: _vm.active, mobile: _vm.mobile},on:{"click":function($event){$event.stopPropagation();}}},[(_vm.menuIsVisible && !_vm.hiddenInParent)?_c('div',{staticClass:"dropdown",class:{visible: _vm.menuIsVisible}},[_c('div',{staticClass:"backgr",on:{"click":function($event){return _vm.hidePopup()}}}),_c('div',{directives:[{name:"click-outside",rawName:"v-click-outside",value:(_vm.hidePopup),expression:"hidePopup"}],staticClass:"menuwrapper"},[_c('simpleMenu',{attrs:{"items":_vm.menuItems},scopedSlots:_vm._u([{key:"default",fn:function(slotProps){return [_vm._t("default",function(){return [_c('div',{staticClass:"menu-item",on:{"click":function($event){return _vm.menuItemClick(slotProps.item)}}},[_c('div',{staticClass:"iconWrapper"},[(slotProps.item.icon)?_c('i',{class:slotProps.item.icon}):_vm._e()]),_c('div',{staticClass:"title"},[_vm._v(" "+_vm._s(slotProps.item.title)+" ")])])]},{"item":slotProps.item})]}}],null,true)}),_c('div',{staticClass:"cancelWrapper"},[_c('div',{staticClass:"menu-item",on:{"click":function($event){return _vm.hidePopup()}}},[_c('div',{staticClass:"iconWrapper"}),_c('div',{staticClass:"title"},[_vm._v(_vm._s(_vm.$t("cancel")))])])])],1)]):_vm._e(),_c('div',{staticClass:"dropDownIcon",on:{"click":_vm.onClickHandler}},[_c('i',{class:'icon ' + (_vm.icon || 'fas fa-ellipsis-h')})])])}
 var dropdownMenuvue_type_template_id_e4f39dca_scoped_true_staticRenderFns = []
 
@@ -42414,7 +42526,7 @@ var dropdownMenu_component = Object(componentNormalizer["a" /* default */])(
 )
 
 /* harmony default export */ var dropdownMenu = (dropdownMenu_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"3c23d37e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/assets/backButton/index.vue?vue&type=template&id=7e97eec1&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/assets/backButton/index.vue?vue&type=template&id=7e97eec1&scoped=true&
 var backButtonvue_type_template_id_7e97eec1_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"back",on:{"click":_vm.click}},[_c('div',{staticClass:"iconbutton"},[_c('i',{class:(_vm.icon || 'fas fa-angle-left')})])])}
 var backButtonvue_type_template_id_7e97eec1_scoped_true_staticRenderFns = []
 
@@ -42479,7 +42591,7 @@ var backButton_component = Object(componentNormalizer["a" /* default */])(
 // EXTERNAL MODULE: ./src/components/assets/topheader/index.vue + 4 modules
 var topheader = __webpack_require__("08da");
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"3c23d37e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/assets/maincontent/index.vue?vue&type=template&id=a8a70f9c&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/assets/maincontent/index.vue?vue&type=template&id=a8a70f9c&scoped=true&
 var maincontentvue_type_template_id_a8a70f9c_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"fixedOnPageTop",class:{'bin' : _vm.pocketnet, 'bout' : !_vm.pocketnet, minimized: _vm.minimized, fix : _vm.pocketnet, active: _vm.active, unauthorized: _vm.unauthorized, modalShowed : _vm.modalShowed ? true : false, mobile: _vm.mobile},attrs:{"id":"maincontent"},on:{"mouseenter":_vm.mouseenter,"mouseleave":_vm.mouseleave}},[_c('div',{staticClass:"headerSpacerWrapper"},[_c('div',{staticClass:"headerSpacerWrapperOvf"},[_c('div',{ref:"scrollable",staticClass:"headerSpacer"},[_vm._t("content",function(){return [_vm._v("   ")]})],2)]),_c('pmenu'),(_vm.modalShowed && _vm.modalShowed.data && !_vm.hiddenInParent)?_c('modal',{on:{"close":_vm.closeModal},scopedSlots:_vm._u([{key:"header",fn:function(){return [_vm._v(_vm._s(_vm.modalShowed.caption))]},proxy:true},{key:"body",fn:function(){return [_c('div',{staticClass:"modalcommoncontent"},[(_vm.modalShowed.type == 'complain')?_c('complain',{attrs:{"p":_vm.modalShowed.data}}):_vm._e(),(_vm.modalShowed.type == 'contact')?_c('contact',{attrs:{"contact":_vm.modalShowed.data.contact}}):_vm._e(),(_vm.modalShowed.type == 'showuserselect')?_c('contacts',{attrs:{"users":_vm.modalShowed.data.users,"mode":"Select"},on:{"close":_vm.closeModal,"select":function (contact) {_vm.modalShowed.data.userselected(contact); _vm.closeModal()}}}):_vm._e()],1)]},proxy:true},{key:"footer",fn:function(){return undefined},proxy:true}],null,false,3972288297)}):_vm._e(),(!_vm.unauthorized && _vm.rbackexp)?_c('div',{staticClass:"expandp",on:{"click":_vm.setactive,"mousemove":_vm.effect}},[_vm._m(0)]):_vm._e()],1),(_vm.iconshow)?_c('transition',{attrs:{"name":"fade"}},[_c('fixedmessageicon')],1):_vm._e()],1)}
 var maincontentvue_type_template_id_a8a70f9c_scoped_true_staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"etablew"},[_c('div',{staticClass:"etable table"},[_c('div',[_c('i',{staticClass:"fas fa-expand-arrows-alt"})])])])}]
 
@@ -42496,7 +42608,7 @@ var maincontentvue_type_template_id_a8a70f9c_scoped_true_staticRenderFns = [func
   components: {
     'contact': () => Promise.resolve(/* import() */).then(__webpack_require__.bind(null, "d3ff")),
     'contacts': () => Promise.resolve(/* import() */).then(__webpack_require__.bind(null, "f978")),
-    'complain': () => __webpack_require__.e(/* import() */ 13).then(__webpack_require__.bind(null, "c27d"))
+    'complain': () => __webpack_require__.e(/* import() */ 14).then(__webpack_require__.bind(null, "c27d"))
   },
   data: function () {
     return {
@@ -42583,7 +42695,7 @@ var maincontent_component = Object(componentNormalizer["a" /* default */])(
 )
 
 /* harmony default export */ var maincontent = (maincontent_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"3c23d37e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/assets/search/index.vue?vue&type=template&id=1774f2a8&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/assets/search/index.vue?vue&type=template&id=1774f2a8&scoped=true&
 var searchvue_type_template_id_1774f2a8_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:{'bin' : _vm.pocketnet, 'bout' : !_vm.pocketnet, minimized: _vm.minimized, fix : _vm.pocketnet, active: _vm.active},attrs:{"id":"search"}},[_c('div',{staticClass:"searchWrapper"},[_c('div',{staticClass:"inputWrapper"},[_c('input',{ref:"input",attrs:{"placeholder":_vm.placeholder || this.$i18n.t('caption.search'),"type":"text"},domProps:{"value":_vm.searchTxt},on:{"keyup":_vm.change,"input":_vm.change,"focus":_vm.focused,"blur":_vm.blured}})]),(!_vm.searchTxt)?_c('div',{staticClass:"iconWrapper"},[_c('i',{staticClass:"fas fa-search"})]):_vm._e(),(_vm.searchTxt)?_c('div',{staticClass:"iconWrapper",on:{"click":_vm.clear}},[_c('i',{staticClass:"fas fa-times"})]):_vm._e()])])}
 var searchvue_type_template_id_1774f2a8_scoped_true_staticRenderFns = []
 
@@ -42677,7 +42789,7 @@ var search_component = Object(componentNormalizer["a" /* default */])(
 )
 
 /* harmony default export */ var search = (search_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"3c23d37e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/assets/linepreloader/index.vue?vue&type=template&id=bcf20e38&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/assets/linepreloader/index.vue?vue&type=template&id=bcf20e38&scoped=true&
 var linepreloadervue_type_template_id_bcf20e38_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _vm._m(0)}
 var linepreloadervue_type_template_id_bcf20e38_scoped_true_staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{attrs:{"id":"linepreloader"}},[_c('span'),_c('span'),_c('span')])}]
 
@@ -42985,6 +43097,10 @@ var scriptsadded = false;
       type: String,
       default: ''
     },
+    pkoindisabled: {
+      type: String,
+      default: ''
+    },
     ctheme: String,
     fcmtoken: String,
     localization: String,
@@ -43062,7 +43178,9 @@ var scriptsadded = false;
       setTimeout(() => {
         if (this.$route.name !== 'chats' &&
         /*this.$route.name !== 'chat' &&*/
-        this.$route.name !== 'contact' && this.$route.name !== 'chatInfo' && this.$route.name !== 'publicPreview' && this.$route.name !== 'chatSettings' && Appvue_type_script_lang_js_shadow_core.cancelDefaultRoute !== true) {
+        this.$route.name !== 'contact' &&
+        /*this.$route.name !== 'chatInfo' &&*/
+        this.$route.name !== 'publicPreview' && this.$route.name !== 'chatSettings' && Appvue_type_script_lang_js_shadow_core.cancelDefaultRoute !== true) {
           this.$router.push('/chats').catch(e => {});
         }
       }, 500);
@@ -43156,12 +43274,13 @@ var scriptsadded = false;
   },
 
   created() {
-    /*this.pocketnet = true
+    /*this.pocketnet = false
     this.mobile = !this.pocketnet
-    this.recording = true*/
+    this.recording = TransformStreamDefaultController*/
     this.$store.commit('setPocketnet', this.pocketnet);
     this.$store.commit('setMobile', this.mobile);
     this.$store.commit('setVoiceMessagesEnabled', this.recording);
+    this.$store.commit('pkoindisabled', this.pkoindisabled);
     this.$store.commit('clearall');
     this.$store.commit('ls');
     this.importInitialScripts();
@@ -43327,7 +43446,7 @@ var scriptsadded = false;
       address: this.address ? functions["a" /* default */].hexEncode(this.address) : '',
       privateKey: this.privatekey
     };
-    var username = 'alchemist';
+    var username = 'nevermore';
     var user = this.address && this.privatekey ? actualUser : testUsers[`${username}`];
     var listofproxies = functions["a" /* default */].deep(window, 'window.POCKETNETINSTANCE.options.listofproxies') || [{
       host: 'test.pocketnet.app',
@@ -43369,7 +43488,6 @@ var scriptsadded = false;
                 cancelText : 'cancel'
             })
               .then((dialog) => {
-               console.log("CNF")
             })
       */
 
@@ -43384,7 +43502,9 @@ var scriptsadded = false;
         setTimeout(() => {
           if (this.$route.name !== 'chats' &&
           /*this.$route.name !== 'chat' &&*/
-          this.$route.name !== 'chatInfo' && this.$route.name !== 'publicPreview' && this.$route.name !== 'chatSettings' && this.$route.name !== 'contact' && Appvue_type_script_lang_js_shadow_core.cancelDefaultRoute !== true) {
+
+          /*this.$route.name !== 'chatInfo' &&*/
+          this.$route.name !== 'publicPreview' && this.$route.name !== 'chatSettings' && this.$route.name !== 'contact' && Appvue_type_script_lang_js_shadow_core.cancelDefaultRoute !== true) {
             this.$router.push('/chats').catch(e => {});
           }
         }, 100); //this.connectCustomRecorder();
@@ -44533,12 +44653,12 @@ function exists(indexedDB, dbName) {
 // ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"3c23d37e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/events/event/index.vue?vue&type=template&id=20528478&scoped=true&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return (!_vm.event.localRedactionEvent() && !_vm.event.getRedactionEvent() && !_vm.removed)?_c('div',{ref:"msgElement",staticClass:"event",class:{readyToRender: _vm.readyToRender, my: _vm.my}},[(_vm.type === 'member' && !_vm.preview)?_c('member',{attrs:{"chat":_vm.chat,"event":_vm.event,"userinfo":_vm.userinfo,"readed":_vm.readed,"preview":_vm.preview || false},on:{"readyToRender":_vm.setReadyToRender}}):_vm._e(),(_vm.type === 'message' || _vm.preview)?_c('message',{attrs:{"chat":_vm.chat,"event":_vm.event,"prevevent":_vm.prevevent,"origin":_vm.event,"decryptEvent":_vm.decryptEvent,"decryptedInfo":_vm.decryptedInfo,"encryptedData":_vm.encryptedData,"imgEvent":_vm.galleryData,"userinfo":_vm.userinfo,"readed":_vm.readed,"preview":_vm.preview || false,"withImage":_vm.withImage || false,"clientWidth":_vm.clientWidth,"encrypted":_vm.encrypted,"subtype":_vm.subtype,"error":_vm.error,"reference":_vm.reference,"downloaded":_vm.downloaded,"last":_vm.last,"showmyicontrue":_vm.showmyicontrue,"fromreference":_vm.fromreference,"audioBuffer":_vm.audioBuffer},on:{"openGalleryImg":_vm.openImage,"readyToRender":_vm.setReadyToRender,"remove":_vm.removeEvent,"download":_vm.downloadFile,"decryptagain":_vm.decryptAgain,"editing":_vm.editing,"reply":_vm.reply,"share":_vm.share,"menuIsVisible":_vm.menuIsVisibleHandler}}):_vm._e(),(_vm.type === 'common')?_c('common',{attrs:{"event":_vm.event,"userinfo":_vm.userinfo,"readed":_vm.readed,"preview":_vm.preview || false}}):_vm._e(),(_vm.downloading)?_c('div',{staticClass:"loading"},[_c('linepreloader')],1):_vm._e()],1):_c('div',{staticClass:"deletedMessage"},[_c('i',{staticClass:"fas fa-eraser"}),_vm._v(" "+_vm._s(_vm.$t("caption.messageDeleted"))+" ")])}
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/events/event/index.vue?vue&type=template&id=659136c0&scoped=true&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return (!_vm.event.localRedactionEvent() && !_vm.event.getRedactionEvent() && !_vm.removed)?_c('div',{ref:"msgElement",staticClass:"event",class:{readyToRender: _vm.readyToRender, my: _vm.my}},[(_vm.type === 'member' && !_vm.preview)?_c('member',{attrs:{"chat":_vm.chat,"event":_vm.event,"userinfo":_vm.userinfo,"readed":_vm.readed,"preview":_vm.preview || false},on:{"readyToRender":_vm.setReadyToRender}}):_vm._e(),(_vm.type === 'message' || _vm.preview)?_c('message',{attrs:{"chat":_vm.chat,"event":_vm.event,"prevevent":_vm.prevevent,"origin":_vm.event,"decryptEvent":_vm.decryptEvent,"decryptedInfo":_vm.decryptedInfo,"encryptedData":_vm.encryptedData,"imgEvent":_vm.galleryData,"userinfo":_vm.userinfo,"readed":_vm.readed,"preview":_vm.preview || false,"withImage":_vm.withImage || false,"clientWidth":_vm.clientWidth,"encrypted":_vm.encrypted,"subtype":_vm.subtype,"error":_vm.error,"reference":_vm.reference,"downloaded":_vm.downloaded,"last":_vm.last,"showmyicontrue":_vm.showmyicontrue,"fromreference":_vm.fromreference,"multiSelect":_vm.multiSelect,"selectedMessages":_vm.selectedMessages,"audioBuffer":_vm.audioBuffer,"isRemoveSelectedMessages":_vm.isRemoveSelectedMessages},on:{"openGalleryImg":_vm.openImage,"readyToRender":_vm.setReadyToRender,"remove":_vm.removeEvent,"download":_vm.downloadFile,"decryptagain":_vm.decryptAgain,"showMultiSelect":function($event){return _vm.$emit('showMultiSelect')},"selectMessage":_vm.selectMessage,"removeMessage":_vm.removeMessage,"messagesIsDeleted":_vm.messagesIsDeleted,"editing":_vm.editing,"reply":_vm.reply,"share":_vm.share,"menuIsVisible":_vm.menuIsVisibleHandler}}):_vm._e(),(_vm.type === 'common')?_c('common',{attrs:{"event":_vm.event,"userinfo":_vm.userinfo,"readed":_vm.readed,"preview":_vm.preview || false}}):_vm._e(),(_vm.downloading)?_c('div',{staticClass:"loading"},[_c('linepreloader')],1):_vm._e()],1):_c('div',{staticClass:"deletedMessage"},[_c('i',{staticClass:"fas fa-eraser"}),_vm._v(" "+_vm._s(_vm.$t("caption.messageDeleted"))+" ")])}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/events/event/index.vue?vue&type=template&id=20528478&scoped=true&
+// CONCATENATED MODULE: ./src/components/events/event/index.vue?vue&type=template&id=659136c0&scoped=true&
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js
 var asyncToGenerator = __webpack_require__("1da1");
@@ -44546,7 +44666,7 @@ var asyncToGenerator = __webpack_require__("1da1");
 // EXTERNAL MODULE: ./src/components/chats/dummypreviews/index.vue + 4 modules
 var dummypreviews = __webpack_require__("a54c");
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"3c23d37e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/events/event/common/index.vue?vue&type=template&id=52fddf5e&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/events/event/common/index.vue?vue&type=template&id=52fddf5e&scoped=true&
 var commonvue_type_template_id_52fddf5e_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"eventsCommon"})}
 var commonvue_type_template_id_52fddf5e_scoped_true_staticRenderFns = []
 
@@ -44605,7 +44725,7 @@ var component = Object(componentNormalizer["a" /* default */])(
 )
 
 /* harmony default export */ var common = (component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"3c23d37e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/events/event/member/index.vue?vue&type=template&id=54a240c2&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/events/event/member/index.vue?vue&type=template&id=54a240c2&scoped=true&
 var membervue_type_template_id_54a240c2_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"eventMember"},[(!_vm.preview)?_c('div',{staticClass:"iconWrapper",on:{"click":function($event){return _vm.core.mtrx.opencontact(_vm.userinfo)}}},[_c('userpic',{attrs:{"userinfo":_vm.userinfo}})],1):_vm._e(),_c('div',{staticClass:"labelwrapper"},[_c('span',{staticClass:"label"},[_c('b',[_vm._v(_vm._s(_vm.userinfo.name || "Somebody"))]),_vm._v(" "+_vm._s(_vm.keyword))])])])}
 var membervue_type_template_id_54a240c2_scoped_true_staticRenderFns = []
 
@@ -44654,7 +44774,7 @@ var functions = __webpack_require__("3139");
           }
         });
 
-        return this.$i18n.t("caption.invited") + `${invitedName}` + this.$i18n.t("caption.inTheChat");
+        return this.$i18n.t("caption.hasInvited") + `${invitedName}` + this.$i18n.t("caption.inTheChat");
       }
 
       if (membership === 'ban') {
@@ -44728,19 +44848,19 @@ var member_component = Object(componentNormalizer["a" /* default */])(
 )
 
 /* harmony default export */ var member = (member_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"3c23d37e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/events/event/message/index.vue?vue&type=template&id=5cf3c392&scoped=true&
-var messagevue_type_template_id_5cf3c392_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"eventsMessage"},[(_vm.referenceshowed && _vm.reference && !_vm.preview && !_vm.fromreference)?_c('div',{staticClass:"reference referenceTop",class:{my: _vm.my}},[_c('eventsEvent',{attrs:{"event":_vm.reference,"chat":_vm.chat,"preview":false,"fromreference":true}})],1):_vm._e(),(!_vm.preview && _vm.content.msgtype !== 'm.notice')?_c('div',{directives:[{name:"touch",rawName:"v-touch:longtap",value:(_vm.dropDownMenuShow),expression:"dropDownMenuShow",arg:"longtap"}],class:{referenceshowed: _vm.referenceshowed, showmeta : _vm.showmeta, my: _vm.my,'messageRow': 'messageRow', urlpreview : _vm.urlpreview, allscreen : _vm.urlpreview || _vm.content.msgtype === 'm.image'|| _vm.file, aligncenter : _vm.content.msgtype === 'm.audio'},attrs:{"my":_vm.my}},[((_vm.urlpreview || _vm.imageUrl || _vm.content.msgtype === 'm.image') || (_vm.showmeta && (_vm.my)) || _vm.file)?_c('div',{staticClass:"timeWrapper"},[(_vm.showburn)?_c('i',{class:'fas fa-fire burn ' + _vm.showburn,on:{"click":_vm.showwhenburn}}):_vm._e(),_c('span',[_vm._v(" "+_vm._s(_vm.format_date(_vm.origin._localTimestamp) || "Now")+" ")])]):_vm._e(),(_vm.content.msgtype !== 'm.file')?_c('div',{staticClass:"actionsWrapper",on:{"click":_vm.setmenu}},[_c('i',{staticClass:"fas fa-ellipsis-h"})]):_vm._e(),(!_vm.my || _vm.showmyicon)?_c('div',{staticClass:"iconWrapper",on:{"click":function($event){return _vm.core.mtrx.opencontact(_vm.userinfo)}}},[_c('userpic',{attrs:{"userinfo":_vm.userinfo}})],1):_vm._e(),((_vm.content.from || _vm.imageFrom) && (_vm.file || (_vm.content.msgtype === 'm.image' && _vm.imageUrl) || ( _vm.content.msgtype === 'm.audio' && _vm.audioUrl)))?_c('div',{staticClass:"fromimagesfiles"},[_c('div',{staticClass:"fromCaption"},[_c('i',{staticClass:"fas fa-share-alt"}),_vm._v(" "),_c('span',[_vm._v(_vm._s(_vm.$t("caption.messagefrom")))])])]):_vm._e(),(_vm.content.msgtype === 'm.image')?_c('div',{staticClass:"messageImg"},[(_vm.imageUrl)?_c('div',{},[(_vm.encryptedData)?_c('div',{staticClass:"encryptedDataIcon"},[_c('i',{staticClass:"fas fa-lock"})]):_vm._e(),_c('div',{staticClass:"imgMsg"},[_c('div',{staticClass:"showImage",style:(_vm.imagePaddingStyle(_vm.content)),on:{"click":function($event){return _vm.openImageGallery(_vm.origin)}}},[_c('div',{staticClass:"abswrapper"},[_c('img',{directives:[{name:"images-loaded",rawName:"v-images-loaded:on.loaded",value:(_vm.imagesLoaded),expression:"imagesLoaded",arg:"on",modifiers:{"loaded":true}}],attrs:{"src":_vm.imageUrl,"alt":""}})])])])]):_c('div',{staticClass:"preloaderImage",style:(_vm.imagePaddingStyle(_vm.content))},[_c('div',{staticClass:"abswrapper"},[_c('linepreloader')],1)])]):_vm._e(),(_vm.content.msgtype === 'm.audio')?_c('div',{staticClass:"messageAudio"},[(_vm.audioUrl)?_c('VoiceMessage',{attrs:{"audioBuffer":_vm.audioUrl,"id":_vm.event._localTimestamp || Date.now()}}):_vm._e()],1):_vm._e(),(_vm.content.msgtype === 'm.encrypted' && !_vm.textWithoutLinks && _vm.badenctypted)?_c('div',{staticClass:"maxcontent",class:{'my' : _vm.my }},[_c('div',{staticClass:"badenctyptedText"},[_c('span',[_vm._v(_vm._s(_vm.$t("caption.unabletoDecrypt")))]),_vm._v(" "),_c('i',{staticClass:"fas fa-undo decryptagain",on:{"click":_vm.decryptagain}})])]):_vm._e(),((_vm.content.msgtype === 'm.text' || _vm.content.msgtype === 'm.encrypted') && _vm.textWithoutLinks)?_c('div',{staticClass:"maxcontent",class:{'my' : _vm.my }},[_c('div',{staticClass:"messageText"},[(_vm.edited)?_c('div',{staticClass:"edited"},[_c('i',{staticClass:"fas fa-pen"}),_vm._v(" "+_vm._s(_vm.$t("caption.edited"))+" ")]):_vm._e(),_c('div',{staticClass:"msgtext"},[_c('IncomingMessage',{attrs:{"message":_vm.textWithoutLinks}})],1),((!_vm.content.from && !_vm.my && _vm.showmeta) || (_vm.showmyicon && !_vm.my))?_c('div',{staticClass:"sendername"},[_c('span',[_c('b',[_vm._v(_vm._s(_vm.userinfo.name))])]),_vm._v(" · "),_c('span',[_vm._v(" "+_vm._s(_vm.format_date(_vm.origin._localTimestamp) || "Now")+" ")])]):_vm._e(),(_vm.reference && !_vm.preview && !_vm.fromreference)?_c('div',{staticClass:"reference showreference",on:{"click":_vm.showreference}},[(!_vm.referenceshowed)?_c('eventsEvent',{attrs:{"event":_vm.reference,"chat":_vm.chat,"preview":true}}):_vm._e(),_c('div',{staticClass:"referenceCaption"},[(!_vm.referenceshowed)?_c('span',[_c('i',{staticClass:"fas fa-share"})]):_c('button',{staticClass:"button ghost small"},[_vm._v("Hide")])])],1):_vm._e(),(_vm.content.from)?_c('div',{staticClass:"from"},[_c('div',{staticClass:"fromCaption"},[_c('i',{staticClass:"fas fa-share-alt"}),_vm._v(" "),_c('span',[_vm._v(_vm._s(_vm.$t("caption.messagefrom")))])])]):_vm._e()])]):_vm._e(),(_vm.file)?_c('div',{staticClass:"filePreview"},[_c('fileMessage',{attrs:{"encryptedData":_vm.encryptedData,"file":_vm.file,"downloaded":_vm.downloaded},on:{"download":_vm.download}}),(_vm.encryptedData)?_c('div',{staticClass:"encryptedDataIcon"},[_c('i',{staticClass:"fas fa-lock"})]):_vm._e(),(_vm.error)?_c('div',{staticClass:"badencrypted"},[_c('span',[_vm._v(_vm._s(_vm.$t("caption.unabletoDecrypt")))])]):_vm._e()],1):_vm._e(),(_vm.urlpreview)?_c('div',{staticClass:"linkPreview"},[(!_vm.sending)?_c('div',{staticClass:"pr"},[(!_vm.origin.localRedactionEvent() && !_vm.origin.getRedactionEvent())?_c('url',{attrs:{"url":_vm.urlpreview,"urllink":_vm.urlpreview,"preview":true},on:{"updatedSize":_vm.updatedSize}}):_vm._e()],1):_c('div',[_c('linepreloader')],1)]):_vm._e()]):_vm._e(),(_vm.preview)?_c('div',{staticClass:"messagePreview"},[_c('listPreview',{attrs:{"my":_vm.my,"event":_vm.origin,"decryptEvent":_vm.decryptEvent,"userinfo":_vm.userinfo,"chat":_vm.chat,"readed":_vm.readed}})],1):_vm._e(),(_vm.my && _vm.readed && !_vm.preview && !_vm.fromreference)?_c('div',{staticClass:"statusWrapper"},[_c('div',{staticClass:"my"},[_c('i',{staticClass:"fas fa-check-double"}),_vm._v(" "),_c('span',[_vm._v(_vm._s(_vm.$t("caption.messageRead")))])])]):_vm._e()])}
-var messagevue_type_template_id_5cf3c392_scoped_true_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/events/event/message/index.vue?vue&type=template&id=c8f458dc&scoped=true&
+var messagevue_type_template_id_c8f458dc_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"eventsMessage"},[(_vm.referenceshowed && _vm.reference && !_vm.preview && !_vm.fromreference)?_c('div',{staticClass:"reference referenceTop",class:{my: _vm.my}},[_c('eventsEvent',{attrs:{"event":_vm.reference,"chat":_vm.chat,"preview":false,"fromreference":true}})],1):_vm._e(),(!_vm.preview && _vm.content.msgtype !== 'm.notice')?_c('div',{directives:[{name:"touch",rawName:"v-touch:touchhold",value:(_vm.dropDownMenuShow),expression:"dropDownMenuShow",arg:"touchhold"}],class:{referenceshowed: _vm.referenceshowed, showmeta : _vm.showmeta, my: _vm.my,'messageRow': 'messageRow', urlpreview : _vm.urlpreview, allscreen : _vm.urlpreview || _vm.content.msgtype === 'm.image'|| _vm.file, aligncenter : _vm.content.msgtype === 'm.audio'},attrs:{"my":_vm.my}},[((_vm.urlpreview || _vm.imageUrl || _vm.content.msgtype === 'm.image') || (_vm.showmeta && (_vm.my)) || _vm.file)?_c('div',{staticClass:"timeWrapper"},[(_vm.showburn)?_c('i',{class:'fas fa-fire burn ' + _vm.showburn,on:{"click":_vm.showwhenburn}}):_vm._e(),_c('span',[_vm._v(" "+_vm._s(_vm.format_date(_vm.origin._localTimestamp) || "Now")+" ")])]):_vm._e(),(_vm.content.msgtype !== 'm.file')?_c('div',{staticClass:"actionsWrapper"},[(_vm.multiSelect)?_c('div',{staticClass:"multiSelect",on:{"click":function($event){return _vm.eventMessage(_vm.selectedMessage)}}},[(_vm.selectedMessage)?_c('i',{staticClass:"far fa-check-circle"}):_c('i',{staticClass:"far fa-circle"})]):_c('div',{staticClass:"mnwrapper"},[_c('i',{staticClass:"fas fa-ellipsis-h",on:{"click":_vm.setmenu}})])]):_vm._e(),(!_vm.my || _vm.showmyicon)?_c('div',{staticClass:"iconWrapper",on:{"click":function($event){return _vm.core.mtrx.opencontact(_vm.userinfo)}}},[_c('userpic',{attrs:{"userinfo":_vm.userinfo}})],1):_vm._e(),((_vm.content.from || _vm.imageFrom) && (_vm.file || (_vm.content.msgtype === 'm.image' && _vm.imageUrl) || ( _vm.content.msgtype === 'm.audio' && _vm.audioUrl)))?_c('div',{staticClass:"fromimagesfiles"},[_c('div',{staticClass:"fromCaption"},[_c('i',{staticClass:"fas fa-share-alt"}),_vm._v(" "),_c('span',[_vm._v(_vm._s(_vm.$t("caption.messagefrom")))])])]):_vm._e(),(_vm.content.msgtype === 'm.image')?_c('div',{staticClass:"messageImg"},[(_vm.imageUrl)?_c('div',{},[(_vm.encryptedData)?_c('div',{staticClass:"encryptedDataIcon"},[_c('i',{staticClass:"fas fa-lock"})]):_vm._e(),_c('div',{staticClass:"imgMsg"},[_c('div',{staticClass:"showImage",style:(_vm.imagePaddingStyle(_vm.content)),on:{"click":function($event){return _vm.openImageGallery(_vm.origin)}}},[_c('div',{staticClass:"abswrapper"},[_c('img',{directives:[{name:"images-loaded",rawName:"v-images-loaded:on.loaded",value:(_vm.imagesLoaded),expression:"imagesLoaded",arg:"on",modifiers:{"loaded":true}}],attrs:{"src":_vm.imageUrl,"alt":""}})])])])]):_c('div',{staticClass:"preloaderImage",style:(_vm.imagePaddingStyle(_vm.content))},[_c('div',{staticClass:"abswrapper"},[_c('linepreloader')],1)])]):_vm._e(),(_vm.content.msgtype === 'm.audio')?_c('div',{staticClass:"messageAudio"},[(_vm.audioUrl)?_c('VoiceMessage',{attrs:{"audioBuffer":_vm.audioUrl,"decryptedInfo":_vm.decryptedInfo,"id":_vm.event._localTimestamp || Date.now()}}):_vm._e()],1):_vm._e(),(_vm.content.msgtype === 'm.encrypted' && !_vm.textWithoutLinks && _vm.badenctypted)?_c('div',{staticClass:"maxcontent",class:{'my' : _vm.my }},[_c('div',{staticClass:"badenctyptedText"},[_c('span',[_vm._v(_vm._s(_vm.$t("caption.unabletoDecrypt")))]),_vm._v(" "),_c('i',{staticClass:"fas fa-undo decryptagain",on:{"click":_vm.decryptagain}})])]):_vm._e(),((_vm.content.msgtype === 'm.text' || _vm.content.msgtype === 'm.encrypted') && _vm.textWithoutLinks)?_c('div',{staticClass:"maxcontent",class:{'my' : _vm.my }},[_c('div',{staticClass:"messageText"},[(_vm.edited)?_c('div',{staticClass:"edited"},[_c('i',{staticClass:"fas fa-pen"}),_vm._v(" "+_vm._s(_vm.$t("caption.edited"))+" ")]):_vm._e(),_c('div',{staticClass:"msgtext"},[_c('IncomingMessage',{attrs:{"message":_vm.textWithoutLinks}})],1),((!_vm.content.from && !_vm.my && _vm.showmeta) || (_vm.showmyicon && !_vm.my))?_c('div',{staticClass:"sendername"},[_c('span',[_c('b',[_vm._v(_vm._s(_vm.userinfo.name))])]),_vm._v(" · "),_c('span',[_vm._v(" "+_vm._s(_vm.format_date(_vm.origin._localTimestamp) || "Now")+" ")])]):_vm._e(),(_vm.reference && !_vm.preview && !_vm.fromreference)?_c('div',{staticClass:"reference showreference",on:{"click":_vm.showreference}},[(!_vm.referenceshowed)?_c('eventsEvent',{attrs:{"event":_vm.reference,"chat":_vm.chat,"preview":true}}):_vm._e(),_c('div',{staticClass:"referenceCaption"},[(!_vm.referenceshowed)?_c('span',[_c('i',{staticClass:"fas fa-share"})]):_c('button',{staticClass:"button ghost small"},[_vm._v("Hide")])])],1):_vm._e(),(_vm.content.from)?_c('div',{staticClass:"from"},[_c('div',{staticClass:"fromCaption"},[_c('i',{staticClass:"fas fa-share-alt"}),_c('span',[_vm._v(_vm._s(_vm.$t("caption.messagefrom"))+" "+_vm._s(this.userinfo.name))])])]):_vm._e()])]):_vm._e(),(_vm.file)?_c('div',{staticClass:"filePreview"},[_c('fileMessage',{attrs:{"encryptedData":_vm.encryptedData,"file":_vm.file,"downloaded":_vm.downloaded},on:{"download":_vm.download}}),(_vm.encryptedData)?_c('div',{staticClass:"encryptedDataIcon"},[_c('i',{staticClass:"fas fa-lock"})]):_vm._e(),(_vm.error)?_c('div',{staticClass:"badencrypted"},[_c('span',[_vm._v(_vm._s(_vm.$t("caption.unabletoDecrypt")))])]):_vm._e()],1):_vm._e(),(_vm.urlpreview)?_c('div',{staticClass:"linkPreview"},[(!_vm.sending)?_c('div',{staticClass:"pr"},[(!_vm.origin.localRedactionEvent() && !_vm.origin.getRedactionEvent())?_c('url',{attrs:{"url":_vm.urlpreview,"urllink":_vm.urlpreview,"preview":true},on:{"updatedSize":_vm.updatedSize}}):_vm._e()],1):_c('div',[_c('linepreloader')],1)]):_vm._e()]):_vm._e(),(_vm.preview)?_c('div',{staticClass:"messagePreview"},[_c('listPreview',{attrs:{"my":_vm.my,"event":_vm.origin,"decryptEvent":_vm.decryptEvent,"userinfo":_vm.userinfo,"chat":_vm.chat,"readed":_vm.readed}})],1):_vm._e(),(_vm.my && _vm.readed && !_vm.preview && !_vm.fromreference)?_c('div',{staticClass:"statusWrapper"},[_c('div',{staticClass:"my"},[_c('i',{staticClass:"fas fa-check-double"}),_vm._v(" "),_c('span',[_vm._v(_vm._s(_vm.$t("caption.messageRead")))])])]):_vm._e()])}
+var messagevue_type_template_id_c8f458dc_scoped_true_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/events/event/message/index.vue?vue&type=template&id=5cf3c392&scoped=true&
+// CONCATENATED MODULE: ./src/components/events/event/message/index.vue?vue&type=template&id=c8f458dc&scoped=true&
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"3c23d37e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/events/event/actions/index.vue?vue&type=template&id=2ac990e8&scoped=true&
-var actionsvue_type_template_id_2ac990e8_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"msgAction"},[_c('div',{staticClass:"contentAction",style:({'margin': _vm.position})},[_c('ul',[_c('li',[_c('a',{attrs:{"href":"google.com"}},[_vm._v(_vm._s(_vm.$t("button.reply"))+" "),_c('i',{staticClass:"fas fa-reply"})])]),_c('li',[_vm._v(_vm._s(_vm.$t("button.copy"))+" "),_c('i',{staticClass:"far fa-copy"})]),_c('li',[_vm._v(_vm._s(_vm.$t("button.forward"))+" "),_c('i',{staticClass:"fas fa-share"})]),_c('li',[_vm._v(_vm._s(_vm.$t("button.delete"))+" "),_c('i',{staticClass:"far fa-trash-alt"})])])])])}
-var actionsvue_type_template_id_2ac990e8_scoped_true_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/events/event/actions/index.vue?vue&type=template&id=9d2b1700&scoped=true&
+var actionsvue_type_template_id_9d2b1700_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"msgAction"},[_c('div',{staticClass:"contentAction",style:({'margin': _vm.position})},[_c('ul',[_c('li',[_c('a',{attrs:{"href":"google.com"}},[_vm._v(_vm._s(_vm.$t("button.reply"))+" "),_c('i',{staticClass:"fas fa-reply"})])]),_c('li',[_vm._v(_vm._s(_vm.$t("button.copy"))+" "),_c('i',{staticClass:"far fa-copy"})]),_c('li',[_vm._v(_vm._s(_vm.$t("button.select"))+" "),_c('i',{staticClass:"far fa-check-circle"})]),_c('li',[_vm._v(_vm._s(_vm.$t("button.forward"))+" "),_c('i',{staticClass:"fas fa-share"})]),_c('li',[_vm._v(_vm._s(_vm.$t("button.delete"))+" "),_c('i',{staticClass:"far fa-trash-alt"})])])])])}
+var actionsvue_type_template_id_9d2b1700_scoped_true_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/events/event/actions/index.vue?vue&type=template&id=2ac990e8&scoped=true&
+// CONCATENATED MODULE: ./src/components/events/event/actions/index.vue?vue&type=template&id=9d2b1700&scoped=true&
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./src/components/events/event/actions?vue&type=script&lang=js&
 
@@ -44768,7 +44888,7 @@ var actionsvue_type_template_id_2ac990e8_scoped_true_staticRenderFns = []
 
 function actions_injectStyles (context) {
   
-  var style0 = __webpack_require__("fc3b")
+  var style0 = __webpack_require__("7acf")
 if (style0.__inject__) style0.__inject__(context)
 
 }
@@ -44777,24 +44897,24 @@ if (style0.__inject__) style0.__inject__(context)
 
 var actions_component = Object(componentNormalizer["a" /* default */])(
   event_actions_vue_type_script_lang_js_,
-  actionsvue_type_template_id_2ac990e8_scoped_true_render,
-  actionsvue_type_template_id_2ac990e8_scoped_true_staticRenderFns,
+  actionsvue_type_template_id_9d2b1700_scoped_true_render,
+  actionsvue_type_template_id_9d2b1700_scoped_true_staticRenderFns,
   false,
   actions_injectStyles,
-  "2ac990e8",
+  "9d2b1700",
   null
   ,true
 )
 
 /* harmony default export */ var actions = (actions_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"3c23d37e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/events/previews/filePreview/index.vue?vue&type=template&id=3d50eb11&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/events/previews/filePreview/index.vue?vue&type=template&id=3d50eb11&
 var filePreviewvue_type_template_id_3d50eb11_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('span',[_c('clip-loader',{staticClass:"clipLoader",attrs:{"size":'25px',"color":'#0035a8',"loading":true}}),_c('p',[_vm._v(_vm._s(_vm.preview.name))]),_c('p',[_vm._v(_vm._s(_vm.preview.size))])],1)}
 var filePreviewvue_type_template_id_3d50eb11_staticRenderFns = []
 
 
 // CONCATENATED MODULE: ./src/components/events/previews/filePreview/index.vue?vue&type=template&id=3d50eb11&
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"3c23d37e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/vue-spinner/src/ClipLoader.vue?vue&type=template&id=7edc50d8&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/vue-spinner/src/ClipLoader.vue?vue&type=template&id=7edc50d8&
 var ClipLoadervue_type_template_id_7edc50d8_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.loading),expression:"loading"}],staticClass:"v-spinner"},[_c('div',{staticClass:"v-clip",style:(_vm.spinnerStyle)})])}
 var ClipLoadervue_type_template_id_7edc50d8_staticRenderFns = []
 
@@ -44913,14 +45033,14 @@ var filePreview_component = Object(componentNormalizer["a" /* default */])(
 // EXTERNAL MODULE: ./src/components/events/event/fileMessage/index.vue + 4 modules
 var fileMessage = __webpack_require__("696c2");
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"3c23d37e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/events/event/message/listPreview/index.vue?vue&type=template&id=ba5ac396&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/events/event/message/listPreview/index.vue?vue&type=template&id=ba5ac396&scoped=true&
 var listPreviewvue_type_template_id_ba5ac396_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"listPreview"},[(_vm.urlpreview && _vm.metaPreviewLink)?_c('div',{staticClass:"previewMessage"},[(_vm.senderName)?_c('span',{staticClass:"sname txt"},[_vm._v(_vm._s(_vm.senderName)+" ")]):_vm._e(),_c('span',{staticClass:"linkTitle txt"},[_vm._v("sent link: "+_vm._s(_vm.meta['og:title'])+" ")]),(_vm.meta['og:site_name'] === 'Pocketnet')?_c('span',{staticClass:"pocketnetLink"},[_vm._v(" "+_vm._s(_vm.meta['og:site_name'])+" ")]):_c('span',[_vm._v(" "+_vm._s(_vm.meta['og:site_name'])+" ")])]):_vm._e(),(_vm.content.msgtype === 'm.file')?_c('div',{staticClass:"previewMessage"},[(_vm.senderName)?_c('span',{staticClass:"sname txt"},[_vm._v(_vm._s(_vm.senderName)+" ")]):_vm._e(),_c('span',{staticClass:"txt"},[_vm._v(" sent file: "+_vm._s(JSON.parse(_vm.content.body).name)+" ")])]):_vm._e(),(_vm.content.msgtype === 'm.bad.encrypted')?_c('div',{staticClass:"previewMessage"},[_c('span',[_vm._v(" "+_vm._s(_vm.$t("caption.unabletoDecrypt"))+" ")])]):_vm._e(),(_vm.event.event.type === 'm.room.redaction')?_c('div',{staticClass:"previewMessage"},[_c('span',{staticClass:"txt"},[_c('i',{staticClass:"fas fa-eraser"}),_vm._v(" "+_vm._s(_vm.$t("caption.messageDeleted"))+" ")])]):_vm._e(),(_vm.event.event.type === 'm.room.power_levels')?_c('div',{staticClass:"previewMessage"},[(_vm.senderName)?_c('span',{staticClass:"txt sname"},[_vm._v(_vm._s(_vm.senderName)+" ")]):_vm._e(),_c('span',{staticClass:"txt"},[_vm._v(" "+_vm._s(_vm.powerLevels)+" ")])]):_vm._e(),(_vm.content.msgtype === 'm.image')?_c('div',{staticClass:"previewMessage"},[(_vm.senderName)?_c('span',{staticClass:"txt sname"},[_vm._v(_vm._s(_vm.senderName)+" ")]):_vm._e(),_c('span',{staticClass:"txt"},[_vm._v(_vm._s(_vm.$t("caption.sentImage")))])]):_vm._e(),(_vm.content.msgtype === 'm.audio')?_c('div',{staticClass:"previewMessage"},[(_vm.senderName)?_c('span',{staticClass:"txt sname"},[_vm._v(_vm._s(_vm.senderName)+" ")]):_vm._e(),_c('span',{staticClass:"txt"},[_vm._v(_vm._s(_vm.$t("caption.sentVoiceMessage")))])]):_vm._e(),((_vm.content.msgtype === 'm.text') && !_vm.urlpreview)?_c('div',{staticClass:"previewMessage"},[(_vm.senderName && _vm.senderName!= 'You')?_c('span',{staticClass:"txt sname"},[_vm._v(_vm._s(_vm.senderName)+": ")]):_vm._e(),_c('span',{staticClass:"txt"},[_c('IncomingMessage',{attrs:{"message":_vm.content.body}})],1)]):_vm._e(),(_vm.content.msgtype === 'm.encrypted' && !_vm.urlpreview)?_c('div',{staticClass:"previewMessage"},[(_vm.senderName && _vm.senderName!= 'You')?_c('span',{staticClass:"txt sname"},[_vm._v(_vm._s(_vm.senderName)+": ")]):_vm._e(),_c('span',{staticClass:"txt"},[_c('IncomingMessage',{attrs:{"message":_vm.decryptEvent.body}})],1)]):_vm._e(),(_vm.content.membership === 'invite')?_c('div',{staticClass:"invitedEvent"},[(_vm.tetatetchat)?_c('span',{staticClass:"txt"},[_vm._v(_vm._s(_vm.$t("caption.invitationToChat")))]):_vm._e(),(!_vm.tetatetchat)?_c('span',{staticClass:"txt"},[_vm._v(_vm._s(_vm.$t("caption.invitationToRoom")))]):_vm._e()]):_vm._e(),(_vm.content.membership === 'leave')?_c('div',{staticClass:"previewMessage"},[(_vm.senderName)?_c('span',{staticClass:"txt sname"},[_vm._v(_vm._s(_vm.senderName)+": ")]):_vm._e(),_c('span',{staticClass:"txt sname"},[_vm._v(" "+_vm._s(_vm.name)+" ")]),_c('span',{staticClass:"txt"},[_vm._v(_vm._s(_vm.$t("caption.leftChat")))])]):_vm._e(),(_vm.content.membership === 'ban')?_c('div',[(_vm.senderName)?_c('span',{staticClass:"txt sname"},[_vm._v(_vm._s(_vm.senderName)+" ")]):_vm._e(),_vm._v(" "),_c('span',{staticClass:"txt"},[_vm._v("banned "+_vm._s(_vm.content.displayname))])]):_vm._e(),(_vm.content.membership === 'join' && _vm.event.getSender() !== _vm.userId)?_c('div',{staticClass:"invitedEvent"},[(_vm.senderName)?_c('span',{staticClass:"txt sname"},[_vm._v(_vm._s(_vm.senderName)+" ")]):_vm._e(),_c('span',{staticClass:"txt"},[_vm._v(_vm._s(_vm.$t("caption.joined")))])]):_vm._e(),(_vm.content.name)?_c('div',[_c('span',{staticClass:"txt"},[_vm._v(_vm._s(_vm.$t("caption.chatRenamed"))+" "),_c('b',[_vm._v(_vm._s(_vm.content.name))])])]):_vm._e(),(_vm.content.topic)?_c('div',[_c('span',{staticClass:"txt"},[_vm._v(_vm._s(_vm.$t("caption.chatTopic"))+" "),_c('b',[_vm._v(_vm._s(_vm.content.topic.replace(/_/g, ' ')))])])]):_vm._e(),(_vm.readed)?_c('div',{staticClass:"statusWrapper"},[(_vm.my)?_c('div',{staticClass:"my"},[_c('i',{staticClass:"fas fa-check-double"})]):_vm._e()]):_vm._e()])}
 var listPreviewvue_type_template_id_ba5ac396_scoped_true_staticRenderFns = []
 
 
 // CONCATENATED MODULE: ./src/components/events/event/message/listPreview/index.vue?vue&type=template&id=ba5ac396&scoped=true&
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"3c23d37e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/events/event/message/incomingMessage/incomingMessage.vue?vue&type=template&id=6b3704ba&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/events/event/message/incomingMessage/incomingMessage.vue?vue&type=template&id=6b3704ba&scoped=true&
 var incomingMessagevue_type_template_id_6b3704ba_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('label',_vm._l((_vm.chunks),function(chunk,index){return _c('label',{key:index,attrs:{"chunks":_vm.chunks}},[(chunk.id)?_c('label',{staticClass:"likelink",on:{"click":function($event){return _vm.show(chunk)}}},[_vm._v("@"+_vm._s(chunk.name))]):_c('label',[_vm._v(_vm._s(chunk))])])}),0)}
 var incomingMessagevue_type_template_id_6b3704ba_scoped_true_staticRenderFns = []
 
@@ -45214,7 +45334,7 @@ var listPreview_component = Object(componentNormalizer["a" /* default */])(
 )
 
 /* harmony default export */ var listPreview = (listPreview_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"3c23d37e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/events/event/url/index.vue?vue&type=template&id=791cf1f7&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/events/event/url/index.vue?vue&type=template&id=791cf1f7&scoped=true&
 var urlvue_type_template_id_791cf1f7_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"urlMessage",attrs:{"id":"url"}},[(_vm.urltype!= 'impty' && !_vm.error)?_c('div',{staticClass:"urlwrapper"},[(!_vm.loading)?_c('metaMessage',{ref:"metamessage",attrs:{"type":_vm.urltype,"name":_vm.meta['og:site_name'],"title":_vm.meta['og:title'],"description":_vm.meta['og:description'],"image":_vm.previewImageUrl,"url":_vm.url,"h":_vm.meta['og:image:height'],"w":_vm.meta['og:image:width']},on:{"updatedSize":_vm.updatedSize}}):_c('div',[_c('div',{staticClass:"preloaderWrapperLocal"},[_c('linepreloader')],1)])],1):_vm._e()])}
 var urlvue_type_template_id_791cf1f7_scoped_true_staticRenderFns = []
 
@@ -45384,15 +45504,19 @@ var url_component = Object(componentNormalizer["a" /* default */])(
 var vueimagesloaded = __webpack_require__("8ff0");
 var vueimagesloaded_default = /*#__PURE__*/__webpack_require__.n(vueimagesloaded);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"3c23d37e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/events/event/VoiceMessage/index.vue?vue&type=template&id=73b53530&scoped=true&
-var VoiceMessagevue_type_template_id_73b53530_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"voiceMessage",class:{playing:_vm.isPlaying}},[_c('div',{staticClass:"voiceMessage_wrapper"},[_c('button',{staticClass:"voiceMessage_toggle",on:{"touchend":_vm.audioToggle,"click":_vm.audioToggleClick}},[_c('i',{class:_vm.isPlaying ? 'fas fa-pause': 'fas fa-play'})]),_c('div',{staticClass:"voiceMessage_graph"},[_c('canvas',{ref:"canvas",attrs:{"width":"100","height":"50"},on:{"mousedown":_vm.goTo}})]),_c('div',{staticClass:"voiceMessage_options"},[(!_vm.error)?_c('span',[_vm._v(_vm._s(_vm.getDurationString))]):_vm._e(),(_vm.error)?_c('i',{staticClass:"fas fa-exclamation-circle"}):_vm._e()])])])}
-var VoiceMessagevue_type_template_id_73b53530_scoped_true_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/events/event/VoiceMessage/index.vue?vue&type=template&id=0438bc11&scoped=true&
+var VoiceMessagevue_type_template_id_0438bc11_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"voiceMessage",class:{playing:_vm.isPlaying}},[_c('div',{staticClass:"voiceMessage_wrapper"},[_c('button',{staticClass:"voiceMessage_toggle",class:{encrypted: _vm.encrypted},on:{"touchend":_vm.audioToggle,"click":_vm.audioToggleClick}},[_c('i',{class:_vm.isPlaying ? 'fas fa-pause': 'fas fa-play'})]),_c('div',{staticClass:"voiceMessage_graph"},[_c('canvas',{ref:"canvas",attrs:{"width":"100","height":"50"},on:{"mousedown":_vm.goTo}})]),_c('div',{staticClass:"voiceMessage_options"},[(!_vm.error)?_c('span',[_vm._v(_vm._s(_vm.getDurationString))]):_vm._e(),(_vm.error)?_c('i',{staticClass:"fas fa-exclamation-circle"}):_vm._e()]),(_vm.encrypted && !_vm.error)?_c('div',{staticClass:"encsign"},[_c('i',{staticClass:"fas fa-lock"})]):_vm._e()])])}
+var VoiceMessagevue_type_template_id_0438bc11_scoped_true_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/events/event/VoiceMessage/index.vue?vue&type=template&id=73b53530&scoped=true&
+// CONCATENATED MODULE: ./src/components/events/event/VoiceMessage/index.vue?vue&type=template&id=0438bc11&scoped=true&
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/events/event/VoiceMessage/index.vue?vue&type=script&lang=js&
 
+//
+//
+//
+//
 //
 //
 //
@@ -45415,6 +45539,7 @@ var VoiceMessagevue_type_template_id_73b53530_scoped_true_staticRenderFns = []
 /* harmony default export */ var VoiceMessagevue_type_script_lang_js_ = ({
   name: "VoiceMessage",
   props: {
+    decryptedInfo: Object,
     audioBuffer: {
       type: String | null,
       required: true
@@ -45462,7 +45587,12 @@ var VoiceMessagevue_type_template_id_73b53530_scoped_true_staticRenderFns = []
       if (!this.isPlaying) {} else {}
     }
   },
-  computed: { ...Object(vuex_esm["c" /* mapState */])({
+  computed: {
+    encrypted() {
+      return this.decryptedInfo ? true : false;
+    },
+
+    ...Object(vuex_esm["c" /* mapState */])({
       mobile: state => state.mobile
     }),
 
@@ -45495,6 +45625,7 @@ var VoiceMessagevue_type_template_id_73b53530_scoped_true_staticRenderFns = []
   },
   methods: {
     goTo(e) {
+      if (!this.$refs.canvas) return;
       var dr = e.offsetX / this.$refs.canvas.width * this.duration;
 
       if (!this.isPlaying) {
@@ -45625,7 +45756,7 @@ var VoiceMessagevue_type_template_id_73b53530_scoped_true_staticRenderFns = []
       let audioNode = null;
       audioNode = this.audioContext.createBufferSource();
       audioNode.buffer = this.audiobuffer;
-      audioNode.connect(this.audioContext.destination);
+      audioNode.connect(this.audioContext.destination); ///let unmuteHandle = unmute(context, allowBackgroundPlayback, forceIOSBehavior);
 
       audioNode.onended = () => {
         this.audio = null;
@@ -45656,7 +45787,6 @@ var VoiceMessagevue_type_template_id_73b53530_scoped_true_staticRenderFns = []
           _this.audioContext = _this.core.getAudioContext(); //new (window.AudioContext || window.webkitAudioContext)() || null;
         } catch (e) {
           _this.error = e;
-          console.log(e);
         }
 
         if (_this.error) return;
@@ -45680,8 +45810,7 @@ var VoiceMessagevue_type_template_id_73b53530_scoped_true_staticRenderFns = []
             _this.draw();
           });
         } catch (e) {
-          _this.error = e;
-          console.error(e);
+          _this.error = e; //console.error(e)
         }
       })();
     }
@@ -45696,7 +45825,7 @@ var VoiceMessagevue_type_template_id_73b53530_scoped_true_staticRenderFns = []
 
 function VoiceMessage_injectStyles (context) {
   
-  var style0 = __webpack_require__("d2d5")
+  var style0 = __webpack_require__("e86a")
 if (style0.__inject__) style0.__inject__(context)
 
 }
@@ -45705,11 +45834,11 @@ if (style0.__inject__) style0.__inject__(context)
 
 var VoiceMessage_component = Object(componentNormalizer["a" /* default */])(
   event_VoiceMessagevue_type_script_lang_js_,
-  VoiceMessagevue_type_template_id_73b53530_scoped_true_render,
-  VoiceMessagevue_type_template_id_73b53530_scoped_true_staticRenderFns,
+  VoiceMessagevue_type_template_id_0438bc11_scoped_true_render,
+  VoiceMessagevue_type_template_id_0438bc11_scoped_true_staticRenderFns,
   false,
   VoiceMessage_injectStyles,
-  "73b53530",
+  "0438bc11",
   null
   ,true
 )
@@ -45755,6 +45884,15 @@ var VoiceMessage_component = Object(componentNormalizer["a" /* default */])(
     last: Boolean,
     showmyicontrue: false,
     fromreference: Boolean,
+    multiSelect: {
+      default: false,
+      type: Boolean
+    },
+    selectedMessages: {
+      default: [],
+      type: Array
+    },
+    isRemoveSelectedMessages: false,
     audioBuffer: null
   },
   directives: {
@@ -45776,6 +45914,23 @@ var VoiceMessage_component = Object(componentNormalizer["a" /* default */])(
     VoiceMessage: VoiceMessage
   },
   watch: {
+    isRemoveSelectedMessages: {
+      immediate: true,
+      handler: function () {
+        if (this.isRemoveSelectedMessages) {
+          for (let i = 0; i < this.selectedMessages.length; i++) {
+            if (this.selectedMessages[i].message_id === this.origin.event.event_id) {
+              this.$emit('remove');
+              return this.core.mtrx.client.redactEvent(this.chat.roomId, this.origin.event.event_id, null, {
+                reason: 'messagedeleting'
+              });
+            }
+          }
+
+          this.$emit('messagesIsDeleted', true);
+        }
+      }
+    },
     readyToRender: {
       immediate: true,
       handler: function () {
@@ -45906,6 +46061,10 @@ var VoiceMessage_component = Object(componentNormalizer["a" /* default */])(
         click: "reply",
         title: this.$i18n.t("button.reply"),
         icon: "fas fa-reply"
+      }, {
+        click: "showMultiSelect",
+        title: this.$i18n.t("button.select"),
+        icon: "fas fa-check-circle"
       }];
 
       if (!this.file) {
@@ -45961,8 +46120,17 @@ var VoiceMessage_component = Object(componentNormalizer["a" /* default */])(
     edited: function () {
       if (this.content.edited) return true;
       if (this.origin.event.content['m.relates_to'] && this.origin.event.content['m.relates_to']['rel_type'] == 'm.replace') return true;
+    },
+    selectedMessage: function () {
+      var _elem$;
+
+      const elem = this.selectedMessages.filter(item => item.message_id === this.origin.event.event_id);
+      return ((_elem$ = elem[0]) === null || _elem$ === void 0 ? void 0 : _elem$.message_id) === this.origin.event.event_id ? true : false;
     }
   },
+
+  mounted() {},
+
   methods: {
     gotoreference: function () {
       var id = this.reference.getId();
@@ -46019,6 +46187,11 @@ var VoiceMessage_component = Object(componentNormalizer["a" /* default */])(
     },
     menuedit: function () {
       this.$emit('editing', this.body);
+      return Promise.resolve();
+    },
+    menushowMultiSelect: function () {
+      this.$emit('showMultiSelect');
+      this.selectMessage();
       return Promise.resolve();
     },
     menureply: function () {
@@ -46125,6 +46298,32 @@ var VoiceMessage_component = Object(componentNormalizer["a" /* default */])(
 
     showreference: function () {
       this.referenceshowed = !this.referenceshowed;
+    },
+    selectMessage: function () {
+      var sharing = {};
+      var trimmed = this.$f.trim(this.body);
+      if (this.content.msgtype === 'm.image' && this.imageUrl) sharing.images = [this.imageUrl];
+      if (this.content.msgtype === 'm.audio' && this.decryptedInfo) sharing.audio = [this.decryptedInfo];
+      if ((this.content.msgtype === 'm.text' || this.content.msgtype === 'm.encrypted') && trimmed) sharing.messages = [trimmed]; //if(this.urlpreview) sharing.urls = [urlpreview]
+
+      if (this.file) {
+        sharing.download = true;
+      } //sharing.route = 'chat?id=' + this.chat.roomId
+
+
+      sharing.from = this.userinfo.id;
+      this.$emit('selectMessage', {
+        message_id: this.origin.event.event_id,
+        ...sharing
+      });
+    },
+    removeMessage: function () {
+      this.$emit('removeMessage', {
+        message_id: this.origin.event.event_id
+      });
+    },
+    eventMessage: function (state) {
+      state ? this.removeMessage() : this.selectMessage();
     }
   }
 });
@@ -46136,7 +46335,7 @@ var VoiceMessage_component = Object(componentNormalizer["a" /* default */])(
 
 function message_injectStyles (context) {
   
-  var style0 = __webpack_require__("dd89")
+  var style0 = __webpack_require__("dd47")
 if (style0.__inject__) style0.__inject__(context)
 
 }
@@ -46145,11 +46344,11 @@ if (style0.__inject__) style0.__inject__(context)
 
 var message_component = Object(componentNormalizer["a" /* default */])(
   event_message_vue_type_script_lang_js_,
-  messagevue_type_template_id_5cf3c392_scoped_true_render,
-  messagevue_type_template_id_5cf3c392_scoped_true_staticRenderFns,
+  messagevue_type_template_id_c8f458dc_scoped_true_render,
+  messagevue_type_template_id_c8f458dc_scoped_true_staticRenderFns,
   false,
   message_injectStyles,
-  "5cf3c392",
+  "c8f458dc",
   null
   ,true
 )
@@ -46157,6 +46356,12 @@ var message_component = Object(componentNormalizer["a" /* default */])(
 /* harmony default export */ var message = (message_component.exports);
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/events/event/index.vue?vue&type=script&lang=js&
 
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -46298,7 +46503,18 @@ var message_component = Object(componentNormalizer["a" /* default */])(
     galleryData: {},
     goToGallery: Function,
     clientWidth: Number,
-    fromreference: Boolean
+    fromreference: Boolean,
+    multiSelect: {
+      default: false,
+      type: Boolean
+    },
+    selectedMessages: {
+      type: Array,
+      default: () => {
+        return [];
+      }
+    },
+    isRemoveSelectedMessages: false
   },
   computed: {
     /*readyToRender : function(){
@@ -46504,8 +46720,7 @@ var message_component = Object(componentNormalizer["a" /* default */])(
     getAudioUnencrypt() {
       this.core.mtrx.getAudioUnencrypt(this.chat, this.event).then(url => {
         this.audioBuffer = url; //this.$set(this.event.event.content, 'audioData', url)
-      }).catch(e => {
-        console.error(e);
+      }).catch(e => {//console.error(e)
       });
     },
 
@@ -46513,7 +46728,10 @@ var message_component = Object(componentNormalizer["a" /* default */])(
       var _this = this;
 
       return Object(asyncToGenerator["a" /* default */])(function* () {
+        console.log("decryptAudiodecryptAudiodecryptAudiodecryptAudio");
+
         _this.core.mtrx.getAudio(_this.chat, _this.event).then(url => {
+          console.log("HE");
           _this.decryptedInfo = url;
         }).catch(e => {
           _this.event.event.decryptKey = _this.decryptKey = {
@@ -46550,6 +46768,8 @@ var message_component = Object(componentNormalizer["a" /* default */])(
       var _this4 = this;
 
       return Object(asyncToGenerator["a" /* default */])(function* () {
+        console.log('this.event', _this4.event);
+
         if (_this4.event.event.decrypted) {
           _this4.decryptEvent = _this4.event.event.decrypted;
           return Promise.resolve();
@@ -46584,6 +46804,18 @@ var message_component = Object(componentNormalizer["a" /* default */])(
     },
     menuIsVisibleHandler: function (isVisible) {
       this.$emit('menuIsVisible', isVisible);
+    },
+    selectMessage: function (message) {
+      this.$emit('selectMessage', message);
+    },
+    removeMessage: function (message) {
+      this.$emit('removeMessage', message);
+    },
+    shareManyMessages: function (isShare) {
+      this.$emit('shareManyMessages', isShare);
+    },
+    messagesIsDeleted: function (state) {
+      this.$emit('messagesIsDeleted', state);
     }
   }
 });
@@ -46595,7 +46827,7 @@ var message_component = Object(componentNormalizer["a" /* default */])(
 
 function event_injectStyles (context) {
   
-  var style0 = __webpack_require__("441c")
+  var style0 = __webpack_require__("72a7")
 if (style0.__inject__) style0.__inject__(context)
 
 }
@@ -46608,7 +46840,7 @@ var event_component = Object(componentNormalizer["a" /* default */])(
   staticRenderFns,
   false,
   event_injectStyles,
-  "20528478",
+  "659136c0",
   null
   ,true
 )
@@ -48002,7 +48234,7 @@ SyncApi.prototype.createRoom = function (roomId) {
     timelineSupport,
     unstableClientRelationAggregation
   });
-  client.reEmitter.reEmit(room, ["Room.name", "Room.timeline", "Room.redaction", "Room.redactionCancelled", "Room.receipt", "Room.tags", "Room.timelineReset", "Room.localEchoUpdated", "Room.accountData", "Room.myMembership", "Room.replaceEvent"]);
+  client.reEmitter.reEmit(room, ["Room.name", "Room.avatar", "Room.timeline", "Room.redaction", "Room.redactionCancelled", "Room.receipt", "Room.tags", "Room.timelineReset", "Room.localEchoUpdated", "Room.accountData", "Room.myMembership", "Room.replaceEvent"]);
 
   this._registerStateListeners(room);
 
@@ -49692,6 +49924,18 @@ function createNewUser(client, userId) {
 
 /***/ }),
 
+/***/ "64a6":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_name_vue_vue_type_style_index_0_id_72a9c575_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("b1e0");
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_name_vue_vue_type_style_index_0_id_72a9c575_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_name_vue_vue_type_style_index_0_id_72a9c575_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_name_vue_vue_type_style_index_0_id_72a9c575_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_name_vue_vue_type_style_index_0_id_72a9c575_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+
+
+/***/ }),
+
 /***/ "651d":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -49722,24 +49966,6 @@ exports.push([module.i, ".topheader[data-v-62a1ab6a]{top:0;z-index:999}.newChat[
 // Exports
 module.exports = exports;
 
-
-/***/ }),
-
-/***/ "662f":
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__("e71e");
-if(content.__esModule) content = content.default;
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add CSS to Shadow Root
-var add = __webpack_require__("35d6").default
-module.exports.__inject__ = function (shadowRoot) {
-  add("4e2c335f", content, shadowRoot)
-};
 
 /***/ }),
 
@@ -50848,7 +51074,7 @@ MemoryStore.prototype = {
 
 "use strict";
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"3c23d37e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/events/event/fileMessage/index.vue?vue&type=template&id=0f8b05de&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/events/event/fileMessage/index.vue?vue&type=template&id=0f8b05de&scoped=true&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"wrapper table"},[_c('div',{staticClass:"filecontent"},[_c('div',{staticClass:"name"},[_c('span',[_vm._v(_vm._s(_vm.file.name))])]),_c('div',{staticClass:"size"},[_c('span',[_vm._v(_vm._s(_vm.humanReadableSize(_vm.file.size)))])]),(!_vm.encryptedData)?_c('div',{staticClass:"download"},[_c('a',{staticClass:"fileMessage",attrs:{"href":_vm.file.url,"download":_vm.download,"target":"_external"}},[_c('button',{staticClass:"button small rounded"},[(!_vm.downloaded)?_c('span',[_vm._v(_vm._s(_vm.$t("button.download")))]):_c('span',[_vm._v(_vm._s(_vm.$t("button.downloaded")))])])])]):_c('div',{staticClass:"download"},[_c('button',{staticClass:"button small rounded",on:{"click":_vm.download}},[(!_vm.downloaded)?_c('span',[_vm._v(_vm._s(_vm.$t("button.download")))]):_c('span',[_vm._v(_vm._s(_vm.$t("button.downloaded")))])])])]),_c('div',{staticClass:"icon"},[_c('a',{staticClass:"fileMessage",attrs:{"href":_vm.file.url,"download":_vm.download,"target":"_external"}},[_c('i',{staticClass:"fas fa-file-download"})])])])}
 var staticRenderFns = []
 
@@ -51227,6 +51453,24 @@ exports.default = Block;
 
 /***/ }),
 
+/***/ "6a45":
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__("76a3");
+if(content.__esModule) content = content.default;
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add CSS to Shadow Root
+var add = __webpack_require__("35d6").default
+module.exports.__inject__ = function (shadowRoot) {
+  add("0017b470", content, shadowRoot)
+};
+
+/***/ }),
+
 /***/ "6b38":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -51270,39 +51514,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ "6ce2":
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"caption\":{\"create\":\"Create\",\"addPublicChatName\":\"Add Public Chat Name\",\"addGroupNamePlaceHolder\":\"Add Group Name\",\"createPublicChat\":\"Create public chat\",\"chatTopic\":\"Topic renamed\",\"asModerator\":\"as moderator\",\"marked\":\"marked\",\"unmarked\":\"unmarked\",\"removeBan\":\"Remove Ban\",\"cancelModeration\":\"Remove moderation\",\"uploadFiles\":\"Herunterladen von Dateien\",\"header\":\"Header\",\"dragAndDropAFile\":\"Drag & Drop-Datei\",\"chatInvite\":\"Sie wurden eingeladen mit Benutzer zu chatten:\",\"cantJoion\":\"Sie können den Chat mit dem Benutzer nicht beitreten:\",\"chatInviteDecline\":\"Sie können im Chat teilnehmen oder Einladung ablehnen\",\"creatorLeft\":\"Weil der Schöpfer den Raum verlassen hat\",\"encrypted\":\"Verschlüssel\",\"noImages\":\"Es gibt noch keine Bilder in diesem Chat\",\"noFiles\":\"There are no files in this chat yet\",\"inviteUser\":\"Benutzer einladen\",\"invite\":\"Einladen\",\"add\":\"Hinzufügen\",\"mute\":\"Stumm\",\"unmute\":\"Ton aktivieren\",\"leave\":\"Verlassen\",\"Info\":\"Info\",\"new\":\"Neue\",\"typing\":\"Tippt\",\"accNotFound\":\"Ihr Konto wurde nicht in der Blockchain gefunden. Vielleicht müssen Sie warten\",\"emptyList\":\"liste ist leer ( gefiltert oder nur leer )\",\"welcome\":\"Willkommen bei Pocketnet Chat\",\"startNewChat\":\"Fangen Sie einen neuen chat an\",\"chats\":\"Chats\",\"shareWith\":\"Teilen mit\",\"newChat\":\"Neuer Chat\",\"moveToChat\":\"Zum Chat wechseln\",\"queryNoResults\":\"Abfrage meldet keine Ergebnisse\",\"needMoreCharacters\":\"Benötigen Sie mehr Zeichen für das Ergebnis\",\"createGroup\":\"Gruppe erstellen\",\"unabletoDecrypt\":\"* Kann nicht entschlüsselnt\",\"messageDeleted\":\"Nachricht gelöscht\",\"sentImage\":\"gesendetes Bild\",\"sentVoiceMessage\":\"eine Sprachnachricht gesendet\",\"invitationToChat\":\"Einladung zum Chat\",\"invitationToRoom\":\"Invitation to room\",\"leftChat\":\"Hat den chat verlasst\",\"joined\":\"beitretet\",\"chatRenamed\":\"Chat umbenannt in\",\"recentComment\":\"Letzter Kommentar:\",\"share\":\"AKTIE\",\"followers\":\"Anhänger:\",\"reputation\":\"Reputation:\",\"following\":\"Folgen:\",\"theme\":\"Thema:\",\"contacts\":\"Kontakte\",\"phoneContacts\":\"Telefonische Kontakte\",\"chooseInviteMedia\":\"Bitte wählen Sie, wie Sie einladen möchten\",\"admin\":\"Admin\",\"moderator\":\"Moderator\",\"videocall\":\"Videoanrufe\",\"call\":\"Anruf\",\"leaveAndDelete\":\"Verlassen und Löschen\",\"donate\":\"Donate\",\"makeModerator\":\"Als Moderator ernennen\",\"ban\":\"Ban\",\"kick\":\"Kick\",\"members\":\"Mitglieds\",\"media\":\"Media\",\"files\":\"Datei\",\"contactsList\":\"Kontaktliste\",\"send\":\"Senden\",\"pageCaption\":\"Seite Beschriftung\",\"caption\":\"Beschriftung\",\"text\":\"Text\",\"placeholder\":\"Platzhalter\",\"sendTransactionTo\":\"Transaktion senden an\",\"toBePaidByReceiver\":\"Zahlung durch den Empfänger\",\"toBePaidBySender\":\"Zahlung durch Absender\",\"source\":\"Quelle\",\"amount\":\"Anzahl\",\"receiver\":\"Empfänger\",\"message\":\"Nachricht\",\"includeFeesInAmount\":\"Gebühren in den Betrag einbeziehen\",\"transactionFees\":\"Gebühren pro Transaktion\",\"totalAmount\":\"Insgesamt\",\"balanceTooLow\":\"Bilanz zu niedrig\",\"transactionError\":\"Fehler: Transaktion kann nicht ausgeführt werden\",\"calculateFees\":\"Gebühren berechnen\",\"startChatWith\":\"Chat anfangen mit\",\"searchResult\":\"Ergebnis der Suche\",\"joinedInTheChat\":\"in den Chat eingeloggt\",\"invited\":\"eingeladet \",\"inTheChat\":\" in den chat\",\"banned\":\"banned\",\"andRoom\":\"und Zimmer\",\"left\":\"verließt\",\"theChat\":\" Chat \",\"made\":\"Gemacht \",\"aModerator\":\" Moderator\",\"editedChatNameTo \":\"änderte den Chat-Namen in \",\"somebody\":\"Jemand\",\"sent\":\"gesendet\",\"PKOINto\":\" PKOIN für \",\"response\":\"Antwort\",\"edited\":\"Bearbeitet\",\"settings\":\"Einstellungen\",\"unauthorized\":\"Nicht autorisiert\",\"search\":\"Suche\",\"replyOnMessage\":\"Antwort auf Nachricht\",\"editMessage\":\"Nachricht bearbeiten\",\"inviteFriend\":\"Пригласите друзей\",\"emptyContactList\":\"Список контактов пуст\",\"joinApp\":\"Pocketnet beitreten\",\"hasInvitedToJoin\":\"hat Sie eingeladen, Pocketnet beizutreten\",\"messagefrom\":\"Forwarded message\",\"usernotgen\":\"User did not generate their encryption keys yet. You will be able to chat them when their keys are generated.\",\"younotgen\":\"Please wait a minute, Your encryption keys are being generated...\",\"chatsearchingempty\":\"No chats found for the specified filter\",\"sendmessage\":\"Send message\"},\"input\":{\"patientEmailPlaceholder\":\"Email\",\"refillNamePlaceholder\":\"Den Namen Nachfüllen\"},\"message\":{},\"button\":{\"starChatButton\":\"Chat anfangen\",\"decline\":\"Ablehnen\",\"join\":\"Beitreten\",\"ok\":\"Ok\",\"copy\":\"Kopieren\",\"forward\":\"Weiterleiten\",\"delete\":\"Löschen\",\"save\":\"Speichern\",\"reply\":\"Antworten\",\"share\":\"Share\",\"download\":\"Herunterladen\",\"downloaded\":\"Herunterladen\",\"goToPocketnetProfile\":\"Zum Pocketnet Profil\",\"sendFile\":\"Datai senden\",\"takePhotoOrVideo\":\"Foto machen\",\"sendCoins\":\"Münzen senden\",\"edit\":\"Bearbeiten\",\"block\":\"Sperren\",\"unblock\":\"Entsperren\",\"blockUser\":\"Benutzer sperren\"},\"yes\":\"Ja\",\"cancel\":\"Abbrechen\",\"teamMessages\":{\"1-title\":\"Willkommen beim privaten Bastyon-Chat!\",\"1-list1\":\"Privater Messenger, der NICHT mit Ihrer Telefonnummer verbunden ist.\",\"1-list2\":\"Standardmäßig Ende-zu-Ende-Verschlüsselung jedes 1-zu-1-Gesprächs\",\"1-list3\":\"Alle per Chat gesendeten oder empfangenen Bilder werden verschlüsselt gespeichert\",\"1-list4\":\"Der Nachrichtenverlauf wird nur 7 Tage lang gespeichert\",\"2-title\":\"Eine riesige Ankündigung! Die Pocketnet-Anwendung heißt jetzt Bastyon!\",\"2-message1\":\"Die Domain wird auf Bastyon.com verschoben. Wir haben kürzlich die folgenden wichtigen Updates veröffentlicht:\",\"2-list1\":\"Privater verschlüsselter Messenger, der nicht mit Ihrer Telefonnummer verbunden ist\",\"2-list2\":\"Möglichkeit, PKOIN an Blogger zu spenden\",\"2-list3\":\"Video- und Live-Streaming\",\"2-message2\":\"Laden Sie jetzt Ihre Freunde ein und werden Sie Teil der großen Zukunft des dezentralen Internets!\",\"2-button\":\"Freunde einladen\"},\"sendingerror\":\"An error occurred while sending the message\",\"details\":\"Details\",\"settings_pin\":\"Pin chat window\",\"checked\":\"Yes\",\"unchecked\":\"No\",\"settings_read\":\"Send read receipts\",\"messagewasburn\":\"This message remains only in the memory of your device\",\"messagewillburn\":\"The message will be deleted soon\",\"micaccessbrowser\":\"Access to the microphone is restricted, please check your browser settings.\",\"micaccesscommonproblem\":\"Sorry, for some reason it is not possible to record voice messages on the device\",\"micaccesscordova\":\"Access to the microphone is restricted, please check your device settings.\",\"micdevicenotfound\":\"Audio recording device not found\"}");
-
-/***/ }),
-
-/***/ "6cfe":
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__("57fa");
-if(content.__esModule) content = content.default;
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add CSS to Shadow Root
-var add = __webpack_require__("35d6").default
-module.exports.__inject__ = function (shadowRoot) {
-  add("31eeccb8", content, shadowRoot)
-};
-
-/***/ }),
-
-/***/ "6d9d":
-/***/ (function(module, exports, __webpack_require__) {
-
-// Imports
-var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
-exports = ___CSS_LOADER_API_IMPORT___(false);
-// Module
-exports.push([module.i, ".referenceTop[data-v-5cf3c392]{margin-left:.25em;margin-right:.25em;border-radius:10px;border-bottom-left-radius:0;overflow:hidden;margin-bottom:.5em}.referenceTop.my[data-v-5cf3c392]{border-bottom-right-radius:0;border-bottom-left-radius:10px}.burn.big[data-v-5cf3c392]{color:rgb(var(--color-bad))}.burn.medium[data-v-5cf3c392]{opacity:.8}.showImage[data-v-5cf3c392]{width:100%;position:relative;overflow:hidden}.showImage .abswrapper[data-v-5cf3c392]{position:absolute;left:0;top:0;bottom:0;right:0;display:flex;text-align:center;align-items:center;justify-content:center}.preloaderImage[data-v-5cf3c392]{padding-bottom:100px;border-radius:10px;background:rgba(var(--neutral-grad-0),.5);width:100%;position:relative}.preloaderImage .abswrapper[data-v-5cf3c392]{position:absolute;left:0;top:0;bottom:0;right:0;display:flex;text-align:center;align-items:center;justify-content:center}.preloaderImage .abswrapper>div[data-v-5cf3c392]{opacity:.2}.statusWrapper[data-v-5cf3c392]{padding:.5em;margin-top:.5em;border-top:.5em solid rgb(var(--neutral-grad-0))}.statusWrapper .my[data-v-5cf3c392]{font-size:.7em;opacity:.5;text-align:center}.messageRow[data-v-5cf3c392]{display:flex;align-items:flex-end;padding-left:.25em;min-height:34px}.messageRow.aligncenter[data-v-5cf3c392]{align-items:center}.messageRow.my[data-v-5cf3c392]{padding-left:0;padding-right:.25em}.messageRow.my .messageImg .imgMsg .showImage .abswrapper[data-v-5cf3c392]{border-radius:1em;border-top-right-radius:0;border-top-left-radius:1em}.messageRow .maxcontent[data-v-5cf3c392]{max-width:82%}.messageRow .maxcontent.my[data-v-5cf3c392]{max-width:87%}.messageRow.allscreen[data-v-5cf3c392]{flex-wrap:wrap}.messageRow.allscreen[data-v-5cf3c392] .userpic{position:relative}.messageRow.allscreen[data-v-5cf3c392] .userpic:after{border-radius:50%;content:\"\";position:absolute;left:-5px;right:-5px;top:-5px;bottom:-5px;border:5px solid rgb(var(--neutral-grad-0));z-index:1;box-shadow:0 5px 7px -5px rgba(var(--color-shadow-base),.7)}.messageRow .badenctyptedText .decryptagain[data-v-5cf3c392]{font-size:.8em}.messageRow .metaMsg[data-v-5cf3c392]{width:100%}.messageRow .badencrypted[data-v-5cf3c392]{position:absolute;background:rgb(var(--background-main));left:0;right:0;top:0;bottom:0;padding:.5em}.messageRow .encryptedDataIcon[data-v-5cf3c392]{position:absolute;color:rgb(var(--text-on-bg-ac-color));opacity:.3;padding:.25em .5em;text-shadow:0 0 2px rgba(var(--color-shadow-base),.714),0 0 3px rgba(var(--color-shadow-base),.519);left:0;top:0}.messageRow .encryptedDataIcon i[data-v-5cf3c392]{font-size:.7em}.messageRow .filePreview .encryptedDataIcon[data-v-5cf3c392]{color:rgb(var(--neutral-grad-2));text-shadow:none;right:0;left:auto}.messageRow .messageAudio[data-v-5cf3c392]{margin-left:.5em;height:50px}.messageRow .messageImg[data-v-5cf3c392]{width:85%;position:relative;margin-top:.125em}.messageRow .messageImg .img[data-v-5cf3c392]{display:block;border-radius:.5em;position:relative;max-width:100%}.messageRow .messageImg .loadingImg[data-v-5cf3c392]{display:flex;align-items:center;justify-content:center;border-radius:.5em;position:relative;max-width:300px;height:250px}.messageRow .messageImg .loadingImg .imgPreview[data-v-5cf3c392]{border-radius:.5em;position:relative;max-width:100%;height:100%;opacity:.6}.messageRow .messageImg .loadingImg .clipLoader[data-v-5cf3c392]{position:absolute;z-index:9999;left:50%;right:0;top:50%;bottom:0;transform:translate(-50,50);display:flex;align-items:center;justify-content:center}.messageRow .messageImg .imgMsg .showImage[data-v-5cf3c392]{display:flex}.messageRow .messageImg .imgMsg img[data-v-5cf3c392]{max-width:100%;-o-object-fit:cover;object-fit:cover;display:block}.messageRow .messageImg .imgMsg .abswrapper[data-v-5cf3c392]{border-radius:1em;border-top-left-radius:0;overflow:hidden;background:rgb(var(--neutral-grad-0))}.messageRow .messageImg .metaLink[data-v-5cf3c392]{background:#000}.messageRow .messageImg .metaLink .metaMessageLink .metaTitle[data-v-5cf3c392]{font-weight:700;font-size:.9em}.messageRow .messageImg .metaLink .metaMessageLink .metaDescription[data-v-5cf3c392]{margin:.5em 0;font-size:.8em}.messageRow .messageImg .metaLink .metaMessageLink .metaImgWrapper[data-v-5cf3c392]{display:block;max-width:300px;-o-object-fit:cover;object-fit:cover}.messageRow .messageImg .metaLink .metaMessageLink .metaImgWrapper img[data-v-5cf3c392]{display:block;width:100%;height:100%}.messageRow .filePreview[data-v-5cf3c392]{width:90%;border:1px solid rgb(var(--neutral-grad-1));overflow:hidden;border-radius:10px;position:relative;margin-top:.5em;height:100px}.messageRow .filePreview .table[data-v-5cf3c392]{height:100%}.messageRow .linkPreview[data-v-5cf3c392]{width:100%}.messageRow .messagePreview[data-v-5cf3c392]{width:100%;overflow:hidden;text-overflow:ellipsis}.messageRow .messagePreview span[data-v-5cf3c392]{word-break:break-all;white-space:normal}.messageRow .fromimagesfiles[data-v-5cf3c392]{order:5;padding:.5em .25em;padding-right:.5em}.messageRow .fromimagesfiles .fromCaption[data-v-5cf3c392]{font-size:.8em}.messageRow .actionsWrapper[data-v-5cf3c392]{order:4;padding-left:.5em;padding-right:1.25em;cursor:pointer;text-align:right;margin-left:auto}.messageRow .actionsWrapper i[data-v-5cf3c392]{font-size:.7em;opacity:.3}.messageRow .actionsWrapper:hover i[data-v-5cf3c392]{opacity:1}.messageRow .statusWrapper[data-v-5cf3c392]{order:5;padding:.5em .25em;opacity:.6}.messageRow .statusWrapper div[data-v-5cf3c392],.messageRow .statusWrapper span[data-v-5cf3c392]{font-size:.7em}.messageRow .sendername[data-v-5cf3c392]{order:3;opacity:.6;overflow:hidden;font-size:.7em}.messageRow .timeWrapper[data-v-5cf3c392]{text-align:left;order:2;padding:0 .25em;line-height:33px;opacity:.6;flex-grow:1}.messageRow .timeWrapper span[data-v-5cf3c392]{white-space:nowrap;font-size:.7em}.messageRow .showreference[data-v-5cf3c392]{cursor:pointer}.messageRow.referenceshowed .messageText[data-v-5cf3c392]{background:rgba(var(--neutral-grad-1),.8)!important;color:rgb(var(--color-txt-gray))!important}.messageRow.referenceshowed .reference[data-v-5cf3c392]{padding-bottom:0!important}.messageRow.referenceshowed .referenceCaption button[data-v-5cf3c392]{width:100%}.messageRow .messageText[data-v-5cf3c392]{margin-left:.25em;background:rgba(var(--neutral-grad-1),.8);color:rgb(var(--text-color));padding:.5em .75em;padding-top:.5em;border-radius:1em;border-bottom-left-radius:0;font-weight:400;white-space:normal;display:flex;flex-direction:column-reverse}.messageRow .messageText .msgtext[data-v-5cf3c392]{text-align:left;white-space:pre-wrap}.messageRow .messageText .reference[data-v-5cf3c392]{height:32px}.messageRow .messageText .from[data-v-5cf3c392],.messageRow .messageText .reference[data-v-5cf3c392]{opacity:.8;border-bottom:1px solid rgb(var(--text-on-bg-ac-color));padding:.5em 0;padding-top:0;margin-bottom:.5em;display:flex}.messageRow .messageText .from .event[data-v-5cf3c392],.messageRow .messageText .reference .event[data-v-5cf3c392]{max-height:38px;text-align:left}.messageRow .messageText .from i[data-v-5cf3c392],.messageRow .messageText .reference i[data-v-5cf3c392]{width:30px;text-align:center;font-size:.8em}.messageRow .messageText .from .referenceCaption[data-v-5cf3c392],.messageRow .messageText .reference .referenceCaption[data-v-5cf3c392]{min-width:28px}.messageRow .messageText .from .fromCaption[data-v-5cf3c392],.messageRow .messageText .from .referenceCaption[data-v-5cf3c392],.messageRow .messageText .reference .fromCaption[data-v-5cf3c392],.messageRow .messageText .reference .referenceCaption[data-v-5cf3c392]{font-size:.8em}.messageRow .messageText .from .sendername[data-v-5cf3c392],.messageRow .messageText .reference .sendername[data-v-5cf3c392]{white-space:nowrap}.messageRow .messageText .from[data-v-5cf3c392] .messagePreview,.messageRow .messageText .reference[data-v-5cf3c392] .messagePreview{font-size:.9em;height:22px}.messageRow .messageText .from[data-v-5cf3c392] .messagePreview .previewMessage,.messageRow .messageText .reference[data-v-5cf3c392] .messagePreview .previewMessage{white-space:nowrap}.messageRow .messageText .edited[data-v-5cf3c392]{font-size:.7em;opacity:.5;text-align:right}.messageRow .messageText div[data-v-5cf3c392]{overflow:hidden;text-overflow:ellipsis}.messageRow .badenctyptedText[data-v-5cf3c392]{margin-left:.5em;color:rgb(var(--text-on-bg-ac-color));padding:.5em .75em;border-radius:1em;background:rgb(var(--neutral-grad-3));word-break:break-all;white-space:normal}.messageRow .badenctyptedText span[data-v-5cf3c392]{font-size:.9em}.messageRow .iconWrapper[data-v-5cf3c392]{width:33px;min-width:33px}.messageRow .withsendername[data-v-5cf3c392]{position:relative}.messageRow .withsendername .sendername[data-v-5cf3c392]{position:absolute;top:100%;margin-top:-5px;left:20px;color:rgb(var(--neutral-grad-3))}.messageRow .withsendername .sendername span[data-v-5cf3c392]{font-size:.7em}.messageRow[my=true][data-v-5cf3c392]{justify-content:flex-end;flex-wrap:wrap}.messageRow[my=true] .iconWrapper[data-v-5cf3c392]{margin-left:.5em;order:1;align-self:flex-start}.messageRow[my=true] .fromimagesfiles[data-v-5cf3c392]{order:-5}.messageRow[my=true] .actionsWrapper[data-v-5cf3c392]{text-align:left;margin-right:auto;margin-left:0;padding-left:.75em;padding-right:.25em;order:-4}.messageRow[my=true] .statusWrapper[data-v-5cf3c392]{order:-3}.messageRow[my=true] .timeWrapper[data-v-5cf3c392]{order:-2;text-align:right}.messageRow[my=true] .messageText[data-v-5cf3c392]{background:rgb(var(--color-bg-ac-bright));color:rgb(var(--text-on-bg-ac-color));text-align:right;border-radius:1em;border-bottom-left-radius:1em;border-top-right-radius:0}.messageRow[my=true] .messageAudio[data-v-5cf3c392]{margin-left:0}.messageRow[my=true] .messageAudio[data-v-5cf3c392] .voiceMessage{justify-content:flex-end}.messageRow.urlpreview[data-v-5cf3c392]{background:rgb(var(--background-total-theme));padding:.5em;padding-left:.25em;padding-bottom:1em}.messageRow.urlpreview .actionsWrapper[data-v-5cf3c392]{padding-right:.5em;padding-left:.5em}.messageRow.allscreen .filePreview[data-v-5cf3c392],.messageRow.allscreen .linkPreview[data-v-5cf3c392],.messageRow.allscreen .messageImg[data-v-5cf3c392],.messageRow.allscreen .metaMsg[data-v-5cf3c392]{order:4;padding-left:.125em}.messageRow.allscreen[my=true] .filePreview[data-v-5cf3c392],.messageRow.allscreen[my=true] .linkPreview[data-v-5cf3c392],.messageRow.allscreen[my=true] .messageImg[data-v-5cf3c392],.messageRow.allscreen[my=true] .metaMsg[data-v-5cf3c392]{order:6}.messageRow.not-preview[data-v-5cf3c392]{align-items:center;justify-content:center;color:rgb(var(--neutral-grad-3));text-align:center;flex-direction:column-reverse}.messageRow.not-preview .messageNoticeWithLink[data-v-5cf3c392]{color:#004680}", ""]);
-// Exports
-module.exports = exports;
-
+module.exports = JSON.parse("{\"caption\":{\"create\":\"Create\",\"addPublicChatName\":\"Add Public Chat Name\",\"addGroupNamePlaceHolder\":\"Add Group Name\",\"createPublicChat\":\"Create public chat\",\"chatTopic\":\"Topic renamed\",\"asModerator\":\"as moderator\",\"marked\":\"marked\",\"unmarked\":\"unmarked\",\"removeBan\":\"Remove Ban\",\"cancelModeration\":\"Remove moderation\",\"uploadFiles\":\"Herunterladen von Dateien\",\"header\":\"Header\",\"dragAndDropAFile\":\"Drag & Drop-Datei\",\"chatInvite\":\"Sie wurden eingeladen mit Benutzer zu chatten:\",\"cantJoion\":\"Sie können den Chat mit dem Benutzer nicht beitreten:\",\"chatInviteDecline\":\"Sie können im Chat teilnehmen oder Einladung ablehnen\",\"creatorLeft\":\"Weil der Schöpfer den Raum verlassen hat\",\"encrypted\":\"Verschlüssel\",\"noImages\":\"Es gibt noch keine Bilder in diesem Chat\",\"noFiles\":\"There are no files in this chat yet\",\"inviteUser\":\"Benutzer einladen\",\"invite\":\"Einladen\",\"add\":\"Hinzufügen\",\"mute\":\"Stumm\",\"unmute\":\"Ton aktivieren\",\"leave\":\"Verlassen\",\"Info\":\"Info\",\"new\":\"Neue\",\"typing\":\"Tippt\",\"accNotFound\":\"Ihr Konto wurde nicht in der Blockchain gefunden. Vielleicht müssen Sie warten\",\"emptyList\":\"liste ist leer ( gefiltert oder nur leer )\",\"welcome\":\"Willkommen bei Pocketnet Chat\",\"startNewChat\":\"Fangen Sie einen neuen chat an\",\"chats\":\"Chats\",\"shareWith\":\"Teilen mit\",\"newChat\":\"Neuer Chat\",\"moveToChat\":\"Zum Chat wechseln\",\"queryNoResults\":\"Abfrage meldet keine Ergebnisse\",\"needMoreCharacters\":\"Benötigen Sie mehr Zeichen für das Ergebnis\",\"createGroup\":\"Gruppe erstellen\",\"unabletoDecrypt\":\"* Kann nicht entschlüsselnt\",\"messageDeleted\":\"Nachricht gelöscht\",\"sentImage\":\"gesendetes Bild\",\"sentVoiceMessage\":\"eine Sprachnachricht gesendet\",\"invitationToChat\":\"Einladung zum Chat\",\"invitationToRoom\":\"Invitation to room\",\"leftChat\":\"Hat den chat verlasst\",\"joined\":\"beitretet\",\"chatRenamed\":\"Chat umbenannt in\",\"recentComment\":\"Letzter Kommentar:\",\"share\":\"AKTIE\",\"followers\":\"Anhänger:\",\"reputation\":\"Reputation:\",\"following\":\"Folgen:\",\"theme\":\"Thema:\",\"contacts\":\"Kontakte\",\"phoneContacts\":\"Telefonische Kontakte\",\"chooseInviteMedia\":\"Bitte wählen Sie, wie Sie einladen möchten\",\"admin\":\"Admin\",\"moderator\":\"Moderator\",\"videocall\":\"Videoanrufe\",\"call\":\"Anruf\",\"leaveAndDelete\":\"Verlassen und Löschen\",\"donate\":\"Donate\",\"makeModerator\":\"Als Moderator ernennen\",\"ban\":\"Ban\",\"kick\":\"Kick\",\"members\":\"Mitglieds\",\"media\":\"Media\",\"files\":\"Datei\",\"contactsList\":\"Kontaktliste\",\"send\":\"Senden\",\"pageCaption\":\"Seite Beschriftung\",\"caption\":\"Beschriftung\",\"text\":\"Text\",\"placeholder\":\"Platzhalter\",\"sendTransactionTo\":\"Transaktion senden an\",\"toBePaidByReceiver\":\"Zahlung durch den Empfänger\",\"toBePaidBySender\":\"Zahlung durch Absender\",\"source\":\"Quelle\",\"amount\":\"Anzahl\",\"receiver\":\"Empfänger\",\"message\":\"Nachricht\",\"includeFeesInAmount\":\"Gebühren in den Betrag einbeziehen\",\"transactionFees\":\"Gebühren pro Transaktion\",\"totalAmount\":\"Insgesamt\",\"balanceTooLow\":\"Bilanz zu niedrig\",\"transactionError\":\"Fehler: Transaktion kann nicht ausgeführt werden\",\"calculateFees\":\"Gebühren berechnen\",\"startChatWith\":\"Chat anfangen mit\",\"searchResult\":\"Ergebnis der Suche\",\"joinedInTheChat\":\"in den Chat eingeloggt\",\"invited\":\"eingeladet \",\"hasInvited\":\"eingeladen \",\"inTheChat\":\" in den chat\",\"banned\":\"banned\",\"andRoom\":\"und Zimmer\",\"left\":\"verließt\",\"theChat\":\" Chat \",\"made\":\"Gemacht \",\"aModerator\":\" Moderator\",\"editedChatNameTo \":\"änderte den Chat-Namen in \",\"somebody\":\"Jemand\",\"sent\":\"gesendet\",\"PKOINto\":\" PKOIN für \",\"response\":\"Antwort\",\"edited\":\"Bearbeitet\",\"settings\":\"Einstellungen\",\"unauthorized\":\"Nicht autorisiert\",\"search\":\"Suche\",\"replyOnMessage\":\"Antwort auf Nachricht\",\"editMessage\":\"Nachricht bearbeiten\",\"inviteFriend\":\"Пригласите друзей\",\"emptyContactList\":\"Список контактов пуст\",\"joinApp\":\"Pocketnet beitreten\",\"hasInvitedToJoin\":\"hat Sie eingeladen, Pocketnet beizutreten\",\"messagefrom\":\"Forwarded message from\",\"usernotgen\":\"User did not generate their encryption keys yet. You will be able to chat them when their keys are generated.\",\"younotgen\":\"Please wait a minute, Your encryption keys are being generated...\",\"chatsearchingempty\":\"No chats found for the specified filter\",\"sendmessage\":\"Send message\"},\"input\":{\"patientEmailPlaceholder\":\"Email\",\"refillNamePlaceholder\":\"Den Namen Nachfüllen\"},\"message\":{},\"button\":{\"starChatButton\":\"Chat anfangen\",\"decline\":\"Ablehnen\",\"join\":\"Beitreten\",\"ok\":\"Ok\",\"copy\":\"Kopieren\",\"forward\":\"Weiterleiten\",\"delete\":\"Löschen\",\"save\":\"Speichern\",\"reply\":\"Antworten\",\"share\":\"Share\",\"download\":\"Herunterladen\",\"downloaded\":\"Herunterladen\",\"goToPocketnetProfile\":\"Zum Pocketnet Profil\",\"sendFile\":\"Datai senden\",\"takePhotoOrVideo\":\"Foto machen\",\"sendCoins\":\"Münzen senden\",\"edit\":\"Bearbeiten\",\"select\":\"Auswählen\",\"block\":\"Sperren\",\"unblock\":\"Entsperren\",\"blockUser\":\"Benutzer sperren\"},\"yes\":\"Ja\",\"cancel\":\"Abbrechen\",\"teamMessages\":{\"1-title\":\"Willkommen beim privaten Bastyon-Chat!\",\"1-list1\":\"Privater Messenger, der NICHT mit Ihrer Telefonnummer verbunden ist.\",\"1-list2\":\"Standardmäßig Ende-zu-Ende-Verschlüsselung jedes 1-zu-1-Gesprächs\",\"1-list3\":\"Alle per Chat gesendeten oder empfangenen Bilder werden verschlüsselt gespeichert\",\"1-list4\":\"Der Nachrichtenverlauf wird nur 7 Tage lang gespeichert\",\"2-title\":\"Eine riesige Ankündigung! Die Pocketnet-Anwendung heißt jetzt Bastyon!\",\"2-message1\":\"Die Domain wird auf Bastyon.com verschoben. Wir haben kürzlich die folgenden wichtigen Updates veröffentlicht:\",\"2-list1\":\"Privater verschlüsselter Messenger, der nicht mit Ihrer Telefonnummer verbunden ist\",\"2-list2\":\"Möglichkeit, PKOIN an Blogger zu spenden\",\"2-list3\":\"Video- und Live-Streaming\",\"2-message2\":\"Laden Sie jetzt Ihre Freunde ein und werden Sie Teil der großen Zukunft des dezentralen Internets!\",\"2-button\":\"Freunde einladen\"},\"sendingerror\":\"An error occurred while sending the message\",\"details\":\"Details\",\"settings_pin\":\"Pin chat window\",\"checked\":\"Yes\",\"unchecked\":\"No\",\"settings_read\":\"Send read receipts\",\"messagewasburn\":\"This message remains only in the memory of your device\",\"messagewillburn\":\"The message will be deleted soon\",\"micaccessbrowser\":\"Access to the microphone is restricted, please check your browser settings.\",\"micaccesscommonproblem\":\"Sorry, for some reason it is not possible to record voice messages on the device\",\"micaccesscordova\":\"Access to the microphone is restricted, please check your device settings.\",\"micdevicenotfound\":\"Audio recording device not found\"}");
 
 /***/ }),
 
@@ -51310,6 +51522,18 @@ module.exports = exports;
 /***/ (function(module) {
 
 module.exports = JSON.parse("{\"0\":\"O\",\"1\":\"l\",\"֭\":\"֖\",\"֮\":\"֘\",\"֨\":\"֙\",\"֤\":\"֚\",\"᪴\":\"ۛ\",\"⃛\":\"ۛ\",\"ؙ\":\"̓\",\"ࣳ\":\"̓\",\"̓\":\"̓\",\"̕\":\"̓\",\"ُ\":\"̓\",\"ٝ\":\"̔\",\"֜\":\"́\",\"֝\":\"́\",\"ؘ\":\"́\",\"݇\":\"́\",\"́\":\"́\",\"॔\":\"́\",\"َ\":\"́\",\"̀\":\"̀\",\"॓\":\"̀\",\"̌\":\"̆\",\"꙼\":\"̆\",\"٘\":\"̆\",\"ٚ\":\"̆\",\"ͮ\":\"̆\",\"ۨ\":\"̆̇\",\"̐\":\"̆̇\",\"ँ\":\"̆̇\",\"ঁ\":\"̆̇\",\"ઁ\":\"̆̇\",\"ଁ\":\"̆̇\",\"ఀ\":\"̆̇\",\"ಁ\":\"̆̇\",\"ഁ\":\"̆̇\",\"𑒿\":\"̆̇\",\"᳐\":\"̂\",\"̑\":\"̂\",\"ٛ\":\"̂\",\"߮\":\"̂\",\"꛰\":\"̂\",\"֯\":\"̊\",\"۟\":\"̊\",\"៓\":\"̊\",\"゚\":\"̊\",\"ْ\":\"̊\",\"ஂ\":\"̊\",\"ံ\":\"̊\",\"ំ\":\"̊\",\"𑌀\":\"̊\",\"ํ\":\"̊\",\"ໍ\":\"̊\",\"ͦ\":\"̊\",\"ⷪ\":\"̊\",\"࣫\":\"̈\",\"߳\":\"̈\",\"ً\":\"̋\",\"ࣰ\":\"̋\",\"͂\":\"̃\",\"ٓ\":\"̃\",\"ׄ\":\"̇\",\"۬\":\"̇\",\"݀\":\"̇\",\"࣪\":\"̇\",\"݁\":\"̇\",\"͘\":\"̇\",\"ֹ\":\"̇\",\"ֺ\":\"̇\",\"ׂ\":\"̇\",\"ׁ\":\"̇\",\"߭\":\"̇\",\"ं\":\"̇\",\"ਂ\":\"̇\",\"ં\":\"̇\",\"்\":\"̇\",\"̷\":\"̸\",\"᪷\":\"̨\",\"̢\":\"̨\",\"ͅ\":\"̨\",\"᳒\":\"̄\",\"̅\":\"̄\",\"ٙ\":\"̄\",\"߫\":\"̄\",\"꛱\":\"̄\",\"᳚\":\"̎\",\"ٗ\":\"̒\",\"͗\":\"͐\",\"ࣿ\":\"͐\",\"ࣸ\":\"͐\",\"ऀ\":\"͒\",\"᳭\":\"̖\",\"᳜\":\"̩\",\"ٖ\":\"̩\",\"᳕\":\"̫\",\"͇\":\"̳\",\"ࣹ\":\"͔\",\"ࣺ\":\"͕\",\"゛\":\"ﾞ\",\"゜\":\"ﾟ\",\"̶\":\"̵\",\"〬\":\"̉\",\"ׅ\":\"̣\",\"࣭\":\"̣\",\"᳝\":\"̣\",\"ִ\":\"̣\",\"ٜ\":\"̣\",\"़\":\"̣\",\"়\":\"̣\",\"਼\":\"̣\",\"઼\":\"̣\",\"଼\":\"̣\",\"𑇊\":\"̣\",\"𑓃\":\"̣\",\"𐨺\":\"̣\",\"࣮\":\"̤\",\"᳞\":\"̤\",\"༷\":\"̥\",\"〭\":\"̥\",\"̧\":\"̦\",\"̡\":\"̦\",\"̹\":\"̦\",\"᳙\":\"̭\",\"᳘\":\"̮\",\"॒\":\"̱\",\"̠\":\"̱\",\"ࣱ\":\"ٌ\",\"ࣨ\":\"ٌ\",\"ࣥ\":\"ٌ\",\"ﱞ\":\"ﹲّ\",\"ࣲ\":\"ٍ\",\"ﱟ\":\"ﹴّ\",\"ﳲ\":\"ﹷّ\",\"ﱠ\":\"ﹶّ\",\"ﳳ\":\"ﹹّ\",\"ﱡ\":\"ﹸّ\",\"ؚ\":\"ِ\",\"̗\":\"ِ\",\"ﳴ\":\"ﹻّ\",\"ﱢ\":\"ﹺّ\",\"ﱣ\":\"ﹼٰ\",\"ٟ\":\"ٕ\",\"̍\":\"ٰ\",\"݂\":\"ܼ\",\"ਃ\":\"ঃ\",\"ః\":\"ঃ\",\"ಃ\":\"ঃ\",\"ഃ\":\"ঃ\",\"ඃ\":\"ঃ\",\"း\":\"ঃ\",\"𑓁\":\"ঃ\",\"់\":\"่\",\"່\":\"่\",\"້\":\"้\",\"໊\":\"๊\",\"໋\":\"๋\",\"꙯\":\"⃩\",\"\\u2028\":\" \",\"\\u2029\":\" \",\" \":\" \",\" \":\" \",\" \":\" \",\" \":\" \",\" \":\" \",\" \":\" \",\" \":\" \",\" \":\" \",\" \":\" \",\" \":\" \",\" \":\" \",\" \":\" \",\" \":\" \",\" \":\" \",\" \":\" \",\"ߺ\":\"_\",\"﹍\":\"_\",\"﹎\":\"_\",\"﹏\":\"_\",\"‐\":\"-\",\"‑\":\"-\",\"‒\":\"-\",\"–\":\"-\",\"﹘\":\"-\",\"۔\":\"-\",\"⁃\":\"-\",\"˗\":\"-\",\"−\":\"-\",\"➖\":\"-\",\"Ⲻ\":\"-\",\"⨩\":\"-̓\",\"⸚\":\"-̈\",\"﬩\":\"-̇\",\"∸\":\"-̇\",\"⨪\":\"-̣\",\"꓾\":\"-.\",\"～\":\"〜\",\"؍\":\",\",\"٫\":\",\",\"‚\":\",\",\"¸\":\",\",\"ꓹ\":\",\",\"⸲\":\"،\",\"٬\":\"،\",\";\":\";\",\"⸵\":\"؛\",\"ः\":\":\",\"ઃ\":\":\",\"：\":\":\",\"։\":\":\",\"܃\":\":\",\"܄\":\":\",\"᛬\":\":\",\"︰\":\":\",\"᠃\":\":\",\"᠉\":\":\",\"⁚\":\":\",\"׃\":\":\",\"˸\":\":\",\"꞉\":\":\",\"∶\":\":\",\"ː\":\":\",\"ꓽ\":\":\",\"⩴\":\"::=\",\"⧴\":\":→\",\"！\":\"!\",\"ǃ\":\"!\",\"ⵑ\":\"!\",\"‼\":\"!!\",\"⁉\":\"!?\",\"ʔ\":\"?\",\"Ɂ\":\"?\",\"ॽ\":\"?\",\"Ꭾ\":\"?\",\"ꛫ\":\"?\",\"⁈\":\"?!\",\"⁇\":\"??\",\"⸮\":\"؟\",\"𝅭\":\".\",\"․\":\".\",\"܁\":\".\",\"܂\":\".\",\"꘎\":\".\",\"𐩐\":\".\",\"٠\":\".\",\"۰\":\".\",\"ꓸ\":\".\",\"ꓻ\":\".,\",\"‥\":\"..\",\"ꓺ\":\"..\",\"…\":\"...\",\"꛴\":\"꛳꛳\",\"・\":\"·\",\"･\":\"·\",\"᛫\":\"·\",\"·\":\"·\",\"⸱\":\"·\",\"𐄁\":\"·\",\"•\":\"·\",\"‧\":\"·\",\"∙\":\"·\",\"⋅\":\"·\",\"ꞏ\":\"·\",\"ᐧ\":\"·\",\"⋯\":\"···\",\"ⵈ\":\"···\",\"ᑄ\":\"·<\",\"⋗\":\"·>\",\"ᐷ\":\"·>\",\"ᑀ\":\"·>\",\"ᔯ\":\"·4\",\"ᑾ\":\"·b\",\"ᒀ\":\"·ḃ\",\"ᑺ\":\"·d\",\"ᒘ\":\"·J\",\"ᒶ\":\"·L\",\"ᑶ\":\"·P\",\"ᑗ\":\"·U\",\"ᐺ\":\"·V\",\"ᐼ\":\"·Ʌ\",\"ᒮ\":\"·Γ\",\"ᐎ\":\"·Δ\",\"ᑙ\":\"·Ո\",\"ᐌ\":\"·ᐁ\",\"ᐐ\":\"·ᐄ\",\"ᐒ\":\"·ᐅ\",\"ᐔ\":\"·ᐆ\",\"ᐗ\":\"·ᐊ\",\"ᐙ\":\"·ᐋ\",\"ᐾ\":\"·ᐲ\",\"ᑂ\":\"·ᐴ\",\"ᑆ\":\"·ᐹ\",\"ᑛ\":\"·ᑏ\",\"ᑔ\":\"·ᑐ\",\"ᑝ\":\"·ᑐ\",\"ᑟ\":\"·ᑑ\",\"ᑡ\":\"·ᑕ\",\"ᑣ\":\"·ᑖ\",\"ᑴ\":\"·ᑫ\",\"ᑸ\":\"·ᑮ\",\"ᑼ\":\"·ᑰ\",\"ᒒ\":\"·ᒉ\",\"ᒔ\":\"·ᒋ\",\"ᒖ\":\"·ᒌ\",\"ᒚ\":\"·ᒎ\",\"ᒜ\":\"·ᒐ\",\"ᒞ\":\"·ᒑ\",\"ᒬ\":\"·ᒣ\",\"ᒰ\":\"·ᒦ\",\"ᒲ\":\"·ᒧ\",\"ᒴ\":\"·ᒨ\",\"ᒸ\":\"·ᒫ\",\"ᓉ\":\"·ᓀ\",\"ᣆ\":\"·ᓂ\",\"ᣈ\":\"·ᓃ\",\"ᣊ\":\"·ᓄ\",\"ᣌ\":\"·ᓅ\",\"ᓋ\":\"·ᓇ\",\"ᓍ\":\"·ᓈ\",\"ᓜ\":\"·ᓓ\",\"ᓞ\":\"·ᓕ\",\"ᓠ\":\"·ᓖ\",\"ᓢ\":\"·ᓗ\",\"ᓤ\":\"·ᓘ\",\"ᓦ\":\"·ᓚ\",\"ᓨ\":\"·ᓛ\",\"ᓶ\":\"·ᓭ\",\"ᓸ\":\"·ᓯ\",\"ᓺ\":\"·ᓰ\",\"ᓼ\":\"·ᓱ\",\"ᓾ\":\"·ᓲ\",\"ᔀ\":\"·ᓴ\",\"ᔂ\":\"·ᓵ\",\"ᔗ\":\"·ᔐ\",\"ᔙ\":\"·ᔑ\",\"ᔛ\":\"·ᔒ\",\"ᔝ\":\"·ᔓ\",\"ᔟ\":\"·ᔔ\",\"ᔡ\":\"·ᔕ\",\"ᔣ\":\"·ᔖ\",\"ᔱ\":\"·ᔨ\",\"ᔳ\":\"·ᔩ\",\"ᔵ\":\"·ᔪ\",\"ᔷ\":\"·ᔫ\",\"ᔹ\":\"·ᔭ\",\"ᔻ\":\"·ᔮ\",\"ᣎ\":\"·ᕃ\",\"ᣏ\":\"·ᕆ\",\"ᣐ\":\"·ᕇ\",\"ᣑ\":\"·ᕈ\",\"ᣒ\":\"·ᕉ\",\"ᣓ\":\"·ᕋ\",\"ᕎ\":\"·ᕌ\",\"ᕛ\":\"·ᕚ\",\"ᕨ\":\"·ᕧ\",\"ᢳ\":\"·ᢱ\",\"ᢶ\":\"·ᢴ\",\"ᢹ\":\"·ᢸ\",\"ᣂ\":\"·ᣀ\",\"꠰\":\"।\",\"॥\":\"।।\",\"᰼\":\"᰻᰻\",\"။\":\"၊၊\",\"᪩\":\"᪨᪨\",\"᪫\":\"᪪᪨\",\"᭟\":\"᭞᭞\",\"𐩗\":\"𐩖𐩖\",\"𑑌\":\"𑑋𑑋\",\"𑙂\":\"𑙁𑙁\",\"𑱂\":\"𑱁𑱁\",\"᱿\":\"᱾᱾\",\"՝\":\"'\",\"＇\":\"'\",\"‘\":\"'\",\"’\":\"'\",\"‛\":\"'\",\"′\":\"'\",\"‵\":\"'\",\"՚\":\"'\",\"׳\":\"'\",\"`\":\"'\",\"`\":\"'\",\"｀\":\"'\",\"´\":\"'\",\"΄\":\"'\",\"´\":\"'\",\"᾽\":\"'\",\"᾿\":\"'\",\"῾\":\"'\",\"ʹ\":\"'\",\"ʹ\":\"'\",\"ˈ\":\"'\",\"ˊ\":\"'\",\"ˋ\":\"'\",\"˴\":\"'\",\"ʻ\":\"'\",\"ʽ\":\"'\",\"ʼ\":\"'\",\"ʾ\":\"'\",\"ꞌ\":\"'\",\"י\":\"'\",\"ߴ\":\"'\",\"ߵ\":\"'\",\"ᑊ\":\"'\",\"ᛌ\":\"'\",\"𖽑\":\"'\",\"𖽒\":\"'\",\"᳓\":\"''\",\"\\\"\":\"''\",\"＂\":\"''\",\"“\":\"''\",\"”\":\"''\",\"‟\":\"''\",\"″\":\"''\",\"‶\":\"''\",\"〃\":\"''\",\"״\":\"''\",\"˝\":\"''\",\"ʺ\":\"''\",\"˶\":\"''\",\"ˮ\":\"''\",\"ײ\":\"''\",\"‴\":\"'''\",\"‷\":\"'''\",\"⁗\":\"''''\",\"Ɓ\":\"'B\",\"Ɗ\":\"'D\",\"ŉ\":\"'n\",\"Ƥ\":\"'P\",\"Ƭ\":\"'T\",\"Ƴ\":\"'Y\",\"［\":\"(\",\"❨\":\"(\",\"❲\":\"(\",\"〔\":\"(\",\"﴾\":\"(\",\"⸨\":\"((\",\"㈠\":\"(ー)\",\"⑵\":\"(2)\",\"⒇\":\"(2O)\",\"⑶\":\"(3)\",\"⑷\":\"(4)\",\"⑸\":\"(5)\",\"⑹\":\"(6)\",\"⑺\":\"(7)\",\"⑻\":\"(8)\",\"⑼\":\"(9)\",\"⒜\":\"(a)\",\"🄐\":\"(A)\",\"⒝\":\"(b)\",\"🄑\":\"(B)\",\"⒞\":\"(c)\",\"🄒\":\"(C)\",\"⒟\":\"(d)\",\"🄓\":\"(D)\",\"⒠\":\"(e)\",\"🄔\":\"(E)\",\"⒡\":\"(f)\",\"🄕\":\"(F)\",\"⒢\":\"(g)\",\"🄖\":\"(G)\",\"⒣\":\"(h)\",\"🄗\":\"(H)\",\"⒤\":\"(i)\",\"⒥\":\"(j)\",\"🄙\":\"(J)\",\"⒦\":\"(k)\",\"🄚\":\"(K)\",\"⑴\":\"(l)\",\"🄘\":\"(l)\",\"⒧\":\"(l)\",\"🄛\":\"(L)\",\"⑿\":\"(l2)\",\"⒀\":\"(l3)\",\"⒁\":\"(l4)\",\"⒂\":\"(l5)\",\"⒃\":\"(l6)\",\"⒄\":\"(l7)\",\"⒅\":\"(l8)\",\"⒆\":\"(l9)\",\"⑾\":\"(ll)\",\"⑽\":\"(lO)\",\"🄜\":\"(M)\",\"⒩\":\"(n)\",\"🄝\":\"(N)\",\"⒪\":\"(o)\",\"🄞\":\"(O)\",\"⒫\":\"(p)\",\"🄟\":\"(P)\",\"⒬\":\"(q)\",\"🄠\":\"(Q)\",\"⒭\":\"(r)\",\"🄡\":\"(R)\",\"⒨\":\"(rn)\",\"⒮\":\"(s)\",\"🄢\":\"(S)\",\"🄪\":\"(S)\",\"⒯\":\"(t)\",\"🄣\":\"(T)\",\"⒰\":\"(u)\",\"🄤\":\"(U)\",\"⒱\":\"(v)\",\"🄥\":\"(V)\",\"⒲\":\"(w)\",\"🄦\":\"(W)\",\"⒳\":\"(x)\",\"🄧\":\"(X)\",\"⒴\":\"(y)\",\"🄨\":\"(Y)\",\"⒵\":\"(z)\",\"🄩\":\"(Z)\",\"㈀\":\"(ᄀ)\",\"㈎\":\"(가)\",\"㈁\":\"(ᄂ)\",\"㈏\":\"(나)\",\"㈂\":\"(ᄃ)\",\"㈐\":\"(다)\",\"㈃\":\"(ᄅ)\",\"㈑\":\"(라)\",\"㈄\":\"(ᄆ)\",\"㈒\":\"(마)\",\"㈅\":\"(ᄇ)\",\"㈓\":\"(바)\",\"㈆\":\"(ᄉ)\",\"㈔\":\"(사)\",\"㈇\":\"(ᄋ)\",\"㈕\":\"(아)\",\"㈝\":\"(오전)\",\"㈞\":\"(오후)\",\"㈈\":\"(ᄌ)\",\"㈖\":\"(자)\",\"㈜\":\"(주)\",\"㈉\":\"(ᄎ)\",\"㈗\":\"(차)\",\"㈊\":\"(ᄏ)\",\"㈘\":\"(카)\",\"㈋\":\"(ᄐ)\",\"㈙\":\"(타)\",\"㈌\":\"(ᄑ)\",\"㈚\":\"(파)\",\"㈍\":\"(ᄒ)\",\"㈛\":\"(하)\",\"㈦\":\"(七)\",\"㈢\":\"(三)\",\"🉁\":\"(三)\",\"㈨\":\"(九)\",\"㈡\":\"(二)\",\"🉂\":\"(二)\",\"㈤\":\"(五)\",\"㈹\":\"(代)\",\"㈽\":\"(企)\",\"㉁\":\"(休)\",\"㈧\":\"(八)\",\"㈥\":\"(六)\",\"㈸\":\"(労)\",\"🉇\":\"(勝)\",\"㈩\":\"(十)\",\"㈿\":\"(協)\",\"㈴\":\"(名)\",\"㈺\":\"(呼)\",\"㈣\":\"(四)\",\"㈯\":\"(土)\",\"㈻\":\"(学)\",\"🉃\":\"(安)\",\"🉅\":\"(打)\",\"🉈\":\"(敗)\",\"㈰\":\"(日)\",\"㈪\":\"(月)\",\"㈲\":\"(有)\",\"㈭\":\"(木)\",\"🉀\":\"(本)\",\"㈱\":\"(株)\",\"㈬\":\"(水)\",\"㈫\":\"(火)\",\"🉄\":\"(点)\",\"㈵\":\"(特)\",\"🉆\":\"(盗)\",\"㈼\":\"(監)\",\"㈳\":\"(社)\",\"㈷\":\"(祝)\",\"㉀\":\"(祭)\",\"㉂\":\"(自)\",\"㉃\":\"(至)\",\"㈶\":\"(財)\",\"㈾\":\"(資)\",\"㈮\":\"(金)\",\"］\":\")\",\"❩\":\")\",\"❳\":\")\",\"〕\":\")\",\"﴿\":\")\",\"⸩\":\"))\",\"❴\":\"{\",\"𝄔\":\"{\",\"❵\":\"}\",\"〚\":\"⟦\",\"〛\":\"⟧\",\"⟨\":\"❬\",\"〈\":\"❬\",\"〈\":\"❬\",\"㇛\":\"❬\",\"く\":\"❬\",\"𡿨\":\"❬\",\"⟩\":\"❭\",\"〉\":\"❭\",\"〉\":\"❭\",\"＾\":\"︿\",\"⸿\":\"¶\",\"⁎\":\"*\",\"٭\":\"*\",\"∗\":\"*\",\"𐌟\":\"*\",\"᜵\":\"/\",\"⁁\":\"/\",\"∕\":\"/\",\"⁄\":\"/\",\"╱\":\"/\",\"⟋\":\"/\",\"⧸\":\"/\",\"𝈺\":\"/\",\"㇓\":\"/\",\"〳\":\"/\",\"Ⳇ\":\"/\",\"ノ\":\"/\",\"丿\":\"/\",\"⼃\":\"/\",\"⧶\":\"/̄\",\"⫽\":\"//\",\"⫻\":\"///\",\"＼\":\"\\\\\",\"﹨\":\"\\\\\",\"∖\":\"\\\\\",\"⟍\":\"\\\\\",\"⧵\":\"\\\\\",\"⧹\":\"\\\\\",\"𝈏\":\"\\\\\",\"𝈻\":\"\\\\\",\"㇔\":\"\\\\\",\"丶\":\"\\\\\",\"⼂\":\"\\\\\",\"⳹\":\"\\\\\\\\\",\"⑊\":\"\\\\\\\\\",\"⟈\":\"\\\\ᑕ\",\"ꝸ\":\"&\",\"૰\":\"॰\",\"𑂻\":\"॰\",\"𑇇\":\"॰\",\"⚬\":\"॰\",\"𑇛\":\"꣼\",\"៙\":\"๏\",\"៕\":\"๚\",\"៚\":\"๛\",\"༌\":\"་\",\"༎\":\"།།\",\"˄\":\"^\",\"ˆ\":\"^\",\"꙾\":\"ˇ\",\"˘\":\"ˇ\",\"‾\":\"ˉ\",\"﹉\":\"ˉ\",\"﹊\":\"ˉ\",\"﹋\":\"ˉ\",\"﹌\":\"ˉ\",\"¯\":\"ˉ\",\"￣\":\"ˉ\",\"▔\":\"ˉ\",\"ъ\":\"ˉb\",\"ꙑ\":\"ˉbi\",\"͵\":\"ˏ\",\"˻\":\"˪\",\"꜖\":\"˪\",\"꜔\":\"˫\",\"。\":\"˳\",\"⸰\":\"°\",\"˚\":\"°\",\"∘\":\"°\",\"○\":\"°\",\"◦\":\"°\",\"⍜\":\"°̲\",\"⍤\":\"°̈\",\"℃\":\"°C\",\"℉\":\"°F\",\"௵\":\"௳\",\"༛\":\"༚༚\",\"༟\":\"༚༝\",\"࿎\":\"༝༚\",\"༞\":\"༝༝\",\"Ⓒ\":\"©\",\"Ⓡ\":\"®\",\"Ⓟ\":\"℗\",\"𝈛\":\"⅄\",\"⯬\":\"↞\",\"⯭\":\"↟\",\"⯮\":\"↠\",\"⯯\":\"↡\",\"↵\":\"↲\",\"⥥\":\"⇃⇂\",\"⥯\":\"⇃ᛚ\",\"𝛛\":\"∂\",\"𝜕\":\"∂\",\"𝝏\":\"∂\",\"𝞉\":\"∂\",\"𝟃\":\"∂\",\"𞣌\":\"∂\",\"𞣍\":\"∂̵\",\"ð\":\"∂̵\",\"⌀\":\"∅\",\"𝛁\":\"∇\",\"𝛻\":\"∇\",\"𝜵\":\"∇\",\"𝝯\":\"∇\",\"𝞩\":\"∇\",\"𑢨\":\"∇\",\"⍢\":\"∇̈\",\"⍫\":\"∇̴\",\"█\":\"∎\",\"■\":\"∎\",\"⨿\":\"∐\",\"᛭\":\"+\",\"➕\":\"+\",\"𐊛\":\"+\",\"⨣\":\"+̂\",\"⨢\":\"+̊\",\"⨤\":\"+̃\",\"∔\":\"+̇\",\"⨥\":\"+̣\",\"⨦\":\"+̰\",\"⨧\":\"+₂\",\"➗\":\"÷\",\"‹\":\"<\",\"❮\":\"<\",\"˂\":\"<\",\"𝈶\":\"<\",\"ᐸ\":\"<\",\"ᚲ\":\"<\",\"⋖\":\"<·\",\"Ⲵ\":\"<·\",\"ᑅ\":\"<·\",\"≪\":\"<<\",\"⋘\":\"<<<\",\"᐀\":\"=\",\"⹀\":\"=\",\"゠\":\"=\",\"꓿\":\"=\",\"≚\":\"=̆\",\"≙\":\"=̂\",\"≗\":\"=̊\",\"≐\":\"=̇\",\"≑\":\"=̣̇\",\"⩮\":\"=⃰\",\"⩵\":\"==\",\"⩶\":\"===\",\"≞\":\"=ͫ\",\"›\":\">\",\"❯\":\">\",\"˃\":\">\",\"𝈷\":\">\",\"ᐳ\":\">\",\"𖼿\":\">\",\"ᑁ\":\">·\",\"⪥\":\"><\",\"≫\":\">>\",\"⨠\":\">>\",\"⋙\":\">>>\",\"⁓\":\"~\",\"˜\":\"~\",\"῀\":\"~\",\"∼\":\"~\",\"⍨\":\"~̈\",\"⸞\":\"~̇\",\"⩪\":\"~̇\",\"⸟\":\"~̣\",\"𞣈\":\"∠\",\"⋀\":\"∧\",\"∯\":\"∮∮\",\"∰\":\"∮∮∮\",\"⸫\":\"∴\",\"⸪\":\"∵\",\"⸬\":\"∷\",\"𑇞\":\"≈\",\"♎\":\"≏\",\"🝞\":\"≏\",\"≣\":\"≡\",\"⨃\":\"⊍\",\"⨄\":\"⊎\",\"𝈸\":\"⊏\",\"𝈹\":\"⊐\",\"⨅\":\"⊓\",\"⨆\":\"⊔\",\"⨂\":\"⊗\",\"⍟\":\"⊛\",\"🝱\":\"⊠\",\"🝕\":\"⊡\",\"◁\":\"⊲\",\"▷\":\"⊳\",\"⍣\":\"⋆̈\",\"︴\":\"⌇\",\"◠\":\"⌒\",\"⨽\":\"⌙\",\"⌥\":\"⌤\",\"⧇\":\"⌻\",\"◎\":\"⌾\",\"⦾\":\"⌾\",\"⧅\":\"⍂\",\"⦰\":\"⍉\",\"⏃\":\"⍋\",\"⏂\":\"⍎\",\"⏁\":\"⍕\",\"⏆\":\"⍭\",\"☸\":\"⎈\",\"︵\":\"⏜\",\"︶\":\"⏝\",\"︷\":\"⏞\",\"︸\":\"⏟\",\"︹\":\"⏠\",\"︺\":\"⏡\",\"▱\":\"⏥\",\"⏼\":\"⏻\",\"︱\":\"│\",\"｜\":\"│\",\"┃\":\"│\",\"┏\":\"┌\",\"┣\":\"├\",\"▐\":\"▌\",\"▗\":\"▖\",\"▝\":\"▘\",\"☐\":\"□\",\"￭\":\"▪\",\"▸\":\"▶\",\"►\":\"▶\",\"⳩\":\"☧\",\"🜊\":\"☩\",\"🌒\":\"☽\",\"🌙\":\"☽\",\"⏾\":\"☾\",\"🌘\":\"☾\",\"⧙\":\"⦚\",\"🜺\":\"⧟\",\"⨾\":\"⨟\",\"𐆠\":\"⳨\",\"♩\":\"𝅘𝅥\",\"♪\":\"𝅘𝅥𝅮\",\"⓪\":\"🄍\",\"↺\":\"🄎\",\"˙\":\"ॱ\",\"ൎ\":\"ॱ\",\"－\":\"ー\",\"—\":\"ー\",\"―\":\"ー\",\"─\":\"ー\",\"━\":\"ー\",\"㇐\":\"ー\",\"ꟷ\":\"ー\",\"ᅳ\":\"ー\",\"ㅡ\":\"ー\",\"一\":\"ー\",\"⼀\":\"ー\",\"ᆖ\":\"ーー\",\"ힹ\":\"ーᅡ\",\"ힺ\":\"ーᅥ\",\"ힻ\":\"ーᅥ丨\",\"ힼ\":\"ーᅩ\",\"ᆕ\":\"ーᅮ\",\"ᅴ\":\"ー丨\",\"ㅢ\":\"ー丨\",\"ᆗ\":\"ー丨ᅮ\",\"🄏\":\"$⃠\",\"₤\":\"£\",\"〒\":\"₸\",\"〶\":\"₸\",\"᭜\":\"᭐\",\"꧆\":\"꧐\",\"𑓑\":\"১\",\"೧\":\"౧\",\"ၥ\":\"၁\",\"①\":\"➀\",\"⑩\":\"➉\",\"⏨\":\"₁₀\",\"𝟐\":\"2\",\"𝟚\":\"2\",\"𝟤\":\"2\",\"𝟮\":\"2\",\"𝟸\":\"2\",\"🯲\":\"2\",\"Ꝛ\":\"2\",\"Ƨ\":\"2\",\"Ϩ\":\"2\",\"Ꙅ\":\"2\",\"ᒿ\":\"2\",\"ꛯ\":\"2\",\"ꧏ\":\"٢\",\"۲\":\"٢\",\"૨\":\"२\",\"𑓒\":\"২\",\"೨\":\"౨\",\"②\":\"➁\",\"ƻ\":\"2̵\",\"🄃\":\"2,\",\"⒉\":\"2.\",\"㏵\":\"22日\",\"㍮\":\"22点\",\"㏶\":\"23日\",\"㍯\":\"23点\",\"㏷\":\"24日\",\"㍰\":\"24点\",\"㏸\":\"25日\",\"㏹\":\"26日\",\"㏺\":\"27日\",\"㏻\":\"28日\",\"㏼\":\"29日\",\"㏴\":\"2l日\",\"㍭\":\"2l点\",\"⒛\":\"2O.\",\"㏳\":\"2O日\",\"㍬\":\"2O点\",\"෩\":\"෨ා\",\"෯\":\"෨ී\",\"㏡\":\"2日\",\"㋁\":\"2月\",\"㍚\":\"2点\",\"𝈆\":\"3\",\"𝟑\":\"3\",\"𝟛\":\"3\",\"𝟥\":\"3\",\"𝟯\":\"3\",\"𝟹\":\"3\",\"🯳\":\"3\",\"Ɜ\":\"3\",\"Ȝ\":\"3\",\"Ʒ\":\"3\",\"Ꝫ\":\"3\",\"Ⳍ\":\"3\",\"З\":\"3\",\"Ӡ\":\"3\",\"𖼻\":\"3\",\"𑣊\":\"3\",\"۳\":\"٣\",\"𞣉\":\"٣\",\"૩\":\"३\",\"③\":\"➂\",\"Ҙ\":\"3̦\",\"🄄\":\"3,\",\"⒊\":\"3.\",\"㏾\":\"3l日\",\"㏽\":\"3O日\",\"㏢\":\"3日\",\"㋂\":\"3月\",\"㍛\":\"3点\",\"𝟒\":\"4\",\"𝟜\":\"4\",\"𝟦\":\"4\",\"𝟰\":\"4\",\"𝟺\":\"4\",\"🯴\":\"4\",\"Ꮞ\":\"4\",\"𑢯\":\"4\",\"۴\":\"٤\",\"૪\":\"४\",\"④\":\"➃\",\"🄅\":\"4,\",\"⒋\":\"4.\",\"ᔰ\":\"4·\",\"㏣\":\"4日\",\"㋃\":\"4月\",\"㍜\":\"4点\",\"𝟓\":\"5\",\"𝟝\":\"5\",\"𝟧\":\"5\",\"𝟱\":\"5\",\"𝟻\":\"5\",\"🯵\":\"5\",\"Ƽ\":\"5\",\"𑢻\":\"5\",\"⑤\":\"➄\",\"🄆\":\"5,\",\"⒌\":\"5.\",\"㏤\":\"5日\",\"㋄\":\"5月\",\"㍝\":\"5点\",\"𝟔\":\"6\",\"𝟞\":\"6\",\"𝟨\":\"6\",\"𝟲\":\"6\",\"𝟼\":\"6\",\"🯶\":\"6\",\"Ⳓ\":\"6\",\"б\":\"6\",\"Ꮾ\":\"6\",\"𑣕\":\"6\",\"۶\":\"٦\",\"𑓖\":\"৬\",\"⑥\":\"➅\",\"🄇\":\"6,\",\"⒍\":\"6.\",\"㏥\":\"6日\",\"㋅\":\"6月\",\"㍞\":\"6点\",\"𝈒\":\"7\",\"𝟕\":\"7\",\"𝟟\":\"7\",\"𝟩\":\"7\",\"𝟳\":\"7\",\"𝟽\":\"7\",\"🯷\":\"7\",\"𐓒\":\"7\",\"𑣆\":\"7\",\"⑦\":\"➆\",\"🄈\":\"7,\",\"⒎\":\"7.\",\"㏦\":\"7日\",\"㋆\":\"7月\",\"㍟\":\"7点\",\"ଃ\":\"8\",\"৪\":\"8\",\"੪\":\"8\",\"𞣋\":\"8\",\"𝟖\":\"8\",\"𝟠\":\"8\",\"𝟪\":\"8\",\"𝟴\":\"8\",\"𝟾\":\"8\",\"🯸\":\"8\",\"ȣ\":\"8\",\"Ȣ\":\"8\",\"𐌚\":\"8\",\"૮\":\"८\",\"⑧\":\"➇\",\"🄉\":\"8,\",\"⒏\":\"8.\",\"㏧\":\"8日\",\"㋇\":\"8月\",\"㍠\":\"8点\",\"੧\":\"9\",\"୨\":\"9\",\"৭\":\"9\",\"൭\":\"9\",\"𝟗\":\"9\",\"𝟡\":\"9\",\"𝟫\":\"9\",\"𝟵\":\"9\",\"𝟿\":\"9\",\"🯹\":\"9\",\"Ꝯ\":\"9\",\"Ⳋ\":\"9\",\"𑣌\":\"9\",\"𑢬\":\"9\",\"𑣖\":\"9\",\"१\":\"٩\",\"𑣤\":\"٩\",\"۹\":\"٩\",\"೯\":\"౯\",\"⑨\":\"➈\",\"🄊\":\"9,\",\"⒐\":\"9.\",\"㏨\":\"9日\",\"㋈\":\"9月\",\"㍡\":\"9点\",\"⍺\":\"a\",\"ａ\":\"a\",\"𝐚\":\"a\",\"𝑎\":\"a\",\"𝒂\":\"a\",\"𝒶\":\"a\",\"𝓪\":\"a\",\"𝔞\":\"a\",\"𝕒\":\"a\",\"𝖆\":\"a\",\"𝖺\":\"a\",\"𝗮\":\"a\",\"𝘢\":\"a\",\"𝙖\":\"a\",\"𝚊\":\"a\",\"ɑ\":\"a\",\"α\":\"a\",\"𝛂\":\"a\",\"𝛼\":\"a\",\"𝜶\":\"a\",\"𝝰\":\"a\",\"𝞪\":\"a\",\"а\":\"a\",\"ⷶ\":\"ͣ\",\"Ａ\":\"A\",\"𝐀\":\"A\",\"𝐴\":\"A\",\"𝑨\":\"A\",\"𝒜\":\"A\",\"𝓐\":\"A\",\"𝔄\":\"A\",\"𝔸\":\"A\",\"𝕬\":\"A\",\"𝖠\":\"A\",\"𝗔\":\"A\",\"𝘈\":\"A\",\"𝘼\":\"A\",\"𝙰\":\"A\",\"Α\":\"A\",\"𝚨\":\"A\",\"𝛢\":\"A\",\"𝜜\":\"A\",\"𝝖\":\"A\",\"𝞐\":\"A\",\"А\":\"A\",\"Ꭺ\":\"A\",\"ᗅ\":\"A\",\"ꓮ\":\"A\",\"𖽀\":\"A\",\"𐊠\":\"A\",\"⍶\":\"a̲\",\"ǎ\":\"ă\",\"Ǎ\":\"Ă\",\"ȧ\":\"å\",\"Ȧ\":\"Å\",\"ẚ\":\"ả\",\"℀\":\"a/c\",\"℁\":\"a/s\",\"ꜳ\":\"aa\",\"Ꜳ\":\"AA\",\"æ\":\"ae\",\"ӕ\":\"ae\",\"Æ\":\"AE\",\"Ӕ\":\"AE\",\"ꜵ\":\"ao\",\"Ꜵ\":\"AO\",\"🜇\":\"AR\",\"ꜷ\":\"au\",\"Ꜷ\":\"AU\",\"ꜹ\":\"av\",\"ꜻ\":\"av\",\"Ꜹ\":\"AV\",\"Ꜻ\":\"AV\",\"ꜽ\":\"ay\",\"Ꜽ\":\"AY\",\"ꭺ\":\"ᴀ\",\"∀\":\"Ɐ\",\"𝈗\":\"Ɐ\",\"ᗄ\":\"Ɐ\",\"ꓯ\":\"Ɐ\",\"𐐟\":\"Ɒ\",\"𝐛\":\"b\",\"𝑏\":\"b\",\"𝒃\":\"b\",\"𝒷\":\"b\",\"𝓫\":\"b\",\"𝔟\":\"b\",\"𝕓\":\"b\",\"𝖇\":\"b\",\"𝖻\":\"b\",\"𝗯\":\"b\",\"𝘣\":\"b\",\"𝙗\":\"b\",\"𝚋\":\"b\",\"Ƅ\":\"b\",\"Ь\":\"b\",\"Ꮟ\":\"b\",\"ᑲ\":\"b\",\"ᖯ\":\"b\",\"Ｂ\":\"B\",\"ℬ\":\"B\",\"𝐁\":\"B\",\"𝐵\":\"B\",\"𝑩\":\"B\",\"𝓑\":\"B\",\"𝔅\":\"B\",\"𝔹\":\"B\",\"𝕭\":\"B\",\"𝖡\":\"B\",\"𝗕\":\"B\",\"𝘉\":\"B\",\"𝘽\":\"B\",\"𝙱\":\"B\",\"Ꞵ\":\"B\",\"Β\":\"B\",\"𝚩\":\"B\",\"𝛣\":\"B\",\"𝜝\":\"B\",\"𝝗\":\"B\",\"𝞑\":\"B\",\"В\":\"B\",\"Ᏼ\":\"B\",\"ᗷ\":\"B\",\"ꓐ\":\"B\",\"𐊂\":\"B\",\"𐊡\":\"B\",\"𐌁\":\"B\",\"ɓ\":\"b̔\",\"ᑳ\":\"ḃ\",\"ƃ\":\"b̄\",\"Ƃ\":\"b̄\",\"Б\":\"b̄\",\"ƀ\":\"b̵\",\"ҍ\":\"b̵\",\"Ҍ\":\"b̵\",\"ѣ\":\"b̵\",\"Ѣ\":\"b̵\",\"ᑿ\":\"b·\",\"ᒁ\":\"ḃ·\",\"ᒈ\":\"b'\",\"Ы\":\"bl\",\"в\":\"ʙ\",\"ᏼ\":\"ʙ\",\"ｃ\":\"c\",\"ⅽ\":\"c\",\"𝐜\":\"c\",\"𝑐\":\"c\",\"𝒄\":\"c\",\"𝒸\":\"c\",\"𝓬\":\"c\",\"𝔠\":\"c\",\"𝕔\":\"c\",\"𝖈\":\"c\",\"𝖼\":\"c\",\"𝗰\":\"c\",\"𝘤\":\"c\",\"𝙘\":\"c\",\"𝚌\":\"c\",\"ᴄ\":\"c\",\"ϲ\":\"c\",\"ⲥ\":\"c\",\"с\":\"c\",\"ꮯ\":\"c\",\"𐐽\":\"c\",\"ⷭ\":\"ͨ\",\"🝌\":\"C\",\"𑣲\":\"C\",\"𑣩\":\"C\",\"Ｃ\":\"C\",\"Ⅽ\":\"C\",\"ℂ\":\"C\",\"ℭ\":\"C\",\"𝐂\":\"C\",\"𝐶\":\"C\",\"𝑪\":\"C\",\"𝒞\":\"C\",\"𝓒\":\"C\",\"𝕮\":\"C\",\"𝖢\":\"C\",\"𝗖\":\"C\",\"𝘊\":\"C\",\"𝘾\":\"C\",\"𝙲\":\"C\",\"Ϲ\":\"C\",\"Ⲥ\":\"C\",\"С\":\"C\",\"Ꮯ\":\"C\",\"ꓚ\":\"C\",\"𐊢\":\"C\",\"𐌂\":\"C\",\"𐐕\":\"C\",\"𐔜\":\"C\",\"¢\":\"c̸\",\"ȼ\":\"c̸\",\"₡\":\"C⃫\",\"🅮\":\"C⃠\",\"ç\":\"c̦\",\"ҫ\":\"c̦\",\"Ç\":\"C̦\",\"Ҫ\":\"C̦\",\"Ƈ\":\"C'\",\"℅\":\"c/o\",\"℆\":\"c/u\",\"🅭\":\"㏄\\t⃝\",\"⋴\":\"ꞓ\",\"ɛ\":\"ꞓ\",\"ε\":\"ꞓ\",\"ϵ\":\"ꞓ\",\"𝛆\":\"ꞓ\",\"𝛜\":\"ꞓ\",\"𝜀\":\"ꞓ\",\"𝜖\":\"ꞓ\",\"𝜺\":\"ꞓ\",\"𝝐\":\"ꞓ\",\"𝝴\":\"ꞓ\",\"𝞊\":\"ꞓ\",\"𝞮\":\"ꞓ\",\"𝟄\":\"ꞓ\",\"ⲉ\":\"ꞓ\",\"є\":\"ꞓ\",\"ԑ\":\"ꞓ\",\"ꮛ\":\"ꞓ\",\"𑣎\":\"ꞓ\",\"𐐩\":\"ꞓ\",\"€\":\"Ꞓ\",\"Ⲉ\":\"Ꞓ\",\"Є\":\"Ꞓ\",\"⍷\":\"ꞓ̲\",\"ͽ\":\"ꜿ\",\"Ͽ\":\"Ꜿ\",\"ⅾ\":\"d\",\"ⅆ\":\"d\",\"𝐝\":\"d\",\"𝑑\":\"d\",\"𝒅\":\"d\",\"𝒹\":\"d\",\"𝓭\":\"d\",\"𝔡\":\"d\",\"𝕕\":\"d\",\"𝖉\":\"d\",\"𝖽\":\"d\",\"𝗱\":\"d\",\"𝘥\":\"d\",\"𝙙\":\"d\",\"𝚍\":\"d\",\"ԁ\":\"d\",\"Ꮷ\":\"d\",\"ᑯ\":\"d\",\"ꓒ\":\"d\",\"Ⅾ\":\"D\",\"ⅅ\":\"D\",\"𝐃\":\"D\",\"𝐷\":\"D\",\"𝑫\":\"D\",\"𝒟\":\"D\",\"𝓓\":\"D\",\"𝔇\":\"D\",\"𝔻\":\"D\",\"𝕯\":\"D\",\"𝖣\":\"D\",\"𝗗\":\"D\",\"𝘋\":\"D\",\"𝘿\":\"D\",\"𝙳\":\"D\",\"Ꭰ\":\"D\",\"ᗞ\":\"D\",\"ᗪ\":\"D\",\"ꓓ\":\"D\",\"ɗ\":\"d̔\",\"ɖ\":\"d̨\",\"ƌ\":\"d̄\",\"đ\":\"d̵\",\"Đ\":\"D̵\",\"Ð\":\"D̵\",\"Ɖ\":\"D̵\",\"₫\":\"ḏ̵\",\"ꝺ\":\"Ꝺ\",\"ᑻ\":\"d·\",\"ᒇ\":\"d'\",\"ʤ\":\"dȝ\",\"ǳ\":\"dz\",\"ʣ\":\"dz\",\"ǲ\":\"Dz\",\"Ǳ\":\"DZ\",\"ǆ\":\"dž\",\"ǅ\":\"Dž\",\"Ǆ\":\"DŽ\",\"ʥ\":\"dʑ\",\"ꭰ\":\"ᴅ\",\"⸹\":\"ẟ\",\"δ\":\"ẟ\",\"𝛅\":\"ẟ\",\"𝛿\":\"ẟ\",\"𝜹\":\"ẟ\",\"𝝳\":\"ẟ\",\"𝞭\":\"ẟ\",\"ծ\":\"ẟ\",\"ᕷ\":\"ẟ\",\"℮\":\"e\",\"ｅ\":\"e\",\"ℯ\":\"e\",\"ⅇ\":\"e\",\"𝐞\":\"e\",\"𝑒\":\"e\",\"𝒆\":\"e\",\"𝓮\":\"e\",\"𝔢\":\"e\",\"𝕖\":\"e\",\"𝖊\":\"e\",\"𝖾\":\"e\",\"𝗲\":\"e\",\"𝘦\":\"e\",\"𝙚\":\"e\",\"𝚎\":\"e\",\"ꬲ\":\"e\",\"е\":\"e\",\"ҽ\":\"e\",\"ⷷ\":\"ͤ\",\"⋿\":\"E\",\"Ｅ\":\"E\",\"ℰ\":\"E\",\"𝐄\":\"E\",\"𝐸\":\"E\",\"𝑬\":\"E\",\"𝓔\":\"E\",\"𝔈\":\"E\",\"𝔼\":\"E\",\"𝕰\":\"E\",\"𝖤\":\"E\",\"𝗘\":\"E\",\"𝘌\":\"E\",\"𝙀\":\"E\",\"𝙴\":\"E\",\"Ε\":\"E\",\"𝚬\":\"E\",\"𝛦\":\"E\",\"𝜠\":\"E\",\"𝝚\":\"E\",\"𝞔\":\"E\",\"Е\":\"E\",\"ⴹ\":\"E\",\"Ꭼ\":\"E\",\"ꓰ\":\"E\",\"𑢦\":\"E\",\"𑢮\":\"E\",\"𐊆\":\"E\",\"ě\":\"ĕ\",\"Ě\":\"Ĕ\",\"ɇ\":\"e̸\",\"Ɇ\":\"E̸\",\"ҿ\":\"ę\",\"ꭼ\":\"ᴇ\",\"ə\":\"ǝ\",\"ә\":\"ǝ\",\"∃\":\"Ǝ\",\"ⴺ\":\"Ǝ\",\"ꓱ\":\"Ǝ\",\"ɚ\":\"ǝ˞\",\"ᴔ\":\"ǝo\",\"ꭁ\":\"ǝo̸\",\"ꭂ\":\"ǝo̵\",\"Ә\":\"Ə\",\"𝈡\":\"Ɛ\",\"ℇ\":\"Ɛ\",\"Ԑ\":\"Ɛ\",\"Ꮛ\":\"Ɛ\",\"𖼭\":\"Ɛ\",\"𐐁\":\"Ɛ\",\"ᶟ\":\"ᵋ\",\"ᴈ\":\"ɜ\",\"з\":\"ɜ\",\"ҙ\":\"ɜ̦\",\"𐑂\":\"ɞ\",\"ꞝ\":\"ʚ\",\"𐐪\":\"ʚ\",\"𝐟\":\"f\",\"𝑓\":\"f\",\"𝒇\":\"f\",\"𝒻\":\"f\",\"𝓯\":\"f\",\"𝔣\":\"f\",\"𝕗\":\"f\",\"𝖋\":\"f\",\"𝖿\":\"f\",\"𝗳\":\"f\",\"𝘧\":\"f\",\"𝙛\":\"f\",\"𝚏\":\"f\",\"ꬵ\":\"f\",\"ꞙ\":\"f\",\"ſ\":\"f\",\"ẝ\":\"f\",\"ք\":\"f\",\"𝈓\":\"F\",\"ℱ\":\"F\",\"𝐅\":\"F\",\"𝐹\":\"F\",\"𝑭\":\"F\",\"𝓕\":\"F\",\"𝔉\":\"F\",\"𝔽\":\"F\",\"𝕱\":\"F\",\"𝖥\":\"F\",\"𝗙\":\"F\",\"𝘍\":\"F\",\"𝙁\":\"F\",\"𝙵\":\"F\",\"Ꞙ\":\"F\",\"Ϝ\":\"F\",\"𝟊\":\"F\",\"ᖴ\":\"F\",\"ꓝ\":\"F\",\"𑣂\":\"F\",\"𑢢\":\"F\",\"𐊇\":\"F\",\"𐊥\":\"F\",\"𐔥\":\"F\",\"ƒ\":\"f̦\",\"Ƒ\":\"F̦\",\"ᵮ\":\"f̴\",\"℻\":\"FAX\",\"ﬀ\":\"ff\",\"ﬃ\":\"ffi\",\"ﬄ\":\"ffl\",\"ﬁ\":\"fi\",\"ﬂ\":\"fl\",\"ʩ\":\"fŋ\",\"ᖵ\":\"Ⅎ\",\"ꓞ\":\"Ⅎ\",\"𝈰\":\"ꟻ\",\"ᖷ\":\"ꟻ\",\"ｇ\":\"g\",\"ℊ\":\"g\",\"𝐠\":\"g\",\"𝑔\":\"g\",\"𝒈\":\"g\",\"𝓰\":\"g\",\"𝔤\":\"g\",\"𝕘\":\"g\",\"𝖌\":\"g\",\"𝗀\":\"g\",\"𝗴\":\"g\",\"𝘨\":\"g\",\"𝙜\":\"g\",\"𝚐\":\"g\",\"ɡ\":\"g\",\"ᶃ\":\"g\",\"ƍ\":\"g\",\"ց\":\"g\",\"𝐆\":\"G\",\"𝐺\":\"G\",\"𝑮\":\"G\",\"𝒢\":\"G\",\"𝓖\":\"G\",\"𝔊\":\"G\",\"𝔾\":\"G\",\"𝕲\":\"G\",\"𝖦\":\"G\",\"𝗚\":\"G\",\"𝘎\":\"G\",\"𝙂\":\"G\",\"𝙶\":\"G\",\"Ԍ\":\"G\",\"Ꮐ\":\"G\",\"Ᏻ\":\"G\",\"ꓖ\":\"G\",\"ᶢ\":\"ᵍ\",\"ɠ\":\"g̔\",\"ǧ\":\"ğ\",\"Ǧ\":\"Ğ\",\"ǵ\":\"ģ\",\"ǥ\":\"g̵\",\"Ǥ\":\"G̵\",\"Ɠ\":\"G'\",\"ԍ\":\"ɢ\",\"ꮐ\":\"ɢ\",\"ᏻ\":\"ɢ\",\"ｈ\":\"h\",\"ℎ\":\"h\",\"𝐡\":\"h\",\"𝒉\":\"h\",\"𝒽\":\"h\",\"𝓱\":\"h\",\"𝔥\":\"h\",\"𝕙\":\"h\",\"𝖍\":\"h\",\"𝗁\":\"h\",\"𝗵\":\"h\",\"𝘩\":\"h\",\"𝙝\":\"h\",\"𝚑\":\"h\",\"һ\":\"h\",\"հ\":\"h\",\"Ꮒ\":\"h\",\"Ｈ\":\"H\",\"ℋ\":\"H\",\"ℌ\":\"H\",\"ℍ\":\"H\",\"𝐇\":\"H\",\"𝐻\":\"H\",\"𝑯\":\"H\",\"𝓗\":\"H\",\"𝕳\":\"H\",\"𝖧\":\"H\",\"𝗛\":\"H\",\"𝘏\":\"H\",\"𝙃\":\"H\",\"𝙷\":\"H\",\"Η\":\"H\",\"𝚮\":\"H\",\"𝛨\":\"H\",\"𝜢\":\"H\",\"𝝜\":\"H\",\"𝞖\":\"H\",\"Ⲏ\":\"H\",\"Н\":\"H\",\"Ꮋ\":\"H\",\"ᕼ\":\"H\",\"ꓧ\":\"H\",\"𐋏\":\"H\",\"ᵸ\":\"ᴴ\",\"ɦ\":\"h̔\",\"ꚕ\":\"h̔\",\"Ᏺ\":\"h̔\",\"Ⱨ\":\"H̩\",\"Ң\":\"H̩\",\"ħ\":\"h̵\",\"ℏ\":\"h̵\",\"ћ\":\"h̵\",\"Ħ\":\"H̵\",\"Ӊ\":\"H̦\",\"Ӈ\":\"H̦\",\"н\":\"ʜ\",\"ꮋ\":\"ʜ\",\"ң\":\"ʜ̩\",\"ӊ\":\"ʜ̦\",\"ӈ\":\"ʜ̦\",\"Ԋ\":\"Ƕ\",\"ꮀ\":\"ⱶ\",\"Ͱ\":\"Ⱶ\",\"Ꭸ\":\"Ⱶ\",\"Ꮀ\":\"Ⱶ\",\"ꚱ\":\"Ⱶ\",\"ꞕ\":\"ꜧ\",\"˛\":\"i\",\"⍳\":\"i\",\"ｉ\":\"i\",\"ⅰ\":\"i\",\"ℹ\":\"i\",\"ⅈ\":\"i\",\"𝐢\":\"i\",\"𝑖\":\"i\",\"𝒊\":\"i\",\"𝒾\":\"i\",\"𝓲\":\"i\",\"𝔦\":\"i\",\"𝕚\":\"i\",\"𝖎\":\"i\",\"𝗂\":\"i\",\"𝗶\":\"i\",\"𝘪\":\"i\",\"𝙞\":\"i\",\"𝚒\":\"i\",\"ı\":\"i\",\"𝚤\":\"i\",\"ɪ\":\"i\",\"ɩ\":\"i\",\"ι\":\"i\",\"ι\":\"i\",\"ͺ\":\"i\",\"𝛊\":\"i\",\"𝜄\":\"i\",\"𝜾\":\"i\",\"𝝸\":\"i\",\"𝞲\":\"i\",\"і\":\"i\",\"ꙇ\":\"i\",\"ӏ\":\"i\",\"ꭵ\":\"i\",\"Ꭵ\":\"i\",\"𑣃\":\"i\",\"ⓛ\":\"Ⓘ\",\"⍸\":\"i̲\",\"ǐ\":\"ĭ\",\"Ǐ\":\"Ĭ\",\"ɨ\":\"i̵\",\"ᵻ\":\"i̵\",\"ᵼ\":\"i̵\",\"ⅱ\":\"ii\",\"ⅲ\":\"iii\",\"ĳ\":\"ij\",\"ⅳ\":\"iv\",\"ⅸ\":\"ix\",\"ｊ\":\"j\",\"ⅉ\":\"j\",\"𝐣\":\"j\",\"𝑗\":\"j\",\"𝒋\":\"j\",\"𝒿\":\"j\",\"𝓳\":\"j\",\"𝔧\":\"j\",\"𝕛\":\"j\",\"𝖏\":\"j\",\"𝗃\":\"j\",\"𝗷\":\"j\",\"𝘫\":\"j\",\"𝙟\":\"j\",\"𝚓\":\"j\",\"ϳ\":\"j\",\"ј\":\"j\",\"Ｊ\":\"J\",\"𝐉\":\"J\",\"𝐽\":\"J\",\"𝑱\":\"J\",\"𝒥\":\"J\",\"𝓙\":\"J\",\"𝔍\":\"J\",\"𝕁\":\"J\",\"𝕵\":\"J\",\"𝖩\":\"J\",\"𝗝\":\"J\",\"𝘑\":\"J\",\"𝙅\":\"J\",\"𝙹\":\"J\",\"Ʝ\":\"J\",\"Ϳ\":\"J\",\"Ј\":\"J\",\"Ꭻ\":\"J\",\"ᒍ\":\"J\",\"ꓙ\":\"J\",\"ɉ\":\"j̵\",\"Ɉ\":\"J̵\",\"ᒙ\":\"J·\",\"𝚥\":\"ȷ\",\"յ\":\"ȷ\",\"ꭻ\":\"ᴊ\",\"𝐤\":\"k\",\"𝑘\":\"k\",\"𝒌\":\"k\",\"𝓀\":\"k\",\"𝓴\":\"k\",\"𝔨\":\"k\",\"𝕜\":\"k\",\"𝖐\":\"k\",\"𝗄\":\"k\",\"𝗸\":\"k\",\"𝘬\":\"k\",\"𝙠\":\"k\",\"𝚔\":\"k\",\"K\":\"K\",\"Ｋ\":\"K\",\"𝐊\":\"K\",\"𝐾\":\"K\",\"𝑲\":\"K\",\"𝒦\":\"K\",\"𝓚\":\"K\",\"𝔎\":\"K\",\"𝕂\":\"K\",\"𝕶\":\"K\",\"𝖪\":\"K\",\"𝗞\":\"K\",\"𝘒\":\"K\",\"𝙆\":\"K\",\"𝙺\":\"K\",\"Κ\":\"K\",\"𝚱\":\"K\",\"𝛫\":\"K\",\"𝜥\":\"K\",\"𝝟\":\"K\",\"𝞙\":\"K\",\"Ⲕ\":\"K\",\"К\":\"K\",\"Ꮶ\":\"K\",\"ᛕ\":\"K\",\"ꓗ\":\"K\",\"𐔘\":\"K\",\"ƙ\":\"k̔\",\"Ⱪ\":\"K̩\",\"Қ\":\"K̩\",\"₭\":\"K̵\",\"Ꝁ\":\"K̵\",\"Ҟ\":\"K̵\",\"Ƙ\":\"K'\",\"׀\":\"l\",\"|\":\"l\",\"∣\":\"l\",\"⏽\":\"l\",\"￨\":\"l\",\"١\":\"l\",\"۱\":\"l\",\"𐌠\":\"l\",\"𞣇\":\"l\",\"𝟏\":\"l\",\"𝟙\":\"l\",\"𝟣\":\"l\",\"𝟭\":\"l\",\"𝟷\":\"l\",\"🯱\":\"l\",\"I\":\"l\",\"Ｉ\":\"l\",\"Ⅰ\":\"l\",\"ℐ\":\"l\",\"ℑ\":\"l\",\"𝐈\":\"l\",\"𝐼\":\"l\",\"𝑰\":\"l\",\"𝓘\":\"l\",\"𝕀\":\"l\",\"𝕴\":\"l\",\"𝖨\":\"l\",\"𝗜\":\"l\",\"𝘐\":\"l\",\"𝙄\":\"l\",\"𝙸\":\"l\",\"Ɩ\":\"l\",\"ｌ\":\"l\",\"ⅼ\":\"l\",\"ℓ\":\"l\",\"𝐥\":\"l\",\"𝑙\":\"l\",\"𝒍\":\"l\",\"𝓁\":\"l\",\"𝓵\":\"l\",\"𝔩\":\"l\",\"𝕝\":\"l\",\"𝖑\":\"l\",\"𝗅\":\"l\",\"𝗹\":\"l\",\"𝘭\":\"l\",\"𝙡\":\"l\",\"𝚕\":\"l\",\"ǀ\":\"l\",\"Ι\":\"l\",\"𝚰\":\"l\",\"𝛪\":\"l\",\"𝜤\":\"l\",\"𝝞\":\"l\",\"𝞘\":\"l\",\"Ⲓ\":\"l\",\"І\":\"l\",\"Ӏ\":\"l\",\"ו\":\"l\",\"ן\":\"l\",\"ا\":\"l\",\"𞸀\":\"l\",\"𞺀\":\"l\",\"ﺎ\":\"l\",\"ﺍ\":\"l\",\"ߊ\":\"l\",\"ⵏ\":\"l\",\"ᛁ\":\"l\",\"ꓲ\":\"l\",\"𖼨\":\"l\",\"𐊊\":\"l\",\"𐌉\":\"l\",\"𝈪\":\"L\",\"Ⅼ\":\"L\",\"ℒ\":\"L\",\"𝐋\":\"L\",\"𝐿\":\"L\",\"𝑳\":\"L\",\"𝓛\":\"L\",\"𝔏\":\"L\",\"𝕃\":\"L\",\"𝕷\":\"L\",\"𝖫\":\"L\",\"𝗟\":\"L\",\"𝘓\":\"L\",\"𝙇\":\"L\",\"𝙻\":\"L\",\"Ⳑ\":\"L\",\"Ꮮ\":\"L\",\"ᒪ\":\"L\",\"ꓡ\":\"L\",\"𖼖\":\"L\",\"𑢣\":\"L\",\"𑢲\":\"L\",\"𐐛\":\"L\",\"𐔦\":\"L\",\"ﴼ\":\"l̋\",\"ﴽ\":\"l̋\",\"ł\":\"l̸\",\"Ł\":\"L̸\",\"ɭ\":\"l̨\",\"Ɨ\":\"l̵\",\"ƚ\":\"l̵\",\"ɫ\":\"l̴\",\"إ\":\"lٕ\",\"ﺈ\":\"lٕ\",\"ﺇ\":\"lٕ\",\"ٳ\":\"lٕ\",\"ŀ\":\"l·\",\"Ŀ\":\"l·\",\"ᒷ\":\"l·\",\"🄂\":\"l,\",\"⒈\":\"l.\",\"ױ\":\"l'\",\"⒓\":\"l2.\",\"㏫\":\"l2日\",\"㋋\":\"l2月\",\"㍤\":\"l2点\",\"⒔\":\"l3.\",\"㏬\":\"l3日\",\"㍥\":\"l3点\",\"⒕\":\"l4.\",\"㏭\":\"l4日\",\"㍦\":\"l4点\",\"⒖\":\"l5.\",\"㏮\":\"l5日\",\"㍧\":\"l5点\",\"⒗\":\"l6.\",\"㏯\":\"l6日\",\"㍨\":\"l6点\",\"⒘\":\"l7.\",\"㏰\":\"l7日\",\"㍩\":\"l7点\",\"⒙\":\"l8.\",\"㏱\":\"l8日\",\"㍪\":\"l8点\",\"⒚\":\"l9.\",\"㏲\":\"l9日\",\"㍫\":\"l9点\",\"ǉ\":\"lj\",\"Ĳ\":\"lJ\",\"ǈ\":\"Lj\",\"Ǉ\":\"LJ\",\"‖\":\"ll\",\"∥\":\"ll\",\"Ⅱ\":\"ll\",\"ǁ\":\"ll\",\"װ\":\"ll\",\"𐆙\":\"l̵l̵\",\"⒒\":\"ll.\",\"Ⅲ\":\"lll\",\"𐆘\":\"l̵l̵S̵\",\"㏪\":\"ll日\",\"㋊\":\"ll月\",\"㍣\":\"ll点\",\"Ю\":\"lO\",\"⒑\":\"lO.\",\"㏩\":\"lO日\",\"㋉\":\"lO月\",\"㍢\":\"lO点\",\"ʪ\":\"ls\",\"₶\":\"lt\",\"Ⅳ\":\"lV\",\"Ⅸ\":\"lX\",\"ɮ\":\"lȝ\",\"ʫ\":\"lz\",\"أ\":\"lٴ\",\"ﺄ\":\"lٴ\",\"ﺃ\":\"lٴ\",\"ٲ\":\"lٴ\",\"ٵ\":\"lٴ\",\"ﷳ\":\"lكبر\",\"ﷲ\":\"lللّٰo\",\"㏠\":\"l日\",\"㋀\":\"l月\",\"㍙\":\"l点\",\"ⳑ\":\"ʟ\",\"ꮮ\":\"ʟ\",\"𐑃\":\"ʟ\",\"Ｍ\":\"M\",\"Ⅿ\":\"M\",\"ℳ\":\"M\",\"𝐌\":\"M\",\"𝑀\":\"M\",\"𝑴\":\"M\",\"𝓜\":\"M\",\"𝔐\":\"M\",\"𝕄\":\"M\",\"𝕸\":\"M\",\"𝖬\":\"M\",\"𝗠\":\"M\",\"𝘔\":\"M\",\"𝙈\":\"M\",\"𝙼\":\"M\",\"Μ\":\"M\",\"𝚳\":\"M\",\"𝛭\":\"M\",\"𝜧\":\"M\",\"𝝡\":\"M\",\"𝞛\":\"M\",\"Ϻ\":\"M\",\"Ⲙ\":\"M\",\"М\":\"M\",\"Ꮇ\":\"M\",\"ᗰ\":\"M\",\"ᛖ\":\"M\",\"ꓟ\":\"M\",\"𐊰\":\"M\",\"𐌑\":\"M\",\"Ӎ\":\"M̦\",\"🝫\":\"MB\",\"ⷨ\":\"ᷟ\",\"𝐧\":\"n\",\"𝑛\":\"n\",\"𝒏\":\"n\",\"𝓃\":\"n\",\"𝓷\":\"n\",\"𝔫\":\"n\",\"𝕟\":\"n\",\"𝖓\":\"n\",\"𝗇\":\"n\",\"𝗻\":\"n\",\"𝘯\":\"n\",\"𝙣\":\"n\",\"𝚗\":\"n\",\"ո\":\"n\",\"ռ\":\"n\",\"Ｎ\":\"N\",\"ℕ\":\"N\",\"𝐍\":\"N\",\"𝑁\":\"N\",\"𝑵\":\"N\",\"𝒩\":\"N\",\"𝓝\":\"N\",\"𝔑\":\"N\",\"𝕹\":\"N\",\"𝖭\":\"N\",\"𝗡\":\"N\",\"𝘕\":\"N\",\"𝙉\":\"N\",\"𝙽\":\"N\",\"Ν\":\"N\",\"𝚴\":\"N\",\"𝛮\":\"N\",\"𝜨\":\"N\",\"𝝢\":\"N\",\"𝞜\":\"N\",\"Ⲛ\":\"N\",\"ꓠ\":\"N\",\"𐔓\":\"N\",\"𐆎\":\"N̊\",\"ɳ\":\"n̨\",\"ƞ\":\"n̩\",\"η\":\"n̩\",\"𝛈\":\"n̩\",\"𝜂\":\"n̩\",\"𝜼\":\"n̩\",\"𝝶\":\"n̩\",\"𝞰\":\"n̩\",\"Ɲ\":\"N̦\",\"ᵰ\":\"n̴\",\"ǌ\":\"nj\",\"ǋ\":\"Nj\",\"Ǌ\":\"NJ\",\"№\":\"No\",\"ͷ\":\"ᴎ\",\"и\":\"ᴎ\",\"𐑍\":\"ᴎ\",\"ņ\":\"ɲ\",\"ం\":\"o\",\"ಂ\":\"o\",\"ം\":\"o\",\"ං\":\"o\",\"०\":\"o\",\"੦\":\"o\",\"૦\":\"o\",\"௦\":\"o\",\"౦\":\"o\",\"೦\":\"o\",\"൦\":\"o\",\"๐\":\"o\",\"໐\":\"o\",\"၀\":\"o\",\"٥\":\"o\",\"۵\":\"o\",\"ｏ\":\"o\",\"ℴ\":\"o\",\"𝐨\":\"o\",\"𝑜\":\"o\",\"𝒐\":\"o\",\"𝓸\":\"o\",\"𝔬\":\"o\",\"𝕠\":\"o\",\"𝖔\":\"o\",\"𝗈\":\"o\",\"𝗼\":\"o\",\"𝘰\":\"o\",\"𝙤\":\"o\",\"𝚘\":\"o\",\"ᴏ\":\"o\",\"ᴑ\":\"o\",\"ꬽ\":\"o\",\"ο\":\"o\",\"𝛐\":\"o\",\"𝜊\":\"o\",\"𝝄\":\"o\",\"𝝾\":\"o\",\"𝞸\":\"o\",\"σ\":\"o\",\"𝛔\":\"o\",\"𝜎\":\"o\",\"𝝈\":\"o\",\"𝞂\":\"o\",\"𝞼\":\"o\",\"ⲟ\":\"o\",\"о\":\"o\",\"ჿ\":\"o\",\"օ\":\"o\",\"ס\":\"o\",\"ه\":\"o\",\"𞸤\":\"o\",\"𞹤\":\"o\",\"𞺄\":\"o\",\"ﻫ\":\"o\",\"ﻬ\":\"o\",\"ﻪ\":\"o\",\"ﻩ\":\"o\",\"ھ\":\"o\",\"ﮬ\":\"o\",\"ﮭ\":\"o\",\"ﮫ\":\"o\",\"ﮪ\":\"o\",\"ہ\":\"o\",\"ﮨ\":\"o\",\"ﮩ\":\"o\",\"ﮧ\":\"o\",\"ﮦ\":\"o\",\"ە\":\"o\",\"ഠ\":\"o\",\"ဝ\":\"o\",\"𐓪\":\"o\",\"𑣈\":\"o\",\"𑣗\":\"o\",\"𐐬\":\"o\",\"߀\":\"O\",\"০\":\"O\",\"୦\":\"O\",\"〇\":\"O\",\"𑓐\":\"O\",\"𑣠\":\"O\",\"𝟎\":\"O\",\"𝟘\":\"O\",\"𝟢\":\"O\",\"𝟬\":\"O\",\"𝟶\":\"O\",\"🯰\":\"O\",\"Ｏ\":\"O\",\"𝐎\":\"O\",\"𝑂\":\"O\",\"𝑶\":\"O\",\"𝒪\":\"O\",\"𝓞\":\"O\",\"𝔒\":\"O\",\"𝕆\":\"O\",\"𝕺\":\"O\",\"𝖮\":\"O\",\"𝗢\":\"O\",\"𝘖\":\"O\",\"𝙊\":\"O\",\"𝙾\":\"O\",\"Ο\":\"O\",\"𝚶\":\"O\",\"𝛰\":\"O\",\"𝜪\":\"O\",\"𝝤\":\"O\",\"𝞞\":\"O\",\"Ⲟ\":\"O\",\"О\":\"O\",\"Օ\":\"O\",\"ⵔ\":\"O\",\"ዐ\":\"O\",\"ଠ\":\"O\",\"𐓂\":\"O\",\"ꓳ\":\"O\",\"𑢵\":\"O\",\"𐊒\":\"O\",\"𐊫\":\"O\",\"𐐄\":\"O\",\"𐔖\":\"O\",\"⁰\":\"º\",\"ᵒ\":\"º\",\"ǒ\":\"ŏ\",\"Ǒ\":\"Ŏ\",\"ۿ\":\"ô\",\"Ő\":\"Ö\",\"ø\":\"o̸\",\"ꬾ\":\"o̸\",\"Ø\":\"O̸\",\"ⵁ\":\"O̸\",\"Ǿ\":\"Ó̸\",\"ɵ\":\"o̵\",\"ꝋ\":\"o̵\",\"ө\":\"o̵\",\"ѳ\":\"o̵\",\"ꮎ\":\"o̵\",\"ꮻ\":\"o̵\",\"⊖\":\"O̵\",\"⊝\":\"O̵\",\"⍬\":\"O̵\",\"𝈚\":\"O̵\",\"🜔\":\"O̵\",\"Ɵ\":\"O̵\",\"Ꝋ\":\"O̵\",\"θ\":\"O̵\",\"ϑ\":\"O̵\",\"𝛉\":\"O̵\",\"𝛝\":\"O̵\",\"𝜃\":\"O̵\",\"𝜗\":\"O̵\",\"𝜽\":\"O̵\",\"𝝑\":\"O̵\",\"𝝷\":\"O̵\",\"𝞋\":\"O̵\",\"𝞱\":\"O̵\",\"𝟅\":\"O̵\",\"Θ\":\"O̵\",\"ϴ\":\"O̵\",\"𝚯\":\"O̵\",\"𝚹\":\"O̵\",\"𝛩\":\"O̵\",\"𝛳\":\"O̵\",\"𝜣\":\"O̵\",\"𝜭\":\"O̵\",\"𝝝\":\"O̵\",\"𝝧\":\"O̵\",\"𝞗\":\"O̵\",\"𝞡\":\"O̵\",\"Ө\":\"O̵\",\"Ѳ\":\"O̵\",\"ⴱ\":\"O̵\",\"Ꮎ\":\"O̵\",\"Ꮻ\":\"O̵\",\"ꭴ\":\"ơ\",\"ﳙ\":\"oٰ\",\"🄁\":\"O,\",\"🄀\":\"O.\",\"ơ\":\"o'\",\"Ơ\":\"O'\",\"Ꭴ\":\"O'\",\"%\":\"º/₀\",\"٪\":\"º/₀\",\"⁒\":\"º/₀\",\"‰\":\"º/₀₀\",\"؉\":\"º/₀₀\",\"‱\":\"º/₀₀₀\",\"؊\":\"º/₀₀₀\",\"œ\":\"oe\",\"Œ\":\"OE\",\"ɶ\":\"oᴇ\",\"∞\":\"oo\",\"ꝏ\":\"oo\",\"ꚙ\":\"oo\",\"Ꝏ\":\"OO\",\"Ꚙ\":\"OO\",\"ﳗ\":\"oج\",\"ﱑ\":\"oج\",\"ﳘ\":\"oم\",\"ﱒ\":\"oم\",\"ﶓ\":\"oمج\",\"ﶔ\":\"oمم\",\"ﱓ\":\"oى\",\"ﱔ\":\"oى\",\"ൟ\":\"oരo\",\"တ\":\"oာ\",\"㍘\":\"O点\",\"ↄ\":\"ɔ\",\"ᴐ\":\"ɔ\",\"ͻ\":\"ɔ\",\"𐑋\":\"ɔ\",\"Ↄ\":\"Ɔ\",\"Ͻ\":\"Ɔ\",\"ꓛ\":\"Ɔ\",\"𐐣\":\"Ɔ\",\"ꬿ\":\"ɔ̸\",\"ꭢ\":\"ɔe\",\"𐐿\":\"ɷ\",\"⍴\":\"p\",\"ｐ\":\"p\",\"𝐩\":\"p\",\"𝑝\":\"p\",\"𝒑\":\"p\",\"𝓅\":\"p\",\"𝓹\":\"p\",\"𝔭\":\"p\",\"𝕡\":\"p\",\"𝖕\":\"p\",\"𝗉\":\"p\",\"𝗽\":\"p\",\"𝘱\":\"p\",\"𝙥\":\"p\",\"𝚙\":\"p\",\"ρ\":\"p\",\"ϱ\":\"p\",\"𝛒\":\"p\",\"𝛠\":\"p\",\"𝜌\":\"p\",\"𝜚\":\"p\",\"𝝆\":\"p\",\"𝝔\":\"p\",\"𝞀\":\"p\",\"𝞎\":\"p\",\"𝞺\":\"p\",\"𝟈\":\"p\",\"ⲣ\":\"p\",\"р\":\"p\",\"Ｐ\":\"P\",\"ℙ\":\"P\",\"𝐏\":\"P\",\"𝑃\":\"P\",\"𝑷\":\"P\",\"𝒫\":\"P\",\"𝓟\":\"P\",\"𝔓\":\"P\",\"𝕻\":\"P\",\"𝖯\":\"P\",\"𝗣\":\"P\",\"𝘗\":\"P\",\"𝙋\":\"P\",\"𝙿\":\"P\",\"Ρ\":\"P\",\"𝚸\":\"P\",\"𝛲\":\"P\",\"𝜬\":\"P\",\"𝝦\":\"P\",\"𝞠\":\"P\",\"Ⲣ\":\"P\",\"Р\":\"P\",\"Ꮲ\":\"P\",\"ᑭ\":\"P\",\"ꓑ\":\"P\",\"𐊕\":\"P\",\"ƥ\":\"p̔\",\"ᵽ\":\"p̵\",\"ᑷ\":\"p·\",\"ᒆ\":\"P'\",\"ᴩ\":\"ᴘ\",\"ꮲ\":\"ᴘ\",\"φ\":\"ɸ\",\"ϕ\":\"ɸ\",\"𝛗\":\"ɸ\",\"𝛟\":\"ɸ\",\"𝜑\":\"ɸ\",\"𝜙\":\"ɸ\",\"𝝋\":\"ɸ\",\"𝝓\":\"ɸ\",\"𝞅\":\"ɸ\",\"𝞍\":\"ɸ\",\"𝞿\":\"ɸ\",\"𝟇\":\"ɸ\",\"ⲫ\":\"ɸ\",\"ф\":\"ɸ\",\"𝐪\":\"q\",\"𝑞\":\"q\",\"𝒒\":\"q\",\"𝓆\":\"q\",\"𝓺\":\"q\",\"𝔮\":\"q\",\"𝕢\":\"q\",\"𝖖\":\"q\",\"𝗊\":\"q\",\"𝗾\":\"q\",\"𝘲\":\"q\",\"𝙦\":\"q\",\"𝚚\":\"q\",\"ԛ\":\"q\",\"գ\":\"q\",\"զ\":\"q\",\"ℚ\":\"Q\",\"𝐐\":\"Q\",\"𝑄\":\"Q\",\"𝑸\":\"Q\",\"𝒬\":\"Q\",\"𝓠\":\"Q\",\"𝔔\":\"Q\",\"𝕼\":\"Q\",\"𝖰\":\"Q\",\"𝗤\":\"Q\",\"𝘘\":\"Q\",\"𝙌\":\"Q\",\"𝚀\":\"Q\",\"ⵕ\":\"Q\",\"ʠ\":\"q̔\",\"🜀\":\"QE\",\"ᶐ\":\"ɋ\",\"ᴋ\":\"ĸ\",\"κ\":\"ĸ\",\"ϰ\":\"ĸ\",\"𝛋\":\"ĸ\",\"𝛞\":\"ĸ\",\"𝜅\":\"ĸ\",\"𝜘\":\"ĸ\",\"𝜿\":\"ĸ\",\"𝝒\":\"ĸ\",\"𝝹\":\"ĸ\",\"𝞌\":\"ĸ\",\"𝞳\":\"ĸ\",\"𝟆\":\"ĸ\",\"ⲕ\":\"ĸ\",\"к\":\"ĸ\",\"ꮶ\":\"ĸ\",\"қ\":\"ĸ̩\",\"ҟ\":\"ĸ̵\",\"𝐫\":\"r\",\"𝑟\":\"r\",\"𝒓\":\"r\",\"𝓇\":\"r\",\"𝓻\":\"r\",\"𝔯\":\"r\",\"𝕣\":\"r\",\"𝖗\":\"r\",\"𝗋\":\"r\",\"𝗿\":\"r\",\"𝘳\":\"r\",\"𝙧\":\"r\",\"𝚛\":\"r\",\"ꭇ\":\"r\",\"ꭈ\":\"r\",\"ᴦ\":\"r\",\"ⲅ\":\"r\",\"г\":\"r\",\"ꮁ\":\"r\",\"𝈖\":\"R\",\"ℛ\":\"R\",\"ℜ\":\"R\",\"ℝ\":\"R\",\"𝐑\":\"R\",\"𝑅\":\"R\",\"𝑹\":\"R\",\"𝓡\":\"R\",\"𝕽\":\"R\",\"𝖱\":\"R\",\"𝗥\":\"R\",\"𝘙\":\"R\",\"𝙍\":\"R\",\"𝚁\":\"R\",\"Ʀ\":\"R\",\"Ꭱ\":\"R\",\"Ꮢ\":\"R\",\"𐒴\":\"R\",\"ᖇ\":\"R\",\"ꓣ\":\"R\",\"𖼵\":\"R\",\"ɽ\":\"r̨\",\"ɼ\":\"r̩\",\"ɍ\":\"r̵\",\"ғ\":\"r̵\",\"ᵲ\":\"r̴\",\"ґ\":\"r'\",\"𑣣\":\"rn\",\"m\":\"rn\",\"ⅿ\":\"rn\",\"𝐦\":\"rn\",\"𝑚\":\"rn\",\"𝒎\":\"rn\",\"𝓂\":\"rn\",\"𝓶\":\"rn\",\"𝔪\":\"rn\",\"𝕞\":\"rn\",\"𝖒\":\"rn\",\"𝗆\":\"rn\",\"𝗺\":\"rn\",\"𝘮\":\"rn\",\"𝙢\":\"rn\",\"𝚖\":\"rn\",\"𑜀\":\"rn\",\"₥\":\"rn̸\",\"ɱ\":\"rn̦\",\"ᵯ\":\"rn̴\",\"₨\":\"Rs\",\"ꭱ\":\"ʀ\",\"ꮢ\":\"ʀ\",\"я\":\"ᴙ\",\"ᵳ\":\"ɾ̴\",\"℩\":\"ɿ\",\"ｓ\":\"s\",\"𝐬\":\"s\",\"𝑠\":\"s\",\"𝒔\":\"s\",\"𝓈\":\"s\",\"𝓼\":\"s\",\"𝔰\":\"s\",\"𝕤\":\"s\",\"𝖘\":\"s\",\"𝗌\":\"s\",\"𝘀\":\"s\",\"𝘴\":\"s\",\"𝙨\":\"s\",\"𝚜\":\"s\",\"ꜱ\":\"s\",\"ƽ\":\"s\",\"ѕ\":\"s\",\"ꮪ\":\"s\",\"𑣁\":\"s\",\"𐑈\":\"s\",\"Ｓ\":\"S\",\"𝐒\":\"S\",\"𝑆\":\"S\",\"𝑺\":\"S\",\"𝒮\":\"S\",\"𝓢\":\"S\",\"𝔖\":\"S\",\"𝕊\":\"S\",\"𝕾\":\"S\",\"𝖲\":\"S\",\"𝗦\":\"S\",\"𝘚\":\"S\",\"𝙎\":\"S\",\"𝚂\":\"S\",\"Ѕ\":\"S\",\"Տ\":\"S\",\"Ꮥ\":\"S\",\"Ꮪ\":\"S\",\"ꓢ\":\"S\",\"𖼺\":\"S\",\"𐊖\":\"S\",\"𐐠\":\"S\",\"ʂ\":\"s̨\",\"ᵴ\":\"s̴\",\"ꞵ\":\"ß\",\"β\":\"ß\",\"ϐ\":\"ß\",\"𝛃\":\"ß\",\"𝛽\":\"ß\",\"𝜷\":\"ß\",\"𝝱\":\"ß\",\"𝞫\":\"ß\",\"Ᏸ\":\"ß\",\"🝜\":\"sss\",\"ﬆ\":\"st\",\"∫\":\"ʃ\",\"ꭍ\":\"ʃ\",\"∑\":\"Ʃ\",\"⅀\":\"Ʃ\",\"Σ\":\"Ʃ\",\"𝚺\":\"Ʃ\",\"𝛴\":\"Ʃ\",\"𝜮\":\"Ʃ\",\"𝝨\":\"Ʃ\",\"𝞢\":\"Ʃ\",\"ⵉ\":\"Ʃ\",\"∬\":\"ʃʃ\",\"∭\":\"ʃʃʃ\",\"⨌\":\"ʃʃʃʃ\",\"𝐭\":\"t\",\"𝑡\":\"t\",\"𝒕\":\"t\",\"𝓉\":\"t\",\"𝓽\":\"t\",\"𝔱\":\"t\",\"𝕥\":\"t\",\"𝖙\":\"t\",\"𝗍\":\"t\",\"𝘁\":\"t\",\"𝘵\":\"t\",\"𝙩\":\"t\",\"𝚝\":\"t\",\"⊤\":\"T\",\"⟙\":\"T\",\"🝨\":\"T\",\"Ｔ\":\"T\",\"𝐓\":\"T\",\"𝑇\":\"T\",\"𝑻\":\"T\",\"𝒯\":\"T\",\"𝓣\":\"T\",\"𝔗\":\"T\",\"𝕋\":\"T\",\"𝕿\":\"T\",\"𝖳\":\"T\",\"𝗧\":\"T\",\"𝘛\":\"T\",\"𝙏\":\"T\",\"𝚃\":\"T\",\"Τ\":\"T\",\"𝚻\":\"T\",\"𝛵\":\"T\",\"𝜯\":\"T\",\"𝝩\":\"T\",\"𝞣\":\"T\",\"Ⲧ\":\"T\",\"Т\":\"T\",\"Ꭲ\":\"T\",\"ꓔ\":\"T\",\"𖼊\":\"T\",\"𑢼\":\"T\",\"𐊗\":\"T\",\"𐊱\":\"T\",\"𐌕\":\"T\",\"ƭ\":\"t̔\",\"⍡\":\"T̈\",\"Ⱦ\":\"T̸\",\"Ț\":\"Ţ\",\"Ʈ\":\"T̨\",\"Ҭ\":\"T̩\",\"₮\":\"T⃫\",\"ŧ\":\"t̵\",\"Ŧ\":\"T̵\",\"ᵵ\":\"t̴\",\"Ⴀ\":\"Ꞇ\",\"Ꜩ\":\"T3\",\"ʨ\":\"tɕ\",\"℡\":\"TEL\",\"ꝷ\":\"tf\",\"ʦ\":\"ts\",\"ʧ\":\"tʃ\",\"ꜩ\":\"tȝ\",\"τ\":\"ᴛ\",\"𝛕\":\"ᴛ\",\"𝜏\":\"ᴛ\",\"𝝉\":\"ᴛ\",\"𝞃\":\"ᴛ\",\"𝞽\":\"ᴛ\",\"т\":\"ᴛ\",\"ꭲ\":\"ᴛ\",\"ҭ\":\"ᴛ̩\",\"ţ\":\"ƫ\",\"ț\":\"ƫ\",\"Ꮏ\":\"ƫ\",\"𝐮\":\"u\",\"𝑢\":\"u\",\"𝒖\":\"u\",\"𝓊\":\"u\",\"𝓾\":\"u\",\"𝔲\":\"u\",\"𝕦\":\"u\",\"𝖚\":\"u\",\"𝗎\":\"u\",\"𝘂\":\"u\",\"𝘶\":\"u\",\"𝙪\":\"u\",\"𝚞\":\"u\",\"ꞟ\":\"u\",\"ᴜ\":\"u\",\"ꭎ\":\"u\",\"ꭒ\":\"u\",\"ʋ\":\"u\",\"υ\":\"u\",\"𝛖\":\"u\",\"𝜐\":\"u\",\"𝝊\":\"u\",\"𝞄\":\"u\",\"𝞾\":\"u\",\"ս\":\"u\",\"𐓶\":\"u\",\"𑣘\":\"u\",\"∪\":\"U\",\"⋃\":\"U\",\"𝐔\":\"U\",\"𝑈\":\"U\",\"𝑼\":\"U\",\"𝒰\":\"U\",\"𝓤\":\"U\",\"𝔘\":\"U\",\"𝕌\":\"U\",\"𝖀\":\"U\",\"𝖴\":\"U\",\"𝗨\":\"U\",\"𝘜\":\"U\",\"𝙐\":\"U\",\"𝚄\":\"U\",\"Ս\":\"U\",\"ሀ\":\"U\",\"𐓎\":\"U\",\"ᑌ\":\"U\",\"ꓴ\":\"U\",\"𖽂\":\"U\",\"𑢸\":\"U\",\"ǔ\":\"ŭ\",\"Ǔ\":\"Ŭ\",\"ᵾ\":\"u̵\",\"ꮜ\":\"u̵\",\"Ʉ\":\"U̵\",\"Ꮜ\":\"U̵\",\"ᑘ\":\"U·\",\"ᑧ\":\"U'\",\"ᵫ\":\"ue\",\"ꭣ\":\"uo\",\"ṃ\":\"ꭑ\",\"պ\":\"ɰ\",\"ሣ\":\"ɰ\",\"℧\":\"Ʊ\",\"ᘮ\":\"Ʊ\",\"ᘴ\":\"Ʊ\",\"ᵿ\":\"ʊ̵\",\"∨\":\"v\",\"⋁\":\"v\",\"ｖ\":\"v\",\"ⅴ\":\"v\",\"𝐯\":\"v\",\"𝑣\":\"v\",\"𝒗\":\"v\",\"𝓋\":\"v\",\"𝓿\":\"v\",\"𝔳\":\"v\",\"𝕧\":\"v\",\"𝖛\":\"v\",\"𝗏\":\"v\",\"𝘃\":\"v\",\"𝘷\":\"v\",\"𝙫\":\"v\",\"𝚟\":\"v\",\"ᴠ\":\"v\",\"ν\":\"v\",\"𝛎\":\"v\",\"𝜈\":\"v\",\"𝝂\":\"v\",\"𝝼\":\"v\",\"𝞶\":\"v\",\"ѵ\":\"v\",\"ט\":\"v\",\"𑜆\":\"v\",\"ꮩ\":\"v\",\"𑣀\":\"v\",\"𝈍\":\"V\",\"٧\":\"V\",\"۷\":\"V\",\"Ⅴ\":\"V\",\"𝐕\":\"V\",\"𝑉\":\"V\",\"𝑽\":\"V\",\"𝒱\":\"V\",\"𝓥\":\"V\",\"𝔙\":\"V\",\"𝕍\":\"V\",\"𝖁\":\"V\",\"𝖵\":\"V\",\"𝗩\":\"V\",\"𝘝\":\"V\",\"𝙑\":\"V\",\"𝚅\":\"V\",\"Ѵ\":\"V\",\"ⴸ\":\"V\",\"Ꮩ\":\"V\",\"ᐯ\":\"V\",\"ꛟ\":\"V\",\"ꓦ\":\"V\",\"𖼈\":\"V\",\"𑢠\":\"V\",\"𐔝\":\"V\",\"𐆗\":\"V̵\",\"ᐻ\":\"V·\",\"🝬\":\"VB\",\"ⅵ\":\"vi\",\"ⅶ\":\"vii\",\"ⅷ\":\"viii\",\"Ⅵ\":\"Vl\",\"Ⅶ\":\"Vll\",\"Ⅷ\":\"Vlll\",\"🜈\":\"Vᷤ\",\"ᴧ\":\"ʌ\",\"𐓘\":\"ʌ\",\"٨\":\"Ʌ\",\"۸\":\"Ʌ\",\"Λ\":\"Ʌ\",\"𝚲\":\"Ʌ\",\"𝛬\":\"Ʌ\",\"𝜦\":\"Ʌ\",\"𝝠\":\"Ʌ\",\"𝞚\":\"Ʌ\",\"Л\":\"Ʌ\",\"ⴷ\":\"Ʌ\",\"𐒰\":\"Ʌ\",\"ᐱ\":\"Ʌ\",\"ꛎ\":\"Ʌ\",\"ꓥ\":\"Ʌ\",\"𖼽\":\"Ʌ\",\"𐊍\":\"Ʌ\",\"Ӆ\":\"Ʌ̦\",\"ᐽ\":\"Ʌ·\",\"ɯ\":\"w\",\"𝐰\":\"w\",\"𝑤\":\"w\",\"𝒘\":\"w\",\"𝓌\":\"w\",\"𝔀\":\"w\",\"𝔴\":\"w\",\"𝕨\":\"w\",\"𝖜\":\"w\",\"𝗐\":\"w\",\"𝘄\":\"w\",\"𝘸\":\"w\",\"𝙬\":\"w\",\"𝚠\":\"w\",\"ᴡ\":\"w\",\"ѡ\":\"w\",\"ԝ\":\"w\",\"ա\":\"w\",\"𑜊\":\"w\",\"𑜎\":\"w\",\"𑜏\":\"w\",\"ꮃ\":\"w\",\"𑣯\":\"W\",\"𑣦\":\"W\",\"𝐖\":\"W\",\"𝑊\":\"W\",\"𝑾\":\"W\",\"𝒲\":\"W\",\"𝓦\":\"W\",\"𝔚\":\"W\",\"𝕎\":\"W\",\"𝖂\":\"W\",\"𝖶\":\"W\",\"𝗪\":\"W\",\"𝘞\":\"W\",\"𝙒\":\"W\",\"𝚆\":\"W\",\"Ԝ\":\"W\",\"Ꮃ\":\"W\",\"Ꮤ\":\"W\",\"ꓪ\":\"W\",\"ѽ\":\"w҆҇\",\"𑓅\":\"ẇ\",\"₩\":\"W̵\",\"ꝡ\":\"w̦\",\"ᴍ\":\"ʍ\",\"м\":\"ʍ\",\"ꮇ\":\"ʍ\",\"ӎ\":\"ʍ̦\",\"᙮\":\"x\",\"×\":\"x\",\"⤫\":\"x\",\"⤬\":\"x\",\"⨯\":\"x\",\"ｘ\":\"x\",\"ⅹ\":\"x\",\"𝐱\":\"x\",\"𝑥\":\"x\",\"𝒙\":\"x\",\"𝓍\":\"x\",\"𝔁\":\"x\",\"𝔵\":\"x\",\"𝕩\":\"x\",\"𝖝\":\"x\",\"𝗑\":\"x\",\"𝘅\":\"x\",\"𝘹\":\"x\",\"𝙭\":\"x\",\"𝚡\":\"x\",\"х\":\"x\",\"ᕁ\":\"x\",\"ᕽ\":\"x\",\"ⷯ\":\"ͯ\",\"᙭\":\"X\",\"╳\":\"X\",\"𐌢\":\"X\",\"𑣬\":\"X\",\"Ｘ\":\"X\",\"Ⅹ\":\"X\",\"𝐗\":\"X\",\"𝑋\":\"X\",\"𝑿\":\"X\",\"𝒳\":\"X\",\"𝓧\":\"X\",\"𝔛\":\"X\",\"𝕏\":\"X\",\"𝖃\":\"X\",\"𝖷\":\"X\",\"𝗫\":\"X\",\"𝘟\":\"X\",\"𝙓\":\"X\",\"𝚇\":\"X\",\"Ꭓ\":\"X\",\"Χ\":\"X\",\"𝚾\":\"X\",\"𝛸\":\"X\",\"𝜲\":\"X\",\"𝝬\":\"X\",\"𝞦\":\"X\",\"Ⲭ\":\"X\",\"Х\":\"X\",\"ⵝ\":\"X\",\"ᚷ\":\"X\",\"ꓫ\":\"X\",\"𐊐\":\"X\",\"𐊴\":\"X\",\"𐌗\":\"X\",\"𐔧\":\"X\",\"⨰\":\"ẋ\",\"Ҳ\":\"X̩\",\"𐆖\":\"X̵\",\"ⅺ\":\"xi\",\"ⅻ\":\"xii\",\"Ⅺ\":\"Xl\",\"Ⅻ\":\"Xll\",\"ɣ\":\"y\",\"ᶌ\":\"y\",\"ｙ\":\"y\",\"𝐲\":\"y\",\"𝑦\":\"y\",\"𝒚\":\"y\",\"𝓎\":\"y\",\"𝔂\":\"y\",\"𝔶\":\"y\",\"𝕪\":\"y\",\"𝖞\":\"y\",\"𝗒\":\"y\",\"𝘆\":\"y\",\"𝘺\":\"y\",\"𝙮\":\"y\",\"𝚢\":\"y\",\"ʏ\":\"y\",\"ỿ\":\"y\",\"ꭚ\":\"y\",\"γ\":\"y\",\"ℽ\":\"y\",\"𝛄\":\"y\",\"𝛾\":\"y\",\"𝜸\":\"y\",\"𝝲\":\"y\",\"𝞬\":\"y\",\"у\":\"y\",\"ү\":\"y\",\"ყ\":\"y\",\"𑣜\":\"y\",\"Ｙ\":\"Y\",\"𝐘\":\"Y\",\"𝑌\":\"Y\",\"𝒀\":\"Y\",\"𝒴\":\"Y\",\"𝓨\":\"Y\",\"𝔜\":\"Y\",\"𝕐\":\"Y\",\"𝖄\":\"Y\",\"𝖸\":\"Y\",\"𝗬\":\"Y\",\"𝘠\":\"Y\",\"𝙔\":\"Y\",\"𝚈\":\"Y\",\"Υ\":\"Y\",\"ϒ\":\"Y\",\"𝚼\":\"Y\",\"𝛶\":\"Y\",\"𝜰\":\"Y\",\"𝝪\":\"Y\",\"𝞤\":\"Y\",\"Ⲩ\":\"Y\",\"У\":\"Y\",\"Ү\":\"Y\",\"Ꭹ\":\"Y\",\"Ꮍ\":\"Y\",\"ꓬ\":\"Y\",\"𖽃\":\"Y\",\"𑢤\":\"Y\",\"𐊲\":\"Y\",\"ƴ\":\"y̔\",\"ɏ\":\"y̵\",\"ұ\":\"y̵\",\"¥\":\"Y̵\",\"Ɏ\":\"Y̵\",\"Ұ\":\"Y̵\",\"ʒ\":\"ȝ\",\"ꝫ\":\"ȝ\",\"ⳍ\":\"ȝ\",\"ӡ\":\"ȝ\",\"ჳ\":\"ȝ\",\"𝐳\":\"z\",\"𝑧\":\"z\",\"𝒛\":\"z\",\"𝓏\":\"z\",\"𝔃\":\"z\",\"𝔷\":\"z\",\"𝕫\":\"z\",\"𝖟\":\"z\",\"𝗓\":\"z\",\"𝘇\":\"z\",\"𝘻\":\"z\",\"𝙯\":\"z\",\"𝚣\":\"z\",\"ᴢ\":\"z\",\"ꮓ\":\"z\",\"𑣄\":\"z\",\"𐋵\":\"Z\",\"𑣥\":\"Z\",\"Ｚ\":\"Z\",\"ℤ\":\"Z\",\"ℨ\":\"Z\",\"𝐙\":\"Z\",\"𝑍\":\"Z\",\"𝒁\":\"Z\",\"𝒵\":\"Z\",\"𝓩\":\"Z\",\"𝖅\":\"Z\",\"𝖹\":\"Z\",\"𝗭\":\"Z\",\"𝘡\":\"Z\",\"𝙕\":\"Z\",\"𝚉\":\"Z\",\"Ζ\":\"Z\",\"𝚭\":\"Z\",\"𝛧\":\"Z\",\"𝜡\":\"Z\",\"𝝛\":\"Z\",\"𝞕\":\"Z\",\"Ꮓ\":\"Z\",\"ꓜ\":\"Z\",\"𑢩\":\"Z\",\"ʐ\":\"z̨\",\"ƶ\":\"z̵\",\"Ƶ\":\"Z̵\",\"ȥ\":\"z̦\",\"Ȥ\":\"Z̦\",\"ᵶ\":\"z̴\",\"ƿ\":\"þ\",\"ϸ\":\"þ\",\"Ϸ\":\"Þ\",\"𐓄\":\"Þ\",\"⁹\":\"ꝰ\",\"ᴤ\":\"ƨ\",\"ϩ\":\"ƨ\",\"ꙅ\":\"ƨ\",\"ь\":\"ƅ\",\"ꮟ\":\"ƅ\",\"ы\":\"ƅi\",\"ꭾ\":\"ɂ\",\"ˤ\":\"ˁ\",\"ꛍ\":\"ʡ\",\"⊙\":\"ʘ\",\"☉\":\"ʘ\",\"⨀\":\"ʘ\",\"Ꙩ\":\"ʘ\",\"ⵙ\":\"ʘ\",\"𐓃\":\"ʘ\",\"ℾ\":\"Γ\",\"𝚪\":\"Γ\",\"𝛤\":\"Γ\",\"𝜞\":\"Γ\",\"𝝘\":\"Γ\",\"𝞒\":\"Γ\",\"Ⲅ\":\"Γ\",\"Г\":\"Γ\",\"Ꮁ\":\"Γ\",\"ᒥ\":\"Γ\",\"𖼇\":\"Γ\",\"Ғ\":\"Γ̵\",\"ᒯ\":\"Γ·\",\"Ґ\":\"Γ'\",\"∆\":\"Δ\",\"△\":\"Δ\",\"🜂\":\"Δ\",\"𝚫\":\"Δ\",\"𝛥\":\"Δ\",\"𝜟\":\"Δ\",\"𝝙\":\"Δ\",\"𝞓\":\"Δ\",\"Ⲇ\":\"Δ\",\"ⵠ\":\"Δ\",\"ᐃ\":\"Δ\",\"𖼚\":\"Δ\",\"𐊅\":\"Δ\",\"𐊣\":\"Δ\",\"⍙\":\"Δ̲\",\"ᐏ\":\"Δ·\",\"ᐬ\":\"Δᐠ\",\"𝟋\":\"ϝ\",\"𝛇\":\"ζ\",\"𝜁\":\"ζ\",\"𝜻\":\"ζ\",\"𝝵\":\"ζ\",\"𝞯\":\"ζ\",\"ⳤ\":\"ϗ\",\"𝛌\":\"λ\",\"𝜆\":\"λ\",\"𝝀\":\"λ\",\"𝝺\":\"λ\",\"𝞴\":\"λ\",\"Ⲗ\":\"λ\",\"𐓛\":\"λ\",\"µ\":\"μ\",\"𝛍\":\"μ\",\"𝜇\":\"μ\",\"𝝁\":\"μ\",\"𝝻\":\"μ\",\"𝞵\":\"μ\",\"𝛏\":\"ξ\",\"𝜉\":\"ξ\",\"𝝃\":\"ξ\",\"𝝽\":\"ξ\",\"𝞷\":\"ξ\",\"𝚵\":\"Ξ\",\"𝛯\":\"Ξ\",\"𝜩\":\"Ξ\",\"𝝣\":\"Ξ\",\"𝞝\":\"Ξ\",\"ϖ\":\"π\",\"ℼ\":\"π\",\"𝛑\":\"π\",\"𝛡\":\"π\",\"𝜋\":\"π\",\"𝜛\":\"π\",\"𝝅\":\"π\",\"𝝕\":\"π\",\"𝝿\":\"π\",\"𝞏\":\"π\",\"𝞹\":\"π\",\"𝟉\":\"π\",\"ᴨ\":\"π\",\"п\":\"π\",\"∏\":\"Π\",\"ℿ\":\"Π\",\"𝚷\":\"Π\",\"𝛱\":\"Π\",\"𝜫\":\"Π\",\"𝝥\":\"Π\",\"𝞟\":\"Π\",\"Ⲡ\":\"Π\",\"П\":\"Π\",\"ꛛ\":\"Π\",\"𐊭\":\"Ϙ\",\"𐌒\":\"Ϙ\",\"ϛ\":\"ς\",\"𝛓\":\"ς\",\"𝜍\":\"ς\",\"𝝇\":\"ς\",\"𝞁\":\"ς\",\"𝞻\":\"ς\",\"𝚽\":\"Φ\",\"𝛷\":\"Φ\",\"𝜱\":\"Φ\",\"𝝫\":\"Φ\",\"𝞥\":\"Φ\",\"Ⲫ\":\"Φ\",\"Ф\":\"Φ\",\"Փ\":\"Φ\",\"ቀ\":\"Φ\",\"ᛰ\":\"Φ\",\"𐊳\":\"Φ\",\"ꭓ\":\"χ\",\"ꭕ\":\"χ\",\"𝛘\":\"χ\",\"𝜒\":\"χ\",\"𝝌\":\"χ\",\"𝞆\":\"χ\",\"𝟀\":\"χ\",\"ⲭ\":\"χ\",\"𝛙\":\"ψ\",\"𝜓\":\"ψ\",\"𝝍\":\"ψ\",\"𝞇\":\"ψ\",\"𝟁\":\"ψ\",\"ѱ\":\"ψ\",\"𐓹\":\"ψ\",\"𝚿\":\"Ψ\",\"𝛹\":\"Ψ\",\"𝜳\":\"Ψ\",\"𝝭\":\"Ψ\",\"𝞧\":\"Ψ\",\"Ⲯ\":\"Ψ\",\"Ѱ\":\"Ψ\",\"𐓑\":\"Ψ\",\"ᛘ\":\"Ψ\",\"𐊵\":\"Ψ\",\"⍵\":\"ω\",\"ꞷ\":\"ω\",\"𝛚\":\"ω\",\"𝜔\":\"ω\",\"𝝎\":\"ω\",\"𝞈\":\"ω\",\"𝟂\":\"ω\",\"ⲱ\":\"ω\",\"ꙍ\":\"ω\",\"Ω\":\"Ω\",\"𝛀\":\"Ω\",\"𝛺\":\"Ω\",\"𝜴\":\"Ω\",\"𝝮\":\"Ω\",\"𝞨\":\"Ω\",\"ᘯ\":\"Ω\",\"ᘵ\":\"Ω\",\"𐊶\":\"Ω\",\"⍹\":\"ω̲\",\"ώ\":\"ῴ\",\"☰\":\"Ⲷ\",\"Ⳝ\":\"Ϭ\",\"җ\":\"ж̩\",\"Җ\":\"Ж̩\",\"𝈋\":\"И\",\"Ͷ\":\"И\",\"ꚡ\":\"И\",\"𐐥\":\"И\",\"Й\":\"Ѝ\",\"Ҋ\":\"Ѝ̦\",\"ѝ\":\"й\",\"ҋ\":\"й̦\",\"𐒼\":\"Ӄ\",\"ᴫ\":\"л\",\"ӆ\":\"л̦\",\"ꭠ\":\"љ\",\"𐓫\":\"ꙩ\",\"ᷮ\":\"ⷬ\",\"𐓍\":\"Ћ\",\"𝈂\":\"Ӿ\",\"𝈢\":\"Ѡ\",\"Ꮗ\":\"Ѡ\",\"ᗯ\":\"Ѡ\",\"Ѽ\":\"Ѡ҆҇\",\"ᣭ\":\"Ѡ·\",\"Ꞷ\":\"Ꙍ\",\"ӌ\":\"ҷ\",\"Ӌ\":\"Ҷ\",\"Ҿ\":\"Ҽ̨\",\"ⲽ\":\"ш\",\"Ⲽ\":\"Ш\",\"Ꙑ\":\"Ъl\",\"℈\":\"Э\",\"🜁\":\"Ꙙ\",\"𖼜\":\"Ꙙ\",\"ꦒ\":\"ⰿ\",\"և\":\"եւ\",\"ኔ\":\"ձ\",\"ﬔ\":\"մե\",\"ﬕ\":\"մի\",\"ﬗ\":\"մխ\",\"ﬓ\":\"մն\",\"∩\":\"Ո\",\"⋂\":\"Ո\",\"𝉅\":\"Ո\",\"በ\":\"Ո\",\"ᑎ\":\"Ո\",\"ꓵ\":\"Ո\",\"ᑚ\":\"Ո·\",\"ᑨ\":\"Ո'\",\"ﬖ\":\"վն\",\"₽\":\"Ք\",\"˓\":\"ՙ\",\"ʿ\":\"ՙ\",\"ℵ\":\"א\",\"ﬡ\":\"א\",\"אָ\":\"אַ\",\"אּ\":\"אַ\",\"ﭏ\":\"אל\",\"ℶ\":\"ב\",\"ℷ\":\"ג\",\"ℸ\":\"ד\",\"ﬢ\":\"ד\",\"ﬣ\":\"ה\",\"יּ\":\"יִ\",\"ﬤ\":\"כ\",\"ﬥ\":\"ל\",\"ﬦ\":\"ם\",\"ﬠ\":\"ע\",\"ﬧ\":\"ר\",\"שׂ\":\"שׁ\",\"שּ\":\"שׁ\",\"שּׂ\":\"שּׁ\",\"ﬨ\":\"ת\",\"ﺀ\":\"ء\",\"۽\":\"ء͈\",\"ﺂ\":\"آ\",\"ﺁ\":\"آ\",\"ﭑ\":\"ٱ\",\"ﭐ\":\"ٱ\",\"𞸁\":\"ب\",\"𞸡\":\"ب\",\"𞹡\":\"ب\",\"𞺁\":\"ب\",\"𞺡\":\"ب\",\"ﺑ\":\"ب\",\"ﺒ\":\"ب\",\"ﺐ\":\"ب\",\"ﺏ\":\"ب\",\"ݑ\":\"بۛ\",\"ࢶ\":\"بۢ\",\"ࢡ\":\"بٔ\",\"ﲠ\":\"بo\",\"ﳢ\":\"بo\",\"ﲜ\":\"بج\",\"ﰅ\":\"بج\",\"ﲝ\":\"بح\",\"ﰆ\":\"بح\",\"ﷂ\":\"بحى\",\"ﲞ\":\"بخ\",\"ﰇ\":\"بخ\",\"ﳒ\":\"بخ\",\"ﱋ\":\"بخ\",\"ﶞ\":\"بخى\",\"ﱪ\":\"بر\",\"ﱫ\":\"بز\",\"ﲟ\":\"بم\",\"ﳡ\":\"بم\",\"ﱬ\":\"بم\",\"ﰈ\":\"بم\",\"ﱭ\":\"بن\",\"ﱮ\":\"بى\",\"ﰉ\":\"بى\",\"ﱯ\":\"بى\",\"ﰊ\":\"بى\",\"ﭔ\":\"ٻ\",\"ﭕ\":\"ٻ\",\"ﭓ\":\"ٻ\",\"ﭒ\":\"ٻ\",\"ې\":\"ٻ\",\"ﯦ\":\"ٻ\",\"ﯧ\":\"ٻ\",\"ﯥ\":\"ٻ\",\"ﯤ\":\"ٻ\",\"ﭜ\":\"ڀ\",\"ﭝ\":\"ڀ\",\"ﭛ\":\"ڀ\",\"ﭚ\":\"ڀ\",\"ࢩ\":\"ݔ\",\"ݧ\":\"ݔ\",\"⍥\":\"ة\",\"ö\":\"ة\",\"ﺔ\":\"ة\",\"ﺓ\":\"ة\",\"ۃ\":\"ة\",\"𞸕\":\"ت\",\"𞸵\":\"ت\",\"𞹵\":\"ت\",\"𞺕\":\"ت\",\"𞺵\":\"ت\",\"ﺗ\":\"ت\",\"ﺘ\":\"ت\",\"ﺖ\":\"ت\",\"ﺕ\":\"ت\",\"ﲥ\":\"تo\",\"ﳤ\":\"تo\",\"ﲡ\":\"تج\",\"ﰋ\":\"تج\",\"ﵐ\":\"تجم\",\"ﶠ\":\"تجى\",\"ﶟ\":\"تجى\",\"ﲢ\":\"تح\",\"ﰌ\":\"تح\",\"ﵒ\":\"تحج\",\"ﵑ\":\"تحج\",\"ﵓ\":\"تحم\",\"ﲣ\":\"تخ\",\"ﰍ\":\"تخ\",\"ﵔ\":\"تخم\",\"ﶢ\":\"تخى\",\"ﶡ\":\"تخى\",\"ﱰ\":\"تر\",\"ﱱ\":\"تز\",\"ﲤ\":\"تم\",\"ﳣ\":\"تم\",\"ﱲ\":\"تم\",\"ﰎ\":\"تم\",\"ﵕ\":\"تمج\",\"ﵖ\":\"تمح\",\"ﵗ\":\"تمخ\",\"ﶤ\":\"تمى\",\"ﶣ\":\"تمى\",\"ﱳ\":\"تن\",\"ﱴ\":\"تى\",\"ﰏ\":\"تى\",\"ﱵ\":\"تى\",\"ﰐ\":\"تى\",\"ﭠ\":\"ٺ\",\"ﭡ\":\"ٺ\",\"ﭟ\":\"ٺ\",\"ﭞ\":\"ٺ\",\"ﭤ\":\"ٿ\",\"ﭥ\":\"ٿ\",\"ﭣ\":\"ٿ\",\"ﭢ\":\"ٿ\",\"𞸂\":\"ج\",\"𞸢\":\"ج\",\"𞹂\":\"ج\",\"𞹢\":\"ج\",\"𞺂\":\"ج\",\"𞺢\":\"ج\",\"ﺟ\":\"ج\",\"ﺠ\":\"ج\",\"ﺞ\":\"ج\",\"ﺝ\":\"ج\",\"ﲧ\":\"جح\",\"ﰕ\":\"جح\",\"ﶦ\":\"جحى\",\"ﶾ\":\"جحى\",\"ﷻ\":\"جل جلlلo\",\"ﲨ\":\"جم\",\"ﰖ\":\"جم\",\"ﵙ\":\"جمح\",\"ﵘ\":\"جمح\",\"ﶧ\":\"جمى\",\"ﶥ\":\"جمى\",\"ﴝ\":\"جى\",\"ﴁ\":\"جى\",\"ﴞ\":\"جى\",\"ﴂ\":\"جى\",\"ﭸ\":\"ڃ\",\"ﭹ\":\"ڃ\",\"ﭷ\":\"ڃ\",\"ﭶ\":\"ڃ\",\"ﭴ\":\"ڄ\",\"ﭵ\":\"ڄ\",\"ﭳ\":\"ڄ\",\"ﭲ\":\"ڄ\",\"ﭼ\":\"چ\",\"ﭽ\":\"چ\",\"ﭻ\":\"چ\",\"ﭺ\":\"چ\",\"ﮀ\":\"ڇ\",\"ﮁ\":\"ڇ\",\"ﭿ\":\"ڇ\",\"ﭾ\":\"ڇ\",\"𞸇\":\"ح\",\"𞸧\":\"ح\",\"𞹇\":\"ح\",\"𞹧\":\"ح\",\"𞺇\":\"ح\",\"𞺧\":\"ح\",\"ﺣ\":\"ح\",\"ﺤ\":\"ح\",\"ﺢ\":\"ح\",\"ﺡ\":\"ح\",\"څ\":\"حۛ\",\"ځ\":\"حٔ\",\"ݲ\":\"حٔ\",\"ﲩ\":\"حج\",\"ﰗ\":\"حج\",\"ﶿ\":\"حجى\",\"ﲪ\":\"حم\",\"ﰘ\":\"حم\",\"ﵛ\":\"حمى\",\"ﵚ\":\"حمى\",\"ﴛ\":\"حى\",\"ﳿ\":\"حى\",\"ﴜ\":\"حى\",\"ﴀ\":\"حى\",\"𞸗\":\"خ\",\"𞸷\":\"خ\",\"𞹗\":\"خ\",\"𞹷\":\"خ\",\"𞺗\":\"خ\",\"𞺷\":\"خ\",\"ﺧ\":\"خ\",\"ﺨ\":\"خ\",\"ﺦ\":\"خ\",\"ﺥ\":\"خ\",\"ﲫ\":\"خج\",\"ﰙ\":\"خج\",\"ﰚ\":\"خح\",\"ﲬ\":\"خم\",\"ﰛ\":\"خم\",\"ﴟ\":\"خى\",\"ﴃ\":\"خى\",\"ﴠ\":\"خى\",\"ﴄ\":\"خى\",\"𐋡\":\"د\",\"𞸃\":\"د\",\"𞺃\":\"د\",\"𞺣\":\"د\",\"ﺪ\":\"د\",\"ﺩ\":\"د\",\"ڈ\":\"دؕ\",\"ﮉ\":\"دؕ\",\"ﮈ\":\"دؕ\",\"ڎ\":\"دۛ\",\"ﮇ\":\"دۛ\",\"ﮆ\":\"دۛ\",\"ۮ\":\"د̂\",\"ࢮ\":\"د̤̣\",\"𞸘\":\"ذ\",\"𞺘\":\"ذ\",\"𞺸\":\"ذ\",\"ﺬ\":\"ذ\",\"ﺫ\":\"ذ\",\"ﱛ\":\"ذٰ\",\"ڋ\":\"ڊؕ\",\"ﮅ\":\"ڌ\",\"ﮄ\":\"ڌ\",\"ﮃ\":\"ڍ\",\"ﮂ\":\"ڍ\",\"𞸓\":\"ر\",\"𞺓\":\"ر\",\"𞺳\":\"ر\",\"ﺮ\":\"ر\",\"ﺭ\":\"ر\",\"ڑ\":\"رؕ\",\"ﮍ\":\"رؕ\",\"ﮌ\":\"رؕ\",\"ژ\":\"رۛ\",\"ﮋ\":\"رۛ\",\"ﮊ\":\"رۛ\",\"ڒ\":\"ر̆\",\"ࢹ\":\"ر̆̇\",\"ۯ\":\"ر̂\",\"ݬ\":\"رٔ\",\"ﱜ\":\"رٰ\",\"ﷶ\":\"رسول\",\"﷼\":\"رىlل\",\"𞸆\":\"ز\",\"𞺆\":\"ز\",\"𞺦\":\"ز\",\"ﺰ\":\"ز\",\"ﺯ\":\"ز\",\"ࢲ\":\"ز̂\",\"ݱ\":\"ڗؕ\",\"𞸎\":\"س\",\"𞸮\":\"س\",\"𞹎\":\"س\",\"𞹮\":\"س\",\"𞺎\":\"س\",\"𞺮\":\"س\",\"ﺳ\":\"س\",\"ﺴ\":\"س\",\"ﺲ\":\"س\",\"ﺱ\":\"س\",\"ش\":\"سۛ\",\"𞸔\":\"سۛ\",\"𞸴\":\"سۛ\",\"𞹔\":\"سۛ\",\"𞹴\":\"سۛ\",\"𞺔\":\"سۛ\",\"𞺴\":\"سۛ\",\"ﺷ\":\"سۛ\",\"ﺸ\":\"سۛ\",\"ﺶ\":\"سۛ\",\"ﺵ\":\"سۛ\",\"ݾ\":\"س̂\",\"ﴱ\":\"سo\",\"ﳨ\":\"سo\",\"ﴲ\":\"سۛo\",\"ﳪ\":\"سۛo\",\"ﲭ\":\"سج\",\"ﴴ\":\"سج\",\"ﰜ\":\"سج\",\"ﴭ\":\"سۛج\",\"ﴷ\":\"سۛج\",\"ﴥ\":\"سۛج\",\"ﴉ\":\"سۛج\",\"ﵝ\":\"سجح\",\"ﵞ\":\"سجى\",\"ﵩ\":\"سۛجى\",\"ﲮ\":\"سح\",\"ﴵ\":\"سح\",\"ﰝ\":\"سح\",\"ﴮ\":\"سۛح\",\"ﴸ\":\"سۛح\",\"ﴦ\":\"سۛح\",\"ﴊ\":\"سۛح\",\"ﵜ\":\"سحج\",\"ﵨ\":\"سۛحم\",\"ﵧ\":\"سۛحم\",\"ﶪ\":\"سۛحى\",\"ﲯ\":\"سخ\",\"ﴶ\":\"سخ\",\"ﰞ\":\"سخ\",\"ﴯ\":\"سۛخ\",\"ﴹ\":\"سۛخ\",\"ﴧ\":\"سۛخ\",\"ﴋ\":\"سۛخ\",\"ﶨ\":\"سخى\",\"ﷆ\":\"سخى\",\"ﴪ\":\"سر\",\"ﴎ\":\"سر\",\"ﴩ\":\"سۛر\",\"ﴍ\":\"سۛر\",\"ﲰ\":\"سم\",\"ﳧ\":\"سم\",\"ﰟ\":\"سم\",\"ﴰ\":\"سۛم\",\"ﳩ\":\"سۛم\",\"ﴨ\":\"سۛم\",\"ﴌ\":\"سۛم\",\"ﵡ\":\"سمج\",\"ﵠ\":\"سمح\",\"ﵟ\":\"سمح\",\"ﵫ\":\"سۛمخ\",\"ﵪ\":\"سۛمخ\",\"ﵣ\":\"سمم\",\"ﵢ\":\"سمم\",\"ﵭ\":\"سۛمم\",\"ﵬ\":\"سۛمم\",\"ﴗ\":\"سى\",\"ﳻ\":\"سى\",\"ﴘ\":\"سى\",\"ﳼ\":\"سى\",\"ﴙ\":\"سۛى\",\"ﳽ\":\"سۛى\",\"ﴚ\":\"سۛى\",\"ﳾ\":\"سۛى\",\"𐋲\":\"ص\",\"𞸑\":\"ص\",\"𞸱\":\"ص\",\"𞹑\":\"ص\",\"𞹱\":\"ص\",\"𞺑\":\"ص\",\"𞺱\":\"ص\",\"ﺻ\":\"ص\",\"ﺼ\":\"ص\",\"ﺺ\":\"ص\",\"ﺹ\":\"ص\",\"ڞ\":\"صۛ\",\"ࢯ\":\"ص̤̣\",\"ﲱ\":\"صح\",\"ﰠ\":\"صح\",\"ﵥ\":\"صحح\",\"ﵤ\":\"صحح\",\"ﶩ\":\"صحى\",\"ﲲ\":\"صخ\",\"ﴫ\":\"صر\",\"ﴏ\":\"صر\",\"ﷵ\":\"صلعم\",\"ﷹ\":\"صلى\",\"ﷰ\":\"صلى\",\"ﷺ\":\"صلى lللo علىo وسلم\",\"ﲳ\":\"صم\",\"ﰡ\":\"صم\",\"ﷅ\":\"صمم\",\"ﵦ\":\"صمم\",\"ﴡ\":\"صى\",\"ﴅ\":\"صى\",\"ﴢ\":\"صى\",\"ﴆ\":\"صى\",\"𞸙\":\"ض\",\"𞸹\":\"ض\",\"𞹙\":\"ض\",\"𞹹\":\"ض\",\"𞺙\":\"ض\",\"𞺹\":\"ض\",\"ﺿ\":\"ض\",\"ﻀ\":\"ض\",\"ﺾ\":\"ض\",\"ﺽ\":\"ض\",\"ﲴ\":\"ضج\",\"ﰢ\":\"ضج\",\"ﲵ\":\"ضح\",\"ﰣ\":\"ضح\",\"ﵮ\":\"ضحى\",\"ﶫ\":\"ضحى\",\"ﲶ\":\"ضخ\",\"ﰤ\":\"ضخ\",\"ﵰ\":\"ضخم\",\"ﵯ\":\"ضخم\",\"ﴬ\":\"ضر\",\"ﴐ\":\"ضر\",\"ﲷ\":\"ضم\",\"ﰥ\":\"ضم\",\"ﴣ\":\"ضى\",\"ﴇ\":\"ضى\",\"ﴤ\":\"ضى\",\"ﴈ\":\"ضى\",\"𐋨\":\"ط\",\"𞸈\":\"ط\",\"𞹨\":\"ط\",\"𞺈\":\"ط\",\"𞺨\":\"ط\",\"ﻃ\":\"ط\",\"ﻄ\":\"ط\",\"ﻂ\":\"ط\",\"ﻁ\":\"ط\",\"ڟ\":\"طۛ\",\"ﲸ\":\"طح\",\"ﰦ\":\"طح\",\"ﴳ\":\"طم\",\"ﴺ\":\"طم\",\"ﰧ\":\"طم\",\"ﵲ\":\"طمح\",\"ﵱ\":\"طمح\",\"ﵳ\":\"طمم\",\"ﵴ\":\"طمى\",\"ﴑ\":\"طى\",\"ﳵ\":\"طى\",\"ﴒ\":\"طى\",\"ﳶ\":\"طى\",\"𞸚\":\"ظ\",\"𞹺\":\"ظ\",\"𞺚\":\"ظ\",\"𞺺\":\"ظ\",\"ﻇ\":\"ظ\",\"ﻈ\":\"ظ\",\"ﻆ\":\"ظ\",\"ﻅ\":\"ظ\",\"ﲹ\":\"ظم\",\"ﴻ\":\"ظم\",\"ﰨ\":\"ظم\",\"؏\":\"ع\",\"𞸏\":\"ع\",\"𞸯\":\"ع\",\"𞹏\":\"ع\",\"𞹯\":\"ع\",\"𞺏\":\"ع\",\"𞺯\":\"ع\",\"ﻋ\":\"ع\",\"ﻌ\":\"ع\",\"ﻊ\":\"ع\",\"ﻉ\":\"ع\",\"ﲺ\":\"عج\",\"ﰩ\":\"عج\",\"ﷄ\":\"عجم\",\"ﵵ\":\"عجم\",\"ﷷ\":\"علىo\",\"ﲻ\":\"عم\",\"ﰪ\":\"عم\",\"ﵷ\":\"عمم\",\"ﵶ\":\"عمم\",\"ﵸ\":\"عمى\",\"ﶶ\":\"عمى\",\"ﴓ\":\"عى\",\"ﳷ\":\"عى\",\"ﴔ\":\"عى\",\"ﳸ\":\"عى\",\"𞸛\":\"غ\",\"𞸻\":\"غ\",\"𞹛\":\"غ\",\"𞹻\":\"غ\",\"𞺛\":\"غ\",\"𞺻\":\"غ\",\"ﻏ\":\"غ\",\"ﻐ\":\"غ\",\"ﻎ\":\"غ\",\"ﻍ\":\"غ\",\"ﲼ\":\"غج\",\"ﰫ\":\"غج\",\"ﲽ\":\"غم\",\"ﰬ\":\"غم\",\"ﵹ\":\"غمم\",\"ﵻ\":\"غمى\",\"ﵺ\":\"غمى\",\"ﴕ\":\"غى\",\"ﳹ\":\"غى\",\"ﴖ\":\"غى\",\"ﳺ\":\"غى\",\"𞸐\":\"ف\",\"𞸰\":\"ف\",\"𞹰\":\"ف\",\"𞺐\":\"ف\",\"𞺰\":\"ف\",\"ﻓ\":\"ف\",\"ﻔ\":\"ف\",\"ﻒ\":\"ف\",\"ﻑ\":\"ف\",\"ڧ\":\"ف\",\"ﲾ\":\"فج\",\"ﰭ\":\"فج\",\"ﲿ\":\"فح\",\"ﰮ\":\"فح\",\"ﳀ\":\"فخ\",\"ﰯ\":\"فخ\",\"ﵽ\":\"فخم\",\"ﵼ\":\"فخم\",\"ﳁ\":\"فم\",\"ﰰ\":\"فم\",\"ﷁ\":\"فمى\",\"ﱼ\":\"فى\",\"ﰱ\":\"فى\",\"ﱽ\":\"فى\",\"ﰲ\":\"فى\",\"𞸞\":\"ڡ\",\"𞹾\":\"ڡ\",\"ࢻ\":\"ڡ\",\"ٯ\":\"ڡ\",\"𞸟\":\"ڡ\",\"𞹟\":\"ڡ\",\"ࢼ\":\"ڡ\",\"ڤ\":\"ڡۛ\",\"ﭬ\":\"ڡۛ\",\"ﭭ\":\"ڡۛ\",\"ﭫ\":\"ڡۛ\",\"ﭪ\":\"ڡۛ\",\"ڨ\":\"ڡۛ\",\"ࢤ\":\"ڢۛ\",\"ﭰ\":\"ڦ\",\"ﭱ\":\"ڦ\",\"ﭯ\":\"ڦ\",\"ﭮ\":\"ڦ\",\"𞸒\":\"ق\",\"𞸲\":\"ق\",\"𞹒\":\"ق\",\"𞹲\":\"ق\",\"𞺒\":\"ق\",\"𞺲\":\"ق\",\"ﻗ\":\"ق\",\"ﻘ\":\"ق\",\"ﻖ\":\"ق\",\"ﻕ\":\"ق\",\"ﳂ\":\"قح\",\"ﰳ\":\"قح\",\"ﷱ\":\"قلى\",\"ﳃ\":\"قم\",\"ﰴ\":\"قم\",\"ﶴ\":\"قمح\",\"ﵾ\":\"قمح\",\"ﵿ\":\"قمم\",\"ﶲ\":\"قمى\",\"ﱾ\":\"قى\",\"ﰵ\":\"قى\",\"ﱿ\":\"قى\",\"ﰶ\":\"قى\",\"𞸊\":\"ك\",\"𞸪\":\"ك\",\"𞹪\":\"ك\",\"ﻛ\":\"ك\",\"ﻜ\":\"ك\",\"ﻚ\":\"ك\",\"ﻙ\":\"ك\",\"ک\":\"ك\",\"ﮐ\":\"ك\",\"ﮑ\":\"ك\",\"ﮏ\":\"ك\",\"ﮎ\":\"ك\",\"ڪ\":\"ك\",\"ڭ\":\"كۛ\",\"ﯕ\":\"كۛ\",\"ﯖ\":\"كۛ\",\"ﯔ\":\"كۛ\",\"ﯓ\":\"كۛ\",\"ݣ\":\"كۛ\",\"ﲀ\":\"كl\",\"ﰷ\":\"كl\",\"ﳄ\":\"كج\",\"ﰸ\":\"كج\",\"ﳅ\":\"كح\",\"ﰹ\":\"كح\",\"ﳆ\":\"كخ\",\"ﰺ\":\"كخ\",\"ﳇ\":\"كل\",\"ﳫ\":\"كل\",\"ﲁ\":\"كل\",\"ﰻ\":\"كل\",\"ﳈ\":\"كم\",\"ﳬ\":\"كم\",\"ﲂ\":\"كم\",\"ﰼ\":\"كم\",\"ﷃ\":\"كمم\",\"ﶻ\":\"كمم\",\"ﶷ\":\"كمى\",\"ﲃ\":\"كى\",\"ﰽ\":\"كى\",\"ﲄ\":\"كى\",\"ﰾ\":\"كى\",\"ݢ\":\"ڬ\",\"ﮔ\":\"گ\",\"ﮕ\":\"گ\",\"ﮓ\":\"گ\",\"ﮒ\":\"گ\",\"ࢰ\":\"گ\",\"ڴ\":\"گۛ\",\"ﮜ\":\"ڱ\",\"ﮝ\":\"ڱ\",\"ﮛ\":\"ڱ\",\"ﮚ\":\"ڱ\",\"ﮘ\":\"ڳ\",\"ﮙ\":\"ڳ\",\"ﮗ\":\"ڳ\",\"ﮖ\":\"ڳ\",\"𞸋\":\"ل\",\"𞸫\":\"ل\",\"𞹋\":\"ل\",\"𞺋\":\"ل\",\"𞺫\":\"ل\",\"ﻟ\":\"ل\",\"ﻠ\":\"ل\",\"ﻞ\":\"ل\",\"ﻝ\":\"ل\",\"ڷ\":\"لۛ\",\"ڵ\":\"ل̆\",\"ﻼ\":\"لl\",\"ﻻ\":\"لl\",\"ﻺ\":\"لlٕ\",\"ﻹ\":\"لlٕ\",\"ﻸ\":\"لlٴ\",\"ﻷ\":\"لlٴ\",\"ﳍ\":\"لo\",\"ﻶ\":\"لآ\",\"ﻵ\":\"لآ\",\"ﳉ\":\"لج\",\"ﰿ\":\"لج\",\"ﶃ\":\"لجج\",\"ﶄ\":\"لجج\",\"ﶺ\":\"لجم\",\"ﶼ\":\"لجم\",\"ﶬ\":\"لجى\",\"ﳊ\":\"لح\",\"ﱀ\":\"لح\",\"ﶵ\":\"لحم\",\"ﶀ\":\"لحم\",\"ﶂ\":\"لحى\",\"ﶁ\":\"لحى\",\"ﳋ\":\"لخ\",\"ﱁ\":\"لخ\",\"ﶆ\":\"لخم\",\"ﶅ\":\"لخم\",\"ﳌ\":\"لم\",\"ﳭ\":\"لم\",\"ﲅ\":\"لم\",\"ﱂ\":\"لم\",\"ﶈ\":\"لمح\",\"ﶇ\":\"لمح\",\"ﶭ\":\"لمى\",\"ﲆ\":\"لى\",\"ﱃ\":\"لى\",\"ﲇ\":\"لى\",\"ﱄ\":\"لى\",\"𞸌\":\"م\",\"𞸬\":\"م\",\"𞹬\":\"م\",\"𞺌\":\"م\",\"𞺬\":\"م\",\"ﻣ\":\"م\",\"ﻤ\":\"م\",\"ﻢ\":\"م\",\"ﻡ\":\"م\",\"ࢧ\":\"مۛ\",\"۾\":\"م͈\",\"ﲈ\":\"مl\",\"ﳎ\":\"مج\",\"ﱅ\":\"مج\",\"ﶌ\":\"مجح\",\"ﶒ\":\"مجخ\",\"ﶍ\":\"مجم\",\"ﷀ\":\"مجى\",\"ﳏ\":\"مح\",\"ﱆ\":\"مح\",\"ﶉ\":\"محج\",\"ﶊ\":\"محم\",\"ﷴ\":\"محمد\",\"ﶋ\":\"محى\",\"ﳐ\":\"مخ\",\"ﱇ\":\"مخ\",\"ﶎ\":\"مخج\",\"ﶏ\":\"مخم\",\"ﶹ\":\"مخى\",\"ﳑ\":\"مم\",\"ﲉ\":\"مم\",\"ﱈ\":\"مم\",\"ﶱ\":\"ممى\",\"ﱉ\":\"مى\",\"ﱊ\":\"مى\",\"𞸍\":\"ن\",\"𞸭\":\"ن\",\"𞹍\":\"ن\",\"𞹭\":\"ن\",\"𞺍\":\"ن\",\"𞺭\":\"ن\",\"ﻧ\":\"ن\",\"ﻨ\":\"ن\",\"ﻦ\":\"ن\",\"ﻥ\":\"ن\",\"ݨ\":\"نؕ\",\"ݩ\":\"ن̆\",\"ﳖ\":\"نo\",\"ﳯ\":\"نo\",\"ﶸ\":\"نجح\",\"ﶽ\":\"نجح\",\"ﶘ\":\"نجم\",\"ﶗ\":\"نجم\",\"ﶙ\":\"نجى\",\"ﷇ\":\"نجى\",\"ﳓ\":\"نح\",\"ﱌ\":\"نح\",\"ﶕ\":\"نحم\",\"ﶖ\":\"نحى\",\"ﶳ\":\"نحى\",\"ﳔ\":\"نخ\",\"ﱍ\":\"نخ\",\"ﲊ\":\"نر\",\"ﲋ\":\"نز\",\"ﳕ\":\"نم\",\"ﳮ\":\"نم\",\"ﲌ\":\"نم\",\"ﱎ\":\"نم\",\"ﶛ\":\"نمى\",\"ﶚ\":\"نمى\",\"ﲍ\":\"نن\",\"ﲎ\":\"نى\",\"ﱏ\":\"نى\",\"ﲏ\":\"نى\",\"ﱐ\":\"نى\",\"ۂ\":\"ۀ\",\"ﮥ\":\"ۀ\",\"ﮤ\":\"ۀ\",\"𐋤\":\"و\",\"𞸅\":\"و\",\"𞺅\":\"و\",\"𞺥\":\"و\",\"ﻮ\":\"و\",\"ﻭ\":\"و\",\"ࢱ\":\"و\",\"ۋ\":\"وۛ\",\"ﯟ\":\"وۛ\",\"ﯞ\":\"وۛ\",\"ۇ\":\"و̓\",\"ﯘ\":\"و̓\",\"ﯗ\":\"و̓\",\"ۆ\":\"و̆\",\"ﯚ\":\"و̆\",\"ﯙ\":\"و̆\",\"ۉ\":\"و̂\",\"ﯣ\":\"و̂\",\"ﯢ\":\"و̂\",\"ۈ\":\"وٰ\",\"ﯜ\":\"وٰ\",\"ﯛ\":\"وٰ\",\"ؤ\":\"وٴ\",\"ﺆ\":\"وٴ\",\"ﺅ\":\"وٴ\",\"ٶ\":\"وٴ\",\"ٷ\":\"و̓ٴ\",\"ﯝ\":\"و̓ٴ\",\"ﷸ\":\"وسلم\",\"ﯡ\":\"ۅ\",\"ﯠ\":\"ۅ\",\"ٮ\":\"ى\",\"𞸜\":\"ى\",\"𞹼\":\"ى\",\"ں\":\"ى\",\"𞸝\":\"ى\",\"𞹝\":\"ى\",\"ﮟ\":\"ى\",\"ﮞ\":\"ى\",\"ࢽ\":\"ى\",\"ﯨ\":\"ى\",\"ﯩ\":\"ى\",\"ﻰ\":\"ى\",\"ﻯ\":\"ى\",\"ي\":\"ى\",\"𞸉\":\"ى\",\"𞸩\":\"ى\",\"𞹉\":\"ى\",\"𞹩\":\"ى\",\"𞺉\":\"ى\",\"𞺩\":\"ى\",\"ﻳ\":\"ى\",\"ﻴ\":\"ى\",\"ﻲ\":\"ى\",\"ﻱ\":\"ى\",\"ی\":\"ى\",\"ﯾ\":\"ى\",\"ﯿ\":\"ى\",\"ﯽ\":\"ى\",\"ﯼ\":\"ى\",\"ے\":\"ى\",\"ﮯ\":\"ى\",\"ﮮ\":\"ى\",\"ٹ\":\"ىؕ\",\"ﭨ\":\"ىؕ\",\"ﭩ\":\"ىؕ\",\"ﭧ\":\"ىؕ\",\"ﭦ\":\"ىؕ\",\"ڻ\":\"ىؕ\",\"ﮢ\":\"ىؕ\",\"ﮣ\":\"ىؕ\",\"ﮡ\":\"ىؕ\",\"ﮠ\":\"ىؕ\",\"پ\":\"ىۛ\",\"ﭘ\":\"ىۛ\",\"ﭙ\":\"ىۛ\",\"ﭗ\":\"ىۛ\",\"ﭖ\":\"ىۛ\",\"ث\":\"ىۛ\",\"𞸖\":\"ىۛ\",\"𞸶\":\"ىۛ\",\"𞹶\":\"ىۛ\",\"𞺖\":\"ىۛ\",\"𞺶\":\"ىۛ\",\"ﺛ\":\"ىۛ\",\"ﺜ\":\"ىۛ\",\"ﺚ\":\"ىۛ\",\"ﺙ\":\"ىۛ\",\"ڽ\":\"ىۛ\",\"ۑ\":\"ىۛ\",\"ؿ\":\"ىۛ\",\"ࢷ\":\"ىۛۢ\",\"ݖ\":\"ى̆\",\"ێ\":\"ى̆\",\"ࢺ\":\"ى̆̇\",\"ؽ\":\"ى̂\",\"ࢨ\":\"ىٔ\",\"ﲐ\":\"ىٰ\",\"ﱝ\":\"ىٰ\",\"ﳞ\":\"ىo\",\"ﳱ\":\"ىo\",\"ﳦ\":\"ىۛo\",\"ئ\":\"ىٴ\",\"ﺋ\":\"ىٴ\",\"ﺌ\":\"ىٴ\",\"ﺊ\":\"ىٴ\",\"ﺉ\":\"ىٴ\",\"ٸ\":\"ىٴ\",\"ﯫ\":\"ىٴl\",\"ﯪ\":\"ىٴl\",\"ﲛ\":\"ىٴo\",\"ﳠ\":\"ىٴo\",\"ﯭ\":\"ىٴo\",\"ﯬ\":\"ىٴo\",\"ﯸ\":\"ىٴٻ\",\"ﯷ\":\"ىٴٻ\",\"ﯶ\":\"ىٴٻ\",\"ﲗ\":\"ىٴج\",\"ﰀ\":\"ىٴج\",\"ﲘ\":\"ىٴح\",\"ﰁ\":\"ىٴح\",\"ﲙ\":\"ىٴخ\",\"ﱤ\":\"ىٴر\",\"ﱥ\":\"ىٴز\",\"ﲚ\":\"ىٴم\",\"ﳟ\":\"ىٴم\",\"ﱦ\":\"ىٴم\",\"ﰂ\":\"ىٴم\",\"ﱧ\":\"ىٴن\",\"ﯯ\":\"ىٴو\",\"ﯮ\":\"ىٴو\",\"ﯱ\":\"ىٴو̓\",\"ﯰ\":\"ىٴو̓\",\"ﯳ\":\"ىٴو̆\",\"ﯲ\":\"ىٴو̆\",\"ﯵ\":\"ىٴوٰ\",\"ﯴ\":\"ىٴوٰ\",\"ﯻ\":\"ىٴى\",\"ﯺ\":\"ىٴى\",\"ﱨ\":\"ىٴى\",\"ﯹ\":\"ىٴى\",\"ﰃ\":\"ىٴى\",\"ﱩ\":\"ىٴى\",\"ﰄ\":\"ىٴى\",\"ﳚ\":\"ىج\",\"ﱕ\":\"ىج\",\"ﰑ\":\"ىۛج\",\"ﶯ\":\"ىجى\",\"ﳛ\":\"ىح\",\"ﱖ\":\"ىح\",\"ﶮ\":\"ىحى\",\"ﳜ\":\"ىخ\",\"ﱗ\":\"ىخ\",\"ﲑ\":\"ىر\",\"ﱶ\":\"ىۛر\",\"ﲒ\":\"ىز\",\"ﱷ\":\"ىۛز\",\"ﳝ\":\"ىم\",\"ﳰ\":\"ىم\",\"ﲓ\":\"ىم\",\"ﱘ\":\"ىم\",\"ﲦ\":\"ىۛم\",\"ﳥ\":\"ىۛم\",\"ﱸ\":\"ىۛم\",\"ﰒ\":\"ىۛم\",\"ﶝ\":\"ىمم\",\"ﶜ\":\"ىمم\",\"ﶰ\":\"ىمى\",\"ﲔ\":\"ىن\",\"ﱹ\":\"ىۛن\",\"ﲕ\":\"ىى\",\"ﱙ\":\"ىى\",\"ﲖ\":\"ىى\",\"ﱚ\":\"ىى\",\"ﱺ\":\"ىۛى\",\"ﰓ\":\"ىۛى\",\"ﱻ\":\"ىۛى\",\"ﰔ\":\"ىۛى\",\"ﮱ\":\"ۓ\",\"ﮰ\":\"ۓ\",\"𐊸\":\"ⵀ\",\"⁞\":\"ⵂ\",\"⸽\":\"ⵂ\",\"⦙\":\"ⵂ\",\"︙\":\"ⵗ\",\"⁝\":\"ⵗ\",\"⋮\":\"ⵗ\",\"Մ\":\"ሆ\",\"Ռ\":\"ቡ\",\"Ի\":\"ኮ\",\"Պ\":\"ጣ\",\"आ\":\"अा\",\"ऒ\":\"अाॆ\",\"ओ\":\"अाे\",\"औ\":\"अाै\",\"ऄ\":\"अॆ\",\"ऑ\":\"अॉ\",\"ऍ\":\"एॅ\",\"ऎ\":\"एॆ\",\"ऐ\":\"एे\",\"ई\":\"र्इ\",\"ઽ\":\"ऽ\",\"𑇜\":\"ꣻ\",\"𑇋\":\"ऺ\",\"ુ\":\"ु\",\"ૂ\":\"ू\",\"ੋ\":\"ॆ\",\"੍\":\"्\",\"્\":\"्\",\"আ\":\"অা\",\"ৠ\":\"ঋৃ\",\"ৡ\":\"ঋৃ\",\"𑒒\":\"ঘ\",\"𑒔\":\"চ\",\"𑒖\":\"জ\",\"𑒘\":\"ঞ\",\"𑒙\":\"ট\",\"𑒛\":\"ড\",\"𑒪\":\"ণ\",\"𑒞\":\"ত\",\"𑒟\":\"থ\",\"𑒠\":\"দ\",\"𑒡\":\"ধ\",\"𑒢\":\"ন\",\"𑒣\":\"প\",\"𑒩\":\"ব\",\"𑒧\":\"ম\",\"𑒨\":\"য\",\"𑒫\":\"র\",\"𑒝\":\"ল\",\"𑒭\":\"ষ\",\"𑒮\":\"স\",\"𑓄\":\"ঽ\",\"𑒰\":\"া\",\"𑒱\":\"ি\",\"𑒹\":\"ে\",\"𑒼\":\"ো\",\"𑒾\":\"ৌ\",\"𑓂\":\"্\",\"𑒽\":\"ৗ\",\"ਉ\":\"ੳੁ\",\"ਊ\":\"ੳੂ\",\"ਆ\":\"ਅਾ\",\"ਐ\":\"ਅੈ\",\"ਔ\":\"ਅੌ\",\"ਇ\":\"ੲਿ\",\"ਈ\":\"ੲੀ\",\"ਏ\":\"ੲੇ\",\"આ\":\"અા\",\"ઑ\":\"અાૅ\",\"ઓ\":\"અાે\",\"ઔ\":\"અાૈ\",\"ઍ\":\"અૅ\",\"એ\":\"અે\",\"ઐ\":\"અૈ\",\"ଆ\":\"ଅା\",\"௮\":\"அ\",\"ர\":\"ஈ\",\"ா\":\"ஈ\",\"௫\":\"ஈு\",\"௨\":\"உ\",\"ഉ\":\"உ\",\"ஊ\":\"உள\",\"ഊ\":\"உൗ\",\"௭\":\"எ\",\"௷\":\"எவ\",\"ஜ\":\"ஐ\",\"ജ\":\"ஐ\",\"௧\":\"க\",\"௪\":\"ச\",\"௬\":\"சு\",\"௲\":\"சூ\",\"ഺ\":\"டி\",\"ണ\":\"ண\",\"௺\":\"நீ\",\"௴\":\"மீ\",\"௰\":\"ய\",\"ഴ\":\"ழ\",\"ௗ\":\"ள\",\"ை\":\"ன\",\"ശ\":\"ஶ\",\"௸\":\"ஷ\",\"ി\":\"ி\",\"ീ\":\"ி\",\"ொ\":\"ெஈ\",\"ௌ\":\"ெள\",\"ோ\":\"ேஈ\",\"ಅ\":\"అ\",\"ಆ\":\"ఆ\",\"ಇ\":\"ఇ\",\"ౠ\":\"ఋా\",\"ౡ\":\"ఌా\",\"ಒ\":\"ఒ\",\"ఔ\":\"ఒౌ\",\"ಔ\":\"ఒౌ\",\"ఓ\":\"ఒౕ\",\"ಓ\":\"ఒౕ\",\"ಜ\":\"జ\",\"ಞ\":\"ఞ\",\"ఢ\":\"డ̣\",\"ಣ\":\"ణ\",\"థ\":\"ధּ\",\"భ\":\"బ̣\",\"ಯ\":\"య\",\"ఠ\":\"రּ\",\"ಱ\":\"ఱ\",\"ಲ\":\"ల\",\"ష\":\"వ̣\",\"హ\":\"వా\",\"మ\":\"వు\",\"ూ\":\"ుా\",\"ౄ\":\"ృా\",\"ೡ\":\"ಌಾ\",\"ഈ\":\"ഇൗ\",\"ഐ\":\"എെ\",\"ഓ\":\"ഒാ\",\"ഔ\":\"ഒൗ\",\"ൡ\":\"ഞ\",\"൫\":\"ദ്ര\",\"൹\":\"നു\",\"ഌ\":\"നു\",\"ങ\":\"നു\",\"൯\":\"ന്\",\"ൻ\":\"ന്\",\"൬\":\"ന്ന\",\"൚\":\"ന്മ\",\"റ\":\"ര\",\"൪\":\"ര്\",\"ർ\":\"ര്\",\"൮\":\"വ്ര\",\"൶\":\"ഹ്മ\",\"ൂ\":\"ു\",\"ൃ\":\"ു\",\"ൈ\":\"െെ\",\"෪\":\"ජ\",\"෫\":\"ද\",\"𑐓\":\"𑐴𑑂𑐒\",\"𑐙\":\"𑐴𑑂𑐘\",\"𑐤\":\"𑐴𑑂𑐣\",\"𑐪\":\"𑐴𑑂𑐩\",\"𑐭\":\"𑐴𑑂𑐬\",\"𑐯\":\"𑐴𑑂𑐮\",\"𑗘\":\"𑖂\",\"𑗙\":\"𑖂\",\"𑗚\":\"𑖃\",\"𑗛\":\"𑖄\",\"𑗜\":\"𑖲\",\"𑗝\":\"𑖳\",\"ฃ\":\"ข\",\"ด\":\"ค\",\"ต\":\"ค\",\"ม\":\"ฆ\",\"ຈ\":\"จ\",\"ซ\":\"ช\",\"ฏ\":\"ฎ\",\"ท\":\"ฑ\",\"ບ\":\"บ\",\"ປ\":\"ป\",\"ຝ\":\"ฝ\",\"ພ\":\"พ\",\"ຟ\":\"ฟ\",\"ฦ\":\"ภ\",\"ຍ\":\"ย\",\"។\":\"ฯ\",\"ๅ\":\"า\",\"ำ\":\"̊า\",\"ិ\":\"ิ\",\"ី\":\"ี\",\"ឹ\":\"ึ\",\"ឺ\":\"ื\",\"ຸ\":\"ุ\",\"ູ\":\"ู\",\"แ\":\"เเ\",\"ໜ\":\"ຫນ\",\"ໝ\":\"ຫມ\",\"ຳ\":\"̊າ\",\"༂\":\"འུྂཿ\",\"༃\":\"འུྂ༔\",\"ཪ\":\"ར\",\"ༀ\":\"ཨོཾ\",\"ཷ\":\"ྲཱྀ\",\"ཹ\":\"ླཱྀ\",\"𑲲\":\"𑲪\",\"ႁ\":\"ဂှ\",\"က\":\"ဂာ\",\"ၰ\":\"ဃှ\",\"ၦ\":\"ပှ\",\"ဟ\":\"ပာ\",\"ၯ\":\"ပာှ\",\"ၾ\":\"ၽှ\",\"ဩ\":\"သြ\",\"ဪ\":\"သြော်\",\"႞\":\"ႃ̊\",\"ឣ\":\"អ\",\"᧐\":\"ᦞ\",\"᧑\":\"ᦱ\",\"᪀\":\"ᩅ\",\"᪐\":\"ᩅ\",\"꩓\":\"ꨁ\",\"꩖\":\"ꨣ\",\"᭒\":\"ᬍ\",\"᭓\":\"ᬑ\",\"᭘\":\"ᬨ\",\"ꦣ\":\"ꦝ\",\"ᢖ\":\"ᡜ\",\"ᡕ\":\"ᠵ\",\"ῶ\":\"Ꮿ\",\"ᐍ\":\"ᐁ·\",\"ᐫ\":\"ᐁᐠ\",\"ᐑ\":\"ᐄ·\",\"ᐓ\":\"ᐅ·\",\"ᐭ\":\"ᐅᐠ\",\"ᐕ\":\"ᐆ·\",\"ᐘ\":\"ᐊ·\",\"ᐮ\":\"ᐊᐠ\",\"ᐚ\":\"ᐋ·\",\"ᣝ\":\"ᐞᣟ\",\"ᓑ\":\"ᐡ\",\"ᕀ\":\"ᐩ\",\"ᐿ\":\"ᐲ·\",\"ᑃ\":\"ᐴ·\",\"⍩\":\"ᐵ\",\"ᑇ\":\"ᐹ·\",\"ᑜ\":\"ᑏ·\",\"⸧\":\"ᑐ\",\"⊃\":\"ᑐ\",\"ᑞ\":\"ᑐ·\",\"ᑩ\":\"ᑐ'\",\"⟉\":\"ᑐ/\",\"⫗\":\"ᑐᑕ\",\"ᑠ\":\"ᑑ·\",\"⸦\":\"ᑕ\",\"⊂\":\"ᑕ\",\"ᑢ\":\"ᑕ·\",\"ᑪ\":\"ᑕ'\",\"ᑤ\":\"ᑖ·\",\"ᑵ\":\"ᑫ·\",\"ᒅ\":\"ᑫ'\",\"ᑹ\":\"ᑮ·\",\"ᑽ\":\"ᑰ·\",\"ᘃ\":\"ᒉ\",\"ᒓ\":\"ᒉ·\",\"ᒕ\":\"ᒋ·\",\"ᒗ\":\"ᒌ·\",\"ᒛ\":\"ᒎ·\",\"ᘂ\":\"ᒐ\",\"ᒝ\":\"ᒐ·\",\"ᒟ\":\"ᒑ·\",\"ᒭ\":\"ᒣ·\",\"ᒱ\":\"ᒦ·\",\"ᒳ\":\"ᒧ·\",\"ᒵ\":\"ᒨ·\",\"ᒹ\":\"ᒫ·\",\"ᓊ\":\"ᓀ·\",\"ᣇ\":\"ᓂ·\",\"ᣉ\":\"ᓃ·\",\"ᣋ\":\"ᓄ·\",\"ᣍ\":\"ᓅ·\",\"ᓌ\":\"ᓇ·\",\"ᓎ\":\"ᓈ·\",\"ᘄ\":\"ᓓ\",\"ᓝ\":\"ᓓ·\",\"ᓟ\":\"ᓕ·\",\"ᓡ\":\"ᓖ·\",\"ᓣ\":\"ᓗ·\",\"ᓥ\":\"ᓘ·\",\"ᘇ\":\"ᓚ\",\"ᓧ\":\"ᓚ·\",\"ᓩ\":\"ᓛ·\",\"ᓷ\":\"ᓭ·\",\"ᓹ\":\"ᓯ·\",\"ᓻ\":\"ᓰ·\",\"ᓽ\":\"ᓱ·\",\"ᓿ\":\"ᓲ·\",\"ᔁ\":\"ᓴ·\",\"ᔃ\":\"ᓵ·\",\"ᔌ\":\"ᔋ<\",\"ᔎ\":\"ᔋb\",\"ᔍ\":\"ᔋᑕ\",\"ᔏ\":\"ᔋᒐ\",\"ᔘ\":\"ᔐ·\",\"ᔚ\":\"ᔑ·\",\"ᔜ\":\"ᔒ·\",\"ᔞ\":\"ᔓ·\",\"ᔠ\":\"ᔔ·\",\"ᔢ\":\"ᔕ·\",\"ᔤ\":\"ᔖ·\",\"ᔲ\":\"ᔨ·\",\"ᔴ\":\"ᔩ·\",\"ᔶ\":\"ᔪ·\",\"ᔸ\":\"ᔫ·\",\"ᔺ\":\"ᔭ·\",\"ᔼ\":\"ᔮ·\",\"ᘢ\":\"ᕃ\",\"ᣠ\":\"ᕃ·\",\"ᘣ\":\"ᕆ\",\"ᘤ\":\"ᕊ\",\"ᕏ\":\"ᕌ·\",\"ᖃ\":\"ᕐb\",\"ᖄ\":\"ᕐḃ\",\"ᖁ\":\"ᕐd\",\"ᕿ\":\"ᕐP\",\"ᙯ\":\"ᕐᑫ\",\"ᕾ\":\"ᕐᑬ\",\"ᖀ\":\"ᕐᑮ\",\"ᖂ\":\"ᕐᑰ\",\"ᖅ\":\"ᕐᒃ\",\"ᕜ\":\"ᕚ·\",\"ᣣ\":\"ᕞ·\",\"ᣤ\":\"ᕦ·\",\"ᕩ\":\"ᕧ·\",\"ᣥ\":\"ᕫ·\",\"ᣨ\":\"ᖆ·\",\"ᖑ\":\"ᖕJ\",\"ᙰ\":\"ᖕᒉ\",\"ᖎ\":\"ᖕᒊ\",\"ᖏ\":\"ᖕᒋ\",\"ᖐ\":\"ᖕᒌ\",\"ᖒ\":\"ᖕᒎ\",\"ᖓ\":\"ᖕᒐ\",\"ᖔ\":\"ᖕᒑ\",\"ᙳ\":\"ᖖJ\",\"ᙱ\":\"ᖖᒋ\",\"ᙲ\":\"ᖖᒌ\",\"ᙴ\":\"ᖖᒎ\",\"ᙵ\":\"ᖖᒐ\",\"ᙶ\":\"ᖖᒑ\",\"ᣪ\":\"ᖗ·\",\"ᙷ\":\"ᖧ·\",\"ᙸ\":\"ᖨ·\",\"ᙹ\":\"ᖩ·\",\"ᙺ\":\"ᖪ·\",\"ᙻ\":\"ᖫ·\",\"ᙼ\":\"ᖬ·\",\"ᙽ\":\"ᖭ·\",\"⪫\":\"ᗒ\",\"⪪\":\"ᗕ\",\"ꓷ\":\"ᗡ\",\"ᣰ\":\"ᗴ·\",\"ᣲ\":\"ᘛ·\",\"ᶻ\":\"ᙆ\",\"ꓭ\":\"ᙠ\",\"ᶺ\":\"ᣔ\",\"ᴾ\":\"ᣖ\",\"ᣜ\":\"ᣟᐞ\",\"ˡ\":\"ᣳ\",\"ʳ\":\"ᣴ\",\"ˢ\":\"ᣵ\",\"ᣛ\":\"ᣵ\",\"ꚰ\":\"ᚹ\",\"ᛡ\":\"ᚼ\",\"⍿\":\"ᚽ\",\"ᛂ\":\"ᚽ\",\"𝈿\":\"ᛋ\",\"↑\":\"ᛏ\",\"↿\":\"ᛐ\",\"⥮\":\"ᛐ⇂\",\"⥣\":\"ᛐᛚ\",\"ⵣ\":\"ᛯ\",\"↾\":\"ᛚ\",\"⨡\":\"ᛚ\",\"⋄\":\"ᛜ\",\"◇\":\"ᛜ\",\"◊\":\"ᛜ\",\"♢\":\"ᛜ\",\"🝔\":\"ᛜ\",\"𑢷\":\"ᛜ\",\"𐊔\":\"ᛜ\",\"⍚\":\"ᛜ̲\",\"⋈\":\"ᛞ\",\"⨝\":\"ᛞ\",\"𐓐\":\"ᛦ\",\"↕\":\"ᛨ\",\"𐳼\":\"𐲂\",\"𐳺\":\"𐲥\",\"ㄱ\":\"ᄀ\",\"ᆨ\":\"ᄀ\",\"ᄁ\":\"ᄀᄀ\",\"ㄲ\":\"ᄀᄀ\",\"ᆩ\":\"ᄀᄀ\",\"ᇺ\":\"ᄀᄂ\",\"ᅚ\":\"ᄀᄃ\",\"ᇃ\":\"ᄀᄅ\",\"ᇻ\":\"ᄀᄇ\",\"ᆪ\":\"ᄀᄉ\",\"ㄳ\":\"ᄀᄉ\",\"ᇄ\":\"ᄀᄉᄀ\",\"ᇼ\":\"ᄀᄎ\",\"ᇽ\":\"ᄀᄏ\",\"ᇾ\":\"ᄀᄒ\",\"ㄴ\":\"ᄂ\",\"ᆫ\":\"ᄂ\",\"ᄓ\":\"ᄂᄀ\",\"ᇅ\":\"ᄂᄀ\",\"ᄔ\":\"ᄂᄂ\",\"ㅥ\":\"ᄂᄂ\",\"ᇿ\":\"ᄂᄂ\",\"ᄕ\":\"ᄂᄃ\",\"ㅦ\":\"ᄂᄃ\",\"ᇆ\":\"ᄂᄃ\",\"ퟋ\":\"ᄂᄅ\",\"ᄖ\":\"ᄂᄇ\",\"ᅛ\":\"ᄂᄉ\",\"ᇇ\":\"ᄂᄉ\",\"ㅧ\":\"ᄂᄉ\",\"ᅜ\":\"ᄂᄌ\",\"ᆬ\":\"ᄂᄌ\",\"ㄵ\":\"ᄂᄌ\",\"ퟌ\":\"ᄂᄎ\",\"ᇉ\":\"ᄂᄐ\",\"ᅝ\":\"ᄂᄒ\",\"ᆭ\":\"ᄂᄒ\",\"ㄶ\":\"ᄂᄒ\",\"ᇈ\":\"ᄂᅀ\",\"ㅨ\":\"ᄂᅀ\",\"ㄷ\":\"ᄃ\",\"ᆮ\":\"ᄃ\",\"ᄗ\":\"ᄃᄀ\",\"ᇊ\":\"ᄃᄀ\",\"ᄄ\":\"ᄃᄃ\",\"ㄸ\":\"ᄃᄃ\",\"ퟍ\":\"ᄃᄃ\",\"ퟎ\":\"ᄃᄃᄇ\",\"ᅞ\":\"ᄃᄅ\",\"ᇋ\":\"ᄃᄅ\",\"ꥠ\":\"ᄃᄆ\",\"ꥡ\":\"ᄃᄇ\",\"ퟏ\":\"ᄃᄇ\",\"ꥢ\":\"ᄃᄉ\",\"ퟐ\":\"ᄃᄉ\",\"ퟑ\":\"ᄃᄉᄀ\",\"ꥣ\":\"ᄃᄌ\",\"ퟒ\":\"ᄃᄌ\",\"ퟓ\":\"ᄃᄎ\",\"ퟔ\":\"ᄃᄐ\",\"ㄹ\":\"ᄅ\",\"ᆯ\":\"ᄅ\",\"ꥤ\":\"ᄅᄀ\",\"ᆰ\":\"ᄅᄀ\",\"ㄺ\":\"ᄅᄀ\",\"ꥥ\":\"ᄅᄀᄀ\",\"ퟕ\":\"ᄅᄀᄀ\",\"ᇌ\":\"ᄅᄀᄉ\",\"ㅩ\":\"ᄅᄀᄉ\",\"ퟖ\":\"ᄅᄀᄒ\",\"ᄘ\":\"ᄅᄂ\",\"ᇍ\":\"ᄅᄂ\",\"ꥦ\":\"ᄅᄃ\",\"ᇎ\":\"ᄅᄃ\",\"ㅪ\":\"ᄅᄃ\",\"ꥧ\":\"ᄅᄃᄃ\",\"ᇏ\":\"ᄅᄃᄒ\",\"ᄙ\":\"ᄅᄅ\",\"ᇐ\":\"ᄅᄅ\",\"ퟗ\":\"ᄅᄅᄏ\",\"ꥨ\":\"ᄅᄆ\",\"ᆱ\":\"ᄅᄆ\",\"ㄻ\":\"ᄅᄆ\",\"ᇑ\":\"ᄅᄆᄀ\",\"ᇒ\":\"ᄅᄆᄉ\",\"ퟘ\":\"ᄅᄆᄒ\",\"ꥩ\":\"ᄅᄇ\",\"ᆲ\":\"ᄅᄇ\",\"ㄼ\":\"ᄅᄇ\",\"ퟙ\":\"ᄅᄇᄃ\",\"ꥪ\":\"ᄅᄇᄇ\",\"ᇓ\":\"ᄅᄇᄉ\",\"ㅫ\":\"ᄅᄇᄉ\",\"ꥫ\":\"ᄅᄇᄋ\",\"ᇕ\":\"ᄅᄇᄋ\",\"ퟚ\":\"ᄅᄇᄑ\",\"ᇔ\":\"ᄅᄇᄒ\",\"ꥬ\":\"ᄅᄉ\",\"ᆳ\":\"ᄅᄉ\",\"ㄽ\":\"ᄅᄉ\",\"ᇖ\":\"ᄅᄉᄉ\",\"ᄛ\":\"ᄅᄋ\",\"ퟝ\":\"ᄅᄋ\",\"ꥭ\":\"ᄅᄌ\",\"ꥮ\":\"ᄅᄏ\",\"ᇘ\":\"ᄅᄏ\",\"ᆴ\":\"ᄅᄐ\",\"ㄾ\":\"ᄅᄐ\",\"ᆵ\":\"ᄅᄑ\",\"ㄿ\":\"ᄅᄑ\",\"ᄚ\":\"ᄅᄒ\",\"ㅀ\":\"ᄅᄒ\",\"ᄻ\":\"ᄅᄒ\",\"ᆶ\":\"ᄅᄒ\",\"ퟲ\":\"ᄅᄒ\",\"ᇗ\":\"ᄅᅀ\",\"ㅬ\":\"ᄅᅀ\",\"ퟛ\":\"ᄅᅌ\",\"ᇙ\":\"ᄅᅙ\",\"ㅭ\":\"ᄅᅙ\",\"ퟜ\":\"ᄅᅙᄒ\",\"ㅁ\":\"ᄆ\",\"ᆷ\":\"ᄆ\",\"ꥯ\":\"ᄆᄀ\",\"ᇚ\":\"ᄆᄀ\",\"ퟞ\":\"ᄆᄂ\",\"ퟟ\":\"ᄆᄂᄂ\",\"ꥰ\":\"ᄆᄃ\",\"ᇛ\":\"ᄆᄅ\",\"ퟠ\":\"ᄆᄆ\",\"ᄜ\":\"ᄆᄇ\",\"ㅮ\":\"ᄆᄇ\",\"ᇜ\":\"ᄆᄇ\",\"ퟡ\":\"ᄆᄇᄉ\",\"ꥱ\":\"ᄆᄉ\",\"ᇝ\":\"ᄆᄉ\",\"ㅯ\":\"ᄆᄉ\",\"ᇞ\":\"ᄆᄉᄉ\",\"ᄝ\":\"ᄆᄋ\",\"ㅱ\":\"ᄆᄋ\",\"ᇢ\":\"ᄆᄋ\",\"ퟢ\":\"ᄆᄌ\",\"ᇠ\":\"ᄆᄎ\",\"ᇡ\":\"ᄆᄒ\",\"ᇟ\":\"ᄆᅀ\",\"ㅰ\":\"ᄆᅀ\",\"ㅂ\":\"ᄇ\",\"ᆸ\":\"ᄇ\",\"ᄞ\":\"ᄇᄀ\",\"ㅲ\":\"ᄇᄀ\",\"ᄟ\":\"ᄇᄂ\",\"ᄠ\":\"ᄇᄃ\",\"ㅳ\":\"ᄇᄃ\",\"ퟣ\":\"ᄇᄃ\",\"ᇣ\":\"ᄇᄅ\",\"ퟤ\":\"ᄇᄅᄑ\",\"ퟥ\":\"ᄇᄆ\",\"ᄈ\":\"ᄇᄇ\",\"ㅃ\":\"ᄇᄇ\",\"ퟦ\":\"ᄇᄇ\",\"ᄬ\":\"ᄇᄇᄋ\",\"ㅹ\":\"ᄇᄇᄋ\",\"ᄡ\":\"ᄇᄉ\",\"ㅄ\":\"ᄇᄉ\",\"ᆹ\":\"ᄇᄉ\",\"ᄢ\":\"ᄇᄉᄀ\",\"ㅴ\":\"ᄇᄉᄀ\",\"ᄣ\":\"ᄇᄉᄃ\",\"ㅵ\":\"ᄇᄉᄃ\",\"ퟧ\":\"ᄇᄉᄃ\",\"ᄤ\":\"ᄇᄉᄇ\",\"ᄥ\":\"ᄇᄉᄉ\",\"ᄦ\":\"ᄇᄉᄌ\",\"ꥲ\":\"ᄇᄉᄐ\",\"ᄫ\":\"ᄇᄋ\",\"ㅸ\":\"ᄇᄋ\",\"ᇦ\":\"ᄇᄋ\",\"ᄧ\":\"ᄇᄌ\",\"ㅶ\":\"ᄇᄌ\",\"ퟨ\":\"ᄇᄌ\",\"ᄨ\":\"ᄇᄎ\",\"ퟩ\":\"ᄇᄎ\",\"ꥳ\":\"ᄇᄏ\",\"ᄩ\":\"ᄇᄐ\",\"ㅷ\":\"ᄇᄐ\",\"ᄪ\":\"ᄇᄑ\",\"ᇤ\":\"ᄇᄑ\",\"ꥴ\":\"ᄇᄒ\",\"ᇥ\":\"ᄇᄒ\",\"ㅅ\":\"ᄉ\",\"ᆺ\":\"ᄉ\",\"ᄭ\":\"ᄉᄀ\",\"ㅺ\":\"ᄉᄀ\",\"ᇧ\":\"ᄉᄀ\",\"ᄮ\":\"ᄉᄂ\",\"ㅻ\":\"ᄉᄂ\",\"ᄯ\":\"ᄉᄃ\",\"ㅼ\":\"ᄉᄃ\",\"ᇨ\":\"ᄉᄃ\",\"ᄰ\":\"ᄉᄅ\",\"ᇩ\":\"ᄉᄅ\",\"ᄱ\":\"ᄉᄆ\",\"ퟪ\":\"ᄉᄆ\",\"ᄲ\":\"ᄉᄇ\",\"ㅽ\":\"ᄉᄇ\",\"ᇪ\":\"ᄉᄇ\",\"ᄳ\":\"ᄉᄇᄀ\",\"ퟫ\":\"ᄉᄇᄋ\",\"ᄊ\":\"ᄉᄉ\",\"ㅆ\":\"ᄉᄉ\",\"ᆻ\":\"ᄉᄉ\",\"ퟬ\":\"ᄉᄉᄀ\",\"ퟭ\":\"ᄉᄉᄃ\",\"ꥵ\":\"ᄉᄉᄇ\",\"ᄴ\":\"ᄉᄉᄉ\",\"ᄵ\":\"ᄉᄋ\",\"ᄶ\":\"ᄉᄌ\",\"ㅾ\":\"ᄉᄌ\",\"ퟯ\":\"ᄉᄌ\",\"ᄷ\":\"ᄉᄎ\",\"ퟰ\":\"ᄉᄎ\",\"ᄸ\":\"ᄉᄏ\",\"ᄹ\":\"ᄉᄐ\",\"ퟱ\":\"ᄉᄐ\",\"ᄺ\":\"ᄉᄑ\",\"ퟮ\":\"ᄉᅀ\",\"ㅇ\":\"ᄋ\",\"ᆼ\":\"ᄋ\",\"ᅁ\":\"ᄋᄀ\",\"ᇬ\":\"ᄋᄀ\",\"ᇭ\":\"ᄋᄀᄀ\",\"ᅂ\":\"ᄋᄃ\",\"ꥶ\":\"ᄋᄅ\",\"ᅃ\":\"ᄋᄆ\",\"ᅄ\":\"ᄋᄇ\",\"ᅅ\":\"ᄋᄉ\",\"ᇱ\":\"ᄋᄉ\",\"ㆂ\":\"ᄋᄉ\",\"ᅇ\":\"ᄋᄋ\",\"ㆀ\":\"ᄋᄋ\",\"ᇮ\":\"ᄋᄋ\",\"ᅈ\":\"ᄋᄌ\",\"ᅉ\":\"ᄋᄎ\",\"ᇯ\":\"ᄋᄏ\",\"ᅊ\":\"ᄋᄐ\",\"ᅋ\":\"ᄋᄑ\",\"ꥷ\":\"ᄋᄒ\",\"ᅆ\":\"ᄋᅀ\",\"ᇲ\":\"ᄋᅀ\",\"ㆃ\":\"ᄋᅀ\",\"ㅈ\":\"ᄌ\",\"ᆽ\":\"ᄌ\",\"ퟷ\":\"ᄌᄇ\",\"ퟸ\":\"ᄌᄇᄇ\",\"ᅍ\":\"ᄌᄋ\",\"ᄍ\":\"ᄌᄌ\",\"ㅉ\":\"ᄌᄌ\",\"ퟹ\":\"ᄌᄌ\",\"ꥸ\":\"ᄌᄌᄒ\",\"ㅊ\":\"ᄎ\",\"ᆾ\":\"ᄎ\",\"ᅒ\":\"ᄎᄏ\",\"ᅓ\":\"ᄎᄒ\",\"ㅋ\":\"ᄏ\",\"ᆿ\":\"ᄏ\",\"ㅌ\":\"ᄐ\",\"ᇀ\":\"ᄐ\",\"ꥹ\":\"ᄐᄐ\",\"ㅍ\":\"ᄑ\",\"ᇁ\":\"ᄑ\",\"ᅖ\":\"ᄑᄇ\",\"ᇳ\":\"ᄑᄇ\",\"ퟺ\":\"ᄑᄉ\",\"ᅗ\":\"ᄑᄋ\",\"ㆄ\":\"ᄑᄋ\",\"ᇴ\":\"ᄑᄋ\",\"ퟻ\":\"ᄑᄐ\",\"ꥺ\":\"ᄑᄒ\",\"ㅎ\":\"ᄒ\",\"ᇂ\":\"ᄒ\",\"ᇵ\":\"ᄒᄂ\",\"ᇶ\":\"ᄒᄅ\",\"ᇷ\":\"ᄒᄆ\",\"ᇸ\":\"ᄒᄇ\",\"ꥻ\":\"ᄒᄉ\",\"ᅘ\":\"ᄒᄒ\",\"ㆅ\":\"ᄒᄒ\",\"ᄽ\":\"ᄼᄼ\",\"ᄿ\":\"ᄾᄾ\",\"ㅿ\":\"ᅀ\",\"ᇫ\":\"ᅀ\",\"ퟳ\":\"ᅀᄇ\",\"ퟴ\":\"ᅀᄇᄋ\",\"ㆁ\":\"ᅌ\",\"ᇰ\":\"ᅌ\",\"ퟵ\":\"ᅌᄆ\",\"ퟶ\":\"ᅌᄒ\",\"ᅏ\":\"ᅎᅎ\",\"ᅑ\":\"ᅐᅐ\",\"ㆆ\":\"ᅙ\",\"ᇹ\":\"ᅙ\",\"ꥼ\":\"ᅙᅙ\",\"ㅤ\":\"ᅠ\",\"ㅏ\":\"ᅡ\",\"ᆣ\":\"ᅡー\",\"ᅶ\":\"ᅡᅩ\",\"ᅷ\":\"ᅡᅮ\",\"ᅢ\":\"ᅡ丨\",\"ㅐ\":\"ᅡ丨\",\"ㅑ\":\"ᅣ\",\"ᅸ\":\"ᅣᅩ\",\"ᅹ\":\"ᅣᅭ\",\"ᆤ\":\"ᅣᅮ\",\"ᅤ\":\"ᅣ丨\",\"ㅒ\":\"ᅣ丨\",\"ㅓ\":\"ᅥ\",\"ᅼ\":\"ᅥー\",\"ᅺ\":\"ᅥᅩ\",\"ᅻ\":\"ᅥᅮ\",\"ᅦ\":\"ᅥ丨\",\"ㅔ\":\"ᅥ丨\",\"ㅕ\":\"ᅧ\",\"ᆥ\":\"ᅧᅣ\",\"ᅽ\":\"ᅧᅩ\",\"ᅾ\":\"ᅧᅮ\",\"ᅨ\":\"ᅧ丨\",\"ㅖ\":\"ᅧ丨\",\"ㅗ\":\"ᅩ\",\"ᅪ\":\"ᅩᅡ\",\"ㅘ\":\"ᅩᅡ\",\"ᅫ\":\"ᅩᅡ丨\",\"ㅙ\":\"ᅩᅡ丨\",\"ᆦ\":\"ᅩᅣ\",\"ᆧ\":\"ᅩᅣ丨\",\"ᅿ\":\"ᅩᅥ\",\"ᆀ\":\"ᅩᅥ丨\",\"ힰ\":\"ᅩᅧ\",\"ᆁ\":\"ᅩᅧ丨\",\"ᆂ\":\"ᅩᅩ\",\"ힱ\":\"ᅩᅩ丨\",\"ᆃ\":\"ᅩᅮ\",\"ᅬ\":\"ᅩ丨\",\"ㅚ\":\"ᅩ丨\",\"ㅛ\":\"ᅭ\",\"ힲ\":\"ᅭᅡ\",\"ힳ\":\"ᅭᅡ丨\",\"ᆄ\":\"ᅭᅣ\",\"ㆇ\":\"ᅭᅣ\",\"ᆆ\":\"ᅭᅣ\",\"ᆅ\":\"ᅭᅣ丨\",\"ㆈ\":\"ᅭᅣ丨\",\"ힴ\":\"ᅭᅥ\",\"ᆇ\":\"ᅭᅩ\",\"ᆈ\":\"ᅭ丨\",\"ㆉ\":\"ᅭ丨\",\"ㅜ\":\"ᅮ\",\"ᆉ\":\"ᅮᅡ\",\"ᆊ\":\"ᅮᅡ丨\",\"ᅯ\":\"ᅮᅥ\",\"ㅝ\":\"ᅮᅥ\",\"ᆋ\":\"ᅮᅥー\",\"ᅰ\":\"ᅮᅥ丨\",\"ㅞ\":\"ᅮᅥ丨\",\"ힵ\":\"ᅮᅧ\",\"ᆌ\":\"ᅮᅧ丨\",\"ᆍ\":\"ᅮᅮ\",\"ᅱ\":\"ᅮ丨\",\"ㅟ\":\"ᅮ丨\",\"ힶ\":\"ᅮ丨丨\",\"ㅠ\":\"ᅲ\",\"ᆎ\":\"ᅲᅡ\",\"ힷ\":\"ᅲᅡ丨\",\"ᆏ\":\"ᅲᅥ\",\"ᆐ\":\"ᅲᅥ丨\",\"ᆑ\":\"ᅲᅧ\",\"ㆊ\":\"ᅲᅧ\",\"ᆒ\":\"ᅲᅧ丨\",\"ㆋ\":\"ᅲᅧ丨\",\"ힸ\":\"ᅲᅩ\",\"ᆓ\":\"ᅲᅮ\",\"ᆔ\":\"ᅲ丨\",\"ㆌ\":\"ᅲ丨\",\"ㆍ\":\"ᆞ\",\"ퟅ\":\"ᆞᅡ\",\"ᆟ\":\"ᆞᅥ\",\"ퟆ\":\"ᆞᅥ丨\",\"ᆠ\":\"ᆞᅮ\",\"ᆢ\":\"ᆞᆞ\",\"ᆡ\":\"ᆞ丨\",\"ㆎ\":\"ᆞ丨\",\"ヘ\":\"へ\",\"⍁\":\"〼\",\"⧄\":\"〼\",\"꒞\":\"ꁊ\",\"꒬\":\"ꁐ\",\"꒜\":\"ꃀ\",\"꒨\":\"ꄲ\",\"꒿\":\"ꉙ\",\"꒾\":\"ꊱ\",\"꒔\":\"ꋍ\",\"꓀\":\"ꎫ\",\"꓂\":\"ꎵ\",\"꒺\":\"ꎿ\",\"꒰\":\"ꏂ\",\"꒧\":\"ꑘ\",\"⊥\":\"ꓕ\",\"⟂\":\"ꓕ\",\"𝈜\":\"ꓕ\",\"Ʇ\":\"ꓕ\",\"Ꞟ\":\"ꓤ\",\"⅁\":\"ꓨ\",\"⅂\":\"ꓶ\",\"𝈕\":\"ꓶ\",\"𝈫\":\"ꓶ\",\"𖼦\":\"ꓶ\",\"𐐑\":\"ꓶ\",\"⅃\":\"𖼀\",\"𑫦\":\"𑫥𑫯\",\"𑫨\":\"𑫥𑫥\",\"𑫩\":\"𑫥𑫥𑫯\",\"𑫪\":\"𑫥𑫥𑫰\",\"𑫧\":\"𑫥𑫰\",\"𑫴\":\"𑫳𑫯\",\"𑫶\":\"𑫳𑫳\",\"𑫷\":\"𑫳𑫳𑫯\",\"𑫸\":\"𑫳𑫳𑫰\",\"𑫵\":\"𑫳𑫰\",\"𑫬\":\"𑫫𑫯\",\"𑫭\":\"𑫫𑫫\",\"𑫮\":\"𑫫𑫫𑫯\",\"⊕\":\"𐊨\",\"⨁\":\"𐊨\",\"🜨\":\"𐊨\",\"Ꚛ\":\"𐊨\",\"▽\":\"𐊼\",\"𝈔\":\"𐊼\",\"🜄\":\"𐊼\",\"⧖\":\"𐋀\",\"ꞛ\":\"𐐺\",\"Ꞛ\":\"𐐒\",\"𐒠\":\"𐒆\",\"𐏑\":\"𐎂\",\"𐏓\":\"𐎓\",\"𒀸\":\"𐎚\",\"☥\":\"𐦞\",\"𓋹\":\"𐦞\",\"〹\":\"卄\",\"不\":\"不\",\"丽\":\"丽\",\"並\":\"並\",\"⎜\":\"丨\",\"⎟\":\"丨\",\"⎢\":\"丨\",\"⎥\":\"丨\",\"⎪\":\"丨\",\"⎮\":\"丨\",\"㇑\":\"丨\",\"ᅵ\":\"丨\",\"ㅣ\":\"丨\",\"⼁\":\"丨\",\"ᆜ\":\"丨ー\",\"ᆘ\":\"丨ᅡ\",\"ᆙ\":\"丨ᅣ\",\"ힽ\":\"丨ᅣᅩ\",\"ힾ\":\"丨ᅣ丨\",\"ힿ\":\"丨ᅧ\",\"ퟀ\":\"丨ᅧ丨\",\"ᆚ\":\"丨ᅩ\",\"ퟁ\":\"丨ᅩ丨\",\"ퟂ\":\"丨ᅭ\",\"ᆛ\":\"丨ᅮ\",\"ퟃ\":\"丨ᅲ\",\"ᆝ\":\"丨ᆞ\",\"ퟄ\":\"丨丨\",\"串\":\"串\",\"丸\":\"丸\",\"丹\":\"丹\",\"乁\":\"乁\",\"㇠\":\"乙\",\"⼄\":\"乙\",\"㇟\":\"乚\",\"⺃\":\"乚\",\"㇖\":\"乛\",\"⺂\":\"乛\",\"⻲\":\"亀\",\"亂\":\"亂\",\"㇚\":\"亅\",\"⼅\":\"亅\",\"了\":\"了\",\"ニ\":\"二\",\"⼆\":\"二\",\"𠄢\":\"𠄢\",\"⼇\":\"亠\",\"亮\":\"亮\",\"⼈\":\"人\",\"イ\":\"亻\",\"⺅\":\"亻\",\"什\":\"什\",\"仌\":\"仌\",\"令\":\"令\",\"你\":\"你\",\"倂\":\"併\",\"倂\":\"併\",\"侀\":\"侀\",\"來\":\"來\",\"例\":\"例\",\"侮\":\"侮\",\"侮\":\"侮\",\"侻\":\"侻\",\"便\":\"便\",\"值\":\"値\",\"倫\":\"倫\",\"偺\":\"偺\",\"備\":\"備\",\"像\":\"像\",\"僚\":\"僚\",\"僧\":\"僧\",\"僧\":\"僧\",\"㒞\":\"㒞\",\"⼉\":\"儿\",\"兀\":\"兀\",\"⺎\":\"兀\",\"充\":\"充\",\"免\":\"免\",\"免\":\"免\",\"兔\":\"兔\",\"兤\":\"兤\",\"⼊\":\"入\",\"內\":\"內\",\"全\":\"全\",\"兩\":\"兩\",\"ハ\":\"八\",\"⼋\":\"八\",\"六\":\"六\",\"具\":\"具\",\"𠔜\":\"𠔜\",\"𠔥\":\"𠔥\",\"冀\":\"冀\",\"㒹\":\"㒹\",\"⼌\":\"冂\",\"再\":\"再\",\"𠕋\":\"𠕋\",\"冒\":\"冒\",\"冕\":\"冕\",\"㒻\":\"㒻\",\"最\":\"最\",\"⼍\":\"冖\",\"冗\":\"冗\",\"冤\":\"冤\",\"⼎\":\"冫\",\"冬\":\"冬\",\"况\":\"况\",\"况\":\"况\",\"冷\":\"冷\",\"凉\":\"凉\",\"凌\":\"凌\",\"凜\":\"凜\",\"凞\":\"凞\",\"⼏\":\"几\",\"𠘺\":\"𠘺\",\"凵\":\"凵\",\"⼐\":\"凵\",\"⼑\":\"刀\",\"⺉\":\"刂\",\"刃\":\"刃\",\"切\":\"切\",\"切\":\"切\",\"列\":\"列\",\"利\":\"利\",\"㓟\":\"㓟\",\"刺\":\"刺\",\"刻\":\"刻\",\"剆\":\"剆\",\"割\":\"割\",\"剷\":\"剷\",\"劉\":\"劉\",\"𠠄\":\"𠠄\",\"カ\":\"力\",\"力\":\"力\",\"⼒\":\"力\",\"劣\":\"劣\",\"㔕\":\"㔕\",\"劳\":\"劳\",\"勇\":\"勇\",\"勇\":\"勇\",\"勉\":\"勉\",\"勉\":\"勉\",\"勒\":\"勒\",\"勞\":\"勞\",\"勤\":\"勤\",\"勤\":\"勤\",\"勵\":\"勵\",\"⼓\":\"勹\",\"勺\":\"勺\",\"勺\":\"勺\",\"包\":\"包\",\"匆\":\"匆\",\"𠣞\":\"𠣞\",\"⼔\":\"匕\",\"北\":\"北\",\"北\":\"北\",\"⼕\":\"匚\",\"⼖\":\"匸\",\"匿\":\"匿\",\"⼗\":\"十\",\"〸\":\"十\",\"〺\":\"卅\",\"卉\":\"卉\",\"࿖\":\"卍\",\"࿕\":\"卐\",\"卑\":\"卑\",\"卑\":\"卑\",\"博\":\"博\",\"ト\":\"卜\",\"⼘\":\"卜\",\"⼙\":\"卩\",\"⺋\":\"㔾\",\"即\":\"即\",\"卵\":\"卵\",\"卽\":\"卽\",\"卿\":\"卿\",\"卿\":\"卿\",\"卿\":\"卿\",\"⼚\":\"厂\",\"𠨬\":\"𠨬\",\"⼛\":\"厶\",\"參\":\"參\",\"⼜\":\"又\",\"及\":\"及\",\"叟\":\"叟\",\"𠭣\":\"𠭣\",\"ロ\":\"口\",\"⼝\":\"口\",\"囗\":\"口\",\"⼞\":\"口\",\"句\":\"句\",\"叫\":\"叫\",\"叱\":\"叱\",\"吆\":\"吆\",\"吏\":\"吏\",\"吝\":\"吝\",\"吸\":\"吸\",\"呂\":\"呂\",\"呈\":\"呈\",\"周\":\"周\",\"咞\":\"咞\",\"咢\":\"咢\",\"咽\":\"咽\",\"䎛\":\"㖈\",\"哶\":\"哶\",\"唐\":\"唐\",\"啓\":\"啓\",\"啟\":\"啓\",\"啕\":\"啕\",\"啣\":\"啣\",\"善\":\"善\",\"善\":\"善\",\"喇\":\"喇\",\"喙\":\"喙\",\"喙\":\"喙\",\"喝\":\"喝\",\"喝\":\"喝\",\"喫\":\"喫\",\"喳\":\"喳\",\"嗀\":\"嗀\",\"嗂\":\"嗂\",\"嗢\":\"嗢\",\"嘆\":\"嘆\",\"嘆\":\"嘆\",\"噑\":\"噑\",\"噴\":\"噴\",\"器\":\"器\",\"囹\":\"囹\",\"圖\":\"圖\",\"圗\":\"圗\",\"⼟\":\"土\",\"士\":\"土\",\"⼠\":\"土\",\"型\":\"型\",\"城\":\"城\",\"㦳\":\"㘽\",\"埴\":\"埴\",\"堍\":\"堍\",\"報\":\"報\",\"堲\":\"堲\",\"塀\":\"塀\",\"塚\":\"塚\",\"塚\":\"塚\",\"塞\":\"塞\",\"填\":\"塡\",\"壿\":\"墫\",\"墬\":\"墬\",\"墳\":\"墳\",\"壘\":\"壘\",\"壟\":\"壟\",\"𡓤\":\"𡓤\",\"壮\":\"壮\",\"売\":\"売\",\"壷\":\"壷\",\"⼡\":\"夂\",\"夆\":\"夆\",\"⼢\":\"夊\",\"タ\":\"夕\",\"⼣\":\"夕\",\"多\":\"多\",\"夢\":\"夢\",\"⼤\":\"大\",\"奄\":\"奄\",\"奈\":\"奈\",\"契\":\"契\",\"奔\":\"奔\",\"奢\":\"奢\",\"女\":\"女\",\"⼥\":\"女\",\"𡚨\":\"𡚨\",\"𡛪\":\"𡛪\",\"姘\":\"姘\",\"姬\":\"姬\",\"娛\":\"娛\",\"娧\":\"娧\",\"婢\":\"婢\",\"婦\":\"婦\",\"嬀\":\"媯\",\"㛮\":\"㛮\",\"㛼\":\"㛼\",\"媵\":\"媵\",\"嬈\":\"嬈\",\"嬨\":\"嬨\",\"嬾\":\"嬾\",\"嬾\":\"嬾\",\"⼦\":\"子\",\"⼧\":\"宀\",\"宅\":\"宅\",\"𡧈\":\"𡧈\",\"寃\":\"寃\",\"寘\":\"寘\",\"寧\":\"寧\",\"寧\":\"寧\",\"寧\":\"寧\",\"寮\":\"寮\",\"寳\":\"寳\",\"𡬘\":\"𡬘\",\"⼨\":\"寸\",\"寿\":\"寿\",\"将\":\"将\",\"⼩\":\"小\",\"尢\":\"尢\",\"⺐\":\"尢\",\"⼪\":\"尢\",\"⺏\":\"尣\",\"㞁\":\"㞁\",\"⼫\":\"尸\",\"尿\":\"尿\",\"屠\":\"屠\",\"屢\":\"屢\",\"層\":\"層\",\"履\":\"履\",\"屮\":\"屮\",\"屮\":\"屮\",\"⼬\":\"屮\",\"𡴋\":\"𡴋\",\"⼭\":\"山\",\"峀\":\"峀\",\"岍\":\"岍\",\"𡷤\":\"𡷤\",\"𡷦\":\"𡷦\",\"崙\":\"崙\",\"嵃\":\"嵃\",\"嵐\":\"嵐\",\"嵫\":\"嵫\",\"嵮\":\"嵮\",\"嵼\":\"嵼\",\"嶲\":\"嶲\",\"嶺\":\"嶺\",\"⼮\":\"巛\",\"巢\":\"巢\",\"エ\":\"工\",\"⼯\":\"工\",\"⼰\":\"己\",\"⺒\":\"巳\",\"㠯\":\"㠯\",\"巽\":\"巽\",\"⼱\":\"巾\",\"帲\":\"帡\",\"帨\":\"帨\",\"帽\":\"帽\",\"幩\":\"幩\",\"㡢\":\"㡢\",\"𢆃\":\"𢆃\",\"⼲\":\"干\",\"年\":\"年\",\"𢆟\":\"𢆟\",\"⺓\":\"幺\",\"⼳\":\"幺\",\"⼴\":\"广\",\"度\":\"度\",\"㡼\":\"㡼\",\"庰\":\"庰\",\"庳\":\"庳\",\"庶\":\"庶\",\"廊\":\"廊\",\"廊\":\"廊\",\"廉\":\"廉\",\"廒\":\"廒\",\"廓\":\"廓\",\"廙\":\"廙\",\"廬\":\"廬\",\"⼵\":\"廴\",\"廾\":\"廾\",\"⼶\":\"廾\",\"𢌱\":\"𢌱\",\"𢌱\":\"𢌱\",\"弄\":\"弄\",\"⼷\":\"弋\",\"⼸\":\"弓\",\"弢\":\"弢\",\"弢\":\"弢\",\"⼹\":\"彐\",\"⺔\":\"彑\",\"当\":\"当\",\"㣇\":\"㣇\",\"⼺\":\"彡\",\"形\":\"形\",\"彩\":\"彩\",\"彫\":\"彫\",\"⼻\":\"彳\",\"律\":\"律\",\"㣣\":\"㣣\",\"徚\":\"徚\",\"復\":\"復\",\"徭\":\"徭\",\"⼼\":\"心\",\"⺖\":\"忄\",\"⺗\":\"㣺\",\"忍\":\"忍\",\"志\":\"志\",\"念\":\"念\",\"忹\":\"忹\",\"怒\":\"怒\",\"怜\":\"怜\",\"恵\":\"恵\",\"㤜\":\"㤜\",\"㤺\":\"㤺\",\"悁\":\"悁\",\"悔\":\"悔\",\"悔\":\"悔\",\"惇\":\"惇\",\"惘\":\"惘\",\"惡\":\"惡\",\"𢛔\":\"𢛔\",\"愈\":\"愈\",\"慨\":\"慨\",\"慄\":\"慄\",\"慈\":\"慈\",\"慌\":\"慌\",\"慌\":\"慌\",\"慎\":\"慎\",\"慎\":\"慎\",\"慠\":\"慠\",\"慺\":\"慺\",\"憎\":\"憎\",\"憎\":\"憎\",\"憎\":\"憎\",\"憐\":\"憐\",\"憤\":\"憤\",\"憯\":\"憯\",\"憲\":\"憲\",\"𢡄\":\"𢡄\",\"𢡊\":\"𢡊\",\"懞\":\"懞\",\"懲\":\"懲\",\"懲\":\"懲\",\"懲\":\"懲\",\"懶\":\"懶\",\"懶\":\"懶\",\"戀\":\"戀\",\"⼽\":\"戈\",\"成\":\"成\",\"戛\":\"戛\",\"戮\":\"戮\",\"戴\":\"戴\",\"⼾\":\"戶\",\"戸\":\"戶\",\"⼿\":\"手\",\"⺘\":\"扌\",\"扝\":\"扝\",\"抱\":\"抱\",\"拉\":\"拉\",\"拏\":\"拏\",\"拓\":\"拓\",\"拔\":\"拔\",\"拼\":\"拼\",\"拾\":\"拾\",\"𢬌\":\"𢬌\",\"挽\":\"挽\",\"捐\":\"捐\",\"捨\":\"捨\",\"捻\":\"捻\",\"掃\":\"掃\",\"掠\":\"掠\",\"掩\":\"掩\",\"揄\":\"揄\",\"揤\":\"揤\",\"摒\":\"摒\",\"𢯱\":\"𢯱\",\"搜\":\"搜\",\"搢\":\"搢\",\"揅\":\"揅\",\"摩\":\"摩\",\"摷\":\"摷\",\"摾\":\"摾\",\"㨮\":\"㨮\",\"搉\":\"㩁\",\"撚\":\"撚\",\"撝\":\"撝\",\"擄\":\"擄\",\"㩬\":\"㩬\",\"⽀\":\"支\",\"⽁\":\"攴\",\"⺙\":\"攵\",\"敏\":\"敏\",\"敏\":\"敏\",\"敖\":\"敖\",\"敬\":\"敬\",\"數\":\"數\",\"𣀊\":\"𣀊\",\"⽂\":\"文\",\"⻫\":\"斉\",\"⽃\":\"斗\",\"料\":\"料\",\"⽄\":\"斤\",\"⽅\":\"方\",\"旅\":\"旅\",\"⽆\":\"无\",\"⺛\":\"旡\",\"既\":\"既\",\"旣\":\"旣\",\"⽇\":\"日\",\"易\":\"易\",\"曶\":\"㫚\",\"㫤\":\"㫤\",\"晉\":\"晉\",\"晩\":\"晚\",\"晴\":\"晴\",\"晴\":\"晴\",\"暑\":\"暑\",\"暑\":\"暑\",\"暈\":\"暈\",\"㬈\":\"㬈\",\"暜\":\"暜\",\"暴\":\"暴\",\"曆\":\"曆\",\"㬙\":\"㬙\",\"𣊸\":\"𣊸\",\"⽈\":\"曰\",\"更\":\"更\",\"書\":\"書\",\"⽉\":\"月\",\"𣍟\":\"𣍟\",\"肦\":\"朌\",\"胐\":\"朏\",\"胊\":\"朐\",\"脁\":\"朓\",\"胶\":\"㬵\",\"朗\":\"朗\",\"朗\":\"朗\",\"朗\":\"朗\",\"脧\":\"朘\",\"望\":\"望\",\"望\":\"望\",\"幐\":\"㬺\",\"䐠\":\"㬻\",\"𣎓\":\"𣎓\",\"膧\":\"朣\",\"𣎜\":\"𣎜\",\"⽊\":\"木\",\"李\":\"李\",\"杓\":\"杓\",\"杖\":\"杖\",\"杞\":\"杞\",\"𣏃\":\"𣏃\",\"柿\":\"杮\",\"杻\":\"杻\",\"枅\":\"枅\",\"林\":\"林\",\"㭉\":\"㭉\",\"𣏕\":\"𣏕\",\"柳\":\"柳\",\"柺\":\"柺\",\"栗\":\"栗\",\"栟\":\"栟\",\"桒\":\"桒\",\"𣑭\":\"𣑭\",\"梁\":\"梁\",\"梅\":\"梅\",\"梅\":\"梅\",\"梎\":\"梎\",\"梨\":\"梨\",\"椔\":\"椔\",\"楂\":\"楂\",\"㮝\":\"㮝\",\"㮝\":\"㮝\",\"槩\":\"㮣\",\"樧\":\"榝\",\"榣\":\"榣\",\"槪\":\"槪\",\"樂\":\"樂\",\"樂\":\"樂\",\"樂\":\"樂\",\"樓\":\"樓\",\"𣚣\":\"𣚣\",\"檨\":\"檨\",\"櫓\":\"櫓\",\"櫛\":\"櫛\",\"欄\":\"欄\",\"㰘\":\"㰘\",\"⽋\":\"欠\",\"次\":\"次\",\"𣢧\":\"𣢧\",\"歔\":\"歔\",\"㱎\":\"㱎\",\"⽌\":\"止\",\"⻭\":\"歯\",\"歲\":\"歲\",\"歷\":\"歷\",\"歹\":\"歹\",\"⽍\":\"歹\",\"⺞\":\"歺\",\"殟\":\"殟\",\"殮\":\"殮\",\"⽎\":\"殳\",\"殺\":\"殺\",\"殺\":\"殺\",\"殺\":\"殺\",\"殻\":\"殻\",\"𣪍\":\"𣪍\",\"⽏\":\"毋\",\"⺟\":\"母\",\"𣫺\":\"𣫺\",\"⽐\":\"比\",\"⽑\":\"毛\",\"⽒\":\"氏\",\"⺠\":\"民\",\"⽓\":\"气\",\"⽔\":\"水\",\"⺡\":\"氵\",\"⺢\":\"氺\",\"汎\":\"汎\",\"汧\":\"汧\",\"沈\":\"沈\",\"沿\":\"沿\",\"泌\":\"泌\",\"泍\":\"泍\",\"泥\":\"泥\",\"𣲼\":\"𣲼\",\"洛\":\"洛\",\"洞\":\"洞\",\"洴\":\"洴\",\"派\":\"派\",\"流\":\"流\",\"流\":\"流\",\"流\":\"流\",\"洖\":\"洖\",\"浩\":\"浩\",\"浪\":\"浪\",\"海\":\"海\",\"海\":\"海\",\"浸\":\"浸\",\"涅\":\"涅\",\"𣴞\":\"𣴞\",\"淋\":\"淋\",\"淚\":\"淚\",\"淪\":\"淪\",\"淹\":\"淹\",\"渚\":\"渚\",\"港\":\"港\",\"湮\":\"湮\",\"潙\":\"溈\",\"滋\":\"滋\",\"滋\":\"滋\",\"溜\":\"溜\",\"溺\":\"溺\",\"滇\":\"滇\",\"滑\":\"滑\",\"滛\":\"滛\",\"㴳\":\"㴳\",\"漏\":\"漏\",\"漢\":\"漢\",\"漢\":\"漢\",\"漣\":\"漣\",\"𣻑\":\"𣻑\",\"潮\":\"潮\",\"𣽞\":\"𣽞\",\"𣾎\":\"𣾎\",\"濆\":\"濆\",\"濫\":\"濫\",\"濾\":\"濾\",\"瀛\":\"瀛\",\"瀞\":\"瀞\",\"瀞\":\"瀞\",\"瀹\":\"瀹\",\"灊\":\"灊\",\"㶖\":\"㶖\",\"⽕\":\"火\",\"⺣\":\"灬\",\"灰\":\"灰\",\"灷\":\"灷\",\"災\":\"災\",\"炙\":\"炙\",\"炭\":\"炭\",\"烈\":\"烈\",\"烙\":\"烙\",\"煮\":\"煮\",\"煮\":\"煮\",\"𤉣\":\"𤉣\",\"煅\":\"煅\",\"煉\":\"煉\",\"𤋮\":\"𤋮\",\"熜\":\"熜\",\"燎\":\"燎\",\"燐\":\"燐\",\"𤎫\":\"𤎫\",\"爐\":\"爐\",\"爛\":\"爛\",\"爨\":\"爨\",\"⽖\":\"爪\",\"爫\":\"爫\",\"⺤\":\"爫\",\"爵\":\"爵\",\"爵\":\"爵\",\"⽗\":\"父\",\"⽘\":\"爻\",\"⺦\":\"丬\",\"⽙\":\"爿\",\"⽚\":\"片\",\"牐\":\"牐\",\"⽛\":\"牙\",\"𤘈\":\"𤘈\",\"⽜\":\"牛\",\"牢\":\"牢\",\"犀\":\"犀\",\"犕\":\"犕\",\"⽝\":\"犬\",\"⺨\":\"犭\",\"犯\":\"犯\",\"狀\":\"狀\",\"𤜵\":\"𤜵\",\"狼\":\"狼\",\"猪\":\"猪\",\"猪\":\"猪\",\"𤠔\":\"𤠔\",\"獵\":\"獵\",\"獺\":\"獺\",\"⽞\":\"玄\",\"率\":\"率\",\"率\":\"率\",\"⽟\":\"玉\",\"王\":\"王\",\"㺬\":\"㺬\",\"玥\":\"玥\",\"玲\":\"玲\",\"㺸\":\"㺸\",\"㺸\":\"㺸\",\"珞\":\"珞\",\"琉\":\"琉\",\"理\":\"理\",\"琢\":\"琢\",\"瑇\":\"瑇\",\"瑜\":\"瑜\",\"瑩\":\"瑩\",\"瑱\":\"瑱\",\"瑱\":\"瑱\",\"璅\":\"璅\",\"璉\":\"璉\",\"璘\":\"璘\",\"瓊\":\"瓊\",\"⽠\":\"瓜\",\"⽡\":\"瓦\",\"㼛\":\"㼛\",\"甆\":\"甆\",\"⽢\":\"甘\",\"⽣\":\"生\",\"甤\":\"甤\",\"⽤\":\"用\",\"⽥\":\"田\",\"画\":\"画\",\"甾\":\"甾\",\"𤰶\":\"𤰶\",\"留\":\"留\",\"略\":\"略\",\"異\":\"異\",\"異\":\"異\",\"𤲒\":\"𤲒\",\"⽦\":\"疋\",\"⽧\":\"疒\",\"痢\":\"痢\",\"瘐\":\"瘐\",\"瘟\":\"瘟\",\"瘝\":\"瘝\",\"療\":\"療\",\"癩\":\"癩\",\"⽨\":\"癶\",\"⽩\":\"白\",\"𤾡\":\"𤾡\",\"𤾸\":\"𤾸\",\"⽪\":\"皮\",\"⽫\":\"皿\",\"𥁄\":\"𥁄\",\"㿼\":\"㿼\",\"益\":\"益\",\"益\":\"益\",\"盛\":\"盛\",\"盧\":\"盧\",\"䀈\":\"䀈\",\"⽬\":\"目\",\"直\":\"直\",\"直\":\"直\",\"𥃲\":\"𥃲\",\"𥃳\":\"𥃳\",\"省\":\"省\",\"䀘\":\"䀘\",\"𥄙\":\"𥄙\",\"眞\":\"眞\",\"真\":\"真\",\"真\":\"真\",\"𥄳\":\"𥄳\",\"着\":\"着\",\"睊\":\"睊\",\"睊\":\"睊\",\"鿃\":\"䀹\",\"䀹\":\"䀹\",\"䀹\":\"䀹\",\"晣\":\"䀿\",\"䁆\":\"䁆\",\"瞋\":\"瞋\",\"𥉉\":\"𥉉\",\"瞧\":\"瞧\",\"⽭\":\"矛\",\"⽮\":\"矢\",\"⽯\":\"石\",\"䂖\":\"䂖\",\"𥐝\":\"𥐝\",\"硏\":\"研\",\"硎\":\"硎\",\"硫\":\"硫\",\"碌\":\"碌\",\"碌\":\"碌\",\"碑\":\"碑\",\"磊\":\"磊\",\"磌\":\"磌\",\"磌\":\"磌\",\"磻\":\"磻\",\"䃣\":\"䃣\",\"礪\":\"礪\",\"⽰\":\"示\",\"⺭\":\"礻\",\"礼\":\"礼\",\"社\":\"社\",\"祈\":\"祈\",\"祉\":\"祉\",\"𥘦\":\"𥘦\",\"祐\":\"祐\",\"祖\":\"祖\",\"祖\":\"祖\",\"祝\":\"祝\",\"神\":\"神\",\"祥\":\"祥\",\"視\":\"視\",\"視\":\"視\",\"祿\":\"祿\",\"𥚚\":\"𥚚\",\"禍\":\"禍\",\"禎\":\"禎\",\"福\":\"福\",\"福\":\"福\",\"𥛅\":\"𥛅\",\"禮\":\"禮\",\"⽱\":\"禸\",\"⽲\":\"禾\",\"秊\":\"秊\",\"䄯\":\"䄯\",\"秫\":\"秫\",\"稜\":\"稜\",\"穊\":\"穊\",\"穀\":\"穀\",\"穀\":\"穀\",\"穏\":\"穏\",\"⽳\":\"穴\",\"突\":\"突\",\"𥥼\":\"𥥼\",\"窱\":\"窱\",\"立\":\"立\",\"⽴\":\"立\",\"⻯\":\"竜\",\"𥪧\":\"𥪧\",\"𥪧\":\"𥪧\",\"竮\":\"竮\",\"⽵\":\"竹\",\"笠\":\"笠\",\"節\":\"節\",\"節\":\"節\",\"䈂\":\"䈂\",\"𥮫\":\"𥮫\",\"篆\":\"篆\",\"䈧\":\"䈧\",\"築\":\"築\",\"𥲀\":\"𥲀\",\"𥳐\":\"𥳐\",\"簾\":\"簾\",\"籠\":\"籠\",\"⽶\":\"米\",\"类\":\"类\",\"粒\":\"粒\",\"精\":\"精\",\"糒\":\"糒\",\"糖\":\"糖\",\"糨\":\"糨\",\"䊠\":\"䊠\",\"糣\":\"糣\",\"糧\":\"糧\",\"⽷\":\"糸\",\"⺯\":\"糹\",\"𥾆\":\"𥾆\",\"紀\":\"紀\",\"紐\":\"紐\",\"索\":\"索\",\"累\":\"累\",\"絶\":\"絕\",\"絣\":\"絣\",\"絛\":\"絛\",\"綠\":\"綠\",\"綾\":\"綾\",\"緇\":\"緇\",\"練\":\"練\",\"練\":\"練\",\"練\":\"練\",\"縂\":\"縂\",\"䌁\":\"䌁\",\"縉\":\"縉\",\"縷\":\"縷\",\"繁\":\"繁\",\"繅\":\"繅\",\"𦇚\":\"𦇚\",\"䌴\":\"䌴\",\"⽸\":\"缶\",\"𦈨\":\"𦈨\",\"缾\":\"缾\",\"𦉇\":\"𦉇\",\"⽹\":\"网\",\"⺫\":\"罒\",\"⺲\":\"罒\",\"⺱\":\"罓\",\"䍙\":\"䍙\",\"署\":\"署\",\"𦋙\":\"𦋙\",\"罹\":\"罹\",\"罺\":\"罺\",\"羅\":\"羅\",\"𦌾\":\"𦌾\",\"⽺\":\"羊\",\"羕\":\"羕\",\"羚\":\"羚\",\"羽\":\"羽\",\"⽻\":\"羽\",\"翺\":\"翺\",\"老\":\"老\",\"⽼\":\"老\",\"⺹\":\"耂\",\"者\":\"者\",\"者\":\"者\",\"者\":\"者\",\"⽽\":\"而\",\"𦓚\":\"𦓚\",\"⽾\":\"耒\",\"𦔣\":\"𦔣\",\"⽿\":\"耳\",\"聆\":\"聆\",\"聠\":\"聠\",\"𦖨\":\"𦖨\",\"聯\":\"聯\",\"聰\":\"聰\",\"聾\":\"聾\",\"⾀\":\"聿\",\"⺺\":\"肀\",\"⾁\":\"肉\",\"肋\":\"肋\",\"肭\":\"肭\",\"育\":\"育\",\"䏕\":\"䏕\",\"䏙\":\"䏙\",\"腁\":\"胼\",\"脃\":\"脃\",\"脾\":\"脾\",\"䐋\":\"䐋\",\"朡\":\"朡\",\"𦞧\":\"𦞧\",\"𦞵\":\"𦞵\",\"朦\":\"䑃\",\"臘\":\"臘\",\"⾂\":\"臣\",\"臨\":\"臨\",\"⾃\":\"自\",\"臭\":\"臭\",\"⾄\":\"至\",\"⾅\":\"臼\",\"舁\":\"舁\",\"舁\":\"舁\",\"舄\":\"舄\",\"⾆\":\"舌\",\"舘\":\"舘\",\"⾇\":\"舛\",\"⾈\":\"舟\",\"䑫\":\"䑫\",\"⾉\":\"艮\",\"良\":\"良\",\"⾊\":\"色\",\"⾋\":\"艸\",\"艹\":\"艹\",\"艹\":\"艹\",\"⺾\":\"艹\",\"⺿\":\"艹\",\"⻀\":\"艹\",\"芋\":\"芋\",\"芑\":\"芑\",\"芝\":\"芝\",\"花\":\"花\",\"芳\":\"芳\",\"芽\":\"芽\",\"若\":\"若\",\"若\":\"若\",\"苦\":\"苦\",\"𦬼\":\"𦬼\",\"茶\":\"茶\",\"荒\":\"荒\",\"荣\":\"荣\",\"茝\":\"茝\",\"茣\":\"茣\",\"莽\":\"莽\",\"荓\":\"荓\",\"菉\":\"菉\",\"菊\":\"菊\",\"菌\":\"菌\",\"菜\":\"菜\",\"菧\":\"菧\",\"華\":\"華\",\"菱\":\"菱\",\"著\":\"著\",\"著\":\"著\",\"𦰶\":\"𦰶\",\"莭\":\"莭\",\"落\":\"落\",\"葉\":\"葉\",\"蔿\":\"蒍\",\"𦳕\":\"𦳕\",\"𦵫\":\"𦵫\",\"蓮\":\"蓮\",\"蓱\":\"蓱\",\"蓳\":\"蓳\",\"蓼\":\"蓼\",\"蔖\":\"蔖\",\"䔫\":\"䔫\",\"蕤\":\"蕤\",\"𦼬\":\"𦼬\",\"藍\":\"藍\",\"䕝\":\"䕝\",\"𦾱\":\"𦾱\",\"䕡\":\"䕡\",\"藺\":\"藺\",\"蘆\":\"蘆\",\"䕫\":\"䕫\",\"蘒\":\"蘒\",\"蘭\":\"蘭\",\"𧃒\":\"𧃒\",\"虁\":\"蘷\",\"蘿\":\"蘿\",\"⾌\":\"虍\",\"⻁\":\"虎\",\"虐\":\"虐\",\"虜\":\"虜\",\"虜\":\"虜\",\"虧\":\"虧\",\"虩\":\"虩\",\"⾍\":\"虫\",\"蚩\":\"蚩\",\"蚈\":\"蚈\",\"蛢\":\"蛢\",\"蜎\":\"蜎\",\"蜨\":\"蜨\",\"蝫\":\"蝫\",\"蟡\":\"蟡\",\"蝹\":\"蝹\",\"蝹\":\"蝹\",\"螆\":\"螆\",\"䗗\":\"䗗\",\"𧏊\":\"𧏊\",\"螺\":\"螺\",\"蠁\":\"蠁\",\"䗹\":\"䗹\",\"蠟\":\"蠟\",\"⾎\":\"血\",\"行\":\"行\",\"⾏\":\"行\",\"衠\":\"衠\",\"衣\":\"衣\",\"⾐\":\"衣\",\"⻂\":\"衤\",\"裂\":\"裂\",\"𧙧\":\"𧙧\",\"裏\":\"裏\",\"裗\":\"裗\",\"裞\":\"裞\",\"裡\":\"裡\",\"裸\":\"裸\",\"裺\":\"裺\",\"䘵\":\"䘵\",\"褐\":\"褐\",\"襁\":\"襁\",\"襤\":\"襤\",\"⾑\":\"襾\",\"⻄\":\"西\",\"⻃\":\"覀\",\"覆\":\"覆\",\"見\":\"見\",\"⾒\":\"見\",\"𧢮\":\"𧢮\",\"⻅\":\"见\",\"⾓\":\"角\",\"⾔\":\"言\",\"𧥦\":\"𧥦\",\"詽\":\"訮\",\"訞\":\"䚶\",\"䚾\":\"䚾\",\"䛇\":\"䛇\",\"誠\":\"誠\",\"說\":\"說\",\"說\":\"說\",\"調\":\"調\",\"請\":\"請\",\"諒\":\"諒\",\"論\":\"論\",\"諭\":\"諭\",\"諭\":\"諭\",\"諸\":\"諸\",\"諸\":\"諸\",\"諾\":\"諾\",\"諾\":\"諾\",\"謁\":\"謁\",\"謁\":\"謁\",\"謹\":\"謹\",\"謹\":\"謹\",\"識\":\"識\",\"讀\":\"讀\",\"讏\":\"讆\",\"變\":\"變\",\"變\":\"變\",\"⻈\":\"讠\",\"⾕\":\"谷\",\"⾖\":\"豆\",\"豈\":\"豈\",\"豕\":\"豕\",\"⾗\":\"豕\",\"豣\":\"豜\",\"⾘\":\"豸\",\"𧲨\":\"𧲨\",\"⾙\":\"貝\",\"貫\":\"貫\",\"賁\":\"賁\",\"賂\":\"賂\",\"賈\":\"賈\",\"賓\":\"賓\",\"贈\":\"贈\",\"贈\":\"贈\",\"贛\":\"贛\",\"⻉\":\"贝\",\"⾚\":\"赤\",\"⾛\":\"走\",\"起\":\"起\",\"趆\":\"赿\",\"𧻓\":\"𧻓\",\"𧼯\":\"𧼯\",\"⾜\":\"足\",\"跋\":\"跋\",\"趼\":\"趼\",\"跺\":\"跥\",\"路\":\"路\",\"跰\":\"跰\",\"躛\":\"躗\",\"⾝\":\"身\",\"車\":\"車\",\"⾞\":\"車\",\"軔\":\"軔\",\"輧\":\"軿\",\"輦\":\"輦\",\"輪\":\"輪\",\"輸\":\"輸\",\"輸\":\"輸\",\"輻\":\"輻\",\"轢\":\"轢\",\"⻋\":\"车\",\"⾟\":\"辛\",\"辞\":\"辞\",\"辰\":\"辰\",\"⾠\":\"辰\",\"⾡\":\"辵\",\"辶\":\"辶\",\"⻌\":\"辶\",\"⻍\":\"辶\",\"巡\":\"巡\",\"連\":\"連\",\"逸\":\"逸\",\"逸\":\"逸\",\"遲\":\"遲\",\"遼\":\"遼\",\"𨗒\":\"𨗒\",\"𨗭\":\"𨗭\",\"邏\":\"邏\",\"⾢\":\"邑\",\"邔\":\"邔\",\"郎\":\"郎\",\"郞\":\"郎\",\"郞\":\"郎\",\"郱\":\"郱\",\"都\":\"都\",\"𨜮\":\"𨜮\",\"鄑\":\"鄑\",\"鄛\":\"鄛\",\"⾣\":\"酉\",\"酪\":\"酪\",\"醙\":\"醙\",\"醴\":\"醴\",\"⾤\":\"釆\",\"里\":\"里\",\"⾥\":\"里\",\"量\":\"量\",\"金\":\"金\",\"⾦\":\"金\",\"鈴\":\"鈴\",\"鈸\":\"鈸\",\"鉶\":\"鉶\",\"鋗\":\"鋗\",\"鋘\":\"鋘\",\"鉼\":\"鉼\",\"錄\":\"錄\",\"鍊\":\"鍊\",\"鎮\":\"鎭\",\"鏹\":\"鏹\",\"鐕\":\"鐕\",\"𨯺\":\"𨯺\",\"⻐\":\"钅\",\"⻑\":\"長\",\"⾧\":\"長\",\"⻒\":\"镸\",\"⻓\":\"长\",\"⾨\":\"門\",\"開\":\"開\",\"䦕\":\"䦕\",\"閭\":\"閭\",\"閷\":\"閷\",\"𨵷\":\"𨵷\",\"⻔\":\"门\",\"⾩\":\"阜\",\"⻏\":\"阝\",\"⻖\":\"阝\",\"阮\":\"阮\",\"陋\":\"陋\",\"降\":\"降\",\"陵\":\"陵\",\"陸\":\"陸\",\"陼\":\"陼\",\"隆\":\"隆\",\"隣\":\"隣\",\"䧦\":\"䧦\",\"⾪\":\"隶\",\"隷\":\"隷\",\"隸\":\"隷\",\"隸\":\"隷\",\"⾫\":\"隹\",\"雃\":\"雃\",\"離\":\"離\",\"難\":\"難\",\"難\":\"難\",\"⾬\":\"雨\",\"零\":\"零\",\"雷\":\"雷\",\"霣\":\"霣\",\"𩅅\":\"𩅅\",\"露\":\"露\",\"靈\":\"靈\",\"⾭\":\"靑\",\"⻘\":\"青\",\"靖\":\"靖\",\"靖\":\"靖\",\"𩇟\":\"𩇟\",\"⾮\":\"非\",\"⾯\":\"面\",\"𩈚\":\"𩈚\",\"⾰\":\"革\",\"䩮\":\"䩮\",\"䩶\":\"䩶\",\"⾱\":\"韋\",\"韛\":\"韛\",\"韠\":\"韠\",\"⻙\":\"韦\",\"⾲\":\"韭\",\"𩐊\":\"𩐊\",\"⾳\":\"音\",\"響\":\"響\",\"響\":\"響\",\"⾴\":\"頁\",\"䪲\":\"䪲\",\"頋\":\"頋\",\"頋\":\"頋\",\"頋\":\"頋\",\"領\":\"領\",\"頩\":\"頩\",\"𩒖\":\"𩒖\",\"頻\":\"頻\",\"頻\":\"頻\",\"類\":\"類\",\"⻚\":\"页\",\"⾵\":\"風\",\"𩖶\":\"𩖶\",\"⻛\":\"风\",\"⾶\":\"飛\",\"⻜\":\"飞\",\"⻝\":\"食\",\"⾷\":\"食\",\"⻟\":\"飠\",\"飢\":\"飢\",\"飯\":\"飯\",\"飼\":\"飼\",\"䬳\":\"䬳\",\"館\":\"館\",\"餩\":\"餩\",\"⻠\":\"饣\",\"⾸\":\"首\",\"⾹\":\"香\",\"馧\":\"馧\",\"⾺\":\"馬\",\"駂\":\"駂\",\"駱\":\"駱\",\"駾\":\"駾\",\"驪\":\"驪\",\"⻢\":\"马\",\"⾻\":\"骨\",\"䯎\":\"䯎\",\"⾼\":\"高\",\"⾽\":\"髟\",\"𩬰\":\"𩬰\",\"鬒\":\"鬒\",\"鬒\":\"鬒\",\"⾾\":\"鬥\",\"⾿\":\"鬯\",\"⿀\":\"鬲\",\"⿁\":\"鬼\",\"⻤\":\"鬼\",\"⿂\":\"魚\",\"魯\":\"魯\",\"鱀\":\"鱀\",\"鱗\":\"鱗\",\"⻥\":\"鱼\",\"⿃\":\"鳥\",\"鳽\":\"鳽\",\"䳎\":\"䳎\",\"鵧\":\"鵧\",\"䳭\":\"䳭\",\"𪃎\":\"𪃎\",\"鶴\":\"鶴\",\"𪄅\":\"𪄅\",\"䳸\":\"䳸\",\"鷺\":\"鷺\",\"𪈎\":\"𪈎\",\"鸞\":\"鸞\",\"鹃\":\"鹂\",\"⿄\":\"鹵\",\"鹿\":\"鹿\",\"⿅\":\"鹿\",\"𪊑\":\"𪊑\",\"麗\":\"麗\",\"麟\":\"麟\",\"⿆\":\"麥\",\"⻨\":\"麦\",\"麻\":\"麻\",\"⿇\":\"麻\",\"𪎒\":\"𪎒\",\"⿈\":\"黃\",\"⻩\":\"黄\",\"⿉\":\"黍\",\"黎\":\"黎\",\"䵖\":\"䵖\",\"⿊\":\"黑\",\"黒\":\"黑\",\"墨\":\"墨\",\"黹\":\"黹\",\"⿋\":\"黹\",\"⿌\":\"黽\",\"鼅\":\"鼅\",\"黾\":\"黾\",\"⿍\":\"鼎\",\"鼏\":\"鼏\",\"⿎\":\"鼓\",\"鼖\":\"鼖\",\"⿏\":\"鼠\",\"鼻\":\"鼻\",\"⿐\":\"鼻\",\"齃\":\"齃\",\"⿑\":\"齊\",\"⻬\":\"齐\",\"⿒\":\"齒\",\"𪘀\":\"𪘀\",\"⻮\":\"齿\",\"龍\":\"龍\",\"⿓\":\"龍\",\"龎\":\"龎\",\"⻰\":\"龙\",\"龜\":\"龜\",\"龜\":\"龜\",\"龜\":\"龜\",\"⿔\":\"龜\",\"⻳\":\"龟\",\"⿕\":\"龠\"}");
+
+/***/ }),
+
+/***/ "6e9e":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_7ed73c7c_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("44c8");
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_7ed73c7c_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_7ed73c7c_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_7ed73c7c_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_7ed73c7c_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+
 
 /***/ }),
 
@@ -53426,7 +53650,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;(function() {
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "body{color:#02061a;background:rgb(var(--background-total-theme))}a{text-decoration:none}select{-moz-appearance:none!important;-webkit-appearance:none!important;appearance:none!important}input{outline:none}input:focus{border:10px}.unselectable{-webkit-touch-callout:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.loadinggradient{background:linear-gradient(-45deg,rgb(var(--background-secondary-theme)),rgb(var(--background-total-theme)),rgb(var(--background-main)));background-size:400% 400%;-webkit-animation:gradient 2s ease infinite;animation:gradient 2s ease infinite}.messagesLine{display:flex;justify-content:flex-start;align-items:center;margin:20px 0;transition:.3s}.circlePreview{width:22px;height:22px;margin:0 10px 0 0;background-color:#000;border-radius:50%;transition:.3s}.messageLine{margin:0 auto 0 0}.messageLine,.myMessageLine{border-radius:13px;height:34px;transition:.3s}.myMessageLine{margin:0 0 0 auto}.dg-container{font-family:Segoe UI Variable,Segoe UI,SegoeUI,Helvetica Neue,Helvetica,Arial,sans-serif}.dg-container .dg-main-content{padding:1.5em;border:0;border-radius:0;background:rgb(var(--background-total-theme));color:rgb(var(--text-color))}.dg-container .dg-content-footer{overflow:hidden}.dg-container .dg-content-footer button{margin-left:.5em;display:block;float:right;font-size:1em;font-weight:400;color:rgb(var(--color-bg-ac));background:transparent;border:1px solid transparent}.dg-container .dg-content-footer button.dg-pull-right{border:1px solid rgb(var(--color-bg-ac));background:rgb(var(--color-bg-ac));color:rgb(var(--text-on-bg-ac-color))}.dg-container .dg-content-body{border:0;padding-bottom:0}.dg-container .dg-content-body .dg-content{font-size:2em;font-weight:100}@-webkit-keyframes gradient{0%{background-position:0 50%}50%{background-position:100% 50%}to{background-position:0 50%}}@keyframes gradient{0%{background-position:0 50%}50%{background-position:100% 50%}to{background-position:0 50%}}mark{background-color:rgb(var(--color-bg-selection))!important}button.button{background:rgb(var(--color-bg-ac));border:1px solid rgb(var(--color-bg-ac));color:rgb(var(--text-on-bg-ac-color));padding:1em;text-align:center;transition:.3s;min-width:200px;cursor:pointer;outline:none;text-decoration:none}button.button.small{padding:.5em 1em;min-width:150px;font-size:.8em}button.button.good{background:rgb(var(--color-good));border:1px solid rgb(var(--color-good))}@media (pointer:fine){button.button.good:hover{background:rgba(var(--color-good),.9);color:rgb(var(--text-on-bg-ac-color))}}button.button.black{background:rgb(var(--neutral-grad-0));border:1px solid rgb(var(--neutral-grad-0));color:rgb(var(--neutral-grad-3))}@media (pointer:fine){button.button.black:hover{background:rgba(var(--neutral-grad-3),.9);color:rgb(var(--text-on-bg-ac-color))}}button.button.orange{background:rgb(var(--color-bg-orange));border:1px solid rgb(var(--color-bg-orange))}@media (pointer:fine){button.button.orange:hover{background:rgba(var(--color-bg-orange),.9);color:rgb(var(--text-on-bg-ac-color))}}button.button.round{width:44px;height:44px;border-radius:50%;font-size:.8em;min-width:0;padding:0;line-height:42px}button.button.rounded{border-radius:22px}button.button.border{font-size:.8em}button.button.border,button.button.ghost{background:transparent;color:rgb(var(--color-txt-ac))}button.button.ghost{border:1px solid transparent}@media (pointer:fine){button.button.ghost:hover{color:rgb(var(--color-txt-gray))}}@media (pointer:fine){button.button:hover{background:transparent;color:rgb(var(--color-txt-ac))}}button.button.underscored{text-decoration:underline}button.button.badbutton{background:transparent;border:1px solid transparent;font-weight:500;color:rgb(var(--color-bad))}button.button[disabled=disabled]{cursor:default}button.button[disabled=disabled],button.button[disabled=disabled]:hover{background:rgb(var(--neutral-grad-2));border-color:rgb(var(--neutral-grad-2))}button.button[disabled=disabled]:hover{color:#fff}.rootcontent.pip *{transform:none!important}.rootcontent.pip .js-player #vjs-forward-button,.rootcontent.pip .js-player #vjs-rewind-button,.rootcontent.pip .js-player .vjs-big-play-button,.rootcontent.pip .js-player .vjs-control-bar,.rootcontent.pip .js-player .vjs-overlay{display:none!important}.iconbuttonRound{width:44px;height:44px;line-height:42px;text-align:center;cursor:pointer;color:rgb(var(--color-txt-ac));font-size:.9em;border-radius:50%;transition:.3s}@media (pointer:fine){.iconbuttonRound:hover{color:rgb(var(--neutral-grad-4))}}.iconbuttonRound.second{background:rgb(var(--neutral-grad-2))}@media (pointer:fine){.iconbuttonRound.second:hover{color:rgb(var(--color-txt-ac))}}.iconbuttonRound.bright{color:rgb(var(--text-on-bg-ac-color));background:rgb(var(--color-txt-ac))}@media (pointer:fine){.iconbuttonRound.bright:hover{color:rgb(var(--color-txt-ac-1))}}.iconbuttonsmall{cursor:pointer;color:rgb(var(--color-txt-ac));text-align:center;transition:.3s}.iconbuttonsmall i{font-size:.8em}@media (pointer:fine){.iconbuttonsmall:hover{color:rgb(var(--neutral-grad-3))}}.iconbutton{cursor:pointer;color:rgb(var(--color-txt-ac));text-align:center;transition:.3s}@media (pointer:fine){.iconbutton:hover{color:rgb(var(--neutral-grad-3))}}.internalpocketnetlink a{cursor:pointer;display:block;text-align:center;padding:1.5em;font-size:.8em;background:rgba(var(--neutral-grad-2),.1);color:rgb(var(--neutral-grad-3));border-radius:5px}.rootcontent{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;font-family:Segoe UI Variable,Segoe UI,SegoeUI,Helvetica Neue,Helvetica,Arial,sans-serif;color:rgb(var(--text-color));font-size:1.1em}.rootcontent .dmdv{width:1px;height:1px;opacity:0;background:rgb(var(--background-total-theme))}.rootcontent.mobile,.rootcontent.unselect{-webkit-touch-callout:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.rootcontent *{scrollbar-width:none}.rootcontent ::-webkit-scrollbar{width:0!important}.rootcontent .backface{position:fixed;left:100%;top:100%;bottom:-1%;right:-1%;transition:background .3s;background:transparent}.rootcontent .chatwrapper,.rootcontent .chatwrapper .main-wrapper{position:absolute;left:0;right:0;top:0;bottom:0}.rootcontent.fix{font-size:.9em}.rootcontent.fix .chatwrapper{transition:.3s;position:fixed;width:340px;top:70px;left:auto;right:.5em;bottom:.5em;z-index:1000}.rootcontent.fix .likeoffline{bottom:103px}.rootcontent.fix.minimized #modal .work,.rootcontent.fix.minimized .page .work{transition:.3s}.rootcontent.fix.minimized .work{padding:0}.rootcontent.fix.minimized #modal .work{padding:0 .5em}.rootcontent.fix.minimized .chatwrapper{width:44px}.rootcontent.fix.minimized:not(.active) .likeoffline,.rootcontent.fix.minimized:not(.active) .offline{background:transparent}.rootcontent.fix.minimized:not(.active) .likeoffline .table>div .icon,.rootcontent.fix.minimized:not(.active) .offline .table>div .icon{font-size:.8em;padding:0}.rootcontent.fix.minimized.active .page .work{padding:0 .25em}.rootcontent.fix.minimized.active .backface{top:0;bottom:0;right:0;left:0}.rootcontent .likeoffline,.rootcontent .offline{color:rgb(var(--neutral-grad-1));background:rgb(var(--background-secondary-theme))}.rootcontent .likeoffline .table,.rootcontent .offline .table{width:100%;height:100%}.rootcontent .likeoffline .table>div,.rootcontent .offline .table>div{vertical-align:middle;text-align:center;padding-bottom:45%}.rootcontent .likeoffline .table>div .icon,.rootcontent .offline .table>div .icon{font-size:2.3em;padding:.5em;color:rgb(var(--color-bg-ac))}.rootcontent .likeoffline .table>div .label,.rootcontent .offline .table>div .label{font-size:1em;padding:0 4em}.rootcontent .likeoffline{background:transparent}.rootcontent .fixedallwrapper,.rootcontent .fixedallwrapperDisplayed,.rootcontent .preloaderWrapper{position:absolute;left:0;right:0;top:0;bottom:0;z-index:998;transition:.3s}.rootcontent .fixedallwrapperDisplayed{background:rgb(var(--background-total-theme))}.rootcontent .fixedOnPageBottom,.rootcontent .fixedOnPageTop{transition:.3s}.rootcontent .fade-in-right-enter-to .fixedallwrapper,.rootcontent .fade-in-right-enter-to .preloaderWrapper,.rootcontent .fade-in-right-enter .fixedallwrapper,.rootcontent .fade-in-right-enter .preloaderWrapper,.rootcontent .fade-in-right-leave-to .fixedallwrapper,.rootcontent .fade-in-right-leave-to .preloaderWrapper{opacity:0}.rootcontent .fade-in-right-enter-to .fixedOnPageBottom,.rootcontent .fade-in-right-enter .fixedOnPageBottom,.rootcontent .fade-in-right-leave-to .fixedOnPageBottom{opacity:0;bottom:-1.5em}.rootcontent .fade-in-right-enter-to .fixedOnPageTop,.rootcontent .fade-in-right-enter .fixedOnPageTop,.rootcontent .fade-in-right-leave-to .fixedOnPageTop{opacity:0;top:-1.5em}.rootcontent .content{padding-top:66px}.rootcontent .work{padding:0 .5em;margin:0 auto;max-width:640px}.rootcontent .pwork{max-width:640px;background:transparent;margin:0 auto;padding:0 4em}.rootcontent .effects{position:fixed;left:0;top:0;bottom:0;right:0;z-index:2020}.rootcontent .speechWrapper{position:fixed;left:0;bottom:0;padding-bottom:2em;right:0;z-index:2000;height:80px}.rootcontent .speechWrapper .speechAbsWrapper{position:relative;width:100%;height:100%}.rootcontent .emptyRec{padding:10em 2em;text-align:center;font-size:.8em}.rootcontent .enablevoice .forbutton{margin-top:2em}.table{display:table;table-layout:fixed;width:100%}.table>div{display:table-cell}.m-message-container.is-bottom-right{padding:0;right:56px;bottom:.75em;width:auto}.notificationWrapper{display:block;max-width:none;font-family:Segoe UI Variable,Segoe UI,SegoeUI,Helvetica Neue,Helvetica,Arial,sans-serif}.notificationWrapper.m-message-wrapper+.m-message-wrapper{margin-top:.5em}.notificationWrapper .m-message{padding:.5em .5em;border:1px solid rgba(var(--neutral-grad-0),.9);border-radius:5px;box-shadow:none;background:rgb(var(--background-secondary-theme));font-size:1em}.notificationWrapper .m-message--title{font-weight:700;color:rgb(var(--color-txt-gray-dark));font-size:.8em}.notificationWrapper .m-message--title:first-letter{text-transform:capitalize}.notificationWrapper .m-message--description{margin-top:0}.notificationWrapper .m-message-content{flex-grow:1}.notificationWrapper .m-message-content .listPreview{cursor:pointer}.notificationWrapper .m-message-content .listPreview .invitedEvent{width:180px;text-overflow:ellipsis;white-space:nowrap;overflow:hidden;display:flex;justify-content:space-between;align-items:center}.notificationWrapper .m-message-content .listPreview .invitedEvent span{display:block;font-size:.8em}.notificationWrapper .m-message-content .listPreview .invitedEvent .txt{color:rgb(var(--color-txt-gray-dark))}.notificationWrapper .m-message-content .listPreview .invitedEvent .txtNew{color:rgb(var(--color-good))}.notificationWrapper .m-message-content .listPreview .linkPreview span:first-letter{text-transform:uppercase}.notificationWrapper .m-message-content .listPreview .linkPreview .senderName{font-weight:700;color:rgb(var(--color-txt-gray-dark))}.notificationWrapper .m-message-content .listPreview .linkPreview .linkTitle{color:#707070}.notificationWrapper .m-message-content .listPreview .linkPreview .pocketnetLink{color:rgb(var(--color-txt-gray-dark))}.notificationWrapper .m-message-content .listPreview .previewMessageList span{color:rgb(var(--color-txt-gray-dark));text-overflow:ellipsis;overflow:hidden;white-space:nowrap;text-align:left}.notificationWrapper .m-message-content .listPreview .previewMessage{display:flex;justify-content:flex-start;align-items:center;width:100%}.notificationWrapper .m-message-content .listPreview .previewMessage span{display:block;color:rgb(var(--color-txt-gray-dark));font-size:.8em;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;text-align:left;max-width:150px}.notificationWrapper .m-message-icons{float:none}.notificationWrapper .m-message--icon{display:block;vertical-align:top}.notificationWrapper .m-message--button.m-message--arrow-down{display:none}.is-top-left{padding:.5em}.is-top-left .notificationWrapper{width:100%;box-shadow:0 5px 7px -5px rgba(var(--color-shadow-base),.7)}@media only screen and (max-width:640px){#app{width:100%}#app .pwork{padding:0 .5em}#app .work{padding:0 .5em 10px}}.collapse{max-width:768px;margin:0 auto;position:relative;z-index:999;padding:.5em 0}.collapse .iconbutton{width:50px;margin-left:auto;color:grey}@media (pointer:fine){.collapse .iconbutton{opacity:.5}.collapse .iconbutton:hover{opacity:1}}.collapsed{display:flex;justify-content:space-between;padding:1em 0;max-width:768px;margin:auto}.angle{display:flex;justify-content:center;width:50px;cursor:pointer}.expand{margin-right:.5em}.bout .collapse{display:none}.resize-observer{position:absolute;right:-20000px}.pswp__img{-o-object-fit:contain;object-fit:contain}.vue-js-switch{display:inline-block;position:relative;vertical-align:middle;-webkit-user-select:none;-moz-user-select:none;user-select:none;font-size:10px;cursor:pointer}.vue-js-switch .v-switch-input{opacity:0;position:absolute;width:1px;height:1px}.vue-js-switch .v-switch-label{position:absolute;top:0;font-weight:600;color:#fff;z-index:1}.vue-js-switch .v-switch-label.v-left{left:10px}.vue-js-switch .v-switch-label.v-right{right:10px}.vue-js-switch .v-switch-core{display:block;position:relative;box-sizing:border-box;outline:0;margin:0;transition:border-color .3s,background-color .3s;-webkit-user-select:none;-moz-user-select:none;user-select:none}.vue-js-switch .v-switch-core .v-switch-button{display:block;position:absolute;overflow:hidden;top:0;left:0;border-radius:100%;background-color:rgb(var(--background-total-theme));z-index:2}.vue-js-switch.disabled{pointer-events:none;opacity:.6}", ""]);
+exports.push([module.i, "body{color:#02061a;background:rgb(var(--background-total-theme))}a{text-decoration:none}select{-moz-appearance:none!important;-webkit-appearance:none!important;appearance:none!important}input{outline:none}input:focus{border:10px}.unselectable{-webkit-touch-callout:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.loadinggradient{background:linear-gradient(-45deg,rgb(var(--background-secondary-theme)),rgb(var(--background-total-theme)),rgb(var(--background-main)));background-size:400% 400%;-webkit-animation:gradient 2s ease infinite;animation:gradient 2s ease infinite}.messagesLine{display:flex;justify-content:flex-start;align-items:center;margin:20px 0;transition:.3s}.circlePreview{width:22px;height:22px;margin:0 10px 0 0;background-color:#000;border-radius:50%;transition:.3s}.messageLine{margin:0 auto 0 0}.messageLine,.myMessageLine{border-radius:13px;height:34px;transition:.3s}.myMessageLine{margin:0 0 0 auto}.dg-container{font-family:Segoe UI Variable,Segoe UI,SegoeUI,Helvetica Neue,Helvetica,Arial,sans-serif}.dg-container .dg-main-content{padding:1.5em;border:0;border-radius:0;background:rgb(var(--background-total-theme));color:rgb(var(--text-color))}.dg-container .dg-content-footer{overflow:hidden}.dg-container .dg-content-footer button{margin-left:.5em;display:block;float:right;font-size:1em;font-weight:400;color:rgb(var(--color-bg-ac));background:transparent;border:1px solid transparent}.dg-container .dg-content-footer button.dg-pull-right{border:1px solid rgb(var(--color-bg-ac));background:rgb(var(--color-bg-ac));color:rgb(var(--text-on-bg-ac-color))}.dg-container .dg-content-body{border:0;padding-bottom:0}.dg-container .dg-content-body .dg-content{font-size:2em;font-weight:100}@-webkit-keyframes gradient{0%{background-position:0 50%}50%{background-position:100% 50%}to{background-position:0 50%}}@keyframes gradient{0%{background-position:0 50%}50%{background-position:100% 50%}to{background-position:0 50%}}mark{background-color:rgb(var(--color-bg-selection))!important}button.button{background:rgb(var(--color-bg-ac));border:1px solid rgb(var(--color-bg-ac));color:rgb(var(--text-on-bg-ac-color));padding:1em;text-align:center;transition:.3s;min-width:200px;cursor:pointer;outline:none;text-decoration:none}button.button.small{padding:.5em 1em;min-width:150px;font-size:.8em}button.button.good{background:rgb(var(--color-good));border:1px solid rgb(var(--color-good))}@media (pointer:fine){button.button.good:hover{background:rgba(var(--color-good),.9);color:rgb(var(--text-on-bg-ac-color))}}button.button.black{background:rgb(var(--neutral-grad-0));border:1px solid rgb(var(--neutral-grad-0));color:rgb(var(--neutral-grad-3))}@media (pointer:fine){button.button.black:hover{background:rgba(var(--neutral-grad-3),.9);color:rgb(var(--text-on-bg-ac-color))}}button.button.orange{background:rgb(var(--color-bg-orange));border:1px solid rgb(var(--color-bg-orange))}@media (pointer:fine){button.button.orange:hover{background:rgba(var(--color-bg-orange),.9);color:rgb(var(--text-on-bg-ac-color))}}button.button.round{width:44px;height:44px;border-radius:50%;font-size:.8em;min-width:0;padding:0;line-height:42px}button.button.rounded{border-radius:22px}button.button.border{font-size:.8em}button.button.border,button.button.ghost{background:transparent;color:rgb(var(--color-txt-ac))}button.button.ghost{border:1px solid transparent}@media (pointer:fine){button.button.ghost:hover{color:rgb(var(--color-txt-gray))}}@media (pointer:fine){button.button:hover{background:transparent;color:rgb(var(--color-txt-ac))}}button.button.underscored{text-decoration:underline}button.button.badbutton{background:transparent;border:1px solid transparent;font-weight:500;color:rgb(var(--color-bad))}button.button[disabled=disabled]{cursor:default}button.button[disabled=disabled],button.button[disabled=disabled]:hover{background:rgb(var(--neutral-grad-2));border-color:rgb(var(--neutral-grad-2))}button.button[disabled=disabled]:hover{color:#fff}.rootcontent.pip *{transform:none!important}.rootcontent.pip .js-player #vjs-forward-button,.rootcontent.pip .js-player #vjs-rewind-button,.rootcontent.pip .js-player .vjs-big-play-button,.rootcontent.pip .js-player .vjs-control-bar,.rootcontent.pip .js-player .vjs-overlay{display:none!important}.iconbuttonRound{width:44px;height:44px;line-height:42px;text-align:center;cursor:pointer;color:rgb(var(--color-txt-ac));font-size:.9em;border-radius:50%;transition:.3s}@media (pointer:fine){.iconbuttonRound:hover{color:rgb(var(--neutral-grad-4))}}.iconbuttonRound.second{background:rgb(var(--neutral-grad-2))}@media (pointer:fine){.iconbuttonRound.second:hover{color:rgb(var(--color-txt-ac))}}.iconbuttonRound.bright{color:rgb(var(--text-on-bg-ac-color));background:rgb(var(--color-txt-ac))}@media (pointer:fine){.iconbuttonRound.bright:hover{color:rgb(var(--color-txt-ac-1))}}.iconbuttonsmall{cursor:pointer;color:rgb(var(--color-txt-ac));text-align:center;transition:.3s}.iconbuttonsmall i{font-size:.8em}@media (pointer:fine){.iconbuttonsmall:hover{color:rgb(var(--neutral-grad-3))}}.iconbutton{cursor:pointer;color:rgb(var(--color-txt-ac));text-align:center;transition:.3s}@media (pointer:fine){.iconbutton:hover{color:rgb(var(--neutral-grad-3))}}.internalpocketnetlink a{cursor:pointer;display:block;text-align:center;padding:1.5em;font-size:.8em;background:rgba(var(--neutral-grad-2),.1);color:rgb(var(--neutral-grad-3));border-radius:5px}.rootcontent{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;font-family:Segoe UI Variable,Segoe UI,SegoeUI,Helvetica Neue,Helvetica,Arial,sans-serif;color:rgb(var(--text-color));font-size:1.1em}.rootcontent .dmdv{width:1px;height:1px;opacity:0;background:rgb(var(--background-total-theme))}.rootcontent.mobile,.rootcontent.unselect{-webkit-touch-callout:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.rootcontent *{scrollbar-width:none}.rootcontent ::-webkit-scrollbar{width:0!important}.rootcontent .backface{position:fixed;left:100%;top:100%;bottom:-1%;right:-1%;transition:background .3s;background:transparent}.rootcontent .chatwrapper,.rootcontent .chatwrapper .main-wrapper{position:absolute;left:0;right:0;top:0;bottom:0}.rootcontent.fix{font-size:.9em}.rootcontent.fix .chatwrapper{transition:.3s;position:fixed;width:340px;top:70px;left:auto;right:.5em;bottom:.5em;z-index:1000}.rootcontent.fix .likeoffline{bottom:103px}.rootcontent.fix.minimized #modal .work,.rootcontent.fix.minimized .page .work{transition:.3s}.rootcontent.fix.minimized .work{padding:0}.rootcontent.fix.minimized #modal .work{padding:0 .5em}.rootcontent.fix.minimized .chatwrapper{width:44px}.rootcontent.fix.minimized:not(.active) .likeoffline,.rootcontent.fix.minimized:not(.active) .offline{background:transparent}.rootcontent.fix.minimized:not(.active) .likeoffline .table>div .icon,.rootcontent.fix.minimized:not(.active) .offline .table>div .icon{font-size:.8em;padding:0}.rootcontent.fix.minimized.active .page .work{padding:0 .25em}.rootcontent.fix.minimized.active .backface{top:0;bottom:0;right:0;left:0}.rootcontent .likeoffline,.rootcontent .offline{color:rgb(var(--neutral-grad-1));background:rgb(var(--background-secondary-theme))}.rootcontent .likeoffline .table,.rootcontent .offline .table{width:100%;height:100%}.rootcontent .likeoffline .table>div,.rootcontent .offline .table>div{vertical-align:middle;text-align:center;padding-bottom:45%}.rootcontent .likeoffline .table>div .icon,.rootcontent .offline .table>div .icon{font-size:2.3em;padding:.5em;color:rgb(var(--color-bg-ac))}.rootcontent .likeoffline .table>div .label,.rootcontent .offline .table>div .label{font-size:1em;padding:0 4em}.rootcontent .likeoffline{background:transparent}.rootcontent .fixedallwrapper,.rootcontent .fixedallwrapperDisplayed,.rootcontent .preloaderWrapper{position:absolute;left:0;right:0;top:0;bottom:0;z-index:998;transition:.3s}.rootcontent .fixedallwrapperDisplayed{background:rgb(var(--background-total-theme))}.rootcontent .fixedOnPageBottom,.rootcontent .fixedOnPageTop{transition:.3s}.rootcontent .fade-in-right-enter-to .fixedallwrapper,.rootcontent .fade-in-right-enter-to .preloaderWrapper,.rootcontent .fade-in-right-enter .fixedallwrapper,.rootcontent .fade-in-right-enter .preloaderWrapper,.rootcontent .fade-in-right-leave-to .fixedallwrapper,.rootcontent .fade-in-right-leave-to .preloaderWrapper{opacity:0}.rootcontent .fade-in-right-enter-to .fixedOnPageBottom,.rootcontent .fade-in-right-enter .fixedOnPageBottom,.rootcontent .fade-in-right-leave-to .fixedOnPageBottom{opacity:0;bottom:-1.5em}.rootcontent .fade-in-right-enter-to .fixedOnPageTop,.rootcontent .fade-in-right-enter .fixedOnPageTop,.rootcontent .fade-in-right-leave-to .fixedOnPageTop{opacity:0;top:-1.5em}.rootcontent .content{padding-top:66px}.rootcontent .work{padding:0 .5em;margin:0 auto;max-width:640px}.rootcontent .pwork{max-width:640px;background:transparent;margin:0 auto;padding:0 4em}.rootcontent .effects{position:fixed;left:0;top:0;bottom:0;right:0;z-index:2020}.rootcontent .speechWrapper{position:fixed;left:0;bottom:0;padding-bottom:2em;right:0;z-index:2000;height:80px}.rootcontent .speechWrapper .speechAbsWrapper{position:relative;width:100%;height:100%}.rootcontent .emptyRec{padding:10em 2em;text-align:center;font-size:.8em}.rootcontent .enablevoice .forbutton{margin-top:2em}.table{display:table;table-layout:fixed;width:100%}.table>div{display:table-cell}.m-message-container.is-bottom-right{padding:0;right:56px;bottom:.75em;width:auto}.m-message-container.is-top-left{top:calc(.5em + var(--app-margin-top))}.notificationWrapper{display:block;max-width:none;font-family:Segoe UI Variable,Segoe UI,SegoeUI,Helvetica Neue,Helvetica,Arial,sans-serif}.notificationWrapper.m-message-wrapper+.m-message-wrapper{margin-top:.5em}.notificationWrapper .m-message{padding:.5em .5em;border:1px solid rgba(var(--neutral-grad-0),.9);border-radius:5px;box-shadow:none;background:rgb(var(--background-secondary-theme));font-size:1em}.notificationWrapper .m-message--title{font-weight:700;color:rgb(var(--color-txt-gray-dark));font-size:.8em}.notificationWrapper .m-message--title:first-letter{text-transform:capitalize}.notificationWrapper .m-message--description{margin-top:0}.notificationWrapper .m-message-content{flex-grow:1}.notificationWrapper .m-message-content .listPreview{cursor:pointer}.notificationWrapper .m-message-content .listPreview .invitedEvent{width:180px;text-overflow:ellipsis;white-space:nowrap;overflow:hidden;display:flex;justify-content:space-between;align-items:center}.notificationWrapper .m-message-content .listPreview .invitedEvent span{display:block;font-size:.8em}.notificationWrapper .m-message-content .listPreview .invitedEvent .txt{color:rgb(var(--color-txt-gray-dark))}.notificationWrapper .m-message-content .listPreview .invitedEvent .txtNew{color:rgb(var(--color-good))}.notificationWrapper .m-message-content .listPreview .linkPreview span:first-letter{text-transform:uppercase}.notificationWrapper .m-message-content .listPreview .linkPreview .senderName{font-weight:700;color:rgb(var(--color-txt-gray-dark))}.notificationWrapper .m-message-content .listPreview .linkPreview .linkTitle{color:#707070}.notificationWrapper .m-message-content .listPreview .linkPreview .pocketnetLink{color:rgb(var(--color-txt-gray-dark))}.notificationWrapper .m-message-content .listPreview .previewMessageList span{color:rgb(var(--color-txt-gray-dark));text-overflow:ellipsis;overflow:hidden;white-space:nowrap;text-align:left}.notificationWrapper .m-message-content .listPreview .previewMessage{display:flex;justify-content:flex-start;align-items:center;width:100%}.notificationWrapper .m-message-content .listPreview .previewMessage span{display:block;color:rgb(var(--color-txt-gray-dark));font-size:.8em;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;text-align:left;max-width:150px}.notificationWrapper .m-message-icons{float:none}.notificationWrapper .m-message--icon{display:block;vertical-align:top}.notificationWrapper .m-message--button.m-message--arrow-down{display:none}.is-top-left{padding:.5em}.is-top-left .notificationWrapper{width:100%;box-shadow:0 5px 7px -5px rgba(var(--color-shadow-base),.7)}@media only screen and (max-width:640px){#app{width:100%}#app .pwork{padding:0 .5em}#app .work{padding:0 .5em 10px}}.collapse{max-width:768px;margin:0 auto;position:relative;z-index:999;padding:.5em 0}.collapse .iconbutton{width:50px;margin-left:auto;color:grey}@media (pointer:fine){.collapse .iconbutton{opacity:.5}.collapse .iconbutton:hover{opacity:1}}.collapsed{display:flex;justify-content:space-between;padding:1em 0;max-width:768px;margin:auto}.angle{display:flex;justify-content:center;width:50px;cursor:pointer}.expand{margin-right:.5em}.bout .collapse{display:none}.resize-observer{position:absolute;right:-20000px}.pswp__img{-o-object-fit:contain;object-fit:contain}.vue-js-switch{display:inline-block;position:relative;vertical-align:middle;-webkit-user-select:none;-moz-user-select:none;user-select:none;font-size:10px;cursor:pointer}.vue-js-switch .v-switch-input{opacity:0;position:absolute;width:1px;height:1px}.vue-js-switch .v-switch-label{position:absolute;top:0;font-weight:600;color:#fff;z-index:1}.vue-js-switch .v-switch-label.v-left{left:10px}.vue-js-switch .v-switch-label.v-right{right:10px}.vue-js-switch .v-switch-core{display:block;position:relative;box-sizing:border-box;outline:0;margin:0;transition:border-color .3s,background-color .3s;-webkit-user-select:none;-moz-user-select:none;user-select:none}.vue-js-switch .v-switch-core .v-switch-button{display:block;position:absolute;overflow:hidden;top:0;left:0;border-radius:100%;background-color:rgb(var(--background-total-theme));z-index:2}.vue-js-switch.disabled{pointer-events:none;opacity:.6}", ""]);
 // Exports
 module.exports = exports;
 
@@ -54219,7 +54443,7 @@ module.exports = function ($this, dummy, Wrapper) {
 
 "use strict";
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"3c23d37e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/contacts/index.vue?vue&type=template&id=12492b0b&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/contacts/index.vue?vue&type=template&id=12492b0b&scoped=true&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:{'bin' : _vm.pocketnet, 'bout' : !_vm.pocketnet, minimized: _vm.minimized, fix : _vm.pocketnet, active: _vm.active},attrs:{"id":"contacts"}},[(!_vm.unauthorized)?_c('div',[(_vm.mode === 'Contacts' && _vm.window.cordova)?_c('div',{staticClass:"work"},[_c('div',{staticClass:"inviteUserDiv"},[_c('router-link',{staticClass:"inviteButton",class:{ colored: true },attrs:{"to":"/invite","tag":"button"}},[_c('span',[_vm._v(_vm._s(_vm.$i18n.t("caption.inviteFriend")))]),_vm._v(" "),_c('i',{staticClass:"fas fa-address-card"})])],1)]):_vm._e(),(_vm.mode === 'Contacts' && !_vm.window.cordova)?_c('div',{staticClass:"work"},[_c('div',{staticClass:"inviteUserDiv"},[_c('button',{staticClass:"inviteButton",class:{ colored: true },on:{"click":_vm.invitepnt}},[_c('span',[_vm._v(_vm._s(_vm.$i18n.t("caption.inviteFriend")))]),_vm._v(" "),_c('i',{staticClass:"fas fa-address-card"})])])]):_vm._e(),_c('div',{staticClass:"namebuttoncreate"},[(_vm.mode === 'Selectmany' && _vm.selectedlength)?_c('div',{},[_c('div',{staticClass:"work"},[_c('div',{staticClass:"groupList"},[_c('div',{staticClass:"groupCaption"},[_c('span',{staticClass:"label"},[_vm._v("Selected ("+_vm._s(_vm.selectedlength)+")")])])]),_c('div',{staticClass:"participants"},_vm._l((_vm.selected),function(v){return _c('div',{key:v.id || v,staticClass:"groupListName"},[_c('preview',{attrs:{"contact":_vm.usersinfo[v.id || v],"mode":"mini"}}),(!v.id)?_c('i',{staticClass:"far fa-times-circle",on:{"click":function($event){return _vm.toggleUser(v)}}}):_vm._e()],1)}),0)])]):_vm._e()]),_c('div',{staticClass:"work searchWrapperEA"},[_c('search',{attrs:{"minimize":_vm.minimized},on:{"search":_vm.search}})],1),_c('div',{staticClass:"work"},[(_vm.users.contacts.length !== 0)?_c('div',{staticClass:"titleContacts"},[_c('span',[_vm._v(_vm._s(_vm.$t("caption.contacts")))])]):_vm._e(),_c('list',{attrs:{"mode":_vm.mode,"selected":_vm.selected,"users":_vm.users.contacts,"title":'Contacts'},on:{"toggleUser":_vm.toggleUser,"select":_vm.select}})],1),_c('div',{staticClass:"work"},[(_vm.users.contacts.length === 0 && !_vm.searching && !_vm.loading && !_vm.inputText)?_c('div',{staticClass:"titleContacts empty"},[_c('span',[_vm._v(_vm._s(_vm.$t("caption.contactsempty")))])]):_vm._e()]),(_vm.inputText.length && (_vm.searching || _vm.users.contacts.length === 0 || _vm.users.search.length))?_c('div',{staticClass:"searchResult"},[_c('div',{staticClass:"work"},[(_vm.users.search.length !== 0)?_c('div',{staticClass:"titleSearchResult"},[_c('span',[_vm._v(_vm._s(_vm.$t("caption.searchResult")))])]):_vm._e(),(_vm.users.search.length)?_c('list',{attrs:{"mode":_vm.mode,"selected":_vm.selected,"users":_vm.users.search,"title":'Search results'},on:{"toggleUser":_vm.toggleUser,"select":_vm.select}}):_vm._e()],1),(_vm.inputText.length >= 3 && !_vm.users.search.length && !_vm.loading && !_vm.searching)?_c('div',{staticClass:"noSearchResult"},[_c('span',[_vm._v(_vm._s(_vm.$t("caption.queryNoResults")))]),_c('i',{staticClass:"fas fa-search"})]):_vm._e(),(_vm.searching)?_c('div',{staticClass:"searching"},[_c('div',{staticClass:"linepreloaderWrapper"},[_c('linepreloader')],1)]):_vm._e()]):_vm._e()]):_c('div',{staticClass:"dmdv"})])}
 var staticRenderFns = []
 
@@ -54941,6 +55165,18 @@ function b64_enc (data) {
 
 /***/ }),
 
+/***/ "72a7":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_659136c0_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("de24");
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_659136c0_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_659136c0_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_659136c0_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_659136c0_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+
+
+/***/ }),
+
 /***/ "72aa":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -55078,6 +55314,20 @@ module.exports.__inject__ = function (shadowRoot) {
 
 /***/ }),
 
+/***/ "76a3":
+/***/ (function(module, exports, __webpack_require__) {
+
+// Imports
+var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
+exports = ___CSS_LOADER_API_IMPORT___(false);
+// Module
+exports.push([module.i, ".voiceMessage[data-v-0438bc11]{-webkit-tap-highlight-color:transparent;display:flex;contain:strict;width:230px;height:100%}.voiceMessage_wrapper[data-v-0438bc11]{display:flex;justify-content:flex-end;align-items:center;overflow:hidden;min-width:10em;padding:0 .5em;padding-right:1em;border-radius:2em;background:rgb(var(--background-secondary-theme))}.voiceMessage_toggle[data-v-0438bc11]{cursor:pointer;height:33px;width:33px;margin-right:.5em;border-radius:50%;background:rgb(var(--neutral-grad-1));display:flex;align-items:center;justify-content:center;color:rgb(var(--color-bg-ac))}.voiceMessage_toggle i[data-v-0438bc11]{font-size:.5em}.voiceMessage_graph[data-v-0438bc11]{position:relative;cursor:pointer}.voiceMessage_options[data-v-0438bc11]{display:flex;justify-content:center;margin-left:10px;padding:2px 10px;min-width:40px;background:rgb(var(--neutral-grad-1));border-radius:10px}.voiceMessage_options span[data-v-0438bc11]{font-size:.8em;color:rgb(var(--neutral-grad-3))}.voiceMessage.playing .voiceMessage_options span[data-v-0438bc11]{font-size:.8em;color:rgb(var(--color-bg-ac-bright))}.voiceMessage .fa-exclamation-circle[data-v-0438bc11]{font-size:.7em;color:rgb(var(--color-bad));padding:.5em}.voiceMessage .encsign[data-v-0438bc11]{position:absolute;right:0;top:0;bottom:0;display:flex;align-items:center;padding-right:.35em}.voiceMessage .encsign i[data-v-0438bc11]{font-size:.5em;color:rgb(var(--neutral-grad-2));opacity:.6}", ""]);
+// Exports
+module.exports = exports;
+
+
+/***/ }),
+
 /***/ "76df":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -55095,19 +55345,7 @@ module.exports = exports;
 /***/ "7704":
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"caption\":{\"create\":\"Создать\",\"addPublicChatName\":\"Имя Публичной комнаты\",\"addGroupNamePlaceHolder\":\"Имя Чата\",\"createPublicChat\":\"Создать публичный чат\",\"chatTopic\":\"Топик изменён\",\"publicRoomTitle\":\"Публичная комната\",\"asModerator\":\"права модерации\",\"marked\":\"Передал\",\"unmarked\":\"Снял\",\"removeBan\":\"Снять Бан\",\"cancelModeration\":\"Снять модерцию\",\"uploadFiles\":\"Загрузить файлы\",\"header\":\"Заголовок\",\"dragAndDropAFile\":\"Перетятите файл в эту область\",\"chatInvite\":\"Вы приглашены в чат с\",\"cantJoion\":\"Вы не можете присоединиться к чату с\",\"chatInviteDecline\":\"Вы можете присоединиться к чату или отклонить приглашение\",\"creatorLeft\":\"Так как создатель чата покинул его\",\"encrypted\":\"Зашифровано \",\"noImages\":\"В чате пока нет изображений\",\"noFiles\":\"В чате пока нет файлов\",\"inviteUser\":\"Пригласить пользователя\",\"invite\":\"Пригласить\",\"add\":\"Добавить\",\"mute\":\"Отключить звук\",\"unmute\":\"Включить звук\",\"leave\":\"Покинуть\",\"Info\":\"Информация\",\"new\":\"Новый\",\"typing\":\"печатает\",\"accNotFound\":\"Ваш аккаунт находится в процессе регистрации, пожалуйста, подождите...\",\"emptyList\":\"Список пуст\",\"welcome\":\"Добро пожаловать в чат!\",\"startNewChat\":\"Начать новый чат\",\"chats\":\"Чаты\",\"shareWith\":\"Поделиться с\",\"newChat\":\"Новый чат\",\"moveToChat\":\"Перейти в чат\",\"queryNoResults\":\"Нет результатов по запросу\",\"needMoreCharacters\":\"Введите больше символов для поиска\",\"createGroup\":\"Создать группу\",\"unabletoDecrypt\":\"* Невозможно расшифровать\",\"messageDeleted\":\"Сообщение удалено\",\"sentImage\":\"отправлено изображение\",\"sentVoiceMessage\":\"отправлено голосовое сообщение\",\"invitationToChat\":\"Приглашение в чат\",\"invitationToRoom\":\"Приглашение в комнату\",\"leftChat\":\"покинул чат\",\"joined\":\"присоединился\",\"chatRenamed\":\"Чат переименован в \",\"recentComment\":\"Последний комментарий:\",\"share\":\"Поделиться\",\"followers\":\"Подписались\",\"reputation\":\"Репутация\",\"unsubscribe\":\"Отписаться\",\"following\":\"Подписан\",\"theme\":\"Тема:\",\"contacts\":\"Контакты\",\"phoneContacts\":\"Телефонные контакты\",\"chooseInviteMedia\":\"Пожалуйста, выберите, способ приглашения\",\"admin\":\"Админ\",\"moderator\":\"Модератор\",\"videocall\":\"Видеозвонок\",\"call\":\"Звонок\",\"leaveAndDelete\":\"Покинуть и удалить чат\",\"donate\":\"Донат\",\"makeModerator\":\"Сделать модератором\",\"ban\":\"Бан\",\"kick\":\"Исключить\",\"members\":\"Участники\",\"media\":\"Медиа\",\"files\":\"Файлы\",\"contactsList\":\"Список контактов\",\"send\":\"Отправить\",\"pageCaption\":\"Заголовок страницы\",\"caption\":\"Заголовок\",\"text\":\"текст\",\"placeholder\":\"плейсхолдер\",\"sendTransactionTo\":\"Послать транзакрию\",\"toBePaidByReceiver\":\"Оплата получателем\",\"toBePaidBySender\":\"Оплата отправителем\",\"source\":\"Источник\",\"amount\":\"Количество\",\"receiver\":\"Получатель\",\"message\":\"Сообщение\",\"includeFeesInAmount\":\"Включить комиссию в сумму\",\"transactionFees\":\"Комиссия за транзакцию\",\"totalAmount\":\"Итого\",\"balanceTooLow\":\"Баланс слишком низкий\",\"transactionError\":\"Ошибка: нельзя совершить транзакцию\",\"calculateFees\":\"Подсчитать комиссию\",\"startChatWith\":\"Начать чат с\",\"searchResult\":\"Результат поиска\",\"joinedInTheChat\":\"вошел в чат\",\"invited\":\"приглашен \",\"inTheChat\":\" в чат\",\"banned\":\"забанен\",\"andRoom\":\"и комната\",\"inRoom\":\"в комнате\",\"left\":\"покинул\",\"theChat\":\" чат \",\"made\":\"сделал \",\"aModerator\":\" модератором\",\"editedChatNameTo \":\"изменил имя чата на \",\"somebody\":\"Кто-то\",\"sent\":\"отправлено\",\"PKOINto\":\" PKOIN для \",\"response\":\"Ответ\",\"edited\":\"Отредактировано\",\"settings\":\"Настройки\",\"unauthorized\":\"Неавторизован\",\"search\":\"Поиск\",\"replyOnMessage\":\"Ответить на сообщение\",\"editMessage\":\"Редактировать сообщение\",\"inviteFriend\":\"Пригласить друзей\",\"emptyContactList\":\"Ваша книга контактов пуста\",\"joinApp\":\"Присоединяйтесь ко мне в защищенном чате.\",\"hasInvitedToJoin\":\"Это зашифрованный чат, который не привязывается к номеру телефона.\",\"messagefrom\":\"Пересланное сообщение\",\"usernotgen\":\"User did not generate their encryption keys yet. You will be able to chat them when their keys are generated.\",\"younotgen\":\"Please wait a minute, Your encryption keys are being generated...\",\"messageRead\":\"Сообщение прочитано\",\"open\":\"Открыть\",\"You\":\"Вы\",\"chatsearchingempty\":\"Чатов по данному фильтру не найдено\",\"sendmessage\":\"Отправить сообщение\"},\"input\":{\"patientEmailPlaceholder\":\"Электронная почта\",\"refillNamePlaceholder\":\"Заполнить имя еще раз\"},\"message\":{},\"button\":{\"starChatButton\":\"Начать чат\",\"decline\":\"Отклонить\",\"join\":\"Присоединиться\",\"ok\":\"Ок\",\"copy\":\"Скопировать\",\"forward\":\"Переслать\",\"delete\":\"Удалить\",\"save\":\"Сохранить\",\"reply\":\"Ответить\",\"share\":\"Переслать\",\"download\":\"Загрузить\",\"downloaded\":\"Загружено\",\"goToPocketnetProfile\":\"Перейти в профиль\",\"sendFile\":\"Отправить файл\",\"takePhotoOrVideo\":\"Отправить фотографию\",\"sendCoins\":\"Отправить коины\",\"edit\":\"Редактировать\",\"block\":\"Заблокировать\",\"unblock\":\"Разблокировать\",\"blockUser\":\"Заблокировать пользователя\",\"Complain\":\"Пожаловаться\"},\"type\":{\"publicgroup\":\"Создать публичную группу\",\"privategroup\":\"Создать приватную группу\",\"one\":\"Чат один на один\"},\"typelabel\":{\"publicgroup\":\"Создание публичной группы\",\"privategroup\":\"Создание приватной группы\",\"one\":\"Создание чата один на один\"},\"yes\":\"Да\",\"cancel\":\"Отменить\",\"teamMessages\":{\"1-title\":\"Добро пожаловать в приватный чат Bastyon!\",\"1-list1\":\"Личный мессенджер, который НЕ связан с вашим номером телефона\",\"1-list2\":\"Конечное шифрование каждого разговора 1 на 1 по умолчанию\",\"1-list3\":\"Все изображения, отправленные или полученные через чат, хранятся в зашифрованном виде\",\"1-list4\":\"История сообщений сохраняется только в течение 7 дней\",\"2-title\":\"Огромное объявление! Приложение Pocketnet теперь называется Bastyon!\",\"2-message1\":\"Домен будет перенесен на Bastyon.com. Недавно мы выпустили следующие крупные обновления:\",\"2-list1\":\"Частный зашифрованный мессенджер, не связанный с вашим номером телефона\",\"2-list2\":\"Возможность пожертвовать PKOIN блогерам\",\"2-list3\":\"Видео и прямая трансляция\",\"2-message2\":\"Пригласите своих друзей сейчас и станьте частью большого будущего децентрализованного интернета!\",\"2-button\":\"Пригласите друзей\"},\"sendingerror\":\"Возникла ошибка при отправке сообщения\",\"details\":\"Подробнее\",\"settings_pin\":\"Закрепить окно чата\",\"checked\":\"Да\",\"unchecked\":\"Нет\",\"settings_read\":\"Отправлять отчёты о прочтении\",\"messagewasburn\":\"Данное сообщение осталось только лишь в памяти вашего устройства\",\"messagewillburn\":\"Сообщение скоро будет удалено\",\"micaccessbrowser\":\"Доступ к микрофону запрещен настройками браузера, пожалуйста проверьте настройки.\",\"micaccesscommonproblem\":\"Извините, по какой-то причине запись голосовых сообщений невозможна на устройстве.\",\"micaccesscordova\":\"Доступ к микрофону запрещен настройками устройства, пожалуйста разрешите доступ к микрофону в настройках устройства.\",\"micdevicenotfound\":\"Устройство для записи звука не найдено\"}");
-
-/***/ }),
-
-/***/ "772c":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_a32fb08c_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("662f");
-/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_a32fb08c_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_a32fb08c_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_a32fb08c_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_a32fb08c_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-
+module.exports = JSON.parse("{\"caption\":{\"create\":\"Создать\",\"addPublicChatName\":\"Имя Публичной комнаты\",\"addGroupNamePlaceHolder\":\"Имя Чата\",\"createPublicChat\":\"Создать публичный чат\",\"chatTopic\":\"Топик изменён\",\"publicRoomTitle\":\"Публичная комната\",\"asModerator\":\"права модерации\",\"marked\":\"Передал\",\"unmarked\":\"Снял\",\"removeBan\":\"Снять Бан\",\"cancelModeration\":\"Снять модерцию\",\"uploadFiles\":\"Загрузить файлы\",\"header\":\"Заголовок\",\"dragAndDropAFile\":\"Перетятите файл в эту область\",\"chatInvite\":\"Вы приглашены в чат с\",\"cantJoion\":\"Вы не можете присоединиться к чату с\",\"chatInviteDecline\":\"Вы можете присоединиться к чату или отклонить приглашение\",\"creatorLeft\":\"Так как создатель чата покинул его\",\"encrypted\":\"Зашифровано \",\"noImages\":\"В чате пока нет изображений\",\"noFiles\":\"В чате пока нет файлов\",\"inviteUser\":\"Пригласить пользователя\",\"invite\":\"Пригласить\",\"add\":\"Добавить\",\"mute\":\"Отключить звук\",\"unmute\":\"Включить звук\",\"leave\":\"Покинуть\",\"Info\":\"Информация\",\"new\":\"Новый\",\"typing\":\"печатает\",\"accNotFound\":\"Ваш аккаунт находится в процессе регистрации, пожалуйста, подождите...\",\"emptyList\":\"Список пуст\",\"welcome\":\"Добро пожаловать в чат!\",\"startNewChat\":\"Начать новый чат\",\"chats\":\"Чаты\",\"shareWith\":\"Поделиться с\",\"newChat\":\"Новый чат\",\"moveToChat\":\"Перейти в чат\",\"queryNoResults\":\"Нет результатов по запросу\",\"needMoreCharacters\":\"Введите больше символов для поиска\",\"createGroup\":\"Создать группу\",\"unabletoDecrypt\":\"* Невозможно расшифровать\",\"messageDeleted\":\"Сообщение удалено\",\"sentImage\":\"отправлено изображение\",\"sentVoiceMessage\":\"отправлено голосовое сообщение\",\"invitationToChat\":\"Приглашение в чат\",\"invitationToRoom\":\"Приглашение в комнату\",\"leftChat\":\"покинул чат\",\"joined\":\"присоединился\",\"chatRenamed\":\"Чат переименован в \",\"recentComment\":\"Последний комментарий:\",\"share\":\"Поделиться\",\"followers\":\"Подписались\",\"reputation\":\"Репутация\",\"unsubscribe\":\"Отписаться\",\"following\":\"Подписан\",\"theme\":\"Тема:\",\"contacts\":\"Контакты\",\"phoneContacts\":\"Телефонные контакты\",\"chooseInviteMedia\":\"Пожалуйста, выберите, способ приглашения\",\"admin\":\"Админ\",\"moderator\":\"Модератор\",\"videocall\":\"Видеозвонок\",\"call\":\"Звонок\",\"leaveAndDelete\":\"Покинуть и удалить чат\",\"donate\":\"Донат\",\"makeModerator\":\"Сделать модератором\",\"ban\":\"Бан\",\"kick\":\"Исключить\",\"members\":\"Участники\",\"media\":\"Медиа\",\"files\":\"Файлы\",\"contactsList\":\"Список контактов\",\"send\":\"Отправить\",\"pageCaption\":\"Заголовок страницы\",\"caption\":\"Заголовок\",\"text\":\"текст\",\"placeholder\":\"плейсхолдер\",\"sendTransactionTo\":\"Послать транзакрию\",\"toBePaidByReceiver\":\"Оплата получателем\",\"toBePaidBySender\":\"Оплата отправителем\",\"source\":\"Источник\",\"amount\":\"Количество\",\"receiver\":\"Получатель\",\"message\":\"Сообщение\",\"includeFeesInAmount\":\"Включить комиссию в сумму\",\"transactionFees\":\"Комиссия за транзакцию\",\"totalAmount\":\"Итого\",\"balanceTooLow\":\"Баланс слишком низкий\",\"transactionError\":\"Ошибка: нельзя совершить транзакцию\",\"calculateFees\":\"Подсчитать комиссию\",\"startChatWith\":\"Начать чат с\",\"searchResult\":\"Результат поиска\",\"joinedInTheChat\":\"вошел в чат\",\"invited\":\"приглашен \",\"hasInvited\":\"приглашен \",\"inTheChat\":\" в чат\",\"banned\":\"забанен\",\"andRoom\":\"и комната\",\"inRoom\":\"в комнате\",\"left\":\"покинул\",\"theChat\":\" чат \",\"made\":\"сделал \",\"aModerator\":\" модератором\",\"editedChatNameTo \":\"изменил имя чата на \",\"somebody\":\"Кто-то\",\"sent\":\"отправлено\",\"PKOINto\":\" PKOIN для \",\"response\":\"Ответ\",\"edited\":\"Отредактировано\",\"settings\":\"Настройки\",\"unauthorized\":\"Неавторизован\",\"search\":\"Поиск\",\"replyOnMessage\":\"Ответить на сообщение\",\"editMessage\":\"Редактировать сообщение\",\"inviteFriend\":\"Пригласить друзей\",\"emptyContactList\":\"Ваша книга контактов пуста\",\"joinApp\":\"Присоединяйтесь ко мне в защищенном чате.\",\"hasInvitedToJoin\":\"Это зашифрованный чат, который не привязывается к номеру телефона.\",\"messagefrom\":\"Пересланное сообщение от\",\"usernotgen\":\"User did not generate their encryption keys yet. You will be able to chat them when their keys are generated.\",\"younotgen\":\"Please wait a minute, Your encryption keys are being generated...\",\"messageRead\":\"Сообщение прочитано\",\"open\":\"Открыть\",\"You\":\"Вы\",\"chatsearchingempty\":\"Чатов по данному фильтру не найдено\",\"sendmessage\":\"Отправить сообщение\"},\"input\":{\"patientEmailPlaceholder\":\"Электронная почта\",\"refillNamePlaceholder\":\"Заполнить имя еще раз\"},\"message\":{},\"button\":{\"starChatButton\":\"Начать чат\",\"decline\":\"Отклонить\",\"join\":\"Присоединиться\",\"ok\":\"Ок\",\"copy\":\"Скопировать\",\"forward\":\"Переслать\",\"delete\":\"Удалить\",\"save\":\"Сохранить\",\"reply\":\"Ответить\",\"share\":\"Переслать\",\"download\":\"Загрузить\",\"downloaded\":\"Загружено\",\"goToPocketnetProfile\":\"Перейти в профиль\",\"sendFile\":\"Отправить файл\",\"takePhotoOrVideo\":\"Отправить фотографию\",\"sendCoins\":\"Отправить коины\",\"edit\":\"Редактировать\",\"select\":\"Выбрать\",\"block\":\"Заблокировать\",\"unblock\":\"Разблокировать\",\"blockUser\":\"Заблокировать пользователя\",\"Complain\":\"Пожаловаться\"},\"type\":{\"publicgroup\":\"Создать публичную группу\",\"privategroup\":\"Создать приватную группу\",\"one\":\"Чат один на один\"},\"typelabel\":{\"publicgroup\":\"Создание публичной группы\",\"privategroup\":\"Создание приватной группы\",\"one\":\"Создание чата один на один\"},\"yes\":\"Да\",\"cancel\":\"Отменить\",\"teamMessages\":{\"1-title\":\"Добро пожаловать в приватный чат Bastyon!\",\"1-list1\":\"Личный мессенджер, который НЕ связан с вашим номером телефона\",\"1-list2\":\"Конечное шифрование каждого разговора 1 на 1 по умолчанию\",\"1-list3\":\"Все изображения, отправленные или полученные через чат, хранятся в зашифрованном виде\",\"1-list4\":\"История сообщений сохраняется только в течение 7 дней\",\"2-title\":\"Огромное объявление! Приложение Pocketnet теперь называется Bastyon!\",\"2-message1\":\"Домен будет перенесен на Bastyon.com. Недавно мы выпустили следующие крупные обновления:\",\"2-list1\":\"Частный зашифрованный мессенджер, не связанный с вашим номером телефона\",\"2-list2\":\"Возможность пожертвовать PKOIN блогерам\",\"2-list3\":\"Видео и прямая трансляция\",\"2-message2\":\"Пригласите своих друзей сейчас и станьте частью большого будущего децентрализованного интернета!\",\"2-button\":\"Пригласите друзей\"},\"sendingerror\":\"Возникла ошибка при отправке сообщения\",\"details\":\"Подробнее\",\"settings_pin\":\"Закрепить окно чата\",\"checked\":\"Да\",\"unchecked\":\"Нет\",\"settings_read\":\"Отправлять отчёты о прочтении\",\"messagewasburn\":\"Данное сообщение осталось только лишь в памяти вашего устройства\",\"messagewillburn\":\"Сообщение скоро будет удалено\",\"micaccessbrowser\":\"Доступ к микрофону запрещен настройками браузера, пожалуйста проверьте настройки.\",\"micaccesscommonproblem\":\"Извините, по какой-то причине запись голосовых сообщений невозможна на устройстве.\",\"micaccesscordova\":\"Доступ к микрофону запрещен настройками устройства, пожалуйста разрешите доступ к микрофону в настройках устройства.\",\"micdevicenotfound\":\"Устройство для записи звука не найдено\"}");
 
 /***/ }),
 
@@ -55800,6 +56038,18 @@ module.exports = (
 
 /***/ }),
 
+/***/ "7acf":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_9d2b1700_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("d3b8");
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_9d2b1700_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_9d2b1700_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_9d2b1700_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_9d2b1700_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+
+
+/***/ }),
+
 /***/ "7b0b":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -56190,7 +56440,7 @@ module.exports.__inject__ = function (shadowRoot) {
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "#maincontent .expandp[data-v-a8a70f9c]{position:absolute;left:0;right:-.5em;top:0;bottom:0;cursor:pointer;overflow-y:hidden;z-index:3}#maincontent .expandp .etablew[data-v-a8a70f9c]{position:absolute;left:0;right:0;top:0;bottom:0;z-index:2}#maincontent .expandp .etable[data-v-a8a70f9c]{height:100%;width:100%}#maincontent .expandp .etable>div[data-v-a8a70f9c]{transition:.3s;opacity:0;color:rgb(var(--text-on-bg-ac-color));vertical-align:middle;text-align:center}#maincontent .expandp[data-v-a8a70f9c]:before{--size:0;content:\"\";position:absolute;left:var(--x);top:50%;width:var(--size);height:var(--size);background:radial-gradient(circle closest-side,rgba(0,24,48,.34902),transparent);transform:translate(-50%,-50%);transition:.3s}#maincontent .expandp:hover .etable>div[data-v-a8a70f9c]{opacity:1}#maincontent .expandp[data-v-a8a70f9c]:hover:before{--size:400px}#maincontent.bout .expandp[data-v-a8a70f9c]{display:none}#maincontent[data-v-a8a70f9c] .resize-observer{height:1px;overflow:hidden}#maincontent .headerSpacer[data-v-a8a70f9c]{position:static;left:0;right:0;top:0;bottom:0;padding-bottom:0;margin:0 auto;max-width:640px}#maincontent .headerSpacerWrapper[data-v-a8a70f9c]{position:absolute;left:0;right:0;top:65px;bottom:90px;overflow-y:auto;overflow-x:hidden}#maincontent .headerSpacerWrapperOvf[data-v-a8a70f9c]{position:absolute;left:0;right:0;top:0;bottom:0;overflow-y:scroll;overflow-x:hidden;overscroll-behavior:contain}#maincontent.minimized .headerSpacerWrapper[data-v-a8a70f9c]{top:55px}#maincontent.minimized.fix .headerSpacerWrapper[data-v-a8a70f9c]{overflow-y:inherit;overflow-x:inherit;top:0;bottom:103px;will-change:transform;transition:transform .3s}#maincontent.minimized.fix:not(.active):not(.unauthorized) .headerSpacerWrapperOvf[data-v-a8a70f9c]{-webkit-mask-image:linear-gradient(0deg,transparent 3%,#000 10%);mask-image:linear-gradient(0deg,transparent 3%,#000 10%)}#maincontent.minimized.fix[data-v-a8a70f9c]:not(.active):not(.unauthorized) .maskedtop{-webkit-mask-image:linear-gradient(180deg,transparent 3%,#000 10%);mask-image:linear-gradient(180deg,transparent 3%,#000 10%)}#maincontent.minimized.fix .headerSpacerWrapperOvf[data-v-a8a70f9c]{position:relative;width:344px;height:100%;overflow:visible;will-change:transform;transition:transform .3s}#maincontent.minimized.fix .headerSpacer[data-v-a8a70f9c]{position:absolute;height:100%;left:0;width:344px;padding:0;overflow-x:hidden;will-change:transform;overscroll-behavior:contain}#maincontent.minimized.fix.active .expandp[data-v-a8a70f9c]{display:none}#maincontent.minimized.fix.active .headerSpacerWrapper[data-v-a8a70f9c]{transform:translateZ(0);z-index:130}#maincontent.minimized.fix.active .headerSpacerWrapperOvf[data-v-a8a70f9c]{transform:translate3d(-300px,4px,0)}#maincontent.minimized.fix.active .headerSpacerWrapperOvf .headerSpacer[data-v-a8a70f9c]{border-radius:8px;border-top-left-radius:0;border-top-right-radius:0;background:rgb(var(--background-total-theme));border:1px solid rgba(var(--neutral-grad-2),.2);box-shadow:0 5px 7px -5px rgba(var(--color-shadow-base),.7);right:0}.modalcommoncontent[data-v-a8a70f9c] .previewContact{padding-left:.75em}", ""]);
+exports.push([module.i, "#maincontent .expandp[data-v-a8a70f9c]{position:absolute;left:0;right:-.5em;top:0;bottom:0;cursor:pointer;overflow-y:hidden;z-index:3}#maincontent .expandp .etablew[data-v-a8a70f9c]{position:absolute;left:0;right:0;top:0;bottom:0;z-index:2}#maincontent .expandp .etable[data-v-a8a70f9c]{height:100%;width:100%}#maincontent .expandp .etable>div[data-v-a8a70f9c]{transition:.3s;opacity:0;color:rgb(var(--text-on-bg-ac-color));vertical-align:middle;text-align:center}#maincontent .expandp[data-v-a8a70f9c]:before{--size:0;content:\"\";position:absolute;left:var(--x);top:50%;width:var(--size);height:var(--size);background:radial-gradient(circle closest-side,rgba(0,24,48,.34902),transparent);transform:translate(-50%,-50%);transition:.3s}#maincontent .expandp:hover .etable>div[data-v-a8a70f9c]{opacity:1}#maincontent .expandp[data-v-a8a70f9c]:hover:before{--size:400px}#maincontent.bout .expandp[data-v-a8a70f9c]{display:none}#maincontent[data-v-a8a70f9c] .resize-observer{height:1px;overflow:hidden}#maincontent .headerSpacer[data-v-a8a70f9c]{position:static;left:0;right:0;top:0;bottom:0;padding-bottom:0;margin:0 auto;max-width:640px}#maincontent .headerSpacerWrapper[data-v-a8a70f9c]{position:absolute;left:0;right:0;top:calc(65px + var(--app-margin-top));bottom:90px;overflow-y:auto;overflow-x:hidden}#maincontent .headerSpacerWrapperOvf[data-v-a8a70f9c]{position:absolute;left:0;right:0;top:0;bottom:0;overflow-y:scroll;overflow-x:hidden;overscroll-behavior:contain}#maincontent.minimized .headerSpacerWrapper[data-v-a8a70f9c]{top:55px}#maincontent.minimized.fix .headerSpacerWrapper[data-v-a8a70f9c]{overflow-y:inherit;overflow-x:inherit;top:0;bottom:103px;will-change:transform;transition:transform .3s}#maincontent.minimized.fix:not(.active):not(.unauthorized) .headerSpacerWrapperOvf[data-v-a8a70f9c]{-webkit-mask-image:linear-gradient(0deg,transparent 3%,#000 10%);mask-image:linear-gradient(0deg,transparent 3%,#000 10%)}#maincontent.minimized.fix[data-v-a8a70f9c]:not(.active):not(.unauthorized) .maskedtop{-webkit-mask-image:linear-gradient(180deg,transparent 3%,#000 10%);mask-image:linear-gradient(180deg,transparent 3%,#000 10%)}#maincontent.minimized.fix .headerSpacerWrapperOvf[data-v-a8a70f9c]{position:relative;width:344px;height:100%;overflow:visible;will-change:transform;transition:transform .3s}#maincontent.minimized.fix .headerSpacer[data-v-a8a70f9c]{position:absolute;height:100%;left:0;width:344px;padding:0;overflow-x:hidden;will-change:transform;overscroll-behavior:contain}#maincontent.minimized.fix.active .expandp[data-v-a8a70f9c]{display:none}#maincontent.minimized.fix.active .headerSpacerWrapper[data-v-a8a70f9c]{transform:translateZ(0);z-index:130}#maincontent.minimized.fix.active .headerSpacerWrapperOvf[data-v-a8a70f9c]{transform:translate3d(-300px,4px,0)}#maincontent.minimized.fix.active .headerSpacerWrapperOvf .headerSpacer[data-v-a8a70f9c]{border-radius:8px;border-top-left-radius:0;border-top-right-radius:0;background:rgb(var(--background-total-theme));border:1px solid rgba(var(--neutral-grad-2),.2);box-shadow:0 5px 7px -5px rgba(var(--color-shadow-base),.7);right:0}.modalcommoncontent[data-v-a8a70f9c] .previewContact{padding-left:.75em}", ""]);
 // Exports
 module.exports = exports;
 
@@ -56328,6 +56578,24 @@ exports.push([module.i, ".eventMember[data-v-54a240c2]{display:flex;align-items:
 // Exports
 module.exports = exports;
 
+
+/***/ }),
+
+/***/ "810b":
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__("d270");
+if(content.__esModule) content = content.default;
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add CSS to Shadow Root
+var add = __webpack_require__("35d6").default
+module.exports.__inject__ = function (shadowRoot) {
+  add("2d214bb3", content, shadowRoot)
+};
 
 /***/ }),
 
@@ -56536,24 +56804,6 @@ module.exports = function buildFullPath(baseURL, requestedURL) {
 /***/ }),
 
 /***/ "848b":
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__("e05a");
-if(content.__esModule) content = content.default;
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add CSS to Shadow Root
-var add = __webpack_require__("35d6").default
-module.exports.__inject__ = function (shadowRoot) {
-  add("4032c288", content, shadowRoot)
-};
-
-/***/ }),
-
-/***/ "848ba":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -57701,7 +57951,7 @@ module.exports = exports;
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "/*! HTML5 Boilerplate v7.3.0 | MIT License | https://html5boilerplate.com/ */:root{--background-hidden-layer:255,255,255;--background-total-theme:255,255,255;--background-secondary-theme:250,250,250;--background-main:240,242,245;--background-main-contrast:10,12,23;--color-medium-theme:199,200,217;--neutral-grad-0:235,235,240;--neutral-grad-1:227,228,235;--neutral-grad-2:142,144,166;--neutral-grad-3:85,87,112;--neutral-grad-4:64,65,82;--text-color:10,12,23;--text-on-main-bg-color:85,87,112;--text-on-bg-ac-color:255,255,255;--color-bg-ac-bright:0,163,247;--color-bg-ac:0,164,255;--color-bg-ac-1:0,142,191;--color-bg-ac-2:250,110,132;--color-bg-selection:179,212,252;--color-txt-ac:0,164,255;--color-txt-ac-1:0,142,191;--color-txt-ac-2:250,110,132;--color-txt-gray:70,71,98;--color-txt-gray-dark:53,53,63;--color-bg-orange:255,59,0;--color-txt-orange:255,72,0;--color-star-yellow:255,174,0;--color-shadow-base:2,18,24;--color-shadow-var:32,35,42;--text-on-bg-shadow-color:255,255,255;--color-bad:244,26,77;--color-nrml:0,0,0;--color-good:7,108,52;--color-yellow:255,238,0}:root,:root[theme=black]{--voice-message-fillStyle:81,129,184}:root[theme=black]{--background-hidden-layer:10,12,23;--background-total-theme:18,22,33;--background-secondary-theme:24,36,52;--background-main:14,28,43;--background-main-contrast:240,242,245;--color-medium-theme:99,100,117;--neutral-grad-0:16,16,17;--neutral-grad-1:34,34,37;--neutral-grad-2:59,59,71;--neutral-grad-3:77,78,92;--neutral-grad-4:85,87,112;--text-color:178,171,172;--text-on-main-bg-color:85,87,112;--text-on-bg-ac-color:255,255,255;--color-bg-ac-bright:0,90,200;--color-bg-ac:0,80,190;--color-bg-ac-1:0,142,191;--color-bg-ac-2:250,110,132;--color-bg-selection:179,212,252;--color-txt-ac:0,164,255;--color-txt-ac-1:0,142,191;--color-txt-ac-2:250,110,132;--color-txt-gray:103,105,128;--color-txt-gray-dark:113,113,134;--color-bg-orange:255,72,0;--text-txt-orange:255,72,0;--color-shadow-base:12,14,33;--color-shadow-var:18,18,26;--text-on-bg-shadow-color:214,219,230;--color-bad:244,26,77;--color-nrml:0,0,0;--color-good:7,108,52;--color-yellow:255,238,0}html{font-size:1em;line-height:1.4;position:relative;overflow-y:hidden;overflow-x:hidden;background:rgb(var(--background-total-theme))}body,html{min-height:100%}body{height:100%}*{box-sizing:border-box}a{color:inherit}::-moz-selection{background:#b3d4fc;text-shadow:none}::selection{background:#b3d4fc;text-shadow:none}hr{display:block;height:1px;border:0;border-top:1px solid #ccc;margin:1em 0;padding:0}audio,canvas,iframe,img,svg,video{vertical-align:middle}fieldset{border:0;margin:0;padding:0}textarea{resize:vertical}.browserupgrade{margin:.2em 0;background:#ccc;color:#000;padding:.2em 0}.hidden{display:none!important}.sr-only{border:0;clip:rect(0,0,0,0);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;white-space:nowrap;width:1px}.sr-only.focusable:active,.sr-only.focusable:focus{clip:auto;height:auto;margin:0;overflow:visible;position:static;white-space:inherit;width:auto}.invisible{visibility:hidden}.clearfix:after,.clearfix:before{content:\" \";display:table}.clearfix:after{clear:both}@media print{*,:after,:before{background:transparent!important;color:#000!important;box-shadow:none!important;text-shadow:none!important}a,a:visited{text-decoration:underline}a[href]:after{content:\" (\" attr(href) \")\"}abbr[title]:after{content:\" (\" attr(title) \")\"}a[href^=\"#\"]:after,a[href^=\"javascript:\"]:after{content:\"\"}pre{white-space:pre-wrap!important}blockquote,pre{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}img,tr{page-break-inside:avoid}h2,h3,p{orphans:3;widows:3}h2,h3{page-break-after:avoid}}", ""]);
+exports.push([module.i, "/*! HTML5 Boilerplate v7.3.0 | MIT License | https://html5boilerplate.com/ */:root{--app-margin-top-default:0px;--app-margin-top:max(env(safe-area-inset-top),var(--app-margin-top-default));--safe-area-inset-top:0px;--safe-area-inset-right:0px;--safe-area-inset-bottom:0px;--safe-area-inset-left:0px}@supports (padding-top:constant(safe-area-inset-top)){:root{--safe-area-inset-top:constant(safe-area-inset-top,0);--safe-area-inset-right:constant(safe-area-inset-right,0);--safe-area-inset-bottom:constant(safe-area-inset-bottom,0);--safe-area-inset-left:constant(safe-area-inset-left,0)}}@supports (padding-top:env(safe-area-inset-top)){:root{--safe-area-inset-top:env(safe-area-inset-top,0);--safe-area-inset-right:env(safe-area-inset-right,0);--safe-area-inset-bottom:env(safe-area-inset-bottom,0);--safe-area-inset-left:env(safe-area-inset-left,0)}}:root{--background-hidden-layer:255,255,255;--background-total-theme:255,255,255;--background-secondary-theme:250,250,250;--background-main:240,242,245;--background-main-contrast:10,12,23;--color-medium-theme:199,200,217;--neutral-grad-0:235,235,240;--neutral-grad-1:227,228,235;--neutral-grad-2:142,144,166;--neutral-grad-3:85,87,112;--neutral-grad-4:64,65,82;--text-color:10,12,23;--text-on-main-bg-color:85,87,112;--text-on-bg-ac-color:255,255,255;--color-bg-ac-bright:0,163,247;--color-bg-ac:0,164,255;--color-bg-ac-1:0,142,191;--color-bg-ac-2:250,110,132;--color-bg-selection:179,212,252;--color-txt-ac:0,164,255;--color-txt-ac-1:0,142,191;--color-txt-ac-2:250,110,132;--color-txt-gray:70,71,98;--color-txt-gray-dark:53,53,63;--color-bg-orange:255,59,0;--color-txt-orange:255,72,0;--color-star-yellow:255,174,0;--color-shadow-base:2,18,24;--color-shadow-var:32,35,42;--text-on-bg-shadow-color:255,255,255;--color-bad:244,26,77;--color-nrml:0,0,0;--color-good:7,108,52;--color-yellow:255,238,0}:root,:root[theme=black]{--voice-message-fillStyle:81,129,184}:root[theme=black]{--background-hidden-layer:10,12,23;--background-total-theme:18,22,33;--background-secondary-theme:24,36,52;--background-main:14,28,43;--background-main-contrast:240,242,245;--color-medium-theme:99,100,117;--neutral-grad-0:16,16,17;--neutral-grad-1:34,34,37;--neutral-grad-2:59,59,71;--neutral-grad-3:77,78,92;--neutral-grad-4:85,87,112;--text-color:178,171,172;--text-on-main-bg-color:85,87,112;--text-on-bg-ac-color:255,255,255;--color-bg-ac-bright:0,90,200;--color-bg-ac:0,80,190;--color-bg-ac-1:0,142,191;--color-bg-ac-2:250,110,132;--color-bg-selection:179,212,252;--color-txt-ac:0,164,255;--color-txt-ac-1:0,142,191;--color-txt-ac-2:250,110,132;--color-txt-gray:103,105,128;--color-txt-gray-dark:113,113,134;--color-bg-orange:255,72,0;--text-txt-orange:255,72,0;--color-shadow-base:12,14,33;--color-shadow-var:18,18,26;--text-on-bg-shadow-color:214,219,230;--color-bad:244,26,77;--color-nrml:0,0,0;--color-good:7,108,52;--color-yellow:255,238,0}html{font-size:1em;line-height:1.4;position:relative;overflow-y:hidden;overflow-x:hidden;background:rgb(var(--background-total-theme))}body,html{min-height:100%}body{height:100%}*{box-sizing:border-box}a{color:inherit}::-moz-selection{background:#b3d4fc;text-shadow:none}::selection{background:#b3d4fc;text-shadow:none}hr{display:block;height:1px;border:0;border-top:1px solid #ccc;margin:1em 0;padding:0}audio,canvas,iframe,img,svg,video{vertical-align:middle}fieldset{border:0;margin:0;padding:0}textarea{resize:vertical}.browserupgrade{margin:.2em 0;background:#ccc;color:#000;padding:.2em 0}.hidden{display:none!important}.sr-only{border:0;clip:rect(0,0,0,0);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;white-space:nowrap;width:1px}.sr-only.focusable:active,.sr-only.focusable:focus{clip:auto;height:auto;margin:0;overflow:visible;position:static;white-space:inherit;width:auto}.invisible{visibility:hidden}.clearfix:after,.clearfix:before{content:\" \";display:table}.clearfix:after{clear:both}@media print{*,:after,:before{background:transparent!important;color:#000!important;box-shadow:none!important;text-shadow:none!important}a,a:visited{text-decoration:underline}a[href]:after{content:\" (\" attr(href) \")\"}abbr[title]:after{content:\" (\" attr(title) \")\"}a[href^=\"#\"]:after,a[href^=\"javascript:\"]:after{content:\"\"}pre{white-space:pre-wrap!important}blockquote,pre{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}img,tr{page-break-inside:avoid}h2,h3,p{orphans:3;widows:3}h2,h3{page-break-after:avoid}}", ""]);
 // Exports
 module.exports = exports;
 
@@ -58407,7 +58657,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"3c23d37e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/contacts/preview/index.vue?vue&type=template&id=951b8314&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/contacts/preview/index.vue?vue&type=template&id=951b8314&scoped=true&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"contacts-preview"},[_c('div',{staticClass:"previewWrapper",style:(_vm.isUser)},[_c('div',{staticClass:"iconWrapper"},[_c('userpic',{attrs:{"userinfo":_vm.contact,"mode":'Contacts'}})],1),_c('div',{staticClass:"infoWrapper"},[_c('div',{staticClass:"summaryLine"},[_c('div',{staticClass:"caption"},[_c('span',[_vm._v(_vm._s(_vm.contact.name))])])])])])])}
 var staticRenderFns = []
 
@@ -58972,7 +59222,7 @@ module.exports.__inject__ = function (shadowRoot) {
 /***/ "96ee":
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"caption\":{\"create\":\"Create\",\"addPublicChatName\":\"Add Public Chat Name\",\"addGroupNamePlaceHolder\":\"Add Group Name\",\"createPublicChat\":\"Create public chat\",\"chatTopic\":\"Topic renamed\",\"publicRoomTitle\":\"Public Room Preview\",\"asModerator\":\"as moderator\",\"marked\":\"marked\",\"unmarked\":\"unmarked\",\"removeBan\":\"Remove Ban\",\"cancelModeration\":\"Remove moderation\",\"uploadFiles\":\"上传文件\",\"header\":\"头\",\"dragAndDropAFile\":\"拖放文件\",\"chatInvite\":\"你被邀请与之聊天：\",\"cantJoin\":\"您不能加入与以下人员的聊天：\",\"chatInviteDecline\":\"你可以加入聊天或拒绝邀请\",\"creatorLeft\":\"因为创建者离开了房间\",\"encrypted\":\"加密的\",\"noImages\":\"此聊天中还没有图片\",\"noFiles\":\"There are no files in this chat yet\",\"inviteUser\":\"邀请用户\",\"invite\":\"邀请\",\"add\":\"添加\",\"mute\":\"静音\",\"unmute\":\"取消静音\",\"leave\":\"离开\",\"Info\":\"信息\",\"new\":\"新\",\"tying\":\"打字\",\"accNotFound\":\"您的注册正在进行中，请等待...\",\"emptyList\":\"列表为空（已过滤或只是空）\",\"welcome\":\"欢迎来到Pocketnet聊天\",\"startNewChat\":\"开始一个新的聊天\",\"chats\":\"Chats\",\"shareWith\":\"与人分享\",\"newChat\":\"新聊天\",\"moveToChat\":\"移动到聊天\",\"queryNoResults\":\"查询报告没有结果\",\"needMoreCharacters\":\"需要更多的字符来获得结果\",\"createGroup\":\"创建群组\",\"unabletoDecrypt\":\"* 无法解密\",\"messageDeleted\":\"信息已删除\",\"sentImage\":\"已发送的图片\",\"sentVoiceMessage\":\"发了一条语音信息\",\"invitationToChat\":\"邀请聊天\",\"invitationToRoom\":\"Invitation to room\",\"leftChat\":\"离开聊天\",\"joined\":\"加入\",\"chatRenamed\":\"聊天记录重命名为\",\"recentComment\":\"最近的评论：\",\"share\":\"SHARE\",\"followers\":\"Followers:\",\"reputation\":\"声誉:\",\"following\":\"关注：\",\"theme\":\"主题:\",\"contacts\":\"联系人\",\"phoneContacts\":\"电话联系人\",\"chooseInviteMedia\":\"请选择你的邀请方式：\",\"admin\":\"管理员\",\"moderator\":\"版主\",\"videocall\":\"视频通话\",\"call\":\"呼叫\",\"leaveAndDelete\":\"离开和删除\",\"donate\":\"捐献\",\"makeModerator\":\"做版主\",\"ban\":\"禁止\",\"kick\":\"踢\",\"members\":\"会员\",\"media\":\"媒体\",\"files\":\"文件\",\"contactsList\":\"联系人列表\",\"send\":\"发送\",\"pageCaption\":\"页面标题\",\"caption\":\"标题\",\"text\":\"文本\",\"placeholder\":\"占位符\",\"sendTransactionTo\":\"发送交易到\",\"toBePaidByReceiver\":\"由收件人支付\",\"toBePaidBySender\":\"将由发送方支付\",\"source\":\"来源\",\"amount\":\"金额\",\"receiver\":\"收件人\",\"message\":\"消息\",\"includeFeesInAmount\":\"在金额中包括费用\",\"transactionFees\":\"交易费用\",\"totalAmount\":\"总金额\",\"balanceTooLow\":\"余额太低\",\"transactionError\":\"Error, can't make the transaction\",\"calculateFees\":\"计算费用\",\"startChatWith\":\"开始与之聊天\",\"searchResult\":\"搜索结果\",\"joinInTheChat\":\"加入到聊天中\",\"invested\":\"被邀请\",\"inTheChat\":\"在聊天中\",\"banned\":\"被禁止的\",\"andRoom\":\"和室\",\"left\":\"左边\",\"theChat\":\" 聊天\",\"made\":\"制造\",\"aModerator\":\"一个版主\",\"editedChatNameTo\":\"将聊天名称编辑为\",\"somebody\":\"某人\",\"sent\":\"已发送\",\"PKOINto\":\" PKOIN to \",\"response\":\"回应\",\"messagefrom\":\"转发的信息\",\"edited\":\"已编辑\",\"settings\":\"设置\",\"unauthorized\":\"未经授权\",\"search\":\"搜索\",\"replyOnMessage\":\"在信息中回复\",\"editMessage\":\"编辑信息\",\"inviteFriend\":\"邀请朋友\",\"emptyContactList\":\"联系人列表是空的\",\"joinApp\":\"加入口袋网\",\"hasInvitedToJoin\":\"已邀请您加入口袋网\",\"contactsempty\":\"您还没有联系人，请在搜索中找到他们\",\"sendmessage\":\"Send message\"},\"input\":{\"patientEmailPlaceholder\":\"电子邮件\",\"refillNamePlaceholder\":\"补货名称\"},\"message\":{},\"button\":{\"starChatButton\":\"开始聊天\",\"decline\":\"拒绝\",\"declineandignore\":\"忽略用户\",\"join\":\"加入\",\"ok\":\"好的\",\"copy\":\"复制\",\"forward\":\"转发\",\"delete\":\"删除\",\"reply\":\"回复\",\"save\":\"Save\",\"share\":\"分享\",\"download\":\"下载\",\"downloaded\":\"已下载\",\"goToPocketnetProfile\":\"转到Pocketnet配置文件\",\"sendFile\":\"发送文件\",\"takePhotoOrVideo\":\"发送图像\",\"sendCoins\":\"发送硬币\",\"edit\":\"编辑\",\"block\":\"阻止\",\"unblock\":\"解除封锁\",\"blockUser\":\"阻止用户\"},\"yes\":\"是的\",\"cancel\":\"取消\",\"teamMessages\":{\"1-title\":\"欢迎来到巴斯蒂昂私人聊天室!\",\"1-list1\":\"与你的手机号码无关的私人信使\",\"1-list2\":\"默认对每一次1对1对话进行端对端加密\",\"1-list3\":\"通过聊天发送或接收的所有图像都是加密存储的\",\"1-list4\":\"信息的历史记录只保存7天\",\"2-title\":\"一个巨大的公告! 口袋网的应用程序现在被称为Bastyon!\",\"2-message1\":\"该域名将被转移到Bastyon.com。我们最近发布了以下重大更新\",\"2-list1\":\"不与你的电话号码相连的私人加密信使\",\"2-list2\":\"能够将PKOIN捐赠给博主\",\"2-list3\":\"视频和实时流媒体\",\"2-message2\":\"现在就邀请你的朋友，成为去中心化的互联网大未来的一部分吧\",\"2-button\":\"邀请朋友\"},\"settings_pin\":\"Pin chat window\",\"checked\":\"Yes\",\"unchecked\":\"No\",\"settings_read\":\"Send read receipts\",\"messagewasburn\":\"This message remains only in the memory of your device\",\"messagewillburn\":\"The message will be deleted soon\",\"micaccessbrowser\":\"Access to the microphone is restricted, please check your browser settings.\",\"micaccesscommonproblem\":\"Sorry, for some reason it is not possible to record voice messages on the device\",\"micaccesscordova\":\"Access to the microphone is restricted, please check your device settings.\",\"micdevicenotfound\":\"Audio recording device not found\"}");
+module.exports = JSON.parse("{\"caption\":{\"create\":\"Create\",\"addPublicChatName\":\"Add Public Chat Name\",\"addGroupNamePlaceHolder\":\"Add Group Name\",\"createPublicChat\":\"Create public chat\",\"chatTopic\":\"Topic renamed\",\"publicRoomTitle\":\"Public Room Preview\",\"asModerator\":\"as moderator\",\"marked\":\"marked\",\"unmarked\":\"unmarked\",\"removeBan\":\"Remove Ban\",\"cancelModeration\":\"Remove moderation\",\"uploadFiles\":\"上传文件\",\"header\":\"头\",\"dragAndDropAFile\":\"拖放文件\",\"chatInvite\":\"你被邀请与之聊天：\",\"cantJoin\":\"您不能加入与以下人员的聊天：\",\"chatInviteDecline\":\"你可以加入聊天或拒绝邀请\",\"creatorLeft\":\"因为创建者离开了房间\",\"encrypted\":\"加密的\",\"noImages\":\"此聊天中还没有图片\",\"noFiles\":\"There are no files in this chat yet\",\"inviteUser\":\"邀请用户\",\"invite\":\"邀请\",\"add\":\"添加\",\"mute\":\"静音\",\"unmute\":\"取消静音\",\"leave\":\"离开\",\"Info\":\"信息\",\"new\":\"新\",\"tying\":\"打字\",\"accNotFound\":\"您的注册正在进行中，请等待...\",\"emptyList\":\"列表为空（已过滤或只是空）\",\"welcome\":\"欢迎来到Pocketnet聊天\",\"startNewChat\":\"开始一个新的聊天\",\"chats\":\"Chats\",\"shareWith\":\"与人分享\",\"newChat\":\"新聊天\",\"moveToChat\":\"移动到聊天\",\"queryNoResults\":\"查询报告没有结果\",\"needMoreCharacters\":\"需要更多的字符来获得结果\",\"createGroup\":\"创建群组\",\"unabletoDecrypt\":\"* 无法解密\",\"messageDeleted\":\"信息已删除\",\"sentImage\":\"已发送的图片\",\"sentVoiceMessage\":\"发了一条语音信息\",\"invitationToChat\":\"邀请聊天\",\"invitationToRoom\":\"Invitation to room\",\"leftChat\":\"离开聊天\",\"joined\":\"加入\",\"chatRenamed\":\"聊天记录重命名为\",\"recentComment\":\"最近的评论：\",\"share\":\"SHARE\",\"followers\":\"Followers:\",\"reputation\":\"声誉:\",\"following\":\"关注：\",\"theme\":\"主题:\",\"contacts\":\"联系人\",\"phoneContacts\":\"电话联系人\",\"chooseInviteMedia\":\"请选择你的邀请方式：\",\"admin\":\"管理员\",\"moderator\":\"版主\",\"videocall\":\"视频通话\",\"call\":\"呼叫\",\"leaveAndDelete\":\"离开和删除\",\"donate\":\"捐献\",\"makeModerator\":\"做版主\",\"ban\":\"禁止\",\"kick\":\"踢\",\"members\":\"会员\",\"media\":\"媒体\",\"files\":\"文件\",\"contactsList\":\"联系人列表\",\"send\":\"发送\",\"pageCaption\":\"页面标题\",\"caption\":\"标题\",\"text\":\"文本\",\"placeholder\":\"占位符\",\"sendTransactionTo\":\"发送交易到\",\"toBePaidByReceiver\":\"由收件人支付\",\"toBePaidBySender\":\"将由发送方支付\",\"source\":\"来源\",\"amount\":\"金额\",\"receiver\":\"收件人\",\"message\":\"消息\",\"includeFeesInAmount\":\"在金额中包括费用\",\"transactionFees\":\"交易费用\",\"totalAmount\":\"总金额\",\"balanceTooLow\":\"余额太低\",\"transactionError\":\"Error, can't make the transaction\",\"calculateFees\":\"计算费用\",\"startChatWith\":\"开始与之聊天\",\"searchResult\":\"搜索结果\",\"joinInTheChat\":\"加入到聊天中\",\"invested\":\"被邀请\",\"inTheChat\":\"在聊天中\",\"banned\":\"被禁止的\",\"andRoom\":\"和室\",\"left\":\"左边\",\"theChat\":\" 聊天\",\"made\":\"制造\",\"aModerator\":\"一个版主\",\"editedChatNameTo\":\"将聊天名称编辑为\",\"somebody\":\"某人\",\"sent\":\"已发送\",\"PKOINto\":\" PKOIN to \",\"response\":\"回应\",\"messagefrom\":\"轉發的消息來自\",\"edited\":\"已编辑\",\"settings\":\"设置\",\"unauthorized\":\"未经授权\",\"search\":\"搜索\",\"replyOnMessage\":\"在信息中回复\",\"editMessage\":\"编辑信息\",\"inviteFriend\":\"邀请朋友\",\"emptyContactList\":\"联系人列表是空的\",\"joinApp\":\"加入口袋网\",\"hasInvitedToJoin\":\"已邀请您加入口袋网\",\"contactsempty\":\"您还没有联系人，请在搜索中找到他们\",\"sendmessage\":\"Send message\"},\"input\":{\"patientEmailPlaceholder\":\"电子邮件\",\"refillNamePlaceholder\":\"补货名称\"},\"message\":{},\"button\":{\"starChatButton\":\"开始聊天\",\"decline\":\"拒绝\",\"declineandignore\":\"忽略用户\",\"join\":\"加入\",\"ok\":\"好的\",\"copy\":\"复制\",\"forward\":\"转发\",\"delete\":\"删除\",\"reply\":\"回复\",\"save\":\"Save\",\"share\":\"分享\",\"download\":\"下载\",\"downloaded\":\"已下载\",\"goToPocketnetProfile\":\"转到Pocketnet配置文件\",\"sendFile\":\"发送文件\",\"takePhotoOrVideo\":\"发送图像\",\"sendCoins\":\"发送硬币\",\"edit\":\"编辑\",\"select\":\"選擇\",\"block\":\"阻止\",\"unblock\":\"解除封锁\",\"blockUser\":\"阻止用户\"},\"yes\":\"是的\",\"cancel\":\"取消\",\"teamMessages\":{\"1-title\":\"欢迎来到巴斯蒂昂私人聊天室!\",\"1-list1\":\"与你的手机号码无关的私人信使\",\"1-list2\":\"默认对每一次1对1对话进行端对端加密\",\"1-list3\":\"通过聊天发送或接收的所有图像都是加密存储的\",\"1-list4\":\"信息的历史记录只保存7天\",\"2-title\":\"一个巨大的公告! 口袋网的应用程序现在被称为Bastyon!\",\"2-message1\":\"该域名将被转移到Bastyon.com。我们最近发布了以下重大更新\",\"2-list1\":\"不与你的电话号码相连的私人加密信使\",\"2-list2\":\"能够将PKOIN捐赠给博主\",\"2-list3\":\"视频和实时流媒体\",\"2-message2\":\"现在就邀请你的朋友，成为去中心化的互联网大未来的一部分吧\",\"2-button\":\"邀请朋友\"},\"settings_pin\":\"Pin chat window\",\"checked\":\"Yes\",\"unchecked\":\"No\",\"settings_read\":\"Send read receipts\",\"messagewasburn\":\"This message remains only in the memory of your device\",\"messagewillburn\":\"The message will be deleted soon\",\"micaccessbrowser\":\"Access to the microphone is restricted, please check your browser settings.\",\"micaccesscommonproblem\":\"Sorry, for some reason it is not possible to record voice messages on the device\",\"micaccesscordova\":\"Access to the microphone is restricted, please check your device settings.\",\"micdevicenotfound\":\"Audio recording device not found\"}");
 
 /***/ }),
 
@@ -61956,6 +62206,20 @@ MatrixClient.prototype.cancelPendingEvent = function (event) {
 MatrixClient.prototype.setRoomName = function (roomId, name, callback) {
   return this.sendStateEvent(roomId, "m.room.name", {
     name: name
+  }, undefined, callback);
+};
+/**
+ * @param {string} roomId
+ * @param {string} topic
+ * @param {module:client.callback} callback Optional.
+ * @return {Promise} Resolves: TODO
+ * @return {module:http-api.MatrixError} Rejects: with an error response.
+ */
+
+
+MatrixClient.prototype.setRoomAvatarUrl = function (roomId, url, callback) {
+  return this.sendStateEvent(roomId, "m.room.avatar", {
+    avatarUrl: url
   }, undefined, callback);
 };
 /**
@@ -65523,22 +65787,22 @@ __webpack_require__.r(__webpack_exports__);
 // ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"3c23d37e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/views/chats.vue?vue&type=template&id=62a1ab6a&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/views/chats.vue?vue&type=template&id=62a1ab6a&scoped=true&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"page chats",class:{pocketnet: _vm.pocketnet, mobile: _vm.mobile, minimized: _vm.minimized, active: _vm.active, newChat: _vm.newChat}},[_c('topheader',{staticClass:"topheader",attrs:{"share":_vm.share},on:{"newchat":_vm.newchat}}),_c('maincontent',{ref:"maincontent",attrs:{"rbackexp":true},scopedSlots:_vm._u([{key:"content",fn:function(){return [_c('list',{attrs:{"share":_vm.share},on:{"scrolltop":_vm.scrolltop}}),(_vm.newChat && !_vm.hiddenInParent)?_c('modal',{on:{"close":_vm.closeNewChat},scopedSlots:_vm._u([{key:"header",fn:function(){return [_vm._v(_vm._s(_vm.$t("caption.newChat")))]},proxy:true},{key:"body",fn:function(){return [_c('chatcreate',{on:{"completed":_vm.chatcreated}})]},proxy:true},{key:"footer",fn:function(){return undefined},proxy:true}],null,false,1284178828)}):_vm._e()]},proxy:true}])})],1)}
 var staticRenderFns = []
 
 
 // CONCATENATED MODULE: ./src/views/chats.vue?vue&type=template&id=62a1ab6a&scoped=true&
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"3c23d37e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/chats/list/index.vue?vue&type=template&id=a32fb08c&scoped=true&
-var listvue_type_template_id_a32fb08c_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"chats-list",class:{'bin' : _vm.pocketnet, 'bout' : !_vm.pocketnet, minimized: _vm.minimized, fix : _vm.pocketnet, active: _vm.active, empty: _vm.empty}},[(!_vm.unauthorized)?_c('div',[(!_vm.minimized || _vm.active)?_c('div',{staticClass:"work searchWrapperEA"},[_c('search',{attrs:{"minimize":_vm.minimized},on:{"search":_vm.search}})],1):_vm._e(),(!_vm.searchText && this.chats.length <= 2 && _vm.chatsready == true)?_c('teamroom',{on:{"click":_vm.openTeamRoom}}):_vm._e(),(_vm.chatsready !== true)?_c('div',{staticClass:"listChatLoading"},[_c('dummypreviews')],1):_c('div',{staticClass:"Swipes"},[_c('transition',{attrs:{"name":"fade"}},[(_vm.showchatslist)?_c('div',{staticClass:"desktopList"},[(_vm.filteredchats.length || !_vm.searchText)?_c('div',{staticClass:"chatswrapper"},[_c('RecycleScroller',{staticClass:"scroller",attrs:{"page-mode":"","items":_vm.filteredchats,"item-size":_vm.pocketnet ? 60 : 70,"key-field":"roomId","buffer":_vm.pocketnet ? 400 : 700},scopedSlots:_vm._u([{key:"default",fn:function(ref){
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/chats/list/index.vue?vue&type=template&id=57da332f&scoped=true&
+var listvue_type_template_id_57da332f_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"chats-list",class:{'bin' : _vm.pocketnet, 'bout' : !_vm.pocketnet, minimized: _vm.minimized, fix : _vm.pocketnet, active: _vm.active, empty: _vm.empty}},[(!_vm.unauthorized)?_c('div',[(!_vm.minimized || _vm.active)?_c('div',{staticClass:"work searchWrapperEA"},[_c('search',{attrs:{"minimize":_vm.minimized},on:{"search":_vm.search}})],1):_vm._e(),(!_vm.searchText && this.chats.length <= 2 && _vm.chatsready == true)?_c('teamroom',{on:{"click":_vm.openTeamRoom}}):_vm._e(),(_vm.chatsready !== true)?_c('div',{staticClass:"listChatLoading"},[_c('dummypreviews')],1):_c('div',{staticClass:"Swipes"},[_c('transition',{attrs:{"name":"fade"}},[(_vm.showchatslist)?_c('div',{staticClass:"desktopList"},[(_vm.filteredchats.length || !_vm.searchText)?_c('div',{staticClass:"chatswrapper"},[_c('RecycleScroller',{staticClass:"scroller",attrs:{"page-mode":"","items":_vm.filteredchats,"item-size":_vm.pocketnet ? 60 : 70,"key-field":"roomId","buffer":_vm.pocketnet ? 400 : 700},scopedSlots:_vm._u([{key:"default",fn:function(ref){
 var item = ref.item;
 var active = ref.active;
 return [(item)?_c('div',{ref:"content",staticClass:"card-content",on:{"click":function (e){ return _vm.itemClick(item); }}},[(active)?_c('preview',{attrs:{"chat":item}}):_vm._e()],1):_vm._e()]}}],null,false,127139565)})],1):_c('div',{staticClass:"work"},[_c('div',{staticClass:"chatsearchingempty"},[_c('span',[_vm._v(_vm._s(_vm.$t("caption.chatsearchingempty")))])])])]):_vm._e()])],1)],1):_c('div',{staticClass:"dmdv"})])}
-var listvue_type_template_id_a32fb08c_scoped_true_staticRenderFns = []
+var listvue_type_template_id_57da332f_scoped_true_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/chats/list/index.vue?vue&type=template&id=a32fb08c&scoped=true&
+// CONCATENATED MODULE: ./src/components/chats/list/index.vue?vue&type=template&id=57da332f&scoped=true&
 
 // EXTERNAL MODULE: ./node_modules/vuex/dist/vuex.esm.js
 var vuex_esm = __webpack_require__("2f62");
@@ -65549,7 +65813,7 @@ var dummypreviews = __webpack_require__("a54c");
 // EXTERNAL MODULE: ./src/components/chats/preview/index.vue + 9 modules
 var preview = __webpack_require__("087d");
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"3c23d37e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/teamroom/index.vue?vue&type=template&id=9b340a7a&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/teamroom/index.vue?vue&type=template&id=9b340a7a&scoped=true&
 var teamroomvue_type_template_id_9b340a7a_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:{'bin' : _vm.pocketnet, 'bout' : !_vm.pocketnet, minimized: _vm.minimized, fix : _vm.pocketnet, active: _vm.active, mobile: _vm.mobile},attrs:{"id":"teamroom"}},[_c('div',{staticClass:"teamChatWrapper",on:{"click":_vm.click}},[_c('div',{staticClass:"iconWrapper"},[_vm._m(0),(_vm.teamNotifications > 0)?_c('div',{staticClass:"unseen"},[_vm._v(" "+_vm._s(_vm.teamNotifications))]):_vm._e()]),_c('div',{staticClass:"infoWrapper"},[_vm._m(1),_c('div',{staticClass:"previewMessage"},[(_vm.pocketteammessages && _vm.pocketteammessages.length > 0)?_c('span',[_vm._v(" "+_vm._s(_vm.pocketteammessages[_vm.pocketteammessages.length - 1].previewText)+" ")]):_vm._e()])])])])}
 var teamroomvue_type_template_id_9b340a7a_scoped_true_staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"logo"},[_c('img',{attrs:{"src":"https://pocketnet.app/img/logo20.svg"}})])},function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"infoName"},[_c('span',[_vm._v("Bastyon")])])}]
 
@@ -65680,7 +65944,7 @@ var functions = __webpack_require__("3139");
     },
     ...Object(vuex_esm["c" /* mapState */])(['minimized', 'active', 'pocketnet', 'chatsready', 'prechats', 'chats', 'unauthorized', 'share', 'pocketteammessages', 'readedteammessages', 'deletedrooms', 'hideOptimization', 'wasunhidden']),
     showchatslist: function () {
-      return !this.hideOptimization || this.wasunhidden;
+      return !this.hideOptimization; // || this.wasunhidden
     },
     rooms: function () {
       return this.core.mtrx.client.getRooms();
@@ -65942,8 +66206,10 @@ var functions = __webpack_require__("3139");
 
 function list_injectStyles (context) {
   
-  var style0 = __webpack_require__("772c")
+  var style0 = __webpack_require__("191a")
 if (style0.__inject__) style0.__inject__(context)
+var style1 = __webpack_require__("b551")
+if (style1.__inject__) style1.__inject__(context)
 
 }
 
@@ -65951,17 +66217,17 @@ if (style0.__inject__) style0.__inject__(context)
 
 var list_component = Object(componentNormalizer["a" /* default */])(
   chats_list_vue_type_script_lang_js_,
-  listvue_type_template_id_a32fb08c_scoped_true_render,
-  listvue_type_template_id_a32fb08c_scoped_true_staticRenderFns,
+  listvue_type_template_id_57da332f_scoped_true_render,
+  listvue_type_template_id_57da332f_scoped_true_staticRenderFns,
   false,
   list_injectStyles,
-  "a32fb08c",
+  "57da332f",
   null
   ,true
 )
 
 /* harmony default export */ var list = (list_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"3c23d37e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/chats/topheader/index.vue?vue&type=template&id=06594ccd&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/chats/topheader/index.vue?vue&type=template&id=06594ccd&scoped=true&
 var topheadervue_type_template_id_06594ccd_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{attrs:{"id":"chatsTopheader"}},[_c('topheader',{scopedSlots:_vm._u([{key:"left",fn:function(){return [(_vm.share)?_c('div',{staticClass:"iconbutton",on:{"click":_vm.cancelShare}},[_c('i',{staticClass:"fas fa-times"})]):_vm._e(),((!_vm.minimized || _vm.active) && _vm.pocketnet && !_vm.share)?_c('div',{staticClass:"iconbutton",on:{"click":_vm.minimizeall}},[_c('i',{staticClass:"fas fa-times"})]):_vm._e(),(!_vm.pocketnet && !_vm.share)?_c('div',{staticClass:"iconbutton",on:{"click":_vm.gotoapp}},[_c('i',{staticClass:"fas fa-angle-left"})]):_vm._e()]},proxy:true},{key:"leftadd",fn:function(){return undefined},proxy:true},{key:"info",fn:function(){return [(!_vm.share)?_c('span',[_vm._v(_vm._s(_vm.$t("caption.chats")))]):_vm._e(),(_vm.share)?_c('span',[_vm._v(_vm._s(_vm.$t("caption.shareWith")))]):_vm._e()]},proxy:true},{key:"rightadd",fn:function(){return [(!_vm.share && _vm.pocketnet)?_c('router-link',{attrs:{"to":"settings"}},[_c('div',{staticClass:"iconbuttonsmall"},[_c('i',{staticClass:"fas fa-cog"})])]):_vm._e()]},proxy:true},{key:"right",fn:function(){return [(!_vm.share && (!_vm.minimized || _vm.active))?_c('div',{staticClass:"iconbutton",on:{"click":_vm.newchat}},[_c('i',{staticClass:"fas fa-plus"})]):_c('div',[(_vm.window.cordova)?_c('div',{staticClass:"iconbutton",on:{"click":_vm.cordovashare}},[_c('i',{staticClass:"fas fa-share-alt"})]):_vm._e()])]},proxy:true}])})],1)}
 var topheadervue_type_template_id_06594ccd_scoped_true_staticRenderFns = []
 
@@ -66082,7 +66348,7 @@ var topheader_component = Object(componentNormalizer["a" /* default */])(
 )
 
 /* harmony default export */ var topheader = (topheader_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"3c23d37e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/chat/create/index.vue?vue&type=template&id=f0734632&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/chat/create/index.vue?vue&type=template&id=f0734632&scoped=true&
 var createvue_type_template_id_f0734632_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{attrs:{"id":"chatcreate"}},[_c('div',{staticClass:"selecttype"},[_c('div',{staticClass:"work"},[(!_vm.type)?_c('div',{staticClass:"types"},_vm._l((_vm.types),function(type){return _c('div',{key:type.id,staticClass:"type",on:{"click":function (e) { return _vm.selecttype(type.id); }}},[_c('div',{staticClass:"icon"},[_c('i',{class:type.icon})]),_c('div',[_c('span',[_vm._v(_vm._s(_vm.$t('type.' + type.id)))])])])}),0):_vm._e(),(_vm.type)?_c('div',{staticClass:"selectedtype"},[_c('div',{staticClass:"icon",on:{"click":_vm.unselecttype}},[_c('i',{staticClass:"fas fa-arrow-left"})]),_c('div',{staticClass:"label"},[_vm._v(" "+_vm._s(_vm.$t('typelabel.' + _vm.type.id))+" ")]),_c('div',{staticClass:"completewrapper"},[_c('button',{staticClass:"button small rounded",class:{orange : _vm.cancomplete, ghost : !_vm.cancomplete},on:{"click":function($event){return _vm.complete()}}},[_vm._v(" "+_vm._s(_vm.$t('caption.create'))+" "),_c('i',{class:_vm.type.icon}),_vm._v(" "),(_vm.selectedLength)?_c('span',[_vm._v(_vm._s(_vm.selectedLength))]):_vm._e()])])]):_vm._e()]),_c('div',{staticClass:"creationbody"},[(_vm.type)?_c('div',{staticClass:"groupsettigns"},[_c('div',{staticClass:"namebuttoncreate"},[_c('div',{staticClass:"groupNameInput"},[_c('label',[_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.groupName),expression:"groupName"}],attrs:{"type":"text","placeholder":_vm.type.id === 'privategroup'? this.$i18n.t('caption.addGroupNamePlaceHolder') : this.$i18n.t('caption.addPublicChatName')},domProps:{"value":(_vm.groupName)},on:{"input":function($event){if($event.target.composing){ return; }_vm.groupName=$event.target.value}}})])])])]):_vm._e(),(!_vm.type)?_c('div',{staticClass:"contactswrapper oneonone"},[_c('contacts',{attrs:{"mode":'Select'},on:{"select":_vm.selectoneuser}})],1):_vm._e(),(_vm.type)?_c('div',{staticClass:"contactswrapper"},[_c('contacts',{attrs:{"mode":'Selectmany'},on:{"selectedUsers":_vm.selectedUsers}})],1):_vm._e()])])])}
 var createvue_type_template_id_f0734632_scoped_true_staticRenderFns = []
 
@@ -66986,13 +67252,13 @@ var PcryptoRoom = /*#__PURE__*/function () {
       users = {};
     };
 
-    var lcachekey = 'pcrypto4_' + chat.roomId + '_';
-    var ecachekey = 'e_pcrypto4_';
+    var lcachekey = 'pcrypto5_' + chat.roomId + '_';
+    var ecachekey = 'e_pcrypto5_';
     var cache = {};
 
     self.preparedUsers = function (time) {
       return _.filter(getusersinfobytime(time), function (ui) {
-        return ui.keys && ui.keys.length == m;
+        return ui.keys && ui.keys.length >= m;
       });
     };
 
@@ -67009,7 +67275,9 @@ var PcryptoRoom = /*#__PURE__*/function () {
     self.canBeEncrypt = function (time) {
       var usersinfoArray = _.toArray(usersinfo);
 
-      if (pcrypto.user && pcrypto.user.private && pcrypto.user.private.length == 12 && users[pcrypto.user.userinfo.id] && pcrypto.core.mtrx.kit.tetatetchat(chat) && usersinfoArray.length > 1 && usersinfoArray.length < 5 && self.preparedUsers(time).length / usersinfoArray.length > 0.6) {
+      var publicChat = pcrypto.core.mtrx.kit.chatIsPublic(chat); // console.log('publicChat', time, publicChat, usersinfoArray.length, self.preparedUsers(time).length)
+
+      if (!publicChat && pcrypto.user && pcrypto.user.private && pcrypto.user.private.length == 12 && users[pcrypto.user.userinfo.id] && pcrypto.core.mtrx.kit.tetatetchat(chat) && usersinfoArray.length > 1 && usersinfoArray.length < 50 && self.preparedUsers(time).length / usersinfoArray.length > 0.6) {
         return true;
       }
 
@@ -67136,6 +67404,10 @@ var PcryptoRoom = /*#__PURE__*/function () {
 
     self.prepare = function () {
       getusershistory();
+      /*if(!pcrypto.core.mtrx.kit.tetatetchat(chat)){
+          m = 2
+      }*/
+
       return getusersinfo().then(r => {
         return self;
       });
@@ -67167,6 +67439,11 @@ var PcryptoRoom = /*#__PURE__*/function () {
       aeskeysls: function (time, block) {
         if (!time) time = 0;
         if (!block) block = pcrypto.currentblock.height;
+
+        if (!pcrypto.core.mtrx.kit.tetatetchat(chat)) {
+          block = 10;
+        }
+
         var k = period(time) + '-' + block;
         return ls.get(`${lcachekey + pcrypto.user.userinfo.id}-${k}`).then(keys => {
           const keysPrepared = convert.aeskeys.out(keys);
@@ -67198,15 +67475,6 @@ var PcryptoRoom = /*#__PURE__*/function () {
         if (!time) time = 0;
         if (!block) block = pcrypto.currentblock.height;
         return eaa.aeskeys(time, block);
-        var timep = period(time);
-        var k = timep + '-' + block;
-
-        if (cache[k]) {
-          return cache[k];
-        }
-
-        cache[k] = eaa.aeskeys(time, block);
-        return cache[k];
       }
     };
     var eaa = {
@@ -67350,6 +67618,8 @@ var PcryptoRoom = /*#__PURE__*/function () {
 
     self.decryptEvent = /*#__PURE__*/function () {
       var _ref7 = Object(C_inetpub2020_wwwroot_bastyon_chat_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"])(function* (event) {
+        if (event.content.hash) return self.decryptEventGroup(event);
+
         if (!pcrypto.user.userinfo) {
           throw new Error('userinfo');
         }
@@ -67456,8 +67726,10 @@ var PcryptoRoom = /*#__PURE__*/function () {
     self.encryptKey = /*#__PURE__*/function () {
       var _ref11 = Object(C_inetpub2020_wwwroot_bastyon_chat_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"])(function* (key) {
         var users = self.preparedUsers();
+        var block = pcrypto.currentblock.height;
+        if (!pcrypto.core.mtrx.kit.tetatetchat(chat)) block = 10;
         var encrypted = {
-          block: pcrypto.currentblock.height,
+          block: block,
           keys: {}
         };
 
@@ -67484,8 +67756,17 @@ var PcryptoRoom = /*#__PURE__*/function () {
           throw new Error('userinfo');
         }
 
-        var secrets = _application_functions__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"].deep(event, 'content.info.secrets.keys') || _application_functions__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"].deep(event, 'content.pbody.secrets.keys');
-        var block = _application_functions__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"].deep(event, 'content.info.secrets.block') || _application_functions__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"].deep(event, 'content.pbody.secrets.block');
+        var secrets = '';
+        var block = '';
+
+        if (event.type == 'm.room.encryption') {
+          secrets = event.content.keys;
+          block = event.content.block;
+        } else {
+          secrets = _application_functions__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"].deep(event, 'content.info.secrets.keys') || _application_functions__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"].deep(event, 'content.pbody.secrets.keys');
+          block = _application_functions__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"].deep(event, 'content.info.secrets.block') || _application_functions__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"].deep(event, 'content.pbody.secrets.block');
+        }
+
         if (!secrets) throw new Error('secrets');
         if (!block) throw new Error('block');
         var sender = _application_functions__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"].getmatrixid(event.sender);
@@ -67521,6 +67802,11 @@ var PcryptoRoom = /*#__PURE__*/function () {
     self.encryptEvent = /*#__PURE__*/function () {
       var _ref13 = Object(C_inetpub2020_wwwroot_bastyon_chat_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"])(function* (text) {
         var users = self.preparedUsers();
+
+        if (!pcrypto.core.mtrx.kit.tetatetchat(chat)) {
+          return self.encryptEventGroup(text);
+        }
+
         var encryptedEvent = {
           block: pcrypto.currentblock.height,
           msgtype: 'm.encrypted',
@@ -67544,12 +67830,161 @@ var PcryptoRoom = /*#__PURE__*/function () {
       };
     }();
 
+    var usershash = function () {
+      var users = self.preparedUsers();
+      var hash = _application_functions__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"].md5(_.filter(_.map(users, user => {
+        return user.id;
+      }), uid => {
+        return uid && uid != pcrypto.user.userinfo.id;
+      }).join('') + '_v4');
+      return hash;
+    };
+
+    self.sendCommonKey = function () {
+      return self.createMyCommonKey().then(result => {
+        //return Promise.reject("HI")
+        return pcrypto.core.mtrx.client.sendStateEvent(chat.roomId, "m.room.encryption", result.export, "pcrypto." + pcrypto.user.userinfo.id + "." + result.export.hash);
+      }).then(r => {
+        return self.getCommonKey();
+      }).catch(e => {
+        console.error(e);
+        return Promise.reject(e);
+      });
+    };
+
+    var getCommonKeyEvent = function (userid, _hash) {
+      var hash = _hash || usershash();
+
+      if (!userid) userid = pcrypto.user.userinfo.id;
+      var state_key = "pcrypto." + userid + '.' + hash;
+      var events = chat.currentState.getStateEvents("m.room.encryption");
+
+      var event = _.find(events, e => {
+        return e.event.state_key == state_key;
+      });
+
+      if (event) {
+        return event;
+      }
+    };
+
+    self.getCommonKey = function (userid, _hash) {
+      return _application_functions__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"].pretry(() => {
+        var e = getCommonKeyEvent(userid, _hash);
+        return e;
+      }, 50, 5000).then(() => {
+        var e = getCommonKeyEvent(userid, _hash);
+
+        if (!e) {
+          Promise.reject('m.room.encryption event not found');
+        }
+
+        return Promise.resolve(e.event);
+      });
+    };
+
+    self.getOrCreateCommonKey = function () {
+      var _e = null;
+      var ce = getCommonKeyEvent();
+      var promise = null;
+
+      if (ce) {
+        promise = Promise.resolve(ce.event);
+      } else {
+        promise = self.sendCommonKey();
+      }
+
+      return promise.then(event => {
+        _e = event;
+        return self.decryptKey(event);
+      }).then(key => {
+        return {
+          key,
+          hash: _e.content.hash,
+          block: _e.content.block
+        };
+      });
+    };
+
+    self.createMyCommonKey = function () {
+      var hash = usershash();
+      var result = {
+        private: {},
+        export: {}
+      };
+      return pcryptoFile.randomkey().then(key => {
+        result.private.secret = key;
+        return pcryptoFile.key(key);
+      }).then(key => {
+        result.private.key = key;
+        result.private.hash = hash;
+        result.export.hash = hash;
+        return self.encryptKey(result.private.secret);
+      }).then(encrypted => {
+        result.export.keys = encrypted.keys;
+        result.export.block = encrypted.block;
+        return result;
+      });
+    };
+
+    self.decryptEventGroup = function (event) {
+      if (!pcrypto.user.userinfo) {
+        throw new Error('userinfo');
+      }
+
+      if (event.decrypting) {
+        return event.decrypting;
+      }
+
+      var hash = event.content.hash;
+      var sender = _application_functions__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"].getmatrixid(event.sender);
+      var block = event.content.block;
+      var dpromise = self.getCommonKey(sender, hash).then(event => {
+        return self.decryptKey(event);
+      }).then(key => {
+        return pcryptoFile.decrypt(Buffer.from(event.content.body, 'hex'), key).then(decrypted => {
+          var dec = new TextDecoder();
+          var data = {
+            body: dec.decode(new Uint8Array(decrypted)),
+            msgtype: 'm.text'
+          };
+          return Promise.resolve(data);
+        });
+      }).finally(() => {
+        delete event.decrypting;
+      });
+      event.decrypting = dpromise;
+      return dpromise;
+    };
+
+    self.encryptEventGroup = /*#__PURE__*/function () {
+      var _ref14 = Object(C_inetpub2020_wwwroot_bastyon_chat_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"])(function* (text) {
+        var encryptedEvent = {
+          msgtype: 'm.encrypted',
+          body: {}
+        };
+        return self.getOrCreateCommonKey().then(info => {
+          encryptedEvent.block = info.block;
+          encryptedEvent.hash = info.hash;
+          let utf8Encode = new TextEncoder();
+          return pcryptoFile.encrypt(utf8Encode.encode(text), info.key).then(encrypted => {
+            encryptedEvent.body = Buffer.from(encrypted).toString("hex");
+            return Promise.resolve(encryptedEvent);
+          });
+        });
+      });
+
+      return function (_x21) {
+        return _ref14.apply(this, arguments);
+      };
+    }();
+
     var decrypt = /*#__PURE__*/function () {
-      var _ref14 = Object(C_inetpub2020_wwwroot_bastyon_chat_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"])(function* (keyData, _ref15) {
+      var _ref15 = Object(C_inetpub2020_wwwroot_bastyon_chat_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"])(function* (keyData, _ref16) {
         let {
           encrypted,
           nonce
-        } = _ref15;
+        } = _ref16;
         var key = yield miscreant__WEBPACK_IMPORTED_MODULE_5__["SIV"].importKey(keyData, "AES-SIV");
 
         var _encrypted = new Uint8Array(_application_functions__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"]._base64ToArrayBuffer(encrypted));
@@ -67561,13 +67996,13 @@ var PcryptoRoom = /*#__PURE__*/function () {
         return decrypted;
       });
 
-      return function decrypt(_x21, _x22) {
-        return _ref14.apply(this, arguments);
+      return function decrypt(_x22, _x23) {
+        return _ref15.apply(this, arguments);
       };
     }();
 
     var encrypt = /*#__PURE__*/function () {
-      var _ref16 = Object(C_inetpub2020_wwwroot_bastyon_chat_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"])(function* (text, keyData) {
+      var _ref17 = Object(C_inetpub2020_wwwroot_bastyon_chat_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"])(function* (text, keyData) {
         let key = yield miscreant__WEBPACK_IMPORTED_MODULE_5__["SIV"].importKey(keyData, "AES-SIV");
         let plaintext = new Uint8Array(new TextEncoder().encode(text));
         let nonce = new Uint8Array(32);
@@ -67580,8 +68015,8 @@ var PcryptoRoom = /*#__PURE__*/function () {
         return encrypted;
       });
 
-      return function encrypt(_x23, _x24) {
-        return _ref16.apply(this, arguments);
+      return function encrypt(_x24, _x25) {
+        return _ref17.apply(this, arguments);
       };
     }();
 
@@ -67631,11 +68066,7 @@ var PcryptoFile = function () {
       var array = new Uint32Array(24);
       var token = window.crypto.getRandomValues(array).toString('hex');
       resolve(token);
-      /*ncrypto.randomBytes(24, function(err, buffer) {
-          var token = buffer.toString('hex');
-              resolve(token)
-      });*/
-    }); //return cryptoRandomString({length: 24});
+    });
   };
 
   self.key = function (str) {
@@ -67678,8 +68109,7 @@ var PcryptoFile = function () {
     if (!strBytes || !secret) return Promise.reject('data');
     if (!p) p = {};
     p.charsetEnc = p.charsetEnc || 'utf8';
-    p.charsetDec = p.charsetDec || 'hex'; //var strBytes = aesjs.utils[p.charsetEnc].toBytes(str);
-
+    p.charsetDec = p.charsetDec || 'hex';
     return self.key(secret).then(key => {
       return crypto.subtle.encrypt({
         name: "AES-CBC",
@@ -67704,6 +68134,7 @@ var PcryptoFile = function () {
     }).then(function (decrypted) {
       return decrypted;
     }).catch(e => {
+      console.error(e);
       return Promise.reject(e);
     });
   };
@@ -67749,7 +68180,7 @@ var Pcrypto = function (core, p) {
     return pretry(() => {
       return core.user.private && core.user.private.length == 12;
     }).then( /*#__PURE__*/function () {
-      var _ref17 = Object(C_inetpub2020_wwwroot_bastyon_chat_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"])(function* (r) {
+      var _ref18 = Object(C_inetpub2020_wwwroot_bastyon_chat_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"])(function* (r) {
         if (self.rooms[chat.roomId]) {
           return self.rooms[chat.roomId].prepare();
         }
@@ -67762,8 +68193,8 @@ var Pcrypto = function (core, p) {
         return room.prepare();
       });
 
-      return function (_x25) {
-        return _ref17.apply(this, arguments);
+      return function (_x26) {
+        return _ref18.apply(this, arguments);
       };
     }());
   };
@@ -67818,6 +68249,20 @@ var Pcrypto = function (core, p) {
 
 /* harmony default export */ __webpack_exports__["a"] = (Pcrypto);
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__("b639").Buffer))
+
+/***/ }),
+
+/***/ "9dd7":
+/***/ (function(module, exports, __webpack_require__) {
+
+// Imports
+var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
+exports = ___CSS_LOADER_API_IMPORT___(false);
+// Module
+exports.push([module.i, ".actions[data-v-16157ecb]{padding-top:9em}.connect[data-v-16157ecb]{padding-top:2em}.connect[data-v-16157ecb] .previewWrapper{display:block;max-width:70%;margin:0 auto;padding:2em 0}.connect[data-v-16157ecb] .iconWrapper{margin:0 auto}.connect[data-v-16157ecb] .infoWrapper{padding:0}.connect .connectCaption[data-v-16157ecb]{max-width:70%;margin:0 auto}.connect .connectCaption span[data-v-16157ecb]{font-size:.8em}#userUnauthorized[data-v-16157ecb]{height:100%}#userUnauthorized.bin[data-v-16157ecb]{transition:.3s}#userUnauthorized.bin.minimized .wrapper[data-v-16157ecb]{top:60px;bottom:100px}#userUnauthorized.bin.minimized[data-v-16157ecb]:not(.active){width:44px}#userUnauthorized.bin.minimized:not(.active) .actions[data-v-16157ecb]{display:none}#userUnauthorized.bin.active .wrapper[data-v-16157ecb]{width:344px;transform:translateX(-300px)}.table[data-v-16157ecb]{height:100%}.table .cell[data-v-16157ecb]{vertical-align:middle}", ""]);
+// Exports
+module.exports = exports;
+
 
 /***/ }),
 
@@ -68707,20 +69152,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_517e1e1f_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("5a2d");
 /* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_517e1e1f_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_517e1e1f_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__);
 /* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_517e1e1f_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_517e1e1f_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-
-
-/***/ }),
-
-/***/ "9ea1":
-/***/ (function(module, exports, __webpack_require__) {
-
-// Imports
-var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
-exports = ___CSS_LOADER_API_IMPORT___(false);
-// Module
-exports.push([module.i, ".deletedMessage[data-v-20528478]{font-size:.8em;text-align:center;opacity:.6}.event[data-v-20528478]{opacity:0;transition:.3s}.event.readyToRender[data-v-20528478]{opacity:1}.event .loading[data-v-20528478]{width:100%;height:100%;text-align:center}.event .deletedMessage[data-v-20528478],.event .loading[data-v-20528478]{position:relative;left:0;top:0;padding:.5em}", ""]);
-// Exports
-module.exports = exports;
 
 
 /***/ }),
@@ -79847,6 +80278,18 @@ module.exports = function (argument) {
 
 /***/ }),
 
+/***/ "a071":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_icon_vue_vue_type_style_index_0_id_332740e2_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("40af");
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_icon_vue_vue_type_style_index_0_id_332740e2_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_icon_vue_vue_type_style_index_0_id_332740e2_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_icon_vue_vue_type_style_index_0_id_332740e2_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_icon_vue_vue_type_style_index_0_id_332740e2_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+
+
+/***/ }),
+
 /***/ "a099":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -81350,7 +81793,7 @@ module.exports = function (fromModel) {
 /***/ "a306":
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"caption\":{\"create\":\"Create\",\"addPublicChatName\":\"Add Public Chat Name\",\"addGroupNamePlaceHolder\":\"Add Group Name\",\"createPublicChat\":\"Create public chat\",\"publicRoomTitle\":\"Public Room Preview\",\"chatTopic\":\"Topic renamed\",\"asModerator\":\"as moderator\",\"marked\":\"marked\",\"unmarked\":\"unmarked\",\"removeBan\":\"Remove Ban\",\"cancelModeration\":\"Remove moderation\",\"uploadFiles\":\"Subir archivos\",\"header\":\"cabecera\",\"dragAndDropAFile\":\"Arrastrar y soltar archivo\",\"chatInvite\":\"Te han invitado a chatear con:\",\"cantJoin\":\"No puedes unirte al chat con:\",\"chatInviteDecline\":\"Puedes unirte al chat o rechazar la invitación\",\"creatorLeft\":\"Porque el creador dejó la sala\",\"encrypted\":\"Cifrado\",\"noImages\":\"Todavía no hay imágenes en este chat\",\"noFiles\":\"Todavía no hay files en este chat\",\"inviteUser\":\"Invitar a un usuario\",\"invite\":\"Invitar\",\"add\":\"Añadir\",\"mute\":\"Mute\",\"unmute\":\"Unmute\",\"leave\":\"Dejar\",\"Info\":\"Info\",\"new\":\"New\",\"typing\":\"typing\",\"accNotFound\":\"Su registro está en curso, por favor espere...\",\"emptyList\":\"La lista está vacía ( filtrada o simplemente vacía )\",\"welcome\":\"Bienvenido al chat\",\"startNewChat\":\"Iniciar un nuevo chat\",\"chats\":\"Chats\",\"shareWith\":\"Compartir con\",\"newChat\":\"Nuevo chat\",\"moveToChat\":\"Mover al chat\",\"queryNoResults\":\"La consulta no reporta resultados\",\"needMoreCharacters\":\"Necesita más caracteres para el resultado\",\"createGroup\":\"Crear grupo\",\"unabletoDecrypt\":\"* Imposible descifrar\",\"messageDeleted\":\"Mensaje eliminado\",\"sentImage\":\"Imagen enviada\",\"sentVoiceMessage\":\"envió un mensaje de voz\",\"invitationToChat\":\"Invitación al chat\",\"invitationToRoom\":\"Invitation to room\",\"leftChat\":\"abandonó el chat\",\"joined\":\"unido\",\"chatRenamed\":\"Chat renombrado a \",\"recentComment\":\"Comentario reciente:\",\"share\":\"SHARE\",\"followers\":\"Seguidores:\",\"reputation\":\"Reputación:\",\"following\":\"Following:\",\"theme\":\"Tema:\",\"contacts\":\"Contactos\",\"phoneContacts\":\"Contactos telefónicos\",\"chooseInviteMedia\":\"Por favor, elige cómo quieres invitar:\",\"admin\":\"Admin\",\"moderator\":\"Moderador\",\"videocall\":\"Videollamada\",\"call\":\"Llamada\",\"leaveAndDelete\":\"Dejar y borrar\",\"donate\":\"Donar\",\"makeModerator\":\"Hacer Moderador\",\"ban\":\"Ban\",\"kick\":\"Kick\",\"members\":\"Miembros\",\"media\":\"Media\",\"files\":\"Files\",\"contactsList\":\"Lista de contactos\",\"send\":\"send\",\"pageCaption\":\"Título de la página\",\"caption\":\"Caption\",\"text\":\"text\",\"placeholder\":\"placeholder\",\"sendTransactionTo\":\"Enviar transacción a\",\"toBePaidByReceiver\":\"A pagar por el receptor\",\"toBePaidBySender\":\"A pagar por el remitente\",\"source\":\"Fuente\",\"amount\":\"Importe\",\"receiver\":\"Receptor\",\"message\":\"Mensaje\",\"includeFeesInAmount\":\"Incluir tasas en el importe\",\"transactionFees\":\"Tasas de transacción\",\"totalAmount\":\"Importe total\",\"balanceTooLow\":\"Saldo demasiado bajo\",\"transactionError\":\"Error, no se puede realizar la transacción\",\"calculateFees\":\"Calculate Fees\",\"startChatWith\":\"Iniciar chat con\",\"searchResult\":\"Resultado de la búsqueda\",\"joinedInTheChat\":\"unido en el chat\",\"invited\":\"invitado\",\"inTheChat\":\"en el chat\",\"banned\":\"prohibido\",\"andRoom\":\"y sala\",\"left\":\"izquierda\",\"theChat\":\"el chat\",\"made\":\"made\",\"aModerator\":\" un moderador\",\"editedChatNameTo \":\"editado el nombre del chat a \",\"somebody\":\"alguien\",\"sent\":\"enviado\",\"PKOINto\":\"PKOIN to\",\"response\":\"Respuesta\",\"messagefrom\":\"Mensaje reenviado\",\"edited\":\"Editado\",\"settings\":\"Ajustes\",\"unauthorized\":\"No autorizado\",\"search\":\"Buscar\",\"replyOnMessage\":\"Respuesta en mensaje\",\"editMessage\":\"Editar mensaje\",\"inviteFriend\":\"Invitar a amigos\",\"emptyContactList\":\"La lista de contactos está vacía\",\"joinApp\":\"Unirse a Pocketnet\",\"hasInvitedToJoin\":\"te ha invitado a unirte a Pocketnet\",\"contactsempty\":\"Todavía no tienes contactos, encuéntralos en la búsqueda\",\"chatsearchingempty\":\"No chats found for the specified filter\",\"sendmessage\":\"Send message\"},\"input\":{\"patientEmailPlaceholder\":\"Email\",\"refillNamePlaceholder\":\"Refill name\"},\"message\":{},\"button\":{\"starChatButton\":\"Iniciar chat\",\"decline\":\"Declinar\",\"declineandignore\":\"Ignorar usuario\",\"join\":\"Unase\",\"ok\":\"Ok\",\"save\":\"ahorrar\",\"copy\":\"Copiar\",\"forward\":\"Adelante\",\"delete\":\"Borrar\",\"reply\":\"Responder\",\"share\":\"Compartir\",\"download\":\"Descargar\",\"downloaded\":\"Descargado\",\"goToPocketnetProfile\":\"Ir al perfil de Pocketnet\",\"sendFile\":\"Enviar archivo\",\"takePhotoOrVideo\":\"Enviar imagen\",\"sendCoins\":\"Enviar monedas\",\"edit\":\"Editar\",\"block\":\"Bloquear\",\"unblock\":\"Desbloquear\",\"blockUser\":\"Bloquear usuario\"},\"yes\":\"sí\",\"cancel\":\"Cancelar\",\"teamMessages\":{\"1-title\":\"¡Bienvenido al chat privado de Bastyon!\",\"1-list1\":\"Mensajería privada que NO está conectada a tu número de teléfono\",\"1-list2\":\"Cifrado de extremo a extremo de cada conversación 1 a 1 por defecto\",\"1-list3\":\"Todas las imágenes enviadas o recibidas a través del chat se almacenan encriptadas\",\"1-list4\":\"El historial de mensajes se guarda sólo durante 7 días\",\"2-title\":\"¡Un gran anuncio! ¡La aplicación Pocketnet se llama ahora Bastyon!\",\"2-message1\":\"El dominio se trasladará a Bastyon.com. Recientemente hemos lanzado las siguientes actualizaciones importantes:\",\"2-list1\":\"Mensajería privada encriptada no conectada a tu número de teléfono\",\"2-list2\":\"Posibilidad de donar PKOIN a los bloggers\",\"2-list3\":\"Vídeo y transmisión en directo\",\"2-message2\":\"Invita a tus amigos ahora y forma parte del gran futuro de la Internet descentralizada!\",\"2-button\":\"Invitar a los amigos\"},\"sendingerror\":\"An error occurred while sending the message\",\"details\":\"Details\",\"settings_pin\":\"Pin chat window\",\"checked\":\"Yes\",\"unchecked\":\"No\",\"settings_read\":\"Send read receipts\",\"messagewasburn\":\"This message remains only in the memory of your device\",\"messagewillburn\":\"The message will be deleted soon\",\"micaccessbrowser\":\"Access to the microphone is restricted, please check your browser settings.\",\"micaccesscommonproblem\":\"Sorry, for some reason it is not possible to record voice messages on the device\",\"micaccesscordova\":\"Access to the microphone is restricted, please check your device settings.\",\"micdevicenotfound\":\"Audio recording device not found\"}");
+module.exports = JSON.parse("{\"caption\":{\"create\":\"Create\",\"addPublicChatName\":\"Add Public Chat Name\",\"addGroupNamePlaceHolder\":\"Add Group Name\",\"createPublicChat\":\"Create public chat\",\"publicRoomTitle\":\"Public Room Preview\",\"chatTopic\":\"Topic renamed\",\"asModerator\":\"as moderator\",\"marked\":\"marked\",\"unmarked\":\"unmarked\",\"removeBan\":\"Remove Ban\",\"cancelModeration\":\"Remove moderation\",\"uploadFiles\":\"Subir archivos\",\"header\":\"cabecera\",\"dragAndDropAFile\":\"Arrastrar y soltar archivo\",\"chatInvite\":\"Te han invitado a chatear con:\",\"cantJoin\":\"No puedes unirte al chat con:\",\"chatInviteDecline\":\"Puedes unirte al chat o rechazar la invitación\",\"creatorLeft\":\"Porque el creador dejó la sala\",\"encrypted\":\"Cifrado\",\"noImages\":\"Todavía no hay imágenes en este chat\",\"noFiles\":\"Todavía no hay files en este chat\",\"inviteUser\":\"Invitar a un usuario\",\"invite\":\"Invitar\",\"add\":\"Añadir\",\"mute\":\"Mute\",\"unmute\":\"Unmute\",\"leave\":\"Dejar\",\"Info\":\"Info\",\"new\":\"New\",\"typing\":\"typing\",\"accNotFound\":\"Su registro está en curso, por favor espere...\",\"emptyList\":\"La lista está vacía ( filtrada o simplemente vacía )\",\"welcome\":\"Bienvenido al chat\",\"startNewChat\":\"Iniciar un nuevo chat\",\"chats\":\"Chats\",\"shareWith\":\"Compartir con\",\"newChat\":\"Nuevo chat\",\"moveToChat\":\"Mover al chat\",\"queryNoResults\":\"La consulta no reporta resultados\",\"needMoreCharacters\":\"Necesita más caracteres para el resultado\",\"createGroup\":\"Crear grupo\",\"unabletoDecrypt\":\"* Imposible descifrar\",\"messageDeleted\":\"Mensaje eliminado\",\"sentImage\":\"Imagen enviada\",\"sentVoiceMessage\":\"envió un mensaje de voz\",\"invitationToChat\":\"Invitación al chat\",\"invitationToRoom\":\"Invitation to room\",\"leftChat\":\"abandonó el chat\",\"joined\":\"unido\",\"chatRenamed\":\"Chat renombrado a \",\"recentComment\":\"Comentario reciente:\",\"share\":\"SHARE\",\"followers\":\"Seguidores:\",\"reputation\":\"Reputación:\",\"following\":\"Following:\",\"theme\":\"Tema:\",\"contacts\":\"Contactos\",\"phoneContacts\":\"Contactos telefónicos\",\"chooseInviteMedia\":\"Por favor, elige cómo quieres invitar:\",\"admin\":\"Admin\",\"moderator\":\"Moderador\",\"videocall\":\"Videollamada\",\"call\":\"Llamada\",\"leaveAndDelete\":\"Dejar y borrar\",\"donate\":\"Donar\",\"makeModerator\":\"Hacer Moderador\",\"ban\":\"Ban\",\"kick\":\"Kick\",\"members\":\"Miembros\",\"media\":\"Media\",\"files\":\"Files\",\"contactsList\":\"Lista de contactos\",\"send\":\"send\",\"pageCaption\":\"Título de la página\",\"caption\":\"Caption\",\"text\":\"text\",\"placeholder\":\"placeholder\",\"sendTransactionTo\":\"Enviar transacción a\",\"toBePaidByReceiver\":\"A pagar por el receptor\",\"toBePaidBySender\":\"A pagar por el remitente\",\"source\":\"Fuente\",\"amount\":\"Importe\",\"receiver\":\"Receptor\",\"message\":\"Mensaje\",\"includeFeesInAmount\":\"Incluir tasas en el importe\",\"transactionFees\":\"Tasas de transacción\",\"totalAmount\":\"Importe total\",\"balanceTooLow\":\"Saldo demasiado bajo\",\"transactionError\":\"Error, no se puede realizar la transacción\",\"calculateFees\":\"Calculate Fees\",\"startChatWith\":\"Iniciar chat con\",\"searchResult\":\"Resultado de la búsqueda\",\"joinedInTheChat\":\"unido en el chat\",\"invited\":\"invitado\",\"hasInvited\":\"invitado \",\"inTheChat\":\"en el chat\",\"banned\":\"prohibido\",\"andRoom\":\"y sala\",\"left\":\"izquierda\",\"theChat\":\"el chat\",\"made\":\"made\",\"aModerator\":\" un moderador\",\"editedChatNameTo \":\"editado el nombre del chat a \",\"somebody\":\"alguien\",\"sent\":\"enviado\",\"PKOINto\":\"PKOIN to\",\"response\":\"Respuesta\",\"messagefrom\":\"Mensaje reenviado de\",\"edited\":\"Editado\",\"settings\":\"Ajustes\",\"unauthorized\":\"No autorizado\",\"search\":\"Buscar\",\"replyOnMessage\":\"Respuesta en mensaje\",\"editMessage\":\"Editar mensaje\",\"inviteFriend\":\"Invitar a amigos\",\"emptyContactList\":\"La lista de contactos está vacía\",\"joinApp\":\"Unirse a Pocketnet\",\"hasInvitedToJoin\":\"te ha invitado a unirte a Pocketnet\",\"contactsempty\":\"Todavía no tienes contactos, encuéntralos en la búsqueda\",\"chatsearchingempty\":\"No chats found for the specified filter\",\"sendmessage\":\"Send message\"},\"input\":{\"patientEmailPlaceholder\":\"Email\",\"refillNamePlaceholder\":\"Refill name\"},\"message\":{},\"button\":{\"starChatButton\":\"Iniciar chat\",\"decline\":\"Declinar\",\"declineandignore\":\"Ignorar usuario\",\"join\":\"Unase\",\"ok\":\"Ok\",\"save\":\"ahorrar\",\"copy\":\"Copiar\",\"forward\":\"Adelante\",\"delete\":\"Borrar\",\"reply\":\"Responder\",\"share\":\"Compartir\",\"download\":\"Descargar\",\"downloaded\":\"Descargado\",\"goToPocketnetProfile\":\"Ir al perfil de Pocketnet\",\"sendFile\":\"Enviar archivo\",\"takePhotoOrVideo\":\"Enviar imagen\",\"sendCoins\":\"Enviar monedas\",\"edit\":\"Editar\",\"select\":\"Seleccione\",\"block\":\"Bloquear\",\"unblock\":\"Desbloquear\",\"blockUser\":\"Bloquear usuario\"},\"yes\":\"sí\",\"cancel\":\"Cancelar\",\"teamMessages\":{\"1-title\":\"¡Bienvenido al chat privado de Bastyon!\",\"1-list1\":\"Mensajería privada que NO está conectada a tu número de teléfono\",\"1-list2\":\"Cifrado de extremo a extremo de cada conversación 1 a 1 por defecto\",\"1-list3\":\"Todas las imágenes enviadas o recibidas a través del chat se almacenan encriptadas\",\"1-list4\":\"El historial de mensajes se guarda sólo durante 7 días\",\"2-title\":\"¡Un gran anuncio! ¡La aplicación Pocketnet se llama ahora Bastyon!\",\"2-message1\":\"El dominio se trasladará a Bastyon.com. Recientemente hemos lanzado las siguientes actualizaciones importantes:\",\"2-list1\":\"Mensajería privada encriptada no conectada a tu número de teléfono\",\"2-list2\":\"Posibilidad de donar PKOIN a los bloggers\",\"2-list3\":\"Vídeo y transmisión en directo\",\"2-message2\":\"Invita a tus amigos ahora y forma parte del gran futuro de la Internet descentralizada!\",\"2-button\":\"Invitar a los amigos\"},\"sendingerror\":\"An error occurred while sending the message\",\"details\":\"Details\",\"settings_pin\":\"Pin chat window\",\"checked\":\"Yes\",\"unchecked\":\"No\",\"settings_read\":\"Send read receipts\",\"messagewasburn\":\"This message remains only in the memory of your device\",\"messagewillburn\":\"The message will be deleted soon\",\"micaccessbrowser\":\"Access to the microphone is restricted, please check your browser settings.\",\"micaccesscommonproblem\":\"Sorry, for some reason it is not possible to record voice messages on the device\",\"micaccesscordova\":\"Access to the microphone is restricted, please check your device settings.\",\"micdevicenotfound\":\"Audio recording device not found\"}");
 
 /***/ }),
 
@@ -81678,12 +82121,12 @@ module.exports.__inject__ = function (shadowRoot) {
 
 "use strict";
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"3c23d37e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/chats/dummypreviews/index.vue?vue&type=template&id=49154b50&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/chats/dummypreviews/index.vue?vue&type=template&id=7ed73c7c&scoped=true&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{attrs:{"id":"dummypreviews"}},_vm._l((_vm.a),function(va){return _c('preview',{key:va.id,attrs:{"dummy":true}})}),1)}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/chats/dummypreviews/index.vue?vue&type=template&id=49154b50&scoped=true&
+// CONCATENATED MODULE: ./src/components/chats/dummypreviews/index.vue?vue&type=template&id=7ed73c7c&scoped=true&
 
 // EXTERNAL MODULE: ./node_modules/vuex/dist/vuex.esm.js
 var vuex_esm = __webpack_require__("2f62");
@@ -81692,6 +82135,12 @@ var vuex_esm = __webpack_require__("2f62");
 var preview = __webpack_require__("087d");
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/chats/dummypreviews/index.vue?vue&type=script&lang=js&
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -81754,7 +82203,9 @@ var componentNormalizer = __webpack_require__("2877");
 
 function injectStyles (context) {
   
-  
+  var style0 = __webpack_require__("6e9e")
+if (style0.__inject__) style0.__inject__(context)
+
 }
 
 /* normalize component */
@@ -81765,7 +82216,7 @@ var component = Object(componentNormalizer["a" /* default */])(
   staticRenderFns,
   false,
   injectStyles,
-  "49154b50",
+  "7ed73c7c",
   null
   ,true
 )
@@ -82135,14 +82586,37 @@ module.exports = typeof ArrayBuffer != 'undefined' && typeof DataView != 'undefi
 
 "use strict";
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"3c23d37e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/chats/assets/name.vue?vue&type=template&id=1ae9a492&scoped=true&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('span',{staticClass:"nameline"},[_vm._v(" "+_vm._s(_vm.convertedName)+" ")])}
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/chats/assets/name.vue?vue&type=template&id=72a9c575&scoped=true&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"nameline"},[(_vm.isShowGroupIcon)?_c('div',{staticClass:"iconGroup"},[_c('i',{staticClass:"fas fa-user-friends"})]):_vm._e(),_c('div',{staticClass:"nameofchat"},[_vm._v(" "+_vm._s(_vm.convertedName)+" ")])])}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/chats/assets/name.vue?vue&type=template&id=1ae9a492&scoped=true&
+// CONCATENATED MODULE: ./src/components/chats/assets/name.vue?vue&type=template&id=72a9c575&scoped=true&
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/chats/assets/name.vue?vue&type=script&lang=js&
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -82196,8 +82670,14 @@ var staticRenderFns = []
 
       if (this.m_chat.name.indexOf("@") == 0) return this.m_chat.name.replace('@', '');
       return names.join(', ');
+    },
+
+    isShowGroupIcon() {
+      return this.m_chat.name.slice(0, 1) === '@';
     }
-  }
+
+  },
+  mounted: function () {}
 });
 // CONCATENATED MODULE: ./src/components/chats/assets/name.vue?vue&type=script&lang=js&
  /* harmony default export */ var assets_namevue_type_script_lang_js_ = (namevue_type_script_lang_js_); 
@@ -82210,7 +82690,9 @@ var componentNormalizer = __webpack_require__("2877");
 
 function injectStyles (context) {
   
-  
+  var style0 = __webpack_require__("64a6")
+if (style0.__inject__) style0.__inject__(context)
+
 }
 
 /* normalize component */
@@ -82221,7 +82703,7 @@ var component = Object(componentNormalizer["a" /* default */])(
   staticRenderFns,
   false,
   injectStyles,
-  "1ae9a492",
+  "72a9c575",
   null
   ,true
 )
@@ -82369,6 +82851,20 @@ var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
 exports.push([module.i, ".previewWrapper[data-v-691bf714]{height:60px;position:absolute;top:0;width:100%;display:flex;align-items:center;justify-content:flex-start;padding:0;border-bottom:1px solid rgb(var(--background-main))}.previewWrapper .previewContact[data-v-691bf714],.previewWrapper .previewContactSelect[data-v-691bf714]{width:100%}.previewWrapper .previewBox[data-v-691bf714]{width:100%;display:flex;justify-content:space-between;align-items:center}.previewWrapper .previewBox .previewWrapper[data-v-691bf714]{flex-grow:1;width:100%}.previewWrapper .checkBox[data-v-691bf714]{text-align:center;position:absolute;right:12px;top:50%;transform:translateY(-50%)}.previewWrapper[data-v-691bf714]:last-child{border-bottom:0}.contactList[data-v-691bf714]{margin-bottom:8px}.contactList .title[data-v-691bf714]{padding:0 .5em}.contactList.minimized .title[data-v-691bf714]{display:none}.contactList.minimized .previewWrapper[data-v-691bf714]{padding:.5em 0;border-bottom:0;cursor:pointer}.contactList.minimized .previewWrapper[data-v-691bf714]:last-child{border-bottom:0}.contactList.minimized .previewWrapper[data-v-691bf714] .previewWrapper{padding:0}", ""]);
+// Exports
+module.exports = exports;
+
+
+/***/ }),
+
+/***/ "abf7":
+/***/ (function(module, exports, __webpack_require__) {
+
+// Imports
+var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
+exports = ___CSS_LOADER_API_IMPORT___(false);
+// Module
+exports.push([module.i, ".matrin[data-v-9d2b1700]{margin:0 auto 0 0!important}.msgAction[data-v-9d2b1700]{position:absolute}.msgAction[data-v-9d2b1700]:before{content:\"\";display:block;width:100%;height:100%;position:fixed;z-index:10;opacity:.9;left:0;right:0;top:0;bottom:0}.msgAction .contentAction[data-v-9d2b1700],.msgAction[data-v-9d2b1700]:before{background-color:rgb(var(--background-main))}.msgAction .contentAction[data-v-9d2b1700]{width:180px;position:relative;z-index:300;border:.1em solid rgb(var(--neutral-grad-0));border-radius:.8em;margin:.6em 0 0 auto}.msgAction .contentAction ul[data-v-9d2b1700]{padding:0;list-style:none;margin:0;display:block;width:100%;height:100%}.msgAction .contentAction ul li[data-v-9d2b1700]{display:flex;justify-content:space-between;padding:.2em .8em;align-items:center;border-top:.1em solid rgb(var(--neutral-grad-1));font-size:1em}.msgAction .contentAction ul li[data-v-9d2b1700]:first-child{border:0}", ""]);
 // Exports
 module.exports = exports;
 
@@ -83731,6 +84227,20 @@ module.exports.__inject__ = function (shadowRoot) {
 
 /***/ }),
 
+/***/ "b0be":
+/***/ (function(module, exports, __webpack_require__) {
+
+// Imports
+var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
+exports = ___CSS_LOADER_API_IMPORT___(false);
+// Module
+exports.push([module.i, "[data-v-7ed73c7c] .infoWrapper{display:flex;align-items:center}[data-v-7ed73c7c] .infoWrapper .eventsLine{width:100%}", ""]);
+// Exports
+module.exports = exports;
+
+
+/***/ }),
+
 /***/ "b19a":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -83875,6 +84385,24 @@ Object.defineProperty(Duplex.prototype, 'destroyed', {
   }
 });
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__("4362")))
+
+/***/ }),
+
+/***/ "b1e0":
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__("4072");
+if(content.__esModule) content = content.default;
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add CSS to Shadow Root
+var add = __webpack_require__("35d6").default
+module.exports.__inject__ = function (shadowRoot) {
+  add("62dc1abb", content, shadowRoot)
+};
 
 /***/ }),
 
@@ -84624,7 +85152,7 @@ module.exports.__inject__ = function (shadowRoot) {
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "#topheader[data-v-52afd868]{background:rgb(var(--background-total-theme));top:0;left:0;right:0;position:absolute;z-index:4;color:rgb(var(--text-color));border-bottom:1px solid rgb(var(--neutral-grad-0))}#topheader .iconbutton[data-v-52afd868]{cursor:pointer}#topheader .headerLine[data-v-52afd868]{display:flex;align-items:center;padding:0;height:64px}#topheader .headerLine>div[data-v-52afd868]{text-align:center}#topheader .headerLine .iconsmall[data-v-52afd868]{width:22px;min-width:22px}#topheader .headerLine .icon[data-v-52afd868]{color:rgb(var(--color-txt-ac));width:44px;min-width:44px}#topheader .headerLine .rightaddIcons[data-v-52afd868]{margin-right:11px}#topheader .headerLine .leftaddIcon[data-v-52afd868]{margin-left:11px}#topheader .headerLine .infoPart[data-v-52afd868]{flex-grow:1;padding:0 1em;overflow:hidden}#topheader .headerLine .infoPart[data-v-52afd868] span,#topheader .headerLine .infoPart span[data-v-52afd868]{font-size:.9em;font-weight:500}#topheader .rightaddIcons[data-v-52afd868],#topheader .rightIcons[data-v-52afd868]{justify-content:space-between}#topheader.bin[data-v-52afd868]{position:relative}#topheader.minimized[data-v-52afd868]{right:auto;transition:.3s}#topheader.minimized .headerLine[data-v-52afd868]{height:54px}#topheader.minimized.fix[data-v-52afd868]{width:344px;position:absolute;background:transparent;overflow:hidden;will-change:transform;right:0}#topheader.minimized.fix .headerLine[data-v-52afd868]{padding:0}#topheader.minimized.fix .icon[data-v-52afd868]{width:44px;height:44px;line-height:44px;transition:transform .3s}#topheader.minimized.fix .icon .iconbutton[data-v-52afd868]{border-radius:50%;background:rgba(var(--neutral-grad-4),.1);color:rgb(var(--color-txt-ac));cursor:pointer}@media (pointer:fine){#topheader.minimized.fix .icon .iconbutton[data-v-52afd868]:hover{background:rgba(var(--neutral-grad-4),.05)}}#topheader.minimized.fix .infoPart[data-v-52afd868],#topheader.minimized.fix .leftIcon[data-v-52afd868]{display:none}#topheader.minimized.fix.active[data-v-52afd868]{transform:translate3d(-300px,-56px,0);border-radius:8px;border-bottom-left-radius:0;border-bottom-right-radius:0;background:rgb(var(--background-total-theme));border:1px solid rgba(var(--neutral-grad-4),.2);box-shadow:0 5px 7px -5px rgba(var(--color-shadow-base),.7)}#topheader.minimized.fix.active .infoPart[data-v-52afd868],#topheader.minimized.fix.active .leftIcon[data-v-52afd868]{display:block}#topheader.minimized.fix[data-v-52afd868]:not(.active){border-bottom:0!important}", ""]);
+exports.push([module.i, "#topheader[data-v-52afd868]{background:rgb(var(--background-total-theme));top:0;padding-top:var(--app-margin-top);left:0;right:0;position:absolute;z-index:4;color:rgb(var(--text-color));border-bottom:1px solid rgb(var(--neutral-grad-0))}#topheader .iconbutton[data-v-52afd868]{cursor:pointer}#topheader .headerLine[data-v-52afd868]{display:flex;align-items:center;padding:0;height:64px}#topheader .headerLine>div[data-v-52afd868]{text-align:center}#topheader .headerLine .iconsmall[data-v-52afd868]{width:22px;min-width:22px}#topheader .headerLine .icon[data-v-52afd868]{color:rgb(var(--color-txt-ac));width:44px;min-width:44px}#topheader .headerLine .rightaddIcons[data-v-52afd868]{margin-right:11px}#topheader .headerLine .leftaddIcon[data-v-52afd868]{margin-left:11px}#topheader .headerLine .infoPart[data-v-52afd868]{flex-grow:1;padding:0 1em;overflow:hidden}#topheader .headerLine .infoPart[data-v-52afd868] span,#topheader .headerLine .infoPart span[data-v-52afd868]{font-size:.9em;font-weight:500}#topheader .rightaddIcons[data-v-52afd868],#topheader .rightIcons[data-v-52afd868]{justify-content:space-between}#topheader.bin[data-v-52afd868]{position:relative}#topheader.minimized[data-v-52afd868]{right:auto;transition:.3s}#topheader.minimized .headerLine[data-v-52afd868]{height:54px}#topheader.minimized.fix[data-v-52afd868]{width:344px;position:absolute;background:transparent;overflow:hidden;will-change:transform;right:0}#topheader.minimized.fix .headerLine[data-v-52afd868]{padding:0}#topheader.minimized.fix .icon[data-v-52afd868]{width:44px;height:44px;line-height:44px;transition:transform .3s}#topheader.minimized.fix .icon .iconbutton[data-v-52afd868]{border-radius:50%;background:rgba(var(--neutral-grad-4),.1);color:rgb(var(--color-txt-ac));cursor:pointer}@media (pointer:fine){#topheader.minimized.fix .icon .iconbutton[data-v-52afd868]:hover{background:rgba(var(--neutral-grad-4),.05)}}#topheader.minimized.fix .infoPart[data-v-52afd868],#topheader.minimized.fix .leftIcon[data-v-52afd868]{display:none}#topheader.minimized.fix.active[data-v-52afd868]{transform:translate3d(-300px,-56px,0);border-radius:8px;border-bottom-left-radius:0;border-bottom-right-radius:0;background:rgb(var(--background-total-theme));border:1px solid rgba(var(--neutral-grad-4),.2);box-shadow:0 5px 7px -5px rgba(var(--color-shadow-base),.7)}#topheader.minimized.fix.active .infoPart[data-v-52afd868],#topheader.minimized.fix.active .leftIcon[data-v-52afd868]{display:block}#topheader.minimized.fix[data-v-52afd868]:not(.active){border-bottom:0!important}", ""]);
 // Exports
 module.exports = exports;
 
@@ -85523,6 +86051,18 @@ module.exports = function xhrAdapter(config) {
     request.send(requestData);
   });
 };
+
+
+/***/ }),
+
+/***/ "b551":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_1_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("f6f7");
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_1_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_1_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_1_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_1_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
 
 
 /***/ }),
@@ -88887,20 +89427,6 @@ module.exports = !fails(function () {
 
 /***/ }),
 
-/***/ "ba3b":
-/***/ (function(module, exports, __webpack_require__) {
-
-// Imports
-var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
-exports = ___CSS_LOADER_API_IMPORT___(false);
-// Module
-exports.push([module.i, ".voiceMessage[data-v-73b53530]{-webkit-tap-highlight-color:transparent;display:flex;contain:strict;width:230px;height:100%}.voiceMessage_wrapper[data-v-73b53530]{display:flex;justify-content:flex-end;align-items:center;overflow:hidden;min-width:10em;padding:0 .5em;padding-right:1em;border-radius:2em;background:rgb(var(--background-secondary-theme))}.voiceMessage_toggle[data-v-73b53530]{cursor:pointer;height:33px;width:33px;margin-right:.5em;border-radius:50%;background:rgb(var(--neutral-grad-1));display:flex;align-items:center;justify-content:center;color:rgb(var(--color-bg-ac))}.voiceMessage_toggle i[data-v-73b53530]{font-size:.5em}.voiceMessage_graph[data-v-73b53530]{position:relative;cursor:pointer}.voiceMessage_options[data-v-73b53530]{display:flex;justify-content:center;margin-left:10px;padding:2px 10px;min-width:40px;background:rgb(var(--neutral-grad-1));border-radius:10px}.voiceMessage_options span[data-v-73b53530]{font-size:.8em;color:rgb(var(--neutral-grad-3))}.voiceMessage.playing .voiceMessage_options span[data-v-73b53530]{font-size:.8em;color:rgb(var(--color-bg-ac-bright))}.voiceMessage .fa-exclamation-circle[data-v-73b53530]{font-size:.7em;color:rgb(var(--color-bad));padding:.5em}", ""]);
-// Exports
-module.exports = exports;
-
-
-/***/ }),
-
 /***/ "bb15":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -89229,6 +89755,24 @@ function incrementCounter(counter) {
 
 /***/ }),
 
+/***/ "be6a":
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__("306eb");
+if(content.__esModule) content = content.default;
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add CSS to Shadow Root
+var add = __webpack_require__("35d6").default
+module.exports.__inject__ = function (shadowRoot) {
+  add("57d84a74", content, shadowRoot)
+};
+
+/***/ }),
+
 /***/ "bfa8":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -89300,7 +89844,7 @@ module.exports = exports;
 /***/ "c1af":
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"caption\":{\"create\":\"Create\",\"addPublicChatName\":\"Add Public Chat Name\",\"addGroupNamePlaceHolder\":\"Add Group Name\",\"createPublicChat\":\"Create public chat\",\"chatTopic\":\"Topic renamed\",\"publicRoomTitle\":\"Public Room\",\"asModerator\":\"as moderator\",\"marked\":\"marked\",\"unmarked\":\"unmarked\",\"removeBan\":\"Remove Ban\",\"cancelModeration\":\"Remove moderation\",\"uploadFiles\":\"파일 업로드\",\"header\":\"헤더\",\"dragAndDropAFile\":\"파일 끌어서 놓기\",\"chatInvite\":\"다음과 채팅하도록 초대되었습니다:\",\"cantJoin\":\"다음과 채팅하기 위해 참여할 수 없습니다:\",\"chatInviteDecline\":\"채팅에 참여하거나 초대를 거부할 수 있습니다.\",\"creatorLeft\":\"크리에이터가 방을 나갔기 때문에\",\"encrypted\":\"암호화\",\"noImages\":\"이 채팅에는 아직 이미지가 없습니다\",\"noFiles\":\"There are no files in this chat yet\",\"inviteUser\":\"사용자 초대\",\"invite\":\"초대하다\",\"add\":\"추가\",\"mute\":\"음소거\",\"unmute\":\"음소거 해제\",\"leave\":\"떠나다\",\"Info\":\"정보\",\"new\":\"신규\",\"typing\":\"타자\",\"accNotFound\":\"등록이 진행 중입니다. 잠시만 기다려 주십시오...\",\"emptyList\":\"목록이 비어 있습니다(필터링되었거나 비어 있음)\",\"welcome\":\"포켓넷 채팅에 오신 것을 환영합니다\",\"startNewChat\":\"새 채팅 시작\",\"chats\":\"채팅\",\"shareWith\":\"공유\",\"newChat\":\"새 채팅\",\"moveToChat\":\"채팅으로 이동\",\"queryNoResults\":\"쿼리가 결과를 보고하지 않음\",\"needMoreCharacters\":\"결과에 대해 더 많은 문자가 필요합니다\",\"createGroup\":\"그룹 만들기\",\"unabletoDecrypt\":\"* 해독할 수 없음\",\"messageDeleted\":\"메시지 삭제됨\",\"sentImage\":\"전송된 이미지\",\"sentVoiceMessage\":\"음성 메시지를 보냈다\",\"invitationToChat\":\"채팅 초대\",\"invitationToRoom\":\"Invitation to room\",\"leftChat\":\"채팅에서 나감\",\"joined\":\"가입\",\"chatRenamed\":\"채팅 이름이 (으)로 변경되었습니다 \",\"recentComment\":\"최근 댓글:\",\"share\":\"공유\",\"followers\":\"팔로워:\",\"reputation\":\"평판:\",\"following\":\"팔로잉:\",\"theme\":\"테마:\",\"contacts\":\"연락처\",\"phoneContacts\":\"전화 연락처\",\"chooseInviteMedia\":\"초대 방법을 선택하십시오:\",\"admin\":\"관리자\",\"moderator\":\"진행자\",\"videocall\":\"영상통화\",\"call\":\"전화\",\"leaveAndDelete\":\"나가서 삭제\",\"donate\":\"기부하다\",\"makeModerator\":\"모더레이터 만들기\",\"ban\":\"금지\",\"kick\":\"킥\",\"members\":\"회원\",\"media\":\"미디어\",\"files\":\"파일\",\"contactsList\":\"연락처 목록\",\"send\":\"보내다\",\"pageCaption\":\"페이지 캡션\",\"caption\":\"캡션\",\"text\":\"텍스트\",\"placeholder\":\"자리 표시자\",\"sendTransactionTo\":\"트랜잭션 보내기\",\"toBePaidByReceiver\":\"수취인이 지불함\",\"toBePaidBySender\":\"발신인이 지불함\",\"source\":\"소스\",\"amount\":\"금액\",\"receiver\":\"수신자\",\"message\":\"메시지\",\"includeFeesInAmount\":\"금액에 수수료 포함\",\"transactionFees\":\"거래 수수료\",\"totalAmount\":\"총 금액\",\"balanceTooLow\":\"밸런스가 너무 낮음\",\"transactionError\":\"오류, 거래를 할 수 없습니다\",\"calculateFees\":\"수수료 계산\",\"startChatWith\":\"채팅 시작\",\"searchResult\":\"검색 결과\",\"joinedInTheChat\":\"채팅에 참여했습니다\",\"invited\":\"초대 \",\"inTheChat\":\" 채팅 중\",\"banned\":\"금지된\",\"andRoom\":\"그리고 방\",\"left\":\"왼쪽\",\"theChat\":\" 채팅 \",\"made\":\"만든 \",\"aModerator\":\" 중재자\",\"editedChatNameTo \":\"편집된 채팅 이름을 \",\"somebody\":\"누군가\",\"sent\":\"보낸\",\"PKOINto\":\" PKOIN to \",\"response\":\"응답\",\"messagefrom\":\"전달된 메시지\",\"edited\":\"편집됨\",\"settings\":\"설정\",\"unauthorized\":\"무단\",\"search\":\"검색\",\"replyOnMessage\":\"메시지에 회신\",\"editMessage\":\"메시지 편집\",\"inviteFriend\":\"친구 초대\",\"emptyContactList\":\"연락처 목록이 비어 있습니다\",\"joinApp\":\"포켓넷 가입\",\"hasInvitedToJoin\":\"Pocketnet에 가입하도록 초대했습니다\",\"contactsempty\":\"아직 연락처가 없습니다. 검색에서 찾으십시오\",\"chatsearchingempty\":\"No chats found for the specified filter\",\"sendmessage\":\"Send message\"},\"input\":{\"patientEmailPlaceholder\":\"이메일\",\"refillNamePlaceholder\":\"리필 이름\"},\"message\":{},\"button\":{\"starChatButton\":\"채팅 시작\",\"decline\":\"거절\",\"declineandignore\":\"사용자 무시\",\"join\":\"가입\",\"ok\":\"그래\",\"copy\":\"복사\",\"forward\":\"앞으로\",\"delete\":\"삭제\",\"reply\":\"답장\",\"share\":\"공유\",\"save\":\"저장\",\"download\":\"다운로드\",\"downloaded\":\"다운로드\",\"goToPocketnetProfile\":\"Pocketnet 프로필로 이동\",\"sendFile\":\"파일 보내기\",\"takePhotoOrVideo\":\"이미지 보내기\",\"sendCoins\":\"코인 보내기\",\"edit\":\"편집\",\"block\":\"차단\",\"unblock\":\"차단 해제\",\"blockUser\":\"사용자 차단\"},\"yes\":\"예\",\"cancel\":\"취소\",\"teamMessages\":{\"1-title\":\"Bastyon 비공개 채팅에 오신 것을 환영합니다!\",\"1-list1\":\"전화번호와 연결되지 않은 비공개 메신저\",\"1-list2\":\"기본적으로 모든 1:1 대화의 종단 간 암호화\",\"1-list3\":\"채팅을 통해 주고받는 모든 이미지는 암호화되어 저장됩니다\",\"1-list4\":\"메시지 기록은 7일 동안만 저장됩니다\",\"2-title\":\"엄청난 발표! Pocketnet 응용 프로그램은 이제 Bastyon이라고 합니다!\",\"2-message1\":\"도메인이 Bastyon.com으로 이동됩니다. 최근에 다음과 같은 주요 업데이트를 발표했습니다\",\"2-list1\":\"귀하의 전화 번호에 연결되지 않은 개인 암호화 메신저\",\"2-list2\":\"블로거에게 PKOIN 기부 기능\",\"2-list3\":\"비디오 및 라이브 스트리밍\",\"2-message2\":\"지금 친구를 초대하고 탈중앙화 인터넷의 큰 미래의 일부가 되십시오!\",\"2-button\":\"친구를 초대\"},\"sendingerror\":\"An error occurred while sending the message\",\"details\":\"Details\",\"settings_pin\":\"Pin chat window\",\"checked\":\"Yes\",\"unchecked\":\"No\",\"settings_read\":\"Send read receipts\",\"messagewasburn\":\"This message remains only in the memory of your device\",\"messagewillburn\":\"The message will be deleted soon\",\"micaccessbrowser\":\"Access to the microphone is restricted, please check your browser settings.\",\"micaccesscommonproblem\":\"Sorry, for some reason it is not possible to record voice messages on the device\",\"micaccesscordova\":\"Access to the microphone is restricted, please check your device settings.\",\"micdevicenotfound\":\"Audio recording device not found\"}");
+module.exports = JSON.parse("{\"caption\":{\"create\":\"Create\",\"addPublicChatName\":\"Add Public Chat Name\",\"addGroupNamePlaceHolder\":\"Add Group Name\",\"createPublicChat\":\"Create public chat\",\"chatTopic\":\"Topic renamed\",\"publicRoomTitle\":\"Public Room\",\"asModerator\":\"as moderator\",\"marked\":\"marked\",\"unmarked\":\"unmarked\",\"removeBan\":\"Remove Ban\",\"cancelModeration\":\"Remove moderation\",\"uploadFiles\":\"파일 업로드\",\"header\":\"헤더\",\"dragAndDropAFile\":\"파일 끌어서 놓기\",\"chatInvite\":\"다음과 채팅하도록 초대되었습니다:\",\"cantJoin\":\"다음과 채팅하기 위해 참여할 수 없습니다:\",\"chatInviteDecline\":\"채팅에 참여하거나 초대를 거부할 수 있습니다.\",\"creatorLeft\":\"크리에이터가 방을 나갔기 때문에\",\"encrypted\":\"암호화\",\"noImages\":\"이 채팅에는 아직 이미지가 없습니다\",\"noFiles\":\"There are no files in this chat yet\",\"inviteUser\":\"사용자 초대\",\"invite\":\"초대하다\",\"add\":\"추가\",\"mute\":\"음소거\",\"unmute\":\"음소거 해제\",\"leave\":\"떠나다\",\"Info\":\"정보\",\"new\":\"신규\",\"typing\":\"타자\",\"accNotFound\":\"등록이 진행 중입니다. 잠시만 기다려 주십시오...\",\"emptyList\":\"목록이 비어 있습니다(필터링되었거나 비어 있음)\",\"welcome\":\"포켓넷 채팅에 오신 것을 환영합니다\",\"startNewChat\":\"새 채팅 시작\",\"chats\":\"채팅\",\"shareWith\":\"공유\",\"newChat\":\"새 채팅\",\"moveToChat\":\"채팅으로 이동\",\"queryNoResults\":\"쿼리가 결과를 보고하지 않음\",\"needMoreCharacters\":\"결과에 대해 더 많은 문자가 필요합니다\",\"createGroup\":\"그룹 만들기\",\"unabletoDecrypt\":\"* 해독할 수 없음\",\"messageDeleted\":\"메시지 삭제됨\",\"sentImage\":\"전송된 이미지\",\"sentVoiceMessage\":\"음성 메시지를 보냈다\",\"invitationToChat\":\"채팅 초대\",\"invitationToRoom\":\"Invitation to room\",\"leftChat\":\"채팅에서 나감\",\"joined\":\"가입\",\"chatRenamed\":\"채팅 이름이 (으)로 변경되었습니다 \",\"recentComment\":\"최근 댓글:\",\"share\":\"공유\",\"followers\":\"팔로워:\",\"reputation\":\"평판:\",\"following\":\"팔로잉:\",\"theme\":\"테마:\",\"contacts\":\"연락처\",\"phoneContacts\":\"전화 연락처\",\"chooseInviteMedia\":\"초대 방법을 선택하십시오:\",\"admin\":\"관리자\",\"moderator\":\"진행자\",\"videocall\":\"영상통화\",\"call\":\"전화\",\"leaveAndDelete\":\"나가서 삭제\",\"donate\":\"기부하다\",\"makeModerator\":\"모더레이터 만들기\",\"ban\":\"금지\",\"kick\":\"킥\",\"members\":\"회원\",\"media\":\"미디어\",\"files\":\"파일\",\"contactsList\":\"연락처 목록\",\"send\":\"보내다\",\"pageCaption\":\"페이지 캡션\",\"caption\":\"캡션\",\"text\":\"텍스트\",\"placeholder\":\"자리 표시자\",\"sendTransactionTo\":\"트랜잭션 보내기\",\"toBePaidByReceiver\":\"수취인이 지불함\",\"toBePaidBySender\":\"발신인이 지불함\",\"source\":\"소스\",\"amount\":\"금액\",\"receiver\":\"수신자\",\"message\":\"메시지\",\"includeFeesInAmount\":\"금액에 수수료 포함\",\"transactionFees\":\"거래 수수료\",\"totalAmount\":\"총 금액\",\"balanceTooLow\":\"밸런스가 너무 낮음\",\"transactionError\":\"오류, 거래를 할 수 없습니다\",\"calculateFees\":\"수수료 계산\",\"startChatWith\":\"채팅 시작\",\"searchResult\":\"검색 결과\",\"joinedInTheChat\":\"채팅에 참여했습니다\",\"invited\":\"초대 \",\"hasInvited\":\"초대 \",\"inTheChat\":\" 채팅 중\",\"banned\":\"금지된\",\"andRoom\":\"그리고 방\",\"left\":\"왼쪽\",\"theChat\":\" 채팅 \",\"made\":\"만든 \",\"aModerator\":\" 중재자\",\"editedChatNameTo \":\"편집된 채팅 이름을 \",\"somebody\":\"누군가\",\"sent\":\"보낸\",\"PKOINto\":\" PKOIN to \",\"response\":\"응답\",\"messagefrom\":\"에서 전달된 메시지\",\"edited\":\"편집됨\",\"settings\":\"설정\",\"unauthorized\":\"무단\",\"search\":\"검색\",\"replyOnMessage\":\"메시지에 회신\",\"editMessage\":\"메시지 편집\",\"inviteFriend\":\"친구 초대\",\"emptyContactList\":\"연락처 목록이 비어 있습니다\",\"joinApp\":\"포켓넷 가입\",\"hasInvitedToJoin\":\"Pocketnet에 가입하도록 초대했습니다\",\"contactsempty\":\"아직 연락처가 없습니다. 검색에서 찾으십시오\",\"chatsearchingempty\":\"No chats found for the specified filter\",\"sendmessage\":\"Send message\"},\"input\":{\"patientEmailPlaceholder\":\"이메일\",\"refillNamePlaceholder\":\"리필 이름\"},\"message\":{},\"button\":{\"starChatButton\":\"채팅 시작\",\"decline\":\"거절\",\"declineandignore\":\"사용자 무시\",\"join\":\"가입\",\"ok\":\"그래\",\"copy\":\"복사\",\"forward\":\"앞으로\",\"delete\":\"삭제\",\"reply\":\"답장\",\"share\":\"공유\",\"save\":\"저장\",\"download\":\"다운로드\",\"downloaded\":\"다운로드\",\"goToPocketnetProfile\":\"Pocketnet 프로필로 이동\",\"sendFile\":\"파일 보내기\",\"takePhotoOrVideo\":\"이미지 보내기\",\"sendCoins\":\"코인 보내기\",\"edit\":\"편집\",\"select\":\"고르다\",\"block\":\"차단\",\"unblock\":\"차단 해제\",\"blockUser\":\"사용자 차단\"},\"yes\":\"예\",\"cancel\":\"취소\",\"teamMessages\":{\"1-title\":\"Bastyon 비공개 채팅에 오신 것을 환영합니다!\",\"1-list1\":\"전화번호와 연결되지 않은 비공개 메신저\",\"1-list2\":\"기본적으로 모든 1:1 대화의 종단 간 암호화\",\"1-list3\":\"채팅을 통해 주고받는 모든 이미지는 암호화되어 저장됩니다\",\"1-list4\":\"메시지 기록은 7일 동안만 저장됩니다\",\"2-title\":\"엄청난 발표! Pocketnet 응용 프로그램은 이제 Bastyon이라고 합니다!\",\"2-message1\":\"도메인이 Bastyon.com으로 이동됩니다. 최근에 다음과 같은 주요 업데이트를 발표했습니다\",\"2-list1\":\"귀하의 전화 번호에 연결되지 않은 개인 암호화 메신저\",\"2-list2\":\"블로거에게 PKOIN 기부 기능\",\"2-list3\":\"비디오 및 라이브 스트리밍\",\"2-message2\":\"지금 친구를 초대하고 탈중앙화 인터넷의 큰 미래의 일부가 되십시오!\",\"2-button\":\"친구를 초대\"},\"sendingerror\":\"An error occurred while sending the message\",\"details\":\"Details\",\"settings_pin\":\"Pin chat window\",\"checked\":\"Yes\",\"unchecked\":\"No\",\"settings_read\":\"Send read receipts\",\"messagewasburn\":\"This message remains only in the memory of your device\",\"messagewillburn\":\"The message will be deleted soon\",\"micaccessbrowser\":\"Access to the microphone is restricted, please check your browser settings.\",\"micaccesscommonproblem\":\"Sorry, for some reason it is not possible to record voice messages on the device\",\"micaccesscordova\":\"Access to the microphone is restricted, please check your device settings.\",\"micdevicenotfound\":\"Audio recording device not found\"}");
 
 /***/ }),
 
@@ -89417,6 +89961,18 @@ module.exports = function transformData(data, headers, fns) {
 
   return data;
 };
+
+
+/***/ }),
+
+/***/ "c412":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_16157ecb_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("51c5");
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_16157ecb_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_16157ecb_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_16157ecb_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_16157ecb_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
 
 
 /***/ }),
@@ -93815,6 +94371,20 @@ module.exports = {
 
 /***/ }),
 
+/***/ "d270":
+/***/ (function(module, exports, __webpack_require__) {
+
+// Imports
+var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
+exports = ___CSS_LOADER_API_IMPORT___(false);
+// Module
+exports.push([module.i, ".chats-list .searchWrapperEA[data-v-57da332f]{margin-top:.5em}.removeRoom[data-v-57da332f]{width:62px;height:100%;background:rgb(var(--color-bad));border-radius:3px}.removeRoom i[data-v-57da332f]{color:#fff}.chatsearchingempty[data-v-57da332f]{padding:2em;text-align:center}.chatsearchingempty span[data-v-57da332f]{font-size:1.5em;font-weight:100}.generatekeys[data-v-57da332f],.inviteUserDiv[data-v-57da332f]{margin-top:.5em;margin-bottom:1em}.generatekeys .generatekeysButton[data-v-57da332f],.generatekeys .inviteButton[data-v-57da332f],.inviteUserDiv .generatekeysButton[data-v-57da332f],.inviteUserDiv .inviteButton[data-v-57da332f]{background-color:rgb(var(--color-bg-orange));color:#fff;width:100%;height:34px;font-size:.9em;border-radius:30px;position:relative;cursor:pointer}.generatekeys .generatekeysButton i[data-v-57da332f],.generatekeys .inviteButton i[data-v-57da332f],.inviteUserDiv .generatekeysButton i[data-v-57da332f],.inviteUserDiv .inviteButton i[data-v-57da332f]{position:absolute;right:0;top:0;line-height:34px;width:50px;text-align:center}[data-v-57da332f] .statusIcon{font-size:.8em}.desktopList .card-content[data-v-57da332f]{position:absolute;width:100%;left:0;right:0;height:60px}.bout .desktopList .card-content[data-v-57da332f]{height:70px;contain:strict}.selectedForShare[data-v-57da332f]{background:rgba(var(--color-shadow-base),.8)!important}.selectedForShare .paddingwrapper[data-v-57da332f]{position:absolute;left:50px;top:100px;bottom:100px;right:50px;overflow:hidden;border-radius:50%}.selectedForShare .paddingwrapper .chatwrapper[data-v-57da332f]{position:absolute;background:rgb(var(--background-total-theme));left:-50px;top:-100px;bottom:-100px;right:-50px}.selectedForShare[data-v-57da332f] .chatInputWrapper{display:none}.previewWrapper[data-v-57da332f]:last-child{border-bottom:0}.swipeout-list[data-v-57da332f]{display:flex;flex-direction:column}.startnewchat[data-v-57da332f],.unauthorized[data-v-57da332f]{padding:2em 0;text-align:center}.startnewchat .buttonWrapper[data-v-57da332f],.unauthorized .buttonWrapper[data-v-57da332f]{padding:1em}.startnewchat .captionWrapper[data-v-57da332f],.unauthorized .captionWrapper[data-v-57da332f]{padding:1em;text-align:center}.startnewchat .captionWrapper span[data-v-57da332f],.unauthorized .captionWrapper span[data-v-57da332f]{font-size:1.5em;font-weight:100}.card[data-v-57da332f]{width:100%;border-radius:3px}.inviteUserDivWrapper[data-v-57da332f]{transition:.3s}.chats-list.minimized:not(.active) .inviteUserDivWrapper[data-v-57da332f],.chats-list.minimized:not(.active) .startnewchat[data-v-57da332f],.chats-list.minimized:not(.active) .unauthorized[data-v-57da332f],.unauthorized.minimized[data-v-57da332f]:not(.active){display:none}", ""]);
+// Exports
+module.exports = exports;
+
+
+/***/ }),
+
 /***/ "d2bb":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -93845,18 +94415,6 @@ module.exports = Object.setPrototypeOf || ('__proto__' in {} ? function () {
     return O;
   };
 }() : undefined);
-
-
-/***/ }),
-
-/***/ "d2d5":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_73b53530_scoped_true_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("4c38");
-/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_73b53530_scoped_true_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_73b53530_scoped_true_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_73b53530_scoped_true_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_73b53530_scoped_true_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
 
 
 /***/ }),
@@ -93962,6 +94520,24 @@ module.exports = Axios;
 
 /***/ }),
 
+/***/ "d3b8":
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__("abf7");
+if(content.__esModule) content = content.default;
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add CSS to Shadow Root
+var add = __webpack_require__("35d6").default
+module.exports.__inject__ = function (shadowRoot) {
+  add("40e4817a", content, shadowRoot)
+};
+
+/***/ }),
+
 /***/ "d3ff":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -93969,7 +94545,7 @@ module.exports = Axios;
 // ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"3c23d37e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/contact/index.vue?vue&type=template&id=7650772c&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/contact/index.vue?vue&type=template&id=7650772c&scoped=true&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:{'bin' : _vm.pocketnet, 'bout' : !_vm.pocketnet, minimized: _vm.minimized, fix : _vm.pocketnet, active: _vm.active, 'isBlocked': _vm.blocked},attrs:{"id":"contact"}},[_c('div',{staticClass:"viewWrapper"},[_c('div',{staticClass:"uviewwr"},[_c('userView',{attrs:{"userinfo":_vm.contact,"blocked":_vm.blocked}})],1)]),(_vm.contact.id !== _vm.activeuser.id)?_c('div',{staticClass:"actionsWrapper"},[_c('contactActions',{attrs:{"contact":_vm.contact,"blocked":_vm.blocked}})],1):_c('div',{staticClass:"actionsWrapper"},[_c('div',{staticClass:"youw"},[_vm._v(" It is you ")])])])}
 var staticRenderFns = []
 
@@ -93979,7 +94555,7 @@ var staticRenderFns = []
 // EXTERNAL MODULE: ./node_modules/vuex/dist/vuex.esm.js
 var vuex_esm = __webpack_require__("2f62");
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"3c23d37e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/contact/view/index.vue?vue&type=template&id=756bd822&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/contact/view/index.vue?vue&type=template&id=756bd822&scoped=true&
 var viewvue_type_template_id_756bd822_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{attrs:{"id":"contactView"}},[_c('div',{staticClass:"imageWrapper"},[_c('userpic',{attrs:{"userinfo":_vm.contact}})],1),_c('div',{staticClass:"nameWrapper"},[_c('span',[_vm._v(_vm._s(_vm.contact.name))])])])}
 var viewvue_type_template_id_756bd822_scoped_true_staticRenderFns = []
 
@@ -94039,7 +94615,7 @@ var component = Object(componentNormalizer["a" /* default */])(
 // EXTERNAL MODULE: ./src/components/user/view/pnuser/index.vue + 4 modules
 var pnuser = __webpack_require__("42cd");
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"3c23d37e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/contact/actions/index.vue?vue&type=template&id=6fd14ec6&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/contact/actions/index.vue?vue&type=template&id=6fd14ec6&scoped=true&
 var actionsvue_type_template_id_6fd14ec6_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{attrs:{"id":"contactActions"}},[_c('div',{staticClass:"actions"},[(_vm.tetatetid)?_c('div',{staticClass:"actionWrapper"},[(!_vm.blocked)?_c('router-link',{attrs:{"to":'chat?id=' + _vm.tetatetid + '&u=' + _vm.contact.id}},[(_vm.readyChat.length !== 0)?_c('button',{staticClass:"button bright rounded small"},[_vm._v(_vm._s(_vm.$t("caption.moveToChat"))+" "),_c('i',{staticClass:"far fa-comment-alt"})]):_c('button',{staticClass:"button bright rounded small"},[_vm._v(_vm._s(_vm.$t("button.starChatButton"))),_c('i',{staticClass:"far fa-comment-alt"})])]):_vm._e()],1):_vm._e(),(_vm.blocked)?_c('button',{staticClass:"unBlockButton",on:{"click":function($event){return _vm.unblock()}}},[_vm._v(_vm._s(_vm.$t("button.unblock")))]):_c('button',{staticClass:"blockButton",on:{"click":function($event){return _vm.blockUser()}}},[_vm._v(_vm._s(_vm.$t("button.blockUser")))])])])}
 var actionsvue_type_template_id_6fd14ec6_scoped_true_staticRenderFns = []
 
@@ -96478,6 +97054,18 @@ function done(stream, er, data) {
 
 /***/ }),
 
+/***/ "dd47":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_c8f458dc_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("be6a");
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_c8f458dc_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_c8f458dc_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_c8f458dc_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_c8f458dc_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+
+
+/***/ }),
+
 /***/ "dd5f":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -97066,15 +97654,21 @@ InteractiveAuth.prototype = {
 
 /***/ }),
 
-/***/ "dd89":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ "de24":
+/***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_5cf3c392_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("5310");
-/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_5cf3c392_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_5cf3c392_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_5cf3c392_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_5cf3c392_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+// style-loader: Adds some css to the DOM by adding a <style> tag
 
+// load the styles
+var content = __webpack_require__("2931");
+if(content.__esModule) content = content.default;
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add CSS to Shadow Root
+var add = __webpack_require__("35d6").default
+module.exports.__inject__ = function (shadowRoot) {
+  add("2456b184", content, shadowRoot)
+};
 
 /***/ }),
 
@@ -97411,20 +98005,6 @@ var substr = 'ab'.substr(-1) === 'b'
 ;
 
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__("4362")))
-
-/***/ }),
-
-/***/ "e05a":
-/***/ (function(module, exports, __webpack_require__) {
-
-// Imports
-var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
-exports = ___CSS_LOADER_API_IMPORT___(false);
-// Module
-exports.push([module.i, ".matrin[data-v-2ac990e8]{margin:0 auto 0 0!important}.msgAction[data-v-2ac990e8]{position:absolute}.msgAction[data-v-2ac990e8]:before{content:\"\";display:block;width:100%;height:100%;position:fixed;z-index:10;opacity:.9;left:0;right:0;top:0;bottom:0}.msgAction .contentAction[data-v-2ac990e8],.msgAction[data-v-2ac990e8]:before{background-color:rgb(var(--background-main))}.msgAction .contentAction[data-v-2ac990e8]{width:180px;position:relative;z-index:300;border:.1em solid rgb(var(--neutral-grad-0));border-radius:.8em;margin:.6em 0 0 auto}.msgAction .contentAction ul[data-v-2ac990e8]{padding:0;list-style:none;margin:0;display:block;width:100%;height:100%}.msgAction .contentAction ul li[data-v-2ac990e8]{display:flex;justify-content:space-between;padding:.2em .8em;align-items:center;border-top:.1em solid rgb(var(--neutral-grad-1));font-size:1em}.msgAction .contentAction ul li[data-v-2ac990e8]:first-child{border:0}", ""]);
-// Exports
-module.exports = exports;
-
 
 /***/ }),
 
@@ -99943,20 +100523,6 @@ module.exports.__inject__ = function (shadowRoot) {
 
 /***/ }),
 
-/***/ "e71e":
-/***/ (function(module, exports, __webpack_require__) {
-
-// Imports
-var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
-exports = ___CSS_LOADER_API_IMPORT___(false);
-// Module
-exports.push([module.i, ".chats-list .searchWrapperEA[data-v-a32fb08c]{margin-top:.5em}.removeRoom[data-v-a32fb08c]{width:62px;height:100%;background:rgb(var(--color-bad));border-radius:3px}.removeRoom i[data-v-a32fb08c]{color:#fff}.chatsearchingempty[data-v-a32fb08c]{padding:2em;text-align:center}.chatsearchingempty span[data-v-a32fb08c]{font-size:1.5em;font-weight:100}.generatekeys[data-v-a32fb08c],.inviteUserDiv[data-v-a32fb08c]{margin-top:.5em;margin-bottom:1em}.generatekeys .generatekeysButton[data-v-a32fb08c],.generatekeys .inviteButton[data-v-a32fb08c],.inviteUserDiv .generatekeysButton[data-v-a32fb08c],.inviteUserDiv .inviteButton[data-v-a32fb08c]{background-color:rgb(var(--color-bg-orange));color:#fff;width:100%;height:34px;font-size:.9em;border-radius:30px;position:relative;cursor:pointer}.generatekeys .generatekeysButton i[data-v-a32fb08c],.generatekeys .inviteButton i[data-v-a32fb08c],.inviteUserDiv .generatekeysButton i[data-v-a32fb08c],.inviteUserDiv .inviteButton i[data-v-a32fb08c]{position:absolute;right:0;top:0;line-height:34px;width:50px;text-align:center}[data-v-a32fb08c] .statusIcon{font-size:.8em}.desktopList .card-content[data-v-a32fb08c]{position:absolute;width:100%;left:0;right:0;height:60px}.bout .desktopList .card-content[data-v-a32fb08c]{height:70px;contain:strict}.selectedForShare[data-v-a32fb08c]{background:rgba(var(--color-shadow-base),.8)!important}.selectedForShare .paddingwrapper[data-v-a32fb08c]{position:absolute;left:50px;top:100px;bottom:100px;right:50px;overflow:hidden;border-radius:50%}.selectedForShare .paddingwrapper .chatwrapper[data-v-a32fb08c]{position:absolute;background:rgb(var(--background-total-theme));left:-50px;top:-100px;bottom:-100px;right:-50px}.selectedForShare[data-v-a32fb08c] .chatInputWrapper{display:none}.previewWrapper[data-v-a32fb08c]:last-child{border-bottom:0}.swipeout-list[data-v-a32fb08c]{display:flex;flex-direction:column}.startnewchat[data-v-a32fb08c],.unauthorized[data-v-a32fb08c]{padding:2em 0;text-align:center}.startnewchat .buttonWrapper[data-v-a32fb08c],.unauthorized .buttonWrapper[data-v-a32fb08c]{padding:1em}.startnewchat .captionWrapper[data-v-a32fb08c],.unauthorized .captionWrapper[data-v-a32fb08c]{padding:1em;text-align:center}.startnewchat .captionWrapper span[data-v-a32fb08c],.unauthorized .captionWrapper span[data-v-a32fb08c]{font-size:1.5em;font-weight:100}.card[data-v-a32fb08c]{width:100%;border-radius:3px}.inviteUserDivWrapper[data-v-a32fb08c]{transition:.3s}.chats-list.minimized:not(.active) .inviteUserDivWrapper[data-v-a32fb08c],.chats-list.minimized:not(.active) .startnewchat[data-v-a32fb08c],.chats-list.minimized:not(.active) .unauthorized[data-v-a32fb08c],.unauthorized.minimized[data-v-a32fb08c]:not(.active){display:none}", ""]);
-// Exports
-module.exports = exports;
-
-
-/***/ }),
-
 /***/ "e7aa":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -100302,7 +100868,7 @@ class PNUser extends _user_js__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"] {
   initKeys() {
     if (!this.state) return Promise.reject();
 
-    if (this.userinfo.name && (!this.userinfo.keys || !this.userinfo.keys.length)) {
+    if (this.userinfo.name && !this.userinfo.deleted && (!this.userinfo.keys || !this.userinfo.keys.length)) {
       if (window.POCKETNETINSTANCE) {
         window.POCKETNETINSTANCE.platform.sdk.keys.init().then(r => {
           if (r == 'exist') {
@@ -100403,13 +100969,14 @@ class PNUser extends _user_js__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"] {
 
   convertUser(info) {
     return {
-      image: info.i,
-      name: decodeURI(info.name),
+      image: info.i || '',
+      name: info.name ? decodeURI(info.name) : '',
       id: _functions_js__WEBPACK_IMPORTED_MODULE_2__[/* default */ "a"].hexEncode(info.address),
       source: info,
       keys: _.filter((info.k || "").split(','), function (f) {
         return f;
       }),
+      deleted: info.deleted,
       nocache: info.nocache || false
     };
   }
@@ -100428,7 +100995,8 @@ class PNUser extends _user_js__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"] {
 
   userInfo(reload) {
     return this.usersInfo(this.credentials.address, false, reload).then(info => {
-      this.userinfo = info[0];
+      this.userinfo = info[0]; //this.userinfo.deleted = true
+
       return Promise.resolve(info[0]);
     });
   }
@@ -100492,6 +101060,18 @@ class PNUser extends _user_js__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"] {
 
 /* harmony default export */ __webpack_exports__["a"] = (PNUser);
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__("b639").Buffer))
+
+/***/ }),
+
+/***/ "e86a":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_0438bc11_scoped_true_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("6a45");
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_0438bc11_scoped_true_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_0438bc11_scoped_true_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_0438bc11_scoped_true_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_9_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_9_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_9_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_9_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_0438bc11_scoped_true_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+
 
 /***/ }),
 
@@ -101170,7 +101750,7 @@ module.exports = {
 
 "use strict";
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"3c23d37e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/assets/userspic/many.vue?vue&type=template&id=71d5e826&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/assets/userspic/many.vue?vue&type=template&id=71d5e826&scoped=true&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return (_vm.userinfo.length > 1)?_c('div',{staticClass:"aboutRoomAvatar"},[(_vm.userinfo.length < 5)?_c('div',{staticClass:"small"},[_c('div',{staticClass:"userinfopicwrapper",class:{'twoAvatars': _vm.userinfo.length === 2, 'threeAvatars' : _vm.userinfo.length === 3, 'fourAvatars' : _vm.userinfo.length === 4}},_vm._l((_vm.userinfo),function(user,i){return _c('div',{staticClass:"userwrapper"},[_c('userpic',{attrs:{"status":_vm.status[user.id],"userinfo":user}})],1)}),0)]):_c('div',{staticClass:"swiperWrapper"},[_c('div',{staticClass:"swiperWrapperFlex noswipepnt"},_vm._l((_vm.userinfo),function(user,i){return _c('div',{staticClass:"imageSwiper"},[_c('userpic',{attrs:{"status":_vm.status[user.id],"userinfo":user}})],1)}),0)])]):_vm._e()}
 var staticRenderFns = []
 
@@ -101670,7 +102250,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 /***/ "edd4":
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"caption\":{\"create\":\"Create\",\"addGroupNamePlaceHolder\":\"Add Group Name\",\"addPublicChatName\":\"Add Public Chat Name\",\"createPublicChat\":\"Create public chat\",\"chatTopic\":\"Topic renamed\",\"publicRoomTitle\":\"Public Room\",\"asModerator\":\"as moderator\",\"marked\":\"marked\",\"unmarked\":\"unmarked\",\"removeBan\":\"Remove Ban\",\"cancelModeration\":\"Remove moderation\",\"uploadFiles\":\"Upload files\",\"header\":\"header\",\"dragAndDropAFile\":\"Drag and drop file\",\"chatInvite\":\"You were invited to chat with:\",\"cantJoin\":\"You can't join to chat with:\",\"chatInviteDecline\":\"You can join in chat or decline invitation\",\"creatorLeft\":\"Because creator left the room\",\"encrypted\":\"Encrypted\",\"noImages\":\"There are no images in this chat yet\",\"noFiles\":\"There are no files in this chat yet\",\"inviteUser\":\"Invite User\",\"invite\":\"Invite\",\"add\":\"Add\",\"mute\":\"Mute\",\"unmute\":\"Unmute\",\"leave\":\"Leave\",\"Info\":\"Info\",\"new\":\"New\",\"typing\":\"typing\",\"accNotFound\":\"Your registration is in progress, please wait...\",\"emptyList\":\"list is empty ( filtered or just empty )\",\"welcome\":\"Welcome to chat\",\"startNewChat\":\"Start a new chat\",\"chats\":\"Chats\",\"shareWith\":\"Share with\",\"newChat\":\"New Chat\",\"moveToChat\":\"Move to chat\",\"queryNoResults\":\"Query reports no results\",\"needMoreCharacters\":\"Need more characters for result\",\"createGroup\":\"Create Group\",\"unabletoDecrypt\":\"* Unable to decrypt\",\"messageDeleted\":\"Message Deleted\",\"sentImage\":\"sent image\",\"sentVoiceMessage\":\"sent a voice message\",\"invitationToChat\":\"Invitation to chat\",\"invitationToRoom\":\"Invitation to room\",\"leftChat\":\"left the chat\",\"joined\":\"joined\",\"chatRenamed\":\"Chat renamed to \",\"recentComment\":\"Recent comment:\",\"share\":\"SHARE\",\"followers\":\"Followers\",\"reputation\":\"Reputation\",\"unsubscribe\":\"Unsubscribe\",\"following\":\"Following\",\"theme\":\"Theme:\",\"contacts\":\"Contacts\",\"phoneContacts\":\"Phone contacts\",\"chooseInviteMedia\":\"Please choose how you want to invite:\",\"admin\":\"Admin\",\"moderator\":\"Moderator\",\"videocall\":\"Video Call\",\"call\":\"Call\",\"leaveAndDelete\":\"Leave and Delete\",\"donate\":\"Donate\",\"makeModerator\":\"Make Moderator\",\"ban\":\"Ban\",\"kick\":\"Kick\",\"members\":\"Members\",\"media\":\"Media\",\"files\":\"Files\",\"contactsList\":\"Contacts List\",\"send\":\"send\",\"pageCaption\":\"Page caption\",\"caption\":\"Caption\",\"text\":\"text\",\"placeholder\":\"placeholder\",\"sendTransactionTo\":\"Send Transaction To\",\"toBePaidByReceiver\":\"To be paid by Receiver\",\"toBePaidBySender\":\"To be paid by Sender\",\"source\":\"Source\",\"amount\":\"Amount\",\"receiver\":\"Receiver\",\"message\":\"Message\",\"includeFeesInAmount\":\"Include Fees in Amount\",\"transactionFees\":\"Transaction Fees\",\"totalAmount\":\"Total amount\",\"balanceTooLow\":\"Balance too low\",\"transactionError\":\"Error, can't make the transaction\",\"calculateFees\":\"Calculate Fees\",\"startChatWith\":\"Start chat with\",\"searchResult\":\"Search result\",\"joinedInTheChat\":\"joined the chat\",\"invited\":\"invited \",\"inTheChat\":\" in the chat\",\"banned\":\"banned\",\"andRoom\":\"and room\",\"left\":\"left\",\"theChat\":\" the chat \",\"made\":\"made \",\"aModerator\":\" a moderator\",\"editedChatNameTo \":\"edited chat name to \",\"somebody\":\"Somebody\",\"sent\":\"sent\",\"PKOINto\":\" PKOIN to \",\"response\":\"Response\",\"messagefrom\":\"Forwarded message\",\"edited\":\"Edited\",\"settings\":\"Settings\",\"unauthorized\":\"Unauthorized\",\"search\":\"Search\",\"replyOnMessage\":\"Reply on Message\",\"editMessage\":\"Edit Message\",\"inviteFriend\":\"Invite friends\",\"emptyContactList\":\"Contacts list is empty\",\"joinApp\":\"Please connect with me for secure chat.\",\"hasInvitedToJoin\":\"It is private and NOT connected to your phone number. Let's chat!\",\"contactsempty\":\"You do not have contacts yet, find them in the search\",\"usernotgen\":\"User did not generate their encryption keys yet. You will be able to chat them when their keys are generated.\",\"younotgen\":\"Please wait a minute, Your encryption keys are being generated...\",\"messageRead\":\"Message read\",\"open\":\"Open\",\"You\":\"You\",\"chatsearchingempty\":\"No chats found for the specified filter\",\"sendmessage\":\"Send message\"},\"input\":{\"patientEmailPlaceholder\":\"Email\",\"refillNamePlaceholder\":\"Refill name\"},\"message\":{},\"button\":{\"starChatButton\":\"Start chat\",\"decline\":\"Decline\",\"declineandignore\":\"Ignore User\",\"join\":\"Join\",\"ok\":\"Ok\",\"save\":\"Save\",\"copy\":\"Copy\",\"forward\":\"Forward\",\"delete\":\"Delete\",\"reply\":\"Reply\",\"share\":\"Share\",\"download\":\"Download\",\"downloaded\":\"Downloaded\",\"goToPocketnetProfile\":\"Go to profile\",\"sendFile\":\"Send File\",\"takePhotoOrVideo\":\"Send image\",\"sendCoins\":\"Send coins\",\"edit\":\"Edit\",\"block\":\"Block\",\"unblock\":\"Unblock\",\"blockUser\":\"Block user\",\"Complain\":\"Complain\"},\"type\":{\"publicgroup\":\"Create Public group\",\"privategroup\":\"Create Private group\",\"one\":\"One on one chat\"},\"typelabel\":{\"publicgroup\":\"Public group creation\",\"privategroup\":\"Private group creation\",\"one\":\"One on one chat creation\"},\"yes\":\"Yes\",\"cancel\":\"Cancel\",\"teamMessages\":{\"1-title\":\"Welcome to Bastyon Private Chat!\",\"1-list1\":\"Private messenger that is NOT connected to your phone number\",\"1-list2\":\"End-To-End Encryption of every 1-on-1 conversation by default\",\"1-list3\":\"All images sent or received through chat are stored encrypted\",\"1-list4\":\"History of messages is saved for 7 days only\",\"2-title\":\"A Huge Announcement! Pocketnet application is now called Bastyon!\",\"2-message1\":\"The domain will be moved to Bastyon.com. We released the following major updates recently:\",\"2-list1\":\"Private encrypted messenger not connected to your phone number\",\"2-list2\":\"Ability to donate PKOIN to bloggers\",\"2-list3\":\"Video and Live Streaming\",\"2-message2\":\"Invite your friends now and be a part of the big future of decentralized internet!\",\"2-button\":\"Invite friends\"},\"sendingerror\":\"An error occurred while sending the message\",\"details\":\"Details\",\"settings_pin\":\"Pin chat window\",\"checked\":\"Yes\",\"unchecked\":\"No\",\"settings_read\":\"Send read receipts\",\"messagewasburn\":\"This message remains only in the memory of your device\",\"messagewillburn\":\"The message will be deleted soon\",\"micaccessbrowser\":\"Access to the microphone is restricted, please check your browser settings.\",\"micaccesscommonproblem\":\"Sorry, for some reason it is not possible to record voice messages on the device\",\"micaccesscordova\":\"Access to the microphone is restricted, please check your device settings.\",\"micdevicenotfound\":\"Audio recording device not found\"}");
+module.exports = JSON.parse("{\"caption\":{\"create\":\"Create\",\"addGroupNamePlaceHolder\":\"Add Group Name\",\"addPublicChatName\":\"Add Public Chat Name\",\"createPublicChat\":\"Create public chat\",\"chatTopic\":\"Topic renamed\",\"publicRoomTitle\":\"Public Room\",\"asModerator\":\"as moderator\",\"marked\":\"marked\",\"unmarked\":\"unmarked\",\"removeBan\":\"Remove Ban\",\"cancelModeration\":\"Remove moderation\",\"uploadFiles\":\"Upload files\",\"header\":\"header\",\"dragAndDropAFile\":\"Drag and drop file\",\"chatInvite\":\"You were invited to chat with:\",\"cantJoin\":\"You can't join to chat with:\",\"chatInviteDecline\":\"You can join in chat or decline invitation\",\"creatorLeft\":\"Because creator left the room\",\"encrypted\":\"Encrypted\",\"noImages\":\"There are no images in this chat yet\",\"noFiles\":\"There are no files in this chat yet\",\"inviteUser\":\"Invite User\",\"invite\":\"Invite\",\"add\":\"Add\",\"mute\":\"Mute\",\"unmute\":\"Unmute\",\"leave\":\"Leave\",\"Info\":\"Info\",\"new\":\"New\",\"typing\":\"typing\",\"accNotFound\":\"Your registration is in progress, please wait...\",\"emptyList\":\"list is empty ( filtered or just empty )\",\"welcome\":\"Welcome to chat\",\"startNewChat\":\"Start a new chat\",\"chats\":\"Chats\",\"shareWith\":\"Share with\",\"newChat\":\"New Chat\",\"moveToChat\":\"Move to chat\",\"queryNoResults\":\"Query reports no results\",\"needMoreCharacters\":\"Need more characters for result\",\"createGroup\":\"Create Group\",\"unabletoDecrypt\":\"* Unable to decrypt\",\"messageDeleted\":\"Message Deleted\",\"sentImage\":\"sent image\",\"sentVoiceMessage\":\"sent a voice message\",\"invitationToChat\":\"Invitation to chat\",\"invitationToRoom\":\"Invitation to room\",\"leftChat\":\"left the chat\",\"joined\":\"joined\",\"chatRenamed\":\"Chat renamed to \",\"recentComment\":\"Recent comment:\",\"share\":\"SHARE\",\"followers\":\"Followers\",\"reputation\":\"Reputation\",\"unsubscribe\":\"Unsubscribe\",\"following\":\"Following\",\"theme\":\"Theme:\",\"contacts\":\"Contacts\",\"phoneContacts\":\"Phone contacts\",\"chooseInviteMedia\":\"Please choose how you want to invite:\",\"admin\":\"Admin\",\"moderator\":\"Moderator\",\"videocall\":\"Video Call\",\"call\":\"Call\",\"leaveAndDelete\":\"Leave and Delete\",\"donate\":\"Donate\",\"makeModerator\":\"Make Moderator\",\"ban\":\"Ban\",\"kick\":\"Kick\",\"members\":\"Members\",\"media\":\"Media\",\"files\":\"Files\",\"contactsList\":\"Contacts List\",\"send\":\"send\",\"pageCaption\":\"Page caption\",\"caption\":\"Caption\",\"text\":\"text\",\"placeholder\":\"placeholder\",\"sendTransactionTo\":\"Send Transaction To\",\"toBePaidByReceiver\":\"To be paid by Receiver\",\"toBePaidBySender\":\"To be paid by Sender\",\"source\":\"Source\",\"amount\":\"Amount\",\"receiver\":\"Receiver\",\"message\":\"Message\",\"includeFeesInAmount\":\"Include Fees in Amount\",\"transactionFees\":\"Transaction Fees\",\"totalAmount\":\"Total amount\",\"balanceTooLow\":\"Balance too low\",\"transactionError\":\"Error, can't make the transaction\",\"calculateFees\":\"Calculate Fees\",\"startChatWith\":\"Start chat with\",\"searchResult\":\"Search result\",\"joinedInTheChat\":\"joined the chat\",\"invited\":\"invited \",\"hasInvited\":\"has invited \",\"inTheChat\":\" in the chat\",\"banned\":\"banned\",\"andRoom\":\"and room\",\"left\":\"left\",\"theChat\":\" the chat \",\"made\":\"made \",\"aModerator\":\" a moderator\",\"editedChatNameTo \":\"edited chat name to \",\"somebody\":\"Somebody\",\"sent\":\"sent\",\"PKOINto\":\" PKOIN to \",\"response\":\"Response\",\"messagefrom\":\"Forwarded message from\",\"edited\":\"Edited\",\"settings\":\"Settings\",\"unauthorized\":\"Unauthorized\",\"search\":\"Search\",\"replyOnMessage\":\"Reply on Message\",\"editMessage\":\"Edit Message\",\"inviteFriend\":\"Invite friends\",\"emptyContactList\":\"Contacts list is empty\",\"joinApp\":\"Please connect with me for secure chat.\",\"hasInvitedToJoin\":\"It is private and NOT connected to your phone number. Let's chat!\",\"contactsempty\":\"You do not have contacts yet, find them in the search\",\"usernotgen\":\"User did not generate their encryption keys yet. You will be able to chat them when their keys are generated.\",\"younotgen\":\"Please wait a minute, Your encryption keys are being generated...\",\"messageRead\":\"Message read\",\"open\":\"Open\",\"You\":\"You\",\"chatsearchingempty\":\"No chats found for the specified filter\",\"sendmessage\":\"Send message\"},\"input\":{\"patientEmailPlaceholder\":\"Email\",\"refillNamePlaceholder\":\"Refill name\"},\"message\":{},\"button\":{\"starChatButton\":\"Start chat\",\"decline\":\"Decline\",\"declineandignore\":\"Ignore User\",\"join\":\"Join\",\"ok\":\"Ok\",\"save\":\"Save\",\"copy\":\"Copy\",\"forward\":\"Forward\",\"delete\":\"Delete\",\"reply\":\"Reply\",\"share\":\"Share\",\"download\":\"Download\",\"downloaded\":\"Downloaded\",\"goToPocketnetProfile\":\"Go to profile\",\"sendFile\":\"Send File\",\"takePhotoOrVideo\":\"Send image\",\"sendCoins\":\"Send coins\",\"edit\":\"Edit\",\"select\":\"Select\",\"block\":\"Block\",\"unblock\":\"Unblock\",\"blockUser\":\"Block user\",\"Complain\":\"Complain\"},\"type\":{\"publicgroup\":\"Create Public group\",\"privategroup\":\"Create Private group\",\"one\":\"One on one chat\"},\"typelabel\":{\"publicgroup\":\"Public group creation\",\"privategroup\":\"Private group creation\",\"one\":\"One on one chat creation\"},\"yes\":\"Yes\",\"cancel\":\"Cancel\",\"teamMessages\":{\"1-title\":\"Welcome to Bastyon Private Chat!\",\"1-list1\":\"Private messenger that is NOT connected to your phone number\",\"1-list2\":\"End-To-End Encryption of every 1-on-1 conversation by default\",\"1-list3\":\"All images sent or received through chat are stored encrypted\",\"1-list4\":\"History of messages is saved for 7 days only\",\"2-title\":\"A Huge Announcement! Pocketnet application is now called Bastyon!\",\"2-message1\":\"The domain will be moved to Bastyon.com. We released the following major updates recently:\",\"2-list1\":\"Private encrypted messenger not connected to your phone number\",\"2-list2\":\"Ability to donate PKOIN to bloggers\",\"2-list3\":\"Video and Live Streaming\",\"2-message2\":\"Invite your friends now and be a part of the big future of decentralized internet!\",\"2-button\":\"Invite friends\"},\"sendingerror\":\"An error occurred while sending the message\",\"details\":\"Details\",\"settings_pin\":\"Pin chat window\",\"checked\":\"Yes\",\"unchecked\":\"No\",\"settings_read\":\"Send read receipts\",\"messagewasburn\":\"This message remains only in the memory of your device\",\"messagewillburn\":\"The message will be deleted soon\",\"micaccessbrowser\":\"Access to the microphone is restricted, please check your browser settings.\",\"micaccesscommonproblem\":\"Sorry, for some reason it is not possible to record voice messages on the device\",\"micaccesscordova\":\"Access to the microphone is restricted, please check your device settings.\",\"micdevicenotfound\":\"Audio recording device not found\"}");
 
 /***/ }),
 
@@ -103425,7 +104005,7 @@ SafeBuffer.allocUnsafeSlow = function (size) {
 /***/ "f693":
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"caption\":{\"create\":\"Create\",\"addPublicChatName\":\"Add Public Chat Name\",\"addGroupNamePlaceHolder\":\"Add Group Name\",\"createPublicChat\":\"Create public chat\",\"chatTopic\":\"Topic renamed\",\"publicRoomTitle\":\"Public Room\",\"asModerator\":\"as moderator\",\"marked\":\"marked\",\"unmarked\":\"unmarked\",\"removeBan\":\"Remove Ban\",\"cancelModeration\":\"Remove moderation\",\"uploadFiles\":\"Télécharger fichiers\",\"header\":\"En-tête\",\"dragAndDropAFile\":\"Glisser déposer fichier\",\"chatInvite\":\"Vous avez été invité à discuter avec:\",\"cantJoin\":\"Vous ne pouvez pas rejoindre la conversation avec:\",\"chatInviteDecline\":\"Vous pouvez rejoindre la conversation ou refuser l'invitation\",\"creatorLeft\":\"Car l'administrateur a quitté la conversation\",\"encrypted\":\"Encrypté\",\"noImages\":\"Il n'y a pas encore d'images dans la conversation\",\"noFiles\":\"Il n'y a pas encore d'files dans la conversation\",\"inviteUser\":\"Inviter utilisateur\",\"invite\":\"Inviter\",\"add\":\"Ajouter\",\"mute\":\"Mode silence\",\"unmute\":\"Mode son\",\"leave\":\"Quitter\",\"Info\":\"Info\",\"new\":\"Nouveau\",\"typing\":\"en train d'écrire\",\"accNotFound\":\"Votre inscription est en cours, veuillez patienter...\",\"emptyList\":\"liste vide (filtrée ou juste vide)\",\"welcome\":\"Bienvenue sur Pocketnet chat\",\"startNewChat\":\"Commencer une conversation\",\"chats\":\"Conversations\",\"shareWith\":\"Partager avec\",\"newChat\":\"Nouvelle conversation\",\"moveToChat\":\"Aller à la conversation\",\"queryNoResults\":\"Auncun résulats\",\"needMoreCharacters\":\"Veuillez saisir plus de caractères\",\"createGroup\":\"Créer groupe\",\"unabletoDecrypt\":\"* Impossible de decrypter\",\"messageDeleted\":\"Message supprimé\",\"sentImage\":\"envoyé image\",\"sentVoiceMessage\":\"envoyé un message vocal\",\"invitationToChat\":\"Invitation à discuter\",\"invitationToRoom\":\"Invitation to room\",\"leftChat\":\"a quitté la conversation\",\"joined\":\"a rejoint\",\"chatRenamed\":\"Conversation renommé en \",\"recentComment\":\"Commentaire récent:\",\"share\":\"PARTAGER\",\"followers\":\"Abonnés:\",\"reputation\":\"Réputation:\",\"following\":\"Abonnements:\",\"theme\":\"Thème:\",\"contacts\":\"Contacts\",\"phoneContacts\":\"Contacts téléphone\",\"chooseInviteMedia\":\"Veuillez choisir comment inviter:\",\"admin\":\"Administrateur\",\"moderator\":\"Modérateur\",\"videocall\":\"Appel Vidéo\",\"call\":\"Appel\",\"leaveAndDelete\":\"Quitter et supprimer\",\"donate\":\"Faire un don\",\"makeModerator\":\"Définir comme Modérateur\",\"ban\":\"Bannir\",\"kick\":\"Expulser\",\"members\":\"Membres\",\"media\":\"Médias\",\"files\":\"Fichiers\",\"contactsList\":\"Liste de contacts\",\"send\":\"envoyer\",\"pageCaption\":\"Légende de page\",\"caption\":\"Légende\",\"text\":\"Texte\",\"placeholder\":\"placeholder\",\"sendTransactionTo\":\"Envoyer transaction à\",\"toBePaidByReceiver\":\"Payé par le receveur\",\"toBePaidBySender\":\"Payé par l'expéditeur\",\"source\":\"Source\",\"amount\":\"Montant\",\"receiver\":\"Receveur\",\"message\":\"Message\",\"includeFeesInAmount\":\"Inclure les frais dans le montant\",\"transactionFees\":\"Frais de transaction\",\"totalAmount\":\"Montant total\",\"balanceTooLow\":\"Solde trop faible\",\"transactionError\":\"Erreur, la transaction ne peut être effectuée\",\"calculateFees\":\"Calculer les frais\",\"startChatWith\":\"Discuter avec:\",\"searchResult\":\"Résultat de la recherche\",\"joinedInTheChat\":\"à rejoint la conversation\",\"invited\":\"invité \",\"inTheChat\":\" dans la conversation\",\"banned\":\"banni\",\"andRoom\":\"et conversation\",\"left\":\"quiité\",\"theChat\":\" la conversation \",\"made\":\"fait \",\"aModerator\":\" un modérateur\",\"editedChatNameTo \":\"edité le nom de la conversation en \",\"somebody\":\"Quelqu'un\",\"sent\":\"a envoyé\",\"PKOINto\":\" PKOIN à \",\"response\":\"Réponse\",\"messagefrom\":\"Transférer message\",\"edited\":\"Edité\",\"settings\":\"Paramètres\",\"unauthorized\":\"Non autorisé\",\"search\":\"Recherche\",\"replyOnMessage\":\"Répondre au message\",\"editMessage\":\"Editer message\",\"inviteFriend\":\"Inviter des amis\",\"emptyContactList\":\"Liste de contacts vide\",\"joinApp\":\"Rejoindre Pocketnet\",\"hasInvitedToJoin\":\"vous a invité à rejoindre Pocketnet\",\"contactsempty\":\"Vous n'avez pas encore de contacts, vous pouvez utiliser la recherche\",\"usernotgen\":\"User did not generate their encryption keys yet. You will be able to chat them when their keys are generated.\",\"younotgen\":\"Please wait a minute, Your encryption keys are being generated...\",\"chatsearchingempty\":\"No chats found for the specified filter\",\"sendmessage\":\"Send message\"},\"input\":{\"patientEmailPlaceholder\":\"Email\",\"refillNamePlaceholder\":\"Saisissez à nouveau le nom\"},\"message\":{},\"button\":{\"starChatButton\":\"Commencer une conversation \",\"decline\":\"Refuser\",\"declineandignore\":\"Ignorer utilisateur\",\"join\":\"Rejoindre\",\"ok\":\"Ok\",\"copy\":\"Copier\",\"forward\":\"Transférer\",\"delete\":\"Supprimer\",\"save\":\"Enregistrer\",\"reply\":\"Répondre\",\"share\":\"Partager\",\"download\":\"Télécharger\",\"downloaded\":\"Téléchargé\",\"goToPocketnetProfile\":\"Aller au profile Pocketnet\",\"sendFile\":\"Envoyer fichier\",\"takePhotoOrVideo\":\"Envoyer image\",\"sendCoins\":\"Envoyer PKOIN\",\"edit\":\"Editer\",\"block\":\"Bloquer\",\"unblock\":\"Débloquer\",\"blockUser\":\"Bloquer utilisateur\"},\"yes\":\"Oui\",\"cancel\":\"Annuler\",\"teamMessages\":{\"1-title\":\"Bienvenue sur la messagerie privée Bastyon!\",\"1-list1\":\"Messagerie privée qui n'est PAS connectée à votre numéro de téléphone\",\"1-list2\":\"Chiffrement de bout en bout pour chaque conversation\",\"1-list3\":\"Toutes les images envoyées ou reçues par le biais du chat sont stockées sous forme cryptée\",\"1-list4\":\"L'historique des messages est conservé pendant 7 jours uniquement\",\"2-title\":\"Bonne nouvelle! L'application Pocketnet s'appelle désormais Bastyon!\",\"2-message1\":\"Le domaine sera déplacé vers Bastyon.com. Nous avons récemment publié les mises à jour majeures suivantes:\",\"2-list1\":\"Messagerie privée cryptée non connectée à votre numéro de téléphone\",\"2-list2\":\"Possibilité de faire des dons en PKOIN aux blogueurs\",\"2-list3\":\"Vidéo et Streaming en direct\",\"2-message2\":\"Invitez dès maintenant vos amis et faites partie du grand avenir de l'internet décentralisé!\",\"2-button\":\"Inviter des amis\"},\"sendingerror\":\"An error occurred while sending the message\",\"details\":\"Details\",\"settings_pin\":\"Pin chat window\",\"checked\":\"Yes\",\"unchecked\":\"No\",\"settings_read\":\"Send read receipts\",\"messagewasburn\":\"This message remains only in the memory of your device\",\"messagewillburn\":\"The message will be deleted soon\",\"micaccessbrowser\":\"Access to the microphone is restricted, please check your browser settings.\",\"micaccesscommonproblem\":\"Sorry, for some reason it is not possible to record voice messages on the device\",\"micaccesscordova\":\"Access to the microphone is restricted, please check your device settings.\",\"micdevicenotfound\":\"Audio recording device not found\"}");
+module.exports = JSON.parse("{\"caption\":{\"create\":\"Create\",\"addPublicChatName\":\"Add Public Chat Name\",\"addGroupNamePlaceHolder\":\"Add Group Name\",\"createPublicChat\":\"Create public chat\",\"chatTopic\":\"Topic renamed\",\"publicRoomTitle\":\"Public Room\",\"asModerator\":\"as moderator\",\"marked\":\"marked\",\"unmarked\":\"unmarked\",\"removeBan\":\"Remove Ban\",\"cancelModeration\":\"Remove moderation\",\"uploadFiles\":\"Télécharger fichiers\",\"header\":\"En-tête\",\"dragAndDropAFile\":\"Glisser déposer fichier\",\"chatInvite\":\"Vous avez été invité à discuter avec:\",\"cantJoin\":\"Vous ne pouvez pas rejoindre la conversation avec:\",\"chatInviteDecline\":\"Vous pouvez rejoindre la conversation ou refuser l'invitation\",\"creatorLeft\":\"Car l'administrateur a quitté la conversation\",\"encrypted\":\"Encrypté\",\"noImages\":\"Il n'y a pas encore d'images dans la conversation\",\"noFiles\":\"Il n'y a pas encore d'files dans la conversation\",\"inviteUser\":\"Inviter utilisateur\",\"invite\":\"Inviter\",\"add\":\"Ajouter\",\"mute\":\"Mode silence\",\"unmute\":\"Mode son\",\"leave\":\"Quitter\",\"Info\":\"Info\",\"new\":\"Nouveau\",\"typing\":\"en train d'écrire\",\"accNotFound\":\"Votre inscription est en cours, veuillez patienter...\",\"emptyList\":\"liste vide (filtrée ou juste vide)\",\"welcome\":\"Bienvenue sur Pocketnet chat\",\"startNewChat\":\"Commencer une conversation\",\"chats\":\"Conversations\",\"shareWith\":\"Partager avec\",\"newChat\":\"Nouvelle conversation\",\"moveToChat\":\"Aller à la conversation\",\"queryNoResults\":\"Auncun résulats\",\"needMoreCharacters\":\"Veuillez saisir plus de caractères\",\"createGroup\":\"Créer groupe\",\"unabletoDecrypt\":\"* Impossible de decrypter\",\"messageDeleted\":\"Message supprimé\",\"sentImage\":\"envoyé image\",\"sentVoiceMessage\":\"envoyé un message vocal\",\"invitationToChat\":\"Invitation à discuter\",\"invitationToRoom\":\"Invitation to room\",\"leftChat\":\"a quitté la conversation\",\"joined\":\"a rejoint\",\"chatRenamed\":\"Conversation renommé en \",\"recentComment\":\"Commentaire récent:\",\"share\":\"PARTAGER\",\"followers\":\"Abonnés:\",\"reputation\":\"Réputation:\",\"following\":\"Abonnements:\",\"theme\":\"Thème:\",\"contacts\":\"Contacts\",\"phoneContacts\":\"Contacts téléphone\",\"chooseInviteMedia\":\"Veuillez choisir comment inviter:\",\"admin\":\"Administrateur\",\"moderator\":\"Modérateur\",\"videocall\":\"Appel Vidéo\",\"call\":\"Appel\",\"leaveAndDelete\":\"Quitter et supprimer\",\"donate\":\"Faire un don\",\"makeModerator\":\"Définir comme Modérateur\",\"ban\":\"Bannir\",\"kick\":\"Expulser\",\"members\":\"Membres\",\"media\":\"Médias\",\"files\":\"Fichiers\",\"contactsList\":\"Liste de contacts\",\"send\":\"envoyer\",\"pageCaption\":\"Légende de page\",\"caption\":\"Légende\",\"text\":\"Texte\",\"placeholder\":\"placeholder\",\"sendTransactionTo\":\"Envoyer transaction à\",\"toBePaidByReceiver\":\"Payé par le receveur\",\"toBePaidBySender\":\"Payé par l'expéditeur\",\"source\":\"Source\",\"amount\":\"Montant\",\"receiver\":\"Receveur\",\"message\":\"Message\",\"includeFeesInAmount\":\"Inclure les frais dans le montant\",\"transactionFees\":\"Frais de transaction\",\"totalAmount\":\"Montant total\",\"balanceTooLow\":\"Solde trop faible\",\"transactionError\":\"Erreur, la transaction ne peut être effectuée\",\"calculateFees\":\"Calculer les frais\",\"startChatWith\":\"Discuter avec:\",\"searchResult\":\"Résultat de la recherche\",\"joinedInTheChat\":\"à rejoint la conversation\",\"invited\":\"invité \",\"hasInvited\":\"invité \",\"inTheChat\":\" dans la conversation\",\"banned\":\"banni\",\"andRoom\":\"et conversation\",\"left\":\"quiité\",\"theChat\":\" la conversation \",\"made\":\"fait \",\"aModerator\":\" un modérateur\",\"editedChatNameTo \":\"edité le nom de la conversation en \",\"somebody\":\"Quelqu'un\",\"sent\":\"a envoyé\",\"PKOINto\":\" PKOIN à \",\"response\":\"Réponse\",\"messagefrom\":\"Transférer message de\",\"edited\":\"Edité\",\"settings\":\"Paramètres\",\"unauthorized\":\"Non autorisé\",\"search\":\"Recherche\",\"replyOnMessage\":\"Répondre au message\",\"editMessage\":\"Editer message\",\"inviteFriend\":\"Inviter des amis\",\"emptyContactList\":\"Liste de contacts vide\",\"joinApp\":\"Rejoindre Pocketnet\",\"hasInvitedToJoin\":\"vous a invité à rejoindre Pocketnet\",\"contactsempty\":\"Vous n'avez pas encore de contacts, vous pouvez utiliser la recherche\",\"usernotgen\":\"User did not generate their encryption keys yet. You will be able to chat them when their keys are generated.\",\"younotgen\":\"Please wait a minute, Your encryption keys are being generated...\",\"chatsearchingempty\":\"No chats found for the specified filter\",\"sendmessage\":\"Send message\"},\"input\":{\"patientEmailPlaceholder\":\"Email\",\"refillNamePlaceholder\":\"Saisissez à nouveau le nom\"},\"message\":{},\"button\":{\"starChatButton\":\"Commencer une conversation \",\"decline\":\"Refuser\",\"declineandignore\":\"Ignorer utilisateur\",\"join\":\"Rejoindre\",\"ok\":\"Ok\",\"copy\":\"Copier\",\"forward\":\"Transférer\",\"delete\":\"Supprimer\",\"save\":\"Enregistrer\",\"reply\":\"Répondre\",\"share\":\"Partager\",\"download\":\"Télécharger\",\"downloaded\":\"Téléchargé\",\"goToPocketnetProfile\":\"Aller au profile Pocketnet\",\"sendFile\":\"Envoyer fichier\",\"takePhotoOrVideo\":\"Envoyer image\",\"sendCoins\":\"Envoyer PKOIN\",\"edit\":\"Editer\",\"select\":\"Sélectionner\",\"block\":\"Bloquer\",\"unblock\":\"Débloquer\",\"blockUser\":\"Bloquer utilisateur\"},\"yes\":\"Oui\",\"cancel\":\"Annuler\",\"teamMessages\":{\"1-title\":\"Bienvenue sur la messagerie privée Bastyon!\",\"1-list1\":\"Messagerie privée qui n'est PAS connectée à votre numéro de téléphone\",\"1-list2\":\"Chiffrement de bout en bout pour chaque conversation\",\"1-list3\":\"Toutes les images envoyées ou reçues par le biais du chat sont stockées sous forme cryptée\",\"1-list4\":\"L'historique des messages est conservé pendant 7 jours uniquement\",\"2-title\":\"Bonne nouvelle! L'application Pocketnet s'appelle désormais Bastyon!\",\"2-message1\":\"Le domaine sera déplacé vers Bastyon.com. Nous avons récemment publié les mises à jour majeures suivantes:\",\"2-list1\":\"Messagerie privée cryptée non connectée à votre numéro de téléphone\",\"2-list2\":\"Possibilité de faire des dons en PKOIN aux blogueurs\",\"2-list3\":\"Vidéo et Streaming en direct\",\"2-message2\":\"Invitez dès maintenant vos amis et faites partie du grand avenir de l'internet décentralisé!\",\"2-button\":\"Inviter des amis\"},\"sendingerror\":\"An error occurred while sending the message\",\"details\":\"Details\",\"settings_pin\":\"Pin chat window\",\"checked\":\"Yes\",\"unchecked\":\"No\",\"settings_read\":\"Send read receipts\",\"messagewasburn\":\"This message remains only in the memory of your device\",\"messagewillburn\":\"The message will be deleted soon\",\"micaccessbrowser\":\"Access to the microphone is restricted, please check your browser settings.\",\"micaccesscommonproblem\":\"Sorry, for some reason it is not possible to record voice messages on the device\",\"micaccesscordova\":\"Access to the microphone is restricted, please check your device settings.\",\"micdevicenotfound\":\"Audio recording device not found\"}");
 
 /***/ }),
 
@@ -103491,6 +104071,24 @@ module.exports = InterceptorManager;
 
 /***/ }),
 
+/***/ "f6f7":
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__("24a6");
+if(content.__esModule) content = content.default;
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add CSS to Shadow Root
+var add = __webpack_require__("35d6").default
+module.exports.__inject__ = function (shadowRoot) {
+  add("5f2561d6", content, shadowRoot)
+};
+
+/***/ }),
+
 /***/ "f726":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -103520,18 +104118,6 @@ module.exports = function (key) {
 
 /***/ }),
 
-/***/ "f7d0":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_icon_vue_vue_type_style_index_0_id_252fb3ae_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("40b6");
-/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_icon_vue_vue_type_style_index_0_id_252fb3ae_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_icon_vue_vue_type_style_index_0_id_252fb3ae_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_icon_vue_vue_type_style_index_0_id_252fb3ae_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_icon_vue_vue_type_style_index_0_id_252fb3ae_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-
-
-/***/ }),
-
 /***/ "f922":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -103553,7 +104139,7 @@ module.exports = exports;
 // ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"3c23d37e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/contacts/list/index.vue?vue&type=template&id=691bf714&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/contacts/list/index.vue?vue&type=template&id=691bf714&scoped=true&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"contactList",class:{minimized: _vm.minimized}},[_c('RecycleScroller',{staticClass:"scroller",attrs:{"page-mode":"","items":_vm.users,"item-size":60,"key-field":"id"},scopedSlots:_vm._u([{key:"default",fn:function(ref){
 var item = ref.item;
 return [_c('div',{staticClass:"previewWrapper minimizeex"},[(_vm.mode === 'Contacts' || _vm.mode === 'Select')?_c('div',{staticClass:"previewContact",on:{"click":function($event){return _vm.navigateToProfile(item.id, item)}}},[_c('preview',{attrs:{"contact":item,"mode":_vm.mode}})],1):_vm._e(),(_vm.mode === 'Selectmany')?_c('div',{staticClass:"previewBox",on:{"click":function($event){return _vm.toggleUser(item)}}},[_c('div',{staticClass:"previewContactSelect"},[_c('preview',{attrs:{"mode":_vm.mode,"contact":item}})],1),_c('div',{staticClass:"checkBox"},[(_vm.selected[item.id])?_c('i',{staticClass:"far fa-check-circle"}):_vm._e(),(!_vm.selected[item.id])?_c('i',{staticClass:"far fa-circle"}):_vm._e()])]):_vm._e()])]}}])})],1)}
@@ -103568,7 +104154,7 @@ var vuex_esm = __webpack_require__("2f62");
 // EXTERNAL MODULE: ./src/components/contacts/preview/index.vue + 4 modules
 var preview = __webpack_require__("92a6");
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"3c23d37e-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/utils/ModalWindow.vue?vue&type=template&id=96a5a68e&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/utils/ModalWindow.vue?vue&type=template&id=96a5a68e&scoped=true&
 var ModalWindowvue_type_template_id_96a5a68e_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"mod-wrapper"},[_c('div',{staticClass:"modal-window"},[_c('span',{staticClass:"message"},[_vm._v(_vm._s(_vm.message))]),_c('button',{staticClass:"btn",on:{"click":_vm.close}},[_vm._v("OK")])])])}
 var ModalWindowvue_type_template_id_96a5a68e_scoped_true_staticRenderFns = []
 
@@ -104256,18 +104842,6 @@ exports = ___CSS_LOADER_API_IMPORT___(false);
 exports.push([module.i, ".searchWrapper[data-v-1774f2a8]{display:flex;overflow:hidden;background:rgb(var(--background-secondary-theme));border-radius:30px;color:rgb(var(--neutral-grad-2));align-items:center}.searchWrapper .inputWrapper[data-v-1774f2a8]{flex-grow:1}.searchWrapper .inputWrapper input[data-v-1774f2a8]{padding:.75em 1em;padding-right:0;width:100%;font-size:.9em}.searchWrapper .iconWrapper[data-v-1774f2a8]{text-align:center;width:50px}.searchWrapper .iconWrapper i[data-v-1774f2a8]{font-size:.8em}#search.minimized:not(.active) .searchWrapper[data-v-1774f2a8]{border-radius:0;background:transparent;padding:0}#search.minimized:not(.active) .searchWrapper .inputWrapper[data-v-1774f2a8]{display:none}#search.minimized:not(.active) .searchWrapper .iconWrapper[data-v-1774f2a8]{text-align:center;width:44px;height:44px;line-height:44px;padding:0;border-radius:50%;background:rgba(var(--color-txt-gray-dark),.4);color:rgba(var(--color-txt-gray-dark),.8)}#search.minimized:not(.active) .searchWrapper .iconWrapper i[data-v-1774f2a8]{font-size:.8em}", ""]);
 // Exports
 module.exports = exports;
-
-
-/***/ }),
-
-/***/ "fc3b":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_2ac990e8_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("848b");
-/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_2ac990e8_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_2ac990e8_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_2ac990e8_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_index_sass_vue_type_style_index_0_id_2ac990e8_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
 
 
 /***/ }),

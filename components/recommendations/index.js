@@ -8,7 +8,7 @@ var recommendations = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el, ed, places = {}, sel;
+		var el, ed, places = {}, sel, globalParams;
 
 		var needmake = [], making = false, empty = false
 
@@ -30,8 +30,12 @@ var recommendations = (function(){
 
 		var renders = {
 			list : function(contents, clbk){
+				if(!el.c) return;
 
-				if(!el.c) return
+				self.app.Logger.info({
+					actionId: 'VIDEO_LOADED_WITH_RECOMMENDATIONS',
+					actionValue: globalParams.v,
+				});
 
 				self.shell({
 
@@ -160,7 +164,7 @@ var recommendations = (function(){
 				p = p + activities.point * 10
 			}
 
-			if(recommendation.itisvideo){
+			if(recommendation.itisvideo()){
 				var h = self.app.platform.sdk.videos.historyget(recommendation.txid)
 
 				if (h.percent > 94){
@@ -308,8 +312,9 @@ var recommendations = (function(){
 			primary : primary,
 
 			getdata : function(clbk, p){
+				needmake = [];
 
-				needmake = []
+				globalParams = parameters() || {};
 
 				empty = false
 				making = false
@@ -375,7 +380,9 @@ var recommendations = (function(){
 
 		_.each(essenses, function(essense){
 
-			essense.destroy();
+			window.requestAnimationFrame(() => {
+				essense.destroy();
+			})
 
 		})
 
