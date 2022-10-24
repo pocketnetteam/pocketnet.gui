@@ -1,5 +1,15 @@
 module.exports = (data = {user: "", amount: "", score: ""}) => {
     return {
+        repost : {
+            ru: {
+                title: `Был сделан репост вашей публикации`,
+                body: `Пользователь ${data.user}`
+            },
+            en: {
+                title: `Your post has been reposted`,
+                body: `By ${data.user}`
+            }
+        },
         boost: {
             ru: {
                 title: `Повышение рейтинга Вашего комментария`,

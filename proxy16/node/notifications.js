@@ -30,6 +30,9 @@ class Notifications{
         this.height = 0
         this.stats = new NotificationStats()
         firebase.useNotifications = true
+
+        //this.test()
+
         return this;
     }
 
@@ -77,8 +80,8 @@ class Notifications{
                                 /*|| dictionary().default[notification?.info?.l || notification?.info?.lang || 'ru']*/
 
                                 if(!notification.header){
-                                    console.log(notification)
-                                    return
+                                    //console.log(notification)
+                                    continue
                                 }
 
                                 notification.image = notification?.account?.a || notification?.account?.avatar
@@ -183,11 +186,12 @@ class Notifications{
     }
 
     async test(){
+        //console.log("TEST")
         try {
             await new Promise(resolve => setTimeout(resolve, 10000))
             await this.nodeManager.waitready()
             const node = this.nodeManager.selectbest();
-            const notifications = await node.rpcs("getnotifications", [1231059])
+            const notifications = await node.rpcs("getnotifications", [1933014])
             const events = [];
             for (const address of Object.keys(notifications?.notifiers)) {
                 const notifier = notifications?.notifiers?.[address]
@@ -207,21 +211,30 @@ class Notifications{
                             }
                             notification = this.transaction(notification, address)
                             notification = this.setDetails(notification)
-                            notification.header = dictionary({
+
+
+                            var dic = dictionary({
                                 user: notification?.account?.n || notification?.account?.name || "",
                                 amount: notification.amount || 0,
                                 score: notification.val || 0,
-                            })?.[notification.type]?.[notification?.info?.l || notification?.info?.lang || 'ru'] 
+                            })
+
+
+                            notification.header = dic?.[notification.type]?.[notification?.info?.l || notification?.info?.lang || 'en'] || dic?.[notification.type]?.['en'] 
                             
                             /*|| dictionary().default[notification?.info?.l || notification?.info?.lang || 'ru']*/
 
-                            if(!notification.header) {
-                                console.log('notification', notification)
-                                return
+                            if(!notification.header){
+                                console.log('DIC', notification)
+                                continue
                             }
 
                             notification.image = notification?.account?.a || notification?.account?.avatar
                             notification.url = this.generateUrl(notification)
+
+                            //console.log('address', address)
+
+
                             events.push({
                                 type: type,
                                 index: index,
@@ -232,8 +245,11 @@ class Notifications{
                     }
                 }
             }
+
+            //console.log('events.length', events.length)
+
             if(events.length){
-                await this.firebase.sendEvents(events);
+                //await this.firebase.sendEvents(events);
                 // for(const event of events) {
                 //     console.log(event.notification.url)
                 //     await this.firebase.sendToAll(event.notification)
