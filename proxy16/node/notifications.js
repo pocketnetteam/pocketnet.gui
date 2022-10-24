@@ -30,6 +30,9 @@ class Notifications{
         this.height = 0
         this.stats = new NotificationStats()
         firebase.useNotifications = true
+
+        //this.test()
+
         return this;
     }
 
@@ -44,6 +47,7 @@ class Notifications{
                 const node = item.node
                 const events = [];
                 const notifications = await node.rpcs("getnotifications", [item.height])
+
                 for (const address of Object.keys(notifications?.notifiers)) {
                     const notifier = notifications?.notifiers?.[address]
                     for (const type of Object.keys(notifier?.e || [])) {
@@ -54,30 +58,51 @@ class Notifications{
                                     events[eventIndex].addresses.push(address)
                                 }
                             } else {
+
                                 let notification = notifications.data[index];
                                 notification.info = notifier.i || notifier.info;
                                 notification.type = type;
                                 notification = this.transaction(notification, address)
                                 notification = this.setDetails(notification)
-                                notification.header = dictionary({
+
+                                var dic = dictionary({
                                     user: notification?.account?.n || notification?.account?.name || "",
                                     amount: notification.amount || 0,
                                     score: notification.val || 0,
-                                })?.[notification.type]?.[notification?.info?.l || notification?.info?.lang || 'ru'] || dictionary().default[notification?.info?.l || notification?.info?.lang || 'ru']
-                                notification.image = notification?.account?.a || notification?.account?.avatar
-                                notification.url = this.generateUrl(notification)
-                                events.push({
-                                    type: type,
-                                    index: index,
-                                    notification: notification,
-                                    addresses: [address]
                                 })
+
+
+                                notification.header = dic?.[notification.type]?.[notification?.info?.l || notification?.info?.lang || 'en'] || dic?.[notification.type]?.['en'] 
+                                
+                                /*|| dictionary().default[notification?.info?.l || notification?.info?.lang || 'ru']*/
+
+                                if (notification.header){
+
+                                    notification.image = notification?.account?.a || notification?.account?.avatar
+                                    notification.url = this.generateUrl(notification)
+                                    events.push({
+                                        type: type,
+                                        index: index,
+                                        notification: notification,
+                                        addresses: [address]
+                                    })
+                                }
+                                else{
+                                    console.log('no header', notification.type)
+                                }
+
+                                
                             }
                         }
                     }
                 }
                 if(events.length){
+
+                    console.log('events', events.length)
+
                     await this.firebase.sendEvents(events);
+
+
                     // for(const event of events) {
                     //     await this.firebase.sendToAll(event.notification)
                     // }
@@ -96,7 +121,7 @@ class Notifications{
                 this.stats.success++;
             } catch (e) {
 
-                console.log("E", e)
+                //console.log("E", e)
 
                 if(!item.reRequest){
                     item.reRequest = true;
@@ -149,6 +174,7 @@ class Notifications{
                 console.log("FIREBASE USERS IS EMPTY")
                 return;
             }
+
             const notification = {
                 height: block.height,
                 node: node,
@@ -161,11 +187,12 @@ class Notifications{
     }
 
     async test(){
+        //console.log("TEST")
         try {
             await new Promise(resolve => setTimeout(resolve, 10000))
             await this.nodeManager.waitready()
             const node = this.nodeManager.selectbest();
-            const notifications = await node.rpcs("getnotifications", [1231059])
+            const notifications = await node.rpcs("getnotifications", [1933014])
             const events = [];
             for (const address of Object.keys(notifications?.notifiers)) {
                 const notifier = notifications?.notifiers?.[address]
@@ -185,13 +212,30 @@ class Notifications{
                             }
                             notification = this.transaction(notification, address)
                             notification = this.setDetails(notification)
-                            notification.header = dictionary({
+
+
+                            var dic = dictionary({
                                 user: notification?.account?.n || notification?.account?.name || "",
                                 amount: notification.amount || 0,
                                 score: notification.val || 0,
-                            })?.[notification.type]?.[notification?.info?.l || notification?.info?.lang || 'ru'] || dictionary().default[notification?.info?.l || notification?.info?.lang || 'ru']
+                            })
+
+
+                            notification.header = dic?.[notification.type]?.[notification?.info?.l || notification?.info?.lang || 'en'] || dic?.[notification.type]?.['en'] 
+                            
+                            /*|| dictionary().default[notification?.info?.l || notification?.info?.lang || 'ru']*/
+
+                            if(!notification.header){
+                                console.log('DIC', notification)
+                                continue
+                            }
+
                             notification.image = notification?.account?.a || notification?.account?.avatar
                             notification.url = this.generateUrl(notification)
+
+                            //console.log('address', address)
+
+
                             events.push({
                                 type: type,
                                 index: index,
@@ -202,8 +246,11 @@ class Notifications{
                     }
                 }
             }
+
+            //console.log('events.length', events.length)
+
             if(events.length){
-                await this.firebase.sendEvents(events);
+                //await this.firebase.sendEvents(events);
                 // for(const event of events) {
                 //     console.log(event.notification.url)
                 //     await this.firebase.sendToAll(event.notification)

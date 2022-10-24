@@ -136,6 +136,8 @@ var Wss = function(node, service){
 
                     node.addblock(data)
 
+                    console.log('block', f.numfromreleasestring(node.version) )
+
                     node.notification(data)
 
                     //blockhash
