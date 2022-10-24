@@ -55,16 +55,32 @@ class Notifications{
                                     events[eventIndex].addresses.push(address)
                                 }
                             } else {
+
+
+                               
+
                                 let notification = notifications.data[index];
                                 notification.info = notifier.i || notifier.info;
                                 notification.type = type;
                                 notification = this.transaction(notification, address)
                                 notification = this.setDetails(notification)
-                                notification.header = dictionary({
+
+                                var dic = dictionary({
                                     user: notification?.account?.n || notification?.account?.name || "",
                                     amount: notification.amount || 0,
                                     score: notification.val || 0,
-                                })?.[notification.type]?.[notification?.info?.l || notification?.info?.lang || 'ru'] || dictionary().default[notification?.info?.l || notification?.info?.lang || 'ru']
+                                })
+
+
+                                notification.header = dic?.[notification.type]?.[notification?.info?.l || notification?.info?.lang || 'en'] || dic?.[notification.type]?.['en'] 
+                                
+                                /*|| dictionary().default[notification?.info?.l || notification?.info?.lang || 'ru']*/
+
+                                if(!notification.header){
+                                    console.log(notification)
+                                    return
+                                }
+
                                 notification.image = notification?.account?.a || notification?.account?.avatar
                                 notification.url = this.generateUrl(notification)
                                 events.push({
@@ -195,7 +211,15 @@ class Notifications{
                                 user: notification?.account?.n || notification?.account?.name || "",
                                 amount: notification.amount || 0,
                                 score: notification.val || 0,
-                            })?.[notification.type]?.[notification?.info?.l || notification?.info?.lang || 'ru'] || dictionary().default[notification?.info?.l || notification?.info?.lang || 'ru']
+                            })?.[notification.type]?.[notification?.info?.l || notification?.info?.lang || 'ru'] 
+                            
+                            /*|| dictionary().default[notification?.info?.l || notification?.info?.lang || 'ru']*/
+
+                            if(!notification.header) {
+                                console.log('notification', notification)
+                                return
+                            }
+
                             notification.image = notification?.account?.a || notification?.account?.avatar
                             notification.url = this.generateUrl(notification)
                             events.push({
