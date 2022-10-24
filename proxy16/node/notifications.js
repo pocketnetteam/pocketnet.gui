@@ -59,9 +59,6 @@ class Notifications{
                                 }
                             } else {
 
-
-                               
-
                                 let notification = notifications.data[index];
                                 notification.info = notifier.i || notifier.info;
                                 notification.type = type;
@@ -79,19 +76,22 @@ class Notifications{
                                 
                                 /*|| dictionary().default[notification?.info?.l || notification?.info?.lang || 'ru']*/
 
-                                if(!notification.header){
-                                    //console.log(notification)
-                                    continue
+                                if (notification.header){
+
+                                    notification.image = notification?.account?.a || notification?.account?.avatar
+                                    notification.url = this.generateUrl(notification)
+                                    events.push({
+                                        type: type,
+                                        index: index,
+                                        notification: notification,
+                                        addresses: [address]
+                                    })
+                                }
+                                else{
+                                    console.log('no header', notification.type)
                                 }
 
-                                notification.image = notification?.account?.a || notification?.account?.avatar
-                                notification.url = this.generateUrl(notification)
-                                events.push({
-                                    type: type,
-                                    index: index,
-                                    notification: notification,
-                                    addresses: [address]
-                                })
+                                
                             }
                         }
                     }
@@ -174,6 +174,7 @@ class Notifications{
                 console.log("FIREBASE USERS IS EMPTY")
                 return;
             }
+
             const notification = {
                 height: block.height,
                 node: node,
