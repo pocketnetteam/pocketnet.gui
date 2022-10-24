@@ -44,7 +44,7 @@ class Notifications{
                 const node = item.node
                 const events = [];
                 const notifications = await node.rpcs("getnotifications", [item.height])
-                console.log('notifications', notifications)
+
                 for (const address of Object.keys(notifications?.notifiers)) {
                     const notifier = notifications?.notifiers?.[address]
                     for (const type of Object.keys(notifier?.e || [])) {
@@ -79,15 +79,17 @@ class Notifications{
                 }
                 if(events.length){
 
-                    console.log('events', events)
+                    console.log('events', events.length)
 
-                    //await this.firebase.sendEvents(events);
+                    await this.firebase.sendEvents(events);
+
+
                     // for(const event of events) {
                     //     await this.firebase.sendToAll(event.notification)
                     // }
                 }
 
-                /*for(const event of events){
+                for(const event of events){
                     if(this.stats.maxSendPush < event.addresses.length){
                         this.stats.maxSendPush = event.addresses.length
                     }
@@ -95,12 +97,12 @@ class Notifications{
                         this.stats.minSendPush = event.addresses.length
                     }
                     this.stats.totalSendPush += 1;
-                }*/
+                }
 
                 this.stats.success++;
             } catch (e) {
 
-                console.log("E", e)
+                //console.log("E", e)
 
                 if(!item.reRequest){
                     item.reRequest = true;
@@ -145,14 +147,14 @@ class Notifications{
 
             this.height = block.height
             
-            /*if(!this.firebase.inited) {
+            if(!this.firebase.inited) {
                 console.log("WARNING FIREBASE")
                 return
             }
             if(!info.users){
                 console.log("FIREBASE USERS IS EMPTY")
                 return;
-            }*/
+            }
             const notification = {
                 height: block.height,
                 node: node,
