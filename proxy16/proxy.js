@@ -27,6 +27,7 @@ var Exchanges = require('./exchanges.js');
 var Peertube = require('./peertube/index.js');
 var Bots = require('./bots.js');
 var SystemNotify = require('./systemnotify.js');
+var Notifications = require('./node/notifications')
 var Transports = require("./transports")
 var Applications = require('./node/applications');
 var bitcoin = require('./lib/btc16.js');
@@ -66,6 +67,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 	var systemnotify = new SystemNotify(settings.systemnotify)
 	var slidemodule = new Slidemodule(settings.slide)
 	slidemodule.init()
+	var notifications = new Notifications()
 
 	var torapplications = new TorControl(settings.tor, self)
 
@@ -83,7 +85,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 		wss, server, pocketnet, nodeControl,
 		remote, firebase, nodeManager, wallet,
 		proxies, exchanges, peertube, bots,
-		systemnotify,
+		systemnotify, notifications,
 		logger,
 		proxy: self
 	})
@@ -343,6 +345,18 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 		}
 	}
 
+	self.notifications = {
+		init: function () {
+			return notifications.init(self, firebase, nodeManager);
+		},
+
+		info: function () {
+			return notifications.info()
+		},
+
+		destroy: function () {
+		}
+	}
 
 	self.wallet = {
 
@@ -953,6 +967,20 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 						ip: '138.201.91.156',
 					}
 				],
+
+				35: [
+					{
+						host : 'peertube29.pocketnet.app',
+						ip: '157.90.171.8',
+					}
+				],
+
+				36: [
+					{
+						host : 'peertube30.pocketnet.app',
+						ip: '95.217.165.102',
+					}
+				],
       		};
 
 			if (test){
@@ -1095,7 +1123,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 			status = 1
 
-			return this.initlist(['server', 'wss', 'nodeManager', 'wallet', 'firebase', 'nodeControl', 'torapplications', 'exchanges', 'peertube', 'bots']).then(r => {
+			return this.initlist(['server', 'wss', 'nodeManager', 'wallet', 'firebase', 'nodeControl', 'torapplications', 'exchanges', 'peertube', 'bots', 'notifications']).then(r => {
 
 				status = 2
 
@@ -2061,7 +2089,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 						data: {
 							time: f.now(),
 							session : self.session,
-							v : '0808',
+							v : '0809',
 							node : node || '',
 							height : height || 0
 						},
@@ -2097,7 +2125,19 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					})
 				},
 			},
+			settings: {
+				authorization: 'signature',
+				path: '/firebase/settings',
+				action: function (data) {
+					return self.firebase.kit.setSettings(data).then((r) => {
+						return Promise.resolve({ data: r });
+					}).catch(e => {
+						console.error(e)
 
+						return Promise.reject(e)
+					})
+				},
+			},
 			test: {
 				path: '/firebase/test',
 				action: function (data) {

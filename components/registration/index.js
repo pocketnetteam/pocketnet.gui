@@ -1866,11 +1866,11 @@ var registration = (function(){
 					inauth : deep(p, 'settings.essenseData.inauth') || false
 				};
 
-				regproxy = self.app.api.get.byid('pocketnet.app:8899:8099')
+				//regproxy = self.app.api.get.byid('pocketnet.app:8899:8099')
 
-				/*if (localStorage['regproxy']){
+				if (localStorage['regproxy']){
 					regproxy = self.app.api.get.byid(localStorage['regproxy'])
-				}*/
+				}
 
 				self.app.api.get.proxywithwallet().then(r => {
 

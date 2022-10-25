@@ -4,7 +4,7 @@
 .vscode
 .vs
 .idea
-dist
+/dist
 messenger/server/cert/key.pem
 messenger/server/cert/cert.pem
 exported.less
