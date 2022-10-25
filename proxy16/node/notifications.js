@@ -31,14 +31,12 @@ class Notifications{
         this.stats = new NotificationStats()
         firebase.useNotifications = true
 
-        this.test()
+        //this.test()
 
         return this;
     }
 
     async worker(){
-
-        return
 
         this.workerEnable = true
 
@@ -63,7 +61,7 @@ class Notifications{
 
                                 let notification = notifications.data[index];
                                 notification.info = notifier.i || notifier.info;
-                                notification.type = type;
+                                //notification.type = type;
                                 notification = this.transaction(notification, address)
                                 notification = this.setDetails(notification)
 
@@ -74,7 +72,7 @@ class Notifications{
                                 })
 
 
-                                notification.header = dic?.[notification.type]?.[notification?.info?.l || notification?.info?.lang || 'en'] || dic?.[notification.type]?.['en'] 
+                                notification.header = dic?.[type]?.[notification?.info?.l || notification?.info?.lang || 'en'] || dic?.[type]?.['en'] 
                                 
                                 /*|| dictionary().default[notification?.info?.l || notification?.info?.lang || 'ru']*/
 
@@ -90,7 +88,7 @@ class Notifications{
                                     })
                                 }
                                 else{
-                                    console.log('no header', notification.type)
+                                    console.log('no header', type)
                                 }
 
                                 
@@ -205,16 +203,22 @@ class Notifications{
                     for (const index of notifier?.e[type] || []) {
                         const eventIndex = events.findIndex(el => el.index === index && el.type === type);
                         if (eventIndex >=0) {
+
+
                             if (!events[eventIndex]?.addresses.some(el=>el===address)) {
                                 events[eventIndex].addresses.push(address)
                             }
                         } else {
+
+                            console.log('eventIndex', type)
+
+
                             let notification = notifications.data[index];
                             notification.info = notifier.i || notifier.info;
-                            notification.type = type;
-                            if (notification.type === 'privatecontent') {
+                            //notification.type = type;
+                            /*if (notification.type === 'privatecontent') {
                                 continue
-                            }
+                            }*/
                             notification = this.transaction(notification, address)
                             notification = this.setDetails(notification)
 
@@ -226,7 +230,7 @@ class Notifications{
                             })
 
 
-                            notification.header = dic?.[notification.type]?.[notification?.info?.l || notification?.info?.lang || 'en'] || dic?.[notification.type]?.['en'] 
+                            notification.header = dic?.[type]?.[notification?.info?.l || notification?.info?.lang || 'en'] || dic?.[type]?.['en'] 
                             
                             /*|| dictionary().default[notification?.info?.l || notification?.info?.lang || 'ru']*/
 
@@ -257,7 +261,7 @@ class Notifications{
             if(events.length){
                 var fs = require('fs');
 
-                fs.writeFile(f.path('data/notifications'), JSON.stringify(events), (err) => {})
+                //fs.writeFile(f.path('data/notifications'), JSON.stringify(events), (err) => {})
 
                 //await this.firebase.sendEvents(events);
                 // for(const event of events) {
