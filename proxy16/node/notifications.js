@@ -100,6 +100,9 @@ class Notifications{
 
                     console.log('events', events.length)
 
+
+                    //this.firebase.addEvents(events)
+
                     await this.firebase.sendEvents(events);
 
 

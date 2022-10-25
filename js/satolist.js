@@ -24181,11 +24181,11 @@ Platform = function (app, listofnodes) {
             },
 
             exist : function(proxy, address, token){
-                var exist = self.storage.get(proxy, address, token)
+                /*var exist = self.storage.get(proxy, address, token)
 
                 if (exist){
                     return Promise.resolve(true)
-                }
+                }*/
 
                 return self.request.mytokens(proxy).then(r => {
 
@@ -24216,7 +24216,7 @@ Platform = function (app, listofnodes) {
         }
 
         self.revokeall = function(){
-            if(using) {
+            if (using) {
                 FirebasePlugin?.unregister();
             }
 
@@ -24578,11 +24578,22 @@ Platform = function (app, listofnodes) {
         }
 
         self.init = function(clbk){
+            
             if(clbk) clbk()
 
-            self.prepare(function(token){
+            app.user.isState(function (state) {
+            
+                if(state){
+                    self.prepare(function(token){
 
-                prepareclbk(token)
+                        prepareclbk(token)
+    
+                    })
+                }
+                else{
+
+                }
+                
 
             })
 
@@ -24607,13 +24618,13 @@ Platform = function (app, listofnodes) {
 
             currenttoken = null
 
+            self.storage.clear()
+
             if (using || usingWeb){
                 self.revokeall().then(clbk).catch(e => {})
 
                 return
             }
-
-
 
             if (clbk)
                 clbk()
