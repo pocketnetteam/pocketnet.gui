@@ -37,7 +37,7 @@ class Notifications{
     }
 
     async worker(){
-
+        
         this.workerEnable = true
 
         let item = this.queue.shift();
@@ -59,9 +59,9 @@ class Notifications{
                                 }
                             } else {
 
-                                let notification = notifications.data[index];
+                                let notification =  {...notifications.data[index]}
                                 notification.info = notifier.i || notifier.info;
-                                //notification.type = type;
+                                notification.type = type;
                                 notification = this.transaction(notification, address)
                                 notification = this.setDetails(notification)
 
@@ -72,7 +72,7 @@ class Notifications{
                                 })
 
 
-                                notification.header = dic?.[type]?.[notification?.info?.l || notification?.info?.lang || 'en'] || dic?.[type]?.['en'] 
+                                notification.header = dic?.[notification.type]?.[notification?.info?.l || notification?.info?.lang || 'en'] || dic?.[notification.type]?.['en'] 
                                 
                                 /*|| dictionary().default[notification?.info?.l || notification?.info?.lang || 'ru']*/
 
@@ -80,12 +80,17 @@ class Notifications{
 
                                     notification.image = notification?.account?.a || notification?.account?.avatar
                                     notification.url = this.generateUrl(notification)
-                                    events.push({
-                                        type: type,
-                                        index: index,
-                                        notification: notification,
-                                        addresses: [address]
-                                    })
+
+                                    if(!notification.ignore){
+
+                                        events.push({
+                                            type : notification.type,
+                                            index: index,
+                                            notification: notification,
+                                            addresses: [address]
+                                        })
+
+                                    }
                                 }
                                 else{
                                     console.log('no header', type)
@@ -190,32 +195,27 @@ class Notifications{
     }
 
     async test(){
-        console.log("TEST")
         try {
             await new Promise(resolve => setTimeout(resolve, 10000))
             await this.nodeManager.waitready()
             const node = this.nodeManager.selectbest();
-            const notifications = await node.rpcs("getnotifications", [1934089])
+            const notifications = await node.rpcs("getnotifications", [1934174])
             const events = [];
             for (const address of Object.keys(notifications?.notifiers)) {
                 const notifier = notifications?.notifiers?.[address]
                 for (const type of Object.keys(notifier?.e || [])) {
                     for (const index of notifier?.e[type] || []) {
-                        const eventIndex = events.findIndex(el => el.index === index && el.type === type);
+                        const eventIndex = events.findIndex(el => el.index === index && el.type === type && type !='money' );
                         if (eventIndex >=0) {
-
 
                             if (!events[eventIndex]?.addresses.some(el=>el===address)) {
                                 events[eventIndex].addresses.push(address)
                             }
                         } else {
 
-                            console.log('eventIndex', type)
-
-
-                            let notification = notifications.data[index];
+                            let notification = {...notifications.data[index]}
                             notification.info = notifier.i || notifier.info;
-                            //notification.type = type;
+                            notification.type = type;
                             /*if (notification.type === 'privatecontent') {
                                 continue
                             }*/
@@ -230,7 +230,7 @@ class Notifications{
                             })
 
 
-                            notification.header = dic?.[type]?.[notification?.info?.l || notification?.info?.lang || 'en'] || dic?.[type]?.['en'] 
+                            notification.header = dic?.[notification.type]?.[notification?.info?.l || notification?.info?.lang || 'en'] || dic?.[notification.type]?.['en'] 
                             
                             /*|| dictionary().default[notification?.info?.l || notification?.info?.lang || 'ru']*/
 
@@ -244,13 +244,15 @@ class Notifications{
 
                             //console.log('address', address)
 
-
-                            events.push({
-                                type: type,
-                                index: index,
-                                notification: notification,
-                                addresses: [address]
-                            })
+                            if(!notification.ignore){
+                                events.push({
+                                    type: notification.type,
+                                    index: index,
+                                    notification: notification,
+                                    addresses: [address]
+                                })
+                            }
+                                
                         }
                     }
                 }
@@ -261,7 +263,7 @@ class Notifications{
             if(events.length){
                 var fs = require('fs');
 
-                //fs.writeFile(f.path('data/notifications'), JSON.stringify(events), (err) => {})
+                fs.writeFile(f.path('data/notifications'), JSON.stringify(events), (err) => {})
 
                 //await this.firebase.sendEvents(events);
                 // for(const event of events) {
@@ -281,6 +283,11 @@ class Notifications{
                     notification.cointype = this.proxy.pocketnet.kit.getCoibaseType(notification.outputs[0])
                 const amount = notification?.outputs?.find(el => el.addresshash === address)?.value;
                 notification.amount = amount ? amount / 100000000 : 0
+
+                if(notification?.inputs?.find(el=>el.addresshash === address)){
+                    notification.ignore = true  
+                }
+
                 break
             case 'boost':
                 notification.amount = notification?.inputs?.reduce((a, item)=> a+item.value, 0) - notification?.outputs?.reduce((a, item)=> a+item.value, 0)
