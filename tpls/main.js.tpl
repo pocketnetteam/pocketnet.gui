@@ -814,7 +814,8 @@ function createWindow() {
 
         for(let i = 0; i < fragmentsList.length; i++) {
 
-            videosDownloadProgress[shareId].progress = i / fragmentsList.length;
+            if (videosDownloadProgress[shareId].status == 'paused')
+                return;
 
             let fragRange = fragmentsList[i].split('@');
             fragRange = fragRange.reverse();
@@ -826,6 +827,13 @@ function createWindow() {
             const fragName = `fragment_${startBytes}-${endBytes}.mp4`;
             const fragPath = path.join(videoDir, fragName);
 
+            // Check if fragment is already downloaded and has correct size, if so, move to the next directly
+            if (fs.existsSync(fragPath)) {
+                let stats = fs.statSync(fragPath);
+                if (stats && stats.size && stats.size == fragSize)
+                    continue;
+            }
+
             const fragFile = fs.createWriteStream(fragPath);
 
             await downloadFile(targetVideoUrl, {
@@ -834,6 +842,8 @@ function createWindow() {
                     range: `bytes=${startBytes}-${endBytes}`,
                 },
             });
+
+            videosDownloadProgress[shareId].progress = i / fragmentsList.length;
         }
 
         videosDownloadProgress[shareId].progress = 1;
@@ -853,6 +863,12 @@ function createWindow() {
         };
 
         return result;
+    });
+
+    ipcMain.removeHandler('setShareVideoDlStatus');
+    ipcMain.handle('setShareVideoDlStatus', async (event, shareId, status) => {
+        if (videosDownloadProgress[shareId] != undefined)
+            videosDownloadProgress[shareId].status = status;
     });
 
     ipcMain.removeHandler('getShareVideoDlProgress');
@@ -876,15 +892,48 @@ function createWindow() {
         const isShaHash = /[a-f0-9]{64}/;
 
         const postsDir = path.join(Storage, PostsDir);
+        const pausedShares = [];
 
         if (!fs.existsSync(postsDir)) {
             return [];
         }
 
-        const postsList = fs.readdirSync(postsDir)
+        var postsList = fs.readdirSync(postsDir)
             .filter(fN => isShaHash.test(fN));
 
-        return postsList;
+        // For each post
+        postsList = postsList.filter((pId) => {
+            const videosDir = path.join(postsDir, pId, 'videos');
+            var shareIsDownloaded = true;
+
+            // If post has a videos folder
+            if (fs.existsSync(videosDir)) {
+                const videoList = fs.readdirSync(videosDir, { withFileTypes: true }).filter((dir) => dir.isDirectory());
+                if (!videoList || videoList.length <= 0)
+                    return true;
+                try {
+                    // For each video, get the video url
+                    const vurl = geturlfromm3u8(path.join(videosDir, videoList[0].name, 'playlist.m3u8'));
+                    // Look in signatures.json for the fragment list
+                    const signatures = JSON.parse(fs.readFileSync(path.join(videosDir, videoList[0].name, 'signatures.json'), { encoding:'utf8', flag:'r' }));
+                    const fragmentList = signatures[vurl];
+                    const fragmentListKeys = Object.keys(fragmentList)
+                    const lastFragmentName = "fragment_" + fragmentListKeys[fragmentListKeys.length - 1] + '.mp4';
+                    if (!fs.existsSync(path.join(videosDir, videoList[0].name, lastFragmentName))) {
+                        let resolutionId = vurl.match(/.+-(\d+)-fragmented.mp4/)[1];
+                        pausedShares.push({ shareId: pId, resolutionId: resolutionId });
+                        shareIsDownloaded = false;
+                    }
+                } catch(e) {
+                    shareIsDownloaded = true;
+                }
+            }
+
+            return shareIsDownloaded;
+
+        });
+
+        return { savedShares: postsList, pausedShares: pausedShares };
     });
 
     ipcMain.removeHandler('getShareData');

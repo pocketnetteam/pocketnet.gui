@@ -11954,19 +11954,27 @@ class LoadingBar {
 	constructor(barElem, styles) {
 		const self = this;
 
-		this.elem = barElem;
-		this.elem.addEventListener('click', () => {
-			self.onStateChange?.({
-				stopped: self.stopped,
-				value: self.value,
-			});
+		this.boundOnClick = this.onClick.bind(this);
 
-			self.toggleStateChange();
-		});
+		this.elem = barElem;
+		this.elem.addEventListener('click', this.boundOnClick);
 
 		if (styles) {
 			this.setStyles(styles);
 		}
+	}
+
+	onClick() {
+		this.toggleStateChange();
+
+		this.onStateChange?.({
+			stopped: this.stopped,
+			value: this.value,
+		});
+	}
+
+	clearListenStateChange() {
+		this.elem.removeEventListener('click', this.boundOnClick);
 	}
 
 	listenStateChange(listenerCb) {
@@ -11980,12 +11988,11 @@ class LoadingBar {
 	setValue(value) {
 		if (this.stopped) {
 			this.onListenErrors?.({ type: 'warning', text: 'Tried to set value when state is stopped' });
-			return;
 		}
 
 		if (value > 100) {
 			this.onListenErrors?.({ type: 'warning', text: 'Tried to set value bigger than 100%' });
-			return;
+			value = 100;
 		}
 
 		this.value = value;

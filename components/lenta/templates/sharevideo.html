@@ -429,7 +429,7 @@ var metadisplay = function(){ %>
 										%>
 	
 										<% if(!checkvisibility) {%>
-										<% const isSaving = (status === 'saving') %>
+										<% const isSaving = (status === 'saving' || status === 'paused') %>
 
 										<div class="item loadingBar" <%- (isSaving) ? '' : 'hidden' %>>
 											<div class="loading-bar" data-loading="true"></div>
