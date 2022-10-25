@@ -31,12 +31,14 @@ class Notifications{
         this.stats = new NotificationStats()
         firebase.useNotifications = true
 
-        //this.test()
+        this.test()
 
         return this;
     }
 
     async worker(){
+
+        return
 
         this.workerEnable = true
 
@@ -190,12 +192,12 @@ class Notifications{
     }
 
     async test(){
-        //console.log("TEST")
+        console.log("TEST")
         try {
             await new Promise(resolve => setTimeout(resolve, 10000))
             await this.nodeManager.waitready()
             const node = this.nodeManager.selectbest();
-            const notifications = await node.rpcs("getnotifications", [1933014])
+            const notifications = await node.rpcs("getnotifications", [1934089])
             const events = [];
             for (const address of Object.keys(notifications?.notifiers)) {
                 const notifier = notifications?.notifiers?.[address]
@@ -249,10 +251,14 @@ class Notifications{
                     }
                 }
             }
-
+            
             //console.log('events.length', events.length)
 
             if(events.length){
+                var fs = require('fs');
+
+                fs.writeFile(f.path('data/notifications'), JSON.stringify(events), (err) => {})
+
                 //await this.firebase.sendEvents(events);
                 // for(const event of events) {
                 //     console.log(event.notification.url)
