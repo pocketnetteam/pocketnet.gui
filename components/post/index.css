@@ -587,6 +587,10 @@
 #post .sharearticle .shareBgCaption.caption_long .captionmult {
   font-size: 0.5em;
 }
+#post .sharearticle .shareBgCaption.withcover .tags div {
+  background: transparent;
+  box-shadow: none;
+}
 #post .sharearticle .shareBgCaption.verticalcover {
   height: 720px;
 }
