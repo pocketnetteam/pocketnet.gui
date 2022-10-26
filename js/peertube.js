@@ -101,6 +101,7 @@ var PeertubeRequest = function (app = {}) {
 				}
 			})
 			.catch((r) => {
+
 				var e = {
 					code: resp.status || 400,
 					text: r,
@@ -131,6 +132,8 @@ PeerTubePocketnet = function (app) {
 	var servers = []
 	// Time needed before we will request the proxy to update the server's IP
 	var INTERVAL_CHECK_SERVER_IP = 10000;
+
+	var triedToken = false;
 
 	self.checklink = function (link) {
 		return link.includes(PEERTUBE_ID);
@@ -502,12 +505,45 @@ PeerTubePocketnet = function (app) {
 
 
 					return Promise.resolve(data)
-				}).catch((err, data) => {
-					return Promise.reject(err);
-				});
-			}).catch(e => {
+				}).catch((err = {}, data) => {
+					try {
+						const errorMessage = JSON.parse(err.text);
 
-				return Promise.reject(e)
+						if (errorMessage.code === 'invalid_token' && !triedToken) {
+						triedToken = true;
+
+						return self.api.user
+							.auth(options.host, true)
+							.then((tokenResult = {}) =>
+							{
+								if (tokenResult.access_token) {
+									requestoptions.headers.Authorization = `Bearer ${tokenResult.access_token}`;
+								} else {
+									return Promise.reject(err);
+								}
+
+								return proxyRequest.fetch(
+									url,
+									meta.path + params,
+									data,
+									requestoptions,
+								);
+							},
+							)
+							.then((data) => {
+							return Promise.resolve(data);
+							});
+						}
+
+						triedToken = false;
+
+						return Promise.reject(err);
+					} catch (error) {
+						return Promise.reject(err);
+					}
+				});
+			}).catch((e = {}) => {
+				return Promise.reject(e);
 			});
 	};
 
@@ -1187,7 +1223,7 @@ PeerTubePocketnet = function (app) {
 						return self.api.user.getToken(data, {
 							host,
 						});
-					});
+					})
 			},
 
 			getToken: function (data = {}, options = {}) {
