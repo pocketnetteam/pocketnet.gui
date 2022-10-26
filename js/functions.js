@@ -11967,10 +11967,14 @@ class LoadingBar {
 	onClick() {
 		this.toggleStateChange();
 
-		this.onStateChange?.({
-			stopped: this.stopped,
-			value: this.value,
-		});
+		const hasOnStateChange = (typeof this.onStateChange === 'function');
+
+		if (hasOnStateChange) {
+			this.onStateChange({
+				stopped: this.stopped,
+				value: this.value,
+			});
+		}
 	}
 
 	clearListenStateChange() {
@@ -11986,13 +11990,18 @@ class LoadingBar {
 	}
 
 	setValue(value) {
-		if (this.stopped) {
-			this.onListenErrors?.({ type: 'warning', text: 'Tried to set value when state is stopped' });
+		const hasOnListenErrors = (typeof this.onListenErrors === 'function');
+
+		if (this.stopped && hasOnListenErrors) {
+			this.onListenErrors({ type: 'warning', text: 'Tried to set value when state is stopped' });
 		}
 
 		if (value > 100) {
-			this.onListenErrors?.({ type: 'warning', text: 'Tried to set value bigger than 100%' });
 			value = 100;
+
+			if (hasOnListenErrors) {
+				this.onListenErrors({ type: 'warning', text: 'Tried to set value bigger than 100%' });
+			}
 		}
 
 		this.value = value;
