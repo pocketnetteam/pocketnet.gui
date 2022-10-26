@@ -86,7 +86,10 @@ var videoCabinet = (function () {
 			parseVideoServerError(error = {}) {
 				self.app.Logger.error({
 					err: error.text || 'videoCabinetError',
-					payload: error,
+					payload: {
+						...error,
+						host: self.app.peertubeHandler.active(),
+					},
 					code: 502,
 				});
 
@@ -1274,7 +1277,10 @@ var videoCabinet = (function () {
 													return self.app.Logger.error({
 														err: 'ERROR_DELETING_VIDEO_FROMCABINET',
 														code: 444,
-														payload: err,
+														payload: {
+															...err,
+															host: self.app.peertubeHandler.active(),
+														},
 													});
 												}
 												deletingElem.addClass('hidden');
@@ -1735,6 +1741,7 @@ var videoCabinet = (function () {
 						self.app.platform.sdk.ustate.canincrease(
 							{ template: 'video' },
 							function (r) {
+
 								clbk({
 									hasAccess: false,
 									inLentaWindow: ed.inLentaWindow,
@@ -1743,9 +1750,13 @@ var videoCabinet = (function () {
 								});
 
 								if (r.trial || !(r.balance && r.reputation)) {
+
 									self.app.Logger.error({
 										err: 'PEERTUBE_AUTH_ERROR_CABINET',
-										payload: err,
+										payload: {
+											...err,
+											host: self.app.peertubeHandler.active(),
+										},
 										code: 501,
 									});
 								}

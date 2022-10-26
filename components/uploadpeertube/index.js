@@ -496,13 +496,15 @@ var uploadpeertube = (function () {
 				})
 				.catch((e = {}) => {
 
-
 					processing(false)
 
 					self.app.Logger.error({
 						err: e.text || 'videoUploadError',
 						code: 401,
-						payload: e,
+						payload: {
+							...e,
+							host: self.app.peertubeHandler.active(),
+						},
 					});
 
 					if (!e.cancel) {
@@ -576,7 +578,10 @@ var uploadpeertube = (function () {
 
 							self.app.Logger.error({
 								err: e.text || 'videoImportError',
-								payload: e,
+								payload: {
+									...e,
+									host: self.app.peertubeHandler.active(),
+								},
 								code: 402,
 							});
 
@@ -675,7 +680,10 @@ var uploadpeertube = (function () {
 								if (r.trial || !(r.balance && r.reputation)) {
 									self.app.Logger.error({
 										err: 'PEERTIBE_AUTH_ERROR_VIDEOELEMENT',
-										payload: e,
+										payload: {
+											...e,
+											host: self.app.peertubeHandler.active(),
+										},
 										code: 501,
 									});
 								}
