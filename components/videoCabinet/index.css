@@ -8,6 +8,9 @@
   flex-direction: column;
   padding: 0 1em;
 }
+#videoCabinet .unpostedCaption {
+  padding: 0 1em;
+}
 #videoCabinet .preloaderwr {
   padding: 1em;
 }
