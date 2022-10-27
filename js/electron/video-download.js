@@ -6,6 +6,7 @@ const https = require('https');
 module.exports = class VideoDownload {
   PostsDir = 'posts';
   VideosDir = 'videos';
+  DownloadProgress = {};
 
   Regexps = {
     Streams: /^.+\.m3u8/gm,
@@ -48,6 +49,14 @@ module.exports = class VideoDownload {
     ipcMain.handle('getVideoSegment', async (event, videoDir, filename) => {
       return videoDownloader.getVideoSegment(videoDir, filename);
     });
+
+    ipcMain.handle('setVideoDownloadStatus', async (event, shareId, status) => {
+      return videoDownloader.setVideoDownloadStatus(shareId, status);
+    });
+
+    ipcMain.handle('getVideoDownloadProgress', async (event, shareId) => {
+      return videoDownloader.getVideoDownloadProgress(shareId);
+    });
   }
 
   static detachHandlers(ipcMain) {
@@ -72,6 +81,11 @@ module.exports = class VideoDownload {
   }
 
   async savePostVideo(folder, videoData, videoResolution) {
+    videosDownloadProgress[shareId] = {
+      status: 'downloading',
+      progress: 0,
+    };
+
     const shareId = path.basename(folder);
     const videoDir = this.getVideoFolder(shareId, videoData.uuid);
     const jsonDir = path.join(videoDir, 'info.json');
@@ -106,7 +120,15 @@ module.exports = class VideoDownload {
 
     const targetVideoUrl = `${targetStreamBaseUrl}/${targetVideo}`;
 
+    const downloadInfo = this.DownloadProgress[shareId];
+
     for(let i = 0; i < fragmentsList.length; i++) {
+      const isDownloadPaused = (downloadInfo.status === 'paused');
+
+      if (isDownloadPaused) {
+        return;
+      }
+
       let fragRange = fragmentsList[i].split('@');
       fragRange = fragRange.reverse();
 
@@ -117,6 +139,18 @@ module.exports = class VideoDownload {
       const fragName = `fragment_${startBytes}-${endBytes}.mp4`;
       const fragPath = path.join(videoDir, fragName);
 
+      /**
+       * Check if fragment is already downloaded and has
+       * correct size, if so, move to the next directly
+       */
+      if (fs.existsSync(fragPath)) {
+        let stats = fs.statSync(fragPath);
+
+        if (stats && stats.size && stats.size == fragSize) {
+          continue;
+        }
+      }
+
       const fragFile = fs.createWriteStream(fragPath);
 
       await this.downloadFile(targetVideoUrl, {
@@ -125,7 +159,12 @@ module.exports = class VideoDownload {
           range: `bytes=${startBytes}-${endBytes}`,
         },
       });
+
+      downloadInfo.progress = i / fragmentsList.length;
     }
+
+    downloadInfo.progress = 1;
+    downloadInfo.status = 'downloaded';
 
     const videoInfo = {
       thumbnail: 'https://' + videoData.from + videoData.thumbnailPath,
@@ -152,16 +191,64 @@ module.exports = class VideoDownload {
   getPostsList() {
     const isShaHash = /[a-f0-9]{64}/;
 
+    const pausedShares = [];
+
     const postsDir = path.join(this.Storage, this.PostsDir);
 
     if (!fs.existsSync(postsDir)) {
       return [];
     }
 
-    const postsList = fs.readdirSync(postsDir)
+    let postsList = fs.readdirSync(postsDir)
       .filter(fN => isShaHash.test(fN));
 
-    return postsList;
+    postsList = postsList.filter((pId) => {
+      const videosDir = path.join(postsDir, pId, 'videos');
+
+      let shareIsDownloaded = true;
+
+      // If post has a videos folder
+      if (fs.existsSync(videosDir)) {
+        const videoList = fs.readdirSync(videosDir, { withFileTypes: true })
+          .filter((dir) => dir.isDirectory());
+
+        if (!videoList || videoList.length <= 0) {
+          return true;
+        }
+
+        try {
+          const playlistPath = path.join(videosDir, videoList[0].name, 'playlist.m3u8');
+          const fileStats = fs.statSync(playlistPath);
+
+          const vurl = fileStats.match(this.Regexps.VideoTargetName)[1];
+
+          const signaturesData = fs.readFileSync(path.join(videosDir, videoList[0].name, 'signatures.json'), { encoding:'utf8', flag:'r' });
+          const signatures = JSON.parse(signaturesData);
+
+          const fragmentList = signatures[vurl];
+          const fragmentListKeys = Object.keys(fragmentList);
+          const fragmentRange = fragmentListKeys[fragmentListKeys.length - 1];
+          const lastFragmentName = `fragment_${fragmentRange}.mp4`;
+
+          const doesFragmentExist = fs.existsSync(path.join(videosDir, videoList[0].name, lastFragmentName));
+
+          if (!doesFragmentExist) {
+            const resolutionId = vurl.match(/.+-(\d+)-fragmented.mp4/)[1];
+            pausedShares.push({ shareId: pId, resolutionId: resolutionId });
+            shareIsDownloaded = false;
+          }
+        } catch(e) {
+          shareIsDownloaded = true;
+        }
+      }
+
+      return shareIsDownloaded;
+    });
+
+    return {
+      savedShares: postsList,
+      pausedShares: pausedShares,
+    };
   }
 
   getPostData(shareId) {
@@ -290,6 +377,22 @@ module.exports = class VideoDownload {
       return data;
     } catch(err) {
       return null;
+    }
+  }
+
+  setVideoDownloadStatus(shareId, status) {
+    const downloadInfo = this.DownloadProgress[shareId];
+
+    if (downloadInfo) {
+      downloadInfo.status = status;
+    }
+  }
+
+  getVideoDownloadProgress(shareId) {
+    const downloadInfo = this.DownloadProgress[shareId];
+
+    if (downloadInfo) {
+      return downloadInfo[shareId];
     }
   }
 
