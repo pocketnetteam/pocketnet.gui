@@ -7213,7 +7213,7 @@ Platform = function (app, listofnodes) {
 
             getSegment :  function(dir, filename){
 
-                return electron.ipcRenderer.invoke('getSegment', dir, filename)
+                return electron.ipcRenderer.invoke('getVideoSegment', dir, filename)
 
             },
 
