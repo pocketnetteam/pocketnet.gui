@@ -590,12 +590,44 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 			await torapplications.stop();
 		},
 
-		statusListener: async (callBack)=>{
-			if(!global.USE_PROXY_NODE) {
-				callBack?.('stopped')
-			}else {
-				torapplications.statusListener(callBack)
-			}
+		isStarted: () => {
+			if (!global.USE_PROXY_NODE) return false;
+			return torapplications.isStarted();
+		},
+
+		isStopped: () => {
+			if (!global.USE_PROXY_NODE) return true;
+			return torapplications.isStopped();
+		},
+
+		isInstalling: () => {
+			if (!global.USE_PROXY_NODE) return false;
+			return torapplications.isInstalling();
+		},
+
+		isRunning: () => {
+			if (!global.USE_PROXY_NODE) return false;
+			return torapplications.isRunning();
+		},
+
+		onStarted: (listener) => {
+			if (!global.USE_PROXY_NODE) return;
+			torapplications.onStarted(listener);
+		},
+
+		onStopped: (listener) => {
+			if (!global.USE_PROXY_NODE) return listener();
+			torapplications.onStopped(listener);
+		},
+
+		onInstalling: (listener) => {
+			if (!global.USE_PROXY_NODE) return;
+			torapplications.onInstalling(listener);
+		},
+
+		onRunning: (listener) => {
+			if (!global.USE_PROXY_NODE) return;
+			torapplications.onRunning(listener);
 		},
 
 		destroy: async ()=>{

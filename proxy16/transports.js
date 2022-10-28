@@ -124,23 +124,19 @@ module.exports = function (enable = false) {
     }
 
     const awaitTor = async () => {
-        return new Promise(resolve=>{
-            if(self.torapplications){
-                if(self.torapplications?.state?.status === "started"){
-                    resolve(true)
-                } else if(self.torapplications?.state?.status === "stopped"){
-                    resolve(false)
-                } else {
-                    self.torapplications.statusListener((status) => {
-                        if (status === "started") {
-                            resolve(true)
-                        }
-                    });
-                }
-            } else {
-                resolve (false)
-            }
-        })
+        const torcontrol = self.torapplications;
+
+        if (!torcontrol || torcontrol?.isStopped()) {
+            return false;
+        }
+
+        if (torcontrol.isStarted()) {
+            return true;
+        }
+
+        return new Promise((resolve, reject) => {
+            self.torapplications.onStarted(() => resolve(true));
+        });
     };
 
     return self;

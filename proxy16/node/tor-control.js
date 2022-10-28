@@ -24,20 +24,44 @@ class Helpers {
 }
 
 class TorControl {
+    helpers = new Helpers();
+    state = { status: 'stopped' };
+    statusListeners = [];
+
     constructor(settings, proxy) {
         this.settings = {};
         this.settings.path = f.path(settings?.dbpath || "data/tor");
         this.settings.enable = settings?.enabled || false;
-        this.state = {};
-        this._statusListenerCallBack = null;
-        this.state.status = 'stopped'
         this.application = new Applications(settings,applicationRepository, proxy)
-        this.helpers = new Helpers();
     }
 
-    statusListener = (callBack)=>{
-        this._statusListenerCallBack = callBack;
-    }
+    onStatusChange = (listener) => {
+        this.statusListeners.push({
+            type: 'any',
+            listener,
+        });
+    };
+
+    offStatusChange = (listener) => {
+        const listenerId = this.statusListeners.findIndex(l => (
+          l.toString() === listener.toString()
+        ));
+
+        if (listenerId) {
+            delete this.statusListeners[listenerId];
+            this.statusListeners = this.statusListeners.flat();
+        }
+    };
+
+    isStarted = () => (this.state.status === 'started');
+    isStopped = () => (this.state.status === 'stopped');
+    isInstalling = () => (this.state.status === 'install');
+    isRunning = () => (this.state.status === 'running');
+
+    onStarted = (listener) => this.statusListeners.push({ type: 'started', listener });
+    onStopped = (listener) => this.statusListeners.push({ type: 'stopped', listener });
+    onInstalling = (listener) => this.statusListeners.push({ type: 'install', listener });
+    onRunning = (listener) => this.statusListeners.push({ type: 'running', listener });
 
     init = async ()=>{
         try {
