@@ -37,7 +37,7 @@ var Logger = function(_loggers){
 
     var self = this
     var loggers = _loggers
-    var level = 'warn'
+    var level = 'info'
     var writelogs = false
 
     self.app = null
@@ -130,7 +130,7 @@ var Logger = function(_loggers){
                 level : level,
                 
                 format: combine(
-                    winston.format.colorize(),
+                    //winston.format.colorize(),
                     label({ label: key }),
                     timestamp(),
                     prettyPrint(),
