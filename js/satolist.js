@@ -24581,7 +24581,7 @@ Platform = function (app, listofnodes) {
             
             if(clbk) clbk()
 
-            app.user.isState(function (state) {
+            /*app.user.isState(function (state) {
             
                 if(state){
                     self.prepare(function(token){
@@ -24595,7 +24595,7 @@ Platform = function (app, listofnodes) {
                 }
                 
 
-            })
+            })*/
 
         }
 
