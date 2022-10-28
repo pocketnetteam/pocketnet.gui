@@ -7243,12 +7243,12 @@ Platform = function (app, listofnodes) {
             },
 
             videoDlProgress : async function(id){
-                const progress = await electron.ipcRenderer.invoke('getShareVideoDlProgress', id);
+                const progress = await electron.ipcRenderer.invoke('getVideoDownloadProgress', id);
                 return progress;
             },
 
             setVideoDlStatus : async function(id, status){
-                await electron.ipcRenderer.invoke('setShareVideoDlStatus', id,  status);
+                await electron.ipcRenderer.invoke('setVideoDownloadStatus', id,  status);
             },
 
             clearfromstorage : function(shareId){
