@@ -81,16 +81,17 @@ module.exports = class VideoDownload {
   }
 
   async savePostVideo(folder, videoData, videoResolution) {
-    videosDownloadProgress[shareId] = {
-      status: 'downloading',
-      progress: 0,
-    };
 
     const shareId = path.basename(folder);
     const videoDir = this.getVideoFolder(shareId, videoData.uuid);
     const jsonDir = path.join(videoDir, 'info.json');
     const signsDir = path.join(videoDir, 'signatures.json');
     const playlistDir = path.join(videoDir, 'playlist.m3u8');
+
+    this.DownloadProgress[shareId] = {
+      status: 'downloading',
+      progress: 0,
+    };
 
     const jsonData = JSON.stringify(videoData);
     fs.writeFileSync(jsonDir, jsonData, { overwrite: false });
@@ -218,7 +219,7 @@ module.exports = class VideoDownload {
 
         try {
           const playlistPath = path.join(videosDir, videoList[0].name, 'playlist.m3u8');
-          const fileStats = fs.statSync(playlistPath);
+          const fileStats = fs.readFileSync(playlistPath, { encoding:'utf8', flag:'r' });
 
           const vurl = fileStats.match(this.Regexps.VideoTargetName)[1];
 
@@ -286,11 +287,11 @@ module.exports = class VideoDownload {
 
     const playlistPath = path.join(videoDir, playlistName);
 
-    const fileStats = fs.statSync(playlistPath);
+    const fileStats = fs.readFileSync(playlistPath, { encoding:'utf8', flag:'r' });
 
     const masterSwarmId = details.streamingPlaylists[0].playlistUrl;
 
-    const vurl = playlistPath.match(this.Regexps.VideoTargetName)[1];
+    const vurl = fileStats.match(this.Regexps.VideoTargetName)[1];
 
     let signatures;
 
@@ -306,7 +307,7 @@ module.exports = class VideoDownload {
       let i = -1;
       let f = -1;
 
-      const fss = signatures.find((a, index) => {
+      const fss = _.find(signatures, (a, index) => {
         f++;
 
         if (index == vurl) {
@@ -392,7 +393,7 @@ module.exports = class VideoDownload {
     const downloadInfo = this.DownloadProgress[shareId];
 
     if (downloadInfo) {
-      return downloadInfo[shareId];
+      return downloadInfo;
     }
   }
 
