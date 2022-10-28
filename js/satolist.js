@@ -28917,6 +28917,16 @@ Platform = function (app, listofnodes) {
 
             if (typeof PeerTubePocketnet != 'undefined'){
                 self.app.peertubeHandler = new PeerTubePocketnet(self.app);
+                // Fetch the peertube servers
+                self.app.peertubeHandler.api.proxy.roys({ type: 'upload' }).then((ptServers) => {
+                    try {
+                        if (ptServers)
+                            self.app.options.peertubeServer = ptServers[_.sample(Object.keys(ptServers))];
+                    } catch(err) {}
+                    console.log("Using Peertube server: ", self.app.options.peertubeServer);
+                }, (err) => {
+                    console.log(err);
+                });
             }
 
 
