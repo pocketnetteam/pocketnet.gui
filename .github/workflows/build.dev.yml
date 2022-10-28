@@ -17,6 +17,7 @@ jobs:
       - name: Prepare building
         run: |
           npm i
+          npm rebuild
           npm run dev:bastyon
       - name: Prepare for app notarization
         run: |
@@ -54,6 +55,7 @@ jobs:
       - name: Prepare building
         run: |
           npm i
+          npm rebuild
           npm run dev:bastyon
       - name: Building
         run: |
@@ -80,6 +82,7 @@ jobs:
       - name: Prepare building
         run: |
           npm i
+          npm rebuild
           npm run dev:bastyon
       - name: Building
         run: |
@@ -110,6 +113,7 @@ jobs:
       - name: Prepare building
         run: |
           npm i
+          npm rebuild
           npm run minimize:cordova
           cd ./cordova
           npm i
