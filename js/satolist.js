@@ -3827,7 +3827,7 @@ Platform = function (app, listofnodes) {
 
                             }
                             else{
-                                error('noinfo')
+                                error('Error, cannot find data for this video')
                             }
                         }
                         else{
