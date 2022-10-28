@@ -70,7 +70,7 @@ ImageUploader = function(app) {
 
                 p.success = function(data){
 
-                    var url = 'peertube://' +  data.image.filename
+                    var url = 'https://' + data.url
 
                     resolve(url)
                 }
