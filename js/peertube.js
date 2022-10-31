@@ -1136,6 +1136,10 @@ PeerTubePocketnet = function (app) {
 				return this.auth(host, renew);
 			},
 
+			getClientId: function (host) {
+				return request('oauthClientsLocal', {}, { host });
+			},
+
 			auth: function (host, renew) {
 				var data = {};
 
