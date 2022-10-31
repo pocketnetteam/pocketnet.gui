@@ -821,11 +821,11 @@ var share = (function(){
 					}
 				})
 
-				var ptag = actions.getprofanitytag(text)
+				/*var ptag = actions.getprofanitytag(text)
 
 				if (ptag){
 					newtags.push(ptag)
-				}
+				}*/
 				
 
 				if(newtags.length){
