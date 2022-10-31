@@ -5,17 +5,74 @@ const commentBanner = (function() {
 	const Essense = function(p) {
 		const primary = deep(p, 'history');
 
-		let el, destroyDelay;
+		let el, destroyDelay, address;
 
 		const actions = {
 			dontShowAgain() {
 				renders.closeBanner();
-				localStorage.nextCommentBanner = -1;
+				
+				const commentBanner = JSON.parse(localStorage.commentBanner || '{}');
+				commentBanner.count = -1;
+				localStorage.setItem('commentBanner', JSON.stringify(commentBanner));
+
+			},
+			unsubscribe : function(address, clbk){
+
+				dialog({
+					html : self.app.localization.e('e13022'),
+					btn1text : self.app.localization.e('unsub'),
+					btn2text :  self.app.localization.e('ucancel'),
+
+					class : 'zindex',
+
+					success : function(){
+
+						self.app.platform.api.actions.unsubscribe(address, function(tx, err){
+
+							if(!tx){
+								self.app.platform.errorHandler(err, true)	
+							}
+
+							if (clbk){
+								clbk();
+							}
+		
+						})
+
+					}
+				})
+
+				
+			},
+			subscribe : function(address, clbk){
+
+				self.app.platform.api.actions.notificationsTurnOn(address, function(tx, err){
+
+					if(!tx){
+
+						self.app.platform.errorHandler(err, true)
+					}
+
+
+					if (clbk){
+						clbk();
+					}
+
+				})
+				 
 			},
 		};
 
 		const events = {
+			unsubscribe : function(){
 
+				actions.unsubscribe(address)
+			},
+
+			subscribe : function(){
+				
+				actions.subscribe(address);
+			},
 		};
 
 		const renders = {
@@ -44,8 +101,12 @@ const commentBanner = (function() {
 		};
 
 		const initEvents = function() {
+
 			el.c.on('click', '.noShowAgain', actions.dontShowAgain)
 			el.c.on('click', '.closeBannerBtn', renders.closeBanner)
+
+			el.c.on('click', '.subscribe', events.subscribe);
+			el.c.on('click', '.unsubscribe', events.unsubscribe);
 		};
 
 		const destroyEvents = function() {
@@ -56,8 +117,13 @@ const commentBanner = (function() {
 		return {
 			primary: primary,
 
-			getdata: function(clbk) {
-				const data = {};
+			getdata: function(clbk, p) {
+				
+				address = p.settings.essenseData.address;
+
+				const data = {
+					address: address, 
+				};
 
 				clbk(data);
 			},
@@ -81,6 +147,7 @@ const commentBanner = (function() {
 			},
 			
 			init: function(p) {
+
 				state.load();
 
 				el = {};

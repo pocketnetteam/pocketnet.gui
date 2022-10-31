@@ -3113,7 +3113,7 @@ Platform = function (app, listofnodes) {
 
         },
 
-        showCommentBanner : function(contextElem, clbk) {
+        showCommentBanner : function(contextElem, clbk, address) {
 
             if (!app.platform.sdk.user.me()?.regdate) {
                 return 
@@ -3125,7 +3125,7 @@ Platform = function (app, listofnodes) {
                 return;
             }
 
-            const createComponent = () => {
+            const createComponent = (address) => {
                 self.app.Logger.info({
                     actionId: 'COMMENT_BANNER_ALLOWED',
                     value: true,
@@ -3135,7 +3135,9 @@ Platform = function (app, listofnodes) {
                     open: true,
                     id: 'commentBanner',
                     el: contextElem.find('.bannerComment'),
-                    essenseData: {},
+                    essenseData: {
+                        address: address
+                    },
 
                     clbk : function(e, p){
                         bannerCommentComponent = p;
@@ -3159,36 +3161,66 @@ Platform = function (app, listofnodes) {
             const unixTimeNow = Math.floor(Date.now() / 1000);
             const oneDayInSeconds = 86400;
 
-            const alreadyShowed = ('nextCommentBanner' in localStorage);
-            const isBannerDisabled = (localStorage.nextCommentBanner == -1);
-            const timeToShowBanner = (localStorage.nextCommentBanner <= unixTimeNow);
+            const commentBanner = JSON.parse(localStorage.commentBanner || '{}');
+            let {next, count} = commentBanner; 
+
+            if (!count) count = 0;
+            if (!next) next = 0;
+
+            const isBannerDisabled = count == -1;
+
 
             const regDate = app.platform.sdk.user.me().regdate;
             const regUnixTime = (regDate.getTime());
             const registeredTime = Date.now() - regUnixTime;
 
-            const isOneDayOld = (registeredTime >= oneDayInSeconds);
+            const isOneDayOld = (registeredTime >= oneDayInSeconds * 1000);
+
 
             if (isBannerDisabled) {
                 return isBannerDisabled;
+
             }
+
 
             if (!isOneDayOld) {
                 createComponent();
-                //return bannerCommentComponent;
+                return;
+                //return bannerCommentComponent;t
             }
 
-            if (!alreadyShowed) {
-                localStorage.nextCommentBanner = 1;
-                createComponent();
-                //return bannerCommentComponent;
+            var me = deep(app, 'platform.sdk.users.storage.' + self.app.user.address.value.toString('hex'));
+
+            if (me && me.relation(address, 'subscribes')){ return; } 
+
+            count++;
+
+            if (unixTimeNow - oneDayInSeconds > next){
+                count = 1;
+                next = Date.now() / 1000;
+
             }
 
-            if (timeToShowBanner || !alreadyShowed) {
-                localStorage.nextCommentBanner = unixTimeNow + oneDayInSeconds;
-                createComponent();
-                //return bannerCommentComponent;
-            }
+            const timeToShowBanner = count <= 4;
+        
+            if (timeToShowBanner) {
+
+                if (count <= 2){
+
+                    createComponent();
+
+                } else if (count <= 4){
+
+                    createComponent(address);
+
+                }
+
+                localStorage.setItem('commentBanner', JSON.stringify({count, next}));
+
+
+            } 
+        
+
 
         },
 
