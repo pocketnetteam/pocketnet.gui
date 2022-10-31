@@ -9,19 +9,19 @@ ImageUploader = function(app) {
 
         if (base64.indexOf('data:image') > -1){
 
-            return self.uploadImage({ base64 }, 'imgur').catch(err => {
+            /*return self.uploadImage({ base64 }, 'imgur').catch(err => {
                 return self.uploadImage({ base64 }, 'up1')
             }).then(url => {
                 return Promise.resolve(url)
-            })
+            })*/
             
-            return self.uploadImage({ base64 }, 'peertube')/*.catch(err => {
+            return self.uploadImage({ base64 }, 'peertube').catch(err => {
                 return self.uploadImage({ base64 }, 'imgur')
             }).catch(err => {
                 return self.uploadImage({ base64 }, 'up1')
             }).then(url => {
                 return Promise.resolve(url)
-            })*/
+            })
         }
         else{
             return Promise.resolve(base64)
@@ -67,6 +67,9 @@ ImageUploader = function(app) {
                 var server = app.peertubeHandler.helpers.urlextended(app.options.peertubeServer, true)
 
                 p.url = server.current
+                if (p.url[p.url.length - 1] != '/')
+                    p.url += '/';
+                p.url += 'api/v1/';
 
                 p.success = function(data){
 

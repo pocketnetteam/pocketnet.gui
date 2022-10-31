@@ -29655,6 +29655,15 @@ Platform = function (app, listofnodes) {
                             self.app.options.peertubeServer = ptServers[_.sample(Object.keys(ptServers))];
                     } catch(err) {}
                     console.log("Using Peertube server: ", self.app.options.peertubeServer);
+                    // Authenticate to this Peertube server
+                    self.app.peertubeHandler.api.user.getClientId(self.app.options.peertubeServer).then(({ client_id, client_secret }) => {
+                        if (client_id)
+                            self.app.options.peertubeCreds.client_id = client_id;
+                        if (client_secret)
+                            self.app.options.peertubeCreds.client_secret = client_secret;
+                    }, (err) => {
+                        console.log(err);
+                    });
                 }, (err) => {
                     console.log(err);
                 });

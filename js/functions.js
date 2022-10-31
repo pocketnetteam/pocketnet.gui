@@ -7948,7 +7948,7 @@
 					xmlHttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 					xmlHttp.send(toUrlEncoded({
 						grant_type: 'password',
-						...user.peertube
+						...app.peertubeCreds
 					}));
 					var res = JSON.parse(xmlHttp.responseText), auth;
 					// Set auth header
