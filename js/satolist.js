@@ -3714,11 +3714,13 @@ Platform = function (app, listofnodes) {
             if(!_p) _p = {}
 
             var error = function(e){
-                sitemessage(e)
+                if (e != 'paused') {
+                    sitemessage(e)
 
-                topPreloader2(100)
+                    topPreloader2(100)
 
-                clbk()
+                    clbk()
+                }
             }
 
             var save = function(p){
@@ -3758,6 +3760,14 @@ Platform = function (app, listofnodes) {
             }
 
             if(self.sdk.localshares.saving[share.txid]) return
+
+            // If download has been paused, resume it
+            if (self.sdk.localshares.paused[share.txid]) {
+
+                save({resolutionId : self.sdk.localshares.paused[share.txid]})
+
+                return;
+            }
 
             if(self.sdk.localshares.storage[share.txid]){
 
@@ -7213,11 +7223,12 @@ Platform = function (app, listofnodes) {
         localshares : {
             storage : {},
             saving : {},
+            paused: {},
             key : '',
 
             getSegment :  function(dir, filename){
 
-                return electron.ipcRenderer.invoke('getSegment', dir, filename)
+                return electron.ipcRenderer.invoke('getVideoSegment', dir, filename)
 
             },
 
@@ -7240,9 +7251,19 @@ Platform = function (app, listofnodes) {
 
             status : function(id){
                 if(self.sdk.localshares.storage[id]) return 'saved'
+                if(self.sdk.localshares.paused[id]) return 'paused'
                 if(self.sdk.localshares.saving[id]) return 'saving'
 
                 return 'cansave'
+            },
+
+            videoDlProgress : async function(id){
+                const progress = await electron.ipcRenderer.invoke('getVideoDownloadProgress', id);
+                return progress;
+            },
+
+            setVideoDlStatus : async function(id, status){
+                await electron.ipcRenderer.invoke('setVideoDownloadStatus', id,  status);
             },
 
             clearfromstorage : function(shareId){
@@ -7360,6 +7381,9 @@ Platform = function (app, listofnodes) {
                 return self.sdk.localshares.write.share[self.sdk.localshares.key](shareInfo.share).then(folder => {
                     return self.sdk.localshares.write.video[self.sdk.localshares.key](folder, shareInfo, p).then(r => {
 
+                        if (r == undefined)
+                            return Promise.reject('paused');
+
                         shareInfo.share.videos || (shareInfo.share.videos = {})
                         shareInfo.share.videos[r.id] = r
 
@@ -7370,6 +7394,7 @@ Platform = function (app, listofnodes) {
                     self.sdk.localshares.storage = {}
 
                     self.sdk.localshares.saving[share.txid] = false
+                    delete self.sdk.localshares.paused[share.txid]
 
                     return self.sdk.localshares.init()
 
@@ -7384,6 +7409,10 @@ Platform = function (app, listofnodes) {
 
 
                     self.sdk.localshares.saving[share.txid] = false
+                    if (e == 'paused')
+                        self.sdk.localshares.paused[share.txid] = p.resolutionId
+                    else
+                        delete self.sdk.localshares.paused[share.txid]
 
                     if (p.after) p.after(share)
 
@@ -7850,8 +7879,11 @@ Platform = function (app, listofnodes) {
 
             getall : {
                 electron : async function() {
-                    const shareList = await electron.ipcRenderer
+                    const shareLists = await electron.ipcRenderer
                         .invoke('getShareList');
+
+                    const shareList = shareLists.savedShares;
+                    const pausedShareList = shareLists.pausedShares;
 
                     const shareDataList = {};
 
@@ -7859,6 +7891,10 @@ Platform = function (app, listofnodes) {
                         const shareId = shareList[shareIndex];
 
                         shareDataList[shareId] = await self.sdk.localshares.get.electron(shareId);
+                    }
+
+                    for(const shareIndex in pausedShareList) {
+                        self.sdk.localshares.paused[pausedShareList[shareIndex].shareId] = pausedShareList[shareIndex].resolutionId;
                     }
 
                     return shareDataList;

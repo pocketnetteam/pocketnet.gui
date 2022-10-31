@@ -810,3 +810,11 @@ html.mobileview #lenta .fullScreenVideo .sharecnt {
 html.mobileview.fullscreen #lenta .fullScreenVideo #comments {
   display: none;
 }
+.item.loadingBar {
+  display: flex;
+  width: 40px;
+  height: 40px;
+}
+.item.loadingBar .loading-bar {
+  margin: auto;
+}
