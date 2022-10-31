@@ -727,6 +727,9 @@ PeerTubePocketnet = function (app) {
 			},
 
 			initResumableUpload: function (parameters, options) {
+
+			
+
 				return self.api.videos
 					.checkQuota(parameters.video.size, { type: options.type })
 					.then((rme) => {

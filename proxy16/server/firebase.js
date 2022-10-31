@@ -42,6 +42,8 @@ var Firebase = function(p){
     var db = new Datastore(f.path(p.dbpath));
     
     self.users = [];
+    self.query = [];
+    self.processInterval = null
     self.inited = false;
     self.useNotifications = false;
 
@@ -225,7 +227,7 @@ var Firebase = function(p){
             })
         },
 
-        revokeToken : function(token){
+        revokeToken : function({token}){
 
             var removed = []
 
@@ -387,7 +389,7 @@ var Firebase = function(p){
                             if (!response.responses[responseIndex]?.success) {
                                 if (message?.tokens[responseIndex] && errorCodeList.includes(response.responses[responseIndex]?.error?.errorInfo?.code)) {
                                 //    console.log("Token is inactive, delete user", message?.tokens[responseIndex])
-                                    self.kit.revokeToken(message?.tokens[responseIndex])
+                                    self.kit.revokeToken({token : message?.tokens[responseIndex]})
                                 } else if (message?.tokens[responseIndex]) {
                                    // console.log("Resend push after 35 seconds, because token is temporarily blocked by firebase:", message?.tokens[responseIndex])
                                     resendTokens.push(message?.tokens[responseIndex])
@@ -453,6 +455,16 @@ var Firebase = function(p){
         }
     }
 
+    self.addEvents = function(events){
+
+        self.query = self.query.concat(events)
+
+    }
+
+    var process = function(){
+
+    }
+
     self.init = function(p){
 
         self.destroy()
@@ -477,7 +489,13 @@ var Firebase = function(p){
 
             self.inited = true
 
-            return loaddb()
+            return loaddb().then(() => {
+
+                self.processInterval = setInterval(() => {
+                    process()
+                }, 2000)
+
+            })
         }
 
         return Promise.resolve()
@@ -503,6 +521,11 @@ var Firebase = function(p){
 
                 return Promise.resolve()
             })
+        }
+
+        if(self.processInterval){
+            clearInterval(self.processInterval)
+            self.processInterval = null
         }
 
         return Promise.resolve()
