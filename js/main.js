@@ -38,7 +38,7 @@ if(!_Node)
 			wss : 8099
 		},
 
-		
+
 		{
 			host : '5.pocketnet.app',
 			port : 8899,
@@ -53,6 +53,16 @@ if(!_Node)
 
 	]
 
+	/* test */
+
+	/*if(window.cordova){
+		_listofproxies.push({
+			host : '6.pocketnet.app',
+			port : 8899,
+			wss : 8099
+		})
+	}*/
+
 
 	var matrix = 'matrix.pocketnet.app'
 
@@ -65,9 +75,21 @@ if(!_Node)
 
 		matrix = 'test.matrix.pocketnet.app'
 	}
-
+		
 	if (window.location.host === 'pre.pocketnet.app') {
-		_listofproxies = [{ host : 'pre.pocketnet.app', port : 8899, wss : 8099 }];
+		_listofproxies = [
+			{
+				host : 'pre.pocketnet.app',
+				port : 8899,
+				wss : 8099
+			},
+			{
+				host : '6.pocketnet.app',
+				port : 8899,
+				wss : 8099
+			},
+		];
+
 	}
 
 

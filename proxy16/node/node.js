@@ -40,6 +40,12 @@ var Node = function(options, manager){
     self.id = f.makeid()
     self.version = null
 
+    self.single = options.single || false
+    self.alwaysrun = options.alwaysrun || false
+    self.allowRpc = true
+
+    if(typeof options.allowRpc != 'undefined') self.allowRpc = options.allowRpc
+
     var statisticInterval = null
     var changeNodeUsersInterval = null
     var lastinfoTime = null
@@ -192,6 +198,10 @@ var Node = function(options, manager){
         return chain
     }
 
+    self.notification = function(block){
+        manager.notifications.addblock(block, self)
+    }
+
     self.addblock = function(block){
 
 
@@ -211,6 +221,10 @@ var Node = function(options, manager){
     
                 timedifference(block.time)
 
+                /*if(block?.msg === 'new block') {
+
+                    manager.notifications.sendBlock(block, self.id)
+                }*/
             }
 
             chain = f.lastelements(chain, 150, 10)
@@ -910,6 +924,8 @@ var Node = function(options, manager){
 
     self.peers = function(){
 
+        if(self.single) return Promise.resolve([])
+
         return self.rpcs('getPeerInfo').then(result => {
 
 
@@ -1043,8 +1059,8 @@ var Node = function(options, manager){
             bchain : self.bchain,
             version : self.version,
             vcode : self.version ? f.numfromreleasestring(self.version) : 1,
-            service : wssconnected ? true : false
-            
+            service : wssconnected ? true : false,
+            allowRpc : self.allowRpc
         }
     }
 

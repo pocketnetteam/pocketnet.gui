@@ -727,6 +727,9 @@ PeerTubePocketnet = function (app) {
 			},
 
 			initResumableUpload: function (parameters, options) {
+
+			
+
 				return self.api.videos
 					.checkQuota(parameters.video.size, { type: options.type })
 					.then((rme) => {
@@ -1071,6 +1074,10 @@ PeerTubePocketnet = function (app) {
 
 		user: {
 			removeAccount(parameters = {}, options = {}) {
+
+				return request(
+					'removeAccount', parameters, options,
+				);
 
 				return self.api.user.metotal().then(d => {
 

@@ -2137,6 +2137,7 @@ var CancelablePromise = __webpack_require__("0bb9");
     },
 
     getFileIosCordova(path) {
+      console.log('load', path);
       return new Promise((resolve, reject) => {
         window.resolveLocalFileSystemURL(path, entry => {
           if (!entry) {
@@ -2163,6 +2164,8 @@ var CancelablePromise = __webpack_require__("0bb9");
 
             reader.readAsArrayBuffer(file);
           });
+        }, e => {
+          reject(e);
         });
       });
     },
@@ -2181,7 +2184,7 @@ var CancelablePromise = __webpack_require__("0bb9");
       this.prepareRecording.then(() => {
         console.log("START RECORDING");
         this.microphoneDisabled = false;
-        var path = 'cdvfile://localhost/temporary/recording.mp3';
+        var path = 'recording.mp3';
         if (functions["a" /* default */].isios()) path = 'cdvfile://localhost/temporary/recording.m4a';
         var sec = 0;
         this.audioContext = this.core.getAudioContext(); //var startedTime = (new Date()).getTime() / 1000
@@ -2197,16 +2200,17 @@ var CancelablePromise = __webpack_require__("0bb9");
           }
 
           var fu = null;
+          /*if(f.isios()){ */
 
-          if (functions["a" /* default */].isios()) {
-            fu = this.getFileIosCordova(path).then(blob => {
-              return Promise.resolve({
-                data: blob
-              });
+          fu = this.getFileIosCordova(functions["a" /* default */].isios() ? path : window.cordova.file.externalDataDirectory + path).then(blob => {
+            return Promise.resolve({
+              data: blob
             });
-          } else {
-            fu = functions["a" /* default */].fetchLocal(path);
-          }
+          });
+          /*}
+          		else{
+          	fu = f.fetchLocal(path)
+          }*/
 
           fu.then(r => {
             ///temp
