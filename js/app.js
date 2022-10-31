@@ -91,7 +91,7 @@ Application = function(p)
   }
 
   self.boost = !(window.cordova && isios());
-  self.pkoindisable = window.cordova && isios();
+  self.pkoindisable =  window.cordova && isios();
   self.cutversion = window.cordova && isios();
 
   self.margintop  = 0
@@ -2731,8 +2731,13 @@ Application = function(p)
     var domain = self.options.url
 
     var m = _.find(groups, function(g){
-      return _.indexOf(g, url.host) > -1 &&  _.indexOf(g, domain) > -1
+
+      console.log('g', g, url.host, domain, _.indexOf(g, url.host))
+
+      return _.indexOf(g, url.host) > -1 &&  (_.indexOf(g, domain) > -1 || domain.indexOf('localhost') > -1)
     })
+
+    console.log("MMM", m)
 
     if(m) return true
 

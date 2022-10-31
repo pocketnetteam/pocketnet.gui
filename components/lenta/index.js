@@ -58,6 +58,9 @@ var lenta = (function(){
 
 		var countshares = 0;
 
+		var progressInterval = {},
+			loadingBars = {};
+
 		var newsharescount = 0
 
 		var offsetblock = 0
@@ -277,7 +280,52 @@ var lenta = (function(){
 			changeSavingStatusLight : function(share){
 
 				if (el && el.share && el.share[share.txid]){
-					el.share[share.txid].find('.shareSave').attr('status', self.app.platform.sdk.localshares.status(share.txid))
+					const status = self.app.platform.sdk.localshares.status(share.txid);
+					const isSaving = (status === 'saving' || status === 'paused');
+
+					const shareSaveElem = el.share[share.txid].find('.shareSave');
+
+					if (isSaving) {
+						const loadingBarHolderElem = el.share[share.txid].find('.loadingBar');
+						if (!loadingBars[share.txid]) {
+							const loadingBarElem = el.share[share.txid].find('.loading-bar');
+							if (!loadingBarElem || loadingBarElem.length <= 0)
+								return;
+
+							// Create download progress bar
+							loadingBars[share.txid] = new LoadingBar(loadingBarElem[0]);
+
+							// Watch pause/resume events
+							loadingBars[share.txid].listenStateChange((status) => {
+								if (!status)
+									return;
+								if (status.stopped == true)
+									self.app.platform.sdk.localshares.setVideoDlStatus(share.txid, 'paused');
+								else
+									events.shareSave(share.txid);
+							});
+
+							// Watch progress and update progress bar
+							if (progressInterval[share.txid]) clearInterval(progressInterval[share.txid]);
+							progressInterval[share.txid] = setInterval(async function() {
+								const progress = await self.app.platform.sdk.localshares.videoDlProgress(share.txid);
+								if (progress != undefined && progress.progress >= 1)
+									clearInterval(progressInterval[share.txid]);
+								if (progress != undefined && !isNaN(progress.progress))
+									loadingBars[share.txid].setValue(progress.progress * 100);
+							}, 500);
+
+							if (status == 'paused')
+								loadingBars[share.txid].setPaused();
+
+						}
+						
+						loadingBarHolderElem.removeAttr('hidden');
+						shareSaveElem.attr('hidden', '');
+						return;
+					}
+
+					shareSaveElem.attr('status', status);
 				}
 
 			},
@@ -2263,8 +2311,9 @@ var lenta = (function(){
 				})	
 			
 			},
-			shareSave : function(){
-				var shareId = $(this).closest('.share').attr('id');
+			shareSave : function(shareTxId){
+
+				var shareId = (shareTxId && typeof shareTxId === 'string') ? shareTxId : $(this).closest('.share').attr('id');
 
 				var share = self.app.platform.sdk.node.shares.storage.trx[shareId];
 
@@ -5229,6 +5278,10 @@ var lenta = (function(){
 								events.videosInview()
 							}, 50)
 							
+							_.each(shares, function(share) {
+								if (share && share.itisvideo && share.itisvideo())
+									actions.changeSavingStatusLight(share);
+							});
 
 							var p = parameters()
 
@@ -5455,6 +5508,10 @@ var lenta = (function(){
 				delete self.app.events.delayedscroll['optimization' + mid]
 				delete self.app.events.scroll['loadmore' + mid]
 				
+				for (const txId in progressInterval) {
+					if (progressInterval[txId]) clearInterval(progressInterval[txId]);
+				}
+				loadingBars = {};
 				
 				delete self.app.errors.clbks[mid]
 

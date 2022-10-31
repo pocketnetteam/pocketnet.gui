@@ -27,6 +27,7 @@ var Exchanges = require('./exchanges.js');
 var Peertube = require('./peertube/index.js');
 var Bots = require('./bots.js');
 var SystemNotify = require('./systemnotify.js');
+var Notifications = require('./node/notifications')
 var Transports = require("./transports")
 var Applications = require('./node/applications');
 var bitcoin = require('./lib/btc16.js');
@@ -66,6 +67,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 	var systemnotify = new SystemNotify(settings.systemnotify)
 	var slidemodule = new Slidemodule(settings.slide)
 	slidemodule.init()
+	var notifications = new Notifications()
 
 	var torapplications = new TorControl(settings.tor, self)
 
@@ -83,7 +85,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 		wss, server, pocketnet, nodeControl,
 		remote, firebase, nodeManager, wallet,
 		proxies, exchanges, peertube, bots,
-		systemnotify,
+		systemnotify, notifications,
 		logger,
 		proxy: self
 	})
@@ -343,6 +345,18 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 		}
 	}
 
+	self.notifications = {
+		init: function () {
+			return notifications.init(self, firebase, nodeManager);
+		},
+
+		info: function () {
+			return notifications.info()
+		},
+
+		destroy: function () {
+		}
+	}
 
 	self.wallet = {
 
@@ -853,6 +867,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					{
 						host : 'peertube17.pocketnet.app',
 						ip: '51.250.104.218',
+						cantuploading: true,
 					}
 				],
 
@@ -860,6 +875,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					{
 						host : 'peertube18.pocketnet.app',
 						ip: '51.250.41.252',
+						cantuploading: true,
 					}
 				],
 
@@ -867,6 +883,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					{
 						host : 'peertube19.pocketnet.app',
 						ip: '51.250.73.97',
+						cantuploading: true,
 					}
 				],
 
@@ -888,6 +905,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					{
 						host : 'peertube19mirror.pocketnet.app',
 						ip: '64.235.50.17',
+						cantuploading: true,
 					}
 				],
 
@@ -937,6 +955,34 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					{
 						host : 'peertube26.pocketnet.app',
 						ip: '49.12.106.120',
+					}
+				],
+				
+				33: [
+					{
+						host : 'peertube27.pocketnet.app',
+						ip: '49.12.102.26',
+					}
+				],
+
+				34: [
+					{
+						host : 'peertube28.pocketnet.app',
+						ip: '138.201.91.156',
+					}
+				],
+
+				35: [
+					{
+						host : 'peertube29.pocketnet.app',
+						ip: '157.90.171.8',
+					}
+				],
+
+				36: [
+					{
+						host : 'peertube30.pocketnet.app',
+						ip: '95.217.165.102',
 					}
 				],
       		};
@@ -1081,7 +1127,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 			status = 1
 
-			return this.initlist(['server', 'wss', 'nodeManager', 'wallet', 'firebase', 'nodeControl', 'torapplications', 'exchanges', 'peertube', 'bots']).then(r => {
+			return this.initlist(['server', 'wss', 'nodeManager', 'wallet', 'firebase', 'nodeControl', 'torapplications', 'exchanges', 'peertube', 'bots', 'notifications']).then(r => {
 
 				status = 2
 
@@ -2047,7 +2093,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 						data: {
 							time: f.now(),
 							session : self.session,
-							v : '0808',
+							v : '0809',
 							node : node || '',
 							height : height || 0
 						},
@@ -2074,7 +2120,12 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				authorization: 'signature',
 				path: '/firebase/set',
 				action: function (data) {
-					return self.firebase.kit.addToken(data).then((r) => {
+
+					if(!self.firebase.inited) return Promise.reject('firebase not setup')
+
+					return self.firebase.kit.revokeToken(data).then(() => {
+						return self.firebase.kit.addToken(data)
+					}).then((r) => {
 						return Promise.resolve({ data: r });
 					}).catch(e => {
 						console.error(e)
@@ -2083,7 +2134,22 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					})
 				},
 			},
+			settings: {
+				authorization: 'signature',
+				path: '/firebase/settings',
+				action: function (data) {
 
+					if(!self.firebase.inited) return Promise.reject('firebase not setup')
+
+					return self.firebase.kit.setSettings(data).then((r) => {
+						return Promise.resolve({ data: r });
+					}).catch(e => {
+						console.error(e)
+
+						return Promise.reject(e)
+					})
+				},
+			},
 			test: {
 				path: '/firebase/test',
 				action: function (data) {
@@ -2112,6 +2178,10 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 			revokedevice: {
 				path: '/firebase/revoke',
 				action: function (data) {
+
+					if(!self.firebase.inited) return Promise.reject('firebase not setup')
+
+
 					return self.firebase.kit.revokeToken(data).then((r) => {
 						return Promise.resolve({ data: r });
 					}).catch(e => {
@@ -2125,6 +2195,9 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 			revokedevice: {
 				path: '/firebase/revokedevice',
 				action: function (data) {
+
+					if(!self.firebase.inited) return Promise.reject('firebase not setup')
+
 					return self.firebase.kit.removeDevice(data).then((r) => {
 						return Promise.resolve({ data: r });
 					}).catch(e => {
@@ -2149,7 +2222,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				authorization: 'signature',
 				path: '/firebase/mytokens',
 				action: function (data) {
-
+					if(!self.firebase.inited) return Promise.reject('firebase not setup')
 
 					return self.firebase.kit.mytokens({address : data.U}).then((r) => {
 						return Promise.resolve({ data: r });

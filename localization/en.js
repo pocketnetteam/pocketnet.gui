@@ -1281,7 +1281,7 @@ _l.sortByDuration = "Duration";
 _l.sortByViews = "Views";
 
 _l.unableToAuthorize = "Unable to authorize";
-_l.unableToAuthorizeBody = "Unfortunately, the application cannot authenticate this account on the video server. You need at least 5 PKOIN or 50 reputation to upload videos.";
+_l.unableToAuthorizeBody = "Unfortunately, the application cannot authenticate this account on the video server. You need at least 5 PKOIN or 100 reputation to upload videos.";
 
 _l.unableToAuthorizeConnection = "Unable to authorize";
 _l.unableToAuthorizeConnectionBody = "Unfortunately, the application cannot authenticate this account on the video server.  Please try again later";
@@ -2356,3 +2356,13 @@ _l.boost_c14 = 'Earn with Bastyon'
 _l.boost_c15 = 'Privacy protection'
 _l.boost_c16 = 'Bitcoin of social media'
 _l.boost_c17 = 'Censorship resistant'
+
+_l.gotopage = 'Go to page'
+
+_l.postedVideos = "Posted Videos"
+_l.unPostedVideos = "Unposted Videos"
+_l.videoIsPosting = "Posting"
+_l.noUnposted = "No Unposted Videos"
+
+_l.sortByComments = "Comments";
+_l.sortByRating = "Number of ratings";

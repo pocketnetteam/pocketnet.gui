@@ -258,7 +258,22 @@ Platform = function (app, listofnodes) {
         'PLZATQyqYzM6NLbH8M3LPicSU3cTAqW3SA' : true,
         'PKWM3oo6YTFFn5U2HLaBueqA3fcLd7BP8m' : true,
         'PHnvqSQzg5D3yKo5KgCiXqtFP84bsYyF7G' : true,
-        'PPw4k3Zra7tYRM643QVm3V4UFrcZZb9H6H' : true
+        'PPw4k3Zra7tYRM643QVm3V4UFrcZZb9H6H' : true,
+        'PUFZvqrgdnaGXxaFmwPuUPf5NhGg7tpBe9' : true,
+        'PDhQL18skFG4g7bEJoYhgvjqo6JNpkN533': true,
+        'PP1bBz11vicydAcw7QKJezYQdQMpYGEMiV': true,
+        'PSFPrHstL1wawZ2eXLdLEpFEjhG8a27EYb': true,
+        'PWKzt9TG45VUmAjuoFQQ4bGfZpjaUhxnhH': true,
+        'PJ5HX1eCHedY2Zjt4JTUanL1ZLi3NQdy3Q': true,
+        'PXkJiHrAwPNk2uKNrN1odK4SDeEdHNGw9j': true,
+        'PXpnB4BNmynDf6AuCU8eyB9patuQTbHAgS': true,
+        'PGjGt6AGH4UQyVQ62rsyovEFUW2H9nRU4w': true,
+        'PLb2C3Gs7r3YqCMamVeaztqnm6mfM2HDjR': true,
+        'P95itUBNbBsH28SVYsyk5qUhXWdSb23dbx': true,
+        'PUZZnLHg9qPoF1NrwFPvGse96DiNQ1uF5g': true,
+        'PJ13w4ap16wZ9xmnLViEt4csZRSDrbCsmF': true,
+        'PDkzixpA4TmkTqEKBJrmX6xFDu15qJ39ut': true,
+        'PGPqNyxuSSsAkt3m6eb5hyckoDhyy19dW9': true,
     }
 
     self.bch = {
@@ -3146,7 +3161,6 @@ Platform = function (app, listofnodes) {
             const unixTimeNow = Math.floor(Date.now() / 1000);
             const oneDayInSeconds = 86400;
 
-
             const commentBanner = JSON.parse(localStorage.commentBanner || '{}');
             let {next, count} = commentBanner; 
 
@@ -3155,11 +3169,13 @@ Platform = function (app, listofnodes) {
 
             const isBannerDisabled = count == -1;
 
+
             const regDate = app.platform.sdk.user.me().regdate;
             const regUnixTime = (regDate.getTime());
             const registeredTime = Date.now() - regUnixTime;
 
             const isOneDayOld = (registeredTime >= oneDayInSeconds * 1000);
+
 
             if (isBannerDisabled) {
                 return isBannerDisabled;
@@ -3182,11 +3198,10 @@ Platform = function (app, listofnodes) {
             if (unixTimeNow - oneDayInSeconds > next){
                 count = 1;
                 next = Date.now() / 1000;
+
             }
 
             const timeToShowBanner = count <= 4;
-
-            debugger;
         
             if (timeToShowBanner) {
 
@@ -3532,6 +3547,7 @@ Platform = function (app, listofnodes) {
                         close : function(){
                         },
                         post : function(){
+                            if (p.onPost) p.onPost();
                         },
                         absolute : true,
                         repost  : p.repost,
@@ -3731,11 +3747,13 @@ Platform = function (app, listofnodes) {
             if(!_p) _p = {}
 
             var error = function(e){
-                sitemessage(e)
+                if (e != 'paused') {
+                    sitemessage(e)
 
-                topPreloader2(100)
+                    topPreloader2(100)
 
-                clbk()
+                    clbk()
+                }
             }
 
             var save = function(p){
@@ -3775,6 +3793,14 @@ Platform = function (app, listofnodes) {
             }
 
             if(self.sdk.localshares.saving[share.txid]) return
+
+            // If download has been paused, resume it
+            if (self.sdk.localshares.paused[share.txid]) {
+
+                save({resolutionId : self.sdk.localshares.paused[share.txid]})
+
+                return;
+            }
 
             if(self.sdk.localshares.storage[share.txid]){
 
@@ -3859,7 +3885,7 @@ Platform = function (app, listofnodes) {
 
                             }
                             else{
-                                error('noinfo')
+                                error('Error, cannot find data for this video')
                             }
                         }
                         else{
@@ -7230,11 +7256,12 @@ Platform = function (app, listofnodes) {
         localshares : {
             storage : {},
             saving : {},
+            paused: {},
             key : '',
 
             getSegment :  function(dir, filename){
 
-                return electron.ipcRenderer.invoke('getSegment', dir, filename)
+                return electron.ipcRenderer.invoke('getVideoSegment', dir, filename)
 
             },
 
@@ -7257,9 +7284,19 @@ Platform = function (app, listofnodes) {
 
             status : function(id){
                 if(self.sdk.localshares.storage[id]) return 'saved'
+                if(self.sdk.localshares.paused[id]) return 'paused'
                 if(self.sdk.localshares.saving[id]) return 'saving'
 
                 return 'cansave'
+            },
+
+            videoDlProgress : async function(id){
+                const progress = await electron.ipcRenderer.invoke('getVideoDownloadProgress', id);
+                return progress;
+            },
+
+            setVideoDlStatus : async function(id, status){
+                await electron.ipcRenderer.invoke('setVideoDownloadStatus', id,  status);
             },
 
             clearfromstorage : function(shareId){
@@ -7377,6 +7414,9 @@ Platform = function (app, listofnodes) {
                 return self.sdk.localshares.write.share[self.sdk.localshares.key](shareInfo.share).then(folder => {
                     return self.sdk.localshares.write.video[self.sdk.localshares.key](folder, shareInfo, p).then(r => {
 
+                        if (r == undefined)
+                            return Promise.reject('paused');
+
                         shareInfo.share.videos || (shareInfo.share.videos = {})
                         shareInfo.share.videos[r.id] = r
 
@@ -7387,6 +7427,7 @@ Platform = function (app, listofnodes) {
                     self.sdk.localshares.storage = {}
 
                     self.sdk.localshares.saving[share.txid] = false
+                    delete self.sdk.localshares.paused[share.txid]
 
                     return self.sdk.localshares.init()
 
@@ -7401,6 +7442,10 @@ Platform = function (app, listofnodes) {
 
 
                     self.sdk.localshares.saving[share.txid] = false
+                    if (e == 'paused')
+                        self.sdk.localshares.paused[share.txid] = p.resolutionId
+                    else
+                        delete self.sdk.localshares.paused[share.txid]
 
                     if (p.after) p.after(share)
 
@@ -7867,8 +7912,11 @@ Platform = function (app, listofnodes) {
 
             getall : {
                 electron : async function() {
-                    const shareList = await electron.ipcRenderer
+                    const shareLists = await electron.ipcRenderer
                         .invoke('getShareList');
+
+                    const shareList = shareLists.savedShares;
+                    const pausedShareList = shareLists.pausedShares;
 
                     const shareDataList = {};
 
@@ -7876,6 +7924,10 @@ Platform = function (app, listofnodes) {
                         const shareId = shareList[shareIndex];
 
                         shareDataList[shareId] = await self.sdk.localshares.get.electron(shareId);
+                    }
+
+                    for(const shareIndex in pausedShareList) {
+                        self.sdk.localshares.paused[pausedShareList[shareIndex].shareId] = pausedShareList[shareIndex].resolutionId;
                     }
 
                     return shareDataList;
@@ -8163,6 +8215,8 @@ Platform = function (app, listofnodes) {
 
                                                         var successFullSendFunc = () => {
                                                             var c = kits.c[object.type]
+
+                                                            console.log('object.type', object.type)
 
                                                             var trobj = new c();
 
@@ -9392,6 +9446,7 @@ Platform = function (app, listofnodes) {
                 })
 
                 localStorage['usersettings'] = JSON.stringify(values);
+                self?.firebase?.settings()
             },
 
             load: function () {
@@ -10306,6 +10361,7 @@ Platform = function (app, listofnodes) {
 
                     var address = self.sdk.address.pnet()
 
+
                     return self.app.peertubeHandler.api.proxy.allServers().then((peertubeservers) => {
                         console.log('peertubeservers', _.flatten(peertubeservers))
 
@@ -10332,19 +10388,31 @@ Platform = function (app, listofnodes) {
                         })
 
                         return Promise.all(promises)
+                    }).catch(e => {
+                        console.error('e' , e)
+
+                        return Promise.resolve()
                     })
                 }
 
                 var removeMatrix = function(){
-                    return new Promise((resolve, reject) => {
-                        setTimeout(() => {
-                            resolve()
-                        }, 1000)
+
+                    return self.matrixchat.deactivateAccount().catch(e => {
+                        console.error('e', e)
+
+                        return Promise.resolve()
+                    }).then(r => {
+
+                        self.matrixchat.destroy()
+                        self.matrixchat.init()
+
+                        return Promise.resolve()
                     })
+
                 }
 
                 var removeBastyon = function(){
-                        
+
                     return new Promise((resolve, reject) => {
 
                         var obj = new DeleteAccount();
@@ -11681,6 +11749,7 @@ Platform = function (app, listofnodes) {
                     if (!a) return false
 
                     if (!s[a]) return true
+                    
                     if (s[a].temp || s[a].relay || s[a].fromstorage) return true
 
 
@@ -11715,6 +11784,22 @@ Platform = function (app, listofnodes) {
                                 self.sdk.userscl.storage[a] = data
 
                             })
+
+                            /*_.each(self.sdk.relayTransactions.withtemp('userInfo'), (tx) => {
+                                var a = _.find(addresses, (a) => {
+                                    return tx.address == a
+                                })
+
+                                if(a && !s[a]){
+
+
+                                    var u = self.sdk.users.prepareuser(tx, a, state)
+
+                                    s[a] = u;
+                                    self.sdk.usersl.storage[a] = u;
+                                    
+                                }
+                            })*/
 
 
                             if (clbk)
@@ -13665,22 +13750,32 @@ Platform = function (app, listofnodes) {
 
                 self.sdk.recommendations.clearplanned()
 
-                var kf = [
-                    /*{
-                        a : self.sdk.recommendations.schedulers.users,
-                        probability : 50 + (self.sdk.recommendations.storage.keys['users'] || 1)
-                    },*/{
-                        a : self.sdk.recommendations.schedulers.tags,
-                        probability : 50 + (self.sdk.recommendations.storage.keys['tags'] || 1)
+                if(!self.sdk.recommendations.storage.keys) self.sdk.recommendations.storage.keys = {}
+
+                self.app.user.isState(function (state) {
+                    if(state){
+
+                        var kf = [
+                            /*{
+                                a : self.sdk.recommendations.schedulers.users,
+                                probability : 50 + (self.sdk.recommendations.storage.keys['users'] || 1)
+                            },*/{
+                                a : self.sdk.recommendations.schedulers.tags,
+                                probability : 50 + (self.sdk.recommendations.storage.keys['tags'] || 1)
+                            }
+                        ]
+        
+                        var action = randomizer(kf)
+        
+        
+                        action.a()
+        
+                        self.sdk.recommendations.maketasksdebounced()
+                        
                     }
-                ]
+                })
 
-                var action = randomizer(kf)
-
-
-                action.a()
-
-                self.sdk.recommendations.maketasksdebounced()
+               
             },
 
             scheduler : _.debounce(() => {
@@ -13706,20 +13801,25 @@ Platform = function (app, listofnodes) {
             },
 
             load: function (clbk) {
-                var p = {};
 
-                try {
-                    p = JSON.parse(localStorage['recommendations'] || '{}');
-                }
-                catch (e) {}
+              
 
-                self.sdk.recommendations.storage.status = p.status || []
-                self.sdk.recommendations.storage.shares = p.shares || []
-                self.sdk.recommendations.storage.keys = p.keys || {}
+                    var p = {};
 
-                self.sdk.recommendations.scheduler()
+                    try {
+                        p = JSON.parse(localStorage['recommendations'] || '{}');
+                    }
+                    catch (e) {}
 
-                if(clbk) clbk()
+                    self.sdk.recommendations.storage.status = p.status || []
+                    self.sdk.recommendations.storage.shares = p.shares || []
+                    self.sdk.recommendations.storage.keys = p.keys || {}
+
+                    self.sdk.recommendations.scheduler()
+
+                    if(clbk) clbk()
+
+              
             },
         },
 
@@ -18513,6 +18613,7 @@ Platform = function (app, listofnodes) {
                         method : 'getprofilefeed'
                     })
 
+
                 },
 
                 getsubscribesfeed : function(p, clbk, cache){
@@ -18768,6 +18869,15 @@ Platform = function (app, listofnodes) {
                                 parameters.push('');
                                 parameters.push(p.depth)
 
+                            }
+                            
+                            if (mtd === 'getprofilefeed') {
+                                // keyword
+                                parameters.push(p.keyword || '');
+                                // orderby
+                                parameters.push(p.orderby || '');
+                                // ascdesc
+                                parameters.push(p.ascdesc || 'desc');
                             }
 
                             s.getex(parameters, function (data, error) {
@@ -19452,6 +19562,8 @@ Platform = function (app, listofnodes) {
                             if (clbk) {
 
                                 var errorcode = deep(_error, 'code') || null
+
+                                console.log("errorcode", errorcode)
 
                                 clbk(
                                     (errorcode == -5) || (errorcode == -8) ||
@@ -24034,11 +24146,12 @@ Platform = function (app, listofnodes) {
         //var FirebasePlugin = new FakeFirebasePlugin()
 
         var using = typeof window != 'undefined' && window.cordova && typeof FirebasePlugin != 'undefined';
-
+        var usingWeb = typeof window != 'undefined' && typeof _Electron === 'undefined' && !window.cordova && typeof firebase != 'undefined'
+        
         var currenttoken = null;
 
         var appid = deep(window, 'BuildInfo.packageName') || window.location.hostname || window.pocketnetdomain
-        if (appid == 'localhost') appid = 'pocketnet.app' /// url
+        if (appid == 'localhost' || appid == '127.0.0.1') appid = 'pocketnet.app' /// url
 
         var device = function () {
             var id = platform.app.options.device
@@ -24134,6 +24247,13 @@ Platform = function (app, listofnodes) {
 
             },
 
+            setSettings: function (proxy) {
+                if(!proxy) return Promise.reject('proxy')
+                return self.request.setSettings(proxy).then(r => {
+                    return Promise.resolve()
+                })
+            },
+
             existanother : function(proxy, address){
                 var obj = self.storage.data[appid] || {}
 
@@ -24155,11 +24275,11 @@ Platform = function (app, listofnodes) {
             },
 
             exist : function(proxy, address, token){
-                var exist = self.storage.get(proxy, address, token)
+                /*var exist = self.storage.get(proxy, address, token)
 
                 if (exist){
                     return Promise.resolve(true)
-                }
+                }*/
 
                 return self.request.mytokens(proxy).then(r => {
 
@@ -24183,14 +24303,16 @@ Platform = function (app, listofnodes) {
                     if (apps.indexOf(appid) == -1){
                         return Promise.reject('proxyfirebaseid')
                     }
-
+                    return Promise.resolve(appid)
 
                 })
             }
         }
 
         self.revokeall = function(){
-            FirebasePlugin.unregister();
+            if (using) {
+                FirebasePlugin?.unregister();
+            }
 
             self.storage.clear();
 
@@ -24216,9 +24338,30 @@ Platform = function (app, listofnodes) {
             }).then(r => {
                 return self.api.setToken(address, token, proxy)
             }).catch(e => {
+                console.log(e)
                 return Promise.resolve()
             })
 
+        }
+
+        self.settings = async function(current){
+            console.log("HERE")
+            if(!current){
+                for(const proxy of platform.app.api.get.proxies()){
+                    const {info} = await proxy.get.info();
+                    if(info.firebase.useNotifications && info.firebase.inited){
+                        current = proxy;
+                    }
+                }
+            }
+            if(!current) return Promise.reject('proxy')
+
+            return self.api.checkProxy(current).then(r => {
+                return  self.api.setSettings(current)
+            }).catch(e => {
+                console.log(e)
+                return Promise.resolve()
+            })
         }
 
         self.request = {
@@ -24270,7 +24413,18 @@ Platform = function (app, listofnodes) {
                 return platform.app.api.fetchauth('firebase/set', {
                     device : device(),
                     token : token,
-                    id : appid
+                    id : appid,
+                    settings: self.getSettings()
+                }, {
+                    proxy : proxy
+                })
+
+            },
+
+            setSettings: function (proxy) {
+                return platform.app.api.fetchauth('firebase/settings', {
+                    device : device(),
+                    settings: self.getSettings()
                 }, {
                     proxy : proxy
                 })
@@ -24278,12 +24432,18 @@ Platform = function (app, listofnodes) {
             }
         }
 
+        self.getSettings = function (){
+            const data = {}
+            const settings = platform.sdk.usersettings.meta;
+            for(const key in settings){
+                data[key] = settings[key].value;
+            }
+            data['web'] = Boolean(!window.cordova)
+            return data;
+        }
 
         self.get = function (clbk) {
-
-            if (!using) {
-            }
-            else {
+            if (using) {
 
                 FirebasePlugin.getToken(function(token) {
 
@@ -24305,121 +24465,204 @@ Platform = function (app, listofnodes) {
                 });
 
 
-            }
+            }else if(usingWeb) {
 
-            if (clbk)
-                clbk()
+                console.log("HERE")
+
+                if (clbk)
+                    clbk()
+
+                return
+
+                try{
+                    if(!firebase.apps.length) {
+                        firebase.initializeApp({
+                            messagingSenderId: "1020521924918",
+                            projectId: 'pocketnet',
+                            apiKey: 'AIzaSyC_Jeet2gpKRZp44iATwlFFA7iGNYsabkk',
+                            appId: '1:1020521924918:ios:ab35cc84f0d10d86aacb97',
+                        });
+                    }
+                    const messaging = firebase.messaging();
+                    messaging.getToken().then(token=>{
+                        console.log(token)
+                        currenttoken = token
+                        platform.fcmtoken = token
+                        platform.matrixchat.changeFcm()
+                        self.events()
+                        if (clbk)
+                            clbk(token)
+                    }).catch(e => {
+                        console.log("E", e)
+                    })
+
+                }
+                catch (e) {
+                    console.log("E", e)
+                }
+                
+            }
         }
 
         self.permissions = function(clbk){
-			FirebasePlugin.hasPermission(function(hasPermission){
+            if(using) {
+                FirebasePlugin.hasPermission(function (hasPermission) {
 
-                if(!hasPermission){
-                    FirebasePlugin.grantPermission(function(hasPermission){
+                    if (!hasPermission) {
+                        FirebasePlugin.grantPermission(function (hasPermission) {
 
-                        if(hasPermission){
-                            self.get(clbk)
-                        }
+                            if (hasPermission) {
+                                self.get(clbk)
+                            }
 
-                    });
-                }
-                else{
-                    self.get(clbk)
-                }
+                        });
+                    } else {
+                        self.get(clbk)
+                    }
 
-            });
+                });
+            }else if (usingWeb){
+                Notification.requestPermission().then((permission) => {
+                    if (permission === 'granted') {
+                        console.log('Notification permission granted.');
+                        self.get(clbk)
+                    } else {
+                        usingWeb = false;
+                        console.log('Unable to get permission to notify.');
+                    }
+                });
+            }
 		}
 
         self.events = function () {
+            if(using) {
+                FirebasePlugin.onMessageReceived((data) => {
 
-            FirebasePlugin.onMessageReceived((data) => {
+                    if (!data) data = {}
 
-                if(!data) data = {}
-
-                if (data.data)
-                    platform.ws.messageHandler(data.data)
+                    if (data.data)
+                        platform.ws.messageHandler(data.data)
 
 
-                if (data.room_id) {
+                    if (data.room_id) {
 
-                    if(data.tap){
-                         // Wait until we can navigate Matrix
-                        retry(function(){
+                        if (data.tap) {
+                            // Wait until we can navigate Matrix
+                            retry(function () {
 
-                            return platform && platform.matrixchat && platform.matrixchat.core;
+                                return platform && platform.matrixchat && platform.matrixchat.core;
 
-                        }, function(){
+                            }, function () {
 
-                            setTimeout(function(){
+                                setTimeout(function () {
 
-                                platform.matrixchat.core.goto(data.room_id);
+                                    platform.matrixchat.core.goto(data.room_id);
 
                                 if (platform.matrixchat.core.apptochat)
                                     platform.matrixchat.core.apptochat();
 
-                            }, 50)
+                                }, 50)
 
 
 
-                        });
+                            });
+                        }
+
+
+
+                        return;
                     }
 
+                    if (data.tap) {
 
+                        platform.ws.destroyMessages();
+                        const body = JSON.parse(data?.json);
+                        body.url = body?.url.replace("/index", "");
+                        if(body.url) {
+                            if(body.url === "/userpage?id=wallet"){
+                                platform.app.nav.api.go({
+                                    open: true,
+                                    href: 'wallet',
+                                    history: true,
+                                    inWnd: true,
+                                    essenseData: {
+                                    },
+                                });
+                            }else {
+                                const params = new URLSearchParams(body.url);
+                                platform.app.nav.api.load({
+                                    open: true,
+                                    href: 'post?s=' + params.get('s'),
+                                    inWnd: true,
+                                    history: true,
+                                    clbk: function (d, p) {
+                                        app.nav.wnds['post'] = p
+                                    },
 
-                    return;
-                }
+                                    essenseData: {
+                                        share: params.get('s'),
 
-                if (data.tap) {
+                                        reply: {
+                                            answerid: params.get('commentid') || "",
+                                            parentid: params.get('parentid') || "",
+                                            noaction: true
+                                        }
+                                    }
+                                })
+                            }
+                        }else{
+                            platform.app.nav.api.go({
+                                open : true,
+                                href : 'notifications',
+                                inWnd : true,
+                                history : true,
+                                essenseData : {
+                                }
+                            })
+                        }
+                    } else {
 
-                    platform.ws.destroyMessages()
+                        if (typeof cordova != 'undefined') {
 
-                    platform.app.nav.api.load({
-                        open: true,
-                        href: 'notifications',
-                        history: true
-                    })
+                            var cordovabadge = deep(cordova, 'plugins.notification.badge')
 
-                    return
-                }
-                else {
+                            if (cordovabadge)
+                                cordovabadge.increase(1, function (badge) {
+                                });
+                        }
 
-                    if (typeof cordova != 'undefined') {
-
-                        var cordovabadge = deep(cordova, 'plugins.notification.badge')
-
-                        if (cordovabadge)
-                            cordovabadge.increase(1, function (badge) { });
                     }
-
-                }
 
 
             });
 
 
-            // When token is refreshed, update the matrix element for the Vue app
-            FirebasePlugin.onTokenRefresh(function(token) {
+                // When token is refreshed, update the matrix element for the Vue app
+                FirebasePlugin?.onTokenRefresh(function (token) {
 
-                platform.fcmtoken = token
-                currenttoken = token
+                    platform.fcmtoken = token
+                    currenttoken = token
                 platform.matrixchat.changeFcm()
 
-                //prepareclbk(token)
+                    //prepareclbk(token)
 
-            }, function(error) {
-                console.error(error);
-            });
-
+                }, function (error) {
+                    console.error(error);
+                });
+            }
         }
 
-        var prepareclbk = function(token){
-
+        var prepareclbk = async function(token){
             if (token){
-
-                var proxy = platform.app.api.get.current()
-
-                if (proxy){
-                    self.set(proxy.id).catch(e => {
+                let current = null;
+                for(const proxy of platform.app.api.get.proxies()){
+                    const {info} = await proxy.get.info();
+                    if(info.firebase.useNotifications && info.firebase.inited){
+                        current = proxy;
+                    }
+                }
+                if (current){
+                    self.set(current.id).catch(e => {
                         console.log("error", e)
                     })
                 }
@@ -24429,21 +24672,32 @@ Platform = function (app, listofnodes) {
         }
 
         self.init = function(clbk){
-
-            self.prepare(function(token){
-
-                prepareclbk(token)
-
-            })
-
+            
             if(clbk) clbk()
+
+            /*app.user.isState(function (state) {
+            
+                if(state){
+                    self.prepare(function(token){
+
+                        prepareclbk(token)
+    
+                    })
+                }
+                else{
+
+                }
+                
+
+            })*/
+
         }
 
         self.prepare = function(clbk){
 
             self.storage.load()
 
-			if (using) {
+            if (using || usingWeb) {
 
 				self.permissions(clbk)
 			}
@@ -24458,13 +24712,13 @@ Platform = function (app, listofnodes) {
 
             currenttoken = null
 
-            if (using){
+            self.storage.clear()
+
+            if (using || usingWeb){
                 self.revokeall().then(clbk).catch(e => {})
 
                 return
             }
-
-
 
             if (clbk)
                 clbk()
@@ -29059,6 +29313,14 @@ Platform = function (app, listofnodes) {
             SHOWING : {}
         },
 
+        deactivateAccount : function(){
+            if(self.matrixchat.core){
+                return self.matrixchat.core.mtrx.deactivateAccount()
+            }
+
+            return Promise.reject('matrixchat.core')
+        },
+
         destroy : function(){
 
 
@@ -29577,7 +29839,7 @@ Platform = function (app, listofnodes) {
                 if (self.matrixchat.el){
 
                     if (self.matrixchat.el.hasClass('active')) return
-                        self.matrixchat.el.addClass('active')
+                    self.matrixchat.el.addClass('active')
 
                 }
                 else{

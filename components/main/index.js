@@ -708,7 +708,7 @@ var main = (function(){
 							//recommendedUsers : self.app.mobileview,
 							//recommendedUsersCount : self.app.mobileview ? 15 : 3,
 
-							includerec : !searchvalue && !searchtags && (mode == 'index' /*|| mode == 'video' || mode == 'read'*/) ? true : false,
+							includerec : state && !searchvalue && !searchtags && (mode == 'index' /*|| mode == 'video' || mode == 'read'*/) ? true : false,
 							includesub : !searchvalue && !searchtags && (mode == 'index' /*|| mode == 'video' || mode == 'read'*/) ? true : false,
 							includeboost : !searchvalue && !searchtags && self.app.boost && !self.app.pkoindisable,
 

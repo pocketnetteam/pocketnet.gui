@@ -1760,7 +1760,7 @@ var comments = (function(){
 					},
 					keydown : function(editor, e){
 						if(e.keyCode == 13){
-							if (isMobile()){
+							if (isMobile() || e.ctrlKey){
 
 								setTimeout(() => {
 									if (c.hasClass('sending')) return

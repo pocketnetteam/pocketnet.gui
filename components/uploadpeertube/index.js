@@ -169,6 +169,28 @@ var uploadpeertube = (function () {
 				wasclbk : !_.isEmpty(self.added)
 			});
 
+			try {
+				var currentUnloadedVideos = JSON.parse(
+				localStorage.getItem('unpostedVideos') || '{}',
+				);
+
+				if (
+					currentUnloadedVideos[self.app.user.address.value] &&
+					typeof currentUnloadedVideos[self.app.user.address.value] === 'object'
+				) {
+					currentUnloadedVideos[self.app.user.address.value].push(v);
+				} else {
+					currentUnloadedVideos[self.app.user.address.value] = [v];
+				}
+
+				localStorage.setItem(
+					'unpostedVideos',
+					JSON.stringify(currentUnloadedVideos),
+				);
+			} catch (error) {
+				localStorage.setItem('unpostedVideos', JSON.stringify([v]));
+			}
+
 			_.each(self.added, function(a){
 				a(v)
 			})
@@ -474,13 +496,15 @@ var uploadpeertube = (function () {
 				})
 				.catch((e = {}) => {
 
-
 					processing(false)
 
 					self.app.Logger.error({
 						err: e.text || 'videoUploadError',
 						code: 401,
-						payload: e,
+						payload: {
+							...e,
+							host: self.app.peertubeHandler.active(),
+						},
 					});
 
 					if (!e.cancel) {
@@ -554,7 +578,10 @@ var uploadpeertube = (function () {
 
 							self.app.Logger.error({
 								err: e.text || 'videoImportError',
-								payload: e,
+								payload: {
+									...e,
+									host: self.app.peertubeHandler.active(),
+								},
 								code: 402,
 							});
 
@@ -653,7 +680,10 @@ var uploadpeertube = (function () {
 								if (r.trial || !(r.balance && r.reputation)) {
 									self.app.Logger.error({
 										err: 'PEERTIBE_AUTH_ERROR_VIDEOELEMENT',
-										payload: e,
+										payload: {
+											...e,
+											host: self.app.peertubeHandler.active(),
+										},
 										code: 501,
 									});
 								}

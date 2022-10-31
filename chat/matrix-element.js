@@ -15841,7 +15841,7 @@ f.fetchLocal = function (url) {
     };
 
     xhr.onerror = function (e) {
-      console.error(e);
+      console.error(e, url);
       reject(new TypeError('Local request failed'));
     };
 
@@ -39500,6 +39500,11 @@ class mtrx_MTRX {
           password: _this3.credentials.password
         });
       } catch (e) {
+        if (e && e.indexOf && e.indexOf('M_USER_DEACTIVATED') > -1) {
+          _this3.error = 'M_USER_DEACTIVATED';
+          return null;
+        }
+
         if (yield client.isUsernameAvailable(_this3.credentials.username)) {
           userData = yield client.register(_this3.credentials.username, _this3.credentials.password, null, {
             type: 'm.login.dummy' //signature : this.core.user.signature('matrix')
@@ -39753,11 +39758,23 @@ class mtrx_MTRX {
 
   init() {
     return this.createClient().then(() => {
+      if (this.error) {
+        return Promise.reject(this.error);
+      }
+
       return this.initdb();
     }).then(() => {
       this.initEvents();
       return Promise.resolve();
     });
+  }
+
+  deactivateAccount() {
+    if (this.client) {
+      return this.client.deactivateAccount(this.credentials, true);
+    }
+
+    return Promise.reject('noclient');
   }
 
   destroy() {
@@ -41509,6 +41526,7 @@ class application_Core {
         if (functions["a" /* default */].deep(this.user, 'userinfo.name')) this.mtrx.client.setDisplayName(functions["a" /* default */].deep(this.user, 'userinfo.name'));
         return Promise.resolve();
       }).catch(e => {
+        console.log("E", e);
         this.loading = false;
 
         if (e == 'unauthorized' || e == 'unknown' || e == 'deleted') {
@@ -67818,7 +67836,7 @@ var PcryptoRoom = /*#__PURE__*/function () {
         return user.id;
       }), uid => {
         return uid && uid != pcrypto.user.userinfo.id;
-      }).join('') + '_v3');
+      }).join('') + '_v4');
       return hash;
     };
 

@@ -2825,7 +2825,8 @@ kits = {
 		subscribe : Subscribe,
 		subscribePrivate : SubscribePrivate,
 		contentBoost : ContentBoost,
-		deleteAccount : DeleteAccount
+		deleteAccount : DeleteAccount,
+		accDel : DeleteAccount
 	},
 
 	ini : {
