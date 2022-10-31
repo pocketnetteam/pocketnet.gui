@@ -931,6 +931,7 @@ var Api = function(app){
     }
 
     self.rpc = function(method, parameters, options, trying){
+        var selectedProxy;
 
         if(!trying) trying = 0
 
@@ -940,10 +941,11 @@ var Api = function(app){
             options = {}
 
         return getproxy(options.proxy).then(proxy => {
+            selectedProxy = proxy;
+
             return proxy.rpc(method, parameters, options.rpc)
 
         }).then(r => {
-
             app.apiHandlers.success({
                 rpc : true
             })
@@ -951,7 +953,6 @@ var Api = function(app){
             return Promise.resolve(r)
 
         }).catch(e => {
-
 
             if(!e) e = 'TypeError: Failed to fetch'
 
@@ -972,7 +973,10 @@ var Api = function(app){
             if (app.Logger) {
                 app.Logger.error({
                     err: typeof e === 'string' ? e : (e.text || 'RPC_DEFAULT_ERROR'),
-                    payload: e,
+                    payload: {
+                        ...e,
+                        proxyHost: deep(selectedProxy, 'host'),
+                    },
                     code: e.code || 423,
                 });
             }

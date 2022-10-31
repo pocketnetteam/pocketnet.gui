@@ -2357,5 +2357,10 @@ _l.boost_c17 = 'Censorship resistant'
 
 _l.gotopage = 'Go to page'
 
+_l.postedVideos = "Posted Videos"
+_l.unPostedVideos = "Unposted Videos"
+_l.videoIsPosting = "Posting"
+_l.noUnposted = "No Unposted Videos"
 
-
+_l.sortByComments = "Comments";
+_l.sortByRating = "Number of ratings";
