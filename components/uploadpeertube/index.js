@@ -711,6 +711,9 @@ var uploadpeertube = (function () {
 				uploading = false
 				cancel = null
 
+				self.app.mobile.backgroundMode(false)
+
+
 			},
 
 			closehack : function(){
@@ -745,11 +748,15 @@ var uploadpeertube = (function () {
 
 				initEvents();
 
+
 				renders.videoErrorContainer()
 
 				//if (error) el.c.closest('.wnd').addClass('witherror');
 
 				p.clbk(null, p);
+
+				self.app.mobile.backgroundMode(true)
+
 			},
 
 			wnd: {
