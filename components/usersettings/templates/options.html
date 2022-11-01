@@ -8,7 +8,7 @@
 			<div class="groupOptions">
 
 				<% _.each(group.options, function(parameter){
-
+					if(!parameter) return
 					if(parameter.id == 'enablePeertube' && !parameter.value) return
 
 					%>

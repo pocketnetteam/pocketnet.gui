@@ -640,7 +640,7 @@ Platform = function (app, listofnodes) {
     }
 
     self.__getSettingsMeta = function(){
-        return {
+        var st = {
 
             preview: {
                 name: self.app.localization.e('disablePreview'),
@@ -678,7 +678,7 @@ Platform = function (app, listofnodes) {
             },
 
             downvotes: {
-                name: 'Downvotes receive',
+                name: self.app.localization.e('e13270d'),
                 id: 'downvotes',
                 type: "BOOLEAN",
                 value: false
@@ -705,12 +705,12 @@ Platform = function (app, listofnodes) {
                 value: true
             },
 
-            rescued: {
+            /*rescued: {
                 name: self.app.localization.e('e13274'),
                 id: 'rescued',
                 type: "BOOLEAN",
                 value: true
-            },
+            },*/
 
             commentScore: {
                 name: self.app.localization.e('e13275'),
@@ -887,6 +887,10 @@ Platform = function (app, listofnodes) {
             },
 
         }
+
+     
+
+        return st
     },
 
     self.errorHandler = function (key, action, akey) {
@@ -9258,7 +9262,7 @@ Platform = function (app, listofnodes) {
                             comments: options.comments,
                             answers: options.answers,
                             followers: options.followers,
-                            rescued: options.rescued,
+                            //rescued: options.rescued,
                             commentScore: options.commentScore
 
                         }
@@ -9286,6 +9290,11 @@ Platform = function (app, listofnodes) {
                         name: self.app.localization.e('system'),
                         options : {}
                     }
+                }
+
+                if(app.pkoindisable){
+                    delete c.notifications.options.win
+                    delete c.notifications.options.transactions
                 }
 
 
@@ -25929,7 +25938,7 @@ Platform = function (app, listofnodes) {
 
                         if (data.cointype) {
 
-                            if (platform.sdk.usersettings.meta.win.value) {
+                            if (!app.pkoindisable && platform.sdk.usersettings.meta.win.value) {
 
                                 var td = 'coinbaseSuccess'
 
@@ -25977,7 +25986,7 @@ Platform = function (app, listofnodes) {
 
                                 }
 
-                                if (platform.sdk.usersettings.meta.transactions.value && data.user && data.user.name) {
+                                if (!app.pkoindisable && platform.sdk.usersettings.meta.transactions.value && data.user && data.user.name) {
 
                                     if (data.amountall >= 0.05 || data.tx.amount >= 0.05) {
 
@@ -26012,14 +26021,14 @@ Platform = function (app, listofnodes) {
 
                         if (data.tx) {
                             if (data.tx.coinbase) {
-                                if (!platform.sdk.usersettings.meta.win.value) {
+                                if (!platform.sdk.usersettings.meta.win.value || app.pkoindisable) {
 
                                     return false;
                                 }
                             }
                             else {
                                 if (data.address != platform.sdk.address.pnet().address) {
-                                    if (!platform.sdk.usersettings.meta.transactions.value) {
+                                    if (!platform.sdk.usersettings.meta.transactions.value || app.pkoindisable) {
                                         return false;
                                     }
                                 }
@@ -26609,11 +26618,11 @@ Platform = function (app, listofnodes) {
 
                         if (data.mesType == 'userInfo') {
 
-                            if ((!platform.sdk.usersettings.meta.rescued || platform.sdk.usersettings.meta.rescued.value)) {
+                            /*if ((!platform.sdk.usersettings.meta.rescued || platform.sdk.usersettings.meta.rescued.value)) {
 
                                 return true
 
-                            }
+                            }*/
 
 
                         }
@@ -26728,7 +26737,7 @@ Platform = function (app, listofnodes) {
 
                     if (data.mesType == 'userInfo') {
 
-                        if ((!platform.sdk.usersettings.meta.rescued || platform.sdk.usersettings.meta.rescued.value)) {
+                        /*if ((!platform.sdk.usersettings.meta.rescued || platform.sdk.usersettings.meta.rescued.value)) {*/
 
                             //text = platform.app.localization.e('refferalUserMessage')
 
@@ -26736,7 +26745,7 @@ Platform = function (app, listofnodes) {
                             caption = platform.app.localization.e('refferalUserMessage')
                             extra = self.tempates.subscribe(data.user)*/
 
-                        }
+                        //}
                     }
 
 

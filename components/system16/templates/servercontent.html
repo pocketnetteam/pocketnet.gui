@@ -32,6 +32,8 @@
 
         <% } %>
 
+        <% if(!app.pkoindisable || admin) {%>
+
         <div class="walletsWrapper collapsepart">
             <div class="work">
                 <div class="subcaption">
@@ -44,6 +46,8 @@
                 </div>
             </div>
         </div>
+
+        <% } %>
 
     <% } %>
 </div>

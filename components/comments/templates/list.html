@@ -170,7 +170,7 @@ var commentf = function(comment){
 
 							<% } %>
 
-							<% if(comment.donation === 'true' && comment.amount) {%>
+							<% if(comment.donation === 'true' && comment.amount && !app.pkoindisable) {%>
 								<div class="donateSum">
 									<i class="fas fa-plus-circle"></i> <%=comment.amount / 100000000 %> PKOIN
 								</div>
