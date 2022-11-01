@@ -419,6 +419,7 @@
 				color : rgb(var(--color-txt-ac-1));	
 			}
 
+			&.hiddenBlockedUserComment,
 			&.hiddenComment{
 				.commentimages,
 				.commentmessage{
@@ -429,10 +430,22 @@
 					display: block;
 					color : rgb(var(--neutral-grad-2));
 				}
+
+				.showBlockedUserCommentWrapper{
+					display: block;
+				}
 			} 
 
 			.hiddenCommentLabel{
 				.ghost{
+					padding-left: 0;
+				}
+			}
+
+			.showBlockedUserCommentWrapper{
+				display: none;
+
+				button{
 					padding-left: 0;
 				}
 			}

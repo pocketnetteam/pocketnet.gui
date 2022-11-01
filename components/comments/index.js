@@ -1389,9 +1389,9 @@ var comments = (function(){
 	
 				comments = _.sortBy(comments, function(c){
 
-					if (self.app.platform.sdk.comments.blocked[c.address]) {
+					/*if (self.app.platform.sdk.comments.blocked[c.address]) {
 						return 0
-					}
+					}*/
 
 
 					var ms = (c.time || new Date()) / 1000
@@ -1603,7 +1603,7 @@ var comments = (function(){
 								{
 									parent.addClass('hiddenBlockedUserComment');
 									var hiddenCommentLabel = $('<div></div>').html(self.app.localization.e('blockedbymeHiddenCommentLabel')).addClass('hiddenCommentLabel')
-									var ghostButton = $('<div></div>').append($('<button></button>').html(self.app.localization.e('showhiddenComment')).addClass('ghost showBlockedUserComment'))
+									var ghostButton = $('<div class="showBlockedUserCommentWrapper"></div>').append($('<button></button>').html(self.app.localization.e('showhiddenComment')).addClass('ghost showBlockedUserComment'))
 									var commentContentTable = localParent.find('.cbodyWrapper > .commentcontenttable')
 									commentContentTable.append(hiddenCommentLabel)
 									commentContentTable.append(ghostButton)
