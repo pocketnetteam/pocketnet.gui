@@ -13,7 +13,7 @@ var diagnosticsPage = (function () {
     var diagnosticsInProgress = false;
 
     var actions = {
-      async getHosts() {
+      async getHosts() {	
         try {
           const serversList =
             await self.app.peertubeHandler.api.proxy.allServers();
@@ -26,7 +26,11 @@ var diagnosticsPage = (function () {
 
     var events = {
       eventGetHosts() {
-        return actions
+        if (diagnosticsInProgress) return;
+
+        diagnosticsInProgress = true;
+
+        actions
           .getHosts()
           .then((res) => {
             const formattedServersList = Object.values(res).flat();
@@ -37,7 +41,29 @@ var diagnosticsPage = (function () {
 
             return formattedServersList;
           })
-          .catch((err) => err);
+          .then((res) => {
+          })
+          .catch((err) => {
+            renders.mainError({ err });
+
+            let errorBody;
+
+            try {
+              errorBody = JSON.stringify(err, Object.getOwnPropertyNames(err));
+            } catch (errorJSON) {
+              errorBody = `Unable to stringify. Reason: ${errorJSON}`;
+            }
+
+            self.app.Logger.error({
+              err: 'DIAGNOSE_UNREACHED_SERVERS',
+              code: 101,
+              payload: errorBody,
+              level: 'diagnostics',
+            });
+          })
+          .finally(() => {
+            diagnosticsInProgress = false;
+          });
       },
     };
 
@@ -46,7 +72,7 @@ var diagnosticsPage = (function () {
         let errorStringed;
 
         try {
-          errorStringed = JSON.stringify(err);
+          errorStringed = JSON.stringify(err, Object.getOwnPropertyNames(err));
         } catch (errorJSON) {
           errorStringed = `Unstringable error. Reason: ${errorJSON}`;
         }
@@ -72,38 +98,7 @@ var diagnosticsPage = (function () {
     };
 
     var initEvents = function () {
-      el.startDiagnoseButton.on('click', () => {
-        if (diagnosticsInProgress) return;
-
-        diagnosticsInProgress = true;
-
-        events
-          .eventGetHosts()
-          .then((res) => {
-            debugger;
-          })
-          .catch((err) => {
-            renders.mainError({ err });
-
-            let errorBody;
-
-            try {
-              errorBody = JSON.stringify(err);
-            } catch (errorJSON) {
-              errorBody = `Unable to stringify. Reason: ${errorJSON}`;
-            }
-
-            self.app.Logger.error({
-              err: 'DIAGNOSE_UNREACHED_SERVERS',
-              code: 101,
-              payload: errorBody,
-              level: 'diagnostics',
-            });
-          })
-          .finally(() => {
-            diagnosticsInProgress = false;
-          });
-      });
+      el.startDiagnoseButton.on('click', () => events.eventGetHosts());
     };
 
     return {
