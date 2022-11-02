@@ -13,7 +13,12 @@ const commentBanner = (function() {
 				
 				const commentBanner = JSON.parse(localStorage.commentBanner || '{}');
 				commentBanner.count = -1;
-				localStorage.setItem('commentBanner', JSON.stringify(commentBanner));
+
+				try {
+					localStorage.setItem('commentBanner', JSON.stringify(commentBanner));
+				}
+				catch (e) { }
+				
 
 			},
 			unsubscribe : function(address, clbk){
