@@ -25,9 +25,13 @@ var authorization = (function(){
 		//var codeReader = new ZXing.BrowserQRCodeReader();
 
 		var stayH = function(){
+			try {
+				localStorage['stay'] = '0';
+				localStorage['mnemonic'] || '';
+			}
+			catch (e) { }
 
-			localStorage['stay'] = '0';
-			localStorage['mnemonic'] || '';
+			
 
 			self.app.user.stay = 0;
 
@@ -85,7 +89,11 @@ var authorization = (function(){
 
 				var mnemonicKey = trim(el.login.val());
 
-				localStorage['stay'] = boolToNumber(stay.value).toString()
+				try {
+					localStorage['stay'] = boolToNumber(stay.value).toString()
+				}
+				catch (e) { }
+				
 
 				self.user.stay = stay.value
 
@@ -431,9 +439,11 @@ var authorization = (function(){
 
 					stay.value = numberToBool(self.app.user.stay)
 
-					var mnemonic = localStorage['mnemonic'] || '';
+					var mnemonic = ''
+					
+					//localStorage['mnemonic'] || '';
 
-					/*if(!stay.value) */mnemonic = ''
+					/*if(!stay.value) *///mnemonic = ''
 
 					var data = {
 						stay : stay,

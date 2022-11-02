@@ -640,7 +640,17 @@ Platform = function (app, listofnodes) {
     }
 
     self.__getSettingsMeta = function(){
-        return {
+
+        var tgv = ""
+
+        try{
+            tgv = (JSON.parse(localStorage.getItem('telegrambot')) && JSON.parse(localStorage.getItem('telegrambot')).token) || ""
+
+        }catch(e){
+            
+        }
+
+        var st = {
 
             preview: {
                 name: self.app.localization.e('disablePreview'),
@@ -678,7 +688,7 @@ Platform = function (app, listofnodes) {
             },
 
             downvotes: {
-                name: 'Downvotes receive',
+                name: self.app.localization.e('e13270d'),
                 id: 'downvotes',
                 type: "BOOLEAN",
                 value: false
@@ -705,12 +715,12 @@ Platform = function (app, listofnodes) {
                 value: true
             },
 
-            rescued: {
+            /*rescued: {
                 name: self.app.localization.e('e13274'),
                 id: 'rescued',
                 type: "BOOLEAN",
                 value: true
-            },
+            },*/
 
             commentScore: {
                 name: self.app.localization.e('e13275'),
@@ -802,7 +812,7 @@ Platform = function (app, listofnodes) {
                 name: self.app.localization.e('e13282'),
                 id: 'telegram',
                 placeholder: self.app.localization.e('e13282'),
-                value: (JSON.parse(localStorage.getItem('telegrambot')) && JSON.parse(localStorage.getItem('telegrambot')).token) || "",
+                value: tgv,
             },
 
             tgfrom: {
@@ -887,6 +897,10 @@ Platform = function (app, listofnodes) {
             },
 
         }
+
+     
+
+        return st
     },
 
     self.errorHandler = function (key, action, akey) {
@@ -3161,7 +3175,15 @@ Platform = function (app, listofnodes) {
             const unixTimeNow = Math.floor(Date.now() / 1000);
             const oneDayInSeconds = 86400;
 
-            const commentBanner = JSON.parse(localStorage.commentBanner || '{}');
+            var commentBanner = {}
+            
+            try{
+                commentBanner =  JSON.parse(localStorage.commentBanner || '{}');
+
+            }catch(e){
+                
+            }
+           
             let {next, count} = commentBanner; 
 
             if (!count) count = 0;
@@ -3215,7 +3237,12 @@ Platform = function (app, listofnodes) {
 
                 }
 
-                localStorage.setItem('commentBanner', JSON.stringify({count, next}));
+                try{
+                    localStorage.setItem('commentBanner', JSON.stringify({count, next}));
+
+                }catch(e){
+                    
+                }
 
 
             } 
@@ -8128,7 +8155,13 @@ Platform = function (app, listofnodes) {
             load: function () {
                 var storage = {};
 
-                var local = localStorage['registrations'] || "{}";
+                var local = "{}"
+                
+                try{
+                    local = localStorage['registrations'] || "{}";
+                }catch(e){
+                    
+                }
 
                 if (local) {
                     try {
@@ -8141,7 +8174,13 @@ Platform = function (app, listofnodes) {
                 self.sdk.registrations.storage = storage;
             },
             save: function () {
-                localStorage['registrations'] = JSON.stringify(self.sdk.registrations.storage || {});
+
+                try{
+                    localStorage['registrations'] = JSON.stringify(self.sdk.registrations.storage || {});
+                }catch(e){
+                    
+                }
+
             }
         },
 
@@ -8392,7 +8431,12 @@ Platform = function (app, listofnodes) {
             load: function () {
                 var storage = {};
 
-                var local = localStorage['relayTransactions'] || "{}";
+                var local = "{}";
+                try{
+                    local = localStorage['relayTransactions'] || "{}";
+                }catch(e){
+                    
+                }
 
                 if (local) {
                     try {
@@ -8407,7 +8451,12 @@ Platform = function (app, listofnodes) {
 
             },
             save: function () {
-                localStorage['relayTransactions'] = JSON.stringify(self.sdk.relayTransactions.storage || {});
+                try{
+                    localStorage['relayTransactions'] = JSON.stringify(self.sdk.relayTransactions.storage || {});
+                }catch(e){
+                    
+                }
+                
             },
 
             getRelTmpSubscriptions : function(){
@@ -8674,7 +8723,14 @@ Platform = function (app, listofnodes) {
 
                 var address = self.sdk.address.pnet().address;
 
-                var local = localStorage[address + 'articles'] || "[]";
+                var local = "[]" 
+                
+                try{
+                    localStorage[address + 'articles'] || "[]";
+                }catch(e){
+                    
+                }
+                
 
                 if (local) {
                     try {
@@ -8898,7 +8954,12 @@ Platform = function (app, listofnodes) {
 
                 var c = self.sdk.lentaMethod.current
 
-                localStorage['lentaMethod'] = c;
+                try{
+                    localStorage['lentaMethod'] = c;
+                }catch(e){
+                    
+                }
+                
 
             },
 
@@ -8906,7 +8967,15 @@ Platform = function (app, listofnodes) {
 
                 var t = self.sdk.lentaMethod
 
-                t.current = localStorage['lentaMethod'] || t.default;
+                t.current = t.default;
+
+                try{
+                    t.current = localStorage['lentaMethod'] || t.default;
+                }catch(e){
+                    
+                }
+
+                
 
                 t.set()
 
@@ -8976,7 +9045,12 @@ Platform = function (app, listofnodes) {
 
                 var c = self.sdk.theme.current
 
-                localStorage['usertheme'] = c;
+                
+                try{
+                    localStorage['usertheme'] = c;
+                }catch(e){
+                    
+                }
 
             },
 
@@ -8984,14 +9058,26 @@ Platform = function (app, listofnodes) {
 
                 var t = self.sdk.theme
 
-                t.current = localStorage['usertheme'] || t.default;
+                t.current = t.default;
+
+                try{
+                    t.current = localStorage['usertheme'] || t.default;
+                }catch(e){
+                    
+                }
 
                 t.set()
 
                 if (clbk) clbk()
 
                 self.sdk.syncStorage.on('change', 'usertheme', (e) => {
-                    t.current = localStorage.usertheme;
+                    
+                    try{
+                        t.current = localStorage.usertheme;
+                    }catch(e){
+                        
+                    }
+
                     t.set();
                 });
             },
@@ -9258,7 +9344,7 @@ Platform = function (app, listofnodes) {
                             comments: options.comments,
                             answers: options.answers,
                             followers: options.followers,
-                            rescued: options.rescued,
+                            //rescued: options.rescued,
                             commentScore: options.commentScore
 
                         }
@@ -9286,6 +9372,11 @@ Platform = function (app, listofnodes) {
                         name: self.app.localization.e('system'),
                         options : {}
                     }
+                }
+
+                if(app.pkoindisable){
+                    delete c.notifications.options.win
+                    delete c.notifications.options.transactions
                 }
 
 
@@ -9445,7 +9536,13 @@ Platform = function (app, listofnodes) {
 
                 })
 
-                localStorage['usersettings'] = JSON.stringify(values);
+                try{
+                    localStorage['usersettings'] = JSON.stringify(values);
+                }catch(e){
+                    
+                }
+
+                
                 self?.firebase?.settings()
             },
 
@@ -9453,7 +9550,13 @@ Platform = function (app, listofnodes) {
 
                 var values = {};
 
-                var local = localStorage['usersettings'];
+                var local = null
+                
+                try{
+                    local = localStorage['usersettings'];
+                }catch(e){
+                    
+                }
 
                 if (local) {
                     try {
@@ -9950,7 +10053,16 @@ Platform = function (app, listofnodes) {
 
                 var adr = self.app.platform.sdk.address.pnet().address;
 
-                var adrref = localStorage[adr + 'subscribeRef'];
+                var adrref = null
+                
+                try{
+                    adrref = localStorage[adr + 'subscribeRef'];
+                }catch(e){
+                    
+                }
+
+                
+                
 
 
 
@@ -10998,22 +11110,28 @@ Platform = function (app, listofnodes) {
             },
             clearlocalstorage : function(){
 
-                var values = {},
+                try{
+                    var values = {},
                     keys = Object.keys(localStorage),
                     i = keys.length;
 
-                while ( i-- ) {
+                    while ( i-- ) {
 
-                    if(keys[i] && keys[i].indexOf('notificationsv') > -1){
+                        if(keys[i] && keys[i].indexOf('notificationsv') > -1){
 
-                        if(keys[i].indexOf('notificationsv14') == -1){
-                            localStorage.removeItem(keys[i]);
+                            if(keys[i].indexOf('notificationsv14') == -1){
+                                localStorage.removeItem(keys[i]);
+                            }
+
+
                         }
 
-
                     }
-
+                }catch(e){
+                    
                 }
+
+                
 
             },
             load: function () {
@@ -11045,8 +11163,15 @@ Platform = function (app, listofnodes) {
 
                     e.notifications = firstEls(e.notifications, 75)
 
-                    if (self.sdk.address.pnet())
-                        localStorage[self.sdk.address.pnet().address + 'notificationsv14'] = JSON.stringify(e)
+                    if (self.sdk.address.pnet()){
+                        try{
+                            localStorage[self.sdk.address.pnet().address + 'notificationsv14'] = JSON.stringify(e)
+
+        
+                        }catch(e){
+                            
+                        }
+                    }
                 }
 
 
@@ -12266,18 +12391,31 @@ Platform = function (app, listofnodes) {
             current: null,
             done: null,
             load: function (clbk) {
-                self.sdk.captcha.done = localStorage['capcha'] || null;
 
+                try{
+                    self.sdk.captcha.done = localStorage['capcha'] || null;
+
+                }catch(e){
+                    
+                }
+                
                 if (clbk) clbk()
             },
             save: function () {
 
-                if (self.sdk.captcha.done) {
-                    localStorage['capcha'] = self.sdk.captcha.done
+                try{
+                    if (self.sdk.captcha.done) {
+                        localStorage['capcha'] = self.sdk.captcha.done
+                    }
+                    else {
+                        delete localStorage['capcha']
+                    }
+
+                }catch(e){
+                    
                 }
-                else {
-                    delete localStorage['capcha']
-                }
+
+                
 
             },
             get: function (clbk, refresh, proxyoptions) {
@@ -12396,14 +12534,24 @@ Platform = function (app, listofnodes) {
             },
 
             load: function (clbk) {
-                self.sdk.exchanges.storage = JSON.parse(localStorage[self.sdk.address.pnet().address + 'exchanges2'] || "{}");
+                
+                try{
+                    self.sdk.exchanges.storage = JSON.parse(localStorage[self.sdk.address.pnet().address + 'exchanges2'] || "{}");
+                }catch(e){
+                    
+                }
 
                 if (clbk)
                     clbk()
             },
 
             save: function (clbk) {
-                localStorage[self.sdk.address.pnet().address + 'exchanges2'] = JSON.stringify(self.sdk.exchanges.storage || {})
+               
+                try{
+                    localStorage[self.sdk.address.pnet().address + 'exchanges2'] = JSON.stringify(self.sdk.exchanges.storage || {})
+                }catch(e){
+                    
+                }
 
                 if (clbk)
                     clbk()
@@ -13056,7 +13204,15 @@ Platform = function (app, listofnodes) {
                     self.sdk.addresses.storage.addressesobj = [];
                 }
 
-                const anum = localStorage[self.sdk.address.pnet().address + 'addressesNum'] || 10;
+                const anum = 10
+                
+                try{
+                    anum = localStorage[self.sdk.address.pnet().address + 'addressesNum'] || 10;
+                }catch(e){
+                    
+                }
+                
+                
 
                 const walletsItem = self.sdk.address.pnet().address + 'wallets';
 
@@ -13067,11 +13223,18 @@ Platform = function (app, listofnodes) {
                  */
                 if (walletsItem in localStorage) {
                     // console.time('LOADING CACHED WALLETS');
-                    const wallets = JSON.parse(localStorage[walletsItem]);
 
-                    wallets.forEach((walletAddress, walletNum) => {
-                        self.sdk.addresses.addCachedWallet(walletNum, walletAddress);
-                    });
+                    try{
+                        const wallets = JSON.parse(localStorage[walletsItem]);
+
+                        wallets.forEach((walletAddress, walletNum) => {
+                            self.sdk.addresses.addCachedWallet(walletNum, walletAddress);
+                        });
+                    }catch(e){
+                        
+                    }
+
+                    
                     // console.timeEnd('LOADING CACHED WALLETS');
                 } else {
                     // console.time('GENERATING WALLETS');
@@ -13083,7 +13246,13 @@ Platform = function (app, listofnodes) {
                         addressesList.push(address);
                     }
 
-                    localStorage[walletsItem] = JSON.stringify(addressesList);
+                    try{
+                        localStorage[walletsItem] = JSON.stringify(addressesList);
+                    }catch(e){
+                        
+                    }
+
+                    
                     // console.timeEnd('GENERATING WALLETS');
                 }
 
@@ -13099,7 +13268,14 @@ Platform = function (app, listofnodes) {
 
                 if (countAddresses) {
                     const itemName = self.sdk.address.pnet().address + 'addressesNum';
-                    localStorage[itemName] = countAddresses;
+
+                    try{
+                        localStorage[itemName] = countAddresses;
+                    }catch(e){
+                        
+                    }
+
+                    
                 }
             },
 
@@ -13793,11 +13969,19 @@ Platform = function (app, listofnodes) {
             },
 
             save: function () {
-                localStorage['recommendations'] = JSON.stringify({
-                    status : self.sdk.recommendations.storage.status,
-                    shares : self.sdk.recommendations.storage.shares,
-                    keys : self.sdk.recommendations.storage.keys
-                })
+
+
+                try{
+                    localStorage['recommendations'] = JSON.stringify({
+                        status : self.sdk.recommendations.storage.status,
+                        shares : self.sdk.recommendations.storage.shares,
+                        keys : self.sdk.recommendations.storage.keys
+                    })
+                }catch(e){
+                    
+                }
+
+                
             },
 
             load: function (clbk) {
@@ -14129,9 +14313,15 @@ Platform = function (app, listofnodes) {
             },
 
             save: function () {
-                localStorage['latestactivity'] = JSON.stringify({
-                    activity : self.sdk.activity.latest
-                })
+                
+
+                try{
+                    localStorage['latestactivity'] = JSON.stringify({
+                        activity : self.sdk.activity.latest
+                    })
+                }catch(e){
+                    
+                }
             },
 
             load: function (clbk) {
@@ -15612,9 +15802,16 @@ Platform = function (app, listofnodes) {
             },
 
             save: function () {
-                localStorage['categoriessettings'] = JSON.stringify({
-                    settings : self.sdk.categories.settings
-                })
+
+                try{
+                    localStorage['categoriessettings'] = JSON.stringify({
+                        settings : self.sdk.categories.settings
+                    })
+                }catch(e){
+                    
+                }
+
+                
             },
 
             load: function (clbk) {
@@ -16074,9 +16271,15 @@ Platform = function (app, listofnodes) {
 
             save : function(){
                 console.log("SAVE")
-                localStorage['memtags'] = JSON.stringify({
-                    tags : self.sdk.memtags.storage.tags,
-                })
+
+                try{
+                    localStorage['memtags'] = JSON.stringify({
+                        tags : self.sdk.memtags.storage.tags,
+                    })
+                }catch(e){
+                    
+                }
+                
             },
 
 
@@ -17214,11 +17417,19 @@ Platform = function (app, listofnodes) {
 
                         var t = deep(d, 'time') || 0
 
-                        self.currentBlock = deep(d, 'lastblock.height') || localStorage['lastblock'] || 0
+                        self.currentBlock = 0
                         self.timeDifference = 0;
+                        
+                        
 
+                        try{
+                            self.currentBlock = deep(d, 'lastblock.height') || localStorage['lastblock'] || 0
+                            localStorage['lastblock'] = self.currentBlock
+                        }catch(e){
+                            
+                        }
 
-                        localStorage['lastblock'] = self.currentBlock
+                        
 
                         if (t) {
 
@@ -17431,9 +17642,15 @@ Platform = function (app, listofnodes) {
                     },
                     save : function(){
 
-                        localStorage['sharessettings'] = JSON.stringify({
-                            stor: self.sdk.node.shares.parameters.stor
-                        })
+                        try{
+                            localStorage['sharessettings'] = JSON.stringify({
+                                stor: self.sdk.node.shares.parameters.stor
+                            })
+                        }catch(e){
+                            
+                        }
+
+                        
                     }
                 },
                 clbks: {
@@ -21517,9 +21734,16 @@ Platform = function (app, listofnodes) {
                 userlist: [],
 
                 save: function () {
-                    localStorage['usernodes'] = JSON.stringify({
-                        list: this.userlist
-                    })
+
+                    try{
+                        localStorage['usernodes'] = JSON.stringify({
+                            list: this.userlist
+                        })
+                    }catch(e){
+                        
+                    }
+
+                    
                 },
 
                 load: function () {
@@ -21905,7 +22129,13 @@ Platform = function (app, listofnodes) {
                 var pool = s.current;
 
                 if (!pool) {
-                    pool = localStorage['pool'];
+                    
+
+                    try{
+                        pool = localStorage['pool'];
+                    }catch(e){
+                        
+                    }
 
                     if (pool) pool = JSON.parse(pool)
                 }
@@ -21956,7 +22186,13 @@ Platform = function (app, listofnodes) {
 
                         s.currentMap();
 
-                        localStorage['pool'] = JSON.stringify(s.current)
+                        try{
+                            localStorage['pool'] = JSON.stringify(s.current)
+                        }catch(e){
+                            
+                        }
+
+                        
 
                     }
 
@@ -24063,11 +24299,23 @@ Platform = function (app, listofnodes) {
 
             volume : 0,
             save : function(){
-                localStorage['pn_videovolume_2'] = self.sdk.videos.volume || 1
+
+                try{
+                    localStorage['pn_videovolume_2'] = self.sdk.videos.volume || 1
+                }catch(e){
+                    
+                }
             },
             load : function(){
 
-                var _v = localStorage['pn_videovolume_2']
+                var _v = undefined
+                
+                try{
+                    _v = localStorage['pn_videovolume_2']
+                }catch(e){
+                    
+                }
+                
 
                 if(typeof _v == 'undefined') {
                     if(self.app.mobileview)
@@ -24177,7 +24425,14 @@ Platform = function (app, listofnodes) {
             load: function () {
                 var storage = {};
 
-                var local = localStorage[self.storage.key] || "{}";
+                var local = null
+
+                try{
+                    local = localStorage[self.storage.key] || "{}";
+                }catch(e){
+                    
+                }
+                
 
                 if (local) {
                     try {
@@ -24190,7 +24445,11 @@ Platform = function (app, listofnodes) {
                 self.storage.data = storage;
             },
             save: function () {
-                localStorage[self.storage.key] = JSON.stringify(self.storage.data);
+                try{
+                    localStorage[self.storage.key] = JSON.stringify(self.storage.data);
+                }catch(e){
+                    
+                }
             },
 
             get : function(proxy, address, token){
@@ -25929,7 +26188,7 @@ Platform = function (app, listofnodes) {
 
                         if (data.cointype) {
 
-                            if (platform.sdk.usersettings.meta.win.value) {
+                            if (!app.pkoindisable && platform.sdk.usersettings.meta.win.value) {
 
                                 var td = 'coinbaseSuccess'
 
@@ -25977,7 +26236,7 @@ Platform = function (app, listofnodes) {
 
                                 }
 
-                                if (platform.sdk.usersettings.meta.transactions.value && data.user && data.user.name) {
+                                if (!app.pkoindisable && platform.sdk.usersettings.meta.transactions.value && data.user && data.user.name) {
 
                                     if (data.amountall >= 0.05 || data.tx.amount >= 0.05) {
 
@@ -26012,14 +26271,14 @@ Platform = function (app, listofnodes) {
 
                         if (data.tx) {
                             if (data.tx.coinbase) {
-                                if (!platform.sdk.usersettings.meta.win.value) {
+                                if (!platform.sdk.usersettings.meta.win.value || app.pkoindisable) {
 
                                     return false;
                                 }
                             }
                             else {
                                 if (data.address != platform.sdk.address.pnet().address) {
-                                    if (!platform.sdk.usersettings.meta.transactions.value) {
+                                    if (!platform.sdk.usersettings.meta.transactions.value || app.pkoindisable) {
                                         return false;
                                     }
                                 }
@@ -26067,7 +26326,12 @@ Platform = function (app, listofnodes) {
 
                         lost = data.block;
 
-                    localStorage['lastblock'] = platform.currentBlock
+                        try{
+                            localStorage['lastblock'] = platform.currentBlock
+                        }catch(e){
+                            
+                        }
+
 
                     if (dif)
                         platform.sdk.newmaterials.update(data)
@@ -26148,8 +26412,11 @@ Platform = function (app, listofnodes) {
 
                     platform.lasttimecheck = new Date()
                     platform.lastblocktime = new Date()
+                    try{
+                        localStorage['lastblock'] = platform.currentBlock
+                    }catch(e){
 
-                    localStorage['lastblock'] = platform.currentBlock
+                    }
 
                     lost = platform.currentBlock;
 
@@ -26609,11 +26876,11 @@ Platform = function (app, listofnodes) {
 
                         if (data.mesType == 'userInfo') {
 
-                            if ((!platform.sdk.usersettings.meta.rescued || platform.sdk.usersettings.meta.rescued.value)) {
+                            /*if ((!platform.sdk.usersettings.meta.rescued || platform.sdk.usersettings.meta.rescued.value)) {
 
                                 return true
 
-                            }
+                            }*/
 
 
                         }
@@ -26728,7 +26995,7 @@ Platform = function (app, listofnodes) {
 
                     if (data.mesType == 'userInfo') {
 
-                        if ((!platform.sdk.usersettings.meta.rescued || platform.sdk.usersettings.meta.rescued.value)) {
+                        /*if ((!platform.sdk.usersettings.meta.rescued || platform.sdk.usersettings.meta.rescued.value)) {*/
 
                             //text = platform.app.localization.e('refferalUserMessage')
 
@@ -26736,7 +27003,7 @@ Platform = function (app, listofnodes) {
                             caption = platform.app.localization.e('refferalUserMessage')
                             extra = self.tempates.subscribe(data.user)*/
 
-                        }
+                        //}
                     }
 
 
@@ -27520,7 +27787,7 @@ Platform = function (app, listofnodes) {
 
             var key = platform.sdk.address.pnet(keyPair.publicKey).address + 'addressesNum'
 
-            var num = localStorage[key] || 1;
+            //var num = localStorage[key] || 1;
 
             var keyPairs = [{
                 kp: keyPair,
@@ -29119,7 +29386,10 @@ Platform = function (app, listofnodes) {
         if(window.cordova){
             var key = 'acceptterms'
 
-            var aterms = localStorage[key]
+            var aterms = null
+            try{
+                aterms = localStorage[key]
+            }catch(e){}
 
             if (!aterms){
                 app.nav.api.load({
@@ -29128,8 +29398,10 @@ Platform = function (app, listofnodes) {
                     inWnd : true,
                     essenseData : {
                         success : function(){
+                            try{
+                                localStorage[key] = new Date();
+                            }catch(e){}
 
-                            localStorage[key] = new Date();
 
                             setTimeout(function(){
                                 if(clbk) clbk()
@@ -30265,11 +30537,14 @@ Platform = function (app, listofnodes) {
 
     self.state = {
         save: function () {
-            if (self.nodeid)
+            try{
+                if (self.nodeid)
                 localStorage['nodeid2'] = JSON.stringify(self.nodeid);
 
-            else
-                delete localStorage['nodeid2']
+                else
+                    delete localStorage['nodeid2']
+            }catch(e){}
+            
 
         },
         load: function () {

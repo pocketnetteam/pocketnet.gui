@@ -597,11 +597,18 @@ PeerTubePocketnet = function (app) {
 								self.helpers.base58.decode(app.user.address.value) / Math.pow(10, 26)
 							), 1 / 3).toFixed(0)).toString().substr(9)
 
-							royId = self.helpers.base58.decode(sq) % roysAmount;
+							try{
+								royId = sq % roysAmount;
+							}
+							catch(e){
+								console.error(e)
+							}
+							
 						}
 						else {
 							royId = rand(0, roysAmount - 1);
 						}
+
 
 						return data[royId];
 					})
