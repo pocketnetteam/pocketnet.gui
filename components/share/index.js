@@ -985,10 +985,15 @@ var share = (function(){
 															(video) => video !== alias.url,
 														);
 
-													localStorage.setItem(
-														'unpostedVideos',
-														JSON.stringify(unpostedVideos),
-													);
+														try {
+															localStorage.setItem(
+																'unpostedVideos',
+																JSON.stringify(unpostedVideos),
+															);
+														}
+														catch (e) { }
+
+													
 												}
 											}
 

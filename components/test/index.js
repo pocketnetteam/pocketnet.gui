@@ -156,7 +156,13 @@ var test = (function(){
 
 
 				if (ref && firstTime && !self.app.dsubref){
-					localStorage[self.app.platform.sdk.address.pnet().address + 'subscribeRef'] = ref.address										
+
+					try {
+						localStorage[self.app.platform.sdk.address.pnet().address + 'subscribeRef'] = ref.address
+					}
+					catch (e) { }
+
+													
 				}
 
 			},
@@ -1076,8 +1082,11 @@ var test = (function(){
 
 			el.c.find('.refRemove').on('click', function(){
 				ref = null;
-
-				delete localStorage['ref']
+				try {
+					delete localStorage['ref']
+				}
+				catch (e) { }
+				
 
 				el.c.find('.referalMaketWrapper').remove()
 			})

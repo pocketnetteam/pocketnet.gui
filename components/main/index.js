@@ -1002,15 +1002,20 @@ var main = (function(){
 
 		var make = function(clbk, p){
 
-			localStorage['lentakey'] = parameters().r || 'index'
+			try {
+				localStorage['lentakey'] = parameters().r || 'index'
 			
-			if (parameters().video){
-				localStorage['lentakey'] = 'video'
-			}
+				if (parameters().video){
+					localStorage['lentakey'] = 'video'
+				}
 
-			if (parameters().read){
-				localStorage['lentakey'] = 'read'
+				if (parameters().read){
+					localStorage['lentakey'] = 'read'
+				}
 			}
+			catch (e) { }
+
+			
 
 			renders.lentawithsearch(clbk, p)
 
@@ -1086,7 +1091,12 @@ var main = (function(){
 
 				var changes = false
 
-				localStorage['lentakey'] = nlentakey
+				try {
+					localStorage['lentakey'] = nlentakey
+				}
+				catch (e) { }
+
+				
 
 				if (currentMode != ncurrentMode){
 					currentMode = ncurrentMode; changes = true

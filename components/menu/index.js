@@ -180,7 +180,13 @@ var menu = (function(){
 					self.app.user.isState(function(state){
 
 						//if(self.app.nav.get.pathname() != 'index'){
-							var k = localStorage['lentakey'] || 'index';
+
+							var k = 'index';
+							try {
+								k = localStorage['lentakey'] || 'index'
+							}
+							catch (e) { }
+							
 
 							if (parameters().r == k) k = 'index'
 
