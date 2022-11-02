@@ -9,11 +9,25 @@ var diagnosticsPage = (function () {
     var el, ed;
 
     var serversObject = {};
+    var serverObjectsWithErrors = {};
+
+    var serversAmount, serversCounter;
 
     var diagnosticsInProgress = false;
 
     var actions = {
-      async getHosts() {	
+      stringifyErrorSafe(err) {
+        let errorStringed;
+
+        try {
+          errorStringed = JSON.stringify(err, Object.getOwnPropertyNames(err));
+        } catch (errorJSON) {
+          errorStringed = `Unstringable error. Reason: ${errorJSON}`;
+        }
+
+        return errorStringed;
+      },
+      async getHosts() {
         try {
           const serversList =
             await self.app.peertubeHandler.api.proxy.allServers();
@@ -21,6 +35,29 @@ var diagnosticsPage = (function () {
         } catch (error) {
           return Promise.reject(error);
         }
+      },
+
+      async diagnoseSingleServer(serverName) {
+        await self.app.peertubeHandler.api.videos
+          .serverStatistics(serverName)
+          .then(() => {
+            serversObject[serverName].reachability = {
+              reachable: true,
+            };
+          })
+          .catch((err) => {
+            serversObject[serverName].reachability = {
+              reachable: false,
+              error: actions.stringifyErrorSafe(err),
+            };
+
+            serverObjectsWithErrors[serverName] = true;
+          });
+
+        serversCounter++;
+        renders.diagnoseProgress({});
+
+        return Promise.resolve();
       },
     };
 
@@ -35,24 +72,29 @@ var diagnosticsPage = (function () {
           .then((res) => {
             const formattedServersList = Object.values(res).flat();
 
+            serversAmount = formattedServersList.length;
+            serversCounter = 0;
+
             formattedServersList.forEach((server) => {
               serversObject[server] = {};
             });
 
+            renders.mainBody({});
+
             return formattedServersList;
           })
+          .then((servers) =>
+            Promise.allSettled(
+              servers.map((server) => actions.diagnoseSingleServer(server)),
+            ),
+          )
           .then((res) => {
+            debugger;
           })
           .catch((err) => {
-            renders.mainError({ err });
+            renders.mainError({ err, title: 'Unable to get servers list.' });
 
-            let errorBody;
-
-            try {
-              errorBody = JSON.stringify(err, Object.getOwnPropertyNames(err));
-            } catch (errorJSON) {
-              errorBody = `Unable to stringify. Reason: ${errorJSON}`;
-            }
+            const errorBody = actions.stringifyErrorSafe(err);
 
             self.app.Logger.error({
               err: 'DIAGNOSE_UNREACHED_SERVERS',
@@ -68,14 +110,8 @@ var diagnosticsPage = (function () {
     };
 
     var renders = {
-      mainError({ err = {} }) {
-        let errorStringed;
-
-        try {
-          errorStringed = JSON.stringify(err, Object.getOwnPropertyNames(err));
-        } catch (errorJSON) {
-          errorStringed = `Unstringable error. Reason: ${errorJSON}`;
-        }
+      mainError({ err = {}, title = 'Default error.' }) {
+        const errorStringed = actions.stringifyErrorSafe(err);
 
         self.shell(
           {
@@ -83,13 +119,41 @@ var diagnosticsPage = (function () {
             el: el.diagnoseBody,
             data: {
               errorStringed,
+              title,
             },
           },
           (p) => {},
         );
       },
 
-      mainBody() {},
+      mainBody({}) {
+        self.shell(
+          {
+            name: 'mainBody',
+            el: el.diagnoseBody,
+            data: {},
+          },
+          (p) => {
+            el.diagnoseProgress = p.el.find('.progress');
+          },
+        );
+      },
+
+      diagnoseProgress({}) {
+        if (!el.diagnoseProgress) return;
+
+        self.shell(
+          {
+            name: 'diagnoseProgress',
+            el: el.diagnoseProgress,
+            data: {
+              completed: serversCounter,
+              total: serversAmount,
+            },
+          },
+          (p) => {},
+        );
+      },
     };
 
     var state = {
