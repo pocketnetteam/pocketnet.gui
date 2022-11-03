@@ -45,6 +45,8 @@ var diagnosticsPage = (function () {
         let videosList = [];
         let masterPlaylist = '';
 
+        console.time(serverName);
+
         try {
           const serverStatistics =
             await self.app.peertubeHandler.api.videos.serverStatistics(
@@ -53,11 +55,13 @@ var diagnosticsPage = (function () {
 
           serversObject[serverName].reachability = {
             reachable: true,
+            time: console.timeEnd(serverName) / 1000,
           };
         } catch (error) {
           serversObject[serverName].reachability = {
             reachable: false,
             error: actions.stringifyErrorSafe(error),
+            time: console.timeEnd(serverName) / 1000,
           };
 
           serversObject[serverName].videos = {
@@ -118,16 +122,14 @@ var diagnosticsPage = (function () {
             if (!masterPlaylist) {
               serversObject[serverName].videos = {
                 gotVideos: false,
-                error: `Error getting master playlist. Reason: ${actions.stringifyErrorSafe(
-                  resultInfo,
-                )}`,
+                error: `Error getting master playlist - no information. Url: ${
+                  resultInfo.url || 'No video url'
+                }`,
               };
 
               serverObjectsWithErrors[serverName] = true;
               masterPlaylistFlag = false;
             }
-
-            console.log('Got Result', masterPlaylist);
           } catch (error) {
             serversObject[serverName].videos = {
               gotVideos: false,
@@ -191,6 +193,16 @@ var diagnosticsPage = (function () {
             ),
           )
           .then(() => {
+			debugger;
+            self.app.Logger.error({
+              err: 'DIAGNOSE_COMPLETED',
+              code: 101,
+              payload: {
+                result: JSON.stringify(serversObject),
+                address: self.app.user.address.value,
+              },
+              level: 'diagnostics',
+            });
             renders.tableResult({});
           })
           .catch((err) => {

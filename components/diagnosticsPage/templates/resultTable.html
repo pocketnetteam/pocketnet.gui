@@ -1,21 +1,33 @@
 <div class="resultsTable">
-    <div class="tableRow tableHeader">
-        <div class="tableCell nameCell">
-            <div><%- e('videoServerName') %></div>
-        </div>
-        <div class="tableCell reachableCell">
-            <div><%- e('videoServerReachable') %></div>
-        </div>
+  <div class="tableRow tableHeader">
+    <div class="tableCell nameCell">
+      <div><%- e('videoServerName') %></div>
     </div>
-    <% serversWithErrors.map(server => {
-        const info = serversObject[server] || {}; %>
-    <div class="tableRow">
-        <div class="tableCell nameCell">
-            <div><%- server %></div>
-        </div>
-        <div class="tableCell reachableCell">
-            <div><%- info.reachability.reachable ? 'Success' : info.reachability.error %></div>
-        </div>
+    <div class="tableCell reachableCell">
+      <div><%- e('videoServerReachable') %></div>
     </div>
-    <% }) %>
+    <div class="tableCell videosCell">
+      <div><%- e('videoServerVideo') %></div>
+    </div>
+  </div>
+  <% serversWithErrors.map(server => { const info = serversObject[server] || {};
+  %>
+  <div class="tableRow">
+    <div class="tableCell nameCell">
+      <div><%- server %></div>
+    </div>
+    <div class="tableCell reachableCell">
+      <div>
+        <%- info.reachability.reachable ? 'Success' : info.reachability.error %>
+      </div>
+    </div>
+    <div class="tableCell videosCell">
+      <% if (info.videos) { %>
+      <div><%- info.videos.gotVideos ? 'Success' : info.videos.error %></div>
+      <% } else { %>
+      <div>–</div>
+      <% } %>
+    </div>
+  </div>
+  <% }) %>
 </div>

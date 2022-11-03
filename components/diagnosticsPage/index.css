@@ -17,6 +17,11 @@
   max-width: 400px;
   overflow-wrap: break-word;
 }
+#diagnosticsPage .videosCell {
+  width: 40%;
+  max-width: 400px;
+  overflow-wrap: break-word;
+}
 #diagnosticsPage .tableCell {
   box-sizing: border-box;
 }

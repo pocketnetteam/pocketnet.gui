@@ -2169,5 +2169,7 @@ _l.startDiagnose = "Начать Диагностику";
 _l.videoServerName = "Адрес Сервера";
 _l.videoServerReachable = "Доступность";
 _l.serversTestingProgress = "Прогресс Диагностики:";
+_l.videoServerVideo = "Видео Статистика";
+
 
 
