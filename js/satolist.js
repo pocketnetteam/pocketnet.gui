@@ -24394,7 +24394,7 @@ Platform = function (app, listofnodes) {
         //var FirebasePlugin = new FakeFirebasePlugin()
 
         var using = typeof window != 'undefined' && window.cordova && typeof FirebasePlugin != 'undefined';
-        var usingWeb = typeof window != 'undefined' && typeof _Electron === 'undefined' && !window.cordova && typeof firebase != 'undefined'
+        var usingWeb = false // typeof window != 'undefined' && typeof _Electron === 'undefined' && !window.cordova && typeof firebase != 'undefined'
         
         var currenttoken = null;
 
@@ -24934,7 +24934,7 @@ Platform = function (app, listofnodes) {
             
             if(clbk) clbk()
 
-            /*app.user.isState(function (state) {
+            app.user.isState(function (state) {
             
                 if(state){
                     self.prepare(function(token){
@@ -24948,7 +24948,7 @@ Platform = function (app, listofnodes) {
                 }
                 
 
-            })*/
+            })
 
         }
 
@@ -29194,7 +29194,7 @@ Platform = function (app, listofnodes) {
         initOnlineListener() // /remove for test
 
 
-        self.app.api.wait.ready('use', 10000).then(r => {
+        self.app.api.wait.ready('use', 6000).then(r => {
 
 
             return new Promise((resolve, reject) => {

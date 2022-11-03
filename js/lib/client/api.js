@@ -371,6 +371,7 @@ var Proxy16 = function(meta, app, api){
                 self.ping = rdate.addSeconds(60)
                 self.successping = true
                 self.session = r.session
+                delete self.pingerror
 
                 if (r.height && self.currentBlock < r.height){
                     self.currentBlock = r.height
@@ -388,6 +389,7 @@ var Proxy16 = function(meta, app, api){
                 var rdate = new Date()
 
                 self.ping = rdate.addSeconds(10)
+                self.pingerror = true
                 
                 return Promise.reject(e)
             })
@@ -397,11 +399,20 @@ var Proxy16 = function(meta, app, api){
 
             var promise = null
 
+
             if(!freshping()){
                 promise = self.api.ping()
             }
             else{
-                promise = Promise.resolve(true)
+
+                if(self.pingerror){
+                    promise = Promise.reject()
+
+                }
+                else{
+                    promise = Promise.resolve(true)
+
+                }
             }
 
             return promise.catch(e => {
@@ -1320,14 +1331,19 @@ var Api = function(app){
         var pr = getproxyas()
         var promise = null
 
+
+
         if (pr){
-            promise = pr.api.actualping()
+            promise = pr.api.actualping().catch(e => {
+                return Promise.resolve(false)
+            })
         }
         else {
             promise = Promise.resolve(false)
         }
 
         return promise.then(r => {
+
             if(r){
                 return Promise.resolve(1)
             }
