@@ -38,21 +38,23 @@ var diagnosticsPage = (function () {
       },
 
       async diagnoseSingleServer(serverName) {
-        await self.app.peertubeHandler.api.videos
-          .serverStatistics(serverName)
-          .then(() => {
-            serversObject[serverName].reachability = {
-              reachable: true,
-            };
-          })
-          .catch((err) => {
-            serversObject[serverName].reachability = {
-              reachable: false,
-              error: actions.stringifyErrorSafe(err),
-            };
+        try {
+          const serverStatistics =
+            await self.app.peertubeHandler.api.videos.serverStatistics(
+              serverName,
+            );
 
-            serverObjectsWithErrors[serverName] = true;
-          });
+          serversObject[serverName].reachability = {
+            reachable: true,
+          };
+        } catch (error) {
+          serversObject[serverName].reachability = {
+            reachable: false,
+            error: actions.stringifyErrorSafe(error),
+          };
+
+          serverObjectsWithErrors[serverName] = true;
+        }
 
         serversCounter++;
         renders.diagnoseProgress({});
@@ -88,8 +90,8 @@ var diagnosticsPage = (function () {
               servers.map((server) => actions.diagnoseSingleServer(server)),
             ),
           )
-          .then((res) => {
-            debugger;
+          .then(() => {
+            renders.tableResult({});
           })
           .catch((err) => {
             renders.mainError({ err, title: 'Unable to get servers list.' });
@@ -135,6 +137,7 @@ var diagnosticsPage = (function () {
           },
           (p) => {
             el.diagnoseProgress = p.el.find('.progress');
+            el.resultTable = p.el.find('.result');
           },
         );
       },
@@ -149,6 +152,24 @@ var diagnosticsPage = (function () {
             data: {
               completed: serversCounter,
               total: serversAmount,
+            },
+          },
+          (p) => {},
+        );
+      },
+
+      tableResult({}) {
+        if (!el.resultTable) return;
+
+        const serversWithErrors = Object.keys(serverObjectsWithErrors);
+
+        self.shell(
+          {
+            name: 'resultTable',
+            el: el.resultTable,
+            data: {
+              serversWithErrors,
+              serversObject,
             },
           },
           (p) => {},

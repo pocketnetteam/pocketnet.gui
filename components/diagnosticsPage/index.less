@@ -1,5 +1,39 @@
 @import "../../css/__cssvar";
 
 #diagnosticsPage{
+    .resultsTable {
+        display: flex;
+        flex-direction: column;
+    }
 
+    .tableRow {
+        display: flex;
+        flex-direction: row;
+
+        box-sizing: border-box;
+    }
+
+    .nameCell {
+        width: 20%;
+        max-width: 250px;
+
+        padding-right: 50px;
+    }
+
+    .reachableCell {
+        width: 40%;
+        max-width: 400px;
+
+        overflow-wrap: break-word;
+    }
+
+    .tableCell {
+        box-sizing: border-box;
+    }
+
+    .tableHeader {
+        .tableCell {
+            font-weight: bold;
+        }
+    }
 }

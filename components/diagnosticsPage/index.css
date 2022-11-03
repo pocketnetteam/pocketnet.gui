@@ -1,0 +1,25 @@
+#diagnosticsPage .resultsTable {
+  display: flex;
+  flex-direction: column;
+}
+#diagnosticsPage .tableRow {
+  display: flex;
+  flex-direction: row;
+  box-sizing: border-box;
+}
+#diagnosticsPage .nameCell {
+  width: 20%;
+  max-width: 250px;
+  padding-right: 50px;
+}
+#diagnosticsPage .reachableCell {
+  width: 40%;
+  max-width: 400px;
+  overflow-wrap: break-word;
+}
+#diagnosticsPage .tableCell {
+  box-sizing: border-box;
+}
+#diagnosticsPage .tableHeader .tableCell {
+  font-weight: bold;
+}

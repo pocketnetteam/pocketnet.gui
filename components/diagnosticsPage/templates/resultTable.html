@@ -1,0 +1,21 @@
+<div class="resultsTable">
+    <div class="tableRow tableHeader">
+        <div class="tableCell nameCell">
+            <div><%- e('videoServerName') %></div>
+        </div>
+        <div class="tableCell reachableCell">
+            <div><%- e('videoServerReachable') %></div>
+        </div>
+    </div>
+    <% serversWithErrors.map(server => {
+        const info = serversObject[server] || {}; %>
+    <div class="tableRow">
+        <div class="tableCell nameCell">
+            <div><%- server %></div>
+        </div>
+        <div class="tableCell reachableCell">
+            <div><%- info.reachability.reachable ? 'Success' : info.reachability.error %></div>
+        </div>
+    </div>
+    <% }) %>
+</div>

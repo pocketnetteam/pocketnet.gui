@@ -2375,4 +2375,7 @@ _l.unpostedFooter = "Unposted videos are deleted from the server after 3-weeks o
 
 _l.diagnosticsPage = "Diagnostics";
 _l.startDiagnose = "Run Diagnostics";
+_l.videoServerName = "Server URL";
+_l.videoServerReachable = "Reachability";
+_l.serversTestingProgress = "Progress of Diagnosing:";
 
