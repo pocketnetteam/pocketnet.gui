@@ -266,16 +266,6 @@ var userpage = (function(){
 				})
 
 			}
-
-			reports.push({
-				name : self.app.localization.e('diagnosticsPage'),
-				id : 'diagnosticsPage',
-				report : 'diagnosticsPage',
-				mobile : true,
-			});
-
-
-
 				
 		}
 

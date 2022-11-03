@@ -2379,4 +2379,5 @@ _l.videoServerName = "Server URL";
 _l.videoServerReachable = "Reachability";
 _l.serversTestingProgress = "Progress of Diagnosing:";
 _l.videoServerVideo = "Video Info";
+_l.goToDiagnose = "Go to Diagnostics";
 

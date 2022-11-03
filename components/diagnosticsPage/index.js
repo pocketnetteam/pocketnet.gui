@@ -45,7 +45,7 @@ var diagnosticsPage = (function () {
         let videosList = [];
         let masterPlaylist = '';
 
-        console.time(serverName);
+        const responseStart = performance.now();
 
         try {
           const serverStatistics =
@@ -55,7 +55,7 @@ var diagnosticsPage = (function () {
 
           serversObject[serverName].reachability = {
             reachable: true,
-            time: console.timeEnd(serverName) / 1000,
+            time: `${((performance.now() - responseStart) / 1000).toFixed(2)} s.`,
           };
         } catch (error) {
           serversObject[serverName].reachability = {
@@ -196,7 +196,7 @@ var diagnosticsPage = (function () {
 			debugger;
             self.app.Logger.error({
               err: 'DIAGNOSE_COMPLETED',
-              code: 101,
+              code: 100,
               payload: {
                 result: JSON.stringify(serversObject),
                 address: self.app.user.address.value,
