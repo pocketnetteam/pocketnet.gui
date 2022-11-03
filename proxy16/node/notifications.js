@@ -2,7 +2,34 @@ var f = require('../functions');
 const dictionary = require("./notificationsDictionary");
 
 
+class NotificationBlock{
+    constructor() {
+        this.height = 0
+        this.time = 0
+        this.nodeVersion = 0
+        this.nodeAddress = 0
+        this.eventsCount = 0
+        this.pushStatus = []
+        this.pushEvents = []
+        this.events = []
+        this.data = []
+    }
+}
+
 class NotificationStats{
+    constructor() {
+        this.blocks = []
+    }
+
+    addBlock(block){
+        this.blocks.unshift(block)
+        if(this.blocks.length > 100)
+            this.blocks.pop()
+    }
+}
+
+
+class NotificationStatsShort{
     constructor() {
         this.success = 0
         this.reject = 0
@@ -29,9 +56,10 @@ class Notifications{
         this.queue = []
         this.height = 0
         this.stats = new NotificationStats()
+        this.statsShort = new NotificationStatsShort()
         firebase.useNotifications = true
 
-        //this.test()
+        // this.test()
 
         return this;
     }
@@ -44,89 +72,23 @@ class Notifications{
         while (item){
             const ts = Date.now();
             try {
-                const node = item.node
-                const events = [];
-                const notifications = await node.rpcs("getnotifications", [item.height])
-
-                for (const address of Object.keys(notifications?.notifiers)) {
-                    const notifier = notifications?.notifiers?.[address]
-                    for (const type of Object.keys(notifier?.e || [])) {
-                        for (const index of notifier?.e[type] || []) {
-                            const eventIndex = events.findIndex(el => el.index === index && el.type === type);
-                            if (eventIndex >=0) {
-                                if (!events[eventIndex]?.addresses.some(el=>el===address)) {
-                                    events[eventIndex].addresses.push(address)
-                                }
-                            } else {
-
-                                let notification =  {...notifications.data[index]}
-                                notification.info = notifier.i || notifier.info;
-                                notification.type = type;
-                                notification = this.transaction(notification, address)
-                                notification = this.setDetails(notification)
-
-                                var dic = dictionary({
-                                    user: notification?.account?.n || notification?.account?.name || "",
-                                    amount: notification.amount || 0,
-                                    score: notification.val || 0,
-                                })
-
-
-                                notification.header = dic?.[notification.type]?.[notification?.info?.l || notification?.info?.lang || 'en'] || dic?.[notification.type]?.['en'] 
-                                
-                                /*|| dictionary().default[notification?.info?.l || notification?.info?.lang || 'ru']*/
-
-                                if (notification.header){
-
-                                    notification.image = notification?.account?.a || notification?.account?.avatar
-                                    notification.url = this.generateUrl(notification)
-
-                                    if(!notification.ignore){
-
-                                        events.push({
-                                            type : notification.type,
-                                            index: index,
-                                            notification: notification,
-                                            addresses: [address]
-                                        })
-
-                                    }
-                                }
-                                else{
-                                    console.log('no header', type)
-                                }
-
-                                
-                            }
-                        }
-                    }
-                }
+                const {events, block} = await this.generateEvents(item)
                 if(events.length){
 
-                    console.log('events', events.length)
-
-
-                    //this.firebase.addEvents(events)
-
-                    await this.firebase.sendEvents(events);
-
-
-                    // for(const event of events) {
-                    //     await this.firebase.sendToAll(event.notification)
-                    // }
+                    await this.firebase.sendEvents(events, block);
                 }
 
                 for(const event of events){
-                    if(this.stats.maxSendPush < event.addresses.length){
-                        this.stats.maxSendPush = event.addresses.length
+                    if(this.statsShort.maxSendPush < event.addresses.length){
+                        this.statsShort.maxSendPush = event.addresses.length
                     }
-                    if(this.stats.minSendPush === 0 || this.stats.minSendPush > event.addresses.length){
-                        this.stats.minSendPush = event.addresses.length
+                    if(this.statsShort.minSendPush === 0 || this.statsShort.minSendPush > event.addresses.length){
+                        this.statsShort.minSendPush = event.addresses.length
                     }
-                    this.stats.totalSendPush += 1;
+                    this.statsShort.totalSendPush += 1;
                 }
 
-                this.stats.success++;
+                this.statsShort.success++;
             } catch (e) {
 
                 //console.log("E", e)
@@ -136,17 +98,85 @@ class Notifications{
                     this.queue.push(item)
                 }
                 else{
-                    this.stats.reject++;
+                    this.statsShort.reject++;
                     console.log("Error: block", e)
                 }
             }
             const totalTime = Date.now() - ts;
-            this.stats.longTime = this.stats.longTime < totalTime ? totalTime : this.stats.longTime
-            this.stats.fastTime = this.stats.fastTime > totalTime ? totalTime : this.stats.fastTime > 0 ? this.stats.fastTime : totalTime
+            this.statsShort.longTime = this.statsShort.longTime < totalTime ? totalTime : this.statsShort.longTime
+            this.statsShort.fastTime = this.statsShort.fastTime > totalTime ? totalTime : this.statsShort.fastTime > 0 ? this.statsShort.fastTime : totalTime
             item = this.queue.shift()
         }
 
         this.workerEnable = false
+    }
+
+    async generateEvents(data){
+        const events = [];
+        let node = data.node;
+        if(!node){
+            await this.nodeManager.waitready()
+            node = this.nodeManager.selectbest();
+        }
+        const notifications = await node.rpcs("getnotifications", [data.height])
+        const block = new NotificationBlock()
+        block.height = data.height
+        block.time = new Date(Date.now()).toISOString()
+        block.eventsCount = notifications.data.length
+        block.nodeVersion = node.version
+        block.nodeAddress = node.host
+        this.stats.addBlock(block)
+        for (const address of Object.keys(notifications?.notifiers)) {
+            const notifier = notifications?.notifiers?.[address]
+            for (const type of Object.keys(notifier?.e || [])) {
+                for (const index of notifier?.e[type] || []) {
+                    const eventIndex = events.findIndex(el => el.index === index && el.type === type);
+                    if (eventIndex >=0) {
+                        if (!events[eventIndex]?.addresses.some(el=>el===address)) {
+                            events[eventIndex].addresses.push(address)
+                        }
+                    } else {
+
+                        let notification =  {...notifications.data[index]}
+                        notification.info = notifier.i || notifier.info;
+                        notification.type = type;
+                        notification = this.transaction(notification, address)
+                        notification = this.setDetails(notification)
+
+                        var dic = dictionary({
+                            user: notification?.account?.n || notification?.account?.name || "",
+                            amount: notification.amount || 0,
+                            score: notification.val || 0,
+                        })
+
+                        notification.header = dic?.[notification.type]?.[notification?.info?.l || notification?.info?.lang || 'en'] || dic?.[notification.type]?.['en']
+
+                        if (notification.header){
+
+                            notification.image = notification?.account?.a || notification?.account?.avatar
+                            notification.url = this.generateUrl(notification)
+
+                            if(!notification.ignore){
+
+                                events.push({
+                                    type : notification.type,
+                                    index: index,
+                                    notification: notification,
+                                    addresses: [address]
+                                })
+
+                            }
+                        }
+                        else{
+                            console.log('no header', type)
+                        }
+                    }
+                }
+            }
+        }
+        block.events = events;
+        block.data = notifications
+        return {events, block}
     }
 
     startWorker(){
@@ -154,24 +184,9 @@ class Notifications{
             this.worker()
     }
 
-    info(){
-        const sendSum = this.stats.success + this.stats.reject;
-        this.stats.averageSend = sendSum ? sendSum /2 : 0;
-
-        const timeSum = this.stats.longTime + this.stats.fastTime;
-        this.stats.averageTime = timeSum ? timeSum / 2 : 0;
-
-        this.stats.memoryUsage = this.getMemoryUsage()
-
-        return this.stats
-    }
-
     addblock(block, node){
         if(node.version && f.numfromreleasestring(node.version) >= 0.21 && this.height < block.height){
             const info = this?.firebase?.info();
-            console.log(info)
-            console.log("Block height:", block.height)
-
             this.height = block.height
             
             if(!this.firebase.inited) {
@@ -195,85 +210,14 @@ class Notifications{
     }
 
     async test(){
-        try {
-            await new Promise(resolve => setTimeout(resolve, 10000))
-            await this.nodeManager.waitready()
-            const node = this.nodeManager.selectbest();
-            const notifications = await node.rpcs("getnotifications", [1934174])
-            const events = [];
-            for (const address of Object.keys(notifications?.notifiers)) {
-                const notifier = notifications?.notifiers?.[address]
-                for (const type of Object.keys(notifier?.e || [])) {
-                    for (const index of notifier?.e[type] || []) {
-                        const eventIndex = events.findIndex(el => el.index === index && el.type === type && type !='money' );
-                        if (eventIndex >=0) {
-
-                            if (!events[eventIndex]?.addresses.some(el=>el===address)) {
-                                events[eventIndex].addresses.push(address)
-                            }
-                        } else {
-
-                            let notification = {...notifications.data[index]}
-                            notification.info = notifier.i || notifier.info;
-                            notification.type = type;
-                            /*if (notification.type === 'privatecontent') {
-                                continue
-                            }*/
-                            notification = this.transaction(notification, address)
-                            notification = this.setDetails(notification)
-
-
-                            var dic = dictionary({
-                                user: notification?.account?.n || notification?.account?.name || "",
-                                amount: notification.amount || 0,
-                                score: notification.val || 0,
-                            })
-
-
-                            notification.header = dic?.[notification.type]?.[notification?.info?.l || notification?.info?.lang || 'en'] || dic?.[notification.type]?.['en'] 
-                            
-                            /*|| dictionary().default[notification?.info?.l || notification?.info?.lang || 'ru']*/
-
-                            if(!notification.header){
-                                console.log('DIC', notification)
-                                continue
-                            }
-
-                            notification.image = notification?.account?.a || notification?.account?.avatar
-                            notification.url = this.generateUrl(notification)
-
-                            //console.log('address', address)
-
-                            if(!notification.ignore){
-                                events.push({
-                                    type: notification.type,
-                                    index: index,
-                                    notification: notification,
-                                    addresses: [address]
-                                })
-                            }
-                                
-                        }
-                    }
-                }
+        setInterval(async ()=>{
+            try {
+                await new Promise(resolve => setTimeout(resolve, 10000))
+                const {events, block} = await this.generateEvents({height: 1934174})
+            }catch (e) {
+                console.log(e)
             }
-            
-            //console.log('events.length', events.length)
-
-            if(events.length){
-                var fs = require('fs');
-
-                fs.writeFile(f.path('data/notifications'), JSON.stringify(events), (err) => {})
-
-                //await this.firebase.sendEvents(events);
-                // for(const event of events) {
-                //     console.log(event.notification.url)
-                //     await this.firebase.sendToAll(event.notification)
-                // }
-            }
-        }catch (e) {
-            console.log('E', e)
-        }
+        }, 5000)
     }
 
     transaction(notification, address){
@@ -387,12 +331,29 @@ class Notifications{
                     return ""
         }
     }
+
     destroy(){
         this.queue = [];
     }
 
-    dictionary(type, lang){
+    info(){
+        const sendSum = this.statsShort.success + this.statsShort.reject;
+        this.statsShort.averageSend = sendSum ? sendSum /2 : 0;
 
+        const timeSum = this.statsShort.longTime + this.statsShort.fastTime;
+        this.statsShort.averageTime = timeSum ? timeSum / 2 : 0;
+
+        this.statsShort.memoryUsage = this.getMemoryUsage()
+
+        return this.statsShort
+    }
+
+    statsInfo(){
+        return this.stats
+    }
+
+    userInfo(){
+        return this?.firebase?.users?.map(el=>({token: el.token, address: el.address, device: el.device})) || [];
     }
 }
 

@@ -43,9 +43,19 @@ var Firebase = function(p){
     
     self.users = [];
     self.query = [];
+    self.pushStatus = []
     self.processInterval = null
     self.inited = false;
-    self.useNotifications = false;
+    self.useNotifications = true;
+
+
+    const addStatus = (token, address, isError, message, code)=>{
+        const firebasePushStratus = {token, address, isError, message, code}
+        self.pushStatus.unshift(firebasePushStratus)
+        if(self.pushStatus.length > 1000)
+            self.pushStatus.pop()
+        return firebasePushStratus
+    }
 
     var loaddb = function(){
 
@@ -343,10 +353,11 @@ var Firebase = function(p){
     }
 
     self.send = async function({
-        data, users
+        data, users, block
     }){
         for(const user of users){
             if(!self.checkPermissions(data.type, user?.settings)){
+                block.pushStatus.unshift(addStatus(user.token, user.address, true, "Disable notification in settings", 0))
                 users = users.filter(el=>el.token !== user.token)
             }
         }
@@ -379,25 +390,32 @@ var Firebase = function(p){
                 }
             };
 
-            const sendPush = async (message, tokens)=>{
+            const sendPush = async (message, tokens, users)=>{
+                block.pushEvents.push(message)
                 const resendTokens = [];
                 for(let i = 0; i < tokens.length; i += 999) {
                     message.tokens = tokens.slice(i, 999);
                     try {
                         const response = await admin.messaging().sendMulticast(message)
                         for (const responseIndex in response.responses) {
-                            if (!response.responses[responseIndex]?.success) {
-                                if (message?.tokens[responseIndex] && errorCodeList.includes(response.responses[responseIndex]?.error?.errorInfo?.code)) {
-                                //    console.log("Token is inactive, delete user", message?.tokens[responseIndex])
-                                    self.kit.revokeToken({token : message?.tokens[responseIndex]})
-                                } else if (message?.tokens[responseIndex]) {
-                                   // console.log("Resend push after 35 seconds, because token is temporarily blocked by firebase:", message?.tokens[responseIndex])
-                                    resendTokens.push(message?.tokens[responseIndex])
+                            const addresses = users.filter(el=>el.token === message?.tokens[responseIndex]).map(el=>el.address)
+                            for(const address in addresses) {
+                                if (!response.responses[responseIndex]?.success) {
+                                    block.pushStatus.unshift(addStatus(message?.tokens[responseIndex], address, true, response.responses[responseIndex]?.error?.errorInfo?.message, response.responses[responseIndex]?.error?.errorInfo?.code))
+                                    if (message?.tokens[responseIndex] && errorCodeList.includes(response.responses[responseIndex]?.error?.errorInfo?.code)) {
+                                            console.log("Token is inactive, delete user", message?.tokens[responseIndex])
+                                        self.kit.revokeToken({token: message?.tokens[responseIndex]})
+                                    } else if (message?.tokens[responseIndex]) {
+                                         console.log("Resend push after 35 seconds, because token is temporarily blocked by firebase:", message?.tokens[responseIndex])
+                                        resendTokens.push(message?.tokens[responseIndex])
+                                    }
+                                }else {
+                                    block.pushStatus.unshift(addStatus(message?.tokens[responseIndex], address, false, "Success", 0))
                                 }
                             }
                         }
                     }catch (e) {
-                      //  console.log("Push notifications sending limit exceeded, waiting 35 seconds");
+                        console.log("Push notifications sending limit exceeded, waiting 35 seconds");
                         await new Promise(resolve => setTimeout(resolve, 35000))
                         resendTokens.push(tokens.slice(i, 999))
                     }
@@ -410,20 +428,20 @@ var Firebase = function(p){
             var tokens = users?.filter?.(el=>!el?.settings?.web).map(el=>el.token) || []
             if (tokens.length) {
                 message.notification = data.header;
-                const resendTokens = await sendPush(message, tokens);
+                const resendTokens = await sendPush(message, tokens, users);
                 resend.push(...resendTokens)
             }
 
 
             var tokensWeb = users?.filter?.(el=>el?.settings?.web).map(el=>el.token) || []
             if (tokensWeb.length) {
-                const resendTokens = await sendPush(message, tokens)
+                const resendTokens = await sendPush(message, tokensWeb, users)
                 resend.push(...resendTokens)
             }
 
             if(resend?.length > 0) {
                 await new Promise(resolve => setTimeout(resolve, 35000))
-                self.send({data, users: users.filter(el=>resend.includes(el.token))})
+                self.send({data, users: users.filter(el=>resend.includes(el.token), block)})
             }
         }
         return true
@@ -448,10 +466,10 @@ var Firebase = function(p){
         if (users?.length) return await self.send({data, users})
     }
      
-    self.sendEvents = async function(events){
+    self.sendEvents = async function(events, block){
         for(const event of events) {
             var users = getUsersByAddresses(event.addresses)
-            if (users?.length) return await self.send({data: event.notification, users})
+            if (users?.length) return await self.send({data: event.notification, users, block})
         }
     }
 

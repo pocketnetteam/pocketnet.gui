@@ -221,10 +221,10 @@ var Node = function(options, manager){
     
                 timedifference(block.time)
 
-                /*if(block?.msg === 'new block') {
+                if(block?.msg === 'new block') {
 
-                    manager.notifications.sendBlock(block, self.id)
-                }*/
+                    self.notification(block)
+                }
             }
 
             chain = f.lastelements(chain, 150, 10)
