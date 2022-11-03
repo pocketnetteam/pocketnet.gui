@@ -679,6 +679,12 @@ PeerTubePocketnet = function (app) {
 					host,
 				});
 			},
+
+			latestVideos: function(host) {
+				return request('stats', {}, {
+					host,
+				});
+			},
 			
 			remove: function (url, options = {}) {
 				if (!self.checklink(url)) return Promise.reject(error('link'));

@@ -38,6 +38,13 @@ var diagnosticsPage = (function () {
       },
 
       async diagnoseSingleServer(serverName) {
+        let reachableFlag = true;
+        let gotVideosFlag = true;
+        let masterPlaylistFlag = true;
+
+        let videosList = [];
+        let masterPlaylist = '';
+
         try {
           const serverStatistics =
             await self.app.peertubeHandler.api.videos.serverStatistics(
@@ -53,7 +60,100 @@ var diagnosticsPage = (function () {
             error: actions.stringifyErrorSafe(error),
           };
 
+          serversObject[serverName].videos = {
+            gotVideos: false,
+            error: 'Server unreachable, thus this step is skipped.',
+          };
+
           serverObjectsWithErrors[serverName] = true;
+          reachableFlag = false;
+        }
+
+        if (reachableFlag) {
+          try {
+            const serverResponse =
+              await self.app.peertubeHandler.api.videos.latestVideos(
+                serverName,
+              );
+
+            videosList = (serverResponse || {}).data;
+
+            if (!videosList) {
+              serversObject[serverName].videos = {
+                gotVideos: false,
+                error: `Wrong response from server: no video list. Response: ${actions.stringifyErrorSafe(
+                  serverResponse,
+                )}`,
+              };
+
+              serverObjectsWithErrors[serverName] = true;
+              gotVideosFlag = false;
+            }
+          } catch (error) {
+            serversObject[serverName].videos = {
+              gotVideos: false,
+              error: actions.stringifyErrorSafe(error),
+            };
+
+            serverObjectsWithErrors[serverName] = true;
+            gotVideosFlag = false;
+          }
+        }
+
+        if (gotVideosFlag && videosList[0]) {
+          try {
+            const videoObject = videosList[0];
+
+            const resultInfo =
+              await self.app.peertubeHandler.api.videos.getDirectVideoInfo(
+                { id: videoObject.uuid },
+                { host: serverName },
+              );
+
+            masterPlaylist = deep(
+              resultInfo,
+              'streamingPlaylists.0.playlistUrl',
+            );
+
+            if (!masterPlaylist) {
+              serversObject[serverName].videos = {
+                gotVideos: false,
+                error: `Error getting master playlist. Reason: ${actions.stringifyErrorSafe(
+                  resultInfo,
+                )}`,
+              };
+
+              serverObjectsWithErrors[serverName] = true;
+              masterPlaylistFlag = false;
+            }
+
+            console.log('Got Result', masterPlaylist);
+          } catch (error) {
+            serversObject[serverName].videos = {
+              gotVideos: false,
+              error: actions.stringifyErrorSafe(error),
+            };
+
+            serverObjectsWithErrors[serverName] = true;
+            masterPlaylistFlag = false;
+          }
+        }
+
+        if (masterPlaylistFlag && masterPlaylist) {
+          try {
+            const masterPlaylistFile = await axios.get(masterPlaylist);
+
+            serversObject[serverName].videos = {
+              gotVideos: true,
+            };
+          } catch (error) {
+            serversObject[serverName].videos = {
+              gotVideos: false,
+              error: actions.stringifyErrorSafe(error),
+            };
+
+            serverObjectsWithErrors[serverName] = true;
+          }
         }
 
         serversCounter++;
