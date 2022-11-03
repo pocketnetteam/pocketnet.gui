@@ -1807,8 +1807,8 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 		notifications: {
 			stats: {
 				path: '/notifications/stats',
-				action: function () {
-
+				action: function ({A}) {
+					if (!A) return Promise.reject('admin');
 					var data = notifications.statsInfo()
 
 					return Promise.resolve({ data });
@@ -1818,8 +1818,8 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 			users: {
 				path: '/notifications/users',
-				action: function () {
-
+				action: function ({A}) {
+					if (!A) return Promise.reject('admin');
 					var data = notifications.userInfo()
 
 					return Promise.resolve({ data });
@@ -2171,7 +2171,6 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 			test: {
 				path: '/firebase/test',
 				action: function (data) {
-					console.log(self.firebase)
 					var _data = {
 						addr: "PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM",
 						addrFrom: "PJorG1HMRegp3SiLAFVp8R5Ef6d3nSrNxA",

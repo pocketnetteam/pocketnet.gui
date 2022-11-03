@@ -2483,7 +2483,7 @@ var system16 = (function(){
 						renders.proxyservers(p.el)
 						renders.servercontent(p.el)
 						renders.nodescontent(p.el)
-						// if(actions.admin())
+						if(actions.admin())
 							renders.notificationcontent(p.el)
 						renders.chaincontent(p.el)
 						renders.peertubecontent(el.c)
