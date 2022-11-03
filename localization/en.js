@@ -294,6 +294,8 @@ _l.lpublic = "Public";
 //inviteComment
 _l.commentBannerTitle = "Comment on this post";
 _l.commentBannerDescription = "Commenting unlocks features on Bastyon and helps you find friends 😀";
+_l.commentBannerTitle2 = function(v){ return "Follow " + v + " to see more posts for them"};
+_l.commentBannerDescription2 = function(v){ return "Following " + v + " will show more content like this in your feed." };
 _l.dontShowAgain = "Don't show again";
 
 //share
@@ -616,6 +618,7 @@ _l.e13107 = "Node management may be carried out with Application"
 _l.e13108 = "There isn't connection with Electron proxy interface"
 
 _l.e13109 = "Please enter the words in the picture to receive Pocketcoin and continue registration"
+_l.e13109lg = "Please enter the words in the picture to continue registration"
 _l.e13110 = "Enter words"
 _l.poll = "Create poll"
 _l.next = "Next"
@@ -863,6 +866,8 @@ _l.e13267 = "Dark Theme"
 _l.e13268 = "Coinstake win"
 _l.e13269 = "Transactions receive"
 _l.e13270 = "Upvotes receive"
+_l.e13270d = "Downvotes receive"
+
 _l.e13271 = "Comment receive"
 _l.e13272 = "Answer receive"
 _l.e13273 = "New Followers"
@@ -2365,3 +2370,11 @@ _l.doYouDownloadVideo = "Do you want to download the video on your device ?"
 _l.gotosaved2 = "Go to saved"
 _l.yes = "Yes"
 _l.no = "No"
+
+_l.postedVideos = "Posted Videos"
+_l.unPostedVideos = "Unposted Videos"
+_l.videoIsPosting = "Posting"
+_l.noUnposted = "No Unposted Videos"
+
+_l.sortByComments = "Comments"
+_l.sortByRating = "Number of ratings"

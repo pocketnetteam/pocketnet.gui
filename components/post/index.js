@@ -15,6 +15,8 @@ var post = (function () {
 
 		var el = {}, share, ed = {}, recommendationsenabled = false, inicomments, eid = '', _repost = null, level = 0, external = null, recommendations = null;
 
+		var progressInterval;
+
 		var player = null
 
 		var authblock = false;
@@ -89,7 +91,34 @@ var post = (function () {
 			changeSavingStatusLight : function(share){
 
 				if (el.c){
-					el.c.find('.shareSave').attr('status', self.app.platform.sdk.localshares.status(share.txid))
+					const status = self.app.platform.sdk.localshares.status(share.txid);
+					const isSaving = (status === 'saving');
+
+					const shareSaveElem = el.c.find('.shareSave');
+
+					if (isSaving) {
+						const loadingBarHolderElem = el.c.find('.loadingBar');
+						const loadingBarElem = el.c.find('.loading-bar');
+
+						if (!loadingBarElem || loadingBarElem.length <= 0)
+							return;
+						const lb = new LoadingBar(loadingBarElem[0]);
+						if (progressInterval) clearInterval(progressInterval);
+						// Watch progress and update progress bar
+						progressInterval = setInterval(async function() {
+							const progress = await self.app.platform.sdk.localshares.videoDlProgress(share.txid);
+							if (progress != undefined && progress.progress >= 1)
+								clearInterval(progressInterval);
+							if (progress != undefined && !isNaN(progress.progress))
+								lb.setValue(progress.progress * 100);
+						}, 500);
+
+						loadingBarHolderElem.removeAttr('hidden');
+						shareSaveElem.attr('hidden', '');
+						return;
+					}
+
+					shareSaveElem.attr('status', status);
 				}
 
 			},
@@ -1887,6 +1916,9 @@ var post = (function () {
 						renders.comments(function () {
 						})
 
+						if (share.itisvideo())
+							actions.changeSavingStatusLight(share);
+
 						if (share.itisvideo() && !ed.repost && !p.pip && recommendationsenabled && !_OpenApi && !ed.openapi) {
 
 							renders.recommendations();
@@ -2022,6 +2054,8 @@ var post = (function () {
 					recommendations.destroy()
 					recommendations = null
 				}
+
+				if (progressInterval) clearInterval(progressInterval);
 
 				self.app.actions.playingvideo(null)
 				

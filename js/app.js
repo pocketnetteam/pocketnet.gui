@@ -91,7 +91,7 @@ Application = function(p)
   }
 
   self.boost = !(window.cordova && isios());
-  self.pkoindisable =  window.cordova && isios();
+  self.pkoindisable = window.cordova && isios();
   self.cutversion = window.cordova && isios();
 
   self.margintop  = 0
@@ -2751,7 +2751,10 @@ Application = function(p)
     if(na && self.ref) return
 
     self.ref = r;
-    localStorage['ref'] = self.ref
+    try{
+      localStorage['ref'] = self.ref
+    }catch(e){}
+    
 
   }
 
@@ -2772,8 +2775,9 @@ Application = function(p)
 
 
   self.options.device = localStorage['device'] || makeid();
-
-  localStorage['device'] = self.options.device
+  try{
+    localStorage['device'] = self.options.device
+  }catch(e){}
 
   if(typeof window != 'undefined'){ self.fref = deep(window, 'location.href') }
 

@@ -11950,3 +11950,90 @@ isDeviceMobile = function() {
 	return check;
 };
 
+class LoadingBar {
+	constructor(barElem, styles) {
+		const self = this;
+
+		this.boundOnClick = this.onClick.bind(this);
+
+		this.elem = barElem;
+		this.elem.addEventListener('click', this.boundOnClick);
+
+		if (styles) {
+			this.setStyles(styles);
+		}
+	}
+
+	onClick() {
+		this.toggleStateChange();
+
+		const hasOnStateChange = (typeof this.onStateChange === 'function');
+
+		if (hasOnStateChange) {
+			this.onStateChange({
+				stopped: this.stopped,
+				value: this.value,
+			});
+		}
+	}
+
+	clearListenStateChange() {
+		this.elem.removeEventListener('click', this.boundOnClick);
+	}
+
+	listenStateChange(listenerCb) {
+		this.onStateChange = listenerCb;
+	}
+
+	listenErrors(listenerCb) {
+		this.onListenErrors = listenerCb;
+	}
+
+	setValue(value) {
+		const hasOnListenErrors = (typeof this.onListenErrors === 'function');
+
+		if (this.stopped && hasOnListenErrors) {
+			this.onListenErrors({ type: 'warning', text: 'Tried to set value when state is stopped' });
+		}
+
+		if (value > 100) {
+			value = 100;
+
+			if (hasOnListenErrors) {
+				this.onListenErrors({ type: 'warning', text: 'Tried to set value bigger than 100%' });
+			}
+		}
+
+		this.value = value;
+		this.elem.style.setProperty('--percent', value);
+	}
+
+	setStyles(styles) {
+		if (styles.barColor) {
+			this.elem.style.setProperty('--barColor', styles.barColor);
+		}
+
+		if (styles.lineColor) {
+			this.elem.style.setProperty('--lineColor', styles.lineColor);
+		}
+	}
+
+	toggleStateChange() {
+		if (this.stopped) {
+			this.setLoading();
+			return;
+		}
+
+		this.setPaused();
+	}
+
+	setPaused() {
+		this.stopped = true;
+		this.elem.setAttribute('data-loading', !this.stopped);
+	}
+
+	setLoading() {
+		this.stopped = false;
+		this.elem.setAttribute('data-loading', !this.stopped);
+	}
+}
