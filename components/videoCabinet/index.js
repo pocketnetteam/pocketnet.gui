@@ -11,6 +11,8 @@ var videoCabinet = (function () {
   const POSITIVE_STATUS = 'fulfilled';
   const TRANSCODING_CHECK_INTERVAL = 20000;
 
+  let firstRenderFlag = true;
+
   var Essense = function (p) {
     var primary = deep(p, 'history');
 
@@ -779,11 +781,14 @@ var videoCabinet = (function () {
             name: 'videoList',
             el: videoPortionElement,
             data: {
-              videos: [],
+              videos,
               buttonCaption,
+			  firstRenderFlag,
             },
           },
           (p) => {
+			firstRenderFlag = false;
+
             p.el.find('.tooltip').tooltipster({
               theme: 'tooltipster-light',
               maxWidth: 600,
@@ -1795,6 +1800,8 @@ var videoCabinet = (function () {
         transcodingIntervals = {};
 
         el = {};
+
+		firstRenderFlag = true;
 
         if (errorcomp) {
           errorcomp.destroy();
