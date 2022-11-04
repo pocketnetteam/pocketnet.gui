@@ -51,8 +51,16 @@
   display: flex;
   align-items: center;
 }
+#diagnosticsPage .goodServerName {
+  color: #076C34;
+  display: flex;
+  align-items: center;
+}
 #diagnosticsPage .fosIcon {
   margin-right: 0.5em;
+}
+#diagnosticsPage .mainBodyWrapper {
+  color: rgb(var(--neutral-grad-2));
 }
 #diagnosticsPage .connectingToWrapper {
   font-weight: bold;

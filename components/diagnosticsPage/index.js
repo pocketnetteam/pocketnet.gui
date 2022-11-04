@@ -196,7 +196,6 @@ var diagnosticsPage = (function () {
             ),
           )
           .then(() => {
-            debugger;
             self.app.Logger.error({
               err: 'DIAGNOSE_COMPLETED',
               code: 100,

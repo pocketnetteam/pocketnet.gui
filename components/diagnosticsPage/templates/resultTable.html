@@ -17,9 +17,15 @@
   %>
   <div class="tableRow">
     <div class="tableCell nameCell">
-      <div class="failedServerName">
-        <i class="fas fa-times fosIcon"></i><%- server %>
-      </div>
+      <% if (serversWithErrors.includes(server)) { %>
+        <div class="failedServerName">
+          <i class="fas fa-times fosIcon"></i><%- server %>
+        </div>
+      <% } else { %>
+        <div class="goodServerName">
+          <i class="fas fa-check fosIcon"></i><%- server %>
+        </div>
+      <% }%>
     </div>
     <div class="tableCell reachableCell">
       <div>
