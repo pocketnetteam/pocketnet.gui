@@ -561,9 +561,24 @@ var videoCabinet = (function () {
           unpostedVideosParsed[self.app.user.address.value] || [];
 
         return new Promise((res) => {
-          actions
-            .getBlockchainPostByVideos(
-              unpostedVideos.map((video = '') => encodeURIComponent(video)),
+          self.app.peertubeHandler.api.videos
+            .getMyAccountVideos()
+            .then((result = {}) => {
+              const latestVideos = (result.data || []).map((video) =>
+                self.app.peertubeHandler.composeLink(
+                  deep(video, 'channel.host'),
+                  video.uuid,
+                ),
+              );
+
+              unpostedVideos.push(...latestVideos);
+
+              return unpostedVideos;
+            })
+            .then((videos) =>
+              actions.getBlockchainPostByVideos(
+                videos.map((video = '') => encodeURIComponent(video)),
+              ),
             )
             .then(() => {
               const accountVideos = unpostedVideos
@@ -783,11 +798,11 @@ var videoCabinet = (function () {
             data: {
               videos,
               buttonCaption,
-			  firstRenderFlag,
+              firstRenderFlag,
             },
           },
           (p) => {
-			firstRenderFlag = false;
+            firstRenderFlag = false;
 
             p.el.find('.tooltip').tooltipster({
               theme: 'tooltipster-light',
@@ -1801,7 +1816,7 @@ var videoCabinet = (function () {
 
         el = {};
 
-		firstRenderFlag = true;
+        firstRenderFlag = true;
 
         if (errorcomp) {
           errorcomp.destroy();
