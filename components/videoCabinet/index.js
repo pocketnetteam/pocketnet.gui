@@ -255,14 +255,28 @@ var videoCabinet = (function () {
 							),
 					)
 					.then((aggregatedNumberViews) => {
+						const cahceViewsInformation = localStorage.getItem('aggregatedVideoViews');
+
+						let viewsObject;
+
+						try {
+							viewsObject = JSON.parse(cahceViewsInformation);
+
+							if (typeof viewsObject !== 'object') viewsObject = {};
+						} catch (errorParsing) {
+							viewsObject = {};
+						}
+
 						const cachedViews = +(
-							localStorage.getItem('aggregatedVideoViews') || 0
+							viewsObject[self.app.user.address.value] || 0
 						);
 
 						if (aggregatedNumberViews > cachedViews) {
+							viewsObject[self.app.user.address.value] = aggregatedNumberViews;
+
 							localStorage.setItem(
 								'aggregatedVideoViews',
-								aggregatedNumberViews,
+								JSON.stringify(viewsObject),
 							);
 
 							return aggregatedNumberViews;
