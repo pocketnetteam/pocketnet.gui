@@ -10,11 +10,16 @@
       <div><%- e('videoServerVideo') %></div>
     </div>
   </div>
-  <% serversWithErrors.map(server => { const info = serversObject[server] || {};
+  <% Object.keys(serversObject)
+    .sort((a,b) => serversWithErrors.indexOf(b) - serversWithErrors.indexOf(a))
+    .map(server => { 
+      const info = serversObject[server] || {}; 
   %>
   <div class="tableRow">
     <div class="tableCell nameCell">
-      <div><%- server %></div>
+      <div class="failedServerName">
+        <i class="fas fa-times fosIcon"></i><%- server %>
+      </div>
     </div>
     <div class="tableCell reachableCell">
       <div>

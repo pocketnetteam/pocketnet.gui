@@ -2171,6 +2171,7 @@ _l.videoServerReachable = "Доступность";
 _l.serversTestingProgress = "Прогресс Диагностики:";
 _l.videoServerVideo = "Видео Статистика";
 _l.goToDiagnose = "Перейти на страницу диагностики";
+_l.connectingTo = "Проверка";
 
 
 

@@ -55,13 +55,17 @@ var diagnosticsPage = (function () {
 
           serversObject[serverName].reachability = {
             reachable: true,
-            time: `${((performance.now() - responseStart) / 1000).toFixed(2)} s.`,
+            time: `${((performance.now() - responseStart) / 1000).toFixed(
+              2,
+            )} s.`,
           };
         } catch (error) {
           serversObject[serverName].reachability = {
             reachable: false,
             error: actions.stringifyErrorSafe(error),
-            time: console.timeEnd(serverName) / 1000,
+            time: `${((performance.now() - responseStart) / 1000).toFixed(
+              2,
+            )} s.`,
           };
 
           serversObject[serverName].videos = {
@@ -158,6 +162,7 @@ var diagnosticsPage = (function () {
           }
         }
 
+        serversObject[serverName].finished = true;
         serversCounter++;
         renders.diagnoseProgress({});
 
@@ -167,11 +172,9 @@ var diagnosticsPage = (function () {
 
     var events = {
       eventGetHosts() {
-        if (diagnosticsInProgress) return;
-
         diagnosticsInProgress = true;
 
-        actions
+        return actions
           .getHosts()
           .then((res) => {
             const formattedServersList = Object.values(res).flat();
@@ -193,7 +196,7 @@ var diagnosticsPage = (function () {
             ),
           )
           .then(() => {
-			debugger;
+            debugger;
             self.app.Logger.error({
               err: 'DIAGNOSE_COMPLETED',
               code: 100,
@@ -216,9 +219,6 @@ var diagnosticsPage = (function () {
               payload: errorBody,
               level: 'diagnostics',
             });
-          })
-          .finally(() => {
-            diagnosticsInProgress = false;
           });
       },
     };
@@ -257,6 +257,10 @@ var diagnosticsPage = (function () {
       diagnoseProgress({}) {
         if (!el.diagnoseProgress) return;
 
+        const lastPendingServer = Object.keys(serversObject).findLast(
+          (server) => !serversObject[server].finished,
+        );
+
         self.shell(
           {
             name: 'diagnoseProgress',
@@ -264,6 +268,7 @@ var diagnosticsPage = (function () {
             data: {
               completed: serversCounter,
               total: serversAmount,
+              lastPendingServer,
             },
           },
           (p) => {},
@@ -295,7 +300,20 @@ var diagnosticsPage = (function () {
     };
 
     var initEvents = function () {
-      el.startDiagnoseButton.on('click', () => events.eventGetHosts());
+      el.startDiagnoseButton.on('click', function () {
+        if (diagnosticsInProgress) return;
+
+        const loadingButton = $(this);
+
+        loadingButton.addClass('disabled');
+        loadingButton.removeClass('orange');
+        loadingButton.attr('disabled', true);
+
+        events.eventGetHosts().finally(() => {
+          loadingButton.removeClass('disabled');
+          loadingButton.addClass('orange');
+        });
+      });
     };
 
     return {

@@ -332,11 +332,12 @@ var usersettings = (function(){
 					p.el.find('.goToDiagnoseButton').on('click', () => {
 						self.app.nav.api.load({
 							open : true,
-							id : 'diagnosticsPage',
+							href : 'diagnosticsPage',
+							history: true,
 		
 							essenseData : {
 							}
-						})
+						});
 					});
 				})
 			}
