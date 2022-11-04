@@ -234,7 +234,9 @@ var videoCabinet = (function () {
 			},
 
 			getTotalViews() {
-				const servers = Object.keys(peertubeServers);
+				const servers = Object.values(serversList)
+					.map(royList => royList[0])
+					.filter((server) => server);
 
 				const serverPromises = servers.map((host) =>
 					self.app.peertubeHandler.api.videos.totalViews({}, { host }),
@@ -280,7 +282,8 @@ var videoCabinet = (function () {
 
 				//getting and rendering bonus program status for views and ratings (same template)
 				actions
-					.getTotalViews()
+					.getHosts()
+					.then(() => actions.getTotalViews())
 					.then((result) => {
 						renders.bonusProgram(
 							{
