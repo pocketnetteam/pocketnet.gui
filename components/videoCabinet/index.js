@@ -1697,13 +1697,12 @@ var videoCabinet = (function () {
         // }
 
         // videosInPosting = [...postingVideos];
-
-        self.app.platform.ws.messages.transaction.clbks.postVideos =
-          actions.onSendToBlockchain;
       },
       update() {},
 
       removeVideo(id) {
+		state.load();
+		
         unpostedVideosParsed[self.app.user.address.value] = (
           unpostedVideosParsed[self.app.user.address.value] || []
         ).filter((item) => {
@@ -1837,6 +1836,8 @@ var videoCabinet = (function () {
 
       init: function (p) {
         state.load();
+		self.app.platform.ws.messages.transaction.clbks.postVideos =
+          actions.onSendToBlockchain;
 
         el = {};
         el.c = p.el.find('#' + self.map.id);

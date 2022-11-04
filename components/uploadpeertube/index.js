@@ -188,7 +188,9 @@ var uploadpeertube = (function () {
 					JSON.stringify(currentUnloadedVideos),
 				);
 			} catch (error) {
-				localStorage.setItem('unpostedVideos', JSON.stringify([v]));
+				localStorage.setItem('unpostedVideos', JSON.stringify({
+					[self.app.user.address.value]: [v],
+				}));
 			}
 
 			_.each(self.added, function(a){
