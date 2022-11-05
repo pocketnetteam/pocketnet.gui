@@ -406,7 +406,7 @@ var main = (function(){
 			addpanel : function(){
 
 				self.app.user.isState(function(state){
-					if(state){
+					if(state && el.addbutton){
 
 						if(state && !isMobile()){
 							el.addbutton.addClass('active')
@@ -1068,6 +1068,8 @@ var main = (function(){
 
 			parametersHandler : function(clbk){
 
+				console.log("HERE2", el, essenses)
+
 				var tgsi = decodeURI(parameters().sst || '')
 
 				var words = _.uniq(_.filter(tgsi.split(wordsRegExp), function(r){
@@ -1263,6 +1265,8 @@ var main = (function(){
 
 			destroy : function(){
 
+				console.log("DESTROY")
+
 				showCategories(false)
 
 				delete self.app.events.scroll.main
@@ -1348,6 +1352,8 @@ var main = (function(){
 					})
 	
 				}
+
+				console.log("HERE")
 			},
 
 			showCategories : function(show){
@@ -1356,6 +1362,8 @@ var main = (function(){
 			},
 			
 			init : function(p){
+
+				console.log("INIT")
 				
 
 				roller = null

@@ -18788,7 +18788,6 @@ Platform = function (app, listofnodes) {
                         method : 'gettopfeed',
                         rpc : {
                             cache : true,
-                            locally : true,
                             fastvideo : true
                         }
                     });
@@ -20084,6 +20083,13 @@ Platform = function (app, listofnodes) {
                     },
 
                     allBalance: function (clbk, update) {
+
+                        if(!self.sdk.address.pnet()) {
+                            if(clbk) clbk()
+
+                            return
+                        }
+
                         var addresses = [self.sdk.address.pnet().address].concat(self.sdk.addresses.storage.addresses || [])
 
                         self.sdk.node.transactions.get.balanceAr(clbk, addresses, update)
@@ -28943,9 +28949,16 @@ Platform = function (app, listofnodes) {
             tags : {}
         }
 
-        self.sdk.node.shares.storage = {
+        /*self.sdk.node.shares.storage = {
             trx: {}
+        }*/
+
+        if(self.sdk.node.shares.storage && self.sdk.node.shares.storage.trx){
+            _.each(self.sdk.node.shares.storage.trx, function(tr){
+                delete tr.myVal
+            })
         }
+       
 
         self.sdk.sharesObserver.storage = {
             viewed : {}

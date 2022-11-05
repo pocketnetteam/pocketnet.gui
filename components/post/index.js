@@ -1170,7 +1170,7 @@ var post = (function () {
 									init: ed.fromempty || false,
 									preview: true,
 									listpreview : false,
-
+									receiver: share.address,
 									fromtop: !ed.fromempty,
 									fromempty: ed.fromempty,
 									lastComment: ed.fromempty ? share.lastComment : null,

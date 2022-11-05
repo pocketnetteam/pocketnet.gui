@@ -52,6 +52,7 @@ var donate = (function(){
 
 				ed = p.settings.essenseData;
 
+				console.log('ed', ed)
 				
 
 				self.sdk.users.get(ed.receiver, function(){
