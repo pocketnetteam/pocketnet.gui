@@ -879,15 +879,11 @@ var share = (function(){
 
 				var SAVE = function(){
 
-					console.log("SAVE")
-
 					currentShare.language.set(self.app.localization.key)
 
 					actions.checktranscoding(function(result){
-						console.log("AS")
 						currentShare.uploadImages(self.app, function(){
 
-							console.log("AS2")
 
 							if (currentShare.hasexchangetag()){
 								currentShare.repost.v = ''
@@ -922,7 +918,6 @@ var share = (function(){
 		
 								function(_alias, error){
 
-									console.log("ASD", error)
 
 									topPreloader(100)
 		
@@ -1665,8 +1660,6 @@ var share = (function(){
 		
 							action : function(file, clbk){
 
-								console.log("FILE", file)
-		
 								if (file.ext == 'gif'){
 									imagesHelper.slowUploadGif(file, tstorage, clbk)
 								}

@@ -62,9 +62,6 @@ var recommendationinfo = (function(){
 
 					_.each(data.tags, (t) => data.recmap[t] = true)
 					
-					console.log('self.app.platform.sdk.tags.maxs()', self.app.platform.sdk.tags.maxs())
-	
-					console.log('data', data)
 	
 					self.shell({
 	
@@ -135,11 +132,6 @@ var recommendationinfo = (function(){
 				}*/ ///p.settings.essenseData
 
 				ed = p.settings.essenseData
-
-				console.log("D", ed)
-
-				
-
 
 				var data = {ed};
 

@@ -236,10 +236,8 @@ var videoCabinet = (function () {
 			getTotalViews() {
 				const servers = Object.keys(peertubeServers);
 
-				console.log("getTotalViews", servers)
 
 				const serverPromises = servers.map((host) =>{
-					console.log('host', host)
 					return self.app.peertubeHandler.api.videos.totalViews({}, { host })
 				}
 				);

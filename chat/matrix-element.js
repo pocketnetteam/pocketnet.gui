@@ -9986,20 +9986,6 @@ module.exports.__inject__ = function (shadowRoot) {
 
 /***/ }),
 
-/***/ "2931":
-/***/ (function(module, exports, __webpack_require__) {
-
-// Imports
-var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
-exports = ___CSS_LOADER_API_IMPORT___(false);
-// Module
-exports.push([module.i, ".deletedMessage[data-v-659136c0]{font-size:.8em;text-align:center;opacity:.6}.event[data-v-659136c0]{opacity:0;transition:.3s}.event.readyToRender[data-v-659136c0]{opacity:1}.event .loading[data-v-659136c0]{width:100%;height:100%;text-align:center}.event .deletedMessage[data-v-659136c0],.event .loading[data-v-659136c0]{position:relative;left:0;top:0;padding:.5em}", ""]);
-// Exports
-module.exports = exports;
-
-
-/***/ }),
-
 /***/ "2a7f":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -36510,7 +36496,6 @@ class mtrxkit_MTRXKIT {
 
   chatIsPublic(chat) {
     var join_rules = chat.currentState.getStateEvents("m.room.join_rules");
-    console.log('join_rules', join_rules);
     return _.find(join_rules, v => {
       return functions["a" /* default */].deep(v, 'event.content.join_rule') == 'public';
     }) ? true : false;
@@ -39333,8 +39318,6 @@ const sdk = __webpack_require__("0a00");
 
 var mtrx_axios = __webpack_require__("bc3a");
 
-console.log("sdk", sdk);
-
 class mtrx_MTRX {
   constructor(core, p) {
     Object(defineProperty["a" /* default */])(this, "fastsync", function () {
@@ -40004,7 +39987,6 @@ class mtrx_MTRX {
     info.from = from;
     return new Promise(resolve => {
       if (chat.pcrypto.canBeEncrypt()) {
-        console.log("??????????");
         return chat.pcrypto.encryptFile(file).then(r => {
           info.secrets = r.secrets;
           return resolve(r.file);
@@ -40017,7 +39999,6 @@ class mtrx_MTRX {
       if (promise.abort) meta.abort = promise.abort;
       return promise;
     }).then(audio => {
-      console.log(audio, info);
       if (meta.aborted) return Promise.reject('aborted');
       return this.client.sendAudioMessage(chat.roomId, audio, info, 'Audio');
     });
@@ -40076,8 +40057,6 @@ class mtrx_MTRX {
     var _this7 = this;
 
     return Object(asyncToGenerator["a" /* default */])(function* () {
-      console.log('getAudioUnencrypt');
-
       if (event.event.content.audioData) {
         return Promise.resolve(event.event.content.audioData);
       }
@@ -44188,6 +44167,18 @@ module.exports.__inject__ = function (shadowRoot) {
 
 /***/ }),
 
+/***/ "60b9":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_72e46191_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("8056");
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_72e46191_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_72e46191_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_72e46191_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_72e46191_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+
+
+/***/ }),
+
 /***/ "6129":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -44653,12 +44644,12 @@ function exists(indexedDB, dbName) {
 // ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/events/event/index.vue?vue&type=template&id=659136c0&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"056ad8cc-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/events/event/index.vue?vue&type=template&id=72e46191&scoped=true&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return (!_vm.event.localRedactionEvent() && !_vm.event.getRedactionEvent() && !_vm.removed)?_c('div',{ref:"msgElement",staticClass:"event",class:{readyToRender: _vm.readyToRender, my: _vm.my}},[(_vm.type === 'member' && !_vm.preview)?_c('member',{attrs:{"chat":_vm.chat,"event":_vm.event,"userinfo":_vm.userinfo,"readed":_vm.readed,"preview":_vm.preview || false},on:{"readyToRender":_vm.setReadyToRender}}):_vm._e(),(_vm.type === 'message' || _vm.preview)?_c('message',{attrs:{"chat":_vm.chat,"event":_vm.event,"prevevent":_vm.prevevent,"origin":_vm.event,"decryptEvent":_vm.decryptEvent,"decryptedInfo":_vm.decryptedInfo,"encryptedData":_vm.encryptedData,"imgEvent":_vm.galleryData,"userinfo":_vm.userinfo,"readed":_vm.readed,"preview":_vm.preview || false,"withImage":_vm.withImage || false,"clientWidth":_vm.clientWidth,"encrypted":_vm.encrypted,"subtype":_vm.subtype,"error":_vm.error,"reference":_vm.reference,"downloaded":_vm.downloaded,"last":_vm.last,"showmyicontrue":_vm.showmyicontrue,"fromreference":_vm.fromreference,"multiSelect":_vm.multiSelect,"selectedMessages":_vm.selectedMessages,"audioBuffer":_vm.audioBuffer,"isRemoveSelectedMessages":_vm.isRemoveSelectedMessages},on:{"openGalleryImg":_vm.openImage,"readyToRender":_vm.setReadyToRender,"remove":_vm.removeEvent,"download":_vm.downloadFile,"decryptagain":_vm.decryptAgain,"showMultiSelect":function($event){return _vm.$emit('showMultiSelect')},"selectMessage":_vm.selectMessage,"removeMessage":_vm.removeMessage,"messagesIsDeleted":_vm.messagesIsDeleted,"editing":_vm.editing,"reply":_vm.reply,"share":_vm.share,"menuIsVisible":_vm.menuIsVisibleHandler}}):_vm._e(),(_vm.type === 'common')?_c('common',{attrs:{"event":_vm.event,"userinfo":_vm.userinfo,"readed":_vm.readed,"preview":_vm.preview || false}}):_vm._e(),(_vm.downloading)?_c('div',{staticClass:"loading"},[_c('linepreloader')],1):_vm._e()],1):_c('div',{staticClass:"deletedMessage"},[_c('i',{staticClass:"fas fa-eraser"}),_vm._v(" "+_vm._s(_vm.$t("caption.messageDeleted"))+" ")])}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/events/event/index.vue?vue&type=template&id=659136c0&scoped=true&
+// CONCATENATED MODULE: ./src/components/events/event/index.vue?vue&type=template&id=72e46191&scoped=true&
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js
 var asyncToGenerator = __webpack_require__("1da1");
@@ -46728,10 +46719,7 @@ var message_component = Object(componentNormalizer["a" /* default */])(
       var _this = this;
 
       return Object(asyncToGenerator["a" /* default */])(function* () {
-        console.log("decryptAudiodecryptAudiodecryptAudiodecryptAudio");
-
         _this.core.mtrx.getAudio(_this.chat, _this.event).then(url => {
-          console.log("HE");
           _this.decryptedInfo = url;
         }).catch(e => {
           _this.event.event.decryptKey = _this.decryptKey = {
@@ -46768,8 +46756,6 @@ var message_component = Object(componentNormalizer["a" /* default */])(
       var _this4 = this;
 
       return Object(asyncToGenerator["a" /* default */])(function* () {
-        console.log('this.event', _this4.event);
-
         if (_this4.event.event.decrypted) {
           _this4.decryptEvent = _this4.event.event.decrypted;
           return Promise.resolve();
@@ -46827,7 +46813,7 @@ var message_component = Object(componentNormalizer["a" /* default */])(
 
 function event_injectStyles (context) {
   
-  var style0 = __webpack_require__("72a7")
+  var style0 = __webpack_require__("60b9")
 if (style0.__inject__) style0.__inject__(context)
 
 }
@@ -46840,7 +46826,7 @@ var event_component = Object(componentNormalizer["a" /* default */])(
   staticRenderFns,
   false,
   event_injectStyles,
-  "659136c0",
+  "72e46191",
   null
   ,true
 )
@@ -55165,18 +55151,6 @@ function b64_enc (data) {
 
 /***/ }),
 
-/***/ "72a7":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_659136c0_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("de24");
-/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_659136c0_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_659136c0_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_659136c0_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_sass_loader_dist_cjs_js_ref_10_oneOf_1_4_node_modules_cache_loader_dist_cjs_js_ref_1_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_659136c0_scoped_true_lang_sass___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-
-
-/***/ }),
-
 /***/ "72aa":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -55346,6 +55320,20 @@ module.exports = exports;
 /***/ (function(module) {
 
 module.exports = JSON.parse("{\"caption\":{\"create\":\"Создать\",\"addPublicChatName\":\"Имя Публичной комнаты\",\"addGroupNamePlaceHolder\":\"Имя Чата\",\"createPublicChat\":\"Создать публичный чат\",\"chatTopic\":\"Топик изменён\",\"publicRoomTitle\":\"Публичная комната\",\"asModerator\":\"права модерации\",\"marked\":\"Передал\",\"unmarked\":\"Снял\",\"removeBan\":\"Снять Бан\",\"cancelModeration\":\"Снять модерцию\",\"uploadFiles\":\"Загрузить файлы\",\"header\":\"Заголовок\",\"dragAndDropAFile\":\"Перетятите файл в эту область\",\"chatInvite\":\"Вы приглашены в чат с\",\"cantJoion\":\"Вы не можете присоединиться к чату с\",\"chatInviteDecline\":\"Вы можете присоединиться к чату или отклонить приглашение\",\"creatorLeft\":\"Так как создатель чата покинул его\",\"encrypted\":\"Зашифровано \",\"noImages\":\"В чате пока нет изображений\",\"noFiles\":\"В чате пока нет файлов\",\"inviteUser\":\"Пригласить пользователя\",\"invite\":\"Пригласить\",\"add\":\"Добавить\",\"mute\":\"Отключить звук\",\"unmute\":\"Включить звук\",\"leave\":\"Покинуть\",\"Info\":\"Информация\",\"new\":\"Новый\",\"typing\":\"печатает\",\"accNotFound\":\"Ваш аккаунт находится в процессе регистрации, пожалуйста, подождите...\",\"emptyList\":\"Список пуст\",\"welcome\":\"Добро пожаловать в чат!\",\"startNewChat\":\"Начать новый чат\",\"chats\":\"Чаты\",\"shareWith\":\"Поделиться с\",\"newChat\":\"Новый чат\",\"moveToChat\":\"Перейти в чат\",\"queryNoResults\":\"Нет результатов по запросу\",\"needMoreCharacters\":\"Введите больше символов для поиска\",\"createGroup\":\"Создать группу\",\"unabletoDecrypt\":\"* Невозможно расшифровать\",\"messageDeleted\":\"Сообщение удалено\",\"sentImage\":\"отправлено изображение\",\"sentVoiceMessage\":\"отправлено голосовое сообщение\",\"invitationToChat\":\"Приглашение в чат\",\"invitationToRoom\":\"Приглашение в комнату\",\"leftChat\":\"покинул чат\",\"joined\":\"присоединился\",\"chatRenamed\":\"Чат переименован в \",\"recentComment\":\"Последний комментарий:\",\"share\":\"Поделиться\",\"followers\":\"Подписались\",\"reputation\":\"Репутация\",\"unsubscribe\":\"Отписаться\",\"following\":\"Подписан\",\"theme\":\"Тема:\",\"contacts\":\"Контакты\",\"phoneContacts\":\"Телефонные контакты\",\"chooseInviteMedia\":\"Пожалуйста, выберите, способ приглашения\",\"admin\":\"Админ\",\"moderator\":\"Модератор\",\"videocall\":\"Видеозвонок\",\"call\":\"Звонок\",\"leaveAndDelete\":\"Покинуть и удалить чат\",\"donate\":\"Донат\",\"makeModerator\":\"Сделать модератором\",\"ban\":\"Бан\",\"kick\":\"Исключить\",\"members\":\"Участники\",\"media\":\"Медиа\",\"files\":\"Файлы\",\"contactsList\":\"Список контактов\",\"send\":\"Отправить\",\"pageCaption\":\"Заголовок страницы\",\"caption\":\"Заголовок\",\"text\":\"текст\",\"placeholder\":\"плейсхолдер\",\"sendTransactionTo\":\"Послать транзакрию\",\"toBePaidByReceiver\":\"Оплата получателем\",\"toBePaidBySender\":\"Оплата отправителем\",\"source\":\"Источник\",\"amount\":\"Количество\",\"receiver\":\"Получатель\",\"message\":\"Сообщение\",\"includeFeesInAmount\":\"Включить комиссию в сумму\",\"transactionFees\":\"Комиссия за транзакцию\",\"totalAmount\":\"Итого\",\"balanceTooLow\":\"Баланс слишком низкий\",\"transactionError\":\"Ошибка: нельзя совершить транзакцию\",\"calculateFees\":\"Подсчитать комиссию\",\"startChatWith\":\"Начать чат с\",\"searchResult\":\"Результат поиска\",\"joinedInTheChat\":\"вошел в чат\",\"invited\":\"приглашен \",\"hasInvited\":\"приглашен \",\"inTheChat\":\" в чат\",\"banned\":\"забанен\",\"andRoom\":\"и комната\",\"inRoom\":\"в комнате\",\"left\":\"покинул\",\"theChat\":\" чат \",\"made\":\"сделал \",\"aModerator\":\" модератором\",\"editedChatNameTo \":\"изменил имя чата на \",\"somebody\":\"Кто-то\",\"sent\":\"отправлено\",\"PKOINto\":\" PKOIN для \",\"response\":\"Ответ\",\"edited\":\"Отредактировано\",\"settings\":\"Настройки\",\"unauthorized\":\"Неавторизован\",\"search\":\"Поиск\",\"replyOnMessage\":\"Ответить на сообщение\",\"editMessage\":\"Редактировать сообщение\",\"inviteFriend\":\"Пригласить друзей\",\"emptyContactList\":\"Ваша книга контактов пуста\",\"joinApp\":\"Присоединяйтесь ко мне в защищенном чате.\",\"hasInvitedToJoin\":\"Это зашифрованный чат, который не привязывается к номеру телефона.\",\"messagefrom\":\"Пересланное сообщение от\",\"usernotgen\":\"User did not generate their encryption keys yet. You will be able to chat them when their keys are generated.\",\"younotgen\":\"Please wait a minute, Your encryption keys are being generated...\",\"messageRead\":\"Сообщение прочитано\",\"open\":\"Открыть\",\"You\":\"Вы\",\"chatsearchingempty\":\"Чатов по данному фильтру не найдено\",\"sendmessage\":\"Отправить сообщение\"},\"input\":{\"patientEmailPlaceholder\":\"Электронная почта\",\"refillNamePlaceholder\":\"Заполнить имя еще раз\"},\"message\":{},\"button\":{\"starChatButton\":\"Начать чат\",\"decline\":\"Отклонить\",\"join\":\"Присоединиться\",\"ok\":\"Ок\",\"copy\":\"Скопировать\",\"forward\":\"Переслать\",\"delete\":\"Удалить\",\"save\":\"Сохранить\",\"reply\":\"Ответить\",\"share\":\"Переслать\",\"download\":\"Загрузить\",\"downloaded\":\"Загружено\",\"goToPocketnetProfile\":\"Перейти в профиль\",\"sendFile\":\"Отправить файл\",\"takePhotoOrVideo\":\"Отправить фотографию\",\"sendCoins\":\"Отправить коины\",\"edit\":\"Редактировать\",\"select\":\"Выбрать\",\"block\":\"Заблокировать\",\"unblock\":\"Разблокировать\",\"blockUser\":\"Заблокировать пользователя\",\"Complain\":\"Пожаловаться\"},\"type\":{\"publicgroup\":\"Создать публичную группу\",\"privategroup\":\"Создать приватную группу\",\"one\":\"Чат один на один\"},\"typelabel\":{\"publicgroup\":\"Создание публичной группы\",\"privategroup\":\"Создание приватной группы\",\"one\":\"Создание чата один на один\"},\"yes\":\"Да\",\"cancel\":\"Отменить\",\"teamMessages\":{\"1-title\":\"Добро пожаловать в приватный чат Bastyon!\",\"1-list1\":\"Личный мессенджер, который НЕ связан с вашим номером телефона\",\"1-list2\":\"Конечное шифрование каждого разговора 1 на 1 по умолчанию\",\"1-list3\":\"Все изображения, отправленные или полученные через чат, хранятся в зашифрованном виде\",\"1-list4\":\"История сообщений сохраняется только в течение 7 дней\",\"2-title\":\"Огромное объявление! Приложение Pocketnet теперь называется Bastyon!\",\"2-message1\":\"Домен будет перенесен на Bastyon.com. Недавно мы выпустили следующие крупные обновления:\",\"2-list1\":\"Частный зашифрованный мессенджер, не связанный с вашим номером телефона\",\"2-list2\":\"Возможность пожертвовать PKOIN блогерам\",\"2-list3\":\"Видео и прямая трансляция\",\"2-message2\":\"Пригласите своих друзей сейчас и станьте частью большого будущего децентрализованного интернета!\",\"2-button\":\"Пригласите друзей\"},\"sendingerror\":\"Возникла ошибка при отправке сообщения\",\"details\":\"Подробнее\",\"settings_pin\":\"Закрепить окно чата\",\"checked\":\"Да\",\"unchecked\":\"Нет\",\"settings_read\":\"Отправлять отчёты о прочтении\",\"messagewasburn\":\"Данное сообщение осталось только лишь в памяти вашего устройства\",\"messagewillburn\":\"Сообщение скоро будет удалено\",\"micaccessbrowser\":\"Доступ к микрофону запрещен настройками браузера, пожалуйста проверьте настройки.\",\"micaccesscommonproblem\":\"Извините, по какой-то причине запись голосовых сообщений невозможна на устройстве.\",\"micaccesscordova\":\"Доступ к микрофону запрещен настройками устройства, пожалуйста разрешите доступ к микрофону в настройках устройства.\",\"micdevicenotfound\":\"Устройство для записи звука не найдено\"}");
+
+/***/ }),
+
+/***/ "7747":
+/***/ (function(module, exports, __webpack_require__) {
+
+// Imports
+var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
+exports = ___CSS_LOADER_API_IMPORT___(false);
+// Module
+exports.push([module.i, ".deletedMessage[data-v-72e46191]{font-size:.8em;text-align:center;opacity:.6}.event[data-v-72e46191]{opacity:0;transition:.3s}.event.readyToRender[data-v-72e46191]{opacity:1}.event .loading[data-v-72e46191]{width:100%;height:100%;text-align:center}.event .deletedMessage[data-v-72e46191],.event .loading[data-v-72e46191]{position:relative;left:0;top:0;padding:.5em}", ""]);
+// Exports
+module.exports = exports;
+
 
 /***/ }),
 
@@ -56578,6 +56566,24 @@ exports.push([module.i, ".eventMember[data-v-54a240c2]{display:flex;align-items:
 // Exports
 module.exports = exports;
 
+
+/***/ }),
+
+/***/ "8056":
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__("7747");
+if(content.__esModule) content = content.default;
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add CSS to Shadow Root
+var add = __webpack_require__("35d6").default
+module.exports.__inject__ = function (shadowRoot) {
+  add("21496148", content, shadowRoot)
+};
 
 /***/ }),
 
@@ -97650,24 +97656,6 @@ InteractiveAuth.prototype = {
       }
     }
   }
-};
-
-/***/ }),
-
-/***/ "de24":
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__("2931");
-if(content.__esModule) content = content.default;
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add CSS to Shadow Root
-var add = __webpack_require__("35d6").default
-module.exports.__inject__ = function (shadowRoot) {
-  add("2456b184", content, shadowRoot)
 };
 
 /***/ }),

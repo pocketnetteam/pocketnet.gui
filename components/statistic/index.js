@@ -29,7 +29,6 @@ var statistic = (function () {
 
       getStat: async function () {
 
-        console.log('prevPeriod', prevPeriod)
 
         if (prevPeriod?.to.block === selectedPeriod.to.block && prevPeriod?.from.block === selectedPeriod.from.block ) {
           return

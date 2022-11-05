@@ -115,7 +115,6 @@ var menu = (function(){
 			
 			var href = link.replace('https://', '').replace('http://', '').replace('bastyon://', '').replace('pocketnet/', '').replace('localhost/', '').replace('bastyon.com/', '').replace('pocketnet.app/', '')
 
-			console.log("HREF", href)
 
 			var p = {
 				href : href,
@@ -490,7 +489,6 @@ var menu = (function(){
 								el.find('.gotopage').on('click', function(){
 									var r = $(this).attr('link')
 
-									console.log("R", r)
 
 									searchlickaction(r)
 
@@ -855,8 +853,6 @@ var menu = (function(){
 						    	number: add,
 
 						    	numberStep: function(now, tween) {
-
-									console.log('step')
 
 						        	var number = Number(value + now).toFixed(8),
 						            	target = $(tween.elem);
