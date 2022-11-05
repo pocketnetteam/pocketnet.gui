@@ -34,7 +34,6 @@ var slides = (function(){
 		var renders = {
 			lenta : function(txids, clbk){
 
-				console.log('txids', txids)
 
 				if(!txids.length){
 					if(clbk) clbk()
@@ -100,7 +99,6 @@ var slides = (function(){
 
 
 			if(_.toArray(rendered).length > maxshares && newshares.length > wshares){
-				console.log("CLEAR")
 				clear()
 			}
 
@@ -122,8 +120,6 @@ var slides = (function(){
 
 				total = _.uniq(total)
 				
-
-				console.log("total", total)
 
 				return Promise.resolve()
 			})

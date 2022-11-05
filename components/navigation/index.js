@@ -75,7 +75,6 @@ var navigation = (function(){
 
 				var back = self.app.nav.api.backChainGet()
 				
-				console.log("k", k)
 
 				self.shell({
 					name :  'menu',
