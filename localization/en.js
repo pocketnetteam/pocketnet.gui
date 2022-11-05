@@ -2369,3 +2369,6 @@ _l.noUnposted = "No Unposted Videos"
 
 _l.sortByComments = "Comments";
 _l.sortByRating = "Number of ratings";
+
+_l.noPosted = "No posted Videos"
+_l.unpostedFooter = "Unposted videos are deleted from the server after 3-weeks of waiting"
