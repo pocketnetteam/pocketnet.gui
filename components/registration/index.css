@@ -586,7 +586,7 @@
   display: none;
 }
 #registration .mWrapper .bloggers .usersHorizontal .wrk .subscribeWrapper.following .unsubscribeButton {
-  display: block;
+  display: inline-block;
 }
 #registration .mWrapper .bloggers .usersHorizontal .wrk .modal {
   display: none;
