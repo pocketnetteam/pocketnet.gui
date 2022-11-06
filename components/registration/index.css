@@ -562,11 +562,16 @@
 }
 #registration .mWrapper .bloggers .usersHorizontal .wrk .subscribeWrapper {
   margin-top: 16px;
+  width: 100%;
+}
+#registration .mWrapper .bloggers .usersHorizontal .wrk .subscribeWrapper > button {
+  min-width: 80px;
+  width: 100%;
+  max-width: 210px;
 }
 #registration .mWrapper .bloggers .usersHorizontal .wrk .subscribeWrapper .unsubscribeButton {
   display: none;
   font-size: 14px;
-  width: 140px;
   background: rgb(var(--color-good));
   border: 1px solid rgb(var(--color-good));
 }
@@ -576,7 +581,6 @@
 }
 #registration .mWrapper .bloggers .usersHorizontal .wrk .subscribeWrapper .subscribeButton {
   font-size: 14px;
-  width: 140px;
 }
 #registration .mWrapper .bloggers .usersHorizontal .wrk .subscribeWrapper.following .subscribeButton {
   display: none;
