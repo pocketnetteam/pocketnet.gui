@@ -723,7 +723,12 @@ var registration = (function(){
 
 						}
 
-						localStorage['regproxy'] = ''
+						try {
+							localStorage['regproxy'] = ''
+						}
+						catch (e) { }
+
+						
 
 						self.app.platform.sdk.registrations.redirect = null
 
@@ -1868,16 +1873,25 @@ var registration = (function(){
 
 				//regproxy = self.app.api.get.byid('pocketnet.app:8899:8099')
 
-				if (localStorage['regproxy']){
-					regproxy = self.app.api.get.byid(localStorage['regproxy'])
+				try {
+					if (localStorage['regproxy']){
+						regproxy = self.app.api.get.byid(localStorage['regproxy'])
+					}
 				}
+				catch (e) { }
+
+				
 
 				self.app.api.get.proxywithwallet().then(r => {
 
 					if(r && !regproxy) regproxy = r
 
 					if (regproxy){
-						localStorage['regproxy'] = regproxy.id
+						try {
+							localStorage['regproxy'] = regproxy.id
+						}
+						catch (e) { }
+						
 					}
 
 

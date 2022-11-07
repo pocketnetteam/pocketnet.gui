@@ -65,8 +65,6 @@ var usersettings = (function(){
 
 						}).catch(e => {
 
-							console.log("E", e)
-
 							var errors = {
 								notprepared : 'notprepared',
 								undefinedError : 'undefinedError',

@@ -120,6 +120,7 @@ class TorControl {
     start = async ()=>{
         const existsBin = await this.helpers.checkPath(path.join(this.settings.path,this.helpers.bin_name("tor")))
         if(!existsBin.exists){
+            console.log("NO BIN")
             await this.install();
         }
 
@@ -129,6 +130,7 @@ class TorControl {
         }
 
         const log = (data)=>{
+            console.log('data', data.data)
             if(data?.data?.indexOf("100%") >= 0){
                 console.log("TOR started")
                 this.state.status = "started"

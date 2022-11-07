@@ -15,6 +15,8 @@ var post = (function () {
 
 		var el = {}, share, ed = {}, recommendationsenabled = false, inicomments, eid = '', _repost = null, level = 0, external = null, recommendations = null;
 
+		var progressInterval;
+
 		var player = null
 
 		var authblock = false;
@@ -89,7 +91,34 @@ var post = (function () {
 			changeSavingStatusLight : function(share){
 
 				if (el.c){
-					el.c.find('.shareSave').attr('status', self.app.platform.sdk.localshares.status(share.txid))
+					const status = self.app.platform.sdk.localshares.status(share.txid);
+					const isSaving = (status === 'saving');
+
+					const shareSaveElem = el.c.find('.shareSave');
+
+					if (isSaving) {
+						const loadingBarHolderElem = el.c.find('.loadingBar');
+						const loadingBarElem = el.c.find('.loading-bar');
+
+						if (!loadingBarElem || loadingBarElem.length <= 0)
+							return;
+						const lb = new LoadingBar(loadingBarElem[0]);
+						if (progressInterval) clearInterval(progressInterval);
+						// Watch progress and update progress bar
+						progressInterval = setInterval(async function() {
+							const progress = await self.app.platform.sdk.localshares.videoDlProgress(share.txid);
+							if (progress != undefined && progress.progress >= 1)
+								clearInterval(progressInterval);
+							if (progress != undefined && !isNaN(progress.progress))
+								lb.setValue(progress.progress * 100);
+						}, 500);
+
+						loadingBarHolderElem.removeAttr('hidden');
+						shareSaveElem.attr('hidden', '');
+						return;
+					}
+
+					shareSaveElem.attr('status', status);
 				}
 
 			},
@@ -1141,7 +1170,7 @@ var post = (function () {
 									init: ed.fromempty || false,
 									preview: true,
 									listpreview : false,
-
+									receiver: share.address,
 									fromtop: !ed.fromempty,
 									fromempty: ed.fromempty,
 									lastComment: ed.fromempty ? share.lastComment : null,
@@ -1218,7 +1247,6 @@ var post = (function () {
 
 										if(aspectRatio > 1.66) aspectRatio = 1.66
 
-										console.log("EL", el)
 
 										el.height( Math.min( 400, images.width() || self.app.width) * aspectRatio)
 									})
@@ -1286,7 +1314,6 @@ var post = (function () {
 								if (clbk) clbk();
 							}
 
-							console.log('share.settings.v', share.settings.v, image.images)
 
 							if(share.settings.v != 'a' && image.images.length > 1){
 
@@ -1312,7 +1339,6 @@ var post = (function () {
 
 								}
 								else{
-									console.log("HERE???")
 									images.addClass('manyImagesView')
 									isclbk()
 									/*images.isotope({
@@ -1887,6 +1913,9 @@ var post = (function () {
 						renders.comments(function () {
 						})
 
+						if (share.itisvideo())
+							actions.changeSavingStatusLight(share);
+
 						if (share.itisvideo() && !ed.repost && !p.pip && recommendationsenabled && !_OpenApi && !ed.openapi) {
 
 							renders.recommendations();
@@ -1957,20 +1986,7 @@ var post = (function () {
 
 
 					if (!share) {
-
 						share = self.app.platform.sdk.node.shares.getWithTemp(id) 
-
-						/*var temp = _.find(self.sdk.node.transactions.temp.share, function (s) {
-							return s.txid == id
-						})
-
-						if (temp) {
-							share = new pShare();
-							share._import(temp, true);
-							share.temp = true;
-							share.address = self.app.platform.sdk.address.pnet().address
-						}*/
-
 					}
 
 					if (share) {
@@ -2022,6 +2038,8 @@ var post = (function () {
 					recommendations.destroy()
 					recommendations = null
 				}
+
+				if (progressInterval) clearInterval(progressInterval);
 
 				self.app.actions.playingvideo(null)
 				
@@ -2147,8 +2165,6 @@ var post = (function () {
 	};
 
 	self.stop = function () {
-
-		console.log("????STOP???")
 
 		_.each(essenses, function (essense) {
 
