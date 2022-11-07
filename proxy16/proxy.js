@@ -7,8 +7,12 @@ var path = require('path');
 const { performance } = require('perf_hooks');
 ////////////
 var f = require('./functions');
-var svgCaptcha = require('svg-captcha');
-var hexCaptcha = require('hex-captcha');
+
+if (global.IMPORT_HEX_CAPTCHA) {
+	var hexCaptcha = require('hex-captcha');
+} else {
+	var svgCaptcha = require('svg-captcha');
+}
 /*
 var WSS = require('./wss.js');
 const Firebase = require('../proxy/firebase');
@@ -1787,7 +1791,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				path: '/info',
 				action: function (message) {
 					const info = self.kit.info(true);
-								info.captcha.hexCaptcha = true;
+								info.captcha.hexCaptcha = !!global.IMPORT_HEX_CAPTCHA;
 					
 					return Promise.resolve({
 						data: {

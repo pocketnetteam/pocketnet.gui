@@ -9,6 +9,8 @@ global.WRITE_LOGS = true
 global.USE_TRUST_NODES_ONLY = false
 global.USE_PROXY_NODE = false
 
+global.IMPORT_HEX_CAPTCHA = true
+
 var destroy = function(repeat){
 
     return kit.destroy().catch(e => {
