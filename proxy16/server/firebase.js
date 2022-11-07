@@ -479,7 +479,7 @@ var Firebase = function(p){
     self.sendEvents = async function(events, block){
         for(const event of events) {
             var users = getUsersByAddresses(event.addresses)
-            if (users?.length) return await self.send({data: event.notification, users, block})
+            if (users?.length) await self.send({data: event.notification, users, block})
         }
     }
 
