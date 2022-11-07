@@ -169,6 +169,28 @@ var uploadpeertube = (function () {
 				wasclbk : !_.isEmpty(self.added)
 			});
 
+			try {
+				var currentUnloadedVideos = JSON.parse(
+				localStorage.getItem('unpostedVideos') || '{}',
+				);
+
+				if (
+					currentUnloadedVideos[self.app.user.address.value] &&
+					typeof currentUnloadedVideos[self.app.user.address.value] === 'object'
+				) {
+					currentUnloadedVideos[self.app.user.address.value].push(v);
+				} else {
+					currentUnloadedVideos[self.app.user.address.value] = [v];
+				}
+
+				localStorage.setItem(
+					'unpostedVideos',
+					JSON.stringify(currentUnloadedVideos),
+				);
+			} catch (error) {
+				localStorage.setItem('unpostedVideos', JSON.stringify([v]));
+			}
+
 			_.each(self.added, function(a){
 				a(v)
 			})
@@ -633,11 +655,13 @@ var uploadpeertube = (function () {
 					})
 					.catch((e = {}) => {
 
+						console.error(e)
+
 						if(e.response) e = e.response
 
 						self.app.peertubeHandler.clear()
 
-						data.e = e;
+						data.e = e.response || e;
 						error = true;
 
 						self.app.platform.sdk.ustate.canincrease(
@@ -758,7 +782,9 @@ var uploadpeertube = (function () {
 
 	self.stop = function () {
 		_.each(essenses, function (essense) {
-			essense.destroy();
+			window.requestAnimationFrame(() => {
+				essense.destroy();
+			})
 		});
 	};
 

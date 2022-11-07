@@ -102,6 +102,7 @@ var channel = (function(){
 
 				}
 			})
+
 		}
 
 		return {
@@ -124,7 +125,15 @@ var channel = (function(){
 
 						author.data = self.sdk.users.storage[ed.id]
 						author.state = self.sdk.ustate.storage[ed.id]
-						author.address = ed.id
+						author.address = ed.id;
+
+						var me = null;
+	
+						if(self.app.user.address.value)
+							me = deep(app, 'platform.sdk.users.storage.' + self.app.user.address.value.toString('hex'));
+
+						author.following = me && me.relation(author.address, 'subscribes');
+
 
 
 						var data = {
@@ -181,7 +190,9 @@ var channel = (function(){
 
 		_.each(essenses, function(essense){
 
-			essense.destroy();
+			window.requestAnimationFrame(() => {
+				essense.destroy();
+			})
 
 		})
 

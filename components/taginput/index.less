@@ -72,10 +72,10 @@
 		}
 
 
-		.tagsWrapper{			
+		.tagsWrapper{	
+			
 
 			>div{
-				vertical-align: top;
 
 				&.label{
 					padding-left: 0;
@@ -84,11 +84,10 @@
 				}
 
 				&.tagsCont{
-					padding : 0;
-					overflow: hidden;
+					display: flex;
+					flex-wrap: wrap;
 
 					>div{
-						float: left;
 						margin-right : @rhythm;
 
 						&.inputWrapper{
@@ -115,61 +114,23 @@
 			}
 		}
 
-		
-		.tag{
-			padding-top : 0;
-			padding-bottom: 0;
-			margin-top: 0.5 * @rhythm;
-			margin-bottom: 0.5 * @rhythm;
-			margin-right : 2 * @rhythm;
-			border-radius : 20px;
-			background: rgb(var(--background-secondary-theme));
 
-			.tagInner{
-				height: auto;
-				width: auto;
-
-				>div{
-					vertical-align: middle;
-					padding : 0.5 * @rhythm @rhythm;
-
-					&.label{
-						color : rgb(var(--color-txt-ac));
-
-					}
-
-					&.remove{
-						cursor: pointer;
-						text-align : center;
-						color : rgb(var(--neutral-grad-2));
-
-						&:hover{
-							color : rgb(var(--color-txt-ac));
-						}
-					}
-
-					span, i{
-						font-size: 0.8em;
-					}
-				}
-			}
-		}
-
+		.tag,
 		.category{
-			padding-top : 0;
-			padding-bottom: 0;
-			margin-top: 0.5 * @rhythm;
-			margin-bottom: 0.5 * @rhythm;
-			margin-right : 2 * @rhythm;
-			border-radius : 20px;
-			background: rgb(var(--background-secondary-theme));
+			border-radius: 8px;
+            padding: 4px 10px;
+            background: rgb(var(--background-total-theme));
+            box-shadow: 0 5px 7px -5px rgba(var(--color-shadow-base), 0.4);
+            margin-right: @rhythm;
+            margin-top: 0.5 * @rhythm;
 
-			.categoryInner{
+			.inne{
 				height: auto;
 				width: auto;
+				display: flex;
+				align-items: center;
 
 				>div{
-					vertical-align: middle;
 					padding : 0.5 * @rhythm @rhythm;
 
 					&.label{

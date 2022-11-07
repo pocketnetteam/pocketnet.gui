@@ -9,17 +9,94 @@ var usersettings = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el, composed, controlller;
+		var el, composed, controller;
 
 		var checking = false
 
 
 		var actions = {
+			removeAccount : function(){
+				new dialog({
+					html: self.app.localization.e('removeAccountQuestion'),
+					btn1text: self.app.localization.e('ucancel'),
+					btn2text: self.app.localization.e('removeAccountYes'),
 
+					class: 'zindex accepting accepting2',
+
+					success: () => {
+
+						
+
+					},
+
+					fail: () => {
+
+						globalpreloader(true)
+
+						var ds = null
+
+						var mes = (t) => {
+							if (ds){
+								ds()
+								ds = null
+							}
+
+							console.log("TT",t)
+
+							if (t) ds = sitemessage(self.app.localization.e(t), null, 'inf')
+						}
+
+						self.app.platform.sdk.user.deleteaccount((progress) => {
+
+							if (progress)
+								mes('removeAccount_' + progress)
+
+						}).then(() => {
+
+							successCheck()
+
+							new dialog({
+								html : self.app.localization.e('removeAccount_success'),
+								class : "one zindex"
+							})
+
+							self.app.reload({
+								href : 'author'
+							});
+
+						}).catch(e => {
+
+							console.log("E", e)
+
+							var errors = {
+								notprepared : 'notprepared',
+								undefinedError : 'undefinedError',
+								balance : 'balance'
+							}
+
+							console.error(e)
+
+							new dialog({
+								html : self.app.localization.e('removeAccount_' + (!e || !errors[e] ? errors.undefinedError : errors[e])),
+								class : "one zindex"
+							})
+
+						}).finally(() => {
+
+							globalpreloader(false)
+
+							mes()
+						})
+
+					}
+				})
+			}
 		}
 
 		var events = {
-
+			removeAccount : function(){
+				actions.removeAccount()
+			}
 		}
 
 		var renders = {
@@ -45,7 +122,7 @@ var usersettings = (function(){
 
 					deleteButton.on('click', function() {
 						// Ask user for confirmation
-						dialog({
+						new dialog({
 							html:  self.app.localization.e('deleteAllVideoDialog'),
 							btn1text: self.app.localization.e('dyes'),
 							btn2text: self.app.localization.e('dno'),
@@ -154,7 +231,7 @@ var usersettings = (function(){
 							meta.tgto.value = '';
 
 						}
-
+						
 						composed = self.app.platform.sdk.usersettings.compose(make)
 
 						self.sdk.usersettings.save();
@@ -185,6 +262,13 @@ var usersettings = (function(){
 					})
 				})
 
+				try{
+					console.log("JSON TEMP", JSON.stringify(t))
+				}catch(e){
+					console.log("TEMP", t)
+				}
+				
+
 				self.shell({
 					name :  'cache',
 					el : el.cache,
@@ -214,10 +298,17 @@ var usersettings = (function(){
 
 					})
 
+					p.el.find('.copyvalue').on('click', function(){
+
+						copyText($(this))
+
+						sitemessage(self.app.localization.e('successcopied'))
+					})
+
 					p.el.find('.clear').on('click', function(){
 
 
-						dialog({
+						new dialog({
 							class : 'zindex',
 							html : "Do you really want to clear temporary application information?",
 							btn1text : self.app.localization.e('dyes'),
@@ -259,6 +350,8 @@ var usersettings = (function(){
 			controller.abort();
 			self.app.platform.sdk.system.get.telegramUpdateAbort = new AbortController();
 
+
+			el.c.find('.removeAccount').on('click', events.removeAccount)
 
 			// self.app.platform.sdk.system.get.telegramGetMe(null, rerender);
 
@@ -313,6 +406,8 @@ var usersettings = (function(){
 			primary : primary,
 
 			getdata : function(clbk){
+
+				self.app.platform.sdk.usersettings.init();
 
 				composed = self.app.platform.sdk.usersettings.compose(make)
 				var data = {};
@@ -377,7 +472,9 @@ var usersettings = (function(){
 
 		_.each(essenses, function(essense){
 
-			essense.destroy();
+			window.requestAnimationFrame(() => {
+				essense.destroy();
+			})
 
 		})
 

@@ -22,18 +22,20 @@ var insertingfunc = function(settings, p){
 __map =  { 
 
 	__vendor : [
-		"js/vendor/device.min.js", //
+		"js/vendor/device.js", //
 		"js/vendor/modernizr-2.8.3.min.js",//
-		"js/vendor/jquery-1.11.3.min.js",//
+		"js/vendor/jquery.js",//
         "js/vendor/tooltipster.core.js",//
         "js/vendor/tooltipster.bundle.js",//
-        "js/vendor/imagesloaded.pkgd.min.js",///
+        "js/vendor/imagesloaded.pkgd.js",///
         "js/vendor/timer.js",//
         
 		"js/vendor/aesjs.js",//
 		"js/vendor/linkify.min.js",
 		"js/vendor/linkify-html.min.js",
-		
+
+		{path :"js/vendor/leoprofanity.js", babelify : true},
+
 		//new
 		{path : "js/lib/pocketnet/btc17.js", babelify : true}, //
 		{path : "js/lib/pocketnet/htls.js", babelify : true}, //
@@ -47,7 +49,8 @@ __map =  {
         "js/vendor/jquery.md5.js",
 		"js/vendor/jquery.animate-number.js", //
 		"js/vendor/jquery.touchSwipe.js", //
-        "js/vendor/joypixels.min.js", //
+        "js/vendor/joypixels.js",
+		"js/vendor/unmute.js", //
         {path : "js/vendor/plyr.js", babelify : true}, // later
         "js/vendor/reconnectingwebsocket.js", //
         "js/vendor/xss.min.js", //
@@ -62,7 +65,10 @@ __map =  {
 		{path : "js/vendor/workbox-v6.1.5/workbox-sw.js", babelify : true},
 		"js/vendor/ion.sound/ion.sound.js",
 		"js/vendor/hammer.min.js",
-		"js/vendor/owl/owl.carousel.min.js"
+
+		"js/vendor/owl/owl.carousel.js",
+		
+		{path : "js/vendor/shadow-popup/popup.js", babelify : true},
 	],
 
 	__sourcesfirst : [
@@ -76,6 +82,7 @@ __map =  {
 		{path : "js/image-uploader.js", babelify : true},
 		"js/_map.js",
 		{path : "js/logger.js", babelify : true},
+		{path : "js/videotransport.js", babelify : true},
 		{path : "js/app.js", babelify : true},
 		"js/main.js"
 	],
@@ -95,7 +102,7 @@ __map =  {
 		{path : "js/kit.js", babelify : true},
 		{path : "js/satolist.js", babelify : true},
 		{path : "js/peertube.js", babelify : true},
-		{path : "js/widgets.js", babelify : true},
+		{path : "js/lib/client/p2pvideo.js", babelify : true},
 		{path : "js/effects.js", babelify : true},
 		{path : "js/video-uploader.js", babelify : true},
 		{path : "js/file-hash.js", babelify : true}
@@ -113,6 +120,7 @@ __map =  {
 		"peertube/video-embed.css",
 		"js/vendor/owl/assets/owl.carousel.min.css",
 		"js/vendor/owl/assets/owl.theme.default.min.css",
+		"js/vendor/shadow-popup/css/popup.css"
 	],
 
 	__exportcss : {
@@ -126,7 +134,7 @@ __map =  {
 	__templates : [
 		{ c : 'navigation', n : 'menu' },
 		{ c : 'menu', n : 'index' },
-		{ c : 'share', n : 'body' },
+		
 		//{ c : 'toppanel', n : 'index' },
 		{ c : 'navigation', n : 'index' },
 		{ c : 'footer', n : 'index' },
@@ -146,20 +154,32 @@ __map =  {
 		{ c : 'lenta', n : 'sharevideo' },
 		{ c : 'lenta', n : 'sharevideopip' },
 		{ c : 'lenta', n : 'sharevideolight' },
-		{ c : 'share', n : 'url' },
 		{ c : 'lenta', n : 'stars' },
 		{ c : 'lenta', n : 'groupshares' },
 		{ c : 'lenta', n : 'commentspreview' },
 		{ c : 'lenta', n : 'tosubscribeshares' },
 
-		
+		{ c : 'share', n : 'body' },
+		{ c : 'share', n : 'postline' },
+		{ c : 'share', n : 'index' },
+		{ c : 'share', n : 'url' },
+
 		{ c : 'comments', n : 'index' },
 		{ c : 'comments', n : 'post' },
 		{ c : 'comments', n : 'list' },
 		{ c : 'lastcomments', n : 'lastcommentslist'},
 		{ c : 'author', n : 'preshell'},
-		{ c : 'author', n : 'authorcaption'},
-		{ c : 'post', n : 'preshell'}
+		{ c : 'post', n : 'preshell'},
+		{ c : 'commentBanner', n : 'index' },
+		{ c : 'registration', n : 'index' },
+		{ c : 'test', n : 'options' },
+		{ c : 'test', n : 'icon' },
+		{ c : 'author', n : 'info'},
+		{ c : 'author', n : 'index'},
+		{ c : 'author', n : 'menu'},
+		{ c : 'mobilesearch', n : 'index'},
+
+
 
 	],
 
@@ -290,6 +310,13 @@ __map =  {
 		add : insertingfunc,
 		anonimus : true,
 		electronDontOpen : true
+	},
+
+	boost : {
+		uri : "boost",
+		href : "boost",
+		add : insertingfunc,
+		anonimus : true
 	},
 
 
@@ -601,6 +628,8 @@ __map =  {
 			anonimus : true,
 		},
 
+	
+
 		donations : {
 			uri : "donations",
 			href : "donations",
@@ -618,12 +647,55 @@ __map =  {
 			},
 			anonimus : true,
 		},
+		addcategory: {
+			uri : "addcategory",
+			href : "addcategory",
+			add : insertingfunc,
+			anonimus : true,
+		},
+
+
+		slides: {
+			uri : "slides",
+			href : "slides",
+			add : insertingfunc,
+			anonimus : true,
+		},
+
+
 		
 	
 		embeding : {
 			uri : "embeding",
 			href : "embeding",
 			add : insertingfunc
+		},
+
+		mobilesearch : {
+			uri : "mobilesearch",
+			href : "mobilesearch",
+			add : insertingfunc,
+			anonimus : true
+		},
+
+		camerapreview : {
+			uri : "camerapreview",
+			href : "camerapreview",
+			add : insertingfunc
+		},
+
+		donate : {
+			uri : "donate",
+			href : "donate",
+			add : insertingfunc
+		},
+
+		recommendationinfo: {
+			uri : "recommendationinfo",
+			href : "recommendationinfo",
+			add : insertingfunc,
+			anonimus : true,
+
 		},
 
 		userpage : {
@@ -768,7 +840,9 @@ __map =  {
 		now : true,
 		anonimus : true,
 		renew : true,
-		reload : true
+		reload : true,
+
+		viewchangereload : true
 	},
 
 	
@@ -900,6 +974,7 @@ __map =  {
 		anonimus : true,
 
 		relations : [
+			{src : 'js/widgets.js',			   f : 'js'},
 			{src : 'js/vendor/SocialShare.min.js',			   f : 'js'},
 		],
 	},
@@ -964,6 +1039,13 @@ __map =  {
 
 		
 	},
+
+	statistic : {
+		uri : "statistic",
+		href : "statistic",
+		add : insertingfunc,
+	},
+
 	videoCabinet : {
 		uri : "videoCabinet",
 		href : "videoCabinet",
@@ -990,6 +1072,13 @@ __map =  {
 		]
 	},
 
+	commentBanner : {
+		uri : "commentBanner",
+		href : "commentBanner",
+		add : insertingfunc,
+		anonimus : true,
+		exportcss : true,
+	}
 };
 
 

@@ -400,7 +400,7 @@ var share = (function(){
 				if (type === 'addVideo') {
 
 					if(currentShare.images.v.length){
-						dialog({
+						new dialog({
 							html : self.app.localization.e('removeimageswhenvideo'),
 							btn1text : self.app.localization.e('dyes'),
 							btn2text : self.app.localization.e('dno'),
@@ -450,7 +450,7 @@ var share = (function(){
 
 				if(type == 'times'){
 
-					dialog({
+					new dialog({
 						html : self.app.localization.e('e14002'),
 						btn1text : self.app.localization.e('dyes'),
 						btn2text : self.app.localization.e('dno'),
@@ -656,7 +656,7 @@ var share = (function(){
 
 
 				setTimeout(function(){
-					dialog({
+					new dialog({
 						html : self.app.localization.e('removevideoShareQuestion'),
 						btn1text : self.app.localization.e('removevideoShareQuestionDelete'),
 						btn2text : self.app.localization.e('removevideoShareQuestionLeave'),
@@ -789,6 +789,23 @@ var share = (function(){
 				}
 			},
 
+			getprofanitytag : function(text){
+				if(typeof window.LeoProfanity != 'undefined'){
+
+					window.LeoProfanity.loadDictionary(currentShare.language.get())
+					var badwords = window.LeoProfanity.badWordsUsed(text)
+
+					if (badwords.length){
+						var t = self.app.localization.e('profanity_tag')
+
+						if(!currentShare.tags.have(t)) return t
+					}
+
+				}
+
+				return null
+			},
+
 			tagsFromText : function(text){
 				var words = text.split(wordsRegExp);
 
@@ -803,6 +820,13 @@ var share = (function(){
 
 					}
 				})
+
+				var ptag = actions.getprofanitytag(text)
+
+				if (ptag){
+					newtags.push(ptag)
+				}
+				
 
 				if(newtags.length){
 
@@ -855,29 +879,15 @@ var share = (function(){
 
 				var SAVE = function(){
 
+					console.log("SAVE")
+
 					currentShare.language.set(self.app.localization.key)
 
 					actions.checktranscoding(function(result){
-
-						// if(!result){
-
-						// 	el.c.removeClass('loading')
-
-						// 	topPreloader(100)
-
-						// 	dialog({
-						// 		html : self.app.localization.e('videotranscodingdelayedpost'),
-						// 		btn1text : self.app.localization.e('daccept'),
-						// 		class : "zindex one",
-						// 		success : function(){
-						// 		},
-		
-						// 		fail : function(){
-						// 		}
-						// 	})
-						// }
-
+						console.log("AS")
 						currentShare.uploadImages(self.app, function(){
+
+							console.log("AS2")
 
 							if (currentShare.hasexchangetag()){
 								currentShare.repost.v = ''
@@ -911,6 +921,8 @@ var share = (function(){
 								currentShare,
 		
 								function(_alias, error){
+
+									console.log("ASD", error)
 
 									topPreloader(100)
 		
@@ -950,8 +962,36 @@ var share = (function(){
 											if(currentShare.aliasid) alias.edit = "true"	
 											if(currentShare.time) alias.time = currentShare.time
 		
-											self.app.platform.sdk.node.shares.add(alias)
-		
+											self.app.platform.sdk.node.shares.add(alias);
+
+											if (alias.itisvideo()) {
+												var unpostedVideos;
+
+												try {
+													unpostedVideos = JSON.parse(localStorage.getItem('unpostedVideos') || '{}');
+												} catch (error) {
+													unpostedVideos = {};
+
+													self.app.Logger.error({
+														err: 'DAMAGED_LOCAL_STORAGE',
+														code: 801,
+														payload: error,
+													  });
+												};
+
+												if (unpostedVideos[self.app.user.address.value]) {
+													unpostedVideos[self.app.user.address.value] =
+														unpostedVideos[self.app.user.address.value].filter(
+															(video) => video !== alias.url,
+														);
+
+													localStorage.setItem(
+														'unpostedVideos',
+														JSON.stringify(unpostedVideos),
+													);
+												}
+											}
+
 											if(!essenseData.notClear){
 												currentShare.clear();
 												self.app.nav.api.history.removeParameters(['repost'])
@@ -976,9 +1016,9 @@ var share = (function(){
 										})
 		
 										intro = false
-		
+
 										if (essenseData.post){
-											essenseData.post()
+											essenseData.post(alias)
 										}
 										else{
 		
@@ -1188,7 +1228,7 @@ var share = (function(){
 
 				self.fastTemplate('sharedate', function(html){
 
-					dialog({
+					new dialog({
 						html : html,
 
 						btn1text : self.app.localization.e('daccept'),
@@ -1252,7 +1292,7 @@ var share = (function(){
 
 				if (type == 'p'){
 
-					dialog({
+					new dialog({
 						html : self.app.localization.e('sharenow'),
 						btn1text : self.app.localization.e('dyes'),
 						btn2text : self.app.localization.e('dno'),
@@ -1358,7 +1398,7 @@ var share = (function(){
 				var error = actions.error();
 
 				if (external && external.uploading()) {
-					dialog({
+					new dialog({
 						html : "Video is still uploading. Do you want to cancel it?",
 						btn1text : "Wait",
 						btn2text : "Cancel uploading",
@@ -1397,7 +1437,7 @@ var share = (function(){
 
 				if (type == 'poll'){
 
-					dialog({
+					new dialog({
 						header: "Create new poll",
 						class : "one joinbeta zindex",
 						poll: true,
@@ -1577,6 +1617,7 @@ var share = (function(){
 					self.shell({
 						name :  'postline',
 						el : el.postline,
+						
 						data : {
 							share : currentShare,
 							essenseData : essenseData,
@@ -1586,6 +1627,8 @@ var share = (function(){
 						},
 
 					}, function(p){
+
+						if(!el.c) return
 
 						el.panel = el.c.find('.panel .item');
 						el.postWrapper = el.c.find('.postWrapper');					
@@ -1611,10 +1654,13 @@ var share = (function(){
 							ext : ['png', 'jpeg', 'jpg', 'gif', 'jfif'],
 		
 							dropZone : el.c,
-		
+							app : self.app,
 							multiple : true,
+							uploadImage : true,
 		
 							action : function(file, clbk){
+
+								console.log("FILE", file)
 		
 								if (file.ext == 'gif'){
 									imagesHelper.slowUploadGif(file, tstorage, clbk)
@@ -1742,20 +1788,28 @@ var share = (function(){
 					}
 				})
 			},
-
-
 		
 			tgs : function(clbk){
 
 				if(!currentShare.repost.v) {
-					
+
+					var addonlytags = false;
+
+					var bycategories = app.platform.sdk.categories.fromTags(currentShare.tags.get(), currentShare.language.v)
+
+					if (bycategories.categories.length >= 2){
+						addonlytags = true
+					}
+				
 					self.nav.api.load({
 						open : true,
 						id : 'taginput',
 						el : el.tgsWrapperMain,
 						eid : 'sharetags' + (p.mid || 'mainshare'),
 						animation : false,
+						insertimmediately : true,
 						essenseData : {
+							addonlytagsFk : addonlytags,
 							tags : function(){
 								return currentShare.tags.get()
 							},
@@ -1831,10 +1885,12 @@ var share = (function(){
 
 					renders.repost();
 
-					renders.postline();
-					renders.settings();
+					
 
 				});
+
+				renders.postline();
+				renders.settings();
 
 			},
 
@@ -1960,7 +2016,7 @@ var share = (function(){
 								el : el.urlWrapper.find('.uploadpeertubewp'),
 					
 								ext : ['png', 'jpeg', 'jpg', 'webp', 'jfif'],
-		
+								app : self.app,
 								dropZone : el.urlWrapper,
 		
 								multiple : false,
@@ -1983,7 +2039,7 @@ var share = (function(){
 
 						} 
 						
-						else {
+						else if (meta.type != 'brighteon' && meta.type != 'stream.brighteon') {
 							self.app.platform.sdk.remote.get(meta.url, function(og){
 
 								if(og){
@@ -2108,6 +2164,8 @@ var share = (function(){
 					})
 
 					p.el.find('.image').imagesLoadedPN({ imageAttr: true }, function(image) {
+
+						if(!el.c) return
 
 						if(!isMobile()){
 							var elimages = el.images.find('.imagesEmbWr')
@@ -2304,6 +2362,7 @@ var share = (function(){
 						share : currentShare,
 						ed : essenseData
 					},
+
 
 				}, function(p){
 
@@ -2589,8 +2648,11 @@ var share = (function(){
 				destroying = false
 				intro = false;
 				external = null
-				currentShare = deep(p, 'settings.essenseData.share') || new Share(self.app.localization.key);
+				currentShare = deep(p, 'settings.essenseData.share') || new Share(self.app.localization.key, self.app);
+
 				essenseData = deep(p, 'settings.essenseData') || {};
+
+				currentShare.app = self.app
 
 				if(!essenseData.share){
 
@@ -2672,9 +2734,7 @@ var share = (function(){
 					sortable = null
 				}
 
-
 				el = {};
-				essenseData = {}
 					
 			},
 			
@@ -2776,7 +2836,9 @@ var share = (function(){
 
 		_.each(essenses, function(essense){
 
-			essense.destroy();
+			window.requestAnimationFrame(() => {
+				essense.destroy();
+			})
 
 		})
 

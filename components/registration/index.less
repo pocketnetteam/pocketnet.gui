@@ -317,23 +317,25 @@
 				font-size: 1.7em;
 				font-weight: 300;
 				text-align: center;
-				max-width: 600px;
+				max-width: 300px;
 			}
 
 			.inputWrapper{
-				max-width: 600px;
+				max-width: 300px;
 				margin : 3 * @rhythm auto;
 			}
 
 			input{
 				font-size: 1.4em;
-				border : 0;
+				border: 0;
+
 				border-bottom: 1px solid rgb(var(--neutral-grad-2));
 				.transition(0.3s);
+				border-radius: 0;
 				width: 100%;
 				background: transparent;
 				text-align : center;
-			
+				
 
 				&:focus{
 					border-color : rgb(var(--color-txt-ac));
@@ -518,9 +520,10 @@
 			}
 
 			.subc{
-				margin-top : 4 * @rhythm;
+				margin-top : 12 * @rhythm;
 				text-align: center;
 			}
+
 		}	
 
 		.welcome{
@@ -549,8 +552,7 @@
 			text-align: center;
 
 			.icon{
-				margin-top: 3em;
-				width: 246px;
+				margin-top: 4 * @rhythm;
 				margin-left: auto;
 				margin-right: auto;
 			}
@@ -640,6 +642,407 @@
 			}
 		}
 
+		.bloggers{
+			margin : 0 auto;
+			max-width: 962px;
+			width: 100%;
+			text-align: center;
+
+			.welcome_text{
+				margin-top: 2 * @rhythm;
+				font-size: 2em;
+
+				.name{
+					color: rgb(var(--color-txt-ac));
+				}
+			}
+
+			.usersHorizontal{
+				margin-top: 20px;
+				display: flex;
+				justify-content: center;
+				flex-wrap: wrap;
+				padding-bottom: @rhythm * 2;
+				padding-left: @rhythm * 2;
+				padding-right: @rhythm * 2;
+		
+		
+				.wrk{
+					position: relative;
+					max-width: 185px;
+					width: 100%;
+					margin-bottom: 30px;
+		
+					&:nth-child(2n) {
+						margin-left: @rhythm * 2;
+						margin-right: @rhythm * 2;
+					}
+
+					:nth-last-child(-n+4){
+
+						.modal .aboutWrapper{
+							-webkit-line-clamp: 6;
+							line-clamp: 6; 
+						}
+
+					}
+
+					.subscribeWrapper{
+						margin-top: 16px; 
+
+						.unsubscribeButton{
+							display: none;
+							font-size: 14px;
+							width: 140px;
+							background: rgb(var(--color-good));
+							border: 1px solid rgb(var(--color-good));
+
+							&:hover{
+								background: rgb(var(--background-total-theme));
+								color: rgb(var(--color-good));
+							}
+						}
+
+						.subscribeButton{
+							font-size: 14px;
+							width: 140px;
+						}
+
+						&.following{
+							.subscribeButton{
+								display: none;
+							}
+
+							.unsubscribeButton{
+								display: block;
+							}
+						}
+
+					}
+
+					.modal{
+						display: none;
+						border: 1px solid rgba(var(--color-medium-theme), 0.8);
+						top: -16px;
+						left: -63px;
+						cursor: default;
+						width: 308px;
+						position: absolute;
+						z-index: 9999;
+						right: 180px;
+						margin-top: 15px;
+						background: rgb(var(--background-total-theme));
+						border-radius: 12px;
+						padding: @rhythm * 2 @rhythm;
+		
+						.topInfo{
+	
+
+							.iconWrapper{
+
+								.usericon{
+									margin-left: auto;
+									margin-right: auto;
+									height: 45px;
+									width: 45px;
+								}
+							}
+
+							.label{
+								margin-top: 20px;
+								padding-left: 7px;
+
+								.name{
+									max-width: 300px!important;
+								}
+			
+								.reputation{
+									font-size: .8em;
+									color : #8E90A6;
+
+			
+									.value{
+										color: rgb(var(--color-bg-ac-bright));
+										font-weight: 700;
+									}
+								}
+							}
+
+
+						}
+						
+		
+		
+		
+						.follow{
+							display: flex;
+							padding : @rhythm @rhythm * 6;
+		
+							.followers{
+								padding-right: @rhythm * 3;
+							}
+		
+							.value{
+								font-weight: 700;
+							}
+						}
+		
+						.subscribeWrapper{
+							padding : @rhythm;
+		
+							button{
+								width: 100%;
+								border-radius: 8px;
+								padding: 8px 16px;
+		
+							}
+		
+							.unsubscribe{
+								display : none;
+								background : rgb(var(--color-good));
+								border : 1px solid rgb(var(--color-good));
+		
+								&:hover{
+									color: rgb(var(--color-good));
+									border : 1px solid rgb(var(--color-good));
+									background: #fff;
+								}
+							}
+			
+				
+							&.following{
+								.unsubscribe{
+									display : block;
+								}
+								
+								.subscribe{
+									display : none;
+								}
+							}
+						}
+		
+						.aboutWrapper{
+							padding : 0 @rhythm * 2;
+							overflow: hidden;
+							text-overflow: ellipsis;
+							display: -webkit-box;
+							-webkit-line-clamp: 12;
+							line-clamp: 12; 
+							-webkit-box-orient: vertical;
+						}
+
+		
+		
+					}
+
+					.iconWrapper{
+					
+						&:hover{
+
+							@media (pointer: fine){
+								.modal{
+									display: block;
+								}					
+							}
+	
+						}
+					}
+		
+
+					
+				}
+		
+				.user{
+					padding : @rhythm * 2;
+					border: 1px solid rgba(var(--color-medium-theme), 0.3);			
+					border-radius: 12px;
+					
+					
+		
+					.addressWrapper{
+		
+						.iconWrapper{
+							display: flex;
+							align-items: center;
+							justify-content: center;
+							height: 100px;
+							cursor: pointer;
+		
+		
+							.icon{
+								margin-top: 1.5em;
+								font-size: 1.5em;
+								width: 246px;
+								margin-left: auto;
+								margin-right: auto;
+								display: flex;
+								justify-content: center;
+								align-items: center;
+								width: 85px;
+								
+			
+								img{
+									border-radius: 12px;
+								}
+		
+								img, .letter{
+									width: 100%;
+								}
+		
+								.usericon{
+									width: 85px;
+									height: 85px;
+		
+									.letter{
+										position: relative;
+										top: @rhythm * 0.5;
+										font-size: @rhythm * 3;
+										text-align: center;
+									}
+								}
+								
+							}
+		
+						}
+					
+		
+						.userbody{
+							display: flex;
+							flex-direction: column;
+							align-items: center;
+							margin-top: 25px;
+		
+							.name{
+								font-weight: 600;
+								font-size: .9em;
+								max-width: 100px;
+								text-overflow: ellipsis;
+								white-space: nowrap;
+								overflow: hidden;
+							}
+			
+							.reputation{
+								font-size: .9em;
+		
+								.label{
+									color: rgb(var(--color-medium-theme));
+								}
+								
+								.value{
+									color: rgb(var(--color-txt-ac));
+		
+								}
+							}
+			
+						}
+		
+		
+						.light{
+							font-size : 0.7em;
+							color : @color-gray;
+						}
+			
+					}
+		
+					.blockingWrapper{
+						display : none;
+					}
+		
+					&.userblocking{
+			
+						.subscribebuttonstop{
+							display: none;
+						}
+			
+						.blockingWrapper{
+							display: inline;
+						}
+		
+						
+					}
+			
+					.subscribebuttonstop{
+						.unsubscribe{
+							display : none;
+						}
+		
+			
+						&.following{
+							.unsubscribe{
+								display : inline;
+							}
+		
+							.notificationturn{
+								display: inline;
+							}
+							
+							.subscribe{
+								display : none;
+							}
+						}
+					}
+				}
+				
+			}
+
+			.next{
+				width: 240px;
+				padding: 12px, 24px, 12px, 24px;
+				border-radius: 12px;
+				background: rgb(var(--color-bg-orange));
+				opacity: .3;
+				color: rgb(var(--text-on-bg-ac-color));
+				border: none;
+				cursor: default;
+
+				&.active{
+					background: rgb(var(--color-bg-orange));
+					cursor: pointer;
+					opacity: 1;
+				}
+
+				&:hover{
+					color: rgb(var(--text-on-bg-ac-color));
+				}
+			}
+
+			.skip{
+				background: transparent;
+				border: none;
+				cursor: pointer;
+			}
+
+			.choosebloggers_text{
+				margin-top: 0.5em;
+				font-size: 1.5em;
+				color: rgb(var(--neutral-grad-3));
+			}
+
+			.showmorebloggers{
+				text-align: center;
+				padding: 1em;
+				cursor: pointer;
+				font-size: .8em;
+				margin-bottom: 0.6em;
+				border-radius: 12px;
+				font-weight: 700;
+				text-decoration: underline;
+			}
+
+			.subcaption{
+				font-weight: 100;
+				padding-top: 3em;
+				font-size : 4em;
+
+			}
+
+			.subc{
+				margin-top : 12 * @rhythm;
+				text-align: center;
+			}
+		}
+
+
 		.network{
 			cursor: pointer;
 			margin : 0 auto;
@@ -662,7 +1065,7 @@
 		}
 	}
 
-	&[step="welcome"], &[step="categories"]{
+	&[step="welcome"], &[step="categories"], &[step="bloggers"]{
 		.caption, .hasaccount{
 			display: none;
 		}
@@ -727,7 +1130,14 @@ html[theme="gray"]{
 			.cat{
 				font-size: .8em!important;
 			}
+
+			.bloggers{
+				.subc{
+					margin-top: @rhythm * 4;
+				}
+			}
 		}
+
 		
 	}
 

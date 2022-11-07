@@ -93,6 +93,8 @@ Localization = function(app){
 		{
 			self.key = key;
 
+			self.setlang()
+
 			self.locSave();
 
 			self.import(function(){
@@ -110,6 +112,11 @@ Localization = function(app){
 		}
 	}
 
+	self.setlang = function(){
+		if(typeof $ != 'undefined')
+			$('html').attr('lang', self.key)
+	}
+
 	self.set = function(key, clbk){
 
 		if(self.available[key] && self.key != key)
@@ -118,6 +125,8 @@ Localization = function(app){
 				app.nav.api.history.removeParameters(['loc'])
 
 			self.key = key;
+
+			self.setlang()
 
 			if(typeof moment != 'undefined')
 				moment.locale(self.key)
@@ -170,6 +179,8 @@ Localization = function(app){
 
 		self.locSave();
 
+		self.setlang()
+
 		if(typeof moment != 'undefined')
 			moment.locale(self.key)
 
@@ -211,7 +222,7 @@ Localization = function(app){
 			var vs = '23'
 
 			if(typeof numfromreleasestring != 'undefined'){
-				vs = numfromreleasestring(window.packageversion)
+				vs = numfromreleasestring(window.packageversion) + '_' + (window.versionsuffix || "0")
 			}
 
 

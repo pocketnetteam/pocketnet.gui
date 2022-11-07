@@ -113,7 +113,8 @@ var accounts = (function(){
 
 				var l = deep(pack, 'addresses.length')
 
-				if (l >= 5){
+
+				if (l >= (window.testpocketnet ? 20 : 5)){
 
 					sitemessage(self.app.localization.e('max5acc'))
 
@@ -136,7 +137,7 @@ var accounts = (function(){
 
 										//hasinthispack
 
-										dialog({
+										new dialog({
 											html : self.app.localization.e('acc' + error),
 											class : "one zindex"
 										})
@@ -177,7 +178,7 @@ var accounts = (function(){
 
 				var address = $(this).closest('.addressTable').attr('address')
 
-				dialog({
+				new dialog({
 					html :  self.app.localization.e('wanttoseekey'),
 					btn1text : self.app.localization.e('seeprivatekey'),
 					btn2text : self.app.localization.e('dcancel'),
@@ -195,7 +196,7 @@ var accounts = (function(){
 			remove : function(){
 				var address = $(this).closest('.addressTable').attr('address')
 
-				dialog({
+				new dialog({
 					html : self.app.localization.e('removeaddress'),
 					btn1text :  self.app.localization.e('remove'),
 					btn2text :  self.app.localization.e('dcancel'),
@@ -245,7 +246,7 @@ var accounts = (function(){
 
 				self.fastTemplate('dumpkey', function(rendered){
 
-					var d = dialog({
+					var d = new dialog({
 						html : rendered,
 						class : "one dumpedkeydialog",
 						btn1text : self.app.localization.e('close'),
@@ -284,6 +285,8 @@ var accounts = (function(){
 					animation : 'fadeIn',
 
 				}, function(p){
+
+					if(!p || !p.el) return
 
 					p.el.find('.remove').on('click', events.remove)
 					p.el.find('.dumpkey').on('click', events.dumpkey)
@@ -395,7 +398,9 @@ var accounts = (function(){
 
 		_.each(essenses, function(essense){
 
-			essense.destroy();
+			window.requestAnimationFrame(() => {
+				essense.destroy();
+			})
 
 		})
 

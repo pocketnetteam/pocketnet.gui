@@ -72,11 +72,10 @@ var popup = (function(){
 
 					if (d){
 
-						console.log('(new Date(d)).addDays(30)', (new Date(d)).addDays(30))
-
-						if((new Date(d)).addDays(30) > new Date()){
+						if((new Date(d)).addDays(10) > new Date()){
 							return false
 						}
+						
 					}
 
 					return !self.app.mobileview && (typeof _Electron == 'undefined' || !_Electron)
@@ -261,7 +260,9 @@ var popup = (function(){
 
 		_.each(essenses, function(essense){
 
-			essense.destroy();
+			window.requestAnimationFrame(() => {
+				essense.destroy();
+			})
 
 		})
 

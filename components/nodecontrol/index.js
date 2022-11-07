@@ -344,7 +344,7 @@ var nodecontrol = (function(){
                                 data : {}
                             }).then(r => {
 
-                                dialog({
+                                new dialog({
                                     class : 'zindex',
                                     html : `${self.app.localization.e('easyNode_e10043')} ${r}`,
                                     btn1text : self.app.localization.e('dcopyToClipboard'),
@@ -406,7 +406,7 @@ var nodecontrol = (function(){
                                         }
                                     }).then(r => {
 
-                                        dialog({
+                                        new dialog({
                                             class : 'zindex',
                                             html : `${self.app.localization.e('easyNode_e10050')} {r}`,
                                             btn1text : self.app.localization.e(self.app.localization.e('dcopyToClipboard')),
@@ -462,7 +462,7 @@ var nodecontrol = (function(){
 
 									setTimeout(function(){
 
-										dialog({
+										new dialog({
 											class : 'zindex',
 											html : self.app.localization.e('easyNode_e10054'),
 											btn1text : self.app.localization.e('dyes'),
@@ -525,7 +525,7 @@ var nodecontrol = (function(){
 						actions.settings(p.el)
 
 						p.el.find('.updatenode').on('click', function(){
-							dialog({
+							new dialog({
 								class : 'zindex',
 								html : self.app.localization.e('easyNode_e10051'),
 								btn1text : self.app.localization.e('dyes'),
@@ -541,7 +541,7 @@ var nodecontrol = (function(){
 						})
 
 						p.el.find('.removenodeall').on('click', function(){
-							dialog({
+							new dialog({
 								class : 'zindex',
 								html : self.app.localization.e('easyNode_e10052'),
 								btn1text : self.app.localization.e('dyes'),
@@ -555,7 +555,7 @@ var nodecontrol = (function(){
 						})
 
 						p.el.find('.removenode').on('click', function(){
-							dialog({
+							new dialog({
 								class : 'zindex',
 								html : self.app.localization.e('easyNode_e10053'),
 								btn1text : self.app.localization.e('dyes'),
@@ -572,7 +572,7 @@ var nodecontrol = (function(){
 
 							topPreloader(20);
 
-							dialog({
+							new dialog({
 								class : 'zindex',
 								html : self.app.localization.e('easyNode_e10054'),
 								btn1text : self.app.localization.e('dyes'),
@@ -595,7 +595,7 @@ var nodecontrol = (function(){
 						})
 
 						p.el.find('.toDefaultPath').on('click', function(){
-							dialog({
+							new dialog({
 								class : 'zindex',
 								html : self.app.localization.e('easyNode_e10055'),
 								btn1text : self.app.localization.e('dyes'),
@@ -848,7 +848,9 @@ var nodecontrol = (function(){
 
 		_.each(essenses, function(essense){
 
-			essense.destroy();
+			window.requestAnimationFrame(() => {
+				essense.destroy();
+			})
 
 		})
 

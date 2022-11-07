@@ -1,0 +1,100 @@
+.popup {
+  background: #1d9bf0;
+  color: #fff;
+  font: 1.75rem "Verdana, Helvetica", sans-serif;
+  text-align: center;
+  padding: 1.25rem;
+  opacity: 0;
+
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently */
+}
+
+.popup:not(.loading) {
+  transition: opacity .25s ease-in-out;
+}
+
+.popup.hidden {
+  display: none;
+  visibility: hidden;
+}
+
+.popup.transition,
+.popup.visible {
+  display: block;
+  visibility: visible;
+}
+
+.popup.visible {
+  opacity: 1;
+}
+
+.popup .holder {
+  display: inline-flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.popup .header h1 {
+  font-size: 1.15rem;
+  margin: 0 0 1rem;
+}
+
+.popup .content p {
+  font-size: 1rem;
+  margin: 0 0 1rem;
+}
+
+.popup .buttons {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.popup .button {
+  background: none;
+  border-radius: 2rem;
+  border: 1px solid transparent;
+  color: #000;
+  cursor: pointer;
+  outline: none;
+  font-size: .85rem;
+  font-weight: bold;
+  margin: 0;
+  padding: .75rem;
+  text-align: center;
+  text-decoration: none;
+}
+
+.popup:not(.loading) .button {
+  transition: background-color .25s ease-in-out, color .25s ease-in-out;
+}
+
+.popup .button:not(:first-child) {
+  margin-left: 1.5rem;
+}
+
+.popup .button:hover {
+  color: #000;
+}
+
+.popup .btn-primary {
+  background: #fff;
+}
+
+.popup .btn-primary:hover {
+  background: #000;
+  color: #fff;
+}
+
+.popup .btn-secondary {
+  color: #fff;
+}
+
+.popup .btn-secondary:hover {
+  background: #fff;
+}

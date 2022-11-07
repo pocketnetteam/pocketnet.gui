@@ -177,13 +177,7 @@ var WSS = function(admins, manage){
 
             _.each(data, (d, k) => { fbdata[k] = (d || "").toString() })
 
-            if(data.msg == 'new block'){
-
-                if (self.server.cache){
-                    self.server.cache.block(data)    
-                }
-
-            }   
+            
                       
             _.each(node.ini, function(client){
 

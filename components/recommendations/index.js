@@ -8,7 +8,7 @@ var recommendations = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el, ed, places = {}, sel;
+		var el, ed, places = {}, sel, globalParams;
 
 		var needmake = [], making = false, empty = false
 
@@ -30,8 +30,12 @@ var recommendations = (function(){
 
 		var renders = {
 			list : function(contents, clbk){
+				if(!el.c) return;
 
-				if(!el.c) return
+				self.app.Logger.info({
+					actionId: 'VIDEO_LOADED_WITH_RECOMMENDATIONS',
+					actionValue: globalParams.v,
+				});
 
 				self.shell({
 
@@ -111,7 +115,7 @@ var recommendations = (function(){
 
 				})
 
-				bgImages(p.el)
+				bgImagesCl(p.el)
 
 			}
 		}
@@ -160,7 +164,7 @@ var recommendations = (function(){
 				p = p + activities.point * 10
 			}
 
-			if(recommendation.itisvideo){
+			if(recommendation.itisvideo()){
 				var h = self.app.platform.sdk.videos.historyget(recommendation.txid)
 
 				if (h.percent > 94){
@@ -236,17 +240,13 @@ var recommendations = (function(){
 
 		var make = function(loader, clbk){
 
-			console.log("HERE")
 			
 			load.contents(loader, function(recommendations){
-				console.log("HERE4")
 				renders.list(recommendations, function(_p){
-					console.log("HERE54")
 					load.info(recommendations, function(){
 						renders.lazyinfo(recommendations, _p)
 					})
 
-					console.log("HERE2")
 
 					if(clbk) clbk()
 
@@ -263,7 +263,6 @@ var recommendations = (function(){
 				making = true
 				el.c.addClass('loading')
 
-				console.log('needmake', needmake)
 
 				make(needmake[0], function(){
 					el.c.removeClass('loading')
@@ -313,8 +312,9 @@ var recommendations = (function(){
 			primary : primary,
 
 			getdata : function(clbk, p){
+				needmake = [];
 
-				needmake = []
+				globalParams = parameters() || {};
 
 				empty = false
 				making = false
@@ -357,8 +357,6 @@ var recommendations = (function(){
 
 				initEvents()
 
-				console.log('ed.startload', ed.startload)
-
 
 				if (ed.startload)
 					makeneed()
@@ -382,7 +380,9 @@ var recommendations = (function(){
 
 		_.each(essenses, function(essense){
 
-			essense.destroy();
+			window.requestAnimationFrame(() => {
+				essense.destroy();
+			})
 
 		})
 

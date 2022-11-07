@@ -82,6 +82,9 @@
   overflow: hidden;
   height: 0px;
 }
+#comments .captionfwrapper .caption {
+  padding-top: var(--app-margin-top);
+}
 #comments .captionfwrapper .csharetable {
   display: none;
 }
@@ -322,31 +325,11 @@
 #comments .list .comment.newcomments {
   color: rgb(var(--color-txt-ac-1));
 }
-#comments .list .comment.hiddenBlockedUserComment > .commentPaddingWrapper > .commentWrapper > .iconWrapper,
-#comments .list .comment.hiddenBlockedUserComment > .commentPaddingWrapper > .commentWrapper > .commentBody > .metatable,
-#comments .list .comment.hiddenBlockedUserComment > .commentPaddingWrapper > .commentWrapper > .commentBody >.answers,
-#comments .list .comment.hiddenBlockedUserComment > .commentPaddingWrapper > .commentWrapper > .commentBody > .cbodyWrapper .commentmessage,
-#comments .list .comment.hiddenBlockedUserComment > .commentPaddingWrapper > .commentWrapper > .commentBody > .cbodyWrapper .commentpanel {
-  display: none;
-}
-#comments .list .comment.hiddenBlockedUserComment > .commentPaddingWrapper > .commentWrapper > .commentBody {
-  margin-left: 45px;
-}
-#comments .list .comment.hiddenBlockedUserComment > .commentPaddingWrapper > .commentWrapper > .commentBody > .cbodyWrapper {
-  padding-top: 1em;
-}
-#comments .list .comment.hiddenBlockedUserComment .showBlockedUserComment {
-  display: block;
-}
-#comments .list .comment .showBlockedUserComment {
-  display: none;
-}
 #comments .list .comment.hiddenComment .commentimages,
 #comments .list .comment.hiddenComment .commentmessage {
   display: none;
 }
-#comments .list .comment.hiddenComment .hiddenCommentLabel,
-#comments .list .comment.hiddenBlockedUserComment .hiddenCommentLabel{
+#comments .list .comment.hiddenComment .hiddenCommentLabel {
   display: block;
   color: rgb(var(--neutral-grad-2));
 }
@@ -765,6 +748,8 @@
 #comments .post {
   padding-left: 1.5em;
   padding-right: 2.25em;
+  /**/
+  /**/
 }
 #comments .edit .postbody,
 #comments .answer .postbody,
@@ -830,6 +815,7 @@
   font-size: 0.9em;
   color: rgb(var(--color-txt-ac));
   padding-top: 0.5em;
+  padding-bottom: 0.5em;
 }
 #comments .edit .posttable > div.postCellWrapper,
 #comments .answer .posttable > div.postCellWrapper,
@@ -1002,18 +988,6 @@
   border: 1px solid rgb(var(--neutral-grad-1));
   box-shadow: none;
 }
-#comments .edit .embedEmojiPrivew,
-#comments .answer .embedEmojiPrivew,
-#comments .post .embedEmojiPrivew {
-  display: none;
-  width: 24px;
-  height: 24px;
-  position: absolute;
-  top: 7px;
-  right: 7px;
-  color: rgb(var(--neutral-grad-2));
-  cursor: pointer;
-}
 #comments .edit .emojionearea-editor,
 #comments .answer .emojionearea-editor,
 #comments .post .emojionearea-editor {
@@ -1032,19 +1006,27 @@
   top: 6px;
   right: 6px;
 }
+#comments .edit .embedEmojiPrivew,
+#comments .answer .embedEmojiPrivew,
+#comments .post .embedEmojiPrivew {
+  display: none;
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  top: 7px;
+  right: 7px;
+  color: rgb(var(--neutral-grad-2));
+  cursor: pointer;
+}
 #comments .edit .embedimages,
 #comments .answer .embedimages,
 #comments .post .embedimages {
   position: absolute;
-  right: 40px;
-  top: 3.5px;
+  right: 7px;
+  top: 3px;
   padding: 6px;
   cursor: pointer;
   color: rgb(var(--neutral-grad-2));
-  -moz-transition: 0.3s;
-  -o-transition: 0.3s;
-  -webkit-transition: 0.3s;
-  transition: 0.3s;
 }
 #comments .edit .embedimages:hover,
 #comments .answer .embedimages:hover,
@@ -1060,15 +1042,24 @@
 #comments .answer .embeddonate,
 #comments .post .embeddonate {
   position: absolute;
-  right: 68px;
+  right: 7px;
   top: 1px;
   padding: 6px;
   cursor: pointer;
   color: rgb(var(--neutral-grad-3));
+  filter: grayscale(1) invert(74%) sepia(11%) saturate(657%) hue-rotate(197deg) brightness(77%) contrast(88%);
   -moz-transition: 0.3s;
   -o-transition: 0.3s;
   -webkit-transition: 0.3s;
   transition: 0.3s;
+  /*&.right{
+				right: 76px;
+			}*/
+}
+#comments .edit .embeddonate:hover,
+#comments .answer .embeddonate:hover,
+#comments .post .embeddonate:hover {
+  filter: none;
 }
 #comments .edit .embeddonate img,
 #comments .answer .embeddonate img,
@@ -1084,6 +1075,26 @@
 #comments .answer .embeddonate:hover,
 #comments .post .embeddonate:hover {
   color: rgb(var(--neutral-grad-4));
+}
+#comments .edit .hasemoji .embedimages,
+#comments .answer .hasemoji .embedimages,
+#comments .post .hasemoji .embedimages {
+  right: 40px;
+}
+#comments .edit .hasemoji .embeddonate,
+#comments .answer .hasemoji .embeddonate,
+#comments .post .hasemoji .embeddonate {
+  right: 40px;
+}
+#comments .edit .hasembedimage .embeddonate,
+#comments .answer .hasembedimage .embeddonate,
+#comments .post .hasembedimage .embeddonate {
+  right: 40px;
+}
+#comments .edit .hasemoji.hasembedimage .embeddonate,
+#comments .answer .hasemoji.hasembedimage .embeddonate,
+#comments .post .hasemoji.hasembedimage .embeddonate {
+  right: 80px;
 }
 #comments .edit .commentPanel,
 #comments .answer .commentPanel,
@@ -1136,6 +1147,9 @@
 #comments .post .commentPanel > div.panelWrapper .panel > div:hover {
   color: rgb(var(--color-txt-gray));
 }
+#comments .edit .embeddonate,
+#comments .answer .embeddonate,
+#comments .post .embeddonate,
 #comments .edit .embedimages,
 #comments .answer .embedimages,
 #comments .post .embedimages,
@@ -1225,19 +1239,21 @@
 .commentmenu .menuitem.complain:hover > div {
   color: rgb(var(--color-bad));
 }
+html.tablet #comments,
+html.mobile #comments {
+  /*.embeddonate{
+			right: 40px!important;
+		}
+
+		.embedimages{
+			right: 12px!important;
+		}*/
+}
 html.tablet #comments .embedEmojiPrivew,
 html.mobile #comments .embedEmojiPrivew,
 html.tablet #comments .emojionearea-button,
 html.mobile #comments .emojionearea-button {
   display: none!important;
-}
-html.tablet #comments .embeddonate,
-html.mobile #comments .embeddonate {
-  right: 40px!important;
-}
-html.tablet #comments .embedimages,
-html.mobile #comments .embedimages {
-  right: 12px!important;
 }
 html.tablet #comments .list .metatable > div.panelWrapper .panel,
 html.mobile #comments .list .metatable > div.panelWrapper .panel {
@@ -1248,6 +1264,19 @@ html.mobileview #comments .emojionearea-editor {
 }
 /*t*/
 @media only screen and (max-width: 768px) {
+  #comments {
+    /*.post{
+			min-height: 70px;
+		}*/
+    /*.edit,
+		.answer{
+			display: none;
+
+			&.active{
+				display: block;
+			}
+		}*/
+  }
   #comments .repliesloaderWrapper,
   #comments .loaderWrapper {
     padding: 0.5em;
@@ -1406,8 +1435,16 @@ html.mobileview #comments .emojionearea-editor {
   #comments .edit.active,
   #comments .answer.active,
   #comments .post.active {
-    /*.newcommentimages.active {
-					display: none!important;
+    /*.postbody{
+					padding : @rhythm;
+					padding-top: 0;
+					padding-bottom: 50px;
+					position: fixed;
+					bottom: 0;
+					left: 0;
+					right: 0;
+					z-index: 1000;
+					background: rgba(var(--background-total-theme));
 				}*/
   }
   #comments .edit.active .postbody .posttable > div.lcpp,

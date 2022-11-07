@@ -28,17 +28,13 @@ var reverseproxy = _.indexOf(process.argv, '--reverseproxy') > -1 || global.REVE
 var logger = new Logger(['general', 'rpc', 'system', 'remote', 'firebase', 'nodecontrol']).init()
 
 var testnodes = [
-
-	
-
 	{
-		host : '78.37.233.202',
+		host : '116.203.219.28',
 		port : 39091,
 		ws : 6067,
-		name : 'test.v.pocketnet.app',
+		name : 'test.pocketnet.app',
 		stable : true
 	},
-
 	{
 		host : '157.90.235.121',
 		port : 39091,
@@ -53,27 +49,6 @@ var testnodes = [
 		name : 'test.2.pocketnet.app',
 		stable : true
 	},
-	{
-		host : '116.203.219.28',
-		port : 39091,
-		ws : 6067,
-		name : 'test.pocketnet.app',
-		stable : true
-	},
-	{
-		host : '137.135.25.73',
-		port : 39091,
-		ws : 6067,
-		name : 'tawmaz',
-		stable : false
-	},
-	{
-		host : '109.173.41.29',
-		port : 39091,
-		ws : 6067,
-		name : 'lostystyg',
-		stable : false
-	}    
 ]
 
 
@@ -167,6 +142,7 @@ var defaultSettings = {
 
         dontCache: false,
 		captcha : true,
+		hexCaptcha : false,
 		host : '',
 		iplimiter : {
 			interval : 30000,
@@ -198,8 +174,8 @@ var defaultSettings = {
 		addresses : {
 			registration : {
 				privatekey : "",
-				amount : 0.0002,
-				outs : 10,
+				amount : 0.0006,
+				outs : 30,
 				check : 'ipAndUniqAddress'
 			}
 		}
@@ -232,6 +208,10 @@ var defaultSettings = {
 		private : '',
 		public : ''
 	}*/
+	
+	slide : {
+		dbpath : 'data/slide',
+	},
 }
 
 
@@ -402,9 +382,14 @@ var kit = {
 					var ctx = kit.manage.set.server
 					var notification = {}
 
+					console.log('settings', settings)
+
+
 					if(typeof settings.domain != 'undefined') notification.domain = settings.domain
 					if(settings.ports) notification.ports = settings.ports
-					if(typeof settings.enabled) notification.enabled = settings.enabled
+					if(typeof settings.enabled != 'undefined') notification.enabled = settings.enabled
+					//if(typeof settings.hexCaptcha != 'undefined') notification.hexCaptcha = settings.hexCaptcha
+
 					if(deep(settings, 'firebase.id')) notification.firebase = deep(settings, 'firebase.id')
                     if(settings.ssl) notification.ssl = true
                 
@@ -420,6 +405,7 @@ var kit = {
 
 					}).then(() => {
 						var promises = []
+
 
 
 						if (settings.firebase && settings.firebase.id) 
@@ -459,6 +445,13 @@ var kit = {
 
 						if (typeof settings.enabled != 'undefined')  
 							promises.push(ctx.enabled(settings.enabled).catch(e => {
+								console.error(e)
+
+								return Promise.resolve('enabled error')
+							}))
+
+						if (typeof settings.hexCaptcha != 'undefined')  
+							promises.push(ctx.hexCaptcha(settings.hexCaptcha).catch(e => {
 								console.error(e)
 
 								return Promise.resolve('enabled error')
@@ -568,6 +561,17 @@ var kit = {
 	
 					if (settings.server.captcha == v) return Promise.resolve()
 						settings.server.captcha = v
+		
+					return kit.save()
+					
+				},
+
+				hexCaptcha : function(v){
+
+					if(typeof v == 'undefined') return Promise.reject('emptyargs')
+	
+					if (settings.server.hexCaptcha == v) return Promise.resolve()
+						settings.server.hexCaptcha = v
 		
 					return kit.save()
 					
@@ -1106,6 +1110,14 @@ var kit = {
 					return proxy.transports.request(option, callback);
 				})
 			},
+		},
+
+		slide: {
+			add : function (...args) {
+				return kit.proxy().then(async proxy => {
+					return proxy.api.add(...args);
+				})
+			}
 		},
 
         quit : function() {

@@ -149,7 +149,9 @@ class HexCaptcha {
             e.target.angle = angles[ angles.indexOf(e.target.angle)+1 ] || angles[0];
             e.target.style.setProperty('--data-angle', parseInt(e.target.style.getPropertyValue('--data-angle') || '0') + 90 + 'deg');
             
-            this.angles = Array.from(e.target.parentNode.children).map(img => img.angle);
+            this.angles = Array.from(e.target.parentNode.parentNode.children).map(img => img.children[0].angle);
+
+            console.log('this.angles', this.angles)
           });
         
           holder.append(image);

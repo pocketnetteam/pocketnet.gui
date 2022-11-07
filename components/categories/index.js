@@ -24,7 +24,7 @@ var categories = (function(){
 			},
 			addcategory : function(_category){
 
-				var hasc = _category ? true : false
+				var editing = _category ? true : false
 
 				if(!_category){
 					_category = {
@@ -40,9 +40,45 @@ var categories = (function(){
 					id : _category.id
 				}
 
+				self.nav.api.load({
+					open : true,
+					href : 'addcategory',
+					inWnd : true,
+
+					essenseData : {
+						category, editing,
+
+						save : function(category){
+							var error = self.app.platform.sdk.categories.add(category)
+
+							if (error){
+
+								return error
+							}
+
+							if(!editing) self.app.platform.sdk.categories.select(category.id)
+
+							make()
+						},
+
+						remove : function(category){
+							self.app.platform.sdk.categories.remove(category.id)
+							make()
+						}
+					}
+					
+					/*{
+						info : share._recommendationInfo,
+						type : share.recommendationKey,
+						share : share.txid
+					}*/
+				})
+
+				return
+
 				self.fastTemplate('addcategory', function(rendered){
 
-					var d = dialog({
+					var d = new dialog({
 						html : rendered,
 						class : "addcategorydialog",
 						header : self.app.localization.e('addcategory'),
@@ -59,7 +95,7 @@ var categories = (function(){
 
 							el.find('.removecat').on('click', function(){
 
-								dialog({
+								new dialog({
 									class : 'zindex',
 									html : 'Do you really want to remove this category?',
 									btn1text : self.app.localization.e('dyes'),
@@ -425,7 +461,7 @@ var categories = (function(){
 
 				if ($(this).hasClass('showed')){
 
-					dialog({
+					new dialog({
 						class : 'zindex',
 						html :  self.app.localization.e('clearcategories'),
 						btn1text : self.app.localization.e('dyes'),
@@ -475,6 +511,10 @@ var categories = (function(){
 		}
 
 		return {
+
+			update : function(){
+				make()
+			},
 
 			getdata : function(clbk, p){
 				essenseData = p.settings.essenseData || {};
@@ -537,7 +577,9 @@ var categories = (function(){
 
 		_.each(essenses, function(essense){
 
-			essense.destroy();
+			window.requestAnimationFrame(() => {
+				essense.destroy();
+			})
 
 		})
 

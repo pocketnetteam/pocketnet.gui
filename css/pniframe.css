@@ -1,1 +1,210 @@
-.openapipnet #lenta .share .work{padding-top:0!important}.openapipnet #lenta .shares .share .metatable>div.metapanel .metapanelitem{display:none}.openapipnet #comments .list .metatable>div.panelWrapper .panel{display:none!important}.openapipnet #comments .list .metatable>div{padding-top:.25em!important}.openapipnet #comments .list .comment .commentPaddingWrapper{padding-left:.5em!important}.openapipnet #lenta .shares .iconWrapper{padding-left:0}.openapipnet #lenta .cntswrk.formeta{margin-left:4em!important}.openapipnet #lenta .shares .share .commentsWrapperHb{min-height:0}.openapipnet #comments .list .comment{margin-bottom:0;border-bottom:0}.openapipnet #lenta .shares .share{margin-bottom:0!important}.openapipnet #lenta .shares .share .panel>div.forrepost{margin-right:0}.openapipnet .forstars .count i{opacity:.5;font-size:.3em;vertical-align:middle}.openapipnet #comments.fromtop .list{border-top:0}.openapipnet #comments .list .commentpanel .items>div.replies,.openapipnet #comments .list .commentpanel .items>div.reply{display:none}.openapipnet #comments .list .commentWrapper>div.commentBody{padding-top:.5em}.openapipnet #lenta .shares .share .meta{padding-top:.7em}.openapipnet #lenta .shares .iconWrapper{padding-bottom:.25em}.openapipnet #lenta .shares .share{padding-top:0}.openapipnet #lenta .loader{display:none}.openapipnet #lenta.loading .loader{display:block}.openapipnet #lenta.openapi .loadmore{display:none!important}.openapipnet #transactionview .workd{background:0;padding:.5em}.openapipnet #lenta .shares .share .showMore{display:none}.openapipnet .pocketnet_iframe #channel .channel{background:0 0!important}.openapipnet .pocketnet_iframe #channel .emptychannel{padding:2em;text-align:center;font-size:.8em}.openapipnet .pocketnet_iframe .owl-dots{text-align:center;margin-top:.5em}.openapipnet .pocketnet_iframe .owl-carousel button.owl-dot{width:.5em;height:.5em;border-radius:50%;background:#b2abac;margin:0 .25em}.openapipnet .pocketnet_iframe .owl-carousel button.owl-dot.active{background:#00a4ff}.openapipnet .pocketnet_iframe .owl-carousel .owl-nav{opacity:0}.openapipnet .pocketnet_iframe .owl-carousel .owl-nav button{text-align:center;position:absolute;top:50%;margin-top:-33px;width:44px;height:44px;line-height:44px;color:#fff;border-radius:50%}.openapipnet .pocketnet_iframe .owl-carousel .owl-nav button i{font-size:.7em;opacity:.7}.openapipnet .pocketnet_iframe .owl-carousel .owl-nav button:hover i{opacity:.87}.openapipnet .pocketnet_iframe .owl-carousel:hover .owl-nav{opacity:1}.openapipnet .pocketnet_iframe .owl-carousel .owl-nav button.owl-next{right:0}.openapipnet .pocketnet_iframe .owl-carousel .owl-nav button.owl-prev{left:0}.openapipnet .pocketnet_iframe .owl-carousel .owl-nav button.disabled{opacity:.5}.openapipnet #lenta .shares .share{background:0 0!important}.openapipnet #lenta .shares .share .shareSave i{display:none}.openapipnet #lenta .shares .share .shareSave[status=cansave] .cansave,.openapipnet #lenta .shares .share .shareSave[status=saving] .saving,.openapipnet #lenta .shares .share .shareSave[status=saved] .saved{display:inline-block}.openapipnet #lenta .shares .share .statswrapperExtended{display:flex;padding:.5em 0}.openapipnet #lenta .shares .share .statswrapperExtended span{font-weight:500;font-size:.9em}.openapipnet #lenta .shares .share .images .imagesContainer.owlcar{height:auto;width:100%;max-width:400px}.openapipnet #lenta .shares .share .images .imagesContainer.owlcar .imagesWrapper{height:500px;float:none;width:100%;background:0 0}.openapipnet #lenta .shares .share .images .imagesContainer.owlcar .imagesWrapper .image{background-size:contain!important}.openapipnet #lenta .shares .share .sharecnt .removeDescription{display:none;padding-bottom:1.5em;color:#b2abac}.openapipnet #lenta .shares .share .sharecnt.deleted .cntscontent,.openapipnet #lenta .shares .share .sharecnt.deleted .commentsWrapperHb,.openapipnet #lenta .shares .share .sharecnt.deleted .metapanel,.openapipnet #lenta .shares .share .sharecnt.deleted .repostWrapper,.openapipnet #lenta .shares .share .sharecnt.deleted .sys{display:none!important}.openapipnet #lenta .shares .share .sharecnt.deleted .removeDescription{display:block}.openapipnet #lenta .shares .share .hiddenpost{padding:7em 5em;font-size:.9em;text-align:center;border-radius:5px;background:rgba(178,171,172,.05);margin-bottom:2em;margin-top:.5em}.openapipnet #lenta .shares .share .hiddenpost .hiddenlabelaction{margin-top:1em}.openapipnet #lenta .shares .share .hiddenpost .hiddenlabeltext{opacity:.6}.openapipnet #lenta .shares .share .hiddenpost .captionpreview{font-weight:700}.openapipnet #post .share .images .imagesContainer.owlcar{height:auto;width:100%;max-width:400px}.openapipnet #post .share .images .imagesContainer.owlcar .imagesWrapper{height:500px;float:none;width:100%;background:0 0}.openapipnet #post .share .images .imagesContainer.owlcar .imagesWrapper .image{background-size:contain!important}
+.openapipnet #lenta .share .work {
+  padding-top: 0!important;
+}
+.openapipnet #lenta .shares .share .metatable > div.metapanel .metapanelitem {
+  display: none;
+}
+.openapipnet #comments .list .metatable > div.panelWrapper .panel {
+  display: none!important;
+}
+.openapipnet #comments .list .metatable > div {
+  padding-top: 0.25em !important;
+}
+.openapipnet #comments .list .comment .commentPaddingWrapper {
+  padding-left: 0.5em !important;
+}
+.openapipnet #lenta .cntswrk.formeta {
+  margin-left: 4em!important;
+}
+.openapipnet #lenta .shares .share .commentsWrapperHb {
+  min-height: 0;
+}
+.openapipnet #comments .list .comment {
+  margin-bottom: 0;
+  border-bottom: 0;
+}
+.openapipnet #lenta .shares .share {
+  margin-bottom: 0!important;
+}
+.openapipnet #lenta .shares .share .panel > div.forrepost {
+  margin-right: 0;
+}
+.openapipnet .forstars .count i {
+  opacity: 0.5;
+  font-size: 0.3em;
+  vertical-align: middle;
+}
+.openapipnet #comments.fromtop .list {
+  border-top: 0;
+}
+.openapipnet #comments .list .commentpanel .items > div.reply,
+.openapipnet #comments .list .commentpanel .items > div.replies {
+  display: none;
+}
+.openapipnet #comments .list .commentWrapper > div.commentBody {
+  padding-top: 0.5em;
+}
+.openapipnet #lenta .shares .share .meta {
+  padding-top: 0.7em;
+}
+.openapipnet #lenta .shares .iconWrapper {
+  padding-bottom: 0.25em;
+}
+.openapipnet #lenta .shares .share {
+  padding-top: 0;
+}
+.openapipnet #lenta .loader {
+  display: none;
+}
+.openapipnet #lenta.loading .loader {
+  display: block;
+}
+.openapipnet #lenta.openapi .loadmore {
+  display: none!important;
+}
+.openapipnet #transactionview .workd {
+  background: 0;
+  padding: 0.5em;
+}
+.openapipnet #lenta .shares .share .showMore {
+  display: none;
+}
+.openapipnet .pocketnet_iframe #channel .channel {
+  background: transparent!important;
+}
+.openapipnet .pocketnet_iframe #channel .emptychannel {
+  padding: 2em;
+  text-align: center;
+  font-size: 0.8em;
+}
+.openapipnet .pocketnet_iframe .owl-dots {
+  text-align: center;
+  margin-top: 0.5em;
+}
+.openapipnet .pocketnet_iframe .owl-carousel button.owl-dot {
+  width: 0.5em;
+  height: 0.5em;
+  border-radius: 50%;
+  background: #b2abac;
+  margin: 0 0.25em;
+}
+.openapipnet .pocketnet_iframe .owl-carousel button.owl-dot.active {
+  background: #00a4ff;
+}
+.openapipnet .pocketnet_iframe .owl-carousel .owl-nav {
+  opacity: 0;
+}
+.openapipnet .pocketnet_iframe .owl-carousel .owl-nav button {
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  margin-top: -33px;
+  width: 44px;
+  height: 44px;
+  line-height: 44px;
+  color: #fff;
+  border-radius: 50%;
+}
+.openapipnet .pocketnet_iframe .owl-carousel .owl-nav button i {
+  font-size: 0.7em;
+  opacity: 0.7;
+}
+.openapipnet .pocketnet_iframe .owl-carousel .owl-nav button:hover i {
+  opacity: 0.87;
+}
+.openapipnet .pocketnet_iframe .owl-carousel:hover .owl-nav {
+  opacity: 1;
+}
+.openapipnet .pocketnet_iframe .owl-carousel .owl-nav button.owl-next {
+  right: 0;
+}
+.openapipnet .pocketnet_iframe .owl-carousel .owl-nav button.owl-prev {
+  left: 0;
+}
+.openapipnet .pocketnet_iframe .owl-carousel .owl-nav button.disabled {
+  opacity: 0.5;
+}
+.openapipnet #lenta .shares .share {
+  background: transparent!important;
+}
+.openapipnet #lenta .shares .share .shareSave i {
+  display: none;
+}
+.openapipnet #lenta .shares .share .shareSave[status="cansave"] .cansave {
+  display: inline-block;
+}
+.openapipnet #lenta .shares .share .shareSave[status="saving"] .saving {
+  display: inline-block;
+}
+.openapipnet #lenta .shares .share .shareSave[status="saved"] .saved {
+  display: inline-block;
+}
+.openapipnet #lenta .shares .share .statswrapperExtended {
+  display: flex;
+  padding: 0.5em 0;
+}
+.openapipnet #lenta .shares .share .statswrapperExtended span {
+  font-weight: 500;
+  font-size: 0.9em;
+}
+.openapipnet #lenta .shares .share .images .imagesContainer.owlcar {
+  height: auto;
+  width: 100%;
+  max-width: 400px;
+}
+.openapipnet #lenta .shares .share .images .imagesContainer.owlcar .imagesWrapper {
+  height: 500px;
+  float: none;
+  width: 100%;
+  background: transparent;
+}
+.openapipnet #lenta .shares .share .images .imagesContainer.owlcar .imagesWrapper .image {
+  background-size: contain!important;
+}
+.openapipnet #lenta .shares .share .sharecnt .removeDescription {
+  display: none;
+  padding-bottom: 1.5em;
+  color: #b2abac;
+}
+.openapipnet #lenta .shares .share .sharecnt.deleted .cntscontent,
+.openapipnet #lenta .shares .share .sharecnt.deleted .repostWrapper,
+.openapipnet #lenta .shares .share .sharecnt.deleted .commentsWrapperHb,
+.openapipnet #lenta .shares .share .sharecnt.deleted .metapanel,
+.openapipnet #lenta .shares .share .sharecnt.deleted .sys {
+  display: none!important;
+}
+.openapipnet #lenta .shares .share .sharecnt.deleted .removeDescription {
+  display: block;
+}
+.openapipnet #lenta .shares .share .hiddenpost {
+  padding: 7em 5em;
+  font-size: 0.9em;
+  text-align: center;
+  border-radius: 5px;
+  background: rgba(178, 171, 172, 0.05);
+  margin-bottom: 2em;
+  margin-top: 0.5em;
+}
+.openapipnet #lenta .shares .share .hiddenpost .hiddenlabelaction {
+  margin-top: 1em;
+}
+.openapipnet #lenta .shares .share .hiddenpost .hiddenlabeltext {
+  opacity: 0.6;
+}
+.openapipnet #lenta .shares .share .hiddenpost .captionpreview {
+  font-weight: 700;
+}
+.openapipnet #post .share .images .imagesContainer.owlcar {
+  height: auto;
+  width: 100%;
+  max-width: 400px;
+}
+.openapipnet #post .share .images .imagesContainer.owlcar .imagesWrapper {
+  height: 500px;
+  float: none;
+  width: 100%;
+  background: transparent;
+}
+.openapipnet #post .share .images .imagesContainer.owlcar .imagesWrapper .image {
+  background-size: contain!important;
+}

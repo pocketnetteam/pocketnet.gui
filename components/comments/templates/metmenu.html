@@ -19,6 +19,11 @@ var all = {
 		text : e('share'),
 		class : 'socialshare'
 	},
+	complain : {
+		icon : '<i class="fas fa-ban"></i>',
+		text : e('reportuser'),
+		class : 'complain'
+	},
 
 	block : {
 		icon : '<i class="fas fa-user-slash"></i>',
@@ -43,11 +48,14 @@ var all = {
 
 
 	if(address == caddress){
-
-
+		
 		if(!app.platform.sdk.node.transactions.findTemp(txid)){
-			m.push('edit')
-			m.push('remove')
+			
+			if((typeof app.platform.sdk.user.myaccauntdeleted == 'undefined' || !app.platform.sdk.user.myaccauntdeleted())){
+				m.push('edit')
+				m.push('remove')
+			}
+
 			m.push('share')
 		}
 		else{
@@ -57,14 +65,21 @@ var all = {
 	}
 	else{
 		m.push('share')
-		var me = app.platform.sdk.user.me()
-		if (me && me.relation(caddress, 'blocking')) {
-			m.push('unblock')
-		} else {
-			m.push('block')
-		}
-	}
 
+		if((typeof app.platform.sdk.user.myaccauntdeleted == 'undefined' || !app.platform.sdk.user.myaccauntdeleted())){
+
+			var me = app.platform.sdk.user.me()
+
+			if (me && me.relation(caddress, 'blocking')) {
+				m.push('unblock')
+			} else {
+				m.push('block')
+			}
+
+			m.push('complain')
+		}
+
+	}
 	
 
 

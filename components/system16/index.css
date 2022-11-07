@@ -320,9 +320,11 @@
 }
 #system16 .webservercontent .panel {
   display: flex;
+  flex-wrap: wrap;
 }
 #system16 .webservercontent .panel > div {
   margin-right: 0.5em;
+  margin-bottom: 0.5em;
 }
 #system16 .webdistributioncontent .walletWrapper {
   border-top: 1px solid rgb(var(--neutral-grad-1));
@@ -598,9 +600,6 @@
                     padding-left: 0;
                     padding-right: 0;
                 }*/
-}
-#system16 .nodescontent .node > div.name {
-  width: 120px;
 }
 #system16 .nodescontent .node > div.use {
   cursor: pointer;

@@ -1,0 +1,56 @@
+name: Report a bug
+description: Report a bug that isn't caused by Bastyon. If unsure, use this form
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Self Check
+        - Look for similar errors in existing [GitHub Issues](https://github.com/pocketnetteam/pocketnet.gui/issues) (open or closed).
+  - type: textarea
+    validations:
+      required: true
+    attributes:
+      label: Describe the bug
+      description: A clear description of what the bug is.
+  - type: textarea
+    validations:
+      required: true
+    attributes:
+      label: Steps to reproduce
+      description: |
+        Steps to reproduce the problem.
+  - type: textarea
+    validations:
+      required: true
+    attributes:
+      label: Expected behavior
+      description: A brief description of what should happen.
+  - type: textarea
+    attributes:
+      label: Screenshots and recordings
+      description: |
+        If applicable, add screenshots to help explain your problem. You can also record an asciinema session: https://asciinema.org/
+  - type: input
+    validations:
+      required: true
+    attributes:
+      label: OS / Linux distribution
+      placeholder: Windows 10, Ubuntu 20.04, Arch Linux, macOS 10.15...
+  - type: input
+    validations:
+      required: true
+    attributes:
+      label: Version
+      description: Check version in interface.
+      placeholder: "v0.8.10"
+  - type: dropdown
+    attributes:
+      label: Type application
+      options:
+        - Website
+        - Desktop
+        - Mobile
+  - type: textarea
+    attributes:
+      label: Additional context
+      description: Add any other context about the problem here. This can be themes, plugins, custom settings...

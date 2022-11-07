@@ -48,7 +48,7 @@
 						<span class="adr"><%-(name || author.address)%></span>
 					</div>
 
-					<% if(ed.openprofilebutton && !app.curation()) {%>
+					<% if(ed.openprofilebutton && !app.curation()) { %>
 
 						<a href="<%-app.platform.api.authorlink(author.address)%>">
 
@@ -59,6 +59,30 @@
 							</div>
 
 						</a>
+
+					<% } %>
+
+					
+					<% if(ed.followbutton && !app.curation()) { %>
+
+
+						<div class="subscribeWrapper">
+
+							<% if(author.following) { %>
+
+								<button class="unsubscribeButton">
+									<%=e('unfollow') %>
+								</button>
+
+							<% } else { %>
+
+								<button class="subscribeButton">
+									<%=e('follow') %>
+								</button>
+								
+							<% } %>
+
+						</div>
 
 					<% } %>
 
@@ -87,7 +111,7 @@
 
 					<div class="additional">
 
-						<% if(about) {%><div class="about"><%- about %></div>
+						<% if(about) {%><div class="about"><%= about %></div>
 						<% } else { %> 
 							<% if(d) {%>
 								<div class="label"><%=e('joined')%> <b><%-_d.yyyymmdd('.')%></b></div>

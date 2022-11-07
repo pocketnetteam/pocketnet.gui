@@ -24,7 +24,7 @@ var userslist = (function(){
 			
 			unblocking : function(address){
 
-				dialog({
+				new dialog({
 					html : self.app.localization.e('e13023'),
 					btn1text : self.app.localization.e('unblock'),
 					btn2text : self.app.localization.e('ucancel'),
@@ -47,7 +47,7 @@ var userslist = (function(){
 			},
 			unsubscribe : function(address){
 
-				dialog({
+				new dialog({
 					html : self.app.localization.e('e13022'),
 					btn1text : self.app.localization.e('unsub'),
 					btn2text :  self.app.localization.e('ucancel'),
@@ -377,7 +377,9 @@ var userslist = (function(){
 
 		_.each(essenses, function(essense){
 
-			essense.destroy();
+			window.requestAnimationFrame(() => {
+				essense.destroy();
+			})
 
 		})
 

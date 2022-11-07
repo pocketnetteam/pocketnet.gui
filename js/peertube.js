@@ -81,7 +81,17 @@ var PeertubeRequest = function (app = {}) {
 					return Promise.resolve(r.text());
 				}
 
-				return r.text().then((data) => (data ? JSON.parse(data) : {}));
+				return r.text().then((data) => {
+					var v = {}
+
+					try{
+						v = data ? JSON.parse(data) : {}
+					}catch(e) {
+						return Promise.reject('Unable parse: ' + (data || "Empty data"))
+					}
+
+					return Promise.resolve(v)
+				});
 			})
 			.then((result) => {
 				if (resp.ok) {
@@ -280,6 +290,14 @@ PeerTubePocketnet = function (app) {
 			axios: true,
 		},
 
+		removeAccount: {
+			path: ({ id }) => `users/${id}`,
+			method: 'DELETE',
+			renew: true,
+			authorization: true,
+			axios: true,
+		},
+
 		removeVideo: {
 			path: function ({ id }) {
 				return 'api/v1/videos/' + id;
@@ -437,6 +455,8 @@ PeerTubePocketnet = function (app) {
 
 					return (typeof proxyAxios != 'undefined' ? proxyAxios : axios)({ method, url, data, ...axiosoptions })
 						.then((r) => {
+
+
 							if (meta.fullreport) {
 								return r;
 							}
@@ -478,7 +498,11 @@ PeerTubePocketnet = function (app) {
 					meta.path + params,
 					data,
 					requestoptions,
-				).catch((err, data) => {
+				).then(data => {
+
+
+					return Promise.resolve(data)
+				}).catch((err, data) => {
 					return Promise.reject(err);
 				});
 			}).catch(e => {
@@ -1028,6 +1052,8 @@ PeerTubePocketnet = function (app) {
 				).then((r = {}) => r);
 			},
 
+			
+
 			getDirectVideoInfo(parameters = {}, options = {}) {
 				return request('video', parameters, options);
 			},
@@ -1044,6 +1070,23 @@ PeerTubePocketnet = function (app) {
 		},
 
 		user: {
+			removeAccount(parameters = {}, options = {}) {
+
+				return self.api.user.metotal().then(d => {
+
+					console.log("D", d)
+
+					return Promise.resolve()
+
+					return request(
+						'removeAccount', parameters, options,
+					);
+
+				})
+
+				
+			},
+
 			me: function (options = {}) {
 				return request('me', {}, options).then((r) => {
 					var data = {
@@ -1053,10 +1096,18 @@ PeerTubePocketnet = function (app) {
 						username: deep(r, 'username'),
 					};
 
+
 					if (!data.channelId || !data.videoQuotaDaily)
 						return Promise.reject(error('usersMe'));
 
 					return Promise.resolve(data);
+				});
+			},
+
+			metotal: function (options = {}) {
+				return request('me', {}, options).then((r) => {
+
+					return Promise.resolve(r);
 				});
 			},
 
@@ -1102,6 +1153,8 @@ PeerTubePocketnet = function (app) {
 					},
 				)
 					.then(({ client_id, client_secret }) => {
+
+
 						if (!client_id || !client_secret) {
 							return Promise.reject(error('oauthClientsLocal'));
 						}

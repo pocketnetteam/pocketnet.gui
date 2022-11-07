@@ -34,6 +34,8 @@ var Bots = require('./bots.js');
 var SystemNotify = require('./systemnotify.js');
 var Transports = require("./transports")
 var Applications = require('./node/applications');
+var bitcoin = require('./lib/btc16.js');
+var Slidemodule = require("./slidemodule")
 const Path = require("path");
 const child_process = require("child_process");
 const {unlink} = require("nedb/browser-version/browser-specific/lib/storage");
@@ -67,6 +69,8 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 	var peertube = new Peertube(self)
 	var bots = new Bots(settings.bots)
 	var systemnotify = new SystemNotify(settings.systemnotify)
+	var slidemodule = new Slidemodule(settings.slide)
+	slidemodule.init()
 
 	var torapplications = new TorControl(settings.tor, self)
 
@@ -854,7 +858,6 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					{
 						host : 'peertube17.pocketnet.app',
 						ip: '51.250.104.218',
-						cantuploading: true
 					}
 				],
 
@@ -862,7 +865,6 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					{
 						host : 'peertube18.pocketnet.app',
 						ip: '51.250.41.252',
-						cantuploading: true
 					}
 				],
 
@@ -870,7 +872,6 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					{
 						host : 'peertube19.pocketnet.app',
 						ip: '51.250.73.97',
-						cantuploading: true
 					}
 				],
 
@@ -894,7 +895,70 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 						ip: '64.235.50.17',
 					}
 				],
-      		};
+
+				26: [
+					{
+						host : 'peertube20.pocketnet.app',
+						ip: '157.90.240.231',
+					}
+				],
+
+				27: [
+					{
+						host : 'peertube21.pocketnet.app',
+						ip: '116.203.16.185',
+					}
+				],
+
+				28: [
+					{
+						host : 'peertube22.pocketnet.app',
+						ip: '104.168.136.179',
+					}
+				],
+
+				29: [
+					{
+						host : 'peertube23.pocketnet.app',
+						ip: '23.254.201.237',
+					}
+				],
+
+				30: [
+					{
+						host : 'peertube24.pocketnet.app',
+						ip: '23.254.224.63',
+					}
+				],
+
+				31: [
+					{
+						host : 'peertube25.pocketnet.app',
+						ip: '95.217.212.144',
+					}
+				],
+
+				32: [
+					{
+						host : 'peertube26.pocketnet.app',
+						ip: '49.12.106.120',
+					}
+				],
+				
+				33: [
+					{
+						host : 'peertube27.pocketnet.app',
+						ip: '49.12.102.26',
+					}
+				],
+
+				34: [
+					{
+						host : 'peertube28.pocketnet.app',
+						ip: '138.201.91.156',
+					}
+				],
+			};
 
 			if (test){
 				ins = {0 : [
@@ -984,7 +1048,8 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				tor: self.torapplications.info(compact),
 				captcha: {
 					ip: _.toArray(captchaip).length,
-					all: _.toArray(captchas).length
+					all: _.toArray(captchas).length,
+					hexCaptcha : !!global.IMPORT_HEX_CAPTCHA && !!settings.server.hexCaptcha,
 				},
 
 				memory: mem,
@@ -1165,6 +1230,12 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 			return rpc({ method, parameters, options, U }).then(r => {
 
+				if(!r.data.contents){
+					var contents = r.data
+
+					r.data = {contents}
+				}
+
 				var posts = r.data.contents || []
 
 					result = r
@@ -1187,7 +1258,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					})
 				})
 
-				if(method == 'gethierarchicalstrip'){
+				if(method == 'gethierarchicalstrip' || method == 'getsubscribesfeed'  || method == 'getprofilefeed'){
 					users = _.map(posts, function(p){
 						return f.deep(p, 'lastComment.address')
 					})
@@ -1255,6 +1326,13 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 	}
 
 	self.rpcscenarios.getrecommendedcontentbyaddress = self.rpcscenarios.gethierarchicalstrip
+	self.rpcscenarios.getprofilefeed = self.rpcscenarios.gethierarchicalstrip
+	self.rpcscenarios.getsubscribesfeed = self.rpcscenarios.gethierarchicalstrip
+	self.rpcscenarios.gethotposts = self.rpcscenarios.gethierarchicalstrip
+
+	self.checkSlideAdminHash = function(hash) {
+		return bitcoin.crypto.sha256(Buffer.from(hash, 'utf8')).toString('hex') == '7b4e4601c461d23919a34d8ea2d9e25b9ab95cf0a93c1e6eae51ba79c82fbcf3'
+	}
 
 	self.api = {
 		node: {
@@ -1791,7 +1869,6 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				path: '/info',
 				action: function (message) {
 					const info = self.kit.info(true);
-								info.captcha.hexCaptcha = !!global.IMPORT_HEX_CAPTCHA;
 					
 					return Promise.resolve({
 						data: {
@@ -2182,7 +2259,8 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					
 					captcha = hexCaptcha({
 						text: {
-							chars: 'ABCDEFGHJKMNPQRSTUVWXZabcdefghjkmnpqrstuvwxz23456789'
+							chars: 'ABCDEFGHJKMNPRSTUVWXZ23456789',
+							font : 'black 22px Monospace'
 						}
 					});
 					captcha.id = f.makeid();
@@ -2191,7 +2269,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 						captcha.generate().then(({ frames, layers }) => {
 							captchas[captcha.id] = {
 								text: captcha.text.toLowerCase(),
-								angle: captcha.angle,
+								angles: captcha.angles,
 								id: captcha.id,
 								done: false,
 								time: f.now(),
@@ -2215,7 +2293,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				authorization: 'signaturelight',
 				path: '/makecaptcha',
 
-				action: function ({ captcha, ip, text }) {
+				action: function ({ captcha, ip, text, angles = [0,0,0,0,0,0,0] }) {
 
 					var _captcha = captcha
 
@@ -2232,6 +2310,22 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 								done: true,
 							},
 						});
+					}
+
+					if(captcha.angles && captcha.angles.length && captcha.angles.length == 7){
+
+						var check = angles.length && angles.length == 7 &&
+
+							angles[0] == -captcha.angles[0] &&
+							angles[1] == -captcha.angles[1] &&
+							angles[2] == -captcha.angles[2] &&
+							angles[3] == -captcha.angles[3] &&
+							angles[4] == -captcha.angles[4] &&
+							angles[5] == -captcha.angles[5] &&
+							angles[6] == -captcha.angles[6]
+
+						if(!check)
+							return Promise.reject('captchanotequal_angles');
 					}
 
 					if (captcha.text == text.toLocaleLowerCase()) {
@@ -2353,6 +2447,92 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 							data: r,
 						});
 					});
+				},
+			},
+		},
+
+		slidemodule : {
+			add: {
+				path: '/slidemodule/add',
+				// authorization: 'signature',
+
+				action: function ({ hash, tag, txid }) {
+
+					if (!self.checkSlideAdminHash(hash)) return Promise.reject('admin');
+					if (!tag) return Promise.reject('tag is empty');
+					if (!txid || txid.length != 64) return Promise.reject('txid is empty or length mismatch');
+
+					return slidemodule.add(tag, txid)
+						.then((r) => {
+							return Promise.resolve({
+								data: r
+							});
+						})
+						.catch((e) => {
+							return Promise.reject(e);
+						});
+				},
+			},
+
+			remove: {
+				path: '/slidemodule/remove',
+				// authorization: 'signature',
+
+				action: function ({ hash, tag, txid }) {
+
+					if (!self.checkSlideAdminHash(hash)) return Promise.reject('admin');
+					if (!tag) return Promise.reject('tag is empty');
+					if (!txid || txid.length != 64) return Promise.reject('txid is empty or length mismatch');
+
+					return slidemodule.remove(tag, txid)
+						.then((r) => {
+							return Promise.resolve({
+								data: r
+							});
+						})
+						.catch((e) => {
+							return Promise.reject(e);
+						});
+				},
+			},
+
+			removeAll: {
+				path: '/slidemodule/removeAll',
+				// authorization: 'signature',
+
+				action: function ({ hash, tag }) {
+
+					if (!self.checkSlideAdminHash(hash)) return Promise.reject('admin');
+					if (!tag) return Promise.reject('tag is empty');
+
+					return slidemodule.removeAll(tag)
+						.then((r) => {
+							return Promise.resolve({
+								data: r
+							});
+						})
+						.catch((e) => {
+							return Promise.reject(e);
+						});
+				},
+			},
+
+			get: {
+				path: '/slidemodule/get',
+
+				action: function ({ tag }) {
+
+					if (!tag) return Promise.reject('tag is empty');
+
+					return slidemodule.get(tag)
+						.then((r) => {
+							return Promise.resolve({
+								data: r
+							});
+						})
+						.catch((e) => {
+							return Promise.reject(e);
+						});
 				},
 			},
 		},

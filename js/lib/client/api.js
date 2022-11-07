@@ -70,6 +70,7 @@ var ProxyRequest = function(app = {}, proxy){
 
         var cancelled = false
 
+
         return new Promise((resolve, reject) => {
             const timer = setTimeout(() => {
 
@@ -147,6 +148,7 @@ var ProxyRequest = function(app = {}, proxy){
         else{
             if (app.user && (app.user.getstate && app.user.getstate() == 1)){ data.state = 1 }
         }
+
 
         return apiFetch(url, {
 
@@ -247,6 +249,8 @@ var Proxy16 = function(meta, app, api){
     self.direct = meta.direct
     self.user = meta.user || false
 
+    self.lastinfo = {}
+
     self.current = null //current node
 
     self.id = self.host + ":" + self.port + ":" + self.wss
@@ -289,6 +293,10 @@ var Proxy16 = function(meta, app, api){
             return true
         }
         
+    }
+
+    self.hasHexCaptcha = function(){
+        return deep(self, 'lastinfo.captcha.hexCaptcha') || false
     }
 
     self.export = function(){
@@ -497,7 +505,7 @@ var Proxy16 = function(meta, app, api){
 
             if (options.fnode && e) e.code = 700
 
-            if ((e.code == 408 || e.code == 429 || e.code == -28) && options.node && trying < 2 && !options.fnode){
+            if ((e.code == 408 || e.code == 429 || e.code == -28 || (e.code == 2000 && freshping())) && options.node && trying < 2 && !options.fnode){
 
                 //if(isonline()){
                     return self.api.nodes.canchange(options.node).then(r => {
@@ -559,7 +567,12 @@ var Proxy16 = function(meta, app, api){
         },
 
         info : function(){
-            return self.fetchauth('info')
+            return self.fetchauth('info').then((r) => {
+                console.log("R", r)
+                self.lastinfo = (r || {}).info || {}
+
+                return Promise.resolve(r)
+            })
         },
 
         stats : function(){
@@ -914,6 +927,20 @@ var Api = function(app){
         }
     }
 
+    var loading = {}
+
+    self.rpcwt = function(method, parameters, options){
+        var hash =MD5(method + JSON.stringify(parameters) + JSON.stringify(options)) 
+
+        if (!loading[hash]){
+            loading[hash] = self.rpc(method, parameters, options)
+        }
+
+        return loading[hash].finally(() => {
+            delete loading[hash]
+        })
+    }
+
     self.rpc = function(method, parameters, options, trying){
 
         if(!trying) trying = 0
@@ -941,6 +968,8 @@ var Api = function(app){
 
             if((!e.code || e.code == 2000) && trying < 2){
 
+                //// api.nodes.canchange
+
                 //if(isonline()){
                     return self.changeProxyIfNeedWithDirect().then(r => {
 
@@ -949,6 +978,14 @@ var Api = function(app){
                         return self.rpc(method, parameters, options, trying)
                     })
                 //}
+            }
+
+            if (app.Logger) {
+                app.Logger.error({
+                    err: typeof e === 'string' ? e : (e.text || 'RPC_DEFAULT_ERROR'),
+                    payload: e,
+                    code: e.code || 423,
+                });
             }
 
             if (e.code != 700){
@@ -1180,6 +1217,25 @@ var Api = function(app){
             })
         },
 
+        byidwithadd : function(id){
+            var p = self.get.byid(id)
+
+            if(!p){
+
+                var mp = id.split(':')
+
+                var meta = {
+                    host : mp[0],
+                    port : mp[1],
+                    wss : mp[2]
+                }
+
+                var proxy = new Proxy16(meta, app, self)
+
+                return proxy
+            }
+        },
+
         working : function(){
 
             var _proxies = _.filter(proxies, function(proxy){
@@ -1209,6 +1265,10 @@ var Api = function(app){
             }
         },
 
+        directpr : function(){
+            return Promise.resolve(self.get.direct())
+        },
+
 
         proxywithwallet : function(){
 
@@ -1218,24 +1278,27 @@ var Api = function(app){
 
             _.each(proxies, function(p){
                 p.get.info().then(r => {
-
+            
                     var wallet = deep(r, 'info.wallet.addresses.registration') || {}
+                    var hexCaptcha = p.hasHexCaptcha()
 
-                    if (wallet.ready && wallet.unspents){
+                    console.log('hexCaptcha', hexCaptcha)
+                    
+                    if (wallet.ready && wallet.unspents /*&& hexCaptcha*/){
                         f = p
                     }
-
+            
                     return Promise.resolve()
-
+            
                 }).catch(e => {
                     return Promise.resolve()
                 }).finally(() => {
                     es++
-
+            
                     if(es >= proxies.length){
                         e = true
                     }
-
+            
                     return Promise.resolve()
                 })
             })
@@ -1243,6 +1306,9 @@ var Api = function(app){
             return pretry(function(){
                 return e || f
             }).then(() => {
+
+                console.log("E", e, f)
+
                 return Promise.resolve(f)
             })
 
