@@ -8,10 +8,35 @@
     .videosWrapper {
         display: flex;
         flex-direction: column;
+        
+        padding: 0 2 * @rhythm;
+    }
+
+    .unpostedCaption {
+        padding: 0 2 * @rhythm;
+    }
+
+    .unpostedFooter {
+        color: rgb(var(--neutral-grad-1));
+        font-weight: bold;
+        text-decoration: underline;
+
+        padding: 0 2 * @rhythm;
+        margin-top: 2 * @rhythm;
+    }
+
+    .unpostedWarningWrapper {
+        font-size: 0.8em;
     }
 
     .preloaderwr{
-        padding : 2 * @rhythm;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
+    .attachVideoToPost{
+        white-space: nowrap;
+        overflow: hidden;
     }
 
     .videoErrorBody {
@@ -29,11 +54,34 @@
 
     .singleVideoSection {
         display: flex;
+        position: relative;
         justify-content: space-between;
         align-items: top;
         padding: @rhythm * 2 0;
         border-bottom: 1px solid rgb(var(--neutral-grad-1));
         font-size: 1.1em;
+
+        .loadingContainer {
+            display: none;
+
+            width: 100%;
+            height: 100%;
+
+            position: absolute;
+            font-weight: 900;
+            text-align: center;
+            font-size: 2em;
+            line-height: 3.5em;
+
+            background-color: rgba(255, 255, 255, 0.5);
+            z-index: 1;
+        }
+
+        &.loading {
+            .loadingContainer {
+                display: block;
+            }
+        }
 
         >div {
             padding: 0 2 * @rhythm;
@@ -208,6 +256,25 @@
             border-bottom-left-radius: 5px;
             bottom: 0;
             padding: @rhythm;
+            left: 0;
+        }
+
+        .backgroundPreloader {
+            position: absolute;
+
+            left: 0;
+            right: 0;
+            margin-left: auto;
+            margin-right: auto;
+
+            width: 150px;
+            height: 90px;
+
+            text-align: center;
+            background-color: rgba(var(--color-shadow-base), 0.3);
+            color: rgb(var(--text-on-bg-shadow-color));
+            border-radius: 5px;
+            line-height: 50px;
         }
     }
 
@@ -225,6 +292,13 @@
         max-width: 700px;
         padding-top: 2 * @rhythm;
         padding-bottom: 2 * @rhythm;
+        font-size: 2em;
+        font-weight: 100;
+    }
+
+    .videosHeader {
+        max-width: 700px;
+        padding: 2 * @rhythm @rhythm;
         font-size: 2em;
         font-weight: 100;
     }

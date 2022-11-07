@@ -40,9 +40,7 @@ function proxifiedFetchFactory(electronIpcRenderer) {
         if (init.signal) {
             fetchCancel = init.signal;
         }
-
-        console.log(init)
-
+        console.log(init);
         if (init.headers instanceof Headers) {
             init.headers.forEach((value, name) => {
                 preparedInit.headers[name] = value;
@@ -56,18 +54,12 @@ function proxifiedFetchFactory(electronIpcRenderer) {
                         fetchCancel.onabort = () => {
                             electronIpcRenderer.removeAllListeners(`ProxifiedFetch : InitialData[${id}]`);
                             electronIpcRenderer.removeAllListeners(`ProxifiedFetch : PartialResponse[${id}]`);
-
-                            console.log("abort", closed)
-
+                            console.log('abort', closed);
                             if (!closed) {
                                 electronIpcRenderer.send('ProxifiedFetch : Abort', id);
                                 controller.close();
                                 closed = true;
-
-                                
                             }
-
-                            
                         };
                     }
                     electronIpcRenderer.once(`ProxifiedFetch : Closed[${id}]`, (event) => {
@@ -79,19 +71,14 @@ function proxifiedFetchFactory(electronIpcRenderer) {
                         }
                     });
                     electronIpcRenderer.once(`ProxifiedFetch : Error[${id}]`, (event) => {
-
-
-                        console.log('event', event)
-
+                        console.log('event', event);
                         if (!closed) {
                             controller.error('PROXIFIED_FETCH_ERROR');
                             closed = true;
                             const err = new TypeError('Failed to fetch');
                             reject(err);
-
-                            return
+                            return;
                         }
-
                         reject(new DOMException('The user aborted a request.', 'AbortError'));
                     });
                     electronIpcRenderer.on(`ProxifiedFetch : PartialResponse[${id}]`, (event, data) => {
@@ -110,9 +97,7 @@ function proxifiedFetchFactory(electronIpcRenderer) {
                     });
                 }
             });
-
-            console.log('request:f', id)
-
+            console.log('request:f', id);
             electronIpcRenderer.on(`ProxifiedFetch : InitialData[${id}]`, (event, initialData) => {
                 const response = new Response(readStream, initialData);
                 Object.defineProperty(response, 'url', { value: url });
@@ -209,10 +194,16 @@ class ProxifiedFetchBridge {
         delete this.selfStatic;
     }
     answer(sender, event, id, data) {
+        if (!this.selfStatic) {
+            return;
+        }
         const eventName = `${this.selfStatic.eventGroup} : ${event}[${id}]`;
         sender.send(eventName, data);
     }
     listen(event, callback) {
+        if (!this.selfStatic) {
+            return;
+        }
         const eventName = `${this.selfStatic.eventGroup} : ${event}`;
         this.ipc.on(eventName, (...args) => {
             const arrangedArgs = args.slice(1);
@@ -221,6 +212,9 @@ class ProxifiedFetchBridge {
         });
     }
     listenOnce(event, callback) {
+        if (!this.selfStatic) {
+            return;
+        }
         const eventName = `${this.selfStatic.eventGroup} : ${event}`;
         this.ipc.once(eventName, (...args) => {
             const arrangedArgs = args.slice(1);
@@ -229,6 +223,9 @@ class ProxifiedFetchBridge {
         });
     }
     stopListen(event) {
+        if (!this.selfStatic) {
+            return;
+        }
         const eventName = `${this.selfStatic.eventGroup} : ${event}`;
         this.ipc.removeAllListeners(eventName);
     }

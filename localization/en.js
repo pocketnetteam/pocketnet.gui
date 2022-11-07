@@ -294,6 +294,8 @@ _l.lpublic = "Public";
 //inviteComment
 _l.commentBannerTitle = "Comment on this post";
 _l.commentBannerDescription = "Commenting unlocks features on Bastyon and helps you find friends 😀";
+_l.commentBannerTitle2 = function(v){ return "Follow " + v + " to see more posts for them"};
+_l.commentBannerDescription2 = function(v){ return "Following " + v + " will show more content like this in your feed." };
 _l.dontShowAgain = "Don't show again";
 
 //share
@@ -616,6 +618,7 @@ _l.e13107 = "Node management may be carried out with Application"
 _l.e13108 = "There isn't connection with Electron proxy interface"
 
 _l.e13109 = "Please enter the words in the picture to receive Pocketcoin and continue registration"
+_l.e13109lg = "Please enter the words in the picture to continue registration"
 _l.e13110 = "Enter words"
 _l.poll = "Create poll"
 _l.next = "Next"
@@ -863,6 +866,8 @@ _l.e13267 = "Dark Theme"
 _l.e13268 = "Coinstake win"
 _l.e13269 = "Transactions receive"
 _l.e13270 = "Upvotes receive"
+_l.e13270d = "Downvotes receive"
+
 _l.e13271 = "Comment receive"
 _l.e13272 = "Answer receive"
 _l.e13273 = "New Followers"
@@ -1279,7 +1284,7 @@ _l.sortByDuration = "Duration";
 _l.sortByViews = "Views";
 
 _l.unableToAuthorize = "Unable to authorize";
-_l.unableToAuthorizeBody = "Unfortunately, the application cannot authenticate this account on the video server. You need at least 5 PKOIN or 50 reputation to upload videos.";
+_l.unableToAuthorizeBody = "Unfortunately, the application cannot authenticate this account on the video server. You need at least 5 PKOIN or 100 reputation to upload videos.";
 
 _l.unableToAuthorizeConnection = "Unable to authorize";
 _l.unableToAuthorizeConnectionBody = "Unfortunately, the application cannot authenticate this account on the video server.  Please try again later";
@@ -2357,5 +2362,13 @@ _l.boost_c17 = 'Censorship resistant'
 
 _l.gotopage = 'Go to page'
 
+_l.postedVideos = "Posted Videos"
+_l.unPostedVideos = "Unposted Videos"
+_l.videoIsPosting = "Posting"
+_l.noUnposted = "No Unposted Videos"
 
+_l.sortByComments = "Comments";
+_l.sortByRating = "Number of ratings";
 
+_l.noPosted = "No posted Videos"
+_l.unpostedFooter = "Unposted videos are deleted from the server after 3-weeks of waiting"

@@ -902,6 +902,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					{
 						host : 'peertube19mirror.pocketnet.app',
 						ip: '64.235.50.17',
+						cantuploading: true,
 					}
 				],
 
@@ -2197,7 +2198,6 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				action: function (data) {
 					if(!self?.firebase?.info()?.inited) return Promise.reject('firebase not setup')
 
-
 					return self.firebase.kit.revokeToken(data).then((r) => {
 						return Promise.resolve({ data: r });
 					}).catch(e => {
@@ -2212,6 +2212,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				path: '/firebase/revokedevice',
 				action: function (data) {
 					if(!self?.firebase?.info()?.inited) return Promise.reject('firebase not setup')
+
 					return self.firebase.kit.removeDevice(data).then((r) => {
 						return Promise.resolve({ data: r });
 					}).catch(e => {

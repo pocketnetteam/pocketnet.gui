@@ -288,8 +288,6 @@ var camerapreview = (function(){
 
 								if(pid != libraryProcessId) return
 
-								console.log('photos', photos)
-
 								photos = photos.concat(result.library)
 
 								if(result.isLastChunk){
@@ -374,8 +372,6 @@ var camerapreview = (function(){
 
 						return Base64Helper.fromFile(data).then(base64 => {
 							images[id] = base64;
-
-							console.log('base64', base64)
 
 							resolve(images[id])
 						})
