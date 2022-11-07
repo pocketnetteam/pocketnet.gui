@@ -21,6 +21,7 @@
   left: 0;
   right: 0;
   top: 0;
+  min-height: 65px;
   height: calc(65px + var(--app-margin-top));
   padding-top: var(--app-margin-top);
   z-index: 20;
