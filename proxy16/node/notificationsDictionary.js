@@ -159,6 +159,16 @@ module.exports = (data = {user: "", amount: "", score: ""}) => {
                 title: `Notification`,
                 body: `You have notification`
             }
-        }
+        },
+        referal: {
+            ru: {
+                title: `У вас новый реферал`,
+                body: `Пользователь ${data.user}`
+            },
+            en: {
+                title: `You have a new referral`,
+                body: `User ${data.user}`
+            }
+        },
     }
 }

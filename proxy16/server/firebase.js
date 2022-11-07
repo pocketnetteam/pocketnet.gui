@@ -291,7 +291,6 @@ var Firebase = function(p){
 
         mytokens : function({address}){
 
-
             return new Promise((resolve, reject) => {
 
             
@@ -362,11 +361,22 @@ var Firebase = function(p){
             }
         }
 
-        if(!data || !users?.length) throw 'data or users error'
+        if(!data || !users?.length) {
+            self.logger.w('system', 'warn', `Notification: User list is empty`)
+            return
+        }
 
-        if(!self.app) throw 'app'
+        if(!self.app) {
+            self.logger.w('system', 'error', `Firebase: Application not inited`)
+            return
+        }
 
         if (data.header){
+            delete data.outputs;
+            delete data.inputs;
+            delete data?.relatedContent?.description;
+            delete data?.description;
+
             var message = {
                 data: {json: JSON.stringify(data)},
                 android: {
@@ -389,12 +399,11 @@ var Firebase = function(p){
                     }
                 }
             };
-
+            block.pushEvents.push(message)
             const sendPush = async (message, tokens, users)=>{
-                block.pushEvents.push(message)
                 const resendTokens = [];
-                for(let i = 0; i < tokens.length; i += 999) {
-                    message.tokens = tokens.slice(i, 999);
+                for(let i = 0; i < tokens.length; i += 499) {
+                    message.tokens = tokens.slice(i, 499);
                     try {
                         const response = await admin.messaging().sendMulticast(message)
                         for (const responseIndex in response.responses) {
@@ -403,10 +412,11 @@ var Firebase = function(p){
                                 if (!response.responses[responseIndex]?.success) {
                                     block.pushStatus.unshift(addStatus(message?.tokens[responseIndex], address, true, response.responses[responseIndex]?.error?.errorInfo?.message, response.responses[responseIndex]?.error?.errorInfo?.code))
                                     if (message?.tokens[responseIndex] && errorCodeList.includes(response.responses[responseIndex]?.error?.errorInfo?.code)) {
-                                            console.log("Token is inactive, delete user", message?.tokens[responseIndex])
+                                        this.logger.w('system', 'error', `Firebase: Token is inactive, delete token - Message:${response.responses[responseIndex]?.error?.errorInfo?.message} Token: ${message?.tokens[responseIndex]}`)
                                         self.kit.revokeToken({token: message?.tokens[responseIndex]})
                                     } else if (message?.tokens[responseIndex]) {
-                                         console.log("Resend push after 35 seconds, because token is temporarily blocked by firebase:", message?.tokens[responseIndex])
+
+                                        self.logger.w('system', 'error', `Firebase: Send push (resend after 35s): Message:${response.responses[responseIndex]?.error?.errorInfo?.message} Token: ${message?.tokens[responseIndex]}`)
                                         resendTokens.push(message?.tokens[responseIndex])
                                     }
                                 }else {
@@ -415,9 +425,9 @@ var Firebase = function(p){
                             }
                         }
                     }catch (e) {
-                        console.log("Push notifications sending limit exceeded, waiting 35 seconds");
+                        self.logger.w('system', 'error', `Firebase: Multicast response error (resend after 35s): ${e?.message || e}`)
                         await new Promise(resolve => setTimeout(resolve, 35000))
-                        resendTokens.push(tokens.slice(i, 999))
+                        resendTokens.push(tokens.slice(i, 499))
                     }
                 }
                 return resendTokens
@@ -441,7 +451,7 @@ var Firebase = function(p){
 
             if(resend?.length > 0) {
                 await new Promise(resolve => setTimeout(resolve, 35000))
-                self.send({data, users: users.filter(el=>resend.includes(el.token), block)})
+                await self.send({data, users: users.filter(el=>resend?.includes(el.token)), block})
             }
         }
         return true
@@ -460,10 +470,10 @@ var Firebase = function(p){
             return self.send({data, users})
     }
 
-    self.sendToAll = async function(data){
+    self.sendToAll = async function(data, block){
         var users = getAllUsers()
 
-        if (users?.length) return await self.send({data, users})
+        if (users?.length) return await self.send({data, users, block})
     }
      
     self.sendEvents = async function(events, block){

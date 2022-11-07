@@ -75,7 +75,10 @@ class Notifications{
                 const {events, block} = await this.generateEvents(item)
                 if(events.length){
 
-                    await this.firebase.sendEvents(events, block);
+                    this.firebase.sendEvents(events, block);
+                    // for(const event of events) {
+                    //     this.firebase.sendToAll(event.notification, block)
+                    // }
                 }
 
                 for(const event of events){
@@ -90,16 +93,13 @@ class Notifications{
 
                 this.statsShort.success++;
             } catch (e) {
-
-                //console.log("E", e)
-
                 if(!item.reRequest){
                     item.reRequest = true;
                     this.queue.push(item)
                 }
                 else{
                     this.statsShort.reject++;
-                    console.log("Error: block", e)
+                    this.logger.w('system', 'error', `Notification: Response from the node:${e?.message || e}`)
                 }
             }
             const totalTime = Date.now() - ts;
@@ -168,7 +168,7 @@ class Notifications{
                             }
                         }
                         else{
-                            console.log('no header', type)
+                            this.logger.w('system', 'error', `Notification: Error generate header ${type}`)
                         }
                     }
                 }
@@ -185,28 +185,36 @@ class Notifications{
     }
 
     addblock(block, node){
-        if(node.version && f.numfromreleasestring(node.version) >= 0.21 && this.height < block.height){
-            const info = this?.firebase?.info();
-            this.height = block.height
-            
-            if(!this.firebase.inited) {
-                console.log("WARNING FIREBASE")
-                return
-            }
-            if(!info.users){
-                console.log("FIREBASE USERS IS EMPTY")
-                return;
-            }
-
-            const notification = {
-                height: block.height,
-                node: node,
-                reRequest: false
-            }
-            
-            this.queue.push(notification)
-            this.startWorker()
+        if(!node.version || f.numfromreleasestring(node.version) < 0.21) {
+            // this.logger.w('system', 'warn', `Notification: Node version is lower: ${node?.version}`)
+            return;
         }
+
+        if(this.height >= block.height) {
+            this.logger.w('system', 'warn', `Notification: Block height is lower or equal: Current:${this.height} >= Incoming:${block.height}`)
+            return;
+        }
+
+        const info = this?.firebase?.info();
+        this.height = block.height
+
+        if(!this.firebase.inited) {
+            this.logger.w('system', 'error', `Notification: Firebase not inited`)
+            return
+        }
+        if(!info.users){
+            this.logger.w('system', 'info', `Notification: Firebase user list is empty`)
+            return;
+        }
+
+        const notification = {
+            height: block.height,
+            node: node,
+            reRequest: false
+        }
+
+        this.queue.push(notification)
+        this.startWorker()
     }
 
     async test(){
