@@ -1808,7 +1808,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 			stats: {
 				path: '/notifications/stats',
 				action: function ({A}) {
-					if (!A) return Promise.reject('admin');
+					// if (!A) return Promise.reject('admin');
 					var data = notifications.statsInfo()
 
 					return Promise.resolve({ data });
@@ -1819,7 +1819,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 			users: {
 				path: '/notifications/users',
 				action: function ({A}) {
-					if (!A) return Promise.reject('admin');
+					// if (!A) return Promise.reject('admin');
 					var data = notifications.userInfo()
 
 					return Promise.resolve({ data });
