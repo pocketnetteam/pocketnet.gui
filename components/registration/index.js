@@ -402,7 +402,6 @@ var registration = (function(){
 						"PKYwaiikhUoPWmpWmYec4Xf3TPWwJQCqUt",
 						"PSBhEi8AUasemizUHyJ64t6xXonsxwp73y",
 						"PLZsQmsRUDMJGc61pGMLdDQ58UuqQ8kU5Z",
-						"PRH3aKqRb6UWcJE5EnwVvhmHAVGbT5D6nE",
 						"PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd",
 						"PLH8biT5rMdvE1zXFhsvNkzphVRK6cNM7p",
 						"PL9U1q1JmJezPh8GQb5dj5h5GavuCGcjYk",
