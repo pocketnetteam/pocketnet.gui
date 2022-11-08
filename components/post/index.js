@@ -1750,6 +1750,8 @@ var post = (function () {
 						self.closeContainer()
 					},
 
+					startload: true,
+
 					el : p.inWnd ? el.c.closest('.wndcontent') : null
 					
 				}, function(e, p){
