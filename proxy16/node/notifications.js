@@ -335,6 +335,16 @@ class Notifications{
                         return `/index?s=${content.postHash || ""}&commentid=${content.rootTxHash || ""}`
                     }
                     return ""
+                case 'repost':
+                    if(notification.rootTxHash){
+                        return `/index?s=${notification?.rootTxHash || ""}`
+                    }
+                    return ""
+                case 'boost':
+                    if(content?.rootTxHash){
+                        return `/index?s=${content?.rootTxHash || ""}`
+                    }
+                    return ""
                 default:
                     return ""
         }
