@@ -107,7 +107,7 @@ var Firebase = function(p){
 
     var finduser = function(_user){
         return _.find(self.users, function(user){
-            return user.address == _user.address && user.device == _user.device
+            return user.address === _user.address && user.device === _user.device
         })
     }
 
@@ -242,7 +242,7 @@ var Firebase = function(p){
             var removed = []
 
             self.users = _.filter(self.users, function(user){
-                if (user.token == token){
+                if (user.token === token){
                     removed.push(user)
                     return false
                 }
@@ -268,7 +268,7 @@ var Firebase = function(p){
             var removed = []
 
             self.users = _.filter(self.users, function(user){
-                if (user.device == device){
+                if (user.device === device){
                     removed.push(user)
                     return false
                 }
@@ -289,12 +289,12 @@ var Firebase = function(p){
             })
         },
 
-        mytokens : function({address}){
+        mytokens : function({address, device}){
 
             return new Promise((resolve, reject) => {
 
-            
-                db.find({address : address}).exec(function (err, docs) {
+
+                db.find({address : address, device: device}).exec(function (err, docs) {
 
                     if(err){
                         return reject(err)
@@ -408,7 +408,7 @@ var Firebase = function(p){
                         const response = await admin.messaging().sendMulticast(message)
                         for (const responseIndex in response.responses) {
                             const addresses = users.filter(el=>el.token === message?.tokens[responseIndex]).map(el=>el.address)
-                            for(const address in addresses) {
+                            for(const address of addresses) {
                                 if (!response.responses[responseIndex]?.success) {
                                     block.pushStatus.unshift(addStatus(message?.tokens[responseIndex], address, true, response.responses[responseIndex]?.error?.errorInfo?.message, response.responses[responseIndex]?.error?.errorInfo?.code))
                                     if (message?.tokens[responseIndex] && errorCodeList.includes(response.responses[responseIndex]?.error?.errorInfo?.code)) {
@@ -435,7 +435,7 @@ var Firebase = function(p){
 
             const resend = [];
 
-            var tokens = users?.filter?.(el=>!el?.settings?.web).map(el=>el.token) || []
+            var tokens = users?.filter?.(el=>el?.settings?.web===false).map(el=>el.token) || []
             if (tokens.length) {
                 message.notification = data.header;
                 const resendTokens = await sendPush(message, tokens, users);
@@ -443,8 +443,9 @@ var Firebase = function(p){
             }
 
 
-            var tokensWeb = users?.filter?.(el=>el?.settings?.web).map(el=>el.token) || []
+            var tokensWeb = users?.filter?.(el=>el?.settings?.web===true).map(el=>el.token) || []
             if (tokensWeb.length) {
+                delete message.notification;
                 const resendTokens = await sendPush(message, tokensWeb, users)
                 resend.push(...resendTokens)
             }

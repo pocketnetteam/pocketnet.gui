@@ -24640,7 +24640,7 @@ Platform = function (app, listofnodes) {
             },
 
             mytokens : function(proxy){
-                return platform.app.api.fetchauth('firebase/mytokens', {}, {
+                return platform.app.api.fetchauth('firebase/mytokens', {device: device()}, {
                     proxy : proxy
                 })
             },
@@ -24972,11 +24972,11 @@ Platform = function (app, listofnodes) {
 
             self.storage.clear()
 
-            if (using || usingWeb){
-                self.revokeall().then(clbk).catch(e => {})
-
-                return
-            }
+            // if (using || usingWeb){
+            //     self.revokeall().then(clbk).catch(e => {})
+            //
+            //     return
+            // }
 
             if (clbk)
                 clbk()

@@ -2193,7 +2193,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				},
 			},
 
-			revokedevice: {
+			revoke: {
 				path: '/firebase/revoke',
 				action: function (data) {
 					if(!self?.firebase?.info()?.inited) return Promise.reject('firebase not setup')
@@ -2239,7 +2239,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				action: function (data) {
 					if(!self?.firebase?.info()?.inited) return Promise.reject('firebase not setup')
 
-					return self.firebase.kit.mytokens({address : data.U}).then((r) => {
+					return self.firebase.kit.mytokens({address : data.U, device: data.device}).then((r) => {
 						return Promise.resolve({ data: r });
 					});
 				},

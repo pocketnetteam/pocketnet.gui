@@ -77,8 +77,8 @@ var testnodes = [
 var activenodes = [
 	{
 		host : '178.217.159.221', /*  */
-		port: 38081,
-		ws: 8087,
+		port: 38381,
+		ws: 8387,
 		name : 'test3.v.pocketnet.app',
 		stable : true,
 		single : true,
