@@ -503,6 +503,7 @@ var uploadpeertube = (function () {
 						code: 401,
 						payload: {
 							...e,
+							uri: location.href,
 							host: self.app.peertubeHandler.active(),
 						},
 					});
@@ -580,6 +581,7 @@ var uploadpeertube = (function () {
 								err: e.text || 'videoImportError',
 								payload: {
 									...e,
+									uri: location.href,
 									host: self.app.peertubeHandler.active(),
 								},
 								code: 402,
@@ -682,6 +684,7 @@ var uploadpeertube = (function () {
 										err: 'PEERTIBE_AUTH_ERROR_VIDEOELEMENT',
 										payload: {
 											...e,
+											uri: location.href,
 											host: self.app.peertubeHandler.active(),
 										},
 										code: 501,

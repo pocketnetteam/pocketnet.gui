@@ -88,6 +88,7 @@ var videoCabinet = (function () {
 					err: error.text || 'videoCabinetError',
 					payload: {
 						...error,
+						uri: location.href,
 						host: self.app.peertubeHandler.active(),
 					},
 					code: 502,
@@ -1279,6 +1280,7 @@ var videoCabinet = (function () {
 														code: 444,
 														payload: {
 															...err,
+															uri: location.href,
 															host: self.app.peertubeHandler.active(),
 														},
 													});
@@ -1619,7 +1621,10 @@ var videoCabinet = (function () {
 					self.app.Logger.error({
 						err: 'DAMAGED_LOCAL_STORAGE',
 						code: 801,
-						payload: error,
+						payload: {
+							...error,
+							uri: location.href,
+						},
 					});
 
 					unpostedVideosParsed = {};
@@ -1755,6 +1760,7 @@ var videoCabinet = (function () {
 										err: 'PEERTUBE_AUTH_ERROR_CABINET',
 										payload: {
 											...err,
+											uri: location.href,
 											host: self.app.peertubeHandler.active(),
 										},
 										code: 501,
@@ -1896,6 +1902,7 @@ var videoCabinet = (function () {
 								err: 'LONG_CABINET_LOADING',
 								payload: {
 									loadingTime,
+									uri: location.href,
 								},
 								code: 485,
 								level: 'warning',

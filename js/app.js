@@ -1278,6 +1278,15 @@ Application = function(p)
 
   self.Logger = new FrontendLogger(navigator.userAgent, self);
 
+  window.onerror = function (errorMsg, url) {
+    self.Logger.error({
+      err: errorMsg,
+      uri: url,
+      code: -1,
+    })
+    return false;
+  }
+
   self.scrollRemoved = 0;
   self.scrollTop = 0
   self.lastScrollTop = 0

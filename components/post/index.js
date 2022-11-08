@@ -543,6 +543,7 @@ var post = (function () {
 							const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection || {};
 							const payload = {
 								...error,
+								uri: location.href,
 								rtt: connection.rtt || 'Undefined',
 								connection: connection.effectiveType || 'Undefined',
 								mobile: isMobile(),

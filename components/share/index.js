@@ -975,7 +975,10 @@ var share = (function(){
 													self.app.Logger.error({
 														err: 'DAMAGED_LOCAL_STORAGE',
 														code: 801,
-														payload: error,
+														payload: {
+															...error,
+															uri: location.href,
+														},
 													  });
 												};
 
