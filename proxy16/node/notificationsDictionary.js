@@ -12,11 +12,11 @@ module.exports = (data = {user: "", amount: "", score: ""}) => {
         },
         boost: {
             ru: {
-                title: `Повышение рейтинга Вашего комментария`,
-                body: `От пользователя ${data.user}`
+                title: `Ваш пост был поднят в ленте`,
+                body: `Пользователем ${data.user}`
             },
             en: {
-                title: `Increasing the rating of your comment`,
+                title: `Your post have been boosted`,
                 body: `By ${data.user}`
             }
         },
