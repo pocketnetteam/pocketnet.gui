@@ -2745,7 +2745,7 @@ Platform = function (app, listofnodes) {
                             minimize : p.minimize,
                             postclass : p.postclass,
                             showrecommendations : p.showrecommendations,
-                            openapi : true
+                            openapi : typeof p.openapi == 'undefined' ? true : p.openapi
                         }
                     })
 
