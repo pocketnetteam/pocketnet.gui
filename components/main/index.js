@@ -863,7 +863,7 @@ var main = (function(){
 						autoplay : true,
 						nocommentcaption : true,
 						r : 'recommended',
-						
+						openapi : false,
 						opensvi : function(id){
 
 							if (openedpost){
