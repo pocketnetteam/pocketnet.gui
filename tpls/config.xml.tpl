@@ -130,6 +130,14 @@
         <config-file overwrite="true" parent="NSPhotoLibraryUsageDescription" target="*-Info.plist">
             <string>Allow the application access to the photo gallery to select photos for publication.</string>
         </config-file>
+
+        <resource-file src="configs/de.lproj" />
+        <resource-file src="configs/es.lproj" />
+        <resource-file src="configs/fr.lproj" />
+        <resource-file src="configs/it.lproj" />
+        <resource-file src="configs/kr.lproj" />
+        <resource-file src="configs/ru.lproj" />
+        <resource-file src="configs/zh.lproj" />
        
         <preference name="UseSwiftLanguageVersion" value="4.2" />
         <preference name="NativeXHRLogging" value="full" />
