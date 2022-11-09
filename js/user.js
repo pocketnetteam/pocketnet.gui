@@ -156,7 +156,7 @@ User = function(app, p) {
 					sessionStorage['mnemonic'] = enc
 				}
 
-				self.umnemonic = mnemonic
+				self.umnemonic = enc
 			})
 		
 
