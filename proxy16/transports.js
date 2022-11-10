@@ -105,9 +105,11 @@ module.exports = function (enable = false) {
             opts.agent = torHttpsAgent;
         } else {
             const urlParts = new URL(url);
-            const isPingSuccess = await pingHost(urlParts.host);
+            const isPingSuccess = await pingHost(urlParts.hostname);
 
             if (!isPingSuccess) {
+                console.log('Proxy16: Proxifing', urlParts.host)
+
                 proxifyHost(url);
                 opts.agent = torHttpsAgent;
             }
