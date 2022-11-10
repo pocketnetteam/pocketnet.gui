@@ -142,7 +142,6 @@ class Notifications{
                         notification.type = type;
                         notification = this.transaction(notification, address)
                         notification = this.setDetails(notification)
-
                         var dic = dictionary({
                             user: notification?.account?.n || notification?.account?.name || "",
                             amount: notification.amount || 0,
@@ -152,6 +151,30 @@ class Notifications{
                         notification.header = dic?.[notification.type]?.[notification?.info?.l || notification?.info?.lang || 'en'] || dic?.[notification.type]?.['en']
 
                         if (notification.header){
+                            const json = notification.description || notification.relatedContent?.description
+                            if(json){
+                                let description = {}
+                                try {
+                                    description = JSON.parse(json)
+                                }catch (e) {
+                                    try {
+                                        description.caption = json
+                                    }catch (e) {
+                                        this.logger.w('system', 'error', `Notification: Error generate description ${e.message || e}`)
+                                    }
+                                }
+                                if(description.caption){
+                                    const caption = decodeURIComponent(description.caption)
+                                    notification.header.body = `${caption.length > 100 ? caption.slice(0, 100)+'...' : caption}`
+                                }else if(description.message){
+                                    const message = decodeURIComponent(description.message)
+                                    notification.header.body = `${message.length > 100 ? message.slice(0, 100)+'...' : message}`
+                                }else if(description.images && description.images.length) {
+                                    const imageText = dic?.['images']?.[notification?.info?.l || notification?.info?.lang || 'en']
+                                    notification.header.body = `${imageText}(${description.images.length})`
+                                }
+
+                            }
 
                             notification.image = notification?.account?.a || notification?.account?.avatar
                             notification.url = this.generateUrl(notification)
@@ -233,7 +256,7 @@ class Notifications{
             case 'money':
                 if (notification.outputs.length && !notification.outputs?.[0]?.addresshash)
                     notification.cointype = this.proxy.pocketnet.kit.getCoibaseType(notification.outputs[0])
-                const amount = notification?.outputs?.find(el => el.addresshash === address)?.value;
+                let amount = notification?.outputs?.find(el => el.addresshash === address)?.value;
                 notification.amount = amount ? amount / 100000000 : 0
 
                 if(notification?.inputs?.find(el=>el.addresshash === address)){
@@ -242,12 +265,12 @@ class Notifications{
 
                 break
             case 'boost':
-                notification.amount = notification?.inputs?.reduce((a, item)=> a+item.value, 0) - notification?.outputs?.reduce((a, item)=> a+item.value, 0)
+                notification.amount = (notification?.inputs?.reduce((a, item)=> a+item.value, 0) - notification?.outputs?.reduce((a, item)=> a+item.value, 0)) / 100000000
                 break
             case 'comment':
                 notification.amount =
-                    notification?.outputs?.filter?.(el=>el.addresshash === address)?.reduce((a, item)=> a+item.value, 0) -
-                    notification?.inputs?.filter?.(el=>el.addresshash === address)?.reduce((a, item)=> a+item.value, 0)
+                    (notification?.outputs?.filter?.(el=>el.addresshash === address)?.reduce((a, item)=> a+item.value, 0) -
+                    notification?.inputs?.filter?.(el=>el.addresshash === address)?.reduce((a, item)=> a+item.value, 0)) / 100000000
                 break
             default:
                 notification.amount = 0

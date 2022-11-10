@@ -72,22 +72,22 @@ module.exports = (data = {user: "", amount: "", score: ""}) => {
         },
         comment: {
             ru: {
-                title: `Вам оставлен новый комментарий`,
-                body: `От пользователя ${data.user}`
+                title: `${data.user} оставил Вам новый комментарий`,
+                body: ``
             },
             en: {
-                title: `You have a new comment`,
-                body: `By ${data.user}`
+                title: `You have a new comment by ${data.user}`,
+                body: ``
             }
         },
         privatecontent: {
             ru: {
-                title: `Новая публикация`,
-                body: `От пользователя ${data.user}`
+                title: `Новая публикация от ${data.user}\``,
+                body: ``
             },
             en: {
-                title: `New publication`,
-                body: `By ${data.user}`
+                title: `New publication by ${data.user}`,
+                body: ``
             }
         },
         commentDonate: {
@@ -102,12 +102,12 @@ module.exports = (data = {user: "", amount: "", score: ""}) => {
         },
         answer: {
             ru: {
-                title: `Оставлен ответ на Ваш комментарий`,
-                body: `От пользователя ${data.user}`
+                title: `${data.user} оставил ответ на Ваш комментарий`,
+                body: ``
             },
             en: {
-                title: `Reply to your comment`,
-                body: `By ${data.user}`
+                title: `Reply to your comment by ${data.user}`,
+                body: ``
             }
         },
         answerDonate: {
@@ -132,7 +132,7 @@ module.exports = (data = {user: "", amount: "", score: ""}) => {
         },
         contentscore: {
             ru: {
-                title: `Пользователь ${data.user} поставил оценку Вашей публикации`,
+                title: `Пользователь ${data.user} оцененил Вашу публикацию`,
                 body: `Оценка ${data.score}`
             },
             en: {
@@ -142,7 +142,7 @@ module.exports = (data = {user: "", amount: "", score: ""}) => {
         },
         commentscore: {
             ru: {
-                title: `Пользователь ${data.user} поставил оценку Вашему комментарию`,
+                title: `Пользователь ${data.user} оцененил Ваш комментарий`,
                 body: `Оценка ${data.score}`
             },
             en: {
@@ -170,5 +170,9 @@ module.exports = (data = {user: "", amount: "", score: ""}) => {
                 body: `User ${data.user}`
             }
         },
+        images: {
+            ru: "Изображения",
+            en: "Images"
+        }
     }
 }
