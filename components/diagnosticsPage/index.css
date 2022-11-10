@@ -1,0 +1,71 @@
+#diagnosticsPage .resultsTable {
+  display: flex;
+  flex-direction: column;
+}
+#diagnosticsPage .tableRow {
+  display: flex;
+  flex-direction: row;
+  box-sizing: border-box;
+}
+#diagnosticsPage .tableCell {
+  box-sizing: border-box;
+  padding: 1em 2.5em;
+  border-bottom: 1px solid #e4ddde;
+}
+#diagnosticsPage .nameCell {
+  width: 20%;
+  max-width: 250px;
+  padding-right: 50px;
+}
+#diagnosticsPage .reachableCell {
+  width: 40%;
+  max-width: 400px;
+  overflow-wrap: break-word;
+}
+#diagnosticsPage .videosCell {
+  width: 40%;
+  max-width: 400px;
+  overflow-wrap: break-word;
+}
+#diagnosticsPage .tableHeader .tableCell {
+  font-weight: bold;
+}
+#diagnosticsPage .diagnosticsHeader {
+  font-size: 2em;
+  font-weight: 100;
+  padding-top: 1em;
+  padding-bottom: 1em;
+}
+#diagnosticsPage .diagnoseBody {
+  padding-top: 2em;
+  padding-bottom: 4em;
+}
+#diagnosticsPage .progress {
+  padding-bottom: 1em;
+}
+#diagnosticsPage .startDiagnoseButton {
+  padding: 1em 2em;
+}
+#diagnosticsPage .failedServerName {
+  color: #F41A4D;
+  display: flex;
+  align-items: center;
+}
+#diagnosticsPage .goodServerName {
+  color: #076C34;
+  display: flex;
+  align-items: center;
+}
+#diagnosticsPage .fosIcon {
+  margin-right: 0.5em;
+}
+#diagnosticsPage .mainBodyWrapper {
+  color: rgb(var(--neutral-grad-2));
+}
+#diagnosticsPage .connectingToWrapper {
+  font-weight: bold;
+  color: rgb(var(--neutral-grad-2));
+}
+#diagnosticsPage .progressCaptionWrapper {
+  color: rgb(var(--neutral-grad-2));
+}

@@ -266,9 +266,6 @@ var userpage = (function(){
 				})
 
 			}
-
-
-
 				
 		}
 

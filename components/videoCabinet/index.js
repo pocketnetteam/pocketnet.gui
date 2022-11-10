@@ -259,19 +259,24 @@ var videoCabinet = (function () {
 							),
 					)
 					.then((aggregatedNumberViews) => {
-						const cahceViewsInformation = localStorage.getItem('aggregatedVideoViews');
+						const cahceViewsInformation = localStorage.getItem('aggregatedVideoViews_v2') || "{}";
 
-						let viewsObject;
+						let viewsObject = {};
 
 						try {
 							viewsObject = JSON.parse(cahceViewsInformation);
 
-							if (typeof viewsObject !== 'object') viewsObject = {};
+							if (typeof viewsObject !== 'object') {
+								viewsObject = {};
+							}
+
 						} catch (errorParsing) {
 							viewsObject = {};
 						}
 
-						const cachedViews = +(
+						console.log("viewsObject", viewsObject)
+
+						const cachedViews =+ (
 							viewsObject[self.app.user.address.value] || 0
 						);
 
@@ -289,9 +294,12 @@ var videoCabinet = (function () {
 						return cachedViews;
 					})
 					.catch((err) => {
+						console.error(err)
 						if (!err.text) err.text = 'GET_TOTAL_VIEWS_VIDEOCABINET';
 
-						return sitemessage(helpers.parseVideoServerError(err));
+						sitemessage(helpers.parseVideoServerError(err));
+
+						return Promise.reject(err)
 					});
 			},
 
@@ -1049,8 +1057,10 @@ var videoCabinet = (function () {
 
 				const elName = typeDictionary[p.type];
 
+				console.log('external', external)
+
 				if (external && external.id == elName) {
-					external.container.show();
+					external.show();
 
 					return;
 				}
@@ -1889,6 +1899,8 @@ var videoCabinet = (function () {
 					self,
 					'app.modules.uploadpeertube.module.essenses.uploadpeertube',
 				);
+
+				console.log('externallatest', externallatest)
 
 				if (externallatest && !externallatest.destroyed) {
 					external = externallatest;

@@ -480,7 +480,7 @@ var main = (function(){
 						caption : self.app.localization.e("Top videos") ,
 						video: true,
 						r : 'hot',
-						loaderkey : 'recommended',
+						loaderkey : 'best',
 						shuffle : true,
 						period : '4320',
 						page : 0,

@@ -209,6 +209,8 @@ class FrontendLogger {
 
     const formattedError = { ...error, guid, userAgent, payload: errorBody };
 
+    if (error.level) formattedError.level = error.level;
+
     if (_addLogWithAggregation[error.err]) {
       _addLogWithAggregation[error.err](
         formattedError,
