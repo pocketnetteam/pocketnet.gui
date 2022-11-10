@@ -1489,7 +1489,7 @@ html.mobileview.ios .share_common.fullScreenVideo .video-js {
 }
 .common_share_article_wrapper .share .sharearticle .readarticlebutton span {
   display: inline;
-  opacity: 0.5;
+  opacity: 0.8;
 }
 .common_share_article_wrapper .share .sharearticle .waitconfirmations {
   padding: 0.5em 0;
@@ -1618,6 +1618,15 @@ html.mobileview.ios .share_common.fullScreenVideo .video-js {
 }
 .common_share_article_wrapper .share .sharearticle .shareBgCaption .captioncnt .articleclick .captionmult {
   margin-top: auto;
+}
+.common_share_article_wrapper .share .sharearticle .shareBgCaption .captioncnt .textPreview {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  max-width: 83%;
 }
 .common_share_article_wrapper .share .sharearticle .shareBgCaption .captioncnt .sharecaption {
   font-size: 1.5em;
