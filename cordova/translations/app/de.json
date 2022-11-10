@@ -1,0 +1,8 @@
+{
+    "config_ios" : {
+        "NSMicrophoneUsageDescription" : "Diese Anwendung verwendet Ihr Mikrofon, um Sprachnachrichten zu erstellen.",
+        "NSCameraUsageDescription" : "Erlauben Sie der Anwendung den Zugriff auf die Kamera, um Fotos für die Veröffentlichung auszuwählen.",
+        "NSPhotoLibraryUsageDescription" : "Erlauben Sie der Anwendung den Zugriff auf die Fotogalerie, um Fotos für die Veröffentlichung auszuwählen.",
+        "NSContactsUsageDescription" : "Diese App benötigt Zugriff auf die Kontakte, um sie zu Bastion einzuladen."
+    }
+}

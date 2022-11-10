@@ -62,6 +62,7 @@
     "cordova-plugin-firebasex": "^14.2.1",
     "cordova-plugin-insomnia": "file:cordova-plugin-insomnia",
     "cordova-plugin-ionic-keyboard": "file:cordova-plugin-ionic-keyboard",
+    "cordova-plugin-localization-strings": "^4.2.0",
     "cordova-plugin-media": "^6.1.0",
     "cordova-plugin-navigationbar-color": "^0.1.0",
     "cordova-plugin-photo-library": "github:simplifier-ag/cordova-plugin-photo-library",
@@ -162,11 +163,14 @@
       "cordova-plugin-camera-preview": {},
       "cordova-plugin-audioinput": {},
       "cordova-plugin-actionsheet": {},
-      "cordova-plugin-background-mode": {}
+      "cordova-plugin-background-mode": {},
+      "cordova-plugin-localization-strings": {
+        "TRANSLATION_PATH": "translations/app/"
+      }
     },
     "platforms": [
-      "ios",
-      "android"
+      "android",
+      "ios"
     ]
   }
 }

@@ -1,3 +1,4 @@
 "NSMicrophoneUsageDescription" = "Questa applicazione utilizza il microfono per inviare messaggi vocali.";
 "NSCameraUsageDescription" = "Consentire all'applicazione di accedere alla fotocamera per selezionare le foto da pubblicare.";
 "NSPhotoLibraryUsageDescription" = "Consentire all'applicazione di accedere alla galleria fotografica per selezionare le foto da pubblicare.";
+"NSContactsUsageDescription" = "Questa app richiede l'accesso ai contatti per invitarli a Bastyon.";

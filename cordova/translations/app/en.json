@@ -1,0 +1,8 @@
+{
+    "config_ios" : {
+        "NSMicrophoneUsageDescription" : "Application uses the microphone to create voice messages in chat.",
+        "NSCameraUsageDescription" : "Application uses the camera so you can take a photo and publish it in the feed.",
+        "NSPhotoLibraryUsageDescription" : "Application uses the photo gallery so you can choose photos from the gallery to publish in your feed.",
+        "NSContactsUsageDescription" : "This app requires access to the contacts to invite them to Bastyon."
+    }
+}

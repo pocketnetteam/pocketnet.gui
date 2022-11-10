@@ -1,0 +1,8 @@
+{
+    "config_ios" : {
+        "NSMicrophoneUsageDescription" : "이 응용 프로그램은 음성 메시지를 만들기 위해 마이크를 사용합니다.",
+        "NSCameraUsageDescription" : "응용 프로그램이 카메라에 액세스하여 게시할 사진을 선택하도록 허용합니다.",
+        "NSPhotoLibraryUsageDescription" : "응용 프로그램이 사진 갤러리에 액세스하여 게시할 사진을 선택하도록 허용합니다.",
+        "NSContactsUsageDescription" : "이 앱은 연락처에 액세스해야 Bastyon에 초대할 수 있습니다."
+    }
+}

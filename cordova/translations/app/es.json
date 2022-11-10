@@ -1,0 +1,8 @@
+{
+    "config_ios" : {
+        "NSMicrophoneUsageDescription" : "Esta aplicación utiliza su micrófono para realizar mensajes de voz.",
+        "NSCameraUsageDescription" : "Permitir a la aplicación el acceso a la cámara para seleccionar fotos para su publicación.",
+        "NSPhotoLibraryUsageDescription" : "Permitir a la aplicación el acceso a la galería de fotos para seleccionar fotos para su publicación.",
+        "NSContactsUsageDescription" : "Esta aplicación requiere acceso a los contactos para invitarlos a Bastyon."
+    }
+}

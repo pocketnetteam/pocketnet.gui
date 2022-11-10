@@ -119,25 +119,29 @@
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
 
-        <config-file parent="NSMicrophoneUsageDescription" target="*-Info.plist">
-            <string>This Application uses your microphone to make voice messages</string>
-        </config-file>
+        <edit-config file="*-Info.plist" mode="merge" target="NSMicrophoneUsageDescription">
+            <string>Application uses the microphone to create voice messages in chat.</string>
+        </edit-config>
 
-        <config-file parent="NSCameraUsageDescription" target="*-Info.plist">
-            <string>Allow the application access to the camera to select photos for publication.</string>
-        </config-file>
-   
-        <config-file overwrite="true" parent="NSPhotoLibraryUsageDescription" target="*-Info.plist">
-            <string>Allow the application access to the photo gallery to select photos for publication.</string>
-        </config-file>
+        <edit-config file="*-Info.plist" mode="merge" target="NSCameraUsageDescription">
+            <string>Application uses the camera so you can take a photo and publish it in the feed.</string>
+        </edit-config>
 
-        <resource-file src="configs/de.lproj" />
+        <edit-config file="*-Info.plist" mode="merge" target="NSPhotoLibraryUsageDescription">
+            <string>Application uses the photo gallery so you can choose photos from the gallery to publish in your feed.</string>
+        </edit-config>
+
+        <edit-config file="*-Info.plist" mode="merge" target="NSContactsUsageDescription">
+            <string>This app requires access to the contacts to invite them to Bastyon.</string>
+        </edit-config>
+
+        <!--<resource-file src="configs/de.lproj" />
         <resource-file src="configs/es.lproj" />
         <resource-file src="configs/fr.lproj" />
         <resource-file src="configs/it.lproj" />
         <resource-file src="configs/kr.lproj" />
         <resource-file src="configs/ru.lproj" />
-        <resource-file src="configs/zh.lproj" />
+        <resource-file src="configs/zh.lproj" />-->
        
         <preference name="UseSwiftLanguageVersion" value="4.2" />
         <preference name="NativeXHRLogging" value="full" />
