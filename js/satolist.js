@@ -30262,7 +30262,7 @@ Platform = function (app, listofnodes) {
     }
 
     self.initSounds = function () {
-        if (typeof ion != 'undefined'){
+        if (typeof ion != 'undefined' && !window.cordova){
             ion.prepare()
             ion.sound({
                 sounds: [ { name: "water_droplet"}, { name: "glass" } ],
