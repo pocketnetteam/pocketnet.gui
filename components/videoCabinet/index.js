@@ -1057,8 +1057,10 @@ var videoCabinet = (function () {
 
 				const elName = typeDictionary[p.type];
 
+				console.log('external', external)
+
 				if (external && external.id == elName) {
-					external.container.show();
+					external.show();
 
 					return;
 				}
@@ -1897,6 +1899,8 @@ var videoCabinet = (function () {
 					self,
 					'app.modules.uploadpeertube.module.essenses.uploadpeertube',
 				);
+
+				console.log('externallatest', externallatest)
 
 				if (externallatest && !externallatest.destroyed) {
 					external = externallatest;
