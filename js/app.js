@@ -847,6 +847,8 @@ Application = function(p)
 
     self.mobile.keyboard.style()
 
+    self.gifResizer = new resizeGif(self)
+
     if (self.ref)
       self.platform.sdk.users.addressByName(self.ref, function(r){
         if(r){
