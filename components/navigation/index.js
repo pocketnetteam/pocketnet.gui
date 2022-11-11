@@ -43,7 +43,14 @@ var navigation = (function(){
 
 				var indexkey = self.app.nav.api.backChainIndex()
 				
-				var k = localStorage['lentakey'] || indexkey + '?b=true';
+				var k = indexkey + '?b=true';
+
+				try {
+					k = localStorage['lentakey'] || indexkey + '?b=true';
+				}
+				catch (e) { }
+				
+				
 
 				if (k == indexkey) k = indexkey + '?b=true'
 
@@ -68,7 +75,6 @@ var navigation = (function(){
 
 				var back = self.app.nav.api.backChainGet()
 				
-				console.log("k", k)
 
 				self.shell({
 					name :  'menu',

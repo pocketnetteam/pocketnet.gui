@@ -71,6 +71,8 @@ __map =  {
 	],
 
 	__sourcesfirst : [
+		"js/vendor/firebase-app.js",
+		"js/vendor/firebase-messaging.js",
 		"js/vendor/axios.js",
 		"js/vendor/underscore-min.js",  
 		{path : "js/functionsfirst.js", babelify : true},
@@ -651,6 +653,17 @@ __map =  {
 			add : insertingfunc,
 			anonimus : true,
 		},
+
+
+		slides: {
+			uri : "slides",
+			href : "slides",
+			add : insertingfunc,
+			anonimus : true,
+		},
+
+
+		
 	
 		embeding : {
 			uri : "embeding",
@@ -1036,6 +1049,12 @@ __map =  {
 	videoCabinet : {
 		uri : "videoCabinet",
 		href : "videoCabinet",
+		add : insertingfunc,
+	},
+
+	diagnosticsPage : {
+		uri : "diagnosticsPage",
+		href : "diagnosticsPage",
 		add : insertingfunc,
 	},
 

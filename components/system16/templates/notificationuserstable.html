@@ -1,0 +1,17 @@
+<% _.each(users, function(item, index){ %>
+        <div class="work">
+            <div elementsid="notificationWrapper_<%-item.height%>" class="users" key="<%-item.height%>">
+                    <div class="field">
+                        <%-item.address%>
+                    </div>
+
+                    <div class="field">
+                        <%-item.token%>
+                    </div>
+
+                    <div class="field">
+                        <%-item.device%>
+                    </div>
+            </div>
+        </div>
+<% }) %>

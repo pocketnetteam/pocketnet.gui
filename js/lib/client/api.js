@@ -371,6 +371,7 @@ var Proxy16 = function(meta, app, api){
                 self.ping = rdate.addSeconds(60)
                 self.successping = true
                 self.session = r.session
+                delete self.pingerror
 
                 if (r.height && self.currentBlock < r.height){
                     self.currentBlock = r.height
@@ -388,6 +389,7 @@ var Proxy16 = function(meta, app, api){
                 var rdate = new Date()
 
                 self.ping = rdate.addSeconds(10)
+                self.pingerror = true
                 
                 return Promise.reject(e)
             })
@@ -397,11 +399,20 @@ var Proxy16 = function(meta, app, api){
 
             var promise = null
 
+
             if(!freshping()){
                 promise = self.api.ping()
             }
             else{
-                promise = Promise.resolve(true)
+
+                if(self.pingerror){
+                    promise = Promise.reject()
+
+                }
+                else{
+                    promise = Promise.resolve(true)
+
+                }
             }
 
             return promise.catch(e => {
@@ -931,6 +942,7 @@ var Api = function(app){
     }
 
     self.rpc = function(method, parameters, options, trying){
+        var selectedProxy;
 
         if(!trying) trying = 0
 
@@ -940,10 +952,11 @@ var Api = function(app){
             options = {}
 
         return getproxy(options.proxy).then(proxy => {
+            selectedProxy = proxy;
+
             return proxy.rpc(method, parameters, options.rpc)
 
         }).then(r => {
-
             app.apiHandlers.success({
                 rpc : true
             })
@@ -951,7 +964,6 @@ var Api = function(app){
             return Promise.resolve(r)
 
         }).catch(e => {
-
 
             if(!e) e = 'TypeError: Failed to fetch'
 
@@ -972,7 +984,10 @@ var Api = function(app){
             if (app.Logger) {
                 app.Logger.error({
                     err: typeof e === 'string' ? e : (e.text || 'RPC_DEFAULT_ERROR'),
-                    payload: e,
+                    payload: {
+                        ...e,
+                        proxyHost: deep(selectedProxy, 'host'),
+                    },
                     code: e.code || 423,
                 });
             }
@@ -1206,6 +1221,25 @@ var Api = function(app){
             })
         },
 
+        byidwithadd : function(id){
+            var p = self.get.byid(id)
+
+            if(!p){
+
+                var mp = id.split(':')
+
+                var meta = {
+                    host : mp[0],
+                    port : mp[1],
+                    wss : mp[2]
+                }
+
+                var proxy = new Proxy16(meta, app, self)
+
+                return proxy
+            }
+        },
+
         working : function(){
 
             var _proxies = _.filter(proxies, function(proxy){
@@ -1297,14 +1331,19 @@ var Api = function(app){
         var pr = getproxyas()
         var promise = null
 
+
+
         if (pr){
-            promise = pr.api.actualping()
+            promise = pr.api.actualping().catch(e => {
+                return Promise.resolve(false)
+            })
         }
         else {
             promise = Promise.resolve(false)
         }
 
         return promise.then(r => {
+
             if(r){
                 return Promise.resolve(1)
             }

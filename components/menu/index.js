@@ -111,6 +111,43 @@ var menu = (function(){
 			
 		}
 
+		var searchlickaction = function(link){
+			
+			var href = link.replace('https://', '').replace('http://', '').replace('bastyon://', '').replace('pocketnet/', '').replace('localhost/', '').replace('bastyon.com/', '').replace('pocketnet.app/', '')
+
+
+			var p = {
+				href : href,
+				history : true,
+				open : true
+			}
+
+			self.nav.api.go(p)
+
+			var w = parameters(href, true).connect
+			var cr = parameters(href, true).publicroom
+			var ps =  parameters(href, true).ps
+			var ref =  parameters(href, true).ref
+
+			self.app.user.isState(function (state) {
+				if(state){
+					self.app.platform.matrixchat.connectWith = w || null
+					self.app.platform.matrixchat.joinRoom = cr || null
+
+
+					if(!ps && !cr && !w && !app.curation()){
+						self.app.platform.matrixchat.backtoapp()
+					}
+
+					self.app.platform.matrixchat.wait().then(r => {
+						self.app.platform.matrixchat.connect()
+					})
+				}
+			})
+
+			
+		}
+
 		var events = {
 
 
@@ -142,7 +179,13 @@ var menu = (function(){
 					self.app.user.isState(function(state){
 
 						//if(self.app.nav.get.pathname() != 'index'){
-							var k = localStorage['lentakey'] || 'index';
+
+							var k = 'index';
+							try {
+								k = localStorage['lentakey'] || 'index'
+							}
+							catch (e) { }
+							
 
 							if (parameters().r == k) k = 'index'
 
@@ -443,6 +486,18 @@ var menu = (function(){
 
 								});
 
+								el.find('.gotopage').on('click', function(){
+									var r = $(this).attr('link')
+
+
+									searchlickaction(r)
+
+									helpers.closeResults()
+
+									if (menusearch)
+										menusearch.setactive(false)
+								})
+
 
 								el.find('.user').on('click', function(){
 
@@ -477,6 +532,8 @@ var menu = (function(){
 
 						menusearch = null
 					}
+
+
 
 					menusearch = mobsearch(el.postssearch, {
 						placeholder : self.app.localization.e('e13139'),
@@ -588,7 +645,6 @@ var menu = (function(){
 
 									render(getresults(), value, clbk, {
 										counts : counts
-
 									})
 								}, 'pocketnet', true)
 
@@ -599,7 +655,7 @@ var menu = (function(){
 							search : function(value, clbk, e, helpers){
 
 
-								if(!menusearch.active){
+								if(menusearch && !menusearch.active){
 
 									if (clbk) clbk(true)
 
@@ -612,6 +668,17 @@ var menu = (function(){
 									
 
 									return
+								}
+
+								if(value && self.app.thislink(value)){
+
+									if (menusearch)
+										menusearch.clear()
+
+									if (clbk)
+										clbk(true)
+
+									return searchlickaction(value)
 								}
 
 								var href = '';
@@ -786,8 +853,6 @@ var menu = (function(){
 						    	number: add,
 
 						    	numberStep: function(now, tween) {
-
-									console.log('step')
 
 						        	var number = Number(value + now).toFixed(8),
 						            	target = $(tween.elem);

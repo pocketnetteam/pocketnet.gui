@@ -294,6 +294,8 @@ _l.lpublic = "Public";
 //inviteComment
 _l.commentBannerTitle = "Comment on this post";
 _l.commentBannerDescription = "Commenting unlocks features on Bastyon and helps you find friends 😀";
+_l.commentBannerTitle2 = function(v){ return "Follow " + v + " to see more posts for them"};
+_l.commentBannerDescription2 = function(v){ return "Following " + v + " will show more content like this in your feed." };
 _l.dontShowAgain = "Don't show again";
 
 //share
@@ -616,6 +618,7 @@ _l.e13107 = "Node management may be carried out with Application"
 _l.e13108 = "There isn't connection with Electron proxy interface"
 
 _l.e13109 = "Please enter the words in the picture to receive Pocketcoin and continue registration"
+_l.e13109lg = "Please enter the words in the picture to continue registration"
 _l.e13110 = "Enter words"
 _l.poll = "Create poll"
 _l.next = "Next"
@@ -863,6 +866,8 @@ _l.e13267 = "Dark Theme"
 _l.e13268 = "Coinstake win"
 _l.e13269 = "Transactions receive"
 _l.e13270 = "Upvotes receive"
+_l.e13270d = "Downvotes receive"
+
 _l.e13271 = "Comment receive"
 _l.e13272 = "Answer receive"
 _l.e13273 = "New Followers"
@@ -1279,7 +1284,7 @@ _l.sortByDuration = "Duration";
 _l.sortByViews = "Views";
 
 _l.unableToAuthorize = "Unable to authorize";
-_l.unableToAuthorizeBody = "Unfortunately, the application cannot authenticate this account on the video server. You need at least 5 PKOIN or 50 reputation to upload videos.";
+_l.unableToAuthorizeBody = "Unfortunately, the application cannot authenticate this account on the video server. You need at least 5 PKOIN or 100 reputation to upload videos.";
 
 _l.unableToAuthorizeConnection = "Unable to authorize";
 _l.unableToAuthorizeConnectionBody = "Unfortunately, the application cannot authenticate this account on the video server.  Please try again later";
@@ -2336,3 +2341,44 @@ _l.removecategoryQestion = 'Do you really want to remove this category?'
 
 _l.searchbytext = "Search by text:"
 _l.searchbytags = "Search by tags:"
+
+_l.boost_c1 = 'Advertise with PKOIN & get leads for your crypto project today'
+_l.boost_c2 = 'Web 2.0'
+_l.boost_c3 = 'Bastyon Web 3.0'
+_l.boost_c4 = 'Are you trying to be heard on the internet?'
+_l.boost_c5 = 'Would you like to get your content or product in front of a new dynamic audience for less than major ad networks?'
+_l.boost_c6 = 'Bastyon, the blockchain social network has just released a way of promoting content, including videos.'
+_l.boost_c7 = 'The cost of an impression on Bastyon is many times lower than on traditional ad networks.'
+_l.boost_c8 = 'Boosting posts on Bastyon is very simple, you just need some Pocketcoin, a native cryptocurrency of Bastyon. Click Boost below the post and enter the amount and your post is moved to the top!'
+_l.boost_c9 = 'Bastyon has millions of visitors and growing. Your content will be seen!'
+_l.boost_c10 = 'If you are an aspiring author who wants to increase your audience, Bastyon boosting of posts can work for you!'
+_l.boost_c11 = 'If you are an advertiser looking for a platform to promote your product, you can quickly get your ad up and running and get conversions.'
+_l.boost_c12 = 'Open source'
+_l.boost_c13 = 'Upload your videos'
+_l.boost_c14 = 'Earn with Bastyon'
+_l.boost_c15 = 'Privacy protection'
+_l.boost_c16 = 'Bitcoin of social media'
+_l.boost_c17 = 'Censorship resistant'
+
+_l.gotopage = 'Go to page'
+
+_l.postedVideos = "Posted Videos"
+_l.unPostedVideos = "Unposted Videos"
+_l.videoIsPosting = "Posting"
+_l.noUnposted = "No Unposted Videos"
+
+_l.sortByComments = "Comments";
+_l.sortByRating = "Number of ratings";
+
+_l.noPosted = "No posted Videos"
+_l.unpostedFooter = "Unposted videos are deleted from the server after 3-weeks of waiting"
+
+_l.diagnosticsPage = "Diagnostics";
+_l.startDiagnose = "Run Diagnostics";
+_l.videoServerName = "Server URL";
+_l.videoServerReachable = "Reachability";
+_l.serversTestingProgress = "Progress of Diagnosing:";
+_l.videoServerVideo = "Video Info";
+_l.goToDiagnose = "Go to Diagnostics";
+_l.connectingTo = "Connecting to";
+

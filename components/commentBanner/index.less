@@ -13,6 +13,12 @@
     border: solid rgb(var(--neutral-grad-3)) 1px;
     border-radius: 7px;
 
+    &.subscribeUser{
+      .iconWrapper{
+        width: 3em;
+      }
+    }
+
     .bannerIcon {
       width: 64px;
       background-image: url(../../images/comment.png);
@@ -34,13 +40,38 @@
 
       .noShowAgain {
         text-decoration: underline;
-        padding-top: 3%;
+        padding-top: 2%;
         color: rgb(var(--color-not-catchy-grey));
         font-size: 0.8em;
         cursor: pointer;
       }
       .noShowAgain:hover {
         color: rgb(var(--color-cc-blue));
+      }
+
+      .buttonsWrapper{
+        margin-top: @rhythm;
+        display: flex;
+
+        .unsubscribe{
+          display: none;
+        }
+
+        button{
+          margin-right: @rhythm * 2;
+          padding-left: @rhythm;
+        }
+
+        &.following{
+          
+          .unsubscribe{
+            display: block
+          }
+
+          .subscribe{
+            display: none;
+          }
+        }
       }
     }
 

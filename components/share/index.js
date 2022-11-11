@@ -821,11 +821,11 @@ var share = (function(){
 					}
 				})
 
-				var ptag = actions.getprofanitytag(text)
+				/*var ptag = actions.getprofanitytag(text)
 
 				if (ptag){
 					newtags.push(ptag)
-				}
+				}*/
 				
 
 				if(newtags.length){
@@ -879,15 +879,11 @@ var share = (function(){
 
 				var SAVE = function(){
 
-					console.log("SAVE")
-
 					currentShare.language.set(self.app.localization.key)
 
 					actions.checktranscoding(function(result){
-						console.log("AS")
 						currentShare.uploadImages(self.app, function(){
 
-							console.log("AS2")
 
 							if (currentShare.hasexchangetag()){
 								currentShare.repost.v = ''
@@ -922,7 +918,6 @@ var share = (function(){
 		
 								function(_alias, error){
 
-									console.log("ASD", error)
 
 									topPreloader(100)
 		
@@ -962,8 +957,41 @@ var share = (function(){
 											if(currentShare.aliasid) alias.edit = "true"	
 											if(currentShare.time) alias.time = currentShare.time
 		
-											self.app.platform.sdk.node.shares.add(alias)
-		
+											self.app.platform.sdk.node.shares.add(alias);
+
+											if (alias.itisvideo()) {
+												var unpostedVideos;
+
+												try {
+													unpostedVideos = JSON.parse(localStorage.getItem('unpostedVideos') || '{}');
+												} catch (error) {
+													unpostedVideos = {};
+
+													self.app.Logger.error({
+														err: 'DAMAGED_LOCAL_STORAGE',
+														code: 801,
+														payload: error,
+													  });
+												};
+
+												if (unpostedVideos[self.app.user.address.value]) {
+													unpostedVideos[self.app.user.address.value] =
+														unpostedVideos[self.app.user.address.value].filter(
+															(video) => video !== alias.url,
+														);
+
+														try {
+															localStorage.setItem(
+																'unpostedVideos',
+																JSON.stringify(unpostedVideos),
+															);
+														}
+														catch (e) { }
+
+													
+												}
+											}
+
 											if(!essenseData.notClear){
 												currentShare.clear();
 												self.app.nav.api.history.removeParameters(['repost'])
@@ -988,9 +1016,9 @@ var share = (function(){
 										})
 		
 										intro = false
-		
+
 										if (essenseData.post){
-											essenseData.post()
+											essenseData.post(alias)
 										}
 										else{
 		
@@ -1060,7 +1088,7 @@ var share = (function(){
 
 						const options = {};
 	
-						if (currentShare.message.v) options.description = `Watch more exciting videos at https://`+self.app.options.url+`/! \n ${currentShare.message.v}`;
+						if (currentShare.message.v) options.description = currentShare.message.v;
 						if (currentShare.caption.v) options.name = currentShare.caption.v;
 	
 						var urlMeta = self.app.peertubeHandler.parselink(currentShare.url.v);
@@ -1631,8 +1659,6 @@ var share = (function(){
 		
 							action : function(file, clbk){
 
-								console.log("FILE", file)
-		
 								if (file.ext == 'gif'){
 									imagesHelper.slowUploadGif(file, tstorage, clbk)
 								}
@@ -2620,6 +2646,7 @@ var share = (function(){
 				intro = false;
 				external = null
 				currentShare = deep(p, 'settings.essenseData.share') || new Share(self.app.localization.key, self.app);
+
 				essenseData = deep(p, 'settings.essenseData') || {};
 
 				currentShare.app = self.app
@@ -2704,9 +2731,7 @@ var share = (function(){
 					sortable = null
 				}
 
-
 				el = {};
-				essenseData = {}
 					
 			},
 			

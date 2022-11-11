@@ -113,7 +113,8 @@ var Cache = function(p){
             },
 
             searchusers: {
-                time : 2000
+                time : 2000,
+                block : 0
             },
             
             // node +

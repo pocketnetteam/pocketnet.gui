@@ -146,13 +146,12 @@
 }
 :root {
   --app-margin-top-default: 0px;
-  --app-margin-top: max(env(safe-area-inset-top), var(--app-margin-top-default));
+  --app-margin-top: 0px;
 }
-:root {
-  --safe-area-inset-top: 0px;
-  --safe-area-inset-right: 0px;
-  --safe-area-inset-bottom: 0px;
-  --safe-area-inset-left: 0px;
+@supports (width: max(1px, 1px)) {
+  :root {
+    --app-margin-top: max(env(safe-area-inset-top), var(--app-margin-top-default));
+  }
 }
 /* iOS 11.0: supports constant() css function. (Assume all other inset vars are supported.) */
 @supports (padding-top: constant(safe-area-inset-top)) {
@@ -5858,8 +5857,8 @@ html.mobileview.fullscreen #navigationWrapper {
   background-color: #0098eb;
 }
 #splashScreen img {
-  max-height: 25px;
-  max-width: 25px;
+  max-height: 55px;
+  max-width: 55px;
   will-change: transform;
 }
 #splashScreen img.zoom-in {

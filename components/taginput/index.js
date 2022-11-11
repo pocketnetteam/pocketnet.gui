@@ -13,8 +13,6 @@ var taginput = (function(){
 		var actions = {
 			initsearch : function(){
 
-				console.log("SSS", s)
-
 				if(s) s.destroy()
 
 				s = mobsearch(el.tagSearch, {
@@ -215,8 +213,6 @@ var taginput = (function(){
 				if(category){
 
 					var c = self.app.platform.sdk.categories.getbyid(category, actions.language())
-
-					console.log("C", c)
 
 					events.addTags(c.tags)
 					

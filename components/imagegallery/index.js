@@ -54,7 +54,6 @@ var imagegallery = (function(){
 			},
 
 			next : function(){
-				console.log("NEXT")
 				if(essenseData.images.length > 1){
 					actions.prepareImages();
 

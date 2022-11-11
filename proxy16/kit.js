@@ -29,12 +29,13 @@ var logger = new Logger(['general', 'rpc', 'system', 'remote', 'firebase', 'node
 
 var testnodes = [
 	{
-		host : '116.203.219.28',
+		host : '78.37.233.202',
 		port : 39091,
 		ws : 6067,
-		name : 'test.pocketnet.app',
+		name : 'test.v.pocketnet.app',
 		stable : true
 	},
+
 	{
 		host : '157.90.235.121',
 		port : 39091,
@@ -49,10 +50,41 @@ var testnodes = [
 		name : 'test.2.pocketnet.app',
 		stable : true
 	},
+	{
+		host : '116.203.219.28',
+		port : 39091,
+		ws : 6067,
+		name : 'test.pocketnet.app',
+		stable : true
+	},
+	{
+		host : '137.135.25.73',
+		port : 39091,
+		ws : 6067,
+		name : 'tawmaz',
+		stable : false
+	},
+	{
+		host : '109.173.41.29',
+		port : 39091,
+		ws : 6067,
+		name : 'lostystyg',
+		stable : false
+	}
 ]
 
 
 var activenodes = [
+	{
+		host : '178.217.159.221', /*  */
+		port: 38381,
+		ws: 8387,
+		name : 'test3.v.pocketnet.app',
+		stable : true,
+		single : true,
+		allowRpc : false,
+		alwaysrun : true
+	},
 	{
 		host : '135.181.196.243',
 		port : 38081,
@@ -207,6 +239,10 @@ var defaultSettings = {
 		private : '',
 		public : ''
 	}*/
+	
+	slide : {
+		dbpath : 'data/slide',
+	},
 }
 
 
@@ -1065,6 +1101,14 @@ var kit = {
 			},
 		},
 
+		notifications: {
+			info : function(){
+				return kit.proxy().then(async proxy => {
+					return proxy.notifications.info();
+				})
+			},
+		},
+
 		transports : {
 			axios : function(...args){
 				return kit.proxy().then(async proxy => {
@@ -1081,6 +1125,14 @@ var kit = {
 					return proxy.transports.request(option, callback);
 				})
 			},
+		},
+
+		slide: {
+			add : function (...args) {
+				return kit.proxy().then(async proxy => {
+					return proxy.api.add(...args);
+				})
+			}
 		},
 
         quit : function() {

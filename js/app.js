@@ -2522,10 +2522,14 @@ Application = function(p)
 
                       })
 
-                      if (self.nav.current.module)
+                      if (self.nav.current.module){
+
                         self.nav.current.module.restart({
-                          essenseData : self.nav.current.essenseData || {}
+                          essenseData : self.nav.current.essenseData || {},
+                          primary : true
                         })
+                      }
+                        
 
                       setTimeout(function(){
                         globalpreloader(false)
@@ -2733,8 +2737,13 @@ Application = function(p)
     var domain = self.options.url
 
     var m = _.find(groups, function(g){
-      return _.indexOf(g, url.host) > -1 &&  _.indexOf(g, domain) > -1
+
+      console.log('g', g, url.host, domain, _.indexOf(g, url.host))
+
+      return _.indexOf(g, url.host) > -1 &&  (_.indexOf(g, domain) > -1 || domain.indexOf('localhost') > -1)
     })
+
+    console.log("MMM", m)
 
     if(m) return true
 
@@ -2745,7 +2754,10 @@ Application = function(p)
     if(na && self.ref) return
 
     self.ref = r;
-    localStorage['ref'] = self.ref
+    try{
+      localStorage['ref'] = self.ref
+    }catch(e){}
+    
 
   }
 
@@ -2766,8 +2778,9 @@ Application = function(p)
 
 
   self.options.device = localStorage['device'] || makeid();
-
-  localStorage['device'] = self.options.device
+  try{
+    localStorage['device'] = self.options.device
+  }catch(e){}
 
   if(typeof window != 'undefined'){ self.fref = deep(window, 'location.href') }
 
