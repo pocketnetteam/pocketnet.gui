@@ -12,12 +12,12 @@ module.exports = (data = {user: "", amount: "", score: ""}) => {
         },
         boost: {
             ru: {
-                title: `Повышение рейтинга Вашего комментария`,
-                body: `От пользователя ${data.user}`
+                title: `⚡️Ваш пост был поднят в ленте пользователем ${data.user}`,
+                body: `На сумму ${data.amount}`
             },
             en: {
-                title: `Increasing the rating of your comment`,
-                body: `By ${data.user}`
+                title: `⚡️Your post have been boosted by ${data.user}`,
+                body: `Amount: ${data.amount} PKOIN`
             }
         },
         money: {
@@ -72,22 +72,22 @@ module.exports = (data = {user: "", amount: "", score: ""}) => {
         },
         comment: {
             ru: {
-                title: `Вам оставлен новый комментарий`,
-                body: `От пользователя ${data.user}`
+                title: `${data.user} оставил Вам новый комментарий`,
+                body: ``
             },
             en: {
-                title: `You have a new comment`,
-                body: `By ${data.user}`
+                title: `You have a new comment by ${data.user}`,
+                body: ``
             }
         },
         privatecontent: {
             ru: {
-                title: `Новая публикация`,
-                body: `От пользователя ${data.user}`
+                title: `Новая публикация от ${data.user}\``,
+                body: ``
             },
             en: {
-                title: `New publication`,
-                body: `By ${data.user}`
+                title: `New publication by ${data.user}`,
+                body: ``
             }
         },
         commentDonate: {
@@ -102,12 +102,12 @@ module.exports = (data = {user: "", amount: "", score: ""}) => {
         },
         answer: {
             ru: {
-                title: `Оставлен ответ на Ваш комментарий`,
-                body: `От пользователя ${data.user}`
+                title: `${data.user} оставил ответ на Ваш комментарий`,
+                body: ``
             },
             en: {
-                title: `Reply to your comment`,
-                body: `By ${data.user}`
+                title: `Reply to your comment by ${data.user}`,
+                body: ``
             }
         },
         answerDonate: {
@@ -132,7 +132,7 @@ module.exports = (data = {user: "", amount: "", score: ""}) => {
         },
         contentscore: {
             ru: {
-                title: `Пользователь ${data.user} поставил оценку Вашей публикации`,
+                title: `Пользователь ${data.user} оцененил Вашу публикацию`,
                 body: `Оценка ${data.score}`
             },
             en: {
@@ -142,7 +142,7 @@ module.exports = (data = {user: "", amount: "", score: ""}) => {
         },
         commentscore: {
             ru: {
-                title: `Пользователь ${data.user} поставил оценку Вашему комментарию`,
+                title: `Пользователь ${data.user} оцененил Ваш комментарий`,
                 body: `Оценка ${data.score}`
             },
             en: {
@@ -159,6 +159,20 @@ module.exports = (data = {user: "", amount: "", score: ""}) => {
                 title: `Notification`,
                 body: `You have notification`
             }
+        },
+        referal: {
+            ru: {
+                title: `У вас новый реферал`,
+                body: `Пользователь ${data.user}`
+            },
+            en: {
+                title: `You have a new referral`,
+                body: `User ${data.user}`
+            }
+        },
+        images: {
+            ru: "Изображения",
+            en: "Images"
         }
     }
 }

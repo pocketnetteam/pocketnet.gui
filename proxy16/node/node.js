@@ -199,7 +199,9 @@ var Node = function(options, manager){
     }
 
     self.notification = function(block){
-        manager.notifications.addblock(block, self)
+        var chaininfo = manager.currentChainCommon2()
+        if(chaininfo.commonHeight - block.height < 10)
+            manager.notifications.addblock(block, self)
     }
 
     self.addblock = function(block){
@@ -221,10 +223,10 @@ var Node = function(options, manager){
     
                 timedifference(block.time)
 
-                /*if(block?.msg === 'new block') {
-
-                    manager.notifications.sendBlock(block, self.id)
-                }*/
+                // if(block?.msg === 'new block') {
+                //
+                //     self.notification(block)
+                // }
             }
 
             chain = f.lastelements(chain, 150, 10)

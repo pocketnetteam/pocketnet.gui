@@ -55,13 +55,13 @@ if(!_Node)
 
 	/* test */
 
-	/*if(window.cordova){
+	if(window.cordova){
 		_listofproxies.push({
 			host : '6.pocketnet.app',
 			port : 8899,
 			wss : 8099
 		})
-	}*/
+	}
 
 
 	var matrix = 'matrix.pocketnet.app'

@@ -24395,8 +24395,8 @@ Platform = function (app, listofnodes) {
         //var FirebasePlugin = new FakeFirebasePlugin()
 
         var using = typeof window != 'undefined' && window.cordova && typeof FirebasePlugin != 'undefined';
-        var usingWeb = false // typeof window != 'undefined' && typeof _Electron === 'undefined' && !window.cordova && typeof firebase != 'undefined'
-        
+        var usingWeb = typeof window != 'undefined' && typeof _Electron === 'undefined' && !window.cordova && typeof firebase != 'undefined'
+
         var currenttoken = null;
 
         var appid = deep(window, 'BuildInfo.packageName') || window.location.hostname || window.pocketnetdomain
@@ -24580,7 +24580,6 @@ Platform = function (app, listofnodes) {
         }
 
         self.set = function(proxy){
-
             if(!currenttoken) return Promise.reject('emptytoken')
 
             var address = getaddress()
@@ -24596,6 +24595,7 @@ Platform = function (app, listofnodes) {
                 if(self.api.existanother(proxy, address)) return self.request.revokeall()
 
             }).then(r => {
+
                 return self.api.setToken(address, token, proxy)
             }).catch(e => {
                 console.log(e)
@@ -24605,7 +24605,6 @@ Platform = function (app, listofnodes) {
         }
 
         self.settings = async function(current){
-            console.log("HERE")
             if(!current){
                 for(const proxy of platform.app.api.get.proxies()){
                     const {info} = await proxy.get.info();
@@ -24641,7 +24640,7 @@ Platform = function (app, listofnodes) {
             },
 
             mytokens : function(proxy){
-                return platform.app.api.fetchauth('firebase/mytokens', {}, {
+                return platform.app.api.fetchauth('firebase/mytokens', {device: device()}, {
                     proxy : proxy
                 })
             },
@@ -24727,10 +24726,12 @@ Platform = function (app, listofnodes) {
 
             }else if(usingWeb) {
 
-                if (clbk)
-                    clbk()
-
-                return
+                // console.log("HERE")
+                //
+                // if (clbk)
+                //     clbk()
+                //
+                // return
 
                 try{
                     if(!firebase.apps.length) {
@@ -24920,7 +24921,7 @@ Platform = function (app, listofnodes) {
                     }
                 }
                 if (current){
-                    self.set(current.id).catch(e => {
+                    self.set(current).catch(e => {
                         console.log("error", e)
                     })
                 }
@@ -24952,7 +24953,6 @@ Platform = function (app, listofnodes) {
         }
 
         self.prepare = function(clbk){
-
             self.storage.load()
 
             if (using || usingWeb) {
@@ -24972,11 +24972,11 @@ Platform = function (app, listofnodes) {
 
             self.storage.clear()
 
-            if (using || usingWeb){
-                self.revokeall().then(clbk).catch(e => {})
-
-                return
-            }
+            // if (using || usingWeb){
+            //     self.revokeall().then(clbk).catch(e => {})
+            //
+            //     return
+            // }
 
             if (clbk)
                 clbk()
