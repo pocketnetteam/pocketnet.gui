@@ -1626,7 +1626,7 @@ html.mobileview.ios .share_common.fullScreenVideo .video-js {
   -webkit-line-clamp: 2;
   line-clamp: 2;
   -webkit-box-orient: vertical;
-  max-width: 83%;
+  max-width: 85%;
 }
 .common_share_article_wrapper .share .sharearticle .shareBgCaption .captioncnt .sharecaption {
   font-size: 1.5em;
