@@ -1575,7 +1575,7 @@ Share = function(lang){
 		return share;
 	}
 
-	self.optstype = function(platform){
+	self.optstype = function(){
 
 		if(self.itisvideo()) return 'video'
 		if(self.itisarticle()) return 'article'
@@ -1583,7 +1583,7 @@ Share = function(lang){
 		return self.type	
 	}
 
-	self.typeop = function(platform){
+	self.typeop = function(){
 
 		if (self.itisvideo()) return 'video'
 		if (self.itisarticle()) return 'article'

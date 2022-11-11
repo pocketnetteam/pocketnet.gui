@@ -24319,7 +24319,7 @@ Platform = function (app, listofnodes) {
                 
 
                 if(typeof _v == 'undefined') {
-                    if(self.app.mobileview)
+                    if(self.app.mobileview && !window.cordova)
                         _v = '0'
                     else
                         _v = '1'
