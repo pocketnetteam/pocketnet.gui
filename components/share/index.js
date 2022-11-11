@@ -1573,7 +1573,6 @@ var share = (function(){
 		var imagesHelper = {
 			slowUploadGif : function(file, storage, clbk){
 			
-						
 				file.id = makeid();
 				file.slow = true;
 				file.base64 = file.base64;
