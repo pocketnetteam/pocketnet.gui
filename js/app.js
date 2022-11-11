@@ -2523,10 +2523,14 @@ Application = function(p)
 
                       })
 
-                      if (self.nav.current.module)
+                      if (self.nav.current.module){
+
                         self.nav.current.module.restart({
-                          essenseData : self.nav.current.essenseData || {}
+                          essenseData : self.nav.current.essenseData || {},
+                          primary : true
                         })
+                      }
+                        
 
                       setTimeout(function(){
                         globalpreloader(false)

@@ -1058,6 +1058,12 @@ __map =  {
 		add : insertingfunc,
 	},
 
+	diagnosticsPage : {
+		uri : "diagnosticsPage",
+		href : "diagnosticsPage",
+		add : insertingfunc,
+	},
+
 	dust : {
 		uri : "dust",
 		href : "dust",

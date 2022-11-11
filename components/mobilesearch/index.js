@@ -17,8 +17,6 @@ var mobilesearch = (function(){
 		var events = {
 			search : function(value){
 
-				console.log(value)
-
 				if (ed.events.search && value){
 
 					el.c.addClass('active')

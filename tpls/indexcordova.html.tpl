@@ -110,6 +110,8 @@
         <script src="cordova.js"></script>
                 
 
+        <!--<script src="js/widgets.js?v=136"></script>-->
+
         <script type="text/javascript">
 
             _Node = false;

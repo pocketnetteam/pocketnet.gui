@@ -2267,8 +2267,6 @@ var lenta = (function(){
 
 				var share = self.app.platform.sdk.node.shares.storage.trx[shareId];
 
-				console.log('share', share, shareId)
-
 				actions.recommendationinfo(share)
 
 			},
@@ -2454,7 +2452,6 @@ var lenta = (function(){
 
 				if(!essenseData.horizontal){
 
-					//console.log('loadedcachedHeight', loadedcachedHeight, cachedHeight, self.app.lastScrollTop+ self.app.height, document.body.scrollHeight - 2000)
 
 					if (
 						!loading && !ended &&
@@ -4370,8 +4367,6 @@ var lenta = (function(){
 							//shares.concat(bshares)
 
 							shares = [].concat(bshares, shares)
-
-							console.log('recommendations', recommendations, essenseData.includerec)
 
 							if(essenseData.includerec && !includingsub && !self.app.platform.sdk.categories.gettags().length){
 								shares = [].concat(recommendations, shares)

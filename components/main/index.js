@@ -406,7 +406,7 @@ var main = (function(){
 			addpanel : function(){
 
 				self.app.user.isState(function(state){
-					if(state){
+					if(state && el.addbutton){
 
 						if(state && !isMobile()){
 							el.addbutton.addClass('active')
@@ -480,7 +480,7 @@ var main = (function(){
 						caption : self.app.localization.e("Top videos") ,
 						video: true,
 						r : 'hot',
-						loaderkey : 'recommended',
+						loaderkey : 'best',
 						shuffle : true,
 						period : '4320',
 						page : 0,
@@ -863,7 +863,7 @@ var main = (function(){
 						autoplay : true,
 						nocommentcaption : true,
 						r : 'recommended',
-						
+						openapi : false,
 						opensvi : function(id){
 
 							if (openedpost){
@@ -1263,6 +1263,7 @@ var main = (function(){
 
 			destroy : function(){
 
+
 				showCategories(false)
 
 				delete self.app.events.scroll.main
@@ -1348,6 +1349,7 @@ var main = (function(){
 					})
 	
 				}
+
 			},
 
 			showCategories : function(show){
@@ -1356,7 +1358,6 @@ var main = (function(){
 			},
 			
 			init : function(p){
-				
 
 				roller = null
 				lenta = null

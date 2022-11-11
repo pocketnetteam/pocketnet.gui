@@ -11,8 +11,17 @@
 #videoCabinet .unpostedCaption {
   padding: 0 1em;
 }
+#videoCabinet .unpostedFooter {
+  color: rgb(var(--neutral-grad-1));
+  font-weight: bold;
+  text-decoration: underline;
+  padding: 0 1em;
+  margin-top: 1em;
+}
+#videoCabinet .unpostedWarningWrapper {
+  font-size: 0.8em;
+}
 #videoCabinet .preloaderwr {
-  padding: 1em;
   white-space: nowrap;
   overflow: hidden;
 }

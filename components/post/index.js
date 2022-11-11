@@ -1170,7 +1170,7 @@ var post = (function () {
 									init: ed.fromempty || false,
 									preview: true,
 									listpreview : false,
-
+									receiver: share.address,
 									fromtop: !ed.fromempty,
 									fromempty: ed.fromempty,
 									lastComment: ed.fromempty ? share.lastComment : null,
@@ -1247,7 +1247,6 @@ var post = (function () {
 
 										if(aspectRatio > 1.66) aspectRatio = 1.66
 
-										console.log("EL", el)
 
 										el.height( Math.min( 400, images.width() || self.app.width) * aspectRatio)
 									})
@@ -1315,7 +1314,6 @@ var post = (function () {
 								if (clbk) clbk();
 							}
 
-							console.log('share.settings.v', share.settings.v, image.images)
 
 							if(share.settings.v != 'a' && image.images.length > 1){
 
@@ -1341,7 +1339,6 @@ var post = (function () {
 
 								}
 								else{
-									console.log("HERE???")
 									images.addClass('manyImagesView')
 									isclbk()
 									/*images.isotope({
@@ -1753,6 +1750,8 @@ var post = (function () {
 						self.closeContainer()
 					},
 
+					startload: true,
+
 					el : p.inWnd ? el.c.closest('.wndcontent') : null
 					
 				}, function(e, p){
@@ -1989,20 +1988,7 @@ var post = (function () {
 
 
 					if (!share) {
-
 						share = self.app.platform.sdk.node.shares.getWithTemp(id) 
-
-						/*var temp = _.find(self.sdk.node.transactions.temp.share, function (s) {
-							return s.txid == id
-						})
-
-						if (temp) {
-							share = new pShare();
-							share._import(temp, true);
-							share.temp = true;
-							share.address = self.app.platform.sdk.address.pnet().address
-						}*/
-
 					}
 
 					if (share) {
@@ -2181,8 +2167,6 @@ var post = (function () {
 	};
 
 	self.stop = function () {
-
-		console.log("????STOP???")
 
 		_.each(essenses, function (essense) {
 

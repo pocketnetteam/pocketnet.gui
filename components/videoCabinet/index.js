@@ -11,6 +11,8 @@ var videoCabinet = (function () {
 	const POSITIVE_STATUS = 'fulfilled';
 	const TRANSCODING_CHECK_INTERVAL = 20000;
 
+	let firstRenderFlag = true;
+
 	var Essense = function (p) {
 		var primary = deep(p, 'history');
 
@@ -234,10 +236,14 @@ var videoCabinet = (function () {
 			},
 
 			getTotalViews() {
-				const servers = Object.keys(peertubeServers);
+				const servers = Object.values(serversList)
+					.map(royList => royList[0])
+					.filter((server) => server);
 
-				const serverPromises = servers.map((host) =>
-					self.app.peertubeHandler.api.videos.totalViews({}, { host }),
+
+				const serverPromises = servers.map((host) =>{
+					return self.app.peertubeHandler.api.videos.totalViews({}, { host })
+				}
 				);
 
 				//aggregating video views from different servers into one number
@@ -253,14 +259,33 @@ var videoCabinet = (function () {
 							),
 					)
 					.then((aggregatedNumberViews) => {
-						const cachedViews = +(
-							localStorage.getItem('aggregatedVideoViews') || 0
+						const cahceViewsInformation = localStorage.getItem('aggregatedVideoViews_v2') || "{}";
+
+						let viewsObject = {};
+
+						try {
+							viewsObject = JSON.parse(cahceViewsInformation);
+
+							if (typeof viewsObject !== 'object') {
+								viewsObject = {};
+							}
+
+						} catch (errorParsing) {
+							viewsObject = {};
+						}
+
+						console.log("viewsObject", viewsObject)
+
+						const cachedViews =+ (
+							viewsObject[self.app.user.address.value] || 0
 						);
 
 						if (aggregatedNumberViews > cachedViews) {
+							viewsObject[self.app.user.address.value] = aggregatedNumberViews;
+
 							localStorage.setItem(
 								'aggregatedVideoViews',
-								aggregatedNumberViews,
+								JSON.stringify(viewsObject),
 							);
 
 							return aggregatedNumberViews;
@@ -269,9 +294,12 @@ var videoCabinet = (function () {
 						return cachedViews;
 					})
 					.catch((err) => {
+						console.error(err)
 						if (!err.text) err.text = 'GET_TOTAL_VIEWS_VIDEOCABINET';
 
-						return sitemessage(helpers.parseVideoServerError(err));
+						sitemessage(helpers.parseVideoServerError(err));
+
+						return Promise.reject(err)
 					});
 			},
 
@@ -280,7 +308,8 @@ var videoCabinet = (function () {
 
 				//getting and rendering bonus program status for views and ratings (same template)
 				actions
-					.getTotalViews()
+					.getHosts()
+					.then(() => actions.getTotalViews())
 					.then((result) => {
 						renders.bonusProgram(
 							{
@@ -541,9 +570,24 @@ var videoCabinet = (function () {
 					unpostedVideosParsed[self.app.user.address.value] || [];
 
 				return new Promise((res) => {
-					actions
-						.getBlockchainPostByVideos(
-							unpostedVideos.map((video = '') => encodeURIComponent(video)),
+					self.app.peertubeHandler.api.videos
+						.getMyAccountVideos()
+						.then((result = {}) => {
+							const latestVideos = (result.data || []).map((video) =>
+								self.app.peertubeHandler.composeLink(
+									deep(video, 'channel.host'),
+									video.uuid,
+								),
+							);
+
+							unpostedVideos.push(...latestVideos);
+
+							return unpostedVideos;
+						})
+						.then((videos) =>
+							actions.getBlockchainPostByVideos(
+								videos.map((video = '') => encodeURIComponent(video)),
+							),
 						)
 						.then(() => {
 							const accountVideos = unpostedVideos
@@ -557,52 +601,52 @@ var videoCabinet = (function () {
 									return !blockChainInfo[video] || videosInTemp[video];
 								})
 								.map((video) => ({
-                  url: video,
-                }));
+									url: video,
+								}));
 
-              return accountVideos;
-            })
-            .then((accountVideos) =>
-              self.app.platform.sdk.node.shares.loadvideoinfoifneed(
-                accountVideos,
-                true,
-                function () {
-                  return res(
-                    accountVideos
-                      .map(
-                        (video) =>
-                          self.app.platform.sdk.videos.storage[video.url],
-                      )
-                      .map((videoInfo = {}) => ({
-                        uuid: deep(videoInfo, 'meta.id'),
-                        name: deep(videoInfo, 'data.original.name'),
-                        description: actions.replaceNetLinks(
-                          deep(videoInfo, 'data.original.description') || '',
-                        ),
-                        server: deep(videoInfo, 'meta.host_name'),
-                        url: deep(videoInfo, 'meta.url'),
-                        createdAt: deep(videoInfo, 'data.original.createdAt'),
-                        state: deep(videoInfo, 'data.original.state') || {},
-                        editable: !videosInPosting.includes(
-                          deep(videoInfo, 'meta.url'),
-                        ),
-                        isPosting: videosInPosting.includes(
-                          deep(videoInfo, 'meta.url'),
-                        ),
-                      })),
-                  );
-                },
-              ),
-            );
-        });
-      },
+								return accountVideos;
+						})
+						.then((accountVideos) =>
+							self.app.platform.sdk.node.shares.loadvideoinfoifneed(
+								accountVideos,
+								true,
+								function () {
+									return res(
+										accountVideos
+										.map(
+											(video) =>
+												self.app.platform.sdk.videos.storage[video.url],
+										)
+										.map((videoInfo = {}) => ({
+											uuid: deep(videoInfo, 'meta.id'),
+											name: deep(videoInfo, 'data.original.name'),
+											description: actions.replaceNetLinks(
+												deep(videoInfo, 'data.original.description') || '',
+											),
+											server: deep(videoInfo, 'meta.host_name'),
+											url: deep(videoInfo, 'meta.url'),
+											createdAt: deep(videoInfo, 'data.original.createdAt'),
+											state: deep(videoInfo, 'data.original.state') || {},
+											editable: !videosInPosting.includes(
+												deep(videoInfo, 'meta.url'),
+											),
+											isPosting: videosInPosting.includes(
+												deep(videoInfo, 'meta.url'),
+											),
+										})),
+									);
+								},
+							),
+						);
+				});
+			},
 
-      onVideoPost(videoLink, linkElement) {
-        state.removeVideo(self.app.peertubeHandler.parselink(videoLink).id);
+			onVideoPost(videoLink, linkElement) {
+				state.removeVideo(self.app.peertubeHandler.parselink(videoLink).id);
 
-        linkElement.html(
-          `<i class="fas fa-spinner fa-spin"></i>${self.app.localization.e(
-            'videoIsPosting',
+				linkElement.html(
+					`<i class="fas fa-spinner fa-spin"></i>${self.app.localization.e(
+						'videoIsPosting',
 					)}`,
 				);
 				linkElement.attr('isposting', 'true');
@@ -611,42 +655,42 @@ var videoCabinet = (function () {
 			onSendToBlockchain(data) {
 				if (data.opmessage !== 'video') return;
 
-        const videoUrl = deep(data, 'temp.url');
+				const videoUrl = deep(data, 'temp.url');
 
-        const { id, host } = self.app.peertubeHandler.parselink(videoUrl);
+				const { id, host } = self.app.peertubeHandler.parselink(videoUrl);
 
-        el.c.find(`.singleVideoSection[uuid="${id}"]`).addClass('hidden');
+				el.c.find(`.singleVideoSection[uuid="${id}"]`).addClass('hidden');
 
-        actions
-          .getSingleVideo(videoUrl)
-          .then((dataVideo) => {
-            debugger;
+				actions
+					.getSingleVideo(videoUrl)
+					.then((dataVideo) => {
+						debugger;
 
-            const formattedData = {
-              ...dataVideo,
-              server: host,
-              url: videoUrl,
-              txid: deep(data, 'temp.txid'),
-              editable: true,
-            };
+						const formattedData = {
+							...dataVideo,
+							server: host,
+							url: videoUrl,
+							txid: deep(data, 'temp.txid'),
+							editable: true,
+						};
 
-            if (formattedData.description)
-              formattedData.description = actions.replaceNetLinks(
-                formattedData.description,
-              );
+						if (formattedData.description)
+							formattedData.description = actions.replaceNetLinks(
+								formattedData.description,
+							);
 
-            renders.videos(
-              [formattedData],
-              renders.newVideoContainer(true),
-              true,
-            );
-          })
-          .catch((err = {}) => {
-            if (!err.text) err.text = 'SINGLE_VIDEO_ADDING_VIDEOCABINET';
+						renders.videos(
+							[formattedData],
+							renders.newVideoContainer(true),
+							true,
+						);
+					})
+					.catch((err = {}) => {
+						if (!err.text) err.text = 'SINGLE_VIDEO_ADDING_VIDEOCABINET';
 
-            return sitemessage(helpers.parseVideoServerError(err));
-          });
-      },
+						return sitemessage(helpers.parseVideoServerError(err));
+					});
+			},
 		};
 
 		var events = {
@@ -763,9 +807,12 @@ var videoCabinet = (function () {
 						data: {
 							videos,
 							buttonCaption,
+							firstRenderFlag,
 						},
 					},
 					(p) => {
+						firstRenderFlag = false;
+
 						p.el.find('.tooltip').tooltipster({
 							theme: 'tooltipster-light',
 							maxWidth: 600,
@@ -1010,8 +1057,10 @@ var videoCabinet = (function () {
 
 				const elName = typeDictionary[p.type];
 
+				console.log('external', external)
+
 				if (external && external.id == elName) {
-					external.container.show();
+					external.show();
 
 					return;
 				}
@@ -1657,14 +1706,13 @@ var videoCabinet = (function () {
 				//   ];
 				// }
 
-				// videosInPosting = [...postingVideos];
-
-				self.app.platform.ws.messages.transaction.clbks.postVideos =
-					actions.onSendToBlockchain;
+        // videosInPosting = [...postingVideos];
 			},
 			update() {},
 
 			removeVideo(id) {
+			state.load();
+
 				unpostedVideosParsed[self.app.user.address.value] = (
 					unpostedVideosParsed[self.app.user.address.value] || []
 				).filter((item) => {
@@ -1779,6 +1827,8 @@ var videoCabinet = (function () {
 
 				el = {};
 
+				firstRenderFlag = true;
+
 				if (errorcomp) {
 					errorcomp.destroy();
 					errorcomp = null;
@@ -1798,6 +1848,8 @@ var videoCabinet = (function () {
 
 			init: function (p) {
 				state.load();
+				self.app.platform.ws.messages.transaction.clbks.postVideos =
+					actions.onSendToBlockchain;
 
 				el = {};
 				el.c = p.el.find('#' + self.map.id);
@@ -1847,6 +1899,8 @@ var videoCabinet = (function () {
 					self,
 					'app.modules.uploadpeertube.module.essenses.uploadpeertube',
 				);
+
+				console.log('externallatest', externallatest)
 
 				if (externallatest && !externallatest.destroyed) {
 					external = externallatest;

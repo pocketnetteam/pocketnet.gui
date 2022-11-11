@@ -19,10 +19,10 @@
     <preference name="SplashMaintainAspectRatio" value="true" />
     <preference name="ShowSplashScreenSpinner" value="false" />
     <preference name="StatusBarOverlaysWebView" value="true" />
-    <preference name="StatusBarBackgroundColor" value="#00000000" />
+    <preference name="StatusBarBackgroundColor" value="#000000" />
     <preference name="AndroidWindowSplashScreenBackground" value="#011621" />
     <preference name="AndroidWindowSplashScreenIconBackgroundColor" value="#011621" />
-    <preference name="BackgroundColor" value="0xff011621" />
+    <preference name="BackgroundColor" value="#011621" />
     <preference name="StatusBarStyle" value="lightcontent" />
     <preference name="AndroidLaunchMode" value="singleTask" />
     <preference name="Fullscreen" value="false" />
@@ -130,6 +130,14 @@
         <config-file overwrite="true" parent="NSPhotoLibraryUsageDescription" target="*-Info.plist">
             <string>Allow the application access to the photo gallery to select photos for publication.</string>
         </config-file>
+
+        <resource-file src="configs/de.lproj" />
+        <resource-file src="configs/es.lproj" />
+        <resource-file src="configs/fr.lproj" />
+        <resource-file src="configs/it.lproj" />
+        <resource-file src="configs/kr.lproj" />
+        <resource-file src="configs/ru.lproj" />
+        <resource-file src="configs/zh.lproj" />
        
         <preference name="UseSwiftLanguageVersion" value="4.2" />
         <preference name="NativeXHRLogging" value="full" />

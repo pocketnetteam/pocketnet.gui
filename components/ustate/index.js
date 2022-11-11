@@ -153,7 +153,6 @@ var ustate = (function(){
 					el : el.c.find('.stat'),
 					animation: false,
 					clbk : (e, p) => {
-						console.log("O", p)
 						statistic = p
 					}
 				})
@@ -342,8 +341,6 @@ var ustate = (function(){
 				el = {};
 				delete self.app.platform.ws.messages["new block"].clbks.ustate
 				delete self.app.platform.sdk.ustate.clbks[id]
-
-				console.log('statistic', statistic)
 
 				if (statistic){
 					statistic.destroy()

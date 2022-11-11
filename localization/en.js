@@ -2376,5 +2376,18 @@ _l.unPostedVideos = "Unposted Videos"
 _l.videoIsPosting = "Posting"
 _l.noUnposted = "No Unposted Videos"
 
-_l.sortByComments = "Comments"
-_l.sortByRating = "Number of ratings"
+_l.sortByComments = "Comments";
+_l.sortByRating = "Number of ratings";
+
+_l.noPosted = "No posted Videos"
+_l.unpostedFooter = "Unposted videos are deleted from the server after 3-weeks of waiting"
+
+_l.diagnosticsPage = "Diagnostics";
+_l.startDiagnose = "Run Diagnostics";
+_l.videoServerName = "Server URL";
+_l.videoServerReachable = "Reachability";
+_l.serversTestingProgress = "Progress of Diagnosing:";
+_l.videoServerVideo = "Video Info";
+_l.goToDiagnose = "Go to Diagnostics";
+_l.connectingTo = "Connecting to";
+

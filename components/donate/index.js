@@ -52,8 +52,6 @@ var donate = (function(){
 
 				ed = p.settings.essenseData;
 
-				
-
 				self.sdk.users.get(ed.receiver, function(){
 
 					self.app.platform.sdk.node.transactions.get.allBalance(function (total) {

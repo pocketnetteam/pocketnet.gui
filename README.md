@@ -87,3 +87,6 @@ If you need assistance, if you want to report a bug or if you are a content crea
 
 You can also contact us directly on Bastyon: 
 - https://pocketnet.app/pocketnet_team
+
+--------
+This project is tested with BrowserStack.

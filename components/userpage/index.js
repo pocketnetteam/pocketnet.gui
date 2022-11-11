@@ -266,9 +266,6 @@ var userpage = (function(){
 				})
 
 			}
-
-
-
 				
 		}
 
@@ -1068,7 +1065,6 @@ var userpage = (function(){
 						actions.openReport(id)
 					}
 					else{
-						console.log('closeReport')
 						actions.closeReport()
 					}
 

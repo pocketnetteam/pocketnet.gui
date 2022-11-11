@@ -2167,5 +2167,21 @@ _l.unPostedVideos = "Неопубликованные Видео"
 _l.videoIsPosting = "Загрузка"
 _l.noUnposted = "Неопубликованные видео отсутствуют"
 
-_l.sortByComments = "Количество комментариев"
-_l.sortByRating = "К-во оценок"
+_l.sortByComments = "Количество комментариев";
+_l.sortByRating = "К-во оценок";
+
+_l.noPosted = "Нет опубликованных видео"
+_l.unpostedFooter = "Незапощенные видео удаляются с серверов через три недели ожидания"
+
+_l.diagnosticsPage = "Диагностика";
+_l.startDiagnose = "Начать Диагностику";
+_l.videoServerName = "Адрес Сервера";
+_l.videoServerReachable = "Доступность";
+_l.serversTestingProgress = "Прогресс Диагностики:";
+_l.videoServerVideo = "Видео Статистика";
+_l.goToDiagnose = "Перейти на страницу диагностики";
+_l.connectingTo = "Проверка";
+
+
+
+

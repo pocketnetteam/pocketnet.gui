@@ -274,6 +274,10 @@ Platform = function (app, listofnodes) {
         'PJ13w4ap16wZ9xmnLViEt4csZRSDrbCsmF': true,
         'PDkzixpA4TmkTqEKBJrmX6xFDu15qJ39ut': true,
         'PGPqNyxuSSsAkt3m6eb5hyckoDhyy19dW9': true,
+        'PRUJpbgfqrDayD5eRi1DmDw7S8857Jhw4e': true,
+        'PWbYmgG6PzqhrNDtuFmWrSaLHTDMwZWc26': true,
+        'PLbv7r1CkNmPMetvpkTssS14WYuuMXNhDF': true
+
     }
 
     self.bch = {
@@ -946,8 +950,6 @@ Platform = function (app, listofnodes) {
         'money': {
 
             action: function (key, action, akey) {
-
-                console.log("HERE")
 
                 var adr = self.app.platform.sdk.address.pnet().address;
 
@@ -2743,7 +2745,7 @@ Platform = function (app, listofnodes) {
                             minimize : p.minimize,
                             postclass : p.postclass,
                             showrecommendations : p.showrecommendations,
-                            openapi : true
+                            openapi : typeof p.openapi == 'undefined' ? true : p.openapi
                         }
                     })
 
@@ -8560,7 +8562,6 @@ Platform = function (app, listofnodes) {
                                                         var successFullSendFunc = () => {
                                                             var c = kits.c[object.type]
 
-                                                            console.log('object.type', object.type)
 
                                                             var trobj = new c();
 
@@ -8767,7 +8768,6 @@ Platform = function (app, listofnodes) {
             getRelTmpSubscriptions : function(){
                 var subs = self.sdk.relayTransactions.withtemp('subscribe').concat(self.sdk.relayTransactions.withtemp('subscribePrivate'))
 
-                console.log('subs', subs)
 
                 return _.filter(_.map(subs, (s) => {
                     return s.vsaddress
@@ -10744,8 +10744,6 @@ Platform = function (app, listofnodes) {
                     return new Promise((resolve, reject) => {
 
                         self.sdk.ustate._me((info) => {
-
-                            console.log('info', info)
     
                             var address = self.sdk.address.pnet()
     
@@ -10780,7 +10778,6 @@ Platform = function (app, listofnodes) {
 
 
                     return self.app.peertubeHandler.api.proxy.allServers().then((peertubeservers) => {
-                        console.log('peertubeservers', _.flatten(peertubeservers))
 
                         var s = []
 
@@ -10790,7 +10787,6 @@ Platform = function (app, listofnodes) {
                         //
                         var promises = _.map(s, (ps) => {
 
-                            console.log("PSS", ps)
 
                             return self.app.peertubeHandler.api.user.removeAccount({
                                 id : address.address
@@ -10839,7 +10835,6 @@ Platform = function (app, listofnodes) {
                         self.sdk.node.transactions.create.commonFromUnspent(
                             obj,
                             function(tx, error){
-                                console.log('tx, error', tx, error)
                                 if(!tx){	
 
                                     return reject(error)
@@ -14134,7 +14129,6 @@ Platform = function (app, listofnodes) {
                     }, 'clear');
                 }
 
-                console.log("MAKE TASKS", task)
 
                 if(task.type == 'tags'){
                     var p = {
@@ -14161,7 +14155,6 @@ Platform = function (app, listofnodes) {
                             return s.address != task.address
                         })*/
 
-                        console.log("COMPLETE TASK")
     
                         _.each(shares, (share) => {
                             if(!_.find(self.sdk.recommendations.storage.shares.concat(self.sdk.recommendations.shares), (s) => {
@@ -16566,7 +16559,6 @@ Platform = function (app, listofnodes) {
             },
 
             saveandrunfast : function(){
-                console.log('saveandrunfast')
                 self.sdk.memtags.save()
 
                 self.sdk.recommendations.scheduler()
@@ -16575,7 +16567,6 @@ Platform = function (app, listofnodes) {
             
 
             save : function(){
-                console.log("SAVE")
 
                 try{
                     localStorage['memtags'] = JSON.stringify({
@@ -18031,15 +18022,21 @@ Platform = function (app, listofnodes) {
                             return s && s.txid == id
                         })
 
+                        if(temp){
+                            share = new pShare();
+                            share._import(temp, true);
+                            share.temp = true;
+    
+                            if (temp.relay) share.relay = true;
+                            if (temp.checkSend) share.checkSend = true
+    
+                            share.address = self.app.platform.sdk.address.pnet().address
+                        }
 
-                        share = new pShare();
-                        share._import(temp, true);
-                        share.temp = true;
 
-                        if (temp.relay) share.relay = true;
-                        if (temp.checkSend) share.checkSend = true
-
-                        share.address = self.app.platform.sdk.address.pnet().address
+                        else{
+                            return null
+                        }
                     }
 
                     return share
@@ -19093,7 +19090,6 @@ Platform = function (app, listofnodes) {
                         method : 'gettopfeed',
                         rpc : {
                             cache : true,
-                            locally : true,
                             fastvideo : true
                         }
                     });
@@ -19141,8 +19137,6 @@ Platform = function (app, listofnodes) {
                 getsubscribesfeed : function(p, clbk, cache){
 
                     p.tempSubscriptions = self.sdk.relayTransactions.getRelTmpSubscriptions()
-
-                    console.log('p.tempSubscriptions', p.tempSubscriptions)
 
 
                     self.app.platform.sdk.node.shares.hierarchical(p, clbk, cache, {
@@ -20389,6 +20383,13 @@ Platform = function (app, listofnodes) {
                     },
 
                     allBalance: function (clbk, update) {
+
+                        if(!self.sdk.address.pnet()) {
+                            if(clbk) clbk()
+
+                            return
+                        }
+
                         var addresses = [self.sdk.address.pnet().address].concat(self.sdk.addresses.storage.addresses || [])
 
                         self.sdk.node.transactions.get.balanceAr(clbk, addresses, update)
@@ -25031,8 +25032,6 @@ Platform = function (app, listofnodes) {
 
             }else if(usingWeb) {
 
-                console.log("HERE")
-
                 if (clbk)
                     clbk()
 
@@ -29248,9 +29247,16 @@ Platform = function (app, listofnodes) {
             tags : {}
         }
 
-        self.sdk.node.shares.storage = {
+        /*self.sdk.node.shares.storage = {
             trx: {}
+        }*/
+
+        if(self.sdk.node.shares.storage && self.sdk.node.shares.storage.trx){
+            _.each(self.sdk.node.shares.storage.trx, function(tr){
+                delete tr.myVal
+            })
         }
+       
 
         self.sdk.sharesObserver.storage = {
             viewed : {}
@@ -30561,7 +30567,7 @@ Platform = function (app, listofnodes) {
     }
 
     self.initSounds = function () {
-        if (typeof ion != 'undefined'){
+        if (typeof ion != 'undefined' && !window.cordova){
             ion.prepare()
             ion.sound({
                 sounds: [ { name: "water_droplet"}, { name: "glass" } ],

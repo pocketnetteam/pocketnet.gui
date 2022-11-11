@@ -181,6 +181,10 @@ PeerTubePocketnet = function (app) {
 			path: 'api/v1/videos',
 		},
 
+		serverStatistics: {
+			path: 'api/v1/server/stats',
+		},
+
 		video: {
 			path: function ({ id }) {
 				return 'api/v1/videos/' + id;
@@ -670,6 +674,18 @@ PeerTubePocketnet = function (app) {
 		},
 
 		videos: {
+			serverStatistics: function(host) {
+				return request('serverStatistics', {}, {
+					host,
+				});
+			},
+
+			latestVideos: function(host) {
+				return request('stats', {}, {
+					host,
+				});
+			},
+			
 			remove: function (url, options = {}) {
 				if (!self.checklink(url)) return Promise.reject(error('link'));
 
@@ -1096,9 +1112,7 @@ PeerTubePocketnet = function (app) {
 					},
 					options,
 				).then((r = {}) => r);
-			},
-
-			
+			},		
 
 			getDirectVideoInfo(parameters = {}, options = {}) {
 				return request('video', parameters, options);
