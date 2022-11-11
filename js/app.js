@@ -120,12 +120,7 @@ Application = function(p)
     //////////////
 
     peertubeServer : '',
-    peertubeCreds: {
-      username : 'test_bastyon',
-      password : 'test_bastyon',
-      client_id : '',
-      client_secret : ''
-    },
+    peertubeCreds: {},
 
 
     //////////////
