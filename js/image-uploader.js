@@ -9,19 +9,29 @@ ImageUploader = function(app) {
 
         if (base64.indexOf('data:image') > -1){
 
-            /*return self.uploadImage({ base64 }, 'imgur').catch(err => {
-                return self.uploadImage({ base64 }, 'up1')
-            }).then(url => {
-                return Promise.resolve(url)
-            })*/
-            
-            return self.uploadImage({ base64 }, 'peertube').catch(err => {
-                return self.uploadImage({ base64 }, 'imgur')
-            }).catch(err => {
-                return self.uploadImage({ base64 }, 'up1')
-            }).then(url => {
-                return Promise.resolve(url)
-            })
+            // If we are in test environment, try to upload images to Peertube
+            // (fallback to Imgur if failure)
+            if (window.testpocketnet) {
+
+                return self.uploadImage({ base64 }, 'peertube').catch(err => {
+                    return self.uploadImage({ base64 }, 'imgur')
+                }).catch(err => {
+                    return self.uploadImage({ base64 }, 'up1')
+                }).then(url => {
+                    return Promise.resolve(url)
+                })
+
+            }
+            // Else, upload images to Imgur
+            else {
+
+                return self.uploadImage({ base64 }, 'imgur').catch(err => {
+                    return self.uploadImage({ base64 }, 'up1')
+                }).then(url => {
+                    return Promise.resolve(url)
+                })
+
+            }
         }
         else{
             return Promise.resolve(base64)
