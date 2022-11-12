@@ -21253,7 +21253,6 @@ Platform = function (app, listofnodes) {
 
                                                         }
 
-
                                                         if (clbk)
                                                             clbk(alias)
 

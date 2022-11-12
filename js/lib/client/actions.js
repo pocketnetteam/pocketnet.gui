@@ -17,7 +17,7 @@ var ActionOptions = {
         },
         userInfo : {
 
-            changeAccount : function(action, account){
+            change : function(action, account){
 
                 if (action.transaction){
                     account.willChange = true
@@ -89,8 +89,60 @@ Action = function(account, object, priority){
     self.inputs = []
     self.outputs = []
     self.attempts = 0
+    self.alias = null
+    self.transaction = null
 
-   
+    self.export = function(){
+        var e = {}
+
+        e.priority = self.priority
+        e.added = self.added
+        e.until = self.until
+        e.sent = self.sent
+        e.checkedUntil = self.checkedUntil
+        e.checkConfirmationUntil = self.checkConfirmationUntil
+        e.inputs = _.clone(self.inputs)
+        e.outputs = _.clone(self.outputs)
+        e.attempts = self.attempts
+        e.transaction = self.transaction
+
+        if (self.object.export){
+            e.expObject = self.object.export()
+        }
+        else{
+            e.object = _.clone(self.object)
+        }
+
+        return e
+    }
+
+    self.import = function(e){
+        self.priority = e.priority
+        self.added = e.added
+        self.until = e.until
+        self.sent = e.sent
+        self.checkedUntil = e.checkedUntil
+        self.checkConfirmationUntil = e.checkConfirmationUntil
+        self.inputs = _.clone(e.inputs)
+        self.outputs = _.clone(e.outputs)
+        self.attempts = e.attempts
+        self.transaction = e.transaction
+
+        if (e.object){
+            self.object = e.object
+        }
+
+        if (e.expObject){
+
+            var alias = new kits.с[e.expObject.type]()
+                alias._import(e.expObject)
+
+            self.object = alias
+        }
+
+        options = ActionOptions.objects[object.type] || {}
+
+    }
 
     var getBestInputs = function(unspents, value){
 
@@ -140,17 +192,44 @@ Action = function(account, object, priority){
         return tx
     }
 
-    var sendTransaction = async function(retry, calculatedFee){
-
-        var unspents = account.getReadyUnspents()
-        var fee = calculatedFee || (options.calculateFee ? 0 : ActionOptions.pcTxFee)
+    var trigger = function(){
         
+        if(options.change()) options.change(action, account)
+
+        account.trigger(action)
+
+    }
+
+    var filterUnspents = function(unspents){
+        if (options.includeZAddresses && options.includeZAddresses()){
+
+        }
+        else{
+            unspents = _.filter(unspents, (u) => {
+                return u.address == account.address
+            })
+        }
+
+        return unspents
+    }
+
+    var makeTransaction = async function(retry, calculatedFee, send){
+
+        var unspents = filterUnspents(account.getReadyUnspents())
+        var fee = calculatedFee || (options.calculateFee ? 0 : ActionOptions.pcTxFee)
+
         if(!unspents.length || retry){
             try{
-                await account.loadUnspents().then((clearUnspents) => {
+                await account.loadUnspents(options.addresses ? options.addresses() : null).then((clearUnspents) => {
 
                     if(!clearUnspents.length && !account.unspents.willChange){
                         return Promise.reject('noinputs')
+                    }
+
+                    clearUnspents = filterUnspents(clearUnspents)
+
+                    if(!clearUnspents.length && !account.unspents.willChange){
+                        return Promise.reject('noinputs_on_address')
                     }
     
                     unspents = account.getReadyUnspents()
@@ -167,7 +246,7 @@ Action = function(account, object, priority){
             return Promise.reject('noinputs_wait')
         }
 
-        var amount = options.amount ? options.amount(self) : 0
+        var amount = (options.amount ? options.amount(self) : 0) + (options.feemode && options.feemode() == 'reciever' ? 0 : fee)
 
         var inputs = getBestInputs(unspents, amount)
 
@@ -250,10 +329,14 @@ Action = function(account, object, priority){
         if (options.calculateFee && !calculatedFee){
             var feerate = await account.actions.estimateFee()
 
-            return sendTransaction(false, Math.min(tx.virtualSize() * feerate, 0.0999))
+            return makeTransaction(false, Math.min(tx.virtualSize() * feerate, 0.0999, send))
         }
 
         var hex = tx.toHex();
+
+        if(!send){
+            return Promise.resolve({tx, calculatedFee})
+        }
 
         var parameters = [hex]
 
@@ -265,7 +348,9 @@ Action = function(account, object, priority){
             parameters.push(optstype)
         }
 
-        self.sent = true
+        self.sent = account.actions.app.platform.currentTime()
+
+        trigger()
 
         return self.app.api.rpc('sendrawtransactionwithmessage', parameters).then(transaction => {
 
@@ -273,30 +358,29 @@ Action = function(account, object, priority){
             self.inputs = inputs
             self.outputs = outputs
 
-            var alias = null
 
-            if (self.object.export){
-                
-                alias = self.object.export(true)
-                alias.txid = transaction;
-                alias.address = account.address;
-                alias.type = self.object.type
-                alias.time = account.actions.app.platform.currentTime()
-                alias.timeUpd = alias.time
-                alias.optype = optype
-                alias.temp = true
-                
+            if (self.object.ustate) {
+                //account.actions.app.platform.sdk.ustate.changeFromObject(self.object)
             }
+
+            trigger()
+
+            return Promise.resolve()
+
 
         }).catch((e = {}) => {
 
             var code = e.code
 
             if(!retry && (code == -26 || code == -25 || code == 16)){
-                return sendTransaction(true, calculatedFee)
+                return makeTransaction(true, calculatedFee, send)
             }
 
+            self.sent = null
+
             self.rejected = e
+
+            trigger()
 
             return Promise.reject(self.rejected)
             
@@ -320,6 +404,8 @@ Action = function(account, object, priority){
                     if (self.attempts > 2){
                         self.rejected = 'rejectedFromNodes'
 
+                        trigger()
+
                         return reject(self.rejected)
                     }
 
@@ -328,6 +414,10 @@ Action = function(account, object, priority){
 
                 if (data.height > 0){
                     self.completed = true
+
+                    account.addUnspentFromTransaction(data)
+
+                    trigger()
 
                     return resolve()
 
@@ -396,7 +486,7 @@ Action = function(account, object, priority){
                 self.object.canSend(app, (r) => {
 
                     if(r){
-                        sendTransaction().then(resolve).catch(reject)
+                        makeTransaction(false, null, true).then(resolve).catch(reject)
                     }
                     else{
                         reject('checkFail')
@@ -407,11 +497,38 @@ Action = function(account, object, priority){
 
         }
 
-        return sendTransaction()
+        return makeTransaction(false, null, true)
 
     }
 
+    self.prepareTransaction = function(){
+        return makeTransaction(false, 0, false)
+    }
+
+    self.get = function(){
+        var exported = self.export()
+
+        var alias = exported.expObject || exported.object
+            alias.txid = exported.transaction
+
+        if(!alias.txid) { alias.txid = makeid(); alias.relay = true }
+        if (alias.txid) { alias.temp = true }
+
+        alias.address = account.address;
+        alias.type = self.object.type
+
+        alias.time = account.actions.app.platform.currentTime()
+        alias.timeUpd = alias.time
+        alias.optype = self.object.typeop ? self.object.typeop() : self.object.type
+
+        alias.inputs = exported.inputs
+        alias.outputs = exported.outputs
+
+        return alias
+    }
+
     self.options = options
+    self.makeTransaction = makeTransaction
 
     return self
 }
@@ -428,7 +545,7 @@ Account = function(address, actions){
     }
 
     self.unspents = {
-        willChange : false, /// date, wait free coins
+        willChange : null, /// date, wait free coins
         value : [],
         updated : null
     }
@@ -444,34 +561,98 @@ Account = function(address, actions){
 
     var checkTransactionByUnspents = function(){
 
-        //var changed = false
-
         _.each(self.unspents.value, (u) => {
             var action = _.find(self.actions.value, (action) => {
 
-                var out = _.find(action.outputs, (out) => {
-                    return out.txid == u.txid && out.vout == u.vout
-                })
-
-                if (out){
+                if(action.transaction == out.txid){
                     return true
                 }
-
             })
 
             if (action){
                 action.completed = true
 
-                changed = true
+                sefl.trigger(action)
 
-                actions.emit('changeAction', action)
+            }
+
+            if (self.unspents.willChange){
+                if (self.unspents.willChange.transaction == out.txid){
+                    self.unspents.willChange = null
+                }
             }
         })
 
-        if(changed){
-            actions.emit('changeAccount', self)
-            /// emit accounts
+    }
+
+    
+
+    var checkTransactionById = function(ids){
+        _.each(ids, (txid) => {
+            var action = _.find(self.actions.value, (action) => {
+
+                if(action.transaction == txid){
+                    return true
+                }
+            })
+
+            if (action){
+                action.completed = true
+
+                sefl.trigger(action)
+            }
+
+            if (self.unspents.willChange){
+                if (self.unspents.willChange.transaction == txid){
+                    self.unspents.willChange = null
+                }
+            }
+        })
+    }
+
+    self.addUnspentFromTransaction = function(){
+        
+    }
+
+    self.setWaitCoins = function(transaction){
+        self.unspents.willChange = {
+            transaction,
+            until : (new Date()).addSeconds(60)
         }
+    }
+
+    self.export = function(){
+        var e = {}
+
+        e.status = _.clone(self.status)
+        e.unspents = _.clone(self.unspents)
+
+        e.actions = {
+            updated : self.actions.updated,
+            value : []
+        }
+
+        _.each(self.actions.value, (action) => {
+            e.actions.value.push(action.export())
+        })
+
+        return e
+    }
+
+    self.import = function(e){
+        self.status = e.status
+        self.unspents = e.unspents
+
+        self.actions.updated = e.actions.updated
+        self.actions.value = []
+
+        _.each(e.actions.value, (exported) => {
+
+            var action = new Action(self, {})
+                action.import(exported)
+
+            self.actions.value.push(action)
+        })
 
     }
 
@@ -541,7 +722,9 @@ Account = function(address, actions){
             return temps.unspents
         }
 
-        var promise = actions.api.rpc('txunspent', [[self.address], 1, 9999999]).then(unspents => {
+        var zAddresses = actions.app.platform.sdk.addresses.storage.addresses || []
+
+        var promise = actions.api.rpc('txunspent', [[self.address].concat(zAddresses), 1, 9999999]).then(unspents => {
 
             checkTransactionByUnspents(unspents)
 
@@ -557,6 +740,34 @@ Account = function(address, actions){
         return promise
         
     }
+
+    self.ws = {
+        transaction : function(transaction){
+            var output = {
+                address : transaction.addr,
+                amount : transaction.amount / ActionOptions.amountC,
+                confirmations : 0,
+                vout : transaction.nout,
+                txid : transaction.txid,
+                pockettx : transaction.type ? true : false,
+                coinbase : transaction.coinbase || false,
+
+                scriptPubKey : transaction.scriptPubKey ///Vadim
+            }
+
+
+            checkTransactionById([transaction.txid])
+
+            self.unspents.value.push(output)
+        },
+
+        block : function(){
+            _.each(self.unspents.value, (u) => {
+                u.confirmations ++
+            })
+        }
+    }
+    
 
     self.getReadyUnspents = function(){
 
@@ -583,7 +794,6 @@ Account = function(address, actions){
             }
 
             if(wait) return false
-
 
             var action = _.find(self.actions.value, (action) => {
 
@@ -619,8 +829,6 @@ Account = function(address, actions){
 
             self.save()
 
-            actions.emit('changeAction', action)
-
         }
 
         
@@ -652,6 +860,31 @@ Account = function(address, actions){
         self.unspents.willChange = value ? true : false
     }
 
+    self.getactions = function(type){
+        return _.map(_.filter(self.actions.value, (action) => {
+            return action.object.type == type
+        }), (action) => {
+            return action.get()
+        })
+    }
+
+    self.trigger = function(action){
+        actions.emit('changeAction', action)
+
+    }
+
+    self.actualBalance = function(){
+
+        var balance = {
+            total : 0,
+            blocked : 0
+        }
+
+        if(!self.unspents.value.length) return balance
+
+        
+    }
+
     return self
 }
 
@@ -667,19 +900,26 @@ Actions = function(app, api){
         feerate : 0
     }
 
-    
-
-
     var processInterval = null
-
-    
     
     var exports = function(){
-        return {}
+        var e = {}
+
+        _.each(accounts, (account, address) => {
+            e[address] = account.export()
+        })
+
+        return e
     }
 
     var imports = function(value){
-        accounts = value
+
+        accounts = {}
+
+        _.each(value, (data, address) => {
+            accounts[address] = new Account(address, self)
+            accounts[address].import(data)
+        })
 
     }
 
@@ -707,7 +947,6 @@ Actions = function(app, api){
         })
     }
 
-
     self.processing = function(){
         _.each(accounts, (account) => {
             account.processing()
@@ -729,8 +968,13 @@ Actions = function(app, api){
     self.addActionAndSendIfCan = function(address, object, priority){
         var action = self.addAction(address, object, priority)
 
-        if (accounts[address].check()){
-            return action.checkAccountReadySend()
+        if (accounts[address].checkAccountReadySend()){
+            return action.makeTransaction().then(() => {
+                return Promise.resolve(action)
+            })
+        }
+        else{
+            return Promise.resolve(action)
         }
     }
 
