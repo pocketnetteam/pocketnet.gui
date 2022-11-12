@@ -588,6 +588,9 @@ Account = function(address, actions){
     
 
     var checkTransactionById = function(ids){
+
+        var actions = []
+
         _.each(ids, (txid) => {
             var action = _.find(self.actions.value, (action) => {
 
@@ -599,6 +602,8 @@ Account = function(address, actions){
             if (action){
                 action.completed = true
 
+                actions.push(action)
+
                 sefl.trigger(action)
             }
 
@@ -608,10 +613,48 @@ Account = function(address, actions){
                 }
             }
         })
+
+        return actions
     }
 
-    self.addUnspentFromTransaction = function(){
-        
+    self.checkTransactionById = function(ids){
+        var actions = checkTransactionById(ids)
+
+        if(actions.length){
+            self.loadUnspents()
+        }
+    }
+
+    self.addUnspentFromTransaction = function(transaction){
+
+       
+        var outs = _.map(transaction.vout, (out) => {
+            return {
+                address : deep(out, 'scriptPubKey.addresses.0'),
+                amount : out.value,
+                vout : out.n,
+                height : transaction.height,
+                scriptPubKey : deep(out, 'scriptPubKey.hex'),
+                confirmations : Math.max(transaction.confirmations || (transaction.height && actions.app.platform.currentBlock ? actions.app.platform.currentBlock - transaction.height : 0), 0),
+                pockettx : deep(transaction, 'vout.0.addresses.0') == "",
+                coinbase : false,
+                txid : transaction.txid
+            }
+        })
+
+        outs = _.filter(outs, (out) => {
+            return out.address && out.address == self.address
+        })
+
+        _.each(outs, (out) => {
+
+            if (self.unspents.willChange){
+                if (self.unspents.willChange.transaction == out.txid){
+                    self.unspents.willChange = null
+                }
+            }
+
+        })
     }
 
     self.setWaitCoins = function(transaction){
@@ -619,6 +662,8 @@ Account = function(address, actions){
             transaction,
             until : (new Date()).addSeconds(60)
         }
+
+        self.unspents.value.push(transaction)
     }
 
     self.export = function(){
@@ -796,6 +841,8 @@ Account = function(address, actions){
             if(wait) return false
 
             var action = _.find(self.actions.value, (action) => {
+
+                if(action.rejected) return false
 
                 var out = _.find(action.inputs, (inp) => {
                     return inp.txid == u.txid && inp.vout == u.vout
