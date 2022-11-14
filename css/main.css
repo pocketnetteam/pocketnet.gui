@@ -6838,6 +6838,9 @@ html.pipmode .matrixchatwrapper {
   flex-direction: row;
   align-items: center;
 }
+#application.default-scroll {
+  overflow-x: visible;
+}
 #application .emojionearea,
 #application .emojionearea.form-control {
   background: rgb(var(--background-hidden-layer));
