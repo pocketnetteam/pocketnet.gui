@@ -206,4 +206,6 @@
         </host>
 
     </universal-links>
+
+    <hook type="before_build" src="hooks/before-build.js" />
 </widget>
