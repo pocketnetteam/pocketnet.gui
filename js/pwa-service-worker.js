@@ -27,6 +27,8 @@ if ('serviceWorker' in navigator) {
             }).then(function(blob){
                 const url = URL.createObjectURL(blob)
                 channel.postMessage(url)
+            }).catch(function(e){
+                
             })
             
             /*const res = await pwaFetch(event.data, { mode: 'no-cors'});
