@@ -1,10 +1,10 @@
-var pwaFetch = function(){fetch.apply( this, arguments );}
+var pwaFetch = function(){return fetch.apply( this, arguments );}
 
 /*(...args) => fetch(...args);*/
 
 if(typeof _Electron != 'undefined'){
     electron = require('electron');
-    pwaFetch = function(){proxyFetch.apply( this, arguments );}
+    pwaFetch = function(){return proxyFetch.apply( this, arguments );}
     
     /*(...args) => proxyFetch(...args);*/
 }
@@ -28,7 +28,7 @@ if ('serviceWorker' in navigator) {
                 const url = URL.createObjectURL(blob)
                 channel.postMessage(url)
             }).catch(function(e){
-                
+                throw e;
             })
             
             /*const res = await pwaFetch(event.data, { mode: 'no-cors'});
