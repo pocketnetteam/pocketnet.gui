@@ -10262,6 +10262,8 @@ Platform = function (app, listofnodes) {
                     return true
                 }
 
+                console.log('totalComplains', totalComplains, ustate, ustate.likers_count, address)
+
                 //console.log('ustate.regdate.addDays(7)', ustate.regdate.addDays(7) > new Date())
                 //ustate.regdate && ustate.regdate.addDays(7) > new Date()
 
