@@ -1849,7 +1849,15 @@ var lenta = (function(){
 						return
 					}
 
-					self.sdk.node.transactions.create.commonFromUnspent(
+					console.log("UPVOTESHARE!!!")
+
+					self.app.platform.actions.addActionAndSendIfCan(upvoteShare).then(action => {
+						console.log("ACTION", action)
+					}).catch(e => {
+						console.error(e)
+					})
+
+					/*self.sdk.node.transactions.create.commonFromUnspent(
 
 						upvoteShare,
 
@@ -1881,7 +1889,7 @@ var lenta = (function(){
 							}
 
 						}
-					)
+					)*/
 
 				}, function(){
 					if (clbk)

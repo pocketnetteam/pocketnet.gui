@@ -370,6 +370,45 @@ Platform = function (app, listofnodes) {
         }
     }
 
+    self.actions = new Actions(app, self.app.api)
+
+    self.actions.on('change', ({account}) => {
+        console.log("CHANGE", account)
+
+        if (account.address == app.user.address.value){
+            
+        }
+    })
+
+    self.actions.on('action', ({action, address}) => {
+
+        console.log("CHANGE ACTION", action, address)
+
+
+        if (address == app.user.address.value){
+
+            var alias = action.object
+
+            console.log('alias', alias)
+
+            if (action.rejected){
+                return
+            }
+
+            if (action.completed){
+                return
+            }
+
+            if (action.transaction){
+                //temp
+                return
+            }
+
+        }
+    })
+
+    console.log('self.actions', self.actions)
+
     // self.network = function(){
     //     if(self.test){
     //         return bitcoin.networks.testnet
@@ -4710,7 +4749,7 @@ Platform = function (app, listofnodes) {
                                 self.api.actions.managesubscribelist(address)
                             }
                             else{
-                                self.api.actions.managesubscribelist(address, true, lt.private)
+                                self.api.actions.managesubscribelist(address, true, lr.private)
                             }
 
                         }
@@ -10830,7 +10869,7 @@ Platform = function (app, listofnodes) {
                         var a = self.sdk.address.pnet().address;
 
                         if (!_.isEmpty(info)) {
-                            self.app.settings.set(a, 'last_ustate_2', info)
+                            self.app.settings.set(a, 'last_ustate_2', info) /// todo remove
                         }
                         else {
                             info = self.app.settings.get(a, 'last_ustate_2') || {}
@@ -20404,7 +20443,7 @@ Platform = function (app, listofnodes) {
 
                     },
 
-                    tx: function (id, clbk) {
+                    tx: function (id, clbk, ) {
 
                         if (self.sdk.node.transactions.loading[id]) {
 
@@ -20445,6 +20484,9 @@ Platform = function (app, listofnodes) {
                                     }
                                     else{
                                         d.confirmations = 0
+
+                                        if (self.currentBlock)
+                                            d.height = self.currentBlock
                                     }
                                 }
 
@@ -26121,6 +26163,8 @@ Platform = function (app, listofnodes) {
                         platform.sdk.node.transactions.get.tx(data.txid, _dataclbk)
                     }
 
+                    platform.actions.ws.transaction(data)
+
 
                 },
 
@@ -26348,6 +26392,10 @@ Platform = function (app, listofnodes) {
 
                     clbk(dif)
 
+                    data.difference = platform.currentBlock - data.block
+
+                    platform.actions.ws.block(data)
+
                     ////////////////
 
                     if(app.platform.sdk.address.pnet()){
@@ -26418,6 +26466,8 @@ Platform = function (app, listofnodes) {
 
                     lost = platform.currentBlock;
 
+                    
+
                     platform.sdk.notifications.wsBlock(data.height)
 
                     _.each(s.unspent, function (unspents, address) {
@@ -26434,6 +26484,13 @@ Platform = function (app, listofnodes) {
 
                     platform.sdk.user.subscribeRef()
 
+                    data.difference = platform.currentBlock - data.block
+
+                    platform.actions.ws.block(data)
+
+                    _.each(platform.sdk.node.transactions.storage, (tx) => {
+                        if(tx.height && tx.height != platform.currentBlock) tx.confirmations ++
+                    })
 
                     ////////////////
 
@@ -29336,6 +29393,7 @@ Platform = function (app, listofnodes) {
 
         lazyActions([
 
+            self.actions.prepare,
             self.sdk.node.transactions.loadTemp,
             self.sdk.ustate.meUpdate,
             self.firebase.init,
@@ -29446,7 +29504,7 @@ Platform = function (app, listofnodes) {
             if (state) {
 
                 lazyActions([
-
+                    self.actions.prepare,
                     self.sdk.node.transactions.loadTemp,
                     self.sdk.addresses.init,
                     self.sdk.ustate.me,
@@ -29470,7 +29528,16 @@ Platform = function (app, listofnodes) {
                 ], function () {
 
                     //self.ui.showmykey()
+                    
+                    var account = self.actions.addAccount(self.app.user.address.value)
 
+                    if (self.sdk.ustate.storage[self.app.user.address.value]){
+                        account.setStatus(true)
+                    }
+
+
+                    console.log('account', account.getStatus())
+                    
 
                     self.sdk.node.transactions.checkTemps(function(){
                         self.sdk.relayTransactions.send()

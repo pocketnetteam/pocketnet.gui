@@ -101,6 +101,7 @@ __map =  {
 		{path : "js/navn.js", babelify : true},
 		{path : "js/validation.js", babelify : true},
 		{path : "js/kit.js", babelify : true},
+		{path : "js/lib/client/actions.js", babelify : true},
 		{path : "js/satolist.js", babelify : true},
 		{path : "js/peertube.js", babelify : true},
 		{path : "js/lib/client/p2pvideo.js", babelify : true},

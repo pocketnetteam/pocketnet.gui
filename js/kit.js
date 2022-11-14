@@ -22,11 +22,13 @@ SubscribePrivate = function(){
 
 		if(alias){
 			return {
+				type : self.type,
 				vsaddress : self.address.v
 			}
 		}
 
 		return {
+			
 			address : self.address.v
 		}
 	}
@@ -70,11 +72,13 @@ Subscribe = function(){
 
 		if(alias){
 			return {
+				type : self.type,
 				vsaddress : self.address.v
 			}
 		}
 
 		return {
+			
 			address : self.address.v
 		}
 	}
@@ -118,11 +122,13 @@ Unsubscribe = function(){
 
 		if(alias){
 			return {
+				type : self.type,
 				vsaddress : self.address.v
 			}
 		}
 
 		return {
+			type : self.type,
 			address : self.address.v
 		}
 	}
@@ -166,6 +172,7 @@ Blocking = function(){
 
 		if(alias){
 			return {
+				type : self.type,
 				vsaddress : self.address.v
 			}
 		}
@@ -214,6 +221,7 @@ Unblocking = function(){
 
 		if(alias){
 			return {
+				type : self.type,
 				vsaddress : self.address.v
 			}
 		}
@@ -557,6 +565,10 @@ Comment = function(txid){
 			r.amount = self.amount.v;
 
 		}
+
+		if(extend){
+			r.type = self.type
+		}
 	
 		return r
 
@@ -672,6 +684,7 @@ Comment = function(txid){
 		}
 		else{
 			return {
+				type : self.type,
 				commentid : self.comment.v,
 				value : self.value.v.toString(),
 				vsaddress : self.address.v
@@ -750,6 +763,7 @@ UpvoteShare = function(){
 		}
 		else{
 			return {
+				type : self.type,
 				share : self.share.v,
 				value : self.value.v,
 				vsaddress : self.address.v
@@ -809,11 +823,24 @@ ComplainShare = function(){
 		return self.share.v + '_' + self.reason.v
 	}
 
-	self.export = function(){
-		return {
-			share : self.share.v,
-			reason : self.reason.v
+	self.export = function(alias){
+
+		if(alias){
+			return {
+				type : self.type,
+				share : self.share.v,
+				reason : self.reason.v
+			}
+			
 		}
+		else{
+			return {
+				share : self.share.v,
+				reason : self.reason.v
+			}
+		}
+		
+		
 	}
 
 	self.import = function(p){
@@ -873,14 +900,26 @@ ModFlag = function(){
 		return self.s2.v + self.s3.v + self.i1.v
 	}
 
-	self.export = function(){
-		return {
-			// share : self.share.v,
-			// reason : self.reason.v
-			s2 : self.s2.v,
-			s3 : self.s3.v,
-			i1 : self.i1.v
+	self.export = function(alias){
+
+		if(alias){
+			return {
+				type : self.type,
+				s2 : self.s2.v,
+				s3 : self.s3.v,
+				i1 : self.i1.v
+			}
 		}
+		else{	
+			return {
+				s2 : self.s2.v,
+				s3 : self.s3.v,
+				i1 : self.i1.v
+			}
+		}
+
+
+		
 	}
 
 	self.import = function(p){
@@ -938,6 +977,7 @@ ContentBoost = function(txid){
 		}
 		else{
 			return {
+				type : self.type,
 				content : self.txid
 			}
 		}
@@ -1502,6 +1542,7 @@ Share = function(lang){
 		if (extend){
 
 			return {
+				type : self.type,
 				caption : self.caption.v,
 				message : textvalue,
 				url : self.url.v,
@@ -1889,6 +1930,7 @@ UserInfo = function(){
 
 		if(extend){
 			return {
+				type : self.type,
 				name : self.name.v,
 				about : self.about.v,
 				site : self.site.v,
@@ -1942,7 +1984,14 @@ DeleteAccount = function(){
 	}
 
 	self.export = function(alias){
-		return {}
+		if(alias){
+			return {type : self.type}
+		}
+		else{
+			return {}
+			
+		}
+		
 	}
 
 	self.import = function(p){
