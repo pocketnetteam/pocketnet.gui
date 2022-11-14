@@ -5,6 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+if(typeof globalThis == 'undefined') globalThis = window
+
  var runtime = (function (exports) {
     "use strict";
   
@@ -965,3 +967,6 @@ if (!hasTextEncoder || !hasTextDecoder) {
 
   document.head.appendChild(polyfillConnector);
 }
+
+/*! (c) Andrea Giammarchi - ISC */
+var self=this||{};try{self.WeakSet=WeakSet}catch(t){!function(e){var s=new e,t=n.prototype;function n(t){"use strict";s.set(this,new e),t&&t.forEach(this.add,this)}t.add=function(t){return s.get(this).set(t,1),this},t.delete=function(t){return s.get(this).delete(t)},t.has=function(t){return s.get(this).has(t)},self.WeakSet=n}(WeakMap)}
