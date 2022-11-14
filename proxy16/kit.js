@@ -85,6 +85,18 @@ var activenodes = [
 		allowRpc : false,
 		alwaysrun : true
 	},
+
+	{
+		host : '65.21.252.135', /*  */
+		port: 38081,
+		ws: 8087,
+		name : 'test4.v.pocketnet.app',
+		stable : true,
+		single : true,
+		allowRpc : false,
+		alwaysrun : true
+	},
+	//////////////
 	{
 		host : '135.181.196.243',
 		port : 38081,
