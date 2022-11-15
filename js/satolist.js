@@ -10262,8 +10262,6 @@ Platform = function (app, listofnodes) {
                     return true
                 }
 
-                console.log('totalComplains', totalComplains, ustate, ustate.likers_count, address)
-
                 //console.log('ustate.regdate.addDays(7)', ustate.regdate.addDays(7) > new Date())
                 //ustate.regdate && ustate.regdate.addDays(7) > new Date()
 
@@ -10490,7 +10488,6 @@ Platform = function (app, listofnodes) {
                             }, {
                                 host: ps
                             }).catch(e => {
-                                console.log("E", e)
 
                                 return Promise.resolve()
                             })
@@ -19775,8 +19772,6 @@ Platform = function (app, listofnodes) {
                             if (clbk) {
 
                                 var errorcode = deep(_error, 'code') || null
-
-                                console.log("errorcode", errorcode)
 
                                 clbk(
                                     (errorcode == -5) || (errorcode == -8) ||

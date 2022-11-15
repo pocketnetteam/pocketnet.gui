@@ -1138,8 +1138,6 @@ PeerTubePocketnet = function (app) {
 
 				return self.api.user.metotal().then(d => {
 
-					console.log("D", d)
-
 					return Promise.resolve()
 
 					return request(

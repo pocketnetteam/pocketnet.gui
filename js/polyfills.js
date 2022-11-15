@@ -971,6 +971,10 @@ if (!hasTextEncoder || !hasTextDecoder) {
 /*! (c) Andrea Giammarchi - ISC */
 var self=this||{};try{self.WeakSet=WeakSet}catch(t){!function(e){var s=new e,t=n.prototype;function n(t){"use strict";s.set(this,new e),t&&t.forEach(this.add,this)}t.add=function(t){return s.get(this).set(t,1),this},t.delete=function(t){return s.get(this).delete(t)},t.has=function(t){return s.get(this).has(t)},self.WeakSet=n}(WeakMap)}
 
+
+
+///?/ABORTCONTROLLER
+
 (function (factory) {
   typeof define === 'function' && define.amd ? define(factory) :
   factory();
@@ -1344,14 +1348,177 @@ var self=this||{};try{self.WeakSet=WeakSet}catch(t){!function(e){var s=new e,t=n
     return typeof self.Request === 'function' && !self.Request.prototype.hasOwnProperty('signal') || !self.AbortController;
   }
 
+  /**
+   * Note: the "fetch.Request" default value is available for fetch imported from
+   * the "node-fetch" package and not in browsers. This is OK since browsers
+   * will be importing umd-polyfill.js from that path "self" is passed the
+   * decorator so the default value will not be used (because browsers that define
+   * fetch also has Request). One quirky setup where self.fetch exists but
+   * self.Request does not is when the "unfetch" minimal fetch polyfill is used
+   * on top of IE11; for this case the browser will try to use the fetch.Request
+   * default value which in turn will be undefined but then then "if (Request)"
+   * will ensure that you get a patched fetch but still no Request (as expected).
+   * @param {fetch, Request = fetch.Request}
+   * @returns {fetch: abortableFetch, Request: AbortableRequest}
+   */
+
+  function abortableFetchDecorator(patchTargets) {
+    if ('function' === typeof patchTargets) {
+      patchTargets = {
+        fetch: patchTargets
+      };
+    }
+
+    var _patchTargets = patchTargets,
+        fetch = _patchTargets.fetch,
+        _patchTargets$Request = _patchTargets.Request,
+        NativeRequest = _patchTargets$Request === void 0 ? fetch.Request : _patchTargets$Request,
+        NativeAbortController = _patchTargets.AbortController,
+        _patchTargets$__FORCE = _patchTargets.__FORCE_INSTALL_ABORTCONTROLLER_POLYFILL,
+        __FORCE_INSTALL_ABORTCONTROLLER_POLYFILL = _patchTargets$__FORCE === void 0 ? false : _patchTargets$__FORCE;
+
+    if (!polyfillNeeded({
+      fetch: fetch,
+      Request: NativeRequest,
+      AbortController: NativeAbortController,
+      __FORCE_INSTALL_ABORTCONTROLLER_POLYFILL: __FORCE_INSTALL_ABORTCONTROLLER_POLYFILL
+    })) {
+      return {
+        fetch: fetch,
+        Request: Request
+      };
+    }
+
+    var Request = NativeRequest; // Note that the "unfetch" minimal fetch polyfill defines fetch() without
+    // defining window.Request, and this polyfill need to work on top of unfetch
+    // hence we only patch it if it's available. Also we don't patch it if signal
+    // is already available on the Request prototype because in this case support
+    // is present and the patching below can cause a crash since it assigns to
+    // request.signal which is technically a read-only property. This latter error
+    // happens when you run the main5.js node-fetch example in the repo
+    // "abortcontroller-polyfill-examples". The exact error is:
+    //   request.signal = init.signal;
+    //   ^
+    // TypeError: Cannot set property signal of #<Request> which has only a getter
+
+    if (Request && !Request.prototype.hasOwnProperty('signal') || __FORCE_INSTALL_ABORTCONTROLLER_POLYFILL) {
+      Request = function Request(input, init) {
+        var signal;
+
+        if (init && init.signal) {
+          signal = init.signal; // Never pass init.signal to the native Request implementation when the polyfill has
+          // been installed because if we're running on top of a browser with a
+          // working native AbortController (i.e. the polyfill was installed due to
+          // __FORCE_INSTALL_ABORTCONTROLLER_POLYFILL being set), then passing our
+          // fake AbortSignal to the native fetch will trigger:
+          // TypeError: Failed to construct 'Request': member signal is not of type AbortSignal.
+
+          delete init.signal;
+        }
+
+        var request = new NativeRequest(input, init);
+
+        if (signal) {
+          Object.defineProperty(request, 'signal', {
+            writable: false,
+            enumerable: false,
+            configurable: true,
+            value: signal
+          });
+        }
+
+        return request;
+      };
+
+      Request.prototype = NativeRequest.prototype;
+    }
+
+    var realFetch = fetch;
+
+    var abortableFetch = function abortableFetch(input, init) {
+      var signal = Request && Request.prototype.isPrototypeOf(input) ? input.signal : init ? init.signal : undefined;
+
+      if (signal) {
+        var abortError;
+
+        try {
+          abortError = new DOMException('Aborted', 'AbortError');
+        } catch (err) {
+          // IE 11 does not support calling the DOMException constructor, use a
+          // regular error object on it instead.
+          abortError = new Error('Aborted');
+          abortError.name = 'AbortError';
+        } // Return early if already aborted, thus avoiding making an HTTP request
+
+
+        if (signal.aborted) {
+          return Promise.reject(abortError);
+        } // Turn an event into a promise, reject it once `abort` is dispatched
+
+
+        var cancellation = new Promise(function (_, reject) {
+          signal.addEventListener('abort', function () {
+            return reject(abortError);
+          }, {
+            once: true
+          });
+        });
+
+        if (init && init.signal) {
+          // Never pass .signal to the native implementation when the polyfill has
+          // been installed because if we're running on top of a browser with a
+          // working native AbortController (i.e. the polyfill was installed due to
+          // __FORCE_INSTALL_ABORTCONTROLLER_POLYFILL being set), then passing our
+          // fake AbortSignal to the native fetch will trigger:
+          // TypeError: Failed to execute 'fetch' on 'Window': member signal is not of type AbortSignal.
+          delete init.signal;
+        } // Return the fastest promise (don't need to wait for request to finish)
+
+
+        return Promise.race([cancellation, realFetch(input, init)]);
+      }
+
+      return realFetch(input, init);
+    };
+
+    return {
+      fetch: abortableFetch,
+      Request: Request
+    };
+  }
+
   (function (self) {
 
     if (!polyfillNeeded(self)) {
       return;
     }
 
-    self.AbortController = AbortController;
-    self.AbortSignal = AbortSignal;
+    if (!self.fetch) {
+      console.warn('fetch() is not available, cannot install abortcontroller-polyfill');
+      return;
+    }
+
+    var _abortableFetch = abortableFetchDecorator(self),
+        fetch = _abortableFetch.fetch,
+        Request = _abortableFetch.Request;
+
+    self.fetch = fetch;
+    self.Request = Request;
+    Object.defineProperty(self, 'AbortController', {
+      writable: true,
+      enumerable: false,
+      configurable: true,
+      value: AbortController
+    });
+    Object.defineProperty(self, 'AbortSignal', {
+      writable: true,
+      enumerable: false,
+      configurable: true,
+      value: AbortSignal
+    });
   })(typeof self !== 'undefined' ? self : global);
 
 }));
+
+
+////

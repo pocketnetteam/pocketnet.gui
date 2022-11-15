@@ -80,8 +80,6 @@ var HTLS = function(){
             OP_ENDIF
         `)*/
 
-        console.log('asm2', asm2)
-        console.log('asm2cc', bitcoin.script.toASM(bitcoin.script.fromASM(asm2)) )
         var script = bitcoin.script.fromASM(asm2)
    
         return script

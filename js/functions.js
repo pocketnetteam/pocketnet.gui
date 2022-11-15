@@ -1987,7 +1987,6 @@
 
 			markers.on('click', function() {
 				gotoslide(this.getAttribute('index'))
-				console.log(this)
 			})
 	
 		})
@@ -2026,7 +2025,6 @@
 		var gotoslide = function(index){
 			window.requestAnimationFrame(() => {
 
-				console.log('index', index, items[index].offsetLeft)
 				container[0].scrollLeft = items[index].offsetLeft
 
 			})
@@ -4061,8 +4059,6 @@
 
 									app.mobile.menu(_.map(items, (i) => {return i.label})).then((i) => {
 
-										console.log("I", i)
-
 										bkp = null;
 
 										input.val(items[i].value);
@@ -4667,7 +4663,6 @@
 
 						var value = $(this).val();
 
-						console.log('value', value)
 
 						if(!value || value == '0') {
 
@@ -4682,10 +4677,8 @@
 
 							var hassep = value.indexOf('.') > -1 || value.indexOf(',') > -1
 
-							console.log('hassep', hassep)
 
 							if(l == '.' || (l == '0' && hassep) || l == ',') {
-								console.log("HERE")
 								return false
 							}
 						}
@@ -4697,9 +4690,6 @@
 
 							var max = deep(parameter, 'format.max')
 							var min = deep(parameter, 'format.min')
-
-							console.log('max', max)
-							console.log('min', min)
 
 							if(typeof max != 'undefined' && max < value) value = max
 							if(typeof min != 'undefined' && min > value) value = min
@@ -12041,7 +12031,6 @@ resizeGif = function (app) {
             return imageBitmapResize(frame, width, height);
         }*/
 
-		console.log('frame', frame)
 
         return canvasResize(frame, width, height);
     }
@@ -12149,8 +12138,6 @@ resizeGif = function (app) {
 
         return new Promise((resolve, reject) => {
             gif.on("finished", resolve);
-
-			console.log('frames', frames)
 
             try {
                 gif.render();
