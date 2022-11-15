@@ -8,7 +8,7 @@ var actions = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el, ed;
+		var el, ed, accounts;
 
 		var actions = {
 
@@ -19,7 +19,28 @@ var actions = (function(){
 		}
 
 		var renders = {
+			accounts : function(){
+				_.each(accounts, (account) => {
+					renders.state(account)
+				})
+			},
+			state : function(account, clbk){
+				self.shell({
 
+					name :  'state',
+					el :   el.c.find('.account[address="'+account.address+'"] .stateWrapper'),
+
+					data : {
+						account
+					},
+
+				}, function(p){
+
+
+					if (clbk)
+						clbk();
+				})
+			}
 		}
 
 		var state = {
@@ -42,11 +63,12 @@ var actions = (function(){
 			getdata : function(clbk, p){
 
 				ed = p.settings.essenseData
+				accounts = self.app.platform.actions.getAccounts()
 
 				var data = {
 					ed,
 
-					accounts : self.app.platform.actions.getAccounts()
+					accounts
 				};
 
 				clbk(data);
@@ -66,6 +88,8 @@ var actions = (function(){
 				el.c = p.el.find('#' + self.map.id);
 
 				initEvents();
+
+				renders.accounts()
 
 				p.clbk(null, p);
 			}

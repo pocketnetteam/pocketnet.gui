@@ -729,6 +729,13 @@ Account = function(address, parent){
         self.unspents.value.push(transaction)
     }
 
+    self.isCurrentNetwork = function(){
+        if(self.address.indexOf("T") == 0 &&  window.testpocketnet) return true
+        if(self.address.indexOf("P") == 0 && !window.testpocketnet) return true
+
+        return false
+    }
+
     self.export = function(){
         var e = {}
 
@@ -842,11 +849,15 @@ Account = function(address, parent){
 
     self.loadUnspents = function(){
 
+        if(!self.isCurrentNetwork()){
+            return Promise.reject('otherNetwork')
+        }
+
         if (temps.unspents){
             return temps.unspents
         }
 
-        var zAddresses = parent.app.platform.sdk.addresses.storage.addresses || []
+        var zAddresses = (self.address == app.user.address.value) ? (parent.app.platform.sdk.addresses.storage.addresses || []) : []
 
         var promise = parent.api.rpc('txunspent', [[self.address].concat(zAddresses), 1, 9999999]).then(unspents => {
 
@@ -974,19 +985,16 @@ Account = function(address, parent){
 
     self.processing = async function(){
 
-        
+        if(!self.isCurrentNetwork()) return
 
         var sorted = _.sortBy(self.actions.value, (action) => {
             return action.priority
         })
 
-
         for(let index in sorted){
 
             var action = sorted[index]
 
-            console.log("action", action)
-            
             try{
                 await action.processing()
             }
@@ -996,15 +1004,12 @@ Account = function(address, parent){
                     console.error(e)
             }
 
-            //self.save()
-
         }
-
         
     }
 
     self.checkAccountReadySend = function(account){
-        if (self.status.value && self.unspents.value.length){
+        if (self.status.value && self.unspents.value.length && self.isCurrentNetwork()){
             return true
         }
     }
@@ -1134,7 +1139,7 @@ Account = function(address, parent){
 
         var balance = {
             total : 0,
-            blocked : 0,
+            actual : 0,
             tempbalance : 0
         }
 
@@ -1162,7 +1167,7 @@ Account = function(address, parent){
         var unspents = self.getActualUnspents()
 
         balance.total = unspentsAmount(totalUnspents) + tempbalance
-        balance.blocked = unspentsAmount(unspents) + tempbalance
+        balance.actual = unspentsAmount(unspents) + tempbalance
         balance.tempbalance = tempbalance
 
       

@@ -306,6 +306,15 @@ __map =  {
 		add : insertingfunc,
 	},
 
+	actions : {
+		uri : "actions",
+		href : "actions",
+		add : {
+			el : 'content'
+		},
+		add : insertingfunc,
+	},
+
 	applications : {
 		uri : "applications",
 		href : "applications",

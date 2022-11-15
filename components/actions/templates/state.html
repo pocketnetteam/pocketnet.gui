@@ -1,9 +1,78 @@
 <div class="state">
-    <div class="status">
-        <span><%-account.getStatus()%></span>
-    </div>
+    <div class="work">
+        <div class="status">
+            <span><%-account.getStatus()%></span>
+        </div>
 
-    <div class="balance">
-        <% var balance = account.actualBalance() %>
+        <% if(account.keyPair) {%>
+            <div class="haskeys">
+                <i class="fas fa-key"></i>
+            </div>
+        <% } %>
+
+        <div class="balance">
+            <% var balance = account.actualBalance() %>
+
+            <div class="total">
+                <span><%-app.platform.mp.coin(balance.total)%></span>
+            </div>
+            <div class="actual">
+                <span><%-app.platform.mp.coin(balance.actual)%></span>
+            </div>
+            <div class="tempbalance">
+                <span><%-app.platform.mp.coin(balance.tempbalance)%></span>
+            </div>
+
+            <% if(account.unspents.willChange) {%>
+                <div class="wait">
+                    <i class="fas fa-clock"></i>
+                </div>
+            <% } %>
+
+            
+
+            
+        </div>
+
+        <div class="actions">
+            <% _.each(account.getActions(), function(action){ %> 
+                <div class="action">
+                    <div class="time">
+                        <span><%-app.reltime(action.sent || action.added)%></span>
+                    </div>
+
+                    <div class="type">
+                        <span><%-action.object.type%></span>
+                    </div>
+
+                    <% if(action.transaction) {%>
+                        <div class="transaction">
+                            <span><%-action.transaction%></span>
+                        </div>
+                    <% } %>
+
+                    <% if(action.completed) {%>
+                        <div class="completed">
+                            <span>Completed</span>
+                        </div>
+                    <% } %>
+
+                    <% if(action.rejected) {%>
+                        <div class="rejected">
+                            <span><%-action.rejected%></span>
+                        </div>
+                    <% } %>
+
+                    <% if(action.attempts) {%>
+                        <div class="attempts">
+                            <span><%-action.attempts%></span>
+                        </div>
+                    <% } %>
+                    
+                </div>
+
+            
+            <% }) %>
+        </div>
     </div>
 </div>

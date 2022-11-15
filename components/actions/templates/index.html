@@ -1,14 +1,18 @@
 <div id="<%-module.map.id%>">
-	<div class="caption">
-		<span>Actions</span>
+	<div class="work">
+		<div class="caption">
+			<span>Actions</span>
+		</div>
 	</div>
 	<% if(!_.isEmpty(accounts)) {%>
 
 		<div class="accounts">
 			<% _.each(accounts, function(account){ %> 
-				<div class="account">
-					<div class="subcaption">
-						<span><%- account.address %></span>
+				<div class="account" address="<%-account.address%>">
+					<div class="work">
+						<div class="subcaption">
+							<span><%- account.address %></span>
+						</div>
 					</div>
 
 					<div class="stateWrapper">
@@ -19,8 +23,10 @@
 		</div>
 
 	<% } else { %> 
-		<div class="empty">
-			<span>No accounts registered</span>
+		<div class="work">
+			<div class="empty">
+				<span>No accounts registered</span>
+			</div>
 		</div>
 	<% } %>
 
