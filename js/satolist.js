@@ -29535,6 +29535,7 @@ Platform = function (app, listofnodes) {
                         account.setStatus(true)
                     }
 
+                    account.setKeys(app.user.keys())
 
                     console.log('account', account.getStatus())
                     

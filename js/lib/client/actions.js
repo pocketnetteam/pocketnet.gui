@@ -606,6 +606,8 @@ Account = function(address, parent){
         updated : null
     }
 
+    self.keyPair = null
+
     var temps = {
         unspents : null
     }
@@ -672,6 +674,10 @@ Account = function(address, parent){
 
     self.setStatus = function(value){
         self.status.value = value ? true : false
+    }
+
+    self.setKeys = function(keyPair){
+        self.keyPair = keyPair
     }
 
     self.checkTransactionById = function(ids){
@@ -752,7 +758,7 @@ Account = function(address, parent){
 
         _.each(e.actions.value, (exported) => {
 
-            if(exported.completed || exported.rejected) return
+            //if(exported.completed || exported.rejected) return
 
             try{
                 var action = new Action(self, {})
@@ -773,11 +779,11 @@ Account = function(address, parent){
 
         if (input.address.indexOf("T") == 0 || input.address.indexOf("P") == 0) {
 
-            if(parent.app.user.address.value != input.address) {
+            var keyPair = parent.app.user.address.value != input.address ? self.keyPair : parent.app.user.keys()
+
+            if(!keyPair) {
                 throw 'unableSign'
             }
-
-            var keyPair = parent.app.user.keys()
 
             txb.sign(indexOfInput, keyPair);
 
@@ -786,11 +792,11 @@ Account = function(address, parent){
 
         if (input.type == 'htlc'){
 
-            if(parent.app.user.address.value != input.address) {
+            var keyPair = parent.app.user.address.value != input.address ? self.keyPair : parent.app.user.keys()
+
+            if(!keyPair) {
                 throw 'unableSign'
             }
-
-            var keyPair = parent.app.user.keys()
 
             txb.sign({
                 prevOutScript: Buffer.from(input.scriptPubKey, 'hex'),
@@ -804,6 +810,11 @@ Account = function(address, parent){
         }
 
         if (input.address.indexOf("Z") == 0 || input.address.indexOf("Y") == 0) {
+
+            if (parent.app.user.address.value != self.address) {
+                throw 'unableSign'
+            }
+
 
             var index = _.indexOf(parent.app.platform.sdk.addresses.storage.addresses, i.address);
 
@@ -962,6 +973,8 @@ Account = function(address, parent){
     }
 
     self.processing = async function(){
+
+        
 
         var sorted = _.sortBy(self.actions.value, (action) => {
             return action.priority
@@ -1374,6 +1387,10 @@ Actions = function(app, api){
         processInterval = null
 
         inited = false
+    }
+
+    self.getAccounts = function(){
+        return accounts
     }
 
     self.api = api

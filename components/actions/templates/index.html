@@ -1,0 +1,27 @@
+<div id="<%-module.map.id%>">
+	<div class="caption">
+		<span>Actions</span>
+	</div>
+	<% if(!_.isEmpty(accounts)) {%>
+
+		<div class="accounts">
+			<% _.each(accounts, function(account){ %> 
+				<div class="account">
+					<div class="subcaption">
+						<span><%- account.address %></span>
+					</div>
+
+					<div class="stateWrapper">
+
+					</div>
+				</div>
+			<% }) %> 
+		</div>
+
+	<% } else { %> 
+		<div class="empty">
+			<span>No accounts registered</span>
+		</div>
+	<% } %>
+
+</div>
