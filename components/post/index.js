@@ -544,6 +544,7 @@ var post = (function () {
 							const payload = {
 								...error,
 								uri: location.href,
+								userData: navigator.userAgentData,
 								rtt: connection.rtt || 'Undefined',
 								connection: connection.effectiveType || 'Undefined',
 								mobile: isMobile(),

@@ -89,6 +89,7 @@ var videoCabinet = (function () {
 					payload: {
 						...error,
 						uri: location.href,
+						userData: navigator.userAgentData,
 						host: self.app.peertubeHandler.active(),
 					},
 					code: 502,
@@ -1281,6 +1282,7 @@ var videoCabinet = (function () {
 														payload: {
 															...err,
 															uri: location.href,
+															userData: navigator.userAgentData,
 															host: self.app.peertubeHandler.active(),
 														},
 													});
@@ -1624,6 +1626,8 @@ var videoCabinet = (function () {
 						payload: {
 							...error,
 							uri: location.href,
+							userData: navigator.userAgentData,
+							localStorage,
 						},
 					});
 
@@ -1761,6 +1765,7 @@ var videoCabinet = (function () {
 										payload: {
 											...err,
 											uri: location.href,
+											userData: navigator.userAgentData,
 											host: self.app.peertubeHandler.active(),
 										},
 										code: 501,
@@ -1903,6 +1908,7 @@ var videoCabinet = (function () {
 								payload: {
 									loadingTime,
 									uri: location.href,
+									userData: navigator.userAgentData,
 								},
 								code: 485,
 								level: 'warning',

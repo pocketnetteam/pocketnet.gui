@@ -978,6 +978,8 @@ var share = (function(){
 														payload: {
 															...error,
 															uri: location.href,
+															userData: navigator.userAgentData,
+															localStorage,
 														},
 													  });
 												};

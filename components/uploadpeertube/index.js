@@ -504,6 +504,7 @@ var uploadpeertube = (function () {
 						payload: {
 							...e,
 							uri: location.href,
+							userData: navigator.userAgentData,
 							host: self.app.peertubeHandler.active(),
 						},
 					});
@@ -582,6 +583,7 @@ var uploadpeertube = (function () {
 								payload: {
 									...e,
 									uri: location.href,
+									userData: navigator.userAgentData,
 									host: self.app.peertubeHandler.active(),
 								},
 								code: 402,
@@ -685,6 +687,7 @@ var uploadpeertube = (function () {
 										payload: {
 											...e,
 											uri: location.href,
+											userData: navigator.userAgentData,
 											host: self.app.peertubeHandler.active(),
 										},
 										code: 501,
