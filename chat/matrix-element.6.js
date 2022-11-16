@@ -851,8 +851,6 @@ var vuex_esm = __webpack_require__("2f62");
     },
 
     handleTouchStart(e) {
-      console.log("E", e, this.isHold, this.isRecording);
-
       if (!this.isRecording) {
         this.$emit('onRecordingStart');
       } else {
@@ -867,7 +865,6 @@ var vuex_esm = __webpack_require__("2f62");
     },
 
     handleTouchEnd(e) {
-      console.log("E", e, this.isHold);
       if (this.isHold) return;
 
       if (this.isRecording || this.prepareRecording) {
@@ -895,7 +892,6 @@ var vuex_esm = __webpack_require__("2f62");
     handleMove(e) {
       var _e$changedTouches;
 
-      console.log("E", e, this.isRecording);
       if (!this.isRecording) return;
       let deltaY = this.start.Y - e.pageY;
       let deltaX = this.start.X - e.pageX;
@@ -2135,7 +2131,6 @@ var CancelablePromise = __webpack_require__("0bb9");
     },
 
     getFileIosCordova(path) {
-      console.log('load', path);
       return new Promise((resolve, reject) => {
         window.resolveLocalFileSystemURL(path, entry => {
           if (!entry) {
@@ -2144,13 +2139,11 @@ var CancelablePromise = __webpack_require__("0bb9");
 
           entry.file(file => {
             var reader = new FileReader();
-            console.log('file', file);
 
             reader.onloadend = function () {
               var blob = new Blob([new Uint8Array(this.result)], {
                 type: file.type
               });
-              console.log('blob', blob);
               entry.remove();
               resolve(blob);
             };
@@ -2180,7 +2173,6 @@ var CancelablePromise = __webpack_require__("0bb9");
         return Promise.reject(err);
       }));
       this.prepareRecording.then(() => {
-        console.log("START RECORDING");
         this.microphoneDisabled = false;
         var path = 'recording.mp3';
         if (functions["a" /* default */].isios()) path = 'cdvfile://localhost/temporary/recording.m4a';
@@ -2188,7 +2180,6 @@ var CancelablePromise = __webpack_require__("0bb9");
         this.audioContext = this.core.getAudioContext(); //var startedTime = (new Date()).getTime() / 1000
 
         var media = this.cordovaMediaRecorder = new Media(path, () => {
-          console.log("MEDIA PREPARED", this.cancelledCordovaMediaRecorder);
           this.recordTime = 0;
           media.release();
 
@@ -2219,8 +2210,6 @@ var CancelablePromise = __webpack_require__("0bb9");
             	/*var e = {
             	data : r.data
             }*/
-            console.log('media.duration', media.duration);
-
             if (media.duration && media.duration > 0) {
               r.duration = media.duration;
             }
@@ -2278,7 +2267,6 @@ var CancelablePromise = __webpack_require__("0bb9");
 
     initRecording() {
       if (this.prepareRecording || this.isRecording || this.cordovaMediaRecorder) return;
-      console.log("INIT RECORDING");
 
       if (window.cordova) {
         return this.initRecordingCordova();
@@ -2368,8 +2356,6 @@ var CancelablePromise = __webpack_require__("0bb9");
     },
 
     createVoiceMessage(event, sendnow) {
-      console.log('event', event);
-
       var c = () => {
         //this.record =
         this.checkaudioForSend({
