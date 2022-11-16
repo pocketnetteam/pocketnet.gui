@@ -47,6 +47,11 @@ var ActionOptions = {
             priority : 1
         },
 
+        share : {
+            rejectedAsk : true,
+            priority : 2
+        },
+
         contentBoost : {
             amount : function(obj){
                 return obj.object.amount.v
@@ -245,8 +250,6 @@ Action = function(account, object, priority){
         return unspents
     }
 
-    
-
     var makeTransaction = async function(retry, calculatedFee, send){
 
         var unspents = filterUnspents(account.getActualUnspents(true))
@@ -416,6 +419,10 @@ Action = function(account, object, priority){
                 return makeTransaction(true, calculatedFee, send)
             }
 
+            if(options.rejectedAsk){
+
+            }
+
             self.rejected = code || (e.toString ? e.toString() : 'rejected')
 
             console.log('self.rejected', self.rejected)
@@ -521,6 +528,15 @@ Action = function(account, object, priority){
 
         if (self.object.checkloaded && self.object.checkloaded()){
             return Promise.reject('resourses')
+        }
+
+        if (self.object.validation){
+            var error = obj.validation();
+
+            if (error) {
+                self.rejected = error
+                return Promise.reject(self.rejected)
+            }
         }
 
         if (self.object.canSend){
@@ -774,7 +790,11 @@ Account = function(address, parent){
         }
 
         _.each(self.actions.value, (action) => {
-            e.actions.value.push(action.export())
+
+            if(!action.completed && !action.rejected){
+                e.actions.value.push(action.export())
+            }   
+           
         })
 
         return e
@@ -1402,7 +1422,7 @@ Actions = function(app, api){
             return action.makeTransaction(null, null, true).then(() => {
                 return Promise.resolve(action)
             }).catch(e => {
-                app.platform.errorHandler(e, true)
+
                 return Promise.reject(e)
             })
         }

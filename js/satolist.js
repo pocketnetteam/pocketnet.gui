@@ -394,7 +394,7 @@ Platform = function (app, listofnodes) {
                 var ustate = typeof object.ustate == 'function' ? alias.ustate() : alias.ustate;
 
                 if (ustate) self.sdk.ustate.change(address, ustate, 1)
-                
+
             }
 
             return listener(alias, status)
@@ -403,6 +403,45 @@ Platform = function (app, listofnodes) {
     })
 
     var listeners = {
+        share : function(alias, status){
+
+            if(status == 'completed'){
+
+                self.sdk.node.shares.add(alias);
+
+                if (alias.itisvideo()) {
+                    var unpostedVideos;
+
+                    try {
+                        unpostedVideos = JSON.parse(localStorage.getItem('unpostedVideos') || '{}');
+                    } catch (error) {
+                        unpostedVideos = {};
+
+                        app.Logger.error({
+                            err: 'DAMAGED_LOCAL_STORAGE',
+                            code: 801,
+                            payload: error,
+                        });
+                    };
+
+                    if (unpostedVideos[app.user.address.value]) {
+                        unpostedVideos[app.user.address.value] = unpostedVideos[app.user.address.value].filter(
+                            (video) => video !== alias.url,
+                        );
+
+                        try {
+                            localStorage.setItem('unpostedVideos', JSON.stringify(unpostedVideos));
+                        }
+                        catch (e) { 
+
+                        }
+
+                        
+                    }
+                }
+            }
+
+        },
         upvoteShare : function(alias, status){
             
             !self.sdk.node.shares.storage.trx ? self.sdk.node.shares.storage.trx = {} : null

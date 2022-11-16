@@ -875,43 +875,57 @@ var share = (function(){
 
 				el.c.addClass('loading')
 				
-				topPreloader(50)
 
 				var SAVE = function(){
 
 					currentShare.language.set(self.app.localization.key)
+					currentShare.uploadImages(self.app, function(){
+
+						if (currentShare.hasexchangetag()){
+							currentShare.repost.v = ''
+							currentShare.settings.f = '0'
+							currentShare.url.set()
+						}
+
+						if (currentShare.repost.v){
+							currentShare.settings.f = '0'
+						}
+
+						if (currentShare.checkloaded()){
+		
+							el.c.removeClass('loading')
+							sitemessage(self.app.platform.errorHandler('imageerror', true))
+							
+							return
+						}
+
+						self.app.platform.actions.addActionAndSendIfCan(currentShare).then(action => {
+
+
+
+							if (clbk)
+								clbk(true)
+						}).catch(e => {
+
+
+							if (clbk){
+								clbk(false, errors[e])
+							}
+								
+							var t = self.app.platform.errorHandler(error, true);
+
+							if (t) actions.errortext(t)
+
+						}).then(() => {
+							el.c.removeClass('loading')
+						})
+					})
+
+					return
 
 					actions.checktranscoding(function(result){
 						currentShare.uploadImages(self.app, function(){
 
-
-							if (currentShare.hasexchangetag()){
-								currentShare.repost.v = ''
-								currentShare.settings.f = '0'
-								currentShare.url.set()
-							}
-
-							if (currentShare.repost.v){
-								currentShare.settings.f = '0'
-							}
-
-							if (currentShare.checkloaded()){
-								
-		
-								var t = self.app.platform.errorHandler('imageerror', true);
-		
-								topPreloader(100)
-		
-								el.c.removeClass('loading')
-		
-								if (t){
-									sitemessage(t)
-								}
-		
-								
-								return
-							}
-		
 							self.sdk.node.transactions.create.commonFromUnspent(
 		
 								currentShare,
@@ -919,7 +933,6 @@ var share = (function(){
 								function(_alias, error){
 
 
-									topPreloader(100)
 		
 									el.c.removeClass('loading')
 		
@@ -1011,11 +1024,11 @@ var share = (function(){
 											console.log(e)
 										}
 		
-										self.app.platform.sdk.user.get(function(u){
+										/*self.app.platform.sdk.user.get(function(u){
 											u.postcnt++
 										})
 		
-										intro = false
+										intro = false*/
 
 										if (essenseData.post){
 											essenseData.post(alias)
@@ -1069,7 +1082,6 @@ var share = (function(){
 
 					el.c.removeClass('loading')
 
-					topPreloader(100)
 				}
 
 				
@@ -2446,8 +2458,6 @@ var share = (function(){
 		
 								el.c.find('.emojionearea-editor').on('pasteImage', function (ev, data){
 		
-									topPreloader(100)
-
 									resize(data.dataURL, 1920, 1080, function(resized){
 										var r = resized.split(',');
 						
@@ -2474,11 +2484,9 @@ var share = (function(){
 		
 								}).on('pasteImageStart', function(){
 		
-									topPreloader(30)
 		
 								}).on('pasteImageError', function(ev, data){
 		
-									 topPreloader(100)
 		
 								}).on('pasteText', function (ev, data){
 		

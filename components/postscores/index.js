@@ -84,7 +84,7 @@ var postscores = (function(){
 						if (clbk)
 							clbk(true)
 					}).catch(e => {
-						console.error(e)
+						self.app.platform.errorHandler(e, true)
 
 						if (clbk)
 							clbk(false)

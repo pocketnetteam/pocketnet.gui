@@ -694,9 +694,13 @@ var post = (function () {
 						if (clbk)
 							clbk(true)
 					}).catch(e => {
+
+						self.app.platform.errorHandler(e, true)
+
 						if (clbk)
 							clbk(false)
-						console.error(e)
+
+						
 					})
 
 				}, function(){
