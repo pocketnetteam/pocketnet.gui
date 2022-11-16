@@ -1794,6 +1794,7 @@ var lenta = (function(){
 
 			like : function(obj, value, clbk){
 
+
 				var checkvisibility = app.platform.sdk.node.shares.checkvisibility(obj);
 
 				var reputation = deep(app, 'platform.sdk.usersl.storage.'+obj.address+'.reputation') || 0
@@ -1853,43 +1854,14 @@ var lenta = (function(){
 
 					self.app.platform.actions.addActionAndSendIfCan(upvoteShare).then(action => {
 						console.log("ACTION", action)
+						if (clbk)
+							clbk(true)
 					}).catch(e => {
 						console.error(e)
+						if (clbk)
+							clbk(false)
 					})
 
-					/*self.sdk.node.transactions.create.commonFromUnspent(
-
-						upvoteShare,
-
-						function(tx, error){
-
-							topPreloader(100)
-
-							if(!tx){				
-
-								upvoteShare.myVal = null;	
-								obj.myVal = 0;	
-
-								self.app.platform.errorHandler(error, true)	
-
-
-								if(clbk)
-									clbk(false)
-								
-							}
-							else
-							{
-
-								if (clbk)
-									clbk(true)
-
-								self.app.platform.sdk.memtags.add(obj.tags, 'l_' + obj.txid, (value - 3) / 2)
-
-								self.app.platform.sdk.recommendations.successRecommendation(obj)
-							}
-
-						}
-					)*/
 
 				}, function(){
 					if (clbk)

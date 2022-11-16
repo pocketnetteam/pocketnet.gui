@@ -689,37 +689,15 @@ var post = (function () {
 
 				self.app.platform.sdk.upvote.checkvalue(value, function(){
 
-					self.sdk.node.transactions.create.commonFromUnspent(
-
-						upvoteShare,
-
-						function (tx, error) {
-
-
-							topPreloader(100)
-
-							if (!tx) {
-
-								share.myVal = null;
-
-								self.app.platform.errorHandler(error, true)
-
-								if (clbk)
-									clbk(false)
-
-							}
-							else {
-
-								if (clbk)
-									clbk(true)
-
-								self.app.platform.sdk.memtags.add(share.tags, 'l_' + share.txid, (value - 3) / 2)
-								self.app.platform.sdk.recommendations.successRecommendation(share)
-
-							}
-
-						}
-					)
+					self.app.platform.actions.addActionAndSendIfCan(upvoteShare).then(action => {
+						console.log("ACTION", action)
+						if (clbk)
+							clbk(true)
+					}).catch(e => {
+						if (clbk)
+							clbk(false)
+						console.error(e)
+					})
 
 				}, function(){
 					if (clbk)

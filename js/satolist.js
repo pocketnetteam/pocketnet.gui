@@ -373,8 +373,6 @@ Platform = function (app, listofnodes) {
     self.actions = new Actions(app, self.app.api)
 
     self.actions.on('change', ({account}) => {
-        console.log("CHANGE", account)
-
         if (account.address == app.user.address.value){
             
         }
@@ -382,7 +380,6 @@ Platform = function (app, listofnodes) {
 
     self.actions.on('actionFiltered', ({action, address, status}) => {
 
-        console.log("CHANGE ACTION", action, address)
 
         var listener = listeners[action.object.type]
 
@@ -392,22 +389,15 @@ Platform = function (app, listofnodes) {
 
             var alias = action.object
 
-            console.log('alias', alias)
+            if (status == 'completed' && alias.ustate) {
+
+                var ustate = typeof object.ustate == 'function' ? alias.ustate() : alias.ustate;
+
+                if (ustate) self.sdk.ustate.change(address, ustate, 1)
+                
+            }
 
             return listener(alias, status)
-            
-
-            /*if (action.rejected){
-                return listener(alias, 'rejected')
-            }
-
-            if (action.completed){
-                return listener(alias, 'completed')
-            }
-
-            if (action.transaction){
-                return listener(alias, 'temp')
-            }*/
 
         }
     })
@@ -440,8 +430,6 @@ Platform = function (app, listofnodes) {
             }
         }
     }
-
-    console.log('self.actions', self.actions)
 
     // self.network = function(){
     //     if(self.test){
@@ -10781,7 +10769,20 @@ Platform = function (app, listofnodes) {
 
             loading : {},
 
+            change : function(address, state, value){
+                if(!value) value = 1
 
+                var us = self.sdk.ustate.storage;
+
+                if (us[adress] && !_.isEmpty(us[address])) {
+                    us[address][state + "_spent"] = (us[address][state + "_spent"] || 0) + value
+                    us[address][state + "_unspent"] = (us[address][state + "_unspent"] || 1) - value
+                }
+
+                _.each(self.sdk.ustate.clbks, function (c) {
+                    c()
+                })
+            },
             validationcurrent: function (address, parameter, clbk) {
                 var s = self.sdk.ustate.storage;
 
@@ -12996,6 +12997,43 @@ Platform = function (app, listofnodes) {
 
                 }, adresses, update)
 
+            },
+
+            drawSpendLineActions: function (el, balance, clbk) {
+
+                var total = balance.actual
+                var amount = balance.actual - balance.tempbalance
+
+                window.requestAnimationFrame(() => {
+                    if (total > 0 && amount < total) {
+
+                        if (!el.find('.spendLine').length) {
+                            el.append('<div class="spendLine"><div class="line"></div></div>')
+                        }
+
+                        var sline = el.find('.spendLine .line');;
+
+                        if (amount == 0) {
+                            if(!sline.hasClass('bad'))
+                                sline.addClass('bad')
+                        }
+                        else {
+                            if (sline.hasClass('bad'))
+                                sline.removeClass('bad')
+                        }
+
+                        sline.css('width', (100 * amount / total) + "%")
+
+
+                    }
+                    else {
+                        el.find('.spendLine').remove()
+                    }
+
+                    if (clbk)
+                        clbk()
+                })
+                    
             },
 
             drawSpendLine: function (el, clbk, addresses) {
@@ -17830,6 +17868,7 @@ Platform = function (app, listofnodes) {
 
                     self.sdk.users.get(users, clbk, true)
                 },
+
                 add: function (share) {
 
                     ////todo
@@ -19521,6 +19560,7 @@ Platform = function (app, listofnodes) {
 
                     var coinbase = deep(tx, 'vin.0.coinbase') || (deep(tx, 'vout.0.scriptPubKey.type') == 'nonstandard') || false
 
+                    console.log('tx', tx)
 
                     var t = {
                         txid: tx.txid,

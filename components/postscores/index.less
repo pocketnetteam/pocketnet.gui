@@ -11,6 +11,10 @@
 
     }
 
+    .stars{
+        cursor: pointer;
+    }
+
 
     .caption{
         text-align: left;
@@ -178,17 +182,27 @@
 
     .fordetailsusers{
 
+        display: none;
+
         .rating{
-            font-size: 64px;
+            margin-top: @rhythm;
+            font-size: 4em;
             font-weight: bold;
             text-align: center;
             font-family: Nunito Sans;
         }
 
         .totalLikes{
-            font-size: 14px;
+            margin-top: 2 * @rhythm;
+            font-size: 0.8em;
             text-align: center;
             color: rgb(var(--neutral-grad-4));
+        }
+    }
+
+    &.rndr{
+        .fordetailsusers{
+            display: block;
         }
     }
 }

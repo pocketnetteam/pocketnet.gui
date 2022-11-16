@@ -821,7 +821,6 @@ var menu = (function(){
 			},
 			wallets : {
 				click : function(){
-
 					
 					self.nav.api.go({
 						open : true,
@@ -842,36 +841,67 @@ var menu = (function(){
 
 						var c = 'good';
 
-						el.removeClass('hidden')
+						window.requestAnimationFrame(() => {
+							el.removeClass('hidden')
 
-						if (add == 0){
-							al.text(self.app.platform.mp.coin(value))
-						}
-						else
-						{
-							al.animateNumber({
-						    	number: add,
+							if (add == 0){
+								al.text(self.app.platform.mp.coin(value))
+							}
+							else
+							{
+								al.animateNumber({
+									number: add,
+	
+									numberStep: function(now, tween) {
+	
+										var number = Number(value + now).toFixed(8),
+											target = $(tween.elem);
+	
+										window.requestAnimationFrame(() => {
+											target.text(self.app.platform.mp.coin(number));
+										})
+	
+									},
+	
+								}, rand(400, 1200), function(){
+									window.requestAnimationFrame(() => {
+										el.removeClass(c)
+									})
+								});
+							}
+						})
 
-						    	numberStep: function(now, tween) {
-
-						        	var number = Number(value + now).toFixed(8),
-						            	target = $(tween.elem);
-
-						           
-						    		target.text(self.app.platform.mp.coin(number));
-
-						    	},
-
-						    }, rand(400, 1200), function(){
-						    	el.removeClass(c)
-						    });
-						}
-						
 					}
 
-					var setValue = function(){						
+					var setValue = function(){		
+						
+						var account = self.app.platform.actions.getCurrentAccount()
 
-						self.app.platform.sdk.node.transactions.get.allBalance(function(amount){
+						if(!account){
+							set(0,0)
+						}
+						else{
+							var balance = account.actualBalance()
+
+							var add = balance.actual - current;
+
+							if (first) {
+								add = 0;
+								current = balance.actual
+							}
+
+							first = false;
+
+							set(current, add)
+
+							current = balance.actual
+
+							console.log('balance', balance)
+
+							self.app.platform.sdk.wallet.drawSpendLineActions(el.find('.numberWrp'), balance)
+						}
+
+						/*self.app.platform.sdk.node.transactions.get.allBalance(function(amount){
 
 							var t = self.app.platform.sdk.node.transactions.tempBalance()
 
@@ -891,19 +921,15 @@ var menu = (function(){
 							current = amount;
 
 							self.app.platform.sdk.wallet.drawSpendLine(el.find('.numberWrp'))
-						})
+						})*/
 
 					}
 
-					var act = function(){
+					self.app.platform.actions.clbk('change', 'menu', setValue)
 
-						setValue()
-						
-					}
+					//self.app.platform.sdk.node.transactions.clbks.menu = setValue;
 
-					self.app.platform.sdk.node.transactions.clbks.menu = act;
-
-					act(0)
+					setValue()
 					
 				}
 			},
@@ -1132,7 +1158,10 @@ var menu = (function(){
 
 				delete self.app.platform.sdk.newmaterials.clbks.update.menu
 
-				delete self.app.platform.sdk.node.transactions.clbks.menu
+				//delete self.app.platform.sdk.node.transactions.clbks.menu
+
+				self.app.platform.actions.clbk('change', 'menu', null)
+
 				delete self.app.platform.ws.messages.event.clbks.menusave
 
 				delete self.app.platform.sdk.notifications.clbks.seen.menu

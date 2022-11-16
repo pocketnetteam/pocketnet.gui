@@ -245,6 +245,8 @@ Action = function(account, object, priority){
         return unspents
     }
 
+    
+
     var makeTransaction = async function(retry, calculatedFee, send){
 
         var unspents = filterUnspents(account.getActualUnspents(true))
@@ -274,7 +276,6 @@ Action = function(account, object, priority){
             
         }
 
-        console.log('unspents', unspents)
 
         if(!unspents.length){
             return Promise.reject('noinputs_wait')
@@ -284,14 +285,10 @@ Action = function(account, object, priority){
 
         var inputs = getBestInputs(unspents, amount)
 
-        console.log('inputs', inputs)
-
 
         var totalInputAmount = _.reduce(inputs, (m, u) => {
             return m + u.amount
         }, 0) - fee
-
-        console.log('totalInputAmount', totalInputAmount, fee)
 
         if (totalInputAmount <= 0) return Promise.reject('totalAmountZero')
 
@@ -349,10 +346,6 @@ Action = function(account, object, priority){
             return m + u.amount
         }, 0)
 
-        console.log('totalOutputAmount < totalInputAmount', totalOutputAmount , totalInputAmount)
-
-        console.log('outputs', outputs)
-
         if (totalOutputAmount < totalInputAmount){
             outputs.push({
                 address : account.address,
@@ -366,11 +359,15 @@ Action = function(account, object, priority){
             tx = buildTransaction({inputs, outputs, opreturnData})
         }
         catch(e){
+            console.error(e)
             return Promise.reject(e)
         }
+
+
         
         if (options.calculateFee && !calculatedFee){
             var feerate = await account.parent.estimateFee()
+
 
             return makeTransaction(false, Math.min(tx.virtualSize() * feerate, 0.0999, send))
         }
@@ -395,16 +392,12 @@ Action = function(account, object, priority){
 
         trigger()
 
+
         return account.parent.api.rpc('sendrawtransactionwithmessage', parameters).then(transaction => {
 
             self.transaction = transaction
             self.inputs = inputs
             self.outputs = outputs
-
-
-            if (self.object.ustate) {
-                //account.parent.app.platform.sdk.ustate.changeFromObject(self.object)
-            }
 
             trigger()
 
@@ -425,6 +418,8 @@ Action = function(account, object, priority){
 
             self.rejected = code || (e.toString ? e.toString() : 'rejected')
 
+            console.log('self.rejected', self.rejected)
+
             trigger()
 
             return Promise.reject(self.rejected)
@@ -437,11 +432,9 @@ Action = function(account, object, priority){
 
         return new Promise((resolve, reject) => {
 
-            console.log('checkTransaction', self.transaction)
 
             account.parent.app.platform.sdk.node.transactions.get.tx(self.transaction, (data = {}, error = {}) => {
 
-                console.log('checkTransaction', data, error)
 
                 if (error.code == -5 || error.code == -8){ /// check codes (transaction not apply, resend action)
                     self.sent = null
@@ -470,6 +463,7 @@ Action = function(account, object, priority){
                     if(options.change) options.change(self, account)
 
                     account.addUnspentFromTransaction(data)
+                    account.removeInputsFromTransaction(data)
 
                     trigger(self)
 
@@ -673,7 +667,7 @@ Account = function(address, parent){
 
                 if(action.change) action.change(action, self)
 
-                sefl.trigger(action)
+                self.trigger(action)
             }
 
             if (self.unspents.willChange){
@@ -685,6 +679,7 @@ Account = function(address, parent){
 
         return actions
     }
+
 
     self.setWaitCoins = function(value){
         self.unspents.willChange = value ? true : false
@@ -704,6 +699,16 @@ Account = function(address, parent){
         if(actions.length){
             self.loadUnspents()
         }
+    }
+
+    self.removeInputsFromTransaction = function(transaction){
+        self.unspents.value = _.filter(self.unspents.value, (u) => {
+            var intransaction = _.find(transaction.vin, (input) => {
+                return u.txid == input.txid && u.vout == input.vout
+            })
+
+            if(!intransaction) return true
+        })
     }
 
     self.addUnspentFromTransaction = function(transaction){
@@ -735,7 +740,10 @@ Account = function(address, parent){
                 }
             }
 
+            self.unspents.value.push(out)
         })
+
+        
     }
 
     self.setWaitCoins = function(transaction){
@@ -786,13 +794,13 @@ Account = function(address, parent){
 
             if (exported.completed || exported.rejected){
 
-                /*_.each(self.emitted, (category) => {
+                _.each(self.emitted, (category) => {
                     if(exported.id && category[exported.id]){
                         delete[exported.id]
                     }
-                })*/
+                })
 
-                ///return
+                return
             }
 
             try{
@@ -930,31 +938,22 @@ Account = function(address, parent){
 
             if(transaction.addr != self.address) return
 
-            var output = {
-                address : transaction.addr,
-                amount : transaction.amount / ActionOptions.amountC,
-                confirmations : 0,
-                vout : transaction.nout,
-                txid : transaction.txid,
-                pockettx : transaction.type ? true : false,
-                coinbase : transaction.coinbase || false,
+            parent.app.platform.sdk.node.transactions.get.tx(transaction.txid, (data, error = {}) => {
 
-                scriptPubKey : transaction.scriptPubKey ///Vadim
-            }
+                self.addUnspentFromTransaction(data)
+                self.removeInputsFromTransaction(data)
 
+                checkTransactionById([transaction.txid])
 
-            checkTransactionById([transaction.txid])
-
-            self.unspents.value.push(output)
-
-            if(transaction.type == 'userInfo' && !self.status.value){
-                self.setStatus(true)
                 self.trigger()
-            }
+
+            })
+
 
         },
 
         block : function(block){
+
             _.each(self.unspents.value, (u) => {
 
                 if (block.difference > 0){
@@ -969,41 +968,45 @@ Account = function(address, parent){
         }
     }
 
+    var checkUnspentReadyBlockChain = function(u){
+        var wait = 0
+
+        if (u.confirmations <= 11 && u.pockettx) {
+
+            wait = 11 - u.confirmations
+
+        }
+
+        if (u.confirmations == 0 && !u.coinbase && !u.coinstake) {
+
+            wait = 1
+
+        }
+
+        if (u.confirmations < 100 && (u.coinbase || u.coinstake)) {
+
+            wait = 100 - u.confirmations
+
+        }
+
+        if(wait) return false
+
+
+        return true
+    }
+
     self.getActualUnspents = function(onlyReady){
 
         return _.filter(self.unspents.value, (u) => {
             
-            var wait = 0
-
-            if(onlyReady){
-                if (u.confirmations <= 11 && u.pockettx) {
-
-                    wait = 11 - tx.confirmations
-    
-                }
-    
-                if (u.confirmations == 0 && !u.coinbase && !u.coinstake) {
-    
-                    wait = 1
-    
-                }
-    
-                if (u.confirmations < 100 && (u.coinbase || u.coinstake)) {
-    
-                    wait = 100 - u.confirmations
-    
-                }
-
-                if(wait) return false
-
+            if(onlyReady && onlyReady != 'withUnconfirmed'){
+                if(!checkUnspentReadyBlockChain(u)) return false
             }
 
-            if(onlyReady){
-
+            if(onlyReady && onlyReady != 'withUnconfirmed'){
                 if (u.amount < 0.0001){
                     return false
                 }
-
             }
            
             var action = _.find(self.actions.value, (action) => {
@@ -1019,10 +1022,6 @@ Account = function(address, parent){
                 }
 
             })
-
-            if(action){
-                console.log("BLOCKED ACTION", action)
-            }
 
             if(!action) return true
 
@@ -1046,8 +1045,7 @@ Account = function(address, parent){
             }
             catch(e){
 
-                if(e != 'completed' && e != 'rejected')
-                    console.error(e)
+                if(e != 'completed' && e != 'rejected') console.error(e)
             }
 
         }
@@ -1176,8 +1174,6 @@ Account = function(address, parent){
         })
 
         if (completed.length) {
-            console.log("ERROR WITH STATUS")
-
             return 'undefined_status'
         }
 
@@ -1235,12 +1231,16 @@ Account = function(address, parent){
 
         }, 0)
 
-        var totalUnspents = self.getActualUnspents(true)
-        var unspents = self.getActualUnspents()
+        var totalUnspents = self.getActualUnspents()
+        var unspents = self.getActualUnspents('withUnconfirmed')
 
         balance.total = unspentsAmount(totalUnspents) + tempbalance
+
         balance.actual = unspentsAmount(unspents) + tempbalance
-        balance.tempbalance = tempbalance
+        
+        balance.tempbalance = tempbalance + unspentsAmount(_.filter(unspents, (u) => {
+            return !checkUnspentReadyBlockChain(u)
+        } ))
 
       
         return balance
@@ -1258,6 +1258,7 @@ Actions = function(app, api){
 
     var accounts = {}
     var events = {}
+    var namedEvents = {}
 
     var data = {
         feerate : 0
@@ -1284,8 +1285,6 @@ Actions = function(app, api){
         _.each(value, (data, address) => {
             accounts[address] = new Account(address, self)
             accounts[address].import(data)
-
-            
         })
 
     }
@@ -1294,6 +1293,44 @@ Actions = function(app, api){
     var emit = function(key, data){
         _.each(events[key] || [], function(e){
             e(data)
+        })
+
+        _.each(namedEvents[key] || {}, function(e){
+            e(data)
+        })
+    }
+
+    self.clbk = function(key, name, f){
+        if(!namedEvents[key]){
+            namedEvents[key] = {}
+        }
+
+        if(f){
+            namedEvents[key][name] = f
+        }
+        else{
+            if (namedEvents[key][name])
+                delete namedEvents[key][name]
+        }
+
+        
+    }
+   
+    self.on = function(key, f){
+        if(!events[key]){
+            events[key] = []
+        }
+
+        events[key].push(f)
+    }
+
+    self.off = function(key, f){
+        if(!events[key]){
+            events[key] = []
+        }
+
+        events[key] = _.filter(events[key], function(k){
+            return k != f
         })
     }
 
@@ -1360,17 +1397,13 @@ Actions = function(app, api){
 
         var action = self.addAction(address, object, priority)
 
-       
-
         if (accounts[address].checkAccountReadySend()){
-            return action.makeTransaction().then(() => {
+
+            return action.makeTransaction(null, null, true).then(() => {
                 return Promise.resolve(action)
             }).catch(e => {
-
                 app.platform.errorHandler(e, true)
-
                 return Promise.reject(e)
-
             })
         }
         else{
@@ -1390,26 +1423,14 @@ Actions = function(app, api){
         }
 
         return accounts[address] 
-
     }
 
-    self.on = function(key, f){
-        if(!events[key]){
-            events[key] = []
+    self.getCurrentAccount = function(){
+        if (app.user.address.value){
+            return accounts[app.user.address.value] || undefined
         }
-
-        events[key].push(f)
     }
 
-    self.off = function(key, f){
-        if(!events[key]){
-            events[key] = []
-        }
-
-        events[key] = _.filter(events[key], function(k){
-            return k != f
-        })
-    }
 
     self.save = function(){
         try{
@@ -1436,13 +1457,21 @@ Actions = function(app, api){
 
             app.platform.sdk.syncStorage.on('change', key, function(e){
 
-                console.log("UPDATE STORAGE", e)
+                if(e.newValue == e.oldValue) return
 
-                imports(JSON.parse(e.newValue || "{}"))
+                try{
+                    imports(JSON.parse(e.newValue || "{}"))
 
-                _.each(self.accounts, (account) => {
-                    account.triggerGlobal()
-                })
+
+                    _.each(accounts, (account) => {
+                        account.triggerGlobal()
+                    })
+                }
+                catch(e){
+                    console.error(e)
+                }
+
+                
 
             });
 
