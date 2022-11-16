@@ -380,7 +380,7 @@ Platform = function (app, listofnodes) {
         }
     })
 
-    self.actions.on('action', ({action, address}) => {
+    self.actions.on('actionFiltered', ({action, address, status}) => {
 
         console.log("CHANGE ACTION", action, address)
 
@@ -388,13 +388,16 @@ Platform = function (app, listofnodes) {
 
         if(!listener) return
 
-
         if (address == app.user.address.value){
 
             var alias = action.object
+
             console.log('alias', alias)
 
-            if (action.rejected){
+            return listener(alias, status)
+            
+
+            /*if (action.rejected){
                 return listener(alias, 'rejected')
             }
 
@@ -404,17 +407,19 @@ Platform = function (app, listofnodes) {
 
             if (action.transaction){
                 return listener(alias, 'temp')
-            }
+            }*/
 
         }
     })
 
     var listeners = {
-        upvoteShare : function(action, status){
+        upvoteShare : function(alias, status){
+            
+            !self.sdk.node.shares.storage.trx ? self.sdk.node.shares.storage.trx = {} : null
 
-            var address = action.object.address.v
-            var share = sdk.node.shares.storage.trx[action.object.share.v]
-            var value = action.object.value.v
+            var address = alias.address.v
+            var share = self.sdk.node.shares.storage.trx[alias.share.v]
+            var value = alias.value.v
 
             if( address != app.user.address.value) return
             if(!share) return
@@ -29565,6 +29570,9 @@ Platform = function (app, listofnodes) {
                     }
 
                     account.setKeys(app.user.keys())
+                    account.updateUnspents().catch(e => {
+                        console.error(e)
+                    })
 
                     console.log('account', account.getStatus())
                     

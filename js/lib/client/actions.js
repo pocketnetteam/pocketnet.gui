@@ -21,15 +21,11 @@ var ActionOptions = {
 
                 if (action.transaction){
                     //account.willChange = true
-
-                    account.trigger()
                 }
 
                 if (action.complete){
                     //account.willChange = false
                     account.status.value = true
-
-                    account.trigger()
 
                 }
             },
@@ -100,8 +96,12 @@ Action = function(account, object, priority){
     self.completed = false
     self.rejected = null
 
+    self.id = makeid()
+
     self.export = function(){
         var e = {}
+
+        e.id = self.id
 
         e.priority = self.priority
         e.added = self.added
@@ -132,6 +132,7 @@ Action = function(account, object, priority){
 
         if(e.added)
             self.added = new Date(e.added)
+
         if(e.until)
             self.until = new Date(e.until)
 
@@ -140,6 +141,8 @@ Action = function(account, object, priority){
 
         if(e.checkedUntil)
             self.checkedUntil = new Date(e.checkedUntil)
+
+        self.id = e.id || makeid()
 
         self.checkConfirmationUntil = e.checkConfirmationUntil
         self.inputs = _.clone(e.inputs)
@@ -450,7 +453,10 @@ Action = function(account, object, priority){
                     if (self.attempts > 2){
                         self.rejected = 'rejectedFromNodes'
 
-                        trigger()
+                        if(options.change) options.change(self, account)
+
+                        trigger(self)
+
 
                         return reject(self.rejected)
                     }
@@ -461,9 +467,11 @@ Action = function(account, object, priority){
                 if (data.confirmations > 0){
                     self.completed = true
 
+                    if(options.change) options.change(self, account)
+
                     account.addUnspentFromTransaction(data)
 
-                    trigger()
+                    trigger(self)
 
                     return resolve()
 
@@ -602,6 +610,12 @@ Account = function(address, parent){
         updated : null
     }
 
+    var emitted = {
+        completed : {},
+        rejected : {},
+        sent : {}
+    }
+
     self.keyPair = null
 
     var temps = {
@@ -613,6 +627,8 @@ Account = function(address, parent){
         _.each(self.unspents.value, (u) => {
             var action = _.find(self.actions.value, (action) => {
 
+                if(action.completed || action.rejected) return
+
                 if(action.transaction == u.txid){
                     return true
                 }
@@ -620,6 +636,8 @@ Account = function(address, parent){
 
             if (action){
                 action.completed = true
+
+                if(action.change) action.change(action, self)
 
                 self.trigger(action)
 
@@ -641,6 +659,8 @@ Account = function(address, parent){
         _.each(ids, (txid) => {
             var action = _.find(self.actions.value, (action) => {
 
+                if(action.rejected || action.completed) return
+
                 if(action.transaction == txid){
                     return true
                 }
@@ -650,6 +670,8 @@ Account = function(address, parent){
                 action.completed = true
 
                 actions.push(action)
+
+                if(action.change) action.change(action, self)
 
                 sefl.trigger(action)
             }
@@ -753,15 +775,25 @@ Account = function(address, parent){
     self.import = function(e){
         self.status = e.status
         self.unspents = e.unspents
-
-        if(e.actions.updated)
-            self.actions.updated = new Date(e.actions.updated)
+        
+        self.unspents.updated ? self.unspents.updated = new Date(self.unspents.updated) : null
+        self.actions.updated ? self.actions.updated = new Date(e.actions.updated) : null
 
         self.actions.value = []
 
+
         _.each(e.actions.value, (exported) => {
 
-            //if(exported.completed || exported.rejected) return
+            if (exported.completed || exported.rejected){
+
+                /*_.each(self.emitted, (category) => {
+                    if(exported.id && category[exported.id]){
+                        delete[exported.id]
+                    }
+                })*/
+
+                ///return
+            }
 
             try{
                 var action = new Action(self, {})
@@ -843,6 +875,24 @@ Account = function(address, parent){
 
     }
 
+    self.updateUnspents = function(){
+
+        if (temps.unspents){
+            return temps.unspents
+        }
+
+        if (self.unspents.updated){
+            var until = self.unspents.updated.addSeconds(60)
+
+            if (until > new Date()){
+                return Promise.resolve(self.unspents.value)
+            }
+        }
+
+        return self.loadUnspents()
+
+    }
+
     self.loadUnspents = function(){
 
         if(!self.isCurrentNetwork()){
@@ -860,6 +910,7 @@ Account = function(address, parent){
             checkTransactionByUnspents(unspents)
 
             self.unspents.value = unspents
+            self.unspents.updated = new Date()
 
             delete temps.unspents
 
@@ -917,7 +968,6 @@ Account = function(address, parent){
             })
         }
     }
-    
 
     self.getActualUnspents = function(onlyReady){
 
@@ -1062,13 +1112,36 @@ Account = function(address, parent){
         return actions[0]
     }
 
-    self.trigger = function(action){
+    self.triggerGlobal = function(){
+        parent.emit('change', {
+            account : self
+        })
 
-        if(action){
-            if(action.completed && action.object.type == 'userInfo' && !self.status.value){
-                self.setStatus(true)
+        _.each(self.actions.value, (action) => {
+            emitFilteredAction(action)
+        })
+    }   
+
+    var emitFilteredAction = function(action){
+        var status = action.rejected ? 'rejected' : (action.completed ? 'completed' : (action.transaction ? 'sent' : null))
+
+        if (status && action.id){
+            
+            if(!emitted[status][action.id]){
+                parent.emit('actionFiltered', {
+                    action,
+                    address : self.address,
+                    status
+                })
+
+                emitted[status][action.id] = true
+
+                return true
             }
         }
+    }
+
+    self.trigger = function(action){
 
         parent.emit('change', {
             action,
@@ -1080,6 +1153,9 @@ Account = function(address, parent){
                 action,
                 address : self.address
             })
+
+            emitFilteredAction(action)
+            
         }
 
         parent.save()
@@ -1203,16 +1279,18 @@ Actions = function(app, api){
 
     var imports = function(value){
 
-
         accounts = {}
 
         _.each(value, (data, address) => {
             accounts[address] = new Account(address, self)
             accounts[address].import(data)
+
+            
         })
 
     }
 
+   
     var emit = function(key, data){
         _.each(events[key] || [], function(e){
             e(data)
@@ -1358,12 +1436,14 @@ Actions = function(app, api){
 
             app.platform.sdk.syncStorage.on('change', key, function(e){
 
-                imports(e.newValue || "{}")
+                console.log("UPDATE STORAGE", e)
 
+                imports(JSON.parse(e.newValue || "{}"))
 
                 _.each(self.accounts, (account) => {
-                    account.trigger()
+                    account.triggerGlobal()
                 })
+
             });
 
             processInterval = setInterval(() => {

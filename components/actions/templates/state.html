@@ -12,32 +12,47 @@
             <% } %>
         </div>
 
-        <div class="balance">
-            <% var balance = account.actualBalance() %>
+        <div class="balanceUnspents">
 
-            <div class="label">
-                <span>Balance:</span>
-            </div>
+            <div class="balance">
+                <% var balance = account.actualBalance() %>
 
-            <div class="total">
-                <span><%-app.platform.mp.coin(balance.total)%> POC</span>
-            </div>
-            <div class="actual">
-                <span><%-app.platform.mp.coin(balance.actual)%> POC</span>
-            </div>
-            <div class="tempbalance">
-                <span><%-app.platform.mp.coin(balance.tempbalance)%> POC</span>
-            </div>
-
-            <% if(account.unspents.willChange) {%>
-                <div class="wait">
-                    <i class="fas fa-clock"></i>
+                <div class="label">
+                    <span>Balance:</span>
                 </div>
-            <% } %>
 
-            
+                <div class="total">
+                    <span><%-app.platform.mp.coin(balance.total)%> POC</span>
+                </div>
+                <div class="actual">
+                    <span><%-app.platform.mp.coin(balance.actual)%> POC</span>
+                </div>
+                <div class="tempbalance">
+                    <span><%-app.platform.mp.coin(balance.tempbalance)%> POC</span>
+                </div>
 
-            
+                <% if(account.unspents.willChange) {%>
+                    <div class="wait">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                <% } %>
+            </div>
+
+            <div class="unspents">
+
+                <div class="label">
+                    <span>Unspents:</span>
+                </div>
+
+                <div class="total">
+                    <span><%-account.unspents.value.length%></span>
+                </div>
+                <div class="date">
+                    <span class="realtime" time="<%-account.unspents.updated%>"><%=account.unspents.updated ? app.reltime(account.unspents.updated) : "&mdash;"%></span>
+                </div>
+
+            </div>
+
         </div>
 
         <div class="actions">
@@ -71,7 +86,7 @@
                     <div class="actionStatusRow">
 
                         <div class="time">
-                            <span><%-app.reltime(action.sent || action.added)%></span>
+                            <span class="realtime" time="<%-action.sent || action.added%>"><%-app.reltime(action.sent || action.added)%></span>
                         </div>
 
                         <% if(action.completed) {%>

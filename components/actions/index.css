@@ -85,16 +85,28 @@
   font-weight: 700;
   font-size: 0.9em;
 }
+#actions .state .balanceUnspents {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+#actions .state .unspents,
 #actions .state .balance {
   display: flex;
 }
+#actions .state .unspents .date,
+#actions .state .balance .date {
+  opacity: 0.7;
+}
+#actions .state .unspents > div,
 #actions .state .balance > div {
   margin-right: 0.5em;
 }
+#actions .state .unspents > div i,
 #actions .state .balance > div i {
   opacity: 0.6;
   font-size: 0.8em;
 }
+#actions .state .unspents > div span,
 #actions .state .balance > div span {
   font-size: 0.9em;
 }

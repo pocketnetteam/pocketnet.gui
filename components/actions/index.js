@@ -15,7 +15,9 @@ var actions = (function(){
 		}
 
 		var events = {
-			
+			change : function({account}){
+				renders.state(account)
+			}
 		}
 
 		var renders = {
@@ -25,6 +27,7 @@ var actions = (function(){
 				})
 			},
 			state : function(account, clbk){
+
 				self.shell({
 
 					name :  'state',
@@ -54,7 +57,7 @@ var actions = (function(){
 
 		var initEvents = function(){
 			
-
+			self.app.platform.actions.on('change', events.change)
 		}
 
 		return {
@@ -76,6 +79,10 @@ var actions = (function(){
 			},
 
 			destroy : function(){
+
+				self.app.platform.actions.off('change', events.change)
+
+
 				ed = {}
 				el = {};
 			},
