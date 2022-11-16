@@ -4,14 +4,23 @@
 			<span>Actions</span>
 		</div>
 	</div>
-	<% if(!_.isEmpty(accounts)) {%>
+	<% 
+	
+	var sorted = _.sortBy(accounts, function(a){
+		return -(a.address == user.address.value ? 10 : (a.isCurrentNetwork() ? 5 : 0))
+	})
+	
+	if(!_.isEmpty(sorted)) {%>
 
 		<div class="accounts">
-			<% _.each(accounts, function(account){ %> 
+			<% _.each(sorted, function(account){ %> 
 				<div class="account" address="<%-account.address%>">
 					<div class="work">
 						<div class="subcaption">
-							<span><%- account.address %></span>
+							<span><%- account.address %></span> 
+							<% if(!account.isCurrentNetwork()) {%>
+								<i class="fas fa-project-diagram"></i>
+							<% } %>
 						</div>
 					</div>
 

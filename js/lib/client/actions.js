@@ -209,16 +209,12 @@ Action = function(account, object, priority){
 
         _.each(outputs, (out) => {
 
-            console.log('out.address, Math.round(out.amount * ActionOptions.amountC)', out.address, Math.round(out.amount * ActionOptions.amountC))
-
             txb.addOutput(out.address, Math.floor(out.amount * ActionOptions.amountC));
         })
 
         _.each(inputs, (input, index) => {
             account.signInput(txb, input, index)
         })
-
-        console.log(inputs, outputs, opreturnData)
 
         var tx = txb.build()
         
@@ -1041,7 +1037,7 @@ Account = function(address, parent){
 
             if(filter && !filter(action)) return false
 
-            return action.object.type == type
+            return !type || action.object.type == type
         }), (action) => {
             return action
         })
@@ -1256,7 +1252,6 @@ Actions = function(app, api){
 
     self.processing = function(){
         _.each(accounts, (account) => {
-            console.log("BAlance", JSON.stringify(account.actualBalance()))
             account.processing()
         })
     } 
@@ -1292,6 +1287,12 @@ Actions = function(app, api){
         if (accounts[address].checkAccountReadySend()){
             return action.makeTransaction().then(() => {
                 return Promise.resolve(action)
+            }).catch(e => {
+
+                app.platform.errorHandler(e, true)
+
+                return Promise.reject(e)
+
             })
         }
         else{

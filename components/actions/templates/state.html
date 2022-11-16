@@ -1,26 +1,32 @@
 <div class="state">
     <div class="work">
-        <div class="status">
-            <span><%-account.getStatus()%></span>
-        </div>
-
-        <% if(account.keyPair) {%>
-            <div class="haskeys">
-                <i class="fas fa-key"></i>
+        <div class="statusRow">
+            <div class="status">
+                <span><%-account.getStatus()%></span>
             </div>
-        <% } %>
+
+            <% if(account.keyPair) {%>
+                <div class="haskeys">
+                    <i class="fas fa-key"></i>
+                </div>
+            <% } %>
+        </div>
 
         <div class="balance">
             <% var balance = account.actualBalance() %>
 
+            <div class="label">
+                <span>Balance:</span>
+            </div>
+
             <div class="total">
-                <span><%-app.platform.mp.coin(balance.total)%></span>
+                <span><%-app.platform.mp.coin(balance.total)%> POC</span>
             </div>
             <div class="actual">
-                <span><%-app.platform.mp.coin(balance.actual)%></span>
+                <span><%-app.platform.mp.coin(balance.actual)%> POC</span>
             </div>
             <div class="tempbalance">
-                <span><%-app.platform.mp.coin(balance.tempbalance)%></span>
+                <span><%-app.platform.mp.coin(balance.tempbalance)%> POC</span>
             </div>
 
             <% if(account.unspents.willChange) {%>
@@ -35,11 +41,13 @@
         </div>
 
         <div class="actions">
-            <% _.each(account.getActions(), function(action){ %> 
+            <% _.each(account.getActions(), function(action){ 
+                
+                console.log('action', action)
+                
+                %> 
                 <div class="action">
-                    <div class="time">
-                        <span><%-app.reltime(action.sent || action.added)%></span>
-                    </div>
+                    
 
                     <div class="type">
                         <span><%-action.object.type%></span>
@@ -50,24 +58,41 @@
                             <span><%-action.transaction%></span>
                         </div>
                     <% } %>
-
-                    <% if(action.completed) {%>
-                        <div class="completed">
-                            <span>Completed</span>
+                    <div class="inputsOutputs">
+                        <div class="inputs">
+                            <%= action.inputs.length ? JSON.stringify(action.inputs, null, "\t") : "&mdash;"%>
                         </div>
-                    <% } %>
 
-                    <% if(action.rejected) {%>
-                        <div class="rejected">
-                            <span><%-action.rejected%></span>
+                        <div class="outputs">
+                            <%=  action.outputs.length ? JSON.stringify(action.outputs, null, "\t") : "&mdash;" %>
                         </div>
-                    <% } %>
+                    </div>
 
-                    <% if(action.attempts) {%>
-                        <div class="attempts">
-                            <span><%-action.attempts%></span>
+                    <div class="actionStatusRow">
+
+                        <div class="time">
+                            <span><%-app.reltime(action.sent || action.added)%></span>
                         </div>
-                    <% } %>
+
+                        <% if(action.completed) {%>
+                            <div class="completed">
+                                <span>Completed</span>
+                            </div>
+                        <% } %>
+
+                        <% if(action.rejected) {%>
+                            <div class="rejected">
+                                <span><%-action.rejected%></span>
+                            </div>
+                        <% } %>
+
+                        <% if(action.attempts) {%>
+                            <div class="attempts">
+                                <span><%-action.attempts%></span>
+                            </div>
+                        <% } %>
+
+                    </div>
                     
                 </div>
 

@@ -384,28 +384,57 @@ Platform = function (app, listofnodes) {
 
         console.log("CHANGE ACTION", action, address)
 
+        var listener = listeners[action.object.type]
+
+        if(!listener) return
+
 
         if (address == app.user.address.value){
 
             var alias = action.object
-
             console.log('alias', alias)
 
             if (action.rejected){
-                return
+                return listener(alias, 'rejected')
             }
 
             if (action.completed){
-                return
+                return listener(alias, 'completed')
             }
 
             if (action.transaction){
-                //temp
-                return
+                return listener(alias, 'temp')
             }
 
         }
     })
+
+    var listeners = {
+        upvoteShare : function(action, status){
+
+            var address = action.object.address.v
+            var share = sdk.node.shares.storage.trx[action.object.share.v]
+            var value = action.object.value.v
+
+            if( address != app.user.address.value) return
+            if(!share) return
+            
+            if(status == 'completed'){
+                share.myVal = Number(value);	
+
+                self.sdk.memtags.add(share.tags, 'l_' + share.txid, (value - 3) / 2)
+
+                self.sdk.recommendations.successRecommendation(share)
+            }
+
+            if(status == 'rejected'){				
+                share.myVal = 0;	
+            }
+
+            if(status == 'temp'){				
+            }
+        }
+    }
 
     console.log('self.actions', self.actions)
 
