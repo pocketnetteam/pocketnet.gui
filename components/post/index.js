@@ -545,6 +545,7 @@ var post = (function () {
 								...error,
 								uri: location.href,
 								userData: navigator.userAgentData,
+								timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
 								rtt: connection.rtt || 'Undefined',
 								connection: connection.effectiveType || 'Undefined',
 								mobile: isMobile(),

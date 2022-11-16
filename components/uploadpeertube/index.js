@@ -505,6 +505,7 @@ var uploadpeertube = (function () {
 							...e,
 							uri: location.href,
 							userData: navigator.userAgentData,
+							timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
 							host: self.app.peertubeHandler.active(),
 						},
 					});
@@ -584,6 +585,7 @@ var uploadpeertube = (function () {
 									...e,
 									uri: location.href,
 									userData: navigator.userAgentData,
+									timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
 									host: self.app.peertubeHandler.active(),
 								},
 								code: 402,
@@ -688,6 +690,7 @@ var uploadpeertube = (function () {
 											...e,
 											uri: location.href,
 											userData: navigator.userAgentData,
+											timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
 											host: self.app.peertubeHandler.active(),
 										},
 										code: 501,

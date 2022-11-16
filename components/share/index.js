@@ -979,6 +979,7 @@ var share = (function(){
 															...error,
 															uri: location.href,
 															userData: navigator.userAgentData,
+															timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
 															localStorage,
 														},
 													  });
