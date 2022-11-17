@@ -29,16 +29,21 @@
     </div>
   </div>
 
-    <% if(real){ %>
-    <div class="total-stat">
-      <div class="label">
-        <%= e('earnings') %>
-      </div>
-      <div class="value">
-        <%- earnings %>
+  <% if(real){ %>
+    <div class="wrapper">
+      <div class="wrap earnings">
+        <div class="commentators">
+          <span>
+            <%= e('earnings') %>
+          </span>
+          <div class="count">
+            <%- earnings %>
+          </div>
+        </div>
       </div>
     </div>
-    <% } %>
+
+  <% } %>
 
   <% } else {%>
   <div class="preloaderWrapper">

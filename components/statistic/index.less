@@ -170,10 +170,14 @@
 
   }
 
-  // .metric-wrapper {
-  //   display: flex;
-  //   width: 100%;
-  // }
+  .metric-wrapper {
+    width: 100%;
+    font-size: 1.2em;
+
+    .label{
+      width: 160px;
+    }
+  }
 
   .wrapper {
     width: 100%;
@@ -194,6 +198,11 @@
       padding-right: 0.5em;
       transition: 0.3s ease all;
       cursor: pointer;
+
+      &.earnings{
+        width: 50%;
+      }
+      
       & > div {
         height: 100%;
         background: rgb(var(--background-secondary-theme));
@@ -204,6 +213,7 @@
           min-height: 50px;
         }
       }
+
       @media only screen and (max-width: 992px) {
         width: 50%;
       }

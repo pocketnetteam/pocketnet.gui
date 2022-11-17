@@ -2381,6 +2381,7 @@ _l.serversTestingProgress = "Progress of Diagnosing:";
 _l.videoServerVideo = "Video Info";
 _l.goToDiagnose = "Go to Diagnostics";
 _l.connectingTo = "Connecting to";
+_l.earnings = "Total earnings";
 
 
 

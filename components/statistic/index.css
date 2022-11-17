@@ -123,6 +123,13 @@
 .statistic .blockswrapper .metricablock:hover .vidgetIconWrapper .vidgetIcon {
   box-shadow: 0 5px 10px -5px rgba(var(--color-shadow-base), 0.4);
 }
+.statistic .metric-wrapper {
+  width: 100%;
+  font-size: 1.2em;
+}
+.statistic .metric-wrapper .label {
+  width: 160px;
+}
 .statistic .wrapper {
   width: 100%;
   display: flex;
@@ -142,6 +149,9 @@
   padding-right: 0.5em;
   transition: 0.3s ease all;
   cursor: pointer;
+}
+.statistic .wrapper .wrap.earnings {
+  width: 50%;
 }
 .statistic .wrapper .wrap > div {
   height: 100%;
