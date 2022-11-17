@@ -2601,7 +2601,7 @@ Application = function(p)
       needmanage : false,
       hasupdate : false,
 
-      playstore : false,  ///// TODO
+      playstore : window.pocketnetstore || false,  ///// TODO
 
       downloadAndInstall : function(){
 
