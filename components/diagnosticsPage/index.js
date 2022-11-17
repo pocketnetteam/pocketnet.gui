@@ -321,8 +321,31 @@ var diagnosticsPage = (function () {
       getdata: function (clbk, p) {
         ed = p.settings.essenseData;
 
+        let timeZone;
+
+        try {
+          timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+        } catch (error) {
+          timeZone = 'Unable to identify';
+        }
+
+        const userAgent = navigator.userAgent;
+
+        const agentMeter = new UAParser(userAgent);
+
+        const agentStats = {
+          browser: agentMeter.getBrowser(),
+          CPU: agentMeter.getCPU(),
+          device: agentMeter.getDevice(),
+          engine: agentMeter.getEngine(),
+          OS: agentMeter.getOS(),
+          result: agentMeter.getResult(),
+        };
+
         var data = {
           ed,
+          timeZone,
+          agentStats,
         };
 
         clbk(data);

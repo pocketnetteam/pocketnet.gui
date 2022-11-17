@@ -7,7 +7,24 @@
 
   <div class="work">
     <div>
-      <button class="startDiagnoseButton orange"><%- e('startDiagnose') %></button>
+      <button class="startDiagnoseButton orange">
+        <%- e('startDiagnose') %>
+      </button>
+    </div>
+  </div>
+  <div class="work">
+    <div class="userInfoWrapper">
+      <div class="userTimeZone">
+        <span>Timezone:</span>
+        <span><%- timeZone %></span>
+      </div>
+      <div class="userDevice">
+        <span>Device:</span>
+        <span
+          ><%- `${deep(agentStats, 'OS.name')} (${deep(agentStats,
+          'OS.version')}), ${deep(agentStats, 'browser.name')} (${deep(agentStats, 'browser.version')})` %></span
+        >
+      </div>
     </div>
   </div>
   <div class="diagnoseBody work"></div>
