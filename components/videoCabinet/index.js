@@ -1621,7 +1621,6 @@ var videoCabinet = (function () {
 						code: 801,
 						payload: {
 							...error,
-							localStorage,
 						},
 					});
 

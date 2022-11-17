@@ -977,7 +977,6 @@ var share = (function(){
 														code: 801,
 														payload: {
 															...error,
-															localStorage,
 														},
 													  });
 												};
