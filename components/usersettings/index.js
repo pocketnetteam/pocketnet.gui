@@ -259,13 +259,6 @@ var usersettings = (function(){
 					})
 				})
 
-				try{
-					console.log("JSON TEMP", JSON.stringify(t))
-				}catch(e){
-					console.log("TEMP", t)
-				}
-				
-
 				self.shell({
 					name :  'cache',
 					el : el.cache,

@@ -274,8 +274,6 @@ var videoCabinet = (function () {
 							viewsObject = {};
 						}
 
-						console.log("viewsObject", viewsObject)
-
 						const cachedViews =+ (
 							viewsObject[self.app.user.address.value] || 0
 						);
@@ -1056,8 +1054,6 @@ var videoCabinet = (function () {
 				};
 
 				const elName = typeDictionary[p.type];
-
-				console.log('external', external)
 
 				if (external && external.id == elName) {
 					external.show();
@@ -1899,8 +1895,6 @@ var videoCabinet = (function () {
 					self,
 					'app.modules.uploadpeertube.module.essenses.uploadpeertube',
 				);
-
-				console.log('externallatest', externallatest)
 
 				if (externallatest && !externallatest.destroyed) {
 					external = externallatest;

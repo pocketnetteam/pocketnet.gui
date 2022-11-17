@@ -82,7 +82,7 @@ module.exports = (data = {user: "", amount: "", score: ""}) => {
         },
         privatecontent: {
             ru: {
-                title: `Новая публикация от ${data.user}\``,
+                title: `Новая публикация от ${data.user}`,
                 body: ``
             },
             en: {

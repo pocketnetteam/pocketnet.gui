@@ -121,7 +121,7 @@ var babelifycode = function(code){
 		presets: [
 			"@babel/preset-env"
 		],
-			plugins: ["remove-use-strict"]
+		plugins: ["remove-use-strict"]
 	});
 	return c.code
 	
