@@ -11,6 +11,8 @@ var diagnosticsPage = (function () {
     var serversObject = {};
     var serverObjectsWithErrors = {};
 
+    var serverAuth = {};
+
     var serversAmount, serversCounter;
 
     var diagnosticsInProgress = false;
@@ -195,13 +197,31 @@ var diagnosticsPage = (function () {
               servers.map((server) => actions.diagnoseSingleServer(server)),
             ),
           )
+          .then(async () => {
+            if (self.app.user.address.value) {
+              try {
+                const auth = await self.app.peertubeHandler.api.user.me();
+
+                serverAuth = {
+                  gotAuth: true,
+                  host: self.app.peertubeHandler.active(),
+                };
+              } catch (error) {
+                serverAuth = {
+                  gotAuth: false,
+                  error: actions.stringifyErrorSafe(error),
+                  host: self.app.peertubeHandler.active(),
+                };
+              }
+            }
+          })
           .then(() => {
             self.app.Logger.error({
               err: 'DIAGNOSE_COMPLETED',
               code: 100,
               payload: {
                 result: JSON.stringify(serversObject),
-                address: self.app.user.address.value,
+                address: self.app.user.address.value || 'Unauthorized user',
               },
               level: 'diagnostics',
             });

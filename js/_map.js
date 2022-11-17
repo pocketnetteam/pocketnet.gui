@@ -1057,6 +1057,7 @@ __map =  {
 		uri : "diagnosticsPage",
 		href : "diagnosticsPage",
 		add : insertingfunc,
+		anonimus : true,
 	},
 
 	dust : {

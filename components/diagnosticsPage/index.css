@@ -69,3 +69,7 @@
 #diagnosticsPage .progressCaptionWrapper {
   color: rgb(var(--neutral-grad-2));
 }
+#diagnosticsPage .userInfoWrapper {
+  padding-top: 1em;
+  color: #b2abac;
+}
