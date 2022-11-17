@@ -1104,9 +1104,6 @@ var lenta = (function(){
 							const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection || {};
 							const payload = {
 								...error,
-								uri: location.href,
-								userData: navigator.userAgentData,
-								timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
 								rtt: connection.rtt || 'Undefined',
 								connection: connection.effectiveType || 'Undefined',
 								mobile: isMobile(),

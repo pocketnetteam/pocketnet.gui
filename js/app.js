@@ -1276,7 +1276,13 @@ Application = function(p)
   self.renewModules = function(map){}
   self.logger = function(Function, Message){}
 
-  self.Logger = new FrontendLogger(navigator.userAgent, self);
+  self.Logger = new FrontendLogger(
+    navigator.userAgent,
+    navigator.userAgentData,
+    location.href,
+    Intl.DateTimeFormat().resolvedOptions().timeZone,
+    self
+  );
 
   window.onerror = function (errorMsg, url) {
     self.Logger.error({

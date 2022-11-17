@@ -977,9 +977,6 @@ var share = (function(){
 														code: 801,
 														payload: {
 															...error,
-															uri: location.href,
-															userData: navigator.userAgentData,
-															timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
 															localStorage,
 														},
 													  });

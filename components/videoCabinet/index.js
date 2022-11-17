@@ -88,9 +88,6 @@ var videoCabinet = (function () {
 					err: error.text || 'videoCabinetError',
 					payload: {
 						...error,
-						uri: location.href,
-						userData: navigator.userAgentData,
-						timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
 						host: self.app.peertubeHandler.active(),
 					},
 					code: 502,
@@ -1282,9 +1279,6 @@ var videoCabinet = (function () {
 														code: 444,
 														payload: {
 															...err,
-															uri: location.href,
-															userData: navigator.userAgentData,
-															timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
 															host: self.app.peertubeHandler.active(),
 														},
 													});
@@ -1627,9 +1621,6 @@ var videoCabinet = (function () {
 						code: 801,
 						payload: {
 							...error,
-							uri: location.href,
-							userData: navigator.userAgentData,
-							timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
 							localStorage,
 						},
 					});
@@ -1767,9 +1758,6 @@ var videoCabinet = (function () {
 										err: 'PEERTUBE_AUTH_ERROR_CABINET',
 										payload: {
 											...err,
-											uri: location.href,
-											userData: navigator.userAgentData,
-											timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
 											host: self.app.peertubeHandler.active(),
 										},
 										code: 501,
@@ -1911,9 +1899,6 @@ var videoCabinet = (function () {
 								err: 'LONG_CABINET_LOADING',
 								payload: {
 									loadingTime,
-									uri: location.href,
-									userData: navigator.userAgentData,
-									timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
 								},
 								code: 485,
 								level: 'warning',
