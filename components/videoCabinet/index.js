@@ -97,6 +97,25 @@ var videoCabinet = (function () {
 
 				return error.text || findResponseError(error) || JSON.stringify(error);
 			},
+
+			getCachedViewsParsed() {
+				const cahceViewsInformation = localStorage.getItem('aggregatedVideoViews_v2') || "{}";
+
+				let viewsObject = {};
+
+				try {
+					viewsObject = JSON.parse(cahceViewsInformation);
+
+					if (typeof viewsObject !== 'object') {
+						viewsObject = {};
+					}
+
+				} catch (errorParsing) {
+					viewsObject = {};
+				}
+
+				return viewsObject;
+			},
 		};
 
 		var actions = {
@@ -259,20 +278,7 @@ var videoCabinet = (function () {
 							),
 					)
 					.then((aggregatedNumberViews) => {
-						const cahceViewsInformation = localStorage.getItem('aggregatedVideoViews_v2') || "{}";
-
-						let viewsObject = {};
-
-						try {
-							viewsObject = JSON.parse(cahceViewsInformation);
-
-							if (typeof viewsObject !== 'object') {
-								viewsObject = {};
-							}
-
-						} catch (errorParsing) {
-							viewsObject = {};
-						}
+						const viewsObject = helpers.getCachedViewsParsed();
 
 						const cachedViews =+ (
 							viewsObject[self.app.user.address.value] || 0
@@ -282,7 +288,7 @@ var videoCabinet = (function () {
 							viewsObject[self.app.user.address.value] = aggregatedNumberViews;
 
 							localStorage.setItem(
-								'aggregatedVideoViews',
+								'aggregatedVideoViews_v2',
 								JSON.stringify(viewsObject),
 							);
 
@@ -303,8 +309,20 @@ var videoCabinet = (function () {
 
 			getFullPageInfo(videoPortionElement, videos = null, fromBlockChainFlag) {
 				renders.videos(videos, videoPortionElement, fromBlockChainFlag);
+				debugger;
 
 				//getting and rendering bonus program status for views and ratings (same template)
+				const cahcedViews = helpers.getCachedViewsParsed()[self.app.user.address.value];
+				if (cahcedViews) {
+					renders.bonusProgram(
+						{
+							parameterName: 'bonusProgramViews',
+							value: cahcedViews,
+						},
+						el.bonusProgramContainerStars,
+					);
+				}
+				
 				actions
 					.getHosts()
 					.then(() => actions.getTotalViews())
