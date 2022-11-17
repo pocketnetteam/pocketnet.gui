@@ -202,8 +202,8 @@ var statistic = (function () {
         selectedPeriod.to.date = e.target.value
         selectedPeriod.to.block = Math.floor((moment().unix() - moment(e.target.value).unix()) / 60) - 1439
         selectedPeriod.from.date? actions.from(selectedPeriod.from.date): actions.from(lastMonth)
-        renders.form()
-        actions.getStat()
+        // renders.form()
+        // actions.getStat()
       }
     }
 
