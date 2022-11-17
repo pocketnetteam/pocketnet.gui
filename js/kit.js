@@ -1609,6 +1609,8 @@ Share = function(lang){
 
 			share.time = new Date();
 
+			console.log("EXPORT ALIAS", self.export())
+
 			share._import(self.export())
 
 			share.txid = txid || self.aliasid

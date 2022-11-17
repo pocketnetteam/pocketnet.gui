@@ -463,8 +463,7 @@ var share = (function(){
 								actions.removevideo(link)
 							}
 
-							currentShare.clear();
-							currentShare.language.set(self.app.localization.key)
+							currentShare = new Share(self.app.localization.key, self.app)
 
 							make();
 							
@@ -904,7 +903,7 @@ var share = (function(){
 							var alias = action.object
 
 							if(!essenseData.notClear){
-								currentShare.clear();
+								currentShare = new Share(self.app.localization.key, self.app)
 								self.app.nav.api.history.removeParameters(['repost'])
 
 								self.closeContainer()
@@ -945,6 +944,8 @@ var share = (function(){
 								clbk(true)
 								
 						}).catch(e => {
+
+							console.error('e', e)
 
 
 							if (clbk){
@@ -1047,7 +1048,7 @@ var share = (function(){
 											}
 
 											if(!essenseData.notClear){
-												currentShare.clear();
+												currentShare = new Share(self.app.localization.key, self.app)
 												self.app.nav.api.history.removeParameters(['repost'])
 		
 												self.closeContainer()

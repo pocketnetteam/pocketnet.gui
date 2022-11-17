@@ -169,6 +169,8 @@ Action = function(account, object, priority){
 
         if (e.expObject){
 
+            console.log("?ASAS")
+
             var alias = new kits.c[e.expObject.type]()
                 alias.import(e.expObject)
 
@@ -391,16 +393,17 @@ Action = function(account, object, priority){
             parameters.push(optstype)
         }
 
-        self.sent = new Date()
-
-        trigger()
-
+        self.sending = true
 
         return account.parent.api.rpc('sendrawtransactionwithmessage', parameters).then(transaction => {
 
             self.transaction = transaction
             self.inputs = inputs
             self.outputs = outputs
+
+            delete self.sending
+
+            self.sent = new Date()
 
             trigger()
 
@@ -409,7 +412,7 @@ Action = function(account, object, priority){
 
         }).catch((e = {}) => {
 
-            self.sent = null
+            delete self.sending
 
             trigger()
 
@@ -512,6 +515,12 @@ Action = function(account, object, priority){
             return Promise.reject('alreadySent')
         }
 
+        if (self.sending){
+            return Promise.reject('alreadySending')
+        }
+
+        
+
         if (!account.status.value){
             if(!options.sendWithNullStatus) {
                 return Promise.reject('waitUserStatus')
@@ -575,25 +584,37 @@ Action = function(account, object, priority){
     self.get = function(){
         var exported = self.export()
 
-        var alias = exported.object// exported.expObject || exported.object
+        var alias = {}// exported.expObject || exported.object
 
+        if (self.object.alias){
+            alias = self.object.alias()
 
-        if (exported.expObject){
-
-            alias = new kits.c[e.expObject.type]()
-            alias.import(e.expObject)
-
+            console.log('alias', alias)
         }
+        else{
+            if (exported.expObject){
+
+                alias = new kits.c[exported.expObject.type]()
+                alias.import(exported.expObject)
+    
+            }
+            else{
+                alias = _.clone(exported.object)
+            }
+        }
+
+
+        
 
         alias.txid = exported.transaction
 
-        if(!alias.txid) { alias.txid = makeid(); alias.relay = true }
+        if(!alias.txid) { alias.txid = self.id; alias.relay = true }
         if (alias.txid) { alias.temp = true }
 
         alias.address = account.address;
         alias.type = self.object.type
 
-        alias.time = account.parent.app.platform.currentTime()
+        alias.time = new Date()
         alias.timeUpd = alias.time
         alias.optype = self.object.typeop ? self.object.typeop() : self.object.type
 
@@ -1128,6 +1149,9 @@ Account = function(address, parent){
     }
 
     self.getTempActions = function(type, filter){
+
+        console.log('getTempActions', type, self.getTempActions.caller)
+
         return _.map(self.getActions(type, (action) => {
 
             if(filter && !filter(action)) return false
@@ -1409,6 +1433,17 @@ Actions = function(app, api){
 
     self.addAction = function(address, object /* object/alias? */, priority){
 
+        /*if(object.export){
+            var copy = object.export(true)
+
+            if (kits.c[copy.type]){
+                var al = new kits.c[copy.type]()
+                    al.import(copy)
+
+                object = al
+            }
+        }*/
+
         if(!address) return Promise.reject('address')
         if(!object) return Promise.reject('object')
 
@@ -1498,6 +1533,7 @@ Actions = function(app, api){
                 try{
                     imports(JSON.parse(e.newValue || "{}"))
 
+                    console.log("HERE")
 
                     _.each(accounts, (account) => {
                         account.triggerGlobal()

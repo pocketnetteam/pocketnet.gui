@@ -387,9 +387,13 @@ Platform = function (app, listofnodes) {
 
         if (address == app.user.address.value){
 
+            
+
             var alias = action.get()
 
-            if (status == 'completed' && alias.ustate) {
+            
+
+            if (status == 'completed' && action.object.ustate) {
 
                 var ustate = typeof alias.ustate == 'function' ? alias.ustate() : alias.ustate;
 
@@ -404,6 +408,8 @@ Platform = function (app, listofnodes) {
 
     var listeners = {
         share : function(alias, status){
+
+            console.log("FILTERED ACTION")
 
             if(status == 'completed'){
 
@@ -10813,7 +10819,7 @@ Platform = function (app, listofnodes) {
 
                 var us = self.sdk.ustate.storage;
 
-                if (us[adress] && !_.isEmpty(us[address])) {
+                if (us[address] && !_.isEmpty(us[address])) {
                     us[address][state + "_spent"] = (us[address][state + "_spent"] || 0) + value
                     us[address][state + "_unspent"] = (us[address][state + "_unspent"] || 1) - value
                 }
@@ -17870,6 +17876,8 @@ Platform = function (app, listofnodes) {
                             share = _.find(account.getTempActions('share'), function (alias) {
                                 return alias.txid == id
                             })
+
+                            console.log("//", share)
                         }
                     }
 
@@ -18771,6 +18779,8 @@ Platform = function (app, listofnodes) {
 
                 common: function (p, clbk, cache) {
 
+                    console.log("LENTA COMMON")
+
                     self.app.user.isState(function (state) {
 
                         if (!p) p = {};
@@ -18849,13 +18859,11 @@ Platform = function (app, listofnodes) {
                             /*var parameters = [p.height, p.txid || "", p.count, p.lang || "", p.tagsfilter || [], p.type || [], [], [], p.tagsexcluded || [], "", p.author];*/
 
                             s.get(parameters, function (shares, error) {
-
+                                var account = self.actions.getCurrentAccount()
                                 if (shares) {
-                                    if (state && (!p.author || p.author == p.address)) {
-
-                                        var account = self.actions.getCurrentAccount()
-
-                                        if (account){
+                                    if (account){
+                                        if (state && (!p.author || p.author == p.address)) {
+                                            console.log("?????")
                                             _.each(account.getTempActions('share'), function (alias) {
                                                 if(alias.txidEdit){
 
@@ -18870,55 +18878,21 @@ Platform = function (app, listofnodes) {
                                                     
                                                 }
                                                 else{
-                                                    shares.unshift(s)
+                                                    shares.unshift(alias)
                                                 }
-                                            })
-
-                                            _.each(account.getTempActions('blocking'), function (alias) {
-                                                _.each(shares, function (share) {
-                                                    if (share.address == alias.address) share.blocking = true;
-                                                })
                                             })
 
                                             
+                                            
                                         }
 
-
-                                        /*if (!p.author || p.author == p.address) {
-                                            _.each(self.sdk.relayTransactions.withtemp('share'), function (ps) {
-
-                                                var s = new pShare();
-                                                    s._import(ps, true);
-                                                    s.temp = true;
-
-                                                if (ps.relay) s.relay = true
-                                                if (ps.checkSend) s.checkSend = true
-
-                                                s.address = ps.address
-
-                                                if (ps.txidEdit) {
-                                                    replaceEqual(shares, {
-                                                        txid: ps.txidEdit
-                                                    }, s)
-
-                                                    /// new
-                                                    s.txidEdit = s.txid
-                                                    s.txid = ps.txidEdit
-                                                }
-
-                                                else {
-                                                    shares.unshift(s)
-                                                }
-
-
+                                        _.each(account.getTempActions('blocking'), function (alias) {
+                                            _.each(shares, function (share) {
+                                                if (share.address == alias.address) share.blocking = true;
                                             })
-                                        }*/
+                                        })
 
-                                        /*_.each(self.sdk.relayTransactions.withtemp('blocking'), function (block) {
-                                            _.each(shares, function (s) {
-                                                if (s.address == block.address) s.blocking = true;
-                                            })
-                                        })*/
+
                                     }
 
                                     _.each(shares || [], function (s) {
@@ -19262,6 +19236,8 @@ Platform = function (app, listofnodes) {
                                 parameters.push(p.ascdesc || 'desc');
                             }
 
+                            console.log('getex', parameters)
+
                             s.getex(parameters, function (data, error) {
 
                                 var shares = data.contents || []
@@ -19276,7 +19252,9 @@ Platform = function (app, listofnodes) {
                                     }
                                 })
 
-                                p.blocknumber = blocknumber
+                                p.blocknumber = blocknumber 
+
+                                console.log('shares', shares)
 
 
                                 if (shares) {
@@ -19285,58 +19263,45 @@ Platform = function (app, listofnodes) {
 
                                         var me = self.app.user.address.value;
 
-                                        if (
+                                        var account = self.actions.getCurrentAccount()
 
-                                            (p.author && p.author == me)
+                                        if (account){
 
-                                        ) {
+                                            if (p.author && p.author == me) {
 
-                                            _.each(self.sdk.relayTransactions.withtemp('share'), function (ps) {
+                                                _.each(account.getTempActions('share'), function (alias) {
+                                                    if(alias.txidEdit){
+    
+                                                        replaceEqual(shares, {
+                                                            txid: ps.txidEdit
+                                                        }, s)
+    
+                                                        var txidEdit = alias.txidEdit
+    
+                                                        alias.txidEdit = alias.txid
+                                                        alias.txid = txidEdit
+                                                        
+                                                    }
+                                                    else{
+                                                        shares.unshift(alias)
+                                                    }
+                                                })
+    
+                                                
+                                            }
 
-                                                var s = new pShare();
-                                                s._import(ps, true);
-                                                s.temp = true;
-
-                                                if (ps.relay) s.relay = true
-                                                if (ps.checkSend) s.checkSend = true
-
-                                                s.address = ps.address
-
-                                                if (ps.txidEdit) {
-                                                    replaceEqual(shares, {
-                                                        txid: ps.txidEdit
-                                                    }, s)
-
-                                                    /// new
-                                                    s.txidEdit = s.txid
-                                                    s.txid = ps.txidEdit
-                                                }
-
-                                                else {
-                                                    shares.unshift(s)
-                                                }
-
+                                            _.each(account.getTempActions('blocking'), function (alias) {
+                                                _.each(shares, function (share) {
+                                                    if (share.address == alias.address) share.blocking = true;
+                                                })
                                             })
+                                            
                                         }
 
-                                        _.each(self.sdk.relayTransactions.withtemp('blocking'), function (block) {
-                                            _.each(shares, function (s) {
-                                                if (s.address == block.address) s.blocking = true;
-                                            })
-                                        })
+                                        
                                     }
 
                                     self.sdk.node.shares.loadvideoinfoifneed(shares, p.skipvideo ? false : true, function(){
-
-                                        if (state) {
-                                            _.each(self.sdk.relayTransactions.withtemp('blocking'), function (block) {
-                                                _.each(shares, function (s) {
-                                                    if (s.address == block.address) s.blocking = true;
-                                                })
-                                            })
-                                        }
-
-
 
                                         if(p.video){
                                             shares = _.filter(shares, function(share){

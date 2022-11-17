@@ -8822,6 +8822,7 @@
 				if (p.events.active) p.events.active(self.active);
 			},
 			clear : function(el){
+				if(!searchEl) return
 
 				var value = searchEl.find('.sminput').val()
 
