@@ -58,6 +58,7 @@ __map =  {
 
 		"js/vendor/moment.min.js", //?
 		"js/vendor/moment.locale.js", //?
+		"js/vendor/ua-parser.min.js",
 		"js/vendor/jquery.inputmask.bundle.js",
 		 //
 		"js/vendor/isotope.pkgd.js", //
