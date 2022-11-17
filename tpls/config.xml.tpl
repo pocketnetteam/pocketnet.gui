@@ -181,7 +181,7 @@
             <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
             <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
             <% if(store) {%>
-            <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" tools:node="remove" />
+                <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" tools:node="remove" />
             <% } %>
         </config-file>
 
