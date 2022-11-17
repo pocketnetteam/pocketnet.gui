@@ -245,18 +245,20 @@ var statistic = (function () {
 
           fields.forEach(function(field){
 
-            if (field.limit === 1){
-              earnings += field.commentators;
+            if (field.commentators){
+              if (field.limit === 1){
+                earnings += field.commentators;
+              }
+    
+              if (field.limit === 3){
+                earnings += field.commentators / 2;
+              }
+    
+              if (field.limit === 7){
+                earnings += field.commentators / 4;
+              }
             }
-  
-            if (field.limit === 3){
-              earnings += field.commentators / 2;
-            }
-  
-            if (field.limit === 7){
-              earnings += field.commentators / 4;
-            }
-  
+
           })
 
         }
