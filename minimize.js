@@ -891,7 +891,6 @@ fs.exists(mapJsPath, function (exists) {
 							JSENV += '<script>window.packageversion = "' + package.version + '";</script>\n';
 							JSENV += '<script>window.versionsuffix = "' + package.versionsuffix + '";</script>\n';
 
-							console.log(JSENV)
 
 							vs = numfromreleasestring(package.version) + '_' + (package.versionsuffix || "0")
 	
