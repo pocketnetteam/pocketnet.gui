@@ -901,10 +901,49 @@ var share = (function(){
 
 						self.app.platform.actions.addActionAndSendIfCan(currentShare).then(action => {
 
+							var alias = action.object
 
+							if(!essenseData.notClear){
+								currentShare.clear();
+								self.app.nav.api.history.removeParameters(['repost'])
+
+								self.closeContainer()
+
+								if(!essenseData.share){
+									state.save()
+								}
+
+								make();	
+							}
+							
+							if (essenseData.post){
+								essenseData.post(alias)
+							}
+							else{
+
+								if(isMobile()){
+
+									self.app.nav.api.load({
+										open : true,
+										href : 'author?address=' + self.app.user.address.value,
+										history : true
+									})
+
+								}
+								else{
+									self.app.actions.scroll(0)
+								}
+
+							}
+
+
+							actions.unfocus();
+							
+							successCheck()
 
 							if (clbk)
 								clbk(true)
+								
 						}).catch(e => {
 
 
@@ -912,9 +951,11 @@ var share = (function(){
 								clbk(false, errors[e])
 							}
 								
-							var t = self.app.platform.errorHandler(error, true);
+							var t = self.app.platform.errorHandler(e, true);
 
 							if (t) actions.errortext(t)
+
+
 
 						}).then(() => {
 							el.c.removeClass('loading')

@@ -487,7 +487,8 @@ var uploadpeertube = (function () {
 						//processing(false)
 
 						uploading = false
-
+						
+						
 						add(response.videoLink);
 
 						wndObj.close();

@@ -550,6 +550,8 @@ Action = function(account, object, priority){
             return new Promise((resolve, reject) => {
                 self.object.canSend(app, (r) => {
 
+                    self.checkedUntil = null
+
                     if(r){
                         makeTransaction(false, null, true).then(resolve).catch(reject)
                     }
@@ -573,8 +575,17 @@ Action = function(account, object, priority){
     self.get = function(){
         var exported = self.export()
 
-        var alias = exported.expObject || exported.object
-            alias.txid = exported.transaction
+        var alias = exported.object// exported.expObject || exported.object
+
+
+        if (exported.expObject){
+
+            alias = new kits.c[e.expObject.type]()
+            alias.import(e.expObject)
+
+        }
+
+        alias.txid = exported.transaction
 
         if(!alias.txid) { alias.txid = makeid(); alias.relay = true }
         if (alias.txid) { alias.temp = true }
@@ -588,6 +599,11 @@ Action = function(account, object, priority){
 
         alias.inputs = exported.inputs
         alias.outputs = exported.outputs
+
+        if(self.checkedUntil){
+            alias.checkSend = true
+        }
+
 
         return alias
     }

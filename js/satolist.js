@@ -387,11 +387,11 @@ Platform = function (app, listofnodes) {
 
         if (address == app.user.address.value){
 
-            var alias = action.object
+            var alias = action.get()
 
             if (status == 'completed' && alias.ustate) {
 
-                var ustate = typeof object.ustate == 'function' ? alias.ustate() : alias.ustate;
+                var ustate = typeof alias.ustate == 'function' ? alias.ustate() : alias.ustate;
 
                 if (ustate) self.sdk.ustate.change(address, ustate, 1)
 
@@ -17860,27 +17860,16 @@ Platform = function (app, listofnodes) {
 
                 getWithTemp: function (id) {
 
-                    var share = deep(self.app.platform, 'sdk.node.shares.storage.trx.' + id)
+                    var share = deep(self.app.platform, 'sdk.node.shares.storage.trx.' + id) || null
 
                     if (!share) {
-                        var temp = _.find(self.sdk.relayTransactions.withtemp('share'), function (s) {
-                            return s && s.txid == id
-                        })
 
-                        if(temp){
-                            share = new pShare();
-                            share._import(temp, true);
-                            share.temp = true;
-    
-                            if (temp.relay) share.relay = true;
-                            if (temp.checkSend) share.checkSend = true
-    
-                            share.address = self.app.platform.sdk.address.pnet().address
-                        }
+                        var account = self.actions.getCurrentAccount()
 
-
-                        else{
-                            return null
+                        if (account){
+                            share = _.find(account.getTempActions('share'), function (alias) {
+                                return alias.txid == id
+                            })
                         }
                     }
 
@@ -18862,9 +18851,40 @@ Platform = function (app, listofnodes) {
                             s.get(parameters, function (shares, error) {
 
                                 if (shares) {
-                                    if (state) {
+                                    if (state && (!p.author || p.author == p.address)) {
 
-                                        if (!p.author || p.author == p.address) {
+                                        var account = self.actions.getCurrentAccount()
+
+                                        if (account){
+                                            _.each(account.getTempActions('share'), function (alias) {
+                                                if(alias.txidEdit){
+
+                                                    replaceEqual(shares, {
+                                                        txid: ps.txidEdit
+                                                    }, s)
+
+                                                    var txidEdit = alias.txidEdit
+
+                                                    alias.txidEdit = alias.txid
+                                                    alias.txid = txidEdit
+                                                    
+                                                }
+                                                else{
+                                                    shares.unshift(s)
+                                                }
+                                            })
+
+                                            _.each(account.getTempActions('blocking'), function (alias) {
+                                                _.each(shares, function (share) {
+                                                    if (share.address == alias.address) share.blocking = true;
+                                                })
+                                            })
+
+                                            
+                                        }
+
+
+                                        /*if (!p.author || p.author == p.address) {
                                             _.each(self.sdk.relayTransactions.withtemp('share'), function (ps) {
 
                                                 var s = new pShare();
@@ -18892,13 +18912,13 @@ Platform = function (app, listofnodes) {
 
 
                                             })
-                                        }
+                                        }*/
 
-                                        _.each(self.sdk.relayTransactions.withtemp('blocking'), function (block) {
+                                        /*_.each(self.sdk.relayTransactions.withtemp('blocking'), function (block) {
                                             _.each(shares, function (s) {
                                                 if (s.address == block.address) s.blocking = true;
                                             })
-                                        })
+                                        })*/
                                     }
 
                                     _.each(shares || [], function (s) {
@@ -18912,7 +18932,7 @@ Platform = function (app, listofnodes) {
 
                                     })
 
-                                    self.sdk.node.transactions.saveTemp()
+                                    //self.sdk.node.transactions.saveTemp()
 
                                     if (clbk)
                                         clbk(shares, error, p)
@@ -30375,7 +30395,6 @@ Platform = function (app, listofnodes) {
                 self.matrixchat.core.destroyExternalLink()
             }
 
-
             self.matrixchat.connectWith = null
             self.matrixchat.joinRoom = null
 
@@ -30412,6 +30431,8 @@ Platform = function (app, listofnodes) {
 
             self.matrixchat.core.mtrx.transaction(roomid, id)
         },
+
+
 
         connect : function(){
             if(!self.matrixchat.connectWith && !self.matrixchat.joinRoom) return
