@@ -479,6 +479,13 @@ __map =  {
 		},
 
 		
+		statistics : {
+			uri : "statistics",
+			href : "statistics",
+			add : insertingfunc,
+		},
+
+		
 		tagcloud : {
 			uri : "tagcloud",
 			href : "tagcloud",

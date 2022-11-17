@@ -8,9 +8,9 @@
     <% _.each(fields, function(field){ %>
     <div class="wrap">
       <div class="commentators">
-                <span>
-                  <%= e(`commentatorsCount`, field.limit) %>
-              </span>
+        <span>
+          <%= e(`commentatorsCount`, field.limit) %>
+        </span>
         <div class="count">
           <%= field.commentators %>
         </div>
@@ -28,6 +28,18 @@
       </div>
     </div>
   </div>
+
+    <% if(real){ %>
+    <div class="total-stat">
+      <div class="label">
+        <%= e('earnings') %>
+      </div>
+      <div class="value">
+        <%- earnings %>
+      </div>
+    </div>
+    <% } %>
+
   <% } else {%>
   <div class="preloaderWrapper">
     <div class="preloader5"><img src="./img/three-dots.svg"/></div>
@@ -35,5 +47,6 @@
   <%}%>
 
 </div>
+
 
 
