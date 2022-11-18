@@ -124,7 +124,7 @@ var channel = (function(){
 					self.sdk.ustate.get(ed.id, function(){
 
 						author.data = self.sdk.users.storage[ed.id]
-						author.state = self.sdk.ustate.storage[ed.id]
+						author.state = self.psdk.userState.get(ed.id)
 						author.address = ed.id;
 
 						var me = null;

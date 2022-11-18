@@ -75,6 +75,7 @@ Nav = function(app)
 			p.module.nav = self;
 			p.module.app = app;
 			p.module.sdk = app.platform.sdk;
+			p.module.psdk = app.platform.psdk;
 			p.module.user = app.user;
 			p.module.ajax = app.ajax;
 			p.module.componentsPath = options.path;

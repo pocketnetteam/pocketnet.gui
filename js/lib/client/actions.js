@@ -169,8 +169,6 @@ var Action = function(account, object, priority){
 
         if (e.expObject){
 
-            console.log("?ASAS")
-
             var alias = new kits.c[e.expObject.type]()
                 alias.import(e.expObject)
 
@@ -428,8 +426,6 @@ var Action = function(account, object, priority){
 
             self.rejected = code || (e.toString ? e.toString() : 'rejected')
 
-            console.log('self.rejected', self.rejected)
-
             trigger()
 
             return Promise.reject(self.rejected)
@@ -588,8 +584,6 @@ var Action = function(account, object, priority){
 
         if (self.object.alias){
             alias = self.object.alias()
-
-            console.log('alias', alias)
         }
         else{
             if (exported.expObject){
@@ -1150,8 +1144,6 @@ var Account = function(address, parent){
 
     self.getTempActions = function(type, filter){
 
-        console.log('getTempActions', type, self.getTempActions.caller)
-
         return _.map(self.getActions(type, (action) => {
 
             if(filter && !filter(action)) return false
@@ -1532,8 +1524,6 @@ var Actions = function(app, api){
 
                 try{
                     imports(JSON.parse(e.newValue || "{}"))
-
-                    console.log("HERE")
 
                     _.each(accounts, (account) => {
                         account.triggerGlobal()

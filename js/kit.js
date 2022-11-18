@@ -1609,8 +1609,6 @@ Share = function(lang){
 
 			share.time = new Date();
 
-			console.log("EXPORT ALIAS", self.export())
-
 			share._import(self.export())
 
 			share.txid = txid || self.aliasid
@@ -2028,6 +2026,7 @@ pUserInfo = function(){
 	self.subscribers = [];
 	self.recomendedSubscribes = [];
 	self.blocking = [];
+	self.regdate = new Date()
 
 	self.address = ''
 
@@ -2087,6 +2086,9 @@ pUserInfo = function(){
 		self.temp = v.temp || null;
 
 		self.dev = v.dev;
+
+		if (v.regdate)
+			self.regdate.setTime(v.regdate * 1000);
 
 
 	}

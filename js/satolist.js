@@ -387,11 +387,7 @@ Platform = function (app, listofnodes) {
 
         if (address == app.user.address.value){
 
-            
-
             var alias = action.get()
-
-            
 
             if (status == 'completed' && action.object.ustate) {
 
@@ -406,10 +402,10 @@ Platform = function (app, listofnodes) {
         }
     })
 
+    self.psdk = new pSDK({app, api : self.app.api, actions : self.actions})
+
     var listeners = {
         share : function(alias, status){
-
-            console.log("FILTERED ACTION")
 
             if(status == 'completed'){
 
@@ -1493,7 +1489,7 @@ Platform = function (app, listofnodes) {
 
         "3": {
             message: function () {
-                var us = self.sdk.ustate.storage[self.sdk.address.pnet().address] || {}
+                var us = self.psdk.userState.getmy() || {}
 
                 return self.app.localization.e('scoreLimitLight', (us.score_unspent || 0) + (us.score_spent || 0))
             }
@@ -1502,7 +1498,7 @@ Platform = function (app, listofnodes) {
         "2": {
             text: function () {
 
-                var us = self.sdk.ustate.storage[self.sdk.address.pnet().address] || {}
+                var us = self.psdk.userState.getmy() || {}
 
                 return self.app.localization.e('postLimitLight', (us.post_unspent || 0) + (us.post_spent || 0))
 
@@ -10308,8 +10304,8 @@ Platform = function (app, listofnodes) {
 
                 if(!address) return false
 
-                var ustate = self.sdk.ustate.storage[address] || deep(self, 'sdk.usersl.storage.' + address) || deep(self, 'sdk.users.storage.' + address);
-
+                var ustate = self.psdk.userState.get(address) || self.psdk.userInfo.get(address)
+                
                 if(!ustate) return false
 
                 var redgate = ustate.user_reg_date || ustate.regdate
@@ -10345,7 +10341,9 @@ Platform = function (app, listofnodes) {
             },
 
             reputationBlocked : function(address, count){
-                var ustate = deep(self, 'sdk.usersl.storage.' + address) || self.sdk.ustate.storage[address] || deep(self, 'sdk.users.storage.' + address);
+                var ustate = self.psdk.userState.get(address) || self.psdk.userInfo.get(address)
+                
+            
 
                 if(!ustate) return false
 
@@ -10414,7 +10412,7 @@ Platform = function (app, listofnodes) {
 
             hiddenComment : function(comment){
                 var address = comment.address
-                var ustate = self.sdk.ustate.storage[address] || deep(self, 'sdk.usersl.storage.' + address) || deep(self, 'sdk.users.storage.' + address);
+                var ustate = self.psdk.userState.get(address) || self.psdk.userInfo.get(address)
 
                 if (self.app.platform.sdk.user.itisme(address)) return false
 
@@ -10428,7 +10426,7 @@ Platform = function (app, listofnodes) {
             canuseimagesincomments : function(address){
                 if(!address) address = (self.app.platform.sdk.address.pnet() || {}).address
 
-                var ustate = self.sdk.ustate.storage[address] || deep(self, 'sdk.usersl.storage.' + address) || deep(self, 'sdk.users.storage.' + address);
+                var ustate = self.psdk.userState.get(address) || self.psdk.userInfo.get(address)
 
                 if (ustate && ustate.reputation > 100){
                     return true
@@ -10544,7 +10542,7 @@ Platform = function (app, listofnodes) {
                 var prepare = function(){
                     return new Promise((resolve, reject) => {
 
-                        self.sdk.ustate._me((info) => {
+                        self.sdk.ustate.me((info) => {
     
                             var address = self.sdk.address.pnet()
     
@@ -10653,7 +10651,7 @@ Platform = function (app, listofnodes) {
         
                                 self.matrixchat.destroy()
         
-                                self.sdk.ustate._me((info) => {
+                                self.sdk.ustate.me((info) => {
                                     self.sdk.user.get(() => {
         
                                         setTimeout(() => {
@@ -10817,24 +10815,24 @@ Platform = function (app, listofnodes) {
             change : function(address, state, value){
                 if(!value) value = 1
 
-                var us = self.sdk.ustate.storage;
+                var us = self.psdk.userState.getmy();
 
-                if (us[address] && !_.isEmpty(us[address])) {
-                    us[address][state + "_spent"] = (us[address][state + "_spent"] || 0) + value
-                    us[address][state + "_unspent"] = (us[address][state + "_unspent"] || 1) - value
+                
+
+                if (us) {
+                    us[state + "_spent"] = (us[state + "_spent"] || 0) + value
+                    us[state + "_unspent"] = (us[state + "_unspent"] || 1) - value
                 }
 
                 _.each(self.sdk.ustate.clbks, function (c) {
                     c()
                 })
             },
-            validationcurrent: function (address, parameter, clbk) {
-                var s = self.sdk.ustate.storage;
-
+            validationcurrent: function (address, parameter) {
 
                 if (!address && state) address = self.sdk.address.pnet().address;
 
-                var info = s[address];
+                var info = self.psdk.userState.get(address);
                 var result = true;
                 var error = false;
 
@@ -10867,210 +10865,41 @@ Platform = function (app, listofnodes) {
                 return result, error
 
             },
-
-            attention: function (num, clbk) {
-
-                var s = self.sdk.ustate.storage;
-                var address = self.sdk.address.pnet().address;
-
-                self.app.user.isState(function (state) {
-
-                    if (state) {
-                        var info = s[address];
-
-                        var me = self.sdk.user.storage.me
-
-                        if (!me || !me.image || !me.name) {
-                            if (clbk)
-                                clbk('notuserinfo')
-
-                            return
-                        }
-
-                        if (!info) {
-                            if (clbk)
-                                clbk('notinfo')
-
-                            return
-                        }
-
-                        if (info.post_unspent <= num) {
-                            if (clbk)
-                                clbk('postunspent')
-
-                            return
-                        }
-
-                        /*if (info.video_unspent <= num) {
-                            if (clbk)
-                                clbk('videounspent')
-
-                            return
-                        }*/
-
-
-
-                        if (info.score_unspent <= num) {
-                            if (clbk)
-                                clbk('scoreunspent')
-
-                            return
-                        }
-
-                        /*if (info.trial){
-                            if (clbk)
-                                clbk('trial')
-
-                            return
-                        }*/
-                    }
-
-
-
-                    if (clbk)
-                        clbk(false)
-
-                })
-
-            },
-
+            
             meUpdate: function (clbk) {
                 self.sdk.ustate.me(clbk, true)
             },
 
             me: function (clbk, update) {
 
-                var s = self.sdk.ustate.storage;
-
-                self.sdk.ustate._me(function (info) {
-
-
-                    if (self.sdk.address.pnet()) {
-                        var a = self.sdk.address.pnet().address;
-
-                        if (!_.isEmpty(info)) {
-                            self.app.settings.set(a, 'last_ustate_2', info) /// todo remove
-                        }
-                        else {
-                            info = self.app.settings.get(a, 'last_ustate_2') || {}
-
-                            if (!_.isEmpty(info)) {
-
-                                s[a] = info;
-
-                            }
-                        }
-
-                    }
-
-                    if (clbk)
-                        clbk(info)
-
-                }, update)
-
-                app.settings.set()
-
-            },
-
-            _me: function (clbk, update) {
-                var s = self.sdk.ustate.storage;
-
                 self.app.user.isState(function (state) {
 
-                    if (state) {
-                        var address = self.sdk.address.pnet().address;
-
-                        if(self.sdk.ustate.loading[address]){
-
-                            retry(function(){
-                                return !self.sdk.ustate.loading[address]
-                            }, function(){
-                                if (clbk)
-                                    clbk(s[address])
-                            }, 5000)
-
-                            return
-
-                        }
-
-                        self.sdk.ustate.get(address, function () {
-
-                            if (clbk)
-                                clbk(s[address])
-
+                    if (state){
+                        self.sdk.ustate.get(app.user.address.value, (r) => {
+                            if(clbk) clbk(r[app.user.address.value] || {})
                         }, update)
                     }
-                    else {
-                        if (clbk)
-                            clbk({})
+                    else{
+                        if(clbk) clbk({})
                     }
-
-
+                    
                 })
 
-
             },
+
+            
             get: function (addresses, clbk, update) {
-                if (!_.isArray(addresses)) addresses = [addresses]
 
-                var s = this.storage;
-                var temp = self.sdk.node.transactions.temp;
+                return self.psdk.userState.load(addresses, update).then(r => {
 
-                if (!update)
+                    console.log("RE", r)
 
-                    addresses = _.filter(addresses, function (a) {
-                        if (!s[a]) {
+                    if (clbk) clbk(r)
+                }).catch(() => {
+                    if (clbk) clbk({})
 
-                            self.sdk.ustate.loading[a] = true
-
-                            return true
-                        }
-                    })
-
-                addresses = _.uniq(addresses)
-
-                if (addresses.length) {
-
-                    self.app.api.rpc('getuserstate', [(addresses || []).join(',')]).then(d => {
-
-                        if (d && !_.isArray(d)) d = [d]
-
-                        _.each(d || [], function (info) {
-                            s[info.address] = info
-                        })
-
-                        _.each(addresses, function(a){
-                            self.sdk.ustate.loading[a] = false
-                        })
-
-
-                        if (clbk)
-                            clbk(d)
-
-
-                    }).catch(e => {
-
-
-                        _.each(addresses, function(a){
-                            self.sdk.ustate.loading[a] = false
-                        })
-
-                        if(e && e.code == -5){
-                            _.each(addresses || [], function (address) {
-                                s[address] = {}
-                            })
-                        }
-
-                        if (clbk)
-                            clbk([])
-                    })
-
-                }
-
-                else {
-                    if (clbk)
-                        clbk()
-                }
+                })
+             
             },
 
             haslowlimits : function(state){
@@ -11132,7 +10961,6 @@ Platform = function (app, listofnodes) {
 
             metrics : function(){
                 return {
-
 
                     post : {
                         key : 'post',
@@ -20542,7 +20370,7 @@ Platform = function (app, listofnodes) {
 
                     },
 
-                    tx: function (id, clbk, ) {
+                    tx: function (id, clbk) {
 
                         if (self.sdk.node.transactions.loading[id]) {
 
@@ -21380,11 +21208,11 @@ Platform = function (app, listofnodes) {
                                                             if (typeof obj.ustate == 'function') ustate = obj.ustate();
 
                                                             if (ustate) {
-                                                                var us = self.sdk.ustate.storage;
+                                                                var us = self.psdk.userState.getmy();
 
-                                                                if (us[address.address] && !_.isEmpty(us[address.address])) {
-                                                                    us[address.address][obj.ustate + "_spent"]++
-                                                                    us[address.address][obj.ustate + "_unspent"]--
+                                                                if (us) {
+                                                                    us[obj.ustate + "_spent"]++
+                                                                    us[obj.ustate + "_unspent"]--
                                                                 }
 
                                                                 _.each(self.sdk.ustate.clbks, function (c) {
@@ -29630,9 +29458,11 @@ Platform = function (app, listofnodes) {
                     
                     var account = self.actions.addAccount(self.app.user.address.value)
 
-                    if (self.sdk.ustate.storage[self.app.user.address.value]){
+                    if(self.psdk.userState.getmy()) account.setStatus(true)
+
+                    /*if (self.sdk.ustate.storage[self.app.user.address.value]){
                         account.setStatus(true)
-                    }
+                    }*/
 
                     account.setKeys(app.user.keys())
                     account.updateUnspents().catch(e => {

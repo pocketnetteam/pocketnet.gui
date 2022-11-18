@@ -667,7 +667,7 @@ var author = (function(){
 
 			info : function(_el){
 
-					author.state = self.sdk.ustate.storage[author.address]
+					author.state = self.psdk.userState.get(author.address)
 
 					self.shell({
 
