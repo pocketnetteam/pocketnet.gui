@@ -366,44 +366,6 @@ var menu = (function(){
 				}
 			},
 
-			
-			savecross : {
-				init : function(el){
-
-					/*var n = deep(self.app, 'platform.sdk.user.storage.me.rc') || 0
-
-					actions.ah(el, n)
-
-					self.app.platform.ws.messages.event.clbks.menusave = function(d){
-						if(d.mesType == 'userInfo'){
-
-							var n = deep(self.app, 'platform.sdk.user.storage.me.rc') || 0
-
-							actions.ah(el, n)
-							
-						}
-					}*/
-
-
-					
-
-				},
-				click : function(){
-
-
-					self.nav.api.load({
-						open : true,
-						href : 'socialshare',
-						history : true,
-						inWnd : true,
-
-						essenseData : {
-							rescue : true
-						}
-					})
-				}
-			},
-
 			search : {
 				fast : true,
 				click : function(){

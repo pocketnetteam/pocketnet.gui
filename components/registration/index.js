@@ -1292,7 +1292,7 @@ var registration = (function(){
 				}
 				else{
 
-					var me = deep(app, 'platform.sdk.user.storage.me');
+					var me = psdk.userInfo.getmy() || {}
 
 					if (me && me.relay){
 						current = steps.captcha.id
@@ -1634,7 +1634,7 @@ var registration = (function(){
 					return k;
 				})
 
-				var username = deep(app, 'platform.sdk.user.storage.me.name');
+				var username = (self.psdk.userInfo.getmy() || {}).name
 
 				self.shell({
 

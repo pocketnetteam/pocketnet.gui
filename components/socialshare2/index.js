@@ -657,8 +657,10 @@ var socialshare2 = (function(){
 
 						var t = actions.shareText() +  '\r\n\r\n' + trimHtml(ed.sharing.text.body, 500).replace(/ &hellip;/g, '...').replace(/&hellip;/g, '...') + '\r\n\r\n' + htmlhelpers.link(ed.url, self.app.localization.e('continueon') + ' ' + self.app.meta.fullname);
 
-						if (deep(app, 'platform.sdk.user.storage.me.name')){
-							t += '\r\n\r\n'+self.app.localization.e('bestwishes')+'\r\n' + deep(app, 'platform.sdk.user.storage.me.name')
+						var info = self.psdk.userInfo.getmy()
+
+						if (info && info.name){
+							t += '\r\n\r\n'+self.app.localization.e('bestwishes')+'\r\n' + self.app.platform.api.clearname(info.name)
 						}
 
 						var m = '';
@@ -708,10 +710,12 @@ var socialshare2 = (function(){
 
 							text = actions.shareText() +  '\r\n\r\n' +  ed.sharing.text.body + '\r\n\r\n' + htmlhelpers.link(ed.url, self.app.localization.e('continueon') + ' ' + self.app.meta.fullname);
 
-							
-							if (deep(app, 'platform.sdk.user.storage.me.name')){
-								text += '\r\n\r\nBest,\r\n' + deep(app, 'platform.sdk.user.storage.me.name')
+							var info = self.psdk.userInfo.getmy()
+
+							if (info && info.name){
+								text += '\r\n\r\nBest,\r\n' + info.name
 							}
+							
 						}
 
 						_el.ShareLink({

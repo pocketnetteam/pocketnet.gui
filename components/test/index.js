@@ -214,13 +214,13 @@ var test = (function(){
 					return
 				}
 
-				if(actions.equal(tempInfo, self.app.platform.sdk.user.storage.me)){
+				if (actions.equal(tempInfo, self.psdk.userInfo.getmy() || {})){
 					sitemessage(self.app.localization.e('uchanges'))
 					saving = false
 					return
 				}
 
-				if(!actions.valid(tempInfo, self.app.platform.sdk.user.storage.me)){
+				if(!actions.valid(tempInfo, self.psdk.userInfo.getmy() || {})){
 					sitemessage(self.app.localization.e('uchangesvalid'))
 
 					if(!trim(tempInfo.name)){	
@@ -374,9 +374,9 @@ var test = (function(){
 												delete self.sdk.users.storage[self.app.platform.sdk.address.pnet().address];
 
 
-												self.app.platform.sdk.user.storage.me = tx
+												////TODO
 												
-												tempInfo = _.clone(self.app.platform.sdk.user.storage.me)
+												tempInfo = _.clone(tx)
 												
 												actions.upanel()
 
@@ -523,7 +523,7 @@ var test = (function(){
 				else{
 					el.upanel.removeClass('wait')
 
-					if(actions.equal(tempInfo, self.app.platform.sdk.user.storage.me) || !actions.valid(tempInfo, self.app.platform.sdk.user.storage.me)){
+					if(actions.equal(tempInfo, self.psdk.userInfo.getmy() || {}) || !actions.valid(tempInfo, self.psdk.userInfo.getmy() || {})){
 						
 						el.upanel.removeClass('changes')
 					}
@@ -544,13 +544,13 @@ var test = (function(){
 
 			userOptions : function(){
 
-				tempInfo = _.clone(self.app.platform.sdk.user.storage.me)
+				tempInfo = _.clone(self.psdk.userInfo.getmy() || {})
 
 				_.each(userOptions, function(parameter, id){
-					var value = self.app.platform.sdk.user.storage.me[parameter.id];
+					var value = tempInfo[parameter.id];
 
 					if(id == 'addresses'){
-						value = _.clone(self.app.platform.sdk.user.storage.me[parameter.id]);
+						value = _.clone(tempInfo[parameter.id]);
 					}
 					
 					parameter.value = value || parameter.defaultValue || ''
@@ -1195,7 +1195,7 @@ var test = (function(){
 
 				self.app.platform.sdk.user.get(function(){
 
-					if(_.isEmpty(self.app.platform.sdk.user.storage.me)){
+					if(!self.psdk.userInfo.getmy()){
 						firstTime = true
 
 						var _r = self.app.ref;

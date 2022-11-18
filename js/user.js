@@ -376,8 +376,8 @@ User = function(app, p) {
 
 		if(app.platform.sdk.user.myaccauntdeleted()) return 'deleted'
 
-		var me = deep(app, 'platform.sdk.user.storage.me');
-
+		var me = app.platform.psdk.userInfo.getmy() || {}
+		
 		if (me && me.relay){
 
 			var regs = app.platform.sdk.registrations.storage[self.address.value];
@@ -387,10 +387,9 @@ User = function(app, p) {
 			}
 
 		}
-
 		
 
-		if(!(deep(app, 'platform.sdk.user.storage.me.name'))) return 'fu' 
+		if(!me.name) return 'fu' 
 	}
 
 	self.validate = function(){
@@ -399,29 +398,25 @@ User = function(app, p) {
 
 		if(app.platform.sdk.user.myaccauntdeleted()) return false
 
-
-		var me = deep(app, 'platform.sdk.user.storage.me');
+		var me = app.platform.psdk.userInfo.getmy() || {}
 
 		if (me && me.relay){
 
 			var regs = app.platform.sdk.registrations.storage[self.address.value];
 
 			if (regs && (regs === true || regs < 3)){
-
 				
 				return false
 			}
 
 		}
 
-
-
-		return (deep(app, 'platform.sdk.user.storage.me.name'))
+		return me.name
 
 	}
 
 	self.isItMe = function(address){
-		return self.address.value && self.address.value.toString('hex') == address
+		return self.address.value && self.address.value == address
 	}
 
 	self.mncache = {

@@ -4174,7 +4174,7 @@ Platform = function (app, listofnodes) {
             //deep(self.sdk.usersl.storage, address + '.name') || deep(self.sdk.users.storage, address + '.name');
 
             if (n) {
-                n = this.clearname(n)
+                n = this.clearname(n.name)
             }
             return n;
         },
@@ -9968,8 +9968,6 @@ Platform = function (app, listofnodes) {
                             }
 
                             var me = self.psdk.userInfo.getmy()
-                            
-                            //self.sdk.user.storage.me
 
                             if(!me || _.isEmpty(me)){
                                 return reject('me')
@@ -10911,8 +10909,6 @@ Platform = function (app, listofnodes) {
             get: function (addresses, clbk, update) {
 
                 return self.psdk.userState.load(addresses, update).then(r => {
-
-                    console.log("RE", r)
 
                     if (clbk) clbk(r)
                 }).catch(() => {

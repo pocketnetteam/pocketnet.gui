@@ -1,6 +1,6 @@
 <%
 
-var deleted = typeof app.platform.sdk.user.myaccauntdeleted == 'undefined' && app.platform.sdk.user.myaccauntdeleted();
+var deleted = app.platform.sdk.user.myaccauntdeleted();
 
 
 %>
@@ -165,7 +165,7 @@ var deleted = typeof app.platform.sdk.user.myaccauntdeleted == 'undefined' && ap
 							</div>
 						</div>		
 
-						<% if(state ) { %>
+						<% if(state) { %>
 
 							<div class="items workstation">
 								<div elementsid="eventschangeaccount" class="item  right changeaccount" events="changeaccount">

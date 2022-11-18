@@ -365,7 +365,7 @@ var system16 = (function(){
 						type : "STRING",
 						name : self.app.localization.e('e13065'),
 						id : 'nodename',
-						defaultValue : (_node.nodename || ((self.app.platform.api.clearname(deep(app, 'platform.sdk.user.storage.me.name')) || "New") + ' node')).replace(/\+/g, ' '),
+						defaultValue : (_node.nodename || ((self.app.platform.api.clearname((self.psdk.userInfo.getmy() || {}).name) || "New") + ' node')).replace(/\+/g, ' '),
 						placeholder : self.app.localization.e('e13066'),
 						require : true
 					

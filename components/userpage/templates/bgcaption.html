@@ -1,10 +1,15 @@
 <% 
-	var name = app.platform.api.clearname(deep(app, 'platform.sdk.user.storage.me.name') || user.address.value.toString('hex') ) 
+	var info = psdk.userInfo.getmy() | {}
+
+	var name = app.platform.api.clearname(info.name || user.address.value ) 
+
+	var src = info.image
+
 	var letter = name ? name[0] : ''
 
 	var deleted = typeof app.platform.sdk.user.myaccauntdeleted != 'undefined' && app.platform.sdk.user.myaccauntdeleted()
 
-	if(deleted) letter = ''
+	if (deleted) {letter = ''; src = ''}
 %>
 
 
@@ -31,12 +36,6 @@
 								<div class="cell cellforimage">
 									<div class="icon">
 
-										<% var src = deep(app, 'platform.sdk.user.storage.me.image')  
-										
-										
-										if(deleted) src = ''
-										%>
-
 										<div class="usericon" image="<%-src || '*'%>">
 
 											<% if(!src && letter) {%>
@@ -59,24 +58,24 @@
 									<div class="infomain">
 										<div class="captionWrapperFloat">
 
-											<% if((typeof app.platform.sdk.user.myaccauntdeleted == 'undefined' || !app.platform.sdk.user.myaccauntdeleted())) {%>
+											<% if(typeof app.platform.sdk.user.myaccauntdeleted == 'undefined' || !app.platform.sdk.user.myaccauntdeleted()) {%>
 											<div class="caption">
 												<b class="adr"><%-name%></b>
 											</div>
 											<% } %>
 											
-											<% if(deep(app, 'platform.sdk.user.storage.me.name') && (typeof app.platform.sdk.user.myaccauntdeleted == 'undefined' || !app.platform.sdk.user.myaccauntdeleted())) {%>
+											<% if(typeof app.platform.sdk.user.myaccauntdeleted == 'undefined' || !app.platform.sdk.user.myaccauntdeleted()) {%>
 												<div class="addressseparateWrapper">
 													<div class="addressseparate">
 														<b><%=e('pnetAddress')%>:</b>
 													</div>
 													<div class="addressseparate">
 														<span elementsid="copyaddresshex" class="copyaddress">
-															<%- user.address.value.toString('hex') %>
+															<%- user.address.value %>
 														</span>
 
 
-														<a elementsid='blockexplorer/address' external='external' href="https://<%-app.options.url%>/blockexplorer/address/<%- user.address.value.toString('hex') %>"> <i class="fas fa-th"></i></a>
+														<a elementsid='blockexplorer/address' external='external' href="https://<%-app.options.url%>/blockexplorer/address/<%- user.address.value %>"> <i class="fas fa-th"></i></a>
 
 														
 													</div>
@@ -88,7 +87,7 @@
 										
 
 										<div class="tips">
-											<a elementsid='authorlink' href="<%-app.platform.api.authorlink(user.address.value.toString('hex'))%>">
+											<a elementsid='authorlink' href="<%-app.platform.api.authorlink(user.address.value)%>">
 												<button class="profile"><%=e('profile')%></button>
 											</a>
 											

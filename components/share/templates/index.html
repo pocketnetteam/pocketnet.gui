@@ -18,14 +18,13 @@
 			<div class="iconWrapper">
 
 				<% 
-				
-					var src = deep(app, 'platform.sdk.users.storage.'+(essenseData.daddress || user.address.value.toString('hex'))+'.image') || '' 
-					var name = deep(app, 'platform.sdk.users.storage.'+(essenseData.daddress || user.address.value.toString('hex'))+'.name') || ''   
-					var letter = name ? name[0] : '';
 
-					if(!src && !essenseData.daddress){
-						src = deep(app, 'platform.sdk.user.storage.me.image') || ''
-					}
+					var info = psdk.userInfo.get(essenseData.daddress || user.address.value) || {}
+				
+					var src = info.src || ''
+					var name = app.platform.api.clearname(info.name || user.address.value) || ''
+					
+					var letter = name ? name[0] : ''
 
 				%>
 		
@@ -56,11 +55,11 @@
 
 								var selected = '';
 
+								var info = psdk.userInfo.get(address) || {}
 
+								if (address == (essenseData.daddress || user.address.value)) selected = 'selected'
 
-								if(address == (essenseData.daddress || user.address.value.toString('hex'))) selected = 'selected'
-
-								var label = deep(app, 'platform.sdk.users.storage.'+address+'.name') || address
+								var label = app.platform.api.clearname(info.name || user.address.value) || ''
 
 							%> 
 
