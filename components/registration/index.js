@@ -691,6 +691,8 @@ var registration = (function(){
 
 				after : function(el){
 
+					self.app.el.app.removeClass('default-scroll')
+
 					var c = false
 
 					var clbk = function(){
@@ -909,6 +911,8 @@ var registration = (function(){
 				render : 'bloggers',
 
 				after : function(el){
+
+					self.app.el.app.addClass('default-scroll')
 
 					var next = el.find('.next');
 
@@ -1469,9 +1473,6 @@ var registration = (function(){
 
 				el.c.find('.step').width(w)
 
-
-
-
 				line.css('margin-left', '-' + ((getindex(current)) * w) + 'px')
 
 				line.width(w * _.toArray(steps).length)
@@ -1496,27 +1497,9 @@ var registration = (function(){
 
 				el.c.find('.step').removeClass('active');
 
-				var _el = el.c.find('.step[step="'+step.id+'"] .stepBody');
-				var s = _el.closest('.step');
-				var line = el.c.find('.stepsWrapperLine');
+				var _el = el.c.find('.step .stepBody');
 
 				renders[step.render](_el, function(_el){
-
-					var w = s.closest('.stepsWrapper').width()
-
-					el.c.find('.step').width(w)
-
-					
-					line.width(w * _.toArray(steps).length)
-
-
-					var m = '-' + (getindex(current) * w) + 'px'
-
-					line.css('margin-left', m)
-					
-
-					s.closest('.step').addClass('active')
-
 
 					if (clbk)
 						clbk(_el)
@@ -1901,6 +1884,8 @@ var registration = (function(){
 
 			destroy : function(){
 				window.removeEventListener('resize', events.width)
+
+				self.app.el.app.removeClass('default-scroll')
 
 				delete self.app.platform.sdk.node.transactions.clbks.moneyfail
 				delete self.app.errors.clbks.registration

@@ -1,6 +1,7 @@
 @import "../../css/__cssvar";
 
 #registration{
+
 	.caption{
 		margin-top: 3 * @rhythm;
 		font-size: 2.1em;
@@ -143,13 +144,7 @@
 			}
 			.step{
 				min-height: 1px;
-				float: left;
-				opacity: 0;
 				.transition(0.3s);
-
-				&.active{
-					opacity: 1;
-				}
 			}
 		}
 
@@ -655,6 +650,19 @@
 				}
 			}
 
+			.nextStepButtons{
+				position: sticky;
+				z-index: 1000;
+				bottom: 0;
+				height: 100px;
+				background: rgb(var(--background-hidden-layer));
+
+				.subc{
+					margin-top: @rhythm * 4;
+					padding-top: @rhythm * 2
+				}
+			}
+
 			.usersHorizontal{
 				margin-top: 20px;
 				display: flex;
@@ -731,7 +739,7 @@
 						cursor: default;
 						width: 308px;
 						position: absolute;
-						z-index: 9999;
+						z-index: 999;
 						right: 180px;
 						margin-top: 15px;
 						background: rgb(var(--background-total-theme));
@@ -1073,6 +1081,18 @@
 			display: none;
 		}
     }
+
+	&[step="bloggers"]{
+		.stepsWrapper{
+			overflow: visible;
+
+			.stepsWrapperLine{
+				overflow: visible;
+			}
+
+		}
+	}
+
     
 }
 
@@ -1115,6 +1135,15 @@ html[theme="gray"]{
 
 	#registration{
 
+		&[step="bloggers"]{
+
+			.bloggers{
+				.nextStepButtons{
+					height: 150px;
+				}
+			}
+		}
+
 		.mWrapper {
 			.categories {
 
@@ -1134,11 +1163,6 @@ html[theme="gray"]{
 				font-size: .8em!important;
 			}
 
-			.bloggers{
-				.subc{
-					margin-top: @rhythm * 4;
-				}
-			}
 		}
 
 		
@@ -1146,17 +1170,20 @@ html[theme="gray"]{
 
 	.wndcontent{
 		#registration{
-			.categories{
+			&[step="categories"]{
 			
 				.nextStepButtons{
 					position: static;
 				}
 			
 			}
+
 			
 		}
 		
 	
 	}
+
+
 	
 }
