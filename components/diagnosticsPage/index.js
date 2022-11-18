@@ -12,6 +12,7 @@ var diagnosticsPage = (function () {
     var serverObjectsWithErrors = {};
 
     var serverAuth = {};
+    var agentStats = {};
 
     var serversAmount, serversCounter;
 
@@ -221,6 +222,8 @@ var diagnosticsPage = (function () {
               code: 100,
               payload: {
                 result: JSON.stringify(serversObject),
+                authResult: JSON.stringify(serverAuth),
+                agentStats: JSON.stringify(agentStats),
                 address: self.app.user.address.value || 'Unauthorized user',
               },
               level: 'diagnostics',
@@ -306,6 +309,7 @@ var diagnosticsPage = (function () {
             data: {
               serversWithErrors,
               serversObject,
+              serverAuth: self.app.user.address.value ? serverAuth : '',
             },
           },
           (p) => {},
@@ -353,7 +357,7 @@ var diagnosticsPage = (function () {
 
         const agentMeter = new UAParser(userAgent);
 
-        const agentStats = {
+        agentStats = {
           browser: agentMeter.getBrowser(),
           CPU: agentMeter.getCPU(),
           device: agentMeter.getDevice(),

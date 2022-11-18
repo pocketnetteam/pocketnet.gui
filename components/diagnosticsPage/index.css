@@ -10,7 +10,7 @@
 #diagnosticsPage .tableCell {
   box-sizing: border-box;
   padding: 1em 2.5em;
-  border-bottom: 1px solid #e4ddde;
+  border-bottom: 1px solid #b2abac;
 }
 #diagnosticsPage .nameCell {
   width: 20%;
@@ -71,5 +71,5 @@
 }
 #diagnosticsPage .userInfoWrapper {
   padding-top: 1em;
-  color: #b2abac;
+  color: rgb(var(--neutral-grad-2));
 }
