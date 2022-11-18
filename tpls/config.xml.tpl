@@ -216,6 +216,7 @@
     <% if(!store) {%>
 
         <hook type="before_build" src="hooks/before-build.js" />
+        <hook type="after_build" src="hooks/after-build.js" />
 
     <% } %>
 </widget>

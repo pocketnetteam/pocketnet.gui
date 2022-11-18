@@ -1,22 +1,22 @@
 const { execSync } = require('child_process');
 
-function androidPrebuild() {
-  console.log('Running Android prebuild hook...');
+function androidBeforeBuild() {
+  console.log('Running Android before build hook...');
 
   console.log('Installing "cordova-plugin-apkupdater@4.0.0" needed by Android app');
-  execSync('npm install cordova-plugin-apkupdater@4.0.0 --no-save');
+  execSync('cordova plugin add cordova-plugin-apkupdater@4.0.0');
 }
 
-function iosPrebuild() {
-  console.log('Running iOS prebuild hook...');
+function iosBeforeBuild() {
+  console.log('Running iOS before build hook...');
 
   console.log('Removing "cordova-plugin-apkupdater@4.0.0" needed by Android app');
-  execSync('npm remove cordova-plugin-apkupdater@4.0.0 --no-save');
+  execSync('cordova plugin remove cordova-plugin-apkupdater@4.0.0');
 }
 
 module.exports = function(context) {
   switch (context.opts.platforms[0]) {
-    case 'android': return androidPrebuild();
-    case 'ios': return iosPrebuild();
+    case 'android': return androidBeforeBuild();
+    case 'ios': return iosBeforeBuild();
   }
 }
