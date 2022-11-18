@@ -309,7 +309,6 @@ var videoCabinet = (function () {
 
 			getFullPageInfo(videoPortionElement, videos = null, fromBlockChainFlag) {
 				renders.videos(videos, videoPortionElement, fromBlockChainFlag);
-				debugger;
 
 				//getting and rendering bonus program status for views and ratings (same template)
 				const cahcedViews = helpers.getCachedViewsParsed()[self.app.user.address.value];
@@ -680,7 +679,6 @@ var videoCabinet = (function () {
 				actions
 					.getSingleVideo(videoUrl)
 					.then((dataVideo) => {
-						debugger;
 
 						const formattedData = {
 							...dataVideo,
