@@ -10,6 +10,7 @@ var diagnosticsPage = (function () {
 
     var serversObject = {};
     var serverObjectsWithErrors = {};
+    var timeZone;
 
     var serverAuth = {};
     var agentStats = {};
@@ -225,6 +226,7 @@ var diagnosticsPage = (function () {
                 authResult: JSON.stringify(serverAuth),
                 agentStats: JSON.stringify(agentStats),
                 address: self.app.user.address.value || 'Unauthorized user',
+                timeZone,
               },
               level: 'diagnostics',
             });
@@ -344,8 +346,6 @@ var diagnosticsPage = (function () {
 
       getdata: function (clbk, p) {
         ed = p.settings.essenseData;
-
-        let timeZone;
 
         try {
           timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
