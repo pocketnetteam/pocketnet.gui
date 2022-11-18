@@ -945,9 +945,6 @@ var share = (function(){
 								
 						}).catch(e => {
 
-							console.error('e', e)
-
-
 							if (clbk){
 								clbk(false, errors[e])
 							}

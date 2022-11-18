@@ -77,7 +77,7 @@ var ActionOptions = {
     }
 }
 
-Action = function(account, object, priority){
+var Action = function(account, object, priority){
 
     var options = ActionOptions.objects[object.type] || {}
         
@@ -635,7 +635,7 @@ Action = function(account, object, priority){
     return self
 }
 
-Account = function(address, parent){
+var Account = function(address, parent){
     var self = this
 
     self.address = address
@@ -1311,7 +1311,7 @@ Account = function(address, parent){
     return self
 }
 
-Actions = function(app, api){
+var Actions = function(app, api){
     var self = this
      
     var key = 'actions_v0'
@@ -1587,6 +1587,5 @@ Actions = function(app, api){
     return self
 }
 
-if (typeof module != "undefined") {
-    module.exports = Actions;
-}
+if(typeof module != "undefined"){ module.exports = {Actions, Account, Action}; } 
+else { window.Actions = Actions; window.Account = Account; window.Action = Action;}

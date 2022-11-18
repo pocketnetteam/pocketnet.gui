@@ -11972,6 +11972,7 @@ Platform = function (app, listofnodes) {
                     })
                 }
             },
+            
             get: function (addresses, clbk, light) {
                 if (!_.isArray(addresses)) addresses = [addresses]
 
