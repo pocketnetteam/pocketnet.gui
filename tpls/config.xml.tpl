@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget android-versionCode="__PACKAGE-CORDOVAVERSIONCODE__" android-packageName="pocketnet.app" ios-CFBundleIdentifier="app.pocketnet" version="__PACKAGE-CORDOVAVERSION__" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget android-versionCode="__PACKAGE-CORDOVAVERSIONCODE__" android-packageName="pocketnet.app" ios-CFBundleIdentifier="app.pocketnet" version="__PACKAGE-CORDOVAVERSION__" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:tools="http://schemas.android.com/tools">
     <name>__VAR__.project</name>
     <description>
         __VAR__.project Application
@@ -165,6 +165,10 @@
 
         <preference name="AndroidXEnabled" value="true" />
 
+        <edit-config file="AndroidManifest.xml" target="/manifest" mode="merge">
+            <manifest xmlns:tools="http://schemas.android.com/tools" />
+        </edit-config>
+
         <edit-config file="AndroidManifest.xml" mode="merge" target="/manifest/application">
             <application android:usesCleartextTraffic="true" android:requestLegacyExternalStorage="true"/>
         </edit-config>
@@ -176,6 +180,9 @@
             <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
             <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
             <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+            <% if(store) {%>
+                <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" tools:node="remove" />
+            <% } %>
         </config-file>
 
         <edit-config file="AndroidManifest.xml" target="/manifest/application/activity[@android:name='MainActivity']" mode="merge">
@@ -206,6 +213,10 @@
         </host>
 
     </universal-links>
+    <% if(!store) {%>
 
-    <hook type="before_build" src="hooks/before-build.js" />
+        <hook type="before_build" src="hooks/before-build.js" />
+        <hook type="after_build" src="hooks/after-build.js" />
+
+    <% } %>
 </widget>
