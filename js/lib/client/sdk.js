@@ -4,6 +4,44 @@ var pSDK = function({app, api, actions}){
     var storage = {}
     var objects = {}
     var temp = {}
+    var dbstorages = {}
+    var dbversion = 1;
+
+    var dbmeta = {
+
+        userInfoFull : {
+            time : 600
+        },
+
+        userInfoFullFB : {
+            time : 0
+        },
+
+        userInfoLight : {
+            time : 3000
+        },
+
+        userState : {
+            time : 600
+        },
+
+        userStateFB : {
+            time : 0
+        }
+    }
+
+    var getDBStorage = function ({name, time}) {
+
+		if (!dbstorages[name]) {
+			return dbstorage(name, dbversion, time).then(storage => {
+				dbstorages[name] = storage
+
+				return Promise.resolve(storage)
+			})
+		}
+
+		return Promise.resolve(dbstorages[name])
+	}
 
     var prepareStorage = function(key){
         if(!storage[key]) storage[key] = {}
@@ -15,9 +53,49 @@ var pSDK = function({app, api, actions}){
         return loadList(key, [index], executor, p)
     }
 
+    var settodb = function(dbname, result){
+        if(!dbname) return Promise.resolve()
+
+        return getDBStorage({name : dbname, ...dbmeta[dbname]}).then((db) => {
+            return Promise.all(_.map(result, ({key, data}) => {
+                return db.set(key, data).catch(e => {})
+            }))
+
+        })
+    }
+
+    var getfromdb = function(dbname, ids){
+
+        if(!_.isArray(ids)) ids = [ids]
+
+        if(!dbname) return Promise.resolve([])
+
+        return getDBStorage({name : dbname, ...dbmeta[dbname]}).then((db) => {
+            var result = []
+
+            return Promise.all(_.map(ids, id => {
+
+                return db.get(id).then(data => {
+
+                    result.push({
+                        key : id,
+                        data : data
+                    })
+    
+                }).catch(e => {})
+
+            })).then(() => {
+                return result
+            })
+            
+        })
+
+    }
+
     var loadList = function(key, keys, executor, p = {
         update : false, 
-        fallbackIndexedDB : false, 
+        fallbackIndexedDB : null, 
+        indexedDb : null,
         alternativeGetStorage : null,
         transform : null
     }){
@@ -68,14 +146,33 @@ var pSDK = function({app, api, actions}){
             load.push(k)
         })
 
-        var promise = !load.length ? Promise.resolve([]) : executor(load).catch(e => {
+        var promise = !load.length ? Promise.resolve([]) : new Promise((resolve, reject) => {
+
+            getfromdb(p.indexedDb, load).then(dbr => {
+
+                var rm = {}
+
+                _.each(dbr, ({key, data}) => {
+                    loaded[key] = data
+                    rm[key] = true
+                })
+
+                load = _.filter(load, (key) => {return !rm[key]})
+
+                executor(load).then((result) => {
+
+                    settodb(p.indexedDb, result)
+
+                    return resolve(result)
+
+                }).catch(reject)
+            })
+
+
+        }).catch(e => {
 
             if(p.fallbackIndexedDB){
-
-                if (p.alternativeGetStorage){
-
-                }
-
+                return getfromdb(p.fallbackIndexedDB, load)
             }
 
             return Promise.reject(e)
@@ -136,11 +233,7 @@ var pSDK = function({app, api, actions}){
 
     self.userInfo = {
         keys : ['userInfoFull', 'userInfoLight'],
-        indexedDb : {
-            userInfoFull : {
-                time : 
-            }
-        },
+        
         load : function(addresses, light, update){
             return loadList(light ? 'userInfoLight' : 'userInfoFull', addresses, (addresses) => {
 
@@ -160,8 +253,9 @@ var pSDK = function({app, api, actions}){
                 })
 
             }, {
-                
                 update, 
+                indexedDb : light ? 'userInfoLight' : 'userInfoFull',
+                fallbackIndexedDB : !light ? 'userInfoFullFB' : null,
                 alternativeGetStorage : light ? 'userInfoFull' : null,
                 transform : this.transform
             })
@@ -244,14 +338,12 @@ var pSDK = function({app, api, actions}){
 
     self.userState = {
         keys : ['userState'],
+        
         load : function(addresses, update){
 
             return loadList('userState', addresses, (addresses) => {
 
                 return api.rpc('getuserstate', [(addresses).join(',')]).then((d) => {
-
-                    console.log("DA", d)
-                    
                     if (d && !_.isArray(d)) d = [d] /// check responce
 
                     return _.map(d || [], (info) => {
@@ -276,7 +368,11 @@ var pSDK = function({app, api, actions}){
                     return Promise.reject(e)
                 })
 
-            }, { update })
+            }, { 
+                update,
+                indexedDb : 'userState',
+                fallbackIndexedDB : !light ? 'userStateFB' : null,
+            })
 
         },
 

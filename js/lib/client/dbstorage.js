@@ -331,7 +331,6 @@ const pdbstorage = function(storageName, version, time) {
 
                     const req = items.get(itemId);
 
-
                     req.onsuccess = (data) => {
                         debugLog('PCryptoStorage GET log', data, req.result);
 
