@@ -165,7 +165,7 @@ var deleted = typeof app.platform.sdk.user.myaccauntdeleted == 'undefined' && ap
 							</div>
 						</div>		
 
-						<% if(state) { %>
+						<% if(state ) { %>
 
 							<div class="items workstation">
 								<div elementsid="eventschangeaccount" class="item  right changeaccount" events="changeaccount">
@@ -179,10 +179,12 @@ var deleted = typeof app.platform.sdk.user.myaccauntdeleted == 'undefined' && ap
 								<div elementsid="menu_user" class="item  right user unselec">
 
 									<% 
-									
-										var src = deep(app, 'platform.sdk.user.storage.me.image')  
 
-										var name = app.platform.api.clearname(deep(app, 'platform.sdk.user.storage.me.name') || (user.address.value && user.address.value.toString('hex')) )
+										var me = psdk.userInfo.getmy() || {}
+									
+										var src = me.image  
+
+										var name = app.platform.api.clearname(me.name || user.address.value)
 										var letter = name ? name[0] : ''
 
 
@@ -198,7 +200,7 @@ var deleted = typeof app.platform.sdk.user.myaccauntdeleted == 'undefined' && ap
 
 
 										
-										<a elementsid="<%-app.platform.api.authorlink(user.address.value.toString('hex'))%>" href="<%-app.platform.api.authorlink(user.address.value.toString('hex'))%>">	
+										<a elementsid="<%-app.platform.api.authorlink(user.address.value)%>" href="<%-app.platform.api.authorlink(user.address.value)%>">	
 											<div class="usericon" contain="none" <% if(src) {%> style="background-image: url(<%-src%>); background-size: cover; background-position: center center; background-repeat: no-repeat;" <% } %>>
 
 												<% if(!src && letter) {%>

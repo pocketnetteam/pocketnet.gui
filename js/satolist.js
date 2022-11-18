@@ -1529,7 +1529,9 @@ Platform = function (app, listofnodes) {
 
                                     globalpreloader(false)
 
-                                    var exist = self.sdk.users.storage[a]
+                                    var exist = self.psdk.userInfo.get(a) 
+                                    
+                                    //self.sdk.users.storage[a]
 
                                     if(!exist){
                                         new dialog({
@@ -3315,7 +3317,9 @@ Platform = function (app, listofnodes) {
                 //return bannerCommentComponent;t
             }
 
-            var me = deep(app, 'platform.sdk.users.storage.' + self.app.user.address.value.toString('hex'));
+            var me = self.psdk.userInfo.getmy() 
+            
+            ///deep(app, 'platform.sdk.users.storage.' + self.app.user.address.value.toString('hex'));
 
             if (me && me.relation(address, 'subscribes')){ return; } 
 
@@ -4165,7 +4169,9 @@ Platform = function (app, listofnodes) {
         },
 
         name: function (address) {
-            var n = deep(self.sdk.usersl.storage, address + '.name') || deep(self.sdk.users.storage, address + '.name');
+            var n = self.psdk.userInfo.get(address)
+            
+            //deep(self.sdk.usersl.storage, address + '.name') || deep(self.sdk.users.storage, address + '.name');
 
             if (n) {
                 n = this.clearname(n)
@@ -4612,7 +4618,8 @@ Platform = function (app, listofnodes) {
 
                         self.sdk.users.get(v, function () {
 
-                            var info = self.sdk.users.storage[v] || null;
+                            var info = self.psdk.userInfo.get(v) 
+                            //self.sdk.users.storage[v] || null;
 
                             render(info)
 
@@ -4634,7 +4641,9 @@ Platform = function (app, listofnodes) {
 
         relation : function(address, type){
 
-            var me = deep(app, 'platform.sdk.users.storage.' + deep(app, 'user.address.value'))
+            var me = self.psdk.userInfo.getmy() 
+            
+            //deep(app, 'platform.sdk.users.storage.' + deep(app, 'user.address.value'))
 
             if(!me) return
 
@@ -4659,7 +4668,9 @@ Platform = function (app, listofnodes) {
 
 
                         if (tx) {
-                            var me = deep(app, 'platform.sdk.users.storage.' + self.app.user.address.value.toString('hex'))
+                            var me = self.psdk.userInfo.getmy() 
+                            
+                            //deep(app, 'platform.sdk.users.storage.' + self.app.user.address.value.toString('hex'))
 
                             if (me) me.addRelation(address, 'blocking')
 
@@ -4691,9 +4702,13 @@ Platform = function (app, listofnodes) {
                     function (tx, error) {
 
                         if (tx) {
-                            var me = deep(app, 'platform.sdk.users.storage.' + self.app.user.address.value.toString('hex'))
+                            var me = self.psdk.userInfo.getmy() 
+                            
+                            //deep(app, 'platform.sdk.users.storage.' + self.app.user.address.value.toString('hex'))
 
-                            var u = self.sdk.users.storage[address];
+                            var u = self.psdk.userInfo.get(address) 
+                            
+                            //self.sdk.users.storage[address];
 
                             if (me) me.removeRelation(address, 'blocking')
 
@@ -4858,8 +4873,11 @@ Platform = function (app, listofnodes) {
 
             managesubscribelist : function(address, add, notificationturnon){
 
-                var me = deep(app, 'platform.sdk.users.storage.' + app.user.address.value.toString('hex'))
-                var u = self.sdk.users.storage[address];
+                var me = self.psdk.userInfo.getmy()
+                
+                
+                //deep(app, 'platform.sdk.users.storage.' + app.user.address.value.toString('hex'))
+                var u = self.psdk.userInfo.get(address);
 
                 if (me) {
 
@@ -9949,7 +9967,9 @@ Platform = function (app, listofnodes) {
                                 return reject('processing')
                             }
 
-                            var me = self.sdk.user.storage.me
+                            var me = self.psdk.userInfo.getmy()
+                            
+                            //self.sdk.user.storage.me
 
                             if(!me || _.isEmpty(me)){
                                 return reject('me')
@@ -9980,15 +10000,22 @@ Platform = function (app, listofnodes) {
             storage: {
             },
 
-            extendMe: function (me) {
-                var subscribe = deep(self, 'sdk.node.transactions.temp.subscribe')
-            },
-
+           
             meUpdate: function (clbk) {
                 self.sdk.user.get(clbk, true)
             },
 
             get: function (clbk, update) {
+
+                self.sdk.users.getone(app.user.address.value, (user, error) => {
+
+                    console.log('self.psdk.userInfo.getmy()', self.psdk.userInfo.getmy())
+
+                    if(clbk) clbk(self.psdk.userInfo.getmy())
+                }, null, update)
+
+                return
+
                 var storage = self.sdk.user.storage
 
                 self.sdk.user._get(function (info, temp) {
@@ -10036,7 +10063,7 @@ Platform = function (app, listofnodes) {
 
             },
 
-            _get: function (clbk, update) {
+            /*_get: function (clbk, update) {
 
                 var storage = self.sdk.user.storage
 
@@ -10122,7 +10149,7 @@ Platform = function (app, listofnodes) {
                     if (clbk)
                         clbk(storage.me)
                 }
-            },
+            },*/
 
             waitActions: function (clbk) {
 
@@ -10162,11 +10189,6 @@ Platform = function (app, listofnodes) {
                 }catch(e){
                     
                 }
-
-                
-                
-
-
 
                 if (adrref) {
 
@@ -10281,14 +10303,9 @@ Platform = function (app, listofnodes) {
             },
 
             me: function () {
-                var me = null;
-                var address = self.app.platform.sdk.address.pnet()
 
-                if (address) {
-                    me = self.app.platform.sdk.users.storage[address.address];
+                return self.psdk.userInfo.getmy()
 
-                    return me
-                }
             },
 
             itisme : function(_address){
@@ -10437,7 +10454,9 @@ Platform = function (app, listofnodes) {
 
                 if(!address) address = (self.app.platform.sdk.address.pnet() || {}).address
 
-                var info = deep(self, 'sdk.users.storage.' + address);
+                var info = self.psdk.userInfo.get(address); 
+                
+                //deep(self, 'sdk.users.storage.' + address);
 
                 if (info.reputation > 100 && info.postcnt < 10) return true
 
@@ -10449,7 +10468,9 @@ Platform = function (app, listofnodes) {
 
                 if(!address) address = (self.app.platform.sdk.address.pnet() || {}).address
 
-                var info = deep(self, 'sdk.users.storage.' + address);
+                var info = self.psdk.userInfo.get(address); 
+                
+                //deep(self, 'sdk.users.storage.' + address);
 
                 if (value <= 3 && info.reputation < 100) return true
 
@@ -10640,12 +10661,11 @@ Platform = function (app, listofnodes) {
                                     //self.app.platform.errorHandler(error, true)	
                                 }
 
-                                delete self.sdk.users.storage[self.sdk.address.pnet().address]
-                                delete self.sdk.usersl.storage[self.sdk.address.pnet().address]
-                                delete self.sdk.userscl.storage[self.sdk.address.pnet().address]
-        
-                                self.app.settings.delete(a, 'last_user')
-                                self.app.settings.delete(a, 'last_ustate_2')
+                                self.psdk.userInfo.clearAll(self.sdk.address.pnet().address)
+                                self.psdk.userState.clearAll(self.sdk.address.pnet().address)
+
+                                //self.app.settings.delete(a, 'last_user')
+                                //self.app.settings.delete(a, 'last_ustate_2')
         
                                 self.deletedtest[self.sdk.address.pnet().address] = true
         
@@ -11732,6 +11752,14 @@ Platform = function (app, listofnodes) {
             },
 
             getone: function (address, clbk, light, reload) {
+
+                self.sdk.users.get([address], function(data = {}, error){
+                    if(clbk) clbk(data[address] || null, error)
+                }, light, reload)
+
+
+                return
+
                 var s = self.sdk.users.storage;
                 var l = self.sdk.users.loading;
 
@@ -11801,7 +11829,19 @@ Platform = function (app, listofnodes) {
                 }
             },
             
-            get: function (addresses, clbk, light) {
+            get: function (addresses, clbk, light, reload) {
+
+
+                return self.psdk.userInfo.load(addresses, light, reload).then(r => {
+
+                    if(clbk) clbk(r)
+
+                }).catch(e => {
+                    console.error(e)
+
+                    if(clbk) clbk(null, e)
+                })
+
                 if (!_.isArray(addresses)) addresses = [addresses]
 
                 var ia = addresses
@@ -12009,16 +12049,11 @@ Platform = function (app, listofnodes) {
 
                     name = (name || '').toLowerCase()
 
-                    var lf = _.find(self.sdk.usersl.storage, function (s) {
-                        if (s && s.name && s.name.toLowerCase() == name.toLowerCase()) return true
+                    var lf = self.psdk.userInfo.findlocal((s) => {
+                        return s && s.name && s.name.toLowerCase() == name.toLowerCase()
                     })
 
-                    if(!lf){
-                        lf = _.find(self.sdk.users.storage, function (s) {
-                            if (s && s.name && s.name.toLowerCase() == name.toLowerCase()) return true
-                        })
-                    }
-
+              
                     if(self.sdk.users.nameaddressstorage[name]){
                         if (clbk)
                             clbk(self.sdk.users.nameaddressstorage[name])
@@ -12218,9 +12253,9 @@ Platform = function (app, listofnodes) {
                     point += 20
                 }
 
-                if(self.sdk.usersl.storage[address]) point += 40
-                if(self.sdk.users.storage[address]) point += 40
+                if(self.psdk.userInfo.get(address)) point += 40
 
+             
 
                 var activities = self.app.platform.sdk.activity.has('users', address)
 
@@ -13714,7 +13749,10 @@ Platform = function (app, listofnodes) {
             prepareshares : function(){
                 var shares = self.sdk.recommendations.shares
 
-                var me = deep(self.app, 'platform.sdk.users.storage.' + (app.user.address.value || ''))
+                var me = self.psdk.userInfo.getmy()
+                
+                
+                //deep(self.app, 'platform.sdk.users.storage.' + (app.user.address.value || ''))
 
                 shares = _.filter(shares, (recommendation) => {
                     if (me && me.relation(recommendation.address, 'blocking') ){
@@ -14184,8 +14222,8 @@ Platform = function (app, listofnodes) {
 
                 self.sdk.users.get([address], function () {
 
-                    var user = self.sdk.users.storage[address] || self.sdk.usersl.storage[address]
-
+                    var user = self.psdk.userInfo.get(address)
+                    
                     if (user){
 
                         var info = {
@@ -17654,18 +17692,11 @@ Platform = function (app, listofnodes) {
 
                     if (v == 'sub'){
 
-                        var a = self.sdk.address.pnet()
+                        var me = self.psdk.userInfo.getmy()
 
-                        if (a){
-
-                            var me = deep(app, 'platform.sdk.users.storage.' + a.address)
-
-                            if (me && me.relation(share.address, 'subscribes')) {
-                                return false
-                            }
-
+                        if (me && me.relation(share.address, 'subscribes')) {
+                            return false
                         }
-
 
                     }
 
@@ -17678,7 +17709,9 @@ Platform = function (app, listofnodes) {
                     var address = deep(app, 'user.address.value')
 
                     if (address) {
-                        var author = deep(self, 'sdk.users.storage.' + address)
+
+
+                        var author = self.psdk.userInfo.get(address)
 
                         var u = _.map(deep(author, 'subscribes') || [], function (a) {
                             return a.adddress
@@ -25389,7 +25422,9 @@ Platform = function (app, listofnodes) {
 
             subscribe: function (author) {
 
-                var me = deep(app, 'platform.sdk.users.storage.' + platform.sdk.address.pnet().address) || deep(app, 'platform.sdk.usersl.storage.' + platform.sdk.address.pnet().address)
+                var me = self.psdk.userInfo.getьн() 
+                
+                /*deep(app, 'platform.sdk.users.storage.' + platform.sdk.address.pnet().address) || deep(app, 'platform.sdk.usersl.storage.' + platform.sdk.address.pnet().address)*/
 
                 var d = ''
 
@@ -25504,7 +25539,9 @@ Platform = function (app, listofnodes) {
                     platform.sdk.users.get([data.addrFrom], function () {
 
 
-                        data.user = platform.sdk.users.storage[data.addrFrom] || platform.sdk.usersl.storage[data.addrFrom] || {}
+                        data.user = self.psdk.userInfo.get(data.addrFrom)
+                        
+                        //platform.sdk.users.storage[data.addrFrom] || platform.sdk.usersl.storage[data.addrFrom] || {}
 
                         data.user.address = data.addrFrom;
 
@@ -25602,7 +25639,9 @@ Platform = function (app, listofnodes) {
 
                     platform.sdk.users.get([data.addrFrom], function () {
 
-                        data.user = platform.sdk.users.storage[data.addrFrom] ||platform.sdk.usersl.storage[data.addrFrom] || {}
+                        data.user = self.psdk.userInfo.get(data.addrFrom)
+                        
+                        //platform.sdk.users.storage[data.addrFrom] ||platform.sdk.usersl.storage[data.addrFrom] || {}
 
                         data.user.address = data.addrFrom
 
@@ -25720,7 +25759,9 @@ Platform = function (app, listofnodes) {
 
                         platform.sdk.users.get([data.addrFrom], function () {
 
-                            data.user = platform.sdk.users.storage[data.addrFrom] || platform.sdk.usersl.storage[data.addrFrom] || {}
+                            data.user = self.psdk.userInfo.get(data.addrFrom)
+                            
+                            //platform.sdk.users.storage[data.addrFrom] || platform.sdk.usersl.storage[data.addrFrom] || {}
 
                             data.user.address = data.addrFrom
 
@@ -25841,7 +25882,9 @@ Platform = function (app, listofnodes) {
 
                         platform.sdk.users.get([data.addrFrom], function () {
 
-                            data.user = platform.sdk.users.storage[data.addrFrom] || platform.sdk.usersl.storage[data.addrFrom] || {}
+                            data.user = self.psdk.userInfo.get(data.addrFrom)
+                            
+                            //platform.sdk.users.storage[data.addrFrom] || platform.sdk.usersl.storage[data.addrFrom] || {}
 
                             data.user.address = data.addrFrom
 
@@ -26167,7 +26210,9 @@ Platform = function (app, listofnodes) {
 
                                 html += self.tempates.user(
 
-                                    platform.sdk.users.storage[platform.sdk.address.pnet().address] || platform.sdk.usersl.storage[platform.sdk.address.pnet().address],
+                                    self.psdk.userInfo.getmy()
+
+                                    ,
 
                                     self.tempates.transaction(data,
 
@@ -26566,7 +26611,9 @@ Platform = function (app, listofnodes) {
 
                     platform.sdk.users.get([data.addrFrom], function () {
 
-                        data.user = platform.sdk.users.storage[data.addrFrom] || platform.sdk.usersl.storage[data.addrFrom] || {}
+                        data.user = self.psdk.userInfo.get(data.addrFrom)
+                        
+                        //platform.sdk.users.storage[data.addrFrom] || platform.sdk.usersl.storage[data.addrFrom] || {}
                         data.user.address = data.addrFrom
 
                         if (!data.commentid && data.txid)
@@ -26733,12 +26780,16 @@ Platform = function (app, listofnodes) {
 
                         platform.sdk.users.get([data.addrFrom], function () {
 
-                            data.user = platform.sdk.users.storage[data.addrFrom] || platform.sdk.usersl.storage[data.addrFrom] || {}
+                            data.user = self.psdk.userInfo.get(data.addrFrom)
+                            
+                            //platform.sdk.users.storage[data.addrFrom] || platform.sdk.usersl.storage[data.addrFrom] || {}
 
                             data.user.address = data.addrFrom
 
                             if (data.mesType == 'userInfo' && !wa) {
-                                var me = platform.sdk.users.storage[platform.sdk.address.pnet().address];
+                                var me = self.psdk.userInfo.getmy()
+                                
+                                //platform.sdk.users.storage[platform.sdk.address.pnet().address];
 
                                 if (me) {
 
@@ -26785,9 +26836,13 @@ Platform = function (app, listofnodes) {
                             else {
 
                                 if ((data.mesType == 'subscribe' || data.mesType == 'unsubscribe') && !wa) {
-                                    var u = platform.sdk.users.storage[data.addrFrom];
+                                    var u = self.psdk.userInfo.get(data.addrFrom)
+                                    
+                                    ///platform.sdk.users.storage[data.addrFrom];
 
-                                    var me = platform.sdk.users.storage[platform.sdk.address.pnet().address];
+                                    var me = self.psdk.userInfo.getmy() 
+                                    
+                                    //platform.sdk.users.storage[platform.sdk.address.pnet().address];
 
 
                                     if (me) {
@@ -27050,7 +27105,10 @@ Platform = function (app, listofnodes) {
 
                         platform.sdk.users.get([data.address], function () {
 
-                            data.user = platform.sdk.users.storage[data.address] || platform.sdk.usersl.storage[data.address]
+                            data.user = self.psdk.userInfo.get(data.address)
+                            
+                            
+                            //platform.sdk.users.storage[data.address] || platform.sdk.usersl.storage[data.address]
 
                             if (data.user) {
                                 data.user.address = data.address

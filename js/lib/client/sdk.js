@@ -64,6 +64,16 @@ var pSDK = function({app, api, actions}){
         })
     }
 
+    var clearfromdb = function(dbname, ids){
+
+        return getDBStorage({name : dbname, ...dbmeta[dbname]}).then(() => {
+            return db.clearItems(ids)
+        }).catch(e => {
+
+        })
+        
+    }
+
     var getfromdb = function(dbname, ids){
 
         if(!_.isArray(ids)) ids = [ids]
@@ -145,7 +155,6 @@ var pSDK = function({app, api, actions}){
             load.push(k)
         })
 
-        console.log("load", load, loaded, storage[key])
 
         var promise = !load.length ? Promise.resolve([]) : new Promise((resolve, reject) => {
 
@@ -178,8 +187,6 @@ var pSDK = function({app, api, actions}){
 
 
         }).catch(e => {
-
-            console.error('e', e)
 
             if(p.fallbackIndexedDB){
                 return getfromdb(p.fallbackIndexedDB, load)
@@ -223,12 +230,8 @@ var pSDK = function({app, api, actions}){
 
         return Promise.all(_.map([promise].concat(_.toArray(loading)))).catch(e => {
 
-            console.error(e)
-
             return null
         }).then((rpack) => {
-
-            console.log('rpack', rpack)
 
             _.each(rpack, (result) => {
                 if(result){
@@ -253,7 +256,8 @@ var pSDK = function({app, api, actions}){
 
                 if (light) { parameters.push('1') }
 
-                return api.rpc('getuserprofile', parameters).then((d) => {
+                return api.rpc('getuserprofile', parameters).then((data) => {
+                    
 
                     return _.map(addresses, (address) => {
                         return {
@@ -339,12 +343,39 @@ var pSDK = function({app, api, actions}){
             return u
         },
 
+        getmy : function(){
+            return app.user.address.value ? this.get(app.user.address.value) : null
+        },
+
         get : function(address){
             return objects['userInfoFull'][address] || objects['userInfoLight'][address]
         },
 
         getclear : function(address){
             return storage['userInfoFull'][address] || storage['userInfoLight'][address]
+        },
+
+        findlocal : function(finder){
+            return _.find(_.toArray(objects['userInfoFull'][address]).concat(objects['userInfoLight'][address]), finder)
+        },
+
+        clearStorage : function(address){
+            delete storage['userInfoFull'][address]
+            delete storage['userInfoLight'][address]
+
+            delete objects['userInfoFull'][address]
+            delete objects['userInfoLight'][address]
+        },
+
+        cleardb : function(address){
+
+            clearfromdb('userInfoFullFB', [address])
+            clearfromdb('userInfoFull', [address])
+        },
+
+        clearAll : function(address){
+            this.clearStorage(address)
+            this.cleardb(address)
         }
     }
 
@@ -394,6 +425,20 @@ var pSDK = function({app, api, actions}){
 
         getmy : function(){
             return app.user.address.value ? this.get(app.user.address.value) : null
+        },
+
+        clearStorage : function(address){
+            delete storage['userState'][address]
+        },
+
+        cleardb : function(address){
+            clearfromdb('userStateFB', [address])
+            clearfromdb('userState', [address])
+        },
+
+        clearAll : function(address){
+            this.clearStorage(address)
+            this.cleardb(address)
         }
     }
     

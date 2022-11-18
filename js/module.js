@@ -289,6 +289,8 @@ nModule = function(){
 			p.data.module = self;	
 			p.data.user	= self.user;
 			p.data.essenseData = p.essenseData || {};
+			p.data.psdk = self.app.platform.psdk
+
 
 			try{
 				p.rendered = template(p.data);
