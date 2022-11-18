@@ -29389,7 +29389,7 @@ var addStylesShadow = __webpack_require__("35d6");
 // EXTERNAL MODULE: ./node_modules/vue-loader/lib/runtime/componentNormalizer.js
 var componentNormalizer = __webpack_require__("2877");
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"2ced6c0a-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App.vue?vue&type=template&id=095404d6&shadow
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"2ced6c0a-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App.vue?vue&type=template&id=386c1770&shadow
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"app",attrs:{"id":"matrix-root","theme":_vm.theme}},[_c('div',{staticClass:"rootcontent",class:{
       pip: _vm.pip,
       bin: _vm.pocketnet,
@@ -29403,7 +29403,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/App.vue?vue&type=template&id=095404d6&shadow
+// CONCATENATED MODULE: ./src/App.vue?vue&type=template&id=386c1770&shadow
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"2ced6c0a-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/main/index.vue?vue&type=template&id=6aac0261&scoped=true&
 var mainvue_type_template_id_6aac0261_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"main-wrapper",class:{minimized: _vm.minimized, active: _vm.active}},[(_vm.showChats)?_c('div',{staticClass:"chat-container"},[(_vm.page === 'contacts')?_c('ContactsContainer'):_vm._e(),(_vm.page === 'chats')?_c('ChatsContainer'):_vm._e(),(_vm.page === 'settings')?_c('SettingsContainer'):_vm._e(),_c('FooterChat')],1):_vm._e(),(_vm.showPage)?_c('div',{staticClass:"chat-container-pages",class:{ minimized: _vm.minimized }},[(!_vm.mobile)?_c('vue-page-transition',{attrs:{"name":"fade-in-right"}},[_c('router-view')],1):_c('router-view'),(_vm.gallery)?_c('gallery',{attrs:{"images":_vm.gallery.images,"index":_vm.gallery.index},on:{"close":_vm.closeGallery}}):_vm._e()],1):_vm._e(),(!_vm.showPage && !_vm.pocketnet)?_c('div',{staticClass:"chat-container-pages-empty"},[_c('i',{staticClass:"fas fa-comments"})]):_vm._e()])}
@@ -44726,9 +44726,9 @@ var scriptsadded = false;
   },
 
   created() {
-    this.pocketnet = true; // this.mobile = false
+    // this.pocketnet = true;
+    // this.mobile = false
     // this.recording = true
-
     this.$store.commit("setIsLocalStorageChatAuth", isMessenger());
 
     if (this.$store.state.isLocalStorageChatAuth) {
