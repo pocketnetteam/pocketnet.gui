@@ -33,7 +33,7 @@ var pSDK = function({app, api, actions}){
     var getDBStorage = function ({name, time}) {
 
 		if (!dbstorages[name]) {
-			return dbstorage(name, dbversion, time).then(storage => {
+			return pdbstorage(name, dbversion, time).then(storage => {
 				dbstorages[name] = storage
 
 				return Promise.resolve(storage)
@@ -128,7 +128,6 @@ var pSDK = function({app, api, actions}){
                 }
 
             }
-            
 
             if (temp[key][k]){
                 loading[k] = temp[key][k]
@@ -146,30 +145,41 @@ var pSDK = function({app, api, actions}){
             load.push(k)
         })
 
+        console.log("load", load, loaded, storage[key])
+
         var promise = !load.length ? Promise.resolve([]) : new Promise((resolve, reject) => {
 
             getfromdb(p.indexedDb, load).then(dbr => {
 
-                var rm = {}
 
-                _.each(dbr, ({key, data}) => {
-                    loaded[key] = data
-                    rm[key] = true
+                load = _.filter(load, (k) => {
+
+                    return !_.find(dbr, ({key}) => {
+                        return key == k
+                    })
+
                 })
 
-                load = _.filter(load, (key) => {return !rm[key]})
+                if(!load.length){
+                    resolve(dbr)
+
+                    return
+                }
 
                 executor(load).then((result) => {
 
                     settodb(p.indexedDb, result)
+                    settodb(p.fallbackIndexedDB, result)
 
-                    return resolve(result)
+                    return resolve(result.concat(dbr))
 
                 }).catch(reject)
             })
 
 
         }).catch(e => {
+
+            console.error('e', e)
 
             if(p.fallbackIndexedDB){
                 return getfromdb(p.fallbackIndexedDB, load)
@@ -217,6 +227,8 @@ var pSDK = function({app, api, actions}){
 
             return null
         }).then((rpack) => {
+
+            console.log('rpack', rpack)
 
             _.each(rpack, (result) => {
                 if(result){
@@ -328,11 +340,11 @@ var pSDK = function({app, api, actions}){
         },
 
         get : function(address){
-            return objects['userInfo'][address] || objects['userInfoLight'][address]
+            return objects['userInfoFull'][address] || objects['userInfoLight'][address]
         },
 
         getclear : function(address){
-            return storage['userInfo'][address] || storage['userInfoLight'][address]
+            return storage['userInfoFull'][address] || storage['userInfoLight'][address]
         }
     }
 
@@ -371,7 +383,7 @@ var pSDK = function({app, api, actions}){
             }, { 
                 update,
                 indexedDb : 'userState',
-                fallbackIndexedDB : !light ? 'userStateFB' : null,
+                fallbackIndexedDB : 'userStateFB',
             })
 
         },

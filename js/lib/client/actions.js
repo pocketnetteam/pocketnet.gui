@@ -1303,7 +1303,7 @@ var Account = function(address, parent){
     return self
 }
 
-var Actions = function(app, api){
+var Actions = function(app, api, storage = localStorage){
     var self = this
      
     var key = 'actions_v0'
@@ -1497,7 +1497,7 @@ var Actions = function(app, api){
 
     self.save = function(){
         try{
-            localStorage[key] = JSON.stringify(exports())
+            storage[key] = JSON.stringify(exports())
         }
         catch(e){
         }
@@ -1505,7 +1505,7 @@ var Actions = function(app, api){
 
     self.load = function(){
         try{
-            imports(JSON.parse(localStorage[key] || "{}"))
+            imports(JSON.parse(storage[key] || "{}"))
         }
         catch(e){
         }
