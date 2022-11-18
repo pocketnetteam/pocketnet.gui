@@ -13,7 +13,7 @@ if(share.address){
 
 	if(!my && user.address.value){
 
-		var me = app.platform.sdk.users.storage[user.address.value]
+		var me = psdk.userInfo.getmy()
 
 		if (me && me.relation(share.address, 'subscribes')){
 			subscribed = 'subscribed'

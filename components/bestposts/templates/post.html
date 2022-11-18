@@ -3,7 +3,7 @@
 var me = null;
 
 if(user.address.value)
-	me = deep(app, 'platform.sdk.users.storage.' + user.address.value.toString('hex'))
+	me = psdk.userInfo.getmy()
 
 	var _class='';
 	var address = u.address;

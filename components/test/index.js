@@ -32,8 +32,8 @@ var test = (function(){
 			if (self.app.ref){
 				self.sdk.users.get(self.app.ref, function(){
 
-					var name = deep(self, 'sdk.users.storage.' + self.app.ref + '.name');
-
+					var name = (self.psdk.userInfo.get(self.app.ref) || {}).name
+					
 					if (clbk)
 						clbk(name)
 				})
@@ -370,8 +370,7 @@ var test = (function(){
 
 												successCheck()
 
-												delete self.sdk.usersl.storage[self.app.platform.sdk.address.pnet().address];
-												delete self.sdk.users.storage[self.app.platform.sdk.address.pnet().address];
+												self.psdk.userInfo.clearAll(self.user.address.value)
 
 
 												////TODO
@@ -1224,9 +1223,9 @@ var test = (function(){
 
 							var address = ref;
 
-							ref = self.sdk.users.storage[address] || null;
+							ref = self.psdk.userInfo.get(address) 
 
-							if(ref) ref.address = address;
+							//if(ref) ref.address = address;
 							
 							data.ref = ref;
 

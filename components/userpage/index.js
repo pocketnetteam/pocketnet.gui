@@ -137,17 +137,13 @@ var userpage = (function(){
 
 				add : function(){
 
-					var address = deep(self, 'app.user.address.value')
+					var me = self.psdk.userInfo.getmy() || {}
 
-					if (address){
-						var s = deep(self, 'sdk.users.storage.'+address+'.subscribers.length')
-
-						if (self.app.mobileview && s){
-							return s
-						}
-					}	
-
+					var s = deep(me, 'subscribers.length')
 					
+					if (self.app.mobileview && s){
+						return s
+					}
 
 				}
 			})
@@ -165,14 +161,12 @@ var userpage = (function(){
 
 				add : function(){
 
-					var address = deep(self, 'app.user.address.value')
+					var me = self.psdk.userInfo.getmy() || {}
 
-					if (address){
-						var s = deep(self, 'sdk.users.storage.'+address+'.subscribes.length')
-
-						if (self.app.mobileview && s){
-							return s
-						}
+					var s = deep(me, 'subscribes.length')
+					
+					if (self.app.mobileview && s){
+						return s
 					}	
 
 				}
@@ -835,8 +829,8 @@ var userpage = (function(){
 
 				if (address){
 
-					var author = deep(self, 'sdk.users.storage.'+address)
-
+					var author = self.psdk.userInfo.get(address)
+					
 					var u = _.map(deep(author, 'subscribers') || [], function(a){
 						return a
 					})
@@ -863,8 +857,8 @@ var userpage = (function(){
 				var address = deep(self, 'app.user.address.value')
 
 				if (address){
-					var author = deep(self, 'sdk.users.storage.'+address)
-
+					var author = self.psdk.userInfo.get(address)
+					
 					var u = _.map(deep(author, 'subscribes') || [], function(a){
 						return a.adddress
 					})

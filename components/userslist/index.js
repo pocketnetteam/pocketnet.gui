@@ -286,7 +286,7 @@ var userslist = (function(){
 
 			if (type == 'commonuserrelation'){
 
-				var me = deep(app, 'platform.sdk.users.storage.' + self.app.user.address.value)
+				var me = self.psdk.userInfo.getmy() 
 
 				return _.sortBy(addresses, function(address){
 

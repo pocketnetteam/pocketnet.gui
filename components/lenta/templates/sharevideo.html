@@ -14,7 +14,8 @@ if(share.address){
 
 	if(!my && user.address.value){
 
-		var me = deep(app, 'platform.sdk.users.storage.' + user.address.value.toString('hex'))
+		var me = psdk.userInfo.getmy()
+		
 		if (me && me.relation(share.address, 'subscribes')){
 			subscribed = 'subscribed'
 		}

@@ -74,8 +74,8 @@ var donate = (function(){
 							var data = {
 								total, 
 								balance,
-								receiver : self.sdk.usersl.storage[ed.receiver],
-								sender : self.sdk.users.storage[self.sdk.address.pnet().address],
+								receiver : self.psdk.userInfo.get(ed.receiver),
+								sender : self.psdk.userInfo.getmy(),
 								input
 							};
 

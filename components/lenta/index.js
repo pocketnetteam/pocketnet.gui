@@ -240,7 +240,7 @@ var lenta = (function(){
 
 				var buttonsWrapper = addressEl.closest('.sharecnt').find('.bannerComment .buttonsWrapper');
 
-				var me = deep(self.app, 'platform.sdk.users.storage.' + self.user.address.value.toString('hex'))
+				var me = self.psdk.userInfo.getmy()
 
 				if (me){
 					var r = me.relation(address, 'subscribes') 
@@ -4373,7 +4373,7 @@ var lenta = (function(){
 
 							if(!essenseData.author && self.user.address && self.user.address.value){
 
-								var me = deep(self.app, 'platform.sdk.users.storage.' + self.user.address.value.toString('hex'))
+								var me = self.psdk.userInfo.getmy()
 
 								shares = _.filter(shares, function(share){
 

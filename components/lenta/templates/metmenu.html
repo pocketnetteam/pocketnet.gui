@@ -139,7 +139,7 @@ if(share){
 		
 		var my = (user.address.value && share.address == user.address.value.toString('hex'))
 		var subscribed = '';
-		var me = deep(app, 'platform.sdk.users.storage.' + user.address.value.toString('hex'))
+		var me = psdk.userInfo.getmy()
 
 		if (my){
 

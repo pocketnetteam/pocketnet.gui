@@ -5,7 +5,8 @@ var format = address ? 'subscribeUser ' : '';
 
 if(user.address.value){
 
-	me = deep(app, 'platform.sdk.users.storage.' + user.address.value.toString('hex'))
+	me = psdk.userInfo.getmy()
+    
 
     if (me && me.relation(address, 'subscribes')){ _class="following" } 
 

@@ -1335,7 +1335,7 @@ var comments = (function(){
 			if(my) p = p * 20
 
 
-			var me = deep(self.app, 'platform.sdk.users.storage.' + (self.user.address.value || ''))
+			var me = self.psdk.userInfo.getmy()
 
 			if (!my && me){
 

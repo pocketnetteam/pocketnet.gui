@@ -1401,7 +1401,9 @@ var share = (function(){
 
 				var icon = el.c.find('.usericon')
 
-				var src = deep(app, 'platform.sdk.users.storage.'+address+'.image') || '';
+				var info = self.psdk.userInfo.get(address)
+
+				var src = info.image || ''
 
 				if(src){
 					icon.html('');

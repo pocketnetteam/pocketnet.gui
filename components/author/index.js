@@ -25,7 +25,7 @@ var author = (function(){
 
 				if(!my && user.address.value){
 
-					var me = deep(self.app, 'platform.sdk.users.storage.' + user.address.value)
+					var me = self.psdk.userInfo.getmy()
 
 					if (me && me.relation(author.address, 'subscribes')){
 						subscribed = true
@@ -1298,8 +1298,8 @@ var author = (function(){
 			self.app.user.isState(function(state){
 
 				if(state){
-					var me = self.app.platform.sdk.users.storage[self.app.platform.sdk.address.pnet().address];
-
+					var me = self.psdk.userInfo.getmy()
+					
 					if (me && me.relation(author.address, 'blocking')){
 						el.caption.addClass('blocking');
 					}
@@ -1400,7 +1400,7 @@ var author = (function(){
 						
 						}
 	
-						author.data = self.sdk.users.storage[author.address]
+						author.data = self.psdk.userInfo.get(author.address)
 	
 						var data = {
 							author : author

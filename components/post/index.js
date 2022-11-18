@@ -155,7 +155,7 @@ var post = (function () {
 
 				if (!my && user.address.value) {
 
-					var me = deep(self.app, 'platform.sdk.users.storage.' + user.address.value)
+					var me = self.psdk.userInfo.getmy()
 
 					if (me && me.relation(share.address, 'subscribes')) {
 						subscribed = true
@@ -1814,7 +1814,7 @@ var post = (function () {
 
 					el.c.find('.shareTable[address="' + address + '"]').addClass('subscribed');
 
-					var me = deep(self.app, 'platform.sdk.users.storage.' + self.user.address.value.toString('hex'))
+					var me = self.psdk.userInfo.getmy()
 
 					if (me) {
 						var r = me.relation(address, 'subscribes')

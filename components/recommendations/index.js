@@ -138,7 +138,7 @@ var recommendations = (function(){
 
 		var filter = function(recommendation){
 
-			var me = deep(self.app, 'platform.sdk.users.storage.' + (self.user.address.value || ''))
+			var me = self.psdk.userInfo.getmy()
 
 
 			if (me && me.relation(recommendation.address, 'blocking') ){

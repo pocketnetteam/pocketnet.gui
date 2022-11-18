@@ -123,18 +123,13 @@ var channel = (function(){
 				self.sdk.users.get(ed.id, function(){
 					self.sdk.ustate.get(ed.id, function(){
 
-						author.data = self.sdk.users.storage[ed.id]
+						author.data = self.psdk.userInfo.get(ed.id)
 						author.state = self.psdk.userState.get(ed.id)
 						author.address = ed.id;
 
-						var me = null;
-	
-						if(self.app.user.address.value)
-							me = deep(app, 'platform.sdk.users.storage.' + self.app.user.address.value.toString('hex'));
-
+						var me = self.psdk.userInfo.getmy()
+							
 						author.following = me && me.relation(author.address, 'subscribes');
-
-
 
 						var data = {
 							author : author,

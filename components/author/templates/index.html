@@ -7,7 +7,7 @@
 			var deleted = typeof app.platform.sdk.user.deletedaccount != 'undefined' ? app.platform.sdk.user.deletedaccount(author.address) : false
 
 			if (user.address.value) 
-				me = deep(app, 'platform.sdk.users.storage.' + user.address.value.toString('hex'))
+				me = psdk.userInfo.getmy()
 
 			var name = app.platform.api.name(author.address)
 			var letter = name ? name[0] : '';
