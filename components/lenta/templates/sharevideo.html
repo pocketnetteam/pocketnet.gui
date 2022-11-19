@@ -35,6 +35,10 @@ var value = Number(share.score)
 
 var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
 
+var userInfo = psdk.userInfo.get(share.address) || {}
+
+var name = app.platform.api.clearname(userInfo.name || share.address)
+
 var makecaptionclear = function(){
 
 	%> 
@@ -74,7 +78,8 @@ var metadisplay = function(){ %>
         
         
                                 <% 
-									var src = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.image');
+									var src = userInfo.image
+									
 									var letter = name ? name[0] : '';
 
 								%>
@@ -110,8 +115,7 @@ var metadisplay = function(){ %>
 						<div class="authorCell">
 							<div>
 								<a elementsid="<%-app.platform.api.authorlink(share.address)%>" href="<%-app.platform.api.authorlink(share.address)%>">
-								<% var reputation = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.reputation') || 0; %>
-									<span class="adr"><%-(name || share.address) %></span><% if(reputation > 1 || reputation < -1) {%><sup class="spsp"><%-compressedNumber(reputation, 1)%></sup><% } %>
+									<span class="adr"><%-(name || share.address) %></span><% if(userInfo.reputation > 1 || reputation < -1) {%><sup class="spsp"><%-compressedNumber(userInfo.reputation, 1)%></sup><% } %>
 								</a>
 
 								

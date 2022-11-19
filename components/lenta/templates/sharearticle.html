@@ -25,13 +25,15 @@ if(!my && user.address.value){
 
 var cview = 'article'
 
-var name = app.platform.api.name(share.address)
-
 var value = Number(share.score)
 
 var checkvisibility = app.platform.sdk.node.shares.checkvisibility(share)
 
 var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
+
+var userInfo = psdk.userInfo.get(share.address) || {}
+
+var name = app.platform.api.clearname(userInfo.name || share.address)
 
 %> 
 
@@ -143,9 +145,7 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
 
         <div class="author">
 
-            <% var reputation = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.reputation') || 0 %>
-
-                <b><span class="adr gotouserprofile" address="<%-share.address%>" name="<%-name %>"><%-(name || share.address) %></span></b><%if(typeof preview == 'undefined' || !preview){%><% if(reputation && !app.curation()) {%><sup class="spsp"><%-compressedNumber(reputation, 1)%></sup><% } %><% } %>
+                <b><span class="adr gotouserprofile" address="<%-share.address%>" name="<%-name %>"><%-(name) %></span></b><%if(typeof preview == 'undefined' || !preview){%><% if(userInfo.reputation && !app.curation()) {%><sup class="spsp"><%-compressedNumber(userInfo.reputation, 1)%></sup><% } %><% } %>
 
 
             <% if((!state || !my) && (typeof repost == 'undefined' || !repost) && (typeof app.platform.sdk.user.myaccauntdeleted == 'undefined' || !app.platform.sdk.user.myaccauntdeleted())) { %> 
@@ -274,7 +274,7 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
 
 <% var makeavatar = function(){
 
-    var src = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.image');
+    var src = userInfo.image;
     var letter = name ? name[0] : ''; 
     
 %>

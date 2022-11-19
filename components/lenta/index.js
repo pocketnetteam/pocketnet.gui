@@ -1308,7 +1308,11 @@ var lenta = (function(){
 
 				if (share){
 
-					var userinfo = deep(app, 'platform.sdk.usersl.storage.' + share.address) || {
+					
+
+			
+
+					var userinfo = self.psdk.userInfo.get(share.address) || {
 						address : share.address,
 						addresses : []
 					}
@@ -1369,7 +1373,8 @@ var lenta = (function(){
 							return
 						}
 
-						var userinfo = deep(app, 'platform.sdk.usersl.storage.' + share.address) || {
+
+						var userinfo = self.psdk.userInfo.get(share.address) || {
 							address : share.address,
 							addresses : [],
 						}
@@ -1761,8 +1766,8 @@ var lenta = (function(){
 
 					var checkvisibility = app.platform.sdk.node.shares.checkvisibility(share);
 
-					var reputation = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.reputation') || 0
-
+					var reputation = ((self.psdk.userInfo.get(share.address) || {}).reputation) || 0
+					
 					if(!checkvisibility || reputation < 50){
 
 						self.app.nav.api.load({
@@ -1797,7 +1802,8 @@ var lenta = (function(){
 
 				var checkvisibility = app.platform.sdk.node.shares.checkvisibility(obj);
 
-				var reputation = deep(app, 'platform.sdk.usersl.storage.'+obj.address+'.reputation') || 0
+				var reputation = (( || {}).reputation) || 0
+
 
 				if (checkvisibility && reputation >= 50) {
 					if (clbk)

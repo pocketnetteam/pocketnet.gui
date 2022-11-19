@@ -7,10 +7,7 @@ var i = index || 0;
 
 shares = _.filter(shares, function(s){
 
-	var name = deep(app, 'platform.sdk.usersl.storage.' + s.address + '.name') || ''
-	
-	
-	name = name.toLowerCase().replace(/[^a-z]/g,'')
+	var name = ((psdk.userInfo.get(s.address) || {}).name || "").toLowerCase().replace(/[^a-z]/g, '')
 
 	if((name.indexOf('pocketnet') == -1 || s.address == 'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd' || s.address == 'PJ3nv2jGyW2onqZVDKJf9TmfuLGpmkSK2X') ){
 		return true
@@ -50,10 +47,15 @@ _.each(groupshares, function(gs, address){ 	%>
 
 		}) %>
 
-		<% if(gs.length > 1) { %>
+		<% if(gs.length > 1) { 
+			
+			var name = app.platform.api.clearname(((psdk.userInfo.get(address) || {}).name) || address
+			
+			
+			%>
 
 			<div elementsid="lenta_showmorebyauthor" class="showmorebyauthor">
-				<%=e('e13123')%> (<%- gs.length - 1 %>) <%=e('fromsh')%> <span class="adr"><%-deep(app, 'platform.sdk.usersl.storage.'+address+'.name') || address %></span>
+				<%=e('e13123')%> (<%- gs.length - 1 %>) <%=e('fromsh')%> <span class="adr"><%-name %></span>
 			</div>
 
 		<% } %>

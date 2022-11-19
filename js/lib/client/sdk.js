@@ -351,6 +351,27 @@ var pSDK = function({app, api, actions}){
             return objects['userInfoFull'][address] || objects['userInfoLight'][address]
         },
 
+        getShortForm : function(address){
+            if(!address) address = app.user.address.value
+
+            var userInfo = this.get(address) || {}
+            var name = app.platform.api.clearname(userInfo.name || address) || address
+
+            return {
+                address : address,
+                name : name,
+                reputation : Math.max(userInfo.reputation || 0, 0),
+                image : userInfo.image,
+                letter : (name ? name[0] : '').toUpperCase(),
+                deleted : app.platform.sdk.user.deletedaccount(address),
+                itisme : address == app.user.address.value,
+                addresses : userInfo.addresses || [],
+                dev : userInfo.dev || false,
+                real : app.platform.real[address]
+                //markHtml : app.platform.ui.markUser(address)
+            }
+        },
+
         getclear : function(address){
             return storage['userInfoFull'][address] || storage['userInfoLight'][address]
         },

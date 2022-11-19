@@ -41,10 +41,7 @@
 
                     if(!nm) return
 
-                    var image = share.images[0] || deep(app, 'platform.sdk.usersl.storage.'+share.address+'.image');
-                    var video = null;
-
-                    var vstyle = false;
+                    var shareUserInfo = psdk.userInfo.getShortForm(share.address)
 
                     var cmts = _.filter(group, function(c){
                         return c.message
@@ -52,17 +49,16 @@
 
                     if(!cmts.length) return
 
-                    if (share.url){
-                        video = videoImage(share.url)
-                        vstyle = true;
-                    } %>
+                    %>
 
                     <div class="commentgroup" share="<%-postid%>">
 
                         <div class="comments">
                             <% _.each(group, function(comment){ 
+
+                                var commentUserInfo = psdk.userInfo.getShortForm(comment.address)
                                 
-                                if(comment.deleted || !comment.message) return
+                                if (comment.deleted || !comment.message || commentUserInfo.deleted) return
 
                                 if (me && me.relation(comment.address, 'blocking')) {
                                     return
@@ -78,9 +74,9 @@
 
                                             <div class="iconWrapper">
                                                 <% 
-                                                    var src = deep(app, 'platform.sdk.usersl.storage.'+comment.address+'.image');
-                                                    var name = deep(app, 'platform.sdk.usersl.storage.'+comment.address+'.name');
-                                                    var letter = name ? name[0] : '';
+                                                    var src = commentUserInfo.image;
+                                                    var name = commentUserInfo.name;
+                                                    var letter = commentUserInfo.name;
                                                 %>
                         
                                                 <div class="icon">
@@ -109,9 +105,9 @@
 
                                             <div class="iconWrapper">
                                                 <% 
-                                                    var src2 = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.image')
-                                                    var name2 = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.name');
-                                                    var letter2 = name ? name[0] : '';    
+                                                    var src2 = shareUserInfo.image
+                                                    var name2 = shareUserInfo.name;
+                                                    var letter2 = shareUserInfo.letter;    
                                                 %>
                         
                                                 <div class="icon">
@@ -158,7 +154,7 @@
                                             %>
 
                                                 <div class="commentmessage">
-                                                    <div><b><%-deep(app, 'platform.sdk.usersl.storage.'+comment.address+'.name') || comment.address %></b> <% if(comment.address != share.address) {%> <i class="fas fa-long-arrow-alt-right"></i> <b><%-deep(app, 'platform.sdk.usersl.storage.'+share.address+'.name') || share.address %></b><% } %>: <%=nl2br(trimHtml(trimrn(m), 120))%> <span class="realtime" time="<%-comment.time%>"><%- app.reltime(comment.time) %></span></div>
+                                                    <div><b><%-name %></b> <% if(comment.address != share.address) {%> <i class="fas fa-long-arrow-alt-right"></i> <b><%-name2 %></b><% } %>: <%=nl2br(trimHtml(trimrn(m), 120))%> <span class="realtime" time="<%-comment.time%>"><%- app.reltime(comment.time) %></span></div>
                                                 </div>
 
                                             <% } %>

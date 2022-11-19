@@ -1,16 +1,11 @@
 <%
-var me = null;
+var me = psdk.userInfo.getmy();
 var _class = '';
 var format = address ? 'subscribeUser ' : ''; 
 
-if(user.address.value){
+if (me && me.relation(address, 'subscribes')) { _class="following" } 
 
-	me = psdk.userInfo.getmy()
-    
-
-    if (me && me.relation(address, 'subscribes')){ _class="following" } 
-
-}
+var sUserInfo = psdk.userInfo.getShortForm(address)
 
 %>
 
@@ -26,8 +21,8 @@ if(user.address.value){
             <a elementsid="shareiconprofilelink" href="<%-app.platform.api.authorlink(address)%>">
 
                 <% 
-                    var src = deep(app.platform.sdk.usersl.storage, address + '.image');
-                    var letter = name ? name[0] : ''; 
+                    var src = sUserInfo.image
+                    var letter = sUserInfo.letter
                     
                 %>
 

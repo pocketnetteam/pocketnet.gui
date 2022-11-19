@@ -4,8 +4,9 @@
         _.each(contents, function(content) { 
             
 
+
             var video = (app.platform.sdk.videos.storage[content.url || "undefined"] || {}).data || {}
-            var userinfo =  deep(app.platform.sdk.usersl.storage, content.address);
+            var userinfo = psdk.userInfo.getShortForm(content.address) 
             var h = app.platform.sdk.videos.historyget(content.txid)
             
             %>

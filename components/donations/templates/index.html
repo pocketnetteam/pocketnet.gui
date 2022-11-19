@@ -56,16 +56,20 @@
 			</div>
 
 			<div class="users">
-				<% _.each(donated, function(address){ %>
+				<% _.each(donated, function(address){ 
+					
+					var sUserInfo = psdk.userInfo.getShortForm(address)
+					
+					
+					%>
 
 					<div class="user">
 						<a elementsid="author?address=<%-address%>&report=shares" href="author?address=<%-address%>&report=shares">
 							<div class="pictureWrapper">
 								
 								<% 
-									var src = deep(app, 'platform.sdk.usersl.storage.' + address+'.image');  
-									var name = 	deep(app, 'platform.sdk.usersl.storage.' + address+'.name');
-									var letter = name ? name[0] : '';
+									var src = sUserInfo.image;  
+									var letter = sUserInfo.letter;
 								%>
 								
 								<div class="icon">
@@ -90,7 +94,7 @@
 							</div>
 							<div class="nameWrapper">
 								<div class="name">
-									<span><%-deep(app, 'platform.sdk.usersl.storage.'+address+'.name') || address %></span>
+									<span><%-sUserInfo.name %></span>
 								</div>
 							</div>
 						</a>

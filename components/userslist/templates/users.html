@@ -52,6 +52,8 @@ _.each(addresses, function(address){
 
 	if (me && me.relation(address, 'blocking')){ _class="userblocking" }
 
+	var sUserInfo = psdk.userInfo.getShortForm(address) 
+
 %>
 	<div class="wrk">
 
@@ -64,9 +66,9 @@ _.each(addresses, function(address){
 
 							<% 
 
-								var src = deep(app, 'platform.sdk.usersl.storage.'+address+'.image');  
-								var name = deep(app, 'platform.sdk.usersl.storage.'+address+'.name');
-								var letter = name ? name[0] : ''; 
+								var src = sUserInfo.image;  
+								var name = sUserInfo.name;
+								var letter = sUserInfo.letter; 
 
 							%>
 
@@ -89,18 +91,16 @@ _.each(addresses, function(address){
 				</div>
 
 				<div class="label">
-					<a elementsid="userlistauthorlink" href="<%-app.platform.api.authorlink(address)%>">
+					<a elementsid="userlistauthorlink" href="<%-sUserInfo.link%>">
 
 						<div class="name">						
-							<%- app.platform.api.name(address) || address %>							
+							<%- sUserInfo.name %>							
 						</div>
 
-						<% var r = (psdk.userInfo.get(address) || {}).reputation %>
-
-						<% if (r) {%>
+						<% if (sUserInfo.reputation) {%>
 
 							<div class="light">						
-								Reputation: <span class="reputation"> <%- Number(r).toFixed(0)  %> </span>						
+								Reputation: <span class="reputation"> <%- Number(sUserInfo.reputation).toFixed(0)  %> </span>						
 							</div>
 
 						<% } %>

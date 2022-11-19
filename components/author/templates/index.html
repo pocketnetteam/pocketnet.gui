@@ -3,18 +3,13 @@
 	<div class="bgCaptionWrapper">
 
 		<%
-			var me = null;
-			var deleted = typeof app.platform.sdk.user.deletedaccount != 'undefined' ? app.platform.sdk.user.deletedaccount(author.address) : false
+			var me = psdk.userInfo.getmy()
 
-			if (user.address.value) 
-				me = psdk.userInfo.getmy()
-
-			var name = app.platform.api.name(author.address)
-			var letter = name ? name[0] : '';
+			var sUserInfo = psdk.userInfo.getShortForm(author.address)
 
 			var telements = function(){ %>
 
-				<% if(!user.isItMe(author.address)) {
+				<% if(!sUserInfo.itisme) {
 					
 					var _class=''
 					
@@ -78,14 +73,14 @@
 				<div class="infoWrapper">
 					<div class="rightchatspacer">
 						<div class="work">
-							<% if(deleted) {%>
+							<% if(sUserInfo.deleted) {%>
 
 								<div class="deletedAccount">
 									<div class="deletedAccountText">
-										<span><%-e('deletedAccount_' + deleted)%></span>
+										<span><%-e('deletedAccount_' + sUserInfo.deleted)%></span>
 									</div>
 
-									<% if(user.isItMe(author.address)) { %>
+									<% if(sUserInfo.itisme) { %>
 
 									<div class="deletedsettings">
 										<button class="button black">
@@ -103,29 +98,21 @@
 									<div class="cell cellforimage">
 										<div class="icon">
 
-											<% 
-												var src = deep(author, 'data.image');
-											%>
+											<div elementsid="author_usericon" ban=".gif" class="usericon" contain="none" image="<%-sUserInfo.image || '*'%>">
 
-											<div elementsid="author_usericon_<%-src || ''%>" ban=".gif" class="usericon" contain="none" image="<%-src || '*'%>">
-
-												<% if(!src && letter) {%>
+												<% if(!sUserInfo.image && sUserInfo.letter) {%>
 
 													<span class="letter">
-														<%-letter.toUpperCase()%>
+														<%-sUserInfo.letter.toUpperCase()%>
 													</span>
 
-												<% } else if (!src) { %>
+												<% } else if (!sUserInfo.image) { %>
 
 													<i class="far fa-user"></i>
 
 												<% } %>
 
-												<% if(app.platform.ui.markUser) {%>
-
-													<%= app.platform.ui.markUser(author.address)%>
-
-												<% } %>
+												<%= app.platform.ui.markUser(author.address)%>
 
 											</div>
 										</div>
@@ -135,9 +122,8 @@
 										<div class="infomain">
 
 											<div class="caption">
-												<% var reputation = deep(app, 'platform.sdk.usersl.storage.'+author.address+'.reputation') || 0 %>
 
-												<b class="adr"><%-name || author.address%></b>
+												<b class="adr"><%-sUserInfo.name%></b>
 
 												<% telements() %>
 												
@@ -170,7 +156,7 @@
 
 	</div>
 
-	<% if(!deleted) {%>
+	<% if(!sUserInfo.deleted) {%>
 
 	<div class="mworkwrapper " id="sticktop">
 		<div class="rightchatspacer">
@@ -183,13 +169,10 @@
 				
 				<div class="lentacell">
 					<div class="cnt">
-
 						<div class="lentaWrapper">
 						</div>
-
 					</div>
 				</div>
-				
 
 			</div>
 		</div>

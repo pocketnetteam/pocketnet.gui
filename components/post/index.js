@@ -37,12 +37,10 @@ var post = (function () {
 
 						self.app.platform.sdk.node.transactions.get.balance(function(amount){
 
-							var balance = amount.toFixed(3);
 	
-							var userinfo = deep(app, 'platform.sdk.usersl.storage.' + share.address) || {
-								address : share.address,
-								addresses : [],
-							}
+							var userinfo = self.psdk.userInfo.getShortForm(share.address)
+							
+							
 		
 							self.nav.api.load({
 								open : true,
@@ -327,10 +325,7 @@ var post = (function () {
 
 			donate: function (clbk) {
 
-				var userinfo = deep(app, 'platform.sdk.usersl.storage.' + share.address) || {
-					address: share.address,
-					addresses: []
-				}
+				var userinfo = self.psdk.userInfo.getShortForm(share.address)
 
 				var link = 'send?address=' + share.address + '&amount=1'
 					+ '&label=' + (userinfo.name || userinfo.address) + '&setammount=true'
@@ -623,7 +618,7 @@ var post = (function () {
 
 
 				var checkvisibility = app.platform.sdk.node.shares.checkvisibility(share);
-				var reputation = deep(app, 'platform.sdk.usersl.storage.'+share.address+'.reputation') || 0
+				var reputation = self.psdk.userInfo.getShortForm(share.address).reputation
 
 				if (checkvisibility && reputation >= 50) return
 

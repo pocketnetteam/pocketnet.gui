@@ -370,10 +370,7 @@ var comments = (function(){
 					
 					actions.stateAction(function(){
 
-						var userinfo = deep(app, 'platform.sdk.usersl.storage.' + share.address) || {
-							address : share.address,
-							addresses : [],
-						}
+						var userinfo = self.psdk.userInfo.getShortForm(share.address)
 
 						self.nav.api.load({
 							open : true,
@@ -900,7 +897,7 @@ var comments = (function(){
 
 						var address = self.app.platform.sdk.comments.address(txid, aid, pid) || deep(ed, 'lastComment.address')
 
-						var name = (deep(self.app, 'platform.sdk.usersl.storage.'+address+'.name') || address)
+						var name = self.psdk.userInfo.getShortForm(address).name
 
 						var str = '@' + name + '  '
 

@@ -2804,7 +2804,8 @@ pComment = function(){
 		}
 
 		if(!s.image) s.image = self.images[0]
-		if(!s.image) s.image = deep(app, 'platform.sdk.usersl.storage.'+self.address+'.image')
+		if(!s.image) s.image = app.platform.psdk.getShortForm(self.address).image
+		
 
 		return s
 

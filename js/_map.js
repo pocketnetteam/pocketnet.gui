@@ -552,13 +552,13 @@ __map =  {
 		// },
 
 
-		bestposts : {
+		/*bestposts : {
 			uri : "bestposts",
 			href : "bestposts",
 			
 			add : insertingfunc,
 			anonimus : true,
-		},
+		},*/
 
 		lastcomments : {
 			uri : "lastcomments",
