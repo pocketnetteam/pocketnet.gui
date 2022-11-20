@@ -10,6 +10,10 @@ var diagnosticsPage = (function () {
 
     var serversObject = {};
     var serverObjectsWithErrors = {};
+    var timeZone;
+
+    var serverAuth = {};
+    var agentStats = {};
 
     var serversAmount, serversCounter;
 
@@ -195,13 +199,34 @@ var diagnosticsPage = (function () {
               servers.map((server) => actions.diagnoseSingleServer(server)),
             ),
           )
+          .then(async () => {
+            if (self.app.user.address.value) {
+              try {
+                const auth = await self.app.peertubeHandler.api.user.me();
+
+                serverAuth = {
+                  gotAuth: true,
+                  host: self.app.peertubeHandler.active(),
+                };
+              } catch (error) {
+                serverAuth = {
+                  gotAuth: false,
+                  error: actions.stringifyErrorSafe(error),
+                  host: self.app.peertubeHandler.active(),
+                };
+              }
+            }
+          })
           .then(() => {
             self.app.Logger.error({
               err: 'DIAGNOSE_COMPLETED',
               code: 100,
               payload: {
                 result: JSON.stringify(serversObject),
-                address: self.app.user.address.value,
+                authResult: JSON.stringify(serverAuth),
+                agentStats: JSON.stringify(agentStats),
+                address: self.app.user.address.value || 'Unauthorized user',
+                timeZone,
               },
               level: 'diagnostics',
             });
@@ -286,6 +311,7 @@ var diagnosticsPage = (function () {
             data: {
               serversWithErrors,
               serversObject,
+              serverAuth: self.app.user.address.value ? serverAuth : '',
             },
           },
           (p) => {},
@@ -321,8 +347,29 @@ var diagnosticsPage = (function () {
       getdata: function (clbk, p) {
         ed = p.settings.essenseData;
 
+        try {
+          timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+        } catch (error) {
+          timeZone = 'Unable to identify';
+        }
+
+        const userAgent = navigator.userAgent;
+
+        const agentMeter = new UAParser(userAgent);
+
+        agentStats = {
+          browser: agentMeter.getBrowser(),
+          CPU: agentMeter.getCPU(),
+          device: agentMeter.getDevice(),
+          engine: agentMeter.getEngine(),
+          OS: agentMeter.getOS(),
+          result: agentMeter.getResult(),
+        };
+
         var data = {
           ed,
+          timeZone,
+          agentStats,
         };
 
         clbk(data);
