@@ -364,7 +364,8 @@ var comments = (function(){
 			
 			pkoin : function(id, format){
 
-				var share = self.app.platform.sdk.node.shares.storage.trx[id];
+				var share = self.psdk.shares.get(id) 
+				
 
 				if (share){
 					
@@ -722,7 +723,7 @@ var comments = (function(){
 					}
 					else
 					{
-						var post = deep(self.app.platform, 'sdk.node.shares.storage.trx.' + txid)
+						var post = self.psdk.shares.get(txid)
 
 						var address = (self.app.platform.sdk.address.pnet() || {}).address
 
@@ -1173,9 +1174,11 @@ var comments = (function(){
 
 				if(!el.showall) return
 
-				var counts = deep(self.app.platform, 'sdk.node.shares.storage.trx.' + txid + '.comments') || 0;
+				var share = self.psdk.shares.get(txid) || {}
 
-				var lastchildren = deep(self.app.platform, 'sdk.node.shares.storage.trx.' + txid + '.lastComment.children') || 0;
+				var counts = share.comments || 0
+				
+				var lastchildren = deep(share, 'lastComment.children') || 0;
 
 				var needtoshow = false
 
@@ -1341,7 +1344,7 @@ var comments = (function(){
 
 			}
 
-			var post = deep(self.app.platform, 'sdk.node.shares.storage.trx.' + txid)
+			var post = self.psdk.shares.get(txid)
 
 			if (post && post.address == comment.address) p = p * 50
 

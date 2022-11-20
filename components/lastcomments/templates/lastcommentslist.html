@@ -12,7 +12,8 @@
 
                 <% _.each(comments, function(group, postid){ 
                     
-                    var share = app.platform.sdk.node.shares.storage.trx[postid]
+                    var share = psdk.shares.get(postid) 
+                    
                     
                     if(!share) return
 

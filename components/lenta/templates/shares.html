@@ -1,14 +1,14 @@
 <% 
 var i = index || 0;
 
-shares = _.filter(shares, function(s){
+shares = _.filter(shares, function(share){
 
 var userInfo = psdk.userInfo.get(share.address) || {}
 
 
 	var name = ((psdk.userInfo.get(share.address) || {}).name || "").toLowerCase().replace(/[^a-z]/g,'')
 	
-	if((name.indexOf('pocketnet') == -1 || s.address == 'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd' || s.address == 'PJ3nv2jGyW2onqZVDKJf9TmfuLGpmkSK2X') ){
+	if((name.indexOf('pocketnet') == -1 || s.address == 'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd' || share.address == 'PJ3nv2jGyW2onqZVDKJf9TmfuLGpmkSK2X') ){
 		return true
 	}
 })

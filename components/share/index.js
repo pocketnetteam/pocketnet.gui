@@ -72,7 +72,8 @@ var share = (function(){
 				if (repost){
 					self.app.platform.sdk.node.shares.getbyid([repost], function(){
 
-						var share = self.app.platform.sdk.node.shares.storage.trx[repost]
+						var share = self.psdk.shares.get(repost) 
+						
 
 						if (clbk) clbk(share)
 	
@@ -2268,7 +2269,8 @@ var share = (function(){
 
 				self.app.platform.sdk.node.shares.getbyid([repost], function(){
 
-					var share = self.app.platform.sdk.node.shares.storage.trx[repost] 
+					var share = self.psdk.shares.get(repost) 
+					
 						
 					self.shell({
 						name :  'repost',

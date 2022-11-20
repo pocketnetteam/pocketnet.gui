@@ -128,7 +128,8 @@ var post = (function () {
 
 				self.app.platform.sdk.node.shares.getbyid(id, function () {
 
-					share = self.app.platform.sdk.node.shares.storage.trx[id]
+					share = self.psdk.shares.get(share.txid)
+					
 
 					delete share.myVal
 
@@ -1925,7 +1926,8 @@ var post = (function () {
 			else{
 				self.app.platform.sdk.node.shares.getbyid([id], function () {
 
-					var share = self.app.platform.sdk.node.shares.storage.trx[id]
+					var share = self.psdk.shares.get(id) 
+					
 
 					clbk(share)
 

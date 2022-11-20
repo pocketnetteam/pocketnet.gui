@@ -2229,10 +2229,14 @@ pShare = function(){
 	self.repost = '';
 	self.language = '';
 	self.poll = {};
+	self.time = new Date()
 
 	self.comments = 0;
 	self.lastComment = null;
 	self.reposted = 0;
+	self.score = 0
+	self.scnt = 0
+	self.address = ''
 
 	self.deleted = false;
 
@@ -2364,25 +2368,46 @@ pShare = function(){
 		if (v.id)
 			self.id = v.id;
 
-		if (v.txidEdit)
+		if (v.txidEdit){
+			
 			self.txidEdit = v.txidEdit;	
+			self.edit = true
+		}
+
+		if(v.edit){
+			self.edit = true
+		}
+
+		if(v.score){
+			self.score = Number(v.score)
+		}
+
+		if(v.scnt){
+			self.scnt = Number(v.scnt)
+		}
+
 
 		self.temp = v.temp || null;
 
-		if(v._time)
+		if (v._time)
 			self._time = v._time
 
-		if(v.comments)
+		if (v.comments)
 			self.comments = v.comments
 
-		if(v.reposted)
+		if (v.reposted)
 			self.reposted = v.reposted
 
 		
-		if(v.lastComment)
+		if (v.lastComment)
 			self.lastComment = v.lastComment
 
+		if(v.address){
+			self.address = v.address
+		}
 
+		if (v.time)
+			self.time.setTime(v.time * 1000);
 	}
 
 	self.export = function(){

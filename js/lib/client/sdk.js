@@ -27,6 +27,14 @@ var pSDK = function({app, api, actions}){
 
         userStateFB : {
             time : 0
+        },
+
+        sharesRequest : {
+            time : 60
+        },
+
+        share : {
+            time : 240
         }
     }
 
@@ -47,10 +55,6 @@ var pSDK = function({app, api, actions}){
         if(!storage[key]) storage[key] = {}
         if(!temp[key]) temp[key] = {}
         if(!objects[key]) objects[key] = {}
-    }
-
-    var loadone = function(key, index, executor, p){
-        return loadList(key, [index], executor, p)
     }
 
     var settodb = function(dbname, result){
@@ -74,7 +78,32 @@ var pSDK = function({app, api, actions}){
         
     }
 
+    var settodbone = function(dbname, hash, data){
+
+        if(!hash || !data) return Promise.resolve()
+
+        return settodb(dbname, [{
+            key : hash,
+            data
+        }])
+    }
+
+    var getfromdbone = function(dbname, hash){
+        return getfromdb(dbname, hash).then(r => {
+
+            console.log("R", r)
+
+            if (r.length){
+                return Promise.resolve(r[0].data)
+            }
+
+            return Promise.resolve(null)
+        })
+    }
+
     var getfromdb = function(dbname, ids){
+
+        if(!ids) return Promise.resolve([])
 
         if(!_.isArray(ids)) ids = [ids]
 
@@ -102,6 +131,10 @@ var pSDK = function({app, api, actions}){
 
     }
 
+    var loadone = function(key, index, executor, p){
+        return loadList(key, [index], executor, p)
+    }
+
     var loadList = function(key, keys, executor, p = {
         update : false, 
         fallbackIndexedDB : null, 
@@ -115,7 +148,7 @@ var pSDK = function({app, api, actions}){
 
         if(!_.isArray(keys)) keys = [keys]
 
-        keys = _.uniq(keys)
+        keys = _.filter(_.uniq(keys), k => k)
 
         var loading = {}
         var loaded = {}
@@ -246,6 +279,49 @@ var pSDK = function({app, api, actions}){
         })
     }
 
+    var request = function(key, hash, executor, p = {
+        requestIndexedDb : null,
+        insertFromResponse : null
+    }){
+
+        if(_.isObject(hash)) {
+            try{
+                hash = $.md5(JSON.stringify(hash))
+            }
+            catch(e){
+                hash = null
+            }
+        }
+
+        if(temp[key][hash]) return temp[key][hash]
+
+        temp[key][hash] = getfromdbone(p.requestIndexedDb, hash).then((r) => {
+
+            if(r) return Promise.resolve(r)
+
+            return executor().then(r => {
+                settodbone(p.requestIndexedDb, hash, r)
+
+                return Promise.resolve(r)
+            })
+
+        }).then(result => {
+
+            console.log('result', result)
+
+            if(p.insertFromResponse){
+                return p.insertFromResponse(result).then(() => {
+                    return result
+                })
+            }
+
+            return result
+        })
+
+        return temp[key][hash]
+
+    }
+
     self.userInfo = {
         keys : ['userInfoFull', 'userInfoLight'],
         
@@ -273,8 +349,47 @@ var pSDK = function({app, api, actions}){
                 indexedDb : light ? 'userInfoLight' : 'userInfoFull',
                 fallbackIndexedDB : !light ? 'userInfoFullFB' : null,
                 alternativeGetStorage : light ? 'userInfoFull' : null,
-                transform : this.transform
+                transform : (r) => this.transform(r)
             })
+        },
+
+        insertFromResponse : function(data, light){
+
+            var result = _.map(data, (r) => {
+                return {
+                    key : r.address,
+                    data : r
+                }
+            })
+
+            var indexedDb = light ? 'userInfoLight' : 'userInfoFull'
+            var fallbackIndexedDB = !light ? 'userInfoFullFB' : null
+            var key = light ? 'userInfoLight' : 'userInfoFull'
+            
+            return settodb(indexedDb, result).then(() => {
+                return settodb(fallbackIndexedDB, result)
+            }).then(() => {
+
+                var filtered = []
+
+                _.each(result, (r) => {
+
+                    if (r && r.key && r.data){
+                        storage[key][r.key] = r.data
+                        filtered.push(r)
+                    }
+    
+                    var object = this.transform(r)
+
+                    if (object)
+                        objects[key][r.key] = object
+    
+                })
+
+                return filtered
+
+            })
+            
         },
 
         transform : function({key, data}){
@@ -363,7 +478,7 @@ var pSDK = function({app, api, actions}){
                 reputation : Math.max(userInfo.reputation || 0, 0),
                 image : userInfo.image,
                 letter : (name ? name[0] : '').toUpperCase(),
-                deleted : app.platform.sdk.user.deletedaccount(address),
+                deleted : userInfo.deleted, /// check temp ///app.platform.sdk.user.deletedaccount(address),
                 itisme : address == app.user.address.value,
                 addresses : userInfo.addresses || [],
                 dev : userInfo.dev || false,
@@ -462,10 +577,129 @@ var pSDK = function({app, api, actions}){
             this.cleardb(address)
         }
     }
+
+    self.shares = {
+        keys : ['share'],
+
+        request : function(executor, hash){
+            return request('share', hash, executor, {
+                requestIndexedDb : 'sharesRequest',
+
+                insertFromResponse : (r) => this.insertFromResponseEx(r)
+            })
+        },
+
+        insertFromResponseEx : function(response){
+
+            console.log('insertFromResponseEx response', response, self.shares.insertFromResponseEx.caller)
+
+            self.userInfo.insertFromResponse(response.users, true)
+
+            app.platform.sdk.videos.getVideoResponse(response.videos)
+
+            return this.insertFromResponse(response.contents)
+        },
+
+        insertFromResponse : function(data){
+            var result = _.map(data, (r) => {
+
+                if(!r) return null
+
+                return {
+                    key : r.txid,
+                    data : r
+                }
+            })
+
+            console.log("DATA", data, result)
+
+            var indexedDb = 'share'
+            var key = 'share'
+            
+            return settodb(indexedDb, result).then(() => {
+
+                var filtered = []
+
+                _.each(result, (r) => {
+
+                    if (r && r.key && r.data){
+                        storage[key][r.key] = r.data
+                        filtered.push(r)
+                    }
+    
+                    var object = this.transform(r)
+
+                    if (object)
+                        objects[key][r.key] = object
+    
+                })
+
+                return filtered
+
+            })
+
+        },
+
+        transform : function({key, data : share}){
+
+            if (share.userprofile){
+                self.userInfo.insertFromResponse([share.userprofile], true)
+            }
+
+            var s = new pShare();
+                s._import(share);
+
+            if (share.ranks){
+                s.info = share.ranks
+            }
+            else
+            {
+
+                if(
+                    share.BOOST || share.DPOST ||
+                    share.DREP || share.LAST5 ||
+                    share.LAST5 || share.LAST5R ||
+                    share.POSTRF || share.PREP ||
+                    share.PREPR || share.UREP
+                )
+                    s.info = {
+                        BOOST : share.BOOST,
+                        DPOST : share.DPOST,
+                        DREP : share.DREP,
+                        LAST5 : share.LAST5,
+                        LAST5R : share.LAST5R,
+                        POSTRF : share.POSTRF,
+                        PREP : share.PREP,
+                        PREPR : share.PREPR,
+                        UREP : share.UREP,
+                        UREPR : share.UREPR,
+                    }
+            }
+
+
+            //deleted, likes temp
+
+            return s
+        },
+
+        gets : function(ids){
+            return _.filter(_.map(ids, this.get), s => s)
+        },
+
+        get : function(id){
+
+
+            return id ? (objects.share[id] || null) : null
+        },
+
+        load : function(api, parameters){
+
+        }
+    }
     
     self.transaction = {
         keys : ['transaction'],
-        load : function(id){
+        load : function(id, update){
 
             return loadone('transaction', id, (ids) => {
                 return api.rpc('getrawtransaction', [ids[0], 1]).then(d => {
@@ -486,6 +720,8 @@ var pSDK = function({app, api, actions}){
                     }]
 
                 })
+            }, {
+                update
             })
 
             

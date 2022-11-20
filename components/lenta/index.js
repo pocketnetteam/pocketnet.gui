@@ -172,7 +172,7 @@ var lenta = (function(){
 					els.each(function() {
 						var txid = $(this).attr('id')
 
-						var share = self.app.platform.sdk.node.shares.storage.trx[txid];
+						var share = self.psdk.shares.get(txid);
 
 						if (share){
 							actions.destroyShare(share)
@@ -341,7 +341,7 @@ var lenta = (function(){
 				
 
 				
-				var share = self.app.platform.sdk.node.shares.storage.trx[shareId];
+				var share = self.psdk.shares.get(shareId); 
 
 				if (share)
 					actions.destroyVideo(share, true)
@@ -447,7 +447,8 @@ var lenta = (function(){
 					return s.address
 
 				}), function(s, id){
-					var share =  self.app.platform.sdk.node.shares.storage.trx[id]
+					var share =  self.psdk.shares.get(id);  
+					
 
 					if (share){
 						actions.subscribeunsubscribeclbk(share.address)
@@ -553,9 +554,9 @@ var lenta = (function(){
 				loadertimeout = null
 				sharesFromRecommendations = {}
 
-				_.each(shareInitedMap, function(s, id){
+				/*_.each(shareInitedMap, function(s, id){
 					delete self.app.platform.sdk.node.shares.storage.trx[id]
-				})
+				})*/
 
 				_.each(players, function(p){
 					if (p.p)
@@ -1150,7 +1151,9 @@ var lenta = (function(){
 			},
 
 			openPost : function(id, clbk, video, _share, openWnd){
-				var share = self.app.platform.sdk.node.shares.storage.trx[id] || _share;
+				var share = self.psdk.shares.get(id) || _share; 
+				
+				
 
 
 				if(openWnd || essenseData.openPostInWindowMobile || (share && share.itisarticle())){
@@ -1228,7 +1231,8 @@ var lenta = (function(){
 					if (!shareInitedMap[id]) return
 					if (shareInitingMap[id]) return
 
-					var share = self.app.platform.sdk.node.shares.storage.trx[id];
+					var share = self.psdk.shares.get(id)
+					
 
 						actions.destroyShare(share)
 
@@ -1245,7 +1249,7 @@ var lenta = (function(){
 
 				if(!shareInitedMap[id]) return
 
-				var share = self.app.platform.sdk.node.shares.storage.trx[id];
+				var share = self.psdk.shares.get(id)
 
 				if (share){
 
@@ -1283,7 +1287,7 @@ var lenta = (function(){
 			},
 
 			unblock : function(id, clbk){
-				var share = self.app.platform.sdk.node.shares.storage.trx[id];
+				var share = self.psdk.shares.get(id)
 
 				if (share){
 					
@@ -1304,7 +1308,7 @@ var lenta = (function(){
 			},
 
 			donate : function(id, clbk){
-				var share = self.app.platform.sdk.node.shares.storage.trx[id];
+				var share = self.psdk.shares.get(id)
 
 				if (share){
 
@@ -1362,7 +1366,7 @@ var lenta = (function(){
 
 				var type = format === 'liftUpThePost' ? 'boost' : 'pkoin';
 
-				var share = self.app.platform.sdk.node.shares.storage.trx[id];
+				var share = self.psdk.shares.get(id)
 
 				if (share){
 					
@@ -1453,7 +1457,7 @@ var lenta = (function(){
 			opensvi : function(id){
 
 				if (essenseData.opensvi){
-					essenseData.opensvi(id, deep(self, 'app.platform.sdk.node.shares.storage.trx.' + id))
+					essenseData.opensvi(id, self.psdk.shares.get(id))
 				}
 
 				else{
@@ -1524,7 +1528,7 @@ var lenta = (function(){
 				if(recommendationsMaking[id] || recommendations[id]) return
 
 				var _el = el.share[id]
-				var share = self.app.platform.sdk.node.shares.storage.trx[id];
+				var share = self.psdk.shares.get(id);
 
 				if(!_el || !share /*|| !self.app.platform.istest()*/){
 					if(clbk) clbk()
@@ -1758,7 +1762,8 @@ var lenta = (function(){
 
 			postscores : function(txid, clbk){
 
-				var share = deep(self.app.platform, 'sdk.node.shares.storage.trx.' + txid)
+				var share = self.psdk.shares.get(txid)
+				
 
 				if(!share) return
 
@@ -1802,7 +1807,7 @@ var lenta = (function(){
 
 				var checkvisibility = app.platform.sdk.node.shares.checkvisibility(obj);
 
-				var reputation = (( || {}).reputation) || 0
+				var reputation = ((self.psdk.userInfo.getmy() || {}).reputation) || 0
 
 
 				if (checkvisibility && reputation >= 50) {
@@ -2088,7 +2093,7 @@ var lenta = (function(){
 
 					essenseData : {
 						item : 'post',
-						obj : self.app.platform.sdk.node.shares.storage.trx[id],
+						obj : self.psdk.shares.get(id),
 
 						success : function(){
 							
@@ -2209,11 +2214,9 @@ var lenta = (function(){
 
 				el.c.find('.share').each(function(){
 
-					var s = self.app.platform.sdk.node.shares.storage.trx[this.getAttribute('id')]
-
-					if (s)
-
-						arranged.push( s )
+					var s = self.psdk.shares.get(this.getAttribute('id')) 
+					
+					if (s) arranged.push(s)
 				})
 
 
@@ -2253,7 +2256,8 @@ var lenta = (function(){
 
 				var shareId = $(this).closest('.share').attr('id');
 
-				var share = self.app.platform.sdk.node.shares.storage.trx[shareId];
+				var share = self.psdk.shares.get(shareId) 
+				
 
 				actions.recommendationinfo(share)
 
@@ -2273,7 +2277,8 @@ var lenta = (function(){
 
 				var shareId = $(this).closest('.share').attr('id');
 
-				var share = self.app.platform.sdk.node.shares.storage.trx[shareId];
+				var share = self.psdk.shares.get(shareId) 
+				
 
 				actions.openauthorwindow(share.address)
 			},
@@ -2281,7 +2286,7 @@ var lenta = (function(){
 
 				var shareId = $(this).closest('.share').attr('id');
 
-				var share = self.app.platform.sdk.node.shares.storage.trx[shareId];
+				var share = self.psdk.shares.get(shareId) 
 
 				if (share.itisvideo()){
 					self.sdk.registrations.redirect = 'post?s=' + shareId
@@ -2301,7 +2306,8 @@ var lenta = (function(){
 
 				var shareId = (shareTxId && typeof shareTxId === 'string') ? shareTxId : $(this).closest('.share').attr('id');
 
-				var share = self.app.platform.sdk.node.shares.storage.trx[shareId];
+				var share = self.psdk.shares.get(shareId) 
+				
 
 				self.app.platform.ui.saveShare(share, function(id, deleted){
 					if (actions.changeSavingStatus)
@@ -2325,7 +2331,8 @@ var lenta = (function(){
 
 					if(!_el.hasClass('showAdditional') && !_el.hasClass('blocking')){
 
-						var share = self.app.platform.sdk.node.shares.storage.trx[_el.attr('id')]
+						var share = self.psdk.shares.get(_el.attr('id')) 
+						
 
 						actions.initVideo(share, function(){
 
@@ -2376,8 +2383,8 @@ var lenta = (function(){
 
 				self.app.mobile.vibration.small()
 
-				var share = self.app.platform.sdk.node.shares.storage.trx[shareId] || {};
-
+				var share = self.psdk.shares.get(shareId)  
+				
 				actions.repost(share.repost || shareId);
 			},
 
@@ -2490,7 +2497,9 @@ var lenta = (function(){
 				var id = $(this).closest('.comment').attr('id');
 				var shareId = $(this).closest('.share').attr('id');
 
-					actions.like(self.app.platform.sdk.node.shares.storage.trx[shareId].findComment(id))
+				 
+
+					actions.like(self.psdk.shares.get(shareId).findComment(id))
 
 					$(this).addClass('active')
 
@@ -2528,7 +2537,8 @@ var lenta = (function(){
 				var id = $(this).closest('.share').attr('id');
 				var value = $(this).attr('value');
 
-				let s = self.app.platform.sdk.node.shares.storage.trx[id]
+				let s =  self.psdk.shares.get(id) 
+				
 
 				if(!id) id = $(this).closest('.truerepost').attr('stxid')
 
@@ -3071,7 +3081,14 @@ var lenta = (function(){
 
 				var _el = el.c.find('#' + txid + " .commentsWrapper");
 
-				var share = deep(self.app.platform, 'sdk.node.shares.storage.trx.' + txid)
+				var share = self.psdk.shares.get(txid)
+
+				if(!share){
+					if(clbk) clbk()
+
+					return
+				}
+				
 
 				var checkvisibility = share ? app.platform.sdk.node.shares.checkvisibility(share) : false;
 
@@ -3474,7 +3491,8 @@ var lenta = (function(){
 
 					if(!v) return
 
-					var share = deep(self.app.platform, 'sdk.node.shares.storage.trx.' + txid)
+					var share = self.psdk.shares.get(txid)  
+					
 
 					if(!share) return
 
@@ -3579,7 +3597,8 @@ var lenta = (function(){
 			txidall : function(txids){
 
 				_.each(txids, function(txid){
-					var share = deep(self.app.platform, 'sdk.node.shares.storage.trx.' + txid)
+					var share = self.psdk.shares.get(txid) 
+					
 					renders.share(share)
 				})
 				
@@ -3925,7 +3944,7 @@ var lenta = (function(){
 						el : el.find('.repostWrapper'),
 						data : {
 							repost : repostid,
-							share : deep(self.app.platform, 'sdk.node.shares.storage.trx.' + txid),
+							share : self.psdk.shares.get(txid),
 							level : 1
 						},
 	
@@ -4280,6 +4299,8 @@ var lenta = (function(){
 				var author = essenseData.author;
 
 				self.app.platform.sdk.node.shares.loadvideoinfoifneed(allshares, video, function(){
+
+					console.log('allshares', allshares)
 
 					self.app.platform.sdk.node.shares.users(allshares, function(l, error2){
 
@@ -5282,7 +5303,8 @@ var lenta = (function(){
 								}
 	
 								if (p.i){
-									var share = deep(self.app.platform, 'sdk.node.shares.storage.trx.' + p.i)
+									var share = self.psdk.shares.get(p.i)
+									
 									var src = null;
 	
 									if (share){

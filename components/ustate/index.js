@@ -294,6 +294,7 @@ var ustate = (function(){
 					waitActions = r;
 					mestate = _mestate;	
 
+
 					if(self.app.platform.sdk.user.reputationBlockedMe()){
 
 						renders.reputationBlockedMe()

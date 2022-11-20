@@ -66,7 +66,7 @@ var metadisplay = function(){ %>
 								<b><span class="adr"><%- name %></span></b><% if(userInfo.reputation && !app.curation()) {%><sup class="spsp"><%-compressedNumber(userInfo.reputation, 1)%></sup><% } %>
 							</a>
 
-							<% if((!state || !my) && (typeof repost == 'undefined' || !repost) && (!deletedaccount) { %> 
+							<% if((!state || !my) && (typeof repost == 'undefined' || !repost) && !deletedaccount) { %> 
 
 								<span elementsid="sbtnxs-follow" class="sbtnxs">
 									&middot; <span class="subscribeLabel asubscribe"><%=e('sub')%></span><span class="subscribedLabel aunsubscribe"><%=e('subi')%></span>

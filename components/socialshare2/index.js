@@ -222,7 +222,8 @@ var socialshare2 = (function(){
 
 					var s = ['black', 'comments']
 
-					var share = self.app.platform.sdk.node.shares.storage.trx[id];
+					var share = self.psdk.shares.get(id) 
+					
 
 					if (share){
 						if(share.url){
@@ -402,7 +403,8 @@ var socialshare2 = (function(){
 
 				if(settings.onlyvideo){
 
-					var share = self.app.platform.sdk.node.shares.storage.trx[actionid];
+					var share = self.psdk.shares.get(actionid) 
+					
 
 					if (share && share.url && action && actionid){
 
@@ -881,7 +883,9 @@ var socialshare2 = (function(){
 					postId = ''
 				}
 
-				if (postId){share = self.app.platform.sdk.node.shares.storage.trx[postId];}
+				if (postId){
+					share = self.psdk.shares.get(postId) 
+				}
 
 				changeRef()
 			

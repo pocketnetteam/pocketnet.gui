@@ -95,7 +95,8 @@ var lastcomments = (function(){
 
 					_.each(c, function(comment){ 
     
-						var share = app.platform.sdk.node.shares.storage.trx[comment.txid]
+						var share = self.psdk.shares.get(comment.txid)
+						
 
 						if(share && comment){
 							au.push(share.address)
