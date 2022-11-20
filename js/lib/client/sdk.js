@@ -91,8 +91,6 @@ var pSDK = function({app, api, actions}){
     var getfromdbone = function(dbname, hash){
         return getfromdb(dbname, hash).then(r => {
 
-            console.log("R", r)
-
             if (r.length){
                 return Promise.resolve(r[0].data)
             }
@@ -188,6 +186,8 @@ var pSDK = function({app, api, actions}){
             load.push(k)
         })
 
+        console.log('load', load)
+
 
         var promise = !load.length ? Promise.resolve([]) : new Promise((resolve, reject) => {
 
@@ -202,6 +202,8 @@ var pSDK = function({app, api, actions}){
 
                 })
 
+                console.log('dbr', dbr)
+
                 if(!load.length){
                     resolve(dbr)
 
@@ -210,8 +212,12 @@ var pSDK = function({app, api, actions}){
 
                 executor(load).then((result) => {
 
+                    console.log("ER", result)
+                  
                     settodb(p.indexedDb, result)
                     settodb(p.fallbackIndexedDB, result)
+
+                    console.log('result.concat(dbr)', result.concat(dbr))
 
                     return resolve(result.concat(dbr))
 
@@ -220,6 +226,8 @@ var pSDK = function({app, api, actions}){
 
 
         }).catch(e => {
+
+            console.error(e)
 
             if(p.fallbackIndexedDB){
                 return getfromdb(p.fallbackIndexedDB, load)
@@ -231,12 +239,16 @@ var pSDK = function({app, api, actions}){
 
             var filtered = []
 
+            console.log("resultresult", result)
+
             _.each(result, (r) => {
+                console.log("r", r, p)
 
                 if (r && r.key && r.data){
                     storage[key][r.key] = r.data
                     filtered.push(r)
                 }
+
 
                 if (p.transform){
                     var object = p.transform(r)
@@ -246,6 +258,10 @@ var pSDK = function({app, api, actions}){
                 }
 
             })
+
+           
+
+            console.log('object', objects, storage)
 
             return filtered
 
@@ -306,8 +322,6 @@ var pSDK = function({app, api, actions}){
             })
 
         }).then(result => {
-
-            console.log('result', result)
 
             if(p.insertFromResponse){
                 return p.insertFromResponse(result).then(() => {
@@ -515,6 +529,143 @@ var pSDK = function({app, api, actions}){
         }
     }
 
+    self.shares = {
+        keys : ['share'],
+
+        request : function(executor, hash){
+            return request('share', hash, executor, {
+                requestIndexedDb : 'sharesRequest',
+
+                insertFromResponse : (r) => this.insertFromResponseEx(r)
+            })
+        },
+
+        insertFromResponseEx : function(response){
+
+            self.userInfo.insertFromResponse(response.users, true)
+
+            app.platform.sdk.videos.getVideoResponse(response.videos)
+
+            return this.insertFromResponse(response.contents)
+        },
+
+        insertFromResponse : function(data){
+            var result = _.map(data, (r) => {
+
+                if(!r) return null
+
+                return {
+                    key : r.txid,
+                    data : r
+                }
+            })
+
+            var indexedDb = 'share'
+            var key = 'share'
+            
+            return settodb(indexedDb, result).then(() => {
+
+                var filtered = []
+
+                _.each(result, (r) => {
+
+                    if (r && r.key && r.data){
+                        storage[key][r.key] = r.data
+                        filtered.push(r)
+                    }
+    
+                    var object = this.transform(r)
+
+                    if (object)
+                        objects[key][r.key] = object
+    
+                })
+
+                return filtered
+
+            })
+
+        },
+
+        transform : function({key, data : share}){
+
+            console.log('share', share)
+
+            if (share.userprofile){
+                self.userInfo.insertFromResponse([share.userprofile], true)
+            }
+
+            var s = new pShare();
+                s._import(share);
+
+            if (share.ranks){
+                s.info = share.ranks
+            }
+            else
+            {
+
+                if(
+                    share.BOOST || share.DPOST ||
+                    share.DREP || share.LAST5 ||
+                    share.LAST5 || share.LAST5R ||
+                    share.POSTRF || share.PREP ||
+                    share.PREPR || share.UREP
+                )
+                    s.info = {
+                        BOOST : share.BOOST,
+                        DPOST : share.DPOST,
+                        DREP : share.DREP,
+                        LAST5 : share.LAST5,
+                        LAST5R : share.LAST5R,
+                        POSTRF : share.POSTRF,
+                        PREP : share.PREP,
+                        PREPR : share.PREPR,
+                        UREP : share.UREP,
+                        UREPR : share.UREPR,
+                    }
+            }
+
+
+            //deleted, likes temp
+
+            return s
+        },
+
+        gets : function(ids){
+            return _.filter(_.map(ids, this.get), s => s)
+        },
+
+        get : function(id){
+            return id ? (objects.share[id] || null) : null
+        },
+
+        load : function(txids, update){
+            return loadList('share', txids, (txids) => {
+
+                return api.rpc('getrawtransactionwithmessagebyid', [txids]).then(d => {
+
+                    if (d && !_.isArray(d)) d = [d];
+
+                    d = _.sortBy(d, (share) => _.indexOf(txids, share.txid))
+
+                    d = _.filter(d || [], (s) => s.address)
+
+                    return _.map(d || [], (info) => {
+                        return { 
+                            key : info.txid,
+                            data : info
+                        }
+                    })
+
+                })
+            }, {
+                transform : (r) => this.transform(r),
+                update,
+                indexedDb : 'share',
+            })
+        }
+    }
+
     self.userState = {
         keys : ['userState'],
         
@@ -578,124 +729,7 @@ var pSDK = function({app, api, actions}){
         }
     }
 
-    self.shares = {
-        keys : ['share'],
-
-        request : function(executor, hash){
-            return request('share', hash, executor, {
-                requestIndexedDb : 'sharesRequest',
-
-                insertFromResponse : (r) => this.insertFromResponseEx(r)
-            })
-        },
-
-        insertFromResponseEx : function(response){
-
-            console.log('insertFromResponseEx response', response, self.shares.insertFromResponseEx.caller)
-
-            self.userInfo.insertFromResponse(response.users, true)
-
-            app.platform.sdk.videos.getVideoResponse(response.videos)
-
-            return this.insertFromResponse(response.contents)
-        },
-
-        insertFromResponse : function(data){
-            var result = _.map(data, (r) => {
-
-                if(!r) return null
-
-                return {
-                    key : r.txid,
-                    data : r
-                }
-            })
-
-            console.log("DATA", data, result)
-
-            var indexedDb = 'share'
-            var key = 'share'
-            
-            return settodb(indexedDb, result).then(() => {
-
-                var filtered = []
-
-                _.each(result, (r) => {
-
-                    if (r && r.key && r.data){
-                        storage[key][r.key] = r.data
-                        filtered.push(r)
-                    }
     
-                    var object = this.transform(r)
-
-                    if (object)
-                        objects[key][r.key] = object
-    
-                })
-
-                return filtered
-
-            })
-
-        },
-
-        transform : function({key, data : share}){
-
-            if (share.userprofile){
-                self.userInfo.insertFromResponse([share.userprofile], true)
-            }
-
-            var s = new pShare();
-                s._import(share);
-
-            if (share.ranks){
-                s.info = share.ranks
-            }
-            else
-            {
-
-                if(
-                    share.BOOST || share.DPOST ||
-                    share.DREP || share.LAST5 ||
-                    share.LAST5 || share.LAST5R ||
-                    share.POSTRF || share.PREP ||
-                    share.PREPR || share.UREP
-                )
-                    s.info = {
-                        BOOST : share.BOOST,
-                        DPOST : share.DPOST,
-                        DREP : share.DREP,
-                        LAST5 : share.LAST5,
-                        LAST5R : share.LAST5R,
-                        POSTRF : share.POSTRF,
-                        PREP : share.PREP,
-                        PREPR : share.PREPR,
-                        UREP : share.UREP,
-                        UREPR : share.UREPR,
-                    }
-            }
-
-
-            //deleted, likes temp
-
-            return s
-        },
-
-        gets : function(ids){
-            return _.filter(_.map(ids, this.get), s => s)
-        },
-
-        get : function(id){
-
-
-            return id ? (objects.share[id] || null) : null
-        },
-
-        load : function(api, parameters){
-
-        }
-    }
     
     self.transaction = {
         keys : ['transaction'],

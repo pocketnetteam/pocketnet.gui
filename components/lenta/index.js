@@ -1861,10 +1861,7 @@ var lenta = (function(){
 						return
 					}
 
-					console.log("UPVOTESHARE!!!")
-
 					self.app.platform.actions.addActionAndSendIfCan(upvoteShare).then(action => {
-						console.log("ACTION", action)
 						if (clbk)
 							clbk(true)
 					}).catch(e => {
@@ -4299,8 +4296,6 @@ var lenta = (function(){
 				var author = essenseData.author;
 
 				self.app.platform.sdk.node.shares.loadvideoinfoifneed(allshares, video, function(){
-
-					console.log('allshares', allshares)
 
 					self.app.platform.sdk.node.shares.users(allshares, function(l, error2){
 

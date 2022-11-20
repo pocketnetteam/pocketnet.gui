@@ -17640,6 +17640,7 @@ Platform = function (app, listofnodes) {
                 getbyidsp: function (p, clbk, refresh) {
                     this.getbyids(p.txids, p.begin, 10, clbk, refresh)
                 },
+                
                 getsavedbyids: function (p, clbk) {
                     if (!p.txids.length) {
                         if (clbk)
@@ -17709,6 +17710,7 @@ Platform = function (app, listofnodes) {
                     }
 
                 },
+
                 getbyids: function (txids, begin, cnt, clbk, refresh) {
 
                     var s = this.storage;
@@ -17760,14 +17762,14 @@ Platform = function (app, listofnodes) {
 
                     this.getbyid(_txids, function (shares) {
 
-                        s.ids[key] = [];
+                        s.ids[key] = shares;
 
-                        _.each(txids, function (txid) {
+                        /*_.each(txids, function (txid) {
 
                             if (s.trx[txid])
                                 s.ids[key].push(s.trx[txid])
 
-                        })
+                        })*/
 
 
                         if (clbk)
@@ -17778,7 +17780,34 @@ Platform = function (app, listofnodes) {
 
                 getbyid: function (txids, clbk, refresh) {
 
+                    self.psdk.shares.load(txids, refresh).then(() => {
+
+                        var shares = self.psdk.shares.gets(txids)
+
+                        console.log(txids, shares)
+
+                        clbk(shares, null, {
+                            count: txids.length
+                        })
+
+                    }).catch(e => {
+
+                        console.error("E", e)
+
+                        if (clbk) {
+                            clbk(null, e, {})
+                        }
+
+                    })
+
+                    return
+
+                    /*
+
                     var storage = this.storage;
+
+
+
                     storage.trx || (storage.trx = {})
 
                     //TODONOW
@@ -17851,10 +17880,6 @@ Platform = function (app, listofnodes) {
                         var temp = self.sdk.node.transactions.temp;
 
                         var a = self.sdk.address.pnet()
-
-                        /*if (a){
-                            parameters.push(a.address)
-                        }*/
 
                         _.each(txids, function (id) {
                             loading[id] = true;
@@ -17945,13 +17970,15 @@ Platform = function (app, listofnodes) {
                                     count: loaded.length
                                 }, true)
                         })
-                    }
+                    }*/
 
 
                 },
 
                 transform: function (d, state) {
 
+                    console.log('transformSHARE')
+                    /*
                     var storage = this.storage;
 
                     storage.trx || (storage.trx = {})
@@ -17982,12 +18009,6 @@ Platform = function (app, listofnodes) {
 
                         s.edit = share.edit || false
                         s.info = null
-
-
-                        /*if (s.url){
-                            s.url = s.url.replace('peertube://pocketnetpeertube8', 'peertube://pocketnetpeertube9')
-                        }*/
-
 
                         if (share.ranks){
                             s.info = share.ranks
@@ -18029,13 +18050,13 @@ Platform = function (app, listofnodes) {
 
                     self.sdk.node.shares.tempLikes(shares)
 
-                    return shares
+                    return shares*/
                 },
 
 
                 takeusers: function (d, state) {
 
-                    _.each(d, function (data) {
+                    /*_.each(d, function (data) {
 
                         var _u = data.userprofile
 
@@ -18049,16 +18070,43 @@ Platform = function (app, listofnodes) {
 
                         }
 
-                    })
+                    })*/
 
 
                 },
 
-                get: function (parameters, clbk, method) {
+                get: function (parameters, clbk, method, rpc = {}) {
+
+                    self.psdk.shares.request(() => {
+                        return self.app.api.rpc(method, parameters, {
+                            rpc : rpc
+                        })
+                    }, {
+                        method,
+                        parameters
+                    }).then(d => {
+
+                        var shares = self.psdk.shares.gets(_.map(d.contents, (s) => {
+                            return s.txid
+                        }))
+
+                        d.contents = shares
+
+                        if(clbk) clbk(d)
+
+                    }).catch(e => {
+
+                        console.error('e', e)
+
+                        if (clbk) {
+                            clbk([], e)
+                        }
+
+                    })
+
+                    return
 
                     method || (method = 'getrawtransactionwithmessage')
-
-                    var storage = this.storage;
 
                     self.app.user.isState(function (state) {
 
@@ -18088,12 +18136,13 @@ Platform = function (app, listofnodes) {
                 getex: function (parameters, clbk, method, rpc) {
 
                     if(!rpc) rpc = {}
+                        rpc.ex = true
 
-                    rpc.ex = true
+                    self.sdk.node.shares.get(parameters, clbk, method, rpc)
+
+                    return
 
                     method || (method = 'getrawtransactionwithmessage')
-
-                    var storage = this.storage;
 
                     self.psdk.shares.request(() => {
                         return self.app.api.rpc(method, parameters, {
@@ -18104,17 +18153,11 @@ Platform = function (app, listofnodes) {
                         parameters
                     }).then(d => {
 
-                        console.log("D", _.map(d.contents, (s) => {
-                            return s.txid
-                        }))
-
                         var shares = self.psdk.shares.gets(_.map(d.contents, (s) => {
                             return s.txid
                         }))
 
                         d.contents = shares
-
-                        console.log('shares', shares)
 
                         if(clbk) clbk(d)
 
@@ -18681,19 +18724,6 @@ Platform = function (app, listofnodes) {
                     })
                 },
 
-                /*hierarchicaltst : function(p, clbk, cache){
-
-                    self.app.platform.sdk.node.shares.hierarchical(p, clbk, cache, {
-                        method : 'gethierarchicalstrip'
-                    })
-
-
-
-                    self.app.platform.sdk.node.shares.hierarchical({...p, ...{height : 0}}, null, cache, {
-                        method : 'gethierarchicalstrip'
-                    })
-
-                },*/
 
 
                 hierarchical: function (p, clbk, cache, methodparams) {
@@ -18853,6 +18883,9 @@ Platform = function (app, listofnodes) {
                                 })
 
                                 p.blocknumber = blocknumber 
+
+
+                                //// TODO PSDK
 
                                 if (shares) {
 
