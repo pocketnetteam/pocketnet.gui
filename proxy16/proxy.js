@@ -1355,6 +1355,8 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 	self.rpcscenarios.getprofilefeed = self.rpcscenarios.gethierarchicalstrip
 	self.rpcscenarios.getsubscribesfeed = self.rpcscenarios.gethierarchicalstrip
 	self.rpcscenarios.gethotposts = self.rpcscenarios.gethierarchicalstrip
+	self.rpcscenarios.gethistoricalstrip = self.rpcscenarios.gethistoricalstrip
+	
 
 	self.checkSlideAdminHash = function(hash) {
 		return bitcoin.crypto.sha256(Buffer.from(hash, 'utf8')).toString('hex') == '7b4e4601c461d23919a34d8ea2d9e25b9ab95cf0a93c1e6eae51ba79c82fbcf3'

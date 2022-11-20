@@ -589,8 +589,6 @@ var pSDK = function({app, api, actions}){
 
         transform : function({key, data : share}){
 
-            console.log('share', share)
-
             if (share.userprofile){
                 self.userInfo.insertFromResponse([share.userprofile], true)
             }
@@ -728,8 +726,6 @@ var pSDK = function({app, api, actions}){
             this.cleardb(address)
         }
     }
-
-    
     
     self.transaction = {
         keys : ['transaction'],
@@ -760,6 +756,10 @@ var pSDK = function({app, api, actions}){
 
             
         }
+    }
+
+    self.score = {
+        
     }
 
 

@@ -403,6 +403,7 @@ Platform = function (app, listofnodes) {
     })
 
     self.psdk = new pSDK({app, api : self.app.api, actions : self.actions})
+    self.actions.psdk = psdk
 
     var listeners = {
         share : function(alias, status){
@@ -16325,7 +16326,6 @@ Platform = function (app, listofnodes) {
                     _.each(ids, function (id) {
 
                         var share = self.psdk.shares.get(id)
-                        
 
                         var lastcomment = deep(share, 'lastComment.id');
 
@@ -16388,22 +16388,6 @@ Platform = function (app, listofnodes) {
                                 }
                             })
 
-                            /*self.app.ajax.rpc({
-                                method: 'getpagescores',
-                                parameters: [ids, address, commentsid],
-                                success: function (d) {
-
-
-
-
-                                },
-                                fail: function (d, e) {
-
-                                    if (clbk) {
-                                        clbk(e, d)
-                                    }
-                                }
-                            })*/
                         }
                         else {
                             _.each(ids, function (id) {
@@ -17431,8 +17415,6 @@ Platform = function (app, listofnodes) {
                             share = _.find(account.getTempActions('share'), function (alias) {
                                 return alias.txid == id
                             })
-
-                            console.log("//", share)
                         }
                     }
 
@@ -17456,8 +17438,6 @@ Platform = function (app, listofnodes) {
                         }
 
                     })
-
-                    console.log('users', users)
 
                     self.sdk.users.get(users, clbk, true)
                 },
@@ -17535,9 +17515,6 @@ Platform = function (app, listofnodes) {
                         })
 
                     })
-
-
-
 
                 },
 
@@ -17629,9 +17606,6 @@ Platform = function (app, listofnodes) {
                         })
 
                     })
-
-
-
                 },
 
                 txids: function (p, clbk, refresh) {
@@ -17751,26 +17725,15 @@ Platform = function (app, listofnodes) {
 
                             begin = l;
                         }
-
-
                     }
 
                     var index = _.indexOf(txids, begin);
 
                     var _txids = _.clone(txids).splice(index, cnt);
 
-
                     this.getbyid(_txids, function (shares) {
 
                         s.ids[key] = shares;
-
-                        /*_.each(txids, function (txid) {
-
-                            if (s.trx[txid])
-                                s.ids[key].push(s.trx[txid])
-
-                        })*/
-
 
                         if (clbk)
                             clbk(shares, null, p)
@@ -17802,276 +17765,20 @@ Platform = function (app, listofnodes) {
 
                     return
 
-                    /*
-
-                    var storage = this.storage;
-
-
-
-                    storage.trx || (storage.trx = {})
-
-                    //TODONOW
-
-                    var loading = this.loading;
-
-                    var loaded = [];
-
-                    var anotherloading = [];
-                    var anotherloadinglength = 0;
-
-                    if (!_.isArray(txids)) txids = [txids];
-
-                    var originaltxids = _.filter(txids, function(id){return id})
-
-                    var waianother = function (clbk) {
-
-                        retry(function () {
-
-
-                            anotherloading = _.filter(anotherloading, function (id) {
-                                if (loading[id]) return true;
-                            })
-
-
-                            if (!anotherloading.length) return true;
-
-                        }, function () {
-
-                            clbk()
-
-                        }, 20)
-
-                    }
-
-                    if (!refresh) {
-                        txids = _.filter(txids, function (id) {
-
-                            if(!id) return false
-
-                            if (!storage.trx[id]) {
-                                return true;
-                            }
-                            else {
-                                loaded.push(storage.trx[id])
-                            }
-                        })
-                    }
-
-                    txids = _.filter(txids, function (id) {
-
-                        if(!id) return false
-
-                        if (!loading[id]) {
-
-                            return true
-                        }
-                        else {
-                            anotherloading.push(id)
-                        }
-
-                    })
-
-                    anotherloadinglength = anotherloading.length
-
-                    if (txids.length) {
-
-                        var parameters = [txids]
-
-                        var temp = self.sdk.node.transactions.temp;
-
-                        var a = self.sdk.address.pnet()
-
-                        _.each(txids, function (id) {
-                            loading[id] = true;
-                        })
-
-                        self.app.user.isState(function (state) {
-
-                            self.app.api.rpc('getrawtransactionwithmessagebyid', parameters).then(d => {
-
-                                if (d && !_.isArray(d)) d = [d];
-
-                                d = _.sortBy(d, function (share) {
-                                    return _.indexOf(txids, share.txid)
-                                })
-
-                                d = _.filter(d || [], function (s) {
-                                    if (s.address) return true
-                                })
-
-                                _.each(txids, function (id) {
-                                    delete loading[id];
-                                })
-
-                                var shares = _.map(d || [], function (share) {
-
-                                    var s = new pShare();
-
-                                    s._import(share);
-
-                                    s.txid = share.txid;
-
-                                    s.time = new Date();
-                                    s.time.setTime(share.time * 1000);
-
-                                    s.address = share.address
-                                    s.edit = share.edit
-
-
-                                    s.score = share.scoreSum;
-                                    s.scnt = share.scoreCnt;
-
-                                    storage.trx[s.txid] = s;
-
-                                    if (state && temp['share'] && temp['share'][s.txid]) delete temp['share'][s.txid]
-
-                                    self.sdk.node.shares.takeusers([share], state)
-
-                                    return s
-
-                                })
-
-                                loaded = loaded.concat(shares)
-
-                                self.sdk.node.shares.tempLikes(loaded)
-
-                                waianother(function () {
-                                    if (clbk)
-
-                                        clbk(loaded, null, {
-                                            count: txids.length
-                                        })
-                                })
-
-                            }).catch(e => {
-
-                                _.each(txids, function (id) {
-                                    delete loading[id];
-                                })
-
-                                if (clbk) {
-                                    clbk(null, e, {})
-                                }
-                            })
-
-
-                        })
-
-                    }
-                    else {
-                        waianother(function () {
-
-                            var loaded = _.map(originaltxids, function(id){
-                                return storage.trx[id]
-                            })
-
-                            if (clbk)
-                                clbk(loaded, null, {
-                                    count: loaded.length
-                                }, true)
-                        })
-                    }*/
-
-
                 },
 
                 transform: function (d, state) {
 
                     console.log('transformSHARE')
-                    /*
-                    var storage = this.storage;
 
-                    storage.trx || (storage.trx = {})
+                    throw 'depreacted'
 
-                    var temp = self.sdk.node.transactions.temp;
-
-                    d = _.filter(d || [], function (s) {
-                        if (s && s.txid && s.address) return true
-                    })
-
-
-                    var shares = _.map(d || [], function (share) {
-
-                        var s = new pShare();
-
-                        s._import(share);
-
-                        s.txid = share.txid;
-
-                        s.time = new Date();
-
-                        s.address = share.address
-
-                        s.time.setTime(share.time * 1000);
-
-                        s.score = share.scoreSum;
-                        s.scnt = share.scoreCnt;
-
-                        s.edit = share.edit || false
-                        s.info = null
-
-                        if (share.ranks){
-                            s.info = share.ranks
-                        }
-                        else
-                        {
-
-                            if(
-                                share.BOOST || share.DPOST ||
-                                share.DREP || share.LAST5 ||
-                                share.LAST5 || share.LAST5R ||
-                                share.POSTRF || share.PREP ||
-                                share.PREPR || share.UREP
-                            )
-                                s.info = {
-                                    BOOST : share.BOOST,
-                                    DPOST : share.DPOST,
-                                    DREP : share.DREP,
-                                    LAST5 : share.LAST5,
-                                    LAST5R : share.LAST5R,
-                                    POSTRF : share.POSTRF,
-                                    PREP : share.PREP,
-                                    PREPR : share.PREPR,
-                                    UREP : share.UREP,
-                                    UREPR : share.UREPR,
-                                }
-                        }
-
-                        if (state && temp['share'] && temp['share'][s.txid]) delete temp['share'][s.txid]
-
-
-                        storage.trx[s.txid] = s;
-
-                        return s
-
-                    })
-
-                    self.sdk.node.shares.tempContentDelete(shares)
-
-                    self.sdk.node.shares.tempLikes(shares)
-
-                    return shares*/
                 },
 
 
                 takeusers: function (d, state) {
 
-                    /*_.each(d, function (data) {
-
-                        var _u = data.userprofile
-
-                        if (_u) {
-
-                            var u = self.sdk.users.prepareuser(_u, _u.address || _u.adr, state)
-
-                            //self.sdk.users.storage[data.address] = u;
-                            //// TODO
-                            self.sdk.usersl.storage[_u.address|| _u.adr] = u;
-
-                        }
-
-                    })*/
-
+                    throw 'depreacted'
 
                 },
 
@@ -18103,34 +17810,6 @@ Platform = function (app, listofnodes) {
                         }
 
                     })
-
-                    return
-
-                    method || (method = 'getrawtransactionwithmessage')
-
-                    self.app.user.isState(function (state) {
-
-                        self.app.api.rpc(method, parameters).then(d => {
-
-                            if (d && d.contents && d.contents.length > 0)
-                                d = d.contents;
-
-                            var shares = self.sdk.node.shares.transform(d, state)
-
-
-                            self.sdk.node.shares.takeusers(d, state)
-
-                            if (clbk)
-                                clbk(shares)
-
-                        }).catch(e => {
-                            if (clbk) {
-                                clbk([], e)
-                            }
-                        })
-
-
-                    })
                 },
 
                 getex: function (parameters, clbk, method, rpc) {
@@ -18139,100 +17818,6 @@ Platform = function (app, listofnodes) {
                         rpc.ex = true
 
                     self.sdk.node.shares.get(parameters, clbk, method, rpc)
-
-                    return
-
-                    method || (method = 'getrawtransactionwithmessage')
-
-                    self.psdk.shares.request(() => {
-                        return self.app.api.rpc(method, parameters, {
-                            rpc : rpc
-                        })
-                    }, {
-                        method,
-                        parameters
-                    }).then(d => {
-
-                        var shares = self.psdk.shares.gets(_.map(d.contents, (s) => {
-                            return s.txid
-                        }))
-
-                        d.contents = shares
-
-                        if(clbk) clbk(d)
-
-                    }).catch(e => {
-
-                        console.error('e', e)
-
-                        if (clbk) {
-                            clbk([], e)
-                        }
-
-                    })
-
-                    return
-
-                    self.app.user.isState(function (state) {
-
-                        self.app.api.rpc(method, parameters, {
-                            rpc : rpc
-                        }).then(d => {
-
-
-                            d.contents || (d.contents = [])
-
-                            var clear = d.contents
-
-                            d.contents = self.sdk.node.shares.transform(d.contents, state)
-
-                            self.sdk.node.shares.takeusers(_.filter(clear, (c => {
-                                return c && c.txid && c.address
-                            })), state)
-
-                            if (d.users)
-                                self.sdk.node.shares.takeusers(_.map(d.users, function(u){
-                                    return {
-                                        userprofile : u
-                                    }
-                                }), state)
-
-                            if(d.videos){
-
-
-                                self.sdk.videos.getVideoResponse(d.videos)
-
-                                /*var s = self.sdk.videos.storage
-
-                                var lmap = _.map(d.videos, function(i, l){
-
-                                    var meta = parseVideo(l)
-
-                                    return {
-                                        meta : meta,
-                                        link : l
-                                    }
-                                })
-
-                                self.sdk.videos.catchPeertubeLinks(d.videos, lmap)
-
-                                _.each(lmap, function(l){
-                                    s[l.link] = s[l.meta.id] = l
-                                })*/
-
-                            }
-
-                            if (clbk)
-                                clbk(d)
-
-                        }).catch(e => {
-                            if (clbk) {
-                                clbk([], e)
-                            }
-                        })
-
-
-                    })
                 },
 
                 recommended: function (p, clbk, cache, methodparams) {
@@ -18261,7 +17846,7 @@ Platform = function (app, listofnodes) {
                         }
                         else {
 
-                            var period = p.period || self.sdk.node.shares.parameters.stor.period || '60' ///self.sdk.node.shares.parameters.defaults.period
+                            var period = p.period || self.sdk.node.shares.parameters.stor.period || '60'
 
                             var depth = p.offset ? self.currentBlock - p.offset : 0
 
@@ -18269,25 +17854,28 @@ Platform = function (app, listofnodes) {
 
                             parameters = [depth,'', p.count , self.app.localization.key,[],[],[],[],[],'',period]
 
-                            // parameters = ['30', '259200', '', self.app.localization.key];
-
                             if (p.type){
                                 parameters[5].push(p.type)
                             }
 
-                            self.sdk.node.shares.get(parameters, function (shares, error) {
+                            self.sdk.node.shares.getex(parameters, function (data, error) {
+
+                                var shares = data.contents
+                                
 
                                 if (shares) {
 
+                                  
+
                                     self.sdk.node.shares.loadvideoinfoifneed(shares, p.type == 'video', function(){
 
-                                        if (state) {
+                                        /*if (state) {
                                             _.each(self.sdk.relayTransactions.withtemp('blocking'), function (block) {
                                                 _.each(shares, function (s) {
                                                     if (s.address == block.address) s.blocking = true;
                                                 })
                                             })
-                                        }
+                                        }*/
 
 
 
@@ -18306,10 +17894,7 @@ Platform = function (app, listofnodes) {
                                             })
                                         }
 
-                                        storage[key] = shares;
-
-                                        if (clbk)
-                                            clbk(storage[key], error, p)
+                                        
 
                                     })
 
@@ -18371,15 +17956,13 @@ Platform = function (app, listofnodes) {
 
                                     self.sdk.node.shares.loadvideoinfoifneed(shares, p.type == 'video', function(){
 
-                                        if (state) {
+                                        /*if (state) {
                                             _.each(self.sdk.relayTransactions.withtemp('blocking'), function (block) {
                                                 _.each(shares, function (s) {
                                                     if (s.address == block.address) s.blocking = true;
                                                 })
                                             })
-                                        }
-
-
+                                        }*/
 
                                         if(p.type == 'video'){
                                             shares = _.filter(shares, function(share){
@@ -18418,153 +18001,7 @@ Platform = function (app, listofnodes) {
 
                     })
                 },
-
-                common: function (p, clbk, cache) {
-
-                    console.log("LENTA COMMON")
-
-                    self.app.user.isState(function (state) {
-
-                        if (!p) p = {};
-
-                        p.count || (p.count = 10)
-
-                        if (state) {
-                            p.address = self.sdk.address.pnet().address;
-                        }
-
-                        var key = (p.address || "") + "_" + (p.author || "") + "_" + (p.begin || "") + "_" + self.app.localization.key
-
-                        var temp = self.sdk.node.transactions.temp;
-
-                        var storage = self.sdk.node.shares.storage;
-
-                        var s = self.sdk.node.shares;
-
-                        if (cache == 'cache' && storage[key]) {
-
-                            var tfinded = null;
-                            var added = 0;
-
-                            if (!p.txid) tfinded = true;
-
-                            var shares = _.filter(storage[key], function (s, i) {
-                                storage.trx[s.txid] = s;
-
-                                if (tfinded && added < p.count) {
-
-                                    added++;
-
-                                    return true;
-                                }
-
-                                if (s.txid == p.txid) {
-                                    tfinded = true;
-                                }
-                            })
-
-
-                            if (clbk)
-                                clbk(storage[key], null, p)
-
-                        }
-                        else {
-
-                            storage[key] || (storage[key] = [])
-
-                            if (cache == 'clear') storage[key] = [];
-
-                            if (!p.txid) {
-                                if (storage[key].length) {
-
-                                    if (p.count > 0) {
-                                        var st = storage[key][storage[key].length - 1]
-
-                                        p.txid = st.txid
-                                    }
-                                    else {
-                                        var st = storage[key][0]
-
-                                        p.txid = st.txid
-                                    }
-
-                                }
-                            }
-
-                            if (!p.txid) p.txid = p.begin || ''
-
-                            var adr = ''
-
-                            if (p.author == '1') adr = p.address
-
-                            var parameters = [adr, p.author || "", p.txid || "", p.count, p.author ? "" : self.app.localization.key];
-                            /*var parameters = [p.height, p.txid || "", p.count, p.lang || "", p.tagsfilter || [], p.type || [], [], [], p.tagsexcluded || [], "", p.author];*/
-
-                            s.get(parameters, function (shares, error) {
-                                var account = self.actions.getCurrentAccount()
-                                if (shares) {
-                                    if (account){
-                                        if (state && (!p.author || p.author == p.address)) {
-                                            console.log("?????")
-                                            _.each(account.getTempActions('share'), function (alias) {
-                                                if(alias.txidEdit){
-
-                                                    replaceEqual(shares, {
-                                                        txid: ps.txidEdit
-                                                    }, s)
-
-                                                    var txidEdit = alias.txidEdit
-
-                                                    alias.txidEdit = alias.txid
-                                                    alias.txid = txidEdit
-                                                    
-                                                }
-                                                else{
-                                                    shares.unshift(alias)
-                                                }
-                                            })
-
-                                            
-                                            
-                                        }
-
-                                        _.each(account.getTempActions('blocking'), function (alias) {
-                                            _.each(shares, function (share) {
-                                                if (share.address == alias.address) share.blocking = true;
-                                            })
-                                        })
-
-
-                                    }
-
-                                    _.each(shares || [], function (s) {
-
-                                        if (p.count > 0) {
-                                            storage[key].push(s)
-                                        }
-                                        else {
-                                            storage[key].unshift(s)
-                                        }
-
-                                    })
-
-                                    //self.sdk.node.transactions.saveTemp()
-
-                                    if (clbk)
-                                        clbk(shares, error, p)
-                                }
-
-                                else {
-                                    if (clbk)
-                                        clbk(shares, error, p)
-                                }
-
-                            })
-
-
-                        }
-                    })
-                },
+                
 
                 gettopfeed : function(p, clbk, cache){
 
@@ -18650,17 +18087,6 @@ Platform = function (app, listofnodes) {
 
                     var mtd = methodparams.method
 
-                    /*
-
-                    p.height
-                    p.start_txid
-                    p.count 10
-                    p.lang lang
-                    p.tagsfilter tagsfilter
-                    p.type
-
-                    */
-
                     self.app.user.isState(function (state) {
 
                         if (!p) p = {};
@@ -18723,8 +18149,6 @@ Platform = function (app, listofnodes) {
                         }
                     })
                 },
-
-
 
                 hierarchical: function (p, clbk, cache, methodparams) {
 
@@ -19004,8 +18428,7 @@ Platform = function (app, listofnodes) {
                                     if(!self.sdk.user.reputationBlocked(s.address)){
                                         return true
                                     }
-                                    else{
-                                    }
+
                                 })
 
 
@@ -19293,13 +18716,11 @@ Platform = function (app, listofnodes) {
                     return 0
                 },
 
-
                 releaseCS: function (inputs) {
                     _.each(inputs, function (t) {
                         delete t.cantspend
                     })
                 },
-
 
                 canSpend: function (tx) {
                     if (tx.cantspend) return false;
@@ -20173,66 +19594,17 @@ Platform = function (app, listofnodes) {
 
                     tx: function (id, clbk) {
 
-                        if (self.sdk.node.transactions.loading[id]) {
+                        self.psdk.transaction.load(id).then(tx => {
 
-                            retry(function () {
+                            if (clbk) {
+                                clbk(tx)
+                            }
 
-                                if (!self.sdk.node.transactions.loading[id]) return true;
-
-                            }, function () {
-
-                                if (clbk) {
-                                    clbk(self.sdk.node.transactions.storage[id])
-                                }
-
-                            }, 40)
-
-
-                            return
-                        }
-
-                        if (self.sdk.node.transactions.storage[id]) {
-                            if (clbk)
-                                clbk(self.sdk.node.transactions.storage[id])
-                        }
-
-                        else {
-                            self.sdk.node.transactions.loading[id] = true;
-
-                            self.app.api.rpc('getrawtransaction', [id, 1]).then(d => {
-
-                                self.sdk.node.transactions.loading[id] = false;
-
-                                self.sdk.node.transactions.storage[id] = d
-
-                                if(!d.confirmations) {
-                                    if(d.height){
-                                        if (self.currentBlock)
-                                            d.confirmations = Math.max(self.currentBlock - d.height, 0)
-                                    }
-                                    else{
-                                        d.confirmations = 0
-
-                                        if (self.currentBlock)
-                                            d.height = self.currentBlock
-                                    }
-                                }
-
-                                if (clbk)
-                                    clbk(d)
-
-                            }).catch(e => {
-                                self.sdk.node.transactions.loading[id] = false;
-
-                                if (clbk) {
-                                    clbk(null, e)
-                                }
-                            })
-
-
-                        }
-
-
+                        }).catch(e => {
+                            if (clbk) {
+                                clbk(null, e)
+                            }
+                        })
 
                     }
                 },

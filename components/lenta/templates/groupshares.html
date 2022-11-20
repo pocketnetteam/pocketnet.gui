@@ -18,7 +18,7 @@ var groupshares = group(shares, function(s){
 	return s.address
 })
 
-if(typeof video != 'undefined' && video) groupshares = group(shares, function(s){
+if (typeof video != 'undefined' && video) groupshares = group(shares, function(s){
 	return s.txid
 })
 
@@ -49,7 +49,7 @@ _.each(groupshares, function(gs, address){ 	%>
 
 		<% if(gs.length > 1) { 
 			
-			var name = app.platform.api.clearname(((psdk.userInfo.get(address) || {}).name) || address
+			var name = app.platform.api.clearname((psdk.userInfo.get(address) || {}).name) || address
 			
 			
 			%>
