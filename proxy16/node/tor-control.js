@@ -25,7 +25,23 @@ class Helpers {
 
 class TorControl {
     helpers = new Helpers();
-    state = { status: 'stopped' };
+    state = {
+        instance: this,
+        _status: 'stopped',
+        get status() { return this._status },
+        set status(stateValue) {
+            this._status = stateValue;
+
+            this.instance.statusListeners.forEach((statusListener) => {
+                const isAnyListener = (statusListener.type === 'any');
+                const isTargetListenerType = (statusListener.type === stateValue);
+
+                if (isAnyListener || isTargetListenerType) {
+                    statusListener.listener(stateValue);
+                }
+            });
+        },
+    };
     statusListeners = [];
 
     constructor(settings, proxy) {
@@ -78,9 +94,8 @@ class TorControl {
 
             if (this.settings.enable)
                 return this.start();
-        }catch (e) {
-            this.state.status = "stopped"
-            this._statusListenerCallBack?.(this.state.status)
+        } catch (e) {
+            this.state.status = "stopped";
         }
     }
 
@@ -122,8 +137,7 @@ class TorControl {
 
     install = async ()=>{
         try{
-            this.state.status = "install"
-            this._statusListenerCallBack?.(this.state.status)
+            this.state.status = "install";
             const download = await this.application.download('bin', {user: "cenitelas", name: "tor"});
             await this.application.decompress(download.path, this.settings.path)
             await fs.unlink(download.path)
@@ -158,20 +172,17 @@ class TorControl {
             if(data?.data?.indexOf("100%") >= 0){
                 console.log("TOR started")
                 this.state.status = "started"
-                this._statusListenerCallBack?.(this.state.status)
             }
             // console.log(data)
         }
 
         this.state.status = "running"
-        this._statusListenerCallBack?.(this.state.status)
         this.instance = child_process.spawn(path.join(this.settings.path, this.helpers.bin_name("tor")), [
             "-f",`${path.join(this.settings.path,"torrc")}`,
         ], { stdio: ['ignore'], detached : false, shell : false, env: {'LD_LIBRARY_PATH': this.settings.path}})
         this.instance.on("error", (err)=>log({error: err}));
         this.instance.on("exit", async (code) => {
             this.state.status = "stopped"
-            this._statusListenerCallBack?.(this.state.status)
             try {
                 await this.stop()
             }catch (e) {}
@@ -225,10 +236,13 @@ class TorControl {
     }
 
     info = (compact)=>{
+        const stateNormalized = { ...this.state };
+        delete stateNormalized.instance;
+
         return {
             enabled : this.settings.enable,
             instance : !!this.instance,
-            state : this.state,
+            state : stateNormalized,
             binPath : path.join(this.settings.path, this.helpers.bin_name("tor")),
             dataPath : this.settings.path,
         }
