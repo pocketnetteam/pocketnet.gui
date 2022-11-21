@@ -858,8 +858,6 @@ var menu = (function(){
 
 							current = balance.actual
 
-							console.log('balance', balance)
-
 							self.app.platform.sdk.wallet.drawSpendLineActions(el.find('.numberWrp'), balance)
 						}
 

@@ -2031,27 +2031,28 @@ var wallet = (function(){
 								actions.prepareTransaction(calculatedFee, function(amount, reciever, feemode, message, calculatedFee){
 
 
-								actions.sendTransaction(amount, reciever, feemode, message, calculatedFee, (txdata, err) => {
+									actions.sendTransaction(amount, reciever, feemode, message, calculatedFee, (txdata, err) => {
 
-									sendpreloader(false)
+										sendpreloader(false)
 
-									if (err){
-										self.app.platform.errorHandler(err, true)
-										return
-									}
-
-
-									renders.mainWithClear()
-
-									sitemessage(self.app.localization.e('wssuccessfully'))
+										if (err){
+											self.app.platform.errorHandler(err, true)
+											return
+										}
 
 
-									//// TODO
+										renders.mainWithClear()
 
-									if(essenseData.sendclbk && txdata.transaction) essenseData.sendclbk({
-										txid : txdata.transaction
+										sitemessage(self.app.localization.e('wssuccessfully'))
+
+
+										//// TODO
+
+										if(essenseData.sendclbk && txdata.transaction) essenseData.sendclbk({
+											txid : txdata.transaction
+										})
+
 									})
-
 								})
 
 
@@ -2254,69 +2255,62 @@ var wallet = (function(){
 			},
 			
 			addresses : function(clbk){
+
+				var account = self.psdk.actions.getCurrentAccount()
+
+				if(!account){
+					if(clbk) clbk()
+
+					return
+				}
+
 				var a = addressesGroup.total.addresses();
-				var as = {};
 
-				self.app.platform.sdk.node.transactions.get.unspents(function(unspents){
+				var meta = [addressesGroup.pnetwallet, addressesGroup.wallet];
 
-					self.app.platform.sdk.node.transactions.get.balance(function(total){
+				var _addressesGroup = _.map(meta, function(gr){
 
+					var addresses = _.map(gr.addresses(), function(address){
 
-						_.each(unspents, function(unspent, i){
+						return {
+							balance : account.actualBalance([address]).actual,
+							address : address
+						}
+					})
 
-							as[i] = _.reduce(unspent, function(m, u){
-								return m + Number(u.amount)
-							}, 0)
-
-						})
-
-						var meta = [addressesGroup.pnetwallet, addressesGroup.wallet];
-
-						var _addressesGroup = _.map(meta, function(gr){
-
-							var addresses = _.map(gr.addresses(), function(address){
-								return {
-									balance : as[address],
-									address : address
-								}
-							})
-
-							return {
-								caption : gr.caption,
-								details : addresses,
-								label : gr.alabel
-								
-							}
-
-						}, a)
-
-						self.shell({
-
-							name :  'addresses',
-							el :   el.addresses,
-							data : {
-								addressesGroup : _addressesGroup,
-								total : total
-							},
-
-						}, function(_p){
-
-							_p.el.find('.addaddress').on('click', events.addaddress)
-							_p.el.find('.copyaddress').on('click', function(){
-								copyText($(this))
-
-								sitemessage(self.app.localization.e('successcopied'))
-							})
-							
-
-							if (clbk)
-								clbk()
-
-						})
-
-					}, a)
+					return {
+						caption : gr.caption,
+						details : addresses,
+						label : gr.alabel
+						
+					}
 
 				}, a)
+
+				self.shell({
+
+					name :  'addresses',
+					el :   el.addresses,
+					data : {
+						addressesGroup : _addressesGroup,
+						total : account.actualBalance()
+					},
+
+				}, function(_p){
+
+					_p.el.find('.addaddress').on('click', events.addaddress)
+					_p.el.find('.copyaddress').on('click', function(){
+						copyText($(this))
+
+						sitemessage(self.app.localization.e('successcopied'))
+					})
+					
+
+					if (clbk)
+						clbk()
+
+				})
+
 
 				
 			},
@@ -2466,7 +2460,7 @@ var wallet = (function(){
 				
 				
 			}
-
+			/*
 			if(isMobile()){
 
 				var cc = el.c.find('.circularprogress');
@@ -2495,70 +2489,7 @@ var wallet = (function(){
 				var trueshold = 80
 
 				
-
-				/*if(!essenseData.api){
-					var parallax = new SwipeParallaxNew({
-
-						el : el.c.find('.ntf'),
-	
-						allowPageScroll : 'vertical',
-		
-						directions : {
-							down : {
-								cancellable : true,						
-	
-								positionclbk : function(px){
-									var percent = Math.abs(px) / trueshold;
-	
-									if (px >= 0){
-	
-										progress.options.text = {
-											value: ''
-										};
-										cc.fadeIn(1)
-										progress.update(percent * 100);
-	
-										cc.height((maxheight * percent)+ 'px')								
-	
-										//tp.css('opacity', 1 -  (4 * percent))
-	
-									}
-									else{
-										progress.renew()
-										cc.fadeOut(1)
-									}
-	
-								},
-	
-								constraints : function(){
-									if(w.scrollTop() <= 0){
-										return true;
-									}
-								},
-	
-								restrict : true,
-								trueshold : trueshold,
-								clbk : function(){
-	
-									progress.update(0);
-									cc.fadeOut(1)
-									self.app.platform.sdk.notifications.getNotifications()
-	
-									self.app.platform.sdk.node.transactions.get.allBalanceUpdate(function(){
-										make()
-									})
-	
-								}
-		
-							}
-						}
-						
-		
-					}).init()
-				}*/
-
-				
-			}
+			}*/
 		}
 
 		var prepareOptions = function(){
@@ -2585,63 +2516,60 @@ var wallet = (function(){
 		}
 
 		var drawCircles = function(clbk, update){
+
+			var account = self.app.platform.actions.getCurrentAccount()
+
+			if(!account) {
+
+				if(clbk) clbk()
+
+				return
+			}
+
+			console.log('drawCircles')
+
+
 			lazyEach({
 				array : _.toArray(addressesGroup),
 				sync : true,
 
 				action : function(p){
+
 					var group = p.item;
 
 					var addresses = group.addresses();
 
-					self.app.platform.sdk.node.transactions.get.balance(function(amount){
+					var balance = account.actualBalance(addresses)
 
-						self.app.platform.sdk.node.transactions.get.canSpend(addresses, function(spend, total){
+					var colorN = '#414244';
+					var colorG = '#0F8623';
+					var samount = Math.max(balance.actual ? balance.tempbalance / balance.actual : 0, 0);
 
-							var color = '#414244';
-							var samount = 100;
-							var temp = self.app.platform.sdk.node.transactions.tempBalance()
+					var move = {
+						positive : {
+							summary : 100 - samount,
+							color : colorG
+						}
+					}
 
-							
-							if(total){
-								if(group.id == 'pnetwallet' || group.id == 'total'){
-									total = temp + total;
-								}
+					if(samount){
+						move.neutral = {
+							summary : samount,
+							color : colorN
+						}
+					}
 
-								samount = 100 * spend / total
-								color = '#0F8623'
-							}
+					console.log('move', move)
 
-							var move = {
-								positive : {
-									summary : samount,
-									color : color
-								}
-							}
+					renders.total({
 
-							if(spend < total){
-								move.neutral = {
-									summary : 100 - samount,
-									color : '#414244'
-								}
-							}
+						label : group.label,
+						id : group.id,
+						balance : balance.actual,
+						move : move,
+						update : update
 
-							if(group.id == 'pnetwallet'|| group.id == 'total'){
-								amount = temp + amount;
-							}
-
-							renders.total({
-
-								label : group.label,
-								id : group.id,
-								balance : amount,
-								move : move,
-								update : update
-
-							}, p.success)
-						})
-						
-					}, addresses)
+					}, p.success)
 
 				},
 
@@ -2675,6 +2603,7 @@ var wallet = (function(){
 				lazyActions(actions, clbk)
 
 				self.app.platform.sdk.node.transactions.clbks.circles = function(){
+					console.log("HERE")
 					drawCircles(null, true)
 				};
 
@@ -2685,7 +2614,7 @@ var wallet = (function(){
 
 			})
 
-			setTimeout(function(){
+			/*setTimeout(function(){
 
 				if(el.c && (!unspentRequestDate || unspentRequestDate.addSeconds(90) < new Date())) 
 				{
@@ -2694,7 +2623,7 @@ var wallet = (function(){
 					unspentRequestDate = new Date()
 				}
 
-			}, 2000)
+			}, 2000)*/
 			
 
 		}

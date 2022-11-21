@@ -516,6 +516,8 @@ var Action = function(account, object, priority){
 
             account.parent.app.platform.sdk.node.transactions.get.tx(self.transaction, (data = {}, error = {}) => {
 
+                console.log('data', data, error)
+
 
                 if (error.code == -5 || error.code == -8){ /// check codes (transaction not apply, resend action)
                     self.sent = null
@@ -1123,9 +1125,20 @@ var Account = function(address, parent){
         return true
     }
 
-    self.getActualUnspents = function(onlyReady){
+    self.getActualUnspents = function(onlyReady, adresses){
 
-        return _.filter(self.unspents.value, (u) => {
+        var unspents = self.unspents.value
+
+        if (adresses) {
+
+            if(!_.isArray(adresses)) adresses = [adresses]
+
+            unspents = _.filter(unspents, (u) => {
+                return _.indexOf(adresses, u.address) > -1
+            })
+        }
+
+        return _.filter(unspents, (u) => {
             
             if(onlyReady && onlyReady != 'withUnconfirmed'){
                 if(!checkUnspentReadyBlockChain(u)) return false
@@ -1336,7 +1349,8 @@ var Account = function(address, parent){
         }, 0)
     }
 
-    self.actualBalance = function(){
+    self.actualBalance = function(adresses){
+
 
         var balance = {
             total : 0,
@@ -1364,8 +1378,8 @@ var Account = function(address, parent){
 
         }, 0)
 
-        var totalUnspents = self.getActualUnspents()
-        var unspents = self.getActualUnspents('withUnconfirmed')
+        var totalUnspents = self.getActualUnspents(null, adresses)
+        var unspents = self.getActualUnspents('withUnconfirmed', adresses)
 
         balance.total = unspentsAmount(totalUnspents) + tempbalance
 

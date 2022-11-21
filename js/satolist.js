@@ -12552,6 +12552,47 @@ Platform = function (app, listofnodes) {
 
         wallet: {
 
+            
+
+            drawSpendLineActions: function (el, balance, clbk) {
+
+                var total = balance.actual
+                var amount = balance.actual - balance.tempbalance
+
+                window.requestAnimationFrame(() => {
+                    if (total > 0 && amount < total) {
+
+                        if (!el.find('.spendLine').length) {
+                            el.append('<div class="spendLine"><div class="line"></div></div>')
+                        }
+
+                        var sline = el.find('.spendLine .line');;
+
+                        if (amount == 0) {
+                            if(!sline.hasClass('bad'))
+                                sline.addClass('bad')
+                        }
+                        else {
+                            if (sline.hasClass('bad'))
+                                sline.removeClass('bad')
+                        }
+
+                        sline.css('width', (100 * amount / total) + "%")
+
+
+                    }
+                    else {
+                        el.find('.spendLine').remove()
+                    }
+
+                    if (clbk)
+                        clbk()
+                })
+                    
+            },
+
+            /* */
+
             txbaseFeesMeta: function (address, outputs, keyPair, feerate, create, clbk) {
                 self.sdk.wallet.txbase([address], _.clone(outputs), null, null, function (err, inputs, _outputs) {
 
@@ -12698,79 +12739,6 @@ Platform = function (app, listofnodes) {
 
                 }, adresses, update)
 
-            },
-
-            drawSpendLineActions: function (el, balance, clbk) {
-
-                var total = balance.actual
-                var amount = balance.actual - balance.tempbalance
-
-                window.requestAnimationFrame(() => {
-                    if (total > 0 && amount < total) {
-
-                        if (!el.find('.spendLine').length) {
-                            el.append('<div class="spendLine"><div class="line"></div></div>')
-                        }
-
-                        var sline = el.find('.spendLine .line');;
-
-                        if (amount == 0) {
-                            if(!sline.hasClass('bad'))
-                                sline.addClass('bad')
-                        }
-                        else {
-                            if (sline.hasClass('bad'))
-                                sline.removeClass('bad')
-                        }
-
-                        sline.css('width', (100 * amount / total) + "%")
-
-
-                    }
-                    else {
-                        el.find('.spendLine').remove()
-                    }
-
-                    if (clbk)
-                        clbk()
-                })
-                    
-            },
-
-            drawSpendLine: function (el, clbk, addresses) {
-                self.app.platform.sdk.node.transactions.get.canSpend(addresses || null, function (amount, total) {
-
-                    window.requestAnimationFrame(() => {
-                        if (total > 0 && amount < total) {
-
-                            if (!el.find('.spendLine').length) {
-                                el.append('<div class="spendLine"><div class="line"></div></div>')
-                            }
-    
-                            var sline = el.find('.spendLine .line');;
-    
-                            if (amount == 0) {
-                                if(!sline.hasClass('bad'))
-                                    sline.addClass('bad')
-                            }
-                            else {
-                                if (sline.hasClass('bad'))
-                                    sline.removeClass('bad')
-                            }
-    
-                            sline.css('width', (100 * amount / total) + "%")
-    
-    
-                        }
-                        else {
-                            el.find('.spendLine').remove()
-                        }
-    
-                        if (clbk)
-                            clbk()
-                    })
-                    
-                })
             },
 
             saveTempInfoWallet : function(txid, inputs, outputs){
@@ -12996,6 +12964,8 @@ Platform = function (app, listofnodes) {
                 this.sendmany(mnemonic, outputs, clbk, embdedtext)
 
             },
+
+            /* */
         },
         addresses: {
             storage: {
@@ -18865,8 +18835,6 @@ Platform = function (app, listofnodes) {
                 send: function (tx, clbk) {
                     var hex = tx.toHex();
 
-                    ///02000000c461916001a051befc35b2b9e291351daf25d9cfe0a69804d04609f929b24715ffe8aaac72010000006a47304402201eaea2d4c04c416f7dbdd3745b29fc1d49eeb7c826cfddf249065193897e22a402205372a4be6a6c0b4a4f74ba86b2fe62c7895d83ab7c17049cc6d764f03d5cf4e0012102e854216811757649179139c8136c8d2e0bfadf92e71f8840752ba6e526e568e1ffffffff0280969800000000005e76a914aa66691afeeb4399803dcfb1ef47ed1024e1f9928763ad75a8207ca94ddc1031a8ce4fac4e3b8d61fd232b491a19d08e4b51f51d89f70a9eccf7886776a914b55078daf7f7b3311237309ddb1ba6af6d4ad4a888ad0311ba11b168bb750600000000001976a914b55078daf7f7b3311237309ddb1ba6af6d4ad4a888ac00000000
-
                     self.app.api.rpc('sendrawtransaction', [hex]).then(d => {
 
                         if (clbk)
@@ -19414,7 +19382,20 @@ Platform = function (app, listofnodes) {
 
                     balance: function (clbk, address, update, canSpend) {
 
-                        if (_.isArray(address)) {
+                        var account = self.app.platform.actions.getCurrentAccount()
+
+                        if(!account) {
+
+                            if(clbk) clbk(0)
+            
+                            return
+                        }
+
+                        if (clbk) clbk(account.actualBalance(address).actual)
+
+                        
+
+                        /*if (_.isArray(address)) {
                             self.sdk.node.transactions.get.balanceAr(clbk, address, update, canSpend)
 
                         }
@@ -19433,7 +19414,7 @@ Platform = function (app, listofnodes) {
                                     clbk(amount, unspent, e)
 
                             }, address, update)
-                        }
+                        }*/
 
 
                     },
@@ -19707,8 +19688,10 @@ Platform = function (app, listofnodes) {
 
                         self.psdk.transaction.load(id).then(tx => {
 
+                            console.log("ID", tx)
+
                             if (clbk) {
-                                clbk(tx)
+                                clbk(tx[id])
                             }
 
                         }).catch(e => {
