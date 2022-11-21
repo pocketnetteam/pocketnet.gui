@@ -10489,7 +10489,6 @@ Platform = function (app, listofnodes) {
                             }, {
                                 host: ps
                             }).catch(e => {
-                                console.log("E", e)
 
                                 return Promise.resolve()
                             })
@@ -19774,8 +19773,6 @@ Platform = function (app, listofnodes) {
                             if (clbk) {
 
                                 var errorcode = deep(_error, 'code') || null
-
-                                console.log("errorcode", errorcode)
 
                                 clbk(
                                     (errorcode == -5) || (errorcode == -8) ||

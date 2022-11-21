@@ -440,7 +440,6 @@
             //// ':[a-z_]+?:'
             ns.unicodeCharRegexCached = map.join('|');
 
-            console.log('ns.unicodeCharRegexCached', ns.unicodeCharRegexCached)
         }
 
         return ns.unicodeCharRegexCached;

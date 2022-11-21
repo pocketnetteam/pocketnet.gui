@@ -55,6 +55,8 @@ f.addzeros = function(v){
 
 f.numfromreleasestring = function(v){
 
+    if(!v) return 0
+
     var vss = v.split('.')
 
     vss[2] = f.addzeros(vss[2])

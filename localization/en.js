@@ -206,7 +206,7 @@ _l.usavechanges = "Do you want to save your changes?";
 
 _l.referralsCount = 'Users who have used the referral link.';
 _l.commentatorsCount = function(limit){
-    return `Users have commented on you more than ${limit + (limit === 1 ? ' time' : ' times')}`;
+    return "Users have commented on you more than " + limit + (limit === 1 ? ' time' : ' times')
 };
 _l.from = 'Period: ';
 _l.to = 'to';
@@ -2383,5 +2383,8 @@ _l.goToDiagnose = "Go to Diagnostics";
 _l.connectingTo = "Connecting to";
 _l.earnings = "Total earnings";
 
+
+
+_l.authHeading = "Auth";
 
 

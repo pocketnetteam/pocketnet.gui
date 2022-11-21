@@ -146,8 +146,8 @@ if(!_Node)
 					embeddingSettigns.openapi = true
 					
 					if (app.platform.papi[action] && (id || ids)){
-						app.platform.papi[action](id || ids.split(','), el, () => {
-							setTimeout(() => {
+						app.platform.papi[action](id || ids.split(','), el, function() {
+							setTimeout(function() {
 								$('html').addClass('openapiready')
 							}, 500)
 						}, embeddingSettigns)

@@ -97,6 +97,25 @@ var videoCabinet = (function () {
 
 				return error.text || findResponseError(error) || JSON.stringify(error);
 			},
+
+			getCachedViewsParsed() {
+				const cahceViewsInformation = localStorage.getItem('aggregatedVideoViews_v2') || "{}";
+
+				let viewsObject = {};
+
+				try {
+					viewsObject = JSON.parse(cahceViewsInformation);
+
+					if (typeof viewsObject !== 'object') {
+						viewsObject = {};
+					}
+
+				} catch (errorParsing) {
+					viewsObject = {};
+				}
+
+				return viewsObject;
+			},
 		};
 
 		var actions = {
@@ -259,22 +278,7 @@ var videoCabinet = (function () {
 							),
 					)
 					.then((aggregatedNumberViews) => {
-						const cahceViewsInformation = localStorage.getItem('aggregatedVideoViews_v2') || "{}";
-
-						let viewsObject = {};
-
-						try {
-							viewsObject = JSON.parse(cahceViewsInformation);
-
-							if (typeof viewsObject !== 'object') {
-								viewsObject = {};
-							}
-
-						} catch (errorParsing) {
-							viewsObject = {};
-						}
-
-						console.log("viewsObject", viewsObject)
+						const viewsObject = helpers.getCachedViewsParsed();
 
 						const cachedViews =+ (
 							viewsObject[self.app.user.address.value] || 0
@@ -284,7 +288,7 @@ var videoCabinet = (function () {
 							viewsObject[self.app.user.address.value] = aggregatedNumberViews;
 
 							localStorage.setItem(
-								'aggregatedVideoViews',
+								'aggregatedVideoViews_v2',
 								JSON.stringify(viewsObject),
 							);
 
@@ -307,6 +311,17 @@ var videoCabinet = (function () {
 				renders.videos(videos, videoPortionElement, fromBlockChainFlag);
 
 				//getting and rendering bonus program status for views and ratings (same template)
+				const cahcedViews = helpers.getCachedViewsParsed()[self.app.user.address.value];
+				if (cahcedViews) {
+					renders.bonusProgram(
+						{
+							parameterName: 'bonusProgramViews',
+							value: cahcedViews,
+						},
+						el.bonusProgramContainerStars,
+					);
+				}
+				
 				actions
 					.getHosts()
 					.then(() => actions.getTotalViews())
@@ -664,7 +679,6 @@ var videoCabinet = (function () {
 				actions
 					.getSingleVideo(videoUrl)
 					.then((dataVideo) => {
-						debugger;
 
 						const formattedData = {
 							...dataVideo,
@@ -1056,8 +1070,6 @@ var videoCabinet = (function () {
 				};
 
 				const elName = typeDictionary[p.type];
-
-				console.log('external', external)
 
 				if (external && external.id == elName) {
 					external.show();
@@ -1899,8 +1911,6 @@ var videoCabinet = (function () {
 					self,
 					'app.modules.uploadpeertube.module.essenses.uploadpeertube',
 				);
-
-				console.log('externallatest', externallatest)
 
 				if (externallatest && !externallatest.destroyed) {
 					external = externallatest;
