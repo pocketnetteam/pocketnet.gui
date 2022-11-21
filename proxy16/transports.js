@@ -10,26 +10,71 @@ const tls = require("tls");
 
 module.exports = function (enable = false) {
     const self = {};
-    self.proxyHosts = []
+    self.proxyHosts = {};
     self.lastUpdate = Date.now();
 
-    const isUseProxy = (path)=>{
-        const url = new URL(path)
-        if((self.lastUpdate + 60*60*1000) < Date.now()){
-            self.proxyHosts = [];
-            self.lastUpdate = Date.now();
+    const isTorNeeded = (url) => {
+        const urlParts = new URL(url);
+        const { hostname } = urlParts;
+
+        const timeNow = Date.now();
+
+        const hostStats = self.proxyHosts[hostname];
+
+        if (!hostStats) {
+            return false;
         }
-        return self.proxyHosts.some(el=>el===url?.host);
+
+        if (timeNow >= hostStats.nextTry) {
+            delete self.proxyHosts[hostname];
+
+            console.log('Proxy16: Tor needed? false. Tries left for', hostname, hostStats.triesLeft);
+            return false;
+        }
+
+        if (hostStats.triesLeft || hostStats.accessible) {
+            console.log('Proxy16: Tor needed? false. Tries left for', hostname, hostStats.triesLeft);
+            return false;
+        }
+
+        console.log('Proxy16: Tor needed? true. Tries left for', hostname, hostStats.triesLeft);
+        return true;
     }
 
-    const proxifyHost = (path) => {
-        const url = new URL(path)
-        self.proxyHosts.push(url?.host)
-    }
+    const saveHostStats = (url, stats) => {
+        const urlParts = new URL(url);
+        const { hostname } = urlParts;
 
-    const unproxifyHost = (path) => {
-        const url = new URL(path)
-        self.proxyHosts = self.proxyHosts.filter(el=>el!==url.host)
+        const oneHour = 60 * 60 * 1000;
+        const limitTries = 3;
+
+        const hostStats = self.proxyHosts[hostname];
+
+        if (stats) {
+            self.proxyHosts[hostname] = {
+                ...self.proxyHosts[hostname],
+                ...stats,
+            };
+        }
+
+        if (hostStats) {
+            if (hostStats.triesLeft === 0 || hostStats.accessible) {
+                return;
+            }
+
+            const timeNow = Date.now();
+
+            if (timeNow >= hostStats.nextTry - oneHour + 60 * 60) {
+                console.log('Proxy16: Remove 1 try for', hostname);
+                hostStats.triesLeft -= 1;
+            }
+        }
+
+        self.proxyHosts[hostname] = {
+            triesLeft: limitTries - 1,
+            ...self.proxyHosts[hostname],
+            nextTry: Date.now() + oneHour,
+        };
     }
 
     const axiosRequest = async (arg1, arg2)=> {
@@ -49,23 +94,24 @@ module.exports = function (enable = false) {
             preparedOpts = arg1;
         }
 
-        const isProxyUsed = isUseProxy(preparedOpts.url);
-
-        if (isProxyUsed && enable) {
+        if (isTorNeeded(preparedOpts.url) && enable) {
             await awaitTor();
             preparedOpts.httpsAgent = torHttpsAgent;
         }
 
         try {
-            return _axios(preparedOpts);
+            return await _axios(preparedOpts)
+              .then(() => {
+                  saveHostStats(preparedOpts.url, { accessible: true });
+              });
         } catch (e) {
             const isTorEnabled = await awaitTor();
 
-            if (!isProxyUsed && isTorEnabled && enable) {
-                proxifyHost(preparedOpts.url)
+            if (!isTorNeeded(preparedOpts.url) && isTorEnabled && enable) {
+                saveHostStats(preparedOpts.url)
                 return axiosRequest(preparedOpts);
             }
-            unproxifyHost(preparedOpts.url)
+
             throw e;
         }
     }
@@ -81,8 +127,6 @@ module.exports = function (enable = false) {
         let parentAbortControlSignal = opts?.signal;
 
         async function pingHost(host) {
-            const tls = require('tls');
-
             function tlsPing() {
                 return new Promise((resolve, reject) => {
                     const timeoutId = setTimeout(() => {
@@ -129,7 +173,7 @@ module.exports = function (enable = false) {
             return abortControl.signal;
         }
 
-        if (isUseProxy(url) && enable) {
+        if (isTorNeeded(url) && enable) {
             opts.agent = torHttpsAgent;
         } else {
             const urlParts = new URL(url);
@@ -138,7 +182,7 @@ module.exports = function (enable = false) {
             if (!isPingSuccess) {
                 console.log('Proxy16: Proxifing', urlParts.host)
 
-                proxifyHost(url);
+                saveHostStats(url);
                 opts.agent = torHttpsAgent;
             }
         }
@@ -147,23 +191,24 @@ module.exports = function (enable = false) {
             opts.signal = timeout(30);
 
             console.log('Proxy16: Fetch request arrived for', url, 'tor enabled?', !!opts.agent);
-            return await fetch(url, {
-                agent: getTransportAgent('https'),
-                ...opts,
-            }).then(async (res) => {
-                console.log('Proxy16: Fetch request received SUCCESS', 'tor enabled?', !!opts.agent);
-                return res;
-            }).catch((err) => {
-                console.log('Proxy16: Fetch request received ERROR', 'tor enabled?', !!opts.agent);
-                throw err;
-            });
+            return await fetch(url, opts)
+                .then(async (res) => {
+                    console.log('Proxy16: Fetch request received SUCCESS', 'tor enabled?', !!opts.agent);
+
+                    saveHostStats(url, { accessible: true });
+                    return res;
+                })
+                .catch((err) => {
+                    console.log('Proxy16: Fetch request received ERROR', 'tor enabled?', !!opts.agent);
+                    throw err;
+                });
         } catch (e) {
             console.log('Proxy16: Retry with TOR');
             const isTorEnabled = await awaitTor();
             console.log('Proxy16: Is TOR active?', isTorEnabled);
 
-            if (enable && isTorEnabled && !isUseProxy(url)) {
-                proxifyHost(url)
+            if (enable && isTorEnabled && !isTorNeeded(url)) {
+                saveHostStats(url)
 
                 opts.agent = torHttpsAgent;
                 opts.signal = timeout(40);
@@ -182,30 +227,27 @@ module.exports = function (enable = false) {
                   });
             }
 
-            unproxifyHost(url)
             throw e;
         }
     }
 
     self.request = async (options, callBack) => {
         let req = _request;
-        if (isUseProxy(options.url) && enable) {
+        if (isTorNeeded(options.url) && enable) {
             req = _request.defaults({agent: torHttpsAgent});
         }
         try {
-            const data = req(options, (...args)=>{
-                    callBack?.(...args)
-                })
-            return data;
+            return req(options, (...args) => {
+                callBack?.(...args)
+            });
         } catch (e) {
             const isTorEnabled = await awaitTor();
 
-            if (enable && isTorEnabled && !isUseProxy(options.url)) {
-                proxifyHost(options.url)
+            if (enable && isTorEnabled && !isTorNeeded(options.url)) {
+                saveHostStats(options.url)
                 return self.request(options, callBack);
             }
 
-            unproxifyHost(options.url)
             callBack?.(e);
         }
     }
