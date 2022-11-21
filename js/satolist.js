@@ -284,6 +284,10 @@ Platform = function (app, listofnodes) {
         'PK4qABXW7cGS4YTwHbKX99MsgMznYgGxBL' : true
     }
 
+    self.bchl = {
+        'PJTPfBQ6Q174s7WWcW41DwTdGrkGYQx5sJ' : true
+    }
+
     self.nvadr = {
         'PUy71ntJeRaF1NNNnFGrmC8NzkY6ruEHGK' : true,
         'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd' : true,
@@ -324,6 +328,7 @@ Platform = function (app, listofnodes) {
         'PFWx4RKpggTjeDNq6oyWJfejP5z8oiKGE5',
         'PFr6sDvtJq3wJejQce5RJ5L8u1oYKgjW9o',
     ];
+
     self.whiteList = [
       'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd',
       'PJ3nv2jGyW2onqZVDKJf9TmfuLGpmkSK2X',
@@ -10249,6 +10254,10 @@ Platform = function (app, listofnodes) {
                 var totalComplainsFirstFlags = typeof ustate.firstFlags === 'object' ? Object.values(ustate.firstFlags).reduce((a,b) => a + +b, 0) : 0
 
                 if(self.bch[address]) return true
+
+                if(self.bchl[address] && (typeof _Electron == 'undefined') && !(window.cordova && !window.pocketnetstore)){
+                    return true
+                }
 
                 if(typeof count == 'undefined') count = -12
 
