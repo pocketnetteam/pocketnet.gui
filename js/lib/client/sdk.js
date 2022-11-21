@@ -8,6 +8,8 @@ var pSDK = function({app, api, actions}){
     var dbstorages = {}
     var dbversion = 1;
 
+    self.actions = actions
+
     var dbmeta = {
 
         userInfoFull : {
@@ -49,7 +51,7 @@ var pSDK = function({app, api, actions}){
             return o && !_.isObject(o)
         })
 
-        account.account(txids)
+        account.checkTransactionById(txids)
     }
 
     var getDBStorage = function ({name, time}) {

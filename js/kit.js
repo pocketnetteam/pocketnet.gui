@@ -2034,7 +2034,7 @@ Transaction = function(){
 		v : []
 	};
 
-	self.feesMode = {
+	self.feemode = {
 		set : function(_v){
 
 			this.v = 'exclude'
@@ -2064,15 +2064,17 @@ Transaction = function(){
 		return {
 			type : self.type,
 			reciever : self.reciever.v,
-			feesMode : self.feesMode.v,
-			message : self.feesMode.v
+			feemode : self.feemode.v,
+			message : self.message.v,
+			source : self.source.v,
 		}
 	}
 
 	self.import = function(p){
 		self.reciever.set(p.reciever)
-		self.feesMode.set(p.feesMode)
+		self.feemode.set(p.feemode)
 		self.message.set(p.message)
+		self.source.set(p.source)
 	}
 
 	self.type = 'transaction'

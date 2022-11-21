@@ -1,11 +1,11 @@
 <% 
-	var info = psdk.userInfo.getmy() | {}
+	var info = psdk.userInfo.getShortForm() 
 
-	var name = app.platform.api.clearname(info.name || user.address.value ) 
+	var name = info.name
 
 	var src = info.image
 
-	var letter = name ? name[0] : ''
+	var letter = info.letter
 
 	var deleted = typeof app.platform.sdk.user.myaccauntdeleted != 'undefined' && app.platform.sdk.user.myaccauntdeleted()
 

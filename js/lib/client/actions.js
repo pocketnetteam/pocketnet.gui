@@ -1,12 +1,20 @@
 var ActionOptions = {
     pcTxFee : 1 / 100000000,
     amountC : 100000000,
+    clearRejected : true,
+    clearCompleted : true,
     objects : {
         transaction : {
             calculateFee : true,
             rejectedAsk : true,
-            destination : function(obj){
-                return _.clone(obj.object.reciever.v)
+            donotexport : true,
+            amount : function(action){
+                return _.reduce(action.object.reciever.v, (m, dn) => {
+                    return m + dn.amount
+                }, 0)
+            },
+            destination : function(action){
+                return _.clone(action.object.reciever.v)
             },
             opreturn : function(action, account){
                 if (action.object.message.v){
@@ -14,9 +22,17 @@ var ActionOptions = {
                 }
             },
 
-            addresses : function(){
-                return _.clone(obj.object.source.v)
-            }
+            addresses : function(action){
+                return _.clone(action.object.source.v)
+            },
+
+            feemode : function(action, account){
+                if (action.object.feemode.v){
+                    return action.object.feemode.v
+                }
+            },
+
+         
         },
         upvoteShare : {
             collision : function(obj, obj2){
@@ -69,21 +85,21 @@ var ActionOptions = {
         },
 
         contentBoost : {
-            amount : function(obj){
-                return obj.object.amount.v
+            amount : function(action){
+                return action.object.amount.v
             },
 
-            destination : function(obj){
+            destination : function(action){
                 return []
             }
         },
 
         comment : {
-            destination : function(obj){
-                return _.clone(obj.object.donate.v)
+            destination : function(action){
+                return _.clone(action.object.donate.v)
             },
-            amount : function(obj){
-                return _.reduce(obj.object.donate.v, (m, dn) => {
+            amount : function(action){
+                return _.reduce(action.object.donate.v, (m, dn) => {
                     return m + dn.amount
                 }, 0)
             },
@@ -254,9 +270,15 @@ var Action = function(account, object, priority){
     }
 
     var filterUnspents = function(unspents){
-        if (options.includeZAddresses && options.includeZAddresses()){
 
+        if (options.addresses){
+            var addresses = options.addresses(self, account)
+
+            unspents = _.filter(unspents, (u) => {
+                return _.indexOf(addresses, u.address) > -1
+            })
         }
+
         else{
             unspents = _.filter(unspents, (u) => {
                 return u.address == account.address
@@ -270,19 +292,26 @@ var Action = function(account, object, priority){
 
         var unspents = filterUnspents(account.getActualUnspents(true))
         var fee = calculatedFee || (options.calculateFee ? 0 : ActionOptions.pcTxFee)
+    
+        var changeAddresses = options.addresses ? options.addresses(self, account) : [account.address]
+
+        if(!changeAddresses.length) changeAddresses = [account.address]
+
+        console.log('calculatedFee', calculatedFee, options.feemode && options.feemode(self, account))
+        
 
         if(!unspents.length || retry){
             try{
                 await account.loadUnspents().then((clearUnspents) => {
 
                     if(!clearUnspents.length && !account.unspents.willChange){
-                        return Promise.reject('noinputs')
+                        return Promise.reject('actions_noinputs')
                     }
 
                     clearUnspents = filterUnspents(clearUnspents)
 
                     if(!clearUnspents.length && !account.unspents.willChange){
-                        return Promise.reject('noinputs_on_address')
+                        return Promise.reject('actions_noinputs_on_address')
                     }
     
                     unspents = account.getActualUnspents(true)
@@ -295,22 +324,16 @@ var Action = function(account, object, priority){
             
         }
 
-        if (options.addresses){
-            var addresses = options.addresses(self, account)
+        
 
-            unspents = _.filter(unspents, (u) => {
-                return _.indexOf(addresses, u.address) > -1
-            })
-        }
-
-        options.addresses ? options.addresses() : null
+        //options.addresses ? options.addresses() : null
 
 
         if(!unspents.length){
-            return Promise.reject('noinputs_wait')
+            return Promise.reject('actions_noinputs_wait')
         }
 
-        var amount = (options.amount ? options.amount(self) : 0) + (options.feemode && options.feemode() == 'reciever' ? 0 : fee)
+        var amount = (options.amount ? options.amount(self) : 0) + (options.feemode && options.feemode(self, account) == 'include' ? 0 : fee)
 
         var inputs = getBestInputs(unspents, amount)
 
@@ -319,7 +342,7 @@ var Action = function(account, object, priority){
             return m + u.amount
         }, 0) - fee
 
-        if (totalInputAmount <= 0) return Promise.reject('totalAmountZero')
+        if (totalInputAmount <= 0) return Promise.reject('actions_totalAmountZero')
 
         var outputs = []
 
@@ -343,19 +366,23 @@ var Action = function(account, object, priority){
         else{
             if (options.opreturn){
 
-                var opreturn = options.opreturn(self, accoutn)
+                var opreturn = options.opreturn(self, account)
 
+                console.log('opreturn', opreturn)
+                
                 if (opreturn){
-                    opreturnData = [Buffer.from(optype, 'utf8'), opreturn];
+                    opreturnData = [Buffer.from(opreturn, 'utf8')];
                 }
                 
             }
         }
 
         if (options.destination){
-            _.each(options.destination(), (d) => {
+            _.each(options.destination(self, account), (d) => {
                 outputs.push(_.clone(d))
             })
+
+            
         }
         else{
 
@@ -364,23 +391,33 @@ var Action = function(account, object, priority){
                 var divi = totalInputAmount / 2
 
                 outputs.push({
-                    address : account.address,
+                    address : changeAddresses[0],
                     amount : divi
                 })
                 
                 outputs.push({
-                    address : account.address,
+                    address : changeAddresses[0],
                     amount : totalInputAmount - divi
                 })
             }
             else{
                 outputs.push({
-                    address : account.address,
+                    address : changeAddresses[0],
                     amount : totalInputAmount
                 })
             }
             
         }
+
+        if(options.feemode && options.feemode(self, account) == 'include'){
+            var dfee = fee / outputs.length
+
+            _.each(outputs, (out) => {
+                out.amount = out.amount - dfee
+            })
+        }
+
+        //(options.feemode && options.feemode(self, account) == 'include' ? 0 : fee)
 
         var totalOutputAmount = _.reduce(outputs, (m, u) => {
             return m + u.amount
@@ -388,10 +425,12 @@ var Action = function(account, object, priority){
 
         if (totalOutputAmount < totalInputAmount){
             outputs.push({
-                address : account.address,
+                address : changeAddresses[0],
                 amount : totalInputAmount - totalOutputAmount
             })
         }
+
+        console.log('inputs, outputs', inputs, outputs, fee)
 
         var tx = null
         
@@ -408,8 +447,7 @@ var Action = function(account, object, priority){
         if (options.calculateFee && !calculatedFee){
             var feerate = await account.parent.estimateFee()
 
-
-            return makeTransaction(false, Math.min(tx.virtualSize() * feerate, 0.0999, send))
+            return makeTransaction(false, Math.min(tx.virtualSize() * feerate, 0.0999), send)
         }
 
         var hex = tx.toHex();
@@ -420,7 +458,7 @@ var Action = function(account, object, priority){
 
         var parameters = [hex]
 
-        if (self.object.export){
+        if (self.object.export && !options.donotexport){
             parameters.push(self.object.export())
         }
 
@@ -457,11 +495,11 @@ var Action = function(account, object, priority){
                 return makeTransaction(true, calculatedFee, send)
             }
 
-            if(options.rejectedAsk){
+            if (options.rejectedAsk){
 
             }
 
-            self.rejected = code || (e.toString ? e.toString() : 'rejected')
+            self.rejected = code || (e.toString ? e.toString() : 'actions_rejected')
 
             trigger()
 
@@ -487,7 +525,7 @@ var Action = function(account, object, priority){
                     self.attempts ++ 
 
                     if (self.attempts > 2){
-                        self.rejected = 'rejectedFromNodes'
+                        self.rejected = 'actions_rejectedFromNodes'
 
                         if(options.change) options.change(self, account)
 
@@ -514,7 +552,7 @@ var Action = function(account, object, priority){
 
                 }
 
-                return reject('waitConfirmation')
+                return reject('actions_waitConfirmation')
 
 
             })
@@ -524,7 +562,7 @@ var Action = function(account, object, priority){
     self.processing = async function(){
 
         if (self.completed){
-            return Promise.reject('completed')
+            return Promise.reject('actions_completed')
         }
 
         if (self.rejected){
@@ -536,7 +574,7 @@ var Action = function(account, object, priority){
             /// temps/wait confirmation
 
             if (self.checkConfirmationUntil && self.checkConfirmationUntil > new Date()){
-                return Promise.reject('alreadyCheckConfirmation')
+                return Promise.reject('actions_alreadyCheckConfirmation')
             }
 
             self.checkConfirmationUntil = (new Date()).addSeconds(65)
@@ -545,35 +583,35 @@ var Action = function(account, object, priority){
         }
 
         if (self.sent){
-            return Promise.reject('alreadySent')
+            return Promise.reject('actions_alreadySent')
         }
 
         if (self.sending){
-            return Promise.reject('alreadySending')
+            return Promise.reject('actions_alreadySending')
         }
 
         
 
         if (!account.status.value){
             if(!options.sendWithNullStatus) {
-                return Promise.reject('waitUserStatus')
+                return Promise.reject('actions_waitUserStatus')
             }
         }
 
 
         if (self.until < new Date()){ ///todo
-            self.rejected = 'rejectedByTime'
+            self.rejected = 'actions_rejectedByTime'
 
             return Promise.reject(self.rejected)
 
         }
 
         if (self.object.checkloaded && self.object.checkloaded()){
-            return Promise.reject('resourses')
+            return Promise.reject('actions_resourses')
         }
 
         if (self.object.validation){
-            var error = obj.validation();
+            var error = self.object.validation();
 
             if (error) {
                 self.rejected = error
@@ -584,7 +622,7 @@ var Action = function(account, object, priority){
         if (self.object.canSend){
 
             if (self.checkedUntil && self.checkedUntil > new Date()){
-                return Promise.reject('alreadyCheck')
+                return Promise.reject('actions_alreadyCheck')
             }
 
             self.checkedUntil = (new Date()).addSeconds(45)
@@ -598,7 +636,7 @@ var Action = function(account, object, priority){
                         makeTransaction(false, null, true).then(resolve).catch(reject)
                     }
                     else{
-                        reject('checkFail')
+                        reject('actions_checkFail')
                     }
     
                 })
@@ -610,8 +648,8 @@ var Action = function(account, object, priority){
 
     }
 
-    self.prepareTransaction = function(){
-        return makeTransaction(false, 0, false)
+    self.prepareTransaction = function(fee = 0){
+        return makeTransaction(false, fee, false)
     }
 
     self.get = function(){
@@ -859,7 +897,7 @@ var Account = function(address, parent){
 
         _.each(self.actions.value, (action) => {
 
-            if(!action.completed && !action.rejected){
+            if( (!action.completed || !ActionOptions.clearCompleted) && (!action.rejected || !ActionOptions.clearRejected) ){
                 e.actions.value.push(action.export())
             }   
            
@@ -880,7 +918,9 @@ var Account = function(address, parent){
 
         _.each(e.actions.value, (exported) => {
 
-            if (exported.completed || exported.rejected){
+
+
+            if ((exported.completed && ActionOptions.clearCompleted) || (exported.rejected && ActionOptions.clearRejected)){
 
                 _.each(self.emitted, (category) => {
                     if(exported.id && category[exported.id]){
@@ -1155,7 +1195,7 @@ var Account = function(address, parent){
 
                 if(!obj2.transaction && !obj2.sent && !obj2.completed){
                     if(!action.options.collision(action, obj2)){
-                        obj2.rejected = 'collision'
+                        obj2.rejected = 'actions_collision'
                         self.trigger()
                     }
                 }
@@ -1166,6 +1206,10 @@ var Account = function(address, parent){
         self.actions.value.push(action)
 
         return action
+    }
+
+    self.prepareAction = function(object, priority){
+        return new Action(self, object, priority)
     }
 
     self.getActions = function(type, filter){
@@ -1425,8 +1469,8 @@ var Actions = function(app, api, storage = localStorage){
 
     self.estimateFee = function(){
 
-        if(feerate){
-            return Promise.resolve(feerate)
+        if (data.feerate){
+            return Promise.resolve(data.feerate)
         }
 
         data.feerate = 0.00001
@@ -1435,9 +1479,11 @@ var Actions = function(app, api, storage = localStorage){
             return Promise.resolve({})
         }).then(d => {
 
-            data.feerate = d.feerate || 0.00001
+            data.feerate = Math.max(d.feerate || 0.00001, 0.00001)
 
-            return Promise.resolve(feerate)
+            
+
+            return Promise.resolve(data.feerate)
         })
     }
 
@@ -1485,21 +1531,21 @@ var Actions = function(app, api, storage = localStorage){
         return action
     }
 
-    self.addActionAndSendIfCan = function(object, priority, address){
+    self.addActionAndSendIfCan = function(object, priority, address, p = {}){
 
         if(!address){
             address = app.user.address.value
         }
 
         if(!address) {
-            return Promise.reject('noAddress')
+            return Promise.reject('actions_address')
         }
 
         var action = self.addAction(address, object, priority)
 
         if (accounts[address].checkAccountReadySend()){
 
-            return action.makeTransaction(null, null, true).then(() => {
+            return action.makeTransaction(null, p.calculateFee || null, true).then(() => {
                 return Promise.resolve(action)
             }).catch(e => {
 
@@ -1512,8 +1558,8 @@ var Actions = function(app, api, storage = localStorage){
     }
 
     self.cancelAction = function(address, actionId){
-        if(!address) return Promise.reject('address')
-        if(!actionId) return Promise.reject('actionId')
+        if(!address) return Promise.reject('actions_noAddress')
+        if(!actionId) return Promise.reject('actions_actionId')
     }
 
     self.addAccount = function(address){

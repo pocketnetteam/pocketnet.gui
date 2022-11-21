@@ -2372,3 +2372,27 @@ _l.sortByRating = "Number of ratings";
 
 _l.noPosted = "No posted Videos"
 _l.unpostedFooter = "Unposted videos are deleted from the server after 3-weeks of waiting"
+
+/// Insufficient funds for the transfer, taking into account the commission
+_l.actions_noinputs_wallet = 'Insufficient funds for the transfer, taking into account the commission'
+_l.actions_noinputs = "You don't have enough coins to complete the operation"
+_l.actions_noinputs_on_address = "You don't have enough coins on selected addresses to complete the operation"
+_l.actions_noinputs_wait = "You don't have enough coins to complete the operation now. Please wait"
+_l.actions_totalAmountZero = 'The total amount of the transaction is zero'
+_l.actions_rejected = 'The operation failed for unknown reason'
+_l.actions_rejectedFromNodes = 'The operation was rejected by the network'
+_l.actions_waitConfirmation = 'Operation pending confirmation'
+_l.actions_completed = 'Operation completed'
+_l.actions_alreadyCheckConfirmation = 'The operation has been sent to the blockchain'
+_l.actions_alreadySent = 'Operation already sent'
+_l.actions_alreadySending = 'The operation is already underway'
+_l.actions_waitUserStatus = 'The operation will be sent to the network after the user registration is completed'
+_l.actions_rejectedByTime = 'Operation canceled due to limitation period'
+_l.actions_resourses = 'Resources have not been loaded'
+_l.actions_alreadyCheck = 'Resource loading has already been checked'
+_l.actions_checkFail = 'Resources have not been loaded yet'
+_l.actions_collision = 'The operation was replaced by another'
+_l.actions_actionId = 'Unable to cancel operation, ID missing'
+_l.actions_address = 'Adress missing, user unregistered'
+_l.actions_noAddress = 'Unable to cancel operation, Adress missing'
+

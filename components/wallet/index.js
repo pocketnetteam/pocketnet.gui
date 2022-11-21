@@ -804,20 +804,14 @@ var wallet = (function(){
 
 			calculateFee : function(el){
 
-				self.app.platform.sdk.node.fee.estimate(function(fees){
-					renders.sendFees(el.find('.actionbody'), fees)
-				})
+
+				renders.sendFees(el.find('.actionbody'))
 
 			},
 
 			calculateFeeHtls : function(el){
 
-
-				self.app.platform.sdk.node.fee.estimate(function(fees){
-
-
-					renders.htlsFees(el.find('.actionbody'), fees)
-				})
+				renders.htlsFees(el.find('.actionbody'))
 
 			},
 
@@ -848,8 +842,7 @@ var wallet = (function(){
 				}
 			},
 
-			prepareTransactionCommonV2: function(amount, reciever, feesMode, feerate, message, clbk){
-
+			getTransaction : function(amount, reciever, feemode, message){
 				var source = actions.sendAddresses();
 				var recievers = []
 
@@ -876,164 +869,90 @@ var wallet = (function(){
 					})
 				}
 
+				console.log('feemode', feemode)
 					
 				var transaction = new Transaction()
 				
 					transaction.source.set(source)
-					transaction.recievers.set(recievers)
-					transaction.feesMode.set(feesMode)
+					transaction.reciever.set(recievers)
+					transaction.feemode.set(feemode)
 					transaction.message.set(message)
 
-					
-
-				//////////////
-
-
-				var prepareClbk = function(addresses, outputs, feesMode){
-
-					self.app.platform.sdk.wallet.txbase(addresses, _.clone(outputs), 0, feesMode, function(err, inputs, _outputs){
-
-						if(err){
-							sitemessage(self.app.localization.e('txbase_err_' + err))
-
-							return
-						}
-
-						var tx = self.app.platform.sdk.node.transactions.create.wallet(inputs, _outputs)
-
-
-						var totalFees = Math.min(tx.virtualSize() * feerate, 0.0999);
-
-						
-						if (clbk)
-							clbk(addresses, outputs, totalFees, feesMode)
-					})
-
-				}
-
-				var addresses = actions.sendAddresses();
-				var outputs = [];
-
-
-				if(reciever == 'pnetwallet' || reciever == self.app.localization.e('tacaddress')){
-					outputs.push({
-						address : self.app.platform.sdk.address.pnet().address,
-						amount : amount
-					})
-
-					prepareClbk(addresses, outputs, feesMode)
-
-					return
-				}
-
-				if(reciever == 'wallet' || reciever == self.app.localization.e('twallet')){
-
-					
-
-
-					self.app.platform.sdk.addresses.getFirstRandomAddress(function(_a){
-
-						outputs.push({
-							address : _a,
-							amount : amount
-						})
-
-						self.app.platform.sdk.addresses.save();
-
-						prepareClbk(addresses, outputs, feesMode)
-
-					})
-
-					return
-				}
-
-				outputs.push({
-					address : reciever,
-					amount : amount
-				})
-
-				self.sdk.wallet.embed(outputs, message)
-
-				prepareClbk(addresses, outputs, feesMode)
+				return transaction
 			},
 
-			prepareTransactionCommon : function(amount, reciever, feesMode, feerate, message, clbk){
+			prepareTransactionCommon: function(amount, reciever, feemode, message, calculatedFee, clbk){
 
-				var prepareClbk = function(addresses, outputs, feesMode){
+				var transaction = actions.getTransaction(amount, reciever, feemode, message)
 
-					self.app.platform.sdk.wallet.txbase(addresses, _.clone(outputs), 0, feesMode, function(err, inputs, _outputs){
+				var account = self.psdk.actions.getCurrentAccount()
 
-						if(err){
-							sitemessage(self.app.localization.e('txbase_err_' + err))
+				if (account){
 
-							return
+					var action = account.prepareAction(transaction)
+
+					action.prepareTransaction(calculatedFee).then(txdata => {
+
+						console.log('----txdata has')
+
+
+						if (clbk)
+							clbk(amount, reciever, feemode, message, txdata.calculatedFee)
+
+					}).catch(e => {
+
+						console.error(e)
+
+						if (e == 'actions_noinputs' || e == 'actions_noinputs_on_address'){
+							e = 'actions_noinputs_wallet'
 						}
 
-						var tx = self.app.platform.sdk.node.transactions.create.wallet(inputs, _outputs)
-
-
-						var totalFees = Math.min(tx.virtualSize() * feerate, 0.0999);
-
-						
-						if (clbk)
-							clbk(addresses, outputs, totalFees, feesMode)
-					})
-
-				}
-
-				var addresses = actions.sendAddresses();
-				var outputs = [];
-
-
-				if(reciever == 'pnetwallet' || reciever == self.app.localization.e('tacaddress')){
-					outputs.push({
-						address : self.app.platform.sdk.address.pnet().address,
-						amount : amount
-					})
-
-					prepareClbk(addresses, outputs, feesMode)
-
-					return
-				}
-
-				if(reciever == 'wallet' || reciever == self.app.localization.e('twallet')){
-
-					self.app.platform.sdk.addresses.getFirstRandomAddress(function(_a){
-
-						outputs.push({
-							address : _a,
-							amount : amount
-						})
-
-						self.app.platform.sdk.addresses.save();
-
-						prepareClbk(addresses, outputs, feesMode)
+						self.app.platform.errorHandler(e, true)
 
 					})
 
-					return
+				}
+				else{
+					console.error("AS")
 				}
 
-				outputs.push({
-					address : reciever,
-					amount : amount
-				})
-
-				self.sdk.wallet.embed(outputs, message)
-
-				prepareClbk(addresses, outputs, feesMode)
 			},
 
-			prepareTransaction : function(feerate, clbk){
+			sendTransaction: function(amount, reciever, feemode, message, calculatedFee, clbk){
+				var transaction = actions.getTransaction(amount, reciever, feemode, message)
+
+				self.app.platform.actions.addActionAndSendIfCan(transaction, 1, null, {
+					calculatedFee
+				}).then((txdata) => {
+
+					if(clbk) clbk(txdata)
+
+				}).catch(e => {
+
+					if (e == 'actions_noinputs' || e == 'actions_noinputs_on_address'){
+						e = 'actions_noinputs_wallet'
+					}
+
+					if(clbk) clbk(null, e)
+
+				})
+			},
+
+			prepareTransaction : function(calculatedFee, clbk){
+
 
 				var amount = send.parameters.amount.value;
-				var feesMode = send.parameters.fees.value;
+				var feemode = send.parameters.fees.value;
 				var message = send.parameters.message.value;
 				var reciever = send.parameters.reciever.value;
 
-				actions.prepareTransactionCommonV2(amount, reciever, feesMode, feerate, message, clbk)
+				try{
+					actions.prepareTransactionCommon(amount, reciever, feemode, message, calculatedFee,  clbk)
 
-				//actions.prepareTransactionCommon(amount, reciever, feesMode, feerate, message, clbk)
+				}catch(e){
+					console.error(e)
+				}
+
 				
 			},
 
@@ -1112,6 +1031,7 @@ var wallet = (function(){
 			},
 
 			clearStep : function(clbk){
+				mode = 0
 
 				self.shell({
 
@@ -2060,22 +1980,22 @@ var wallet = (function(){
 
 			////
 			//// SEND
-				sendFees : function(el, fees, clbk){
+				sendFees : function(el, clbk){
+
 
 					if(!actions.validSend()){
 						return;
 					}
 
-					var f = (fees.feerate || 0.000001)
 
-					actions.prepareTransaction(f, function(addresses, outputs, totalFees, feesMode){
+					actions.prepareTransaction(0, function(amount, reciever, feemode, message, calculatedFee){
 
 						self.shell({
 
 							name :  'sendfees',
 							el :   el,
 							data : {
-								fees : totalFees,
+								fees : calculatedFee,
 								d : send
 							},
 
@@ -2085,6 +2005,7 @@ var wallet = (function(){
 
 							send.parameters.fees._onChange = function(v){
 								self.app.settings.set(self.map.uri, 'feesMode', v)
+								feemode = v
 							}
 
 							var sendpreloader = function(r){
@@ -2098,10 +2019,8 @@ var wallet = (function(){
 							}
 
 							setTimeout(function(){
-								_scrollToTop(el.find('.sendtransaction'), w, 200)
+								_scrollToTop(el.find('.sendtransaction'), w, 50)
 							},200)
-
-							
 
 							_p.el.find('.sendtransaction').on('click', function(){
 
@@ -2109,69 +2028,32 @@ var wallet = (function(){
 
 								sendpreloader(true)
 
-								actions.prepareTransaction(f, function(addresses, outputs, totalFees, feesMode){
-
-									self.app.platform.sdk.wallet.txbase(addresses, _.clone(outputs), totalFees, feesMode, function(err, inputs, _outputs){
-
-										if(err){
-											sendpreloader(false)
-											sitemessage(err.text || err)
-
-											return
-										}
-
-										var tx = self.app.platform.sdk.node.transactions.create.wallet(inputs, _outputs)
-
-										_.each(inputs, function(t){
-							 				t.cantspend = true
-							 			})
+								actions.prepareTransaction(calculatedFee, function(amount, reciever, feemode, message, calculatedFee){
 
 
-										self.app.platform.sdk.node.transactions.send(tx, function(d, err){
+								actions.sendTransaction(amount, reciever, feemode, message, calculatedFee, (txdata, err) => {
+
+									sendpreloader(false)
+
+									if (err){
+										self.app.platform.errorHandler(err, true)
+										return
+									}
 
 
-											if(err){
+									renders.mainWithClear()
+
+									sitemessage(self.app.localization.e('wssuccessfully'))
 
 
-												self.app.platform.sdk.node.transactions.releaseCS(inputs)
-												sendpreloader(false)
-												self.app.platform.errorHandler(err, true)
-											}
+									//// TODO
 
-											else
-											{
-												var ids = _.map(inputs, function(i){
-													return {
-														txid : i.txId || i.txid,
-														vout : i.vout
-													}
-												})
-
-
-												self.app.platform.sdk.node.transactions.clearUnspents(ids)
-
-												mode = 0;
-
-												renders.mainWithClear()
-
-												self.app.platform.sdk.wallet.saveTempInfoWallet(d, inputs, _outputs)
-
-												sendpreloader(false)
-
-												sitemessage(self.app.localization.e('wssuccessfully'))
-
-
-												//self.app.platform.matrixchat.transaction(d, essenseData.roomid)
-
-												if(essenseData.sendclbk) essenseData.sendclbk({
-													txid : d
-												})
-												
-											}
-										})	
+									if(essenseData.sendclbk && txdata.transaction) essenseData.sendclbk({
+										txid : txdata.transaction
 									})
 
 								})
+
 
 							})
 

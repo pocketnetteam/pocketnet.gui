@@ -1061,6 +1061,8 @@ Platform = function (app, listofnodes) {
 
         'money': {
 
+            /////
+
             action: function (key, action, akey) {
 
                 var adr = self.app.platform.sdk.address.pnet().address;
@@ -1215,6 +1217,114 @@ Platform = function (app, listofnodes) {
             },
 
             relay: true
+        },
+
+        "actions_noinputs_wallet" : {
+            message: function () {
+                return self.app.localization.e('actions_noinputs_wallet')
+            }
+        },
+        "actions_noinputs" : {
+            message: function () {
+                return self.app.localization.e('actions_noinputs')
+            }
+        },
+        "actions_noinputs_on_address" : {
+            message: function () {
+                return self.app.localization.e('actions_noinputs_on_address')
+            }
+        },
+        "actions_noinputs_wait" : {
+            message: function () {
+                return self.app.localization.e('actions_noinputs_wait')
+            }
+        },
+        "actions_totalAmountZero" : {
+            message: function () {
+                return self.app.localization.e('actions_totalAmountZero')
+            }
+        },
+        "actions_rejected" : {
+            message: function () {
+                return self.app.localization.e('actions_rejected')
+            }
+        },
+        "actions_rejectedFromNodes" : {
+            message: function () {
+                return self.app.localization.e('actions_rejectedFromNodes')
+            }
+        },
+        "actions_waitConfirmation" : {
+            message: function () {
+                return self.app.localization.e('actions_waitConfirmation')
+            }
+        },
+        "actions_completed" : {
+            message: function () {
+                return self.app.localization.e('actions_completed')
+            }
+        },
+        "actions_alreadyCheckConfirmation" : {
+            message: function () {
+                return self.app.localization.e('actions_alreadyCheckConfirmation')
+            }
+        },
+
+        "actions_alreadySent" : {
+            message: function () {
+                return self.app.localization.e('actions_alreadySent')
+            }
+        },
+        "actions_alreadySending" : {
+            message: function () {
+                return self.app.localization.e('actions_alreadySending')
+            }
+        },
+        "actions_waitUserStatus" : {
+            message: function () {
+                return self.app.localization.e('actions_waitUserStatus')
+            }
+        },
+        "actions_rejectedByTime" : {
+            message: function () {
+                return self.app.localization.e('actions_rejectedByTime')
+            }
+        },
+        "actions_resourses" : {
+            message: function () {
+                return self.app.localization.e('actions_resourses')
+            }
+        },
+        "actions_alreadyCheck" : {
+            message: function () {
+                return self.app.localization.e('actions_alreadyCheck')
+            }
+        },
+        "actions_checkFail" : {
+            message: function () {
+                return self.app.localization.e('actions_checkFail')
+            }
+        },
+
+        "actions_collision" : {
+            message: function () {
+                return self.app.localization.e('actions_collision')
+            }
+        },
+        "actions_actionId" : {
+            message: function () {
+                return self.app.localization.e('actions_actionId')
+            }
+        },
+        "actions_address" : {
+            message: function () {
+                return self.app.localization.e('actions_address')
+            }
+        },
+        "actions_noAddress" : {
+            message: function () {
+                return self.app.localization.e('actions_noAddress')
+            }
         },
 
         "313" : {
