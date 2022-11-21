@@ -5,6 +5,7 @@ const _axios = require("axios");
 const fetch = require("node-fetch");
 const { SocksProxyAgent } = require("socks-proxy-agent");
 const torHttpsAgent = new SocksProxyAgent("socks5h://127.0.0.1:9050");
+const yaping = require("yaping");
 
 module.exports = function (enable = false) {
     const self = {};
@@ -76,9 +77,25 @@ module.exports = function (enable = false) {
     self.axios.patch = (...args) => axiosRequest(...args);
 
     self.fetch = async (url, opts = {}) => {
+        let parentAbortControlSignal = opts?.signal;
+
+        function pingHost(host) {
+            return new Promise((resolve) => {
+                yaping(host, (err, target) => {
+                    if (err) {
+                        resolve(false);
+                        return;
+                    }
+
+                    resolve(true);
+                });
+            });
+        }
+
         function timeout(time) {
             const abortControl = new AbortController();
 
+            parentAbortControlSignal.addEventListener('abort', () => abortControl.abort());
             setTimeout(() => abortControl.abort(), time * 1000);
 
             return abortControl.signal;
@@ -86,40 +103,48 @@ module.exports = function (enable = false) {
 
         if (isUseProxy(url) && enable) {
             opts.agent = torHttpsAgent;
+        } else {
+            const urlParts = new URL(url);
+            const isPingSuccess = await pingHost(urlParts.host);
+
+            if (!isPingSuccess) {
+                proxifyHost(url);
+                opts.agent = torHttpsAgent;
+            }
         }
 
         try {
-            opts.signal = timeout(15);
+            opts.signal = timeout(30);
 
-            //console.log('000', url, 'tor enabled?', !!opts.agent);
+            console.log('Proxy16: Fetch request arrived for', url, 'tor enabled?', !!opts.agent);
             return await fetch(url, {
                 agent: getTransportAgent('https'),
                 ...opts,
             }).then(async (res) => {
-                //console.log(111);
+                console.log('Proxy16: Fetch request received SUCCESS', 'tor enabled?', !!opts.agent);
                 return res;
             }).catch((err) => {
-                //console.log(222);
+                console.log('Proxy16: Fetch request received ERROR', 'tor enabled?', !!opts.agent);
                 throw err;
             });
         } catch (e) {
-            //console.log(333);
+            console.log('Proxy16: Retry with TOR');
             const isTorEnabled = await awaitTor();
-            //console.log(444);
+            console.log('Proxy16: Is TOR active?', isTorEnabled);
 
             if (enable && isTorEnabled && !isUseProxy(url)) {
                 proxifyHost(url)
 
                 opts.agent = torHttpsAgent;
-                opts.signal = timeout(15);
+                opts.signal = timeout(40);
 
                 return await self.fetch(url, opts)
                   .then((res) => {
-                      //console.log(555);
+                      console.log('Proxy16: TOR Fetch request received SUCCESS');
                       return res;
                   })
                   .catch((err) => {
-                      //console.log(666);
+                      console.log('Proxy16: TOR Fetch request received ERROR');
                       if (err.code !== 'FETCH_ABORTED') {
                           // For debugging, don't remove
                           // console.log(err);

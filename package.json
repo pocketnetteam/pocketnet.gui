@@ -138,6 +138,7 @@
         "uglifycss": "0.0.29",
         "underscore": "",
         "winston": "^3.3.3",
+        "yaping": "0.0.3",
         "yuicompressor": "^2.4.8"
     },
     "build": {
