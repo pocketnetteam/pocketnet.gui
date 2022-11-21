@@ -4,6 +4,7 @@ var pSDK = function({app, api, actions}){
     var storage = {}
     var objects = {}
     var temp = {}
+    var queue = {}
     var dbstorages = {}
     var dbversion = 1;
 
@@ -40,12 +41,21 @@ var pSDK = function({app, api, actions}){
 
     var getDBStorage = function ({name, time}) {
 
+        var key = 'initdbstorage_' + name
+
+        if (temp[key]) return temp[key]
+
 		if (!dbstorages[name]) {
-			return pdbstorage(name, dbversion, time).then(storage => {
+     
+			temp[key] = pdbstorage(name, dbversion, time).then(storage => {
 				dbstorages[name] = storage
+
+                delete temp[key]
 
 				return Promise.resolve(storage)
 			})
+
+            return temp[key]
 		}
 
 		return Promise.resolve(dbstorages[name])
@@ -55,6 +65,9 @@ var pSDK = function({app, api, actions}){
         if(!storage[key]) storage[key] = {}
         if(!temp[key]) temp[key] = {}
         if(!objects[key]) objects[key] = {}
+        if(!queue[key]) queue[key] = []
+
+        
     }
 
     var settodb = function(dbname, result){
@@ -133,6 +146,47 @@ var pSDK = function({app, api, actions}){
         return loadList(key, [index], executor, p)
     }
 
+    var processingQueue = function(queue){
+
+
+        if (queue.length){
+
+            var groupped = group(queue, (q) => {return q.executor})
+
+            _.each(groupped, (g) => {
+
+                var executor = g[0].executor
+                var load = _.reduce(g, (m, q) => m.concat(q.load), [])
+
+                executor(load).then(r => {
+
+                    _.each(g, (q) => {
+                        q.resolve(r)
+                    })
+
+                }).catch(e => {
+
+                    _.each(g, (q) => {
+                        q.reject(e)
+                    })
+
+                })
+
+            })
+
+        }
+
+    }
+
+    var processingAll = function(){
+        _.each(queue, (q, type) => {
+
+            processingQueue(q)
+
+            queue[type] = []
+        })
+    }
+
     var loadList = function(key, keys, executor, p = {
         update : false, 
         fallbackIndexedDB : null, 
@@ -186,13 +240,11 @@ var pSDK = function({app, api, actions}){
             load.push(k)
         })
 
-        console.log('load', load)
-
-
         var promise = !load.length ? Promise.resolve([]) : new Promise((resolve, reject) => {
 
-            getfromdb(p.indexedDb, load).then(dbr => {
+            //var t = performance.now()
 
+            getfromdb(p.indexedDb, load).then(dbr => {
 
                 load = _.filter(load, (k) => {
 
@@ -202,26 +254,48 @@ var pSDK = function({app, api, actions}){
 
                 })
 
-                console.log('dbr', dbr)
-
                 if(!load.length){
                     resolve(dbr)
 
                     return
                 }
 
-                executor(load).then((result) => {
+                //console.log('performance.now() - t', performance.now() - t)
 
-                    console.log("ER", result)
+                queue[key].push({
+                    load,
+                    executor,
+                    resolve : (result) => {
                   
-                    settodb(p.indexedDb, result)
-                    settodb(p.fallbackIndexedDB, result)
+                        settodb(p.indexedDb, result)
+                        settodb(p.fallbackIndexedDB, result)
+    
+                        return resolve(result.concat(dbr))
+    
+                    },
 
-                    console.log('result.concat(dbr)', result.concat(dbr))
+                    reject
+                    /*executor : (load) => {
 
-                    return resolve(result.concat(dbr))
+                        executor(load).then().catch(reject)
 
-                }).catch(reject)
+                    }*/
+                })
+
+                /*
+                
+                    executor(load).then((result) => {
+                    
+                        settodb(p.indexedDb, result)
+                        settodb(p.fallbackIndexedDB, result)
+
+                        return resolve(result.concat(dbr))
+
+                    }).catch(reject)
+                
+                */
+
+                
             })
 
 
@@ -239,10 +313,8 @@ var pSDK = function({app, api, actions}){
 
             var filtered = []
 
-            console.log("resultresult", result)
 
             _.each(result, (r) => {
-                console.log("r", r, p)
 
                 if (r && r.key && r.data){
                     storage[key][r.key] = r.data
@@ -259,9 +331,6 @@ var pSDK = function({app, api, actions}){
 
             })
 
-           
-
-            console.log('object', objects, storage)
 
             return filtered
 
@@ -638,6 +707,9 @@ var pSDK = function({app, api, actions}){
         },
 
         load : function(txids, update){
+
+            console.log("LOAD", txids)
+
             return loadList('share', txids, (txids) => {
 
                 return api.rpc('getrawtransactionwithmessagebyid', [txids]).then(d => {
@@ -759,7 +831,7 @@ var pSDK = function({app, api, actions}){
     }
 
     self.score = {
-        
+
     }
 
 
@@ -775,6 +847,11 @@ var pSDK = function({app, api, actions}){
     self.prepareDb = function(){
 
     }
+
+
+    var interval = setInterval(() => {
+        processingAll()
+    }, 30)
 
 
     return self

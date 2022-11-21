@@ -403,7 +403,14 @@ Platform = function (app, listofnodes) {
     })
 
     self.psdk = new pSDK({app, api : self.app.api, actions : self.actions})
-    self.actions.psdk = psdk
+    self.actions.psdk = self.psdk
+
+    /*self.psdk.shares.load(['37cd921ffeee746147517ba821220e2951bd38eff8587e43a0675cd494c9a64e'])
+    self.psdk.shares.load(['03387a46a7fcf7a070f30aad246958482329499d1aef3b75ad34763ba71eb79d'])
+    self.psdk.shares.load(['e57b77a3cad6d0317c0e500d08cb341255845bf3f869801c8c5eefed56bddeec'])
+    self.psdk.shares.load(['a2f027b343bbe1b8c07d08ed0fc4985a230c8176add80c5a84228cc626e377ab'])
+    self.psdk.shares.load(['b58d3aac69953638361f6f904b27a986bd747217301ea44fed869bca65623312'])*/
+    
 
     var listeners = {
         share : function(alias, status){
@@ -10208,8 +10215,6 @@ Platform = function (app, listofnodes) {
             reputationBlocked : function(address, count){
                 var ustate = self.psdk.userState.get(address) || self.psdk.userInfo.get(address)
                 
-                console.log('address', address, ustate)
-
                 if(!ustate) return false
 
                 var totalComplains = typeof ustate.flags === 'object' ? Object.values(ustate.flags).reduce((a,b) => a + +b, 0) : 0
@@ -10221,18 +10226,13 @@ Platform = function (app, listofnodes) {
 
                 if(typeof count == 'undefined') count = -12
 
-                console.log('ustate.reputation', ustate.reputation)
-
                 if (ustate && ustate.reputation <= count && !self.real[address]/* &&
                     (ustate.likers_count < 20 || (ustate.likers_count < ustate.blockings_count * 2))*/
                 ){
-                    console.log('0')
-
                     return true
                 }
 
                 if(isOverComplained) {
-                    console.log('1')
                     return true
                 }
 
@@ -10240,25 +10240,18 @@ Platform = function (app, listofnodes) {
                 //ustate.regdate && ustate.regdate.addDays(7) > new Date()
 
                 if(moment().diff(ustate.regdate, 'days') <= 7 && totalComplains  > 20 ) {
-                    console.log('2')
                     return true
                 }
 
                 if(totalComplainsFirstFlags > 10){
-                    console.log('3')
-
                     return true
                 }
 
                 if(totalComplains > 20 && ustate.likers_count * 2 < totalComplains) {
-                    console.log('2')
-
                     return true
                 }
 
                 if(this.isNotAllowedName(ustate)) {
-                    console.log('2')
-
                     return true
                 }
             },
@@ -10475,7 +10468,6 @@ Platform = function (app, listofnodes) {
                             }, {
                                 host: ps
                             }).catch(e => {
-                                console.log("E", e)
 
                                 return Promise.resolve()
                             })
@@ -17747,8 +17739,6 @@ Platform = function (app, listofnodes) {
 
                         var shares = self.psdk.shares.gets(txids)
 
-                        console.log(txids, shares)
-
                         clbk(shares, null, {
                             count: txids.length
                         })
@@ -17768,8 +17758,6 @@ Platform = function (app, listofnodes) {
                 },
 
                 transform: function (d, state) {
-
-                    console.log('transformSHARE')
 
                     throw 'depreacted'
 
@@ -18290,8 +18278,6 @@ Platform = function (app, listofnodes) {
                                 parameters.push(p.ascdesc || 'desc');
                             }
 
-                            console.log('getex', parameters)
-
                             s.getex(parameters, function (data, error) {
 
                                 var shares = data.contents || []
@@ -18637,8 +18623,6 @@ Platform = function (app, listofnodes) {
 
                     var coinbase = deep(tx, 'vin.0.coinbase') || (deep(tx, 'vout.0.scriptPubKey.type') == 'nonstandard') || false
 
-                    console.log('tx', tx)
-
                     var t = {
                         txid: tx.txid,
                         vout: vout.n,
@@ -18961,8 +18945,6 @@ Platform = function (app, listofnodes) {
                             if (clbk) {
 
                                 var errorcode = deep(_error, 'code') || null
-
-                                console.log("errorcode", errorcode)
 
                                 clbk(
                                     (errorcode == -5) || (errorcode == -8) ||
@@ -23767,7 +23749,6 @@ Platform = function (app, listofnodes) {
         }
 
         self.settings = async function(current){
-            console.log("HERE")
             if(!current){
                 for(const proxy of platform.app.api.get.proxies()){
                     const {info} = await proxy.get.info();
@@ -28674,8 +28655,6 @@ Platform = function (app, listofnodes) {
                     account.updateUnspents().catch(e => {
                         console.error(e)
                     })
-
-                    console.log('account', account.getStatus())
                     
 
                     self.sdk.node.transactions.checkTemps(function(){
