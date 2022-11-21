@@ -2173,6 +2173,8 @@ _l.videoServerVideo = "Видео Статистика";
 _l.goToDiagnose = "Перейти на страницу диагностики";
 _l.connectingTo = "Проверка";
 
+_l.earnings = "Всего заработано";
+
 _l.authHeading = "Авторизация";
 
 

@@ -266,6 +266,16 @@ var userpage = (function(){
 				})
 
 			}
+
+			
+			reports.push({
+				name : self.app.localization.e('captionUserStats'),
+				id : 'statistics',
+				report : 'statistic',
+				//openReportPageMobile : true,
+				mobile : false
+			})
+			
 				
 		}
 

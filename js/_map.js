@@ -478,7 +478,6 @@ __map =  {
 			href : "streampeertube",
 			add : insertingfunc,
 		},
-
 		
 		tagcloud : {
 			uri : "tagcloud",
