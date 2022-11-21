@@ -275,7 +275,6 @@ var pSDK = function({app, api, actions}){
                     return
                 }
 
-                //console.log('performance.now() - t', performance.now() - t)
 
                 queue[key].push({
                     load,

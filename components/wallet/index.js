@@ -869,8 +869,6 @@ var wallet = (function(){
 					})
 				}
 
-				console.log('feemode', feemode)
-					
 				var transaction = new Transaction()
 				
 					transaction.source.set(source)
@@ -892,9 +890,6 @@ var wallet = (function(){
 					var action = account.prepareAction(transaction)
 
 					action.prepareTransaction(calculatedFee).then(txdata => {
-
-						console.log('----txdata has')
-
 
 						if (clbk)
 							clbk(amount, reciever, feemode, message, txdata.calculatedFee)
@@ -2526,8 +2521,6 @@ var wallet = (function(){
 				return
 			}
 
-			console.log('drawCircles')
-
 
 			lazyEach({
 				array : _.toArray(addressesGroup),
@@ -2558,8 +2551,6 @@ var wallet = (function(){
 							color : colorN
 						}
 					}
-
-					console.log('move', move)
 
 					renders.total({
 
@@ -2603,7 +2594,6 @@ var wallet = (function(){
 				lazyActions(actions, clbk)
 
 				self.app.platform.sdk.node.transactions.clbks.circles = function(){
-					console.log("HERE")
 					drawCircles(null, true)
 				};
 

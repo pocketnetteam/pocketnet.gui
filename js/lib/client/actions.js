@@ -297,8 +297,6 @@ var Action = function(account, object, priority){
 
         if(!changeAddresses.length) changeAddresses = [account.address]
 
-        console.log('calculatedFee', calculatedFee, options.feemode && options.feemode(self, account))
-        
 
         if(!unspents.length || retry){
             try{
@@ -349,10 +347,14 @@ var Action = function(account, object, priority){
         var optype = null
         var optstype = null
         var opreturnData = null
+        var method = 'sendrawtransaction'
 
         //////////////
 
         if (self.object.serialize){
+
+            method = 'sendrawtransactionwithmessage'
+
             var data = Buffer.from(bitcoin.crypto.hash256(self.object.serialize()), 'utf8');
 
             optype = self.object.typeop ? self.object.typeop() : self.object.type
@@ -368,8 +370,6 @@ var Action = function(account, object, priority){
 
                 var opreturn = options.opreturn(self, account)
 
-                console.log('opreturn', opreturn)
-                
                 if (opreturn){
                     opreturnData = [Buffer.from(opreturn, 'utf8')];
                 }
@@ -430,9 +430,9 @@ var Action = function(account, object, priority){
             })
         }
 
-        console.log('inputs, outputs', inputs, outputs, fee)
-
         var tx = null
+
+        console.log('inputs, outputs', inputs, outputs)
         
         try{
             tx = buildTransaction({inputs, outputs, opreturnData})
@@ -468,7 +468,9 @@ var Action = function(account, object, priority){
 
         self.sending = true
 
-        return account.parent.api.rpc('sendrawtransactionwithmessage', parameters).then(transaction => {
+        ///sendrawtransaction
+
+        return account.parent.api.rpc(method, parameters).then(transaction => {
 
             self.transaction = transaction
             self.inputs = inputs
@@ -515,9 +517,6 @@ var Action = function(account, object, priority){
 
 
             account.parent.app.platform.sdk.node.transactions.get.tx(self.transaction, (data = {}, error = {}) => {
-
-                console.log('data', data, error)
-
 
                 if (error.code == -5 || error.code == -8){ /// check codes (transaction not apply, resend action)
                     self.sent = null
@@ -826,6 +825,12 @@ var Account = function(address, parent){
     }
 
     self.removeInputsFromTransaction = function(transaction){
+
+        console.log('transaction', transaction)
+        console.log(_.clone(self.unspents.value))
+
+        console.log('self.unspents.value', self.unspents.value.length)
+
         self.unspents.value = _.filter(self.unspents.value, (u) => {
             var intransaction = _.find(transaction.vin, (input) => {
                 return u.txid == input.txid && u.vout == input.vout
@@ -833,6 +838,10 @@ var Account = function(address, parent){
 
             if(!intransaction) return true
         })
+
+        console.log('self.unspents.value2', self.unspents.value.length)
+        console.log(_.clone(self.unspents.value))
+
     }
 
     self.addUnspentFromTransaction = function(transaction){
