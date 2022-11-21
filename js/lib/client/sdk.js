@@ -39,6 +39,19 @@ var pSDK = function({app, api, actions}){
         }
     }
 
+    var checkObjectInActions = function(objects){
+
+        var account = actions.getCurrentAccount()
+
+        if(!account) return
+
+        var txids = _.filter(_.map(objects, (o) => { return o.txid || o }), (o) => {
+            return o && !_.isObject(o)
+        })
+
+        account.account(txids)
+    }
+
     var getDBStorage = function ({name, time}) {
 
         var key = 'initdbstorage_' + name
@@ -645,8 +658,11 @@ var pSDK = function({app, api, actions}){
     
                     var object = this.transform(r)
 
-                    if (object)
+                    if (object){
                         objects[key][r.key] = object
+
+                        checkObjectInActions([object])
+                    }
     
                 })
 
@@ -708,8 +724,6 @@ var pSDK = function({app, api, actions}){
 
         load : function(txids, update){
 
-            console.log("LOAD", txids)
-
             return loadList('share', txids, (txids) => {
 
                 return api.rpc('getrawtransactionwithmessagebyid', [txids]).then(d => {
@@ -719,6 +733,8 @@ var pSDK = function({app, api, actions}){
                     d = _.sortBy(d, (share) => _.indexOf(txids, share.txid))
 
                     d = _.filter(d || [], (s) => s.address)
+
+                    checkObjectInActions(d)
 
                     return _.map(d || [], (info) => {
                         return { 

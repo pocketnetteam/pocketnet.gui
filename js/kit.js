@@ -2005,6 +2005,80 @@ DeleteAccount = function(){
 	}
 }
 
+Transaction = function(){
+	var self = this;
+
+	self.source = {
+		set : function(_v){
+
+			this.v = _v || []
+
+		},
+		v : []
+	}
+
+	self.reciever = {
+		set : function(_v){
+
+			/*{
+				address: receiver,
+				amount: Number(value)
+			}*/
+
+			this.v = _.filter(_v || [], (a) => {
+
+				return a.address && a.amount
+
+			})
+		},
+		v : []
+	};
+
+	self.feesMode = {
+		set : function(_v){
+
+			this.v = 'exclude'
+
+			if (_v == 'exclude' || _v == 'include'){
+				this.v = _v
+			}
+
+			
+		},
+		v : 'exclude'
+	};
+
+	self.message = {
+		set : function(_v){
+			this.v = _v || ''
+		},
+		v : ''
+	};
+
+	
+	self.validation = function(){
+		return false;
+	}
+
+	self.export = function(extend){
+		return {
+			type : self.type,
+			reciever : self.reciever.v,
+			feesMode : self.feesMode.v,
+			message : self.feesMode.v
+		}
+	}
+
+	self.import = function(p){
+		self.reciever.set(p.reciever)
+		self.feesMode.set(p.feesMode)
+		self.message.set(p.message)
+	}
+
+	self.type = 'transaction'
+
+}
+
 pUserInfo = function(){
 
 	var self = this;
@@ -2905,7 +2979,8 @@ kits = {
 		subscribePrivate : SubscribePrivate,
 		contentBoost : ContentBoost,
 		deleteAccount : DeleteAccount,
-		accDel : DeleteAccount
+		accDel : DeleteAccount,
+		transaction : Transaction
 	},
 
 	ini : {

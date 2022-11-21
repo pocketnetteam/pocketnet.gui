@@ -13018,6 +13018,25 @@ Platform = function (app, listofnodes) {
                 return wallet.address;
             },
 
+            getRandomAddress : function(clbk){
+                if (self.sdk.addresses.storage.addresses.length) {
+
+                    var ar = _.toArray(self.sdk.addresses.storage.addresses)
+
+                    ar = _.first(ar, 10)
+
+                    var address = ar[rand(0, ar.length - 1)]
+
+
+                    return address
+                }
+                else{
+                    var address = self.sdk.addresses.addWalletAddress()
+
+                    return address
+                }
+            },
+
             getFirstRandomAddress : function(clbk){
                 if (self.sdk.addresses.storage.addresses.length) {
 

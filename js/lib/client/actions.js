@@ -2,6 +2,22 @@ var ActionOptions = {
     pcTxFee : 1 / 100000000,
     amountC : 100000000,
     objects : {
+        transaction : {
+            calculateFee : true,
+            rejectedAsk : true,
+            destination : function(obj){
+                return _.clone(obj.object.reciever.v)
+            },
+            opreturn : function(action, account){
+                if (action.object.message.v){
+                    return action.object.message.v
+                }
+            },
+
+            addresses : function(){
+                return _.clone(obj.object.source.v)
+            }
+        },
         upvoteShare : {
             collision : function(obj, obj2){
 
@@ -64,7 +80,7 @@ var ActionOptions = {
 
         comment : {
             destination : function(obj){
-                return obj.object.donate.v
+                return _.clone(obj.object.donate.v)
             },
             amount : function(obj){
                 return _.reduce(obj.object.donate.v, (m, dn) => {
@@ -257,7 +273,7 @@ var Action = function(account, object, priority){
 
         if(!unspents.length || retry){
             try{
-                await account.loadUnspents(options.addresses ? options.addresses() : null).then((clearUnspents) => {
+                await account.loadUnspents().then((clearUnspents) => {
 
                     if(!clearUnspents.length && !account.unspents.willChange){
                         return Promise.reject('noinputs')
@@ -278,6 +294,16 @@ var Action = function(account, object, priority){
             }
             
         }
+
+        if (options.addresses){
+            var addresses = options.addresses(self, account)
+
+            unspents = _.filter(unspents, (u) => {
+                return _.indexOf(addresses, u.address) > -1
+            })
+        }
+
+        options.addresses ? options.addresses() : null
 
 
         if(!unspents.length){
@@ -312,6 +338,17 @@ var Action = function(account, object, priority){
 
             if (self.object.opreturn) {
                 opreturnData.push(Buffer.from(self.object.opreturn()))
+            }
+        }
+        else{
+            if (options.opreturn){
+
+                var opreturn = options.opreturn(self, accoutn)
+
+                if (opreturn){
+                    opreturnData = [Buffer.from(optype, 'utf8'), opreturn];
+                }
+                
             }
         }
 

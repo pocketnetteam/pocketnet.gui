@@ -848,6 +848,115 @@ var wallet = (function(){
 				}
 			},
 
+			prepareTransactionCommonV2: function(amount, reciever, feesMode, feerate, message, clbk){
+
+				var source = actions.sendAddresses();
+				var recievers = []
+
+				if(reciever == 'pnetwallet' || reciever == self.app.localization.e('tacaddress')){
+					recievers.push({
+						address : self.app.platform.sdk.address.pnet().address,
+						amount : amount
+					})
+				}
+
+				else
+
+				if(reciever == 'wallet' || reciever == self.app.localization.e('twallet')){
+					recievers.push({
+						address : self.app.platform.sdk.addresses.getRandomAddress(),
+						amount : amount
+					})
+				}
+
+				else {
+					recievers.push({
+						address : reciever,
+						amount : amount
+					})
+				}
+
+					
+				var transaction = new Transaction()
+				
+					transaction.source.set(source)
+					transaction.recievers.set(recievers)
+					transaction.feesMode.set(feesMode)
+					transaction.message.set(message)
+
+					
+
+				//////////////
+
+
+				var prepareClbk = function(addresses, outputs, feesMode){
+
+					self.app.platform.sdk.wallet.txbase(addresses, _.clone(outputs), 0, feesMode, function(err, inputs, _outputs){
+
+						if(err){
+							sitemessage(self.app.localization.e('txbase_err_' + err))
+
+							return
+						}
+
+						var tx = self.app.platform.sdk.node.transactions.create.wallet(inputs, _outputs)
+
+
+						var totalFees = Math.min(tx.virtualSize() * feerate, 0.0999);
+
+						
+						if (clbk)
+							clbk(addresses, outputs, totalFees, feesMode)
+					})
+
+				}
+
+				var addresses = actions.sendAddresses();
+				var outputs = [];
+
+
+				if(reciever == 'pnetwallet' || reciever == self.app.localization.e('tacaddress')){
+					outputs.push({
+						address : self.app.platform.sdk.address.pnet().address,
+						amount : amount
+					})
+
+					prepareClbk(addresses, outputs, feesMode)
+
+					return
+				}
+
+				if(reciever == 'wallet' || reciever == self.app.localization.e('twallet')){
+
+					
+
+
+					self.app.platform.sdk.addresses.getFirstRandomAddress(function(_a){
+
+						outputs.push({
+							address : _a,
+							amount : amount
+						})
+
+						self.app.platform.sdk.addresses.save();
+
+						prepareClbk(addresses, outputs, feesMode)
+
+					})
+
+					return
+				}
+
+				outputs.push({
+					address : reciever,
+					amount : amount
+				})
+
+				self.sdk.wallet.embed(outputs, message)
+
+				prepareClbk(addresses, outputs, feesMode)
+			},
+
 			prepareTransactionCommon : function(amount, reciever, feesMode, feerate, message, clbk){
 
 				var prepareClbk = function(addresses, outputs, feesMode){
@@ -922,7 +1031,9 @@ var wallet = (function(){
 				var message = send.parameters.message.value;
 				var reciever = send.parameters.reciever.value;
 
-				actions.prepareTransactionCommon(amount, reciever, feesMode, feerate, message, clbk)
+				actions.prepareTransactionCommonV2(amount, reciever, feesMode, feerate, message, clbk)
+
+				//actions.prepareTransactionCommon(amount, reciever, feesMode, feerate, message, clbk)
 				
 			},
 
