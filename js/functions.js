@@ -9653,6 +9653,7 @@
 				dropZone[0].ondrop = upload;
 			}
 
+
 			if(p.uploadImage && app && app.mobile.supportimagegallery()){
 
 				input.on('click', function(e){

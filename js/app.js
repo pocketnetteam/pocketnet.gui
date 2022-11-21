@@ -2393,9 +2393,9 @@ Application = function(p)
       
 
       if(isios()){
-        setTimeout(() => {
+        /*setTimeout(() => {
           cl()
-        }, 1000)
+        }, 1000)*/
       }
       else{
         window.requestAnimationFrame(() => {
