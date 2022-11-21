@@ -6,6 +6,7 @@ const fetch = require("node-fetch");
 const { SocksProxyAgent } = require("socks-proxy-agent");
 const torHttpsAgent = new SocksProxyAgent("socks5h://127.0.0.1:9050");
 const yaping = require("yaping");
+const tls = require("tls");
 
 module.exports = function (enable = false) {
     const self = {};
@@ -79,17 +80,44 @@ module.exports = function (enable = false) {
     self.fetch = async (url, opts = {}) => {
         let parentAbortControlSignal = opts?.signal;
 
-        function pingHost(host) {
-            return new Promise((resolve) => {
-                yaping(host, (err, target) => {
-                    if (err) {
-                        resolve(false);
-                        return;
-                    }
+        async function pingHost(host) {
+            const tls = require('tls');
 
-                    resolve(true);
+            function tlsPing() {
+                return new Promise((resolve, reject) => {
+                    const timeoutId = setTimeout(() => {
+                        reject('TLS_PING_FAILED');
+                    }, 5000);
+
+                    const socket = tls.connect({ port: 443, host: host, servername: host }, () => {
+                        clearTimeout(timeoutId);
+                        socket.destroy();
+                        resolve(true);
+                    });
+
+                    socket.on('error', (err) => {
+                        reject('TLS_PING_TIMEOUT');
+                    });
                 });
-            });
+            }
+
+            function icmpPing() {
+                return new Promise((resolve, reject) => {
+                    yaping(host, (err, target) => {
+                        if (err) {
+                            reject('ICMP_PING_FAILED');
+                            return;
+                        }
+
+                        resolve(true);
+                    });
+                });
+            }
+
+            return Promise.any([icmpPing(), tlsPing()])
+              .catch(() => {
+                  return false;
+              });
         }
 
         function timeout(time) {
