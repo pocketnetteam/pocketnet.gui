@@ -600,7 +600,7 @@ var Action = function(account, object, priority){
         }
 
 
-        if (self.until < new Date()){ ///todo
+        if (self.until < new Date()){
             self.rejected = 'actions_rejectedByTime'
 
             return Promise.reject(self.rejected)
@@ -690,6 +690,7 @@ var Action = function(account, object, priority){
 
         alias.inputs = exported.inputs
         alias.outputs = exported.outputs
+
 
         if(self.checkedUntil){
             alias.checkSend = true

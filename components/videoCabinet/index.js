@@ -1649,8 +1649,7 @@ var videoCabinet = (function () {
         );
             },
       load() {
-        const unpostedVideosByAddress =
-          localStorage.getItem('unpostedVideos') || '{}';
+        const unpostedVideosByAddress = localStorage.getItem('unpostedVideos') || '{}';
 
 				try {
 					unpostedVideosParsed = JSON.parse(unpostedVideosByAddress);
@@ -1664,39 +1663,7 @@ var videoCabinet = (function () {
 					unpostedVideosParsed = {};
 				}
 
-				// const postingShares = self.sdk.relayTransactions
-				//   .withtemp('share')
-				//   .map((ps) => {
-				//     const s = new pShare();
-				//     s._import(ps, true);
-				//     s.temp = true;
-
-				//     if (ps.relay) s.relay = true;
-				//     if (ps.checkSend) s.checkSend = true;
-
-				//     s.address = ps.address;
-
-				//     return s;
-				//   });
-
-				// const postingVideos = postingShares
-				//   .filter((share) => share.itisvideo())
-				//   .map((share) => {
-				//     videosInTemp[share.url] = true;
-
-				//     return share.url;
-				//   });
-				// if (unpostedVideosParsed[self.app.user.address.value]) {
-				//   unpostedVideosParsed[self.app.user.address.value].push(
-				//     ...postingVideos,
-				//   );
-				// } else {
-				//   unpostedVideosParsed[self.app.user.address.value] = [
-				//     ...postingVideos,
-				//   ];
-				// }
-
-        // videosInPosting = [...postingVideos];
+			
 			},
 			update() {},
 

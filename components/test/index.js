@@ -373,7 +373,7 @@ var test = (function(){
 												self.psdk.userInfo.clearAll(self.user.address.value)
 
 
-												////TODO
+												//// TODO_REF_ACTIONS
 												
 												tempInfo = _.clone(tx)
 												

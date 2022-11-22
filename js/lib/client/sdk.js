@@ -10,6 +10,35 @@ var pSDK = function({app, api, actions}){
 
     self.actions = actions
 
+    self.actions.on('change', ({account}) => {
+        if (account.address == app.user.address.value){
+            
+        }
+    })
+
+    self.actions.on('actionFiltered', ({action, address, status}) => {
+
+        var listener = self[action.object.type]?.listener
+
+        if(!listener) return
+
+        if (address == app.user.address.value){
+
+            var alias = action.get()
+
+            listener(alias, address, status)
+
+            if (status == 'completed' && action.object.ustate) {
+
+                var ustate = typeof alias.ustate == 'function' ? alias.ustate() : alias.ustate;
+
+                if (ustate) self.userState.changeLimits(address, ustate, 1)
+
+            }
+
+        }
+    })
+
     var dbmeta = {
 
         userInfoFull : {
@@ -32,7 +61,7 @@ var pSDK = function({app, api, actions}){
             time : 0
         },
 
-        sharesRequest : {
+        shareRequest : {
             time : 60
         },
 
@@ -100,6 +129,16 @@ var pSDK = function({app, api, actions}){
 
         return getDBStorage({name : dbname, ...dbmeta[dbname]}).then(() => {
             return db.clearItems(ids)
+        }).catch(e => {
+
+        })
+        
+    }
+
+    var clearallfromdb = function(dbname){
+
+        return getDBStorage({name : dbname, ...dbmeta[dbname]}).then(() => {
+            return db.clearall()
         }).catch(e => {
 
         })
@@ -276,7 +315,7 @@ var pSDK = function({app, api, actions}){
                 }
 
 
-                queue[key].push({
+                /*queue[key].push({
                     load,
                     executor,
                     resolve : (result) => {
@@ -289,14 +328,10 @@ var pSDK = function({app, api, actions}){
                     },
 
                     reject
-                    /*executor : (load) => {
+                    
+                })*/
 
-                        executor(load).then().catch(reject)
-
-                    }*/
-                })
-
-                /*
+                
                 
                     executor(load).then((result) => {
                     
@@ -307,7 +342,7 @@ var pSDK = function({app, api, actions}){
 
                     }).catch(reject)
                 
-                */
+                
 
                 
             })
@@ -423,6 +458,9 @@ var pSDK = function({app, api, actions}){
         keys : ['userInfoFull', 'userInfoLight'],
         
         load : function(addresses, light, update){
+
+            console.log('addresses load', addresses)
+
             return loadList(light ? 'userInfoLight' : 'userInfoFull', addresses, (addresses) => {
 
                 var parameters = [addresses]; 
@@ -498,61 +536,8 @@ var pSDK = function({app, api, actions}){
                 u._import(data)
             }
 
-            var account = actions.getCurrentAccount()
-
-            if (account.address == key){
-                var object = account.getTempUserInfo() //edit or create
-
-                if (object) u = object
-            }
-
-            if(!u) return null
-
-            /*
-            
-                _.each(temp.blocking, function (block) {
-                    u.addRelation(block.vsaddress, 'blocking')
-                })
-
-                _.each(temp.unblocking, function (block) {
-                    u.removeRelation(block.vsaddress, 'blocking')
-                })
-
-                _.each(temp.subscribe, function (s) {
-
-                    u.removeRelation({
-                        adddress: s.vsaddress
-                    })
-
-                    u.addRelation({
-                        adddress: s.vsaddress,
-                        private: false
-                    })
-                })
-
-                _.each(temp.subscribePrivate, function (s) {
-
-                    u.removeRelation({
-                        adddress: s.vsaddress
-                    })
-
-                    u.addRelation({
-                        adddress: s.vsaddress,
-                        private: true
-                    })
-                })
-
-                _.each(temp.unsubscribe, function (s) {
-
-                    u.removeRelation({
-                        adddress: s.vsaddress
-                    })
-
-                })
-            
-            */
-
             return u
+
         },
 
         getmy : function(){
@@ -560,7 +545,73 @@ var pSDK = function({app, api, actions}){
         },
 
         get : function(address){
-            return objects['userInfoFull'][address] || objects['userInfoLight'][address]
+            return this.tempExtend(objects['userInfoFull'][address] || objects['userInfoLight'][address])
+        },
+
+        listener : function(action, address, status){
+
+            if (status == 'completed'){
+
+                var exp = action.get()
+
+                objects['userInfoFull'][address] = this.applyAction(objects['userInfoFull'][address], exp)
+
+                self.clear.db('userInfo', address)
+                ///self.clear
+            }
+        },
+
+        applyAction : function(object, exp){
+
+            if(!object) {
+
+                if(exp.address == app.user.address.value) {
+                    return exp
+                }
+            }
+
+            if (object.address == exp.address){
+                object.name = exp.name
+                object.image = exp.image
+                object.language = exp.language
+                object.about = exp.about
+                object.site = exp.site
+                object.txid = exp.txid
+
+                object.temp = exp.temp
+                object.relay = exp.relay
+            }
+
+            return object
+        },
+
+        tempExtend : function(object/*, address*/){
+
+            var extendedObject = null
+
+            _.each(actions.getAccounts(), (account) => {
+
+                var temps = ['userInfo', 'blocking', 'unblocking', 'subscribe', 'subscribePrivate', 'unsubscribe']
+
+                _.each(temps, (k) => {
+
+                    if(k != 'userInfo' && !extendedObject) return
+ 
+                    _.each(account.getTempActions(k), (action) => {
+
+                        if (self[k] && self[k].applyAction){
+                            var applied = self[k].applyAction(extendedObject || object.clone(), action.get())
+
+                            if (applied) extendedObject = applied
+                        }
+                    })
+
+                })
+            
+            })
+
+            return extendedObject || object
+
         },
 
         getShortForm : function(address){
@@ -589,7 +640,7 @@ var pSDK = function({app, api, actions}){
         },
 
         findlocal : function(finder){
-            return _.find(_.toArray(objects['userInfoFull'][address]).concat(objects['userInfoLight'][address]), finder)
+            return _.find(_.toArray(objects['userInfoFull']).concat(objects['userInfoLight']), finder)
         },
 
         clearStorage : function(address){
@@ -612,12 +663,201 @@ var pSDK = function({app, api, actions}){
         }
     }
 
-    self.shares = {
+    self.blocking = {
+        listener : function(action, address, status){
+            if (status == 'completed'){
+
+                var exp = action.get()
+
+                this.applyAction(objects['userInfoFull'][address], exp)
+                this.applyAction(objects['userInfoFull'][exp.vsaddress], exp)
+            }
+        },
+        applyAction : function(object, exp){
+
+            if (object){
+                if (object.address == exp.address){ /// for me
+                    object.addRelation(exp.vsaddress, 'blocking')
+                }
+               
+                if (object.address == exp.vsaddress){ /// for me
+                    //object.addRelation(exp.vsaddress, 'blocking')
+                }
+            }
+
+            return object
+        }
+    }
+
+    self.unblocking = {
+        listener : function(action, address, status){
+            if (status == 'completed'){
+
+                var exp = action.get()
+
+                this.applyAction(objects['userInfoFull'][address], exp)
+                this.applyAction(objects['userInfoFull'][exp.vsaddress], exp)
+            }
+        },
+        applyAction : function(object, exp){
+
+            if (object){
+                if (object.address == exp.address){ /// for me
+                    object.removeRelation(exp.vsaddress, 'blocking')
+                }
+               
+                if (object.address == exp.vsaddress){ /// for me
+                }
+            }
+
+            return object
+        }
+    }
+
+    self.subscribe = {
+        listener : function(action, address, status){
+            if (status == 'completed'){
+
+                var exp = action.get()
+
+                this.applyAction(objects['userInfoFull'][address], exp)
+                this.applyAction(objects['userInfoFull'][exp.vsaddress], exp)
+            }
+        },
+        applyAction : function(object, exp){
+
+            if (object){
+                if (object.address == exp.address){ /// for me
+                    object.addRelation({
+                        adddress : exp.vsaddress
+                    })
+                }
+               
+                if (object.address == exp.vsaddress){
+                    object.addRelation(object.address, 'subscribers')
+                    
+                    
+                    //object.addRelation(exp.vsaddress, 'blocking')
+                }
+            }
+
+            return object
+        }
+    }
+
+    self.subscribePrivate = {
+        listener : function(action, address, status){
+            if (status == 'completed'){
+
+                var exp = action.get()
+
+                this.applyAction(objects['userInfoFull'][address], exp)
+                this.applyAction(objects['userInfoFull'][exp.vsaddress], exp)
+            }
+        },
+        applyAction : function(object, exp){
+
+            if (object){
+                if (object.address == exp.address){ /// for me
+                    object.addRelation({
+                        adddress : exp.vsaddress,
+                        private : true
+                    })
+                }
+               
+                if (object.address == exp.vsaddress){
+                    object.addRelation(object.address, 'subscribers')
+                    
+                    
+                    //object.addRelation(exp.vsaddress, 'blocking')
+                }
+            }
+
+            return object
+        }
+    }
+
+    self.unsubscribe = {
+        listener : function(action, address, status){
+            if (status == 'completed'){
+
+                var exp = action.get()
+
+                this.applyAction(objects['userInfoFull'][address], exp)
+                this.applyAction(objects['userInfoFull'][exp.vsaddress], exp)
+            }
+        },
+        applyAction : function(object, exp){
+
+            if (object){
+                if (object.address == exp.address){ /// for me
+                    object.removeRelation({
+                        adddress : exp.vsaddress
+                    })
+                }
+               
+                if (object.address == exp.vsaddress){
+                    object.removeRelation(object.address, 'subscribers')
+                    
+                    
+                    //object.addRelation(exp.vsaddress, 'blocking')
+                }
+            }
+
+            return object
+        }
+    }
+
+    
+
+    self.contentDelete = {
+        listener : function(action, address, status){
+            if (status == 'completed'){
+
+                var exp = action.get()
+
+                objects['share'][exp.txidEdit] = this.applyAction(objects['share'][exp.txidEdit], exp)
+            }
+        },
+        applyAction : function(share, exp){
+
+            if (share){
+                if (share.txid == exp.txidEdit){ /// for me
+                    share.deleted = true
+                }
+            }
+
+            return share
+        }
+    }
+
+    self.upvoteShare = {
+        listener : function(action, address, status){
+            if (status == 'completed'){
+
+                var exp = action.get()
+
+                objects['share'][exp.share] = this.applyAction(objects['share'][exp.share], exp)
+            }
+        },
+        applyAction : function(share, exp){
+
+            if (share){
+                if (share.txid == exp.share && exp.address == app.user.address.value){ /// for me
+                    share.myVal = Number(exp.value)
+                }
+            }
+
+            return share
+        }
+    }
+
+    self.share = {
         keys : ['share'],
 
         request : function(executor, hash){
             return request('share', hash, executor, {
-                requestIndexedDb : 'sharesRequest',
+                requestIndexedDb : 'shareRequest',
 
                 insertFromResponse : (r) => this.insertFromResponseEx(r)
             })
@@ -720,7 +960,7 @@ var pSDK = function({app, api, actions}){
         },
 
         get : function(id){
-            return id ? (objects.share[id] || null) : null
+            return this.tempExtend(id ? (objects.share[id] || null) : null, id)
         },
 
         load : function(txids, update){
@@ -750,8 +990,99 @@ var pSDK = function({app, api, actions}){
                 update,
                 indexedDb : 'share',
             })
-        }
+        },
+
+        listener : function(action, status){
+
+            if (status == 'completed'){
+                clearallfromdb('shareRequest')
+                clearfromdb('share', [action.txid])
+
+                var exp = action.get()
+
+                objects['share'][action.txid] = this.applyAction(objects['userInfoFull'][action.txid], exp)
+            }
+        },
+
+
+        applyAction : function(object, exp){
+
+            if (exp.txidEdit){
+
+                if(!object) return
+
+                if(exp.txidEdit == object.txid){
+                    object.message = exp.message
+                    object.caption = exp.caption
+                    object.tags = exp.tags
+                    object.url = exp.url
+                    object.language = exp.language
+                    object.repost = exp.repost
+                    object.settings = _.clone(exp.settings)
+                    object.edit = true
+                    object.txidEdit = exp.txidEdit
+    
+                    object.temp = exp.temp
+                    object.relay = exp.relay   
+                }
+
+                         
+            
+            }
+
+            else{
+
+            }
+
+            /*
+            object.temp = exp.temp
+                object.relay = exp.relay
+            
+            
+            */
+       
+            return object
+        },
+
+        tempExtend : function(object, txid){
+
+            var extendedObject = null
+
+            _.each(actions.getAccounts(), (account) => {
+
+                var temps = ['share', 'upvoteShare', 'comment', 'contentDelete']
+
+                _.each(temps, (k) => {
+
+                    _.each(account.getTempActions(k), (action) => {
+
+                        if (!object && action.id == txid){
+                            extendedObject = action.get()
+                        }
+                        else{
+
+                            if (self[k] && self[k].applyAction){
+
+                                var applied = self[k].applyAction(extendedObject || object.clone(), action.get())
+    
+                                if (applied) extendedObject = applied
+                            }
+
+                        }
+
+                        
+                    })
+
+                })
+            
+            })
+
+            return extendedObject || object || null
+
+        },
     }
+
+    
 
     self.userState = {
         keys : ['userState'],
@@ -801,18 +1132,19 @@ var pSDK = function({app, api, actions}){
             return app.user.address.value ? this.get(app.user.address.value) : null
         },
 
-        clearStorage : function(address){
-            delete storage['userState'][address]
+        changeLimits : function(address, limit, value){
+            var state = this.get(address);
+
+            if (state){
+                state[limit + "_spent"] = (state[limit + "_spent"] || 0) + value
+                state[limit + "_unspent"] = (state[limit + "_unspent"] || 1) - value
+            }
         },
 
-        cleardb : function(address){
-            clearfromdb('userStateFB', [address])
-            clearfromdb('userState', [address])
-        },
+        change : function(address, state){
+            this.clear.all('userState', address)
 
-        clearAll : function(address){
-            this.clearStorage(address)
-            this.cleardb(address)
+            storage['userState'][address] = state
         }
     }
     
@@ -851,6 +1183,36 @@ var pSDK = function({app, api, actions}){
 
     }
 
+    
+    self.clear = {
+        storage : function(k, key){
+            var keys = self[k]?.keys || []
+
+            _.each(keys, (k) => {
+                delete storage[k][key]
+            })
+        },
+
+        db : function(k, key){
+            var keys = self[k]?.keys || []
+
+            _.each(keys, (k) => {
+
+                if (key){
+                    clearfromdb(k, [key])
+                    clearfromdb(k + 'FB', [key])
+                }
+                
+                clearallfromdb(k + 'Request')
+            })
+        },
+
+        all : function(k, key){
+            this.storage(k, key)
+            this.db(k, key)
+        }
+    }
+
 
     _.each(self, (v) => {
         if(v && _.isObject(v) && v.keys){
@@ -859,11 +1221,6 @@ var pSDK = function({app, api, actions}){
             })
         }
     })
-
-
-    self.prepareDb = function(){
-
-    }
 
 
     var interval = setInterval(() => {

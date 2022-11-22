@@ -222,7 +222,7 @@ var socialshare2 = (function(){
 
 					var s = ['black', 'comments']
 
-					var share = self.psdk.shares.get(id) 
+					var share = self.psdk.share.get(id) 
 					
 
 					if (share){
@@ -403,7 +403,7 @@ var socialshare2 = (function(){
 
 				if(settings.onlyvideo){
 
-					var share = self.psdk.shares.get(actionid) 
+					var share = self.psdk.share.get(actionid) 
 					
 
 					if (share && share.url && action && actionid){
@@ -884,7 +884,7 @@ var socialshare2 = (function(){
 				}
 
 				if (postId){
-					share = self.psdk.shares.get(postId) 
+					share = self.psdk.share.get(postId) 
 				}
 
 				changeRef()

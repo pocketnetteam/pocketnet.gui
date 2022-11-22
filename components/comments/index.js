@@ -364,7 +364,7 @@ var comments = (function(){
 			
 			pkoin : function(id, format){
 
-				var share = self.psdk.shares.get(id) 
+				var share = self.psdk.share.get(id) 
 				
 
 				if (share){
@@ -723,7 +723,7 @@ var comments = (function(){
 					}
 					else
 					{
-						var post = self.psdk.shares.get(txid)
+						var post = self.psdk.share.get(txid)
 
 						var address = (self.app.platform.sdk.address.pnet() || {}).address
 
@@ -1174,7 +1174,7 @@ var comments = (function(){
 
 				if(!el.showall) return
 
-				var share = self.psdk.shares.get(txid) || {}
+				var share = self.psdk.share.get(txid) || {}
 
 				var counts = share.comments || 0
 				
@@ -1344,7 +1344,7 @@ var comments = (function(){
 
 			}
 
-			var post = self.psdk.shares.get(txid)
+			var post = self.psdk.share.get(txid)
 
 			if (post && post.address == comment.address) p = p * 50
 

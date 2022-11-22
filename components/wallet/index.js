@@ -1007,14 +1007,12 @@ var wallet = (function(){
 
 			clearMain : function(clbk){
 
-
-
 				self.shell({
 
 					animation : {
 						id : 'fadeInByElement',
 						selector : ".fadeInByElement",
-						timeouts : 150
+						timeouts : 50
 					},
 
 					clear : true,
@@ -1132,40 +1130,37 @@ var wallet = (function(){
 
 					renders.clearMain(function(){
 
-						_scrollToTop(el.step, w, 200, -70)
+						_scrollToTop(el.step, w, 50, -70)
 
-						setTimeout(function(){
+						self.shell({
 
-							self.shell({
-
-								name :  'step',
-								el :   el.step,
-								data : {
-									
-								},
-
-								animation : 'fadeIn'
-
-							}, function(p){
-
-
-								var s = p.el.find('.step');
-
-								if(_p.class) s.addClass(_p.class)	
-								if(_p.view) {
-									s.attr('view', _p.view)		
-								}
-								else{
-									s.removeAttr('view')
-								}						
-
+							name :  'step',
+							el :   el.step,
+							data : {
 								
-								if (clbk)
-									clbk(s)
+							},
 
-							})
+							animation : 'fadeIn'
 
-						}, 200)
+						}, function(p){
+
+
+							var s = p.el.find('.step');
+
+							if(_p.class) s.addClass(_p.class)	
+							if(_p.view) {
+								s.attr('view', _p.view)		
+							}
+							else{
+								s.removeAttr('view')
+							}						
+
+							
+							if (clbk)
+								clbk(s)
+
+						})
+
 
 
 					})
@@ -1994,6 +1989,9 @@ var wallet = (function(){
 								d : send
 							},
 
+							animation : 'fadeIn',
+
+
 						}, function(_p){
 
 							ParametersLive([send.parameters.fees], _p.el)
@@ -2013,9 +2011,9 @@ var wallet = (function(){
 								
 							}
 
-							setTimeout(function(){
+							/*setTimeout(function(){
 								_scrollToTop(el.find('.sendtransaction'), w, 50)
-							},200)
+							},200)*/
 
 							_p.el.find('.sendtransaction').on('click', function(){
 
@@ -2041,7 +2039,7 @@ var wallet = (function(){
 										sitemessage(self.app.localization.e('wssuccessfully'))
 
 
-										//// TODO
+										//// TODO_REF_ACTIONS
 
 										if(essenseData.sendclbk && txdata.transaction) essenseData.sendclbk({
 											txid : txdata.transaction
@@ -2699,6 +2697,7 @@ var wallet = (function(){
 									send.parameters.amount._onChange();
 
 								renders.send(null, null, true)
+								
 
 							}
 

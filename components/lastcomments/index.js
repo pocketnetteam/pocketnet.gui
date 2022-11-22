@@ -95,7 +95,7 @@ var lastcomments = (function(){
 
 					_.each(c, function(comment){ 
     
-						var share = self.psdk.shares.get(comment.txid)
+						var share = self.psdk.share.get(comment.txid)
 						
 
 						if(share && comment){

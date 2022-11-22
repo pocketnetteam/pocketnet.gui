@@ -452,7 +452,7 @@ var pkoin = (function(){
 
 				self.app.platform.sdk.node.shares.getbyid([shareId], function () {
 
-					share = self.psdk.shares.get(shareId)
+					share = self.psdk.share.get(shareId)
 					
 					clbk(data);
 

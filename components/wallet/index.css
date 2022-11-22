@@ -1,5 +1,5 @@
 #wallet {
-  min-height: 600px;
+  min-height: 100vh;
   padding-bottom: 4em;
   position: relative;
 }
@@ -774,6 +774,9 @@
   font-size: 2em;
   color: rgb(var(--color-txt-gray-dark));
   font-weight: 700;
+}
+#wallet .deposit .depositaddress .adrwrapper .cell {
+  text-align: center;
 }
 #wallet .deposit .actionbody textarea {
   padding: 1em;

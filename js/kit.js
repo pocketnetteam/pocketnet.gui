@@ -599,6 +599,7 @@ Comment = function(txid){
 		var comment = new pComment();
 			comment.import(self.export())
 
+			///TODO_REF_ACTIONS remove alias args
 
 			comment.id = id
 			comment.txid = self.txid
@@ -2107,8 +2108,6 @@ pUserInfo = function(){
 	self.address = ''
 
 	self.rc = 0;
-	
-
 
 	self._import = function(v){
 		self.name = clearStringXss(decodeURIComponent(v.n || v.name || ''));
@@ -2284,6 +2283,13 @@ pUserInfo = function(){
 
 	}
 	
+	self.clone = function(){
+		var ui = new pUserInfo()
+
+			ui._import(self.export())
+
+		return ui
+	}
 
 	self.type = 'userInfo'
 

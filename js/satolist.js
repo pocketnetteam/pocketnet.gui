@@ -402,14 +402,13 @@ Platform = function (app, listofnodes) {
         }
     })
 
-    self.psdk = new pSDK({app, api : self.app.api, actions : self.actions})
-    self.actions.psdk = self.psdk
+    
 
-    /*self.psdk.shares.load(['37cd921ffeee746147517ba821220e2951bd38eff8587e43a0675cd494c9a64e'])
-    self.psdk.shares.load(['03387a46a7fcf7a070f30aad246958482329499d1aef3b75ad34763ba71eb79d'])
-    self.psdk.shares.load(['e57b77a3cad6d0317c0e500d08cb341255845bf3f869801c8c5eefed56bddeec'])
-    self.psdk.shares.load(['a2f027b343bbe1b8c07d08ed0fc4985a230c8176add80c5a84228cc626e377ab'])
-    self.psdk.shares.load(['b58d3aac69953638361f6f904b27a986bd747217301ea44fed869bca65623312'])*/
+    /*self.psdk.share.load(['37cd921ffeee746147517ba821220e2951bd38eff8587e43a0675cd494c9a64e'])
+    self.psdk.share.load(['03387a46a7fcf7a070f30aad246958482329499d1aef3b75ad34763ba71eb79d'])
+    self.psdk.share.load(['e57b77a3cad6d0317c0e500d08cb341255845bf3f869801c8c5eefed56bddeec'])
+    self.psdk.share.load(['a2f027b343bbe1b8c07d08ed0fc4985a230c8176add80c5a84228cc626e377ab'])
+    self.psdk.share.load(['b58d3aac69953638361f6f904b27a986bd747217301ea44fed869bca65623312'])*/
     
 
     var listeners = {
@@ -417,60 +416,44 @@ Platform = function (app, listofnodes) {
 
             if(status == 'completed'){
 
-                self.sdk.node.shares.add(alias);
+                //self.sdk.node.shares.add(alias);
 
                 if (alias.itisvideo()) {
-                    var unpostedVideos;
 
-                    try {
-                        unpostedVideos = JSON.parse(localStorage.getItem('unpostedVideos') || '{}');
-                    } catch (error) {
-                        unpostedVideos = {};
-
-                        app.Logger.error({
-                            err: 'DAMAGED_LOCAL_STORAGE',
-                            code: 801,
-                            payload: error,
-                        });
-                    };
-
-                    if (unpostedVideos[app.user.address.value]) {
-                        unpostedVideos[app.user.address.value] = unpostedVideos[app.user.address.value].filter(
-                            (video) => video !== alias.url,
-                        );
-
-                        try {
-                            localStorage.setItem('unpostedVideos', JSON.stringify(unpostedVideos));
-                        }
-                        catch (e) { 
-
-                        }
-
-                        
-                    }
+                    self.sdk.videos.unposted.remove(alias.url)
+                    
                 }
             }
 
         },
         upvoteShare : function(alias, status){
-            
-        
 
             var address = alias.address.v
-            var share = self.psdk.shares.get(alias.share.v)
-            
-            
+            var share = self.psdk.share.get(alias.share.v)
             var value = alias.value.v
 
             if( address != app.user.address.value) return
             if(!share) return
+
+            if(status == 'completed'){
+
+                self.sdk.memtags.add(share.tags, 'l_' + share.txid, (value - 3) / 2)
+
+                if (value > 4)
+                    self.sdk.recommendations.successRecommendation(share)
+
+            }
+
+            return
+
             
             if(status == 'completed'){
                 share.myVal = Number(value);	
 
                 self.sdk.memtags.add(share.tags, 'l_' + share.txid, (value - 3) / 2)
 
-                self.sdk.recommendations.successRecommendation(share)
+                if (value > 4)
+                    self.sdk.recommendations.successRecommendation(share)
             }
 
             if(status == 'rejected'){				
@@ -481,6 +464,9 @@ Platform = function (app, listofnodes) {
             }
         }
     }
+
+    self.psdk = new pSDK({app, api : self.app.api, actions : self.actions})
+    self.actions.psdk = self.psdk
 
     // self.network = function(){
     //     if(self.test){
@@ -3661,7 +3647,7 @@ Platform = function (app, listofnodes) {
 
                             self.sdk.node.shares.getbyid([txid], function () {
 
-                                var share = self.psdk.shares.get(txid)
+                                var share = self.psdk.share.get(txid)
                                 
 
                                 ed.next(txid, share)
@@ -5044,7 +5030,7 @@ Platform = function (app, listofnodes) {
         },
 
         metmenu: function (_el, id, actions) {
-            var share = self.psdk.shares.get(id) 
+            var share = self.psdk.share.get(id) 
             
 
             if (!share) {
@@ -5074,7 +5060,7 @@ Platform = function (app, listofnodes) {
 
                     var t = self.api.tooltip(_el, function () {
 
-                        d.share = self.psdk.shares.get(id)
+                        d.share = self.psdk.share.get(id)
                         
                         d.mestate = _mestate
 
@@ -5206,7 +5192,7 @@ Platform = function (app, listofnodes) {
 										if(!err)
 										{
 
-                                            var alreadyPinned = self.psdk.shares.get(share.pin)
+                                            var alreadyPinned = self.psdk.share.get(share.pin)
                                             
                                             if (alreadyPinned && alreadyPinned.txid){
 
@@ -10507,7 +10493,7 @@ Platform = function (app, listofnodes) {
 
             deletedaccount : function(address){
 
-                ///TODO
+                ///TODO_REF_ACTIONS
                 var temp = _.find(deep(self, 'sdk.node.transactions.temp.accDel') || {}, (txa) => {
                     return txa.address == address
                 })
@@ -10625,8 +10611,9 @@ Platform = function (app, listofnodes) {
                                     //self.app.platform.errorHandler(error, true)	
                                 }
 
-                                self.psdk.userInfo.clearAll(self.sdk.address.pnet().address)
-                                self.psdk.userState.clearAll(self.sdk.address.pnet().address)
+                                self.psdk.clear.all('userInfo', self.app.user.address.value)
+                                self.psdk.clear.all('userState', self.app.user.address.value)
+
 
                                 //self.app.settings.delete(a, 'last_user')
                                 //self.app.settings.delete(a, 'last_ustate_2')
@@ -10800,8 +10787,6 @@ Platform = function (app, listofnodes) {
                 if(!value) value = 1
 
                 var us = self.psdk.userState.getmy();
-
-                
 
                 if (us) {
                     us[state + "_spent"] = (us[state + "_spent"] || 0) + value
@@ -16342,7 +16327,7 @@ Platform = function (app, listofnodes) {
                 var s = self.sdk.likes.storage
 
                 _.each(ids, function (txid) {
-                    var share = self.psdk.shares.get(txid)
+                    var share = self.psdk.share.get(txid)
                     
                     
 
@@ -16416,7 +16401,7 @@ Platform = function (app, listofnodes) {
 
                     _.each(ids, function (id) {
 
-                        var share = self.psdk.shares.get(id)
+                        var share = self.psdk.share.get(id)
 
                         var lastcomment = deep(share, 'lastComment.id');
 
@@ -17068,7 +17053,7 @@ Platform = function (app, listofnodes) {
                                 alias.children = 0;
                                 alias.setTime(temptime, temptime);
 
-                                var share = self.psdk.shares.get(txid)
+                                var share = self.psdk.share.get(txid)
                                 
 
                                 if (share && (!pid || pid == '0'))
@@ -17496,7 +17481,7 @@ Platform = function (app, listofnodes) {
 
                 getWithTemp: function (id) {
 
-                    var share = self.psdk.shares.get(id)
+                    var share = self.psdk.share.get(id)
 
                     if (!share) {
 
@@ -17535,7 +17520,7 @@ Platform = function (app, listofnodes) {
 
                 add: function (share) {
 
-                    ////todo
+                    ////TODO_REF_ACTIONS
 
                     this.storage[share.txid] = share;
 
@@ -17725,7 +17710,7 @@ Platform = function (app, listofnodes) {
 
                             // Prepare user
 
-                            ///TODO
+                            ///TODO_REF_ACTIONS
                             var newUser = self.sdk.users.prepareuser(curShare.share.user, curShare.share.user.adr);
                             self.sdk.usersl.storage[newUser.address] = newUser;
 
@@ -17745,7 +17730,7 @@ Platform = function (app, listofnodes) {
 
                             loadedShares.push(newShare);
 
-                            //// TODO
+                            //// TODO_REF_ACTIONS
 
                             if(!self.sdk.node.shares.storage.trx)
                                 self.sdk.node.shares.storage.trx = {};
@@ -17834,9 +17819,9 @@ Platform = function (app, listofnodes) {
 
                 getbyid: function (txids, clbk, refresh) {
 
-                    self.psdk.shares.load(txids, refresh).then(() => {
+                    self.psdk.share.load(txids, refresh).then(() => {
 
-                        var shares = self.psdk.shares.gets(txids)
+                        var shares = self.psdk.share.gets(txids)
 
                         clbk(shares, null, {
                             count: txids.length
@@ -17871,7 +17856,7 @@ Platform = function (app, listofnodes) {
 
                 get: function (parameters, clbk, method, rpc = {}) {
 
-                    self.psdk.shares.request(() => {
+                    self.psdk.share.request(() => {
                         return self.app.api.rpc(method, parameters, {
                             rpc : rpc
                         })
@@ -17880,7 +17865,7 @@ Platform = function (app, listofnodes) {
                         parameters
                     }).then(d => {
 
-                        var shares = self.psdk.shares.gets(_.map(d.contents, (s) => {
+                        var shares = self.psdk.share.gets(_.map(d.contents, (s) => {
                             return s.txid
                         }))
 
@@ -18352,7 +18337,7 @@ Platform = function (app, listofnodes) {
                                 parameters.push(p.address)
 
                                 if(p.tempSubscriptions && p.tempSubscriptions.length){
-                                    //parameters.push(p.tempSubscriptions) TODO
+                                    //parameters.push(p.tempSubscriptions) TODO_REF_ACTIONS
                                 }
                             }
 
@@ -18383,18 +18368,19 @@ Platform = function (app, listofnodes) {
 
                                 //if (p.contenttypes) shares = data;
 
-                                var blocknumber = data.height
+                                //var blocknumber = data.height
 
-                                _.each(shares, function(s){
+                                /*_.each(shares, function(s){
                                     if (s.info){
                                         s.info.BLOCK = blocknumber
                                     }
-                                })
+                                })*/
 
-                                p.blocknumber = blocknumber 
+                                p.blocknumber = data.height
+ 
 
 
-                                //// TODO PSDK
+                                //// TODO TODO_REF_ACTIONS
 
                                 if (shares) {
 
@@ -19709,7 +19695,7 @@ Platform = function (app, listofnodes) {
                         var lock = 0
 
                         self.sdk.node.shares.getbyid(id, function() {
-                            var item = self.psdk.shares.get(id) 
+                            var item = self.psdk.share.get(id) 
                             
 
                             if(!item) return clbk('item')
@@ -19896,6 +19882,8 @@ Platform = function (app, listofnodes) {
                     },
 
                     commonFromUnspent: function (obj, clbk, p, telegram) {
+
+                        /// TODO_REF_ACTIONS REMOVE
 
                         if (!p) p = {};
 
@@ -23276,6 +23264,40 @@ Platform = function (app, listofnodes) {
         videos : {
             storage : {},
             historykey : 'videohistory_v1_',
+
+            unposted : {
+                remove : function(url){
+                    var unpostedVideos;
+
+                    try {
+                        unpostedVideos = JSON.parse(localStorage.getItem('unpostedVideos') || '{}');
+                    } catch (error) {
+                        unpostedVideos = {};
+
+                        app.Logger.error({
+                            err: 'DAMAGED_LOCAL_STORAGE',
+                            code: 801,
+                            payload: error,
+                        });
+                    };
+
+                    if (unpostedVideos[app.user.address.value]) {
+                        unpostedVideos[app.user.address.value] = unpostedVideos[app.user.address.value].filter(
+                            (video) => video !== url,
+                        );
+
+                        try {
+                            localStorage.setItem('unpostedVideos', JSON.stringify(unpostedVideos));
+                        }
+                        catch (e) { 
+
+                        }
+
+                        
+                    }
+                }
+            },
+
             historyget : function(txid){
 
                 var h = {
