@@ -2746,8 +2746,8 @@ pComment = function(){
 
 	self.txid = '';
 	self.id = '';
-	self.time = 0;
-	self.timeUpd = 0;
+	self.time = new Date();
+	self.timeUpd = new Date();
 	self.children = 0;
 
 	self.donation = '';
@@ -2762,6 +2762,7 @@ pComment = function(){
 	self.scoreUp = 0;
 	self.myScore = 0;
 	self.deleted = false;
+	self.address = ''
 
 	self.reputation = 0;
 
@@ -2803,6 +2804,12 @@ pComment = function(){
 
 		self.donation = v.donation;
 		self.amount = Number(v.amount || '0');
+		self.children = Number(v.children || '0');
+
+		self.address = v.address
+
+		if (v.rating)
+			self.rating = v.rating
 
 		if (v.myScore) self.myScore = v.myScore
 
@@ -2810,6 +2817,9 @@ pComment = function(){
 
 		if (v.id || v.txid)
 			self.id = v.id || v.txid;
+
+		self.setTime(v.time, v.timeUpd)
+
 	}
 
 	self.import = function(v){
@@ -2837,7 +2847,11 @@ pComment = function(){
 			myScore : self.myScore,
 			deleted : self.deleted,
 			donation: self.donation,
-			amount: self.amount
+			amount: self.amount,
+			address : self.address,
+
+			time : self.time.getTime(),
+			timeUpd: self.timeUpd.getTime()
 		}
 
 		return r
@@ -2883,11 +2897,18 @@ pComment = function(){
 	}
 
 	self.setTime = function(t, tu){
-		self.time = new Date()
-		self.time.setTime(t * 1000);
 
-		self.timeUpd = new Date()
-		self.timeUpd.setTime(tu * 1000);
+		if(t){
+			self.time = new Date()
+			self.time.setTime(t * 1000);
+		}
+		
+		if(tu){
+			self.timeUpd = new Date()
+			self.timeUpd.setTime(tu * 1000);
+		}
+
+		
 	}	
 
 	self.social = function(app){

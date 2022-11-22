@@ -16618,6 +16618,7 @@ Platform = function (app, listofnodes) {
                 var relay = self.sdk.relayTransactions.get();
                 var newblock = false
 
+
                 var c = _.map(d || [], function (data) {
                     var comment = new pComment();
 
@@ -16802,18 +16803,15 @@ Platform = function (app, listofnodes) {
 
             getclear: function (txid, pid, clbk, ccha) {
 
+                console.log('getclear')
+
                 var s = self.sdk.comments.storage;
                 var i = self.sdk.comments.ini;
-                var address = ''
-
-                var ao = self.app.platform.sdk.address.pnet();
-
-                if (ao) address = ao.address
 
                 s[txid] || (s[txid] = {})
 
 
-                if(ccha && s[txid][pid || '0']){
+                if (ccha && s[txid][pid || '0']){
 
                     if (clbk)
                         clbk(s[txid][pid || '0'])
@@ -16821,8 +16819,41 @@ Platform = function (app, listofnodes) {
                     return
                 }
 
+                var parameters = [txid, pid || '', self.app.user.address.value || '']
 
-                self.app.api.rpc('getcomments', [txid, pid || '', address]).then(d => {
+                self.psdk.comment.request(() => {
+                    return self.app.api.rpc('getcomments', parameters)
+                }, {
+                    parameters
+                }).then(d => {
+
+                    var comments = self.psdk.comment.gets(_.map(d, (s) => {
+                        return s.id
+                    }))
+
+                    comments = self.psdk.comment.tempAdd(comments, (action) => {
+                        return txid == action.postid && (pid || '') == (action.parentid || '')
+                    })
+                    
+                    console.log('comments', comments)
+
+                    s[txid][pid || '0'] = comments
+
+                    if(clbk) clbk(comments)
+
+                }).catch(e => {
+
+                    console.error('e', e)
+
+                    if (clbk) {
+                        clbk(null, e)
+                    }
+
+                })
+
+                return
+
+                self.app.api.rpc('getcomments', [txid, pid || '', self.app.user.address.value || '']).then(d => {
 
                     self.sdk.comments.temps(d, txid, pid)
 
@@ -18366,33 +18397,37 @@ Platform = function (app, listofnodes) {
 
                                 var shares = data.contents || []
 
-                                //if (p.contenttypes) shares = data;
-
-                                //var blocknumber = data.height
-
-                                /*_.each(shares, function(s){
-                                    if (s.info){
-                                        s.info.BLOCK = blocknumber
-                                    }
-                                })*/
-
                                 p.blocknumber = data.height
- 
 
 
-                                //// TODO TODO_REF_ACTIONS
+                                //// TODO TODO_REF_ACTIONS + check blocking
 
                                 if (shares) {
 
-                                    if (state) {
+                                    if (p.author) {
 
-                                        var me = self.app.user.address.value;
+                                        if(!p.txid){
+                                            shares = self.psdk.share.tempAdd(shares, (action) => {
+                                                return action.address == p.author
+                                            })
+                                        }
+                                    }
+
+                                    /*
+
+                                    if (state) {
 
                                         var account = self.actions.getCurrentAccount()
 
                                         if (account){
 
-                                            if (p.author && p.author == me) {
+                                            if (p.author  && p.author == me) {
+
+                                                if(!p.txid){
+                                                    self.psdk.share.tempAdd(shares, (action) => {
+                                                        return action.address == p.author
+                                                    })
+                                                }
 
                                                 _.each(account.getTempActions('share'), function (alias) {
                                                     if(alias.txidEdit){
@@ -18414,7 +18449,6 @@ Platform = function (app, listofnodes) {
     
                                                 
                                             }
-
                                             _.each(account.getTempActions('blocking'), function (alias) {
                                                 _.each(shares, function (share) {
                                                     if (share.address == alias.address) share.blocking = true;
@@ -18425,6 +18459,7 @@ Platform = function (app, listofnodes) {
 
                                         
                                     }
+                                    */
 
                                     self.sdk.node.shares.loadvideoinfoifneed(shares, p.skipvideo ? false : true, function(){
 

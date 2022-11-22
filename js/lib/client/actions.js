@@ -673,9 +673,6 @@ var Action = function(account, object, priority){
             }
         }
 
-
-        
-
         alias.txid = exported.transaction
 
         if(!alias.txid) { alias.txid = self.id; alias.relay = true }
@@ -683,6 +680,7 @@ var Action = function(account, object, priority){
 
         alias.address = account.address;
         alias.type = self.object.type
+        alias.id = alias.txid
 
         alias.time = new Date()
         alias.timeUpd = alias.time

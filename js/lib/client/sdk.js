@@ -10,34 +10,13 @@ var pSDK = function({app, api, actions}){
 
     self.actions = actions
 
-    self.actions.on('change', ({account}) => {
+    /*self.actions.on('change', ({account}) => {
         if (account.address == app.user.address.value){
             
         }
-    })
+    })*/
 
-    self.actions.on('actionFiltered', ({action, address, status}) => {
-
-        var listener = self[action.object.type]?.listener
-
-        if(!listener) return
-
-        if (address == app.user.address.value){
-
-            var alias = action.get()
-
-            listener(alias, address, status)
-
-            if (status == 'completed' && action.object.ustate) {
-
-                var ustate = typeof alias.ustate == 'function' ? alias.ustate() : alias.ustate;
-
-                if (ustate) self.userState.changeLimits(address, ustate, 1)
-
-            }
-
-        }
-    })
+    
 
     var dbmeta = {
 
@@ -59,6 +38,10 @@ var pSDK = function({app, api, actions}){
 
         userStateFB : {
             time : 0
+        },
+
+        commentRequest: {
+            time : 60
         },
 
         shareRequest : {
@@ -459,8 +442,6 @@ var pSDK = function({app, api, actions}){
         
         load : function(addresses, light, update){
 
-            console.log('addresses load', addresses)
-
             return loadList(light ? 'userInfoLight' : 'userInfoFull', addresses, (addresses) => {
 
                 var parameters = [addresses]; 
@@ -600,7 +581,7 @@ var pSDK = function({app, api, actions}){
                     _.each(account.getTempActions(k), (action) => {
 
                         if (self[k] && self[k].applyAction){
-                            var applied = self[k].applyAction(extendedObject || object.clone(), action.get())
+                            var applied = self[k].applyAction(extendedObject || object.clone(), action)
 
                             if (applied) extendedObject = applied
                         }
@@ -687,6 +668,195 @@ var pSDK = function({app, api, actions}){
 
             return object
         }
+    }
+
+    self.comment = {
+        keys : ['comment'],
+        request : function(executor, hash){
+            return request('comment', hash, executor, {
+                requestIndexedDb : 'commentRequest',
+
+                insertFromResponse : (r) => this.insertFromResponseEx(r)
+            })
+        },
+
+        transform : function({key, data}){
+            var comment = new pComment();
+                comment.import(data)
+
+            return comment
+        },
+
+        insertFromResponseEx : function(data){
+            return Promise.resolve(this.insertFromResponse(data))
+        },
+
+        insertFromResponse : function(data){
+            var result = _.map(data, (r) => {
+
+                if(!r) return null
+
+                return {
+                    key : r.id,
+                    data : r
+                }
+            })
+
+            var key = 'comment'
+
+            var filtered = []
+
+            _.each(result, (r) => {
+
+                if (r && r.key && r.data){
+                    storage[key][r.key] = r.data
+                    filtered.push(r)
+                }
+
+                var object = this.transform(r)
+
+                if (object){
+                    objects[key][r.key] = object
+
+                    checkObjectInActions([{txid : object.id}])
+                }
+
+            })
+
+            
+
+        },
+
+        listener : function(action, address, status){
+            if (status == 'completed'){
+
+                var exp = action.get()
+
+                this.applyAction(objects['comment'][exp.id], exp)
+                this.applyAction(objects['share'][exp.postid], exp)
+            }
+        },
+        applyAction : function(object, exp){
+
+            if (object){
+                if (object.type == 'share'){
+
+                    if(object.txid == exp.postid){
+
+                        var last = object.lastComment
+
+                        if(exp.optype == 'comment'){
+                            object.comments++
+
+                            if (!last || Number(last.timeUpd) < Number(exp.timeUpd)) {
+                                object.lastComment = tempComment
+                            }
+                        }
+    
+                        if(exp.optype == 'commentEdit'){
+
+                            if (last && last.id == exp.id) {
+
+                                exp.time = last.time
+                                object.lastComment = exp
+
+                            }
+                        }
+    
+                        if(exp.optype == 'commentDelete'){
+                            if (last && last.id == exp.id) {
+                                last.deleted = true
+                            }
+
+                            if (object.comments > 0)
+                                object.comments--
+                        }
+                    }
+                }
+
+                if(object.type == 'comment'){
+
+                    if(exp.optype == 'comment'){
+                        if(object.id == exp.id) return exp
+                    }
+
+                    if(exp.optype == 'commentEdit'){
+                        if (object.id == exp.id){
+                            object.msg = exp.msg
+                            object.timeUpd = exp.timeUpd
+                        }
+                    }
+
+                    if(exp.optype == 'commentDelete'){
+                        if (object.id == exp.id){
+                            object.deleted = true
+                        }
+                    }
+                }
+            }
+
+            return object
+        },
+
+
+        gets : function(ids){
+            return _.filter(_.map(ids, s => this.get(s)), s => s)
+        },
+
+        get : function(id){
+            return this.tempExtend(id ? (objects.comment[id] || null) : null, id)
+        },
+
+        tempAdd : function(objects, filter){
+
+            _.each(actions.getAccounts(), (account) => {
+                var actions = account.getTempActions('comment', filter)
+
+                _.each(actions, (a) => {
+                    objects.unshift(a)
+                })
+            })
+
+            return objects
+            
+        },
+
+        tempExtend : function(object, id){
+
+            var extendedObject = null
+
+            _.each(actions.getAccounts(), (account) => {
+
+                var temps = ['comment', 'cScore']
+
+                _.each(temps, (k) => {
+
+                    _.each(account.getTempActions(k), (action) => {
+
+                        if (!object && action.id == id){
+                            extendedObject = action
+                        }
+                        else{
+
+                            if (self[k] && self[k].applyAction){
+
+                                var applied = self[k].applyAction(extendedObject || object.clone(), action)
+    
+                                if (applied) extendedObject = applied
+                            }
+
+                        }
+
+                        
+                    })
+
+                })
+            
+            })
+
+            return extendedObject || object || null
+
+        },
     }
 
     self.unblocking = {
@@ -956,7 +1126,7 @@ var pSDK = function({app, api, actions}){
         },
 
         gets : function(ids){
-            return _.filter(_.map(ids, this.get), s => s)
+            return _.filter(_.map(ids, s => this.get(s)), s => s)
         },
 
         get : function(id){
@@ -1050,20 +1220,20 @@ var pSDK = function({app, api, actions}){
 
             _.each(actions.getAccounts(), (account) => {
 
-                var temps = ['share', 'upvoteShare', 'comment', 'contentDelete']
+                var temps = ['share', 'upvoteShare', 'comment', 'contentDelete', 'cScore']
 
                 _.each(temps, (k) => {
 
                     _.each(account.getTempActions(k), (action) => {
 
-                        if (!object && action.id == txid){
-                            extendedObject = action.get()
+                        if (!object && action.txid == txid){
+                            extendedObject = action
                         }
                         else{
 
                             if (self[k] && self[k].applyAction){
 
-                                var applied = self[k].applyAction(extendedObject || object.clone(), action.get())
+                                var applied = self[k].applyAction(extendedObject || object.clone(), action)
     
                                 if (applied) extendedObject = applied
                             }
@@ -1080,6 +1250,20 @@ var pSDK = function({app, api, actions}){
             return extendedObject || object || null
 
         },
+
+        tempAdd : function(objects, filter){
+
+            _.each(actions.getAccounts(), (account) => {
+                var actions = account.getTempActions('share', filter)
+
+                _.each(actions, (a) => {
+                    objects.unshift(a)
+                })
+            })
+
+            return objects
+            
+        }
     }
 
     
@@ -1178,11 +1362,6 @@ var pSDK = function({app, api, actions}){
             
         }
     }
-
-    self.score = {
-
-    }
-
     
     self.clear = {
         storage : function(k, key){
@@ -1227,6 +1406,30 @@ var pSDK = function({app, api, actions}){
         processingAll()
     }, 30)
 
+
+    self.actions.on('actionFiltered', ({action, address, status}) => {
+
+        var listener = self[action.object.type]?.listener
+
+        if(!listener) return
+
+        if (address == app.user.address.value){
+
+            var alias = action.get()
+
+            listener(alias, address, status)
+
+
+            if (status == 'completed' && action.object.ustate) {
+
+                var ustate = typeof alias.ustate == 'function' ? alias.ustate() : alias.ustate;
+
+                if (ustate) self.userState.changeLimits(address, ustate, 1)
+
+            }
+
+        }
+    })
 
     return self
 }
