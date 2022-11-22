@@ -1,0 +1,411 @@
+/*! HTML5 Boilerplate v7.3.0 | MIT License | https://html5boilerplate.com/ */
+
+/* main.css 2.0.0 | MIT License | https://github.com/h5bp/main.css#readme */
+/*
+ * What follows is the result of much research on cross-browser styling.
+ * Credit left inline and big thanks to Nicolas Gallagher, Jonathan Neal,
+ * Kroc Camen, and the H5BP dev community and team.
+ */
+
+/* ==========================================================================
+   Base styles: opinionated defaults
+   ========================================================================== */
+
+
+  :root {
+    --app-margin-top-default: 0px;
+    --app-margin-top: max(env(safe-area-inset-top), var(--app-margin-top-default));
+  }
+  
+  :root {
+    --safe-area-inset-top:      0px;
+    --safe-area-inset-right:    0px;
+    --safe-area-inset-bottom:   0px;
+    --safe-area-inset-left:     0px;
+  }
+  
+  
+  
+  /* iOS 11.0: supports constant() css function. (Assume all other inset vars are supported.) */
+  @supports (padding-top: constant(safe-area-inset-top))  {
+    :root {
+          --safe-area-inset-top:      constant(safe-area-inset-top, 0);
+          --safe-area-inset-right:    constant(safe-area-inset-right, 0);
+          --safe-area-inset-bottom:   constant(safe-area-inset-bottom, 0);
+          --safe-area-inset-left:     constant(safe-area-inset-left, 0);
+    }
+  }
+  /* iOS 11.2 and latest Chrome webviews support the env() css function. (Assume all other inset vars are supported.) */
+  @supports (padding-top: env(safe-area-inset-top))  {
+    :root {
+          --safe-area-inset-top:      env(safe-area-inset-top, 0);
+          --safe-area-inset-right:    env(safe-area-inset-right, 0);
+          --safe-area-inset-bottom:   env(safe-area-inset-bottom, 0);
+          --safe-area-inset-left:     env(safe-area-inset-left, 0);
+    }
+  }
+
+:root{
+  --background-hidden-layer: 255, 255, 255;
+  --background-total-theme: 255, 255, 255;
+  --background-secondary-theme: 250, 250, 250;
+  --background-main: 240, 242, 245;
+  --background-main-contrast: 10, 12, 23;
+  --color-medium-theme: 199, 200, 217;
+
+  --neutral-grad-0: 235,235,240;
+  --neutral-grad-1: 227,228,235;
+  --neutral-grad-2: 142,144,166;
+  --neutral-grad-3: 85,87,112;
+  --neutral-grad-4: 64,65,82;
+
+  --text-color: 10, 12, 23;
+  --text-on-main-bg-color: 85,87,112;
+  --text-on-bg-ac-color: 255, 255, 255;
+
+  --voice-message-fillStyle: 81, 129, 184;
+
+  --color-bg-ac-bright: 0,163,247;
+  --color-bg-ac: 0,164,255;
+  --color-bg-ac-1: 0,142,191;
+  --color-bg-ac-2: 250,110,132;
+  --color-bg-selection: 179, 212, 252;
+
+  --color-txt-ac: 0,164,255;
+  --color-txt-ac-1: 0,142,191;
+  --color-txt-ac-2: 250,110,132;
+  --color-txt-gray: 70, 71, 98;
+  --color-txt-gray-dark: 53, 53, 63;
+
+  --color-bg-orange: 255, 59, 0;
+  --color-txt-orange: 255, 72, 0;
+
+  --color-star-yellow: 255,174, 0;
+
+  --color-shadow-base: 2, 18, 24;
+  --color-shadow-var: 32, 35, 42;
+  --text-on-bg-shadow-color: 255, 255, 255;
+
+  --color-bad : 244, 26, 77;
+  --color-nrml : 0, 0, 0;
+  --color-good : 7, 108, 52;
+  --color-yellow : 255, 238, 0;
+}
+
+
+:root[theme='black']{
+  --background-hidden-layer:  10, 12, 23;
+  --background-total-theme:  18, 22, 33;
+  --background-secondary-theme: 24, 36, 52;
+  --background-main: 14, 28, 43;
+  --background-main-contrast: 240, 242, 245;
+
+  --color-medium-theme: 99, 100, 117;
+
+  --neutral-grad-0: 16,16,17;
+  --neutral-grad-1: 34,34,37;
+  --neutral-grad-2: 59,59,71;
+  --neutral-grad-3: 77,78,92;
+  --neutral-grad-4: 85,87,112;
+
+  --text-color: 178, 171, 172;
+  --text-on-main-bg-color: 85,87,112;
+  --text-on-bg-ac-color: 255, 255, 255;
+
+  --voice-message-fillStyle: 81, 129, 184;
+
+  --color-bg-ac-bright: 0, 90, 200;
+  --color-bg-ac: 0, 80, 190;
+  --color-bg-ac-1: 0, 142, 191;
+  --color-bg-ac-2: 250, 110,132;
+  --color-bg-selection: 179, 212, 252;
+
+  --color-txt-ac: 0, 164, 255;
+  --color-txt-ac-1: 0, 142, 191;
+  --color-txt-ac-2: 250, 110, 132;
+  --color-txt-gray: 103, 105, 128;
+  --color-txt-gray-dark: 113, 113, 134;
+
+  --color-bg-orange: 255, 72, 0;
+  --text-txt-orange: 255, 72, 0;
+
+  --color-shadow-base: 12, 14, 33;
+  --color-shadow-var: 18, 18, 26;
+  --text-on-bg-shadow-color: 214, 219, 230;
+
+  --color-bad : 244, 26, 77;
+  --color-nrml : 0, 0, 0;
+  --color-good : 7, 108, 52;
+  --color-yellow : 255, 238, 0;
+}
+
+html {
+  font-size: 1em;
+  line-height: 1.4;
+  min-height: 100%;
+  position: relative;
+  overflow-y: hidden;
+  overflow-x: hidden;
+  background: rgb(var(--background-total-theme));
+}
+
+
+body{
+  min-height: 100%;
+  height: 100%;
+}
+
+*{
+  box-sizing: border-box;
+}
+
+a{
+  color : inherit;
+}
+
+/*
+ * Remove text-shadow in selection highlight:
+ * https://twitter.com/miketaylr/status/12228805301
+ *
+ * Vendor-prefixed and regular ::selection selectors cannot be combined:
+ * https://stackoverflow.com/a/16982510/7133471
+ *
+ * Customize the background color to match your design.
+ */
+
+::-moz-selection {
+  background: #b3d4fc;
+  text-shadow: none;
+}
+
+::selection {
+  background: #b3d4fc;
+  text-shadow: none;
+}
+
+/*
+ * A better looking default horizontal rule
+ */
+
+hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #ccc;
+  margin: 1em 0;
+  padding: 0;
+}
+
+/*
+ * Remove the gap between audio, canvas, iframes,
+ * images, videos and the bottom of their containers:
+ * https://github.com/h5bp/html5-boilerplate/issues/440
+ */
+
+audio,
+canvas,
+iframe,
+img,
+svg,
+video {
+  vertical-align: middle;
+}
+
+/*
+ * Remove default fieldset styles.
+ */
+
+fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+/*
+ * Allow only vertical resizing of textareas.
+ */
+
+textarea {
+  resize: vertical;
+}
+
+/* ==========================================================================
+   Browser Upgrade Prompt
+   ========================================================================== */
+
+.browserupgrade {
+  margin: 0.2em 0;
+  background: #ccc;
+  color: #000;
+  padding: 0.2em 0;
+}
+
+/* ==========================================================================
+   Author's custom styles
+   ========================================================================== */
+
+/* ==========================================================================
+   Helper classes
+   ========================================================================== */
+
+/*
+ * Hide visually and from screen readers
+ */
+
+.hidden {
+  display: none !important;
+}
+
+/*
+* Hide only visually, but have it available for screen readers:
+* https://snook.ca/archives/html_and_css/hiding-content-for-accessibility
+*
+* 1. For long content, line feeds are not interpreted as spaces and small width
+*    causes content to wrap 1 word per line:
+*    https://medium.com/@jessebeach/beware-smushed-off-screen-accessible-text-5952a4c2cbfe
+*/
+
+.sr-only {
+  border: 0;
+  clip: rect(0, 0, 0, 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+  /* 1 */
+}
+
+/*
+* Extends the .sr-only class to allow the element
+* to be focusable when navigated to via the keyboard:
+* https://www.drupal.org/node/897638
+*/
+
+.sr-only.focusable:active,
+.sr-only.focusable:focus {
+  clip: auto;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  position: static;
+  white-space: inherit;
+  width: auto;
+}
+
+/*
+* Hide visually and from screen readers, but maintain layout
+*/
+
+.invisible {
+  visibility: hidden;
+}
+
+/*
+* Clearfix: contain floats
+*
+* For modern browsers
+* 1. The space content is one way to avoid an Opera bug when the
+*    `contenteditable` attribute is included anywhere else in the document.
+*    Otherwise it causes space to appear at the top and bottom of elements
+*    that receive the `clearfix` class.
+* 2. The use of `table` rather than `block` is only necessary if using
+*    `:before` to contain the top-margins of child elements.
+*/
+
+.clearfix:before,
+.clearfix:after {
+  content: " ";
+  /* 1 */
+  display: table;
+  /* 2 */
+}
+
+.clearfix:after {
+  clear: both;
+}
+
+/* ==========================================================================
+   EXAMPLE Media Queries for Responsive Design.
+   These examples override the primary ('mobile first') styles.
+   Modify as content requires.
+   ========================================================================== */
+
+@media only screen and (min-width: 35em) {
+  /* Style adjustments for viewports that meet the condition */
+}
+
+@media print,
+  (-webkit-min-device-pixel-ratio: 1.25),
+  (min-resolution: 1.25dppx),
+  (min-resolution: 120dpi) {
+  /* Style adjustments for high resolution devices */
+}
+
+/* ==========================================================================
+   Print styles.
+   Inlined to avoid the additional HTTP request:
+   https://www.phpied.com/delay-loading-your-print-css/
+   ========================================================================== */
+
+@media print {
+  *,
+  *:before,
+  *:after {
+    background: transparent !important;
+    color: #000 !important;
+    /* Black prints faster */
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+  a,
+  a:visited {
+    text-decoration: underline;
+  }
+  a[href]:after {
+    content: " (" attr(href) ")";
+  }
+  abbr[title]:after {
+    content: " (" attr(title) ")";
+  }
+  /*
+     * Don't show links that are fragment identifiers,
+     * or use the `javascript:` pseudo protocol
+     */
+  a[href^="#"]:after,
+  a[href^="javascript:"]:after {
+    content: "";
+  }
+  pre {
+    white-space: pre-wrap !important;
+  }
+  pre,
+  blockquote {
+    border: 1px solid #999;
+    page-break-inside: avoid;
+  }
+  /*
+     * Printing Tables:
+     * https://web.archive.org/web/20180815150934/http://css-discuss.incutio.com/wiki/Printing_Tables
+     */
+  thead {
+    display: table-header-group;
+  }
+  tr,
+  img {
+    page-break-inside: avoid;
+  }
+  p,
+  h2,
+  h3 {
+    orphans: 3;
+    widows: 3;
+  }
+  h2,
+  h3 {
+    page-break-after: avoid;
+  }
+}
+
