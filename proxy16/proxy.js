@@ -1554,7 +1554,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 							self.logger.w('rpc', 'debug', 'ADD TO QUEUE')
 
-							console.log('send!', method, parameters);
+							console.log('send!', method);
 
 
 							nodeManager.queue(node, method, parameters, direct, {resolve, reject}, time.node)
