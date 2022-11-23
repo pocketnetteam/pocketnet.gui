@@ -24788,15 +24788,24 @@ Platform = function (app, listofnodes) {
 
                 });
             }else if (usingWeb){
-                Notification.requestPermission().then((permission) => {
-                    if (permission === 'granted') {
-                        console.log('Notification permission granted.');
-                        self.get(clbk)
-                    } else {
-                        usingWeb = false;
-                        console.log('Unable to get permission to notify.');
-                    }
-                });
+
+                if(typeof Notification != 'undefined'){
+
+                }
+                else{
+                    Notification.requestPermission().then((permission) => {
+                        if (permission === 'granted') {
+                            console.log('Notification permission granted.');
+                            self.get(clbk)
+                        } else {
+                            usingWeb = false;
+                            console.log('Unable to get permission to notify.');
+                        }
+                    });
+                }
+
+
+                
             }
 		}
 
