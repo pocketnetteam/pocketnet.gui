@@ -24789,7 +24789,7 @@ Platform = function (app, listofnodes) {
                 });
             }else if (usingWeb){
 
-                if(typeof Notification != 'undefined'){
+                if(typeof Notification == 'undefined'){
 
                 }
                 else{
