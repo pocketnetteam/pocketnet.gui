@@ -288,6 +288,12 @@
 #menu .sections .items .item.onlyicon .icon {
   padding: 0.5em;
 }
+#menu .sections .items .item.onlyicon .icon .icn {
+  display: flex;
+}
+#menu .sections .items .item.onlyicon .icon .icn img {
+  height: 18px;
+}
 #menu .sections .items .item.onlyicon .count {
   color: rgb(var(--color-bg-ac-2));
 }
@@ -623,6 +629,12 @@
   width: 38px;
   -webkit-transition: none;
   transition: none;
+}
+#menu .postssearch .christmasBranchLeft {
+  position: absolute;
+  height: 50px;
+  bottom: -10px;
+  left: -38px;
 }
 #menu .postssearch .searchPanel {
   width: 2em;

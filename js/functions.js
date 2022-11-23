@@ -8737,6 +8737,8 @@
 					'<input  elementsid="sminputsearch_' + (p.id || p.placeholder) + '" class="sminput" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" id="text" maxlength="400" type="text" placeholder="' + (p.placeholder || "Search") + '">' +
 				'</div>',
 
+				'<img class="christmasBranchLeft" src="img/christmas_branch_1.svg">',
+
 				'<div class="searchPanel">' +
 					'<div class="searchPanelWrapper">' +
 						'<div class="searchPanelItem" event="clear">' +
