@@ -2,7 +2,7 @@
 
 var http = require('http');
 var https = require('https');
-
+var axios = require('axios');
 function RpcClient(opts) {
     opts = opts || {};
     this.host = opts.host || '127.0.0.1';
@@ -171,8 +171,19 @@ function rpc(request, callback, obj) {
     var self = obj;
 
 
+    var msg = false;
+
+    if (request?.params && request?.params[1] && request?.params[1].msg){
+
+        msg = true;
+    }
+
+
     try{
+
         request = JSON.stringify(request);
+        // Buffer.from(request).toString('base64');
+
     }
     catch(e){
 
@@ -182,6 +193,9 @@ function rpc(request, callback, obj) {
 
         return
     }
+
+    // console.log('request', request, options);
+
     
     var signal = null
 
@@ -222,8 +236,33 @@ function rpc(request, callback, obj) {
     var called = false;
     var errorMessage = 'Bitcoin JSON-RPC: ';
 
+
+    const url = 'http://' + options.host + ':' + options.port + options.path;
+
+    console.log('url', url, request);
+
+
+    axios.post(url, request).then((res) => {
+        console.log('res', res?.status, m);
+        if (msg){
+            callback({
+                code : 408,
+                error : 'timeout'
+            });
+        }
+
+
+    })
+    .catch(err => {
+        console.log('err', Object.keys(err), err.toJSON());
+    })
+
+    if (msg){
+
+        return;
+    }
+
     
-   
     var req = self.protocol.request(options, function(res) {
 
         var buf = '';
@@ -336,12 +375,15 @@ function rpc(request, callback, obj) {
 
     req.setHeader('Content-Length', request.length);
     req.setHeader('Content-Type', 'application/json');
+    req.setHeader('Accept-Encoding', 'gzip, deflate, br');
+
+    
 
     if (prv) {
         req.setHeader('Authorization', 'Basic ' + Base64Helper.encode(self.user + ':' + self.pass));
     }
 
-    req.write(request);
+    req.write(request)
     req.end();
 }
 

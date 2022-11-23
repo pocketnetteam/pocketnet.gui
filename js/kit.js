@@ -528,7 +528,7 @@ Comment = function(txid){
 
 		if(!self.delete){
 			r.msg = JSON.stringify({
-				message : encodeURIComponent(self.message.v),
+				message : (self.message.v),
 				url : encodeURIComponent(self.url.v),
 				images : _.map(self.images.v, function(i){
 					return encodeURIComponent(i)
