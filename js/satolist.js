@@ -10256,7 +10256,7 @@ Platform = function (app, listofnodes) {
 
                 if(self.bch[address]) return true
 
-                if(self.bchl[address] && (typeof _Electron == 'undefined') && !(window.cordova && !window.pocketnetstore)){
+                if(self.bchl[address] && (typeof _Electron == 'undefined') && !window.cordova){
                     return true
                 }
 
