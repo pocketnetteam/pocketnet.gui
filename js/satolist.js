@@ -17949,6 +17949,8 @@ Platform = function (app, listofnodes) {
 
                 recommended: function (p, clbk, cache, methodparams) {
 
+                    console.log('recommended')
+
                     if(!methodparams) methodparams = {}
 
                     if (!p) p = {};
@@ -17985,14 +17987,16 @@ Platform = function (app, listofnodes) {
                                 parameters[5].push(p.type)
                             }
 
+                            console.log('parameters', parameters)
+
                             self.sdk.node.shares.getex(parameters, function (data, error) {
 
                                 var shares = data.contents
+
+                                console.log('shares', data, p)
                                 
 
                                 if (shares) {
-
-                                  
 
                                     self.sdk.node.shares.loadvideoinfoifneed(shares, p.type == 'video', function(){
 
@@ -18021,8 +18025,10 @@ Platform = function (app, listofnodes) {
                                             })
                                         }
 
+                                        console.log('filtered', shares)
                                         
-
+                                        if (clbk)
+                                            clbk(shares, error, p)
                                     })
 
 

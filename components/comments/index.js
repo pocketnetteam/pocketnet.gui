@@ -1381,7 +1381,7 @@ var comments = (function(){
 					})
 	
 				}
-				console.log('comments', comments)
+		
 				var oldest = (_.min(comments, function(c){return c.time}).time).getTime() / 1000
 				var newest = (_.max(comments, function(c){return c.time}).time).getTime() / 1000
 
@@ -2886,7 +2886,7 @@ var comments = (function(){
 				var comments = [];
 
 				if (ed.lastComment){
-					comments = self.app.platform.sdk.comments.ini([ed.lastComment])
+					comments = [ed.lastComment]//self.app.platform.sdk.comments.ini([ed.lastComment])
 				}
 
 				self.sdk.comments.users(comments, function(){
@@ -3159,8 +3159,6 @@ var comments = (function(){
 					top = 0
 				}
 
-				console.log('listpreview', listpreview)
-				
 
 				if (listpreview){
 					makePreview(() => {

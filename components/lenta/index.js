@@ -3047,9 +3047,6 @@ var lenta = (function(){
 			},
 			comments : function(txid, init, showall, preview, clbk){
 
-				console.log('essenseData.comments, preview', essenseData.comments, preview)
-
-
 				if(essenseData.comments == 'no') {
 
 					if(clbk) clbk()
@@ -3391,8 +3388,6 @@ var lenta = (function(){
 				})
 
 				self.app.platform.sdk.likes.get(ids, function(){
-
-					console.log('shares', shares)
 
 					_.each(shares, function(share){
 
@@ -4291,16 +4286,10 @@ var lenta = (function(){
 
 				var recommendations = []
 
-				console.log("?????")
-
 
 				if(essenseData.includerec && !includingsub && !self.app.platform.sdk.categories.gettags().length){
 
-					console.log("HERE")
-
 					recommendations = self.app.platform.sdk.recommendations.getshares(rand(0, 3)) || []
-
-					console.log('recommendations', recommendations)
 
 					allshares = [].concat(allshares, recommendations)
 
@@ -4391,8 +4380,6 @@ var lenta = (function(){
 								_.each(recommendations, (r) => {
 									sharesFromRecommendations[r.txid] = true
 								})
-
-								console.log('sharesFromRecommendations', sharesFromRecommendations)
 							}
 
 							if (essenseData.filter) {
@@ -4445,8 +4432,6 @@ var lenta = (function(){
 						//// TODO_REF_ACTIONS
 
 						var getPin = function(settings){
-
-							console.log('getpin', settings)
 
 							var pinnedId = shares.findIndex(function(share){
 								return share.txid === settings.pin;
@@ -4701,6 +4686,7 @@ var lenta = (function(){
 								includingsub = true
 
 							}
+
 
 							var period = newsharescount ? Math.floor(60 * 20 / newsharescount) : page ? 4320 : 1440
 							//if(loader == 'hierarchical') loader = 'hierarchicaltst'
