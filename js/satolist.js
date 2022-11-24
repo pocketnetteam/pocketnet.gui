@@ -16329,9 +16329,6 @@ Platform = function (app, listofnodes) {
                 _.each(ids, function (txid) {
                     var share = self.psdk.share.get(txid)
                     
-                    
-
-
                     if (share && s[txid]) {
 
                         if (typeof share.myVal == 'undefined') {
@@ -16383,7 +16380,33 @@ Platform = function (app, listofnodes) {
 
             },
 
-            get: function (ids, clbk) {
+            get: function (shareIds, clbk) {
+
+                var commentIds = []
+
+                _.each(shareIds, function (id) {
+
+                    var commentId = deep(self.psdk.share.get(id), 'lastComment.id');
+
+                    if (commentId) {
+                        commentIds.push(lastcomment)
+                    }
+
+                })
+
+                self.app.user.isState((state) => {
+                    if(!state){
+                        if(clbk) clbk()
+                    }
+                    else{
+                        self.psdk.myScore.load(shareIds, commentIds).finally(() => {
+                            if(clbk) clbk()
+                        })
+                    }
+                })
+
+                return
+
 
                 var l = self.sdk.likes
 
@@ -17901,6 +17924,8 @@ Platform = function (app, listofnodes) {
                         }))
 
                         d.contents = shares
+
+                        console.log('shares', shares)
 
                         if(clbk) clbk(d)
 

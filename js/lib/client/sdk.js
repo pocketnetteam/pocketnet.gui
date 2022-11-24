@@ -50,6 +50,16 @@ var pSDK = function({app, api, actions}){
 
         share : {
             time : 240
+        },
+
+        myScore : {
+            time : 6000,
+            authorized : true
+        },
+
+        myScoreFB : {
+            time : 6000,
+            authorized : true
         }
     }
 
@@ -93,8 +103,6 @@ var pSDK = function({app, api, actions}){
         if(!temp[key]) temp[key] = {}
         if(!objects[key]) objects[key] = {}
         if(!queue[key]) queue[key] = []
-
-        
     }
 
     var settodb = function(dbname, result){
@@ -102,6 +110,9 @@ var pSDK = function({app, api, actions}){
 
         return getDBStorage({name : dbname, ...dbmeta[dbname]}).then((db) => {
             return Promise.all(_.map(result, ({key, data}) => {
+
+                if(dbmeta[dbname].authorized) key = key + '_' + app.user.address.value
+
                 return db.set(key, data).catch(e => {})
             }))
 
@@ -111,6 +122,11 @@ var pSDK = function({app, api, actions}){
     var clearfromdb = function(dbname, ids){
 
         return getDBStorage({name : dbname, ...dbmeta[dbname]}).then(() => {
+
+            if(dbmeta[dbname].authorized) ids = _.map(ids, id => {
+                return id + '_' + app.user.address.value
+            })
+
             return db.clearItems(ids)
         }).catch(e => {
 
@@ -157,10 +173,16 @@ var pSDK = function({app, api, actions}){
 
         if(!dbname) return Promise.resolve([])
 
+        if(dbmeta[dbname].authorized) ids = _.map(ids, id => {
+            return id + '_' + app.user.address.value
+        })
+
         return getDBStorage({name : dbname, ...dbmeta[dbname]}).then((db) => {
             var result = []
 
             return Promise.all(_.map(ids, id => {
+
+                
 
                 return db.get(id).then(data => {
 
@@ -644,32 +666,6 @@ var pSDK = function({app, api, actions}){
         }
     }
 
-    self.blocking = {
-        listener : function(action, address, status){
-            if (status == 'completed'){
-
-                var exp = action.get()
-
-                this.applyAction(objects['userInfoFull'][address], exp)
-                this.applyAction(objects['userInfoFull'][exp.vsaddress], exp)
-            }
-        },
-        applyAction : function(object, exp){
-
-            if (object){
-                if (object.address == exp.address){ /// for me
-                    object.addRelation(exp.vsaddress, 'blocking')
-                }
-               
-                if (object.address == exp.vsaddress){ /// for me
-                    //object.addRelation(exp.vsaddress, 'blocking')
-                }
-            }
-
-            return object
-        }
-    }
-
     self.comment = {
         keys : ['comment'],
         request : function(executor, hash){
@@ -859,6 +855,32 @@ var pSDK = function({app, api, actions}){
         },
     }
 
+    self.blocking = {
+        listener : function(action, address, status){
+            if (status == 'completed'){
+
+                var exp = action.get()
+
+                this.applyAction(objects['userInfoFull'][address], exp)
+                this.applyAction(objects['userInfoFull'][exp.vsaddress], exp)
+            }
+        },
+        applyAction : function(object, exp){
+
+            if (object){
+                if (object.address == exp.address){ /// for me
+                    object.addRelation(exp.vsaddress, 'blocking')
+                }
+               
+                if (object.address == exp.vsaddress){ /// for me
+                    //object.addRelation(exp.vsaddress, 'blocking')
+                }
+            }
+
+            return object
+        }
+    }
+
     self.unblocking = {
         listener : function(action, address, status){
             if (status == 'completed'){
@@ -978,8 +1000,6 @@ var pSDK = function({app, api, actions}){
         }
     }
 
-    
-
     self.contentDelete = {
         listener : function(action, address, status){
             if (status == 'completed'){
@@ -1019,6 +1039,42 @@ var pSDK = function({app, api, actions}){
             }
 
             return share
+        }
+    }
+
+    self.myScore = {
+        keys : ['myScore'],
+
+        load : function(shareIds, commentIds, update){
+
+            var ids = [].concat(shareIds, commentIds)
+
+            return loadList('myScore', ids, (ids) => {
+
+                var sIds = _.filter(ids, (id) => {
+                    return _.indexOf(shareIds, id) > -1
+                })
+
+                var cIds = _.filter(ids, (id) => {
+                    return _.indexOf(commentIds, id) > -1
+                })
+
+                return api.rpc('getpagescores', [sIds, app.user.address.value, cIds]).then((data) => {
+                    
+                    return _.map(data, (v) => {
+                        return {
+                            key : v.posttxid || v.cmntid,
+                            data : data
+                        }
+                    })
+                   
+                })
+
+            }, {
+                update, 
+                indexedDb : 'myScore',
+                fallbackIndexedDB : 'myScoreFB'
+            })
         }
     }
 
@@ -1069,6 +1125,7 @@ var pSDK = function({app, api, actions}){
     
                     var object = this.transform(r)
 
+
                     if (object){
                         objects[key][r.key] = object
 
@@ -1087,6 +1144,10 @@ var pSDK = function({app, api, actions}){
 
             if (share.userprofile){
                 self.userInfo.insertFromResponse([share.userprofile], true)
+            }
+
+            if(share.lastComment){
+                self.comment.insertFromResponse([share.lastComment])
             }
 
             var s = new pShare();
@@ -1117,6 +1178,10 @@ var pSDK = function({app, api, actions}){
                         UREP : share.UREP,
                         UREPR : share.UREPR,
                     }
+            }
+
+            if (s.lastComment){
+                s.lastComment = objects.comment[s.lastComment.id]
             }
 
 
@@ -1265,8 +1330,6 @@ var pSDK = function({app, api, actions}){
             
         }
     }
-
-    
 
     self.userState = {
         keys : ['userState'],
