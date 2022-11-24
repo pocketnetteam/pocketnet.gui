@@ -15684,31 +15684,15 @@ Platform = function (app, listofnodes) {
                 if (block) parameters.push(block.toString())
                 else parameters.push('')
 
-
-                ///
-               // parameters.push(self.app.localization.key)
-
                 parameters.push(localization || self.app.localization.key)
 
-                self.app.api.rpcwt('gettags', parameters).then(d => {
+                var cacheparameters = _.clone(parameters)
+                    cacheparameters[2] = ''
 
-
-                    var _d = _.map(d, function(_d){
-                        return {
-                            count : _d.count,
-                            tag : clearTagString(trim(decodeURIComponent(decodeURIComponent(_d.tag))))
-                        }
-                    })
-
-
-                    if (clbk) {
-                        clbk(_d)
-                    }
-
-                }).catch(e => {
-                    if (clbk) {
-                        clbk([], e)
-                    }
+                self.psdk.tag.request(() => {
+                    return self.app.api.rpcwt('gettags', parameters)
+                }, cacheparameters).then(data => {
+                    if(clbk) clbk(data)
                 })
 
             },
@@ -15745,7 +15729,7 @@ Platform = function (app, listofnodes) {
 
                     var round = (a, b) => a - a % b
 
-                    t.get('', 350, round(self.currentBlock, 1000) - 20000, loc, function (d) {
+                    t.get('', 350, round(self.currentBlock, 1000) - 23700, loc, function (d) {
 
                         if(!s.all) s.all = {}
 
@@ -16389,7 +16373,7 @@ Platform = function (app, listofnodes) {
                     var commentId = deep(self.psdk.share.get(id), 'lastComment.id');
 
                     if (commentId) {
-                        commentIds.push(lastcomment)
+                        commentIds.push(commentId)
                     }
 
                 })
@@ -16826,7 +16810,7 @@ Platform = function (app, listofnodes) {
 
             getclear: function (txid, pid, clbk, ccha) {
 
-                console.log('getclear')
+                console.log('getclear', txid, pid, ccha)
 
                 var s = self.sdk.comments.storage;
                 var i = self.sdk.comments.ini;
@@ -17209,6 +17193,9 @@ Platform = function (app, listofnodes) {
 
             get: {
 
+
+                /// TODO_REF_ACTIONS
+
                 info: function (clbk) {
 
                     self.app.api.rpc('getnodeinfo').then(d => {
@@ -17241,16 +17228,12 @@ Platform = function (app, listofnodes) {
                         self.currentBlock = 0
                         self.timeDifference = 0;
                         
-                        
-
                         try{
                             self.currentBlock = deep(d, 'lastblock.height') || localStorage['lastblock'] || 0
                             localStorage['lastblock'] = self.currentBlock
                         }catch(e){
                             
                         }
-
-                        
 
                         if (t) {
 

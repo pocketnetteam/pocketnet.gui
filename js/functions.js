@@ -10102,13 +10102,17 @@
 	compressedNumber = function(num, n, N) {
 
 
-
-		num = Number(num).toFixed(0)
-
+		if(!num) return 0
 
 		if(!N) N = 999
 
-		if(!n) n = 0 ;
+		if(!n) n = 0;
+
+		if(Math.abs(num) < 1) return Number(num).toFixed(n)
+
+		num = Number(num).toFixed(0)
+
+		
 
 		var keys = ['k', 'm', 'b'],
 			kl = keys.length,

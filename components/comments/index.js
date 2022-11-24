@@ -3159,6 +3159,7 @@ var comments = (function(){
 					top = 0
 				}
 
+				console.log('listpreview', listpreview)
 				
 
 				if (listpreview){

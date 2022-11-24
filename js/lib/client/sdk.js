@@ -60,6 +60,14 @@ var pSDK = function({app, api, actions}){
         myScoreFB : {
             time : 6000,
             authorized : true
+        },
+
+        tagRequest : {
+            time : 6000
+        },
+
+        accSet : {
+            time : 6000
         }
     }
 
@@ -186,6 +194,10 @@ var pSDK = function({app, api, actions}){
 
                 return db.get(id).then(data => {
 
+                    if(dbmeta[dbname].authorized){
+                        id = id.replace('_' + app.user.address.value, '')
+                    }
+
                     result.push({
                         key : id,
                         data : data
@@ -308,10 +320,12 @@ var pSDK = function({app, api, actions}){
                 load = _.filter(load, (k) => {
 
                     return !_.find(dbr, ({key}) => {
+
                         return key == k
                     })
 
                 })
+
 
                 if(!load.length){
                     resolve(dbr)
@@ -339,6 +353,11 @@ var pSDK = function({app, api, actions}){
                 
                 
                     executor(load).then((result) => {
+
+                        if (p.transformResult){
+                            result = p.transformResult(result)
+                        }
+
                     
                         settodb(p.indexedDb, result)
                         settodb(p.fallbackIndexedDB, result)
@@ -439,12 +458,19 @@ var pSDK = function({app, api, actions}){
             if(r) return Promise.resolve(r)
 
             return executor().then(r => {
+
+                if (p.transformResult){
+                    r = p.transformResult(r)
+                }
+
                 settodbone(p.requestIndexedDb, hash, r)
 
                 return Promise.resolve(r)
             })
 
         }).then(result => {
+
+            
 
             if(p.insertFromResponse){
                 return p.insertFromResponse(result).then(() => {
@@ -1060,11 +1086,20 @@ var pSDK = function({app, api, actions}){
                 })
 
                 return api.rpc('getpagescores', [sIds, app.user.address.value, cIds]).then((data) => {
-                    
+
+                    return _.map(ids, (id) => {
+                        return {
+                            key : id,
+                            data : _.find(data, (v) => {
+                                return id == (v.posttxid || v.cmntid)
+                            }) || {}
+                        }
+                    })
+
                     return _.map(data, (v) => {
                         return {
                             key : v.posttxid || v.cmntid,
-                            data : data
+                            data : v
                         }
                     })
                    
@@ -1072,10 +1107,27 @@ var pSDK = function({app, api, actions}){
 
             }, {
                 update, 
+                transform : (v) => this.transform(v),
                 indexedDb : 'myScore',
                 fallbackIndexedDB : 'myScoreFB'
             })
-        }
+        },
+
+        transform : function({key, data}){
+            if(data.posttxid){
+                if (objects.share[data.posttxid]){
+                    objects.share[data.posttxid].myVal = Number(data.value)
+                }
+            }
+
+            if(data.cmntid){
+                if (objects.comment[data.cmntid] && data.myScore){
+                    objects.comment[data.cmntid].myScore = Number(data.myScore)
+                }
+            }
+
+            return data
+        }   
     }
 
     self.share = {
@@ -1425,6 +1477,75 @@ var pSDK = function({app, api, actions}){
             
         }
     }
+
+    self.accSet = {
+        keys : ['accSet'],
+        load : function(address, update){
+
+            return loadone('accSet', address, (ids) => {
+                return api.rpc('getaccountsetting', [ids[0]]).then(d => {
+
+                    var setting = {}
+                    
+                    try{
+                        setting = JSON.parse(d || "{}")
+                    }
+                    catch(e) {
+                        
+                    }
+                
+                    return [{
+                        key : ids[0],
+                        data : setting
+                    }]
+
+                })
+            }, {
+                update,
+                indexedDb : 'accSet',
+            })
+
+        },
+
+
+        get : function(address){
+            return storage.accSet[address] || {}
+        }
+
+    }
+
+    self.tag = {
+        keys : ['tag'],
+        request : function(executor, hash){
+            return request('tag', hash, executor, {
+                requestIndexedDb : 'tagRequest',
+
+                transformResult : (r) => this.transformResult(r)
+            })
+        }, 
+
+        transformResult : function(data){
+
+            return _.filter(_.map(data, (tg) => {
+
+                var t = null
+
+                try{
+                    t = {
+                        count : tg.count,
+                        tag : clearTagString(trim(decodeURIComponent(decodeURIComponent(tg.tag))))
+                    }
+                }catch(e){
+                    console.log(tg, e)
+                }
+
+                return t
+                
+            }), (t) => {return t})
+
+
+        }
+    }
     
     self.clear = {
         storage : function(k, key){
@@ -1454,6 +1575,8 @@ var pSDK = function({app, api, actions}){
             this.db(k, key)
         }
     }
+
+    
 
 
     _.each(self, (v) => {

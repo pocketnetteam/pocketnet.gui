@@ -1095,7 +1095,7 @@ var post = (function () {
 
 		var renders = {
 			comments: function (clbk) {
-				if ((!ed.repost || ed.fromempty) && ed.comments != 'no') {
+				if ((!ed.repost/* || ed.fromempty*/) && ed.comments != 'no') {
 					
 					self.fastTemplate(
 						'commentspreview',
@@ -1558,7 +1558,8 @@ var post = (function () {
 			},
 			
 			mystars: function (clbk) {
-				if (typeof share.myVal == 'undefined' && !ed.preview) {
+				
+				if (typeof share.myVal == 'undefined' && !ed.preview && !ed.repost) {
 					var ids = [share.txid];
 
 					self.app.platform.sdk.likes.get(ids, function () {

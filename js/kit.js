@@ -2460,12 +2460,12 @@ pShare = function(){
 			self.edit = true
 		}
 
-		if(v.score){
-			self.score = Number(v.score)
+		if(v.scoreSum){
+			self.score = Number(v.scoreSum)
 		}
 
-		if(v.scnt){
-			self.scnt = Number(v.scnt)
+		if(v.scoreCnt){
+			self.scnt = Number(v.scoreCnt)
 		}
 
 
@@ -2492,6 +2492,14 @@ pShare = function(){
 			self.time.setTime(v.time * 1000);
 	}
 
+	self.clone = function(){
+		var ui = new pShare()
+
+			ui._import(self.export())
+
+		return ui
+	}
+
 	self.export = function(){
 
 		var v = {}
@@ -2506,6 +2514,9 @@ pShare = function(){
 		v.l = self.language
 		v.p = self.poll
 		v.deleted = self.deleted
+
+		v.scoreCnt = self.scnt
+		v.scoreSum = self.score
 
 		return v
 	}

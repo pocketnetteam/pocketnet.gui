@@ -21,6 +21,7 @@ var lenta = (function(){
 		var lastcache = null
 		var subloaded = false
 		var subloadedindex = 0
+		var authorsettings = {}
 
 		var boosted = [],
 			boostloadedblock = 0,
@@ -553,6 +554,7 @@ var lenta = (function(){
 				isotopeinited = false
 				loadertimeout = null
 				sharesFromRecommendations = {}
+				authorsettings = {}
 
 				/*_.each(shareInitedMap, function(s, id){
 					delete self.app.platform.sdk.node.shares.storage.trx[id]
@@ -3045,6 +3047,8 @@ var lenta = (function(){
 			},
 			comments : function(txid, init, showall, preview, clbk){
 
+				console.log('essenseData.comments, preview', essenseData.comments, preview)
+
 
 				if(essenseData.comments == 'no') {
 
@@ -3221,6 +3225,7 @@ var lenta = (function(){
 						sharesFromSub,
 						boosted : p.boosted,
 						shareRelayedFlag : false,
+						authorsettings,
 						fromrecommendations : sharesFromRecommendations[share.txid] && self.app.platform.sdk.recommendations.sharesinfo[share.txid] ? true : false
 					}
 
@@ -3386,6 +3391,8 @@ var lenta = (function(){
 				})
 
 				self.app.platform.sdk.likes.get(ids, function(){
+
+					console.log('shares', shares)
 
 					_.each(shares, function(share){
 
@@ -4426,7 +4433,12 @@ var lenta = (function(){
 						
 						var temp = self.sdk.node.transactions.temp;
 
+
+						//// TODO_REF_ACTIONS
+
 						var getPin = function(settings){
+
+							console.log('getpin', settings)
 
 							var pinnedId = shares.findIndex(function(share){
 								return share.txid === settings.pin;
@@ -4436,7 +4448,7 @@ var lenta = (function(){
 
 								var pinnedShare = shares.splice(pinnedId, 1);
 								
-								pinnedShare[0].pin = true;
+								pinnedShare[0].pin = true; //// wrong
 								shares.unshift(pinnedShare[0]);		
 								
 
@@ -4471,7 +4483,7 @@ var lenta = (function(){
 
 						}
 
-						var getAccountSettings = function(d, author){
+						/*var getAccountSettings = function(d, author){
 
 							var settings = JSON.parse((typeof d === 'string' && d) ? d : '{}');
 
@@ -4487,11 +4499,19 @@ var lenta = (function(){
 								clbk(shares, error || error2);
 
 							}
-						}
+						}*/
 						
 						if (essenseData.byauthor && author && !sharesInview.length && !(essenseData.searchValue || essenseData.searchTags)){
 
-							if (self.app.platform.sdk.accountsettings.storage[author]){
+							self.psdk.accSet.load(author).then(setting => {
+
+								authorsettings = self.psdk.accSet.get(author)
+
+								getPin(authorsettings)
+							})
+
+
+							/*if (self.app.platform.sdk.accountsettings.storage[author]){
 
 								getPin(self.app.platform.sdk.accountsettings.storage[author]);
 
@@ -4518,7 +4538,7 @@ var lenta = (function(){
 								}
 
 
-							}
+							}*/
 
 
 						} else if (clbk){
