@@ -1677,7 +1677,6 @@ UserInfo = function(){
 	}
 
 	self.checkloaded = function(){
-		//console.log("self.image.v.indexOf('data:image')", self.image.v.indexOf('data:image'))
 		return self.image.v.indexOf('data:image') > -1
 	}
 
@@ -2307,7 +2306,6 @@ pShare = function(){
 	self.caption = ''
 	self.images = [];
 	self.txid = '';
-	self.time = null;
 	self.repost = '';
 	self.language = '';
 	self.poll = {};
@@ -2509,7 +2507,8 @@ pShare = function(){
 		v.u = encodeURIComponent(self.url)
 		v.t = _.map(self.tags || [], function(t){ return encodeURIComponent(t) })
 		v.i = _.clone(self.images)
-		v._time = self._time;
+		v._time = self._time || self.time;
+		v.time = self.time.getTime() / 1000;
 		v.s = _.clone(self.settings)
 		v.l = self.language
 		v.p = self.poll
@@ -2517,6 +2516,21 @@ pShare = function(){
 
 		v.scoreCnt = self.scnt
 		v.scoreSum = self.score
+		v.address = self.address
+		v.txid = self.txid
+		v.deleted = self.deleted
+		v.comments = self.comments
+		v.repost = self.repost
+		v.txidEdit = self.txidEdit
+
+		if(self.lastComment){
+			if(self.lastComment.export){
+				v.lastComment = self.lastComment.export()
+			}
+			else{
+				v.lastComment = self.lastComment
+			}
+		}
 
 		return v
 	}
@@ -2843,6 +2857,7 @@ pComment = function(){
 
 	self.export = function(){
 
+
 		var r = {
 			id : self.id,
 			postid : self.txid || "",
@@ -2861,8 +2876,8 @@ pComment = function(){
 			amount: self.amount,
 			address : self.address,
 
-			time : self.time.getTime(),
-			timeUpd: self.timeUpd.getTime()
+			time : self.time.getTime() / 1000,
+			timeUpd: self.timeUpd.getTime() / 1000
 		}
 
 		return r

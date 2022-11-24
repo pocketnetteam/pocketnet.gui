@@ -1381,7 +1381,7 @@ var comments = (function(){
 					})
 	
 				}
-
+				console.log('comments', comments)
 				var oldest = (_.min(comments, function(c){return c.time}).time).getTime() / 1000
 				var newest = (_.max(comments, function(c){return c.time}).time).getTime() / 1000
 

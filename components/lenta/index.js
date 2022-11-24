@@ -4291,10 +4291,16 @@ var lenta = (function(){
 
 				var recommendations = []
 
+				console.log("?????")
+
 
 				if(essenseData.includerec && !includingsub && !self.app.platform.sdk.categories.gettags().length){
 
+					console.log("HERE")
+
 					recommendations = self.app.platform.sdk.recommendations.getshares(rand(0, 3)) || []
+
+					console.log('recommendations', recommendations)
 
 					allshares = [].concat(allshares, recommendations)
 
@@ -4385,6 +4391,8 @@ var lenta = (function(){
 								_.each(recommendations, (r) => {
 									sharesFromRecommendations[r.txid] = true
 								})
+
+								console.log('sharesFromRecommendations', sharesFromRecommendations)
 							}
 
 							if (essenseData.filter) {

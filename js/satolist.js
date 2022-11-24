@@ -13517,9 +13517,6 @@ Platform = function (app, listofnodes) {
 
                 var me = self.psdk.userInfo.getmy()
                 
-                
-                //deep(self.app, 'platform.sdk.users.storage.' + (app.user.address.value || ''))
-
                 shares = _.filter(shares, (recommendation) => {
                     if (me && me.relation(recommendation.address, 'blocking') ){
                         return false
@@ -13576,6 +13573,7 @@ Platform = function (app, listofnodes) {
                     task.status = 'processing'
     
                     self.app.platform.sdk.node.shares.getrecomendedcontents(p, (shares, error) => {
+                        
 
                         if(!self.sdk.recommendations.storage.shares) return
     
@@ -13639,7 +13637,6 @@ Platform = function (app, listofnodes) {
                             return s.address != task.address
                         })*/
 
-    
                         _.each(shares, (share) => {
                             if(!_.find(self.sdk.recommendations.storage.shares.concat(self.sdk.recommendations.shares), (s) => {
                                 return s.txid == share.txid
@@ -13649,7 +13646,6 @@ Platform = function (app, listofnodes) {
                                     key : 'tags',
                                     info : info
                                 }
-
                           
                                 self.sdk.recommendations.shares.push(share)
     
@@ -13754,13 +13750,22 @@ Platform = function (app, listofnodes) {
 
 
                 try{
+
                     localStorage['recommendations'] = JSON.stringify({
                         status : self.sdk.recommendations.storage.status,
                         shares : self.sdk.recommendations.storage.shares,
-                        keys : self.sdk.recommendations.storage.keys
+                        keys : self.sdk.recommendations.storage.keys,
+                        
+                        unseen : _.map(self.sdk.recommendations.shares, (s) => {
+                            return {
+                                date : self.currentTime(),
+                                share : s.export(),
+                                info : self.sdk.recommendations.sharesinfo[s.txid]
+                            }
+                        })
                     })
                 }catch(e){
-                    
+                    console.error(e)
                 }
 
                 
@@ -13768,22 +13773,39 @@ Platform = function (app, listofnodes) {
 
             load: function (clbk) {
 
-              
+                var p = {};
 
-                    var p = {};
+                try {
+                    p = JSON.parse(localStorage['recommendations'] || '{}');
+                }
+                catch (e) {}
 
-                    try {
-                        p = JSON.parse(localStorage['recommendations'] || '{}');
+                var time = self.currentTime()
+
+                self.sdk.recommendations.storage.status = p.status || []
+                self.sdk.recommendations.storage.shares = p.shares || []
+                self.sdk.recommendations.storage.keys = p.keys || {}
+                self.sdk.recommendations.sharesinfo = {}
+
+                self.psdk.share.insertFromResponse(_.map(_.filter(p.unseen || [], (sd) => {
+                    if(time - sd.date < 60 * 60) {
+                        self.sdk.recommendations.sharesinfo[sd.share.txid] = sd.info
+                        return true
                     }
-                    catch (e) {}
+                }), (sd) => {
+                    return sd.share   
+                })).then(r => {
 
-                    self.sdk.recommendations.storage.status = p.status || []
-                    self.sdk.recommendations.storage.shares = p.shares || []
-                    self.sdk.recommendations.storage.keys = p.keys || {}
+                    self.sdk.recommendations.shares = _.filter(self.psdk.share.gets(_.map(r, ({key}) => {
+                        return key
+                    })), v => v)
 
                     self.sdk.recommendations.scheduler()
 
                     if(clbk) clbk()
+                })
+
+                
 
               
             },
@@ -16810,8 +16832,6 @@ Platform = function (app, listofnodes) {
 
             getclear: function (txid, pid, clbk, ccha) {
 
-                console.log('getclear', txid, pid, ccha)
-
                 var s = self.sdk.comments.storage;
                 var i = self.sdk.comments.ini;
 
@@ -16842,8 +16862,6 @@ Platform = function (app, listofnodes) {
                         return txid == action.postid && (pid || '') == (action.parentid || '')
                     })
                     
-                    console.log('comments', comments)
-
                     s[txid][pid || '0'] = comments
 
                     if(clbk) clbk(comments)
@@ -17907,8 +17925,6 @@ Platform = function (app, listofnodes) {
                         }))
 
                         d.contents = shares
-
-                        console.log('shares', shares)
 
                         if(clbk) clbk(d)
 
@@ -19716,8 +19732,6 @@ Platform = function (app, listofnodes) {
                     tx: function (id, clbk) {
 
                         self.psdk.transaction.load(id).then(tx => {
-
-                            console.log("ID", tx)
 
                             if (clbk) {
                                 clbk(tx[id])

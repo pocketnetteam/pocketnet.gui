@@ -333,38 +333,38 @@ var pSDK = function({app, api, actions}){
                     return
                 }
 
+                var c = (result) => {
 
-                /*queue[key].push({
-                    load,
-                    executor,
-                    resolve : (result) => {
-                  
-                        settodb(p.indexedDb, result)
-                        settodb(p.fallbackIndexedDB, result)
-    
-                        return resolve(result.concat(dbr))
-    
-                    },
+                    if (p.transformResult){
+                        result = p.transformResult(result)
+                    }
+              
+                    settodb(p.indexedDb, result)
+                    settodb(p.fallbackIndexedDB, result)
 
-                    reject
-                    
-                })*/
+                    return resolve(result.concat(dbr))
+
+                }
+
+
+                if(p.queue){
+                    queue[key].push({
+                        load,
+                        executor,
+                        resolve : c,
+    
+                        reject
+                        
+                    })
+                }
+                else{
+                    executor(load).then(c).catch(reject)
+                }
+
+                /**/
 
                 
                 
-                    executor(load).then((result) => {
-
-                        if (p.transformResult){
-                            result = p.transformResult(result)
-                        }
-
-                    
-                        settodb(p.indexedDb, result)
-                        settodb(p.fallbackIndexedDB, result)
-
-                        return resolve(result.concat(dbr))
-
-                    }).catch(reject)
                 
                 
 
@@ -1273,6 +1273,7 @@ var pSDK = function({app, api, actions}){
 
                 })
             }, {
+                queue : true,
                 transform : (r) => this.transform(r),
                 update,
                 indexedDb : 'share',
@@ -1486,7 +1487,7 @@ var pSDK = function({app, api, actions}){
                 return api.rpc('getaccountsetting', [ids[0]]).then(d => {
 
                     var setting = {}
-                    
+
                     try{
                         setting = JSON.parse(d || "{}")
                     }
