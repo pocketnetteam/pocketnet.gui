@@ -2924,8 +2924,6 @@ pComment = function(){
 
 	self.setTime = function(t, tu){
 
-		console.log(t, tu)
-
 		if(t){
 			self.time = new Date()
 			self.time.setTime(t * 1000);

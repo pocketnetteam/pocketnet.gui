@@ -11028,7 +11028,7 @@ Platform = function (app, listofnodes) {
 
                         if(keys[i] && keys[i].indexOf('notificationsv') > -1){
 
-                            if(keys[i].indexOf('notificationsv14') == -1){
+                            if(keys[i].indexOf('notificationsv15') == -1){
                                 localStorage.removeItem(keys[i]);
                             }
 
@@ -11047,7 +11047,7 @@ Platform = function (app, listofnodes) {
 
                 var old = {}
 
-                try { old = JSON.parse(localStorage[self.sdk.address.pnet().address + 'notificationsv14'] || "{}") } catch (e){}
+                try { old = JSON.parse(localStorage[self.sdk.address.pnet().address + 'notificationsv15'] || "{}") } catch (e){}
 
                 this.import(old)
 
@@ -11074,7 +11074,7 @@ Platform = function (app, listofnodes) {
 
                     if (self.sdk.address.pnet()){
                         try{
-                            localStorage[self.sdk.address.pnet().address + 'notificationsv14'] = JSON.stringify(e)
+                            localStorage[self.sdk.address.pnet().address + 'notificationsv15'] = JSON.stringify(e)
 
         
                         }catch(e){
@@ -13746,12 +13746,22 @@ Platform = function (app, listofnodes) {
                 self.sdk.recommendations.save()
             },
 
+            lskey : function(){
+                if(window.testpocketnet){
+                    return 'recommendations_tn'
+                }
+                else{
+                    return 'recommendations'
+                }
+            },
+
             save: function () {
+
 
 
                 try{
 
-                    localStorage['recommendations'] = JSON.stringify({
+                    localStorage[self.sdk.recommendations.lskey()] = JSON.stringify({
                         status : self.sdk.recommendations.storage.status,
                         shares : self.sdk.recommendations.storage.shares,
                         keys : self.sdk.recommendations.storage.keys,
@@ -13776,7 +13786,7 @@ Platform = function (app, listofnodes) {
                 var p = {};
 
                 try {
-                    p = JSON.parse(localStorage['recommendations'] || '{}');
+                    p = JSON.parse(localStorage[self.sdk.recommendations.lskey()] || '{}');
                 }
                 catch (e) {}
 
@@ -17987,13 +17997,9 @@ Platform = function (app, listofnodes) {
                                 parameters[5].push(p.type)
                             }
 
-                            console.log('parameters', parameters)
-
                             self.sdk.node.shares.getex(parameters, function (data, error) {
 
                                 var shares = data.contents
-
-                                console.log('shares', data, p)
                                 
 
                                 if (shares) {
@@ -18025,8 +18031,6 @@ Platform = function (app, listofnodes) {
                                             })
                                         }
 
-                                        console.log('filtered', shares)
-                                        
                                         if (clbk)
                                             clbk(shares, error, p)
                                     })
