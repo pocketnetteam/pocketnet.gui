@@ -31163,6 +31163,26 @@ Platform = function (app, listofnodes) {
     if(!self.matrixchat.connectWith)
         self.matrixchat.joinRoom = parameters().publicroom
 
+	  self.getCallsOptions = function(){
+		return {
+			el : $("#bastyonCalls").first()[0],
+			parameters : {
+				getUserInfo: async (address) => {
+					let res = new Promise((resolve, reject) => {
+						address = hexDecode(address.split(':')[0].replace('@',''))
+						this.sdk.users.getone(address, () => {
+							console.log('stor',this.sdk.users.storage)
+							resolve(this.sdk.users.storage[address])
+						})
+					})
+
+					return res
+				}
+			}
+
+		}
+	  }
+
     return self;
 
 }
