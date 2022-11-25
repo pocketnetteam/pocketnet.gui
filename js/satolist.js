@@ -16225,12 +16225,17 @@ Platform = function (app, listofnodes) {
 
                 var np = [encodeURIComponent(value), type, fixedBlock, (start || 0).toString(), (count || 10).toString()]
 
-                if (address != 'pocketnet') np.push(address)
+                //if (address != 'pocketnet') np.push(address)
 
                 if (value.length) {
 
                     if(type === 'users') {
-                        self.app.api.rpc('searchusers', np).then(d => {
+
+                        self.psdk.searchUsers.request(() => {
+                            return self.app.api.rpc('searchusers', np)
+                        }, np).then(d => {
+
+                            console.log("D", d)
 
                             d = {
                                 data: [...d]
@@ -16240,14 +16245,66 @@ Platform = function (app, listofnodes) {
 
                             if (clbk)
                                 clbk(d, fixedBlock)
+
                         }).catch(e => {
                             if (clbk) {
                                 clbk({})
                             }
                         })
                         return;
+
+                        /*self.app.api.rpc('searchusers', np).then(d => {
+
+                            d = {
+                                data: [...d]
+                            }
+
+                            s.add(value, fixedBlock, type, d, start, count, address)
+
+                            if (clbk)
+                                clbk(d, fixedBlock)
+
+                        }).catch(e => {
+                            if (clbk) {
+                                clbk({})
+                            }
+                        })
+                        return;*/
+
                     }
-                    self.app.api.rpc('search', np).then(d => {
+
+                    self.psdk.search.request(() => {
+                        return self.app.api.rpc('search', np)
+                    }, np).then(d => {
+
+                        if (type != 'fs') {
+
+                            if (type == 'all') {
+                                _.each(d, function (d, k) {
+                                    s.add(value, fixedBlock, k, d, start, count, address)
+                                })
+                            }
+
+                            else {
+                                d = d[type] || {
+                                    data: []
+                                }
+
+                                s.add(value, fixedBlock, type, d, start, count, address)
+                            }
+
+                        }
+
+                        if (clbk)
+                            clbk(d, fixedBlock)
+
+                    }).catch(e => {
+                        if (clbk) {
+                            clbk({})
+                        }
+                    })
+
+                    /*self.app.api.rpc('search', np).then(d => {
                         if (type != 'fs') {
 
                             if (type == 'all') {
@@ -16274,7 +16331,7 @@ Platform = function (app, listofnodes) {
                         if (clbk) {
                             clbk({})
                         }
-                    })
+                    })*/
 
 
                 }

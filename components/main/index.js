@@ -656,8 +656,8 @@ var main = (function(){
 
 				if(searchvalue){
 					loader = function(clbk){
-						var _clbk = function(data){
-							var shares = self.app.platform.sdk.node.shares.transform(data) 
+						var _clbk = function(shares){
+							//var shares = self.app.platform.sdk.node.shares.transform(data) 
 
 							if (clbk)
 								clbk(shares, null, {

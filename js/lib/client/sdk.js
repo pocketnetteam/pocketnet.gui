@@ -73,6 +73,14 @@ var pSDK = function({app, api, actions}){
         nameAddress : {
             time : 6000
         },
+
+        searchUsersRequest : {
+            time : 120
+        },
+
+        searchRequest : {
+            time : 240
+        },
     }
 
     var checkObjectInActions = function(objects){
@@ -1548,6 +1556,24 @@ var pSDK = function({app, api, actions}){
 
             })
 
+        },
+    }
+
+    self.search = {
+        keys : ['search'],
+        request : function(executor, hash){
+            return request('search', hash, executor, {
+                requestIndexedDb : 'searchRequest',
+            })
+        },
+    }
+
+    self.searchUsers = {
+        keys : ['searchUsers'],
+        request : function(executor, hash){
+            return request('searchUsers', hash, executor, {
+                requestIndexedDb : 'searchUsersRequest',
+            })
         },
     }
 
