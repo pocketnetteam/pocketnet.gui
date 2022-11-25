@@ -450,7 +450,9 @@ var comments = (function(){
 			},
 			myscores : function(){
 				_.each(rendered, function(c, id){
-					var comment = deep(self.app.platform.sdk, 'comments.storage.all.' + id)
+					var comment = self.psdk.comment.get(id)
+					
+					//deep(self.app.platform.sdk, 'comments.storage.all.' + id)
 
 					if (comment){
 						clbks.upvote(null, comment, Number(comment.myScore), self.app.platform.sdk.address.pnet().address)
@@ -1240,7 +1242,7 @@ var comments = (function(){
 
 				actions.stateAction(function(){
 
-					var comment = deep(self.app.platform.sdk, 'comments.storage.all.' + id)
+					var comment = self.psdk.comment.get(id) //deep(self.app.platform.sdk, 'comments.storage.all.' + id)
 
 					if(!comment) return
 					

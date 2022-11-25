@@ -41,7 +41,13 @@ var pSDK = function({app, api, actions}){
         },
 
         commentRequest: {
-            time : 60
+            time : 60,
+            authorized : true
+        },
+
+        comment: {
+            time : 120,
+            authorized : true
         },
 
         shareRequest : {
@@ -80,7 +86,7 @@ var pSDK = function({app, api, actions}){
 
         searchRequest : {
             time : 240
-        },
+        }
     }
 
     var checkObjectInActions = function(objects){
@@ -714,6 +720,32 @@ var pSDK = function({app, api, actions}){
             })
         },
 
+        load : function(ids, update){
+            return loadList('comment', ids, (ids) => {
+
+                return api.rpc('getcomments', ['','', app.user.address.value || '', ids]).then(d => {
+
+                    checkObjectInActions(_.map(d, (c) => {
+                        return {
+                            txid : c.id
+                        }
+                    }))
+
+                    return _.map(d || [], (info) => {
+                        return { 
+                            key : info.id,
+                            data : info
+                        }
+                    })
+
+                })
+            }, {
+                transform : (r) => this.transform(r),
+                update,
+                indexedDb : 'comment',
+            })
+        },
+
         transform : function({key, data}){
             var comment = new pComment();
                 comment.import(data)
@@ -1105,13 +1137,6 @@ var pSDK = function({app, api, actions}){
                             data : _.find(data, (v) => {
                                 return id == (v.posttxid || v.cmntid)
                             }) || {}
-                        }
-                    })
-
-                    return _.map(data, (v) => {
-                        return {
-                            key : v.posttxid || v.cmntid,
-                            data : v
                         }
                     })
                    
@@ -1558,6 +1583,7 @@ var pSDK = function({app, api, actions}){
 
         },
     }
+
 
     self.search = {
         keys : ['search'],

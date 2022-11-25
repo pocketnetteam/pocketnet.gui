@@ -10469,6 +10469,9 @@ Platform = function (app, listofnodes) {
 
             statistic : function(address, de){
 
+
+                /// TODO LATER MAYBE
+
                 return self.app.api.rpc('getuserstatistic', [[address], 0, de]).then(d => {
 
                     var result = _.find(d, function(p){
@@ -11856,19 +11859,6 @@ Platform = function (app, listofnodes) {
                         }
                     })
 
-                    return
-
-                    self.app.api.rpc('getuseraddress', [name]).then(address => {
-
-                        if (clbk) clbk(address)
-
-                    }).catch(e => {
-                        if (clbk) {
-                            clbk(null, e)
-                        }
-                    })
-
-
                 }
 
             },
@@ -11889,6 +11879,18 @@ Platform = function (app, listofnodes) {
 
                     return
                 }
+
+                self.psdk.nameAddress(encodeURIComponent(name)).then(() => {
+                    if (clbk) {
+                        clbk(true)
+                    }
+                }).catch(e => {
+                    if (clbk) {
+                        clbk(false)
+                    }
+                })
+
+                return
 
                 self.app.api.rpc('getuseraddress', [encodeURIComponent(name)]).then(d => {
                     var r = deep(d, '0.address');
@@ -12007,25 +12009,6 @@ Platform = function (app, listofnodes) {
 
             },
 
-            getBestUsers : function(clbk){
-
-                var my = self.app.user.address.value;
-
-                self.app.api.rpc('getrecomendedaccountsbyscoresfromaddress', [my, ['share', 'video'], 0, 20000, 15])
-                .then(function(d){
-
-                    if (clbk){
-                        clbk(d)
-                    }
-
-                })
-                .catch(function(e){
-
-                    if (clbk){
-                        clbk(null)
-                    }
-                })
-            },
 
             commonuserpoint : function(address, me){
                 var point = 1;
@@ -12061,7 +12044,7 @@ Platform = function (app, listofnodes) {
 
         posts: {
 
-            getRecommendedPosts : function(clbk){
+            /*getRecommendedPosts : function(clbk){
 
                 var my = self.app.user.address.value;
 
@@ -12079,8 +12062,8 @@ Platform = function (app, listofnodes) {
                         clbk(null, e);
                     }
                 })
-            },
-
+            },*/
+            /*
             getRecommendedPostsContents : function(parameters, clbk){
 
                 self.app.api.rpc('getrawtransactionwithmessagebyid', parameters)
@@ -12096,7 +12079,7 @@ Platform = function (app, listofnodes) {
                         clbk(null)
                     }
                 })
-            }
+            }*/
         },
 
         newmaterials : {
@@ -13279,7 +13262,7 @@ Platform = function (app, listofnodes) {
                 return keyPair.privateKey;
             },
 
-            registration: function (address, clbk) {
+            /*registration: function (address, clbk) {
 
                 self.app.api.rpc('getaddressregistration', [[address]]).then(d => {
 
@@ -13294,26 +13277,7 @@ Platform = function (app, listofnodes) {
                     }
                 })
 
-                /*self.app.ajax.rpc({
-                    method: 'getaddressregistration',
-                    parameters: [[address]],
-                    success: function (d) {
-
-                        var r = deep(d, '0.date') || 0;
-
-                        if (clbk)
-                            clbk(r > 0)
-                    },
-                    fail: function (d, e) {
-
-                        if (clbk) {
-                            clbk(null, e)
-                        }
-
-                    }
-                })*/
-
-            }
+            }*/
         },
         remote: {
             storage: {},
@@ -13930,14 +13894,6 @@ Platform = function (app, listofnodes) {
                 })
 
                 return probabilitymap
-
-                /*var sorted = _.sortBy(users, (user) => {
-                    return (Math.max(user.value, 1000) + user.points) * (user.date - mindate) / difference
-                })
-
-                return _.map(sorted, (u) => {
-                    return u.address
-                })*/
             },
 
             clear : function(){
@@ -14135,11 +14091,19 @@ Platform = function (app, listofnodes) {
 
             },
 
+            key : function(){
+                if(window.testpocketnet){
+                    return 'latestactivity_test'
+                }
+
+                return 'latestactivity'
+            },
+
             save: function () {
                 
 
                 try{
-                    localStorage['latestactivity'] = JSON.stringify({
+                    localStorage[self.sdk.activity.key()] = JSON.stringify({
                         activity : self.sdk.activity.latest
                     })
                 }catch(e){
@@ -14152,7 +14116,7 @@ Platform = function (app, listofnodes) {
 
 
                 try {
-                    p = JSON.parse(localStorage['latestactivity'] || '{}');
+                    p = JSON.parse(localStorage[self.sdk.activity.key()] || '{}');
                 }
                 catch (e) {}
 
@@ -16251,25 +16215,8 @@ Platform = function (app, listofnodes) {
                                 clbk({})
                             }
                         })
+
                         return;
-
-                        /*self.app.api.rpc('searchusers', np).then(d => {
-
-                            d = {
-                                data: [...d]
-                            }
-
-                            s.add(value, fixedBlock, type, d, start, count, address)
-
-                            if (clbk)
-                                clbk(d, fixedBlock)
-
-                        }).catch(e => {
-                            if (clbk) {
-                                clbk({})
-                            }
-                        })
-                        return;*/
 
                     }
 
@@ -16304,35 +16251,7 @@ Platform = function (app, listofnodes) {
                         }
                     })
 
-                    /*self.app.api.rpc('search', np).then(d => {
-                        if (type != 'fs') {
-
-                            if (type == 'all') {
-                                _.each(d, function (d, k) {
-                                    s.add(value, fixedBlock, k, d, start, count, address)
-                                })
-                            }
-
-                            else {
-                                d = d[type] || {
-                                    data: []
-                                }
-
-                                s.add(value, fixedBlock, type, d, start, count, address)
-                            }
-
-                        }
-
-
-                        if (clbk)
-                            clbk(d, fixedBlock)
-
-                    }).catch(e => {
-                        if (clbk) {
-                            clbk({})
-                        }
-                    })*/
-
+                 
 
                 }
                 else {
@@ -16354,6 +16273,9 @@ Platform = function (app, listofnodes) {
 
                 if (!l.storage[id] || update) {
 
+
+                    //// TODO_REF_ACTIONS maybe
+
                     self.app.api.rpc('getpostscores', [id]).then(d => {
 
                         _.each(d, function (d) {
@@ -16374,21 +16296,6 @@ Platform = function (app, listofnodes) {
                             clbk(e, null)
                         }
                     })
-
-                    /*self.app.ajax.rpc({
-                        method: 'getpostscores',
-                        parameters: [id],
-                        success: function (d) {
-
-
-
-                        },
-                        fail: function (d, e) {
-
-
-                        }
-
-                    })*/
 
                 }
                 else {
@@ -16486,109 +16393,6 @@ Platform = function (app, listofnodes) {
                         })
                     }
                 })
-
-                return
-
-
-                var l = self.sdk.likes
-
-                ids = _.filter(ids, function (id) {
-                    if (!l.storage[id]) return true
-                })
-
-                ids = _.sortBy(ids, function(id){
-                    return id
-                })
-
-                if (ids.length) {
-
-                    var commentsid = [];
-
-                    _.each(ids, function (id) {
-
-                        var share = self.psdk.share.get(id)
-
-                        var lastcomment = deep(share, 'lastComment.id');
-
-                        if (lastcomment) {
-                            commentsid.push(lastcomment)
-                        }
-
-                    })
-
-                    commentsid = _.sortBy(commentsid, function(id){
-                        return id
-                    })
-
-                    self.app.user.isState(function (state) {
-
-                        if (state) {
-                            var ao = self.app.platform.sdk.address.pnet();
-
-                            var address = ''
-
-                            if (ao) address = ao.address
-
-                            self.app.api.rpc('getpagescores', [ids, address, commentsid]).then(d => {
-
-                                _.each(d, function (v) {
-
-                                    if (v.posttxid) {
-                                        if (v.value)
-                                            l.storage[v.posttxid] = v.value
-
-                                        l.who[v.posttxid] = v.postlikers
-                                    }
-
-                                    if (v.cmntid) {
-                                        if (v.myscore) {
-
-                                            l.storage[v.cmntid] = Number(v.myscore)
-
-                                        }
-                                    }
-                                })
-
-
-
-                                _.each(ids, function (id) {
-                                    if (!l.storage)
-                                        l.storage[id] = '0'
-                                })
-
-                                l.extendshares(ids, commentsid)
-
-
-
-                                if (clbk)
-                                    clbk(null)
-
-                            }).catch(e => {
-                                if (clbk) {
-                                    clbk(e, null)
-                                }
-                            })
-
-                        }
-                        else {
-                            _.each(ids, function (id) {
-                                l.storage[id] = '0'
-                            })
-
-                            l.extendshares(ids)
-
-                            if (clbk)
-                                clbk(null)
-                        }
-
-                    })
-
-
-                }
-                else {
-                    if (clbk)
-                        clbk()
-                }
             }
         },
 
@@ -16663,7 +16467,8 @@ Platform = function (app, listofnodes) {
                 }, true)
             },
 
-            info: function (ids, clbk) {
+            /*info: function (ids, clbk) {
+
                 var s = self.sdk.comments.storage;
                 var i = self.sdk.comments.ini;
 
@@ -16680,7 +16485,7 @@ Platform = function (app, listofnodes) {
                     }
                 })
 
-            },
+            },*/
 
             checkSign: function (comment, signature, pubkey) {
 
@@ -16783,77 +16588,78 @@ Platform = function (app, listofnodes) {
 
             getbyid: function (ids, clbk) {
 
-                var s = self.sdk.comments.storage;
-                var i = self.sdk.comments.ini;
-                var address = ''
-
-                var ao = self.sdk.address.pnet();
-
-                if (ao) address = ao.address
+                //var s = self.sdk.comments.storage;
+                //var i = self.sdk.comments.ini;
 
                 if (!_.isArray(ids)) ids = [ids]
 
-                s.all || (s.all = {})
+                
+                self.psdk.comment.load(ids).then(() => {
+                    var comments = self.psdk.comment.gets(ids)
 
-                ids = _.filter(ids, function (id) {
-                    if (id && !s.all[id]) return true
-                })
+                    self.sdk.comments.users(comments, function (d, e) {
 
-
-                if (!ids.length) {
-                    if (clbk)
-                        clbk('tmp')
-                }
-                else {
-
-                    self.app.api.rpc('getcomments', ['', '', address, ids]).then(d => {
-
-                        var arrange = ['commentEdit', 'commentDelete'];
-                        var tc = group(self.sdk.relayTransactions.withtemp('comment'), function (tempComment) {
-                            return tempComment.optype || 'comment'
-                        })
-
-                        _.each(arrange, function (i) {
-
-                            _.each(tc[i], function (tempComment) {
-
-                                var i = tempComment.optype
-
-                                var f = _.find(d, function (c) {
-                                    if (c.id == (tempComment.id || tempComment.txid)) return true
-                                })
-
-                                if (i == 'commentEdit') {
-                                    if (f && f.id == tempComment.id) {
-                                        f.msg = tempComment.msg
-                                        f.timeUpd = tempComment.timeUpd
-                                    }
-                                }
-
-                                if (i == 'commentDelete') {
-                                    if (f && f.id == tempComment.id) {
-                                        f.deleted = true
-                                    }
-                                }
-
-                            })
-                        })
-
-                        var c = i(d)
-
-                        self.sdk.comments.users(c, function (d, e) {
-
-                            if (clbk)
-                                clbk(d, e)
-
-                        })
-
-                    }).catch(e => {
                         if (clbk)
-                            clbk(e)
+                            clbk(comments, e)
+
                     })
 
-                }
+                }).catch(e => {
+                    if (clbk)
+                        clbk(e)
+                })
+
+                return
+
+                self.app.api.rpc('getcomments', ['', '', address, ids]).then(d => {
+
+
+
+                    var arrange = ['commentEdit', 'commentDelete'];
+                    var tc = group(self.sdk.relayTransactions.withtemp('comment'), function (tempComment) {
+                        return tempComment.optype || 'comment'
+                    })
+
+                    _.each(arrange, function (i) {
+
+                        _.each(tc[i], function (tempComment) {
+
+                            var i = tempComment.optype
+
+                            var f = _.find(d, function (c) {
+                                if (c.id == (tempComment.id || tempComment.txid)) return true
+                            })
+
+                            if (i == 'commentEdit') {
+                                if (f && f.id == tempComment.id) {
+                                    f.msg = tempComment.msg
+                                    f.timeUpd = tempComment.timeUpd
+                                }
+                            }
+
+                            if (i == 'commentDelete') {
+                                if (f && f.id == tempComment.id) {
+                                    f.deleted = true
+                                }
+                            }
+
+                        })
+                    })
+
+                    var c = i(d)
+
+                    self.sdk.comments.users(c, function (d, e) {
+
+                        if (clbk)
+                            clbk(d, e)
+
+                    })
+
+                }).catch(e => {
+                    if (clbk)
+                        clbk(e)
+                })
+
 
             },
 
@@ -17009,15 +16815,26 @@ Platform = function (app, listofnodes) {
 
             last: function (clbk) {
 
-                var ini = this.ini
+                //var ini = this.ini
 
-                var address = ''
+                var ps = ['7', '', self.app.localization.key]
 
-                var ao = self.app.platform.sdk.address.pnet();
+                self.psdk.comment.request(() => {
+                    return self.app.api.rpc('getlastcomments', ps)
+                }, ps).then(d => {
 
-                if (ao) address = ao.address
+                    var comments = _.filter(self.psdk.comment.gets(_.map(d, (d) => {
+                        return d.id
+                    })), (c) => {
+                        return !c.deleted
+                    })
 
-                self.app.api.rpc('getlastcomments', ['7', '', self.app.localization.key]).then(d => {
+                    if(clbk) clbk(comments)
+
+
+                    return
+
+                    console.log('getlastcomments' ,d )
 
                     d = _.filter(d, function (d) {
                         return !d.deleted
@@ -17031,17 +16848,33 @@ Platform = function (app, listofnodes) {
                         clbk([], e)
                 })
 
+                /*self.app.api.rpc('getlastcomments', ['7', '', self.app.localization.key]).then(d => {
+
+                    d = _.filter(d, function (d) {
+                        return !d.deleted
+                    })
+
+                    if (clbk)
+                        clbk(ini(d))
+
+                }).catch(e => {
+                    if (clbk)
+                        clbk([], e)
+                })*/
+
 
             },
 
             upvote: function (upvote, clbk) {
 
-                var comment = deep(self.sdk, 'comments.storage.all.' + upvote.comment.v)
+                var comment = self.psdk.comment.get(id)
+                
+                //deep(self.sdk, 'comments.storage.all.' + upvote.comment.v)
 
-                var ma = self.app.platform.sdk.address.pnet().address
+                //var ma = self.app.platform.sdk.address.pnet().address
 
                 _.each(self.sdk.comments.upvoteClbks, function (c) {
-                    c(null, comment, upvote.value.v, ma, true)
+                    c(null, comment, upvote.value.v, app.user.address.value, true)
                 })
 
                 self.sdk.node.transactions.create.commonFromUnspent(
@@ -17056,7 +16889,7 @@ Platform = function (app, listofnodes) {
                             }
 
                             _.each(self.sdk.comments.upvoteClbks, function (c) {
-                                c(error, comment, null, ma)
+                                c(error, comment, null, app.user.address.value)
                             })
                         }
                         else {
@@ -17080,7 +16913,7 @@ Platform = function (app, listofnodes) {
                             }
 
                             _.each(self.sdk.comments.upvoteClbks, function (c) {
-                                c(null, comment, upvote.value.v, ma)
+                                c(null, comment, upvote.value.v, app.user.address.value)
                             })
 
                         }
@@ -19513,33 +19346,7 @@ Platform = function (app, listofnodes) {
                         }
 
                         if (clbk) clbk(account.actualBalance(address).actual)
-
-                        
-
-                        /*if (_.isArray(address)) {
-                            self.sdk.node.transactions.get.balanceAr(clbk, address, update, canSpend)
-
-                        }
-                        else {
-                            self.sdk.node.transactions.get.unspent(function (unspent, e) {
-
-                                if (canSpend) {
-                                    unspent = _.filter(unspent, self.sdk.node.transactions.canSpend)
-                                }
-
-                                var amount = Number(_.reduce(unspent, function (m, u) {
-                                    return m + Number(u.amount)
-                                }, 0).toFixed(8))
-
-                                if (clbk)
-                                    clbk(amount, unspent, e)
-
-                            }, address, update)
-                        }*/
-
-
                     },
-
 
 
                     _unspent: function (clbk) {
@@ -20916,30 +20723,6 @@ Platform = function (app, listofnodes) {
                     }
                 }
 
-            },
-
-            fee: {
-                estimate: function (clbk) {
-
-                    self.app.api.rpc('estimateSmartFee', [1]).then(d => {
-
-                        d.feerate = 0.00001
-
-                        if (clbk)
-                            clbk(d)
-
-                    }).catch(e => {
-                        var d = {}
-                        d.feerate = 0.00001
-
-                        if (clbk) {
-                            clbk(d)
-                        }
-                    })
-
-
-
-                }
             },
 
             sys: {
