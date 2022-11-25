@@ -134,6 +134,10 @@
   flex-wrap: nowrap;
   justify-content: space-between;
 }
+#menu .sections .mobileUpperLeft,
+#menu .sections .mobileUpperRight {
+  display: none;
+}
 #menu .sections .section {
   min-height: 65px;
   height: 100%;
@@ -739,6 +743,25 @@
     height: 34px;
     line-height: 34px;
     font-size: 0.9em;
+  }
+  #menu .sections .mobileUpperLeft {
+    display: block;
+    position: absolute;
+    left: -20px;
+    top: -6px;
+  }
+  #menu .sections .mobileUpperLeft .christmasBranch {
+    height: 40px;
+  }
+  #menu .sections .mobileUpperRight {
+    display: block;
+    position: absolute;
+    right: -22px;
+    top: 23px;
+    rotate: 35deg;
+  }
+  #menu .sections .mobileUpperRight .christmasBranch {
+    height: 40px;
   }
   #menu .searchFastResultWrapper .fastsearch {
     padding-left: 40px;

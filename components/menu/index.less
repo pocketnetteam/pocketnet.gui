@@ -213,6 +213,10 @@
 		flex-wrap: nowrap;
 		justify-content: space-between;
 
+		.mobileUpperLeft, .mobileUpperRight{
+			display: none;
+		}
+
 		.section{
 			min-height: 65px;
 			height: 100%;
@@ -924,6 +928,7 @@
 			padding : 0  2 * @rhythm;
 			padding-right: 0;
 
+			
 			.section{
 				padding: 0;
 				width: auto;
@@ -993,6 +998,29 @@
 							font-size: 0.9em;
 						}
 					}
+				}
+			}
+
+			.mobileUpperLeft{
+				display: block;
+				position: absolute;
+				left: -20px;
+				top: -6px;
+
+				.christmasBranch{
+					height: 40px;
+				}
+			}
+
+			.mobileUpperRight{
+				display: block;
+				position: absolute;
+				right: -22px;
+				top: 23px;
+				rotate: 35deg;
+				
+				.christmasBranch{
+					height: 40px;
 				}
 			}
 		}
