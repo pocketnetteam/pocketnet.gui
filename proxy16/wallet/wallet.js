@@ -924,7 +924,6 @@ var Wallet = function(p){
                     if(u) u.cantspend = true
                 })
 
-                console.log('sendraw', obj, obj.export())
                 return self.nodeManager.requestprobnew('sendrawtransactionwithmessage', [hex, obj.export(), optstype]).then(data => {
 
                     var alias = obj.export(true);

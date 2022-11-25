@@ -11,6 +11,7 @@ function RpcClient(opts) {
     this.user = opts.user || '';
     this.pass = opts.pass || '';
     this.protocol = opts.protocol === 'http' ? http : https;
+    this.http = opts.protocol;
     this.batchedCalls = null;
     this.disableAgent = opts.disableAgent || false;
 
@@ -232,36 +233,40 @@ function rpc(request, callback, obj) {
             options[k] = self.httpOptions[k];
         }
     }
-
+    
     var called = false;
     var errorMessage = 'Bitcoin JSON-RPC: ';
 
+    const url = self.http + '://' + options.host + ':' + options.port + options.path;
 
-    const url = 'http://' + options.host + ':' + options.port + options.path;
-
-    console.log('url', url, request);
-
-
-    axios.post(url, request).then((res) => {
-        console.log('res', res?.status, m);
-        if (msg){
-            callback({
-                code : 408,
-                error : 'timeout'
-            });
+    const config = {
+        headers: {
+            'Content-Length': request.length,
+            'Content-Type': 'application/json',
+            'Accept-Encoding': 'gzip, deflate, br',
+            'Authorization': 'Basic ' + Base64Helper.encode(self.user + ':' + self.pass)
         }
-
-
-    })
-    .catch(err => {
-        console.log('err', Object.keys(err), err.toJSON());
-    })
-
-    if (msg){
-
-        return;
     }
 
+    if (true){
+
+
+        axios.post(url, request, config).then((res) => {
+    
+            callback(res?.data?.error, res?.data);
+    
+            return;
+    
+    
+        })
+        .catch(err => {
+
+            var error = err.response?.data?.error;
+    
+            callback(error);
+        })
+    
+    } else {
     
     var req = self.protocol.request(options, function(res) {
 
@@ -320,6 +325,7 @@ function rpc(request, callback, obj) {
                 }
 
             }
+
 
             if (exceededError){
 
@@ -385,6 +391,8 @@ function rpc(request, callback, obj) {
 
     req.write(request)
     req.end();
+
+    }
 }
 
 RpcClient.prototype.batch = function(batchCallback, resultCallback) {
