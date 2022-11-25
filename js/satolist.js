@@ -74,6 +74,7 @@ Platform = function (app, listofnodes) {
     self.lastblocktime = null
     self.lasttimecheck = null
     self.real = {
+        'PWUH5h7fyoCMffBjABk8vtnDRqUZ1BmFWG' : true,
         'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd' : true,
         'PLJvEixJkj85C4jHM3mt5u1ATwZE9zgFaA' : true,
         'PRTugzBefzB1AA2Rw8VTBKf3BBPDjQND8y' : true,
@@ -284,6 +285,10 @@ Platform = function (app, listofnodes) {
         'PK4qABXW7cGS4YTwHbKX99MsgMznYgGxBL' : true
     }
 
+    self.bchl = {
+        'PJTPfBQ6Q174s7WWcW41DwTdGrkGYQx5sJ' : true
+    }
+
     self.nvadr = {
         'PUy71ntJeRaF1NNNnFGrmC8NzkY6ruEHGK' : true,
         'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd' : true,
@@ -324,6 +329,7 @@ Platform = function (app, listofnodes) {
         'PFWx4RKpggTjeDNq6oyWJfejP5z8oiKGE5',
         'PFr6sDvtJq3wJejQce5RJ5L8u1oYKgjW9o',
     ];
+
     self.whiteList = [
       'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd',
       'PJ3nv2jGyW2onqZVDKJf9TmfuLGpmkSK2X',
@@ -2955,7 +2961,7 @@ Platform = function (app, listofnodes) {
                             minimize : p.minimize,
                             postclass : p.postclass,
                             showrecommendations : p.showrecommendations,
-                            openapi : true
+                            openapi : typeof p.openapi == 'undefined' ? true : p.openapi
                         }
                     })
 
@@ -10319,6 +10325,10 @@ Platform = function (app, listofnodes) {
                 var totalComplainsFirstFlags = typeof ustate.firstFlags === 'object' ? Object.values(ustate.firstFlags).reduce((a,b) => a + +b, 0) : 0
 
                 if(self.bch[address]) return true
+
+                if(self.bchl[address] && (typeof _Electron == 'undefined') && !window.cordova){
+                    return true
+                }
 
                 if(typeof count == 'undefined') count = -12
 
@@ -23587,8 +23597,8 @@ Platform = function (app, listofnodes) {
         //var FirebasePlugin = new FakeFirebasePlugin()
 
         var using = typeof window != 'undefined' && window.cordova && typeof FirebasePlugin != 'undefined';
-        var usingWeb = false // typeof window != 'undefined' && typeof _Electron === 'undefined' && !window.cordova && typeof firebase != 'undefined'
-        
+        var usingWeb = typeof window != 'undefined' && typeof _Electron === 'undefined' && !window.cordova && typeof firebase != 'undefined'
+
         var currenttoken = null;
 
         var appid = deep(window, 'BuildInfo.packageName') || window.location.hostname || window.pocketnetdomain
@@ -23772,7 +23782,6 @@ Platform = function (app, listofnodes) {
         }
 
         self.set = function(proxy){
-
             if(!currenttoken) return Promise.reject('emptytoken')
 
             var address = getaddress()
@@ -23788,6 +23797,7 @@ Platform = function (app, listofnodes) {
                 if(self.api.existanother(proxy, address)) return self.request.revokeall()
 
             }).then(r => {
+
                 return self.api.setToken(address, token, proxy)
             }).catch(e => {
                 console.log(e)
@@ -23832,7 +23842,7 @@ Platform = function (app, listofnodes) {
             },
 
             mytokens : function(proxy){
-                return platform.app.api.fetchauth('firebase/mytokens', {}, {
+                return platform.app.api.fetchauth('firebase/mytokens', {device: device()}, {
                     proxy : proxy
                 })
             },
@@ -23918,10 +23928,12 @@ Platform = function (app, listofnodes) {
 
             }else if(usingWeb) {
 
-                if (clbk)
-                    clbk()
-
-                return
+                // console.log("HERE")
+                //
+                // if (clbk)
+                //     clbk()
+                //
+                // return
 
                 try{
                     if(!firebase.apps.length) {
@@ -23971,15 +23983,24 @@ Platform = function (app, listofnodes) {
 
                 });
             }else if (usingWeb){
-                Notification.requestPermission().then((permission) => {
-                    if (permission === 'granted') {
-                        console.log('Notification permission granted.');
-                        self.get(clbk)
-                    } else {
-                        usingWeb = false;
-                        console.log('Unable to get permission to notify.');
-                    }
-                });
+
+                if(typeof Notification == 'undefined'){
+
+                }
+                else{
+                    Notification.requestPermission().then((permission) => {
+                        if (permission === 'granted') {
+                            console.log('Notification permission granted.');
+                            self.get(clbk)
+                        } else {
+                            usingWeb = false;
+                            console.log('Unable to get permission to notify.');
+                        }
+                    });
+                }
+
+
+                
             }
 		}
 
@@ -24111,7 +24132,7 @@ Platform = function (app, listofnodes) {
                     }
                 }
                 if (current){
-                    self.set(current.id).catch(e => {
+                    self.set(current).catch(e => {
                         console.log("error", e)
                     })
                 }
@@ -24143,7 +24164,6 @@ Platform = function (app, listofnodes) {
         }
 
         self.prepare = function(clbk){
-
             self.storage.load()
 
             if (using || usingWeb) {
@@ -24163,11 +24183,11 @@ Platform = function (app, listofnodes) {
 
             self.storage.clear()
 
-            if (using || usingWeb){
-                self.revokeall().then(clbk).catch(e => {})
-
-                return
-            }
+            // if (using || usingWeb){
+            //     self.revokeall().then(clbk).catch(e => {})
+            //
+            //     return
+            // }
 
             if (clbk)
                 clbk()
@@ -29495,7 +29515,7 @@ Platform = function (app, listofnodes) {
     }
 
     self.initSounds = function () {
-        if (typeof ion != 'undefined'){
+        if (typeof ion != 'undefined' && !window.cordova){
             ion.prepare()
             ion.sound({
                 sounds: [ { name: "water_droplet"}, { name: "glass" } ],

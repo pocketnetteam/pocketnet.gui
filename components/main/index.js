@@ -480,7 +480,7 @@ var main = (function(){
 						caption : self.app.localization.e("Top videos") ,
 						video: true,
 						r : 'hot',
-						loaderkey : 'recommended',
+						loaderkey : 'best',
 						shuffle : true,
 						period : '4320',
 						page : 0,
@@ -865,7 +865,7 @@ var main = (function(){
 						autoplay : true,
 						nocommentcaption : true,
 						r : 'recommended',
-						
+						openapi : false,
 						opensvi : function(id){
 
 							if (openedpost){

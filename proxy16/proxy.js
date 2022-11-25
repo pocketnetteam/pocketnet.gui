@@ -1807,6 +1807,30 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 			},
 		},
 
+		notifications: {
+			stats: {
+				path: '/notifications/stats',
+				action: function ({A}) {
+					// if (!A) return Promise.reject('admin');
+					var data = notifications.statsInfo()
+
+					return Promise.resolve({ data });
+
+				},
+			},
+
+			users: {
+				path: '/notifications/users',
+				action: function ({A}) {
+					// if (!A) return Promise.reject('admin');
+					var data = notifications.userInfo()
+
+					return Promise.resolve({ data });
+
+				},
+			},
+		},
+
 		remote: {
 			bitchute: {
 				path: '/bitchute',
@@ -2119,8 +2143,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				authorization: 'signature',
 				path: '/firebase/set',
 				action: function (data) {
-
-					if(!self.firebase.inited) return Promise.reject('firebase not setup')
+					if(!self?.firebase?.info()?.inited) return Promise.reject('firebase not setup')
 
 					return self.firebase.kit.revokeToken(data).then(() => {
 						return self.firebase.kit.addToken(data)
@@ -2137,8 +2160,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				authorization: 'signature',
 				path: '/firebase/settings',
 				action: function (data) {
-
-					if(!self.firebase.inited) return Promise.reject('firebase not setup')
+					if(!self?.firebase?.info()?.inited) return Promise.reject('firebase not setup')
 
 					return self.firebase.kit.setSettings(data).then((r) => {
 						return Promise.resolve({ data: r });
@@ -2152,7 +2174,6 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 			test: {
 				path: '/firebase/test',
 				action: function (data) {
-
 					var _data = {
 						addr: "PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM",
 						addrFrom: "PJorG1HMRegp3SiLAFVp8R5Ef6d3nSrNxA",
@@ -2174,12 +2195,10 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				},
 			},
 
-			revokedevice: {
+			revoke: {
 				path: '/firebase/revoke',
 				action: function (data) {
-
-					if(!self.firebase.inited) return Promise.reject('firebase not setup')
-
+					if(!self?.firebase?.info()?.inited) return Promise.reject('firebase not setup')
 
 					return self.firebase.kit.revokeToken(data).then((r) => {
 						return Promise.resolve({ data: r });
@@ -2194,8 +2213,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 			revokedevice: {
 				path: '/firebase/revokedevice',
 				action: function (data) {
-
-					if(!self.firebase.inited) return Promise.reject('firebase not setup')
+					if(!self?.firebase?.info()?.inited) return Promise.reject('firebase not setup')
 
 					return self.firebase.kit.removeDevice(data).then((r) => {
 						return Promise.resolve({ data: r });
@@ -2221,9 +2239,9 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				authorization: 'signature',
 				path: '/firebase/mytokens',
 				action: function (data) {
-					if(!self.firebase.inited) return Promise.reject('firebase not setup')
+					if(!self?.firebase?.info()?.inited) return Promise.reject('firebase not setup')
 
-					return self.firebase.kit.mytokens({address : data.U}).then((r) => {
+					return self.firebase.kit.mytokens({address : data.U, device: data.device}).then((r) => {
 						return Promise.resolve({ data: r });
 					});
 				},

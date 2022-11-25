@@ -847,6 +847,8 @@ Application = function(p)
 
     self.mobile.keyboard.style()
 
+    self.gifResizer = new resizeGif(self)
+
     if (self.ref)
       self.platform.sdk.users.addressByName(self.ref, function(r){
         if(r){
@@ -2392,9 +2394,9 @@ Application = function(p)
       
 
       if(isios()){
-        setTimeout(() => {
+        /*setTimeout(() => {
           cl()
-        }, 1000)
+        }, 1000)*/
       }
       else{
         window.requestAnimationFrame(() => {
@@ -2600,7 +2602,7 @@ Application = function(p)
       needmanage : false,
       hasupdate : false,
 
-      playstore : false,  ///// TODO
+      playstore : window.pocketnetstore || false,  ///// TODO
 
       downloadAndInstall : function(){
 
@@ -2737,12 +2739,9 @@ Application = function(p)
 
     var m = _.find(groups, function(g){
 
-      console.log('g', g, url.host, domain, _.indexOf(g, url.host))
-
       return _.indexOf(g, url.host) > -1 &&  (_.indexOf(g, domain) > -1 || domain.indexOf('localhost') > -1)
     })
 
-    console.log("MMM", m)
 
     if(m) return true
 

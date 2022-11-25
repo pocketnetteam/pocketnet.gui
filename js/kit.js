@@ -2134,6 +2134,8 @@ pUserInfo = function(){
 		if (v.hash) self.hash = v.hash;
 		if (v.firstFlags) self.firstFlags = v.firstFlags;
 
+		if(v.likers_count) self.likers_count = v.likers_count
+
 		self.keys = (v.k || v.keys || '')
 
 		if(!_.isArray(self.keys)) self.keys = self.keys.split(',')

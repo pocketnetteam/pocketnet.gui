@@ -164,21 +164,41 @@
         .shadowText();
     }
 
-    .gallerytoggle{
-        opacity: 0;
+    .lefticons{
         position: absolute;
         left : @rhythm;
         top : var(--app-margin-top);
-        padding : 3 * @rhythm;
-        color : #fff;
         z-index: 201;
-        .shadowText();
         .transition(0.3s);
+        display: flex;
+        align-items: center;
+        >div{
+            min-width: 60px;
+            text-align: center;
+        }
+    }
+
+    .openexternal{
+        padding : 3 * @rhythm 0;
+        color : #fff;
+        .shadowText();
+
+        .elContent{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+
+    .gallerytoggle{
+        padding : 3 * @rhythm 0;
+        color : #fff;
+        .shadowText();
     }
 
     &.ready{
-        .gallerytoggle{
-           opacity: 1;
+        .lefticons{
+            opacity: 1;
         }
     }
 

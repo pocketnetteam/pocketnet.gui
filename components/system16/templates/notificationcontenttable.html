@@ -1,0 +1,56 @@
+<% _.each(stats.blocks, function(item, index){ %>
+        <div class="work">
+            <div elementsid="notificationWrapper_<%-item.height%>" class="notification" key="<%-item.height%>">
+                    <div class="field">
+                        <%-item.height%>
+                    </div>
+
+                    <div class="field">
+                        <%-item.nodeAddress%>
+                    </div>
+
+                    <div class="field">
+                        <%-item.nodeVersion%>
+                    </div>
+
+                    <div class="field">
+                        <%-item.eventsCount%>
+                    </div>
+
+                    <div class="field">
+                        <%-new Date(item.time).toLocaleTimeString()%>
+                    </div>
+
+                    <div class="field">
+                        <span class="red"><%-item.pushStatus.filter(el=>el.isError).length%></span> /
+                        <span class="green"><%-item.pushStatus.filter(el=>!el.isError).length%></span> /
+                        <span><%-item.pushStatus.length%></span>
+                    </div>
+
+                    <div class="field" style="overflow: visible">
+                        <div class="controls">
+                            <% var node = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(item.data)); %>
+                            <a class="button" download="node.json" href="<%-node%>">
+                                <div class="tooltip">Node data</div>
+                                <i class="far fa-sticky-note"></i>
+                            </a>
+                            <% var events = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(item.events)); %>
+                            <a class="button" download="events.json" href="<%-events%>">
+                                <div class="tooltip">Generated events</div>
+                                <i class="far fa-bell"></i>
+                            </a>
+                            <% var push = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(item.pushEvents)); %>
+                            <a class="button" download="push.json" href="<%-push%>">
+                                <div class="tooltip">Push notifications</div>
+                                <i class="fas fa-paper-plane"></i>
+                            </a>
+                            <% var status = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(item.pushStatus)); %>
+                            <a class="button" download="status.json" href="<%-status%>">
+                                <div class="tooltip">Push statuses</div>
+                                <i class="fas fa-users"></i>
+                            </a>
+                        </div>
+                    </div>
+            </div>
+        </div>
+<% }) %>

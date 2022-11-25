@@ -273,8 +273,10 @@ var comments = (function(){
 	
 	
 								if (result){
-	
-									new Audio('sounds/donate.mp3').play();
+
+									if(!window.cordova){
+										new Audio('sounds/donate.mp3').play();
+									}
 	
 									renders.donate(id, p)
 	

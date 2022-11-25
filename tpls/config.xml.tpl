@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget android-versionCode="__PACKAGE-CORDOVAVERSIONCODE__" android-packageName="pocketnet.app" ios-CFBundleIdentifier="app.pocketnet" version="__PACKAGE-CORDOVAVERSION__" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget android-versionCode="__PACKAGE-CORDOVAVERSIONCODE__" android-packageName="pocketnet.app" ios-CFBundleIdentifier="app.pocketnet" version="__PACKAGE-CORDOVAVERSION__" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:tools="http://schemas.android.com/tools">
     <name>__VAR__.project</name>
     <description>
         __VAR__.project Application
@@ -19,10 +19,10 @@
     <preference name="SplashMaintainAspectRatio" value="true" />
     <preference name="ShowSplashScreenSpinner" value="false" />
     <preference name="StatusBarOverlaysWebView" value="true" />
-    <preference name="StatusBarBackgroundColor" value="#00000000" />
+    <preference name="StatusBarBackgroundColor" value="#000000" />
     <preference name="AndroidWindowSplashScreenBackground" value="#011621" />
     <preference name="AndroidWindowSplashScreenIconBackgroundColor" value="#011621" />
-    <preference name="BackgroundColor" value="0xff011621" />
+    <preference name="BackgroundColor" value="#011621" />
     <preference name="StatusBarStyle" value="lightcontent" />
     <preference name="AndroidLaunchMode" value="singleTask" />
     <preference name="Fullscreen" value="false" />
@@ -130,6 +130,14 @@
         <config-file overwrite="true" parent="NSPhotoLibraryUsageDescription" target="*-Info.plist">
             <string>Allow the application access to the photo gallery to select photos for publication.</string>
         </config-file>
+
+        <resource-file src="configs/de.lproj" />
+        <resource-file src="configs/es.lproj" />
+        <resource-file src="configs/fr.lproj" />
+        <resource-file src="configs/it.lproj" />
+        <resource-file src="configs/kr.lproj" />
+        <resource-file src="configs/ru.lproj" />
+        <resource-file src="configs/zh.lproj" />
        
         <preference name="UseSwiftLanguageVersion" value="4.2" />
         <preference name="NativeXHRLogging" value="full" />
@@ -157,6 +165,10 @@
 
         <preference name="AndroidXEnabled" value="true" />
 
+        <edit-config file="AndroidManifest.xml" target="/manifest" mode="merge">
+            <manifest xmlns:tools="http://schemas.android.com/tools" />
+        </edit-config>
+
         <edit-config file="AndroidManifest.xml" mode="merge" target="/manifest/application">
             <application android:usesCleartextTraffic="true" android:requestLegacyExternalStorage="true"/>
         </edit-config>
@@ -168,6 +180,9 @@
             <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
             <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
             <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+            <% if(store) {%>
+                <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" tools:node="remove" />
+            <% } %>
         </config-file>
 
         <edit-config file="AndroidManifest.xml" target="/manifest/application/activity[@android:name='MainActivity']" mode="merge">
@@ -198,4 +213,10 @@
         </host>
 
     </universal-links>
+    <% if(!store) {%>
+
+        <hook type="before_build" src="hooks/before-build.js" />
+        <hook type="after_build" src="hooks/after-build.js" />
+
+    <% } %>
 </widget>

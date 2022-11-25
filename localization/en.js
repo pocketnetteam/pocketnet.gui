@@ -206,7 +206,7 @@ _l.usavechanges = "Do you want to save your changes?";
 
 _l.referralsCount = 'Users who have used the referral link.';
 _l.commentatorsCount = function(limit){
-    return `Users have commented on you more than ${limit + (limit === 1 ? ' time' : ' times')}`;
+    return "Users have commented on you more than " + limit + (limit === 1 ? ' time' : ' times')
 };
 _l.from = 'Period: ';
 _l.to = 'to';
@@ -2395,4 +2395,18 @@ _l.actions_collision = 'The operation was replaced by another'
 _l.actions_actionId = 'Unable to cancel operation, ID missing'
 _l.actions_address = 'Adress missing, user unregistered'
 _l.actions_noAddress = 'Unable to cancel operation, Adress missing'
+_l.diagnosticsPage = "Diagnostics";
+_l.startDiagnose = "Run Diagnostics";
+_l.videoServerName = "Server URL";
+_l.videoServerReachable = "Reachability";
+_l.serversTestingProgress = "Progress of Diagnosing:";
+_l.videoServerVideo = "Video Info";
+_l.goToDiagnose = "Go to Diagnostics";
+_l.connectingTo = "Connecting to";
+_l.earnings = "Total earnings";
+
+
+
+_l.authHeading = "Auth";
+
 

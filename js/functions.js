@@ -1987,7 +1987,6 @@
 
 			markers.on('click', function() {
 				gotoslide(this.getAttribute('index'))
-				console.log(this)
 			})
 	
 		})
@@ -2026,7 +2025,6 @@
 		var gotoslide = function(index){
 			window.requestAnimationFrame(() => {
 
-				console.log('index', index, items[index].offsetLeft)
 				container[0].scrollLeft = items[index].offsetLeft
 
 			})
@@ -4061,8 +4059,6 @@
 
 									app.mobile.menu(_.map(items, (i) => {return i.label})).then((i) => {
 
-										console.log("I", i)
-
 										bkp = null;
 
 										input.val(items[i].value);
@@ -4667,7 +4663,6 @@
 
 						var value = $(this).val();
 
-						console.log('value', value)
 
 						if(!value || value == '0') {
 
@@ -4682,10 +4677,8 @@
 
 							var hassep = value.indexOf('.') > -1 || value.indexOf(',') > -1
 
-							console.log('hassep', hassep)
 
 							if(l == '.' || (l == '0' && hassep) || l == ',') {
-								console.log("HERE")
 								return false
 							}
 						}
@@ -4697,9 +4690,6 @@
 
 							var max = deep(parameter, 'format.max')
 							var min = deep(parameter, 'format.min')
-
-							console.log('max', max)
-							console.log('min', min)
 
 							if(typeof max != 'undefined' && max < value) value = max
 							if(typeof min != 'undefined' && min > value) value = min
@@ -9664,6 +9654,7 @@
 				dropZone[0].ondrop = upload;
 			}
 
+
 			if(p.uploadImage && app && app.mobile.supportimagegallery()){
 
 				input.on('click', function(e){
@@ -11954,6 +11945,216 @@ isDeviceMobile = function() {
 	(function(a){if(/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino/i.test(a)||/1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(a.substr(0,4))) check = true;})(navigator.userAgent||navigator.vendor||window.opera);
 	return check;
 };
+
+
+resizeGif = function (app) {
+    var self = this
+    var workerScript = null
+
+    var transparentThreshold = 127
+    var background = null
+    var speedMultiplier = 1
+
+	var relations = {}
+
+    var loadworker = async function () {
+        if (workerScript) {
+            return workerScript;
+        }
+
+        const { data } = await axios.get(
+            "https://cdnjs.cloudflare.com/ajax/libs/gif.js/0.2.0/gif.worker.js",
+            {
+                responseType: "blob"
+            }
+        );
+
+        const content = await data.text();
+
+        const blob = new Blob([content], {
+            type: "application/javascript"
+        });
+
+        workerScript = URL.createObjectURL(blob);
+
+        return workerScript;
+    }
+
+    var loadlib = function () {
+
+		return new Promise((resolve, reject) => {
+			var jsRelations = [
+				{src : 'js/vendor/gif.js',			   f : 'js'},
+				{src : 'js/vendor/gif-frames.min.js',			   f : 'js'},
+			]
+	
+			importScripts(jsRelations, relations, function(){
+	
+				resolve();
+	
+			}, null, null, app);
+		})
+
+    }
+
+    var fixEdgeSmoothing = function (image, options = {}) {
+        const { background = null, transparentThreshold = 127 } = options;
+
+        const canvas = document.createElement("canvas");
+        canvas.width = image.width;
+        canvas.height = image.height;
+        const ctx = canvas.getContext("2d");
+
+        if (background) {
+            ctx.fillStyle = background;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(image, 0, 0);
+        } else {
+            const data = image
+                .getContext("2d")
+                .getImageData(0, 0, canvas.width, canvas.height)
+                .data.map((data, index, dataArr) => {
+                    if (index % 4 === 3) {
+                        if (_.some(dataArr.slice(index - 3, index), data => data !== 0)) {
+                            return data <= transparentThreshold ? 0 : 255;
+                        }
+                    }
+
+                    return data;
+                });
+
+            ctx.putImageData(new ImageData(data, canvas.width, canvas.height), 0, 0);
+        }
+
+        return canvas;
+    }
+
+    var resizeFrame = function (frame, width, height) {
+        /*if (
+            typeof window.createImageBitmap !== "undefined" &&
+            typeof window.chrome !== "undefined"
+        ) {
+            return imageBitmapResize(frame, width, height);
+        }*/
+
+
+        return canvasResize(frame, width, height);
+    }
+
+    var imageBitmapResize = async function (src, width, height) {
+        const canvas = newCanvas(width, height);
+
+        return createImageBitmap(src, 0, 0, src.width, src.height, {
+            premultiplyAlpha: "none",
+            resizeWidth: width,
+            resizeHeight: height,
+            resizeQuality: "high"
+        }).then(img => {
+            canvas.getContext("2d").drawImage(img, 0, 0);
+
+            return canvas;
+        });
+    }
+
+    var canvasResize = function (src, width, height) {
+        const canvas = newCanvas(width, height);
+
+		var w = src.width, h = src.height, s = w
+
+		if(h < w) s = h
+
+
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(src, (w - s) / 2, (h - s) / 2, s, s, 0, 0, width, height);
+
+        return Promise.resolve(canvas);
+    }
+
+    function newCanvas(width, height) {
+        if (typeof OffscreenCanvas !== "undefined") {
+            return new OffscreenCanvas(width, height);
+        }
+
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+
+        return canvas;
+    }
+
+    var getFrames = async function (url) {
+
+        const frames = await gifFrames({
+            url,
+            frames: "all",
+            outputType: "canvas"
+        });
+
+        return frames.map(frame => ({
+            image: frame.getImage(),
+            delay: frame.frameInfo.delay
+        }));
+    }
+
+    self.prepare = function () {
+
+        return Promise.all([loadlib(), loadworker()])
+
+    }
+
+    self.resize = async function (base64, {width, height}) {
+        if (typeof gifFrames == 'undefined') throw new Error('getFrames')
+        if (typeof GIF == 'undefined') throw new Error('GIF')
+
+
+        const frames = await getFrames(base64);
+        const resizedFrames = await Promise.all(
+            frames.map(({ image }) => resizeFrame(image, width, height))
+        ).then(images =>
+            images.map((image, index) => ({
+                image,
+                delay: frames[index].delay * 10
+            }))
+        );
+
+
+        const blob = await renderGif(resizedFrames, {
+            transparentThreshold,
+            speedMultiplier
+        });
+
+		return getBase64(blob)
+    }
+
+    var renderGif = async function (frames, options = {}) {
+        const { speedMultiplier = 1, background = null } = options;
+
+        const gif = new GIF({
+            workers: 2,
+            workerScript,
+            quality: 1,
+            transparent: background ? null : "rgba(0, 0, 0, 0)"
+        });
+
+        frames.forEach(({ image, delay }) =>
+            gif.addFrame(fixEdgeSmoothing(image, options), {
+                delay: delay / speedMultiplier
+            })
+        );
+
+        return new Promise((resolve, reject) => {
+            gif.on("finished", resolve);
+
+            try {
+                gif.render();
+            } catch (e) {
+                reject(e);
+            }
+        });
+    }
+
+    return self
+}
 
 class LoadingBar {
 	constructor(barElem, styles) {
