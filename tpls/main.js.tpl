@@ -367,6 +367,10 @@ function initApp() {
 
     })
 
+    powerMonitor.on('shutdown', () => {
+        destroyAppSafe();
+    });
+
 }
 
 function createWindow() {
