@@ -250,152 +250,80 @@ function rpc(request, callback, obj) {
     if (prv){
         config.headers['Authorization'] = 'Basic ' + Base64Helper.encode(self.user + ':' + self.pass)
     }
+    
+    if (self.httpOptions) {
+        for (var k in self.httpOptions) {
+            config[k] = self.httpOptions[k];
+        }
+    }
 
-    if (true){
 
+    axios.post(url, request, config).then((res) => {
 
-        axios.post(url, request, config).then((res) => {
-    
-            callback(res?.data?.error, res?.data);
-    
-            return;
-    
-    
-        })
-        .catch(err => {
-
-            var error = err.response?.data?.error;
-    
-            callback(error);
-        })
-    
-    } else {
-    
-    var req = self.protocol.request(options, function(res) {
-
-        var buf = '';
-        var parsedBuf = null;
         var exceededError = null
 
-        res.on('data', function(data) {
-            buf += data;
+        if (res.status === 401) {
 
-        });
+            exceededError = {
+                error : errorMessage + 'Connection Rejected: 401 Unnauthorized',
+                code : 401
+            } 
 
-        res.on('end', function() {
+        }
 
-            if (called) {
-                return;
-            }
+        if (res.status === 403) {
 
-            if (res.statusCode === 401) {
+            exceededError = {
+                error : errorMessage + 'Connection Rejected: 403 Forbidden',
+                code : 403
+            } 
 
-                exceededError = {
-                    error : errorMessage + 'Connection Rejected: 401 Unnauthorized',
-                    code : 401
-                } 
-
-            }
-
-            if (res.statusCode === 403) {
-
-                exceededError = {
-                    error : errorMessage + 'Connection Rejected: 403 Forbidden',
-                    code : 403
-                } 
-
-            }
-
-            if (res.statusCode === 500 && buf.toString('utf8') === 'Work queue depth exceeded') {
-
-                exceededError = {
-                    error : 'Bitcoin JSON-RPC: ' + buf.toString('utf8'),
-                    code : 429
-                } 
-
-            }
-
-            if(!exceededError){
-
-                try {
-                    parsedBuf = JSON.parse(buf);
-                } 
-                catch (e) {
-                    exceededError = {
-                        error : 'Error Parsing JSON: ' + e.message,
-                        code : res.statusCode || 500
-                    }   
-                }
-
-            }
-
-
-            if (exceededError){
-
-                if(lg) console.log("exceededError", self.host, m, exceededError, buf)
-
-                res.resume()
-
-                callback(exceededError);
-            }
-            else{
-                callback(parsedBuf.error, parsedBuf);
-            }
-            
-            buf = '';
-            parsedBuf = null;
-            exceededError = null;
-
-            called = true;
-
-        });
-
-    }).on('error', function(e) {
-
-        if(!called) {
-
-            if(lg) console.log("requesterror", self.host, m, e)
-            
-
-            callback({
-                code : 408,
-                error : 'requesterror'
-            });
-
-            called = true;
         }
         
-    }).setTimeout(timeout, function(){
 
-        if(!called) {
+        const data = res?.data;
 
-            if(lg) console.log("timeout", self.host, m)
+        if (res.status === 500 && data?.error === 'Work queue depth exceeded') {
 
-            callback({
-                code : 408,
-                error : 'timeout'
-            });
+            exceededError = {
+                error : 'Bitcoin JSON-RPC: ' + data.error,
+                code : 429
+            } 
 
-            called = true;
         }
 
-        req.destroy()
+        if (exceededError){
+
+            callback(exceededError);
+
+        } else {
+
+            callback(data?.error, data);
+
+        }
+
+
+        exceededError = null;
+
+        called = true;
+
+        return;
+
+
+
     })
+    .catch(err => {
 
-    req.setHeader('Content-Length', request.length);
-    req.setHeader('Content-Type', 'application/json');
-    req.setHeader('Accept-Encoding', 'gzip, deflate, br');
+        var error = err.response?.data?.error;
 
-    
-
-    if (prv) {
-        req.setHeader('Authorization', 'Basic ' + Base64Helper.encode(self.user + ':' + self.pass));
-    }
-
-    req.write(request)
-    req.end();
-
-    }
+        
+        callback({
+            code : 408,
+            error : 'requesterror'
+        });
+        
+        callback(error);
+    })
 }
 
 RpcClient.prototype.batch = function(batchCallback, resultCallback) {
