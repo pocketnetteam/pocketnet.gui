@@ -17832,8 +17832,22 @@ Platform = function (app, listofnodes) {
                 get: function (parameters, clbk, method, rpc = {}) {
 
                     self.psdk.share.request(() => {
+
+                        console.log('method', method)
+
                         return self.app.api.rpc(method, parameters, {
                             rpc : rpc
+                        }).then(data => {
+
+                            if(_.isArray(data)){
+                                return Promise.resolve({
+                                    contents : data
+                                })
+
+                            }
+
+                            return Promise.resolve(data)
+
                         })
                     }, {
                         method,
@@ -17868,6 +17882,8 @@ Platform = function (app, listofnodes) {
                 },
 
                 recommended: function (p, clbk, cache, methodparams) {
+
+                    console.log("HERE??")
 
                     if(!methodparams) methodparams = {}
 
@@ -17964,6 +17980,7 @@ Platform = function (app, listofnodes) {
 
                     if (!p) p = {};
 
+                    console.log("????")
 
                     self.app.user.isState(function (state) {
 
@@ -17995,7 +18012,11 @@ Platform = function (app, listofnodes) {
                                 parameters.push(p.type)
                             }
 
-                            self.sdk.node.shares.get(parameters, function (shares, error) {
+                            self.sdk.node.shares.get(parameters, function (d, error) {
+
+                                var shares = d.contents
+
+                                console.log('shares', shares)
 
                                 if (shares) {
 
@@ -18025,6 +18046,8 @@ Platform = function (app, listofnodes) {
                                         }
 
                                         storage[key] = shares;
+
+                                        console.log("ASDshares", shares)
 
                                         if (clbk)
                                             clbk(storage[key], error, p)

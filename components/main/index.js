@@ -601,8 +601,6 @@ var main = (function(){
 
 			lentawithsearch : function(clbk, p){
 
-				//return
-
 				if(searchvalue || searchtags){
 					if (searchvalue){
 						self.app.platform.sdk.activity.addsearch(searchvalue)
