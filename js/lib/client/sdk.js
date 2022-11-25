@@ -503,6 +503,8 @@ var pSDK = function({app, api, actions}){
 
     }
 
+    /// main
+
     self.userInfo = {
         keys : ['userInfoFull', 'userInfoLight'],
         
@@ -571,6 +573,33 @@ var pSDK = function({app, api, actions}){
                 return filtered
 
             })
+            
+        },
+
+        insertFromResponseSmall : function(data, light){
+
+            var result = _.map(data, (r) => {
+                return {
+                    key : r.address,
+                    data : r
+                }
+            })
+
+            var key = light ? 'userInfoLight' : 'userInfoFull'
+            
+            _.each(result, (r) => {
+
+                if(!storage[key][r.key])
+                    storage[key][r.key] = r.data
+
+                var object = this.transform(r)
+
+                if (object && !objects[key][r.key])
+                    objects[key][r.key] = object
+
+            })
+
+            return 
             
         },
 
@@ -710,6 +739,107 @@ var pSDK = function({app, api, actions}){
         }
     }
 
+    self.userState = {
+        keys : ['userState'],
+        
+        load : function(addresses, update){
+
+            return loadList('userState', addresses, (addresses) => {
+
+                return api.rpc('getuserstate', [(addresses).join(',')]).then((d) => {
+                    if (d && !_.isArray(d)) d = [d] /// check responce
+
+                    return _.map(d || [], (info) => {
+                        return { 
+                            key : info.address,
+                            data : info
+                        }
+                    })
+
+                }).catch(e => {
+
+                    if(e && e.code == -5){
+                        ///// userstate hack
+                        return Promise.resolve(_.map(addresses, (address) => {
+                            return {
+                                key : address,
+                                data : null //{}
+                            }
+                        }))
+                    }
+
+                    return Promise.reject(e)
+                })
+
+            }, { 
+                update,
+                indexedDb : 'userState',
+                fallbackIndexedDB : 'userStateFB',
+            })
+
+        },
+
+        get : function(address){
+            return storage['userState'][address]
+        },
+
+        getmy : function(){
+            return app.user.address.value ? this.get(app.user.address.value) : null
+        },
+
+        changeLimits : function(address, limit, value){
+            var state = this.get(address);
+
+            if (state){
+                state[limit + "_spent"] = (state[limit + "_spent"] || 0) + value
+                state[limit + "_unspent"] = (state[limit + "_unspent"] || 1) - value
+            }
+        },
+
+        change : function(address, state){
+            this.clear.all('userState', address)
+
+            storage['userState'][address] = state
+        }
+    }
+    
+    self.accSet = {
+        keys : ['accSet'],
+        load : function(address, update){
+
+            return loadone('accSet', address, (ids) => {
+                return api.rpc('getaccountsetting', [ids[0]]).then(d => {
+
+                    var setting = {}
+
+                    try{
+                        setting = JSON.parse(d || "{}")
+                    }
+                    catch(e) {
+                        
+                    }
+                
+                    return [{
+                        key : ids[0],
+                        data : setting
+                    }]
+
+                })
+            }, {
+                update,
+                indexedDb : 'accSet',
+            })
+
+        },
+
+
+        get : function(address){
+            return storage.accSet[address] || {}
+        }
+
+    }
+    /// content
+
     self.comment = {
         keys : ['comment'],
         request : function(executor, hash){
@@ -785,6 +915,37 @@ var pSDK = function({app, api, actions}){
                     objects[key][r.key] = object
 
                     checkObjectInActions([{txid : object.id}])
+                }
+
+            })
+
+            return filtered
+
+        },
+
+        insertFromResponseSmall : function(data){
+            var result = _.map(data, (r) => {
+
+                if(!r) return null
+
+                return {
+                    key : r.id,
+                    data : r
+                }
+            })
+
+            var key = 'comment'
+
+            _.each(result, (r) => {
+
+                if(!storage[key][r.key]){
+                    storage[key][r.key] = r.data
+                }
+
+                var object = this.transform(r)
+
+                if (object && !objects[key][r.key]){
+                    objects[key][r.key] = object
                 }
 
             })
@@ -924,6 +1085,293 @@ var pSDK = function({app, api, actions}){
 
         },
     }
+
+    self.share = {
+        keys : ['share'],
+
+        request : function(executor, hash){
+            return request('share', hash, executor, {
+                requestIndexedDb : 'shareRequest',
+
+                insertFromResponse : (r) => this.insertFromResponseEx(r)
+            })
+        },
+
+        insertFromResponseEx : function(response){
+
+            self.userInfo.insertFromResponse(response.users, true)
+
+            app.platform.sdk.videos.getVideoResponse(response.videos)
+
+            return this.insertFromResponse(response.contents)
+        },
+
+        insertFromResponse : function(data){
+            var result = _.map(data, (r) => {
+
+                if(!r) return null
+
+                return {
+                    key : r.txid,
+                    data : r
+                }
+            })
+
+            var indexedDb = 'share'
+            var key = 'share'
+            
+            return settodb(indexedDb, result).then(() => {
+
+                var filtered = []
+
+                _.each(result, (r) => {
+
+                    if (r && r.key && r.data){
+                        storage[key][r.key] = r.data
+                        filtered.push(r)
+                    }
+    
+                    var object = this.transform(r)
+
+                    if (object){
+                        objects[key][r.key] = object
+
+                        checkObjectInActions([object])
+                    }
+    
+                })
+
+                return filtered
+
+            })
+
+        },
+
+        insertFromResponseSmall: function(data){
+            var result = _.map(data, (r) => {
+
+                if(!r) return null
+
+                return {
+                    key : r.txid,
+                    data : r
+                }
+            })
+
+            var key = 'share'
+
+            _.each(result, (r) => {
+
+                if(!storage[key][r.key])
+                    storage[key][r.key] = r.data
+
+                var object = this.transform(r, true)
+
+                if (object && !objects[key][r.key]){
+                    objects[key][r.key] = object
+                }
+
+            })
+
+            return data
+
+        },
+
+        transform : function({key, data : share}, small){
+
+            if (share.userprofile){
+
+                self.userInfo[!small? 'insertFromResponse' : 'insertFromResponseSmall']([share.userprofile], true)
+                
+            }
+
+            if(share.lastComment){
+                self.comment[!small? 'insertFromResponse' : 'insertFromResponseSmall']([share.lastComment])
+            }
+
+            var s = new pShare();
+                s._import(share);
+
+            if (share.ranks){
+                s.info = share.ranks
+            }
+            else
+            {
+
+                if(
+                    share.BOOST || share.DPOST ||
+                    share.DREP || share.LAST5 ||
+                    share.LAST5 || share.LAST5R ||
+                    share.POSTRF || share.PREP ||
+                    share.PREPR || share.UREP
+                )
+                    s.info = {
+                        BOOST : share.BOOST,
+                        DPOST : share.DPOST,
+                        DREP : share.DREP,
+                        LAST5 : share.LAST5,
+                        LAST5R : share.LAST5R,
+                        POSTRF : share.POSTRF,
+                        PREP : share.PREP,
+                        PREPR : share.PREPR,
+                        UREP : share.UREP,
+                        UREPR : share.UREPR,
+                    }
+            }
+
+            if (s.lastComment){
+                s.lastComment = objects.comment[s.lastComment.id]
+            }
+
+
+            //deleted, likes temp
+
+            return s
+        },
+
+        gets : function(ids){
+            return _.filter(_.map(ids, s => this.get(s)), s => s)
+        },
+
+        get : function(id){
+            return this.tempExtend(id ? (objects.share[id] || null) : null, id)
+        },
+
+        load : function(txids, update){
+
+            return loadList('share', txids, (txids) => {
+
+                return api.rpc('getrawtransactionwithmessagebyid', [txids]).then(d => {
+
+                    if (d && !_.isArray(d)) d = [d];
+
+                    d = _.sortBy(d, (share) => _.indexOf(txids, share.txid))
+
+                    d = _.filter(d || [], (s) => s.address)
+
+                    checkObjectInActions(d)
+
+                    return _.map(d || [], (info) => {
+                        return { 
+                            key : info.txid,
+                            data : info
+                        }
+                    })
+
+                })
+            }, {
+                queue : true,
+                transform : (r) => this.transform(r),
+                update,
+                indexedDb : 'share',
+            })
+        },
+
+        listener : function(action, status){
+
+            if (status == 'completed'){
+                clearallfromdb('shareRequest')
+                clearfromdb('share', [action.txid])
+
+                var exp = action.get()
+
+                objects['share'][action.txid] = this.applyAction(objects['userInfoFull'][action.txid], exp)
+            }
+        },
+
+
+        applyAction : function(object, exp){
+
+            if (exp.txidEdit){
+
+                if(!object) return
+
+                if(exp.txidEdit == object.txid){
+                    object.message = exp.message
+                    object.caption = exp.caption
+                    object.tags = exp.tags
+                    object.url = exp.url
+                    object.language = exp.language
+                    object.repost = exp.repost
+                    object.settings = _.clone(exp.settings)
+                    object.edit = true
+                    object.txidEdit = exp.txidEdit
+    
+                    object.temp = exp.temp
+                    object.relay = exp.relay   
+                }
+
+                         
+            
+            }
+
+            else{
+
+            }
+
+            /*
+            object.temp = exp.temp
+                object.relay = exp.relay
+            
+            
+            */
+       
+            return object
+        },
+
+        tempExtend : function(object, txid){
+
+            var extendedObject = null
+
+            _.each(actions.getAccounts(), (account) => {
+
+                var temps = ['share', 'upvoteShare', 'comment', 'contentDelete', 'cScore']
+
+                _.each(temps, (k) => {
+
+                    _.each(account.getTempActions(k), (action) => {
+
+                        if (!object && action.txid == txid){
+                            extendedObject = action
+                        }
+                        else{
+
+                            if (self[k] && self[k].applyAction){
+
+                                var applied = self[k].applyAction(extendedObject || object.clone(), action)
+    
+                                if (applied) extendedObject = applied
+                            }
+
+                        }
+
+                        
+                    })
+
+                })
+            
+            })
+
+            return extendedObject || object || null
+
+        },
+
+        tempAdd : function(objects, filter){
+
+            _.each(actions.getAccounts(), (account) => {
+                var actions = account.getTempActions('share', filter)
+
+                _.each(actions, (a) => {
+                    objects.unshift(a)
+                })
+            })
+
+            return objects
+            
+        }
+    }
+
+    /// actions
 
     self.blocking = {
         listener : function(action, address, status){
@@ -1112,6 +1560,8 @@ var pSDK = function({app, api, actions}){
         }
     }
 
+    /// requests
+
     self.myScore = {
         keys : ['myScore'],
 
@@ -1167,324 +1617,6 @@ var pSDK = function({app, api, actions}){
         }   
     }
 
-    self.share = {
-        keys : ['share'],
-
-        request : function(executor, hash){
-            return request('share', hash, executor, {
-                requestIndexedDb : 'shareRequest',
-
-                insertFromResponse : (r) => this.insertFromResponseEx(r)
-            })
-        },
-
-        insertFromResponseEx : function(response){
-
-            self.userInfo.insertFromResponse(response.users, true)
-
-            app.platform.sdk.videos.getVideoResponse(response.videos)
-
-            return this.insertFromResponse(response.contents)
-        },
-
-        insertFromResponse : function(data){
-            var result = _.map(data, (r) => {
-
-                if(!r) return null
-
-                return {
-                    key : r.txid,
-                    data : r
-                }
-            })
-
-            var indexedDb = 'share'
-            var key = 'share'
-            
-            return settodb(indexedDb, result).then(() => {
-
-                var filtered = []
-
-                _.each(result, (r) => {
-
-                    if (r && r.key && r.data){
-                        storage[key][r.key] = r.data
-                        filtered.push(r)
-                    }
-    
-                    var object = this.transform(r)
-
-
-                    if (object){
-                        objects[key][r.key] = object
-
-                        checkObjectInActions([object])
-                    }
-    
-                })
-
-                return filtered
-
-            })
-
-        },
-
-        transform : function({key, data : share}){
-
-            if (share.userprofile){
-                self.userInfo.insertFromResponse([share.userprofile], true)
-            }
-
-            if(share.lastComment){
-                self.comment.insertFromResponse([share.lastComment])
-            }
-
-            var s = new pShare();
-                s._import(share);
-
-            if (share.ranks){
-                s.info = share.ranks
-            }
-            else
-            {
-
-                if(
-                    share.BOOST || share.DPOST ||
-                    share.DREP || share.LAST5 ||
-                    share.LAST5 || share.LAST5R ||
-                    share.POSTRF || share.PREP ||
-                    share.PREPR || share.UREP
-                )
-                    s.info = {
-                        BOOST : share.BOOST,
-                        DPOST : share.DPOST,
-                        DREP : share.DREP,
-                        LAST5 : share.LAST5,
-                        LAST5R : share.LAST5R,
-                        POSTRF : share.POSTRF,
-                        PREP : share.PREP,
-                        PREPR : share.PREPR,
-                        UREP : share.UREP,
-                        UREPR : share.UREPR,
-                    }
-            }
-
-            if (s.lastComment){
-                s.lastComment = objects.comment[s.lastComment.id]
-            }
-
-
-            //deleted, likes temp
-
-            return s
-        },
-
-        gets : function(ids){
-            return _.filter(_.map(ids, s => this.get(s)), s => s)
-        },
-
-        get : function(id){
-            return this.tempExtend(id ? (objects.share[id] || null) : null, id)
-        },
-
-        load : function(txids, update){
-
-            return loadList('share', txids, (txids) => {
-
-                return api.rpc('getrawtransactionwithmessagebyid', [txids]).then(d => {
-
-                    if (d && !_.isArray(d)) d = [d];
-
-                    d = _.sortBy(d, (share) => _.indexOf(txids, share.txid))
-
-                    d = _.filter(d || [], (s) => s.address)
-
-                    checkObjectInActions(d)
-
-                    return _.map(d || [], (info) => {
-                        return { 
-                            key : info.txid,
-                            data : info
-                        }
-                    })
-
-                })
-            }, {
-                queue : true,
-                transform : (r) => this.transform(r),
-                update,
-                indexedDb : 'share',
-            })
-        },
-
-        listener : function(action, status){
-
-            if (status == 'completed'){
-                clearallfromdb('shareRequest')
-                clearfromdb('share', [action.txid])
-
-                var exp = action.get()
-
-                objects['share'][action.txid] = this.applyAction(objects['userInfoFull'][action.txid], exp)
-            }
-        },
-
-
-        applyAction : function(object, exp){
-
-            if (exp.txidEdit){
-
-                if(!object) return
-
-                if(exp.txidEdit == object.txid){
-                    object.message = exp.message
-                    object.caption = exp.caption
-                    object.tags = exp.tags
-                    object.url = exp.url
-                    object.language = exp.language
-                    object.repost = exp.repost
-                    object.settings = _.clone(exp.settings)
-                    object.edit = true
-                    object.txidEdit = exp.txidEdit
-    
-                    object.temp = exp.temp
-                    object.relay = exp.relay   
-                }
-
-                         
-            
-            }
-
-            else{
-
-            }
-
-            /*
-            object.temp = exp.temp
-                object.relay = exp.relay
-            
-            
-            */
-       
-            return object
-        },
-
-        tempExtend : function(object, txid){
-
-            var extendedObject = null
-
-            _.each(actions.getAccounts(), (account) => {
-
-                var temps = ['share', 'upvoteShare', 'comment', 'contentDelete', 'cScore']
-
-                _.each(temps, (k) => {
-
-                    _.each(account.getTempActions(k), (action) => {
-
-                        if (!object && action.txid == txid){
-                            extendedObject = action
-                        }
-                        else{
-
-                            if (self[k] && self[k].applyAction){
-
-                                var applied = self[k].applyAction(extendedObject || object.clone(), action)
-    
-                                if (applied) extendedObject = applied
-                            }
-
-                        }
-
-                        
-                    })
-
-                })
-            
-            })
-
-            return extendedObject || object || null
-
-        },
-
-        tempAdd : function(objects, filter){
-
-            _.each(actions.getAccounts(), (account) => {
-                var actions = account.getTempActions('share', filter)
-
-                _.each(actions, (a) => {
-                    objects.unshift(a)
-                })
-            })
-
-            return objects
-            
-        }
-    }
-
-    self.userState = {
-        keys : ['userState'],
-        
-        load : function(addresses, update){
-
-            return loadList('userState', addresses, (addresses) => {
-
-                return api.rpc('getuserstate', [(addresses).join(',')]).then((d) => {
-                    if (d && !_.isArray(d)) d = [d] /// check responce
-
-                    return _.map(d || [], (info) => {
-                        return { 
-                            key : info.address,
-                            data : info
-                        }
-                    })
-
-                }).catch(e => {
-
-                    if(e && e.code == -5){
-                        ///// userstate hack
-                        return Promise.resolve(_.map(addresses, (address) => {
-                            return {
-                                key : address,
-                                data : null //{}
-                            }
-                        }))
-                    }
-
-                    return Promise.reject(e)
-                })
-
-            }, { 
-                update,
-                indexedDb : 'userState',
-                fallbackIndexedDB : 'userStateFB',
-            })
-
-        },
-
-        get : function(address){
-            return storage['userState'][address]
-        },
-
-        getmy : function(){
-            return app.user.address.value ? this.get(app.user.address.value) : null
-        },
-
-        changeLimits : function(address, limit, value){
-            var state = this.get(address);
-
-            if (state){
-                state[limit + "_spent"] = (state[limit + "_spent"] || 0) + value
-                state[limit + "_unspent"] = (state[limit + "_unspent"] || 1) - value
-            }
-        },
-
-        change : function(address, state){
-            this.clear.all('userState', address)
-
-            storage['userState'][address] = state
-        }
-    }
-    
     self.transaction = {
         keys : ['transaction'],
         load : function(id, update){
@@ -1514,42 +1646,6 @@ var pSDK = function({app, api, actions}){
 
             
         }
-    }
-
-    self.accSet = {
-        keys : ['accSet'],
-        load : function(address, update){
-
-            return loadone('accSet', address, (ids) => {
-                return api.rpc('getaccountsetting', [ids[0]]).then(d => {
-
-                    var setting = {}
-
-                    try{
-                        setting = JSON.parse(d || "{}")
-                    }
-                    catch(e) {
-                        
-                    }
-                
-                    return [{
-                        key : ids[0],
-                        data : setting
-                    }]
-
-                })
-            }, {
-                update,
-                indexedDb : 'accSet',
-            })
-
-        },
-
-
-        get : function(address){
-            return storage.accSet[address] || {}
-        }
-
     }
 
     self.nameAddress = {
@@ -1583,7 +1679,6 @@ var pSDK = function({app, api, actions}){
 
         },
     }
-
 
     self.search = {
         keys : ['search'],
@@ -1635,6 +1730,9 @@ var pSDK = function({app, api, actions}){
 
         }
     }
+
+
+    /// end
     
     self.clear = {
         storage : function(k, key){

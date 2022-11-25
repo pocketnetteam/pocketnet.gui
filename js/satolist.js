@@ -17669,13 +17669,15 @@ Platform = function (app, listofnodes) {
 
                         if (curShare) {
 
-                            if (!curShare || !curShare.share || !curShare.share.user || !curShare.share.user.adr || !curShare.share.share)
-                                return;
+                            if (!curShare || !curShare.share || !curShare.share.user || !curShare.share.user.adr || !curShare.share.share) return;
 
+                            self.psdk.share.insertFromResponseSmall([curShare.share])
+                            
+                            var newShare = self.psdk.share.get(txid)
                             // Prepare user
 
                             ///TODO_REF_ACTIONS
-                            var newUser = self.sdk.users.prepareuser(curShare.share.user, curShare.share.user.adr);
+                            /*var newUser = self.sdk.users.prepareuser(curShare.share.user, curShare.share.user.adr);
                             self.sdk.usersl.storage[newUser.address] = newUser;
 
                             // Prepare share
@@ -17690,17 +17692,18 @@ Platform = function (app, listofnodes) {
 
 
                             newShare.time = new Date();
-                            newShare.time.setTime(curShare.share.share.time * 1000);
+                            newShare.time.setTime(curShare.share.share.time * 1000);*/
 
-                            loadedShares.push(newShare);
+                            if (newShare)
+                                loadedShares.push(newShare);
 
                             //// TODO_REF_ACTIONS
 
-                            if(!self.sdk.node.shares.storage.trx)
+                            /*if(!self.sdk.node.shares.storage.trx)
                                 self.sdk.node.shares.storage.trx = {};
 
                             if(!self.sdk.node.shares.storage.trx[txid])
-                                self.sdk.node.shares.storage.trx[txid] = newShare;
+                                self.sdk.node.shares.storage.trx[txid] = newShare;*/
 
                         }
                     });
@@ -17801,8 +17804,6 @@ Platform = function (app, listofnodes) {
 
                     })
 
-                    return
-
                 },
 
                 transform: function (d, state) {
@@ -17857,8 +17858,6 @@ Platform = function (app, listofnodes) {
                 },
 
                 recommended: function (p, clbk, cache, methodparams) {
-
-                    console.log('recommended')
 
                     if(!methodparams) methodparams = {}
 
@@ -18239,7 +18238,6 @@ Platform = function (app, listofnodes) {
                             if (!p.txid) tfinded = true;
 
                             _.each(storage[key], function (s, i) {
-                                //storage.trx[s.txid] = s;
 
                                 if (tfinded && added < p.count) {
                                     added++;
