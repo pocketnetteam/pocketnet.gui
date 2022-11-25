@@ -5,7 +5,7 @@ if (global.WRITE_LOGS) {
 
 var open = require("open");
 
-const {protocol} = require('electron');
+const {protocol, powerMonitor} = require('electron');
 
 const ProxyInterface = require('./proxy16/ipc.js')
 const IpcBridge =require('./js/electron/ipcbridge.js')
@@ -354,8 +354,6 @@ function initApp() {
             autoUpdater.checkForUpdates();
         }, 10 * 60 * 1000);
     }
-
-    const { powerMonitor } = require('electron')
 
     powerMonitor.on('suspend', () => {
 
