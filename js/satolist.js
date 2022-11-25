@@ -386,7 +386,6 @@ Platform = function (app, listofnodes) {
 
     self.actions.on('actionFiltered', ({action, address, status}) => {
 
-
         var listener = listeners[action.object.type]
 
         if(!listener) return
@@ -395,39 +394,27 @@ Platform = function (app, listofnodes) {
 
             var alias = action.get()
 
-            if (status == 'completed' && action.object.ustate) {
+            listener(alias, status)
 
-                var ustate = typeof alias.ustate == 'function' ? alias.ustate() : alias.ustate;
-
-                if (ustate) self.sdk.ustate.change(address, ustate, 1)
-
-            }
-
-            return listener(alias, status)
+            window.requestAnimationFrame(() => {
+                _.each(self.actionListeners, (c) => {
+                    c({type : action.object.type, alias, status})
+                })
+            })
 
         }
+
+        
+
     })
 
-    
-
-    /*self.psdk.share.load(['37cd921ffeee746147517ba821220e2951bd38eff8587e43a0675cd494c9a64e'])
-    self.psdk.share.load(['03387a46a7fcf7a070f30aad246958482329499d1aef3b75ad34763ba71eb79d'])
-    self.psdk.share.load(['e57b77a3cad6d0317c0e500d08cb341255845bf3f869801c8c5eefed56bddeec'])
-    self.psdk.share.load(['a2f027b343bbe1b8c07d08ed0fc4985a230c8176add80c5a84228cc626e377ab'])
-    self.psdk.share.load(['b58d3aac69953638361f6f904b27a986bd747217301ea44fed869bca65623312'])*/
-    
 
     var listeners = {
         share : function(alias, status){
 
-            if(status == 'completed'){
-
-                //self.sdk.node.shares.add(alias);
-
+            if (status == 'sent'){
                 if (alias.itisvideo()) {
-
                     self.sdk.videos.unposted.remove(alias.url)
-                    
                 }
             }
 
@@ -441,35 +428,22 @@ Platform = function (app, listofnodes) {
             if( address != app.user.address.value) return
             if(!share) return
 
-            if(status == 'completed'){
+            if (status == 'completed'){
+
+            }
+
+            if (status == 'sent'){
 
                 self.sdk.memtags.add(share.tags, 'l_' + share.txid, (value - 3) / 2)
 
-                if (value > 4)
-                    self.sdk.recommendations.successRecommendation(share)
+                if (value > 4) self.sdk.recommendations.successRecommendation(share)
 
             }
-
-            return
-
-            
-            if(status == 'completed'){
-                share.myVal = Number(value);	
-
-                self.sdk.memtags.add(share.tags, 'l_' + share.txid, (value - 3) / 2)
-
-                if (value > 4)
-                    self.sdk.recommendations.successRecommendation(share)
-            }
-
-            if(status == 'rejected'){				
-                share.myVal = 0;	
-            }
-
-            if(status == 'temp'){				
-            }
+           
         }
     }
+
+    self.actionListeners = {}
 
     self.psdk = new pSDK({app, api : self.app.api, actions : self.actions})
     self.actions.psdk = self.psdk
@@ -8543,9 +8517,9 @@ Platform = function (app, listofnodes) {
 
             save: function () {
 
-                var address = self.sdk.address.pnet().address;
+        
                 try{
-                    localStorage[address + 'articles'] = JSON.stringify(self.sdk.articles.storage || []);
+                    localStorage[self.app.user.address.value + 'articles'] = JSON.stringify(self.sdk.articles.storage || []);
                 }
                 catch(e){
                     console.log("e", e)
@@ -8558,12 +8532,10 @@ Platform = function (app, listofnodes) {
 
                 var articles = {};
 
-                var address = self.sdk.address.pnet().address;
-
                 var local = "[]" 
                 
                 try{
-                    localStorage[address + 'articles'] || "[]";
+                    localStorage[self.app.user.address.value + 'articles'] || "[]";
                 }catch(e){
                     
                 }
@@ -8759,21 +8731,14 @@ Platform = function (app, listofnodes) {
             },
 
             save: function () {
-                if(!self.sdk.address.pnet()) return
 
-                var a = self.sdk.address.pnet().address;
-
-                self.app.settings.set(a, 'sharesObserver', self.sdk.sharesObserver.storage.viewed || '{}')
+                self.app.settings.set('observer', 'sharesObserver', self.sdk.sharesObserver.storage.viewed || '{}')
 
             },
 
             load: function (clbk) {
 
-                if(!self.sdk.address.pnet()) return
-
-                var a = self.sdk.address.pnet().address;
-
-                self.sdk.sharesObserver.storage.viewed = self.app.settings.get(a, 'sharesObserver') || {}
+                self.sdk.sharesObserver.storage.viewed = self.app.settings.get('observer', 'sharesObserver') || {}
 
                 if(clbk) clbk()
             },
@@ -10015,14 +9980,13 @@ Platform = function (app, listofnodes) {
 
             mystatisticnov : function(){
                 var novblock = 1420300
-                var address = self.sdk.address.pnet().address;
 
                 if(window.testpocketnet) novblock = 302900
 
                 return pretry(function(){
                     return self.currentBlock
                 }).then(r => {
-                    return self.sdk.user.statistic(address, self.currentBlock - novblock)
+                    return self.sdk.user.statistic(self.app.user.address.value, self.currentBlock - novblock)
                 })
 
             },
@@ -10079,7 +10043,7 @@ Platform = function (app, listofnodes) {
 
                         self.sdk.ustate.me((info) => {
     
-                            var address = self.sdk.address.pnet()
+                            var address = self.app.user.address.value
     
                             if(!info || _.isEmpty(info)){
                                 return reject('notprepared')
@@ -10108,7 +10072,7 @@ Platform = function (app, listofnodes) {
 
                 var removePeertube = function(){
 
-                    var address = self.sdk.address.pnet()
+                    var address = self.app.user.address.value
 
 
                     return self.app.peertubeHandler.api.proxy.allServers().then((peertubeservers) => {
@@ -10181,7 +10145,7 @@ Platform = function (app, listofnodes) {
                                 //self.app.settings.delete(a, 'last_user')
                                 //self.app.settings.delete(a, 'last_ustate_2')
         
-                                self.deletedtest[self.sdk.address.pnet().address] = true
+                                self.deletedtest[self.app.user.address.value] = true
         
                                 self.matrixchat.destroy()
         
@@ -10237,108 +10201,7 @@ Platform = function (app, listofnodes) {
 
         },
 
-        processes: {
-            storage: {},
-
-            level: function (reputation) {
-                if (this.storage.p && typeof reputation != 'undefined') {
-
-                    var lvl = _.find(this.storage.p, function (c) {
-                        return c.reputation > reputation && c.prev <= reputation
-                    })
-
-                    if (lvl) {
-                        var lobj = {
-
-                            perc: (reputation - lvl.prev) / (lvl.reputation - lvl.prev),
-                            level: lvl.level,
-                            reputation: lvl.reputation,
-                            bonus: lvl.bonus
-
-                        }
-
-                        return lobj
-                    }
-
-                    else {
-                        return {
-                            level: 999,
-                            max: true
-                        }
-                    }
-                }
-
-                return null
-            },
-
-            get: function (clbk) {
-
-                var s = this.storage;
-
-                if (clbk)
-                    clbk(null)
-
-
-                return
-
-                if (s.p) {
-                    if (clbk)
-                        clbk(s.p)
-                }
-
-                else {
-
-                    self.app.api.fetch('processes').then(d => {
-                        var inited = deep(d, 'data.info.inited');
-
-                        if (!inited) {
-                            if (clbk)
-                                clbk(null)
-                        }
-                        else {
-                            var fill = deep(d, 'data.info.fill');
-
-                            s.p = fill
-
-                            _.each(s.p, function (c, i) {
-                                if (i) c.prev = s.p[i - 1].reputation
-                            })
-
-                            if (clbk)
-                                clbk(s.p)
-                        }
-
-                    }).catch(e => {
-                        if (clbk)
-                            clbk(null, e)
-                    })
-
-                }
-
-            },
-
-            gifts: function (clbk) {
-
-                if (clbk)
-                    clbk(null)
-
-                return
-
-                self.app.api.fetch('checkgift', {
-                    address: self.sdk.address.pnet().address
-                }).then(d => {
-                    if (clbk)
-                        clbk(deep(d, 'data.gifts') || [])
-
-                }).catch(e => {
-                    if (clbk)
-                        clbk([])
-                })
-
-
-            }
-        },
-
+        
         ustate: {
             storage: {},
 
@@ -15568,6 +15431,8 @@ Platform = function (app, listofnodes) {
 
                 })
 
+                console.log('shareIds', shareIds)
+
                 self.app.user.isState((state) => {
                     if(!state){
                         if(clbk) clbk()
@@ -15862,7 +15727,6 @@ Platform = function (app, listofnodes) {
             getclear: function (txid, pid, clbk, ccha) {
 
                 var s = self.sdk.comments.storage;
-                var i = self.sdk.comments.ini;
 
                 s[txid] || (s[txid] = {})
 
@@ -15908,7 +15772,7 @@ Platform = function (app, listofnodes) {
              
             },
 
-            get: function (txid, pid, clbk, ccha) {
+            /*get: function (txid, pid, clbk, ccha) {
 
                 var s = self.sdk.comments.storage;
                 var i = self.sdk.comments.ini;
@@ -15936,7 +15800,7 @@ Platform = function (app, listofnodes) {
                         clbk(null, e)
                     }
                 })
-            },
+            },*/
 
             last: function (clbk) {
 
@@ -15956,36 +15820,10 @@ Platform = function (app, listofnodes) {
 
                     if(clbk) clbk(comments)
 
-
-                    return
-
-                    console.log('getlastcomments' ,d )
-
-                    d = _.filter(d, function (d) {
-                        return !d.deleted
-                    })
-
-                    if (clbk)
-                        clbk(ini(d))
-
                 }).catch(e => {
                     if (clbk)
                         clbk([], e)
                 })
-
-                /*self.app.api.rpc('getlastcomments', ['7', '', self.app.localization.key]).then(d => {
-
-                    d = _.filter(d, function (d) {
-                        return !d.deleted
-                    })
-
-                    if (clbk)
-                        clbk(ini(d))
-
-                }).catch(e => {
-                    if (clbk)
-                        clbk([], e)
-                })*/
 
 
             },
@@ -15994,10 +15832,6 @@ Platform = function (app, listofnodes) {
 
                 var comment = self.psdk.comment.get(id)
                 
-                //deep(self.sdk, 'comments.storage.all.' + upvote.comment.v)
-
-                //var ma = self.app.user.address.value
-
                 _.each(self.sdk.comments.upvoteClbks, function (c) {
                     c(null, comment, upvote.value.v, app.user.address.value, true)
                 })
@@ -16496,7 +16330,7 @@ Platform = function (app, listofnodes) {
                             var newShare = self.psdk.share.get(txid)
                             // Prepare user
 
-                            ///TODO_REF_ACTIONS
+                            ///TODO_REF_ACTIONS -check
                             /*var newUser = self.sdk.users.prepareuser(curShare.share.user, curShare.share.user.adr);
                             self.sdk.usersl.storage[newUser.address] = newUser;
 
@@ -16517,7 +16351,7 @@ Platform = function (app, listofnodes) {
                             if (newShare)
                                 loadedShares.push(newShare);
 
-                            //// TODO_REF_ACTIONS
+                            //// TODO_REF_ACTIONS -check
 
                             /*if(!self.sdk.node.shares.storage.trx)
                                 self.sdk.node.shares.storage.trx = {};
@@ -16915,8 +16749,8 @@ Platform = function (app, listofnodes) {
 
                 getsubscribesfeed : function(p, clbk, cache){
 
-                    p.tempSubscriptions = []//self.sdk.relayTransactions.getRelTmpSubscriptions()
-                    console.error('TODO_REF_ACTIONS')
+                    p.tempSubscriptions = self.psdk.subscribe.tempAdd()
+                    
 
                     self.app.platform.sdk.node.shares.hierarchical(p, clbk, cache, {
                         method : 'getsubscribesfeed'

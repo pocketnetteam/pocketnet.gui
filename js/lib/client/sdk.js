@@ -624,11 +624,9 @@ var pSDK = function({app, api, actions}){
             return this.tempExtend(objects['userInfoFull'][address] || objects['userInfoLight'][address])
         },
 
-        listener : function(action, address, status){
+        listener : function(exp, address, status){
 
             if (status == 'completed'){
-
-                var exp = action.get()
 
                 objects['userInfoFull'][address] = this.applyAction(objects['userInfoFull'][address], exp)
 
@@ -954,10 +952,8 @@ var pSDK = function({app, api, actions}){
 
         },
 
-        listener : function(action, address, status){
+        listener : function(exp, address, status){
             if (status == 'completed'){
-
-                var exp = action.get()
 
                 this.applyAction(objects['comment'][exp.id], exp)
                 this.applyAction(objects['share'][exp.postid], exp)
@@ -1027,6 +1023,9 @@ var pSDK = function({app, api, actions}){
 
 
         gets : function(ids){
+
+            if(!_.isArray(ids)) ids = [ids]
+
             return _.filter(_.map(ids, s => this.get(s)), s => s)
         },
 
@@ -1034,7 +1033,7 @@ var pSDK = function({app, api, actions}){
             return this.tempExtend(id ? (objects.comment[id] || null) : null, id)
         },
 
-        tempAdd : function(objects, filter){
+        tempAdd : function(objects = [], filter){
 
             _.each(actions.getAccounts(), (account) => {
                 var actions = account.getTempActions('comment', filter)
@@ -1230,6 +1229,9 @@ var pSDK = function({app, api, actions}){
         },
 
         gets : function(ids){
+
+            if(!_.isArray(ids)) ids = [ids]
+
             return _.filter(_.map(ids, s => this.get(s)), s => s)
         },
 
@@ -1267,15 +1269,13 @@ var pSDK = function({app, api, actions}){
             })
         },
 
-        listener : function(action, status){
+        listener : function(exp, status){
 
             if (status == 'completed'){
                 clearallfromdb('shareRequest')
-                clearfromdb('share', [action.txid])
+                clearfromdb('share', [exp.txid])
 
-                var exp = action.get()
-
-                objects['share'][action.txid] = this.applyAction(objects['userInfoFull'][action.txid], exp)
+                objects['share'][exp.txid] = this.applyAction(objects['userInfoFull'][action.txid], exp)
             }
         },
 
@@ -1321,6 +1321,7 @@ var pSDK = function({app, api, actions}){
 
         tempExtend : function(object, txid){
 
+
             var extendedObject = null
 
             _.each(actions.getAccounts(), (account) => {
@@ -1336,12 +1337,16 @@ var pSDK = function({app, api, actions}){
                         }
                         else{
 
-                            if (self[k] && self[k].applyAction){
+                            if(extendedObject || object){
+                                if (self[k] && self[k].applyAction){
 
-                                var applied = self[k].applyAction(extendedObject || object.clone(), action)
-    
-                                if (applied) extendedObject = applied
+                                    var applied = self[k].applyAction(extendedObject || object.clone(), action)
+        
+                                    if (applied) extendedObject = applied
+                                }
                             }
+
+                            
 
                         }
 
@@ -1356,7 +1361,7 @@ var pSDK = function({app, api, actions}){
 
         },
 
-        tempAdd : function(objects, filter){
+        tempAdd : function(objects = [], filter){
 
             _.each(actions.getAccounts(), (account) => {
                 var actions = account.getTempActions('share', filter)
@@ -1374,10 +1379,8 @@ var pSDK = function({app, api, actions}){
     /// actions
 
     self.blocking = {
-        listener : function(action, address, status){
+        listener : function(exp, address, status){
             if (status == 'completed'){
-
-                var exp = action.get()
 
                 this.applyAction(objects['userInfoFull'][address], exp)
                 this.applyAction(objects['userInfoFull'][exp.vsaddress], exp)
@@ -1400,10 +1403,8 @@ var pSDK = function({app, api, actions}){
     }
 
     self.unblocking = {
-        listener : function(action, address, status){
+        listener : function(exp, address, status){
             if (status == 'completed'){
-
-                var exp = action.get()
 
                 this.applyAction(objects['userInfoFull'][address], exp)
                 this.applyAction(objects['userInfoFull'][exp.vsaddress], exp)
@@ -1445,21 +1446,30 @@ var pSDK = function({app, api, actions}){
                
                 if (object.address == exp.vsaddress){
                     object.addRelation(object.address, 'subscribers')
-                    
-                    
-                    //object.addRelation(exp.vsaddress, 'blocking')
                 }
             }
 
             return object
+        },
+
+        tempAdd : function(objects = [], filter){
+
+            _.each(actions.getAccounts(), (account) => {
+                var actions = account.getTempActions('subscribePrivate', filter).concat(account.getTempActions('subscribe', filter))
+
+                _.each(actions, (a) => {
+                    objects.unshift(a)
+                })
+            })
+
+            return objects
+            
         }
     }
 
     self.subscribePrivate = {
-        listener : function(action, address, status){
+        listener : function(exp, address, status){
             if (status == 'completed'){
-
-                var exp = action.get()
 
                 this.applyAction(objects['userInfoFull'][address], exp)
                 this.applyAction(objects['userInfoFull'][exp.vsaddress], exp)
@@ -1488,10 +1498,8 @@ var pSDK = function({app, api, actions}){
     }
 
     self.unsubscribe = {
-        listener : function(action, address, status){
+        listener : function(exp, address, status){
             if (status == 'completed'){
-
-                var exp = action.get()
 
                 this.applyAction(objects['userInfoFull'][address], exp)
                 this.applyAction(objects['userInfoFull'][exp.vsaddress], exp)
@@ -1519,10 +1527,8 @@ var pSDK = function({app, api, actions}){
     }
 
     self.contentDelete = {
-        listener : function(action, address, status){
+        listener : function(exp, address, status){
             if (status == 'completed'){
-
-                var exp = action.get()
 
                 objects['share'][exp.txidEdit] = this.applyAction(objects['share'][exp.txidEdit], exp)
             }
@@ -1540,11 +1546,8 @@ var pSDK = function({app, api, actions}){
     }
 
     self.upvoteShare = {
-        listener : function(action, address, status){
+        listener : function(exp, address, status){
             if (status == 'completed'){
-
-                var exp = action.get()
-
                 objects['share'][exp.share] = this.applyAction(objects['share'][exp.share], exp)
             }
         },
@@ -1603,6 +1606,7 @@ var pSDK = function({app, api, actions}){
         transform : function({key, data}){
             if(data.posttxid){
                 if (objects.share[data.posttxid]){
+                    console.log('data.value', data.value)
                     objects.share[data.posttxid].myVal = Number(data.value)
                 }
             }
@@ -1790,8 +1794,7 @@ var pSDK = function({app, api, actions}){
 
             var alias = action.get()
 
-            listener(alias, address, status)
-
+            self[action.object.type].listener(alias, address, status)
 
             if (status == 'completed' && action.object.ustate) {
 

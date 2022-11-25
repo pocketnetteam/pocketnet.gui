@@ -2558,12 +2558,11 @@ var lenta = (function(){
 
 						}
 
-							
-
 						p.attr('value', value)
 						p.addClass('liked')
 
 						actions.like(s, value, function(r){
+							return
 							if(r){
 								
 
@@ -3436,10 +3435,8 @@ var lenta = (function(){
 			stars : function(share, clbk){
 
 				if (video) { if(clbk) clbk(); return }
-				if (!el.shares) return
 
-
-				if (el.share[share.txid] ){
+				if (el.share && el.share[share.txid] ){
 
 					self.shell({
 						name :  'stars',
@@ -5088,6 +5085,21 @@ var lenta = (function(){
 						}
 						
 					}
+
+					self.app.platform.actionListeners.lenta = function({type, alias, status}){
+
+						console.log('status', status, type, alias)
+						
+						if(type == 'upvoteShare'){
+
+							var share = _.find(sharesInview, (share) => share.txid == alias.share)
+
+							if (share){
+								renders.stars(share)
+							}
+						}
+						
+					}
 				}
 
 				self.app.platform.clbks._focus.lenta = function(time){
@@ -5581,7 +5593,7 @@ var lenta = (function(){
 					parallax = null
 				}
 			
-				
+				delete self.app.platform.actionListeners.lenta
 
 				app.actions.playingvideo(null);
 

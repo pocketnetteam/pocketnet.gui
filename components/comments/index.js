@@ -1483,7 +1483,7 @@ var comments = (function(){
 				var comment = self.app.platform.sdk.comments.find(txid, id, pid)
 
 				if (!comment && listpreview && ed.lastComment){
-					comment = self.app.platform.sdk.comments.ini([ed.lastComment])[0]
+					comment = ed.lastComment//self.app.platform.sdk.comments.ini([ed.lastComment])[0]
 				}
 
 
@@ -1569,7 +1569,7 @@ var comments = (function(){
 
 				if (listpreview && ed.lastComment && !pid){
 
-					comment = self.app.platform.sdk.comments.ini([ed.lastComment])[0]
+					comment = ed.lastComment
 
 					d.caddress = comment.address
 				}

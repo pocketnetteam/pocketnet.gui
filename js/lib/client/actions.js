@@ -516,7 +516,10 @@ var Action = function(account, object, priority){
         return new Promise((resolve, reject) => {
 
 
-            account.parent.app.platform.sdk.node.transactions.get.tx(self.transaction, (data = {}, error = {}) => {
+            account.parent.app.platform.sdk.node.transactions.get.tx(self.transaction, (data, error = {}) => {
+
+                data || (data = {})
+                console.log('data', data)
 
                 if (error.code == -5 || error.code == -8){ /// check codes (transaction not apply, resend action)
                     self.sent = null
@@ -729,7 +732,8 @@ var Account = function(address, parent){
     var emitted = {
         completed : {},
         rejected : {},
-        sent : {}
+        sent : {},
+        relay : {}
     }
 
     self.keyPair = null
@@ -1275,7 +1279,7 @@ var Account = function(address, parent){
     }   
 
     var emitFilteredAction = function(action){
-        var status = action.rejected ? 'rejected' : (action.completed ? 'completed' : (action.transaction ? 'sent' : null))
+        var status = action.rejected ? 'rejected' : (action.completed ? 'completed' : (action.transaction ? 'sent' : 'relay'))
 
         if (status && action.id){
             

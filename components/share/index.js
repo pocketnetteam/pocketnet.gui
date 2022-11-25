@@ -261,22 +261,7 @@ var share = (function(){
 					el.c.addClass('unfocus').removeClass('focus')
 			},
 
-			waitActions : function(){
-				self.app.platform.sdk.user.waitActions(function(r){
-
-					if(!el.c) return
-
-					if(!r || r == 'inf'){
-
-						el.c.removeClass('waitActions')
-
-					}
-					else
-					{
-						el.c.addClass('waitActions')
-					}
-				})
-			},
+			
 
 			autoFilled : function(){
 
@@ -2630,7 +2615,7 @@ var share = (function(){
 			
 			currentShare.on.change.edit = events.change;
 
-			self.app.platform.ws.messages.transaction.clbks.share = actions.waitActions
+			//self.app.platform.ws.messages.transaction.clbks.share = actions.waitActions
 
 			el.c.on('click', function(){
 				
@@ -2844,7 +2829,7 @@ var share = (function(){
 
 				p.clbk(null, p);
 
-				actions.waitActions();
+				//actions.waitActions();
 
 				el.c.on('click', function(){
 					el.c.removeClass('minimized')
