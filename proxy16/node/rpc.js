@@ -315,14 +315,11 @@ function rpc(request, callback, obj) {
     .catch(err => {
 
         var error = err.response?.data?.error;
-
         
-        callback({
+        callback(error || {
             code : 408,
             error : 'requesterror'
         });
-        
-        callback(error);
     })
 }
 
