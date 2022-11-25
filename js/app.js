@@ -862,6 +862,8 @@ Application = function(p)
 
       self.platform.sdk.users.addressByName((p.href), function(r){
 
+        console.log("R", r)
+
         if (r){
           if (clbk)
             clbk(null, {
@@ -874,8 +876,7 @@ Application = function(p)
             })
         }
         else{
-          if (clbk)
-            clbk('notfound')
+          if (clbk) clbk('notfound')
         }
 
       })

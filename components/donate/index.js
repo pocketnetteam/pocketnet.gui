@@ -54,37 +54,43 @@ var donate = (function(){
 
 				self.sdk.users.get(ed.receiver, function(){
 
-					self.app.platform.sdk.node.transactions.get.allBalance(function (total) {
+					var account = self.app.platform.actions.getCurrentAccount()
 
-						self.app.platform.sdk.node.transactions.get.canSpend(self.sdk.address.pnet().address, function (balance) {
+					if (account){
+						var b = account.actualBalance()
+						var total = b.actual
+						var balance = b.actual - b.tempbalance
 
-							input = new Parameter({
-								name: self.app.localization.e('wsamountof'),
-								type: 'NUMBER',
-								id: 'amount',
-								placeholder : '0',
-								value : ed.value || 0.5,
-								format: {
-									Precision: 3,
-									max : balance,
-									min : 0.5
-								}
-							})
-
-							var data = {
-								total, 
-								balance,
-								receiver : self.psdk.userInfo.get(ed.receiver),
-								sender : self.psdk.userInfo.getmy(),
-								input
-							};
-
-							clbk(data);
-
-
+						input = new Parameter({
+							name: self.app.localization.e('wsamountof'),
+							type: 'NUMBER',
+							id: 'amount',
+							placeholder : '0',
+							value : ed.value || 0.5,
+							format: {
+								Precision: 3,
+								max : balance,
+								min : 0.5
+							}
 						})
 
-					})
+						var data = {
+							total, 
+							balance,
+							receiver : self.psdk.userInfo.get(ed.receiver),
+							sender : self.psdk.userInfo.getmy(),
+							input,
+							error : false
+						};
+
+						clbk(data);
+					}
+
+					else{
+						clbk({
+							error : true
+						});
+					}
 
 				}, true)
 

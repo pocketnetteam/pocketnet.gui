@@ -68,7 +68,11 @@ var pSDK = function({app, api, actions}){
 
         accSet : {
             time : 6000
-        }
+        },
+
+        nameAddress : {
+            time : 6000
+        },
     }
 
     var checkObjectInActions = function(objects){
@@ -1513,6 +1517,38 @@ var pSDK = function({app, api, actions}){
             return storage.accSet[address] || {}
         }
 
+    }
+
+    self.nameAddress = {
+        keys : ['nameAddress'],
+        load : function(name, update){
+
+            return loadone('nameAddress', name, (ids) => {
+                return api.rpc('getuseraddress', [ids[0]]).then(r => {
+
+                    if (r && r[0]){
+                        return [{
+                            key : name,
+                            data : r[0].address
+                        }]
+                    }
+
+                    return Promise.reject('404')
+
+                })
+            }, {
+                update,
+                indexedDb : 'nameAddress',
+                
+            }).then(r => {
+
+                if(!r[name]) return Promise.reject('404')
+
+                return r[name]
+
+            })
+
+        },
     }
 
     self.tag = {

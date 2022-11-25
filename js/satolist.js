@@ -11824,12 +11824,17 @@ Platform = function (app, listofnodes) {
                 }
                 else {
 
+                    console.log('name', name)
+
                     name = (name || '').toLowerCase()
 
                     var lf = self.psdk.userInfo.findlocal((s) => {
                         return s && s.name && s.name.toLowerCase() == name.toLowerCase()
                     })
 
+                    if (lf) {
+                        if (clbk) clbk(lf.address)
+                    }
               
                     if(self.sdk.users.nameaddressstorage[name]){
                         if (clbk)
@@ -11838,27 +11843,31 @@ Platform = function (app, listofnodes) {
                         return
                     }
 
-                    if (lf) {
-                        if (clbk)
-                            clbk(lf.address)
+                    self.psdk.nameAddress.load(name).then(address => {
 
-                    }
-                    else {
+                        console.log(address)
 
-                        self.app.api.rpc('getuseraddress', [name]).then(d => {
+                        if (clbk) clbk(address)
 
-                            var r = deep(d, '0.address');
+                    }).catch(e => {
+                        console.error(e)
+                        if (clbk) {
+                            clbk(null, e)
+                        }
+                    })
 
-                            if (clbk)
-                                clbk(r || null)
+                    return
 
-                        }).catch(e => {
-                            if (clbk) {
-                                clbk(null, e)
-                            }
-                        })
+                    self.app.api.rpc('getuseraddress', [name]).then(address => {
 
-                    }
+                        if (clbk) clbk(address)
+
+                    }).catch(e => {
+                        if (clbk) {
+                            clbk(null, e)
+                        }
+                    })
+
 
                 }
 

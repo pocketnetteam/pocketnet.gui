@@ -601,6 +601,8 @@ var main = (function(){
 
 			lentawithsearch : function(clbk, p){
 
+				//return
+
 				if(searchvalue || searchtags){
 					if (searchvalue){
 						self.app.platform.sdk.activity.addsearch(searchvalue)
@@ -1025,6 +1027,7 @@ var main = (function(){
 
 			renders.menu()
 
+			
 
 			if (currentMode == 'common' && !videomain && !readmain && !searchvalue && !searchtags)
 				renders.topvideos(true)

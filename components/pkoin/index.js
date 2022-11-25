@@ -12,137 +12,139 @@ var pkoin = (function(){
 		var renders = {
 
 			fields: function(){
-				
-				self.app.platform.sdk.node.transactions.get.allBalance(function (total) {
 
-					self.app.platform.sdk.node.transactions.get.canSpend(self.sdk.address.pnet().address, function (balance) {
+				var account = self.app.platform.actions.getCurrentAccount()
+
+				if (account){
+					var b = account.actualBalance()
+					var total = b.actual
+					var balance = b.actual - b.tempbalance
+
+					var my = (share.address == self.app.user.address.value)
 	
-						var my = (share.address == self.app.user.address.value)
-	
-						var values = ['pkoinComment', 'sendToAuthor']
-						var labels = [self.app.localization.e('pkoinComment'), self.app.localization.e('sendToAuthor')]
-	
-						var blocked = self.app.platform.sdk.user.reputationBlocked(share.address)
-	
-						if (self.app.boost && my){
-							values = []
-							labels = []
-	
-							optionsValue = 'liftUpThePost'
+					var values = ['pkoinComment', 'sendToAuthor']
+					var labels = [self.app.localization.e('pkoinComment'), self.app.localization.e('sendToAuthor')]
+
+					var blocked = self.app.platform.sdk.user.reputationBlocked(share.address)
+
+					if (self.app.boost && my){
+						values = []
+						labels = []
+
+						optionsValue = 'liftUpThePost'
+					}
+
+					if (self.app.boost && !app.pkoindisable && !blocked && optionsValue === 'liftUpThePost'){
+						values.push('liftUpThePost')
+						labels.push(self.app.localization.e('liftUpThePost'))
+					}
+					
+					var options = new Parameter({
+
+						type : "VALUES",
+						name : "Localization",
+						id : 'localization',
+						defaultValue : optionsValue,
+						possibleValues : values,
+						possibleValuesLabels : labels,
+
+						_onChange : function(value){
+
+							optionsValue = value;
+
+							renders.fields();
+						},
+
+						onFocus : function(el){
+							_scrollTo(el, el.c.closest('.customscroll'), 0)
 						}
-	
-						if (self.app.boost && !app.pkoindisable && !blocked && optionsValue === 'liftUpThePost'){
-							values.push('liftUpThePost')
-							labels.push(self.app.localization.e('liftUpThePost'))
-						}
-						
-						var options = new Parameter({
-	
-							type : "VALUES",
-							name : "Localization",
-							id : 'localization',
-							defaultValue : optionsValue,
-							possibleValues : values,
-							possibleValuesLabels : labels,
-	
-							_onChange : function(value){
-	
-								optionsValue = value;
-	
-								renders.fields();
-							},
-	
-							onFocus : function(el){
-								_scrollTo(el, el.c.closest('.customscroll'), 0)
-							}
-				
-						})
-	
-	
-						if (el.textareaComment){
-							valComment = el.textareaComment.val();
-						}
-	
-						self.shell({
-	
-							name :  'fields',
-							el :   el.fields,
-							data : {
-								options : options,
-								optionsValue: optionsValue,
-								valSum : valSum,
-								valComment : valComment,
-								total: total.toFixed(3),
-								balance : balance.toFixed(3),
-								userinfo: userinfo
-	
-							},
-	
-						}, function(_p){
-	
-							ParametersLive([options], _p.el);
-	
-							el.inputSum = _p.el.find('#inputSum');
-		
-							var errorWrapper = _p.el.find('#errorWrapper');
-							
-							el.inputSum.on('keyup', function(e){
-								valSum = Number(e.target.value);
-								
-								if (valSum > Number(balance)){
-	
-									errorWrapper.text(self.app.localization.e('incoins'));
-									disabled = true;
-									el.send.addClass('disabled');
-	
-								} else if (valSum < 0.5){
-	
-									errorWrapper.text(self.app.localization.e('minPkoin', 0.5));
-									disabled = true;
-									el.send.addClass('disabled');
-	
-	
-								} else {
-	
-									errorWrapper.text('');
-									disabled = false;
-									el.send.removeClass('disabled');
-	
-								}
 			
-								
-	
-								if(optionsValue === 'liftUpThePost') {
-									renders.boostinfo(boost)
-								}
-	
-							})
-	
-							if(optionsValue === 'liftUpThePost') {
-	
-								self.app.platform.sdk.node.shares.getboost({
-									lang: share.language,
-									count : 10,
-				
-								}, function(_boost ,err){
-	
-									boost = _boost
-	
-									renders.boostinfo(boost)
-	
-								}, boost ? 'cache' : null)
-							}
-	
-							el.textareaComment = _p.el.find('#textareaComment');
-	
-							el.textareaComment.on('focus', function(){
-								_scrollTo(el.textareaComment, el.c.closest('.customscroll'), 0)
-							})
-						})
-	
-					});
+					})
 
-				})
+
+					if (el.textareaComment){
+						valComment = el.textareaComment.val();
+					}
+
+					self.shell({
+
+						name :  'fields',
+						el :   el.fields,
+						data : {
+							options : options,
+							optionsValue: optionsValue,
+							valSum : valSum,
+							valComment : valComment,
+							total: total.toFixed(2),
+							balance : balance.toFixed(2),
+							userinfo: userinfo
+
+						},
+
+					}, function(_p){
+
+						ParametersLive([options], _p.el);
+
+						el.inputSum = _p.el.find('#inputSum');
+	
+						var errorWrapper = _p.el.find('#errorWrapper');
+						
+						el.inputSum.on('keyup', function(e){
+							valSum = Number(e.target.value);
+							
+							if (valSum > Number(balance)){
+
+								errorWrapper.text(self.app.localization.e('incoins'));
+								disabled = true;
+								el.send.addClass('disabled');
+
+							} else if (valSum < 0.5){
+
+								errorWrapper.text(self.app.localization.e('minPkoin', 0.5));
+								disabled = true;
+								el.send.addClass('disabled');
+
+
+							} else {
+
+								errorWrapper.text('');
+								disabled = false;
+								el.send.removeClass('disabled');
+
+							}
+		
+							
+
+							if(optionsValue === 'liftUpThePost') {
+								renders.boostinfo(boost)
+							}
+
+						})
+
+						if(optionsValue === 'liftUpThePost') {
+
+							self.app.platform.sdk.node.shares.getboost({
+								lang: share.language,
+								count : 10,
+			
+							}, function(_boost ,err){
+
+								boost = _boost
+
+								renders.boostinfo(boost)
+
+							}, boost ? 'cache' : null)
+						}
+
+						el.textareaComment = _p.el.find('#textareaComment');
+
+						el.textareaComment.on('focus', function(){
+							_scrollTo(el.textareaComment, el.c.closest('.customscroll'), 0)
+						})
+					})
+
+				}
+				
 
 			},
 

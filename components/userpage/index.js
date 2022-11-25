@@ -781,15 +781,16 @@ var userpage = (function(){
 				self.app.user.isState(function (state) { 
 
 					if(self.app.mobileview && state){
-						self.app.platform.sdk.node.transactions.get.allBalance(function(amount){
-							var temp = self.app.platform.sdk.node.transactions.tempBalance()
 
-							allbalance = amount + temp
-							
+						var account = self.app.platform.actions.getCurrentAccount()
 
-							r()
+						if (account){
+							allbalance = account.actualBalance().actual
+						}
+
+						r()
+
 						
-						})
 					}
 					else{
 						r()

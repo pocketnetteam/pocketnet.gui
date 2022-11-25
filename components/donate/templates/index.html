@@ -11,59 +11,64 @@ var receiverLetter = receiver.name ? receiver.name[0] : '';
 	<div class="caption">
 		<span><%=e('e130961')%></span>
 	</div>
-	<div class="subcaption">
-		<span><%= e('totalBalance') %>: <%-app.platform.mp.coin(total || 0)%> PKOIN</span>
-	</div>
-	<div class="subcaption">
-		<span><%=e('e130962')%>: <%-app.platform.mp.coin(balance || 0)%> PKOIN</span>
-	</div>
+	<% if(error) {%>
 
-	<div class="donateWrapper">
+	<% } else { %> 
+		<div class="subcaption">
+			<span><%= e('totalBalance') %>: <%-app.platform.mp.coin(total || 0)%> PKOIN</span>
+		</div>
+		<div class="subcaption">
+			<span><%=e('e130962')%>: <%-app.platform.mp.coin(balance || 0)%> PKOIN</span>
+		</div>
 
-		<div class="transaction">
-			<div class="user">
-				<div class="iconWrapper">
-					<div class="usericon" image="<%-sender.image || ''%>">
+		<div class="donateWrapper">
 
-						<% if(!sender.image && senderLetter) { %>
+			<div class="transaction">
+				<div class="user">
+					<div class="iconWrapper">
+						<div class="usericon" image="<%-sender.image || ''%>">
 
-							<span class="letter">
-								<%-senderLetter.toUpperCase()%>
-							</span>
+							<% if(!sender.image && senderLetter) { %>
 
-						<% } %>
-					</div>
-				</div>
-			</div>
-			<div class="coinsWrapper">
-				<div class="chevron-right right"></div>
-				<div class="receiver">
-					<%= input.input() %>
-						<span class="text">PKOIN</span>
-				</div>
-			</div>
-			<div class="user">
-				<div class="iconWrapper">
-					<div class="usericon" image="<%-receiver.image || ''%>">
-						<% if(!receiver.image && receiverLetter) { %>
-
-							<span class="letter">
-								<%-receiverLetter.toUpperCase()%>
-							</span>
+								<span class="letter">
+									<%-senderLetter.toUpperCase()%>
+								</span>
 
 							<% } %>
+						</div>
+					</div>
+				</div>
+				<div class="coinsWrapper">
+					<div class="chevron-right right"></div>
+					<div class="receiver">
+						<%= input.input() %>
+							<span class="text">PKOIN</span>
+					</div>
+				</div>
+				<div class="user">
+					<div class="iconWrapper">
+						<div class="usericon" image="<%-receiver.image || ''%>">
+							<% if(!receiver.image && receiverLetter) { %>
+
+								<span class="letter">
+									<%-receiverLetter.toUpperCase()%>
+								</span>
+
+								<% } %>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-		<div class="subscription">
-			<span><%=e('sumoftransaction')%></span>
+			<div class="subscription">
+				<span><%=e('sumoftransaction')%></span>
+			</div>
+
+			<div class="buttonWrapper">
+				<button class="button black apply">
+					<%=e('applydonate')%>
+				</button>
+			</div>
 		</div>
 
-		<div class="buttonWrapper">
-			<button class="button black apply">
-				<%=e('applydonate')%>
-			</button>
-		</div>
-	</div>
+	<% } %>
 </div>

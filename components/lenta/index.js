@@ -3521,6 +3521,8 @@ var lenta = (function(){
 			sharesInview : function(shares, clbk, p){
 				if(!p) p = {}
 
+				console.log('sharesInview')
+
 				
 				shares = _.filter(shares, function(s){
 					return !$('#' + s.txid).hasClass('hidden')
@@ -3575,6 +3577,10 @@ var lenta = (function(){
 						success : function(){
 				
 							renders.mystars(shares)
+
+							setTimeout(() => {
+								//events.loadmorescroll()
+							}, 500)
 
 							if (essenseData.includeboost){ actions.includeboost() }
 
@@ -4353,6 +4359,9 @@ var lenta = (function(){
 								if(!shares.length && !essenseData.ended && !includingsub && (emptyinarow >= 3 || offsetblock >= 43200 )){
 									ended = true
 								}
+
+
+								console.log('ended', ended, shares.length, pr)
 									
 							}
 
@@ -4545,6 +4554,8 @@ var lenta = (function(){
 			},
 
 			shares : function(clbk, cache){
+
+				console.log("LOAD shares")
 
 
 				if (loading || (ended && (!essenseData.contents || essenseData.txids.length == _.toArray(shareInitedMap).length) )) return
