@@ -1377,7 +1377,7 @@ var author = (function(){
 							return
 						}
 	
-						if(!self.app.platform.sdk.address.pnet() || author.address != self.app.platform.sdk.address.pnet().address){
+						if (author.address != self.app.user.address.value){
 							reports.shares.name = self.app.localization.e('uposts')
 						}
 						else

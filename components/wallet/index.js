@@ -49,7 +49,7 @@ var wallet = (function(){
 				id : 'pnetwallet',
 
 				addresses : function(){
-					return [self.app.platform.sdk.address.pnet().address]
+					return [self.app.user.address.value]
 				}
 			},
 
@@ -69,7 +69,7 @@ var wallet = (function(){
 				id : 'total',
 
 				addresses : function(){
-					return [self.app.platform.sdk.address.pnet().address].concat(self.app.platform.sdk.addresses.storage.addresses || [])
+					return [self.app.user.address.value].concat(self.app.platform.sdk.addresses.storage.addresses || [])
 				}
 			},
 
@@ -475,7 +475,7 @@ var wallet = (function(){
 				p || (p = {});
 
 				if(!p.reciever || p.reciever == 'pnetwallet'){
-					p.address = self.app.platform.sdk.address.pnet().address
+					p.address = self.app.user.address.value
 				}
 
 				if (p.reciever == 'wallet'){
@@ -586,7 +586,7 @@ var wallet = (function(){
 
 						if(v.type == 'user'){
 
-							if(v.id != self.app.platform.sdk.address.pnet().address){
+							if(v.id != self.app.user.address.value){
 								c++
 
 								send.parameters.reciever.possibleValues.push(v.id)
@@ -702,7 +702,7 @@ var wallet = (function(){
 				deposit.active = true;
 
 				if(v == 'pnetwallet') {
-					address = self.app.platform.sdk.address.pnet().address
+					address = self.app.user.address.value
 
 					deposit.address = address;
 
@@ -848,7 +848,7 @@ var wallet = (function(){
 
 				if(reciever == 'pnetwallet' || reciever == self.app.localization.e('tacaddress')){
 					recievers.push({
-						address : self.app.platform.sdk.address.pnet().address,
+						address : self.app.user.address.value,
 						amount : amount
 					})
 				}
@@ -960,7 +960,7 @@ var wallet = (function(){
 				var addresses = actions.sendAddresses();
 				var outputs = [];
 
-				var reciever = self.app.platform.sdk.address.pnet().address //// dummy
+				var reciever = self.app.user.address.value //// dummy
 
 				outputs.push({
 					amount : amount,
@@ -2226,7 +2226,6 @@ var wallet = (function(){
 					return
 				}
 
-				var a = self.app.platform.sdk.address.pnet() || {}
 
 				self.shell({
 
@@ -2234,7 +2233,7 @@ var wallet = (function(){
 					el : _el || el.buy,
 					data : {
 						coins : coins,
-						a : a
+						adress : self.app.user.address.value
 					},
 
 				}, function(_p){
@@ -2623,9 +2622,7 @@ var wallet = (function(){
 
 				var data = {};
 
-					data.p2pkh = self.app.platform.sdk.address.pnet()
-
-				 essenseData = p.settings.essenseData || {}
+				essenseData = p.settings.essenseData || {}
 
 
 				prepareOptions()

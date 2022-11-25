@@ -347,12 +347,15 @@ var pkoin = (function(){
 				}
 
 				if (!disabled){
-
 					
-					self.app.platform.sdk.node.transactions.get.canSpend(self.sdk.address.pnet().address, function (amount) {
+					var account = self.app.platform.actions.getCurrentAccount()
 
+					if (account){
+						var b = account.actualBalance()
+						var total = b.actual
+						var balance = b.actual - b.tempbalance
 
-						balance = amount.toFixed(3);
+						balance = amount.toFixed(2);
 						valSum = Number(el.inputSum.val());
 	
 						if (valSum){
@@ -413,9 +416,8 @@ var pkoin = (function(){
 							sitemessage(self.app.localization.e('e13057'))
 	
 						}
-						
-					
-					})
+
+					}
 
 				}
 

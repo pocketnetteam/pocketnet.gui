@@ -2795,9 +2795,7 @@ pComment = function(){
 
 	self.my = function(app){
 
-		var ao = app.platform.sdk.address.pnet();
-
-		if(self.address && ao && self.address == ao.address) return true
+		if(self.address && self.address == app.user.address.value) return true
 
 		return false
 	}

@@ -49,7 +49,7 @@ var comments = (function(){
 
 				var d_el = _el.find(">div.commentPaddingWrapper>div.commentWrapper>div.commentBody>div.cbodyWrapper");
 
-				if (address == self.app.platform.sdk.address.pnet().address){
+				if (address == self.app.user.address.value){
 
 					if(!value){
 
@@ -225,7 +225,7 @@ var comments = (function(){
 			
 				var storage = currents[id].export(true)
 			
-				var sender = self.sdk.address.pnet().address;
+				var sender = self.app.user.address.value;
 			
 				if (sender === receiver){
 			
@@ -457,7 +457,7 @@ var comments = (function(){
 					//deep(self.app.platform.sdk, 'comments.storage.all.' + id)
 
 					if (comment){
-						clbks.upvote(null, comment, Number(comment.myScore), self.app.platform.sdk.address.pnet().address)
+						clbks.upvote(null, comment, Number(comment.myScore), self.app.user.address.value)
 					}
 				})	
 			},
@@ -729,7 +729,7 @@ var comments = (function(){
 					{
 						var post = self.psdk.share.get(txid)
 
-						var address = (self.app.platform.sdk.address.pnet() || {}).address
+						var address = self.app.user.address.value
 
 						if (post.address && address && post.address != address && self.app.platform.sdk.user.scamcriteria()){
 
@@ -906,7 +906,7 @@ var comments = (function(){
 
 						var str = '@' + name + '  '
 
-						if(address == self.app.platform.sdk.address.pnet().address || !name) str = ''
+						if(address == self.app.user.address.value || !name) str = ''
 
 						area.setText(str)
 
@@ -1248,7 +1248,7 @@ var comments = (function(){
 
 					if(!comment) return
 					
-					if (comment.address == self.app.platform.sdk.address.pnet().address){
+					if (comment.address == self.app.user.address.value){
 						return
 					}
 
@@ -2259,7 +2259,7 @@ var comments = (function(){
 							edit : p.edit || '',
 							preview : _preview,
 							mestate : mestate,
-							sender : self.app.platform.sdk.address.pnet() ? self.app.platform.sdk.address.pnet().address : null,
+							sender : self.app.user.address.value,
 							receiver: receiver
 						},
 

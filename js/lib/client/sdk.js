@@ -51,7 +51,7 @@ var pSDK = function({app, api, actions}){
         },
 
         shareRequest : {
-            time : 60
+            time : 6000 // temp
         },
 
         share : {
@@ -1720,7 +1720,7 @@ var pSDK = function({app, api, actions}){
                         tag : clearTagString(trim(decodeURIComponent(decodeURIComponent(tg.tag))))
                     }
                 }catch(e){
-                    console.log(tg, e)
+                    //console.log(tg, e)
                 }
 
                 return t

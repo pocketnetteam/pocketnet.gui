@@ -1082,7 +1082,7 @@ var menu = (function(){
 
 				if(p.state){
 
-					var addr = self.sdk.address.pnet().address
+					var addr = self.app.user.address.value
 
 					if (self.app.platform.sdk.registrations.showprivate()){
 						data.key = true

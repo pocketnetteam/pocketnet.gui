@@ -271,7 +271,7 @@ var donations = (function(){
 									Action : 'ADDTOMAILLIST',
 									Lang : self.app.localization.key || 'en',
 									TemplateID : 100,
-									Email : self.app.platform.sdk.address.pnet().address,
+									Email : self.app.user.address.value,
 									Name : (curobj.name || 'NAN0') + ", " + (thankparameters.amount.value || 0)
 								},
 								dataType: 'json',

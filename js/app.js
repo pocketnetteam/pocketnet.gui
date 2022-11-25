@@ -956,7 +956,7 @@ Application = function(p)
 
     self.user.isState(function(state){
 
-      if(state && self.platform.sdk.address.pnet()){
+      if(state){
 
         self.user.usePeertube = self.platform.sdk.usersettings.meta.enablePeertube ? self.platform.sdk.usersettings.meta.enablePeertube.value : false;
 

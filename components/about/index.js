@@ -716,10 +716,8 @@ var about = (function(){
 
 				var p = parameters();
 
-				data.p2pkh = self.app.platform.sdk.address.pnet()
 
 				self.app.platform.sdk.ustate.me(function(_mestate){					
-
 
 					mestate = _mestate
 

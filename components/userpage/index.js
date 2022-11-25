@@ -576,7 +576,7 @@ var userpage = (function(){
 				}
 
 				var so2 = function(){
-					if (self.app.platform.sdk.address.pnet()){
+					if (self.app.user.address.value){
 
 						if (self.app.platform.sdk.registrations.showprivate()){
 							
@@ -1132,13 +1132,10 @@ var userpage = (function(){
 
 				var p = parameters();
 
-				data.p2pkh = self.app.platform.sdk.address.pnet()
 
 				self.app.platform.sdk.ustate.me(function(_mestate){					
 
 					mestate = _mestate
-
-					
 
 					clbk(data);
 

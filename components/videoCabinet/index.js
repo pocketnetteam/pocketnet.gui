@@ -232,8 +232,8 @@ var videoCabinet = (function () {
 			},
 
 			getTotalRatings() {
-				if (self.app.platform.sdk.address.pnet()) {
-					var address = self.app.platform.sdk.address.pnet().address;
+				if (self.app.user.address.value) {
+					var address = self.app.user.address.value;
 					return self.app.api
 						.rpc('getcontentsstatistic', [[address], 'video'], {})
 						.then((r) => {

@@ -392,12 +392,12 @@ var socialshare2 = (function(){
 					emeta.extra(p)
 				}
 
-				if (self.app.platform.sdk.address.pnet()){
-					p.ref = self.app.platform.sdk.address.pnet().address
+				if (self.app.user.value)){
+					p.ref = self.app.user.address.value
 				}
 				else{
 					if (self.app.ref){
-						p.ref = self.app.platform.sdk.address.pnet().address = self.app.ref
+						p.ref = self.app.user.address.value = self.app.ref
 					}
 				}
 
@@ -790,9 +790,9 @@ var socialshare2 = (function(){
 		}
 
 		var includeRef = function(){
-			if (self.app.platform.sdk.address.pnet()){
+			if (self.app.user.value){
 				ed.url = self.app.nav.api.history.addParametersToHref(ed.url, {
-					ref : self.app.platform.sdk.address.pnet().address
+					ref : self.app.user.address.value
 				})
 			}
 			else{

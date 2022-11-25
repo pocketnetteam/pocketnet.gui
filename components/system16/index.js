@@ -177,7 +177,7 @@ var system16 = (function(){
 		
 			admin : function(){
 
-				var address = self.app.platform.sdk.address.pnet()
+				var address = self.app.user.value
 
 				if(!address) return false
 				if (proxy && info){
@@ -3075,7 +3075,7 @@ var system16 = (function(){
 
 								var t = 'Do you really want to remove selected admin from Proxy server admin list?'
 
-								if(address == self.app.platform.sdk.address.pnet().address){
+								if(address == self.app.user.address.value){
 									t = 'Do you really want to remove Your account from Proxy server admin list?'
 								}
 

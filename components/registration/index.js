@@ -509,7 +509,7 @@ var registration = (function(){
 
 				prev : function(clbk){
 
-					var address = self.sdk.address.pnet().address;
+					var address = self.app.user.address.value;
 
 					var requested = self.app.settings.get(address, 'request') || "";
 
@@ -975,7 +975,7 @@ var registration = (function(){
 	
 				after : function(el){
 
-					var address = self.sdk.address.pnet().address;
+					var address = self.app.user.address.value;
 
 					var b = function(){
 						self.app.platform.sdk.node.transactions.get.allBalance(function(amount){

@@ -38,7 +38,7 @@ var support = (function(){
 					return
 				}
 
-				values.address = self.app.platform.sdk.address.pnet().address
+				values.address = self.app.user.address.value
 
 				globalpreloader(true)
 

@@ -995,7 +995,7 @@ var post = (function () {
 
 				actions.stateAction(function () {
 
-					if (!self.app.platform.sdk.address.pnet() || share.address == self.app.platform.sdk.address.pnet().address) return
+					if (share.address == self.app.user.address.value) return
 
 					var p = $(this).closest('.stars');
 
@@ -1104,8 +1104,8 @@ var post = (function () {
 
 							var rf = '';
 
-							if (self.app.platform.sdk.address.pnet()) {
-								rf = '&ref=' + self.app.platform.sdk.address.pnet().address;
+							if (self.app.user.value) {
+								rf = '&ref=' + self.app.user.address.value;
 							}
 
 							var url =
@@ -1968,7 +1968,7 @@ var post = (function () {
 
 
 					if (!share) {
-						share = self.app.platform.sdk.node.shares.getWithTemp(id) 
+						share = self.psdk.share.get(id) 
 					}
 
 					if (share) {

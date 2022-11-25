@@ -119,8 +119,8 @@ var statistic = (function () {
 			},
 
 			getTotalRatings() {
-				if (self.app.platform.sdk.address.pnet()) {
-					var address = self.app.platform.sdk.address.pnet().address;
+				if (self.app.user.value) {
+					var address = self.app.user.address.value;
 					return self.app.api
 						.rpc('getcontentsstatistic', [[address], 'video', 738274, 738274], {})
 						.then((r) => {

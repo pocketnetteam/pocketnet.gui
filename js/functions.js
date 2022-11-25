@@ -8073,7 +8073,7 @@
 			self.run(p)
 		}
 
-		self.rpc = function(p){
+		/*self.rpc = function(p){
 
 			p.rpc = true
 
@@ -8110,7 +8110,7 @@
         		var id = parseInt(Math.random() * 100000)
 
 
-				p.url = app.platform.sdk.system.nodeexdirect();
+				//p.url = app.platform.sdk.system.nodeexdirect();
 				p.nodedirect = true;
 
 				if (p.url){
@@ -8172,7 +8172,7 @@
 
 
 			self.api(p)
-		}
+		}*/
 
 
 		return self;
@@ -8555,122 +8555,6 @@
 
 	}
 
-	sQuestion = function(p){
-		var self = this;
-
-		self.question = p.question;
-		self.answers = p.answers;
-		var ajax = p.ajax;
-
-		self.value = null;
-		self.user = null;
-		self.id = p.id || makeid()
-
-		self.results = [];
-
-		self.save = function(){
-
-			if (self.user)
-			{
-				localStorage['sQuestionUser'] = self.user
-				localStorage['sQuestionValue'] = self.value || ''
-			}
-			else{
-				localStorage['sQuestionUser'] = ''
-				localStorage['sQuestionValue'] = ''
-			}
-
-		}
-
-		self.summary = function(){
-			return _.reduce(self.results || [], function(m, r){
-				return m + r.count
-			},0)
-		}
-
-		self.findResult = function(v){
-			return _.find(self.results, function(r){
-				return r.v == v
-			})
-		}
-
-		self.send = function(value, clbk){
-
-			if(self.user){
-
-				app.ajax.run({
-					data : {
-						Action : 'ADDSURVEY',
-						ID  : self.id,
-						UserID : self.user,
-						OptionID : value
-					},
-					success : function(d){
-
-						self.value = value;
-
-						self.save();
-
-						var r = self.findResult(self.value);
-
-						if (r)
-							r.count++
-						else{
-							self.results.push({
-								v : self.value,
-								count : 1
-							})
-						}
-
-						if (clbk)
-							clbk();
-
-					}
-				})
-			}
-			else
-			{
-				if (clbk)
-					clbk(false)
-			}
-
-		}
-
-		self.results = function(clbk){
-			app.ajax.run({
-				data : {
-					Action : 'GETSURVEY',
-					ID  : self.id
-				},
-				success : function(d){
-
-					self.results = _.map(d.Survey || [], function(r){
-						return {
-							v : r.OptionID,
-							count : Number(r.count)
-						}
-					});
-
-					if (clbk)
-						clbk();
-
-				}
-			})
-		}
-
-		self.init = function(clbk){
-
-			self.user = localStorage['sQuestionUser'] || makeid();
-			self.value = localStorage['sQuestionValue'] || null;
-
-			self.save();
-
-			self.results(clbk)
-		}
-
-		return self;
-
-	}
 
 	mobsearch = function(el, p){
 

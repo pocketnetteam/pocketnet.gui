@@ -158,7 +158,7 @@ var test = (function(){
 				if (ref && firstTime && !self.app.dsubref){
 
 					try {
-						localStorage[self.app.platform.sdk.address.pnet().address + 'subscribeRef'] = ref.address
+						localStorage[self.app.user.address.value + 'subscribeRef'] = ref.address
 					}
 					catch (e) { }
 
@@ -302,7 +302,7 @@ var test = (function(){
 						//exist = false
 						
 
-						if(!exist || (self.app.platform.sdk.address.pnet() && exist == self.app.platform.sdk.address.pnet().address)){
+						if(!exist || (exist == self.app.user.address.value)){
 
 							topPreloader(50)
 
@@ -384,7 +384,7 @@ var test = (function(){
 												self.closeContainer()
 												
 
-												self.app.platform.sdk.users.getone(self.app.platform.sdk.address.pnet().address, function(){
+												self.app.platform.sdk.users.getone(self.app.user.address.value, function(){
 
 													self.app.reloadModules(function(){
 
@@ -537,9 +537,12 @@ var test = (function(){
 
 				if(!el.upanel) return
 
+
+				//TODO_REF_ACTIONS
+
 				if(_.toArray((self.app.platform.sdk.node.transactions.temp.userInfo || {})).length > 0 || 
 				
-				(self.app.platform.sdk.address.pnet() && deep(self.sdk.relayTransactions.storage, self.app.platform.sdk.address.pnet().address + '.userInfo.length') > 0 ) && !ed.failedrelay){
+					(deep(self.sdk.relayTransactions.storage, self.app.user.address.value + '.userInfo.length') > 0 ) && !ed.failedrelay){
 
 					el.upanel.addClass('wait')
 
@@ -637,7 +640,7 @@ var test = (function(){
 
 										if(!el.c) return
 	
-										if(!exist || (self.app.platform.sdk.address.pnet() && exist == self.app.platform.sdk.address.pnet().address)){
+										if(!exist || (exist == self.app.user.address.value)){
 											el.c.find('.errorname').fadeOut();
 										}
 										else
@@ -927,20 +930,7 @@ var test = (function(){
 			cancel : function(){
 				actions.cancel()
 			},
-			importAddress : function(){
-
-				var address = self.app.platform.sdk.address.pnet()
-				
-				topPreloader(30);
-
-				self.app.platform.sdk.node.account.import(address.address, function(){
-
-					topPreloader(100);
-
-					sitemessage("Address " + address.address + " was successfully imported")
-
-				})
-			}
+			
 		}
 
 		var setNode = null;
@@ -1187,7 +1177,7 @@ var test = (function(){
 
 				self.app.platform.state.save()
 
-				self.user.address.set(self.app.platform.sdk.address.pnet().address)
+				self.user.address.set(self.app.user.address.value)
 
 				self.app.reload();
 
@@ -1226,7 +1216,7 @@ var test = (function(){
 
 						var _r = self.app.ref;
 
-						if (_r && _r != self.app.platform.sdk.address.pnet())
+						if (_r && _r != self.app.user.value)
 
 							ref = _r;
 					}
@@ -1235,14 +1225,7 @@ var test = (function(){
 
 					var data = {};
 
-						data.p2pkh = self.app.platform.sdk.address.pnet()
-
-						data.setNode = setNode;
-						data.setAddressType = setAddressType;
-						data.userOptions = userOptions;
-						data.tempInfo = tempInfo;
 						data.firstTime = firstTime;
-						data.ref = ref;
 						data.caption = ed.caption
 
 					if(ref){
@@ -1252,8 +1235,6 @@ var test = (function(){
 
 							ref = self.psdk.userInfo.get(address) 
 
-							//if(ref) ref.address = address;
-							
 							data.ref = ref;
 
 

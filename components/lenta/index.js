@@ -1591,22 +1591,9 @@ var lenta = (function(){
 				fullscreenvideoShowing = id
 
 				var _el = el.share[id]
-				var share = self.app.platform.sdk.node.shares.getWithTemp(id) 
+				var share = self.psdk.share.get(id) 
 				
-				//self.app.platform.sdk.node.shares.storage.trx[id];
-
-				/*if(!share){
-					var temp = _.find(self.sdk.node.transactions.temp.share, function(s){
-						return s.txid == id
-					}) || (self.app.platform.sdk.relayTransactions.get().share || []).find(transaction => transaction.txid === id);
-
-					share = new pShare();
-					share._import(temp);
-					share.temp = true;
-					share.address = self.app.platform.sdk.address.pnet().address
-				}*/
-
-
+		
 
 				actions.initVideo(share, function(res){
 
@@ -1739,7 +1726,7 @@ var lenta = (function(){
 
 				actions.removeRecommendationsFullScreenVideo(id)
 
-				var share = self.app.platform.sdk.node.shares.getWithTemp(id) 
+				var share = self.psdk.share.get(id) 
 
 				if (share){
 					if (!essenseData.comments && !share.temp && !share.relay){
@@ -2546,7 +2533,7 @@ var lenta = (function(){
 				actions.stateAction('_this', function(){
 
 					self.app.platform.sdk.node.shares.getbyid(id, function(){
-						if (self.app.platform.sdk.address.pnet() && s.address == self.app.platform.sdk.address.pnet().address) return
+						if (s.address == self.app.user.address.value) return
 
 						if(self.app.platform.sdk.user.myaccauntdeleted()){
 							return
@@ -2632,7 +2619,7 @@ var lenta = (function(){
 				var id = $(this).closest('.shareinlenta').attr('id');
 				var src = $(this).attr('i')
 
-				var share = self.app.platform.sdk.node.shares.getWithTemp(id) 
+				var share = self.psdk.share.get(id) 
 
 				self.app.mobile.vibration.small()
 				actions.openGalleryRec(share, src)
@@ -3098,8 +3085,8 @@ var lenta = (function(){
 
 					var rf = ''
 
-					if(self.app.platform.sdk.address.pnet()){
-						rf = '&ref=' + self.app.platform.sdk.address.pnet().address
+					if (self.app.user.address.value){
+						rf = '&ref=' + self.app.user.address.value
 					}
 
 					var hr = 'https://'+self.app.options.url+'/' + (essenseData.hr || 'index?') + 's='+txid+'&mpost=true' + rf
@@ -3201,11 +3188,6 @@ var lenta = (function(){
 				if(!p.repost)
 					shareInitingMap[share.txid] = true;
 
-				//var relayTransactions = deep(self.app.platform.sdk.relayTransactions.get(), 'share') || {};
-
-				/*var shareRelayedFlag = _.find(relayTransactions, (transaction) => (
-					transaction.txid === share.txid
-				));*/
 
 				self.shell({
 					name : video ? 'sharevideolight' : share.itisarticle() ? 'sharearticle' : 'share',
@@ -4796,23 +4778,13 @@ var lenta = (function(){
 			}
 		}
 
-		var shownewmaterials = function(c){
+		var shownewmaterials = function(c = 0){
 
 			if(/*!beginmaterial &&*/ recommended != 'recommended' && !essenseData.author && !(essenseData.searchValue || essenseData.searchTags)){
 
-				var ts =  _.toArray(self.sdk.node.transactions.temp.share || {})
+				if(c > 0){
 
-				var a = 0;
-				
-				if (ts.length && !recommended){
-
-					a = a - ts.length;
-				}
-
-
-				if(((c || 0) + a > 0)){
-
-					newmaterials = newmaterials + (c || 0) + a;
+					newmaterials = newmaterials + c;
 
 					el.c.addClass('showprev')
 
@@ -5071,7 +5043,7 @@ var lenta = (function(){
 						
 					}
 
-					self.app.platform.sdk.relayTransactions.clbks.relayToTemp = function(data) {
+					/*self.app.platform.sdk.relayTransactions.clbks.relayToTemp = function(data) {
 						if(essenseData.author && (essenseData.author != self.user.address.value.toString('hex')) || essenseData.txids) return
 	
 						if(data.txid){
@@ -5095,7 +5067,7 @@ var lenta = (function(){
 							}
 	
 						}
-					}
+					}*/
 	
 					self.app.platform.ws.messages.event.clbks.lenta = function(data){
 	

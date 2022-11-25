@@ -152,7 +152,7 @@ var nodecontrol = (function(){
 			},
 			admin : function(){
 
-				var address = self.app.platform.sdk.address.pnet()
+				var address = self.app.user.value
 
 				if(!address) return false
 
