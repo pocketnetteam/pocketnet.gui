@@ -12120,7 +12120,7 @@ Platform = function (app, listofnodes) {
                     return
                 }
 
-                self.app.api.rpc('getuseraddress', [encodeURIComponent(name)]).then(d => {
+                self.app.api.rpc('getuseraddress', [name]).then(d => {
                     var r = deep(d, '0.address');
 
                     if (clbk)
@@ -12171,11 +12171,11 @@ Platform = function (app, listofnodes) {
                 p.tagsexcluded = self.app.platform.sdk.categories.gettagsexcluded();
 
                 p.tagsfilter = _.map(p.tagsfilter, function(t){
-                    return encodeURIComponent(t)
+                    return t
                 })
 
                 p.tagsexcluded = _.map(p.tagsexcluded, function(t){
-                    return encodeURIComponent(t)
+                    return t
                 })
 
                 p.depth || (p.depth = 10000);

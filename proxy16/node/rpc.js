@@ -244,8 +244,11 @@ function rpc(request, callback, obj) {
             'Content-Length': request.length,
             'Content-Type': 'application/json',
             'Accept-Encoding': 'gzip, deflate, br',
-            'Authorization': 'Basic ' + Base64Helper.encode(self.user + ':' + self.pass)
         }
+    }
+
+    if (prv){
+        config.headers['Authorization'] = 'Basic ' + Base64Helper.encode(self.user + ':' + self.pass)
     }
 
     if (true){
