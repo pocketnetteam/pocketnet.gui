@@ -1290,7 +1290,7 @@ var pSDK = function({app, api, actions}){
                     objects['share'][modified.txid] = modified
                 }
                 else{
-                    objects['share'][exp.txidEdit || exp.txid] = exp
+                    objects['share'][/*exp.txidEdit || */exp.txid] = exp
                 }
             }
         },
