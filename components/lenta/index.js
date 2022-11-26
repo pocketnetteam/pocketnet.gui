@@ -5017,21 +5017,10 @@ var lenta = (function(){
 
 						if(type == 'share'){
 
-							var replace = _.find(sharesInview, (share) => (share.txid == alias.txidEdit) || (share.txid == alias.txid))
-							var replaceAll = false
+							var replace = _.find(sharesInview, (share) => share.txid == alias.txid)
+							var replaceAll = true
 
-							if (alias.txidEdit){
-								replaceAll = true
-							}
-
-							else{
-								replaceAll = true /// maybe replace status
-								/// add
-
-							}
-
-
-							console.log('replace', replace)
+							alias = self.psdk.share.get(alias.txid)
 
 							if (!replace){
 								if(essenseData.author == alias.address){
@@ -5052,8 +5041,6 @@ var lenta = (function(){
 							else{
 
 								if (replaceAll){
-
-									console.log('replace', replace, alias)
 
 									actions.destroyShare(replace)
 

@@ -1280,22 +1280,22 @@ var pSDK = function({app, api, actions}){
 
             if (status == 'completed'){
                 clearallfromdb('shareRequest')
-                clearfromdb('share', _.filter([exp.txid, exp.txidEdit], r => r))
+                clearfromdb('share', _.filter([exp.txid], r => r))
 
                 //objects['share'][exp.txid] =
                  
-                var modified = this.applyAction(objects['share'][exp.txidEdit || exp.txid], exp) //// check txidEdit
+                var modified = this.applyAction(objects['share'][exp.txid], exp) //// check txidEdit
 
                 if (modified){
                     objects['share'][modified.txid] = modified
                 }
                 else{
 
-                    if (exp.txidEdit){
+                    /*if (exp.txidEdit){
                         exp = exp.clone()
                         exp.txid = exp.txidEdit
                         delete exp.txidEdit
-                    }
+                    }*/
 
                     objects['share'][exp.txid] = exp
                 }
@@ -1305,11 +1305,11 @@ var pSDK = function({app, api, actions}){
 
         applyAction : function(object, exp){
 
-            if (exp.txidEdit){
+            if (exp.editing){
 
                 if(!object) return
 
-                if (exp.txidEdit == object.txid){
+                if (exp.txid == object.txid){
 
                     object.message = exp.message
                     object.caption = exp.caption
@@ -1362,7 +1362,7 @@ var pSDK = function({app, api, actions}){
 
                         if (shareId){
 
-                            if ((alias.txidEdit || alias.share || alias.postid || alias.txid) == shareId){
+                            if ((alias.share || alias.postid || alias.txid) == shareId){
                                 if (self[k] && self[k].applyAction){
 
                                     if(!extendedObject){
@@ -1397,7 +1397,7 @@ var pSDK = function({app, api, actions}){
                 var actions = _.filter(account.getTempActions('share'), filter)
 
 
-                console.log("TEMP SHARES", actions, account.getTempActions('share'))
+                //console.log("TEMP SHARES", actions, account.getTempActions('share'))
 
                 _.each(actions, (a) => {
                     objects.unshift(a)
@@ -1661,6 +1661,10 @@ var pSDK = function({app, api, actions}){
             return loadone('transaction', id, (ids) => {
                 return api.rpc('getrawtransaction', [ids[0], 1]).then(d => {
 
+                    if(_.isEmpty(d)){
+                        return []
+                    }
+
                     if(!d.confirmations) {
                         d.confirmations = 0
 
@@ -1679,6 +1683,14 @@ var pSDK = function({app, api, actions}){
                 })
             }, {
                 update
+            }).then(r => {
+
+                if(!r[id]) return Promise.reject({
+                    code : -5
+                })
+
+                return r[id]
+
             })
 
             

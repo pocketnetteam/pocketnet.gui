@@ -519,7 +519,7 @@ var Action = function(account, object, priority){
             account.parent.app.platform.sdk.node.transactions.get.tx(self.transaction, (data, error = {}) => {
 
                 data || (data = {})
-                console.log('data', data)
+                console.log('data', data, error)
 
                 if (error.code == -5 || error.code == -8){ /// check codes (transaction not apply, resend action)
                     self.sent = null
@@ -691,6 +691,12 @@ var Action = function(account, object, priority){
 
         alias.inputs = exported.inputs
         alias.outputs = exported.outputs
+
+
+        if (alias.txidEdit){
+            alias.txid = alias.txidEdit
+            alias.editing = true
+        }
 
 
         if(self.checkedUntil){

@@ -17381,10 +17381,11 @@ Platform = function (app, listofnodes) {
                         self.psdk.transaction.load(id).then(tx => {
 
                             if (clbk) {
-                                clbk(tx[id])
+                                clbk(tx)
                             }
 
                         }).catch(e => {
+                            console.error("E", e)
                             if (clbk) {
                                 clbk(null, e)
                             }
@@ -20611,10 +20612,10 @@ Platform = function (app, listofnodes) {
 
                         var address = data.addr;
 
-                        platform.sdk.node.transactions.unspent || (platform.sdk.node.transactions.unspent = {})
+                        /* platform.sdk.node.transactions.unspent || (platform.sdk.node.transactions.unspent = {})
 
                         var s = platform.sdk.node.transactions.unspent;
-                        s[address] || (s[address] = []);
+                        s[address] || (s[address] = []);*/
 
 
                         ////////////
@@ -20653,7 +20654,7 @@ Platform = function (app, listofnodes) {
                         /////////
 
 
-                        var uitemp = deep(platform.sdk.node.transactions.temp, 'userInfo.0')
+                       /* var uitemp = deep(platform.sdk.node.transactions.temp, 'userInfo.0')
 
                         if (uitemp && data.type == 'userInfo') {
                             platform.sdk.node.transactions.temp.userInfo = {};
@@ -20664,7 +20665,7 @@ Platform = function (app, listofnodes) {
 
                         _.each(outs, function (o) {
 
-                            platform.sdk.node.transactions.clearTemp(data.txid, o.vout, true);
+                            //platform.sdk.node.transactions.clearTemp(data.txid, o.vout, true);
 
                             if (!wa) {
 
@@ -20678,7 +20679,7 @@ Platform = function (app, listofnodes) {
                             }
 
 
-                        })
+                        })*/
 
                         ////////////
 
@@ -20711,9 +20712,9 @@ Platform = function (app, listofnodes) {
                                 
                             }
 
-                            _.each(platform.sdk.node.transactions.clbks, function (c) {
+                            /*_.each(platform.sdk.node.transactions.clbks, function (c) {
                                 c(data.amountall)
-                            })
+                            })*/
 
                             if (clbk)
                                 clbk(data)
