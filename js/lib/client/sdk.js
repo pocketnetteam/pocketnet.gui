@@ -1282,7 +1282,16 @@ var pSDK = function({app, api, actions}){
                 clearallfromdb('shareRequest')
                 clearfromdb('share', _.filter([exp.txid, exp.txidEdit], r => r))
 
-                objects['share'][exp.txid] = this.applyAction(objects['userInfoFull'][exp.txid], exp) //// check txidEdit
+                //objects['share'][exp.txid] =
+                 
+                var modified = this.applyAction(objects['share'][exp.txidEdit || exp.txid], exp) //// check txidEdit
+
+                if (modified){
+                    objects['share'][modified.txid] = modified
+                }
+                else{
+                    objects['share'][exp.txidEdit || exp.txid] = exp
+                }
             }
         },
 

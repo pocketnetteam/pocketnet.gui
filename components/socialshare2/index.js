@@ -392,7 +392,7 @@ var socialshare2 = (function(){
 					emeta.extra(p)
 				}
 
-				if (self.app.user.value)){
+				if (self.app.user.value){
 					p.ref = self.app.user.address.value
 				}
 				else{
