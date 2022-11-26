@@ -15553,7 +15553,7 @@ Platform = function (app, listofnodes) {
                     parentid: comment.parentid,
                     id: comment.id,
                     children: comment.children || 0,
-                    postid: comment.txid,
+                    postid: comment.postid,
                     block: self.currentBlock,
                     msg: JSON.stringify({
                         message: comment.message,
@@ -15694,7 +15694,7 @@ Platform = function (app, listofnodes) {
                             var i = tempComment.optype || 'comment'
 
                             var f = _.find(d, function (c) {
-                                if (c.id == (tempComment.id || tempComment.txid)) return true
+                                if (c.id == (tempComment.id || tempComment.postid)) return true
                             })
 
                             if (i == 'comment') {
@@ -15887,7 +15887,7 @@ Platform = function (app, listofnodes) {
 
                 var s = self.sdk.comments.storage;
 
-                comment.txid = txid
+                comment.postid = txid
 
                 self.sdk.node.transactions.create.commonFromUnspent(
 
@@ -16749,7 +16749,9 @@ Platform = function (app, listofnodes) {
 
                 getsubscribesfeed : function(p, clbk, cache){
 
-                    p.tempSubscriptions = self.psdk.subscribe.tempAdd()
+                    p.tempSubscriptions = self.psdk.subscribe.tempAdd([], (alias) => {
+                        if(alias.address == self.app.user.address.value) return true
+                    })
                     
 
                     self.app.platform.sdk.node.shares.hierarchical(p, clbk, cache, {
@@ -16989,6 +16991,8 @@ Platform = function (app, listofnodes) {
 
                                 p.blocknumber = data.height
 
+                                console.log("GETEX CLBK", p)
+
 
                                 //// TODO TODO_REF_ACTIONS + check blocking
 
@@ -16996,9 +17000,11 @@ Platform = function (app, listofnodes) {
 
                                     if (p.author) {
 
+                                        console.log("EXTEND SHARES")
+
                                         if(!p.txid){
-                                            shares = self.psdk.share.tempAdd(shares, (action) => {
-                                                return action.address == p.author
+                                            shares = self.psdk.share.tempAdd(shares, (alias) => {
+                                                return alias.address == p.author
                                             })
                                         }
                                     }
@@ -20126,7 +20132,7 @@ Platform = function (app, listofnodes) {
 
                         platform.app.nav.api.load({
                             open: true,
-                            href: 'post?s=' + data.comment.txid,
+                            href: 'post?s=' + data.comment.postid,
                             inWnd: true,
                             history: true,
                             clbk: function (d, p) {
@@ -20134,7 +20140,7 @@ Platform = function (app, listofnodes) {
                             },
 
                             essenseData: {
-                                share: data.comment.txid,
+                                share: data.comment.postid,
 
                                 reply: {
                                     answerid: data.comment.id,
@@ -21179,13 +21185,13 @@ Platform = function (app, listofnodes) {
                                 data.comment = deep(platform.sdk.comments, 'storage.all.' + data.commentid)
 
                                 if (data.comment) {
-                                    platform.sdk.comments.storage[data.comment.txid] ||
-                                        (platform.sdk.comments.storage[data.comment.txid] = {})
+                                    platform.sdk.comments.storage[data.comment.postid] ||
+                                        (platform.sdk.comments.storage[data.comment.postid] = {})
 
                                     var pid = data.comment.parentid || '0';
 
-                                    if (platform.sdk.comments.storage[data.comment.txid][pid]) {
-                                        platform.sdk.comments.storage[data.comment.txid][pid].push(data.comment)
+                                    if (platform.sdk.comments.storage[data.comment.postid][pid]) {
+                                        platform.sdk.comments.storage[data.comment.postid][pid].push(data.comment)
                                     }
                                 }
 

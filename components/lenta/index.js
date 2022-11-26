@@ -146,6 +146,8 @@ var lenta = (function(){
 
 				delete initedcommentes[share.txid]
 				delete shareInitingMap[share.txid]
+
+				//delete el.share[share.txid] /// check
 			},
 			optimize : function(){
 				
@@ -4431,6 +4433,9 @@ var lenta = (function(){
 								
 								pinnedShare[0].pin = true; //// wrong
 								shares.unshift(pinnedShare[0]);		
+
+
+								console.log('pinnedShare', pinnedShare, shares)
 								
 
 								if (clbk)
@@ -4464,24 +4469,6 @@ var lenta = (function(){
 
 						}
 
-						/*var getAccountSettings = function(d, author){
-
-							var settings = JSON.parse((typeof d === 'string' && d) ? d : '{}');
-
-							self.app.platform.sdk.accountsettings.storage[author] = settings;
-
-							if (settings && settings.pin){
-
-								getPin(settings);
-
-
-							} else if(clbk){
-
-								clbk(shares, error || error2);
-
-							}
-						}*/
-						
 						if (essenseData.byauthor && author && !sharesInview.length && !(essenseData.searchValue || essenseData.searchTags)){
 
 							self.psdk.accSet.load(author).then(setting => {
@@ -4490,37 +4477,6 @@ var lenta = (function(){
 
 								getPin(authorsettings)
 							})
-
-
-							/*if (self.app.platform.sdk.accountsettings.storage[author]){
-
-								getPin(self.app.platform.sdk.accountsettings.storage[author]);
-
-							} else {
-
-								var acc = temp.accSet && Object.values(temp.accSet)[0];
-
-								if (acc && acc.address === author){
-									
-									getAccountSettings(acc.d, author);
-
-								} else {
-
-
-									self.app.api.rpc('getaccountsetting', [author])
-									.then(function(d){
-
-										getAccountSettings(d, author);
-									})
-									.catch(function(){
-
-										getAccountSettings(null, author);
-									})
-								}
-
-
-							}*/
-
 
 						} else if (clbk){
 							
@@ -4534,11 +4490,7 @@ var lenta = (function(){
 
 			shares : function(clbk, cache){
 
-				console.log("LOAD shares")
-
-
 				if (loading || (ended && (!essenseData.contents || essenseData.txids.length == _.toArray(shareInitedMap).length) )) return
-
 
 				var includingsub = false
 
@@ -4671,7 +4623,6 @@ var lenta = (function(){
 							if(state && essenseData.includesub && loader == 'hierarchical' && !subloaded){
 
 								loader = 'getsubscribesfeed'
-								//author = '1'
 
 								includingsub = true
 
@@ -4856,39 +4807,6 @@ var lenta = (function(){
 
 			})
 
-			//////////////////////
-
-			/*if(self.app.mobileview && canloadprev && !essenseData.openapi){
-
-				var cc = el.c.find('.circularprogress');
-				var maxheight = 220;
-
-				progress = new CircularProgress({
-					radius: 30,
-					strokeStyle: '#00A3F7',
-					lineCap: 'round',
-					lineWidth: 1,
-					font: "100 14px 'Segoe UI',SegoeUI,'Helvetica Neue',Helvetica,Arial,sans-serif",
-					fillStyle : "#00A3F7",
-					text : {						
-						value : ""
-					},
-					initial: {
-						strokeStyle: '#fff',
-						lineWidth: 1
-					}
-				});
-
-				progress.update(70);
-
-				el.c.find('.circularprogressWrapper').html(progress.el);
-
-				var tp = el.c.find('.loadprev')
-
-				var trueshold = 80
-
-			}*/
-
 			if(!essenseData.openapi){
 
 				self.app.events.resize[mid] = events.resize
@@ -4969,7 +4887,6 @@ var lenta = (function(){
 									ignoresw : true,
 								})
 	
-								
 							}
 						}
 						else{
@@ -5059,7 +4976,6 @@ var lenta = (function(){
 								renders.sharesInview([s], function(){
 									
 								})
-	
 								
 							}
 	
@@ -5088,8 +5004,8 @@ var lenta = (function(){
 
 					self.app.platform.actionListeners.lenta = function({type, alias, status}){
 
-						console.log('status', status, type, alias)
-						
+						console.log('type, alias, status', type, alias, status)
+
 						if(type == 'upvoteShare'){
 
 							var share = _.find(sharesInview, (share) => share.txid == alias.share)
@@ -5097,6 +5013,67 @@ var lenta = (function(){
 							if (share){
 								renders.stars(share)
 							}
+						}
+
+						if(type == 'share'){
+
+							var replace = _.find(sharesInview, (share) => (share.txid == alias.txidEdit) || (share.txid == alias.txid))
+							var replaceAll = false
+
+							if (alias.txidEdit){
+								replaceAll = true
+							}
+
+							else{
+								replaceAll = true /// maybe replace status
+								/// add
+
+							}
+
+
+							console.log('replace', replace)
+
+							if (!replace){
+								if(essenseData.author == alias.address){
+
+									renders.shares([alias], function(){
+										renders.sharesInview([alias], function(){
+											
+										})
+									}, {
+										inner : prepend
+									})
+
+								}
+								else{
+
+								}
+							}
+							else{
+
+								if (replaceAll){
+
+									console.log('replace', replace, alias)
+
+									actions.destroyShare(replace)
+
+									renders.shares([alias], function(){
+										renders.sharesInview([alias], function(){
+											
+										})
+									}, {
+										inner : replaceWith,
+										el : el.share[replace.txid],
+										ignoresw : true,
+									})
+								}
+
+								else{
+									/// only status
+								}
+
+							}
+
 						}
 						
 					}

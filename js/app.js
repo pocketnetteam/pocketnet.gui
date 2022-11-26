@@ -2515,10 +2515,14 @@ Application = function(p)
                     else{
 
                       self.user.isState(function(state){
+
                         if(state){
-                          self.platform.sdk.node.transactions.get.allBalanceUpdate(function(){
-                            self.platform.sdk.notifications.getNotifications()
-                          })
+
+                          var account = self.platform.actions.getCurrentAccount()
+
+                          if (account) account.updateUnspents()
+
+                          self.platform.sdk.notifications.getNotifications()
                         }
 
                       })

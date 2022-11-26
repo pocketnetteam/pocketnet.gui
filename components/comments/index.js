@@ -43,7 +43,7 @@ var comments = (function(){
 
 				if(!comment) return
 
-				if (comment.txid != txid) return
+				if (comment.postid != txid) return
 
 				var _el = el.c.find('#' + comment.id);
 
@@ -1385,9 +1385,18 @@ var comments = (function(){
 					})
 	
 				}
+
+				try{
+
+				
 		
 				var oldest = (_.min(comments, function(c){return c.time}).time).getTime() / 1000
 				var newest = (_.max(comments, function(c){return c.time}).time).getTime() / 1000
+
+				}catch(e){
+					console.error(e)
+					console.log(comments)
+				}
 
 				var cbyauthors = group(comments, function(c){ return c.address })
 	
@@ -2665,7 +2674,7 @@ var comments = (function(){
 			self.app.platform.ws.messages.cScore.clbks[eid] = function(data){
 
 
-				if (data.comment.txid == txid){
+				if (data.comment.postid == txid){
 
 					clbks.upvote(null, data.comment, data.upvoteVal || data.value, data.addrFrom)
 				}

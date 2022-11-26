@@ -16,8 +16,6 @@ const pdbstorage = function(storageName, version, time) {
 
     var cacheTime = time || SecondsInMonth
 
-    var memorystorage = {}
-
     /**
      * Function generates UNIX timestamp
      * floored to current hour.
@@ -83,18 +81,9 @@ const pdbstorage = function(storageName, version, time) {
                 req.onsuccess = (data) => {
                     const cursor = data.target.result;
 
-                    if (cursor) {
-                        _.each(cursor, (item) => {
-                            memorystorage[item.id] = {
-                                cachedAt : item.cachedAt,
-                                data : item.message,
-                                invalidate : item.invalidate
-                            }
-                        })
-                    }
+              
 
-
-                    resolve()
+                    resolve(cursor)
                 };
 
                 req.onerror = (data) => {
@@ -180,13 +169,7 @@ const pdbstorage = function(storageName, version, time) {
             invalidateMany : function(updated = getHourUnixtime()){
                 var needToClear = []
 
-                _.each(memorystorage, (item, itemid) => {
-
-                    if(item.cachedAt < updated){
-                        needToClear.push(itemid)
-                    }
-
-                })
+            
 
                 return this.clearItems(needToClear).then(() => {
 
@@ -202,19 +185,7 @@ const pdbstorage = function(storageName, version, time) {
                 var cleared = []
 
 
-                _.each(memorystorage, (item, itemid) => {
-                    if (item.itemid == index){
-                        if(item.cachedAt < updated){
-                            needToClear.push(itemid)
-                            cleared.push(item.invalidate.index)
-                        }
-                    }   
-                })
-
-
                 return this.clearItems(needToClear).then(() => {
-
-
                     return Promise.resolve(cleared)
                 })
             },
@@ -228,8 +199,6 @@ const pdbstorage = function(storageName, version, time) {
                     items.clear()
 
                     var req = items.clear()
-
-                    memorystorage = {}
 
                     req.onsuccess = (data) => {
                         resolve(true);
@@ -259,7 +228,6 @@ const pdbstorage = function(storageName, version, time) {
 
                     const req = items.delete(itemId);
 
-                    delete memorystorage[itemId]
 
                     req.onsuccess = (data) => {
                         debugLog('PCryptoStorage CLEAR log', data);
@@ -290,11 +258,7 @@ const pdbstorage = function(storageName, version, time) {
                         cachedAt: unixtime,
                     };
 
-                    memorystorage[itemId] = {
-                        cachedAt: item.cachedAt,
-                        data : message
-                    }
-
+              
                     /**
                      * FIXME: It is not the best practice to use
                      *        here put() instead of add(), but it
@@ -322,9 +286,7 @@ const pdbstorage = function(storageName, version, time) {
 
                 function executor(resolve, reject) {
 
-                    if (memorystorage[itemId]){
-                        return resolve(memorystorage[itemId].data);
-                    }
+                   
 
                     const transaction = openTransaction('items');
                     const items = transaction.objectStore('items');
@@ -346,10 +308,7 @@ const pdbstorage = function(storageName, version, time) {
                             return;
                         }
 
-                        memorystorage[itemId] = {
-                            cachedAt: req.result.cachedAt,
-                            data : req.result.message,
-                        }
+
 
                         resolve(req.result.message);
                     };
@@ -421,32 +380,7 @@ const pdbstorage = function(storageName, version, time) {
         }
 
         const instanceFunctions = {
-            invalidateMany: function(updated = getHourUnixtime()) {
-
-                var needToClear = []
-
-                _.each(memorystorage, (item, itemid) => {
-
-                    if(item.cachedAt > updated){
-                        needToClear.push(itemid)
-                    }
-                })
-
-                return this.clearItems(needToClear)
-            },
-            invalidate : function(updated = getHourUnixtime(), index) {
-
-                var needToClear = []
-
-                _.each(memorystorage, (item, itemid) => {
-
-                    if(itemid == index && item.cachedAt < updated) needToClear.push(itemid)
-
-                })
-
-                return this.clearItems(needToClear)
-            },
-
+            
             clearall : () => { 
 
                 for (itemName in localStorage){
@@ -482,7 +416,6 @@ const pdbstorage = function(storageName, version, time) {
                 }
 
                 delete localStorage[itemName];
-                delete memorystorage[itemName]
 
                 return new Promise();
             },
@@ -497,10 +430,6 @@ const pdbstorage = function(storageName, version, time) {
                     cachedAt: unixtime,
                 };
 
-                memorystorage[itemId] = {
-                    cachedAt: item.cachedAt,
-                    data : message
-                }
 
                 localStorage[itemName] = JSON.stringify(item);
             },

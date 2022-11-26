@@ -249,7 +249,7 @@ Unblocking = function(){
 Comment = function(txid){
 	var self = this;
 
-	self.txid = txid;
+	self.postid = txid;
 
 	self.id = ''
     self.parentid = ''
@@ -505,7 +505,7 @@ Comment = function(txid){
 
 	self.serialize = function(){
 
-		var s = self.txid;
+		var s = self.postid;
 
 		if(!self.delete){
 
@@ -529,7 +529,7 @@ Comment = function(txid){
 
 	self.export = function(extend){
 		var r = {
-			postid : self.txid,
+			postid : self.postid,
 			answerid : self.answerid || "",
 			parentid : self.parentid || ""
 		}
@@ -579,7 +579,7 @@ Comment = function(txid){
 
 	self.import = function(v){
 
-		self.txid = v.postid;
+		self.postid = v.postid;
 		self.answerid = v.answerid;
 		self.parentid = v.parentid;
 
@@ -602,7 +602,7 @@ Comment = function(txid){
 			///TODO_REF_ACTIONS remove alias args
 
 			comment.id = id
-			comment.txid = self.txid
+			comment.postid = self.postid
 
 
 
@@ -2497,6 +2497,8 @@ pShare = function(){
 
 			ui._import(self.export())
 
+			ui.lastComment = self.lastComment
+
 		return ui
 	}
 
@@ -2771,7 +2773,7 @@ pComment = function(){
 	self.message = ''
 	self.images = [];
 
-	self.txid = '';
+	self.postid = '';
 	self.id = '';
 	self.time = new Date();
 	self.timeUpd = new Date();
@@ -2820,7 +2822,7 @@ pComment = function(){
 			
 		}			
 		
-		self.txid = v.postid;
+		self.postid = v.postid;
 		self.answerid = v.answerid;
 		self.parentid = v.parentid;
 
@@ -2860,7 +2862,7 @@ pComment = function(){
 
 		var r = {
 			id : self.id,
-			postid : self.txid || "",
+			postid : self.postid || "",
 			answerid : self.answerid || "",
 			parentid : self.parentid || "",
 			msgparsed : {
@@ -3058,6 +3060,13 @@ Remove = function(lang){
 		self.s.set()
 
 	}
+
+	self.txidEdit = {
+		set : function(_v){
+			this.v = _v
+		},
+		v : ''
+	};
 
 	self.ustate = function(){
 

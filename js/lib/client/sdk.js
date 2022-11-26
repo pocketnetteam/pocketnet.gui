@@ -51,7 +51,7 @@ var pSDK = function({app, api, actions}){
         },
 
         shareRequest : {
-            time : 6000 // temp
+            time : 60 // temp
         },
 
         share : {
@@ -147,7 +147,7 @@ var pSDK = function({app, api, actions}){
 
     var clearfromdb = function(dbname, ids){
 
-        return getDBStorage({name : dbname, ...dbmeta[dbname]}).then(() => {
+        return getDBStorage({name : dbname, ...dbmeta[dbname]}).then((db) => {
 
             if(dbmeta[dbname].authorized) ids = _.map(ids, id => {
                 return id + '_' + app.user.address.value
@@ -162,7 +162,7 @@ var pSDK = function({app, api, actions}){
 
     var clearallfromdb = function(dbname){
 
-        return getDBStorage({name : dbname, ...dbmeta[dbname]}).then(() => {
+        return getDBStorage({name : dbname, ...dbmeta[dbname]}).then((db) => {
             return db.clearall()
         }).catch(e => {
 
@@ -497,6 +497,8 @@ var pSDK = function({app, api, actions}){
             }
 
             return result
+        }).finally(() => {
+            delete temp[key][hash]
         })
 
         return temp[key][hash]
@@ -671,10 +673,10 @@ var pSDK = function({app, api, actions}){
 
                     if(k != 'userInfo' && !extendedObject) return
  
-                    _.each(account.getTempActions(k), (action) => {
+                    _.each(account.getTempActions(k), (alias) => {
 
                         if (self[k] && self[k].applyAction){
-                            var applied = self[k].applyAction(extendedObject || object.clone(), action)
+                            var applied = self[k].applyAction(extendedObject || object.clone(), alias)
 
                             if (applied) extendedObject = applied
                         }
@@ -1036,7 +1038,7 @@ var pSDK = function({app, api, actions}){
         tempAdd : function(objects = [], filter){
 
             _.each(actions.getAccounts(), (account) => {
-                var actions = account.getTempActions('comment', filter)
+                var actions = _.filter(account.getTempActions('comment'), filter)
 
                 _.each(actions, (a) => {
                     objects.unshift(a)
@@ -1057,16 +1059,16 @@ var pSDK = function({app, api, actions}){
 
                 _.each(temps, (k) => {
 
-                    _.each(account.getTempActions(k), (action) => {
+                    _.each(account.getTempActions(k), (alias) => {
 
-                        if (!object && action.id == id){
-                            extendedObject = action
+                        if (!object && alias.id == id){
+                            extendedObject = alias
                         }
                         else{
 
                             if (self[k] && self[k].applyAction){
 
-                                var applied = self[k].applyAction(extendedObject || object.clone(), action)
+                                var applied = self[k].applyAction(extendedObject || object.clone(), alias)
     
                                 if (applied) extendedObject = applied
                             }
@@ -1089,6 +1091,7 @@ var pSDK = function({app, api, actions}){
         keys : ['share'],
 
         request : function(executor, hash){
+            console.log('request', hash)
             return request('share', hash, executor, {
                 requestIndexedDb : 'shareRequest',
 
@@ -1097,6 +1100,8 @@ var pSDK = function({app, api, actions}){
         },
 
         insertFromResponseEx : function(response){
+
+            console.log("response", response)
 
             self.userInfo.insertFromResponse(response.users, true)
 
@@ -1269,13 +1274,15 @@ var pSDK = function({app, api, actions}){
             })
         },
 
-        listener : function(exp, status){
+        listener : function(exp, address, status){
+
+            console.log('exp', exp, status)
 
             if (status == 'completed'){
                 clearallfromdb('shareRequest')
-                clearfromdb('share', [exp.txid])
+                clearfromdb('share', _.filter([exp.txid, exp.txidEdit], r => r))
 
-                objects['share'][exp.txid] = this.applyAction(objects['userInfoFull'][action.txid], exp)
+                objects['share'][exp.txid] = this.applyAction(objects['userInfoFull'][exp.txid], exp) //// check txidEdit
             }
         },
 
@@ -1286,7 +1293,8 @@ var pSDK = function({app, api, actions}){
 
                 if(!object) return
 
-                if(exp.txidEdit == object.txid){
+                if (exp.txidEdit == object.txid){
+
                     object.message = exp.message
                     object.caption = exp.caption
                     object.tags = exp.tags
@@ -1296,9 +1304,9 @@ var pSDK = function({app, api, actions}){
                     object.settings = _.clone(exp.settings)
                     object.edit = true
                     object.txidEdit = exp.txidEdit
-    
                     object.temp = exp.temp
                     object.relay = exp.relay   
+
                 }
 
                          
@@ -1308,13 +1316,6 @@ var pSDK = function({app, api, actions}){
             else{
 
             }
-
-            /*
-            object.temp = exp.temp
-                object.relay = exp.relay
-            
-            
-            */
        
             return object
         },
@@ -1326,29 +1327,42 @@ var pSDK = function({app, api, actions}){
 
             _.each(actions.getAccounts(), (account) => {
 
-                var temps = ['share', 'upvoteShare', 'comment', 'contentDelete', 'cScore']
+                var temps = ['share', 'upvoteShare', 'comment', /*'cScore', */'contentDelete']
 
                 _.each(temps, (k) => {
 
-                    _.each(account.getTempActions(k), (action) => {
+                    _.each(account.getTempActions(k), (alias) => {
 
-                        if (!object && action.txid == txid){
-                            extendedObject = action
+                        if (k == 'share'){
+
+                            if (alias.txid == txid){
+                                extendedObject = alias
+
+                                return
+                            }
                         }
-                        else{
 
-                            if(extendedObject || object){
+                        var shareId = (extendedObject || object || {}).txid
+
+                        if (shareId){
+
+                            if ((alias.txidEdit || alias.share || alias.postid || alias.txid) == shareId){
                                 if (self[k] && self[k].applyAction){
 
-                                    var applied = self[k].applyAction(extendedObject || object.clone(), action)
+                                    if(!extendedObject){
+                                        console.log("CLONE OBJECT", object, alias, txid)
+                                    }
+        
+                                    var applied = self[k].applyAction(extendedObject || object.clone(), alias)
         
                                     if (applied) extendedObject = applied
                                 }
                             }
 
                             
-
                         }
+
+                        /////////
 
                         
                     })
@@ -1364,7 +1378,10 @@ var pSDK = function({app, api, actions}){
         tempAdd : function(objects = [], filter){
 
             _.each(actions.getAccounts(), (account) => {
-                var actions = account.getTempActions('share', filter)
+                var actions = _.filter(account.getTempActions('share'), filter)
+
+
+                console.log("TEMP SHARES", actions, account.getTempActions('share'))
 
                 _.each(actions, (a) => {
                     objects.unshift(a)
@@ -1455,7 +1472,7 @@ var pSDK = function({app, api, actions}){
         tempAdd : function(objects = [], filter){
 
             _.each(actions.getAccounts(), (account) => {
-                var actions = account.getTempActions('subscribePrivate', filter).concat(account.getTempActions('subscribe', filter))
+                var actions = _.filter(account.getTempActions('subscribePrivate'), filter).concat(_.filter(account.getTempActions('subscribe'), filter))
 
                 _.each(actions, (a) => {
                     objects.unshift(a)

@@ -679,7 +679,7 @@ var Action = function(account, object, priority){
         alias.txid = exported.transaction
 
         if(!alias.txid) { alias.txid = self.id; alias.relay = true }
-        if (alias.txid) { alias.temp = true }
+        if (alias.txid && !self.completed) { alias.temp = true }
 
         alias.address = account.address;
         alias.type = self.object.type
