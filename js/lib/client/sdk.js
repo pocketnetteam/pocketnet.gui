@@ -1290,7 +1290,14 @@ var pSDK = function({app, api, actions}){
                     objects['share'][modified.txid] = modified
                 }
                 else{
-                    objects['share'][/*exp.txidEdit || */exp.txid] = exp
+
+                    if (exp.txidEdit){
+                        exp = exp.clone()
+                        exp.txid = exp.txidEdit
+                        delete exp.txidEdit
+                    }
+
+                    objects['share'][exp.txid] = exp
                 }
             }
         },
@@ -1312,7 +1319,7 @@ var pSDK = function({app, api, actions}){
                     object.repost = exp.repost
                     object.settings = _.clone(exp.settings)
                     object.edit = true
-                    object.txidEdit = exp.txidEdit
+                    //object.txidEdit = exp.txid
                     object.temp = exp.temp
                     object.relay = exp.relay   
 

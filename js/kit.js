@@ -2451,12 +2451,11 @@ pShare = function(){
 			self.id = v.id;
 
 		if (v.txidEdit){
-			
 			self.txidEdit = v.txidEdit;	
 			self.edit = true
 		}
 
-		if(v.edit){
+		if (v.edit){
 			self.edit = true
 		}
 
@@ -2526,6 +2525,7 @@ pShare = function(){
 		v.comments = self.comments
 		v.repost = self.repost
 		v.txidEdit = self.txidEdit
+		v.edit = self.edit
 
 		if(self.lastComment){
 			if(self.lastComment.export){
@@ -3110,20 +3110,16 @@ Remove = function(lang){
 	}
 
 	self.import = function(v){
-
 		self.txidEdit.set(v.txidEdit || ""); 
-
-		
 	}
 
-	self.alias = function(txid){
+	self.alias = function(){
 		var remove = new pRemove();
 
-            remove.time = new Date();
+            //remove.time = new Date();
 
 			remove._import(self.export())
 
-			remove.txid = txid || self.txidEdit
 
 		return remove;
 	}
