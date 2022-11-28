@@ -29389,7 +29389,7 @@ var addStylesShadow = __webpack_require__("35d6");
 // EXTERNAL MODULE: ./node_modules/vue-loader/lib/runtime/componentNormalizer.js
 var componentNormalizer = __webpack_require__("2877");
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"2ced6c0a-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App.vue?vue&type=template&id=386c1770&shadow
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"2ced6c0a-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App.vue?vue&type=template&id=8a4defd4&shadow
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"app",attrs:{"id":"matrix-root","theme":_vm.theme}},[_c('div',{staticClass:"rootcontent",class:{
       pip: _vm.pip,
       bin: _vm.pocketnet,
@@ -29403,7 +29403,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/App.vue?vue&type=template&id=386c1770&shadow
+// CONCATENATED MODULE: ./src/App.vue?vue&type=template&id=8a4defd4&shadow
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"2ced6c0a-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/main/index.vue?vue&type=template&id=6aac0261&scoped=true&
 var mainvue_type_template_id_6aac0261_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"main-wrapper",class:{minimized: _vm.minimized, active: _vm.active}},[(_vm.showChats)?_c('div',{staticClass:"chat-container"},[(_vm.page === 'contacts')?_c('ContactsContainer'):_vm._e(),(_vm.page === 'chats')?_c('ChatsContainer'):_vm._e(),(_vm.page === 'settings')?_c('SettingsContainer'):_vm._e(),_c('FooterChat')],1):_vm._e(),(_vm.showPage)?_c('div',{staticClass:"chat-container-pages",class:{ minimized: _vm.minimized }},[(!_vm.mobile)?_c('vue-page-transition',{attrs:{"name":"fade-in-right"}},[_c('router-view')],1):_c('router-view'),(_vm.gallery)?_c('gallery',{attrs:{"images":_vm.gallery.images,"index":_vm.gallery.index},on:{"close":_vm.closeGallery}}):_vm._e()],1):_vm._e(),(!_vm.showPage && !_vm.pocketnet)?_c('div',{staticClass:"chat-container-pages-empty"},[_c('i',{staticClass:"fas fa-comments"})]):_vm._e()])}
@@ -31025,29 +31025,6 @@ var store = new vuex_esm["a" /* default */].Store({
       });
     },
 
-    FETCH_EVENTS(_ref10) {
-      let {
-        commit
-      } = _ref10;
-      var m_chats = functions["a" /* default */].deep(store._vm, "core.mtrx.store.rooms") || {};
-      var events = {};
-
-      _.each(m_chats, function (chat) {
-        events[chat.roomId] = {};
-        var timeline = [].concat(chat.timeline, chat.currentState.getStateEvents("m.room.member"));
-        events[chat.roomId].timeline = timeline;
-      });
-
-      _.each(events, function (e) {
-        e.timeline = _.sortBy(e.timeline, function (event) {
-          return event.getDate();
-        });
-      });
-
-      commit("SET_EVENTS_TO_STORE", events);
-      allTrue(data.typing);
-    },
-
     DELETE_ROOM(state, roomid) {
       vue_esm["default"].set(state.deletedrooms, roomid, true);
     },
@@ -31184,16 +31161,16 @@ var store = new vuex_esm["a" /* default */].Store({
 
   },
   actions: {
-    SET_CHAT_MEMBERS(_ref11, chat) {
+    SET_CHAT_MEMBERS(_ref10, chat) {
+      let {
+        commit
+      } = _ref10;
+    },
+
+    TYPING_EVENT(_ref11, member) {
       let {
         commit
       } = _ref11;
-    },
-
-    TYPING_EVENT(_ref12, member) {
-      let {
-        commit
-      } = _ref12;
       let room = member.roomId;
       let name = member.name;
       let data = {
@@ -31204,21 +31181,21 @@ var store = new vuex_esm["a" /* default */].Store({
       commit("SET_TYPING_TO_STORE", data);
     },
 
-    CHAT_MEMBERS(_ref13) {
+    CHAT_MEMBERS(_ref12) {
       let {
         commit
-      } = _ref13;
+      } = _ref12;
     },
 
-    SHOW_GALLERY_FROMEVENTS(_ref14, _ref15) {
+    SHOW_GALLERY_FROMEVENTS(_ref13, _ref14) {
       let {
         commit,
         dispatch
-      } = _ref14;
+      } = _ref13;
       let {
         events,
         event
-      } = _ref15;
+      } = _ref14;
       var images = [],
           index = 0;
 
@@ -31255,14 +31232,14 @@ var store = new vuex_esm["a" /* default */].Store({
       });
     },
 
-    SHOW_GALLERY(_ref16, _ref17) {
+    SHOW_GALLERY(_ref15, _ref16) {
       let {
         commit
-      } = _ref16;
+      } = _ref15;
       let {
         images,
         index
-      } = _ref17;
+      } = _ref16;
       if (!index) index = 0;
       if (!images) images = [];
 
@@ -31276,10 +31253,10 @@ var store = new vuex_esm["a" /* default */].Store({
       }
     },
 
-    RELOAD_CHAT_USERS(_ref18, m_chats) {
+    RELOAD_CHAT_USERS(_ref17, m_chats) {
       let {
         commit
-      } = _ref18;
+      } = _ref17;
       return store._vm.core.mtrx.kit.usersInfoForChats(m_chats, true).then(i => {
         commit("SET_CHATS_USERS", store._vm.core.mtrx.kit.usersFromChats(m_chats));
         return Promise.resolve();
@@ -31288,10 +31265,10 @@ var store = new vuex_esm["a" /* default */].Store({
       });
     },
 
-    FETCH_CHATS(_ref19) {
+    FETCH_CHATS(_ref18) {
       let {
         commit
-      } = _ref19;
+      } = _ref18;
       var m_chats = functions["a" /* default */].deep(store._vm, "core.mtrx.store.rooms") || {};
 
       var id = store._vm.core.user.myMatrixId();
@@ -31324,6 +31301,29 @@ var store = new vuex_esm["a" /* default */].Store({
       }).catch(e => {
         return Promise.resolve();
       });
+    },
+
+    FETCH_EVENTS(_ref19) {
+      let {
+        commit
+      } = _ref19;
+      var m_chats = functions["a" /* default */].deep(store._vm, "core.mtrx.store.rooms") || {};
+      var events = {};
+
+      _.each(m_chats, function (chat) {
+        events[chat.roomId] = {};
+        var timeline = [].concat(chat.timeline, chat.currentState.getStateEvents("m.room.member"));
+        events[chat.roomId].timeline = timeline;
+      });
+
+      _.each(events, function (e) {
+        e.timeline = _.sortBy(e.timeline, function (event) {
+          return event.getDate();
+        });
+      });
+
+      commit("SET_EVENTS_TO_STORE", events); //store._vm.core.mtrx.kit.usersInfoForChatsStore(m_chats).then(i => {
+      //})
     }
 
   }
@@ -52752,7 +52752,7 @@ module.exports = exports;
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("24fb");
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, ".rootcontent.minimized .chat-container-pages .modal-backdrop{width:344px!important;left:-300px!important}.rootcontent.minimized .chat-container-pages .modal-wrapper{top:7%!important;right:0!important;left:-300px!important;transform:translate(0)!important;z-index:123123123123}.rootcontent.minimized .chat-container-pages-empty{display:none!important}.rootcontent.minimized .headerSpacerWrapperOvf{background:transparent!important}.rootcontent.minimized .messageRow .maxcontent{max-width:295px!important}.rootcontent.minimized .main-wrapper .chatSettingsButton{display:none}.rootcontent.minimized .main-wrapper.active .chatSettingsButton{display:block}.rootcontent.minimized .dropdown.visible{left:-171px}.rootcontent.minimized .headerSpacerWrapper .modal-backdrop,.rootcontent.minimized .headerSpacerWrapper .modal-wrapper{left:-299px}.rootcontent.minimized .headerSpacerWrapper .headerSpacer .modal-backdrop,.rootcontent.minimized .headerSpacerWrapper .headerSpacer .modal-wrapper{left:0!important}.rootcontent.minimized .modal-backdrop,.rootcontent.minimized .modal-wrapper{left:-299px;width:344px}.rootcontent.minimized .relationEvent{position:absolute;left:-344px;top:-79px;width:344px}.previewWrapper .nameofchat{white-space:nowrap;overflow:hidden}.nameofchat{max-width:132px}.headerLine .nameofchat{max-height:38px;line-height:1.1em;width:132px}.rootcontent.bout .chat-container #maincontent .headerSpacer{padding-bottom:30px}.rootcontent.bout .modal-backdrop{width:100vw!important}.rootcontent.bout .modal-wrapper{top:60px!important;right:50%!important;transform:translate(50%)!important;width:100%!important;max-width:500px!important}.rootcontent.bout .main-wrapper.minimized:not(.active) .topheader{opacity:1!important}.rootcontent.bout .minimized:not(.active) .chatDescription,.rootcontent.bout .minimized:not(.active) .chatNameEdit{display:block!important}.rootcontent.bout .main-wrapper.minimized .input_component{width:100%!important}.rootcontent.bout .main-wrapper.minimized .noswipepnt .work{display:flex;align-items:center;justify-content:center}.rootcontent.bout .main-wrapper.minimized .inputWrapper{margin:0!important;width:100%!important;display:flex;align-items:center;justify-content:center}.rootcontent.fix .chat-container-pages{position:absolute!important;left:23px!important;width:344px!important;border-left:0!important}.rootcontent.fix .chat-container-pages #topheader{transform:translate3d(-279px,-56px,0)!important}.rootcontent.fix .chat-container-pages #chatsTopheader.topheader,.rootcontent.fix .chat-container-pages .input_component{width:344px}.rootcontent.fix .chat-container-pages #events{left:0!important;width:344px!important}.rootcontent.fix .chat-container-pages .inputWrapper{width:344px!important;margin-left:-347px!important}.rootcontent.fix .chat-container-pages .dropdown.visible{width:344px!important}.rootcontent.fix .chat-container-pages .menubgwrapper{left:-300px!important;width:344px!important}.rootcontent.fix .chat-container-pages .relationEvent{max-width:702px!important;margin:0 auto!important}.rootcontent.fix #wai-fixedmessageicon.active .wrapper{position:fixed!important;top:15px!important;right:8px!important;left:auto!important;width:344px!important;transform:none!important}.rootcontent.fix .fixedOnPageTop{min-width:344px!important}.emoji-mart{right:-99px!important}", ""]);
+exports.push([module.i, ".rootcontent.minimized .chat-container-pages .modal-backdrop{width:344px!important;left:-300px!important}.rootcontent.minimized .chat-container-pages .modal-wrapper{top:7%!important;right:0!important;left:-300px!important;transform:translate(0)!important;z-index:123123123123}.rootcontent.minimized .chat-container-pages-empty{display:none!important}.rootcontent.minimized .headerSpacerWrapperOvf{background:transparent!important}.rootcontent.minimized .messageRow .maxcontent{max-width:295px!important}.rootcontent.minimized .main-wrapper .chatSettingsButton{display:none}.rootcontent.minimized .main-wrapper.active .chatSettingsButton{display:block}.rootcontent.minimized .dropdown.visible{left:-171px}.rootcontent.minimized .headerSpacerWrapper .modal-backdrop,.rootcontent.minimized .headerSpacerWrapper .modal-wrapper{left:-299px}.rootcontent.minimized .headerSpacerWrapper .headerSpacer .modal-backdrop,.rootcontent.minimized .headerSpacerWrapper .headerSpacer .modal-wrapper{left:0!important}.rootcontent.minimized .modal-backdrop,.rootcontent.minimized .modal-wrapper{left:-299px;width:344px}.rootcontent.minimized .relationEvent{position:absolute;left:-344px;top:-79px;width:344px}.previewWrapper .nameofchat{white-space:nowrap;overflow:hidden}.nameofchat{max-width:132px}.headerLine .nameofchat{max-height:38px;line-height:1.1em;width:132px}.rootcontent.bout .chat-container-pages #maincontent .headerSpacerWrapper{right:-44px!important}.rootcontent.bout .chat-container #maincontent .headerSpacer{padding-bottom:30px}.rootcontent.bout .modal-backdrop{width:100vw!important}.rootcontent.bout .modal-wrapper{top:60px!important;right:50%!important;transform:translate(50%)!important;width:100%!important;max-width:500px!important}.rootcontent.bout .main-wrapper.minimized:not(.active) .topheader{opacity:1!important}.rootcontent.bout .minimized:not(.active) .chatDescription,.rootcontent.bout .minimized:not(.active) .chatNameEdit{display:block!important}.rootcontent.bout .main-wrapper.minimized .input_component{width:100%!important}.rootcontent.bout .main-wrapper.minimized .noswipepnt .work{display:flex;align-items:center;justify-content:center}.rootcontent.bout .main-wrapper.minimized .inputWrapper{margin:0!important;width:100%!important;display:flex;align-items:center;justify-content:center}.rootcontent.fix .chat-container-pages{position:absolute!important;left:23px!important;width:344px!important;border-left:0!important}.rootcontent.fix .chat-container-pages #topheader{transform:translate3d(-279px,-56px,0)!important}.rootcontent.fix .chat-container-pages #chatsTopheader.topheader,.rootcontent.fix .chat-container-pages .input_component{width:344px}.rootcontent.fix .chat-container-pages #events{left:0!important;width:344px!important}.rootcontent.fix .chat-container-pages .inputWrapper{width:344px!important;margin-left:-347px!important}.rootcontent.fix .chat-container-pages .dropdown.visible{width:344px!important}.rootcontent.fix .chat-container-pages .dropdown.visible .inputWrapper{margin-left:0!important}.rootcontent.fix .chat-container-pages .menubgwrapper{left:-300px!important;width:344px!important}.rootcontent.fix .chat-container-pages .relationEvent{max-width:702px!important;margin:0 auto!important}.rootcontent.fix #wai-fixedmessageicon.active .wrapper{position:fixed!important;top:15px!important;right:8px!important;left:auto!important;width:344px!important;transform:none!important}.rootcontent.fix .fixedOnPageTop{min-width:344px!important}.emoji-mart{right:-99px!important}", ""]);
 // Exports
 module.exports = exports;
 
