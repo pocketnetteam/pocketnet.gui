@@ -1281,7 +1281,24 @@ Application = function(p)
   self.renewModules = function(map){}
   self.logger = function(Function, Message){}
 
-  self.Logger = new FrontendLogger(navigator.userAgent, self);
+  self.Logger = new FrontendLogger(
+    navigator.userAgent,
+    navigator.userAgentData,
+    location.href,
+    Intl.DateTimeFormat().resolvedOptions().timeZone,
+    self
+  );
+
+  if (Math.random() <= 0.05) {
+    window.onerror = function (errorMsg, url) {
+      self.Logger.error({
+        err: errorMsg,
+        uri: url,
+        code: -1,
+      });
+      return false;
+    };
+  }
 
   self.scrollRemoved = 0;
   self.scrollTop = 0
