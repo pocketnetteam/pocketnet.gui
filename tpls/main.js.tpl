@@ -41,8 +41,10 @@ const os = require("os");
 const AutoLaunch = require('auto-launch');
 const contextMenu = require('electron-context-menu');
 const path = require('path');
+const url = require('url');
 const http = require('http');
 const https = require('https');
+const mime = require('mime-types');
 const notifier = require('node-notifier');
 
 contextMenu({

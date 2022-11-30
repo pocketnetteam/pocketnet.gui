@@ -335,8 +335,11 @@ Application = function(p)
   }
 
   self.savesupported = function(){
-    var isElectron = (typeof _Electron !== 'undefined' && !!window.electron);
-    return isElectron || (window.cordova && !isios());
+    var isElectron = self.isElectron();
+    return isElectron || window.cordova;
+  }
+  self.savesupportedForBrowser = function(){
+    return !self.savesupported() && localStorage;
   }
 
   self.useip = function(){

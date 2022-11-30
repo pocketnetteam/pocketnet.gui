@@ -2365,6 +2365,15 @@ _l.boost_c17 = 'Censorship resistant'
 
 _l.gotopage = 'Go to page'
 
+_l.saved = "Saved"
+_l.savePost = "Save post"
+_l.postsaved = "Post saved"
+_l.deleteSavedPost = "Delete saved post"
+_l.doYouDownloadVideo = "Do you want to download the video on your device ?"
+_l.gotosaved2 = "Go to saved"
+_l.yes = "Yes"
+_l.no = "No"
+
 _l.postedVideos = "Posted Videos"
 _l.unPostedVideos = "Unposted Videos"
 _l.videoIsPosting = "Posting"

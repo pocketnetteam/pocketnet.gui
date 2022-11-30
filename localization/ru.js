@@ -2157,6 +2157,15 @@ _l.boost_c17 = 'Устойчивость к цензуре'
 
 _l.gotopage = 'Перейти на страницу'
 
+_l.saved = "Сохранено"
+_l.savePost = "Сохранить пост"
+_l.postsaved = "Сохраненный пост"
+_l.deleteSavedPost = "Удалить сохраненный пост"
+_l.doYouDownloadVideo = "Вы хотите загрузить видео на свое устройство?"
+_l.gotosaved2 = "Перейти к сохранённой публикации"
+_l.yes = "Да"
+_l.no = "Нет"
+
 _l.postedVideos = "Опубликованные Видео"
 _l.unPostedVideos = "Неопубликованные Видео"
 _l.videoIsPosting = "Загрузка"
