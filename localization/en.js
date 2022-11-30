@@ -1092,6 +1092,9 @@ _l.system16 = {
 
     }
 }
+_l.selectnode = function(a) {
+    return `Do you really want reconnect to selected ${a} Node?`
+}
 
 
 _l.downvoteShareMessage = "downvoted your post"
