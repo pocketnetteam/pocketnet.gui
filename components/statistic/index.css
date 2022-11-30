@@ -1,65 +1,65 @@
-.statistic {
-  background: rgb(var(--background-main));
+#statistic .statistic {
+  /*background: rgb(var(--background-main));*/
   padding: 0 4em;
   padding-bottom: 2em;
 }
-.statistic .title {
+#statistic .statistic .title {
   max-width: 700px;
   font-size: 2em;
   font-weight: 100;
 }
 @media only screen and (max-width: 768px) {
-  .statistic .title {
+  #statistic .statistic .title {
     font-size: 1.5em;
   }
 }
-.statistic .blocks {
+#statistic .statistic .blocks {
   display: flex;
 }
-.statistic .blocks .leaderBoardContainer {
+#statistic .statistic .blocks .leaderBoardContainer {
   width: 100%;
 }
-.statistic .blockswrapper {
+#statistic .statistic .blockswrapper {
   overflow: hidden;
 }
-.statistic .blockswrapper .wait {
+#statistic .statistic .blockswrapper .wait {
   padding-bottom: 0.5em;
 }
-.statistic .blockswrapper .wait .waitCnt {
+#statistic .statistic .blockswrapper .wait .waitCnt {
   background: rgb(var(--background-secondary-theme));
   color: rgb(var(--neutral-grad-3));
   height: 250px;
 }
-.statistic .blockswrapper .wait .waitCnt .table {
+#statistic .statistic .blockswrapper .wait .waitCnt .table {
   height: 100%;
 }
-.statistic .blockswrapper .wait .waitCnt .table > div {
+#statistic .statistic .blockswrapper .wait .waitCnt .table > div {
   vertical-align: middle;
   text-align: center;
   font-size: 1.2em;
   font-weight: 100;
 }
-.statistic .blockswrapper .wait .waitCnt .label {
+#statistic .statistic .blockswrapper .wait .waitCnt .label {
   margin-bottom: 1em;
 }
-.statistic .blockswrapper .wait .waitCnt button {
+#statistic .statistic .blockswrapper .wait .waitCnt button {
   font-weight: 100;
   padding: 1em 2em;
   width: 270px;
 }
-.statistic .blockswrapper .metricsContainerHeader {
+#statistic .statistic .blockswrapper .metricsContainerHeader {
   font-size: 0.8em;
   min-height: 36px;
 }
-.statistic .blockswrapper .metricablockwrapper {
+#statistic .statistic .blockswrapper .metricablockwrapper {
   padding-bottom: 0.5em;
   padding-right: 0.5em;
 }
-.statistic .blockswrapper .metricablock {
+#statistic .statistic .blockswrapper .metricablock {
   color: rgb(var(--text-color));
   cursor: pointer;
 }
-.statistic .blockswrapper .metricablock .blockContentWrapper {
+#statistic .statistic .blockswrapper .metricablock .blockContentWrapper {
   padding: 0.5em;
   background: rgb(var(--background-secondary-theme));
   -moz-transition: 0.3s;
@@ -67,16 +67,16 @@
   -webkit-transition: 0.3s;
   transition: 0.3s;
 }
-.statistic .blockswrapper .metricablock .blockContentWrapper.forchart {
+#statistic .statistic .blockswrapper .metricablock .blockContentWrapper.forchart {
   background: transparent;
 }
-.statistic .blockswrapper .metricablock .blockContent {
+#statistic .statistic .blockswrapper .metricablock .blockContent {
   position: relative;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
-.statistic .blockswrapper .metricablock .vidgetIconWrapper {
+#statistic .statistic .blockswrapper .metricablock .vidgetIconWrapper {
   flex-grow: 1;
   position: relative;
   display: flex;
@@ -85,29 +85,29 @@
   font-size: 1.5em;
   font-weight: 200;
 }
-.statistic .blockswrapper .metricablock .vidgetNameWrapper span {
+#statistic .statistic .blockswrapper .metricablock .vidgetNameWrapper span {
   font-size: 0.8em;
 }
-.statistic .blockswrapper .metricablock .vidgetNameWrapperTable > div {
+#statistic .statistic .blockswrapper .metricablock .vidgetNameWrapperTable > div {
   vertical-align: middle;
 }
-.statistic .blockswrapper .metricablock .vidgetNameWrapperTable > div.cellright {
+#statistic .statistic .blockswrapper .metricablock .vidgetNameWrapperTable > div.cellright {
   text-align: right;
 }
-.statistic .blockswrapper .metricablock .vidgetcaption {
+#statistic .statistic .blockswrapper .metricablock .vidgetcaption {
   font-size: 0.6em;
   font-weight: 700;
 }
-.statistic .blockswrapper .metricablock .preloaderGift {
+#statistic .statistic .blockswrapper .metricablock .preloaderGift {
   display: none;
 }
-.statistic .blockswrapper .metricablock .preloaderGift .preloader5 span {
+#statistic .statistic .blockswrapper .metricablock .preloaderGift .preloader5 span {
   vertical-align: bottom;
 }
-.statistic .blockswrapper .metricablock.bad .vidgetIconWrapper .vidgetIcon {
+#statistic .statistic .blockswrapper .metricablock.bad .vidgetIconWrapper .vidgetIcon {
   color: rgb(var(--color-bad));
 }
-.statistic .blockswrapper .metricablock .vidgetAboutWrapper {
+#statistic .statistic .blockswrapper .metricablock .vidgetAboutWrapper {
   position: absolute;
   left: 215px;
   height: 210px;
@@ -120,17 +120,17 @@
   display: none;
   z-index: 100;
 }
-.statistic .blockswrapper .metricablock:hover .vidgetIconWrapper .vidgetIcon {
+#statistic .statistic .blockswrapper .metricablock:hover .vidgetIconWrapper .vidgetIcon {
   box-shadow: 0 5px 10px -5px rgba(var(--color-shadow-base), 0.4);
 }
-.statistic .metric-wrapper {
+#statistic .statistic .metric-wrapper {
   width: 100%;
   font-size: 1.2em;
 }
-.statistic .metric-wrapper .label {
+#statistic .statistic .metric-wrapper .label {
   width: 160px;
 }
-.statistic .wrapper {
+#statistic .statistic .wrapper {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
@@ -142,7 +142,7 @@
   transition: 0.3s;
   color: rgb(var(--neutral-grad));
 }
-.statistic .wrapper .wrap {
+#statistic .statistic .wrapper .wrap {
   box-sizing: border-box;
   width: 25%;
   padding-bottom: 0.5em;
@@ -150,71 +150,71 @@
   transition: 0.3s ease all;
   cursor: pointer;
 }
-.statistic .wrapper .wrap.earnings {
+#statistic .statistic .wrapper .wrap.earnings {
   width: 50%;
 }
-.statistic .wrapper .wrap > div {
+#statistic .statistic .wrapper .wrap > div {
   height: 100%;
   background: rgb(var(--background-secondary-theme));
   padding: 0.5em;
 }
-.statistic .wrapper .wrap > div span {
+#statistic .statistic .wrapper .wrap > div span {
   display: block;
   font-size: 12px;
   min-height: 50px;
 }
 @media only screen and (max-width: 992px) {
-  .statistic .wrapper .wrap {
+  #statistic .statistic .wrapper .wrap {
     width: 50%;
   }
 }
 @media only screen and (max-width: 768px) {
-  .statistic .wrapper .wrap {
+  #statistic .statistic .wrapper .wrap {
     width: 100%;
     padding: 0 0 0.5em;
   }
-  .statistic .wrapper .wrap > div {
+  #statistic .statistic .wrapper .wrap > div {
     padding: 0.5em 1em;
     margin-bottom: 0.5em;
   }
 }
 @media only screen and (max-width: 768px) {
-  .statistic .wrapper {
+  #statistic .statistic .wrapper {
     flex-wrap: wrap;
   }
 }
-.statistic .count {
+#statistic .statistic .count {
   font-size: 1.5em;
   font-weight: 200;
 }
-.statistic .count i {
+#statistic .statistic .count i {
   font-size: 0.5em;
 }
-.statistic .count i.fa-star {
+#statistic .statistic .count i.fa-star {
   color: rgb(var(--color-star-yellow));
 }
-.statistic .top {
+#statistic .statistic .top {
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
   padding: 2em 0;
 }
-.statistic .form {
+#statistic .statistic .form {
   display: flex;
 }
-.statistic .form form {
+#statistic .statistic .form form {
   display: flex;
   align-items: center;
   color: rgb(var(--neutral-grad));
   -webkit-tap-highlight-color: transparent;
 }
-.statistic .form form label {
+#statistic .statistic .form form label {
   display: flex;
   align-items: center;
   margin-right: 0.5em;
 }
-.statistic .form form label input {
+#statistic .statistic .form form label input {
   margin-left: 0.5em;
   padding: 5px;
   border: none;
@@ -223,24 +223,24 @@
   border-radius: 5px;
   background-color: rgb(var(--background-secondary-theme));
 }
-.statistic .form form label ::-webkit-calendar-picker-indicator {
+#statistic .statistic .form form label ::-webkit-calendar-picker-indicator {
   padding: 5px;
   border-radius: 5px;
   cursor: pointer;
 }
 @media only screen and (max-width: 992px) {
-  .statistic .form form {
+  #statistic .statistic .form form {
     margin: 1em 0 0;
   }
 }
 @media only screen and (max-width: 768px) {
-  .statistic .form form {
+  #statistic .statistic .form form {
     width: 100%;
     justify-content: space-between;
   }
 }
 @media only screen and (max-width: 768px) {
-  .statistic .form {
+  #statistic .statistic .form {
     width: 100%;
   }
 }

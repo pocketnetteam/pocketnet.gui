@@ -43,9 +43,7 @@ var read = parameters(app.nav.current.completeHref, true).read;
             <% if(app.savesupported() || app.savesupportedForBrowser()) {%>
                 <div class="tab">
                     <span class="pcenterLabel <% if(r == 'saved' && pathname=='index') {%> active <% } %>">
-                        <a href="index?r=saved"  handler="true"><i class="fas fa-download cansave"></i></i><span class="text">
-                            <%= e('saved') %>
-                        </span></a>
+                        <a href="index?r=saved"  handler="true"><i class="fas fa-download cansave"></i></i><span class="text"><%= e('saved') %></span></a>
                     </span>
                 </div>
             <% } %>
