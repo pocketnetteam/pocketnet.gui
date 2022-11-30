@@ -5,7 +5,7 @@ if (global.WRITE_LOGS) {
 
 var open = require("open");
 
-const {protocol} = require('electron');
+const {protocol, powerMonitor} = require('electron');
 
 const ProxyInterface = require('./proxy16/ipc.js')
 const IpcBridge =require('./js/electron/ipcbridge.js')
@@ -355,8 +355,6 @@ function initApp() {
         }, 10 * 60 * 1000);
     }
 
-    const { powerMonitor } = require('electron')
-
     powerMonitor.on('suspend', () => {
 
         win.webContents.send('pause-message', { msg: 'pause', type: 'info' })
@@ -368,6 +366,10 @@ function initApp() {
         win.webContents.send('resume-message', { msg: 'resume', type: 'info' })
 
     })
+
+    powerMonitor.on('shutdown', () => {
+        destroyAppSafe();
+    });
 
 }
 
