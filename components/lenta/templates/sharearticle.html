@@ -461,11 +461,38 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
                                     var edjs = new edjsHTML(null, app)
                                     var message = edjs.apply(share.message, decodeURIComponent)
 				                    var words = edjs.words(message)
+
+                                    var textPreview = '';
+
+                                    if (message && message.blocks){
+                                        for (const b of message.blocks.slice()){
+                                            
+                                            if (b.type === 'paragraph' && b.data && b.data.text){
+                                                try{
+                                                    textPreview = filterXSS(clearScripts(findAndReplaceLink(b.data.text)))
+                                                } catch(err){
+                                                }
+                                                break;
+                                            }
+                                        }
+                                    }
                                     
                                     %>
 
                                     <div class="buttonOpenWrapper">
-                                        <div class="black articleclick readarticlebutton"><%= e('readarticle') %> <span>(<%-e('art_wordscount')%> <%-words%>)</span></div>
+                                        <div class="black articleclick readarticlebutton">
+                                            <% if (textPreview){ %>
+
+                                                <span class="textPreview">
+                                                    <%=textPreview%>
+                                                </span>
+
+                                            <% } else { %>
+
+                                                <%= e('readarticle') %> <span>(<%-e('art_wordscount')%> <%-words%>)</span>
+
+                                            <% } %>
+                                        </div>
                                     </div>
 
                                 <%} else{ %>

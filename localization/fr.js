@@ -1378,3 +1378,11 @@ _l.desktopPopupDisagree = "Pas maintenant"
 
 _l.profanity_tag = 'impiété'
 
+_l.saved = "Sauvegardé"
+_l.savePost = "Sauvegarder le post"
+_l.postsaved = "Post sauvegardé"
+_l.deleteSavedPost = "Supprimer le post enregistré"
+_l.doYouDownloadVideo = "Voulez-vous télécharger la vidéo sur votre appareil ?"
+_l.gotosaved2 = "Afficher les posts"
+_l.yes = "Oui"
+_l.no = "Non"

@@ -1092,6 +1092,9 @@ _l.system16 = {
 
     }
 }
+_l.selectnode = function(a) {
+    return `Do you really want reconnect to selected ${a} Node?`
+}
 
 
 _l.downvoteShareMessage = "downvoted your post"
@@ -2361,6 +2364,15 @@ _l.boost_c16 = 'Bitcoin of social media'
 _l.boost_c17 = 'Censorship resistant'
 
 _l.gotopage = 'Go to page'
+
+_l.saved = "Saved"
+_l.savePost = "Save post"
+_l.postsaved = "Post saved"
+_l.deleteSavedPost = "Delete saved post"
+_l.doYouDownloadVideo = "Do you want to download the video on your device ?"
+_l.gotosaved2 = "Go to saved"
+_l.yes = "Yes"
+_l.no = "No"
 
 _l.postedVideos = "Posted Videos"
 _l.unPostedVideos = "Unposted Videos"
