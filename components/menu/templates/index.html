@@ -10,6 +10,10 @@ var deleted = typeof app.platform.sdk.user.myaccauntdeleted == 'undefined' && ap
 		<div class="rightchatspacer">
 			<div class="sections">
 
+				<div class="mobileUpperLeft">
+					<img class="christmasBranch" src="img/christmas_branch_right.svg">
+				</div>
+
 				<div class="section leftpart">
 
 					<% if(haschat && state && (app.mobileview)) {%>
@@ -34,7 +38,7 @@ var deleted = typeof app.platform.sdk.user.myaccauntdeleted == 'undefined' && ap
 
 								<div class="item  sitename" >
 									<div elementsid="eventssitename" class="icon" events="sitename">
-										<img class="header_logo all" src="img/logotypes/<%-app.meta.fullname.toLowerCase()%>_logo_<%-theme%>.svg">
+										<img class="header_logo all" src="img/logotypes/<%-app.meta.fullname.toLowerCase()%>_logo_<%-theme%>_christmas.svg">
 									</div>
 									<div elementsid="eventslang" class="label">
 										<div elementsid="menu_localization" class="lang localization">
@@ -122,7 +126,7 @@ var deleted = typeof app.platform.sdk.user.myaccauntdeleted == 'undefined' && ap
 
 										<div class="icon">
 											<div class="icn">
-												<i class="far fa-bell"></i>
+												<img src="img/christmas_bell.svg">
 											</div>
 
 											<div class="amount">
@@ -256,6 +260,9 @@ var deleted = typeof app.platform.sdk.user.myaccauntdeleted == 'undefined' && ap
 
 						<% } %>
 					
+				</div>
+				<div class="mobileUpperRight">
+					<img class="christmasBranch" src="img/christmas_branch_left.svg">
 				</div>
 			</div>
 		</div>
