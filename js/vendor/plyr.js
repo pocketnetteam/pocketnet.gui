@@ -9194,6 +9194,8 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
       if (localVideo)
         localVideo.infos = localVideo.infos || {};
 
+        console.log('localVideo', localVideo)
+
       const isElectron = (typeof _Electron !== 'undefined');
       const isCordova = (typeof window.cordova != 'undefined');
 
@@ -9223,7 +9225,7 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
           localVideo : localVideo,
           start : options.startTime || 0,
           localTransport,
-          hlsError : options.hlsError,
+          error : options.error,
           light : options.light,
           pathfunction : options.app.peertubeHandler.helpers.url,
           mobile : options.mobile,
@@ -9232,7 +9234,7 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
           segmentsStorage : localVideo ? null : deep(options, 'app.videotransport.segments')
 
         },{
-          hlsError : options.hlsError,
+          error : options.error,
           playbackStatusChange : function(status){
             
           },

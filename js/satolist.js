@@ -421,8 +421,12 @@ Platform = function (app, listofnodes) {
                     p.precision = 4;
                 }
 
-                if (value < 0.001) {
+                if (value < 0.0005) {
                     p.precision = 8;
+                }
+
+                if (value <= 0) {
+                    p.precision = 2;
                 }
             }
 
