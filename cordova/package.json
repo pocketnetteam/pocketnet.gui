@@ -55,6 +55,7 @@
     "cordova-plugin-camera-preview": "^0.12.3",
     "cordova-plugin-contacts-x": "file:cordova-plugin-contacts-x",
     "cordova-plugin-device": "^1.1.7",
+    "cordova-plugin-ffmpeg": "git+https://github.com/MaximBelov/cordova-plugin-ffmpeg.git",
     "cordova-plugin-file": "^7.0.0",
     "cordova-plugin-file-transfer": "file:cordova-plugin-file-transfer",
     "cordova-plugin-firebasex": "^14.2.1",
@@ -156,7 +157,8 @@
       "cordova-plugin-camera-preview": {},
       "cordova-plugin-audioinput": {},
       "cordova-plugin-actionsheet": {},
-      "cordova-plugin-background-mode": {}
+      "cordova-plugin-background-mode": {},
+      "cordova-plugin-ffmpeg": {}
     },
     "platforms": [
       "ios",
