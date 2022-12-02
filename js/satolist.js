@@ -7774,6 +7774,20 @@ Platform = function (app, listofnodes) {
 
                                                                 targetFile.internalURL = entry.toURL();
 
+                                                                // Use ffmpeg to fix the MP4 fragment file
+                                                                console.log("Fix video: " + targetFile.nativeURL.replace('file://',''));
+                                                                ffmpeg.exec("-i " + targetFile.nativeURL.replace('file://','') + " -c copy " + dirEntry4.nativeURL.replace('file://','') + "temp.mp4", (success) => {
+                                                                    dirEntry4.getFile("temp.mp4", {}, function(tempFileEntry) {
+                                                                        tempFileEntry.moveTo(dirEntry4, targetFile.name, function(success2) {
+                                                                            console.log("Video replaced !");
+                                                                        }, function(err) {
+                                                                            console.log("MoveTo Error: ", err);
+                                                                        });
+                                                                    });
+                                                                }, (failure) => {
+                                                                    console.log("Fix video fail: ", failure)
+                                                                });
+
                                                                 result.video = targetFile;
                                                                 result.size = fileDetails.size || null;
 
