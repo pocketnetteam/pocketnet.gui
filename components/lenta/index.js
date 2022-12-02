@@ -4858,7 +4858,7 @@ var lenta = (function(){
 							
 						}
 					}
-
+					/*
 					self.app.platform.sdk.node.shares.clbks.added.lenta = function(share){
 						
 						if (share.txidEdit){		
@@ -4956,7 +4956,7 @@ var lenta = (function(){
 						}
 						
 					}
-
+					*/
 					/*self.app.platform.sdk.relayTransactions.clbks.relayToTemp = function(data) {
 						if(essenseData.author && (essenseData.author != self.user.address.value.toString('hex')) || essenseData.txids) return
 	
@@ -5003,8 +5003,6 @@ var lenta = (function(){
 					}
 
 					self.app.platform.actionListeners.lenta = function({type, alias, status}){
-
-						console.log('type, alias, status', type, alias, status)
 
 						if(type == 'upvoteShare'){
 

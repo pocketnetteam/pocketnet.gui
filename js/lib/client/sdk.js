@@ -974,7 +974,7 @@ var pSDK = function({app, api, actions}){
                             object.comments++
 
                             if (!last || Number(last.timeUpd) < Number(exp.timeUpd)) {
-                                object.lastComment = tempComment
+                                object.lastComment = exp
                             }
                         }
     
@@ -1040,6 +1040,8 @@ var pSDK = function({app, api, actions}){
             _.each(actions.getAccounts(), (account) => {
                 var actions = _.filter(account.getTempActions('comment'), filter)
 
+                console.log("account.getTempActions('comment')", account.getTempActions('comment'))
+
                 _.each(actions, (a) => {
                     objects.unshift(a)
                 })
@@ -1066,12 +1068,17 @@ var pSDK = function({app, api, actions}){
                         }
                         else{
 
-                            if (self[k] && self[k].applyAction){
 
-                                var applied = self[k].applyAction(extendedObject || object.clone(), alias)
-    
-                                if (applied) extendedObject = applied
+                            if(extendedObject || object){
+                                if (self[k] && self[k].applyAction){
+
+                                    var applied = self[k].applyAction(extendedObject || object.clone(), alias)
+        
+                                    if (applied) extendedObject = applied
+                                }
                             }
+
+                            
 
                         }
 
@@ -1091,7 +1098,6 @@ var pSDK = function({app, api, actions}){
         keys : ['share'],
 
         request : function(executor, hash){
-            console.log('request', hash)
             return request('share', hash, executor, {
                 requestIndexedDb : 'shareRequest',
 
@@ -1101,7 +1107,6 @@ var pSDK = function({app, api, actions}){
 
         insertFromResponseEx : function(response){
 
-            console.log("response", response)
 
             self.userInfo.insertFromResponse(response.users, true)
 
@@ -1276,7 +1281,6 @@ var pSDK = function({app, api, actions}){
 
         listener : function(exp, address, status){
 
-            console.log('exp', exp, status)
 
             if (status == 'completed'){
                 clearallfromdb('shareRequest')
@@ -1365,9 +1369,6 @@ var pSDK = function({app, api, actions}){
                             if ((alias.share || alias.postid || alias.txid) == shareId){
                                 if (self[k] && self[k].applyAction){
 
-                                    if(!extendedObject){
-                                        console.log("CLONE OBJECT", object, alias, txid)
-                                    }
         
                                     var applied = self[k].applyAction(extendedObject || object.clone(), alias)
         
@@ -1397,7 +1398,6 @@ var pSDK = function({app, api, actions}){
                 var actions = _.filter(account.getTempActions('share'), filter)
 
 
-                //console.log("TEMP SHARES", actions, account.getTempActions('share'))
 
                 _.each(actions, (a) => {
                     objects.unshift(a)
@@ -1639,7 +1639,6 @@ var pSDK = function({app, api, actions}){
         transform : function({key, data}){
             if(data.posttxid){
                 if (objects.share[data.posttxid]){
-                    console.log('data.value', data.value)
                     objects.share[data.posttxid].myVal = Number(data.value)
                 }
             }

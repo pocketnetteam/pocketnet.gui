@@ -164,8 +164,14 @@ var commentf = function(comment){
 							<% if(!app.mobileview) {%><a elementsid="<%-app.platform.api.authorlink(comment.address)%>" href="<%-app.platform.api.authorlink(comment.address)%>"><% } %>
 
 							<span class="adr" profile="<%-comment.address%>"><%-sUserInfo.name %></span><% if(!app.mobileview) {%></a><% } %> &middot;
+								
+							<% if(comment.temp || comment.relay) {%>
+								<span class="preloader6"><img src="./img/three-dots.svg"/></span>
+							<% } else { %> 
+								
+								<span class="date realtime" time="<%-comment.time%>"><%- app.reltime(comment.time) %></span>
+							<% } %>
 							
-							<span class="date realtime" time="<%-comment.time%>"><%- app.reltime(comment.time) %></span>
 
 							<% if(Number(comment.timeUpd) > Number(comment.time) && !comment.deleted) {%>
 

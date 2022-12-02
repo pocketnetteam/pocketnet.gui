@@ -102,103 +102,115 @@ var comments = (function(){
 
 				var p = {}
 
-				if (editid || !showedall){
-					p.comments = [alias]
-				}
-				else{
-					p.comments = self.app.platform.sdk.comments.storage[_txid][pid || '0']
-					p.add = alias.id
-				}
-
-
-				if (listpreview){
-					ed.lastComment = self.app.platform.sdk.comments.toLastComment(alias)
-				}
-
-				delete currents[id]
-
-
-				if (id == '0'){
-					p.class = "firstcomment"
-				}
-
-				if (id == '0')
-				{
-
-
-					if (areas[id])
-
-						areas[id].setText('');
-
-					el.c.find('.post .newcommentimages').html('');
-					el.c.find('.post .newcommentdonate').html('');
-				}
-
-				else
-				{
-
-					var _el = el.c.find('#' + id);
-
-					if (editid){
-
-						_el.find('.edit').html('');
-
-						alias.timeUpd = alias.timeUpd.addMinutes(1)
-
-						if(!alias.parentid) p.class = "firstcomment"
-
-						delete areas[id]
-
-						delete rendered[id]
-
-						_el.removeClass('editing')
-
-						p.replace = true
-						p.el = _el
-
+				var cl = function(){
+					/*if (listpreview){
+						ed.lastComment = self.app.platform.sdk.comments.toLastComment(alias)
+					}*/
+	
+					delete currents[id]
+	
+	
+					if (id == '0'){
+						p.class = "firstcomment"
 					}
+	
+					if (id == '0')
+					{
+						if (areas[id])
+	
+							areas[id].setText('');
+	
+						el.c.find('.post .newcommentimages').html('');
+						el.c.find('.post .newcommentdonate').html('');
+					}
+	
 					else
 					{
-						_el.find('.answer').html('');
-
-						_el.find('.repliescount').html(Number(_el.find('.repliescount').html() || "0") + 1)
-
-						_el.find('.replies').removeClass('hidden')
-
-						p.el = el.c.find("#" + id + ' .answers')
-
-						delete areas[id]
-					}								
-					
-				}
-
-				p.newcomments = 'newcomments'
-
-
-
-				/////// ADD COMMENT
-
-				//todo
-
-				renders.list(p, function(){
-
-					if (manual){
-						actions.tocomment(alias.id)
+						var _el = el.c.find('#' + id);
+	
+						if (editid){
+	
+							_el.find('.edit').html('');
+	
+							alias.timeUpd = alias.timeUpd.addMinutes(1)
+	
+							if(!alias.parentid) p.class = "firstcomment"
+	
+							delete areas[id]
+	
+							delete rendered[id]
+	
+							_el.removeClass('editing')
+	
+							p.replace = true
+							p.el = _el
+	
+						}
+						else
+						{
+							_el.find('.answer').html('');
+	
+							_el.find('.repliescount').html(Number(_el.find('.repliescount').html() || "0") + 1)
+	
+							_el.find('.replies').removeClass('hidden')
+	
+							p.el = el.c.find("#" + id + ' .answers')
+	
+							delete areas[id]
+						}								
+						
 					}
+	
+					p.newcomments = 'newcomments'
+	
+	
+	
+					/////// ADD COMMENT
+	
+					//todo
+	
+					renders.list(p, function(){
+	
+						if (manual){
+							actions.tocomment(alias.id)
+						}
+						
+					})
+	
+					if (!editid && ed.send){
+						ed.send(alias, alias)
+					}
+	
+					if(!editid){
+	
+						if(ed.comments) ed.comments++
+	
+						actions.showhideLabel()
+	
+					}
+				}
+
+				if (editid || !showedall){
+					p.comments = [alias]
+
+					cl()
+				}
+				else{
+
+					load.level(id, function(comments){
+						p.comments = comments
+						p.add = alias.id
+
+						cl()
+
+					})
 					
-				})
-
-				if (!editid && ed.send){
-					ed.send(alias, self.app.platform.sdk.comments.toLastComment(alias))
 				}
 
-				if(!editid){
+				
 
-					if(ed.comments) ed.comments++
 
-					actions.showhideLabel()
-
-				}
+				
 			}
 		}
 
@@ -752,21 +764,15 @@ var comments = (function(){
 
 						if(current.loading) return;
 						
+						//current.loading = true;
 
-						current.loading = true;
+						actions.send(current, function(error, alias){
 
-						current.uploadImages(self.app, function(){
-
-							actions.send(current, function(error, alias){
-
-								current.loading = false;
-
-								if(!error){
-									successCheck()
-								}
-							
-							}, pid, aid, editid, id)
-						})
+							if(!error){
+								successCheck()
+							}
+						
+						}, pid, aid, editid, id)
 							
 					}
 				}
@@ -780,12 +786,15 @@ var comments = (function(){
 			send : function(comment, clbk, pid, aid, editid, id){	
 
 				self.app.platform.sdk.comments.send(txid, comment, pid, aid, function(err, alias){
+
 					if (el.c)
 						el.c.find('.sending').removeClass('sending')
 
 					if(!err){
+
 						if (clbk)
 							clbk(null, alias)
+							
 					}
 
 					else
@@ -932,14 +941,15 @@ var comments = (function(){
 				})
 			},
 			hideallReplies : function(){
-				_.each(deep(self, 'app.platform.sdk.comments.storage.'+txid + '.0'), function(r, id){
+				console.error('hideadd')
+				/*_.each(deep(self, 'app.platform.sdk.comments.storage.'+txid + '.0'), function(r, id){
 
 					actions.replies(id, false)
 
 				})
 				
 				if (ed.lastComment)
-					actions.replies(ed.lastComment.id, false)
+					actions.replies(ed.lastComment.id, false)*/
 				
 			},
 			replies : function(id, show, clbk, _p){
@@ -978,9 +988,7 @@ var comments = (function(){
 				if (show){
 					load.level(id, function(comments){
 
-						
-
-						p.comments = self.app.platform.sdk.comments.storage[txid][id]
+						p.comments = comments
 						
 						c.addClass('showedreplies')
 
@@ -1004,10 +1012,6 @@ var comments = (function(){
 
 					delete currentstate.levels[id]
 
-					/*if (self.app.platform.sdk.comments.storage[txid])
-						_.each(self.app.platform.sdk.comments.storage[txid][id], function(c){
-							delete rendered[c.id]
-						})*/
 
 					c.removeClass('showedreplies')
 
@@ -1157,7 +1161,7 @@ var comments = (function(){
 
 						var p = {}
 
-						p.comments = self.app.platform.sdk.comments.storage[txid]['0']
+						p.comments = comments
 						p.class = "firstcomment"
 						p.inner = html
 
@@ -1244,7 +1248,8 @@ var comments = (function(){
 
 				actions.stateAction(function(){
 
-					var comment = self.psdk.comment.get(id) //deep(self.app.platform.sdk, 'comments.storage.all.' + id)
+					var comment = self.psdk.comment.get(id) 
+					
 
 					if(!comment) return
 					
@@ -1402,6 +1407,8 @@ var comments = (function(){
 	
 				comments = _.sortBy(comments, function(c){
 
+					if(c.temp || c.relay) return -10000000000
+
 					/*if (self.app.platform.sdk.comments.blocked[c.address]) {
 						return 0
 					}*/
@@ -1489,7 +1496,7 @@ var comments = (function(){
 				var id = parent.attr('id')
 				var pid = parent.attr('pid')
 
-				var comment = self.app.platform.sdk.comments.find(txid, id, pid)
+				var comment = self.psdk.comment.get(id) //self.app.platform.sdk.comments.find(txid, id, pid)
 
 				if (!comment && listpreview && ed.lastComment){
 					comment = ed.lastComment//self.app.platform.sdk.comments.ini([ed.lastComment])[0]
@@ -1568,12 +1575,13 @@ var comments = (function(){
 				var id = parent.attr('id')
 				var pid = parent.attr('pid')
 
-				var comment = self.app.platform.sdk.comments.find(txid, id, pid)
+				var comment = self.psdk.comment.get(id)/// self.app.platform.sdk.comments.find(txid, id, pid)
 
 				var d = {
 					address : self.app.user.address.value,
 					caddress : self.app.platform.sdk.comments.address(txid, id, pid),
-					txid : id
+					txid : id,
+					comment
 				};
 
 				if (listpreview && ed.lastComment && !pid){
@@ -2152,7 +2160,9 @@ var comments = (function(){
 
 				if(isMobile() && _in) return
 
-				var cl = deep(self.app.platform.sdk.comments.storage, txid + '.0.length') || 0
+				var cl = el.c.find('.comment').length
+				
+				//deep(self.app.platform.sdk.comments.storage, txid + '.0.length') || 0
 
 				if(ed.caption && cl > 5){
 					self.shell({
@@ -2848,7 +2858,7 @@ var comments = (function(){
 
 			load.level(null, function(comments){
 
-				p.comments = self.app.platform.sdk.comments.storage[txid]['0']
+				p.comments = comments//self.app.platform.sdk.comments.storage[txid]['0']
 				p.class = "firstcomment"
 
 				actions.showhideLabel()	

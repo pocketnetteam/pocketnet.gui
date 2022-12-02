@@ -4697,9 +4697,24 @@ Platform = function (app, listofnodes) {
 
             blocking: function (address, clbk) {
                 var blocking = new Blocking();
-                blocking.address.set(address);
+                    blocking.address.set(address);
 
-                topPreloader(10)
+
+                self.app.platform.actions.addActionAndSendIfCan(blocking).then(action => {
+                    var alias = action.object
+
+                  
+					successCheck()
+
+					if (clbk) clbk(alias)
+  
+				}).catch(e => {
+
+                    if(clbk) clbk(null, e)
+
+				})
+
+                return
 
                 self.sdk.node.transactions.create.commonFromUnspent(
 
@@ -4734,7 +4749,22 @@ Platform = function (app, listofnodes) {
                 var unblocking = new Unblocking();
                 unblocking.address.set(address);
 
-                topPreloader(10)
+
+                self.app.platform.actions.addActionAndSendIfCan(unblocking).then(action => {
+                    var alias = action.object
+
+                  
+					successCheck()
+
+					if (clbk) clbk(alias)
+  
+				}).catch(e => {
+
+                    if(clbk) clbk(null, e)
+
+				})
+
+                return
 
                 self.sdk.node.transactions.create.commonFromUnspent(
 
@@ -4826,6 +4856,22 @@ Platform = function (app, listofnodes) {
                 var unsubscribe = new Unsubscribe();
                     unsubscribe.address.set(address);
 
+
+                self.app.platform.actions.addActionAndSendIfCan(unsubscribe).then(action => {
+                
+                    successCheck()
+
+                    if (clbk) clbk()
+    
+                }).catch(e => {
+
+                    if (clbk)
+                        clbk(null, e)
+
+                })
+
+                return
+
                 topPreloader(10)
 
                 self.sdk.node.transactions.create.commonFromUnspent(
@@ -4848,7 +4894,24 @@ Platform = function (app, listofnodes) {
 
             subscribe: function (address, clbk) {
                 var subscribe = new Subscribe();
-                subscribe.address.set(address);
+                    subscribe.address.set(address);
+
+
+                self.app.platform.actions.addActionAndSendIfCan(subscribe).then(action => {
+                
+                    successCheck()
+
+                    if (clbk) clbk()
+    
+                }).catch(e => {
+
+                    if (clbk)
+                        clbk(null, e)
+
+                })
+
+                return
+
 
                 topPreloader(10)
 
@@ -4888,7 +4951,23 @@ Platform = function (app, listofnodes) {
 
             notificationsTurnOn: function (address, clbk) {
                 var subscribe = new SubscribePrivate();
-                subscribe.address.set(address);
+                    subscribe.address.set(address);
+
+
+                self.app.platform.actions.addActionAndSendIfCan(subscribe).then(action => {
+                
+                    successCheck()
+
+                    if (clbk) clbk()
+    
+                }).catch(e => {
+
+                    if (clbk)
+                        clbk(null, e)
+
+                })
+
+                return
 
                 topPreloader(10)
 
@@ -5267,12 +5346,12 @@ Platform = function (app, listofnodes) {
 
                                     var removePost = function (share, clbk){
 
-                                        share.deleted = true;
+                                        /*share.deleted = true;
                                         var ct = new Remove();
-                                        ct.txidEdit = share.txid;
+                                        ct.txidEdit = share.txid;*/
 
 
-                                        self.app.platform.sdk.node.shares.delete(share.txid, ct, function(err, alias){
+                                        self.app.platform.sdk.node.shares.delete(share.txid, function(err, alias){
 
                                             if(!err){
                                                 if (clbk){
@@ -9452,6 +9531,8 @@ Platform = function (app, listofnodes) {
 
             init : function(){
 
+                return Promise.resolve()
+
                 return self.sdk.keys.need().then(me => {
 
                     if(self.loadingWithErrors){
@@ -9623,6 +9704,24 @@ Platform = function (app, listofnodes) {
             },
 
             accSet: function (settings, clbk) {
+
+                self.app.platform.actions.addActionAndSendIfCan(settings).then(action => {
+
+                    var alias = action.get()
+                
+                    successCheck()
+
+                    if (clbk) clbk(alias)
+    
+                }).catch(e => {
+
+                    if (clbk)
+                        clbk(null, e)
+
+                })
+
+                return
+
 
                 self.sdk.node.transactions.create.commonFromUnspent(
 
@@ -10127,7 +10226,38 @@ Platform = function (app, listofnodes) {
 
                         var obj = new DeleteAccount();
 
-                        self.sdk.node.transactions.clearTempHard()
+                        ///self.sdk.node.transactions.clearTempHard()
+
+                        self.app.platform.actions.addActionAndSendIfCan(obj).then(action => {
+
+                            self.psdk.clear.all('userInfo', self.app.user.address.value)
+                            self.psdk.clear.all('userState', self.app.user.address.value)
+
+
+                            //self.app.settings.delete(a, 'last_user')
+                            //self.app.settings.delete(a, 'last_ustate_2')
+    
+                            self.deletedtest[self.app.user.address.value] = true
+    
+                            self.matrixchat.destroy()
+    
+                            self.sdk.ustate.me((info) => {
+                                self.sdk.user.get(() => {
+    
+                                    setTimeout(() => {
+                                        resolve()
+                                    }, 1000)
+    
+                                }, true)
+                            }, true)
+            
+                        }).catch(e => {
+        
+                            reject(error)
+        
+                        })
+
+                        return
 
                         self.sdk.node.transactions.create.commonFromUnspent(
                             obj,
@@ -10138,26 +10268,7 @@ Platform = function (app, listofnodes) {
                                     //self.app.platform.errorHandler(error, true)	
                                 }
 
-                                self.psdk.clear.all('userInfo', self.app.user.address.value)
-                                self.psdk.clear.all('userState', self.app.user.address.value)
-
-
-                                //self.app.settings.delete(a, 'last_user')
-                                //self.app.settings.delete(a, 'last_ustate_2')
-        
-                                self.deletedtest[self.app.user.address.value] = true
-        
-                                self.matrixchat.destroy()
-        
-                                self.sdk.ustate.me((info) => {
-                                    self.sdk.user.get(() => {
-        
-                                        setTimeout(() => {
-                                            resolve()
-                                        }, 1000)
-        
-                                    }, true)
-                                }, true)
+                                
                             }
                         )
 
@@ -15485,21 +15596,9 @@ Platform = function (app, listofnodes) {
                 if(clbk) clbk()
             },
 
-            find: function (txid, id, pid) {
-                var s = self.sdk.comments.storage;
+            address: function (id) {
 
-                var comments = deep(s, txid + '.' + (pid || '0')) || [];
-
-                var comment = _.find(comments, function (c) {
-                    return c.id == id
-                })
-
-                return comment
-            },
-
-            address: function (txid, id, pid) {
-
-                var comment = self.sdk.comments.find(txid, id, pid);
+                var comment = self.psdk.comment.get(id)
 
                 if (comment) return comment.address
 
@@ -15515,34 +15614,6 @@ Platform = function (app, listofnodes) {
                     if (clbk)
                         clbk(n, e)
                 }, true)
-            },
-
-            /*info: function (ids, clbk) {
-
-                var s = self.sdk.comments.storage;
-                var i = self.sdk.comments.ini;
-
-                self.app.api.rpc('getcomments', ['', '', ids]).then(d => {
-
-                    var m = i(d);
-
-                    if (clbk)
-                        clbk(null, m)
-
-                }).catch(e => {
-                    if (clbk) {
-                        clbk(e)
-                    }
-                })
-
-            },*/
-
-            checkSign: function (comment, signature, pubkey) {
-
-                var verify = false
-
-                return true
-
             },
 
             toLastComment: function (comment) {
@@ -15576,77 +15647,9 @@ Platform = function (app, listofnodes) {
 
                 return d
 
-
-                //// remove
-
-                var s = self.sdk.comments.storage;
-                s.all || (s.all = {})
-
-                var relay = self.sdk.relayTransactions.get();
-                var newblock = false
-
-
-                var c = _.map(d || [], function (data) {
-                    var comment = new pComment();
-
-                    comment.import(data)
-                    comment.setTime(data.time, data.timeUpd)
-
-                    comment.children = Number(data.children)
-                    comment.address = data.address;
-                    comment.verify = true;
-
-                    comment.rating = data.rating
-                    comment.deleted= data.deleted || data.blck
-
-                    _.each(self.sdk.relayTransactions.withtemp('comment'), function (c) {
-                        if (c.optype == 'comment' || !c.optype) {
-                            if (c.parentid == comment.id) {
-                                comment.children++
-                            }
-                        }
-                    })
-
-                    return comment;
-                })
-
-                _.each(self.sdk.relayTransactions.withtemp('cScore'), function (score) {
-
-                    var comment = _.find(c, function (comment) {
-                        return comment.id == score.commentid
-                    })
-
-                    if (comment && !comment.myScore) {
-                        comment.myScore = Number(score.value)
-
-                        if (score.value > 0) comment.scoreUp++
-                        else comment.scoreDown++
-                    }
-
-                })
-
-                _.each(c, function (c) {
-                    s.all[c.id] = c
-
-                    if (self.sdk.user.hiddenComment(c)) {
-                        self.sdk.comments.blocked[c.address] = true
-                        newblock = true
-                    }
-
-                })
-
-                if(newblock){
-                    self.sdk.comments.saveblocked()
-                }
-
-
-                return c
             },
 
             getbyid: function (ids, clbk) {
-
-                //var s = self.sdk.comments.storage;
-                //var i = self.sdk.comments.ini;
 
                 if (!_.isArray(ids)) ids = [ids]
 
@@ -15728,7 +15731,7 @@ Platform = function (app, listofnodes) {
 
                 var s = self.sdk.comments.storage;
 
-                s[txid] || (s[txid] = {})
+                /*s[txid] || (s[txid] = {})
 
 
                 if (ccha && s[txid][pid || '0']){
@@ -15737,7 +15740,7 @@ Platform = function (app, listofnodes) {
                         clbk(s[txid][pid || '0'])
 
                     return
-                }
+                }*/
 
                 var parameters = [txid, pid || '', self.app.user.address.value || '']
 
@@ -15751,11 +15754,18 @@ Platform = function (app, listofnodes) {
                         return s.id
                     }))
 
+                    console.log("comments", comments.length)
+
                     comments = self.psdk.comment.tempAdd(comments, (action) => {
+
+
+                        console.log('action', txid, action.postid, action.parentid, pid)
+
                         return txid == action.postid && (pid || '') == (action.parentid || '')
                     })
+                    console.log("comments2", comments.length)
                     
-                    s[txid][pid || '0'] = comments
+                    //s[txid][pid || '0'] = comments
 
                     if(clbk) clbk(comments)
 
@@ -15772,35 +15782,6 @@ Platform = function (app, listofnodes) {
              
             },
 
-            /*get: function (txid, pid, clbk, ccha) {
-
-                var s = self.sdk.comments.storage;
-                var i = self.sdk.comments.ini;
-
-                s[txid] || (s[txid] = {})
-
-
-                self.app.api.rpc('getcomments', [txid, pid || '', self.app.user.address.value || '']).then(d => {
-
-                    //self.sdk.comments.temps(d, txid, pid)
-
-                    var c = i(d)
-
-                    s[txid][pid || '0'] = c
-
-                    self.sdk.comments.users(c, function (i, e) {
-
-                        if (clbk)
-                            clbk(c, e)
-
-                    })
-
-                }).catch(e => {
-                    if (clbk) {
-                        clbk(null, e)
-                    }
-                })
-            },*/
 
             last: function (clbk) {
 
@@ -15830,11 +15811,23 @@ Platform = function (app, listofnodes) {
 
             upvote: function (upvote, clbk) {
 
-                var comment = self.psdk.comment.get(id)
-                
-                _.each(self.sdk.comments.upvoteClbks, function (c) {
-                    c(null, comment, upvote.value.v, app.user.address.value, true)
+                console.log("HERE", upvote)
+
+                self.app.platform.actions.addActionAndSendIfCan(upvote).then(action => {
+
+                    var alias = action.get()
+              
+                    if (clbk)
+                        clbk(null, alias)
+  
+                }).catch(e => {
+                    if (clbk) {
+                        clbk(e, null)
+                    }
+
                 })
+
+                return
 
                 self.sdk.node.transactions.create.commonFromUnspent(
 
@@ -15885,9 +15878,23 @@ Platform = function (app, listofnodes) {
 
             delete: function (txid, comment, clbk) {
 
-                var s = self.sdk.comments.storage;
-
                 comment.postid = txid
+
+                self.app.platform.actions.addActionAndSendIfCan(comment).then(action => {
+
+                    var alias = action.get()
+              
+                    if (clbk)
+                        clbk(null, alias)
+  
+                }).catch(e => {
+                    if (clbk) {
+                        clbk(e, null)
+                    }
+
+                })
+
+                return
 
                 self.sdk.node.transactions.create.commonFromUnspent(
 
@@ -15925,8 +15932,6 @@ Platform = function (app, listofnodes) {
 
             send: function (txid, comment, pid, aid, clbk, editid, fid) {
 
-                var s = self.sdk.comments.storage;
-
                 comment.answerid = aid;
                 comment.parentid = pid;
 
@@ -15949,6 +15954,53 @@ Platform = function (app, listofnodes) {
 
                         return
                     }
+
+                    self.app.platform.actions.addActionAndSendIfCan(comment).then(action => {
+
+                        var alias = action.get()
+
+                        /*s[txid] || (s[txid] = {})
+
+                        s[txid][pid || '0'] || (s[txid][pid || '0'] = [])
+
+                        var i = findIndex(s[txid][pid || '0'], function (c) {
+                            if (c.id == editid) return true;
+                        })
+
+                        if (!editid || i == -1) {
+                            s[txid][pid || '0'].push(alias)
+                        }
+                        else {
+
+                            alias.children = s[txid][pid || '0'][i].children
+                            alias.id = editid
+
+                            s[txid][pid || '0'][i] = alias
+
+                            s.all || (s.all = {})
+
+                            s.all[alias.id] = alias
+
+                        }*/
+
+                        _.each(self.sdk.comments.sendclbks, function (c) {
+                            c(null, alias, txid, pid, aid, editid, fid, true)
+                        })
+
+                        if (clbk)
+                            clbk(null, alias)
+      
+                    }).catch(e => {
+    
+                        if (clbk)
+                            clbk(e)
+
+                        _.each(self.sdk.comments.sendclbks, function (c) {
+                            c(e)
+                        })
+                    })
+
+                    return
 
                     self.sdk.node.transactions.create.commonFromUnspent(
 
@@ -15978,7 +16030,6 @@ Platform = function (app, listofnodes) {
                                 alias.setTime(temptime, temptime);
 
                                 var share = self.psdk.share.get(txid)
-                                
 
                                 if (share && (!pid || pid == '0'))
                                     share.comments++
@@ -16261,11 +16312,27 @@ Platform = function (app, listofnodes) {
                 },
 
 
-                delete: function (txid, share, clbk) {
+                delete: function (txid, clbk) {
 
-                    var s = self.sdk.node.shares.storage;
+                    var rm = new Remove()
+                        rm.txidEdit.set(share.txid);
 
-                    share.txid = txid
+                    self.app.platform.actions.addActionAndSendIfCan(rm).then(action => {
+
+                        var alias = action.get()
+                    
+                        successCheck()
+    
+                        if (clbk) clbk(null, alias)
+        
+                    }).catch(e => {
+    
+                        if (clbk)
+                            clbk(e, null)
+    
+                    })
+
+                    return
 
                     self.sdk.node.transactions.create.commonFromUnspent(
 
@@ -21144,27 +21211,6 @@ Platform = function (app, listofnodes) {
 
                 loadMore: function (data, clbk, wa) {
 
-                    var getpost = function (pid, clbk) {
-
-                       /* if (pid)
-
-                            platform.sdk.node.shares.getbyid(pid, function (s, fromcashe) {
-
-                                s || (s = []);
-
-                                if (s[0]) {
-                                    data.share = s[0];
-                                }
-
-                                clbk()
-
-                            })
-
-                        else*/
-
-                            clbk()
-                    }
-
                     platform.sdk.users.get([data.addrFrom], function () {
 
                         data.user = platform.psdk.userInfo.getShortForm(data.addrFrom)
@@ -21174,31 +21220,29 @@ Platform = function (app, listofnodes) {
                         if (!data.commentid && data.txid)
                             data.commentid = data.txid
 
-                        getpost(data.posttxid, function () {
 
-                            var ids = [data.commentid]
+                        var ids = [data.commentid]
 
-                            data.txid = data.commentid
+                        data.txid = data.commentid
 
-                            platform.sdk.comments.getbyid(ids, function () {
+                        platform.sdk.comments.getbyid(ids, function (comments) {
 
 
-                                data.comment = deep(platform.sdk.comments, 'storage.all.' + data.commentid)
+                            data.comment = comments[0]
 
-                                if (data.comment) {
-                                    platform.sdk.comments.storage[data.comment.postid] ||
-                                        (platform.sdk.comments.storage[data.comment.postid] = {})
+                            /*if (data.comment) {
+                                platform.sdk.comments.storage[data.comment.postid] ||
+                                    (platform.sdk.comments.storage[data.comment.postid] = {})
 
-                                    var pid = data.comment.parentid || '0';
+                                var pid = data.comment.parentid || '0';
 
-                                    if (platform.sdk.comments.storage[data.comment.postid][pid]) {
-                                        platform.sdk.comments.storage[data.comment.postid][pid].push(data.comment)
-                                    }
+                                if (platform.sdk.comments.storage[data.comment.postid][pid]) {
+                                    platform.sdk.comments.storage[data.comment.postid][pid].push(data.comment)
                                 }
+                            }*/
 
 
-                                clbk()
-                            })
+                            clbk()
                         })
 
 

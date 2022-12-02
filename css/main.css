@@ -3101,15 +3101,20 @@ html.mobileview.android .wnd .wndback {
 .preloader6 img {
   width: 30px;
 }
+.preloader6,
 .preloader5 {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 7.5px;
 }
+.preloader6 img,
 .preloader5 img {
   height: 7.5px;
   width: 30px;
+}
+.preloader6 {
+  display: inline-block;
 }
 .preloader5 span {
   vertical-align: middle;

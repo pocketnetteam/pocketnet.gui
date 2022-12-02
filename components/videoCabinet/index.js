@@ -1313,12 +1313,11 @@ var videoCabinet = (function () {
 											const removePost = (share, clbk) => {
 												share.deleted = true;
 
-												const ct = new Remove();
-												ct.txidEdit = share.txid;
+												/*const ct = new Remove();
+												ct.txidEdit = share.txid;*/
 
 												self.app.platform.sdk.node.shares.delete(
 													share.txid,
-													ct,
 													function (err, alias) {
 														if (!err) {
 															if (clbk) {

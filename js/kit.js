@@ -2885,6 +2885,14 @@ pComment = function(){
 		return r
 	}
 
+	self.clone = function(){
+		var ui = new pComment()
+
+			ui._import(self.export())
+
+		return ui
+	}
+
 	self.upvote = function(value){
 
 		if(self.myVal && self.myVal != '0') return null;
@@ -3050,7 +3058,7 @@ kits = {
 	}
 }
 
-Remove = function(lang){
+Remove = function(){
 
 	var self = this;
 
@@ -3092,7 +3100,7 @@ Remove = function(lang){
 
 	self.serialize = function(){
 
-        return encodeURIComponent(self.txid)
+        return encodeURIComponent(self.txidEdit.v)
 
 	}
 
@@ -3192,7 +3200,7 @@ pRemove = function(){
 	}
 
 
-	self.delete = function(){
+	/*self.delete = function(){
 		var c = new Remove();
 
 		c.txidEdit = self.txidEdit;
@@ -3201,7 +3209,7 @@ pRemove = function(){
 
 		return c
 
-	}
+	}*/
 
 
 	self.alias = function(){

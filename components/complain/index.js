@@ -62,7 +62,6 @@ var complain = (function(){
       },
 
       complain : function(clbk){
-        try {
           self.app.platform.sdk.ustate.me(function(mestate){
             if(ess == 'post'){
 
@@ -70,7 +69,22 @@ var complain = (function(){
 
                 var modFlag = sobj.modFlag(selected);
 
-                topPreloader(30);
+                //topPreloader(30);
+
+                self.app.platform.actions.addActionAndSendIfCan(modFlag).then(action => {
+                  
+                  var alias = action.object
+        
+                  successCheck()
+                  sitemessage(self.app.localization.e('complain_success'))
+
+                  if (clbk) clbk(true)
+
+                }).catch(e => {
+                  self.app.platform.errorHandler(e, true)
+                })
+
+                return 
                 self.sdk.node.transactions.create.commonFromUnspent(
 
                   modFlag,
@@ -87,24 +101,24 @@ var complain = (function(){
                     else
                     {
 
-                      successCheck()
-                      sitemessage(self.app.localization.e('complain_success'))
+                      
                     }
 
                   }
                 )
-                if (clbk)
-                  clbk(true)
+                
               }
 
               else{
                 try{
                   var i1 = ((actions.find(selected) || {}).name) || selected;
+
                   self.app.Logger.info({
                     actionId: 'POST_COMPLAIN',
                     actionValue: i1,
                     actionSubType: sobj.txid
                   });
+
                   clbk(true)
                   sitemessage(self.app.localization.e('complain_success'))
                 } catch (error) {
@@ -130,7 +144,24 @@ var complain = (function(){
 
                 var modFlag = sobj.data.modFlag(selected);
 
-                topPreloader(30);
+                //topPreloader(30);
+
+                self.app.platform.actions.addActionAndSendIfCan(modFlag).then(action => {
+                  
+                  var alias = action.object
+        
+                  successCheck()
+                  sitemessage(self.app.localization.e('complain_success'))
+
+                  if (clbk) clbk(true)
+
+                }).catch(e => {
+                  self.app.platform.errorHandler(e, true)
+                })
+
+                return
+
+
                 self.sdk.node.transactions.create.commonFromUnspent(
 
                   modFlag,
@@ -157,6 +188,7 @@ var complain = (function(){
               }
 
               else{
+                
                 try{
                   var i1 = ((actions.find(selected) || {}).name) || selected;
                   self.app.Logger.info({
@@ -174,9 +206,7 @@ var complain = (function(){
             }
 
           })
-        } catch (e) {
-          console.log(e)
-        }
+       
 
       },
 

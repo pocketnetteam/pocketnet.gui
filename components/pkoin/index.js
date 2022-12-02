@@ -254,7 +254,21 @@ var pkoin = (function(){
 
 				globalpreloader(true);
 
-				self.sdk.node.transactions.create.commonFromUnspent(
+				self.app.platform.actions.addActionAndSendIfCan(booster).then(action => {
+                  
+					successCheck()
+
+					if (clbk) clbk()
+  
+				}).catch(e => {
+
+					self.app.platform.errorHandler(e, true)
+
+				}).finally(() => {
+					globalpreloader(false)
+				})
+
+				/*self.sdk.node.transactions.create.commonFromUnspent(
 
 					booster,
 
@@ -267,7 +281,7 @@ var pkoin = (function(){
 						clbk()
 
 					}
-				)
+				)*/
 			}
 
 		}
