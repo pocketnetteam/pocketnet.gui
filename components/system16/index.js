@@ -295,7 +295,7 @@ var system16 = (function(){
 					if (el.c){
 						renders.nodescontenttable(el.c)
 						renders.notificationcontenttable(el.c)
-						renders.notificationuserstable(el.c)
+						//renders.notificationuserstable(el.c)
 						renders.peertubeinstancestable(el.c)
 						renders.webadminscontent(el.c)
 						renders.webdistributionwallets(el.c)
@@ -3473,7 +3473,7 @@ var system16 = (function(){
 					},
 					function(){
 						renders.notificationcontenttable(elc)
-						renders.notificationuserstable(elc)
+						//renders.notificationuserstable(elc)
 
 						if (clbk)
 							clbk()

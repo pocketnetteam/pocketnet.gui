@@ -656,22 +656,18 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 9px;
-  font-weight: 700;
-  line-height: 26px;
   color: rgb(var(--color-txt-gray-dark));
   margin: 0 auto;
 }
 #system16 .notificationcontent .field {
   width: 100%;
-  vertical-align: top;
   padding: 1.5em 1em;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  font-size: 15px;
-  text-align: center;
-  line-height: 1.4;
+}
+#system16 .notificationcontent .field span {
+  font-size: 0.8em;
 }
 #system16 .notificationcontent .notifications-table {
   display: flex;
@@ -742,6 +738,12 @@
 #system16 .notificationcontent .notification .button:hover .tooltip,
 #system16 .notificationcontent .users .button:hover .tooltip {
   visibility: visible;
+}
+#system16 .notificationcontent .notification i,
+#system16 .notificationcontent .users i,
+#system16 .notificationcontent .notification span,
+#system16 .notificationcontent .users span {
+  font-size: 0.8em;
 }
 #system16 .notificationcontent .users .field {
   font-size: 10px;

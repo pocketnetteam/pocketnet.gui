@@ -149,6 +149,7 @@
 }
 #menu .sections .section.right {
   padding-right: 0;
+  min-width: 200px;
 }
 #menu .sections .section.centerpart {
   padding-right: 0;
@@ -702,6 +703,7 @@
     min-width: 0;
   }
   #menu .sections .section.right {
+    min-width: 0;
     padding-right: 0;
   }
   #menu .sections .section.centerpart {
