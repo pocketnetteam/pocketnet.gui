@@ -442,9 +442,9 @@ Platform = function (app, listofnodes) {
            
         },
 
-        cScore : function(alias, status){
+        cScore : function(alias, status){},
 
-        }
+        comment: function(alias, status){},
     }
 
     self.actionListeners = {}
@@ -15733,19 +15733,6 @@ Platform = function (app, listofnodes) {
 
             getclear: function (txid, pid, clbk, ccha) {
 
-                var s = self.sdk.comments.storage;
-
-                /*s[txid] || (s[txid] = {})
-
-
-                if (ccha && s[txid][pid || '0']){
-
-                    if (clbk)
-                        clbk(s[txid][pid || '0'])
-
-                    return
-                }*/
-
                 var parameters = [txid, pid || '', self.app.user.address.value || '']
 
                 self.psdk.comment.request(() => {
@@ -15758,19 +15745,10 @@ Platform = function (app, listofnodes) {
                         return s.id
                     }))
 
-                    console.log("comments", comments.length)
-
                     comments = self.psdk.comment.tempAdd(comments, (action) => {
-
-
-                        console.log('action', txid, action.postid, action.parentid, pid)
-
                         return txid == action.postid && (pid || '') == (action.parentid || '')
                     })
-                    console.log("comments2", comments.length)
                     
-                    //s[txid][pid || '0'] = comments
-
                     if(clbk) clbk(comments)
 
                 }).catch(e => {
@@ -15934,27 +15912,15 @@ Platform = function (app, listofnodes) {
 
             },
 
-            send: function (txid, comment, pid, aid, clbk, editid, fid) {
-
-                comment.answerid = aid;
-                comment.parentid = pid;
-
-                if (editid) {
-                    comment.id = editid
-                }
+            send: function (comment, clbk) {
 
                 comment.uploadImages(self.app, function () {
 
                     if (comment.checkloaded()){
 
-
                         if (clbk) {
-                            clbk('imageerror', null)
+                            clbk('imageerror')
                         }
-
-                        _.each(self.sdk.comments.sendclbks, function (c) {
-                            c('imageerror')
-                        })
 
                         return
                     }
@@ -15963,34 +15929,7 @@ Platform = function (app, listofnodes) {
 
                         var alias = action.get()
 
-                        /*s[txid] || (s[txid] = {})
-
-                        s[txid][pid || '0'] || (s[txid][pid || '0'] = [])
-
-                        var i = findIndex(s[txid][pid || '0'], function (c) {
-                            if (c.id == editid) return true;
-                        })
-
-                        if (!editid || i == -1) {
-                            s[txid][pid || '0'].push(alias)
-                        }
-                        else {
-
-                            alias.children = s[txid][pid || '0'][i].children
-                            alias.id = editid
-
-                            s[txid][pid || '0'][i] = alias
-
-                            s.all || (s.all = {})
-
-                            s.all[alias.id] = alias
-
-                        }*/
-
-                        _.each(self.sdk.comments.sendclbks, function (c) {
-                            c(null, alias, txid, pid, aid, editid, fid, true)
-                        })
-
+                    
                         if (clbk)
                             clbk(null, alias)
       
@@ -15999,81 +15938,8 @@ Platform = function (app, listofnodes) {
                         if (clbk)
                             clbk(e)
 
-                        _.each(self.sdk.comments.sendclbks, function (c) {
-                            c(e)
-                        })
                     })
 
-                    return
-
-                    self.sdk.node.transactions.create.commonFromUnspent(
-
-                        comment,
-
-                        function (_alias, error) {
-
-                            if (!_alias) {
-                                if (clbk) {
-                                    clbk(error, null)
-                                }
-
-                                _.each(self.sdk.comments.sendclbks, function (c) {
-                                    c(error)
-                                })
-                            }
-                            else {
-
-                                var alias = new pComment();
-                                alias.import(_alias)
-                                alias.temp = true;
-                                alias.address = _alias.address;
-
-                                var temptime = self.currentTime()
-
-                                alias.children = 0;
-                                alias.setTime(temptime, temptime);
-
-                                var share = self.psdk.share.get(txid)
-
-                                if (share && (!pid || pid == '0'))
-                                    share.comments++
-
-                                s[txid] || (s[txid] = {})
-
-                                s[txid][pid || '0'] || (s[txid][pid || '0'] = [])
-
-                                var i = findIndex(s[txid][pid || '0'], function (c) {
-                                    if (c.id == editid) return true;
-                                })
-
-                                if (!editid || i == -1) {
-                                    s[txid][pid || '0'].push(alias)
-                                }
-                                else {
-
-                                    alias.children = s[txid][pid || '0'][i].children
-                                    alias.id = editid
-
-                                    s[txid][pid || '0'][i] = alias
-
-                                    s.all || (s.all = {})
-
-                                    s.all[alias.id] = alias
-
-                                }
-
-
-                                if (clbk)
-                                    clbk(null, alias)
-
-                                _.each(self.sdk.comments.sendclbks, function (c) {
-                                    c(null, alias, txid, pid, aid, editid, fid, true)
-                                })
-
-                            }
-
-                        }
-                    )
                 })
 
 

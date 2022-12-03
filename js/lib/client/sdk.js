@@ -957,8 +957,17 @@ var pSDK = function({app, api, actions}){
         listener : function(exp, address, status){
             if (status == 'completed'){
 
-                this.applyAction(objects['comment'][exp.id], exp)
+                if (exp.optype == 'comment'){
+                    objects['comment'][exp.id] = this.applyAction(objects['comment'][exp.id] || exp, exp)
+                }
+                else{
+                    this.applyAction(objects['comment'][exp.id], exp)
+                }
+
                 this.applyAction(objects['share'][exp.postid], exp)
+
+                console.log("CLEARREWUS")
+                clearallfromdb('commentRequest')
             }
         },
         applyAction : function(object, exp){
@@ -999,7 +1008,7 @@ var pSDK = function({app, api, actions}){
                     }
                 }
 
-                if(object.type == 'comment'){
+                if (object.type == 'comment'){
 
                     if(exp.optype == 'comment'){
                         if(object.id == exp.id) return exp
@@ -1019,6 +1028,7 @@ var pSDK = function({app, api, actions}){
                     }
                 }
             }
+          
 
             return object
         },
@@ -1033,6 +1043,10 @@ var pSDK = function({app, api, actions}){
 
         get : function(id){
             return this.tempExtend(id ? (objects.comment[id] || null) : null, id)
+        },
+
+        getclear : function(id){
+            return objects.comment[id] || null
         },
 
         tempAdd : function(objects = [], filter){
@@ -1092,6 +1106,24 @@ var pSDK = function({app, api, actions}){
             return extendedObject || object || null
 
         },
+    }
+
+    self.cScore = {
+        listener : function(exp, address, status){
+            if (status == 'completed'){
+                objects['comment'][exp.comment.v] = this.applyAction(objects['comment'][exp.comment.v], exp)
+            }
+        },
+        applyAction : function(comment, exp){
+
+            if (comment){
+                if (comment.id == exp.comment.v && exp.address == app.user.address.value){ /// for me
+                    comment.myScore = exp.value.v
+                }
+            }
+
+            return comment
+        }
     }
 
     self.share = {
@@ -1367,13 +1399,14 @@ var pSDK = function({app, api, actions}){
                         if (shareId){
 
                             if ((alias.share || alias.postid || alias.txid) == shareId){
-                                if (self[k] && self[k].applyAction){
 
+                                if (self[k] && self[k].applyAction){
         
                                     var applied = self[k].applyAction(extendedObject || object.clone(), alias)
         
                                     if (applied) extendedObject = applied
                                 }
+
                             }
 
                             
