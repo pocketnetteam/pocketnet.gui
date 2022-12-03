@@ -202,8 +202,8 @@
     padding-right: 1em;
   }
   #authorization .mpad {
-    padding-left: 1em;
-    padding-right: 1em;
+    /*padding-left: 2 * @rhythm;
+			padding-right: 2 * @rhythm;*/
   }
   #authorization .caption {
     margin-top: 0.5em;

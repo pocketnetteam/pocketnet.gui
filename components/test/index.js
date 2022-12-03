@@ -538,11 +538,11 @@ var test = (function(){
 				if(!el.upanel) return
 
 
+				var account = self.app.platform.actions.getCurrentAccount()
+
 				//TODO_REF_ACTIONS
 
-				if(_.toArray((self.app.platform.sdk.node.transactions.temp.userInfo || {})).length > 0 || 
-				
-					(deep(self.sdk.relayTransactions.storage, self.app.user.address.value + '.userInfo.length') > 0 ) && !ed.failedrelay){
+				if(account && account.getTempUserInfo()){
 
 					el.upanel.addClass('wait')
 

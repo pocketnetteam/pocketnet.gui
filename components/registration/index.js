@@ -1296,7 +1296,7 @@ var registration = (function(){
 				}
 				else{
 
-					var me = psdk.userInfo.getmy() || {}
+					var me = self.psdk.userInfo.getmy() || {}
 
 					if (me && me.relay){
 						current = steps.captcha.id

@@ -614,11 +614,13 @@ var wallet = (function(){
 
 				var addresses = actions.sendAddresses();
 
-				self.app.platform.sdk.node.transactions.get.balance(function(amount){
+				var account = self.psdk.actions.getCurrentAccount()
+				
+				var amount = account.actualBalance(addresses).actual
 
-					if(send.parameters.amount.value > amount) send.parameters.amount.value = amount
+
+				if(send.parameters.amount.value > amount) send.parameters.amount.value = amount
 					
-				}, addresses, null, true)
 			},
 
 			addaddress : function(){

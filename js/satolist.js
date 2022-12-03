@@ -440,6 +440,10 @@ Platform = function (app, listofnodes) {
 
             }
            
+        },
+
+        cScore : function(alias, status){
+
         }
     }
 
@@ -23644,9 +23648,9 @@ Platform = function (app, listofnodes) {
 
         if(app.peertubeHandler) app.peertubeHandler.clear()
 
-        self.sdk.node.transactions.clearUnspentoptimizationInterval()
+        //self.sdk.node.transactions.clearUnspentoptimizationInterval()
 
-        self.sdk.node.transactions.unspentLoading = {}
+        //self.sdk.node.transactions.unspentLoading = {}
 
         if (electron) {
             electron.ipcRenderer.send('update-badge', null);

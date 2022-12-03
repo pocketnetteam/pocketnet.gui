@@ -51,6 +51,8 @@ var comments = (function(){
 
 				if (address == self.app.user.address.value){
 
+					console.log('value', value, _el)
+
 					if(!value){
 
 						if(err != 40){
@@ -80,8 +82,8 @@ var comments = (function(){
 					scoreDown : (comment.scoreDown || 0) + ((temp && value < 0) ? 1 : 0)
 				}
 
-				d_el.find('.scoreUp .commentScore').html(comment.scoreUp ? compressedNumber(cs.scoreUp, 1) : '')
-				d_el.find('.scoreDown .commentScore').html(cs.scoreDown ? compressedNumber(cs.scoreDown, 1) : '')
+				d_el.find('.scoreUp .commentScore').html(comment.scoreUp ? compressedNumber(cs.scoreUp, 1) : '1')
+				d_el.find('.scoreDown .commentScore').html(cs.scoreDown ? compressedNumber(cs.scoreDown, 1) : '1')
 			},
 
 			post : function(err, alias, _txid, pid, aid, editid, id, manual){
@@ -197,7 +199,10 @@ var comments = (function(){
 				}
 				else{
 
-					load.level(id, function(comments){
+
+
+					load.level(pid, function(comments){
+
 						p.comments = comments
 						p.add = alias.id
 
@@ -1095,12 +1100,12 @@ var comments = (function(){
 
 				if(pid) _el = el.c.find("#" + pid + ' .answers')
 
-					else{
+				else{
 
-						p.class = "firstcomment"
+					p.class = "firstcomment"
 
-						_el = el.c.find('.list')
-					}
+					_el = el.c.find('.list')
+				}
 
 				load.level(pid, function(comments){
 					_el.html('')
@@ -1407,7 +1412,7 @@ var comments = (function(){
 	
 				comments = _.sortBy(comments, function(c){
 
-					if(c.temp || c.relay) return -10000000000
+					//if(c.temp || c.relay) return -10000000000
 
 					/*if (self.app.platform.sdk.comments.blocked[c.address]) {
 						return 0
@@ -2689,6 +2694,35 @@ var comments = (function(){
 					clbks.upvote(null, data.comment, data.upvoteVal || data.value, data.addrFrom)
 				}
 			
+			}
+
+			self.app.platform.actionListeners[eid] = function({type, alias, status}){
+
+
+
+				if(type == 'cScore'){
+
+					var comment = self.psdk.comment.get(alias.comment.v)
+
+
+					if (comment){
+						if(comment.postid == txid){
+							console.log("HERE", comment, alias.value.v)
+							clbks.upvote(null, comment, alias.value.v, alias.address)
+						}
+					}
+
+					/*if (alias.postid == share.txid){
+						clbks.upvote(null, data.comment, data.upvoteVal || data.value, data.addrFrom)
+					}*/
+
+					/*var share = _.find(sharesInview, (share) => share.txid == alias.share)
+
+					if (share){
+						renders.stars(share)
+					}*/
+				}
+				
 			}
 
 
