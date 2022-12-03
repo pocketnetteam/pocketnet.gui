@@ -138,7 +138,10 @@ var component = Object(componentNormalizer["a" /* default */])(
 
 
 
-
+function contact_injectStyles (context) {
+  
+  
+}
 
 /* normalize component */
 
@@ -147,10 +150,10 @@ var contact_component = Object(componentNormalizer["a" /* default */])(
   render,
   staticRenderFns,
   false,
-  null,
+  contact_injectStyles,
   "0a9214ac",
   null
-  
+  ,true
 )
 
 /* harmony default export */ var views_contact = __webpack_exports__["default"] = (contact_component.exports);
