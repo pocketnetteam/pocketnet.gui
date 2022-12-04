@@ -25102,7 +25102,13 @@ Platform = function (app, listofnodes) {
 
                 }
                 else{
-                    Notification.requestPermission().then((permission) => {
+                    const notificationPermission = Notification.requestPermission();
+
+                    if (!notificationPermission) {
+                        return Notification.permission;
+                    }
+
+                    notificationPermission.then((permission) => {
                         if (permission === 'granted') {
                             console.log('Notification permission granted.');
                             self.get(clbk)
