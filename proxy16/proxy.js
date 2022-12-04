@@ -1416,7 +1416,6 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					self.logger.w('rpc', 'debug', 'RPC REQUEST')
 
 
-
 					return new Promise((resolve, reject) => {
 
 						if((options.locally && options.meta)){
@@ -1529,6 +1528,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 							});
 						}
 
+
 						if (method == 'sendrawtransactionwithmessage') {
 							if (!bots.check(U)) {
 								return new Promise((resolve, reject) => {
@@ -1560,6 +1560,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 						.then((data) => {
 
+							// console.log('then', data, method, cparameters, data, node)
 							if (noderating || options.cache){
 								server.cache.set(method, cparameters, data, node.height());
 							}
