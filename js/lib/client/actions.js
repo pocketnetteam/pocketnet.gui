@@ -468,11 +468,13 @@ var Action = function(account, object, priority){
 
         ///sendrawtransaction
 
+        self.inputs = inputs
+        self.outputs = outputs
+
         return account.parent.api.rpc(method, parameters).then(transaction => {
 
             self.transaction = transaction
-            self.inputs = inputs
-            self.outputs = outputs
+            
 
             self.checkConfirmationUntil = (new Date()).addSeconds(35)
 
@@ -487,6 +489,8 @@ var Action = function(account, object, priority){
 
         }).catch((e = {}) => {
 
+            delete self.inputs
+            delete self.outputs
             delete self.sending
 
             trigger()

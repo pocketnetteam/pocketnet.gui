@@ -167,6 +167,16 @@ var ProxyRequest = function(app = {}, proxy){
                 er = true
             }
 
+            if (r.status){
+
+                if (r.status == 261){
+                    return Promise.reject({
+                        code : r.status
+                    })
+                }
+
+            }
+
             return r.json()
 
         }).then(result => {
