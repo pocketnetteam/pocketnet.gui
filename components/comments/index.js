@@ -98,7 +98,7 @@ var comments = (function(){
 
 				if(comment.optype == 'comment' || comment.optype == 'commentEdit'){
 
-					var _el = el.c.find('#' + comment.id);
+					var _el = el.c.find('#' + comment.id + ',#' + comment.actionId);
 
 
 					if(!comment.parentid){

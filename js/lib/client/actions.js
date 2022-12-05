@@ -167,16 +167,19 @@ var Action = function(account, object, priority){
     self.import = function(e){
         self.priority = e.priority
 
-        if(e.added)
+        if (e.added)
             self.added = new Date(e.added)
 
-        if(e.until)
+        if (e.until)
             self.until = new Date(e.until)
 
-        if(e.sent)
+        if (e.sent)
             self.sent = new Date(e.sent)
 
-        if(e.checkedUntil)
+        if (e.sending)
+            self.sending = new Date(e.sending)
+
+        if (e.checkedUntil)
             self.checkedUntil = new Date(e.checkedUntil)
 
         self.id = e.id || makeid()
@@ -464,18 +467,17 @@ var Action = function(account, object, priority){
             parameters.push(optstype)
         }
 
-        self.sending = true
-
-        ///sendrawtransaction
-
+        self.sending = new Date()
         self.inputs = inputs
         self.outputs = outputs
+        ///sendrawtransaction
+
+        trigger()
 
         return account.parent.api.rpc(method, parameters).then(transaction => {
 
             self.transaction = transaction
             
-
             self.checkConfirmationUntil = (new Date()).addSeconds(35)
 
             delete self.sending
@@ -496,8 +498,6 @@ var Action = function(account, object, priority){
             trigger()
 
             var code = e.code
-
-            console.log("CODE", code)
 
             if(!retry && (code == -26 || code == -25 || code == 16 || code == 261)){
                 return makeTransaction(true, calculatedFee, send)
@@ -595,7 +595,7 @@ var Action = function(account, object, priority){
             return Promise.reject('actions_alreadySent')
         }
 
-        if (self.sending){
+        if (self.sending && (new Date()).addSeconds(-65) < self.sending){
             return Promise.reject('actions_alreadySending')
         }
 
@@ -709,6 +709,9 @@ var Action = function(account, object, priority){
         }
 
 
+        alias.actionId = self.id
+
+
         return alias
     }
 
@@ -744,7 +747,8 @@ var Account = function(address, parent){
         completed : {},
         rejected : {},
         sent : {},
-        relay : {}
+        relay : {},
+        relayorsent : {}
     }
 
     self.keyPair = null
@@ -924,6 +928,8 @@ var Account = function(address, parent){
         return e
     }
 
+ 
+
     self.import = function(e){
         self.status = e.status
         self.unspents = e.unspents
@@ -933,10 +939,7 @@ var Account = function(address, parent){
 
         self.actions.value = []
 
-
         _.each(e.actions.value, (exported) => {
-
-
 
             if ((exported.completed && ActionOptions.clearCompleted) || (exported.rejected && ActionOptions.clearRejected)){
 
@@ -1036,7 +1039,7 @@ var Account = function(address, parent){
         }
 
         if (self.unspents.updated){
-            var until = self.unspents.updated.addSeconds(60)
+            var until = self.unspents.updated.addSeconds(600)
 
             if (until > new Date()){
                 return Promise.resolve(self.unspents.value)
@@ -1082,13 +1085,9 @@ var Account = function(address, parent){
     self.ws = {
         transaction : function(transaction){
 
-            console.log("transaction", transaction)
-
             if(transaction.addr != self.address) return
 
             parent.app.platform.sdk.node.transactions.get.tx(transaction.txid, (data, error = {}) => {
-
-                console.log('data', data)
 
                 self.addUnspentFromTransaction(data)
                 self.removeInputsFromTransaction(data)
@@ -1288,17 +1287,20 @@ var Account = function(address, parent){
 
     var emitFilteredAction = function(action){
         var status = action.rejected ? 'rejected' : (action.completed ? 'completed' : (action.transaction ? 'sent' : 'relay'))
+        var estatus = (status == 'relay' || status == 'sent') ? 'relayorsent' : status
 
         if (status && action.id){
             
-            if(!emitted[status][action.id]){
+            console.log('emitted[estatus][action.id]', self.address, estatus, action.id, emitted)
+
+            if(!emitted[estatus][action.id]){
                 parent.emit('actionFiltered', {
                     action,
                     address : self.address,
                     status
                 })
 
-                emitted[status][action.id] = true
+                emitted[estatus][action.id] = true
 
                 return true
             }
@@ -1456,6 +1458,20 @@ var Actions = function(app, api, storage = localStorage){
 
     }
 
+    var update = function(value){
+        _.each(value, (data, address) => {
+
+            if(!accounts[address]){
+                accounts[address] = new Account(address, self)
+            }
+                
+            accounts[address].import(data)
+
+            accounts[address].triggerGlobal()
+            
+        })
+    }
+
    
     var emit = function(key, data){
         _.each(events[key] || [], function(e){
@@ -1524,7 +1540,6 @@ var Actions = function(app, api, storage = localStorage){
     self.ws = {
         transaction : function(transaction){
             _.each(accounts, (account) => {
-                console.log("WS TRANSACTION", transaction)
                 account.ws.transaction(transaction)
             })
         },
@@ -1638,14 +1653,16 @@ var Actions = function(app, api, storage = localStorage){
 
             app.platform.sdk.syncStorage.on('change', key, function(e){
 
+                console.log("E", e)
+
+                console.log("CHANGE EVENT", e.newValue == e.oldValue)
+
+                
+
                 if(e.newValue == e.oldValue) return
 
                 try{
-                    imports(JSON.parse(e.newValue || "{}"))
-
-                    _.each(accounts, (account) => {
-                        account.triggerGlobal()
-                    })
+                    update(JSON.parse(e.newValue || "{}"))
                 }
                 catch(e){
                     console.error(e)

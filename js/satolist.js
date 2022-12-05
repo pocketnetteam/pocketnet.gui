@@ -18897,7 +18897,9 @@ Platform = function (app, listofnodes) {
                 }
             },
             init() {
+                window.storage_tab = makeid()
                 window.addEventListener('storage', (e) => {
+
                     if (!e.oldValue) {
                         this.eventListeners[e.key]?.create?.(e);
                         return;

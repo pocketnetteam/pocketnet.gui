@@ -5015,7 +5015,7 @@ var lenta = (function(){
 
 						if(type == 'share'){
 
-							var replace = _.find(sharesInview, (share) => share.txid == alias.txid)
+							var replace = _.find(sharesInview, (share) => share.txid == alias.txid || share.txid == alias.actionId)
 							var replaceAll = true
 
 							alias = self.psdk.share.get(alias.txid)
