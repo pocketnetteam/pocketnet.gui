@@ -1,8 +1,8 @@
 var ActionOptions = {
     pcTxFee : 1 / 100000000,
     amountC : 100000000,
-    clearRejected : true,
-    clearCompleted : true,
+    clearRejected : false,
+    clearCompleted : false,
     objects : {
         transaction : {
             calculateFee : true,
@@ -144,6 +144,7 @@ var Action = function(account, object, priority){
         e.added = self.added
         e.until = self.until
         e.sent = self.sent
+        e.sending = self.sending
         e.checkedUntil = self.checkedUntil
         e.checkConfirmationUntil = self.checkConfirmationUntil
         e.inputs = _.clone(self.inputs)
@@ -940,6 +941,8 @@ var Account = function(address, parent){
         self.actions.value = []
 
         _.each(e.actions.value, (exported) => {
+
+            if (exported.until < new Date()) return
 
             if ((exported.completed && ActionOptions.clearCompleted) || (exported.rejected && ActionOptions.clearRejected)){
 

@@ -1539,7 +1539,7 @@ var pSDK = function ({ app, api, actions }) {
 
                         if (k == 'share') {
 
-                            if (alias.txid == txid) {
+                            if (alias.txid == txid || alias.actionId == txid) {
                                 extendedObject = alias
 
                                 return
