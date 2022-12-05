@@ -259,6 +259,15 @@ function rpc(request, callback, obj) {
 
             }
 
+            if (res.statusCode === 261) {
+
+                exceededError = {
+                    error : errorMessage + 'Rejected: 261',
+                    code : 261
+                } 
+
+            }
+
             if (res.statusCode === 500 && buf.toString('utf8') === 'Work queue depth exceeded') {
 
                 exceededError = {
