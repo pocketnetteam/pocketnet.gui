@@ -474,6 +474,8 @@ var Action = function(account, object, priority){
             self.inputs = inputs
             self.outputs = outputs
 
+            self.checkConfirmationUntil = (new Date()).addSeconds(35)
+
             delete self.sending
 
             self.sent = new Date()

@@ -8428,7 +8428,12 @@
 	}
 
 	replaceWith = function(el, h){
-		el.replaceWith(h);
+
+		var hj = $(h)
+
+		el.replaceWith(hj);
+
+		return hj
 	}
 
 	prepend = function(el, h){

@@ -105,7 +105,17 @@ nModule = function(){
 			if (p.el && !p.ignorelinksandimages)
 			{
 				self.nav.api.links(null, p.el, p.additionalActions || null);
-				bgImagesCl(p.el, p.bgImages)
+
+				console.log("P", p)
+
+				if(p.inner == replaceWith){
+					bgImagesCl(p.el.parent(), p.bgImages)
+				}
+				else{
+					bgImagesCl(p.el, p.bgImages)
+				}
+
+				
 			}
 
 			if (typeof clbk  === 'function'){
@@ -266,7 +276,11 @@ nModule = function(){
 
 		p.inner || (p.inner = html);	
 
-		p.inner(p.el, _html);
+		var nel = p.inner(p.el, _html);
+
+		if (nel) {
+			p.el = nel
+		}
 
 		if (p.display){
 			p.el.css("display", p.display)

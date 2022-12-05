@@ -100,9 +100,9 @@ var comments = (function(){
 
 					var _el = el.c.find('#' + comment.id);
 
-					console.log('_el.length', _el.length, _el)
+					//console.log('_el.length', _el.length, _el)
 
-					if(!showedall || comment.optype == 'commentEdit' || _el.length){
+					if((!showedall && !comment.parentid) || comment.optype == 'commentEdit' || _el.length){
 
 						p.comments = [comment]
 
@@ -119,6 +119,19 @@ var comments = (function(){
 
 					}
 					else{
+
+						if (comment.parentid){
+
+							var parent = el.c.find("#" + comment.parentid)
+							var panel = parent.find('.commentpanel[comment="'+comment.parentid+'"]')
+
+							p.el = parent.find('.answers')
+
+							panel.find('.repliescount').html(Number(panel.find('.repliescount').html() || "0") + 1)
+							panel.find('.replies').removeClass('hidden')
+						}
+							
+
 						load.level(comment.parentid, function(comments){
 
 							p.comments = comments
@@ -848,6 +861,9 @@ var comments = (function(){
 	
 								el.c.find('.post .newcommentimages').html('');
 								el.c.find('.post .newcommentdonate').html('');
+
+								if (current.parentid)
+									el.c.find('.answer[for="'+current.parentid+'"]').html('');
 
 							}
 
@@ -3095,7 +3111,8 @@ var comments = (function(){
 					_in = el.c.closest('.fullScreenVideo .sharecnt');
 				}
 
-				el.list.on('click', '.reply', events.reply);
+				
+				el.list.on('click', '.reply', events.replyandreplies);
 				el.list.on('click', '.replies', events.replies);
 				el.list.on('click', '.panel', events.metmenu);
 				el.list.on('click', '.tocomment', events.tocomment)

@@ -5,7 +5,7 @@ var commentpanel = function(comment, _class){
 	
 	
 	%>
-	<div class="commentpanel">
+	<div class="commentpanel" comment="<%- comment.id %>">
 
 		<div class="items">
 
@@ -166,7 +166,7 @@ var commentf = function(comment){
 							<span class="adr" profile="<%-comment.address%>"><%-sUserInfo.name %></span><% if(!app.mobileview) {%></a><% } %> &middot;
 								
 							<% if(comment.temp || comment.relay) {%>
-								<span class="preloader6"><img src="./img/three-dots.svg"/></span>
+								<span class="date"><%-e('ntnow').toLowerCase()%></span>
 							<% } else { %> 
 								
 								<span class="date realtime" time="<%-comment.time%>"><%- app.reltime(comment.time) %></span>

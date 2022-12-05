@@ -20622,13 +20622,13 @@ Platform = function (app, listofnodes) {
 
                         console.error('TODO_REF_ACTIONS')
 
-                        var addr = platform.user.address.value
+                        var addr = platform.app.user.address.value
 
                         //////////////////////
 
                         data.tx = platform.sdk.node.transactions.toUT(tx, data.addr, data.nout)
 
-                        data.amountall = _.reduce(outs, function (m, v) {
+                        data.amountall = _.reduce(data.txinfo.vout, function (m, v) {
 
                             var forme = deep(v, 'scriptPubKey.addresses.0') == addr
 
