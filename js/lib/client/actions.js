@@ -493,7 +493,9 @@ var Action = function(account, object, priority){
 
             var code = e.code
 
-            if(!retry && (code == -26 || code == -25 || code == 16)){
+            console.log("CODE", code)
+
+            if(!retry && (code == -26 || code == -25 || code == 16 || code == 261)){
                 return makeTransaction(true, calculatedFee, send)
             }
 

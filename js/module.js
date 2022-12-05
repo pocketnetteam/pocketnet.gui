@@ -106,8 +106,6 @@ nModule = function(){
 			{
 				self.nav.api.links(null, p.el, p.additionalActions || null);
 
-				console.log("P", p)
-
 				if(p.inner == replaceWith){
 					bgImagesCl(p.el.parent(), p.bgImages)
 				}

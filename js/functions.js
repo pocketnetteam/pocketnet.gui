@@ -11039,6 +11039,7 @@ clearStringXss = function(nm){
 	})
 }
 
+
 getBase64 = function (file) {
 	return new Promise((resolve, reject) => {
 	  const reader = new FileReader();

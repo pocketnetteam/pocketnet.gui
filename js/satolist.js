@@ -386,6 +386,8 @@ Platform = function (app, listofnodes) {
 
     self.actions.on('actionFiltered', ({action, address, status}) => {
 
+        console.log('{action, address, status}', {action, address, status, alias : action.get()})
+
         var listener = listeners[action.object.type]
 
         if(!listener) return
@@ -15620,7 +15622,7 @@ Platform = function (app, listofnodes) {
                 }, true)
             },
 
-            toLastComment: function (comment) {
+            /*toLastComment: function (comment) {
 
                 var lc = {
                     address: comment.address,
@@ -15643,7 +15645,7 @@ Platform = function (app, listofnodes) {
                 }
 
                 return lc;
-            },
+            },*/
 
             ini: function (d) {
 
@@ -20547,7 +20549,6 @@ Platform = function (app, listofnodes) {
 
                         data.txinfo = tx;
 
-                        var address = data.addr;
 
                         /* platform.sdk.node.transactions.unspent || (platform.sdk.node.transactions.unspent = {})
 

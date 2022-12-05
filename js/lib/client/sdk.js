@@ -1,4 +1,4 @@
-var pSDK = function({app, api, actions}){
+var pSDK = function ({ app, api, actions }) {
     var self = this
 
     var storage = {}
@@ -6,7 +6,7 @@ var pSDK = function({app, api, actions}){
     var temp = {}
     var queue = {}
     var dbstorages = {}
-    var dbversion = 1;
+    var dbversion = 2;
 
     self.actions = actions
 
@@ -16,84 +16,84 @@ var pSDK = function({app, api, actions}){
         }
     })*/
 
-    
+
 
     var dbmeta = {
 
-        userInfoFull : {
-            time : 600
+        userInfoFull: {
+            time: 600
         },
 
-        userInfoFullFB : {
-            time : 0
+        userInfoFullFB: {
+            time: 0
         },
 
-        userInfoLight : {
-            time : 3000
+        userInfoLight: {
+            time: 3000
         },
 
-        userState : {
-            time : 600
+        userState: {
+            time: 600
         },
 
-        userStateFB : {
-            time : 0
+        userStateFB: {
+            time: 0
         },
 
         commentRequest: {
-            time : 60,
-            authorized : true
+            time: 60,
+            authorized: true
         },
 
         comment: {
-            time : 120,
-            authorized : true
+            time: 120,
+            authorized: true
         },
 
-        shareRequest : {
-            time : 60 // temp
+        shareRequest: {
+            time: 60 // temp
         },
 
-        share : {
-            time : 240
+        share: {
+            time: 240
         },
 
-        myScore : {
-            time : 6000,
-            authorized : true
+        myScore: {
+            time: 6000,
+            authorized: true
         },
 
-        myScoreFB : {
-            time : 6000,
-            authorized : true
+        myScoreFB: {
+            time: 6000,
+            authorized: true
         },
 
-        tagRequest : {
-            time : 6000
+        tagRequest: {
+            time: 6000
         },
 
-        accSet : {
-            time : 6000
+        accSet: {
+            time: 6000
         },
 
-        nameAddress : {
-            time : 6000
+        nameAddress: {
+            time: 6000
         },
 
-        searchUsersRequest : {
-            time : 120
+        searchUsersRequest: {
+            time: 120
         },
 
-        searchRequest : {
-            time : 240
+        searchRequest: {
+            time: 240
         }
     }
 
-    var checkObjectInActions = function(objects){
+    var checkObjectInActions = function (objects) {
 
         var account = actions.getCurrentAccount()
 
-        if(!account) return
+        if (!account) return
 
         var txids = _.filter(_.map(objects, (o) => { return o.txid || o }), (o) => {
             return o && !_.isObject(o)
@@ -102,54 +102,54 @@ var pSDK = function({app, api, actions}){
         account.checkTransactionById(txids)
     }
 
-    var getDBStorage = function ({name, time}) {
+    var getDBStorage = function ({ name, time }) {
 
         var key = 'initdbstorage_' + name
 
         if (temp[key]) return temp[key]
 
-		if (!dbstorages[name]) {
-     
-			temp[key] = pdbstorage(name, dbversion, time).then(storage => {
-				dbstorages[name] = storage
+        if (!dbstorages[name]) {
+
+            temp[key] = pdbstorage(name, dbversion, time).then(storage => {
+                dbstorages[name] = storage
 
                 delete temp[key]
 
-				return Promise.resolve(storage)
-			})
+                return Promise.resolve(storage)
+            })
 
             return temp[key]
-		}
+        }
 
-		return Promise.resolve(dbstorages[name])
-	}
-
-    var prepareStorage = function(key){
-        if(!storage[key]) storage[key] = {}
-        if(!temp[key]) temp[key] = {}
-        if(!objects[key]) objects[key] = {}
-        if(!queue[key]) queue[key] = []
+        return Promise.resolve(dbstorages[name])
     }
 
-    var settodb = function(dbname, result){
-        if(!dbname) return Promise.resolve()
+    var prepareStorage = function (key) {
+        if (!storage[key]) storage[key] = {}
+        if (!temp[key]) temp[key] = {}
+        if (!objects[key]) objects[key] = {}
+        if (!queue[key]) queue[key] = []
+    }
 
-        return getDBStorage({name : dbname, ...dbmeta[dbname]}).then((db) => {
-            return Promise.all(_.map(result, ({key, data}) => {
+    var settodb = function (dbname, result) {
+        if (!dbname) return Promise.resolve()
 
-                if(dbmeta[dbname].authorized) key = key + '_' + app.user.address.value
+        return getDBStorage({ name: dbname, ...dbmeta[dbname] }).then((db) => {
+            return Promise.all(_.map(result, ({ key, data }) => {
 
-                return db.set(key, data).catch(e => {})
+                if (dbmeta[dbname].authorized) key = key + '_' + app.user.address.value
+
+                return db.set(key, data).catch(e => { })
             }))
 
         })
     }
 
-    var clearfromdb = function(dbname, ids){
+    var clearfromdb = function (dbname, ids) {
 
-        return getDBStorage({name : dbname, ...dbmeta[dbname]}).then((db) => {
+        return getDBStorage({ name: dbname, ...dbmeta[dbname] }).then((db) => {
 
-            if(dbmeta[dbname].authorized) ids = _.map(ids, id => {
+            if (dbmeta[dbname].authorized) ids = _.map(ids, id => {
                 return id + '_' + app.user.address.value
             })
 
@@ -157,33 +157,33 @@ var pSDK = function({app, api, actions}){
         }).catch(e => {
 
         })
-        
+
     }
 
-    var clearallfromdb = function(dbname){
+    var clearallfromdb = function (dbname) {
 
-        return getDBStorage({name : dbname, ...dbmeta[dbname]}).then((db) => {
+        return getDBStorage({ name: dbname, ...dbmeta[dbname] }).then((db) => {
             return db.clearall()
         }).catch(e => {
 
         })
-        
+
     }
 
-    var settodbone = function(dbname, hash, data){
+    var settodbone = function (dbname, hash, data) {
 
-        if(!hash || !data) return Promise.resolve()
+        if (!hash || !data) return Promise.resolve()
 
         return settodb(dbname, [{
-            key : hash,
+            key: hash,
             data
         }])
     }
 
-    var getfromdbone = function(dbname, hash){
+    var getfromdbone = function (dbname, hash) {
         return getfromdb(dbname, hash).then(r => {
 
-            if (r.length){
+            if (r.length) {
                 return Promise.resolve(r[0].data)
             }
 
@@ -191,56 +191,56 @@ var pSDK = function({app, api, actions}){
         })
     }
 
-    var getfromdb = function(dbname, ids){
+    var getfromdb = function (dbname, ids) {
 
-        if(!ids) return Promise.resolve([])
+        if (!ids) return Promise.resolve([])
 
-        if(!_.isArray(ids)) ids = [ids]
+        if (!_.isArray(ids)) ids = [ids]
 
-        if(!dbname) return Promise.resolve([])
+        if (!dbname) return Promise.resolve([])
 
-        if(dbmeta[dbname].authorized) ids = _.map(ids, id => {
+        if (dbmeta[dbname].authorized) ids = _.map(ids, id => {
             return id + '_' + app.user.address.value
         })
 
-        return getDBStorage({name : dbname, ...dbmeta[dbname]}).then((db) => {
+        return getDBStorage({ name: dbname, ...dbmeta[dbname] }).then((db) => {
             var result = []
 
             return Promise.all(_.map(ids, id => {
 
-                
+
 
                 return db.get(id).then(data => {
 
-                    if(dbmeta[dbname].authorized){
+                    if (dbmeta[dbname].authorized) {
                         id = id.replace('_' + app.user.address.value, '')
                     }
 
                     result.push({
-                        key : id,
-                        data : data
+                        key: id,
+                        data: data
                     })
-    
-                }).catch(e => {})
+
+                }).catch(e => { })
 
             })).then(() => {
                 return result
             })
-            
+
         })
 
     }
 
-    var loadone = function(key, index, executor, p){
+    var loadone = function (key, index, executor, p) {
         return loadList(key, [index], executor, p)
     }
 
-    var processingQueue = function(queue){
+    var processingQueue = function (queue) {
 
 
-        if (queue.length){
+        if (queue.length) {
 
-            var groupped = group(queue, (q) => {return q.executor})
+            var groupped = group(queue, (q) => { return q.executor })
 
             _.each(groupped, (g) => {
 
@@ -267,7 +267,7 @@ var pSDK = function({app, api, actions}){
 
     }
 
-    var processingAll = function(){
+    var processingAll = function () {
         _.each(queue, (q, type) => {
 
             processingQueue(q)
@@ -276,18 +276,18 @@ var pSDK = function({app, api, actions}){
         })
     }
 
-    var loadList = function(key, keys, executor, p = {
-        update : false, 
-        fallbackIndexedDB : null, 
-        indexedDb : null,
-        alternativeGetStorage : null,
-        transform : null
-    }){
+    var loadList = function (key, keys, executor, p = {
+        update: false,
+        fallbackIndexedDB: null,
+        indexedDb: null,
+        alternativeGetStorage: null,
+        transform: null
+    }) {
 
-        if(!key) return Promise.reject('missing:key')
-        if(!keys) return Promise.reject('missing:keys')
+        if (!key) return Promise.reject('missing:key')
+        if (!keys) return Promise.reject('missing:keys')
 
-        if(!_.isArray(keys)) keys = [keys]
+        if (!_.isArray(keys)) keys = [keys]
 
         keys = _.filter(_.uniq(keys), k => k)
 
@@ -297,30 +297,30 @@ var pSDK = function({app, api, actions}){
 
         _.each(keys, (k) => {
 
-            if (p.alternativeGetStorage){
+            if (p.alternativeGetStorage) {
 
-                if (temp[p.alternativeGetStorage][k]){
+                if (temp[p.alternativeGetStorage][k]) {
                     loading[k] = temp[p.alternativeGetStorage][k]
-    
+
                     return
                 }
 
-                if(!p.update && storage[p.alternativeGetStorage][k]){
+                if (!p.update && storage[p.alternativeGetStorage][k]) {
                     loaded[k] = storage[p.alternativeGetStorage][k]
-    
+
                     return
                 }
 
             }
 
-            if (temp[key][k]){
+            if (temp[key][k]) {
                 loading[k] = temp[key][k]
 
                 return
             }
-            
 
-            if(!p.update && storage[key][k]){
+
+            if (!p.update && storage[key][k]) {
                 loaded[k] = storage[key][k]
 
                 return
@@ -337,7 +337,7 @@ var pSDK = function({app, api, actions}){
 
                 load = _.filter(load, (k) => {
 
-                    return !_.find(dbr, ({key}) => {
+                    return !_.find(dbr, ({ key }) => {
 
                         return key == k
                     })
@@ -345,7 +345,7 @@ var pSDK = function({app, api, actions}){
                 })
 
 
-                if(!load.length){
+                if (!load.length) {
                     resolve(dbr)
 
                     return
@@ -353,10 +353,10 @@ var pSDK = function({app, api, actions}){
 
                 var c = (result) => {
 
-                    if (p.transformResult){
+                    if (p.transformResult) {
                         result = p.transformResult(result)
                     }
-              
+
                     settodb(p.indexedDb, result)
                     settodb(p.fallbackIndexedDB, result)
 
@@ -365,28 +365,28 @@ var pSDK = function({app, api, actions}){
                 }
 
 
-                if(p.queue){
+                if (p.queue) {
                     queue[key].push({
                         load,
                         executor,
-                        resolve : c,
-    
+                        resolve: c,
+
                         reject
-                        
+
                     })
                 }
-                else{
+                else {
                     executor(load).then(c).catch(reject)
                 }
 
                 /**/
 
-                
-                
-                
-                
 
-                
+
+
+
+
+
             })
 
 
@@ -394,7 +394,7 @@ var pSDK = function({app, api, actions}){
 
             console.error(e)
 
-            if(p.fallbackIndexedDB){
+            if (p.fallbackIndexedDB) {
                 return getfromdb(p.fallbackIndexedDB, load)
             }
 
@@ -407,13 +407,13 @@ var pSDK = function({app, api, actions}){
 
             _.each(result, (r) => {
 
-                if (r && r.key && r.data){
+                if (r && r.key && r.data) {
                     storage[key][r.key] = r.data
                     filtered.push(r)
                 }
 
 
-                if (p.transform){
+                if (p.transform) {
                     var object = p.transform(r)
 
                     if (object)
@@ -443,10 +443,10 @@ var pSDK = function({app, api, actions}){
         }).then((rpack) => {
 
             _.each(rpack, (result) => {
-                if(result){
+                if (result) {
                     _.each(result, (r) => {
                         loaded[r.key] = r.data
-                    })  
+                    })
                 }
             })
 
@@ -455,29 +455,29 @@ var pSDK = function({app, api, actions}){
         })
     }
 
-    var request = function(key, hash, executor, p = {
-        requestIndexedDb : null,
-        insertFromResponse : null
-    }){
+    var request = function (key, hash, executor, p = {
+        requestIndexedDb: null,
+        insertFromResponse: null
+    }) {
 
-        if(_.isObject(hash)) {
-            try{
+        if (_.isObject(hash)) {
+            try {
                 hash = $.md5(JSON.stringify(hash))
             }
-            catch(e){
+            catch (e) {
                 hash = null
             }
         }
 
-        if(temp[key][hash]) return temp[key][hash]
+        if (temp[key][hash]) return temp[key][hash]
 
         temp[key][hash] = getfromdbone(p.requestIndexedDb, hash).then((r) => {
 
-            if(r) return Promise.resolve(r)
+            if (r) return Promise.resolve(r)
 
             return executor().then(r => {
 
-                if (p.transformResult){
+                if (p.transformResult) {
                     r = p.transformResult(r)
                 }
 
@@ -488,9 +488,9 @@ var pSDK = function({app, api, actions}){
 
         }).then(result => {
 
-            
 
-            if(p.insertFromResponse){
+
+            if (p.insertFromResponse) {
                 return p.insertFromResponse(result).then(() => {
                     return result
                 })
@@ -508,50 +508,50 @@ var pSDK = function({app, api, actions}){
     /// main
 
     self.userInfo = {
-        keys : ['userInfoFull', 'userInfoLight'],
-        
-        load : function(addresses, light, update){
+        keys: ['userInfoFull', 'userInfoLight'],
+
+        load: function (addresses, light, update) {
 
             return loadList(light ? 'userInfoLight' : 'userInfoFull', addresses, (addresses) => {
 
-                var parameters = [addresses]; 
+                var parameters = [addresses];
 
                 if (light) { parameters.push('1') }
 
                 return api.rpc('getuserprofile', parameters).then((data) => {
-                    
+
 
                     return _.map(addresses, (address) => {
                         return {
-                            key : address,
-                            data : _.find(data, (info) => {return info.address == address})
+                            key: address,
+                            data: _.find(data, (info) => { return info.address == address })
                         }
                     })
-                   
+
                 })
 
             }, {
-                update, 
-                indexedDb : light ? 'userInfoLight' : 'userInfoFull',
-                fallbackIndexedDB : !light ? 'userInfoFullFB' : null,
-                alternativeGetStorage : light ? 'userInfoFull' : null,
-                transform : (r) => this.transform(r)
+                update,
+                indexedDb: light ? 'userInfoLight' : 'userInfoFull',
+                fallbackIndexedDB: !light ? 'userInfoFullFB' : null,
+                alternativeGetStorage: light ? 'userInfoFull' : null,
+                transform: (r) => this.transform(r)
             })
         },
 
-        insertFromResponse : function(data, light){
+        insertFromResponse: function (data, light) {
 
             var result = _.map(data, (r) => {
                 return {
-                    key : r.address,
-                    data : r
+                    key: r.address,
+                    data: r
                 }
             })
 
             var indexedDb = light ? 'userInfoLight' : 'userInfoFull'
             var fallbackIndexedDB = !light ? 'userInfoFullFB' : null
             var key = light ? 'userInfoLight' : 'userInfoFull'
-            
+
             return settodb(indexedDb, result).then(() => {
                 return settodb(fallbackIndexedDB, result)
             }).then(() => {
@@ -560,38 +560,38 @@ var pSDK = function({app, api, actions}){
 
                 _.each(result, (r) => {
 
-                    if (r && r.key && r.data){
+                    if (r && r.key && r.data) {
                         storage[key][r.key] = r.data
                         filtered.push(r)
                     }
-    
+
                     var object = this.transform(r)
 
                     if (object)
                         objects[key][r.key] = object
-    
+
                 })
 
                 return filtered
 
             })
-            
+
         },
 
-        insertFromResponseSmall : function(data, light){
+        insertFromResponseSmall: function (data, light) {
 
             var result = _.map(data, (r) => {
                 return {
-                    key : r.address,
-                    data : r
+                    key: r.address,
+                    data: r
                 }
             })
 
             var key = light ? 'userInfoLight' : 'userInfoFull'
-            
+
             _.each(result, (r) => {
 
-                if(!storage[key][r.key])
+                if (!storage[key][r.key])
                     storage[key][r.key] = r.data
 
                 var object = this.transform(r)
@@ -601,15 +601,15 @@ var pSDK = function({app, api, actions}){
 
             })
 
-            return 
-            
+            return
+
         },
 
-        transform : function({key, data}){
+        transform: function ({ key, data }) {
 
             var u = null
-            
-            if (data){
+
+            if (data) {
                 u = new pUserInfo()
                 u._import(data)
             }
@@ -618,17 +618,17 @@ var pSDK = function({app, api, actions}){
 
         },
 
-        getmy : function(){
+        getmy: function () {
             return app.user.address.value ? this.get(app.user.address.value) : null
         },
 
-        get : function(address){
+        get: function (address) {
             return this.tempExtend(objects['userInfoFull'][address] || objects['userInfoLight'][address])
         },
 
-        listener : function(exp, address, status){
+        listener: function (exp, address, status) {
 
-            if (status == 'completed'){
+            if (status == 'completed') {
 
                 objects['userInfoFull'][address] = this.applyAction(objects['userInfoFull'][address], exp)
 
@@ -637,16 +637,16 @@ var pSDK = function({app, api, actions}){
             }
         },
 
-        applyAction : function(object, exp){
+        applyAction: function (object, exp) {
 
-            if(!object) {
+            if (!object) {
 
-                if(exp.address == app.user.address.value) {
+                if (exp.address == app.user.address.value) {
                     return exp
                 }
             }
 
-            if (object.address == exp.address){
+            if (object.address == exp.address) {
                 object.name = exp.name
                 object.image = exp.image
                 object.language = exp.language
@@ -661,7 +661,7 @@ var pSDK = function({app, api, actions}){
             return object
         },
 
-        tempExtend : function(object/*, address*/){
+        tempExtend: function (object/*, address*/) {
 
             var extendedObject = null
 
@@ -671,11 +671,11 @@ var pSDK = function({app, api, actions}){
 
                 _.each(temps, (k) => {
 
-                    if(k != 'userInfo' && !extendedObject) return
- 
+                    if (k != 'userInfo' && !extendedObject) return
+
                     _.each(account.getTempActions(k), (alias) => {
 
-                        if (self[k] && self[k].applyAction){
+                        if (self[k] && self[k].applyAction) {
                             var applied = self[k].applyAction(extendedObject || object.clone(), alias)
 
                             if (applied) extendedObject = applied
@@ -683,43 +683,43 @@ var pSDK = function({app, api, actions}){
                     })
 
                 })
-            
+
             })
 
             return extendedObject || object
 
         },
 
-        getShortForm : function(address){
-            if(!address) address = app.user.address.value
+        getShortForm: function (address) {
+            if (!address) address = app.user.address.value
 
             var userInfo = this.get(address) || {}
             var name = app.platform.api.clearname(userInfo.name || address) || address
 
             return {
-                address : address,
-                name : name,
-                reputation : Math.max(userInfo.reputation || 0, 0),
-                image : userInfo.image,
-                letter : (name ? name[0] : '').toUpperCase(),
-                deleted : userInfo.deleted, /// check temp ///app.platform.sdk.user.deletedaccount(address),
-                itisme : address == app.user.address.value,
-                addresses : userInfo.addresses || [],
-                dev : userInfo.dev || false,
-                real : app.platform.real[address]
+                address: address,
+                name: name,
+                reputation: Math.max(userInfo.reputation || 0, 0),
+                image: userInfo.image,
+                letter: (name ? name[0] : '').toUpperCase(),
+                deleted: userInfo.deleted, /// check temp ///app.platform.sdk.user.deletedaccount(address),
+                itisme: address == app.user.address.value,
+                addresses: userInfo.addresses || [],
+                dev: userInfo.dev || false,
+                real: app.platform.real[address]
                 //markHtml : app.platform.ui.markUser(address)
             }
         },
 
-        getclear : function(address){
+        getclear: function (address) {
             return storage['userInfoFull'][address] || storage['userInfoLight'][address]
         },
 
-        findlocal : function(finder){
+        findlocal: function (finder) {
             return _.find(_.toArray(objects['userInfoFull']).concat(objects['userInfoLight']), finder)
         },
 
-        clearStorage : function(address){
+        clearStorage: function (address) {
             delete storage['userInfoFull'][address]
             delete storage['userInfoLight'][address]
 
@@ -727,22 +727,22 @@ var pSDK = function({app, api, actions}){
             delete objects['userInfoLight'][address]
         },
 
-        cleardb : function(address){
+        cleardb: function (address) {
 
             clearfromdb('userInfoFullFB', [address])
             clearfromdb('userInfoFull', [address])
         },
 
-        clearAll : function(address){
+        clearAll: function (address) {
             this.clearStorage(address)
             this.cleardb(address)
         }
     }
 
     self.userState = {
-        keys : ['userState'],
-        
-        load : function(addresses, update){
+        keys: ['userState'],
+
+        load: function (addresses, update) {
 
             return loadList('userState', addresses, (addresses) => {
 
@@ -750,20 +750,20 @@ var pSDK = function({app, api, actions}){
                     if (d && !_.isArray(d)) d = [d] /// check responce
 
                     return _.map(d || [], (info) => {
-                        return { 
-                            key : info.address,
-                            data : info
+                        return {
+                            key: info.address,
+                            data: info
                         }
                     })
 
                 }).catch(e => {
 
-                    if(e && e.code == -5){
+                    if (e && e.code == -5) {
                         ///// userstate hack
                         return Promise.resolve(_.map(addresses, (address) => {
                             return {
-                                key : address,
-                                data : null //{}
+                                key: address,
+                                data: null //{}
                             }
                         }))
                     }
@@ -771,69 +771,69 @@ var pSDK = function({app, api, actions}){
                     return Promise.reject(e)
                 })
 
-            }, { 
+            }, {
                 update,
-                indexedDb : 'userState',
-                fallbackIndexedDB : 'userStateFB',
+                indexedDb: 'userState',
+                fallbackIndexedDB: 'userStateFB',
             })
 
         },
 
-        get : function(address){
+        get: function (address) {
             return storage['userState'][address]
         },
 
-        getmy : function(){
+        getmy: function () {
             return app.user.address.value ? this.get(app.user.address.value) : null
         },
 
-        changeLimits : function(address, limit, value){
+        changeLimits: function (address, limit, value) {
             var state = this.get(address);
 
-            if (state){
+            if (state) {
                 state[limit + "_spent"] = (state[limit + "_spent"] || 0) + value
                 state[limit + "_unspent"] = (state[limit + "_unspent"] || 1) - value
             }
         },
 
-        change : function(address, state){
+        change: function (address, state) {
             this.clear.all('userState', address)
 
             storage['userState'][address] = state
         }
     }
-    
+
     self.accSet = {
-        keys : ['accSet'],
-        load : function(address, update){
+        keys: ['accSet'],
+        load: function (address, update) {
 
             return loadone('accSet', address, (ids) => {
                 return api.rpc('getaccountsetting', [ids[0]]).then(d => {
 
                     var setting = {}
 
-                    try{
+                    try {
                         setting = JSON.parse(d || "{}")
                     }
-                    catch(e) {
-                        
+                    catch (e) {
+
                     }
-                
+
                     return [{
-                        key : ids[0],
-                        data : setting
+                        key: ids[0],
+                        data: setting
                     }]
 
                 })
             }, {
                 update,
-                indexedDb : 'accSet',
+                indexedDb: 'accSet',
             })
 
         },
 
 
-        get : function(address){
+        get: function (address) {
             return storage.accSet[address] || {}
         }
 
@@ -841,60 +841,98 @@ var pSDK = function({app, api, actions}){
     /// content
 
     self.comment = {
-        keys : ['comment'],
-        request : function(executor, hash){
-            return request('comment', hash, executor, {
-                requestIndexedDb : 'commentRequest',
+        keys: ['comment'],
+        request: function (executor, hash) {
 
-                insertFromResponse : (r) => this.insertFromResponseEx(r)
+
+            return request('comment', hash, (data) => {
+
+                return executor(data).then(r => {
+                    return this.cleanData(r)
+                })
+
+            }, {
+                requestIndexedDb: 'commentRequest',
+
+                insertFromResponse: (r) => this.insertFromResponseEx(r)
             })
         },
 
-        load : function(ids, update){
+        cleanData: function (rawcomments) {
+            return _.filter(_.map(rawcomments, (c) => {
+
+                try {
+
+                    c.msgparsed = JSON.parse(c.msg)
+
+                    c.msgparsed.url = clearStringXss(decodeURIComponent(c.msgparsed.url || ""));
+
+                    c.msgparsed.message = clearStringXss(decodeURIComponent(c.msgparsed.message || "").replace(/\+/g, " ")).replace(/\n{2,}/g, '\n\n')
+
+                    c.msgparsed.images = _.map(c.msgparsed.images || [], function (i) {
+
+                        return clearStringXss(decodeURIComponent(i))
+                    });
+
+                }
+                catch (e) {
+                    console.error(e)
+                    return null
+                }
+
+
+                return c
+
+            }), c => c)
+        },
+
+        load: function (ids, update) {
             return loadList('comment', ids, (ids) => {
 
-                return api.rpc('getcomments', ['','', app.user.address.value || '', ids]).then(d => {
+                return api.rpc('getcomments', ['', '', app.user.address.value || '', ids]).then(d => {
+
+                    d = this.cleanData(d)
 
                     checkObjectInActions(_.map(d, (c) => {
                         return {
-                            txid : c.id
+                            txid: c.id
                         }
                     }))
 
                     return _.map(d || [], (info) => {
-                        return { 
-                            key : info.id,
-                            data : info
+                        return {
+                            key: info.id,
+                            data: info
                         }
                     })
 
                 })
             }, {
-                transform : (r) => this.transform(r),
+                transform: (r) => this.transform(r),
                 update,
-                indexedDb : 'comment',
+                indexedDb: 'comment',
             })
         },
 
-        transform : function({key, data}){
+        transform: function ({ key, data }) {
             var comment = new pComment();
-                comment.import(data)
+            comment.import(data)
 
             return comment
         },
 
-        insertFromResponseEx : function(data){
+        insertFromResponseEx: function (data) {
             return Promise.resolve(this.insertFromResponse(data))
         },
 
-        insertFromResponse : function(data){
+        insertFromResponse: function (data) {
             var result = _.map(data, (r) => {
 
-                if(!r) return null
+                if (!r) return null
 
                 return {
-                    key : r.id,
-                    data : r
+                    key: r.id,
+                    data: r
                 }
             })
 
@@ -904,17 +942,17 @@ var pSDK = function({app, api, actions}){
 
             _.each(result, (r) => {
 
-                if (r && r.key && r.data){
+                if (r && r.key && r.data) {
                     storage[key][r.key] = r.data
                     filtered.push(r)
                 }
 
                 var object = this.transform(r)
 
-                if (object){
+                if (object) {
                     objects[key][r.key] = object
 
-                    checkObjectInActions([{txid : object.id}])
+                    checkObjectInActions([{ txid: object.id }])
                 }
 
             })
@@ -923,14 +961,14 @@ var pSDK = function({app, api, actions}){
 
         },
 
-        insertFromResponseSmall : function(data){
+        insertFromResponseSmall: function (data) {
             var result = _.map(data, (r) => {
 
-                if(!r) return null
+                if (!r) return null
 
                 return {
-                    key : r.id,
-                    data : r
+                    key: r.id,
+                    data: r
                 }
             })
 
@@ -938,56 +976,55 @@ var pSDK = function({app, api, actions}){
 
             _.each(result, (r) => {
 
-                if(!storage[key][r.key]){
+                if (!storage[key][r.key]) {
                     storage[key][r.key] = r.data
                 }
 
                 var object = this.transform(r)
 
-                if (object && !objects[key][r.key]){
+                if (object && !objects[key][r.key]) {
                     objects[key][r.key] = object
                 }
 
             })
 
-            
+
 
         },
 
-        listener : function(exp, address, status){
-            if (status == 'completed'){
+        listener: function (exp, address, status) {
+            if (status == 'completed') {
 
-                if (exp.optype == 'comment'){
+                if (exp.optype == 'comment') {
                     objects['comment'][exp.id] = this.applyAction(objects['comment'][exp.id] || exp, exp)
                 }
-                else{
+                else {
                     this.applyAction(objects['comment'][exp.id], exp)
                 }
 
                 this.applyAction(objects['share'][exp.postid], exp)
 
-                console.log("CLEARREWUS")
                 clearallfromdb('commentRequest')
             }
         },
-        applyAction : function(object, exp){
+        applyAction: function (object, exp) {
 
-            if (object){
-                if (object.type == 'share'){
+            if (object) {
+                if (object.type == 'share') {
 
-                    if(object.txid == exp.postid){
+                    if (object.txid == exp.postid) {
 
                         var last = object.lastComment
 
-                        if(exp.optype == 'comment'){
+                        if (exp.optype == 'comment') {
                             object.comments++
 
                             if (!last || Number(last.timeUpd) < Number(exp.timeUpd)) {
                                 object.lastComment = exp
                             }
                         }
-    
-                        if(exp.optype == 'commentEdit'){
+
+                        if (exp.optype == 'commentEdit') {
 
                             if (last && last.id == exp.id) {
 
@@ -996,8 +1033,8 @@ var pSDK = function({app, api, actions}){
 
                             }
                         }
-    
-                        if(exp.optype == 'commentDelete'){
+
+                        if (exp.optype == 'commentDelete') {
                             if (last && last.id == exp.id) {
                                 last.deleted = true
                             }
@@ -1008,53 +1045,52 @@ var pSDK = function({app, api, actions}){
                     }
                 }
 
-                if (object.type == 'comment'){
+                if (object.type == 'comment') {
 
-                    if(exp.optype == 'comment'){
-                        if(object.id == exp.id) return exp
+                    if (exp.optype == 'comment') {
+                        if (object.id == exp.id) return exp
                     }
 
-                    if(exp.optype == 'commentEdit'){
-                        if (object.id == exp.id){
+                    if (exp.optype == 'commentEdit') {
+                        if (object.id == exp.id) {
                             object.msg = exp.msg
                             object.timeUpd = exp.timeUpd
                         }
                     }
 
-                    if(exp.optype == 'commentDelete'){
-                        if (object.id == exp.id){
+                    if (exp.optype == 'commentDelete') {
+                        if (object.id == exp.id) {
                             object.deleted = true
                         }
                     }
                 }
             }
-          
+
 
             return object
         },
 
 
-        gets : function(ids){
+        gets: function (ids) {
 
-            if(!_.isArray(ids)) ids = [ids]
+            if (!_.isArray(ids)) ids = [ids]
 
             return _.filter(_.map(ids, s => this.get(s)), s => s)
         },
 
-        get : function(id){
+        get: function (id) {
             return this.tempExtend(id ? (objects.comment[id] || null) : null, id)
         },
 
-        getclear : function(id){
+        getclear: function (id) {
             return objects.comment[id] || null
         },
 
-        tempAdd : function(objects = [], filter){
+        tempAdd: function (objects = [], filter) {
 
             _.each(actions.getAccounts(), (account) => {
                 var actions = _.filter(account.getTempActions('comment'), filter)
 
-                console.log("account.getTempActions('comment')", account.getTempActions('comment'))
 
                 _.each(actions, (a) => {
                     objects.unshift(a)
@@ -1062,10 +1098,10 @@ var pSDK = function({app, api, actions}){
             })
 
             return objects
-            
+
         },
 
-        tempExtend : function(object, id){
+        tempExtend: function (object, id) {
 
             var extendedObject = null
 
@@ -1077,30 +1113,30 @@ var pSDK = function({app, api, actions}){
 
                     _.each(account.getTempActions(k), (alias) => {
 
-                        if (!object && alias.id == id){
+                        if (!object && alias.id == id) {
                             extendedObject = alias
                         }
-                        else{
+                        else {
 
 
-                            if(extendedObject || object){
-                                if (self[k] && self[k].applyAction){
+                            if (extendedObject || object) {
+                                if (self[k] && self[k].applyAction) {
 
                                     var applied = self[k].applyAction(extendedObject || object.clone(), alias)
-        
+
                                     if (applied) extendedObject = applied
                                 }
                             }
 
-                            
+
 
                         }
 
-                        
+
                     })
 
                 })
-            
+
             })
 
             return extendedObject || object || null
@@ -1109,15 +1145,15 @@ var pSDK = function({app, api, actions}){
     }
 
     self.cScore = {
-        listener : function(exp, address, status){
-            if (status == 'completed'){
+        listener: function (exp, address, status) {
+            if (status == 'completed') {
                 objects['comment'][exp.comment.v] = this.applyAction(objects['comment'][exp.comment.v], exp)
             }
         },
-        applyAction : function(comment, exp){
+        applyAction: function (comment, exp) {
 
-            if (comment){
-                if (comment.id == exp.comment.v && exp.address == app.user.address.value){ /// for me
+            if (comment) {
+                if (comment.id == exp.comment.v && exp.address == app.user.address.value) { /// for me
                     comment.myScore = exp.value.v
                 }
             }
@@ -1127,18 +1163,27 @@ var pSDK = function({app, api, actions}){
     }
 
     self.share = {
-        keys : ['share'],
+        keys: ['share'],
 
-        request : function(executor, hash){
-            return request('share', hash, executor, {
-                requestIndexedDb : 'shareRequest',
+        request: function (executor, hash) {
+            return request('share', hash, (data) => {
+                
+                return executor(data).then(r => {
 
-                insertFromResponse : (r) => this.insertFromResponseEx(r)
+
+                    if(r.contents) r.contents = this.cleanData(r.contents)
+                    else r = this.cleanData(r)
+                    return r
+                })
+
+            }, {
+                requestIndexedDb: 'shareRequest',
+
+                insertFromResponse: (r) => this.insertFromResponseEx(r)
             })
         },
 
-        insertFromResponseEx : function(response){
-
+        insertFromResponseEx: function (response) {
 
             self.userInfo.insertFromResponse(response.users, true)
 
@@ -1147,39 +1192,40 @@ var pSDK = function({app, api, actions}){
             return this.insertFromResponse(response.contents)
         },
 
-        insertFromResponse : function(data){
+        insertFromResponse: function (data) {
+
             var result = _.map(data, (r) => {
 
-                if(!r) return null
+                if (!r) return null
 
                 return {
-                    key : r.txid,
-                    data : r
+                    key: r.txid,
+                    data: r
                 }
             })
 
             var indexedDb = 'share'
             var key = 'share'
-            
+
             return settodb(indexedDb, result).then(() => {
 
                 var filtered = []
 
                 _.each(result, (r) => {
 
-                    if (r && r.key && r.data){
+                    if (r && r.key && r.data) {
                         storage[key][r.key] = r.data
                         filtered.push(r)
                     }
-    
+
                     var object = this.transform(r)
 
-                    if (object){
+                    if (object) {
                         objects[key][r.key] = object
 
                         checkObjectInActions([object])
                     }
-    
+
                 })
 
                 return filtered
@@ -1188,14 +1234,19 @@ var pSDK = function({app, api, actions}){
 
         },
 
-        insertFromResponseSmall: function(data){
+        insertFromResponseSmall: function (data) {
+
+
+            data = this.cleanData(data)
+
+
             var result = _.map(data, (r) => {
 
-                if(!r) return null
+                if (!r) return null
 
                 return {
-                    key : r.txid,
-                    data : r
+                    key: r.txid,
+                    data: r
                 }
             })
 
@@ -1203,12 +1254,12 @@ var pSDK = function({app, api, actions}){
 
             _.each(result, (r) => {
 
-                if(!storage[key][r.key])
+                if (!storage[key][r.key])
                     storage[key][r.key] = r.data
 
                 var object = this.transform(r, true)
 
-                if (object && !objects[key][r.key]){
+                if (object && !objects[key][r.key]) {
                     objects[key][r.key] = object
                 }
 
@@ -1218,28 +1269,27 @@ var pSDK = function({app, api, actions}){
 
         },
 
-        transform : function({key, data : share}, small){
+        transform: function ({ key, data: share }, small) {
 
-            if (share.userprofile){
+            if (share.userprofile) {
 
-                self.userInfo[!small? 'insertFromResponse' : 'insertFromResponseSmall']([share.userprofile], true)
-                
+                self.userInfo[!small ? 'insertFromResponse' : 'insertFromResponseSmall']([share.userprofile], true)
+
             }
 
-            if(share.lastComment){
-                self.comment[!small? 'insertFromResponse' : 'insertFromResponseSmall']([share.lastComment])
+            if (share.lastComment) {
+                self.comment[!small ? 'insertFromResponse' : 'insertFromResponseSmall'](self.comment.cleanData([share.lastComment]))
             }
 
             var s = new pShare();
-                s._import(share);
+            s._import(share);
 
-            if (share.ranks){
+            if (share.ranks) {
                 s.info = share.ranks
             }
-            else
-            {
+            else {
 
-                if(
+                if (
                     share.BOOST || share.DPOST ||
                     share.DREP || share.LAST5 ||
                     share.LAST5 || share.LAST5R ||
@@ -1247,20 +1297,20 @@ var pSDK = function({app, api, actions}){
                     share.PREPR || share.UREP
                 )
                     s.info = {
-                        BOOST : share.BOOST,
-                        DPOST : share.DPOST,
-                        DREP : share.DREP,
-                        LAST5 : share.LAST5,
-                        LAST5R : share.LAST5R,
-                        POSTRF : share.POSTRF,
-                        PREP : share.PREP,
-                        PREPR : share.PREPR,
-                        UREP : share.UREP,
-                        UREPR : share.UREPR,
+                        BOOST: share.BOOST,
+                        DPOST: share.DPOST,
+                        DREP: share.DREP,
+                        LAST5: share.LAST5,
+                        LAST5R: share.LAST5R,
+                        POSTRF: share.POSTRF,
+                        PREP: share.PREP,
+                        PREPR: share.PREPR,
+                        UREP: share.UREP,
+                        UREPR: share.UREPR,
                     }
             }
 
-            if (s.lastComment){
+            if (s.lastComment) {
                 s.lastComment = objects.comment[s.lastComment.id]
             }
 
@@ -1270,24 +1320,129 @@ var pSDK = function({app, api, actions}){
             return s
         },
 
-        gets : function(ids){
+        gets: function (ids) {
 
-            if(!_.isArray(ids)) ids = [ids]
+            if (!_.isArray(ids)) ids = [ids]
 
             return _.filter(_.map(ids, s => this.get(s)), s => s)
         },
 
-        get : function(id){
+        get: function (id) {
             return this.tempExtend(id ? (objects.share[id] || null) : null, id)
         },
 
-        load : function(txids, update){
+        cleanData: function (rawshares) {
+
+
+            return _.filter(_.map(rawshares, (c) => {
+
+                console.log('rawshares', c)
+
+                try {
+                    c.u = clearStringXss(decodeURIComponent(c.u || ''));
+                    c.c = clearStringXss(decodeURIComponent(c.c || '').replace(/\+/g, " "));
+
+                    if (c.s && c.s.v == 'a') {
+
+                        if (c.s.version >= 2) {
+
+                            //console.log("C", c.m)
+
+                            //c.m = JSON.parse(c.m)
+                        }
+                        else {
+                            var whiteclass = {
+                                'js-player': true,
+                                'plyr': true,
+                                'medium-insert-images': true,
+                                'medium-insert-images-grid': true,
+                                'medium-insert-embeds': true
+                            }
+
+                            c.m = filterXSS(c.m, {
+                                stripIgnoreTag: true,
+                                whiteList: {
+                                    a: ["href", "title", "target", 'cordovalink'],
+                                    br: ["style"],
+                                    b: ["style"],
+                                    span: ["style"],
+                                    figure: ["style"],
+                                    figcaption: ["style"/*, "class"*/],
+                                    i: ["style"],
+                                    img: ["src"/*, "width", "height"*/],
+                                    div: [ /*"class",*/"data-plyr-provider", "data-plyr-embed-id"],
+                                    p: [],
+                                    ul: [],
+                                    ol: [],
+                                    li: [],
+                                    h2: [],
+                                    h1: [],
+                                    h3: [],
+                                    h4: [],
+                                    h5: [],
+                                    em: [],
+                                    u: [],
+                                    blockquote: [],
+                                    strong: [],
+                                    picture: ['img-type'],
+                                    source: ['srcset', 'type'],
+                                    strike: []
+
+                                },
+
+                                onIgnoreTagAttr: function (tag, name, value, isWhiteAttr) {
+                                    if (name === "class") {
+                                        var v = value.split(' ');
+
+                                        v = _.filter(v, function (v) {
+                                            return whiteclass[v]
+                                        })
+
+                                        return name + '="' + v.join(' ') + '"';
+                                    }
+                                }
+
+                            }).replace(/http:\/\//g, 'https://').replace(/\n{2,}/g, '\n\n')
+
+                        }
+
+                    }
+                    else {
+                        console.log("HERE", c)
+                        c.m = nl2br(trimrn(findAndReplaceLink(filterXSS(decodeURIComponent(c.m), {
+                            whiteList: [],
+                            stripIgnoreTag: true,
+                        })))).replace(/\n{2,}/g, '\n\n')
+                    }
+
+                    c.t = _.map(c.t, function(t){ 
+                        return clearStringXss(clearTagString(decodeURIComponent(t)))
+                    })
+
+                    c.i = _.map(c.i || [], function(i){return clearStringXss(i)});
+                }
+                catch (e) {
+                    console.error(e)
+
+                    return null
+                }
+
+
+                return c
+
+            }), c => c)
+        },
+
+        load: function (txids, update) {
+
 
             return loadList('share', txids, (txids) => {
 
                 return api.rpc('getrawtransactionwithmessagebyid', [txids]).then(d => {
 
                     if (d && !_.isArray(d)) d = [d];
+
+                    d = this.cleanData(d)
 
                     d = _.sortBy(d, (share) => _.indexOf(txids, share.txid))
 
@@ -1296,36 +1451,36 @@ var pSDK = function({app, api, actions}){
                     checkObjectInActions(d)
 
                     return _.map(d || [], (info) => {
-                        return { 
-                            key : info.txid,
-                            data : info
+                        return {
+                            key: info.txid,
+                            data: info
                         }
                     })
 
                 })
             }, {
-                queue : true,
-                transform : (r) => this.transform(r),
+                queue: true,
+                transform: (r) => this.transform(r),
                 update,
-                indexedDb : 'share',
+                indexedDb: 'share',
             })
         },
 
-        listener : function(exp, address, status){
+        listener: function (exp, address, status) {
 
 
-            if (status == 'completed'){
+            if (status == 'completed') {
                 clearallfromdb('shareRequest')
                 clearfromdb('share', _.filter([exp.txid], r => r))
 
                 //objects['share'][exp.txid] =
-                 
+
                 var modified = this.applyAction(objects['share'][exp.txid], exp) //// check txidEdit
 
-                if (modified){
+                if (modified) {
                     objects['share'][modified.txid] = modified
                 }
-                else{
+                else {
 
                     /*if (exp.txidEdit){
                         exp = exp.clone()
@@ -1339,13 +1494,13 @@ var pSDK = function({app, api, actions}){
         },
 
 
-        applyAction : function(object, exp){
+        applyAction: function (object, exp) {
 
-            if (exp.editing){
+            if (exp.editing) {
 
-                if(!object) return
+                if (!object) return
 
-                if (exp.txid == object.txid){
+                if (exp.txid == object.txid) {
 
                     object.message = exp.message
                     object.caption = exp.caption
@@ -1357,22 +1512,22 @@ var pSDK = function({app, api, actions}){
                     object.edit = true
                     //object.txidEdit = exp.txid
                     object.temp = exp.temp
-                    object.relay = exp.relay   
+                    object.relay = exp.relay
 
                 }
 
-                         
-            
-            }
 
-            else{
 
             }
-       
+
+            else {
+
+            }
+
             return object
         },
 
-        tempExtend : function(object, txid){
+        tempExtend: function (object, txid) {
 
 
             var extendedObject = null
@@ -1385,9 +1540,9 @@ var pSDK = function({app, api, actions}){
 
                     _.each(account.getTempActions(k), (alias) => {
 
-                        if (k == 'share'){
+                        if (k == 'share') {
 
-                            if (alias.txid == txid){
+                            if (alias.txid == txid) {
                                 extendedObject = alias
 
                                 return
@@ -1396,36 +1551,36 @@ var pSDK = function({app, api, actions}){
 
                         var shareId = (extendedObject || object || {}).txid
 
-                        if (shareId){
+                        if (shareId) {
 
-                            if ((alias.share || alias.postid || alias.txid) == shareId){
+                            if ((alias.share || alias.postid || alias.txid) == shareId) {
 
-                                if (self[k] && self[k].applyAction){
-        
+                                if (self[k] && self[k].applyAction) {
+
                                     var applied = self[k].applyAction(extendedObject || object.clone(), alias)
-        
+
                                     if (applied) extendedObject = applied
                                 }
 
                             }
 
-                            
+
                         }
 
                         /////////
 
-                        
+
                     })
 
                 })
-            
+
             })
 
             return extendedObject || object || null
 
         },
 
-        tempAdd : function(objects = [], filter){
+        tempAdd: function (objects = [], filter) {
 
             _.each(actions.getAccounts(), (account) => {
                 var actions = _.filter(account.getTempActions('share'), filter)
@@ -1438,28 +1593,28 @@ var pSDK = function({app, api, actions}){
             })
 
             return objects
-            
+
         }
     }
 
     /// actions
 
     self.blocking = {
-        listener : function(exp, address, status){
-            if (status == 'completed'){
+        listener: function (exp, address, status) {
+            if (status == 'completed') {
 
                 this.applyAction(objects['userInfoFull'][address], exp)
                 this.applyAction(objects['userInfoFull'][exp.vsaddress], exp)
             }
         },
-        applyAction : function(object, exp){
+        applyAction: function (object, exp) {
 
-            if (object){
-                if (object.address == exp.address){ /// for me
+            if (object) {
+                if (object.address == exp.address) { /// for me
                     object.addRelation(exp.vsaddress, 'blocking')
                 }
-               
-                if (object.address == exp.vsaddress){ /// for me
+
+                if (object.address == exp.vsaddress) { /// for me
                     //object.addRelation(exp.vsaddress, 'blocking')
                 }
             }
@@ -1469,21 +1624,21 @@ var pSDK = function({app, api, actions}){
     }
 
     self.unblocking = {
-        listener : function(exp, address, status){
-            if (status == 'completed'){
+        listener: function (exp, address, status) {
+            if (status == 'completed') {
 
                 this.applyAction(objects['userInfoFull'][address], exp)
                 this.applyAction(objects['userInfoFull'][exp.vsaddress], exp)
             }
         },
-        applyAction : function(object, exp){
+        applyAction: function (object, exp) {
 
-            if (object){
-                if (object.address == exp.address){ /// for me
+            if (object) {
+                if (object.address == exp.address) { /// for me
                     object.removeRelation(exp.vsaddress, 'blocking')
                 }
-               
-                if (object.address == exp.vsaddress){ /// for me
+
+                if (object.address == exp.vsaddress) { /// for me
                 }
             }
 
@@ -1492,8 +1647,8 @@ var pSDK = function({app, api, actions}){
     }
 
     self.subscribe = {
-        listener : function(action, address, status){
-            if (status == 'completed'){
+        listener: function (action, address, status) {
+            if (status == 'completed') {
 
                 var exp = action.get()
 
@@ -1501,16 +1656,16 @@ var pSDK = function({app, api, actions}){
                 this.applyAction(objects['userInfoFull'][exp.vsaddress], exp)
             }
         },
-        applyAction : function(object, exp){
+        applyAction: function (object, exp) {
 
-            if (object){
-                if (object.address == exp.address){ /// for me
+            if (object) {
+                if (object.address == exp.address) { /// for me
                     object.addRelation({
-                        adddress : exp.vsaddress
+                        adddress: exp.vsaddress
                     })
                 }
-               
-                if (object.address == exp.vsaddress){
+
+                if (object.address == exp.vsaddress) {
                     object.addRelation(object.address, 'subscribers')
                 }
             }
@@ -1518,7 +1673,7 @@ var pSDK = function({app, api, actions}){
             return object
         },
 
-        tempAdd : function(objects = [], filter){
+        tempAdd: function (objects = [], filter) {
 
             _.each(actions.getAccounts(), (account) => {
                 var actions = _.filter(account.getTempActions('subscribePrivate'), filter).concat(_.filter(account.getTempActions('subscribe'), filter))
@@ -1529,32 +1684,32 @@ var pSDK = function({app, api, actions}){
             })
 
             return objects
-            
+
         }
     }
 
     self.subscribePrivate = {
-        listener : function(exp, address, status){
-            if (status == 'completed'){
+        listener: function (exp, address, status) {
+            if (status == 'completed') {
 
                 this.applyAction(objects['userInfoFull'][address], exp)
                 this.applyAction(objects['userInfoFull'][exp.vsaddress], exp)
             }
         },
-        applyAction : function(object, exp){
+        applyAction: function (object, exp) {
 
-            if (object){
-                if (object.address == exp.address){ /// for me
+            if (object) {
+                if (object.address == exp.address) { /// for me
                     object.addRelation({
-                        adddress : exp.vsaddress,
-                        private : true
+                        adddress: exp.vsaddress,
+                        private: true
                     })
                 }
-               
-                if (object.address == exp.vsaddress){
+
+                if (object.address == exp.vsaddress) {
                     object.addRelation(object.address, 'subscribers')
-                    
-                    
+
+
                     //object.addRelation(exp.vsaddress, 'blocking')
                 }
             }
@@ -1564,26 +1719,26 @@ var pSDK = function({app, api, actions}){
     }
 
     self.unsubscribe = {
-        listener : function(exp, address, status){
-            if (status == 'completed'){
+        listener: function (exp, address, status) {
+            if (status == 'completed') {
 
                 this.applyAction(objects['userInfoFull'][address], exp)
                 this.applyAction(objects['userInfoFull'][exp.vsaddress], exp)
             }
         },
-        applyAction : function(object, exp){
+        applyAction: function (object, exp) {
 
-            if (object){
-                if (object.address == exp.address){ /// for me
+            if (object) {
+                if (object.address == exp.address) { /// for me
                     object.removeRelation({
-                        adddress : exp.vsaddress
+                        adddress: exp.vsaddress
                     })
                 }
-               
-                if (object.address == exp.vsaddress){
+
+                if (object.address == exp.vsaddress) {
                     object.removeRelation(object.address, 'subscribers')
-                    
-                    
+
+
                     //object.addRelation(exp.vsaddress, 'blocking')
                 }
             }
@@ -1593,16 +1748,16 @@ var pSDK = function({app, api, actions}){
     }
 
     self.contentDelete = {
-        listener : function(exp, address, status){
-            if (status == 'completed'){
+        listener: function (exp, address, status) {
+            if (status == 'completed') {
 
                 objects['share'][exp.txidEdit] = this.applyAction(objects['share'][exp.txidEdit], exp)
             }
         },
-        applyAction : function(share, exp){
+        applyAction: function (share, exp) {
 
-            if (share){
-                if (share.txid == exp.txidEdit){ /// for me
+            if (share) {
+                if (share.txid == exp.txidEdit) { /// for me
                     share.deleted = true
                 }
             }
@@ -1612,15 +1767,15 @@ var pSDK = function({app, api, actions}){
     }
 
     self.upvoteShare = {
-        listener : function(exp, address, status){
-            if (status == 'completed'){
+        listener: function (exp, address, status) {
+            if (status == 'completed') {
                 objects['share'][exp.share] = this.applyAction(objects['share'][exp.share], exp)
             }
         },
-        applyAction : function(share, exp){
+        applyAction: function (share, exp) {
 
-            if (share){
-                if (share.txid == exp.share && exp.address == app.user.address.value){ /// for me
+            if (share) {
+                if (share.txid == exp.share && exp.address == app.user.address.value) { /// for me
                     share.myVal = Number(exp.value)
                 }
             }
@@ -1632,9 +1787,9 @@ var pSDK = function({app, api, actions}){
     /// requests
 
     self.myScore = {
-        keys : ['myScore'],
+        keys: ['myScore'],
 
-        load : function(shareIds, commentIds, update){
+        load: function (shareIds, commentIds, update) {
 
             var ids = [].concat(shareIds, commentIds)
 
@@ -1652,55 +1807,55 @@ var pSDK = function({app, api, actions}){
 
                     return _.map(ids, (id) => {
                         return {
-                            key : id,
-                            data : _.find(data, (v) => {
+                            key: id,
+                            data: _.find(data, (v) => {
                                 return id == (v.posttxid || v.cmntid)
                             }) || {}
                         }
                     })
-                   
+
                 })
 
             }, {
-                update, 
-                transform : (v) => this.transform(v),
-                indexedDb : 'myScore',
-                fallbackIndexedDB : 'myScoreFB'
+                update,
+                transform: (v) => this.transform(v),
+                indexedDb: 'myScore',
+                fallbackIndexedDB: 'myScoreFB'
             })
         },
 
-        transform : function({key, data}){
-            if(data.posttxid){
-                if (objects.share[data.posttxid]){
+        transform: function ({ key, data }) {
+            if (data.posttxid) {
+                if (objects.share[data.posttxid]) {
                     objects.share[data.posttxid].myVal = Number(data.value)
                 }
             }
 
-            if(data.cmntid){
-                if (objects.comment[data.cmntid] && data.myScore){
+            if (data.cmntid) {
+                if (objects.comment[data.cmntid] && data.myScore) {
                     objects.comment[data.cmntid].myScore = Number(data.myScore)
                 }
             }
 
             return data
-        }   
+        }
     }
 
     self.transaction = {
-        keys : ['transaction'],
-        load : function(id, update){
+        keys: ['transaction'],
+        load: function (id, update) {
 
             return loadone('transaction', id, (ids) => {
                 return api.rpc('getrawtransaction', [ids[0], 1]).then(d => {
 
-                    if(_.isEmpty(d)){
+                    if (_.isEmpty(d)) {
                         return []
                     }
 
-                    if(!d.confirmations) {
+                    if (!d.confirmations) {
                         d.confirmations = 0
 
-                        if(d.height) {
+                        if (d.height) {
                             app.platform.currentBlock ? (d.confirmations = Math.max(app.platform.currentBlock - d.height, 0)) : null
                         } else {
                             app.platform.currentBlock ? (d.height = app.platform.currentBlock) : null
@@ -1708,8 +1863,8 @@ var pSDK = function({app, api, actions}){
                     }
 
                     return [{
-                        key : ids[0],
-                        data : d
+                        key: ids[0],
+                        data: d
                     }]
 
                 })
@@ -1717,29 +1872,29 @@ var pSDK = function({app, api, actions}){
                 update
             }).then(r => {
 
-                if(!r[id]) return Promise.reject({
-                    code : -5
+                if (!r[id]) return Promise.reject({
+                    code: -5
                 })
 
                 return r[id]
 
             })
 
-            
+
         }
     }
 
     self.nameAddress = {
-        keys : ['nameAddress'],
-        load : function(name, update){
+        keys: ['nameAddress'],
+        load: function (name, update) {
 
             return loadone('nameAddress', name, (ids) => {
                 return api.rpc('getuseraddress', [ids[0]]).then(r => {
 
-                    if (r && r[0]){
+                    if (r && r[0]) {
                         return [{
-                            key : name,
-                            data : r[0].address
+                            key: name,
+                            data: r[0].address
                         }]
                     }
 
@@ -1748,11 +1903,11 @@ var pSDK = function({app, api, actions}){
                 })
             }, {
                 update,
-                indexedDb : 'nameAddress',
-                
+                indexedDb: 'nameAddress',
+
             }).then(r => {
 
-                if(!r[name]) return Promise.reject('404')
+                if (!r[name]) return Promise.reject('404')
 
                 return r[name]
 
@@ -1762,51 +1917,51 @@ var pSDK = function({app, api, actions}){
     }
 
     self.search = {
-        keys : ['search'],
-        request : function(executor, hash){
+        keys: ['search'],
+        request: function (executor, hash) {
             return request('search', hash, executor, {
-                requestIndexedDb : 'searchRequest',
+                requestIndexedDb: 'searchRequest',
             })
         },
     }
 
     self.searchUsers = {
-        keys : ['searchUsers'],
-        request : function(executor, hash){
+        keys: ['searchUsers'],
+        request: function (executor, hash) {
             return request('searchUsers', hash, executor, {
-                requestIndexedDb : 'searchUsersRequest',
+                requestIndexedDb: 'searchUsersRequest',
             })
         },
     }
 
     self.tag = {
-        keys : ['tag'],
-        request : function(executor, hash){
+        keys: ['tag'],
+        request: function (executor, hash) {
             return request('tag', hash, executor, {
-                requestIndexedDb : 'tagRequest',
+                requestIndexedDb: 'tagRequest',
 
-                transformResult : (r) => this.transformResult(r)
+                transformResult: (r) => this.transformResult(r)
             })
-        }, 
+        },
 
-        transformResult : function(data){
+        transformResult: function (data) {
 
             return _.filter(_.map(data, (tg) => {
 
                 var t = null
 
-                try{
+                try {
                     t = {
-                        count : tg.count,
-                        tag : clearTagString(trim(decodeURIComponent(decodeURIComponent(tg.tag))))
+                        count: tg.count,
+                        tag: clearTagString(trim(decodeURIComponent(decodeURIComponent(tg.tag))))
                     }
-                }catch(e){
+                } catch (e) {
                     //console.log(tg, e)
                 }
 
                 return t
-                
-            }), (t) => {return t})
+
+            }), (t) => { return t })
 
 
         }
@@ -1814,9 +1969,9 @@ var pSDK = function({app, api, actions}){
 
 
     /// end
-    
+
     self.clear = {
-        storage : function(k, key){
+        storage: function (k, key) {
             var keys = self[k]?.keys || []
 
             _.each(keys, (k) => {
@@ -1824,31 +1979,31 @@ var pSDK = function({app, api, actions}){
             })
         },
 
-        db : function(k, key){
+        db: function (k, key) {
             var keys = self[k]?.keys || []
 
             _.each(keys, (k) => {
 
-                if (key){
+                if (key) {
                     clearfromdb(k, [key])
                     clearfromdb(k + 'FB', [key])
                 }
-                
+
                 clearallfromdb(k + 'Request')
             })
         },
 
-        all : function(k, key){
+        all: function (k, key) {
             this.storage(k, key)
             this.db(k, key)
         }
     }
 
-    
+
 
 
     _.each(self, (v) => {
-        if(v && _.isObject(v) && v.keys){
+        if (v && _.isObject(v) && v.keys) {
             _.each(v.keys, (i) => {
                 prepareStorage(i)
             })
@@ -1861,13 +2016,13 @@ var pSDK = function({app, api, actions}){
     }, 30)
 
 
-    self.actions.on('actionFiltered', ({action, address, status}) => {
+    self.actions.on('actionFiltered', ({ action, address, status }) => {
 
         var listener = self[action.object.type]?.listener
 
-        if(!listener) return
+        if (!listener) return
 
-        if (address == app.user.address.value){
+        if (address == app.user.address.value) {
 
             var alias = action.get()
 
@@ -1887,5 +2042,5 @@ var pSDK = function({app, api, actions}){
     return self
 }
 
-if(typeof module != "undefined"){ module.exports = {pSDK}; } 
-else { window.pSDK = pSDK;}
+if (typeof module != "undefined") { module.exports = { pSDK }; }
+else { window.pSDK = pSDK; }

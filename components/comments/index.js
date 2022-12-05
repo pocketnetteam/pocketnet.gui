@@ -85,7 +85,6 @@ var comments = (function(){
 
 			post2 : function(comment){
 
-				console.log("POST2", comment)
 
 				var p = {
 					newcomments : 'newcomments'
@@ -100,15 +99,16 @@ var comments = (function(){
 
 					var _el = el.c.find('#' + comment.id);
 
-					//console.log('_el.length', _el.length, _el)
+
+					if(!comment.parentid){
+						p.class = "firstcomment"
+					}
 
 					if((!showedall && !comment.parentid) || comment.optype == 'commentEdit' || _el.length){
 
 						p.comments = [comment]
 
-						if(!comment.parentid){
-							p.class = "firstcomment"
-						}
+						
 
 						if(_el.length){
 							p.replace = true
@@ -136,6 +136,7 @@ var comments = (function(){
 
 							p.comments = comments
 							p.add = comment.id
+
 	
 							renders.list(p)
 	
@@ -921,7 +922,7 @@ var comments = (function(){
 				id || (id = '0')
 
 				if (currents[id])
-					currents[id].message.set(v)
+					currents[id].message.set(v.replace('⠀', ' '))
 
 				state.save()
 
@@ -979,11 +980,15 @@ var comments = (function(){
 
 						if (aid != id) pid = id
 
-						var address = self.app.platform.sdk.comments.address(txid, aid, pid) || deep(ed, 'lastComment.address')
+						var comment = self.psdk.comment.get(id)
+
+						var address = comment.address
 
 						var name = self.psdk.userInfo.getShortForm(address).name
 
-						var str = '@' + name + '  '
+						console.log('name', name)
+
+						var str = '@' + name + ',⠀'
 
 						if(address == self.app.user.address.value || !name) str = ''
 
@@ -1023,6 +1028,7 @@ var comments = (function(){
 				
 			},
 			replies : function(id, show, clbk, _p){
+
 
 				if(!_p) _p = {}
 
@@ -1470,7 +1476,6 @@ var comments = (function(){
 
 				}catch(e){
 					console.error(e)
-					console.log(comments)
 				}
 
 				var cbyauthors = group(comments, function(c){ return c.address })
@@ -1583,13 +1588,20 @@ var comments = (function(){
 				var _id = cf.attr('id')
 				var _aid = c.attr('id')
 
-				
+				var comment = self.psdk.comment.get(id)
 
-				actions.replies(id, true, function() {
-					// Scroll comment section to top of the screen
-					actions.scrollToComment(el.list.find('.answer.active'));
+				if (comment && !comment.children){
 					actions.reply(_id, _aid)
-				});
+				}
+				else{
+					actions.replies(id, true, function() {
+						// Scroll comment section to top of the screen
+						actions.scrollToComment(el.list.find('.answer.active'));
+						actions.reply(_id, _aid)
+					});
+				}
+
+				
 
 				
 			},
@@ -2525,6 +2537,7 @@ var comments = (function(){
 				var commentslength
 				var comments = p.comments
 				var sort = null
+
 				
 				if(!preview || showedall)
 					sort = new sortParameter()
@@ -2548,6 +2561,7 @@ var comments = (function(){
 					currentstate.pagination[ pid || '0' ] || (currentstate.pagination[ pid || '0' ] = 1)
 	
 					var pg = currentstate.pagination[ pid || '0' ]
+
 
 					if(!ed.commentPs && !ed.reply){
 
@@ -2722,7 +2736,6 @@ var comments = (function(){
 
 					if (comment){
 						if(comment.postid == txid){
-							console.log("HERE", comment, alias.value.v)
 							clbks.upvote(null, comment, alias.value.v, alias.address)
 						}
 					}

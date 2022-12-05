@@ -2373,9 +2373,9 @@ pShare = function(){
 		return self.settings.v == 'a' && self.settings.version && self.settings.version >= 2
 	}
 
-	self._import = function(v, notdecode){
+	self._import = function(v){
 
-		if (v.s){
+		/*if (v.s){
 
 			try{
 				self.settings = v.s 
@@ -2389,13 +2389,15 @@ pShare = function(){
 			if(v.settings){
 				self.settings = v.settings
 			}
-		}
+		}*/
+
+		self.settings = v.s || v.settings || {}
 
 		
 		if(v.i && !_.isArray(v.i)) v.i = [v.i]
 		if(v.t && !_.isArray(v.t)) v.t = [v.t]
 		
-		var textvalue = v.m || v.message || ""
+		/*var textvalue = v.m || v.message || ""
 
 		var articleversion2 = self.settings.v == 'a' && self.settings.version && self.settings.version >= 2
 
@@ -2407,39 +2409,35 @@ pShare = function(){
 			catch(e){
 				textvalue = textvalue
 			}
-		}
+		}*/
 
 
-		if (notdecode){
-			self.message = textvalue
+		//if (notdecode){
+			self.message = v.m || v.message || ""
 			self.caption = v.c || v.caption || ""
 			self.tags = v.t || v.tags || []
 			self.url = v.u || v.url || '';
 			self.poll = v.p || v.poll || {}
 			
-		}
+		/*}
 		else
 		{	
-			self.url = clearStringXss(decodeURIComponent(v.u || v.url || ''));
-			self.message = articleversion2 ? textvalue : (decodeURIComponent((textvalue).replace(/\+/g, " ")))
-			self.caption = (decodeURIComponent((v.c || v.caption || "").replace(/\+/g, " ")))
-
-			self.tags = _.map(v.t || v.tags || [], function(t){ 
-				return clearStringXss(clearTagString(decodeURIComponent(t)))
-			})
-			
+			self.url = v.u || v.url || ''
+			self.message = v.m || v.message || "" ///articleversion2 ? textvalue : (decodeURIComponent((textvalue).replace(/\+/g, " ")))
+			self.caption = (v.c || v.caption || "")
+			self.tags = v.t || v.tags || []
 			self.poll = v.p || v.poll || {}
 
-		}
+		}*/
 
-		if (!articleversion2 && self.message){
+		/*if (!articleversion2 && self.message){
 			self.message = self.message.replace(/\n{2,}/g, '\n\n');
-		}
+		}*/
 
 		if(v.myVal) self.myVal = Number(v.myVal)
 
 		self.language = v.l || v.language || 'en'
-		self.images = _.map(v.i || v.images || [], function(i){return clearStringXss(i)});
+		self.images = v.i || v.images || []
 		self.repost = v.r || v.repost || v.txidRepost || ''
 
 		if (v.deleted) self.deleted = true
@@ -2505,10 +2503,10 @@ pShare = function(){
 
 		var v = {}
 		
-		v.m = encodeURIComponent(self.message)
-		v.c = encodeURIComponent(self.caption)
-		v.u = encodeURIComponent(self.url)
-		v.t = _.map(self.tags || [], function(t){ return encodeURIComponent(t) })
+		v.m = (self.message)
+		v.c = (self.caption)
+		v.u = (self.url)
+		v.t = _.map(self.tags || [], function(t){ return (t) })
 		v.i = _.clone(self.images)
 		v._time = self._time || self.time;
 		v.time = self.time.getTime() / 1000;
@@ -2806,20 +2804,9 @@ pComment = function(){
 	self._import = function(v){
 
 		if (v.msgparsed){
-
-			try {	
-				self.url = clearStringXss(decodeURIComponent(v.msgparsed.url || ""));
-				self.message = clearStringXss(decodeURIComponent((v.msgparsed.message || "").replace(/\+/g, " ")).replace(/\n{2,}/g, '\n\n'))
-				self.images = _.map(v.msgparsed.images || [], function(i){
-
-					return clearStringXss(decodeURIComponent(i))
-				});
-			}
-
-			catch(e){
-			}
-
-			
+			self.url = v.msgparsed.url;
+			self.message = v.msgparsed.message
+			self.images = v.msgparsed.images
 		}			
 		
 		self.postid = v.postid;
@@ -2851,8 +2838,8 @@ pComment = function(){
 
 	self.import = function(v){
 			
-		if (v.msg)
-			v.msgparsed = JSON.parse(v.msg)
+		/*if (v.msg)
+			v.msgparsed = JSON.parse(v.msg)*/
 
 		self._import(v)
 	}
@@ -2877,7 +2864,7 @@ pComment = function(){
 			donation: self.donation,
 			amount: self.amount,
 			address : self.address,
-
+			children : self.children,
 			time : self.time.getTime() / 1000,
 			timeUpd: self.timeUpd.getTime() / 1000
 		}
