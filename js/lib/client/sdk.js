@@ -1336,8 +1336,6 @@ var pSDK = function ({ app, api, actions }) {
 
             return _.filter(_.map(rawshares, (c) => {
 
-                console.log('rawshares', c)
-
                 try {
                     c.u = clearStringXss(decodeURIComponent(c.u || ''));
                     c.c = clearStringXss(decodeURIComponent(c.c || '').replace(/\+/g, " "));
@@ -1408,7 +1406,6 @@ var pSDK = function ({ app, api, actions }) {
 
                     }
                     else {
-                        console.log("HERE", c)
                         c.m = nl2br(trimrn(findAndReplaceLink(filterXSS(decodeURIComponent(c.m), {
                             whiteList: [],
                             stripIgnoreTag: true,

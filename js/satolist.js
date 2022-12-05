@@ -15795,8 +15795,6 @@ Platform = function (app, listofnodes) {
 
             upvote: function (upvote, clbk) {
 
-                console.log("HERE", upvote)
-
                 self.app.platform.actions.addActionAndSendIfCan(upvote).then(action => {
 
                     var alias = action.get()
@@ -16403,8 +16401,6 @@ Platform = function (app, listofnodes) {
 
                     self.psdk.share.request(() => {
 
-                        console.log('method', method)
-
                         return self.app.api.rpc(method, parameters, {
                             rpc : rpc
                         }).then(data => {
@@ -16582,8 +16578,6 @@ Platform = function (app, listofnodes) {
 
                                 var shares = d.contents
 
-                                console.log('shares', shares)
-
                                 if (shares) {
 
                                     self.sdk.node.shares.loadvideoinfoifneed(shares, p.type == 'video', function(){
@@ -16612,8 +16606,6 @@ Platform = function (app, listofnodes) {
                                         }
 
                                         storage[key] = shares;
-
-                                        console.log("ASDshares", shares)
 
                                         if (clbk)
                                             clbk(storage[key], error, p)
@@ -16930,16 +16922,12 @@ Platform = function (app, listofnodes) {
 
                                 p.blocknumber = data.height
 
-                                console.log("GETEX CLBK", p)
-
 
                                 //// TODO TODO_REF_ACTIONS + check blocking
 
                                 if (shares) {
 
                                     if (p.author) {
-
-                                        console.log("EXTEND SHARES")
 
                                         if(!p.txid){
                                             shares = self.psdk.share.tempAdd(shares, (alias) => {
@@ -19299,7 +19287,6 @@ Platform = function (app, listofnodes) {
                     }
                     const messaging = firebase.messaging();
                     messaging.getToken().then(token=>{
-                        console.log(token)
                         currenttoken = token
                         platform.fcmtoken = token
                         platform.matrixchat.changeFcm()

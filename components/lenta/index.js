@@ -3137,7 +3137,7 @@ var lenta = (function(){
 							preview : true, // essenseData.comments == 'all' ? false : preview,
 							listpreview : essenseData.comments == 'all' ? false : preview,
 							lastComment : essenseData.comments != 'all' ? share.lastComment : null,
-							count : share.comments,
+							
 							init : essenseData.comments == 'all' ? false : init,
 							hr : hr,
 							receiver: share.address,

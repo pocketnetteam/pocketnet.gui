@@ -535,13 +535,23 @@ Comment = function(txid){
 		}
 
 		if(!self.delete){
-			r.msg = JSON.stringify({
-				message : encodeURIComponent(self.message.v),
-				url : encodeURIComponent(self.url.v),
-				images : _.map(self.images.v, function(i){
-					return encodeURIComponent(i)
-				}),
-			})
+			if(extend){
+				r.msgparsed = {
+					message : self.message.v,
+					url : self.url.v,
+					images : self.images.v
+				}
+			}
+			else{
+				r.msg = JSON.stringify({
+					message : encodeURIComponent(self.message.v),
+					url : encodeURIComponent(self.url.v),
+					images : _.map(self.images.v, function(i){
+						return encodeURIComponent(i)
+					}),
+				})
+			}
+			
 		}
 
 		if(self.id){
@@ -572,9 +582,6 @@ Comment = function(txid){
 	
 		return r
 
-
-		
-
 	}
 
 	self.import = function(v){
@@ -583,13 +590,22 @@ Comment = function(txid){
 		self.answerid = v.answerid;
 		self.parentid = v.parentid;
 
-		v.msgparsed = JSON.parse(v.msg)
+		if (v.msg){
+			v.msgparsed = JSON.parse(v.msg)
 
-		self.url.set(decodeURIComponent(v.msgparsed.url))
-		self.message.set(decodeURIComponent(v.msgparsed.message))
-		self.images.set(_.map(v.msgparsed.images, function(i){
-			return decodeURIComponent(i)
-		}))
+			self.url.set(decodeURIComponent(v.msgparsed.url))
+			self.message.set(decodeURIComponent(v.msgparsed.message))
+			self.images.set(_.map(v.msgparsed.images, function(i){
+				return decodeURIComponent(i)
+			}))
+		}
+
+		if(v.msgparsed){
+			self.url.set(v.msgparsed.url)
+			self.message.set(v.msgparsed.message)
+			self.images.set(v.msgparsed.images)
+		}
+		
 
 		if (v.txid || v.id)
 			self.id = v.txid || v.id
@@ -597,7 +613,7 @@ Comment = function(txid){
 
 	self.alias = function(id){
 		var comment = new pComment();
-			comment.import(self.export())
+			comment.import(self.export(true))
 
 			///TODO_REF_ACTIONS remove alias args
 
@@ -1610,7 +1626,7 @@ Share = function(lang){
 
 			share.time = new Date();
 
-			share._import(self.export())
+			share._import(self.export(true))
 
 			share.txid = txid || self.aliasid
 

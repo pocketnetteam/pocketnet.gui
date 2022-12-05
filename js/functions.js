@@ -1896,6 +1896,17 @@
 
 	}
 
+	var imagesLoadedCache = {}
+
+	bgImagesClApply = function(el, src){
+		el.setAttribute('image', '*')
+		el.setAttribute('imageloaded', 'true')
+		el.style['background-image'] = 'url('+src+')';
+		el.style['background-size'] = 'cover';
+		el.style['background-position'] = 'center center';
+		el.style['background-repeat'] = 'no-repeat';
+	}
+
 	bgImagesCl = function(el, p){
 
 		if(!p) p = {};
@@ -1927,21 +1938,28 @@
 				src = src.replace('bastyon.com:8092', 'pocketnet.app:8092').replace('test.pocketnet', 'pocketnet')
 				
 				image.src = src
-				image.onload = () => {
 
-					window.requestAnimationFrame(() => {
-						
-						el.setAttribute('image', '*')
-						el.setAttribute('imageloaded', 'true')
-						el.style['background-image'] = 'url('+src+')';
-						el.style['background-size'] = 'cover';
-						el.style['background-position'] = 'center center';
-						el.style['background-repeat'] = 'no-repeat';
-
-					})
-
+				if(imagesLoadedCache[src]){
+					console.log("????")
+					bgImagesClApply(el, src)
 					resolve()
 				}
+				else{
+					image.onload = () => {
+
+						imagesLoadedCache[src] = true
+	
+						window.requestAnimationFrame(() => {
+	
+							bgImagesClApply(el, src)
+	
+						})
+	
+						resolve()
+					}
+				}
+
+				
 
 				image.onerror = () => {
 

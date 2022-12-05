@@ -85,6 +85,7 @@ var comments = (function(){
 
 			post2 : function(comment){
 
+				actions.showhideLabel()
 
 				var p = {
 					newcomments : 'newcomments'
@@ -145,6 +146,8 @@ var comments = (function(){
 
 					return
 				}
+
+				
 			},
 
 			post : function(err, alias, _txid, pid, aid, editid, id, manual){
@@ -1276,7 +1279,7 @@ var comments = (function(){
 					el.showall.addClass('hidden')
 				}
 				else{
-					if (needtoshow ){
+					if (needtoshow){
 						el.showall.removeClass('hidden')
 					}
 					else{

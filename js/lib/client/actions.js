@@ -938,7 +938,7 @@ var Account = function(address, parent){
 
                 _.each(self.emitted, (category) => {
                     if(exported.id && category[exported.id]){
-                        delete[exported.id]
+                        delete category[exported.id]
                     }
                 })
 
@@ -1078,9 +1078,13 @@ var Account = function(address, parent){
     self.ws = {
         transaction : function(transaction){
 
+            console.log("transaction", transaction)
+
             if(transaction.addr != self.address) return
 
             parent.app.platform.sdk.node.transactions.get.tx(transaction.txid, (data, error = {}) => {
+
+                console.log('data', data)
 
                 self.addUnspentFromTransaction(data)
                 self.removeInputsFromTransaction(data)
@@ -1516,6 +1520,7 @@ var Actions = function(app, api, storage = localStorage){
     self.ws = {
         transaction : function(transaction){
             _.each(accounts, (account) => {
+                console.log("WS TRANSACTION", transaction)
                 account.ws.transaction(transaction)
             })
         },
