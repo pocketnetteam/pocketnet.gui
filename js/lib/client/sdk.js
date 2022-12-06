@@ -1172,9 +1172,26 @@ var pSDK = function ({ app, api, actions }) {
                 
                 return executor(data).then(r => {
 
+                    if (r.boosts){
+                        return r
+                    }
+
+
+
+                    if(_.isArray(r)){
+                        r = {
+                            contents : r
+                        }
+                        /*return Promise.resolve({
+                            contents : data
+                        })*/
+                    }
+
 
                     if(r.contents) r.contents = this.cleanData(r.contents)
                     else r = this.cleanData(r)
+
+
                     return r
                 })
 

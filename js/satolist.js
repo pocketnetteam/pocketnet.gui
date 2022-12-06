@@ -16760,6 +16760,8 @@ Platform = function (app, listofnodes) {
 
                             s.getex(parameters, function (data, error) {
 
+                                console.log("data", data)
+
                                 var shares = data.boosts || []
                                 var blocknumber = data.height
                                     p.blocknumber = blocknumber
