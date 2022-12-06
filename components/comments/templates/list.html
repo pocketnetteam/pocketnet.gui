@@ -320,18 +320,7 @@ var commentf = function(comment){
 					<div class="edit">
 					</div>
 
-					<% if(_class == 'firstcomment') {%>
-
-						<% if(comment.children > 0) {%>
-							<div class="repliesloaderWrapper hidden">
-								<div class="preloader5"><img src="./img/three-dots.svg"/></div>
-							</div>
-						<% } %>
-
-						<div class="answers">
-						</div>
-
-					<% } %>
+					
 
 					
 				</div>
@@ -339,6 +328,22 @@ var commentf = function(comment){
 			</div>
 
 		</div>
+
+		<% if(_class == 'firstcomment') {%>
+
+			<div class="answersWrapper">
+
+				<% if(comment.children > 0) {%>
+					<div class="repliesloaderWrapper hidden">
+						<div class="preloader5"><img src="./img/three-dots.svg"/></div>
+					</div>
+				<% } %>
+
+				<div class="answers">
+				</div>
+			</div>
+
+		<% } %>
 
 		<% if(_class == 'firstcomment') {%>
 			<div class="answer" for="<%-comment.id%>">

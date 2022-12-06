@@ -8748,10 +8748,11 @@ Platform = function (app, listofnodes) {
             newmaterials : function(counts){
 
                 if(!self.sdk.sharesObserver.storage.viewed) self.sdk.sharesObserver.storage.viewed = {}
+                if(!self.sdk.sharesObserver.storage.viewed[app.user.address.value]) self.sdk.sharesObserver.storage.viewed[app.user.address.value] = {}
 
                 _.each(counts, (c, i) => {
-                    if (self.sdk.sharesObserver.storage.viewed[i]){
-                        self.sdk.sharesObserver.storage.viewed[i].new = (self.sdk.sharesObserver.storage.viewed[i].new || 0) + c
+                    if (self.sdk.sharesObserver.storage.viewed[app.user.address.value][i]){
+                        self.sdk.sharesObserver.storage.viewed[app.user.address.value][i].new = (self.sdk.sharesObserver.storage.viewed[app.user.address.value][i].new || 0) + c
                     }
                 })
 
@@ -8767,22 +8768,23 @@ Platform = function (app, listofnodes) {
             hasnew : function(key){
 
                 if(!self.sdk.sharesObserver.storage.viewed) self.sdk.sharesObserver.storage.viewed = {}
+                if(!self.sdk.sharesObserver.storage.viewed[app.user.address.value]) self.sdk.sharesObserver.storage.viewed[app.user.address.value] = {}
 
-                if(!self.sdk.sharesObserver.storage.viewed[key]) return true
+                if(!self.sdk.sharesObserver.storage.viewed[app.user.address.value][key]) return true
 
                 var block = self.currentBlock || (self.app.api.getCurrentBlock ? self.app.api.getCurrentBlock() : 0)
 
                 if (block){
 
-                    if (block >= (self.sdk.sharesObserver.storage.viewed[key].block || 0) + 30){
+                    if (block >= (self.sdk.sharesObserver.storage.viewed[app.user.address.value][key].block || 0) + 30){
 
 
                         return true
                     }
 
-                    if (block > (self.sdk.sharesObserver.storage.viewed[key].block || 0)){
+                    if (block > (self.sdk.sharesObserver.storage.viewed[app.user.address.value][key].block || 0)){
 
-                        return self.sdk.sharesObserver.storage.viewed[key].new > 0
+                        return self.sdk.sharesObserver.storage.viewed[app.user.address.value][key].new > 0
                     }
                 }
             },
@@ -8793,22 +8795,24 @@ Platform = function (app, listofnodes) {
                 if(key == 'saved') return
 
                 if(!self.sdk.sharesObserver.storage.viewed) self.sdk.sharesObserver.storage.viewed = {}
+                if(!self.sdk.sharesObserver.storage.viewed[app.user.address.value]) 
+                    self.sdk.sharesObserver.storage.viewed[app.user.address.value] = {}
 
-                if(!self.sdk.sharesObserver.storage.viewed[key]) self.sdk.sharesObserver.storage.viewed[key] = {}
+                if(!self.sdk.sharesObserver.storage.viewed[app.user.address.value][key]) self.sdk.sharesObserver.storage.viewed[app.user.address.value][key] = {}
 
-                if (!self.sdk.sharesObserver.storage.viewed[key].first || self.sdk.sharesObserver.storage.viewed[key].first <= first){
+                if (!self.sdk.sharesObserver.storage.viewed[app.user.address.value][key].first || self.sdk.sharesObserver.storage.viewed[app.user.address.value][key].first <= first){
 
-                    self.sdk.sharesObserver.storage.viewed[key].first = first
-                    self.sdk.sharesObserver.storage.viewed[key].new = 0
+                    self.sdk.sharesObserver.storage.viewed[app.user.address.value][key].first = first
+                    self.sdk.sharesObserver.storage.viewed[app.user.address.value][key].new = 0
 
                 }
 
 
-                if (!self.sdk.sharesObserver.storage.viewed[key].last || self.sdk.sharesObserver.storage.viewed[key].last > last)
-                    self.sdk.sharesObserver.storage.viewed[key].last = last
+                if (!self.sdk.sharesObserver.storage.viewed[app.user.address.value][key].last || self.sdk.sharesObserver.storage.viewed[app.user.address.value][key].last > last)
+                    self.sdk.sharesObserver.storage.viewed[app.user.address.value][key].last = last
 
-                self.sdk.sharesObserver.storage.viewed[key].time = new Date()
-                self.sdk.sharesObserver.storage.viewed[key].block = self.currentBlock || (self.app.api.getCurrentBlock ? self.app.api.getCurrentBlock() : 0)
+                self.sdk.sharesObserver.storage.viewed[app.user.address.value][key].time = new Date()
+                self.sdk.sharesObserver.storage.viewed[app.user.address.value][key].block = self.currentBlock || (self.app.api.getCurrentBlock ? self.app.api.getCurrentBlock() : 0)
 
 
                 self.sdk.sharesObserver.save()
@@ -8817,13 +8821,25 @@ Platform = function (app, listofnodes) {
 
             save: function () {
 
-                self.app.settings.set('observer', 'sharesObserver', self.sdk.sharesObserver.storage.viewed || '{}')
+                try{
+                    localStorage['observer'] = JSON.stringify(self.sdk.sharesObserver.storage.viewed || {})
+                }
+                catch(e){
+                }
+
+                //self.app.settings.set('observer', 'sharesObserver', self.sdk.sharesObserver.storage.viewed || '{}')
 
             },
 
             load: function (clbk) {
-
-                self.sdk.sharesObserver.storage.viewed = self.app.settings.get('observer', 'sharesObserver') || {}
+                try{
+                    self.sdk.sharesObserver.storage.viewed = JSON.parse(localStorage['observer'] || "{}") || {}
+                }
+                catch(e){
+                    self.sdk.sharesObserver.storage.viewed = {}
+                }
+                
+                //self.sdk.sharesObserver.storage.viewed = self.app.settings.get('observer', 'sharesObserver') || {}
 
                 if(clbk) clbk()
             },

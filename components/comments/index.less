@@ -392,6 +392,24 @@
 				border-top : 0;
 			}
 
+			.answersWrapper{
+				display: none;
+				padding-top: 2 * @rhythm;
+				padding-bottom: 2 * @rhythm;
+				padding-left: 2 * @rhythm;
+				margin-left: @rhythm;
+				border-top : 1px solid rgb(var(--neutral-grad-0));
+				.answers{
+					
+				}
+			}
+
+			&.showedreplies{
+				.answersWrapper{
+					display: block;
+				}
+			}
+
 			&.mycomment,
 			&.rated{
 				>div.commentPaddingWrapper>div.commentWrapper>div.commentBody>div.cbodyWrapper{
@@ -421,19 +439,31 @@
 
 			&.hiddenBlockedUserComment,
 			&.hiddenComment{
-				.commentimages,
-				.commentmessage{
-					display: none;
-				}
 
-				.hiddenCommentLabel{
-					display: block;
-					color : rgb(var(--neutral-grad-2));
+				>div.commentPaddingWrapper{
+					.commentimages,
+					.commentmessage{
+						display: none;
+					}
+	
+					.hiddenCommentLabel{
+						display: block;
+						color : rgb(var(--neutral-grad-2));
+					}
+	
+					.showBlockedUserCommentWrapper{
+						display: block;
+					}
+	
+					.usericon{
+						background: rgb(var(--neutral-grad-1))!important;
+					}
+	
+					.donatedbefore{
+						display: none;
+					}
 				}
-
-				.showBlockedUserCommentWrapper{
-					display: block;
-				}
+				
 			} 
 
 			.hiddenCommentLabel{
@@ -1403,9 +1433,9 @@
 				padding-right: 0;
 			}
 
-			&:nth-child(1){
+			/*&:nth-child(1){
 				border-top : 1px solid rgb(var(--neutral-grad-0));
-			}
+			}*/
 			
 		}
 	}
@@ -1550,6 +1580,13 @@ html.mobileview{
 					.postbody{
 						padding-left: @rhythm;
 						padding-right: 0.3em;
+					}
+				}
+
+				.answers{
+					.commentPaddingWrapper{
+						padding-left:  @rhythm;
+						padding-right: @rhythm;
 					}
 				}
 			}
@@ -1718,6 +1755,8 @@ html.mobileview{
 		.answer{
 			padding : 0;
 		}
+
+		
 
 		.answers{		
 			.comment{

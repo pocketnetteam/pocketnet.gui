@@ -309,6 +309,17 @@
 #comments .list .comment:nth-child(1) {
   border-top: 0;
 }
+#comments .list .comment .answersWrapper {
+  display: none;
+  padding-top: 1em;
+  padding-bottom: 1em;
+  padding-left: 1em;
+  margin-left: 0.5em;
+  border-top: 1px solid rgb(var(--neutral-grad-0));
+}
+#comments .list .comment.showedreplies .answersWrapper {
+  display: block;
+}
 #comments .list .comment.mycomment > div.commentPaddingWrapper > div.commentWrapper > div.commentBody > div.cbodyWrapper .commentpanel .upvoteComment,
 #comments .list .comment.rated > div.commentPaddingWrapper > div.commentWrapper > div.commentBody > div.cbodyWrapper .commentpanel .upvoteComment {
   cursor: default;
@@ -325,20 +336,28 @@
 #comments .list .comment.newcomments {
   color: rgb(var(--color-txt-ac-1));
 }
-#comments .list .comment.hiddenBlockedUserComment .commentimages,
-#comments .list .comment.hiddenComment .commentimages,
-#comments .list .comment.hiddenBlockedUserComment .commentmessage,
-#comments .list .comment.hiddenComment .commentmessage {
+#comments .list .comment.hiddenBlockedUserComment > div.commentPaddingWrapper .commentimages,
+#comments .list .comment.hiddenComment > div.commentPaddingWrapper .commentimages,
+#comments .list .comment.hiddenBlockedUserComment > div.commentPaddingWrapper .commentmessage,
+#comments .list .comment.hiddenComment > div.commentPaddingWrapper .commentmessage {
   display: none;
 }
-#comments .list .comment.hiddenBlockedUserComment .hiddenCommentLabel,
-#comments .list .comment.hiddenComment .hiddenCommentLabel {
+#comments .list .comment.hiddenBlockedUserComment > div.commentPaddingWrapper .hiddenCommentLabel,
+#comments .list .comment.hiddenComment > div.commentPaddingWrapper .hiddenCommentLabel {
   display: block;
   color: rgb(var(--neutral-grad-2));
 }
-#comments .list .comment.hiddenBlockedUserComment .showBlockedUserCommentWrapper,
-#comments .list .comment.hiddenComment .showBlockedUserCommentWrapper {
+#comments .list .comment.hiddenBlockedUserComment > div.commentPaddingWrapper .showBlockedUserCommentWrapper,
+#comments .list .comment.hiddenComment > div.commentPaddingWrapper .showBlockedUserCommentWrapper {
   display: block;
+}
+#comments .list .comment.hiddenBlockedUserComment > div.commentPaddingWrapper .usericon,
+#comments .list .comment.hiddenComment > div.commentPaddingWrapper .usericon {
+  background: rgb(var(--neutral-grad-1)) !important;
+}
+#comments .list .comment.hiddenBlockedUserComment > div.commentPaddingWrapper .donatedbefore,
+#comments .list .comment.hiddenComment > div.commentPaddingWrapper .donatedbefore {
+  display: none;
 }
 #comments .list .comment .hiddenCommentLabel .ghost {
   padding-left: 0;
@@ -1218,12 +1237,14 @@
 #comments .edit .posttable > div.postCellWrapper {
   padding-right: 0;
 }
+#comments .answers .comment {
+  /*&:nth-child(1){
+				border-top : 1px solid rgb(var(--neutral-grad-0));
+			}*/
+}
 #comments .answers .comment .commentPaddingWrapper {
   padding-left: 0;
   padding-right: 0;
-}
-#comments .answers .comment:nth-child(1) {
-  border-top: 1px solid rgb(var(--neutral-grad-0));
 }
 #comments.inited .post .commentPanel {
   display: table;
@@ -1317,6 +1338,10 @@ html.mobileview #comments .emojionearea-editor {
   #comments .list .comment .answer .postbody {
     padding-left: 0.5em;
     padding-right: 0.3em;
+  }
+  #comments .list .comment .answers .commentPaddingWrapper {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
   }
   #comments .list .commentWrapper > div {
     vertical-align: top;

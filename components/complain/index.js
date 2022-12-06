@@ -69,8 +69,6 @@ var complain = (function () {
 
 							var modFlag = sobj.modFlag(selected);
 
-							//topPreloader(30);
-
 							self.app.platform.actions.addActionAndSendIfCan(modFlag).then(action => {
 
 								var alias = action.object
@@ -84,29 +82,11 @@ var complain = (function () {
 
 							}).catch(e => {
 								self.app.platform.errorHandler(e, true)
+
+								if (clbk) clbk(true)
 							})
 
-							return
-							self.sdk.node.transactions.create.commonFromUnspent(
-
-								modFlag,
-
-								function (tx, error) {
-									topPreloader(100)
-
-									if (!tx) {
-										self.app.platform.errorHandler(error, true)
-
-										if (clbk)
-											clbk()
-									}
-									else {
-
-
-									}
-
-								}
-							)
+						
 
 						}
 
@@ -123,7 +103,10 @@ var complain = (function () {
 								clbk(true)
 								sitemessage(self.app.localization.e('complain_success'))
 							} catch (error) {
+
 								self.app.platform.errorHandler(error, true)
+
+								if (clbk) clbk(false)
 							}
 
 							// var i1 = ((actions.find(selected) || {}).name) || selected;
@@ -160,33 +143,10 @@ var complain = (function () {
 
 							}).catch(e => {
 								self.app.platform.errorHandler(e, true)
+
+								if(clbk) clbk(true)
 							})
 
-							return
-
-
-							self.sdk.node.transactions.create.commonFromUnspent(
-
-								modFlag,
-
-								function (tx, error) {
-									topPreloader(100)
-
-									if (!tx) {
-										self.app.platform.errorHandler(error, true)
-
-										if (clbk)
-											clbk()
-									}
-									else {
-										successCheck()
-										sitemessage(self.app.localization.e('complain_success'))
-									}
-
-								}
-							)
-							if (clbk)
-								clbk(true)
 						}
 
 						else {
@@ -202,6 +162,8 @@ var complain = (function () {
 								sitemessage(self.app.localization.e('complain_success'))
 							} catch (error) {
 								self.app.platform.errorHandler(error, true)
+
+								clbk(false)
 							}
 
 						}
@@ -233,7 +195,13 @@ var complain = (function () {
 			complain: function () {
 				if (!el.next.hasClass('disabled') && (selected || textreason)) {
 
+					globalpreloader(true)
+
 					actions.complain(function (r) {
+
+						globalpreloader(false)
+
+
 						if (r) {
 							self.closeContainer();
 
