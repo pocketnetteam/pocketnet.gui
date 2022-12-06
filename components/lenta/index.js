@@ -251,7 +251,6 @@ var lenta = (function(){
 					if (r) {
 
 						addressEl.addClass('subscribed');
-
 						buttonsWrapper.addClass('following');
 
 						if((r.private == 'true' || r.private === true)){
@@ -5021,7 +5020,7 @@ var lenta = (function(){
 							alias = self.psdk.share.get(alias.txid)
 
 							if (!replace){
-								if(essenseData.author == alias.address){
+								if(essenseData.author == alias.actor){
 
 									renders.shares([alias], function(){
 										renders.sharesInview([alias], function(){

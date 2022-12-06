@@ -700,7 +700,7 @@ var Action = function(account, object, priority){
         if(!alias.txid) { alias.txid = self.id; alias.relay = true }
         if (alias.txid && !self.completed) { alias.temp = true }
 
-        alias.address = account.address;
+        alias.actor = account.address;
         alias.type = self.object.type
         alias.id = alias.txid
 

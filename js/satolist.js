@@ -423,11 +423,10 @@ Platform = function (app, listofnodes) {
         },
         upvoteShare : function(alias, status){
 
-            var address = alias.address.v
             var share = self.psdk.share.get(alias.share.v)
             var value = alias.value.v
 
-            if( address != app.user.address.value) return
+            if(alias.actor != app.user.address.value) return
             if(!share) return
 
             if (status == 'completed'){
@@ -447,6 +446,11 @@ Platform = function (app, listofnodes) {
         cScore : function(alias, status){},
 
         comment: function(alias, status){},
+        subscribe: function(alias, status){},
+        unsubscribe: function(alias, status){},
+        blocking: function(alias, status){},
+        unblocking: function(alias, status){},
+        subscribePrivate: function(alias, status){},
     }
 
     self.actionListeners = {}
@@ -4864,12 +4868,16 @@ Platform = function (app, listofnodes) {
 
 
                 self.app.platform.actions.addActionAndSendIfCan(unsubscribe).then(action => {
+
+                    console.log('action', action)
                 
                     successCheck()
 
-                    if (clbk) clbk()
+                    if (clbk) clbk(action.get())
     
                 }).catch(e => {
+
+                    console.error(e)
 
                     if (clbk)
                         clbk(null, e)
@@ -4904,12 +4912,14 @@ Platform = function (app, listofnodes) {
 
 
                 self.app.platform.actions.addActionAndSendIfCan(subscribe).then(action => {
-                
+
                     successCheck()
 
-                    if (clbk) clbk()
+                    if (clbk) clbk(action.get())
     
                 }).catch(e => {
+
+                    console.error(e)
 
                     if (clbk)
                         clbk(null, e)
@@ -4964,9 +4974,11 @@ Platform = function (app, listofnodes) {
                 
                     successCheck()
 
-                    if (clbk) clbk()
+                    if (clbk) clbk(action.get())
     
                 }).catch(e => {
+
+                    console.error(e)
 
                     if (clbk)
                         clbk(null, e)
@@ -4997,7 +5009,7 @@ Platform = function (app, listofnodes) {
                 )
             },
 
-            managesubscribelist : function(address, add, notificationturnon){
+            /*managesubscribelist : function(address, add, notificationturnon){
 
                 var me = self.psdk.userInfo.getmy()
                 
@@ -5049,7 +5061,7 @@ Platform = function (app, listofnodes) {
                 })
 
 
-            },
+            },*/
 
             htls : function(id){
                 self.app.platform.ui.wallet.send({id : id}, function(){
@@ -16697,7 +16709,7 @@ Platform = function (app, listofnodes) {
                 getsubscribesfeed : function(p, clbk, cache){
 
                     p.tempSubscriptions = self.psdk.subscribe.tempAdd([], (alias) => {
-                        if(alias.address == self.app.user.address.value) return true
+                        if(alias.actor == self.app.user.address.value) return true
                     })
                     
 
@@ -16949,7 +16961,7 @@ Platform = function (app, listofnodes) {
 
                                         if(!p.txid){
                                             shares = self.psdk.share.tempAdd(shares, (alias) => {
-                                                return alias.address == p.author
+                                                return alias.actor == p.author
                                             })
                                         }
                                     }

@@ -1171,6 +1171,65 @@ var author = (function(){
 			},
 		}
 
+		var relationsClbk = function(address){
+
+			if (address == author.address){
+				var me = self.psdk.userInfo.getmy()
+
+				if (me){
+
+					var r = me.relation(address, 'subscribes') 
+					var blocking = me.relation(address, 'blocking')
+	
+					window.requestAnimationFrame(() => {
+	
+						if(!el.c) return
+						
+						if (r) {
+	
+							el.subscribe.addClass('following')
+		
+							if ((r.private == 'true' || r.private === true)){
+								el.c.find('.notificationturn').addClass('turnon')	
+							}
+							else{
+								el.c.find('.notificationturn').removeClass('turnon')	
+							}
+						}
+						else{
+							el.subscribe.removeClass('following')
+							el.c.find('.notificationturn').removeClass('turnon')	
+						}
+		
+						
+		
+						if (blocking){
+							el.caption.addClass('blocking');
+						}
+						else{
+							el.caption.removeClass('blocking');
+						}
+					})
+	
+				}
+			}
+
+			
+
+			if(address == author.address || author.address == self.app.user.address.value){
+
+				window.requestAnimationFrame(() => {
+
+					if(!el.c) return
+
+					el.c.find('.toReport[report="followers"] .count').html(reports.followers.count())
+					el.c.find('.toReport[report="following"] .count').html(reports.following.count())
+
+				})
+
+			}
+		}
+
 		var initEvents = function(){
 
 			el.up.on('click', events.up)
@@ -1198,14 +1257,12 @@ var author = (function(){
 				}
 				
 			}
-
-
+			/*
 			self.app.platform.clbks.api.actions.subscribe.author = function(address){
 
 				if (address == author.address){
 
-					if (el.subscribe)
-						el.subscribe.addClass('following')
+					if (el.subscribe) el.subscribe.addClass('following')
 
 					el.c.find('.notificationturn').removeClass('turnon')	
 
@@ -1280,6 +1337,34 @@ var author = (function(){
 						el.caption.removeClass('blocking');
 				}
 
+			}*/
+
+			self.app.platform.actionListeners.author = function({type, alias, status}){
+
+				console.log('type', type, alias)
+
+				if(type == 'unblocking'){
+					relationsClbk(alias.address.v)
+				}
+
+				if(type == 'blocking'){
+					relationsClbk(alias.address.v)
+				}
+
+				if(type == 'subscribe'){
+					relationsClbk(alias.address.v)
+				}
+
+				if(type == 'unsubscribe'){
+					relationsClbk(alias.address.v)
+				}
+
+				if(type == 'subscribePrivate'){
+					relationsClbk(alias.address.v)
+				}
+
+				
+				
 			}
 
 		}
@@ -1526,6 +1611,8 @@ var author = (function(){
 					acsearch.destroy()
 					acsearch = null
 				}
+
+				delete self.app.platform.actionListeners.author
 
 				delete self.app.platform.ws.messages.event.clbks.author
 				delete self.app.platform.clbks.api.actions.subscribe.author

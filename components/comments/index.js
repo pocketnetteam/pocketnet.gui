@@ -2747,7 +2747,7 @@ var comments = (function(){
 
 					if (comment){
 						if(comment.postid == txid){
-							clbks.upvote(null, comment, alias.value.v, alias.address)
+							clbks.upvote(null, comment, alias.value.v, alias.actor)
 						}
 					}
 

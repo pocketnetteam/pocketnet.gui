@@ -641,12 +641,12 @@ var pSDK = function ({ app, api, actions }) {
 
             if (!object) {
 
-                if (exp.address == app.user.address.value) {
+                if (exp.actor == app.user.address.value) {
                     return exp
                 }
             }
 
-            if (object.address == exp.address) {
+            if (object.address == exp.actor) {
                 object.name = exp.name
                 object.image = exp.image
                 object.language = exp.language
@@ -671,12 +671,14 @@ var pSDK = function ({ app, api, actions }) {
 
                 _.each(temps, (k) => {
 
-                    if (k != 'userInfo' && !extendedObject) return
+                    if (k != 'userInfo' && !(extendedObject || object)) return
 
                     _.each(account.getTempActions(k), (alias) => {
 
                         if (self[k] && self[k].applyAction) {
                             var applied = self[k].applyAction(extendedObject || object.clone(), alias)
+
+                            console.log('applied', applied, alias)
 
                             if (applied) extendedObject = applied
                         }
@@ -731,6 +733,7 @@ var pSDK = function ({ app, api, actions }) {
 
             clearfromdb('userInfoFullFB', [address])
             clearfromdb('userInfoFull', [address])
+            clearfromdb('userInfoLight', [address])
         },
 
         clearAll: function (address) {
@@ -1155,7 +1158,7 @@ var pSDK = function ({ app, api, actions }) {
         applyAction: function (comment, exp) {
 
             if (comment) {
-                if (comment.id == exp.comment.v && exp.address == app.user.address.value) { /// for me
+                if (comment.id == exp.comment.v && exp.actor == app.user.address.value) { /// for me
                     comment.myScore = exp.value.v
                 }
             }
@@ -1620,18 +1623,20 @@ var pSDK = function ({ app, api, actions }) {
             if (status == 'completed') {
 
                 this.applyAction(objects['userInfoFull'][address], exp)
-                this.applyAction(objects['userInfoFull'][exp.vsaddress], exp)
+                this.applyAction(objects['userInfoFull'][exp.address], exp)
+
+                self.userInfo.cleardb(address)
+                self.userInfo.cleardb(exp.address)
             }
         },
         applyAction: function (object, exp) {
 
             if (object) {
-                if (object.address == exp.address) { /// for me
-                    object.addRelation(exp.vsaddress, 'blocking')
+                if (object.address == exp.actor) { /// for me
+                    object.addRelation(exp.address, 'blocking')
                 }
 
-                if (object.address == exp.vsaddress) { /// for me
-                    //object.addRelation(exp.vsaddress, 'blocking')
+                if (object.address == exp.address) { 
                 }
             }
 
@@ -1644,17 +1649,20 @@ var pSDK = function ({ app, api, actions }) {
             if (status == 'completed') {
 
                 this.applyAction(objects['userInfoFull'][address], exp)
-                this.applyAction(objects['userInfoFull'][exp.vsaddress], exp)
+                this.applyAction(objects['userInfoFull'][exp.address], exp)
+
+                self.userInfo.cleardb(address)
+                self.userInfo.cleardb(exp.address)
             }
         },
         applyAction: function (object, exp) {
 
             if (object) {
-                if (object.address == exp.address) { /// for me
-                    object.removeRelation(exp.vsaddress, 'blocking')
+                if (object.address == exp.actor) { /// for me
+                    object.removeRelation(exp.address, 'blocking')
                 }
 
-                if (object.address == exp.vsaddress) { /// for me
+                if (object.address == exp.address) { /// for me
                 }
             }
 
@@ -1663,26 +1671,29 @@ var pSDK = function ({ app, api, actions }) {
     }
 
     self.subscribe = {
-        listener: function (action, address, status) {
+        listener: function (exp, address, status) {
             if (status == 'completed') {
 
-                var exp = action.get()
+                console.log('exp.address', exp.address, exp.actor)
 
-                this.applyAction(objects['userInfoFull'][address], exp)
-                this.applyAction(objects['userInfoFull'][exp.vsaddress], exp)
+                this.applyAction(objects['userInfoFull'][exp.actor], exp)
+                this.applyAction(objects['userInfoFull'][exp.address.v], exp)
+
+                self.userInfo.cleardb(exp.actor)
+                self.userInfo.cleardb(exp.address.v)
             }
         },
         applyAction: function (object, exp) {
 
             if (object) {
-                if (object.address == exp.address) { /// for me
+                if (object.address == exp.actor) { /// for me
                     object.addRelation({
-                        adddress: exp.vsaddress
+                        adddress: exp.address.v
                     })
                 }
 
-                if (object.address == exp.vsaddress) {
-                    object.addRelation(object.address, 'subscribers')
+                if (object.address == exp.address.v) {
+                    object.addRelation(exp.address.v, 'subscribers')
                 }
             }
 
@@ -1708,25 +1719,27 @@ var pSDK = function ({ app, api, actions }) {
         listener: function (exp, address, status) {
             if (status == 'completed') {
 
-                this.applyAction(objects['userInfoFull'][address], exp)
-                this.applyAction(objects['userInfoFull'][exp.vsaddress], exp)
+                console.log('exp.address', exp.address, exp.actor)
+
+                this.applyAction(objects['userInfoFull'][exp.actor], exp)
+                this.applyAction(objects['userInfoFull'][exp.address.v], exp)
+
+                self.userInfo.cleardb(exp.actor)
+                self.userInfo.cleardb(exp.address.v)
             }
         },
         applyAction: function (object, exp) {
 
             if (object) {
-                if (object.address == exp.address) { /// for me
+                if (object.address == exp.actor) { /// for me
                     object.addRelation({
-                        adddress: exp.vsaddress,
+                        adddress: exp.address.v,
                         private: true
                     })
                 }
 
-                if (object.address == exp.vsaddress) {
-                    object.addRelation(object.address, 'subscribers')
-
-
-                    //object.addRelation(exp.vsaddress, 'blocking')
+                if (object.address == exp.address.v) {
+                    object.addRelation(exp.address.v, 'subscribers')
                 }
             }
 
@@ -1738,24 +1751,28 @@ var pSDK = function ({ app, api, actions }) {
         listener: function (exp, address, status) {
             if (status == 'completed') {
 
-                this.applyAction(objects['userInfoFull'][address], exp)
-                this.applyAction(objects['userInfoFull'][exp.vsaddress], exp)
+                console.log('exp.address', exp.address.v, exp.actor)
+
+
+                this.applyAction(objects['userInfoFull'][exp.actor], exp)
+                this.applyAction(objects['userInfoFull'][exp.address.v], exp)
+
+                self.userInfo.cleardb(exp.actor)
+                self.userInfo.cleardb(exp.address.v)
             }
         },
         applyAction: function (object, exp) {
 
             if (object) {
-                if (object.address == exp.address) { /// for me
+                if (object.address == exp.actor) { /// for me
                     object.removeRelation({
-                        adddress: exp.vsaddress
+                        adddress: exp.address.v
                     })
                 }
 
-                if (object.address == exp.vsaddress) {
-                    object.removeRelation(object.address, 'subscribers')
+                if (object.address == exp.address.v) {
+                    object.removeRelation(exp.address.v, 'subscribers')
 
-
-                    //object.addRelation(exp.vsaddress, 'blocking')
                 }
             }
 
@@ -1791,7 +1808,7 @@ var pSDK = function ({ app, api, actions }) {
         applyAction: function (share, exp) {
 
             if (share) {
-                if (share.txid == exp.share && exp.address == app.user.address.value) { /// for me
+                if (share.txid == exp.share && exp.actor == app.user.address.value) { /// for me
                     share.myVal = Number(exp.value)
                 }
             }

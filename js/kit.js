@@ -78,7 +78,6 @@ Subscribe = function(){
 		}
 
 		return {
-			
 			address : self.address.v
 		}
 	}
@@ -3040,35 +3039,6 @@ Img = function(p){
 	return self;	
 }
 
-kits = {
-	c : {
-		userInfo : UserInfo,
-		share : Share,
-		complainShare : ComplainShare,
-		modFlag : ModFlag,
-		upvoteShare : UpvoteShare,
-		cScore : СScore,
-		comment : Comment,
-		unblocking : Unblocking,
-		blocking : Blocking,
-		unsubscribe : Unsubscribe,
-		subscribe : Subscribe,
-		subscribePrivate : SubscribePrivate,
-		contentBoost : ContentBoost,
-		deleteAccount : DeleteAccount,
-		accDel : DeleteAccount,
-		transaction : Transaction
-	},
-
-	ini : {
-
-	},
-	alias : {
-		userInfo : pUserInfo,
-		share : pShare,
-		comment : pComment,
-	}
-}
 
 Remove = function(){
 
@@ -3346,3 +3316,35 @@ Settings = function(){
 	return self;
 }
 
+
+
+
+kits = {
+	c : {
+		userInfo : UserInfo,
+		share : Share,
+		complainShare : ComplainShare,
+		modFlag : ModFlag,
+		upvoteShare : UpvoteShare,
+		cScore : СScore,
+		comment : Comment,
+		unblocking : Unblocking,
+		blocking : Blocking,
+		unsubscribe : Unsubscribe,
+		subscribe : Subscribe,
+		subscribePrivate : SubscribePrivate,
+		contentBoost : ContentBoost,
+		deleteAccount : DeleteAccount,
+		accDel : DeleteAccount,
+		transaction : Transaction
+	},
+
+	ini : {
+
+	},
+	alias : {
+		userInfo : pUserInfo,
+		share : pShare,
+		comment : pComment,
+	}
+}
