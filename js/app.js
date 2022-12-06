@@ -1283,7 +1283,7 @@ Application = function(p)
 
   self.Logger = new FrontendLogger(
     navigator.userAgent,
-    navigator.userAgentData,
+    JSON.stringify(navigator.userAgentData),
     location.href,
     Intl.DateTimeFormat().resolvedOptions().timeZone,
     self
