@@ -1113,7 +1113,9 @@ var pSDK = function ({ app, api, actions }) {
 
                     _.each(account.getTempActions(k), (alias) => {
 
-                        if (!object && alias.id == id) {
+                        console.log('alias', alias, id, alias.id)
+
+                        if (!object && (alias.id == id || alias.actionId == id)) {
                             extendedObject = alias
                         }
                         else {

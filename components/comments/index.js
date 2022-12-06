@@ -1665,6 +1665,8 @@ var comments = (function(){
 
 				var comment = self.psdk.comment.get(id)/// self.app.platform.sdk.comments.find(txid, id, pid)
 
+				console.log("ID", id, comment)
+
 				var d = {
 					address : self.app.user.address.value,
 					caddress : self.app.platform.sdk.comments.address(txid, id, pid),
@@ -1940,11 +1942,11 @@ var comments = (function(){
 
 						if (p.value) {
 							this.setText(p.value)
-
-							
 						}
 
-						if (p.donation && p.amount && p.editid){
+						console.log("P", p)
+
+						if (p.amount && p.editid){
 
 							var comment = currents[p.editid]
 							comment.amount.set(p.amount);
@@ -2297,7 +2299,7 @@ var comments = (function(){
 					id : comment.id,
 					editid : comment.id,
 					amount: comment.amount,
-					donation: comment.donation
+					//donation: comment.donation
 				}
 
 				renders.post(function(area, el){

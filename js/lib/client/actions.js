@@ -97,14 +97,19 @@ var ActionOptions = {
         comment : {
             destination : function(action){
 
-                if(action.object.typeop != 'comment') return []
+                console.log("DEST", action.object.typeop())
+
+                if(action.object.typeop() != 'comment') return []
 
 
                 return _.clone(action.object.donate.v)
             },
             amount : function(action){
 
-                if(action.object.typeop != 'comment') return 0
+                console.log("amount", action.object.typeop())
+
+
+                if(action.object.typeop() != 'comment') return 0
 
 
                 return _.reduce(action.object.donate.v, (m, dn) => {
@@ -896,7 +901,13 @@ var Account = function(address, parent){
             self.unspents.value.push(out)
         })
 
-        
+        cleanOutputs()
+    }
+
+    var cleanOutputs = function(){
+        self.unspents.value = _.uniq(self.unspents.value, (v) => {
+            return v.txid + ";" + v.vout
+        })
     }
 
     self.setWaitCoins = function(transaction){
@@ -1081,6 +1092,8 @@ var Account = function(address, parent){
 
             self.unspents.value = unspents
             self.unspents.updated = new Date()
+
+            cleanOutputs()
 
             delete temps.unspents
 

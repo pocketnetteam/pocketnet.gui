@@ -561,7 +561,7 @@ Comment = function(txid){
 		//included multi donates!!!
 
 		if (self.donate && self.donate.v.length){
-			r.donate = self.donate
+			r.donate = self.donate.v
 		}
 
  		/*if (self.donate && self.donate.v.length){
@@ -611,7 +611,7 @@ Comment = function(txid){
 		}
 		
 		if (v.donate){
-			self.donate = v.donate
+			self.donate.set(v.donate)
 		}
 
 		if (v.txid || v.id)
@@ -2842,7 +2842,7 @@ pComment = function(){
 		if(v.donate){
 			self.amount = _.reduce(v.donate, (m, n) => {
 				return m + n.amount
-			}, 0)
+			}, 0) * 100000000
 		}
 
 		self.address = v.address

@@ -502,6 +502,9 @@
 #comments .list .metatable > div .date {
   color: rgb(var(--neutral-grad-3));
 }
+#comments .list .metatable > div .tempicon {
+  color: rgba(var(--neutral-grad-2), 0.3);
+}
 #comments .list .metatable > div .edited {
   color: rgb(var(--neutral-grad-3));
 }
