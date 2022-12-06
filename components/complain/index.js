@@ -1,403 +1,402 @@
-var complain = (function(){
-
-  var self = new nModule();
-
-  var essenses = {};
-
-  var Essense = function(p){
-
-    var primary = deep(p, 'history');
-
-    var el, ess, sobj, selected, ed, textreason;
-
-    var reasons = {
-
-      post : [
-        {
-          name : self.app.localization.e('lowstar_reason_1'),
-          gid : 1
-        },
-        {
-          name : self.app.localization.e('lowstar_reason_2'),
-          gid : 2
-        },
-        {
-          name : self.app.localization.e('lowstar_reason_3'),
-          gid : 3
-        },
-        {
-          name : self.app.localization.e('lowstar_reason_4'),
-          gid : 4
-        }
-
-      ],
-      user : [
-        {
-          name : self.app.localization.e('lowstar_reason_1'),
-          gid : 1
-        },
-        {
-          name : self.app.localization.e('lowstar_reason_2'),
-          gid : 2
-        },
-        {
-          name : self.app.localization.e('lowstar_reason_3'),
-          gid : 3
-        },
-        {
-          name : self.app.localization.e('lowstar_reason_4'),
-          gid : 4
-        }
-
-      ]
-
-    }
-
-
-    var actions = {
-      find : function(id){
-        return _.find(reasons[ess], function(r){
-          return (r.gid || r.id) == id
-        })
-      },
-
-      complain : function(clbk){
-          self.app.platform.sdk.ustate.me(function(mestate){
-            if(ess == 'post'){
-
-              if((typeof mestate!= 'undefined' && mestate.badges && Object.values(mestate.badges).includes('shark'))){
-
-                var modFlag = sobj.modFlag(selected);
-
-                //topPreloader(30);
-
-                self.app.platform.actions.addActionAndSendIfCan(modFlag).then(action => {
-                  
-                  var alias = action.object
-        
-                  successCheck()
-                  sitemessage(self.app.localization.e('complain_success'))
-
-                  if (clbk) clbk(true)
-
-                }).catch(e => {
-                  self.app.platform.errorHandler(e, true)
-                })
-
-                return 
-                self.sdk.node.transactions.create.commonFromUnspent(
-
-                  modFlag,
-
-                  function(tx, error){
-                    topPreloader(100)
-
-                    if(!tx){
-                      self.app.platform.errorHandler(error, true)
-
-                      if (clbk)
-                        clbk()
-                    }
-                    else
-                    {
-
-                      
-                    }
-
-                  }
-                )
-                
-              }
-
-              else{
-                try{
-                  var i1 = ((actions.find(selected) || {}).name) || selected;
-
-                  self.app.Logger.info({
-                    actionId: 'POST_COMPLAIN',
-                    actionValue: i1,
-                    actionSubType: sobj.txid
-                  });
-
-                  clbk(true)
-                  sitemessage(self.app.localization.e('complain_success'))
-                } catch (error) {
-                  self.app.platform.errorHandler(error, true)
-                }
-
-                // var i1 = ((actions.find(selected) || {}).name) || selected;
-                // self.app.complainletters.post({
-                //   i1,
-                //   s3 : mestate.address,
-                //   s2 : sobj.txid
-                // }, function(r){
-                //   successCheck()
-                //
-                //   if (clbk)
-                //     clbk(r)
-                // })
-              }
-            }
-
-            if(ess == 'user'){
-              if((typeof mestate!= 'undefined' && mestate.badges && Object.values(mestate.badges).includes('shark'))){
-
-                var modFlag = sobj.data.modFlag(selected);
-
-                //topPreloader(30);
-
-                self.app.platform.actions.addActionAndSendIfCan(modFlag).then(action => {
-                  
-                  var alias = action.object
-        
-                  successCheck()
-                  sitemessage(self.app.localization.e('complain_success'))
-
-                  if (clbk) clbk(true)
+var complain = (function () {
 
-                }).catch(e => {
-                  self.app.platform.errorHandler(e, true)
-                })
+	var self = new nModule();
 
-                return
+	var essenses = {};
 
+	var Essense = function (p) {
 
-                self.sdk.node.transactions.create.commonFromUnspent(
+		var primary = deep(p, 'history');
 
-                  modFlag,
+		var el, ess, sobj, selected, ed, textreason;
 
-                  function(tx, error){
-                    topPreloader(100)
+		var reasons = {
 
-                    if(!tx){
-                      self.app.platform.errorHandler(error, true)
+			post: [
+				{
+					name: self.app.localization.e('lowstar_reason_1'),
+					gid: 1
+				},
+				{
+					name: self.app.localization.e('lowstar_reason_2'),
+					gid: 2
+				},
+				{
+					name: self.app.localization.e('lowstar_reason_3'),
+					gid: 3
+				},
+				{
+					name: self.app.localization.e('lowstar_reason_4'),
+					gid: 4
+				}
 
-                      if (clbk)
-                        clbk()
-                    }
-                    else
-                    {
-                      successCheck()
-                      sitemessage(self.app.localization.e('complain_success'))
-                    }
+			],
+			user: [
+				{
+					name: self.app.localization.e('lowstar_reason_1'),
+					gid: 1
+				},
+				{
+					name: self.app.localization.e('lowstar_reason_2'),
+					gid: 2
+				},
+				{
+					name: self.app.localization.e('lowstar_reason_3'),
+					gid: 3
+				},
+				{
+					name: self.app.localization.e('lowstar_reason_4'),
+					gid: 4
+				}
 
-                  }
-                )
-                if (clbk)
-                  clbk(true)
-              }
+			]
 
-              else{
-                
-                try{
-                  var i1 = ((actions.find(selected) || {}).name) || selected;
-                  self.app.Logger.info({
-                    actionId: 'USER_COMPLAIN',
-                    actionValue: i1,
-                    actionSubType: sobj.data.address
-                  });
-                  clbk(true)
-                  sitemessage(self.app.localization.e('complain_success'))
-                } catch (error) {
-                  self.app.platform.errorHandler(error, true)
-                }
+		}
 
-              }
-            }
 
-          })
-       
+		var actions = {
+			find: function (id) {
+				return _.find(reasons[ess], function (r) {
+					return (r.gid || r.id) == id
+				})
+			},
 
-      },
+			complain: function (clbk) {
+				self.app.platform.sdk.ustate.me(function (mestate) {
+					if (ess == 'post') {
 
-      nextActive : function(){
+						if ((typeof mestate != 'undefined' && mestate.badges && Object.values(mestate.badges).includes('shark'))) {
 
-        if(selected || textreason){
+							var modFlag = sobj.modFlag(selected);
 
-          el.next.removeClass('disabled')
+							//topPreloader(30);
 
-        }
-        else
-        {
-          el.next.addClass('disabled')
-        }
-      },
-    }
+							self.app.platform.actions.addActionAndSendIfCan(modFlag).then(action => {
 
-    var events = {
-      close : function(){
-        self.closeContainer();
-      },
+								var alias = action.object
 
-      complain : function(){
-        if(!el.next.hasClass('disabled') && (selected || textreason)){
+								console.log('action', action, alias)
 
-          actions.complain(function(r){
-            if(r){
-              self.closeContainer();
+								successCheck()
+								sitemessage(self.app.localization.e('complain_success'))
 
-              if (ed.success) {
-                ed.success()
-              }
-            }
+								if (clbk) clbk(true)
 
-          })
-        }
+							}).catch(e => {
+								self.app.platform.errorHandler(e, true)
+							})
 
-      },
+							return
+							self.sdk.node.transactions.create.commonFromUnspent(
 
+								modFlag,
 
+								function (tx, error) {
+									topPreloader(100)
 
-      select : function(){
-        var id = $(this).attr('reason')
+									if (!tx) {
+										self.app.platform.errorHandler(error, true)
 
-        var reason = actions.find(id);
+										if (clbk)
+											clbk()
+									}
+									else {
 
-        if (reason){
 
-          if($(this).hasClass('active')){
+									}
 
-          }
-          else
-          {
-            el.c.find('.reason').removeClass('active');
+								}
+							)
 
-            selected = null
+						}
 
-            $(this).addClass('active')
+						else {
+							try {
+								var i1 = ((actions.find(selected) || {}).name) || selected;
 
-            selected = reason.gid
+								self.app.Logger.info({
+									actionId: 'POST_COMPLAIN',
+									actionValue: i1,
+									actionSubType: sobj.txid
+								});
 
-            actions.nextActive()
-          }
+								clbk(true)
+								sitemessage(self.app.localization.e('complain_success'))
+							} catch (error) {
+								self.app.platform.errorHandler(error, true)
+							}
 
-        }
-      }
-    }
+							// var i1 = ((actions.find(selected) || {}).name) || selected;
+							// self.app.complainletters.post({
+							//   i1,
+							//   s3 : mestate.address,
+							//   s2 : sobj.txid
+							// }, function(r){
+							//   successCheck()
+							//
+							//   if (clbk)
+							//     clbk(r)
+							// })
+						}
+					}
 
-    var renders = {
-      reasons : function(){
-        self.shell({
-          name :  'reasons',
-          inner : html,
-          el : el.reasons,
-          data : {
-            reasons : reasons[ess]
-          },
+					if (ess == 'user') {
+						if ((typeof mestate != 'undefined' && mestate.badges && Object.values(mestate.badges).includes('shark'))) {
 
-        }, function(p){
-          p.el.find('.reason').on('click', events.select)
-        })
-      }
+							var modFlag = sobj.data.modFlag(selected);
 
-    }
+							//topPreloader(30);
 
-    var state = {
-      save : function(){
+							self.app.platform.actions.addActionAndSendIfCan(modFlag).then(action => {
 
-      },
-      load : function(){
 
-      }
-    }
+								var alias = action.get()
+								
 
-    var initEvents = function(){
+								successCheck()
+								sitemessage(self.app.localization.e('complain_success'))
 
-      el.c.find('.cancel').on('click', events.close)
+								if (clbk) clbk(true)
 
-      el.next.on('click', events.complain)
+							}).catch(e => {
+								self.app.platform.errorHandler(e, true)
+							})
 
-      el.c.find('textarea').on('keyup', function(){
-        textreason = $(this).val()
-        actions.nextActive()
-      })
-    }
+							return
 
-    var make = function(){
-      renders.reasons()
-    }
 
-    return {
-      primary : primary,
+							self.sdk.node.transactions.create.commonFromUnspent(
 
-      getdata : function(clbk, p){
+								modFlag,
 
-        selected = null;
-        textreason = ''
+								function (tx, error) {
+									topPreloader(100)
 
-        ess = deep(p, 'settings.essenseData.item') || 'post';
+									if (!tx) {
+										self.app.platform.errorHandler(error, true)
 
-        sobj = deep(p, 'settings.essenseData.obj') || null;
+										if (clbk)
+											clbk()
+									}
+									else {
+										successCheck()
+										sitemessage(self.app.localization.e('complain_success'))
+									}
 
+								}
+							)
+							if (clbk)
+								clbk(true)
+						}
 
-        ed = p.settings.essenseData || {};
+						else {
 
-        if (sobj){
-          var data = {
-            ess : ess
-          };
-          clbk(data);
-        }
+							try {
+								var i1 = ((actions.find(selected) || {}).name) || selected;
+								self.app.Logger.info({
+									actionId: 'USER_COMPLAIN',
+									actionValue: i1,
+									actionSubType: sobj.data.address
+								});
+								clbk(true)
+								sitemessage(self.app.localization.e('complain_success'))
+							} catch (error) {
+								self.app.platform.errorHandler(error, true)
+							}
 
-      },
+						}
+					}
 
-      destroy : function(){
-        el = {};
-      },
+				})
 
-      init : function(p){
 
-        state.load();
+			},
 
-        el = {};
-        el.c = p.el.find('#' + self.map.id);
-        el.reasons = el.c.find('.reasons')
-        el.next = el.c.find('.next')
+			nextActive: function () {
 
-        initEvents();
+				if (selected || textreason) {
 
-        make()
+					el.next.removeClass('disabled')
 
-        p.clbk(null, p);
-      },
-      wnd : {
-        class : 'withoutButtons transparent small complain'
-      }
-    }
-  };
+				}
+				else {
+					el.next.addClass('disabled')
+				}
+			},
+		}
 
+		var events = {
+			close: function () {
+				self.closeContainer();
+			},
 
+			complain: function () {
+				if (!el.next.hasClass('disabled') && (selected || textreason)) {
 
-  self.run = function(p){
+					actions.complain(function (r) {
+						if (r) {
+							self.closeContainer();
 
-    var essense = self.addEssense(essenses, Essense, p);
+							if (ed.success) {
+								ed.success()
+							}
+						}
 
-    self.init(essense, p);
+					})
+				}
 
-  };
+			},
 
-  self.stop = function(){
 
-    _.each(essenses, function(essense){
 
-      window.requestAnimationFrame(() => {
+			select: function () {
+				var id = $(this).attr('reason')
+
+				var reason = actions.find(id);
+
+				if (reason) {
+
+					if ($(this).hasClass('active')) {
+
+					}
+					else {
+						el.c.find('.reason').removeClass('active');
+
+						selected = null
+
+						$(this).addClass('active')
+
+						selected = reason.gid
+
+						actions.nextActive()
+					}
+
+				}
+			}
+		}
+
+		var renders = {
+			reasons: function () {
+				self.shell({
+					name: 'reasons',
+					inner: html,
+					el: el.reasons,
+					data: {
+						reasons: reasons[ess]
+					},
+
+				}, function (p) {
+					p.el.find('.reason').on('click', events.select)
+				})
+			}
+
+		}
+
+		var state = {
+			save: function () {
+
+			},
+			load: function () {
+
+			}
+		}
+
+		var initEvents = function () {
+
+			el.c.find('.cancel').on('click', events.close)
+
+			el.next.on('click', events.complain)
+
+			el.c.find('textarea').on('keyup', function () {
+				textreason = $(this).val()
+				actions.nextActive()
+			})
+		}
+
+		var make = function () {
+			renders.reasons()
+		}
+
+		return {
+			primary: primary,
+
+			getdata: function (clbk, p) {
+
+				selected = null;
+				textreason = ''
+
+				ess = deep(p, 'settings.essenseData.item') || 'post';
+
+				sobj = deep(p, 'settings.essenseData.obj') || null;
+
+
+				ed = p.settings.essenseData || {};
+
+				if (sobj) {
+					var data = {
+						ess: ess
+					};
+					clbk(data);
+				}
+
+			},
+
+			destroy: function () {
+				el = {};
+			},
+
+			init: function (p) {
+
+				state.load();
+
+				el = {};
+				el.c = p.el.find('#' + self.map.id);
+				el.reasons = el.c.find('.reasons')
+				el.next = el.c.find('.next')
+
+				initEvents();
+
+				make()
+
+				p.clbk(null, p);
+			},
+			wnd: {
+				class: 'withoutButtons transparent small complain'
+			}
+		}
+	};
+
+
+
+	self.run = function (p) {
+
+		var essense = self.addEssense(essenses, Essense, p);
+
+		self.init(essense, p);
+
+	};
+
+	self.stop = function () {
+
+		_.each(essenses, function (essense) {
+
+			window.requestAnimationFrame(() => {
 				essense.destroy();
 			})
 
-    })
+		})
 
-  }
+	}
 
-  return self;
+	return self;
 })();
 
 
-if(typeof module != "undefined")
-{
-  module.exports = complain;
+if (typeof module != "undefined") {
+	module.exports = complain;
 }
-else{
-  app.modules.complain = {};
-  app.modules.complain.module = complain;
+else {
+	app.modules.complain = {};
+	app.modules.complain.module = complain;
 
 }
