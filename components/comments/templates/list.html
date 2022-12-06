@@ -130,10 +130,10 @@ var commentf = function(comment){
 						<% if(!app.mobileview) {%><a elementsid="<%-app.platform.api.authorlink(comment.address)%>" href="<%-app.platform.api.authorlink(comment.address)%>"><% } %>
 
 						<div class="icon" profile="<%-comment.address%>">
-							<% if(comment.donation === 'true' && comment.amount) {%>
+							<% if(comment.amount) {%>
 								<div class="donatedbefore"></div>
 							<% } %>
-							<div  ban=".gif" contain="none" class="usericon <% if(comment.donation === 'true' && comment.amount) {%> donated <% } %>" image="<%-src || '*'%>">
+							<div  ban=".gif" contain="none" class="usericon <% if(comment.amount) {%> donated <% } %>" image="<%-src || '*'%>">
 
 								<% if(!src && letter) { %>
 
@@ -179,7 +179,7 @@ var commentf = function(comment){
 
 							<% } %>
 
-							<% if(comment.donation === 'true' && comment.amount && !app.pkoindisable) {%>
+							<% if(comment.amount && !app.pkoindisable) {%>
 								<div class="donateSum">
 									<i class="fas fa-plus-circle"></i> <%=comment.amount / 100000000 %> PKOIN
 								</div>

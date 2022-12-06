@@ -48,9 +48,9 @@ var mobilesearch = (function(){
 
 				ed.events.fastsearch(value, (r, revents) => {
 
-					if(thisSearch != currentFastId || !element.val()) return;
-
 					el.c.removeClass('active')
+
+					if(thisSearch != currentFastId || !element.val()) return;
 
 					if (r){
 
@@ -115,7 +115,7 @@ var mobilesearch = (function(){
 
 		var initEvents = function(){
 
-			var dfastsearch = _.debounce(events.fastsearch)
+			var dfastsearch = _.debounce(events.fastsearch, 450)
 
 			el.c.find('.cancelWrapper').on('click', () => {
 				self.closeContainer()

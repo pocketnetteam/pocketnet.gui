@@ -1068,12 +1068,14 @@ var comments = (function(){
 					load.level(id, function(comments){
 
 						p.comments = comments
+
+						window.requestAnimationFrame(() => {
+							c.addClass('showedreplies')
+							c.find('.repliesloaderWrapper').addClass('hidden')
+						})
 						
-						c.addClass('showedreplies')
 
 						renders.list(p, function(){
-
-							c.find('.repliesloaderWrapper').addClass('hidden')
 
 							if(!caption)
 								renders.caption()
@@ -1084,7 +1086,8 @@ var comments = (function(){
 
 						}, id)
 
-					}, currentstate.levels[id] ? true : false)
+					}, currentstate.levels[id] ? currentstate.levels[id].comments : null)
+
 				}
 				else
 				{
@@ -2558,7 +2561,10 @@ var comments = (function(){
 					commentslength = comments.length
 	
 					if (pid){
-						currentstate.levels[pid] = pid
+						currentstate.levels[pid] = {
+							id : pid,
+							comments
+						}
 					}
 	
 					currentstate.pagination[ pid || '0' ] || (currentstate.pagination[ pid || '0' ] = 1)
@@ -2603,7 +2609,7 @@ var comments = (function(){
 						el : p.el,
 
 						inner : p.replace ? replaceWith : html,
-
+						fast : p.fast,
 						//inner : p.inner || _in, /// html
 						
 						data : {
@@ -2761,8 +2767,8 @@ var comments = (function(){
 		}
 
 		var makeCurrentLevels = function(clbk){
-			var lvls = _.map(currentstate.levels, function(id){
-				return id
+			var lvls = _.map(currentstate.levels, function(lv){
+				return lv.id
 			})
 
 			if(lvls.length){
@@ -2889,14 +2895,21 @@ var comments = (function(){
 
 				})
 			},	
-			level : function(pid, clbk, ccha){
+			level : function(pid, clbk, comments){
+
+				if(comments){
+					
+					if (clbk) clbk(comments)
+
+					return
+				}
 
 				self.app.platform.sdk.comments.getclear(txid, pid || "", function(comments, e){
 
 					if (clbk)
 						clbk(comments, e)
 
-				}, ccha)
+				})
 
 			}
 		}

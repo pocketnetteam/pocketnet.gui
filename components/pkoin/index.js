@@ -367,17 +367,15 @@ var pkoin = (function(){
 					if (account){
 						var b = account.actualBalance()
 						var total = b.actual
-						var balance = b.actual - b.tempbalance
+						var balance = (b.actual - b.tempbalance).toFixed(2);
 
-						balance = amount.toFixed(2);
 						valSum = Number(el.inputSum.val());
 	
 						if (valSum){
 	
+							if (valSum && valSum < 0.5){
 	
-							if (valSum && valSum < 0.05){
-	
-								sitemessage(self.app.localization.e('minPkoin', 0.05))
+								sitemessage(self.app.localization.e('minPkoin', 0.5))
 	
 							} else if (valSum < Number(balance)){
 

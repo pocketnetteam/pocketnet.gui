@@ -1357,7 +1357,7 @@ var pSDK = function ({ app, api, actions }) {
                                 'medium-insert-embeds': true
                             }
 
-                            c.m = filterXSS(c.m, {
+                            c.m = filterXSS(c.m || '', {
                                 stripIgnoreTag: true,
                                 whiteList: {
                                     a: ["href", "title", "target", 'cordovalink'],
@@ -1406,7 +1406,7 @@ var pSDK = function ({ app, api, actions }) {
 
                     }
                     else {
-                        c.m = nl2br(trimrn(findAndReplaceLink(filterXSS(decodeURIComponent(c.m), {
+                        c.m = nl2br(trimrn(findAndReplaceLink(filterXSS(decodeURIComponent(c.m || ''), {
                             whiteList: [],
                             stripIgnoreTag: true,
                         })))).replace(/\n{2,}/g, '\n\n')

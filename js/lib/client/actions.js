@@ -1,8 +1,8 @@
 var ActionOptions = {
     pcTxFee : 1 / 100000000,
     amountC : 100000000,
-    clearRejected : false,
-    clearCompleted : false,
+    clearRejected : true,
+    clearCompleted : true,
     objects : {
         transaction : {
             calculateFee : true,
@@ -96,9 +96,17 @@ var ActionOptions = {
 
         comment : {
             destination : function(action){
+
+                if(action.object.typeop != 'comment') return []
+
+
                 return _.clone(action.object.donate.v)
             },
             amount : function(action){
+
+                if(action.object.typeop != 'comment') return 0
+
+
                 return _.reduce(action.object.donate.v, (m, dn) => {
                     return m + dn.amount
                 }, 0)
@@ -920,9 +928,9 @@ var Account = function(address, parent){
 
         _.each(self.actions.value, (action) => {
 
-            if( (!action.completed || !ActionOptions.clearCompleted) && (!action.rejected || !ActionOptions.clearRejected) ){
+            //if( (!action.completed || !ActionOptions.clearCompleted) && (!action.rejected || !ActionOptions.clearRejected) ){
                 e.actions.value.push(action.export())
-            }   
+            //}   
            
         })
 
@@ -931,7 +939,7 @@ var Account = function(address, parent){
 
  
 
-    self.import = function(e){
+    self.import = function(e, flag){
         self.status = e.status
         self.unspents = e.unspents
         
@@ -944,7 +952,9 @@ var Account = function(address, parent){
 
             if (exported.until < new Date()) return
 
-            if ((exported.completed && ActionOptions.clearCompleted) || (exported.rejected && ActionOptions.clearRejected)){
+
+            //withcompleted
+            if (flag != 'withcompleted' && ((exported.completed && ActionOptions.clearCompleted) || (exported.rejected && ActionOptions.clearRejected))){
 
                 _.each(self.emitted, (category) => {
                     if(exported.id && category[exported.id]){
@@ -1468,8 +1478,7 @@ var Actions = function(app, api, storage = localStorage){
                 accounts[address] = new Account(address, self)
             }
                 
-            accounts[address].import(data)
-
+            accounts[address].import(data, 'withcompleted')
             accounts[address].triggerGlobal()
             
         })
@@ -1656,12 +1665,6 @@ var Actions = function(app, api, storage = localStorage){
 
             app.platform.sdk.syncStorage.on('change', key, function(e){
 
-                console.log("E", e)
-
-                console.log("CHANGE EVENT", e.newValue == e.oldValue)
-
-                
-
                 if(e.newValue == e.oldValue) return
 
                 try{
@@ -1674,6 +1677,8 @@ var Actions = function(app, api, storage = localStorage){
                 
 
             });
+
+            self.processing()
 
             processInterval = setInterval(() => {
                 self.processing()

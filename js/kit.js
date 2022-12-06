@@ -560,7 +560,11 @@ Comment = function(txid){
 
 		//included multi donates!!!
 
- 		if (self.donate && self.donate.v.length){
+		if (self.donate && self.donate.v.length){
+			r.donate = self.donate
+		}
+
+ 		/*if (self.donate && self.donate.v.length){
 
 			r.donation = 'true';
 			r.amount = self.donate.v.reduce(function(prev, next){
@@ -574,7 +578,7 @@ Comment = function(txid){
 			r.donation = 'true';
 			r.amount = self.amount.v;
 
-		}
+		}*/
 
 		if(extend){
 			r.type = self.type
@@ -600,12 +604,15 @@ Comment = function(txid){
 			}))
 		}
 
-		if(v.msgparsed){
+		if (v.msgparsed){
 			self.url.set(v.msgparsed.url)
 			self.message.set(v.msgparsed.message)
 			self.images.set(v.msgparsed.images)
 		}
 		
+		if (v.donate){
+			self.donate = v.donate
+		}
 
 		if (v.txid || v.id)
 			self.id = v.txid || v.id
@@ -642,9 +649,6 @@ Comment = function(txid){
 	}
 
 	self.ustate = 'comment'
-
-
-
 	self.type = 'comment'
 
 	return self;
@@ -2793,7 +2797,6 @@ pComment = function(){
 	self.timeUpd = new Date();
 	self.children = 0;
 
-	self.donation = '';
 	self.amount = 0;
 
 
@@ -2832,9 +2835,15 @@ pComment = function(){
 		self.scoreDown = Number(v.scoreDown || '0');
 		self.scoreUp = Number(v.scoreUp || '0');
 
-		self.donation = v.donation;
+		//self.donation = v.donation;
 		self.amount = Number(v.amount || '0');
 		self.children = Number(v.children || '0');
+
+		if(v.donate){
+			self.amount = _.reduce(v.donate, (m, n) => {
+				return m + n.amount
+			}, 0)
+		}
 
 		self.address = v.address
 

@@ -1940,8 +1940,9 @@
 				image.src = src
 
 				if(imagesLoadedCache[src]){
-					console.log("????")
-					bgImagesClApply(el, src)
+					//window.requestAnimationFrame(() => {
+						bgImagesClApply(el, src)
+					//})
 					resolve()
 				}
 				else{
@@ -8843,6 +8844,7 @@
 			}
 		}
 
+
 		self.clear = events.clear
 
 		self.setactive = function(a){
@@ -8880,11 +8882,15 @@
 
 			searchInput.on('keyup', function(e){
 
+				console.log("KEYUP")
+
 				if ((e.keyCode || e.which) != 13) {
 
 					if(typeof p.time == 'undefined'){
-						p.time = 250;
+						p.time = 450;
 					}
+
+					console.log('p.time', p.time)
 
 					if(!p.time){
 						events.fastsearch(searchInput, e)
