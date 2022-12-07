@@ -805,7 +805,7 @@ PeerTubePocketnet = function (app) {
 						const optionsPrepared = {
 							headers: {
 								"X-Upload-Content-Length": parameters.video.size,
-								"X-Upload-Content-Type": 'video/mp4', // FIXME: Is dynamic variable...
+								"X-Upload-Content-Type": parameters.video.type, // FIXME: Is dynamic variable...
 							},
 							...options,
 						};

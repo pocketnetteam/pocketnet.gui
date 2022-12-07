@@ -250,7 +250,7 @@ var uploadpeertube = (function () {
 					return;
 				}
 
-				if (!videoInputFile[0].type.includes('video')) {
+				if (!videoInputFile[0].type.includes('video') && !videoInputFile[0].type.includes('audio')) {
 					showerror('videoFormatError')
 					return;
 				}
