@@ -15,16 +15,36 @@
 #editVideoDescription .videoDescriptionInput {
   padding-top: 0.5em;
   padding-bottom: 0.5em;
-  padding: 0.5em;
+  padding: 1em 1.25em;
   min-height: 110px;
 }
 #editVideoDescription .videoNameWrapper,
 #editVideoDescription .videoDescriptionWrapper {
   margin-bottom: 1em;
 }
+#editVideoDescription .confirmButtons {
+  padding-top: 1em;
+}
+#editVideoDescription .confirmButtons .button {
+  font-size: 2em;
+}
+.wnd.editVideoDescription .wndinner {
+  max-width: 800px;
+}
+.wnd.editVideoDescription .wndcontent {
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
 @media only screen and (max-width: 768px) {
+  #editVideoDescription {
+    padding: 0 1em;
+  }
   #editVideoDescription .videoNameInput,
   #editVideoDescription .videoDescriptionInput {
     width: 100%;
+  }
+  .wnd.editVideoDescription .wndcontent {
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
   }
 }

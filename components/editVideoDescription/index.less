@@ -21,7 +21,7 @@
     .videoDescriptionInput {
         padding-top: @rhythm;
         padding-bottom: @rhythm;
-        padding: @rhythm;
+        padding: 2 * @rhythm 2.5 * @rhythm;
         min-height: 110px;
     }
 
@@ -29,14 +29,42 @@
     .videoDescriptionWrapper {
         margin-bottom: @rhythm * 2;
     }
+
+    .confirmButtons {
+        padding-top: 2 * @rhythm;
+
+        .button {
+            font-size: 1.4em;
+        }
+    }
+}
+
+.wnd.editVideoDescription {
+    .wndinner {
+        max-width: 800px;
+    }
+
+    .wndcontent {
+        border-bottom-left-radius: 6px;
+        border-bottom-right-radius: 6px;
+    }
 }
 
 @media only screen and (max-width: 768px) {
     #editVideoDescription{
+        padding: 0 2 * @rhythm;
         .videoNameInput,
             .videoDescriptionInput {
                 width: 100%;
     
             }
+    }
+
+    .wnd.editVideoDescription {
+    
+        .wndcontent {
+            border-bottom-left-radius: 0px;
+            border-bottom-right-radius: 0px;
+        }
     }
 }

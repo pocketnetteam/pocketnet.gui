@@ -1633,7 +1633,7 @@ var videoCabinet = (function () {
 
 						addTag: function (tag) {
 							tagActions.addTag(tag);
-              renders.tags(tagElement);
+              				renders.tags(tagElement);
 						},
 
 						addTags: function (tags) {

@@ -1,141 +1,119 @@
-var editVideoDescription = (function(){
+var editVideoDescription = (function () {
+  var self = new nModule();
 
-	var self = new nModule();
+  var essenses = {};
 
-	var essenses = {};
+  var Essense = function (p) {
+    var primary = deep(p, 'history');
 
-	var Essense = function(p){
+    var el, ed;
 
-		var primary = deep(p, 'history');
+    var actions = {};
 
-		var el, ed;
+    var events = {};
 
-		var actions = {
+    var renders = {};
 
-		}
+    var state = {
+      save: function () {},
+      load: function () {},
+    };
 
-		var events = {
-			
-		}
+    var initEvents = function () {
+      el.acceptChanges.on('click', function () {
+        ed.success({
+          el: el.c,
+          close: self.container ? self.container.close : () => {},
+        });
+      });
 
-		var renders = {
+      el.cacnelChanges.on('click', function () {
+        if (self.container) self.container.close();
+      });
+    };
 
-		}
+    return {
+      primary: primary,
 
-		var state = {
-			save : function(){
+      getdata: function (clbk, p) {
+        ed = p.settings.essenseData;
 
-			},
-			load : function(){
-				
-			}
-		}
+        var data = {
+          ed,
+        };
 
-		var initEvents = function(){
-			el.acceptChanges.on('click', function() {
-				ed.success({
-					el: el.c,
-					close: self.container.close,
-				});
-			});
-		}
+        clbk(data);
+      },
 
-		return {
-			primary : primary,
+      destroy: function () {
+        ed = {};
+        el = {};
+      },
 
-			getdata : function(clbk, p){
+      init: function (p) {
+        state.load();
 
-				ed = p.settings.essenseData
+        el = {};
+        el.c = p.el.find('#' + self.map.id);
 
-				var data = {
-					ed
-				};
+        el.acceptChanges = el.c.find('.confirmEditing');
+        el.cacnelChanges = el.c.find('.cancelEditing');
 
-				clbk(data);
+        initEvents();
 
-			},
+        p.clbk(null, p);
+      },
 
-			destroy : function(){
-				ed = {}
-				el = {};
-			},
-			
-			init : function(p){
+      wnd: {
+        header: '',
+        // close: function () {
+        // 	if (ed.closeClbk) {
+        // 		ed.closeClbk();
+        // 	}
+        // },
+        // postRender: function (_wnd, _wndObj, clbk) {
+        // 	wndObj = _wndObj;
+        // 	wnd = _wnd;
 
-				state.load();
+        // 	if (clbk) {
+        // 		clbk();
+        // 	}
+        // },
+        offScroll: true,
+        noInnerScroll: true,
+        class:
+          'editVideoDescription normalizedmobile nobfilter maxheight showbetter',
+        allowHide: false,
+        noCloseButton: true,
+        noButtons: true,
 
-				el = {};
-				el.c = p.el.find('#' + self.map.id);
+        swipeClose: true,
+        swipeCloseDir: 'right',
+        swipeMintrueshold: 30,
+      },
+    };
+  };
 
-				el.acceptChanges = el.c.find('.confirmEditing');
+  self.run = function (p) {
+    var essense = self.addEssense(essenses, Essense, p);
 
-				initEvents();
+    self.init(essense, p);
+  };
 
-				p.clbk(null, p);
-			},
+  self.stop = function () {
+    _.each(essenses, function (essense) {
+      window.requestAnimationFrame(() => {
+        essense.destroy();
+      });
+    });
+  };
 
-			wnd: {
-				header: '',
-				// close: function () {
-				// 	if (ed.closeClbk) {
-				// 		ed.closeClbk();
-				// 	}
-				// },
-				// postRender: function (_wnd, _wndObj, clbk) {
-				// 	wndObj = _wndObj;
-				// 	wnd = _wnd;
-
-				// 	if (clbk) {
-				// 		clbk();
-				// 	}
-				// },
-				offScroll: true,
-				noInnerScroll: true,
-				class: 'editVideoDescription normalizedmobile nobfilter maxheight showbetter',
-				allowHide: false,
-				noCloseButton: true,
-				noButtons: true,
-
-				swipeClose: true,
-				swipeCloseDir: 'right',
-				swipeMintrueshold: 30,
-			},
-		}
-	};
-
-
-
-	self.run = function(p){
-
-		var essense = self.addEssense(essenses, Essense, p);
-
-		self.init(essense, p);
-
-	};
-
-	self.stop = function(){
-
-		_.each(essenses, function(essense){
-
-			window.requestAnimationFrame(() => {
-				essense.destroy();
-			})
-
-		})
-
-	}
-
-	return self;
+  return self;
 })();
 
-
-if(typeof module != "undefined")
-{
-	module.exports = editVideoDescription;
-}
-else{
-
-	app.modules.editVideoDescription = {};
-	app.modules.editVideoDescription.module = editVideoDescription;
-
+if (typeof module != 'undefined') {
+  module.exports = editVideoDescription;
+} else {
+  app.modules.editVideoDescription = {};
+  app.modules.editVideoDescription.module = editVideoDescription;
 }
