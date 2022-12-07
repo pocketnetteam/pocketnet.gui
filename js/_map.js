@@ -185,6 +185,7 @@ __map =  {
 		{ c : 'author', n : 'info'},
 		{ c : 'author', n : 'index'},
 		{ c : 'author', n : 'menu'},
+		{ c : 'author', n : 'panel'},
 		{ c : 'mobilesearch', n : 'index'},
 
 
@@ -211,7 +212,9 @@ __map =  {
 		href : "easynode",
 		add : insertingfunc,
 		anonimus : true,
-		electronDontOpen : true
+		electronDontOpen : true,
+
+		ignoreMinimize : true
 	},
 
 	about : {
@@ -219,7 +222,10 @@ __map =  {
 		href : "about",
 		add : insertingfunc,
 		anonimus : true,
-		electronDontOpen : true
+		electronDontOpen : true,
+
+		ignoreMinimize : true
+
 	},
 
 	aboutHome : {
@@ -229,6 +235,9 @@ __map =  {
 			el : 'content'
 		},
 		anonimus : true,
+
+		ignoreMinimize : true
+
 		/*redirect : {
 			auth : 'authorization',
 			//validate : 'filluser'
@@ -243,6 +252,9 @@ __map =  {
 			el : 'content'
 		},
 		anonimus : true,
+
+		ignoreMinimize : true
+
 		/*redirect : {
 			auth : 'authorization',
 			//validate : 'filluser'
@@ -257,6 +269,9 @@ __map =  {
 			el : 'content'
 		},
 		anonimus : true,
+
+		ignoreMinimize : true
+
 		/*redirect : {
 			auth : 'authorization',
 			//validate : 'filluser'
@@ -272,6 +287,7 @@ __map =  {
 		},
 		anonimus : true,
 
+		ignoreMinimize : true
 	
 	},
 
@@ -283,6 +299,7 @@ __map =  {
 		},
 		anonimus : true,
 
+		ignoreMinimize : true
 	
 	},
 
@@ -293,6 +310,9 @@ __map =  {
 			el : 'content'
 		},
 		anonimus : true,
+
+		ignoreMinimize : true
+
 	},
 
 	abilityincrease : {
@@ -326,7 +346,10 @@ __map =  {
 		href : "applications",
 		add : insertingfunc,
 		anonimus : true,
-		electronDontOpen : true
+		electronDontOpen : true,
+
+		ignoreMinimize : true
+
 	},
 
 	boost : {
@@ -342,7 +365,10 @@ __map =  {
 		href : "terms",
 		add : insertingfunc,
 		anonimus : true,
-		electronDontOpen : true
+		electronDontOpen : true,
+
+		ignoreMinimize : true
+
 	},
 
 	
@@ -545,22 +571,6 @@ __map =  {
 		},
 
 
-		// usermodal : {
-		// 	uri : "usermodal",
-		// 	href : "usermodal",
-		
-		// 	anonimus : true,
-		// },
-
-
-		/*bestposts : {
-			uri : "bestposts",
-			href : "bestposts",
-			
-			add : insertingfunc,
-			anonimus : true,
-		},*/
-
 		lastcomments : {
 			uri : "lastcomments",
 			href : "lastcomments",
@@ -631,6 +641,9 @@ __map =  {
 			],
 
 			relationsSunc : true,
+
+			ignoreMinimize : true
+
 			
 		},
 
@@ -641,6 +654,9 @@ __map =  {
 				el : 'content'
 			},
 			anonimus : true,
+
+			ignoreMinimize : true
+
 		},
 
 	
@@ -661,6 +677,9 @@ __map =  {
 				el : 'content'
 			},
 			anonimus : true,
+
+			ignoreMinimize : true
+
 		},
 		addcategory: {
 			uri : "addcategory",
@@ -675,6 +694,9 @@ __map =  {
 			href : "slides",
 			add : insertingfunc,
 			anonimus : true,
+
+			ignoreMinimize : true
+
 		},
 
 
@@ -702,7 +724,10 @@ __map =  {
 		donate : {
 			uri : "donate",
 			href : "donate",
-			add : insertingfunc
+			add : insertingfunc,
+
+			ignoreMinimize : true
+
 		},
 
 		recommendationinfo: {
@@ -862,31 +887,6 @@ __map =  {
 
 	
 	
-	// electronnav
-	
-	/*electronnav : {
-		uri : "electronnav",
-		href : "electronnav",
-		add : {
-			el : 'electronnav'
-		},
-		now : typeof _Electron != 'undefined' && _Electron,
-		anonimus : true,
-		renew : true,
-		reload : true
-	},*/
-
-	/*toppanel : {
-		uri : "toppanel",
-		href : "toppanel",
-		add : {
-			el : 'toppanel'
-		},
-		now : true,
-		anonimus : true,
-		renew : true,
-		reload : true
-	},*/
 
 	navigation : {
 		uri : "navigation",
@@ -1081,7 +1081,10 @@ __map =  {
 
 		relations : [
 			{src : 'js/validation.js',			   f : 'js'},	
-		]
+		],
+
+		ignoreMinimize : true
+
 	},
 
 	testApi : {

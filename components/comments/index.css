@@ -1337,7 +1337,7 @@ html.mobileview #comments .emojionearea-editor {
   }
   #comments .list .comment .answer .postbody {
     padding-left: 0.5em;
-    padding-right: 0.3em;
+    padding-right: 0.5em;
   }
   #comments .list .comment .answers .commentPaddingWrapper {
     padding-left: 0.5em;
@@ -1441,7 +1441,7 @@ html.mobileview #comments .emojionearea-editor {
   #comments .answer,
   #comments .post {
     padding-left: 0.5em;
-    padding-right: 0.3em;
+    padding-right: 0.5em;
   }
   #comments .answer .postbody,
   #comments .post .postbody {

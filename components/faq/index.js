@@ -164,32 +164,34 @@ var faq = (function(){
 
 				var k = self.app.localization.key;
 
-				var faqLangs = self.sdk.faqLangs.get();
+				self.sdk.faqLangs.get(function(faqLangs){
 				
-				if(!faqLangs[k]) k = 'en';
+					if(!faqLangs[k]) k = 'en';
 
-				var faqcontent = faqLangs[k];
-				
-				if (!window.cordova){
+					var faqcontent = faqLangs[k];
+					
+					if (!window.cordova){
 
-					faqcontent[0].group.splice(1, 0, {
-						id : 'downloadandroid',
-						q : self.app.localization.e('e14109'),
-						a : `<div><a elementsid="https://play.google.com/store/apps/details?id=pocketnet.app" href="https://play.google.com/store/apps/details?id=pocketnet.app">https://play.google.com/store/apps/details?id=pocketnet.app</a></div><div>${self.app.localization.e('e14110')}</div>`,
+						faqcontent[0].group.splice(1, 0, {
+							id : 'downloadandroid',
+							q : self.app.localization.e('e14109'),
+							a : `<div><a elementsid="https://play.google.com/store/apps/details?id=pocketnet.app" href="https://play.google.com/store/apps/details?id=pocketnet.app">https://play.google.com/store/apps/details?id=pocketnet.app</a></div><div>${self.app.localization.e('e14110')}</div>`,
+						})
+					}
+
+					_.each(faqcontent, function(f){
+						_.each(f.group, function(q){
+							mp[q.id] = q;
+						})
 					})
-				}
 
-				_.each(faqcontent, function(f){
-					_.each(f.group, function(q){
-						mp[q.id] = q;
-					})
-				})
+					var data = {
+						groups : faqcontent
+					};
 
-				var data = {
-					groups : faqcontent
-				};
+					clbk(data);
 
-				clbk(data);
+				});
 
 			},
 

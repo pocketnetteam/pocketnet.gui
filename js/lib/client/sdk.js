@@ -915,7 +915,7 @@ var pSDK = function ({ app, api, actions }) {
 
                 try {
 
-                    c.msgparsed = JSON.parse(c.msg)
+                    c.msgparsed = c.msgparsed || JSON.parse(c.msg)
 
                     c.msgparsed.url = clearStringXss(decodeURIComponent(c.msgparsed.url || ""));
 
@@ -928,6 +928,7 @@ var pSDK = function ({ app, api, actions }) {
 
                 }
                 catch (e) {
+                    console.log("C", c)
                     console.error(e)
                     return null
                 }

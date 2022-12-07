@@ -709,7 +709,7 @@ Nav = function(app)
 
 				topPreloader(40)
 
-				if (window.design)
+				if (window.design || map.ignoreMinimize)
 				{
 
 					if(!cssimported[map.uri])
@@ -726,8 +726,6 @@ Nav = function(app)
 				}
 				else
 				{
-
-
 
 					importScript(src, function(){
 

@@ -224,7 +224,7 @@ fs.exists(mapJsPath, function (exists) {
 
 
 		var _modules = _.filter(m, function(_m, mn){
-			if(mn != "__sources" && mn != "__css" && mn != '__vendor' && mn != '__templates'  && mn != '__sourcesfirst' && mn != '__sourceslast' && mn != '__exportcss') return true;
+			if(mn != "__sources" && mn != "__css" && mn != '__vendor' && mn != '__templates'  && mn != '__sourcesfirst' && mn != '__sourceslast' && mn != '__exportcss' && !_m.ignoreMinimize) return true;
 			
 		})
 

@@ -341,10 +341,16 @@ var easynode = (function(){
 
 					oss = self.app.platform.applications[ed.key || 'ui'];
 
-					faqLangs = self.sdk.faqLangs.get();
+				self.sdk.faqLangs.get(function(_faqLangs){
+
+					faqLangs = _faqLangs
+					
+					clbk(data);
+
+				});
 
 
-				clbk(data);
+				
 
 			},
 

@@ -548,6 +548,9 @@ html.mobileview #author .authorlentawrappermain .authorsearchwrapper .search .se
   padding-left: 0.5em;
 }
 @media only screen and (max-width: 1024px) {
+  #author .bgCaption {
+    min-height: 485px;
+  }
   #author .bgCaption .adr {
     max-width: none;
     display: block;
@@ -717,6 +720,9 @@ html.mobileview #author .authorlentawrappermain .authorsearchwrapper .search .se
   }
 }
 @media only screen and (max-width: 768px) {
+  #author .authorlentawrappermain .authorsearchwrapper {
+    padding-right: 0.25em !important;
+  }
   #author .newsharewrapper {
     display: none;
   }

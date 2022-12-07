@@ -559,20 +559,7 @@ var about = (function(){
 
 				self.app.user.isState(function (state) { 
 
-					if(isMobile() && state){
-						self.app.platform.sdk.node.transactions.get.allBalance(function(amount){
-							var temp = self.app.platform.sdk.node.transactions.tempBalance()
-
-							allbalance = amount + temp
-							
-
-							r()
-						
-						})
-					}
-					else{
-						r()
-					}
+					r()
 
 				})
 					

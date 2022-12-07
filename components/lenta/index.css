@@ -725,6 +725,9 @@
   #lenta .shares .statswrapperExtended {
     padding: 0.5em;
   }
+  #lenta .shares .paddingWrapper {
+    margin-right: 0.25em;
+  }
   #lenta .shares .ss {
     padding: 1em;
   }
