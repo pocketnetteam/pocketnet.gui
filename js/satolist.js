@@ -1,6 +1,6 @@
 var electron = null, fs, url, path, https;
-if (typeof _OpenApi == 'undefined') _OpenApi = false;
 
+if (typeof _OpenApi == 'undefined') _OpenApi = false;
 
 if (typeof _Electron != 'undefined') {
     electron = require('electron');
@@ -16,53 +16,8 @@ if (typeof _Electron != 'undefined') {
     https = require('https');
     path = require('path');
 
-    var storage = electron.OSBrowser; //?
-
     $('html').addClass('electron')
 }
-
-
-/*
-
-    {
-        NOT_SUPPORTED = 0,
-
-        TX_DEFAULT = 1,
-        TX_COINBASE = 2,
-        TX_COINSTAKE = 3,
-
-        ACCOUNT_USER = 100,
-        ACCOUNT_VIDEO_SERVER = 101,
-        ACCOUNT_MESSAGE_SERVER = 102,
-        ACCOUNT_SETTING = 103,
-
-        CONTENT_POST = 200,
-        CONTENT_VIDEO = 201,
-        CONTENT_ARTICLE = 202,
-        // CONTENT_SERVERPING = 203,
-
-        CONTENT_COMMENT = 204,
-        CONTENT_COMMENT_EDIT = 205,
-        CONTENT_COMMENT_DELETE = 206,
-
-        CONTENT_DELETE = 207,
-
-        BOOST_CONTENT = 208,
-
-        ACTION_SCORE_CONTENT = 300,
-        ACTION_SCORE_COMMENT = 301,
-
-        ACTION_SUBSCRIBE = 302,
-        ACTION_SUBSCRIBE_PRIVATE = 303,
-        ACTION_SUBSCRIBE_CANCEL = 304,
-
-        ACTION_BLOCKING = 305,
-        ACTION_BLOCKING_CANCEL = 306,
-
-        ACTION_COMPLAIN = 307,
-    };
-
-*/
 
 
 Platform = function (app, listofnodes) {
@@ -300,7 +255,6 @@ Platform = function (app, listofnodes) {
 
     self.deletedtest = {}
 
-
     self.testaddresses = [
         'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82',
         'PUy71ntJeRaF1NNNnFGrmC8NzkY6ruEHGK',
@@ -337,12 +291,10 @@ Platform = function (app, listofnodes) {
       'TFkhfcxXSWX5SsLcjhdiSDHEepWUcb7yi3',
     ];
 
-    if (window.IpcBridge)
-        self.ipcbridge = new window.IpcBridge().listen()
-
-    /*self.testchataddresses = ['PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82', 'PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM', 'PQvcVW7ZV4YPKC1QhxXdT8ppUakCejWYTA']*/
     self.testchataddresses = ['P9EkPPJPPRYxmK541WJkmH8yBM4GuWDn2m', 'PFnN8SExxLsUjMKzs2avdvBdcA3ZKXPPkF', 'PVgqi72Qba4aQETKNURS8Ro7gHUdJvju78', 'P9tRnx73Sw1Ms9XteoxYyYjvqR88Qdb8MK', 'PQxuDLBaetWEq9Wcx33VjhRfqtof1o8hDz', 'PEHrffuK9Qiqs5ksqeFKHgkk9kwQN2NeuS', 'PP582V47P8vCvXjdV3inwYNgxScZCuTWsq', 'PQxuDLBaetWEq9Wcx33VjhRfqtof1o8hDz','PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM', 'PK6Kydq5prNj13nm5uLqNXNLFuePFGVvzf', 'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82', 'PCAyKXa52WTBhBaRWZKau9xfn93XrUMW2s', 'PCBpHhZpAUnPNnWsRKxfreumSqG6pn9RPc', 'PEkKrb7WJgfU3rCkkU9JYT8jbGiQsw8Qy8', 'PBHvKTH5TGQYDbRHgQHTTvaBf7tuww6ho7', 'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd']
 
+    if (window.IpcBridge) self.ipcbridge = new window.IpcBridge().listen()
+    
     self.focus = true;
     self.currentBlock = 0 //1165858;
     self.online = undefined;
@@ -352,16 +304,9 @@ Platform = function (app, listofnodes) {
 
     var bastyonhelperOpened = false
     self.uicamerapreview = null
-    self.uimobilesearch=null
-    //////////////
-    self.test = false;
-    //////////////
+    self.uimobilesearch = null
 
     var onlinetnterval;
-    var unspentoptimizationInterval = null;
-   // var blockps = self.currentBlock - 30000;
-    var nshowed = false;
-    var TXFEE = 1;
 
     var smulti = 100000000
 
@@ -457,15 +402,6 @@ Platform = function (app, listofnodes) {
 
     self.psdk = new pSDK({app, api : self.app.api, actions : self.actions})
     self.actions.psdk = self.psdk
-
-    // self.network = function(){
-    //     if(self.test){
-    //         return bitcoin.networks.testnet
-    //     }
-    //     else{
-    //         return bitcoin.networks.bitcoin
-    //     }
-    // }
 
     self.mp = {
         dollars: function (value, p) {
@@ -4611,8 +4547,6 @@ Platform = function (app, listofnodes) {
             return _el
         },
 
-
-
         electron: {
             storage: {},
 
@@ -4694,8 +4628,6 @@ Platform = function (app, listofnodes) {
 
             var me = self.psdk.userInfo.getmy() 
             
-            //deep(app, 'platform.sdk.users.storage.' + deep(app, 'user.address.value'))
-
             if(!me) return
 
             var r = me.relation(address, type)
@@ -4884,26 +4816,7 @@ Platform = function (app, listofnodes) {
 
                 })
 
-                return
-
-                topPreloader(10)
-
-                self.sdk.node.transactions.create.commonFromUnspent(
-
-                    unsubscribe,
-
-                    function (tx, error) {
-
-                        if (tx) {
-                            self.api.actions.managesubscribelist(address)
-                        }
-
-                        topPreloader(100)
-
-                        clbk(tx, error)
-
-                    }
-                )
+                
             },
 
             subscribe: function (address, clbk) {
@@ -4926,39 +4839,7 @@ Platform = function (app, listofnodes) {
 
                 })
 
-                return
-
-
-                topPreloader(10)
-
-                var lr = self.api.relation(address)
-
-                self.api.actions.managesubscribelist(address, true)
-
-                self.sdk.node.transactions.create.commonFromUnspent(
-
-                    subscribe,
-
-                    function (tx, error) {
-
-                        if (!tx) {
-
-                            if(!lr){
-                                self.api.actions.managesubscribelist(address)
-                            }
-                            else{
-                                self.api.actions.managesubscribelist(address, true, lr.private)
-                            }
-
-                        }
-
-                        topPreloader(100)
-
-                        if (clbk)
-                            clbk(tx, error)
-
-                    }
-                )
+                
             },
 
             notificationsTurnOff: function (address, clbk) {
@@ -4985,83 +4866,8 @@ Platform = function (app, listofnodes) {
 
                 })
 
-                return
-
-                topPreloader(10)
-
-                self.api.actions.managesubscribelist(address, true, true)
-
-                self.sdk.node.transactions.create.commonFromUnspent(
-
-                    subscribe,
-
-                    function (tx, error) {
-
-                        if(!tx) {
-                            self.api.actions.managesubscribelist(address)
-                        }
-
-                        topPreloader(100)
-
-                        clbk(tx, error)
-
-                    }
-                )
+              
             },
-
-            /*managesubscribelist : function(address, add, notificationturnon){
-
-                var me = self.psdk.userInfo.getmy()
-                
-                
-                //deep(app, 'platform.sdk.users.storage.' + app.user.address.value.toString('hex'))
-                var u = self.psdk.userInfo.get(address);
-
-                if (me) {
-
-                    me.removeRelation({
-                        adddress: address
-                    })
-
-                    if (add){
-                        me.addRelation({
-                            adddress: address,
-                            private: notificationturnon ? true : false
-                        })
-                    }
-
-                    me.removeRelation(address, 'recomendedSubscribes')
-                }
-
-                if (u) {
-
-                    u.removeRelation(address, 'subscribers')
-
-                    if (add){
-                        u.addRelation(address, 'subscribers')
-                    }
-                }
-
-                if (add){
-                    self.sdk.activity.adduser('subscribe', address)
-                }
-
-                _.each(deep(self.clbks, 'api.actions.anysubscribe') || {}, function (c) {
-                    c(address, add, notificationturnon)
-                })
-
-                var cname = 'subscribe'
-
-                if(!add) cname = 'unsubscribe'
-
-                else if(notificationturnon) cname = 'subscribePrivate'
-
-                _.each(deep(self.clbks, 'api.actions.' + cname) || {}, function (c) {
-                    c(address, add, notificationturnon)
-                })
-
-
-            },*/
 
             htls : function(id){
                 self.app.platform.ui.wallet.send({id : id}, function(){
@@ -5073,7 +4879,6 @@ Platform = function (app, listofnodes) {
 
         metmenu: function (_el, id, actions) {
             var share = self.psdk.share.get(id) 
-            
 
             var address = share.address
 
@@ -8420,10 +8225,7 @@ Platform = function (app, listofnodes) {
             }
         },
 
-     
-
         ////TODO_REF_ACTIONS getRelTmpSubscriptions
-       
 
         articles: {
 
@@ -9754,36 +9556,7 @@ Platform = function (app, listofnodes) {
 
                 })
 
-                return
-
-
-                self.sdk.node.transactions.create.commonFromUnspent(
-
-                    settings,
-
-                    function (_alias, error) {
-
-
-                        if (!_alias) {
-
-                            if (clbk) {
-                                clbk(error, null)
-                            }
-
-                        }
-
-                        else {
-
-                            if (clbk)
-                                clbk(null, _alias)
-                        }
-
-                    }
-                )
-
             },
-
-            
 
             subscribeRef: function (clbk) {
 
@@ -9908,9 +9681,7 @@ Platform = function (app, listofnodes) {
             },
 
             me: function () {
-
                 return self.psdk.userInfo.getmy()
-
             },
 
             itisme : function(_address){
@@ -10576,8 +10347,6 @@ Platform = function (app, listofnodes) {
 
         },
 
-
-
         notifications: {
             storage: {},
 
@@ -11166,107 +10935,6 @@ Platform = function (app, listofnodes) {
 
             nameaddressstorage : {},
 
-            /*extend: function (u, state) {
-
-                var ext = function (temp) {
-                    _.each(temp.blocking, function (block) {
-                        u.addRelation(block.vsaddress, 'blocking')
-                    })
-
-                    _.each(temp.unblocking, function (block) {
-                        u.removeRelation(block.vsaddress, 'blocking')
-                    })
-
-                    _.each(temp.subscribe, function (s) {
-
-                        u.removeRelation({
-                            adddress: s.vsaddress
-                        })
-
-                        u.addRelation({
-                            adddress: s.vsaddress,
-                            private: false
-                        })
-                    })
-
-                    _.each(temp.subscribePrivate, function (s) {
-
-                        u.removeRelation({
-                            adddress: s.vsaddress
-                        })
-
-                        u.addRelation({
-                            adddress: s.vsaddress,
-                            private: true
-                        })
-                    })
-
-                    _.each(temp.unsubscribe, function (s) {
-
-                        u.removeRelation({
-                            adddress: s.vsaddress
-                        })
-
-                    })
-                }
-
-                if (state && self.sdk.address.pnet() && u.address == self.sdk.address.pnet().address) {
-
-                    var temp = self.sdk.node.transactions.temp || {};
-                    var relay = self.sdk.relayTransactions.get();
-
-                    ext(temp)
-                    ext(relay)
-
-                }
-
-
-            },*/
-
-            /*prepareuser: function (data, a, state) {
-
-                var temp = self.sdk.node.transactions.temp;
-                var relay = self.sdk.relayTransactions.storage;
-
-                var u = new pUserInfo();
-                u.regdate = new Date();
-
-                if (state && temp['userInfo'] && !_.isEmpty(temp['userInfo']) && a == self.sdk.address.pnet().address) {
-
-                    u._import(_.toArray(temp['userInfo'])[0])
-                    u.regdate.setTime(self.currentTime() * 1000);
-                    u.temp = true
-                }
-                else {
-
-                    if (state && a == self.sdk.address.pnet().address && relay[a] && relay[a]['userInfo'] && relay[a]['userInfo'].length) {
-
-                        var uin = relay[a]['userInfo']
-
-                        u._import(uin[uin.length - 1])
-                        u.regdate.setTime(self.currentTime() * 1000);
-                        u.relay = true
-
-                    }
-                    else {
-                        if (!data) return
-
-                        u._import(data)
-                        u.regdate.setTime(data.regdate * 1000);
-
-                    }
-
-                }
-
-                u.address = a
-
-                if(self.real[a]) u.real = true
-
-                self.sdk.users.extend(u, state)
-
-                return u
-            },*/
-
             getone: function (address, clbk, light, reload) {
 
                 self.sdk.users.get([address], function(data = {}, error){
@@ -11606,46 +11274,7 @@ Platform = function (app, listofnodes) {
             }
         },
 
-
-
         posts: {
-
-            /*getRecommendedPosts : function(clbk){
-
-                var my = self.app.user.address.value;
-
-                self.app.api.rpc('getrecomendedcontentsbyscoresfromaddress', [my, ['share', 'video'], 0, 20000, 15])
-                .then(function(d){
-
-                    if (clbk){
-                        clbk(d)
-                    }
-
-                })
-                .catch(function(e){
-
-                    if (clbk){
-                        clbk(null, e);
-                    }
-                })
-            },*/
-            /*
-            getRecommendedPostsContents : function(parameters, clbk){
-
-                self.app.api.rpc('getrawtransactionwithmessagebyid', parameters)
-                .then(function(d){
-
-                    if (clbk){
-                        clbk(d)
-                    }
-                })
-                .catch(function(e){
-
-                    if (clbk){
-                        clbk(null)
-                    }
-                })
-            }*/
         },
 
         newmaterials : {
@@ -12132,10 +11761,6 @@ Platform = function (app, listofnodes) {
                     
             },
 
-            /* */
-
-
-            /* */
         },
         addresses: {
             storage: {
@@ -12455,22 +12080,6 @@ Platform = function (app, listofnodes) {
                 return keyPair.privateKey;
             },
 
-            /*registration: function (address, clbk) {
-
-                self.app.api.rpc('getaddressregistration', [[address]]).then(d => {
-
-                    var r = deep(d, '0.date') || 0;
-
-                    if (clbk)
-                        clbk(r > 0)
-
-                }).catch(e => {
-                    if (clbk) {
-                        clbk(null, e)
-                    }
-                })
-
-            }*/
         },
         remote: {
             storage: {},
@@ -12987,8 +12596,6 @@ Platform = function (app, listofnodes) {
             },
         },
 
-        
-
         activity : {
             latest : {},
             allowRequestAfterFive : true,
@@ -13336,6 +12943,7 @@ Platform = function (app, listofnodes) {
 
             }
         },
+
         categories : {
             data : {
                 all : {
@@ -14824,6 +14432,7 @@ Platform = function (app, listofnodes) {
             }
 
         },
+
         tags: {
             storage: {
 
@@ -15650,31 +15259,7 @@ Platform = function (app, listofnodes) {
                 }, true)
             },
 
-            /*toLastComment: function (comment) {
-
-                var lc = {
-                    address: comment.address,
-                    answerid: comment.answerid,
-                    parentid: comment.parentid,
-                    id: comment.id,
-                    children: comment.children || 0,
-                    postid: comment.postid,
-                    block: self.currentBlock,
-                    msg: JSON.stringify({
-                        message: comment.message,
-                        images: comment.images
-                    }),
-                    time: comment.time,
-                    timeUpd: comment.timeUpd,
-                    scoreDown: 0,
-                    scoreUp: 0,
-                    myScore: 0,
-                    deleted : comment.deleted
-                }
-
-                return lc;
-            },*/
-
+            
             ini: function (d) {
 
                 console.error("TODO_REF_ACTIONS_INI_COMMENTS")
@@ -15708,58 +15293,7 @@ Platform = function (app, listofnodes) {
 
             },
 
-            temps: function (d, txid, pid) {
-
-
-                ////
-                return
-                var tc = group(self.sdk.relayTransactions.withtemp('comment'), function (tempComment) {
-                    return tempComment.optype || 'comment'
-                })
-
-                var arrange = ['comment', 'commentEdit', 'commentDelete'];
-                var del = [];
-
-                _.each(arrange, function (i) {
-
-                    _.each(tc[i], function (tempComment) {
-
-                        var _txid = tempComment.postid
-
-                        if (_txid == txid && (pid || '') == (tempComment.parentid || '')) {
-
-                            var i = tempComment.optype || 'comment'
-
-                            var f = _.find(d, function (c) {
-                                if (c.id == (tempComment.id || tempComment.postid)) return true
-                            })
-
-                            if (i == 'comment') {
-                                if (!f)
-                                    d.push(tempComment)
-                            }
-
-                            if (i == 'commentEdit') {
-                                if (f && f.id == tempComment.id) {
-                                    f.msg = tempComment.msg
-                                    f.timeUpd = tempComment.timeUpd
-                                }
-                            }
-
-                            if (i == 'commentDelete') {
-                                if (f && f.id == tempComment.id) {
-
-                                    f.deleted = true
-                                    del.push(f.id)
-                                }
-                            }
-
-                        }
-
-
-                    })
-                })
-            },
+         
 
             getclear: function (txid, pid, clbk, ccha) {
 
@@ -15796,8 +15330,6 @@ Platform = function (app, listofnodes) {
 
 
             last: function (clbk) {
-
-                //var ini = this.ini
 
                 var ps = ['7', '', self.app.localization.key]
 
@@ -15837,52 +15369,6 @@ Platform = function (app, listofnodes) {
 
                 })
 
-                return
-
-                self.sdk.node.transactions.create.commonFromUnspent(
-
-                    upvote,
-
-                    function (_alias, error) {
-
-                        if (!_alias) {
-                            if (clbk) {
-                                clbk(error, null)
-                            }
-
-                            _.each(self.sdk.comments.upvoteClbks, function (c) {
-                                c(error, comment, null, app.user.address.value)
-                            })
-                        }
-                        else {
-
-                            if (comment) {
-
-                                comment.myScore = Number(upvote.value.v)
-
-                                if (upvote.value.v > 0) {
-                                    comment.scoreUp++
-                                }
-                                if (upvote.value.v < 0) {
-                                    comment.scoreDown++
-                                }
-
-                            }
-
-
-                            if (clbk) {
-                                clbk(null, comment, upvote.value.v)
-                            }
-
-                            _.each(self.sdk.comments.upvoteClbks, function (c) {
-                                c(null, comment, upvote.value.v, app.user.address.value)
-                            })
-
-                        }
-
-                    }
-                )
-
 
             },
 
@@ -15904,40 +15390,7 @@ Platform = function (app, listofnodes) {
 
                 })
 
-                return
-
-                self.sdk.node.transactions.create.commonFromUnspent(
-
-                    comment,
-
-                    function (_alias, error) {
-
-
-                        if (!_alias) {
-
-                            if (clbk) {
-                                clbk(error, null)
-                            }
-
-                        }
-
-                        else {
-
-                            s[txid] || (s[txid] = {})
-
-                            var c = _.find(s[txid][comment.parentid || '0'] || [], function (c) {
-                                return c.id == comment.id
-                            })
-
-                            if (c) c.deleted = true
-
-                            if (clbk)
-                                clbk(null, _alias)
-                        }
-
-                    }
-                )
-
+                
             },
 
             send: function (comment, clbk) {
@@ -17683,8 +17136,6 @@ Platform = function (app, listofnodes) {
                 }
             }
 
-
-
         },
 
         pool: {
@@ -18122,7 +17573,6 @@ Platform = function (app, listofnodes) {
 
             }
         },
-
 
         system16: {
             requestes: {},
@@ -18948,20 +18398,6 @@ Platform = function (app, listofnodes) {
 
     self.sdk.memtags.saveandrun = _.debounce(self.sdk.memtags.saveandrunfast, 3000)
 
-
-    var FakeFirebasePlugin = function(){
-        var self = this;
-
-        self.unregister = function(){}
-        self.hasPermission = function(c){c(true)}
-        self.grantPermission = function(c){c(true)}
-        self.onMessageReceived = function(){}
-        self.getToken = function(c){
-            c('ba36b658-f9b7-8850-edc1-e53dcc2ebaf7')
-        }
-
-        return self
-    }
 
     self.Firebase = function (platform) {
 
@@ -23659,7 +23095,6 @@ Platform = function (app, listofnodes) {
         })
     }
 
-
     self.directdialog = function(proxy){
 
         return new Promise((resolve, reject) => {
@@ -23726,7 +23161,7 @@ Platform = function (app, listofnodes) {
 
         ///
 
-        initOnlineListener() // /remove for test
+        //initOnlineListener() // /remove for test
 
 
         self.app.api.wait.ready('use', 6000).then(r => {
@@ -24980,46 +24415,6 @@ Platform = function (app, listofnodes) {
         return self;
     }
 
-    var initOnlineListener = function () {
-
-        return
-
-        if(onlinetnterval){
-            clearInterval(onlinetnterval)
-        }
-
-        onlinetnterval = retry(function () {
-
-            var online = deep(window, 'navigator.onLine');
-
-            if (self.online != online) {
-
-                self.online = online;
-
-                return true;
-
-            }
-
-
-        }, function () {
-
-            if (!self.online) {
-                _.each(self.clbks.online, function (c) {
-                    c(false)
-                })
-            }
-            else {
-                _.each(self.clbks.online, function (c) {
-                    c(true)
-                })
-            }
-
-            initOnlineListener();
-
-        }, 500)
-
-    }
-
     self.TitleManager = function () {
         var self = this;
 
@@ -25232,7 +24627,6 @@ Platform = function (app, listofnodes) {
 
     }
 
-
     self.navManager = function(){
 
         var routing = function(route){
@@ -25339,6 +24733,3 @@ Platform = function (app, listofnodes) {
 if (typeof module != "undefined") {
     module.exports = Platform;
 }
-
-topPreloader(65);
-
