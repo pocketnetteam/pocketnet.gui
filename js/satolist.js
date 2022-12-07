@@ -12111,6 +12111,28 @@ Platform = function (app, listofnodes) {
 
                 return blockersList;
             },
+
+            isUserBlockedBy: async function(arg1, arg2) {
+                let targetUser = self.sdk.user.me().address;
+                let relatedUser;
+
+                function prepareArguments() {
+                    if (typeof arg2 === 'string') {
+                        targetUser = arg1;
+                        relatedUser = arg2;
+                    } else {
+                        relatedUser = arg1;
+                    }
+                }
+
+                prepareArguments();
+
+                const blockingUsers = await this.getBlockingUsers(targetUser, { populate: true });
+
+                return blockingUsers.some((blockingUser) => (
+                  blockingUser.address === relatedUser
+                ));
+            }
         },
 
 
