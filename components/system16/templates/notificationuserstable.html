@@ -1,17 +1,31 @@
-<% _.each(users, function(item, index){ %>
+<% _.each(users, function(item, index){ 
+    
+    if(index < 20) { %> 
+    
         <div class="work">
             <div elementsid="notificationWrapper_<%-item.height%>" class="users" key="<%-item.height%>">
-                    <div class="field">
-                        <%-item.address%>
-                    </div>
+                <div class="field">
+                    <span><%-item.address%></span>
+                </div>
 
-                    <div class="field">
-                        <%-item.token%>
-                    </div>
+                <div class="field">
+                    <span><%-item.token%></span>
+                </div>
 
-                    <div class="field">
-                        <%-item.device%>
-                    </div>
+                <div class="field">
+                    <span><%-item.device%></span>
+                </div>
             </div>
         </div>
+
+    <% } %>
 <% }) %>
+
+<% if(users.length > 20) {%>
+    <div class="work">
+        <div class="andmoreusers">
+            <span>Total: <%-users.length%> users</span>
+        </div>
+    </div>
+
+<% } %>

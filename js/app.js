@@ -1074,7 +1074,7 @@ Application = function(p)
      * for desktop popup before we had created popup
      * conditional checking in appear method of instance
      */
-    if (typeof initShadowPopups === 'function') initShadowPopups()
+    if (typeof initShadowPopups === 'function' && !window.testpocketnet) initShadowPopups()
   }
 
   self.reload = function(p){
@@ -1283,7 +1283,7 @@ Application = function(p)
 
   self.Logger = new FrontendLogger(
     navigator.userAgent,
-    navigator.userAgentData,
+    JSON.stringify(navigator.userAgentData),
     location.href,
     Intl.DateTimeFormat().resolvedOptions().timeZone,
     self

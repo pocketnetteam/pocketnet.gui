@@ -846,6 +846,7 @@ var menu = (function(){
 
 						if (add == 0){
 							al.text(self.app.platform.mp.coin(value))
+
 						}
 						else
 						{
@@ -857,7 +858,6 @@ var menu = (function(){
 						        	var number = Number(value + now).toFixed(8),
 						            	target = $(tween.elem);
 
-						           
 						    		target.text(self.app.platform.mp.coin(number));
 
 						    	},

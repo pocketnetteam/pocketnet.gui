@@ -421,8 +421,12 @@ Platform = function (app, listofnodes) {
                     p.precision = 4;
                 }
 
-                if (value < 0.001) {
+                if (value < 0.0005) {
                     p.precision = 8;
+                }
+
+                if (value <= 0) {
+                    p.precision = 2;
                 }
             }
 
@@ -25098,7 +25102,13 @@ Platform = function (app, listofnodes) {
 
                 }
                 else{
-                    Notification.requestPermission().then((permission) => {
+                    const notificationPermission = Notification.requestPermission();
+
+                    if (!notificationPermission) {
+                        return Notification.permission;
+                    }
+
+                    notificationPermission.then((permission) => {
                         if (permission === 'granted') {
                             console.log('Notification permission granted.');
                             self.get(clbk)
