@@ -1,0 +1,26 @@
+<div id="<%-module.map.id%>">
+  <div class="editVideoForm">
+    <div class="dialogheader">
+      <span><%- e('editVideoDescription') %> </span>
+    </div>
+    <section class="videoNameWrapper">
+      <input
+        elementsid="videoNameInput"
+        type="text"
+        class="videoNameInput"
+        placeholder="<%- e('enterVideoName') %>"
+      />
+    </section>
+    <section class="videoDescriptionWrapper">
+      <textarea
+        elementsid="videoDescriptionInput"
+        class="videoDescriptionInput"
+        placeholder="<%- e('enterVideoDescription') %>"
+      ></textarea>
+    </section>
+    <section class="videoTagsWrapper">tags</section>
+	<section class="confirmButton">
+		<button class="confirmEditing"><%- e('daccept') %></button>
+	</section>
+  </div>
+</div>

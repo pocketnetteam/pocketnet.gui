@@ -1059,6 +1059,12 @@ __map =  {
 		add : insertingfunc,
 	},
 
+	editVideoDescription : {
+		uri : "editVideoDescription",
+		href : "editVideoDescription",
+		add : insertingfunc,
+	},
+
 	diagnosticsPage : {
 		uri : "diagnosticsPage",
 		href : "diagnosticsPage",

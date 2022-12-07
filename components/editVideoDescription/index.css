@@ -1,0 +1,30 @@
+#editVideoDescription .dialogheader {
+  padding: 1em 0;
+  padding-top: 0;
+}
+#editVideoDescription .dialogheader span {
+  font-weight: 700;
+}
+#editVideoDescription .videoNameInput,
+#editVideoDescription .videoDescriptionInput {
+  border-radius: 3px;
+  width: 80%;
+  border: none;
+  box-shadow: 0 5px 10px -5px rgba(var(--color-shadow-base), 0.4);
+}
+#editVideoDescription .videoDescriptionInput {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  padding: 0.5em;
+  min-height: 110px;
+}
+#editVideoDescription .videoNameWrapper,
+#editVideoDescription .videoDescriptionWrapper {
+  margin-bottom: 1em;
+}
+@media only screen and (max-width: 768px) {
+  #editVideoDescription .videoNameInput,
+  #editVideoDescription .videoDescriptionInput {
+    width: 100%;
+  }
+}

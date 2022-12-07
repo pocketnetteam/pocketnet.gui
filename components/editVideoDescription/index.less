@@ -1,0 +1,42 @@
+@import "../../css/__cssvar";
+
+#editVideoDescription{
+    .dialogheader {
+        padding: 2 * @rhythm 0;
+        padding-top: 0;
+
+        span {
+            font-weight: 700;
+        }
+    }
+
+    .videoNameInput,
+    .videoDescriptionInput {
+        border-radius: 3px;
+        width: 80%;
+        border: none;
+        .shadowSmall();
+    }
+
+    .videoDescriptionInput {
+        padding-top: @rhythm;
+        padding-bottom: @rhythm;
+        padding: @rhythm;
+        min-height: 110px;
+    }
+
+    .videoNameWrapper,
+    .videoDescriptionWrapper {
+        margin-bottom: @rhythm * 2;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    #editVideoDescription{
+        .videoNameInput,
+            .videoDescriptionInput {
+                width: 100%;
+    
+            }
+    }
+}
