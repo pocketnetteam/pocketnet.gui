@@ -12053,15 +12053,42 @@ Platform = function (app, listofnodes) {
             getBlockingUsers: async function(arg1, options = {}) {
                 let address = self.sdk.user.me().address;
 
+                function prepareArguments() {
                 if (typeof arg1 === 'object') {
                     options = arg1;
                 } else if (typeof arg1 === 'string') {
                     address = arg1;
+                    }
                 }
+
+                async function getBlockersList(addr) {
+                    const storageName = `profiles_restrictions_${addr}`;
+                    const stringData = localStorage[storageName] || '{}';
+                    const data = JSON.parse(stringData);
+
+                    const isDatePassed = (data.validUntil <= Date.now());
+
+                    let blockersList = data.blockers;
+
+                    if (!data.blockers || isDatePassed) {
+                        blockersList = await self.app.api.rpc('getuserblockers', [address]);
+
+                        const min5 = 60 * 60 * 1000;
+
+                        localStorage[`profiles_restrictions_${address}`] = JSON.stringify({
+                            validUntil: Date.now() + min5,
+                            blockers: blockersList,
+                        });
+                    }
+
+                    return blockersList;
+                }
+
+                prepareArguments();
 
                 console.log('Blocks for', address, options);
 
-                const blockersList = await self.app.api.rpc('getuserblockers', [address]);
+                let blockersList = await getBlockersList(address);
 
                 /**
                  * If populate is set, then UID will be converted to pUserInfo.
