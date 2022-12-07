@@ -6505,11 +6505,13 @@ html.mobileview #content .work {
     font-size: 1.1em;
     font-weight: 100;
   }
+  html.allcontent {
+    /*body{
+            background: #051b48;
+        }*/
+  }
   html.allcontent .contentWrapper {
     padding-top: 0;
-  }
-  html.allcontent body {
-    background: #051b48;
   }
   html.allcontent #footerWrapper {
     background: #051b28;

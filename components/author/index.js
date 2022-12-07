@@ -7,7 +7,7 @@ var author = (function(){
 	var Essense = function(p){
 
 		var primary = deep(p, 'history');
-		var author, _state;
+		var author;
 		var el = {};
 		var upbutton;
 
@@ -365,7 +365,7 @@ var author = (function(){
 						class : 'more',
 		
 						if : function(){
-							if(!self.user.isItMe(author.address) && _state) return true
+							if(!self.user.isItMe(author.address) && state) return true
 						},
 		
 						events : {
@@ -422,51 +422,15 @@ var author = (function(){
 			authorcaption : function(clbk){
 
 				el.menu = el.authorcaption.find('.usermenu')
-				el.panel = el.c.find('.panel')
 				el.caption = el.c.find('.bgCaption')
 				el.usericon = el.c.find('.usericon');
-				el.subscribe = el.c.find('.subscribebuttonstop');
-				el.subscribe.find('.subscribe').on('click', events.subscribe)
-				el.subscribe.find('.unsubscribe').on('click', events.unsubscribe)
-				el.caption.find('.startchat').on('click', events.startchat)
-				el.caption.find('.unblocking').on('click', function(){
-	
-					new dialog({
-						html : self.app.localization.e('e13023'),
-						btn1text : self.app.localization.e('unblock'),
-						btn2text : self.app.localization.e('ucancel'),
-	
-						class : 'zindex',
-	
-						success : function(){
-	
-							self.app.platform.api.actions.unblocking(author.address, function(tx, error){
-								if(!tx){
-									self.app.platform.errorHandler(error, true)	
-								}
-							})
-	
-						}
-					})
-	
-					
-				})
 
-				el.authorcaption.find('.notificationturn').on('click', events.subscribePrivate)
-	
-				el.authorcaption.find('.changeaccount').on('click', function(){
-	
-					self.nav.api.go({
-						open : true,
-						href : 'accounts',
-						inWnd : true,
-						history : true,
-						essenseData : {
-							toaccpage : true
-						}
-	
-					})
-				})
+				//el.subscribe = el.c.find('.subscribebuttonstop');
+
+
+
+
+				
 
 				
 				if(clbk) clbk()
@@ -498,7 +462,6 @@ var author = (function(){
 							actions.donate(id)
 
 							close()
-
 						})
 
 						el.find('.block').on('click', function(){
@@ -665,41 +628,100 @@ var author = (function(){
 				})
 			},
 
-			info : function(_el){
+			panel : function(){
+				self.shell({
 
-					author.state = self.psdk.userState.get(author.address)
+					name :  'panel',
+					el :   el.c.find('.panelWrapper'),
 
-					self.shell({
+					data : {
+						author : author
+					},
 
-						name :  'info',
-						el :   _el,
+					animation : false,
 
-						data : {
-							author : author
-						},
+				}, function(p){
 
-						animation : false,
-
-					}, function(p){
-
-						p.el.find('.showmoreabout').on('click', actions.showmoreabout)
-
-						p.el.find('.copyaddress').on('click', function(){
-							copyText($(this))
-
-							sitemessage(self.app.localization.e('successcopied'))
+					p.el.find('.subscribe').on('click', events.subscribe)
+					p.el.find('.unsubscribe').on('click', events.unsubscribe)
+					p.el.find('.startchat').on('click', events.startchat)
+					p.el.find('.unblocking').on('click', function(){
+		
+						new dialog({
+							html : self.app.localization.e('e13023'),
+							btn1text : self.app.localization.e('unblock'),
+							btn2text : self.app.localization.e('ucancel'),
+		
+							class : 'zindex',
+		
+							success : function(){
+		
+								self.app.platform.api.actions.unblocking(author.address, function(tx, error){
+									if(!tx){
+										self.app.platform.errorHandler(error, true)	
+									}
+								})
+		
+							}
 						})
+		
+						
+					})
 
-						p.el.find('.postcnt').on('click', function(){
-
-							renders.report(reports.contents)
-
-						})
-
-						p.el.find('.showmoreinabout').on('click', function(){
-							p.el.find('.authorinfo').addClass('displayedall')
+					p.el.find('.notifications').on('click', events.subscribePrivate)
+		
+					p.el.find('.changeAccount').on('click', function(){
+		
+						self.nav.api.go({
+							open : true,
+							href : 'accounts',
+							inWnd : true,
+							history : true,
+							essenseData : {
+								toaccpage : true
+							}
+		
 						})
 					})
+				
+				})
+			},
+
+			info : function(_el){
+
+					//author.state = self.psdk.userState.get(author.address)
+
+				self.shell({
+
+					name :  'info',
+					el :   _el,
+
+					data : {
+						author : author
+					},
+
+					animation : false,
+
+				}, function(p){
+
+					p.el.find('.showmoreabout').on('click', actions.showmoreabout)
+
+					p.el.find('.copyaddress').on('click', function(){
+						copyText($(this))
+
+						sitemessage(self.app.localization.e('successcopied'))
+					})
+
+					/*p.el.find('.postcnt').on('click', function(){
+
+						renders.report(reports.contents)
+
+					})*/
+
+					p.el.find('.showmoreinabout').on('click', function(){
+						p.el.find('.authorinfo').addClass('displayedall')
+					})
+				})
 
 			
 			},
@@ -1174,7 +1196,10 @@ var author = (function(){
 		var relationsClbk = function(address){
 
 			if (address == author.address){
-				var me = self.psdk.userInfo.getmy()
+
+				renders.panel()
+
+				/*var me = self.psdk.userInfo.getmy()
 
 				if (me){
 
@@ -1211,7 +1236,7 @@ var author = (function(){
 						}
 					})
 	
-				}
+				}*/
 			}
 
 			if(address == author.address || author.address == self.app.user.address.value){
@@ -1339,8 +1364,6 @@ var author = (function(){
 
 			self.app.platform.actionListeners.author = function({type, alias, status}){
 
-				console.log('type', type, alias)
-
 				if(type == 'unblocking'){
 					relationsClbk(alias.address.v)
 				}
@@ -1374,6 +1397,7 @@ var author = (function(){
 			if (reports[r])
 				reports[r].active = true;
 
+			renders.panel()
 			renders.info(el.c.find('.mobileinfo'))
 			renders.report(reports[r], null, ini)
 			renders.menu()
@@ -1563,8 +1587,6 @@ var author = (function(){
 				var ed = settings.settings.essenseData || {}
 
 				var p = parameters();
-
-				_state = settings.state
 
 				p.address || (p.address = ed.address || self.app.user.address.value || '')
 

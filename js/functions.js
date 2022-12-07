@@ -1925,8 +1925,6 @@
 
 		var els = el.find('[image]')
 
-		console.log('els.length',el, els.length)
-
 		if(!els.length){
 
 			if(typeof p.clbk === 'function') p.clbk();
@@ -1939,8 +1937,6 @@
 			return new Promise((resolve) => {
 
 				var src = el.getAttribute('image')
-
-				console.log("LO", src)
 
 				if(!src || src == '*') {
 					window.requestAnimationFrame(() => {
@@ -1955,9 +1951,6 @@
 
 				src = src.replace('bastyon.com:8092', 'pocketnet.app:8092').replace('test.pocketnet', 'pocketnet')
 
-				console.log("LO2", src)
-
-				
 				image.src = src
 
 				if(imagesLoadedCache[src]){

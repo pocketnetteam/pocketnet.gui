@@ -16049,7 +16049,7 @@ Platform = function (app, listofnodes) {
                             var page = p.page || 0
                             var offset = p.offset
                             var parameters = []
-                            parameters = [p.count.toString(), period, offset || '', self.app.localization.key]
+                            parameters = [p.count.toString(), period, offset || '0', self.app.localization.key]
 
                             if (p.type){
                                 parameters.push(p.type)

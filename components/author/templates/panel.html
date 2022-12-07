@@ -1,0 +1,71 @@
+<%
+
+    var me = psdk.userInfo.getmy()
+
+    var sUserInfo = psdk.userInfo.getShortForm(author.address)
+
+    var r = me ? me.relation(author.address, 'subscribes') : null
+    var blocking = me ? me.relation(author.address, 'blocking') : null
+
+%>
+
+
+<div class="panel">
+
+    <% if(state) {%>
+
+        <%if(!sUserInfo.itisme) {%>
+
+            <% if(!app.curation()) {%> 
+
+                <% if(r) { %>
+                        
+                    <div class="buttonWrapper unsubscribe">
+                        <span class="label"><%=e('youarefollowing')%></span> <i class="fas fa-user-check"></i>
+                    </div>
+
+                    <% if(r.private == 'true' || r.private == '1' || r.private === true) {%>
+
+                        <div class="buttonWrapper notifications">
+                            <i class="far fa-bell-slash"></i>
+                        </div>
+
+                    <% } %>
+
+                <% } else { %> 
+
+                    <div class="buttonWrapper subscribe">
+                        <span class="label"><%=e('follow')%></span> <i class="fas fa-user-plus"></i>
+                    </div>
+
+                <% } %>
+
+                <% if(blocking) {%>
+                    <div class="buttonWrapper unblocking">
+                        <span class="label"><%=e('blocked')%></span> <i class="fas fa-user-alt-slash"></i>
+                    </div>
+                <% } %>
+
+            <% } %>
+
+            <div class="buttonWrapper startchat">
+                <span class="label"><%=e('startchat')%></span> <i class="fas fa-comments"></i>
+            </div>
+
+            <div class="buttonWrapper startcall">
+                <span class="label"><%=e('call')%></span> <i class="fas fa-phone"></i>
+            </div>
+
+        <% } else { %> 
+
+            <div class="buttonWrapper changeAccount">
+                <span class="label"><%=e('aaddedacc')%></span> <i class="fas fa-chevron-down"></i>
+            </div>
+            
+        <% } %>
+
+        
+
+    <% } %>
+
+</div>   
