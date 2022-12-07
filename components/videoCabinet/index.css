@@ -686,7 +686,4 @@ html.mobileview #videoCabinet .videoSearchWrapper {
   .wnd.videoCabinet .wndcontent #videoCabinet .videoControls .sortSelectWrapper {
     margin-top: 0.5em;
   }
-  .editVideoDialog {
-    z-index: 100;
-  }
 }
