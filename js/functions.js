@@ -1907,11 +1907,25 @@
 		el.style['background-repeat'] = 'no-repeat';
 	}
 
+	bgImagesClApplyTemplate = function(src){
+
+		src = (src || "").replace('bastyon.com:8092', 'pocketnet.app:8092').replace('test.pocketnet', 'pocketnet')
+
+		if(src && imagesLoadedCache[src]){
+			return 'image="*" imageloaded="true" style="background-image:url('+src+');background-size:cover;background-position:center center;background-repeat:no-repeat"'
+		}
+		else{
+			return 'image="'+(src || "*")+'"'
+		}
+	}
+
 	bgImagesCl = function(el, p){
 
 		if(!p) p = {};
 
 		var els = el.find('[image]')
+
+		console.log('els.length',el, els.length)
 
 		if(!els.length){
 
@@ -1926,23 +1940,28 @@
 
 				var src = el.getAttribute('image')
 
+				console.log("LO", src)
+
 				if(!src || src == '*') {
-					el.setAttribute('imageloaded', 'true')
+					window.requestAnimationFrame(() => {
+						el.setAttribute('imageloaded', 'true')
+					})
 					return Promise.resolve()
 				}
 
-				el.setAttribute('data-image', src)
+				//el.setAttribute('data-image', src)
 
 				var image = new Image()
 
 				src = src.replace('bastyon.com:8092', 'pocketnet.app:8092').replace('test.pocketnet', 'pocketnet')
+
+				console.log("LO2", src)
+
 				
 				image.src = src
 
 				if(imagesLoadedCache[src]){
-					//window.requestAnimationFrame(() => {
-						bgImagesClApply(el, src)
-					//})
+					bgImagesClApply(el, src)
 					resolve()
 				}
 				else{
@@ -1962,7 +1981,9 @@
 
 				
 
-				image.onerror = () => {
+				image.onerror = (e) => {
+
+					console.error(e)
 
 					window.requestAnimationFrame(() => {
 						el.setAttribute('image', '*')

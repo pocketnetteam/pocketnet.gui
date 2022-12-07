@@ -1214,8 +1214,6 @@ var author = (function(){
 				}
 			}
 
-			
-
 			if(address == author.address || author.address == self.app.user.address.value){
 
 				window.requestAnimationFrame(() => {

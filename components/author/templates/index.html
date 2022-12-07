@@ -91,14 +91,18 @@
 									<% } %>
 								</div>
 
-							<% } else { %> 
+							<% } else {
+								
+								console.log(bgImagesClApplyTemplate(sUserInfo.image))
+								
+								%> 
 
 								<div class="cwrapper table">
 
 									<div class="cell cellforimage">
 										<div class="icon">
 
-											<div elementsid="author_usericon" ban=".gif" class="usericon" contain="none" image="<%-sUserInfo.image || '*'%>">
+											<div elementsid="author_usericon" ban=".gif" class="usericon" contain="none" <%=bgImagesClApplyTemplate(sUserInfo.image)%>>
 
 												<% if(!sUserInfo.image && sUserInfo.letter) {%>
 

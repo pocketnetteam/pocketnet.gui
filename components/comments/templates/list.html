@@ -133,7 +133,7 @@ var commentf = function(comment){
 							<% if(comment.amount) {%>
 								<div class="donatedbefore"></div>
 							<% } %>
-							<div  ban=".gif" contain="none" class="usericon <% if(comment.amount) {%> donated <% } %>" image="<%-src || '*'%>">
+							<div  ban=".gif" contain="none" class="usericon <% if(comment.amount) {%> donated <% } %>" <%=bgImagesClApplyTemplate(src)%>>
 
 								<% if(!src && letter) { %>
 

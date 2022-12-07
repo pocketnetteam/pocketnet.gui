@@ -381,12 +381,6 @@ var pSDK = function ({ app, api, actions }) {
 
                 /**/
 
-
-
-
-
-
-
             })
 
 
@@ -505,10 +499,85 @@ var pSDK = function ({ app, api, actions }) {
 
     }
 
+    var extendCache = {}
+
+    var extendFromActions = function(type, temps, object, helpId){
+
+        var cacheId = type + _.reduce(temps, (m, t) => {m + t}, '') + (helpId || "")
+
+        if (extendCache[cacheId]) return extendCache[cacheId]
+
+        var extendedObject = null
+
+        console.log("TEMP CALCULATION", type, helpId)
+
+        _.each(actions.getAccounts(), (account) => {
+
+            _.each(temps, (k) => {
+
+                _.each(account.getTempActions(k), (alias) => {
+
+                    if (k == type){
+
+                        if(helpId){
+
+                            if (!object && (alias.id == helpId || alias.actionId == helpId)) {
+                                extendedObject = alias
+
+                                return
+                            }
+    
+                        }
+                    }
+
+                    if (k != type){
+                        if(!extendedObject && !object) return
+                    }
+
+                    if (self[k] && self[k].applyAction) {
+                        var applied = self[k].applyAction(extendedObject || object.clone(), alias)
+
+                        if (applied) extendedObject = applied
+                    }
+                })
+
+            })
+
+        })
+
+        extendCache[cacheId] = extendedObject || object
+
+        return extendedObject || object
+
+    }
+
     /// main
 
     self.userInfo = {
         keys: ['userInfoFull', 'userInfoLight'],
+
+        cleanData: function (rawinfo) {
+            return _.filter(_.map(rawinfo, (c) => {
+
+                try {
+
+                    c.name = clearStringXss(decodeURIComponent(c.name || ''));
+                    c.i = clearStringXss(decodeURIComponent(c.i || ''));
+                    c.s = clearStringXss(decodeURIComponent(c.s || ''));
+                    c.l = clearStringXss(decodeURIComponent(c.l || ''));
+                    c.a = clearStringXss(decodeURIComponent(c.a || ''));
+
+                }
+                catch (e) {
+                    console.error(e)
+                    return null
+                }
+
+
+                return c
+
+            }), c => c)
+        },
 
         load: function (addresses, light, update) {
 
@@ -520,6 +589,7 @@ var pSDK = function ({ app, api, actions }) {
 
                 return api.rpc('getuserprofile', parameters).then((data) => {
 
+                    data = this.cleanData(data)
 
                     return _.map(addresses, (address) => {
                         return {
@@ -623,7 +693,7 @@ var pSDK = function ({ app, api, actions }) {
         },
 
         get: function (address) {
-            return this.tempExtend(objects['userInfoFull'][address] || objects['userInfoLight'][address])
+            return this.tempExtend(objects['userInfoFull'][address] || objects['userInfoLight'][address], address)
         },
 
         listener: function (exp, address, status) {
@@ -661,34 +731,13 @@ var pSDK = function ({ app, api, actions }) {
             return object
         },
 
-        tempExtend: function (object/*, address*/) {
+        tempExtend: function (object, address) {
 
-            var extendedObject = null
-
-            _.each(actions.getAccounts(), (account) => {
-
-                var temps = ['userInfo', 'blocking', 'unblocking', 'subscribe', 'subscribePrivate', 'unsubscribe']
-
-                _.each(temps, (k) => {
-
-                    if (k != 'userInfo' && !(extendedObject || object)) return
-
-                    _.each(account.getTempActions(k), (alias) => {
-
-                        if (self[k] && self[k].applyAction) {
-                            var applied = self[k].applyAction(extendedObject || object.clone(), alias)
-
-                            console.log('applied', applied, alias)
-
-                            if (applied) extendedObject = applied
-                        }
-                    })
-
-                })
-
-            })
-
-            return extendedObject || object
+            return extendFromActions('userInfo', 
+                ['userInfo', 'blocking', 'unblocking', 'subscribe', 'subscribePrivate', 'unsubscribe'],
+                object,
+                address
+            )
 
         },
 
@@ -1106,45 +1155,12 @@ var pSDK = function ({ app, api, actions }) {
 
         tempExtend: function (object, id) {
 
-            var extendedObject = null
+            return extendFromActions('comment', 
+                ['comment', 'cScore'],
+                object,
+                id
+            )
 
-            _.each(actions.getAccounts(), (account) => {
-
-                var temps = ['comment', 'cScore']
-
-                _.each(temps, (k) => {
-
-                    _.each(account.getTempActions(k), (alias) => {
-
-                        console.log('alias', alias, id, alias.id)
-
-                        if (!object && (alias.id == id || alias.actionId == id)) {
-                            extendedObject = alias
-                        }
-                        else {
-
-
-                            if (extendedObject || object) {
-                                if (self[k] && self[k].applyAction) {
-
-                                    var applied = self[k].applyAction(extendedObject || object.clone(), alias)
-
-                                    if (applied) extendedObject = applied
-                                }
-                            }
-
-
-
-                        }
-
-
-                    })
-
-                })
-
-            })
-
-            return extendedObject || object || null
 
         },
     }
@@ -1295,7 +1311,7 @@ var pSDK = function ({ app, api, actions }) {
 
             if (share.userprofile) {
 
-                self.userInfo[!small ? 'insertFromResponse' : 'insertFromResponseSmall']([share.userprofile], true)
+                self.userInfo[!small ? 'insertFromResponse' : 'insertFromResponseSmall'](self.userInfo.cleanData([share.userprofile]), true)
 
             }
 
@@ -1548,54 +1564,11 @@ var pSDK = function ({ app, api, actions }) {
 
         tempExtend: function (object, txid) {
 
-
-            var extendedObject = null
-
-            _.each(actions.getAccounts(), (account) => {
-
-                var temps = ['share', 'upvoteShare', 'comment', /*'cScore', */'contentDelete']
-
-                _.each(temps, (k) => {
-
-                    _.each(account.getTempActions(k), (alias) => {
-
-                        if (k == 'share') {
-
-                            if (alias.txid == txid || alias.actionId == txid) {
-                                extendedObject = alias
-
-                                return
-                            }
-                        }
-
-                        var shareId = (extendedObject || object || {}).txid
-
-                        if (shareId) {
-
-                            if ((alias.share || alias.postid || alias.txid) == shareId) {
-
-                                if (self[k] && self[k].applyAction) {
-
-                                    var applied = self[k].applyAction(extendedObject || object.clone(), alias)
-
-                                    if (applied) extendedObject = applied
-                                }
-
-                            }
-
-
-                        }
-
-                        /////////
-
-
-                    })
-
-                })
-
-            })
-
-            return extendedObject || object || null
+            return extendFromActions('share', 
+                ['share', 'upvoteShare', 'comment', 'contentDelete'],
+                object,
+                txid
+            )
 
         },
 
@@ -1622,10 +1595,10 @@ var pSDK = function ({ app, api, actions }) {
         listener: function (exp, address, status) {
             if (status == 'completed') {
 
-                this.applyAction(objects['userInfoFull'][address], exp)
-                this.applyAction(objects['userInfoFull'][exp.address], exp)
+                this.applyAction(objects['userInfoFull'][exp.actor], exp)
+                this.applyAction(objects['userInfoFull'][exp.address.v], exp)
 
-                self.userInfo.cleardb(address)
+                self.userInfo.cleardb(exp.actor)
                 self.userInfo.cleardb(exp.address)
             }
         },
@@ -1633,10 +1606,10 @@ var pSDK = function ({ app, api, actions }) {
 
             if (object) {
                 if (object.address == exp.actor) { /// for me
-                    object.addRelation(exp.address, 'blocking')
+                    object.addRelation(exp.address.v, 'blocking')
                 }
 
-                if (object.address == exp.address) { 
+                if (object.address == exp.address.v) { 
                 }
             }
 
@@ -1647,34 +1620,6 @@ var pSDK = function ({ app, api, actions }) {
     self.unblocking = {
         listener: function (exp, address, status) {
             if (status == 'completed') {
-
-                this.applyAction(objects['userInfoFull'][address], exp)
-                this.applyAction(objects['userInfoFull'][exp.address], exp)
-
-                self.userInfo.cleardb(address)
-                self.userInfo.cleardb(exp.address)
-            }
-        },
-        applyAction: function (object, exp) {
-
-            if (object) {
-                if (object.address == exp.actor) { /// for me
-                    object.removeRelation(exp.address, 'blocking')
-                }
-
-                if (object.address == exp.address) { /// for me
-                }
-            }
-
-            return object
-        }
-    }
-
-    self.subscribe = {
-        listener: function (exp, address, status) {
-            if (status == 'completed') {
-
-                console.log('exp.address', exp.address, exp.actor)
 
                 this.applyAction(objects['userInfoFull'][exp.actor], exp)
                 this.applyAction(objects['userInfoFull'][exp.address.v], exp)
@@ -1687,6 +1632,40 @@ var pSDK = function ({ app, api, actions }) {
 
             if (object) {
                 if (object.address == exp.actor) { /// for me
+                    object.removeRelation(exp.address.v, 'blocking')
+                }
+
+                if (object.address == exp.address.v) { /// for me
+                }
+            }
+
+            return object
+        }
+    }
+
+    self.subscribe = {
+        listener: function (exp, address, status) {
+            if (status == 'completed') {
+
+                console.log('exp.address', exp.address.v, exp.actor)
+
+                this.applyAction(objects['userInfoFull'][exp.actor], exp)
+                this.applyAction(objects['userInfoFull'][exp.address.v], exp)
+
+                self.userInfo.cleardb(exp.actor)
+                self.userInfo.cleardb(exp.address.v)
+            }
+        },
+        applyAction: function (object, exp) {
+
+            console.log('subscribe, apply', exp.address.v, object.address)
+
+            if (object) {
+                if (object.address == exp.actor) { 
+                    
+                    console.log('exp.address.v', exp.address.v)
+                    
+                    /// for me
                     object.addRelation({
                         adddress: exp.address.v
                     })
@@ -1719,7 +1698,7 @@ var pSDK = function ({ app, api, actions }) {
         listener: function (exp, address, status) {
             if (status == 'completed') {
 
-                console.log('exp.address', exp.address, exp.actor)
+                console.log('exp.address', exp.address.v, exp.actor)
 
                 this.applyAction(objects['userInfoFull'][exp.actor], exp)
                 this.applyAction(objects['userInfoFull'][exp.address.v], exp)
@@ -1762,6 +1741,9 @@ var pSDK = function ({ app, api, actions }) {
             }
         },
         applyAction: function (object, exp) {
+
+            console.log('unsubscribe, apply', exp.address.v, object.address)
+
 
             if (object) {
                 if (object.address == exp.actor) { /// for me
@@ -2051,6 +2033,8 @@ var pSDK = function ({ app, api, actions }) {
 
     self.actions.on('actionFiltered', ({ action, address, status }) => {
 
+        extendCache = {}
+        console.log('extendCache clear')
         var listener = self[action.object.type]?.listener
 
         if (!listener) return

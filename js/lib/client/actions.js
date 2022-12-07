@@ -704,6 +704,8 @@ var Action = function(account, object, priority){
         alias.type = self.object.type
         alias.id = alias.txid
 
+        if(!alias.address) alias.address = account.address
+
         alias.time = new Date()
         alias.timeUpd = alias.time
         alias.optype = self.object.typeop ? self.object.typeop() : self.object.type
@@ -1481,6 +1483,8 @@ var Actions = function(app, api, storage = localStorage){
             accounts[address] = new Account(address, self)
             accounts[address].import(data)
         })
+
+        console.log("IMPORTED ACTIONS")
 
     }
 

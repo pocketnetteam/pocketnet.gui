@@ -2128,11 +2128,11 @@ pUserInfo = function(){
 	self.rc = 0;
 
 	self._import = function(v){
-		self.name = clearStringXss(decodeURIComponent(v.n || v.name || ''));
-		self.image = clearStringXss(v.i || v.image);
-		self.about = clearStringXss(decodeURIComponent(v.a || v.about || ''));
-		self.language = clearStringXss(v.l || v.language);
-		self.site = clearStringXss(decodeURIComponent(v.s || v.site || ''));
+		self.name = v.n || v.name || '';
+		self.image = v.i || v.image;
+		self.about = v.a || v.about || '';
+		self.language = v.l || v.language;
+		self.site = v.s || v.site || '';
 
 		self.ref = v.r || v.ref;
 		self.rc = v.rc || 0;
