@@ -12098,9 +12098,12 @@ Platform = function (app, listofnodes) {
                  **/
                 if (options.populate) {
                     const usersStorageList = Object.values(self.sdk.users.storage);
+                    const userslStorageList = Object.values(self.sdk.usersl.storage);
+
+                    const usersList = [...usersStorageList, ...userslStorageList];
 
                     return blockersList.map((blockerId) => {
-                        const blockerAddress = usersStorageList.find(u => u.id === blockerId);
+                        const blockerAddress = usersList.find(u => u.id === blockerId);
 
                         return blockerAddress || blockerId;
                     });
