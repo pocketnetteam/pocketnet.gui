@@ -183,6 +183,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+  z-index: 999;
   color: rgb(var(--neutral-grad-1));
   box-sizing: border-box;
   padding: 0 0.5em;
@@ -194,6 +196,12 @@
 }
 #menu .sections .items.control-app > div:hover {
   color: rgb(var(--color-txt-gray));
+}
+#menu .sections .items.control-app.control-left {
+  padding-right: 1.5em;
+}
+#menu .sections .items.control-app.control-right {
+  padding-left: 1.5em;
 }
 #menu .sections .items.notificationsWrapper {
   margin-right: 0.5em;
