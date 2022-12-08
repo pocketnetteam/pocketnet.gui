@@ -200,7 +200,14 @@ __map =  {
 		],*/
 	},      
 
-	
+	installios: {
+		uri : "installios",
+		href : "installios",
+		add : insertingfunc,
+		anonimus : true,
+		electronDontOpen : true
+	},
+
 	easynode : {
 		uri : "easynode",
 		href : "easynode",

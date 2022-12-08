@@ -30,6 +30,7 @@
         "minimize:cordova:store": "node minimize.js -prodaction=true -vendor=30068 -path=/pocketnet/ -project=Bastyon -composetemplates=true -store=true",
         "minimize:cordova:test": "node minimize.js -prodaction=true -test=true -vendor=30068 -path=/pocketnet/ -project=Bastyon -composetemplates=true",
         "minimize:bastyon": "node minimize.js -prodaction=true -vendor=30068 -path=/ -project=Bastyon",
+        "minimize:bastyon:papp": "node minimize.js -prodaction=true -vendor=30068 -path=/ -project=BastyonPapp",
         "minimize:bastyon:test": "node minimize.js -prodaction=true -vendor=30068 -test=true -path=/ -project=Bastyon",
         "dev:bastyon": "node minimize.js -prodaction=false -path=/pocketnet/ -project=Bastyon",
         "dev:bastyon:test": "node minimize.js -prodaction=false -test=true -path=/pocketnet/ -project=Bastyon",
