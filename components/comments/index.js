@@ -2264,7 +2264,7 @@ var comments = (function(){
 							receiver: receiver
 						},
 
-					}, function(_p){
+					}, function(_p){				
 
 						var ini = function(_clbk, unfocus){
 
@@ -2361,7 +2361,7 @@ var comments = (function(){
 
 								})
 
-
+								
 							})
 
 							_p.el.find('.embedEmojiPrivew').on('click', function(){

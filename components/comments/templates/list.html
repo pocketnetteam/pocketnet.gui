@@ -2,7 +2,7 @@
 var commentpanel = function(comment, _class){  
 	
 	var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(comment.address)
-
+	
 	var isUserBlockedBy = app.platform.sdk.users.isUserBlockedBy(comment.address)
 	
 	
