@@ -2230,7 +2230,7 @@ var comments = (function(){
 					return
 				}
 
-				self.app.user.isState(function(state){
+				self.app.user.isState(async function(state){
 					//if(!state) return;
 					
 					if(state && self.app.platform.sdk.user.myaccauntdeleted()){
@@ -2244,6 +2244,11 @@ var comments = (function(){
 					p.el || (p.el = el.post)
 
 					var _preview = preview && !p.answer && !p.editid
+					const isBlockedByAuthor = await app.platform.sdk.users.isUserBlockedBy(receiver)
+
+					if (isBlockedByAuthor) {
+						return;
+					}
 
 					self.shell({
 						name :  'post',
@@ -2259,7 +2264,7 @@ var comments = (function(){
 							receiver: receiver
 						},
 
-					}, function(_p){				
+					}, function(_p){
 
 						var ini = function(_clbk, unfocus){
 
@@ -2336,7 +2341,8 @@ var comments = (function(){
 
 							_p.el.find('textarea').on('click', function(e){
 
-								if (app.platform.sdk.users.isUserBlockedBy(receiver)){
+								if (isBlockedByAuthor){
+									_p.el.find('textarea').attr('readonly', '');
 									e.preventDefault();
 									return
 								}
@@ -2355,7 +2361,7 @@ var comments = (function(){
 
 								})
 
-								
+
 							})
 
 							_p.el.find('.embedEmojiPrivew').on('click', function(){

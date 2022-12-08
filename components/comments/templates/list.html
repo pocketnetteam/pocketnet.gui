@@ -2,6 +2,8 @@
 var commentpanel = function(comment, _class){  
 	
 	var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(comment.address)
+
+	var isUserBlockedBy = app.platform.sdk.users.isUserBlockedBy(comment.address)
 	
 	
 	%>
@@ -75,7 +77,7 @@ var commentpanel = function(comment, _class){
 			<% } %> 
 
 
-			<% if((!state || mestate.reputation >= -50) && !comment.deleted && !lockedaccount && !ed.cantsend) { %> 
+			<% if((!state || mestate.reputation >= -50) && !comment.deleted && !lockedaccount && !ed.cantsend && !isUserBlockedBy) { %>
 				<div elementsid="comments_reply" class="item reply">
 					<div class="cact">
 						<div class="label">

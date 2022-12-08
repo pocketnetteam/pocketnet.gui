@@ -6,7 +6,7 @@ if (isMobile()) dplace = e('e13039')
 
 var deleted = typeof app.platform.sdk.user.myaccauntdeleted != 'undefined' && app.platform.sdk.user.myaccauntdeleted();
 
-	
+var isUserBlockedBy = app.platform.sdk.users.isUserBlockedBy(essenseData.daddress);
 
 %>
 
@@ -73,7 +73,7 @@ var deleted = typeof app.platform.sdk.user.myaccauntdeleted != 'undefined' && ap
 			
 			
 		
-		if((!state || !user.validate() || _.isEmpty(mestate) || (mestate.reputation >= -50)) && !deleted) { 
+		if((!state || !user.validate() || _.isEmpty(mestate) || (mestate.reputation >= -50)) && !deleted && !isUserBlockedBy) {
 			
 			var embedimage = app.platform.sdk.user.canuseimagesincomments(); 
 			var hasdonate = sender && sender !== receiver
