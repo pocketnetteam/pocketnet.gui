@@ -1647,7 +1647,7 @@ var Actions = function(app, api, storage = localStorage){
     }
 
     self.getCurrentAccount = function(){
-        if (app.user.address.value){
+        if (app.user && app.user.address && app.user.address.value){
             return accounts[app.user.address.value] || undefined
         }
     }

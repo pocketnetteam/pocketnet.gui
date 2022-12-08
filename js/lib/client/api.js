@@ -912,21 +912,29 @@ var Api = function(app){
 
                 },
                 
-                mixedping : function(proxies){
+                mixedping : function(proxies, successPingClbk){
                     var current = self.get.current()
 
-                    if(!current) return Promise.resolve()
+                    if(!current) {
+                        if(successPingClbk) successPingClbk()
+                        return Promise.resolve()
+                    }
 
                     return current.api.actualping().catch(e => {return Promise.resolve()}).then(() => {
 
+                        if(self.ready.use()) {
+                            if(successPingClbk) successPingClbk()
 
-                        if(self.ready.use()) return Promise.resolve()
+                            return Promise.resolve()
+                        }
 
                         proxies = _.filter(proxies, function(p){
                             return p.id != current.id
                         })
 
                         return internal.proxy.api.softping(proxies).then(r => {
+
+                            if(successPingClbk) successPingClbk()
 
                             return Promise.resolve()
                         })
@@ -1369,7 +1377,7 @@ var Api = function(app){
         })
     },
 
-    self.init = function(){
+    self.init = function(successPingClbk){
 
         var f = localStorage['fixednode']
 
@@ -1378,18 +1386,17 @@ var Api = function(app){
         return internal.proxy.manage.init().then(r => { 
             //softping
 
-
-            internal.proxy.api.mixedping(proxies).catch(e => {
+            internal.proxy.api.mixedping(proxies, successPingClbk).catch(e => {
             })
 
             return Promise.resolve()
         })
     }
 
-    self.initIf = function(){
+    self.initIf = function(successPingClbk){
 
         if(inited) return Promise.resolve()
-        else return self.init()
+        else return self.init(successPingClbk)
 
     }
 

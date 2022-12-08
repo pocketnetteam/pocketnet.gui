@@ -5,20 +5,7 @@ var pSDK = function ({ app, api, actions }) {
     var objects = {}
     var temp = {}
     var queue = {}
-    var dbstorages = {}
-    var dbversion = 2;
-
-    var dbenabled = true
-
-    self.actions = actions
-
-    /*self.actions.on('change', ({account}) => {
-        if (account.address == app.user.address.value){
-            
-        }
-    })*/
-
-
+    //var dbstorages = {}
 
     var dbmeta = {
 
@@ -91,16 +78,20 @@ var pSDK = function ({ app, api, actions }) {
         }
     }
 
-    self.preInitIndexedDb = function(){
-        var keys = ['userInfoFull', 'userInfoFullFB', 'userInfoLight', 'userState', 'userStateFB', 'share']
+    var storages = _.map(dbmeta, (v, i) => {return i})
 
-        return Promise.all(_.map(keys, (k) => {
-            return getDBStorage({
-                ...dbmeta[k],
-                name : k
-            })
-        }))
-    }
+    var dbversion = 2 + storages.length;
+
+    self.db = new ResoursesDB('psdk', dbversion, storages)
+
+    var rt = performance.now()
+
+    self.db.getdb().then(() => {
+    })
+
+    self.actions = actions
+
+    
 
     var checkObjectInActions = function (objects) {
 
@@ -115,32 +106,6 @@ var pSDK = function ({ app, api, actions }) {
         account.checkTransactionById(txids)
     }
 
-    var getDBStorage = function ({ name, time }) {
-
-        if(!dbenabled){
-            return Promise.resolve(null)
-        }
-
-        var key = 'initdbstorage_' + name
-
-        if (temp[key]) return temp[key]
-
-        if (!dbstorages[name]) {
-
-            temp[key] = pdbstorage(name, dbversion, time).then(storage => {
-                dbstorages[name] = storage
-
-                delete temp[key]
-
-                return Promise.resolve(storage)
-            })
-
-            return temp[key]
-        }
-
-        return Promise.resolve(dbstorages[name])
-    }
-
     var prepareStorage = function (key) {
         if (!storage[key]) storage[key] = {}
         if (!temp[key]) temp[key] = {}
@@ -149,52 +114,35 @@ var pSDK = function ({ app, api, actions }) {
     }
 
     var settodb = function (dbname, result) {
-        if (!dbname) return Promise.resolve()
+        if (!dbname || !dbmeta[dbname]) return Promise.resolve()
 
-        return getDBStorage({ name: dbname, ...dbmeta[dbname] }).then((db) => {
+        return Promise.all(_.map(result, ({ key, data }) => {
 
-            if(!db) return Promise.resolve()
+            if (dbmeta[dbname].authorized) key = key + '_' + app.user.address.value
 
+            return self.db.set(dbname, dbmeta[dbname].time, key, data).catch(e => {
+                console.error(e)
+                return Promise.resolve()
+            })
+        }))
 
-            return Promise.all(_.map(result, ({ key, data }) => {
-
-                if (dbmeta[dbname].authorized) key = key + '_' + app.user.address.value
-
-                return db.set(key, data).catch(e => { })
-            }))
-
-        })
     }
 
     var clearfromdb = function (dbname, ids) {
 
-        return getDBStorage({ name: dbname, ...dbmeta[dbname] }).then((db) => {
+        if (dbmeta[dbname].authorized) ids = _.map(ids, id => {
+            return id + '_' + app.user.address.value
+        })
 
-            if(!db) return Promise.resolve()
-
-            if (dbmeta[dbname].authorized) ids = _.map(ids, id => {
-                return id + '_' + app.user.address.value
-            })
-
-            return db.clearItems(ids)
-        }).catch(e => {
-
+        return self.db.clearMany(dbname, ids).catch(e => {
+            console.error(e)
+            return Promise.resolve()
         })
 
     }
 
     var clearallfromdb = function (dbname) {
-
-        return getDBStorage({ name: dbname, ...dbmeta[dbname] }).then((db) => {
-
-            if(!db) return Promise.resolve()
-
-            
-            return db.clearall()
-        }).catch(e => {
-
-        })
-
+        return self.db.clearAll(dbname)
     }
 
     var settodbone = function (dbname, hash, data) {
@@ -230,43 +178,30 @@ var pSDK = function ({ app, api, actions }) {
             return id + '_' + app.user.address.value
         })
 
-        var rt = performance.now()
-
-        return getDBStorage({ name: dbname, ...dbmeta[dbname] }).then((db) => {
-
-            console.log('getdb', performance.now() - rt)
-
-            var result = []
-
-            if(!db) return Promise.resolve(result)
+        var result = []
 
 
-            return Promise.all(_.map(ids, id => {
+        return Promise.all(_.map(ids, id => {
+            return self.db.get(dbname, id).then(data => {
 
-                return db.get(id).then(data => {
+                if (dbmeta[dbname].authorized) {
+                    id = id.replace('_' + app.user.address.value, '')
+                }
 
-                console.log(performance.now() - rt, id)
+                result.push({
+                    key: id,
+                    data: data
+                })
 
+            }).catch(e => { 
 
-                    if (dbmeta[dbname].authorized) {
-                        id = id.replace('_' + app.user.address.value, '')
-                    }
+                console.error(e)
 
-                    result.push({
-                        key: id,
-                        data: data
-                    })
-
-                }).catch(e => { })
-
-            })).then(() => {
-
-                console.log(performance.now() - rt)
-
-
-                return result
             })
+        })).then(() => {
 
+
+            return result
         })
 
     }
@@ -372,9 +307,7 @@ var pSDK = function ({ app, api, actions }) {
 
         var promise = !load.length ? Promise.resolve([]) : new Promise((resolve, reject) => {
 
-            console.log("MAKE", load)
 
-            //var t = performance.now()
 
             getfromdb(p.indexedDb, load).then(dbr => {
 
@@ -387,7 +320,6 @@ var pSDK = function ({ app, api, actions }) {
 
                 })
 
-                console.log("HERE", load)
                 if (!load.length) {
                     resolve(dbr)
 
@@ -409,7 +341,6 @@ var pSDK = function ({ app, api, actions }) {
 
 
                 if (p.queue) {
-                    console.log("HERE2", load)
                     queue[key].push({
                         load,
                         executor,
@@ -420,10 +351,6 @@ var pSDK = function ({ app, api, actions }) {
                     })
                 }
                 else {
-
-
-                    console.log("HERE2", load)
-
 
                     executor(load).then(c).catch(reject)
                 }
@@ -628,6 +555,7 @@ var pSDK = function ({ app, api, actions }) {
         },
 
         load: function (addresses, light, update) {
+            var rt = performance.now()
 
 
             return loadList(light ? 'userInfoLight' : 'userInfoFull', addresses, (addresses) => {
@@ -635,7 +563,6 @@ var pSDK = function ({ app, api, actions }) {
                 var parameters = [addresses];
 
                 if (light) { parameters.push('1') }
-
 
                 return api.rpc('getuserprofile', parameters).then((data) => {
 
@@ -1494,7 +1421,7 @@ var pSDK = function ({ app, api, actions }) {
 
                     }
                     else {
-                        c.m = nl2br(trimrn(findAndReplaceLink(filterXSS(decodeURIComponent(c.m || ''), {
+                        c.m = nl2br(trimrn((filterXSS(decodeURIComponent(c.m || ''), {
                             whiteList: [],
                             stripIgnoreTag: true,
                         })))).replace(/\n{2,}/g, '\n\n')

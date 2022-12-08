@@ -85,7 +85,7 @@ __map =  {
 	
 		{path : "js/lib/client/system16.js", babelify : true},
 		{path : "js/lib/client/api.js", babelify : true},
-		{path : "js/lib/client/dbstorage.js", babelify : true},
+		{path : "js/lib/client/resoursesdb.js", babelify : true},
 		{path : "js/kit.js", babelify : true},
 		{path : "js/lib/client/actions.js", babelify : true},
 		{path : "js/lib/client/sdk.js", babelify : true},

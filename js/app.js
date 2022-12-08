@@ -816,10 +816,7 @@ Application = function (p) {
 
 		console.log("WAIT USE")
 
-		
-
 		self.api.wait.ready('use', 1000).then(r => {
-
 
 			var canuse = self.api.ready.use()
 
@@ -890,10 +887,12 @@ Application = function (p) {
 		if (self.preapied) return
 
 		self.api = new Api(self)
-		self.api.initIf().then(() => {
+		self.api.initIf(() => {
 			console.log('acceleration')
 			/// acceleration
 			acceleration()
+		}).then(() => {
+			
 		})
 
 		self.localization = new Localization(self);
@@ -901,13 +900,12 @@ Application = function (p) {
 
 		self.Actions = new Actions(self, self.api)
 		self.psdk = new pSDK({ app: self, api: self.api, actions: self.Actions })
-		console.log("INIT DB")
 
-		var rt = performance.now()
+		/*var rt = performance.now()
 
 		self.psdk.preInitIndexedDb().then(() => {
 			console.log("DBINITED",  performance.now() - rt)
-		})
+		})*/
 
 		self.Actions.psdk = self.psdk
 
