@@ -59,3 +59,4 @@ main.js
 docs/
 posts/
 ./main.js
+cordova/cert.keystore
