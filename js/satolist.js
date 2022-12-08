@@ -321,7 +321,8 @@ Platform = function (app, listofnodes) {
         }
     }
 
-    self.actions = new Actions(app, self.app.api)
+    self.actions = app.Actions
+    self.psdk = app.psdk
 
     self.actions.on('change', ({account}) => {
         if (account.address == app.user.address.value){
@@ -400,8 +401,7 @@ Platform = function (app, listofnodes) {
 
     self.actionListeners = {}
 
-    self.psdk = new pSDK({app, api : self.app.api, actions : self.actions})
-    self.actions.psdk = self.psdk
+    
 
     self.mp = {
         dollars: function (value, p) {
@@ -9025,6 +9025,8 @@ Platform = function (app, listofnodes) {
             getone: function (address, clbk, light, reload) {
 
                 self.sdk.users.get([address], function(data = {}, error){
+                    if(!data) data = {}
+
                     if(clbk) clbk(data[address] || null, error)
                 }, light, reload)
             },
@@ -21489,7 +21491,7 @@ Platform = function (app, listofnodes) {
 
         checkfeatures()
 
-
+        console.log("GET INFO")
 
         app.user.isState(function(state){
             
@@ -21519,6 +21521,9 @@ Platform = function (app, listofnodes) {
                     self.sdk.comments.loadblocked
 
                 ], function () {
+
+                    console.log("READY")
+
 
                     //self.ui.showmykey()
                     

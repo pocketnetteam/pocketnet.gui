@@ -97,7 +97,6 @@ var ActionOptions = {
         comment : {
             destination : function(action){
 
-                console.log("DEST", action.object.typeop())
 
                 if(action.object.typeop() != 'comment') return []
 
@@ -106,7 +105,6 @@ var ActionOptions = {
             },
             amount : function(action){
 
-                console.log("amount", action.object.typeop())
 
 
                 if(action.object.typeop() != 'comment') return 0
@@ -1319,7 +1317,6 @@ var Account = function(address, parent){
 
         if (status && action.id){
             
-            console.log('emitted[estatus][action.id]', self.address, estatus, action.id, emitted)
 
             if(!emitted[estatus][action.id]){
                 parent.emit('actionFiltered', {
@@ -1484,7 +1481,6 @@ var Actions = function(app, api, storage = localStorage){
             accounts[address].import(data)
         })
 
-        console.log("IMPORTED ACTIONS")
 
     }
 

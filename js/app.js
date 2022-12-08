@@ -7,2795 +7,2883 @@ if(typeof require != 'undefined' && typeof __map == 'undefined')
 
 if (typeof _OpenApi == 'undefined') _OpenApi = false;
 
-if (typeof _Electron != 'undefined' && _Electron){
+if (typeof _Electron != 'undefined' && _Electron) {
 
-  imagesLoaded = require('./js/vendor/imagesloaded.pkgd.js');
+	imagesLoaded = require('./js/vendor/imagesloaded.pkgd.js');
 
-  emojione = require('emojione')
+	emojione = require('emojione')
 
-  var Isotope = require('isotope-layout'); require('isotope-packery');
+	var Isotope = require('isotope-layout'); require('isotope-packery');
 
-  var jquerytextcomplete = require('jquery-textcomplete')
+	var jquerytextcomplete = require('jquery-textcomplete')
 
-  animateNumber = require('./js/vendor/jquery.animate-number.js')
-  touchSwipe = require('./js/vendor/jquery.touchSwipe.js')
+	animateNumber = require('./js/vendor/jquery.animate-number.js')
+	touchSwipe = require('./js/vendor/jquery.touchSwipe.js')
 
-  ImageUploader = require('./js/image-uploader.js');
+	ImageUploader = require('./js/image-uploader.js');
 
-  VideoUploader = require('./js/video-uploader.js');
+	VideoUploader = require('./js/video-uploader.js');
 
-  jQueryBridget = require('jquery-bridget');
-  jQueryBridget( 'isotope', Isotope, $ );
-  jQueryBridget( 'textcomplete', jquerytextcomplete, $ );
+	jQueryBridget = require('jquery-bridget');
+	jQueryBridget('isotope', Isotope, $);
+	jQueryBridget('textcomplete', jquerytextcomplete, $);
 
-  Mark = require('./js/vendor/jquery.mark.js');
+	Mark = require('./js/vendor/jquery.mark.js');
 
-  EmojioneArea = require('./js/vendor/emojionearea.js')
-  filterXss = require('./js/vendor/xss.min.js')
+	EmojioneArea = require('./js/vendor/emojionearea.js')
+	filterXss = require('./js/vendor/xss.min.js')
 
 }
 
-if(typeof _Node == 'undefined') _Node = false;
+if (typeof _Node == 'undefined') _Node = false;
 
 /////////////////////////////////////////////
 ///
 
 chrsz = 8;
 
-Application = function(p)
-{
+Application = function (p) {
 
-  if(!p) p = {}
+	if (!p) p = {}
 
-  var self = this;
-  var realtimeInterval = null;
-  var baseorientation = typeof getbaseorientation != undefined ? getbaseorientation() : 'portrait'
-  var electron = null
-  
-  if (typeof _Electron != 'undefined' && _Electron){
-    electron = require('electron');
-  }
+	var self = this;
+	var realtimeInterval = null;
+	var baseorientation = typeof getbaseorientation != undefined ? getbaseorientation() : 'portrait'
+	var electron = null
 
-  self._meta = {
-    Pocketnet : {
-      url : "pocketnet.app",
-      turl : "test.pocketnet.app",
-      fullname : "Pocketnet",
-      protocol : 'pocketnet',
-      blockexplorer : 'https://pocketnet.app/blockexplorer/'
-    },
+	if (typeof _Electron != 'undefined' && _Electron) {
+		electron = require('electron');
+	}
 
-    Bastyon : {
-      fullname : "Bastyon",
-      url : "bastyon.com",
-      turl : "test.pocketnet.app",
-      protocol : 'bastyon',
-      blockexplorer : 'https://pocketnet.app/blockexplorer/'
-    }
-  }
+	self._meta = {
+		Pocketnet: {
+			url: "pocketnet.app",
+			turl: "test.pocketnet.app",
+			fullname: "Pocketnet",
+			protocol: 'pocketnet',
+			blockexplorer: 'https://pocketnet.app/blockexplorer/'
+		},
 
-  self.meta = self._meta.Pocketnet
+		Bastyon: {
+			fullname: "Bastyon",
+			url: "bastyon.com",
+			turl: "test.pocketnet.app",
+			protocol: 'bastyon',
+			blockexplorer: 'https://pocketnet.app/blockexplorer/'
+		}
+	}
 
-  if (window.pocketnetproject && self._meta[window.pocketnetproject]){
-    self.meta = self._meta[window.pocketnetproject]
-  }
+	self.meta = self._meta.Pocketnet
 
-  var url = window.pocketnetdomain
+	if (window.pocketnetproject && self._meta[window.pocketnetproject]) {
+		self.meta = self._meta[window.pocketnetproject]
+	}
 
-  if ((typeof _Electron != 'undefined' && _Electron) || window.cordova){} else {
-    url = window.location.hostname + window.pocketnetpublicpath.substring(0, window.pocketnetpublicpath.length - 1)
-  }
+	var url = window.pocketnetdomain
 
-  if (window.testpocketnet){
-    self.test = true
-  }
+	if ((typeof _Electron != 'undefined' && _Electron) || window.cordova) { } else {
+		url = window.location.hostname + window.pocketnetpublicpath.substring(0, window.pocketnetpublicpath.length - 1)
+	}
 
-  self.boost = !(window.cordova && isios());
-  self.pkoindisable = window.cordova && isios();
-  self.cutversion = window.cordova && isios();
+	if (window.testpocketnet) {
+		self.test = true
+	}
 
-  self.margintop  = 0
+	self.boost = !(window.cordova && isios());
+	self.pkoindisable = window.cordova && isios();
+	self.cutversion = window.cordova && isios();
 
-  self.options = {
+	self.margintop = 0
 
-    url : url,
+	self.options = {
 
-    matrix : p.matrix,
+		url: url,
 
-    nav : {
-      navPrefix : window.pocketnetpublicpath || '/pocketnet',
-    },
+		matrix: p.matrix,
 
-    name : 'PCRB',
-    fullName : self.meta.protocol,
-    localStoragePrefix : self.meta.protocol,
+		nav: {
+			navPrefix: window.pocketnetpublicpath || '/pocketnet',
+		},
 
+		name: 'PCRB',
+		fullName: self.meta.protocol,
+		localStoragePrefix: self.meta.protocol,
 
-    server : p.server || 'https://pocketnet.app/Shop/AJAXMain.aspx', //donations will be removed
 
-    //////////////
+		server: p.server || 'https://pocketnet.app/Shop/AJAXMain.aspx', //donations will be removed
 
-    firebase : p.firebase || 'https://'+url+':8888', /// will be removed
+		//////////////
 
-    //////////////
+		firebase: p.firebase || 'https://' + url + ':8888', /// will be removed
 
-    peertubeServer : 'https://test.peertube2.pocketnet.app/api/v1/',
+		//////////////
 
+		peertubeServer: 'https://test.peertube2.pocketnet.app/api/v1/',
 
-    //////////////
 
-    imageServer : p.imageServer || 'https://api.imgur.com/3/',
-    imageStorage : 'https://api.imgur.com/3/images/',
+		//////////////
 
-    //imageServerup1 : p.imageServerup1 || 'https://'+url+':8092/up', // will be part of proxy
-    imageServerup1 : p.imageServerup1 || 'https://pocketnet.app:8092/up',
-    rtc : p.rtc || 'https://'+url+':9001/',
-    rtcws : p.rtcws || 'wss://pocketnet.app:9090',
-    rtchttp : p.rtchttp || 'https://pocketnet.app:9091',
+		imageServer: p.imageServer || 'https://api.imgur.com/3/',
+		imageStorage: 'https://api.imgur.com/3/images/',
 
-    listofnodes : p.listofnodes || null,
-    listofproxies : p.listofproxies || null,
+		//imageServerup1 : p.imageServerup1 || 'https://'+url+':8092/up', // will be part of proxy
+		imageServerup1: p.imageServerup1 || 'https://pocketnet.app:8092/up',
+		rtc: p.rtc || 'https://' + url + ':9001/',
+		rtcws: p.rtcws || 'wss://pocketnet.app:9090',
+		rtchttp: p.rtchttp || 'https://pocketnet.app:9091',
 
-    unathorizated : function(ignoreDialog){
+		listofnodes: p.listofnodes || null,
+		listofproxies: p.listofproxies || null,
 
-      self.user.isState(function(state){
+		unathorizated: function (ignoreDialog) {
 
-        if (state){
+			self.user.isState(function (state) {
 
-          self.user.signout();
+				if (state) {
 
-          self.reload({
-            href : 'authorization'
-          });
+					self.user.signout();
 
-          if(!ignoreDialog)
-            dialog({
-              html : self.localization.e('id189_1'),
-              class : 'accepting one',
-              btn1text : "Okay",
-              btn2text : self.localization.e('dcancel'),
-            })
+					self.reload({
+						href: 'authorization'
+					});
 
+					if (!ignoreDialog)
+						dialog({
+							html: self.localization.e('id189_1'),
+							class: 'accepting one',
+							btn1text: "Okay",
+							btn2text: self.localization.e('dcancel'),
+						})
 
 
-        }
 
-      })
+				}
 
+			})
 
-    },
 
-    /////////
+		},
 
-    successHandler : function(p){
+		/////////
 
-      var ca = {}
-      var change = false;
+		successHandler: function (p) {
 
-      if (p.rpc){
-        ca.proxy = true;
-        ca.node = true;
-        ca.offline = true;
-      }
+			var ca = {}
+			var change = false;
 
-      if (p.api){
-        ca.proxy = true;
-        ca.offline = true;
-      }
+			if (p.rpc) {
+				ca.proxy = true;
+				ca.node = true;
+				ca.offline = true;
+			}
 
-      if (p.apim){
-        ca.proxymain = true;
-        ca.offline = true;
-      }
+			if (p.api) {
+				ca.proxy = true;
+				ca.offline = true;
+			}
 
-      if (p.online){
-        ca.offline = true
-      }
+			if (p.apim) {
+				ca.proxymain = true;
+				ca.offline = true;
+			}
 
-      ca.offline = true;
+			if (p.online) {
+				ca.offline = true
+			}
 
-      _.each(ca, function(t, i){
+			ca.offline = true;
 
-        if (self.errors.state[i]){
-          delete self.errors.state[i]
+			_.each(ca, function (t, i) {
 
-          change = true
-        }
+				if (self.errors.state[i]) {
+					delete self.errors.state[i]
 
-      })
+					change = true
+				}
 
-      if(change){
-        _.each(self.errors.clbks, function(c){
-          c(self.errors.state)
-        })
-      }
+			})
 
-    },
+			if (change) {
+				_.each(self.errors.clbks, function (c) {
+					c(self.errors.state)
+				})
+			}
 
+		},
 
-    ///////////
 
-    errorHandler : function(error, p){
+		///////////
 
-      if(!error) {
+		errorHandler: function (error, p) {
 
-        if (p.rpc || p.api)
+			if (!error) {
 
-          error = 'proxy'
+				if (p.rpc || p.api)
 
-        if (p.apim)
-          error = 'proxymain'
+					error = 'proxy'
 
-      }
+				if (p.apim)
+					error = 'proxymain'
 
-      else
-      {
-        if(error == 'fail') error = ''
-        //error = 'node'
-      }
+			}
 
+			else {
+				if (error == 'fail') error = ''
+				//error = 'node'
+			}
 
-      if((error == 'proxy' || error == 'proxymain') && self.platform && !self.platform.online){
-        error = 'offline'
-      }
 
-      self.app.api.changeProxyIfNeed()
+			if ((error == 'proxy' || error == 'proxymain') && self.platform && !self.platform.online) {
+				error = 'offline'
+			}
 
-      if(error && !self.errors.state[error]){
+			self.app.api.changeProxyIfNeed()
 
-        self.errors.state[error] = true;
+			if (error && !self.errors.state[error]) {
 
-        _.each(self.errors.clbks, function(c){
-          c(self.errors.state)
-        })
+				self.errors.state[error] = true;
 
-      }
+				_.each(self.errors.clbks, function (c) {
+					c(self.errors.state)
+				})
 
+			}
 
-      return error;
 
-    }
+			return error;
 
-  };
+		}
 
-  var isonline = function(){
+	};
 
-    if (window.cordova){
-      if(navigator.connection.type === 'none') return false
-    }
+	var isonline = function () {
 
-    if(typeof window.navigator && window.navigator.onLine === false){
-      return window.navigator.onLine
-    }
+		if (window.cordova) {
+			if (navigator.connection.type === 'none') return false
+		}
 
-    return true
-  }
+		if (typeof window.navigator && window.navigator.onLine === false) {
+			return window.navigator.onLine
+		}
 
-  var istouchstylecalculate = function(){
-    let isIpad = /Macintosh/i.test(navigator.userAgent) && navigator.maxTouchPoints && navigator.maxTouchPoints > 1;
+		return true
+	}
 
-    var mobileview = (isIpad || self.el.html.hasClass('mobile') || self.el.html.hasClass('ipad') || self.el.html.hasClass('tablet') || window.cordova || self.width < 768)
+	var istouchstylecalculate = function () {
+		let isIpad = /Macintosh/i.test(navigator.userAgent) && navigator.maxTouchPoints && navigator.maxTouchPoints > 1;
 
+		var mobileview = (isIpad || self.el.html.hasClass('mobile') || self.el.html.hasClass('ipad') || self.el.html.hasClass('tablet') || window.cordova || self.width < 768)
 
-    if ((typeof _Electron != 'undefined' && _Electron)){
-      mobileview = false
-    }
 
-    return mobileview
-  }
+		if ((typeof _Electron != 'undefined' && _Electron)) {
+			mobileview = false
+		}
 
-  var istouchstyle = function(){
+		return mobileview
+	}
 
-    self.mobileview = istouchstylecalculate()
+	var istouchstyle = function () {
 
-    if(self.mobileview){
-      self.el.html.addClass('mobileview').removeClass('wsview')
-    }
-    else{
-      self.el.html.removeClass('mobileview').addClass('wsview')
-    }
-  }
+		self.mobileview = istouchstylecalculate()
 
-  var checkTouchStyle = function(){
-    var mobileview = istouchstylecalculate()
+		if (self.mobileview) {
+			self.el.html.addClass('mobileview').removeClass('wsview')
+		}
+		else {
+			self.el.html.removeClass('mobileview').addClass('wsview')
+		}
+	}
 
-    if(self.mobileview != mobileview){
-      istouchstyle()
+	var checkTouchStyle = function () {
+		var mobileview = istouchstylecalculate()
 
-      self.platform.matrixchat.changeMobile()
-      self.platform.matrixchat.initevents()
+		if (self.mobileview != mobileview) {
+			istouchstyle()
 
-      _.each(self.modules, function(m){
+			self.platform.matrixchat.changeMobile()
+			self.platform.matrixchat.initevents()
 
-        if(m.module.map.viewchangereload){
-          m.module.restart()
-        }
+			_.each(self.modules, function (m) {
 
-      })
-      
-      _.each(self.nav.wnds, (w) => {
-        var wnd = deep(w, 'module.container')
+				if (m.module.map.viewchangereload) {
+					m.module.restart()
+				}
 
-        if (wnd){
-          if(self.mobileview)
-            wnd.unhidenormalized()
-        }
-      })
-    }
-  }
+			})
 
-  self.secure = function(){
-    return location.protocol != 'http:'
-  }
+			_.each(self.nav.wnds, (w) => {
+				var wnd = deep(w, 'module.container')
 
-  self.canuseip = function(){
-    if((!self.secure() || (typeof _Electron != 'undefined' && _Electron))){
-      return true
-    }
-  }
+				if (wnd) {
+					if (self.mobileview)
+						wnd.unhidenormalized()
+				}
+			})
+		}
+	}
 
-  self.savesupported = function(){
-    var isElectron = (typeof _Electron !== 'undefined' && !!window.electron);
-    return isElectron || (window.cordova && !isios());
-  }
+	self.secure = function () {
+		return location.protocol != 'http:'
+	}
 
-  self.useip = function(){
-    return self.canuseip() && self.platform.sdk.usersettings.meta.canuseip.value
-  }
+	self.canuseip = function () {
+		if ((!self.secure() || (typeof _Electron != 'undefined' && _Electron))) {
+			return true
+		}
+	}
 
-  self.isonline = isonline
+	self.savesupported = function () {
+		var isElectron = (typeof _Electron !== 'undefined' && !!window.electron);
+		return isElectron || (window.cordova && !isios());
+	}
 
-  ///////////////
-  self.errors = {
-    clear : function(){
-      this.state = {};
+	self.useip = function () {
+		return self.canuseip() && self.platform.sdk.usersettings.meta.canuseip.value
+	}
 
-      self.platform.loadingWithErrors = false
+	self.isonline = isonline
 
-      self.errors.autocheck(false)
+	///////////////
+	self.errors = {
+		clear: function () {
+			this.state = {};
 
-    },
-    state : {},
-    clbks : {
+			self.platform.loadingWithErrors = false
 
-      /*_platform : function(change){
-        if(!self.errors.connection() && !self.platform.loadingWithErrors){
-          self.prepareUserData()
-        }
-      },*/
+			self.errors.autocheck(false)
 
-      _modules : function(change){
+		},
+		state: {},
+		clbks: {
 
+			/*_platform : function(change){
+			  if(!self.errors.connection() && !self.platform.loadingWithErrors){
+				self.prepareUserData()
+			  }
+			},*/
 
-        if(!self.errors.connection() && !self.platform.loadingWithErrors){
+			_modules: function (change) {
 
-          _.each(self.modules, function(m){
 
-            _.each(m.module.iclbks, function(c){
+				if (!self.errors.connection() && !self.platform.loadingWithErrors) {
 
-              c(change)
+					_.each(self.modules, function (m) {
 
-            })
+						_.each(m.module.iclbks, function (c) {
 
-          })
+							c(change)
 
-        }
+						})
 
-      },
+					})
 
-      check : function(){
-        if (self.errors.connection()){
-          self.errors.autocheck(true)
-        }
+				}
 
-        else
-        {
-          self.errors.autocheck(false)
-        }
-      }
+			},
 
-    },
+			check: function () {
+				if (self.errors.connection()) {
+					self.errors.autocheck(true)
+				}
 
-    _autocheck : null,
+				else {
+					self.errors.autocheck(false)
+				}
+			}
 
-    autocheck : function(enable){
-      if (enable){
+		},
 
-        if(!self.platform || !this.connection()) return
+		_autocheck: null,
 
-        self.errors._autocheck || (self.errors._autocheck = setInterval(function(){
+		autocheck: function (enable) {
+			if (enable) {
 
-          if (self.platform.focus && isonline()){
-            self.errors.check()
-          }
+				if (!self.platform || !this.connection()) return
 
-        }, 10000))
+				self.errors._autocheck || (self.errors._autocheck = setInterval(function () {
 
-      }
-      else{
+					if (self.platform.focus && isonline()) {
+						self.errors.check()
+					}
 
-        if(self.errors._autocheck){
+				}, 10000))
 
-          clearInterval(self.errors._autocheck)
-          self.errors._autocheck = null;
+			}
+			else {
 
-        }
+				if (self.errors._autocheck) {
 
-      }
-    },
+					clearInterval(self.errors._autocheck)
+					self.errors._autocheck = null;
 
-    check : function(clbk){
-      if (self.errors.state.node || self.errors.state.proxy)
-        self.platform.sdk.node.get.time(function(t, error){})
+				}
 
-      if (self.errors.state.proxymain){
-        self.platform.sdk.proxy.info(function(t, error){}, true)
-      }
-    },
+			}
+		},
 
-    connection : function(){
-      return this.state.node || this.state.proxy || this.state.offline
-    },
+		check: function (clbk) {
+			if (self.errors.state.node || self.errors.state.proxy)
+				self.platform.sdk.node.get.time(function (t, error) { })
 
-    connectionRs : function(){
-      return (this.state.node || this.state.proxy || this.state.offline) && !self.platform.loadingWithErrors
-    }
-  }
+			if (self.errors.state.proxymain) {
+				self.platform.sdk.proxy.info(function (t, error) { }, true)
+			}
+		},
 
-  self.apiHandlers = {
-    success : function(p){
+		connection: function () {
+			return this.state.node || this.state.proxy || this.state.offline
+		},
 
-      var ca = {}
-      var change = false;
+		connectionRs: function () {
+			return (this.state.node || this.state.proxy || this.state.offline) && !self.platform.loadingWithErrors
+		}
+	}
 
-      if (p.rpc){
-        ca.proxy = true;
-        ca.node = true;
-      }
+	self.apiHandlers = {
+		success: function (p) {
 
-      if (p.api){
-        ca.proxy = true;
-      }
+			var ca = {}
+			var change = false;
 
-      ca.offline = true;
+			if (p.rpc) {
+				ca.proxy = true;
+				ca.node = true;
+			}
 
+			if (p.api) {
+				ca.proxy = true;
+			}
 
-      _.each(ca, function(t, i){
+			ca.offline = true;
 
-        if (self.errors.state[i]){
-          delete self.errors.state[i]
 
-          change = true
-        }
+			_.each(ca, function (t, i) {
 
-      })
+				if (self.errors.state[i]) {
+					delete self.errors.state[i]
 
-      if (change){
-        _.each(self.errors.clbks, function(c){
-          c(self.errors.state)
-        })
-      }
+					change = true
+				}
 
-    },
+			})
 
-    ///////////
+			if (change) {
+				_.each(self.errors.clbks, function (c) {
+					c(self.errors.state)
+				})
+			}
 
-    error : function(p){
-      var error = null
+		},
 
-      if (p.rpc){
-        error = 'node'
-      }
+		///////////
 
-      if (p.api){
-        error = 'proxy'
-      }
+		error: function (p) {
+			var error = null
 
-      if((error == 'proxy') && (self.platform && !self.platform.online)){
-        error = 'offline'
-      }
+			if (p.rpc) {
+				error = 'node'
+			}
 
+			if (p.api) {
+				error = 'proxy'
+			}
 
-      if(error && !self.errors.state[error]){
+			if ((error == 'proxy') && (self.platform && !self.platform.online)) {
+				error = 'offline'
+			}
 
-        self.errors.state[error] = true;
 
-        _.each(self.errors.clbks, function(c){
-          c(self.errors.state)
-        })
+			if (error && !self.errors.state[error]) {
 
-      }
+				self.errors.state[error] = true;
 
+				_.each(self.errors.clbks, function (c) {
+					c(self.errors.state)
+				})
 
-      return error;
+			}
 
-    }
-  }
 
-  self.el = {}
+			return error;
 
-  self.id = makeid();
-  self.map = __map;
-  self.modules = {};
+		}
+	}
 
-  self.isElectron = function(){
-    return typeof _Electron != 'undefined' && _Electron
-  }
+	self.el = {}
 
-  self.curation = function(){
+	self.id = makeid();
+	self.map = __map;
+	self.modules = {};
 
-    //if(window.cordova && typeof isios != 'undefined' && isios()) return true
-    return false
-  }
+	self.isElectron = function () {
+		return typeof _Electron != 'undefined' && _Electron
+	}
 
-  self.letters = {
-    videoblogger : function({
-                              link1 = '',
-                              link2 = '',
-                              link3 = '',
-                              info = '',
-                              email = '',
-                              address = ''
-                            }, clbk){
+	self.curation = function () {
 
-      var _p = {
-        link1,
-        link2,
-        link3,
-        info,
-        address,
-        email
-      }
+		//if(window.cordova && typeof isios != 'undefined' && isios()) return true
+		return false
+	}
 
-      _p.Action || (_p.Action = 'ADDTOMAILLIST');
-      _p.TemplateID = '2001'
+	self.letters = {
+		videoblogger: function ({
+			link1 = '',
+			link2 = '',
+			link3 = '',
+			info = '',
+			email = '',
+			address = ''
+		}, clbk) {
 
-      var body = ''
+			var _p = {
+				link1,
+				link2,
+				link3,
+				info,
+				address,
+				email
+			}
 
-      body += '<p><a href="https://'+self.options.url+'/author?address='+address+'">User ('+address+') require PKOIN</a></p>'
+			_p.Action || (_p.Action = 'ADDTOMAILLIST');
+			_p.TemplateID = '2001'
 
-      if(link1)
-        body += '<p>Link: <a href="'+link1+'">'+link1+'</a></p>'
+			var body = ''
 
-      if(link2)
-        body += '<p>Link: <a href="'+link2+'">'+link2+'</a></p>'
+			body += '<p><a href="https://' + self.options.url + '/author?address=' + address + '">User (' + address + ') require PKOIN</a></p>'
 
-      if(link3)
-        body += '<p>Link: <a href="'+link2+'">'+link2+'</a></p>'
+			if (link1)
+				body += '<p>Link: <a href="' + link1 + '">' + link1 + '</a></p>'
 
-      body += '<p>Info: '+info+'</p>'
-      body += '<p>Email: '+email+'</p>'
+			if (link2)
+				body += '<p>Link: <a href="' + link2 + '">' + link2 + '</a></p>'
 
-      _p.body = encodeURIComponent(body)
+			if (link3)
+				body += '<p>Link: <a href="' + link2 + '">' + link2 + '</a></p>'
 
-      $.ajax({
-        type: 'POST',
-        url: 'https://pocketnet.app/Shop/AJAXMain.aspx',
-        data: _p,
-        dataType: 'json',
-        success : function(){
+			body += '<p>Info: ' + info + '</p>'
+			body += '<p>Email: ' + email + '</p>'
 
-          if (clbk)
-            clbk(true);
+			_p.body = encodeURIComponent(body)
 
-        },
+			$.ajax({
+				type: 'POST',
+				url: 'https://pocketnet.app/Shop/AJAXMain.aspx',
+				data: _p,
+				dataType: 'json',
+				success: function () {
 
-        error : function(){
+					if (clbk)
+						clbk(true);
 
-          if (clbk)
-            clbk(true);
-        }
-      });
+				},
 
-    }
-  }
+				error: function () {
 
-  self.complainletters = {
+					if (clbk)
+						clbk(true);
+				}
+			});
 
-    post: function ({
-                      i1,
-                      s3,
-                      s2
-                    }, clbk) {
-      if (!s3 || !s2 || !i1) {
-        clbk(false)
-        return
-      }
+		}
+	}
 
-      var _p = {
-        s3,
-        i1,
-        s2
-      }
+	self.complainletters = {
 
-      _p.Action || (_p.Action = 'ADDTOMAILLIST');
-      _p.TemplateID = '2000'
+		post: function ({
+			i1,
+			s3,
+			s2
+		}, clbk) {
+			if (!s3 || !s2 || !i1) {
+				clbk(false)
+				return
+			}
 
-      var body = ''
-      body += '<p><a elementsid="https://' + self.options.url + '/author?address=' + s3 + '" href="https://' + self.options.url + '/author?address=' + s3 + '">User(' + s3 + ')</a> complaint post <a elementsid="https://' + self.options.url + '/post?s=' + s2 + '" href="https://' + self.options.url + '/post?s=' + s2 + '">Post (' + s2 + ')</a></p>'
-      body += '<p>Reason: ' + i1 + '</p>'
+			var _p = {
+				s3,
+				i1,
+				s2
+			}
 
-      _p.body = encodeURIComponent(body)
+			_p.Action || (_p.Action = 'ADDTOMAILLIST');
+			_p.TemplateID = '2000'
 
-      $.ajax({
-        type: 'POST',
-        url: 'https://pocketnet.app/Shop/AJAXMain.aspx',
-        data: _p,
-        dataType: 'json',
-        success: function () {
+			var body = ''
+			body += '<p><a elementsid="https://' + self.options.url + '/author?address=' + s3 + '" href="https://' + self.options.url + '/author?address=' + s3 + '">User(' + s3 + ')</a> complaint post <a elementsid="https://' + self.options.url + '/post?s=' + s2 + '" href="https://' + self.options.url + '/post?s=' + s2 + '">Post (' + s2 + ')</a></p>'
+			body += '<p>Reason: ' + i1 + '</p>'
 
+			_p.body = encodeURIComponent(body)
 
-          if (clbk)
-            clbk(true);
+			$.ajax({
+				type: 'POST',
+				url: 'https://pocketnet.app/Shop/AJAXMain.aspx',
+				data: _p,
+				dataType: 'json',
+				success: function () {
 
-        },
 
-        error: function () {
+					if (clbk)
+						clbk(true);
 
-          if (clbk)
-            clbk(true);
-        }
-      });
-    },
-    user : function({
-                      address1,
-                      address2,
-                      email,
-                      reason
-                    }, clbk){
+				},
 
-      if(!address1 || !address2 || !reason){
-        clbk(false)
+				error: function () {
 
-        return
-      }
+					if (clbk)
+						clbk(true);
+				}
+			});
+		},
+		user: function ({
+			address1,
+			address2,
+			email,
+			reason
+		}, clbk) {
 
-      var _p = {
-        address1 : address1,
-        address2 : address2,
-        email : email || ''
-      }
+			if (!address1 || !address2 || !reason) {
+				clbk(false)
 
-      _p.Action || (_p.Action = 'ADDTOMAILLIST');
-      _p.TemplateID = '2000'
+				return
+			}
 
-      var body = ''
-      body += '<p><a href="https://'+self.options.url+'/author?address='+address1+'">User('+address1+')</a> complaint another <a href="https://'+self.options.url+'/author?address='+address2+'">user('+address2+')</a></p>'
-      body += '<p>Reason: '+reason+'</p>'
+			var _p = {
+				address1: address1,
+				address2: address2,
+				email: email || ''
+			}
 
-      _p.body = encodeURIComponent(body)
+			_p.Action || (_p.Action = 'ADDTOMAILLIST');
+			_p.TemplateID = '2000'
 
-      $.ajax({
-        type: 'POST',
-        url: 'https://pocketnet.app/Shop/AJAXMain.aspx',
-        data: _p,
-        dataType: 'json',
-        success : function(){
+			var body = ''
+			body += '<p><a href="https://' + self.options.url + '/author?address=' + address1 + '">User(' + address1 + ')</a> complaint another <a href="https://' + self.options.url + '/author?address=' + address2 + '">user(' + address2 + ')</a></p>'
+			body += '<p>Reason: ' + reason + '</p>'
 
+			_p.body = encodeURIComponent(body)
 
-          if (clbk)
-            clbk(true);
+			$.ajax({
+				type: 'POST',
+				url: 'https://pocketnet.app/Shop/AJAXMain.aspx',
+				data: _p,
+				dataType: 'json',
+				success: function () {
 
-        },
 
-        error : function(){
+					if (clbk)
+						clbk(true);
 
-          if (clbk)
-            clbk(true);
-        }
-      });
+				},
 
-    },
-    common : function({address1, reason, email},  clbk){
-      if(!address1 || !reason){
-        clbk(false)
+				error: function () {
 
-        return
-      }
+					if (clbk)
+						clbk(true);
+				}
+			});
 
-      var _p = {
-        address1 : address1,
-        email : email
-      }
+		},
+		common: function ({ address1, reason, email }, clbk) {
+			if (!address1 || !reason) {
+				clbk(false)
 
-      _p.Action || (_p.Action = 'ADDTOMAILLIST');
-      _p.TemplateID = '2000'
+				return
+			}
 
-      var body = ''
-      body += '<p>Common complaint</p>'
+			var _p = {
+				address1: address1,
+				email: email
+			}
 
-      body += '<p>Reason: '+reason+'</p>'
+			_p.Action || (_p.Action = 'ADDTOMAILLIST');
+			_p.TemplateID = '2000'
 
-      _p.body = encodeURIComponent(body)
+			var body = ''
+			body += '<p>Common complaint</p>'
 
-      $.ajax({
-        type: 'POST',
-        url: 'https://pocketnet.app/Shop/AJAXMain.aspx',
-        data: _p,
-        dataType: 'json',
-        success : function(){
+			body += '<p>Reason: ' + reason + '</p>'
 
-          if (clbk)
-            clbk(true);
+			_p.body = encodeURIComponent(body)
 
-        },
+			$.ajax({
+				type: 'POST',
+				url: 'https://pocketnet.app/Shop/AJAXMain.aspx',
+				data: _p,
+				dataType: 'json',
+				success: function () {
 
-        error : function(){
+					if (clbk)
+						clbk(true);
 
-          if (clbk)
-            clbk(true);
-        }
-      });
-    },
-    room : function({address1, roomid, reason}, clbk){
-      if(!address1 || !roomid || !reason){
-        clbk(false)
+				},
 
-        return
-      }
+				error: function () {
 
-      var _p = {
-        address1 : address1,
-        roomid : roomid
-      }
+					if (clbk)
+						clbk(true);
+				}
+			});
+		},
+		room: function ({ address1, roomid, reason }, clbk) {
+			if (!address1 || !roomid || !reason) {
+				clbk(false)
 
-      _p.Action || (_p.Action = 'ADDTOMAILLIST');
-      _p.TemplateID = '2000'
+				return
+			}
 
-      var body = ''
-      body += '<p><a elementsid="https://'+self.options.url+'/author?address='+address1+'" href="https://'+self.options.url+'/author?address='+address1+'">User('+address1+')</a> complaint room ('+roomid+')</a></p>'
+			var _p = {
+				address1: address1,
+				roomid: roomid
+			}
 
-      body += '<p>Reason: '+reason+'</p>'
+			_p.Action || (_p.Action = 'ADDTOMAILLIST');
+			_p.TemplateID = '2000'
 
-      _p.body = encodeURIComponent(body)
+			var body = ''
+			body += '<p><a elementsid="https://' + self.options.url + '/author?address=' + address1 + '" href="https://' + self.options.url + '/author?address=' + address1 + '">User(' + address1 + ')</a> complaint room (' + roomid + ')</a></p>'
 
-      $.ajax({
-        type: 'POST',
-        url: 'https://pocketnet.app/Shop/AJAXMain.aspx',
-        data: _p,
-        dataType: 'json',
-        success : function(){
+			body += '<p>Reason: ' + reason + '</p>'
 
-          if (clbk)
-            clbk(true);
+			_p.body = encodeURIComponent(body)
 
-        },
+			$.ajax({
+				type: 'POST',
+				url: 'https://pocketnet.app/Shop/AJAXMain.aspx',
+				data: _p,
+				dataType: 'json',
+				success: function () {
 
-        error : function(){
+					if (clbk)
+						clbk(true);
 
-          if (clbk)
-            clbk(true);
-        }
-      });
-    }
+				},
 
-  }
+				error: function () {
 
-  self.relations = {};
+					if (clbk)
+						clbk(true);
+				}
+			});
+		}
 
-  self.backmap = {
+	}
 
+	self.relations = {};
 
-    index : {
-      href : 'index',
-      childrens : ['author', 'chat', 's', 'share', 'userpage'],
-    },
+	self.backmap = {
 
-    s : {
-      href : 's',
-      childrens : ['author', 'chat', 's', 'share','userpage']
-    },
 
-    author : {
-      href : 'author',
-      childrens : ['author', 's', 'chat', 'share', 'userpage', 'post']
-    },
+		index: {
+			href: 'index',
+			childrens: ['author', 'chat', 's', 'share', 'userpage'],
+		},
 
-    userpage : {
-      href : 'userpage',
-      childrens : ['userpage', 'share', 'author', 'post', 'authorization', 'registration', 'pkview']
-    }
+		s: {
+			href: 's',
+			childrens: ['author', 'chat', 's', 'share', 'userpage']
+		},
 
-  }
+		author: {
+			href: 'author',
+			childrens: ['author', 's', 'chat', 'share', 'userpage', 'post']
+		},
 
-  if(self.curation()){
-    delete self.backmap.index
-  }
+		userpage: {
+			href: 'userpage',
+			childrens: ['userpage', 'share', 'author', 'post', 'authorization', 'registration', 'pkview']
+		}
 
-  self.options.backmap = self.backMap
+	}
 
-  var prepareMap = function(){
+	if (self.curation()) {
+		delete self.backmap.index
+	}
 
-    _.each(self.map, function(m, id){
-      m.id = id;
-    })
+	self.options.backmap = self.backMap
 
-  }
+	var prepareMap = function () {
 
-  if (typeof window != 'undefined')
-    self.options.address = window.location.protocol + "//" + window.location.host;
+		_.each(self.map, function (m, id) {
+			m.id = id;
+		})
 
+	}
 
-  self.preapi = function(){
+	if (typeof window != 'undefined')
+		self.options.address = window.location.protocol + "//" + window.location.host;
 
-    if(self.preapied) return
+	var acceleration = function () {
 
-    self.api = new Api(self)
-    self.api.initIf()
+		console.log("WAIT USE")
 
-    self.localization = new Localization(self);
-    self.localization.init()
+		
 
-    self.preapied = true
+		self.api.wait.ready('use', 1000).then(r => {
 
-  }
 
-  var newObjects = function(p){
+			var canuse = self.api.ready.use()
 
-    self.settings = new settingsLocalstorage(self);
-    self.nav = new Nav(self);
+			console.log("CAN USE", canuse)
 
-    self.ajax = new AJAX(self.options);
-    self.user = new User(self);
-    self.ajax.set.user(self.user);
+			if (canuse) {
 
-    self.platform = new Platform(self, self.options.listofnodes);
+				var stateAdresses = []
+				var infoAdresses = []
+				var share = ''
 
-    self.imageUploader = new ImageUploader(self);
+				var hrefParameters = parameters()
 
-    self.options.platform = self.platform
+				try {
+					var ua = localStorage['useraddress'] || ''
 
-    self.mobile.keyboard.style()
+					stateAdresses.push(ua)
+					infoAdresses.push(ua)
+				} catch (e) { }
 
-    self.gifResizer = new resizeGif(self)
+				infoAdresses.push(hrefParameters.address || '')
 
-    if (self.ref)
-      self.platform.sdk.users.addressByName(self.ref, function(r){
-        if(r){
-          self.setref(r)
-          /*self.ref = r;
-          localStorage['ref'] = self.ref*/
-        }
+				share = hrefParameters.v || hrefParameters.s || hrefParameters.p || hrefParameters.i || ''
 
-      })
 
-    self.nav.dynamic = function(p, clbk){
+				stateAdresses = _.filter(stateAdresses, (s) => s)
+				infoAdresses = _.filter(infoAdresses, (s) => s)
 
+				console.log('stateAdresses', stateAdresses, infoAdresses, share)
 
-      self.platform.sdk.users.addressByName((p.href), function(r){
+				if (share){
+					self.psdk.share.load([share]).then(() => {
+						console.log('shareGet')
+					}).catch(e => {
+						console.error(e)
+					})
+				}
 
-        console.log("R", r)
+				if (stateAdresses.length) {
 
-        if (r){
-          if (clbk)
-            clbk(null, {
+					self.psdk.userState.load(stateAdresses).then(() => {
+						console.log('userStateGet')
+					}).catch(e => {
+						console.error(e)
+					})
 
-              id : 'author',
-              extra : {
-                address : r
-              }
+				}
 
-            })
-        }
-        else{
-          if (clbk) clbk('notfound')
-        }
+				if (infoAdresses.length) {
 
-      })
+					self.psdk.userInfo.load(infoAdresses).then(() => {
+						console.log('userInfoGet')
+					}).catch(e => {
+						console.error(e)
+					})
 
-    }
+				}
 
-  }
+				
 
-  self.module = function(id){
+			}
+		})
+	}
 
-    var checkedId = deep(self, 'map.' + id + ".id");
 
-    var module = null;
+	self.preapi = function () {
 
-    if (checkedId)
+		if (self.preapied) return
 
-      module = deep(self, 'modules.' + checkedId + ".module") || null;
+		self.api = new Api(self)
+		self.api.initIf().then(() => {
+			console.log('acceleration')
+			/// acceleration
+			acceleration()
+		})
 
-    return module;
-  }
+		self.localization = new Localization(self);
+		self.localization.init()
 
-  self.initTest = function(mnemokey, clbk,){
-    if (typeof localStorage == 'undefined') localStorage = {};
+		self.Actions = new Actions(self, self.api)
+		self.psdk = new pSDK({ app: self, api: self.api, actions: self.Actions })
+		console.log("INIT DB")
 
-    prepareMap();
+		var rt = performance.now()
 
-    newObjects();
+		self.psdk.preInitIndexedDb().then(() => {
+			console.log("DBINITED",  performance.now() - rt)
+		})
 
-    self.platform.nodeid = 0;
+		self.Actions.psdk = self.psdk
 
-    self.user.setKeysPair(self.user.keysFromMnemo(mnemokey));
+		
 
-    self.user.isState(function(state){
 
-      self.localization.init(function(){
 
-        self.platform.prepare(function(){
-          if (clbk)
-            clbk(state)
-        })
+		self.preapied = true
 
-      })
 
 
-    })
-  }
+	}
 
-  self.initTestFromPrivate = function(_private, clbk,){
-    if (typeof localStorage == 'undefined') localStorage = {};
+	var newObjects = function (p) {
 
-    prepareMap();
+		self.settings = new settingsLocalstorage(self);
+		self.nav = new Nav(self);
 
-    newObjects();
+		self.ajax = new AJAX(self.options);
+		self.user = new User(self);
+		self.ajax.set.user(self.user);
 
-    self.platform.nodeid = 0;
+		self.platform = new Platform(self, self.options.listofnodes);
 
-    self.user.setKeysPairFromPrivate(_private);
+		self.imageUploader = new ImageUploader(self);
 
-    self.user.isState(function(state){
+		self.options.platform = self.platform
 
-      self.localization.init(function(){
+		self.mobile.keyboard.style()
 
-        self.platform.prepare(function(){
-          if (clbk)
-            clbk(state)
-        })
+		self.gifResizer = new resizeGif(self)
 
-      })
+		if (self.ref)
+			self.platform.sdk.users.addressByName(self.ref, function (r) {
+				if (r) {
+					self.setref(r)
+					/*self.ref = r;
+					localStorage['ref'] = self.ref*/
+				}
 
+			})
 
-    })
-  }
+		self.nav.dynamic = function (p, clbk) {
 
-  self.showuikeysfirstloading = function(){
 
-    self.user.isState(function(state){
+			self.platform.sdk.users.addressByName((p.href), function (r) {
 
-      if(state){
+				console.log("R", r)
 
-        self.user.usePeertube = self.platform.sdk.usersettings.meta.enablePeertube ? self.platform.sdk.usersettings.meta.enablePeertube.value : false;
+				if (r) {
+					if (clbk)
+						clbk(null, {
 
+							id: 'author',
+							extra: {
+								address: r
+							}
 
-        if (self.platform.sdk.registrations.showprivate()){
-          self.platform.ui.showmykey({
-            showsavelabel : true
-          })
-        }
-      }
+						})
+				}
+				else {
+					if (clbk) clbk('notfound')
+				}
 
-    })
-  }
+			})
 
-  self.initvideodb = function(){
+		}
 
+	}
 
+	self.module = function (id) {
 
-    if(typeof VideoTransport != 'undefined'){
+		var checkedId = deep(self, 'map.' + id + ".id");
 
-      self.videotransport = new VideoTransport(self, electron ? electron.ipcRenderer : null)
-      self.videotransport.init()
-    }
+		var module = null;
 
-  }
+		if (checkedId)
 
-  self.init = function(p){
+			module = deep(self, 'modules.' + checkedId + ".module") || null;
 
-    self.boost = !(window.cordova && isios());
+		return module;
+	}
 
-    if (navigator.webdriver && !self.test && !parameters().webdrivertest) return
+	self.initTest = function (mnemokey, clbk,) {
+		if (typeof localStorage == 'undefined') localStorage = {};
 
-    if (typeof localStorage == 'undefined')
-      localStorage = {};
+		prepareMap();
 
-    if(!p) p = {};
+		newObjects();
 
-    p.nav || 		(p.nav = {})
-    p.nav.clbk || 	(p.nav.clbk = self.initClbk || null)
+		self.platform.nodeid = 0;
 
-    prepareMap();
+		self.user.setKeysPair(self.user.keysFromMnemo(mnemokey));
 
-    self.options.fingerPrint = hexEncode('fakefingerprint');
+		self.user.isState(function (state) {
 
-    self.initvideodb()
+			self.localization.init(function () {
 
-    
+				self.platform.prepare(function () {
+					if (clbk)
+						clbk(state)
+				})
 
-    self.localization.init(function(){
+			})
 
-      newObjects(p);
 
-      lazyActions([
-        self.platform.prepare
-      ], function(){
+		})
+	}
 
-        retry(function () {
-          return typeof linkify != 'undefined'
-        }, function () {
-          if(typeof linkify != 'undefined'){
-            linkify.registerCustomProtocol('pocketnet')
-            linkify.registerCustomProtocol('bastyon')
-          }
-        }, 2000)
+	self.initTestFromPrivate = function (_private, clbk,) {
+		if (typeof localStorage == 'undefined') localStorage = {};
 
+		prepareMap();
 
-        self.realtime();
+		newObjects();
 
-        // TODO (brangr): DEBUG!
-        //p.nav.href = "userpage?id=system16"
-        if(!_OpenApi)
-          self.nav.init(p.nav, function(){
+		self.platform.nodeid = 0;
 
-            if (typeof hideSplashScreen != 'undefined'){
-              hideSplashScreen();
-            }
-            else{
-              $('#splashScreen').remove()
-            }
-          });
+		self.user.setKeysPairFromPrivate(_private);
 
-        if (p.clbk)
-          p.clbk();
+		self.user.isState(function (state) {
 
-        if(!_OpenApi)
-          self.showuikeysfirstloading()
-        else{
-          $('#splashScreen').remove()
-        }
+			self.localization.init(function () {
 
+				self.platform.prepare(function () {
+					if (clbk)
+						clbk(state)
+				})
 
+			})
 
-        self.mobile.update.needmanagecheck().then(r => {
-          if (r){
-            self.mobile.update.hasupdatecheck()
-          }
 
-        })
+		})
+	}
 
+	self.showuikeysfirstloading = function () {
 
+		self.user.isState(function (state) {
 
-      })
+			if (state) {
 
-    })
+				self.user.usePeertube = self.platform.sdk.usersettings.meta.enablePeertube ? self.platform.sdk.usersettings.meta.enablePeertube.value : false;
 
-    self.mobile.inputs.init()
-    self.mobile.reload.initparallax()
-  
-    /**
-     * Launch Shadow Popups located in popups/index.js
-     * all conditions of appearing contains each popup
-     * i.e. self-checking for android and self-checking
-     * for desktop popup before we had created popup
-     * conditional checking in appear method of instance
-     */
-    if (typeof initShadowPopups === 'function') initShadowPopups()
-  }
 
-  self.reload = function(p){
-    if(!p) p = {};
+				if (self.platform.sdk.registrations.showprivate()) {
+					self.platform.ui.showmykey({
+						showsavelabel: true
+					})
+				}
+			}
 
-    p.nav || (p.nav = {})
+		})
+	}
 
+	self.initvideodb = function () {
 
-    if(typeof p.nav.reload == 'undefined')
-      p.nav.reload = true;
 
-    if(p.href) p.nav.href = p.href;
-    if(p.history) p.nav.history = p.history;
-    if(p.current) p.nav.href = self.nav.get.href()
 
-    if (typeof _Electron != 'undefined' && _Electron) {
-      p.nav.href = 'index'
-    }
+		if (typeof VideoTransport != 'undefined') {
 
-    self.destroyModules();
+			self.videotransport = new VideoTransport(self, electron ? electron.ipcRenderer : null)
+			self.videotransport.init()
+		}
 
-    self.user.isState(function(s){
+	}
 
-      p.nav.clbk = p.clbk;
+	self.init = function (p) {
 
-      if(typeof p.nav.href == 'function') p.nav.href = p.nav.href()
+		self.boost = !(window.cordova && isios());
 
-      self.nav.init(p.nav);
+		if (navigator.webdriver && !self.test && !parameters().webdrivertest) return
 
-    })
-  }
+		if (typeof localStorage == 'undefined')
+			localStorage = {};
 
-  self.reloadModules = function(clbk){
-    self.destroyModules();
+		if (!p) p = {};
 
-    self.user.isState(function(){
+		p.nav || (p.nav = {})
+		p.nav.clbk || (p.nav.clbk = self.initClbk || null)
 
-      var mp = _.filter(self.map, function(mobj, i){
+		prepareMap();
 
-        var m = self.modules[i]
+		self.options.fingerPrint = hexEncode('fakefingerprint');
 
-        if (m && m.module.inited && m.module.authclbk){
-          m.module.authclbk()
-        }
+		self.initvideodb()
 
-        if (m && m.module.inited && m.module.restart && (mobj.reload && !mobj.now) ) {
-          m.module.restart();
-        }
 
-        if (m && mobj.now) {
-          //m.module.restart();
 
-          return true;
-        }
-      })
+		self.localization.init(function () {
 
-      self.nav.api.ini(function(){
-        if (clbk)
-          clbk()
-      }, mp)
+			newObjects(p);
 
+			lazyActions([
+				self.platform.prepare
+			], function () {
 
-    })
-  }
+				retry(function () {
+					return typeof linkify != 'undefined'
+				}, function () {
+					if (typeof linkify != 'undefined') {
+						linkify.registerCustomProtocol('pocketnet')
+						linkify.registerCustomProtocol('bastyon')
+					}
+				}, 2000)
 
-  self.reloadLight = function(clbk){
 
-    self.reloadModules(function(){
-      if (clbk)
-        clbk();
-    })
+				self.realtime();
 
-  }
+				// TODO (brangr): DEBUG!
+				//p.nav.href = "userpage?id=system16"
+				if (!_OpenApi)
+					self.nav.init(p.nav, function () {
 
-  self.chatposition = function(ab){
-    var attr = ab ? 'above' : 'under'
+						if (typeof hideSplashScreen != 'undefined') {
+							hideSplashScreen();
+						}
+						else {
+							$('#splashScreen').remove()
+						}
+					});
 
-    self.el.html.attr('chatposition', attr)
-  }
+				if (p.clbk)
+					p.clbk();
 
-  self.deviceReadyInit = function(p){
+				if (!_OpenApi)
+					self.showuikeysfirstloading()
+				else {
+					$('#splashScreen').remove()
+				}
 
-    self.el = {
-      camera : 		$('#camera'),
-      content : 		$('#content'),
-      app : 			$('#application'),
-      header : 		$('#headerWrapper'),
-      menu : 			$('#menuWrapper'),
-      toppanel : 		$('#panelWrapper'),
-      navigation : 	$('#navigationWrapper'),
-      footer : 		$('#footerWrapper'),
-      chats : 		$('.chats'),
-      html : 			$('html'),
-      window : 		$(window),
-      windows : 		$('#windowsContainer'),
-      electronnav : 	$('#electronnavContainer'),
-      preloader : 	$('#globalpreloader'),
-      topsmallpreloader : 	$('#topsmallpreloader'),
-    };
 
 
+				self.mobile.update.needmanagecheck().then(r => {
+					if (r) {
+						self.mobile.update.hasupdatecheck()
+					}
 
-    if (self.test){
-      $('html').addClass('testpocketnet') /// bstn
-    }
+				})
 
-    initevents()
 
-    moment.locale(self.localization.key)
 
-    if(typeof window.cordova != 'undefined')
-    {
-      document.addEventListener('deviceready', function(){
+			})
 
-        self.el.html.addClass('cordova')
+		})
 
-        if(self.curation()){
-          self.el.html.addClass('curation')
-        }
+		self.mobile.inputs.init()
+		self.mobile.reload.initparallax()
 
-        if (window.cordova && !isMobile()){
-          self.el.html.addClass('tablet')
-        }
+		/**
+		 * Launch Shadow Popups located in popups/index.js
+		 * all conditions of appearing contains each popup
+		 * i.e. self-checking for android and self-checking
+		 * for desktop popup before we had created popup
+		 * conditional checking in appear method of instance
+		 */
+		if (typeof initShadowPopups === 'function') initShadowPopups()
+	}
 
+	self.reload = function (p) {
+		if (!p) p = {};
 
-        if(isTablet() && !isMobile()) baseorientation = null
+		p.nav || (p.nav = {})
 
-        self.mobile.screen.lock()
-        if (navigator.splashscreen) navigator.splashscreen.hide();
 
-        p || (p = {});
+		if (typeof p.nav.reload == 'undefined')
+			p.nav.reload = true;
 
-        p.clbk = function(){
+		if (p.href) p.nav.href = p.href;
+		if (p.history) p.nav.history = p.history;
+		if (p.current) p.nav.href = self.nav.get.href()
 
-          self.appready = true
+		if (typeof _Electron != 'undefined' && _Electron) {
+			p.nav.href = 'index'
+		}
 
-          
-        }
+		self.destroyModules();
 
-        self.mobile.pip.init()
-        self.mobile.keyboard.init()
-        self.mobile.safearea()
+		self.user.isState(function (s) {
 
-        if (window.Keyboard && window.Keyboard.disableScroll){
-          window.Keyboard.disableScroll(false)
-        }
+			p.nav.clbk = p.clbk;
 
-        if (cordova.plugins && cordova.plugins.backgroundMode)
-          cordova.plugins.backgroundMode.on('activate', function() {
-            cordova.plugins.backgroundMode.disableWebViewOptimizations();
-          });
+			if (typeof p.nav.href == 'function') p.nav.href = p.nav.href()
 
-        self.init(p)
+			self.nav.init(p.nav);
 
-      }, false);
-    }
-    else
-    {
+		})
+	}
 
-      self.mobile.keyboard.init()
-      self.mobile.safearea()
-      self.init(p);
+	self.reloadModules = function (clbk) {
+		self.destroyModules();
 
-      setTimeout(function(){
-        self.appready = true
+		self.user.isState(function () {
 
+			var mp = _.filter(self.map, function (mobj, i) {
 
-      }, 2000)
-    }
+				var m = self.modules[i]
 
+				if (m && m.module.inited && m.module.authclbk) {
+					m.module.authclbk()
+				}
 
-  }
+				if (m && m.module.inited && m.module.restart && (mobj.reload && !mobj.now)) {
+					m.module.restart();
+				}
 
-  self.destroyModules = function(){
-    _.each(self.modules, function(module){
-      if (module.module.inited) {
-        if (module.module.destroy)
-          module.module.destroy();
-      }
+				if (m && mobj.now) {
+					//m.module.restart();
 
-    })
-  }
+					return true;
+				}
+			})
 
-  self.stopModules = function(){
-    _.each(self.modules, function(module){
+			self.nav.api.ini(function () {
+				if (clbk)
+					clbk()
+			}, mp)
 
-      if (module.module.inited) {
-        module.module.stop();
-      }
 
-    })
-  }
+		})
+	}
 
-  self.destroy = function(){
+	self.reloadLight = function (clbk) {
 
-    self.destroyModules();
+		self.reloadModules(function () {
+			if (clbk)
+				clbk();
+		})
 
-    self.modules = {};
-    self.ajax = null;
+	}
 
-    self.nav = null;
-  }
+	self.chatposition = function (ab) {
+		var attr = ab ? 'above' : 'under'
 
-  self.renewModules = function(map){}
-  self.logger = function(Function, Message){}
+		self.el.html.attr('chatposition', attr)
+	}
 
-  self.Logger = new FrontendLogger(navigator.userAgent, self);
+	self.deviceReadyInit = function (p) {
 
-  self.scrollRemoved = 0;
-  self.scrollTop = 0
-  self.lastScrollTop = 0
+		self.el = {
+			camera: $('#camera'),
+			content: $('#content'),
+			app: $('#application'),
+			header: $('#headerWrapper'),
+			menu: $('#menuWrapper'),
+			toppanel: $('#panelWrapper'),
+			navigation: $('#navigationWrapper'),
+			footer: $('#footerWrapper'),
+			chats: $('.chats'),
+			html: $('html'),
+			window: $(window),
+			windows: $('#windowsContainer'),
+			electronnav: $('#electronnavContainer'),
+			preloader: $('#globalpreloader'),
+			topsmallpreloader: $('#topsmallpreloader'),
+		};
 
-  self.height = 0
-  self.width = 0
 
-  self.fullscreenmode = false
-  self.pseudofullscreenmode = false
-  self.playingvideo = null
-  self.pipwindow = null
 
-  var blockScroll = false
-  var scrollmodechanging = false
-  var optimizeTimeout = null
+		if (self.test) {
+			$('html').addClass('testpocketnet') /// bstn
+		}
 
-  self.actions = {
-    closepip : function(){
-      if (self.pipwindow) {
-        self.pipwindow.container.close()
-        self.pipwindow = null
-      }
-    },
-    pipwindow : function(p){
+		initevents()
 
-      if (self.pipwindow) {
-        self.pipwindow.container.close()
-        self.pipwindow = null
-      }
+		moment.locale(self.localization.key)
 
-      if(!p) {
-        return
-      }
+		if (typeof window.cordova != 'undefined') {
+			document.addEventListener('deviceready', function () {
 
-      var clbk = p.clbk
+				self.el.html.addClass('cordova')
 
-      p.open = true
-      p.pip = true
-      p.inWnd = true
-      p.history = false
-      p.open = true
-      p.independent = true
-      p.eid = p.mid = makeid()
+				if (self.curation()) {
+					self.el.html.addClass('curation')
+				}
 
-      if (p.essenseData){
-        p.essenseData.eid = p.eid
-      }
+				if (window.cordova && !isMobile()) {
+					self.el.html.addClass('tablet')
+				}
 
-      p.clbk = function(c,b){
-        self.pipwindow = b
 
-        if(clbk) clbk(c,b)
-      }
+				if (isTablet() && !isMobile()) baseorientation = null
 
-      p.onclose = function(){
-        self.pipwindow = null
-      }
+				self.mobile.screen.lock()
+				if (navigator.splashscreen) navigator.splashscreen.hide();
 
+				p || (p = {});
 
-      self.nav.api.load(p)
+				p.clbk = function () {
 
-    },
+					self.appready = true
 
-    emoji : function(text){
-      
-      //if(self.mobileview) return text
 
-      return joypixels.toImage(text)
-    },
+				}
 
-    restore : function(){
+				self.mobile.pip.init()
+				self.mobile.keyboard.init()
+				self.mobile.safearea()
 
-      return
+				if (window.Keyboard && window.Keyboard.disableScroll) {
+					window.Keyboard.disableScroll(false)
+				}
 
-      if (optimizeTimeout) clearTimeout(optimizeTimeout)
+				if (cordova.plugins && cordova.plugins.backgroundMode)
+					cordova.plugins.backgroundMode.on('activate', function () {
+						cordova.plugins.backgroundMode.disableWebViewOptimizations();
+					});
 
-      optimizeTimeout = null
+				self.init(p)
 
-      /*self.el.content.css('width', '')
-      self.el.content.css('height', '')
-      self.el.content.css('contain', '')*/
-      /*self.el.footer.css('display', '')
-      self.el.content.css('display', '')*/
-    },
+			}, false);
+		}
+		else {
 
-    optimize : function(){
+			self.mobile.keyboard.init()
+			self.mobile.safearea()
+			self.init(p);
 
+			setTimeout(function () {
+				self.appready = true
 
-      return
 
-      if (optimizeTimeout) clearTimeout(optimizeTimeout)
+			}, 2000)
+		}
 
-      optimizeTimeout = setTimeout(function(){
-        /*self.el.content.css('width', self.width)
-        self.el.content.css('height', self.height)
-        self.el.content.css('contain', 'strict')*/
-        /*self.el.content.css('display', 'none')
-        self.el.footer.css('display', 'none')*/
-      }, 300)
 
+	}
 
-    },
+	self.destroyModules = function () {
+		_.each(self.modules, function (module) {
+			if (module.module.inited) {
+				if (module.module.destroy)
+					module.module.destroy();
+			}
 
-    playingvideo : function(v){
+		})
+	}
 
-      if (self.playingvideo && self.playingvideo.playing){
+	self.stopModules = function () {
+		_.each(self.modules, function (module) {
 
-        try{
-          self.playingvideo.pause()
-        }
-        catch(e){
+			if (module.module.inited) {
+				module.module.stop();
+			}
 
-        }
+		})
+	}
 
-      }
+	self.destroy = function () {
 
-      self.playingvideo = v
+		self.destroyModules();
 
-      if(self.playingvideo){
+		self.modules = {};
+		self.ajax = null;
 
-        setTimeout(function(){
+		self.nav = null;
+	}
 
-          var scrollTop = self.actions.getScroll()
+	self.renewModules = function (map) { }
+	self.logger = function (Function, Message) { }
 
-          if (self.playingvideo && self.playingvideo.playing){
+	self.Logger = new FrontendLogger(navigator.userAgent, self);
 
-            if (scrollTop >= 65) self.el.html.addClass('scrollmodedown')
+	self.scrollRemoved = 0;
+	self.scrollTop = 0
+	self.lastScrollTop = 0
 
-          }
+	self.height = 0
+	self.width = 0
 
-        }, 1000)
-      }
+	self.fullscreenmode = false
+	self.pseudofullscreenmode = false
+	self.playingvideo = null
+	self.pipwindow = null
 
-      setTimeout(function(){
+	var blockScroll = false
+	var scrollmodechanging = false
+	var optimizeTimeout = null
 
-        var duration = deep(self.playingvideo, 'embed.details.duration') || 0
+	self.actions = {
+		closepip: function () {
+			if (self.pipwindow) {
+				self.pipwindow.container.close()
+				self.pipwindow = null
+			}
+		},
+		pipwindow: function (p) {
 
-        self.mobile.backgroundMode(self.playingvideo && self.playingvideo.playing && (!duration || duration > 60)/* && self.platform.sdk.videos.volume*/)
+			if (self.pipwindow) {
+				self.pipwindow.container.close()
+				self.pipwindow = null
+			}
 
-      }, 1000)
+			if (!p) {
+				return
+			}
 
+			var clbk = p.clbk
 
-    },
+			p.open = true
+			p.pip = true
+			p.inWnd = true
+			p.history = false
+			p.open = true
+			p.independent = true
+			p.eid = p.mid = makeid()
 
-    up : function(scrollTop, el, time){
-      _scrollTop(scrollTop, el, time)
-    },
+			if (p.essenseData) {
+				p.essenseData.eid = p.eid
+			}
 
-    wscroll : function(){
-      self.actions.scroll(self.scrollTop)
-    },
+			p.clbk = function (c, b) {
+				self.pipwindow = b
 
-    scrollToTop: function(){
-      self.actions.scroll(0)
-    },
+				if (clbk) clbk(c, b)
+			}
 
-    backupscroll : function(){
-      self.actions.scroll(self.lastScrollTop)
-    },
+			p.onclose = function () {
+				self.pipwindow = null
+			}
 
-    scroll : function(to){
 
-      blockScroll = true
+			self.nav.api.load(p)
 
-      self.el.window.scrollTop(to)
-      self.scrollTop = to
+		},
 
-      setTimeout(function(){
-        blockScroll = false
-      }, 100)
+		emoji: function (text) {
 
-    },
+			//if(self.mobileview) return text
 
-    getScroll : function(){
+			return joypixels.toImage(text)
+		},
 
-      var s = window.pageYOffset || document.documentElement.scrollTop;
+		restore: function () {
 
-      if(!self.fullscreenmode){
-        self.lastScrollTop = s
-      }
+			return
 
-      return s
-    },
+			if (optimizeTimeout) clearTimeout(optimizeTimeout)
 
-    offScroll : function(target){
+			optimizeTimeout = null
 
-      if(self.scrollRemoved < 0) self.scrollRemoved = 0
+			/*self.el.content.css('width', '')
+			self.el.content.css('height', '')
+			self.el.content.css('contain', '')*/
+			/*self.el.footer.css('display', '')
+			self.el.content.css('display', '')*/
+		},
 
-      self.scrollRemoved++
+		optimize: function () {
 
-      if (self.scrollRemoved > 1){
-        return false
-      }
 
-      scrollmodechanging = true
+			return
 
-      self.el.html.css('overflow', 'hidden')
+			if (optimizeTimeout) clearTimeout(optimizeTimeout)
 
-      /*if (self.mobileview && window.bodyScrollLock && target){
+			optimizeTimeout = setTimeout(function () {
+				/*self.el.content.css('width', self.width)
+				self.el.content.css('height', self.height)
+				self.el.content.css('contain', 'strict')*/
+				/*self.el.content.css('display', 'none')
+				self.el.footer.css('display', 'none')*/
+			}, 300)
 
-        window.bodyScrollLock.disableBodyScroll(target[0])
-        self.scrolltarget = target
-      }*/
 
-      //self.el.html.addClass('nooverflow')
+		},
 
-      if (window.Keyboard && window.Keyboard.disableScroll && !isios()){
-        window.Keyboard.disableScroll(true)
-      }
+		playingvideo: function (v) {
 
-      setTimeout(function(){
-        scrollmodechanging = false
-      }, 100)
+			if (self.playingvideo && self.playingvideo.playing) {
 
-      return true
+				try {
+					self.playingvideo.pause()
+				}
+				catch (e) {
 
-    },
+				}
 
-    onScroll : function(target){
+			}
 
-      if (self.scrollRemoved < 1) self.scrollRemoved = 1
+			self.playingvideo = v
 
-      if (self.scrollRemoved){
-        self.scrollRemoved--
-      }
+			if (self.playingvideo) {
 
+				setTimeout(function () {
 
+					var scrollTop = self.actions.getScroll()
 
-      if(!self.scrollRemoved){
+					if (self.playingvideo && self.playingvideo.playing) {
 
-        scrollmodechanging = true
+						if (scrollTop >= 65) self.el.html.addClass('scrollmodedown')
 
-        self.el.html.css('overflow', '')
+					}
 
-        /*if (self.mobileview && window.bodyScrollLock && self.scrolltarget){
-          window.bodyScrollLock.enableBodyScroll(self.scrolltarget[0])
-          self.scrolltarget = null
-        }*/
+				}, 1000)
+			}
 
-        ///
-        //self.el.html.removeClass('nooverflow')
-        ///
+			setTimeout(function () {
 
-        if (window.Keyboard && window.Keyboard.disableScroll && !isios()){
-          window.Keyboard.disableScroll(false)
-        }
+				var duration = deep(self.playingvideo, 'embed.details.duration') || 0
 
-        setTimeout(function(){
-          scrollmodechanging = false
-        }, 100)
-      }
+				self.mobile.backgroundMode(self.playingvideo && self.playingvideo.playing && (!duration || duration > 60)/* && self.platform.sdk.videos.volume*/)
 
-    },
+			}, 1000)
 
-  }
 
-  var initevents = function(){
+		},
 
-    self.height = self.el.window.height()
-    self.width = self.el.window.width()
+		up: function (scrollTop, el, time) {
+			_scrollTop(scrollTop, el, time)
+		},
 
-    document.documentElement.style.setProperty('--vh', `${self.height * 0.01}px`);
-    document.documentElement.style.setProperty('--keyboardheight', `0px`);
+		wscroll: function () {
+			self.actions.scroll(self.scrollTop)
+		},
 
+		scrollToTop: function () {
+			self.actions.scroll(0)
+		},
 
-    istouchstyle()
+		backupscroll: function () {
+			self.actions.scroll(self.lastScrollTop)
+		},
 
-    var showPanel = '1'
+		scroll: function (to) {
 
-    var cr = self.curation()
+			blockScroll = true
 
-    var scrolling = _.throttle(function(){
+			self.el.window.scrollTop(to)
+			self.scrollTop = to
 
-      if(!self.el.window) return
-      if (self.fullscreenmode) return
-      if (scrollmodechanging) return
-      if (self.blockScroll) return
+			setTimeout(function () {
+				blockScroll = false
+			}, 100)
 
-      var lastScrollTop = self.lastScrollTop
+		},
 
-      var scrollTop = self.actions.getScroll()
+		getScroll: function () {
 
-      _.each(self.events.scroll, function(s){
-        s(scrollTop, blockScroll)
-      })
+			var s = window.pageYOffset || document.documentElement.scrollTop;
 
+			if (!self.fullscreenmode) {
+				self.lastScrollTop = s
+			}
 
-      if(!scrollTop){
-        self.mobile.reload.initparallax()
-      }
-      else{
-        self.mobile.reload.destroyparallax()
-      }
+			return s
+		},
 
+		offScroll: function (target) {
 
+			if (self.scrollRemoved < 0) self.scrollRemoved = 0
 
-      if(self.mobileview && !cr){
+			self.scrollRemoved++
 
-        var cs = (lastScrollTop + 40 < scrollTop || lastScrollTop - 40 < scrollTop)
+			if (self.scrollRemoved > 1) {
+				return false
+			}
 
-        var scrollTopH = 900
+			scrollmodechanging = true
 
-        if(self.playingvideo) scrollTopH = 65
+			self.el.html.css('overflow', 'hidden')
 
-        if (scrollTop < scrollTopH){
+			/*if (self.mobileview && window.bodyScrollLock && target){
+	  
+			  window.bodyScrollLock.disableBodyScroll(target[0])
+			  self.scrolltarget = target
+			}*/
 
-          showPanel = '1'
+			//self.el.html.addClass('nooverflow')
 
-          if (self.el.html.hasClass('scrollmodedown')){
-            self.el.html.removeClass('scrollmodedown')
-          }
+			if (window.Keyboard && window.Keyboard.disableScroll && !isios()) {
+				window.Keyboard.disableScroll(true)
+			}
 
-          return
-        }
+			setTimeout(function () {
+				scrollmodechanging = false
+			}, 100)
 
-        if (scrollTop > scrollTopH && cs){
-          if(lastScrollTop + 40 < scrollTop){
-            showPanel = '2'
+			return true
 
-            if(!self.el.html.hasClass('scrollmodedown')){
-              self.el.html.addClass('scrollmodedown')
-              if(self.modules.menu.module) self.modules.menu.module.blursearch()
-            }
+		},
 
+		onScroll: function (target) {
 
+			if (self.scrollRemoved < 1) self.scrollRemoved = 1
 
-          }
-        }
-        else{
-          showPanel = '3'
-        }
+			if (self.scrollRemoved) {
+				self.scrollRemoved--
+			}
 
-      }
 
-    }, 100)
 
-    var dbscrolling = _.debounce(function(){
+			if (!self.scrollRemoved) {
 
+				scrollmodechanging = true
 
-      if(!self.el.window) return
-      if (self.fullscreenmode) return
-      if (scrollmodechanging) return
-      if (self.blockScroll) return
+				self.el.html.css('overflow', '')
 
-      _.each(self.events.delayedscroll, function(s){
-        s(self.lastScrollTop, blockScroll)
-      })
+				/*if (self.mobileview && window.bodyScrollLock && self.scrolltarget){
+				  window.bodyScrollLock.enableBodyScroll(self.scrolltarget[0])
+				  self.scrolltarget = null
+				}*/
 
-      if(!t && self.mobileview){
+				///
+				//self.el.html.removeClass('nooverflow')
+				///
 
-        if (showPanel == '2' && !self.el.html.hasClass('scrollmodedown')){
-          self.el.html.addClass('scrollmodedown')
-        }
+				if (window.Keyboard && window.Keyboard.disableScroll && !isios()) {
+					window.Keyboard.disableScroll(false)
+				}
 
-        if (showPanel == '3' && self.el.html.hasClass('scrollmodedown'))
-          self.el.html.removeClass('scrollmodedown')
+				setTimeout(function () {
+					scrollmodechanging = false
+				}, 100)
+			}
 
-        showPanel = '1'
-      }
+		},
 
-    }, 100)
+	}
 
-    var dbresize = _.debounce(function(){
+	var initevents = function () {
 
-      if(!self.el.window) return
-      if (self.fullscreenmode) return
-      if (self.mobile.inputs.focused) return
+		self.height = self.el.window.height()
+		self.width = self.el.window.width()
 
+		document.documentElement.style.setProperty('--vh', `${self.height * 0.01}px`);
+		document.documentElement.style.setProperty('--keyboardheight', `0px`);
 
-      var scrollTop = self.actions.getScroll(),
-        height = self.el.window.height(),
-        width = self.el.window.width();
 
-      self.height = height
-      self.width = width
+		istouchstyle()
 
-      _.each(self.events.resize, function(s){
-        s({
-          scrollTop : scrollTop,
-          height : height,
-          width : width
-        })
-      })
+		var showPanel = '1'
 
-      let vh = window.innerHeight * 0.01;
-      document.documentElement.style.setProperty('--vh', `${vh}px`);
+		var cr = self.curation()
 
-      self.blockScroll = false
+		var scrolling = _.throttle(function () {
 
-      checkTouchStyle()
+			if (!self.el.window) return
+			if (self.fullscreenmode) return
+			if (scrollmodechanging) return
+			if (self.blockScroll) return
 
-    }, 100)
+			var lastScrollTop = self.lastScrollTop
 
-    var t = false
+			var scrollTop = self.actions.getScroll()
 
-    window.addEventListener('touchstart', function(e){
-      t = true
-    })
+			_.each(self.events.scroll, function (s) {
+				s(scrollTop, blockScroll)
+			})
 
-    window.addEventListener('touchend', function(e){
-      t = false
-    })
 
-    window.addEventListener('touchcancel', function(e){
-      t = false
-    })
+			if (!scrollTop) {
+				self.mobile.reload.initparallax()
+			}
+			else {
+				self.mobile.reload.destroyparallax()
+			}
 
-    window.addEventListener('scroll', function(){
-      scrolling()
-      dbscrolling()
-    })
 
-    window.addEventListener('resize', function(){
-      self.blockScroll = true
-      dbresize()
-    })
-  }
 
-  self.events = {
-    scroll : {},
-    resize : {},
-    delayedscroll : {}
-  }
+			if (self.mobileview && !cr) {
 
-  self.loadModules = function(p){
+				var cs = (lastScrollTop + 40 < scrollTop || lastScrollTop - 40 < scrollTop)
 
-    lazyEach({
-      array : p.modules,
-      action : function(p){
+				var scrollTopH = 900
 
-        self.nav.p.open({
-          nohistory : true,
-          load : true,
-          uri : p.item,
-          success : p.success,
-          psname : true
-        })
+				if (self.playingvideo) scrollTopH = 65
 
-      },
-      each : {
-        after : p.after
-      },
-      all : {
-        success : function(){
+				if (scrollTop < scrollTopH) {
 
-          p.success(p.modules);
-        }
-      }
-    })
+					showPanel = '1'
 
-  }
+					if (self.el.html.hasClass('scrollmodedown')) {
+						self.el.html.removeClass('scrollmodedown')
+					}
 
-  self.name = self.options.name;
+					return
+				}
 
-  self.reltime = function(time){
+				if (scrollTop > scrollTopH && cs) {
+					if (lastScrollTop + 40 < scrollTop) {
+						showPanel = '2'
 
-    var value = time || new Date()
+						if (!self.el.html.hasClass('scrollmodedown')) {
+							self.el.html.addClass('scrollmodedown')
+							if (self.modules.menu.module) self.modules.menu.module.blursearch()
+						}
 
-    if ((moment().diff(value, 'days')) === 0) {
 
-      if((moment().diff(value, 'hours') < 12 ))
-        return moment(moment.utc(value).toDate()).local().fromNow();
 
-      return new Date(value).toLocaleTimeString([], {hour: '2-digit', minute: "2-digit", hour12: false})
-    }
+					}
+				}
+				else {
+					showPanel = '3'
+				}
 
-    if (moment().year() === moment(value).year())
-      return moment(value).local().format('D MMMM')
+			}
 
-    return moment(value).local().format('D MMMM YYYY')
-  }
+		}, 100)
 
-  self.realtime = function(){
+		var dbscrolling = _.debounce(function () {
 
-    if (realtimeInterval)
-      clearInterval(realtimeInterval)
 
-    realtimeInterval = setInterval(function(){
+			if (!self.el.window) return
+			if (self.fullscreenmode) return
+			if (scrollmodechanging) return
+			if (self.blockScroll) return
 
-      var realtimeelements = $('.realtime');
+			_.each(self.events.delayedscroll, function (s) {
+				s(self.lastScrollTop, blockScroll)
+			})
 
-      if(realtimeelements.length > 30 || isMobile()) return
+			if (!t && self.mobileview) {
 
-      realtimeelements.each(function(){
-        var el = $(this);
+				if (showPanel == '2' && !self.el.html.hasClass('scrollmodedown')) {
+					self.el.html.addClass('scrollmodedown')
+				}
 
-        var time = el.attr('time');
-        var utc =  el.attr('utc');
-        var _ctime = el.html();
+				if (showPanel == '3' && self.el.html.hasClass('scrollmodedown'))
+					self.el.html.removeClass('scrollmodedown')
 
-        var ctime = null;
+				showPanel = '1'
+			}
 
-        if (utc && utc == 'true'){
-          ctime = self.platform.convertUTCSSrel(time)
-        }
-        else{
-          ctime = self.reltime(new Date(time))
-        }
+		}, 100)
 
-        if(_ctime != ctime){
-          el.html(ctime)
-        }
+		var dbresize = _.debounce(function () {
 
+			if (!self.el.window) return
+			if (self.fullscreenmode) return
+			if (self.mobile.inputs.focused) return
 
 
-        el = null
+			var scrollTop = self.actions.getScroll(),
+				height = self.el.window.height(),
+				width = self.el.window.width();
 
-      })
+			self.height = height
+			self.width = width
 
-      realtimeelements = null
-    }, isMobile() ? 90000 : 30000)
+			_.each(self.events.resize, function (s) {
+				s({
+					scrollTop: scrollTop,
+					height: height,
+					width: width
+				})
+			})
 
-  }
+			let vh = window.innerHeight * 0.01;
+			document.documentElement.style.setProperty('--vh', `${vh}px`);
 
-  self.storage = {
+			self.blockScroll = false
 
-    getStorageLocation: function() {
+			checkTouchStyle()
 
-      if (!device || !cordova || !cordova.file)
-        return undefined;
+		}, 100)
 
-      return (window.cordova.file.externalDataDirectory) ? window.cordova.file.externalDataDirectory : window.cordova.file.dataDirectory;
+		var t = false
 
-    },
+		window.addEventListener('touchstart', function (e) {
+			t = true
+		})
 
-    getStorageDirectory: function() {
-      return 'internal';
-    },
+		window.addEventListener('touchend', function (e) {
+			t = false
+		})
 
-    saveFile: function(url, blob) {
+		window.addEventListener('touchcancel', function (e) {
+			t = false
+		})
 
-      if(!window.resolveLocalFileSystemURL){
-        return Promise.resolve()
-      }
+		window.addEventListener('scroll', function () {
+			scrolling()
+			dbscrolling()
+		})
 
-      return new Promise((resolve, reject) => {
-        var storageLocation = self.storage.getStorageLocation();
-        // var blob = new Blob([file], { type: "image/png" });
-        var name = $.md5(url);
+		window.addEventListener('resize', function () {
+			self.blockScroll = true
+			dbresize()
+		})
+	}
 
-        window.resolveLocalFileSystemURL(storageLocation, function (fileSystem) {
-          fileSystem.getDirectory(self.storage.getStorageDirectory(), {
-              create: true,
-              exclusive: false
-            },
-            function (directory) {
-              directory.getFile(name, { create: true, exclusive: false }, function (entry) {
-                var myFileUrl = entry.toURL();
-                entry.createWriter(function (writer) {
-                  writer.onwriteend = function () {
-                    return resolve(myFileUrl);
-                  };
-                  writer.seek(0);
-                  writer.write(blob);
-                }, function (error) {
-                  return reject(error);
-                });
-              }, function (error) {
-                return reject(error);
-              });
-            }, function (error) {
-              return reject(error);
-            });
-        }, function (evt) {
-          return reject(evt);
-        });
-      });
-    },
+	self.events = {
+		scroll: {},
+		resize: {},
+		delayedscroll: {}
+	}
 
-    loadFile: function(url) {
+	self.loadModules = function (p) {
 
-      if(!window.resolveLocalFileSystemURL){
-        return Promise.reject()
-      }
+		lazyEach({
+			array: p.modules,
+			action: function (p) {
 
-      return new Promise((resolve, reject) => {
+				self.nav.p.open({
+					nohistory: true,
+					load: true,
+					uri: p.item,
+					success: p.success,
+					psname: true
+				})
 
-        var storageLocation = self.storage.getStorageLocation();
-        var name = $.md5(url);
+			},
+			each: {
+				after: p.after
+			},
+			all: {
+				success: function () {
 
-        window.resolveLocalFileSystemURL(storageLocation, function (fileSystem) {
-          fileSystem.getDirectory(self.storage.getStorageDirectory(), {
-              create: true,
-              exclusive: false
-            },
-            function (directory) {
-              directory.getFile(name, { create: false }, function (entry) {
+					p.success(p.modules);
+				}
+			}
+		})
 
-                entry.file(function(file) {
+	}
 
-                  var reader = new FileReader();
+	self.name = self.options.name;
 
-                  reader.onloadend = function() {
+	self.reltime = function (time) {
 
-                    var blob = new Blob([new Uint8Array(this.result)], { type: file.type || "file" });
+		var value = time || new Date()
 
-                    return resolve(blob);
-                  };
+		if ((moment().diff(value, 'days')) === 0) {
 
-                  reader.readAsArrayBuffer(file);
+			if ((moment().diff(value, 'hours') < 12))
+				return moment(moment.utc(value).toDate()).local().fromNow();
 
+			return new Date(value).toLocaleTimeString([], { hour: '2-digit', minute: "2-digit", hour12: false })
+		}
 
+		if (moment().year() === moment(value).year())
+			return moment(value).local().format('D MMMM')
 
-                }, function(error) {
-                  return reject(error);
-                });
+		return moment(value).local().format('D MMMM YYYY')
+	}
 
+	self.realtime = function () {
 
-              }, function (error) {
-                return reject(error);
-              });
-            }, function (error) {
-              return reject(error);
-            });
-        }, function (evt) {
-          return reject(evt);
-        });
-      });
-    },
+		if (realtimeInterval)
+			clearInterval(realtimeInterval)
 
-    // Delete the file if it is older than the time passed as parameter
-    deleteFileIfTooOld: function(fileEntry, time) {
-      return new Promise((resolve, reject) => {
-        if (fileEntry.isFile) {
-          fileEntry.file((file) => {
-            // If file is older than the date passed as parameter
-            if (file.lastModifiedDate <= time.getTime()) {
-              // Delete the file
-              fileEntry.remove(function() {
-                return resolve();
-              }, function(error) {
-                return resolve();
-              });
-            } else
-              return resolve();
-          }, function(error) {
-            return resolve();
-          });
-        } else
-          return resolve();
-      });
-    },
+		realtimeInterval = setInterval(function () {
 
-    clearStorage: function(time) {
-      return new Promise((resolve, reject) => {
-        if (!time || !time.getTime)
-          return reject('Invalid date object');
-        var nbEntries, nbDone = 0;
-        var incrementAndCheckNbDone = function() {
-          nbDone += 1;
-          if (nbDone >= nbEntries)
-            resolve();
-        }
-        var storageLocation = self.storage.getStorageLocation();
+			var realtimeelements = $('.realtime');
 
+			if (realtimeelements.length > 30 || isMobile()) return
 
+			realtimeelements.each(function () {
+				var el = $(this);
 
-        window.resolveLocalFileSystemURL(storageLocation, function (fileSystem) {
-          fileSystem.getDirectory(self.storage.getStorageDirectory(), {
-              create: true,
-              exclusive: false
-            },
-            function (directory) {
-              var directoryReader = directory.createReader();
-              directoryReader.readEntries(function(entries) {
-                nbEntries = entries.length;
-                // For each file inside the directory
-                for (var i = 0; i < nbEntries; i++) {
-                  self.storage.deleteFileIfTooOld(entries[i], time).then(() => {
-                    incrementAndCheckNbDone();
-                  });
-                }
-              }, function(error) {
-                return reject(error);
-              });
-            }, function (error) {
-              return reject(error);
-            });
-        });
-      });
-    }
+				var time = el.attr('time');
+				var utc = el.attr('utc');
+				var _ctime = el.html();
 
-  }
+				var ctime = null;
 
-  self.mobile = {
+				if (utc && utc == 'true') {
+					ctime = self.platform.convertUTCSSrel(time)
+				}
+				else {
+					ctime = self.reltime(new Date(time))
+				}
 
-    menu : function(items){
+				if (_ctime != ctime) {
+					el.html(ctime)
+				}
 
-      var theme = 'THEME_HOLO_LIGHT'
 
-      if(self.platform.sdk.theme.current != 'white') theme = 'THEME_HOLO_DARK'
 
-      var options = {
-        'buttonLabels': items,
-        'androidTheme': window.plugins.actionsheet.ANDROID_THEMES[theme],
-        'androidEnableCancelButton' : true, // default false
-        'winphoneEnableCancelButton' : true, // default false
-        'addCancelButtonWithLabel': self.localization.e('ucancel')
-      };
+				el = null
 
-      return new Promise((resolve, reject) => {
-        window.plugins.actionsheet.show(options, (i) => {
+			})
 
-          i = i - 1
-  
-          if(i == items.length) {
-            return reject()
-          }
-  
-          resolve(i)
-        });
-      })
-      
-    },
+			realtimeelements = null
+		}, isMobile() ? 90000 : 30000)
 
-    supportimagegallery : function(){
-      return window.cordova && !isios()
-    },
+	}
 
-    safearea : function(){
-      if(window.cordova){
-        document.documentElement.style.setProperty('--app-margin-top-default', `25px`);
-        margintop = 20
-      }
-      else{
-        document.documentElement.style.setProperty('--app-margin-top-default', `0px`);
-      }
-      
-    },
+	self.storage = {
 
-    inputs : {
+		getStorageLocation: function () {
 
-      init : function(){
-        $(document).on('focus blur', 'select, textarea, input, [contenteditable="true"]', function(e){
-          if(e.type == 'focusin'){
-            self.mobile.inputs.focused = $(e.target)
-          }
+			if (!device || !cordova || !cordova.file)
+				return undefined;
 
-          if(e.type == 'focusout'){
-            self.mobile.inputs.focused = null
-          }
+			return (window.cordova.file.externalDataDirectory) ? window.cordova.file.externalDataDirectory : window.cordova.file.dataDirectory;
 
-        });
-      }
+		},
 
-    },
+		getStorageDirectory: function () {
+			return 'internal';
+		},
 
-    keyboard : {
-      height : 0,
-      lastheight : 0,
-      init : function(){
+		saveFile: function (url, blob) {
 
-        if(window.cordova){
+			if (!window.resolveLocalFileSystemURL) {
+				return Promise.resolve()
+			}
 
-          window.addEventListener('keyboardWillShow', (event) => {
+			return new Promise((resolve, reject) => {
+				var storageLocation = self.storage.getStorageLocation();
+				// var blob = new Blob([file], { type: "image/png" });
+				var name = $.md5(url);
 
-            self.mobile.keyboard.height = self.mobile.keyboard.lastheight = event.keyboardHeight
+				window.resolveLocalFileSystemURL(storageLocation, function (fileSystem) {
+					fileSystem.getDirectory(self.storage.getStorageDirectory(), {
+						create: true,
+						exclusive: false
+					},
+						function (directory) {
+							directory.getFile(name, { create: true, exclusive: false }, function (entry) {
+								var myFileUrl = entry.toURL();
+								entry.createWriter(function (writer) {
+									writer.onwriteend = function () {
+										return resolve(myFileUrl);
+									};
+									writer.seek(0);
+									writer.write(blob);
+								}, function (error) {
+									return reject(error);
+								});
+							}, function (error) {
+								return reject(error);
+							});
+						}, function (error) {
+							return reject(error);
+						});
+				}, function (evt) {
+					return reject(evt);
+				});
+			});
+		},
 
-            document.documentElement.style.setProperty('--keyboardheight', `${event.keyboardHeight}px`);
- 
-          });
+		loadFile: function (url) {
 
-          window.addEventListener('keyboardDidShow', (event) => {
-            
-          });
+			if (!window.resolveLocalFileSystemURL) {
+				return Promise.reject()
+			}
 
-          window.addEventListener('keyboardWillHide', () => {
-            document.documentElement.style.setProperty('--keyboardheight', `0px`);
+			return new Promise((resolve, reject) => {
 
-            self.mobile.keyboard.height = 0
-          });
-        }
-        else{
+				var storageLocation = self.storage.getStorageLocation();
+				var name = $.md5(url);
 
-          if(navigator.virtualKeyboard && isTablet()){
-            navigator.virtualKeyboard.overlaysContent = true;
+				window.resolveLocalFileSystemURL(storageLocation, function (fileSystem) {
+					fileSystem.getDirectory(self.storage.getStorageDirectory(), {
+						create: true,
+						exclusive: false
+					},
+						function (directory) {
+							directory.getFile(name, { create: false }, function (entry) {
 
-            navigator.virtualKeyboard.addEventListener('geometrychange', (event) => {
-              document.documentElement.style.setProperty('--keyboardheight', `${event.target.boundingRect.height}px`);
-            });
-          }
-          
-        }
+								entry.file(function (file) {
 
-        
+									var reader = new FileReader();
 
-      },
+									reader.onloadend = function () {
 
-      style : function(){
-        if(window.cordova && typeof Keyboard != 'undefined'){
-          Keyboard.setKeyboardStyle(self.platform.sdk.theme.current == 'white' ? 'light' : 'dark')
-        }
-        
-      }
-    },
+										var blob = new Blob([new Uint8Array(this.result)], { type: file.type || "file" });
 
-    pip : {
+										return resolve(blob);
+									};
 
-      element : null,
-      enabled : false,
-      loading : false,
-      checkIfHere : function(){
-        if (window.PictureInPicture && window.PictureInPicture.leavePip){
-          window.PictureInPicture.isPip(function(res){
+									reader.readAsArrayBuffer(file);
 
-            if(res == 'true'){
-              window.PictureInPicture.leavePip()
-            }
-          })
-        }
-      },
-      enable : function(htmlElement) {
 
-        if(self.mobile.pip.loading){
-          return Promise.resolve()
-        }
 
-        var aspectratio = 1
+								}, function (error) {
+									return reject(error);
+								});
 
-        if (!window.PictureInPicture || !window.PictureInPicture.enter) return Promise.resolve();
 
-        if (htmlElement){
-          aspectratio = htmlElement.height() / htmlElement.width()
-        }
+							}, function (error) {
+								return reject(error);
+							});
+						}, function (error) {
+							return reject(error);
+						});
+				}, function (evt) {
+					return reject(evt);
+				});
+			});
+		},
 
-        var width = 400, height = width * (aspectratio || 1);
+		// Delete the file if it is older than the time passed as parameter
+		deleteFileIfTooOld: function (fileEntry, time) {
+			return new Promise((resolve, reject) => {
+				if (fileEntry.isFile) {
+					fileEntry.file((file) => {
+						// If file is older than the date passed as parameter
+						if (file.lastModifiedDate <= time.getTime()) {
+							// Delete the file
+							fileEntry.remove(function () {
+								return resolve();
+							}, function (error) {
+								return resolve();
+							});
+						} else
+							return resolve();
+					}, function (error) {
+						return resolve();
+					});
+				} else
+					return resolve();
+			});
+		},
 
-        self.mobile.pip.loading = true
+		clearStorage: function (time) {
+			return new Promise((resolve, reject) => {
+				if (!time || !time.getTime)
+					return reject('Invalid date object');
+				var nbEntries, nbDone = 0;
+				var incrementAndCheckNbDone = function () {
+					nbDone += 1;
+					if (nbDone >= nbEntries)
+						resolve();
+				}
+				var storageLocation = self.storage.getStorageLocation();
 
-        return new Promise((resolve, reject) => {
 
-          PictureInPicture.enter(width, height, function(d) {
 
-            if (self.mobile.pip.element){
-              self.mobile.pip.element.removeClass('pipped')
-            }
+				window.resolveLocalFileSystemURL(storageLocation, function (fileSystem) {
+					fileSystem.getDirectory(self.storage.getStorageDirectory(), {
+						create: true,
+						exclusive: false
+					},
+						function (directory) {
+							var directoryReader = directory.createReader();
+							directoryReader.readEntries(function (entries) {
+								nbEntries = entries.length;
+								// For each file inside the directory
+								for (var i = 0; i < nbEntries; i++) {
+									self.storage.deleteFileIfTooOld(entries[i], time).then(() => {
+										incrementAndCheckNbDone();
+									});
+								}
+							}, function (error) {
+								return reject(error);
+							});
+						}, function (error) {
+							return reject(error);
+						});
+				});
+			});
+		}
 
-            self.mobile.pip.element = htmlElement
+	}
 
-            if (self.mobile.pip.element)
-              self.mobile.pip.element.addClass('pipped')
+	self.mobile = {
 
-            self.mobile.pip.loading = false
+		menu: function (items) {
 
-            // PIP mode started
-            resolve(d)
-          }, function(error) {
+			var theme = 'THEME_HOLO_LIGHT'
 
-            self.mobile.pip.loading = false
+			if (self.platform.sdk.theme.current != 'white') theme = 'THEME_HOLO_DARK'
 
-            reject(error)
-          });
+			var options = {
+				'buttonLabels': items,
+				'androidTheme': window.plugins.actionsheet.ANDROID_THEMES[theme],
+				'androidEnableCancelButton': true, // default false
+				'winphoneEnableCancelButton': true, // default false
+				'addCancelButtonWithLabel': self.localization.e('ucancel')
+			};
 
-        })
+			return new Promise((resolve, reject) => {
+				window.plugins.actionsheet.show(options, (i) => {
 
-      },
+					i = i - 1
 
-      init : function(){
+					if (i == items.length) {
+						return reject()
+					}
 
-        if (window.PictureInPicture && window.PictureInPicture.onPipModeChanged){
-          window.PictureInPicture.onPipModeChanged(function(res){
+					resolve(i)
+				});
+			})
 
-            res = (res == 'true')
+		},
 
-            if (res){
-              if(!self.el.html.hasClass('pipmode')) self.el.html.addClass('pipmode')
-            }
-            else{
+		supportimagegallery: function () {
+			return window.cordova && !isios()
+		},
 
-              if (self.el.html.hasClass('pipmode')) self.el.html.removeClass('pipmode')
+		safearea: function () {
+			if (window.cordova) {
+				document.documentElement.style.setProperty('--app-margin-top-default', `25px`);
+				margintop = 20
+			}
+			else {
+				document.documentElement.style.setProperty('--app-margin-top-default', `0px`);
+			}
 
-              if (self.mobile.pip.element){
-                self.mobile.pip.element.removeClass('pipped')
-                self.mobile.pip.element = null
-              }
-            }
+		},
 
-            self.mobile.pip.enabled = res
+		inputs: {
 
-            self.platform.matrixchat.changePip()
-          })
-        }
+			init: function () {
+				$(document).on('focus blur', 'select, textarea, input, [contenteditable="true"]', function (e) {
+					if (e.type == 'focusin') {
+						self.mobile.inputs.focused = $(e.target)
+					}
 
-        self.mobile.pip.checkIfHere()
+					if (e.type == 'focusout') {
+						self.mobile.inputs.focused = null
+					}
 
-      }
-    },
+				});
+			}
 
-    saveImages : {
-      save : function(base64, nms, clbk){
-        var nm = nms.split('.')
+		},
 
-        var name = nm[0],
-          format = nm[1]
+		keyboard: {
+			height: 0,
+			lastheight: 0,
+			init: function () {
 
-        var mt = {
-          png : 'image/png',
-          jpg : 'image/jpeg'
-        }
+				if (window.cordova) {
 
-        var ms = mt[format] || 'image/' + format
+					window.addEventListener('keyboardWillShow', (event) => {
 
-        if (window.cordova){
+						self.mobile.keyboard.height = self.mobile.keyboard.lastheight = event.keyboardHeight
 
-          var image = b64toBlob(base64.split(',')[1], 'image/' + ms);
+						document.documentElement.style.setProperty('--keyboardheight', `${event.keyboardHeight}px`);
 
-          p_saveAsWithCordova(image, name + '.' + format, function(d, e){
+					});
 
-            if (clbk)
-              clbk(d, e)
-          }, true)
+					window.addEventListener('keyboardDidShow', (event) => {
 
-        }
+					});
 
-        else{
-          p_saveAs({
-            file : base64,
-            format : format,
-            name : name
-          })
+					window.addEventListener('keyboardWillHide', () => {
+						document.documentElement.style.setProperty('--keyboardheight', `0px`);
 
-          if (clbk)
-            clbk({name})
-        }
-      },
-      dialog : function(name, src){
+						self.mobile.keyboard.height = 0
+					});
+				}
+				else {
 
+					if (navigator.virtualKeyboard && isTablet()) {
+						navigator.virtualKeyboard.overlaysContent = true;
 
-        var items = [
-          {
-            text : app.localization.e('saveimage'),
-            class : 'itemmain',
-            action : function(clbk){
+						navigator.virtualKeyboard.addEventListener('geometrychange', (event) => {
+							document.documentElement.style.setProperty('--keyboardheight', `${event.target.boundingRect.height}px`);
+						});
+					}
 
-              globalpreloader(true, true)
+				}
 
 
-              srcToData(src, function(base64){
 
-                imagetojpegifneed({base64, name}).then(({base64, name})=> {
+			},
 
-                  self.mobile.saveImages.save(base64, name, function(d, err){
+			style: function () {
+				if (window.cordova && typeof Keyboard != 'undefined') {
+					Keyboard.setKeyboardStyle(self.platform.sdk.theme.current == 'white' ? 'light' : 'dark')
+				}
 
-                    globalpreloader(false)
+			}
+		},
 
-                    if (d){
-                      successCheck()
-                    }
-                    else{
-                      sitemessage( self.localization.e('e13230')  )
-                    }
+		pip: {
 
-                    clbk()
+			element: null,
+			enabled: false,
+			loading: false,
+			checkIfHere: function () {
+				if (window.PictureInPicture && window.PictureInPicture.leavePip) {
+					window.PictureInPicture.isPip(function (res) {
 
+						if (res == 'true') {
+							window.PictureInPicture.leavePip()
+						}
+					})
+				}
+			},
+			enable: function (htmlElement) {
 
-                  })
+				if (self.mobile.pip.loading) {
+					return Promise.resolve()
+				}
 
-                })
+				var aspectratio = 1
 
+				if (!window.PictureInPicture || !window.PictureInPicture.enter) return Promise.resolve();
 
+				if (htmlElement) {
+					aspectratio = htmlElement.height() / htmlElement.width()
+				}
 
-              })
-            }
-          }
-        ]
+				var width = 400, height = width * (aspectratio || 1);
 
-        menuDialog({
-          items : items
-        })
+				self.mobile.pip.loading = true
 
-      },
-      init : function(_el){
+				return new Promise((resolve, reject) => {
 
-        if(self.mobileview){
-          _el.swipe({
-            longTap : function(){
-              self.mobile.vibration.small()
+					PictureInPicture.enter(width, height, function (d) {
 
-              var name = this.attr('save')
-              var src = this.attr('original') || this.attr('src') || this.attr('i')
+						if (self.mobile.pip.element) {
+							self.mobile.pip.element.removeClass('pipped')
+						}
 
+						self.mobile.pip.element = htmlElement
 
-              setTimeout(function(){
-                self.mobile.saveImages.dialog(name, src)
-              }, 200)
+						if (self.mobile.pip.element)
+							self.mobile.pip.element.addClass('pipped')
 
-              return false
+						self.mobile.pip.loading = false
 
-            }
-          })
-        }
+						// PIP mode started
+						resolve(d)
+					}, function (error) {
 
+						self.mobile.pip.loading = false
 
-      }
-    },
-    vibration : {
-      small : function(android){
+						reject(error)
+					});
 
-        if(!window.cordova) return
+				})
 
-        if(isios()){
+			},
 
-          if(typeof TapticEngine != 'undefined')
-            TapticEngine.impact({
-              style: "medium"
-            });
+			init: function () {
 
-          return
-        }
+				if (window.PictureInPicture && window.PictureInPicture.onPipModeChanged) {
+					window.PictureInPicture.onPipModeChanged(function (res) {
 
-        if (navigator.vibrate && android){
-          navigator.vibrate(50)
-        }
-      }
-    },
-    statusbar : {
-      background : function(){
+						res = (res == 'true')
 
-        var colors = {
-          white : "#FFF",
-          black : "#030F1B",
-          gray : '#1e1d1a'
-        }
+						if (res) {
+							if (!self.el.html.hasClass('pipmode')) self.el.html.addClass('pipmode')
+						}
+						else {
 
-        if (window.StatusBar) {
-          StatusBar.overlaysWebView(true);
-          window.StatusBar.backgroundColorByHexString('#00000000');
-          self.platform.sdk.theme.current == 'white' ? window.StatusBar.styleDefault() : window.StatusBar.styleLightContent()
-          
-        }
+							if (self.el.html.hasClass('pipmode')) self.el.html.removeClass('pipmode')
 
-        if (window.NavigationBar)
-          window.NavigationBar.backgroundColorByHexString(colors[self.platform.sdk.theme.current] || "#FFF", self.platform.sdk.theme.current != 'white');
-      },
+							if (self.mobile.pip.element) {
+								self.mobile.pip.element.removeClass('pipped')
+								self.mobile.pip.element = null
+							}
+						}
 
-      gallerybackground : function(){
+						self.mobile.pip.enabled = res
 
+						self.platform.matrixchat.changePip()
+					})
+				}
 
-        if (window.StatusBar) {
-          
-          StatusBar.overlaysWebView(true);
-          window.StatusBar.backgroundColorByHexString('#00000000');
-          window.StatusBar.styleLightContent()
-        }
+				self.mobile.pip.checkIfHere()
 
-        if (window.NavigationBar)
-          window.NavigationBar.backgroundColorByHexString("#030F1B", true);
+			}
+		},
 
-      },
+		saveImages: {
+			save: function (base64, nms, clbk) {
+				var nm = nms.split('.')
 
-      hide : function(){
-        if (window.StatusBar) {
-          window.StatusBar.hide()
-          //window.StatusBar.overlaysWebView(true);
-        }
+				var name = nm[0],
+					format = nm[1]
 
-        if (window.NavigationBar){
-          window.NavigationBar.hide()
-        }
-      },
-      show : function(){
-        if (window.StatusBar) {
-          window.StatusBar.show()
-          //window.StatusBar.overlaysWebView(false);
-        }
+				var mt = {
+					png: 'image/png',
+					jpg: 'image/jpeg'
+				}
 
-        if (window.NavigationBar){
-          window.NavigationBar.show()
-        }
+				var ms = mt[format] || 'image/' + format
 
-        self.mobile.statusbar.background()
-      },
-    },
+				if (window.cordova) {
 
-    unsleep : function(t){
+					var image = b64toBlob(base64.split(',')[1], 'image/' + ms);
 
-      if (window.plugins && window.plugins.insomnia){
+					p_saveAsWithCordova(image, name + '.' + format, function (d, e) {
 
-        if(t) window.plugins.insomnia.keepAwake()
-        else window.plugins.insomnia.allowSleepAgain()
-      }
+						if (clbk)
+							clbk(d, e)
+					}, true)
 
-    },
+				}
 
-    backgroundMode : function(t){
+				else {
+					p_saveAs({
+						file: base64,
+						format: format,
+						name: name
+					})
 
-      if (window.cordova){
-        if (window.cordova.plugins && window.cordova.plugins.backgroundMode){
+					if (clbk)
+						clbk({ name })
+				}
+			},
+			dialog: function (name, src) {
 
-          if(t) {
-            cordova.plugins.backgroundMode.enable()
-          }
-          else {
-            cordova.plugins.backgroundMode.disable()
-          }
-        }
-      }
 
+				var items = [
+					{
+						text: app.localization.e('saveimage'),
+						class: 'itemmain',
+						action: function (clbk) {
 
-    },  
+							globalpreloader(true, true)
 
 
-    //// for video
+							srcToData(src, function (base64) {
 
-    fullscreenmode : function(v){
+								imagetojpegifneed({ base64, name }).then(({ base64, name }) => {
 
-      var cl = function(){
-        v ? self.mobile.screen.lock('landscape') : self.mobile.screen.lock()
-        v ? self.mobile.statusbar.hide() : self.mobile.statusbar.show()
-      }
-      
+									self.mobile.saveImages.save(base64, name, function (d, err) {
 
-      if(isios()){
-        /*setTimeout(() => {
-          cl()
-        }, 1000)*/
-      }
-      else{
-        window.requestAnimationFrame(() => {
-          cl()
-        })
-      }
+										globalpreloader(false)
 
-      self.mobile.unsleep(v)
+										if (d) {
+											successCheck()
+										}
+										else {
+											sitemessage(self.localization.e('e13230'))
+										}
 
-      if(!v){
-        setTimeout(function(){
-          self.fullscreenmode = v
-          self.actions.scroll(self.lastScrollTop)
-        }, 10)
-      }
-      else{
-        self.fullscreenmode = v
-      }
+										clbk()
 
-    },
 
-    reload : {
-      parallax : null,
-      reloading : false,
-      destroyparallax : function(){
+									})
 
-        if(self.mobile.reload.reloading) return
+								})
 
-        if (self.mobile.reload.parallax) {
-          self.mobile.reload.parallax.clear()
-          self.mobile.reload.parallax.destroy()
-          self.mobile.reload.parallax = null
-        }
 
-      },
-      initparallax : function(){
 
-        if(isTablet() || isMobile()){
+							})
+						}
+					}
+				]
 
-          if(self.mobile.reload.parallax) return
-          if(self.mobile.reload.reloading) return
+				menuDialog({
+					items: items
+				})
 
-          self.mobile.reload.parallax = new SwipeParallaxNew({
+			},
+			init: function (_el) {
 
-            el : self.el.content,
+				if (self.mobileview) {
+					_el.swipe({
+						longTap: function () {
+							self.mobile.vibration.small()
 
-            allowPageScroll : 'vertical',
-            preventDefaultEvents : false,
+							var name = this.attr('save')
+							var src = this.attr('original') || this.attr('src') || this.attr('i')
 
-            directions : {
-              down : {
-                cancellable : true,
 
-                positionclbk : function(px){
-                  var percent = easeOutQuint(Math.abs(px) / 200);
+							setTimeout(function () {
+								self.mobile.saveImages.dialog(name, src)
+							}, 200)
 
-                  if (px >= 5){
+							return false
 
-                    if(!self.el.topsmallpreloader.hasClass('show'))
-                      self.el.topsmallpreloader.addClass('show')
+						}
+					})
+				}
 
 
-                    self.el.topsmallpreloader.css('transform', 'translateY('+(100 * percent)+'%)')
-                  }
-                  else{
+			}
+		},
+		vibration: {
+			small: function (android) {
 
-                    self.el.topsmallpreloader.removeClass('show')
-                    self.el.topsmallpreloader.css('transform', '')
-                  }
+				if (!window.cordova) return
 
-                },
+				if (isios()) {
 
-                constraints : function(e){
+					if (typeof TapticEngine != 'undefined')
+						TapticEngine.impact({
+							style: "medium"
+						});
 
-                  if(self.platform.preparingUser) return false
+					return
+				}
 
-                  if(_.find(e.path, function(el){
+				if (navigator.vibrate && android) {
+					navigator.vibrate(50)
+				}
+			}
+		},
+		statusbar: {
+			background: function () {
 
-                    return el.className && (el.className.indexOf('noswipepnt') > -1 || el.className.indexOf('fullScreenVideo') > -1)
+				var colors = {
+					white: "#FFF",
+					black: "#030F1B",
+					gray: '#1e1d1a'
+				}
 
-                  })) return false
+				if (window.StatusBar) {
+					StatusBar.overlaysWebView(true);
+					window.StatusBar.backgroundColorByHexString('#00000000');
+					self.platform.sdk.theme.current == 'white' ? window.StatusBar.styleDefault() : window.StatusBar.styleLightContent()
 
-                  if(self.lastScrollTop <= 0 && !self.mobile.reload.reloading){
-                    return true;
-                  }
+				}
 
-                },
+				if (window.NavigationBar)
+					window.NavigationBar.backgroundColorByHexString(colors[self.platform.sdk.theme.current] || "#FFF", self.platform.sdk.theme.current != 'white');
+			},
 
-                restrict : true,
-                //distance : 150,
-                trueshold : 70,
-                clbk : function(){
+			gallerybackground: function () {
 
-                  self.mobile.reload.reloading = true
-                  self.el.topsmallpreloader.css('transform', '')
-                  self.el.topsmallpreloader.removeClass('show')
 
-                  globalpreloader(true)
+				if (window.StatusBar) {
 
-                  setTimeout(function(){
+					StatusBar.overlaysWebView(true);
+					window.StatusBar.backgroundColorByHexString('#00000000');
+					window.StatusBar.styleLightContent()
+				}
 
-                    if (self.platform.loadingWithErrors){
+				if (window.NavigationBar)
+					window.NavigationBar.backgroundColorByHexString("#030F1B", true);
 
-                      self.platform.appstate(function(){
+			},
 
-                        setTimeout(function(){
-                          globalpreloader(false)
+			hide: function () {
+				if (window.StatusBar) {
+					window.StatusBar.hide()
+					//window.StatusBar.overlaysWebView(true);
+				}
 
-                          self.mobile.reload.reloading = false
+				if (window.NavigationBar) {
+					window.NavigationBar.hide()
+				}
+			},
+			show: function () {
+				if (window.StatusBar) {
+					window.StatusBar.show()
+					//window.StatusBar.overlaysWebView(false);
+				}
 
-                        }, 200)
+				if (window.NavigationBar) {
+					window.NavigationBar.show()
+				}
 
-                      })
+				self.mobile.statusbar.background()
+			},
+		},
 
-                    }
-                    else{
+		unsleep: function (t) {
 
-                      self.user.isState(function(state){
+			if (window.plugins && window.plugins.insomnia) {
 
-                        if(state){
+				if (t) window.plugins.insomnia.keepAwake()
+				else window.plugins.insomnia.allowSleepAgain()
+			}
 
-                          var account = self.platform.actions.getCurrentAccount()
+		},
 
-                          if (account) account.updateUnspents()
+		backgroundMode: function (t) {
 
-                          self.platform.sdk.notifications.getNotifications()
-                        }
+			if (window.cordova) {
+				if (window.cordova.plugins && window.cordova.plugins.backgroundMode) {
 
-                      })
+					if (t) {
+						cordova.plugins.backgroundMode.enable()
+					}
+					else {
+						cordova.plugins.backgroundMode.disable()
+					}
+				}
+			}
 
-                      if (self.nav.current.module){
 
-                        self.nav.current.module.restart({
-                          essenseData : self.nav.current.essenseData || {},
-                          primary : true
-                        })
-                      }
-                        
+		},
 
-                      setTimeout(function(){
-                        globalpreloader(false)
 
-                        self.mobile.reload.reloading = false
-                      }, 200)
+		//// for video
 
-                    }
+		fullscreenmode: function (v) {
 
+			var cl = function () {
+				v ? self.mobile.screen.lock('landscape') : self.mobile.screen.lock()
+				v ? self.mobile.statusbar.hide() : self.mobile.statusbar.show()
+			}
 
-                  }, 100)
 
+			if (isios()) {
+				/*setTimeout(() => {
+				  cl()
+				}, 1000)*/
+			}
+			else {
+				window.requestAnimationFrame(() => {
+					cl()
+				})
+			}
 
-                }
+			self.mobile.unsleep(v)
 
-              }
-            }
+			if (!v) {
+				setTimeout(function () {
+					self.fullscreenmode = v
+					self.actions.scroll(self.lastScrollTop)
+				}, 10)
+			}
+			else {
+				self.fullscreenmode = v
+			}
 
+		},
 
-          }).init()
+		reload: {
+			parallax: null,
+			reloading: false,
+			destroyparallax: function () {
 
-        }
-      }
-    },
+				if (self.mobile.reload.reloading) return
 
-    screen : {
+				if (self.mobile.reload.parallax) {
+					self.mobile.reload.parallax.clear()
+					self.mobile.reload.parallax.destroy()
+					self.mobile.reload.parallax = null
+				}
 
-      lock : function(orientation){
-        if (window.cordova && (orientation || baseorientation))
-          window.screen.orientation.lock(orientation || baseorientation)
-      },
-      unlock : function(){
-        if (window.cordova){
-          window.screen.orientation.lock(baseorientation)
-          window.screen.orientation.unlock()
-        }
-          
-      },
+			},
+			initparallax: function () {
 
-      destroy : function(){
-        if (window.cordova)
-          window.screen.orientation.removeEventListener('change')
-        self.mobile.screen.clbks = {}
-      },
+				if (isTablet() || isMobile()) {
 
-      init : function(){
-        self.mobile.screen.clbks = {}
-        
+					if (self.mobile.reload.parallax) return
+					if (self.mobile.reload.reloading) return
 
-        if (window.cordova){
+					self.mobile.reload.parallax = new SwipeParallaxNew({
 
-        
+						el: self.el.content,
 
-          window.screen.orientation.addEventListener('change', function(){
+						allowPageScroll: 'vertical',
+						preventDefaultEvents: false,
 
-            _.each(self.mobile.screen.clbks, function(c){
-              c(screen.orientation.type)
-            })
+						directions: {
+							down: {
+								cancellable: true,
 
-          });
-        }
-          
-      },
+								positionclbk: function (px) {
+									var percent = easeOutQuint(Math.abs(px) / 200);
 
-      clbks : {}
-    },
+									if (px >= 5) {
 
-    update : {
-      needmanage : false,
-      hasupdate : false,
+										if (!self.el.topsmallpreloader.hasClass('show'))
+											self.el.topsmallpreloader.addClass('show')
 
-      playstore : window.pocketnetstore || false,  ///// TODO
 
-      downloadAndInstall : function(){
+										self.el.topsmallpreloader.css('transform', 'translateY(' + (100 * percent) + '%)')
+									}
+									else {
 
-        if(!self.mobile.update.hasupdate){
-          return Promise.reject({text : 'hasnotupdates'})
-        }
+										self.el.topsmallpreloader.removeClass('show')
+										self.el.topsmallpreloader.css('transform', '')
+									}
 
-        if(!self.mobile.update.needmanage){
-          return Promise.reject({text : 'cantmanageupdate'})
-        }
+								},
 
-        self.mobile.update.updating = true
+								constraints: function (e) {
 
-        return self.mobile.update.download(self.mobile.update.hasupdate).then(r => {
+									if (self.platform.preparingUser) return false
 
-          return window.ApkUpdater.install()
+									if (_.find(e.path, function (el) {
 
-        }).then( r => {
-          self.mobile.update.updating = false
+										return el.className && (el.className.indexOf('noswipepnt') > -1 || el.className.indexOf('fullScreenVideo') > -1)
 
-          return Promise.resolve()
-        }).catch(e => {
+									})) return false
 
-          self.mobile.update.updating = false
+									if (self.lastScrollTop <= 0 && !self.mobile.reload.reloading) {
+										return true;
+									}
 
-          return Promise.reject(e)
-        })
+								},
 
-      },
+								restrict: true,
+								//distance : 150,
+								trueshold: 70,
+								clbk: function () {
 
-      download : function(l){
+									self.mobile.reload.reloading = true
+									self.el.topsmallpreloader.css('transform', '')
+									self.el.topsmallpreloader.removeClass('show')
 
-        return window.ApkUpdater.download(l, {
-          onDownloadProgress: function(e){
-            topPreloader2(e.progress, self.localization.e('downloadingUpdate'))
-          }
-        }).then(r => {
-          topPreloader2(100)
+									globalpreloader(true)
 
-          return Promise.resolve()
-        }).catch(e => {
-          topPreloader2(100)
+									setTimeout(function () {
 
-          return Promise.reject(e)
-        })
+										if (self.platform.loadingWithErrors) {
 
+											self.platform.appstate(function () {
 
-      },
-      hasupdatecheck : function(){
+												setTimeout(function () {
+													globalpreloader(false)
 
-        if(!self.platform) return Promise.resolve()
+													self.mobile.reload.reloading = false
 
-        var os = self.platform.__applications().ui.android
+												}, 200)
 
-        return new Promise((resolve, reject) => {
+											})
 
-          $.get(os.github.url, {}, function(d){
+										}
+										else {
 
-            if(!d.prerelease && numfromreleasestring(d.name) > numfromreleasestring(window.packageversion)) {
-              var assets = deep(d, 'assets') || [];
+											self.user.isState(function (state) {
 
-              var l = _.find(assets, function(a){
-                return a.name == os.github.name
-              })
+												if (state) {
 
-              if(l){
-                self.mobile.update.hasupdate = l.browser_download_url
-              }
-            }
+													var account = self.platform.actions.getCurrentAccount()
 
-          })
+													if (account) account.updateUnspents()
 
-        })
+													self.platform.sdk.notifications.getNotifications()
+												}
 
+											})
 
+											if (self.nav.current.module) {
 
-      },
-      needmanagecheck : function(){
+												self.nav.current.module.restart({
+													essenseData: self.nav.current.essenseData || {},
+													primary: true
+												})
+											}
 
-        if(window.plugins && window.plugins.packagemanager && window.ApkUpdater){
 
-          return new Promise((resolve, reject) => {
+											setTimeout(function () {
+												globalpreloader(false)
 
-            window.plugins.packagemanager.getInstallerPackageName(function(d){
+												self.mobile.reload.reloading = false
+											}, 200)
 
-              self.mobile.update.needmanage = d && d.indexOf('com.android.vending') > -1 ? false : true
-              self.mobile.update.needmanageinfo = d
+										}
 
-              resolve(self.mobile.update.needmanage)
 
-            }, function(e){
+									}, 100)
 
-              self.mobile.update.needmanage = false
-              self.mobile.update.needmanageinfo = e
 
-              resolve(self.mobile.update.needmanage)
-            });
+								}
 
-          })
+							}
+						}
 
-        }
-        else{
 
-          return Promise.resolve(self.mobile.update.needmanage)
-        }
+					}).init()
 
-      }
+				}
+			}
+		},
 
-    },
+		screen: {
 
+			lock: function (orientation) {
+				if (window.cordova && (orientation || baseorientation))
+					window.screen.orientation.lock(orientation || baseorientation)
+			},
+			unlock: function () {
+				if (window.cordova) {
+					window.screen.orientation.lock(baseorientation)
+					window.screen.orientation.unlock()
+				}
 
-  }
+			},
 
-  self.thislink = function(_url){
+			destroy: function () {
+				if (window.cordova)
+					window.screen.orientation.removeEventListener('change')
+				self.mobile.screen.clbks = {}
+			},
 
-    var url = {}
+			init: function () {
+				self.mobile.screen.clbks = {}
 
-    try{
-      url = new URL(_url)
-    }
-    catch(e){
-      url.host = ''
-    }
 
-    var groups = {
-      p : ['pocketnet.app', 'bastyon.com'],
-      pt : ['test.pocketnet.app', 'test.bastyon.com']
-    }
+				if (window.cordova) {
 
-    if (_url.indexOf('bastyon://') > -1) return true
-    if (_url.indexOf('pocketnet://') > -1) return true
 
-    var domain = self.options.url
 
-    var m = _.find(groups, function(g){
+					window.screen.orientation.addEventListener('change', function () {
 
-      return _.indexOf(g, url.host) > -1 &&  (_.indexOf(g, domain) > -1 || domain.indexOf('localhost') > -1)
-    })
+						_.each(self.mobile.screen.clbks, function (c) {
+							c(screen.orientation.type)
+						})
 
+					});
+				}
 
-    if(m) return true
+			},
 
-  }
+			clbks: {}
+		},
 
-  self.setref = function(r, na){
+		update: {
+			needmanage: false,
+			hasupdate: false,
 
-    if(na && self.ref) return
+			playstore: window.pocketnetstore || false,  ///// TODO
 
-    self.ref = r;
-    try{
-      localStorage['ref'] = self.ref
-    }catch(e){}
-    
+			downloadAndInstall: function () {
 
-  }
+				if (!self.mobile.update.hasupdate) {
+					return Promise.reject({ text: 'hasnotupdates' })
+				}
 
-  self.dsubref = false
-  self.ref = null;
+				if (!self.mobile.update.needmanage) {
+					return Promise.reject({ text: 'cantmanageupdate' })
+				}
 
-  try{
-    self.Logger.info({
-      actionId: 'APP_LOADED_FROM_EXTERNAL_LINK',
-      actionSubType: 'USER_FROM_EXTERNAL_SESSION',
-    });
+				self.mobile.update.updating = true
 
-    self.ref = parameters().ref || localStorage['ref'];
-    self.dsubref = parameters().dsubref || localStorage['dsubref'];
+				return self.mobile.update.download(self.mobile.update.hasupdate).then(r => {
 
-    localStorage['dsubref'] = self.dsubref
-  }catch(e){}
+					return window.ApkUpdater.install()
 
+				}).then(r => {
+					self.mobile.update.updating = false
 
-  self.options.device = localStorage['device'] || makeid();
-  try{
-    localStorage['device'] = self.options.device
-  }catch(e){}
+					return Promise.resolve()
+				}).catch(e => {
 
-  if(typeof window != 'undefined'){ self.fref = deep(window, 'location.href') }
+					self.mobile.update.updating = false
 
-  
+					return Promise.reject(e)
+				})
 
-  return self;
+			},
+
+			download: function (l) {
+
+				return window.ApkUpdater.download(l, {
+					onDownloadProgress: function (e) {
+						topPreloader2(e.progress, self.localization.e('downloadingUpdate'))
+					}
+				}).then(r => {
+					topPreloader2(100)
+
+					return Promise.resolve()
+				}).catch(e => {
+					topPreloader2(100)
+
+					return Promise.reject(e)
+				})
+
+
+			},
+			hasupdatecheck: function () {
+
+				if (!self.platform) return Promise.resolve()
+
+				var os = self.platform.__applications().ui.android
+
+				return new Promise((resolve, reject) => {
+
+					$.get(os.github.url, {}, function (d) {
+
+						if (!d.prerelease && numfromreleasestring(d.name) > numfromreleasestring(window.packageversion)) {
+							var assets = deep(d, 'assets') || [];
+
+							var l = _.find(assets, function (a) {
+								return a.name == os.github.name
+							})
+
+							if (l) {
+								self.mobile.update.hasupdate = l.browser_download_url
+							}
+						}
+
+					})
+
+				})
+
+
+
+			},
+			needmanagecheck: function () {
+
+				if (window.plugins && window.plugins.packagemanager && window.ApkUpdater) {
+
+					return new Promise((resolve, reject) => {
+
+						window.plugins.packagemanager.getInstallerPackageName(function (d) {
+
+							self.mobile.update.needmanage = d && d.indexOf('com.android.vending') > -1 ? false : true
+							self.mobile.update.needmanageinfo = d
+
+							resolve(self.mobile.update.needmanage)
+
+						}, function (e) {
+
+							self.mobile.update.needmanage = false
+							self.mobile.update.needmanageinfo = e
+
+							resolve(self.mobile.update.needmanage)
+						});
+
+					})
+
+				}
+				else {
+
+					return Promise.resolve(self.mobile.update.needmanage)
+				}
+
+			}
+
+		},
+
+
+	}
+
+	self.thislink = function (_url) {
+
+		var url = {}
+
+		try {
+			url = new URL(_url)
+		}
+		catch (e) {
+			url.host = ''
+		}
+
+		var groups = {
+			p: ['pocketnet.app', 'bastyon.com'],
+			pt: ['test.pocketnet.app', 'test.bastyon.com']
+		}
+
+		if (_url.indexOf('bastyon://') > -1) return true
+		if (_url.indexOf('pocketnet://') > -1) return true
+
+		var domain = self.options.url
+
+		var m = _.find(groups, function (g) {
+
+			return _.indexOf(g, url.host) > -1 && (_.indexOf(g, domain) > -1 || domain.indexOf('localhost') > -1)
+		})
+
+
+		if (m) return true
+
+	}
+
+	self.setref = function (r, na) {
+
+		if (na && self.ref) return
+
+		self.ref = r;
+		try {
+			localStorage['ref'] = self.ref
+		} catch (e) { }
+
+
+	}
+
+	self.dsubref = false
+	self.ref = null;
+
+	try {
+		self.Logger.info({
+			actionId: 'APP_LOADED_FROM_EXTERNAL_LINK',
+			actionSubType: 'USER_FROM_EXTERNAL_SESSION',
+		});
+
+		self.ref = parameters().ref || localStorage['ref'];
+		self.dsubref = parameters().dsubref || localStorage['dsubref'];
+
+		localStorage['dsubref'] = self.dsubref
+	} catch (e) { }
+
+
+	self.options.device = localStorage['device'] || makeid();
+	try {
+		localStorage['device'] = self.options.device
+	} catch (e) { }
+
+	if (typeof window != 'undefined') { self.fref = deep(window, 'location.href') }
+
+
+
+	return self;
 }
 
 topPreloader(85);
 
-if(typeof module != "undefined")
-{
-  module.exports = Application;
+if (typeof module != "undefined") {
+	module.exports = Application;
 }
 
 

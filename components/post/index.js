@@ -1302,38 +1302,13 @@ var post = (function () {
 
 									new carousel(images, '.imagesWrapper', '.imagesContainer')
 
-									/*images.find('.imagesContainer').owlCarousel({
-										items: 1,
-										dots: true,
-										nav: !isMobile(),
-										navText: [
-											'<i class="fas fa-chevron-left"></i> ',
-											'<i class="fas fa-chevron-right"></i>'
-											]
-									
-									});*/
-
 									isclbk()
 
 								}
 								else{
 									images.addClass('manyImagesView')
 									isclbk()
-									/*images.isotope({
-
-										layoutMode: 'packery',
-										itemSelector: '.imagesWrapper',
-										packery: {
-											gutter: gutter
-										},
-										initLayout: false
-									});
-		
-									images.on('arrangeComplete', function(){
-										isclbk()
-									});
-		
-									images.isotope()*/
+									
 								}
 
 								

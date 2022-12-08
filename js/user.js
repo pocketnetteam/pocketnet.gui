@@ -168,6 +168,9 @@ User = function(app, p) {
 					try{
 						localStorage['waslogged'] = true
 						localStorage['popupsignup'] = 'showed'
+
+
+						localStorage['useraddress'] = self.address.value
 					}catch(e){
 					}
 
@@ -241,6 +244,7 @@ User = function(app, p) {
 		try{
 			localStorage['mnemonic'] = ''
 			sessionStorage['mnemonic'] = ''
+			localStorage['useraddress'] = ''
 		}catch(e){
 		}
 
@@ -497,6 +501,8 @@ User = function(app, p) {
 	    var address = app.platform.sdk.address.pnet()
 
 	    self.address.set(address.address)
+
+		localStorage['useraddress'] = address.address
 
 	    topPreloader(20)
 

@@ -118,17 +118,16 @@
             
         </script>
 
-        <script src="js/polyfills.js"></script>
 
         __JSENV__
-
+        __JS__
         __VE__
 
-        __JS__
-
-        __CSS__
+        
 
         __JSPOST__
+
+        __CSS__
 
         <link rel="stylesheet" href="css/fontawesome/css/all.min.css">
 

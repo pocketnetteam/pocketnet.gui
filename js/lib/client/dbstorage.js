@@ -339,8 +339,6 @@ const pdbstorage = function(storageName, version, time) {
                 db = openRequest.result;
 
                 clearOldItems().then(r => {
-                    return getall()
-                }).then(r => {
                     resolve(instanceFunctions);
                 })
                 

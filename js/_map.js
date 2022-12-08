@@ -24,7 +24,7 @@ __map =  {
 	__vendor : [
 		"js/vendor/device.js", //
 		"js/vendor/modernizr-2.8.3.min.js",//
-		"js/vendor/jquery.js",//
+		"js/vendor/jquery.min.js",//
         "js/vendor/tooltipster.core.js",//
         "js/vendor/tooltipster.bundle.js",//
         "js/vendor/imagesloaded.pkgd.js",///
@@ -34,11 +34,14 @@ __map =  {
 		"js/vendor/linkify.min.js",
 		"js/vendor/linkify-html.min.js",
 
-		{path :"js/vendor/leoprofanity.js", babelify : true},
+		"js/vendor/firebase-app.js",
+		"js/vendor/firebase-messaging.js",
+
+		//{path :"js/vendor/leoprofanity.js", babelify : true},
 
 		//new
 		{path : "js/lib/pocketnet/btc17.js", babelify : true}, //
-		{path : "js/lib/pocketnet/htls.js", babelify : true}, //
+		//{path : "js/lib/pocketnet/htls.js", babelify : true}, //
 		{path : "js/lib/pocketnet/buffer.js", babelify : true}, //
 		
 		//
@@ -53,16 +56,15 @@ __map =  {
 		"js/vendor/unmute.js", //
         {path : "js/vendor/plyr.js", babelify : true}, // later
         "js/vendor/reconnectingwebsocket.js", //
-        "js/vendor/xss.min.js", //
+        
 		"js/vendor/jquery.mark.js", //?
-
+		
 		"js/vendor/moment.min.js", //?
 		"js/vendor/moment.locale.js", //?
 		"js/vendor/ua-parser.min.js",
 		"js/vendor/jquery.inputmask.bundle.js",
 		 //
 		"js/vendor/isotope.pkgd.js", //
-		"js/vendor/circular-progress.js", //
 		{path : "js/vendor/workbox-v6.1.5/workbox-sw.js", babelify : true},
 		"js/vendor/ion.sound/ion.sound.js",
 		"js/vendor/hammer.min.js",
@@ -73,20 +75,27 @@ __map =  {
 	],
 
 	__sourcesfirst : [
-		"js/vendor/firebase-app.js",
-		"js/vendor/firebase-messaging.js",
+		"js/polyfills.js",
 		"js/vendor/axios.js",
 		"js/vendor/underscore-min.js",  
+		"js/vendor/xss.min.js", //
 		{path : "js/functionsfirst.js", babelify : true},
+
 		"js/localization.js",
-		//"js/notifications.js",
+	
 		{path : "js/lib/client/system16.js", babelify : true},
 		{path : "js/lib/client/api.js", babelify : true},
-		{path : "js/image-uploader.js", babelify : true},
+		{path : "js/lib/client/dbstorage.js", babelify : true},
+		{path : "js/kit.js", babelify : true},
+		{path : "js/lib/client/actions.js", babelify : true},
+		{path : "js/lib/client/sdk.js", babelify : true},
+		
 		"js/_map.js",
+
 		{path : "js/logger.js", babelify : true},
 		{path : "js/videotransport.js", babelify : true},
 		{path : "js/app.js", babelify : true},
+
 		"js/main.js"
 	],
 
@@ -102,12 +111,9 @@ __map =  {
 		{path : "js/module.js", babelify : true},
 		{path : "js/navn.js", babelify : true},
 		{path : "js/validation.js", babelify : true},
-		{path : "js/kit.js", babelify : true},
-
-		{path : "js/lib/client/dbstorage.js", babelify : true},
-		{path : "js/lib/client/actions.js", babelify : true},
 		
-		{path : "js/lib/client/sdk.js", babelify : true},
+		{path : "js/image-uploader.js", babelify : true},
+		
 		{path : "js/satolist.js", babelify : true},
 		{path : "js/peertube.js", babelify : true},
 		{path : "js/lib/client/p2pvideo.js", babelify : true},

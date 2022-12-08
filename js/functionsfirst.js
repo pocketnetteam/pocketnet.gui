@@ -38,6 +38,29 @@ deep = function(obj, key){
     }
 }
 
+superXSS = function (str, p) {
+
+	var l = str.length;
+
+	var nstr = filterXSS(str, p)
+
+	if (!nstr.length || l == nstr.length) {
+		return nstr
+	}
+	else {
+		return superXSS(nstr, p)
+	}
+
+}
+
+clearStringXss = function (nm) {
+
+	return filterXSS(nm, {
+		whiteList: [],
+		stripIgnoreTag: true,
+	})
+}
+
 function iOS() {
     return [
       'iPad Simulator',

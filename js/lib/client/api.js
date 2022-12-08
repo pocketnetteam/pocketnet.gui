@@ -1115,7 +1115,6 @@ var Api = function(app){
 
         use : () => {
 
-
             return useproxy ? _.filter(proxies, proxy => { 
                 return proxy.successping
             }).length || !proxies.length : false

@@ -8,6 +8,8 @@ var pSDK = function ({ app, api, actions }) {
     var dbstorages = {}
     var dbversion = 2;
 
+    var dbenabled = true
+
     self.actions = actions
 
     /*self.actions.on('change', ({account}) => {
@@ -89,6 +91,17 @@ var pSDK = function ({ app, api, actions }) {
         }
     }
 
+    self.preInitIndexedDb = function(){
+        var keys = ['userInfoFull', 'userInfoFullFB', 'userInfoLight', 'userState', 'userStateFB', 'share']
+
+        return Promise.all(_.map(keys, (k) => {
+            return getDBStorage({
+                ...dbmeta[k],
+                name : k
+            })
+        }))
+    }
+
     var checkObjectInActions = function (objects) {
 
         var account = actions.getCurrentAccount()
@@ -103,6 +116,10 @@ var pSDK = function ({ app, api, actions }) {
     }
 
     var getDBStorage = function ({ name, time }) {
+
+        if(!dbenabled){
+            return Promise.resolve(null)
+        }
 
         var key = 'initdbstorage_' + name
 
@@ -135,6 +152,10 @@ var pSDK = function ({ app, api, actions }) {
         if (!dbname) return Promise.resolve()
 
         return getDBStorage({ name: dbname, ...dbmeta[dbname] }).then((db) => {
+
+            if(!db) return Promise.resolve()
+
+
             return Promise.all(_.map(result, ({ key, data }) => {
 
                 if (dbmeta[dbname].authorized) key = key + '_' + app.user.address.value
@@ -148,6 +169,8 @@ var pSDK = function ({ app, api, actions }) {
     var clearfromdb = function (dbname, ids) {
 
         return getDBStorage({ name: dbname, ...dbmeta[dbname] }).then((db) => {
+
+            if(!db) return Promise.resolve()
 
             if (dbmeta[dbname].authorized) ids = _.map(ids, id => {
                 return id + '_' + app.user.address.value
@@ -163,6 +186,10 @@ var pSDK = function ({ app, api, actions }) {
     var clearallfromdb = function (dbname) {
 
         return getDBStorage({ name: dbname, ...dbmeta[dbname] }).then((db) => {
+
+            if(!db) return Promise.resolve()
+
+            
             return db.clearall()
         }).catch(e => {
 
@@ -203,14 +230,23 @@ var pSDK = function ({ app, api, actions }) {
             return id + '_' + app.user.address.value
         })
 
+        var rt = performance.now()
+
         return getDBStorage({ name: dbname, ...dbmeta[dbname] }).then((db) => {
+
+            console.log('getdb', performance.now() - rt)
+
             var result = []
+
+            if(!db) return Promise.resolve(result)
+
 
             return Promise.all(_.map(ids, id => {
 
-
-
                 return db.get(id).then(data => {
+
+                console.log(performance.now() - rt, id)
+
 
                     if (dbmeta[dbname].authorized) {
                         id = id.replace('_' + app.user.address.value, '')
@@ -224,6 +260,10 @@ var pSDK = function ({ app, api, actions }) {
                 }).catch(e => { })
 
             })).then(() => {
+
+                console.log(performance.now() - rt)
+
+
                 return result
             })
 
@@ -295,6 +335,7 @@ var pSDK = function ({ app, api, actions }) {
         var loaded = {}
         var load = []
 
+
         _.each(keys, (k) => {
 
             if (p.alternativeGetStorage) {
@@ -331,6 +372,8 @@ var pSDK = function ({ app, api, actions }) {
 
         var promise = !load.length ? Promise.resolve([]) : new Promise((resolve, reject) => {
 
+            console.log("MAKE", load)
+
             //var t = performance.now()
 
             getfromdb(p.indexedDb, load).then(dbr => {
@@ -344,7 +387,7 @@ var pSDK = function ({ app, api, actions }) {
 
                 })
 
-
+                console.log("HERE", load)
                 if (!load.length) {
                     resolve(dbr)
 
@@ -366,6 +409,7 @@ var pSDK = function ({ app, api, actions }) {
 
 
                 if (p.queue) {
+                    console.log("HERE2", load)
                     queue[key].push({
                         load,
                         executor,
@@ -376,6 +420,11 @@ var pSDK = function ({ app, api, actions }) {
                     })
                 }
                 else {
+
+
+                    console.log("HERE2", load)
+
+
                     executor(load).then(c).catch(reject)
                 }
 
@@ -509,7 +558,6 @@ var pSDK = function ({ app, api, actions }) {
 
         var extendedObject = null
 
-        console.log("TEMP CALCULATION", type, helpId)
 
         _.each(actions.getAccounts(), (account) => {
 
@@ -581,11 +629,13 @@ var pSDK = function ({ app, api, actions }) {
 
         load: function (addresses, light, update) {
 
+
             return loadList(light ? 'userInfoLight' : 'userInfoFull', addresses, (addresses) => {
 
                 var parameters = [addresses];
 
                 if (light) { parameters.push('1') }
+
 
                 return api.rpc('getuserprofile', parameters).then((data) => {
 
@@ -928,7 +978,6 @@ var pSDK = function ({ app, api, actions }) {
 
                 }
                 catch (e) {
-                    console.log("C", c)
                     console.error(e)
                     return null
                 }
@@ -1648,7 +1697,6 @@ var pSDK = function ({ app, api, actions }) {
         listener: function (exp, address, status) {
             if (status == 'completed') {
 
-                console.log('exp.address', exp.address.v, exp.actor)
 
                 this.applyAction(objects['userInfoFull'][exp.actor], exp)
                 this.applyAction(objects['userInfoFull'][exp.address.v], exp)
@@ -1659,12 +1707,9 @@ var pSDK = function ({ app, api, actions }) {
         },
         applyAction: function (object, exp) {
 
-            console.log('subscribe, apply', exp.address.v, object.address)
 
             if (object) {
                 if (object.address == exp.actor) { 
-                    
-                    console.log('exp.address.v', exp.address.v)
                     
                     /// for me
                     object.addRelation({
@@ -1699,8 +1744,6 @@ var pSDK = function ({ app, api, actions }) {
         listener: function (exp, address, status) {
             if (status == 'completed') {
 
-                console.log('exp.address', exp.address.v, exp.actor)
-
                 this.applyAction(objects['userInfoFull'][exp.actor], exp)
                 this.applyAction(objects['userInfoFull'][exp.address.v], exp)
 
@@ -1731,8 +1774,6 @@ var pSDK = function ({ app, api, actions }) {
         listener: function (exp, address, status) {
             if (status == 'completed') {
 
-                console.log('exp.address', exp.address.v, exp.actor)
-
 
                 this.applyAction(objects['userInfoFull'][exp.actor], exp)
                 this.applyAction(objects['userInfoFull'][exp.address.v], exp)
@@ -1742,9 +1783,6 @@ var pSDK = function ({ app, api, actions }) {
             }
         },
         applyAction: function (object, exp) {
-
-            console.log('unsubscribe, apply', exp.address.v, object.address)
-
 
             if (object) {
                 if (object.address == exp.actor) { /// for me
@@ -2035,7 +2073,6 @@ var pSDK = function ({ app, api, actions }) {
     self.actions.on('actionFiltered', ({ action, address, status }) => {
 
         extendCache = {}
-        console.log('extendCache clear')
         var listener = self[action.object.type]?.listener
 
         if (!listener) return
