@@ -2334,7 +2334,12 @@ var comments = (function(){
 
 						if(_preview){
 
-							_p.el.find('textarea').on('click', function(){
+							_p.el.find('textarea').on('click', function(e){
+
+								if (app.platform.sdk.users.isUserBlockedBy(receiver)){
+									e.preventDefault();
+									return
+								}
 
 								$(this).blur();
 
