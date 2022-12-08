@@ -2594,7 +2594,16 @@ pComment = function(){
 	self.amount = 0;
 
 
-	self.address = '';
+	self._address = '';
+
+	Object.defineProperty(self, 'address', {
+		get : () => self._address,
+		set: async (addrValue) => {
+			self._address = addrValue;
+			self.isBlocking = await app.platform.sdk.users.isUserBlockedBy(addrValue);
+		}
+	});
+
 	self.parentid = '';
 	self.answerid = '';
 
