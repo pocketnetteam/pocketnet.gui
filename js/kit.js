@@ -2761,6 +2761,10 @@ pComment = function(){
 		self.answerid = v.answerid;
 		self.parentid = v.parentid;
 
+
+		
+
+
 		self.scoreDown = Number(v.scoreDown || '0');
 		self.scoreUp = Number(v.scoreUp || '0');
 
@@ -2775,6 +2779,11 @@ pComment = function(){
 		}
 
 		self.address = v.address
+		self.commentTo = null
+
+		if(v.addressCommentAnswer && v.addressCommentAnswer != self.address) self.commentTo = v.addressCommentAnswer
+		if(!self.commentTo && v.addressCommentParent && v.addressCommentParent != self.address) self.commentTo = v.addressCommentAnswer
+		if(!self.commentTo && v.addressContent && v.addressContent != self.address) self.commentTo = v.addressContent
 
 		if (v.rating)
 			self.rating = v.rating

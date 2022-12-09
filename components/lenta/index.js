@@ -3507,9 +3507,6 @@ var lenta = (function(){
 			sharesInview : function(shares, clbk, p){
 				if(!p) p = {}
 
-				console.log('sharesInview')
-
-				
 				shares = _.filter(shares, function(s){
 					return !$('#' + s.txid).hasClass('hidden')
 				})
@@ -4344,9 +4341,6 @@ var lenta = (function(){
 								if(!shares.length && !essenseData.ended && !includingsub && (emptyinarow >= 3 || offsetblock >= 43200 )){
 									ended = true
 								}
-
-
-								console.log('ended', ended, shares.length, pr)
 									
 							}
 
@@ -4437,10 +4431,6 @@ var lenta = (function(){
 								
 								pinnedShare[0].pin = true; //// wrong
 								shares.unshift(pinnedShare[0]);		
-
-
-								console.log('pinnedShare', pinnedShare, shares)
-								
 
 								if (clbk)
 									clbk(shares, error || error2)

@@ -332,8 +332,6 @@ Platform = function (app, listofnodes) {
 
     self.actions.on('actionFiltered', ({action, address, status}) => {
 
-        console.log('{action, address, status}', {action, address, status, alias : action.get()})
-
         var listener = listeners[action.object.type]
 
         if(!listener) return
@@ -3137,8 +3135,6 @@ Platform = function (app, listofnodes) {
 
                     _el.find(".img").imagesLoadedPN({ imageAttr: true }, function(image) {
 
-                        console.log('image', image)
-
                         _.each(image.images, function(img, n){
                             var _img = img.img;
 
@@ -3148,9 +3144,6 @@ Platform = function (app, listofnodes) {
 
                             if (aspectRatio > 1.99) aspectRatio = 1.99
 
-                            console.log('el', el, aspectRatio)
-
-                            
                             image.elements[n].style['aspect-ratio'] = 1 / aspectRatio
 
                             //el.css('aspectRatio', aspectRatio)
@@ -4831,15 +4824,11 @@ Platform = function (app, listofnodes) {
 
                 self.app.platform.actions.addActionAndSendIfCan(unsubscribe).then(action => {
 
-                    console.log('action', action)
-                
                     successCheck()
 
                     if (clbk) clbk(action.get())
     
                 }).catch(e => {
-
-                    console.error(e)
 
                     if (clbk)
                         clbk(null, e)
@@ -9180,8 +9169,6 @@ Platform = function (app, listofnodes) {
                 }
                 else {
 
-                    console.log('name', name)
-
                     name = (name || '').toLowerCase()
 
                     var lf = self.psdk.userInfo.findlocal((s) => {
@@ -9200,8 +9187,6 @@ Platform = function (app, listofnodes) {
                     }
 
                     self.psdk.nameAddress.load(name).then(address => {
-
-                        console.log(address)
 
                         if (clbk) clbk(address)
 
@@ -12876,8 +12861,6 @@ Platform = function (app, listofnodes) {
 
                     tags = self.sdk.tags.filterEx(self.sdk.tags.filterCats(tags))
 
-                    //console.log( this.gettags(), self.sdk.tags.filterCats(tags), self.sdk.tags.filterEx(self.sdk.tags.filterCats(tags)))
-
                 return _.map(randomizerarray(tags, count || 3, 'probability') || [], (t) => {
                     return t.tag
                 })
@@ -13120,8 +13103,6 @@ Platform = function (app, listofnodes) {
                             return self.app.api.rpc('searchusers', np)
                         }, np).then(d => {
 
-                            console.log("D", d)
-
                             d = {
                                 data: [...d]
                             }
@@ -13304,8 +13285,6 @@ Platform = function (app, listofnodes) {
 
                 })
 
-                console.log('shareIds', shareIds)
-
                 self.app.user.isState((state) => {
                     if(!state){
                         if(clbk) clbk()
@@ -13450,7 +13429,7 @@ Platform = function (app, listofnodes) {
 
             last: function (clbk) {
 
-                var ps = ['7', '', self.app.localization.key]
+                var ps = ['20', '', self.app.localization.key]
 
                 self.psdk.comment.request(() => {
                     return self.app.api.rpc('getlastcomments', ps)
@@ -14359,8 +14338,6 @@ Platform = function (app, listofnodes) {
                             var parameters = [Number(p.height), p.txid || '', p.count, p.lang, p.tagsfilter, p.type ? [p.type] : [], [], [], p.tagsexcluded];
 
                             s.getex(parameters, function (data, error) {
-
-                                console.log("data", data)
 
                                 var shares = data.boosts || []
                                 var blocknumber = data.height
@@ -16917,11 +16894,9 @@ Platform = function (app, listofnodes) {
                 else{
                     Notification.requestPermission().then((permission) => {
                         if (permission === 'granted') {
-                            console.log('Notification permission granted.');
                             self.get(clbk)
                         } else {
                             usingWeb = false;
-                            console.log('Unable to get permission to notify.');
                         }
                     });
                 }
@@ -21521,8 +21496,6 @@ Platform = function (app, listofnodes) {
 
         checkfeatures()
 
-        console.log("GET INFO")
-
         app.user.isState(function(state){
             
             if (state) {
@@ -21551,9 +21524,6 @@ Platform = function (app, listofnodes) {
                     self.sdk.comments.loadblocked
 
                 ], function () {
-
-                    console.log("READY")
-
 
                     //self.ui.showmykey()
                     

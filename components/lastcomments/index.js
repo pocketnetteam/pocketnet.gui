@@ -77,47 +77,61 @@ var lastcomments = (function(){
 		var load = function(clbk){
 			self.app.platform.sdk.comments.last(function(c, error){
 
+				console.log("C", c)
+
+				var me = app.platform.sdk.user.me()
+
+				c = _.filter(c, (c) => {
+
+					if (c.deleted) return false
+
+					if (me && me.relation(c.address, 'blocking')) {
+                        return false
+                    }
+
+					if (me && me.relation(c.commentTo, 'blocking')) {
+                        return false
+                    }
+
+					return c.message && c.commentTo && c.address != 'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82' && c.commentTo != 'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82'
+				})
+
 				c = _.uniq(c, (c) => c.address)
 
-				var bytx = group(c, function(c){
-					return c.txid
+				
+
+				var au = [];
+
+				_.each(c, (c) => {
+					au.push(c.address)
+					au.push(c.commentTo)
 				})
 
-				var txids = _.map(bytx, function(g, id){
-					return id;
-				})
+
+				self.sdk.users.get(au, function(l, error3){
+
+					c = _.filter(c, (comment) => {
+
+						var commentUserInfo = self.psdk.userInfo.getShortForm(comment.address)
+						var commentToUserInfo = self.psdk.userInfo.getShortForm(comment.commentTo)
+
+						if(!commentUserInfo || commentUserInfo.deleted || self.app.platform.sdk.user.reputationBlocked(comment.address)) return false
+						if(!commentToUserInfo || commentToUserInfo.deleted || self.app.platform.sdk.user.reputationBlocked(comment.commentTo)) return false
 
 
-
-				self.app.platform.sdk.node.shares.getbyid(txids, function(l, error2){
-
-					var au = [];
-
-					_.each(c, function(comment){ 
-    
-						var share = self.psdk.share.get(comment.txid)
-						
-
-						if(share && comment){
-							au.push(share.address)
-							au.push(comment.address)
-						}
-
-						
-
+						return true
 					})
 
-					au = _.uniq(au)
+					var bytx = group(c, function(c){
+						return c.postid
+					})
 
-					self.sdk.users.get(au, function(l, error3){
+					console.log('bytx', bytx, c)
 
-						if (clbk)
-							clbk(bytx, error || error2 || error3)
+					if (clbk)
+						clbk(bytx, error || error3)
 
-					}, true)
-
-					
-				})
+				}, true)
 
 				
 			})

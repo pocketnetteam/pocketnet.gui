@@ -7,50 +7,8 @@
 
         <div class="lastcommentslistwrapper">
             <div class="lastcommentslist">        
-
             
-
-                <% _.each(comments, function(group, postid){ 
-                    
-                    var share = psdk.share.get(postid) 
-                    
-                    
-                    if(!share) return
-
-                    if(share.address == 'PR7srzZt4EfcNb3s27grgmiG8aB9vYNV82') return
-
-
-                    var me = app.platform.sdk.user.me()
-                    if (me && me.relation(share.address, 'blocking')) {
-                        return
-                    }
-                    
-                    var h = '';
-
-                    var m = '';
-
-                    if(share.caption) m = m + '' + share.caption + ' '
-
-                    if(share.message) m = m + '' + share.message + ''
-
-                    var nm = filterXSS(trimHtml(m, 80), {
-                        stripIgnoreTag : true,
-                        whiteList: {
-                            b : ["style"]
-                        }
-                    });
-
-                    if(!nm) return
-
-                    var shareUserInfo = psdk.userInfo.getShortForm(share.address)
-
-                    var cmts = _.filter(group, function(c){
-                        return c.message
-                    })
-
-                    if(!cmts.length) return
-
-                    %>
+                <% _.each(comments, function(group, postid){ %>
 
                     <div class="commentgroup" share="<%-postid%>">
 
@@ -58,12 +16,7 @@
                             <% _.each(group, function(comment){ 
 
                                 var commentUserInfo = psdk.userInfo.getShortForm(comment.address)
-                                
-                                if (comment.deleted || !comment.message || commentUserInfo.deleted) return
-
-                                if (me && me.relation(comment.address, 'blocking')) {
-                                    return
-                                }
+                                var commentToUserInfo = psdk.userInfo.getShortForm(comment.commentTo)
                                 
                                 %> 
 
@@ -106,9 +59,9 @@
 
                                             <div class="iconWrapper">
                                                 <% 
-                                                    var src2 = shareUserInfo.image
-                                                    var name2 = shareUserInfo.name;
-                                                    var letter2 = shareUserInfo.letter;    
+                                                    var src2 = commentToUserInfo.image
+                                                    var name2 = commentToUserInfo.name;
+                                                    var letter2 = commentToUserInfo.letter;    
                                                 %>
                         
                                                 <div class="icon">
