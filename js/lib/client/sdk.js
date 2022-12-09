@@ -82,7 +82,7 @@ var pSDK = function ({ app, api, actions }) {
 
     var dbversion = 2 + storages.length;
 
-    self.db = new ResoursesDB('psdk', dbversion, storages)
+    self.db = new ResoursesDB('psdk_' + (window.testpocketnet ? 'test' : 'production'), dbversion, storages)
 
     var rt = performance.now()
 
@@ -121,6 +121,7 @@ var pSDK = function ({ app, api, actions }) {
             if (dbmeta[dbname].authorized) key = key + '_' + app.user.address.value
 
             return self.db.set(dbname, dbmeta[dbname].time, key, data).catch(e => {
+                console.log(dbname, result, key)
                 console.error(e)
                 return Promise.resolve()
             })
@@ -778,11 +779,13 @@ var pSDK = function ({ app, api, actions }) {
                 return api.rpc('getuserstate', [(addresses).join(',')]).then((d) => {
                     if (d && !_.isArray(d)) d = [d] /// check responce
 
-                    return _.map(d || [], (info) => {
+                    return _.filter(_.map(d || [], (info) => {
                         return {
                             key: info.address,
-                            data: info
+                            data: _.isEmpty(info) ? null : info
                         }
+                    }), d => {
+                        return d.data
                     })
 
                 }).catch(e => {
@@ -1360,8 +1363,8 @@ var pSDK = function ({ app, api, actions }) {
                         if (c.s.version >= 2) {
 
                             //console.log("C", c.m)
-
-                            //c.m = JSON.parse(c.m)
+                            if(!_.isObject(c.m))
+                                c.m = JSON.parse(c.m)
                         }
                         else {
                             var whiteclass = {
@@ -1372,7 +1375,7 @@ var pSDK = function ({ app, api, actions }) {
                                 'medium-insert-embeds': true
                             }
 
-                            c.m = filterXSS(c.m || '', {
+                            c.m = superXSS(c.m || '', {
                                 stripIgnoreTag: true,
                                 whiteList: {
                                     a: ["href", "title", "target", 'cordovalink'],
@@ -1421,10 +1424,10 @@ var pSDK = function ({ app, api, actions }) {
 
                     }
                     else {
-                        c.m = nl2br(trimrn((filterXSS(decodeURIComponent(c.m || ''), {
+                        c.m = trimrn((superXSS(decodeURIComponent(c.m || ''), {
                             whiteList: [],
                             stripIgnoreTag: true,
-                        })))).replace(/\n{2,}/g, '\n\n')
+                        }))).replace(/\n{2,}/g, '\n\n')
                     }
 
                     c.t = _.map(c.t, function(t){ 

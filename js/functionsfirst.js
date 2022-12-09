@@ -55,7 +55,7 @@ superXSS = function (str, p) {
 
 clearStringXss = function (nm) {
 
-	return filterXSS(nm, {
+	return superXSS(nm, {
 		whiteList: [],
 		stripIgnoreTag: true,
 	})

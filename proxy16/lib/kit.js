@@ -1957,8 +1957,8 @@ var pShare = function(){
 			images : self.images || [],
 			title : "Post by " + name,
 			html : {
-				body : self.renders.xssmessagec(),
-				preview : trimHtml(self.renders.xssmessagec(), 160).replace(/ &hellip;/g, '...').replace(/&hellip;/g, '...')
+				body : self.renders.messagec(),
+				preview : trimHtml(self.renders.messagec(), 160).replace(/ &hellip;/g, '...').replace(/&hellip;/g, '...')
 			},
 
 			text : {

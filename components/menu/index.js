@@ -861,27 +861,7 @@ var menu = (function(){
 							self.app.platform.sdk.wallet.drawSpendLineActions(el.find('.numberWrp'), balance)
 						}
 
-						/*self.app.platform.sdk.node.transactions.get.allBalance(function(amount){
-
-							var t = self.app.platform.sdk.node.transactions.tempBalance()
-
-							amount = amount + t
-
-							var add = amount - current;
-
-							if (first) {
-								add = 0;
-								current = amount
-							}
-
-							first = false;
-
-							set(current, add)
-
-							current = amount;
-
-							self.app.platform.sdk.wallet.drawSpendLine(el.find('.numberWrp'))
-						})*/
+						
 
 					}
 

@@ -479,7 +479,7 @@ User = function(app, p) {
 
 		mnemonic = (mnemonic || '').toLowerCase()
 
-		var cache = self.smcache('mncache', true)
+		var cache = self.smcache('mncache' + (window.testpocketnet ? 'test' : 'production'), true)
 
 		var seed = cache.get(mnemonic) || bitcoin.bip39.mnemonicToSeedSync(mnemonic)
 

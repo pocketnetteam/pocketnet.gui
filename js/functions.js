@@ -1781,7 +1781,7 @@ bgImagesCl = function (el, p) {
 				return Promise.resolve()
 			}
 
-			//el.setAttribute('data-image', src)
+			el.setAttribute('data-image', src)
 
 			var image = new Image()
 
@@ -9402,7 +9402,7 @@ edjsHTML = function () {
 			}).join('')
 
 
-			return '<div class="article_carousel">' + imageshtml + '</div>'
+			return '<div class="article_carousel"><div class="article_carousel_container carousel noswipepnt">' + imageshtml + '</div></div>'
 		},
 
 		linkTool: function (e) {
@@ -9632,6 +9632,7 @@ edjsHTML = function () {
 			},
 
 			parse: function (e) {
+				console.log("E", e)
 				return '<div class="article_body">' + e.blocks.map((function (e) {
 					return i[e.type] ? i[e.type](e) : t(e.type)
 				})).join('') + '</div>'

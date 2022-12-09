@@ -1474,8 +1474,11 @@ var author = (function(){
 
 					var deleted = typeof self.app.platform.sdk.user.deletedaccount != 'undefined' ? self.app.platform.sdk.user.deletedaccount(author.address) : false
 
+					author.data = self.psdk.userInfo.get(author.address)
 
-					if(!deleted || self.app.user.isItMe(author.address)){
+
+					
+					if(author.data && (!deleted || self.app.user.isItMe(author.address))){
 
 						if(self.app.platform.sdk.user.reputationBlockedRedirect(address)){
 	
@@ -1507,7 +1510,6 @@ var author = (function(){
 						
 						}
 	
-						author.data = self.psdk.userInfo.get(author.address)
 	
 						var data = {
 							author : author

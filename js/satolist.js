@@ -3132,7 +3132,36 @@ Platform = function (app, listofnodes) {
 
             if(extend){
                 wr.find('.article_carousel').each(function(){
-                    self.app.platform.ui.carousel($(this))
+
+                    var _el = $(this)
+
+                    _el.find(".img").imagesLoadedPN({ imageAttr: true }, function(image) {
+
+                        console.log('image', image)
+
+                        _.each(image.images, function(img, n){
+                            var _img = img.img;
+
+                            var el = $(image.elements[n])
+
+                            var aspectRatio = _img.naturalHeight / _img.naturalWidth
+
+                            if (aspectRatio > 1.99) aspectRatio = 1.99
+
+                            console.log('el', el, aspectRatio)
+
+                            
+                            image.elements[n].style['aspect-ratio'] = 1 / aspectRatio
+
+                            //el.css('aspectRatio', aspectRatio)
+                        })
+
+
+                        new carousel(_el, '.img', '.article_carousel_container')
+
+                    })
+
+                    //self.app.platform.ui.carousel($(this))
                 })
 
                 wr.find('.article_this_embed').each(function(){
@@ -3357,6 +3386,7 @@ Platform = function (app, listofnodes) {
         },
 
         carousel : function(el, clbk){
+            throw 'use new carousel()'
 			var images = el.find('[image]');
 
             var w = el.width()

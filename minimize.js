@@ -457,7 +457,6 @@ fs.exists(mapJsPath, function (exists) {
 										})
 									}
 									catch(e){
-										console.error('e', e)
 									}
 
 									currentcssdata = currentcssdata + "\n" + "/*" + path +"*/ \n" + pre2;

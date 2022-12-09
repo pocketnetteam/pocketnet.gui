@@ -1156,8 +1156,6 @@ var lenta = (function(){
 			openPost : function(id, clbk, video, _share, openWnd){
 				var share = self.psdk.share.get(id) || _share; 
 				
-				
-
 
 				if(openWnd || essenseData.openPostInWindowMobile || (share && share.itisarticle())){
 
@@ -1231,18 +1229,26 @@ var lenta = (function(){
 				}
 				else
 				{
-					if (!shareInitedMap[id]) return
-					if (shareInitingMap[id]) return
 
 					var share = self.psdk.share.get(id)
-					
 
-						actions.destroyShare(share)
+					var _el = el.share[id] 
+
+					if(!share) return
+
+					var nm = self.app.actions.emoji(nl2br(findAndReplaceLink(share.renders.message(), true)))
+
+					window.requestAnimationFrame(() => {
+						_el.find('.message').html(nm)
+						_el.find('.showMore,.showMorePW').remove()
+					})
+
+					//	actions.destroyShare(share)
 
 						
-					renders.share(share, function(){
+					/*renders.share(share, function(){
 						if(clbk) clbk()
-					}, true)
+					}, true)*/
 
 				}
 
@@ -3776,7 +3782,6 @@ var lenta = (function(){
 								var aspectRatio = _img.naturalHeight / _img.naturalWidth
 
 								if(aspectRatio > 1.66) aspectRatio = 1.66
-
 
 								el.height( Math.min( 400, images.width() || lwidth || self.app.width) * aspectRatio)
 							})

@@ -138,11 +138,11 @@ var makecaption = function(){
 
 		<% if(c) {
 
-			c = findAndReplaceLink(filterXSS(clearScripts(c)), true)
+			c = findAndReplaceLink(c, true)
 		%>
 			<div class="paddingWrapper">
 				<div class="sharecaption canmark hyhpensenable">
-					<span><%=app.actions.emoji(nl2br(trimrn(c)))%></span>
+					<span><%=app.actions.emoji(c)%></span>
 				</div>
 			</div>
 
@@ -156,13 +156,13 @@ var makecaptionclear = function(){
 
 		<% if(cc) {
 
-			cc = findAndReplaceLink(filterXSS(clearScripts(cc)), true)
+			cc = findAndReplaceLink(cc, true)
 
 
 		%>
 			<div class="paddingWrapper hideOnFullVideo">
 				<div class="sharecaption canmark cancopy hyhpensenable">
-					<%=app.actions.emoji(nl2br(trimrn(cc)))%>
+					<%=app.actions.emoji(cc)%>
 				</div>
 				
 			</div>
@@ -198,7 +198,7 @@ var arranges = {
 
 		var m = share.renders.message();
 		
-		if(m) {
+		if (m) {
 
 			var nm = m;
 
@@ -206,31 +206,18 @@ var arranges = {
 
 				nm = trimHtml(m, 750);
 
-				var nmbrar = nm.split("\n")
-				var nmbrarl = nmbrar.length
-
-
-				if (nmbrarl > 15){
+				if (nm != m){
 					bigmessage = true;
-
-					nm = _.first(nmbrar, 15).join('\n')
 				}
-
-				else{
-					if (nm != m){
-						bigmessage = true;
-					}
-				}
-
 				
 			}
 
-			nm = findAndReplaceLink(share.renders.xssmessage(nm), true)
+			nm = findAndReplaceLink(nm, true)
 
 		%>
 			<div class="paddingWrapper ">
 				<div class="message canmark cancopy hyhpensenable">
-					<%=app.actions.emoji((clearScripts(((nm)))))%>
+					<%=app.actions.emoji(nl2br(nm))%>
 				</div>
 			</div>
 

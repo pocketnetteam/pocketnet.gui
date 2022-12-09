@@ -32,7 +32,7 @@ __map =  {
 		"js/vendor/aesjs.js",//
 		"js/vendor/linkify.min.js",
 		"js/vendor/linkify-html.min.js",
-
+		"js/vendor/exif.js",
 		"js/vendor/firebase-app.js",
 		"js/vendor/firebase-messaging.js",
 
@@ -67,7 +67,7 @@ __map =  {
 		{path : "js/vendor/workbox-v6.1.5/workbox-sw.js", babelify : true},
 		"js/vendor/ion.sound/ion.sound.js",
 		"js/vendor/hammer.min.js",
-		"js/vendor/owl/owl.carousel.js",
+		//"js/vendor/owl/owl.carousel.js",
 		
 		{path : "js/vendor/shadow-popup/popup.js", babelify : true},
 		{path : "js/popups/index.js", babelify : true}
@@ -476,17 +476,6 @@ __map =  {
 			anonimus : true,
 			relationsSunc : true,
 			electronDontOpen : true,
-			relations : [
-
-				{src : 'js/vendor/exif.js', f : 'js', 
-
-					require : function(){
-
-						EXIF = require('./js/vendor/exif.js')
-
-				}}
-			],
-
 			
 		},
 
@@ -782,13 +771,6 @@ __map =  {
 			add : insertingfunc,
 
 			relations : [
-				{src : 'js/vendor/exif.js', f : 'js', 
-
-					require : function(){
-
-						EXIF = require('./js/vendor/exif.js')
-
-				}},
 
 				{src : 'js/vendor/Sortable.min.js', f : 'js', 
 
@@ -814,13 +796,6 @@ __map =  {
 			},
 
 			relations : [
-				{src : 'js/vendor/exif.js', f : 'js', 
-
-					require : function(){
-
-						EXIF = require('./js/vendor/exif.js')
-
-				}},
 		
 				{src : 'js/vendor/emojionearea.min.js',			   f : 'js', if : function(){return (typeof _Electron == 'undefined' || _Electron == false)}},	
 				{src : 'js/vendor/emojionearea.min.css',			   f : 'css'},	

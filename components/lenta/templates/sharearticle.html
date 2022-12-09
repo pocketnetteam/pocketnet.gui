@@ -370,6 +370,8 @@ var name = app.platform.api.clearname(userInfo.name || share.address)
 	var edjs = new edjsHTML(null, app)
     var txt = null
 
+    console.log('share.message', share.message)
+
     try{
         var message = edjs.apply(share.message, decodeURIComponent)
         txt = edjs.parse(message)

@@ -2572,8 +2572,8 @@ pShare = function(){
 			images : self.images || [],
 			title : app.localization.e('postby') + " " + name,
 			html : {
-				body : self.renders.xssmessagec(),
-				preview : trimHtml(self.renders.xssmessagec(), 160).replace(/ &hellip;/g, '...').replace(/&hellip;/g, '...')
+				body : self.renders.messagec(),
+				preview : trimHtml(self.renders.messagec(), 160).replace(/ &hellip;/g, '...').replace(/&hellip;/g, '...')
 			},
 
 			text : {
@@ -2646,79 +2646,9 @@ pShare = function(){
 			return nm
 		},
 
-		xssmessagec : function(){
-			var nm = self.renders.messagec()
+	
 
-			return self.renders.xssmessage(nm)
-		},
-
-		xssmessage : function(nm){
-
-			if(!nm) nm = self.renders.message()
-
-			if(self.settings.v != 'a'){
-
-				nm = nl2br(trimrn(findAndReplaceLink(filterXSS(nm, {
-					whiteList: [],
-					stripIgnoreTag: true,
-				}))));	
-
-			}
-			else
-			{
-
-				var whiteclass = {'js-player' : true, 'plyr' : true, 'medium-insert-images' : true, 'medium-insert-images-grid' : true, 'medium-insert-embeds' : true}
-
-				nm = filterXSS(nm, {
-					stripIgnoreTag : true,
-					whiteList: {
-						a: ["href", "title", "target", 'cordovalink'],
-						br : ["style"],
-						b : ["style"],
-						span : ["style"],
-						figure : ["style"],
-						figcaption : ["style"/*, "class"*/],
-						i : ["style"],
-						img : ["src"/*, "width", "height"*/],
-						div : [ /*"class",*/"data-plyr-provider", "data-plyr-embed-id"],
-						p : [],
-						ul : [],
-						ol : [],
-						li : [],
-						h2 : [],
-						h1 : [],
-						h3 : [],
-						h4 : [],
-						h5 : [],
-						em : [],
-						u : [],
-						blockquote : [],
-						strong : [],
-						picture : ['img-type'],
-						source : ['srcset', 'type'],
-						strike : []
-
-					},
-
-					onIgnoreTagAttr: function(tag, name, value, isWhiteAttr) {
-						if (name === "class") {
-						  var v = value.split(' ');
-
-							v = _.filter(v, function(v){
-								return whiteclass[v]
-							})
-
-						  return name + '="' + v.join(' ') + '"';
-						}
-					}
-
-				})
-
-				nm = nm.replace(/http:\/\//g, 'https://')
-			}
-
-			return trimrn(nm)
-		}
+		
 	}
 
 	self.upvote = function(value){

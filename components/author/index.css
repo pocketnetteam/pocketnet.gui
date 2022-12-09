@@ -181,6 +181,7 @@
   align-items: center;
 }
 #author .authorinfo .itemtable > div.icon {
+  min-width: 30px;
   width: 30px;
   text-align: center;
   opacity: 0.6;

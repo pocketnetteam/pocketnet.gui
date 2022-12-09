@@ -194,7 +194,7 @@ var metadisplay = function(){ %>
 
 		<% if(c) {
 
-			c = filterXSS(clearScripts((findAndReplaceLink(c, true))))
+			c = findAndReplaceLink(c, true)
 		%>
 			<div class="paddingWrapper piphidden">
 				<div class="sharecaption canmark opensviurl lenta_opensviurl">
@@ -210,8 +210,6 @@ var metadisplay = function(){ %>
 
             if(typeof tplvideo != 'undefined' && tplvideo) return
 
-			m = (m)
-			
 			var nm = m;
 
 			if(typeof all == 'undefined' || !all){
@@ -223,13 +221,13 @@ var metadisplay = function(){ %>
 				}
 			}
 
-			nm = share.renders.xssmessage(nm)
+			nm = share.renders.message(nm)
 
 		%>
 			<div class="paddingWrapper hideOnFullVideo piphidden">
 				<div class="message canmark">
 
-					<%=app.actions.emoji((clearScripts(((nm)))))%>
+					<%=app.actions.emoji(nl2br(nm))%>
 
 				</div>
 			</div>
@@ -239,17 +237,13 @@ var metadisplay = function(){ %>
 				<div class="paddingWrapper showMorePW piphidden">
 					<div elementsid="lenta_showmore" class="showMore">
 						<div class="showmoretable table">
-							<!-- <div class="linecell">
-								<div class="line"></div>
-							</div> -->
+						
 							<div class="buttoncell">
 								<button>
 									<%=e('showmore')%>
 								</button>
 							</div>
-							<!-- <div class="linecell">
-								<div class="line"></div>
-							</div> -->
+							
 						</div>
 						
 
