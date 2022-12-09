@@ -4950,17 +4950,17 @@
   (function (Buffer){(function (){
   const BN = require('bn.js')
   const EC = require('elliptic').ec
-
-  const secp256k1 = new EC('secp256k1')
+  
   const deterministicGenerateK = require('./rfc6979')
   
   const ZERO32 = Buffer.alloc(32, 0)
   const EC_GROUP_ORDER = Buffer.from('fffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364141', 'hex')
   const EC_P = Buffer.from('fffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffc2f', 'hex')
   
-  const n = secp256k1.curve.n
-  const nDiv2 = n.shrn(1)
-  const G = secp256k1.curve.g
+  var secp256k1 = null
+  var n = null
+  var nDiv2 = null
+  var G = null
   
   const THROW_BAD_PRIVATE = 'Expected Private'
   const THROW_BAD_POINT = 'Expected Point'
@@ -4968,6 +4968,24 @@
   const THROW_BAD_HASH = 'Expected Hash'
   const THROW_BAD_SIGNATURE = 'Expected Signature'
   const THROW_BAD_EXTRA_DATA = 'Expected Extra Data (32 bytes)'
+
+  
+  
+  function initCurve(){
+
+  
+    if(secp256k1) return
+
+    console.log("initCurve")
+
+  
+    secp256k1 = new EC('secp256k1')
+  
+    n = secp256k1.curve.n
+    nDiv2 = n.shrn(1)
+    G = secp256k1.curve.g
+  
+  }
   
   function isScalar (x) {
     return Buffer.isBuffer(x) && x.length === 32
@@ -5029,7 +5047,7 @@
   
   function fromBuffer (d) { return new BN(d) }
   function toBuffer (d) { return d.toArrayLike(Buffer, 'be', 32) }
-  function decodeFrom (P) { return secp256k1.curve.decodePoint(P) }
+  function decodeFrom (P) { initCurve(); return secp256k1.curve.decodePoint(P) }
   function getEncoded (P, compressed) { return Buffer.from(P._encode(compressed)) }
   
   function pointAdd (pA, pB, __compressed, allpoints) {
@@ -5046,6 +5064,9 @@
   }
   
   function pointAddScalar (p, tweak, __compressed, allpoints) {
+  
+    initCurve()
+  
     if (!allpoints && !isPoint(p)) throw new TypeError(THROW_BAD_POINT)
     if (!isOrderScalar(tweak)) throw new TypeError(THROW_BAD_TWEAK)
   
@@ -5071,6 +5092,9 @@
   }
   
   function pointFromScalar (d, __compressed) {
+  
+    initCurve()
+  
     if (!isPrivate(d)) throw new TypeError(THROW_BAD_PRIVATE)
   
     const dd = fromBuffer(d)
@@ -5095,6 +5119,9 @@
   }
   
   function privateAdd (d, tweak) {
+  
+    initCurve()
+  
     if (!isPrivate(d)) throw new TypeError(THROW_BAD_PRIVATE)
     if (!isOrderScalar(tweak)) throw new TypeError(THROW_BAD_TWEAK)
   
@@ -5107,6 +5134,9 @@
   }
   
   function privateSub (d, tweak) {
+  
+    initCurve()
+    
     if (!isPrivate(d)) throw new TypeError(THROW_BAD_PRIVATE)
     if (!isOrderScalar(tweak)) throw new TypeError(THROW_BAD_TWEAK)
   
@@ -5127,6 +5157,9 @@
   }
   
   function __sign (hash, x, addData) {
+  
+    initCurve()
+  
     if (!isScalar(hash)) throw new TypeError(THROW_BAD_HASH)
     if (!isPrivate(x)) throw new TypeError(THROW_BAD_PRIVATE)
     if (addData !== undefined && !isScalar(addData)) throw new TypeError(THROW_BAD_EXTRA_DATA)
@@ -5167,6 +5200,9 @@
   }
   
   function verify (hash, q, signature) {
+  
+    initCurve()
+  
     if (!isScalar(hash)) throw new TypeError(THROW_BAD_HASH)
     if (!isPoint(q)) throw new TypeError(THROW_BAD_POINT)
   

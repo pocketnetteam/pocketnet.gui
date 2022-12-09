@@ -423,6 +423,8 @@ Comment = function(txid){
 		self.url.set()
 		self.donate.set()
 		self.fees.set()
+
+		self.delete = false
 	}
 
 	self.on = {}
@@ -552,33 +554,19 @@ Comment = function(txid){
 			}
 			
 		}
+		else{
+			r.delete = self.delete
+		}
 
 		if(self.id){
 			r.id = self.id
 		}
 
-		//included multi donates!!!
-
 		if (self.donate && self.donate.v.length){
 			r.donate = self.donate.v
 		}
 
- 		/*if (self.donate && self.donate.v.length){
-
-			r.donation = 'true';
-			r.amount = self.donate.v.reduce(function(prev, next){
-				return prev + next.amount;
-			}, 0)
-
-			r.amount *= 100000000;
-
-		} else if (self.amount.v){
-
-			r.donation = 'true';
-			r.amount = self.amount.v;
-
-		}*/
-
+ 	
 		if(extend){
 			r.type = self.type
 		}
@@ -615,18 +603,22 @@ Comment = function(txid){
 
 		if (v.txid || v.id)
 			self.id = v.txid || v.id
+
+		if(v.delete) self.delete = v.delete
 	}
 
-	self.alias = function(id){
+	self.alias = function(){
 		var comment = new pComment();
 			comment.import(self.export(true))
 
 			///TODO_REF_ACTIONS remove alias args
 
-			comment.id = id
+			comment.id = self.id
 			comment.postid = self.postid
 
-
+		if(self.delete){
+			comment.deleted = true
+		}
 
 		return comment;
 	}
@@ -2869,12 +2861,11 @@ pComment = function(){
 	}
 
 	self.delete = function(){
-		var c = new Comment();
+		var c = new Comment(self.postid);
 
 		c.id = self.id
 		c.parentid = self.parentid
 		c.answerid = self.answerid
-
 		c.delete = true
 		
 

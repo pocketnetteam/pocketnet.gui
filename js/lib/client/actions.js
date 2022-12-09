@@ -696,11 +696,13 @@ var Action = function(account, object, priority){
         alias.txid = exported.transaction
 
         if(!alias.txid) { alias.txid = self.id; alias.relay = true }
-        if (alias.txid && !self.completed) { alias.temp = true }
+        if (alias.txid && !self.completed && !self.rejected) { alias.temp = true }
 
         alias.actor = account.address;
         alias.type = self.object.type
-        alias.id = alias.txid
+
+        if(!alias.id)
+            alias.id = alias.txid
 
         if(!alias.address) alias.address = account.address
 
@@ -724,6 +726,8 @@ var Action = function(account, object, priority){
 
 
         alias.actionId = self.id
+
+        if(self.rejected) alias.rejected = self.rejected
 
 
         return alias

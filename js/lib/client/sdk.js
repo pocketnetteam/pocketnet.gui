@@ -497,10 +497,15 @@ var pSDK = function ({ app, api, actions }) {
 
                         if(helpId){
 
+                            console.log('alias.id == helpId', alias.id, helpId, alias.id == helpId)
+
                             if (!object && (alias.id == helpId || alias.actionId == helpId)) {
                                 extendedObject = alias
 
                                 return
+                            }
+                            else{
+                                if(!object) return
                             }
     
                         }
@@ -509,6 +514,7 @@ var pSDK = function ({ app, api, actions }) {
                     if (k != type){
                         if(!extendedObject && !object) return
                     }
+
 
                     if (self[k] && self[k].applyAction) {
                         var applied = self[k].applyAction(extendedObject || object.clone(), alias)
@@ -1041,6 +1047,7 @@ var pSDK = function ({ app, api, actions }) {
         },
         applyAction: function (object, exp) {
 
+
             if (object) {
                 if (object.type == 'share') {
 
@@ -1079,6 +1086,7 @@ var pSDK = function ({ app, api, actions }) {
 
                 if (object.type == 'comment') {
 
+
                     if (exp.optype == 'comment') {
                         if (object.id == exp.id) return exp
                     }
@@ -1091,6 +1099,7 @@ var pSDK = function ({ app, api, actions }) {
                     }
 
                     if (exp.optype == 'commentDelete') {
+                        console.log('object.id == exp.id', object.id, exp.id)
                         if (object.id == exp.id) {
                             object.deleted = true
                         }
@@ -1125,7 +1134,14 @@ var pSDK = function ({ app, api, actions }) {
 
 
                 _.each(actions, (a) => {
-                    objects.unshift(a)
+
+                    if (a.optype == 'comment'){
+                        objects.unshift(a)
+                    }
+
+                    /*if(a.optype == 'commentDelete'){
+                        objects = _.filter(objects)
+                    }*/
                 })
             })
 

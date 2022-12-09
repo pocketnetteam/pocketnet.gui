@@ -290,6 +290,7 @@ User = function(app, p) {
 
 	self.isState = function(clbk){
 
+
 		if(!p) p = {};
 
 		if(state ===  2) {

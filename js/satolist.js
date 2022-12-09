@@ -13470,9 +13470,8 @@ Platform = function (app, listofnodes) {
 
             },
 
-            delete: function (txid, comment, clbk) {
+            delete: function (comment, clbk) {
 
-                comment.postid = txid
 
                 self.app.platform.actions.addActionAndSendIfCan(comment).then(action => {
 

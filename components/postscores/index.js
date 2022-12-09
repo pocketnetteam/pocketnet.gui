@@ -322,7 +322,7 @@ var postscores = (function(){
 
 				self.app.platform.sdk.node.shares.getbyid([shareid], function(){
 
-					share = self.psdk.share.get(id) 
+					share = self.psdk.share.get(shareid) 
 
 					if (share){
 

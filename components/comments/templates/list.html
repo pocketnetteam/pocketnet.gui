@@ -9,7 +9,7 @@ var commentpanel = function(comment, _class){
 
 		<div class="items">
 
-			<% if(!comment.deleted && !lockedaccount && (typeof app.platform.sdk.user.myaccauntdeleted == 'undefined' || !app.platform.sdk.user.myaccauntdeleted()) && !(comment.temp || comment.relay)) { 
+			<% if(!comment.deleted && !lockedaccount && (typeof app.platform.sdk.user.myaccauntdeleted == 'undefined' || !app.platform.sdk.user.myaccauntdeleted())) { 
 				
 				
 				%> 
@@ -75,7 +75,7 @@ var commentpanel = function(comment, _class){
 			<% } %> 
 
 
-			<% if((!state || mestate.reputation >= -50) && !comment.deleted && !lockedaccount && !ed.cantsend) { %> 
+			<% if((!state || mestate.reputation >= -50) && !comment.deleted && !comment.rejected && !lockedaccount && !ed.cantsend) { %> 
 				<div elementsid="comments_reply" class="item reply">
 					<div class="cact">
 						<div class="label">
@@ -165,10 +165,14 @@ var commentf = function(comment){
 
 							<span class="adr" profile="<%-comment.address%>"><%-sUserInfo.name %></span><% if(!app.mobileview) {%></a><% } %> &middot;
 								
-							<% if(comment.temp || comment.relay) {%>
-								<i class="fas fa-stopwatch tempicon"></i> <span class="date"><%-e('ntnow').toLowerCase()%></span>
-							<% } else { %> 
+							<% if(comment.temp || comment.relay || comment.rejected) {%>
+								<% if(comment.rejected) {%>
+									<i class="fas fa-ban tempicon"></i>
+								<% } else {%> 
+									<i class="fas fa-stopwatch tempicon"></i> <span class="date"><%-e('ntnow').toLowerCase()%></span>
+								<%} %>
 								
+							<% } else { %> 
 								<span class="date realtime" time="<%-comment.time%>"><%- app.reltime(comment.time) %></span>
 							<% } %>
 							
@@ -187,7 +191,7 @@ var commentf = function(comment){
 						</div>
 						
 						<div class="panelWrapper">
-							<% if(!comment.deleted) {%>
+							<% if(!comment.deleted && !comment.rejected) {%>
 
 								<div elementsid="comments_panel" class="panel">
 									<i class="fas fa-ellipsis-h"></i>

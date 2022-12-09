@@ -83,7 +83,10 @@ var comments = (function(){
 				d_el.find('.scoreDown .commentScore').html(cs.scoreDown ? compressedNumber(cs.scoreDown, 1) : '1')
 			},
 
-			post2 : function(comment){
+			post : function(comment, optype){
+
+				console.log("comment", comment, optype)
+
 
 				actions.showhideLabel()
 
@@ -91,12 +94,7 @@ var comments = (function(){
 					newcomments : 'newcomments'
 				}
 
-
-				if(comment.optype == 'commentDelete'){
-					return
-				}
-
-				if(comment.optype == 'comment' || comment.optype == 'commentEdit'){
+				if(optype == 'comment' || optype == 'commentEdit' || optype == 'commentDelete'){
 
 					var _el = el.c.find('#' + comment.id + ',#' + comment.actionId);
 
@@ -105,16 +103,22 @@ var comments = (function(){
 						p.class = "firstcomment"
 					}
 
-					if((!showedall && !comment.parentid) || comment.optype == 'commentEdit' || _el.length){
+					if((!showedall && !comment.parentid) || optype == 'commentEdit' || optype == 'commentDelete' || _el.length){
 
 						p.comments = [comment]
 
-						
 
 						if(_el.length){
 							p.replace = true
 							p.el = _el
 						}
+						else{
+							if (optype == 'commentEdit' || optype == 'commentDelete'){
+								return
+							}
+						}
+
+						console.log("check", p)
 
 						renders.list(p)
 
@@ -150,134 +154,8 @@ var comments = (function(){
 				
 			},
 
-			post : function(err, alias, _txid, pid, aid, editid, id, manual){
-				
-				if(_txid != txid) return
+			commentDelete : function(commentDelete){
 
-				el.c.find('.sending').removeClass('sending')
-
-				if (err){
-					return
-				}
-
-				state.save()
-
-				el.c.find('.emojionearea-editor').blur();
-
-				//el.c.find('.att').html('');
-
-				var p = {}
-
-				var cl = function(){
-					/*if (listpreview){
-						ed.lastComment = self.app.platform.sdk.comments.toLastComment(alias)
-					}*/
-	
-					//delete currents[id]
-	
-	
-					if (id == '0'){
-						p.class = "firstcomment"
-					}
-	
-					if (id == '0')
-					{
-						if (areas[id]) areas[id].setText('');
-	
-						el.c.find('.post .newcommentimages').html('');
-						el.c.find('.post .newcommentdonate').html('');
-					}
-	
-					else
-					{
-						var _el = el.c.find('#' + id);
-	
-						if (editid){
-	
-							_el.find('.edit').html('');
-	
-							alias.timeUpd = alias.timeUpd.addMinutes(1)
-	
-							if(!alias.parentid) p.class = "firstcomment"
-	
-							delete areas[id]
-	
-							delete rendered[id]
-	
-							_el.removeClass('editing')
-	
-							p.replace = true
-							p.el = _el
-	
-						}
-						else
-						{
-							_el.find('.answer').html('');
-	
-							_el.find('.repliescount').html(Number(_el.find('.repliescount').html() || "0") + 1)
-	
-							_el.find('.replies').removeClass('hidden')
-	
-							p.el = el.c.find("#" + id + ' .answers')
-	
-							delete areas[id]
-						}								
-						
-					}
-	
-					p.newcomments = 'newcomments'
-	
-	
-	
-					/////// ADD COMMENT
-	
-					//todo
-	
-					renders.list(p, function(){
-	
-						if (manual){
-							actions.tocomment(alias.id)
-						}
-						
-					})
-	
-					if (!editid && ed.send){
-						ed.send(alias, alias)
-					}
-	
-					if(!editid){
-	
-						//if(ed.comments) ed.comments++
-	
-						actions.showhideLabel()
-	
-					}
-				}
-
-				if (editid || !showedall){
-					p.comments = [alias]
-
-					cl()
-				}
-				else{
-
-
-
-					load.level(pid, function(comments){
-
-						p.comments = comments
-						p.add = alias.id
-
-						cl()
-
-					})
-					
-				}
-
-				
-
-
-				
 			}
 		}
 
@@ -857,17 +735,23 @@ var comments = (function(){
 							}
 
 							if (el.c) {
+
 								state.save()
-								el.c.find('.emojionearea-editor').blur();
-								el.c.find('.sending').removeClass('sending')
 
-								if (areas[id]) areas[id].setText('');
+								window.requestAnimationFrame(() => {
+									el.c.find('.emojionearea-editor').blur();
+									el.c.find('.sending').removeClass('sending')
 	
-								el.c.find('.post .newcommentimages').html('');
-								el.c.find('.post .newcommentdonate').html('');
-
-								if (current.parentid)
-									el.c.find('.answer[for="'+current.parentid+'"]').html('');
+									if(!error){
+										if (areas[id]) areas[id].setText('');
+		
+										el.c.find('.post .newcommentimages').html('');
+										el.c.find('.post .newcommentdonate').html('');
+		
+										if (current.parentid)
+											el.c.find('.answer[for="'+current.parentid+'"]').html('');
+									}
+								})
 
 							}
 
@@ -989,7 +873,6 @@ var comments = (function(){
 
 						var name = self.psdk.userInfo.getShortForm(address).name
 
-						console.log('name', name)
 
 						var str = '@' + name + ',⠀'
 
@@ -1019,7 +902,6 @@ var comments = (function(){
 				})
 			},
 			hideallReplies : function(){
-				console.error('hideadd')
 				/*_.each(deep(self, 'app.platform.sdk.comments.storage.'+txid + '.0'), function(r, id){
 
 					actions.replies(id, false)
@@ -1152,7 +1034,7 @@ var comments = (function(){
 			delete : function(comment, clbk){
 				var ct = comment.delete()
 
-				self.app.platform.sdk.comments.delete(txid, ct, function(err, alias){
+				self.app.platform.sdk.comments.delete(ct, function(err, alias){
 
 					if(!err){
 						if (clbk)
@@ -1334,6 +1216,8 @@ var comments = (function(){
 					
 
 					if(!comment) return
+
+					if(comment.relay || comment.temp) return
 					
 					if (comment.address == self.app.user.address.value){
 						return
@@ -1665,19 +1549,16 @@ var comments = (function(){
 
 				var comment = self.psdk.comment.get(id)/// self.app.platform.sdk.comments.find(txid, id, pid)
 
-				console.log("ID", id, comment)
 
 				var d = {
 					address : self.app.user.address.value,
-					caddress : self.app.platform.sdk.comments.address(txid, id, pid),
+					caddress : comment.address,
 					txid : id,
 					comment
 				};
 
 				if (listpreview && ed.lastComment && !pid){
-
 					comment = ed.lastComment
-
 					d.caddress = comment.address
 				}
 
@@ -1750,15 +1631,14 @@ var comments = (function(){
 
 										if(!err)
 										{
-
-											var c = el.c.find('#' + comment.id);
+											/*var c = el.c.find('#' + comment.id);
 
 											c.addClass('deleted')
 											el.c.find('#' + comment.id + ' >div.commentPaddingWrapper .commentmessage div').html("<div>"+self.app.localization.e('e13033')+"</div>")
 
 											c.find('.panel').remove()
 											c.find('.commentimages').remove()
-											c.find('.reply').remove()
+											c.find('.reply').remove()*/
 										}
 											
 									})
@@ -1944,7 +1824,6 @@ var comments = (function(){
 							this.setText(p.value)
 						}
 
-						console.log("P", p)
 
 						if (p.amount && p.editid){
 
@@ -2736,7 +2615,15 @@ var comments = (function(){
 					var comment = alias
 
 					if (comment.postid == txid){
-						clbks.post2(comment)
+
+						clbks.post(self.psdk.comment.get(comment.id)/* || comment*/, comment.optype)
+						/*
+						if(comment.optype != 'commentDelete'){
+							clbks.post(comment)
+						}else{
+							clbks.commentDelete(comment)
+						}*/
+						
 					}
 				}
 
