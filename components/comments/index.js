@@ -1372,7 +1372,7 @@ var comments = (function(){
 	
 				comments = _.sortBy(comments, function(c){
 
-					//if(c.temp || c.relay) return -10000000000
+					if(c.temp || c.relay) return 10000000000
 
 					/*if (self.app.platform.sdk.comments.blocked[c.address]) {
 						return 0
