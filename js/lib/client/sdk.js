@@ -195,7 +195,7 @@ var pSDK = function ({ app, api, actions }) {
 
             }).catch(e => { 
 
-                console.error(e)
+                //console.error(e)
 
             })
         })).then(() => {

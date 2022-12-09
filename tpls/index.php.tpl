@@ -138,7 +138,6 @@
 
         __CSS__
 
-        <link rel="stylesheet" href="css/fontawesome/css/all.min.css">
         
         
 

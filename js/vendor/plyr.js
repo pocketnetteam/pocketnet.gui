@@ -9198,10 +9198,15 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
       let localTransport;
 
       if (isElectron) {
-
-
         localTransport = peertubeTransport(electron.ipcRenderer, localVideo);
         localVideo = undefined;
+      }
+
+      else{
+
+        importScript('peertube/video-embed.bundle.js', function(){
+
+        }, null, options.app, 'satolist');
       }
 
       retry(function(){

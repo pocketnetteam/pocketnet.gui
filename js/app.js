@@ -286,12 +286,16 @@ Application = function (p) {
 
 		self.mobileview = istouchstylecalculate()
 
-		if (self.mobileview) {
-			self.el.html.addClass('mobileview').removeClass('wsview')
-		}
-		else {
-			self.el.html.removeClass('mobileview').addClass('wsview')
-		}
+		window.requestAnimationFrame(() => {
+
+			if (self.mobileview) {
+				self.el.html.addClass('mobileview').removeClass('wsview')
+			}
+			else {
+				self.el.html.removeClass('mobileview').addClass('wsview')
+			}
+
+		})
 	}
 
 	var checkTouchStyle = function () {

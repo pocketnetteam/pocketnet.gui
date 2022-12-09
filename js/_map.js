@@ -22,8 +22,7 @@ var insertingfunc = function(settings, p){
 __map =  { 
 
 	__vendor : [
-		"js/vendor/device.js", //
-		"js/vendor/modernizr-2.8.3.min.js",//
+		
 		"js/vendor/jquery.min.js",//
         "js/vendor/tooltipster.core.js",//
         "js/vendor/tooltipster.bundle.js",//
@@ -75,6 +74,8 @@ __map =  {
 	],
 
 	__sourcesfirst : [
+		"js/vendor/device.js", //
+		"js/vendor/modernizr-2.8.3.min.js",//
 		"js/polyfills.js",
 		"js/vendor/axios.js",
 		"js/vendor/underscore-min.js",  
@@ -99,9 +100,9 @@ __map =  {
 		"js/main.js"
 	],
 
-	__sourceslast : [
+	/*__sourceslast : [
 		{path : "peertube/video-embed.bundle.js", babelify : true}
-	],
+	],*/
 
 
 	__sources : [
@@ -134,7 +135,8 @@ __map =  {
 		"peertube/video-embed.css",
 		"js/vendor/owl/assets/owl.carousel.min.css",
 		"js/vendor/owl/assets/owl.theme.default.min.css",
-		"js/vendor/shadow-popup/css/popup.css"
+		"js/vendor/shadow-popup/css/popup.css",
+		"css/fontawesome/css/all.min.css"
 	],
 
 	__exportcss : {
