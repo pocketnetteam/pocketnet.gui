@@ -2344,7 +2344,7 @@ pShare = function(){
 		v.t = _.map(self.tags || [], function(t){ return encodeURIComponent(t) })
 		v.i = _.clone(self.images)
 		v._time = self._time;
-		v.s = _.clone(self.settings)
+		v.s = _.clone(self.settings)	
 		v.l = self.language
 		v.p = self.poll
 		v.deleted = self.deleted
@@ -2369,7 +2369,7 @@ pShare = function(){
 			var edjs = new edjsHTML(null, app)
 			var message = edjs.apply(self.message, decodeURIComponent)
 			text = edjs.text(message);
-			text = self.caption + `\n\n\n` + text;
+			text = self.caption + `\n\n` + text;
 	
 		} else {
 
@@ -2379,7 +2379,7 @@ pShare = function(){
 
 		var s = {
 			image : '',
-			images : self.images || [],
+			files : self.images || [],
 			title : app.localization.e('postby') + " " + name,
 			html : {
 				body : self.renders.xssmessagec(),
