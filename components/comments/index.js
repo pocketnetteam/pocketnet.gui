@@ -2345,13 +2345,7 @@ var comments = (function(){
 
 						if(_preview){
 
-							_p.el.find('textarea').on('click', function(e){
-
-								if (isBlockedByAuthor){
-									_p.el.find('textarea').attr('readonly', '');
-									e.preventDefault();
-									return
-								}
+							_p.el.find('textarea').on('click', function(){
 
 								$(this).blur();
 
