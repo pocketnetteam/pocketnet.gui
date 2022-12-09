@@ -11451,8 +11451,11 @@ edjsHTML = function() {
 			return '<div class="article_error">' + 'Error:' + _.escape(type) + '</div>'
 		},
 
-		text : function(e){
-			var t = e.data.text ? e.data.text + ' ' : '';
+		text : function(e, type){
+
+			var t = type === 'paragraph' ? '\n\n' : '';
+			t += (e.data.text ? e.data.text + ' ' : '');
+
 			return t;
 		}
     };
@@ -11654,9 +11657,9 @@ edjsHTML = function() {
 
 			text: function(e){
 
-				var text = e.blocks.map((function(e) {
-					return i['text'](e);
-                })).join('');
+				var text = e.blocks.map(function(e) {
+					return i['text'](e, e.type);
+                }).join('');
 
 				return filterXSS(clearScripts((findAndReplaceLink(text, true))), {
 					stripIgnoreTag : true,

@@ -2368,12 +2368,8 @@ pShare = function(){
 			var name = app.platform.api.name(self.address)
 			var edjs = new edjsHTML(null, app)
 			var message = edjs.apply(self.message, decodeURIComponent)
-			text = edjs.text(message)
-
-			text = self.caption + `
-
-\n			
-` + text;
+			text = edjs.text(message);
+			text = self.caption + `\n\n\n` + text;
 	
 		} else {
 
