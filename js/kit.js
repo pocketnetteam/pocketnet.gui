@@ -2600,7 +2600,7 @@ pComment = function(){
 		get : () => self._address,
 		set: async (addrValue) => {
 			self._address = addrValue;
-			self.isBlocking = await app.platform.sdk.users.isUserBlockedBy(addrValue);
+			self.isBlocking = app.platform.sdk.users.isUserBlockedBy(addrValue);
 		}
 	});
 

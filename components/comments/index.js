@@ -2244,7 +2244,12 @@ var comments = (function(){
 					p.el || (p.el = el.post)
 
 					var _preview = preview && !p.answer && !p.editid
-					const isBlockedByAuthor = await app.platform.sdk.users.isUserBlockedBy(receiver)
+
+					let isBlockedByAuthor = false;
+
+					if(!app.platform.sdk.user.itisme(receiver)) {
+						isBlockedByAuthor = await app.platform.sdk.users.isUserBlockedBy(receiver)
+					}
 
 					if (isBlockedByAuthor) {
 						return;
@@ -2261,7 +2266,8 @@ var comments = (function(){
 							preview : _preview,
 							mestate : mestate,
 							sender : self.app.platform.sdk.address.pnet() ? self.app.platform.sdk.address.pnet().address : null,
-							receiver: receiver
+							receiver: receiver,
+							isBlockedByAuthor
 						},
 
 					}, function(_p){				
@@ -2518,7 +2524,21 @@ var comments = (function(){
 				if(!preview && p.el)
 					p.el.addClass('listloading')
 
-				self.sdk.comments.users(comments, function (i, e) {
+				self.sdk.comments.users(comments, async function (i, e) {
+					const commentsReady = comments.map(async c => {
+						c.isBlocking.then((res) => {
+							c.isBlocking = res;
+						});
+						return c.isBlocking;
+					});
+
+					await Promise.all(commentsReady);
+
+					let isBlockedByAuthor = false;
+
+					if(!app.platform.sdk.user.itisme(receiver)) {
+						isBlockedByAuthor = await app.platform.sdk.users.isUserBlockedBy(receiver)
+					}
 
 					self.shell({
 						name :  'list',
@@ -2535,6 +2555,7 @@ var comments = (function(){
 							_class : p.class || '',
 							newcomments : p.newcomments || '',
 							needtoshow : commentslength - comments.length,
+							isBlockedByAuthor,
 
 							replaceName : function(name, p){
 								return '<span elementsid="comments_tocomment" class="tocomment" comment="'+p.comment+'">' + name + "</span>"
