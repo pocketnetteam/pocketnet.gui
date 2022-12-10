@@ -1387,7 +1387,7 @@ var pSDK = function ({ app, api, actions }) {
                                 'medium-insert-embeds': true
                             }
 
-                            c.m = superXSS(c.m || '', {
+                            c.m = superXSS(decodeURIComponent(c.m || ''), {
                                 stripIgnoreTag: true,
                                 whiteList: {
                                     a: ["href", "title", "target", 'cordovalink'],
