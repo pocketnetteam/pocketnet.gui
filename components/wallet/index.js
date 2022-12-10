@@ -2235,7 +2235,7 @@ var wallet = (function(){
 					el : _el || el.buy,
 					data : {
 						coins : coins,
-						adress : self.app.user.address.value
+						address : self.app.user.address.value
 					},
 
 				}, function(_p){

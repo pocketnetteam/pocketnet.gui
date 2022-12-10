@@ -914,6 +914,7 @@ var pSDK = function ({ app, api, actions }) {
 
                 }
                 catch (e) {
+                    console.log('c', c)
                     console.error(e)
                     return null
                 }
@@ -1236,6 +1237,8 @@ var pSDK = function ({ app, api, actions }) {
 
                 var filtered = []
 
+                console.log('result', result)
+
                 _.each(result, (r) => {
 
                     if (r && r.key && r.data) {
@@ -1301,6 +1304,8 @@ var pSDK = function ({ app, api, actions }) {
                 self.userInfo[!small ? 'insertFromResponse' : 'insertFromResponseSmall'](self.userInfo.cleanData([share.userprofile]), true)
 
             }
+
+            console.log('share', share)
 
             if (share.lastComment) {
                 self.comment[!small ? 'insertFromResponse' : 'insertFromResponseSmall'](self.comment.cleanData([share.lastComment]))

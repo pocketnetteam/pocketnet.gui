@@ -5570,10 +5570,20 @@ Platform = function (app, listofnodes) {
 
                 if(!user) return Promise.reject('user')
 
+                var exported = share.export()
+
+                if (exported.lastComment){
+                    var c = self.psdk.comment.get(exported.lastComment)
+
+                    if (c){
+                        exported.lastComment = c.export()
+                    }
+                }
+
                 var shareInfo = {
                     share: {
                         id : share.txid,
-                        share: share.export(),
+                        share: exported,
                         user: user.export(),
                         timestamp: new Date()
                     },
@@ -10646,9 +10656,20 @@ Platform = function (app, listofnodes) {
                         keys : self.sdk.recommendations.storage.keys,
                         
                         unseen : _.map(self.sdk.recommendations.shares, (s) => {
+
+                            var exported = s.export()
+
+                            if (exported.lastComment){
+                                var c = self.psdk.comment.get(exported.lastComment)
+
+                                if (c){
+                                    exported.lastComment = c.export()
+                                }
+                            }
+
                             return {
                                 date : self.currentTime(),
-                                share : s.export(),
+                                share : exported,
                                 info : self.sdk.recommendations.sharesinfo[s.txid]
                             }
                         })

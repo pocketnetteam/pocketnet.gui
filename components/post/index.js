@@ -1151,7 +1151,7 @@ var post = (function () {
 									receiver: share.address,
 									fromtop: !ed.fromempty,
 									fromempty: ed.fromempty,
-									//lastComment: ed.fromempty ? share.lastComment : null,
+									
 									cantsend : checkvisibility,
 									additionalActions: function () {
 										self.closeContainer();

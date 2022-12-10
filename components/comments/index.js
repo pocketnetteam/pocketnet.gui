@@ -247,75 +247,6 @@ var comments = (function(){
 						}
 					})
 			
-					/*self.nav.api.load({
-						open : true,
-						id : 'embeding',
-						inWnd : true,
-			
-						essenseData : {
-							type : 'donate',
-							storage : storage,
-							sender: sender, 
-							receiver: receiver,
-							balance: p.balance,
-							total: p.total,
-							on : {
-			
-								added : function(value){
-
-									value = Number(value);
-			
-									var result = Boolean(value);
-
-									if (value < 0.5){
-										sitemessage(self.app.localization.e('minPkoin', 0.5))
-										return;
-									}
-						
-									if (value < p.balance){
-			
-										if(!_.isArray(value)) value = [value]
-			
-										currents[id].donate.remove();
-			
-										currents[id].donate.set({
-											address: receiver,
-											amount: Number(value)
-										})
-			
-										if(!result && errors[type]){
-			
-											sitemessage(errors[type])
-			
-										}
-			
-			
-										if (result){
-			
-											new Audio('sounds/donate.mp3').play();
-			
-											renders.donate(id, p)
-			
-										}	
-			
-								
-			
-									} else {
-			
-										sitemessage(self.app.localization.e('incoins'))
-									}
-			
-				
-			
-								}
-							}
-						},
-			
-						clbk : function(s, p){
-							external = p
-						}
-					})*/
-			
 				}
 			
 			}, 
@@ -1107,11 +1038,27 @@ var comments = (function(){
 					
 				}
 			},
+			hideall : function(){
+
+				listpreview = true;
+				showedall = false;
+				ed.showall = false;
+
+				window.requestAnimationFrame(() => {
+
+					el.c.removeClass('showedall')	
+					el.c.addClass('listpreview')
+					actions.showhideLabel()
+
+				})
+
+				makePreview(() => {
+					
+				})
+			},
 			showall : function(){
 
 				showedall = true;
-							
-				
 				
 				ed.showall = true
 
@@ -1120,7 +1067,6 @@ var comments = (function(){
 					window.requestAnimationFrame(() => {
 						el.c.find('.loaderWrapper').removeClass('hidden')
 					})
-					
 				
 					load.level(null, function(comments, e){
 
@@ -1140,8 +1086,6 @@ var comments = (function(){
 						}
 
 						listpreview = false;
-
-						renders.caption()
 
 						rendered = {}
 
@@ -1172,7 +1116,6 @@ var comments = (function(){
 					renders.caption()	
 				}
 			},
-
 
 			showhideLabel : function(){
 
@@ -2597,8 +2540,7 @@ var comments = (function(){
 								});
 
 								_p.el.find('.close-comments').on('click', (e) => {
-									if (ed.close)
-										ed.close()
+									actions.hideall()
 								});	
 
 								if (sort){
@@ -2907,7 +2849,7 @@ var comments = (function(){
 				preview = ed.preview || false;
 				listpreview = ed.listpreview || false;
 
-				showedall = false;
+				showedall = !listpreview;
 
 				txid = ed.txid || null
 
@@ -3147,6 +3089,9 @@ var comments = (function(){
 			},
 
 			hideall : function(preview){
+				throw 'deprecated'
+
+				return
 
 				showedall = false;
 

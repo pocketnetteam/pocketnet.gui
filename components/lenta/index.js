@@ -2717,18 +2717,9 @@ var lenta = (function(){
 			clickOutsideOfWindow: function(e){
 				const clickedElem = e.target;
 
-				/**
-				 * HTML layout is made incorrectly. This becomes problem to
-				 * make outside of window click detector. So, using hacky
-				 * method: 2 elements instead of 1.
-				 *
-				 * TODO: After layout is fixed, remove redundant code here.
-				 */
-
 				const isElem1Clicked = clickedElem.classList.contains('sharecnt');
-				const isElem2Clicked = clickedElem.classList.contains('commentsWrapperHb');
 
-				const isClickOutside = (isElem1Clicked || isElem2Clicked);
+				const isClickOutside = isElem1Clicked;
 
 				if (!isClickOutside) {
 					return;
@@ -3108,22 +3099,7 @@ var lenta = (function(){
 						
 
 						essenseData : {
-							close : function(){
-
-								if (initedcommentes[txid]){
-									initedcommentes[txid].hideall(true)
-									initedcommentes[txid].destroy()
-								}
-
-								delete initedcommentes[txid]
-
-								//_el.html('')
-
-								_scrollToTop(_el, 0, 0, -65)
-
-								renders.comments(txid, init, showall, preview)
-
-							},
+							close : true,
 							totop : el.c.find('#' + txid),
 							caption : rendered,
 							/*send : function(comment, last){
@@ -4754,7 +4730,7 @@ var lenta = (function(){
 			el.c.on('click', '.opensviurl', events.opensvi)
 			el.c.on('click', '.exitFull', events.exitFullScreenVideo)
 			el.c.on('click', '.sharecnt', events.clickOutsideOfWindow)
-			el.c.on('click', '.commentsWrapperHb', events.clickOutsideOfWindow)
+			//el.c.on('click', '.commentsWrapperHb', events.clickOutsideOfWindow)
 			//el.c.on('click', '.additional', events.additional)
 			el.c.on('click', '.asubscribe', events.asubscribe)
 			el.c.on('click', '.aunsubscribe', events.aunsubscribe)

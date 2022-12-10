@@ -1260,9 +1260,11 @@ html.mobileview #comments .emojionearea-editor {
   #comments .list .commentWrapper > div.iconWrapper .usericon {
     margin: 0;
   }
+  #comments .list .comments-operations {
+    padding-bottom: 0.5em;
+    padding-top: 0.5em;
+  }
   #comments .list .comments-operations .operations-wrapper {
-    margin-bottom: 0.5em;
-    margin-top: 0.5em;
     position: relative;
     /*>div {
 						
