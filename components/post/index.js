@@ -1134,12 +1134,12 @@ var post = (function () {
 									totop: el.c,
 
 									caption: ed.nocommentcaption ? null : rendered,
-									send: function () {
+									/*send: function () {
 
 										var c = el.c.find('.commentsAction .count span');
 											c.html(Number(c.html() || '0') + 1);
 											
-									},
+									},*/
 									txid: ed.commentsid || share.txid,
 
 									reply: ed.reply,
@@ -1151,7 +1151,7 @@ var post = (function () {
 									receiver: share.address,
 									fromtop: !ed.fromempty,
 									fromempty: ed.fromempty,
-									lastComment: ed.fromempty ? share.lastComment : null,
+									//lastComment: ed.fromempty ? share.lastComment : null,
 									cantsend : checkvisibility,
 									additionalActions: function () {
 										self.closeContainer();

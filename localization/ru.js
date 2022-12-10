@@ -2177,5 +2177,9 @@ _l.earnings = "Всего заработано";
 
 _l.authHeading = "Авторизация";
 
+_l.commentBannedWarning = function(name){
+	return name + " заблокировал вас. Вы не сможете оставить ему комментарий";
+};
+
 
 

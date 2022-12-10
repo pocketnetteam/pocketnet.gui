@@ -1053,30 +1053,22 @@ var pSDK = function ({ app, api, actions }) {
 
                     if (object.txid == exp.postid) {
 
-                        var last = object.lastComment
 
                         if (exp.optype == 'comment') {
                             object.comments++
 
+                            var last = object.lastComment ? self.comment.get(object.lastComment) : null
+
                             if (!last || Number(last.timeUpd) < Number(exp.timeUpd)) {
-                                object.lastComment = exp
+                                object.lastComment = exp.id
                             }
                         }
 
                         if (exp.optype == 'commentEdit') {
 
-                            if (last && last.id == exp.id) {
-
-                                exp.time = last.time
-                                object.lastComment = exp
-
-                            }
                         }
 
                         if (exp.optype == 'commentDelete') {
-                            if (last && last.id == exp.id) {
-                                last.deleted = true
-                            }
 
                             if (object.comments > 0)
                                 object.comments--
@@ -1099,7 +1091,6 @@ var pSDK = function ({ app, api, actions }) {
                     }
 
                     if (exp.optype == 'commentDelete') {
-                        console.log('object.id == exp.id', object.id, exp.id)
                         if (object.id == exp.id) {
                             object.deleted = true
                         }
@@ -1344,9 +1335,9 @@ var pSDK = function ({ app, api, actions }) {
                     }
             }
 
-            if (s.lastComment) {
-                s.lastComment = objects.comment[s.lastComment.id]
-            }
+            /*if (s.lastComment) {
+                //s.lastComment = objects.comment[s.lastComment.id]
+            }*/
 
 
             //deleted, likes temp

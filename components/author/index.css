@@ -407,6 +407,7 @@
   font-weight: 500;
   padding: 0.5em;
   border-bottom: 2px solid transparent;
+  white-space: nowrap;
   cursor: pointer;
   -moz-transition: 0.3s;
   -o-transition: 0.3s;

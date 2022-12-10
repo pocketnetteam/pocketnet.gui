@@ -14,7 +14,7 @@ var comments = (function(){
 		var primary = false;
 
 		var el = {}, txid, ed, currents = {}, caption, _in, top, eid, preview = false, listpreview = false, showedall = false, receiver;
-
+		var share = null
 		var authblock = false;
 
 		var paginationcount = 10;
@@ -323,10 +323,6 @@ var comments = (function(){
 			
 			pkoin : function(id, format){
 
-				var share = self.psdk.share.get(id) 
-				
-
-				if (share){
 					
 					actions.stateAction(function(){
 
@@ -348,7 +344,6 @@ var comments = (function(){
 	
 					}, share.txid)	
 
-				}
 
 			},
 
@@ -388,6 +383,33 @@ var comments = (function(){
 				else
 					c.removeClass('hastext')
 			},
+
+			checkBanned : function(p){
+
+				if(!self.app.user.address.value){
+					return Promise.resolve(null)
+				}
+
+				var cmtsTo = _.filter([self.psdk.comment.get(p.pid), self.psdk.comment.get(p.aid)], (c) => c)
+				var authors = [share.address]
+
+				_.each(cmtsTo, (c) => {
+					authors.push(c.address)
+				})
+
+				return self.psdk.userInfo.load(authors).then(() => {
+
+					var block = _.find(authors, (address) => {
+
+						var user = self.psdk.userInfo.get(address)
+
+						return user && user.relation(self.app.user.address.value, 'blocking')
+					})
+
+					if(block) return Promise.resolve(self.psdk.userInfo.get(block))
+				})
+			},
+
 			complain : function(comment){
 				self.nav.api.load({
 					open : true,
@@ -1088,30 +1110,30 @@ var comments = (function(){
 			showall : function(){
 
 				showedall = true;
-
-				el.c.addClass('showedall')	
 							
-				actions.showhideLabel()	
+				
 				
 				ed.showall = true
 
 				if (listpreview){
 
-					el.c.removeClass('listpreview')
-
-					el.c.find('.loaderWrapper').removeClass('hidden')
-
+					window.requestAnimationFrame(() => {
+						el.c.find('.loaderWrapper').removeClass('hidden')
+					})
+					
+				
 					load.level(null, function(comments, e){
 
 						if(e){
 							self.app.platform.errorHandler(e, true)
 
-							el.c.addClass('listpreview')
+							window.requestAnimationFrame(() => {
+								el.c.find('.loaderWrapper').addClass('hidden')
 
-							el.c.find('.loaderWrapper').addClass('hidden')
+							})
 
 							showedall = false;
-							el.c.removeClass('showedall')				
+							
 							actions.showhideLabel()
 
 							return
@@ -1128,11 +1150,21 @@ var comments = (function(){
 						p.comments = comments
 						p.class = "firstcomment"
 						p.inner = html
+						
 
+						actions.showhideLabel()	
+
+					
 						renders.list(p, function(){
-							el.c.find('.loaderWrapper').addClass('hidden')
+							window.requestAnimationFrame(() => {
+								el.c.addClass('showedall')	
+								el.c.removeClass('listpreview')
+								el.c.find('.loaderWrapper').addClass('hidden')
+							})
 						})
+
 					})
+
 				}
 
 				else
@@ -1146,11 +1178,13 @@ var comments = (function(){
 
 				if(!el.showall) return
 
-				var share = self.psdk.share.get(txid) || {}
-
 				var counts = share.comments || 0
+
+				var lastComment = self.psdk.comment.get(share.lastComment) || {}
 				
-				var lastchildren = deep(share, 'lastComment.children') || 0;
+				var lastchildren = lastComment.children || 0
+				
+				//deep(share, 'lastComment.children') || 0;
 
 				var needtoshow = false
 
@@ -1160,17 +1194,21 @@ var comments = (function(){
 					needtoshow = true
 				}
 
-				if (showedall){
-					el.showall.addClass('hidden')
-				}
-				else{
-					if (needtoshow){
-						el.showall.removeClass('hidden')
-					}
-					else{
+				window.requestAnimationFrame(() => {
+					if (showedall){
 						el.showall.addClass('hidden')
 					}
-				}
+					else{
+						if (needtoshow){
+							el.showall.removeClass('hidden')
+						}
+						else{
+							el.showall.addClass('hidden')
+						}
+					}
+				})
+
+				
 
 				
 			},
@@ -1463,9 +1501,11 @@ var comments = (function(){
 
 				var comment = self.psdk.comment.get(id) //self.app.platform.sdk.comments.find(txid, id, pid)
 
-				if (!comment && listpreview && ed.lastComment){
-					comment = ed.lastComment//self.app.platform.sdk.comments.ini([ed.lastComment])[0]
-				}
+				/*if (!comment && listpreview && ed.lastComment){
+					comment = ed.lastComment
+					
+					//self.app.platform.sdk.comments.ini([ed.lastComment])[0]
+				}*/
 
 
 				actions.openGallery(comment, _el.attr('i'))
@@ -1557,10 +1597,10 @@ var comments = (function(){
 					comment
 				};
 
-				if (listpreview && ed.lastComment && !pid){
+				/*if (listpreview && ed.lastComment && !pid){
 					comment = ed.lastComment
 					d.caddress = comment.address
-				}
+				}*/
 
 				self.fastTemplate('metmenu', function(rendered, template){
 
@@ -1788,6 +1828,8 @@ var comments = (function(){
 						renders.limits(c, text)
 
 						actions.lightarea(p.id || '0', c)
+
+						
 					},
 
 					focus : function() {
@@ -1937,13 +1979,24 @@ var comments = (function(){
 
 			}).on('pasteImageError', function(ev, data){
 
-				 topPreloader(100)
+				topPreloader(100)
 
 			})
 
 
-		}
+			actions.checkBanned(p).then((user) => {
+				if (user){
 
+					var info = self.psdk.userInfo.getShortForm(user.address)
+
+					if (info){
+						_p.el.find('.errormessage').removeClass('hidden').html(self.app.localization.e('commentBannedWarning', info.name))
+
+					}
+				}
+			})
+
+		}
 		
 
 		var renders = {
@@ -2114,7 +2167,7 @@ var comments = (function(){
 				
 				//deep(self.app.platform.sdk.comments.storage, txid + '.0.length') || 0
 
-				if(ed.caption && cl > 5){
+				/*if(ed.caption && cl > 5){
 					self.shell({
 						name :  'caption',
 						el : el.caption,
@@ -2158,7 +2211,7 @@ var comments = (function(){
 							clbk();
 						
 					})
-				}
+				}*/
 
 			},
 
@@ -2532,14 +2585,21 @@ var comments = (function(){
 								makeCurrentLevels()
 
 								_p.el.find('.refresh-comments').on('click', (e) => {
-									$(e.currentTarget).addClass('refreshing');
-
+									window.requestAnimationFrame(() => {
+										$(e.currentTarget).addClass('refreshing');
+									})
+									
 									setTimeout(() => {
 										$(e.currentTarget).removeClass('refreshing');
 
 										actions.update();
 									}, 300);
 								});
+
+								_p.el.find('.close-comments').on('click', (e) => {
+									if (ed.close)
+										ed.close()
+								});	
 
 								if (sort){
 									sort._onChange = function(v){
@@ -2616,7 +2676,7 @@ var comments = (function(){
 
 					if (comment.postid == txid){
 
-						clbks.post(self.psdk.comment.get(comment.id)/* || comment*/, comment.optype)
+						clbks.post(self.psdk.comment.get(comment.id) || comment, comment.optype)
 						/*
 						if(comment.optype != 'commentDelete'){
 							clbks.post(comment)
@@ -2773,8 +2833,8 @@ var comments = (function(){
 			preview : function(clbk){
 				var comments = [];
 
-				if (ed.lastComment){
-					comments = [ed.lastComment]//self.app.platform.sdk.comments.ini([ed.lastComment])
+				if (share.lastComment){
+					comments = [self.psdk.comment.get(share.lastComment)]//self.app.platform.sdk.comments.ini([ed.lastComment])
 				}
 
 				self.sdk.comments.users(comments, function(){
@@ -2853,6 +2913,8 @@ var comments = (function(){
 
 				currents['0'] = new Comment(txid);
 
+				share = self.psdk.share.get(txid)
+
 				if (txid){
 					//state.load()
 
@@ -2906,8 +2968,10 @@ var comments = (function(){
 			showBanner : function(c) {
 				let alredyCommented;
 
-				if (c.essenseData && c.essenseData.lastComment) {
-					const address = c.essenseData.lastComment.address;
+				var lastComment = self.psdk.comment.get(share.lastComment)
+
+				if (lastComment) {
+					const address = lastComment.address;
 					const me = app.platform.sdk.user.me();
 
 					const firstLikeIsMine = (address == me.address);

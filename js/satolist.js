@@ -13211,73 +13211,13 @@ Platform = function (app, listofnodes) {
             storage: {},
             who: {},
 
-            extendshares: function (ids, commentsid) {
-
-                commentsid || (commentsid = [])
-
-                var s = self.sdk.likes.storage
-
-                _.each(ids, function (txid) {
-                    var share = self.psdk.share.get(txid)
-                    
-                    if (share && s[txid]) {
-
-                        if (typeof share.myVal == 'undefined') {
-                            share.myVal = Number(s[txid])
-                        }
-
-
-
-                    }
-
-                    if (share) {
-                        var lastcomment = share.lastComment;
-
-                        if (lastcomment) {
-                            var cid = _.find(commentsid, function (r) {
-                                return r == lastcomment.id
-                            })
-
-
-                            if (cid && s[cid]) {
-
-
-                                if (lastcomment && !lastcomment.myscore && self.sdk.address.pnet()) {
-                                    lastcomment.myScore = Number(s[cid])
-
-
-                                    _.each(self.sdk.comments.upvoteClbks, function (c) {
-
-                                        c(null, lastcomment, lastcomment.myscore, self.sdk.address.pnet().address)
-
-                                    })
-                                }
-                            }
-                        }
-                    }
-
-
-
-
-
-                    if (share)
-                        share.who = self.sdk.likes.who[txid]
-                })
-
-                _.each(commentsid, function (txid) {
-
-                })
-
-
-            },
-
             get: function (shareIds, clbk) {
 
                 var commentIds = []
 
                 _.each(shareIds, function (id) {
 
-                    var commentId = deep(self.psdk.share.get(id), 'lastComment.id');
+                    var commentId = deep(self.psdk.share.get(id), 'lastComment');
 
                     if (commentId) {
                         commentIds.push(commentId)
@@ -13736,10 +13676,14 @@ Platform = function (app, listofnodes) {
                         users.push(s.address)
 
                         if(!withoutlastcomment){
-                            var cuser = deep(s, 'lastComment.address')
 
-                            if (cuser)
-                                users.push(cuser)
+                            var lastComment = s.lastComment ? self.psdk.comment.get(s.lastComment) : null
+
+                            if (lastComment){
+                                users.push(lastComment.address)
+                            }
+
+                            
                         }
 
                     })

@@ -361,12 +361,26 @@ var commentf = function(comment){
 
 	<div class="comments-operations">
 		<div class="operations-wrapper">
+
 			<div class="refresh-comments" pid="refresh-comments">
 				<div class="icon-wrapper">
 					<i class="fa fa-sync-alt" aria-hidden="true"></i>
 				</div>
 			</div>
+
+		
+
+		
+
 			<%= sort.input() %>
+
+			<% if(ed.close) {%>
+				<div class="close-comments" pid="refresh-comments">
+					<div class="icon-wrapper">
+						<i class="fas fa-times-circle"></i>
+					</div>
+				</div>
+			<% } %>
 		</div>
 	</div>
 

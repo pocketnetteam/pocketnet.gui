@@ -2490,7 +2490,7 @@ pShare = function(){
 
 		
 		if (v.lastComment)
-			self.lastComment = v.lastComment
+			self.lastComment = v.lastComment.id || v.lastComment
 
 		if(v.address){
 			self.address = v.address
@@ -2505,7 +2505,7 @@ pShare = function(){
 
 			ui._import(self.export())
 
-			ui.lastComment = self.lastComment
+			//ui.lastComment = self.lastComment
 
 		return ui
 	}
@@ -2537,12 +2537,12 @@ pShare = function(){
 		v.edit = self.edit
 
 		if(self.lastComment){
-			if(self.lastComment.export){
+			/*if(self.lastComment.export){
 				v.lastComment = self.lastComment.export()
 			}
-			else{
+			else{*/
 				v.lastComment = self.lastComment
-			}
+			//}
 		}
 
 		return v

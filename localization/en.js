@@ -2410,3 +2410,6 @@ _l.earnings = "Total earnings";
 _l.authHeading = "Auth";
 
 
+_l.commentBannedWarning = function(name){
+	return name + " blocked you. You won't be able to comment on it.";
+};

@@ -3112,13 +3112,12 @@ var lenta = (function(){
 
 								if (initedcommentes[txid]){
 									initedcommentes[txid].hideall(true)
-
 									initedcommentes[txid].destroy()
 								}
 
 								delete initedcommentes[txid]
 
-								_el.html('')
+								//_el.html('')
 
 								_scrollToTop(_el, 0, 0, -65)
 
@@ -3127,21 +3126,21 @@ var lenta = (function(){
 							},
 							totop : el.c.find('#' + txid),
 							caption : rendered,
-							send : function(comment, last){
+							/*send : function(comment, last){
 
 								var c = el.c.find('#' + txid + " .commentsAction .count span");
 
 								c.html(Number(c.html() || "0") + 1)
 
 								share.lastComment = last
-							},
+							},*/
 
 							txid : txid,
 							showall : essenseData.comments == 'all' || showall,	
 							fromtop: essenseData.comments == 'all' || e.hasClass('fullScreenVideo') || false,
 							preview : true, // essenseData.comments == 'all' ? false : preview,
 							listpreview : essenseData.comments == 'all' ? false : preview,
-							lastComment : essenseData.comments != 'all' ? share.lastComment : null,
+							//lastComment : essenseData.comments != 'all' ? share.lastComment : null,
 							
 							init : essenseData.comments == 'all' ? false : init,
 							hr : hr,
