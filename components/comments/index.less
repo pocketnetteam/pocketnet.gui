@@ -129,148 +129,7 @@
 		}
 	}
 
-	.captionfwrapper{
-		overflow : hidden;
-		height: 0px;
-		.caption{
-			padding-top: var(--app-margin-top);
-		}
-		.csharetable{
-			display: none;
-		}
 
-		&.cf_caption{
-			height: auto;
-			.csharetable{
-				display: table;
-			}
-		}
-	}
-
-	.caption{
-		padding-left:  2.5 * @rhythm;
-		padding-right: 6 * @rhythm;
-		background: rgb(var(--background-total-theme));
-
-		.captionTable{
-			>div{
-				vertical-align: middle;
-
-				&.captionPanel{
-					width: 160px;
-
-					.items{
-						margin-left: auto;
-						width: auto;
-
-						>div{
-							vertical-align: middle;
-							padding : @rhythm;
-
-							.cact{
-								padding: 0 @rhythm;
-								cursor : pointer;
-								.transition(0.3s);
-
-								&:hover{
-									color : rgb(var(--color-bg-ac));
-								}
-							}
-
-							&.close{
-								padding-right: 0;
-
-								.cact{
-									padding-right: 0;
-								}
-							}
-						}
-					}
-
-					span{
-						font-weight: 700;
-						font-size : 0.8em;
-					}
-				}
-			}
-		}
-
-		.csharetable{
-			>div{
-				padding : @rhythm 0;
-				vertical-align: middle;
-
-				&.image{
-					width: 45px;
-
-					.icon{
-						height: 45px;
-						width: 100%;
-						padding-top : 3px;
-
-						.usericon{
-							margin : 0 auto;
-						}
-					}
-				}
-
-				&.csharecnt{
-					padding-left: @rhythm;
-				}
-			}
-
-			.shareprwrapper{
-				display: none;
-	            >div{
-	                vertical-align: middle;
-	                padding : 0.5 * @rhythm;
-
-	                &.forimage{
-	                    width: 25px;
-	                    padding-left: 0;
-	                    padding-right: 0;
-	                }
-
-	                &.fortext{
-	                    padding-left: 0.5 * @rhythm;
-	                    overflow: hidden;
-	                    text-overflow: ellipsis;
-	                    white-space: nowrap; 
-	                    span{
-	                        font-size: 0.8em;
-	                    }
-	                }
-
-	                &.extra{
-	                    div{
-	                        font-size: 0.9em;
-	                        float: right;
-	                    }
-	                }
-	            }
-
-				.additionalcontent{
-					font-size: 0.8em;
-				}
-
-	            .img{
-	                width: 25px;
-	                height: 25px;
-	                border-radius: 50%;
-	                position: relative;
-
-	                .vstyle{
-	                    position: absolute;
-	                    left: 20px;
-	                    top: 14px;
-	                    font-size: 0.6em;
-	                    color : rgb(var(--neutral-grad-1));
-	                }
-	            }
-	        }
-		}
-	}
-	
 	&.fromtop{
 		.list{
 			border-bottom : 0;
@@ -599,12 +458,7 @@
 			}
 
 			.metatable{
-				
-				.temppanel{
-					display: none;
-					text-align: right;
-				}
-
+			
 				.adr{
 					font-weight: 700;
 				}
@@ -1576,34 +1430,6 @@ html.mobileview{
 /*t*/ @media only screen and (max-width: 768px){
 	#comments{
 
-		
-
-		.caption{
-			padding-left:  @rhythm;
-			padding-right: 2 * @rhythm;
-
-			.csharetable{
-				>div{
-	
-					&.csharecnt{
-						padding-left: 0;
-					}
-				}
-	
-				.shareprwrapper{
-					>div{
-						&.fortext{
-							padding-left: 0;
-						}
-						
-						&.forimage{
-							width: 42px;
-						}
-					}
-	
-				}
-			}
-		}
 		
 
 		.list{

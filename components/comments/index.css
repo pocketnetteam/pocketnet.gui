@@ -87,121 +87,6 @@
 #comments.listpreview .list .comment.firstcomment:nth-last-child(1) {
   display: block;
 }
-#comments .captionfwrapper {
-  overflow: hidden;
-  height: 0px;
-}
-#comments .captionfwrapper .caption {
-  padding-top: var(--app-margin-top);
-}
-#comments .captionfwrapper .csharetable {
-  display: none;
-}
-#comments .captionfwrapper.cf_caption {
-  height: auto;
-}
-#comments .captionfwrapper.cf_caption .csharetable {
-  display: table;
-}
-#comments .caption {
-  padding-left: 1.25em;
-  padding-right: 3em;
-  background: rgb(var(--background-total-theme));
-}
-#comments .caption .captionTable > div {
-  vertical-align: middle;
-}
-#comments .caption .captionTable > div.captionPanel {
-  width: 160px;
-}
-#comments .caption .captionTable > div.captionPanel .items {
-  margin-left: auto;
-  width: auto;
-}
-#comments .caption .captionTable > div.captionPanel .items > div {
-  vertical-align: middle;
-  padding: 0.5em;
-}
-#comments .caption .captionTable > div.captionPanel .items > div .cact {
-  padding: 0 0.5em;
-  cursor: pointer;
-  -moz-transition: 0.3s;
-  -o-transition: 0.3s;
-  -webkit-transition: 0.3s;
-  transition: 0.3s;
-}
-#comments .caption .captionTable > div.captionPanel .items > div .cact:hover {
-  color: rgb(var(--color-bg-ac));
-}
-#comments .caption .captionTable > div.captionPanel .items > div.close {
-  padding-right: 0;
-}
-#comments .caption .captionTable > div.captionPanel .items > div.close .cact {
-  padding-right: 0;
-}
-#comments .caption .captionTable > div.captionPanel span {
-  font-weight: 700;
-  font-size: 0.8em;
-}
-#comments .caption .csharetable > div {
-  padding: 0.5em 0;
-  vertical-align: middle;
-}
-#comments .caption .csharetable > div.image {
-  width: 45px;
-}
-#comments .caption .csharetable > div.image .icon {
-  height: 45px;
-  width: 100%;
-  padding-top: 3px;
-}
-#comments .caption .csharetable > div.image .icon .usericon {
-  margin: 0 auto;
-}
-#comments .caption .csharetable > div.csharecnt {
-  padding-left: 0.5em;
-}
-#comments .caption .csharetable .shareprwrapper {
-  display: none;
-}
-#comments .caption .csharetable .shareprwrapper > div {
-  vertical-align: middle;
-  padding: 0.25em;
-}
-#comments .caption .csharetable .shareprwrapper > div.forimage {
-  width: 25px;
-  padding-left: 0;
-  padding-right: 0;
-}
-#comments .caption .csharetable .shareprwrapper > div.fortext {
-  padding-left: 0.25em;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-#comments .caption .csharetable .shareprwrapper > div.fortext span {
-  font-size: 0.8em;
-}
-#comments .caption .csharetable .shareprwrapper > div.extra div {
-  font-size: 0.9em;
-  float: right;
-}
-#comments .caption .csharetable .shareprwrapper .additionalcontent {
-  font-size: 0.8em;
-}
-#comments .caption .csharetable .shareprwrapper .img {
-  width: 25px;
-  height: 25px;
-  border-radius: 50%;
-  position: relative;
-}
-#comments .caption .csharetable .shareprwrapper .img .vstyle {
-  position: absolute;
-  left: 20px;
-  top: 14px;
-  font-size: 0.6em;
-  color: rgb(var(--neutral-grad-1));
-}
 #comments.fromtop .list {
   border-bottom: 0;
 }
@@ -447,10 +332,6 @@
 }
 #comments .list .comment:hover .metatable > div.panelWrapper .panel {
   opacity: 1;
-}
-#comments .list .comment .metatable .temppanel {
-  display: none;
-  text-align: right;
 }
 #comments .list .comment .metatable .adr {
   font-weight: 700;
@@ -1355,19 +1236,6 @@ html.mobileview #comments .emojionearea-editor {
 				display: block;
 			}
 		}*/
-  }
-  #comments .caption {
-    padding-left: 0.5em;
-    padding-right: 1em;
-  }
-  #comments .caption .csharetable > div.csharecnt {
-    padding-left: 0;
-  }
-  #comments .caption .csharetable .shareprwrapper > div.fortext {
-    padding-left: 0;
-  }
-  #comments .caption .csharetable .shareprwrapper > div.forimage {
-    width: 42px;
   }
   #comments .list .comment .commentPaddingWrapper {
     padding-left: 0.5em;
