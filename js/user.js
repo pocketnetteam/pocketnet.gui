@@ -249,8 +249,8 @@ User = function(app, p) {
 		}
 
 		
-
-		self.mncache.clear()
+		var cache = self.smcache('mncache' + (window.testpocketnet ? 'test' : 'production'), true)
+			cache.clear()
 
 		settings.clear();
 

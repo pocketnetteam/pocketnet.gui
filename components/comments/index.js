@@ -3002,6 +3002,14 @@ var comments = (function(){
 
 				authblock = false
 
+				share = null
+
+				currentstate = {
+					reply : null,
+					levels : {},
+					pagination : {}
+				}
+
 				/*_.each(areas, function(a){
 				})*/
 

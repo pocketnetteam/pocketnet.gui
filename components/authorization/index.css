@@ -198,8 +198,8 @@
   #authorization .work {
     padding-top: 1em;
     padding-bottom: 1em;
-    padding-left: 1em;
-    padding-right: 1em;
+    padding-left: 1em !important;
+    padding-right: 1em !important;
   }
   #authorization .mpad {
     /*padding-left: 2 * @rhythm;

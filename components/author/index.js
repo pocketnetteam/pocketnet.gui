@@ -1643,6 +1643,8 @@ var author = (function(){
 
 				actions.destroy();
 
+				author = null
+
 				el = {};
 
 				self.app.el.html.removeClass('allcontent')
