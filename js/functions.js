@@ -582,10 +582,32 @@
 				else{	
 					el.append(wnd);
 				}
-				
+
+				let wasFullscreen = false;
+
+				const fullscreenStateListener = function () {
+					wasFullscreen = !!document.fullscreenElement;
+				};
+
+				const escListener = function (e) {
+					const isEsc = e.code === 'Escape';
+
+					if (isEsc && !wasFullscreen) {
+						actions['close'](true);
+						document.removeEventListener('keyup', escListener);
+						document.removeEventListener('fullscreenchange', fullscreenStateListener);
+						wasFullscreen = false;
+					}
+				};
+
+				document.addEventListener('keyup', escListener);
+				document.addEventListener('fullscreenchange', fullscreenStateListener);
 
 				wnd.find("._close").on('click', function(){
 					actions["close"](true);
+					document.removeEventListener('keyup', escListener);
+					document.removeEventListener('fullscreenchange', fullscreenStateListener);
+					wasFullscreen = false;
 				});
 
 				wnd.find("._expand").on('click', function(){
