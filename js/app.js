@@ -71,6 +71,14 @@ Application = function(p)
       turl : "test.pocketnet.app",
       protocol : 'bastyon',
       blockexplorer : 'https://pocketnet.app/blockexplorer/'
+    },
+
+    BastyonPapp : {
+      fullname : "Bastyon",
+      url : "pocketnet.app",
+      turl : "test.pocketnet.app",
+      protocol : 'bastyon',
+      blockexplorer : 'https://pocketnet.app/blockexplorer/'
     }
   }
 

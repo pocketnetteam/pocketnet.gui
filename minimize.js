@@ -91,7 +91,12 @@ var _meta = {
 	Bastyon : {
 		url : "bastyon.com",
 		turl : "test.pocketnet.app"
-	}
+	},
+
+	BastyonPapp: {
+		url : "bastyon.com",
+		turl : "test.pocketnet.app"
+	},
 }
 
 var vars = {

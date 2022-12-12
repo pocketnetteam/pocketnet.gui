@@ -555,6 +555,24 @@ Platform = function (app, listofnodes) {
                     githublabel : 'downloadgithub'
                 },
 
+                ios : {
+                    appname: app.meta.fullname,
+                    id: "ios",
+                    text: {
+                        name: "Ios",
+                        download: self.app.localization.e('e132221'),
+                        label: self.app.localization.e('e132233ios')
+                    },
+
+                    icon: '<i class="fab fa-apple"></i>',
+
+                    modile : true,
+                    image : 'applications_ios.jpg',
+
+                    href: 'https://pocketnet.app/installios',
+                    hreflabel : 'installpwa',
+                },
+
                 windows: {
 
                     appname: app.meta.fullname,
