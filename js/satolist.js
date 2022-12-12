@@ -29659,7 +29659,7 @@ Platform = function (app, listofnodes) {
                 clbk();
             });
 
-            if (typeof _Electron == 'undefined' && !window.cordova && window.pocketnetproject !== 'Bastyon' && !bastyonhelperOpened && !window.testpocketnet){
+            /*if (typeof _Electron == 'undefined' && !window.cordova && window.pocketnetproject !== 'Bastyon' && !bastyonhelperOpened && !window.testpocketnet){
 
                 bastyonhelperOpened = true
 
@@ -29673,7 +29673,7 @@ Platform = function (app, listofnodes) {
 
                 }, 1000)
 
-            }
+            }*/
 
 
 
