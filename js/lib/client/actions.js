@@ -987,6 +987,7 @@ var Account = function(address, parent){
                 self.actions.value.push(action)
             }
             catch(e){
+                console.log('exported', exported)
                 console.error(e)
             }
 

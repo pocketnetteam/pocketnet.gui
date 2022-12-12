@@ -328,11 +328,15 @@ var comments = (function(){
 					authors.push(c.address)
 				})
 
+				console.log('authors', authors)
+
 				return self.psdk.userInfo.load(authors).then(() => {
 
 					var block = _.find(authors, (address) => {
 
 						var user = self.psdk.userInfo.get(address)
+
+						console.log('user', user)
 
 						return user && user.relation(self.app.user.address.value, 'blocking')
 					})
@@ -1926,8 +1930,10 @@ var comments = (function(){
 
 			})
 
+			console.log('actions.checkBanned', p)
 
 			actions.checkBanned(p).then((user) => {
+				console.log('user', user)
 				if (user){
 
 					var info = self.psdk.userInfo.getShortForm(user.address)

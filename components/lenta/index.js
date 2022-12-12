@@ -637,7 +637,7 @@ var lenta = (function(){
 						return s.id
 					})
 
-					if(sharesFromSub[first.txid]){
+					if (sharesFromSub[first.txid]){
 						k = '_sub'
 
 						larray = _.toArray(sharesFromSub)
@@ -648,6 +648,7 @@ var lenta = (function(){
 					})
 
 					//var first = _.first(sharesInview)
+
 
 					if (first && last){
 
@@ -4223,9 +4224,7 @@ var lenta = (function(){
 
 							var obs = self.sdk.sharesObserver.storage.viewed[essenseData.observe + '_sub']
 
-
 							if(!obs) return true
-
 
 							return (!obs.first || share.id > obs.first) || (!obs.last || share.id < obs.last)
 						}
@@ -4240,6 +4239,7 @@ var lenta = (function(){
 
 						self.app.platform.sdk.newmaterials.see('sub')
 					}
+
 
 					_.each(shares, function(share){
 						sharesFromSub[share.txid] = share
@@ -5166,7 +5166,6 @@ var lenta = (function(){
 
 			if(essenseData.observe && essenseData.includesub){
 				subloaded = !self.app.platform.sdk.sharesObserver.hasnewkeys([essenseData.observe + '_sub', 'sub'])
-
 			}
 
 			renders.loader(true)

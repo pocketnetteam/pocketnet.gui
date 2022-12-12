@@ -3021,11 +3021,17 @@ Remove = function(){
 	}
 	
 
-	self.export = function(){
+	self.export = function(extend){
 
-		return {
-			txidEdit: self.txidEdit || "",
+		var r = {
+			txidEdit: self.txidEdit.v || "",
 		}
+
+		if(extend){
+			r.type = self.type
+		}
+	
+		return r
 
 	}
 
@@ -3266,7 +3272,8 @@ kits = {
 		contentBoost : ContentBoost,
 		deleteAccount : DeleteAccount,
 		accDel : DeleteAccount,
-		transaction : Transaction
+		transaction : Transaction,
+		contentDelete : Remove
 	},
 
 	ini : {
@@ -3276,5 +3283,6 @@ kits = {
 		userInfo : pUserInfo,
 		share : pShare,
 		comment : pComment,
+		contentDelete : pRemove
 	}
 }

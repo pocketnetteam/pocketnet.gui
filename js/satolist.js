@@ -6704,6 +6704,7 @@ Platform = function (app, listofnodes) {
 
                 var block = self.currentBlock || (self.app.api.getCurrentBlock ? self.app.api.getCurrentBlock() : 0)
 
+
                 if (block){
 
                     if (block >= (self.sdk.sharesObserver.storage.viewed[app.user.address.value][key].block || 0) + 30){
@@ -6721,7 +6722,6 @@ Platform = function (app, listofnodes) {
 
             view : function(key, first, last){
 
-
                 if(key == 'saved') return
 
                 if(!self.sdk.sharesObserver.storage.viewed) self.sdk.sharesObserver.storage.viewed = {}
@@ -6737,7 +6737,6 @@ Platform = function (app, listofnodes) {
 
                 }
 
-
                 if (!self.sdk.sharesObserver.storage.viewed[app.user.address.value][key].last || self.sdk.sharesObserver.storage.viewed[app.user.address.value][key].last > last)
                     self.sdk.sharesObserver.storage.viewed[app.user.address.value][key].last = last
 
@@ -6749,28 +6748,48 @@ Platform = function (app, listofnodes) {
 
             },
 
+            key : function(){
+                return 'observer_' + (window.testpocketnet ? 'test' : 'production')
+            },
+
             save: function () {
 
                 try{
-                    localStorage['observer'] = JSON.stringify(self.sdk.sharesObserver.storage.viewed || {})
+                    localStorage[self.sdk.sharesObserver.key()] = JSON.stringify(self.sdk.sharesObserver.storage.viewed || {})
                 }
                 catch(e){
                 }
 
-                //self.app.settings.set('observer', 'sharesObserver', self.sdk.sharesObserver.storage.viewed || '{}')
+            },
+
+            init : function(clbk){
+                self.app.user.isState(function (state) {
+                    if(state){
+                        self.sdk.sharesObserver.load(clbk)
+
+                        app.platform.sdk.syncStorage.on('change', self.sdk.sharesObserver.key(), this.load);
+                    }
+                    else{
+                        if(clbk) clbk()
+                    }
+                })
+            },
+
+            destroy : function(){
+                self.sdk.sharesObserver.storage.viewed = {}
+
+                app.platform.sdk.syncStorage.off('change', self.sdk.sharesObserver.key());
 
             },
 
             load: function (clbk) {
                 try{
-                    self.sdk.sharesObserver.storage.viewed = JSON.parse(localStorage['observer'] || "{}") || {}
+                    self.sdk.sharesObserver.storage.viewed = JSON.parse(localStorage[self.sdk.sharesObserver.key()] || "{}") || {}
                 }
                 catch(e){
                     self.sdk.sharesObserver.storage.viewed = {}
                 }
                 
-                //self.sdk.sharesObserver.storage.viewed = self.app.settings.get('observer', 'sharesObserver') || {}
-
                 if(clbk) clbk()
             },
         },
@@ -13728,7 +13747,7 @@ Platform = function (app, listofnodes) {
                 delete: function (txid, clbk) {
 
                     var rm = new Remove()
-                        rm.txidEdit.set(share.txid);
+                        rm.txidEdit.set(txid);
 
                     self.app.platform.actions.addActionAndSendIfCan(rm).then(action => {
 
@@ -21484,7 +21503,7 @@ Platform = function (app, listofnodes) {
                     self.sdk.recommendations.load,
                     self.sdk.memtags.load,
                     self.sdk.node.shares.parameters.load,
-                    self.sdk.sharesObserver.load,
+                    self.sdk.sharesObserver.init,
                     self.sdk.comments.loadblocked
 
                 ], function () {

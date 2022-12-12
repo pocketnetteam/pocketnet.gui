@@ -121,7 +121,6 @@ var pSDK = function ({ app, api, actions }) {
             if (dbmeta[dbname].authorized) key = key + '_' + app.user.address.value
 
             return self.db.set(dbname, dbmeta[dbname].time, key, data).catch(e => {
-                console.log(dbname, result, key)
                 console.error(e)
                 return Promise.resolve()
             })
@@ -271,7 +270,6 @@ var pSDK = function ({ app, api, actions }) {
         var loaded = {}
         var load = []
 
-
         _.each(keys, (k) => {
 
             if (p.alternativeGetStorage) {
@@ -387,8 +385,11 @@ var pSDK = function ({ app, api, actions }) {
                 if (p.transform) {
                     var object = p.transform(r)
 
-                    if (object)
+                    if (object){
                         objects[key][r.key] = object
+                        
+                    }
+                        
                 }
 
             })
@@ -478,9 +479,21 @@ var pSDK = function ({ app, api, actions }) {
 
     var extendCache = {}
 
+    var clearIdCache = function(type, helpId){
+
+
+        console.log('type, helpId', type, helpId)
+
+        _.each(extendCache, (o, cid) => {
+            if(cid.indexOf(type + ":" + (helpId || "")) == 0){
+                delete extendCache[cid]
+            }
+        })
+    }   
+
     var extendFromActions = function(type, temps, object, helpId){
 
-        var cacheId = type + _.reduce(temps, (m, t) => {m + t}, '') + (helpId || "")
+        var cacheId = type + ":" + (helpId || "") + ":" + _.reduce(temps, (m, t) => {m + t}, '') + (helpId || "")
 
         if (extendCache[cacheId]) return extendCache[cacheId]
 
@@ -497,7 +510,6 @@ var pSDK = function ({ app, api, actions }) {
 
                         if(helpId){
 
-                            console.log('alias.id == helpId', alias.id, helpId, alias.id == helpId)
 
                             if (!object && (alias.id == helpId || alias.actionId == helpId)) {
                                 extendedObject = alias
@@ -511,10 +523,7 @@ var pSDK = function ({ app, api, actions }) {
                         }
                     }
 
-                    if (k != type){
-                        if(!extendedObject && !object) return
-                    }
-
+                    if(!extendedObject && !object) return
 
                     if (self[k] && self[k].applyAction) {
                         var applied = self[k].applyAction(extendedObject || object.clone(), alias)
@@ -562,7 +571,6 @@ var pSDK = function ({ app, api, actions }) {
         },
 
         load: function (addresses, light, update) {
-            var rt = performance.now()
 
 
             return loadList(light ? 'userInfoLight' : 'userInfoFull', addresses, (addresses) => {
@@ -570,6 +578,7 @@ var pSDK = function ({ app, api, actions }) {
                 var parameters = [addresses];
 
                 if (light) { parameters.push('1') }
+
 
                 return api.rpc('getuserprofile', parameters).then((data) => {
 
@@ -605,6 +614,7 @@ var pSDK = function ({ app, api, actions }) {
             var indexedDb = light ? 'userInfoLight' : 'userInfoFull'
             var fallbackIndexedDB = !light ? 'userInfoFullFB' : null
             var key = light ? 'userInfoLight' : 'userInfoFull'
+
 
             return settodb(indexedDb, result).then(() => {
                 return settodb(fallbackIndexedDB, result)
@@ -667,6 +677,8 @@ var pSDK = function ({ app, api, actions }) {
                 u = new pUserInfo()
                 u._import(data)
             }
+
+            clearIdCache('userInfo', u.address)
 
             return u
 
@@ -1237,8 +1249,6 @@ var pSDK = function ({ app, api, actions }) {
 
                 var filtered = []
 
-                console.log('result', result)
-
                 _.each(result, (r) => {
 
                     if (r && r.key && r.data) {
@@ -1300,12 +1310,8 @@ var pSDK = function ({ app, api, actions }) {
         transform: function ({ key, data: share }, small) {
 
             if (share.userprofile) {
-
                 self.userInfo[!small ? 'insertFromResponse' : 'insertFromResponseSmall'](self.userInfo.cleanData([share.userprofile]), true)
-
             }
-
-            console.log('share', share)
 
             if (share.lastComment) {
                 self.comment[!small ? 'insertFromResponse' : 'insertFromResponseSmall'](self.comment.cleanData([share.lastComment]))
@@ -1374,7 +1380,6 @@ var pSDK = function ({ app, api, actions }) {
 
                         if (c.s.version >= 2) {
 
-                            //console.log("C", c.m)
                             if(!_.isObject(c.m))
                                 c.m = JSON.parse(c.m)
                         }
