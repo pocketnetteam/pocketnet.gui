@@ -5,7 +5,8 @@ loclib.kr = {};
 
 var _l = loclib.kr;
 
-var appname = window.pocketnetproject || "Pocketnet"
+var appname = ((window.projects_meta || {})[window.pocketnetproject || "Bastyon"] || {}).fullname || 'Bastyon'
+
 //time
 
 _l.fewseconds = "몇 초 전";

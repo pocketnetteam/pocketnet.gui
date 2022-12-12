@@ -1,5 +1,5 @@
+var appname = ((window.projects_meta || {})[window.pocketnetproject || "Bastyon"] || {}).fullname || 'Bastyon'
 
-var appname = window.pocketnetproject || "Pocketnet"
 
 if(typeof loclib == "undefined" || !loclib)
 loclib = {};

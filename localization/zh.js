@@ -4,7 +4,8 @@ loclib = {};
 loclib.cmn = {};
 
 var _l = loclib.cmn;
-var appname = window.pocketnetproject || "Pocketnet"
+var appname = ((window.projects_meta || {})[window.pocketnetproject || "Bastyon"] || {}).fullname || 'Bastyon'
+
 //time
 
 _l.fewseconds = "几秒前";	
