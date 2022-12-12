@@ -8141,27 +8141,47 @@ initUpload = function (p) {
 /* ______________________________ */
 
 /* EVENTS */
+	globalpreloaderid = null;
+	
+	globalpreloader = function(show, dark){
 
-globalpreloader = function (show, dark) {
+		if(typeof window == 'undefined') return
 
-	if (typeof window == 'undefined') return
+		var el = $('#globalpreloader');
 
-	var el = $('#globalpreloader');
+		var thisid = makeid()
 
-	if (dark) {
-		el.addClass('dark')
+
+		window.requestAnimationFrame(() => {
+
+			if (dark){
+				el.addClass('dark')
+			}
+			else{
+				el.removeClass('dark')
+			}
+
+			if(show){
+				globalpreloaderid = thisid
+
+				el.addClass('show')
+
+				setTimeout(() => {
+					if (globalpreloaderid == thisid){
+						globalpreloader(false)
+					}
+				}, 15000)
+			}
+			else{
+				el.removeClass('show')
+
+				globalpreloaderid = null
+			}
+
+		})
+
+		
 	}
-	else {
-		el.removeClass('dark')
-	}
-
-	if (show) {
-		el.addClass('show')
-	}
-	else {
-		el.removeClass('show')
-	}
-}
 
 
 
