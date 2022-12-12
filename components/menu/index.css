@@ -310,6 +310,9 @@
 #menu .sections .items .item.onlyicon .count {
   color: rgb(var(--color-bg-ac-2));
 }
+#menu .sections .items .item .icon .icn img {
+  height: 18px;
+}
 #menu .sections .items .item.navWrapperItem {
   display: none;
 }
