@@ -1454,6 +1454,7 @@ var pSDK = function ({ app, api, actions }) {
                     c.i = _.map(c.i || [], function(i){return clearStringXss(i)});
                 }
                 catch (e) {
+                    console.log(c)
                     console.error(e)
 
                     return null

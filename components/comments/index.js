@@ -898,18 +898,22 @@ var comments = (function(){
 					else
 					{
 						show = true;
+						window.requestAnimationFrame(() => {
 
-						c.find('.repliesloaderWrapper').removeClass('hidden')
+							c.addClass('showedreplies')
+							c.find('.repliesloaderWrapper').removeClass('hidden')
+
+						})
 					}
 				}
 
 				if (show){
+
 					load.level(id, function(comments){
 
 						p.comments = comments
 
 						window.requestAnimationFrame(() => {
-							c.addClass('showedreplies')
 							c.find('.repliesloaderWrapper').addClass('hidden')
 						})
 						
@@ -924,6 +928,8 @@ var comments = (function(){
 							
 
 						}, id)
+
+					
 
 					}, currentstate.levels[id] ? currentstate.levels[id].comments : null)
 

@@ -229,6 +229,7 @@
   border-top: 0;
 }
 #comments .list .comment .answersWrapper {
+  position: relative;
   display: none;
   padding-top: 1em;
   padding-bottom: 1em;
