@@ -1,11 +1,9 @@
 {
     "name": "pocketnet",
-
-    "version": "0.8.34",
-    "versionsuffix": "1",
-    "cordovaversion": "1.8.34",
-    "cordovaversioncode": "180340",
-
+    "version": "0.8.20",
+    "versionsuffix": "2",
+    "cordovaversion": "1.8.20",
+    "cordovaversioncode": "180200",
     "description": "Bastyon desktop application",
     "author": "Pocketnet Community <support@pocketnet.app>",
     "company": "Pocketnet Community",
@@ -27,10 +25,8 @@
         "dev": "node minimize.js -prodaction=false -path=/pocketnet/",
         "dev:test": "node minimize.js -prodaction=false -test=true -path=/pocketnet/",
         "minimize:cordova": "node minimize.js -prodaction=true -vendor=30068 -path=/pocketnet/ -project=Bastyon -composetemplates=true",
-        "minimize:cordova:store": "node minimize.js -prodaction=true -vendor=30068 -path=/pocketnet/ -project=Bastyon -composetemplates=true -store=true",
         "minimize:cordova:test": "node minimize.js -prodaction=true -test=true -vendor=30068 -path=/pocketnet/ -project=Bastyon -composetemplates=true",
         "minimize:bastyon": "node minimize.js -prodaction=true -vendor=30068 -path=/ -project=Bastyon",
-        "minimize:bastyon:papp": "node minimize.js -prodaction=true -vendor=30068 -path=/ -project=BastyonPapp",
         "minimize:bastyon:test": "node minimize.js -prodaction=true -vendor=30068 -test=true -path=/ -project=Bastyon",
         "dev:bastyon": "node minimize.js -prodaction=false -path=/pocketnet/ -project=Bastyon",
         "dev:bastyon:test": "node minimize.js -prodaction=false -test=true -path=/pocketnet/ -project=Bastyon",
