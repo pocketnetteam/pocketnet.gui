@@ -108,7 +108,7 @@ var ProxyRequest = function(app = {}, proxy){
             var time = p.timeout || 30000
     
             if (window.cordova || isInStandaloneMode()){
-                time = time * 2
+                time = time * 1.5
             }
 
             if(data && data.method == 'sendrawtransactionwithmessage') time = time * 4
@@ -362,13 +362,20 @@ var Proxy16 = function(meta, app, api){
         return true
     }
 
+    var pinging = false
+
     self.api = {
         ping : () => {
-            return self.fetch('ping', {}, {timeout : 4000}).then(r => {
+
+            if(pinging){
+                return pinging
+            }
+
+            pinging = self.fetch('ping', {}, {timeout : 4000}).then(r => {
 
                 var rdate = new Date()
 
-                self.ping = rdate.addSeconds(60)
+                self.ping = rdate.addSeconds(120)
                 self.successping = true
                 self.session = r.session
                 delete self.pingerror
@@ -388,11 +395,15 @@ var Proxy16 = function(meta, app, api){
 
                 var rdate = new Date()
 
-                self.ping = rdate.addSeconds(10)
+                self.ping = rdate.addSeconds(30)
                 self.pingerror = true
                 
                 return Promise.reject(e)
+            }).finally(() => {
+                pinging = null
             })
+
+            return pinging
         },
 
         actualping : function(){

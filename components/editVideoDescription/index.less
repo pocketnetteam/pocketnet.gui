@@ -1,0 +1,70 @@
+@import "../../css/__cssvar";
+
+#editVideoDescription{
+    .dialogheader {
+        padding: 2 * @rhythm 0;
+        padding-top: 0;
+
+        span {
+            font-weight: 700;
+        }
+    }
+
+    .videoNameInput,
+    .videoDescriptionInput {
+        border-radius: 3px;
+        width: 80%;
+        border: none;
+        .shadowSmall();
+    }
+
+    .videoDescriptionInput {
+        padding-top: @rhythm;
+        padding-bottom: @rhythm;
+        padding: 2 * @rhythm 2.5 * @rhythm;
+        min-height: 110px;
+    }
+
+    .videoNameWrapper,
+    .videoDescriptionWrapper {
+        margin-bottom: @rhythm * 2;
+    }
+
+    .confirmButtons {
+        padding-top: 2 * @rhythm;
+
+        .button {
+            font-size: 1.2em;
+        }
+    }
+}
+
+.wnd.editVideoDescription {
+    .wndinner {
+        max-width: 800px;
+    }
+
+    .wndcontent {
+        border-bottom-left-radius: 6px;
+        border-bottom-right-radius: 6px;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    #editVideoDescription{
+        padding: 0 2 * @rhythm;
+        .videoNameInput,
+            .videoDescriptionInput {
+                width: 100%;
+    
+            }
+    }
+
+    .wnd.editVideoDescription {
+    
+        .wndcontent {
+            border-bottom-left-radius: 0px;
+            border-bottom-right-radius: 0px;
+        }
+    }
+}

@@ -3,7 +3,7 @@ if(typeof loclib == "undefined" || !loclib)
 
 	loclib.ru = {};
 
-var appname = window.pocketnetproject || "Pocketnet"
+var appname = ((window.projects_meta || {})[window.pocketnetproject || "Bastyon"] || {}).fullname || 'Bastyon'
 
 
 
@@ -207,7 +207,7 @@ _l.usavechanges = "Вы хотите сохранить изменения?";
 // statistic
 _l.referralsCount = 'Пользователей воспользовавшихся реферальной ссылкой';
 _l.commentatorsCount = function(limit){
-	return `Пользователей прокомментировавших вас более ${limit + (limit === 1 ? ' раза' : ' раз')} `;
+	return "Пользователей прокомментировавших вас более " + limit + (limit === 1 ? ' раза' : ' раз');
 };
 _l.from = 'Период: ';
 _l.to = 'по';
@@ -771,7 +771,15 @@ _l.e13224 = "Скачать "+appname+" для Linux"
 _l.e132233 = "Скачать "+appname+" для Android"
 
 _l.e132221 = "Скачать Мобильное Приложение. Это наиболее удобный способ использования "+appname+"."
+_l.installpwa = "Установить"
 
+_l.e132233ios = "Установить "+appname+" для IOS"
+
+_l.installios_caption =  "Установить прогрессивное веб приложение "+appname+" для IOS!"
+_l.installios_empty =  "Это страница для установки прогрессивного веб приложения для Iphone. Приложения для других операционных систем находятся по ссылке."
+_l.installios_empty_button =  "Перейти на страницу приложений"
+_l.installios_instruction1 = 'Нажмите'
+_l.installios_instruction2 = 'и затем "Добавить на домашний экран"'
 
 _l.e13225 = "Нода "+appname+""
 _l.e13226 = "Скачать Ноду"
@@ -950,6 +958,10 @@ _l.videotitle = "Введите заголовок видео";
 _l.videodesc = "Введите описание к видео";
 _l.entervideocaption = "Пожалуйста, введите заголовок видео";
 
+
+_l.selectnode = function(a) {
+	return `Вы действительно хотите подключиться к выбранной ${a} Node?`
+}
 
 _l.shareBareLink = "Поделиться Видео";
 _l.videoCopied = "Ссылка на видео успешно скопирована";
@@ -2153,6 +2165,15 @@ _l.boost_c17 = 'Устойчивость к цензуре'
 
 _l.gotopage = 'Перейти на страницу'
 
+_l.saved = "Сохранено"
+_l.savePost = "Сохранить пост"
+_l.postsaved = "Сохраненный пост"
+_l.deleteSavedPost = "Удалить сохраненный пост"
+_l.doYouDownloadVideo = "Вы хотите загрузить видео на свое устройство?"
+_l.gotosaved2 = "Перейти к сохранённой публикации"
+_l.yes = "Да"
+_l.no = "Нет"
+
 _l.postedVideos = "Опубликованные Видео"
 _l.unPostedVideos = "Неопубликованные Видео"
 _l.videoIsPosting = "Загрузка"
@@ -2173,6 +2194,9 @@ _l.videoServerVideo = "Видео Статистика";
 _l.goToDiagnose = "Перейти на страницу диагностики";
 _l.connectingTo = "Проверка";
 
+_l.earnings = "Всего заработано";
+
+_l.authHeading = "Авторизация";
 
 
 

@@ -117,15 +117,10 @@
 }
 #registration .mWrapper .stepsWrapper .step {
   min-height: 1px;
-  float: left;
-  opacity: 0;
   -moz-transition: 0.3s;
   -o-transition: 0.3s;
   -webkit-transition: 0.3s;
   transition: 0.3s;
-}
-#registration .mWrapper .stepsWrapper .step.active {
-  opacity: 1;
 }
 #registration .mWrapper #test {
   background: rgb(var(--background-total-theme));
@@ -537,6 +532,17 @@
 #registration .mWrapper .bloggers .welcome_text .name {
   color: rgb(var(--color-txt-ac));
 }
+#registration .mWrapper .bloggers .nextStepButtons {
+  position: sticky;
+  z-index: 1000;
+  bottom: 0;
+  height: 100px;
+  background: rgb(var(--background-hidden-layer));
+}
+#registration .mWrapper .bloggers .nextStepButtons .subc {
+  margin-top: 2em;
+  padding-top: 1em;
+}
 #registration .mWrapper .bloggers .usersHorizontal {
   margin-top: 20px;
   display: flex;
@@ -596,7 +602,7 @@
   cursor: default;
   width: 308px;
   position: absolute;
-  z-index: 9999;
+  z-index: 999;
   right: 180px;
   margin-top: 15px;
   background: rgb(var(--background-total-theme));
@@ -833,6 +839,12 @@
 #registration[step="bloggers"] .hasaccount {
   display: none;
 }
+#registration[step="bloggers"] .stepsWrapper {
+  overflow: visible;
+}
+#registration[step="bloggers"] .stepsWrapper .stepsWrapperLine {
+  overflow: visible;
+}
 .wndcontent #registration .categories .welcome_text {
   margin-top: 0.5em !important;
 }
@@ -851,6 +863,9 @@ html[theme="gray"] #registration .ucaptcha .captchaImage {
   #registration .mWrapper #test {
     width: 100%;
   }
+  #registration[step="bloggers"] .bloggers .nextStepButtons {
+    height: 150px;
+  }
   #registration .mWrapper .categories .cats {
     padding: 0.5em;
     justify-content: space-between;
@@ -862,10 +877,7 @@ html[theme="gray"] #registration .ucaptcha .captchaImage {
   #registration .mWrapper .cat {
     font-size: 0.8em !important;
   }
-  #registration .mWrapper .bloggers .subc {
-    margin-top: 2em;
-  }
-  .wndcontent #registration .categories .nextStepButtons {
+  .wndcontent #registration[step="categories"] .nextStepButtons {
     position: static;
   }
 }

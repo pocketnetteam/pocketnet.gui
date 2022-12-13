@@ -193,6 +193,7 @@
   #applications .mainos .os .data {
     left: 10%;
     top: 10%;
+    right: 1em;
   }
   #applications .mainos .os .subcaption {
     display: none;

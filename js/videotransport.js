@@ -218,11 +218,25 @@ var VideoTransport = function (app, ipcRenderer) {
 
     self.assets = {
         storeAsset(asset){
-            return idb_assetsStorage.storeAsset(asset)
+            try{
+                return idb_assetsStorage.storeAsset(asset).catch(e => {
+                    return Promise.resolve(undefined)
+                })
+            }
+            catch(e){
+                return Promise.resolve(undefined)
+            }
+            
         },
         getAsset(requestUri, requestRange, masterSwarmId){
-   
-            return idb_assetsStorage.getAsset(requestUri, requestRange, masterSwarmId)
+            try{
+                return idb_assetsStorage.getAsset(requestUri, requestRange, masterSwarmId) .catch(e => {
+                    return Promise.resolve(undefined)
+                })
+            }
+            catch(e){
+                return Promise.resolve(undefined)
+            }
             
             
             /*.catch(e => {
@@ -267,13 +281,34 @@ var VideoTransport = function (app, ipcRenderer) {
 
     self.segments = {
         storeSegment(segment){
-            return idb_segmentsStorage.storeSegment(segment)
+            try{
+                return idb_segmentsStorage.storeSegment(segment).catch(e => {
+                    return Promise.resolve(undefined)
+                })
+            }
+            catch(e){
+                return Promise.resolve(undefined)
+            }
         },
         getSegmentsMap(masterSwarmId){
-            return idb_segmentsStorage.getSegmentsMap(masterSwarmId)
+            try{
+                return idb_segmentsStorage.getSegmentsMap(masterSwarmId).catch(e => {
+                    return Promise.resolve(undefined)
+                })
+            }
+            catch(e){
+                return Promise.resolve(undefined)
+            }
         },
         getSegment(id, masterSwarmId){
-            return idb_segmentsStorage.getSegment(id, masterSwarmId)
+            try{
+                return idb_segmentsStorage.getSegment(id, masterSwarmId).catch(e => {
+                    return Promise.resolve(undefined)
+                })
+            }
+            catch(e){
+                return Promise.resolve(undefined)
+            }
         },
         clean() { },
         destroy() { }

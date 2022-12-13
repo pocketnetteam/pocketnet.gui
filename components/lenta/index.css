@@ -178,7 +178,8 @@
 #lenta .share .images {
   max-width: 590px;
 }
-#lenta .share .sharecaption {
+#lenta .share .sharecaption,
+#lenta .share .textPreview {
   max-width: 590px;
 }
 #lenta .share .message {

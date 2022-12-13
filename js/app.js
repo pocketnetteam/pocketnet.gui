@@ -56,23 +56,7 @@ Application = function(p)
     electron = require('electron');
   }
 
-  self._meta = {
-    Pocketnet : {
-      url : "pocketnet.app",
-      turl : "test.pocketnet.app",
-      fullname : "Pocketnet",
-      protocol : 'pocketnet',
-      blockexplorer : 'https://pocketnet.app/blockexplorer/'
-    },
-
-    Bastyon : {
-      fullname : "Bastyon",
-      url : "bastyon.com",
-      turl : "test.pocketnet.app",
-      protocol : 'bastyon',
-      blockexplorer : 'https://pocketnet.app/blockexplorer/'
-    }
-  }
+  self._meta = window.projects_meta
 
   self.meta = self._meta.Pocketnet
 
@@ -335,8 +319,11 @@ Application = function(p)
   }
 
   self.savesupported = function(){
-    var isElectron = (typeof _Electron !== 'undefined' && !!window.electron);
-    return isElectron || (window.cordova && !isios());
+    var isElectron = self.isElectron();
+    return isElectron || window.cordova;
+  }
+  self.savesupportedForBrowser = function(){
+    return !self.savesupported() && localStorage;
   }
 
   self.useip = function(){
@@ -1071,7 +1058,7 @@ Application = function(p)
      * for desktop popup before we had created popup
      * conditional checking in appear method of instance
      */
-    if (typeof initShadowPopups === 'function') initShadowPopups()
+    if (typeof initShadowPopups === 'function' && !window.testpocketnet) initShadowPopups()
   }
 
   self.reload = function(p){
@@ -1278,7 +1265,24 @@ Application = function(p)
   self.renewModules = function(map){}
   self.logger = function(Function, Message){}
 
-  self.Logger = new FrontendLogger(navigator.userAgent, self);
+  self.Logger = new FrontendLogger(
+    navigator.userAgent,
+    JSON.stringify(navigator.userAgentData),
+    location.href,
+    Intl.DateTimeFormat().resolvedOptions().timeZone,
+    self
+  );
+
+  if (Math.random() <= 0.05) {
+    window.onerror = function (errorMsg, url) {
+      self.Logger.error({
+        err: errorMsg,
+        uri: url,
+        code: -1,
+      });
+      return false;
+    };
+  }
 
   self.scrollRemoved = 0;
   self.scrollTop = 0
@@ -2393,9 +2397,9 @@ Application = function(p)
       
 
       if(isios()){
-        setTimeout(() => {
+        /*setTimeout(() => {
           cl()
-        }, 1000)
+        }, 1000)*/
       }
       else{
         window.requestAnimationFrame(() => {
@@ -2601,7 +2605,7 @@ Application = function(p)
       needmanage : false,
       hasupdate : false,
 
-      playstore : false,  ///// TODO
+      playstore : window.pocketnetstore || false,  ///// TODO
 
       downloadAndInstall : function(){
 
@@ -2738,12 +2742,9 @@ Application = function(p)
 
     var m = _.find(groups, function(g){
 
-      console.log('g', g, url.host, domain, _.indexOf(g, url.host))
-
       return _.indexOf(g, url.host) > -1 &&  (_.indexOf(g, domain) > -1 || domain.indexOf('localhost') > -1)
     })
 
-    console.log("MMM", m)
 
     if(m) return true
 

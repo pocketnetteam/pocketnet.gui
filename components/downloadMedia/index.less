@@ -1,0 +1,66 @@
+@import "../../css/__cssvar";
+
+#downloadMedia{
+
+	padding : 2 * @rhythm;
+	position: relative;
+	height: 100%;
+	width : 100%;
+
+	.cwrapper{
+		position: relative;
+		height: 100%;
+		width : 100%;
+	}
+
+	.caption{
+		font-size: 1.4em;
+	}
+
+	.content {
+		position: absolute;
+		top: 55px;
+	}
+
+	.cbuttons{
+		overflow-y: hidden;
+		>div{
+			float: right;
+
+			button{
+				min-width: 140px;
+			}
+		}
+	}
+
+}	
+
+.wnd.downloadMedia{
+	.wndinner{
+		max-width: 550px;
+		max-height: 250px;
+	}
+
+	.wndcontent{
+		top : 0;
+		overflow: hidden; 
+	}
+
+	#downloadMedia{
+		.caption{
+			top: 0;
+			left: 0;
+			right: 0;
+			height: 55px;
+			position: absolute;
+		}
+
+		.cbuttons{
+			bottom: 0;
+			left: 0;
+			right: 0;
+			height: 60px;
+			position: absolute;
+		}
+	}
+}
