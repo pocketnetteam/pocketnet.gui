@@ -3,6 +3,7 @@ var statistic = (function () {
   var self = new nModule();
 
   var essenses = {};
+  
 
   var Essense = function (p) {
 
@@ -10,17 +11,135 @@ var statistic = (function () {
 
     var el;
 
+    var block;
+
     var selectedPeriod = {
       from: {},
       to: {}
     }
+
+    var serversList = {};
+		var peertubeServers = {};
+
+    var lastMonth = moment().subtract(1, 'months').format('YYYY-MM-DD'); 
     var fields
 
     var loading = false
 
-    var prevPeriod
+    var prevPeriod;
+
+    var helpers = {
+			removeDuplicateVideos(host, videos) {
+				let formattingVideos = [...videos];
+
+				const serverRoy = Object.keys(serversList).find((royKey) =>
+					(serversList[royKey] || []).includes(host),
+				);
+
+				(serversList[serverRoy] || []).forEach((server) => {
+					if (server === host) return;
+
+					if (!peertubeServers[server]) return;
+
+					formattingVideos = formattingVideos.filter((video) => {
+						const duplicate = peertubeServers[server].videos.find(
+							(duplicatedVideo) => video.uuid === duplicatedVideo.uuid,
+						);
+
+						if (duplicate) {
+							//pick max amount of views
+							duplicate.views = Math.max(duplicate.views, video.views);
+
+							return false;
+						}
+
+						return true;
+					});
+				});
+
+				return formattingVideos;
+			}
+		}
 
     var actions = {
+
+      getFullPageInfo() {
+				
+				actions
+					.getTotalRatings()
+					.then((result) => {
+						const renderingStarts =
+							result.scoreCnt && result.scoreSum
+								? `${(result.scoreSum / result.scoreCnt).toFixed(1)} (${
+									result.scoreCnt
+								}) <i class="fas fa-star"></i>`
+								: `&mdash;`;
+
+						const renderingUsers = `${
+							result.countLikers || 0
+						}  <i class="fas fa-users"></i>`;
+						
+						renders.bonusProgram(
+							{
+								parameterName: 'bonusProgramRatings',
+								value: renderingStarts,
+							},
+							el.bonusProgramContainerViews,
+						);
+
+						renders.bonusProgram(
+							{
+								parameterName: 'UniqueUsers',
+								value: renderingUsers,
+							},
+							el.bonusProgramContainerUniqueUsers,
+						);
+					})
+					.catch((e) => {
+						renders.bonusProgram(
+							{
+								parameterName: 'bonusProgramRatings',
+								value: `<span class="errorLoading"><i class="fas fa-exclamation-circle"></i> ${self.app.localization.e(
+									'ErrorLoadingRates',
+								)}</span>`,
+							},
+							el.bonusProgramContainerViews,
+						);
+
+						renders.bonusProgram(
+							{
+								parameterName: 'UniqueUsers',
+								value: `<span class="errorLoading"><i class="fas fa-exclamation-circle"></i> ${self.app.localization.e(
+									'ErrorLoadingRates',
+								)}</span>`,
+							},
+							el.bonusProgramContainerUniqueUsers,
+						);
+					});
+			},
+
+			getTotalRatings() {
+				if (self.app.platform.sdk.address.pnet()) {
+					var address = self.app.platform.sdk.address.pnet().address;
+					return self.app.api
+						.rpc('getcontentsstatistic', [[address], 'video', 738274, 738274], {})
+						.then((r) => {
+							var d =
+								_.find(r || [], function (obj) {
+									return address == obj.address;
+								}) || {};
+
+							return Promise.resolve(d);
+						})
+						.catch((err) => {
+							if (!err.text) err.text = 'GET_TOTAL_RATINGS_VIDEOCABINET';
+
+							return sitemessage(helpers.parseVideoServerError(err));
+						});
+				} else {
+					return Promise.reject();
+				}
+			},
 
       loading: function (sh) {
         loading = sh
@@ -29,12 +148,12 @@ var statistic = (function () {
 
       getStat: async function () {
 
-
-        if (prevPeriod?.to.block === selectedPeriod.to.block && prevPeriod?.from.block === selectedPeriod.from.block ) {
-          return
-        }
+        // if (prevPeriod?.to.block === selectedPeriod.to.block && prevPeriod?.from.block === selectedPeriod.from.block ) {
+        //   return
+        // }
 
         prevPeriod = JSON.parse(JSON.stringify(selectedPeriod))
+
         actions.loading(true)
         fields = []
 
@@ -82,15 +201,28 @@ var statistic = (function () {
       to: function (e) {
         selectedPeriod.to.date = e.target.value
         selectedPeriod.to.block = Math.floor((moment().unix() - moment(e.target.value).unix()) / 60) - 1439
-        selectedPeriod.from.date? actions.from(selectedPeriod.from.date): actions.from('2022-07-01')
-        renders.form()
-        actions.getStat()
+        selectedPeriod.from.date? actions.from(selectedPeriod.from.date): actions.from(lastMonth)
+        // renders.form()
+        // actions.getStat()
       }
     }
 
     var events = {}
 
     var renders = {
+    
+
+      bonusProgram(parameters = {}, element) {
+				self.shell(
+					{
+						name: 'bonusProgram',
+						el: element,
+						data: { ...parameters },
+					},
+					(p) => {},
+				);
+			},
+      
       form: function (clbk) {
         self.shell({
 
@@ -106,6 +238,33 @@ var statistic = (function () {
       },
 
       block: function (clbk) {
+
+        var earnings = 0;
+
+        if (fields){
+
+          fields.forEach(function(field){
+
+            if (field.commentators){
+              if (field.limit === 1){
+                earnings += field.commentators;
+              }
+    
+              if (field.limit === 3){
+                earnings += field.commentators / 2;
+              }
+    
+              if (field.limit === 7){
+                earnings += field.commentators / 4;
+              }
+            }
+
+          })
+
+        }
+
+        var real = self.app.platform.ui.usertype(self.user.address.value) === 'real';
+
         self.shell({
 
           name: 'block',
@@ -114,10 +273,11 @@ var statistic = (function () {
             fields: _.sortBy(fields, function(c){
               return c.limit
             }),
-            loading: loading
+            earnings: earnings,
+            loading: loading, 
+            real: real
           },
         }, function (_p) {
-
         })
       }
     }
@@ -133,6 +293,9 @@ var statistic = (function () {
 
     var initEvents = function () {
 
+      // renders.statistic();
+			actions.getFullPageInfo();
+      
     }
 
     return {
@@ -164,8 +327,22 @@ var statistic = (function () {
         el.block = p.el.find('.block');
         el.form = p.el.find('.form')
 
-        selectedPeriod.to.block = 0
-        selectedPeriod.from.block = Math.floor((moment().unix() - moment('2022-07-01').unix()) / 60)
+        el.bonusProgramContainerViews = el.c.find('.leaderBoardContainerViews');
+				el.bonusProgramContainerUniqueUsers = el.c.find(
+					'.leaderBoardContainerUniqueUsers',
+				);
+
+        if (!selectedPeriod.to.block ){
+
+          selectedPeriod.to.block = 0;
+
+        }
+
+        if (!selectedPeriod.from.block){
+
+          selectedPeriod.from.block = Math.floor((moment().unix() - moment(lastMonth).unix()) / 60)
+
+        }
         renders.form()
 
         initEvents();

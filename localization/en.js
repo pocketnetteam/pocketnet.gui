@@ -1,5 +1,7 @@
+var appname = ((window.projects_meta || {})[window.pocketnetproject || "Bastyon"] || {}).fullname || 'Bastyon'
 
-var appname = window.pocketnetproject || "Pocketnet"
+
+console.log('window.projects_meta', window.projects_meta)
 
 if(typeof loclib == "undefined" || !loclib)
 loclib = {};
@@ -206,7 +208,7 @@ _l.usavechanges = "Do you want to save your changes?";
 
 _l.referralsCount = 'Users who have used the referral link.';
 _l.commentatorsCount = function(limit){
-    return `Users have commented on you more than ${limit + (limit === 1 ? ' time' : ' times')}`;
+    return "Users have commented on you more than " + limit + (limit === 1 ? ' time' : ' times')
 };
 _l.from = 'Period: ';
 _l.to = 'to';
@@ -811,6 +813,15 @@ _l.e13224 = "Download "+appname+" for Linux"
 
 _l.e132233 = "Download "+appname+" for Android"
 _l.e132221 = "Download Mobile App - this is the most usefull way to use "+appname+"."
+_l.installpwa = "Install"
+_l.e132233ios = "Install "+appname+" for IOS"
+
+_l.installios_caption =  "Install "+appname+" progressive web application for IOS!"
+_l.installios_empty =  "This is the page to install the Progressive Web App for iPhone. Applications for other operating systems can be found here"
+_l.installios_empty_button =  "Go to application page"
+_l.installios_instruction1 = 'Tap'
+_l.installios_instruction2 = 'then "Add to home screen"'
+
 
 _l.e13225 = ""+appname+" Node"
 _l.e13226 = "Download Node"
@@ -1091,6 +1102,9 @@ _l.system16 = {
     charts : {
 
     }
+}
+_l.selectnode = function(a) {
+    return `Do you really want reconnect to selected ${a} Node?`
 }
 
 
@@ -2362,6 +2376,15 @@ _l.boost_c17 = 'Censorship resistant'
 
 _l.gotopage = 'Go to page'
 
+_l.saved = "Saved"
+_l.savePost = "Save post"
+_l.postsaved = "Post saved"
+_l.deleteSavedPost = "Delete saved post"
+_l.doYouDownloadVideo = "Do you want to download the video on your device ?"
+_l.gotosaved2 = "Go to saved"
+_l.yes = "Yes"
+_l.no = "No"
+
 _l.postedVideos = "Posted Videos"
 _l.unPostedVideos = "Unposted Videos"
 _l.videoIsPosting = "Posting"
@@ -2381,4 +2404,10 @@ _l.serversTestingProgress = "Progress of Diagnosing:";
 _l.videoServerVideo = "Video Info";
 _l.goToDiagnose = "Go to Diagnostics";
 _l.connectingTo = "Connecting to";
+_l.earnings = "Total earnings";
+
+
+
+_l.authHeading = "Auth";
+
 

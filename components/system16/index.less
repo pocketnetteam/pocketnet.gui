@@ -880,22 +880,19 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 9px;
-            font-weight: 700;
-            line-height: 26px;
             color: rgb(var(--color-txt-gray-dark));
             margin: 0 auto;
         }
         .field{
             width: 100%;
-            vertical-align: top;
             padding :3 * @rhythm 2 * @rhythm;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
-            font-size: 15px;
-            text-align: center;
-            line-height: 1.4;
+            
+            span{
+                font-size: 0.8em;
+            }
         }
         .notifications-table{
             display: flex;
@@ -959,6 +956,11 @@
                         visibility: visible;
                     }
                 }
+            }
+
+            i,
+            span{
+                font-size: 0.8em;
             }
         }
 

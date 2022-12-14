@@ -2,7 +2,8 @@ if(typeof loclib == 'undefined' || !loclib)
 loclib = {};
 
 loclib.fr = {};
-var appname = window.pocketnetproject || "Pocketnet"
+var appname = ((window.projects_meta || {})[window.pocketnetproject || "Bastyon"] || {}).fullname || 'Bastyon'
+
 var _l = loclib.fr;
 
 //time
@@ -1378,3 +1379,11 @@ _l.desktopPopupDisagree = "Pas maintenant"
 
 _l.profanity_tag = 'impiété'
 
+_l.saved = "Sauvegardé"
+_l.savePost = "Sauvegarder le post"
+_l.postsaved = "Post sauvegardé"
+_l.deleteSavedPost = "Supprimer le post enregistré"
+_l.doYouDownloadVideo = "Voulez-vous télécharger la vidéo sur votre appareil ?"
+_l.gotosaved2 = "Afficher les posts"
+_l.yes = "Oui"
+_l.no = "Non"

@@ -2,10 +2,13 @@ const path = require('path');
 const fs = require('fs');
 const http = require('http');
 const https = require('https');
+const url = require('url');
+const mime = require('mime-types');
 
 module.exports = class VideoDownload {
   PostsDir = 'posts';
   VideosDir = 'videos';
+  ImagesDir = 'images';
   DownloadProgress = {};
 
   Regexps = {
@@ -57,6 +60,10 @@ module.exports = class VideoDownload {
     ipcMain.handle('getVideoDownloadProgress', async (event, shareId) => {
       return videoDownloader.getVideoDownloadProgress(shareId);
     });
+
+    ipcMain.handle('saveShareImages', async (event, folder, images) => {
+      return await videoDownloader.saveShareImages(folder, images);
+    });
   }
 
   static detachHandlers(ipcMain) {
@@ -67,6 +74,9 @@ module.exports = class VideoDownload {
     ipcMain.removeHandler('getShareData');
     ipcMain.removeHandler('getVideoData');
     ipcMain.removeHandler('getVideoSegment');
+    ipcMain.removeHandler('setVideoDownloadStatus');
+    ipcMain.removeHandler('getVideoDownloadProgress');
+    ipcMain.removeHandler('saveShareImages');
   }
 
   async savePostData(shareData) {
@@ -75,7 +85,7 @@ module.exports = class VideoDownload {
 
     const jsonData = JSON.stringify(shareData);
 
-    fs.writeFileSync(jsonDir, jsonData, { overwrite: false });
+    fs.writeFileSync(jsonDir, jsonData, { overwrite: true });
 
     return shareDir;
   }
@@ -92,6 +102,13 @@ module.exports = class VideoDownload {
       status: 'downloading',
       progress: 0,
     };
+
+    // Save thumbnail image
+    const thumbnailPath = 'https://' + videoData.from + videoData.thumbnailPath;
+    const thumbnailName = thumbnailPath.substring(thumbnailPath.lastIndexOf('/') + 1);
+    const thumbnailDest = path.join(videoDir, thumbnailName);
+    await this.writeImage(thumbnailPath, thumbnailDest);
+    videoData.previewPath = url.pathToFileURL(thumbnailDest);
 
     const jsonData = JSON.stringify(videoData);
     fs.writeFileSync(jsonDir, jsonData, { overwrite: false });
@@ -256,9 +273,19 @@ module.exports = class VideoDownload {
     const shareDir = this.getPostFolder(shareId);
     const jsonPath = path.join(shareDir, 'share.json');
 
-    const jsonData = fs.readFileSync(jsonPath, { encoding:'utf8', flag:'r' });
-
-    return JSON.parse(jsonData);
+    var jsonData = fs.readFileSync(jsonPath, { encoding:'utf8', flag:'r' });
+    jsonData = JSON.parse(jsonData);
+    if (jsonData && jsonData.share && jsonData.share.i && jsonData.share.i.length > 0) {
+      jsonData.share.i = jsonData.share.i.map((imgUrl) => {
+        if (fs.existsSync(imgUrl)) {
+          let imgBase64 = fs.readFileSync(imgUrl, {encoding: 'base64'});
+          if (imgBase64)
+            return 'data:' + mime.lookup(imgUrl) + ';base64,' + imgBase64;
+        }
+        return imgUrl;
+      });
+    }
+    return jsonData;
   }
 
   getVideoData(shareId, videoId) {
@@ -459,4 +486,63 @@ module.exports = class VideoDownload {
 
     return videoDir;
   }
+
+  getImageFolder = (postId) => {
+    const imageDir = path.join(this.getPostFolder(postId), this.ImagesDir);
+
+    if (!fs.existsSync(imageDir)) {
+      fs.mkdirSync(imageDir, { recursive: true });
+    }
+
+    return imageDir;
+  }
+
+  writeImage(url, destinationPath) {
+    return new Promise((resolve, reject) => {
+      let isHttps = /^https:/;
+      let isHttp = /^http:/;
+      let protocol;
+      if (isHttp.test(url))
+          protocol = http;
+      if (isHttps.test(url))
+          protocol = https;
+      if (protocol) {
+          protocol.get(url, (res) => {
+              res.pipe(fs.createWriteStream(destinationPath));
+              resolve();
+          }).on('error', (err) => {
+              reject('Error: ' + err);
+          });
+      } else {
+          reject('Unsupported protocol');
+      }
+    });
+  }
+
+  async saveShareImages(folder, images) {
+    if (!folder || !images || !images.length)
+        return [];
+    
+    const resImages = [];
+    const shareId = path.basename(folder);
+    const imagesDir = this.getImageFolder(shareId);
+    if (!fs.existsSync(imagesDir))
+        fs.mkdirSync(imagesDir, { recursive: true });
+    function waitt(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+    for (var i = 0; i < images.length; i++) {
+        try {
+            let imageName = path.basename(images[i]);
+            let imagePath = path.join(imagesDir, imageName);
+            await this.writeImage(images[i], imagePath);
+            resImages.push(path.normalize(imagePath));
+        } catch(err) {
+            return Promise.reject('Cannot write image to device: ' + err);
+        }
+    }
+    await waitt(500);
+    return resImages;
+  };
+
 }

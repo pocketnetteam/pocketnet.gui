@@ -336,9 +336,6 @@
   padding-left: 0;
   padding-right: 0;
 }
-#userpage .maketsWrapper .report #statistic {
-  min-height: 600px;
-}
 #userpage .maketsWrapper .report #statistic .mwork {
   padding-bottom: 2em;
 }

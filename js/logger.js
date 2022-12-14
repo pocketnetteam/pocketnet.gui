@@ -3,8 +3,11 @@ const DEFAULT_CONTENT_TYPE = 'text/plain';
 const SENDING_INTERVAL = 30000;
 
 class FrontendLogger {
-  constructor(userAgent = '', app = {}) {
+  constructor(userAgent = '', userData = '', uri = '', timezone = '', app = {}) {
     this.userAgent = userAgent;
+    this.userData = userData;
+    this.uri = uri;
+    this.timezone = timezone;
     this.app = app;
 
     this.guid = makeid();
@@ -140,6 +143,9 @@ class FrontendLogger {
     err = '',
     guid = '',
     userAgent = '',
+    userData = '',
+    uri = '',
+    timezone = ''
   }) {
     const parametersOrder = [
       level,
@@ -149,6 +155,9 @@ class FrontendLogger {
       payload,
       err,
       userAgent,
+      userData,
+      uri,
+      timezone,
       guid,
     ].map((element) =>
       typeof element !== 'number' ? `'${element}'` : element,
@@ -164,6 +173,9 @@ class FrontendLogger {
     date = moment().format('YYYY-MM-DD hh:mm:ss'),
     moduleVersion = '0.0.1',
     userAgent = '',
+    userData = '',
+    uri = '',
+    timezone = '',
     guid = '',
     language = 'no',
   }) {
@@ -174,6 +186,9 @@ class FrontendLogger {
       date,
       moduleVersion,
       userAgent,
+      userData,
+      uri,
+      timezone,
       guid,
       language,
     ].map((element) =>
@@ -188,6 +203,9 @@ class FrontendLogger {
       _errorsCache,
       guid,
       userAgent,
+      userData,
+      uri,
+      timezone,
       _addLogWithAggregation,
       errorCounters,
       loggerActive,
@@ -207,7 +225,7 @@ class FrontendLogger {
       errorBody = `{ "error": "Unable to stringify received error. Report: ${errorFormat}", "type": "ERROR_PROCESSING_FAILED"}`;
     }
 
-    const formattedError = { ...error, guid, userAgent, payload: errorBody };
+    const formattedError = { ...error, guid, userAgent, userData, uri, timezone, payload: errorBody };
 
     if (error.level) formattedError.level = error.level;
 
@@ -326,6 +344,9 @@ class FrontendLogger {
       _logsCache,
       guid,
       userAgent,
+      userData,
+      uri,
+      timezone,
       loggerActive,
       logCodes,
       _addLogWithAggregation,
@@ -343,6 +364,9 @@ class FrontendLogger {
       value: actionValue,
       guid,
       userAgent,
+      userData,
+      uri,
+      timezone,
       language,
     };
 

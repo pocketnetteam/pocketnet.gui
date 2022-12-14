@@ -1547,9 +1547,9 @@ Nav = function(app)
 				self.api.loadDefault(p);
 
 				//////
+				var isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
 
-
-				if (!electron && !window.cordova && !electronopen && !app.platform.sdk.usersettings.meta.openlinksinelectron.value && !isMobile() && !isTablet()){
+				if (!electron && !window.cordova && !electronopen && !app.platform.sdk.usersettings.meta.openlinksinelectron.value && !isMobile() && !isTablet() && !isFirefox){
 
 					var currentHref = self.get.href();
 					var pathname = self.get.pathname();

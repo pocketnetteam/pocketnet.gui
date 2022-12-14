@@ -12,8 +12,7 @@
   padding: 0 1em;
 }
 #videoCabinet .unpostedFooter {
-  color: rgb(var(--neutral-grad-1));
-  font-weight: bold;
+  color: #b2abac;
   text-decoration: underline;
   padding: 0 1em;
   margin-top: 1em;
