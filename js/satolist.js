@@ -7218,7 +7218,7 @@ Platform = function (app, listofnodes) {
                                 },
                                 {
                                     id : "Apple App",
-                                    q : "Est-ce que Bastyon peut être ajouté à Apple?",
+                                    q : "Est-ce que Bastyon peubastyonCalls.min.jst être ajouté à Apple?",
                                     a : "<div>Apple a décidé de ne pas autoriser Bastyon en raison du manque d`opportunités de censure centralisée par Apple, nous le portons comme un insigne d`honneur. </div>",
                                 },
                                 {
@@ -31177,6 +31177,9 @@ Platform = function (app, listofnodes) {
 					})
 
 					return res
+				},
+				getWithLocale: (key) => {
+					return  self.app.localization.e(key)
 				}
 			}
 

@@ -498,7 +498,9 @@ var component = Object(componentNormalizer["a" /* default */])(
         'm.room.image': true,
         'm.room.audio': true,
         'm.room.file': true,
-        'm.call.candidates': true,
+        'm.call.invite': true,
+        'm.call.hangup': true,
+        'm.call.reject': true,
         'm.fully_read': true
       };
 
@@ -560,17 +562,14 @@ var component = Object(componentNormalizer["a" /* default */])(
         var type = e.event.type;
 
         if (e.localRedactionEvent() || e.getRedactionEvent()) {
-          console.log('1', e.event.type);
           return;
         }
 
         if (e.event.type === 'm.room.power_levels' && Object.keys(e.event.content.users).length === 1) {
-          console.log('2', e.event.type);
           return;
         }
 
         if (this.chat.currentState.getMembers().length <= 2 && e.event.type === 'm.room.member' && 'm.room.power_levels') {
-          console.log('3', e.event.type);
           return;
         }
 
@@ -590,6 +589,10 @@ var component = Object(componentNormalizer["a" /* default */])(
       });
       events = events.reverse();
       this.$emit('getEvents', events);
+      console.log('IN C', events); // events = _.filter(events, function (e) {
+      //   return e.ty
+      // })
+
       return events;
     },
     getEventsAndEncrypt: function () {
