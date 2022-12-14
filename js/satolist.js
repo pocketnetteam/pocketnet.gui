@@ -569,7 +569,7 @@ Platform = function (app, listofnodes) {
                     modile : true,
                     image : 'applications_ios.jpg',
 
-                    href: 'https://pocketnet.app/installios',
+                    href: 'https://pocketnet.app/bastyon_iphone',
                     hreflabel : 'installpwa',
                 },
 
