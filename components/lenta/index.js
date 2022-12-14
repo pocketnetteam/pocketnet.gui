@@ -22,6 +22,8 @@ var lenta = (function(){
 		var subloaded = false
 		var subloadedindex = 0
 
+		var wasFullscreen = false;
+
 		var boosted = [],
 			boostloadedblock = 0,
 			boostplaces = {}
@@ -2255,8 +2257,11 @@ var lenta = (function(){
 				_.each(willshowed, function(share){
 					actions.shareReturnAfterOptimization(share)
 				})
-			}
+			},
 
+			changeFullscreenState : function () {
+				wasFullscreen = !!document.fullscreenElement;
+			},
 		}
 
 		var events = {
@@ -2751,16 +2756,41 @@ var lenta = (function(){
 			exitFullScreenVideo : function(){
 				var shareId = $(this).closest('.share').attr('id');
 
-					actions.exitFullScreenVideo(shareId)
+				document.removeEventListener('keyup', events.escKeyListener);
+				document.removeEventListener('fullscreenchange', events.fullscreenStateChange);
+
+				wasFullscreen = false;
+
+				actions.exitFullScreenVideo(shareId)
 			},
 
 			fullScreenVideo : function(){
 
 				var shareId = $(this).closest('.share').attr('id');
 
-					self.app.mobile.vibration.small()
+				document.addEventListener('keyup', (e) => {
+					events.escKeyListener(e, shareId);
+				});
+				document.addEventListener('fullscreenchange', events.fullscreenStateChange);
+
+				self.app.mobile.vibration.small()
 
 				actions.fullScreenVideo(shareId)
+			},
+
+			fullscreenStateChange : function () {
+				actions.changeFullscreenState();
+			},
+
+			escKeyListener : function (e, shareId) {
+				if (e.code === 'Escape' && !wasFullscreen) {
+					document.removeEventListener('keyup', events.escKeyListener);
+					document.removeEventListener('fullscreenchange', events.fullscreenStateChange);
+
+					wasFullscreen = false;
+
+					actions.exitFullScreenVideo(shareId);
+				}
 			},
 
 			opensvi : function(){

@@ -1151,6 +1151,18 @@
 			el.on('click', function(){
 				self.destroy()
 			})
+
+			const escListener = function (e) {
+				const isEsc = e.code === 'Escape';
+
+				if (isEsc) {
+					self.destroy();
+					document.removeEventListener('keyup', escListener);
+				}
+			};
+
+			document.addEventListener('keyup', escListener);
+
 		}
 
 		var self = new dialog(p);
