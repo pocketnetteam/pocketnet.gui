@@ -31,22 +31,24 @@
 #editVideoDescription .videoTagsWrapper {
   margin-bottom: 2em;
 }
-#editVideoDescription .confirmButtons {
-  padding-top: 1em;
-}
 #editVideoDescription .confirmButtons .button {
-  font-size: 1.2em;
+  width: 150px;
 }
 .wnd.editVideoDescription .wndinner {
   max-width: 800px;
+  max-height: 550px;
 }
 .wnd.editVideoDescription .wndcontent {
+  background: rgb(var(--background-secondary-theme)) !important;
   border-bottom-left-radius: 6px;
   border-bottom-right-radius: 6px;
 }
 @media only screen and (max-width: 768px) {
   #editVideoDescription {
     padding: 0;
+  }
+  #editVideoDescription .confirmButtons .button {
+    font-size: 1.2em;
   }
   #editVideoDescription .videoNameInput,
   #editVideoDescription .videoDescriptionInput {
@@ -55,17 +57,14 @@
   #editVideoDescription .cancelEditing {
     display: none;
   }
-  #editVideoDescription .confirmEditing {
-    width: 100%;
-  }
   #editVideoDescription .confirmButtons {
     padding: 0 1em;
   }
   #editVideoDescription .confirmButtons .button {
     font-size: 1em;
+    width: 100%;
   }
   .wnd.editVideoDescription .wndcontent {
-    background: rgb(var(--background-secondary-theme)) !important;
     border-bottom-left-radius: 0px;
     border-bottom-right-radius: 0px;
   }

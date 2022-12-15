@@ -46,10 +46,8 @@
     }
 
     .confirmButtons {
-        padding-top: 2 * @rhythm;
-
         .button {
-            font-size: 1.2em;
+            width: 150px;
         }
     }
 }
@@ -57,9 +55,12 @@
 .wnd.editVideoDescription {
     .wndinner {
         max-width: 800px;
+        max-height: 550px;
     }
 
     .wndcontent {
+        background: rgb(var(--background-secondary-theme)) !important;
+
         border-bottom-left-radius: 6px;
         border-bottom-right-radius: 6px;
     }
@@ -68,6 +69,12 @@
 @media only screen and (max-width: 768px) {
     #editVideoDescription{
         padding: 0;
+
+        .confirmButtons {
+            .button {
+                font-size: 1.2em;
+            }
+        }
 
         .videoNameInput,
         .videoDescriptionInput {
@@ -78,15 +85,12 @@
             display: none;
         }
     
-        .confirmEditing {
-            width: 100%;
-        }
-    
         .confirmButtons {
             padding: 0 2 * @rhythm;
 
             .button {
                 font-size: 1em;
+                width: 100%;
             }
         }
     }
@@ -94,8 +98,6 @@
     .wnd.editVideoDescription {
 
         .wndcontent {
-            background: rgb(var(--background-secondary-theme)) !important;
-
             border-bottom-left-radius: 0px;
             border-bottom-right-radius: 0px;
         }
