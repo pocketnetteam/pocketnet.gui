@@ -29,7 +29,7 @@
 #editVideoDescription .videoNameWrapper,
 #editVideoDescription .videoDescriptionWrapper,
 #editVideoDescription .videoTagsWrapper {
-  margin-bottom: 2em;
+  margin-bottom: 1em;
 }
 #editVideoDescription .confirmButtons .button {
   width: 150px;
