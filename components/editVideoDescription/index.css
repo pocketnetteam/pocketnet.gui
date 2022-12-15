@@ -1,46 +1,67 @@
 #editVideoDescription .dialogheader {
-  padding: 1em 0;
+  padding: 1em;
   padding-top: 0;
 }
 #editVideoDescription .dialogheader span {
   font-weight: 700;
+  font-size: 1.5em;
 }
 #editVideoDescription .videoNameInput,
 #editVideoDescription .videoDescriptionInput {
   border-radius: 3px;
   width: 80%;
   border: none;
-  box-shadow: 0 5px 10px -5px rgba(var(--color-shadow-base), 0.4);
+  padding: 1em 1.25em;
 }
 #editVideoDescription .videoDescriptionInput {
-  padding-top: 0.5em;
-  padding-bottom: 0.5em;
-  padding: 1em 1.25em;
   min-height: 110px;
 }
+#editVideoDescription .videoTagsWrapper .tagsInputWrapper {
+  width: 100% !important;
+}
+#editVideoDescription .videoTagsWrapper .inputWrapper {
+  box-shadow: none !important;
+  width: 100% !important;
+}
+#editVideoDescription .videoTagsWrapper .searchWrapper {
+  padding: 1em 1.25em;
+}
 #editVideoDescription .videoNameWrapper,
-#editVideoDescription .videoDescriptionWrapper {
+#editVideoDescription .videoDescriptionWrapper,
+#editVideoDescription .videoTagsWrapper {
   margin-bottom: 1em;
 }
-#editVideoDescription .confirmButtons {
-  padding-top: 1em;
-}
 #editVideoDescription .confirmButtons .button {
-  font-size: 1.2em;
+  width: 150px;
 }
 .wnd.editVideoDescription .wndinner {
   max-width: 800px;
+  max-height: 550px;
 }
 .wnd.editVideoDescription .wndcontent {
+  background: rgb(var(--background-secondary-theme)) !important;
   border-bottom-left-radius: 6px;
   border-bottom-right-radius: 6px;
 }
 @media only screen and (max-width: 768px) {
   #editVideoDescription {
-    padding: 0 1em;
+    padding: 0;
+  }
+  #editVideoDescription .confirmButtons .button {
+    font-size: 1.2em;
   }
   #editVideoDescription .videoNameInput,
   #editVideoDescription .videoDescriptionInput {
+    width: 100%;
+  }
+  #editVideoDescription .cancelEditing {
+    display: none;
+  }
+  #editVideoDescription .confirmButtons {
+    padding: 0 1em;
+  }
+  #editVideoDescription .confirmButtons .button {
+    font-size: 1em;
     width: 100%;
   }
   .wnd.editVideoDescription .wndcontent {
