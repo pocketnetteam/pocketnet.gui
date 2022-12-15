@@ -27,10 +27,13 @@
         }
 
         .imageWithCaption {
-            background: rgb(var(--background-secondary-theme));
+            // background: red; 
+            background: rgb(250,250,250); 
+            // background: rgb(var(--background-secondary-theme));             
             border-radius: 16px;
-            .shadowSmaller();
-            padding: 3 * @rhythm;
+            // .shadowSmaller();
+            padding: 30px;
+            // padding: 3 * @rhythm;
 
             .subcaption {
                 text-align: center;
@@ -77,9 +80,11 @@
         grid-gap: 1 * @rhythm;
 
         .featureWithImage {
-            background: rgb(var(--background-secondary-theme));
+            // background:red;
+            // background: rgb(var(--background-secondary-theme));
+            background: rgb(250,250,250);
             border-radius: 16px;
-            .shadowSmaller();
+            // .shadowSmaller();
 
             .imageWrapper {
                 img {
@@ -105,7 +110,7 @@
         align-items: center;
 
         iframe {
-            .shadowSmaller();
+            // .shadowSmaller();
         }
 
     }
@@ -131,8 +136,10 @@
 
         img {
             border-radius: 10px;
-            border: 1px solid rgb(var(--neutral-grad-1));
-            .shadowSmaller();
+            // border: 1px solid red;
+            // border: 1px solid rgb(var(--neutral-grad-1));
+            border: 1px solid rgb(227,228,235);
+            // .shadowSmaller();
         }
 
         .faq {
@@ -145,7 +152,9 @@
                     font-size: 2.5em;
                     font-weight: 700;
                     padding-bottom: @rhythm;
-                    color: rgb(var(--color-txt-orange));
+                    // color: red;
+                    // color: rgb(var(--color-txt-orange));
+                    color: rgb(255,72,0);
                 }
 
                 .groupCnt {
@@ -162,7 +171,9 @@
                         .questionName {
                             padding-bottom: 2 * @rhythm;
                             font-weight: 700;
-                            color: rgb(var(--color-txt-gray));
+                            // color: red;
+                            // color: rgb(var(--color-txt-gray));
+                            color: rgb(70,71,98);
                             font-size: 1.5em;
                             max-width: 85%;
                         }
@@ -173,7 +184,9 @@
 
                             a {
                                 text-decoration: underline;
-                                color: rgb(var(--color-txt-ac));
+                                // color: red;
+                                // color: rgb(var(--color-txt-ac));
+                                color: rgb(0,164,255);
                             }
 
                             .image {
@@ -199,7 +212,9 @@
 
                             &:hover {
 
-                                color: rgb(var(--color-txt-ac));
+                                // color: red;
+                                // color: rgb(var(--color-txt-ac));
+                                color: rgb(0,164,255);
                             }
 
                             span {
@@ -208,10 +223,14 @@
                         }
 
                         .icon {
-                            background: rgb(var(--color-bg-ac));
-                            color: rgb(var(--text-on-bg-ac-color));
+                            background: red;
+                            // background: rgb(var(--color-bg-ac));
+                            background: rgb(0,164,255);
+                            // color: red;
+                            // color: rgb(var(--text-on-bg-ac-color));
+                            color: rgb(255,255,255);
                             cursor: pointer;
-                            .transition(0.3s);
+                            // .transition(0.3s);
                             width: 44px;
                             height: 44px;
                             line-height: 44px;
@@ -220,7 +239,9 @@
                             font-size: 0.6em;
 
                             &:hover {
-                                background: rgb(var(--color-txt-ac));
+                                background: red;
+                                // background: rgb(var(--color-txt-ac));
+                                background: rgb(0,164,255);
                             }
                         }
                     }
@@ -239,7 +260,21 @@
         margin-top: @rhythm * 4;
         padding-top: @rhythm * 4;
         .title{
-            font-size:
+            padding-bottom: 1em;
+            font-weight: 700;
+            // color: red;
+            // color: rgb(var(--color-txt-gray));
+            color: rgb(70,71,98);
+            font-size: 1.5em;
+            max-width: 85%;
+        }
+        .category{
+            font-size: 0.8em;
+            padding-bottom: 20px;
+        }
+        .imageWrapper{
+            display: flex;
+            justify-content: center;
         }
 
     }
