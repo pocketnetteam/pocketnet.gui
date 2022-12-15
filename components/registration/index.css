@@ -566,6 +566,19 @@
   -webkit-line-clamp: 6;
   line-clamp: 6;
 }
+#registration .mWrapper .bloggers .usersHorizontal .wrk .aboutWrapper {
+  padding: 0 1em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 12;
+  line-clamp: 12;
+  -webkit-box-orient: vertical;
+}
+#registration .mWrapper .bloggers .usersHorizontal .wrk .aboutWrapper.aboutWrapperShort {
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+}
 #registration .mWrapper .bloggers .usersHorizontal .wrk .subscribeWrapper {
   margin-top: 16px;
   width: 100%;
@@ -664,24 +677,13 @@
 #registration .mWrapper .bloggers .usersHorizontal .wrk .modal .subscribeWrapper.following .subscribe {
   display: none;
 }
-#registration .mWrapper .bloggers .usersHorizontal .wrk .modal .aboutWrapper {
-  padding: 0 1em;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 12;
-  line-clamp: 12;
-  -webkit-box-orient: vertical;
-}
-@media (pointer: fine) {
-  #registration .mWrapper .bloggers .usersHorizontal .wrk .iconWrapper:hover .modal {
-    display: block;
-  }
-}
 #registration .mWrapper .bloggers .usersHorizontal .user {
   padding: 1em;
   border: 1px solid rgba(var(--color-medium-theme), 0.3);
   border-radius: 12px;
+}
+#registration .mWrapper .bloggers .usersHorizontal .user.showMore .modal {
+  display: block;
 }
 #registration .mWrapper .bloggers .usersHorizontal .user .addressWrapper .iconWrapper {
   display: flex;
@@ -803,6 +805,14 @@
   border-radius: 12px;
   font-weight: 700;
   text-decoration: underline;
+}
+#registration .mWrapper .bloggers .showMoreAbout {
+  margin-top: 0.5em;
+  color: #00A4FF;
+  cursor: pointer;
+}
+#registration .mWrapper .bloggers .showMoreAbout:hover {
+  opacity: 0.6;
 }
 #registration .mWrapper .bloggers .subcaption {
   font-weight: 100;
