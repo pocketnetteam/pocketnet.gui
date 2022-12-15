@@ -2410,4 +2410,7 @@ _l.earnings = "Total earnings";
 
 _l.authHeading = "Auth";
 
+_l.terms = 'Terms and Conditions for Bastyon';
+_l.daccept = "Accept and continue";
+
 
