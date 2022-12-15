@@ -1,5 +1,7 @@
+var appname = ((window.projects_meta || {})[window.pocketnetproject || "Bastyon"] || {}).fullname || 'Bastyon'
 
-var appname = window.pocketnetproject || "Pocketnet"
+
+console.log('window.projects_meta', window.projects_meta)
 
 if(typeof loclib == "undefined" || !loclib)
 loclib = {};
@@ -2409,5 +2411,8 @@ _l.earnings = "Total earnings";
 
 
 _l.authHeading = "Auth";
+
+_l.terms = 'Terms and Conditions for Bastyon';
+_l.daccept = "Accept and continue";
 
 

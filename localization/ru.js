@@ -3,7 +3,7 @@ if(typeof loclib == "undefined" || !loclib)
 
 	loclib.ru = {};
 
-var appname = window.pocketnetproject || "Pocketnet"
+var appname = ((window.projects_meta || {})[window.pocketnetproject || "Bastyon"] || {}).fullname || 'Bastyon'
 
 
 
@@ -2201,6 +2201,9 @@ _l.connectingTo = "Проверка";
 _l.earnings = "Всего заработано";
 
 _l.authHeading = "Авторизация";
+
+_l.terms = 'Правила и условия испльзования Бастиона';
+_l.daccept = "Принять и продолжить";
 
 
 

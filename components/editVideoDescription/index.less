@@ -2,11 +2,12 @@
 
 #editVideoDescription{
     .dialogheader {
-        padding: 2 * @rhythm 0;
+        padding : 2 * @rhythm;
         padding-top: 0;
 
         span {
             font-weight: 700;
+            font-size: 1.5em;
         }
     }
 
@@ -15,26 +16,38 @@
         border-radius: 3px;
         width: 80%;
         border: none;
-        .shadowSmall();
+
+        padding: 2 * @rhythm 2.5 * @rhythm;
     }
 
     .videoDescriptionInput {
-        padding-top: @rhythm;
-        padding-bottom: @rhythm;
-        padding: 2 * @rhythm 2.5 * @rhythm;
         min-height: 110px;
     }
 
+    .videoTagsWrapper {
+        .tagsInputWrapper {
+            width: 100% !important;   
+        }
+
+        .inputWrapper {
+            box-shadow: none !important;
+            width: 100% !important;
+        }
+
+        .searchWrapper {
+            padding: 2 * @rhythm 2.5 * @rhythm;
+        }   
+    }
+
     .videoNameWrapper,
-    .videoDescriptionWrapper {
+    .videoDescriptionWrapper,
+    .videoTagsWrapper {
         margin-bottom: @rhythm * 2;
     }
 
     .confirmButtons {
-        padding-top: 2 * @rhythm;
-
         .button {
-            font-size: 1.2em;
+            width: 150px;
         }
     }
 }
@@ -42,9 +55,12 @@
 .wnd.editVideoDescription {
     .wndinner {
         max-width: 800px;
+        max-height: 550px;
     }
 
     .wndcontent {
+        background: rgb(var(--background-secondary-theme)) !important;
+
         border-bottom-left-radius: 6px;
         border-bottom-right-radius: 6px;
     }
@@ -52,16 +68,35 @@
 
 @media only screen and (max-width: 768px) {
     #editVideoDescription{
-        padding: 0 2 * @rhythm;
-        .videoNameInput,
-            .videoDescriptionInput {
-                width: 100%;
-    
+        padding: 0;
+
+        .confirmButtons {
+            .button {
+                font-size: 1.2em;
             }
+        }
+
+        .videoNameInput,
+        .videoDescriptionInput {
+            width: 100%;
+        }
+
+        .cancelEditing {
+            display: none;
+        }
+    
+        .confirmButtons {
+            padding: 0 2 * @rhythm;
+
+            .button {
+                font-size: 1em;
+                width: 100%;
+            }
+        }
     }
 
     .wnd.editVideoDescription {
-    
+
         .wndcontent {
             border-bottom-left-radius: 0px;
             border-bottom-right-radius: 0px;

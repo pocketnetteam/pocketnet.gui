@@ -2344,7 +2344,7 @@ pShare = function(){
 		v.t = _.map(self.tags || [], function(t){ return encodeURIComponent(t) })
 		v.i = _.clone(self.images)
 		v._time = self._time;
-		v.s = _.clone(self.settings)
+		v.s = _.clone(self.settings)	
 		v.l = self.language
 		v.p = self.poll
 		v.deleted = self.deleted
@@ -2361,11 +2361,25 @@ pShare = function(){
 
 	self.social = function(app){
 
-		var name = app.platform.api.name(self.address)
+		var text = self.message.v;
+
+		if (window.cordova && deep(window, 'plugins.socialsharing') && self.message.blocks){
+
+			var name = app.platform.api.name(self.address)
+			var edjs = new edjsHTML(null, app)
+			var message = edjs.apply(self.message, decodeURIComponent)
+			text = edjs.text(message);
+			text = self.caption + `\n\n` + text;
+	
+		} else {
+
+			text = self.renders.text(text);
+
+		}
 
 		var s = {
 			image : '',
-			images : self.images || [],
+			files : self.images || [],
 			title : app.localization.e('postby') + " " + name,
 			html : {
 				body : self.renders.xssmessagec(),
@@ -2373,8 +2387,9 @@ pShare = function(){
 			},
 
 			text : {
-				body : self.renders.text(),
-				preview : trimHtml(self.renders.text(), 130).replace(/ &hellip;/g, '...').replace(/&hellip;/g, '...')
+				body : text,
+				preview : trimHtml(self.renders.text(), 130).replace(/ &hellip;/g, '...').replace(/&hellip;/g, '...'),
+				title: self.caption
 			}
 		
 		}
