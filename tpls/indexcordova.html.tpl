@@ -8,7 +8,7 @@
         <meta http-equiv='expires' content='0'>
         <meta http-equiv="X-Frame-Options: SAMEORIGIN">
         
-        <title>__VAR__.project</title>
+        <title>__VAR__.name</title>
         <meta name="description" content="A Revolutionary anti-censorship decentralized publishing and social platform. Based on the blockchain technology, it runs on a set of computers around the world, not controlled by any single entity. Self-policed by users with good reputation where nobody records your keystrokes, viewing habits or searches. ">
         <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1, user-scalable=no">
         <meta name="fragment" content="!">

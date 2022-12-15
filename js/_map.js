@@ -200,9 +200,9 @@ __map =  {
 		],*/
 	},      
 
-	installios: {
-		uri : "installios",
-		href : "installios",
+	bastyon_iphone: {
+		uri : "bastyon_iphone",
+		href : "bastyon_iphone",
 		add : insertingfunc,
 		anonimus : true,
 		electronDontOpen : true

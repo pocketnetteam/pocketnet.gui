@@ -1,4 +1,4 @@
-var installios = (function(){
+var bastyon_iphone = (function(){
 
 	var self = new nModule();
 
@@ -100,11 +100,11 @@ var installios = (function(){
 
 if(typeof module != "undefined")
 {
-	module.exports = installios;
+	module.exports = bastyon_iphone;
 }
 else{
 
-	app.modules.installios = {};
-	app.modules.installios.module = installios;
+	app.modules.bastyon_iphone = {};
+	app.modules.bastyon_iphone.module = bastyon_iphone;
 
 }
