@@ -693,6 +693,21 @@
 
 					}
 
+					.aboutWrapper{
+						padding : 0 @rhythm * 2;
+						overflow: hidden;
+						text-overflow: ellipsis;
+						display: -webkit-box;
+						-webkit-line-clamp: 12;
+						line-clamp: 12; 
+						-webkit-box-orient: vertical;
+
+						&.aboutWrapperShort{
+							-webkit-line-clamp: 2;
+							line-clamp: 2; 
+						}
+					}
+
 					.subscribeWrapper{
 						margin-top: 16px; 
 						width: 100%;
@@ -702,6 +717,8 @@
 							width: 100%;
 							max-width: 210px;
 						}
+
+
 
 						.unsubscribeButton{
 							display: none;
@@ -831,32 +848,8 @@
 								}
 							}
 						}
+				
 		
-						.aboutWrapper{
-							padding : 0 @rhythm * 2;
-							overflow: hidden;
-							text-overflow: ellipsis;
-							display: -webkit-box;
-							-webkit-line-clamp: 12;
-							line-clamp: 12; 
-							-webkit-box-orient: vertical;
-						}
-
-		
-		
-					}
-
-					.iconWrapper{
-					
-						&:hover{
-
-							@media (pointer: fine){
-								.modal{
-									display: block;
-								}					
-							}
-	
-						}
 					}
 		
 
@@ -867,6 +860,13 @@
 					padding : @rhythm * 2;
 					border: 1px solid rgba(var(--color-medium-theme), 0.3);			
 					border-radius: 12px;
+
+					&.showMore{
+						.modal{
+							display: block;
+						}	
+					}
+	
 					
 					
 		
@@ -1038,6 +1038,16 @@
 				border-radius: 12px;
 				font-weight: 700;
 				text-decoration: underline;
+			}
+
+			.showMoreAbout{
+				margin-top: @rhythm;
+				color: #00A4FF;
+				cursor: pointer;
+				
+				&:hover{
+					opacity: 0.6;
+				}
 			}
 
 			.subcaption{
