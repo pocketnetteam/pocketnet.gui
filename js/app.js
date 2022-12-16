@@ -56,23 +56,7 @@ Application = function(p)
     electron = require('electron');
   }
 
-  self._meta = {
-    Pocketnet : {
-      url : "pocketnet.app",
-      turl : "test.pocketnet.app",
-      fullname : "Pocketnet",
-      protocol : 'pocketnet',
-      blockexplorer : 'https://pocketnet.app/blockexplorer/'
-    },
-
-    Bastyon : {
-      fullname : "Bastyon",
-      url : "bastyon.com",
-      turl : "test.pocketnet.app",
-      protocol : 'bastyon',
-      blockexplorer : 'https://pocketnet.app/blockexplorer/'
-    }
-  }
+  self._meta = window.projects_meta
 
   self.meta = self._meta.Pocketnet
 

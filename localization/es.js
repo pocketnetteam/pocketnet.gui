@@ -3,7 +3,8 @@ if(typeof loclib == "undefined" || !loclib)
 
 	loclib.es = {};
 
-	var appname = window.pocketnetproject || "Pocketnet"
+	var appname = ((window.projects_meta || {})[window.pocketnetproject || "Bastyon"] || {}).fullname || 'Bastyon'
+
 
 var _l = loclib.es;
 

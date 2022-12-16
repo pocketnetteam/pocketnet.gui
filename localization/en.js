@@ -1,5 +1,7 @@
+var appname = ((window.projects_meta || {})[window.pocketnetproject || "Bastyon"] || {}).fullname || 'Bastyon'
 
-var appname = window.pocketnetproject || "Pocketnet"
+
+console.log('window.projects_meta', window.projects_meta)
 
 if(typeof loclib == "undefined" || !loclib)
 loclib = {};
@@ -811,6 +813,15 @@ _l.e13224 = "Download "+appname+" for Linux"
 
 _l.e132233 = "Download "+appname+" for Android"
 _l.e132221 = "Download Mobile App - this is the most usefull way to use "+appname+"."
+_l.installpwa = "Install"
+_l.e132233ios = "Install "+appname+" for IOS"
+
+_l.installios_caption =  "Install "+appname+" progressive web application for IOS!"
+_l.installios_empty =  "This is the page to install the Progressive Web App for iPhone. Applications for other operating systems can be found here"
+_l.installios_empty_button =  "Go to application page"
+_l.installios_instruction1 = 'Tap'
+_l.installios_instruction2 = 'then "Add to home screen"'
+
 
 _l.e13225 = ""+appname+" Node"
 _l.e13226 = "Download Node"
@@ -2398,5 +2409,8 @@ _l.earnings = "Total earnings";
 
 
 _l.authHeading = "Auth";
+
+_l.terms = 'Terms and Conditions for Bastyon';
+_l.daccept = "Accept and continue";
 
 

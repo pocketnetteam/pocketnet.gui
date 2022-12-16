@@ -8,7 +8,7 @@
         <meta http-equiv='expires' content='0'>
         <meta http-equiv="X-Frame-Options: SAMEORIGIN">
 
-        <!-- <title>__VAR__.project</title> -->
+        <!-- <title>__VAR__.name</title> -->
         <meta name="description" content="">
         <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1, user-scalable=no">
         <meta name="fragment" content="!">

@@ -3,7 +3,7 @@ if(typeof loclib == "undefined" || !loclib)
 
 	loclib.ru = {};
 
-var appname = window.pocketnetproject || "Pocketnet"
+var appname = ((window.projects_meta || {})[window.pocketnetproject || "Bastyon"] || {}).fullname || 'Bastyon'
 
 
 
@@ -771,7 +771,15 @@ _l.e13224 = "Скачать "+appname+" для Linux"
 _l.e132233 = "Скачать "+appname+" для Android"
 
 _l.e132221 = "Скачать Мобильное Приложение. Это наиболее удобный способ использования "+appname+"."
+_l.installpwa = "Установить"
 
+_l.e132233ios = "Установить "+appname+" для IOS"
+
+_l.installios_caption =  "Установить прогрессивное веб приложение "+appname+" для IOS!"
+_l.installios_empty =  "Это страница для установки прогрессивного веб приложения для Iphone. Приложения для других операционных систем находятся по ссылке."
+_l.installios_empty_button =  "Перейти на страницу приложений"
+_l.installios_instruction1 = 'Нажмите'
+_l.installios_instruction2 = 'и затем "Добавить на домашний экран"'
 
 _l.e13225 = "Нода "+appname+""
 _l.e13226 = "Скачать Ноду"
@@ -2189,6 +2197,9 @@ _l.connectingTo = "Проверка";
 _l.earnings = "Всего заработано";
 
 _l.authHeading = "Авторизация";
+
+_l.terms = 'Правила и условия испльзования Бастиона';
+_l.daccept = "Принять и продолжить";
 
 
 

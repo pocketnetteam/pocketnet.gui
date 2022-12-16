@@ -200,7 +200,14 @@ __map =  {
 		],*/
 	},      
 
-	
+	bastyon_iphone: {
+		uri : "bastyon_iphone",
+		href : "bastyon_iphone",
+		add : insertingfunc,
+		anonimus : true,
+		electronDontOpen : true
+	},
+
 	easynode : {
 		uri : "easynode",
 		href : "easynode",
