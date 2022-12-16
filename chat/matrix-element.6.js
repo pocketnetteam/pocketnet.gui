@@ -1522,6 +1522,26 @@ var CancelablePromise = __webpack_require__("0bb9");
       }
 
       if (this.transaction && !this.pkoindisabled) {
+        menuItems.push({
+          click: "cameraHandlerCustom",
+          title: this.$i18n.t("button.takePhotoOrVideo"),
+          icon: "fas fa-camera"
+        });
+        menuItems.push({
+          click: "fileHandler",
+          title: this.$i18n.t("button.sendFile"),
+          icon: "fas fa-sticky-note",
+          upload: {
+            multiple: true,
+            extensions: [],
+            maxsize: 25,
+            images: {
+              resize: {
+                type: 'fit'
+              }
+            }
+          }
+        });
         menuItems.unshift({
           click: "sendtransactionWrapper",
           title: this.$i18n.t("button.sendCoins"),
