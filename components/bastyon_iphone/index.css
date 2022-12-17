@@ -2,7 +2,7 @@
   margin: 0 auto;
   margin-top: 2em;
   text-align: center;
-  max-width: 250px;
+  max-width: 350px;
 }
 #bastyon_iphone .caption span {
   font-size: 2em;
@@ -12,10 +12,14 @@
   margin: 0 auto;
   margin-top: 4em;
   padding-bottom: 5em;
-  text-align: center;
-  max-width: 250px;
+  text-align: left;
+  max-width: 350px;
+}
+#bastyon_iphone .instruction .line {
+  margin-bottom: 0.5em;
 }
 #bastyon_iphone .instruction span {
+  font-size: 1.2em;
   line-height: 25px;
 }
 #bastyon_iphone .instruction img {
