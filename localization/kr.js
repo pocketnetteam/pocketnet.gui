@@ -840,7 +840,7 @@ _l.noDownloadedVideos = "다운로드한 동영상이 없습니다.";
 _l.buy = '구입';
 
 _l.lowstar1 = "Bastyon 팀은 금지된 콘텐츠를 제외하고 별 1개 및 2개 등급에 대해 일시적인 유예 조치를 시행하고 있습니다. 금지된 콘텐츠는 다음과 같습니다."
-_l.lowstar_reason_1 = "포르노"
+_l.lowstar_reason_1 = "에로틱/포르노"
 _l.lowstar_reason_2 = "아동 착취"
 _l.lowstar_reason_3 = "직접적인 폭력 위협"
 _l.lowstar_reason_4 = "불법 마약"

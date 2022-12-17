@@ -1,47 +1,51 @@
-#installios .caption {
+#bastyon_iphone .caption {
   margin: 0 auto;
   margin-top: 2em;
   text-align: center;
-  max-width: 250px;
+  max-width: 350px;
 }
-#installios .caption span {
+#bastyon_iphone .caption span {
   font-size: 2em;
   font-weight: 700;
 }
-#installios .instruction {
+#bastyon_iphone .instruction {
   margin: 0 auto;
   margin-top: 4em;
   padding-bottom: 5em;
-  text-align: center;
-  max-width: 250px;
+  text-align: left;
+  max-width: 350px;
 }
-#installios .instruction span {
+#bastyon_iphone .instruction .line {
+  margin-bottom: 0.5em;
+}
+#bastyon_iphone .instruction span {
+  font-size: 1.2em;
   line-height: 25px;
 }
-#installios .instruction img {
+#bastyon_iphone .instruction img {
   width: 25px;
 }
-#installios .instruction path {
+#bastyon_iphone .instruction path {
   fill: blue;
 }
-#installios .logowrapper {
+#bastyon_iphone .logowrapper {
   margin-top: 4em;
   margin-bottom: 4em;
 }
-#installios .logowrapper img {
+#bastyon_iphone .logowrapper img {
   display: block;
   width: 170px;
   margin: 0 auto;
 }
-#installios .notisonWrapper {
+#bastyon_iphone .notisonWrapper {
   margin-top: 4em;
 }
-#installios .notisonWrapper .notios {
+#bastyon_iphone .notisonWrapper .notios {
   margin: 0 auto;
   text-align: center;
   max-width: 250px;
 }
-#installios .notisonWrapper .gotoapplicationsWrapper {
+#bastyon_iphone .notisonWrapper .gotoapplicationsWrapper {
   margin-top: 2em;
   text-align: center;
 }

@@ -814,12 +814,17 @@ _l.e13224 = "Download "+appname+" for Linux"
 _l.e132233 = "Download "+appname+" for Android"
 _l.e132221 = "Download Mobile App - this is the most usefull way to use "+appname+"."
 _l.installpwa = "Install"
-_l.e132233ios = "Install "+appname+" for IOS"
 
-_l.installios_caption =  "Install "+appname+" progressive web application for IOS!"
-_l.installios_empty =  "This is the page to install the Progressive Web App for iPhone. Applications for other operating systems can be found here"
+_l.step1 = "Step 1:"
+_l.step2 = "Step 2:"
+_l.installios_instruction3 = "at the bottom of the screen"
+
+_l.e132233ios = "Install "+appname+" for Iphone"
+
+_l.installios_caption =  "Install "+appname+" for Iphone"
+_l.installios_empty =  "This is the page to install the Application for iPhone. Applications for other operating systems can be found here"
 _l.installios_empty_button =  "Go to application page"
-_l.installios_instruction1 = 'Tap'
+_l.installios_instruction1 = 'tap'
 _l.installios_instruction2 = 'then "Add to home screen"'
 
 
@@ -2264,7 +2269,7 @@ _l.removeimageswhenvideo = "The images attached to the post will be deleted if y
 
 
 _l.lowstar1 = "Bastyon team is implementing a temporary moratorium on 1 and 2 star ratings, except prohibited content. Prohibited content is:"
-_l.lowstar_reason_1 = "Porno"
+_l.lowstar_reason_1 = "Erotic/Porn"
 _l.lowstar_reason_2 = "Child exploitation"
 _l.lowstar_reason_3 = "Direct threat of violence"
 _l.lowstar_reason_4 = "Illegal narcotics"

@@ -1202,7 +1202,7 @@ _l.buy = 'Acquistare';
 
 
 _l.lowstar1 = "Il team di Bastyon sta implementando una moratoria temporanea sulle valutazioni a 1 e 2 stelle, ad eccezione dei contenuti vietati. I contenuti vietati sono:"
-_l.lowstar_reason_1 = "Porno"
+_l.lowstar_reason_1 = "Erotico/porno"
 _l.lowstar_reason_2 = "Sfruttamento minorile"
 _l.lowstar_reason_3 = "Minaccia diretta di violenza"
 _l.lowstar_reason_4 = "Droghe illegali"
