@@ -1478,23 +1478,47 @@ var CancelablePromise = __webpack_require__("0bb9");
     menuItems: function () {
       var menuItems = [];
 
-      if (window.POCKETNETINSTANCE) {
-        if (window.POCKETNETINSTANCE.mobile.supportimagegallery()) {
+      if (this.transaction && !this.pkoindisabled) {
+        menuItems.unshift({
+          click: "sendtransactionWrapper",
+          title: this.$i18n.t("button.sendCoins"),
+          icon: "fas fa-wallet"
+        });
+
+        if (window.POCKETNETINSTANCE) {
+          if (window.POCKETNETINSTANCE.mobile.supportimagegallery()) {
+            menuItems.push({
+              click: "cameraHandlerCustom",
+              title: this.$i18n.t("button.takePhotoOrVideo"),
+              icon: "fas fa-camera"
+            });
+          }
+        } else {
           menuItems.push({
-            click: "cameraHandlerCustom",
+            click: "cameraHandler",
             title: this.$i18n.t("button.takePhotoOrVideo"),
-            icon: "fas fa-camera"
+            icon: "fas fa-camera",
+            upload: {
+              multiple: true,
+              extensions: ['jpg', 'jpeg', 'png', 'webp'],
+              maxsize: 100,
+              images: {
+                resize: {
+                  type: 'fit'
+                }
+              }
+            }
           });
         }
-      } else {
+
         menuItems.push({
-          click: "cameraHandler",
-          title: this.$i18n.t("button.takePhotoOrVideo"),
-          icon: "fas fa-camera",
+          click: "fileHandler",
+          title: this.$i18n.t("button.sendFile"),
+          icon: "fas fa-sticky-note",
           upload: {
             multiple: true,
-            extensions: ['jpg', 'jpeg', 'png', 'webp'],
-            maxsize: 100,
+            extensions: [],
+            maxsize: 25,
             images: {
               resize: {
                 type: 'fit'
@@ -1502,29 +1526,47 @@ var CancelablePromise = __webpack_require__("0bb9");
             }
           }
         });
-      }
+      } else {
+        if (window.POCKETNETINSTANCE) {
+          if (window.POCKETNETINSTANCE.mobile.supportimagegallery()) {
+            menuItems.push({
+              click: "cameraHandlerCustom",
+              title: this.$i18n.t("button.takePhotoOrVideo"),
+              icon: "fas fa-camera"
+            });
+          }
+        } else {
+          menuItems.push({
+            click: "cameraHandler",
+            title: this.$i18n.t("button.takePhotoOrVideo"),
+            icon: "fas fa-camera",
+            upload: {
+              multiple: true,
+              extensions: ['jpg', 'jpeg', 'png', 'webp'],
+              maxsize: 100,
+              images: {
+                resize: {
+                  type: 'fit'
+                }
+              }
+            }
+          });
+        }
 
-      menuItems.push({
-        click: "fileHandler",
-        title: this.$i18n.t("button.sendFile"),
-        icon: "fas fa-sticky-note",
-        upload: {
-          multiple: true,
-          extensions: [],
-          maxsize: 25,
-          images: {
-            resize: {
-              type: 'fit'
+        menuItems.push({
+          click: "fileHandler",
+          title: this.$i18n.t("button.sendFile"),
+          icon: "fas fa-sticky-note",
+          upload: {
+            multiple: true,
+            extensions: [],
+            maxsize: 25,
+            images: {
+              resize: {
+                type: 'fit'
+              }
             }
           }
-        }
-      });
-
-      if (this.transaction && !this.pkoindisabled) {
-        menuItems.unshift({
-          click: "sendtransactionWrapper",
-          title: this.$i18n.t("button.sendCoins"),
-          icon: "fas fa-wallet"
         });
       }
 
