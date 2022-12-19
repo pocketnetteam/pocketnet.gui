@@ -840,7 +840,7 @@ _l.buy = 'Kaufen';
 
 
 _l.lowstar1 = "Das Bastion-Team führt ein vorübergehendes Moratorium für 1- und 2-Sterne-Bewertungen ein, mit Ausnahme von verbotenen Inhalten. Verbotene Inhalte sind:"
-_l.lowstar_reason_1 = "Porno"
+_l.lowstar_reason_1 = "Erotik/Porno"
 _l.lowstar_reason_2 = "Ausbeutung von Kindern"
 _l.lowstar_reason_3 = "Direkte Androhung von Gewalt"
 _l.lowstar_reason_4 = "Illegale Drogen"

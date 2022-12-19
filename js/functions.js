@@ -11449,6 +11449,14 @@ edjsHTML = function() {
 
 		error : function(type, e){
 			return '<div class="article_error">' + 'Error:' + _.escape(type) + '</div>'
+		},
+
+		text : function(e, type){
+
+			var t = type === 'paragraph' ? '\n\n' : '';
+			t += (e.data.text ? e.data.text + ' ' : '');
+
+			return t;
 		}
     };
 
@@ -11646,6 +11654,20 @@ edjsHTML = function() {
                     return i[e.type] ? i[e.type](e) : t(e.type)
                 })).join('') + '</div>'
             },
+
+			text: function(e){
+
+				var text = e.blocks.map(function(e) {
+					return i['text'](e, e.type);
+                }).join('');
+
+				return filterXSS(clearScripts((findAndReplaceLink(text, true))), {
+					stripIgnoreTag : true,
+					whiteList: {
+						img : []
+					}
+				});
+			},
 
             parseBlock: function(e) {
                 return i[e.type] ? i[e.type](e) : t(e.type)
