@@ -2,7 +2,8 @@ if(typeof loclib == 'undefined' || !loclib)
 loclib = {};
 
 loclib.fr = {};
-var appname = window.pocketnetproject || "Pocketnet"
+var appname = ((window.projects_meta || {})[window.pocketnetproject || "Bastyon"] || {}).fullname || 'Bastyon'
+
 var _l = loclib.fr;
 
 //time
@@ -564,6 +565,8 @@ _l.e13135 = "L'utilisateur n'a pas de clè privèe"
 _l.e13136 = "Tous les messages"
 _l.e13137 = "Votre poche"
 _l.e13138 = "Top messages"
+_l.discussed = "Les Plus Discutés"
+_l["Most Discussed Over"] = "Pour la période"
 _l.e13139 = "RECHERCHE SUR "+appname.toUpperCase()+""
 _l.e13140 = "RECHERCHE SUR"
 _l.notifications = "Notifications"
@@ -599,7 +602,7 @@ _l.repost = "Republier"
 _l.e13160 = "Bonjour Pocketeers!"
 
 _l.e13161 = "Ajouter des étiquettes pour votre message"
-_l.e13162 = "Vous pouvez saisir moins de 5 étiquettes"
+_l.e13162 = "Vous pouvez saisir moins de 15 étiquettes"
 _l.e13163 = "Il n'y a pas de changements dans la publication"
 _l.e13164 = "Veuillez ajouter quelques mots pour informer Pocketpeople de votre lien. De quoi s'agit-il? Pourquoi c'est important? Quel est ton opinion?"
 _l.e13165 = "VNotre lien vers la vidéo n'est pas valide. Veuillez mettre en ligne une URL de vidéo valide."
@@ -1359,7 +1362,7 @@ _l.ContentCreatorsOpen4 = 'Contactez-nous';
 _l.ContentCreatorsOpen5 = "Envoyez-nous un message si vous avez besoin d’aide ou si vous êtes un créateur de contenu, blogueur, influenceur et que vous souhaitez débloquer votre bonus et vérifier votre profil!";
 
 _l.lowstar1 = "L'équipe Bastyon met en place un moratoire temporaire sur les classifications 1 et 2 étoiles, à l'exception du contenu interdit. Le contenu interdit est :"
-_l.lowstar_reason_1 = "Porno"
+_l.lowstar_reason_1 = "Érotique/Porno"
 _l.lowstar_reason_2 = "L'exploitation des enfants"
 _l.lowstar_reason_3 = "Menace directe de violence"
 _l.lowstar_reason_4 = "Drogues illégales"
@@ -1373,3 +1376,14 @@ _l.androidPopupDisagree = "Pas maintenant"
 _l.desktopPopupTitle = "Obtenir des informations non censurées dans l'application de bureau Bastyon"
 _l.desktopPopupAgree = "Télécharger l'application"
 _l.desktopPopupDisagree = "Pas maintenant"
+
+_l.profanity_tag = 'impiété'
+
+_l.saved = "Sauvegardé"
+_l.savePost = "Sauvegarder le post"
+_l.postsaved = "Post sauvegardé"
+_l.deleteSavedPost = "Supprimer le post enregistré"
+_l.doYouDownloadVideo = "Voulez-vous télécharger la vidéo sur votre appareil ?"
+_l.gotosaved2 = "Afficher les posts"
+_l.yes = "Oui"
+_l.no = "Non"

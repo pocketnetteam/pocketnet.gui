@@ -242,7 +242,16 @@ var pkview = (function(){
 
 			current = {}
 
-			var mnemonic = ed.mnemonic || localStorage['mnemonic'];
+			var mnemonic = ed.mnemonic || self.app.user.umnemonic;
+
+			if(!mnemonic){
+				try {
+					mnemonic = localStorage['mnemonic']
+				}
+				catch (e) { }
+			}
+
+			
 
 			if (mnemonic){
 
@@ -351,7 +360,9 @@ var pkview = (function(){
 
 		_.each(essenses, function(essense){
 
-			essense.destroy();
+			window.requestAnimationFrame(() => {
+				essense.destroy();
+			})
 
 		})
 

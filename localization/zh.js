@@ -4,7 +4,8 @@ loclib = {};
 loclib.cmn = {};
 
 var _l = loclib.cmn;
-var appname = window.pocketnetproject || "Pocketnet"
+var appname = ((window.projects_meta || {})[window.pocketnetproject || "Bastyon"] || {}).fullname || 'Bastyon'
+
 //time
 
 _l.fewseconds = "几秒前";	
@@ -575,6 +576,8 @@ _l.e13135 = "用戶沒有私鑰"
 _l.e13136 = "所有帖子"
 _l.e13137 = "你的口袋"
 _l.e13138 = "热门帖子"
+_l.discussed = "讨论最多"
+_l["Most Discussed Over"] = "期间"
 _l.e13139 = "在口袋网上搜索"
 _l.e13140 = "搜索"
 _l.notifications = "消息提醒"
@@ -610,7 +613,7 @@ _l.repost = "转发"
 _l.e13160 = "你好口袋小子!"
 
 _l.e13161 = "为你的帖子添加标签"
-_l.e13162 = "标签不超过5个"
+_l.e13162 = "标签不超过15个"
 _l.e13163 = "该帖子没有任何修改"
 _l.e13164 = "请用几句话向口袋网民们介绍你的链接。内容是什么？有何重要性？你的观点是？"
 _l.e13165 = '视频链接无效，请使用有效的视频链接。'
@@ -1007,7 +1010,7 @@ _l.noDownloadedVideos = "没有下载的视频";
 _l.buy = '买';
 
 _l.lowstar1 = "Bastyon 團隊正在實施臨時暫停 1 星和 2 星評級，禁止內容除外。禁止內容是："
-_l.lowstar_reason_1 = "色情"
+_l.lowstar_reason_1 = "情色/色情"
 _l.lowstar_reason_2 = "兒童剝削"
 _l.lowstar_reason_3 = "直接的暴力威脅"
 _l.lowstar_reason_4 = "非法藥物"
@@ -1021,3 +1024,15 @@ _l.androidPopupDisagree = "不是现在"
 _l.desktopPopupTitle = "在 Bastyon 桌面应用程序中获取未经审查的信息"
 _l.desktopPopupAgree = "下载应用程序"
 _l.desktopPopupDisagree = "不是现在"
+
+
+_l.profanity_tag = '褻瀆'
+
+_l.saved = "已保存"
+_l.savePost = "保存帖子"
+_l.postsaved = "保存的帖子"
+_l.deleteSavedPost = "删除已保存的帖子"
+_l.doYouDownloadVideo = "你想在你的设备上下载视频吗？"
+_l.gotosaved2 = "转到已保存"
+_l.yes = "是"
+_l.no = "拒绝"

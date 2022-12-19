@@ -73,7 +73,7 @@
         <div elementsid="nodeWrapper_<%-key%>" class="nodeWrapper" key="<%-key%>">
             <div class="work">
                 <div class="tableovfWrapper">
-                    <div class="node table <%- !node.canuse ? 'cantuse' : ''%>" node="<%-node.key%>">
+                    <div class="node table <%- !node.allowRpc || !node.canuse ? 'cantuse' : ''%>" node="<%-node.key%>">
                         <div elementsid="usenode" class="use <% if(node.key == currentnode) {%> using <% } %> <% if(typeof fixednode != 'undefined' && fixednode == node.key) {%> locked <% } %>">
 
                             <% if(key == 'nodes') {%>
@@ -101,7 +101,7 @@
                                 <span>v<%- node.version || '-' %>, <%- node.name %></span>
                             <% } %> 
                             
-                            <% if(key != 'tmp') {%>
+                            <% if(key != 'tmp' && node.allowRpc && node.canuse) {%>
                             <br><span class="smalllabel">
                                 <%- (100 * nodeinfo.probability).toFixed(0) %> % 
 

@@ -5,7 +5,8 @@ loclib.kr = {};
 
 var _l = loclib.kr;
 
-var appname = window.pocketnetproject || "Pocketnet"
+var appname = ((window.projects_meta || {})[window.pocketnetproject || "Bastyon"] || {}).fullname || 'Bastyon'
+
 //time
 
 _l.fewseconds = "몇 초 전";
@@ -567,6 +568,8 @@ _l.e13135 = "사용자에게 개인 키가 없습니다"
 _l.e13136 = "모든 게시물"
 _l.e13137 = "당신의 포켓"
 _l.e13138 = "인기 게시물"
+_l.discussed = "대부분의 논의"
+_l["Most Discussed Over"] = "기간 동안"
 _l.e13139 = ""+appname+"에서 검색"
 _l.e13140 = "검색 켜기"
 _l.notifications = "알림"
@@ -837,7 +840,7 @@ _l.noDownloadedVideos = "다운로드한 동영상이 없습니다.";
 _l.buy = '구입';
 
 _l.lowstar1 = "Bastyon 팀은 금지된 콘텐츠를 제외하고 별 1개 및 2개 등급에 대해 일시적인 유예 조치를 시행하고 있습니다. 금지된 콘텐츠는 다음과 같습니다."
-_l.lowstar_reason_1 = "포르노"
+_l.lowstar_reason_1 = "에로틱/포르노"
 _l.lowstar_reason_2 = "아동 착취"
 _l.lowstar_reason_3 = "직접적인 폭력 위협"
 _l.lowstar_reason_4 = "불법 마약"
@@ -851,3 +854,14 @@ _l.androidPopupDisagree = "지금은 아닙니다"
 _l.desktopPopupTitle = "Bastyon 데스크탑 앱에서 무수정 정보 가져오기"
 _l.desktopPopupAgree = "앱 다운로드"
 _l.desktopPopupDisagree = "지금은 아닙니다"
+
+_l.profanity_tag = '욕설'
+
+_l.saved = "저장됨"
+_l.savePost = "게시물 저장"
+_l.postsaved = "게시물이 저장되었습니다."
+_l.deleteSavedPost = "저장된 게시물 삭제"
+_l.doYouDownloadVideo = "당신은 당신의 장치에 비디오를 다운로드 하시겠습니까?"
+_l.gotosaved2 = "저장된 항목으로 이동"
+_l.yes = "예"
+_l.no = "아니"

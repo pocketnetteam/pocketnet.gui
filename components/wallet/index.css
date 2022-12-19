@@ -3,6 +3,13 @@
   padding-bottom: 4em;
   position: relative;
 }
+#wallet .pkoindisabledisclaimer {
+  padding: 3em;
+  text-align: center;
+}
+#wallet .pkoindisabledisclaimer span {
+  font-size: 0.9em;
+}
 #wallet .caption {
   padding: 1em;
   padding-top: 2em;

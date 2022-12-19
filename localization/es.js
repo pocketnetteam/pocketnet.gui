@@ -3,7 +3,8 @@ if(typeof loclib == "undefined" || !loclib)
 
 	loclib.es = {};
 
-	var appname = window.pocketnetproject || "Pocketnet"
+	var appname = ((window.projects_meta || {})[window.pocketnetproject || "Bastyon"] || {}).fullname || 'Bastyon'
+
 
 var _l = loclib.es;
 
@@ -543,6 +544,8 @@ _l.e13135 = "El usuario no tiene clave privada"
 _l.e13136 = "Cinta completa"
 _l.e13137 = "Su cinta"
 _l.e13138 = "Mejor"
+_l.discussed = "Lo Más Discutido"
+_l["Most Discussed Over"] = "En el espacio"
 _l.e13139 = "BUSCAR EN "+appname+""
 _l.e13140 = "BUSCAR EN"
 _l.notifications = "Notificaciones"
@@ -578,7 +581,7 @@ _l.repost = "Volver a publicar"
 _l.e13160 = "¡Hola Pocketeers!"
 
 _l.e13161 = "Agrega etiquetas para tu publicación"
-_l.e13162 = "Podéis ingresar hasta 5 etiquetas"
+_l.e13162 = "Podéis ingresar hasta 15 etiquetas"
 _l.e13163 = "No se han realizado cambios en esta publicación"
 _l.e13164 = "Agrega algunas palabras para decirle a Pocketpeople sobre tu enlace. ¿De qué es eso? ¿Por qué es importante? ¿Cuál es tu opinión?"
 _l.e13165 = "Su enlace de video no es válido. Inténtelo descargar URL de video correcto."
@@ -834,7 +837,7 @@ _l.buy = 'Comprar';
 _l.usetor = "Conexión a través de la red Tor"
 
 _l.lowstar1 = "El equipo de Bastyon está implementando una moratoria temporal en las calificaciones de 1 y 2 estrellas, excepto el contenido prohibido. El contenido prohibido es:"
-_l.lowstar_reason_1 = "Porno"
+_l.lowstar_reason_1 = "Erótico/Porno"
 _l.lowstar_reason_2 = "Explotación de menores"
 _l.lowstar_reason_3 = "Amenaza directa de violencia"
 _l.lowstar_reason_4 = "Drogas ilegales"
@@ -848,3 +851,15 @@ _l.androidPopupDisagree = "Ahora no"
 _l.desktopPopupTitle = "Obtenga información sin censura en la aplicación de escritorio Bastyon"
 _l.desktopPopupAgree = "Descargar la aplicación"
 _l.desktopPopupDisagree = "Ahora no"
+
+
+_l.profanity_tag = 'blasfemia'
+
+_l.saved = "Guardado"
+_l.savePost = "Guardar puesto"
+_l.postsaved = "Puesto guardado"
+_l.deleteSavedPost = "Borrar post guardado"
+_l.doYouDownloadVideo = "Quieres descargar el vídeo en tu dispositivo?"
+_l.gotosaved2 = "Ir a guardado"
+_l.yes = "Sí"
+_l.no = "No"

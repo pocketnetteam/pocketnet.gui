@@ -17,7 +17,7 @@ class OG {
     private $project = NULL;
     
 
-    private $maphrefs = array("pkview","about","applications","terms","page404","welcome","registration","anothersite","token","filluserfast","filluser","usersettings","test","accounts","uploadpeertube","streampeertube","tagcloud","taginput","categories","staking","lastcomments","articles","article","video","system16","connection","proxylogs","help","donations","faq","embeding","userpage","oldchat","wallet","share","comments","tube","lenta","transactionview","s","send","imageGalleryEdit","imagegallery","aboutus","menu","toppanel","navigation","footer","support","notifications","panel","leftpanel","discussions","authorization","addaccount","complain","postscores","scheduler","surveyiframe","socialshare","socialshare2","main","author","channel","post","userslist","ustate","dust","testApi", "index");
+    private $maphrefs = array("pkview","easynode","about","aboutHome","aboutYoutube","aboutFacebook","aboutContentCreators","aboutHIW","aboutTwitter","abilityincrease","support","applications","boost","terms","page404","welcome","registration","anothersite","usersettings","popup","test","accounts","uploadpeertube","streampeertube","tagcloud","taginput","categories","staking","recommendations","recommendedusers","bestposts","lastcomments","pkoin","articlesv","articlev","video","system16","help","donations","faq","embeding","camerapreview","donate","recommendationinfo","userpage","wallet","share","comments","lenta","transactionview","imageGalleryEdit","imagegallery","aboutus","menu","navigation","footer","notifications","panel","leftpanel","nodecontrol","authorization","addaccount","complain","downloadMedia","postscores","socialshare2","main","author","channel","post","userslist","ustate","statistic","videoCabinet","dust","testApi","commentBanner", "index", "");
 
     private $defaultOg = NULL;
 
@@ -191,7 +191,7 @@ class OG {
         $host_name = '';
         $params = '';
 
-        $t = preg_match('/(peertube:\/\/)?(http:\/\/|https:\/\/|)?(player.|www.)?(pocketnetpeertube[0-9]*\.nohost\.me|peer\.tube|vimeo\.com|youtu(be\.com|\.be|be\.googleapis\.com)|bitchute\.com)\/((videos?\/|embed\/|watch\/?)*(\?v=|v\/)?)*([A-Za-z0-9._%-]*)(\&\S+)?/', $_url, $test);
+        $t = preg_match('/(peertube:\/\/)?(http:\/\/|https:\/\/|)?(player.|www.)?(pocketnetpeertube[0-9]*\.nohost\.me|peer\.tube|vimeo\.com|youtu(be\.com|\.be|be\.googleapis\.com)|bitchute\.com|brighteon\.com|stream\.brighteon\.com)\/((videos?\/|embed\/|watch\/?)*(\?v=|v\/)?)*([A-Za-z0-9._%-]*)(\&\S+)?/', $_url, $test);
 
         $type = NULL;
         $id = NULL;
@@ -285,7 +285,7 @@ class OG {
 
         if($this->is_bot()){
             
-            $this->currentOg['user'] = $_SERVER['HTTP_USER_AGENT'];
+            ///$this->currentOg['user'] = $_SERVER['HTTP_USER_AGENT'];
 
             if($this->author != NULL){
 

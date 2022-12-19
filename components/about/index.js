@@ -797,6 +797,7 @@ var about = (function(){
 		$('#menu').show();
 		
 		$(document.body).removeClass('removed-menu');
+		
 		_.each(essenses, function(essense){
 
 			essense.destroy();

@@ -15,11 +15,85 @@ var usersettings = (function(){
 
 
 		var actions = {
+			removeAccount : function(){
+				new dialog({
+					html: self.app.localization.e('removeAccountQuestion'),
+					btn1text: self.app.localization.e('ucancel'),
+					btn2text: self.app.localization.e('removeAccountYes'),
 
+					class: 'zindex accepting accepting2',
+
+					success: () => {
+
+						
+
+					},
+
+					fail: () => {
+
+						globalpreloader(true)
+
+						var ds = null
+
+						var mes = (t) => {
+							if (ds){
+								ds()
+								ds = null
+							}
+
+
+							if (t) ds = sitemessage(self.app.localization.e(t), null, 'inf')
+						}
+
+						self.app.platform.sdk.user.deleteaccount((progress) => {
+
+							if (progress)
+								mes('removeAccount_' + progress)
+
+						}).then(() => {
+
+							successCheck()
+
+							new dialog({
+								html : self.app.localization.e('removeAccount_success'),
+								class : "one zindex"
+							})
+
+							self.app.reload({
+								href : 'author'
+							});
+
+						}).catch(e => {
+
+							var errors = {
+								notprepared : 'notprepared',
+								undefinedError : 'undefinedError',
+								balance : 'balance'
+							}
+
+							console.error(e)
+
+							new dialog({
+								html : self.app.localization.e('removeAccount_' + (!e || !errors[e] ? errors.undefinedError : errors[e])),
+								class : "one zindex"
+							})
+
+						}).finally(() => {
+
+							globalpreloader(false)
+
+							mes()
+						})
+
+					}
+				})
+			}
 		}
 
 		var events = {
-
+			removeAccount : function(){
+				actions.removeAccount()
+			}
 		}
 
 		var renders = {
@@ -214,6 +288,13 @@ var usersettings = (function(){
 
 					})
 
+					p.el.find('.copyvalue').on('click', function(){
+
+						copyText($(this))
+
+						sitemessage(self.app.localization.e('successcopied'))
+					})
+
 					p.el.find('.clear').on('click', function(){
 
 
@@ -230,6 +311,27 @@ var usersettings = (function(){
 
 
 					})
+				})
+			},
+
+			diagnostics : function() {
+				self.shell({
+					name :  'diagnostics',
+					el : el.diagnostics,
+					data : {
+					}
+
+				}, function(p){
+					p.el.find('.goToDiagnoseButton').on('click', () => {
+						self.app.nav.api.load({
+							open : true,
+							href : 'diagnosticsPage',
+							history: true,
+		
+							essenseData : {
+							}
+						});
+					});
 				})
 			}
 		}
@@ -260,6 +362,8 @@ var usersettings = (function(){
 			self.app.platform.sdk.system.get.telegramUpdateAbort = new AbortController();
 
 
+			el.c.find('.removeAccount').on('click', events.removeAccount)
+
 			// self.app.platform.sdk.system.get.telegramGetMe(null, rerender);
 
 
@@ -270,6 +374,7 @@ var usersettings = (function(){
 
 			renders.options()
 			renders.cache()
+			renders.diagnostics()
 			renders.downloadedvideoscontent()
 
 			self.app.platform.sdk.node.transactions.clbks.settings = renders.cache;
@@ -347,6 +452,7 @@ var usersettings = (function(){
 
 				el.options = el.c.find('.options')
 				el.cache = el.c.find('.cache')
+				el.diagnostics = el.c.find('.diagnostics')
 
 				initEvents();
 
@@ -379,7 +485,9 @@ var usersettings = (function(){
 
 		_.each(essenses, function(essense){
 
-			essense.destroy();
+			window.requestAnimationFrame(() => {
+				essense.destroy();
+			})
 
 		})
 

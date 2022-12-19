@@ -73,6 +73,8 @@ export function proxifiedFetchFactory(electronIpcRenderer: Electron.IpcRenderer)
                             electronIpcRenderer.removeAllListeners(`ProxifiedFetch : InitialData[${id}]`);
                             electronIpcRenderer.removeAllListeners(`ProxifiedFetch : PartialResponse[${id}]`);
 
+                            console.log('abort', closed);
+
                             if (!closed) {
                                 electronIpcRenderer.send('ProxifiedFetch : Abort', id);
 
@@ -93,7 +95,7 @@ export function proxifiedFetchFactory(electronIpcRenderer: Electron.IpcRenderer)
                     });
 
                     electronIpcRenderer.once(`ProxifiedFetch : Error[${id}]`, (event) => {
-                        console.log(event)
+                        console.log('event', event);
                         if (!closed) {
                             controller.error('PROXIFIED_FETCH_ERROR');
                             closed = true;
@@ -101,7 +103,7 @@ export function proxifiedFetchFactory(electronIpcRenderer: Electron.IpcRenderer)
                             const err = new TypeError('Failed to fetch');
                             reject(err);
 
-                            return
+                            return;
                         }
 
                         reject(new DOMException('The user aborted a request.', 'AbortError'));
@@ -125,6 +127,8 @@ export function proxifiedFetchFactory(electronIpcRenderer: Electron.IpcRenderer)
                     });
                 }
             });
+
+            console.log('request:f', id);
 
             electronIpcRenderer.on(`ProxifiedFetch : InitialData[${id}]`, (event, initialData) => {
                 const response = new Response(readStream, initialData);
@@ -252,12 +256,20 @@ export class ProxifiedFetchBridge {
     }
 
     private answer(sender: Electron.WebContents, event: string, id: string, data?: any) {
+        if (!this.selfStatic) {
+            return;
+        }
+
         const eventName = `${this.selfStatic.eventGroup} : ${event}[${id}]`;
 
         sender.send(eventName, data);
     }
 
     private listen(event: string, callback: (...args) => void) {
+        if (!this.selfStatic) {
+            return;
+        }
+
         const eventName = `${this.selfStatic.eventGroup} : ${event}`;
 
         this.ipc.on(eventName, (...args) => {
@@ -269,6 +281,10 @@ export class ProxifiedFetchBridge {
     }
 
     private listenOnce(event: string, callback: (...args) => void) {
+        if (!this.selfStatic) {
+            return;
+        }
+
         const eventName = `${this.selfStatic.eventGroup} : ${event}`;
 
         this.ipc.once(eventName, (...args) => {
@@ -280,6 +296,10 @@ export class ProxifiedFetchBridge {
     }
 
     private stopListen(event: string) {
+        if (!this.selfStatic) {
+            return;
+        }
+
         const eventName = `${this.selfStatic.eventGroup} : ${event}`;
 
         this.ipc.removeAllListeners(eventName);

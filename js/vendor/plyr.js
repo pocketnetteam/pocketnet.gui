@@ -9191,6 +9191,10 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
 
       // Check if we have downloaded the video already
       var localVideo = options.app.platform.sdk.localshares.getVideo(parsed.id);
+      if (localVideo)
+        localVideo.infos = localVideo.infos || {};
+
+        console.log('localVideo', localVideo)
 
       const isElectron = (typeof _Electron !== 'undefined');
       const isCordova = (typeof window.cordova != 'undefined');
@@ -9199,7 +9203,6 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
 
       if (isElectron) {
 
-        console.log('localVideo', localVideo, parsed)
 
         localTransport = peertubeTransport(electron.ipcRenderer, localVideo);
         localVideo = undefined;
@@ -9211,7 +9214,6 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
 
         var host = options.app.peertubeHandler.helpers.url(parsed.host, true)
 
-        console.log('options.startTime', options.startTime)
 
         PeerTubeEmbeding.main(target, parsed.id, host, {
 
@@ -9223,7 +9225,7 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
           localVideo : localVideo,
           start : options.startTime || 0,
           localTransport,
-          hlsError : options.hlsError,
+          error : options.error,
           light : options.light,
           pathfunction : options.app.peertubeHandler.helpers.url,
           mobile : options.mobile,
@@ -9232,7 +9234,7 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
           segmentsStorage : localVideo ? null : deep(options, 'app.videotransport.segments')
 
         },{
-          hlsError : options.hlsError,
+          error : options.error,
           playbackStatusChange : function(status){
             
           },

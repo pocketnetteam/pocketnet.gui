@@ -294,6 +294,8 @@ var system16 = (function(){
 
 					if (el.c){
 						renders.nodescontenttable(el.c)
+						renders.notificationcontenttable(el.c)
+						//renders.notificationuserstable(el.c)
 						renders.peertubeinstancestable(el.c)
 						renders.webadminscontent(el.c)
 						renders.webdistributionwallets(el.c)
@@ -2481,6 +2483,8 @@ var system16 = (function(){
 						renders.proxyservers(p.el)
 						renders.servercontent(p.el)
 						renders.nodescontent(p.el)
+						if(actions.admin())
+							renders.notificationcontent(p.el)
 						renders.chaincontent(p.el)
 						renders.peertubecontent(el.c)
 						renders.nodecontent(p.el)
@@ -3344,6 +3348,7 @@ var system16 = (function(){
 						clbk()
 				})
 			},
+
 			peertubeinstancestable : function(elc, clbk){
 								
 				self.shell({
@@ -3403,6 +3408,7 @@ var system16 = (function(){
 						clbk()
 				})
 			},
+
 			chaincontent: function(elc, clbk){
 
 				if(!info){
@@ -3440,6 +3446,107 @@ var system16 = (function(){
 						clbk()
 				})
 			},
+
+			notificationcontent : function(elc, clbk){
+
+				if(!info){
+					if(clbk) clbk()
+
+					return
+				}
+
+
+
+				self.shell({
+						inner : html,
+						name : 'notificationcontent',
+						data : {
+							info : info,
+							manager : info.nodeManager,
+							proxy : proxy,
+							admin : actions.admin(),
+
+						},
+
+						el : elc.find('.notificationsWrapper')
+
+					},
+					function(){
+						renders.notificationcontenttable(elc)
+						//renders.notificationuserstable(elc)
+
+						if (clbk)
+							clbk()
+					})
+			},
+
+
+			notificationcontenttable : async function(elc, clbk){
+
+				var use = api.get.current()
+				var currentnode = null
+
+				if (use.id == proxy.id && proxy.current){
+					currentnode = proxy.current.key
+				}
+
+				const stats = await proxy.fetchauth('notifications/stats')
+
+				self.shell({
+						inner : html,
+						name : 'notificationcontenttable',
+						data : {
+							info : info,
+							stats : stats,
+							proxy : proxy,
+							admin : actions.admin(),
+						},
+
+						el : elc.find('.notificationsWrapper .notifications')
+
+					},
+					function(p){
+
+						p.el.find('.button').on('click', function(){
+							var href = $(this).attr('href')
+							$(this).attr('href', href.replaceAll("https://", ""))
+						})
+
+						if (clbk)
+							clbk()
+					})
+			},
+
+			notificationuserstable : async function(elc, clbk){
+
+				var use = api.get.current()
+				var currentnode = null
+
+				if (use.id == proxy.id && proxy.current){
+					currentnode = proxy.current.key
+				}
+
+				const users = await proxy.fetchauth('notifications/users')
+
+				self.shell({
+						inner : html,
+						name : 'notificationuserstable',
+						data : {
+							info : info,
+							users : users,
+							proxy : proxy,
+							admin : actions.admin(),
+						},
+
+						el : elc.find('.notificationsWrapper .notifications-users')
+
+					},
+					function(p){
+						if (clbk)
+							clbk()
+					})
+			},
+
 			nodescontent : function(elc, clbk){
 
 				if(!info){
@@ -3492,6 +3599,7 @@ var system16 = (function(){
 						clbk()
 				})
 			},
+
 			nodescontenttable : function(elc, clbk){
 
 				var use = api.get.current() 
@@ -3568,7 +3676,7 @@ var system16 = (function(){
 
 							new dialog({
 								class : 'zindex',
-								html : "Do you really want reconnect to selected "+self.app.meta.fullname+" Node?",
+								html : self.app.localization.e('selectnode', self.app.meta.fullname),
 								btn1text : self.app.localization.e('dyes'),
 								btn2text : self.app.localization.e('dno'),
 								success : function(){	
@@ -3743,6 +3851,7 @@ var system16 = (function(){
 			panel : function(){
 				if(el.c){
 					renders.nodescontenttable(el.c)
+					renders.notificationcontenttable(el.c)
 					renders.peertubeinstancestable(el.c)
 					renders.webadminscontent(el.c)
 					renders.webdistributionwallets(el.c)
@@ -3969,7 +4078,9 @@ var system16 = (function(){
 
 		_.each(essenses, function(essense){
 
-			essense.destroy();
+			window.requestAnimationFrame(() => {
+				essense.destroy();
+			})
 
 		})
 

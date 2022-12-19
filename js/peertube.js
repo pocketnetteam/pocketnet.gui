@@ -101,6 +101,7 @@ var PeertubeRequest = function (app = {}) {
 				}
 			})
 			.catch((r) => {
+
 				var e = {
 					code: resp.status || 400,
 					text: r,
@@ -131,6 +132,8 @@ PeerTubePocketnet = function (app) {
 	var servers = []
 	// Time needed before we will request the proxy to update the server's IP
 	var INTERVAL_CHECK_SERVER_IP = 10000;
+
+	var triedToken = false;
 
 	self.checklink = function (link) {
 		return link.includes(PEERTUBE_ID);
@@ -176,6 +179,10 @@ PeerTubePocketnet = function (app) {
 	var methods = {
 		stats: {
 			path: 'api/v1/videos',
+		},
+
+		serverStatistics: {
+			path: 'api/v1/server/stats',
 		},
 
 		video: {
@@ -286,6 +293,14 @@ PeerTubePocketnet = function (app) {
 		getMyAccountVideos: {
 			path: 'api/v1/users/me/videos',
 			method: 'GET',
+			authorization: true,
+			axios: true,
+		},
+
+		removeAccount: {
+			path: ({ id }) => `users/${id}`,
+			method: 'DELETE',
+			renew: true,
 			authorization: true,
 			axios: true,
 		},
@@ -494,12 +509,45 @@ PeerTubePocketnet = function (app) {
 
 
 					return Promise.resolve(data)
-				}).catch((err, data) => {
-					return Promise.reject(err);
-				});
-			}).catch(e => {
+				}).catch((err = {}, data) => {
+					try {
+						const errorMessage = JSON.parse(err.text);
 
-				return Promise.reject(e)
+						if (errorMessage.code === 'invalid_token' && !triedToken) {
+						triedToken = true;
+
+						return self.api.user
+							.auth(options.host, true)
+							.then((tokenResult = {}) =>
+							{
+								if (tokenResult.access_token) {
+									requestoptions.headers.Authorization = `Bearer ${tokenResult.access_token}`;
+								} else {
+									return Promise.reject(err);
+								}
+
+								return proxyRequest.fetch(
+									url,
+									meta.path + params,
+									data,
+									requestoptions,
+								);
+							},
+							)
+							.then((data) => {
+							return Promise.resolve(data);
+							});
+						}
+
+						triedToken = false;
+
+						return Promise.reject(err);
+					} catch (error) {
+						return Promise.reject(err);
+					}
+				});
+			}).catch((e = {}) => {
+				return Promise.reject(e);
 			});
 	};
 
@@ -539,13 +587,13 @@ PeerTubePocketnet = function (app) {
 			},
 
 			best: function (type) {
+				const special = deep(app, 'platform.real')[app.user.address.value];
 
-				return this.roys({ type: type })
+				return this.roys({ type, special, })
 					.then((data = {}) => {
 
 						const roysAmount = Object.keys(data).length;
 						var royId;
-
 
 						if (app.user.address.value) {
 
@@ -553,13 +601,19 @@ PeerTubePocketnet = function (app) {
 								self.helpers.base58.decode(app.user.address.value) / Math.pow(10, 26)
 							), 1 / 3).toFixed(0)).toString().substr(9)
 
-							royId = self.helpers.base58.decode(sq) % roysAmount;
+							try{
+								royId = sq % roysAmount;
+							}
+							catch(e){
+								console.error(e)
+							}
+							
 						}
 						else {
 							royId = rand(0, roysAmount - 1);
 						}
 
-						return data[royId];
+						return Object.values(data)[royId];
 					})
 
 					.catch(() => 0)
@@ -619,6 +673,18 @@ PeerTubePocketnet = function (app) {
 		},
 
 		videos: {
+			serverStatistics: function(host) {
+				return request('serverStatistics', {}, {
+					host,
+				});
+			},
+
+			latestVideos: function(host) {
+				return request('stats', {}, {
+					host,
+				});
+			},
+			
 			remove: function (url, options = {}) {
 				if (!self.checklink(url)) return Promise.reject(error('link'));
 
@@ -719,6 +785,9 @@ PeerTubePocketnet = function (app) {
 			},
 
 			initResumableUpload: function (parameters, options) {
+
+			
+
 				return self.api.videos
 					.checkQuota(parameters.video.size, { type: options.type })
 					.then((rme) => {
@@ -1042,7 +1111,7 @@ PeerTubePocketnet = function (app) {
 					},
 					options,
 				).then((r = {}) => r);
-			},
+			},		
 
 			getDirectVideoInfo(parameters = {}, options = {}) {
 				return request('video', parameters, options);
@@ -1060,6 +1129,25 @@ PeerTubePocketnet = function (app) {
 		},
 
 		user: {
+			removeAccount(parameters = {}, options = {}) {
+
+				return request(
+					'removeAccount', parameters, options,
+				);
+
+				return self.api.user.metotal().then(d => {
+
+					return Promise.resolve()
+
+					return request(
+						'removeAccount', parameters, options,
+					);
+
+				})
+
+				
+			},
+
 			me: function (options = {}) {
 				return request('me', {}, options).then((r) => {
 					var data = {
@@ -1074,6 +1162,13 @@ PeerTubePocketnet = function (app) {
 						return Promise.reject(error('usersMe'));
 
 					return Promise.resolve(data);
+				});
+			},
+
+			metotal: function (options = {}) {
+				return request('me', {}, options).then((r) => {
+
+					return Promise.resolve(r);
 				});
 			},
 
@@ -1153,7 +1248,7 @@ PeerTubePocketnet = function (app) {
 						return self.api.user.getToken(data, {
 							host,
 						});
-					});
+					})
 			},
 
 			getToken: function (data = {}, options = {}) {

@@ -143,13 +143,20 @@ var socialshare2 = (function(){
 
 		}
 
+		var black = false
+
+		try {
+			black = localStorage.getItem('usertheme') === 'black' ? true : false
+		}
+		catch (e) { }
+
 		var embeddingSettings = {
 
 			black : new Parameter({
 				name: self.app.localization.e('blackTheme'),
 				id: 'black',
 				type: "BOOLEAN",
-				value: localStorage.getItem('usertheme') === 'black' ? true : false
+				value: black
 			}),
 
 
@@ -938,7 +945,9 @@ var socialshare2 = (function(){
 
 		_.each(essenses, function(essense){
 
-			essense.destroy();
+			window.requestAnimationFrame(() => {
+				essense.destroy();
+			})
 
 		})
 

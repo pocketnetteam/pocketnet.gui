@@ -1,9 +1,18 @@
+<%
 
+var deleted = typeof app.platform.sdk.user.myaccauntdeleted == 'undefined' && app.platform.sdk.user.myaccauntdeleted();
+
+
+%>
 
 <div id="<%-module.map.id%>" class="unselecmobile">
 	<div class="menuWrapper">
 		<div class="rightchatspacer">
 			<div class="sections">
+
+				<div class="mobileUpperLeft">
+					<img class="christmasBranch" src="img/christmas_branch_right.svg">
+				</div>
 
 				<div class="section leftpart">
 
@@ -13,7 +22,7 @@
 							<div elementsid="eventschats" class="item  chatwr" events="chats">
 								<div class="icon">
 									<div class="icn">
-										<i class="far fa-comment"></i>
+										<img src="img/christmas_chat.svg">
 									</div>
 									<div class="amount">
 									</div>
@@ -23,13 +32,13 @@
 
 					<% } else { %> 
 
-						<% if( !(state && (app.mobileview)) ) {%>
+						<% if( !(state  && (app.mobileview))  ) {%>
 
 							<div class="items sitenames">
 
 								<div class="item  sitename" >
 									<div elementsid="eventssitename" class="icon" events="sitename">
-										<img class="header_logo all" src="img/logotypes/<%-app.meta.fullname.toLowerCase()%>_logo_<%-theme%>.svg">
+										<img class="header_logo all" src="img/logotypes/<%-app.meta.fullname.toLowerCase()%>_logo_<%-theme%>_christmas.svg">
 									</div>
 									<div elementsid="eventslang" class="label">
 										<div elementsid="menu_localization" class="lang localization">
@@ -58,7 +67,7 @@
 				<div class="section centerpart">
 					<% if(!app.curation()) {%>
 						<% if(app.isElectron()) {%>
-							<div class="items control-app" events="controlApp">
+							<div class="items control-app control-left" events="controlApp">
 								<div class="control-app-back" >
 									<i class="fa fa-arrow-left"></i>
 								</div>
@@ -77,7 +86,7 @@
 							</div>
 						</div>
 						<% if(app.isElectron()) {%>
-						<div class="items control-app" events="controlApp">
+						<div class="items control-app control-right" events="controlApp">
 							<div class="control-app-refresh" >
 								<i class="fas fa-redo-alt"></i>
 							</div>
@@ -92,37 +101,45 @@
 
 						<% if(state) { %>
 
-							<div elementsid="keyexportWrapper" class="items keyexportWrapper <% if(typeof key== 'undefined' || !key) {%> hidden <% } %>">
-								<div class="item  right onlyicon keyexport" events="keyexport">
+							<% if(!deleted) {%>
 
-									<div class="icon">
-										<div class="icn">
-											<i class="fas fa-key"></i>
-										</div>
+								<div elementsid="keyexportWrapper" class="items keyexportWrapper <% if(typeof key== 'undefined' || !key) {%> hidden <% } %>">
+									<div class="item  right onlyicon keyexport" events="keyexport">
 
-										<div class="amount">
-										</div>
+										<div class="icon">
+											<div class="icn">
+												<i class="fas fa-key"></i>
+											</div>
 
-									</div>
+											<div class="amount">
+											</div>
 
-								</div>
-							</div>
-
-							<div elementsid="notificationsWrapper" class="items notificationsWrapper">
-								<div class="item  right onlyicon notifications" events="notifications">
-
-									<div class="icon">
-										<div class="icn">
-											<i class="far fa-bell"></i>
-										</div>
-
-										<div class="amount">
 										</div>
 
 									</div>
-
 								</div>
-							</div>
+
+								
+
+								<div elementsid="notificationsWrapper" class="items notificationsWrapper">
+									<div class="item  right onlyicon notifications" events="notifications">
+
+										<div class="icon">
+											<div class="icn">
+												<img src="img/christmas_bell.svg">
+											</div>
+
+											<div class="amount">
+											</div>
+
+										</div>
+
+									</div>
+								</div>
+
+							<% } %>
+
+							<% if(!app.pkoindisable) {%>
 
 							<div elementsid="walletsWrapperOpen" class="items walletsWrapper">
 								<div class="item  right wallets onlyicon" events="wallets">
@@ -135,6 +152,8 @@
 
 								</div>
 							</div>
+
+							<% } %>
 
 						<% } %>
 
@@ -165,10 +184,16 @@
 
 									<% 
 									
-									var src = deep(app, 'platform.sdk.user.storage.me.image')  
+										var src = deep(app, 'platform.sdk.user.storage.me.image')  
 
-									var name = app.platform.api.clearname(deep(app, 'platform.sdk.user.storage.me.name') || (user.address.value && user.address.value.toString('hex')) )
-									var letter = name ? name[0] : ''
+										var name = app.platform.api.clearname(deep(app, 'platform.sdk.user.storage.me.name') || (user.address.value && user.address.value.toString('hex')) )
+										var letter = name ? name[0] : ''
+
+
+										if(deleted){
+											src = ''
+											letter = ''
+										}
 
 
 									%>
@@ -192,7 +217,7 @@
 
 												<% } %>
 
-												<% if(app.platform.ui.markUser) {%>
+												<% if(app.platform.ui.markUser && !deleted) {%>
 
 													<%= app.platform.ui.markUser(user.address.value && user.address.value.toString('hex'))%>
 				
@@ -235,6 +260,9 @@
 
 						<% } %>
 					
+				</div>
+				<div class="mobileUpperRight">
+					<img class="christmasBranch" src="img/christmas_branch_left.svg">
 				</div>
 			</div>
 		</div>

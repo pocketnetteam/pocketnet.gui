@@ -11,7 +11,7 @@
 
 					
 
-					<% if(state) {%>
+					<% if(state && (typeof app.platform.sdk.user.myaccauntdeleted == 'undefined' || !app.platform.sdk.user.myaccauntdeleted())) {%>
 
 						<% if(!ed.registration && (!share || !share.visibility() || share.visibility() == 'reg')){ %>
 
@@ -27,7 +27,7 @@
 					<% } %>
 
 					<% if(postId) {
-						if(share && share.address != app.user.address.value && (!share.visibility() || share.visibility() == 'reg')){ %>
+						if(share && (typeof app.platform.sdk.user.myaccauntdeleted == 'undefined' || !app.platform.sdk.user.myaccauntdeleted()) && share.address != app.user.address.value && (!share.visibility() || share.visibility() == 'reg')){ %>
 
 							<div elementsid="itemforrepost" class="item forrepost">
 								<div class="button black ">

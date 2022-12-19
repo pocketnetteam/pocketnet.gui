@@ -130,13 +130,33 @@ User = function(app, p) {
 		var setKeysClbk = function(){
 
 			app.platform.cryptography.api.aeswc.encryption(mnemonic, app.options.fingerPrint, {}, function(enc){
+
+				
 				if (self.stay){
-					localStorage['mnemonic'] = enc
+					var s = false
+
+					try{
+						localStorage['mnemonic'] = enc
+						s = true
+					}catch(e){
+						
+					}
+
+					if(!s){
+						try{
+							sessionStorage['mnemonic'] = enc
+						}catch(e){
+							
+						}
+					}
+					
 				}
 				else
 				{
 					sessionStorage['mnemonic'] = enc
 				}
+
+				self.umnemonic = enc
 			})
 		
 
@@ -145,8 +165,13 @@ User = function(app, p) {
 
 				if(state){
 
-					localStorage['waslogged'] = true
-					localStorage['popupsignup'] = 'showed'
+					try{
+						localStorage['waslogged'] = true
+						localStorage['popupsignup'] = 'showed'
+					}catch(e){
+					}
+
+					
 
 
 					self.prepare(clbk)
@@ -170,7 +195,13 @@ User = function(app, p) {
 				}
 				else
 				{
-					localStorage['mnemonic'] = ''
+
+					try{
+						localStorage['mnemonic'] = ''
+					}catch(e){
+					}
+
+					
 
 					state = 0;
 
@@ -206,9 +237,15 @@ User = function(app, p) {
 
 		state = 0;
 		self.data = {};
-		localStorage['mnemonic'] = '';
-		sessionStorage['mnemonic'] = '';
-		localStorage.removeItem('connectWith');
+
+		try{
+			localStorage['mnemonic'] = '';
+			sessionStorage['mnemonic'] = '';
+			localStorage.removeItem('connectWith');
+		}catch(e){
+		}
+
+
 
 		self.mncache.clear()
 
@@ -274,9 +311,18 @@ User = function(app, p) {
 		}
 		else{
 
-			if ( (localStorage['mnemonic'] && self.stay) || sessionStorage['mnemonic']){
+			var lsmn = ''
+			var ssmn = ''
 
-				var m = localStorage['mnemonic'] || sessionStorage['mnemonic'];
+			try{
+				lsmn = localStorage['mnemonic']
+				ssmn = sessionStorage['mnemonic']
+			}catch(e){
+			}
+
+			if ( (lsmn && self.stay) || ssmn){
+
+				var m = lsmn || ssmn;
 
 				app.platform.cryptography.api.aeswc.decryption(m, app.options.fingerPrint, {}, function(m){
 
@@ -298,8 +344,14 @@ User = function(app, p) {
 					else
 					{
 						if(!_OpenApi){
-							localStorage['mnemonic'] = ''
-							sessionStorage['mnemonic'] = ''
+
+							try{
+								localStorage['mnemonic'] = ''
+								sessionStorage['mnemonic'] = ''
+							}catch(e){
+							}
+
+							
 						}
 							
 
@@ -323,6 +375,8 @@ User = function(app, p) {
 
 		if(!self.address.value) return 'fu';
 
+		if(app.platform.sdk.user.myaccauntdeleted()) return 'deleted'
+
 		var me = deep(app, 'platform.sdk.user.storage.me');
 
 		if (me && me.relay){
@@ -335,12 +389,17 @@ User = function(app, p) {
 
 		}
 
+		
+
 		if(!(deep(app, 'platform.sdk.user.storage.me.name'))) return 'fu' 
 	}
 
 	self.validate = function(){
 
 		if(!self.address.value) return false;
+
+		if(app.platform.sdk.user.myaccauntdeleted()) return false
+
 
 		var me = deep(app, 'platform.sdk.user.storage.me');
 
@@ -355,6 +414,8 @@ User = function(app, p) {
 			}
 
 		}
+
+
 
 		return (deep(app, 'platform.sdk.user.storage.me.name'))
 
@@ -546,7 +607,13 @@ User = function(app, p) {
 		return ckeys;
 	}
 
-	self.stay = Number(localStorage['stay'] || '1')
+	try{
+		self.stay = Number(localStorage['stay'] || '1')
+	}catch(e){
+		self.stay = '1'
+	}
+
+	
 
 	//if(typeof localStorage['stay'] == 'undefined') self.stay = 1;
 

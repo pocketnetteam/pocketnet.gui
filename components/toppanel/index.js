@@ -28,7 +28,7 @@ var toppanel = (function(){
 					links.video = "index?video=1"
 				}
 
-				if (self.app.savesupported()) {
+				if (self.app.savesupported() || app.savesupportedForBrowser()) {
 					links.saved = "index?r=saved"
 				}
 
@@ -38,14 +38,14 @@ var toppanel = (function(){
 				var video = parameters(self.app.nav.current.completeHref, true).video || false
 				var value = links[r]
 
-				var labels = [self.app.localization.e('e13136'), self.app.localization.e('e13137'), self.app.localization.e('e13138')]
+				var labels = [self.app.localization.e('e13136'), self.app.localization.e('e13137'), self.app.localization.e('discussed')]
 
 				if (self.app.platform.videoenabled ){
 					value = links[video ? 'video' : r]
 					labels.push(self.app.localization.e('video'))
 				}
 
-				if ((window.cordova) || (typeof _Electron != 'undefined' && window.electron)) {
+				if (self.app.savesupported()) {
 					labels.push(self.app.localization.e('downloaded'));
 				}
 
@@ -229,7 +229,9 @@ var toppanel = (function(){
 
 		_.each(essenses, function(essense){
 
-			essense.destroy();
+			window.requestAnimationFrame(() => {
+				essense.destroy();
+			})
 
 		})
 

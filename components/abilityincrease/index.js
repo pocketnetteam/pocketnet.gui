@@ -24,15 +24,7 @@ var abilityincrease = (function(){
 
 		var meta = {
 			video : function(increase){
-
-				if(_.isEmpty(increase)){
-					return {
-						icon : 'fas fa-wifi',
-						header : 'unableToAuthorizeConnection',
-						body : 'unableToAuthorizeConnectionBody'
-					}
-				}
-				else{
+				if (increase.balance && increase.reputation) {
 					return {
 						icon : 'fas fa-exclamation-circle',
 						header : 'unableToAuthorize',
@@ -42,6 +34,12 @@ var abilityincrease = (function(){
 							template : 'videoblogger',
 							text : 'submitapplicationVideo'
 						}
+					}
+				} else {
+					return {
+						icon : 'fas fa-wifi',
+						header : 'unableToAuthorizeConnection',
+						body : 'unableToAuthorizeConnectionBody'
 					}
 				}
 			}
@@ -156,7 +154,9 @@ var abilityincrease = (function(){
 
 		_.each(essenses, function(essense){
 
-			essense.destroy();
+			window.requestAnimationFrame(() => {
+				essense.destroy();
+			})
 
 		})
 

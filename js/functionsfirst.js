@@ -38,9 +38,23 @@ deep = function(obj, key){
     }
 }
 
+function iOS() {
+    return [
+      'iPad Simulator',
+      'iPhone Simulator',
+      'iPod Simulator',
+      'iPad',
+      'iPhone',
+      'iPod'
+    ].includes(navigator.platform)
+    // iPad on iOS 13 detection
+    || (navigator.userAgent.includes("Mac") && "ontouchend" in document)
+  }
+
 isios = function () {
-    return (window.cordova && window.device && deep(window, 'device.platform') == 'iOS') || (navigator || {}).platform &&  /iPad|iPhone|iPod/.test(navigator.platform || '')
+    return (window.cordova && window.device && deep(window, 'device.platform') == 'iOS') || iOS()
 }
+
 
 getbaseorientation = function(){
 	
@@ -625,7 +639,7 @@ importScript = function(src, callback, appendTo, app, module, _require) {
     }
 
     if (src.indexOf('v=') == -1)
-        src += "?v=119"
+        src += "?v=120"
 
     script.src = src;
     

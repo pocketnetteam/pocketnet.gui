@@ -123,6 +123,9 @@
 	.captionfwrapper{
 		overflow : hidden;
 		height: 0px;
+		.caption{
+			padding-top: var(--app-margin-top);
+		}
 		.csharetable{
 			display: none;
 		}
@@ -416,6 +419,7 @@
 				color : rgb(var(--color-txt-ac-1));	
 			}
 
+			&.hiddenBlockedUserComment,
 			&.hiddenComment{
 				.commentimages,
 				.commentmessage{
@@ -426,10 +430,22 @@
 					display: block;
 					color : rgb(var(--neutral-grad-2));
 				}
+
+				.showBlockedUserCommentWrapper{
+					display: block;
+				}
 			} 
 
 			.hiddenCommentLabel{
 				.ghost{
+					padding-left: 0;
+				}
+			}
+
+			.showBlockedUserCommentWrapper{
+				display: none;
+
+				button{
 					padding-left: 0;
 				}
 			}
@@ -1031,6 +1047,7 @@
 					font-size: 0.9em;
 					color : rgb(var(--color-txt-ac));
 					padding-top : @rhythm;
+					padding-bottom : @rhythm;
 				}
 
 				&.postCellWrapper{
@@ -1176,17 +1193,7 @@
 			}
 		}
 
-		.embedEmojiPrivew{
-			display: none;
-			width: 24px;
-			height: 24px;
-			position: absolute;
-			top : 7px;
-			right : 7px;
-			color : rgb(var(--neutral-grad-2));
-			cursor: pointer;
-		}
-
+		
 
 		.emojionearea-editor{
 		
@@ -1205,14 +1212,26 @@
 			right : 6px;
 		}
 
+		/**/
+
+		.embedEmojiPrivew{
+			display: none;
+			width: 24px;
+			height: 24px;
+			position: absolute;
+			top : 7px;
+			right : 7px;
+			color : rgb(var(--neutral-grad-2));
+			cursor: pointer;
+		}
+
 		.embedimages{
 			position: absolute;
-			right : 40px;
-			top : 3.5px;
+			right : 7px;
+			top : 3px;
 			padding : 6px;
 			cursor: pointer;
 			color : rgb(var(--neutral-grad-2));
-			.transition(0.3s);
 
 			&:hover{
 				color : rgb(var(--neutral-grad-4));
@@ -1223,14 +1242,24 @@
 			}
 		}
 
+
 		.embeddonate{
 			position: absolute;
-			right : 68px;
-			top : 1px;
+			right : 7px;
+			top: 1px;
 			padding : 6px;
 			cursor: pointer;
 			color : rgb(var(--neutral-grad-3));
+			filter: grayscale(1) invert(74%) sepia(11%) saturate(657%) hue-rotate(197deg) brightness(77%) contrast(88%);
 			.transition(0.3s);
+
+			/*&.right{
+				right: 76px;
+			}*/
+
+			&:hover{
+				filter: none;
+			}
 
 			img{
 				height: 15px;
@@ -1245,6 +1274,29 @@
 			}
 		}
 
+		.hasemoji{
+			.embedimages{
+				right : 40px
+			}
+
+			.embeddonate{
+				right : 40px
+			}
+		}
+
+		.hasembedimage{
+			.embeddonate{
+				right : 40px
+			}
+		}
+
+		.hasemoji.hasembedimage{
+			.embeddonate{
+				right : 80px
+			}
+		}
+
+		/**/
 
 		.commentPanel{
 			display: none;
@@ -1284,6 +1336,7 @@
 			}
 		}
 
+		.embeddonate,
 		.embedimages,
 		.embedEmojiPrivew{
 			.transition(0.3s);
@@ -1412,13 +1465,13 @@ html.mobile{
 			display: none!important;
 		}
 
-		.embeddonate{
+		/*.embeddonate{
 			right: 40px!important;
 		}
 
 		.embedimages{
 			right: 12px!important;
-		}
+		}*/
 
 		.list{
 			.metatable{
@@ -1672,9 +1725,23 @@ html.mobileview{
 			}
 		}
 
+		/*.post{
+			min-height: 70px;
+		}*/
+
+		/*.edit,
+		.answer{
+			display: none;
+
+			&.active{
+				display: block;
+			}
+		}*/
+
 		.edit,
 		.answer,
 		.post{
+			
 
 			.postbody{
 				.posttable{
@@ -1691,9 +1758,19 @@ html.mobileview{
 			}
 
 			&.active{
-				/*.newcommentimages.active {
-					display: none!important;
+				/*.postbody{
+					padding : @rhythm;
+					padding-top: 0;
+					padding-bottom: 50px;
+					position: fixed;
+					bottom: 0;
+					left: 0;
+					right: 0;
+					z-index: 1000;
+					background: rgba(var(--background-total-theme));
 				}*/
+				
+				
 
 				.postbody{
 

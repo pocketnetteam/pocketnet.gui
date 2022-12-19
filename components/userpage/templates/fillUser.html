@@ -2,8 +2,13 @@
     <div class="table">
         <div>
 
-            <% if(!app.errors.connection()) { %>
-                <% if(user.validateVay() == 'fu') {%>
+            <% if(!app.errors.connection()) { 
+                
+                var vv = user.validateVay()
+
+                %>
+
+                <% if(vv == 'fu') { %>
                     <div class="caption">
                         <span>
                             <%=e('utip1')%> 
@@ -15,8 +20,21 @@
                         </a>
                     </div>
 
-                <% } else { %> 
+                <% } %> 
+
+                
+                <% if(vv == 'deleted') { %>
+
+                    <div class="caption">
+                        <span>
+                            <%=e('utipdeleted')%> 
+                        </span>
+                    </div>
                     
+
+                <% } %> 
+
+                <% if(vv != 'fu' && vv != 'deleted') { %>
                     <div class="caption">
                         <span>
                             <%=e('utip2')%> 
@@ -27,8 +45,10 @@
                             <button><%=e('e13184')%></button>
                         </a>
                     </div>
-
                 <% } %>
+                        
+                    
+
 
             <% } else {%> 
 

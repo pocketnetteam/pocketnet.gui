@@ -1,6 +1,7 @@
 var electron = null, fs, url, path, https;
 if (typeof _OpenApi == 'undefined') _OpenApi = false;
 
+
 if (typeof _Electron != 'undefined') {
     electron = require('electron');
 
@@ -73,6 +74,7 @@ Platform = function (app, listofnodes) {
     self.lastblocktime = null
     self.lasttimecheck = null
     self.real = {
+        'PWUH5h7fyoCMffBjABk8vtnDRqUZ1BmFWG' : true,
         'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd' : true,
         'PLJvEixJkj85C4jHM3mt5u1ATwZE9zgFaA' : true,
         'PRTugzBefzB1AA2Rw8VTBKf3BBPDjQND8y' : true,
@@ -121,7 +123,6 @@ Platform = function (app, listofnodes) {
         'PPY1UbumjHJaoxsfL7DVTPNLM4g697zdDe' : true,
         'P9nFzh2sSyeTFd1F7fFGByhB6cD886jJi5' : true,
         'PMf2RiHZiZTtQZftkxhRYbN5CgBH6dNh5A' : true,
-        'PJg4gur26sCRukHcn5aoDSRZTQF5dxTMUS' : true,
         'PDz71dsW1cPwNewGHVUteFgQx3ZmBf4gaf' : true,
         'PFjWEfsm3jX81MctFU2VSJ17LGVKDc99oH' : true,
         'PBo7zu6xguzzftFE8c3Urgz4D6YVnj8oux' : true,
@@ -238,7 +239,7 @@ Platform = function (app, listofnodes) {
         'PCfvhqHEYG3zdWXvLJrjPPDVK2H8qwwXn5' : true,
         'PLZsQmsRUDMJGc61pGMLdDQ58UuqQ8kU5Z' : true,
         'PMC3pwutfiYpGWUMHhiB1NRjiHL7iWHiyi' : true,
-        'PEd7HQKaGj36sgPAidCvm62KidQQGL5sD8' : true,
+        // 'PEd7HQKaGj36sgPAidCvm62KidQQGL5sD8' : true, //??????????????????
         'PMTrhcppMJpaRz4Xnv7CogJPHPMKtcg6bA' : true,
         'PCYeapWncohMda9vfrFe26EDEiFa89kDZ1' : true,
         'PQEYtpgvtfETFVfhk467SyuGRhwtMcvKUd' : true,
@@ -251,10 +252,45 @@ Platform = function (app, listofnodes) {
         'PT4fvQ7jMicg6McC52BmFFkL2M6AEWc7vo' : true,
         'PCkX8n2e6aD6Ji37hSpHCJpqvaaJjVWt1m' : true,
         'PGD5jUBQ7qNnHDuW85RRBxY1msywEdCm7r' : true,
+        'PPdfqTLnz2S6F1ng5N7rzMUh19H4e3pfZe' : true,
+        'PVjhQyjrLur2ZGD5CspSu18ee7R2qsCjo6' : true,
+        'PNQ8drkeMEtZ44g7VyhxPPwPYubBsT6ekt' : true,
+        'PCx1LKWdV1pc6TmKwYU8vqEn3CpAeTexDr' : true,
+        'PLZATQyqYzM6NLbH8M3LPicSU3cTAqW3SA' : true,
+        'PKWM3oo6YTFFn5U2HLaBueqA3fcLd7BP8m' : true,
+        'PHnvqSQzg5D3yKo5KgCiXqtFP84bsYyF7G' : true,
+        'PPw4k3Zra7tYRM643QVm3V4UFrcZZb9H6H' : true,
+        'PUFZvqrgdnaGXxaFmwPuUPf5NhGg7tpBe9' : true,
+        'PDhQL18skFG4g7bEJoYhgvjqo6JNpkN533': true,
+        'PP1bBz11vicydAcw7QKJezYQdQMpYGEMiV': true,
+        'PSFPrHstL1wawZ2eXLdLEpFEjhG8a27EYb': true,
+        'PWKzt9TG45VUmAjuoFQQ4bGfZpjaUhxnhH': true,
+        'PJ5HX1eCHedY2Zjt4JTUanL1ZLi3NQdy3Q': true,
+        'PXkJiHrAwPNk2uKNrN1odK4SDeEdHNGw9j': true,
+        'PXpnB4BNmynDf6AuCU8eyB9patuQTbHAgS': true,
+        'PGjGt6AGH4UQyVQ62rsyovEFUW2H9nRU4w': true,
+        'PLb2C3Gs7r3YqCMamVeaztqnm6mfM2HDjR': true,
+        'P95itUBNbBsH28SVYsyk5qUhXWdSb23dbx': true,
+        'PUZZnLHg9qPoF1NrwFPvGse96DiNQ1uF5g': true,
+        'PJ13w4ap16wZ9xmnLViEt4csZRSDrbCsmF': true,
+        'PDkzixpA4TmkTqEKBJrmX6xFDu15qJ39ut': true,
+        'PGPqNyxuSSsAkt3m6eb5hyckoDhyy19dW9': true,
+        'PRUJpbgfqrDayD5eRi1DmDw7S8857Jhw4e': true,
+        'PWbYmgG6PzqhrNDtuFmWrSaLHTDMwZWc26': true,
+        'PLbv7r1CkNmPMetvpkTssS14WYuuMXNhDF': true,
+        'PDSkBPfxgX25RTde3VzoZ1Wz8yTeUaYAvM': true,
+        'PFkCWH4zuAYtVJSQn6rvgEiSsMjHvN8dwE': true,
+        'PSbFTgRftgSCsTzTdYFWY6SYkPD72Pdqfx': true,
+        'PXZGt2EaVyRDrXCWMTiH2Tvh5eP7RZhhxF': true,
+        'PCtDTH7XznLBCTHhKFeeg8ezSa7WJtYiMJ': true,
     }
 
     self.bch = {
         'PK4qABXW7cGS4YTwHbKX99MsgMznYgGxBL' : true
+    }
+
+    self.bchl = {
+        'PJTPfBQ6Q174s7WWcW41DwTdGrkGYQx5sJ' : true
     }
 
     self.nvadr = {
@@ -265,6 +301,8 @@ Platform = function (app, listofnodes) {
         'PU7D6X5bNUdEiuUGWGLp8C6TjSsB2hzHxL' : true,
         'PQxuDLBaetWEq9Wcx33VjhRfqtof1o8hDz' : true
     }
+
+    self.deletedtest = {}
 
 
     self.testaddresses = [
@@ -295,10 +333,12 @@ Platform = function (app, listofnodes) {
         'PFWx4RKpggTjeDNq6oyWJfejP5z8oiKGE5',
         'PFr6sDvtJq3wJejQce5RJ5L8u1oYKgjW9o',
     ];
+
     self.whiteList = [
       'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd',
       'PJ3nv2jGyW2onqZVDKJf9TmfuLGpmkSK2X',
-      'TAqR1ncH95eq9XKSDRR18DtpXqktxh74UU'
+      'TAqR1ncH95eq9XKSDRR18DtpXqktxh74UU',
+      'TFkhfcxXSWX5SsLcjhdiSDHEepWUcb7yi3',
     ];
 
     if (window.IpcBridge)
@@ -315,6 +355,8 @@ Platform = function (app, listofnodes) {
     self.videoenabled = true;
 
     var bastyonhelperOpened = false
+    self.uicamerapreview = null
+    self.uimobilesearch=null
     //////////////
     self.test = false;
     //////////////
@@ -383,8 +425,12 @@ Platform = function (app, listofnodes) {
                     p.precision = 4;
                 }
 
-                if (value < 0.001) {
+                if (value < 0.0005) {
                     p.precision = 8;
+                }
+
+                if (value <= 0) {
+                    p.precision = 2;
                 }
             }
 
@@ -509,6 +555,24 @@ Platform = function (app, listofnodes) {
                     githublabel : 'downloadgithub'
                 },
 
+                ios : {
+                    appname: app.meta.fullname,
+                    id: "ios",
+                    text: {
+                        name: "Ios",
+                        download: self.app.localization.e('e132221'),
+                        label: self.app.localization.e('e132233ios')
+                    },
+
+                    icon: '<i class="fab fa-apple"></i>',
+
+                    modile : true,
+                    image : 'applications_ios.jpg',
+
+                    href: 'https://pocketnet.app/bastyon_iphone',
+                    hreflabel : 'installpwa',
+                },
+
                 windows: {
 
                     appname: app.meta.fullname,
@@ -612,7 +676,17 @@ Platform = function (app, listofnodes) {
     }
 
     self.__getSettingsMeta = function(){
-        return {
+
+        var tgv = ""
+
+        try{
+            tgv = (JSON.parse(localStorage.getItem('telegrambot')) && JSON.parse(localStorage.getItem('telegrambot')).token) || ""
+
+        }catch(e){
+            
+        }
+
+        var st = {
 
             preview: {
                 name: self.app.localization.e('disablePreview'),
@@ -650,7 +724,7 @@ Platform = function (app, listofnodes) {
             },
 
             downvotes: {
-                name: 'Downvotes receive',
+                name: self.app.localization.e('e13270d'),
                 id: 'downvotes',
                 type: "BOOLEAN",
                 value: false
@@ -677,12 +751,12 @@ Platform = function (app, listofnodes) {
                 value: true
             },
 
-            rescued: {
+            /*rescued: {
                 name: self.app.localization.e('e13274'),
                 id: 'rescued',
                 type: "BOOLEAN",
                 value: true
-            },
+            },*/
 
             commentScore: {
                 name: self.app.localization.e('e13275'),
@@ -754,12 +828,27 @@ Platform = function (app, listofnodes) {
                 value: true
             },
 
+            commentsOrder: {
+                type: "VALUES",
+                name: self.app.localization.e('commentsOrder'),
+                id: 'commentsOrder',
+                placeholder: self.app.localization.e('commentsOrderPlaceholder'),
+                defaultValue: self.app.localization.e('comments_interesting'),
+                value: "",
+                possibleValues: ['interesting', 'timeup', 'time'],
+                possibleValuesLabels: [
+                    self.app.localization.e('comments_interesting'), 
+                    self.app.localization.e('comments_timeup'), 
+                    self.app.localization.e('comments_time')
+                ]
+            },
+
             telegram: {
                 type: "STRINGANY",
                 name: self.app.localization.e('e13282'),
                 id: 'telegram',
                 placeholder: self.app.localization.e('e13282'),
-                value: (JSON.parse(localStorage.getItem('telegrambot')) && JSON.parse(localStorage.getItem('telegrambot')).token) || "",
+                value: tgv,
             },
 
             tgfrom: {
@@ -844,6 +933,10 @@ Platform = function (app, listofnodes) {
             },
 
         }
+
+     
+
+        return st
     },
 
     self.errorHandler = function (key, action, akey) {
@@ -1565,6 +1658,34 @@ Platform = function (app, listofnodes) {
                     _url = `https://www.bitchute.com/video/${s}/`;
 
                     meta.id = s
+                }
+
+            }
+
+            if (meta.type == 'brighteon' && url.indexOf("player") == -1) {
+
+                if (url.indexOf('embed') == -1) {
+
+                    _url = 'https://www.brighteon.com/embed/' + meta.id;
+
+                } else {
+
+                    _url = url;
+
+                }
+
+            }
+
+            if (meta.type == 'stream.brighteon' && url.indexOf("player") == -1) {
+
+                if (url.indexOf('embed') == -1) {
+
+                    _url = 'https://stream.brighteon.com/embed/' + meta.id;
+
+                } else {
+
+                    _url = url;
+
                 }
 
             }
@@ -2398,6 +2519,8 @@ Platform = function (app, listofnodes) {
         offline: {},
 
         _focus: {},
+        _unfocus: {},
+
 
         focus: function (time) {
 
@@ -2417,6 +2540,12 @@ Platform = function (app, listofnodes) {
 
         },
 
+        unfocus: function () {
+            _.each(self.clbks._unfocus, function (f) {
+                f()
+            })
+        },
+
         api: {
             actions: {
                 anysubscribe : {},
@@ -2429,6 +2558,7 @@ Platform = function (app, listofnodes) {
             }
         },
     }
+    
 
     self.papi = {
         horizontalLenta : function(el, clbk, p){
@@ -2440,29 +2570,33 @@ Platform = function (app, listofnodes) {
             var tpl = `<div class="horizontalLentaWrapper"><div class="horizontalLentacaption"><span>`+(p.caption || '')+`</span><div class="controlhors"><div class="controlleft controlhor" dir="left"><i class="fas fa-arrow-left"></i></div><div class="controlright controlhor"><i class="fas fa-arrow-right"></i></div></div></div><div class="showmorebywrapper"><div class="showmoreby"></div></div>
             </div>`
 
-            el.html(tpl)
+            window.requestAnimationFrame(() => {
 
-            p.hcnt = el.find('.horizontalLentaWrapper')
+                el.html(tpl)
 
-            p.window = el.find('.showmorebywrapper')
+                p.hcnt = el.find('.horizontalLentaWrapper')
 
-            var _el = el.find('.showmoreby')
+                p.window = el.find('.showmorebywrapper')
 
-            self.papi.clenta(_el, clbk, p)
+                var _el = el.find('.showmoreby')
 
-            el.find('.controlhor').on('click', function(){
-                var dir = $(this).attr('dir') || 'right'
+                self.papi.clenta(_el, clbk, p)
 
-                var curscroll = p.window.scrollLeft()
-                var width = p.window.width()
+                el.find('.controlhor').on('click', function(){
+                    var dir = $(this).attr('dir') || 'right'
 
-                var to = width * 0.9
+                    var curscroll = p.window.scrollLeft()
+                    var width = p.window.width()
 
-                if(dir == 'left') to = -to
+                    var to = width * 0.9
 
-                to = curscroll + to
+                    if(dir == 'left') to = -to
 
-                p.window.animate({ scrollLeft: to }, 100);
+                    to = curscroll + to
+
+                    p.window.animate({ scrollLeft: to }, 100);
+                })
+
             })
         },
 
@@ -2643,7 +2777,7 @@ Platform = function (app, listofnodes) {
                             minimize : p.minimize,
                             postclass : p.postclass,
                             showrecommendations : p.showrecommendations,
-                            openapi : true
+                            openapi : typeof p.openapi == 'undefined' ? true : p.openapi
                         }
                     })
 
@@ -2811,6 +2945,44 @@ Platform = function (app, listofnodes) {
 
     self.ui = {
 
+        mobilesearch : function(p){
+
+            app.nav.api.load({
+                open : true,
+                id : 'mobilesearch',
+                inWnd : true,
+
+                essenseData : p,
+
+                clbk : function(s, p){
+                    self.uimobilesearch = p
+                }
+            })
+
+        },
+
+        uploadImage : function(p){
+
+            
+
+            /*if (self.uicamerapreview){
+                self.uicamerapreview.destroy()
+                self.uicamerapreview = null
+            }*/
+
+            app.nav.api.load({
+                open : true,
+                id : 'camerapreview',
+                el : app.el.camera,
+                essenseData : p,
+
+                clbk : function(s, p){
+                    self.uicamerapreview = p
+                }
+            })
+            
+        },
+
         pipvideo : function(txid, clbk, d){
 
             if(!d) d = {}
@@ -2910,7 +3082,7 @@ Platform = function (app, listofnodes) {
                     if(clbk) clbk()
                 }, 150)
 
-                
+
 
             }
             else{
@@ -2989,7 +3161,7 @@ Platform = function (app, listofnodes) {
 
         },
 
-        showCommentBanner : function(contextElem, clbk) {
+        showCommentBanner : function(contextElem, clbk, address) {
 
             if (!app.platform.sdk.user.me()?.regdate) {
                 return 
@@ -3001,7 +3173,7 @@ Platform = function (app, listofnodes) {
                 return;
             }
 
-            const createComponent = () => {
+            const createComponent = (address) => {
                 self.app.Logger.info({
                     actionId: 'COMMENT_BANNER_ALLOWED',
                     value: true,
@@ -3011,7 +3183,9 @@ Platform = function (app, listofnodes) {
                     open: true,
                     id: 'commentBanner',
                     el: contextElem.find('.bannerComment'),
-                    essenseData: {},
+                    essenseData: {
+                        address: address
+                    },
 
                     clbk : function(e, p){
                         bannerCommentComponent = p;
@@ -3035,37 +3209,79 @@ Platform = function (app, listofnodes) {
             const unixTimeNow = Math.floor(Date.now() / 1000);
             const oneDayInSeconds = 86400;
 
-            const alreadyShowed = ('nextCommentBanner' in localStorage);
-            const isBannerDisabled = (localStorage.nextCommentBanner == -1);
-            const timeToShowBanner = (unixTimeNow >= localStorage.nextCommentBanner);
+            var commentBanner = {}
+            
+            try{
+                commentBanner =  JSON.parse(localStorage.commentBanner || '{}');
+
+            }catch(e){
+                
+            }
+           
+            let {next, count} = commentBanner; 
+
+            if (!count) count = 0;
+            if (!next) next = 0;
+
+            const isBannerDisabled = count == -1;
+
 
             const regDate = app.platform.sdk.user.me().regdate;
             const regUnixTime = (regDate.getTime());
             const registeredTime = Date.now() - regUnixTime;
 
-            const repeat = (localStorage.nextCommentBanner == 1);
-            const isOneDayOld = (registeredTime >= oneDayInSeconds);
+            const isOneDayOld = (registeredTime >= oneDayInSeconds * 1000);
+
 
             if (isBannerDisabled) {
                 return isBannerDisabled;
+
             }
+
 
             if (!isOneDayOld) {
                 createComponent();
-                //return bannerCommentComponent;
+                return;
+                //return bannerCommentComponent;t
             }
 
-            if (repeat && timeToShowBanner) {
-                localStorage.nextCommentBanner = unixTimeNow + oneDayInSeconds;
-                createComponent();
-                //return bannerCommentComponent;
+            var me = deep(app, 'platform.sdk.users.storage.' + self.app.user.address.value.toString('hex'));
+
+            if (me && me.relation(address, 'subscribes')){ return; } 
+
+            count++;
+
+            if (unixTimeNow - oneDayInSeconds > next){
+                count = 1;
+                next = Date.now() / 1000;
+
             }
 
-            if (timeToShowBanner || !alreadyShowed) {
-                localStorage.nextCommentBanner = 1;
-                createComponent();
-                //return bannerCommentComponent;
-            }
+            const timeToShowBanner = count <= 4;
+        
+            if (timeToShowBanner) {
+
+                if (count <= 2){
+
+                    createComponent();
+
+                } else if (count <= 4){
+
+                    createComponent(address);
+
+                }
+
+                try{
+                    localStorage.setItem('commentBanner', JSON.stringify({count, next}));
+
+                }catch(e){
+                    
+                }
+
+
+            } 
+        
+
 
         },
 
@@ -3392,6 +3608,7 @@ Platform = function (app, listofnodes) {
                         close : function(){
                         },
                         post : function(){
+                            if (p.onPost) p.onPost();
                         },
                         absolute : true,
                         repost  : p.repost,
@@ -3591,11 +3808,13 @@ Platform = function (app, listofnodes) {
             if(!_p) _p = {}
 
             var error = function(e){
-                sitemessage(e)
+                if (e != 'paused') {
+                    sitemessage(e)
 
-                topPreloader2(100)
+                    topPreloader2(100)
 
-                clbk()
+                    clbk()
+                }
             }
 
             var save = function(p){
@@ -3636,6 +3855,14 @@ Platform = function (app, listofnodes) {
 
             if(self.sdk.localshares.saving[share.txid]) return
 
+            // If download has been paused, resume it
+            if (self.sdk.localshares.paused[share.txid]) {
+
+                save({resolutionId : self.sdk.localshares.paused[share.txid]})
+
+                return;
+            }
+
             if(self.sdk.localshares.storage[share.txid]){
 
                 menuDialog({
@@ -3658,12 +3885,14 @@ Platform = function (app, listofnodes) {
                 return
             }
 
+            /*
             menuDialog({
                 items: [{
                     text: self.app.localization.e('saveshare'),
                     action: function (_clbk) {
 
                         if (share.itisvideo()){
+                            */
 
                             var info = share.url ? (app.platform.sdk.videos.storage[share.url] || {}).data || null : null
 
@@ -3719,8 +3948,9 @@ Platform = function (app, listofnodes) {
 
                             }
                             else{
-                                error('noinfo')
+                                error('Error, cannot find data for this video')
                             }
+                        /*
                         }
                         else{
                             error('todo')
@@ -3730,7 +3960,7 @@ Platform = function (app, listofnodes) {
 
                     }
                 }]
-            })
+            })*/
 
 
 
@@ -3919,7 +4149,7 @@ Platform = function (app, listofnodes) {
                 h += '</div>'
 
                 h += '<div class="fullcell label">'
-                h +=  (p.text || 'To the top')
+                h +=  (p.text || app.localization.e('tothetop'))
                 h += '</div>'
 
                 h += '<div class="fullcell label likeicon">'
@@ -4655,7 +4885,25 @@ Platform = function (app, listofnodes) {
 
                     }, function (el, f, close) {
 
+                        el.find('.recommendationinfo').on('click', function(){
 
+                            
+                            var data = {
+                                ...self.sdk.recommendations.sharesinfo[share.txid] || {},
+                                share : share.txid
+                            }
+
+                            self.app.nav.api.load({
+                                open : true,
+                                href : 'recommendationinfo',
+                                inWnd : true,
+                                history : true,
+            
+                                essenseData : data
+                            })
+
+                            close()
+                        })
 
                         el.find('.opennewwindow').on('click', function(){
 
@@ -5121,6 +5369,110 @@ Platform = function (app, listofnodes) {
 
                         })
 
+                        el.find('.savePost').on('click', function(){
+
+                            var sendSiteMessage = function() {
+                                sitemessage(self.app.localization.e('postsaved'), null, 5000, {
+                                    action : {
+                                        text : self.app.localization.e('gotosaved2'),
+                                        do : function(){
+
+                                            app.nav.api.load({
+                                                open: true,
+                                                href: 'index?r=saved',
+                                                history: true,
+                                                handler : true
+                                            })
+
+                                            app.actions.scrollToTop()
+
+                                        }
+                                    }
+                                })
+                            }
+
+                            if (!self.app.savesupported() && !self.app.savesupportedForBrowser()) {
+                                close();
+                                return;
+                            }
+
+                            share.user = deep(self.app, 'platform.sdk.usersl.storage.' + share.address).export();
+
+                            // If we are on mobile/electron and post has a downloadable media video
+                            // Do not download video on iOS
+                            if (share.itisvideo() && self.app.savesupported() && !isios()) {
+
+                                // Ask user if he wants to download
+                                app.nav.api.load({
+                                    open: true,
+                                    id: 'downloadMedia',
+                                    inWnd: true,
+
+                                    essenseData: {
+                                        item : 'post',
+                                        obj : share,
+
+                                        success: function (saveMedia) {
+
+                                            // Save the post on the device without medias
+                                            if (!saveMedia) {
+
+                                                self.app.platform.sdk.localshares.saveShare(share, { doNotSaveMedia: true }).then(() =>{
+
+                                                    sendSiteMessage();
+
+                                                });
+
+                                                return;
+
+                                            }
+
+                                            // Save the post with video
+                                            self.ui.saveShare(share, function() {});
+
+                                            return;
+
+                                        }
+                                    },
+
+                                    clbk: function () {
+
+                                    }
+                                })
+
+                            } else if (self.app.savesupported()) {
+
+                                // Save the post on the device
+                                self.app.platform.sdk.localshares.saveShare(share).then(() =>{
+
+                                    sendSiteMessage();
+                                    
+                                });
+
+                            } else {
+
+                                // Here, we have access to the localstorage (browser)
+                                self.app.platform.sdk.localshares.write.share.localstorage(share);
+
+                                sendSiteMessage();
+
+                            }
+
+                            close()
+
+                        })
+
+                        el.find('.deleteSavedPost').on('click', function(){
+
+                            if (self.app.platform.sdk.localshares.delete[self.sdk.localshares.key])
+                                self.app.platform.sdk.localshares.delete[self.sdk.localshares.key](share.txid);
+
+                            close()
+
+                            if (app.nav.current.completeHref && app.nav.current.completeHref.startsWith('index?r=saved'))
+                                _el.closest(`.share[id='${share.txid}']`).remove();
+
+                        })
 
                         el.find('.videoshare').on('click', function () {
                             self.app.mobile.vibration.small()
@@ -5643,7 +5995,7 @@ Platform = function (app, listofnodes) {
                                 {
                                     id : 'banning',
                                     q : 'Can people be banned?',
-                                    a : '<div>Yes, Bastyon is a community moderated platform, however, there are only certain topics that community will flag like pornography, narcotics and direct threats of violence. You will never be banned for an opinion or free speech, and even for specific banned topics there has to be a consensus of experienced users without other users defending the content. Currently, users with rep below -30 are losing their account privileges, but this is a temporary system. By the end of 2021, Bastyon is releasing a new moderation system where posts are initially flagged by any high rep user, but account can be blocked only by a certain group of jurors who are selected using a blockchain lottery. Thus, nobody can choose to attack someone for an opinion, jurors will be selected to moderate certain content and they have to all agree. Account cannot be banned until two sets of jurors decided and they cannot be the same. This system protects against any kind of mob rule on Bastyon, while protecting the platform from unsavory content.</div>',
+                                    a : '<div>Yes, Bastyon is a community moderated platform, however, there are only certain topics that community will flag like porn/nudity, narcotics and direct threats of violence. You will never be banned for an opinion or free speech, and even for specific banned topics there has to be a consensus of experienced users without other users defending the content. Currently, users with rep below -30 are losing their account privileges, but this is a temporary system. By the end of 2021, Bastyon is releasing a new moderation system where posts are initially flagged by any high rep user, but account can be blocked only by a certain group of jurors who are selected using a blockchain lottery. Thus, nobody can choose to attack someone for an opinion, jurors will be selected to moderate certain content and they have to all agree. Account cannot be banned until two sets of jurors decided and they cannot be the same. This system protects against any kind of mob rule on Bastyon, while protecting the platform from unsavory content.</div>',
                                 },
                                 {
                                     id : 'Apple App',
@@ -5715,7 +6067,7 @@ Platform = function (app, listofnodes) {
                                 {
                                     id : 'specific',
                                     q : 'Specifics of curation on '+self.app.meta.fullname+'.',
-                                    a : '<div> Currently the moderation of content is done through 1 star votes by high reputation  users. When reputation reaches -30, the access to the account is restricted. However, there is a completely new moderation algorithm that will be released by the end of 2021. Under the new algorithms, there will be an option to flag a user or a post by any high rep user, but that is not goign to affect the account directly. After certain numbers of flags a lottery on the blockchain will be drawn and a group of juror moderators will be chosen for that account. Jurors have to agree that this user posted pornography, narcotics or a direct threat to violence. Any other opinion or a disagreement is not a grounds for flagging or any sanctions.</div> ',
+                                    a : '<div> Currently the moderation of content is done through 1 star votes by high reputation  users. When reputation reaches -30, the access to the account is restricted. However, there is a completely new moderation algorithm that will be released by the end of 2021. Under the new algorithms, there will be an option to flag a user or a post by any high rep user, but that is not goign to affect the account directly. After certain numbers of flags a lottery on the blockchain will be drawn and a group of juror moderators will be chosen for that account. Jurors have to agree that this user posted porn/nudity, narcotics or a direct threat to violence. Any other opinion or a disagreement is not a grounds for flagging or any sanctions.</div> ',
                                 },
                                 // {
                                 // 	id : 'racism',
@@ -5785,8 +6137,8 @@ Platform = function (app, listofnodes) {
                                 },
                                 {
                                     id : 'ecosystem4',
-                                    q : 'What if users post illegal content, pornography and SPAM?',
-                                    a : '<div>'+self.app.meta.fullname+' is not a darknet platform or some sort of pornhub. While it is decentralized and censorship resistant, it is moderated by the users. Any illegal content is flagged and removed from the platform. This means that users with highest reputation can moderate the platform. However, there are safeguards in place (within the open source code) from same or very similar group(s) of people repeatedly voting content off the platform. Moderators for content are chosen randomly using a lottery on the blockchain to avoid any kind of mob rule. Also, users are explicitly encouraged to illicit content, NOT simply the content they find offensive. To make sure that '+self.app.meta.fullname+' is a free speech platform, we encourage you to start participate, grow your reputation and police the platform properly without the censorship currently prevalent in centralized social media.</div>',
+                                    q : 'What if users post illegal content, porn/nudity and SPAM?',
+                                    a : '<div>'+self.app.meta.fullname+' is not a darknet platform or some sort of porn/nudity. While it is decentralized and censorship resistant, it is moderated by the users. Any illegal content is flagged and removed from the platform. This means that users with highest reputation can moderate the platform. However, there are safeguards in place (within the open source code) from same or very similar group(s) of people repeatedly voting content off the platform. Moderators for content are chosen randomly using a lottery on the blockchain to avoid any kind of mob rule. Also, users are explicitly encouraged to illicit content, NOT simply the content they find offensive. To make sure that '+self.app.meta.fullname+' is a free speech platform, we encourage you to start participate, grow your reputation and police the platform properly without the censorship currently prevalent in centralized social media.</div>',
                                 },
                                 {
                                     id : 'ecosystem5',
@@ -5850,7 +6202,7 @@ Platform = function (app, listofnodes) {
                                 {
                                     id : 'honor11',
                                     q : 'Obligations for users:',
-                                    a : '<ul><li>Respect differing opinions and attempt to keep the platform friendly to newcomers</li><li>Flag the prohibited content:<ol><li>Any kind of pornography</li><li>Direct threats of violence</li><li>Promotion of illegal narcotics</li></ol></li><li>Give five stars to any post you peruse and find of high quality</li><li>Likewise, give 1 star to poor content, it helps the network</li><li>Use 1 star to enforce the relevance of content to the tags used</li><li>Do not flag or downvote for simple disagreement, only for prohibited content</li><li>Do not engage in reciprocal rating or any rating not based on quality of content</li></ul>',
+                                    a : '<ul><li>Respect differing opinions and attempt to keep the platform friendly to newcomers</li><li>Flag the prohibited content:<ol><li>Any kind of porn/nudity</li><li>Direct threats of violence</li><li>Promotion of illegal narcotics</li></ol></li><li>Give five stars to any post you peruse and find of high quality</li><li>Likewise, give 1 star to poor content, it helps the network</li><li>Use 1 star to enforce the relevance of content to the tags used</li><li>Do not flag or downvote for simple disagreement, only for prohibited content</li><li>Do not engage in reciprocal rating or any rating not based on quality of content</li></ul>',
                                     img: ''
                                 },
                                 {
@@ -6252,7 +6604,7 @@ Platform = function (app, listofnodes) {
                         {
                         id : 'запрет ',
                         q : 'Можно ли банить людей?',
-                        a : '<div>Да, Bastyon - это платформа, модерируемая сообществом, однако есть только определенные темы, которые будут отмечены сообществом, такие как порнография, наркотики и прямые угрозы насилия. Вас никогда не забанят за свое мнение или свободу слова, и даже по конкретным запрещенным темам должен быть консенсус опытных пользователей, при этом другие пользователи не защищают контент. В настоящее время пользователи с репутацией ниже -30 теряют свои привилегии учетной записи, но это временная система. К концу 2021 года Bastyon выпускает новую систему модерации, в которой сообщения изначально помечаются любым пользователем с высоким уровнем репутации, но учетные записи могут быть заблокированы только определенной группой присяжных, выбранных с помощью лотереи блокчейна. Таким образом, никто не может атаковать кого-то за мнение, присяжные будут выбраны для модерации определенного контента, и все они должны согласиться. Аккаунт не может быть заблокирован до тех пор, пока не будет определено два состава присяжных, и они не могут быть одинаковыми. Эта система защищает от любых правил мафии на Bastyon, одновременно защищая платформу от сомнительного контента.</div>',
+                        a : '<div>Да, Bastyon - это платформа, модерируемая сообществом, однако есть только определенные темы, которые будут отмечены сообществом, такие как порно/обнаженка, наркотики и прямые угрозы насилия. Вас никогда не забанят за свое мнение или свободу слова, и даже по конкретным запрещенным темам должен быть консенсус опытных пользователей, при этом другие пользователи не защищают контент. В настоящее время пользователи с репутацией ниже -30 теряют свои привилегии учетной записи, но это временная система. К концу 2021 года Bastyon выпускает новую систему модерации, в которой сообщения изначально помечаются любым пользователем с высоким уровнем репутации, но учетные записи могут быть заблокированы только определенной группой присяжных, выбранных с помощью лотереи блокчейна. Таким образом, никто не может атаковать кого-то за мнение, присяжные будут выбраны для модерации определенного контента, и все они должны согласиться. Аккаунт не может быть заблокирован до тех пор, пока не будет определено два состава присяжных, и они не могут быть одинаковыми. Эта система защищает от любых правил мафии на Bastyon, одновременно защищая платформу от сомнительного контента.</div>',
                         },
                         {
                         id : 'Приложение Apple',
@@ -6471,7 +6823,7 @@ Platform = function (app, listofnodes) {
                         {
                         id : 'конкретный',
                         q : 'Особенности модерации на '+self.app.meta.fullname+'.',
-                        a : '<div> В настоящее время модерация контента осуществляется с помощью оценок в 1 звезду пользователями с высокой репутацией. Когда репутация достигает -30, доступ к аккаунту ограничивается. Однако существует совершенно новый алгоритм модерации, который будет выпущен к концу 2021 года. Согласно новым алгоритмам, будет возможность пометить пользователя или сообщение любым высокопоставленным пользователем, но это не повлияет на счет напрямую. После того, как будет установлено определенное количество флагов, на блокчейне будет разыграна лотерея, и для этой учетной записи будет выбрана группа модераторов присяжных заседателей. Присяжные должны согласиться с тем, что этот пользователь разместил порнографию, наркотики или прямую угрозу насилия. Любое иное мнение или несогласие не является основанием для пометки или каких-либо санкций.</div> ',
+                        a : '<div> В настоящее время модерация контента осуществляется с помощью оценок в 1 звезду пользователями с высокой репутацией. Когда репутация достигает -30, доступ к аккаунту ограничивается. Однако существует совершенно новый алгоритм модерации, который будет выпущен к концу 2021 года. Согласно новым алгоритмам, будет возможность пометить пользователя или сообщение любым высокопоставленным пользователем, но это не повлияет на счет напрямую. После того, как будет установлено определенное количество флагов, на блокчейне будет разыграна лотерея, и для этой учетной записи будет выбрана группа модераторов присяжных заседателей. Присяжные должны согласиться с тем, что этот пользователь разместил порно/обнаженку, наркотики или прямую угрозу насилия. Любое иное мнение или несогласие не является основанием для пометки или каких-либо санкций.</div> ',
                         },
                         {
                         id : 'взаимный',
@@ -6546,8 +6898,8 @@ Platform = function (app, listofnodes) {
                         },
                         {
                         id : 'экосистема 4',
-                        q : 'Что, если пользователи размещают незаконный контент, порнографию и СПАМ?',
-                        a : '<div>'+self.app.meta.fullname+'- это не платформа даркнета или какой-то порнхаб. Хотя '+self.app.meta.fullname+' децентрализован и устойчив к цензуре, он модерируется пользователями. Любой незаконный контент помечается и удаляется с платформы. Это означает, что модерировать платформу могут пользователи с наивысшей репутацией. Однако, не существуют гарантии (в рамках открытого исходного кода), что за деструктивный контент не проголосуют пользователи с высокой репутацией. Модераторы контента выбираются случайным образом с помощью лотереи на блокчейне, чтобы избежать каких-либо подтасовок. Модерируется только запрещённый контент (порнография, педофилия, пропаганда нелегальных нарктотиков и прямые угрозы насилия), а НЕ просто к контенту, который они считают оскорбительным. Bastyon является платформой для свободы слова, мы призываем каждого участвовать в модерации контента путем проставления оценок, публиковать интересный авторский контент, повышая таким образом свою репутацию и привнося вклад в развитие платформы.</div>',
+                        q : 'Что, если пользователи размещают незаконный контент, порно/обнаженку и СПАМ?',
+                        a : '<div>'+self.app.meta.fullname+'- это не платформа даркнета или какой-то порнхаб. Хотя '+self.app.meta.fullname+' децентрализован и устойчив к цензуре, он модерируется пользователями. Любой незаконный контент помечается и удаляется с платформы. Это означает, что модерировать платформу могут пользователи с наивысшей репутацией. Однако, не существуют гарантии (в рамках открытого исходного кода), что за деструктивный контент не проголосуют пользователи с высокой репутацией. Модераторы контента выбираются случайным образом с помощью лотереи на блокчейне, чтобы избежать каких-либо подтасовок. Модерируется только запрещённый контент (порно/обнаженка, педофилия, пропаганда нелегальных нарктотиков и прямые угрозы насилия), а НЕ просто к контенту, который они считают оскорбительным. Bastyon является платформой для свободы слова, мы призываем каждого участвовать в модерации контента путем проставления оценок, публиковать интересный авторский контент, повышая таким образом свою репутацию и привнося вклад в развитие платформы.</div>',
                         },
                         {
                         id : 'экосистема 5',
@@ -6610,7 +6962,7 @@ Platform = function (app, listofnodes) {
                                 {
                                     id : 'honor1',
                                     q : 'Обязанности пользователей:',
-                                    a : '<ul><li>Уважайте различные мнения</li><li>Отметить запрещенный контент:<ol><li>Любой вид порнографии</li><li>Прямые угрозы насилием</li><li>Продвижение незаконных наркотиков</li></ol></li><li>Дайте пять звезд любой публикации, которую вы просматриваете и считаете высококачественной</li><li>Точно так же ставьте 1 звезду плохому контенту, это помогает сети</li><li>Используйте 1 звезду, чтобы обеспечить соответствие контента используемым тегам</li><li>Не отмечайте и не голосуйте за простое несогласие, а только за запрещенный контент</li><li>Не участвуйте во взаимных оценках или любых рейтингах, не основанных на качестве контента</li></ul>',
+                                    a : '<ul><li>Уважайте различные мнения</li><li>Отметить запрещенный контент:<ol><li>Любой вид порно/обнаженки</li><li>Прямые угрозы насилием</li><li>Продвижение незаконных наркотиков</li></ol></li><li>Дайте пять звезд любой публикации, которую вы просматриваете и считаете высококачественной</li><li>Точно так же ставьте 1 звезду плохому контенту, это помогает сети</li><li>Используйте 1 звезду, чтобы обеспечить соответствие контента используемым тегам</li><li>Не отмечайте и не голосуйте за простое несогласие, а только за запрещенный контент</li><li>Не участвуйте во взаимных оценках или любых рейтингах, не основанных на качестве контента</li></ul>',
                                     img: ''
                                 },
                                 {
@@ -6645,7 +6997,7 @@ Platform = function (app, listofnodes) {
                                     a : 'Критерии для получения бонуса за оригинальный контент:  Каждые 15 тысяч просмотров видео + 1500 пятизвёздочных рейтингов от уникальных пользователей + 1500 реферальных пользователей <br />PKOIN или Bitcoin:  1,000 USDT <br />Как ускорить получение бонуса?<br />Делитесь ссылкой на видео в социальных сетях, с помощью мессенджеров или через почту. Выставляйте эксклюзивные материалы для подписчиков в Бастионе (это делается при создании поста, выбрать Для Подписчиков). Эксклюзивные материалы увеличат количество реферальных подписок.<br />Делитесь ссылкой на ваш профиль.<br />Всегда выбирайте Реферальная Ссылка, когда делитесь ссылкой на Бастион (на видео или профиль).<br />Если вы пригласите блоггера и докажете это, вы получите бонус в размере до 25% от первых 4 бонусов.<br />По вопросам обращайтесь support@bastyon.com.',
                                     img: ''
                                 },
-                                
+
                             ]
 
                         },
@@ -6862,7 +7214,7 @@ Platform = function (app, listofnodes) {
                                 {
                                     id : "banning",
                                     q : "Est-ce que les gens peuvent être bannis?",
-                                    a : "<div>Oui, Bastyon est une plate-forme modérée par la communauté, cependant, il n`y a que certains sujets que la communauté signalera comme la pornographie, les stupéfiants et les menaces directes de violence. Vous ne serez jamais banni pour une opinion ou une liberté d`expression, et même pour des sujets interdits spécifiques, il doit y avoir un consensus d`utilisateurs expérimentés sans que d`autres utilisateurs défendent le contenu. Actuellement, les utilisateurs dont la représentation est inférieure à -30 perdent leurs privilèges de compte, mais il s`agit d`un système temporaire. D`ici la fin de 2021, Bastyon lancera un nouveau système de modération dans lequel les publications sont initialement signalées par tout utilisateur de haut niveau, mais le compte ne peut être bloqué que par un certain groupe de jurés sélectionnés à l`aide d`une loterie blockchain. Ainsi, personne ne peut choisir d`attaquer quelqu`un pour un avis, les jurés seront sélectionnés pour modérer certains contenus et ils doivent tous être d`accord. Le compte ne peut pas être interdit jusqu`à ce que deux groupes de jurés aient décidé et ils ne peuvent pas être les mêmes. Ce système protège contre tout type de règle de foule sur Bastyon, tout en protégeant la plate-forme des contenus peu recommandables.</div>",
+                                    a : "<div>Oui, Bastyon est une plate-forme modérée par la communauté, cependant, il n`y a que certains sujets que la communauté signalera comme la porn/nudity, les stupéfiants et les menaces directes de violence. Vous ne serez jamais banni pour une opinion ou une liberté d`expression, et même pour des sujets interdits spécifiques, il doit y avoir un consensus d`utilisateurs expérimentés sans que d`autres utilisateurs défendent le contenu. Actuellement, les utilisateurs dont la représentation est inférieure à -30 perdent leurs privilèges de compte, mais il s`agit d`un système temporaire. D`ici la fin de 2021, Bastyon lancera un nouveau système de modération dans lequel les publications sont initialement signalées par tout utilisateur de haut niveau, mais le compte ne peut être bloqué que par un certain groupe de jurés sélectionnés à l`aide d`une loterie blockchain. Ainsi, personne ne peut choisir d`attaquer quelqu`un pour un avis, les jurés seront sélectionnés pour modérer certains contenus et ils doivent tous être d`accord. Le compte ne peut pas être interdit jusqu`à ce que deux groupes de jurés aient décidé et ils ne peuvent pas être les mêmes. Ce système protège contre tout type de règle de foule sur Bastyon, tout en protégeant la plate-forme des contenus peu recommandables.</div>",
                                 },
                                 {
                                     id : "Apple App",
@@ -7072,7 +7424,14 @@ Platform = function (app, listofnodes) {
         localshares : {
             storage : {},
             saving : {},
+            paused: {},
             key : '',
+
+            getSegment :  function(dir, filename){
+
+                return electron.ipcRenderer.invoke('getVideoSegment', dir, filename)
+
+            },
 
             getByMasterSwarmId : function(masterSwarmId){
                 var s = self.sdk.localshares.storage
@@ -7081,7 +7440,7 @@ Platform = function (app, listofnodes) {
 
                 _.find(s, (share) => {
                     return _.find(share.videos, function(v){
-                        if(v.infos && v.infos.videoDetails && v.infos.masterSwarmId == masterSwarmId) {
+                        if(v.infos && v.infos.videoDetails && v.infos.masterSwarmId == masterSwarmId && v.infos.segments && v.infos.dir) {
                             video = v;
                             return true
                         }
@@ -7093,9 +7452,19 @@ Platform = function (app, listofnodes) {
 
             status : function(id){
                 if(self.sdk.localshares.storage[id]) return 'saved'
+                if(self.sdk.localshares.paused[id]) return 'paused'
                 if(self.sdk.localshares.saving[id]) return 'saving'
 
                 return 'cansave'
+            },
+
+            videoDlProgress : async function(id){
+                const progress = await electron.ipcRenderer.invoke('getVideoDownloadProgress', id);
+                return progress;
+            },
+
+            setVideoDlStatus : async function(id, status){
+                await electron.ipcRenderer.invoke('setVideoDownloadStatus', id,  status);
             },
 
             clearfromstorage : function(shareId){
@@ -7129,9 +7498,11 @@ Platform = function (app, listofnodes) {
                     _.each(r, function(share){
                         self.sdk.localshares.addtostorage(share)
 
-                        _.each(share.videos, function(v){
-                            if(v.infos &&  v.infos.videoDetails) window.peertubeglobalcache[v.infos.videoDetails.uuid] = v.infos.videoDetails
-                        })
+                        if (share.videos) {
+                            _.each(share.videos, function(v){
+                                if(v && v.infos &&  v.infos.videoDetails) window.peertubeglobalcache[v.infos.videoDetails.uuid] = v.infos.videoDetails
+                            })
+                        }
 
                     })
 
@@ -7156,6 +7527,27 @@ Platform = function (app, listofnodes) {
                 return _.map(self.sdk.localshares.storage, function(v, i){
                     return i
                 })
+            },
+
+            getAllVideos : function(){
+                var videos = []
+
+                var s = self.sdk.localshares.storage
+
+                _.find(s, (share) => {
+                    var v = _.find(share.videos, function(v){
+                        if(v.infos && v.infos.videoDetails && v.infos.masterSwarmId && v.infos.segments && v.infos.dir) {
+                            video = v;
+                            return true
+                        }
+                    })
+
+                    if (v){
+                        videos.push(v)
+                    }
+                })
+
+                return videos
             },
 
             saveShare : function(share, p){
@@ -7190,18 +7582,50 @@ Platform = function (app, listofnodes) {
                     shareInfo.video = share.url ? (app.platform.sdk.videos.storage[share.url] || {}).data || null : null
 
                 return self.sdk.localshares.write.share[self.sdk.localshares.key](shareInfo.share).then(folder => {
-                    return self.sdk.localshares.write.video[self.sdk.localshares.key](folder, shareInfo, p).then(r => {
 
-                        shareInfo.share.videos || (shareInfo.share.videos = {})
-                        shareInfo.share.videos[r.id] = r
+                    return new Promise((resolve) => {
 
-                        return Promise.resolve()
+                        // Only save videos on Android
+                        if (share.itisvideo() && !p.doNotSaveMedia && !isios()) {
 
-                    })
+                            self.sdk.localshares.write.video[self.sdk.localshares.key](folder, shareInfo, p).then(r => {
+
+                                if (r == undefined)
+                                    return Promise.reject('paused');
+
+                                shareInfo.share.videos || (shareInfo.share.videos = {})
+                                if (r)
+                                    shareInfo.share.videos[r.id] = r
+
+                                return resolve()
+
+                            })
+
+                        }
+                        else if (share.images && share.images.length > 0 && !p.doNotSaveMedia)  {
+
+                            self.sdk.localshares.write.image[self.sdk.localshares.key](folder, shareInfo, share.images, p).then(images => {
+
+                                shareInfo.share.share.i = images;
+
+                                self.sdk.localshares.write.share[self.sdk.localshares.key](shareInfo.share).finally(() => {
+                                    return resolve()
+                                });
+
+                            });
+
+                        }
+                        else
+
+                            return resolve()
+
+                    });
+
                 }).then(r => {
                     self.sdk.localshares.storage = {}
 
                     self.sdk.localshares.saving[share.txid] = false
+                    delete self.sdk.localshares.paused[share.txid]
 
                     return self.sdk.localshares.init()
 
@@ -7216,6 +7640,10 @@ Platform = function (app, listofnodes) {
 
 
                     self.sdk.localshares.saving[share.txid] = false
+                    if (e == 'paused')
+                        self.sdk.localshares.paused[share.txid] = p.resolutionId
+                    else
+                        delete self.sdk.localshares.paused[share.txid]
 
                     if (p.after) p.after(share)
 
@@ -7299,68 +7727,113 @@ Platform = function (app, listofnodes) {
 
                         if(!fileDownloadUrl) return Promise.reject('fileDownloadUrl')
 
-                        return new Promise((resolve, reject) => {
-                            folder.getDirectory('videos', { create: true }, function (dirEntry3) {
+                        var infos = {
+                            thumbnail: 'https://' + videoDetails.from + videoDetails.thumbnailPath,
+                            videoDetails : videoDetails,
+                        }
+                        var result = {
+                            infos: infos,
+                            id : id
+                        }
 
-                                dirEntry3.getDirectory(id, { create: true }, function (dirEntry4) {
-
-                                    var infos = {
-                                        thumbnail: 'https://' + videoDetails.from + videoDetails.thumbnailPath,
-                                        videoDetails : videoDetails,
-                                    }
-
-                                    dirEntry4.getFile('info.json', { create: true }, function (infoFile) {
-                                        // Write into file
-                                        infoFile.createWriter(function (fileWriter) {
-
-                                            fileWriter.write(infos);
-
-                                            dirEntry4.getFile(p.resolutionId + '.mp4', { create: true }, function (targetFile) {
-
-                                                var downloader = new BackgroundTransfer.BackgroundDownloader();
-                                                // Create a new download operation.
-                                                var download = downloader.createDownload(fileDownloadUrl.fileDownloadUrl, targetFile, "Bastyon: Downloading video");
-
-                                                // Start the download
-                                                download.startAsync().then(function(e) {
+                        var downloadThumbnail = function() {
+                            return new Promise((resolve, reject) => {
+                                if (!infos || !infos.thumbnail || infos.thumbnail.length <= 0)
+                                    return reject();
+                                folder.getDirectory('videos', { create: true }, function (dirEntry3) {
+                                    dirEntry3.getDirectory(id, { create: true }, function (dirEntry4) {
+                                        // Download thumbnail
+                                        let thumbnailName = infos.thumbnail.substring(infos.thumbnail.lastIndexOf('/') + 1, infos.thumbnail.length);
+                                        dirEntry4.getFile(thumbnailName, { create: true }, function (thumbFile) {
+                                            var fileTransfer = new FileTransfer();
+                                            fileTransfer.download(
+                                                'https://' + videoDetails.from + videoDetails.thumbnailPath,
+                                                thumbFile.nativeURL,
+                                                function (entry) {
                                                     // Success
-                                                    // Get file size
-                                                    targetFile.file(function(fileDetails) {
-                                                        // Resolve internal URL
-                                                        window.resolveLocalFileSystemURL(targetFile.nativeURL, function(entry) {
+                                                    resolve(entry.toURL());
+                                                },
+                                                function (error) {
+                                                    console.log("download thumbnail error: ", error);
+                                                    reject('download thumbnail error');
+                                                },
+                                                null, {}
+                                            );
+                                        }, reject);
+                                    }, reject);
+                                }, reject);
+                            });
+                        }
 
-                                                            targetFile.internalURL = entry.toInternalURL();
+                        return new Promise((resolve, reject) => {
 
-                                                            var result = {
-                                                                video: targetFile,
-                                                                infos: infos,
-                                                                size : fileDetails.size || null,
-                                                                id : id
-                                                            }
+                            // Download video thumbnail
+                            downloadThumbnail().then((thumbnailPath) => {
+                                infos.thumbnail = thumbnailPath;
+                                result.infos.thumbnail = thumbnailPath;
+                                infos.videoDetails.previewPath = thumbnailPath;
+                            }).finally(() => {
 
-                                                            //self.sdk.local.shares.add(shareId, shareInfos);
+                                // Download video
+                                folder.getDirectory('videos', { create: true }, function (dirEntry3) {
 
-                                                            return resolve(result);
+                                    dirEntry3.getDirectory(id, { create: true }, function (dirEntry4) {
 
-                                                        }, reject);
+                                        dirEntry4.getFile('info.json', { create: true }, function (infoFile) {
+                                            // Write into file
+                                            infoFile.createWriter(function (fileWriter) {
 
-                                                    }, reject);
+                                                fileWriter.write(infos);
 
-                                                }, reject, function(pr) {
+                                                dirEntry4.getFile(p.resolutionId + '.mp4', { create: true }, function (targetFile) {
 
-                                                    if(p.progress) p.progress('video', 100* pr.bytesReceived / pr.totalBytesToReceive)
+                                                    var fileTransfer = new FileTransfer();
 
-                                                });
+                                                    fileTransfer.download(
+                                                        fileDownloadUrl.fileDownloadUrl,
+                                                        targetFile.nativeURL,
+                                                        function (entry) {
+
+                                                            // Success
+                                                            // Get file size
+                                                            targetFile.file(function(fileDetails) {
+
+                                                                targetFile.internalURL = entry.toURL();
+
+                                                                result.video = targetFile;
+                                                                result.size = fileDetails.size || null;
+
+                                                                //self.sdk.local.shares.add(shareId, shareInfos);
+
+                                                                return resolve(result);
+
+                                                            }, reject);
+
+                                                        },
+                                                        function (error) {
+                                                            console.log("download error: ", error);
+                                                            reject(error);
+                                                        },
+                                                        null, {}
+                                                    );
+
+                                                    fileTransfer.onprogress = function(progressEvent) {
+                                                        if (progressEvent)
+                                                            p.progress('video', 100 * progressEvent.loaded / progressEvent.total);
+                                                    }
+
+                                                }, reject);
 
                                             }, reject);
-
+    
                                         }, reject);
-
-                                    }, reject);
-
+    
+                                    }, reject)
+    
                                 }, reject)
 
-                            }, reject)
+                            });
+
                         })
 
                     },
@@ -7380,11 +7853,76 @@ Platform = function (app, listofnodes) {
                         return videoData;
                     },
 
-                    localstorage : function(){
+                    localstorage : function(folder, shareInfo, p = {}){
+                        if(!shareInfo.video) return Promise.resolve()
                         return Promise.reject('todo')
                     }
                 },
-             
+
+                image : {
+
+                    cordova : async function(folder, shareInfo, images, p = {}){
+
+                        if (!folder || !images || images.length <= 0)
+                            return Promise.resolve([]);
+
+                        var nbToDo = images.length, nbDone = 0, resImages = images.map((i) => i);
+
+                        return new Promise((resolve, reject) => {
+
+                            var checkDone = function() {
+
+                                nbDone += 1;
+
+                                if (nbDone >= nbToDo)
+                                    resolve(resImages);
+
+                            }
+
+                            // Save the base64 strings for the images
+                            images.forEach((imageUrl, imageIndex) => {
+
+                                var xhr = new XMLHttpRequest();
+                                xhr.onload = function() {
+                                    var reader = new FileReader();
+                                    reader.onloadend = function() {
+                                        resImages[imageIndex] = reader.result;
+                                        checkDone();
+                                    }
+                                    reader.onerror = function(err) {
+                                        console.log(err);
+                                        checkDone();
+                                    }
+                                    reader.readAsDataURL(xhr.response);
+                                };
+                                xhr.open('GET', imageUrl);
+                                xhr.responseType = 'blob';
+                                xhr.send();
+
+                            });
+                            
+                        });
+
+                    },
+
+                    electron : async function(folder, shareInfo, images, p = {}){
+                        var imagesData = [];
+
+                        try {
+                            imagesData = await electron.ipcRenderer
+                                .invoke('saveShareImages', folder, shareInfo.share.share.i);
+                        } catch(err) {
+                            console.log(err);
+                        }
+
+                        return Promise.resolve(imagesData);
+                    },
+
+                    localstorage : function(){
+                        return Promise.resolve();
+                    }
+                },
+
                 share : {
                     cordova : function(share){
 
@@ -7404,7 +7942,7 @@ Platform = function (app, listofnodes) {
                                     dirEntry2.getFile('share.json', { create: true }, function (shareFile) {
                                         // Write into file
                                         shareFile.createWriter(function (fileWriter) {
-                                            fileWriter.write(share);
+                                            fileWriter.write(JSON.stringify(share));
 
                                             resolve(dirEntry2)
                                         });
@@ -7432,8 +7970,23 @@ Platform = function (app, listofnodes) {
                         return shareDir;
                     },
 
-                    localstorage : function(){
-                        return Promise.reject('todo')
+                    // Write share in localstorage
+                    localstorage : function(share){
+
+                        if (localStorage && localStorage.setItem) {
+
+                            share.timestamp = new Date();
+                            delete share.share;
+
+                            localStorage.setItem('saved_share_' + share.txid, JSON.stringify(share));
+
+                            share.share = share;
+                            self.sdk.localshares.addtostorage({ id: share.txid, share: share});
+                            return Promise.resolve();
+
+                        }
+
+                        return Promise.reject();
                     }
                 }
             },
@@ -7479,8 +8032,22 @@ Platform = function (app, listofnodes) {
 
                     },
 
-                    localstorage : function(){
-                        return Promise.reject('todo')
+                    // Read shares in localstorage
+                    localstorage : function(shareId){
+
+                        var share;
+
+                        if (localStorage && localStorage.getItem) {
+                            let shareStr = localStorage.getItem('saved_share_' + shareId);
+                            if (shareStr) {
+                                try {
+                                    share = JSON.parse(shareStr);
+                                    // share.user = { adr: share.address };
+                                } catch(err) {}
+                            }
+                        }
+
+                        return share;
                     }
                 },
 
@@ -7615,6 +8182,7 @@ Platform = function (app, listofnodes) {
                             .invoke('getVideoData', shareId, videoId);
 
 
+
                         videosDataList[videoId] = videoData;
 
                         return videosDataList;
@@ -7636,7 +8204,8 @@ Platform = function (app, listofnodes) {
                     const videoId = shareDataList.share.share.u
                         .split('%2F').pop();
 
-                    shareDataList.videos = await self.sdk.localshares.read.video.electron(videoId, shareId);
+                    if (videoId)
+                        shareDataList.videos = await self.sdk.localshares.read.video.electron(videoId, shareId);
 
 
                     return shareDataList;
@@ -7674,15 +8243,23 @@ Platform = function (app, listofnodes) {
 
                 },
 
-                localstorage : function(){
-                    return Promise.reject('todo')
+                // Get a share from localstorage
+                localstorage : async function(shareId){
+
+                    const share = await self.sdk.localshares.read.share.localstorage(shareId);
+                    share.share = share;
+
+                    return share;
                 }
             },
 
             getall : {
                 electron : async function() {
-                    const shareList = await electron.ipcRenderer
+                    const shareLists = await electron.ipcRenderer
                         .invoke('getShareList');
+
+                    const shareList = shareLists.savedShares;
+                    const pausedShareList = shareLists.pausedShares;
 
                     const shareDataList = {};
 
@@ -7690,6 +8267,10 @@ Platform = function (app, listofnodes) {
                         const shareId = shareList[shareIndex];
 
                         shareDataList[shareId] = await self.sdk.localshares.get.electron(shareId);
+                    }
+
+                    for(const shareIndex in pausedShareList) {
+                        self.sdk.localshares.paused[pausedShareList[shareIndex].shareId] = pausedShareList[shareIndex].resolutionId;
                     }
 
                     return shareDataList;
@@ -7723,6 +8304,10 @@ Platform = function (app, listofnodes) {
 
                                             return Promise.resolve()
 
+                                        }).catch(err => {
+
+                                            return Promise.resolve()
+
                                         })
 
                                     })).then(r => {
@@ -7741,8 +8326,25 @@ Platform = function (app, listofnodes) {
 
                 },
 
-                localstorage : function(){
-                    return Promise.reject('todo')
+                localstorage : async function(){
+
+                    var shares = {};
+
+                    for (i in localStorage) {
+
+                        var matches = /^saved_share_([a-zA-Z\d]+)$/.exec(i);
+
+                        if (matches && matches.length >= 2) {
+
+                            try {
+                                let share = await self.sdk.localshares.get.localstorage(matches[1]);
+                                shares[share.txid] = { id: share.txid, share: share };
+                            } catch(err) {}
+
+                        }
+                    }
+
+                    return Promise.resolve(shares);
                 }
             },
 
@@ -7762,6 +8364,8 @@ Platform = function (app, listofnodes) {
             delete : {
                 localstorage : function(shareId){
                     self.sdk.localshares.clearfromstorage(shareId)
+                    if (localStorage && localStorage.removeItem)
+                        localStorage.removeItem('saved_share_' + shareId);
 
                     return Promise.resolve();
                 },
@@ -7803,6 +8407,17 @@ Platform = function (app, listofnodes) {
             storage: {},
             clbks: {},
 
+            mappings: {
+                loggingMapping: {
+                    1: 'USER_ADDRESS_GENERATED',
+                    2: 'USER_FILLED_ACCOUNT_INFO',
+                    3: 'COINS_REQUEST_SENT',
+                    4: 'COINS_REQUEST_COMPLETED',
+                    5: 'ACCOUNT_CREATING_TRANSACTION_SUCCESS',
+                    6: 'ACCOUNT_SUCCESSFULLY_CREATED',
+                },
+            },
+
             redirect : null,
 
             getredirectFromCurrentPage : function(){
@@ -7834,6 +8449,12 @@ Platform = function (app, listofnodes) {
             },
 
             add: function (address, value) {
+                
+                self.app.Logger.info({
+                    actionId: 'USER_REGISTRATION_PROCESS',
+                    actionSubType: self.sdk.registrations.mappings.loggingMapping[value] || value,
+                    actionValue: bitcoin.crypto.sha256(Buffer.from(address, 'utf8')).toString('hex'),
+                });
 
                 /*if(self.sdk.registrations.storage[address] && self.sdk.registrations.storage[address] > value) return*/
 
@@ -7873,7 +8494,13 @@ Platform = function (app, listofnodes) {
             load: function () {
                 var storage = {};
 
-                var local = localStorage['registrations'] || "{}";
+                var local = "{}"
+                
+                try{
+                    local = localStorage['registrations'] || "{}";
+                }catch(e){
+                    
+                }
 
                 if (local) {
                     try {
@@ -7886,7 +8513,13 @@ Platform = function (app, listofnodes) {
                 self.sdk.registrations.storage = storage;
             },
             save: function () {
-                localStorage['registrations'] = JSON.stringify(self.sdk.registrations.storage || {});
+
+                try{
+                    localStorage['registrations'] = JSON.stringify(self.sdk.registrations.storage || {});
+                }catch(e){
+                    
+                }
+
             }
         },
 
@@ -7960,6 +8593,7 @@ Platform = function (app, listofnodes) {
 
                                                         var successFullSendFunc = () => {
                                                             var c = kits.c[object.type]
+
 
                                                             var trobj = new c();
 
@@ -8099,7 +8733,7 @@ Platform = function (app, listofnodes) {
 
                 var a2 = _.toArray(self.sdk.node.transactions.temp[key] || {})
 
-                return a1.concat(a2);
+                return _.filter(a1.concat(a2), (v) => {return v});
 
             },
 
@@ -8135,7 +8769,12 @@ Platform = function (app, listofnodes) {
             load: function () {
                 var storage = {};
 
-                var local = localStorage['relayTransactions'] || "{}";
+                var local = "{}";
+                try{
+                    local = localStorage['relayTransactions'] || "{}";
+                }catch(e){
+                    
+                }
 
                 if (local) {
                     try {
@@ -8150,7 +8789,21 @@ Platform = function (app, listofnodes) {
 
             },
             save: function () {
-                localStorage['relayTransactions'] = JSON.stringify(self.sdk.relayTransactions.storage || {});
+                try{
+                    localStorage['relayTransactions'] = JSON.stringify(self.sdk.relayTransactions.storage || {});
+                }catch(e){
+                    
+                }
+                
+            },
+
+            getRelTmpSubscriptions : function(){
+                var subs = self.sdk.relayTransactions.withtemp('subscribe').concat(self.sdk.relayTransactions.withtemp('subscribePrivate'))
+
+
+                return _.filter(_.map(subs, (s) => {
+                    return s.vsaddress
+                }), (a) => {return a})
             }
         },
 
@@ -8407,7 +9060,14 @@ Platform = function (app, listofnodes) {
 
                 var address = self.sdk.address.pnet().address;
 
-                var local = localStorage[address + 'articles'] || "[]";
+                var local = "[]" 
+                
+                try{
+                    localStorage[address + 'articles'] || "[]";
+                }catch(e){
+                    
+                }
+                
 
                 if (local) {
                     try {
@@ -8437,7 +9097,7 @@ Platform = function (app, listofnodes) {
 
                 var artcontent = edjs.apply(art.content, encodeURIComponent)
 
-                var share = new Share(art.language || self.app.localization.key);
+                var share = new Share(art.language || self.app.localization.key, self.app);
 
                     share.tags.set(_.clone(art.tags))
                     share.caption.set(art.caption.value)
@@ -8567,7 +9227,7 @@ Platform = function (app, listofnodes) {
 
                         return self.sdk.sharesObserver.storage.viewed[key].new > 0
                     }
-                }   
+                }
             },
 
             view : function(key, first, last){
@@ -8585,14 +9245,14 @@ Platform = function (app, listofnodes) {
                     self.sdk.sharesObserver.storage.viewed[key].new = 0
 
                 }
-                    
+
 
                 if (!self.sdk.sharesObserver.storage.viewed[key].last || self.sdk.sharesObserver.storage.viewed[key].last > last)
                     self.sdk.sharesObserver.storage.viewed[key].last = last
 
                 self.sdk.sharesObserver.storage.viewed[key].time = new Date()
                 self.sdk.sharesObserver.storage.viewed[key].block = self.currentBlock || (self.app.api.getCurrentBlock ? self.app.api.getCurrentBlock() : 0)
-                
+
 
                 self.sdk.sharesObserver.save()
 
@@ -8631,7 +9291,12 @@ Platform = function (app, listofnodes) {
 
                 var c = self.sdk.lentaMethod.current
 
-                localStorage['lentaMethod'] = c;
+                try{
+                    localStorage['lentaMethod'] = c;
+                }catch(e){
+                    
+                }
+                
 
             },
 
@@ -8639,7 +9304,15 @@ Platform = function (app, listofnodes) {
 
                 var t = self.sdk.lentaMethod
 
-                t.current = localStorage['lentaMethod'] || t.default;
+                t.current = t.default;
+
+                try{
+                    t.current = localStorage['lentaMethod'] || t.default;
+                }catch(e){
+                    
+                }
+
+                
 
                 t.set()
 
@@ -8709,7 +9382,12 @@ Platform = function (app, listofnodes) {
 
                 var c = self.sdk.theme.current
 
-                localStorage['usertheme'] = c;
+                
+                try{
+                    localStorage['usertheme'] = c;
+                }catch(e){
+                    
+                }
 
             },
 
@@ -8717,14 +9395,26 @@ Platform = function (app, listofnodes) {
 
                 var t = self.sdk.theme
 
-                t.current = localStorage['usertheme'] || t.default;
+                t.current = t.default;
+
+                try{
+                    t.current = localStorage['usertheme'] || t.default;
+                }catch(e){
+                    
+                }
 
                 t.set()
 
                 if (clbk) clbk()
 
                 self.sdk.syncStorage.on('change', 'usertheme', (e) => {
-                    t.current = localStorage.usertheme;
+                    
+                    try{
+                        t.current = localStorage.usertheme;
+                    }catch(e){
+                        
+                    }
+
                     t.set();
                 });
             },
@@ -8767,6 +9457,8 @@ Platform = function (app, listofnodes) {
                     t.current = value
 
                     self.matrixchat.changeTheme()
+
+                    self.app.mobile.keyboard.style()
 
                     t.save()
 
@@ -8940,7 +9632,8 @@ Platform = function (app, listofnodes) {
             },
 
             createall: function () {
-                var create = self.sdk.usersettings.create
+
+                var create = self.sdk.usersettings.create;
                 var m = self.sdk.usersettings.meta;
 
                 var options = {};
@@ -8968,7 +9661,8 @@ Platform = function (app, listofnodes) {
                         name: self.app.localization.e('posts'),
                         options: {
 
-                            preview: options.preview
+                            preview: options.preview,
+                            commentsOrder: options.commentsOrder
 
                         }
                     },
@@ -8987,7 +9681,7 @@ Platform = function (app, listofnodes) {
                             comments: options.comments,
                             answers: options.answers,
                             followers: options.followers,
-                            rescued: options.rescued,
+                            //rescued: options.rescued,
                             commentScore: options.commentScore
 
                         }
@@ -9017,6 +9711,11 @@ Platform = function (app, listofnodes) {
                     }
                 }
 
+                if(app.pkoindisable){
+                    delete c.notifications.options.win
+                    delete c.notifications.options.transactions
+                }
+
 
                 if(!self.released.vidgets.staking){
                     delete c.vidgets.options.vidgetstaking
@@ -9039,6 +9738,7 @@ Platform = function (app, listofnodes) {
                     }
 
                 }
+
 
                 c.system.options.useanimations = options.useanimations
 
@@ -9073,10 +9773,18 @@ Platform = function (app, listofnodes) {
 
                         if (m[i].type === "VALUES") {
 
+                            if (m[i].tgto){
 
-                            const idx = m[i].possibleValues.indexOf(String(v));
-                            m[i].value = m[i].possibleValuesLabels[idx];
-                            m[i].valueId = Number(v);
+                                const idx = m[i].possibleValues.indexOf(String(v));
+                                m[i].value = m[i].possibleValuesLabels[idx];
+                                m[i].valueId = Number(v);
+
+                            } else {
+
+                                m[i].value = v;
+
+                            }
+
 
                         }
 
@@ -9165,14 +9873,27 @@ Platform = function (app, listofnodes) {
 
                 })
 
-                localStorage['usersettings'] = JSON.stringify(values);
+                try{
+                    localStorage['usersettings'] = JSON.stringify(values);
+                }catch(e){
+                    
+                }
+
+                
+                self?.firebase?.settings()
             },
 
             load: function () {
 
                 var values = {};
 
-                var local = localStorage['usersettings'];
+                var local = null
+                
+                try{
+                    local = localStorage['usersettings'];
+                }catch(e){
+                    
+                }
 
                 if (local) {
                     try {
@@ -9229,10 +9950,15 @@ Platform = function (app, listofnodes) {
                             } else {
 
                                 m[i].value = v.value;
-                                m[i].possibleValues = v.possibleValues && v.possibleValues.map(function(i){
-                                    return String(i);
-                                })
-                                m[i].possibleValuesLabels = v.possibleValuesLabels;
+
+                                if (!(m[i].possibleValues && m[i].possibleValues.length)){
+
+                                    m[i].possibleValues = v.possibleValues && v.possibleValues.map(function(i){
+                                        return String(i);
+                                    })
+                                    m[i].possibleValuesLabels = v.possibleValuesLabels;
+                                    
+                                } 
 
                             }
 
@@ -9664,7 +10390,16 @@ Platform = function (app, listofnodes) {
 
                 var adr = self.app.platform.sdk.address.pnet().address;
 
-                var adrref = localStorage[adr + 'subscribeRef'];
+                var adrref = null
+                
+                try{
+                    adrref = localStorage[adr + 'subscribeRef'];
+                }catch(e){
+                    
+                }
+
+                
+                
 
 
 
@@ -9852,6 +10587,10 @@ Platform = function (app, listofnodes) {
 
                 if(self.bch[address]) return true
 
+                if(self.bchl[address] && (typeof _Electron == 'undefined') && !window.cordova){
+                    return true
+                }
+
                 if(typeof count == 'undefined') count = -12
 
                 if (ustate && ustate.reputation <= count && !self.real[address]/* &&
@@ -9865,8 +10604,8 @@ Platform = function (app, listofnodes) {
                 }
 
                 //console.log('ustate.regdate.addDays(7)', ustate.regdate.addDays(7) > new Date())
-                //ustate.regdate && ustate.regdate.addDays(7) > new Date() 
-                
+                //ustate.regdate && ustate.regdate.addDays(7) > new Date()
+
                 if(moment().diff(ustate.regdate, 'days') <= 7 && totalComplains  > 20 ) {
                     return true
                 }
@@ -10007,6 +10746,195 @@ Platform = function (app, listofnodes) {
                     if (clbk)
                         clbk([])
                 })
+            },
+
+            myaccauntdeleted : function(){
+                var address = deep(self.app.user, 'address.value')
+
+                if(!address) return null
+
+                return self.sdk.user.deletedaccount(address)
+            },
+
+            deletedaccount : function(address){
+                var temp = _.find(deep(self, 'sdk.node.transactions.temp.accDel') || {}, (txa) => {
+                    return txa.address == address
+                })
+
+
+                if (temp/* || self.deletedtest[address]*/){
+                    return 'temp'
+                }
+
+
+                var info = self.sdk.usersl.storage[address] || {}
+
+                if (info.deleted) return 'deleted'
+            },
+
+            deleteaccount : function(progress){
+
+                if(!progress) progress = () => {}
+
+                var prepare = function(){
+                    return new Promise((resolve, reject) => {
+
+                        self.sdk.ustate._me((info) => {
+    
+                            var address = self.sdk.address.pnet()
+    
+                            if(!info || _.isEmpty(info)){
+                                return reject('notprepared')
+                            }
+    
+                            if(!address){
+                                return reject('notprepared')
+                            }
+    
+                            self.sdk.node.transactions.get.balance(function (total, us) {
+    
+                                if(!us.length){
+                                    return reject('balance')
+                                }
+    
+    
+                                resolve()
+                                
+                            }, address.address, true)
+    
+                        }, true)
+        
+    
+                    })
+                }
+
+                var removePeertube = function(){
+
+                    var address = self.sdk.address.pnet()
+
+
+                    return self.app.peertubeHandler.api.proxy.allServers().then((peertubeservers) => {
+
+                        var s = []
+
+                        _.each(peertubeservers, (srv) => {
+                            s = s.concat(srv)
+                        })
+                        //
+                        var promises = _.map(s, (ps) => {
+
+
+                            return self.app.peertubeHandler.api.user.removeAccount({
+                                id : address.address
+                            }, {
+                                host: ps
+                            }).catch(e => {
+
+                                return Promise.resolve()
+                            })
+
+                        })
+
+                        return Promise.all(promises)
+                    }).catch(e => {
+                        console.error('e' , e)
+
+                        return Promise.resolve()
+                    })
+                }
+
+                var removeMatrix = function(){
+
+                    return self.matrixchat.deactivateAccount().catch(e => {
+                        console.error('e', e)
+
+                        return Promise.resolve()
+                    }).then(r => {
+
+                        self.matrixchat.destroy()
+                        self.matrixchat.init()
+
+                        return Promise.resolve()
+                    })
+
+                }
+
+                var removeBastyon = function(){
+
+                    return new Promise((resolve, reject) => {
+
+                        var obj = new DeleteAccount();
+
+                        self.sdk.node.transactions.clearTempHard()
+
+                        self.sdk.node.transactions.create.commonFromUnspent(
+                            obj,
+                            function(tx, error){
+                                if(!tx){	
+
+                                    return reject(error)
+                                    //self.app.platform.errorHandler(error, true)	
+                                }
+
+                                delete self.sdk.users.storage[self.sdk.address.pnet().address]
+                                delete self.sdk.usersl.storage[self.sdk.address.pnet().address]
+                                delete self.sdk.userscl.storage[self.sdk.address.pnet().address]
+        
+                                self.app.settings.delete(a, 'last_user')
+                                self.app.settings.delete(a, 'last_ustate_2')
+        
+                                self.deletedtest[self.sdk.address.pnet().address] = true
+        
+                                self.matrixchat.destroy()
+        
+                                self.sdk.ustate._me((info) => {
+                                    self.sdk.user.get(() => {
+        
+                                        setTimeout(() => {
+                                            resolve()
+                                        }, 1000)
+        
+                                    }, true)
+                                }, true)
+                            }
+                        )
+
+
+
+                        
+                    })
+                }
+
+                progress('prepare')
+
+                return prepare().then(() => {
+
+                    progress('removePeertube')
+
+                    return removePeertube()
+                }).then(() => {
+
+                    progress('removeMatrix')
+
+                    return removeMatrix()
+                }).then(() => {
+
+                    progress('removeBastyon')
+
+                    return removeBastyon()
+                }).then(() => {
+
+                    progress()
+
+                }).catch(e => {
+
+                    progress()
+
+                    return Promise.reject(e)
+
+                })
+
+
             }
 
         },
@@ -10517,22 +11445,28 @@ Platform = function (app, listofnodes) {
             },
             clearlocalstorage : function(){
 
-                var values = {},
+                try{
+                    var values = {},
                     keys = Object.keys(localStorage),
                     i = keys.length;
 
-                while ( i-- ) {
+                    while ( i-- ) {
 
-                    if(keys[i] && keys[i].indexOf('notificationsv') > -1){
+                        if(keys[i] && keys[i].indexOf('notificationsv') > -1){
 
-                        if(keys[i].indexOf('notificationsv14') == -1){
-                            localStorage.removeItem(keys[i]);
+                            if(keys[i].indexOf('notificationsv14') == -1){
+                                localStorage.removeItem(keys[i]);
+                            }
+
+
                         }
 
-
                     }
-
+                }catch(e){
+                    
                 }
+
+                
 
             },
             load: function () {
@@ -10564,8 +11498,15 @@ Platform = function (app, listofnodes) {
 
                     e.notifications = firstEls(e.notifications, 75)
 
-                    if (self.sdk.address.pnet())
-                        localStorage[self.sdk.address.pnet().address + 'notificationsv14'] = JSON.stringify(e)
+                    if (self.sdk.address.pnet()){
+                        try{
+                            localStorage[self.sdk.address.pnet().address + 'notificationsv14'] = JSON.stringify(e)
+
+        
+                        }catch(e){
+                            
+                        }
+                    }
                 }
 
 
@@ -11268,6 +12209,7 @@ Platform = function (app, listofnodes) {
                     if (!a) return false
 
                     if (!s[a]) return true
+                    
                     if (s[a].temp || s[a].relay || s[a].fromstorage) return true
 
 
@@ -11285,7 +12227,9 @@ Platform = function (app, listofnodes) {
                             params.push('1')
                         }
 
+
                         self.app.api.rpc('getuserprofile', params).then(d => {
+
 
                             _.each(addresses || [], function (a) {
 
@@ -11301,11 +12245,28 @@ Platform = function (app, listofnodes) {
 
                             })
 
+                            /*_.each(self.sdk.relayTransactions.withtemp('userInfo'), (tx) => {
+                                var a = _.find(addresses, (a) => {
+                                    return tx.address == a
+                                })
+
+                                if(a && !s[a]){
+
+
+                                    var u = self.sdk.users.prepareuser(tx, a, state)
+
+                                    s[a] = u;
+                                    self.sdk.usersl.storage[a] = u;
+                                    
+                                }
+                            })*/
+
 
                             if (clbk)
                                 clbk(d)
 
                         }).catch(e => {
+                            console.error(e)
                             if (clbk)
                                 clbk(null, e)
                         })
@@ -11516,7 +12477,7 @@ Platform = function (app, listofnodes) {
             },
 
             replacePattern: function (str, h, p) {
-                
+
                 var sreg = /(?:^|\s)@([a-zA-Z0-9_]+)/g
 
                 var name = str.match(sreg);
@@ -11765,18 +12726,31 @@ Platform = function (app, listofnodes) {
             current: null,
             done: null,
             load: function (clbk) {
-                self.sdk.captcha.done = localStorage['capcha'] || null;
 
+                try{
+                    self.sdk.captcha.done = localStorage['capcha'] || null;
+
+                }catch(e){
+                    
+                }
+                
                 if (clbk) clbk()
             },
             save: function () {
 
-                if (self.sdk.captcha.done) {
-                    localStorage['capcha'] = self.sdk.captcha.done
+                try{
+                    if (self.sdk.captcha.done) {
+                        localStorage['capcha'] = self.sdk.captcha.done
+                    }
+                    else {
+                        delete localStorage['capcha']
+                    }
+
+                }catch(e){
+                    
                 }
-                else {
-                    delete localStorage['capcha']
-                }
+
+                
 
             },
             get: function (clbk, refresh, proxyoptions) {
@@ -11895,14 +12869,24 @@ Platform = function (app, listofnodes) {
             },
 
             load: function (clbk) {
-                self.sdk.exchanges.storage = JSON.parse(localStorage[self.sdk.address.pnet().address + 'exchanges2'] || "{}");
+                
+                try{
+                    self.sdk.exchanges.storage = JSON.parse(localStorage[self.sdk.address.pnet().address + 'exchanges2'] || "{}");
+                }catch(e){
+                    
+                }
 
                 if (clbk)
                     clbk()
             },
 
             save: function (clbk) {
-                localStorage[self.sdk.address.pnet().address + 'exchanges2'] = JSON.stringify(self.sdk.exchanges.storage || {})
+               
+                try{
+                    localStorage[self.sdk.address.pnet().address + 'exchanges2'] = JSON.stringify(self.sdk.exchanges.storage || {})
+                }catch(e){
+                    
+                }
 
                 if (clbk)
                     clbk()
@@ -12284,34 +13268,36 @@ Platform = function (app, listofnodes) {
             drawSpendLine: function (el, clbk, addresses) {
                 self.app.platform.sdk.node.transactions.get.canSpend(addresses || null, function (amount, total) {
 
+                    window.requestAnimationFrame(() => {
+                        if (total > 0 && amount < total) {
 
-                    if (total > 0 && amount < total) {
-
-                        el.css('position', 'relative')
-
-                        if (!el.find('.spendLine').length) {
-                            el.append('<div class="spendLine"><div class="line"></div></div>')
-                        }
-
-                        var sline = el.find('.spendLine .line');;
-
-                        if (amount == 0) {
-                            sline.addClass('bad')
+                            if (!el.find('.spendLine').length) {
+                                el.append('<div class="spendLine"><div class="line"></div></div>')
+                            }
+    
+                            var sline = el.find('.spendLine .line');;
+    
+                            if (amount == 0) {
+                                if(!sline.hasClass('bad'))
+                                    sline.addClass('bad')
+                            }
+                            else {
+                                if (sline.hasClass('bad'))
+                                    sline.removeClass('bad')
+                            }
+    
+                            sline.css('width', (100 * amount / total) + "%")
+    
+    
                         }
                         else {
-                            sline.removeClass('bad')
+                            el.find('.spendLine').remove()
                         }
-
-                        sline.css('width', (100 * amount / total) + "%")
-
-
-                    }
-                    else {
-                        el.find('.spendLine').remove()
-                    }
-
-                    if (clbk)
-                        clbk()
+    
+                        if (clbk)
+                            clbk()
+                    })
+                    
                 })
             },
 
@@ -12553,7 +13539,15 @@ Platform = function (app, listofnodes) {
                     self.sdk.addresses.storage.addressesobj = [];
                 }
 
-                const anum = localStorage[self.sdk.address.pnet().address + 'addressesNum'] || 10;
+                const anum = 10
+                
+                try{
+                    anum = localStorage[self.sdk.address.pnet().address + 'addressesNum'] || 10;
+                }catch(e){
+                    
+                }
+                
+                
 
                 const walletsItem = self.sdk.address.pnet().address + 'wallets';
 
@@ -12564,11 +13558,18 @@ Platform = function (app, listofnodes) {
                  */
                 if (walletsItem in localStorage) {
                     // console.time('LOADING CACHED WALLETS');
-                    const wallets = JSON.parse(localStorage[walletsItem]);
 
-                    wallets.forEach((walletAddress, walletNum) => {
-                        self.sdk.addresses.addCachedWallet(walletNum, walletAddress);
-                    });
+                    try{
+                        const wallets = JSON.parse(localStorage[walletsItem]);
+
+                        wallets.forEach((walletAddress, walletNum) => {
+                            self.sdk.addresses.addCachedWallet(walletNum, walletAddress);
+                        });
+                    }catch(e){
+                        
+                    }
+
+                    
                     // console.timeEnd('LOADING CACHED WALLETS');
                 } else {
                     // console.time('GENERATING WALLETS');
@@ -12580,7 +13581,13 @@ Platform = function (app, listofnodes) {
                         addressesList.push(address);
                     }
 
-                    localStorage[walletsItem] = JSON.stringify(addressesList);
+                    try{
+                        localStorage[walletsItem] = JSON.stringify(addressesList);
+                    }catch(e){
+                        
+                    }
+
+                    
                     // console.timeEnd('GENERATING WALLETS');
                 }
 
@@ -12596,7 +13603,14 @@ Platform = function (app, listofnodes) {
 
                 if (countAddresses) {
                     const itemName = self.sdk.address.pnet().address + 'addressesNum';
-                    localStorage[itemName] = countAddresses;
+
+                    try{
+                        localStorage[itemName] = countAddresses;
+                    }catch(e){
+                        
+                    }
+
+                    
                 }
             },
 
@@ -12881,7 +13895,7 @@ Platform = function (app, listofnodes) {
 
                         if (!s[url])
                             f[url] = true
-    
+
                         if (clbk) {
                             if (s[url].title) s[url].title = decodeEntities(s[url].title);
                             if (s[url].description) s[url].description = decodeEntities(s[url].description);
@@ -12900,6 +13914,434 @@ Platform = function (app, listofnodes) {
 
             }
         },
+
+        recommendations : {
+            storage : {
+                status : [],
+                shares : [],
+                keys : {}
+            },
+
+            planned : [],
+            shares : [],
+
+            sharesinfo : {},
+
+            enabled : true,
+
+            getcompleted : function(type){
+                return _.filter(self.sdk.recommendations.storage.status, (s) => {
+                    return s.type == type && s.status == 'completed'
+                })
+            },
+
+            plans : function(data, type){
+
+                var time = self.currentTime()
+
+                var task = {
+                    
+                    created : time,
+                    id : makeid(),
+                    status : 'created', 
+
+                    type,
+                    
+                    ... data
+                }
+
+                if (type == 'users'){
+                    if(
+                        !_.find(self.sdk.recommendations.planned, (t) => {
+                            return t.address == task.address
+                        }) && 
+                        !_.find(self.sdk.recommendations.storage.status, (t) => {
+                            return t.address == task.address && (time - t.date > 60 * 24 * 14) 
+                        }) 
+                    ){
+                        self.sdk.recommendations.planned.push(task)
+                    }
+                }
+
+                if (type == 'tags'){
+                    if(
+                        !_.find(self.sdk.recommendations.planned, (t) => {
+                            return t.hash == task.hash
+                        }) && 
+                        !_.find(self.sdk.recommendations.storage.status, (t) => {
+                            return t.hash == task.hash && (time - t.date > 60 * 24 * 3) 
+                        }) 
+                    ){
+                        self.sdk.recommendations.planned.push(task)
+                    }
+                }
+            },
+
+            clearplanned : function(){
+                self.sdk.recommendations.planned = _.filter(self.sdk.recommendations.planned, (p) => {
+                    return p.status == 'created' || p.status == 'processing'
+                })
+            },
+
+            getshares : function(count, type){
+                if(!count) count = 1
+
+                var result = []
+                var remove = {}
+
+                _.find(self.sdk.recommendations.shares, (share, i) => {
+                    if(result.length >= count) return true
+
+                    self.sdk.recommendations.storage.shares.unshift({
+                        txid : share.txid,
+                        date : self.currentTime()
+                    })
+
+                    remove[i] = true
+
+                    result.push(share)
+                })  
+
+                self.sdk.recommendations.storage.shares = _.first(self.sdk.recommendations.storage.shares, 300)
+                
+
+                self.sdk.recommendations.shares = _.filter(self.sdk.recommendations.shares, (a, i) => {
+                    return !remove[i]
+                })
+
+                if (result.length){
+                    self.sdk.recommendations.save()
+                }
+
+                return result
+            },
+            maketasks : function(){
+
+                if (self.sdk.recommendations.planned.length && self.sdk.recommendations.shares.length < 6){
+                    if(!_.find(self.sdk.recommendations.planned, (p) => {
+                        return p.status == 'processing'
+                    })){
+                        self.sdk.recommendations.maketask(self.sdk.recommendations.planned[0]) 
+                    }
+                }
+            },
+
+            maketasksdebounced : _.debounce(() => {
+                self.sdk.recommendations.maketasks()
+            }, 1000),
+
+            point : function(recommendation){
+                
+                var p = Number(recommendation.score || 0)
+    
+                p += 10 * (recommendation.comments || 0)
+    
+                p += 50 * (recommendation.reposted || 0)
+    
+                var activities = self.app.platform.sdk.activity.has('users', recommendation.address)
+    
+                if (activities.point){
+                    p = p + activities.point * 10
+                }
+    
+                if(recommendation.itisvideo()){
+                    var h = self.app.platform.sdk.videos.historyget(recommendation.txid)
+    
+                    if (h.percent > 94){
+                        p = p / 100
+                    }
+                    else
+                    if (h.percent > 5){
+                        p = p * 10
+                    }
+                    
+                }
+    
+    
+                if (recommendation.myVal){
+                    p = p / 10
+                }
+    
+                return p
+    
+            },
+
+            prepareshares : function(){
+                var shares = self.sdk.recommendations.shares
+
+                var me = deep(self.app, 'platform.sdk.users.storage.' + (app.user.address.value || ''))
+
+                shares = _.filter(shares, (recommendation) => {
+                    if (me && me.relation(recommendation.address, 'blocking') ){
+                        return false
+                    }
+
+                    return true
+                })
+
+                if(!shares.length){
+                    return
+                }
+
+                var maxdate = _.max(shares, (u) => {
+                    return u.time
+                })
+
+                var mindate = _.min(shares, (u) => {
+                    return u.time
+                })
+
+                var difference = maxdate.time.getTime() - mindate.time.getTime()
+
+                if (difference <= 0) difference = 1
+
+
+                shares = _.sortBy(shares, (recommendation) => {
+                    recommendation.point = self.sdk.recommendations.point(recommendation) * (0.5 + recommendation.time.getTime() - mindate.time.getTime()) / difference
+                    return -self.sdk.recommendations.point(recommendation) * (0.5 + recommendation.time.getTime() - mindate.time.getTime()) / difference
+                })
+
+
+                self.sdk.recommendations.shares = _.first(shares, 12)
+
+            },
+
+            maketask : function(task){
+         
+                if (task.status != 'created') return
+
+                if(task.type == 'users'){
+                    var p = {
+                        contentAddress: task.address,
+                        depth: 10000,
+                        count: 15,
+                        lang : 'all', /*self.app.localization.key*/
+                    }
+
+                    var info = {
+                        address : task.address,
+                        lang : 'all', /*self.app.localization.key*/
+                        task : task.id
+                    }
+    
+                    task.status = 'processing'
+    
+                    self.app.platform.sdk.node.shares.getrecomendedcontents(p, (shares, error) => {
+
+                        if(!self.sdk.recommendations.storage.shares) return
+    
+                        task.status = 'completed'
+    
+                        shares = _.filter(shares, (s) => {
+                            return s.address != task.address
+                        })
+    
+                        _.each(shares, (share) => {
+                            if(!_.find(self.sdk.recommendations.storage.shares.concat(self.sdk.recommendations.shares), (s) => {
+                                return s.txid == share.txid
+                            })){
+
+                                self.sdk.recommendations.sharesinfo[share.txid] = {
+                                    key : 'users',
+                                    info : info
+                                }
+
+                                //share.recommendationKey = 'users'
+                                //share._recommendationInfo = info
+                                self.sdk.recommendations.shares.push(share)
+    
+                            }
+                        })
+
+                        task.shares = _.map(shares, (s) => {
+                            return s.txid
+                        })
+    
+                        self.sdk.recommendations.prepareshares()
+    
+                        self.sdk.recommendations.add(task)
+                        
+                    }, 'clear');
+                }
+
+
+                if(task.type == 'tags'){
+                    var p = {
+                        depth: 7000,
+                        count: 15,
+                        lang : 'all', /*self.app.localization.key*/
+                        tagsfilter : task.tags
+                    }
+
+                    var info = {
+                        lang : 'all', /*self.app.localization.key*/
+                        tags : task.tags,
+                        task : task.id
+                    }
+
+    
+                    task.status = 'processing'
+    
+                    self.app.platform.sdk.node.shares.gettopfeed(p, (shares, error) => {
+    
+                        task.status = 'completed'
+    
+                        /*shares = _.filter(shares, (s) => {
+                            return s.address != task.address
+                        })*/
+
+    
+                        _.each(shares, (share) => {
+                            if(!_.find(self.sdk.recommendations.storage.shares.concat(self.sdk.recommendations.shares), (s) => {
+                                return s.txid == share.txid
+                            })){
+
+                                self.sdk.recommendations.sharesinfo[share.txid] = {
+                                    key : 'tags',
+                                    info : info
+                                }
+
+                          
+                                self.sdk.recommendations.shares.push(share)
+    
+                            }
+                        })
+
+                        task.shares = _.map(shares, (s) => {
+                            return s.txid
+                        })
+    
+                        self.sdk.recommendations.prepareshares()
+    
+                        self.sdk.recommendations.add(task)
+                        
+                    }, 'clear');
+                }
+
+            },
+
+            schedulers : {
+                users : function(){
+                    var users = self.sdk.activity.getinterestingUsers()
+
+                    var user = randomizer(users)
+
+                    if (user){
+                        self.sdk.recommendations.plans({address : user.address}, 'users')
+                    }
+
+                },
+
+                tags : function(){
+                    var tags = self.sdk.memtags.getprobtags(3)
+                    
+                    if (tags.length){
+
+                        var hash = bitcoin.crypto.hash256(JSON.stringify(_.sortBy(tags, (t) => {return t}))).toString('hex')
+
+                        self.sdk.recommendations.plans({tags : tags, hash : hash}, 'tags')
+                    }
+                }
+            },
+
+            successRecommendation : function(share){
+                if (share.recommendationKey){
+                    if(!self.sdk.recommendations.storage.keys[share.recommendationKey]) self.sdk.recommendations.storage.keys[share.recommendationKey] = 0
+                    self.sdk.recommendations.storage.keys[share.recommendationKey] ++ 
+                    self.sdk.recommendations.save()
+                }
+                    
+            },
+
+            schedulermake : function(){
+
+                if(!self.sdk.recommendations.enabled) return
+
+                self.sdk.recommendations.clearplanned()
+
+                if(!self.sdk.recommendations.storage.keys) self.sdk.recommendations.storage.keys = {}
+
+                self.app.user.isState(function (state) {
+                    if(state){
+
+                        var kf = [
+                            /*{
+                                a : self.sdk.recommendations.schedulers.users,
+                                probability : 50 + (self.sdk.recommendations.storage.keys['users'] || 1)
+                            },*/{
+                                a : self.sdk.recommendations.schedulers.tags,
+                                probability : 50 + (self.sdk.recommendations.storage.keys['tags'] || 1)
+                            }
+                        ]
+        
+                        var action = randomizer(kf)
+        
+        
+                        action.a()
+        
+                        self.sdk.recommendations.maketasksdebounced()
+                        
+                    }
+                })
+
+               
+            },
+
+            scheduler : _.debounce(() => {
+                self.sdk.recommendations.schedulermake()
+            }, 1000),
+
+            add : function(task){
+                if(!self.sdk.recommendations.storage.status) return
+                
+                self.sdk.recommendations.storage.status.unshift(task)
+
+                self.sdk.recommendations.storage.status = firstEls(self.sdk.recommendations.storage.status, 300)
+
+                self.sdk.recommendations.save()
+            },
+
+            save: function () {
+
+
+                try{
+                    localStorage['recommendations'] = JSON.stringify({
+                        status : self.sdk.recommendations.storage.status,
+                        shares : self.sdk.recommendations.storage.shares,
+                        keys : self.sdk.recommendations.storage.keys
+                    })
+                }catch(e){
+                    
+                }
+
+                
+            },
+
+            load: function (clbk) {
+
+              
+
+                    var p = {};
+
+                    try {
+                        p = JSON.parse(localStorage['recommendations'] || '{}');
+                    }
+                    catch (e) {}
+
+                    self.sdk.recommendations.storage.status = p.status || []
+                    self.sdk.recommendations.storage.shares = p.shares || []
+                    self.sdk.recommendations.storage.keys = p.keys || {}
+
+                    self.sdk.recommendations.scheduler()
+
+                    if(clbk) clbk()
+
+              
+            },
+        },
+
+        
+
         activity : {
             latest : {},
             allowRequestAfterFive : true,
@@ -12910,7 +14352,7 @@ Platform = function (app, listofnodes) {
 
                     var availablesLikes = this.latest.like.filter(function(like){
 
-                        return like.countOfFives && like.data.subscribers_count + like.data.subscribes_count;
+                        return like.value && like.data.subscribers_count + like.data.subscribes_count;
                     })
 
 
@@ -12919,12 +14361,12 @@ Platform = function (app, listofnodes) {
 
                     availablesLikes.forEach(function(like){
 
-                        if (like.countOfFives > bestCount){
+                        if (like.value > bestCount){
 
                             bestAddress = like.data.address;
-                            bestCount = like.countOfFives;
+                            bestCount = like.value;
 
-                        } else if (!bestAddress && (like.countOfFives === bestCount)){
+                        } else if (!bestAddress && (like.value === bestCount)){
 
                             bestAddress = like.data.address;
                         }
@@ -12937,6 +14379,75 @@ Platform = function (app, listofnodes) {
 
 
 
+            },
+
+            getinterestingUsers : function(){
+                var users = {}
+
+                var s = self.sdk.activity
+
+                if(self.sdk.address.pnet()){
+                
+                    _.each(s.latest || [], (a, i) => {
+
+                        if(i == 'visited' || i == 'search') return
+
+                        _.each(a, (o) => {
+                            if(o.type == 'user'){
+
+                                if(o.id != self.sdk.address.pnet().address){
+                                    users[o.id] || (users[o.id] = {
+                                        date : o.date,
+                                        address : o.id,
+                                        points : 0,
+                                        value : 0
+                                    })
+    
+                                    users[o.id].points = users[o.id].points + s.points.users[i] || 10
+                                    users[o.id].value = users[o.id].value + (o.data.value || 1)
+    
+                                    if(o.date > users[o.id].date) users[o.id].date = o.date
+                                }
+                                
+                               
+                            }
+                        })
+                        
+                    })
+
+                }
+
+                if(_.isEmpty(users)) return []
+
+                var maxdate = _.max(users, (u) => {
+                    return u.date
+                })
+
+                var mindate = _.min(users, (u) => {
+                    return u.date
+                })
+
+                var difference = maxdate.date - mindate.date
+
+                if (difference <= 0) difference = 1
+
+                var probabilitymap = _.map(users, (user) => {
+
+                    return {
+                        probability : (Math.max(user.value, 1000) + user.points) * (user.date - mindate.date) / difference,
+                        address : user.address
+                    }
+                })
+
+                return probabilitymap
+
+                /*var sorted = _.sortBy(users, (user) => {
+                    return (Math.max(user.value, 1000) + user.points) * (user.date - mindate) / difference
+                })
+
+                return _.map(sorted, (u) => {
+                    return u.address
+                })*/
             },
 
             clear : function(){
@@ -12976,9 +14487,11 @@ Platform = function (app, listofnodes) {
             points : {
                 users : {
                     like : 50,
+                    clike : 20,
                     search : 30,
                     subscribe : 100,
-                    visited : 20
+                    visited : 20,
+                    video : 30
                 }
             },
 
@@ -13038,7 +14551,7 @@ Platform = function (app, listofnodes) {
                             address : address,
                             subscribers_count: user.subscribers_count,
                             subscribes_count : user.subscribes_count,
-                            value: value
+                            value: Number(value || '0')
                         }
 
                         var error = self.sdk.activity.add(key, 'user', info)
@@ -13055,6 +14568,8 @@ Platform = function (app, listofnodes) {
 
                 if(!info.index) return 'index'
                 if(!info.id) return 'id'
+
+                l[key] || (l[key] = [])
 
                 var obj = {
                     index : info.index,
@@ -13074,6 +14589,31 @@ Platform = function (app, listofnodes) {
                         subscribes_count: info.subscribes_count,
                         subscribers_count: info.subscribers_count,
                     }
+
+                    var dvalue = 0
+
+                    if(key == 'like'){
+                        dvalue = 5
+                    }
+
+                    if(key == 'video'){
+                        dvalue = 0.1
+                    }
+
+                    if(dvalue){
+                        var prev = _.find(l[key], (o) => {
+                            return o.id == info.id
+                        })
+
+
+                        if (prev && prev.data){
+                            obj.data.value = Number( prev.data.value || (1) ) + Number(info.value)
+                        }
+                        else{
+                            obj.data.value = Number(info.value)
+                        }
+                        
+                    }
                 }
 
 
@@ -13089,29 +14629,6 @@ Platform = function (app, listofnodes) {
 
                 obj.date = self.currentTime()
 
-                l[key] || (l[key] = [])
-
-                var objectsIdx = l[key].findIndex(function(objects){
-                    return objects.id === info.id && objects.index === info.index;
-                })
-
-
-                if (objectsIdx > -1){
-
-                    if (info.value === '5'){
-                        var already = l[key][objectsIdx].countOfFives;
-                        obj.countOfFives = already ? already + 1 : 1;
-                    }
-
-                    l[key].splice(objectsIdx, 1);
-                } else {
-
-                    if (info.value === '5'){
-
-                        obj.countOfFives = 1;
-                    }
-                }
-
                 l[key] = _.filter(l[key], function(objects){
                     return objects.id != info.id && objects.index != info.index
                 })
@@ -13122,21 +14639,27 @@ Platform = function (app, listofnodes) {
 
                 self.sdk.activity.save();
 
-                if (this.allowRequestAfterFive && info.value === '5'){
-
-                    self.app.platform.sdk.categories.clbks.selected.topusers && self.app.platform.sdk.categories.clbks.selected.topusers();
-                    this.allowRequestAfterFive = false;
+                if(type == 'user' && (key != 'visited' && key == 'search')){
+                    self.sdk.recommendations.scheduler()
                 }
 
             },
+
             save: function () {
-                localStorage['latestactivity'] = JSON.stringify({
-                    activity : self.sdk.activity.latest
-                })
+                
+
+                try{
+                    localStorage['latestactivity'] = JSON.stringify({
+                        activity : self.sdk.activity.latest
+                    })
+                }catch(e){
+                    
+                }
             },
 
             load: function (clbk) {
                 var p = {};
+
 
                 try {
                     p = JSON.parse(localStorage['latestactivity'] || '{}');
@@ -13149,7 +14672,6 @@ Platform = function (app, listofnodes) {
                 self.sdk.activity.latest = p.activity
 
                 self.sdk.activity.filladdressstorage()
-
 
                 if(clbk) clbk()
             },
@@ -14267,9 +15789,24 @@ Platform = function (app, listofnodes) {
                 return tags
             },
 
+            getalltagsmap : function(){
+                var t = {}
+                _.each(self.sdk.categories.data.all, (l) => {
+                    _.each(l, (c) => {
+                        _.each(c.tags, (tg) => {
+                        
+                            t[tg] = true
+                        })
+                    })
+                })
+
+                return  t                
+            },
+
             gettagsmap : function(_k){
                 var ctags = self.sdk.categories.gettags(_k, true)
                 var alltags = self.sdk.categories.gettags(_k)
+
 
                 var mp = {}
 
@@ -14443,9 +15980,11 @@ Platform = function (app, listofnodes) {
 
                 s.selected[k] || (s.selected[k] = {})
 
+                var categoryNameForLogs = self.sdk.categories.getByIdForLogs(cat.id);
+
                 self.app.Logger.info({
                     actionId: 'SELECT_FEED_CATEGORY',
-                    actionValue: cat.name,
+                    actionValue: categoryNameForLogs.name,
                     actionSubType: s.selected[k][id] ? 'DESELECT' : 'SELECT'
                 });
 
@@ -14547,6 +16086,12 @@ Platform = function (app, listofnodes) {
                 return (categories).concat(added)
             },
 
+            getByIdForLogs : function(id) {
+                var categories = self.sdk.categories.data.all['en'];
+
+                return categories.find(category => category.id === id) || {};
+            },
+
             getbyid : function(id, _k){
                 var allcats = self.sdk.categories.get(_k)
 
@@ -14590,9 +16135,16 @@ Platform = function (app, listofnodes) {
             },
 
             save: function () {
-                localStorage['categoriessettings'] = JSON.stringify({
-                    settings : self.sdk.categories.settings
-                })
+
+                try{
+                    localStorage['categoriessettings'] = JSON.stringify({
+                        settings : self.sdk.categories.settings
+                    })
+                }catch(e){
+                    
+                }
+
+                
             },
 
             load: function (clbk) {
@@ -14689,7 +16241,7 @@ Platform = function (app, listofnodes) {
 
                 parameters.push(localization || self.app.localization.key)
 
-                self.app.api.rpc('gettags', parameters).then(d => {
+                self.app.api.rpcwt('gettags', parameters).then(d => {
 
 
                     var _d = _.map(d, function(_d){
@@ -14710,6 +16262,14 @@ Platform = function (app, listofnodes) {
                     }
                 })
 
+            },
+
+            filterCats : function(tags){
+                var tm = self.sdk.categories.getalltagsmap()
+
+                return _.filter(tags, t => {
+                    return !tm[t.tag]
+                })
             },
 
             filterEx: function (tags) {
@@ -14736,7 +16296,7 @@ Platform = function (app, listofnodes) {
 
                     var round = (a, b) => a - a % b
 
-                    t.get('', 150, round(self.currentBlock, 1000) - 20000, loc, function (d) {
+                    t.get('', 350, round(self.currentBlock, 1000) - 20000, loc, function (d) {
 
                         if(!s.all) s.all = {}
 
@@ -14792,7 +16352,7 @@ Platform = function (app, listofnodes) {
                         return self.currentBlock
                     }, function(){
 
-                        t.get('', 50, (round(self.currentBlock, 1000) - 23700), loc, function (d, error) {
+                        t.get('', 100, (round(self.currentBlock, 1000) - 23700), loc, function (d, error) {
                             if(!s.cloud) s.cloud = {}
 
                             if (!error) s.cloud[loc] = d
@@ -14827,14 +16387,245 @@ Platform = function (app, listofnodes) {
                                 clbk(s.cloud[loc], error)
                             }
 
+                            self.sdk.recommendations.scheduler()
+
                         })
                     })
 
                 }
 
+            },
+
+            getcloudall : function(){
+                var all = {}
+                _.each(this.storage.cloud, (c, loc) => {
+                    _.each(c, (tg) => {
+                        all[tg.tag] = tg
+                    })
+                })
+
+                return all
+            },
+
+            totals : function(){
+                var r = {max : 0}
+
+                _.each(this.storage.cloud, (c, loc) => {
+                    r[loc] = this.total(loc)
+
+                    if(r.max < r[loc]) r.max = r[loc]
+                })
 
 
+
+                return r
+            },
+
+            total : function(loc){
+                var s = this.storage;
+
+                loc || (loc = self.app.localization.key)
+
+                if(!s.cloud) s.cloud = {}
+
+                if(s.cloud[loc]){
+                    return _.reduce(s.cloud[loc], (m, tag) => {
+                        return m + tag.count
+                    }, 0)
+                }
+
+                return 0
+            },
+
+            maxs : function(){
+                var r = {max : 0}
+
+                _.each(this.storage.cloud, (c, loc) => {
+                    r[loc] = this.max(loc)
+
+                    if(r.max < r[loc]) r.max = r[loc]
+                })
+
+
+
+                return r
+            },
+
+
+            max : function(loc){
+                var s = this.storage;
+
+                loc || (loc = self.app.localization.key)
+
+                if(!s.cloud) s.cloud = {}
+
+                if(s.cloud[loc]){
+              
+                    return ((_.max(s.cloud[loc], (tag) => {
+                        return tag.count
+                    }) || {}).count) || 0
+                }
+
+                return 0
+            },
+
+            gettag : function(tag){
+                var s = this.storage;
+
+                if(!s.cloud) s.cloud = {}
+
+                var mincount = 2
+                var res = null
+                var l = self.app.localization.key
+
+                _.find(s.cloud, (lg, loc) => {
+                    return _.find(lg, (tg) => {
+
+                        if(mincount > tg.count) mincount = tg.count
+
+                        if(tg.tag == tag){
+                            res = tg
+
+                            l = loc
+
+                            return true
+                        }
+                    })
+                })
+
+                if(!res) {
+                    res = {
+                        tag : tag,
+                        count : mincount / 2,
+                        loc : l
+                    }
+                }
+
+                return res
             }
+
+        },
+
+        memtags : {
+            storage : {},
+            added : {},
+
+            
+            getprobtags : function(count){
+
+                var tags = this.gettags()
+
+                    tags = self.sdk.tags.filterEx(self.sdk.tags.filterCats(tags))
+
+                    //console.log( this.gettags(), self.sdk.tags.filterCats(tags), self.sdk.tags.filterEx(self.sdk.tags.filterCats(tags)))
+
+                return _.map(randomizerarray(tags, count || 3, 'probability') || [], (t) => {
+                    return t.tag
+                })
+            },
+
+            gettags : function(){
+                var totals = self.sdk.tags.maxs()
+                var result = []
+
+                var maxdate = _.max(this.storage.tags, (u) => {
+                    return u.date
+                })
+
+                var mindate = _.min(this.storage.tags, (u) => {
+                    return u.date
+                })
+
+                var difference = maxdate.date - mindate.date
+
+                if (difference <= 0) difference = 1
+
+                if (totals.max){
+
+                    var tgc = _.reduce(this.storage.tags, (m, tg) => {
+
+                        if(tg.c < 0) return m
+
+                        return m + tg.c
+                    }, 0)
+
+                    _.each(this.storage.tags, (tg, i) => {
+
+                        if(tg.c < 0) return
+                        
+                        var tag = self.sdk.tags.gettag(i)
+                        var t = totals[tag.loc] || totals.max
+
+                        var p = tg.c / tgc + Math.sqrt((t - tag.count) / t) * (0.5 + (tg.date - mindate.date) / difference)
+
+                        result.push({
+                            tag : i,
+                            probability : p
+                        })
+                    })
+                }
+
+                return result
+
+            },
+
+            add : function(tags, id, value){
+                if(id && this.added[id]) return
+
+                if(!self.sdk.memtags.storage.tags) self.sdk.memtags.storage.tags = {}
+
+
+                //var total = 0
+
+                _.each(tags, (tag) => {
+                    self.sdk.memtags.storage.tags[tag] || (self.sdk.memtags.storage.tags[tag] = {c : 0})
+
+                    self.sdk.memtags.storage.tags[tag].c = self.sdk.memtags.storage.tags[tag].c + (value || 1)
+
+                    if ((value || 1) > 0)
+                        self.sdk.memtags.storage.tags[tag].date = self.currentTime()
+                    
+                })
+
+                if (id)
+                    this.added[id] = true
+
+                self.sdk.memtags.saveandrun()
+            },
+
+            saveandrunfast : function(){
+                self.sdk.memtags.save()
+
+                self.sdk.recommendations.scheduler()
+            },
+
+            
+
+            save : function(){
+
+                try{
+                    localStorage['memtags'] = JSON.stringify({
+                        tags : self.sdk.memtags.storage.tags,
+                    })
+                }catch(e){
+                    
+                }
+                
+            },
+
+
+            load: function (clbk) {
+                var p = {};
+
+                try {
+                    p = JSON.parse(localStorage['memtags'] || '{}');
+                }
+                catch (e) {}
+
+                self.sdk.memtags.storage.tags = p.tags || {}
+
+                if(clbk) clbk()
+            },
         },
 
         search: {
@@ -15957,11 +17748,19 @@ Platform = function (app, listofnodes) {
 
                         var t = deep(d, 'time') || 0
 
-                        self.currentBlock = deep(d, 'lastblock.height') || localStorage['lastblock'] || 0
+                        self.currentBlock = 0
                         self.timeDifference = 0;
+                        
+                        
 
+                        try{
+                            self.currentBlock = deep(d, 'lastblock.height') || localStorage['lastblock'] || 0
+                            localStorage['lastblock'] = self.currentBlock
+                        }catch(e){
+                            
+                        }
 
-                        localStorage['lastblock'] = self.currentBlock
+                        
 
                         if (t) {
 
@@ -16174,9 +17973,15 @@ Platform = function (app, listofnodes) {
                     },
                     save : function(){
 
-                        localStorage['sharessettings'] = JSON.stringify({
-                            stor: self.sdk.node.shares.parameters.stor
-                        })
+                        try{
+                            localStorage['sharessettings'] = JSON.stringify({
+                                stor: self.sdk.node.shares.parameters.stor
+                            })
+                        }catch(e){
+                            
+                        }
+
+                        
                     }
                 },
                 clbks: {
@@ -16249,18 +18054,24 @@ Platform = function (app, listofnodes) {
 
                     if (!share) {
                         var temp = _.find(self.sdk.relayTransactions.withtemp('share'), function (s) {
-                            return s.txid == id
+                            return s && s.txid == id
                         })
 
+                        if(temp){
+                            share = new pShare();
+                            share._import(temp, true);
+                            share.temp = true;
+    
+                            if (temp.relay) share.relay = true;
+                            if (temp.checkSend) share.checkSend = true
+    
+                            share.address = self.app.platform.sdk.address.pnet().address
+                        }
 
-                        share = new pShare();
-                        share._import(temp, true);
-                        share.temp = true;
 
-                        if (temp.relay) share.relay = true;
-                        if (temp.checkSend) share.checkSend = true
-
-                        share.address = self.app.platform.sdk.address.pnet().address
+                        else{
+                            return null
+                        }
                     }
 
                     return share
@@ -16779,7 +18590,7 @@ Platform = function (app, listofnodes) {
                     var temp = self.sdk.node.transactions.temp;
 
                     d = _.filter(d || [], function (s) {
-                        if (s.address) return true
+                        if (s && s.txid && s.address) return true
                     })
 
 
@@ -16928,7 +18739,9 @@ Platform = function (app, listofnodes) {
 
                             d.contents = self.sdk.node.shares.transform(d.contents, state)
 
-                            self.sdk.node.shares.takeusers(clear, state)
+                            self.sdk.node.shares.takeusers(_.filter(clear, (c => {
+                                return c && c.txid && c.address
+                            })), state)
 
                             if (d.users)
                                 self.sdk.node.shares.takeusers(_.map(d.users, function(u){
@@ -16981,7 +18794,7 @@ Platform = function (app, listofnodes) {
 
                     self.app.user.isState(function (state) {
 
-                        p.count || (p.count = '30')
+                        p.count || (p.count = '20')
 
                         if (state) {
                             p.address = self.sdk.address.pnet().address;
@@ -16998,15 +18811,105 @@ Platform = function (app, listofnodes) {
                         }
                         else {
 
-                            var period = p.period || self.sdk.node.shares.parameters.stor.period || self.sdk.node.shares.parameters.defaults.period || '4320' ///self.sdk.node.shares.parameters.defaults.period
+                            var period = p.period || self.sdk.node.shares.parameters.stor.period || '60' ///self.sdk.node.shares.parameters.defaults.period
 
-                            var page = p.page || 0
+                            var depth = p.offset ? self.currentBlock - p.offset : 0
 
                             var parameters = []
 
-                            parameters = [p.count.toString(), period, (period * page) || '', self.app.localization.key]
+                            parameters = [depth,'', p.count , self.app.localization.key,[],[],[],[],[],'',period]
 
-                            //parameters = ['30', '259200', '', self.app.localization.key];
+                            // parameters = ['30', '259200', '', self.app.localization.key];
+
+                            if (p.type){
+                                parameters[5].push(p.type)
+                            }
+
+                            self.sdk.node.shares.get(parameters, function (shares, error) {
+
+                                if (shares) {
+
+                                    self.sdk.node.shares.loadvideoinfoifneed(shares, p.type == 'video', function(){
+
+                                        if (state) {
+                                            _.each(self.sdk.relayTransactions.withtemp('blocking'), function (block) {
+                                                _.each(shares, function (s) {
+                                                    if (s.address == block.address) s.blocking = true;
+                                                })
+                                            })
+                                        }
+
+
+
+                                        if(p.type == 'video'){
+                                            shares = _.filter(shares, function(share){
+
+                                                if(!share.url) return
+
+                                                var meta = app.platform.parseUrl(share.url);
+
+                                                if((meta.type == 'youtube') || meta.type == 'vimeo' || meta.type == 'bitchute' || meta.type == 'peertube'){
+
+                                                    if (self.sdk.videos.storage[share.url] && self.sdk.videos.storage[share.url].data)
+                                                        return true
+                                                }
+                                            })
+                                        }
+
+                                        storage[key] = shares;
+
+                                        if (clbk)
+                                            clbk(storage[key], error, p)
+
+                                    })
+
+
+                                }
+
+                                else {
+                                    if (clbk)
+                                        clbk(shares, error, p)
+                                }
+
+                            }, methodparams.method || 'getmostcommentedfeed')
+
+
+                        }
+
+                    })
+                },
+                best: function (p, clbk, cache, methodparams) {
+
+                    if(!methodparams) methodparams = {}
+
+                    if (!p) p = {};
+
+
+                    self.app.user.isState(function (state) {
+
+                        p.count || (p.count = '20')
+
+                        if (state) {
+                            p.address = self.sdk.address.pnet().address;
+                        }
+
+                        var storage = self.sdk.node.shares.storage
+                        var key = 'best'
+
+                        if (cache == 'cache' && storage[key]) {
+
+                            if (clbk)
+                                clbk(storage[key], null, p)
+
+                        }
+                        else {
+
+                            var period = p.period || self.sdk.node.shares.parameters.stor.period || '60'
+
+                            var page = p.page || 0
+                            var offset = p.offset
+                            var parameters = []
+                            parameters = [p.count.toString(), period, offset || '', self.app.localization.key]
 
                             if (p.type){
                                 parameters.push(p.type)
@@ -17035,7 +18938,7 @@ Platform = function (app, listofnodes) {
 
                                                 var meta = app.platform.parseUrl(share.url);
 
-                                                if((meta.type == 'youtube') || meta.type == 'vimeo' || meta.type == 'bitchute' || meta.type == 'peertube'){
+                                                if((meta.type == 'youtube') || meta.type == 'vimeo' || meta.type == 'bitchute' || meta.type == 'peertube' || meta.type == 'brighteon' || meta.type == 'stream.brighteon'){
 
                                                     if (self.sdk.videos.storage[share.url] && self.sdk.videos.storage[share.url].data)
                                                         return true
@@ -17222,7 +19125,6 @@ Platform = function (app, listofnodes) {
                         method : 'gettopfeed',
                         rpc : {
                             cache : true,
-                            locally : true,
                             fastvideo : true
                         }
                     });
@@ -17264,9 +19166,13 @@ Platform = function (app, listofnodes) {
                         method : 'getprofilefeed'
                     })
 
+
                 },
 
                 getsubscribesfeed : function(p, clbk, cache){
+
+                    p.tempSubscriptions = self.sdk.relayTransactions.getRelTmpSubscriptions()
+
 
                     self.app.platform.sdk.node.shares.hierarchical(p, clbk, cache, {
                         method : 'getsubscribesfeed'
@@ -17409,9 +19315,10 @@ Platform = function (app, listofnodes) {
 
                         p.count || (p.count = 10)
 
-                        if(!p.lang){
+                        if (!p.lang){
                             (mtd == 'gethierarchicalstrip' || mtd == 'gethistoricalstrip') ? p.lang = self.app.localization.key : p.lang = ''
                         }
+
 
                         p.height || (p.height = 0)
                         p.tagsfilter || (p.tagsfilter = [])
@@ -17487,7 +19394,8 @@ Platform = function (app, listofnodes) {
                             /////temp
                             ////
 
-                            var parameters = [Number(p.height), p.txid, p.count, p.lang, p.tagsfilter, p.type ? [p.type] : [], [], [], p.tagsexcluded];
+                            var parameters = [Number(p.height), p.txid, p.count, p.lang == 'all' ? '' : p.lang, p.tagsfilter, p.type ? [p.type] : [], [], [], p.tagsexcluded];
+
 
                             if(p.author) {
                                 parameters.push('');
@@ -17496,16 +19404,31 @@ Platform = function (app, listofnodes) {
                             if(mtd == 'getsubscribesfeed') {
                                 parameters.push('');
                                 parameters.push(p.address)
+
+                                if(p.tempSubscriptions && p.tempSubscriptions.length){
+                                    //parameters.push(p.tempSubscriptions) TODO
+                                }
                             }
+
+                            
 
 
                             if (methodparams.method == 'getrecommendedcontentbyaddress')
                                 parameters = [p.contentAddress, '', p.type ? [p.type] : [], p.lang || "", p.count];
 
-                            if(mtd == 'gettopfeed') {
+                            if (mtd == 'gettopfeed') {
                                 parameters.push('');
                                 parameters.push(p.depth)
 
+                            }
+                            
+                            if (mtd === 'getprofilefeed') {
+                                // keyword
+                                parameters.push(p.keyword || '');
+                                // orderby
+                                parameters.push(p.orderby || '');
+                                // ascdesc
+                                parameters.push(p.ascdesc || 'desc');
                             }
 
                             s.getex(parameters, function (data, error) {
@@ -17591,7 +19514,7 @@ Platform = function (app, listofnodes) {
 
                                                 var meta = app.platform.parseUrl(share.url);
 
-                                                if((meta.type == 'youtube') || meta.type == 'vimeo' || meta.type == 'bitchute' || meta.type == 'peertube'){
+                                                if((meta.type == 'youtube') || meta.type == 'vimeo' || meta.type == 'bitchute' || meta.type == 'peertube' || meta.type == 'brighteon' || meta.type == 'stream.brighteon'){
 
                                                     if (self.sdk.videos.storage[share.url] && self.sdk.videos.storage[share.url].data)
                                                         return true
@@ -17647,7 +19570,7 @@ Platform = function (app, listofnodes) {
 
                         self.app.platform.sdk.node.shares.getbyid(txids, function (shares) {
 
-                            
+
                             self.app.platform.sdk.node.shares.users(shares, function(){
 
                                 shares = _.filter(shares, function(s){
@@ -17658,13 +19581,13 @@ Platform = function (app, listofnodes) {
                                     else{
                                     }
                                 })
-    
-    
+
+
                                 if (clbk)
                                     clbk(shares, null, p)
                             })
 
-                            
+
 
                         })
 
@@ -17708,13 +19631,13 @@ Platform = function (app, listofnodes) {
 
                     var n = -1
                     var uservout = _.find(tx.vout, (v) => {
-                        n ++ 
+                        n ++
                         return _.find(deep(v, 'scriptPubKey.addresses') || [], (a) => {
                             return a == address
                         })
                     })
-                    
-                    
+
+
                     /**/
                     var l = tx.vout.length
 
@@ -18493,6 +20416,13 @@ Platform = function (app, listofnodes) {
                     },
 
                     allBalance: function (clbk, update) {
+
+                        if(!self.sdk.address.pnet()) {
+                            if(clbk) clbk()
+
+                            return
+                        }
+
                         var addresses = [self.sdk.address.pnet().address].concat(self.sdk.addresses.storage.addresses || [])
 
                         self.sdk.node.transactions.get.balanceAr(clbk, addresses, update)
@@ -19093,9 +21023,15 @@ Platform = function (app, listofnodes) {
                             return;
                         }
 
+
                         self.sdk.node.transactions.get.unspent(function (unspent) {
 
                             unspent = _.filter(unspent, self.sdk.node.transactions.canSpend)
+
+                            unspent = _.filter(unspent, (u) => {
+                                return u.amount > 0.00001
+                            })
+
 
                             if (!unspent.length && !p.relay) {
 
@@ -19131,13 +21067,13 @@ Platform = function (app, listofnodes) {
                                 var slicedArr = [];
 
                                 for (var u of arr){
-                                    
+
                                    slicedArr.push({
                                         txId: u.txid,
                                         vout: u.vout,
                                         amount: u.amount,
                                         scriptPubKey: u.scriptPubKey,
-                                    });    
+                                    });
 
                                    if (u.amount > min) break;
 
@@ -19146,7 +21082,7 @@ Platform = function (app, listofnodes) {
                                 var overInput;
 
                                 var lastIdx = slicedArr.length - 1
-                                
+
                                 if (slicedArr[lastIdx].amount > min){
 
                                     overInput = slicedArr.splice(lastIdx, 1)[0];
@@ -19181,7 +21117,7 @@ Platform = function (app, listofnodes) {
                                         if (min >= amountSeveralInputs - slicedInputs[0].amount){
 
                                             break;
-                                        } 
+                                        }
 
                                         amountSeveralInputs -= slicedInputs[0].amount;
                                         slicedInputs = slicedInputs.slice(1);
@@ -19196,6 +21132,8 @@ Platform = function (app, listofnodes) {
 
 
                             }
+
+
 
                             if (obj.donate && obj.donate.v.length){
 
@@ -19232,7 +21170,7 @@ Platform = function (app, listofnodes) {
                             if (obj.type === 'contentBoost' && obj.amount.v){
 
                                 feerate = 0;
-                                
+
                                 var best = selectBestUnspent(unspent, obj.amount.v + 0.00001);
 
                                 var totalInputs = best.totalInputs;
@@ -19250,7 +21188,10 @@ Platform = function (app, listofnodes) {
 
                                 }
                             }
+
+
                             self.sdk.node.transactions.create[obj.type](inputs, obj, /*feerate,*/ function (a, er, data) {
+
                                 if (!a) {
                                     if ((er == -26 || er == -25 || er == 16) && !p.update) {
 
@@ -19382,6 +21323,7 @@ Platform = function (app, listofnodes) {
                             error = null
                         }
 
+
                         if (error) {
 
                             if (clbk)
@@ -19454,6 +21396,7 @@ Platform = function (app, listofnodes) {
 
                                     return
                                 }
+
 
                                 self.sdk.node.transactions.get.unspent(function (unspents) {
 
@@ -19836,31 +21779,43 @@ Platform = function (app, listofnodes) {
 
                     share: function (inputs, share, /*fees, */clbk, p = {}, fromTG) {
 
+
+                        try{
+
+
                         var meta = self.sdk.usersettings.meta;
 
-                        var savedShare = JSON.parse(JSON.stringify(share));
+                        
 
-                        if (self.app.user.features.telegram && !fromTG && meta.telegram && meta.telegram.value && meta.tgto && meta.tgto.value) {
+                        /*if (self.app.user.features.telegram && !fromTG && meta.telegram && meta.telegram.value && meta.tgto && meta.tgto.value) {
 
-                          if (!meta.tgtoask.value) {
+                            var savedShare = JSON.parse(JSON.stringify(share));
 
-                            this.telegramSend(share, meta);
+                            if (!meta.tgtoask.value) {
 
-                          } else {
-                            // this.telegramSend = this.telegramSend.bind(this)
-                            new dialog({
-                              html: "Do you really want send message to Telegram?",
-                              btn1text: "Send",
-                              btn2text: "Cancel",
-                              class: 'zindex',
-                              success: () => {
-                                this.telegramSend(savedShare, meta);
-                              }
-                            });
-                          }
-                        }
+                                this.telegramSend(share, meta);
+
+                            } else {
+                                // this.telegramSend = this.telegramSend.bind(this)
+                                new dialog({
+                                html: "Do you really want send message to Telegram?",
+                                btn1text: "Send",
+                                btn2text: "Cancel",
+                                class: 'zindex',
+                                success: () => {
+                                    this.telegramSend(savedShare, meta);
+                                }
+                                });
+                            }
+                        }*/
+
 
                         this.common(inputs, share, TXFEE, clbk, p)
+                    }
+
+                        catch(e){
+                            console.error(e)
+                        }
                     },
 
                     shareRelayed: function(inputs, obj, fees, clbk, p = {}) {},
@@ -19868,6 +21823,12 @@ Platform = function (app, listofnodes) {
 
                     accSet: function (inputs, settings, clbk, p) {
                         this.common(inputs, settings, TXFEE, clbk, p)
+                    },
+
+                    accDel: function (inputs, settings, clbk, p) {
+                        this.common(inputs, settings, TXFEE, function(a, e){
+                            if(clbk) clbk(a, e)
+                        }, p)
                     },
 
                     userInfo: function (inputs, userInfo, clbk, p) {
@@ -19881,7 +21842,8 @@ Platform = function (app, listofnodes) {
                     upvoteShare: function (inputs, upvoteShare, clbk, p) {
                         this.common(inputs, upvoteShare, TXFEE, clbk, p)
 
-                        self.sdk.activity.adduser('like', upvoteShare.address.v, upvoteShare.value.v)
+                        if(upvoteShare.value.v > 3)
+                            self.sdk.activity.adduser('like', upvoteShare.address.v, upvoteShare.value.v)
                     },
 
                     complainShare: function (inputs, complainShare, clbk, p) {
@@ -19909,7 +21871,8 @@ Platform = function (app, listofnodes) {
                     cScore: function (inputs, cScore, clbk, p) {
                         this.common(inputs, cScore, TXFEE, clbk, p)
 
-                        self.sdk.activity.adduser('like', cScore.address.v, cScore.value.v)
+                        if (cScore.value.v > 0)
+                            self.sdk.activity.adduser('clike', cScore.address.v, cScore.value.v)
                     },
 
                     unsubscribe: function (inputs, unsubscribe, clbk, p) {
@@ -20110,9 +22073,16 @@ Platform = function (app, listofnodes) {
                 userlist: [],
 
                 save: function () {
-                    localStorage['usernodes'] = JSON.stringify({
-                        list: this.userlist
-                    })
+
+                    try{
+                        localStorage['usernodes'] = JSON.stringify({
+                            list: this.userlist
+                        })
+                    }catch(e){
+                        
+                    }
+
+                    
                 },
 
                 load: function () {
@@ -20498,7 +22468,13 @@ Platform = function (app, listofnodes) {
                 var pool = s.current;
 
                 if (!pool) {
-                    pool = localStorage['pool'];
+                    
+
+                    try{
+                        pool = localStorage['pool'];
+                    }catch(e){
+                        
+                    }
 
                     if (pool) pool = JSON.parse(pool)
                 }
@@ -20549,7 +22525,13 @@ Platform = function (app, listofnodes) {
 
                         s.currentMap();
 
-                        localStorage['pool'] = JSON.stringify(s.current)
+                        try{
+                            localStorage['pool'] = JSON.stringify(s.current)
+                        }catch(e){
+                            
+                        }
+
+                        
 
                     }
 
@@ -21946,6 +23928,7 @@ Platform = function (app, listofnodes) {
                         const clbk = (html) => {
 
                             const share = new Share();
+                            share.app = app
 
                             function tagsFromText(text) {
                                 var words = text.split(/[,.!?;:()<> \n\r]/g);
@@ -22655,11 +24638,23 @@ Platform = function (app, listofnodes) {
 
             volume : 0,
             save : function(){
-                localStorage['pn_videovolume_2'] = self.sdk.videos.volume || 1
+
+                try{
+                    localStorage['pn_videovolume_2'] = self.sdk.videos.volume || 1
+                }catch(e){
+                    
+                }
             },
             load : function(){
 
-                var _v = localStorage['pn_videovolume_2']
+                var _v = undefined
+                
+                try{
+                    _v = localStorage['pn_videovolume_2']
+                }catch(e){
+                    
+                }
+                
 
                 if(typeof _v == 'undefined') {
                     if(self.app.mobileview)
@@ -22714,6 +24709,8 @@ Platform = function (app, listofnodes) {
         },
     }
 
+    self.sdk.memtags.saveandrun = _.debounce(self.sdk.memtags.saveandrunfast, 3000)
+
 
     var FakeFirebasePlugin = function(){
         var self = this;
@@ -22736,11 +24733,12 @@ Platform = function (app, listofnodes) {
         //var FirebasePlugin = new FakeFirebasePlugin()
 
         var using = typeof window != 'undefined' && window.cordova && typeof FirebasePlugin != 'undefined';
+        var usingWeb = typeof window != 'undefined' && typeof _Electron === 'undefined' && !window.cordova && typeof firebase != 'undefined'
 
         var currenttoken = null;
 
         var appid = deep(window, 'BuildInfo.packageName') || window.location.hostname || window.pocketnetdomain
-        if (appid == 'localhost') appid = 'pocketnet.app' /// url
+        if (appid == 'localhost' || appid == '127.0.0.1') appid = 'pocketnet.app' /// url
 
         var device = function () {
             var id = platform.app.options.device
@@ -22766,7 +24764,14 @@ Platform = function (app, listofnodes) {
             load: function () {
                 var storage = {};
 
-                var local = localStorage[self.storage.key] || "{}";
+                var local = null
+
+                try{
+                    local = localStorage[self.storage.key] || "{}";
+                }catch(e){
+                    
+                }
+                
 
                 if (local) {
                     try {
@@ -22779,7 +24784,11 @@ Platform = function (app, listofnodes) {
                 self.storage.data = storage;
             },
             save: function () {
-                localStorage[self.storage.key] = JSON.stringify(self.storage.data);
+                try{
+                    localStorage[self.storage.key] = JSON.stringify(self.storage.data);
+                }catch(e){
+                    
+                }
             },
 
             get : function(proxy, address, token){
@@ -22836,6 +24845,13 @@ Platform = function (app, listofnodes) {
 
             },
 
+            setSettings: function (proxy) {
+                if(!proxy) return Promise.reject('proxy')
+                return self.request.setSettings(proxy).then(r => {
+                    return Promise.resolve()
+                })
+            },
+
             existanother : function(proxy, address){
                 var obj = self.storage.data[appid] || {}
 
@@ -22857,11 +24873,11 @@ Platform = function (app, listofnodes) {
             },
 
             exist : function(proxy, address, token){
-                var exist = self.storage.get(proxy, address, token)
+                /*var exist = self.storage.get(proxy, address, token)
 
                 if (exist){
                     return Promise.resolve(true)
-                }
+                }*/
 
                 return self.request.mytokens(proxy).then(r => {
 
@@ -22885,14 +24901,16 @@ Platform = function (app, listofnodes) {
                     if (apps.indexOf(appid) == -1){
                         return Promise.reject('proxyfirebaseid')
                     }
-
+                    return Promise.resolve(appid)
 
                 })
             }
         }
 
         self.revokeall = function(){
-            FirebasePlugin.unregister();
+            if (using) {
+                FirebasePlugin?.unregister();
+            }
 
             self.storage.clear();
 
@@ -22900,7 +24918,6 @@ Platform = function (app, listofnodes) {
         }
 
         self.set = function(proxy){
-
             if(!currenttoken) return Promise.reject('emptytoken')
 
             var address = getaddress()
@@ -22916,11 +24933,32 @@ Platform = function (app, listofnodes) {
                 if(self.api.existanother(proxy, address)) return self.request.revokeall()
 
             }).then(r => {
+
                 return self.api.setToken(address, token, proxy)
             }).catch(e => {
+                console.log(e)
                 return Promise.resolve()
             })
 
+        }
+
+        self.settings = async function(current){
+            if(!current){
+                for(const proxy of platform.app.api.get.proxies()){
+                    const {info} = await proxy.get.info();
+                    if(info.firebase.useNotifications && info.firebase.inited){
+                        current = proxy;
+                    }
+                }
+            }
+            if(!current) return Promise.reject('proxy')
+
+            return self.api.checkProxy(current).then(r => {
+                return  self.api.setSettings(current)
+            }).catch(e => {
+                console.log(e)
+                return Promise.resolve()
+            })
         }
 
         self.request = {
@@ -22940,7 +24978,7 @@ Platform = function (app, listofnodes) {
             },
 
             mytokens : function(proxy){
-                return platform.app.api.fetchauth('firebase/mytokens', {}, {
+                return platform.app.api.fetchauth('firebase/mytokens', {device: device()}, {
                     proxy : proxy
                 })
             },
@@ -22972,7 +25010,18 @@ Platform = function (app, listofnodes) {
                 return platform.app.api.fetchauth('firebase/set', {
                     device : device(),
                     token : token,
-                    id : appid
+                    id : appid,
+                    settings: self.getSettings()
+                }, {
+                    proxy : proxy
+                })
+
+            },
+
+            setSettings: function (proxy) {
+                return platform.app.api.fetchauth('firebase/settings', {
+                    device : device(),
+                    settings: self.getSettings()
                 }, {
                     proxy : proxy
                 })
@@ -22980,12 +25029,18 @@ Platform = function (app, listofnodes) {
             }
         }
 
+        self.getSettings = function (){
+            const data = {}
+            const settings = platform.sdk.usersettings.meta;
+            for(const key in settings){
+                data[key] = settings[key].value;
+            }
+            data['web'] = Boolean(!window.cordova)
+            return data;
+        }
 
         self.get = function (clbk) {
-
-            if (!using) {
-            }
-            else {
+            if (using) {
 
                 FirebasePlugin.getToken(function(token) {
 
@@ -23007,121 +25062,219 @@ Platform = function (app, listofnodes) {
                 });
 
 
-            }
+            }else if(usingWeb) {
 
-            if (clbk)
-                clbk()
+                // console.log("HERE")
+                //
+                // if (clbk)
+                //     clbk()
+                //
+                // return
+
+                try{
+                    if(!firebase.apps.length) {
+                        firebase.initializeApp({
+                            messagingSenderId: "1020521924918",
+                            projectId: 'pocketnet',
+                            apiKey: 'AIzaSyC_Jeet2gpKRZp44iATwlFFA7iGNYsabkk',
+                            appId: '1:1020521924918:ios:ab35cc84f0d10d86aacb97',
+                        });
+                    }
+                    const messaging = firebase.messaging();
+                    messaging.getToken().then(token=>{
+                        console.log(token)
+                        currenttoken = token
+                        platform.fcmtoken = token
+                        platform.matrixchat.changeFcm()
+                        self.events()
+                        if (clbk)
+                            clbk(token)
+                    }).catch(e => {
+                        console.log("E", e)
+                    })
+
+                }
+                catch (e) {
+                    console.log("E", e)
+                }
+                
+            }
         }
 
         self.permissions = function(clbk){
-			FirebasePlugin.hasPermission(function(hasPermission){
+            if(using) {
+                FirebasePlugin.hasPermission(function (hasPermission) {
 
-                if(!hasPermission){
-                    FirebasePlugin.grantPermission(function(hasPermission){
+                    if (!hasPermission) {
+                        FirebasePlugin.grantPermission(function (hasPermission) {
 
-                        if(hasPermission){
-                            self.get(clbk)
-                        }
+                            if (hasPermission) {
+                                self.get(clbk)
+                            }
 
-                    });
+                        });
+                    } else {
+                        self.get(clbk)
+                    }
+
+                });
+            }else if (usingWeb){
+
+                if(typeof Notification == 'undefined'){
+
                 }
                 else{
-                    self.get(clbk)
+                    const notificationPermission = Notification.requestPermission();
+
+                    if (!notificationPermission) {
+                        return Notification.permission;
+                    }
+
+                    notificationPermission.then((permission) => {
+                        if (permission === 'granted') {
+                            console.log('Notification permission granted.');
+                            self.get(clbk)
+                        } else {
+                            usingWeb = false;
+                            console.log('Unable to get permission to notify.');
+                        }
+                    });
                 }
 
-            });
+
+                
+            }
 		}
 
         self.events = function () {
+            if(using) {
+                FirebasePlugin.onMessageReceived((data) => {
 
-            FirebasePlugin.onMessageReceived((data) => {
+                    if (!data) data = {}
 
-                if(!data) data = {}
-
-                if (data.data)
-                    platform.ws.messageHandler(data.data)
+                    if (data.data)
+                        platform.ws.messageHandler(data.data)
 
 
-                if (data.room_id) {
+                    if (data.room_id) {
 
-                    if(data.tap){
-                         // Wait until we can navigate Matrix
-                        retry(function(){
+                        if (data.tap) {
+                            // Wait until we can navigate Matrix
+                            retry(function () {
 
-                            return platform && platform.matrixchat && platform.matrixchat.core;
+                                return platform && platform.matrixchat && platform.matrixchat.core;
 
-                        }, function(){
+                            }, function () {
 
-                            setTimeout(function(){
+                                setTimeout(function () {
 
-                                platform.matrixchat.core.goto(data.room_id);
+                                    platform.matrixchat.core.goto(data.room_id);
 
                                 if (platform.matrixchat.core.apptochat)
                                     platform.matrixchat.core.apptochat();
 
-                            }, 50)
+                                }, 50)
 
 
 
-                        });
+                            });
+                        }
+
+
+
+                        return;
                     }
 
+                    if (data.tap) {
 
+                        platform.ws.destroyMessages();
+                        const body = JSON.parse(data?.json);
+                        body.url = body?.url.replace("/index", "");
+                        if(body.url) {
+                            if(body.url === "/userpage?id=wallet"){
+                                platform.app.nav.api.go({
+                                    open: true,
+                                    href: 'wallet',
+                                    history: true,
+                                    inWnd: true,
+                                    essenseData: {
+                                    },
+                                });
+                            }else {
+                                const params = new URLSearchParams(body.url);
+                                platform.app.nav.api.load({
+                                    open: true,
+                                    href: 'post?s=' + params.get('s'),
+                                    inWnd: true,
+                                    history: true,
+                                    clbk: function (d, p) {
+                                        app.nav.wnds['post'] = p
+                                    },
 
-                    return;
-                }
+                                    essenseData: {
+                                        share: params.get('s'),
 
-                if (data.tap) {
+                                        reply: {
+                                            answerid: params.get('commentid') || "",
+                                            parentid: params.get('parentid') || "",
+                                            noaction: true
+                                        }
+                                    }
+                                })
+                            }
+                        }else{
+                            platform.app.nav.api.go({
+                                open : true,
+                                href : 'notifications',
+                                inWnd : true,
+                                history : true,
+                                essenseData : {
+                                }
+                            })
+                        }
+                    } else {
 
-                    platform.ws.destroyMessages()
+                        if (typeof cordova != 'undefined') {
 
-                    platform.app.nav.api.load({
-                        open: true,
-                        href: 'notifications',
-                        history: true
-                    })
+                            var cordovabadge = deep(cordova, 'plugins.notification.badge')
 
-                    return
-                }
-                else {
+                            if (cordovabadge)
+                                cordovabadge.increase(1, function (badge) {
+                                });
+                        }
 
-                    if (typeof cordova != 'undefined') {
-
-                        var cordovabadge = deep(cordova, 'plugins.notification.badge')
-
-                        if (cordovabadge)
-                            cordovabadge.increase(1, function (badge) { });
                     }
-
-                }
 
 
             });
 
 
-            // When token is refreshed, update the matrix element for the Vue app
-            FirebasePlugin.onTokenRefresh(function(token) {
+                // When token is refreshed, update the matrix element for the Vue app
+                FirebasePlugin?.onTokenRefresh(function (token) {
 
-                platform.fcmtoken = token
-                currenttoken = token
+                    platform.fcmtoken = token
+                    currenttoken = token
                 platform.matrixchat.changeFcm()
 
-                //prepareclbk(token)
+                    //prepareclbk(token)
 
-            }, function(error) {
-                console.error(error);
-            });
-
+                }, function (error) {
+                    console.error(error);
+                });
+            }
         }
 
-        var prepareclbk = function(token){
-
+        var prepareclbk = async function(token){
             if (token){
-
-                var proxy = platform.app.api.get.current()
-
-                if (proxy){
-                    self.set(proxy.id).catch(e => {
+                let current = null;
+                for(const proxy of platform.app.api.get.proxies()){
+                    const {info} = await proxy.get.info();
+                    if(info.firebase.useNotifications && info.firebase.inited){
+                        current = proxy;
+                    }
+                }
+                if (current){
+                    self.set(current).catch(e => {
                         console.log("error", e)
                     })
                 }
@@ -23131,21 +25284,31 @@ Platform = function (app, listofnodes) {
         }
 
         self.init = function(clbk){
+            
+            if(clbk) clbk()
 
-            self.prepare(function(token){
+            app.user.isState(function (state) {
+            
+                if(state){
+                    self.prepare(function(token){
 
-                prepareclbk(token)
+                        prepareclbk(token)
+    
+                    })
+                }
+                else{
+
+                }
+                
 
             })
 
-            if(clbk) clbk()
         }
 
         self.prepare = function(clbk){
-
             self.storage.load()
 
-			if (using) {
+            if (using || usingWeb) {
 
 				self.permissions(clbk)
 			}
@@ -23160,13 +25323,13 @@ Platform = function (app, listofnodes) {
 
             currenttoken = null
 
-            if (using){
-                self.revokeall().then(clbk).catch(e => {})
+            self.storage.clear()
 
-                return
-            }
-
-
+            // if (using || usingWeb){
+            //     self.revokeall().then(clbk).catch(e => {})
+            //
+            //     return
+            // }
 
             if (clbk)
                 clbk()
@@ -23631,6 +25794,41 @@ Platform = function (app, listofnodes) {
 
                 return h
             },
+
+            simple : function(json){
+
+                h += '<div class="cwrapper table">\
+                        <div class="cell cellforimage">\
+                            <div class="icon">'
+
+
+                h +=            '<div class="usericon" ban=".gif" image="' + (clearStringXss(json.image || '') || '*') + '">'
+                h +=            '</div>'
+
+                h +=        '</div>\
+                        </div>\
+                        <div class="ccell">\
+                            <div class="infomain">\
+                                <div class="caption">'
+
+                                if (json.caption) {
+                                    h += " " + clearStringXss(json.caption)
+                                }
+
+                h +=            '</div>\
+                                <div class="tips">' + (json.text) + '\
+                                </div>\
+                            </div>'
+
+                h +=        self.tempates.time(json.time)
+
+                h +=    '</div>'
+
+
+                h += '</div>'
+    
+                return h;
+            }
 
 
         }
@@ -24342,7 +26540,7 @@ Platform = function (app, listofnodes) {
 
                         if (data.cointype) {
 
-                            if (platform.sdk.usersettings.meta.win.value) {
+                            if (!app.pkoindisable && platform.sdk.usersettings.meta.win.value) {
 
                                 var td = 'coinbaseSuccess'
 
@@ -24390,7 +26588,7 @@ Platform = function (app, listofnodes) {
 
                                 }
 
-                                if (platform.sdk.usersettings.meta.transactions.value && data.user && data.user.name) {
+                                if (!app.pkoindisable && platform.sdk.usersettings.meta.transactions.value && data.user && data.user.name) {
 
                                     if (data.amountall >= 0.05 || data.tx.amount >= 0.05) {
 
@@ -24425,14 +26623,14 @@ Platform = function (app, listofnodes) {
 
                         if (data.tx) {
                             if (data.tx.coinbase) {
-                                if (!platform.sdk.usersettings.meta.win.value) {
+                                if (!platform.sdk.usersettings.meta.win.value || app.pkoindisable) {
 
                                     return false;
                                 }
                             }
                             else {
                                 if (data.address != platform.sdk.address.pnet().address) {
-                                    if (!platform.sdk.usersettings.meta.transactions.value) {
+                                    if (!platform.sdk.usersettings.meta.transactions.value || app.pkoindisable) {
                                         return false;
                                     }
                                 }
@@ -24480,7 +26678,12 @@ Platform = function (app, listofnodes) {
 
                         lost = data.block;
 
-                    localStorage['lastblock'] = platform.currentBlock
+                        try{
+                            localStorage['lastblock'] = platform.currentBlock
+                        }catch(e){
+                            
+                        }
+
 
                     if (dif)
                         platform.sdk.newmaterials.update(data)
@@ -24517,7 +26720,7 @@ Platform = function (app, listofnodes) {
                     if(!slowMadeRelayTransactions)
 
                         slowMadeRelayTransactions = slowMade(function(){
-                            
+
                             platform.sdk.relayTransactions.send()
                             slowMadeRelayTransactions = null
 
@@ -24561,8 +26764,11 @@ Platform = function (app, listofnodes) {
 
                     platform.lasttimecheck = new Date()
                     platform.lastblocktime = new Date()
+                    try{
+                        localStorage['lastblock'] = platform.currentBlock
+                    }catch(e){
 
-                    localStorage['lastblock'] = platform.currentBlock
+                    }
 
                     lost = platform.currentBlock;
 
@@ -25022,11 +27228,11 @@ Platform = function (app, listofnodes) {
 
                         if (data.mesType == 'userInfo') {
 
-                            if ((!platform.sdk.usersettings.meta.rescued || platform.sdk.usersettings.meta.rescued.value)) {
+                            /*if ((!platform.sdk.usersettings.meta.rescued || platform.sdk.usersettings.meta.rescued.value)) {
 
                                 return true
 
-                            }
+                            }*/
 
 
                         }
@@ -25141,7 +27347,7 @@ Platform = function (app, listofnodes) {
 
                     if (data.mesType == 'userInfo') {
 
-                        if ((!platform.sdk.usersettings.meta.rescued || platform.sdk.usersettings.meta.rescued.value)) {
+                        /*if ((!platform.sdk.usersettings.meta.rescued || platform.sdk.usersettings.meta.rescued.value)) {*/
 
                             //text = platform.app.localization.e('refferalUserMessage')
 
@@ -25149,7 +27355,7 @@ Platform = function (app, listofnodes) {
                             caption = platform.app.localization.e('refferalUserMessage')
                             extra = self.tempates.subscribe(data.user)*/
 
-                        }
+                        //}
                     }
 
 
@@ -25588,14 +27794,20 @@ Platform = function (app, listofnodes) {
             }, 301)
         }
 
-        self.fastMessage = function (html, destroyclbk) {
+        self.fastMessageByJson = function(json, destroyclbk, p = {}){
+            var html = self.tempates.simple(json)
+
+            return self.fastMessage(html, destroyclbk, p = {})
+        }
+
+        self.fastMessage = function (html, destroyclbk, p = {}) {
             var id = makeid(true);
 
             html = '<div class="fastMessage" elementsid="notificationmessage" id="' + id + '">\
-            <div class="fmCnt">' + html + '</div>\
-            <div class="close">\
-                <i class="fa fa-times" aria-hidden="true"></i>\
-            </div>\
+                <div class="fmCnt">' + html + '</div>\
+                <div class="close">\
+                    <i class="fa fa-times" aria-hidden="true"></i>\
+                </div>\
             </div>';
 
             $('body').append(html);
@@ -25621,6 +27833,14 @@ Platform = function (app, listofnodes) {
             destroyMessage(message, 5000, false, true);
 
             message.el.on('click', function(){
+
+                if (p.click) {
+
+                    p.click() 
+                    destroyMessage(message, 1)
+
+                    return
+                }
 
                 if (platform.app.mobileview){
 
@@ -25919,7 +28139,7 @@ Platform = function (app, listofnodes) {
 
             var key = platform.sdk.address.pnet(keyPair.publicKey).address + 'addressesNum'
 
-            var num = localStorage[key] || 1;
+            //var num = localStorage[key] || 1;
 
             var keyPairs = [{
                 kp: keyPair,
@@ -26206,7 +28426,7 @@ Platform = function (app, listofnodes) {
                 txid: "65fee9b1e925833c5ff623178efecc436d3af0c9f6a4baa0b73c52907a9d1d7b"
             })*/
 
-            // test coin 
+            // test coin
 
             //self.messageHandler({"addr":"TSVui5YmA3JNYvSjGK23Y2S8Rckb2eV3kn","msg":"transaction","txid":"a6819e0de29c148a193932da4581b79cae02163f717962a86ccbf259f915a4be","time":1657701744,"amount":"1000000","nout":"2","node":"116.203.219.28:39091:6067"})
 
@@ -26248,8 +28468,8 @@ Platform = function (app, listofnodes) {
         return dateToStrUTCSS(created)
     }
 
-    self.currentTime = function () {
-        var created = Math.floor((new Date().getTime()) / 1000)
+    self.currentTime = function (date) {
+        var created = Math.floor(((date || new Date()).getTime()) / 1000)
 
         if (self.timeDifference) {
             created += self.timeDifference
@@ -27075,9 +29295,16 @@ Platform = function (app, listofnodes) {
             tags : {}
         }
 
-        self.sdk.node.shares.storage = {
+        /*self.sdk.node.shares.storage = {
             trx: {}
+        }*/
+
+        if(self.sdk.node.shares.storage && self.sdk.node.shares.storage.trx){
+            _.each(self.sdk.node.shares.storage.trx, function(tr){
+                delete tr.myVal
+            })
         }
+       
 
         self.sdk.sharesObserver.storage = {
             viewed : {}
@@ -27240,7 +29467,7 @@ Platform = function (app, listofnodes) {
 
 
         self.restart(function () {
-            self.prepareUserData(function(){
+            //self.prepareUserData(function(){
 
                 self.app.reload({
                     clbk : function () {
@@ -27251,7 +29478,7 @@ Platform = function (app, listofnodes) {
                         if(clbk) clbk()
                     }
                 })
-            })
+            //})
 
         })
     }
@@ -27326,7 +29553,7 @@ Platform = function (app, listofnodes) {
         initOnlineListener() // /remove for test
 
 
-        self.app.api.wait.ready('use', 10000).then(r => {
+        self.app.api.wait.ready('use', 6000).then(r => {
 
 
             return new Promise((resolve, reject) => {
@@ -27410,7 +29637,8 @@ Platform = function (app, listofnodes) {
             self.sdk.captcha.load()
 
             setTimeout(function(){
-                self.sdk.tags.getfastsearch()
+                /*self.sdk.tags.getfastsearch()*/
+                self.sdk.tags.cloud()
                 self.sdk.node.get.time()
             }, 1000)
 
@@ -27422,7 +29650,7 @@ Platform = function (app, listofnodes) {
                 self.app.peertubeHandler = new PeerTubePocketnet(self.app);
             }
 
-            
+
 
             self.prepareUser(function() {
 
@@ -27431,7 +29659,7 @@ Platform = function (app, listofnodes) {
                 clbk();
             });
 
-            if (typeof _Electron == 'undefined' && !window.cordova && window.pocketnetproject !== 'Bastyon' && !bastyonhelperOpened && !window.testpocketnet){
+            /*if (typeof _Electron == 'undefined' && !window.cordova && window.pocketnetproject !== 'Bastyon' && !bastyonhelperOpened && !window.testpocketnet){
 
                 bastyonhelperOpened = true
 
@@ -27445,7 +29673,7 @@ Platform = function (app, listofnodes) {
 
                 }, 1000)
 
-            }
+            }*/
 
 
 
@@ -27468,6 +29696,8 @@ Platform = function (app, listofnodes) {
             self.sdk.user.meUpdate,
             self.sdk.categories.load,
             self.sdk.activity.load,
+            self.sdk.recommendations.load,
+            self.sdk.memtags.load,
             self.sdk.node.shares.parameters.load,
 
 
@@ -27515,7 +29745,10 @@ Platform = function (app, listofnodes) {
         if(window.cordova){
             var key = 'acceptterms'
 
-            var aterms = localStorage[key]
+            var aterms = null
+            try{
+                aterms = localStorage[key]
+            }catch(e){}
 
             if (!aterms){
                 app.nav.api.load({
@@ -27524,8 +29757,10 @@ Platform = function (app, listofnodes) {
                     inWnd : true,
                     essenseData : {
                         success : function(){
+                            try{
+                                localStorage[key] = new Date();
+                            }catch(e){}
 
-                            localStorage[key] = new Date();
 
                             setTimeout(function(){
                                 if(clbk) clbk()
@@ -27558,10 +29793,10 @@ Platform = function (app, listofnodes) {
 
         checkfeatures()
 
-        
+
 
         app.user.isState(function(state){
-
+            
             if (state) {
 
                 lazyActions([
@@ -27580,6 +29815,8 @@ Platform = function (app, listofnodes) {
                     self.sdk.articles.init,
                     self.sdk.categories.load,
                     self.sdk.activity.load,
+                    self.sdk.recommendations.load,
+                    self.sdk.memtags.load,
                     self.sdk.node.shares.parameters.load,
                     self.sdk.sharesObserver.load,
                     self.sdk.comments.loadblocked
@@ -27600,6 +29837,11 @@ Platform = function (app, listofnodes) {
                     self.preparingUser = false;
 
                     self.loadingWithErrors = !_.isEmpty(self.app.errors.state)
+
+                    self.app.Logger.info({
+                        actionId: 'SESSION_STARTED',
+                        actionSubType: 'AUTHORIZED_SESSION',
+                    });
 
                     setTimeout(() => {
                         self.matrixchat.init()
@@ -27636,7 +29878,7 @@ Platform = function (app, listofnodes) {
                             $('html').addClass('testaddress')
                         }
                         else{
-                            if($('html').hasClass('testaddress'))
+                            if ($('html').hasClass('testaddress'))
                                 $('html').removeClass('testaddress')
                         }
 
@@ -27646,6 +29888,10 @@ Platform = function (app, listofnodes) {
                 })
             }
             else {
+                self.app.Logger.info({
+                    actionId: 'SESSION_STARTED',
+                    actionSubType: 'UNAUTHORIZED_SESSION',
+                });
 
                 self.preparingUser = false;
 
@@ -27665,22 +29911,22 @@ Platform = function (app, listofnodes) {
                             self.ui.popup('application');
                         }
                         else{
-                            
+
                             var a = self.sdk.address.pnet()
-    
+
                             if (a){
                                 var regs = self.sdk.registrations.value(a.address)
-    
+
                                 if(!regs){
                                     self.ui.popup('application');
                                 }
                             }
-                            
+
                         }
                     }
-                    
+
                 }
-                
+
             })
         }, 30000)*/
 
@@ -27696,6 +29942,14 @@ Platform = function (app, listofnodes) {
             ALL_NOTIFICATIONS_COUNT : {},
             NOTIFICATION : {},
             SHOWING : {}
+        },
+
+        deactivateAccount : function(){
+            if(self.matrixchat.core){
+                return self.matrixchat.core.mtrx.deactivateAccount()
+            }
+
+            return Promise.reject('matrixchat.core')
         },
 
         destroy : function(){
@@ -27776,7 +30030,7 @@ Platform = function (app, listofnodes) {
         },
 
         importifneed : function(clbk){
-            
+
             app.user.isState(function(state){
 
                 if(self.matrixchat.inited || self.matrixchat.initing || _OpenApi || !state) {
@@ -27804,6 +30058,8 @@ Platform = function (app, listofnodes) {
                 if (state) {
 
                     if(self.sdk.user.reputationBlockedMe()) return
+                    if(self.sdk.user.myaccauntdeleted()) return
+
 
                     var pnet = self.app.platform.sdk.address.pnet()
 
@@ -27828,15 +30084,17 @@ Platform = function (app, listofnodes) {
                                     localization="`+self.app.localization.key+`"
                                     fcmtoken="`+(self.fcmtoken || "")+`"
                                     isSoundAvailable="`+(self.sdk.usersettings.meta.sound.value)+`"
+                                    pkoindisabled="`+(self.app.pkoindisable)+`"
                                 >
                                 </matrix-element>
                             </div>`
+                            window.requestAnimationFrame(() => {
+                                $('#matrix').html(matrix);
 
-                            $('#matrix').html(matrix);
-
-                            self.matrixchat.el = $('.matrixchatwrapper')
-                            self.matrixchat.initevents()
-                            self.matrixchat.connect()
+                                self.matrixchat.el = $('.matrixchatwrapper')
+                                self.matrixchat.initevents()
+                                self.matrixchat.connect()
+                            })
 
                         }, null, app);
 
@@ -27890,7 +30148,7 @@ Platform = function (app, listofnodes) {
 
                     if(self.matrixchat.chatparallax) return
 
-                    
+
                     self.matrixchat.chatparallax = new SwipeParallaxNew({
 
                         el : self.matrixchat.el,
@@ -28148,7 +30406,7 @@ Platform = function (app, listofnodes) {
                         open: true,
                         href: link,
                         history: true,
-                        handler : true
+                        /*handler : true*/
                     })
                 }
 
@@ -28175,6 +30433,9 @@ Platform = function (app, listofnodes) {
                     self.matrixchat.core.cancelshare ? self.matrixchat.core.cancelshare() : '' ;
 
                     self.matrixchat.core.hideInParent(self.app.mobileview ? true : false )
+
+                    if (self.app.mobileview)
+                        self.matrixchat.core.hideOptimization(true)
                 }
 
                 if (self.app.mobileview){
@@ -28209,7 +30470,7 @@ Platform = function (app, listofnodes) {
                 if (self.matrixchat.el){
 
                     if (self.matrixchat.el.hasClass('active')) return
-                        self.matrixchat.el.addClass('active')
+                    self.matrixchat.el.addClass('active')
 
                 }
                 else{
@@ -28235,6 +30496,10 @@ Platform = function (app, listofnodes) {
 
                 if (self.matrixchat.core){
                     self.matrixchat.core.hideInParent(false)
+
+
+                    if (self.app.mobileview)
+                        self.matrixchat.core.hideOptimization(false)
                 }
 
 
@@ -28351,7 +30616,7 @@ Platform = function (app, listofnodes) {
     }
 
     self.initSounds = function () {
-        if (typeof ion != 'undefined'){
+        if (typeof ion != 'undefined' && !window.cordova){
             ion.prepare()
             ion.sound({
                 sounds: [ { name: "water_droplet"}, { name: "glass" } ],
@@ -28426,6 +30691,8 @@ Platform = function (app, listofnodes) {
 
             unfocustime = platform.currentTime()
 
+            self.clbks.unfocus();
+
             setTimeout(function(){
 
                 if (self.focus) return
@@ -28434,7 +30701,7 @@ Platform = function (app, listofnodes) {
                     self.app.mobile.pip.enable(self.app.pipwindow.el)
                 }
                 else{
-                    
+
                 }
 
             }, 200)
@@ -28479,21 +30746,21 @@ Platform = function (app, listofnodes) {
                     setTimeout(function(){
 
                         if (self.focus) return
-        
+
                         if (self.app.pipwindow && self.app.pipwindow.playerstatus && self.app.pipwindow.playerstatus() == 'playing'){
-                           
+
                         }
                         else{
                             if (self.app.playingvideo){
                                 self.app.playingvideo.pause()
                             }
                         }
-        
+
                     }, 200)
                 })
 
 
-                
+
 
             }
 
@@ -28630,11 +30897,14 @@ Platform = function (app, listofnodes) {
 
     self.state = {
         save: function () {
-            if (self.nodeid)
+            try{
+                if (self.nodeid)
                 localStorage['nodeid2'] = JSON.stringify(self.nodeid);
 
-            else
-                delete localStorage['nodeid2']
+                else
+                    delete localStorage['nodeid2']
+            }catch(e){}
+            
 
         },
         load: function () {
@@ -28764,7 +31034,19 @@ Platform = function (app, listofnodes) {
         }
 
 
-        self.sdk.localshares.initclbk()
+        self.sdk.localshares.initclbk(() => {
+            if (typeof _Electron != 'undefined') {
+                self.p2pvideo = new window.P2Pvideo(app)
+
+                /*setTimeout(() => {
+                    self.p2pvideo.initlocalsvideo()
+                }, 3000)*/
+                
+
+            }
+            
+        })
+        
 
         if(window.cordova){
             setupOpenwith()

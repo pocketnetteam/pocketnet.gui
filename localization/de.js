@@ -2,8 +2,8 @@ if(typeof loclib == "undefined" || !loclib)
 loclib = {};
 
 loclib.de = {};
+var appname = ((window.projects_meta || {})[window.pocketnetproject || "Bastyon"] || {}).fullname || 'Bastyon'
 
-var appname = window.pocketnetproject || "Pocketnet"
 
 var _l = loclib.de;
 
@@ -567,6 +567,8 @@ _l.e13135 = "Benutzer hat keinen privaten Schlüssel"
 _l.e13136 = "Alle Beiträge"
 _l.e13137 = "Deine Pocket"
 _l.e13138 = "Top Beiträge"
+_l.discussed = "Am meisten diskutiert"
+_l["Most Discussed Over"] = "Für einen Zeitraum"
 _l.e13139 = "SUCHE AUF "+appname.toUpperCase()+""
 _l.e13140 = "SUCHE AUF"
 _l.notifications = "Benachrichtigungen"
@@ -602,7 +604,7 @@ _l.repost = "Repost"
 _l.e13160 = "Hallo Pocketeers!"
 
 _l.e13161 = "Fügen Sie Tags zu Ihren Beiträgen hinzu"
-_l.e13162 = "Sie können max. 5 Tags hinzufügen"
+_l.e13162 = "Sie können max. 15 Tags hinzufügen"
 _l.e13163 = "Es gibt keine Veränderungen im Beitrag"
 _l.e13164 = "Bitte füge einige Wörter hinzu, um den Pocketleuten über deinen Link zu erzählen. Um was geht es? Warum ist es wichtig? Was ist Ihre Meinung?"
 _l.e13165 = "Ihr Link zum Video ist ungültig. Bitte laden Sie eine gültige Video-URL."
@@ -838,7 +840,7 @@ _l.buy = 'Kaufen';
 
 
 _l.lowstar1 = "Das Bastion-Team führt ein vorübergehendes Moratorium für 1- und 2-Sterne-Bewertungen ein, mit Ausnahme von verbotenen Inhalten. Verbotene Inhalte sind:"
-_l.lowstar_reason_1 = "Porno"
+_l.lowstar_reason_1 = "Erotik/Porno"
 _l.lowstar_reason_2 = "Ausbeutung von Kindern"
 _l.lowstar_reason_3 = "Direkte Androhung von Gewalt"
 _l.lowstar_reason_4 = "Illegale Drogen"
@@ -852,3 +854,14 @@ _l.androidPopupDisagree = "Nicht jetzt"
 _l.desktopPopupTitle = "Unzensierte Informationen in der Bastyon-Desktop-App abrufen"
 _l.desktopPopupAgree = "App herunterladen"
 _l.desktopPopupDisagree = "Nicht jetzt"
+
+_l.profanity_tag = 'profanität'
+
+_l.saved = "Gespeicherte"
+_l.savePost = "Beitrag speichern"
+_l.postsaved = "Beitrag gespeichert"
+_l.deleteSavedPost = "Gespeicherten Beitrag löschen"
+_l.doYouDownloadVideo = "Möchten Sie das Video auf Ihr Gerät herunterladen?"
+_l.gotosaved2 = "Gehe zu gespeichert"
+_l.yes = "Ja"
+_l.no = "Nein"

@@ -1,3 +1,12 @@
+<% if(app.pkoindisable) {%>
+    <div class="pkoindisabledisclaimer">
+        <span>
+            <%- e('pkoindisabledisclaimer') %>
+        </span>
+    </div>
+<% } %>
+
+
 <div class="total slide fadeInByElement">
     <div class="tttl">
     </div>
@@ -21,12 +30,13 @@
 
 <div class="htls slide fadeInByElement">
 </div>
+<% if(!app.pkoindisable) {%>
+    <div class="send slide fadeInByElement">
+    </div>
 
-<div class="send slide fadeInByElement">
-</div>
-
-<div class="buy slide fadeInByElement">
-</div>
+    <div class="buy slide fadeInByElement">
+    </div>
+<% } %>
 
 <div class="deposit slide fadeInByElement">
 </div>

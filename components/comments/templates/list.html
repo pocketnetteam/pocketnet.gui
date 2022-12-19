@@ -9,7 +9,7 @@ var commentpanel = function(comment, _class){
 
 		<div class="items">
 
-			<% if(!comment.deleted && !lockedaccount) { 
+			<% if(!comment.deleted && !lockedaccount && (typeof app.platform.sdk.user.myaccauntdeleted == 'undefined' || !app.platform.sdk.user.myaccauntdeleted())) { 
 				
 				
 				%> 
@@ -170,7 +170,7 @@ var commentf = function(comment){
 
 							<% } %>
 
-							<% if(comment.donation === 'true' && comment.amount) {%>
+							<% if(comment.donation === 'true' && comment.amount && !app.pkoindisable) {%>
 								<div class="donateSum">
 									<i class="fas fa-plus-circle"></i> <%=comment.amount / 100000000 %> PKOIN
 								</div>
@@ -263,7 +263,7 @@ var commentf = function(comment){
 											<%=e('blockedbymeHiddenCommentLabel')%>
 										</div>
 
-										<div>
+										<div class="showBlockedUserCommentWrapper">
 											<button class="ghost showBlockedUserComment"><%=e('showhiddenComment')%></button>
 										</div>
 									<% } %>

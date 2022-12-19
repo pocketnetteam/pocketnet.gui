@@ -13,7 +13,7 @@ var comments = (function(){
 
 		var primary = false;
 
-		var el = {}, txid, ed, currents = {}, caption, _in, top, eid, preview = false, listpreview = false, showedall = false, receiver, balance = 0;
+		var el = {}, txid, ed, currents = {}, caption, _in, top, eid, preview = false, listpreview = false, showedall = false, receiver;
 
 		var authblock = false;
 
@@ -32,7 +32,8 @@ var comments = (function(){
 		var bannerComment = null;
 		var currentstate = {};
 		var wordsRegExp = /[,.!?;:() \n\r]/g
-		var sortby = 'interesting' 
+
+		var sortby = self.sdk.usersettings.meta.commentsOrder.value || 'interesting';
 
 		var isotopes = {}
 		
@@ -202,6 +203,200 @@ var comments = (function(){
 		}
 
 		var actions = {
+
+			removeDonate : function(id, p){
+
+				var comment = currents[id]
+			
+				comment.donate.remove()
+			
+				renders.donate(id, p);
+			
+			},
+			
+			embeddonate : function(id, p){
+			
+				id || (id = '0')
+			
+				actions.process(id)
+			
+				if (areas[id])
+					areas[id].___inited = true
+			
+				var storage = currents[id].export(true)
+			
+				var sender = self.sdk.address.pnet().address;
+			
+				if (sender === receiver){
+			
+					sitemessage(self.app.localization.e('donateself'));
+			
+				} else {
+
+					self.nav.api.load({
+						open : true,
+						id : 'donate',
+						inWnd : true,
+			
+						essenseData : {
+							type : 'donate',
+							sender: sender, 
+							receiver: receiver,
+							value : storage.donate,
+							storage,
+							clbk  : function(value){
+
+								value = Number(value);
+		
+								var result = Boolean(value);
+
+								if (value < 0.5){
+									sitemessage(self.app.localization.e('minPkoin', 0.5))
+									return;
+								}
+					
+	
+								if(!_.isArray(value)) value = [value]
+	
+								currents[id].donate.remove();
+	
+								currents[id].donate.set({
+									address: receiver,
+									amount: Number(value)
+								})
+	
+								if(!result && errors[type]){
+	
+									sitemessage(errors[type])
+	
+								}
+	
+	
+								if (result){
+
+									if(!window.cordova){
+										new Audio('sounds/donate.mp3').play();
+									}
+	
+									renders.donate(id, p)
+	
+								}	
+								
+							}
+						},
+			
+						clbk : function(s, p){
+							external = p
+						}
+					})
+			
+					/*self.nav.api.load({
+						open : true,
+						id : 'embeding',
+						inWnd : true,
+			
+						essenseData : {
+							type : 'donate',
+							storage : storage,
+							sender: sender, 
+							receiver: receiver,
+							balance: p.balance,
+							total: p.total,
+							on : {
+			
+								added : function(value){
+
+									value = Number(value);
+			
+									var result = Boolean(value);
+
+									if (value < 0.5){
+										sitemessage(self.app.localization.e('minPkoin', 0.5))
+										return;
+									}
+						
+									if (value < p.balance){
+			
+										if(!_.isArray(value)) value = [value]
+			
+										currents[id].donate.remove();
+			
+										currents[id].donate.set({
+											address: receiver,
+											amount: Number(value)
+										})
+			
+										if(!result && errors[type]){
+			
+											sitemessage(errors[type])
+			
+										}
+			
+			
+										if (result){
+			
+											new Audio('sounds/donate.mp3').play();
+			
+											renders.donate(id, p)
+			
+										}	
+			
+								
+			
+									} else {
+			
+										sitemessage(self.app.localization.e('incoins'))
+									}
+			
+				
+			
+								}
+							}
+						},
+			
+						clbk : function(s, p){
+							external = p
+						}
+					})*/
+			
+				}
+			
+			}, 
+
+			
+			pkoin : function(id, format){
+
+				var share = self.app.platform.sdk.node.shares.storage.trx[id];
+
+				if (share){
+					
+					actions.stateAction(function(){
+
+						var userinfo = deep(app, 'platform.sdk.usersl.storage.' + share.address) || {
+							address : share.address,
+							addresses : [],
+						}
+
+						self.nav.api.load({
+							open : true,
+							href : 'pkoin',
+							history : true,
+							inWnd : true,
+		
+							essenseData : {
+								userinfo: userinfo,
+								id : id,
+								format: format
+							}
+						})
+		
+	
+					}, share.txid)	
+
+				}
+
+			},
+
 			showprofile : function(address){
 
 				if (self.app.mobileview){
@@ -444,6 +639,44 @@ var comments = (function(){
 					areas[id].___inited = true
 
 				var storage = currents[id].export(true)
+
+				var added = function(value){
+
+					var result = true;
+
+					if(!_.isArray(value)) value = [value]
+
+					_.each(value, function(v, i){
+
+						result = currents[id].images.set(v)
+
+					})
+
+					if(!result && errors[type]){
+
+						sitemessage(errors[type])
+
+					}		
+					
+					renders.images(id, p)
+
+					actions.lightarea(id, p.el.find('.postbody'))
+
+				}
+
+				if(self.app.mobile.supportimagegallery()){
+
+					app.platform.ui.uploadImage({
+						multiple : true,
+						
+						onSuccess : function(imgs){
+							_.each(imgs, added)
+						}
+					})
+
+
+					return
+				}
 	
 				self.nav.api.load({
 					open : true,
@@ -456,29 +689,10 @@ var comments = (function(){
 						storage : storage,
 						on : {
 						
-							added : function(value){
+							added,
 
-								var result = true;
-
-								if(!_.isArray(value)) value = [value]
-
-								_.each(value, function(v, i){
-
-									result = currents[id].images.set(v)
-
-								})
-
-								if(!result && errors[type]){
-
-									sitemessage(errors[type])
-
-								}		
-								
-								
-								renders.images(id, p)
-
-								actions.lightarea(id, p.el.find('.postbody'))
-
+							destroy(){
+								external = null
 							}
 						}
 					},
@@ -1082,6 +1296,7 @@ var comments = (function(){
 		}
 
 		var sortParameter = function(){
+
 			
 			var ps = new Parameter({
 
@@ -1176,9 +1391,9 @@ var comments = (function(){
 	
 				comments = _.sortBy(comments, function(c){
 
-					if (self.app.platform.sdk.comments.blocked[c.address]) {
+					/*if (self.app.platform.sdk.comments.blocked[c.address]) {
 						return 0
-					}
+					}*/
 
 
 					var ms = (c.time || new Date()) / 1000
@@ -1204,6 +1419,14 @@ var comments = (function(){
 		}
 
 		var events = {
+
+			pkoin : function(){
+
+				var shareId = $(this).closest('.share').attr('id') || txid;
+
+				actions.pkoin(shareId, 'pkoinComment')
+
+			},
 
 			showprofile : function(){
 				var address = $(this).attr('profile')
@@ -1382,7 +1605,7 @@ var comments = (function(){
 								{
 									parent.addClass('hiddenBlockedUserComment');
 									var hiddenCommentLabel = $('<div></div>').html(self.app.localization.e('blockedbymeHiddenCommentLabel')).addClass('hiddenCommentLabel')
-									var ghostButton = $('<div></div>').append($('<button></button>').html(self.app.localization.e('showhiddenComment')).addClass('ghost showBlockedUserComment'))
+									var ghostButton = $('<div class="showBlockedUserCommentWrapper"></div>').append($('<button></button>').html(self.app.localization.e('showhiddenComment')).addClass('ghost showBlockedUserComment'))
 									var commentContentTable = localParent.find('.cbodyWrapper > .commentcontenttable')
 									commentContentTable.append(hiddenCommentLabel)
 									commentContentTable.append(ghostButton)
@@ -1524,7 +1747,7 @@ var comments = (function(){
 					change : events.emessage,
 					click : events.emessage,
 					keydown : function(editor, e){
-						if (e.ctrlKey && e.keyCode == 13) {
+						/*if (e.ctrlKey && e.keyCode == 13) {
 
 							if (c.hasClass('sending')) return
 
@@ -1535,9 +1758,26 @@ var comments = (function(){
 							e.preventDefault()
 
 							return false;
+						}*/
+					},
+					keydown : function(editor, e){
+						if(e.keyCode == 13){
+							if (isMobile() || e.ctrlKey){
+
+								setTimeout(() => {
+									if (c.hasClass('sending')) return
+									c.addClass('sending')
+
+									_p.el.removeClass('active')
+
+									actions.post(p.id || '0', p.pid, p.aid, p.editid)
+								}, 100)
+								
+								e.preventDefault()
+
+								return false
+							}
 						}
-						// Scroll comment section to top of the screen
-						//actions.scrollToComment(_p.el);
 					},
 					keyup : function(editor, e){
 						var char = String.fromCharCode(e.keyCode || e.which);
@@ -1551,6 +1791,8 @@ var comments = (function(){
 						if (e.ctrlKey && e.keyCode == 13) {
 							return
 						}
+
+						
 						
 						actions.message(p.id || '0', text)
 
@@ -1564,6 +1806,13 @@ var comments = (function(){
 
 						if(!isios())
 							actions.scrollToComment(_p.el);
+						else{
+							if(window.cordova){
+								setTimeout(() => {
+									actions.scrollToComment(_p.el);
+								}, 300)
+							}
+						}
 					},
 
 					blur : function(){
@@ -1631,9 +1880,12 @@ var comments = (function(){
 			})
 
 			_p.el.find('.emojionearea-editor').on('blur', function(){
-
+				
 				setTimeout(function(){
-					_p.el.removeClass('active')
+					//if(!external){
+						_p.el.removeClass('active')
+					//}
+					
 				}, 150)
 				
 			})
@@ -1982,7 +2234,12 @@ var comments = (function(){
 
 				self.app.user.isState(function(state){
 					//if(!state) return;
+					
+					if(state && self.app.platform.sdk.user.myaccauntdeleted()){
+						if(clbk) clbk()
 
+						return
+					}
 
 					if(!p) p = {};
 
@@ -2051,6 +2308,31 @@ var comments = (function(){
 								})
 							}
 						})
+
+						_p.el.find('.embeddonate').off('click').on('click', function(){
+
+									
+							
+
+							if(state){
+
+								var id = actions.getid(_p.el.find('.postbody'))
+
+								actions.embeddonate(id, p)
+
+								if(!p.answer && !p.editid){ ini(null, true) }	
+							}
+							else{
+								actions.stateAction(function(){
+								})
+							}
+
+
+
+						})
+
+						// _p.el.find('.embeddonate').on('click', events.pkoin)
+
 
 						if(_preview){
 
@@ -2774,7 +3056,7 @@ var comments = (function(){
 
 				app.platform.ui.showCommentBanner(el.c, (c) => {
 					bannerComment = c
-				});
+				}, c.essenseData.receiver);
 			},
 
 			authclbk : function(){
@@ -2867,7 +3149,7 @@ var comments = (function(){
 				if(!_in.length) {
 					_in = null
 
-					if(!self.app.el.html.hasClass('allcontent') || !isTablet()){
+					if(!isTablet()){
 						top = 65
 					} else {
 						top = 0
@@ -2997,7 +3279,9 @@ var comments = (function(){
 
 		_.each(essenses, function(essense){
 
-			essense.destroy();
+			window.requestAnimationFrame(() => {
+				essense.destroy();
+			})
 
 		})
 

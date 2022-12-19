@@ -26,6 +26,8 @@ var lenta = (function(){
 			boostloadedblock = 0,
 			boostplaces = {}
 
+		var sharesFromRecommendations = {}
+
 		var extra = {}, extraloading = {}, recommendations = {}, recommendationsMaking = {};
 
 		var progress, parallax;
@@ -55,7 +57,14 @@ var lenta = (function(){
 			fullscreenvideoShowed = null;
 
 		var countshares = 0;
-		
+
+		var progressInterval = {},
+			loadingBars = {};
+
+		var newsharescount = 0
+
+		var offsetblock = 0
+		var emptyinarow = 0
 
 		var beginmaterial = null;
 		var beginmaterialloaded = false;
@@ -89,6 +98,32 @@ var lenta = (function(){
 
 
 		var actions = {
+			recommendationinfo : function(share){
+				if(!share || !self.app.platform.sdk.recommendations.sharesinfo[share.txid]) return
+
+
+				var data = {
+					...self.app.platform.sdk.recommendations.sharesinfo[share.txid] || {},
+					share : share.txid
+				}
+
+
+				self.nav.api.load({
+					open : true,
+					href : 'recommendationinfo',
+					inWnd : true,
+					history : true,
+
+					essenseData : data
+
+					/*{
+						info : share._recommendationInfo,
+						type : share.recommendationKey,
+						share : share.txid
+					}*/
+				})
+
+			},
 			destroyShare : function(share){
 
 				if (fullscreenvideoShowed == share.txid){
@@ -103,7 +138,7 @@ var lenta = (function(){
 				if (initedcommentes[share.txid])
 					initedcommentes[share.txid].destroy()
 
-				if (carousels[share.txid]) carousels[share.txid].owlCarousel('destroy')
+				if (carousels[share.txid]) carousels[share.txid].destroy()
 
 				delete carousels[share.txid]
 
@@ -200,7 +235,10 @@ var lenta = (function(){
 
 			subscribeunsubscribeclbk : function(address){
 
+
 				var addressEl = el.c.find('.shareTable[address="'+address+'"]')
+
+				var buttonsWrapper = addressEl.closest('.sharecnt').find('.bannerComment .buttonsWrapper');
 
 				var me = deep(self.app, 'platform.sdk.users.storage.' + self.user.address.value.toString('hex'))
 
@@ -210,6 +248,8 @@ var lenta = (function(){
 					if (r) {
 
 						addressEl.addClass('subscribed');
+
+						buttonsWrapper.addClass('following');
 
 						if((r.private == 'true' || r.private === true)){
 							addressEl.find('.notificationturn').addClass('turnon')	
@@ -226,6 +266,7 @@ var lenta = (function(){
 				}
 				else{
 					addressEl.removeClass('subscribed');
+					buttonsWrapper.removeClass('following');
 					addressEl.find('.notificationturn').removeClass('turnon')
 				}
 
@@ -239,7 +280,52 @@ var lenta = (function(){
 			changeSavingStatusLight : function(share){
 
 				if (el && el.share && el.share[share.txid]){
-					el.share[share.txid].find('.shareSave').attr('status', self.app.platform.sdk.localshares.status(share.txid))
+					const status = self.app.platform.sdk.localshares.status(share.txid);
+					const isSaving = (status === 'saving' || status === 'paused');
+
+					const shareSaveElem = el.share[share.txid].find('.shareSave');
+
+					if (isSaving) {
+						const loadingBarHolderElem = el.share[share.txid].find('.loadingBar');
+						if (!loadingBars[share.txid]) {
+							const loadingBarElem = el.share[share.txid].find('.loading-bar');
+							if (!loadingBarElem || loadingBarElem.length <= 0)
+								return;
+
+							// Create download progress bar
+							loadingBars[share.txid] = new LoadingBar(loadingBarElem[0]);
+
+							// Watch pause/resume events
+							loadingBars[share.txid].listenStateChange((status) => {
+								if (!status)
+									return;
+								if (status.stopped == true)
+									self.app.platform.sdk.localshares.setVideoDlStatus(share.txid, 'paused');
+								else
+									events.shareSave(share.txid);
+							});
+
+							// Watch progress and update progress bar
+							if (progressInterval[share.txid]) clearInterval(progressInterval[share.txid]);
+							progressInterval[share.txid] = setInterval(async function() {
+								const progress = await self.app.platform.sdk.localshares.videoDlProgress(share.txid);
+								if (progress != undefined && progress.progress >= 1)
+									clearInterval(progressInterval[share.txid]);
+								if (progress != undefined && !isNaN(progress.progress))
+									loadingBars[share.txid].setValue(progress.progress * 100);
+							}, 500);
+
+							if (status == 'paused')
+								loadingBars[share.txid].setPaused();
+
+						}
+						
+						loadingBarHolderElem.removeAttr('hidden');
+						shareSaveElem.attr('hidden', '');
+						return;
+					}
+
+					shareSaveElem.attr('status', status);
 				}
 
 			},
@@ -321,6 +407,7 @@ var lenta = (function(){
 			},
 
 			scrollmode : function(m){
+
 				if(m){
 					$('html').addClass('scrollmodedown')
 				}
@@ -393,9 +480,10 @@ var lenta = (function(){
 
 			rebuilddelay : function(){
 
-
-				if (el.c)
-					el.c.addClass('rebuilding')
+				window.requestAnimationFrame(() => {
+					if (el.c)
+						el.c.addClass('rebuilding')
+				})
 
 				delay = slowMade(function(){
 
@@ -463,6 +551,7 @@ var lenta = (function(){
 				lastcache = null;
 				isotopeinited = false
 				loadertimeout = null
+				sharesFromRecommendations = {}
 
 				_.each(shareInitedMap, function(s, id){
 					delete self.app.platform.sdk.node.shares.storage.trx[id]
@@ -572,6 +661,7 @@ var lenta = (function(){
 			},	
 
 			loadmore : function(loadclbk){
+				essenseData.page = ++essenseData.page
 				actions.observe()
 
 				renders.loader(true)
@@ -598,11 +688,13 @@ var lenta = (function(){
 						el.c.removeClass('networkError')
 
 
-					if(shares){
+					if (shares){
 						renders.shares(shares, function(){
 
 							renders.sharesInview(shares, function(){
 								essenserenderclbk()
+
+								events.loadmorescroll()
 							})
 
 						}, {
@@ -611,7 +703,7 @@ var lenta = (function(){
 					}
 
 					if (loadclbk)
-						loadclbk(shares)
+						loadclbk(shares, error)
 
 				}, lastcache || null)
 
@@ -691,7 +783,7 @@ var lenta = (function(){
 
 				
 			},
-			removeAdditionalByScroll : function(){
+			/*removeAdditionalByScroll : function(){
 
 				if(ascrollel){
 					var s = self.app.lastScrollTop;
@@ -719,7 +811,7 @@ var lenta = (function(){
 					el.w.on('scroll', actions.removeAdditionalByScroll);
 				}
 				
-			},
+			},*/
 
 			stateAction : function(link, clbk, txid){
 
@@ -985,6 +1077,11 @@ var lenta = (function(){
 							playbackState,
 							duration
 						}){
+
+							if (duration > 0 && playbackState == 'playing')
+								self.app.platform.sdk.memtags.add(share.tags, null, 0.500 / duration)
+
+
 							if(playbackState == 'playing' && ((position > 15 && duration > 120) || startTime)){
 								
 								self.app.platform.sdk.videos.historyset(share.txid, {
@@ -992,10 +1089,18 @@ var lenta = (function(){
 									percent : ((position/duration)* 100).toFixed(0),
 								})
 
+								self.app.platform.sdk.activity.adduser('video', share.address, 6 * position / duration)
+								return
 							}
+
+							if(playbackState == 'playing' && duration < 120 && position / duration > 0.2){
+								self.app.platform.sdk.activity.adduser('video', share.address, 6 * position / duration)
+							}
+
+
 						},
 
-						hlsError : function(error){
+						error : function(error){
 							const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection || {};
 							const payload = {
 								...error,
@@ -1249,7 +1354,9 @@ var lenta = (function(){
 				}
 			},
 
-			pkoin : function(id){
+			pkoin : function(id, format){
+
+				var type = format === 'liftUpThePost' ? 'boost' : 'pkoin';
 
 				var share = self.app.platform.sdk.node.shares.storage.trx[id];
 
@@ -1257,22 +1364,29 @@ var lenta = (function(){
 					
 					actions.stateAction('_this', function(){
 
-					var userinfo = deep(app, 'platform.sdk.usersl.storage.' + share.address) || {
-						address : share.address,
-						addresses : [],
-					}
 
-					self.nav.api.load({
-						open : true,
-						href : 'pkoin',
-						history : true,
-						inWnd : true,
-	
-						essenseData : {
-							userinfo: userinfo,
-							id : id
+						if(self.app.platform.sdk.user.myaccauntdeleted()){
+							return
 						}
-					})
+
+						var userinfo = deep(app, 'platform.sdk.usersl.storage.' + share.address) || {
+							address : share.address,
+							addresses : [],
+						}
+
+						self.nav.api.load({
+							open : true,
+							href : 'pkoin',
+							history : true,
+							inWnd : true,
+
+							essenseData : {
+								userinfo: userinfo,
+								id : id,
+								format: format,
+								type: type
+							}
+						})
 	
 					
 	
@@ -1497,6 +1611,8 @@ var lenta = (function(){
 
 					fullscreenvideoShowed = id;
 
+					self.app.mobile.reload.destroyparallax()
+
 					self.app.pseudofullscreenmode = true
 
 					_el.addClass('fullScreenVideo')
@@ -1606,6 +1722,10 @@ var lenta = (function(){
 
 				fullscreenvideoShowed = null;
 
+				if(!self.app.actions.getScroll()){
+					self.app.mobile.reload.initparallax()
+				}
+
 				actions.removeRecommendationsFullScreenVideo(id)
 
 				var share = self.app.platform.sdk.node.shares.getWithTemp(id) 
@@ -1685,6 +1805,8 @@ var lenta = (function(){
 					return
 				}
 
+
+
 				if(value <= 3 && !self.app.test){
 					if(self.app.platform.sdk.user.scamcriteria()){
 						if(clbk)
@@ -1752,6 +1874,10 @@ var lenta = (function(){
 
 								if (clbk)
 									clbk(true)
+
+								self.app.platform.sdk.memtags.add(obj.tags, 'l_' + obj.txid, (value - 3) / 2)
+
+								self.app.platform.sdk.recommendations.successRecommendation(obj)
 							}
 
 						}
@@ -2135,6 +2261,16 @@ var lenta = (function(){
 
 		var events = {
 
+			recommendationinfo : function(){
+
+				var shareId = $(this).closest('.share').attr('id');
+
+				var share = self.app.platform.sdk.node.shares.storage.trx[shareId];
+
+				actions.recommendationinfo(share)
+
+			},
+
 			gotouserprofile : function(){
 				var name = $(this).attr('name')
 				var address = $(this).attr('address') 
@@ -2173,8 +2309,9 @@ var lenta = (function(){
 				})	
 			
 			},
-			shareSave : function(){
-				var shareId = $(this).closest('.share').attr('id');
+			shareSave : function(shareTxId){
+
+				var shareId = (shareTxId && typeof shareTxId === 'string') ? shareTxId : $(this).closest('.share').attr('id');
 
 				var share = self.app.platform.sdk.node.shares.storage.trx[shareId];
 
@@ -2260,7 +2397,16 @@ var lenta = (function(){
 
 				var shareId = $(this).closest('.share').attr('id');
 
-				actions.pkoin(shareId)
+				actions.pkoin(shareId, 'sendToAuthor')
+
+			},
+
+			boost : function(){
+
+
+				var shareId = $(this).closest('.share').attr('id');
+
+				actions.pkoin(shareId, 'liftUpThePost')
 
 			},
 
@@ -2302,9 +2448,13 @@ var lenta = (function(){
 			loadmorescroll : function(){
 
 
+
+
 				if(!essenseData.horizontal){
+
+
 					if (
-						!loading && !ended && (recommended != 'recommended' || isMobile()) &&
+						!loading && !ended &&
 
 						(self.app.lastScrollTop + self.app.height > document.body.scrollHeight - 2000) 
 
@@ -2313,8 +2463,13 @@ var lenta = (function(){
 						) {
 
 							loadedcachedHeight = cachedHeight
-	
-							actions.loadmore()
+
+
+							actions.loadmore(function(s, e){
+								if(e){
+									loadedcachedHeight = 0
+								}
+							})
 
 							setTimeout(function(){
 								loadedcachedHeight = 0
@@ -2325,9 +2480,9 @@ var lenta = (function(){
 				else{
 
 					if (
-						!loading &&  (!ended && recommended != 'recommended') && 
-						(el.w.scrollLeft() + el.w.width() > el.c.find('.shares').width() - 1000) 
-	
+						!loading &&  (!ended && (recommended != 'recommended' || recommended != 'best')) &&
+						(el.w.scrollLeft() + el.w.width() > el.c.find('.shares').width() - 1000)
+
 						) {
 
 							
@@ -2395,6 +2550,10 @@ var lenta = (function(){
 
 					self.app.platform.sdk.node.shares.getbyid(id, function(){
 						if (self.app.platform.sdk.address.pnet() && s.address == self.app.platform.sdk.address.pnet().address) return
+
+						if(self.app.platform.sdk.user.myaccauntdeleted()){
+							return
+						}
 
 						if (value == 5){
 							setTimeout(function(){
@@ -2464,33 +2623,19 @@ var lenta = (function(){
 					
 			},
 
-			additional : function(){
+			/*additional : function(){
 
 				var _el = $(this).closest('.share');
 
 				actions.additional(_el, !_el.hasClass('showAdditional'))
 
-			},
+			},*/
 
 			openGallery : function(){
 				var id = $(this).closest('.shareinlenta').attr('id');
 				var src = $(this).attr('i')
 
 				var share = self.app.platform.sdk.node.shares.getWithTemp(id) 
-				
-				/*self.app.platform.sdk.node.shares.storage.trx[id];
-
-				if(!share){
-					var temp = _.find(self.sdk.node.transactions.temp.share, function(s){
-						return s.txid == id
-					})
-
-
-					share = new pShare();
-					share._import(temp);
-					share.temp = true;
-					share.address = self.app.platform.sdk.address.pnet().address
-				}*/
 
 				self.app.mobile.vibration.small()
 				actions.openGalleryRec(share, src)
@@ -2625,7 +2770,7 @@ var lenta = (function(){
 				if (essenseData.horizontal) {
 					self.app.Logger.info({
 						actionId: 'BEST_VIDEO_CLICKED',
-						value: shareId
+						actionValue: shareId,
 					});
 				}
 
@@ -2709,13 +2854,16 @@ var lenta = (function(){
 				if(show){
 					loadertimeout = setTimeout(() => {
 
-						console.log("TIMEOUT")
+						window.requestAnimationFrame(() => {
 
-						if(el.loader && !el.loader.hasClass('loading')){
-							el.loader.addClass('loading')
-						}
+							if(el.loader && !el.loader.hasClass('loading')){
+								el.loader.addClass('loading')
+							}
 
-						loadertimeout = null
+							loadertimeout = null
+
+						})
+
 					}, 600)
 				}
 
@@ -2727,7 +2875,9 @@ var lenta = (function(){
 					}
 
 					if (el.loader && el.loader.hasClass('loading')){
-						el.loader.removeClass('loading')
+						window.requestAnimationFrame(() => {
+							el.loader.removeClass('loading')
+						})
 					}
 				}
 						
@@ -3054,7 +3204,6 @@ var lenta = (function(){
 					transaction.txid === share.txid
 				));*/
 
-
 				self.shell({
 					name : video ? 'sharevideolight' : share.itisarticle() ? 'sharearticle' : 'share',
 
@@ -3070,7 +3219,8 @@ var lenta = (function(){
 						sharesFromSub,
 						boosted : p.boosted,
 						shareRelayedFlag : false,
-					}					
+						fromrecommendations : sharesFromRecommendations[share.txid] && self.app.platform.sdk.recommendations.sharesinfo[share.txid] ? true : false
+					}
 
 				}, function(p){
 
@@ -3105,6 +3255,12 @@ var lenta = (function(){
 	
 								if(essenseData.searchValue){
 									p.el.find('.canmark').mark(essenseData.searchValue);
+								}
+
+								if(essenseData.searchTags){
+									p.el.find('.canmark').mark(_.map(essenseData.searchTags, (t) => {
+										return '#' + t
+									}).join(' '));
 								}
 	
 								if(!video) actions.initVideoLight(share)
@@ -3156,23 +3312,27 @@ var lenta = (function(){
 
 					var c = function(){
 
-						if(!p.el.hasClass('rendered')){
-							p.el.addClass('rendered')
+						window.requestAnimationFrame(() => {
 
-							if (p.el.hasClass('hashiddengroup')){
-								p.el.closest('.authorgroup').find('.showmorebyauthor').addClass('active')
+							if(!p.el.hasClass('rendered')){
+								p.el.addClass('rendered')
+
+								if (p.el.hasClass('hashiddengroup')){
+									p.el.closest('.authorgroup').find('.showmorebyauthor').addClass('active')
+								}
+
 							}
-							
-						}
-							
 
-						if (clbk)
-							clbk();
-							clbk = null
+
+							if (clbk)
+								clbk();
+								clbk = null
+
+						})
 					}
 
 					
-					if(p.el.find(".shareImages .image").length > 1 || video){
+					if (video){
 						c()
 					}
 					else{
@@ -3464,7 +3624,7 @@ var lenta = (function(){
 
 				var tpl = 'groupshares';
 
-				if (essenseData.author || recommended || essenseData.horizontal || essenseData.txids || essenseData.search){
+				if (essenseData.author || recommended || essenseData.horizontal || essenseData.txids || essenseData.searchValue || essenseData.searchTags){
 					tpl = 'shares'
 				}
 
@@ -3616,7 +3776,20 @@ var lenta = (function(){
 
 						if((isMobile() || essenseData.openapi) && image.images.length > 1 ){
 
-							var aspectRatio = 0
+							_.each(image.images, function(img, n){
+								var _img = img.img;
+
+								var el = $(image.elements[n]).closest('.imagesWrapper');
+
+								var aspectRatio = _img.naturalHeight / _img.naturalWidth
+
+								if(aspectRatio > 1.66) aspectRatio = 1.66
+
+
+								el.height( Math.min( 400, images.width() || lwidth || self.app.width) * aspectRatio)
+							})
+
+							/*var aspectRatio = 0
 							
 							_.each(image.images, function(img){
 								var _img = img.img;
@@ -3633,7 +3806,7 @@ var lenta = (function(){
 								ch = Math.min(400, cwidth ) * aspectRatio
 
 								sel.find('.imagesWrapper').height(ch)
-							}
+							}*/
 							
 						}
 						else{
@@ -3711,25 +3884,8 @@ var lenta = (function(){
 
 						if (isMobile() || essenseData.openapi) {
 
-							if(carousels[s.txid]) carousels[s.txid].owlCarousel('destroy')
 
-
-
-							carousels[s.txid] = sel.find('.imagesContainer').height(ch + 50).owlCarousel({
-								items: 1,
-								dots: true,
-								nav: !isMobile(),
-								navText: [
-									'<i class="fas fa-chevron-circle-left"></i> ',
-									'<i class="fas fa-chevron-circle-right"></i>'
-								],
-
-								width : cwidth,
-
-								checkVisibility: false,
-								//responsive : false
-								
-							});
+							carousels[s.txid] = new carousel(images, '.imagesWrapper', '.imagesContainer')
 
 
 							isclbk()
@@ -4080,6 +4236,14 @@ var lenta = (function(){
 
 				if(!bshares) bshares = []
 
+				newsharescount = shares.length
+				if (!shares.length) {
+					emptyinarow++
+				} else {
+					emptyinarow = 0
+				}
+
+
 				var allshares = [].concat(shares, bshares)
 
 				if(includingsub) {
@@ -4099,11 +4263,6 @@ var lenta = (function(){
 
 						return true
 					})
-					//temp
-					/*_.each(shares, (s) => {
-						s.__fromSUB = true
-					})*/
-
 
 					if (shares.length < pr.count || countshares >= 10){
 						subloaded = true
@@ -4116,6 +4275,17 @@ var lenta = (function(){
 					_.each(shares, function(share){
 						sharesFromSub[share.txid] = share
 					})
+
+				}
+
+				var recommendations = []
+
+
+				if(essenseData.includerec && !includingsub && !self.app.platform.sdk.categories.gettags().length){
+
+					recommendations = self.app.platform.sdk.recommendations.getshares(rand(0, 3)) || []
+
+					allshares = [].concat(allshares, recommendations)
 
 				}
 
@@ -4137,7 +4307,7 @@ var lenta = (function(){
 
 						if(!error && !error2){
 
-							if(!shares || !shares.length || ((shares.length < pr.count) || recommended == 'recommended')){								
+							if(!shares || !shares.length || (shares.length < pr.count)){
 
 								if(!beginmaterial && !countshares && !includingsub){
 									el.c.addClass("sharesZero")
@@ -4145,7 +4315,8 @@ var lenta = (function(){
 								else
 								{
 		
-									if ( !essenseData.txids && (shares.length < pr.count || recommended == 'recommended') && (recommended || author || essenseData.search || essenseData.tags) ){
+									if ( !essenseData.txids && (shares.length < pr.count || recommended == 'recommended') && (recommended || author || essenseData.searchValue || essenseData.searchTags) ){
+
 		
 										setTimeout(function(){
 											if (el.c)
@@ -4157,10 +4328,15 @@ var lenta = (function(){
 								}
 
 								
-								if ((!shares.length || shares.length < pr.count) && (recommended || author || essenseData.search) && !includingsub){
+								if ((!shares.length || shares.length < pr.count) && (recommended || author || essenseData.searchValue || essenseData.searchTags) && !includingsub){
 
 									if(essenseData.ended) {
 										ended = essenseData.ended(shares)
+									}
+
+									//720 is a month depth
+									if (pr.page < 720) {
+										ended = false
 									}
 
 									else
@@ -4168,7 +4344,7 @@ var lenta = (function(){
 
 								}
 
-								if(!shares.length && !essenseData.ended && !includingsub){
+								if(!shares.length && !essenseData.ended && !includingsub && (emptyinarow >= 3 || offsetblock >= 43200 )){
 									ended = true
 								}
 									
@@ -4188,13 +4364,30 @@ var lenta = (function(){
 								})
 							}
 
-							shares.concat(bshares)
+							//shares.concat(bshares)
 
 							shares = [].concat(bshares, shares)
+
+							if(essenseData.includerec && !includingsub && !self.app.platform.sdk.categories.gettags().length){
+								shares = [].concat(recommendations, shares)
+
+								_.each(recommendations, (r) => {
+									sharesFromRecommendations[r.txid] = true
+								})
+							}
 
 							if (essenseData.filter) {
 								shares = _.filter(shares, essenseData.filter)
 							}
+
+							shares = _.uniq(shares, (s) => {
+								return s.txid
+							})
+
+							shares = _.filter(shares, (s) => {
+								return !shareInitedMap[s.txid]
+							})
+
 
 							if(!essenseData.author && self.user.address && self.user.address.value){
 
@@ -4292,7 +4485,7 @@ var lenta = (function(){
 							}
 						}
 						
-						if (essenseData.byauthor && author && !sharesInview.length && !parameters().s && !parameters().ssa){
+						if (essenseData.byauthor && author && !sharesInview.length && !(essenseData.searchValue || essenseData.searchTags)){
 
 							if (self.app.platform.sdk.accountsettings.storage[author]){
 
@@ -4382,6 +4575,12 @@ var lenta = (function(){
 								
 								else if(recommended == 'sub'){
 									loader = 'getsubscribesfeed'
+
+
+								}
+
+								else if(recommended == 'best'){
+									loader = 'best'
 								}
 
 								else if(recommended == 'hot'){
@@ -4412,7 +4611,7 @@ var lenta = (function(){
 							}
 
 
-							var count = 10
+							var count = 20
 
 							if(essenseData.txids && recommended != 'b'){
 								loader = 'txids'
@@ -4436,9 +4635,13 @@ var lenta = (function(){
 								tagsexcluded = self.app.platform.sdk.categories.gettagsexcluded()
 							}
 
-							if (essenseData.tags) tagsfilter = essenseData.tags
+							if (essenseData.searchTags) tagsfilter = essenseData.searchTags
 
 							var page = essenseData.page || parameters().page || 0
+
+							if(page === 0) {
+								offsetblock = 0
+							}
 
 							var type = null
 
@@ -4448,8 +4651,15 @@ var lenta = (function(){
 							
 
 							if(essenseData.count) count = essenseData.count
-							else if (recommended == 'recommended') count = 30
 							else if (video) count = 20
+
+
+							if(self.app.platform.sdk.user.myaccauntdeleted() && loader == 'getsubscribesfeed'){
+								ended = true
+								if(clbk) clbk()
+
+								return
+							}
 
 							if(state && essenseData.includesub && loader == 'hierarchical' && !subloaded){
 
@@ -4460,6 +4670,7 @@ var lenta = (function(){
 
 							}
 
+							var period = newsharescount ? Math.floor(60 * 20 / newsharescount) : page ? 4320 : 1440
 							//if(loader == 'hierarchical') loader = 'hierarchicaltst'
 
 							self.app.platform.sdk.node.shares[loader]({
@@ -4474,11 +4685,14 @@ var lenta = (function(){
 								type : type,
 
 								count : count,
+								offset : offsetblock,
 								page : page,
-								period : essenseData.period,
+								period : period,
 								tagsexcluded : tagsexcluded
 
 							}, function(shares, error, pr){
+
+								offsetblock = offsetblock + period
 
 								///
 
@@ -4555,7 +4769,7 @@ var lenta = (function(){
 
 		var shownewmaterials = function(c){
 
-			if(/*!beginmaterial &&*/ recommended != 'recommended' && !essenseData.author && !essenseData.search){
+			if(/*!beginmaterial &&*/ recommended != 'recommended' && !essenseData.author && !(essenseData.searchValue || essenseData.searchTags)){
 
 				var ts =  _.toArray(self.sdk.node.transactions.temp.share || {})
 
@@ -4591,6 +4805,7 @@ var lenta = (function(){
 			el.c.on('click', '.articleclick', events.openArticle)
 			el.c.on('click', '.forrepost', events.repost)
 			el.c.on('click', '.panel .pkoin', events.pkoin)
+			el.c.on('click', '.panel .boost', events.boost)
 			el.c.on('click', '.unblockbutton', events.unblock)
 			el.c.on('click', '.videoTips', events.fullScreenVideo)
 			el.c.on('click', '.videoOpen', events.fullScreenVideo)
@@ -4598,7 +4813,7 @@ var lenta = (function(){
 			el.c.on('click', '.exitFull', events.exitFullScreenVideo)
 			el.c.on('click', '.sharecnt', events.clickOutsideOfWindow)
 			el.c.on('click', '.commentsWrapperHb', events.clickOutsideOfWindow)
-			el.c.on('click', '.additional', events.additional)
+			//el.c.on('click', '.additional', events.additional)
 			el.c.on('click', '.asubscribe', events.asubscribe)
 			el.c.on('click', '.aunsubscribe', events.aunsubscribe)
 			el.c.on('click', '.notificationturn', events.subscribePrivate)
@@ -4613,7 +4828,13 @@ var lenta = (function(){
 			el.c.find('.loadprev button').on('click', events.loadprev)
 			el.c.on('click', '.gotouserprofile', events.gotouserprofile)
 
+			el.c.on('click', '.fromrecommendationslabel', events.recommendationinfo)
+
 			el.c.on('click','.openauthorwindow', events.openauthorwindow)
+
+			el.c.find('.cancelsearch').on('click', function(){
+				if(essenseData.cancelsearch) essenseData.cancelsearch()
+			})
 
 			el.c.find('.networkErrorMessage button').on('click', function(){
 
@@ -4795,6 +5016,20 @@ var lenta = (function(){
 	
 								
 								actions.destroyShare(s)
+
+								if (s.txidEdit){
+
+									if (el.share[s.txid]){
+
+										el.share[s.txidEdit] = el.share[s.txid]
+										el.share[s.txidEdit].attr('id', s.txidEdit)
+
+										delete el.share[s.txid]
+									}
+
+									s.txid = s.txidEdit
+									delete s.txidEdit 
+								}
 	
 								renders.sharesInview([s], function(){
 									
@@ -4976,7 +5211,9 @@ var lenta = (function(){
 				}
 
 				if(essenseData.author && beginmaterial){
-					el.c.addClass('showprev')
+					window.requestAnimationFrame(() => {
+						el.c.addClass('showprev')
+					})
 				}
 
 				
@@ -5000,8 +5237,10 @@ var lenta = (function(){
 
 				if (error){
 					making = false;
-					
-					el.c.addClass('networkError')
+
+					window.requestAnimationFrame(() => {
+						el.c.addClass('networkError')
+					})
 				
 					//el.c.removeClass('loading')
 
@@ -5012,7 +5251,11 @@ var lenta = (function(){
 					return;
 				}
 
-				el.c.removeClass('networkError')
+				window.requestAnimationFrame(() => {
+					if (el.c.hasClass('networkError'))
+						el.c.removeClass('networkError')
+				})
+
 
 				if(!shares){
 					making = false;
@@ -5030,6 +5273,10 @@ var lenta = (function(){
 								events.videosInview()
 							}, 50)
 							
+							_.each(shares, function(share) {
+								if (share && share.itisvideo && share.itisvideo())
+									actions.changeSavingStatusLight(share);
+							});
 
 							var p = parameters()
 
@@ -5092,7 +5339,7 @@ var lenta = (function(){
 							}*/
 
 
-							if(shares.length < 5 && essenseData.includesub && !loading && (!ended && recommended != 'recommended')){
+							if(shares.length < 5 && essenseData.includesub && !loading && (!ended && recommended != 'recommended' && recommended != 'best')){
 								actions.loadmore()
 							}
 
@@ -5172,9 +5419,6 @@ var lenta = (function(){
 
 				if (typeof essenseData.r != 'undefined' && essenseData.r != null) recommended = essenseData.r;
 
-
-				
-
 				if (essenseData.second){
 					beginmaterial = null
 				}
@@ -5202,7 +5446,7 @@ var lenta = (function(){
 						beginmaterial : beginmaterial,
 						author : essenseData.author,
 						recommended : recommended,
-						filters : essenseData.search || essenseData.tags,
+						filters : essenseData.searchValue || essenseData.searchTags,
 						ed : essenseData
 					};
 
@@ -5259,6 +5503,10 @@ var lenta = (function(){
 				delete self.app.events.delayedscroll['optimization' + mid]
 				delete self.app.events.scroll['loadmore' + mid]
 				
+				for (const txId in progressInterval) {
+					if (progressInterval[txId]) clearInterval(progressInterval[txId]);
+				}
+				loadingBars = {};
 				
 				delete self.app.errors.clbks[mid]
 
@@ -5271,15 +5519,14 @@ var lenta = (function(){
 				}
 
 				_.each(carousels, function(carousel){
-					carousel.owlCarousel('destroy')
-					carousel.empty()
+					carousel.destroy()
 				})
 
 				carousels = {}
 
 				actions.cleardelay()
 
-				actions.scrollmode(false)
+				//actions.scrollmode(false)
 
 				isotopeinited = false
 
@@ -5419,14 +5666,6 @@ var lenta = (function(){
 
 				el.share = {};
 
-				/*if (essenseData.horizontal){
-					el.c.addClass('horizontal')
-				}
-
-				if (essenseData.compact){
-					el.c.addClass('compact')
-				}*/
-
 				initEvents();
 
 				clearnewmaterials()	
@@ -5434,14 +5673,6 @@ var lenta = (function(){
 				lwidth = el.c.width()
 
 				make(null, p);
-
-				/*if(essenseData.openapi){
-					el.c.addClass('openapi')
-				}
-
-				if (video){
-					el.c.addClass('mainvideo')
-				}*/
 
 				if(!essenseData.goback) p.clbk(null, p);
 
@@ -5477,7 +5708,9 @@ var lenta = (function(){
 
 	self.stop = function(){
 		_.each(essenses, function(essense){
-			essense.destroy();
+			window.requestAnimationFrame(() => {
+				essense.destroy();
+			})
 		})
 	}
 

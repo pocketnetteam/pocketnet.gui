@@ -113,7 +113,8 @@ var Cache = function(p){
             },
 
             searchusers: {
-                time : 2000
+                time : 2000,
+                block : 0
             },
             
             // node +
@@ -188,6 +189,11 @@ var Cache = function(p){
 
             // node +
             gethotposts: {
+                time : 460,
+                block : 0
+            },
+
+            getmostcommentedfeed: {
                 time : 460,
                 block : 0
             },

@@ -599,9 +599,6 @@
                     padding-right: 0;
                 }*/
 }
-#system16 .nodescontent .node > div.name {
-  width: 120px;
-}
 #system16 .nodescontent .node > div.use {
   cursor: pointer;
 }
@@ -654,6 +651,104 @@
 }
 #system16 .nodescontent .node > div span {
   font-size: 0.9em;
+}
+#system16 .notificationcontent .caption {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgb(var(--color-txt-gray-dark));
+  margin: 0 auto;
+}
+#system16 .notificationcontent .field {
+  width: 100%;
+  padding: 1.5em 1em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+#system16 .notificationcontent .field span {
+  font-size: 0.8em;
+}
+#system16 .notificationcontent .notifications-table {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background: rgb(var(--background-secondary-theme));
+  border-radius: 6px;
+}
+#system16 .notificationcontent .notifications-users {
+  margin-bottom: 40px;
+}
+#system16 .notificationcontent .notification,
+#system16 .notificationcontent .users {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+#system16 .notificationcontent .notification .field,
+#system16 .notificationcontent .users .field {
+  border-bottom: 1px solid rgb(var(--neutral-grad-2));
+}
+#system16 .notificationcontent .notification .field .green,
+#system16 .notificationcontent .users .field .green {
+  color: green;
+}
+#system16 .notificationcontent .notification .field .red,
+#system16 .notificationcontent .users .field .red {
+  color: red;
+}
+#system16 .notificationcontent .notification .controls,
+#system16 .notificationcontent .users .controls {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-content: center;
+  width: 100%;
+}
+#system16 .notificationcontent .notification .tooltip,
+#system16 .notificationcontent .users .tooltip {
+  visibility: hidden;
+  box-sizing: border-box;
+  border: 1px solid rgba(var(--color-medium-theme));
+  text-align: center;
+  background: rgb(var(--background-secondary-theme));
+  padding: 5px;
+  border-radius: 3px;
+  position: absolute;
+  z-index: 1;
+  top: -5px;
+  right: 155%;
+}
+#system16 .notificationcontent .notification .tooltip::after,
+#system16 .notificationcontent .users .tooltip::after {
+  content: " ";
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  margin-top: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent transparent rgba(var(--color-medium-theme));
+}
+#system16 .notificationcontent .notification .button,
+#system16 .notificationcontent .users .button {
+  position: relative;
+  cursor: pointer;
+}
+#system16 .notificationcontent .notification .button:hover .tooltip,
+#system16 .notificationcontent .users .button:hover .tooltip {
+  visibility: visible;
+}
+#system16 .notificationcontent .notification i,
+#system16 .notificationcontent .users i,
+#system16 .notificationcontent .notification span,
+#system16 .notificationcontent .users span {
+  font-size: 0.8em;
+}
+#system16 .notificationcontent .users .field {
+  font-size: 10px;
+  white-space: normal;
+  text-overflow: unset;
 }
 #system16 .peertubecontent .peertubeWrapper {
   border-bottom: 1px solid rgb(var(--neutral-grad-2));

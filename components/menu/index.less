@@ -30,8 +30,10 @@
 		position: fixed;
 		left: 0;
 		right: 0;
-		top: 0;
-		height: 65px;
+		top : 0;
+		min-height: 65px;
+		height: calc(65px + var(--app-margin-top));
+		padding-top: var(--app-margin-top);
 		z-index: 20;
 		contain: strict;
 		background: rgb(var(--background-total-theme));
@@ -211,8 +213,12 @@
 		flex-wrap: nowrap;
 		justify-content: space-between;
 
+		.mobileUpperLeft, .mobileUpperRight{
+			display: none;
+		}
+
 		.section{
-			
+			min-height: 65px;
 			height: 100%;
 			padding: 0 2 * @rhythm;
 			display: flex;
@@ -222,6 +228,7 @@
 
 			&.right{
 				padding-right: 0;
+				min-width: 200px;
 			}
 
 			&.centerpart{
@@ -264,6 +271,8 @@
 				display: flex;
 				align-items: center;
 				justify-content: center;
+				position: relative;
+				z-index: 999;
 				color : rgb(var(--neutral-grad-1));
 				box-sizing: border-box;
 				padding: 0 @rhythm;
@@ -274,6 +283,14 @@
 					&:hover{
 						color : rgb(var(--color-txt-gray));
 					}
+				}
+
+				&.control-left{
+					padding-right: @rhythm * 3;
+				}
+
+				&.control-right{
+					padding-left: @rhythm * 3;
 				}
 			}
 			
@@ -400,11 +417,23 @@
 
 					.icon{
 						padding: @rhythm;
+
+						.icn{
+							display: flex;
+
+							img{
+								height: 18px;
+							}
+						}
 					}
 
 					.count{
 						color: rgb(var(--color-bg-ac-2));	
 					}
+				}
+
+				.icon .icn img{
+					height: 18px;					
 				}
 
 
@@ -597,6 +626,10 @@
 					cursor: pointer;
 					.transition(0.3s);
 
+					.numberWrp{
+						position: relative;
+					}
+
 					.icon{
 						width: 30px;
 						opacity: 0;
@@ -671,11 +704,14 @@
 		}
 
 		.results{
-			padding :  @rhythm 0;
+			padding : @rhythm 0;
+
+			.result{
+				padding : @rhythm 0;
+			}
 		}
 
 		.user{
-			padding : 0 @rhythm;
 			cursor: pointer;
 			.transition(0.3s);
 			
@@ -685,14 +721,14 @@
 		}
 
 		.stringresult{
-			padding : 2 * @rhythm @rhythm;
+			//padding : 2 * @rhythm @rhythm;
 		}
 
 		.searchbywrapper{
-			padding : 2 * @rhythm @rhythm;
+			//padding : 2 * @rhythm @rhythm;
 
 			&.small{
-				padding : 0 @rhythm;
+				//padding : 0 @rhythm;
 			}
 
 			.caption{
@@ -708,19 +744,21 @@
 				.swrp{
 					width: 100%;
 					cursor: pointer;
+					display: flex;
+					align-items: center;
+					padding : 2 * @rhythm 0;
 					>div{
 						color : rgba(var(--color-txt-gray-dark), 0.8); 
 						.transition(0.3s);
 
 						&.rsicon{
-							width: 33px;
+							width: 44px;
 							text-align: center;
 							font-size: 0.8em;
 						}
 	
 						&.label{
 							text-align: left;
-							padding-left: @rhythm;
 						}
 					}
 
@@ -739,23 +777,13 @@
 				padding :0;
 				vertical-align: middle;
 
-				&.iconWrapper{
-					width: 33px;
-					padding : @rhythm 0;
-				}
-
-				&.label{
-					padding-left: @rhythm;
-				}
-
 				.usericon{
-					width: 33px;
-					height: 33px;
+					width: 44px;
+					height: 44px;
 
 					.letter{
 						font-size: 1em;
-						top: -4px;
-						position: relative		
+						line-height: 44px;
 					}
 				}
 			}
@@ -782,6 +810,10 @@
 	.postssearch{
 		height: 100%;
 		width: 100%;
+
+		.christmas_search{
+			height: 16px;
+		}
 
 		.searchInputIcon,
 		.searchInput,
@@ -837,18 +869,40 @@
 			border : 0;
 		}
 
+		.searchInputWrapper{
+			position: relative;
+			z-index: 1;
+		}
+
 		
 		.searchIconLabel{
+			position: relative;
+			z-index: 1;
 			width: 38px;
 			-webkit-transition: none;
 			transition: none;
 		}
 
 		.searchPanel{
+			position: relative;
+			z-index: 1;
 			width: 4 * @rhythm;
 			font-size: 0.8em;
-			text-align: center;
-			
+			text-align: center;			
+		}
+
+		.christmasBranchLeft{
+			position: absolute;
+			height: 52px;
+			bottom: -10px;
+			left: -35px;
+		}
+
+		.christmasBranchRight{
+			position: absolute;
+			bottom: -10px;
+			right: -21px;
+			height: 52px;
 		}
 		
 	}
@@ -893,6 +947,7 @@
 			padding : 0  2 * @rhythm;
 			padding-right: 0;
 
+			
 			.section{
 				padding: 0;
 				width: auto;
@@ -902,6 +957,7 @@
 				}
 
 				&.right{
+					min-width: 0;
 					padding-right: 0;
 				}
 
@@ -962,6 +1018,29 @@
 							font-size: 0.9em;
 						}
 					}
+				}
+			}
+
+			.mobileUpperLeft{
+				display: block;
+				position: absolute;
+				left: -20px;
+				top: -6px;
+
+				.christmasBranch{
+					height: 40px;
+				}
+			}
+
+			.mobileUpperRight{
+				display: block;
+				position: absolute;
+				right: -22px;
+				top: 23px;
+				rotate: 35deg;
+				
+				.christmasBranch{
+					height: 40px;
 				}
 			}
 		}
@@ -1038,6 +1117,7 @@
 							width: 40px;
 						}
 
+
 						.searchPanel{
 							width: 40px;
 
@@ -1065,7 +1145,7 @@
 			font-size: 1.2em;
 		}*/
 
-		&.searchactive{
+		/*&.searchactive{
 
 			.sections{
 				padding : 0;
@@ -1110,14 +1190,15 @@
 					}
 				}
 			}
-		}
+		}*/
 	}
 
 	html.allcontent{
 		#menu{
 			.menuWrapper {
+				backdrop-filter: blur(2px);
+                -webkit-backdrop-filter: blur(2px);  
 				background: transparent;
-
 				.searchIconLabel i,
 				.icon i{
 					color : rgba(var(--color-bg-ac-bright), 0.9);
@@ -1128,6 +1209,12 @@
 					display: none;
 				}
 		
+			}
+
+			.mobsearch{
+				i{
+					color : rgba(var(--color-bg-ac-bright), 0.9);
+				}
 			}
 
 			//.centerpart,

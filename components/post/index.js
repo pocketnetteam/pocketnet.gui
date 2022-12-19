@@ -15,17 +15,25 @@ var post = (function () {
 
 		var el = {}, share, ed = {}, recommendationsenabled = false, inicomments, eid = '', _repost = null, level = 0, external = null, recommendations = null;
 
+		var progressInterval;
+
 		var player = null
 
 		var authblock = false;
 
 		var actions = {
 
-			pkoin : function(id){
+			pkoin : function(format){
+
+				var type = format === 'liftUpThePost' ? 'boost' : 'pkoin';
 
 				if (share){
 
 					actions.stateAction(function(){
+
+						if(self.app.platform.sdk.user.myaccauntdeleted()){
+							return
+						}
 
 						self.app.platform.sdk.node.transactions.get.balance(function(amount){
 
@@ -44,7 +52,9 @@ var post = (function () {
 			
 								essenseData : {
 									userinfo: userinfo,
-									id : share.txid
+									id : share.txid,
+									format : format,
+									type : type
 								}
 							})
 	
@@ -81,7 +91,34 @@ var post = (function () {
 			changeSavingStatusLight : function(share){
 
 				if (el.c){
-					el.c.find('.shareSave').attr('status', self.app.platform.sdk.localshares.status(share.txid))
+					const status = self.app.platform.sdk.localshares.status(share.txid);
+					const isSaving = (status === 'saving');
+
+					const shareSaveElem = el.c.find('.shareSave');
+
+					if (isSaving) {
+						const loadingBarHolderElem = el.c.find('.loadingBar');
+						const loadingBarElem = el.c.find('.loading-bar');
+
+						if (!loadingBarElem || loadingBarElem.length <= 0)
+							return;
+						const lb = new LoadingBar(loadingBarElem[0]);
+						if (progressInterval) clearInterval(progressInterval);
+						// Watch progress and update progress bar
+						progressInterval = setInterval(async function() {
+							const progress = await self.app.platform.sdk.localshares.videoDlProgress(share.txid);
+							if (progress != undefined && progress.progress >= 1)
+								clearInterval(progressInterval);
+							if (progress != undefined && !isNaN(progress.progress))
+								lb.setValue(progress.progress * 100);
+						}, 500);
+
+						loadingBarHolderElem.removeAttr('hidden');
+						shareSaveElem.attr('hidden', '');
+						return;
+					}
+
+					shareSaveElem.attr('status', status);
 				}
 
 			},
@@ -443,9 +480,7 @@ var post = (function () {
 							self.sdk.videos.save()
 						},
 
-						fullscreenchange : function(v){
-							self.app.mobile.fullscreenmode(v)
-						},
+						fullscreenchange : self.app.mobile.fullscreenmode,
 
 						play : function(){
 
@@ -453,7 +488,7 @@ var post = (function () {
 								self.app.actions.playingvideo(player)
 
 							if(isMobile() && !ed.repost && !el.c.closest('.wndcontent').length && !ed.openapi){
-								self.app.actions.scroll(125)
+								self.app.actions.scroll(70)
 							}
 						},
 
@@ -481,6 +516,11 @@ var post = (function () {
 							duration
 						}){
 
+							//// interest score later
+
+							if (duration > 0 && playbackState == 'playing') 
+								self.app.platform.sdk.memtags.add(share.tags, null, 0.500 / duration)
+
 							if(playbackState == 'playing' && ((position > 15 && duration > 120) || startTime)){
 
 								self.app.platform.sdk.videos.historyset(share.txid, {
@@ -488,10 +528,18 @@ var post = (function () {
 									percent : ((position/duration) * 100).toFixed(0)
 								})
 
+								self.app.platform.sdk.activity.adduser('video', share.address, 6 * position / duration)
+								
+								return
+							}
+
+							if(playbackState == 'playing' && duration < 120 && position / duration > 0.2){
+								self.app.platform.sdk.activity.adduser('video', share.address, 6 * position / duration)
+								
 							}
 						},
 
-						hlsError : function(error){
+						error : function(error){
 							const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection || {};
 							const payload = {
 								...error,
@@ -664,6 +712,10 @@ var post = (function () {
 
 								if (clbk)
 									clbk(true)
+
+								self.app.platform.sdk.memtags.add(share.tags, 'l_' + share.txid, (value - 3) / 2)
+								self.app.platform.sdk.recommendations.successRecommendation(share)
+
 							}
 
 						}
@@ -851,9 +903,13 @@ var post = (function () {
 
 			pkoin : function(){
 
-				var shareId = $(this).closest('.share').attr('id');
+				actions.pkoin('sendToAuthor')
 
-				actions.pkoin(shareId)
+			},
+
+			boost : function(){
+
+				actions.pkoin('liftUpThePost')
 
 			},
 
@@ -966,8 +1022,10 @@ var post = (function () {
 					var p = $(this).closest('.stars');
 
 					if (p.attr('value')) {
+						return
+					}
 
-
+					if(self.app.platform.sdk.user.myaccauntdeleted()){
 						return
 					}
 
@@ -1112,7 +1170,7 @@ var post = (function () {
 									init: ed.fromempty || false,
 									preview: true,
 									listpreview : false,
-
+									receiver: share.address,
 									fromtop: !ed.fromempty,
 									fromempty: ed.fromempty,
 									lastComment: ed.fromempty ? share.lastComment : null,
@@ -1166,149 +1224,155 @@ var post = (function () {
 				var _el = el.c.find('.postcontent .image');
 				var images = el.c.find('.postcontent .images');
 
-				if (images.hasClass('active') || !_el.length || !images.length) {
-					if (clbk) clbk();
-				} else {
+
+					if (images.hasClass('active') || !_el.length || !images.length) {
+						if (clbk) clbk();
+					} else {
 
 
-					_el.imagesLoadedPN({ imageAttr: true, debug : true }, function (image) {
+						_el.imagesLoadedPN({ imageAttr: true, debug : true }, function (image) {
 
 
-						if (share.settings.v != 'a') {
+							if (share.settings.v != 'a') {
 
-							if((isMobile() || ed.repost) && image.images.length > 1){
+								if((isMobile() || ed.repost) && image.images.length > 1){
 
-								var aspectRatio = 0
+									
+									_.each(image.images, function(img, n){
+										var _img = img.img;
+
+										var el = $(image.elements[n]).closest('.imagesWrapper');
+
+										var aspectRatio = _img.naturalHeight / _img.naturalWidth
+
+										if(aspectRatio > 1.66) aspectRatio = 1.66
+
+
+										el.height( Math.min( 400, images.width() || self.app.width) * aspectRatio)
+									})
+
 								
-								_.each(image.images, function(img){
-									var _img = img.img;
-
-									var _aspectRatio = _img.naturalHeight / _img.naturalWidth
-
-									if(_aspectRatio > aspectRatio) aspectRatio = _aspectRatio
-								})
-
-								if (aspectRatio){
-
-									if(aspectRatio > 1.66) aspectRatio = 1.66
-
-									images.find('.imagesWrapper').height( Math.min( 400, images.width() )* aspectRatio)
 								}
-								
-							}
-							else{
+								else{
 
-								var imageswidth = images.width()
+									var imageswidth = images.width()
 
-								_.each(image.images, function(img, n){
+									_.each(image.images, function(img, n){
 
-									var _img = img.img;
-									var el = $(image.elements[n]).closest('.imagesWrapper');
+										var _img = img.img;
+										var el = $(image.elements[n]).closest('.imagesWrapper');
 
-									var ac = '';
+										var ac = '';
 
-									/*var _w = imagesWrapperWidth;
-									var _h = imagesWrapperHeight*/
+										/*var _w = imagesWrapperWidth;
+										var _h = imagesWrapperHeight*/
 
-									var _w = el.width();
-									var _h = el.height()
+										var _w = el.width();
+										var _h = el.height()
 
-									if(_img.width >= _img.height && (!isMobile() && self.app.width > 768 && !ed.openapi)){
-										ac = 'w2'
+										if(_img.width >= _img.height && (!isMobile() && self.app.width > 768 && !ed.openapi)){
+											ac = 'w2'
 
-										var w = _w * (_img.width / _img.height);
+											var w = _w * (_img.width / _img.height);
 
-										if (w > imageswidth){
-											w = imageswidth
+											if (w > imageswidth){
+												w = imageswidth
 
-											h = w * ( _img.height / _img.width) 
+												h = w * ( _img.height / _img.width) 
 
-											el.height(h);
+												el.height(h);
+											}
+
+											el.width(w);
 										}
 
-										el.width(w);
-									}
+										if(_img.height >= _img.width || (isMobile() || self.app.width <= 768 || ed.openapi)){
+											ac = 'h2'
 
-									if(_img.height >= _img.width || (isMobile() || self.app.width <= 768 || ed.openapi)){
-										ac = 'h2'
+											el.height(_w * (_img.height / _img.width))
+										}
 
-										el.height(_w * (_img.height / _img.width))
-									}
+										if(ac){
+											el.addClass(ac)
+										}
+										
+									})
 
-									if(ac){
-										el.addClass(ac)
-									}
+
+								}
+
+							}
+
+							var isclbk = function(){
+
+
+								
+								images.addClass('active');
+
+								_el.addClass('active');
+
+								if (clbk) clbk();
+							}
+
+
+							if(share.settings.v != 'a' && image.images.length > 1){
+
+								var gutter = 5;
+
+								if (isMobile() || ed.repost) {
+
+
+									new carousel(images, '.imagesWrapper', '.imagesContainer')
+
+									/*images.find('.imagesContainer').owlCarousel({
+										items: 1,
+										dots: true,
+										nav: !isMobile(),
+										navText: [
+											'<i class="fas fa-chevron-left"></i> ',
+											'<i class="fas fa-chevron-right"></i>'
+											]
 									
-								})
+									});*/
 
-
-							}
-
-						}
-
-						var isclbk = function(){
-
-
-							
-							images.addClass('active');
-
-							_el.addClass('active');
-
-							if (clbk) clbk();
-						}
-
-						if(share.settings.v != 'a' && image.images.length > 1){
-
-							var gutter = 5;
-
-							if (isMobile() || ed.repost) {
-
-								images.find('.imagesContainer').owlCarousel({
-									items: 1,
-									dots: true,
-									nav: !isMobile(),
-									navText: [
-										'<i class="fas fa-chevron-left"></i> ',
-										'<i class="fas fa-chevron-right"></i>'
-										]
-								  
-								});
-
-								isclbk()
-
-							}
-							else{
-								images.isotope({
-
-									layoutMode: 'packery',
-									itemSelector: '.imagesWrapper',
-									packery: {
-										gutter: gutter
-									},
-									initLayout: false
-								});
-	
-								images.on('arrangeComplete', function(){
 									isclbk()
-								});
-	
-								images.isotope()
+
+								}
+								else{
+									images.addClass('manyImagesView')
+									isclbk()
+									/*images.isotope({
+
+										layoutMode: 'packery',
+										itemSelector: '.imagesWrapper',
+										packery: {
+											gutter: gutter
+										},
+										initLayout: false
+									});
+		
+									images.on('arrangeComplete', function(){
+										isclbk()
+									});
+		
+									images.isotope()*/
+								}
+
+								
+
+								
+							}
+							else
+							{
+								isclbk()
 							}
 
 							
-
-							
-						}
-						else
-						{
-							isclbk()
-						}
-
-						
-					}, self.app);
+						}, self.app);
 
 
-				}
+					}
+
 			},
 			share: function (clbk) {
 
@@ -1340,6 +1404,7 @@ var post = (function () {
 
 						el.stars = el.share.find('.forstars');
 
+						_p.el.find('.boost').on('click', events.boost)
 						_p.el.find('.pkoin').on('click', events.pkoin)
 						_p.el.find('.gotouserprofile').on('click', events.gotouserprofile)
 
@@ -1685,6 +1750,8 @@ var post = (function () {
 						self.closeContainer()
 					},
 
+					startload: true,
+
 					el : p.inWnd ? el.c.closest('.wndcontent') : null
 					
 				}, function(e, p){
@@ -1848,7 +1915,10 @@ var post = (function () {
 						renders.comments(function () {
 						})
 
-						if (share.itisvideo() && !ed.repost && !p.pip && recommendationsenabled) {
+						if (share.itisvideo())
+							actions.changeSavingStatusLight(share);
+
+						if (share.itisvideo() && !ed.repost && !p.pip && recommendationsenabled && !_OpenApi && !ed.openapi) {
 
 							renders.recommendations();
 
@@ -1918,20 +1988,7 @@ var post = (function () {
 
 
 					if (!share) {
-
 						share = self.app.platform.sdk.node.shares.getWithTemp(id) 
-
-						/*var temp = _.find(self.sdk.node.transactions.temp.share, function (s) {
-							return s.txid == id
-						})
-
-						if (temp) {
-							share = new pShare();
-							share._import(temp, true);
-							share.temp = true;
-							share.address = self.app.platform.sdk.address.pnet().address
-						}*/
-
 					}
 
 					if (share) {
@@ -1983,6 +2040,8 @@ var post = (function () {
 					recommendations.destroy()
 					recommendations = null
 				}
+
+				if (progressInterval) clearInterval(progressInterval);
 
 				self.app.actions.playingvideo(null)
 				
@@ -2111,8 +2170,11 @@ var post = (function () {
 
 		_.each(essenses, function (essense) {
 
-			if(!essense.pip)
-				essense.destroy();
+			if(!essense.pip){
+				window.requestAnimationFrame(() => {
+					essense.destroy();
+				})
+			}
 
 		})
 

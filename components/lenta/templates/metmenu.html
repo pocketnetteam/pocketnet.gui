@@ -100,7 +100,25 @@ var all = {
 		icon : '<i class="fas fa-cubes"></i>',
 		text : 'HTLC BUY TEST',
 		class : 'htls'
-	}
+	},
+
+	savePost : {
+		icon : '<i class="fas fa-download"></i>',
+		text : e('savePost'),
+		class : 'savePost'
+	},
+
+	deleteSavedPost : {
+		icon : '<i class="fas fa-trash"></i>',
+		text : e('deleteSavedPost'),
+		class : 'deleteSavedPost'
+	},
+
+	recommendationinfo : {
+		icon : '<i class="fas fa-info-circle"></i>',
+		text : e('recommendations_menu_caption'),
+		class : 'recommendationinfo'
+	},
 
 }
 
@@ -116,22 +134,29 @@ if(share){
 
 		m.push('shareBareVideoLink');
 
-		if(app.platform.sdk.localshares.getShare(share.txid)){
-			m.unshift('deleteSavedVideo');
+	}
+
+	if (app.savesupported() || app.savesupportedForBrowser()) {
+
+		if (app.platform.sdk.localshares.getShare(share.txid)){
+			m.unshift('deleteSavedPost');
 		}
 		else{
-			m.unshift('downloadVideo');
+			m.unshift('savePost');
 		}
 
 	}
 
 	m.push('opennewwindow');
 
-	if(share.address && user.address.value){
+	
+
+	if(share.address && user.address.value && (typeof app.platform.sdk.user.myaccauntdeleted == 'undefined' || !app.platform.sdk.user.myaccauntdeleted())){
 		
 		var my = (user.address.value && share.address == user.address.value.toString('hex'))
 		var subscribed = '';
 		var me = deep(app, 'platform.sdk.users.storage.' + user.address.value.toString('hex'))
+
 		if (my){
 
 			if (share.pin){
@@ -159,9 +184,15 @@ if(share){
 			if(true){
 				m.push('complain')
 			}
+
 			if(app.platform.matrixchat.core){
 				m.push('startchat')
 			}
+
+			if(app.platform.sdk.recommendations.sharesinfo && app.platform.sdk.recommendations.sharesinfo[share.txid]){
+				m.push('recommendationinfo')
+			}
+
 
 			/*m.push('donation')*/
 			/*m.push('htls')*/

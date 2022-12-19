@@ -76,7 +76,7 @@ var mapJsPath = './js/_map.js';
 console.log("run")
 console.log(args)
 
-var tpls = ['embedVideo.php', 'index_el.html', 'index.html', 'index.php', 'indexcordova.html', 'config.xml', 'openapi.html', /*'.htaccess',*/ 'service-worker.js', 'manifest.json', 'main.js']
+var tpls = ['embedVideo.php', 'index_el.html', 'index.html', 'index.php', 'indexcordova.html', {name : 'config.xml', underscoreTemplate : true}, 'openapi.html', /*'.htaccess',*/ 'service-worker.js', 'manifest.json', 'main.js']
 
 var tplspath = {
 
@@ -85,13 +85,21 @@ var tplspath = {
 var _meta = {
 	Pocketnet : {
 		url : "pocketnet.app",
-		turl : "test.pocketnet.app"
+		turl : "test.pocketnet.app",
+		name : 'Pocketnet'
 	},
 
 	Bastyon : {
 		url : "bastyon.com",
-		turl : "test.pocketnet.app"
-	}
+		turl : "test.pocketnet.app",
+		name : 'Bastyon'
+	},
+
+	BastyonPapp: {
+		url : "bastyon.com",
+		turl : "test.pocketnet.app",
+		name : 'Bastyon'
+	},
 }
 
 var vars = {
@@ -101,7 +109,9 @@ var vars = {
 		test : '<script>window.testpocketnet = true;</script>',
 		globaltest : 'global.TESTPOCKETNET = true;',
 		path : args.path,
-		project : args.project
+		project : args.project,
+		store : args.store || false,
+		name : _meta[args.project].name
 	},
 	prod : {
 		proxypath : '"https://pocketnet.app:8899/"',
@@ -109,19 +119,25 @@ var vars = {
 		test : '',
 		globaltest : '',
 		path : args.path,
-		project : args.project
+		project : args.project,
+		store : args.store || false,
+		name : _meta[args.project].name
+
 	}
 }
 
 
 var VARS = args.test ? vars.test : vars.prod
 
+console.log('VARS', VARS)
+
+
 var babelifycode = function(code){
 	var c = bablecore.transformSync(code, {
 		presets: [
 			"@babel/preset-env"
 		],
-			plugins: ["remove-use-strict"]
+		plugins: ["remove-use-strict"]
 	});
 	return c.code
 	
@@ -175,7 +191,35 @@ fs.exists(mapJsPath, function (exists) {
 
 		var cordova = {
 			path : './cordova/www',
-			copy : ['chat', 'components', 'css', 'images', 'img', 'js', 'localization', 'peertube', 'res', 'sounds', 'browserconfig.xml', 'crossdomain.xml', 'favicon.svg', 'indexcordova.html']
+			filter : function(component, name){
+				if(name.indexOf('.map') > -1) return false
+
+				if(component == 'peertube'){
+
+					if(name.indexOf('peertube') > -1) return true
+
+					if(name.indexOf('.html') > -1 || name.indexOf('.txt') > -1) return false
+
+					if(name.indexOf('.js') > -1 || name.indexOf('.css') > -1) return true
+
+					return false
+				}
+
+				if(component == 'chat'){
+					if(name.indexOf('.js') > -1 && name.indexOf('.min') == -1) return false
+
+					return true
+				}
+
+				if(component == 'css'){
+					if(name.indexOf('.less') > -1) return false
+
+					return true
+				}
+
+				return true
+			},
+			copy : ['chat', 'components', 'css', 'images', 'img', 'js', 'localization', 'peertube', 'sounds', 'browserconfig.xml', 'crossdomain.xml', 'favicon.svg', 'favicon.ico', 'indexcordova.html']
 		}
 
 		var cordovaconfig = {
@@ -185,7 +229,7 @@ fs.exists(mapJsPath, function (exists) {
 
 		var cordovaiosfast = {
 			path : './cordova/platforms/ios/www',
-			copy : ['chat', 'components', 'css', 'images', 'img', 'js', 'localization', 'peertube', 'res', 'sounds', 'browserconfig.xml', 'crossdomain.xml', 'favicon.svg', 'indexcordova.html']
+			copy : ['chat', 'components', 'css', 'images', 'img', 'js', 'localization', 'peertube', 'sounds', 'browserconfig.xml', 'crossdomain.xml', 'favicon.svg', 'favicon.ico', 'indexcordova.html']
 		}
 
 
@@ -804,6 +848,14 @@ fs.exists(mapJsPath, function (exists) {
 
 		var createTemplatedFile = function(tplname){
 			/*WORK WITH INDEX*/
+
+			var options = {}
+
+			if(_.isObject(tplname)) {
+				options = tplname
+				tplname = tplname.name
+			}
+
 			var pth = './tpls/' + tplname + '.tpl'
 
 			console.log("CREATING TEMPLATE: ", tplname)
@@ -826,23 +878,29 @@ fs.exists(mapJsPath, function (exists) {
 							var CACHED_FILES = "";
 	
 							if(args.test){
-								JSENV += '<script>window.testpocketnet = true;</script>';
+								JSENV += '<script>window.testpocketnet = true;</script>\n';
 							}
 
 							if(args.path){
-								JSENV += '<script>window.pocketnetpublicpath = "'+args.path+'";</script>';
+								JSENV += '<script>window.pocketnetpublicpath = "'+args.path+'";</script>\n';
 							}
 
 							if(VARS.domain){
-								JSENV += '<script>window.pocketnetdomain = "' + VARS.domain + '";</script>';
+								JSENV += '<script>window.pocketnetdomain = "' + VARS.domain + '";</script>\n';
 							}
 
 							if(VARS.project){
-								JSENV += '<script>window.pocketnetproject = "' + VARS.project + '";</script>';
+								JSENV += '<script>window.pocketnetproject = "' + VARS.project + '";</script>\n';
 							}
 
-							JSENV += '<script>window.packageversion = "' + package.version + '";</script>';
-							JSENV += '<script>window.versionsuffix = "' + package.versionsuffix + '";</script>';
+							if(VARS.store){
+								JSENV += '<script>window.pocketnetstore = ' + VARS.store + ';</script>\n';
+							}
+							
+
+							JSENV += '<script>window.packageversion = "' + package.version + '";</script>\n';
+							JSENV += '<script>window.versionsuffix = "' + package.versionsuffix + '";</script>\n';
+
 
 							vs = numfromreleasestring(package.version) + '_' + (package.versionsuffix || "0")
 	
@@ -862,7 +920,7 @@ fs.exists(mapJsPath, function (exists) {
 							{
 	
 
-								JSENV += '<script>window.design = true;</script>';
+								JSENV += '<script>window.design = true;</script>\n';
 
 								_.each(m.__sourcesfirst, function(source){
 
@@ -930,6 +988,12 @@ fs.exists(mapJsPath, function (exists) {
 							_.each(VARS, function(v, i){
 								index = index.replaceAll("__VAR__." + i, v);
 							})
+
+							if(options.underscoreTemplate){
+								var t = _.template(index)
+
+								index = t(VARS)
+							}
 	
 							fs.writeFile('./' + tplname, index, function(err) {
 
@@ -1030,6 +1094,8 @@ var helpers = {
 
 var copycontent = function(options, clbk, nac) {
 
+	if(!options) options = {}
+
 	var ac = function(){
 		lazyEach({
 			sync : true,
@@ -1037,7 +1103,14 @@ var copycontent = function(options, clbk, nac) {
 			action : function(p){
 				ncp(p.item, options.path + '/' + p.item, {
 					filter : function(name){
+
+
+						if(options.filter){
+							return options.filter(p.item, name)
+						}
+						else
 						return name.indexOf('.map') == -1
+
 					},
 				}, function (err) {
 					if (err) {

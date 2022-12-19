@@ -332,6 +332,7 @@
     var url = elem.getAttribute('image'), self = this
 
     if (url) url == '*' ? url = elem.getAttribute('data-image') : elem.setAttribute('data-image', url)
+
     if(!url) {
       elem.setAttribute('imageloaded', 'true')
       return
@@ -391,6 +392,7 @@
     this.progressedCount = 0;
     this.hasAnyBroken = false;
     // complete if no images
+
     if ( !this.images.length ) {
       this.complete();
       return;

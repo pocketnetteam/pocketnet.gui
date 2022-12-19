@@ -40,7 +40,7 @@ var main = (function(){
 				label : () => self.app.localization.e('e13137'),
 				value : 'sub',
 				if : function(){
-					return self.app.user.getstate()
+					return self.app.user.getstate() && !self.app.platform.sdk.user.myaccauntdeleted()
 				}
 			},
 			
@@ -57,17 +57,22 @@ var main = (function(){
 
 			{
 				link : "index?r=saved",
-				label : () => self.app.localization.e('downloaded'),
+				label : () => self.app.localization.e('saved'),
 				if : function(){
-					return self.app.savesupported()
+					return self.app.savesupported() || self.app.savesupportedForBrowser()
 				},
 				value : 'saved'
 			},
 
 			{
 				link : "index?r=recommended",
-				label : () => self.app.localization.e('e13138'),
+				label : () => self.app.localization.e('discussed'),
 				value : 'recommended'
+			},
+			{
+				link : "index?r=best",
+				label : () => self.app.localization.e('e13138'),
+				value : 'best'
 			},
 		]
 		
@@ -99,12 +104,14 @@ var main = (function(){
 		
 					recommended : "index?r=recommended",
 
+					best : "index?r=best",
+
 					video : "index?video=1",
 
 					read : "index?read=1"
 				}
 
-				if (window.cordova) {
+				if (self.app.savesupported() || self.app.savesupportedForBrowser()) {
 					links.saved = "index?r=saved"
 				}
 
@@ -113,7 +120,7 @@ var main = (function(){
 				var value = _.find(_modes, (m) => m.value == r)
 
 				return {
-					value : value.value,
+					value : value ? value.value : null,
 					modes : _modes
 				};
 
@@ -399,7 +406,7 @@ var main = (function(){
 			addpanel : function(){
 
 				self.app.user.isState(function(state){
-					if(state){
+					if(state && el.addbutton){
 
 						if(state && !isMobile()){
 							el.addbutton.addClass('active')
@@ -416,9 +423,9 @@ var main = (function(){
 			
 			share : function(){
 
-				if (!isMobile() && !videomain && !readmain && !searchvalue && !searchtags){
+				if (!isMobile() && !videomain && !readmain && !searchvalue && !searchtags && !app.platform.sdk.user.myaccauntdeleted()){
 
-					el.c.removeClass('wshar')
+					//el.c.removeClass('wshar')
 
 					self.nav.api.load({
 
@@ -447,7 +454,7 @@ var main = (function(){
 					})
 					
 				}else{
-					el.c.addClass('wshar')
+					//el.c.addClass('wshar')
 				}
 			},
 
@@ -456,8 +463,9 @@ var main = (function(){
 				if(!el.topvideos) return
 				
 				if (show){
-
-					el.topvideos.removeClass('hidden')
+					window.requestAnimationFrame(() => {
+						el.topvideos.removeClass('hidden')
+					})
 
 					if (external) {
 						external.clearessense()
@@ -472,7 +480,7 @@ var main = (function(){
 						caption : self.app.localization.e("Top videos") ,
 						video: true,
 						r : 'hot',
-						loaderkey : 'recommended',
+						loaderkey : 'best',
 						shuffle : true,
 						period : '4320',
 						page : 0,
@@ -513,8 +521,10 @@ var main = (function(){
 					}
 
 					if(el.topvideos){
-						el.topvideos.find('.wrpcn').html('')
-						el.topvideos.addClass('hidden')
+						window.requestAnimationFrame(() => {
+							el.topvideos.find('.wrpcn').html('')
+							el.topvideos.addClass('hidden')
+						})
 					}
 					
 				}
@@ -523,35 +533,43 @@ var main = (function(){
 			},
 
 			leftpanel: function(){
+				if (leftpanel && leftpanel.update){
+					leftpanel.update()
+				}
+				else{
+					self.nav.api.load({
 
-				self.nav.api.load({
-
-					open : true,
-					id : 'leftpanel',
-					el : el.leftpanel,
-					animation : false,
-
-					essenseData : {
-					
-						renderclbk : function(){
-							actions.refreshSticky(true)
+						open : true,
+						id : 'leftpanel',
+						el : el.leftpanel,
+						animation : false,
+	
+						essenseData : {
+						
+							renderclbk : function(){
+								actions.refreshSticky(true)
+							},
+	
+							changed : function(){
+								renders.lentawithsearch()
+							},
+	
+							close : function(){
+								showCategories(false)
+							}
 						},
-
-						changed : function(){
-							renders.lentawithsearch()
-						},
-
-						close : function(){
-							showCategories(false)
+						clbk : function(e, p){
+	
+							leftpanel = p;
+	
 						}
-					},
-					clbk : function(e, p){
+	
+					})
+				}
+				
+					
 
-						leftpanel = p;
-
-					}
-
-				})
+				
 			},
 
 			panel : function(){
@@ -583,57 +601,42 @@ var main = (function(){
 
 			lentawithsearch : function(clbk, p){
 
-				if(searchvalue){
+				if(searchvalue || searchtags){
+					if (searchvalue){
+						self.app.platform.sdk.activity.addsearch(searchvalue)
 
-					var value = searchvalue.replace('tag:', "#");
+						self.app.platform.sdk.search.get(searchvalue, 'posts', 0, 10, null, function(r, block){
 
-					var c = deep(self, 'app.modules.menu.module.showsearch')
+							fixedBlock = block
+	
+							result = {
+								posts : r
+							};
+	
+							renders.lenta(clbk, p)
+						})
 
-					if (c)
-
-						c(value)
-
-					self.app.platform.sdk.search.get(searchvalue, 'posts', 0, 10, null, function(r, block){
-
-						if (r.count){
-							self.app.platform.sdk.activity.addsearch(searchvalue)
-						}
-
-						fixedBlock = block
-
-						result = {
-							posts : r
-						};
-
-						renders.lenta(clbk, p)
-					})
-
-				}
-				else{
-					result = {}
-					fixedBlock = null
-
-					var c = deep(self, 'app.modules.menu.module.showsearch')
-
-					if (c){
-
-						if(searchtags){
-
-							var val = _.map(searchtags, function(w){return '#' + w}).join(' ')
-
-							c(val)
-
-							self.app.platform.sdk.activity.addtagsearch(val)
-
-						}
-						else{
-							c('')
-						}
-
+						return
 					}
 
-					renders.lenta(clbk, p)
+					if (searchtags){
+
+						result = {}
+						fixedBlock = null
+
+						renders.lenta(clbk, p)
+
+						var val = _.map(searchtags, function(w){return '#' + w}).join(' ')
+
+						self.app.platform.sdk.activity.addtagsearch(val)
+
+						return
+					}
 				}
+
+
+				renders.lenta(clbk, p)
+
 			},
 
 			lenta : function(clbk, p){
@@ -694,8 +697,8 @@ var main = (function(){
 							hr : 'index?',
 							goback : p.goback,
 							searchValue : searchvalue || null,
-							search : searchvalue ? true : false,
-							tags : searchtags,
+							search : searchvalue || searchtags ? true : false,
+							searchTags : searchtags,
 							read : readmain,
 							video :  videomain && !isMobile(),
 							videomobile : videomain && isMobile(),
@@ -705,9 +708,9 @@ var main = (function(){
 							//recommendedUsers : self.app.mobileview,
 							//recommendedUsersCount : self.app.mobileview ? 15 : 3,
 
-
+							includerec : state && !searchvalue && !searchtags && (mode == 'index' /*|| mode == 'video' || mode == 'read'*/) ? true : false,
 							includesub : !searchvalue && !searchtags && (mode == 'index' /*|| mode == 'video' || mode == 'read'*/) ? true : false,
-							includeboost : self.app.boost,
+							includeboost : !searchvalue && !searchtags && self.app.boost && !self.app.pkoindisable,
 
 							//optimize : self.app.mobileview,
 							extra : (self.app.test || self.app.platform.istest()) && state && isMobile() ? [
@@ -722,6 +725,21 @@ var main = (function(){
 									}
 								}
 							] : [],
+
+							cancelsearch : function(){
+								var backlink = 'index'
+
+								if (parameters().video) backlink = 'index?video=1'
+								if (parameters().read) backlink = 'index?read=1'
+
+
+								self.nav.api.load({
+									open : true,
+									href : backlink,
+									history : true,
+									handler : true
+								})
+							},
 
 							afterload : function(ed, s, e){
 
@@ -845,7 +863,7 @@ var main = (function(){
 						autoplay : true,
 						nocommentcaption : true,
 						r : 'recommended',
-						
+						openapi : false,
 						opensvi : function(id){
 
 							if (openedpost){
@@ -962,12 +980,16 @@ var main = (function(){
 						if (currentMode == 'common')
 						{
 							renders.share()
-							el.c.find('.bgCaption').removeClass('hidden')
+							window.requestAnimationFrame(() => {
+								el.c.find('.bgCaption').removeClass('hidden')
+							})
 						}
 						else
 						{
-							el.share.html('')
-							el.c.find('.bgCaption').addClass('hidden')
+							window.requestAnimationFrame(() => {
+								el.share.html('')
+								el.c.find('.bgCaption').addClass('hidden')
+							})
 						}
 
 					}
@@ -980,15 +1002,20 @@ var main = (function(){
 
 		var make = function(clbk, p){
 
-			localStorage['lentakey'] = parameters().r || 'index'
+			try {
+				localStorage['lentakey'] = parameters().r || 'index'
 			
-			if (parameters().video){
-				localStorage['lentakey'] = 'video'
-			}
+				if (parameters().video){
+					localStorage['lentakey'] = 'video'
+				}
 
-			if (parameters().read){
-				localStorage['lentakey'] = 'read'
+				if (parameters().read){
+					localStorage['lentakey'] = 'read'
+				}
 			}
+			catch (e) { }
+
+			
 
 			renders.lentawithsearch(clbk, p)
 
@@ -1015,12 +1042,23 @@ var main = (function(){
 
 				if (t){
 					el.c.addClass('leftshowed')
+					
 					//setTimeout(self.app.actions.offScroll, 300)
 				}
 				else{
 					el.c.removeClass('leftshowed')
 					//setTimeout(self.app.actions.onScroll, 300)
 				}
+				
+			}
+
+			if(!t){
+				if(!self.app.actions.getScroll()){
+					self.app.mobile.reload.initparallax()
+				}
+			}
+			else{
+				self.app.mobile.reload.destroyparallax()
 				
 			}
 		}
@@ -1053,7 +1091,12 @@ var main = (function(){
 
 				var changes = false
 
-				localStorage['lentakey'] = nlentakey
+				try {
+					localStorage['lentakey'] = nlentakey
+				}
+				catch (e) { }
+
+				
 
 				if (currentMode != ncurrentMode){
 					currentMode = ncurrentMode; changes = true
@@ -1220,6 +1263,7 @@ var main = (function(){
 
 			destroy : function(){
 
+
 				showCategories(false)
 
 				delete self.app.events.scroll.main
@@ -1305,6 +1349,7 @@ var main = (function(){
 					})
 	
 				}
+
 			},
 
 			showCategories : function(show){
@@ -1313,7 +1358,6 @@ var main = (function(){
 			},
 			
 			init : function(p){
-				
 
 				roller = null
 				lenta = null
@@ -1362,7 +1406,9 @@ var main = (function(){
 				if(readmain) videomain = false
 
 				if(videomain && !isMobile()){
-					el.c.addClass('videomain')
+					window.requestAnimationFrame(() => {
+						el.c.addClass('videomain')
+					})
 				}
 
 				make(function(){
