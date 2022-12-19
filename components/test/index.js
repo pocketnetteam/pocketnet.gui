@@ -384,24 +384,19 @@ var test = (function(){
 												self.closeContainer()
 												
 
-												self.app.platform.sdk.users.getone(self.app.user.address.value, function(){
+												//self.app.platform.sdk.users.getone(self.app.user.address.value, function(){
 
-													self.app.reloadModules(function(){
+												self.app.reloadModules(function(){
 
-														if (ed.presuccess){
-															ed.presuccess(allclbk)
-														}
-														else{
-															allclbk()
-														}
-
-														
-				
-													})
+													if (ed.presuccess){
+														ed.presuccess(allclbk)
+													}
+													else{
+														allclbk()
+													}
+			
 												})
-
-												
-
+												//})
 												
 											}
 

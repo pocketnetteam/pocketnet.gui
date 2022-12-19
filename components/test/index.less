@@ -110,88 +110,35 @@
 			}
 		}
 	
-		.referalMaketWrapper{
-			margin-top : @rhythm;
-			>div{
-				vertical-align: middle;
-
-				&.refLabel{
-					padding-top: @rhythm;
-					padding-right : @rhythm;
-					width: 190px;
-
-					.span{
-						color : rgb(var(--color-txt-ac));
-						font-weight: 700;
-					}
-				}
-
-				.refNameTable{
-
-					>div{
-						vertical-align: middle;
-
-						&.refAv{
-							width: 40px;
-
-							.usericon{
-								width: 40px;
-								height: 40px;
-							}
-						}
-						&.refName{
-							padding-left: 2 * @rhythm;
-							padding-right: 2 * @rhythm;
-						}
-
-						&.refRemove{
-							width: 30px;
-							text-align: center;
-							.transition(0.3s);
-							cursor: pointer;
-
-							&:hover{
-								color : rgb(var(--color-txt-ac));
-							}
-						}
-
-
-					}					
-				}
-			}
-		}
 
 		.parameter{
 			max-width: 600px;
 			width: 100%;
+			display: flex;
+			align-items: center;
+
+			input,
+			textarea{
+				width: 100%;
+			}
 
 			>div{
 				padding: @rhythm 0;
-				vertical-align: top;
 			}
 
 			.pName{
-				vertical-align: top;
-				padding-top: 2 * @rhythm;
-				padding-right : @rhythm;
-				width: 190px;
+				min-width: 190px;
 
 				.pNameW{
-					padding-top : @rhythm  / 3;
 					font-weight: 700;
 					font-size: 0.8em;
-					line-height: 1.4em;
 				}
 				
 			}
 
 			.pInput{
 				position: relative;
-				vertical-align: top;
-
-				.vm_valuesmulti{
-					padding-top: @rhythm / 2;
-				}
+				flex-grow: 2;
 			}
 
 		}
@@ -200,6 +147,12 @@
 			&[parameter="addresses"]{
 				.parameter{
 					max-width: 800px;
+				}
+			}
+
+			&[parameter="about"]{
+				.parameter{
+					align-items: flex-start;
 				}
 			}
 
@@ -598,16 +551,12 @@
 			
 			.parameter{
 				max-width: none;
-				display: block;
-
-				>div{
-					padding: 0;
-					display: block;
-				}
+				flex-direction: column;
+				margin-top: 1.5 * @rhythm;
 
 				.pName{
 					width: 100%;
-					padding-bottom : @rhythm;
+					padding-bottom : 0.5 * @rhythm;
 				}
 				
 				.pInput{
