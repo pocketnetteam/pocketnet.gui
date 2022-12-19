@@ -13,7 +13,7 @@
 
 					<% if(state && (typeof app.platform.sdk.user.myaccauntdeleted == 'undefined' || !app.platform.sdk.user.myaccauntdeleted())) {%>
 
-						<% if(!share || !share.visibility() || share.visibility() == 'reg'){ %>
+						<% if(!ed.registration && (!share || !share.visibility() || share.visibility() == 'reg')){ %>
 
 							<div class="chat">
 								<div elementsid="chatbutton" class="button black ">

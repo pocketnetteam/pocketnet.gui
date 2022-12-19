@@ -239,12 +239,13 @@ User = function(app, p) {
 		self.data = {};
 
 		try{
-			localStorage['mnemonic'] = ''
-			sessionStorage['mnemonic'] = ''
+			localStorage['mnemonic'] = '';
+			sessionStorage['mnemonic'] = '';
+			localStorage.removeItem('connectWith');
 		}catch(e){
 		}
 
-		
+
 
 		self.mncache.clear()
 

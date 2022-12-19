@@ -30593,6 +30593,7 @@ Platform = function (app, listofnodes) {
 
             if (self.matrixchat.connectWith){
                 return self.matrixchat.core.connect(self.matrixchat.connectWith).then(r => {
+                    localStorage.removeItem('connectWith');
                     self.matrixchat.connectWith = null
                 }).catch(e => {
                     self.matrixchat.connectWith = null
@@ -31149,7 +31150,20 @@ Platform = function (app, listofnodes) {
     self.autoUpdater()
     self.cordovaSetup()
 
-    self.matrixchat.connectWith = parameters().connect
+    var connect = parameters().connect;
+
+    if (connect){
+
+        localStorage.setItem('connectWith', connect);
+
+    } else {
+
+        connect = localStorage.getItem('connectWith');
+    }
+
+    self.matrixchat.connectWith = connect;
+
+    console.log('connectwith', self.matrixchat.connectWith)
 
     if(!self.matrixchat.connectWith)
         self.matrixchat.joinRoom = parameters().publicroom

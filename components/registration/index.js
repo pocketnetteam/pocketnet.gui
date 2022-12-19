@@ -368,7 +368,7 @@ var registration = (function(){
 
 				after : function(el, pel){
 
-					
+								
 				},
 
 				next : true				
@@ -766,7 +766,7 @@ var registration = (function(){
 			categories : {
 
 				id : 'categories',
-				nextindex : 'welcome',
+				nextindex : 'sharing',
 
 				prev : function(clbk){
 
@@ -867,7 +867,7 @@ var registration = (function(){
 			bloggers : {
 
 				id : 'bloggers',
-				nextindex : 'welcome',
+				nextindex : 'sharing',
 
 				prev : function(clbk){
 
@@ -928,6 +928,69 @@ var registration = (function(){
 					})
 
 					
+				}
+
+
+			},
+
+			sharing : {
+
+				id : 'sharing',
+
+				nextindex : 'welcome',
+
+				prev : function(clbk){
+
+					clbk()
+				},
+
+				render : 'sharing',
+
+				after : function(el){
+
+
+					el.find('.share').on('click', function(){
+
+						var my = self.app.user.address.value;
+
+						self.nav.api.load({
+							open : true,
+							href : 'socialshare2',
+							history : true,
+							inWnd : true,
+	
+							essenseData : {
+								url : 'https://bastyon.com/welcome?connect=' + my,
+								sharing: {
+									image : '',
+									images : [],
+									title : self.app.localization.e('welcomecaption4'),
+									text : {
+										body : "",
+										preview :""
+									}
+								},
+	
+								embedding : {
+									type : 'channel',
+									id : my
+								},
+
+								registration: true
+							}
+						})
+					})
+
+					var next = el.find('.next');
+
+					next.on('click', function(){
+
+						actions.next()
+							
+					})
+
+	
+
 				}
 
 
@@ -1585,6 +1648,24 @@ var registration = (function(){
 					el :   el,
 					data : {
 						addresses: addresses
+					},
+
+				}, function(_p){
+
+					if (clbk)
+						clbk(_p.el);
+
+				})
+			},
+
+			
+			sharing : function(el, clbk){
+
+				self.shell({
+
+					name :  'sharing',
+					el :   el,
+					data : {
 					},
 
 				}, function(_p){
