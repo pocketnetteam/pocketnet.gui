@@ -3,11 +3,11 @@
 		<header class="header">
 
 			<h1 class="header__title yellow">
-				<span class="red"><%= e('boost_c20') %></span>: Выгодная Реклама на Быстрорастущей Блокчейн Соцсети 						
+				<span class="red"><%-e('boost_c20')%></span>:<%-e('boost_c21')%> 						
 			</h1>			
 			<div class="video">
-				<h2>Реклама за Покеткойн - Рентабельные Охваты</h2>
-				<iframe width="640" style="aspect-ratio:1.7770833333333333" src="https://bastyon.com/embedVideo.php?embed=true&amp;s=711c7030bcd0b5a3aa69be6c1df454f2790e42c144144cd5d5e9e93ee5b237cd&amp;host=peertube23.pocketnet.app&amp;id=737525b7-e1d5-4c87-9f41-ff3b605c877c" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="">
+				<h2><%-e('boost_c22')%></h2>
+				<iframe width="" style="aspect-ratio:1.7770833333333333" src="https://bastyon.com/embedVideo.php?embed=true&amp;s=711c7030bcd0b5a3aa69be6c1df454f2790e42c144144cd5d5e9e93ee5b237cd&amp;host=peertube23.pocketnet.app&amp;id=737525b7-e1d5-4c87-9f41-ff3b605c877c" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="">
 					
 				</iframe>
 			</div>
@@ -15,36 +15,33 @@
 				<div class="column">
 					<ul>
 						<li>
-							Are you trying to be heard on the internet?
+							<%-e('boost_c23')%>							
 						</li>
 						<li>
-							Would you like to get your content or product in front of a new dynamic audience for less than major ad networks?
-
+							<%-e('boost_c24')%>
+						</li>
+						<li>							
+							<%-e('boost_c25')%>
 						</li>
 						<li>
-							Bastyon, the blockchain social network has just released a way of promoting content, including videos.
-
-						</li>
-						<li>The cost of an impression on Bastyon is many times lower than on traditional ad networks.
+							<%-e('boost_c26')%>
 						</li>						
 					</ul>
 				</div>
 				<div class="column">
 					<ul>
 						<li>
-							Boosting posts on Bastyon is very simple, you just need some Pocketcoin, a native cryptocurrency of Bastyon. Click Boost below the post and enter the amount and your post is moved to the top!
-
+							
+							<%-e('boost_c27')%>
+						</li>
+						<li>							
+							<%-e('boost_c28')%>
+						</li>
+						<li>							
+							<%-e('boost_c29')%>
 						</li>
 						<li>
-							Bastyon has millions of visitors and growing. Your content will be seen!
-
-						</li>
-						<li>
-							If you are an aspiring author who wants to increase your audience, Bastyon boosting of posts can work for you!
-
-						</li>
-						<li>
-							If you are an advertiser looking for a platform to promote your product, you can quickly get your ad up and running and get conversions.
+							<%-e('boost_c30')%>							
 						</li>
 
 						
@@ -53,8 +50,10 @@
 			</div>
 
 			<div class="buy-pkoin">
-				<h2 class="yellow">Где купить PKOIN?</h2>
-				<p>Покупку PKOIN  можно осуществить на следующих сайтах.</p>
+				<h2 class="yellow"><%-e('boost_c31')%></h2>
+				<p>					
+					<%-e('boost_c32')%>
+				</p>
 				<div class="sites">
 					<a target="_blank" href="https://www.bitforex.com/en/spot/pkoin_usdt">
 						<img class="img" src="./img/bitforex.png"/>
@@ -72,46 +71,79 @@
 						<!--<img src="./img/Digifinex.svg.png"/> -->
 						PKOIN.NET
 						<span class	= "span">
-							 - здесь приобрести PKOIN можно за другие криптовалюты.
+							<%-e('boost_c33')%>							 
 						</span>
 					</a>
 					<a target="_blank" style="max-width:400px" href="https://buy.pkoin.indacoin.io/">
 						<img src="./img/INDACOIN.22f2245a.svg"/>
-						
+						<span class	= "span">
+							<%-e('boost_c45')%>							 
+						</span>
 						
 					</a>
 				</div>
 
-				<p class="yellow">Покупка PKOIN из рук в руки</p>
-				<p class="text">
-					Покупка PKOIN возможна у других пользователей Бастиона. Об условиях купли/продажи вы можете договориться в личной переписке с продавцом/покупателем, найти которого вы можете в ленте новостей по категории "PKOIN/из рук в руки"
+				<p class="yellow">
+					<%-e('boost_c34')%>					
 				</p>
-				<img src="./img/peer-to-peer.jpg"/>
-
-				<p class="yellow">Как начать рекламу?</p>
 				<p class="text">
-					Запуск рекламы на Бастионе - это очень просто. Для этого необходимо:					
+					<%-e('boost_c35')%>					
+				</p>
+				<% if(app.localization.key === 'ru') {%>
+					<img src="./img/peer-to-peer.jpg"/>
+				<% } %>
+				<% if(app.localization.key === 'en') {%>
+					<img src="./img/peer-to-peer-en.jpg"/>
+				<% } %>
+				
+
+				<p class="yellow"><%-e('boost_c36')%></p>
+				<p class="text">
+					<%-e('boost_c37')%>										
 				</p>
 				<div class="columns">
 					<div class="column">
 						<ul>
-							<li>Подготовить рекламную публикацию (видео, пост или статью)</li>
-							<li>Купить PKOIN</li>
-							<li>Внести необходимое количество PKOIN для старта рекламы</li>
+							<li>
+								<%-e('boost_c38')%>								
+							</li>
+							<li>
+								<%-e('boost_c39')%>
+								
+							</li>
+							<li>
+								<%-e('boost_c40')%>								
+							</li>
 						</ul>
 					</div>
 				</div>
 				<p class="text">
-					Нажмите значок молнии в правом нижнем углу выбранного поста:
+					<%-e('boost_c41')%>					
 				</p>
-				<img src="./img/ads-on-bastyon1.jpg"/>
-				<p class="text">
-					Внесите PKOIN в поле "Сумма" и нажмите "Отправить":
-				</p>
-				<img src="./img/ads-on-bastyon3.jpg"/>
-				<p class="red">Поздравляем! Вы запустили рекламу на Бастионе!</p>
+				<% if(app.localization.key === 'ru') {%>
+					<img src="./img/ads-on-bastyon1.jpg"/>
+				<% } %>
+				<% if(app.localization.key === 'en') {%>
+					<img src="./img/ads-on-bastyon1-en.jpg"/>
+				<% } %>
 				
-				<a target="_blank" href="https://bastyon.com/" class="cta "> Хочу Запустить рекламу на  Бастионе!</a>
+				<p class="text">
+					<%-e('boost_c42')%>					
+				</p>
+				<% if(app.localization.key === 'ru') {%>
+					<img src="./img/ads-on-bastyon3.jpg"/>
+				<% } %>
+				<% if(app.localization.key === 'en') {%>
+					<img src="./img/ads-on-bastyon3-en.jpg"/>
+				<% } %>
+				
+				<p class="red">					
+					<%-e('boost_c43')%>
+				</p>
+				
+				<a target="_blank" href="https://bastyon.com/" class="cta "> 
+					<%-e('boost_c44')%>					
+				</a>
 			
 			</div>
 			

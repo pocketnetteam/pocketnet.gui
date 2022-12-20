@@ -61,6 +61,9 @@
             font-weight: 700;
             margin: 15px 0;
         }
+        iframe{
+            width: 640px;
+        }
     }
     .columns{
         display: flex;
@@ -89,6 +92,7 @@
             font-size: 1.5em;
             font-weight: 700;
         }
+        
         p{
             font-size: 1.4em;
             font-weight: 700;
@@ -141,6 +145,20 @@
 @media only screen and (max-width: 768px) {
     #boost {
         padding :  @rhythm 2 * @rhythm;
+        .video{
+            iframe{
+                width: 100%;
+                padding: 0 10px;
+            }
+        
+        }
+        .buy-pkoin{
+            img{
+                width: 100%;
+                padding: 0 10px;
+            }
+        }
+        
         
     }
 }
