@@ -919,7 +919,9 @@ var registration = (function(){
 					el.on('click', '.subscribeButton', events.subscribe);
 					el.on('click', '.unsubscribeButton', events.unsubscribe);
 
-					el.on('click', '.user .iconWrapper', events.showprofile)
+					el.on('click', '.user .showMoreAbout', events.showprofile)
+
+					$('body').on('click', events.hideprofiles)
 
 					next.on('click', function(){
 
@@ -1167,26 +1169,23 @@ var registration = (function(){
 
 			showprofile: function(address){
 
-				if (isMobile()){
+				self.nav.api.load({
+					open : true,
+					id : 'channel',
+					inWnd : true,
+					history : true,
 
-					self.nav.api.load({
-						open : true,
-						id : 'channel',
-						inWnd : true,
-						history : true,
-	
-						essenseData : {
-							id : address,
-							followbutton : true,
-						},
-	
-						clbk : function(i, p){
+					essenseData : {
+						id : address,
+						followbutton : true,
+					},
 
-							p.el.on('click', '.subscribeButton', function() {actions.subscribe(address, p.container.close)});
-							p.el.on('click', '.unsubscribeButton', function(){ actions.unsubscribe(address, p.container.close)});
-						}
-					})
-				}
+					clbk : function(i, p){
+
+						p.el.on('click', '.subscribeButton', function() {actions.subscribe(address, p.container.close)});
+						p.el.on('click', '.unsubscribeButton', function(){ actions.unsubscribe(address, p.container.close)});
+					}
+				})
 
 			},
 
@@ -1439,10 +1438,47 @@ var registration = (function(){
 		var events = {
 
 			showprofile : function(){
-				var address = $(this).closest('.user').attr('address');
 
-				actions.showprofile(address)
+				var user = $(this).closest('.user');
+				var address = user.attr('address');
+
+				if (isMobile()){
+
+					actions.showprofile(address);
+
+				} else {
+
+					setTimeout(function(){
+
+						user.addClass('showMore')
+
+					}, 0)
+
+
+				}
 			},
+
+
+			hideprofiles : function(e){
+
+				var user = $(e.target).closest('.user');
+				var isShowed = user.hasClass('showMore');
+				var address = user.attr('address');
+
+				$(this).find('.user').each(function(i, user){
+					
+					var user = $(this);
+
+					if (!(isShowed && user.attr('address') === address)){
+						user.removeClass('showMore')
+					}
+
+				});
+
+
+			},
+			
+
 
 			unsubscribe : function(){
 
