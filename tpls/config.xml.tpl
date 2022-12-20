@@ -180,7 +180,7 @@
             <application android:usesCleartextTraffic="true" android:requestLegacyExternalStorage="true"/>
         </edit-config>
 
-        <config-file target="AndroidManifest.xml" mode="merge" target="/manifest">
+        <edit-config file="AndroidManifest.xml" mode="merge" target="/manifest/uses-permission" xmlns:android="http://schemas.android.com/apk/res/android">
             <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
             <uses-permission android:name="android.permission.RECORD_AUDIO" />
             <uses-permission android:name="android.permission.CAPTURE_AUDIO_OUTPUT" />
@@ -190,7 +190,7 @@
             <% if(store) {%>
                 <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" tools:node="remove" />
             <% } %>
-        </config-file>
+        </edit-config>
 
         <edit-config file="AndroidManifest.xml" target="/manifest/application/activity[@android:name='MainActivity']" mode="merge">
             <activity android:windowSoftInputMode="adjustPan" android:supportsPictureInPicture="true"/>
