@@ -30604,6 +30604,7 @@ Platform = function (app, listofnodes) {
 
             if (self.matrixchat.joinRoom){
                 return self.matrixchat.core.joinRoom(self.matrixchat.joinRoom).then(r => {
+                    localStorage.removeItem('joinRoom');
                     self.matrixchat.joinRoom = null
                 }).catch(e => {
                     self.matrixchat.joinRoom = null
@@ -31163,10 +31164,19 @@ Platform = function (app, listofnodes) {
 
     self.matrixchat.connectWith = connect;
 
-    console.log('connectwith', self.matrixchat.connectWith)
+    var joinRoom = parameters().publicroom;
 
-    if(!self.matrixchat.connectWith)
-        self.matrixchat.joinRoom = parameters().publicroom
+    if (joinRoom){
+
+        localStorage.setItem('joinRoom', joinRoom);
+
+    } else {
+
+        joinRoom = localStorage.getItem('joinRoom');
+    }
+
+    self.matrixchat.joinRoom = joinRoom;
+
 
     return self;
 
