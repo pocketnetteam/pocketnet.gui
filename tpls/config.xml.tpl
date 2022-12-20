@@ -180,7 +180,7 @@
             <application android:usesCleartextTraffic="true" android:requestLegacyExternalStorage="true"/>
         </edit-config>
 
-        <config-file target="AndroidManifest.xml" parent="/manifest">
+        <config-file target="AndroidManifest.xml" mode="merge" target="/manifest">
             <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
             <uses-permission android:name="android.permission.RECORD_AUDIO" />
             <uses-permission android:name="android.permission.CAPTURE_AUDIO_OUTPUT" />
