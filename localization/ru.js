@@ -2167,6 +2167,30 @@ _l.boost_c19 = 'Для покупки Покеткоина "из рук в ру�
 
 
 
+
+_l.boost_c20 = 'Найдите Свою Аудиторию'
+_l.boost_c21 = ''
+_l.boost_c22 = ''
+_l.boost_c23 = ''
+_l.boost_c24 = ''
+_l.boost_c25 = ''
+_l.boost_c26 = ''
+_l.boost_c27 = ''
+_l.boost_c28 = ''
+_l.boost_c29 = ''
+_l.boost_c30 = ''
+_l.boost_c31 = ''
+_l.boost_c32 = ''
+_l.boost_c33 = ''
+_l.boost_c34 = ''
+_l.boost_c35 = ''
+_l.boost_c36 = ''
+_l.boost_c37 = ''
+_l.boost_c38 = ''
+_l.boost_c39 = ''
+
+
+
 _l.gotopage = 'Перейти на страницу'
 
 _l.saved = "Сохранено"

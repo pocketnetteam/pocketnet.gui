@@ -2374,6 +2374,28 @@ _l.boost_c17 = 'Censorship resistant'
 _l.boost_c18 = 'Buying PKOIN peer-to-peer'
 _l.boost_c19 = 'To buy a Pocketcoin "from hand to hand", you need to sort the news feed by category "PKOIN/peer-to-peer"'
 
+
+_l.boost_c20 = ''
+_l.boost_c21 = ''
+_l.boost_c22 = ''
+_l.boost_c23 = ''
+_l.boost_c24 = ''
+_l.boost_c25 = ''
+_l.boost_c26 = ''
+_l.boost_c27 = ''
+_l.boost_c28 = ''
+_l.boost_c29 = ''
+_l.boost_c30 = ''
+_l.boost_c31 = ''
+_l.boost_c32 = ''
+_l.boost_c33 = ''
+_l.boost_c34 = ''
+_l.boost_c35 = ''
+_l.boost_c36 = ''
+_l.boost_c37 = ''
+_l.boost_c38 = ''
+_l.boost_c39 = ''
+
 _l.gotopage = 'Go to page'
 
 _l.saved = "Saved"
