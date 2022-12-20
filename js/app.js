@@ -2649,6 +2649,12 @@ Application = function(p)
         }).catch(e => {
           topPreloader2(100)
 
+          try{
+            e = JSON.stringify(e)
+          }catch (er){
+
+          }
+
           return Promise.reject(e)
         })
 
