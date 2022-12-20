@@ -30087,6 +30087,7 @@ Platform = function (app, listofnodes) {
                                     privatekey="${privatekey}"
                                     pocketnet="`+( self.app.mobileview ? '' : 'true')+`"
                                     recording="true"
+                                    iscallsenabled="false"
                                     mobile="`+( self.app.mobileview ? 'true' : '')+`" 
                                     ctheme="`+self.sdk.theme.current+`"
                                     localization="`+self.app.localization.key+`"

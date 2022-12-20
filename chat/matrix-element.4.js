@@ -322,6 +322,7 @@ var functions = __webpack_require__("3139");
     this.getuserinfo();
   },
   computed: Object(vuex_esm["c" /* mapState */])({
+    callsEnabled: state => state.isCallsEnabled,
     isGroup: function () {
       return this.m_chat.name.slice(0, 1) === '@';
     },
@@ -366,6 +367,7 @@ var functions = __webpack_require__("3139");
 
       try {
         let matrixCall = this.core.mtrx.bastyonCalls.initCall(this.chat.roomId, local);
+        console.log(matrixCall);
         if (matrixCall) this.$store.dispatch('CALL', matrixCall);
       } catch (e) {
         console.log('ошибка при создании звонка', e);
