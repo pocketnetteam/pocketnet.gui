@@ -99,7 +99,7 @@ function initShadowPopups() {
     },
     appear: () => {
       const state = (() => {
-          return new Date() > localStorage.getItem('desktop-app');
+          return (self.history.state.href !== 'boost') && (new Date() > localStorage.getItem('desktop-app'));
         })(),
         isDesktop = () => {
           const navigatorAgent =
