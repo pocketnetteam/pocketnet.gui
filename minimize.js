@@ -85,17 +85,20 @@ var tplspath = {
 var _meta = {
 	Pocketnet : {
 		url : "pocketnet.app",
-		turl : "test.pocketnet.app"
+		turl : "test.pocketnet.app",
+		name : 'Pocketnet'
 	},
 
 	Bastyon : {
 		url : "bastyon.com",
-		turl : "test.pocketnet.app"
+		turl : "test.pocketnet.app",
+		name : 'Bastyon'
 	},
 
 	BastyonPapp: {
 		url : "bastyon.com",
-		turl : "test.pocketnet.app"
+		turl : "test.pocketnet.app",
+		name : 'Bastyon'
 	},
 }
 
@@ -107,7 +110,8 @@ var vars = {
 		globaltest : 'global.TESTPOCKETNET = true;',
 		path : args.path,
 		project : args.project,
-		store : args.store || false
+		store : args.store || false,
+		name : _meta[args.project].name
 	},
 	prod : {
 		proxypath : '"https://pocketnet.app:8899/"',
@@ -116,7 +120,8 @@ var vars = {
 		globaltest : '',
 		path : args.path,
 		project : args.project,
-		store : args.store || false
+		store : args.store || false,
+		name : _meta[args.project].name
 
 	}
 }
