@@ -54,6 +54,9 @@
 #registration.loading .upanelloader {
   display: block;
 }
+#registration.loading .hasaccount {
+  display: none;
+}
 #registration .mWrapper {
   margin-top: 2em;
   position: relative;
@@ -841,6 +844,27 @@
 }
 #registration[step="bloggers"] .stepsWrapper .stepsWrapperLine {
   overflow: visible;
+}
+.wnd.regwindow .wndcontent {
+  padding: 0;
+}
+.wnd.regwindow .wndinner {
+  max-width: 400px;
+  max-height: 670px;
+}
+.wnd.regwindow #registration .work {
+  padding-left: 0;
+  padding-right: 0;
+}
+.wnd.regwindow #registration .caption {
+  margin-top: 1em;
+  font-size: 1.5em;
+}
+.wnd.regwindow #registration .mWrapper .panelWrapper {
+  padding-bottom: 1em;
+}
+.wnd.regwindow #registration .mWrapper #test {
+  width: 100%;
 }
 .wndcontent #registration .categories .welcome_text {
   margin-top: 0.5em !important;

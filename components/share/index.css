@@ -983,7 +983,7 @@ html.mobileview .wnd.wndsharepost .wndcontent #share .absolutetxwrapper {
   }
   #share .repostShareWrapperInns {
     border-radius: 5px;
-    border: 1px solid rgba(var(--neutral-grad-2), 0.5);
+    /*border : 1px solid rgba(var(--neutral-grad-2), 0.5);*/
     background: rgb(var(--background-total-theme));
     margin-bottom: 0.5em;
   }

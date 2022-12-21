@@ -30,7 +30,7 @@ var socialshare2 = (function(){
 
 			repost : function(shareid){
 
-				actions.stateAction('_this', function(){
+				self.app.platform.sdk.user.stateAction(() => {
 
 					self.app.platform.ui.share({
 						repost : shareid
@@ -39,9 +39,9 @@ var socialshare2 = (function(){
 					setTimeout(function(){
 						self.closeContainer()
 					}, 200)
-					
-					
-				}, shareid)
+
+				})
+				
 
 			},
 
@@ -72,63 +72,6 @@ var socialshare2 = (function(){
 
 				
 			},
-			
-			stateAction : function(link, clbk, txid){
-
-				self.app.user.isState(function(state){
-
-					if(state){
-						clbk()
-					}
-
-					else
-					{
-
-
-						if (_OpenApi){
-
-							var phref = 'https://'+self.app.options.url+'/post?openapi=true&s=' + txid
-		
-							if (self.app.ref){
-								phref += '&ref=' + self.app.ref
-							}
-		
-							window.open(phref, '_blank');
-		
-							return
-						}
-
-
-						self.nav.api.load({
-							open : true,
-							id : 'authorization',
-							inWnd : true,
-
-							essenseData : {
-
-								fast : true,
-								loginText : self.app.localization.e('llogin'),
-								successHref : link,
-								signInClbk : function(){
-
-									retry(function(){
-
-										return !authblock
-
-									}, function(){
-										if (clbk)
-											clbk()
-									})
-
-									
-								}
-							}
-						})
-					}
-
-				})
-			},
-
 			applyview : function(view){
 
 				if(!view){

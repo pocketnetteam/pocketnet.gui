@@ -61,7 +61,6 @@ var ActionOptions = {
 
                 }
             },
-
             sendWithNullStatus : true,
 
             collision : function(obj, obj2){
@@ -318,7 +317,11 @@ var Action = function(account, object, priority){
                 await account.loadUnspents().then((clearUnspents) => {
 
                     if(!clearUnspents.length && !account.unspents.willChange){
-                        return Promise.reject('actions_noinputs')
+
+                     
+                            return Promise.reject('actions_noinputs')
+
+
                     }
 
                     clearUnspents = filterUnspents(clearUnspents)
@@ -1594,19 +1597,9 @@ var Actions = function(app, api, storage = localStorage){
         })
     } 
 
-    self.addAction = function(address, object /* object/alias? */, priority){
+    self.addAction = function(address, object, priority){
 
-        /*if(object.export){
-            var copy = object.export(true)
-
-            if (kits.c[copy.type]){
-                var al = new kits.c[copy.type]()
-                    al.import(copy)
-
-                object = al
-            }
-        }*/
-
+    
         if(!address) return Promise.reject('address')
         if(!object) return Promise.reject('object')
 

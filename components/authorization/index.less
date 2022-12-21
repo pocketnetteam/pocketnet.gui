@@ -2,32 +2,6 @@
 
 #authorization{	
 
-	#registration{
-		.caption{
-			display: none;
-		}
-
-		.work{
-			width : 100%;
-			padding-left : 0;
-			padding-right : 0;
-			padding-top : 0;
-		}
-
-		.mWrapper {
-
-			margin-top : 0;
-
-			#test{
-				width : 100%;
-
-				.userPanel{
-					padding-top : 0;
-				}
-			}
-			
-		}
-	}
 	.work{
 		padding-top: 4 * @rhythm;
 		padding-bottom : 4 * @rhythm;
@@ -236,35 +210,6 @@
 	}
 
 	#authorization{
-		.topCaption{
-			padding-top : 2 * @rhythm;
-			padding-bottom : 2 * @rhythm;
-		}
-		.caption{
-			text-align: center;
-			font-size: 1.5em;
-			margin-bottom: 0;
-		}
-
-		.work{
-			padding-top : 0;
-			padding-bottom: 0;
-		}
-
-		.leftPart{
-			display: none;
-		}
-		
-
-		#registration .mWrapper .panelWrapper{
-			padding-bottom: 2 * @rhythm;
-		}
-	}
-}
-
-/*t*/ @media only screen and (max-width: 768px){
-	#authorization{	
-		padding-bottom : 6 * @rhythm;
 		.work{
 			padding-top: 2 * @rhythm;
 			padding-bottom : 2 * @rhythm;
@@ -272,18 +217,71 @@
 			padding-right: 2 * @rhythm!important;
 		}
 
-		.mpad{
-			/*padding-left: 2 * @rhythm;
-			padding-right: 2 * @rhythm;*/
+		
+		.caption{
+			font-size: 2.5em;
+			margin-bottom: @rhythm;
+
+			&.cpt2{
+				font-size: 2.5em;
+			}
 		}
 
+		button{
+			width: 100%;
+			min-width: 0;
 
-		/*.maket{
-
-			&.leftPart{
-				background: #F7F7F9;
+			&.toRegistration{
+				min-width: 0;
 			}
-		}*/
+		}
+
+		.keytable{
+			display: block;
+			position: relative;
+
+			>div{
+				display: block;
+				&.actionButtonsWrapper{
+					/*width: 50%;*/
+					width: 80px;
+					text-align: center;
+					display: block;
+					position: absolute;
+					right: 0;
+					bottom : 0;
+					top : 0;
+
+					.label{
+						display: none;
+					}
+
+					.uploadFile, .showPassword{
+						height: 100%;
+					}
+				}
+
+				input{
+					border-radius: 3px;
+					padding-right: 80px !important;
+				}
+			}
+		}
+	}
+}
+
+/*t*/ @media only screen and (max-width: 768px){
+	#authorization{	
+		padding-bottom : 6 * @rhythm;
+
+		.work{
+			padding-top: 2 * @rhythm;
+			padding-bottom : 2 * @rhythm;
+			padding-left : 2 * @rhythm!important;
+			padding-right: 2 * @rhythm!important;
+		}
+
+		
 		.caption{
 			margin-top: .5em;
 			font-size: 3em;
@@ -335,10 +333,7 @@
 		}
 	}
 
-	.wnd.authwindow{
-		.wndinner{
-		}
-	
+	/*.wnd.authwindow{
 	
 		#authorization{	
 			.work{
@@ -354,11 +349,7 @@
 			.scrollmaketpart{
 				
 			}
-			
-			#registration{
-				padding-top : 3 * @rhythm;
-			}
-			
+		
 			.work{
 				padding-top: 0;
 				padding-bottom : 0;
@@ -378,6 +369,6 @@
 				}
 			}
 		}
-	}
+	}*/
 
 }

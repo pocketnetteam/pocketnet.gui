@@ -6601,6 +6601,8 @@ html.mobileview .wnd.normalizedmobile:not(.hiddenState) .wndinner {
   max-height: none!important;
   top: auto!important;
   bottom: 0;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
   height: auto!important;
   max-width: none!important;
   -webkit-transform: translateY(100%);

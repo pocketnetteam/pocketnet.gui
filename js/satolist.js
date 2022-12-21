@@ -7659,7 +7659,54 @@ Platform = function (app, listofnodes) {
 
             storage: {
             },
+            
+            stateAction : function(clbk){
+                app.user.isState(function(state){
 
+					if(state){
+						clbk()
+					}
+
+					else
+					{
+
+						if (_OpenApi){
+
+							var phref = 'https://'+app.options.url+'/post?openapi=true&s=' + txid
+		
+							if (app.ref){
+								phref += '&ref=' + app.ref
+							}
+		
+							window.open(phref, '_blank');
+		
+							return
+						}
+
+						app.nav.api.load({
+							open : true,
+							id : 'registration',
+							inWnd : true,
+
+							essenseData : {
+
+								successHref : '_this',
+								signInClbk : function(){
+
+                                    if (app.platform.sdk.user.myaccauntdeleted()){
+                                        return
+                                    }
+									
+                                    if (clbk)
+                                        clbk()
+									
+								}
+							}
+						})
+					}
+
+				})
+            },
            
             meUpdate: function (clbk) {
                 self.sdk.user.get(clbk, true)
@@ -9175,6 +9222,10 @@ Platform = function (app, listofnodes) {
                     }
 
                 })
+            },
+
+            requestUnspents : function(){
+
             },
 
             //////////////// ANOTHER

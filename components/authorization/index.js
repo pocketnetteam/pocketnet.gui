@@ -107,8 +107,6 @@ var authorization = (function(){
 
 						sitemessage(self.app.localization.e('e13028'))
 
-						
-
 						return;
 					}
 				
@@ -146,32 +144,31 @@ var authorization = (function(){
 						}
 					}
 
-					_p.nav = essenseData.nav || {};		
+					if(_p.href == '_this') delete _p.href
 
+					_p.nav = essenseData.nav || {};		
 
 					if(typeof _p.nav.reload == 'undefined') _p.nav.reload = false
 
 					_p.clbk = function(){
 
-						var close = deep(initialParameters, 'container.close')
-
-						if (close)
-							close();
+						self.closeContainer()
 
 						if (essenseData.signInClbk)
 							essenseData.signInClbk();
 					}
 
+					setTimeout(function(){
+						self.app.reload(_p);
+					}, 30)
 
-					if(deep(essenseData, 'successHref') == '_this'){
+
+					/*if(deep(essenseData, 'successHref') == '_this'){
 
 						self.app.reloadModules(function(){
 
 							if(self.app.user.validate()){
-								var close = deep(initialParameters, 'container.close')
-
-								if (close)
-									close();
+								self.closeContainer()
 
 								if (essenseData.signInClbk)
 									essenseData.signInClbk();
@@ -191,7 +188,7 @@ var authorization = (function(){
 							self.app.reload(_p);
 						}, 30)
 						
-					}
+					}*/
 
 					
 
@@ -484,7 +481,7 @@ var authorization = (function(){
 				initEvents(p);
 
 				make();
-		
+
 				p.clbk(null, p);
 
 			},

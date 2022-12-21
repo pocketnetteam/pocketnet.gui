@@ -29,11 +29,7 @@ var post = (function () {
 
 				if (share){
 
-					actions.stateAction(function(){
-
-						if(self.app.platform.sdk.user.myaccauntdeleted()){
-							return
-						}
+					self.app.platform.sdk.user.stateAction(() => {
 
 						self.app.platform.sdk.node.transactions.get.balance(function(amount){
 
@@ -58,7 +54,7 @@ var post = (function () {
 	
 						})
 	
-					}, share.txid)
+					})
 
 
 				}
@@ -178,63 +174,10 @@ var post = (function () {
 
 			},
 
-			stateAction: function (clbk, txid) {
-
-				if (_OpenApi) {
-
-					var phref = 'https://' + self.app.options.url + '/post?openapi=true&s=' + txid
-
-					if (self.app.ref) {
-						phref += '&ref=' + self.app.ref
-					}
-
-					window.open(phref, '_blank');
-
-					return
-				}
-
-				self.app.user.isState(function (state) {
-
-					if (state) {
-						clbk()
-					}
-
-					else {
-						self.nav.api.load({
-							open: true,
-							id: 'authorization',
-							inWnd: true,
-
-							essenseData: {
-
-								fast: true,
-								loginText: self.app.localization.e('llogin'),
-								successHref: '_this',
-
-								signInClbk: function () {
-
-									retry(function () {
-
-										return !authblock
-
-									}, function () {
-
-										if (clbk)
-											clbk()
-									})
-
-
-								}
-							}
-						})
-					}
-
-				})
-			},
-
+			
 			postscores: function (clbk) {
 
-				actions.stateAction(function(){
+				self.app.platform.sdk.user.stateAction(() => {
 
 					self.app.nav.api.load({
 						open: true,
@@ -259,19 +202,19 @@ var post = (function () {
 						}
 					})
 
-				}, share.txid)
+				})
 
 			},
 
 			repost: function (shareid) {
 
-				actions.stateAction(function () {
+				self.app.platform.sdk.user.stateAction(() => {
 
 					self.app.platform.ui.share({
 						repost : shareid
 					})
 
-				}, shareid)
+				})
 
 
 
@@ -968,7 +911,7 @@ var post = (function () {
 
 			subscribe: function (clbk) {
 
-				actions.stateAction(function () {
+				self.app.platform.sdk.user.stateAction(() => {
 
 					self.app.platform.api.actions.subscribeWithDialog(share.address, function (tx, error) {
 						if (tx) {
@@ -980,7 +923,7 @@ var post = (function () {
 
 					})
 
-				}, share.txid)
+				})
 
 
 			},
@@ -993,7 +936,7 @@ var post = (function () {
 
 				var value = $(this).attr('value')
 
-				actions.stateAction(function () {
+				self.app.platform.sdk.user.stateAction(() => {
 
 					if (share.address == self.app.user.address.value) return
 
@@ -1037,7 +980,7 @@ var post = (function () {
 							p.removeClass('liked')
 						}
 					})
-				}, share.txid)
+				})
 
 
 			},

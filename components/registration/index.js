@@ -9,7 +9,7 @@ var registration = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el = {}, k = {}, needcaptcha = false, gliperror = false, essenseData, initialParameters, ext = null;
+		var el = {}, k = {},  gliperror = false, essenseData, initialParameters, ext = null;
 
 		var addresses = [];
 
@@ -478,7 +478,6 @@ var registration = (function(){
 						}
 						else
 						{
-
 						
 							self.nav.api.go({
 								href : self.app.platform.sdk.registrations.redirect || 'index',
@@ -826,9 +825,7 @@ var registration = (function(){
 
 						if (err == 'captcha'){
 
-							needcaptcha = true;
-
-							if (current == 'money' || current == 'captcha'){
+							if (current == 'captcha'){
 								actions.to('captcha')
 							}
 
@@ -839,7 +836,7 @@ var registration = (function(){
 
 							gliperror = true
 
-							if (current == 'money' || current == 'captcha'){
+							if (current == 'captcha'){
 								actions.to('moneyfail')
 							}
 
@@ -1020,26 +1017,25 @@ var registration = (function(){
 
 			next : function(clbk){
 
+				console.log('current', current)
+
 				if (current) {
 					current = steps[current].nextindex
 
 					if(typeof current == 'function') current = current()
 				}
 				else{
-
+					current = steps.settings.id
 					var me = self.psdk.userInfo.getmy() || {}
 
-					if (me && me.relay){
+					/*if (me && me.relay){
 						current = steps.captcha.id
 					}
 					else{
 						current = steps.settings.id
-					}
-
+					}*/
 					
 				}
-
-
 
 				if(!current) return
 
@@ -1052,7 +1048,6 @@ var registration = (function(){
 
 				var step = steps[current];
 
-
 				if (step){			
 
 					actions.preloader(true)
@@ -1064,12 +1059,10 @@ var registration = (function(){
 							return
 						}
 
-						
-
 						el.c.attr('step', step.id)
 
-						renders.panel(step, function(pel){
-							renders.step(step, function(el){
+						renders.step(step, function(el){
+							renders.panel(step, function(pel){
 
 								actions.preloader(false)
 
@@ -1503,19 +1496,10 @@ var registration = (function(){
 			}
 		}
 
-		var initEvents = function(){
+		var initEvents = function(p){
 			
-			//window.addEventListener('resize', events.width)
-
 			el.c.find('.gotohasaccount').on('click', function(){
-
-				if (essenseData.close) essenseData.close()
-
-				self.nav.api.go({
-					href : 'authorization',
-					history : true,
-					open : true
-				})
+				self.nav.api.loadSameThis('authorization', p)
 			})
 
 		}
@@ -1524,21 +1508,18 @@ var registration = (function(){
 			self.app.user.isState(function(state){
 
 				if(!state){
+
 					setTimeout(function(){
 						actions.generate(function(){
 						})
-					}, 1000)	
+					}, 300)	
 					
-
 				}
 				else{
 
 					k = {};
-
 					k.mainAddress = self.app.user.address.value
 					k.mk = self.app.user.private.value.toString('hex');
-
-
 				}
 
 				actions.next();
@@ -1553,6 +1534,8 @@ var registration = (function(){
 
 			getdata : function(clbk, p){
 
+				console.log("PP", p)
+
 				if (p.state && !self.user.validateVay()){
 					
 					self.app.nav.api.load({
@@ -1564,7 +1547,6 @@ var registration = (function(){
 					return
 				}
 
-				needcaptcha = false;
 				gliperror = false;
 
 				k = {}
@@ -1621,7 +1603,6 @@ var registration = (function(){
 
 				ext = null
 
-				needcaptcha = false;
 				gliperror = false;
 
 				k = {}
@@ -1647,7 +1628,7 @@ var registration = (function(){
 
 				if(!scrollel.length) scrollel = null;
 
-				initEvents();
+				initEvents(p);
 
 				make();
 
@@ -1658,6 +1639,9 @@ var registration = (function(){
 				p.clbk(null, p);
 
 			
+			},
+			wnd : {
+				class : 'withoutButtons regwindow normalizedmobile maxheight'
 			}
 		}
 	};

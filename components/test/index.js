@@ -618,253 +618,256 @@ var test = (function(){
 			},
 		}
 
-		userOptions = {
-			name : new Parameter({
-				name : self.app.localization.e('unickname'),
-				placeholder : self.app.localization.e('unickname'),
-				id : 'name',
-				type : "NICKNAME",
-				onType : true,
-				require : true,
-				onFocus : function(pn){
-					if (self.app.mobileview) setTimeout(function(){_scrollTo(pn, el.c.closest('.customscroll')), 200})
-				}
-			}),
-
-			email : new Parameter({
-				name : 'Email',
-				placeholder : 'Email',
-				id : 'email',
-				type : "STRINGANY",
-				onType : true,
-
-				onFocus : function(pn){
-					if (self.app.mobileview) setTimeout(function(){_scrollTo(pn, el.c.closest('.customscroll')), 200})
-				}
-			}),
-
-			language : new Parameter({
-				name : self.app.localization.e('ulanguage'),
-				placeholder : self.app.localization.e('ulanguage'),
-				id : 'language',
-				type : "VALUES",
-				defaultValue : self.app.localization.key || 'en',
-				
-				
-				possibleValues : ['en', 'ru'],
-				possibleValuesLabels : ['English', 'Русский'],
-			}),
-
-			about : new Parameter({
-				name : self.app.localization.e('uabout'),
-				id : 'about',
-				type : "TEXT",
-				onType : true,
-				
-				placeholder : self.app.localization.e('e133512')
-			}),
-
-			site : new Parameter({
-				name : self.app.localization.e('uwebsite'),
-				id : 'site',
-				type : "STRINGANY",
-				onType : true,
-				value : '',
-				placeholder : self.app.localization.e('uwebsite'),
-				name : self.app.localization.e('uwebsite')
-			}),
-
-			addresses : new function(){
-
-				var _self = this;
-
-				_self.id = 'addresses';
-				_self.name = self.app.localization.e('uaddresesd')
-				_self.value = [];
-
-				_self.defaultValue = [];
-
-				_self.remove = function(currency, address){
-					removeEqual(_self.value, {
-						currency : currency,
-						address : address
-					})
-
-					if (_self._onChange)
-						_self._onChange(_self.value)
-
-					_self.addedAddresses();
-				}
-
-				_self.add = function(v){
-
-
-					_self.value.push(v)
-
-					if (_self._onChange)
-						_self._onChange(_self.value)
-
-					_self.addedAddresses();
-
-				}
-
-				_self.addDialog = function(){
-
-					var validate = function(cur, address){
-
-						if(address.length > 0){
-							return true
-						}
-						else
-						{
-							return false
-						}
-
-						
+		var initUserOptions = function(){
+			userOptions = {
+				name : new Parameter({
+					name : self.app.localization.e('unickname'),
+					placeholder : self.app.localization.e('unickname'),
+					id : 'name',
+					type : "NICKNAME",
+					onType : true,
+					require : true,
+					onFocus : function(pn){
+						if (self.app.mobileview) setTimeout(function(){_scrollTo(pn, el.c.closest('.customscroll')), 200})
 					}
-
-					mdl.fastTemplate('addaddress', function(rendered){
-
-						new dialog({
-							html : rendered,
-
-							wrap : true,
-
-							success : function(d){
-
-								var currency = d.el.find('.currency').val();
-								var address = d.el.find('.address').val();
-
-								if(validate(currency, address)){
-
-
-									_self.add({
-										currency : currency,
-										address : address
-									})
-
-									return true;
-
-								}
-							},
-
-							clbk : function(_el){
-
-								var currency = _el.find('.currency');
-								var address = _el.find('.address');
-								var b = _el.find('.btn1');
-
-
-								var vl = function(){
-									var c = currency.val();
-									var a = address.val();
-
-									if(validate(c, a)){
-										b.removeClass('disabled')
-
-										return true;
-									}
-									else
-									{
-										b.addClass('disabled')
-										return false;
-									}
-								}
-
-								address.focus()
-								address.on('change', vl)
-								address.on('keyup', vl)
-
-								currency.on('change', vl)
-								currency.on('keyup', vl)
-
-								vl()
-							},
-
-							class : "one addaddressDialog zindex"
-						})
-
-					}, {
-					})
-				}
-
-				_self.removeEvent = function(){
-					var currency = $(this).closest('.addedAddress').attr('currency')
-					var address = $(this).closest('.addedAddress').attr('address')
-
-					_self.remove(currency, address)
-				}
-
-				_self.addedAddresses = function(){
-
-					/* 1F1tAaz5x1HUXrCNLbtMDqcw6o5GNn4xqX */
-
-					var h = '';
-
-					_.each(_self.value, function(v){
+				}),
+	
+				email : new Parameter({
+					name : 'Email',
+					placeholder : 'Email',
+					id : 'email',
+					type : "STRINGANY",
+					onType : true,
+	
+					onFocus : function(pn){
+						if (self.app.mobileview) setTimeout(function(){_scrollTo(pn, el.c.closest('.customscroll')), 200})
+					}
+				}),
+	
+				language : new Parameter({
+					name : self.app.localization.e('ulanguage'),
+					placeholder : self.app.localization.e('ulanguage'),
+					id : 'language',
+					type : "VALUES",
+					defaultValue : self.app.localization.key || 'en',
 					
-						if(!v || !v.currency) return
-
-						h += '<div class="addedAddressWrapper">'
-							h += '<div class="addedAddress table" currency="'+v.currency+'" address="'+v.address+'">'
-
-							h += 	'<div class="currencyWrapper">'	
-							h += 		v.currency.toUpperCase()
-							h += 	'</div>'
-
-							h += 	'<div class="addressWrapper">'	
-							h += 		v.address
-							h += 	'</div>'
-
-							h += 	'<div class="panelWrapper">'	
-							h += 		'<div class="item remove">'	
-							h += 			'<i class="far fa-times-circle"></i>'	
-							h += 		'</div>'
-							h += 	'</div>'
-
-							h += '</div>'
-						h += '</div>'
-					})
 					
-					_self.el.find('.addedAddressesWrapper').html(h)
-
-					_self.el.find('.addedAddressesWrapper .remove').on('click', _self.removeEvent)
-				}
-
-
-
-				_self.init = function(_el){
-
+					possibleValues : ['en', 'ru'],
+					possibleValuesLabels : ['English', 'Русский'],
+				}),
+	
+				about : new Parameter({
+					name : self.app.localization.e('uabout'),
+					id : 'about',
+					type : "TEXT",
+					onType : true,
+					
+					placeholder : self.app.localization.e('e133512')
+				}),
+	
+				site : new Parameter({
+					name : self.app.localization.e('uwebsite'),
+					id : 'site',
+					type : "STRINGANY",
+					onType : true,
+					value : '',
+					placeholder : self.app.localization.e('uwebsite'),
+					name : self.app.localization.e('uwebsite')
+				}),
+	
+				addresses : new function(){
+	
+					var _self = this;
+	
+					_self.id = 'addresses';
+					_self.name = self.app.localization.e('uaddresesd')
+					_self.value = [];
+	
 					_self.defaultValue = [];
-
-					_self.el = _el.find('.adressesInput')
-
-					_self.addedAddresses();
-
-					_self.el.find('.addaddress').on('click', _self.addDialog)
-				}	
-
-				_self.input = function(){
-					var h = ''
-
-					h += '<div class="adressesInput">'
-					h += 	'<div class="addaddressWrapper">'
-					h += 		'<div class="addaddress">'
-					h += 			'<i class="fas fa-plus"></i>'
-					h += 		'</div>'
-					h += 	'</div>'
-					h += 	'<div class="addedAddressesWrapper">'
-					h += 	'</div>'
-					h += '</div>'
-
-					return h;
-				}
-
-				return _self
-			},
+	
+					_self.remove = function(currency, address){
+						removeEqual(_self.value, {
+							currency : currency,
+							address : address
+						})
+	
+						if (_self._onChange)
+							_self._onChange(_self.value)
+	
+						_self.addedAddresses();
+					}
+	
+					_self.add = function(v){
+	
+	
+						_self.value.push(v)
+	
+						if (_self._onChange)
+							_self._onChange(_self.value)
+	
+						_self.addedAddresses();
+	
+					}
+	
+					_self.addDialog = function(){
+	
+						var validate = function(cur, address){
+	
+							if(address.length > 0){
+								return true
+							}
+							else
+							{
+								return false
+							}
+	
+							
+						}
+	
+						mdl.fastTemplate('addaddress', function(rendered){
+	
+							new dialog({
+								html : rendered,
+	
+								wrap : true,
+	
+								success : function(d){
+	
+									var currency = d.el.find('.currency').val();
+									var address = d.el.find('.address').val();
+	
+									if(validate(currency, address)){
+	
+	
+										_self.add({
+											currency : currency,
+											address : address
+										})
+	
+										return true;
+	
+									}
+								},
+	
+								clbk : function(_el){
+	
+									var currency = _el.find('.currency');
+									var address = _el.find('.address');
+									var b = _el.find('.btn1');
+	
+	
+									var vl = function(){
+										var c = currency.val();
+										var a = address.val();
+	
+										if(validate(c, a)){
+											b.removeClass('disabled')
+	
+											return true;
+										}
+										else
+										{
+											b.addClass('disabled')
+											return false;
+										}
+									}
+	
+									address.focus()
+									address.on('change', vl)
+									address.on('keyup', vl)
+	
+									currency.on('change', vl)
+									currency.on('keyup', vl)
+	
+									vl()
+								},
+	
+								class : "one addaddressDialog zindex"
+							})
+	
+						}, {
+						})
+					}
+	
+					_self.removeEvent = function(){
+						var currency = $(this).closest('.addedAddress').attr('currency')
+						var address = $(this).closest('.addedAddress').attr('address')
+	
+						_self.remove(currency, address)
+					}
+	
+					_self.addedAddresses = function(){
+	
+						/* 1F1tAaz5x1HUXrCNLbtMDqcw6o5GNn4xqX */
+	
+						var h = '';
+	
+						_.each(_self.value, function(v){
+						
+							if(!v || !v.currency) return
+	
+							h += '<div class="addedAddressWrapper">'
+								h += '<div class="addedAddress table" currency="'+v.currency+'" address="'+v.address+'">'
+	
+								h += 	'<div class="currencyWrapper">'	
+								h += 		v.currency.toUpperCase()
+								h += 	'</div>'
+	
+								h += 	'<div class="addressWrapper">'	
+								h += 		v.address
+								h += 	'</div>'
+	
+								h += 	'<div class="panelWrapper">'	
+								h += 		'<div class="item remove">'	
+								h += 			'<i class="far fa-times-circle"></i>'	
+								h += 		'</div>'
+								h += 	'</div>'
+	
+								h += '</div>'
+							h += '</div>'
+						})
+						
+						_self.el.find('.addedAddressesWrapper').html(h)
+	
+						_self.el.find('.addedAddressesWrapper .remove').on('click', _self.removeEvent)
+					}
+	
+	
+	
+					_self.init = function(_el){
+	
+						_self.defaultValue = [];
+	
+						_self.el = _el.find('.adressesInput')
+	
+						_self.addedAddresses();
+	
+						_self.el.find('.addaddress').on('click', _self.addDialog)
+					}	
+	
+					_self.input = function(){
+						var h = ''
+	
+						h += '<div class="adressesInput">'
+						h += 	'<div class="addaddressWrapper">'
+						h += 		'<div class="addaddress">'
+						h += 			'<i class="fas fa-plus"></i>'
+						h += 		'</div>'
+						h += 	'</div>'
+						h += 	'<div class="addedAddressesWrapper">'
+						h += 	'</div>'
+						h += '</div>'
+	
+						return h;
+					}
+	
+					return _self
+				},
+			
+			}
+		}
 
 		
-		}
 
 
 		var events = {
@@ -1132,6 +1135,8 @@ var test = (function(){
 			getdata : function(clbk, p){
 
 				//testletter()
+
+				initUserOptions()
 
 				ref = null
 				changedLoc = true;

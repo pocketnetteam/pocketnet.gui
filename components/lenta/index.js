@@ -420,7 +420,7 @@ var lenta = (function(){
 
 			authclbk : function(){
 
-				authblock = true;
+				/*authblock = true;
 
 				var allids = _.map(shareInitedMap, function(s, id){
 					return id;
@@ -439,7 +439,7 @@ var lenta = (function(){
 					
 					actions.subscribeLabels()
 
-				})				
+				})		*/		
 
 			},
 
@@ -460,14 +460,12 @@ var lenta = (function(){
 			},
 
 			repost : function(shareid){
-
-				actions.stateAction('_this', function(){
-
+				self.app.platform.sdk.user.stateAction(() => {
 					self.app.platform.ui.share({
 						repost : shareid
 					})
-					
-				}, shareid)
+				})
+				
 
 			},
 
@@ -818,59 +816,7 @@ var lenta = (function(){
 				
 			},*/
 
-			stateAction : function(link, clbk, txid){
-
-				self.app.user.isState(function(state){
-
-					if(state){
-						clbk()
-					}
-
-					else
-					{
-
-						if (_OpenApi){
-
-							var phref = 'https://'+self.app.options.url+'/post?openapi=true&s=' + txid
-		
-							if (self.app.ref){
-								phref += '&ref=' + self.app.ref
-							}
-		
-							window.open(phref, '_blank');
-		
-							return
-						}
-
-						self.nav.api.load({
-							open : true,
-							id : 'authorization',
-							inWnd : true,
-
-							essenseData : {
-
-								fast : true,
-								loginText : self.app.localization.e('llogin'),
-								successHref : link,
-								signInClbk : function(){
-
-									retry(function(){
-
-										return !authblock
-
-									}, function(){
-										if (clbk)
-											clbk()
-									})
-
-									
-								}
-							}
-						})
-					}
-
-				})
-			},
+			
 
 			destroyVideo : function(share, nr){
 				if (!players[share.txid]){
@@ -1379,15 +1325,8 @@ var lenta = (function(){
 				var share = self.psdk.share.get(id)
 
 				if (share){
-					
-					actions.stateAction('_this', function(){
 
-
-						if(self.app.platform.sdk.user.myaccauntdeleted()){
-							return
-						}
-
-
+					self.app.platform.sdk.user.stateAction(() => {
 						var userinfo = self.psdk.userInfo.get(share.address) || {
 							address : share.address,
 							addresses : [],
@@ -1406,10 +1345,9 @@ var lenta = (function(){
 								type: type
 							}
 						})
-	
+					})
 					
-	
-					}, share.txid)	
+				
 
 				}
 
@@ -1764,8 +1702,7 @@ var lenta = (function(){
 
 				if(!share) return
 
-				actions.stateAction('_this', function(){
-
+				self.app.platform.sdk.user.stateAction(() => {
 					var checkvisibility = app.platform.sdk.node.shares.checkvisibility(share);
 
 					var reputation = ((self.psdk.userInfo.get(share.address) || {}).reputation) || 0
@@ -1794,8 +1731,9 @@ var lenta = (function(){
 						})
 
 					}
-
 				})
+
+			
 
 			},
 
@@ -2538,10 +2476,9 @@ var lenta = (function(){
 
 				self.app.mobile.vibration.small()
 
-				actions.stateAction('_this', function(){
-
+				self.app.platform.sdk.user.stateAction(() => {
 					self.app.platform.sdk.node.shares.getbyid(id, function(){
-						if (s.address == self.app.user.address.value) return
+						if(s.address == self.app.user.address.value) return
 
 						if(self.app.platform.sdk.user.myaccauntdeleted()){
 							return
@@ -2560,44 +2497,18 @@ var lenta = (function(){
 									}
 								})
 							}, 300)
-
-							
-							
-
 						}
 
 						p.attr('value', value)
 						p.addClass('liked')
 
 						actions.like(s, value, function(r){
-							return
-							if(r){
-								
-
-								s.scnt || (s.scnt = 0)
-								s.score || (s.score = 0)
-
-								s.scnt++;
-								s.score = Number(s.score || 0) + Number(value);
-
-								var v = Number(s.score) / Number(s.scnt) 
-
-								p.find('.tstars').css('width', ((v / 5) * 100) + '%')
-								p.closest('.itemwr').find('.count span.v').html(v.toFixed(1))
-
-								renders.stars(s)
-
-							}
-							else
-							{
-								p.removeAttr('value')
-								p.removeClass('liked')
-							}
+							
 						})
 
 					})
+				})
 
-				}, id)
 
 
 			},
@@ -2667,9 +2578,8 @@ var lenta = (function(){
 				var txid = $(this).closest('.shareTable').attr('stxid')
 
 				var _el = $(this).closest('.share')
-
-				actions.stateAction('_this', function(){
-
+				
+				self.app.platform.sdk.user.stateAction(() => {
 					self.app.platform.api.actions.subscribeWithDialog(address, function(tx, error){
 						if(tx){
 							
@@ -2679,8 +2589,8 @@ var lenta = (function(){
 						}
 						
 					})
-
-				}, txid)
+				})
+				
 
 			},
 

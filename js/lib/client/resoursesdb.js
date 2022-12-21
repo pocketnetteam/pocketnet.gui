@@ -1,7 +1,7 @@
 ResoursesDB = function(storageName, version, storages){
     var self = this
     var db = null
-    var debugFlag = true
+    var debugFlag = false
     var initing = null
 
     let debugLog = () => {};
@@ -71,8 +71,6 @@ ResoursesDB = function(storageName, version, storages){
 
         return self.getdb().then(db => {
 
-            console.log("MAKE TRANSACTION")
-
             try{
                 const transaction = db.transaction(name, mode);
     
@@ -104,11 +102,9 @@ ResoursesDB = function(storageName, version, storages){
 
     self.clear = function(key, id){
 
-        console.log("MAKE CLEAR", key, id)
 
         return transaction(key).then(items => {
 
-            console.log('self.clear', key, id)
 
             const req = items.delete(id);
 
@@ -131,7 +127,6 @@ ResoursesDB = function(storageName, version, storages){
 
     self.clearMany = function(key, ids){
 
-        console.log('self.clearMany', key, ids)
         return Promise.all(_.map(ids, id => {
             return self.clear(key, id)
         }))
