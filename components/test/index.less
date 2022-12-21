@@ -68,7 +68,7 @@
 		}
 		
 		.pgroupIconWrapper{
-			margin-bottom: 6 * @rhythm;
+			margin-bottom: 4 * @rhythm;
 			
 			.pgroup{
 				height: 100%;
@@ -83,17 +83,15 @@
 			margin-bottom: 6 * @rhythm;
 		}
 
-		.uploadPhoto{
-			height: 60px;
-		}
 
 		.uploadTable{
 
+			display: flex;
+			align-items: center;
+
 			>div{
-				vertical-align: middle;
 				&.iconWrapper{
 
-					width : 85px;
 					.usericon{
 						width : 60px;
 						height: 60px;
@@ -103,6 +101,7 @@
 				}
 
 				&.label{
+					margin-left: 2 * @rhythm;
 					font-weight: 700;
 					font-size: 0.9em;
 					color : rgb(var(--color-txt-ac));
@@ -492,10 +491,9 @@
 		.uploadTable{
 			width: auto;
 			margin : 0 auto;
+			
 			>div{
-				&.label{
-					display : none;
-				}
+			
 
 				&.iconWrapper{
 					width: 60px;

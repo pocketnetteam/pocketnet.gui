@@ -52,7 +52,7 @@
   display: block;
 }
 #test .userPanel .pgroupIconWrapper {
-  margin-bottom: 3em;
+  margin-bottom: 2em;
 }
 #test .userPanel .pgroupIconWrapper .pgroup {
   height: 100%;
@@ -65,14 +65,9 @@
 #test .userPanel .pgroup {
   margin-bottom: 3em;
 }
-#test .userPanel .uploadPhoto {
-  height: 60px;
-}
-#test .userPanel .uploadTable > div {
-  vertical-align: middle;
-}
-#test .userPanel .uploadTable > div.iconWrapper {
-  width: 85px;
+#test .userPanel .uploadTable {
+  display: flex;
+  align-items: center;
 }
 #test .userPanel .uploadTable > div.iconWrapper .usericon {
   width: 60px;
@@ -80,6 +75,7 @@
   line-height: 60px;
 }
 #test .userPanel .uploadTable > div.label {
+  margin-left: 1em;
   font-weight: 700;
   font-size: 0.9em;
   color: rgb(var(--color-txt-ac));
@@ -355,9 +351,6 @@
 .wnd.testwindow #test .uploadTable {
   width: auto;
   margin: 0 auto;
-}
-.wnd.testwindow #test .uploadTable > div.label {
-  display: none;
 }
 .wnd.testwindow #test .uploadTable > div.iconWrapper {
   width: 60px;

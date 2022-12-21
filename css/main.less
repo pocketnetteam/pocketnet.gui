@@ -8581,13 +8581,23 @@ html.pipmode{
 		textarea,
 		input{
 			width: 100%;
-			padding: @rhythm;
+			padding: 0 @rhythm;
 			border-radius: 6px;
 
 			&.error{
 				border : 1px solid rgb(var(--color-bad));
 			}
 		}
+
+        select,
+		input{
+            line-height: 3em;
+        }
+
+        textarea{
+            padding-top: 1.5 * @rhythm;
+            padding-bottom: 1.5 * @rhythm;
+        }
 
 		.error{
 			select,
@@ -8599,14 +8609,14 @@ html.pipmode{
 		}
 
 		select{
-			height: 38px;
+			height: 3em;
 			padding-right: 25px;
 			width: auto;
 		}
 
 		.vc_valuecustom{
 			width: 100%;
-			font-size: 0.8em;
+            height: 3em;
 		}
 
 		.vc_valuecustom,
@@ -8629,6 +8639,7 @@ html.pipmode{
 			}
 		}
 		
+       
 	}
 }
 

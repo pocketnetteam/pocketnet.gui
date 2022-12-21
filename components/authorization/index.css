@@ -207,12 +207,10 @@
   }
   #authorization .caption {
     margin-top: 0.5em;
-    font-size: 2em;
-    font-weight: 700;
-    text-align: center;
+    font-size: 3em;
   }
   #authorization .caption.cpt2 {
-    font-size: 2em;
+    font-size: 3em;
   }
   #authorization button {
     width: 100%;
@@ -220,9 +218,6 @@
   }
   #authorization button.toRegistration {
     min-width: 0;
-  }
-  #authorization .formh {
-    text-align: center;
   }
   #authorization .keytable {
     display: block;
@@ -251,6 +246,10 @@
   #authorization .keytable > div input {
     border-radius: 3px;
     padding-right: 80px !important;
+  }
+  .wnd.authwindow #authorization .work {
+    padding-left: 0em !important;
+    padding-right: 0em !important;
   }
   .wnd.authwindow #authorization .topCaption {
     padding-left: 1em;

@@ -142,7 +142,7 @@ var test = (function(){
 
 				renders.icon();
 
-				renders.options();
+				renders.icon(renders.options);
 			},
 			ref : function(){
 
@@ -169,8 +169,6 @@ var test = (function(){
 
 					actions.loading(false)
 
-					//el.upanel.removeClass('loading')
-					//el.c.find('.userPanel').removeClass('loading')
 
 					topPreloader2(100)
 
@@ -521,7 +519,6 @@ var test = (function(){
 
 			clear : function(){
 				actions.userOptions();
-				renders.caption();
 			},
 
 			userOptions : function(){
@@ -673,6 +670,7 @@ var test = (function(){
 				type : "STRINGANY",
 				onType : true,
 				value : '',
+				placeholder : self.app.localization.e('uwebsite'),
 				name : self.app.localization.e('uwebsite')
 			}),
 
@@ -1015,12 +1013,6 @@ var test = (function(){
 				})
 			},
 
-			caption : function(unspent, clbk){
-
-				return
-
-			},
-
 			address : function(){
 				el.c.find('.adr').html(bitcoin.payments[self.app.platform.addressType]({ pubkey: self.app.user.key.value}))
 			}
@@ -1064,24 +1056,16 @@ var test = (function(){
 
 		var make = function(){
 
-			renders.caption()
 
-			renders.icon();
+			renders.icon(renders.options);
 
-			renders.options();
-
-			/*self.sdk.node.transactions.get.unspent(function(unspent){
-				renders.unspent(unspent)
-			})*/
-
-
-			self.app.platform.ws.messages.transaction.clbks.utemp = function(data){
+			/*self.app.platform.ws.messages.transaction.clbks.utemp = function(data){
 				if(data.temp){
 					if(data.temp.type == 'userInfo'){
 						actions.upanel()
 					}
 				}
-			}
+			}*/
 		}
 
 		var prepare = function(){

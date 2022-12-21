@@ -230,22 +230,28 @@
 
 			.subcaption{
 				text-align: center;
+				display: none;
 			}
+
+
 
 			.uploadTable{
 				width: auto;
 				margin : 0 auto;
+				flex-direction: column;
 				>div{
+
 					&.label{
-						display : none;
+						margin-top: 2 * @rhythm;
+						margin-left: 0;
 					}
-
+					
 					&.iconWrapper{
-						width: 60px;
-						position: relative;
-
-						.plissingCnt{
-							left : 45px;
+						width: 130px;
+						.usericon{
+							width : 130px;
+							height: 130px;
+							line-height: 130px;
 						}
 					}
 				}
@@ -276,15 +282,7 @@
 					margin-bottom: @rhythm;
 				}
 
-				.uploadPhoto{
-					height: 130px;
-				}
-
-				.uploadTable>div.iconWrapper .usericon{
-					width: 130px;
-					height: 130px;
-					line-height: 130px;
-				}
+				
 			}
 			.parameterMaketWrapper[parameter="addresses"]{
 				display: none;

@@ -1000,8 +1000,6 @@ var registration = (function(){
 
 			signin : function(clbk){
 				self.user.signin(k.mnemonicKey, function(state){
-
-
 					if (clbk)
 						clbk()
 
@@ -1191,7 +1189,7 @@ var registration = (function(){
 				actions.subscribe(address);
 			},
 
-			width : function(){
+			/*width : function(){
 
 
 				if(!current) return
@@ -1210,7 +1208,7 @@ var registration = (function(){
 
 				line.width(w * _.toArray(steps).length)
 			
-			}
+			}*/
 		}
 
 		var renders = {
@@ -1435,37 +1433,32 @@ var registration = (function(){
 					essenseData : {
 						wizard : true,
 						panel : el.panel,
-						prepresave : function(){
-
-						},
+					
 						presave : function(clbk){
 
-								actions.waitgeneration(function(){
+							actions.waitgeneration(function(){
 
 
-									self.app.user.isState(function(state){
-	
-										self.sdk.registrations.add(k.mainAddress, 1)
-	
-	
-										if(!state){
-	
-											actions.signin(function(){
-												if(clbk) clbk()
-											})	
-	
-										}
-										else{
-											self.sdk.registrations.add(k.mainAddress, 1)
-	
+								self.app.user.isState(function(state){
+
+									self.sdk.registrations.add(k.mainAddress, 1)
+
+
+									if(!state){
+
+										actions.signin(function(){
 											if(clbk) clbk()
-										}
-									})
-									
+										})	
+
+									}
+									else{
+										self.sdk.registrations.add(k.mainAddress, 1)
+
+										if(clbk) clbk()
+									}
 								})
 								
-							
-
+							})
 
 						},
 
@@ -1482,6 +1475,7 @@ var registration = (function(){
 							state.save()
 
 							actions.next()
+
 						}
 					},
 					
@@ -1511,7 +1505,7 @@ var registration = (function(){
 
 		var initEvents = function(){
 			
-			window.addEventListener('resize', events.width)
+			//window.addEventListener('resize', events.width)
 
 			el.c.find('.gotohasaccount').on('click', function(){
 
@@ -1614,7 +1608,7 @@ var registration = (function(){
 			},
 
 			destroy : function(){
-				window.removeEventListener('resize', events.width)
+				//window.removeEventListener('resize', events.width)
 
 				self.app.el.app.removeClass('default-scroll')
 

@@ -118,8 +118,7 @@ var authorization = (function(){
 
 					_p.href = essenseData.successHref;
 
-					if(!_p.href && primary)
-
+					if(!_p.href && primary){
 						_p.href = function(){
 
 							if(self.app.user.validate()){
@@ -145,26 +144,23 @@ var authorization = (function(){
 							}
 
 						}
+					}
 
-						_p.nav = essenseData.nav || {};		
+					_p.nav = essenseData.nav || {};		
 
 
-						if(typeof _p.nav.reload == 'undefined')
-							_p.nav.reload = false
+					if(typeof _p.nav.reload == 'undefined') _p.nav.reload = false
 
-						_p.clbk = function(){
-							topPreloader(100);
+					_p.clbk = function(){
 
-							var close = deep(initialParameters, 'container.close')
+						var close = deep(initialParameters, 'container.close')
 
-							if (close)
-								close();
+						if (close)
+							close();
 
-							
-
-							if (essenseData.signInClbk)
-								essenseData.signInClbk();
-						}
+						if (essenseData.signInClbk)
+							essenseData.signInClbk();
+					}
 
 
 					if(deep(essenseData, 'successHref') == '_this'){

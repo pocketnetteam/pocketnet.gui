@@ -183,20 +183,24 @@
 }
 #registration .mWrapper #test .subcaption {
   text-align: center;
+  display: none;
 }
 #registration .mWrapper #test .uploadTable {
   width: auto;
   margin: 0 auto;
+  flex-direction: column;
 }
 #registration .mWrapper #test .uploadTable > div.label {
-  display: none;
+  margin-top: 1em;
+  margin-left: 0;
 }
 #registration .mWrapper #test .uploadTable > div.iconWrapper {
-  width: 60px;
-  position: relative;
+  width: 130px;
 }
-#registration .mWrapper #test .uploadTable > div.iconWrapper .plissingCnt {
-  left: 45px;
+#registration .mWrapper #test .uploadTable > div.iconWrapper .usericon {
+  width: 130px;
+  height: 130px;
+  line-height: 130px;
 }
 #registration .mWrapper #test .parameterMaketWrapper[parameter="about"],
 #registration .mWrapper #test .parameterMaketWrapper[parameter="site"],
@@ -218,14 +222,6 @@
 }
 #registration .mWrapper #test .userPanel .pgroup {
   margin-bottom: 0.5em;
-}
-#registration .mWrapper #test .userPanel .uploadPhoto {
-  height: 130px;
-}
-#registration .mWrapper #test .userPanel .uploadTable > div.iconWrapper .usericon {
-  width: 130px;
-  height: 130px;
-  line-height: 130px;
 }
 #registration .mWrapper #test .parameterMaketWrapper[parameter="addresses"] {
   display: none;

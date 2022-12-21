@@ -6942,7 +6942,7 @@ html.pipmode .matrixchatwrapper {
 #application .parameter textarea,
 #application .parameter input {
   width: 100%;
-  padding: 0.5em;
+  padding: 0 0.5em;
   border-radius: 6px;
 }
 #application .parameter select.error,
@@ -6950,19 +6950,27 @@ html.pipmode .matrixchatwrapper {
 #application .parameter input.error {
   border: 1px solid rgb(var(--color-bad));
 }
+#application .parameter select,
+#application .parameter input {
+  line-height: 3em;
+}
+#application .parameter textarea {
+  padding-top: 0.75em;
+  padding-bottom: 0.75em;
+}
 #application .parameter .error select,
 #application .parameter .error textarea,
 #application .parameter .error input {
   border: 1px solid rgb(var(--color-bad));
 }
 #application .parameter select {
-  height: 38px;
+  height: 3em;
   padding-right: 25px;
   width: auto;
 }
 #application .parameter .vc_valuecustom {
   width: 100%;
-  font-size: 0.8em;
+  height: 3em;
 }
 #application .parameter .vc_valuecustom .vc_textInput,
 #application .parameter .vc_valuecustom_multibig .vc_textInput {
