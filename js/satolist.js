@@ -9247,7 +9247,7 @@ Platform = function (app, listofnodes) {
                     return
                 }
 
-                self.psdk.nameAddress(encodeURIComponent(name)).then(() => {
+                self.psdk.nameAddress.load(encodeURIComponent(name)).then(() => {
                     if (clbk) {
                         clbk(true)
                     }

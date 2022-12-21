@@ -128,9 +128,10 @@
 #test .userPanel .upanel {
   margin-top: 1em;
   overflow: hidden;
+  display: flex;
+  align-items: center;
 }
 #test .userPanel .upanel > div {
-  float: left;
   margin-right: 1em;
 }
 #test .userPanel .upanel > div button {

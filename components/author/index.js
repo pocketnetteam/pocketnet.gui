@@ -17,6 +17,8 @@ var author = (function(){
 		var actions = {
 			subscribeLabel : function(){
 
+				if(!author) return
+
 				var user = self.app.user
 
 				var my = (user.address.value && author.address == user.address.value)

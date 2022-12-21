@@ -130,6 +130,10 @@ var pSDK = function ({ app, api, actions }) {
 
     var clearfromdb = function (dbname, ids) {
 
+        if (!dbname || !dbmeta[dbname]) return Promise.resolve()
+
+        console.log('clearfromdb', dbname, ids)
+
         if (dbmeta[dbname].authorized) ids = _.map(ids, id => {
             return id + '_' + app.user.address.value
         })
@@ -142,6 +146,10 @@ var pSDK = function ({ app, api, actions }) {
     }
 
     var clearallfromdb = function (dbname) {
+
+        if (!dbname || !dbmeta[dbname]) return Promise.resolve()
+        
+        
         return self.db.clearAll(dbname)
     }
 
@@ -506,9 +514,11 @@ var pSDK = function ({ app, api, actions }) {
 
                 _.each(account.getTempActions(k), (alias) => {
 
+
                     if (k == type){
 
                         if(helpId){
+
 
 
                             if (!object && (alias.id == helpId || alias.actionId == helpId)) {
@@ -694,16 +704,20 @@ var pSDK = function ({ app, api, actions }) {
 
         listener: function (exp, address, status) {
 
+            console.log("LISTEN", exp, address, status)
+
             if (status == 'completed') {
 
                 objects['userInfoFull'][address] = this.applyAction(objects['userInfoFull'][address], exp)
 
-                self.clear.db('userInfo', address)
-                ///self.clear
+                this.cleardb(address)
+
             }
         },
 
         applyAction: function (object, exp) {
+
+            console.log('applyAction', object, exp)
 
             if (!object) {
 
@@ -1986,12 +2000,20 @@ var pSDK = function ({ app, api, actions }) {
 
             _.each(keys, (k) => {
 
+                console.log('cleardb', k, key)
+
                 if (key) {
-                    clearfromdb(k, [key])
-                    clearfromdb(k + 'FB', [key])
+                    clearfromdb(k, [key]).catch(e => {
+                        console.error(e)
+                    })
+                    clearfromdb(k + 'FB', [key]).catch(e => {
+                        console.error(e)
+                    })
                 }
 
-                clearallfromdb(k + 'Request')
+                clearallfromdb(k + 'Request').catch(e => {
+                    console.error(e)
+                })
             })
         },
 

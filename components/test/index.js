@@ -26,8 +26,6 @@ var test = (function(){
 
 		var saving = false
 
-		var namereg = /[a-zA-Z0-9_]{1,20}/
-
 		var getrefname = function(clbk){
 			if (self.app.ref){
 				self.sdk.users.get(self.app.ref, function(){
@@ -54,13 +52,9 @@ var test = (function(){
 
 					if(loading){
 						globalpreloader(true)
-						//el.c.find('.userPanel').addClass('loading')
-						//el.upanel.addClass('loading')
 					}
 					else{
 						globalpreloader(false)
-						//el.c.find('.userPanel').removeClass('loading')
-						//el.upanel.removeClass('loading')
 					}
 					
 				}
@@ -68,8 +62,6 @@ var test = (function(){
 			},
 
 			saveemail : function(email, clbk){
-			
-
 				var _p = {
 					Email : email,
 					Lang : self.app.localization.key || 'en'
@@ -117,7 +109,7 @@ var test = (function(){
 						},
 
 						error : function(){
-							topPreloader(100)
+							topPreloader2(100)
 		
 							if (clbk)
 								clbk();
@@ -180,7 +172,7 @@ var test = (function(){
 					//el.upanel.removeClass('loading')
 					//el.c.find('.userPanel').removeClass('loading')
 
-					topPreloader(100)
+					topPreloader2(100)
 
 					saving = false
 
@@ -244,11 +236,11 @@ var test = (function(){
 
 				var userInfo = new UserInfo();
 
-					userInfo.name.set(trim(tempInfo.name));
-					userInfo.language.set(tempInfo.language);
-					userInfo.about.set(trim(tempInfo.about));
-					userInfo.site.set(trim(tempInfo.site));
-					userInfo.image.set(tempInfo.image);
+					userInfo.name.set(trim(superXSS(tempInfo.name)));
+					userInfo.language.set(superXSS(tempInfo.language));
+					userInfo.about.set(trim(superXSS(tempInfo.about)));
+					userInfo.site.set(trim(superXSS(tempInfo.site)));
+					userInfo.image.set(superXSS(tempInfo.image));
 					userInfo.addresses.set(tempInfo.addresses);
 					userInfo.ref.set(deep(ref, 'address') || '');
 
@@ -291,7 +283,7 @@ var test = (function(){
 				renders.termsconditions(function(){
 					saving = true
 
-					topPreloader(30)
+					topPreloader2(30)
 
 				
 
@@ -304,7 +296,7 @@ var test = (function(){
 
 						if(!exist || (exist == self.app.user.address.value)){
 
-							topPreloader(50)
+							topPreloader2(50)
 
 							ed.presave(function(){
 
@@ -314,30 +306,18 @@ var test = (function(){
 							
 								el.c.find('.errorname').fadeOut();
 
-								topPreloader(70)
+								topPreloader2(70)
+
 								userInfo.uploadImage(self.app, function(err){
 
 									if (err){
-										topPreloader(100)
-
-
+										topPreloader2(100)
+										saving = false
 										actions.loading(false)
 
 										sitemessage("An error occurred while loading images")
-										saving = false
+										
 										return 
-									}
-
-									if (ed.makeuser){
-
-										topPreloader(100)
-
-										actions.loading(false)
-
-										ed.makeuser(userInfo)
-										saving = false
-										return
-
 									}
 
 									var email = tempInfo.email;
@@ -346,67 +326,47 @@ var test = (function(){
 										actions.saveemail(email);
 									}
 
+									self.app.platform.actions.addActionAndSendIfCan(userInfo).then(action => {
 
-									self.sdk.node.transactions.create.commonFromUnspent(
+										successCheck()
 
-										userInfo,
+										//self.psdk.userInfo.clearAll(self.user.address.value)
 
-										function(tx, error){
-
-
-											if(!tx){
-
-												saving = false;
-
-												self.app.platform.errorHandler(error, true)	
+										tempInfo = _.clone(self.psdk.userInfo.getmy() || {})
 												
-												actions.loading(false)
+										actions.upanel()
 
-												topPreloader(100)
+										actions.ref()
 
+										self.closeContainer()
+
+										self.app.reloadModules(function(){
+
+											if (ed.presuccess){
+												ed.presuccess(allclbk)
 											}
-											else
-											{
-
-												successCheck()
-
-												self.psdk.userInfo.clearAll(self.user.address.value)
-
-
-												//// TODO_REF_ACTIONS
-												
-												tempInfo = _.clone(tx)
-												
-												actions.upanel()
-
-												actions.ref()
-
-												self.closeContainer()
-												
-
-												//self.app.platform.sdk.users.getone(self.app.user.address.value, function(){
-
-												self.app.reloadModules(function(){
-
-													if (ed.presuccess){
-														ed.presuccess(allclbk)
-													}
-													else{
-														allclbk()
-													}
-			
-												})
-												//})
-												
+											else{
+												allclbk()
 											}
+	
+										})
 
-										},
+									}).catch(e => {
 
-										{
-											relay : ed.relay? ed.relay() : false
-										}
+										console.error(e)
+
+										self.app.platform.errorHandler(e, true)	
+
+									}).finally(() => {
+
+										saving = false;
+										actions.loading(false)
+										topPreloader2(100)
+
+									})
+
+
 									
-									)
 								})
 
 							})
@@ -415,10 +375,8 @@ var test = (function(){
 						else
 						{
 							saving = false
-							
 							actions.loading(false)
-
-							topPreloader(100)
+							topPreloader2(100)
 
 							var txt = self.app.localization.e('nametaken')
 
@@ -469,7 +427,7 @@ var test = (function(){
 					return
 				}
 
-				topPreloader(20);
+				topPreloader2(20);
 
 				var images = [{
 					original : file.base64,
@@ -515,7 +473,7 @@ var test = (function(){
 								}
 								else
 								{
-									topPreloader(100);
+									topPreloader2(100);
 								}
 
 								

@@ -154,18 +154,20 @@ topPreloader2 = function(percent, text){
         
     }
 
-    el.removeClass('complete');
-
-    var inip = el.attr('percent') || 0;
-
-    el.attr('percent', percent); 
-
-    div.width((percent) + "%")
+    window.requestAnimationFrame(() => {
+        el.removeClass('complete');
+        el.attr('percent', percent); 
+        div.width((percent) + "%")
+    })
+    
 
     if(percent <= 0 || percent >= 100){
+        window.requestAnimationFrame(() => {
 
-        el.addClass('complete');
-        el.attr('percent', 0); 
+            el.addClass('complete');
+            el.attr('percent', 0);  
+
+        })
 
         setTimeout(function(){
 

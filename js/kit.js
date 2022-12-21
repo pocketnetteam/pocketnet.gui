@@ -2115,6 +2115,14 @@ pUserInfo = function(){
 	self.blocking = [];
 	self.regdate = new Date()
 
+	self.subscribers_count = 0
+	self.subscribes_count = 0
+	self.blockings_count = 0
+	self.likers_count = 0
+
+	self.flags = {}
+	self.firstFlags = {}
+
 	self.address = ''
 
 	self.rc = 0;
@@ -2192,9 +2200,22 @@ pUserInfo = function(){
 		v.r = self.ref;
 		v.rc = self.rc
 		v.b = JSON.stringify(self.addresses || [])
-
 		v.adr = self.address
 		v.k = self.keys.join(',')
+
+
+		v.reputation = self.reputation
+		v.subscribers = _.clone(self.subscribers)
+		v.subscribes = _.clone(self.subscribes)
+		v.recomendedSubscribes = _.clone(self.recomendedSubscribes)
+		v.blocking = _.clone(self.blocking)
+		v.flags = _.clone(self.flags)
+		v.firstFlags = _.clone(self.firstFlags)
+
+		v.subscribers_count = self.subscribers_count
+		v.subscribes_count = self.subscribes_count
+		v.blockings_count = self.blockings_count
+		v.likers_count = self.likers_count
 
 		return v
 	}

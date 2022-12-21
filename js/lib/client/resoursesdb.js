@@ -1,7 +1,7 @@
 ResoursesDB = function(storageName, version, storages){
     var self = this
     var db = null
-    var debugFlag = false
+    var debugFlag = true
     var initing = null
 
     let debugLog = () => {};
@@ -71,31 +71,44 @@ ResoursesDB = function(storageName, version, storages){
 
         return self.getdb().then(db => {
 
+            console.log("MAKE TRANSACTION")
 
+            try{
+                const transaction = db.transaction(name, mode);
     
-            const transaction = db.transaction(name, mode);
+                transaction.onsuccess = function (data) {
+                    debugLog('PCryptoStorage TRANSACTION finished', data);
+                };
+        
+                transaction.onabort = function (data) {
+                    debugLog('PCryptoStorage TRANSACTION abort', data.target.error);
+                }
+        
+                transaction.onerror = function (data) {
+                    debugLog('PCryptoStorage TRANSACTION error', data.target.error);
+                };
     
-            transaction.onsuccess = function (data) {
-                debugLog('PCryptoStorage TRANSACTION finished', data);
-            };
-    
-            transaction.onabort = function (data) {
-                debugLog('PCryptoStorage TRANSACTION abort', data.target.error);
+                const items = transaction.objectStore(name);
+
+                return Promise.resolve(items)
+
             }
-    
-            transaction.onerror = function (data) {
-                debugLog('PCryptoStorage TRANSACTION error', data.target.error);
-            };
+            catch(e){
+                console.error(e)
+                return Promise.reject(e)
+            }
 
-            const items = transaction.objectStore(name);
-
-            return Promise.resolve(items)
         })
 
     }
 
     self.clear = function(key, id){
+
+        console.log("MAKE CLEAR", key, id)
+
         return transaction(key).then(items => {
+
+            console.log('self.clear', key, id)
 
             const req = items.delete(id);
 
@@ -117,9 +130,11 @@ ResoursesDB = function(storageName, version, storages){
     }
 
     self.clearMany = function(key, ids){
-        return Promise.all(ids, id => {
+
+        console.log('self.clearMany', key, ids)
+        return Promise.all(_.map(ids, id => {
             return self.clear(key, id)
-        })
+        }))
     }
 
     self.clearAll = function(key){

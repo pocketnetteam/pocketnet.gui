@@ -278,7 +278,7 @@ var Action = function(account, object, priority){
 
     var trigger = function(){
         
-        if(options.change) options.change(action, account)
+        //if(options.change) options.change(action, account)
 
         account.trigger(self)
 
@@ -534,47 +534,55 @@ var Action = function(account, object, priority){
         return new Promise((resolve, reject) => {
 
 
-            account.parent.app.platform.sdk.node.transactions.get.tx(self.transaction, (data, error = {}) => {
+            retry(function(){
+                return account.parent.app.platform.currentBlock
+            }, function(){
 
-                data || (data = {})
+                account.parent.app.platform.sdk.node.transactions.get.tx(self.transaction, (data, error = {}) => {
 
-                if (error.code == -5 || error.code == -8){ /// check codes (transaction not apply, resend action)
-                    self.sent = null
-                    self.transaction = null
+                    data || (data = {})
 
-                    self.attempts || (self.attempts = 0)
-                    self.attempts ++ 
+                    console.log("CHECK", data)
 
-                    if (self.attempts > 2){
-                        self.rejected = 'actions_rejectedFromNodes'
+                    if (error.code == -5 || error.code == -8){ /// check codes (transaction not apply, resend action)
+                        self.sent = null
+                        self.transaction = null
+
+                        self.attempts || (self.attempts = 0)
+                        self.attempts ++ 
+
+                        if (self.attempts > 2){
+                            self.rejected = 'actions_rejectedFromNodes'
+
+                            if(options.change) options.change(self, account)
+
+                            trigger(self)
+
+
+                            return reject(self.rejected)
+                        }
+
+                        return reject('newAttempt')
+                    }
+
+                    if (data.confirmations > 0){
+                        self.completed = true
 
                         if(options.change) options.change(self, account)
 
+                        account.addUnspentFromTransaction(data)
+                        account.removeInputsFromTransaction(data)
+
                         trigger(self)
 
+                        return resolve()
 
-                        return reject(self.rejected)
                     }
 
-                    return reject('newAttempt')
-                }
+                    return reject('actions_waitConfirmation')
 
-                if (data.confirmations > 0){
-                    self.completed = true
 
-                    if(options.change) options.change(self, account)
-
-                    account.addUnspentFromTransaction(data)
-                    account.removeInputsFromTransaction(data)
-
-                    trigger(self)
-
-                    return resolve()
-
-                }
-
-                return reject('actions_waitConfirmation')
-
+                })
 
             })
         })
