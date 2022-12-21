@@ -576,6 +576,10 @@
   -webkit-box-orient: vertical;
 }
 #registration .mWrapper .bloggers .usersHorizontal .wrk .aboutWrapper.aboutWrapperShort {
+  padding: 0;
+  height: 38px;
+  max-width: 100%;
+  font-size: 0.9em;
   -webkit-line-clamp: 2;
   line-clamp: 2;
 }
@@ -728,7 +732,6 @@
 }
 #registration .mWrapper .bloggers .usersHorizontal .user .addressWrapper .userbody .name {
   font-weight: 600;
-  font-size: 0.9em;
   max-width: 100px;
   text-overflow: ellipsis;
   white-space: nowrap;
