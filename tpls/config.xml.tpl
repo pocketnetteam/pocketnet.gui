@@ -114,7 +114,14 @@
 
     <access allows-arbitrary-loads-for-media="true" allows-arbitrary-loads-in-web-content="true" allows-local-networking="true" minimum-tls-version="TLSv1.1" origin="*" requires-certificate-transparency="true" requires-forward-secrecy="false" />
     <plugin name="cordova-plugin-device" spec="~1.1.1" />
-    <plugin name="cordova-plugin-fullscreen" spec="^1.3.0" />
+    
+
+    <% if(!store) {%>
+
+        <plugin name="cordova-plugin-apkupdater" spec="~4.0.0" />
+
+    <% } %>
+
     <platform name="ios">
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
@@ -173,7 +180,7 @@
             <application android:usesCleartextTraffic="true" android:requestLegacyExternalStorage="true"/>
         </edit-config>
 
-        <config-file target="AndroidManifest.xml" parent="/manifest">
+        <edit-config file="AndroidManifest.xml" target="/manifest/uses-permission" xmlns:android="http://schemas.android.com/apk/res/android">
             <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
             <uses-permission android:name="android.permission.RECORD_AUDIO" />
             <uses-permission android:name="android.permission.CAPTURE_AUDIO_OUTPUT" />
@@ -183,7 +190,7 @@
             <% if(store) {%>
                 <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" tools:node="remove" />
             <% } %>
-        </config-file>
+        </edit-config>
 
         <edit-config file="AndroidManifest.xml" target="/manifest/application/activity[@android:name='MainActivity']" mode="merge">
             <activity android:windowSoftInputMode="adjustPan" android:supportsPictureInPicture="true"/>
@@ -213,10 +220,5 @@
         </host>
 
     </universal-links>
-    <% if(!store) {%>
-
-        <hook type="before_build" src="hooks/before-build.js" />
-        <hook type="after_build" src="hooks/after-build.js" />
-
-    <% } %>
+    
 </widget>
