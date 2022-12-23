@@ -511,8 +511,7 @@ Nav = function(app)
 		},
 		
 		open : function(p){
-
-
+			
 			if(!p) p = {};
 
 				p.clbk || (p.clbk = emptyFunction);
@@ -885,6 +884,7 @@ Nav = function(app)
 			})
 		},
 		load : function(p){
+
 			if(!p) p = {};
 
 			if(!p.href && !p.id) {
@@ -1170,12 +1170,26 @@ Nav = function(app)
 							blockclick = false
 						}, 800)
 
-						var href = core.thisSiteLink( $(this).attr('href') );
+						var href = core.thisSiteLink( $(this).attr('href') ) || '';
+						var handler = $(this).attr('handler') || null;
+						var replace = $(this).attr('replace') || false;
+						var force = $(this).attr('replace') || false;
+						var mobilepreview = $(this).attr('mobilepreview') || null;
 
-						var handler = $(this).attr('handler') || null
-						var replace = $(this).attr('replace') || false
-						var force = $(this).attr('replace') || false
-						var mobilepreview = $(this).attr('mobilepreview') || null
+						var arrHref = href.split("?");
+
+						if (arrHref && arrHref[0] === 'welcome' && app.user.address && app.user.address.value){
+
+							const params = new URLSearchParams('?' + arrHref[1]);
+
+							app.platform.matrixchat.connectWith = params.get('connect');
+			
+							app.platform.matrixchat.joinRoom = params.get('publicroom');
+			
+							app.platform.matrixchat.connect();
+			
+							return false;
+						}
 
 						if (mobilepreview && app.mobileview){
 
@@ -1465,6 +1479,7 @@ Nav = function(app)
 
 	self.get = {
 		href : function(){
+
 			var loc =  window.location;  
 
 			var pathname = protocolAction('pathname')
@@ -1495,7 +1510,6 @@ Nav = function(app)
 	}
 
 	self.init = function(p, clbk){
-
 
 		if(!p) p = {};
 

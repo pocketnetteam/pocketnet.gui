@@ -63,7 +63,7 @@ public class ForegroundService extends Service {
 
     // Partial wake lock to prevent the app from going to sleep when locked
     private PowerManager.WakeLock wakeLock;
-
+    public static int FOREGROUND_SERVICE_TYPE_MICROPHONE;
     /**
      * Allow clients to call on to the service.
      */
@@ -126,8 +126,18 @@ public class ForegroundService extends Service {
         boolean isSilent    = settings.optBoolean("silent", false);
 
         if (!isSilent) {
-            startForeground(NOTIFICATION_ID, makeNotification());
+            //startForeground(notification, FOREGROUND_SERVICE_TYPE_MICROPHONE);
+            //startForeground(NOTIFICATION_ID, makeNotification());
+         
+           if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                //LOG.d("My  debug","if");
+                //startForeground(NOTIFICATION_ID,  makeNotification(), FOREGROUND_SERVICE_TYPE_MICROPHONE);
+            } else {
+                //LOG.d("My  debug","else");
+                startForeground(NOTIFICATION_ID, makeNotification());
+            }
         }
+     
 
         PowerManager pm = (PowerManager)getSystemService(POWER_SERVICE);
 
@@ -240,7 +250,7 @@ public class ForegroundService extends Service {
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             PendingIntent contentIntent = PendingIntent.getActivity(
                     context, NOTIFICATION_ID, intent,
-                    PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+                    PendingIntent.FLAG_UPDATE_CURRENT| PendingIntent.FLAG_IMMUTABLE);
 
 
             notification.setContentIntent(contentIntent);
