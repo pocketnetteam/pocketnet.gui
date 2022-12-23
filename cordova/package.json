@@ -112,7 +112,7 @@
       "cordova-plugin-firebasex": {
         "FIREBASE_ANALYTICS_COLLECTION_ENABLED": "false",
         "FIREBASE_PERFORMANCE_COLLECTION_ENABLED": "false",
-        "FIREBASE_CRASHLYTICS_COLLECTION_ENABLED": "false",
+        "FIREBASE_CRASHLYTICS_COLLECTION_ENABLED": "true",
         "FIREBASE_FCM_AUTOINIT_ENABLED": "true",
         "IOS_USE_PRECOMPILED_FIRESTORE_POD": "false",
         "ANDROID_ICON_ACCENT": "#FF00FFFF",
@@ -147,16 +147,16 @@
       "cordova-plugin-android-packagemanager": {},
       "cordova-plugin-file-transfer": {},
       "cordova-plugin-pip": {},
-      "cordova-plugin-media": {
-        "KEEP_AVAUDIOSESSION_ALWAYS_ACTIVE": "NO"
-      },
       "cordova-plugin-photo-library": {
         "PHOTO_LIBRARY_USAGE_DESCRIPTION": "Allow the application access to the photo gallery to select photos for publication."
       },
       "cordova-plugin-camera-preview": {},
       "cordova-plugin-audioinput": {},
       "cordova-plugin-actionsheet": {},
-      "cordova-plugin-background-mode": {}
+      "cordova-plugin-background-mode": {},
+      "cordova-plugin-media": {
+        "KEEP_AVAUDIOSESSION_ALWAYS_ACTIVE": "NO"
+      }
     },
     "platforms": [
       "ios",
