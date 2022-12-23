@@ -77,7 +77,7 @@ var welcome = (function(){
 					self.nav.api.load({
 						open : true,
 						href : 'index',
-						history : true
+						// history : true
 					})
 
 					return
@@ -94,8 +94,6 @@ var welcome = (function(){
 			},
 			
 			init : function(p){
-
-				console.log('init');
 
 				state.load();
 
