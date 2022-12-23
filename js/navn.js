@@ -962,20 +962,6 @@ Nav = function(app)
 				
 			}
 
-			console.log('p', p);
-
-			if (p.id === 'welcome' && app.user.address && app.user.address.value){
-
-				const params = new URLSearchParams(p.completeHref.slice(7));
-				app.platform.matrixchat.connectWith = params.get('connect');
-
-				app.platform.matrixchat.joinRoom = params.get('publicroom');
-
-				app.platform.matrixchat.connect();
-
-				return;
-			}
-
 			core.loadSource(p.map, function(module){
 
 				if(!module)
@@ -1185,12 +1171,26 @@ Nav = function(app)
 							blockclick = false
 						}, 800)
 
-						var href = core.thisSiteLink( $(this).attr('href') );
+						var href = core.thisSiteLink( $(this).attr('href') ) || '';
+						var handler = $(this).attr('handler') || null;
+						var replace = $(this).attr('replace') || false;
+						var force = $(this).attr('replace') || false;
+						var mobilepreview = $(this).attr('mobilepreview') || null;
 
-						var handler = $(this).attr('handler') || null
-						var replace = $(this).attr('replace') || false
-						var force = $(this).attr('replace') || false
-						var mobilepreview = $(this).attr('mobilepreview') || null
+						var arrHref = href.split("?");
+
+						if (arrHref && arrHref[0] === 'welcome' && app.user.address && app.user.address.value){
+
+							const params = new URLSearchParams('?' + arrHref[1]);
+
+							app.platform.matrixchat.connectWith = params.get('connect');
+			
+							app.platform.matrixchat.joinRoom = params.get('publicroom');
+			
+							app.platform.matrixchat.connect();
+			
+							return false;
+						}
 
 						if (mobilepreview && app.mobileview){
 
@@ -1511,7 +1511,6 @@ Nav = function(app)
 	}
 
 	self.init = function(p, clbk){
-
 
 		if(!p) p = {};
 

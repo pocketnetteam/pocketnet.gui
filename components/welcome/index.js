@@ -73,8 +73,6 @@ var welcome = (function(){
 
 				var data = {};
 
-				console.log('self!!!', self.app.platform.matrixchat)
-
 				if(p.state){
 					self.nav.api.load({
 						open : true,
