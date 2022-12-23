@@ -177,7 +177,7 @@
         </edit-config>
 
         <edit-config file="AndroidManifest.xml" mode="merge" target="/manifest/application">
-            <application android:usesCleartextTraffic="true" android:requestLegacyExternalStorage="true"/>
+            <application android:largeHeap="true" android:usesCleartextTraffic="true" android:requestLegacyExternalStorage="true"/>
         </edit-config>
 
         <edit-config file="AndroidManifest.xml" target="/manifest/uses-permission" xmlns:android="http://schemas.android.com/apk/res/android">

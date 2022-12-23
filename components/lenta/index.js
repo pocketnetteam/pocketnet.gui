@@ -661,6 +661,9 @@ var lenta = (function(){
 			},	
 
 			loadmore : function(loadclbk){
+
+				if(!el.c) return
+
 				essenseData.page = ++essenseData.page
 				actions.observe()
 
@@ -2447,7 +2450,7 @@ var lenta = (function(){
 
 			loadmorescroll : function(){
 
-
+				if(!el.c) return
 
 
 				if(!essenseData.horizontal){
@@ -4404,15 +4407,19 @@ var lenta = (function(){
 									return true
 								})
 							}
+
+
 							
 							if (essenseData.hasshares){
 								essenseData.hasshares(shares)
+								delete essenseData.hasshares
 							}
 						}
 
 						else{
 							if (essenseData.hasshares){
 								essenseData.hasshares([])
+								delete essenseData.hasshares
 							}
 						}
 
@@ -5628,7 +5635,7 @@ var lenta = (function(){
 					el.w.off('scroll', events.videosInview);
 					el.w.off('scroll', events.loadmorescroll);
 					el.w.off('resize', events.resize);
-
+					console.log("HERE")
 				}
 				
 
