@@ -55,24 +55,7 @@ Application = function (p) {
 		electron = require('electron');
 	}
 
-	self._meta = {
-		Pocketnet: {
-			url: "pocketnet.app",
-			turl: "test.pocketnet.app",
-			fullname: "Pocketnet",
-			protocol: 'pocketnet',
-			blockexplorer: 'https://pocketnet.app/blockexplorer/'
-		},
-
-		Bastyon: {
-			fullname: "Bastyon",
-			url: "bastyon.com",
-			turl: "test.pocketnet.app",
-			protocol: 'bastyon',
-			blockexplorer: 'https://pocketnet.app/blockexplorer/'
-		}
-	}
-
+  self._meta = window.projects_meta
 	self.meta = self._meta.Pocketnet
 
 	if (window.pocketnetproject && self._meta[window.pocketnetproject]) {
@@ -340,6 +323,10 @@ Application = function (p) {
 		var isElectron = (typeof _Electron !== 'undefined' && !!window.electron);
 		return isElectron || (window.cordova && !isios());
 	}
+
+  self.savesupportedForBrowser = function(){
+    return !self.savesupported() && localStorage;
+  }
 
 	self.useip = function () {
 		return self.canuseip() && self.platform.sdk.usersettings.meta.canuseip.value
@@ -1051,7 +1038,7 @@ Application = function (p) {
 
 			if (state) {
 
-				self.user.usePeertube = self.platform.sdk.usersettings.meta.enablePeertube ? self.platform.sdk.usersettings.meta.enablePeertube.value : false;
+				self.user.usePeertube = self.platform.sdk.usersettings.meta.enablePeertube ? self.platform.sdk.usersettings.meta.enablePeertube.value : false; ////TODO_REF
 
 
 				if (self.platform.sdk.registrations.showprivate()) {
@@ -1374,7 +1361,24 @@ Application = function (p) {
 	self.renewModules = function (map) { }
 	self.logger = function (Function, Message) { }
 
-	self.Logger = new FrontendLogger(navigator.userAgent, self);
+	self.Logger = new FrontendLogger(
+    navigator.userAgent,
+    JSON.stringify(navigator.userAgentData),
+    location.href,
+    Intl.DateTimeFormat().resolvedOptions().timeZone,
+    self
+  );
+
+  if (Math.random() <= 0.05) {
+    window.onerror = function (errorMsg, url) {
+      self.Logger.error({
+        err: errorMsg,
+        uri: url,
+        code: -1,
+      });
+      return false;
+    };
+  }
 
 	self.scrollRemoved = 0;
 	self.scrollTop = 0
@@ -2744,6 +2748,12 @@ Application = function (p) {
 					return Promise.resolve()
 				}).catch(e => {
 					topPreloader2(100)
+
+          try{
+            e = JSON.stringify(e)
+          }catch (er){
+
+          }
 
 					return Promise.reject(e)
 				})

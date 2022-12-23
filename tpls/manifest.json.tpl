@@ -1,5 +1,5 @@
 {
-    "name": "__VAR__.project",
+    "name": "__VAR__.name",
     "icons": [
         {
             "src": "img/res/drawable-ldpi-icon.png",

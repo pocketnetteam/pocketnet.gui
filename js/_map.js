@@ -214,7 +214,14 @@ __map =  {
 		],*/
 	},      
 
-	
+	bastyon_iphone: {
+		uri : "bastyon_iphone",
+		href : "bastyon_iphone",
+		add : insertingfunc,
+		anonimus : true,
+		electronDontOpen : true
+	},
+
 	easynode : {
 		uri : "easynode",
 		href : "easynode",
@@ -902,6 +909,12 @@ __map =  {
 		
 	},
 
+	downloadMedia : {
+		uri : "downloadMedia",
+		href : "downloadMedia",
+		add : insertingfunc
+	},
+
 	panel : {
 		uri : "panel",
 		href : "panel",
@@ -1047,6 +1060,12 @@ __map =  {
 	videoCabinet : {
 		uri : "videoCabinet",
 		href : "videoCabinet",
+		add : insertingfunc,
+	},
+
+	editVideoDescription : {
+		uri : "editVideoDescription",
+		href : "editVideoDescription",
 		add : insertingfunc,
 	},
 

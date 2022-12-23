@@ -261,7 +261,7 @@ var faqcontent = [
             {
                 id : 'banning',
                 q : 'Can people or content be banned?',
-                a : '<div>Generally speaking, no. <br>If someone posts prohibited content (pornography for example) then people will rate their content low causing their reputation to fall. If the reputation falls below -50, then the user is "shadowed". This means that he can still post but no one will see their contents unless directly on his profile.</div>',
+                a : '<div>Generally speaking, no. <br>If someone posts prohibited content (porn/nudity for example) then people will rate their content low causing their reputation to fall. If the reputation falls below -50, then the user is "shadowed". This means that he can still post but no one will see their contents unless directly on his profile.</div>',
             },
     
 
@@ -292,7 +292,7 @@ var faqcontent = [
             {
                 id : 'banning',
                 q : 'Can people or content be banned?',
-                a : '<div>Generally speaking, no. <br>If someone posts prohibited content (pornography for example) then people will rate their content low causing their reputation to fall. If the reputation falls below -50, then the user is "shadowed". This means that he can still post but no one will see their contents unless directly on his profile.</div>',
+                a : '<div>Generally speaking, no. <br>If someone posts prohibited content (porn/nudity for example) then people will rate their content low causing their reputation to fall. If the reputation falls below -50, then the user is "shadowed". This means that he can still post but no one will see their contents unless directly on his profile.</div>',
             },
     
 
@@ -308,7 +308,7 @@ var faqcontent = [
             {
                 id : 'content',
                 q : 'Is any content allowed on '+self.app.meta.fullname+'? If some content is not allowed, can the platform still be called free speech?',
-                a : '<div>This is a very important question.</div><div>&nbsp;</div><div>We will be releasing many videos and articles about it, as well as looking for your input.</div><div>&nbsp;</div><div>Not all types of content are allowed: illegal contents, like pornography for example, are hidden.</div><div>&nbsp;</div><div>However, and this is crucial, <strong>the enforcement is transparent and up to the community.</strong>&nbsp;Enforcement is done by the community, with no hidden shadow bans or selective banning, like the ones typically practiced by the Silicon Valley companies.</div>',
+                a : '<div>This is a very important question.</div><div>&nbsp;</div><div>We will be releasing many videos and articles about it, as well as looking for your input.</div><div>&nbsp;</div><div>Not all types of content are allowed: illegal contents, like porn/nudity for example, are hidden.</div><div>&nbsp;</div><div>However, and this is crucial, <strong>the enforcement is transparent and up to the community.</strong>&nbsp;Enforcement is done by the community, with no hidden shadow bans or selective banning, like the ones typically practiced by the Silicon Valley companies.</div>',
             },
             
             {
@@ -320,7 +320,7 @@ var faqcontent = [
             {
                 id : 'what-to-report',
                 q : 'What should I report?',
-                a : '<div><p>You should NOT complain and report posts that you simply don not agree with or that you do not like..&nbsp;</p><p>That is not a high enough bar.</p><p>In that case, simply do not follow people who offend you, but do not complain about them. You can also block them and you will no longer see their posts.</p><p>Instead you should report posts that threaten long term viability of '+self.app.meta.fullname+' as a mass communication platform that intends to reach to all levels of society in many countries.</p><p><br />1. We strongly recommend that you report <strong>porn posts</strong> of any kind. <br />There are plenty of porn sites on the web, we do not want to mix our free speech endeavor with that. This is just not the right place, you can for sure find porn somewhere else.</p><p>2. Any sort of <strong>direct threat</strong> should be reported and clear examples of <strong>racism and hate</strong> should be reported, too.&nbsp;<br />If we allow mainstream social media to link our name to racism or violence directly, '+self.app.meta.fullname+' will cease to exist before we can even get it out there. <br />Just because&nbsp;we see a lot of "politically correct" news about fake racism, doesn&rsquo;t mean we should prove them right by tolerating racism and violence in our platform. This would detract from what we are really trying to achieve, which is to challenge new totalitarianism created by the alliance of media, finance and governments, and to give freedom of speech to anyone. But again, freedom of speech does not mean free violence, irrational racism and illogical hate.</p>',
+                a : '<div><p>You should NOT complain and report posts that you simply don not agree with or that you do not like..&nbsp;</p><p>That is not a high enough bar.</p><p>In that case, simply do not follow people who offend you, but do not complain about them. You can also block them and you will no longer see their posts.</p><p>Instead you should report posts that threaten long term viability of '+self.app.meta.fullname+' as a mass communication platform that intends to reach to all levels of society in many countries.</p><p><br />1. We strongly recommend that you report <strong>porn/nudity posts</strong> of any kind. <br />There are plenty of porn/nudity sites on the web, we do not want to mix our free speech endeavor with that. This is just not the right place, you can for sure find porn/nudity somewhere else.</p><p>2. Any sort of <strong>direct threat</strong> should be reported and clear examples of <strong>racism and hate</strong> should be reported, too.&nbsp;<br />If we allow mainstream social media to link our name to racism or violence directly, '+self.app.meta.fullname+' will cease to exist before we can even get it out there. <br />Just because&nbsp;we see a lot of "politically correct" news about fake racism, doesn&rsquo;t mean we should prove them right by tolerating racism and violence in our platform. This would detract from what we are really trying to achieve, which is to challenge new totalitarianism created by the alliance of media, finance and governments, and to give freedom of speech to anyone. But again, freedom of speech does not mean free violence, irrational racism and illogical hate.</p>',
             },
             {
                 id : 'racism',

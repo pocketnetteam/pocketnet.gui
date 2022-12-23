@@ -17,7 +17,7 @@
 			var address = u.address;		
 			var followers = u.subscribers_count;
 			var following  = u.subscribes_count;
-			var about = u.a;
+			var about = u.a || '';
 			var src = u.i;
 			var name = u.name
 			var letter = name ? name[0] : ''; 
@@ -118,7 +118,6 @@
 												<%=e('reputation') %> <span class="value"><%- Number(r).toFixed(0) %></span> 
 											</div>
 						
-						
 										</div>			
 						
 									</div>
@@ -164,13 +163,11 @@
 							</div>		
 							<% var s = u.subscribers_count || 0 %>
 		
-							<div class="reputation">
-								<span class="label">
-									<%=e('reputation') %>
-								</span>
-								<span class="value">
-									<%- Number(r).toFixed(0) %>
-								</span> 
+							<div class="aboutWrapper aboutWrapperShort">
+								<%- decodeURIComponent(about || '') %>
+							</div>
+							<div class="showMoreAbout">
+								<%=e('e13021') %>
 							</div>
 		
 							<div class="subscribeWrapper <%-_class%>">

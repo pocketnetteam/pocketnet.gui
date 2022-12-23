@@ -7288,22 +7288,26 @@ search = function (el, p) {
 
 		var elements = [
 
-			'<div elementsid="template_searchIconLabel_' + (p.id || p.placeholder) + '" class="searchIconLabel">' + (p.icon ||
+			'<img class="christmasBranchRight" src="img/christmas_branch_right.svg">',
+
+			'<div elementsid="template_searchIconLabel_' +  (p.id || p.placeholder) + '" class="searchIconLabel">' + (p.icon ||
 				'<i class="fa fa-search" aria-hidden="true"></i>' +
 				'<i class="fas fa-circle-notch fa-spin"></i>') +
 			'</div>',
 
 			'<div class="searchInputWrapper">' +
-			'<input  elementsid="sminputsearch_' + (p.id || p.placeholder) + '" class="sminput" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" id="text" maxlength="400" type="text" placeholder="' + (p.placeholder || "Search") + '">' +
+				'<input  elementsid="sminputsearch_' + (p.id || p.placeholder) + '" class="sminput" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" id="text" maxlength="400" type="text" placeholder="' + (p.placeholder || "Search") + '">' +
 			'</div>',
 
 			'<div class="searchPanel">' +
-			'<div class="searchPanelWrapper">' +
-			'<div class="searchPanelItem" event="clear">' +
-			'<i class="fa fa-times-circle" aria-hidden="true"></i>' +
-			'</div>' +
-			'</div>' +
-			'</div>'
+				'<div class="searchPanelWrapper">' +
+					'<div class="searchPanelItem" event="clear">' +
+						'<i class="fa fa-times-circle" aria-hidden="true"></i>' +
+					'</div>' +
+				'</div>' +
+			'</div>',
+
+			'<img class="christmasBranchLeft" src="img/christmas_branch_left.svg">'
 
 		]
 
@@ -9459,6 +9463,14 @@ edjsHTML = function () {
 
 		error: function (type, e) {
 			return '<div class="article_error">' + 'Error:' + _.escape(type) + '</div>'
+		},
+
+		text : function(e, type){
+
+			var t = type === 'paragraph' ? '\n\n' : '';
+			t += (e.data.text ? e.data.text + ' ' : '');
+
+			return t;
 		}
 	};
 
@@ -9658,9 +9670,23 @@ edjsHTML = function () {
 				})).join('') + '</div>'
 			},
 
-			parseBlock: function (e) {
-				return i[e.type] ? i[e.type](e) : t(e.type)
+			text: function(e){
+
+				var text = e.blocks.map(function(e) {
+					return i['text'](e, e.type);
+                }).join('');
+
+				return filterXSS(clearScripts((findAndReplaceLink(text, true))), {
+					stripIgnoreTag : true,
+					whiteList: {
+						img : []
+					}
+				});
 			},
+
+            parseBlock: function(e) {
+                return i[e.type] ? i[e.type](e) : t(e.type)
+            },
 
 			parseStrict: function (e) {
 				var n = e.blocks,

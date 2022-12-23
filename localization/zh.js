@@ -4,7 +4,8 @@ loclib = {};
 loclib.cmn = {};
 
 var _l = loclib.cmn;
-var appname = window.pocketnetproject || "Pocketnet"
+var appname = ((window.projects_meta || {})[window.pocketnetproject || "Bastyon"] || {}).fullname || 'Bastyon'
+
 //time
 
 _l.fewseconds = "几秒前";	
@@ -1009,7 +1010,7 @@ _l.noDownloadedVideos = "没有下载的视频";
 _l.buy = '买';
 
 _l.lowstar1 = "Bastyon 團隊正在實施臨時暫停 1 星和 2 星評級，禁止內容除外。禁止內容是："
-_l.lowstar_reason_1 = "色情"
+_l.lowstar_reason_1 = "情色/色情"
 _l.lowstar_reason_2 = "兒童剝削"
 _l.lowstar_reason_3 = "直接的暴力威脅"
 _l.lowstar_reason_4 = "非法藥物"
@@ -1026,3 +1027,12 @@ _l.desktopPopupDisagree = "不是现在"
 
 
 _l.profanity_tag = '褻瀆'
+
+_l.saved = "已保存"
+_l.savePost = "保存帖子"
+_l.postsaved = "保存的帖子"
+_l.deleteSavedPost = "删除已保存的帖子"
+_l.doYouDownloadVideo = "你想在你的设备上下载视频吗？"
+_l.gotosaved2 = "转到已保存"
+_l.yes = "是"
+_l.no = "拒绝"

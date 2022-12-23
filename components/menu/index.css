@@ -134,6 +134,10 @@
   flex-wrap: nowrap;
   justify-content: space-between;
 }
+#menu .sections .mobileUpperLeft,
+#menu .sections .mobileUpperRight {
+  display: none;
+}
 #menu .sections .section {
   min-height: 65px;
   height: 100%;
@@ -145,6 +149,7 @@
 }
 #menu .sections .section.right {
   padding-right: 0;
+  min-width: 200px;
 }
 #menu .sections .section.centerpart {
   padding-right: 0;
@@ -178,6 +183,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+  z-index: 999;
   color: rgb(var(--neutral-grad-1));
   box-sizing: border-box;
   padding: 0 0.5em;
@@ -189,6 +196,12 @@
 }
 #menu .sections .items.control-app > div:hover {
   color: rgb(var(--color-txt-gray));
+}
+#menu .sections .items.control-app.control-left {
+  padding-right: 1.5em;
+}
+#menu .sections .items.control-app.control-right {
+  padding-left: 1.5em;
 }
 #menu .sections .items.notificationsWrapper {
   margin-right: 0.5em;
@@ -288,8 +301,17 @@
 #menu .sections .items .item.onlyicon .icon {
   padding: 0.5em;
 }
+#menu .sections .items .item.onlyicon .icon .icn {
+  display: flex;
+}
+#menu .sections .items .item.onlyicon .icon .icn img {
+  height: 18px;
+}
 #menu .sections .items .item.onlyicon .count {
   color: rgb(var(--color-bg-ac-2));
+}
+#menu .sections .items .item .icon .icn img {
+  height: 18px;
 }
 #menu .sections .items .item.navWrapperItem {
   display: none;
@@ -577,6 +599,9 @@
   height: 100%;
   width: 100%;
 }
+#menu .postssearch .christmas_search {
+  height: 16px;
+}
 #menu .postssearch .searchInputIcon,
 #menu .postssearch .searchInput,
 #menu .postssearch .search {
@@ -619,15 +644,35 @@
   background: rgb(var(--background-main));
   border: 0;
 }
+#menu .postssearch .searchInputWrapper {
+  position: relative;
+  z-index: 1;
+}
 #menu .postssearch .searchIconLabel {
+  position: relative;
+  z-index: 1;
   width: 38px;
   -webkit-transition: none;
   transition: none;
 }
 #menu .postssearch .searchPanel {
+  position: relative;
+  z-index: 1;
   width: 2em;
   font-size: 0.8em;
   text-align: center;
+}
+#menu .postssearch .christmasBranchLeft {
+  position: absolute;
+  height: 52px;
+  bottom: -10px;
+  left: -35px;
+}
+#menu .postssearch .christmasBranchRight {
+  position: absolute;
+  bottom: -10px;
+  right: -21px;
+  height: 52px;
 }
 #menu .signup,
 #menu .signout,
@@ -672,6 +717,7 @@
     min-width: 0;
   }
   #menu .sections .section.right {
+    min-width: 0;
     padding-right: 0;
   }
   #menu .sections .section.centerpart {
@@ -713,6 +759,25 @@
     height: 34px;
     line-height: 34px;
     font-size: 0.9em;
+  }
+  #menu .sections .mobileUpperLeft {
+    display: block;
+    position: absolute;
+    left: -20px;
+    top: -6px;
+  }
+  #menu .sections .mobileUpperLeft .christmasBranch {
+    height: 40px;
+  }
+  #menu .sections .mobileUpperRight {
+    display: block;
+    position: absolute;
+    right: -22px;
+    top: 23px;
+    rotate: 35deg;
+  }
+  #menu .sections .mobileUpperRight .christmasBranch {
+    height: 40px;
   }
   #menu .searchFastResultWrapper .fastsearch {
     padding-left: 40px;

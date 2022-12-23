@@ -1051,7 +1051,7 @@ var lenta = (function(){
 
 						},
 
-						hlsError : function(error){
+						error : function(error){
 							const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection || {};
 							const payload = {
 								...error,
