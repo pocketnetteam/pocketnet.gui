@@ -510,8 +510,7 @@ Nav = function(app)
 		},
 		
 		open : function(p){
-
-
+			
 			if(!p) p = {};
 
 				p.clbk || (p.clbk = emptyFunction);
@@ -886,6 +885,7 @@ Nav = function(app)
 			})
 		},
 		load : function(p){
+
 			if(!p) p = {};
 
 			if(!p.href && !p.id) {
@@ -960,6 +960,20 @@ Nav = function(app)
 					globalpreloader(true)
 				}, 400)
 				
+			}
+
+			console.log('p', p);
+
+			if (p.id === 'welcome' && app.user.address && app.user.address.value){
+
+				const params = new URLSearchParams(p.completeHref.slice(7));
+				app.platform.matrixchat.connectWith = params.get('connect');
+
+				app.platform.matrixchat.joinRoom = params.get('publicroom');
+
+				app.platform.matrixchat.connect();
+
+				return;
 			}
 
 			core.loadSource(p.map, function(module){
@@ -1466,6 +1480,7 @@ Nav = function(app)
 
 	self.get = {
 		href : function(){
+
 			var loc =  window.location;  
 
 			var pathname = protocolAction('pathname')

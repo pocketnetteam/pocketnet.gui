@@ -73,11 +73,13 @@ var welcome = (function(){
 
 				var data = {};
 
+				console.log('self!!!', self.app.platform.matrixchat)
+
 				if(p.state){
 					self.nav.api.load({
 						open : true,
 						href : 'index',
-						//history : true
+						history : true
 					})
 
 					return
@@ -94,6 +96,8 @@ var welcome = (function(){
 			},
 			
 			init : function(p){
+
+				console.log('init');
 
 				state.load();
 
