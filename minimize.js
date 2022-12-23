@@ -6,9 +6,7 @@ var bablecore = require("@babel/core")
 
 require('./js/functions.js');
 var uglifyJS = require("uglify-js");
-var uglifycss = require('uglifycss');
 var ncp = require('ncp').ncp;
-const _path = require('path');
 ncp.limit = 16;
 
 var minifyHtml = require('html-minifier').minify;
@@ -178,17 +176,6 @@ fs.exists(mapJsPath, function (exists) {
 			data : ""
 		}
 
-		var cssmaster = {
-			data : "",
-			path : './css/master.css'
-		}
-
-		var exported = {
-			data : "",
-			//path : '../matrix/src/components/events/event/metaMessage/exported.less'
-			path : './css/exported.less'
-		}
-
 		var cordova = {
 			path : './cordova/www',
 			filter : function(component, name){
@@ -257,15 +244,9 @@ fs.exists(mapJsPath, function (exists) {
 	
 					var path = module.path || './';
 	
-					var _csspath = (module.csspath || module.path) || './';
-	
-					if(module.csspath) _csspath = "." + _csspath
-	
 					path = path.replace("..", '.')
-					_csspath = _csspath.replace("..", '.')
 				
 					var modulepath = path + 'components/' + module.uri + '/index.js';
-					var csspath = _csspath + 'components/' + module.uri + '/index.css';
 	
 					fs.exists(modulepath, function (exists) {
 						if(exists){
@@ -298,57 +279,16 @@ fs.exists(mapJsPath, function (exists) {
 								}
 								
 	
-								modules.data = modules.data + "\n\n\n /*"+modulepath+"*/ " + "\n /*_____*/ \n" + code;
-	
-								fs.exists(csspath, function (exists) {
-									if(exists){
-	
-										console.log(csspath)
-	
-										fs.readFile(csspath, function read(err, data) {
-											if (err) {
-												throw err;
-											}
-	
-											data = data.toString().replaceAll("../..", "..");
+								modules.data = modules.data + "\n /*_____*/ \n" + data;
 
-											var pre2 = data
-
-											try{
-												pre2 = uglifycss.processString(data, {
-													cuteComments : true
-												})
-											}
-											catch(e){
-												console.log('uglifycss error:', path)
-												console.log(e)
-											}
-	
-											cssmaster.data = cssmaster.data + "\n" + "/*" + csspath +"*/\n" + pre2;
-
-											if (module.exportcss)
-												exported.data = exported.data + "\n" + "/*" + csspath +"*/\n" + pre2;
-	
-											p.success();
-										})
-									}
-	
-									else
-									{
-										throw "notexist (CSS) " + module.csspath + ": " + csspath
-										p.success();
-									}
-								})
-	
-	
-								
+								p.success();
 							});
 	
 						}
 						else
 						{
 							console.log('module.uri', module.uri)
-							throw "notexist (CSS) " + module.uri
+							throw Error(`File doesn't exist: ${module.uri}`)
 						}
 					})
 	
@@ -399,140 +339,27 @@ fs.exists(mapJsPath, function (exists) {
 	
 												console.log("joinScriptsLast DONE")
 	
-												joinCss(function(){
-	
-													console.log("joinCss DONE")
-	
-													createTemplates().catch(e => {
-														
-													}).then( r => {
-														if(_clbk) _clbk()
-													})
+												createTemplates().catch(e => {
+
+												}).then( r => {
+													if(_clbk) _clbk()
 												})
-	
 											})
-											
+										
 										});
-	
+
 									})
-	
+
 								})
-								
+
 							});
-	
-							
-													
+
+
+
 						});
 					}
 				}
 			})
-		}
-
-		var joinCss = function(clbk){
-			if(m.__css)
-			{
-
-				var currentcssdata = ''
-
-				lazyEach({
-					sync : true,
-					array : m.__css,
-					action : function(p){
-
-						var filepath = p.item;
-
-						var path;
-
-						if(filepath.indexOf("..") == -1) path = './'+ filepath;
-						else path = filepath.replace("..", '.');				  				
-
-						fs.exists(path, function (exists) {
-						
-							if(exists){
-
-								console.log(path)
-
-								fs.readFile(path, function read(err, data) {
-									if (err) {
-										throw err;
-									}
-
-									var pre2 = data
-
-									try{
-										pre2 = uglifycss.processString(data, {
-											cuteComments : true
-										})
-									}
-									catch(e){
-									}
-
-									currentcssdata = currentcssdata + "\n" + "/*" + path +"*/ \n" + pre2;
-
-
-									if(m.__exportcss[filepath]){
-										exported.data = exported.data + "\n" + "/*" + path +"*/ \n" + pre2;	
-									}
-										
-
-									p.success();
-								});
-
-							}
-							else
-							{
-								throw "notexist (CSS) " + module.uri + ": " + path
-
-							}
-						})
-
-					},
-					
-					all : {
-						success : function(){
-							cssmaster.data = currentcssdata + '\n' + cssmaster.data;
-
-
-							exported.data = '.pocketnet_iframe{\n' + exported.data + '\n}'
-							exported.data = exported.data.split('\n')
-
-							exported.data = exported.data.map(item => {
-								return item.replace(/\(max-width:640px\)|\(max-width:768px\)|\(max-width:1024px\)/g, '(max-width:1920px)').replace(/\(max-width: 640px\)|\(max-width: 768px\)|\(max-width: 1024px\)/g, '(max-width:1920px)')
-							})
-
-							exported.data = exported.data.join('\n')
-
-							var pre = uglifycss.processString(cssmaster.data, {
-								cuteComments : true
-							})
-
-							fs.writeFile(cssmaster.path, pre, function(err) {
-
-								if(err) {
-									throw "Access not permitted (CSS) " +  cssmaster.path
-								}
-										
-								clbk();				
-							});
-
-
-							fs.writeFile(exported.path, exported.data, function(err) {
-
-								if (err) {
-
-									console.log("Access not permitted (LESS) " +  exported.path) 
-								}
-										
-							});
-						}
-					}
-				})
-			}
-
-			else
-			{
-				throw "m.__css"
-			}
 		}
 
 		var joinScripts = function(ar, join, clbk){
