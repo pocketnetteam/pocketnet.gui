@@ -161,6 +161,8 @@ var test = (function(){
 
 			save : function(clbk){
 
+				console.log("HERE", saving)
+
 				if (saving) return
 
 					saving = true
@@ -168,7 +170,6 @@ var test = (function(){
 				var allclbk = function(){
 
 					actions.loading(false)
-
 
 					topPreloader2(100)
 
@@ -191,8 +192,10 @@ var test = (function(){
 						}
 						else
 						{
-							if (clbk)
-								clbk()
+							self.app.reloadModules(function(){
+								if (clbk)
+									clbk()
+							})
 						}
 					}
 				}
@@ -338,7 +341,7 @@ var test = (function(){
 
 										self.closeContainer()
 
-										self.app.reloadModules(function(){
+										
 
 											if (ed.presuccess){
 												ed.presuccess(allclbk)
@@ -347,7 +350,6 @@ var test = (function(){
 												allclbk()
 											}
 	
-										})
 
 									}).catch(e => {
 
@@ -887,8 +889,7 @@ var test = (function(){
 			
 		}
 
-		var setNode = null;
-		var setAddressType = null;
+		
 
 		var renders = {
 			termsconditions : function(clbk){
@@ -1040,7 +1041,7 @@ var test = (function(){
 			el.upanel.find('.cancel').on('click', events.cancel)
 			el.upanel.find('.save').on('click', events.save)
 
-			ParametersLive([setNode, setAddressType], el.c)			
+			//ParametersLive([setNode, setAddressType], el.c)			
 
 			el.signout.on('click', events.signout)
 
@@ -1054,77 +1055,27 @@ var test = (function(){
 
 				el.c.find('.referalMaketWrapper').remove()
 			})
+
+			if(ed.events){
+				ed.events(events)
+			}
 			
 		}
 
 		var make = function(){
 
+			renders.icon(() => {
+				renders.options(() => {
+					window.requestAnimationFrame(() => {
+						el.c.addClass('rendered')
+					})
+				})
+			});
 
-			renders.icon(renders.options);
-
-			/*self.app.platform.ws.messages.transaction.clbks.utemp = function(data){
-				if(data.temp){
-					if(data.temp.type == 'userInfo'){
-						actions.upanel()
-					}
-				}
-			}*/
 		}
 
 		var prepare = function(){
-
-			var pv = _.map(self.app.platform.nodes, function(n, i){
-				return i.toString()
-			})
-
-			var pvl = _.map(self.app.platform.nodes, function(n, i){
-				return n.full
-			})
-
-			setNode = new Parameter({
-				type : "VALUES",
-				name : "setNode",
-				id : 'setNode',
-				possibleValues : pv,
-				possibleValuesLabels : pvl,
-				defaultValue : "1",
-			}),
-
-			setNode.value = self.app.platform.nodeid
-
-			setNode._onChange = function(value){
-				self.app.platform.nodeid = value;
-
-				self.app.platform.state.save()
-			}
-
-			setAddressType = new Parameter({
-				type : "VALUES",
-				name : "setAddressType",
-				id : 'setAddressType',
-				possibleValues : self.app.platform.addressTypes,
-				possibleValuesLabels : ['P2PKH', 'P2SH'/*, 'P2WPKH'*/],
-
-				defaultValue : "p2sh"
-			}),
-
-			setAddressType.value = self.app.platform.addressType
-			
-
-			setAddressType._onChange = function(value){
-
-				self.app.platform.addressType = value;
-
-				self.app.platform.state.save()
-
-				self.user.address.set(self.app.user.address.value)
-
-				self.app.reload();
-
-			}
-
 			actions.userOptions()
-
 		}
 
 		

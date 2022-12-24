@@ -381,15 +381,19 @@ User = function(app, p) {
 
 		if(app.platform.sdk.user.myaccauntdeleted()) return 'deleted'
 
-		var me = app.platform.psdk.userInfo.getmy() || {}
-		
-		if (me && me.relay){
+		var me = app.platform.psdk.userInfo.getmy()
 
-			var regs = app.platform.sdk.registrations.storage[self.address.value];
+		console.log('me', me)
+		
+		if (me && me.relay && !me.extended){
+
+			return 'fuf'
+
+			/*var regs = app.platform.sdk.registrations.storage[self.address.value];
 
 			if (regs && (regs === true || regs < 3)){
 				return 'fuf'
-			}
+			}*/
 
 		}
 		

@@ -3669,27 +3669,10 @@ var lenta = (function(){
 
 								if(aspectRatio > 1.66) aspectRatio = 1.66
 
-								el.height( Math.min( 400, images.width() || lwidth || self.app.width) * aspectRatio)
+								window.requestAnimationFrame(() => {
+									el.height( Math.min( 400, images.width() || lwidth || self.app.width) * aspectRatio)
+								})
 							})
-
-							/*var aspectRatio = 0
-							
-							_.each(image.images, function(img){
-								var _img = img.img;
-
-								var _aspectRatio = _img.naturalHeight / _img.naturalWidth
-
-								if(_aspectRatio > aspectRatio) aspectRatio = _aspectRatio
-							})
-
-							if (aspectRatio){
-
-								if(aspectRatio > 1.66) aspectRatio = 1.66
-
-								ch = Math.min(400, cwidth ) * aspectRatio
-
-								sel.find('.imagesWrapper').height(ch)
-							}*/
 							
 						}
 						else{
@@ -3703,14 +3686,11 @@ var lenta = (function(){
 
 								var ac = '';
 
-								/*var _w = imagesWrapperWidth;
-								var _h = imagesWrapperHeight*/
-
 								var _w = isMobile() ? self.app.width : el.width();
 								var _h = el.height()
 
 
-								if(_img.width >= _img.height && (/*!self.app.mobileview && */!essenseData.openapi || image.images.length == 1)){
+								if(_img.width >= _img.height && (!essenseData.openapi || image.images.length == 1)){
 									ac = 'w2'
 
 									var w = _w * (_img.width / _img.height);
@@ -3720,21 +3700,28 @@ var lenta = (function(){
 
 										h = w * ( _img.height / _img.width) 
 
-										el.height(h);
-									}
+										window.requestAnimationFrame(() => {
+											el.height(h);
 
-									el.width(w);
+										})
+									}
+									window.requestAnimationFrame(() => {
+										el.width(w);
+									})
 								}
 
-								if(_img.height >= _img.width && (/*self.app.mobileview || */essenseData.openapi|| image.images.length == 1)){
+								if(_img.height >= _img.width && (essenseData.openapi|| image.images.length == 1)){
 									ac = 'h2'
 
-
-									el.height(_w * (_img.height / _img.width))
+									window.requestAnimationFrame(() => {
+										el.height(_w * (_img.height / _img.width))
+									})
 								}
 
 								if(ac){
-									el.addClass(ac)
+									window.requestAnimationFrame(() => {
+										el.addClass(ac)
+									})
 								}
 								
 							})
@@ -3747,55 +3734,39 @@ var lenta = (function(){
 
 					var isclbk = function(){
 
-						images.addClass('active')
+						window.requestAnimationFrame(() => {
+						
+							images.addClass('active')
+							_el.addClass('active')
 
-						_el.addClass('active')
+							images = null,
+							_el = null,
+							sel = null;
 
-						essenserenderclbk()
+							essenserenderclbk()
 
-						images = null,
-						_el = null,
-						sel = null;
+							if (clbk)
+								clbk()
 
-						if (clbk)
-							clbk()
+						})
+
+						
 					}
 
 					if(s.settings.v != 'a' && image.images.length > 1){
 
-						var gutter = self.app.width <= 768 ? 0 : 5;
-
 						if (isMobile() || essenseData.openapi) {
-
-
 							carousels[s.txid] = new carousel(images, '.imagesWrapper', '.imagesContainer')
-
-
 							isclbk()
 
 						}
 						else{
 							images.addClass('manyImagesView')
+
 							isclbk()
-							/*images.isotope({
-								layoutMode: 'packery',
-								itemSelector: '.imagesWrapper',
-								packery: {
-									gutter: gutter
-								},
-								initLayout: false
-							});
-
-							images.on('arrangeComplete', function(){
-								isclbk()
-							});
-
-							images.isotope()*/
+							
 						}
 
-						
-
-						
 					}
 					else
 					{

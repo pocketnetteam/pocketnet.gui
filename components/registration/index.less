@@ -75,70 +75,7 @@
 		margin-top: 4 * @rhythm;
 		position: relative;
 
-		.panelWrapper{
-			margin-top: 4 * @rhythm;
-			padding : 2 * @rhythm;
-			padding-bottom: 10 * @rhythm;
-
-			.elpanel{
-				opacity: 0;
-				.transition(0.3s);
-
-				&.active{
-					opacity: 1;
-				}
-
-				.lwrapper{
-					display: none;
-				}
-
-
-			}
-
-			&.loading{
-				.elpanel{
-					opacity: 0.5;
-					.nlberl{
-						display: none;
-					}
-					.lwrapper{
-						display: inline;
-					}
-
-				}
-			}
-
-
-			.btn{
-				margin : 0 auto;
-				text-align: center;
-				width: 200px;
-				color : rgba(var(--text-on-bg-ac-color));
-				cursor : pointer;
-				background: rgba(var(--color-bg-orange));
-				padding : @rhythm 0;
-				border-radius: 2px;
-
-				&.save{
-					border-radius: 30px;
-					cursor: default;
-					background: rgba(var(--color-txt-orange));
-					.transition(0.3s);
-				}
-
-				
-			}
-
-			&.changes{
-				.btn{
-					&.save{
-						background: rgba(var(--color-bg-orange));
-						color : rgba(var(--text-on-bg-ac-color));
-						cursor : pointer;
-					}
-				}
-			}
-		}
+		
 
 		.stepsWrapper{
 			overflow: hidden;
@@ -295,6 +232,36 @@
 			.parameterMaketWrapper[parameter="email"]{
 				display: block;
 			}
+		}
+
+		.filluser{
+				
+			.elpanel{
+				margin-top: 4 * @rhythm;
+				padding : 2 * @rhythm;
+				padding-bottom: 10 * @rhythm;
+
+				.btn{
+					margin : 0 auto;
+					text-align: center;
+					width: 200px;
+					color : rgba(var(--text-on-bg-ac-color));
+					cursor : pointer;
+					background: rgba(var(--color-bg-orange));
+					padding : @rhythm 0;
+					border-radius: 2px;
+	
+					&.save{
+						border-radius: 30px;
+						cursor: default;
+						background: rgba(var(--color-txt-orange));
+						.transition(0.3s);
+					}
+					
+				}
+
+			}
+	
 		}
 
 		.ucaptcha{

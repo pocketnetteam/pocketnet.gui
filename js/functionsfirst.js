@@ -40,6 +40,8 @@ deep = function(obj, key){
 
 superXSS = function (str, p) {
 
+    if(!str) return ''
+
 	var l = str.length;
 
 	var nstr = filterXSS(str, p)

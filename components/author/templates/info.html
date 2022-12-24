@@ -7,7 +7,7 @@
 		<div class="item name">
 			<div class="itemtable">
 				<div class="icon"><i class="fab fa-slack-hash"></i></div>
-				<div class="label"><%-filterXSS(deep(author, 'data.name'))%></div>
+				<div class="label"><%-deep(author, 'data.name')%></div>
 			</div>
 		</div>
 
@@ -39,7 +39,7 @@
 			<div class="label">
 				<div class="aboutwrapper">
 
-					<%=filterXSS(clearScripts((findAndReplaceLink(am, true))))%>
+					<%=findAndReplaceLink(am, true)%>
 
 					<span class="showmoreinabout">
 						<%=e('e13021')%>

@@ -725,18 +725,25 @@ var registration = (function(){
 					var address = self.app.user.address.value;
 
 					var b = function(){
-						self.app.platform.sdk.node.transactions.get.allBalance(function(amount){
-							
+
+						var account = self.app.platform.actions.getCurrentAccount()
+
+						account.loadUnspents().catch(e => {}).then(() => {
+
+							var balance = account.actualBalance()
+
+							var amount = balance.actual
+
 							el.find('.balance').html('Balance: ' + self.app.platform.mp.coin(amount) + " PKOIN")
-						
+					
 							if(amount > 0){
 
 								var regs = app.platform.sdk.registrations.storage[address];
 
-                                if (regs && (regs == 2)) {
-                                    self.sdk.registrations.add(address, 3)
-                                }
-	
+								if (regs && (regs == 2)) {
+									self.sdk.registrations.add(address, 3)
+								}
+
 								if (current == 'moneyfail'){
 									setTimeout(function(){
 										actions.to('welcome');	
@@ -745,10 +752,15 @@ var registration = (function(){
 
 								}
 									
-	
+
 								delete self.app.platform.sdk.node.transactions.clbks.moneyfail
 							}
 						})
+
+						
+
+							
+						
 					}
 
 					var ch = function(){
@@ -756,7 +768,13 @@ var registration = (function(){
 						globalpreloader(true)
 
 
-						self.app.platform.sdk.node.transactions.get.allBalance(function(amount){
+						var account = self.app.platform.actions.getCurrentAccount()
+
+						account.loadUnspents().catch(e => {}).then(() => {
+							
+							var balance = account.actualBalance()
+
+							var amount = balance.actual
 							
 							topPreloader(100);
 
@@ -870,7 +888,13 @@ var registration = (function(){
 
 			check : function(clbk, update){
 
-				self.app.platform.sdk.node.transactions.get.allBalance(function(amount){
+				var account = self.app.platform.actions.getCurrentAccount()
+
+				account.loadUnspents().catch(e => {}).then(() => {
+					
+					var balance = account.actualBalance()
+
+					var amount = balance.actual
 
 					if (clbk)
 						clbk(amount > 0)
@@ -1025,14 +1049,19 @@ var registration = (function(){
 				}
 				else{
 					current = steps.settings.id
-					var me = self.psdk.userInfo.getmy() || {}
 
-					/*if (me && me.relay){
+					var me = self.psdk.userInfo.getmy()
+					var account = self.app.platform.actions.getCurrentAccount()
+
+					console.log("me", me)
+
+					if (me && me.relay && (account && !account.unspents.willChange && !account.unspents.value.length)){
+						
 						current = steps.captcha.id
 					}
 					else{
 						current = steps.settings.id
-					}*/
+					}
 					
 				}
 
@@ -1061,17 +1090,17 @@ var registration = (function(){
 						el.c.attr('step', step.id)
 
 						renders.step(step, function(el){
-							renders.panel(step, function(pel){
+							//renders.panel(step, function(pel){
 
 								actions.preloader(false)
 
 								_scrollTop(el, scrollel)
 
-								pel.find('.elpanel').addClass('active')
+								//pel.find('.elpanel').addClass('active')
 							
-								step.after(el, pel)
+								step.after(el)
 
-							})
+							//})
 
 						})
 
@@ -1218,26 +1247,7 @@ var registration = (function(){
 				actions.subscribe(address);
 			},
 
-			/*width : function(){
-
-
-				if(!current) return
-
-				var activestep = steps[current]
-
-				var _el = el.c.find('.step[step="'+activestep.id+'"] .stepBody');
-				var s = _el.closest('.step');
-				var line = el.c.find('.stepsWrapperLine');
-
-				var w = s.closest('.stepsWrapper').width()
-
-				el.c.find('.step').width(w)
-
-				line.css('margin-left', '-' + ((getindex(current)) * w) + 'px')
-
-				line.width(w * _.toArray(steps).length)
-			
-			}*/
+	
 		}
 
 		var renders = {
@@ -1265,23 +1275,6 @@ var registration = (function(){
 						clbk(_el)
 				})
 
-			},
-
-			panel : function(step, clbk){
-				self.shell({
-
-					name :  'panel',
-					el :   el.panel,
-					data : {
-						step : step
-					},
-
-				}, function(_p){
-
-					if (clbk)
-						clbk(_p.el);
-
-				})
 			},
 
 			captcha : function(el, clbk){
@@ -1452,72 +1445,89 @@ var registration = (function(){
 
 			settings : function(_el, clbk){
 
+				self.shell({
 
-				self.nav.api.load({
-
-					open : true,
-					id : 'test',
-					el : _el,
-
-					essenseData : {
-						wizard : true,
-						panel : el.panel,
-					
-						presave : function(clbk){
-
-							actions.waitgeneration(function(){
-
-
-								self.app.user.isState(function(state){
-
-									self.sdk.registrations.add(k.mainAddress, 1)
-
-
-									if(!state){
-
-										actions.signin(function(){
-											if(clbk) clbk()
-										})	
-
-									}
-									else{
-										self.sdk.registrations.add(k.mainAddress, 1)
-
-										if(clbk) clbk()
-									}
-								})
-								
-							})
-
-						},
-
-						relay : function(){
-							return k.mainAddress
-						},
-
-						success : function(userInfo){
-
-							k.info = userInfo
-
-							self.sdk.registrations.add(k.mainAddress, 2)
-
-							state.save()
-
-							actions.next()
-
-						}
+					name :  'useroptions',
+					el :   _el,
+					data : {
 					},
-					
-					clbk : function(e, p){
 
-						ext = p
+				}, function(_p){
 
-						if (clbk)
-							clbk(_el);
+					self.nav.api.load({
 
-					}
+						open : true,
+						id : 'test',
+						el : _p.el.find('.useroptions'),
+	
+						essenseData : {
+							wizard : true,
+	
+							events : function(events){
+								_p.el.find('.elpanel .save').on('click', events.save)
+							},
+	
+							//panel : el.panel,
+						
+							presave : function(clbk){
+	
+								actions.generate(function(){
+	
+									self.app.user.isState(function(state){
+	
+										self.sdk.registrations.add(k.mainAddress, 1)
+	
+										if(!state){
+	
+											actions.signin(function(){
+	
+												var account = self.app.platform.actions.addAccount(self.app.user.address.value)
+													account.setKeys(app.user.keys())
+	
+												if(clbk) clbk()
+											})	
+	
+										}
+										else{
+	
+											if(clbk) clbk()
+										}
+									})
+									
+								})
+	
+							},
+	
+							relay : function(){
+								return k.mainAddress
+							},
+	
+							success : function(userInfo){
+	
+								k.info = userInfo
+	
+								self.sdk.registrations.add(k.mainAddress, 2)
+	
+								state.save()
+	
+								actions.next()
+	
+							}
+						},
+						
+						clbk : function(e, p){
+	
+							ext = p
+	
+							if (clbk)
+								clbk(_el);
+	
+						}
+	
+					})
 
 				})
+				
 
 			}
 		}
@@ -1545,10 +1555,10 @@ var registration = (function(){
 
 				if(!state){
 
-					setTimeout(function(){
+					/*setTimeout(function(){
 						actions.generate(function(){
 						})
-					}, 300)	
+					}, 300)	*/
 					
 				}
 				else{
@@ -1570,7 +1580,7 @@ var registration = (function(){
 
 			getdata : function(clbk, p){
 
-				console.log("PP", p)
+				console.log("PP", p, self.user.validateVay())
 
 				if (p.state && !self.user.validateVay()){
 					
@@ -1656,7 +1666,7 @@ var registration = (function(){
 
 				el = {};
 				el.c = p.el.find('#' + self.map.id);
-				el.panel = el.c.find('.panelWrapper')
+				//el.panel = el.c.find('.panelWrapper')
 
 				initialParameters = p;
 

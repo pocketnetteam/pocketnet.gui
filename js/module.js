@@ -335,7 +335,18 @@ nModule = function(){
 
 		if(loading.templates[p.name]){
 
-			retry(
+			loading.templates[p.name].then(() => {
+				if (clbk)
+					clbk(self.storage.templates[p.name]);
+			}).catch(e => {
+				if (p.fail){
+					p.fail()
+				}
+			})
+
+			return
+
+			/*retry(
 				function(){
 					return !loading.templates[p.name];
 				},
@@ -344,7 +355,7 @@ nModule = function(){
 				}
 			)
 
-			return
+			return*/
 		}
 
 		if (self.storage.templates[p.name] || p.clear)
@@ -377,62 +388,80 @@ nModule = function(){
 				
 			}
 
-			loading.templates[p.name] = true;
+			loading.templates[p.name] = new Promise((resolve, reject) => {
 
-			var url;
-			var appPath = (self.map.pathtpl || self.map.path || "");	
+				var url;
+				var appPath = (self.map.pathtpl || self.map.path || "");	
 
-			if (_Node){
-				appPath = 'https://bastyon.com/'
-			}		
+				if (_Node){
+					appPath = 'https://bastyon.com/'
+				}		
 
-			if(p.common){
+				if(p.common){
 
-				url = appPath + 'common';
-
-			}
-			else
-			{
-				url = appPath + (self.componentsPath || "") + (p.turi || self.map.uri)
-			}
-
-			var vs = '131'
-
-			if (typeof numfromreleasestring != 'undefined'){
-				vs = numfromreleasestring(window.packageversion) + '_' + (window.versionsuffix || "0")
-			}
-
-			url += '/templates/' + p.name + '.html?v=' + vs;
-
-			
-			self.ajax.run({
-				url : url,
-				type : 'GET',
-				dataType : 'html',
-				success : function(tpl){
-
-					try{
-						self.storage.templates[p.name] = _.template(tpl);
-						loading.templates[p.name] = false;
-					}
-
-					catch(e){
-						console.log('url', url)
-						console.error(e)
-					}
-
-					if (clbk) clbk(self.storage.templates[p.name]);
-					
-
-				},
-				fail : function(){
-
-					if (p.fail){
-						p.fail()
-					}
+					url = appPath + 'common';
 
 				}
-			});
+				else
+				{
+					url = appPath + (self.componentsPath || "") + (p.turi || self.map.uri)
+				}
+
+				var vs = '131'
+
+				if (typeof numfromreleasestring != 'undefined'){
+					vs = numfromreleasestring(window.packageversion) + '_' + (window.versionsuffix || "0")
+				}
+
+				url += '/templates/' + p.name + '.html?v=' + vs;
+
+				
+				self.ajax.run({
+					url : url,
+					type : 'GET',
+					dataType : 'html',
+					success : function(tpl){
+
+						try{
+							self.storage.templates[p.name] = _.template(tpl);
+							loading.templates[p.name] = null;
+						}
+
+						catch(e){
+							console.log('url', url)
+							console.error(e)
+
+							if (p.fail){
+								p.fail()
+							}
+	
+							reject()
+
+							return
+						}
+
+						
+
+						if (clbk) clbk(self.storage.templates[p.name]);
+
+						resolve()
+						
+
+					},
+					fail : function(){
+
+						if (p.fail){
+							p.fail()
+						}
+
+						reject()
+
+					}
+				});
+
+			})
+
+			
 		}
 	}
 

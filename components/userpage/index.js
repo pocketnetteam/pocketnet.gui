@@ -431,7 +431,7 @@ var userpage = (function(){
 		}
 
 		var actions = {
-			closeGroup : function(id){
+			/*closeGroup : function(id){
 
 				var group = helpers.findReport(id);
 
@@ -486,11 +486,13 @@ var userpage = (function(){
 						}
 					}
 				})
-			},
+			},*/
 
 			closeReport : function(){
-				el.report.html('')
-				el.c.removeClass('reportshowed')
+				window.requestAnimationFrame(() => {
+					el.report.html('')
+					el.c.removeClass('reportshowed')
+				})
 
 				
 			},
@@ -536,9 +538,12 @@ var userpage = (function(){
 
 				el.c.find('[rid="'+id+'"]').addClass('active')
 
-				el.c.addClass('reportshowed')
+				window.requestAnimationFrame(() => {
+					el.c.addClass('reportshowed')
+				})
+				
 
-				actions.openTree(id);
+				//actions.openTree(id);
 				renders.report(id);
 
 				if (report && report.rh) return
@@ -648,11 +653,11 @@ var userpage = (function(){
 		}
 
 		var events = {
-			closeGroup : function(){
+			/*closeGroup : function(){
 				var id = $(this).closest('[levelid]').attr('levelid')
 
 				actions.closeGroup(id);
-			},
+			},*/
 			openReport : function(){
 				var id = $(this).attr('rid');
 
@@ -672,6 +677,8 @@ var userpage = (function(){
 			bgcaption : function(clbk){
 
 				if(!el || !el.bgcaption) return
+
+				if(!primary) return
 
 				if(!self.app.user.validate()) {
 					el.bgcaption.html('<div class="bgCaptionSpacer"></div>')
@@ -695,8 +702,6 @@ var userpage = (function(){
 
 					
 				}
-
-				
 		
 			},
 			contents : function(clbk, id){
@@ -718,7 +723,7 @@ var userpage = (function(){
 	
 					}, function(_p){
 	
-						_p.el.find('.groupNamePanelWrapper').on('click', events.closeGroup);
+						//_p.el.find('.groupNamePanelWrapper').on('click', events.closeGroup);
 						_p.el.find('.openReport').on('click', events.openReport);
 
 						_p.el.find('.changelang').on('click', function(){

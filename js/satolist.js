@@ -4327,6 +4327,9 @@ Platform = function (app, listofnodes) {
                 },
                 scroll: function () {
 
+                    /*window.requestAnimationFrame(() => {
+
+                    })*/
                     if (app.lastScrollTop >= (typeof p.scrollTop == 'undefined' ? 250 : p.scrollTop)) {
                         up.addClass('active')
                     }
@@ -8428,8 +8431,7 @@ Platform = function (app, listofnodes) {
             },
 
             myaccauntdeleted : function(){
-                var address = deep(self.app.user, 'address.value')
-
+                var address =  self.app.user.address.value
                 if(!address) return null
 
                 return self.sdk.user.deletedaccount(address)
@@ -8438,13 +8440,13 @@ Platform = function (app, listofnodes) {
             deletedaccount : function(address){
 
                 ///TODO_REF_ACTIONS
-                var temp = _.find(deep(self, 'sdk.node.transactions.temp.accDel') || {}, (txa) => {
+                /*var temp = _.find(deep(self, 'sdk.node.transactions.temp.accDel') || {}, (txa) => {
                     return txa.address == address
                 })
 
                 if (temp){
                     return 'temp'
-                }
+                }*/
 
                 var info = self.psdk.userInfo.getShortForm(address)
 
@@ -8469,6 +8471,8 @@ Platform = function (app, listofnodes) {
                             if(!address){
                                 return reject('notprepared')
                             }
+
+                            ////TODO_REF_ACTIONS
     
                             self.sdk.node.transactions.get.balance(function (total, us) {
     
@@ -9531,9 +9535,11 @@ Platform = function (app, listofnodes) {
 
                             if (!r) {
 
-                                self.sdk.node.transactions.get.balance(function (a) {
+                                if (clbk)
+                                    clbk(true)
 
-                                    if (a > 0) {
+                                /*self.app.api.rpc('txunspent', [address, 1, 9999999]).then(unspents => {
+                                    if (unspents.length > 0) {
                                         if (clbk)
                                             clbk(false)
                                     }
@@ -9541,8 +9547,7 @@ Platform = function (app, listofnodes) {
                                         if (clbk)
                                             clbk(true)
                                     }
-
-                                }, address, true)
+                                })*/
 
                             }
                             else {
@@ -10594,6 +10599,23 @@ Platform = function (app, listofnodes) {
 
                 return keyPair.privateKey;
             },
+
+            registration: function (address, clbk) {
+
+                self.app.api.rpc('getaddressregistration', [[address]]).then(d => {
+
+                    var r = deep(d, '0.date') || 0;
+
+                    if (clbk)
+                        clbk(r > 0)
+
+                }).catch(e => {
+                    if (clbk) {
+                        clbk(null, e)
+                    }
+                })
+
+            }
 
         },
         remote: {

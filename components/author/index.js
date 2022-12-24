@@ -1418,14 +1418,17 @@ var author = (function(){
 
 			})
 			
-			upbutton = self.app.platform.api.upbutton(el.up, {
-				top : function(){
-
-					return '65px'
-				},
-				class : 'light',
-				rightEl : el.c.find('.leftpanelcell')
-			})	
+			if(!isMobile()){
+				upbutton = self.app.platform.api.upbutton(el.up, {
+					top : function(){
+	
+						return '65px'
+					},
+					class : 'light',
+					rightEl : el.c.find('.leftpanelcell')
+				})	
+			}
+			
 
 			if(!isTablet())
 				renders.info(el.info)
@@ -1583,8 +1586,11 @@ var author = (function(){
 			},
 
 			getdata : function(clbk, settings){
-				
-				self.app.el.html.addClass('allcontent')
+
+				window.requestAnimationFrame(() => {
+					self.app.el.html.addClass('allcontent')
+
+				})
 
 				self.app.platform.sdk.search.clear()
 
@@ -1648,7 +1654,6 @@ var author = (function(){
 				author = null
 
 				el = {};
-
 				self.app.el.html.removeClass('allcontent')
 
 			},

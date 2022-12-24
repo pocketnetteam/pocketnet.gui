@@ -1064,20 +1064,7 @@ Nav = function(app)
 				link.off('click').on('click', function(){
 	
 					var ref = cordova.InAppBrowser.open(href, link.attr('cordovalink') || '_system');
-
-					/*var scrollremoved = app.scrollRemoved
-
-					 '_blank', 'location=yes'
-
-					if (scrollremoved){
-						app.onScroll()
-					}
-
-					ref.addEventListener('exit', function(){
-						if (scrollremoved){
-							app.offScroll()
-						}
-					});*/
+					
 
 					return false
 					
@@ -1113,7 +1100,12 @@ Nav = function(app)
 
 			var _links = null;
 
-			if(_el) _links = _el.find('a'); else _links = $('a');		
+			if(_el) _links = _el.find('a'); else {
+				console.error("GLOBAL LINKS")
+
+				return
+				//_links = $('a');		
+			}
 
 			if(!_links.length) return
 
@@ -1519,6 +1511,17 @@ Nav = function(app)
 
 			protocolAction('prefix');
 			protocolAction('seoRedirect');
+
+			if (window.cordova && backManager.chain.length){
+				var href = backManager.chain[0].href	
+
+				history.replaceState({
+
+					href : href,
+					lfox : true
+
+				}, 'Bastyon', href);
+			}
 		
 			if (options.history === true && !_OpenApi)
 			{
@@ -1536,6 +1539,8 @@ Nav = function(app)
 					
 				};
 			}
+
+			
 
 			core.openInitialModules(function(){
 

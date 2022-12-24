@@ -489,9 +489,6 @@ var pSDK = function ({ app, api, actions }) {
 
     var clearIdCache = function(type, helpId){
 
-
-        console.log('type, helpId', type, helpId)
-
         _.each(extendCache, (o, cid) => {
             if(cid.indexOf(type + ":" + (helpId || "")) == 0){
                 delete extendCache[cid]
@@ -514,14 +511,11 @@ var pSDK = function ({ app, api, actions }) {
 
                 _.each(account.getTempActions(k), (alias) => {
 
-
                     if (k == type){
 
                         if(helpId){
 
-
-
-                            if (!object && (alias.id == helpId || alias.actionId == helpId)) {
+                            if (!object && (alias.id == helpId || alias.actionId == helpId || (k == 'userInfo' && alias.actor == helpId))) {
                                 extendedObject = alias
 
                                 return
@@ -717,7 +711,7 @@ var pSDK = function ({ app, api, actions }) {
 
         applyAction: function (object, exp) {
 
-            console.log('applyAction', object, exp)
+            console.log("applyAction")
 
             if (!object) {
 
@@ -736,6 +730,7 @@ var pSDK = function ({ app, api, actions }) {
 
                 object.temp = exp.temp
                 object.relay = exp.relay
+                object.extended = true
             }
 
             return object

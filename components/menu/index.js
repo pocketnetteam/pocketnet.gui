@@ -10,7 +10,7 @@ var menu = (function(){
 			authorForSearch = null,
 			menusearch = null;
 
-		var loc = new Parameter({
+		/*var loc = new Parameter({
 
 			type : "VALUES",
 			name : "Localization",
@@ -30,7 +30,7 @@ var menu = (function(){
 				}
 			}
 
-		})
+		})*/
 
 		var updateNew = function(){
 
@@ -1001,7 +1001,7 @@ var menu = (function(){
 
 			})
 
-			ParametersLive([loc], el.c);
+			//ParametersLive([loc], el.c);
 		}
 
 		var renders = {
@@ -1027,10 +1027,7 @@ var menu = (function(){
 
 		var make = function(){
 
-			self.app.user.isState(function(state){
-
-				
-			})
+			
 
 		}
 
@@ -1051,9 +1048,9 @@ var menu = (function(){
 
 				var data = {};
 
-					loc.value = app.localization.current().name;
+					//loc.value = app.localization.current().name;
 
-					data.loc = loc;
+					//data.loc = loc;
 					data._SEO = _SEO;
 					data.lkey = app.localization.current()
 					data.theme = self.app.platform.sdk.theme.current == "white" ? 'white' : 'black'
@@ -1168,17 +1165,9 @@ var menu = (function(){
 
 				el = {};
 				el.c = p.el.find('#' + self.map.id);
-				el.cart = el.c.find('.cart');
-				el.likes = el.c.find('.favorites');
 
-				el.messagesCount = el.c.find('.dialogs .count');
-				el.notificationsCount = el.c.find('.notifications .count');
 
-				el.walletsAmount = el.c.find('.wallets .amount');
-				el.notactive = el.c.find('.notactive');
-				el.currency = el.c.find('.currencyWrapper');
 				el.postssearch =  el.c.find('.postssearch')
-				el.nav = el.c.find('.menutoppanel')
 
 				actions.ahnotifyclear()
 

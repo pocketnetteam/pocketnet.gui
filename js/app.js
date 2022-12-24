@@ -1506,7 +1506,12 @@ Application = function (p) {
 
 					if (self.playingvideo && self.playingvideo.playing) {
 
-						if (scrollTop >= 65) self.el.html.addClass('scrollmodedown')
+						if (scrollTop >= 65) {
+							window.requestAnimationFrame(() => {
+								self.el.html.addClass('scrollmodedown')
+							})
+							
+						}
 
 					}
 
@@ -1576,7 +1581,9 @@ Application = function (p) {
 
 			scrollmodechanging = true
 
-			self.el.html.css('overflow', 'hidden')
+			window.requestAnimationFrame(() => {
+				self.el.html.css('overflow', 'hidden')
+			})
 
 			/*if (self.mobileview && window.bodyScrollLock && target){
 	  
@@ -1612,7 +1619,10 @@ Application = function (p) {
 
 				scrollmodechanging = true
 
-				self.el.html.css('overflow', '')
+				window.requestAnimationFrame(() => {
+					self.el.html.css('overflow', '')
+				})
+				
 
 				/*if (self.mobileview && window.bodyScrollLock && self.scrolltarget){
 				  window.bodyScrollLock.enableBodyScroll(self.scrolltarget[0])
@@ -1641,9 +1651,12 @@ Application = function (p) {
 		self.height = self.el.window.height()
 		self.width = self.el.window.width()
 
-		document.documentElement.style.setProperty('--vh', `${self.height * 0.01}px`);
-		document.documentElement.style.setProperty('--keyboardheight', `0px`);
+		window.requestAnimationFrame(() => {
 
+		
+			document.documentElement.style.setProperty('--vh', `${self.height * 0.01}px`);
+			document.documentElement.style.setProperty('--keyboardheight', `0px`);
+		})
 
 		istouchstyle()
 
@@ -1689,7 +1702,9 @@ Application = function (p) {
 					showPanel = '1'
 
 					if (self.el.html.hasClass('scrollmodedown')) {
-						self.el.html.removeClass('scrollmodedown')
+						window.requestAnimationFrame(() => {
+							self.el.html.removeClass('scrollmodedown')
+						})
 					}
 
 					return
@@ -1700,7 +1715,11 @@ Application = function (p) {
 						showPanel = '2'
 
 						if (!self.el.html.hasClass('scrollmodedown')) {
-							self.el.html.addClass('scrollmodedown')
+
+							window.requestAnimationFrame(() => {
+								self.el.html.addClass('scrollmodedown')
+							})
+
 							if (self.modules.menu.module) self.modules.menu.module.blursearch()
 						}
 
@@ -1724,18 +1743,26 @@ Application = function (p) {
 			if (scrollmodechanging) return
 			if (self.blockScroll) return
 
-			_.each(self.events.delayedscroll, function (s) {
-				s(self.lastScrollTop, blockScroll)
+			window.requestAnimationFrame(() => {
+				_.each(self.events.delayedscroll, function (s) {
+					s(self.lastScrollTop, blockScroll)
+				})
 			})
 
 			if (!t && self.mobileview) {
 
 				if (showPanel == '2' && !self.el.html.hasClass('scrollmodedown')) {
-					self.el.html.addClass('scrollmodedown')
+					window.requestAnimationFrame(() => {
+						self.el.html.addClass('scrollmodedown')
+					})
 				}
 
-				if (showPanel == '3' && self.el.html.hasClass('scrollmodedown'))
-					self.el.html.removeClass('scrollmodedown')
+				if (showPanel == '3' && self.el.html.hasClass('scrollmodedown')){
+					window.requestAnimationFrame(() => {
+						self.el.html.removeClass('scrollmodedown')
+					})
+				}
+					
 
 				showPanel = '1'
 			}
@@ -1756,16 +1783,19 @@ Application = function (p) {
 			self.height = height
 			self.width = width
 
-			_.each(self.events.resize, function (s) {
-				s({
-					scrollTop: scrollTop,
-					height: height,
-					width: width
+			let vh = window.innerHeight * 0.01;
+
+			window.requestAnimationFrame(() => {
+				document.documentElement.style.setProperty('--vh', `${vh}px`);
+
+				_.each(self.events.resize, function (s) {
+					s({
+						scrollTop: scrollTop,
+						height: height,
+						width: width
+					})
 				})
 			})
-
-			let vh = window.innerHeight * 0.01;
-			document.documentElement.style.setProperty('--vh', `${vh}px`);
 
 			self.blockScroll = false
 
@@ -1837,19 +1867,22 @@ Application = function (p) {
 	self.reltime = function (time) {
 
 		var value = time || new Date()
+		var today = moment()
+		
 
-		if ((moment().diff(value, 'days')) === 0) {
+		if ((today.diff(value, 'days')) === 0) {
 
-			if ((moment().diff(value, 'hours') < 12))
-				return moment(moment.utc(value).toDate()).local().fromNow();
+			if ((today.diff(value, 'hours') < 12)) return moment(moment.utc(value).toDate()).local().fromNow();
 
 			return new Date(value).toLocaleTimeString([], { hour: '2-digit', minute: "2-digit", hour12: false })
 		}
 
-		if (moment().year() === moment(value).year())
-			return moment(value).local().format('D MMMM')
+		var mvalue = moment(value)
 
-		return moment(value).local().format('D MMMM YYYY')
+		if (today.year() === mvalue.year())
+			return mvalue.local().format('D MMMM')
+
+		return mvalue.local().format('D MMMM YYYY')
 	}
 
 	self.realtime = function () {

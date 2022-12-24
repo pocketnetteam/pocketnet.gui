@@ -18,7 +18,7 @@
 	}
 
 	.errorname{
-		color : rgb(var(--color-txt-ac));
+		color : rgb(var(--neutral-grad-4));
 		padding: 2 * @rhythm;
 		text-align: center;
 		display: none;
@@ -251,6 +251,19 @@
 		
 		}
 
+	}
+
+	.upanel,
+	.reqsnoska{
+		opacity: 0;
+		.transition(0.3s);
+	}
+
+	&.rendered{
+		.upanel,
+		.reqsnoska{
+			opacity: 1;
+		}
 	}
 
 	&.firstTime{

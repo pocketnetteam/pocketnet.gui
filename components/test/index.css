@@ -14,7 +14,7 @@
   font-size: 0.4em;
 }
 #test .errorname {
-  color: rgb(var(--color-txt-ac));
+  color: rgb(var(--neutral-grad-4));
   padding: 1em;
   text-align: center;
   display: none;
@@ -174,6 +174,18 @@
 }
 #test .userPanel .upanel.wait > div.loadingToB {
   display: block;
+}
+#test .upanel,
+#test .reqsnoska {
+  opacity: 0;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+#test.rendered .upanel,
+#test.rendered .reqsnoska {
+  opacity: 1;
 }
 #test.firstTime .userPanel .parameterMaketWrapper[parameter="ref"] {
   display: block;
