@@ -198,7 +198,7 @@
                     "target": "deb"
                 },
                 {
-                    "target": "rpc"
+                    "target": "rpm"
                 }
             ],
             "artifactName": "${productName}Setup.${ext}",
