@@ -194,6 +194,7 @@ jobs:
           node-version: 14
       - name: Prepare building
         run: |
+          apt update && apt install -y binutils rpm
           npm i
           npm run dev:bastyon
       - name: Building

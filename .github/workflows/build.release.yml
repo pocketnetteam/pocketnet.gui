@@ -26,6 +26,9 @@ jobs:
         with:
           node-version: 14
 
+      - name: Install dependencies
+        run: apt update && apt install -y binutils rpm
+
       - name: Prepare for app notarization
         if: startsWith(matrix.os, 'macos')
         run: |
