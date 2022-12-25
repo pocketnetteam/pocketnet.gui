@@ -87,6 +87,7 @@ jobs:
           name: unix
           path: |
             ./dist/BastyonSetup.deb
+            ./dist/BastyonSetup.rpm
             ./dist/Bastyon.AppImage
             ./head.txt
 

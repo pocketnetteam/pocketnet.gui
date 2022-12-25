@@ -206,6 +206,7 @@ jobs:
           name: unix
           path: |
             ./dist/BastyonSetup.deb
+            ./dist/BastyonSetup.rpm
             ./dist/Bastyon.AppImage
     
   build-app-windows:
