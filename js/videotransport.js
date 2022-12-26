@@ -123,7 +123,11 @@ class IdbSegmentsStorage {
                 }
 
                 transaction.objectStore("segmentsData").get([id, masterSwarmId]).onsuccess = (event) => {
-                    segment.data = event.target.result ? event.target.result.data : undefined;
+                    if(!event.target.result){
+                        return 
+                    }
+
+                    segment.data = event.target.result.data;
                 };
             };
 

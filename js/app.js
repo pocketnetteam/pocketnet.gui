@@ -1200,6 +1200,7 @@ Application = function(p)
 
         self.mobile.pip.init()
         self.mobile.keyboard.init()
+        self.mobile.memory()
         self.mobile.safearea()
 
         if (window.Keyboard && window.Keyboard.disableScroll){
@@ -1208,6 +1209,7 @@ Application = function(p)
 
         if (cordova.plugins && cordova.plugins.backgroundMode)
           cordova.plugins.backgroundMode.on('activate', function() {
+            console.log('disable optimization')
             cordova.plugins.backgroundMode.disableWebViewOptimizations();
           });
 
@@ -1424,7 +1426,6 @@ Application = function(p)
         self.mobile.backgroundMode(self.playingvideo && self.playingvideo.playing && (!duration || duration > 60)/* && self.platform.sdk.videos.volume*/)
 
       }, 1000)
-
 
     },
 
@@ -1969,6 +1970,14 @@ Application = function(p)
   }
 
   self.mobile = {
+
+    memory : function(){
+
+      document.addEventListener('memorywarning', function () {
+        console.log("MOMORY WARNING1")
+      });
+
+    },
 
     menu : function(items){
 
