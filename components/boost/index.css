@@ -4,221 +4,142 @@
 #boost .work {
   max-width: 850px;
 }
-#boost .caption {
-  margin-top: 2em;
+#boost .header {
+  margin-top: 40px;
+  text-align: center;
+  padding: 10px 0;
+  border-top: 2px solid #c5c2c2;
+  border-bottom: 2px solid #c5c2c2;
 }
-#boost .caption span {
-  opacity: 0.9;
-  font-size: 2.5em;
+#boost .header__title {
+  font-size: 2rem;
+  text-transform: uppercase;
+}
+#boost .header__subtitle {
+  margin-top: 1rem;
+  font-size: 2.2rem;
+  font-weight: normal;
+}
+#boost .tips-list {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+#boost .ul-tips {
+  font-size: 2rem;
+  font-weight: 300;
+  margin-top: 5px;
+  margin-left: 20px;
+  list-style: disc;
+}
+#boost .li-tip {
+  text-align: left;
+  font-size: 0.9em;
+  font-weight: 500;
+}
+#boost .yellow {
+  color: #f0b811;
+}
+#boost .red {
+  color: #d63c3c;
+}
+#boost .video {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+#boost .video h2 {
+  font-size: 1.5em;
+  font-weight: 700;
+  margin: 15px 0;
+}
+#boost .video iframe {
+  width: 640px;
+}
+#boost .columns {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  margin: 20px 0;
+}
+#boost .columns .column {
+  text-align: left;
+  width: 40%;
+  min-width: 350px;
+}
+#boost .columns .column ul li {
+  text-align: left;
+  font-size: 1.2em;
+  font-weight: 200;
+}
+#boost .buy-pkoin {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+#boost .buy-pkoin h2 {
+  font-size: 1.5em;
   font-weight: 700;
 }
-#boost .layout {
-  margin-top: 2em;
+#boost .buy-pkoin p {
+  font-size: 1.4em;
+  font-weight: 700;
 }
-#boost .layout .images {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-gap: 1em;
+#boost .buy-pkoin .text {
+  text-align: left;
+  font-size: 1.2em;
+  font-weight: 200;
 }
-#boost .layout .imageWithCaption {
-  background: rgb(var(--background-secondary-theme));
-  border-radius: 16px;
-  box-shadow: 0 5px 7px -5px rgba(var(--color-shadow-base), 0.4);
-  padding: 1.5em;
-}
-#boost .layout .imageWithCaption .subcaption {
-  text-align: center;
-}
-#boost .layout .imageWithCaption .subcaption span {
-  font-size: 1.5em;
-  font-weight: 100;
-}
-#boost .layout .imageWithCaption .imageWrapper {
-  margin-top: 2em;
-}
-#boost .layout .imageWithCaption .imageWrapper img {
-  width: 100%;
-}
-#boost .texts {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-gap: 1em;
-}
-#boost .texts .paragraphs {
-  padding: 1.5em;
-}
-#boost .texts .paragraph {
-  display: list-item;
-  list-style: square;
-  max-width: 620px;
-  margin-top: 1em;
-}
-#boost .features {
-  margin-top: 1.5em;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-  grid-gap: 0.5em;
-}
-#boost .features .featureWithImage {
-  background: rgb(var(--background-secondary-theme));
-  border-radius: 16px;
-  box-shadow: 0 5px 7px -5px rgba(var(--color-shadow-base), 0.4);
-}
-#boost .features .featureWithImage .imageWrapper img {
-  width: 100%;
-}
-#boost .features .featureWithImage .subcaption {
-  text-align: center;
-  padding: 1em;
-}
-#boost .features .featureWithImage .subcaption span {
-  font-size: 0.9em;
-}
-#boost .videoWrapper {
-  margin-top: 2em;
+#boost .buy-pkoin .sites {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
-#boost .videoWrapper iframe {
-  box-shadow: 0 5px 7px -5px rgba(var(--color-shadow-base), 0.4);
-}
-#boost .faq {
-  margin-top: 3em;
-}
-#boost .faq .container {
-  max-width: 800px;
-  width: 100%;
-  margin: 0 auto;
-  padding: 0px 20px 20px 20px;
-}
-#boost .faqWrapper {
-  max-width: 1280px;
-  width: 100%;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 2em;
-  padding-top: 2em;
-}
-#boost .faqWrapper img {
-  border-radius: 10px;
-  border: 1px solid rgb(var(--neutral-grad-1));
-  box-shadow: 0 5px 7px -5px rgba(var(--color-shadow-base), 0.4);
-}
-#boost .faqWrapper .faq {
-  padding: 0 20px;
-}
-#boost .faqWrapper .faq .group {
-  margin-bottom: 2em;
-}
-#boost .faqWrapper .faq .group .groupCaption {
-  font-size: 2.5em;
+#boost .buy-pkoin .sites a {
+  margin: 15px 0;
+  font-size: 1.2em;
   font-weight: 700;
-  padding-bottom: 0.5em;
-  color: rgb(var(--color-txt-orange));
 }
-#boost .faqWrapper .faq .group .groupCnt .question {
-  font-size: 1.5em;
-  padding-bottom: 3em;
-  max-width: 700px;
+#boost .buy-pkoin .sites a img {
+  width: 150px;
 }
-#boost .faqWrapper .faq .group .groupCnt .question .questiontop {
-  display: flex;
-  justify-content: space-between;
+#boost .buy-pkoin .sites a img .img {
+  width: 60px;
 }
-#boost .faqWrapper .faq .group .groupCnt .question .questionName {
-  padding-bottom: 1em;
+#boost .buy-pkoin .sites a .span {
+  font-weight: 300;
+}
+#boost .buy-pkoin img {
+  max-width: 500px;
+}
+#boost .buy-pkoin .cta {
+  font-size: 1.2em;
   font-weight: 700;
-  color: rgb(var(--color-txt-gray));
-  font-size: 1.5em;
-  max-width: 85%;
-}
-#boost .faqWrapper .faq .group .groupCnt .question .answer {
-  font-size: 0.8em;
-  padding-bottom: 20px !important;
-}
-#boost .faqWrapper .faq .group .groupCnt .question .answer a {
-  text-decoration: underline;
-  color: rgb(var(--color-txt-ac));
-}
-#boost .faqWrapper .faq .group .groupCnt .question .answer .image {
-  width: 100% !important;
-  max-width: 700px;
-  position: relative;
-}
-#boost .faqWrapper .faq .group .groupCnt .question .answer .image img {
-  width: 100% !important;
-}
-#boost .faqWrapper .faq .group .groupCnt .question .answer div {
-  padding-bottom: 0.5em;
-}
-#boost .faqWrapper .faq .group .groupCnt .question .share {
-  margin-top: 0.5em;
-  color: #ff6e84;
-  font-size: 0.7em;
-  cursor: pointer;
-}
-#boost .faqWrapper .faq .group .groupCnt .question .share:hover {
-  color: rgb(var(--color-txt-ac));
-}
-#boost .faqWrapper .faq .group .groupCnt .question .share span {
-  padding-right: 2px;
-}
-#boost .faqWrapper .faq .group .groupCnt .question .icon {
-  background: rgb(var(--color-bg-ac));
-  color: rgb(var(--text-on-bg-ac-color));
-  cursor: pointer;
-  -moz-transition: 0.3s;
-  -o-transition: 0.3s;
-  -webkit-transition: 0.3s;
-  transition: 0.3s;
-  width: 44px;
-  height: 44px;
-  line-height: 44px;
-  text-align: center;
-  border-radius: 50%;
-  font-size: 0.6em;
-}
-#boost .faqWrapper .faq .group .groupCnt .question .icon:hover {
-  background: rgb(var(--color-txt-ac));
+  color: white;
+  margin: 30px 0;
+  padding: 25px 35px;
+  text-transform: uppercase;
+  background: #f0b811;
+  border-radius: 5px;
 }
 @media only screen and (max-width: 768px) {
   #boost {
     padding: 0.5em 1em;
   }
-  #boost .faqWrapper img {
+  #boost .video iframe {
     width: 100%;
+    padding: 0 10px;
   }
-  #boost .caption {
-    margin-top: 1em;
-    text-align: center;
+  #boost .buy-pkoin img {
+    width: 100%;
+    padding: 0 10px;
   }
-  #boost .caption span {
-    font-size: 2em;
-  }
-  #boost .layout {
-    margin-top: 2em;
-  }
-  #boost .layout .images {
-    grid-template-columns: 1fr;
-    grid-gap: 1em;
-  }
-  #boost .texts {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-gap: 1em;
-  }
-  #boost .texts .paragraphs {
-    padding: 0 0.5em;
-  }
-  #boost .features {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-  }
-  #boost .faq .container {
-    padding: 0.5em;
-  }
-  #boost .faqWrapper .faq {
-    padding: 0;
+  #boost .buy-pkoin .cta {
+    font-size: 0.8em;
+    padding: 15px;
   }
 }
