@@ -74,6 +74,7 @@ Platform = function (app, listofnodes) {
     self.lastblocktime = null
     self.lasttimecheck = null
     self.real = {
+        'PSDZb5TAtxhRx2Kw4d6mATJrsR6yaYgzhC' : true,
         'PWUH5h7fyoCMffBjABk8vtnDRqUZ1BmFWG' : true,
         'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd' : true,
         'PLJvEixJkj85C4jHM3mt5u1ATwZE9zgFaA' : true,
