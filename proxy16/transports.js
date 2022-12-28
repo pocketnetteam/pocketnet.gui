@@ -4,7 +4,7 @@ const _request = require("request");
 const _axios = require("axios");
 const fetch = require("node-fetch");
 const { SocksProxyAgent } = require("socks-proxy-agent");
-const torHttpsAgent = new SocksProxyAgent("socks5h://127.0.0.1:9050");
+const torHttpsAgent = new SocksProxyAgent("socks5h://127.0.0.1:9050", { keepAlive: true });
 const yaping = require("yaping");
 const tls = require("tls");
 
