@@ -253,6 +253,10 @@ module.exports = function (enable = false) {
         }
     }
 
+    self.isTorNeeded = (url) => isTorNeeded(url);
+
+    self.saveHostStats = (url, stats) => saveHostStats(url, stats);
+
     const awaitTor = async () => {
         const torcontrol = self.torapplications;
 
