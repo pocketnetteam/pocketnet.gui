@@ -26,6 +26,8 @@ export function fsFetchFactory(electronIpcRenderer: Electron.IpcRenderer, shareI
 
         if (init.headers instanceof Headers && init.headers.has('Range')) {
             let rangeStr = init.headers.get('Range');
+
+            // @ts-ignore
             range = rangeStr
                 .match(/\d+/g)
                 .map(Number.parseFloat);
@@ -92,7 +94,7 @@ export function initFsFetchBridge(electronIpcMain: Electron.IpcMain, appPath: st
             filePath = `${shareId}/videos/${videoId}/fragment_${range[0]}-${range[1]}.mp4`;
         }
 
-        return `${appPath}/posts/${filePath}`;
+        return `${appPath}/posts/${filePath!}`;
     }
 
     electronIpcMain.handle('BastyonFsFetch : FileStats', (event, shareId: string, url: string, range?: number[]) => {
