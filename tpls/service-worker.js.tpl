@@ -1,17 +1,13 @@
 // importScripts('./js/vendor/workbox-v6.1.5/workbox-sw.js');
-importScripts('./js/transports2/hosts-data.js');
 importScripts('./js/transports2/fetch/receiver.js');
 importScripts('./js/broadcaster.js');
 
 let isEnabled = false;
-let hostsData = null;
 let nodeFetch = (...args) => fetch(...args);
-let proxifiedHosts = {};
 
 const swBroadcaster = new Broadcaster('ServiceWorker');
 
 swBroadcaster.once('extended-fetch', async () => {
-  hostsData = await self.HostsData.init();
   nodeFetch = FetchReceiver.init('ExtendedFetch');
   isEnabled = true;
 });
