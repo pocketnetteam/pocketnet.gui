@@ -556,6 +556,20 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 	}
 
+	self.transports = {
+		isAltTransportSet: (url) => {
+			return transports.isTorNeeded(url)
+		},
+
+		reportAccessProblem: (url) => {
+			return transports.saveHostStats(url);
+		},
+
+		reportAccessSuccess: (url) => {
+			return transports.saveHostStats(url, { accessible: true });
+		},
+	}
+
 	self.torapplications = {
 		init: function () {
 			if(!global.USE_PROXY_NODE) {
@@ -651,7 +665,19 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 		request: (option, callback)=>{
 			return transports.request(option, callback)
-		}
+		},
+
+		isAltTransportSet: (url) => {
+			return transports.isTorNeeded(url);
+		},
+
+		reportAccessProblem: (url) => {
+			return transports.saveHostStats(url);
+		},
+
+		reportAccessSuccess: (url) => {
+			return transports.saveHostStats(url, { accessible: true });
+		},
 	}
 
 	///
