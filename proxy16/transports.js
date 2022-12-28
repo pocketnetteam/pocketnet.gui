@@ -101,8 +101,9 @@ module.exports = function (enable = false) {
 
         try {
             return await _axios(preparedOpts)
-              .then(() => {
+              .then((response) => {
                   saveHostStats(preparedOpts.url, { accessible: true });
+                  return response;
               });
         } catch (e) {
             const isTorEnabled = await awaitTor();
