@@ -4,6 +4,27 @@ if (typeof _OpenApi == 'undefined') _OpenApi = false;
 
 if (typeof _Electron != 'undefined') {
     electron = require('electron');
+    Broadcaster = require('./js/broadcaster.js');
+
+    swBroadcaster = new Broadcaster('ServiceWorker');
+
+    swBroadcaster.handle('AltTransportActive', (url) => {
+        return electron.ipcRenderer.invoke('AltTransportActive', url);
+    });
+
+    swBroadcaster.handle('ReportAccessProblem', (url) => {
+        return electron.ipcRenderer.invoke('ReportAccessProblem', url);
+    });
+
+    swBroadcaster.handle('ReportAccessSuccess', (url) => {
+        return electron.ipcRenderer.invoke('ReportAccessSuccess', url);
+    });
+
+    setTimeout(() => {
+        swBroadcaster.send('extended-fetch');
+    }, 5000);
+
+    fetchRetranslator = require('./js/transports2/fetch/retranslator').init('ExtendedFetch', electron.ipcRenderer);
 
     proxyAxios = require('./js/transports/proxified-axios').proxifiedAxiosFactory(electron.ipcRenderer);
     proxyFetch = require('./js/transports/proxified-fetch').proxifiedFetchFactory(electron.ipcRenderer);

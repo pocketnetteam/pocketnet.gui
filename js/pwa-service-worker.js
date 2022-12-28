@@ -11,10 +11,9 @@ if(typeof _Electron != 'undefined'){
 if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('./service-worker.js').then(function (registration) {
         console.log('Service worker registration succeeded:', registration);
-    }, /*catch*/ function (error) {
-        console.log('Service worker registration failed:', error);
-    });
 
+        registration.addEventListener('updatefound', () => {
+            const worker = registration.installing;
 
     navigator.serviceWorker.addEventListener('message', function(event) {
 
@@ -41,9 +40,4 @@ if ('serviceWorker' in navigator) {
         }
 
     });
-
-    
- 
-} else {
 }
-

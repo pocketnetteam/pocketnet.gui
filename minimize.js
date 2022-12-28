@@ -106,6 +106,7 @@ var vars = {
 	test : {
 		proxypath : '"https://test.pocketnet.app:8899/"',
 		domain : _meta[args.project].turl,
+		packageVersion: package.version,
 		test : '<script>window.testpocketnet = true;</script>',
 		globaltest : 'global.TESTPOCKETNET = true;',
 		path : args.path,
@@ -116,6 +117,7 @@ var vars = {
 	prod : {
 		proxypath : '"https://pocketnet.app:8899/"',
 		domain : _meta[args.project].url,
+		packageVersion: package.version,
 		test : '',
 		globaltest : '',
 		path : args.path,
