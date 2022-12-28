@@ -27,6 +27,20 @@ const transports = require('./proxy16/transports')()
 const { app, BrowserWindow, Menu, MenuItem, Tray, ipcMain, Notification, nativeImage, dialog, globalShortcut, OSBrowser } = require('electron')
 app.allowRendererProcessReuse = false
 
+const FetchHandler = require('./js/transports2/fetch/handler.js');
+const { SocksProxyAgent } = require('socks-proxy-agent');
+
+FetchHandler.init(ipcMain, {
+  prepareOptions: () => ({
+      agent: new SocksProxyAgent('socks5h://127.0.0.1:9050'),
+  }),
+  prepareResponse: (response) => {
+    response.headers.append('#bastyon-tor-used', true);
+
+    return response;
+  },
+});
+
 // app.commandLine.appendSwitch('proxy-server', "socks5h://127.0.0.1:9050")
 
 const Badge = require('./js/vendor/electron-windows-badge.js');
