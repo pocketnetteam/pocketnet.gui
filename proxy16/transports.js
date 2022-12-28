@@ -5,8 +5,9 @@ const _axios = require("axios");
 const fetch = require("node-fetch");
 const { SocksProxyAgent } = require("socks-proxy-agent");
 const torHttpsAgent = new SocksProxyAgent("socks5h://127.0.0.1:9050", { keepAlive: true });
-const yaping = require("yaping");
 const tls = require("tls");
+
+const yaping = import("@shpingalet007/node-yaping");
 
 module.exports = function (enable = false) {
     const self = {};
@@ -147,8 +148,10 @@ module.exports = function (enable = false) {
             }
 
             function icmpPing() {
-                return new Promise((resolve, reject) => {
-                    yaping(host, (err, target) => {
+                return new Promise(async (resolve, reject) => {
+                    const promisedYaping = await yaping;
+
+                    promisedYaping.ping(host, (err, target) => {
                         if (err) {
                             reject('ICMP_PING_FAILED');
                             return;

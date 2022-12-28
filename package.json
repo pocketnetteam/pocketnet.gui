@@ -51,6 +51,7 @@
         "humanize": "0.0.9"
     },
     "dependencies": {
+        "@shpingalet007/node-yaping": "github:shpingalet007/node-yaping#v0.0.5",
         "aes-js": "^3.1.2",
         "async-each": "^1.0.3",
         "auto-launch": "^5.0.5",
@@ -138,7 +139,6 @@
         "uglifycss": "0.0.29",
         "underscore": "",
         "winston": "^3.3.3",
-        "yaping": "0.0.3",
         "yuicompressor": "^2.4.8"
     },
     "build": {
