@@ -187,8 +187,19 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  async function cacheAnswer(cache) {
+  async function getCache(cache) {
     return await cache.match(request);
+  }
+
+  function putCache(cache, response) {
+    let preparedResponse = response;
+
+    if (response.type === 'opaque') {
+      const responseBlob = response.blob();
+      preparedResponse = new Response(responseBlob);
+    }
+
+    cache.put(request, preparedResponse);
   }
 
   async function torAnswer() {
@@ -210,7 +221,7 @@ self.addEventListener('fetch', (event) => {
       cache = await caches.open(cacheName);
 
       console.log('Try to get cache for', request.url);
-      const cacheResponse = await cacheAnswer(cache)
+      const cacheResponse = await getCache(cache)
       if (cacheResponse) {
         console.log('Using cache for', request.url);
         resolve(cacheResponse);
@@ -225,7 +236,7 @@ self.addEventListener('fetch', (event) => {
       resolve(torResponse.clone());
 
       if (cacheName) {
-        cache.put(request, torResponse);
+        putCache(cache, torResponse);
       }
 
       return;
@@ -242,7 +253,7 @@ self.addEventListener('fetch', (event) => {
       resolve(fetchResponse.clone());
 
       if (cacheName) {
-        cache.put(request, fetchResponse);
+        putCache(cache, fetchResponse);
       }
 
       return;
