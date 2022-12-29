@@ -1204,6 +1204,7 @@ Application = function(p)
         self.mobile.pip.init()
         self.mobile.keyboard.init()
         self.mobile.memory()
+        self.mobile.webviewchecker()
         self.mobile.safearea()
 
         if (window.Keyboard && window.Keyboard.disableScroll){
@@ -1975,6 +1976,18 @@ Application = function(p)
   }
 
   self.mobile = {
+
+    webviewchecker : function(){
+
+      if(window.plugins && window.plugins.webViewChecker){
+        plugins.webViewChecker.isAndroidWebViewEnabled().then(function(enabled) { console.log('isAndroidWebViewEnabled',enabled); })
+          .catch(function(error) { });
+
+        plugins.webViewChecker.getAndroidWebViewPackageInfo().then(function(packageInfo) { console.log('getAndroidWebViewPackageInfo', packageInfo); })
+          .catch(function(error) { });
+      }
+     
+    },
 
     memory : function(){
 
