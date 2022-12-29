@@ -61,10 +61,10 @@
     "cordova-plugin-insomnia": "file:cordova-plugin-insomnia",
     "cordova-plugin-ionic-keyboard": "file:cordova-plugin-ionic-keyboard",
     "cordova-plugin-media": "^6.1.0",
-    "cordova-plugin-memory-warning-ios-android": "^1.1.1",
     "cordova-plugin-navigationbar-color": "^0.1.0",
     "cordova-plugin-photo-library": "github:simplifier-ag/cordova-plugin-photo-library",
     "cordova-plugin-pip": "file:cordova-plugin-pip",
+    "cordova-plugin-proguard": "^2.2.0",
     "cordova-plugin-statusbar": "file:cordova-plugin-statusbar",
     "cordova-plugin-taptic-engine": "^2.2.0",
     "cordova-plugin-x-socialsharing": "^6.0.4",
@@ -143,7 +143,9 @@
         "CAMERA_USAGE_DESCRIPTION": "Allow the application access to the camera to select photos for publication.",
         "PHOTOLIBRARY_USAGE_DESCRIPTION": "Allow the application access to the photo gallery to select photos for publication."
       },
-      "cordova-plugin-photo-library": {},
+      "cordova-plugin-photo-library": {
+        "PHOTO_LIBRARY_USAGE_DESCRIPTION": " "
+      },
       "cordova-plugin-network-information": {},
       "cordova-plugin-vibration": {},
       "cordova-plugin-android-packagemanager": {},
@@ -155,7 +157,7 @@
         "KEEP_AVAUDIOSESSION_ALWAYS_ACTIVE": "NO"
       },
       "cordova-plugin-camera-preview": {},
-      "cordova-plugin-memory-warning": {}
+      "cordova-plugin-proguard": {}
     },
     "platforms": [
       "ios",

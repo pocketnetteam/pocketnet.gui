@@ -42,6 +42,9 @@ if(typeof _Node == 'undefined') _Node = false;
 
 chrsz = 8;
 
+if(window)
+  window.HELP_IMPROVE_VIDEOJS = false;
+
 Application = function(p)
 {
 
@@ -1422,7 +1425,9 @@ Application = function(p)
       setTimeout(function(){
 
         var duration = deep(self.playingvideo, 'embed.details.duration') || 0
+        var unsleep = self.playingvideo && self.playingvideo.playing && (!duration || duration > 60)
 
+        self.mobile.unsleep(unsleep)
         self.mobile.backgroundMode(self.playingvideo && self.playingvideo.playing && (!duration || duration > 60)/* && self.platform.sdk.videos.volume*/)
 
       }, 1000)
