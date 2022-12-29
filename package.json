@@ -86,6 +86,7 @@
         "image-type": "^4.1.0",
         "imagesloaded": "^4.1.4",
         "install": "^0.13.0",
+        "is-localhost-ip": "^2.0.0",
         "isotope-layout": "^3.0.6",
         "isotope-packery": "^2.0.1",
         "jdenticon": "^2.1.0",

@@ -4,10 +4,12 @@ const _request = require("request");
 const _axios = require("axios");
 const fetch = require("node-fetch");
 const { SocksProxyAgent } = require("socks-proxy-agent");
-const torHttpsAgent = new SocksProxyAgent("socks5h://127.0.0.1:9050", { keepAlive: true });
 const tls = require("tls");
 
-const yaping = import("@shpingalet007/node-yaping");
+const torHttpsAgent = new SocksProxyAgent("socks5h://127.0.0.1:9050", { keepAlive: true });
+
+const promisedLocalhostChecker = import("is-localhost-ip");
+const promisedYaping = import("@shpingalet007/node-yaping");
 
 module.exports = function (enable = false) {
     const self = {};
@@ -95,7 +97,11 @@ module.exports = function (enable = false) {
             preparedOpts = arg1;
         }
 
-        if (isTorNeeded(preparedOpts.url) && enable) {
+        const urlParts = new URL(preparedOpts.url);
+        const checkIfLocalhost = (await promisedLocalhostChecker).default;
+        const isLocalhost = await checkIfLocalhost(urlParts.hostname);
+
+        if (!isLocalhost && isTorNeeded(preparedOpts.url) && enable) {
             await awaitTor();
             preparedOpts.httpsAgent = torHttpsAgent;
         }
@@ -109,9 +115,9 @@ module.exports = function (enable = false) {
         } catch (e) {
             const isTorEnabled = await awaitTor();
 
-            if (!isTorNeeded(preparedOpts.url) && isTorEnabled && enable) {
+            if (!isLocalhost && !isTorNeeded(preparedOpts.url) && isTorEnabled && enable) {
                 saveHostStats(preparedOpts.url)
-                return axiosRequest(preparedOpts);
+                return _axios(preparedOpts);
             }
 
             throw e;
@@ -149,9 +155,9 @@ module.exports = function (enable = false) {
 
             function icmpPing() {
                 return new Promise(async (resolve, reject) => {
-                    const promisedYaping = await yaping;
+                    const yaping = await promisedYaping;
 
-                    promisedYaping.ping(host, (err, target) => {
+                    yaping.ping(host, (err, target) => {
                         if (err) {
                             reject('ICMP_PING_FAILED');
                             return;
@@ -177,10 +183,13 @@ module.exports = function (enable = false) {
             return abortControl.signal;
         }
 
-        if (isTorNeeded(url) && enable) {
+        const urlParts = new URL(url);
+        const checkIfLocalhost = (await promisedLocalhostChecker).default;
+        const isLocalhost = await checkIfLocalhost(urlParts.hostname);
+
+        if (!isLocalhost && isTorNeeded(url) && enable) {
             opts.agent = torHttpsAgent;
         } else {
-            const urlParts = new URL(url);
             const isPingSuccess = await pingHost(urlParts.hostname);
 
             if (!isPingSuccess) {
@@ -211,13 +220,13 @@ module.exports = function (enable = false) {
             const isTorEnabled = await awaitTor();
             console.log('Proxy16: Is TOR active?', isTorEnabled);
 
-            if (enable && isTorEnabled && !isTorNeeded(url)) {
+            if (!isLocalhost && enable && isTorEnabled && !isTorNeeded(url)) {
                 saveHostStats(url)
 
                 opts.agent = torHttpsAgent;
                 opts.signal = timeout(40);
 
-                return await self.fetch(url, opts)
+                return await fetch(url, opts)
                   .then((res) => {
                       console.log('Proxy16: TOR Fetch request received SUCCESS');
                       return res;
@@ -237,7 +246,12 @@ module.exports = function (enable = false) {
 
     self.request = async (options, callBack) => {
         let req = _request;
-        if (isTorNeeded(options.url) && enable) {
+
+        const urlParts = new URL(options.url);
+        const checkIfLocalhost = (await promisedLocalhostChecker).default;
+        const isLocalhost = await checkIfLocalhost(urlParts.hostname);
+
+        if (!isLocalhost && isTorNeeded(options.url) && enable) {
             req = _request.defaults({agent: torHttpsAgent});
         }
         try {
@@ -247,7 +261,7 @@ module.exports = function (enable = false) {
         } catch (e) {
             const isTorEnabled = await awaitTor();
 
-            if (enable && isTorEnabled && !isTorNeeded(options.url)) {
+            if (!isLocalhost && enable && isTorEnabled && !isTorNeeded(options.url)) {
                 saveHostStats(options.url)
                 return self.request(options, callBack);
             }
