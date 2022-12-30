@@ -102,6 +102,18 @@ var all = {
 		class : 'htls'
 	},
 
+	savePost : {
+		icon : '<i class="fas fa-download"></i>',
+		text : e('savePost'),
+		class : 'savePost'
+	},
+
+	deleteSavedPost : {
+		icon : '<i class="fas fa-trash"></i>',
+		text : e('deleteSavedPost'),
+		class : 'deleteSavedPost'
+	},
+
 	recommendationinfo : {
 		icon : '<i class="fas fa-info-circle"></i>',
 		text : e('recommendations_menu_caption'),
@@ -122,11 +134,15 @@ if(share){
 
 		m.push('shareBareVideoLink');
 
-		if(app.platform.sdk.localshares.getShare(share.txid)){
-			m.unshift('deleteSavedVideo');
+	}
+
+	if (app.savesupported() || app.savesupportedForBrowser()) {
+
+		if (app.platform.sdk.localshares.getShare(share.txid)){
+			m.unshift('deleteSavedPost');
 		}
 		else{
-			m.unshift('downloadVideo');
+			m.unshift('savePost');
 		}
 
 	}

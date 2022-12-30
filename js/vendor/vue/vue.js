@@ -1893,7 +1893,11 @@
       warn(("Error in " + info + ": \"" + (err.toString()) + "\""), vm);
     }
     /* istanbul ignore else */
-    if ((inBrowser || inWeex) && typeof console !== 'undefined') {
+    if ((inBrowser || inWeex) &&
+      typeof console !== 'undefined' &&
+      err !== undefined &&
+      err.message !== undefined &&
+      !err.message.includes('_injectedStyles')) {
       console.error(err);
     } else {
       throw err

@@ -117,15 +117,10 @@
 }
 #registration .mWrapper .stepsWrapper .step {
   min-height: 1px;
-  float: left;
-  opacity: 0;
   -moz-transition: 0.3s;
   -o-transition: 0.3s;
   -webkit-transition: 0.3s;
   transition: 0.3s;
-}
-#registration .mWrapper .stepsWrapper .step.active {
-  opacity: 1;
 }
 #registration .mWrapper #test {
   background: rgb(var(--background-total-theme));
@@ -537,6 +532,17 @@
 #registration .mWrapper .bloggers .welcome_text .name {
   color: rgb(var(--color-txt-ac));
 }
+#registration .mWrapper .bloggers .nextStepButtons {
+  position: sticky;
+  z-index: 1000;
+  bottom: 0;
+  height: 100px;
+  background: rgb(var(--background-hidden-layer));
+}
+#registration .mWrapper .bloggers .nextStepButtons .subc {
+  margin-top: 2em;
+  padding-top: 1em;
+}
 #registration .mWrapper .bloggers .usersHorizontal {
   margin-top: 20px;
   display: flex;
@@ -559,6 +565,23 @@
 #registration .mWrapper .bloggers .usersHorizontal .wrk :nth-last-child(-n+4) .modal .aboutWrapper {
   -webkit-line-clamp: 6;
   line-clamp: 6;
+}
+#registration .mWrapper .bloggers .usersHorizontal .wrk .aboutWrapper {
+  padding: 0 1em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 12;
+  line-clamp: 12;
+  -webkit-box-orient: vertical;
+}
+#registration .mWrapper .bloggers .usersHorizontal .wrk .aboutWrapper.aboutWrapperShort {
+  padding: 0;
+  height: 38px;
+  max-width: 100%;
+  font-size: 0.9em;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
 }
 #registration .mWrapper .bloggers .usersHorizontal .wrk .subscribeWrapper {
   margin-top: 16px;
@@ -596,7 +619,7 @@
   cursor: default;
   width: 308px;
   position: absolute;
-  z-index: 9999;
+  z-index: 999;
   right: 180px;
   margin-top: 15px;
   background: rgb(var(--background-total-theme));
@@ -658,24 +681,13 @@
 #registration .mWrapper .bloggers .usersHorizontal .wrk .modal .subscribeWrapper.following .subscribe {
   display: none;
 }
-#registration .mWrapper .bloggers .usersHorizontal .wrk .modal .aboutWrapper {
-  padding: 0 1em;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 12;
-  line-clamp: 12;
-  -webkit-box-orient: vertical;
-}
-@media (pointer: fine) {
-  #registration .mWrapper .bloggers .usersHorizontal .wrk .iconWrapper:hover .modal {
-    display: block;
-  }
-}
 #registration .mWrapper .bloggers .usersHorizontal .user {
   padding: 1em;
   border: 1px solid rgba(var(--color-medium-theme), 0.3);
   border-radius: 12px;
+}
+#registration .mWrapper .bloggers .usersHorizontal .user.showMore .modal {
+  display: block;
 }
 #registration .mWrapper .bloggers .usersHorizontal .user .addressWrapper .iconWrapper {
   display: flex;
@@ -720,7 +732,6 @@
 }
 #registration .mWrapper .bloggers .usersHorizontal .user .addressWrapper .userbody .name {
   font-weight: 600;
-  font-size: 0.9em;
   max-width: 100px;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -798,6 +809,14 @@
   font-weight: 700;
   text-decoration: underline;
 }
+#registration .mWrapper .bloggers .showMoreAbout {
+  margin-top: 0.5em;
+  color: #00A4FF;
+  cursor: pointer;
+}
+#registration .mWrapper .bloggers .showMoreAbout:hover {
+  opacity: 0.6;
+}
 #registration .mWrapper .bloggers .subcaption {
   font-weight: 100;
   padding-top: 3em;
@@ -833,6 +852,12 @@
 #registration[step="bloggers"] .hasaccount {
   display: none;
 }
+#registration[step="bloggers"] .stepsWrapper {
+  overflow: visible;
+}
+#registration[step="bloggers"] .stepsWrapper .stepsWrapperLine {
+  overflow: visible;
+}
 .wndcontent #registration .categories .welcome_text {
   margin-top: 0.5em !important;
 }
@@ -851,6 +876,9 @@ html[theme="gray"] #registration .ucaptcha .captchaImage {
   #registration .mWrapper #test {
     width: 100%;
   }
+  #registration[step="bloggers"] .bloggers .nextStepButtons {
+    height: 150px;
+  }
   #registration .mWrapper .categories .cats {
     padding: 0.5em;
     justify-content: space-between;
@@ -862,10 +890,7 @@ html[theme="gray"] #registration .ucaptcha .captchaImage {
   #registration .mWrapper .cat {
     font-size: 0.8em !important;
   }
-  #registration .mWrapper .bloggers .subc {
-    margin-top: 2em;
-  }
-  .wndcontent #registration .categories .nextStepButtons {
+  .wndcontent #registration[step="categories"] .nextStepButtons {
     position: static;
   }
 }

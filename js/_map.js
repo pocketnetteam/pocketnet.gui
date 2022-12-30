@@ -58,6 +58,7 @@ __map =  {
 
 		"js/vendor/moment.min.js", //?
 		"js/vendor/moment.locale.js", //?
+		"js/vendor/ua-parser.min.js",
 		"js/vendor/jquery.inputmask.bundle.js",
 		 //
 		"js/vendor/isotope.pkgd.js", //
@@ -68,11 +69,11 @@ __map =  {
 		"js/vendor/owl/owl.carousel.js",
 		
 		{path : "js/vendor/shadow-popup/popup.js", babelify : true},
+		{path : "js/popups/index.js", babelify : true}
 	],
 
 	__sourcesfirst : [
-		/*"js/vendor/firebase-app.js",*/
-		/*"js/vendor/firebase-messaging.js",*/ /// temp
+		
 		"js/vendor/axios.js",
 		"js/vendor/underscore-min.js",  
 		{path : "js/functionsfirst.js", babelify : true},
@@ -198,7 +199,14 @@ __map =  {
 		],*/
 	},      
 
-	
+	bastyon_iphone: {
+		uri : "bastyon_iphone",
+		href : "bastyon_iphone",
+		add : insertingfunc,
+		anonimus : true,
+		electronDontOpen : true
+	},
+
 	easynode : {
 		uri : "easynode",
 		href : "easynode",
@@ -477,7 +485,6 @@ __map =  {
 			href : "streampeertube",
 			add : insertingfunc,
 		},
-
 		
 		tagcloud : {
 			uri : "tagcloud",
@@ -904,6 +911,12 @@ __map =  {
 		
 	},
 
+	downloadMedia : {
+		uri : "downloadMedia",
+		href : "downloadMedia",
+		add : insertingfunc
+	},
+
 	panel : {
 		uri : "panel",
 		href : "panel",
@@ -1052,10 +1065,17 @@ __map =  {
 		add : insertingfunc,
 	},
 
+	editVideoDescription : {
+		uri : "editVideoDescription",
+		href : "editVideoDescription",
+		add : insertingfunc,
+	},
+
 	diagnosticsPage : {
 		uri : "diagnosticsPage",
 		href : "diagnosticsPage",
 		add : insertingfunc,
+		anonimus : true,
 	},
 
 	dust : {

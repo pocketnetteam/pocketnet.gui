@@ -17,7 +17,7 @@
         box-sizing: border-box;
         padding: 1em 2.5em;
 
-        border-bottom: 1px solid @color-gray-slight;
+        border-bottom: 1px solid @color-gray-mlight;
     }
 
     .nameCell {
@@ -97,5 +97,20 @@
 
     .progressCaptionWrapper {
         color: rgb(var(--neutral-grad-2));
+    }
+
+    .userInfoWrapper {
+        padding-top: @rhythm * 2;
+
+        color: rgb(var(--neutral-grad-2));
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    #diagnosticsPage {
+        .tableCell {
+            padding: 0;
+            word-break: break-all;
+        }
     }
 }

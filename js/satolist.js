@@ -74,6 +74,7 @@ Platform = function (app, listofnodes) {
     self.lastblocktime = null
     self.lasttimecheck = null
     self.real = {
+        'PWUH5h7fyoCMffBjABk8vtnDRqUZ1BmFWG' : true,
         'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd' : true,
         'PLJvEixJkj85C4jHM3mt5u1ATwZE9zgFaA' : true,
         'PRTugzBefzB1AA2Rw8VTBKf3BBPDjQND8y' : true,
@@ -276,12 +277,20 @@ Platform = function (app, listofnodes) {
         'PGPqNyxuSSsAkt3m6eb5hyckoDhyy19dW9': true,
         'PRUJpbgfqrDayD5eRi1DmDw7S8857Jhw4e': true,
         'PWbYmgG6PzqhrNDtuFmWrSaLHTDMwZWc26': true,
-        'PLbv7r1CkNmPMetvpkTssS14WYuuMXNhDF': true
-
+        'PLbv7r1CkNmPMetvpkTssS14WYuuMXNhDF': true,
+        'PDSkBPfxgX25RTde3VzoZ1Wz8yTeUaYAvM': true,
+        'PFkCWH4zuAYtVJSQn6rvgEiSsMjHvN8dwE': true,
+        'PSbFTgRftgSCsTzTdYFWY6SYkPD72Pdqfx': true,
+        'PXZGt2EaVyRDrXCWMTiH2Tvh5eP7RZhhxF': true,
+        'PCtDTH7XznLBCTHhKFeeg8ezSa7WJtYiMJ': true,
     }
 
     self.bch = {
         'PK4qABXW7cGS4YTwHbKX99MsgMznYgGxBL' : true
+    }
+
+    self.bchl = {
+        'PJTPfBQ6Q174s7WWcW41DwTdGrkGYQx5sJ' : true
     }
 
     self.nvadr = {
@@ -324,6 +333,7 @@ Platform = function (app, listofnodes) {
         'PFWx4RKpggTjeDNq6oyWJfejP5z8oiKGE5',
         'PFr6sDvtJq3wJejQce5RJ5L8u1oYKgjW9o',
     ];
+
     self.whiteList = [
       'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd',
       'PJ3nv2jGyW2onqZVDKJf9TmfuLGpmkSK2X',
@@ -415,8 +425,12 @@ Platform = function (app, listofnodes) {
                     p.precision = 4;
                 }
 
-                if (value < 0.001) {
+                if (value < 0.0005) {
                     p.precision = 8;
+                }
+
+                if (value <= 0) {
+                    p.precision = 2;
                 }
             }
 
@@ -539,6 +553,24 @@ Platform = function (app, listofnodes) {
                     href: 'https://play.google.com/store/apps/details?id=pocketnet.app',
                     hreflabel : 'downloadplaystore',
                     githublabel : 'downloadgithub'
+                },
+
+                ios : {
+                    appname: app.meta.fullname,
+                    id: "ios",
+                    text: {
+                        name: "Ios",
+                        download: self.app.localization.e('e132221'),
+                        label: self.app.localization.e('e132233ios')
+                    },
+
+                    icon: '<i class="fab fa-apple"></i>',
+
+                    modile : true,
+                    image : 'applications_ios.jpg',
+
+                    href: 'https://pocketnet.app/bastyon_iphone',
+                    hreflabel : 'installpwa',
                 },
 
                 windows: {
@@ -3853,12 +3885,14 @@ Platform = function (app, listofnodes) {
                 return
             }
 
+            /*
             menuDialog({
                 items: [{
                     text: self.app.localization.e('saveshare'),
                     action: function (_clbk) {
 
                         if (share.itisvideo()){
+                            */
 
                             var info = share.url ? (app.platform.sdk.videos.storage[share.url] || {}).data || null : null
 
@@ -3916,6 +3950,7 @@ Platform = function (app, listofnodes) {
                             else{
                                 error('Error, cannot find data for this video')
                             }
+                        /*
                         }
                         else{
                             error('todo')
@@ -3925,7 +3960,7 @@ Platform = function (app, listofnodes) {
 
                     }
                 }]
-            })
+            })*/
 
 
 
@@ -5334,6 +5369,110 @@ Platform = function (app, listofnodes) {
 
                         })
 
+                        el.find('.savePost').on('click', function(){
+
+                            var sendSiteMessage = function() {
+                                sitemessage(self.app.localization.e('postsaved'), null, 5000, {
+                                    action : {
+                                        text : self.app.localization.e('gotosaved2'),
+                                        do : function(){
+
+                                            app.nav.api.load({
+                                                open: true,
+                                                href: 'index?r=saved',
+                                                history: true,
+                                                handler : true
+                                            })
+
+                                            app.actions.scrollToTop()
+
+                                        }
+                                    }
+                                })
+                            }
+
+                            if (!self.app.savesupported() && !self.app.savesupportedForBrowser()) {
+                                close();
+                                return;
+                            }
+
+                            share.user = deep(self.app, 'platform.sdk.usersl.storage.' + share.address).export();
+
+                            // If we are on mobile/electron and post has a downloadable media video
+                            // Do not download video on iOS
+                            if (share.itisvideo() && self.app.savesupported() && !isios()) {
+
+                                // Ask user if he wants to download
+                                app.nav.api.load({
+                                    open: true,
+                                    id: 'downloadMedia',
+                                    inWnd: true,
+
+                                    essenseData: {
+                                        item : 'post',
+                                        obj : share,
+
+                                        success: function (saveMedia) {
+
+                                            // Save the post on the device without medias
+                                            if (!saveMedia) {
+
+                                                self.app.platform.sdk.localshares.saveShare(share, { doNotSaveMedia: true }).then(() =>{
+
+                                                    sendSiteMessage();
+
+                                                });
+
+                                                return;
+
+                                            }
+
+                                            // Save the post with video
+                                            self.ui.saveShare(share, function() {});
+
+                                            return;
+
+                                        }
+                                    },
+
+                                    clbk: function () {
+
+                                    }
+                                })
+
+                            } else if (self.app.savesupported()) {
+
+                                // Save the post on the device
+                                self.app.platform.sdk.localshares.saveShare(share).then(() =>{
+
+                                    sendSiteMessage();
+                                    
+                                });
+
+                            } else {
+
+                                // Here, we have access to the localstorage (browser)
+                                self.app.platform.sdk.localshares.write.share.localstorage(share);
+
+                                sendSiteMessage();
+
+                            }
+
+                            close()
+
+                        })
+
+                        el.find('.deleteSavedPost').on('click', function(){
+
+                            if (self.app.platform.sdk.localshares.delete[self.sdk.localshares.key])
+                                self.app.platform.sdk.localshares.delete[self.sdk.localshares.key](share.txid);
+
+                            close()
+
+                            if (app.nav.current.completeHref && app.nav.current.completeHref.startsWith('index?r=saved'))
+                                _el.closest(`.share[id='${share.txid}']`).remove();
+
+                        })
 
                         el.find('.videoshare').on('click', function () {
                             self.app.mobile.vibration.small()
@@ -5856,7 +5995,7 @@ Platform = function (app, listofnodes) {
                                 {
                                     id : 'banning',
                                     q : 'Can people be banned?',
-                                    a : '<div>Yes, Bastyon is a community moderated platform, however, there are only certain topics that community will flag like pornography, narcotics and direct threats of violence. You will never be banned for an opinion or free speech, and even for specific banned topics there has to be a consensus of experienced users without other users defending the content. Currently, users with rep below -30 are losing their account privileges, but this is a temporary system. By the end of 2021, Bastyon is releasing a new moderation system where posts are initially flagged by any high rep user, but account can be blocked only by a certain group of jurors who are selected using a blockchain lottery. Thus, nobody can choose to attack someone for an opinion, jurors will be selected to moderate certain content and they have to all agree. Account cannot be banned until two sets of jurors decided and they cannot be the same. This system protects against any kind of mob rule on Bastyon, while protecting the platform from unsavory content.</div>',
+                                    a : '<div>Yes, Bastyon is a community moderated platform, however, there are only certain topics that community will flag like porn/nudity, narcotics and direct threats of violence. You will never be banned for an opinion or free speech, and even for specific banned topics there has to be a consensus of experienced users without other users defending the content. Currently, users with rep below -30 are losing their account privileges, but this is a temporary system. By the end of 2021, Bastyon is releasing a new moderation system where posts are initially flagged by any high rep user, but account can be blocked only by a certain group of jurors who are selected using a blockchain lottery. Thus, nobody can choose to attack someone for an opinion, jurors will be selected to moderate certain content and they have to all agree. Account cannot be banned until two sets of jurors decided and they cannot be the same. This system protects against any kind of mob rule on Bastyon, while protecting the platform from unsavory content.</div>',
                                 },
                                 {
                                     id : 'Apple App',
@@ -5928,7 +6067,7 @@ Platform = function (app, listofnodes) {
                                 {
                                     id : 'specific',
                                     q : 'Specifics of curation on '+self.app.meta.fullname+'.',
-                                    a : '<div> Currently the moderation of content is done through 1 star votes by high reputation  users. When reputation reaches -30, the access to the account is restricted. However, there is a completely new moderation algorithm that will be released by the end of 2021. Under the new algorithms, there will be an option to flag a user or a post by any high rep user, but that is not goign to affect the account directly. After certain numbers of flags a lottery on the blockchain will be drawn and a group of juror moderators will be chosen for that account. Jurors have to agree that this user posted pornography, narcotics or a direct threat to violence. Any other opinion or a disagreement is not a grounds for flagging or any sanctions.</div> ',
+                                    a : '<div> Currently the moderation of content is done through 1 star votes by high reputation  users. When reputation reaches -30, the access to the account is restricted. However, there is a completely new moderation algorithm that will be released by the end of 2021. Under the new algorithms, there will be an option to flag a user or a post by any high rep user, but that is not goign to affect the account directly. After certain numbers of flags a lottery on the blockchain will be drawn and a group of juror moderators will be chosen for that account. Jurors have to agree that this user posted porn/nudity, narcotics or a direct threat to violence. Any other opinion or a disagreement is not a grounds for flagging or any sanctions.</div> ',
                                 },
                                 // {
                                 // 	id : 'racism',
@@ -5998,8 +6137,8 @@ Platform = function (app, listofnodes) {
                                 },
                                 {
                                     id : 'ecosystem4',
-                                    q : 'What if users post illegal content, pornography and SPAM?',
-                                    a : '<div>'+self.app.meta.fullname+' is not a darknet platform or some sort of pornhub. While it is decentralized and censorship resistant, it is moderated by the users. Any illegal content is flagged and removed from the platform. This means that users with highest reputation can moderate the platform. However, there are safeguards in place (within the open source code) from same or very similar group(s) of people repeatedly voting content off the platform. Moderators for content are chosen randomly using a lottery on the blockchain to avoid any kind of mob rule. Also, users are explicitly encouraged to illicit content, NOT simply the content they find offensive. To make sure that '+self.app.meta.fullname+' is a free speech platform, we encourage you to start participate, grow your reputation and police the platform properly without the censorship currently prevalent in centralized social media.</div>',
+                                    q : 'What if users post illegal content, porn/nudity and SPAM?',
+                                    a : '<div>'+self.app.meta.fullname+' is not a darknet platform or some sort of porn/nudity. While it is decentralized and censorship resistant, it is moderated by the users. Any illegal content is flagged and removed from the platform. This means that users with highest reputation can moderate the platform. However, there are safeguards in place (within the open source code) from same or very similar group(s) of people repeatedly voting content off the platform. Moderators for content are chosen randomly using a lottery on the blockchain to avoid any kind of mob rule. Also, users are explicitly encouraged to illicit content, NOT simply the content they find offensive. To make sure that '+self.app.meta.fullname+' is a free speech platform, we encourage you to start participate, grow your reputation and police the platform properly without the censorship currently prevalent in centralized social media.</div>',
                                 },
                                 {
                                     id : 'ecosystem5',
@@ -6063,7 +6202,7 @@ Platform = function (app, listofnodes) {
                                 {
                                     id : 'honor11',
                                     q : 'Obligations for users:',
-                                    a : '<ul><li>Respect differing opinions and attempt to keep the platform friendly to newcomers</li><li>Flag the prohibited content:<ol><li>Any kind of pornography</li><li>Direct threats of violence</li><li>Promotion of illegal narcotics</li></ol></li><li>Give five stars to any post you peruse and find of high quality</li><li>Likewise, give 1 star to poor content, it helps the network</li><li>Use 1 star to enforce the relevance of content to the tags used</li><li>Do not flag or downvote for simple disagreement, only for prohibited content</li><li>Do not engage in reciprocal rating or any rating not based on quality of content</li></ul>',
+                                    a : '<ul><li>Respect differing opinions and attempt to keep the platform friendly to newcomers</li><li>Flag the prohibited content:<ol><li>Any kind of porn/nudity</li><li>Direct threats of violence</li><li>Promotion of illegal narcotics</li></ol></li><li>Give five stars to any post you peruse and find of high quality</li><li>Likewise, give 1 star to poor content, it helps the network</li><li>Use 1 star to enforce the relevance of content to the tags used</li><li>Do not flag or downvote for simple disagreement, only for prohibited content</li><li>Do not engage in reciprocal rating or any rating not based on quality of content</li></ul>',
                                     img: ''
                                 },
                                 {
@@ -6465,7 +6604,7 @@ Platform = function (app, listofnodes) {
                         {
                         id : 'запрет ',
                         q : 'Можно ли банить людей?',
-                        a : '<div>Да, Bastyon - это платформа, модерируемая сообществом, однако есть только определенные темы, которые будут отмечены сообществом, такие как порнография, наркотики и прямые угрозы насилия. Вас никогда не забанят за свое мнение или свободу слова, и даже по конкретным запрещенным темам должен быть консенсус опытных пользователей, при этом другие пользователи не защищают контент. В настоящее время пользователи с репутацией ниже -30 теряют свои привилегии учетной записи, но это временная система. К концу 2021 года Bastyon выпускает новую систему модерации, в которой сообщения изначально помечаются любым пользователем с высоким уровнем репутации, но учетные записи могут быть заблокированы только определенной группой присяжных, выбранных с помощью лотереи блокчейна. Таким образом, никто не может атаковать кого-то за мнение, присяжные будут выбраны для модерации определенного контента, и все они должны согласиться. Аккаунт не может быть заблокирован до тех пор, пока не будет определено два состава присяжных, и они не могут быть одинаковыми. Эта система защищает от любых правил мафии на Bastyon, одновременно защищая платформу от сомнительного контента.</div>',
+                        a : '<div>Да, Bastyon - это платформа, модерируемая сообществом, однако есть только определенные темы, которые будут отмечены сообществом, такие как порно/обнаженка, наркотики и прямые угрозы насилия. Вас никогда не забанят за свое мнение или свободу слова, и даже по конкретным запрещенным темам должен быть консенсус опытных пользователей, при этом другие пользователи не защищают контент. В настоящее время пользователи с репутацией ниже -30 теряют свои привилегии учетной записи, но это временная система. К концу 2021 года Bastyon выпускает новую систему модерации, в которой сообщения изначально помечаются любым пользователем с высоким уровнем репутации, но учетные записи могут быть заблокированы только определенной группой присяжных, выбранных с помощью лотереи блокчейна. Таким образом, никто не может атаковать кого-то за мнение, присяжные будут выбраны для модерации определенного контента, и все они должны согласиться. Аккаунт не может быть заблокирован до тех пор, пока не будет определено два состава присяжных, и они не могут быть одинаковыми. Эта система защищает от любых правил мафии на Bastyon, одновременно защищая платформу от сомнительного контента.</div>',
                         },
                         {
                         id : 'Приложение Apple',
@@ -6684,7 +6823,7 @@ Platform = function (app, listofnodes) {
                         {
                         id : 'конкретный',
                         q : 'Особенности модерации на '+self.app.meta.fullname+'.',
-                        a : '<div> В настоящее время модерация контента осуществляется с помощью оценок в 1 звезду пользователями с высокой репутацией. Когда репутация достигает -30, доступ к аккаунту ограничивается. Однако существует совершенно новый алгоритм модерации, который будет выпущен к концу 2021 года. Согласно новым алгоритмам, будет возможность пометить пользователя или сообщение любым высокопоставленным пользователем, но это не повлияет на счет напрямую. После того, как будет установлено определенное количество флагов, на блокчейне будет разыграна лотерея, и для этой учетной записи будет выбрана группа модераторов присяжных заседателей. Присяжные должны согласиться с тем, что этот пользователь разместил порнографию, наркотики или прямую угрозу насилия. Любое иное мнение или несогласие не является основанием для пометки или каких-либо санкций.</div> ',
+                        a : '<div> В настоящее время модерация контента осуществляется с помощью оценок в 1 звезду пользователями с высокой репутацией. Когда репутация достигает -30, доступ к аккаунту ограничивается. Однако существует совершенно новый алгоритм модерации, который будет выпущен к концу 2021 года. Согласно новым алгоритмам, будет возможность пометить пользователя или сообщение любым высокопоставленным пользователем, но это не повлияет на счет напрямую. После того, как будет установлено определенное количество флагов, на блокчейне будет разыграна лотерея, и для этой учетной записи будет выбрана группа модераторов присяжных заседателей. Присяжные должны согласиться с тем, что этот пользователь разместил порно/обнаженку, наркотики или прямую угрозу насилия. Любое иное мнение или несогласие не является основанием для пометки или каких-либо санкций.</div> ',
                         },
                         {
                         id : 'взаимный',
@@ -6759,8 +6898,8 @@ Platform = function (app, listofnodes) {
                         },
                         {
                         id : 'экосистема 4',
-                        q : 'Что, если пользователи размещают незаконный контент, порнографию и СПАМ?',
-                        a : '<div>'+self.app.meta.fullname+'- это не платформа даркнета или какой-то порнхаб. Хотя '+self.app.meta.fullname+' децентрализован и устойчив к цензуре, он модерируется пользователями. Любой незаконный контент помечается и удаляется с платформы. Это означает, что модерировать платформу могут пользователи с наивысшей репутацией. Однако, не существуют гарантии (в рамках открытого исходного кода), что за деструктивный контент не проголосуют пользователи с высокой репутацией. Модераторы контента выбираются случайным образом с помощью лотереи на блокчейне, чтобы избежать каких-либо подтасовок. Модерируется только запрещённый контент (порнография, педофилия, пропаганда нелегальных нарктотиков и прямые угрозы насилия), а НЕ просто к контенту, который они считают оскорбительным. Bastyon является платформой для свободы слова, мы призываем каждого участвовать в модерации контента путем проставления оценок, публиковать интересный авторский контент, повышая таким образом свою репутацию и привнося вклад в развитие платформы.</div>',
+                        q : 'Что, если пользователи размещают незаконный контент, порно/обнаженку и СПАМ?',
+                        a : '<div>'+self.app.meta.fullname+'- это не платформа даркнета или какой-то порнхаб. Хотя '+self.app.meta.fullname+' децентрализован и устойчив к цензуре, он модерируется пользователями. Любой незаконный контент помечается и удаляется с платформы. Это означает, что модерировать платформу могут пользователи с наивысшей репутацией. Однако, не существуют гарантии (в рамках открытого исходного кода), что за деструктивный контент не проголосуют пользователи с высокой репутацией. Модераторы контента выбираются случайным образом с помощью лотереи на блокчейне, чтобы избежать каких-либо подтасовок. Модерируется только запрещённый контент (порно/обнаженка, педофилия, пропаганда нелегальных нарктотиков и прямые угрозы насилия), а НЕ просто к контенту, который они считают оскорбительным. Bastyon является платформой для свободы слова, мы призываем каждого участвовать в модерации контента путем проставления оценок, публиковать интересный авторский контент, повышая таким образом свою репутацию и привнося вклад в развитие платформы.</div>',
                         },
                         {
                         id : 'экосистема 5',
@@ -6823,7 +6962,7 @@ Platform = function (app, listofnodes) {
                                 {
                                     id : 'honor1',
                                     q : 'Обязанности пользователей:',
-                                    a : '<ul><li>Уважайте различные мнения</li><li>Отметить запрещенный контент:<ol><li>Любой вид порнографии</li><li>Прямые угрозы насилием</li><li>Продвижение незаконных наркотиков</li></ol></li><li>Дайте пять звезд любой публикации, которую вы просматриваете и считаете высококачественной</li><li>Точно так же ставьте 1 звезду плохому контенту, это помогает сети</li><li>Используйте 1 звезду, чтобы обеспечить соответствие контента используемым тегам</li><li>Не отмечайте и не голосуйте за простое несогласие, а только за запрещенный контент</li><li>Не участвуйте во взаимных оценках или любых рейтингах, не основанных на качестве контента</li></ul>',
+                                    a : '<ul><li>Уважайте различные мнения</li><li>Отметить запрещенный контент:<ol><li>Любой вид порно/обнаженки</li><li>Прямые угрозы насилием</li><li>Продвижение незаконных наркотиков</li></ol></li><li>Дайте пять звезд любой публикации, которую вы просматриваете и считаете высококачественной</li><li>Точно так же ставьте 1 звезду плохому контенту, это помогает сети</li><li>Используйте 1 звезду, чтобы обеспечить соответствие контента используемым тегам</li><li>Не отмечайте и не голосуйте за простое несогласие, а только за запрещенный контент</li><li>Не участвуйте во взаимных оценках или любых рейтингах, не основанных на качестве контента</li></ul>',
                                     img: ''
                                 },
                                 {
@@ -7075,7 +7214,7 @@ Platform = function (app, listofnodes) {
                                 {
                                     id : "banning",
                                     q : "Est-ce que les gens peuvent être bannis?",
-                                    a : "<div>Oui, Bastyon est une plate-forme modérée par la communauté, cependant, il n`y a que certains sujets que la communauté signalera comme la pornographie, les stupéfiants et les menaces directes de violence. Vous ne serez jamais banni pour une opinion ou une liberté d`expression, et même pour des sujets interdits spécifiques, il doit y avoir un consensus d`utilisateurs expérimentés sans que d`autres utilisateurs défendent le contenu. Actuellement, les utilisateurs dont la représentation est inférieure à -30 perdent leurs privilèges de compte, mais il s`agit d`un système temporaire. D`ici la fin de 2021, Bastyon lancera un nouveau système de modération dans lequel les publications sont initialement signalées par tout utilisateur de haut niveau, mais le compte ne peut être bloqué que par un certain groupe de jurés sélectionnés à l`aide d`une loterie blockchain. Ainsi, personne ne peut choisir d`attaquer quelqu`un pour un avis, les jurés seront sélectionnés pour modérer certains contenus et ils doivent tous être d`accord. Le compte ne peut pas être interdit jusqu`à ce que deux groupes de jurés aient décidé et ils ne peuvent pas être les mêmes. Ce système protège contre tout type de règle de foule sur Bastyon, tout en protégeant la plate-forme des contenus peu recommandables.</div>",
+                                    a : "<div>Oui, Bastyon est une plate-forme modérée par la communauté, cependant, il n`y a que certains sujets que la communauté signalera comme la porn/nudity, les stupéfiants et les menaces directes de violence. Vous ne serez jamais banni pour une opinion ou une liberté d`expression, et même pour des sujets interdits spécifiques, il doit y avoir un consensus d`utilisateurs expérimentés sans que d`autres utilisateurs défendent le contenu. Actuellement, les utilisateurs dont la représentation est inférieure à -30 perdent leurs privilèges de compte, mais il s`agit d`un système temporaire. D`ici la fin de 2021, Bastyon lancera un nouveau système de modération dans lequel les publications sont initialement signalées par tout utilisateur de haut niveau, mais le compte ne peut être bloqué que par un certain groupe de jurés sélectionnés à l`aide d`une loterie blockchain. Ainsi, personne ne peut choisir d`attaquer quelqu`un pour un avis, les jurés seront sélectionnés pour modérer certains contenus et ils doivent tous être d`accord. Le compte ne peut pas être interdit jusqu`à ce que deux groupes de jurés aient décidé et ils ne peuvent pas être les mêmes. Ce système protège contre tout type de règle de foule sur Bastyon, tout en protégeant la plate-forme des contenus peu recommandables.</div>",
                                 },
                                 {
                                     id : "Apple App",
@@ -7359,9 +7498,11 @@ Platform = function (app, listofnodes) {
                     _.each(r, function(share){
                         self.sdk.localshares.addtostorage(share)
 
-                        _.each(share.videos, function(v){
-                            if(v.infos &&  v.infos.videoDetails) window.peertubeglobalcache[v.infos.videoDetails.uuid] = v.infos.videoDetails
-                        })
+                        if (share.videos) {
+                            _.each(share.videos, function(v){
+                                if(v && v.infos &&  v.infos.videoDetails) window.peertubeglobalcache[v.infos.videoDetails.uuid] = v.infos.videoDetails
+                            })
+                        }
 
                     })
 
@@ -7441,17 +7582,45 @@ Platform = function (app, listofnodes) {
                     shareInfo.video = share.url ? (app.platform.sdk.videos.storage[share.url] || {}).data || null : null
 
                 return self.sdk.localshares.write.share[self.sdk.localshares.key](shareInfo.share).then(folder => {
-                    return self.sdk.localshares.write.video[self.sdk.localshares.key](folder, shareInfo, p).then(r => {
 
-                        if (r == undefined)
-                            return Promise.reject('paused');
+                    return new Promise((resolve) => {
 
-                        shareInfo.share.videos || (shareInfo.share.videos = {})
-                        shareInfo.share.videos[r.id] = r
+                        // Only save videos on Android
+                        if (share.itisvideo() && !p.doNotSaveMedia && !isios()) {
 
-                        return Promise.resolve()
+                            self.sdk.localshares.write.video[self.sdk.localshares.key](folder, shareInfo, p).then(r => {
 
-                    })
+                                if (r == undefined)
+                                    return Promise.reject('paused');
+
+                                shareInfo.share.videos || (shareInfo.share.videos = {})
+                                if (r)
+                                    shareInfo.share.videos[r.id] = r
+
+                                return resolve()
+
+                            })
+
+                        }
+                        else if (share.images && share.images.length > 0 && !p.doNotSaveMedia)  {
+
+                            self.sdk.localshares.write.image[self.sdk.localshares.key](folder, shareInfo, share.images, p).then(images => {
+
+                                shareInfo.share.share.i = images;
+
+                                self.sdk.localshares.write.share[self.sdk.localshares.key](shareInfo.share).finally(() => {
+                                    return resolve()
+                                });
+
+                            });
+
+                        }
+                        else
+
+                            return resolve()
+
+                    });
+
                 }).then(r => {
                     self.sdk.localshares.storage = {}
 
@@ -7558,68 +7727,113 @@ Platform = function (app, listofnodes) {
 
                         if(!fileDownloadUrl) return Promise.reject('fileDownloadUrl')
 
-                        return new Promise((resolve, reject) => {
-                            folder.getDirectory('videos', { create: true }, function (dirEntry3) {
+                        var infos = {
+                            thumbnail: 'https://' + videoDetails.from + videoDetails.thumbnailPath,
+                            videoDetails : videoDetails,
+                        }
+                        var result = {
+                            infos: infos,
+                            id : id
+                        }
 
-                                dirEntry3.getDirectory(id, { create: true }, function (dirEntry4) {
-
-                                    var infos = {
-                                        thumbnail: 'https://' + videoDetails.from + videoDetails.thumbnailPath,
-                                        videoDetails : videoDetails,
-                                    }
-
-                                    dirEntry4.getFile('info.json', { create: true }, function (infoFile) {
-                                        // Write into file
-                                        infoFile.createWriter(function (fileWriter) {
-
-                                            fileWriter.write(infos);
-
-                                            dirEntry4.getFile(p.resolutionId + '.mp4', { create: true }, function (targetFile) {
-
-                                                var downloader = new BackgroundTransfer.BackgroundDownloader();
-                                                // Create a new download operation.
-                                                var download = downloader.createDownload(fileDownloadUrl.fileDownloadUrl, targetFile, "Bastyon: Downloading video");
-
-                                                // Start the download
-                                                download.startAsync().then(function(e) {
+                        var downloadThumbnail = function() {
+                            return new Promise((resolve, reject) => {
+                                if (!infos || !infos.thumbnail || infos.thumbnail.length <= 0)
+                                    return reject();
+                                folder.getDirectory('videos', { create: true }, function (dirEntry3) {
+                                    dirEntry3.getDirectory(id, { create: true }, function (dirEntry4) {
+                                        // Download thumbnail
+                                        let thumbnailName = infos.thumbnail.substring(infos.thumbnail.lastIndexOf('/') + 1, infos.thumbnail.length);
+                                        dirEntry4.getFile(thumbnailName, { create: true }, function (thumbFile) {
+                                            var fileTransfer = new FileTransfer();
+                                            fileTransfer.download(
+                                                'https://' + videoDetails.from + videoDetails.thumbnailPath,
+                                                thumbFile.nativeURL,
+                                                function (entry) {
                                                     // Success
-                                                    // Get file size
-                                                    targetFile.file(function(fileDetails) {
-                                                        // Resolve internal URL
-                                                        window.resolveLocalFileSystemURL(targetFile.nativeURL, function(entry) {
+                                                    resolve(entry.toURL());
+                                                },
+                                                function (error) {
+                                                    console.log("download thumbnail error: ", error);
+                                                    reject('download thumbnail error');
+                                                },
+                                                null, {}
+                                            );
+                                        }, reject);
+                                    }, reject);
+                                }, reject);
+                            });
+                        }
 
-                                                            targetFile.internalURL = entry.toInternalURL();
+                        return new Promise((resolve, reject) => {
 
-                                                            var result = {
-                                                                video: targetFile,
-                                                                infos: infos,
-                                                                size : fileDetails.size || null,
-                                                                id : id
-                                                            }
+                            // Download video thumbnail
+                            downloadThumbnail().then((thumbnailPath) => {
+                                infos.thumbnail = thumbnailPath;
+                                result.infos.thumbnail = thumbnailPath;
+                                infos.videoDetails.previewPath = thumbnailPath;
+                            }).finally(() => {
 
-                                                            //self.sdk.local.shares.add(shareId, shareInfos);
+                                // Download video
+                                folder.getDirectory('videos', { create: true }, function (dirEntry3) {
 
-                                                            return resolve(result);
+                                    dirEntry3.getDirectory(id, { create: true }, function (dirEntry4) {
 
-                                                        }, reject);
+                                        dirEntry4.getFile('info.json', { create: true }, function (infoFile) {
+                                            // Write into file
+                                            infoFile.createWriter(function (fileWriter) {
 
-                                                    }, reject);
+                                                fileWriter.write(infos);
 
-                                                }, reject, function(pr) {
+                                                dirEntry4.getFile(p.resolutionId + '.mp4', { create: true }, function (targetFile) {
 
-                                                    if(p.progress) p.progress('video', 100* pr.bytesReceived / pr.totalBytesToReceive)
+                                                    var fileTransfer = new FileTransfer();
 
-                                                });
+                                                    fileTransfer.download(
+                                                        fileDownloadUrl.fileDownloadUrl,
+                                                        targetFile.nativeURL,
+                                                        function (entry) {
+
+                                                            // Success
+                                                            // Get file size
+                                                            targetFile.file(function(fileDetails) {
+
+                                                                targetFile.internalURL = entry.toURL();
+
+                                                                result.video = targetFile;
+                                                                result.size = fileDetails.size || null;
+
+                                                                //self.sdk.local.shares.add(shareId, shareInfos);
+
+                                                                return resolve(result);
+
+                                                            }, reject);
+
+                                                        },
+                                                        function (error) {
+                                                            console.log("download error: ", error);
+                                                            reject(error);
+                                                        },
+                                                        null, {}
+                                                    );
+
+                                                    fileTransfer.onprogress = function(progressEvent) {
+                                                        if (progressEvent)
+                                                            p.progress('video', 100 * progressEvent.loaded / progressEvent.total);
+                                                    }
+
+                                                }, reject);
 
                                             }, reject);
-
+    
                                         }, reject);
-
-                                    }, reject);
-
+    
+                                    }, reject)
+    
                                 }, reject)
 
-                            }, reject)
+                            });
+
                         })
 
                     },
@@ -7639,8 +7853,73 @@ Platform = function (app, listofnodes) {
                         return videoData;
                     },
 
-                    localstorage : function(){
+                    localstorage : function(folder, shareInfo, p = {}){
+                        if(!shareInfo.video) return Promise.resolve()
                         return Promise.reject('todo')
+                    }
+                },
+
+                image : {
+
+                    cordova : async function(folder, shareInfo, images, p = {}){
+
+                        if (!folder || !images || images.length <= 0)
+                            return Promise.resolve([]);
+
+                        var nbToDo = images.length, nbDone = 0, resImages = images.map((i) => i);
+
+                        return new Promise((resolve, reject) => {
+
+                            var checkDone = function() {
+
+                                nbDone += 1;
+
+                                if (nbDone >= nbToDo)
+                                    resolve(resImages);
+
+                            }
+
+                            // Save the base64 strings for the images
+                            images.forEach((imageUrl, imageIndex) => {
+
+                                var xhr = new XMLHttpRequest();
+                                xhr.onload = function() {
+                                    var reader = new FileReader();
+                                    reader.onloadend = function() {
+                                        resImages[imageIndex] = reader.result;
+                                        checkDone();
+                                    }
+                                    reader.onerror = function(err) {
+                                        console.log(err);
+                                        checkDone();
+                                    }
+                                    reader.readAsDataURL(xhr.response);
+                                };
+                                xhr.open('GET', imageUrl);
+                                xhr.responseType = 'blob';
+                                xhr.send();
+
+                            });
+                            
+                        });
+
+                    },
+
+                    electron : async function(folder, shareInfo, images, p = {}){
+                        var imagesData = [];
+
+                        try {
+                            imagesData = await electron.ipcRenderer
+                                .invoke('saveShareImages', folder, shareInfo.share.share.i);
+                        } catch(err) {
+                            console.log(err);
+                        }
+
+                        return Promise.resolve(imagesData);
+                    },
+
+                    localstorage : function(){
+                        return Promise.resolve();
                     }
                 },
 
@@ -7663,7 +7942,7 @@ Platform = function (app, listofnodes) {
                                     dirEntry2.getFile('share.json', { create: true }, function (shareFile) {
                                         // Write into file
                                         shareFile.createWriter(function (fileWriter) {
-                                            fileWriter.write(share);
+                                            fileWriter.write(JSON.stringify(share));
 
                                             resolve(dirEntry2)
                                         });
@@ -7691,8 +7970,23 @@ Platform = function (app, listofnodes) {
                         return shareDir;
                     },
 
-                    localstorage : function(){
-                        return Promise.reject('todo')
+                    // Write share in localstorage
+                    localstorage : function(share){
+
+                        if (localStorage && localStorage.setItem) {
+
+                            share.timestamp = new Date();
+                            delete share.share;
+
+                            localStorage.setItem('saved_share_' + share.txid, JSON.stringify(share));
+
+                            share.share = share;
+                            self.sdk.localshares.addtostorage({ id: share.txid, share: share});
+                            return Promise.resolve();
+
+                        }
+
+                        return Promise.reject();
                     }
                 }
             },
@@ -7738,8 +8032,22 @@ Platform = function (app, listofnodes) {
 
                     },
 
-                    localstorage : function(){
-                        return Promise.reject('todo')
+                    // Read shares in localstorage
+                    localstorage : function(shareId){
+
+                        var share;
+
+                        if (localStorage && localStorage.getItem) {
+                            let shareStr = localStorage.getItem('saved_share_' + shareId);
+                            if (shareStr) {
+                                try {
+                                    share = JSON.parse(shareStr);
+                                    // share.user = { adr: share.address };
+                                } catch(err) {}
+                            }
+                        }
+
+                        return share;
                     }
                 },
 
@@ -7896,7 +8204,8 @@ Platform = function (app, listofnodes) {
                     const videoId = shareDataList.share.share.u
                         .split('%2F').pop();
 
-                    shareDataList.videos = await self.sdk.localshares.read.video.electron(videoId, shareId);
+                    if (videoId)
+                        shareDataList.videos = await self.sdk.localshares.read.video.electron(videoId, shareId);
 
 
                     return shareDataList;
@@ -7934,8 +8243,13 @@ Platform = function (app, listofnodes) {
 
                 },
 
-                localstorage : function(){
-                    return Promise.reject('todo')
+                // Get a share from localstorage
+                localstorage : async function(shareId){
+
+                    const share = await self.sdk.localshares.read.share.localstorage(shareId);
+                    share.share = share;
+
+                    return share;
                 }
             },
 
@@ -7990,6 +8304,10 @@ Platform = function (app, listofnodes) {
 
                                             return Promise.resolve()
 
+                                        }).catch(err => {
+
+                                            return Promise.resolve()
+
                                         })
 
                                     })).then(r => {
@@ -8008,8 +8326,25 @@ Platform = function (app, listofnodes) {
 
                 },
 
-                localstorage : function(){
-                    return Promise.reject('todo')
+                localstorage : async function(){
+
+                    var shares = {};
+
+                    for (i in localStorage) {
+
+                        var matches = /^saved_share_([a-zA-Z\d]+)$/.exec(i);
+
+                        if (matches && matches.length >= 2) {
+
+                            try {
+                                let share = await self.sdk.localshares.get.localstorage(matches[1]);
+                                shares[share.txid] = { id: share.txid, share: share };
+                            } catch(err) {}
+
+                        }
+                    }
+
+                    return Promise.resolve(shares);
                 }
             },
 
@@ -8029,6 +8364,8 @@ Platform = function (app, listofnodes) {
             delete : {
                 localstorage : function(shareId){
                     self.sdk.localshares.clearfromstorage(shareId)
+                    if (localStorage && localStorage.removeItem)
+                        localStorage.removeItem('saved_share_' + shareId);
 
                     return Promise.resolve();
                 },
@@ -10250,6 +10587,10 @@ Platform = function (app, listofnodes) {
 
                 if(self.bch[address]) return true
 
+                if(self.bchl[address] && (typeof _Electron == 'undefined') && !window.cordova){
+                    return true
+                }
+
                 if(typeof count == 'undefined') count = -12
 
                 if (ustate && ustate.reputation <= count && !self.real[address]/* &&
@@ -10488,7 +10829,6 @@ Platform = function (app, listofnodes) {
                             }, {
                                 host: ps
                             }).catch(e => {
-                                console.log("E", e)
 
                                 return Promise.resolve()
                             })
@@ -19774,8 +20114,6 @@ Platform = function (app, listofnodes) {
 
                                 var errorcode = deep(_error, 'code') || null
 
-                                console.log("errorcode", errorcode)
-
                                 clbk(
                                     (errorcode == -5) || (errorcode == -8) ||
                                     (deep(d, 'height') > 0)
@@ -24395,8 +24733,8 @@ Platform = function (app, listofnodes) {
         //var FirebasePlugin = new FakeFirebasePlugin()
 
         var using = typeof window != 'undefined' && window.cordova && typeof FirebasePlugin != 'undefined';
-        var usingWeb = false // typeof window != 'undefined' && typeof _Electron === 'undefined' && !window.cordova && typeof firebase != 'undefined'
-        
+        var usingWeb = typeof window != 'undefined' && typeof _Electron === 'undefined' && !window.cordova && typeof firebase != 'undefined'
+
         var currenttoken = null;
 
         var appid = deep(window, 'BuildInfo.packageName') || window.location.hostname || window.pocketnetdomain
@@ -24580,7 +24918,6 @@ Platform = function (app, listofnodes) {
         }
 
         self.set = function(proxy){
-
             if(!currenttoken) return Promise.reject('emptytoken')
 
             var address = getaddress()
@@ -24596,6 +24933,7 @@ Platform = function (app, listofnodes) {
                 if(self.api.existanother(proxy, address)) return self.request.revokeall()
 
             }).then(r => {
+
                 return self.api.setToken(address, token, proxy)
             }).catch(e => {
                 console.log(e)
@@ -24605,7 +24943,6 @@ Platform = function (app, listofnodes) {
         }
 
         self.settings = async function(current){
-            console.log("HERE")
             if(!current){
                 for(const proxy of platform.app.api.get.proxies()){
                     const {info} = await proxy.get.info();
@@ -24641,7 +24978,7 @@ Platform = function (app, listofnodes) {
             },
 
             mytokens : function(proxy){
-                return platform.app.api.fetchauth('firebase/mytokens', {}, {
+                return platform.app.api.fetchauth('firebase/mytokens', {device: device()}, {
                     proxy : proxy
                 })
             },
@@ -24727,10 +25064,12 @@ Platform = function (app, listofnodes) {
 
             }else if(usingWeb) {
 
-                if (clbk)
-                    clbk()
-
-                return
+                // console.log("HERE")
+                //
+                // if (clbk)
+                //     clbk()
+                //
+                // return
 
                 try{
                     if(!firebase.apps.length) {
@@ -24780,15 +25119,30 @@ Platform = function (app, listofnodes) {
 
                 });
             }else if (usingWeb){
-                Notification.requestPermission().then((permission) => {
-                    if (permission === 'granted') {
-                        console.log('Notification permission granted.');
-                        self.get(clbk)
-                    } else {
-                        usingWeb = false;
-                        console.log('Unable to get permission to notify.');
+
+                if(typeof Notification == 'undefined'){
+
+                }
+                else{
+                    const notificationPermission = Notification.requestPermission();
+
+                    if (!notificationPermission) {
+                        return Notification.permission;
                     }
-                });
+
+                    notificationPermission.then((permission) => {
+                        if (permission === 'granted') {
+                            console.log('Notification permission granted.');
+                            self.get(clbk)
+                        } else {
+                            usingWeb = false;
+                            console.log('Unable to get permission to notify.');
+                        }
+                    });
+                }
+
+
+                
             }
 		}
 
@@ -24920,7 +25274,7 @@ Platform = function (app, listofnodes) {
                     }
                 }
                 if (current){
-                    self.set(current.id).catch(e => {
+                    self.set(current).catch(e => {
                         console.log("error", e)
                     })
                 }
@@ -24952,7 +25306,6 @@ Platform = function (app, listofnodes) {
         }
 
         self.prepare = function(clbk){
-
             self.storage.load()
 
             if (using || usingWeb) {
@@ -24972,11 +25325,11 @@ Platform = function (app, listofnodes) {
 
             self.storage.clear()
 
-            if (using || usingWeb){
-                self.revokeall().then(clbk).catch(e => {})
-
-                return
-            }
+            // if (using || usingWeb){
+            //     self.revokeall().then(clbk).catch(e => {})
+            //
+            //     return
+            // }
 
             if (clbk)
                 clbk()
@@ -29306,7 +29659,7 @@ Platform = function (app, listofnodes) {
                 clbk();
             });
 
-            if (typeof _Electron == 'undefined' && !window.cordova && window.pocketnetproject !== 'Bastyon' && !bastyonhelperOpened && !window.testpocketnet){
+            /*if (typeof _Electron == 'undefined' && !window.cordova && window.pocketnetproject !== 'Bastyon' && !bastyonhelperOpened && !window.testpocketnet){
 
                 bastyonhelperOpened = true
 
@@ -29320,7 +29673,7 @@ Platform = function (app, listofnodes) {
 
                 }, 1000)
 
-            }
+            }*/
 
 
 
@@ -30231,6 +30584,7 @@ Platform = function (app, listofnodes) {
         },
 
         connect : function(){
+
             if(!self.matrixchat.connectWith && !self.matrixchat.joinRoom) return
             if(!self.matrixchat.core) return
 

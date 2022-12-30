@@ -57,8 +57,6 @@ export function proxifiedFetchFactory(electronIpcRenderer: Electron.IpcRenderer)
             fetchCancel = init.signal;
         }
 
-        console.log(init);
-
         if (init.headers instanceof Headers) {
             init.headers.forEach((value, name) => {
                 preparedInit.headers[name] = value;

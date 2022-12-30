@@ -57,9 +57,9 @@ var main = (function(){
 
 			{
 				link : "index?r=saved",
-				label : () => self.app.localization.e('downloaded'),
+				label : () => self.app.localization.e('saved'),
 				if : function(){
-					return self.app.savesupported()
+					return self.app.savesupported() || self.app.savesupportedForBrowser()
 				},
 				value : 'saved'
 			},
@@ -111,7 +111,7 @@ var main = (function(){
 					read : "index?read=1"
 				}
 
-				if (window.cordova) {
+				if (self.app.savesupported() || self.app.savesupportedForBrowser()) {
 					links.saved = "index?r=saved"
 				}
 
@@ -501,8 +501,17 @@ var main = (function(){
 						},
 						hasshares : function(shares){
 
+							console.log('hasshares', shares.length)
+
 							if (shares.length <= 2 && el.topvideos){
 								el.topvideos.addClass('hidden')
+
+								if(external){
+									external.destroy()
+									external = null
+									console.log("D")
+								}
+								
 							}
 							
 						},

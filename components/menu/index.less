@@ -213,8 +213,12 @@
 		flex-wrap: nowrap;
 		justify-content: space-between;
 
+		.mobileUpperLeft, .mobileUpperRight{
+			display: none;
+		}
+
 		.section{
-			
+			min-height: 65px;
 			height: 100%;
 			padding: 0 2 * @rhythm;
 			display: flex;
@@ -224,6 +228,7 @@
 
 			&.right{
 				padding-right: 0;
+				min-width: 200px;
 			}
 
 			&.centerpart{
@@ -266,6 +271,8 @@
 				display: flex;
 				align-items: center;
 				justify-content: center;
+				position: relative;
+				z-index: 999;
 				color : rgb(var(--neutral-grad-1));
 				box-sizing: border-box;
 				padding: 0 @rhythm;
@@ -276,6 +283,14 @@
 					&:hover{
 						color : rgb(var(--color-txt-gray));
 					}
+				}
+
+				&.control-left{
+					padding-right: @rhythm * 3;
+				}
+
+				&.control-right{
+					padding-left: @rhythm * 3;
 				}
 			}
 			
@@ -402,11 +417,23 @@
 
 					.icon{
 						padding: @rhythm;
+
+						.icn{
+							display: flex;
+
+							img{
+								height: 18px;
+							}
+						}
 					}
 
 					.count{
 						color: rgb(var(--color-bg-ac-2));	
 					}
+				}
+
+				.icon .icn img{
+					height: 18px;					
 				}
 
 
@@ -784,6 +811,10 @@
 		height: 100%;
 		width: 100%;
 
+		.christmas_search{
+			height: 16px;
+		}
+
 		.searchInputIcon,
 		.searchInput,
 		.search{
@@ -838,18 +869,40 @@
 			border : 0;
 		}
 
+		.searchInputWrapper{
+			position: relative;
+			z-index: 1;
+		}
+
 		
 		.searchIconLabel{
+			position: relative;
+			z-index: 1;
 			width: 38px;
 			-webkit-transition: none;
 			transition: none;
 		}
 
 		.searchPanel{
+			position: relative;
+			z-index: 1;
 			width: 4 * @rhythm;
 			font-size: 0.8em;
-			text-align: center;
-			
+			text-align: center;			
+		}
+
+		.christmasBranchLeft{
+			position: absolute;
+			height: 52px;
+			bottom: -10px;
+			left: -35px;
+		}
+
+		.christmasBranchRight{
+			position: absolute;
+			bottom: -10px;
+			right: -21px;
+			height: 52px;
 		}
 		
 	}
@@ -894,6 +947,7 @@
 			padding : 0  2 * @rhythm;
 			padding-right: 0;
 
+			
 			.section{
 				padding: 0;
 				width: auto;
@@ -903,6 +957,7 @@
 				}
 
 				&.right{
+					min-width: 0;
 					padding-right: 0;
 				}
 
@@ -963,6 +1018,29 @@
 							font-size: 0.9em;
 						}
 					}
+				}
+			}
+
+			.mobileUpperLeft{
+				display: block;
+				position: absolute;
+				left: -20px;
+				top: -6px;
+
+				.christmasBranch{
+					height: 40px;
+				}
+			}
+
+			.mobileUpperRight{
+				display: block;
+				position: absolute;
+				right: -22px;
+				top: 23px;
+				rotate: 35deg;
+				
+				.christmasBranch{
+					height: 40px;
 				}
 			}
 		}
@@ -1038,6 +1116,7 @@
 						.searchIconLabel{
 							width: 40px;
 						}
+
 
 						.searchPanel{
 							width: 40px;

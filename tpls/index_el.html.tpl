@@ -8,7 +8,7 @@
         <meta http-equiv='expires' content='0'>
         <meta http-equiv="X-Frame-Options: SAMEORIGIN">
 
-        <!-- <title>__VAR__.project</title> -->
+        <!-- <title>__VAR__.name</title> -->
         <meta name="description" content="">
         <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1, user-scalable=no">
         <meta name="fragment" content="!">
@@ -181,6 +181,7 @@
         <script src="js/vendor/tooltipster.core.js"></script>
         <script src="js/vendor/tooltipster.bundle.js"></script>
         <script  join src="js/vendor/moment.min.js?v=89"></script>
+        <script  join src="js/vendor/ua-parser.min.js"></script>
         <script  join src="js/vendor/moment.locale.js?v=89"></script>
         
         <!--<script src="js/vendor/imagesloaded.pkgd.js"></script> -->

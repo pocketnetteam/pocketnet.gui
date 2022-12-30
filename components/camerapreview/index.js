@@ -708,6 +708,23 @@ var camerapreview = (function(){
 				actions.stopcamera()
 			}
 
+
+			initUpload({
+				el : el.openexternal,
+				ext : ed.ext,
+				dropZone : el.c,
+				app : self.app,
+				multiple : ed.multiple,
+				action : ed.action,
+				onError : ed.onError,
+				onSuccess : function(){
+
+					if(ed.onSuccess) ed.onSuccess()
+
+					self.stop()
+				}
+			})
+
 			
 		}
 
@@ -717,6 +734,8 @@ var camerapreview = (function(){
 			getdata : function(clbk, p){
 				ed = p.settings.essenseData
 				var data = {};
+
+				console.log("ED", ed)
 
 				clbk(data);
 
@@ -758,13 +777,10 @@ var camerapreview = (function(){
 
 					window.requestAnimationFrame(() => {
 
-	
-						
-						
 						app.el.html.removeClass('cameraenabledend')
-	
-	
-						el.c.empty()
+						
+						if (el.c)
+							el.c.empty()
 	
 						el = {};
 						
@@ -807,13 +823,12 @@ var camerapreview = (function(){
 				el.wnds = $('.wnd')
 				el.state = el.c.find('.state')
 				el.galleryimages = el.c.find('.gallery .images')
+				el.openexternal = el.c.find('.openexternal')
 				initEvents();
 
 				p.clbk(null, p);
 
 				compute()
-
-				
 
 				getlibrary().then(() => {
 					data.gallery = true

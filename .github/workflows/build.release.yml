@@ -1,4 +1,5 @@
 name: Build Release
+run-name: Release ${{github.ref_name}}
 
 on:
   push:
@@ -24,6 +25,9 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 14
+
+      - name: Install dependencies
+        run: apt update && apt install -y binutils rpm
 
       - name: Prepare for app notarization
         if: startsWith(matrix.os, 'macos')

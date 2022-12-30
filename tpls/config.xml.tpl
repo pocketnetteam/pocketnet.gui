@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget android-versionCode="__PACKAGE-CORDOVAVERSIONCODE__" android-packageName="pocketnet.app" ios-CFBundleIdentifier="app.pocketnet" version="__PACKAGE-CORDOVAVERSION__" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="pocketnet.app" android-versionCode="__PACKAGE-CORDOVAVERSIONCODE__" android-packageName="pocketnet.app" ios-CFBundleIdentifier="app.pocketnet" version="__PACKAGE-CORDOVAVERSION__" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:tools="http://schemas.android.com/tools">
     <name>__VAR__.project</name>
     <description>
         __VAR__.project Application
@@ -114,7 +114,14 @@
 
     <access allows-arbitrary-loads-for-media="true" allows-arbitrary-loads-in-web-content="true" allows-local-networking="true" minimum-tls-version="TLSv1.1" origin="*" requires-certificate-transparency="true" requires-forward-secrecy="false" />
     <plugin name="cordova-plugin-device" spec="~1.1.1" />
-    <plugin name="cordova-plugin-fullscreen" spec="^1.3.0" />
+    
+
+    <% if(!store) {%>
+
+        <plugin name="cordova-plugin-apkupdater" spec="~4.0.0" />
+
+    <% } %>
+
     <platform name="ios">
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
@@ -163,25 +170,32 @@
     </platform>
     <platform name="android">
 
-        <preference name="AndroidXEnabled" value="true" />
+        <!--<preference name="AndroidXEnabled" value="true" />-->
 
-        <edit-config file="AndroidManifest.xml" mode="merge" target="/manifest/application">
-            <application android:usesCleartextTraffic="true" android:requestLegacyExternalStorage="true"/>
+        <edit-config file="AndroidManifest.xml" target="/manifest" mode="merge">
+            <manifest xmlns:tools="http://schemas.android.com/tools" />
         </edit-config>
 
-        <config-file target="AndroidManifest.xml" parent="/manifest">
+        <edit-config file="AndroidManifest.xml" mode="merge" target="/manifest/application">
+            <application android:hardwareAccelerated="true" android:largeHeap="true" android:usesCleartextTraffic="true" android:requestLegacyExternalStorage="true"/>
+        </edit-config>
+
+        <edit-config file="AndroidManifest.xml" target="/manifest/uses-permission" xmlns:android="http://schemas.android.com/apk/res/android">
             <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
             <uses-permission android:name="android.permission.RECORD_AUDIO" />
             <uses-permission android:name="android.permission.CAPTURE_AUDIO_OUTPUT" />
             <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
             <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
             <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
-        </config-file>
+            <% if(store) {%>
+                <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" tools:node="remove" />
+            <% } %>
+        </edit-config>
 
         <edit-config file="AndroidManifest.xml" target="/manifest/application/activity[@android:name='MainActivity']" mode="merge">
             <activity android:windowSoftInputMode="adjustPan" android:supportsPictureInPicture="true"/>
         </edit-config>
-
+        <preference name="LogLevel" value="VERBOSE"/>
         <preference name="AndroidPersistentFileLocation" value="Compatibility" />
 
     </platform>
@@ -206,4 +220,5 @@
         </host>
 
     </universal-links>
+    
 </widget>

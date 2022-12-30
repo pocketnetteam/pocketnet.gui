@@ -97,6 +97,25 @@ var videoCabinet = (function () {
 
 				return error.text || findResponseError(error) || JSON.stringify(error);
 			},
+
+			getCachedViewsParsed() {
+				const cahceViewsInformation = localStorage.getItem('aggregatedVideoViews_v2') || "{}";
+
+				let viewsObject = {};
+
+				try {
+					viewsObject = JSON.parse(cahceViewsInformation);
+
+					if (typeof viewsObject !== 'object') {
+						viewsObject = {};
+					}
+
+				} catch (errorParsing) {
+					viewsObject = {};
+				}
+
+				return viewsObject;
+			},
 		};
 
 		var actions = {
@@ -259,22 +278,7 @@ var videoCabinet = (function () {
 							),
 					)
 					.then((aggregatedNumberViews) => {
-						const cahceViewsInformation = localStorage.getItem('aggregatedVideoViews_v2') || "{}";
-
-						let viewsObject = {};
-
-						try {
-							viewsObject = JSON.parse(cahceViewsInformation);
-
-							if (typeof viewsObject !== 'object') {
-								viewsObject = {};
-							}
-
-						} catch (errorParsing) {
-							viewsObject = {};
-						}
-
-						console.log("viewsObject", viewsObject)
+						const viewsObject = helpers.getCachedViewsParsed();
 
 						const cachedViews =+ (
 							viewsObject[self.app.user.address.value] || 0
@@ -284,7 +288,7 @@ var videoCabinet = (function () {
 							viewsObject[self.app.user.address.value] = aggregatedNumberViews;
 
 							localStorage.setItem(
-								'aggregatedVideoViews',
+								'aggregatedVideoViews_v2',
 								JSON.stringify(viewsObject),
 							);
 
@@ -307,6 +311,17 @@ var videoCabinet = (function () {
 				renders.videos(videos, videoPortionElement, fromBlockChainFlag);
 
 				//getting and rendering bonus program status for views and ratings (same template)
+				const cahcedViews = helpers.getCachedViewsParsed()[self.app.user.address.value];
+				if (cahcedViews) {
+					renders.bonusProgram(
+						{
+							parameterName: 'bonusProgramViews',
+							value: cahcedViews,
+						},
+						el.bonusProgramContainerStars,
+					);
+				}
+				
 				actions
 					.getHosts()
 					.then(() => actions.getTotalViews())
@@ -664,7 +679,6 @@ var videoCabinet = (function () {
 				actions
 					.getSingleVideo(videoUrl)
 					.then((dataVideo) => {
-						debugger;
 
 						const formattedData = {
 							...dataVideo,
@@ -1057,8 +1071,6 @@ var videoCabinet = (function () {
 
 				const elName = typeDictionary[p.type];
 
-				console.log('external', external)
-
 				if (external && external.id == elName) {
 					external.show();
 
@@ -1429,68 +1441,73 @@ var videoCabinet = (function () {
 												});
 											}
 
-											return self.fastTemplate(
-												'editDescription',
-												(rendered) => {
-													dialog({
-														html: rendered,
+											return self.app.nav.api.load({
+												open: true,
+												id: 'editVideoDescription',
+												animation: false,
+												inWnd: true,
 
-														wrap: true,
+												essenseData: {
+													success: function (d) {
+														const name = d.el.find('.videoNameInput').val();
+														const description = d.el
+															.find('.videoDescriptionInput')
+															.val();
 
-														success: function (d) {
-															const name = d.el.find('.videoNameInput').val();
-															const description = d.el
-																.find('.videoDescriptionInput')
-																.val();
+														const parameters = {};
 
-															const parameters = {};
+														if (name) parameters.name = name;
+														if (description)
+															parameters.description = description;
 
-															if (name) parameters.name = name;
-															if (description)
-																parameters.description = description;
+														parameters.tags = tagArray;
 
-															parameters.tags = tagArray;
+						  								const { host } = videoLink;
 
-                              const { host } = videoLink;
+														return self.app.peertubeHandler.api.videos
+															.update(videoLink, parameters, { host })
+															.then(() => {
+																const textContainert = el.c.find(
+																	`.singleVideoSection[uuid="${meta.id}"]`,
+																);
 
-															return self.app.peertubeHandler.api.videos
-																.update(videoLink, parameters, { host })
-																.then(() => {
-																	const textContainert = el.c.find(
-																		`.singleVideoSection[uuid="${meta.id}"]`,
-																	);
+																if (name)
+																	textContainert
+																		.find('.videoNameText')
+																		.text(name);
+																if (description)
+																	textContainert
+																		.find('.videoDescriptionText')
+																		.text(description);
 
-																	if (name)
-																		textContainert
-																			.find('.videoNameText')
-																			.text(name);
-																	if (description)
-																		textContainert
-																			.find('.videoDescriptionText')
-																			.text(description);
+																d.close();
+																tagElement = {};
+																tagArray = [];
+															})
+															.catch((err = {}) => {
+																tagElement = {};
+																tagArray = [];
+																d.close();
 
-																	d.close();
-																	tagElement = {};
-																	tagArray = [];
-																})
-																.catch((err = {}) => {
-																	tagElement = {};
-																	tagArray = [];
-																	d.close();
+																sitemessage(
+																	`${self.app.localization.e(
+																		'errorChangingDescription',
+																	)}: ${helpers.parseVideoServerError(err)}`,
+																);
+															});
+													},
 
-																	sitemessage(
-																		`${self.app.localization.e(
-																			'errorChangingDescription',
-																		)}: ${helpers.parseVideoServerError(err)}`,
-																	);
-																});
-														},
+													post: function () {
+													},
+												},
 
-														clbk: function (editDialogEl) {
-															tagElement =
+												clbk: function (e, p) {
+													const editDialogEl = p.el;
+													
+													tagElement =
 																editDialogEl.find('.videoTagsWrapper');
 															tagArray = [...videoData.tags];
-                              renders.tags(tagElement);
+                              						renders.tags(tagElement);
 
 															editDialogEl
 																.find('.videoNameInput')
@@ -1498,12 +1515,8 @@ var videoCabinet = (function () {
 															editDialogEl
 																.find('.videoDescriptionInput')
 																.val(videoData.description);
-														},
-
-														class: 'editVideoDialog',
-													});
 												},
-											);
+											});
 										})
 										.catch((err = {}) => {
 											sitemessage(
@@ -1620,7 +1633,7 @@ var videoCabinet = (function () {
 
 						addTag: function (tag) {
 							tagActions.addTag(tag);
-              renders.tags(tagElement);
+              				renders.tags(tagElement);
 						},
 
 						addTags: function (tags) {
@@ -1899,8 +1912,6 @@ var videoCabinet = (function () {
 					self,
 					'app.modules.uploadpeertube.module.essenses.uploadpeertube',
 				);
-
-				console.log('externallatest', externallatest)
 
 				if (externallatest && !externallatest.destroyed) {
 					external = externallatest;

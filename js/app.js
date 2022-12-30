@@ -42,6 +42,9 @@ if(typeof _Node == 'undefined') _Node = false;
 
 chrsz = 8;
 
+if(window)
+  window.HELP_IMPROVE_VIDEOJS = false;
+
 Application = function(p)
 {
 
@@ -56,23 +59,7 @@ Application = function(p)
     electron = require('electron');
   }
 
-  self._meta = {
-    Pocketnet : {
-      url : "pocketnet.app",
-      turl : "test.pocketnet.app",
-      fullname : "Pocketnet",
-      protocol : 'pocketnet',
-      blockexplorer : 'https://pocketnet.app/blockexplorer/'
-    },
-
-    Bastyon : {
-      fullname : "Bastyon",
-      url : "bastyon.com",
-      turl : "test.pocketnet.app",
-      protocol : 'bastyon',
-      blockexplorer : 'https://pocketnet.app/blockexplorer/'
-    }
-  }
+  self._meta = window.projects_meta
 
   self.meta = self._meta.Pocketnet
 
@@ -335,8 +322,11 @@ Application = function(p)
   }
 
   self.savesupported = function(){
-    var isElectron = (typeof _Electron !== 'undefined' && !!window.electron);
-    return isElectron || (window.cordova && !isios());
+    var isElectron = self.isElectron();
+    return isElectron || window.cordova;
+  }
+  self.savesupportedForBrowser = function(){
+    return !self.savesupported() && localStorage;
   }
 
   self.useip = function(){
@@ -847,6 +837,8 @@ Application = function(p)
 
     self.mobile.keyboard.style()
 
+    self.gifResizer = new resizeGif(self)
+
     if (self.ref)
       self.platform.sdk.users.addressByName(self.ref, function(r){
         if(r){
@@ -1069,7 +1061,7 @@ Application = function(p)
      * for desktop popup before we had created popup
      * conditional checking in appear method of instance
      */
-    if (typeof initShadowPopups === 'function') initShadowPopups()
+    if (typeof initShadowPopups === 'function' && !window.testpocketnet) initShadowPopups()
   }
 
   self.reload = function(p){
@@ -1211,6 +1203,8 @@ Application = function(p)
 
         self.mobile.pip.init()
         self.mobile.keyboard.init()
+        self.mobile.memory()
+        self.mobile.webviewchecker()
         self.mobile.safearea()
 
         if (window.Keyboard && window.Keyboard.disableScroll){
@@ -1219,6 +1213,7 @@ Application = function(p)
 
         if (cordova.plugins && cordova.plugins.backgroundMode)
           cordova.plugins.backgroundMode.on('activate', function() {
+            console.log('disable optimization')
             cordova.plugins.backgroundMode.disableWebViewOptimizations();
           });
 
@@ -1276,7 +1271,24 @@ Application = function(p)
   self.renewModules = function(map){}
   self.logger = function(Function, Message){}
 
-  self.Logger = new FrontendLogger(navigator.userAgent, self);
+  self.Logger = new FrontendLogger(
+    navigator.userAgent,
+    JSON.stringify(navigator.userAgentData),
+    location.href,
+    Intl.DateTimeFormat().resolvedOptions().timeZone,
+    self
+  );
+
+  if (Math.random() <= 0.05) {
+    window.onerror = function (errorMsg, url) {
+      self.Logger.error({
+        err: errorMsg,
+        uri: url,
+        code: -1,
+      });
+      return false;
+    };
+  }
 
   self.scrollRemoved = 0;
   self.scrollTop = 0
@@ -1414,11 +1426,12 @@ Application = function(p)
       setTimeout(function(){
 
         var duration = deep(self.playingvideo, 'embed.details.duration') || 0
+        var unsleep = self.playingvideo && self.playingvideo.playing && (!duration || duration > 60)
 
-        self.mobile.backgroundMode(self.playingvideo && self.playingvideo.playing && (!duration || duration > 60)/* && self.platform.sdk.videos.volume*/)
+        self.mobile.unsleep(unsleep)
+        //self.mobile.backgroundMode(unsleep/* && self.platform.sdk.videos.volume*/)
 
       }, 1000)
-
 
     },
 
@@ -1964,6 +1977,26 @@ Application = function(p)
 
   self.mobile = {
 
+    webviewchecker : function(){
+
+      if(window.plugins && window.plugins.webViewChecker){
+        plugins.webViewChecker.isAndroidWebViewEnabled().then(function(enabled) { console.log('isAndroidWebViewEnabled',enabled); })
+          .catch(function(error) { });
+
+        plugins.webViewChecker.getAndroidWebViewPackageInfo().then(function(packageInfo) { console.log('getAndroidWebViewPackageInfo', packageInfo); })
+          .catch(function(error) { });
+      }
+     
+    },
+
+    memory : function(){
+
+      document.addEventListener('memorywarning', function () {
+        console.log("MOMORY WARNING1")
+      });
+
+    },
+
     menu : function(items){
 
       var theme = 'THEME_HOLO_LIGHT'
@@ -2391,9 +2424,9 @@ Application = function(p)
       
 
       if(isios()){
-        setTimeout(() => {
+        /*setTimeout(() => {
           cl()
-        }, 1000)
+        }, 1000)*/
       }
       else{
         window.requestAnimationFrame(() => {
@@ -2599,7 +2632,7 @@ Application = function(p)
       needmanage : false,
       hasupdate : false,
 
-      playstore : false,  ///// TODO
+      playstore : window.pocketnetstore || false,  ///// TODO
 
       downloadAndInstall : function(){
 
@@ -2642,6 +2675,12 @@ Application = function(p)
           return Promise.resolve()
         }).catch(e => {
           topPreloader2(100)
+
+          try{
+            e = JSON.stringify(e)
+          }catch (er){
+
+          }
 
           return Promise.reject(e)
         })
@@ -2736,12 +2775,9 @@ Application = function(p)
 
     var m = _.find(groups, function(g){
 
-      console.log('g', g, url.host, domain, _.indexOf(g, url.host))
-
       return _.indexOf(g, url.host) > -1 &&  (_.indexOf(g, domain) > -1 || domain.indexOf('localhost') > -1)
     })
 
-    console.log("MMM", m)
 
     if(m) return true
 

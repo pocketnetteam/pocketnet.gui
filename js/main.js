@@ -55,13 +55,13 @@ if(!_Node)
 
 	/* test */
 
-	/*if(window.cordova){
+	if(window.cordova){
 		_listofproxies.push({
 			host : '6.pocketnet.app',
 			port : 8899,
 			wss : 8099
 		})
-	}*/
+	}
 
 
 	var matrix = 'matrix.pocketnet.app'
@@ -91,6 +91,32 @@ if(!_Node)
 		];
 
 	}
+
+	window.projects_meta = {
+		Pocketnet : {
+		  url : "pocketnet.app",
+		  turl : "test.pocketnet.app",
+		  fullname : "Pocketnet",
+		  protocol : 'pocketnet',
+		  blockexplorer : 'https://pocketnet.app/blockexplorer/'
+		},
+	
+		Bastyon : {
+		  fullname : "Bastyon",
+		  url : "bastyon.com",
+		  turl : "test.pocketnet.app",
+		  protocol : 'bastyon',
+		  blockexplorer : 'https://pocketnet.app/blockexplorer/'
+		},
+	
+		BastyonPapp : {
+		  fullname : "Bastyon",
+		  url : "pocketnet.app",
+		  turl : "test.pocketnet.app",
+		  protocol : 'bastyon',
+		  blockexplorer : 'https://pocketnet.app/blockexplorer/'
+		}
+	  }
 
 
 	app = new Application({
@@ -146,8 +172,8 @@ if(!_Node)
 					embeddingSettigns.openapi = true
 					
 					if (app.platform.papi[action] && (id || ids)){
-						app.platform.papi[action](id || ids.split(','), el, () => {
-							setTimeout(() => {
+						app.platform.papi[action](id || ids.split(','), el, function() {
+							setTimeout(function() {
 								$('html').addClass('openapiready')
 							}, 500)
 						}, embeddingSettigns)

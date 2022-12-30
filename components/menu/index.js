@@ -537,7 +537,7 @@ var menu = (function(){
 
 					menusearch = mobsearch(el.postssearch, {
 						placeholder : self.app.localization.e('e13139'),
-						icon : '<i class="fas fa-search"></i>',
+						icon : '<img class="christmas_search" src="img/christmas_search.svg"></img>',
 						app : self.app,
 						mobileSearch : self.app.width <= 768,
 
@@ -846,6 +846,7 @@ var menu = (function(){
 
 						if (add == 0){
 							al.text(self.app.platform.mp.coin(value))
+
 						}
 						else
 						{
@@ -857,7 +858,6 @@ var menu = (function(){
 						        	var number = Number(value + now).toFixed(8),
 						            	target = $(tween.elem);
 
-						           
 						    		target.text(self.app.platform.mp.coin(number));
 
 						    	},

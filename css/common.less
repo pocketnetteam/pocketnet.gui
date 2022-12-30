@@ -2055,7 +2055,7 @@ html.mobileview.ios{
                 display: block!important;
                 span{
                     display: inline;
-                    opacity: 0.5;
+                    opacity: 0.8;
                 }
 			}
 
@@ -2211,6 +2211,16 @@ html.mobileview.ios{
 							margin-top: auto
 						}
 					}
+
+                    .textPreview{
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        display: -webkit-box;
+                        -webkit-line-clamp: 2; 
+                                line-clamp: 2; 
+                        -webkit-box-orient: vertical;
+                        max-width: 85%
+                    }
 
 					.sharecaption{
 						font-size: @rhythm * 3;
