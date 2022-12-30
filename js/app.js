@@ -1428,8 +1428,8 @@ Application = function(p)
         var duration = deep(self.playingvideo, 'embed.details.duration') || 0
         var unsleep = self.playingvideo && self.playingvideo.playing && (!duration || duration > 60)
 
-        //self.mobile.unsleep(unsleep)
-        self.mobile.backgroundMode(unsleep/* && self.platform.sdk.videos.volume*/)
+        self.mobile.unsleep(unsleep)
+        //self.mobile.backgroundMode(unsleep/* && self.platform.sdk.videos.volume*/)
 
       }, 1000)
 
