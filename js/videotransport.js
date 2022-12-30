@@ -85,6 +85,8 @@ class IdbSegmentsStorage {
 
         this.clearDb()
 
+        this.midcache = {}
+
         this.clearDbThrottled = _.throttle((f) => {
             this.clearDb(f)
         }, 15000)
@@ -148,6 +150,11 @@ class IdbSegmentsStorage {
                 var s = allSegments[i]
 
                 if(!s.lastAccessed || now - s.lastAccessed > this.settings.idb.cachedSegmentExpiration || i > this.settings.idb.cachedSegmentsCount){
+
+                    if(s.masterSwarmId && this.midcache[s.masterSwarmId]){
+                        delete this.midcache[s.masterSwarmId]
+                    }
+
                     deleteSegments.push(s.key)
                 }
 
@@ -172,7 +179,11 @@ class IdbSegmentsStorage {
 
     storeSegment(segment) {
 
+        if (this.midcache[segment.masterSwarmId]) delete this.midcache[segment.masterSwarmId]
+
+
         this.cache.set(segment.id, { segment, lastAccessed: performance.now() });
+
 
         return new Promise((resolve, reject) => {
             const segmentWithoutData = { ...segment, lastAccessed: performance.now() };
@@ -199,6 +210,9 @@ class IdbSegmentsStorage {
     }
 
     getSegmentsMap(masterSwarmId) {
+
+        if(this.midcache[masterSwarmId]) return Promise.resolve(this.midcache[masterSwarmId])
+
         return new Promise((resolve, reject) => {
             const cursor = this.db
                 .transaction(["segments"])
@@ -225,6 +239,9 @@ class IdbSegmentsStorage {
                     this.cache.forEach(function(value, key) {
                         result.set(key, value);
                     });
+
+
+                    this.midcache[masterSwarmId] = result
 
 
                     resolve(result);
@@ -352,10 +369,7 @@ var VideoTransport = function (app, ipcRenderer) {
                         reject(xhr.statusText);
                     }
                 });
-                /*const xhrSetup = this.loader.getSettings().xhrSetup;
-                if (xhrSetup) {
-                    xhrSetup(xhr, url);
-                }*/
+            
 
                 xhr.send();
 
@@ -398,6 +412,8 @@ var VideoTransport = function (app, ipcRenderer) {
         return initIndexedDbVideo().then(db => {
             idb_segmentsStorage = new IdbSegmentsStorage(db)
             idb_assetsStorage = new IdbAssetsStorage(db)
+        }).catch(() => {
+            console.error(e)
         })
     }
 
@@ -423,43 +439,6 @@ var VideoTransport = function (app, ipcRenderer) {
                 return Promise.resolve(undefined)
             }
             
-            
-            /*.catch(e => {
-                return Promise.resolve()
-            }).then(content => {
-
-                if(content) return Promise.resolve(content.data)
-
-                return requestLocal(requestUri, requestRange, masterSwarmId).then(content => {
-
-                    return Promise.resolve(content)
-                })
-                .catch(e => {
-                    return Promise.reject(e)
-                })
-            })
-            
-            .then(content => {
-
-                if(content) return Promise.resolve(content)
-
-                return xhr(requestUri, requestRange ? 'arraybuffer' : 'text', requestRange).then(xhr => {
-
-                    idb_assetsStorage.storeAsset({
-                        data : xhr.response,
-                        responseUri: xhr.responseURL,
-                        requestRange,
-                        masterSwarmId
-                    }).catch(e => {})
-
-                    return Promise.resolve(xhr.response)
-                })
-            }).then(content => {
-                return {
-                    data : content,
-                    responseUri : requestUri
-                }
-            })*/
         },
         destroy(){}
     }
@@ -510,25 +489,6 @@ var VideoTransport = function (app, ipcRenderer) {
         },
         destroy() { }
     }
-
-    /*
-
-        export type Segment = {
-            readonly id: string;
-            readonly url: string;
-            readonly masterSwarmId: string;
-            readonly masterManifestUri: string;
-            readonly streamId: string | undefined;
-            readonly sequence: string;
-            readonly range: string | undefined;
-            readonly priority: number;
-            data?: ArrayBuffer;
-            downloadBandwidth?: number;
-            requestUrl?: string;
-            responseUrl?: string;
-        };
-
-    */
 
     self.internal = {
       

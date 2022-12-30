@@ -21,12 +21,16 @@
   "author": "Pocketnet Team",
   "license": "Apache-2.0",
   "dependencies": {
+    "cordova-plugin-android-packagemanager": "file:cordova-plugin-android-packagemanager",
+    "cordova-plugin-android-permissions": "1.1.3",
     "cordova-plugin-android-window-background": "1.0.2",
     "cordova-plugin-camera": "6.0.0",
     "cordova-plugin-fullscreen": "^1.3.0",
-    "cordova-plugin-gallery-refresh": "^1.0.61",
+    "cordova-plugin-gallery-refresh": "1.0.61",
     "cordova-plugin-inappbrowser": "4.0.0",
+    "cordova-plugin-navigationbar-color": "0.1.0",
     "cordova-plugin-network-information": "3.0.0",
+    "cordova-plugin-pip": "file:cordova-plugin-pip",
     "cordova-plugin-screen-orientation": "^3.0.1",
     "cordova-plugin-vibration": "3.1.1",
     "cordova-support-android-plugin": "1.0.1",
@@ -45,8 +49,6 @@
     "cordova-ios": "^6.2.0",
     "cordova-plugin-actionsheet": "^2.3.3",
     "cordova-plugin-add-swift-support": "^2.0.2",
-    "cordova-plugin-android-packagemanager": "file:cordova-plugin-android-packagemanager",
-    "cordova-plugin-android-permissions": "^1.1.3",
     "cordova-plugin-apkupdater": "~4.0.0",
     "cordova-plugin-audioinput": "^1.0.2",
     "cordova-plugin-background-download": "0.0.2",
@@ -62,9 +64,7 @@
     "cordova-plugin-insomnia": "file:cordova-plugin-insomnia",
     "cordova-plugin-ionic-keyboard": "file:cordova-plugin-ionic-keyboard",
     "cordova-plugin-media": "^6.1.0",
-    "cordova-plugin-navigationbar-color": "^0.1.0",
     "cordova-plugin-photo-library": "github:simplifier-ag/cordova-plugin-photo-library",
-    "cordova-plugin-pip": "file:cordova-plugin-pip",
     "cordova-plugin-proguard": "^2.2.0",
     "cordova-plugin-statusbar": "file:cordova-plugin-statusbar",
     "cordova-plugin-taptic-engine": "^2.2.0",
@@ -79,10 +79,6 @@
       "cordova-plugin-device": {},
       "cordova-plugin-screen-orientation": {},
       "cordova-plugin-badge": {},
-      "cordova-plugin-gallery-refresh": {
-        "CAMERA_USAGE_DESCRIPTION": " ",
-        "PHOTOLIBRARY_USAGE_DESCRIPTION": " "
-      },
       "cordova-plugin-statusbar": {},
       "cordova-plugin-x-socialsharing": {
         "ANDROID_SUPPORT_V4_VERSION": "24.1.1+",
@@ -106,12 +102,10 @@
         "SHAREEXT_DEVELOPMENT_TEAM": "Y5JW9JU787",
         "ANDROID_EXTRA_ACTIONS": " "
       },
-      "cordova-plugin-navigationbar-color": {},
       "cordova-plugin-insomnia": {},
       "cordova-plugin-taptic-engine": {},
       "cordova-plugin-background-download": {},
       "cordova-plugin-fullscreen": {},
-      "cordova-plugin-android-permissions": {},
       "cordova-plugin-firebasex": {
         "FIREBASE_ANALYTICS_COLLECTION_ENABLED": "false",
         "FIREBASE_PERFORMANCE_COLLECTION_ENABLED": "false",
@@ -150,9 +144,7 @@
       },
       "cordova-plugin-network-information": {},
       "cordova-plugin-vibration": {},
-      "cordova-plugin-android-packagemanager": {},
       "cordova-plugin-file-transfer": {},
-      "cordova-plugin-pip": {},
       "cordova-plugin-actionsheet": {},
       "cordova-plugin-background-mode": {},
       "cordova-plugin-media": {
@@ -161,7 +153,15 @@
       "cordova-plugin-camera-preview": {},
       "cordova-plugin-proguard": {},
       "cordova-plugin-apkupdater": {},
-      "cordova-plugin-webview-checker": {}
+      "cordova-plugin-webview-checker": {},
+      "cordova-plugin-pip": {},
+      "cordova-plugin-android-packagemanager": {},
+      "cordova-plugin-android-permissions": {},
+      "cordova-plugin-navigationbar-color": {},
+      "cordova-plugin-gallery-refresh": {
+        "CAMERA_USAGE_DESCRIPTION": "",
+        "PHOTOLIBRARY_USAGE_DESCRIPTION": ""
+      }
     },
     "platforms": [
       "ios",
