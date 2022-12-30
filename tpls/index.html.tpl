@@ -113,6 +113,8 @@
         </script>
 
         <script src="js/polyfills.js"></script>
+        <script src="js/vendor/firebase-app.js"></script>
+        <script src="js/vendor/firebase-messaging.js"></script>
         
 
         __JSENV__

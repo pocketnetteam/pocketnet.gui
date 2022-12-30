@@ -1085,7 +1085,7 @@ var lenta = (function(){
 								self.app.platform.sdk.memtags.add(share.tags, null, 0.500 / duration)
 
 
-							if(playbackState == 'playing' && ((position > 15 && duration > 120) || startTime)){
+							if (playbackState == 'playing' && ((position > 15 && duration > 120) || startTime)){
 								
 								self.app.platform.sdk.videos.historyset(share.txid, {
 									time : position,

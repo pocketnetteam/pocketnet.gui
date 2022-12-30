@@ -64,31 +64,155 @@ class IdbAssetsStorage {
     destroy() { }
 }
 
+
 class IdbSegmentsStorage {
     constructor(db) {
         this.db = db;
+
+        this.settings = {
+            cache : {
+                cachedSegmentExpiration : 5 * 60 * 1000,
+                cachedSegmentsCount : 45
+            },
+
+            idb : {
+                cachedSegmentExpiration : 60 * 60 * 1000,
+                cachedSegmentsCount : 300
+            }
+        }
+
+        this.cache = new Map();
+
+        this.clearDb()
+
+        this.midcache = {}
+
+        this.clearDbThrottled = _.throttle((f) => {
+            this.clearDb(f)
+        }, 15000)
+    }
+
+    clearDb(lockedSegmentsFilter) {
+
+        var allSegments = []
+        var deleteSegments = []
+        const now = performance.now();
+
+        var clearSegment = (key) => {
+            return new Promise((resolve, reject) => {
+                const transaction = this.db.transaction(["segments", "segmentsData"], 'readwrite');
+    
+                transaction.objectStore("segments").delete(key).onsuccess = (event) => {
+                    transaction.objectStore("segmentsData").delete(key).onsuccess = (event) => {
+                    };
+                };
+    
+                transaction.onerror = (event) => reject(event);
+                transaction.oncomplete = () => resolve();
+            });
+        }
+
+        return new Promise((resolve, reject) => {
+            const cursor = this.db
+                .transaction(["segments"])
+                .objectStore("segments")
+                .openCursor();
+
+            cursor.onerror = (event) => reject(event);
+            cursor.onsuccess = (event) => {
+                const cursor = event.target.result;
+
+                if (cursor) {
+
+                    if(!lockedSegmentsFilter || !lockedSegmentsFilter(cursor.value)){
+                        allSegments.push({
+                            key : cursor.key,
+                            id : cursor.value,
+                            masterSwarmId : cursor.value.masterSwarmId,
+                            lastAccessed : cursor.value.lastAccessed
+                        })
+                    }
+
+                    cursor.continue();
+
+                } else {
+                    resolve()
+                }
+            };
+        }).then(() => {
+
+            allSegments = _.sortBy(allSegments, (v) => {
+                return -(v.lastAccessed || 0)
+            })
+            
+            for(var i = 0; i < allSegments.length; i++){
+
+                var s = allSegments[i]
+
+                if(!s.lastAccessed || now - s.lastAccessed > this.settings.idb.cachedSegmentExpiration || i > this.settings.idb.cachedSegmentsCount){
+
+                    if(s.masterSwarmId && this.midcache[s.masterSwarmId]){
+                        delete this.midcache[s.masterSwarmId]
+                    }
+
+                    deleteSegments.push(s.key)
+                }
+
+            }
+
+            if(deleteSegments.length){
+
+                return Promise.all(_.map(deleteSegments, (key) => {
+                    return clearSegment(key)
+                })).then(() => {
+                   
+                })
+                
+            }
+            else{
+                return Promise.resolve()
+            }
+        }).catch(e => {
+            console.error(e)
+        })
     }
 
     storeSegment(segment) {
+
+        if (this.midcache[segment.masterSwarmId]) delete this.midcache[segment.masterSwarmId]
+
+
+        this.cache.set(segment.id, { segment, lastAccessed: performance.now() });
+
+
         return new Promise((resolve, reject) => {
-            const segmentWithoutData = { ...segment };
+            const segmentWithoutData = { ...segment, lastAccessed: performance.now() };
             delete segmentWithoutData.data;
 
             const transaction = this.db.transaction(["segments", "segmentsData"], "readwrite");
+
             transaction.objectStore("segments").put(segmentWithoutData).onsuccess = () => {
                 transaction.objectStore("segmentsData").put({
                     id: segment.id,
                     masterSwarmId: segment.masterSwarmId,
-                    data: segment.data,
+                    data: segment.data
                 });
             };
 
-            transaction.onerror = (event) => reject(event);
+            transaction.onerror = (event) => {
+                console.error("fatal: can't store segment")
+                console.error(event)
+
+                reject(event)
+            };
             transaction.oncomplete = () => resolve();
         });
     }
 
     getSegmentsMap(masterSwarmId) {
+
+        if(this.midcache[masterSwarmId]) return Promise.resolve(this.midcache[masterSwarmId])
+
         return new Promise((resolve, reject) => {
             const cursor = this.db
                 .transaction(["segments"])
@@ -100,39 +224,116 @@ class IdbSegmentsStorage {
             cursor.onerror = (event) => reject(event);
             cursor.onsuccess = (event) => {
                 const cursor = event.target.result;
+
                 if (cursor) {
-                    result.set(cursor.value.id, { segment: cursor.value });
+
+                    var segment = cursor.value
+
+                    result.set(segment.id, { segment });
+
                     cursor.continue();
+
                 } else {
+
+
+                    this.cache.forEach(function(value, key) {
+                        result.set(key, value);
+                    });
+
+
+                    this.midcache[masterSwarmId] = result
+
+
                     resolve(result);
                 }
             };
-        });
+        }).catch(e => {
+            console.error(e)
+            return Promise.resolve(this.cache);
+        })
     }
 
     getSegment(id, masterSwarmId) {
-        return new Promise((resolve, reject) => {
-            const transaction = this.db.transaction(["segments", "segmentsData"]);
 
-            let segment;
-            transaction.objectStore("segments").get([id, masterSwarmId]).onsuccess = (event) => {
-                segment = event.target.result;
-                
-                if (segment === undefined) {
-                    return;
-                }
 
-                transaction.objectStore("segmentsData").get([id, masterSwarmId]).onsuccess = (event) => {
-                    segment.data = event.target.result ? event.target.result.data : undefined;
+        var cacheItem = this.cache.get(id);
+
+        if (cacheItem === undefined) {
+
+            return new Promise((resolve, reject) => {
+                const transaction = this.db.transaction(["segments", "segmentsData"]);
+    
+                let segment;
+                transaction.objectStore("segments").get([id, masterSwarmId]).onsuccess = (event) => {
+                    segment = event.target.result;
+                    
+                    if (segment === undefined) {
+                        return reject();
+                    }
+    
+                    transaction.objectStore("segmentsData").get([id, masterSwarmId]).onsuccess = (event) => {
+                        if(!event.target.result || !event.target.result.data){
+                            return reject()
+                        }
+    
+                        segment.data = event.target.result.data;
+
+                        this.cache.set(segment.id, { segment, lastAccessed: performance.now() });
+                    };
                 };
-            };
+    
+                transaction.onerror = (event) => reject(event);
+                transaction.oncomplete = () => resolve(segment);
+            });
 
-            transaction.onerror = (event) => reject(event);
-            transaction.oncomplete = () => resolve(segment);
-        });
+        }
+
+        else{
+            cacheItem.lastAccessed = performance.now();
+            return Promise.resolve(cacheItem.segment);
+        }
+        
     }
 
-    clean() { }
+    clean(masterSwarmId, lockedSegmentsFilter) { 
+
+        return new Promise((resolve) => {
+
+            const segmentsToDelete = [];
+            const remainingSegments = [];
+            // Delete old segments
+            const now = performance.now();
+            for (const cachedSegment of this.cache.values()) {
+                if (now - cachedSegment.lastAccessed > this.settings.cache.cachedSegmentExpiration) {
+                    segmentsToDelete.push(cachedSegment.segment.id);
+                }
+                else {
+                    remainingSegments.push(cachedSegment);
+                }
+            }
+            // Delete segments over cached count
+            let countOverhead = remainingSegments.length - this.settings.cache.cachedSegmentsCount;
+            if (countOverhead > 0) {
+                remainingSegments.sort((a, b) => a.lastAccessed - b.lastAccessed);
+                for (const cachedSegment of remainingSegments) {
+                    if (lockedSegmentsFilter === undefined || !lockedSegmentsFilter(cachedSegment.segment.id)) {
+                        segmentsToDelete.push(cachedSegment.segment.id);
+                        countOverhead--;
+                        if (countOverhead === 0) {
+                            break;
+                        }
+                    }
+                }
+            }
+            segmentsToDelete.forEach((id) => this.cache.delete(id));
+
+            this.clearDbThrottled(lockedSegmentsFilter)
+
+            resolve(segmentsToDelete.length > 0) ;
+
+        })
+
+    }
     destroy() { }
 }
 
@@ -168,10 +369,7 @@ var VideoTransport = function (app, ipcRenderer) {
                         reject(xhr.statusText);
                     }
                 });
-                /*const xhrSetup = this.loader.getSettings().xhrSetup;
-                if (xhrSetup) {
-                    xhrSetup(xhr, url);
-                }*/
+            
 
                 xhr.send();
 
@@ -214,6 +412,8 @@ var VideoTransport = function (app, ipcRenderer) {
         return initIndexedDbVideo().then(db => {
             idb_segmentsStorage = new IdbSegmentsStorage(db)
             idb_assetsStorage = new IdbAssetsStorage(db)
+        }).catch(() => {
+            console.error(e)
         })
     }
 
@@ -239,43 +439,6 @@ var VideoTransport = function (app, ipcRenderer) {
                 return Promise.resolve(undefined)
             }
             
-            
-            /*.catch(e => {
-                return Promise.resolve()
-            }).then(content => {
-
-                if(content) return Promise.resolve(content.data)
-
-                return requestLocal(requestUri, requestRange, masterSwarmId).then(content => {
-
-                    return Promise.resolve(content)
-                })
-                .catch(e => {
-                    return Promise.reject(e)
-                })
-            })
-            
-            .then(content => {
-
-                if(content) return Promise.resolve(content)
-
-                return xhr(requestUri, requestRange ? 'arraybuffer' : 'text', requestRange).then(xhr => {
-
-                    idb_assetsStorage.storeAsset({
-                        data : xhr.response,
-                        responseUri: xhr.responseURL,
-                        requestRange,
-                        masterSwarmId
-                    }).catch(e => {})
-
-                    return Promise.resolve(xhr.response)
-                })
-            }).then(content => {
-                return {
-                    data : content,
-                    responseUri : requestUri
-                }
-            })*/
         },
         destroy(){}
     }
@@ -284,6 +447,8 @@ var VideoTransport = function (app, ipcRenderer) {
         storeSegment(segment){
             try{
                 return idb_segmentsStorage.storeSegment(segment).catch(e => {
+                    if (e)
+                        console.error('e', e)
                     return Promise.resolve(undefined)
                 })
             }
@@ -294,6 +459,8 @@ var VideoTransport = function (app, ipcRenderer) {
         getSegmentsMap(masterSwarmId){
             try{
                 return idb_segmentsStorage.getSegmentsMap(masterSwarmId).catch(e => {
+                    if (e)
+                        console.error('e', e)
                     return Promise.resolve(undefined)
                 })
             }
@@ -304,6 +471,8 @@ var VideoTransport = function (app, ipcRenderer) {
         getSegment(id, masterSwarmId){
             try{
                 return idb_segmentsStorage.getSegment(id, masterSwarmId).catch(e => {
+                    if (e)
+                        console.error('e', e)
                     return Promise.resolve(undefined)
                 })
             }
@@ -311,28 +480,15 @@ var VideoTransport = function (app, ipcRenderer) {
                 return Promise.resolve(undefined)
             }
         },
-        clean() { },
+        clean(masterSwarmId, lockedSegmentsFilter) { 
+            return idb_segmentsStorage.clean(masterSwarmId, lockedSegmentsFilter).catch(e => {
+                if (e)
+                    console.error('e', e)
+                return Promise.resolve(undefined)
+            })
+        },
         destroy() { }
     }
-
-    /*
-
-        export type Segment = {
-            readonly id: string;
-            readonly url: string;
-            readonly masterSwarmId: string;
-            readonly masterManifestUri: string;
-            readonly streamId: string | undefined;
-            readonly sequence: string;
-            readonly range: string | undefined;
-            readonly priority: number;
-            data?: ArrayBuffer;
-            downloadBandwidth?: number;
-            requestUrl?: string;
-            responseUrl?: string;
-        };
-
-    */
 
     self.internal = {
       
@@ -365,14 +521,11 @@ var VideoTransport = function (app, ipcRenderer) {
 
             return app.platform.sdk.localshares.getSegment(video.infos.dir, filename).then(data => {
 
-
                 if(!data){
                     return Promise.reject(null)
                 }
 
-                var buffer = data.buffer // new ArrayBuffer(data.length);
-
-                //data.map(function(value, i){buffer[i] = value});
+                var buffer = data.buffer 
 
                 return {
                     ...segment,

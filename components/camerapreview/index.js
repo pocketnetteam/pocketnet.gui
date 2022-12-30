@@ -778,8 +778,9 @@ var camerapreview = (function(){
 					window.requestAnimationFrame(() => {
 
 						app.el.html.removeClass('cameraenabledend')
-	
-						el.c.empty()
+						
+						if (el.c)
+							el.c.empty()
 	
 						el = {};
 						
