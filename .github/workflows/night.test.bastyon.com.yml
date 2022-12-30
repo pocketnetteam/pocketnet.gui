@@ -75,6 +75,7 @@ jobs:
           node-version: 14
       - name: Prepare building
         run: |
+          apt update && apt install -y binutils rpm
           npm i
           npm run dev:bastyon:test
       - name: Building
@@ -87,6 +88,7 @@ jobs:
           name: unix
           path: |
             ./dist/BastyonSetup.deb
+            ./dist/BastyonSetup.rpm
             ./dist/Bastyon.AppImage
             ./head.txt
 

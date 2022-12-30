@@ -1,6 +1,7 @@
 {
     "name": "pocketnet",
 
+
     "version": "0.8.37",
     "versionsuffix": "2",
     "cordovaversion": "1.8.37",
@@ -198,6 +199,9 @@
                 },
                 {
                     "target": "deb"
+                },
+                {
+                    "target": "rpm"
                 }
             ],
             "artifactName": "${productName}Setup.${ext}",
