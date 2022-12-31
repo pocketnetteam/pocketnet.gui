@@ -44,7 +44,6 @@
     "@cordova/eslint-config": "^4.0.0",
     "@globules-io/cordova-plugin-ios-xhr": "^1.2.1",
     "cc.fovea.cordova.openwith": "file:cc.fovea.cordova.openwith",
-    "cordova-android": "^11.0.0",
     "cordova-androidx-build": "^1.0.4",
     "cordova-ios": "^6.2.0",
     "cordova-plugin-actionsheet": "^2.3.3",
@@ -160,8 +159,7 @@
       }
     },
     "platforms": [
-      "ios",
-      "android"
+      "ios"
     ]
   }
 }
