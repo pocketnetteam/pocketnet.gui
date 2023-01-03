@@ -4,7 +4,7 @@ var faq = (function(){
 
 	var essenses = {};
 
-	var Essense = function(p){https://youtu.be/l0IDybyHR4M
+	var Essense = function(p){
 
 		var primary = deep(p, 'history');
 
