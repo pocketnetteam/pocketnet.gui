@@ -30104,6 +30104,22 @@ Platform = function (app, listofnodes) {
             })
         },
 
+        openinpopup: function() {
+            console.log('function is work')
+            let newWindow = window.open("/pocketnet/messenger", "messengerWindow", "popup");
+     
+            let myInterval = setInterval(() => {
+                if(newWindow?.window) {
+                    // console.log('popup is opened');
+                    self.matrixchat.destroy
+                } else {
+                    // console.log('popup is closed');
+                    self.matrixchat.startchat
+                    clearInterval(myInterval)
+                }
+            }, 500);
+        },
+
         initcl : function(clbk){
             self.matrixchat.init()
             if(clbk) clbk()
