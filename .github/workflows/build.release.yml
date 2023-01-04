@@ -26,7 +26,8 @@ jobs:
         with:
           node-version: 14
 
-      - name: Install dependencies
+      - name: Install Linux dependencies
+        if: startsWith(matrix.os, 'ubuntu')
         run: sudo apt update && sudo apt install -y binutils rpm
 
       - name: Prepare for app notarization
