@@ -141,38 +141,47 @@ var instance = function (host, ip, Roy) {
 
 		if (typeof url == 'function') url = url(data);
 
-		var timeout = p.timeout || Roy.parent.timeout() || 10000
-		return Roy.parent.transports.axios[p.type || 'get'](`http://${host}${url}`, { timeout }).then((result) => {
+		var timeout = p.timeout || Roy.parent.timeout() || 10000;
 
-			var meta = {
-				code : 200,
-				difference : performance.now() - responseTime,
-				method : method
-			}
+		if (self.offline) {
+			return Promise.reject('HOST_OFFLINE_MARKER');
+		}
 
-			statistic.add(meta);
+		return Roy.parent.transports.fetch(`http://${host}${url}`, {
+			method: p.type || 'get',
+			timeout,
+		})
+			.then((res) => res.json())
+			.then(async (result) => {
+				const meta = {
+					code: 200,
+					difference: performance.now() - responseTime,
+					method: method,
+				};
 
-			return Promise.resolve({
-				data: result.data || {},
-				meta,
-				host,
+				statistic.add(meta);
+
+				return {
+					data: result || {},
+					meta,
+					host,
+				};
+			})
+			.catch(async (error) => {
+				const meta = {
+					code: ((error || {}).response || {}).status || 500,
+					difference: performance.now() - responseTime,
+					method: method,
+				};
+
+				if (meta.code == 500) {
+					statistic.penalty.set(0.9, 30000, 500);
+				}
+
+				statistic.add(meta);
+
+				throw (error || {}).response || {};
 			});
-
-		}).catch((error) => {
-
-			var meta = {
-				code : ((error || {}).response || {}).status || 500,
-				difference : performance.now() - responseTime,
-				method : method
-			}
-
-			if (meta.code == 500) statistic.penalty.set(0.9, 30000, 500)
-
-			statistic.add(meta);
-
-			return Promise.reject((error || {}).response || {});
-
-		});
 	};
 
 	self.availability = function(){
