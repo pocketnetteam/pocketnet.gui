@@ -2787,6 +2787,10 @@ var share = (function(){
 					external.addclbk('share' + key, actions.closeexternal, 'closed')
 				}
 
+				if (essenseData.images){
+					currentShare.images.set(essenseData.images);
+				}
+
 				make();
 
 				//p.noscroll = self.app.actions.scrollBMenu()
