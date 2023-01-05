@@ -160,10 +160,16 @@ class FetchReceiver {
             const readStream = new ReadableStream({
                 async start(controller) {
                     const closeReadStream = () => {
+                        if (isEmpty) {
+                            const emptyData = new Uint8Array([]);
+                            controller.enqueue(emptyData);
+                        }
+
                         controller.close();
                         closed = true;
                     }
 
+                    let isEmpty = true;
                     let closed = false;
 
                     if (abortSignal) {
@@ -176,6 +182,8 @@ class FetchReceiver {
                     }
 
                     self.onData(requestId, (data) => {
+                        isEmpty = false;
+
                         const chunkUint8 = new Uint8Array(data);
                         controller.enqueue(chunkUint8);
                     });
