@@ -42,6 +42,9 @@ if(typeof _Node == 'undefined') _Node = false;
 
 chrsz = 8;
 
+if(window)
+  window.HELP_IMPROVE_VIDEOJS = false;
+
 Application = function(p)
 {
 
@@ -1200,6 +1203,8 @@ Application = function(p)
 
         self.mobile.pip.init()
         self.mobile.keyboard.init()
+        self.mobile.memory()
+        self.mobile.webviewchecker()
         self.mobile.safearea()
 
         if (window.Keyboard && window.Keyboard.disableScroll){
@@ -1208,6 +1213,7 @@ Application = function(p)
 
         if (cordova.plugins && cordova.plugins.backgroundMode)
           cordova.plugins.backgroundMode.on('activate', function() {
+            console.log('disable optimization')
             cordova.plugins.backgroundMode.disableWebViewOptimizations();
           });
 
@@ -1420,11 +1426,12 @@ Application = function(p)
       setTimeout(function(){
 
         var duration = deep(self.playingvideo, 'embed.details.duration') || 0
+        var unsleep = self.playingvideo && self.playingvideo.playing && (!duration || duration > 60)
 
-        self.mobile.backgroundMode(self.playingvideo && self.playingvideo.playing && (!duration || duration > 60)/* && self.platform.sdk.videos.volume*/)
+        self.mobile.unsleep(unsleep)
+        //self.mobile.backgroundMode(unsleep/* && self.platform.sdk.videos.volume*/)
 
       }, 1000)
-
 
     },
 
@@ -1969,6 +1976,26 @@ Application = function(p)
   }
 
   self.mobile = {
+
+    webviewchecker : function(){
+
+      if(window.plugins && window.plugins.webViewChecker){
+        plugins.webViewChecker.isAndroidWebViewEnabled().then(function(enabled) { console.log('isAndroidWebViewEnabled',enabled); })
+          .catch(function(error) { });
+
+        plugins.webViewChecker.getAndroidWebViewPackageInfo().then(function(packageInfo) { console.log('getAndroidWebViewPackageInfo', packageInfo); })
+          .catch(function(error) { });
+      }
+     
+    },
+
+    memory : function(){
+
+      document.addEventListener('memorywarning', function () {
+        console.log("MOMORY WARNING1")
+      });
+
+    },
 
     menu : function(items){
 
