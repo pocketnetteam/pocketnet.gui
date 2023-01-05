@@ -27,7 +27,7 @@ class TorControl {
     helpers = new Helpers();
     state = {
         instance: this,
-        _status: 'stopped',
+        _status: 'not_started',
         get status() { return this._status },
         set status(stateValue) {
             this._status = stateValue;
