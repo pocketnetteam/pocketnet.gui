@@ -1,4 +1,3 @@
-// importScripts('./js/vendor/workbox-v6.1.5/workbox-sw.js');
 importScripts('./js/transports2/fetch/receiver.js');
 importScripts('./js/broadcaster.js');
 
@@ -12,174 +11,6 @@ swBroadcaster.once('extended-fetch', async () => {
   isEnabled = true;
 });
 
-/*workbox.setConfig({
-  modulePathPrefix: './js/vendor/workbox-v6.1.5/',
-  debug: false
-});*/
-
-// const { strategies, core, routing, cacheableResponse, expiration } = workbox;
-
-/*core.clientsClaim();*/
-
-/*core.setCacheNameDetails({
-  prefix: '__VAR__.domain',
-  suffix: 'v__PACKAGE-VERSION__'
-});*/
-
-/*class TorWithFirstCacheStrategy extends strategies.CacheFirst {
-  initFetchAndCachePut = (uInstance) => {
-    const otherFetch = async function (t) {
-      const {event: s} = uInstance;
-      let r = l(t);
-      if ("navigate" === r.mode && s instanceof FetchEvent && s.preloadResponse) {
-        const t = await s.preloadResponse;
-        if (t) return t
-      }
-      const a = uInstance.hasCallback("fetchDidFail") ? r.clone() : null;
-      try {
-        for (const t of uInstance.iterateCallbacks("requestWillFetch")) r = await t({request: r.clone(), event: s})
-      } catch (t) {
-        throw new e.WorkboxError("plugin-error-request-will-fetch", {thrownError: t})
-      }
-      const i = r.clone();
-      try {
-        let t;
-        t = await nodeFetch(r, "navigate" === r.mode ? void 0 : uInstance.ht.fetchOptions);
-        for (const e of uInstance.iterateCallbacks("fetchDidSucceed")) t = await e({
-          event: s,
-          request: i,
-          response: t
-        });
-        return t
-      } catch (t) {
-        throw a && await uInstance.runCallbacks("fetchDidFail", {
-          error: t,
-          event: s,
-          originalRequest: a.clone(),
-          request: i.clone()
-        }), t
-      }
-    };
-
-    return async function(t) {
-      let e;
-
-      if (t.useTor) {
-        e = await otherFetch(t);
-      } else {
-        e = await uInstance.fetch(t);
-      }
-
-      const s = e.clone();
-
-      return uInstance.waitUntil(uInstance.cachePut(t, s)), e;
-    }
-  };
-
-  async _handle(request, handler) {
-    const isTorRequest = await swBroadcaster.invoke('AltTransportActive', request.url);
-
-    handler.fetchAndCachePut = this.initFetchAndCachePut(handler);
-
-    if (isTorRequest) {
-      handler.useTor = true;
-
-      const preparedRequest = new Request(request);
-      preparedRequest.headers.delete('X-Use-Tor');
-
-      return await nodeFetch(preparedRequest);
-    }
-
-    return super._handle(request, handler);
-  }
-}*/
-
-/*const proxyPlugin = {
-  handlerWillStart: async ({ request }) => {
-    const isTorRequest = await swBroadcaster.invoke('AltTransportActive', request.url);
-
-    if (isTorRequest) {
-      const preparedRequest = new Request(request);
-      preparedRequest.headers.set('X-Use-Tor', 'true');
-
-      return preparedRequest;
-    }
-
-    return request;
-  },
-
-  fetchDidSucceed: async ({ request }) => {
-    const isTorRequest = await swBroadcaster.invoke('AltTransportActive', request.url);
-
-    if (!isTorRequest) {
-      swBroadcaster.invoke('ReportAccessSuccess', request.url);
-    }
-
-    return request;
-  },
-
-  fetchDidFail: async ({ request }) => {
-    const isTorRequest = await swBroadcaster.invoke('AltTransportActive', request.url);
-
-    if (!isTorRequest) {
-      swBroadcaster.invoke('ReportAccessProblem', request.url);
-    }
-
-    return request;
-  },
-
-  handlerDidError: async ({ request }) => {
-    const isTorRequest = await swBroadcaster.invoke('AltTransportActive', request.url);
-
-    if (!isTorRequest) {
-      swBroadcaster.invoke('ReportAccessProblem', request.url);
-    }
-
-    return request;
-  },
-};*/
-
-/*routing.registerRoute(
-    ({ request }) => request.destination === '',
-    new TorWithFirstCacheStrategy({ plugins: [ proxyPlugin ] })
-);*/
-
-// Cache CSS, JS, and Web Worker requests with a Network First strategy
-/*routing.registerRoute(
-  // Check to see if the request's destination is style for stylesheets, script for JavaScript, or worker for web worker
-  ({ request }) => {
-
-    return (
-        request.destination === 'style' ||
-        request.destination === 'script' ||
-        request.destination === 'worker'
-      ) &&
-      request.url.startsWith('file://')
-  },
-    new TorWithFirstCacheStrategy({
-      cacheName: 'cache' + '__VAR__.domain' + 'v__PACKAGE-VERSION__',
-      plugins: [
-        new cacheableResponse.CacheableResponsePlugin({
-          statuses: [200],
-        }),
-      ],
-    })
-);*/
-
-/*routing.registerRoute(
-  ({request}) => request.destination === 'image',
-  new TorWithFirstCacheStrategy({
-    cacheName: 'image-cache',
-    plugins: [
-      proxyPlugin,
-      new expiration.ExpirationPlugin({
-        maxAgeSeconds: 124 * 60 * 60,
-        maxEntries: 500,
-      }),
-    ],
-  })
-);*/
-
 self.addEventListener('fetch', (event) => {
   const { request } = event;
 
@@ -192,14 +23,11 @@ self.addEventListener('fetch', (event) => {
   }
 
   function putCache(cache, response) {
-    let preparedResponse = response;
-
     if (response.type === 'opaque') {
-      const responseBlob = response.blob();
-      preparedResponse = new Response(responseBlob);
+      return;
     }
 
-    cache.put(request, preparedResponse);
+    cache.put(request, response);
   }
 
   async function torAnswer() {
@@ -262,6 +90,8 @@ self.addEventListener('fetch', (event) => {
     reject(Error('SERVICE_WORKER_NO_DATA'));
   });
 
+  console.log('GOING WITH', request.url, request);
+
   switch (request.destination) {
     case 'image':
       event.respondWith(handle('image-cache'));
@@ -286,10 +116,6 @@ async function onActivate(event) {
   console.log('Service Worker was successfully activated');
 }
 
-// The activate handler takes care of cleaning up old caches
-self.addEventListener('activate', (event) => {
-  event.waitUntil(onActivate());
-});
-
+self.addEventListener('activate', event => event.waitUntil(onActivate(event)));
 self.addEventListener('install', event => event.waitUntil(onInstall(event)));
 self.addEventListener('activate', event => event.waitUntil(onActivate(event)));
