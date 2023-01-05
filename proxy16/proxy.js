@@ -797,6 +797,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				8: [
 				  {
 					host: 'pocketnetpeertube8.nohost.me',
+				    offline: true,
 					cantuploading: true,
 					old : true,
 
