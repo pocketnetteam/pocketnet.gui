@@ -549,21 +549,12 @@ var Proxy16 = function(meta, app, api){
 
     var wait = {}
 
-    self.fetch = function(path, data, p){
-
-        var promise = null
-
-        if (self.direct){
-            promise = self.system.fetch(path, data, p)
+    self.fetch = async function(path, data, p) {
+        if (self.direct) {
+            return self.system.fetch(path, data, p);
+        } else {
+            return request.fetch(self.url.https(), path, data, p);
         }
-        else{
-            promise = request.fetch(self.url.https(), path, data, p)
-        }
-
-        return promise.then(r => {
-            return Promise.resolve(r)
-        })
-       
     }
 
     self.fetchauth = function(path, data, p){
