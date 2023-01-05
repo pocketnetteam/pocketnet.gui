@@ -1,20 +1,35 @@
 'use strict';
 
 const _request = require("request");
-const _axios = require("axios");
-const fetch = require("node-fetch");
+global.fetch = require("node-fetch");
+const _axios = require("redaxios");
 const { SocksProxyAgent } = require("socks-proxy-agent");
 const tls = require("tls");
 
-const torHttpsAgent = new SocksProxyAgent("socks5h://127.0.0.1:9050", { keepAlive: true });
-
 const promisedLocalhostChecker = import("is-localhost-ip");
-const promisedYaping = import("@shpingalet007/node-yaping");
+
+const dns = require("dns");
+
+const pingUtil = require("icmp-ping").createSession({
+    packetSize: 64,
+    timeout: 5000,
+    retries: 3,
+});
 
 module.exports = function (enable = false) {
     const self = {};
     self.proxyHosts = {};
     self.lastUpdate = Date.now();
+
+    let torHttpsAgent = null;
+    const initHttpsAgent = async (opts, name) => {
+        if (!torHttpsAgent) {
+            await awaitTor();
+            torHttpsAgent = new SocksProxyAgent("socks5h://127.0.0.1:9050", { keepAlive: true });
+        }
+
+        opts[name] = torHttpsAgent;
+    };
 
     const isTorNeeded = (url) => {
         const urlParts = new URL(url);
@@ -49,7 +64,7 @@ module.exports = function (enable = false) {
         const { hostname } = urlParts;
 
         const oneHour = 60 * 60 * 1000;
-        const limitTries = 3;
+        const limitTries = 1;
 
         const hostStats = self.proxyHosts[hostname];
 
@@ -80,7 +95,71 @@ module.exports = function (enable = false) {
         };
     }
 
-    const axiosRequest = async (arg1, arg2)=> {
+    const getHostIp = async (host) => {
+        return new Promise((resolve, reject) => {
+            dns.lookup(host, 4, (err, address) => {
+                if (err) {
+                    reject(err);
+                }
+
+                resolve(address);
+            });
+        });
+    }
+
+    const pingHost = async function(host) {
+        function tlsPing() {
+            return new Promise((resolve, reject) => {
+                const timeoutId = setTimeout(() => {
+                    reject('TLS_PING_FAILED');
+                }, 10000);
+
+                const socket = tls.connect({ port: 443, host: host, servername: host }, () => {
+                    clearTimeout(timeoutId);
+                    socket.destroy();
+                    resolve(true);
+                });
+
+                socket.on('error', (err) => {
+                    reject('TLS_PING_TIMEOUT');
+                });
+            });
+        }
+
+        function icmpPing() {
+            return new Promise(async (resolve, reject) => {
+                const hostIp = await getHostIp(host);
+
+                pingUtil.pingHost(hostIp, (err, target) => {
+                    if (err) {
+                        reject('ICMP_PING_FAILED');
+                        return;
+                    }
+
+                    resolve(true);
+                });
+            });
+        }
+
+        console.log('Proxy16: Ping started', host);
+        const pingStart = Date.now();
+
+        return Promise.any([icmpPing(), tlsPing()])
+            .then((response) => {
+                const pingTime = (Date.now() - pingStart) / 1000;
+
+                console.log('Proxy16: Ping success', host, pingTime);
+                return response;
+            })
+            .catch(() => {
+                const pingTime = (Date.now() - pingStart) / 1000;
+
+                console.log('Proxy16: Ping fail', host, pingTime);
+                return false;
+            });
+    }
+
+    const axiosRequest = async (arg1, arg2, child)=> {
         let preparedOpts = {};
 
         if (!arg1) {
@@ -102,22 +181,47 @@ module.exports = function (enable = false) {
         const isLocalhost = await checkIfLocalhost(urlParts.hostname);
 
         if (!isLocalhost && isTorNeeded(preparedOpts.url) && enable) {
-            await awaitTor();
-            preparedOpts.httpsAgent = torHttpsAgent;
+            await initHttpsAgent(preparedOpts, 'httpsAgent');
+        } else if (!isLocalhost) {
+            const isPingSuccess = await pingHost(urlParts.hostname);
+
+            if (!isPingSuccess) {
+                console.log('Proxy16: Proxifing', urlParts.host)
+
+                saveHostStats(preparedOpts.url);
+
+                await initHttpsAgent(preparedOpts, 'httpsAgent');
+        }
         }
 
         try {
             return await _axios(preparedOpts)
               .then((response) => {
+                    if (preparedOpts.httpsAgent) {
+                        saveHostStats(preparedOpts.url);
+                    } else {
                   saveHostStats(preparedOpts.url, { accessible: true });
+                    }
+
                   return response;
+                })
+                .catch((err) => {
+                    saveHostStats(preparedOpts.url);
+                    throw err;
               });
         } catch (e) {
             const isTorEnabled = await awaitTor();
 
             if (!isLocalhost && !isTorNeeded(preparedOpts.url) && isTorEnabled && enable) {
-                saveHostStats(preparedOpts.url)
-                return _axios(preparedOpts);
+                return _axios(preparedOpts)
+                    .then((response) => {
+                        saveHostStats(preparedOpts.url);
+                        return response;
+                    })
+                    .catch((err) => {
+                        saveHostStats(preparedOpts.url);
+                        throw err;
+                    });
             }
 
             throw e;
@@ -134,50 +238,10 @@ module.exports = function (enable = false) {
     self.fetch = async (url, opts = {}) => {
         let parentAbortControlSignal = opts?.signal;
 
-        async function pingHost(host) {
-            function tlsPing() {
-                return new Promise((resolve, reject) => {
-                    const timeoutId = setTimeout(() => {
-                        reject('TLS_PING_FAILED');
-                    }, 5000);
-
-                    const socket = tls.connect({ port: 443, host: host, servername: host }, () => {
-                        clearTimeout(timeoutId);
-                        socket.destroy();
-                        resolve(true);
-                    });
-
-                    socket.on('error', (err) => {
-                        reject('TLS_PING_TIMEOUT');
-                    });
-                });
-            }
-
-            function icmpPing() {
-                return new Promise(async (resolve, reject) => {
-                    const yaping = await promisedYaping;
-
-                    yaping.ping(host, (err, target) => {
-                        if (err) {
-                            reject('ICMP_PING_FAILED');
-                            return;
-                        }
-
-                        resolve(true);
-                    });
-                });
-            }
-
-            return Promise.any([icmpPing(), tlsPing()])
-              .catch(() => {
-                  return false;
-              });
-        }
-
         function timeout(time) {
             const abortControl = new AbortController();
 
-            parentAbortControlSignal.addEventListener('abort', () => abortControl.abort());
+            parentAbortControlSignal?.addEventListener('abort', () => abortControl.abort());
             setTimeout(() => abortControl.abort(), time * 1000);
 
             return abortControl.signal;
@@ -188,7 +252,7 @@ module.exports = function (enable = false) {
         const isLocalhost = await checkIfLocalhost(urlParts.hostname);
 
         if (!isLocalhost && isTorNeeded(url) && enable) {
-            opts.agent = torHttpsAgent;
+            await initHttpsAgent(opts, 'agent');
         } else {
             const isPingSuccess = await pingHost(urlParts.hostname);
 
@@ -196,7 +260,8 @@ module.exports = function (enable = false) {
                 console.log('Proxy16: Proxifing', urlParts.host)
 
                 saveHostStats(url);
-                opts.agent = torHttpsAgent;
+
+                await initHttpsAgent(opts, 'agent');
             }
         }
 
@@ -208,7 +273,12 @@ module.exports = function (enable = false) {
                 .then(async (res) => {
                     console.log('Proxy16: Fetch request received SUCCESS', 'tor enabled?', !!opts.agent);
 
+                    if (opts.agent) {
+                        saveHostStats(url);
+                    } else {
                     saveHostStats(url, { accessible: true });
+                    }
+
                     return res;
                 })
                 .catch((err) => {
