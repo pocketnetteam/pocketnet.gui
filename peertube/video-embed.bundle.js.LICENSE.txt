@@ -25,7 +25,7 @@
 
 /**
  * @license
- * Video.js 7.20.1 <http://videojs.com/>
+ * Video.js 7.20.3 <http://videojs.com/>
  * Copyright Brightcove, Inc. <https://www.brightcove.com/>
  * Available under Apache License Version 2.0
  * <https://github.com/videojs/video.js/blob/main/LICENSE>

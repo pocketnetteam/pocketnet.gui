@@ -488,7 +488,7 @@ var post = (function () {
 								self.app.actions.playingvideo(player)
 
 							if(isMobile() && !ed.repost && !el.c.closest('.wndcontent').length && !ed.openapi){
-								self.app.actions.scroll(70)
+								//self.app.actions.scroll(70)
 							}
 						},
 
@@ -597,7 +597,7 @@ var post = (function () {
 									player.play()
 	
 									if (player.setVolume)
-										player.setVolume(self.sdk.videos.volume)
+										player.setVolume(1/*self.sdk.videos.volume*/)
 									else{
 										player.muted = false
 									}

@@ -1,10 +1,11 @@
 {
     "name": "pocketnet",
 
-    "version": "0.8.36",
-    "versionsuffix": "2",
-    "cordovaversion": "1.8.36",
-    "cordovaversioncode": "180360",
+
+    "version": "0.8.37",
+    "versionsuffix": "3",
+    "cordovaversion": "1.8.37",
+    "cordovaversioncode": "180372",
 
     "description": "Bastyon desktop application",
     "author": "Pocketnet Community <support@pocketnet.app>",
@@ -198,6 +199,9 @@
                 },
                 {
                     "target": "deb"
+                },
+                {
+                    "target": "rpm"
                 }
             ],
             "artifactName": "${productName}Setup.${ext}",

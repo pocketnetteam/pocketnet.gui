@@ -77,7 +77,7 @@ var welcome = (function(){
 					self.nav.api.load({
 						open : true,
 						href : 'index',
-						//history : true
+						// history : true
 					})
 
 					return
