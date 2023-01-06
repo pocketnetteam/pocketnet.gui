@@ -58,7 +58,7 @@ Application = function (p) {
 		electron = require('electron');
 	}
 
-  self._meta = window.projects_meta
+  	self._meta = window.projects_meta
 	self.meta = self._meta.Pocketnet
 
 	if (window.pocketnetproject && self._meta[window.pocketnetproject]) {

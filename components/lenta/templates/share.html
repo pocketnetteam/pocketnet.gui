@@ -322,7 +322,7 @@ var arranges = {
 
 	<div class="work unselectablemobile">
 
-		<div class="shareTable <%-subscribed%> <%-view%> truerepost" address="<%-share.address%>" stxid="<%-share.txid%>">
+		<div class="shareTable unselectablemobile <%-subscribed%> <%-view%> truerepost" address="<%-share.address%>" stxid="<%-share.txid%>">
 
 			
 
@@ -622,10 +622,8 @@ var arranges = {
 							<div class="cntswrk forcomments">
 								<div class="paddingWrapper">
 									<div class="commentsWrapperHb">
-									
 										<div class="commentsWrapper">
 										</div>
-					
 									</div>
 								</div>
 							</div>
@@ -634,10 +632,6 @@ var arranges = {
 					<% } %>
 
 				<% } %>
-
-				
-
-					
 
 			<% } %>
 
@@ -654,9 +648,13 @@ var arranges = {
 		
 	</div>
 
-	<div class="exitFull roundclosebutton unselectablemobile">
-		<i class="fa fa-times" aria-hidden="true"></i>
-	</div>
+	<% if(share.itisvideo()) {%>
+
+		<div class="exitFull roundclosebutton unselectablemobile">
+			<i class="fa fa-times" aria-hidden="true"></i>
+		</div>
+
+	<% } %>
 
 	<% if(typeof verticalVideo == 'undefined' || !verticalVideo) {%>
 
@@ -664,13 +662,10 @@ var arranges = {
 
 			<% if(typeof repost == 'undefined' || !repost || fromempty) {%>
 
-				<div class="showmorelenta"></div>
-	
+				<!--<div class="showmorelenta"></div>-->
 				<div class="commentsWrapperHb">
-					
 					<div class="commentsWrapper">
 					</div>
-	
 				</div>
 	
 			<% } %>

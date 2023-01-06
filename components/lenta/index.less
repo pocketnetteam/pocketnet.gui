@@ -17,7 +17,7 @@
 	.shareinlenta{
 		min-height: 400px;
 		opacity: 0;
-		.transition(0.3s);
+		.transition(0.3s, 'opacity');
 		.sharecnt{
 			display: none;
 		}
@@ -26,12 +26,15 @@
 
 		&.rendered{
 			opacity: 1;
-			min-height: 0;
+			min-height: auto;
 			.sharecnt{
 				display: block;
 			}
 			
 		}
+	}
+
+	.portion{
 	}
 
 	.optimizationTip{
@@ -182,6 +185,7 @@
 	}
 
 	.share {
+		
 		.sharecnt{
 
 			.removeDescription{
@@ -274,7 +278,6 @@
 	}
 
 	.shares{
-		overflow: hidden; 
 		display: flex;
 		flex-direction: column;
 
@@ -756,6 +759,14 @@
 			flex-direction: row;
 		}
 
+		.portion{
+			display: flex;
+			flex-wrap: nowrap;
+			flex-grow: 1;
+			flex-direction: row;
+			margin-right: @rhythm;
+		}
+
 		.loader,
 		.ended{
 			display: none!important;
@@ -1008,7 +1019,6 @@
 		}
 
 		.shares{
-			overflow: hidden; 
 			.work{
 				padding : 0;
 			}

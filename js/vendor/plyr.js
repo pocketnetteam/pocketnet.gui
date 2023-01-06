@@ -9208,9 +9208,12 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
 
       else{
 
-        importScript('peertube/video-embed.bundle.js', function(){
+        importScripts([{src : 'peertube/video-embed.bundle.js'}], plyrrelations, function(){
 
-        }, null, options.app, 'satolist');
+					clbk();
+
+				}, null, null, options.app);
+
       }
 
       retry(function(){
@@ -9366,3 +9369,4 @@ var PlyrEx = async function(target, options, clbk, readyCallback) {
 }
 
 
+plyrrelations = {}

@@ -224,6 +224,7 @@
   -webkit-transition: color 0.9s;
   transition: color 0.9s;
   position: relative;
+  padding-top: 0.5em;
 }
 #comments .list .comment:nth-child(1) {
   border-top: 0;
@@ -507,24 +508,24 @@
   -o-transition: 0.3s;
   -webkit-transition: 0.3s;
   transition: 0.3s;
-}
-#comments .list .commentpanel .upvoteComment.ratedScore,
-#comments .list .commentpanel .upvoteComment:hover {
-  color: rgb(var(--color-bg-ac-bright));
-}
-#comments .list .commentpanel .upvoteCommentTable {
   width: auto;
   display: flex;
   align-items: center;
 }
-#comments .list .commentpanel .upvoteCommentTable > div {
+#comments .list .commentpanel .upvoteComment > i,
+#comments .list .commentpanel .upvoteComment span {
   padding: 0 0.5em;
 }
-#comments .list .commentpanel .upvoteCommentTable > div:nth-child(1) {
+#comments .list .commentpanel .upvoteComment > i:nth-child(1),
+#comments .list .commentpanel .upvoteComment span:nth-child(1) {
   padding-left: 0;
 }
-#comments .list .commentpanel .upvoteCommentTable .commentScore {
+#comments .list .commentpanel .upvoteComment .commentScore {
   font-size: 0.8em;
+}
+#comments .list .commentpanel .upvoteComment.ratedScore,
+#comments .list .commentpanel .upvoteComment:hover {
+  color: rgb(var(--color-bg-ac-bright));
 }
 #comments.showedall .showall {
   display: none;

@@ -22,6 +22,7 @@ var lenta = (function(){
 		var subloaded = false
 		var subloadedindex = 0
 		var authorsettings = {}
+		var fragments = {}
 
 		var boosted = [],
 			boostloadedblock = 0,
@@ -34,6 +35,7 @@ var lenta = (function(){
 		var progress, parallax;
 
 		var carousels = {}
+
 
 		var openedPost = null
 		var shareInitedMap = {},
@@ -218,6 +220,43 @@ var lenta = (function(){
 					}, 150)
 
 					optimizationTip = null
+				}
+			},
+
+
+			optimize2 : function(){
+				if(!essenseData.optimize) return
+
+				var notoptimized = el.c.find('.portion:not(.optimized):not(:first-child):not(:nth-last-child(1)):not(:nth-last-child(2))')
+
+				if (notoptimized.length){
+
+					notoptimized.each(function(){
+						var id = makeid()
+						
+						var h = $(this).height()
+						
+						var shares =  _.filter($(this).find('.share').map(function(){
+							return shareInitedMap[this.getAttribute('id')]
+						}), (v) => v)
+
+						_.each(shares, function(share){
+							actions.destroyShare(share)
+						})
+
+						window.requestAnimationFrame(() => {
+							$(this).html('<div class="optimizationDiv" style="height:'+h+'px"></div>').addClass('optimized').attr('optimization', id)
+						})
+						
+
+						/*fragments[id] = fragment
+
+						setTimeout(() => {
+							$(this).html(fragment).removeClass('optimized').attr('optimization')
+							fragments[id] = null
+						}, 5000)*/
+					})
+
 				}
 			},
 
@@ -2017,8 +2056,6 @@ var lenta = (function(){
 
 			},
 			
-			
-
 			complain : function(id){
 			
 				self.nav.api.load({
@@ -2988,7 +3025,7 @@ var lenta = (function(){
 
 				var checkvisibility = share ? app.platform.sdk.node.shares.checkvisibility(share) : false;
 
-				self.fastTemplate('commentspreview', function(rendered){
+				//self.fastTemplate('commentspreview', function(rendered){
 					
 					if(!el.c) return
 
@@ -3015,7 +3052,7 @@ var lenta = (function(){
 						essenseData : {
 							close : true,
 							totop : el.c.find('#' + txid),
-							caption : rendered,
+							//caption : rendered,
 							/*send : function(comment, last){
 
 								var c = el.c.find('#' + txid + " .commentsAction .count span");
@@ -3061,9 +3098,9 @@ var lenta = (function(){
 						}
 					})
 
-				}, {
+				/*}, {
 					share : share
-				})
+				})*/
 				
 			},
 			
@@ -3128,7 +3165,6 @@ var lenta = (function(){
 					}
 
 					promises.push(new Promise((resolve, reject) => {
-
 
 						renders.url(p.el.find('.url'), share.url, share, function(){
 
@@ -3205,9 +3241,9 @@ var lenta = (function(){
 							}
 
 
-							if (clbk)
-								clbk();
-								clbk = null
+							if (clbk) clbk();
+
+							clbk = null
 
 						})
 					}
@@ -3217,18 +3253,24 @@ var lenta = (function(){
 						c()
 					}
 					else{
+
+						Promise.all(promises).catch(e => {}).then(() => {
+							c()
+
+							/*setTimeout(() => {
+								p.el.css('contain-intrinsic-size', p.el.height() + 'px')
+								p.el.css('content-visibility', 'auto')
+							}, 5000)*/
+						})
+						
 						setTimeout(() => {
 							c()
 						}, 300)
 					}
 					
+					
 
-
-					/*Promise.all(promises).catch(e => {}).then(() => {
-						c()
-					})
-
-					var time = 3000
+					/*var time = 3000
 
 					if(p.el.find(".shareImages .image").length > 1 || !index) c()
 					else
@@ -3526,6 +3568,7 @@ var lenta = (function(){
 							return s1.txid == s.txid
 						})
 					})
+
 					
 				self.shell({
 					name :  tpl,
@@ -3544,6 +3587,8 @@ var lenta = (function(){
 
 					if (_p.inner == append || likeappend){
 						sharesInview = sharesInview.concat(shares)	
+
+						
 					}
 					else
 					{
@@ -4672,7 +4717,11 @@ var lenta = (function(){
 
 					self.app.events.delayedscroll['videos' + mid] = events.videosInview
 
-					self.app.events.delayedscroll['optimization' + mid] = actions.optimize
+					//self.app.events.delayedscroll['optimization' + mid] = actions.optimize
+
+					
+					
+
 
 				}
 
@@ -4686,8 +4735,12 @@ var lenta = (function(){
 					}
 					else{
 						self.app.events.scroll['loadmore' + mid] = events.loadmorescroll
+
+						
+						
 					}
 				}	
+
 				
 			}
 

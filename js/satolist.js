@@ -11078,7 +11078,7 @@ Platform = function (app, listofnodes) {
                         shares : self.sdk.recommendations.storage.shares,
                         keys : self.sdk.recommendations.storage.keys,
                         
-                        unseen : _.map(self.sdk.recommendations.shares, (s) => {
+                        unseen : _.filter(_.map(self.sdk.recommendations.shares, (s) => {
 
                             var exported = s.export()
 
@@ -11088,6 +11088,9 @@ Platform = function (app, listofnodes) {
                                 if (c){
                                     exported.lastComment = c.export()
                                 }
+                                else{
+                                    return null
+                                }
                             }
 
                             return {
@@ -11095,7 +11098,7 @@ Platform = function (app, listofnodes) {
                                 share : exported,
                                 info : self.sdk.recommendations.sharesinfo[s.txid]
                             }
-                        })
+                        }), e => e)
                     })
                 }catch(e){
                     console.error(e)

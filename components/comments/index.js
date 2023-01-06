@@ -2102,7 +2102,7 @@ var comments = (function(){
 				
 			},
 
-			cpreview : function(h){
+			/*cpreview : function(h){
 				if(!h){
 					h = ed.caption
 				}
@@ -2112,7 +2112,7 @@ var comments = (function(){
 				el.caption.find('.captionPreview').html(h)
 
 				bgImages(el.caption.find('.captionPreview'))
-			},
+			},*/
 
 			caption : function(clbk){
 

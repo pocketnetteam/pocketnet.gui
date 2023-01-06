@@ -20,17 +20,17 @@
 #lenta .shareinlenta {
   min-height: 400px;
   opacity: 0;
-  -moz-transition: 0.3s;
-  -o-transition: 0.3s;
-  -webkit-transition: 0.3s;
-  transition: 0.3s;
+  -moz-transition: 'opacity' 0.3s;
+  -o-transition: 'opacity' 0.3s;
+  -webkit-transition: 'opacity' 0.3s;
+  transition: 'opacity' 0.3s;
 }
 #lenta .shareinlenta .sharecnt {
   display: none;
 }
 #lenta .shareinlenta.rendered {
   opacity: 1;
-  min-height: 0;
+  min-height: auto;
 }
 #lenta .shareinlenta.rendered .sharecnt {
   display: block;
@@ -199,7 +199,6 @@
   max-width: none;
 }
 #lenta .shares {
-  overflow: hidden;
   display: flex;
   flex-direction: column;
 }
@@ -552,6 +551,13 @@
   flex-grow: 1;
   flex-direction: row;
 }
+#lenta.horizontal .portion {
+  display: flex;
+  flex-wrap: nowrap;
+  flex-grow: 1;
+  flex-direction: row;
+  margin-right: 0.5em;
+}
 #lenta.horizontal .loader,
 #lenta.horizontal .ended {
   display: none!important;
@@ -709,9 +715,6 @@
   #lenta .loader {
     padding: 1em;
     text-align: center;
-  }
-  #lenta .shares {
-    overflow: hidden;
   }
   #lenta .shares .work {
     padding: 0;

@@ -215,40 +215,24 @@ var commentf = function(comment){
 									
 									
 									%> 
-									<div class="item upvoteCommentWrapper">
 
 										<div elementsid="comments_upvoteComment" class="upvoteComment scoreUp  <% if(comment.myScore && comment.myScore > 0) {%> ratedScore <% } %>"  score="scoreUp">
-											<div class="upvoteCommentTable">
-												<div class="upvoteCommentCell">
-													<i class="fas fa-thumbs-up"></i>
-												</div>
+											<i class="fas fa-thumbs-up"></i>
 
-												<div class="upvoteCommentCell">
-													<span class="commentScore">
-														<%- comment.scoreUp ? compressedNumber(comment.scoreUp, 1) : '' %>
-													</span>
-												</div>
-											</div>
+											<span class="commentScore">
+												<%- comment.scoreUp ? compressedNumber(comment.scoreUp, 1) : '' %>
+											</span>
 										</div>
 
-									</div>
 
-									<div class="item upvoteCommentWrapper">
 
 										<div class="upvoteComment scoreDown <% if(comment.myScore && comment.myScore < 0) {%> ratedScore <% } %>" score="scoreDown">
-											<div class="upvoteCommentTable">
-												<div class="upvoteCommentCell">
-													<i class="fas fa-thumbs-down fa-flip-horizontal"></i>
-												</div>
+											<i class="fas fa-thumbs-down fa-flip-horizontal"></i>
 
-												<div class="upvoteCommentCell">
-													<span class="commentScore">
-														<%- comment.scoreDown ? compressedNumber(comment.scoreDown, 1) : '' %>
-													</span>
-												</div>
-											</div>
+											<span class="commentScore">
+												<%- comment.scoreDown ? compressedNumber(comment.scoreDown, 1) : '' %>
+											</span>
 										</div>
-									</div>
 								<% } %>
 
 								<% if(_class == 'firstcomment') {
