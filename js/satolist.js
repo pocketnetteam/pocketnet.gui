@@ -30610,6 +30610,7 @@ Platform = function (app, listofnodes) {
         },
 
         connect : function(){
+
             if(!self.matrixchat.connectWith && !self.matrixchat.joinRoom) return
             if(!self.matrixchat.core) return
 
