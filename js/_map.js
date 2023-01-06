@@ -175,7 +175,9 @@ __map =  {
 		{ c : 'test', n : 'icon' },
 		{ c : 'author', n : 'info'},
 		{ c : 'author', n : 'index'},
-		{ c : 'author', n : 'menu'}
+		{ c : 'author', n : 'menu'},
+		{ c : 'mobilesearch', n : 'index'},
+
 
 
 	],
@@ -624,6 +626,8 @@ __map =  {
 			anonimus : true,
 		},
 
+	
+
 		donations : {
 			uri : "donations",
 			href : "donations",
@@ -641,12 +645,24 @@ __map =  {
 			},
 			anonimus : true,
 		},
-		
+		addcategory: {
+			uri : "addcategory",
+			href : "addcategory",
+			add : insertingfunc,
+			anonimus : true,
+		},
 	
 		embeding : {
 			uri : "embeding",
 			href : "embeding",
 			add : insertingfunc
+		},
+
+		mobilesearch : {
+			uri : "mobilesearch",
+			href : "mobilesearch",
+			add : insertingfunc,
+			anonimus : true
 		},
 
 		camerapreview : {
@@ -664,7 +680,9 @@ __map =  {
 		recommendationinfo: {
 			uri : "recommendationinfo",
 			href : "recommendationinfo",
-			add : insertingfunc
+			add : insertingfunc,
+			anonimus : true,
+
 		},
 
 		userpage : {

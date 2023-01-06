@@ -916,6 +916,20 @@ var Api = function(app){
         }
     }
 
+    var loading = {}
+
+    self.rpcwt = function(method, parameters, options){
+        var hash =MD5(method + JSON.stringify(parameters) + JSON.stringify(options)) 
+
+        if (!loading[hash]){
+            loading[hash] = self.rpc(method, parameters, options)
+        }
+
+        return loading[hash].finally(() => {
+            delete loading[hash]
+        })
+    }
+
     self.rpc = function(method, parameters, options, trying){
 
         if(!trying) trying = 0
@@ -953,6 +967,14 @@ var Api = function(app){
                         return self.rpc(method, parameters, options, trying)
                     })
                 //}
+            }
+
+            if (app.Logger) {
+                app.Logger.error({
+                    err: typeof e === 'string' ? e : (e.text || 'RPC_DEFAULT_ERROR'),
+                    payload: e,
+                    code: e.code || 423,
+                });
             }
 
             if (e.code != 700){

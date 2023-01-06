@@ -2354,3 +2354,10 @@ _l.addAccessToLibrary = 'Grant access to the gallery'
 _l.cameranotavailable = 'Camera not available'
 
 _l.rtip4 = 'This key is your password! Do not lose it.'
+
+_l.removecategory = 'Remove'
+_l.removecategoryQestion = 'Do you really want to remove this category?'
+
+
+_l.searchbytext = "Search by text:"
+_l.searchbytags = "Search by tags:"

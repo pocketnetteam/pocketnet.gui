@@ -94,7 +94,7 @@ var lockedaccount = app.platform.sdk.user.reputationBlockedNotMe(share.address)
 
         <% } %>
         <% if(!lockedaccount) {%>
-            <% if(app.boost && !app.pkoindisable) {%>
+            <% if(app.boost && !app.pkoindisable && (typeof preview == 'undefined' || !preview)) {%>
             <div class="bolt boost right">
                 <i class="fa fa-bolt"></i>
             </div>

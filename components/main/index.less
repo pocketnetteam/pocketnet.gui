@@ -292,15 +292,28 @@
 		min-height: 3000px;
 		padding-bottom : 300px;
 
-		.cf_spacer,
-		.bgCaption {
+		.cf_spacer {
 			margin-bottom : @rhythm;
+		}
+
+		.bgCaption{
+			.share{
+				#share{
+					margin-bottom: @rhythm;
+				}
+			}
 		}
 
 		.cnt{
 			max-width: 720px;
 			margin : 0 auto;
 		}
+		#lenta{
+			.searchInfo{
+				display: none;
+			}
+		}
+		
 	}
 
 	.lentacellsvi{
@@ -484,7 +497,7 @@
 			background: rgb(var(--background-total-theme));
 		}
 
-		&.cf_caption{
+		/*&.cf_caption{
 			padding : 0;
 			margin-bottom : 0;
 			
@@ -559,7 +572,7 @@
 				}
 				
 			}
-		}
+		}*/
 	}
 
 	
@@ -804,6 +817,13 @@ html.mobileview{
 		.lentacell{
 			margin-right: 0;
 			margin-left: 0;
+
+			#lenta{
+				.searchInfo{
+					display: block;
+				}
+			}
+			
 		}
 	
 		&.videomain {

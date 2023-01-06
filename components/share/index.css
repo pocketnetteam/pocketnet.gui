@@ -41,6 +41,10 @@
 #share .tgsWrapperMain #taginput {
   margin-top: 0.5em;
 }
+#share .tgsWrapperMain #taginput .mobsearch {
+  cursor: pointer;
+  padding: 1.5em 1em;
+}
 #share .tgsWrapperMain #taginput .inputWrapper {
   background: rgb(var(--background-main));
   box-shadow: none;
@@ -1184,12 +1188,6 @@ html.mobileview .wnd.wndsharepost .wndcontent #share .absolutetxwrapper {
   }
   #share .tgs .tagsWrapper > div.tagsInputWrapper > div {
     margin-right: 0;
-  }
-  #share .tgs .tag {
-    margin-top: 0.5em;
-    margin-right: 0.25em;
-    margin-left: 0.25em;
-    margin-bottom: 0;
   }
   #share .imagesWrapper .imagesEmbWr {
     overflow: hidden;

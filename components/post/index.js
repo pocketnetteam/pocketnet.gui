@@ -2148,6 +2148,8 @@ var post = (function () {
 
 	self.stop = function () {
 
+		console.log("????STOP???")
+
 		_.each(essenses, function (essense) {
 
 			if(!essense.pip){

@@ -52,6 +52,10 @@
 		#taginput{
 			margin-top : @rhythm;
 
+			.mobsearch{
+				cursor: pointer;
+				padding : 3 * @rhythm 2 * @rhythm;
+			}
 
 			.inputWrapper{
 				background: rgb(var(--background-main));
@@ -1285,6 +1289,7 @@ html.mobileview{
 		.tgsWrapperMain{
 	
 			#taginput{
+				
 				.inputWrapper{
 					background: rgb(var(--background-total-theme));
 				}
@@ -1554,7 +1559,6 @@ html.mobileview{
 					width: 100%;
 
 					&.tagsCont{
-						
 					}
 
 					&.tagsInputWrapper{
@@ -1577,12 +1581,6 @@ html.mobileview{
 				}
 			}
 
-			.tag{
-				margin-top : @rhythm;
-				margin-right: 0.5 * @rhythm;
-				margin-left: 0.5 * @rhythm;
-				margin-bottom : 0;
-			}
 		}
 
 		.imagesWrapper{

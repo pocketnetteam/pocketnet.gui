@@ -448,6 +448,9 @@
   -webkit-transition: 0.3s;
   transition: 0.3s;
 }
+#menu .sections .items .item.wallets .numberWrp {
+  position: relative;
+}
 #menu .sections .items .item.wallets .icon {
   width: 30px;
   opacity: 0;
@@ -494,8 +497,10 @@
 #menu .searchFastResultWrapper .results {
   padding: 0.5em 0;
 }
+#menu .searchFastResultWrapper .results .result {
+  padding: 0.5em 0;
+}
 #menu .searchFastResultWrapper .user {
-  padding: 0 0.5em;
   cursor: pointer;
   -moz-transition: 0.3s;
   -o-transition: 0.3s;
@@ -504,15 +509,6 @@
 }
 #menu .searchFastResultWrapper .user:hover {
   color: rgb(var(--color-txt-ac));
-}
-#menu .searchFastResultWrapper .stringresult {
-  padding: 1em 0.5em;
-}
-#menu .searchFastResultWrapper .searchbywrapper {
-  padding: 1em 0.5em;
-}
-#menu .searchFastResultWrapper .searchbywrapper.small {
-  padding: 0 0.5em;
 }
 #menu .searchFastResultWrapper .searchbywrapper .caption {
   padding-bottom: 0.5em;
@@ -525,6 +521,9 @@
 #menu .searchFastResultWrapper .searchbywrapper .searchby .swrp {
   width: 100%;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 1em 0;
 }
 #menu .searchFastResultWrapper .searchbywrapper .searchby .swrp > div {
   color: rgba(var(--color-txt-gray-dark), 0.8);
@@ -534,13 +533,12 @@
   transition: 0.3s;
 }
 #menu .searchFastResultWrapper .searchbywrapper .searchby .swrp > div.rsicon {
-  width: 33px;
+  width: 44px;
   text-align: center;
   font-size: 0.8em;
 }
 #menu .searchFastResultWrapper .searchbywrapper .searchby .swrp > div.label {
   text-align: left;
-  padding-left: 0.5em;
 }
 #menu .searchFastResultWrapper .searchbywrapper .searchby .swrp:hover > div {
   color: rgb(var(--color-txt-gray-dark));
@@ -549,21 +547,13 @@
   padding: 0;
   vertical-align: middle;
 }
-#menu .searchFastResultWrapper .userTable > div.iconWrapper {
-  width: 33px;
-  padding: 0.5em 0;
-}
-#menu .searchFastResultWrapper .userTable > div.label {
-  padding-left: 0.5em;
-}
 #menu .searchFastResultWrapper .userTable > div .usericon {
-  width: 33px;
-  height: 33px;
+  width: 44px;
+  height: 44px;
 }
 #menu .searchFastResultWrapper .userTable > div .usericon .letter {
   font-size: 1em;
-  top: -4px;
-  position: relative;
+  line-height: 44px;
 }
 #menu .searchFastResultWrapper .fastsearch {
   padding-left: 80px;
@@ -776,38 +766,52 @@
     /*.postssearch{
 			font-size: 1.2em;
 		}*/
-  }
-  #menu.searchactive .sections {
-    padding: 0;
-  }
-  #menu.searchactive .sections .section {
-    width: 100%;
-  }
-  #menu.searchactive .sections .section.right {
-    width: 100%;
-  }
-  #menu.searchactive .sections .section .items.searchWrapper {
-    width: 100%;
-  }
-  #menu.searchactive .sections .section .items.searchWrapper .item {
-    width: 100%;
-  }
-  #menu.searchactive .sections .section .items.searchWrapper .postssearch {
-    width: 100%;
-  }
-  #menu.searchactive .sections .section.leftpart {
-    display: none;
-  }
-  #menu.searchactive .sections .section.right {
-    display: none;
-  }
-  #menu.searchactive .sections .items.searchWrapper {
-    width: 100%;
-    max-width: none;
-    padding-right: 0;
-  }
-  #menu.searchactive .sections .items.searchWrapper .postssearchwrapper {
-    padding: 0.75em 0.75em;
+    /*&.searchactive{
+
+			.sections{
+				padding : 0;
+
+				.section{
+					width : 100%;
+					&.right{
+						width : 100%;
+					}
+					
+					.items.searchWrapper{
+						width : 100%;
+
+						.item{
+							width : 100%;
+						}
+
+						.postssearch{
+							width : 100%;
+						}
+					}
+
+					&.leftpart{
+						display: none;
+					}
+
+					&.right{
+						display: none;
+					}
+				}
+
+
+				.items{
+					&.searchWrapper{
+						width: 100%;
+						max-width: none;
+						padding-right: 0;
+
+						.postssearchwrapper{
+							padding : 1.5 * @rhythm 1.5 * @rhythm;
+						}
+					}
+				}
+			}
+		}*/
   }
   html.allcontent #menu .menuWrapper {
     backdrop-filter: blur(2px);
@@ -820,6 +824,9 @@
   }
   html.allcontent #menu .menuWrapper .sitename .label {
     display: none;
+  }
+  html.allcontent #menu .mobsearch i {
+    color: rgba(var(--color-bg-ac-bright), 0.9);
   }
   html.allcontent #menu .walletsWrapper,
   html.allcontent #menu .keyexportWrapper,

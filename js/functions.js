@@ -2,6 +2,7 @@
 /* PDF */
 
 
+
 	var tableAlignmentCenter = function(obj){
 
 		obj.width = 'auto';
@@ -643,8 +644,7 @@
 					if((wnd.hasClass('normalizedmobile'))){
 
 						setTimeout(function(){
-
-							if(clbk) clbk()
+							if(clbk && !p.fastClbk) clbk()
 
 							setTimeout(function(){
 								window.requestAnimationFrame(() => {
@@ -659,7 +659,7 @@
 
 				}, 220)
 
-				if((wnd.hasClass('normalizedmobile'))){
+				if(wnd.hasClass('normalizedmobile') && !p.fastClbk){
 
 				}
 				else{
@@ -752,7 +752,14 @@
 
 				}
 
-			console.log('initSwipable')
+				var directions = {}
+
+				if(p.reversePrlx){
+					directions.up = down
+				}
+				else{
+					directions.down = down
+				}
 
 
 				parallax = new SwipeParallaxNew({
@@ -760,9 +767,7 @@
 					el : wnd.find(p.parallaxselector || '.wndinner'),
 					transformel : wnd.find('.wndinner'),
 					allowPageScroll : 'vertical',
-					directions : {
-						down : down
-					}
+					directions : directions
 	
 	
 				}).init()
@@ -807,7 +812,9 @@
 
 				cnt = wnd.find('.wndcontent')
 
-				penable = true
+				if(!wnd.hasClass('fromtop')){
+					penable = true
+				}
 
 				/*if(!p.showbetter)
 					cnt.on('scroll', _.throttle(wndcontentscrollmobile, 50))*/
@@ -872,7 +879,7 @@
 
 				closing = true
 
-				destroySwipable()
+				
 
 				if(cl) if(p.closecross) p.closecross(wnd, self);
 
@@ -881,23 +888,35 @@
 				delete app.events.resize[id]
 				delete app.events.scroll[id]
 
-				wnd.addClass('asette')
-				wnd.removeClass('sette')
+				window.requestAnimationFrame(() => {
+					destroySwipable()
 
-		
-
-				setTimeout(function(){
+					wnd.addClass('asette')
+					wnd.removeClass('sette')
 
 					if(!nooverflow)
 						app.actions.onScroll();
+				})
 
+
+				var cl = function(){
 					if (self.essenseDestroy) self.essenseDestroy(key)
 
-					wnd.remove();
+					window.requestAnimationFrame(() => {
+						
+						wnd.remove();
 
-					clearmem();
+						clearmem();
+					})
 
-				}, isMobile() ? 220 : 1)
+				}
+
+				if (!isMobile()){
+					cl()
+				}
+				else{
+					setTimeout(cl,  220)
+				}
 
 				if(p.onclose) p.onclose()
 
@@ -911,7 +930,6 @@
 				wnd.addClass('hiddenState');
 
 				wnd.find('.wndcontent > div').addClass('rolledUp');
-			
 
 				if(!nooverflow) {
 					app.actions.onScroll();
@@ -934,8 +952,8 @@
 		}
 
 		self.unhidenormalized = function(){
-			console.log('unhidenormalized')
-			if (app.mobileview && wnd && (wnd.hasClass('normalizedmobile'))){
+	
+			if (app.mobileview && wnd && (wnd.hasClass('normalizedmobile'))  ){
 				wnd.find('.wndcontent>div').css('opacity', 1)
 			}
 		}
@@ -4029,7 +4047,37 @@
 						if(parameter.type == 'values' && !parameter.autoSearch)
 						{
 							_el.find('.vc_textInput').on(clickAction(), function(){
-								open()
+
+								if(window.cordova && window.plugins.actionsheet){
+
+									var items = _.map(parameter.possibleValues, (value) => {
+										var label = parameter.labelByValue(value);
+
+										return {
+											label,
+											value
+										}
+									})
+
+									app.mobile.menu(_.map(items, (i) => {return i.label})).then((i) => {
+
+										console.log("I", i)
+
+										bkp = null;
+
+										input.val(items[i].value);
+										input.change();
+
+									}).catch(e => {
+										console.error('e', e)
+									})
+								
+								}
+								else{
+									open()
+								}
+
+								
 							})
 						}
 
@@ -8634,6 +8682,27 @@
 
 	}
 
+	mobsearch = function(el, p){
+
+		if(p.mobileSearch && p.app){
+			window.requestAnimationFrame(() => {
+
+				el.html('<div class="mobsearch">'+(p.icon || p.placeholder)+'</div>')
+				el.find('div').on('click', function(){
+					p.app.platform.ui.mobilesearch(p)
+				})
+
+			})
+
+			return null
+			
+		}
+		else{
+			return new search(el, p)
+		}
+
+	}
+
 	search = function(el, p){
 
 		var self = this;
@@ -8721,15 +8790,19 @@
 				if(!searchEl.hasClass('fastSearchShow')){
 					searchEl.addClass('fastSearchShow');
 
-					$('html').on('click', helpers.closeclickResults)
+					if(!p.closeByHtmlRemove)
+
+						$('html').on('click', helpers.closeclickResults)
 				}
 
 
 			},
 			closeResults : function(){
-				$('html').off('click', helpers.closeclickResults);
+				
+				if(!p.closeByHtmlRemove)	
+					$('html').off('click', helpers.closeclickResults);
 
-					searchEl.removeClass('fastSearchShow');
+				searchEl.removeClass('fastSearchShow');
 			},
 			closeclickResults : function(e){
 				if (!searchEl || (searchEl.has(e.target).length === 0 && searchEl.hasClass('fastSearchShow'))) {
@@ -8795,7 +8868,7 @@
 					}, events, helpers);
 				}
 			},
-			showlast : function(el){
+			showlast : function(){
 				var result = p.last.get();
 
 				if (result.length){
@@ -8815,6 +8888,8 @@
 			},
 			fastsearch : function(el, e, _currentFastId){
 				var value = el.val();
+
+				if(!searchEl) return
 
 				if (value && p.events && p.events.fastsearch &&!bsActive){
 
@@ -8896,6 +8971,8 @@
 		self.getvalue = function(){
 			return searchEl.find('.sminput').val()
 		}
+
+		self.template = template
 
 		var initEvents = function(){
 
@@ -8981,7 +9058,7 @@
 
 		var init = function(){
 
-			el.html(template());
+				el.html(template());
 
 			searchEl = el.find('.search');
 			fastResult = el.find('.searchFastResultWrapper');
@@ -8990,6 +9067,7 @@
 
 			if (p.clbk)
 				p.clbk(searchEl)
+
 		}
 
 		self.destroy = function(){
@@ -9002,6 +9080,8 @@
 			el = null
 			p = {}
 		}
+
+		self.showlast = events.showlast
 
 		init();
 

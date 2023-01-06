@@ -2145,3 +2145,9 @@ _l.addAccessToLibrary = 'Предоставить доступ к галерее
 _l.cameranotavailable = 'Камера недоступна'
 
 _l.rtip4 = 'Этот ключ - ваш пароль! Не потеряйте его и не показывайте никому.'
+
+_l.removecategory = 'Удалить'
+_l.removecategoryQestion = 'Вы действительно хотите удалить эту категорию?'
+
+_l.searchbytext = "Искать по тексту:"
+_l.searchbytags = "Искать по тэгам:"

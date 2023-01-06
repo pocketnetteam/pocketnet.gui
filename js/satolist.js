@@ -251,6 +251,14 @@ Platform = function (app, listofnodes) {
         'PT4fvQ7jMicg6McC52BmFFkL2M6AEWc7vo' : true,
         'PCkX8n2e6aD6Ji37hSpHCJpqvaaJjVWt1m' : true,
         'PGD5jUBQ7qNnHDuW85RRBxY1msywEdCm7r' : true,
+        'PPdfqTLnz2S6F1ng5N7rzMUh19H4e3pfZe' : true,
+        'PVjhQyjrLur2ZGD5CspSu18ee7R2qsCjo6' : true,
+        'PNQ8drkeMEtZ44g7VyhxPPwPYubBsT6ekt' : true,
+        'PCx1LKWdV1pc6TmKwYU8vqEn3CpAeTexDr' : true,
+        'PLZATQyqYzM6NLbH8M3LPicSU3cTAqW3SA' : true,
+        'PKWM3oo6YTFFn5U2HLaBueqA3fcLd7BP8m' : true,
+        'PHnvqSQzg5D3yKo5KgCiXqtFP84bsYyF7G' : true,
+        'PPw4k3Zra7tYRM643QVm3V4UFrcZZb9H6H' : true
     }
 
     self.bch = {
@@ -319,6 +327,7 @@ Platform = function (app, listofnodes) {
 
     var bastyonhelperOpened = false
     self.uicamerapreview = null
+    self.uimobilesearch=null
     //////////////
     self.test = false;
     //////////////
@@ -2863,6 +2872,22 @@ Platform = function (app, listofnodes) {
     }
 
     self.ui = {
+
+        mobilesearch : function(p){
+
+            app.nav.api.load({
+                open : true,
+                id : 'mobilesearch',
+                inWnd : true,
+
+                essenseData : p,
+
+                clbk : function(s, p){
+                    self.uimobilesearch = p
+                }
+            })
+
+        },
 
         uploadImage : function(p){
 
@@ -8237,7 +8262,7 @@ Platform = function (app, listofnodes) {
 
                 var a2 = _.toArray(self.sdk.node.transactions.temp[key] || {})
 
-                return a1.concat(a2);
+                return _.filter(a1.concat(a2), (v) => {return v});
 
             },
 
@@ -12635,34 +12660,36 @@ Platform = function (app, listofnodes) {
             drawSpendLine: function (el, clbk, addresses) {
                 self.app.platform.sdk.node.transactions.get.canSpend(addresses || null, function (amount, total) {
 
+                    window.requestAnimationFrame(() => {
+                        if (total > 0 && amount < total) {
 
-                    if (total > 0 && amount < total) {
-
-                        el.css('position', 'relative')
-
-                        if (!el.find('.spendLine').length) {
-                            el.append('<div class="spendLine"><div class="line"></div></div>')
-                        }
-
-                        var sline = el.find('.spendLine .line');;
-
-                        if (amount == 0) {
-                            sline.addClass('bad')
+                            if (!el.find('.spendLine').length) {
+                                el.append('<div class="spendLine"><div class="line"></div></div>')
+                            }
+    
+                            var sline = el.find('.spendLine .line');;
+    
+                            if (amount == 0) {
+                                if(!sline.hasClass('bad'))
+                                    sline.addClass('bad')
+                            }
+                            else {
+                                if (sline.hasClass('bad'))
+                                    sline.removeClass('bad')
+                            }
+    
+                            sline.css('width', (100 * amount / total) + "%")
+    
+    
                         }
                         else {
-                            sline.removeClass('bad')
+                            el.find('.spendLine').remove()
                         }
-
-                        sline.css('width', (100 * amount / total) + "%")
-
-
-                    }
-                    else {
-                        el.find('.spendLine').remove()
-                    }
-
-                    if (clbk)
-                        clbk()
+    
+                        if (clbk)
+                            clbk()
+                    })
+                    
                 })
             },
 
@@ -15544,7 +15571,7 @@ Platform = function (app, listofnodes) {
 
                 parameters.push(localization || self.app.localization.key)
 
-                self.app.api.rpc('gettags', parameters).then(d => {
+                self.app.api.rpcwt('gettags', parameters).then(d => {
 
 
                     var _d = _.map(d, function(_d){
@@ -15599,7 +15626,7 @@ Platform = function (app, listofnodes) {
 
                     var round = (a, b) => a - a % b
 
-                    t.get('', 150, round(self.currentBlock, 1000) - 20000, loc, function (d) {
+                    t.get('', 350, round(self.currentBlock, 1000) - 20000, loc, function (d) {
 
                         if(!s.all) s.all = {}
 
@@ -15697,6 +15724,17 @@ Platform = function (app, listofnodes) {
 
                 }
 
+            },
+
+            getcloudall : function(){
+                var all = {}
+                _.each(this.storage.cloud, (c, loc) => {
+                    _.each(c, (tg) => {
+                        all[tg.tag] = tg
+                    })
+                })
+
+                return all
             },
 
             totals : function(){
@@ -17328,7 +17366,7 @@ Platform = function (app, listofnodes) {
 
                     if (!share) {
                         var temp = _.find(self.sdk.relayTransactions.withtemp('share'), function (s) {
-                            return s.txid == id
+                            return s && s.txid == id
                         })
 
 
@@ -24853,6 +24891,41 @@ Platform = function (app, listofnodes) {
                 return h
             },
 
+            simple : function(json){
+
+                h += '<div class="cwrapper table">\
+                        <div class="cell cellforimage">\
+                            <div class="icon">'
+
+
+                h +=            '<div class="usericon" ban=".gif" image="' + (clearStringXss(json.image || '') || '*') + '">'
+                h +=            '</div>'
+
+                h +=        '</div>\
+                        </div>\
+                        <div class="ccell">\
+                            <div class="infomain">\
+                                <div class="caption">'
+
+                                if (json.caption) {
+                                    h += " " + clearStringXss(json.caption)
+                                }
+
+                h +=            '</div>\
+                                <div class="tips">' + (json.text) + '\
+                                </div>\
+                            </div>'
+
+                h +=        self.tempates.time(json.time)
+
+                h +=    '</div>'
+
+
+                h += '</div>'
+    
+                return h;
+            }
+
 
         }
 
@@ -26809,14 +26882,20 @@ Platform = function (app, listofnodes) {
             }, 301)
         }
 
-        self.fastMessage = function (html, destroyclbk) {
+        self.fastMessageByJson = function(json, destroyclbk, p = {}){
+            var html = self.tempates.simple(json)
+
+            return self.fastMessage(html, destroyclbk, p = {})
+        }
+
+        self.fastMessage = function (html, destroyclbk, p = {}) {
             var id = makeid(true);
 
             html = '<div class="fastMessage" elementsid="notificationmessage" id="' + id + '">\
-            <div class="fmCnt">' + html + '</div>\
-            <div class="close">\
-                <i class="fa fa-times" aria-hidden="true"></i>\
-            </div>\
+                <div class="fmCnt">' + html + '</div>\
+                <div class="close">\
+                    <i class="fa fa-times" aria-hidden="true"></i>\
+                </div>\
             </div>';
 
             $('body').append(html);
@@ -26842,6 +26921,14 @@ Platform = function (app, listofnodes) {
             destroyMessage(message, 5000, false, true);
 
             message.el.on('click', function(){
+
+                if (p.click) {
+
+                    p.click() 
+                    destroyMessage(message, 1)
+
+                    return
+                }
 
                 if (platform.app.mobileview){
 
@@ -28461,7 +28548,7 @@ Platform = function (app, listofnodes) {
 
 
         self.restart(function () {
-            self.prepareUserData(function(){
+            //self.prepareUserData(function(){
 
                 self.app.reload({
                     clbk : function () {
@@ -28472,7 +28559,7 @@ Platform = function (app, listofnodes) {
                         if(clbk) clbk()
                     }
                 })
-            })
+            //})
 
         })
     }
@@ -28631,7 +28718,7 @@ Platform = function (app, listofnodes) {
             self.sdk.captcha.load()
 
             setTimeout(function(){
-                self.sdk.tags.getfastsearch()
+                /*self.sdk.tags.getfastsearch()*/
                 self.sdk.tags.cloud()
                 self.sdk.node.get.time()
             }, 1000)
