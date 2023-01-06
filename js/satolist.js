@@ -30106,7 +30106,7 @@ Platform = function (app, listofnodes) {
 
         openinpopup: function() {
             // console.log('function is work')
-            let newWindow = window.open("/pocketnet/messenger", "messengerWindow", "popup", 'width=600,height=400');
+            let newWindow = window.open("/messenger", "messengerWindow", "popup", 'width=600,height=400');
             // self.matrixchat.destroy
             // alert(newWin.location.href); // (*) about:blank, загрузка ещё не началась
             // console.log('newWindow alert', newWindow)
