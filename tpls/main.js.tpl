@@ -5,13 +5,14 @@ if (global.WRITE_LOGS) {
 
 var open = require("open");
 
-const {protocol} = require('electron');
+const {protocol, powerMonitor} = require('electron');
 
 const ProxyInterface = require('./proxy16/ipc.js')
 const IpcBridge =require('./js/electron/ipcbridge.js')
 
 const { Bridge: TranscoderBridge } = require('./js/electron/transcoding2.js');
 const { initFsFetchBridge } = require('./js/transports/fs-fetch.js');
+const VideoDownload = require('./js/electron/video-download.js');
 
 const { ProxifiedAxiosBridge } = require('./js/transports/proxified-axios.js');
 const { ProxifiedFetchBridge } = require('./js/transports/proxified-fetch.js');
@@ -40,8 +41,10 @@ const os = require("os");
 const AutoLaunch = require('auto-launch');
 const contextMenu = require('electron-context-menu');
 const path = require('path');
+const url = require('url');
 const http = require('http');
 const https = require('https');
+const mime = require('mime-types');
 const notifier = require('node-notifier');
 
 contextMenu({
@@ -354,8 +357,6 @@ function initApp() {
         }, 10 * 60 * 1000);
     }
 
-    const { powerMonitor } = require('electron')
-
     powerMonitor.on('suspend', () => {
 
         win.webContents.send('pause-message', { msg: 'pause', type: 'info' })
@@ -367,6 +368,10 @@ function initApp() {
         win.webContents.send('resume-message', { msg: 'resume', type: 'info' })
 
     })
+
+    powerMonitor.on('shutdown', () => {
+        destroyAppSafe();
+    });
 
 }
 
@@ -695,337 +700,12 @@ function createWindow() {
         autoLaunchManage(p.enable)
     })
 
+    const Storage = app.getPath('userData');
 
     /**
-     * Video and posts download handlers
+     * Video downloader handlers
      */
-
-    const Storage = app.getPath('userData');
-    const PostsDir = 'posts';
-    const VideosDir = 'videos';
-    const getPostFolder = (postId) => path.join(Storage, PostsDir, postId);
-    const getVideoFolder = (postId, videoId) => path.join(getPostFolder(postId), VideosDir, videoId);
-
-    ipcMain.removeHandler('saveShareData');
-    ipcMain.handle('saveShareData', async (event, shareData) => {
-        const shareDir = getPostFolder(shareData.id);
-        const jsonDir = path.join(shareDir, 'share.json');
-
-        if (!fs.existsSync(shareDir)) {
-            fs.mkdirSync(shareDir, { recursive: true });
-        }
-
-        const jsonData = JSON.stringify(shareData);
-
-        await asyncFs.writeFile(jsonDir, jsonData, { overwrite: false });
-
-        return shareDir;
-    });
-
-    ipcMain.removeHandler('saveShareVideo');
-    ipcMain.handle('saveShareVideo', async (event, folder, videoData, videoResolution) => {
-        function downloadFile(url, options = {}) {
-            return new Promise((resolve, reject) => {
-                let isHttps = /^https:/;
-                let isHttp = /^http:/;
-
-                const handler = (response) => {
-                    let data = '';
-
-                    response.on('data', (chunk) => (
-                        data += chunk
-                    ));
-
-                    if (options.stream) {
-                        options.stream.on('close', () => resolve(data));
-
-                        response.pipe(options.stream);
-                    } else {
-                        response.on('end', () => resolve(data));
-                    }
-                };
-
-                const reqOptions = {
-                    headers: options.headers,
-                };
-
-                if (isHttp.test(url)) {
-                    if (options.headers) {
-                        http.get(url, reqOptions, handler);
-                    } else {
-                        http.get(url, handler);
-                    }
-                } else if (isHttps.test(url)) {
-                    if (options.headers) {
-                        https.get(url, reqOptions, handler);
-                    } else {
-                        https.get(url, handler);
-                    }
-                } else {
-                    reject('Unsupported protocol');
-                }
-            });
-        }
-
-        const shareId = path.basename(folder);
-        const videoDir = getVideoFolder(shareId, videoData.uuid);
-        const jsonDir = path.join(videoDir, 'info.json');
-        const signsDir = path.join(videoDir, 'signatures.json');
-        const playlistDir = path.join(videoDir, 'playlist.m3u8');
-
-        const streamsRegexp = /^.+\.m3u8/gm;
-        const videoTargetFile = /#EXT-X-MAP:URI="(.+\.mp4)"/m;
-        const bytesRangesSelect = /(?!BYTERANGE)(\d+@\d+)/gm;
-
-        if (!fs.existsSync(videoDir)) {
-            fs.mkdirSync(videoDir, { recursive: true });
-        }
-
-        const jsonData = JSON.stringify(videoData);
-        await asyncFs.writeFile(jsonDir, jsonData, { overwrite: false });
-
-        const playlistUrl = videoData.streamingPlaylists[0].playlistUrl;
-        const signsUrl = videoData.streamingPlaylists[0].segmentsSha256Url;
-
-        const streamsData = await downloadFile(playlistUrl);
-
-        const signsFile = fs.createWriteStream(signsDir);
-        await downloadFile(signsUrl, { stream: signsFile });
-
-        const streamsList = streamsData.match(streamsRegexp);
-
-        const targetStream = streamsList.find((stream) => (
-            stream.endsWith(`${videoResolution}.m3u8`)
-        ));
-
-        const urlLastCut = playlistUrl.lastIndexOf('/');
-        const targetStreamBaseUrl = playlistUrl.substring(0, urlLastCut);
-        const targetStreamUrl = `${targetStreamBaseUrl}/${targetStream}`;
-
-        const fragmentsFile = fs.createWriteStream(playlistDir);
-        const fragmentsData = await downloadFile(targetStreamUrl, { stream: fragmentsFile });
-        const fragmentsList = fragmentsData.match(bytesRangesSelect);
-
-        const targetVideo = fragmentsData.match(videoTargetFile)[1];
-
-        const targetVideoUrl = `${targetStreamBaseUrl}/${targetVideo}`;
-
-        for(let i = 0; i < fragmentsList.length; i++) {
-            let fragRange = fragmentsList[i].split('@');
-            fragRange = fragRange.reverse();
-
-            const fragSize = Number.parseInt(fragRange[1]);
-            const startBytes = Number.parseInt(fragRange[0]);
-            const endBytes = fragSize + startBytes - 1;
-
-            const fragName = `fragment_${startBytes}-${endBytes}.mp4`;
-            const fragPath = path.join(videoDir, fragName);
-
-            const fragFile = fs.createWriteStream(fragPath);
-
-            await downloadFile(targetVideoUrl, {
-                stream: fragFile,
-                headers: {
-                    range: `bytes=${startBytes}-${endBytes}`,
-                },
-            });
-        }
-
-        const videoInfo = {
-            thumbnail: 'https://' + videoData.from + videoData.thumbnailPath,
-            videoDetails : videoData,
-        };
-
-        const result = {
-            video: {
-                internalURL: shareId,
-            },
-            infos: videoInfo,
-            id: videoData.uuid,
-        };
-
-        return result;
-    });
-
-    ipcMain.removeHandler('deleteShareWithVideo');
-    ipcMain.handle('deleteShareWithVideo', async (event, shareId) => {
-        const shareDir = getPostFolder(shareId);
-
-        fs.rmSync(shareDir, { recursive: true, force: true });
-    });
-
-    ipcMain.removeHandler('proxyUrl');
-
-    ipcMain.removeHandler('getShareList');
-    ipcMain.handle('getShareList', async (event) => {
-        const isShaHash = /[a-f0-9]{64}/;
-
-        const postsDir = path.join(Storage, PostsDir);
-
-        if (!fs.existsSync(postsDir)) {
-            return [];
-        }
-
-        const postsList = fs.readdirSync(postsDir)
-            .filter(fN => isShaHash.test(fN));
-
-        return postsList;
-    });
-
-    ipcMain.removeHandler('getShareData');
-    ipcMain.handle('getShareData', async (event, shareId) => {
-        const shareDir = getPostFolder(shareId);
-        const jsonPath = path.join(shareDir, 'share.json');
-
-        const jsonData = fs.readFileSync(jsonPath, { encoding:'utf8', flag:'r' });
-
-        return JSON.parse(jsonData);
-    });
-
-    ipcMain.removeHandler('getSegment');
-
-    ipcMain.handle('getSegment', async (event, videoDir, filename) => {
-
-        try{
-            const data = fs.readFileSync(path.join(videoDir, filename), {  flag:'r' });
-    
-            return data
-        }   
-        catch(e){
-            return null
-        }
-
-    })  
-
-    ipcMain.removeHandler('getVideoData');
-
-    ipcMain.handle('getVideoData', async (event, shareId, videoId) => {
-        const videoDir = getVideoFolder(shareId, videoId);
-
-        const jsonPath = path.join(videoDir, 'info.json');
-
-        const videosList = fs.readdirSync(videoDir);
-
-        const videoData = {};
-
-        videoData.id = videoId;
-
-        const jsonData = fs.readFileSync(jsonPath, { encoding:'utf8', flag:'r' });
-
-        var details =  JSON.parse(jsonData)
-
-        videoData.infos = {
-            thumbnail : '',
-            videoDetails : details,
-        }
-
-        var sequence = 0
-
-        
-
-        const playlistName = videosList.find(fN => (
-            fN.endsWith('.m3u8')
-        ));
-
-        const playlistPath = path.join(videoDir, playlistName);
-
-        const fileStats = fs.statSync(playlistPath);
-
-        var masterSwarmId = details.streamingPlaylists[0].playlistUrl
-
-        var vurl = geturlfromm3u8(playlistPath)
-
-        var signatures = null
-            
-        try{
-            signatures = JSON.parse(fs.readFileSync(path.join(videoDir, 'signatures.json'), { encoding:'utf8', flag:'r' }));
-        }catch(e){
-            console.log(e)
-        }
-
-
-        if(masterSwarmId && vurl && signatures){
-
-
-            var url = masterSwarmId.split("/hls/")[0] + '/hls/' + details.uuid + '/' + vurl
-
-            var i = -1
-            var f = -1
-            
-            var fss = _.find(signatures, (a, index) => {
-                f++
-                if(index == vurl) {
-                    return true
-                }
-            })
-
-            if(fss) {
-                i = f
-            }
-
-
-            if(i > -1){
-
-
-                var segmentsFiles = _.sortBy(_.filter(videosList, (vl) => {
-                    if (vl.endsWith('.mp4')){return true}
-                }), (vl => {
-                    var n = Number(vl.replace('fragment_', '').replace('.mp4', '').split('-')[0])
-
-                    return n
-                }))
-
-                var segments = _.map(segmentsFiles, (vl, j) => {
-
-                    var j1 = j - 1
-
-                    var segment = {
-                        sequence : j1 + '',
-                        range : "bytes=" + vl.replace('fragment_', '').replace('.mp4', ''),
-                        priority : 1,
-                        downloadBandwidth : 10,
-                        streamId : 'V' + i,
-                        masterSwarmId : masterSwarmId,
-                        masterManifestUri : masterSwarmId,
-                        id : masterSwarmId + '+V'+i+'+' + j1,
-                        url,
-                        requestUrl : url,
-                        responseUrl : url
-
-                    }
-    
-                    return segment
-    
-        
-                    return null
-        
-                })
-
-
-                var map = new Map();
-
-                _.each(segments, (s) => {
-                    map.set(s.id, {segment : s})
-                })
-
-                videoData.infos.segments = map
-                videoData.infos.masterSwarmId = masterSwarmId
-                videoData.infos.streamSwarmId = masterSwarmId + '+V' + i
-                videoData.infos.dir = videoDir
-                videoData.infos.trackerUrls = details.trackerUrls
-            }
-
-            
-        }
-
-        
-        videoData.size = fileStats.size;
-        videoData.video = {
-            internalURL: shareId,
-        };
-
-        return videoData;
-    });
+    VideoDownload.initHandlers(ipcMain, Storage);
 
     /**
      * Local files requestor bridge

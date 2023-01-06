@@ -179,14 +179,13 @@
 
 :root {
 	--app-margin-top-default: 0px;
-	--app-margin-top: max(env(safe-area-inset-top), var(--app-margin-top-default));
+	--app-margin-top: 0px;
 }
 
-:root {
-	--safe-area-inset-top:      0px;
-	--safe-area-inset-right:    0px;
-	--safe-area-inset-bottom:   0px;
-	--safe-area-inset-left:     0px;
+@supports (width: max(1px, 1px)) {
+    :root {
+        --app-margin-top: max(env(safe-area-inset-top), var(--app-margin-top-default));
+    }
 }
 
 
@@ -7173,8 +7172,8 @@ html.mobileview.fullscreen{
     }
 
     img {
-        max-height: 25px;
-        max-width: 25px;
+        max-height: 55px;
+        max-width: 55px;
         will-change: transform;
 
         &.zoom-in {
@@ -8031,7 +8030,15 @@ html.mobileview{
             background: #051b28;
         }
         
-    }        
+    }      
+    
+    html.allcontent.cameraenabled{
+       
+        body{
+            background: transparent;
+        }
+        
+    }   
 
 }
 
@@ -8460,6 +8467,10 @@ html.pipmode{
 
 ///////////
 #application{
+
+    &.default-scroll{
+        overflow-x: visible;
+    }
 
     .emojionearea, .emojionearea.form-control{
         background: rgb(var(--background-hidden-layer));

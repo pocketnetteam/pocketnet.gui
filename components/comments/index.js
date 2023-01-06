@@ -273,8 +273,10 @@ var comments = (function(){
 	
 	
 								if (result){
-	
-									new Audio('sounds/donate.mp3').play();
+
+									if(!window.cordova){
+										new Audio('sounds/donate.mp3').play();
+									}
 	
 									renders.donate(id, p)
 	
@@ -1389,9 +1391,9 @@ var comments = (function(){
 	
 				comments = _.sortBy(comments, function(c){
 
-					if (self.app.platform.sdk.comments.blocked[c.address]) {
+					/*if (self.app.platform.sdk.comments.blocked[c.address]) {
 						return 0
-					}
+					}*/
 
 
 					var ms = (c.time || new Date()) / 1000
@@ -1603,7 +1605,7 @@ var comments = (function(){
 								{
 									parent.addClass('hiddenBlockedUserComment');
 									var hiddenCommentLabel = $('<div></div>').html(self.app.localization.e('blockedbymeHiddenCommentLabel')).addClass('hiddenCommentLabel')
-									var ghostButton = $('<div></div>').append($('<button></button>').html(self.app.localization.e('showhiddenComment')).addClass('ghost showBlockedUserComment'))
+									var ghostButton = $('<div class="showBlockedUserCommentWrapper"></div>').append($('<button></button>').html(self.app.localization.e('showhiddenComment')).addClass('ghost showBlockedUserComment'))
 									var commentContentTable = localParent.find('.cbodyWrapper > .commentcontenttable')
 									commentContentTable.append(hiddenCommentLabel)
 									commentContentTable.append(ghostButton)
@@ -1760,7 +1762,7 @@ var comments = (function(){
 					},
 					keydown : function(editor, e){
 						if(e.keyCode == 13){
-							if (isMobile()){
+							if (isMobile() || e.ctrlKey){
 
 								setTimeout(() => {
 									if (c.hasClass('sending')) return
@@ -3054,7 +3056,7 @@ var comments = (function(){
 
 				app.platform.ui.showCommentBanner(el.c, (c) => {
 					bannerComment = c
-				});
+				}, c.essenseData.receiver);
 			},
 
 			authclbk : function(){

@@ -1,5 +1,168 @@
 @import "../../css/__cssvar";
 
-#boost{
+#boost {
+    padding: 4 * @rhythm 0;
 
+    .work {
+        max-width: 850px;
+    }
+    .header {
+        margin-top: 40px;
+        text-align: center;
+        padding: 10px 0;
+        border-top: 2px solid rgb(197, 194, 194);
+        border-bottom: 2px solid rgb(197, 194, 194);
+
+        &__title {
+            font-size: 2rem;
+            text-transform: uppercase;
+        }
+
+        &__subtitle {
+            margin-top: 1rem;
+            font-size: 2.2rem;
+            font-weight: normal;    
+        }
+        }
+    .tips-list{
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+            // width: 70%;
+        }
+    .ul-tips{
+            // width: 70%;
+        font-size: 2rem;
+        font-weight: 300;
+        margin-top: 5px;
+        margin-left: 20px;
+        list-style: disc;
+        }
+    .li-tip{
+        // width: 70%;
+        text-align: left;
+        font-size: .9em;
+        font-weight: 500; 
+        }  
+    .yellow {            
+        color: #f0b811;
+        }
+    .red {
+        color: #d63c3c; 
+        }
+    .video{
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        h2{
+            font-size: 1.5em;
+            font-weight: 700;
+            margin: 15px 0;
+        }
+        iframe{
+            width: 640px;
+        }
+    }
+    .columns{
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap; 
+        margin: 20px 0;
+        .column{
+            text-align: left;
+            width: 40%;
+            min-width: 350px;
+            ul{
+                li{
+                    text-align: left;
+                    font-size: 1.2em;
+                    font-weight: 200;
+                }
+            }
+        }
+    }
+    .buy-pkoin{
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        h2{
+            font-size: 1.5em;
+            font-weight: 700;
+        }
+        
+        p{
+            font-size: 1.4em;
+            font-weight: 700;
+        }
+        .text{
+            text-align: left;
+            font-size: 1.2em;
+            font-weight: 200;
+
+        }
+        .sites{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            a{
+                margin: 15px 0;
+                font-size: 1.2em;
+                font-weight: 700;
+                img{
+                    width: 150px;
+                    .img{
+                        width: 60px;
+                    }
+                }
+            .span{
+                font-weight: 300;
+            }
+            }
+        }
+        img{
+            max-width: 500px;
+        }
+        .cta{
+            font-size: 1.2em;
+            font-weight: 700;
+            color: white;
+            margin: 30px 0;
+            padding: 25px 35px;
+            text-transform: uppercase;
+            background: #f0b811;
+            border-radius: 5px;
+
+        }
+    }
+
+
+}
+
+@media only screen and (max-width: 768px) {
+    #boost {
+        padding :  @rhythm 2 * @rhythm;
+        .video{
+            iframe{
+                width: 100%;
+                padding: 0 10px;
+            }
+        
+        }
+        .buy-pkoin{
+            img{
+                width: 100%;
+                padding: 0 10px;
+            }
+            .cta{
+                font-size: 0.8em;
+                padding: 15px;
+            }
+        }
+        
+        
+    }
 }

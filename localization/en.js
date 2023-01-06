@@ -1,5 +1,7 @@
+var appname = ((window.projects_meta || {})[window.pocketnetproject || "Bastyon"] || {}).fullname || 'Bastyon'
 
-var appname = window.pocketnetproject || "Pocketnet"
+
+console.log('window.projects_meta', window.projects_meta)
 
 if(typeof loclib == "undefined" || !loclib)
 loclib = {};
@@ -231,7 +233,7 @@ _l.usavechanges = "Do you want to save your changes?";
 
 _l.referralsCount = 'Users who have used the referral link.';
 _l.commentatorsCount = function(limit){
-    return `Users have commented on you more than ${limit + (limit === 1 ? ' time' : ' times')}`;
+    return "Users have commented on you more than " + limit + (limit === 1 ? ' time' : ' times')
 };
 _l.from = 'Period: ';
 _l.to = 'to';
@@ -319,6 +321,8 @@ _l.lpublic = "Public";
 //inviteComment
 _l.commentBannerTitle = "Comment on this post";
 _l.commentBannerDescription = "Commenting unlocks features on Bastyon and helps you find friends 😀";
+_l.commentBannerTitle2 = function(v){ return "Follow " + v + " to see more posts for them"};
+_l.commentBannerDescription2 = function(v){ return "Following " + v + " will show more content like this in your feed." };
 _l.dontShowAgain = "Don't show again";
 
 //share
@@ -641,6 +645,7 @@ _l.e13107 = "Node management may be carried out with Application"
 _l.e13108 = "There isn't connection with Electron proxy interface"
 
 _l.e13109 = "Please enter the words in the picture to receive Pocketcoin and continue registration"
+_l.e13109lg = "Please enter the words in the picture to continue registration"
 _l.e13110 = "Enter words"
 _l.poll = "Create poll"
 _l.next = "Next"
@@ -833,6 +838,20 @@ _l.e13224 = "Download "+appname+" for Linux"
 
 _l.e132233 = "Download "+appname+" for Android"
 _l.e132221 = "Download Mobile App - this is the most usefull way to use "+appname+"."
+_l.installpwa = "Install"
+
+_l.step1 = "Step 1:"
+_l.step2 = "Step 2:"
+_l.installios_instruction3 = "at the bottom of the screen"
+
+_l.e132233ios = "Install "+appname+" for Iphone"
+
+_l.installios_caption =  "Install "+appname+" for Iphone"
+_l.installios_empty =  "This is the page to install the Application for iPhone. Applications for other operating systems can be found here"
+_l.installios_empty_button =  "Go to application page"
+_l.installios_instruction1 = 'tap'
+_l.installios_instruction2 = 'then "Add to home screen"'
+
 
 _l.e13225 = ""+appname+" Node"
 _l.e13226 = "Download Node"
@@ -888,6 +907,8 @@ _l.e13267 = "Dark Theme"
 _l.e13268 = "Coinstake win"
 _l.e13269 = "Transactions receive"
 _l.e13270 = "Upvotes receive"
+_l.e13270d = "Downvotes receive"
+
 _l.e13271 = "Comment receive"
 _l.e13272 = "Answer receive"
 _l.e13273 = "New Followers"
@@ -1057,14 +1078,14 @@ _l.e14069 = "Specifics of curation on "+appname+"."
 _l.e14070 = "When your reputation gets to 100 and you press on dots in the upper right of any post, you will see an option to Complain. If enough Complaints come in, the post will not be shown anymore. When someone has more than 2 posts that are voted off the platform in 24 hours, they cannot post for another 48 hours after the second post. Complain is completed when number of complaints is at least ⅓ of the number of 4 and 5 star ratings, subject to a minimum of 10 complaints (which will be adjusted over time in consultation with the community)."
 _l.e140701 = "We are extremely and passionately pro-speech. However, we do not want to turn "+appname+" into a marginal forum where lunatics reign. What would cause you to Complain?"
 _l.e140702 = "Do NOT complain about stuff that you simply don’t like or that offends you. That is not a high enough bar. Do not follow people who offend you, soon we will have a feature for not seeing their posts, but do not complain about them. Complain only about things that threaten long term viability of "+appname+" as a mass communication platform that intends to reach to all levels of society in many countries."
-_l.e140703 = "We strongly recommend that you complain about porn of any kind. There are plenty of porn sites on the web, we do not want to mix our free speech endeavor with that. We strongly encourage the community to vote off porn. Secondly, any type of a direct threat should be voted off and clear examples of racism should too. If we allow MSM to tie us to racism or violence directly, "+appname+" will cease to exist before we can even get it out there. Just because MSM media cries wolf about fake racism, doesn’t mean we should prove them right by tolerating it in our platform. It will detract from what we are trying to achieve, which is to challenge new totalitarianism created by the unholy alliance of media, finance and corrupt government officials."
+_l.e140703 = "We strongly recommend that you complain about porn/nudity of any kind. There are plenty of porn/nudity sites on the web, we do not want to mix our free speech endeavor with that. We strongly encourage the community to vote off porn/nudity. Secondly, any type of a direct threat should be voted off and clear examples of racism should too. If we allow MSM to tie us to racism or violence directly, "+appname+" will cease to exist before we can even get it out there. Just because MSM media cries wolf about fake racism, doesn’t mean we should prove them right by tolerating it in our platform. It will detract from what we are trying to achieve, which is to challenge new totalitarianism created by the unholy alliance of media, finance and corrupt government officials."
 _l.e14071 = "Important Note on Racism."
 _l.e14072 = "Free thought and free speech is under attack on mainstream social platforms and in the media. We need to speak the truth and this platform is non-corporate and decentralized for that very reason. But we ask everyone make your point without attacking people&rsquo;s nationality or race. You can make your point based on evidence. We cannot afford to turn "+appname+" into a marginal platform. Speak the truth, but please avoid racism and attacks against specific nationalities on the whole. We know that Silicon Valley and MSM has turned the issue of racism into their playing card and they constantly cry wolf. Even more the reason for us to be measured and evidence based and not let them smear us with that. If we are not, we are not allowing most of the population to weigh the evidence of MSM corruption presented on "+appname+". Please keep that in mind, so that free speech can thrive and we can beat the facebokks of the world.</div><div>Ultimately, it is the community that will determine the direction of the platform. Having a bunch of snowflakes that complain about stuff that offends them is equally as bad as when people want to voice direct violent threats. However, the first indication is that early users of the platform are generally intelligent and evidence based, so the future looks incredibly bright. "+appname+" team has noticed after a few days of the beta test, that we stopped reading even alternative news, because there was so much interesting content on "+appname+". Keep it up!</div><div>Please get involved in the discussion on these topics. This is a community platform. We are always eager to improve transparency of the platform and you should let us know how we can improve our content curation and policing. Use group chat or email support(at)pocketnet*dot*app or make full posts on this topic."
 _l.e14073 = "Specifics of curation on "+appname+"."
 _l.e14074 = "Is any content allowed on "+appname+"? If some content is not allowed, can the platform still be called free speech?"
 _l.e14075 = "Sometimes we can have a user who comes in with a specific purpose to attack "+appname+" by posting a series of vile images. To protect against that we have a following mechanism. If someone’s reputation reaches -50 (negative 50), their account is automatically blocked. Getting a reputation of -50 is equivalent to having 25 one star ratings and no four or five star ratings. This is nearly impossible to achieve without having lots of bad posts."
 _l.e14076 = "Flagging a specific post"
-_l.e14077 = "When your reputation gets to 50 and you press on dots in the upper right of any post, you will see an option to Complain. If enough Complaints come in, the post will not be shown anymore. Complain is completed when number of complaints is at least ⅓ of the number of 4 and 5 star ratings, subject to a minimum of 10 complaints (which will be adjusted over time in consultation with the community).</div><div>We are extremely and passionately pro-speech. However, we do not want to turn "+appname+" into a marginal forum where lunatics reign. What would cause you to Complain?</div><div>Do NOT complain about stuff that you simply don’t like or that offends you. That is not a high enough bar. Do not follow people who offend you, soon we will have a feature for not seeing their posts, but do not complain about them. Complain only about things that threaten long term viability of "+appname+" as a mass communication platform that intends to reach to all levels of society in many countries.</div><div>We strongly recommend that you complain about porn of any kind. There are plenty of porn sites on the web, we do not want to mix our free speech endeavor with that. We strongly encourage the community to vote off porn. Secondly, any type of a direct threat should be voted off and clear examples of racism should too. If we allow MSM to tie us to racism or violence directly, "+appname+" will cease to exist before we can even get it out there. Just because MSM media cries wolf about fake racism, doesn’t mean we should prove them right by tolerating it in our platform. It will detract from what we are trying to achieve, which is to challenge new totalitarianism created by the unholy alliance of media, finance and corrupt government officials."
+_l.e14077 = "When your reputation gets to 50 and you press on dots in the upper right of any post, you will see an option to Complain. If enough Complaints come in, the post will not be shown anymore. Complain is completed when number of complaints is at least ⅓ of the number of 4 and 5 star ratings, subject to a minimum of 10 complaints (which will be adjusted over time in consultation with the community).</div><div>We are extremely and passionately pro-speech. However, we do not want to turn "+appname+" into a marginal forum where lunatics reign. What would cause you to Complain?</div><div>Do NOT complain about stuff that you simply don’t like or that offends you. That is not a high enough bar. Do not follow people who offend you, soon we will have a feature for not seeing their posts, but do not complain about them. Complain only about things that threaten long term viability of "+appname+" as a mass communication platform that intends to reach to all levels of society in many countries.</div><div>We strongly recommend that you complain about porn/nudity of any kind. There are plenty of porn/nudity sites on the web, we do not want to mix our free speech endeavor with that. We strongly encourage the community to vote off porn/nudity. Secondly, any type of a direct threat should be voted off and clear examples of racism should too. If we allow MSM to tie us to racism or violence directly, "+appname+" will cease to exist before we can even get it out there. Just because MSM media cries wolf about fake racism, doesn’t mean we should prove them right by tolerating it in our platform. It will detract from what we are trying to achieve, which is to challenge new totalitarianism created by the unholy alliance of media, finance and corrupt government officials."
 _l.e14078 = "How is "+appname+" different from..."
 _l.e14079 = "Twitter, Facebook, Reddit & other centralized platforms?"
 _l.e14080 = "There is no central authority or corporation. Platform is run by equal nodes on a blockchain. All revenue is split between node operators and content creators. Node operators stake Pocketcoin in order to mint blocks with rewards and transactions fees. Half of rewards in each block go to content creators based on ratings their content gathers from users."
@@ -1081,7 +1102,7 @@ _l.e14090 = "What is Pocketcoin?"
 _l.e14091 = "Pocketcoin is a network token. It is used exclusively to buy advertising from "+appname+" contributors and to pay transaction fees for such payments. Pocketcoin emission depends on the number of users of "+appname+" and has inherent algorithmic factors tying its long term value to Annual Revenue Per User (ARPU). ARPU is a term in digital advertising which signifies the total amount of revenue platform receives for one active user per year. In Pocketent all of the revenue is split between content creators and nodes."
 _l.e14092 = "How are content creators and node operators rewarded?"
 _l.e14093 = ""+appname+" features unique Direct Marketplace where content creators can sell advertising to ad buyers. Content creators set their price and can accept mass-produced ads or can offer highly valued custom placements (creators pitching the product in their own way). Direct Marketplace is essentially an exchange for advertising that allows ad buyers target specific audiences without any intermediaries. All ad buys and ads themselves are linked on the blockchain, therefore ad buying is completely trustless."
-_l.e14094 = "What if users post illegal content, pornography and SPAM?"
+_l.e14094 = "What if users post illegal content, porn/nudity and SPAM?"
 _l.e14095 = ""+appname+" is not a darknet platform or some sort of pornhub. While it is decentralized and censorship resistant, it is policed by the users. Any illegal content is flagged and removed from the platform using the Wikipedia model. This means that users with highest reputation can police the platform. However, there are safeguards in place (within the open source code) from same or very similar group(s) of people repeatedly voting content off the platform. Also, users are explicitly encouraged to flag illegal content OR content that threatens mass adoption of "+appname+", not simply the content they find offensive. To make sure that "+appname+" is a free speech platform, we encourage you to start participate, grow your reputation and police the platform properly without the censorship currently prevalent in centralized social media."
 _l.e14096 = "Who runs the "+appname+"?"
 _l.e14097 = "There is no corporate entity or single individual who owns or controls the "+appname+"."
@@ -1111,6 +1132,9 @@ _l.system16 = {
     charts : {
 
     }
+}
+_l.selectnode = function(a) {
+    return `Do you really want reconnect to selected ${a} Node?`
 }
 
 
@@ -1304,7 +1328,7 @@ _l.sortByDuration = "Duration";
 _l.sortByViews = "Views";
 
 _l.unableToAuthorize = "Unable to authorize";
-_l.unableToAuthorizeBody = "Unfortunately, the application cannot authenticate this account on the video server. You need at least 5 PKOIN or 50 reputation to upload videos.";
+_l.unableToAuthorizeBody = "Unfortunately, the application cannot authenticate this account on the video server. You need at least 5 PKOIN or 100 reputation to upload videos.";
 
 _l.unableToAuthorizeConnection = "Unable to authorize";
 _l.unableToAuthorizeConnectionBody = "Unfortunately, the application cannot authenticate this account on the video server.  Please try again later";
@@ -1511,9 +1535,9 @@ _l.aboutYoutubeH3Section = "Building a community of followers on YouTube is like
 
 _l.aboutYoutubeImgAndText1 = "EARN WITH BASTYON NO DEMONETIZATION";
 _l.aboutYoutubeImgAndText2 = 'Bastyon pays you to post videos and for each interaction (like/comment) that you get. Right now Bastyon has a bonus program that gives you 1,000 $ (in crypto currency) for each 15,000 views + 1,250 interactions + 1,000 invited users to your channel';
-_l.aboutYoutubeImgAndText3 = 'And you can talk about "sensitive" topics. You will never be blocked or demonetized, if you do not post pornography or illegal content that will be moderated by the community. In addition, if you bring your subscribers, you get referrals, too.'
+_l.aboutYoutubeImgAndText3 = 'And you can talk about "sensitive" topics. You will never be blocked or demonetized, if you do not post porn/nudity or illegal content that will be moderated by the community. In addition, if you bring your subscribers, you get referrals, too.'
 _l.aboutYoutubeImgAndText4 = 'Free Speech Zone – Moderated by the Community ';
-_l.aboutYoutubeImgAndText5 = 'On Bastyon you can talk about sensitive topics (and they are multiplying by the day): COVID, politics, climate change, first and second amendment. Community of users moderates Bastyon and the only topics that are blocked are pornography and illicit content.';
+_l.aboutYoutubeImgAndText5 = 'On Bastyon you can talk about sensitive topics (and they are multiplying by the day): COVID, politics, climate change, first and second amendment. Community of users moderates Bastyon and the only topics that are blocked are porn/nudity and illicit content.';
 _l.aboutYoutubeImgAndText6 = 'We believe in real freedom of speech and community of users does not ban or moderate content based on disagreement of opinions. And Bastyon is not owned by a corporation and is independent of the banking system.';
 _l.aboutYoutubeImgAndText7 = 'PRIVATE AND SECURE';
 _l.aboutYoutubeImgAndText8 = 'Bastyon does not collect any personal information. No name, no phone number, no IP address, not your identity. Your login to the Bastyon account is your private key, only you have control over it, even developers could not access or restore it, if lost.';
@@ -1543,7 +1567,7 @@ _l.aboutYoutubeThirdBoard2 = 'Property of YouTube.';
 _l.aboutYoutubeThirdBoard3 = 'Your Private Key Belongs to You';
 _l.aboutYoutubeThirdBoard4 = 'Censorship';
 _l.aboutYoutubeThirdBoard5 = 'Yes, selective and arbitrary censorship';
-_l.aboutYoutubeThirdBoard6 = 'Community moderates content with only a few topics such as pornography and illicit content moderated';
+_l.aboutYoutubeThirdBoard6 = 'Community moderates content with only a few topics such as porn/nudity and illicit content moderated';
 _l.aboutYoutubeThirdBoard7 = 'Open Sourced Code';
 _l.aboutYoutubeThirdBoard8 = 'NO.';
 _l.aboutYoutubeThirdBoard9 = 'Yes, open to everyone';
@@ -1572,7 +1596,7 @@ _l.aboutYoutubeThirdBoard26 = 'No';
 
 _l.aboutYoutubeThirdBoard18 = 'Reporting videos';
 _l.aboutYoutubeThirdBoard19 = 'YES, YouTube algorithms analyze videos and remove or block them automatically if they believe that they are against the policy. In addition YouTube can remove posts and ban users at its sole discretion.';
-_l.aboutYoutubeThirdBoard20 = "YES, however only users with a high reputation can report post and a post is made \"invisible\" on the feed page (but remains available on the user's profile page) only if several tens of high reputation users report it (reports can be made only for racism, hate speech and pornography).";
+_l.aboutYoutubeThirdBoard20 = "YES, however only users with a high reputation can report post and a post is made \"invisible\" on the feed page (but remains available on the user's profile page) only if several tens of high reputation users report it (reports can be made only for racism, hate speech and porn/nudity).";
 _l.aboutYoutubeThirdBoard21 = 'Hashtags to classify videos';
 _l.aboutYoutubeThirdBoard22 = 'Videoa can be shared on multiple platforms';
 _l.aboutYoutubeThirdBoard23 = 'Dictatorship bans';
@@ -1664,7 +1688,7 @@ _l.aboutTitterTable7 = 'Not all of your followers see your post, Facebook contro
 _l.aboutTitterTable8 = 'Every follower sees your post';
 _l.aboutTitterTable9 = 'Censorship';
 _l.aboutTitterTable10 = 'Yes, selective and arbitrary censorship, lots of shadowbanning';
-_l.aboutTitterTable11 = 'Community moderates content with only a few topics such as pornography and illicit content moderated';
+_l.aboutTitterTable11 = 'Community moderates content with only a few topics such as porn/nudity and illicit content moderated';
 _l.aboutTitterTable12 = 'Open Sourced Code ';
 _l.aboutTitterTable13 = 'No';
 _l.aboutTitterTable14 = 'Yes, open to everyone';
@@ -1751,7 +1775,7 @@ _l.aboutFbTable6 = 'Not all of your followers see your post, Facebook controls t
 _l.aboutFbTable7 = 'Every follower sees your post';
 _l.aboutFbTable8 = 'Censorship';
 _l.aboutFbTable9 = 'Yes, selective and arbitrary censorship';
-_l.aboutFbTable10 = 'Community moderates content with only a few topics such as pornography and illicit content moderated';
+_l.aboutFbTable10 = 'Community moderates content with only a few topics such as porn/nudity and illicit content moderated';
 _l.aboutFbTable11 = 'Open Sourced Code ';
 _l.aboutFbTable12 = 'No';
 _l.aboutFbTable13 = 'Yes, open to everyone';
@@ -2270,7 +2294,7 @@ _l.removeimageswhenvideo = "The images attached to the post will be deleted if y
 
 
 _l.lowstar1 = "Bastyon team is implementing a temporary moratorium on 1 and 2 star ratings, except prohibited content. Prohibited content is:"
-_l.lowstar_reason_1 = "Porno"
+_l.lowstar_reason_1 = "Erotic/Porn"
 _l.lowstar_reason_2 = "Child exploitation"
 _l.lowstar_reason_3 = "Direct threat of violence"
 _l.lowstar_reason_4 = "Illegal narcotics"
@@ -2361,3 +2385,92 @@ _l.removecategoryQestion = 'Do you really want to remove this category?'
 
 _l.searchbytext = "Search by text:"
 _l.searchbytags = "Search by tags:"
+
+_l.boost_c1 = 'Advertise with PKOIN & get leads for your crypto project today'
+_l.boost_c2 = 'Web 2.0'
+_l.boost_c3 = 'Bastyon Web 3.0'
+_l.boost_c4 = 'Are you trying to be heard on the internet?'
+_l.boost_c5 = 'Would you like to get your content or product in front of a new dynamic audience for less than major ad networks?'
+_l.boost_c6 = 'Bastyon, the blockchain social network has just released a way of promoting content, including videos.'
+_l.boost_c7 = 'The cost of an impression on Bastyon is many times lower than on traditional ad networks.'
+_l.boost_c8 = 'Boosting posts on Bastyon is very simple, you just need some Pocketcoin, a native cryptocurrency of Bastyon. Click Boost below the post and enter the amount and your post is moved to the top!'
+_l.boost_c9 = 'Bastyon has millions of visitors and growing. Your content will be seen!'
+_l.boost_c10 = 'If you are an aspiring author who wants to increase your audience, Bastyon boosting of posts can work for you!'
+_l.boost_c11 = 'If you are an advertiser looking for a platform to promote your product, you can quickly get your ad up and running and get conversions.'
+_l.boost_c12 = 'Open source'
+_l.boost_c13 = 'Upload your videos'
+_l.boost_c14 = 'Earn with Bastyon'
+_l.boost_c15 = 'Privacy protection'
+_l.boost_c16 = 'Bitcoin of social media'
+_l.boost_c17 = 'Censorship resistant'
+_l.boost_c18 = 'Buying PKOIN peer-to-peer'
+_l.boost_c19 = 'To buy a Pocketcoin "from hand to hand", you need to sort the news feed by category "PKOIN/peer-to-peer"'
+
+_l.boost_c20 = 'Find Your Audience'
+_l.boost_c21 = 'Profitable Advertising on the Fast-Growing Blockchain Social Network'
+_l.boost_c22 = 'Advertising for Pocketcoin - Cost-Effective Coverage'
+_l.boost_c23 = 'Are you trying to be heard on the internet?'
+_l.boost_c24 = 'Would you like to get your content or product in front of a new dynamic audience for less than major ad networks?'
+_l.boost_c25 = 'Bastyon, the blockchain social network has just released a way of promoting content, including videos.'
+_l.boost_c26 = 'The cost of an impression on Bastyon is many times lower than on traditional ad networks.'
+_l.boost_c27 = 'Boosting posts on Bastyon is very simple, you just need some Pocketcoin, a native cryptocurrency of Bastyon. Click Boost below the post and enter the amount and your post is moved to the top!'
+_l.boost_c28 = 'Bastyon has millions of visitors and growing. Your content will be seen!'
+_l.boost_c29 = 'If you are an aspiring author who wants to increase your audience, Bastyon boosting of posts can work for you!'
+_l.boost_c30 = 'If you are an advertiser looking for a platform to promote your product, you can quickly get your ad up and running and get conversions.'
+_l.boost_c31 = 'Where to buy PKOIN?'
+_l.boost_c32 = 'PKOIN can be purchased on the following sites.'
+_l.boost_c33 = '- here you can buy PKOIN for other cryptocurrencies.'
+_l.boost_c45 = ' - here you can purchase PKOIN using a bank card.'
+_l.boost_c34 = 'Buying PKOIN from hand to hand'
+_l.boost_c35 = 'PKOIN purchase is possible from other Bastyon users. You can agree on the terms of purchase/sale in personal correspondence with the seller / buyer, whom you can find in the news feed under the category "PKOIN/peer-to-peer"'
+_l.boost_c36 = 'How do I start advertising?'
+_l.boost_c37 = 'Launching ads on Bastion is very simple. To do this, you need:'
+_l.boost_c38 = 'Prepare an advertising publication (video, post or article)'
+_l.boost_c39 = 'Buy PKOIN'
+_l.boost_c40 = 'Deposit the required amount of PKOIN to start advertising'
+_l.boost_c41 = 'Click the lightning bolt icon in the lower right corner of the selected post:'
+_l.boost_c42 = 'Enter PKOIN in the "Amount" field and click "Send":'
+_l.boost_c43 = 'Congratulations! You have launched an advertisement on Bastyon!'
+_l.boost_c44 = 'I want to launch an advertisement on the Bastyon!'
+
+
+_l.gotopage = 'Go to page'
+
+_l.saved = "Saved"
+_l.savePost = "Save post"
+_l.postsaved = "Post saved"
+_l.deleteSavedPost = "Delete saved post"
+_l.doYouDownloadVideo = "Do you want to download the video on your device ?"
+_l.gotosaved2 = "Go to saved"
+_l.yes = "Yes"
+_l.no = "No"
+
+_l.postedVideos = "Posted Videos"
+_l.unPostedVideos = "Unposted Videos"
+_l.videoIsPosting = "Posting"
+_l.noUnposted = "No Unposted Videos"
+
+_l.sortByComments = "Comments";
+_l.sortByRating = "Number of ratings";
+
+_l.noPosted = "No posted Videos"
+_l.unpostedFooter = "Unposted videos are deleted from the server after 3-weeks of waiting"
+
+_l.diagnosticsPage = "Diagnostics";
+_l.startDiagnose = "Run Diagnostics";
+_l.videoServerName = "Server URL";
+_l.videoServerReachable = "Reachability";
+_l.serversTestingProgress = "Progress of Diagnosing:";
+_l.videoServerVideo = "Video Info";
+_l.goToDiagnose = "Go to Diagnostics";
+_l.connectingTo = "Connecting to";
+_l.earnings = "Total earnings";
+
+
+
+_l.authHeading = "Auth";
+
+_l.terms = 'Terms and Conditions for Bastyon';
+_l.daccept = "Accept and continue";
+
+

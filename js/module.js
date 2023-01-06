@@ -632,6 +632,7 @@ nModule = function(){
 
 	self.restart = function(p){
 
+
 		if (self.user){
 			if(!p) p = {};
 

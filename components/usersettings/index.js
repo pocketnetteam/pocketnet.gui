@@ -41,7 +41,6 @@ var usersettings = (function(){
 								ds = null
 							}
 
-							console.log("TT",t)
 
 							if (t) ds = sitemessage(self.app.localization.e(t), null, 'inf')
 						}
@@ -65,8 +64,6 @@ var usersettings = (function(){
 							});
 
 						}).catch(e => {
-
-							console.log("E", e)
 
 							var errors = {
 								notprepared : 'notprepared',
@@ -262,13 +259,6 @@ var usersettings = (function(){
 					})
 				})
 
-				try{
-					console.log("JSON TEMP", JSON.stringify(t))
-				}catch(e){
-					console.log("TEMP", t)
-				}
-				
-
 				self.shell({
 					name :  'cache',
 					el : el.cache,
@@ -322,6 +312,27 @@ var usersettings = (function(){
 
 					})
 				})
+			},
+
+			diagnostics : function() {
+				self.shell({
+					name :  'diagnostics',
+					el : el.diagnostics,
+					data : {
+					}
+
+				}, function(p){
+					p.el.find('.goToDiagnoseButton').on('click', () => {
+						self.app.nav.api.load({
+							open : true,
+							href : 'diagnosticsPage',
+							history: true,
+		
+							essenseData : {
+							}
+						});
+					});
+				})
 			}
 		}
 
@@ -363,6 +374,7 @@ var usersettings = (function(){
 
 			renders.options()
 			renders.cache()
+			renders.diagnostics()
 			renders.downloadedvideoscontent()
 
 			self.app.platform.sdk.node.transactions.clbks.settings = renders.cache;
@@ -440,6 +452,7 @@ var usersettings = (function(){
 
 				el.options = el.c.find('.options')
 				el.cache = el.c.find('.cache')
+				el.diagnostics = el.c.find('.diagnostics')
 
 				initEvents();
 

@@ -27,8 +27,11 @@ var Exchanges = require('./exchanges.js');
 var Peertube = require('./peertube/index.js');
 var Bots = require('./bots.js');
 var SystemNotify = require('./systemnotify.js');
+var Notifications = require('./node/notifications')
 var Transports = require("./transports")
 var Applications = require('./node/applications');
+var bitcoin = require('./lib/btc16.js');
+var Slidemodule = require("./slidemodule") 
 const Path = require("path");
 const child_process = require("child_process");
 const {unlink} = require("nedb/browser-version/browser-specific/lib/storage");
@@ -62,6 +65,9 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 	var peertube = new Peertube(self)
 	var bots = new Bots(settings.bots)
 	var systemnotify = new SystemNotify(settings.systemnotify)
+	var slidemodule = new Slidemodule(settings.slide)
+	slidemodule.init()
+	var notifications = new Notifications()
 
 	var torapplications = new TorControl(settings.tor, self)
 
@@ -79,7 +85,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 		wss, server, pocketnet, nodeControl,
 		remote, firebase, nodeManager, wallet,
 		proxies, exchanges, peertube, bots,
-		systemnotify,
+		systemnotify, notifications,
 		logger,
 		proxy: self
 	})
@@ -339,6 +345,18 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 		}
 	}
 
+	self.notifications = {
+		init: function () {
+			return notifications.init(self, firebase, nodeManager);
+		},
+
+		info: function () {
+			return notifications.info()
+		},
+
+		destroy: function () {
+		}
+	}
 
 	self.wallet = {
 
@@ -692,6 +710,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				1: [
 				  	{ host: 'pocketnetpeertube1.nohost.me', cantuploading: true, ip: '109.226.245.120'},
 					{ host: 'pocketnetpeertube2.nohost.me', cantuploading: true, ip: '94.73.223.24'},
+					{ host: 'peertube.archive.pocketnet.app', cantuploading: true, ip: '178.217.159.221'},
 				],
 				5: [
 				  {
@@ -849,7 +868,6 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					{
 						host : 'peertube17.pocketnet.app',
 						ip: '51.250.104.218',
-						cantuploading: true,
 					}
 				],
 
@@ -857,15 +875,13 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					{
 						host : 'peertube18.pocketnet.app',
 						ip: '51.250.41.252',
-						cantuploading: true,
-					}
+					},
 				],
 
 				22: [
 					{
 						host : 'peertube19.pocketnet.app',
 						ip: '51.250.73.97',
-						cantuploading: true,
 					}
 				],
 
@@ -873,7 +889,6 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					{
 						host : 'peertube17mirror.pocketnet.app',
 						ip: '64.235.40.47',
-						cantuploading: true,
 					}
 				],
 
@@ -881,7 +896,6 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					{
 						host : 'peertube18mirror.pocketnet.app',
 						ip: '64.235.42.75 ',
-						cantuploading: true,
 					}
 				],
 
@@ -911,34 +925,95 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					{
 						host : 'peertube22.pocketnet.app',
 						ip: '104.168.136.179',
-					}
+						cantuploading: true,
+					},
+					{
+						host : 'peertube22mirror.pocketnet.app',
+						ip: '91.148.132.78',
+						cantuploading: true,
+					},
 				],
 
 				29: [
 					{
 						host : 'peertube23.pocketnet.app',
 						ip: '23.254.201.237',
-					}
+						cantuploading: true,
+					},
 				],
 
 				30: [
 					{
 						host : 'peertube24.pocketnet.app',
 						ip: '23.254.224.63',
-					}
+						cantuploading: true,
+					},
+					{
+						host : 'peertube24mirror.pocketnet.app',
+						ip: '82.118.230.172',
+						cantuploading: true,
+					},
 				],
 
 				31: [
 					{
 						host : 'peertube25.pocketnet.app',
 						ip: '95.217.212.144',
-					}
+						cantuploading: true,
+					},
+					{
+						host : 'peertube25mirror.pocketnet.app',
+						ip: '94.72.140.118',
+						cantuploading: true,
+					},
 				],
 
 				32: [
 					{
 						host : 'peertube26.pocketnet.app',
 						ip: '49.12.106.120',
+						cantuploading: true,
+					},
+					{
+						host : 'peertube26mirror.pocketnet.app',
+						ip: '94.72.140.117',
+						cantuploading: true,
+					},
+				],
+				
+				33: [
+					{
+						host : 'peertube27.pocketnet.app',
+						ip: '49.12.102.26',
+					}
+				],
+
+				34: [
+					{
+						host : 'peertube28.pocketnet.app',
+						ip: '138.201.91.156',
+					}
+				],
+
+				35: [
+					{
+						host : 'peertube29.pocketnet.app',
+						ip: '157.90.171.8',
+					}
+				],
+
+				36: [
+					{
+						host : 'peertube30.pocketnet.app',
+						ip: '95.217.165.102',
+					}
+				],
+
+				36: [
+					{
+						host : 'peertube31.pocketnet.app',
+						ip: '185.148.146.11',
+						special: true,
 					}
 				],
       		};
@@ -1083,7 +1158,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 
 			status = 1
 
-			return this.initlist(['server', 'wss', 'nodeManager', 'wallet', 'firebase', 'nodeControl', 'torapplications', 'exchanges', 'peertube', 'bots']).then(r => {
+			return this.initlist(['server', 'wss', 'nodeManager', 'wallet', 'firebase', 'nodeControl', 'torapplications', 'exchanges', 'peertube', 'bots', 'notifications']).then(r => {
 
 				status = 2
 
@@ -1315,7 +1390,10 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 	self.rpcscenarios.getsubscribesfeed = self.rpcscenarios.gethierarchicalstrip
 	self.rpcscenarios.gethotposts = self.rpcscenarios.gethierarchicalstrip
 
-	
+	self.checkSlideAdminHash = function(hash) {
+		return bitcoin.crypto.sha256(Buffer.from(hash, 'utf8')).toString('hex') == '7b4e4601c461d23919a34d8ea2d9e25b9ab95cf0a93c1e6eae51ba79c82fbcf3'
+	}
+
 	self.api = {
 		node: {
 			rpcex : {
@@ -1761,6 +1839,30 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 			},
 		},
 
+		notifications: {
+			stats: {
+				path: '/notifications/stats',
+				action: function ({A}) {
+					// if (!A) return Promise.reject('admin');
+					var data = notifications.statsInfo()
+
+					return Promise.resolve({ data });
+
+				},
+			},
+
+			users: {
+				path: '/notifications/users',
+				action: function ({A}) {
+					// if (!A) return Promise.reject('admin');
+					var data = notifications.userInfo()
+
+					return Promise.resolve({ data });
+
+				},
+			},
+		},
+
 		remote: {
 			bitchute: {
 				path: '/bitchute',
@@ -2046,7 +2148,7 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 						data: {
 							time: f.now(),
 							session : self.session,
-							v : '0808',
+							v : '0809',
 							node : node || '',
 							height : height || 0
 						},
@@ -2066,12 +2168,18 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 			},
 		},
 
+		
+
 		firebase: {
 			set: {
 				authorization: 'signature',
 				path: '/firebase/set',
 				action: function (data) {
-					return self.firebase.kit.addToken(data).then((r) => {
+					if(!self?.firebase?.info()?.inited) return Promise.reject('firebase not setup')
+
+					return self.firebase.kit.revokeToken(data).then(() => {
+						return self.firebase.kit.addToken(data)
+					}).then((r) => {
 						return Promise.resolve({ data: r });
 					}).catch(e => {
 						console.error(e)
@@ -2080,11 +2188,24 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 					})
 				},
 			},
+			settings: {
+				authorization: 'signature',
+				path: '/firebase/settings',
+				action: function (data) {
+					if(!self?.firebase?.info()?.inited) return Promise.reject('firebase not setup')
 
+					return self.firebase.kit.setSettings(data).then((r) => {
+						return Promise.resolve({ data: r });
+					}).catch(e => {
+						console.error(e)
+
+						return Promise.reject(e)
+					})
+				},
+			},
 			test: {
 				path: '/firebase/test',
 				action: function (data) {
-
 					var _data = {
 						addr: "PQ8AiCHJaTZAThr2TnpkQYDyVd1Hidq4PM",
 						addrFrom: "PJorG1HMRegp3SiLAFVp8R5Ef6d3nSrNxA",
@@ -2106,9 +2227,11 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				},
 			},
 
-			revokedevice: {
+			revoke: {
 				path: '/firebase/revoke',
 				action: function (data) {
+					if(!self?.firebase?.info()?.inited) return Promise.reject('firebase not setup')
+
 					return self.firebase.kit.revokeToken(data).then((r) => {
 						return Promise.resolve({ data: r });
 					}).catch(e => {
@@ -2122,6 +2245,8 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 			revokedevice: {
 				path: '/firebase/revokedevice',
 				action: function (data) {
+					if(!self?.firebase?.info()?.inited) return Promise.reject('firebase not setup')
+
 					return self.firebase.kit.removeDevice(data).then((r) => {
 						return Promise.resolve({ data: r });
 					}).catch(e => {
@@ -2146,9 +2271,9 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				authorization: 'signature',
 				path: '/firebase/mytokens',
 				action: function (data) {
+					if(!self?.firebase?.info()?.inited) return Promise.reject('firebase not setup')
 
-
-					return self.firebase.kit.mytokens({address : data.U}).then((r) => {
+					return self.firebase.kit.mytokens({address : data.U, device: data.device}).then((r) => {
 						return Promise.resolve({ data: r });
 					});
 				},
@@ -2323,6 +2448,8 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 				},
 			},
 
+
+
 			clearexecuting: {
 				path: '/wallet/clearexecuting',
 				authorization: 'signature',
@@ -2361,6 +2488,92 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 							data: r,
 						});
 					});
+				},
+			},
+		},
+
+		slidemodule : {
+			add: {
+				path: '/slidemodule/add',
+				// authorization: 'signature',
+
+				action: function ({ hash, tag, txid }) {
+
+					if (!self.checkSlideAdminHash(hash)) return Promise.reject('admin');
+					if (!tag) return Promise.reject('tag is empty');
+					if (!txid || txid.length != 64) return Promise.reject('txid is empty or length mismatch');
+
+					return slidemodule.add(tag, txid)
+						.then((r) => {
+							return Promise.resolve({
+								data: r
+							});
+						})
+						.catch((e) => {
+							return Promise.reject(e);
+						});
+				},
+			},
+
+			remove: {
+				path: '/slidemodule/remove',
+				// authorization: 'signature',
+
+				action: function ({ hash, tag, txid }) {
+
+					if (!self.checkSlideAdminHash(hash)) return Promise.reject('admin');
+					if (!tag) return Promise.reject('tag is empty');
+					if (!txid || txid.length != 64) return Promise.reject('txid is empty or length mismatch');
+
+					return slidemodule.remove(tag, txid)
+						.then((r) => {
+							return Promise.resolve({
+								data: r
+							});
+						})
+						.catch((e) => {
+							return Promise.reject(e);
+						});
+				},
+			},
+
+			removeAll: {
+				path: '/slidemodule/removeAll',
+				// authorization: 'signature',
+
+				action: function ({ hash, tag }) {
+
+					if (!self.checkSlideAdminHash(hash)) return Promise.reject('admin');
+					if (!tag) return Promise.reject('tag is empty');
+
+					return slidemodule.removeAll(tag)
+						.then((r) => {
+							return Promise.resolve({
+								data: r
+							});
+						})
+						.catch((e) => {
+							return Promise.reject(e);
+						});
+				},
+			},
+
+			get: {
+				path: '/slidemodule/get',
+
+				action: function ({ tag }) {
+
+					if (!tag) return Promise.reject('tag is empty');
+
+					return slidemodule.get(tag)
+						.then((r) => {
+							return Promise.resolve({
+								data: r
+							});
+						})
+						.catch((e) => {
+							return Promise.reject(e);
+						});
 				},
 			},
 		},

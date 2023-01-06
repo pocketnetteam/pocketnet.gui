@@ -53,6 +53,7 @@ jobs:
           node-version: 14
       - name: Prepare building
         run: |
+          apt update && apt install -y binutils rpm
           npm i
           npm run dev:bastyon
       - name: Building
@@ -65,6 +66,7 @@ jobs:
           name: unix
           path: |
             ./dist/BastyonSetup.deb
+            ./dist/BastyonSetup.rpm
             ./dist/Bastyon.AppImage
             ./head.txt
     
@@ -97,7 +99,7 @@ jobs:
       - uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
-          java-version: '8'
+          java-version: '11'
       - name: Check out Git repository
         uses: actions/checkout@v1
       - uses: actions/setup-node@v3

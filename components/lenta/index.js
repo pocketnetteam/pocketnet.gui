@@ -58,6 +58,9 @@ var lenta = (function(){
 
 		var countshares = 0;
 
+		var progressInterval = {},
+			loadingBars = {};
+
 		var newsharescount = 0
 
 		var offsetblock = 0
@@ -232,7 +235,10 @@ var lenta = (function(){
 
 			subscribeunsubscribeclbk : function(address){
 
+
 				var addressEl = el.c.find('.shareTable[address="'+address+'"]')
+
+				var buttonsWrapper = addressEl.closest('.sharecnt').find('.bannerComment .buttonsWrapper');
 
 				var me = deep(self.app, 'platform.sdk.users.storage.' + self.user.address.value.toString('hex'))
 
@@ -242,6 +248,8 @@ var lenta = (function(){
 					if (r) {
 
 						addressEl.addClass('subscribed');
+
+						buttonsWrapper.addClass('following');
 
 						if((r.private == 'true' || r.private === true)){
 							addressEl.find('.notificationturn').addClass('turnon')	
@@ -258,6 +266,7 @@ var lenta = (function(){
 				}
 				else{
 					addressEl.removeClass('subscribed');
+					buttonsWrapper.removeClass('following');
 					addressEl.find('.notificationturn').removeClass('turnon')
 				}
 
@@ -271,7 +280,52 @@ var lenta = (function(){
 			changeSavingStatusLight : function(share){
 
 				if (el && el.share && el.share[share.txid]){
-					el.share[share.txid].find('.shareSave').attr('status', self.app.platform.sdk.localshares.status(share.txid))
+					const status = self.app.platform.sdk.localshares.status(share.txid);
+					const isSaving = (status === 'saving' || status === 'paused');
+
+					const shareSaveElem = el.share[share.txid].find('.shareSave');
+
+					if (isSaving) {
+						const loadingBarHolderElem = el.share[share.txid].find('.loadingBar');
+						if (!loadingBars[share.txid]) {
+							const loadingBarElem = el.share[share.txid].find('.loading-bar');
+							if (!loadingBarElem || loadingBarElem.length <= 0)
+								return;
+
+							// Create download progress bar
+							loadingBars[share.txid] = new LoadingBar(loadingBarElem[0]);
+
+							// Watch pause/resume events
+							loadingBars[share.txid].listenStateChange((status) => {
+								if (!status)
+									return;
+								if (status.stopped == true)
+									self.app.platform.sdk.localshares.setVideoDlStatus(share.txid, 'paused');
+								else
+									events.shareSave(share.txid);
+							});
+
+							// Watch progress and update progress bar
+							if (progressInterval[share.txid]) clearInterval(progressInterval[share.txid]);
+							progressInterval[share.txid] = setInterval(async function() {
+								const progress = await self.app.platform.sdk.localshares.videoDlProgress(share.txid);
+								if (progress != undefined && progress.progress >= 1)
+									clearInterval(progressInterval[share.txid]);
+								if (progress != undefined && !isNaN(progress.progress))
+									loadingBars[share.txid].setValue(progress.progress * 100);
+							}, 500);
+
+							if (status == 'paused')
+								loadingBars[share.txid].setPaused();
+
+						}
+						
+						loadingBarHolderElem.removeAttr('hidden');
+						shareSaveElem.attr('hidden', '');
+						return;
+					}
+
+					shareSaveElem.attr('status', status);
 				}
 
 			},
@@ -607,6 +661,9 @@ var lenta = (function(){
 			},	
 
 			loadmore : function(loadclbk){
+
+				if(!el.c) return
+
 				essenseData.page = ++essenseData.page
 				actions.observe()
 
@@ -1028,7 +1085,7 @@ var lenta = (function(){
 								self.app.platform.sdk.memtags.add(share.tags, null, 0.500 / duration)
 
 
-							if(playbackState == 'playing' && ((position > 15 && duration > 120) || startTime)){
+							if (playbackState == 'playing' && ((position > 15 && duration > 120) || startTime)){
 								
 								self.app.platform.sdk.videos.historyset(share.txid, {
 									time : position,
@@ -1046,7 +1103,7 @@ var lenta = (function(){
 
 						},
 
-						hlsError : function(error){
+						error : function(error){
 							const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection || {};
 							const payload = {
 								...error,
@@ -2213,8 +2270,6 @@ var lenta = (function(){
 
 				var share = self.app.platform.sdk.node.shares.storage.trx[shareId];
 
-				console.log('share', share, shareId)
-
 				actions.recommendationinfo(share)
 
 			},
@@ -2257,8 +2312,9 @@ var lenta = (function(){
 				})	
 			
 			},
-			shareSave : function(){
-				var shareId = $(this).closest('.share').attr('id');
+			shareSave : function(shareTxId){
+
+				var shareId = (shareTxId && typeof shareTxId === 'string') ? shareTxId : $(this).closest('.share').attr('id');
 
 				var share = self.app.platform.sdk.node.shares.storage.trx[shareId];
 
@@ -2394,12 +2450,11 @@ var lenta = (function(){
 
 			loadmorescroll : function(){
 
-
+				if(!el.c) return
 
 
 				if(!essenseData.horizontal){
 
-					//console.log('loadedcachedHeight', loadedcachedHeight, cachedHeight, self.app.lastScrollTop+ self.app.height, document.body.scrollHeight - 2000)
 
 					if (
 						!loading && !ended &&
@@ -4316,8 +4371,6 @@ var lenta = (function(){
 
 							shares = [].concat(bshares, shares)
 
-							console.log('recommendations', recommendations, essenseData.includerec)
-
 							if(essenseData.includerec && !includingsub && !self.app.platform.sdk.categories.gettags().length){
 								shares = [].concat(recommendations, shares)
 
@@ -4354,15 +4407,19 @@ var lenta = (function(){
 									return true
 								})
 							}
+
+
 							
 							if (essenseData.hasshares){
 								essenseData.hasshares(shares)
+								delete essenseData.hasshares
 							}
 						}
 
 						else{
 							if (essenseData.hasshares){
 								essenseData.hasshares([])
+								delete essenseData.hasshares
 							}
 						}
 
@@ -5223,6 +5280,10 @@ var lenta = (function(){
 								events.videosInview()
 							}, 50)
 							
+							_.each(shares, function(share) {
+								if (share && share.itisvideo && share.itisvideo())
+									actions.changeSavingStatusLight(share);
+							});
 
 							var p = parameters()
 
@@ -5449,6 +5510,10 @@ var lenta = (function(){
 				delete self.app.events.delayedscroll['optimization' + mid]
 				delete self.app.events.scroll['loadmore' + mid]
 				
+				for (const txId in progressInterval) {
+					if (progressInterval[txId]) clearInterval(progressInterval[txId]);
+				}
+				loadingBars = {};
 				
 				delete self.app.errors.clbks[mid]
 
@@ -5570,7 +5635,7 @@ var lenta = (function(){
 					el.w.off('scroll', events.videosInview);
 					el.w.off('scroll', events.loadmorescroll);
 					el.w.off('resize', events.resize);
-
+					console.log("HERE")
 				}
 				
 

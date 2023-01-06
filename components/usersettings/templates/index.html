@@ -13,21 +13,25 @@
 		<div class="downloadedvideoscontentWrapper">
 
 		</div>
+
+		
 		
 		<% if((typeof app.platform.sdk.user.myaccauntdeleted == 'undefined' || !app.platform.sdk.user.myaccauntdeleted())) {%>
-			<div class="cache">
+			<!--<div class="cache">
 				
 			</div>
-			<% if(window.testpocketnet) {%>
-				<div class="removeAccauntWrapper">
+			<div class="removeAccauntWrapper">
+				<div class="mwork">
 					<div class="removeAccount">
 						<span><%- e('removeaccount') %></span>
 					</div>
 				</div>
-			<% } %>
+			</div>-->
 		<% } %>
 
 
 	<% } %>
+		
+	<div class="diagnostics"></div>
 
 </div>

@@ -384,34 +384,48 @@ var registration = (function(){
 
 					
 					var bloggersEn = [
-						'PKSV2KXCdEtTtYb8rF3xMMgiiKe1oDstXR', 
-						'PXXaSczoZcuJEwxYKhaC9pV1JBvwi6UjSw', 
-						'P9eLPo3gXUqBr7wgxDSSLNfyNMyeDua7cn',
-						'PVpSK2qQXmG1SjAMJVMAMRLUkrzMjsJouL',
-						'PLJvEixJkj85C4jHM3mt5u1ATwZE9zgFaA',
-						'P8boyun9yF6QYn1fjGC1WABt4BQUL4STeh',
-						'PAVjp9nsNtgzUNF1VkUd74YzLaQHpv4g7v',
-						'PWvS62zsRm96Bw63qo9Adif97U18mLCpfN',
-						'PGQh5JW5c1shJTpi3iC2dkvov1pUqs1SqX',
-						'PXsjQA3fYDGCr1WwmNTNmrs9N7VA18gVuB',
-						"PQkNpRfXbCGXJ2o1mRfsJMvMtsvq3uvZU9",
-						'PUhvX53ueD2Sxa3q7av83vNcEHuS8M7kRS',
-						'PCfvhqHEYG3zdWXvLJrjPPDVK2H8qwwXn5',
-						'PGegspsgRqvMiZCP8PGufKMYBk3yekDaEE',
-						'PB8wu7hQwo5xMsVG4F4HshrW39t2Y4eN37',
-						'PKYwaiikhUoPWmpWmYec4Xf3TPWwJQCqUt',
-						'PSBhEi8AUasemizUHyJ64t6xXonsxwp73y',
-						'PLZsQmsRUDMJGc61pGMLdDQ58UuqQ8kU5Z',
-						'PQDxqrJqKM15weq1mbunEqK2uVNvZy1Z6d',
-						'PDUWW57W8DoV1dMTQYsrkwg66xEuaNckbd',
-						'PRH3aKqRb6UWcJE5EnwVvhmHAVGbT5D6nE',
-						'PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd',
+						"PKSV2KXCdEtTtYb8rF3xMMgiiKe1oDstXR",
+						"PXXaSczoZcuJEwxYKhaC9pV1JBvwi6UjSw",
+						"P9eLPo3gXUqBr7wgxDSSLNfyNMyeDua7cn",
+						"PVpSK2qQXmG1SjAMJVMAMRLUkrzMjsJouL",
+						"PLJvEixJkj85C4jHM3mt5u1ATwZE9zgFaA",
+						"P8boyun9yF6QYn1fjGC1WABt4BQUL4STeh",
+						"PAVjp9nsNtgzUNF1VkUd74YzLaQHpv4g7v",
+						"PWvS62zsRm96Bw63qo9Adif97U18mLCpfN",
+						"PGQh5JW5c1shJTpi3iC2dkvov1pUqs1SqX",
+						"PXsjQA3fYDGCr1WwmNTNmrs9N7VA18gVuB",
+						// "PQkNpRfXbCGXJ2o1mRfsJMvMtsvq3uvZU9",
+						"PUhvX53ueD2Sxa3q7av83vNcEHuS8M7kRS",
+						"PCfvhqHEYG3zdWXvLJrjPPDVK2H8qwwXn5",
+						"PGegspsgRqvMiZCP8PGufKMYBk3yekDaEE",
+						"PB8wu7hQwo5xMsVG4F4HshrW39t2Y4eN37",
+						"PKYwaiikhUoPWmpWmYec4Xf3TPWwJQCqUt",
+						"PSBhEi8AUasemizUHyJ64t6xXonsxwp73y",
+						"PLZsQmsRUDMJGc61pGMLdDQ58UuqQ8kU5Z",
+						"PEj7QNjKdDPqE9kMDRboKoCtp8V6vZeZPd",
+						"PLH8biT5rMdvE1zXFhsvNkzphVRK6cNM7p",
+						"PL9U1q1JmJezPh8GQb5dj5h5GavuCGcjYk",
+						"PHmvLy9b5m2b7fvU7MSTw4mAkdshhdY4Nt",
+						"PUYEkLb6szwxjw3cq6FvLxDPmedbyd3foq",
+						"PTPVArrxr4wZuget8phZ1eSNFsGmdSXXck",
+						"PQ8PDzWy7hDV8gfgSgoP2BCU2CXngMPCvt",
+						"PR54hSnPDbhPePLNQZCP4CU77TRFoMxYqg",
+						"P9D3ntMdwy4HGjBhg1uQDuQD99MXYZTqg3",
+						"PST4P2KEweDQJ2RAtG3scUmXAgPJJ5JJRL",
+						"PCYeapWncohMda9vfrFe26EDEiFa89kDZ1",
+						"PGnshbCvNGRiBYGxUpVNqLkaM8Ku1xvbaw",
+						"PPdfqTLnz2S6F1ng5N7rzMUh19H4e3pfZe",
+						"PNQ8drkeMEtZ44g7VyhxPPwPYubBsT6ekt",
+						"PCx1LKWdV1pc6TmKwYU8vqEn3CpAeTexDr",
+						"PPw4k3Zra7tYRM643QVm3V4UFrcZZb9H6H"
 					];
 
 					var bloggersRu = [
+						"PDUWW57W8DoV1dMTQYsrkwg66xEuaNckbd",
+						"PQDxqrJqKM15weq1mbunEqK2uVNvZy1Z6d",
 						'PX7pM9CG9MhMCqJQD52ahLyqSssNK2WxEv',
 						'PA6biduJbWcQ97n5jz2jUqWHtenLpWTH7s',
-						'PCjhy4t6B2b5xeqVoJcN51XkhUqAXBuaq4',
+						// 'PCjhy4t6B2b5xeqVoJcN51XkhUqAXBuaq4', //???
 						'PXupozgNg1Ee6Nrbapj8DEfMGCVgWi4GB1',
 						'P9KXb7sS2JDjV5jnXu4t2WwwbvzYeu6yds',
 						'PUXG7rfX19Xoco1FXjXBW8qt6NEZpp8maL',
@@ -439,7 +453,44 @@ var registration = (function(){
 						'PWyjwnA3Rr8Fuc6HQmcYFb3cYXDeaq679j',
 						'PEnqXhQU2MxZc4bFQJ4TSaCCT3f5wbqHJZ',
 						'PFCdnHww9UQLf2WQHPF8vtABgNuK4uaiXY',
-						'PSXmn4k7BDwwtZkTxdgC7yq1Cwh4Di7GLK'
+						'PSXmn4k7BDwwtZkTxdgC7yq1Cwh4Di7GLK',
+
+
+						'PCVt7H4vgjBDxifLz3uokbc1tD3MZwWwQh',
+						'PR3BcnBziYoDgckdyaARgFayiZUiA7agSx',
+						'PGFKA1DieVsg9pQK4aBaEp5wpvaXpWtuVJ',
+						'PERF5kDM32ebkq8SeSj8ZaLqfCoqz8FRgh',
+						'P9i55BxFWpjMyqgHyCKtazDN1HDiZxTSzJ',
+						'PCkbxDvFQbFvEzPWnnrraey1QCUro2kMLU',
+						'PB1EShZbvkTSQgU8NLxEH8MN5UiKw1CBHb',
+						'PWAAzRuHNi5iNxQDaJ8ZVpqEJSoPWFFiRN',
+						'PD4pWxVke4Yz2y5UnNWnSsVHd45Vy6izCr',
+						'PQi77s3JtrUkavxN9t6Hy5sT3CNnHokNrK',
+						'PQ2hAPwkey8aACP548DtgLscQTk9PkAKnP',
+						'PFGMWt1cQFm6QEbcqH6YJxfabj4L5rHfLM',
+						'PHMjVgWj6HMiLeAhiR8eDLzVrXp8nyF2ji',
+						// 'PWGhooqyrq1qL7NPgg2an8M69sHfJrDM8Y', //!,
+						'PUuNT7icKad8fm7ATPRn1s8gd19HXYKDqS',
+						'PHsHq6i4RKm9gCqFGhAr3yvF34yDocc5S7',
+						'PBw3aSQe6HCzX75xDy5X2SXx9y9JaUP9ke',
+						'PCxXVA4quzXVjUM356t3FE2nvWmDVY47J7',
+						'PVATJhZqKdYXLp1nmPdrssRhygJApmAALR',
+						'PJtnXwKNPDdEpJhaKH2fbPEyLrcS77oj46',
+						'PVRWuvwCNfZWUUD5gQzDsqabnTcMXoqgbV',
+						'PKXSw8Q4Kdy244Gb1R7GYPvTwiM22JssTf',
+						'PSKLx4k7ehAtvipwpo2ohBeCYzpf4SiKHj',
+						'PUopiRZvD6BAjF9CcWtMfpeJtxp411dxKM',
+						// 'PEd7HQKaGj36sgPAidCvm62KidQQGL5sD8', //?????????????????
+						'PMTrhcppMJpaRz4Xnv7CogJPHPMKtcg6bA',
+						'PSGSnF7Diww2yJdQefuy3ZvuZEoBw8TGTV',
+						'PT4fvQ7jMicg6McC52BmFFkL2M6AEWc7vo',
+						'PCkX8n2e6aD6Ji37hSpHCJpqvaaJjVWt1m',
+						'PGD5jUBQ7qNnHDuW85RRBxY1msywEdCm7r',
+						'PVjhQyjrLur2ZGD5CspSu18ee7R2qsCjo6',
+						'PLZATQyqYzM6NLbH8M3LPicSU3cTAqW3SA',
+						'PKWM3oo6YTFFn5U2HLaBueqA3fcLd7BP8m',
+						'PHnvqSQzg5D3yKo5KgCiXqtFP84bsYyF7G'
+
 					]
 
 					if (self.app.localization.key === 'en'){
@@ -640,6 +691,8 @@ var registration = (function(){
 
 				after : function(el){
 
+					self.app.el.app.removeClass('default-scroll')
+
 					var c = false
 
 					var clbk = function(){
@@ -671,7 +724,12 @@ var registration = (function(){
 
 						}
 
-						localStorage['regproxy'] = ''
+						try {
+							localStorage['regproxy'] = ''
+						}
+						catch (e) { }
+
+						
 
 						self.app.platform.sdk.registrations.redirect = null
 
@@ -837,8 +895,7 @@ var registration = (function(){
 						'TJYKMFZKYhSpU7xT55tuR4jD8gpC1dAZ5c'
 					];
 
-					var bloggers = _.shuffle(self.app.test ? testBloggers : prodBloggers);
-
+					var bloggers = self.app.test ? testBloggers : prodBloggers;
 
 					self.sdk.users.get(bloggers, function(data){
 
@@ -855,12 +912,16 @@ var registration = (function(){
 
 				after : function(el){
 
+					self.app.el.app.addClass('default-scroll')
+
 					var next = el.find('.next');
 
 					el.on('click', '.subscribeButton', events.subscribe);
 					el.on('click', '.unsubscribeButton', events.unsubscribe);
 
-					el.on('click', '.user .iconWrapper', events.showprofile)
+					el.on('click', '.user .showMoreAbout', events.showprofile)
+
+					$('body').on('click', events.hideprofiles)
 
 					next.on('click', function(){
 
@@ -1108,26 +1169,23 @@ var registration = (function(){
 
 			showprofile: function(address){
 
-				if (isMobile()){
+				self.nav.api.load({
+					open : true,
+					id : 'channel',
+					inWnd : true,
+					history : true,
 
-					self.nav.api.load({
-						open : true,
-						id : 'channel',
-						inWnd : true,
-						history : true,
-	
-						essenseData : {
-							id : address,
-							followbutton : true,
-						},
-	
-						clbk : function(i, p){
+					essenseData : {
+						id : address,
+						followbutton : true,
+					},
 
-							p.el.on('click', '.subscribeButton', function() {actions.subscribe(address, p.container.close)});
-							p.el.on('click', '.unsubscribeButton', function(){ actions.unsubscribe(address, p.container.close)});
-						}
-					})
-				}
+					clbk : function(i, p){
+
+						p.el.on('click', '.subscribeButton', function() {actions.subscribe(address, p.container.close)});
+						p.el.on('click', '.unsubscribeButton', function(){ actions.unsubscribe(address, p.container.close)});
+					}
+				})
 
 			},
 
@@ -1380,10 +1438,47 @@ var registration = (function(){
 		var events = {
 
 			showprofile : function(){
-				var address = $(this).closest('.user').attr('address');
 
-				actions.showprofile(address)
+				var user = $(this).closest('.user');
+				var address = user.attr('address');
+
+				if (isMobile()){
+
+					actions.showprofile(address);
+
+				} else {
+
+					setTimeout(function(){
+
+						user.addClass('showMore')
+
+					}, 0)
+
+
+				}
 			},
+
+
+			hideprofiles : function(e){
+
+				var user = $(e.target).closest('.user');
+				var isShowed = user.hasClass('showMore');
+				var address = user.attr('address');
+
+				$(this).find('.user').each(function(i, user){
+					
+					var user = $(this);
+
+					if (!(isShowed && user.attr('address') === address)){
+						user.removeClass('showMore')
+					}
+
+				});
+
+
+			},
+			
+
 
 			unsubscribe : function(){
 
@@ -1414,9 +1509,6 @@ var registration = (function(){
 
 				el.c.find('.step').width(w)
 
-
-
-
 				line.css('margin-left', '-' + ((getindex(current)) * w) + 'px')
 
 				line.width(w * _.toArray(steps).length)
@@ -1441,27 +1533,9 @@ var registration = (function(){
 
 				el.c.find('.step').removeClass('active');
 
-				var _el = el.c.find('.step[step="'+step.id+'"] .stepBody');
-				var s = _el.closest('.step');
-				var line = el.c.find('.stepsWrapperLine');
+				var _el = el.c.find('.step .stepBody');
 
 				renders[step.render](_el, function(_el){
-
-					var w = s.closest('.stepsWrapper').width()
-
-					el.c.find('.step').width(w)
-
-					
-					line.width(w * _.toArray(steps).length)
-
-
-					var m = '-' + (getindex(current) * w) + 'px'
-
-					line.css('margin-left', m)
-					
-
-					s.closest('.step').addClass('active')
-
 
 					if (clbk)
 						clbk(_el)
@@ -1538,6 +1612,8 @@ var registration = (function(){
 			},
 
 			bloggers : function(el, clbk){
+
+				addresses = _.shuffle(addresses);
 
 				self.shell({
 
@@ -1813,18 +1889,27 @@ var registration = (function(){
 					inauth : deep(p, 'settings.essenseData.inauth') || false
 				};
 
-				regproxy = self.app.api.get.byid('pocketnet.app:8899:8099')
+				//regproxy = self.app.api.get.byid('pocketnet.app:8899:8099')
 
-				/*if (localStorage['regproxy']){
-					regproxy = self.app.api.get.byid(localStorage['regproxy'])
-				}*/
+				try {
+					if (localStorage['regproxy']){
+						regproxy = self.app.api.get.byid(localStorage['regproxy'])
+					}
+				}
+				catch (e) { }
+
+				
 
 				self.app.api.get.proxywithwallet().then(r => {
 
 					if(r && !regproxy) regproxy = r
 
 					if (regproxy){
-						localStorage['regproxy'] = regproxy.id
+						try {
+							localStorage['regproxy'] = regproxy.id
+						}
+						catch (e) { }
+						
 					}
 
 
@@ -1835,6 +1920,8 @@ var registration = (function(){
 
 			destroy : function(){
 				window.removeEventListener('resize', events.width)
+
+				self.app.el.app.removeClass('default-scroll')
 
 				delete self.app.platform.sdk.node.transactions.clbks.moneyfail
 				delete self.app.errors.clbks.registration

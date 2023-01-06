@@ -156,7 +156,13 @@ var test = (function(){
 
 
 				if (ref && firstTime && !self.app.dsubref){
-					localStorage[self.app.platform.sdk.address.pnet().address + 'subscribeRef'] = ref.address										
+
+					try {
+						localStorage[self.app.platform.sdk.address.pnet().address + 'subscribeRef'] = ref.address
+					}
+					catch (e) { }
+
+													
 				}
 
 			},
@@ -441,6 +447,33 @@ var test = (function(){
 		
 			},
 			upload	: function(file, clbk){
+
+				if(file.ext == 'gif' && 1 == 2){
+
+					globalpreloader(true)
+
+					self.app.gifResizer.prepare().then(() => {
+
+
+						self.app.gifResizer.resize(file.base64, {width : 150, height : 150}).then((base64) => {
+							globalpreloader(false)
+
+							tempInfo.image = base64;
+
+							renders.icon()
+
+							actions.upanel()	
+							
+							if (clbk)
+								clbk()
+						})
+
+					}).catch(e => {
+						console.error(e)
+					})
+
+					return
+				}
 
 				topPreloader(20);
 
@@ -988,7 +1021,7 @@ var test = (function(){
 					initUpload({
 						el : _p.el.find('.pgroup'),
 			
-						ext : ['png', 'jpeg', 'jpg', 'webp', 'jfif'],
+						ext : ['png', 'jpeg', 'jpg', 'webp', /*'gif', */'jfif'],
 
 						dropZone : el.c,
 
@@ -1076,8 +1109,11 @@ var test = (function(){
 
 			el.c.find('.refRemove').on('click', function(){
 				ref = null;
-
-				delete localStorage['ref']
+				try {
+					delete localStorage['ref']
+				}
+				catch (e) { }
+				
 
 				el.c.find('.referalMaketWrapper').remove()
 			})

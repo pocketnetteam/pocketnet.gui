@@ -303,7 +303,19 @@ var Peertube = function (settings) {
 
 					return r.canupload();
 				});
+			
+			if (special) {
+				Object.keys(_roys)
+					.filter((roy) => _roys[roy].hasspecial())
+					.map((roy, index) => {
+						_roys[roy].best() ? (output[index] = _roys[roy].best().host) : null;
+					});
 
+				if (Object.keys(output).length > 0) return Promise.resolve(output);
+			}
+
+			console.log('ROYS', Object.keys(_roys));
+			
 			Object.keys(_roys).map((roy) => {
 				_roys[roy].best() ? (output[roy] = _roys[roy].best().host) : null;
 			});

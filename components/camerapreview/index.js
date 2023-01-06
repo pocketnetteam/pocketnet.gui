@@ -44,6 +44,7 @@ var camerapreview = (function(){
 		var images = {}
 		var thubnails = {}
 		var imagesadding = false
+		var libraryProcessId = null
 
 		
 
@@ -115,8 +116,9 @@ var camerapreview = (function(){
             }).then(imgs => {
 
 				var fls = _.map(imgs, (img) => {
+
 					return {
-						ext : 'jpg',
+						ext : fkit.extensionBase64(img),
 						base64 : img
 					}
 				})
@@ -279,10 +281,21 @@ var camerapreview = (function(){
 				if (window.cordova.plugins.photoLibrary)
 					return new Promise((resolve, reject) => {
 
+						var pid = libraryProcessId = makeid()
+
 						window.cordova.plugins.photoLibrary.getLibrary(
 							(result) => {
+
+								if(pid != libraryProcessId) return
+
+								photos = photos.concat(result.library)
+
+								if(result.isLastChunk){
+									libraryProcessId = null
+								}
 	
-								photos = result.library
+								//photos = result.library
+								
 	
 								/*_.each(photos, (p) => {
 									getthubnail(p.id)
@@ -295,16 +308,18 @@ var camerapreview = (function(){
 	
 							},
 							(err) => {
+
+								libraryProcessId = null
 								
 								permissions.init().then(resolve).catch(reject)
 	
 							},
 							{ // optional options
-								//chunkTimeSec: 0.5,
-								thumbnailWidth: 128,
-								//itemsInChunk: 20,
-								thumbnailHeight: 128,
-								quality: 0.85,
+								chunkTimeSec: 0.5,
+								//thumbnailWidth: 128,
+								itemsInChunk: 20,
+								//thumbnailHeight: 128,
+								//quality: 0.5,
 								includeAlbumData: true // default
 							}
 						)
@@ -352,21 +367,15 @@ var camerapreview = (function(){
 
                 return new Promise((resolve, reject) => {
 
-                    cordova.plugins.photoLibrary.getPhotoURL(id, (url) => {
+                    cordova.plugins.photoLibrary.getPhoto(id, (data) => {
 
-                        fetchLocal(url).then(({data}) => {
 
-							console.log("DATA", data)
+						return Base64Helper.fromFile(data).then(base64 => {
+							images[id] = base64;
 
-							return Base64Helper.fromFile(data).then(base64 => {
-								images[id] = base64;
-    
-								resolve(images[id])
-							})
+							resolve(images[id])
+						})
 
-                            
-
-                        }).catch(reject)
     
                     }, (e) => {
     
@@ -386,14 +395,18 @@ var camerapreview = (function(){
         }
 
 		var actions = {
-			startcamera : function(){
-				if (data.cameraenabled){
-					CameraPreview.startCamera(getcameraoptions());
+			camerastate : function(){
+				if(!data.gallery){
+					actions.startcamera()
 				}
 				else{
+					actions.stopcamera()
 				}
-
-				
+			},
+			startcamera : function(){
+				if (data.cameraenabled && !data.gallery){
+					CameraPreview.startCamera(getcameraoptions());
+				}
 			},
 			stopcamera : function(){
 				if (data.cameraenabled){
@@ -505,6 +518,8 @@ var camerapreview = (function(){
 				else{
 					el.c.removeClass('showgallery')
 				}
+
+				actions.camerastate()
 			},
 
 			selectedButton : function(){
@@ -685,6 +700,32 @@ var camerapreview = (function(){
 
 				
 			})
+
+			self.app.platform.clbks._focus.camera = function(time){
+				actions.startcamera()
+			}
+			self.app.platform.clbks._unfocus.camera = function(time){
+				actions.stopcamera()
+			}
+
+
+			initUpload({
+				el : el.openexternal,
+				ext : ed.ext,
+				dropZone : el.c,
+				app : self.app,
+				multiple : ed.multiple,
+				action : ed.action,
+				onError : ed.onError,
+				onSuccess : function(){
+
+					if(ed.onSuccess) ed.onSuccess()
+
+					self.stop()
+				}
+			})
+
+			
 		}
 
 		return {
@@ -694,11 +735,16 @@ var camerapreview = (function(){
 				ed = p.settings.essenseData
 				var data = {};
 
+				console.log("ED", ed)
+
 				clbk(data);
 
 			},
 
 			destroy : function(){
+
+				delete self.app.platform.clbks._unfocus.camera
+				delete self.app.platform.clbks._focus.camera
 
 				data.selected = {}
 
@@ -731,13 +777,10 @@ var camerapreview = (function(){
 
 					window.requestAnimationFrame(() => {
 
-	
-						
-						
 						app.el.html.removeClass('cameraenabledend')
-	
-	
-						el.c.empty()
+						
+						if (el.c)
+							el.c.empty()
 	
 						el = {};
 						
@@ -780,13 +823,12 @@ var camerapreview = (function(){
 				el.wnds = $('.wnd')
 				el.state = el.c.find('.state')
 				el.galleryimages = el.c.find('.gallery .images')
+				el.openexternal = el.c.find('.openexternal')
 				initEvents();
 
 				p.clbk(null, p);
 
 				compute()
-
-				
 
 				getlibrary().then(() => {
 					data.gallery = true

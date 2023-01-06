@@ -793,10 +793,6 @@
                 text-overflow: ellipsis;
                 white-space: nowrap;
 
-                &.name{
-                    width: 120px;
-                }
-
                 &.use{
                     cursor: pointer;
     
@@ -877,6 +873,105 @@
               
             }
         }
+    }
+
+    .notificationcontent{
+        .caption{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgb(var(--color-txt-gray-dark));
+            margin: 0 auto;
+        }
+        .field{
+            width: 100%;
+            padding :3 * @rhythm 2 * @rhythm;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            
+            span{
+                font-size: 0.8em;
+            }
+        }
+        .notifications-table{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            background: rgb(var(--background-secondary-theme));
+            border-radius: 6px;
+
+        }
+        .notifications-users{
+            margin-bottom: 40px;
+        }
+        .notification, .users{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            .field{
+                .green{
+                    color: green;
+                }
+                .red{
+                    color: red;
+                }
+                border-bottom: 1px solid rgb(var(--neutral-grad-2));
+            }
+            .controls{
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                align-content: center;
+                width: 100%;
+            }
+            .tooltip {
+                visibility: hidden;
+                box-sizing: border-box;
+                border: 1px solid rgba(var(--color-medium-theme));
+                text-align: center;
+                background: rgb(var(--background-secondary-theme));
+                padding: 5px;
+                border-radius: 3px;
+                position: absolute;
+                z-index: 1;
+                top: -5px;
+                right: 155%;
+                &::after {
+                    content: " ";
+                    position: absolute;
+                    top: 50%;
+                    left: 100%;
+                    margin-top: -5px;
+                    border-width: 5px;
+                    border-style: solid;
+                    border-color: transparent transparent transparent rgba(var(--color-medium-theme));
+                }
+            }
+            .button{
+                position: relative;
+                cursor: pointer;
+                &:hover{
+                    .tooltip{
+                        visibility: visible;
+                    }
+                }
+            }
+
+            i,
+            span{
+                font-size: 0.8em;
+            }
+        }
+
+        .users{
+            .field{
+                font-size: 10px;
+                white-space: normal;
+                text-overflow: unset;
+            }
+        }
+
     }
 
     .peertubecontent{

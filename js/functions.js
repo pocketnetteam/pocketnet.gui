@@ -1987,7 +1987,6 @@
 
 			markers.on('click', function() {
 				gotoslide(this.getAttribute('index'))
-				console.log(this)
 			})
 	
 		})
@@ -2026,7 +2025,6 @@
 		var gotoslide = function(index){
 			window.requestAnimationFrame(() => {
 
-				console.log('index', index, items[index].offsetLeft)
 				container[0].scrollLeft = items[index].offsetLeft
 
 			})
@@ -4061,8 +4059,6 @@
 
 									app.mobile.menu(_.map(items, (i) => {return i.label})).then((i) => {
 
-										console.log("I", i)
-
 										bkp = null;
 
 										input.val(items[i].value);
@@ -4667,7 +4663,6 @@
 
 						var value = $(this).val();
 
-						console.log('value', value)
 
 						if(!value || value == '0') {
 
@@ -4682,10 +4677,8 @@
 
 							var hassep = value.indexOf('.') > -1 || value.indexOf(',') > -1
 
-							console.log('hassep', hassep)
 
 							if(l == '.' || (l == '0' && hassep) || l == ',') {
-								console.log("HERE")
 								return false
 							}
 						}
@@ -4697,9 +4690,6 @@
 
 							var max = deep(parameter, 'format.max')
 							var min = deep(parameter, 'format.min')
-
-							console.log('max', max)
-							console.log('min', min)
 
 							if(typeof max != 'undefined' && max < value) value = max
 							if(typeof min != 'undefined' && min > value) value = min
@@ -8738,6 +8728,8 @@
 
 			var elements = [
 
+				'<img class="christmasBranchRight" src="img/christmas_branch_right.svg">',
+
 				'<div elementsid="template_searchIconLabel_' +  (p.id || p.placeholder) + '" class="searchIconLabel">' + (p.icon ||
 					'<i class="fa fa-search" aria-hidden="true"></i>' +
 					'<i class="fas fa-circle-notch fa-spin"></i>') +
@@ -8753,7 +8745,10 @@
 							'<i class="fa fa-times-circle" aria-hidden="true"></i>' +
 						'</div>' +
 					'</div>' +
-				'</div>'
+				'</div>',
+
+				'<img class="christmasBranchLeft" src="img/christmas_branch_left.svg">'
+
 
 			]
 
@@ -9662,6 +9657,7 @@
 	
 				dropZone[0].ondrop = upload;
 			}
+
 
 			if(p.uploadImage && app && app.mobile.supportimagegallery()){
 
@@ -11062,9 +11058,16 @@ var fkit = {
         'image/png' : 'png',
         'image/jpeg' : 'jpg',
         'image/jpg' : 'jpg',
+		'image/gif' : 'gif',
         'image/webp' : 'webp',
         'image/jfif' : 'jfif'
     },
+	extensionBase64 : function(base64){
+		if(!base64) return ''
+
+		return fkit.extensions[base64.split(';')[0].replace('data:', '')] || ''
+
+	},
     getExtension: function (file) {
         var name = file.name.split('.');
         var ext = name[name.length - 1].toLowerCase();
@@ -11446,6 +11449,14 @@ edjsHTML = function() {
 
 		error : function(type, e){
 			return '<div class="article_error">' + 'Error:' + _.escape(type) + '</div>'
+		},
+
+		text : function(e, type){
+
+			var t = type === 'paragraph' ? '\n\n' : '';
+			t += (e.data.text ? e.data.text + ' ' : '');
+
+			return t;
 		}
     };
 
@@ -11644,6 +11655,20 @@ edjsHTML = function() {
                 })).join('') + '</div>'
             },
 
+			text: function(e){
+
+				var text = e.blocks.map(function(e) {
+					return i['text'](e, e.type);
+                }).join('');
+
+				return filterXSS(clearScripts((findAndReplaceLink(text, true))), {
+					stripIgnoreTag : true,
+					whiteList: {
+						img : []
+					}
+				});
+			},
+
             parseBlock: function(e) {
                 return i[e.type] ? i[e.type](e) : t(e.type)
             },
@@ -11720,7 +11745,7 @@ if(typeof window != 'undefined'){
 	if (splashScreen) {
 
 
-		var splashScreenImg = document.getElementById('splashScreenImg');
+		var splashScreenIcon = document.querySelector('#splashScreen .icon');
 		var stopRotation = false;
 
 		// Logos variant color
@@ -11741,12 +11766,12 @@ if(typeof window != 'undefined'){
 
 		// Function triggered at the end of each rotating animation
 		rotatingAnimationEnded = function() {
-			if (!splashScreenImg)
+			if (!splashScreenIcon)
 				return;
 			// Check if we need to stop rotating and fade out
 			if (stopRotation) {
-				splashScreenImg.classList.remove("rotate");
-				splashScreenImg.classList.add('zoom-out-rotate');
+				splashScreenIcon.classList.remove("rotate");
+				splashScreenIcon.classList.add('zoom-out-rotate');
 				splashScreen.classList.add('fade-out');
 				// When zoom out animation is done, completely remove the splash screen
 				setTimeout(() => {
@@ -11758,7 +11783,7 @@ if(typeof window != 'undefined'){
 
 					if (splashScreen)
 						splashScreen.remove();
-						splashScreenImg = null
+						splashScreenIcon = null
 
 					splashScreen = null
 				}, zoomOutDuration * 2);
@@ -11766,8 +11791,8 @@ if(typeof window != 'undefined'){
 			// Wait until half the rotation is done
 			/*setTimeout(() => {
 				// Change the logo image
-				if (splashScreenImg)
-					splashScreenImg.src = logos[nextLogoIndex];
+				if (splashScreenIcon)
+					splashScreenIcon.style.backgroundImage = `url('${logos[nextLogoIndex]}')`;
 				// Increase index
 				nextLogoIndex = (nextLogoIndex >= (logos.length - 1)) ? 0 : nextLogoIndex + 1;
 			}, rotatingDuration * 0.5);*/
@@ -11775,11 +11800,11 @@ if(typeof window != 'undefined'){
 
 		// Wait until the zoom in is done
 		setTimeout(() => {
-			if (!splashScreenImg)
+			if (!splashScreenIcon)
 				return;
 			// Start rotating the logo
-			splashScreenImg.classList.remove('zoom-in');
-			splashScreenImg.classList.add('rotate');
+			splashScreenIcon.classList.remove('zoom-in');
+			splashScreenIcon.classList.add('rotate');
 			// Triggered every times we reached the end of the rotating animation
 			rotatingAnimationEnded();
 			splashScreeninterval = setInterval(rotatingAnimationEnded, rotatingDuration);
@@ -11943,3 +11968,355 @@ isDeviceMobile = function() {
 	return check;
 };
 
+
+resizeGif = function (app) {
+    var self = this
+    var workerScript = null
+
+    var transparentThreshold = 127
+    var background = null
+    var speedMultiplier = 1
+
+	var relations = {}
+
+    var loadworker = async function () {
+        if (workerScript) {
+            return workerScript;
+        }
+
+        const { data } = await axios.get(
+            "https://cdnjs.cloudflare.com/ajax/libs/gif.js/0.2.0/gif.worker.js",
+            {
+                responseType: "blob"
+            }
+        );
+
+        const content = await data.text();
+
+        const blob = new Blob([content], {
+            type: "application/javascript"
+        });
+
+        workerScript = URL.createObjectURL(blob);
+
+        return workerScript;
+    }
+
+    var loadlib = function () {
+
+		return new Promise((resolve, reject) => {
+			var jsRelations = [
+				{src : 'js/vendor/gif.js',			   f : 'js'},
+				{src : 'js/vendor/gif-frames.min.js',			   f : 'js'},
+			]
+	
+			importScripts(jsRelations, relations, function(){
+	
+				resolve();
+	
+			}, null, null, app);
+		})
+
+    }
+
+    var fixEdgeSmoothing = function (image, options = {}) {
+        const { background = null, transparentThreshold = 127 } = options;
+
+        const canvas = document.createElement("canvas");
+        canvas.width = image.width;
+        canvas.height = image.height;
+        const ctx = canvas.getContext("2d");
+
+        if (background) {
+            ctx.fillStyle = background;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(image, 0, 0);
+        } else {
+            const data = image
+                .getContext("2d")
+                .getImageData(0, 0, canvas.width, canvas.height)
+                .data.map((data, index, dataArr) => {
+                    if (index % 4 === 3) {
+                        if (_.some(dataArr.slice(index - 3, index), data => data !== 0)) {
+                            return data <= transparentThreshold ? 0 : 255;
+                        }
+                    }
+
+                    return data;
+                });
+
+            ctx.putImageData(new ImageData(data, canvas.width, canvas.height), 0, 0);
+        }
+
+        return canvas;
+    }
+
+    var resizeFrame = function (frame, width, height) {
+        /*if (
+            typeof window.createImageBitmap !== "undefined" &&
+            typeof window.chrome !== "undefined"
+        ) {
+            return imageBitmapResize(frame, width, height);
+        }*/
+
+
+        return canvasResize(frame, width, height);
+    }
+
+    var imageBitmapResize = async function (src, width, height) {
+        const canvas = newCanvas(width, height);
+
+        return createImageBitmap(src, 0, 0, src.width, src.height, {
+            premultiplyAlpha: "none",
+            resizeWidth: width,
+            resizeHeight: height,
+            resizeQuality: "high"
+        }).then(img => {
+            canvas.getContext("2d").drawImage(img, 0, 0);
+
+            return canvas;
+        });
+    }
+
+    var canvasResize = function (src, width, height) {
+        const canvas = newCanvas(width, height);
+
+		var w = src.width, h = src.height, s = w
+
+		if(h < w) s = h
+
+
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(src, (w - s) / 2, (h - s) / 2, s, s, 0, 0, width, height);
+
+        return Promise.resolve(canvas);
+    }
+
+    function newCanvas(width, height) {
+        if (typeof OffscreenCanvas !== "undefined") {
+            return new OffscreenCanvas(width, height);
+        }
+
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+
+        return canvas;
+    }
+
+    var getFrames = async function (url) {
+
+        const frames = await gifFrames({
+            url,
+            frames: "all",
+            outputType: "canvas"
+        });
+
+        return frames.map(frame => ({
+            image: frame.getImage(),
+            delay: frame.frameInfo.delay
+        }));
+    }
+
+    self.prepare = function () {
+
+        return Promise.all([loadlib(), loadworker()])
+
+    }
+
+    self.resize = async function (base64, {width, height}) {
+        if (typeof gifFrames == 'undefined') throw new Error('getFrames')
+        if (typeof GIF == 'undefined') throw new Error('GIF')
+
+
+        const frames = await getFrames(base64);
+        const resizedFrames = await Promise.all(
+            frames.map(({ image }) => resizeFrame(image, width, height))
+        ).then(images =>
+            images.map((image, index) => ({
+                image,
+                delay: frames[index].delay * 10
+            }))
+        );
+
+
+        const blob = await renderGif(resizedFrames, {
+            transparentThreshold,
+            speedMultiplier
+        });
+
+		return getBase64(blob)
+    }
+
+    var renderGif = async function (frames, options = {}) {
+        const { speedMultiplier = 1, background = null } = options;
+
+        const gif = new GIF({
+            workers: 2,
+            workerScript,
+            quality: 1,
+            transparent: background ? null : "rgba(0, 0, 0, 0)"
+        });
+
+        frames.forEach(({ image, delay }) =>
+            gif.addFrame(fixEdgeSmoothing(image, options), {
+                delay: delay / speedMultiplier
+            })
+        );
+
+        return new Promise((resolve, reject) => {
+            gif.on("finished", resolve);
+
+            try {
+                gif.render();
+            } catch (e) {
+                reject(e);
+            }
+        });
+    }
+
+    return self
+}
+
+class LoadingBar {
+	constructor(barElem, styles) {
+		const self = this;
+
+		this.boundOnClick = this.onClick.bind(this);
+
+		this.elem = barElem;
+		this.elem.addEventListener('click', this.boundOnClick);
+
+		if (styles) {
+			this.setStyles(styles);
+		}
+	}
+
+	onClick() {
+		this.toggleStateChange();
+
+		const hasOnStateChange = (typeof this.onStateChange === 'function');
+
+		if (hasOnStateChange) {
+			this.onStateChange({
+				stopped: this.stopped,
+				value: this.value,
+			});
+		}
+	}
+
+	clearListenStateChange() {
+		this.elem.removeEventListener('click', this.boundOnClick);
+	}
+
+	listenStateChange(listenerCb) {
+		this.onStateChange = listenerCb;
+	}
+
+	listenErrors(listenerCb) {
+		this.onListenErrors = listenerCb;
+	}
+
+	setValue(value) {
+		const hasOnListenErrors = (typeof this.onListenErrors === 'function');
+
+		if (this.stopped && hasOnListenErrors) {
+			this.onListenErrors({ type: 'warning', text: 'Tried to set value when state is stopped' });
+		}
+
+		if (value > 100) {
+			value = 100;
+
+			if (hasOnListenErrors) {
+				this.onListenErrors({ type: 'warning', text: 'Tried to set value bigger than 100%' });
+			}
+		}
+
+		this.value = value;
+		this.elem.style.setProperty('--percent', value);
+	}
+
+	setStyles(styles) {
+		if (styles.barColor) {
+			this.elem.style.setProperty('--barColor', styles.barColor);
+		}
+
+		if (styles.lineColor) {
+			this.elem.style.setProperty('--lineColor', styles.lineColor);
+		}
+	}
+
+	toggleStateChange() {
+		if (this.stopped) {
+			this.setLoading();
+			return;
+		}
+
+		this.setPaused();
+	}
+
+	setPaused() {
+		this.stopped = true;
+		this.elem.setAttribute('data-loading', !this.stopped);
+	}
+
+	setLoading() {
+		this.stopped = false;
+		this.elem.setAttribute('data-loading', !this.stopped);
+	}
+}
+
+
+var connectionSpeed = function() 
+{
+    // Deal with vendor prefixes
+    var defaultSpeed = false,
+        navigator = window.navigator,
+        connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection || null;
+    if( ! connection )
+        return defaultSpeed;
+
+    // assume W3C Editor's Draft 09 October 2014
+    if( 'downlinkMax' in connection )
+    {
+        var downlinkMax = connection.downlinkMax;
+        if( ! downlinkMax )
+            return defaultSpeed;
+        if( ! isFinite(downlinkMax) )
+            return defaultSpeed;
+        return downlinkMax;
+    }
+    // assume W3C Working Draft 29 November 2012
+    if( 'bandwidth' in connection )
+    {
+        var bandwidth = connection.bandwidth;
+        if( ! bandwidth )
+            return defaultSpeed;
+        if( isNaN(speed) )
+            return defaultSpeed;
+        // standardize connection.bandwidth value by converting megabytes per second (MB/s) to megabits per second (Mbit/s)
+        return bandwidth * 8;
+    }
+    // assume W3C Working Draft 07 June 2011
+    switch( connection.type )
+    {
+        // convert connection.type value to approximate downlink values
+        // speed estimate is based on the median downlink value for common devices in megabits per second (Mbit/s)
+        case 'none':
+            return 0;
+        case '2g':
+            return 0.134;
+        case 'bluetooth':
+        case 'cellular':
+            return 2;
+        case '3g':
+            return 8.95;
+        case '4g':
+            return 100;
+        case 'ethernet':
+            return 550;
+        case 'wifi':
+            return 600;            
+    }
+    return defaultSpeed;
+};

@@ -1023,7 +1023,6 @@ var author = (function(){
 					hr : hr,
 					optimize : self.app.mobileview,
 					cancelsearch : function(){
-						console.log("clearsearch")
 						clearsearch()
 					},
 					renderclbk : function(){
@@ -1359,8 +1358,6 @@ var author = (function(){
 				
 				
 				author.address = address
-
-				console.log("GETSTATE")
 
 				/*self.sdk.ustate.get(author.address, function(){
 					

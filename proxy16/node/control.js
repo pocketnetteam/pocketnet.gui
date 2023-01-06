@@ -390,6 +390,12 @@ var Control = function(settings, proxy) {
                 return Promise.resolve(result)
             })
         },
+
+        getNotifications: function(blocks) {
+            return self.kit.rpc('getnotifications', blocks).then(result => {
+                return Promise.resolve(result)
+            })
+        },
     }
 
     self.kit = {
