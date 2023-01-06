@@ -30105,21 +30105,31 @@ Platform = function (app, listofnodes) {
         },
 
         openinpopup: function() {
-            console.log('function is work')
-            let newWindow = window.open("/pocketnet/messenger", "messengerWindow", "popup");
-     
-            let myInterval = setInterval(() => {
-                if(newWindow?.window) {
-                    // console.log('popup is opened');
-                    self.matrixchat.destroy
-                } else {
-                    // console.log('popup is closed');
-                    self.matrixchat.startchat
-                    clearInterval(myInterval)
-                }
-            }, 500);
-        },
+            // console.log('function is work')
+            let newWindow = window.open("/pocketnet/messenger", "messengerWindow", "popup", 'width=600,height=400');
+            // self.matrixchat.destroy
+            // alert(newWin.location.href); // (*) about:blank, загрузка ещё не началась
+            // console.log('newWindow alert', newWindow)
 
+
+            function tick() {
+                if(newWindow.name !== '') {
+                    // console.log('popup is opened');
+                    // self.matrixchat.destroy
+                    self.matrixchat.destroy()
+                } else if(newWindow.name === '') {
+                    // console.log('popup is closed');
+                    self.matrixchat.startchat()
+                    
+                    setTimeout (clearInterval(t), 1000)
+                }
+              }
+              
+              var t = setInterval(tick, 500)
+              tick()
+            
+
+        },
         initcl : function(clbk){
             self.matrixchat.init()
             if(clbk) clbk()
