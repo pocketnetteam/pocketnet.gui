@@ -70,6 +70,7 @@ var ProxyRequest = function(app = {}, proxy){
 
         var cancelled = false
 
+
         return new Promise((resolve, reject) => {
             const timer = setTimeout(() => {
 
@@ -147,6 +148,7 @@ var ProxyRequest = function(app = {}, proxy){
         else{
             if (app.user && (app.user.getstate && app.user.getstate() == 1)){ data.state = 1 }
         }
+
 
         return apiFetch(url, {
 
@@ -497,7 +499,7 @@ var Proxy16 = function(meta, app, api){
 
             if (options.fnode && e) e.code = 700
 
-            if ((e.code == 408 || e.code == 429 || e.code == -28) && options.node && trying < 2 && !options.fnode){
+            if ((e.code == 408 || e.code == 429 || e.code == -28 || (e.code == 2000 && freshping())) && options.node && trying < 2 && !options.fnode){
 
                 //if(isonline()){
                     return self.api.nodes.canchange(options.node).then(r => {
@@ -914,6 +916,20 @@ var Api = function(app){
         }
     }
 
+    var loading = {}
+
+    self.rpcwt = function(method, parameters, options){
+        var hash =MD5(method + JSON.stringify(parameters) + JSON.stringify(options)) 
+
+        if (!loading[hash]){
+            loading[hash] = self.rpc(method, parameters, options)
+        }
+
+        return loading[hash].finally(() => {
+            delete loading[hash]
+        })
+    }
+
     self.rpc = function(method, parameters, options, trying){
 
         if(!trying) trying = 0
@@ -941,6 +957,8 @@ var Api = function(app){
 
             if((!e.code || e.code == 2000) && trying < 2){
 
+                //// api.nodes.canchange
+
                 //if(isonline()){
                     return self.changeProxyIfNeedWithDirect().then(r => {
 
@@ -949,6 +967,14 @@ var Api = function(app){
                         return self.rpc(method, parameters, options, trying)
                     })
                 //}
+            }
+
+            if (app.Logger) {
+                app.Logger.error({
+                    err: typeof e === 'string' ? e : (e.text || 'RPC_DEFAULT_ERROR'),
+                    payload: e,
+                    code: e.code || 423,
+                });
             }
 
             if (e.code != 700){
@@ -1207,6 +1233,10 @@ var Api = function(app){
             if(_proxies.length){
                 return _proxies[0]
             }
+        },
+
+        directpr : function(){
+            return Promise.resolve(self.get.direct())
         },
 
 

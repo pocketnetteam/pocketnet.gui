@@ -3,6 +3,11 @@
 		width: 30px;
 		text-align: right;
 	}*/
+  /*
+		.loader{
+			display: block;
+		}
+	}*/
   /*.authorCell a,
 	.sbtnxs,
 	.spsp{
@@ -12,8 +17,23 @@
 #lenta .boosted {
   min-height: 100px;
 }
-#lenta .boostedlabel {
-  color: rgb(var(--color-good));
+#lenta .shareinlenta {
+  min-height: 400px;
+  opacity: 0;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+#lenta .shareinlenta .sharecnt {
+  display: none;
+}
+#lenta .shareinlenta.rendered {
+  opacity: 1;
+  min-height: 0;
+}
+#lenta .shareinlenta.rendered .sharecnt {
+  display: block;
 }
 #lenta .optimizationTip {
   height: 150px;
@@ -55,19 +75,39 @@
 #lenta .mlwr {
   position: relative;
 }
-#lenta .loader {
+#lenta .searchInfo {
   background: rgb(var(--background-total-theme));
+  padding: 1em 0;
+  padding-top: 1.5em;
+  margin-bottom: 0.5em;
+  text-align: center;
+  border-radius: 12px;
+}
+#lenta .searchInfo .searchcaption span {
+  font-size: 1em;
+  color: rgb(var(--neutral-grad-3));
+}
+#lenta .searchInfo .cancelsearch {
+  margin-top: 1em;
+}
+#lenta .searchInfo .value span {
+  font-weight: 700;
+  color: rgb(var(--neutral-grad-4));
+  font-size: 2em;
+}
+#lenta .loader {
+  /*background: rgb(var(--background-total-theme));*/
   padding: 3em 0;
   display: none;
   border-radius: 12px;
   height: 111px;
   contain: strict;
 }
-#lenta.loading .loader {
+#lenta .loader.loading {
   display: block;
 }
 #lenta.sharesEnded .loader {
-  display: none;
+  display: none!important;
 }
 #lenta .panel {
   overflow: hidden;
@@ -131,6 +171,7 @@
   border-radius: 12px;
 }
 #lenta .share .shareSpacer {
+  display: none;
   height: 400px;
   padding: 0 2em;
 }
@@ -186,6 +227,14 @@
   border-radius: 12px;
   font-weight: 700;
   text-decoration: underline;
+  opacity: 0;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+#lenta .shares .showmorebyauthor.active {
+  opacity: 1;
 }
 #lenta .subc {
   margin-top: 1em;
@@ -608,17 +657,25 @@
   #lenta .openoriginallabel {
     display: none;
   }
+  #lenta .searchInfo {
+    display: block;
+    padding-left: 1em;
+    padding-right: 1em;
+    border-radius: 0;
+  }
   #lenta .fullScreenVideo .videoWrapper .js-player .video-js .vjs-volume-control {
     display: none;
   }
 }
 /*t*/
 @media only screen and (max-width: 768px) {
+  #lenta.horizontal.compact {
+    /*.share_common .jsPlayerPreview .wpl{
+					opacity: 1;
+				}*/
+  }
   #lenta.horizontal.compact.mainvideo .shares .formeta {
     margin-left: 0.25em;
-  }
-  #lenta.horizontal.compact .share_common .jsPlayerPreview .wpl {
-    opacity: 1;
   }
   #lenta .loadprev.fxdp {
     position: fixed;

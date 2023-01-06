@@ -21,11 +21,17 @@ var post = (function () {
 
 		var actions = {
 
-			pkoin : function(id){
+			pkoin : function(format){
+
+				var type = format === 'liftUpThePost' ? 'boost' : 'pkoin';
 
 				if (share){
 
 					actions.stateAction(function(){
+
+						if(self.app.platform.sdk.user.myaccauntdeleted()){
+							return
+						}
 
 						self.app.platform.sdk.node.transactions.get.balance(function(amount){
 
@@ -44,7 +50,9 @@ var post = (function () {
 			
 								essenseData : {
 									userinfo: userinfo,
-									id : share.txid
+									id : share.txid,
+									format : format,
+									type : type
 								}
 							})
 	
@@ -443,9 +451,7 @@ var post = (function () {
 							self.sdk.videos.save()
 						},
 
-						fullscreenchange : function(v){
-							self.app.mobile.fullscreenmode(v)
-						},
+						fullscreenchange : self.app.mobile.fullscreenmode,
 
 						play : function(){
 
@@ -453,7 +459,7 @@ var post = (function () {
 								self.app.actions.playingvideo(player)
 
 							if(isMobile() && !ed.repost && !el.c.closest('.wndcontent').length && !ed.openapi){
-								self.app.actions.scroll(125)
+								self.app.actions.scroll(70)
 							}
 						},
 
@@ -480,6 +486,12 @@ var post = (function () {
 							playbackState,
 							duration
 						}){
+
+							//// interest score later
+
+							if (duration > 0 && playbackState == 'playing') 
+								self.app.platform.sdk.memtags.add(share.tags, null, 0.500 / duration)
+
 							if(playbackState == 'playing' && ((position > 15 && duration > 120) || startTime)){
 
 								self.app.platform.sdk.videos.historyset(share.txid, {
@@ -487,10 +499,38 @@ var post = (function () {
 									percent : ((position/duration) * 100).toFixed(0)
 								})
 
+								self.app.platform.sdk.activity.adduser('video', share.address, 6 * position / duration)
+								
+								return
+							}
+
+							if(playbackState == 'playing' && duration < 120 && position / duration > 0.2){
+								self.app.platform.sdk.activity.adduser('video', share.address, 6 * position / duration)
+								
 							}
 						},
 
 						hlsError : function(error){
+							const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection || {};
+							const payload = {
+								...error,
+								rtt: connection.rtt || 'Undefined',
+								connection: connection.effectiveType || 'Undefined',
+								mobile: isMobile(),
+								location: 'IN_POST',
+								video: share.url,
+							};
+
+							self.app.Logger.error({
+								err: 'VIDEO_LOADING_ERROR',
+								videoErrorId: share.url,
+								videoErrorType: error.details,
+								payload: {
+									...payload,
+								},
+								code: 611,
+								level: 'warning',
+							});
 							/*if(!window.cordova)
 								self.app.Logger.error({
 									err: 'hlsError',
@@ -514,7 +554,11 @@ var post = (function () {
 
 						PlyrEx(el2, options, (_player) => {
 
-							if(!el.c) return
+
+							if(!el.c) {
+								_player.destroy()
+								return
+							}
 
 							player = _player
 
@@ -530,7 +574,7 @@ var post = (function () {
 									}
 	
 								}
-	
+
 								if (player.enableHotKeys && !ed.repost) player.enableHotKeys()
 							}
 
@@ -598,28 +642,19 @@ var post = (function () {
 					return
 				}
 
-				if (value > 4){
+				if (value == 5){
+					setTimeout(function(){
+						if(!el.c) return
 
-					var reason = null
+						inicomments.showBanner(inicomments);
+					
 
-					if (self.app.platform.sdk.user.newuser()){
-						reason = 'n'
-					}
-
-					if (share.scnt == '0') reason = 's'
-
-					if (reason) {
-						setTimeout(function(){
-							if(!el.c) return
-								self.app.platform.effects.templates.commentstars(el.c, value, function(){
-									
-								})
-
-								if (inicomments){
-									inicomments.attention(self.app.localization.e('starssendcomment' + reason))
-								}
-						}, 300)
-					}
+						self.app.platform.effects.templates.commentstars(el.c, value, function(){
+							if (inicomments){
+								inicomments.attention(self.app.localization.e('starssendcomments'))
+							}
+						})
+					}, 300)
 					
 				}
 
@@ -648,6 +683,10 @@ var post = (function () {
 
 								if (clbk)
 									clbk(true)
+
+								self.app.platform.sdk.memtags.add(share.tags, 'l_' + share.txid, (value - 3) / 2)
+								self.app.platform.sdk.recommendations.successRecommendation(share)
+
 							}
 
 						}
@@ -835,9 +874,13 @@ var post = (function () {
 
 			pkoin : function(){
 
-				var shareId = $(this).closest('.share').attr('id');
+				actions.pkoin('sendToAuthor')
 
-				actions.pkoin(shareId)
+			},
+
+			boost : function(){
+
+				actions.pkoin('liftUpThePost')
 
 			},
 
@@ -950,13 +993,16 @@ var post = (function () {
 					var p = $(this).closest('.stars');
 
 					if (p.attr('value')) {
+						return
+					}
 
-
+					if(self.app.platform.sdk.user.myaccauntdeleted()){
 						return
 					}
 
 					p.attr('value', value)
 					p.addClass('liked')
+
 
 					actions.like(value, function (r) {
 						if (r) {
@@ -1149,149 +1195,158 @@ var post = (function () {
 				var _el = el.c.find('.postcontent .image');
 				var images = el.c.find('.postcontent .images');
 
-				if (images.hasClass('active') || !_el.length || !images.length) {
-					if (clbk) clbk();
-				} else {
+
+					if (images.hasClass('active') || !_el.length || !images.length) {
+						if (clbk) clbk();
+					} else {
 
 
-					_el.imagesLoadedPN({ imageAttr: true, debug : true }, function (image) {
+						_el.imagesLoadedPN({ imageAttr: true, debug : true }, function (image) {
 
 
-						if (share.settings.v != 'a') {
+							if (share.settings.v != 'a') {
 
-							if((isMobile() || ed.repost) && image.images.length > 1){
+								if((isMobile() || ed.repost) && image.images.length > 1){
 
-								var aspectRatio = 0
+									
+									_.each(image.images, function(img, n){
+										var _img = img.img;
+
+										var el = $(image.elements[n]).closest('.imagesWrapper');
+
+										var aspectRatio = _img.naturalHeight / _img.naturalWidth
+
+										if(aspectRatio > 1.66) aspectRatio = 1.66
+
+										console.log("EL", el)
+
+										el.height( Math.min( 400, images.width() || self.app.width) * aspectRatio)
+									})
+
 								
-								_.each(image.images, function(img){
-									var _img = img.img;
-
-									var _aspectRatio = _img.naturalHeight / _img.naturalWidth
-
-									if(_aspectRatio > aspectRatio) aspectRatio = _aspectRatio
-								})
-
-								if (aspectRatio){
-
-									if(aspectRatio > 1.66) aspectRatio = 1.66
-
-									images.find('.imagesWrapper').height( Math.min( 400, images.width() )* aspectRatio)
 								}
-								
-							}
-							else{
+								else{
 
-								var imageswidth = images.width()
+									var imageswidth = images.width()
 
-								_.each(image.images, function(img, n){
+									_.each(image.images, function(img, n){
 
-									var _img = img.img;
-									var el = $(image.elements[n]).closest('.imagesWrapper');
+										var _img = img.img;
+										var el = $(image.elements[n]).closest('.imagesWrapper');
 
-									var ac = '';
+										var ac = '';
 
-									/*var _w = imagesWrapperWidth;
-									var _h = imagesWrapperHeight*/
+										/*var _w = imagesWrapperWidth;
+										var _h = imagesWrapperHeight*/
 
-									var _w = el.width();
-									var _h = el.height()
+										var _w = el.width();
+										var _h = el.height()
 
-									if(_img.width >= _img.height && (!isMobile() && self.app.width > 768 && !ed.openapi)){
-										ac = 'w2'
+										if(_img.width >= _img.height && (!isMobile() && self.app.width > 768 && !ed.openapi)){
+											ac = 'w2'
 
-										var w = _w * (_img.width / _img.height);
+											var w = _w * (_img.width / _img.height);
 
-										if (w > imageswidth){
-											w = imageswidth
+											if (w > imageswidth){
+												w = imageswidth
 
-											h = w * ( _img.height / _img.width) 
+												h = w * ( _img.height / _img.width) 
 
-											el.height(h);
+												el.height(h);
+											}
+
+											el.width(w);
 										}
 
-										el.width(w);
-									}
+										if(_img.height >= _img.width || (isMobile() || self.app.width <= 768 || ed.openapi)){
+											ac = 'h2'
 
-									if(_img.height >= _img.width || (isMobile() || self.app.width <= 768 || ed.openapi)){
-										ac = 'h2'
+											el.height(_w * (_img.height / _img.width))
+										}
 
-										el.height(_w * (_img.height / _img.width))
-									}
+										if(ac){
+											el.addClass(ac)
+										}
+										
+									})
 
-									if(ac){
-										el.addClass(ac)
-									}
+
+								}
+
+							}
+
+							var isclbk = function(){
+
+
+								
+								images.addClass('active');
+
+								_el.addClass('active');
+
+								if (clbk) clbk();
+							}
+
+							console.log('share.settings.v', share.settings.v, image.images)
+
+							if(share.settings.v != 'a' && image.images.length > 1){
+
+								var gutter = 5;
+
+								if (isMobile() || ed.repost) {
+
+
+									new carousel(images, '.imagesWrapper', '.imagesContainer')
+
+									/*images.find('.imagesContainer').owlCarousel({
+										items: 1,
+										dots: true,
+										nav: !isMobile(),
+										navText: [
+											'<i class="fas fa-chevron-left"></i> ',
+											'<i class="fas fa-chevron-right"></i>'
+											]
 									
-								})
+									});*/
 
-
-							}
-
-						}
-
-						var isclbk = function(){
-
-
-							
-							images.addClass('active');
-
-							_el.addClass('active');
-
-							if (clbk) clbk();
-						}
-
-						if(share.settings.v != 'a' && image.images.length > 1){
-
-							var gutter = 5;
-
-							if (isMobile() || ed.repost) {
-
-								images.find('.imagesContainer').owlCarousel({
-									items: 1,
-									dots: true,
-									nav: !isMobile(),
-									navText: [
-										'<i class="fas fa-chevron-left"></i> ',
-										'<i class="fas fa-chevron-right"></i>'
-										]
-								  
-								});
-
-								isclbk()
-
-							}
-							else{
-								images.isotope({
-
-									layoutMode: 'packery',
-									itemSelector: '.imagesWrapper',
-									packery: {
-										gutter: gutter
-									},
-									initLayout: false
-								});
-	
-								images.on('arrangeComplete', function(){
 									isclbk()
-								});
-	
-								images.isotope()
+
+								}
+								else{
+									console.log("HERE???")
+									images.addClass('manyImagesView')
+									isclbk()
+									/*images.isotope({
+
+										layoutMode: 'packery',
+										itemSelector: '.imagesWrapper',
+										packery: {
+											gutter: gutter
+										},
+										initLayout: false
+									});
+		
+									images.on('arrangeComplete', function(){
+										isclbk()
+									});
+		
+									images.isotope()*/
+								}
+
+								
+
+								
+							}
+							else
+							{
+								isclbk()
 							}
 
 							
-
-							
-						}
-						else
-						{
-							isclbk()
-						}
-
-						
-					}, self.app);
+						}, self.app);
 
 
-				}
+					}
+
 			},
 			share: function (clbk) {
 
@@ -1323,6 +1378,7 @@ var post = (function () {
 
 						el.stars = el.share.find('.forstars');
 
+						_p.el.find('.boost').on('click', events.boost)
 						_p.el.find('.pkoin').on('click', events.pkoin)
 						_p.el.find('.gotouserprofile').on('click', events.gotouserprofile)
 
@@ -2013,7 +2069,7 @@ var post = (function () {
 
 			},
 
-			clearparameters: ['s', 'commentid', 'parentid'],
+			clearparameters: ['s', 'v', 'commentid', 'parentid'],
 
 			init: function (p) {
 
@@ -2092,10 +2148,15 @@ var post = (function () {
 
 	self.stop = function () {
 
+		console.log("????STOP???")
+
 		_.each(essenses, function (essense) {
 
-			if(!essense.pip)
-				essense.destroy();
+			if(!essense.pip){
+				window.requestAnimationFrame(() => {
+					essense.destroy();
+				})
+			}
 
 		})
 

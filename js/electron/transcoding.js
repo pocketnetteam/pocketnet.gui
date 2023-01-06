@@ -299,7 +299,6 @@ async function transcodingProcessor(electronIpcMain) {
           const fileName = `transvideo-${randomId(6)}.temp.mp4`;
           const fileLocation = path.join(tempDir, fileName);
 
-          console.log('Created temporary file', fileLocation);
           fs.writeFileSync(fileLocation, '');
 
           const transcodeProcess = ffmpeg(filePath);

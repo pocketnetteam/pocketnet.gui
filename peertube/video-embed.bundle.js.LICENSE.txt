@@ -9,19 +9,23 @@
  * @license  MIT
  */
 
-/*! @name videojs-contextmenu-pt @version 5.4.1 @license Apache-2.0 */
-
-/*! @name videojs-contrib-quality-levels @version 2.1.0 @license Apache-2.0 */
-
-/*! @name videojs-dock @version 2.2.0 @license Apache-2.0 */
-
 /*! @name videojs-overlay @version 2.1.5 @license Apache-2.0 */
 
 /*! ieee754. BSD-3-Clause License. Feross Aboukhadijeh <https://feross.org/opensource> */
 
+/*! queue-microtask. MIT License. Feross Aboukhadijeh <https://feross.org/opensource> */
+
+/*! run-parallel. MIT License. Feross Aboukhadijeh <https://feross.org/opensource> */
+
+/*! safe-buffer. MIT License. Feross Aboukhadijeh <https://feross.org/opensource> */
+
+/*! simple-peer. MIT License. Feross Aboukhadijeh <https://feross.org/opensource> */
+
+/*! simple-websocket. MIT License. Feross Aboukhadijeh <https://feross.org/opensource> */
+
 /**
  * @license
- * Video.js 7.18.1 <http://videojs.com/>
+ * Video.js 7.20.1 <http://videojs.com/>
  * Copyright Brightcove, Inc. <https://www.brightcove.com/>
  * Available under Apache License Version 2.0
  * <https://github.com/videojs/video.js/blob/main/LICENSE>
@@ -29,4 +33,21 @@
  * Includes vtt.js <https://github.com/mozilla/vtt.js>
  * Available under Apache License Version 2.0
  * <https://github.com/mozilla/vtt.js/blob/main/LICENSE>
+ */
+
+/**
+ * @license Apache-2.0
+ * Copyright 2018 Novage LLC.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */

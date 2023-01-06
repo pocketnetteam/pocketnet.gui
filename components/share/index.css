@@ -20,6 +20,10 @@
 #share .emojionearea.form-control {
   font-size: 1em;
 }
+#share .peertube-server-hint {
+  right: 0;
+  bottom: 0;
+}
 #share .sLoader {
   display: none;
   position: absolute;
@@ -36,6 +40,10 @@
 }
 #share .tgsWrapperMain #taginput {
   margin-top: 0.5em;
+}
+#share .tgsWrapperMain #taginput .mobsearch {
+  cursor: pointer;
+  padding: 1.5em 1em;
 }
 #share .tgsWrapperMain #taginput .inputWrapper {
   background: rgb(var(--background-main));
@@ -64,7 +72,7 @@
 }
 #share.minimized {
   padding: 0;
-  min-height: 0!important;
+  min-height: 60px!important;
 }
 #share.minimized .attachements {
   display: none;
@@ -633,7 +641,7 @@
   vertical-align: middle;
 }
 #share .postpanel > div.postWrapper {
-  width: 140px;
+  width: 280px;
   padding-right: 0;
   text-align: right;
 }
@@ -730,6 +738,10 @@
 #share .videoStatsWrapper {
   font-weight: 100;
   padding-top: 0.5em;
+}
+.topvideosWrapper .peertube-server-hint {
+  bottom: 0;
+  font-size: 0.6em;
 }
 .sharedate .selectDateTableWrapper {
   width: 500px;
@@ -828,6 +840,7 @@
 }
 .wnd.wndsharepost .wndcontent #share .postlineWrapper {
   position: absolute;
+  padding-left: 1em;
   bottom: 0.5em;
   background: rgb(var(--background-secondary-theme));
 }
@@ -961,6 +974,9 @@ html.mobileview .wnd.wndsharepost .wndcontent #share .absolutetxwrapper {
   }
   #share #taginput .tgs .tagsWrapper > div.tagsInputWrapper > div {
     margin-right: 0;
+  }
+  #share .cpt input {
+    background: rgb(var(--background-total-theme));
   }
   #share .tgsWrapperMain #taginput .inputWrapper {
     background: rgb(var(--background-total-theme));
@@ -1173,12 +1189,6 @@ html.mobileview .wnd.wndsharepost .wndcontent #share .absolutetxwrapper {
   #share .tgs .tagsWrapper > div.tagsInputWrapper > div {
     margin-right: 0;
   }
-  #share .tgs .tag {
-    margin-top: 0.5em;
-    margin-right: 0.25em;
-    margin-left: 0.25em;
-    margin-bottom: 0;
-  }
   #share .imagesWrapper .imagesEmbWr {
     overflow: hidden;
     opacity: 1;
@@ -1326,7 +1336,7 @@ html.mobileview .wnd.wndsharepost .wndcontent #share .absolutetxwrapper {
   }
   #share .postlineWrapper {
     margin: 0;
-    padding-left: 0;
+    padding-left: 0!important;
     padding-right: 0;
     position: static!important;
   }

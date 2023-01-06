@@ -167,6 +167,8 @@ var transactionview = (function(){
 				if (tx) 
 					type = actions.type(tx)
 
+				if(!el.c) return
+
 				self.shell({
 					inner : html,
 					name : 'tx',
@@ -285,7 +287,9 @@ var transactionview = (function(){
 
 		_.each(essenses, function(essense){
 
-			essense.destroy();
+			window.requestAnimationFrame(() => {
+				essense.destroy();
+			})
 
 		})
 

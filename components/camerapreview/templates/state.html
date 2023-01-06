@@ -1,0 +1,48 @@
+
+
+
+
+<% if(!cameraenabled) {%>
+    <div class="notfound">
+        <div><span><%-e('cameranotavailable')%></span></div>
+    </div>
+<% } else { %> 
+
+    <% if(current) { %> 
+
+        <div class="currentpicture">
+            <div class="image" image="<%-current%>"></div>
+        </div>
+
+        <div class="removepicture mbtn left">
+            <div>
+                <i class="fas fa-redo-alt"></i>
+            </div>
+        </div>
+
+        <div class="selectpicture mbtn right">
+            <div>
+                <i class="fas fa-check"></i>
+            </div>
+        </div>
+        
+        
+    <% } else { %> 
+
+        <div class="takepicture mbtn">
+            <div>
+                <i class="fas fa-camera"></i>
+            </div>
+        </div>
+
+        <div class="changedirection mbtn left small">
+            <div>
+                <i class="fas fa-sync"></i>
+            </div>
+        </div>
+        
+    <% } %>
+
+
+    
+<% } %>

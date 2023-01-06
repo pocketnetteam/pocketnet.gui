@@ -113,7 +113,8 @@ var accounts = (function(){
 
 				var l = deep(pack, 'addresses.length')
 
-				if (l >= 5){
+
+				if (l >= (window.testpocketnet ? 20 : 5)){
 
 					sitemessage(self.app.localization.e('max5acc'))
 
@@ -285,6 +286,8 @@ var accounts = (function(){
 
 				}, function(p){
 
+					if(!p || !p.el) return
+
 					p.el.find('.remove').on('click', events.remove)
 					p.el.find('.dumpkey').on('click', events.dumpkey)
 					
@@ -395,7 +398,9 @@ var accounts = (function(){
 
 		_.each(essenses, function(essense){
 
-			essense.destroy();
+			window.requestAnimationFrame(() => {
+				essense.destroy();
+			})
 
 		})
 

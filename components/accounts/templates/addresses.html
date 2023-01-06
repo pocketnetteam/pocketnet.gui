@@ -11,7 +11,7 @@
 
 %>
 	<div class="wrk">
-		<div elementsid="accounts_<%-ncur%>" class="addressTable table <%-cur%> <%-ncur%>" address="<%-address%>">
+		<div elementsid="accounts_<%-ncur%>" class="addressTable <%-cur%> <%-ncur%>" address="<%-address%>">
 			<div class="iconWrapper">
 				<div class="icon">
 
@@ -23,7 +23,7 @@
 						
 					%>
 
-					<div class="usericon" ban=".gif" image="<%-src || '*'%>">
+					<div class="usericon" ban=".gif" image="<%-src || '*'%>" contain="none">
 
 						<% if(!src && letter) { %>
 
@@ -45,7 +45,9 @@
 
 			<div class="label">
 
-				<%- deep(app, 'platform.sdk.usersl.storage.'+address+'.name') || address %>
+				<span class="name">
+					<%- deep(app, 'platform.sdk.usersl.storage.'+address+'.name') || address %>
+				</span>
 
 				<% if(cur) { %> 
 

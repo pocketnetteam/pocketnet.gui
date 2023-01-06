@@ -54,6 +54,7 @@ var imagegallery = (function(){
 			},
 
 			next : function(){
+				console.log("NEXT")
 				if(essenseData.images.length > 1){
 					actions.prepareImages();
 
@@ -489,7 +490,7 @@ var imagegallery = (function(){
 						if(hammers.s) hammers.s.destroy()
 						// Instance a second hammer instance for the swipping outside of the image
 						hammers.s = new Hammer(zoomData.fullContainer);
-						hammers.s.get('swipe').set({ direction: Hammer.DIRECTION_ALL });
+						/*hammers.s.get('swipe').set({ direction: Hammer.DIRECTION_ALL });
 							// Event for the swipe left and right outside the image
 							hammers.s.on('swipeleft swiperight', function(e) {
 								// If we can pan horizontally, cancel the swipe
@@ -506,7 +507,7 @@ var imagegallery = (function(){
 								if ((zoomData.imageContainerParent.height() * 1.2) < zoomData.current.height) return;
 								// Close the gallery
 								self.closeContainer();
-							});
+							});*/
 
 					}, self.app);
 
@@ -673,7 +674,9 @@ var imagegallery = (function(){
 
 		_.each(essenses, function(essense){
 
-			essense.destroy();
+			window.requestAnimationFrame(() => {
+				essense.destroy();
+			})
 
 		})
 

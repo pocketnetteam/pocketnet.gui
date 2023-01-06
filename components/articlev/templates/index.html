@@ -38,7 +38,7 @@
 
 									%>
 
-									<div class="usericon" ban=".gif" image="<%-src || '*'%>">
+									<div class="usericon" ban=".gif" image="<%-src || '*'%>" contain="none">
 
 										<% if(!src && letter) {%>
 											<span class="letter">
@@ -55,23 +55,13 @@
 									</div>
 								</div>
 
-								<div class="forback">
-									<button class="button ghost backfromedittags"><i class="fas fa-chevron-left"></i></button>
-								</div>
 
 								<div class="statusWrapper">
 									<div class="articlecaptiondouble">
 										
 									</div>
-									<div class="tagswrapper">
-										<div class=""></div>
-									</div>
-									<div class="tagsinputwrapper">
-										
-										<div class="forinput ">
-
-										</div>
-									</div>
+									
+									
 								</div>
 							</div>
 
@@ -95,11 +85,11 @@
 
 			</div>
 
-			<div class="forbackmain">
+			<!--<div class="forbackmain">
 				<div class="mwork">
 					<i class="fas fa-chevron-circle-left"></i> <span><%= e('art_goback') %></span>
 				</div>
-			</div>
+			</div>-->
 
 			<div class="coverelements">
 				<div class="coverelementsinner">
@@ -124,6 +114,11 @@
 					<div class="abody">
 
 						<div class="abodywrp">
+
+							<div class="tagsinputwrapper">
+								<div class="forinput ">
+								</div>
+							</div>
 				
 							<div class="captionWrapper">
 								<textarea rows="2" placeholder="<%= e('art_caption') %>"></textarea>

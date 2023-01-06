@@ -1,3 +1,9 @@
+#pkoin .content.liftUpThePost .options {
+  display: none;
+}
+#pkoin .content.liftUpThePost .wndinner {
+  height: 540px;
+}
 #pkoin .content .vc_valuecustom .vc_textInput {
   border: 0;
   background: transparent;
@@ -5,7 +11,7 @@
 #pkoin .content .top,
 #pkoin .content .fieldsWrapper,
 #pkoin .content .sendButtonWrapper {
-  padding: 1em;
+  padding: 1em 1em;
 }
 #pkoin .content .top {
   display: flex;
@@ -148,17 +154,15 @@
   color: rgb(var(--color-txt-ac));
   position: absolute;
   right: 12px;
-  top: 12px;
+  top: 14px;
 }
 #pkoin .content .fieldsWrapper .fields .sum .inputWrapper .notion {
-  display: flex;
-  justify-content: space-between;
   font-size: 0.8em;
   margin-top: 0.5em;
 }
 #pkoin .content .fieldsWrapper .fields .sum .inputWrapper .notion .balance {
   display: flex;
-  padding-left: 1.5em;
+  padding-left: 1em;
 }
 #pkoin .content .fieldsWrapper .fields .sum .inputWrapper .notion .balance .text {
   color: rgb(var(--neutral-grad-3));
@@ -171,8 +175,8 @@
   padding-left: 0.5em;
 }
 #pkoin .content .fieldsWrapper .fields .sum .inputWrapper .notion .errorWrapper {
-  padding-left: 0.5em;
-  padding-right: 1.5em;
+  margin-top: 0.5em;
+  padding-left: 1em;
   color: rgb(var(--color-bad));
 }
 #pkoin .content .fieldsWrapper .fields .comment .text {
@@ -223,10 +227,16 @@
 #pkoin .boostinfodata .text span {
   font-size: 0.7em;
 }
-.wnd.pkoinwindow .wndinner.pkoin {
+.wnd.pkoinwindow .wndinner.pkoin,
+.wnd.pkoinwindow .wndinner.boost {
   max-width: 370px;
-  max-height: 620px;
   box-shadow: none;
+}
+.wnd.pkoinwindow .wndinner.pkoin {
+  max-height: 620px;
+}
+.wnd.pkoinwindow .wndinner.boost {
+  max-height: 500px;
 }
 .wnd.pkoinwindow .wndinner .wndheader {
   display: none;
