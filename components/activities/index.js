@@ -103,7 +103,6 @@ var activities = (function(){
 				if(!activities.length) {
 					return self.app.api.fetch('ping', {}, { timeout : 4000 }).then(async (r) => {
 						block = r
-						console.log('currrent block')
 						try {
 							activities = await self.app.api.rpc('getactivities', [self.user.address.value, r.height, , getters.getFilters(currentFilter)])
 						} catch (e) {
@@ -166,7 +165,6 @@ var activities = (function(){
 				})
 			},
 			openMultiBlocks(data, clbk) {
-				console.log('open block')
 				self.app.nav.api.load({
 					open : true,
 					href : 'userslist',
