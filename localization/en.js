@@ -1168,6 +1168,7 @@ _l.uploadVideoProgress_processing = "Processing video:"
 _l.uploadVideoProgress_uploading = "Uploading video:"
 _l.uploadAudioProgress_uploading = "Uploading audio:"
 _l.uploadVideoProgress_start = "Video download initialization:"
+_l.uploadAudioProgress_start = "Audio download initialization:"
 _l.uploadCanceled = "Upload canceled"
 
 _l.pleaseTryAgain = "Something was wrong there. Please try again"
