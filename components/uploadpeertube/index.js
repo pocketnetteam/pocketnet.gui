@@ -646,6 +646,7 @@ var uploadpeertube = (function () {
 				var data = {
 					hasAccess: false,
 					increase: {},
+					isAudio: (ed.isAudio != undefined) ? ed.isAudio : false
 				};
 
 				error = false;

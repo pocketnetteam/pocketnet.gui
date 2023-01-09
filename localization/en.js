@@ -1083,6 +1083,7 @@ _l.e14110 = "Google Play Market"
 
 
 _l.peertubeAddVideo = "Upload Video"
+_l.peertubeAddAudio = "Upload Audio"
 _l.peertubeAddStream = "Add live stream to post"
 
 _l.e14111 = "There was a problem with loading images"
@@ -1159,7 +1160,9 @@ _l.videoTranscodingNotOptimal = "Not optimal transcoding result. Continuing with
 _l.videoTranscodingError = "There was an error with processing your video"
 _l.videoUploadingFinish = "Finishing uploading..."
 _l.uploadNewVideo = "Upload New Pocketvideo"
+_l.uploadNewAudio = "Upload New Pocketaudio"
 _l.selectVideoFile = "Select video file"
+_l.selectAudioFile = "Select audio file"
 _l.uploadVideoProgress_binaries = "Preparing binaries:"
 _l.uploadVideoProgress_processing = "Processing video:"
 _l.uploadVideoProgress_uploading = "Uploading video:"
