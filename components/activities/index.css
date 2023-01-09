@@ -74,7 +74,7 @@
   flex-wrap: nowrap;
   background: transparent;
   transition: 0.3s ease all;
-  border-radius: 12px;
+  /*border-radius: 12px;*/
   cursor: pointer;
 }
 .container .comment:hover {
