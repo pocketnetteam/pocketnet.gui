@@ -291,6 +291,10 @@ var uploadpeertube = (function () {
 
 				let transcodingAllowed = (transcodeOption && transcodeOption.value);
 
+				// For audio files, disable the transcoding
+				if (videoInputFile[0].type.includes('audio'))
+					transcodingAllowed = false;
+
 				let transcoded = null;
 
 
