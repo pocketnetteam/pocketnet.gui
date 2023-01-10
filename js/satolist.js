@@ -30109,8 +30109,8 @@ Platform = function (app, listofnodes) {
             let newWindow = window.open("/messenger", "messengerWindow", "popup,width=1200,height=600");
             // self.matrixchat.destroy
             // alert(newWin.location.href); // (*) about:blank, загрузка ещё не началась
-            // console.log('newWindow alert', newWindow)
-
+            console.log('newWindow alert', newWindow)
+            // newWindow
             function tick() {
                  if(newWindow.name === '') {
                     self.matrixchat.startchat()                    
