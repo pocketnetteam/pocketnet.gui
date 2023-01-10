@@ -1586,6 +1586,7 @@ Share = function(lang){
 	self.typeop = function(platform){
 
 		if (self.itisvideo()) return 'video'
+
 		if (self.itisarticle()) return 'article'
 
 		if (self.aliasid){
