@@ -7,8 +7,12 @@
 			</h1>			
 			<div class="video">
 				<h2><%-e('boost_c22')%></h2>
-				<iframe width="" style="aspect-ratio:1.7770833333333333" src="https://bastyon.com/embedVideo.php?embed=true&amp;s=711c7030bcd0b5a3aa69be6c1df454f2790e42c144144cd5d5e9e93ee5b237cd&amp;host=peertube23.pocketnet.app&amp;id=737525b7-e1d5-4c87-9f41-ff3b605c877c" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="">
-					
+				<% if(app.localization.key === 'ru') {%>
+					<iframe width="640" style="aspect-ratio:1.7770833333333333" src="https://bastyon.com/embedVideo.php?embed=true&s=711c7030bcd0b5a3aa69be6c1df454f2790e42c144144cd5d5e9e93ee5b237cd&host=peertube23.pocketnet.app&id=737525b7-e1d5-4c87-9f41-ff3b605c877c" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+				<% } %>
+				<% if(app.localization.key === 'en') {%>
+					<iframe width="640" style="aspect-ratio:1.7770833333333333" src="https://bastyon.com/embedVideo.php?embed=true&s=2cdab966cf0cce28b52597a42d9f4290489b120a2ec64a09e6a6650ffb090f66&host=peertube23.pocketnet.app&id=cf7b0d22-6d10-46bc-bb9b-de6d51482153" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+				<% } %>					
 				</iframe>
 			</div>
 			<div class="columns">
@@ -121,7 +125,7 @@
 					<%-e('boost_c41')%>					
 				</p>
 				<% if(app.localization.key === 'ru') {%>
-					<img src="./img/ads-on-bastyon1-ru.jpg"/>
+					<img src="./img/basty-boost-img.jpg"/>
 				<% } %>
 				<% if(app.localization.key === 'en') {%>
 					<img src="./img/ads-on-bastyon1-en.jpg"/>
@@ -141,7 +145,7 @@
 					<%-e('boost_c43')%>
 				</p>
 				
-				<a target="_blank" href="https://bastyon.com/" class="cta "> 
+				<a target="_blank" href="https://bastyon.com/index" class="cta "> 
 					<%-e('boost_c44')%>					
 				</a>
 			
