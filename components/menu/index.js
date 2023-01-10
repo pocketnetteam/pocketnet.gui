@@ -298,8 +298,8 @@ var menu = (function(){
 			openChatInPopup: {
 				click: function(el) {
 					console.log(';l;lkas;ldk; function')
-				 self.app.platform.matrixchat.openinpopup()
-				}
+				 	self.app.platform.matrixchat.openinpopup()					
+				},
 			   },
 
 			notifications : {

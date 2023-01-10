@@ -29937,6 +29937,7 @@ Platform = function (app, listofnodes) {
         inited : false,
         initing : false,
         chatparallax : null,
+        chatInWindow: null,
 
         clbks : {
             ALL_NOTIFICATIONS_COUNT : {},
@@ -30105,26 +30106,57 @@ Platform = function (app, listofnodes) {
         },
 
         openinpopup: function() {
-            // console.log('function is work')
-            let newWindow = window.open("/messenger", "messengerWindow", "popup,width=1200,height=600");
-            // self.matrixchat.destroy
-            // alert(newWin.location.href); // (*) about:blank, загрузка ещё не началась
-            console.log('newWindow alert', newWindow)
-            // newWindow
-            function tick() {
-                 if(newWindow.name === '') {
-                    self.matrixchat.startchat()                    
-                    setTimeout (clearInterval(t), 100)
+            if(self.matrixchat.chatInWindow !== null && self.matrixchat.chatInWindow?.name !== '') {
+                self.matrixchat.chatInWindow.focus()
+            } else {
+                self.matrixchat.chatInWindow = window.open("/messenger", "messengerWindow", "popup,width=1200,height=600");
+                // self.matrixchat.destroy
+                // alert(newWin.location.href); // (*) about:blank, загрузка ещё не началась
+                console.log('newWindow alert', self.matrixchat.chatInWindow)
+                // newWindow
+                function tick() {
+                     if(self.matrixchat.chatInWindow.name === '') {
+                        self.matrixchat.init()                    
+                        setTimeout (clearInterval(t), 100)
+                    }
                 }
-            }
-              
-            var t = setInterval(tick, 100)
-            tick()
-            if(newWindow.name !== '') {
-                self.matrixchat.destroy()
-            }
-            
+                  
+                var t = setInterval(tick, 100)
+                tick()
+    
+                if(self.matrixchat.chatInWindow.name !== '') {
+                    self.matrixchat.destroy()
+                    
+                    self.matrixchat.core = self.matrixchat.chatInWindow.core
 
+                    console.log('self.matrixchat.chatInWindow.core', self.matrixchat.chatInWindow.core);
+                    console.log('self.matrixchat.chatInWindow.matrixchat', self.matrixchat.chatInWindow.matrixchat);
+                    console.log('self.matrixchat.core', self.matrixchat.core);
+
+                    var core = self.matrixchat.core
+                    core.update({
+                        block : {
+                            height : self.currentBlock
+                        }
+                    })
+                    
+                    self.matrixchat.core = core 
+            
+                    core.externalLink(self.matrixchat)
+            
+                    self.app.platform.ws.messages["newblocks"].clbks.newsharesLenta =
+                    self.app.platform.ws.messages["new block"].clbks.matrixchat = function(){
+    
+                        core.update({
+                            block : {
+                                height : self.currentBlock
+                            }
+                        })
+    
+                    }
+                    
+                }
+            }          
         },
         initcl : function(clbk){
             self.matrixchat.init()
@@ -30342,6 +30374,7 @@ Platform = function (app, listofnodes) {
         share : {
 
             object : function(sharing){
+                console.log('share object')
                 if (self.matrixchat.core){
 
                     self.matrixchat.core.apptochat()
@@ -30358,7 +30391,20 @@ Platform = function (app, listofnodes) {
             },
 
             url : function(url){
-                if (self.matrixchat.core){
+                if (self.matrixchat.chatInWindow) {
+                    if(self.matrixchat.chatInWindow) {
+                        self.matrixchat.chatInWindow.focus()
+
+                        return self.matrixchat.chatInWindow.matrixchat.share({
+                            urls : [url]
+                        }).catch(e => {
+    
+                            self.matrixchat.core.backtoapp()
+    
+                            return Promise.reject(e)
+                        })
+                    } 
+                } else if (self.matrixchat.core){                   
 
                     self.matrixchat.core.apptochat()
 
@@ -30371,6 +30417,7 @@ Platform = function (app, listofnodes) {
                         return Promise.reject(e)
                     })
                 }
+                
 
                 return Promise.reject('matrixchat.core')
             }
