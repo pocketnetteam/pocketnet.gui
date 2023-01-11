@@ -1879,6 +1879,7 @@ var CancelablePromise = __webpack_require__("0bb9");
                 "rel_type": "m.replace",
                 "event_id": this.core.mtrx.clearEventId(this.relationEvent.event) || functions["a" /* default */].makeid()
               };
+              console.log("R", r, text);
               var editEvent = r;
               this.relationEvent.event.event.content.body = r.body;
               this.relationEvent.event.event.content.block = r.block;
