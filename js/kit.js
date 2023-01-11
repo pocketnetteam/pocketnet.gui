@@ -2399,7 +2399,7 @@ pShare = function(){
 			var v = videoImage(self.url)
 			if (v){
 				s.image = v;
-				s.images.unshift(v)
+				//s.images.unshift(v)
 			}
 		}
 
