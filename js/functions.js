@@ -788,6 +788,8 @@
 
 		var initevents = function(){
 
+			if(!wnd) return
+
 			if(!p.noCloseBack)
 				wnd.find('.wndback').one('click', function(){
 
