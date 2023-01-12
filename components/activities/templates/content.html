@@ -245,9 +245,9 @@ if(activity.txType === 300) {
 %>
 <%
 }
-if(!activities) {
+if( Object.keys(activities).length === 0 && !loading) {
 %>
-<h1>Нет данных</h1>
+<div class="empty"><%=e('a_empty')%></div>
 <%
 }
 %>

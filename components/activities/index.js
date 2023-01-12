@@ -91,9 +91,10 @@ var activities = (function(){
 				loading = v
 				if (loading) {
 					el.loader[0].style.display = 'block'
+					renders.content()
 				} else {
 					el.loader[0].style.display = 'none'
-					  renders.content()
+					renders.content()
 				}
 			},
 
@@ -191,6 +192,7 @@ var activities = (function(){
 					return
 				}
 				activities = []
+				renders.content()
 				end = false
 				currentFilter = $(this).attr('rid');
 
@@ -211,7 +213,6 @@ var activities = (function(){
 			loadmorescroll : function(){
 
 				if (el.c.height() - scnt.scrollTop() < 800 && !loading && !end) {
-					console.log('get')
 					actions.getdata()
 				}
 			},
@@ -240,6 +241,7 @@ var activities = (function(){
 					name : 'content',
 					el : el.content,
 					data : {
+						loading: loading,
 						activities : getters.formatActivities(),
 						openPost: actions.openPost,
 					},

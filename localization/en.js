@@ -118,6 +118,7 @@ _l.a_block = function(c){
     return c ? `You have blocked ${c} users` : `You have blocked`
 };
 _l.a_unblock= "You have unblocked";
+_l.a_empty = "No statistics for the last 3 months";
 //user page
 
 
