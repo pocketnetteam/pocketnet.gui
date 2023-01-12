@@ -29952,7 +29952,9 @@ Platform = function (app, listofnodes) {
 
             return Promise.reject('matrixchat.core')
         },
-
+        destroyChat : function(){
+            $('#matrix').html('');
+        },
         destroy : function(){
 
 
@@ -30099,7 +30101,6 @@ Platform = function (app, listofnodes) {
 
                         }, null, app);
 
-
                     }
                 }
             })
@@ -30110,12 +30111,10 @@ Platform = function (app, listofnodes) {
                 self.matrixchat.chatInWindow.focus()
             } else {
                 self.matrixchat.chatInWindow = window.open("/messenger", "messengerWindow", "popup,width=1200,height=600");
-                // self.matrixchat.destroy
-                // alert(newWin.location.href); // (*) about:blank, загрузка ещё не началась
-                console.log('newWindow alert', self.matrixchat.chatInWindow)
-                // newWindow
+                
                 function tick() {
                      if(self.matrixchat.chatInWindow.name === '') {
+                        self.matrixchat.destroy()
                         self.matrixchat.init()                    
                         setTimeout (clearInterval(t), 100)
                     }
@@ -30125,36 +30124,7 @@ Platform = function (app, listofnodes) {
                 tick()
     
                 if(self.matrixchat.chatInWindow.name !== '') {
-                    self.matrixchat.destroy()
-                    
-                    self.matrixchat.core = self.matrixchat.chatInWindow.core
-
-                    console.log('self.matrixchat.chatInWindow.core', self.matrixchat.chatInWindow.core);
-                    console.log('self.matrixchat.chatInWindow.matrixchat', self.matrixchat.chatInWindow.matrixchat);
-                    console.log('self.matrixchat.core', self.matrixchat.core);
-
-                    var core = self.matrixchat.core
-                    core.update({
-                        block : {
-                            height : self.currentBlock
-                        }
-                    })
-                    
-                    self.matrixchat.core = core 
-            
-                    core.externalLink(self.matrixchat)
-            
-                    self.app.platform.ws.messages["newblocks"].clbks.newsharesLenta =
-                    self.app.platform.ws.messages["new block"].clbks.matrixchat = function(){
-    
-                        core.update({
-                            block : {
-                                height : self.currentBlock
-                            }
-                        })
-    
-                    }
-                    
+                    self.matrixchat.destroyChat()                    
                 }
             }          
         },

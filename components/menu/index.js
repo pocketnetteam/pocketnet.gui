@@ -164,7 +164,6 @@ var menu = (function(){
 				},
 
 				init : function(el){
-
 					self.app.platform.matrixchat.clbks.ALL_NOTIFICATIONS_COUNT.menu = function(count){
 						actions.ahnotify(el, count, 'chat')
 					}
@@ -331,7 +330,7 @@ var menu = (function(){
 					self.app.platform.sdk.notifications.clbks.inited.menu =
 					self.app.platform.sdk.notifications.clbks.added.menu =
 					self.app.platform.sdk.notifications.clbks.seen.menu = function(){
-						actions.ahnotify(el, unseen().length, 'notifications')
+						actions.ahnotify(el, (unseen().length > 0 ? unseen().length : ''), 'notifications')
 					}
 
 					setTimeout(function(){
@@ -348,7 +347,7 @@ var menu = (function(){
 						
 					},2000)
 
-					actions.ahnotify(el, unseen().length, 'notifications')
+					actions.ahnotify(el, (unseen().length > 0 ? unseen().length : ''), 'notifications')
 
 					
 				},
@@ -967,7 +966,7 @@ var menu = (function(){
 					events.searchinit.init()
 				}
 			}
-
+			console.log('ALL_NOTIFICATIONS_COUNT', self.app.platform.matrixchat)
 			self.app.platform.matrixchat.clbks.ALL_NOTIFICATIONS_COUNT.menu2 = function(count){
 				actions.ahnotify(null, count, 'chat')
 			}
