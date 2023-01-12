@@ -97,13 +97,17 @@
   font-size: 16px;
   line-height: 20px;
 }
-.container .comment .description i.fa-thumbs-up {
+.container .comment i.fa-thumbs-up {
   margin: 8px 0;
   color: rgb(var(--color-bg-ac-bright));
 }
-.container .comment .description i.fa-thumbs-down {
+.container .comment i.fa-thumbs-down {
   margin: 8px 0;
   color: rgb(var(--color-bad));
+}
+.container .comment .icon {
+  display: flex;
+  align-items: center;
 }
 .container .comment .avatar {
   display: flex;

@@ -65,17 +65,15 @@ var userpage = (function(){
 			}
 
 
-			if(self.app.test) {
-				reports.push({
-					name : self.app.localization.e('ractivities'),
-					id : 'activities',
-					report : 'activities',
-					mobile : false,
-					if : function(){
-						return true
-					}
-				})
-			}
+			reports.push({
+				name : self.app.localization.e('ractivities'),
+				id : 'activities',
+				report : 'activities',
+				mobile : false,
+				if : function(){
+					return true
+				}
+			})
 			
 
 			reports.push({

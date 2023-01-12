@@ -92,18 +92,20 @@ if(activity.txType === 301) { %>
     <% if(activity.description) { %>
     <div class="message"><%- decodeURIComponent(activity.description.message) %></div>
     <% } %>
+    <div class="date"><%- activity.date.calendar() %></div>
+  </div>
+  <div class="icon">
     <% if(activity.val === 1) { %>
     <i class="fas fa-thumbs-up"></i>
     <% } %>
     <% if(activity.val === -1) { %>
     <i class="fas fa-thumbs-down"></i>
     <% } %>
-    <div class="date"><%- activity.date.calendar() %></div>
   </div>
 </div>
 <%}
 //  Subscribe
-if(activity.txType === 302 || activity.txType === 303) { %>
+if(activity.txType === 302 || activity.txType === 304) { %>
 <div class="comment">
   <div class="avatar">
     <a href="<%-activity?.relatedContent?.account.n%>">

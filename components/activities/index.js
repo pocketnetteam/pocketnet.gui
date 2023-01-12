@@ -8,7 +8,7 @@ var activities = (function(){
 
 		var primary = deep(p, 'history');
 
-		var el, loading, scnt, currentFilter, end = false, block;
+		var el, loading, scnt, currentFilter = 'all', end = false, block;
 
 		var filtersList = ['all', 'interactions', 'comment', 'subscriber', 'blocking']
 
@@ -99,7 +99,6 @@ var activities = (function(){
 
 			getdata : function(){
 				actions.setloading(true)
-
 				if(!activities.length) {
 					return self.app.api.fetch('ping', {}, { timeout : 4000 }).then(async (r) => {
 						block = r
@@ -301,13 +300,14 @@ var activities = (function(){
 			},
 
 			destroy : function(){
+				activities = []
+				currentFilter = 'all'
 				el = {};
 				scnt.off('scroll', events.loadmorescroll)
 				delete self.app.events.scroll['activities']
 			},
 
 			init : function(p){
-
 				state.load();
 
 				el = {};
