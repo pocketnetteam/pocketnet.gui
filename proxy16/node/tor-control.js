@@ -168,8 +168,16 @@ class TorControl {
         }
 
         const log = (data)=>{
+            const isBootstrapped100 = ({ data }) => data.includes('Bootstrapped 100%');
+            const isConnected = ({ data }) => (/Managed proxy .*: connected/g).test(data);
+            const isBrokerFailure = ({ data }) => (/Managed proxy .*: broker failure/g).test(data);
+
             console.log('data', data.data)
-            if(data?.data?.indexOf("100%") >= 0){
+
+            if (isBrokerFailure(data)) {
+                console.log("TOR connection lost")
+                this.state.status = "failure"
+            } else if (isBootstrapped100(data) || isConnected(data)) {
                 console.log("TOR started")
                 this.state.status = "started"
             }
