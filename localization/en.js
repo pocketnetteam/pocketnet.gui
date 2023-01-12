@@ -2277,6 +2277,9 @@ _l.lowstar2 = "Please do not use 1 and 2 star ratings for other reasons. After t
 _l.lowstaragree = "I confirm that this post contains one of four types of prohibited content"
 
 _l.usetor = "Connection via Tor network"
+_l.torHintStateEnabled = "Tor network state - enabled"
+_l.torHintStateDisabled = "Tor network state - disabled"
+_l.torHintStateLoading = "Tor network state - loading"
 
 _l.videotranscodingdelayedpost = "This video is being processed and will be posted as soon as the transcoding process ends. Please, do not close the tab untill then."
 

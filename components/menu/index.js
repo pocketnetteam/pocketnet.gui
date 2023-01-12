@@ -8,7 +8,8 @@ var menu = (function(){
 
 		var el = {},
 			authorForSearch = null,
-			menusearch = null;
+			menusearch = null,
+		    torIntervalId = null;
 
 		var loc = new Parameter({
 
@@ -446,7 +447,48 @@ var menu = (function(){
 						if (electron)
 							electron.ipcRenderer.send('electron-refresh');
 					})
-					
+
+					const controlTorElem = _el.find('.control-tor-state');
+					const currentProxy = app.api.get.current();
+					let proxyData;
+
+					if (torIntervalId) {
+						clearInterval(torIntervalId);
+					}
+
+					torIntervalId = setInterval(async () => {
+						if (!currentProxy.direct) {
+							return;
+						}
+
+						proxyData = await currentProxy.get.info();
+
+						if (proxyData.info.tor.state.status === 'started') {
+							controlTorElem.removeClass(['off', 'loading']);
+							controlTorElem.addClass('on');
+							controlTorElem.attr('title', app.localization.e('torHintStateEnabled'));
+						} else if (proxyData.info.tor.state.status === 'running') {
+							controlTorElem.removeClass(['on', 'off']);
+							controlTorElem.addClass('loading');
+							controlTorElem.attr('title', app.localization.e('torHintStateLoading'));
+						} else if (proxyData.info.tor.state.status === 'stopped') {
+							controlTorElem.removeClass(['on', 'loading']);
+							controlTorElem.addClass('off');
+							controlTorElem.attr('title', app.localization.e('torHintStateDisabled'));
+						}
+					}, 2000);
+
+					controlTorElem.on('click', () => {
+						const isTorEnabled = (
+							proxyData.info.tor.state.status === 'started' ||
+							proxyData.info.tor.state.status === 'loading'
+						);
+
+						currentProxy.fetchauth('manage', {
+							action: isTorEnabled ? 'tor.stop' : 'tor.start',
+							data: {}
+						});
+					});
 				},
 				fast : true,
 			},
@@ -1151,6 +1193,9 @@ var menu = (function(){
 					if (e.destroy)
 						e.destroy()
 				})
+
+				clearInterval(torIntervalId);
+				torIntervalId = null;
 
 				//if (el.c) el.c.empty()
 

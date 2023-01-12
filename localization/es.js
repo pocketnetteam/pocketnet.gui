@@ -835,6 +835,9 @@ _l.pleaseTryAgain = "Algo está incorrecto. Por favor, inténtelo de nuevo"
 _l.buy = 'Comprar';
 
 _l.usetor = "Conexión a través de la red Tor"
+_l.torHintStateEnabled = "Estado de red Tor - activado"
+_l.torHintStateDisabled = "Estado de red Tor - desactivado"
+_l.torHintStateLoading = "Estado de red Tor - cargando"
 
 _l.lowstar1 = "El equipo de Bastyon está implementando una moratoria temporal en las calificaciones de 1 y 2 estrellas, excepto el contenido prohibido. El contenido prohibido es:"
 _l.lowstar_reason_1 = "Erótico/Porno"

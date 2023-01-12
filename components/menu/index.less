@@ -292,8 +292,50 @@
 				&.control-right{
 					padding-left: @rhythm * 3;
 				}
+
+				.control-tor-state {
+					i::after {
+						position: absolute;
+					}
+
+					&.on {
+						color: rgb(var(--color-good));
+					}
+
+					/*&.auto {
+						color: @color-azure;
+
+						i::after {
+							content: 'A';
+							font-size: 0.5em;
+							font-family: 'Segoe UI Variable', 'Segoe UI', SegoeUI, "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+							margin-top: 1.6em;
+							margin-left: -0.2em;
+						}
+					}*/
+
+					&.off {
+						color: rgb(var(--neutral-grad-1));
+					}
+
+					&.loading {
+						color: rgb(var(--neutral-grad-1));
+
+						i::after {
+							content: '\f2f9';
+							font-size: 0.4em;
+							animation: rotate 1.5s linear infinite;
+							margin-top: 2.2em;
+							margin-left: -0.3em;
+						}
+
+						@keyframes rotate {
+							to { transform: rotate(360deg) }
+						}
+					}
+				}
 			}
-			
+
 			&.notificationsWrapper{
 				margin-right : @rhythm;
 			}
