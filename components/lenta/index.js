@@ -1867,6 +1867,16 @@ var lenta = (function(){
 
 								self.app.platform.errorHandler(error, true)	
 
+								if (error === 32 && value === "1"){
+
+									self.app.platform.api.actions.blocking(obj.address, function (tx, error) {
+										if (!tx) {
+											self.app.platform.errorHandler(error, true)
+										}
+									})
+
+								}
+
 
 								if(clbk)
 									clbk(false)
@@ -1891,10 +1901,6 @@ var lenta = (function(){
 						clbk(false)
 				})
 			},
-
-			block : function(address, clbk){
-				
-			},	
 			
 			openGalleryRec : function(share, initialValue, clbk){
 
@@ -2766,9 +2772,9 @@ var lenta = (function(){
 				actions.fullScreenVideo(shareId)
 			},
 
-			opensvi : function(){
+			opensvi : function(e){
 
-				var shareId = $(this).closest('.share').attr('id');
+				var shareId = $(e.target).closest('.share').attr('id');
 
 				if (essenseData.horizontal) {
 					self.app.Logger.info({
@@ -4816,7 +4822,6 @@ var lenta = (function(){
 			el.c.on('click', '.unblockbutton', events.unblock)
 			el.c.on('click', '.videoTips', events.fullScreenVideo)
 			el.c.on('click', '.videoOpen', events.fullScreenVideo)
-			el.c.on('click', '.opensviurl', events.opensvi)
 			el.c.on('click', '.exitFull', events.exitFullScreenVideo)
 			el.c.on('click', '.sharecnt', events.clickOutsideOfWindow)
 			el.c.on('click', '.commentsWrapperHb', events.clickOutsideOfWindow)
@@ -4864,6 +4869,68 @@ var lenta = (function(){
 				}
 
 			})
+
+			if (isMobile()){
+
+				var onlongtouch; 
+				var timer;
+				var touchduration = 1000; 
+				var event = null;
+				
+				function touchstart(e) {
+					event = e;
+					e.preventDefault();
+					if (!timer) {
+						timer = setTimeout(onlongtouch, touchduration);
+					}
+				}
+				
+				function touchend(e) {
+					if (timer) {
+						clearTimeout(timer);
+						timer = null;
+						events.opensvi(e);
+					}
+				}
+	
+				onlongtouch = function() { 
+
+					new dialog({
+						html : self.app.localization.e('blockUserQ'),
+						btn1text :  self.app.localization.e('blockuser'),
+						btn2text : self.app.localization.e('ucancel') ,
+	
+						class : 'zindex',
+	
+						success : function(){
+	
+							self.app.mobile.vibration.small();
+
+							var address = $(event.target).closest('.shareTable').attr('address');
+
+                            self.app.platform.api.actions.blocking(address, function (tx, error) {
+                                if (!tx) {
+                                    self.errorHandler(error, true)
+                                }
+                            })
+
+							event = null;
+	
+						}
+					})
+
+					timer = null;
+				};
+	
+				el.c.on('touchstart', '.opensviurl', touchstart)
+				el.c.on('touchend', '.opensviurl', touchend)
+				
+			} else {
+
+				el.c.on('click', '.opensviurl', events.opensvi)
+
+			}
+
 
 			//////////////////////
 
@@ -5147,13 +5214,13 @@ var lenta = (function(){
 				self.app.platform.clbks.api.actions.anysubscribe.lenta = actions.subscribeunsubscribeclbk
 
 				self.app.platform.clbks.api.actions.blocking.lenta = function(address){
-					var addressEl = el.c.find('.shareTable[address="'+address+'"]').closest('.share')
+					var addressEl = el.c.closest('.cnt').find('.shareTable[address="'+address+'"]').closest('.share')
 						addressEl.addClass('blocking');
 						actions.stopPlayers()
 				}
 
 				self.app.platform.clbks.api.actions.unblocking.lenta = function(address){
-					var addressEl = el.c.find('.shareTable[address="'+address+'"]').closest('.share')
+					var addressEl = el.c.closest('.cnt').find('.shareTable[address="'+address+'"]').closest('.share')
 						addressEl.removeClass('blocking');
 						actions.stopPlayers()
 				}
