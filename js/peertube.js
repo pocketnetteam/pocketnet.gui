@@ -588,13 +588,13 @@ PeerTubePocketnet = function (app) {
 			},
 
 			best: function (type) {
+				const special = deep(app, 'platform.real')[app.user.address.value];
 
-				return this.roys({ type: type })
+				return this.roys({ type, special, })
 					.then((data = {}) => {
 
 						const roysAmount = Object.keys(data).length;
 						var royId;
-
 
 						if (app.user.address.value) {
 
@@ -614,8 +614,7 @@ PeerTubePocketnet = function (app) {
 							royId = rand(0, roysAmount - 1);
 						}
 
-
-						return data[royId];
+						return Object.values(data)[royId];
 					})
 
 					.catch(() => 0)

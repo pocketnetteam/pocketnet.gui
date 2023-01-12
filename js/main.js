@@ -92,6 +92,32 @@ if(!_Node)
 
 	}
 
+	window.projects_meta = {
+		Pocketnet : {
+		  url : "pocketnet.app",
+		  turl : "test.pocketnet.app",
+		  fullname : "Pocketnet",
+		  protocol : 'pocketnet',
+		  blockexplorer : 'https://pocketnet.app/blockexplorer/'
+		},
+	
+		Bastyon : {
+		  fullname : "Bastyon",
+		  url : "bastyon.com",
+		  turl : "test.pocketnet.app",
+		  protocol : 'bastyon',
+		  blockexplorer : 'https://pocketnet.app/blockexplorer/'
+		},
+	
+		BastyonPapp : {
+		  fullname : "Bastyon",
+		  url : "pocketnet.app",
+		  turl : "test.pocketnet.app",
+		  protocol : 'bastyon',
+		  blockexplorer : 'https://pocketnet.app/blockexplorer/'
+		}
+	  }
+
 
 	app = new Application({
 		listofproxies : _listofproxies,

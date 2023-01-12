@@ -22,7 +22,7 @@ var deleted = typeof app.platform.sdk.user.myaccauntdeleted == 'undefined' && ap
 							<div elementsid="eventschats" class="item  chatwr" events="chats">
 								<div class="icon">
 									<div class="icn">
-										<i class="far fa-comment"></i>
+										<img src="img/christmas_chat.svg">
 									</div>
 									<div class="amount">
 									</div>
@@ -67,7 +67,7 @@ var deleted = typeof app.platform.sdk.user.myaccauntdeleted == 'undefined' && ap
 				<div class="section centerpart">
 					<% if(!app.curation()) {%>
 						<% if(app.isElectron()) {%>
-							<div class="items control-app" events="controlApp">
+							<div class="items control-app control-left" events="controlApp">
 								<div class="control-app-back" >
 									<i class="fa fa-arrow-left"></i>
 								</div>
@@ -86,7 +86,7 @@ var deleted = typeof app.platform.sdk.user.myaccauntdeleted == 'undefined' && ap
 							</div>
 						</div>
 						<% if(app.isElectron()) {%>
-						<div class="items control-app" events="controlApp">
+						<div class="items control-app control-right" events="controlApp">
 							<div class="control-app-refresh" >
 								<i class="fas fa-redo-alt"></i>
 							</div>

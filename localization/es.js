@@ -3,7 +3,8 @@ if(typeof loclib == "undefined" || !loclib)
 
 	loclib.es = {};
 
-	var appname = window.pocketnetproject || "Pocketnet"
+	var appname = ((window.projects_meta || {})[window.pocketnetproject || "Bastyon"] || {}).fullname || 'Bastyon'
+
 
 var _l = loclib.es;
 
@@ -836,7 +837,7 @@ _l.buy = 'Comprar';
 _l.usetor = "Conexión a través de la red Tor"
 
 _l.lowstar1 = "El equipo de Bastyon está implementando una moratoria temporal en las calificaciones de 1 y 2 estrellas, excepto el contenido prohibido. El contenido prohibido es:"
-_l.lowstar_reason_1 = "Porno"
+_l.lowstar_reason_1 = "Erótico/Porno"
 _l.lowstar_reason_2 = "Explotación de menores"
 _l.lowstar_reason_3 = "Amenaza directa de violencia"
 _l.lowstar_reason_4 = "Drogas ilegales"

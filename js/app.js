@@ -42,6 +42,9 @@ if(typeof _Node == 'undefined') _Node = false;
 
 chrsz = 8;
 
+if(window)
+  window.HELP_IMPROVE_VIDEOJS = false;
+
 Application = function(p)
 {
 
@@ -56,23 +59,7 @@ Application = function(p)
     electron = require('electron');
   }
 
-  self._meta = {
-    Pocketnet : {
-      url : "pocketnet.app",
-      turl : "test.pocketnet.app",
-      fullname : "Pocketnet",
-      protocol : 'pocketnet',
-      blockexplorer : 'https://pocketnet.app/blockexplorer/'
-    },
-
-    Bastyon : {
-      fullname : "Bastyon",
-      url : "bastyon.com",
-      turl : "test.pocketnet.app",
-      protocol : 'bastyon',
-      blockexplorer : 'https://pocketnet.app/blockexplorer/'
-    }
-  }
+  self._meta = window.projects_meta
 
   self.meta = self._meta.Pocketnet
 
@@ -1216,6 +1203,8 @@ Application = function(p)
 
         self.mobile.pip.init()
         self.mobile.keyboard.init()
+        self.mobile.memory()
+        self.mobile.webviewchecker()
         self.mobile.safearea()
 
         if (window.Keyboard && window.Keyboard.disableScroll){
@@ -1224,6 +1213,7 @@ Application = function(p)
 
         if (cordova.plugins && cordova.plugins.backgroundMode)
           cordova.plugins.backgroundMode.on('activate', function() {
+            console.log('disable optimization')
             cordova.plugins.backgroundMode.disableWebViewOptimizations();
           });
 
@@ -1283,7 +1273,7 @@ Application = function(p)
 
   self.Logger = new FrontendLogger(
     navigator.userAgent,
-    navigator.userAgentData,
+    JSON.stringify(navigator.userAgentData),
     location.href,
     Intl.DateTimeFormat().resolvedOptions().timeZone,
     self
@@ -1436,11 +1426,12 @@ Application = function(p)
       setTimeout(function(){
 
         var duration = deep(self.playingvideo, 'embed.details.duration') || 0
+        var unsleep = self.playingvideo && self.playingvideo.playing && (!duration || duration > 60)
 
-        self.mobile.backgroundMode(self.playingvideo && self.playingvideo.playing && (!duration || duration > 60)/* && self.platform.sdk.videos.volume*/)
+        self.mobile.unsleep(unsleep)
+        //self.mobile.backgroundMode(unsleep/* && self.platform.sdk.videos.volume*/)
 
       }, 1000)
-
 
     },
 
@@ -1985,6 +1976,26 @@ Application = function(p)
   }
 
   self.mobile = {
+
+    webviewchecker : function(){
+
+      if(window.plugins && window.plugins.webViewChecker){
+        plugins.webViewChecker.isAndroidWebViewEnabled().then(function(enabled) { console.log('isAndroidWebViewEnabled',enabled); })
+          .catch(function(error) { });
+
+        plugins.webViewChecker.getAndroidWebViewPackageInfo().then(function(packageInfo) { console.log('getAndroidWebViewPackageInfo', packageInfo); })
+          .catch(function(error) { });
+      }
+     
+    },
+
+    memory : function(){
+
+      document.addEventListener('memorywarning', function () {
+        console.log("MOMORY WARNING1")
+      });
+
+    },
 
     menu : function(items){
 
@@ -2664,6 +2675,12 @@ Application = function(p)
           return Promise.resolve()
         }).catch(e => {
           topPreloader2(100)
+
+          try{
+            e = JSON.stringify(e)
+          }catch (er){
+
+          }
 
           return Promise.reject(e)
         })

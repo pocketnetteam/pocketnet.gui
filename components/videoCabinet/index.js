@@ -1441,68 +1441,73 @@ var videoCabinet = (function () {
 												});
 											}
 
-											return self.fastTemplate(
-												'editDescription',
-												(rendered) => {
-													dialog({
-														html: rendered,
+											return self.app.nav.api.load({
+												open: true,
+												id: 'editVideoDescription',
+												animation: false,
+												inWnd: true,
 
-														wrap: true,
+												essenseData: {
+													success: function (d) {
+														const name = d.el.find('.videoNameInput').val();
+														const description = d.el
+															.find('.videoDescriptionInput')
+															.val();
 
-														success: function (d) {
-															const name = d.el.find('.videoNameInput').val();
-															const description = d.el
-																.find('.videoDescriptionInput')
-																.val();
+														const parameters = {};
 
-															const parameters = {};
+														if (name) parameters.name = name;
+														if (description)
+															parameters.description = description;
 
-															if (name) parameters.name = name;
-															if (description)
-																parameters.description = description;
+														parameters.tags = tagArray;
 
-															parameters.tags = tagArray;
+						  								const { host } = videoLink;
 
-                              const { host } = videoLink;
+														return self.app.peertubeHandler.api.videos
+															.update(videoLink, parameters, { host })
+															.then(() => {
+																const textContainert = el.c.find(
+																	`.singleVideoSection[uuid="${meta.id}"]`,
+																);
 
-															return self.app.peertubeHandler.api.videos
-																.update(videoLink, parameters, { host })
-																.then(() => {
-																	const textContainert = el.c.find(
-																		`.singleVideoSection[uuid="${meta.id}"]`,
-																	);
+																if (name)
+																	textContainert
+																		.find('.videoNameText')
+																		.text(name);
+																if (description)
+																	textContainert
+																		.find('.videoDescriptionText')
+																		.text(description);
 
-																	if (name)
-																		textContainert
-																			.find('.videoNameText')
-																			.text(name);
-																	if (description)
-																		textContainert
-																			.find('.videoDescriptionText')
-																			.text(description);
+																d.close();
+																tagElement = {};
+																tagArray = [];
+															})
+															.catch((err = {}) => {
+																tagElement = {};
+																tagArray = [];
+																d.close();
 
-																	d.close();
-																	tagElement = {};
-																	tagArray = [];
-																})
-																.catch((err = {}) => {
-																	tagElement = {};
-																	tagArray = [];
-																	d.close();
+																sitemessage(
+																	`${self.app.localization.e(
+																		'errorChangingDescription',
+																	)}: ${helpers.parseVideoServerError(err)}`,
+																);
+															});
+													},
 
-																	sitemessage(
-																		`${self.app.localization.e(
-																			'errorChangingDescription',
-																		)}: ${helpers.parseVideoServerError(err)}`,
-																	);
-																});
-														},
+													post: function () {
+													},
+												},
 
-														clbk: function (editDialogEl) {
-															tagElement =
+												clbk: function (e, p) {
+													const editDialogEl = p.el;
+													
+													tagElement =
 																editDialogEl.find('.videoTagsWrapper');
 															tagArray = [...videoData.tags];
-                              renders.tags(tagElement);
+                              						renders.tags(tagElement);
 
 															editDialogEl
 																.find('.videoNameInput')
@@ -1510,12 +1515,8 @@ var videoCabinet = (function () {
 															editDialogEl
 																.find('.videoDescriptionInput')
 																.val(videoData.description);
-														},
-
-														class: 'editVideoDialog',
-													});
 												},
-											);
+											});
 										})
 										.catch((err = {}) => {
 											sitemessage(
@@ -1632,7 +1633,7 @@ var videoCabinet = (function () {
 
 						addTag: function (tag) {
 							tagActions.addTag(tag);
-              renders.tags(tagElement);
+              				renders.tags(tagElement);
 						},
 
 						addTags: function (tags) {

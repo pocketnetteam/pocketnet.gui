@@ -73,8 +73,7 @@ __map =  {
 	],
 
 	__sourcesfirst : [
-		"js/vendor/firebase-app.js",
-		"js/vendor/firebase-messaging.js",
+		
 		"js/vendor/axios.js",
 		"js/vendor/underscore-min.js",  
 		{path : "js/functionsfirst.js", babelify : true},
@@ -200,7 +199,14 @@ __map =  {
 		],*/
 	},      
 
-	
+	bastyon_iphone: {
+		uri : "bastyon_iphone",
+		href : "bastyon_iphone",
+		add : insertingfunc,
+		anonimus : true,
+		electronDontOpen : true
+	},
+
 	easynode : {
 		uri : "easynode",
 		href : "easynode",
@@ -1056,6 +1062,12 @@ __map =  {
 	videoCabinet : {
 		uri : "videoCabinet",
 		href : "videoCabinet",
+		add : insertingfunc,
+	},
+
+	editVideoDescription : {
+		uri : "editVideoDescription",
+		href : "editVideoDescription",
 		add : insertingfunc,
 	},
 

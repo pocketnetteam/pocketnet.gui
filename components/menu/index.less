@@ -271,6 +271,8 @@
 				display: flex;
 				align-items: center;
 				justify-content: center;
+				position: relative;
+				z-index: 999;
 				color : rgb(var(--neutral-grad-1));
 				box-sizing: border-box;
 				padding: 0 @rhythm;
@@ -281,6 +283,14 @@
 					&:hover{
 						color : rgb(var(--color-txt-gray));
 					}
+				}
+
+				&.control-left{
+					padding-right: @rhythm * 3;
+				}
+
+				&.control-right{
+					padding-left: @rhythm * 3;
 				}
 			}
 			
@@ -420,6 +430,10 @@
 					.count{
 						color: rgb(var(--color-bg-ac-2));	
 					}
+				}
+
+				.icon .icn img{
+					height: 18px;					
 				}
 
 
@@ -796,6 +810,10 @@
 	.postssearch{
 		height: 100%;
 		width: 100%;
+
+		.christmas_search{
+			height: 16px;
+		}
 
 		.searchInputIcon,
 		.searchInput,

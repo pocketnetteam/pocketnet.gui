@@ -788,6 +788,8 @@
 
 		var initevents = function(){
 
+			if(!wnd) return
+
 			if(!p.noCloseBack)
 				wnd.find('.wndback').one('click', function(){
 
@@ -11449,6 +11451,14 @@ edjsHTML = function() {
 
 		error : function(type, e){
 			return '<div class="article_error">' + 'Error:' + _.escape(type) + '</div>'
+		},
+
+		text : function(e, type){
+
+			var t = type === 'paragraph' ? '\n\n' : '';
+			t += (e.data.text ? e.data.text + ' ' : '');
+
+			return t;
 		}
     };
 
@@ -11646,6 +11656,20 @@ edjsHTML = function() {
                     return i[e.type] ? i[e.type](e) : t(e.type)
                 })).join('') + '</div>'
             },
+
+			text: function(e){
+
+				var text = e.blocks.map(function(e) {
+					return i['text'](e, e.type);
+                }).join('');
+
+				return filterXSS(clearScripts((findAndReplaceLink(text, true))), {
+					stripIgnoreTag : true,
+					whiteList: {
+						img : []
+					}
+				});
+			},
 
             parseBlock: function(e) {
                 return i[e.type] ? i[e.type](e) : t(e.type)
@@ -12243,3 +12267,58 @@ class LoadingBar {
 		this.elem.setAttribute('data-loading', !this.stopped);
 	}
 }
+
+
+var connectionSpeed = function() 
+{
+    // Deal with vendor prefixes
+    var defaultSpeed = false,
+        navigator = window.navigator,
+        connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection || null;
+    if( ! connection )
+        return defaultSpeed;
+
+    // assume W3C Editor's Draft 09 October 2014
+    if( 'downlinkMax' in connection )
+    {
+        var downlinkMax = connection.downlinkMax;
+        if( ! downlinkMax )
+            return defaultSpeed;
+        if( ! isFinite(downlinkMax) )
+            return defaultSpeed;
+        return downlinkMax;
+    }
+    // assume W3C Working Draft 29 November 2012
+    if( 'bandwidth' in connection )
+    {
+        var bandwidth = connection.bandwidth;
+        if( ! bandwidth )
+            return defaultSpeed;
+        if( isNaN(speed) )
+            return defaultSpeed;
+        // standardize connection.bandwidth value by converting megabytes per second (MB/s) to megabits per second (Mbit/s)
+        return bandwidth * 8;
+    }
+    // assume W3C Working Draft 07 June 2011
+    switch( connection.type )
+    {
+        // convert connection.type value to approximate downlink values
+        // speed estimate is based on the median downlink value for common devices in megabits per second (Mbit/s)
+        case 'none':
+            return 0;
+        case '2g':
+            return 0.134;
+        case 'bluetooth':
+        case 'cellular':
+            return 2;
+        case '3g':
+            return 8.95;
+        case '4g':
+            return 100;
+        case 'ethernet':
+            return 550;
+        case 'wifi':
+            return 600;            
+    }
+    return defaultSpeed;
+};
