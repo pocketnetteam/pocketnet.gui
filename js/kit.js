@@ -1473,6 +1473,18 @@ Share = function(lang){
 		if(meta.type == 'peertube') return true
 	}
 
+	self.itisaudio = function(){
+
+		if(self.settings.v == 'a') return
+
+		if(!self.url) return 
+
+		var meta = parseVideo(self.url)
+		var ch = self.url.replace('peertube://', '').split('/')
+
+		if(meta.type == 'peertube' && ch && ch.length > 0 && ch[ch.length - 1] == 'audio') return true
+	}
+
 	self.canSend = function(app, clbk) {
 		if (self.itisvideo() && !self.aliasid) {
 			return app.peertubeHandler.checkTranscoding(self.url.v).then(result => clbk(result));
@@ -2226,6 +2238,18 @@ pShare = function(){
 		var meta = parseVideo(self.url)
 
 		if(meta.type == 'peertube') return true
+	}
+
+	self.itisaudio = function(){
+
+		if(self.settings.v == 'a') return
+
+		if(!self.url) return 
+
+		var meta = parseVideo(self.url)
+		var ch = self.url.replace('peertube://', '').split('/')
+
+		if(meta.type == 'peertube' && ch && ch.length > 0 && ch[ch.length - 1] == 'audio') return true
 	}
 
 	self.hasexchangetag = function(){
