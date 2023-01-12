@@ -191,7 +191,7 @@ module.exports = function (enable = false) {
                 saveHostStats(preparedOpts.url);
 
                 await initHttpsAgent(preparedOpts, 'httpsAgent');
-        }
+            }
         }
 
         try {
@@ -200,7 +200,7 @@ module.exports = function (enable = false) {
                     if (preparedOpts.httpsAgent) {
                         saveHostStats(preparedOpts.url);
                     } else {
-                  saveHostStats(preparedOpts.url, { accessible: true });
+                        saveHostStats(preparedOpts.url, { accessible: true });
                     }
 
                   return response;
@@ -276,7 +276,7 @@ module.exports = function (enable = false) {
                     if (opts.agent) {
                         saveHostStats(url);
                     } else {
-                    saveHostStats(url, { accessible: true });
+                        saveHostStats(url, { accessible: true });
                     }
 
                     return res;
@@ -324,6 +324,7 @@ module.exports = function (enable = false) {
         if (!isLocalhost && isTorNeeded(options.url) && enable) {
             req = _request.defaults({agent: torHttpsAgent});
         }
+
         try {
             return req(options, (...args) => {
                 callBack?.(...args)
