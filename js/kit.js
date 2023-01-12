@@ -1477,10 +1477,10 @@ Share = function(lang){
 
 		if(self.settings.v == 'a') return
 
-		if(!self.url) return 
+		if(!self.url.v) return 
 
-		var meta = parseVideo(self.url)
-		var ch = self.url.replace('peertube://', '').split('/')
+		var meta = parseVideo(self.url.v)
+		var ch = self.url.v.replace('peertube://', '').split('/')
 
 		if(meta.type == 'peertube' && ch && ch.length > 0 && ch[ch.length - 1] == 'audio') return true
 	}
