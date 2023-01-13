@@ -186,6 +186,7 @@ var defaultSettings = {
 
         dontCache: false,
 		captcha : true,
+		hexCaptcha : false,
 		host : '',
 		iplimiter : {
 			interval : 30000,
@@ -425,9 +426,14 @@ var kit = {
 					var ctx = kit.manage.set.server
 					var notification = {}
 
+					console.log('settings', settings)
+
+
 					if(typeof settings.domain != 'undefined') notification.domain = settings.domain
 					if(settings.ports) notification.ports = settings.ports
-					if(typeof settings.enabled) notification.enabled = settings.enabled
+					if(typeof settings.enabled != 'undefined') notification.enabled = settings.enabled
+					//if(typeof settings.hexCaptcha != 'undefined') notification.hexCaptcha = settings.hexCaptcha
+
 					if(deep(settings, 'firebase.id')) notification.firebase = deep(settings, 'firebase.id')
                     if(settings.ssl) notification.ssl = true
                 
@@ -443,6 +449,7 @@ var kit = {
 
 					}).then(() => {
 						var promises = []
+
 
 
 						if (settings.firebase && settings.firebase.id) 
@@ -482,6 +489,13 @@ var kit = {
 
 						if (typeof settings.enabled != 'undefined')  
 							promises.push(ctx.enabled(settings.enabled).catch(e => {
+								console.error(e)
+
+								return Promise.resolve('enabled error')
+							}))
+
+						if (typeof settings.hexCaptcha != 'undefined')  
+							promises.push(ctx.hexCaptcha(settings.hexCaptcha).catch(e => {
 								console.error(e)
 
 								return Promise.resolve('enabled error')
@@ -591,6 +605,17 @@ var kit = {
 	
 					if (settings.server.captcha == v) return Promise.resolve()
 						settings.server.captcha = v
+		
+					return kit.save()
+					
+				},
+
+				hexCaptcha : function(v){
+
+					if(typeof v == 'undefined') return Promise.reject('emptyargs')
+	
+					if (settings.server.hexCaptcha == v) return Promise.resolve()
+						settings.server.hexCaptcha = v
 		
 					return kit.save()
 					

@@ -18,6 +18,7 @@
     "author": "Max Grishkov",
     "license": "ISC",
     "dependencies": {
+        "node-fetch": "^2.6.7",
         "axios": "^0.21.1",
         "clone-deep": "^4.0.1",
         "compression": "^1.7.4",
@@ -43,6 +44,7 @@
         "socks-proxy-agent": "^7.0.0",
         "string": "^3.3.3",
         "svg-captcha": "^1.4.0",
+        "hex-captcha": "^2.0.3",
         "targz": "^1.0.1",
         "tcp-port-used": "^1.0.1",
         "underscore": "^1.12.1",

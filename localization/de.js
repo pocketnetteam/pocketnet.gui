@@ -522,6 +522,7 @@ _l.e13107 = "Netzwerkknoten Management kann durch die Anwendung ausgeführt werd
 _l.e13108 = "Es gibt keine Verbindung mit dem Electron proxy Interface"
 
 _l.e13109 = "Bitte geben Sie die Wörter in dem Bild ein, um Pocketcoins zu empfangen und mit der Registrierung fortzufahren"
+_l.e13109h = "Klicken Sie auf die Sechsecke, um das Bild zusammenzusetzen, und geben Sie dann Text in das resultierende Bild ein."
 _l.e13110 = "Wörter eingeben"
 _l.next = "Weiter"
 _l.refresh = "Neu laden"

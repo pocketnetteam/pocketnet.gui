@@ -3,35 +3,35 @@ if(typeof _OpenApi == 'undefined') _OpenApi = false;
 if(typeof _SEO == 'undefined') 	_SEO = false;
 
 if(!_Node)
-{	
-
-	var _listofproxies =  [
+{
 	
-			
+	var _listofproxies =  [
+		
+
 		/*{
 			host : 'pocketnet.app',
 			port : 8899,
 			wss : 8099
 	    },*/
-	
-	    {
+		
+		{
 			host : '1.pocketnet.app',
 			port : 8899,
 			wss : 8099
 		},
-
+		
 		{
 			host : '2.pocketnet.app',
 			port : 8899,
 			wss : 8099
 		},
-
+		
 		{
 			host : '3.pocketnet.app',
 			port : 8899,
 			wss : 8099
 		},
-
+		
 		{
 			host : '4.pocketnet.app',
 			port : 8899,
@@ -44,13 +44,13 @@ if(!_Node)
 			port : 8899,
 			wss : 8099
 		},
-
+		
 		/*{
 			host : '6.pocketnet.app',
 			port : 8899,
 			wss : 8099
 		}*/
-
+	
 	]
 
 	/* test */
