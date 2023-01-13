@@ -31,7 +31,7 @@ var Notifications = require('./node/notifications')
 var Transports = require("./transports")
 var Applications = require('./node/applications');
 var bitcoin = require('./lib/btc16.js');
-var Slidemodule = require("./slidemodule") 
+var Slidemodule = require("./slidemodule")
 const Path = require("path");
 const child_process = require("child_process");
 const {unlink} = require("nedb/browser-version/browser-specific/lib/storage");
@@ -46,7 +46,7 @@ if (process.platform === 'win32') expectedExitCodes = [3221225477];
 
 console.log('expectedExitCodes' , expectedExitCodes)*/
 
-var Proxy = function (settings, manage, test, logger, reverseproxy) {
+var Proxy = function (settings, manage, test, logger, reverseproxy, ipc) {
 	var self = this;
 
 		self.test = test
@@ -578,6 +578,10 @@ var Proxy = function (settings, manage, test, logger, reverseproxy) {
 			}
 
 			return torapplications.application.init().then(async r => {
+				torapplications.onStatusChange((status) => {
+					console.log('LISTENING STATUS SOMEWHERE ELSE', status);
+				});
+
 				return await torapplications.init();
 			})
 		},

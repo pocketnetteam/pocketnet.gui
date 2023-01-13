@@ -1,5 +1,4 @@
 var Path = require('path');
-var kit = require('./kit.js');
 var f = require('./functions');
 const electron = require('electron')
 const { dialog } = require('electron');
@@ -59,6 +58,8 @@ var WssDummy = function(wc){
 }
 
 var IPC = function(ipc, wc, proxyBridges){
+	var kit = require('./kit.js')(ipc);
+
 	var self = this;
 
 	var wssdummy = new WssDummy(wc)
