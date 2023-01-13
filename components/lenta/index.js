@@ -16,7 +16,7 @@ var lenta = (function(){
 		var mid = p.mid;
 		var making = false, ovf = false;
 		var w, essenseData, recomended = [], initialized, recommended, mestate, initedcommentes = {}, canloadprev = false,
-		video = false, isotopeinited = false, videosVolume = 0, fullscreenvideoShowing = null, loadedcachedHeight, lwidth = 0;
+		video = false, isotopeinited = false, videosVolume = 0, fullscreenvideoShowing = null, loadedcachedHeight, lwidth = 0, bannerComment = null;
 		var loadertimeout = null
 		var lastcache = null
 		var subloaded = false
@@ -1860,23 +1860,20 @@ var lenta = (function(){
 
 							topPreloader(100)
 
+							if (value === "5"){
+
+								self.app.platform.ui.showCommentBanner(el.c.find('#' + obj.txid), (c) => {
+									bannerComment = c
+								}, obj.address, true);
+	
+							}
+
 							if(!tx){				
 
 								upvoteShare.myVal = null;	
 								obj.myVal = 0;	
 
 								self.app.platform.errorHandler(error, true)	
-
-								if (error === 32 && value === "1"){
-
-									self.app.platform.api.actions.blocking(obj.address, function (tx, error) {
-										if (!tx) {
-											self.app.platform.errorHandler(error, true)
-										}
-									})
-
-								}
-
 
 								if(clbk)
 									clbk(false)

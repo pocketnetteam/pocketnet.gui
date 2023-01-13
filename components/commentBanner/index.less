@@ -8,6 +8,7 @@
   .bannerBody {
     display: none;
     justify-content: space-between;
+    min-width: 90%;
     padding: 1.2em;
     background-color: rgb(var(--background-secondary-theme));
     border: solid rgb(var(--neutral-grad-3)) 1px;
@@ -32,6 +33,7 @@
     :last-child  { padding-right: 0 }
 
     .text {
+      width: 100%;
       color: rgb(var(--text-color));
 
       .bannerDescription {
@@ -39,8 +41,9 @@
       }
 
       .noShowAgain {
+        display: flex;
+        align-items: center;
         text-decoration: underline;
-        padding-top: 2%;
         color: rgb(var(--color-not-catchy-grey));
         font-size: 0.8em;
         cursor: pointer;

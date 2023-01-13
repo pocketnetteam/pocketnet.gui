@@ -426,6 +426,7 @@ _l.youarefollowing = "Stai seguendo";
 _l.follow = "Segui";
 _l.blocked = "Bloccato";
 _l.e13021 = "Mostra di più";
+_l.block = "Blocca";
 _l.blockuser = "Blocca utente";
 _l.unblockuser = "Sblocca Utente";
 _l.e13022 = "Vuoi davvero togliere il follow all'utente?";

@@ -65,10 +65,14 @@ if(user.address.value){
     <% } %>
 
     <div class="text">
-        <strong><%= e(address ? 'commentBannerTitle2' : 'commentBannerTitle', name) %></strong>
-        <div class="bannerDescription"><%= e(address ? 'commentBannerDescription2' : 'commentBannerDescription', name) %></div>
+        <strong><%= e(block ? 'blockuser' : address ? 'commentBannerTitle2' : 'commentBannerTitle', name) %></strong>
+        <div class="bannerDescription"><%= e(block ? 'blockUserQ' : address ? 'commentBannerDescription2' : 'commentBannerDescription', name) %></div>
         <div class="buttonsWrapper <%-_class%>">
-            <% if (address) {%>
+            <% if (block) {%>
+                <button class="block funf">
+                    <%=e('blockuser') %>
+                </button>	
+            <% } else if (address) {%>
                 <button class="subscribe funf">
                     <%=e('follow') %>
                 </button>	
@@ -78,7 +82,7 @@ if(user.address.value){
                 </button>	
         
             <% } %>
-            <div class="noShowAgain"><%= e('dontShowAgain') %></div>
+            <div class="noShowAgain"><span><%= e('dontShowAgain') %></span></div>
         </div>
     </div>
 

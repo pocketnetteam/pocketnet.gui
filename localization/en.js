@@ -477,6 +477,7 @@ _l.follow = "Follow"
 _l.blocked = "Blocked"
 _l.e13021 = "Show more"
 
+_l.block = "Block"
 _l.blockuser = "Block User"
 _l.unblockuser = "Unblock User"
 _l.e13022 = "Do you really want to unfollow user?"

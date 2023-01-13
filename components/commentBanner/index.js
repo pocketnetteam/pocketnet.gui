@@ -5,7 +5,7 @@ const commentBanner = (function() {
 	const Essense = function(p) {
 		const primary = deep(p, 'history');
 
-		let el, destroyDelay, address;
+		let el, destroyDelay, address, block;
 
 		const actions = {
 			dontShowAgain() {
@@ -13,6 +13,10 @@ const commentBanner = (function() {
 				
 				const commentBanner = JSON.parse(localStorage.commentBanner || '{}');
 				commentBanner.count = -1;
+
+				if (block){
+					el.c.closest('.share').removeClass('blurred');
+				}
 
 				try {
 					localStorage.setItem('commentBanner', JSON.stringify(commentBanner));
@@ -66,6 +70,18 @@ const commentBanner = (function() {
 				})
 				 
 			},
+			block : function(address, clbk){
+
+				self.app.platform.api.actions.blocking(address, function (tx, error) {
+					if (!tx) {
+						self.app.platform.errorHandler(error, true)
+					}
+
+					if (clbk){
+						clbk();
+					}
+				})
+			}
 		};
 
 		const events = {
@@ -78,6 +94,12 @@ const commentBanner = (function() {
 				
 				actions.subscribe(address);
 			},
+
+			block : function(){
+
+				actions.block(address);
+
+			}
 		};
 
 		const renders = {
@@ -112,6 +134,13 @@ const commentBanner = (function() {
 
 			el.c.on('click', '.subscribe', events.subscribe);
 			el.c.on('click', '.unsubscribe', events.unsubscribe);
+
+			el.c.on('click', '.block', events.block);
+
+			if (block){
+				el.c.closest('.share').addClass('blurred');
+			}
+
 		};
 
 		const destroyEvents = function() {
@@ -125,10 +154,13 @@ const commentBanner = (function() {
 			getdata: function(clbk, p) {
 				
 				address = p.settings.essenseData.address;
+				block = p.settings.essenseData.block;
 
 				const data = {
 					address: address, 
+					block: block
 				};
+
 
 				clbk(data);
 			},
