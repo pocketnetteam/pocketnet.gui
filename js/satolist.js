@@ -3040,6 +3040,95 @@ Platform = function (app, listofnodes) {
 
     self.ui = {
 
+        capcha : function(){
+
+            var getcapcha = function(){
+
+                var regproxy = null
+
+                try {
+                    if (localStorage['regproxy']){
+                        regproxy = self.app.api.get.byid(localStorage['regproxy'])
+                    }
+                }
+                catch (e) { }
+
+                return self.app.api.get.proxywithwallet().then(r => {
+
+                    if(r && !regproxy) regproxy = r
+
+                    if (regproxy){
+                        try {
+                            localStorage['regproxy'] = regproxy.id
+                        }
+                        catch (e) { }
+                    }
+
+                    return Promise.resolve(regproxy)
+
+                }).then((proxy) => {
+
+                    return new Promise((resolve, reject) => {
+
+                        self.sdk.captcha[proxy.hasHexCaptcha() ? 'getHex' : 'get'](function(captcha, error){
+
+                            if (error){
+
+                                reject('network')
+
+                                return
+                            }
+
+                            resolve(captcha)
+
+                            
+                            
+
+                        }, true, {
+                            proxy : proxy.id
+                        })
+                        
+                    })
+
+                })
+
+            }
+            
+            return getcapcha().then(captcha => {
+
+                if (captcha.done){
+
+                    resolve(captcha)
+    
+                }
+                else{
+    
+                    app.nav.api.load({
+                        open : true,
+                        id : 'capcha',
+                        inWnd : true,
+        
+                        essenseData : {
+                            getcapcha,
+                            success : (data) => {
+                                resolve(data)
+                            }
+                        },
+    
+                        closecross : function(){
+                            reject('close')
+                        }
+                        
+                    })
+    
+                }
+
+            })
+
+            
+            
+        },
+
         mobilesearch : function(p){
 
             app.nav.api.load({
@@ -9503,7 +9592,7 @@ Platform = function (app, listofnodes) {
 
                             }, proxyoptions).then(d => {
 
-                                self.sdk.captcha.done = null
+                                //self.sdk.captcha.done = null
                                 account.willChangeUnspentsCallback(d.id, proxyoptions)
 
                                 if (clbk)
@@ -9629,7 +9718,7 @@ Platform = function (app, listofnodes) {
                     return
                 }
 
-                self.psdk.nameAddress.load(encodeURIComponent(name)).then(() => {
+                self.psdk.nameAddress.load((name)).then(() => {
                     if (clbk) {
                         clbk(true)
                     }
@@ -9641,7 +9730,7 @@ Platform = function (app, listofnodes) {
 
                 return
 
-                self.app.api.rpc('getuseraddress', [encodeURIComponent(name)]).then(d => {
+                self.app.api.rpc('getuseraddress', [(name)]).then(d => {
                     var r = deep(d, '0.address');
 
                     if (clbk)
@@ -9692,11 +9781,11 @@ Platform = function (app, listofnodes) {
                 p.tagsexcluded = self.app.platform.sdk.categories.gettagsexcluded();
 
                 p.tagsfilter = _.map(p.tagsfilter, function(t){
-                    return encodeURIComponent(t)
+                    return (t)
                 })
 
                 p.tagsexcluded = _.map(p.tagsexcluded, function(t){
-                    return encodeURIComponent(t)
+                    return (t)
                 })
 
                 p.depth || (p.depth = 10000);
@@ -13579,7 +13668,7 @@ Platform = function (app, listofnodes) {
                     }
                 }
 
-                var np = [encodeURIComponent(value), type, fixedBlock, (start || 0).toString(), (count || 10).toString()]
+                var np = [(value), type, fixedBlock, (start || 0).toString(), (count || 10).toString()]
 
                 //if (address != 'pocketnet') np.push(address)
 
@@ -14762,11 +14851,11 @@ Platform = function (app, listofnodes) {
                             if (!storage[key] || cache == 'clear') storage[key] = [];
 
                             p.tagsfilter = _.map(p.tagsfilter, function(t){
-                                return encodeURIComponent(t)
+                                return (t)
                             })
 
                             p.tagsexcluded = _.map(p.tagsexcluded, function(t){
-                                return encodeURIComponent(t)
+                                return (t)
                             })
 
                             var parameters = [Number(p.height), p.txid || '', p.count, p.lang, p.tagsfilter, p.type ? [p.type] : [], [], [], p.tagsexcluded];
@@ -14881,12 +14970,12 @@ Platform = function (app, listofnodes) {
 
 
                             p.tagsfilter = _.map(p.tagsfilter, function(t){
-                                return encodeURIComponent(t)
+                                return (t)
                             })
 
 
                             p.tagsexcluded = _.map(p.tagsexcluded, function(t){
-                                return encodeURIComponent(t)
+                                return (t)
                             })
 
                             /////temp

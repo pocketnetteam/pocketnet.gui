@@ -10,9 +10,7 @@ class HexCaptcha {
   /*Class defaults*/
   #options = {
     holder: '#captcha',
-    styleSheet: [
-      'css/captcha.css'
-    ],
+ 
     puzzle: {
       hexagonAngle: 0.523598776, //30 deg in rad
       sideLength: 48, //hex half size (pixels)
@@ -58,27 +56,17 @@ class HexCaptcha {
   #create () {
     /*Main holders and controls*/
     this.#holder = document.querySelector(this.#options.holder) || document.body;
-    this.#root = this.#holder.attachShadow({ mode: 'closed' });
+    //this.#root = this.#holder.attachShadow({ mode: 'closed' });
     this.#container = document.createElement('section');
     this.#canvas = document.createElement('div');
     
     /*Structure items*/
     const
-      style = document.createElement('style'),
-      sheet = [].concat(this.#options.styleSheet).map(style => '@import "' + style + '"').join(';\n'),
       fragment = document.createDocumentFragment(),
       jigsaw = document.createElement('div'),
       result = document.createElement('div');
   
-    /*Create main stylesheet*/
-    style.setAttribute('type', 'text/css');
-    if (style.styleSheet){
-      // This is required for IE8 and below.
-      style.styleSheet.cssText = sheet;
-    } else {
-      style.appendChild(document.createTextNode(sheet));
-    }
-
+  
     /*Add classes to structure blocks*/
     this.#canvas.classList.add('canvas');
     this.#container.classList.add('captcha-container');
@@ -94,7 +82,9 @@ class HexCaptcha {
     this.#container.append(jigsaw);
     fragment.append(this.#container);
     
-    this.#root.append(style, fragment);
+    this.#holder.append(fragment);
+    this.#holder.classList.add('hexCaptcha');
+    
     
     /*Get images chunks and draw puzzle*/
     this.#render({

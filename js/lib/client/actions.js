@@ -869,6 +869,11 @@ var Account = function(address, parent){
     }
 
 
+    self.requestUnspents = function(){
+
+    }
+
+
     var checkTransactionById = function(ids){
 
         var actions = []
@@ -1539,6 +1544,7 @@ var Actions = function(app, api, storage = localStorage){
     var inited = false
 
     var processInterval = null
+    var waitUserAction = false
     
     var exports = function(){
         var e = {}
@@ -1604,6 +1610,10 @@ var Actions = function(app, api, storage = localStorage){
 
         
     }
+
+    self.waitUserAction = function(v){
+        waitUserAction = v ? true : false
+    }
    
     self.on = function(key, f){
         if(!events[key]){
@@ -1657,6 +1667,9 @@ var Actions = function(app, api, storage = localStorage){
     }
 
     self.processing = function(){
+
+        if(waitUserAction) return
+
         _.each(accounts, (account) => {
             account.processing()
         })

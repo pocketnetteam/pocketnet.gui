@@ -137,7 +137,8 @@ __map =  {
 		"js/vendor/owl/assets/owl.carousel.min.css",
 		"js/vendor/owl/assets/owl.theme.default.min.css",
 		"js/vendor/shadow-popup/css/popup.css",
-		"css/fontawesome/css/all.min.css"
+		"css/fontawesome/css/all.min.css",
+		"js/vendor/hex-captcha/css/captcha.css"
 	],
 
 	__exportcss : {

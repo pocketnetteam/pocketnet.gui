@@ -1917,10 +1917,10 @@ UserInfo = function(){
 
 	self.serialize = function(){
 
-		return encodeURIComponent(self.name.v)
-		 + encodeURIComponent(self.site.v)
+		return (self.name.v)
+		 + (self.site.v)
 		 + self.language.v
-		 + encodeURIComponent(self.about.v)
+		 + (self.about.v)
 		 + self.image.v + JSON.stringify(self.addresses.v) 
 		 + self.ref.v
 		 + self.keys.v.join(',')
@@ -1954,10 +1954,10 @@ UserInfo = function(){
 		}
 
 		return {
-			n : encodeURIComponent(self.name.v),
+			n : (self.name.v),
 			l : self.language.v,
-			a : encodeURIComponent(self.about.v),
-			s : encodeURIComponent(self.site.v),
+			a : (self.about.v),
+			s : (self.site.v),
 			i : self.image.v,
 			b : JSON.stringify(self.addresses.v || []),
 			r : self.ref.v,
@@ -2192,11 +2192,11 @@ pUserInfo = function(){
 
 		var v = {};
 
-		v.n = encodeURIComponent(self.name)
+		v.n = (self.name)
 		v.image = self.image
-		v.a = encodeURIComponent(self.about)
+		v.a = (self.about)
 		v.l = self.language
-		v.s = encodeURIComponent(self.site)
+		v.s = (self.site)
 		v.r = self.ref;
 		v.rc = self.rc
 		v.b = JSON.stringify(self.addresses || [])
@@ -3048,7 +3048,7 @@ Remove = function(){
 
 	self.serialize = function(){
 
-        return encodeURIComponent(self.txidEdit.v)
+        return (self.txidEdit.v)
 
 	}
 
