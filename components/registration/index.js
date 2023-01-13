@@ -1053,8 +1053,6 @@ var registration = (function(){
 					var me = self.psdk.userInfo.getmy()
 					var account = self.app.platform.actions.getCurrentAccount()
 
-					console.log("me", me)
-
 					if (me && me.relay && (account && !account.unspents.willChange && !account.unspents.value.length)){
 						
 						current = steps.captcha.id

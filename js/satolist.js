@@ -9483,27 +9483,31 @@ Platform = function (app, listofnodes) {
 
             requestFreeMoney: function (clbk, proxyoptions) {
 
-                var a = self.sdk.address.pnet();
 
-                if (a) {
-                    a = a.address;
+                var account = self.app.platform.actions.getCurrentAccount()
 
+                if (account) {
 
-                    this.checkFreeMoney(a, function (r) {
+                    this.checkFreeMoney(account.address, function (r) {
                         if (!r) {
                             if (clbk)
                                 clbk(null)
                         }
                         else {
 
-                            var prms = {
-                                address: a,
-                                captcha: self.sdk.captcha.done
-                            }
 
-                            self.app.api.fetchauth('free/registration', prms, proxyoptions).then(d => {
+                            self.app.api.fetchauth('free/registration', {
+                                
+                                address: account.address,
+                                captcha: self.sdk.captcha.done
+
+                            }, proxyoptions).then(d => {
+
+                                self.sdk.captcha.done = null
+                                account.willChangeUnspentsCallback(d.id, proxyoptions)
+
                                 if (clbk)
-                                        clbk(true)
+                                    clbk(true)
 
                             }).catch(e => {
                                 if (clbk)
@@ -9539,17 +9543,6 @@ Platform = function (app, listofnodes) {
 
                                 if (clbk)
                                     clbk(true)
-
-                                /*self.app.api.rpc('txunspent', [address, 1, 9999999]).then(unspents => {
-                                    if (unspents.length > 0) {
-                                        if (clbk)
-                                            clbk(false)
-                                    }
-                                    else {
-                                        if (clbk)
-                                            clbk(true)
-                                    }
-                                })*/
 
                             }
                             else {

@@ -701,6 +701,12 @@ var pSDK = function ({ app, api, actions }) {
             return this.tempExtend(objects['userInfoFull'][address] || objects['userInfoLight'][address], address)
         },
 
+        gets: function (addresses) {
+            return _.map(addresses, (address) => {
+                return this.get(address)
+            })
+        },
+
         listener: function (exp, address, status) {
 
             if (status == 'completed') {

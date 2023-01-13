@@ -4804,10 +4804,6 @@ var lenta = (function(){
 
 							var share = _.find(sharesInview, (share) => share.txid == alias.share.v) ? self.psdk.share.get(alias.share.v) : null
 
-
-							console.log('upvoteShare share', share)
-
-
 							if (share){
 								renders.stars(share)
 							}

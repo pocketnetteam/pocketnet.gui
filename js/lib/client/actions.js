@@ -351,7 +351,7 @@ var Action = function(account, object, priority){
 
         if(!unspents.length || retry){
             try{
-                await account.loadUnspents().then((clearUnspents) => {
+                await account.updateUnspents(retry ? 0 : 60).then((clearUnspents) => {
 
                     if(!clearUnspents.length && !account.unspents.willChange){
                         return Promise.reject('actions_noinputs')
@@ -847,14 +847,27 @@ var Account = function(address, parent){
 
             }
 
-            if (self.unspents.willChange){
+            /*if (self.unspents.willChange){
                 if (self.unspents.willChange.transaction == out.txid){
                     self.unspents.willChange = null
                 }
-            }
+            }*/
         })
 
     }
+
+    self.willChangeUnspentsCallback = function(actionId, proxy){
+
+        self.unspents.willChange = {
+            transaction : null,
+            id : actionId,
+            until : (new Date).addSeconds(280),
+            proxy
+        }
+
+        self.trigger()
+    }
+
 
     var checkTransactionById = function(ids){
 
@@ -891,9 +904,9 @@ var Account = function(address, parent){
     }
 
 
-    self.setWaitCoins = function(value){
+    /*self.setWaitCoins = function(value){
         self.unspents.willChange = value ? true : false
-    }
+    }*/
 
     self.setStatus = function(value){
         self.status.value = value ? true : false
@@ -1114,14 +1127,17 @@ var Account = function(address, parent){
 
     }
 
-    self.updateUnspents = function(){
+    self.updateUnspents = function(time){
+
+        if(typeof time == 'undefined') time = 600
 
         if (temps.unspents){
             return temps.unspents
         }
 
         if (self.unspents.updated){
-            var until = self.unspents.updated.addSeconds(600)
+
+            var until = self.unspents.updated.addSeconds(time)
 
             if (until > new Date()){
                 return Promise.resolve(self.unspents.value)
