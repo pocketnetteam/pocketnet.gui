@@ -2,7 +2,7 @@
 
 var http = require('http');
 var https = require('https');
-
+var axios = require('axios');
 function RpcClient(opts) {
     opts = opts || {};
     this.host = opts.host || '127.0.0.1';
@@ -11,6 +11,7 @@ function RpcClient(opts) {
     this.user = opts.user || '';
     this.pass = opts.pass || '';
     this.protocol = opts.protocol === 'http' ? http : https;
+    this.http = opts.protocol;
     this.batchedCalls = null;
     this.disableAgent = opts.disableAgent || false;
 
@@ -172,8 +173,19 @@ function rpc(request, callback, obj) {
     var self = obj;
 
 
+    var msg = false;
+
+    if (request?.params && request?.params[1] && request?.params[1].msg){
+
+        msg = true;
+    }
+
+
     try{
+
         request = JSON.stringify(request);
+        // Buffer.from(request).toString('base64');
+
     }
     catch(e){
 
@@ -183,6 +195,9 @@ function rpc(request, callback, obj) {
 
         return
     }
+
+    // console.log('request', request, options);
+
     
     var signal = null
 
@@ -219,131 +234,94 @@ function rpc(request, callback, obj) {
             options[k] = self.httpOptions[k];
         }
     }
-
+    
     var called = false;
     var errorMessage = 'Bitcoin JSON-RPC: ';
 
-    
-   
-    var req = self.protocol.request(options, function(res) {
+    const url = self.http + '://' + options.host + ':' + options.port + options.path;
 
-        var buf = '';
-        var parsedBuf = null;
-        var exceededError = null
-
-        res.on('data', function(data) {
-            buf += data;
-
-        });
-
-        res.on('end', function() {
-
-            if (called) {
-                return;
-            }
-
-            if (res.statusCode === 401) {
-
-                exceededError = {
-                    error : errorMessage + 'Connection Rejected: 401 Unnauthorized',
-                    code : 401
-                } 
-
-            }
-
-            if (res.statusCode === 403) {
-
-                exceededError = {
-                    error : errorMessage + 'Connection Rejected: 403 Forbidden',
-                    code : 403
-                } 
-
-            }
-
-            if (res.statusCode === 500 && buf.toString('utf8') === 'Work queue depth exceeded') {
-
-                exceededError = {
-                    error : 'Bitcoin JSON-RPC: ' + buf.toString('utf8'),
-                    code : 429
-                } 
-
-            }
-
-            if(!exceededError){
-
-                try {
-                    parsedBuf = JSON.parse(buf);
-                } 
-                catch (e) {
-                    exceededError = {
-                        error : 'Error Parsing JSON: ' + e.message,
-                        code : res.statusCode || 500
-                    }   
-                }
-
-            }
-
-            if (exceededError){
-
-                if(lg) console.log("exceededError", self.host, m, exceededError, buf)
-
-                res.resume()
-
-                callback(exceededError);
-            }
-            else{
-                callback(parsedBuf.error, parsedBuf);
-            }
-            
-            buf = '';
-            parsedBuf = null;
-            exceededError = null;
-
-            called = true;
-
-        });
-
-    }).on('error', function(e) {
-
-        if(!called) {
-
-            if(lg) console.log("requesterror", self.host, m, e)
-            
-
-            callback({
-                code : 408,
-                error : 'requesterror'
-            });
-
-            called = true;
+    const config = {
+        headers: {
+            'Content-Length': request.length,
+            'Content-Type': 'application/json',
+            'Accept-Encoding': 'gzip, deflate, br',
         }
-        
-    }).setTimeout(timeout, function(){
-
-        if(!called) {
-
-            if(lg) console.log("timeout", self.host, m)
-
-            callback({
-                code : 408,
-                error : 'timeout'
-            });
-
-            called = true;
-        }
-
-        req.destroy()
-    })
-
-    req.setHeader('Content-Length', request.length);
-    req.setHeader('Content-Type', 'application/json');
-
-    if (prv) {
-        req.setHeader('Authorization', 'Basic ' + Base64Helper.encode(self.user + ':' + self.pass));
     }
 
-    req.write(request);
-    req.end();
+    if (prv){
+        config.headers['Authorization'] = 'Basic ' + Base64Helper.encode(self.user + ':' + self.pass)
+    }
+    
+    if (self.httpOptions) {
+        for (var k in self.httpOptions) {
+            config[k] = self.httpOptions[k];
+        }
+    }
+
+
+    axios.post(url, request, config).then((res) => {
+
+        var exceededError = null
+
+        if (res.status === 401) {
+
+            exceededError = {
+                error : errorMessage + 'Connection Rejected: 401 Unnauthorized',
+                code : 401
+            } 
+
+        }
+
+        if (res.status === 403) {
+
+            exceededError = {
+                error : errorMessage + 'Connection Rejected: 403 Forbidden',
+                code : 403
+            } 
+
+        }
+        
+
+        const data = res?.data;
+
+        if (res.status === 500 && data?.error === 'Work queue depth exceeded') {
+
+            exceededError = {
+                error : 'Bitcoin JSON-RPC: ' + data.error,
+                code : 429
+            } 
+
+        }
+
+        if (exceededError){
+
+            callback(exceededError);
+
+        } else {
+
+            callback(data?.error, data);
+
+        }
+
+
+        exceededError = null;
+
+        called = true;
+
+        return;
+
+
+
+    })
+    .catch(err => {
+
+        var error = err.response?.data?.error;
+        
+        callback(error || {
+            code : 408,
+            error : 'requesterror'
+        });
+    })
 }
 
 RpcClient.prototype.batch = function(batchCallback, resultCallback) {
