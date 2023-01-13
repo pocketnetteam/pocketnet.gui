@@ -601,7 +601,7 @@ var videoCabinet = (function () {
 						})
 						.then((videos) =>
 							actions.getBlockchainPostByVideos(
-								videos.map((video = '') => encodeURIComponent(video)),
+								videos.map((video = '') => video),
 							),
 						)
 						.then(() => {

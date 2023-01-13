@@ -503,10 +503,10 @@ Comment = function(txid){
 
 			s += (JSON.stringify({
 				
-				message : encodeURIComponent(self.message.v),
-				url : encodeURIComponent(self.url.v),
+				message : self.message.v,
+				url : self.url.v,
 				images : _.map(self.images.v, function(i){
-					return encodeURIComponent(i)
+					return i
 				}),
 
 			}))
@@ -528,10 +528,10 @@ Comment = function(txid){
 
 		if(!self.delete){
 			r.msg = JSON.stringify({
-				message : encodeURIComponent(self.message.v),
-				url : encodeURIComponent(self.url.v),
+				message : self.message.v,
+				url : self.url.v,
 				images : _.map(self.images.v, function(i){
-					return encodeURIComponent(i)
+					return i
 				}),
 			})
 		}
@@ -926,7 +926,7 @@ ContentBoost = function(txid){
 
 	self.serialize = function(){
 
-		return encodeURIComponent(self.txid)
+		return self.txid
 	}
 
 	self.export = function(alias){
@@ -1444,12 +1444,12 @@ Share = function(lang){
 			textvalue = JSON.stringify(textvalue) //  Base64Helper.encode(JSON.stringify(textvalue))
 		}
 		
-		return encodeURIComponent(self.url.v) 
+		return self.url.v 
 		
-		+ encodeURIComponent(self.caption.v) 
-		+ (articleversion2 ? textvalue : encodeURIComponent(textvalue))
+		+ self.caption.v 
+		+ (articleversion2 ? textvalue : textvalue)
 
-		+ _.map(self.tags.v, function(t){ return encodeURIComponent(t) }).join(',')
+		+ _.map(self.tags.v, function(t){ return t }).join(',')
 		+ self.images.v.join(',')
 
 		+ (self.aliasid || "")
@@ -1516,11 +1516,11 @@ Share = function(lang){
 		}
 
 		return {
-			c : encodeURIComponent(self.caption.v),
-			m : articleversion2 ? textvalue : encodeURIComponent(textvalue),
-			u : encodeURIComponent(self.url.v),
+			c : self.caption.v,
+			m : articleversion2 ? textvalue : textvalue,
+			u : self.url.v,
 			p : _.clone(self.poll.v),
-			t : _.map(self.tags.v, function(t){ return encodeURIComponent(t) }),
+			t : _.map(self.tags.v, function(t){ return t }),
 			i : self.images.v,
 			s : _.clone(self.settings),
 			l : self.language.v,
@@ -1866,10 +1866,10 @@ UserInfo = function(){
 
 	self.serialize = function(){
 
-		return encodeURIComponent(self.name.v)
-		 + encodeURIComponent(self.site.v)
+		return self.name.v
+		 + self.site.v
 		 + self.language.v
-		 + encodeURIComponent(self.about.v)
+		 + self.about.v
 		 + self.image.v + JSON.stringify(self.addresses.v) 
 		 + self.ref.v
 		 + self.keys.v.join(',')
@@ -1902,10 +1902,10 @@ UserInfo = function(){
 		}
 
 		return {
-			n : encodeURIComponent(self.name.v),
+			n : self.name.v,
 			l : self.language.v,
-			a : encodeURIComponent(self.about.v),
-			s : encodeURIComponent(self.site.v),
+			a : self.about.v,
+			s : self.site.v,
 			i : self.image.v,
 			b : JSON.stringify(self.addresses.v || []),
 			r : self.ref.v,
@@ -2892,7 +2892,7 @@ Remove = function(lang){
 
 	self.serialize = function(){
 
-        return encodeURIComponent(self.txid)
+        return self.txid
 
 	}
 
